@@ -6,69 +6,109 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C8A21F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 19:05:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E1A31F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 19:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728504AbfAXTFB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 14:05:01 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47736 "HELO cloud.peff.net"
+        id S1729010AbfAXTL1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 14:11:27 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47748 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725951AbfAXTFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jan 2019 14:05:00 -0500
-Received: (qmail 9619 invoked by uid 109); 24 Jan 2019 19:05:00 -0000
+        id S1725909AbfAXTL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 14:11:26 -0500
+Received: (qmail 9921 invoked by uid 109); 24 Jan 2019 19:11:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 Jan 2019 19:05:00 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 Jan 2019 19:11:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31273 invoked by uid 111); 24 Jan 2019 19:05:05 -0000
+Received: (qmail 31325 invoked by uid 111); 24 Jan 2019 19:11:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 24 Jan 2019 14:05:05 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 24 Jan 2019 14:11:31 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Jan 2019 14:04:59 -0500
-Date:   Thu, 24 Jan 2019 14:04:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Jan 2019 14:11:24 -0500
+Date:   Thu, 24 Jan 2019 14:11:24 -0500
 From:   Jeff King <peff@peff.net>
-To:     Lucy Phipps <landfillbaby69@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Fwd: [PATCH] optimize PNGs with FileOptimizer 13.50.2431 (x86)
- and ZopfliPNG 1.0.2
-Message-ID: <20190124190458.GA29828@sigill.intra.peff.net>
-References: <20190124180755.6124-1-landfillbaby@outlook.com>
- <CAGZ79kZAhL6jz9i1-v09y0b3KGCokANN6eZYgXgU1w9_ymFZFg@mail.gmail.com>
- <CAGOd_F8f=dURFE0H3qjMONy32nrSsXs5KHnogsosfwK92-KbYw@mail.gmail.com>
- <CAGOd_F8A7Tfgb8cD1qvi2WDKYXLp=Zf_Yopb38gFpRQoj0tcdg@mail.gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, David Turner <novalis@novalis.org>
+Subject: Re: [PATCH 2/6] diff: clear emitted_symbols flag after use
+Message-ID: <20190124191124.GB29828@sigill.intra.peff.net>
+References: <20190124122603.GA10415@sigill.intra.peff.net>
+ <20190124123240.GB11354@sigill.intra.peff.net>
+ <CAGZ79kbHLvN252v-gNbcpsyGg8pZ9GPBtyZquX50HwhtYep5oA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGOd_F8A7Tfgb8cD1qvi2WDKYXLp=Zf_Yopb38gFpRQoj0tcdg@mail.gmail.com>
+In-Reply-To: <CAGZ79kbHLvN252v-gNbcpsyGg8pZ9GPBtyZquX50HwhtYep5oA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 24, 2019 at 06:34:29PM +0000, Lucy Phipps wrote:
+On Thu, Jan 24, 2019 at 10:55:10AM -0800, Stefan Beller wrote:
 
-> honestly i just like optimizing files. the test images still work but
-> one of them is half the size as before. i don't know if it needs to be
-> bigger. it doesn't make any actual difference
+> >      But where does that output go? Normally it goes directly to stdout,
+> >      but because o->emitted_symbols is set, we queue it. As a result, we
+> >      don't actually print the diffstat for the merge commit (yet),
+> 
+> Thanks for your analysis. As always a pleasant read.
+> I understand and agree with what is written up to here remembering
+> the code vaguely.
+> 
+> > which
+> >      is wrong.
+> 
+> I disagree with this sentiment. If we remember to flush the queued output
+> this is merely an inefficiency due to implementation details, but not wrong.
+> 
+> We could argue that it is wrong to have o->emitted_symbols set, as
+> we know we don't need it for producing a diffstat only.
 
-I'm not sure if we actually see any benefit to optimizing them, though.
+It's wrong in the sense that we finish printing that merge commit
+without having shown its diff. If it were the final commit, we would not
+ever print it at all!
 
-Optimizing a file which is served to many clients makes sense. So these:
+So if you are arguing that it would be OK to queue it as long as we
+flushed it before deciding we were done with the diff, then I agree. But
+doing that correctly would actually be non-trivial, because the
+combined-diff code does not use the emitted_symbols queue for its diff
+(so the stat and the patch would appear out of order).
 
-> > >  gitweb/static/git-favicon.png | Bin 115 -> 106 bytes
-> > >  gitweb/static/git-logo.png    | Bin 207 -> 204 bytes
+I also wondered why diffstats go to o->emitted_symbols at all. We do not
+do any analysis of them with --color-moved, I don't think. But I can
+also see that having emitted_symbols hold everything makes sense from a
+maintainability standpoint; future features may want to see more of what
+we're emitting.
 
-should be optimized (and largely already are, from the byte counts).
+> >   3. Next we compute the diff for C. We're actually showing a patch
+> >      again, so we end up in diff_flush_patch_all_file_pairs(), but this
+> >      time we have the queued stat from step 2 waiting in our struct.
+> 
+> Right, that is how the queueing can produce errors. I wonder if the
+> test that is included in this patch would work on top of
+> e6e045f803 ("diff.c: buffer all output if asked to", 2017-06-29)
+> as that commit specifically wanted to make sure these errors
+> would be caught.
 
-But these:
+I suspect that would not work with "--cc", because combine-diff outputs
+directly stdout. That's something that we might want to improve in the
+long run (since obviously it cannot use --color-moved at this point).
 
-> > >  t/test-binary-1.png           | Bin 5660 -> 2603 bytes
-> > >  t/test-binary-2.png           | Bin 275 -> 217 bytes
+> > To fix it, we can simply restore o->emitted_symbols to NULL after
+> > flushing it, so that it does not affect anything outside of
+> > diff_flush_patch_all_file_pairs(). This intuitively makes sense, since
+> > nobody outside of that function is going to bother flushing it, so we
+> > would not want them to write to it either.
+> 
+> This would also cause the inefficiency I mentioned after (2) to disappear,
+> as the merge commits diffstat would be just printed to stdout?
 
-never go anywhere except developer's working trees. And since the
-history is kept in Git, we keep the original version of the file, too.
-So this is actually making git.git slightly _larger_, even though
-checked-out file in the working tree is smaller.
+Yes, it avoids the overhead of even storing them in the emitted struct
+at all.
 
-I'm not sure that's worth the tradeoff.
+> Reviewed-by: Stefan Beller <sbeller@google.com>
+
+Thanks!
+
+I did quite a bit of head-scratching figuring out this bug, but at the
+end of it I now understand the flow of the color-moved code quite a bit
+better. :)
 
 -Peff
