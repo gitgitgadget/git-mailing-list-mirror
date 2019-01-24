@@ -2,96 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C47E81F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 19:17:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E08A51F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 19:18:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727892AbfAXTRl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 14:17:41 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:45631 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727488AbfAXTRl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jan 2019 14:17:41 -0500
-Received: by mail-qk1-f195.google.com with SMTP id y78so3960040qka.12
-        for <git@vger.kernel.org>; Thu, 24 Jan 2019 11:17:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=emfKEtyCMTpMK8+AmYhrlz08STOuANxWJF8bRrAXB4Y=;
-        b=fdEW5MDekFvX/HYt67kbvE3RSAgdBcBs9Ver824EKJ4EVn4OrzSM9yjkhF1+rXxe1a
-         yVRtj145R4SNkwdRxEmEf4T50irscocjsuMgSSAXBd+EYq/poO+z0UzulxE7+HUGTXtj
-         tJrUDYChQLNX7hdL0z3iCoQ0EK0aoN23QjSLkpfVduxLUZhyRA5pzDFaeDdSZd2zTca2
-         nluuvfVSmPhRtGXPgp5p9FOEW9wBcWyzflkR0rOvi/aMuEA1iietzbY3NXQt26f+GspJ
-         M5AuJFh6ee0oVK2gI8pvsFg52FTMHl+tRaEPqXIuYwGnLNYQOJDy55seBIKkvHSr4PdU
-         aH1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=emfKEtyCMTpMK8+AmYhrlz08STOuANxWJF8bRrAXB4Y=;
-        b=sRzEJNtoF+SzdeIjJJMpQGxInUOgrAqFLA2iU4fgmG/5hFWjBGXKZ3Z+1mR96ud4Mi
-         PaEBFLaMXCJITQdzY2Et3M1iKJmPUh4BMvRskduqv0szsjcGCQWd3WOP7YEhWq2waWK5
-         kA40Atv8J+SSJ1bLUTy7j/LCi4qMlwHC8hbhMnjk2V9MXVb7FKo2KxydsxeARGnnDYd7
-         ItSKTNENzehlNaFvJci5qdX7lnkwEfjXzAYIqa6PWpZGgbAaqJNJiLmtETliNBSw9x4N
-         CXdzYmR84srCIyzvWIbAx9Hhyqj7UxGuInxCcv4AfRqciAayGPV97nBJGWjdIvYzlhyb
-         KZsA==
-X-Gm-Message-State: AJcUukfcsK6bJx26Lntt49uNZ01ILvKmYUmcLszIum2J0+5UDzhlqZzc
-        lotR5GG85Z+xioUCtFWqK7o=
-X-Google-Smtp-Source: ALg8bN7H2QHN2L4Cd663Flc85S5E/m25GhXPor+Y3dK/ytCWgiI1XxAZUOzoED1XGdZtE861rxUhyQ==
-X-Received: by 2002:a37:a141:: with SMTP id k62mr6872723qke.280.1548357460165;
-        Thu, 24 Jan 2019 11:17:40 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:a010:321f:4bbb:82c4? ([2001:4898:8010:0:8946:321f:4bbb:82c4])
-        by smtp.gmail.com with ESMTPSA id o48sm73411149qtb.87.2019.01.24.11.17.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Jan 2019 11:17:39 -0800 (PST)
-Subject: Re: [PATCH v3 5/9] midx: refactor permutation logic and pack sorting
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>, gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        jrnieder@gmail.com, avarab@gmail.com, gitster@pobox.com,
-        dstolee@microsoft.com
-References: <a0d4cc6cb3fbca0de732dfd34cbec4d765b55228.1547047269.git.gitgitgadget@gmail.com>
- <20190123210054.118647-1-jonathantanmy@google.com>
- <14fe05d0-75e5-0975-d490-550539dbb34a@gmail.com>
-Message-ID: <295eb5fb-5497-0517-a5ed-af96aafb3133@gmail.com>
-Date:   Thu, 24 Jan 2019 14:17:38 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:65.0) Gecko/20100101
- Thunderbird/65.0
+        id S1728652AbfAXTSi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 14:18:38 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47774 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727558AbfAXTSi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 14:18:38 -0500
+Received: (qmail 10229 invoked by uid 109); 24 Jan 2019 19:18:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 Jan 2019 19:18:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31429 invoked by uid 111); 24 Jan 2019 19:18:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 24 Jan 2019 14:18:43 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Jan 2019 14:18:36 -0500
+Date:   Thu, 24 Jan 2019 14:18:36 -0500
+From:   Jeff King <peff@peff.net>
+To:     Joey Hess <id@joeyh.name>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: git status OOM on mmap of large file
+Message-ID: <20190124191836.GA31073@sigill.intra.peff.net>
+References: <20190122220714.GA6176@kitenet.net>
+ <20190124121037.GA4949@sigill.intra.peff.net>
+ <20190124183810.GC29200@kitenet.net>
 MIME-Version: 1.0
-In-Reply-To: <14fe05d0-75e5-0975-d490-550539dbb34a@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190124183810.GC29200@kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/24/2019 12:34 PM, Derrick Stolee wrote:
-> On 1/23/2019 4:00 PM, Jonathan Tan wrote:
->> Indeed, the sorting of pack_info is moved to after get_sorted_entries().
->> Also, pack_perm[old number] = new number, as expected.
->
-> Thanks for chiming in with all the detail on the use of 'perm'. This 
-> is the most confusing part of this code path.
->
->> I think a comment explaining why the perm is needed would be helpful -
->> something explaining that the entries were generated using the old pack
->> numbers, so we need this mapping to be able to write them using the new
->> numbers.
->
-> I can put this comment in the struct definition. Is that the right 
-> place for it?
+On Thu, Jan 24, 2019 at 02:38:10PM -0400, Joey Hess wrote:
 
-I mistakenly thought the pack_perm array was placed into the pack_list 
-struct. I'll put the comment right before we populate the contents of 
-the array.
+> > Just off the top of my head, something like:
+> > 
+> >   /* guess that the filtered output will be the same size as the original */
+> >   hint = len;
+> > 
+> >   /* allocate 10% extra in case the clean size is slightly larger */
+> >   hint *= 1.1;
+> > 
+> >   /*
+> >    * in any case, never go higher than half of core.bigfileThreshold.
+> >    * We'd like to avoid allocating more bytes than that, and that still
+> >    * gives us room for our strbuf to preemptively double if our guess is
+> >    * just a little on the low side.
+> >    */
+> >   if (hint > big_file_threshold / 2)
+> > 	hint = big_file_threshold / 2;
+> > 
+> > But to be honest, I have no idea if that would even produce measurable
+> > benefits over simply growing the strbuf from scratch (i.e., hint==0).
+> 
+> Half of 512 MB is still quite a lot of memory to default to using in
+> this situation. Eg smaller VPS's still often only have a GB or two of ram.
 
-Thanks,
--Stolee
+I think you'd want to drop core.bigFileThreshold on such a server, just
+because Git will happily keep 2*(bigFileThreshold-1) in memory to do a
+diff. But that nit aside...
+
+> I did some benchmarking, using cat as the clean filter:
+> [...]
+> From this, it looks like the file has to be quite large before the
+> preallocation makes a sizable improvement to runtime, and the
+> smudge/clean filters have to be used for actual content filtering
+> (not for hash generation purposes as git-annex and git-lfs use it).
+> An unusual edge case I think. So hint == 0 seems fine.
+
+Thanks for these timings! I agree that "hint == 0" is probably
+reasonable, then.
+
+I suppose there's no reason not to proceed with a patch around this.
+For most cases it's really only half the solution (since smudging is
+going to run into the same problem). But fixing that is quite a bit more
+involved, and the change itself will be largely orthogonal.
+
+-Peff
