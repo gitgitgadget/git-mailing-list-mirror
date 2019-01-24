@@ -2,113 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E1A31F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 19:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C4D21F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 19:14:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729010AbfAXTL1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 14:11:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47748 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725909AbfAXTL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jan 2019 14:11:26 -0500
-Received: (qmail 9921 invoked by uid 109); 24 Jan 2019 19:11:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 Jan 2019 19:11:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31325 invoked by uid 111); 24 Jan 2019 19:11:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 24 Jan 2019 14:11:31 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Jan 2019 14:11:24 -0500
-Date:   Thu, 24 Jan 2019 14:11:24 -0500
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, David Turner <novalis@novalis.org>
-Subject: Re: [PATCH 2/6] diff: clear emitted_symbols flag after use
-Message-ID: <20190124191124.GB29828@sigill.intra.peff.net>
-References: <20190124122603.GA10415@sigill.intra.peff.net>
- <20190124123240.GB11354@sigill.intra.peff.net>
- <CAGZ79kbHLvN252v-gNbcpsyGg8pZ9GPBtyZquX50HwhtYep5oA@mail.gmail.com>
+        id S1727749AbfAXTO2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 14:14:28 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35206 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725909AbfAXTO2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 14:14:28 -0500
+Received: by mail-ed1-f66.google.com with SMTP id x30so5516254edx.2
+        for <git@vger.kernel.org>; Thu, 24 Jan 2019 11:14:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/op1Qcryg11lRj+2XjLhf1zOAZl5MP6oWL56mtNofCQ=;
+        b=dUlZfm8uZ/noOIQ5xo1qE7ZwwW55LGXnvCiTvLJ0ZvwnaEo8xz8Vg3FK3kfIAHF/JX
+         QV7y/mH07hu7UinUNSilZZrH1jIoBvtCSJfJBZS9M4f1mw/Vx/DIGA2D6gxLRY+wlvrW
+         oz7M9XwqP1IH3jewRMregx0E/tQjR4TYPp86baMzoBbqWh27EDjT6wrMhxAAkcYEg3xr
+         wn19lUz/SG9uv9TDkhVAEG0SAqeMr+KaYLm4WzEanQ8ciAW8ryBezCZd10G35IitdQ3t
+         JPcZz+7NGpdVtDovkRQlyUucQzf2VAoj3H40QAXn6SmgjRH60MLIkMVK5Fn9oyHQap8d
+         GJ2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/op1Qcryg11lRj+2XjLhf1zOAZl5MP6oWL56mtNofCQ=;
+        b=DemD5s75K8tjyghgZsmq9S8kwmax2ZNburCNmMI3IfL33vQ8MjrwH/zfGOJNmDu1xt
+         /4v1ig+8gHjHEUZUQOQ9nRr60VQqVmvlqxy2Qg5JB8UYW3Q87TCrjMPOr4fKQWOcGv/n
+         Migt6ccEzPVh5oVKCNIobQ44GA3pQPPRseGA+Ng8+G+Vexipbb1Ux4wSZS7e3EM2bM3V
+         rTroxb0z2b0xLRfpOHmSM/NVeOUL8aOSk4nMso0OBDj1uXLKFUtf2jq1yOD492sMNSTr
+         7wQNHqMM4+znnz2X0KHPohMAtSKa1HC3jcfRaSbaKFuyybY3koW19/YoqvfnR6wxCCwP
+         XXkg==
+X-Gm-Message-State: AJcUukf01JJ2oH/HbyCbkF/yI33LPLgkIPrgBpQrJnH707CsJNGe78yM
+        5S50o2b5sLbiqTJ3V3Jm1V+30+aC52jPJL1lwLYIjQ==
+X-Google-Smtp-Source: ALg8bN4Uoye9a1FAfF5sIOIAovEY+uOtmmD5Ufqh/M9j6vqSY9Ct3oFXUricBpuCu7k7lQQxwcvyIq3f5/OuoHtKXG4=
+X-Received: by 2002:a50:ade7:: with SMTP id b36mr7535037edd.215.1548357266274;
+ Thu, 24 Jan 2019 11:14:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbHLvN252v-gNbcpsyGg8pZ9GPBtyZquX50HwhtYep5oA@mail.gmail.com>
+References: <20190124122603.GA10415@sigill.intra.peff.net> <20190124123539.GE11354@sigill.intra.peff.net>
+In-Reply-To: <20190124123539.GE11354@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 24 Jan 2019 11:14:15 -0800
+Message-ID: <CAGZ79kY-xMDDgLgkWdc9CoZucd4S557NEPQdvPrd2+_LJAretA@mail.gmail.com>
+Subject: Re: [PATCH 5/6] combine-diff: treat --summary like --stat
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>, David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 24, 2019 at 10:55:10AM -0800, Stefan Beller wrote:
+On Thu, Jan 24, 2019 at 4:35 AM Jeff King <peff@peff.net> wrote:
 
-> >      But where does that output go? Normally it goes directly to stdout,
-> >      but because o->emitted_symbols is set, we queue it. As a result, we
-> >      don't actually print the diffstat for the merge commit (yet),
-> 
-> Thanks for your analysis. As always a pleasant read.
-> I understand and agree with what is written up to here remembering
-> the code vaguely.
-> 
-> > which
-> >      is wrong.
-> 
-> I disagree with this sentiment. If we remember to flush the queued output
-> this is merely an inefficiency due to implementation details, but not wrong.
-> 
-> We could argue that it is wrong to have o->emitted_symbols set, as
-> we know we don't need it for producing a diffstat only.
+> Note that we have to tweak t4013's setup a bit to test this case, as the
+> existing merges do not have any --summary results against their first
+> parent. But since the merge at the tip of 'master' does add and remove
+> files with respect to the second parent, we can just make a reversed
+> doppelganger merge where the parents are swapped.
 
-It's wrong in the sense that we finish printing that merge commit
-without having shown its diff. If it were the final commit, we would not
-ever print it at all!
+...
 
-So if you are arguing that it would be OK to queue it as long as we
-flushed it before deciding we were done with the diff, then I agree. But
-doing that correctly would actually be non-trivial, because the
-combined-diff code does not use the emitted_symbols queue for its diff
-(so the stat and the patch would appear out of order).
+> +       # Same merge as master, but with parents reversed. Hide it in a
+> +       # pseudo-ref to avoid impacting tests with --all.
 
-I also wondered why diffstats go to o->emitted_symbols at all. We do not
-do any analysis of them with --color-moved, I don't think. But I can
-also see that having emitted_symbols hold everything makes sense from a
-maintainability standpoint; future features may want to see more of what
-we're emitting.
+There are 2 calls with --all, which may be worth testing for as well
+assuming we still have similar bugs as shown in the second patch,
+but I guess this would also allow for other tests (how do we list all
+pseudo refs for example?) to cover more corner cases.
 
-> >   3. Next we compute the diff for C. We're actually showing a patch
-> >      again, so we end up in diff_flush_patch_all_file_pairs(), but this
-> >      time we have the queued stat from step 2 waiting in our struct.
-> 
-> Right, that is how the queueing can produce errors. I wonder if the
-> test that is included in this patch would work on top of
-> e6e045f803 ("diff.c: buffer all output if asked to", 2017-06-29)
-> as that commit specifically wanted to make sure these errors
-> would be caught.
-
-I suspect that would not work with "--cc", because combine-diff outputs
-directly stdout. That's something that we might want to improve in the
-long run (since obviously it cannot use --color-moved at this point).
-
-> > To fix it, we can simply restore o->emitted_symbols to NULL after
-> > flushing it, so that it does not affect anything outside of
-> > diff_flush_patch_all_file_pairs(). This intuitively makes sense, since
-> > nobody outside of that function is going to bother flushing it, so we
-> > would not want them to write to it either.
-> 
-> This would also cause the inefficiency I mentioned after (2) to disappear,
-> as the merge commits diffstat would be just printed to stdout?
-
-Yes, it avoids the overhead of even storing them in the emitted struct
-at all.
-
-> Reviewed-by: Stefan Beller <sbeller@google.com>
-
-Thanks!
-
-I did quite a bit of head-scratching figuring out this bug, but at the
-end of it I now understand the flow of the color-moved code quite a bit
-better. :)
-
--Peff
+I am not sure I like this.
