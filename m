@@ -2,98 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5ECF91F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 22:43:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8A261F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 23:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727605AbfAXWnX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 17:43:23 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34371 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725996AbfAXWnX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jan 2019 17:43:23 -0500
-Received: by mail-wm1-f65.google.com with SMTP id y185so3426238wmd.1
-        for <git@vger.kernel.org>; Thu, 24 Jan 2019 14:43:21 -0800 (PST)
+        id S1726779AbfAXXCh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 18:02:37 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45981 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725996AbfAXXCh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 18:02:37 -0500
+Received: by mail-wr1-f65.google.com with SMTP id t6so8268297wrr.12
+        for <git@vger.kernel.org>; Thu, 24 Jan 2019 15:02:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=W1QjZdp/JPPC8hTki2eJlS73uYjTEO0Bq9RRHKQ6KXI=;
-        b=DyYufPbO+tt7SHR02a2jEWHGK53R5KX8TNiYF5+vWvyMUXSS3nKvJ+aMN7aiGhNiZZ
-         Sam72qYi6nmUm2T6M8KQ9eNQBiEzK0AFCJtA/8plufOziMrn4apT2ySsSEABIm1s8pde
-         lRWBkyWabAhjEeS8IIT8nycS0Q/BlCeuNcpyofsGgIkETGeWaCwVTm+2o7BXUglvQB+N
-         q5rONcDjV6PVJeC25JNdlrCI9B0CxbeaPDSxd+r8zscIWJqkGDzsi3sNmBux29sHnnZC
-         n+N1tVSf3DpMZxJ5YZMaW9mgrlZZB+WfbR5wmItzlgjdUqJDoX34051hi7sL/Fsz9pfU
-         inyw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=md8CT0rmiOGQfdERcDQXJnDZ5MtiPTFG9jkVWYx22ew=;
+        b=maI7PnY4eC25FYhesqghXYnbh6SZ8XxPhh9I7dQp4W9z9ouzEXWiJ9X1Z0IStU1Osf
+         /xFPBT71NgvU6KOWPuAGgivYwQSJStT7Lfjm/7xiQCzafC6fyrRddxaE29xdUqCKTQSt
+         yOCIXzpumRUXE/ZWXHDIqnLoh4ReOfn8kIPGdE+L7m0XGfH69obCXBAIlPzblEeupox8
+         N1S1FrQDWwr3SkC3NPuFvqimYl5QwsSeMXWdGmKuOsL0uaeNDwtgo5DCcpwPd4eoaF4u
+         OwpQKGVZLxFydR0we/8Ajjgn5xtqAwM06cn0aYrNVj2FpzNfUoY7+npFt6CfaNXxDpar
+         4ugQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=W1QjZdp/JPPC8hTki2eJlS73uYjTEO0Bq9RRHKQ6KXI=;
-        b=LnZuQ6SIF5aFB8+eoFXcFApWv8AAWS9AMOz8hY1gcf3xIyp3772MdWU+/6B4Jj/VDJ
-         JegpGRJ2blZrrixaZJFkUvVIzja5BRFlPeRLfrjP2qmoiL3L5s4OLCUsoR6nuEQLOENR
-         q7KwuL1OJFeyWSGJbG8fB2KLo5LUMwrEdmKP9ZWQRotK2ATyyiDGTxxfbYV6KELOqb1b
-         /ZdQGEPKZ71+m8egepnyaNiCkh9x/Ee+Lx+hYjpU3JldwzpA8xWVgwXVwsoCVpHipQN0
-         dP/KpF1M/NNtIwWm0TNnxeQqrCBsFFox00Z2luBIaH4aS1/un3OZXdFOcIlHV3+sul7T
-         lo9A==
-X-Gm-Message-State: AJcUukfn3OZDaErAuo/KfFKcy21wTz4wv0W29d+/ofp9RIo6f5jmY9Pw
-        eg0Hux5eSdgF3VaflD77IBStW0/1
-X-Google-Smtp-Source: ALg8bN6qUnnqfBKfn0iNDaIZhezuoonzQ2mj+atvzQ4752Sa84zi6EcuUE0GXgHgvLZAzmjW13/YsA==
-X-Received: by 2002:a1c:1b4f:: with SMTP id b76mr4470587wmb.147.1548369801127;
-        Thu, 24 Jan 2019 14:43:21 -0800 (PST)
-Received: from andromeda.localnet (atoulouse-658-1-2-163.w86-222.abo.wanadoo.fr. [86.222.145.163])
-        by smtp.gmail.com with ESMTPSA id l6sm98349149wrv.70.2019.01.24.14.43.20
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=md8CT0rmiOGQfdERcDQXJnDZ5MtiPTFG9jkVWYx22ew=;
+        b=n16O44oTqvjLPyhJpyIv75T9XOkcPqoMLVHp2KANtAY3QqH1u3OBWlAvygQSjTiOn7
+         rvDOJBmPlao8oI9p55o1aLnHtXsw2bOsrTkYkrV5B7sNEocTGhSRS14OwMP9Qu1D9UPm
+         x0JpMYUJMHDkpccb2RecDaPo02eM+NGORRhuqSVOXdlV/CjowSa4En8t9hwakEb9JFzy
+         4F0rIJPPJF6+9xhY/nV2z+m9NOKsOKO+0KMpppelPbcs2yKvWLRIb/2tuxJpIBFWy+jn
+         swwjGAh6HcJ3qbRGPfNw81gpge7AhZ0MCLCUm25+bvosRpBb08PabGNzAAC/HJhDX/To
+         8nVA==
+X-Gm-Message-State: AJcUukecfDR+QKz9dZMxhv6TSR2uE4d5XIvJGmqiPMaL9+r5qxUdlH8S
+        37vRD8Z/2UoaQjwi/lITBco=
+X-Google-Smtp-Source: ALg8bN7l2MC/Wps4KB6QpuKabzFHlqSaXFXvOTcQ4hE1YviG8u2rtk515nLNocuMw/L6ZKItofTt8Q==
+X-Received: by 2002:adf:b649:: with SMTP id i9mr9188852wre.70.1548370955157;
+        Thu, 24 Jan 2019 15:02:35 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o9sm38144093wmh.3.2019.01.24.15.02.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 24 Jan 2019 14:43:20 -0800 (PST)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v5 00/16] sequencer: refactor functions working on a todo_list
-Date:   Thu, 24 Jan 2019 23:43:09 +0100
-Message-ID: <2759286.8cvUeAOlzz@andromeda>
-In-Reply-To: <xmqqd0olhgb2.fsf@gitster-ct.c.googlers.com>
-References: <20181229160413.19333-1-alban.gruin@gmail.com> <20190123205821.27459-1-alban.gruin@gmail.com> <xmqqd0olhgb2.fsf@gitster-ct.c.googlers.com>
+        Thu, 24 Jan 2019 15:02:34 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 7/8] checkout: introduce --{,no-}overlay option
+References: <20181220134820.21810-1-t.gummerer@gmail.com>
+        <20190108215225.3077-1-t.gummerer@gmail.com>
+        <20190108215225.3077-8-t.gummerer@gmail.com>
+        <20190122235313.GA199923@google.com>
+        <20190123202156.GA11293@hank.intra.tgummerer.com>
+        <xmqqzhrr9j52.fsf@gitster-ct.c.googlers.com>
+        <20190124011244.GE34357@google.com>
+Date:   Thu, 24 Jan 2019 15:02:33 -0800
+In-Reply-To: <20190124011244.GE34357@google.com> (Jonathan Nieder's message of
+        "Wed, 23 Jan 2019 17:12:44 -0800")
+Message-ID: <xmqq8sz9hd6e.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[I=E2=80=99m resending this as I clicked on the wrong button=E2=80=A6]
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Hi,
+> I find --ignore-removal fairly easy to understand, and I had no idea
+> what --overlay would mean.
+>
+> I realize this is just one user's experience.
 
-Le 24/01/2019 =C3=A0 22:54, Junio C Hamano a =C3=A9crit :
-> Alban Gruin <alban.gruin@gmail.com> writes:
->=20
-> Before I comment on anything else.
->=20
-> > This is based on nd/the-index (36e7ed69de, "rebase-interactive.c: remove
-> > the_repository references").
->=20
-> My attempt to apply these in order on top of that commit seems to
-> stop at step 5/16.  Are you sure you based them on it?
->=20
-> Thanks.
+Exactly.  My impression was the exact opposite from yours.
 
-It is based on that commit, but I mistakenly added a newline between `--- a/
-sequencer.c` and `+++ b/sequencer.c` before sending this series.  Sorry abo=
-ut=20
-this.
-
-I just reapplied all the patches I sent, and there is no other problem. =20
-Should I send this back?
-
-=2D- Alban
-
-
+The phrase "removal" in the context of checkout does not click for
+me at all, and neither it does in the context of add, especially
+given that Git tracks states (i.e. snapshots), not changes.
 
 
