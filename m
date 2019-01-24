@@ -2,76 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36EEC1F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 15:09:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C31A1F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 15:17:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728485AbfAXPJw convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 24 Jan 2019 10:09:52 -0500
-Received: from mx0b-0000bf01.pphosted.com ([67.231.152.145]:57862 "EHLO
-        mx0a-0000bf01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727943AbfAXPJw (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 24 Jan 2019 10:09:52 -0500
-X-Greylist: delayed 839 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jan 2019 10:09:51 EST
-Received: from pps.filterd (m0042303.ppops.net [127.0.0.1])
-        by mx0b-0000bf01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x0OEmpqb020755
-        for <git@vger.kernel.org>; Thu, 24 Jan 2019 08:55:52 -0600
-Received: from np1exhc101.corp.halliburton.com ([134.132.53.10])
-        by mx0b-0000bf01.pphosted.com with ESMTP id 2q7dnqs0ad-5
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Thu, 24 Jan 2019 08:55:49 -0600
-Received: from NP1EXMB203.corp.halliburton.com ([169.254.6.8]) by
- NP1EXHC101.corp.halliburton.com ([10.192.132.205]) with mapi id
- 14.03.0415.000; Thu, 24 Jan 2019 08:51:51 -0600
-From:   Naum Derzhi <Naum.Derzhi@halliburton.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Removing data from repository
-Thread-Topic: Removing data from repository
-Thread-Index: AdSz7s7aSPVattG+TsebHRS3nLc11AABTpqw
-Date:   Thu, 24 Jan 2019 14:51:50 +0000
-Message-ID: <7A854577E980BE4FB29FDD041B9B75E701798CEE@NP1EXMB203.corp.halliburton.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.192.128.17]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1727848AbfAXPRl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 10:17:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47350 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727562AbfAXPRl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 10:17:41 -0500
+Received: (qmail 32648 invoked by uid 109); 24 Jan 2019 15:17:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 24 Jan 2019 15:17:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29004 invoked by uid 111); 24 Jan 2019 15:17:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 24 Jan 2019 10:17:45 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Jan 2019 10:17:39 -0500
+Date:   Thu, 24 Jan 2019 10:17:39 -0500
+From:   Jeff King <peff@peff.net>
+To:     Naum Derzhi <Naum.Derzhi@halliburton.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Removing data from repository
+Message-ID: <20190124151739.GA26616@sigill.intra.peff.net>
+References: <7A854577E980BE4FB29FDD041B9B75E701798CEE@NP1EXMB203.corp.halliburton.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-24_08:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=794 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1810050000
- definitions=main-1901240104
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7A854577E980BE4FB29FDD041B9B75E701798CEE@NP1EXMB203.corp.halliburton.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Greetings,
+On Thu, Jan 24, 2019 at 02:51:50PM +0000, Naum Derzhi wrote:
 
-I have this problem: years ago one of our developers committed a large (Gigabytes) piece of binary data into our project repository. This should not have been done, but it happened. (Honest, it was not me). We never needed this data in the repository.
+> I have this problem: years ago one of our developers committed a large
+> (Gigabytes) piece of binary data into our project repository. This
+> should not have been done, but it happened. (Honest, it was not me).
+> We never needed this data in the repository.
+> 
+> Using git rm removes these files from the working tree, but they are
+> still somewhere in the repository, so when we clone, we transfer
+> gigabytes of unneeded data. 
+> 
+> Is it possible to fix this problem?
 
-Using git rm removes these files from the working tree, but they are still somewhere in the repository, so when we clone, we transfer gigabytes of unneeded data. 
+You'll have to rewrite the offending history. You can use
+git-filter-branch. See especially these sections of the manpage:
 
-Is it possible to fix this problem?
+  https://git-scm.com/docs/git-filter-branch#_examples
 
-Thank you
- 
- 
-Naum Derzhi
-Chief Scientific Adviser, Physics
- 
-3000 N Sam Houston Pkwy E, Technology Center, Office T1241H
-Houston, TX 77032
+  https://git-scm.com/docs/git-filter-branch#_checklist_for_shrinking_a_repository
 
-Office: +1 (281) 871 3278
+as well as the warning in the DESCRIPTION section:
 
-________________________________________
-This e-mail, including any attached files, may contain confidential and privileged information for the sole use of the intended recipient. Any review, use, distribution, or disclosure by others is strictly prohibited. If you are not the intended recipient (or authorized to receive information for the intended recipient), please contact the sender by reply e-mail and delete all copies of this message.
+  WARNING! The rewritten history will have different object names for
+  all the objects and will not converge with the original branch. You
+  will not be able to easily push and distribute the rewritten branch on
+  top of the original branch. Please do not use this command if you do
+  not know the full implications, and avoid using it anyway, if a simple
+  single commit would suffice to fix your problem. (See the "RECOVERING
+  FROM UPSTREAM REBASE" section in git-rebase(1) for further information
+  about rewriting published history.)
 
+You may also want to check out the BFG repo cleaner[1], as separate
+project that handles this case a little more simply (it doesn't save you
+from dealing with rewritten history, but it does avoid having to learn
+filter-branch's flexible but confusing syntax).
+
+-Peff
+
+[1] https://rtyley.github.io/bfg-repo-cleaner/
