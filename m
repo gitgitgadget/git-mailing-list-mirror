@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E71CD1F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 08:29:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 655031F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 08:30:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727487AbfAXI3x (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 03:29:53 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:46235 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbfAXI3w (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jan 2019 03:29:52 -0500
-Received: by mail-pg1-f193.google.com with SMTP id w7so2333796pgp.13
-        for <git@vger.kernel.org>; Thu, 24 Jan 2019 00:29:52 -0800 (PST)
+        id S1727535AbfAXIaD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 03:30:03 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44492 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727491AbfAXIaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 03:30:03 -0500
+Received: by mail-pf1-f193.google.com with SMTP id u6so2615968pfh.11
+        for <git@vger.kernel.org>; Thu, 24 Jan 2019 00:30:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YL2Kt0dGrUtWFOKzFsijWY0N236Y1bIaCd2k+5sEaAI=;
-        b=oC8z5yP9bs6zQWPb689H42kRju1fmaI4BjRSIeRIzb45yppU67FA3GxY5oQJUmi1lX
-         Wcs0QGvrXqwp5vDO4KXMtiHK8+8BLaBmzmo2U6wH6GHZLxkpOBhs9H3RwJqGomz3QSgY
-         RjKkw4M4THDzEArPULFUJ36/F8wP9xSbpcey8Be5/qTOleZ/TNOPPkt5E9VWAv65Bnv2
-         z7HFekLUnKC1BZ8IZXbd/VzmSjZv/0+Uwg/Du9pfLy94ar7NxQ4T7BXzrjeOQZN4lNCu
-         V4ZMVoPN6yadNdvNZtkBYPV6JB0YhoaMXlCGMPAIW1QQEOo4T4W1On+MZNoWDrRbRGne
-         +H/Q==
+        bh=72LMcCD4nDM08MNb3shTGe5CiZL8WdPS+wo7aeYArBo=;
+        b=jU21d0a6VbENAo6tjyWchFsxEVtaFkDB5DU03bm1Q3z5vkXEjd2PYXnRJ7bpmyGKcL
+         vJ/vqqa/VvrQcwh8zKjtUVdx+v5CVIsM/FhStn9bcJcRN+jfyG2Y0ui//eZ+1zR24vC1
+         IZ/cv4TIOFvmxvIArVHUX+KDGzMzzyMWQKvNaJtYU7qq25O8j9X3o5q7O6rtTP1h9dTg
+         FZTm1DpKcwPUuYwV0ESJsVKKjqryic81nx7L7JynionYfQJiQuxmjRgu28GyTeoKQOaS
+         1ppElXG1qWKUdk+TINuOQ6NbdQJs++XNGKOibl1X/WyHszHYvJQeIcU1eIGncgLI2xq+
+         HOag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YL2Kt0dGrUtWFOKzFsijWY0N236Y1bIaCd2k+5sEaAI=;
-        b=rktAVuIQNk+GZSCHcnkUXR1HZ0QwsWiKZoBVG763kVt4xFzvjostRX4cBUCGAMyYlS
-         OcIM35+ANVzscP3zuOgDRp8Mck/bA+HGJ9+p1rn4vFc1MSreH7MXCymMtvaaQOS5Vgyq
-         Gzdmq3DInwCJBksDijLpmrusm7NRhp30Y4XopPgvgXzswjqr7kDj6zscz4TtFlxdv9cB
-         C3c5HlyJb/vqiwqxs98SzdYqBz+5biktnJnmwMysRnhvSp1Eb2TGD1w6mt4TNmCeYd/p
-         pK1aicLbmLib/kA55C7Z13aDJYSCJrKded3SPi0exUB5ZpNkxGXl9N67P3ASQrgUQebC
-         lpRg==
-X-Gm-Message-State: AJcUukcEFnWl2/3hPo4pZOtDOhlGUTUyz3PR9st/JxKpB4HZG0Ko4LJQ
-        JH9LzYJRPmljAg3dwP1tHWolhb7pEZg=
-X-Google-Smtp-Source: ALg8bN6C+fmR2BZn8cAW5BRrJZacjkIUaA4MX7lQQK1ecDgVbaSjghM3drOdFuWhWIYBQwGeoknf0g==
-X-Received: by 2002:a63:fb15:: with SMTP id o21mr5089474pgh.211.1548318591595;
-        Thu, 24 Jan 2019 00:29:51 -0800 (PST)
+        bh=72LMcCD4nDM08MNb3shTGe5CiZL8WdPS+wo7aeYArBo=;
+        b=LSJ/fIyeAAvpTMBzv9DOh97uooHUlNjN7qZMeYUt/Gc8p+8AKGHqt1IP5qri6l1fHj
+         n9rExyXt7gJiWHyPNNxttAIJNaw9hS/eC35WC2jU/SHcMkrEmxUxqCpmrpG3kUhyXAZc
+         K9B6b6B6gKegdcAICPpEA06t0Xox5cEk+fSYjCbRr9Xr+LuOZU13tM6cR52ycbudJMTH
+         kAjDf0h4iVbgCBiy/E3h710jA5fXAQLWLNHUtGP1oWGFhKoWtN/i06z/uw5hNjAxuxHJ
+         RXWrMkKcGfkhhlK2sho3wfdFzm0+kJQ4TwRGmFc3mei6p9HoeGyBeFY9FvylRSRfRdCV
+         Z22g==
+X-Gm-Message-State: AJcUukfTPLJHSSp//Wbv7Sb/pgCpTov78HHSFOT5uFRg3EL98AZRjCQp
+        tcVUrudPaXvlWfjq6p5qR8GMVGcJTXo=
+X-Google-Smtp-Source: ALg8bN64mtCtn3s1+3Eb3Vvrjf3ksUcXfxsDzPenVeroJ4NKk+3L0hp3oLBHPhDFmE4vLM8JFY88tg==
+X-Received: by 2002:a62:35c7:: with SMTP id c190mr5704157pfa.76.1548318601690;
+        Thu, 24 Jan 2019 00:30:01 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id v12sm24411242pgg.41.2019.01.24.00.29.48
+        by smtp.gmail.com with ESMTPSA id c23sm25126156pfi.83.2019.01.24.00.29.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Jan 2019 00:29:50 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 24 Jan 2019 15:29:46 +0700
+        Thu, 24 Jan 2019 00:30:01 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 24 Jan 2019 15:29:56 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 06/11] read-cache.c: replace update_index_if_able with repo_&
-Date:   Thu, 24 Jan 2019 15:29:07 +0700
-Message-Id: <20190124082912.24401-7-pclouds@gmail.com>
+Subject: [PATCH 08/11] merge-recursive.c: remove implicit dependency on the_index
+Date:   Thu, 24 Jan 2019 15:29:09 +0700
+Message-Id: <20190124082912.24401-9-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.560.g70ca8b83ee
 In-Reply-To: <20190124082912.24401-1-pclouds@gmail.com>
 References: <20190124082912.24401-1-pclouds@gmail.com>
@@ -73,158 +73,630 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/commit.c   |  2 +-
- builtin/describe.c |  2 +-
- builtin/diff.c     |  2 +-
- builtin/rebase.c   |  5 ++---
- cache.h            |  6 ------
- read-cache.c       | 14 ++++++++------
- repository.h       |  6 ++++++
- wt-status.c        |  2 +-
- 8 files changed, 20 insertions(+), 19 deletions(-)
+ builtin/am.c              |   2 +-
+ builtin/checkout.c        |   2 +-
+ builtin/merge-recursive.c |   2 +-
+ builtin/merge.c           |   2 +-
+ merge-recursive.c         | 148 ++++++++++++++++++++------------------
+ merge-recursive.h         |   6 +-
+ sequencer.c               |   4 +-
+ 7 files changed, 91 insertions(+), 75 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 19eb6cff86..d3f1234bf0 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1396,7 +1396,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	wt_status_collect(&s);
+diff --git a/builtin/am.c b/builtin/am.c
+index 901dc55078..611712dc95 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1545,7 +1545,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+ 	 * changes.
+ 	 */
  
- 	if (0 <= fd)
--		update_index_if_able(&the_index, &index_lock);
-+		repo_update_index_if_able(the_repository, &index_lock);
+-	init_merge_options(&o);
++	init_merge_options(&o, the_repository);
  
- 	if (s.relative_paths)
- 		s.prefix = prefix;
-diff --git a/builtin/describe.c b/builtin/describe.c
-index cc118448ee..bc97e50650 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -634,7 +634,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 				      NULL, NULL, NULL);
- 			fd = hold_locked_index(&index_lock, 0);
- 			if (0 <= fd)
--				update_index_if_able(&the_index, &index_lock);
-+				repo_update_index_if_able(the_repository, &index_lock);
+ 	o.branch1 = "HEAD";
+ 	their_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 1b672a9fd9..a95ba2c6dc 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -670,7 +670,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			 * a pain; plumb in an option to set
+ 			 * o.renormalize?
+ 			 */
+-			init_merge_options(&o);
++			init_merge_options(&o, the_repository);
+ 			o.verbosity = 0;
+ 			work = write_tree_from_memory(&o);
  
- 			repo_init_revisions(the_repository, &revs, prefix);
- 			argv_array_pushv(&args, diff_index_args);
-diff --git a/builtin/diff.c b/builtin/diff.c
-index f0393bba23..ec78920ee2 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -212,7 +212,7 @@ static void refresh_index_quietly(void)
- 	discard_cache();
- 	read_cache();
- 	refresh_cache(REFRESH_QUIET|REFRESH_UNMERGED);
--	update_index_if_able(&the_index, &lock_file);
-+	repo_update_index_if_able(the_repository, &lock_file);
+diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+index 9b2f707c29..4864f7b22f 100644
+--- a/builtin/merge-recursive.c
++++ b/builtin/merge-recursive.c
+@@ -28,7 +28,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+ 	struct merge_options o;
+ 	struct commit *result;
+ 
+-	init_merge_options(&o);
++	init_merge_options(&o, the_repository);
+ 	if (argv[0] && ends_with(argv[0], "-subtree"))
+ 		o.subtree_shift = "";
+ 
+diff --git a/builtin/merge.c b/builtin/merge.c
+index dc0b7cc521..bc1aecfe70 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -702,7 +702,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 			return 2;
+ 		}
+ 
+-		init_merge_options(&o);
++		init_merge_options(&o, the_repository);
+ 		if (!strcmp(strategy, "subtree"))
+ 			o.subtree_shift = "";
+ 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 5fbd4253c1..28f44c73ec 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -343,22 +343,24 @@ static int add_cacheinfo(struct merge_options *o,
+ 			 unsigned int mode, const struct object_id *oid,
+ 			 const char *path, int stage, int refresh, int options)
+ {
++	struct index_state *istate = o->repo->index;
+ 	struct cache_entry *ce;
+ 	int ret;
+ 
+-	ce = make_cache_entry(&the_index, mode, oid ? oid : &null_oid, path, stage, 0);
++	ce = make_cache_entry(istate, mode, oid ? oid : &null_oid, path, stage, 0);
+ 	if (!ce)
+ 		return err(o, _("add_cacheinfo failed for path '%s'; merge aborting."), path);
+ 
+-	ret = add_cache_entry(ce, options);
++	ret = add_index_entry(istate, ce, options);
+ 	if (refresh) {
+ 		struct cache_entry *nce;
+ 
+-		nce = refresh_cache_entry(&the_index, ce, CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSING);
++		nce = refresh_cache_entry(istate, ce,
++					  CE_MATCH_REFRESH | CE_MATCH_IGNORE_MISSING);
+ 		if (!nce)
+ 			return err(o, _("add_cacheinfo failed to refresh for path '%s'; merge aborting."), path);
+ 		if (nce != ce)
+-			ret = add_cache_entry(nce, options);
++			ret = add_index_entry(istate, nce, options);
+ 	}
+ 	return ret;
  }
+@@ -386,7 +388,7 @@ static int unpack_trees_start(struct merge_options *o,
+ 	o->unpack_opts.merge = 1;
+ 	o->unpack_opts.head_idx = 2;
+ 	o->unpack_opts.fn = threeway_merge;
+-	o->unpack_opts.src_index = &the_index;
++	o->unpack_opts.src_index = o->repo->index;
+ 	o->unpack_opts.dst_index = &tmp_index;
+ 	o->unpack_opts.aggressive = !merge_detect_rename(o);
+ 	setup_unpack_trees_porcelain(&o->unpack_opts, "merge");
+@@ -396,16 +398,16 @@ static int unpack_trees_start(struct merge_options *o,
+ 	init_tree_desc_from_tree(t+2, merge);
  
- static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv)
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index ce5f5b5a17..7124e66d00 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1020,8 +1020,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		refresh_index(the_repository->index, REFRESH_QUIET, NULL, NULL,
- 			      NULL);
- 		if (0 <= fd)
--			update_index_if_able(the_repository->index,
--					     &lock_file);
-+			repo_update_index_if_able(the_repository, &lock_file);
- 		rollback_lock_file(&lock_file);
+ 	rc = unpack_trees(3, t, &o->unpack_opts);
+-	cache_tree_free(&active_cache_tree);
++	cache_tree_free(&o->repo->index->cache_tree);
  
- 		if (has_unstaged_changes(the_repository, 1)) {
-@@ -1378,7 +1377,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		fd = hold_locked_index(&lock_file, 0);
- 		refresh_cache(REFRESH_QUIET);
- 		if (0 <= fd)
--			update_index_if_able(&the_index, &lock_file);
-+			repo_update_index_if_able(the_repository, &lock_file);
- 		rollback_lock_file(&lock_file);
+ 	/*
+-	 * Update the_index to match the new results, AFTER saving a copy
++	 * Update o->repo->index to match the new results, AFTER saving a copy
+ 	 * in o->orig_index.  Update src_index to point to the saved copy.
+ 	 * (verify_uptodate() checks src_index, and the original index is
+ 	 * the one that had the necessary modification timestamps.)
+ 	 */
+-	o->orig_index = the_index;
+-	the_index = tmp_index;
++	o->orig_index = *o->repo->index;
++	*o->repo->index = tmp_index;
+ 	o->unpack_opts.src_index = &o->orig_index;
  
- 		if (has_unstaged_changes(the_repository, 1) ||
-diff --git a/cache.h b/cache.h
-index 3715808f52..702c5bfbb3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -823,12 +823,6 @@ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
- extern int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
- extern struct cache_entry *refresh_cache_entry(struct index_state *, struct cache_entry *, unsigned int);
+ 	return rc;
+@@ -420,12 +422,13 @@ static void unpack_trees_finish(struct merge_options *o)
+ struct tree *write_tree_from_memory(struct merge_options *o)
+ {
+ 	struct tree *result = NULL;
++	struct index_state *istate = o->repo->index;
  
--/*
-- * Opportunistically update the index but do not complain if we can't.
-- * The lockfile is always committed or rolled back.
-- */
--extern void update_index_if_able(struct index_state *, struct lock_file *);
--
- extern void set_alternate_index_output(const char *);
+-	if (unmerged_cache()) {
++	if (unmerged_index(istate)) {
+ 		int i;
+ 		fprintf(stderr, "BUG: There are unmerged index entries:\n");
+-		for (i = 0; i < active_nr; i++) {
+-			const struct cache_entry *ce = active_cache[i];
++		for (i = 0; i < istate->cache_nr; i++) {
++			const struct cache_entry *ce = istate->cache[i];
+ 			if (ce_stage(ce))
+ 				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
+ 					(int)ce_namelen(ce), ce->name);
+@@ -433,16 +436,16 @@ struct tree *write_tree_from_memory(struct merge_options *o)
+ 		BUG("unmerged index entries in merge-recursive.c");
+ 	}
  
- extern int verify_index_checksum;
-diff --git a/read-cache.c b/read-cache.c
-index afbf976107..61cc0571da 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2654,9 +2654,9 @@ static int verify_index_from(const struct index_state *istate, const char *path)
+-	if (!active_cache_tree)
+-		active_cache_tree = cache_tree();
++	if (!istate->cache_tree)
++		istate->cache_tree = cache_tree();
+ 
+-	if (!cache_tree_fully_valid(active_cache_tree) &&
+-	    cache_tree_update(&the_index, 0) < 0) {
++	if (!cache_tree_fully_valid(istate->cache_tree) &&
++	    cache_tree_update(istate, 0) < 0) {
+ 		err(o, _("error building trees"));
+ 		return NULL;
+ 	}
+ 
+-	result = lookup_tree(the_repository, &active_cache_tree->oid);
++	result = lookup_tree(the_repository, &istate->cache_tree->oid);
+ 
+ 	return result;
+ }
+@@ -512,17 +515,17 @@ static struct stage_data *insert_stage_data(const char *path,
+  * Create a dictionary mapping file names to stage_data objects. The
+  * dictionary contains one entry for every path with a non-zero stage entry.
+  */
+-static struct string_list *get_unmerged(void)
++static struct string_list *get_unmerged(struct index_state *istate)
+ {
+ 	struct string_list *unmerged = xcalloc(1, sizeof(struct string_list));
+ 	int i;
+ 
+ 	unmerged->strdup_strings = 1;
+ 
+-	for (i = 0; i < active_nr; i++) {
++	for (i = 0; i < istate->cache_nr; i++) {
+ 		struct string_list_item *item;
+ 		struct stage_data *e;
+-		const struct cache_entry *ce = active_cache[i];
++		const struct cache_entry *ce = istate->cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+ 
+@@ -682,7 +685,7 @@ static int update_stages(struct merge_options *opt, const char *path,
+ 	int clear = 1;
+ 	int options = ADD_CACHE_OK_TO_ADD | ADD_CACHE_SKIP_DFCHECK;
+ 	if (clear)
+-		if (remove_file_from_cache(path))
++		if (remove_file_from_index(opt->repo->index, path))
+ 			return -1;
+ 	if (o)
+ 		if (add_cacheinfo(opt, o->mode, &o->oid, path, 1, 0, options))
+@@ -717,13 +720,14 @@ static int remove_file(struct merge_options *o, int clean,
+ 	int update_working_directory = !o->call_depth && !no_wd;
+ 
+ 	if (update_cache) {
+-		if (remove_file_from_cache(path))
++		if (remove_file_from_index(o->repo->index, path))
+ 			return -1;
+ 	}
+ 	if (update_working_directory) {
+ 		if (ignore_case) {
+ 			struct cache_entry *ce;
+-			ce = cache_file_exists(path, strlen(path), ignore_case);
++			ce = index_file_exists(o->repo->index, path, strlen(path),
++					       ignore_case);
+ 			if (ce && ce_stage(ce) == 0 && strcmp(path, ce->name))
+ 				return 0;
+ 		}
+@@ -773,7 +777,8 @@ static char *unique_path(struct merge_options *o, const char *path, const char *
+  * check the working directory.  If empty_ok is non-zero, also return
+  * 0 in the case where the working-tree dir exists but is empty.
+  */
+-static int dir_in_way(const char *path, int check_working_copy, int empty_ok)
++static int dir_in_way(struct index_state *istate, const char *path,
++		      int check_working_copy, int empty_ok)
+ {
+ 	int pos;
+ 	struct strbuf dirpath = STRBUF_INIT;
+@@ -782,12 +787,12 @@ static int dir_in_way(const char *path, int check_working_copy, int empty_ok)
+ 	strbuf_addstr(&dirpath, path);
+ 	strbuf_addch(&dirpath, '/');
+ 
+-	pos = cache_name_pos(dirpath.buf, dirpath.len);
++	pos = index_name_pos(istate, dirpath.buf, dirpath.len);
+ 
+ 	if (pos < 0)
+ 		pos = -1 - pos;
+-	if (pos < active_nr &&
+-	    !strncmp(dirpath.buf, active_cache[pos]->name, dirpath.len)) {
++	if (pos < istate->cache_nr &&
++	    !strncmp(dirpath.buf, istate->cache[pos]->name, dirpath.len)) {
+ 		strbuf_release(&dirpath);
+ 		return 1;
+ 	}
+@@ -830,8 +835,10 @@ static int was_tracked(struct merge_options *o, const char *path)
  	return 0;
  }
  
--static int verify_index(const struct index_state *istate)
-+static int repo_verify_index(struct repository *repo)
+-static int would_lose_untracked(const char *path)
++static int would_lose_untracked(struct merge_options *o, const char *path)
  {
--	return verify_index_from(istate, get_index_file());
-+	return verify_index_from(repo->index, repo->index_file);
- }
- 
- static int has_racy_timestamp(struct index_state *istate)
-@@ -2672,11 +2672,13 @@ static int has_racy_timestamp(struct index_state *istate)
- 	return 0;
- }
- 
--void update_index_if_able(struct index_state *istate, struct lock_file *lockfile)
-+void repo_update_index_if_able(struct repository *repo,
-+			       struct lock_file *lockfile)
- {
--	if ((istate->cache_changed || has_racy_timestamp(istate)) &&
--	    verify_index(istate))
--		write_locked_index(istate, lockfile, COMMIT_LOCK);
-+	if ((repo->index->cache_changed ||
-+	     has_racy_timestamp(repo->index)) &&
-+	    repo_verify_index(repo))
-+		write_locked_index(repo->index, lockfile, COMMIT_LOCK);
- 	else
- 		rollback_lock_file(lockfile);
- }
-diff --git a/repository.h b/repository.h
-index cc3879add4..6fe1c089db 100644
---- a/repository.h
-+++ b/repository.h
-@@ -140,5 +140,11 @@ int repo_read_index_preload(struct repository *,
- 			    const struct pathspec *pathspec,
- 			    unsigned refresh_flags);
- int repo_read_index_unmerged(struct repository *);
-+/*
-+ * Opportunistically update the index but do not complain if we can't.
-+ * The lockfile is always committed or rolled back.
-+ */
-+void repo_update_index_if_able(struct repository *, struct lock_file *);
++	struct index_state *istate = o->repo->index;
 +
+ 	/*
+ 	 * This may look like it can be simplified to:
+ 	 *   return !was_tracked(o, path) && file_exists(path)
+@@ -849,19 +856,19 @@ static int would_lose_untracked(const char *path)
+ 	 * update_file()/would_lose_untracked(); see every comment in this
+ 	 * file which mentions "update_stages".
+ 	 */
+-	int pos = cache_name_pos(path, strlen(path));
++	int pos = index_name_pos(istate, path, strlen(path));
  
- #endif /* REPOSITORY_H */
-diff --git a/wt-status.c b/wt-status.c
-index becf78b04f..1f564b12d2 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2378,7 +2378,7 @@ int require_clean_work_tree(struct repository *r,
- 	fd = repo_hold_locked_index(r, &lock_file, 0);
- 	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
- 	if (0 <= fd)
--		update_index_if_able(r->index, &lock_file);
-+		repo_update_index_if_able(r, &lock_file);
- 	rollback_lock_file(&lock_file);
+ 	if (pos < 0)
+ 		pos = -1 - pos;
+-	while (pos < active_nr &&
+-	       !strcmp(path, active_cache[pos]->name)) {
++	while (pos < istate->cache_nr &&
++	       !strcmp(path, istate->cache[pos]->name)) {
+ 		/*
+ 		 * If stage #0, it is definitely tracked.
+ 		 * If it has stage #2 then it was tracked
+ 		 * before this merge started.  All other
+ 		 * cases the path was not tracked.
+ 		 */
+-		switch (ce_stage(active_cache[pos])) {
++		switch (ce_stage(istate->cache[pos])) {
+ 		case 0:
+ 		case 2:
+ 			return 0;
+@@ -921,7 +928,7 @@ static int make_room_for_path(struct merge_options *o, const char *path)
+ 	 * Do not unlink a file in the work tree if we are not
+ 	 * tracking it.
+ 	 */
+-	if (would_lose_untracked(path))
++	if (would_lose_untracked(o, path))
+ 		return err(o, _("refusing to lose untracked file at '%s'"),
+ 			   path);
  
- 	if (has_unstaged_changes(r, ignore_submodules)) {
+@@ -971,7 +978,7 @@ static int update_file_flags(struct merge_options *o,
+ 		}
+ 		if (S_ISREG(mode)) {
+ 			struct strbuf strbuf = STRBUF_INIT;
+-			if (convert_to_working_tree(&the_index, path, buf, size, &strbuf)) {
++			if (convert_to_working_tree(o->repo->index, path, buf, size, &strbuf)) {
+ 				free(buf);
+ 				size = strbuf.len;
+ 				buf = strbuf_detach(&strbuf, NULL);
+@@ -1091,7 +1098,7 @@ static int merge_3way(struct merge_options *o,
+ 
+ 	merge_status = ll_merge(result_buf, a->path, &orig, base_name,
+ 				&src1, name1, &src2, name2,
+-				&the_index, &ll_opts);
++				o->repo->index, &ll_opts);
+ 
+ 	free(base_name);
+ 	free(name1);
+@@ -1102,7 +1109,8 @@ static int merge_3way(struct merge_options *o,
+ 	return merge_status;
+ }
+ 
+-static int find_first_merges(struct object_array *result, const char *path,
++static int find_first_merges(struct repository *repo,
++			     struct object_array *result, const char *path,
+ 			     struct commit *a, struct commit *b)
+ {
+ 	int i, j;
+@@ -1122,7 +1130,7 @@ static int find_first_merges(struct object_array *result, const char *path,
+ 	/* get all revisions that merge commit a */
+ 	xsnprintf(merged_revision, sizeof(merged_revision), "^%s",
+ 		  oid_to_hex(&a->object.oid));
+-	repo_init_revisions(the_repository, &revs, NULL);
++	repo_init_revisions(repo, &revs, NULL);
+ 	rev_opts.submodule = path;
+ 	/* FIXME: can't handle linked worktrees in submodules yet */
+ 	revs.single_worktree = path != NULL;
+@@ -1252,7 +1260,8 @@ static int merge_submodule(struct merge_options *o,
+ 		return 0;
+ 
+ 	/* find commit which merges them */
+-	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
++	parent_count = find_first_merges(o->repo, &merges, path,
++					 commit_a, commit_b);
+ 	switch (parent_count) {
+ 	case 0:
+ 		output(o, 1, _("Failed to merge submodule %s (merge following commits not found)"), path);
+@@ -1400,7 +1409,7 @@ static int handle_rename_via_dir(struct merge_options *o,
+ 	 */
+ 	const struct diff_filespec *dest = pair->two;
+ 
+-	if (!o->call_depth && would_lose_untracked(dest->path)) {
++	if (!o->call_depth && would_lose_untracked(o, dest->path)) {
+ 		char *alt_path = unique_path(o, dest->path, rename_branch);
+ 
+ 		output(o, 1, _("Error: Refusing to lose untracked file at %s; "
+@@ -1438,8 +1447,8 @@ static int handle_change_delete(struct merge_options *o,
+ 	const char *update_path = path;
+ 	int ret = 0;
+ 
+-	if (dir_in_way(path, !o->call_depth, 0) ||
+-	    (!o->call_depth && would_lose_untracked(path))) {
++	if (dir_in_way(o->repo->index, path, !o->call_depth, 0) ||
++	    (!o->call_depth && would_lose_untracked(o, path))) {
+ 		update_path = alt_path = unique_path(o, path, change_branch);
+ 	}
+ 
+@@ -1449,7 +1458,7 @@ static int handle_change_delete(struct merge_options *o,
+ 		 * correct; since there is no true "middle point" between
+ 		 * them, simply reuse the base version for virtual merge base.
+ 		 */
+-		ret = remove_file_from_cache(path);
++		ret = remove_file_from_index(o->repo->index, path);
+ 		if (!ret)
+ 			ret = update_file(o, 0, o_oid, o_mode, update_path);
+ 	} else {
+@@ -1525,7 +1534,7 @@ static int handle_rename_delete(struct merge_options *o,
+ 		return -1;
+ 
+ 	if (o->call_depth)
+-		return remove_file_from_cache(dest->path);
++		return remove_file_from_index(o->repo->index, dest->path);
+ 	else
+ 		return update_stages(o, dest->path, NULL,
+ 				     rename_branch == o->branch1 ? dest : NULL,
+@@ -1606,10 +1615,10 @@ static int handle_file_collision(struct merge_options *o,
+ 	/* Remove rename sources if rename/add or rename/rename(2to1) */
+ 	if (prev_path1)
+ 		remove_file(o, 1, prev_path1,
+-			    o->call_depth || would_lose_untracked(prev_path1));
++			    o->call_depth || would_lose_untracked(o, prev_path1));
+ 	if (prev_path2)
+ 		remove_file(o, 1, prev_path2,
+-			    o->call_depth || would_lose_untracked(prev_path2));
++			    o->call_depth || would_lose_untracked(o, prev_path2));
+ 
+ 	/*
+ 	 * Remove the collision path, if it wouldn't cause dirty contents
+@@ -1620,7 +1629,7 @@ static int handle_file_collision(struct merge_options *o,
+ 		output(o, 1, _("Refusing to lose dirty file at %s"),
+ 		       collide_path);
+ 		update_path = alt_path = unique_path(o, collide_path, "merged");
+-	} else if (would_lose_untracked(collide_path)) {
++	} else if (would_lose_untracked(o, collide_path)) {
+ 		/*
+ 		 * Only way we get here is if both renames were from
+ 		 * a directory rename AND user had an untracked file
+@@ -1716,12 +1725,12 @@ static char *find_path_for_conflict(struct merge_options *o,
+ 				    const char *branch2)
+ {
+ 	char *new_path = NULL;
+-	if (dir_in_way(path, !o->call_depth, 0)) {
++	if (dir_in_way(o->repo->index, path, !o->call_depth, 0)) {
+ 		new_path = unique_path(o, path, branch1);
+ 		output(o, 1, _("%s is a directory in %s adding "
+ 			       "as %s instead"),
+ 		       path, branch2, new_path);
+-	} else if (would_lose_untracked(path)) {
++	} else if (would_lose_untracked(o, path)) {
+ 		new_path = unique_path(o, path, branch1);
+ 		output(o, 1, _("Refusing to lose untracked file"
+ 			       " at %s; adding as %s instead"),
+@@ -1782,14 +1791,14 @@ static int handle_rename_rename_1to2(struct merge_options *o,
+ 				return -1;
+ 		}
+ 		else
+-			remove_file_from_cache(a->path);
++			remove_file_from_index(o->repo->index, a->path);
+ 		add = filespec_from_entry(&other, ci->dst_entry2, 3 ^ 1);
+ 		if (add) {
+ 			if (update_file(o, 0, &add->oid, add->mode, b->path))
+ 				return -1;
+ 		}
+ 		else
+-			remove_file_from_cache(b->path);
++			remove_file_from_index(o->repo->index, b->path);
+ 	} else {
+ 		/*
+ 		 * For each destination path, we need to see if there is a
+@@ -1886,7 +1895,7 @@ static struct diff_queue_struct *get_diffpairs(struct merge_options *o,
+ 	struct diff_queue_struct *ret;
+ 	struct diff_options opts;
+ 
+-	repo_diff_setup(the_repository, &opts);
++	repo_diff_setup(o->repo, &opts);
+ 	opts.flags.recursive = 1;
+ 	opts.flags.rename_empty = 0;
+ 	opts.detect_rename = merge_detect_rename(o);
+@@ -3041,8 +3050,8 @@ static int blob_unchanged(struct merge_options *opt,
+ 	 * performed.  Comparison can be skipped if both files are
+ 	 * unchanged since their sha1s have already been compared.
+ 	 */
+-	if (renormalize_buffer(&the_index, path, o.buf, o.len, &o) |
+-	    renormalize_buffer(&the_index, path, a.buf, a.len, &a))
++	if (renormalize_buffer(opt->repo->index, path, o.buf, o.len, &o) |
++	    renormalize_buffer(opt->repo->index, path, a.buf, a.len, &a))
+ 		ret = (o.len == a.len && !memcmp(o.buf, a.buf, o.len));
+ 
+ error_return:
+@@ -3123,7 +3132,7 @@ static int handle_content_merge(struct merge_options *o,
+ 		a.path = (char *)path1;
+ 		b.path = (char *)path2;
+ 
+-		if (dir_in_way(path, !o->call_depth,
++		if (dir_in_way(o->repo->index, path, !o->call_depth,
+ 			       S_ISGITLINK(pair1->two->mode)))
+ 			df_conflict_remains = 1;
+ 	}
+@@ -3157,8 +3166,8 @@ static int handle_content_merge(struct merge_options *o,
+ 		pos = index_name_pos(&o->orig_index, path, strlen(path));
+ 		ce = o->orig_index.cache[pos];
+ 		if (ce_skip_worktree(ce)) {
+-			pos = index_name_pos(&the_index, path, strlen(path));
+-			ce = the_index.cache[pos];
++			pos = index_name_pos(o->repo->index, path, strlen(path));
++			ce = o->repo->index->cache[pos];
+ 			ce->ce_flags |= CE_SKIP_WORKTREE;
+ 		}
+ 		return mfi.clean;
+@@ -3177,7 +3186,7 @@ static int handle_content_merge(struct merge_options *o,
+ 	if (df_conflict_remains || is_dirty) {
+ 		char *new_path;
+ 		if (o->call_depth) {
+-			remove_file_from_cache(path);
++			remove_file_from_index(o->repo->index, path);
+ 		} else {
+ 			if (!mfi.clean) {
+ 				if (update_stages(o, path, &one, &a, &b))
+@@ -3337,7 +3346,7 @@ static int process_entry(struct merge_options *o,
+ 			oid = b_oid;
+ 			conf = _("directory/file");
+ 		}
+-		if (dir_in_way(path,
++		if (dir_in_way(o->repo->index, path,
+ 			       !o->call_depth && !S_ISGITLINK(a_mode),
+ 			       0)) {
+ 			char *new_path = unique_path(o, path, add_branch);
+@@ -3348,7 +3357,7 @@ static int process_entry(struct merge_options *o,
+ 			if (update_file(o, 0, oid, mode, new_path))
+ 				clean_merge = -1;
+ 			else if (o->call_depth)
+-				remove_file_from_cache(path);
++				remove_file_from_index(o->repo->index, path);
+ 			free(new_path);
+ 		} else {
+ 			output(o, 2, _("Adding %s"), path);
+@@ -3396,10 +3405,11 @@ int merge_trees(struct merge_options *o,
+ 		struct tree *common,
+ 		struct tree **result)
+ {
++	struct index_state *istate = o->repo->index;
+ 	int code, clean;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+-	if (!o->call_depth && index_has_changes(&the_index, head, &sb)) {
++	if (!o->call_depth && index_has_changes(istate, head, &sb)) {
+ 		err(o, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+ 		    sb.buf);
+ 		return -1;
+@@ -3427,7 +3437,7 @@ int merge_trees(struct merge_options *o,
+ 		return -1;
+ 	}
+ 
+-	if (unmerged_cache()) {
++	if (unmerged_index(istate)) {
+ 		struct string_list *entries;
+ 		struct rename_info re_info;
+ 		int i;
+@@ -3442,7 +3452,7 @@ int merge_trees(struct merge_options *o,
+ 		get_files_dirs(o, head);
+ 		get_files_dirs(o, merge);
+ 
+-		entries = get_unmerged();
++		entries = get_unmerged(o->repo->index);
+ 		clean = detect_and_process_renames(o, common, head, merge,
+ 						   entries, &re_info);
+ 		record_df_conflict_files(o, entries);
+@@ -3558,7 +3568,7 @@ int merge_recursive(struct merge_options *o,
+ 		 * overwritten it: the committed "conflicts" were
+ 		 * already resolved.
+ 		 */
+-		discard_cache();
++		discard_index(o->repo->index);
+ 		saved_b1 = o->branch1;
+ 		saved_b2 = o->branch2;
+ 		o->branch1 = "Temporary merge branch 1";
+@@ -3574,9 +3584,9 @@ int merge_recursive(struct merge_options *o,
+ 			return err(o, _("merge returned no commit"));
+ 	}
+ 
+-	discard_cache();
++	discard_index(o->repo->index);
+ 	if (!o->call_depth)
+-		repo_read_index(the_repository);
++		repo_read_index(o->repo);
+ 
+ 	o->ancestor = "merged common ancestors";
+ 	clean = merge_trees(o, get_commit_tree(h1), get_commit_tree(h2),
+@@ -3643,7 +3653,7 @@ int merge_recursive_generic(struct merge_options *o,
+ 		}
+ 	}
+ 
+-	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
++	repo_hold_locked_index(o->repo, &lock, LOCK_DIE_ON_ERROR);
+ 	clean = merge_recursive(o, head_commit, next_commit, ca,
+ 				result);
+ 	if (clean < 0) {
+@@ -3651,7 +3661,7 @@ int merge_recursive_generic(struct merge_options *o,
+ 		return clean;
+ 	}
+ 
+-	if (write_locked_index(&the_index, &lock,
++	if (write_locked_index(o->repo->index, &lock,
+ 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+ 		return err(o, _("Unable to write index."));
+ 
+@@ -3675,10 +3685,12 @@ static void merge_recursive_config(struct merge_options *o)
+ 	git_config(git_xmerge_config, NULL);
+ }
+ 
+-void init_merge_options(struct merge_options *o)
++void init_merge_options(struct merge_options *o,
++			struct repository *repo)
+ {
+ 	const char *merge_verbosity;
+ 	memset(o, 0, sizeof(struct merge_options));
++	o->repo = repo;
+ 	o->verbosity = 2;
+ 	o->buffer_output = 1;
+ 	o->diff_rename_limit = -1;
+diff --git a/merge-recursive.h b/merge-recursive.h
+index e6a0828eca..c2b7bb65c6 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -6,6 +6,8 @@
+ 
+ struct commit;
+ 
++struct repository;
++
+ struct merge_options {
+ 	const char *ancestor;
+ 	const char *branch1;
+@@ -34,6 +36,7 @@ struct merge_options {
+ 	struct string_list df_conflict_file_set;
+ 	struct unpack_trees_options unpack_opts;
+ 	struct index_state orig_index;
++	struct repository *repo;
+ };
+ 
+ /*
+@@ -92,7 +95,8 @@ int merge_recursive_generic(struct merge_options *o,
+ 			    const struct object_id **ca,
+ 			    struct commit **result);
+ 
+-void init_merge_options(struct merge_options *o);
++void init_merge_options(struct merge_options *o,
++			struct repository *repo);
+ struct tree *write_tree_from_memory(struct merge_options *o);
+ 
+ int parse_merge_opt(struct merge_options *out, const char *s);
+diff --git a/sequencer.c b/sequencer.c
+index c2c9cc7e2b..cede6ea095 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -545,7 +545,7 @@ static int do_recursive_merge(struct repository *r,
+ 
+ 	repo_read_index(r);
+ 
+-	init_merge_options(&o);
++	init_merge_options(&o, r);
+ 	o.ancestor = base ? base_label : "(empty tree)";
+ 	o.branch1 = "HEAD";
+ 	o.branch2 = next ? next_label : "(empty tree)";
+@@ -3300,7 +3300,7 @@ static int do_merge(struct repository *r,
+ 	free_commit_list(bases);
+ 
+ 	repo_read_index(r);
+-	init_merge_options(&o);
++	init_merge_options(&o, r);
+ 	o.branch1 = "HEAD";
+ 	o.branch2 = ref_name.buf;
+ 	o.buffer_output = 2;
 -- 
 2.20.1.560.g70ca8b83ee
 
