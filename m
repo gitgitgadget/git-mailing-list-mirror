@@ -2,198 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C9B11F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 01:06:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B989B1F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 01:12:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726322AbfAXBGZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 20:06:25 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:44973 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726235AbfAXBGY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 20:06:24 -0500
-Received: by mail-qt1-f195.google.com with SMTP id n32so4678495qte.11
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 17:06:24 -0800 (PST)
+        id S1726763AbfAXBMs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 20:12:48 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:46017 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726236AbfAXBMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 20:12:48 -0500
+Received: by mail-pg1-f195.google.com with SMTP id y4so1873026pgc.12
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 17:12:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=GYx9MOqwSF9/iiuMbfhJCkdqRf4OIEhs8n3H25r3dMA=;
+        b=dA88Ud5xVu1P6/zV3YlX4SaLzmyT/lG9rcmlXpz+ozimv8Lc/StSpGvFM8MZs94Igw
+         KMYfoRAEV7QRicvtmZuDV5OIFzwj3uiOvME+CS5vbhdEjognqZ5tNgniJuj0goup6AJ8
+         GloG7GbiVsmZzOH/PPXCLLUggwOHBLLG4H453tJsfO2R1McpXtZG9g2e2Vz7TpxgXoDQ
+         4FIN1j9BPcpc8INyjsTrNKu0grWLC9A+QPLriTG8h0pGSCKKZiDSrYWXbqKptEQIUGQr
+         G/yn4XkBC5TTZobgb6SfZQQ2xJ+Rvd5Nw3GQliY/k4YqzyfBbo90L4TPG57jm55XVrOo
+         IdXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=igbUZ3GYTxRyW7xobx6MMC/HBKJr2kJV1c0rkxlgON4=;
-        b=L+BfDEFENFdzBQvt1vDRZP6Nw0ytptbkdq/yzdhOvNhFITBCFKyxdyLPOgyirhF78G
-         B9sA/fTUdqQK6HYLN5IttZRuUGpycTvsq1xoJ52SqZ/qjvDsDvdvRjR+tnypJ9FO66cf
-         hhakoGlqQAgpbt0QJriDJP6OwTdVixxM88AK8NJw+Oz6fRtcFBQlRgQYMWJPzzcJG52t
-         XeNSTCPOc8qbIUB7bLc7rruVtdGETc3Gu9C69H19OGu8ZuqtIV78V0EVuBZPDt0o427r
-         eWNsfbWvLNWMkujlwEmpGiLkqusVxkeBToYFVQS7lh0ryrVVjMYY0pU6hjE7iMtjwTeA
-         nhuQ==
-X-Gm-Message-State: AJcUukeW2fZiFUJEblXF4y8D5oDZ1SBixEjKtQsHQRpjZN0l2HYb/MJG
-        yWnGaCnD56gePxv3/G5iIo6ymoWzyQ==
-X-Google-Smtp-Source: ALg8bN5Vo26ddMHXpP0nsdHxJJP4DrFAXNlEFxKSVpATR4D86Y4QeEaVIuajf9MixT/eKNrnA8vN+g==
-X-Received: by 2002:ac8:6784:: with SMTP id b4mr4828845qtp.103.1548291983177;
-        Wed, 23 Jan 2019 17:06:23 -0800 (PST)
-Received: from localhost.localdomain (pool-71-112-205-176.pitbpa.fios.verizon.net. [71.112.205.176])
-        by smtp.googlemail.com with ESMTPSA id 5sm87549678qtw.50.2019.01.23.17.06.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jan 2019 17:06:22 -0800 (PST)
-From:   Patrick Hogg <phogg@novamoon.net>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, pclouds@gmail.com, Johannes.Schindelin@gmx.de,
-        peff@peff.net, newren@gmail.com, Patrick Hogg <phogg@novamoon.net>
-Subject: [PATCH v3 2/2] pack-objects: merge read_lock and lock in packing_data struct
-Date:   Wed, 23 Jan 2019 20:05:23 -0500
-Message-Id: <20190124010521.28452-2-phogg@novamoon.net>
-X-Mailer: git-send-email 2.20.1.windows.1
-In-Reply-To: <20190124010521.28452-1-phogg@novamoon.net>
-References: <20190124010521.28452-1-phogg@novamoon.net>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=GYx9MOqwSF9/iiuMbfhJCkdqRf4OIEhs8n3H25r3dMA=;
+        b=Zl6rz2gja7x+tBoYLOFZHzaztDnVjysTrZuryGPFItYQ9a0Q4josVru6ibxBKia+yt
+         ULUPxAd7csMrSS1C95YpUCoAzPYa9AQijn0NebnlC8IbvPri6sH3hgQlRGD2fS96T5j3
+         v1zcO0w3BCSWogJdTr4eA9tG0J3pojq4vY+p7xGR/r1zpsGw5B22NVAWICeJRnXaoCQo
+         RXriPfU1f8Nig5Z8tvvmLj/8vRdg1SDHAN0vnNbwtaf4bYUd6LIe1TOU3MRbrXLwQG4J
+         Xu9fB8EmcPobcPzghOX6K51WUnBFbv2ulsTEb4OMB4lXHWL73CTtE3M5RGnPBDWhpo4Y
+         dIUg==
+X-Gm-Message-State: AJcUukfxYNymRhN3XJ/C8Q/qdzKwCToqp+K+QF0mMObWckfs4aDzL1Vt
+        ldKZFY4TpexN/4LV1RQTQzs=
+X-Google-Smtp-Source: ALg8bN5KHB0LeeieJBnlW5Mywa3JSgXQn/V/9Usi+HhrBbulNPV4epajnjSn1mJ2dY+zky6Qu+snbQ==
+X-Received: by 2002:a63:ee4c:: with SMTP id n12mr3986899pgk.21.1548292367118;
+        Wed, 23 Jan 2019 17:12:47 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id r12sm20745390pgv.83.2019.01.23.17.12.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 23 Jan 2019 17:12:46 -0800 (PST)
+Date:   Wed, 23 Jan 2019 17:12:44 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 7/8] checkout: introduce --{,no-}overlay option
+Message-ID: <20190124011244.GE34357@google.com>
+References: <20181220134820.21810-1-t.gummerer@gmail.com>
+ <20190108215225.3077-1-t.gummerer@gmail.com>
+ <20190108215225.3077-8-t.gummerer@gmail.com>
+ <20190122235313.GA199923@google.com>
+ <20190123202156.GA11293@hank.intra.tgummerer.com>
+ <xmqqzhrr9j52.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqzhrr9j52.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Upgrade the packing_data lock to a recursive mutex to make it suitable
-for current read_lock usages. Additionally remove the superfluous
-#ifndef NO_PTHREADS guard around mutex initialization in
-prepare_packing_data as the mutex functions themselves are already
-protected.
+Hi,
 
-Signed-off-by: Patrick Hogg <phogg@novamoon.net>
----
- builtin/pack-objects.c | 24 ++++++++++++------------
- pack-objects.c         |  5 +----
- pack-objects.h         | 10 ----------
- 3 files changed, 13 insertions(+), 26 deletions(-)
+Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+>> Jonathan Nieder wrote:
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 506061b4c..5439b434c 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1954,8 +1954,8 @@ static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
- }
- 
- /* Protect access to object database */
--#define read_lock()		packing_data_read_lock(&to_pack)
--#define read_unlock()		packing_data_read_unlock(&to_pack)
-+#define pack_lock()		packing_data_lock(&to_pack)
-+#define pack_unlock()		packing_data_unlock(&to_pack)
- 
- /* Protect delta_cache_size */
- static pthread_mutex_t cache_mutex;
-@@ -1992,11 +1992,11 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
- 	unsigned long used, avail, size;
- 
- 	if (e->type_ != OBJ_OFS_DELTA && e->type_ != OBJ_REF_DELTA) {
--		read_lock();
-+		pack_lock();
- 		if (oid_object_info(the_repository, &e->idx.oid, &size) < 0)
- 			die(_("unable to get size of %s"),
- 			    oid_to_hex(&e->idx.oid));
--		read_unlock();
-+		pack_unlock();
- 		return size;
- 	}
- 
-@@ -2004,7 +2004,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
- 	if (!p)
- 		BUG("when e->type is a delta, it must belong to a pack");
- 
--	read_lock();
-+	pack_lock();
- 	w_curs = NULL;
- 	buf = use_pack(p, &w_curs, e->in_pack_offset, &avail);
- 	used = unpack_object_header_buffer(buf, avail, &type, &size);
-@@ -2013,7 +2013,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
- 		    oid_to_hex(&e->idx.oid));
- 
- 	unuse_pack(&w_curs);
--	read_unlock();
-+	pack_unlock();
- 	return size;
- }
- 
-@@ -2075,9 +2075,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 
- 	/* Load data if not already done */
- 	if (!trg->data) {
--		read_lock();
-+		pack_lock();
- 		trg->data = read_object_file(&trg_entry->idx.oid, &type, &sz);
--		read_unlock();
-+		pack_unlock();
- 		if (!trg->data)
- 			die(_("object %s cannot be read"),
- 			    oid_to_hex(&trg_entry->idx.oid));
-@@ -2088,9 +2088,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 		*mem_usage += sz;
- 	}
- 	if (!src->data) {
--		read_lock();
-+		pack_lock();
- 		src->data = read_object_file(&src_entry->idx.oid, &type, &sz);
--		read_unlock();
-+		pack_unlock();
- 		if (!src->data) {
- 			if (src_entry->preferred_base) {
- 				static int warned = 0;
-@@ -2336,9 +2336,9 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 
- static void try_to_free_from_threads(size_t size)
- {
--	read_lock();
-+	pack_lock();
- 	release_pack_memory(size);
--	read_unlock();
-+	pack_unlock();
- }
- 
- static try_to_free_t old_try_to_free_routine;
-diff --git a/pack-objects.c b/pack-objects.c
-index 3554c43ac..6f32a7ba0 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -148,10 +148,7 @@ void prepare_packing_data(struct packing_data *pdata)
- 					     1U << OE_SIZE_BITS);
- 	pdata->oe_delta_size_limit = git_env_ulong("GIT_TEST_OE_DELTA_SIZE",
- 						   1UL << OE_DELTA_SIZE_BITS);
--#ifndef NO_PTHREADS
--	pthread_mutex_init(&pdata->lock, NULL);
--	init_recursive_mutex(&pdata->read_lock);
--#endif
-+	init_recursive_mutex(&pdata->lock);
- }
- 
- struct object_entry *packlist_alloc(struct packing_data *pdata,
-diff --git a/pack-objects.h b/pack-objects.h
-index 0a038e3bc..dc869f26c 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -146,7 +146,6 @@ struct packing_data {
- 	struct packed_git **in_pack;
- 
- 	pthread_mutex_t lock;
--	pthread_mutex_t read_lock;
- 
- 	/*
- 	 * This list contains entries for bases which we know the other side
-@@ -175,15 +174,6 @@ static inline void packing_data_unlock(struct packing_data *pdata)
- 	pthread_mutex_unlock(&pdata->lock);
- }
- 
--static inline void packing_data_read_lock(struct packing_data *pdata)
--{
--	pthread_mutex_lock(&pdata->read_lock);
--}
--static inline void packing_data_read_unlock(struct packing_data *pdata)
--{
--	pthread_mutex_unlock(&pdata->read_lock);
--}
--
- struct object_entry *packlist_alloc(struct packing_data *pdata,
- 				    const unsigned char *sha1,
- 				    uint32_t index_pos);
--- 
-2.20.1.windows.1
+>>> Is this analogous to "git add --ignore-removal"?  If so, can we just
+>>> call it --ignore-removal?
+>>
+>> Yes, it seems like they are very similar.
+>
+> Hmm, I am not sure if the word "removal" makes sense in the context
+> of "checkout", as "removal" is an _action_ just like "checking out"
+> itself is, and not a _state_.  You'd check out a state out of a tree
+> to the index and the working tree, so "checking out absence of a
+> path" may make sense, though, as "absence of a path" is a state
+> recorded in that source tree object.
 
+I find --ignore-removal fairly easy to understand, and I had no idea
+what --overlay would mean.
+
+I realize this is just one user's experience.  I'd be happy to do a
+little informal survey (e.g. taking the description from the manpage
+and asking people to name the option) if that's useful.
+
+See also https://dl.acm.org/citation.cfm?id=32212 on this subject.
+
+> The word "removal" makes little sense in "git add --ignore-removal",
+> but it and "git add --no-all" outlived their usefulness already, so
+> it may not be worth _fixing_ it.  But I am mildly opposed to spread
+> the earlier mistake to a new option.
+
+I think that's a good place to end up: once we flip the default for
+checkout, then --ignore-removal would be an obscure option in that
+command as well.  The consistency with "git add" is just a bonus.
+
+Thanks,
+Jonathan
