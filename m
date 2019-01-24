@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47F681F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 08:30:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 146941F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 08:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727538AbfAXIaI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 03:30:08 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:32830 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727491AbfAXIaH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jan 2019 03:30:07 -0500
-Received: by mail-pl1-f194.google.com with SMTP id z23so2568271plo.0
-        for <git@vger.kernel.org>; Thu, 24 Jan 2019 00:30:07 -0800 (PST)
+        id S1727545AbfAXIaM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 03:30:12 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:35692 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727457AbfAXIaM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 03:30:12 -0500
+Received: by mail-pf1-f194.google.com with SMTP id z9so2646228pfi.2
+        for <git@vger.kernel.org>; Thu, 24 Jan 2019 00:30:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qksA0oqJ0QEfR2s+LGbBM8HCYAn9JgIIz11JyJ+AGrM=;
-        b=nRvR5wfTJdwTCt2iDmruWsuYOA5JJ0ljndQ5o7RBEY8nUFhI31OVaag5TGUw76bnwN
-         isRYoOSTPxpqfCh0UmYHwTpsXk8vmDT+LEhbz1pe6CQnPBSd6PYKrjbSJjLcWBX34XyI
-         veMt6agFjzk13lJiM2w3vfu0mCTRxtqpJXt5qkS3SDfNxI/djPw2xPO+RN3z9op5CSvg
-         vlqQU4yRsLV7Tzk3p0cgIDhGc3fYh3l7oTjdey9OfVRd0SHeYsuHKOnOwGxlUj41QQtH
-         +5qGn6nzW2DidIQZbnJZUGhc9/wtFQVn0UzQQXjmFjKkxtJSWfrwz937Xh6H58RuB0J7
-         jicQ==
+        bh=XFotHXnkZfamZV+K6NDRzhhK2WfmnAFs6HPBSkMm2Vg=;
+        b=Dm6PU3yK7EZ8Rtcz37likKwQ4zIZrvZHshR3w40A4ZbDGH/o7MEG8uKs87THptV1gD
+         mkW4UOunBsKY8A3qIMBpNx11F9fL2aA/W8Md2GQTxNIRKEX6JcvIXuB89sQ3ERkYSawk
+         cWhr3ejoVzgQwPVwQZL0fdH9xSr9cTihkW/IyYgbpAc+rX/2NPu8hxzYSLU4D4uPYy/0
+         SriEvgREPTIKKb4YSF5PTrAZ2bHAD/SH97wGP6eYKBk7yOqygJi6wWvz2zE+c1khS22Q
+         0yAdjmdXVuSa25ji0ytSCMKI85rhFXMnLxlt+SrMMQ/h9OqP3KV4WeT+vgCYAHaFpepv
+         Thsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qksA0oqJ0QEfR2s+LGbBM8HCYAn9JgIIz11JyJ+AGrM=;
-        b=qQFgfaZCl7z5PfiSEKiZcFQsY1e9NI2xg77XpYBuJfD/MyEVeJiybOSvapfXf1iCFB
-         Kim11WHXDq3FhdJXCEIUpnuhUfcjaBaP7qpN5GtzQ7MWLY510iuX3sH6/RoqK13OcoOA
-         AkJ8tCe390c3vkUoVtoK3H8oQxScgKzi/dwPDYTQ8GX8y4L9Ur086gKaG5bA7qGtoVH8
-         w/f3/9WV5bml4DW8SpRJMtBcMAtY8cj6MosYiMM0ezQDWiqg8R50IX41aJuLtdxOy/jQ
-         WTm64um8OkVdGMInZ088Mkkp3+475LxhvrQSb7MGu8xyoPORNRBxJFXtpYqffSUrsbI6
-         Nx1w==
-X-Gm-Message-State: AJcUukd/b+dtBpBEOY4MpSrO6LX7XStUIPL2nGu4S6NzthyQ/FIXHeqY
-        XpokL37PzhI/psxvWDSuikUEy2v2BFs=
-X-Google-Smtp-Source: ALg8bN6cpM93oMEXU7AwQRvoAjZOLpWXXNJ3j735b3nEx+EhNgkj5YVtBDXWTHPpG2QNIWIxG1YVSA==
-X-Received: by 2002:a17:902:280b:: with SMTP id e11mr5638114plb.269.1548318606670;
-        Thu, 24 Jan 2019 00:30:06 -0800 (PST)
+        bh=XFotHXnkZfamZV+K6NDRzhhK2WfmnAFs6HPBSkMm2Vg=;
+        b=mfs9g9iR1scf8i1FE2+qfPtXUvv0sALVigsAtihlluVvyfcDxwU8BBr8FCs1uHFGKl
+         kwjltNKbRssKmCm9zn11bfvALeEvAaDNOFexgrxRXca6jOlS/1TV59NpdXNFC8JpW650
+         5hB4OLhMJsLXpc7NEB2p4PkT5SAGBwGg/YpMwSRsaLhP99BSFNLIjIqeXUzVlpDgpO9+
+         Zof6xpKhz6Xeh7dB1rYgdNqhqeII/lJMhEEC1N1abCT6J7xV+FRwu0G5vsdtDitfSNju
+         u6C6bGHbbKzcF6hDrMEWBStDYUTTvUpTkykaUWzPvU3fhXtvu9B5f5xfvF7jb6v5GM70
+         CAbA==
+X-Gm-Message-State: AJcUukek6Hsd/8JNfFgLjMSNXp4IqBhQWxaWdjkQE/IPD+TNDAjHGPrz
+        ZhZe9uLem7URPQp7LpVhkWdXikOiabU=
+X-Google-Smtp-Source: ALg8bN4baXsxCvTnNR5ZxegBcJQoAuTR4Iv8w3QvYcY7D1i5y8ZiID2Wvj/E44uDQJ7SRcRJ8xZ+QA==
+X-Received: by 2002:a63:4b25:: with SMTP id y37mr5272621pga.181.1548318611783;
+        Thu, 24 Jan 2019 00:30:11 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id m67sm31178518pfm.73.2019.01.24.00.30.03
+        by smtp.gmail.com with ESMTPSA id t5sm38314242pfb.60.2019.01.24.00.30.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Jan 2019 00:30:06 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 24 Jan 2019 15:30:01 +0700
+        Thu, 24 Jan 2019 00:30:10 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 24 Jan 2019 15:30:06 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 09/11] merge-recursive.c: remove implicit dependency on the_repository
-Date:   Thu, 24 Jan 2019 15:29:10 +0700
-Message-Id: <20190124082912.24401-10-pclouds@gmail.com>
+Subject: [PATCH 10/11] read-cache.c: remove the_* from index_has_changes()
+Date:   Thu, 24 Jan 2019 15:29:11 +0700
+Message-Id: <20190124082912.24401-11-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.560.g70ca8b83ee
 In-Reply-To: <20190124082912.24401-1-pclouds@gmail.com>
 References: <20190124082912.24401-1-pclouds@gmail.com>
@@ -73,136 +73,105 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- merge-recursive.c | 45 ++++++++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 21 deletions(-)
+ builtin/am.c      |  6 +++---
+ cache.h           |  6 +++---
+ merge-recursive.c |  2 +-
+ read-cache.c      | 12 +++++-------
+ 4 files changed, 12 insertions(+), 14 deletions(-)
 
+diff --git a/builtin/am.c b/builtin/am.c
+index 611712dc95..a9ffc92eaa 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1719,7 +1719,7 @@ static void am_run(struct am_state *state, int resume)
+ 
+ 	refresh_and_write_cache();
+ 
+-	if (index_has_changes(&the_index, NULL, &sb)) {
++	if (repo_index_has_changes(the_repository, NULL, &sb)) {
+ 		write_state_bool(state, "dirtyindex", 1);
+ 		die(_("Dirty index: cannot apply patches (dirty: %s)"), sb.buf);
+ 	}
+@@ -1777,7 +1777,7 @@ static void am_run(struct am_state *state, int resume)
+ 			 * the result may have produced the same tree as ours.
+ 			 */
+ 			if (!apply_status &&
+-			    !index_has_changes(&the_index, NULL, NULL)) {
++			    !repo_index_has_changes(the_repository, NULL, NULL)) {
+ 				say(state, stdout, _("No changes -- Patch already applied."));
+ 				goto next;
+ 			}
+@@ -1831,7 +1831,7 @@ static void am_resolve(struct am_state *state)
+ 
+ 	say(state, stdout, _("Applying: %.*s"), linelen(state->msg), state->msg);
+ 
+-	if (!index_has_changes(&the_index, NULL, NULL)) {
++	if (!repo_index_has_changes(the_repository, NULL, NULL)) {
+ 		printf_ln(_("No changes - did you forget to use 'git add'?\n"
+ 			"If there is nothing left to stage, chances are that something else\n"
+ 			"already introduced the same changes; you might want to skip this patch."));
+diff --git a/cache.h b/cache.h
+index fdcd69bfb0..326e73f391 100644
+--- a/cache.h
++++ b/cache.h
+@@ -706,9 +706,9 @@ extern int unmerged_index(const struct index_state *);
+  * provided, the space-separated list of files that differ will be appended
+  * to it.
+  */
+-extern int index_has_changes(struct index_state *istate,
+-			     struct tree *tree,
+-			     struct strbuf *sb);
++extern int repo_index_has_changes(struct repository *repo,
++				  struct tree *tree,
++				  struct strbuf *sb);
+ 
+ extern int verify_path(const char *path, unsigned mode);
+ extern int strcmp_offset(const char *s1, const char *s2, size_t *first_change);
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 28f44c73ec..a596d95739 100644
+index a596d95739..df00896b25 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -146,7 +146,8 @@ static int err(struct merge_options *o, const char *err, ...)
- 	return -1;
+@@ -3412,7 +3412,7 @@ int merge_trees(struct merge_options *o,
+ 	int code, clean;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+-	if (!o->call_depth && index_has_changes(istate, head, &sb)) {
++	if (!o->call_depth && repo_index_has_changes(o->repo, head, &sb)) {
+ 		err(o, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+ 		    sb.buf);
+ 		return -1;
+diff --git a/read-cache.c b/read-cache.c
+index 61cc0571da..2549477ed2 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2365,22 +2365,20 @@ int unmerged_index(const struct index_state *istate)
+ 	return 0;
  }
  
--static struct tree *shift_tree_object(struct tree *one, struct tree *two,
-+static struct tree *shift_tree_object(struct repository *repo,
-+				      struct tree *one, struct tree *two,
- 				      const char *subtree_shift)
+-int index_has_changes(struct index_state *istate,
+-		      struct tree *tree,
+-		      struct strbuf *sb)
++int repo_index_has_changes(struct repository *repo,
++			   struct tree *tree,
++			   struct strbuf *sb)
  {
- 	struct object_id shifted;
-@@ -159,12 +160,14 @@ static struct tree *shift_tree_object(struct tree *one, struct tree *two,
- 	}
- 	if (oideq(&two->object.oid, &shifted))
- 		return two;
--	return lookup_tree(the_repository, &shifted);
-+	return lookup_tree(repo, &shifted);
- }
++	struct index_state *istate = repo->index;
+ 	struct object_id cmp;
+ 	int i;
  
--static struct commit *make_virtual_commit(struct tree *tree, const char *comment)
-+static struct commit *make_virtual_commit(struct repository *repo,
-+					  struct tree *tree,
-+					  const char *comment)
- {
--	struct commit *commit = alloc_commit_node(the_repository);
-+	struct commit *commit = alloc_commit_node(repo);
+-	if (istate != &the_index) {
+-		BUG("index_has_changes cannot yet accept istate != &the_index; do_diff_cache needs updating first.");
+-	}
+ 	if (tree)
+ 		cmp = tree->object.oid;
+ 	if (tree || !get_oid_tree("HEAD", &cmp)) {
+ 		struct diff_options opt;
  
- 	set_merge_remote_desc(commit, comment, (struct object *)commit);
- 	commit->maybe_tree = tree;
-@@ -445,7 +448,7 @@ struct tree *write_tree_from_memory(struct merge_options *o)
- 		return NULL;
- 	}
- 
--	result = lookup_tree(the_repository, &istate->cache_tree->oid);
-+	result = lookup_tree(o->repo, &istate->cache_tree->oid);
- 
- 	return result;
- }
-@@ -1208,9 +1211,9 @@ static int merge_submodule(struct merge_options *o,
- 		return 0;
- 	}
- 
--	if (!(commit_base = lookup_commit_reference(the_repository, base)) ||
--	    !(commit_a = lookup_commit_reference(the_repository, a)) ||
--	    !(commit_b = lookup_commit_reference(the_repository, b))) {
-+	if (!(commit_base = lookup_commit_reference(o->repo, base)) ||
-+	    !(commit_a = lookup_commit_reference(o->repo, a)) ||
-+	    !(commit_b = lookup_commit_reference(o->repo, b))) {
- 		output(o, 1, _("Failed to merge submodule %s (commits not present)"), path);
- 		return 0;
- 	}
-@@ -3416,8 +3419,8 @@ int merge_trees(struct merge_options *o,
- 	}
- 
- 	if (o->subtree_shift) {
--		merge = shift_tree_object(head, merge, o->subtree_shift);
--		common = shift_tree_object(head, common, o->subtree_shift);
-+		merge = shift_tree_object(o->repo, head, merge, o->subtree_shift);
-+		common = shift_tree_object(o->repo, head, common, o->subtree_shift);
- 	}
- 
- 	if (oid_eq(&common->object.oid, &merge->object.oid)) {
-@@ -3553,8 +3556,8 @@ int merge_recursive(struct merge_options *o,
- 		/* if there is no common ancestor, use an empty tree */
- 		struct tree *tree;
- 
--		tree = lookup_tree(the_repository, the_repository->hash_algo->empty_tree);
--		merged_common_ancestors = make_virtual_commit(tree, "ancestor");
-+		tree = lookup_tree(o->repo, o->repo->hash_algo->empty_tree);
-+		merged_common_ancestors = make_virtual_commit(o->repo, tree, "ancestor");
- 	}
- 
- 	for (iter = ca; iter; iter = iter->next) {
-@@ -3598,7 +3601,7 @@ int merge_recursive(struct merge_options *o,
- 	}
- 
- 	if (o->call_depth) {
--		*result = make_virtual_commit(mrtree, "merged tree");
-+		*result = make_virtual_commit(o->repo, mrtree, "merged tree");
- 		commit_list_insert(h1, &(*result)->parents);
- 		commit_list_insert(h2, &(*result)->parents->next);
- 	}
-@@ -3611,17 +3614,17 @@ int merge_recursive(struct merge_options *o,
- 	return clean;
- }
- 
--static struct commit *get_ref(const struct object_id *oid, const char *name)
-+static struct commit *get_ref(struct repository *repo, const struct object_id *oid,
-+			      const char *name)
- {
- 	struct object *object;
- 
--	object = deref_tag(the_repository, parse_object(the_repository, oid),
--			   name,
--			   strlen(name));
-+	object = deref_tag(repo, parse_object(repo, oid),
-+			   name, strlen(name));
- 	if (!object)
- 		return NULL;
- 	if (object->type == OBJ_TREE)
--		return make_virtual_commit((struct tree*)object, name);
-+		return make_virtual_commit(repo, (struct tree*)object, name);
- 	if (object->type != OBJ_COMMIT)
- 		return NULL;
- 	if (parse_commit((struct commit *)object))
-@@ -3638,15 +3641,15 @@ int merge_recursive_generic(struct merge_options *o,
- {
- 	int clean;
- 	struct lock_file lock = LOCK_INIT;
--	struct commit *head_commit = get_ref(head, o->branch1);
--	struct commit *next_commit = get_ref(merge, o->branch2);
-+	struct commit *head_commit = get_ref(o->repo, head, o->branch1);
-+	struct commit *next_commit = get_ref(o->repo, merge, o->branch2);
- 	struct commit_list *ca = NULL;
- 
- 	if (base_list) {
- 		int i;
- 		for (i = 0; i < num_base_list; ++i) {
- 			struct commit *base;
--			if (!(base = get_ref(base_list[i], oid_to_hex(base_list[i]))))
-+			if (!(base = get_ref(o->repo, base_list[i], oid_to_hex(base_list[i]))))
- 				return err(o, _("Could not parse object '%s'"),
- 					   oid_to_hex(base_list[i]));
- 			commit_list_insert(base, &ca);
+-		repo_diff_setup(the_repository, &opt);
++		repo_diff_setup(repo, &opt);
+ 		opt.flags.exit_with_status = 1;
+ 		if (!sb)
+ 			opt.flags.quick = 1;
 -- 
 2.20.1.560.g70ca8b83ee
 
