@@ -2,84 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA0281F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 19:13:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DB621F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 19:24:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726311AbfAYTNf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 14:13:35 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36001 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726218AbfAYTNf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 14:13:35 -0500
-Received: by mail-wr1-f67.google.com with SMTP id u4so11476115wrp.3
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 11:13:34 -0800 (PST)
+        id S1726311AbfAYTYv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 14:24:51 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:40699 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726044AbfAYTYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 14:24:50 -0500
+Received: by mail-lf1-f65.google.com with SMTP id v5so7713153lfe.7
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 11:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=gExK3rnXKjv2FchIbfQL+8GziJ6VaPfXReAbVsieA7Y=;
-        b=aNwMEkHTK349NkA83I8h0aPLE8rt8d8AZkeapH3/JYOlk6DvCT6gtqWW5TDKH8YmWv
-         L/3LMRi7tfJ7S375BS5GuRhletSwg2+W2THkIQ5c5w3v79sOOsLV/sbvT4AdCFCFxnVq
-         yWTiTeyB5JTDbgrmQpTEDfpP/lWH8Wz0rht89+Cu+A/VsLlJgFQ/yWXx0a83kiRVLifU
-         KZj7ZOeuTnp/sIjO6YFjPnmm+GDMu1dUiIUgZMXlAT2bX0hd4d2/SMpweIzHd9r5MPuV
-         AIthzv3icDOLMt43HaZUA9D1CtyaRmrr2TGXA2BK/nlAZjFZDc3tE78X47hzb9iO8awn
-         j1/A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GFN0g3yAY17OrTTVBReP1PHDUf2lLolDJz0Gis6j2hk=;
+        b=cShI0w+Y0yd0HuvUvlx9ChZGiZNS2ftc7GFIwK1vq3ahnd1mWfr6gHeVg2zQl1dOOa
+         dRpKBQ/OwH9ir9maKYWEs8BWMiAhFNSkfnFqki5GSLqpYLiSwXspsAqLunNzmQsMU1SC
+         FU4gqI5u5J+GN5lUbORqhJP6EIr0ShzPhPvvMJiV2GtoVMNEeDHtdALSp8O4v3uirKen
+         B9Qhls1I+uYPM8cEbbW6RORhaIIJL7kLnz+FSjplX+nTNVBy6TZX77Is0WSeBzDJw7jq
+         c7gA9BB3dyvdB3bq8ylNoX/CIkCgfbCl/wiuObnIpnXt+jslAhvYOa+I+cQ77JbXN2+H
+         SZLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=gExK3rnXKjv2FchIbfQL+8GziJ6VaPfXReAbVsieA7Y=;
-        b=P8VF+ghZJ4J8esP7g1zu+iQ3eFGGe+Ez3DVjEiDIajcWW/GBLBHTnSq1dd668fNsHA
-         Qfw8bAl/u7mXDoKI1JTipRxPooA2SdGat6YB/BEQjfTa0SSGz9c3O4gCOwf9WfIXOlSV
-         XlW7vW+5Ai/Qnnh2mvyJw+FZh4NLIvG38CYBu3aLJJ3g0txiUATz+aX5JKrQ47pZhM9a
-         qTsykrXc7AZvS74L16WFdJwRDt2jCZsuDrDsVPZ1wPeO7lXaeH5dAryCn9ut1wlcTecG
-         eTKWCA4Z3Gp3zC2gLcmtFYcRcOHULzKoMuegpHgfZJ6XTJfw4D3p2/YrDSkBOC0aGmxe
-         FXTQ==
-X-Gm-Message-State: AJcUukfZl7WAo2zhx87WdjsKix0ENjJp2aoWMnvQ6JFZogbCx+vEODwC
-        5daTUMe8UZ9JOzFPGHvIoVA=
-X-Google-Smtp-Source: ALg8bN7WbPWOUpButndxHz56rRU39kX5l7C6ej+urpSJmAygpoVR8uL+WD5rnAWn7T/MNzyLZduUhg==
-X-Received: by 2002:a5d:4e82:: with SMTP id e2mr12376267wru.291.1548443613178;
-        Fri, 25 Jan 2019 11:13:33 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k3sm140739577wrm.7.2019.01.25.11.13.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 25 Jan 2019 11:13:32 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jeffhost@microsoft.com
-Subject: Re: [PATCH 02/14] trace2: create new combined trace facility
-References: <pull.108.git.gitgitgadget@gmail.com>
-        <4aaf4834bfa9f2169e2c00f7cdc6c75281567c15.1548192131.git.gitgitgadget@gmail.com>
-        <20190125112203.GB6702@szeder.dev>
-Date:   Fri, 25 Jan 2019 11:13:32 -0800
-In-Reply-To: <20190125112203.GB6702@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Fri, 25 Jan 2019 12:22:03 +0100")
-Message-ID: <xmqqr2d0ft43.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GFN0g3yAY17OrTTVBReP1PHDUf2lLolDJz0Gis6j2hk=;
+        b=mjWm/t0nQbj9b6PFMAeOsyYULthzhLPMdozyf31yU5HzHcNsV0rC1wGjMztSvnhKBR
+         ZwjuAgU+3Z7teSz4QVzx0U01lVQjIqM4G+R+eqwGkm6KhITX2lWa2Jk/aelwL6UnXYYI
+         iDbb3SFq32K6oz0NIFhPhTQ7sJGXN9YL10gLPRdShPyt1Vx2UEIbxsyBgSrR4blviaoc
+         6eaueRbiFaBY7YuI+Pz61hH3xDKi7m0Jymg/qabZzf3Xg4/pywyd+RjQJFrxlYVZhf6y
+         vKPCy3/adkw1gyhTM5ik7a5eqF7psKFRwZzQx4+CC+SiQDOtZCYp2W8gfrB2b4nDO4Hc
+         EKDQ==
+X-Gm-Message-State: AJcUukf80eR8jMSs2FbY93fGb3mSbMBH7hgd+x+VJCwCnmIRXU9N8Dya
+        DNY47IMEBiPdqwPjkjVLl1xyUJ4HNwLjROavGOtWqWRSn20=
+X-Google-Smtp-Source: ALg8bN4O8jgIDYm+gICogMofOaBLJfQB+mzZdg5AIRl56kCXtSuL0VSEPzALputD1sjRKzfuzzr9+GEelsoyMamjr2Y=
+X-Received: by 2002:a19:910d:: with SMTP id t13mr9354444lfd.98.1548444288691;
+ Fri, 25 Jan 2019 11:24:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CAN0heSq0Nb-WdhDFpdwgjUMrkJNbviAtietn=B5nJg-rDgcR_g@mail.gmail.com>
+ <cover.1548186510.git.martin.agren@gmail.com> <f8b021033b887923662eb9fa63f6df1677ebbbb5.1548186510.git.martin.agren@gmail.com>
+ <20190123055704.GA19601@sigill.intra.peff.net>
+In-Reply-To: <20190123055704.GA19601@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 25 Jan 2019 20:24:35 +0100
+Message-ID: <CAN0heSoNvTVfC6A8fFK83u4TBX3sLaTJ_NqKwkCZORiCKdVwcA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] setup: fix memory leaks with `struct repository_format`
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
-
->> +	if (ctx->nr_open_regions > 0) {
->> +		int len_indent = TR2_INDENT_LENGTH(ctx);
->> +		while (len_indent > dots.len) {
->> +			strbuf_addf(buf, "%s", dots.buf);
+On Wed, 23 Jan 2019 at 06:57, Jeff King <peff@peff.net> wrote:
 >
-> Please use the much simpler are more idiomatic strbuf_addbuf()
-> function instead.
+> On Tue, Jan 22, 2019 at 10:45:48PM +0100, Martin =C3=85gren wrote:
+>
+> > Call `clear_...()` at the start of `read_...()` instead of just zeroing
+> > the struct, since we sometimes enter the function multiple times. This
+> > means that it is important to initialize the struct before calling
+> > `read_...()`, so document that.
+>
+> This part is a little counter-intuitive to me. Is anybody ever going to
+> pass in anything except a struct initialized to REPOSITORY_FORMAT_INIT?
 
-Ahh, contrib/coccinelle/strbuf.cocci would help ;-)
+I do update all users in git.git, but yeah, out-of-tree users and
+in-flight topics would segfault.
+
+> If so, might it be kinder for read_...() to not assume anything about
+> the incoming struct, and initialize it from scratch? I.e., not to use
+> clear() but just do the initialization step?
+
+I have some vague memory from going down that route and giving up. Now
+that I'm looking at it again, I think we can at least try to do
+something. We can make sure that "external" users that call into setup.c
+are fine (they'll leak, but won't crash). Out-of-tree users inside
+setup.c will still be able to trip on this. I don't have much spare time
+over the next few days, but I'll get to this.
+
+Or we could accept that we may leak when we end up calling `read()`
+multiple times (I could catch all leaks now, but new ones might sneak in
+after that) and come back to this after X months, when we can perhaps
+afford to be a bit more aggressive.
+
+I guess we could just rename the struct to have the compiler catch
+out-of-tree users...
+
+> A caller which calls read_() multiple times would presumably have an
+> intervening clear (either their own, or the one done on an error return
+> from the read function).
+>
+> Other than that minor nit, I like the overall shape of this.
+
+Thank you.
+
+Martin
