@@ -2,91 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F0A21F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 19:51:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0BEF1F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 19:51:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726179AbfAYTvK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 14:51:10 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49332 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725778AbfAYTvK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 14:51:10 -0500
-Received: (qmail 6390 invoked by uid 109); 25 Jan 2019 19:51:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 25 Jan 2019 19:51:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9610 invoked by uid 111); 25 Jan 2019 19:51:14 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 25 Jan 2019 14:51:14 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Jan 2019 14:51:07 -0500
-Date:   Fri, 25 Jan 2019 14:51:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 2/2] setup: fix memory leaks with `struct
- repository_format`
-Message-ID: <20190125195107.GA6520@sigill.intra.peff.net>
-References: <CAN0heSq0Nb-WdhDFpdwgjUMrkJNbviAtietn=B5nJg-rDgcR_g@mail.gmail.com>
- <cover.1548186510.git.martin.agren@gmail.com>
- <f8b021033b887923662eb9fa63f6df1677ebbbb5.1548186510.git.martin.agren@gmail.com>
- <20190123055704.GA19601@sigill.intra.peff.net>
- <CAN0heSoNvTVfC6A8fFK83u4TBX3sLaTJ_NqKwkCZORiCKdVwcA@mail.gmail.com>
+        id S1726262AbfAYTv5 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 25 Jan 2019 14:51:57 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:39771 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725778AbfAYTv5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 14:51:57 -0500
+Received: by mail-qk1-f196.google.com with SMTP id c21so6101084qkl.6
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 11:51:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=IiyuPmEv5lVPsYZcNmE+W3sF7OkcQVBS1I0i4jqt1h8=;
+        b=m6a2c7gRos5RTr8JQa7hbf7j4XObuWMcbnlUACB6ASGvwvYBoBlWWY4feSAv3zxF6P
+         XvQzxUMaqA6dEdxO69BDf3r4jLfbwt1PX7CSlthErql0AEMMdEcglh85qvStUTYwo1PO
+         pvj6q3skqoHuh/zoIPBIkhgpqilqy19gEzUe1IhoL6tHpiG/DgrZOOLh5VkHYeXa9KgF
+         hf746vw1XYHWSEFF59y3yvt5F0F37VFazI8x6Kr/3CVZgZWLghGl7y+lAjXj0MpzzUkt
+         zSDMknmXGgh1mfZsRvq0Z3eQzjItNMrviBWZlG0iKgLG+gNQHRDV0Kk9S3NczFHJ204z
+         bYmA==
+X-Gm-Message-State: AJcUukdbCaqSlpMtVg87M8uLmpshvKgWxtLgGOfZNdzg2FDbF94t4fFy
+        Y0GsSy/S18cXou0C0kIlTSNSl8tl2DHFyPNqGKU=
+X-Google-Smtp-Source: ALg8bN4zdHvtQ9b/8PbcUiy8FapfA5qsVxnOt9qx6Hge7lvJXFFZ62KXJHc+mlPfzbqg9AAgnlN2isRVWKoH+JJOnxo=
+X-Received: by 2002:a37:a315:: with SMTP id m21mr10850605qke.152.1548445916606;
+ Fri, 25 Jan 2019 11:51:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSoNvTVfC6A8fFK83u4TBX3sLaTJ_NqKwkCZORiCKdVwcA@mail.gmail.com>
+References: <20190124164654.1923-1-newren@gmail.com> <20190125165416.17473-1-newren@gmail.com>
+ <2f785c2d-161c-b6a3-7743-b071969d60d7@gmail.com> <CABPp-BHTsZBO11ykfTaZ_dzpvrww5D3A57qBM05EgP_wK-iM9g@mail.gmail.com>
+In-Reply-To: <CABPp-BHTsZBO11ykfTaZ_dzpvrww5D3A57qBM05EgP_wK-iM9g@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 25 Jan 2019 14:51:45 -0500
+Message-ID: <CAPig+cRefjWr3gNOfQou9JyW=yfACEvbXPPRzXU+VkJN_gCTzA@mail.gmail.com>
+Subject: Re: [PATCH v2] log,diff-tree: add --combined-with-paths options for
+ merges with renames
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 25, 2019 at 08:24:35PM +0100, Martin Ågren wrote:
-
-> On Wed, 23 Jan 2019 at 06:57, Jeff King <peff@peff.net> wrote:
+On Fri, Jan 25, 2019 at 12:52 PM Elijah Newren <newren@gmail.com> wrote:
+> On Fri, Jan 25, 2019 at 9:41 AM Derrick Stolee <stolee@gmail.com> wrote:
+> > On 1/25/2019 11:54 AM, Elijah Newren wrote:
+> > > +     printf "0f9645804ebb04cc3eef91f799eb7fb54d70cefb\0::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR\0file\twith\ttabs\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
 > >
-> > On Tue, Jan 22, 2019 at 10:45:48PM +0100, Martin Ågren wrote:
-> >
-> > > Call `clear_...()` at the start of `read_...()` instead of just zeroing
-> > > the struct, since we sometimes enter the function multiple times. This
-> > > means that it is important to initialize the struct before calling
-> > > `read_...()`, so document that.
-> >
-> > This part is a little counter-intuitive to me. Is anybody ever going to
-> > pass in anything except a struct initialized to REPOSITORY_FORMAT_INIT?
-> 
-> I do update all users in git.git, but yeah, out-of-tree users and
-> in-flight topics would segfault.
-> 
-> > If so, might it be kinder for read_...() to not assume anything about
-> > the incoming struct, and initialize it from scratch? I.e., not to use
-> > clear() but just do the initialization step?
-> 
-> I have some vague memory from going down that route and giving up. Now
-> that I'm looking at it again, I think we can at least try to do
-> something. We can make sure that "external" users that call into setup.c
-> are fine (they'll leak, but won't crash). Out-of-tree users inside
-> setup.c will still be able to trip on this. I don't have much spare time
-> over the next few days, but I'll get to this.
-> 
-> Or we could accept that we may leak when we end up calling `read()`
-> multiple times (I could catch all leaks now, but new ones might sneak in
-> after that) and come back to this after X months, when we can perhaps
-> afford to be a bit more aggressive.
-> 
-> I guess we could just rename the struct to have the compiler catch
-> out-of-tree users...
+> > I'm guessing that you use printf here because the
+> > 'cat <<-\EOF' approach doesn't work with the special
+> > tabs? Kudos for putting in the extra effort here for
+> > the special formatting!
+>
+> Yeah, I didn't know how to easily get NUL bytes in the stream without
+> printf, and once I was using printf the EOF HEREDOC no longer had a
+> useful purpose.  In the first testcase, since there were only
+> printable characters in the expected output, a HEREDOC worked well.  I
+> guess I could have just used printf for both testcases, but having the
+> literal output shown where it's possible for a human to read it seemed
+> like an advantage worth capitalizing on.
 
-I'm less worried about out-of-tree users, and more concerned with just
-having a calling convention that matches usual conventions (and is
-harder to get wrong).
+If the readability of a here-doc is preferred, you should be able to
+achieve the desired result with the q_to_tab() and lf_to_nul()
+functions. For instance:
 
-It's a pretty minor point, though, so I can live with it either way.
-
--Peff
+    q_to_tab <<-\EOF | lf_to_nul >expect &&
+    ...Q...Q...
+    EOF
