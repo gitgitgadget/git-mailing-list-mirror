@@ -2,85 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7F151F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 19:56:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDF181F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 20:03:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726234AbfAYT4v (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 14:56:51 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:40349 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726030AbfAYT4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 14:56:51 -0500
-Received: by mail-ed1-f67.google.com with SMTP id g22so8282587edr.7
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 11:56:50 -0800 (PST)
+        id S1726179AbfAYUDW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 15:03:22 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:33779 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725778AbfAYUDV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 15:03:21 -0500
+Received: by mail-pg1-f193.google.com with SMTP id z11so4646310pgu.0
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 12:03:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/gS9VBM7pZIAUVpXispvELxOKxerYEpoTxtKybPWgCI=;
-        b=UJ6uyW+Kax0CK612yNUhSvkpznzcwM++T2rAX+utST+x1RP+xUxj+fy+AF/TqICYB1
-         LQYqwfGKwQzTWyFjE0zlN2yllw4WiS+QLu3090aegMaoUOvZeLoblhLWJro53Ewd5PpG
-         OwzoWNwKlOJBO8VX6BQYEwtAsJMy/i3vmPp6b801/hBKpwFRvKJ/5VqFWJDk+WUV/2XV
-         kd5HH2jgf9u1lekHYhEzNNLjtD7KWPmq7SgJ5QJfgA5AM8eQaRpP4PDBrmau7wjIlJMx
-         5V4T3I5WWcKmzoWHxiukJwF1zd218bHtEZnvoG+jq7w9VulmgBM73O6WCWeN+Sv9N5Ql
-         Amlw==
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Dz8SqA/3WBv+psPcAhK2lNHelS3YN2xcO9Pk/BeZXkY=;
+        b=CCLPojIX2xtPdlHU+uJh0GPoGOq/Rw45iy643pTmOPcxFjNiBQfG6KBa7TMOMAAQVa
+         CdBM4/Ng8X+wZKI72DcO6wjkSCa9Ip7G2wpix3k6IVTg+pyXSmZyc35DSFhJcVOhw8rK
+         f2dGYh35QxVNpSonNH6dp/XlHzPKhO/i6cTqxva1hIUe6zO0nmNuEe37CmrQjxFwCuyz
+         9VjVqf/b1araQBGXrMP1/hsr7FmxvtOGhP3p2tYfJqiA/4JGfUegdJ4obxRaDTy6vLUI
+         kLXmrwFwcgftHwn2XZPH78kwBnRcx42VW/tgvebILxEiD4mINKOZcHTxgb6u+78oLgq8
+         E6Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/gS9VBM7pZIAUVpXispvELxOKxerYEpoTxtKybPWgCI=;
-        b=cB8GOAqMhCGj35J08FMlLUg0XiQZ/xHHmixZcorseLX1kUVO8sHhc9JBbFbSA8vCVT
-         zU1PkLue531IDduBy5UwaOZjyIiEvzFjHCoCs2noqHcFFLg4FRe870nVKfEv51uO0IKL
-         6GGEw1Nuzd3aR3WE+o/Ju4/DYg7gTVS0ai5zXfXQWp/XNf/UR9zW5OqxrvNpGB02L5AM
-         8LaM1ju2Gfo8VawIQ73WJIr6VCWhB69siB9LroawTJu5eCTLqzOZQ7DNzehHQRBDmz/e
-         gH6RjqUu16jqqejmh+wGSzCSrMO9ehD0ISKuj+zpVrBAfL6qdJFwdJXzCl9fINStzWIa
-         nQoA==
-X-Gm-Message-State: AJcUukeYH28CIJDa+/YExHVt/aLUsyM9cZFlVqqG5093uAvnwSxqfEzc
-        HIT9jiRjSd+YDBlFryu+0tN4TjQfmTFGr3Pms/qJzw==
-X-Google-Smtp-Source: ALg8bN7qziw5ke6ZFMZZ67p8amVT+BBUpmwbh+BmgcW2amXWWuUj1PqZmekInfJlAVEuVpefQkX/q7hNR/5d+Hq0QrY=
-X-Received: by 2002:a17:906:cb2:: with SMTP id k18-v6mr10838538ejh.129.1548446209086;
- Fri, 25 Jan 2019 11:56:49 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=Dz8SqA/3WBv+psPcAhK2lNHelS3YN2xcO9Pk/BeZXkY=;
+        b=YXK1zAbawxBbstoDBBjdMZ6Ik36egqtWrELWpe59tRUW9/WTSpKPbQG8+EmrioHmsK
+         ZhusSjJZXAGDl18KFzlQrIj/l+Ul3Y/hec9pWFMkIYMQUv/YpwUCemeKtJERfqubPbYZ
+         Myc7R/geOmo8dtGuy+8WWy+DEN5mTB3SmrEn5JEGfWfwwNmi6gtdzL5ozzAt0LLpARSZ
+         EHei9gS3JIbIzsA2jeynBsN4uFF7fcAIVhuhN1HPGw6qBtu4iRFY2c5ficH0rY/LeNA1
+         5zJRFklT8gpjKldyIVs78XuGcD74WZ4VPChxNVCwAQsvMiLJHxYgffeEBFuDBhV1K3qp
+         rlRA==
+X-Gm-Message-State: AJcUukdxICLQwe+oxBackzYYG6Mc65NvAgM+R8DwdvaofuBp6bWs0bJ4
+        ALG6PAC7uAdRT1AD3MLfnGH0lABXTDj0iQ==
+X-Google-Smtp-Source: ALg8bN7fI3rOA7DpKxegZWmpwfbVJ1/VX3n4Nt/hHqER8aiE84zPobfNvSTWrUnSEnABpgmt5es6Sw==
+X-Received: by 2002:a63:cf02:: with SMTP id j2mr11340975pgg.113.1548446600139;
+        Fri, 25 Jan 2019 12:03:20 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id x186sm32062229pfb.59.2019.01.25.12.03.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 25 Jan 2019 12:03:19 -0800 (PST)
+Date:   Fri, 25 Jan 2019 12:03:09 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/14] Trace2 tracing facility
+Message-ID: <20190125200309.GB72177@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.108.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20181204224238.50966-1-jonathantanmy@google.com> <20190125153348.GF6702@szeder.dev>
-In-Reply-To: <20190125153348.GF6702@szeder.dev>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 25 Jan 2019 11:56:38 -0800
-Message-ID: <CAGZ79kZRnuTU3ukP1UdBUZD1x+nubYSwLxYgJse1mcj8JUOa2g@mail.gmail.com>
-Subject: Re: Regression in: [PATCH on sb/more-repo-in-api] revision: use
- commit graph in get_reference()
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.108.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Have fun! :)
+On 2019.01.22 13:22, Jeff Hostetler via GitGitGadget wrote:
+> This patch series contains a greatly refactored version of my original
+> Trace2 series [1] from August 2018.
+> 
+> A new design doc in Documentation/technical/api-trace2.txt (in the first
+> commit) explains the relationship of Trace2 to the current tracing facility.
+> Calls to the current tracing facility have not been changed, rather new
+> trace2 calls have been added so that both continue to work in parallel for
+> the time being.
+> 
+> [1] https://public-inbox.org/git/pull.29.git.gitgitgadget@gmail.com/
+> 
+> Cc: gitster@pobox.comCc: peff@peff.netCc: jrnieder@gmail.com
+> 
+> Derrick Stolee (1):
+>   pack-objects: add trace2 regions
+> 
+> Jeff Hostetler (13):
+>   trace2: Documentation/technical/api-trace2.txt
+>   trace2: create new combined trace facility
+>   trace2: collect platform-specific process information
+>   trace2:data: add trace2 regions to wt-status
+>   trace2:data: add editor/pager child classification
+>   trace2:data: add trace2 sub-process classification
+>   trace2:data: add trace2 transport child classification
+>   trace2:data: add trace2 hook classification
+>   trace2:data: add trace2 instrumentation to index read/write
+>   trace2:data: add subverb to checkout command
+>   trace2:data: add subverb to reset command
+>   trace2:data: add subverb for rebase
+>   trace2: t/helper/test-trace2, t0210.sh, t0211.sh, t0212.sh
+> 
+>  Documentation/technical/api-trace2.txt | 1158 ++++++++++++++++++++++++
+>  Makefile                               |   11 +
+>  builtin/am.c                           |    1 +
+>  builtin/checkout.c                     |    7 +
+>  builtin/pack-objects.c                 |   12 +-
+>  builtin/rebase.c                       |   19 +
+>  builtin/receive-pack.c                 |    4 +
+>  builtin/reset.c                        |    6 +
+>  builtin/submodule--helper.c            |   11 +-
+>  builtin/worktree.c                     |    1 +
+>  cache.h                                |    1 +
+>  common-main.c                          |   13 +-
+>  compat/mingw.c                         |   11 +-
+>  compat/mingw.h                         |    3 +-
+>  compat/win32/ancestry.c                |  102 +++
+>  config.c                               |    2 +
+>  config.mak.uname                       |    2 +
+>  connect.c                              |    3 +
+>  editor.c                               |    1 +
+>  exec-cmd.c                             |    2 +
+>  git-compat-util.h                      |    7 +
+>  git.c                                  |   65 ++
+>  pager.c                                |    1 +
+>  read-cache.c                           |   47 +-
+>  remote-curl.c                          |    7 +
+>  repository.c                           |    2 +
+>  repository.h                           |    3 +
+>  run-command.c                          |   63 +-
+>  run-command.h                          |   17 +-
+>  sequencer.c                            |    2 +
+>  sh-i18n--envsubst.c                    |    3 +
+>  sub-process.c                          |    1 +
+>  submodule.c                            |   11 +-
+>  t/helper/test-parse-options.c          |    3 +
+>  t/helper/test-tool.c                   |    4 +
+>  t/helper/test-tool.h                   |    1 +
+>  t/helper/test-trace2.c                 |  273 ++++++
+>  t/t0001-init.sh                        |    1 +
+>  t/t0210-trace2-normal.sh               |  135 +++
+>  t/t0210/scrub_normal.perl              |   48 +
+>  t/t0211-trace2-perf.sh                 |  153 ++++
+>  t/t0211/scrub_perf.perl                |   76 ++
+>  t/t0212-trace2-event.sh                |  237 +++++
+>  t/t0212/parse_events.perl              |  251 +++++
+>  trace2.c                               |  809 +++++++++++++++++
+>  trace2.h                               |  403 +++++++++
+>  trace2/tr2_cfg.c                       |   92 ++
+>  trace2/tr2_cfg.h                       |   19 +
+>  trace2/tr2_dst.c                       |   90 ++
+>  trace2/tr2_dst.h                       |   34 +
+>  trace2/tr2_sid.c                       |   67 ++
+>  trace2/tr2_sid.h                       |   18 +
+>  trace2/tr2_tbuf.c                      |   32 +
+>  trace2/tr2_tbuf.h                      |   23 +
+>  trace2/tr2_tgt.h                       |  126 +++
+>  trace2/tr2_tgt_event.c                 |  606 +++++++++++++
+>  trace2/tr2_tgt_normal.c                |  331 +++++++
+>  trace2/tr2_tgt_perf.c                  |  573 ++++++++++++
+>  trace2/tr2_tls.c                       |  164 ++++
+>  trace2/tr2_tls.h                       |   95 ++
+>  trace2/tr2_verb.c                      |   30 +
+>  trace2/tr2_verb.h                      |   24 +
+>  transport-helper.c                     |    2 +
+>  transport.c                            |    1 +
+>  usage.c                                |   31 +
+>  wt-status.c                            |   23 +-
+>  66 files changed, 6353 insertions(+), 21 deletions(-)
+>  create mode 100644 Documentation/technical/api-trace2.txt
+>  create mode 100644 compat/win32/ancestry.c
+>  create mode 100644 t/helper/test-trace2.c
+>  create mode 100755 t/t0210-trace2-normal.sh
+>  create mode 100644 t/t0210/scrub_normal.perl
+>  create mode 100755 t/t0211-trace2-perf.sh
+>  create mode 100644 t/t0211/scrub_perf.perl
+>  create mode 100755 t/t0212-trace2-event.sh
+>  create mode 100644 t/t0212/parse_events.perl
+>  create mode 100644 trace2.c
+>  create mode 100644 trace2.h
+>  create mode 100644 trace2/tr2_cfg.c
+>  create mode 100644 trace2/tr2_cfg.h
+>  create mode 100644 trace2/tr2_dst.c
+>  create mode 100644 trace2/tr2_dst.h
+>  create mode 100644 trace2/tr2_sid.c
+>  create mode 100644 trace2/tr2_sid.h
+>  create mode 100644 trace2/tr2_tbuf.c
+>  create mode 100644 trace2/tr2_tbuf.h
+>  create mode 100644 trace2/tr2_tgt.h
+>  create mode 100644 trace2/tr2_tgt_event.c
+>  create mode 100644 trace2/tr2_tgt_normal.c
+>  create mode 100644 trace2/tr2_tgt_perf.c
+>  create mode 100644 trace2/tr2_tls.c
+>  create mode 100644 trace2/tr2_tls.h
+>  create mode 100644 trace2/tr2_verb.c
+>  create mode 100644 trace2/tr2_verb.h
+> 
+> 
+> base-commit: 77556354bb7ac50450e3b28999e3576969869068
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-108%2Fjeffhostetler%2Fcore-trace2-2019-v0-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-108/jeffhostetler/core-trace2-2019-v0-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/108
+> -- 
+> gitgitgadget
 
-$ git gc
-...
-Computing commit graph generation numbers: 100% (164264/164264), done.
-$ ./git version
-git version 2.20.1.775.g2313a6b87fe.dirty
-# pu + one commit addressing
-# https://public-inbox.org/git/CAGZ79kaUg3NTRPRi5mLk6ag87iDB_Ltq_kEiLwZ2HGZ+-Vsd8w@mail.gmail.com/
+Several patches in this series have many style diffs as reported by
+clang-format. Not all the diffs actually improve readability, but many
+do. If you have clang-format installed, you can run:
 
-$ ./git -c core.commitGraph=false describe --dirty --all
-remotes/gitgitgadget/pu-1-g03745a36e6
-$ ./git -c core.commitGraph=true describe --dirty --all
-remotes/gitgitgadget/pu-1-g03745a36e6
-$ ./git -c core.commitGraph=true describe --dirty
-v2.20.1-776-g03745a36e6
-$ ./git -c core.commitGraph=false describe --dirty
-v2.20.1-776-g03745a36e6
+git clang-format --style file --diff --extensions c,h ${commit}^ ${commit}
 
-it looks like it is working correctly here?
-Or did I miss some hint as in how to setup the reproduction properly?
+for each commit in the series to see what it thinks needs to be changed.
+
+
+Other than that, I don't have any comments apart from what the other
+reviewers have already mentioned.
+
+Thanks for the series!
