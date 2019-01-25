@@ -2,98 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E8991F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 13:54:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E70DA1F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 14:05:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728597AbfAYNy3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 08:54:29 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:39088 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726108AbfAYNy3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 08:54:29 -0500
-Received: by mail-qt1-f193.google.com with SMTP id u47so10706244qtj.6
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 05:54:28 -0800 (PST)
+        id S1728597AbfAYOFb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 09:05:31 -0500
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:36266 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726095AbfAYOFb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 09:05:31 -0500
+Received: by mail-wm1-f42.google.com with SMTP id p6so6743917wmc.1
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 06:05:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=tUp3PK3Jow0pnW7u5HGSsmyAOLbXP3TP124PmGVc0uY=;
-        b=uA6ZGInvl+ykAF+lFoNymfnoA9TimKAzYDosTPn1mhldn5hLfYrVnhY6Nz5OGPoI61
-         4SGmFUkkn6EhjmpR2mrT1aPNwnZmmJrNTE7yMZxuqPy+hkgCnCwBWHe2Whq67fIqYRcr
-         ZdSzu+NE+qoK8OteX0KBPn0/EYotK59DMFNMdQHyUa517ZR/yybD/tAfz65hnmSOcZ57
-         0z41Qc5VkB/TI019RFMfm8o11C2ofc+2VdiKOGNXrEQIim5tHRQ1WxPzm4cUHQiVpfMD
-         lbm4ElgYa7/Vb6UITJt2OsbOozLcybNJMeBv9S9n4wj5xqIKwTowOlfRImOmcaMW8RQZ
-         yrrw==
+        d=blixt-nyc.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=esPkYhEyIdNKe2v0Nv7U7ssLVYS2Ijn+hX3POjHuhgg=;
+        b=cornYYnv5NvxbEAssw48yI4NlsrY2C0Yl4+epOMSdHpCPcWbthF0+ASGqk7VJFiZOl
+         eYW2ehmnpAoDWfeQhWFi2LzJoeIJq/PnwDFNGPIMdLiQAuMxaN5Ap7dYZbOU+UMoZAC0
+         msyVYjxq/VQk5cCYr8x5WiUm3MF5p0TfmBcLLY+jiPYNxqw/WU4I9JyojyFd8T/ItHHY
+         BsPqqL5/DM6Tlh/CCsP4ox7HxXt9CZPAoEeNzehlm4VtkeMKDoW5Ie7YwD4wL1ck5qN+
+         11ufl/HbcsElWoHQfySDOigpHi30L4UuWM3OEvN/YEow3e2RgDZMBQHqXvLLCuKzXw5/
+         AwNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=tUp3PK3Jow0pnW7u5HGSsmyAOLbXP3TP124PmGVc0uY=;
-        b=clwNJl9stbRzFuW6HfMspWxPq2bwQqa+deMNgnjmxUm2Uxxu1v6aDFqfInhO4QLqqx
-         rYJbMGin+LT0qn7sEKDSimqNqJ5k1+TmBvLYDAnijOhtQ91ShI0WB9EJYXfTKIFuWrmV
-         XhEVZ9bLV+QvO6K8Ec21NWB+iX35va+yyuRYGJSfKJpQ2H34skcYkkEsHFdKvNtyDtQq
-         CkjOUuBekz+BAbVJpReiICtleN28jaiaaVIky7vATVpaVOznin7epDCgPuZMEjJfz3yM
-         WXQaemNcsYlfj3N1LdDQWit1QFvP65PSp4ZMjl4GNg8nK1I9S2AMvt/AKecsa4+66UZD
-         nl+w==
-X-Gm-Message-State: AJcUukfxFXjWHstoTBcbCKfZqQEQQtPyICys+lq8bCUk/hp4wmkQRvsZ
-        MEoW8MSDQgoaOG8hNviyJxk=
-X-Google-Smtp-Source: ALg8bN4nhh7hKyNkTAEz57CPwUYC9JwOvDgEFb7NEUygBuikX8egGl0j8UGwjgglY4Fvdmo5WLUMNw==
-X-Received: by 2002:aed:2539:: with SMTP id v54mr10939927qtc.211.1548424468307;
-        Fri, 25 Jan 2019 05:54:28 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:a010:321f:4bbb:82c4? ([2001:4898:8010:2:8944:321f:4bbb:82c4])
-        by smtp.gmail.com with ESMTPSA id j138sm41832662qke.65.2019.01.25.05.54.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 25 Jan 2019 05:54:27 -0800 (PST)
-Subject: Re: [PATCH 0/6] Create commit-graph file format v2
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net, avarab@gmail.com
-References: <pull.112.git.gitgitgadget@gmail.com>
- <xmqqzhrpfwvk.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <82be29f0-9b68-4bd6-4d5f-c6cfa1a0ccc6@gmail.com>
-Date:   Fri, 25 Jan 2019 08:54:27 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:65.0) Gecko/20100101
- Thunderbird/65.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=esPkYhEyIdNKe2v0Nv7U7ssLVYS2Ijn+hX3POjHuhgg=;
+        b=X9kcEDRblP3+PY40z0A0tnpOnl3UqdBkaqNEy/Z9fWTQguJxjIEakknoIi//WThrqh
+         ZG0tENzLhQt7EZv0wB70BIexVdpjr2zQwKxkWOheP6B0lectdhNaIYVNpRkuqLmJLNcq
+         6Zxu06IQ1Cuj9Dd/uDsV90PCapzO16dwO0+jX6Urppa52quVbPOxtcnxqFBMsNtPRmei
+         e3uFh18GrjW0ywi63q13Kv0t5Qc5i0b9+d3k3wHJojGlFsMrV6jzSF8RkI+rlhS5WgiX
+         EDPr2fXO+OvJkDUc4U+VE0YhW2y35WKM77mtrz5neQSTBENBB/g+TiIBDYcTy9zMovcg
+         bqng==
+X-Gm-Message-State: AJcUukfl+Q5Y1u3muW//hE5uptGPNl4LRmiCRcitiYPjSzeUJgzmZ+cs
+        irIlm85g3GgjxvqGxkN3hH5SUI1Me42qMd7nfPuJ3OzZGqgbwQ==
+X-Google-Smtp-Source: ALg8bN4GVYPeH98G0tQShZSuQ72mH0NGqJSX6o6XKG8wxqFeJedcDIEzqAlykAbniZbnMr7Bgl0mt1p6vWQWdcOhdQ0=
+X-Received: by 2002:a1c:c2d4:: with SMTP id s203mr7007648wmf.3.1548425129265;
+ Fri, 25 Jan 2019 06:05:29 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqzhrpfwvk.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAFYJ4vvGhwxd5wTq-yYeOy6Hq-GpCsTy6=jG-LoHn2mShM4_NQ@mail.gmail.com>
+In-Reply-To: <CAFYJ4vvGhwxd5wTq-yYeOy6Hq-GpCsTy6=jG-LoHn2mShM4_NQ@mail.gmail.com>
+From:   Blixt <me@blixt.nyc>
+Date:   Fri, 25 Jan 2019 15:05:18 +0100
+Message-ID: <CAFYJ4vur8KUbvnPaq2McR874K6o5YS6pCkKnihdwN758CKkwng@mail.gmail.com>
+Subject: git describe --dirty doesn't work with --work-tree
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/24/2019 6:39 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> This series is based on ab/commit-graph-write-progress and bc/sha-256.
-> 
-> Thanks.
-> 
-> It seems that the base (i.e. merge between these two topics) you
-> used may have used a version of either topic (most likely the
-> latter) slightly older than what I have, as patches 1 and 2 seem to
-> lack the local variable "hashsz" in the context, near the beginning
-> of commit_graph_write().  I wiggled the patches in, but it has too
-> heavy conflict merging to 'pu', so it may have to wait until the
-> other topics stabilize a bit further.
+In a script of mine I want to describe HEAD without changing the
+current directory, so I specify --git-dir and --work-tree. But it
+appears the --dirty check doesn't consider the --work-tree value.
 
-Sorry that the merge was painful. I would have waited longer for
-things to stabilize, but I'm expecting to go on paternity leave
-soon. Didn't want to get the idea out there before I disappear
-for a while.
+Here's a simplified example (on macOS 10.14.1):
 
-When things stabilize, I may have time to do a rebase and work
-out the details myself. Otherwise, everyone has my blessing to
-take work I've started and move it forward themselves.
-
-Thanks,
--Stolee
+$ git version
+git version 2.20.1
+$ mkdir test
+$ cd test
+$ git init
+Initialized empty Git repository in /Users/example/test/.git/
+$ touch test
+$ git add test
+$ git commit -m "initial commit"
+[master (root-commit) 9fc4511] initial commit
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test
+$ git describe --all --dirty
+heads/master
+$ cd ..
+$ git --git-dir test/.git --work-tree test describe --all --dirty
+heads/master-dirty
