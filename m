@@ -2,59 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E7C61F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 19:42:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F0A21F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 19:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726329AbfAYTmG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 14:42:06 -0500
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:34304 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbfAYTmG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 14:42:06 -0500
-Received: by mail-ed1-f41.google.com with SMTP id b3so8297563ede.1
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 11:42:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=iFw7AgTLuKOmoyAG3FrHw+s29z19Ti1XhRLFat2+nuY=;
-        b=oOU+lICtAwv+UjLHEG6UgR2GoWsTgqr3dVXlopaycpocKlYO+Ku4648MNYCwueK1kf
-         yOVG+pBZXEcPh8GX284Bve804i2E1TwL4PNCZnBAgfHqF1FR9f89mhtqNNRLx9NXhIUL
-         Sr4O2PGuk52kAAYhKyuiwzxSKMpjOeU9YPn0ESm03eYF6t63s6+Qk7NnStj8G5pX29Gk
-         mZHGNzUusmuMOJTmUTu4SA1q6DMJRw4teQOxHUi2NES6BI0/Y85iFVr63DogCjFW832J
-         tyvrNrj+VR4v+i+YOP9gOSD8dL2q4jlJe1IqSQAIuHwJQOQJX+e9sRYDUmkJ7ubGmueD
-         z9Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=iFw7AgTLuKOmoyAG3FrHw+s29z19Ti1XhRLFat2+nuY=;
-        b=U9+40KfmyybHvPS5rYMefVqqXnZbTpdRfwns9j+p1KxT2mgSDkwMIUStWDPwgtKlD4
-         r0Smb3B/TLRuFKqPaRIIDAqdplP5gyuvmMKacbFC9G1MiJWZ2Q2qga9BqZRgu23/xhGm
-         iLxJj9Ap2CsIt0wqKDaGxjQrCYRfUVaE+/R5K4hybbrc3KPDppQt1ft1IGdC8AD33IKV
-         8ayeMuv+WLeNGnDOH6CfEuOCZ/CRzvTDGZjgvLrTEivH/qMJ4UUOhSPpqv3M6W2qHFKC
-         6MB4ezPN85qbh9vd1+SjUf3c0EaPfOLX/J0dFmpR3UNBTuNqMlCq2yaZEd8fKo8YIBvw
-         2azQ==
-X-Gm-Message-State: AJcUukcvUDT2T5YqSF+hn7uWbQD+YcpYIxbK5MFFplOICfG/qximh95c
-        SVPDHfYtbihIif2+XRUyL7BlsSV5TYC9OxXONUGvqunDYpWSVg==
-X-Google-Smtp-Source: ALg8bN5D5mEgWov2W4qjT8xWAE9HdRCEwJWUDDBGrJMBIZKu3txNue8C7xQ5Rxie0bpKDcxsaP5aEzlpa1Uu0sFnOvM=
-X-Received: by 2002:a50:acc3:: with SMTP id x61mr11859808edc.76.1548445324093;
- Fri, 25 Jan 2019 11:42:04 -0800 (PST)
+        id S1726179AbfAYTvK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 14:51:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49332 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725778AbfAYTvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 14:51:10 -0500
+Received: (qmail 6390 invoked by uid 109); 25 Jan 2019 19:51:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 25 Jan 2019 19:51:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9610 invoked by uid 111); 25 Jan 2019 19:51:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 25 Jan 2019 14:51:14 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Jan 2019 14:51:07 -0500
+Date:   Fri, 25 Jan 2019 14:51:07 -0500
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 2/2] setup: fix memory leaks with `struct
+ repository_format`
+Message-ID: <20190125195107.GA6520@sigill.intra.peff.net>
+References: <CAN0heSq0Nb-WdhDFpdwgjUMrkJNbviAtietn=B5nJg-rDgcR_g@mail.gmail.com>
+ <cover.1548186510.git.martin.agren@gmail.com>
+ <f8b021033b887923662eb9fa63f6df1677ebbbb5.1548186510.git.martin.agren@gmail.com>
+ <20190123055704.GA19601@sigill.intra.peff.net>
+ <CAN0heSoNvTVfC6A8fFK83u4TBX3sLaTJ_NqKwkCZORiCKdVwcA@mail.gmail.com>
 MIME-Version: 1.0
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 25 Jan 2019 11:41:53 -0800
-Message-ID: <CAGZ79kaUg3NTRPRi5mLk6ag87iDB_Ltq_kEiLwZ2HGZ+-Vsd8w@mail.gmail.com>
-Subject: Compiling pu fails: diff.c:4695:19: error: unused function 'short_opt'
-To:     git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSoNvTVfC6A8fFK83u4TBX3sLaTJ_NqKwkCZORiCKdVwcA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I see it is fixed in
-https://public-inbox.org/git/20190122003020.9672-3-pclouds@gmail.com/
-but not in 2722d068deb (SQUASH???, 2019-01-18)
+On Fri, Jan 25, 2019 at 08:24:35PM +0100, Martin Ågren wrote:
+
+> On Wed, 23 Jan 2019 at 06:57, Jeff King <peff@peff.net> wrote:
+> >
+> > On Tue, Jan 22, 2019 at 10:45:48PM +0100, Martin Ågren wrote:
+> >
+> > > Call `clear_...()` at the start of `read_...()` instead of just zeroing
+> > > the struct, since we sometimes enter the function multiple times. This
+> > > means that it is important to initialize the struct before calling
+> > > `read_...()`, so document that.
+> >
+> > This part is a little counter-intuitive to me. Is anybody ever going to
+> > pass in anything except a struct initialized to REPOSITORY_FORMAT_INIT?
+> 
+> I do update all users in git.git, but yeah, out-of-tree users and
+> in-flight topics would segfault.
+> 
+> > If so, might it be kinder for read_...() to not assume anything about
+> > the incoming struct, and initialize it from scratch? I.e., not to use
+> > clear() but just do the initialization step?
+> 
+> I have some vague memory from going down that route and giving up. Now
+> that I'm looking at it again, I think we can at least try to do
+> something. We can make sure that "external" users that call into setup.c
+> are fine (they'll leak, but won't crash). Out-of-tree users inside
+> setup.c will still be able to trip on this. I don't have much spare time
+> over the next few days, but I'll get to this.
+> 
+> Or we could accept that we may leak when we end up calling `read()`
+> multiple times (I could catch all leaks now, but new ones might sneak in
+> after that) and come back to this after X months, when we can perhaps
+> afford to be a bit more aggressive.
+> 
+> I guess we could just rename the struct to have the compiler catch
+> out-of-tree users...
+
+I'm less worried about out-of-tree users, and more concerned with just
+having a calling convention that matches usual conventions (and is
+harder to get wrong).
+
+It's a pretty minor point, though, so I can live with it either way.
+
+-Peff
