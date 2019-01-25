@@ -2,80 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0BEF1F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 19:51:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7F151F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 19:56:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726262AbfAYTv5 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 25 Jan 2019 14:51:57 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:39771 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbfAYTv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 14:51:57 -0500
-Received: by mail-qk1-f196.google.com with SMTP id c21so6101084qkl.6
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 11:51:57 -0800 (PST)
+        id S1726234AbfAYT4v (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 14:56:51 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40349 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726030AbfAYT4v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 14:56:51 -0500
+Received: by mail-ed1-f67.google.com with SMTP id g22so8282587edr.7
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 11:56:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/gS9VBM7pZIAUVpXispvELxOKxerYEpoTxtKybPWgCI=;
+        b=UJ6uyW+Kax0CK612yNUhSvkpznzcwM++T2rAX+utST+x1RP+xUxj+fy+AF/TqICYB1
+         LQYqwfGKwQzTWyFjE0zlN2yllw4WiS+QLu3090aegMaoUOvZeLoblhLWJro53Ewd5PpG
+         OwzoWNwKlOJBO8VX6BQYEwtAsJMy/i3vmPp6b801/hBKpwFRvKJ/5VqFWJDk+WUV/2XV
+         kd5HH2jgf9u1lekHYhEzNNLjtD7KWPmq7SgJ5QJfgA5AM8eQaRpP4PDBrmau7wjIlJMx
+         5V4T3I5WWcKmzoWHxiukJwF1zd218bHtEZnvoG+jq7w9VulmgBM73O6WCWeN+Sv9N5Ql
+         Amlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IiyuPmEv5lVPsYZcNmE+W3sF7OkcQVBS1I0i4jqt1h8=;
-        b=m6a2c7gRos5RTr8JQa7hbf7j4XObuWMcbnlUACB6ASGvwvYBoBlWWY4feSAv3zxF6P
-         XvQzxUMaqA6dEdxO69BDf3r4jLfbwt1PX7CSlthErql0AEMMdEcglh85qvStUTYwo1PO
-         pvj6q3skqoHuh/zoIPBIkhgpqilqy19gEzUe1IhoL6tHpiG/DgrZOOLh5VkHYeXa9KgF
-         hf746vw1XYHWSEFF59y3yvt5F0F37VFazI8x6Kr/3CVZgZWLghGl7y+lAjXj0MpzzUkt
-         zSDMknmXGgh1mfZsRvq0Z3eQzjItNMrviBWZlG0iKgLG+gNQHRDV0Kk9S3NczFHJ204z
-         bYmA==
-X-Gm-Message-State: AJcUukdbCaqSlpMtVg87M8uLmpshvKgWxtLgGOfZNdzg2FDbF94t4fFy
-        Y0GsSy/S18cXou0C0kIlTSNSl8tl2DHFyPNqGKU=
-X-Google-Smtp-Source: ALg8bN4zdHvtQ9b/8PbcUiy8FapfA5qsVxnOt9qx6Hge7lvJXFFZ62KXJHc+mlPfzbqg9AAgnlN2isRVWKoH+JJOnxo=
-X-Received: by 2002:a37:a315:: with SMTP id m21mr10850605qke.152.1548445916606;
- Fri, 25 Jan 2019 11:51:56 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=/gS9VBM7pZIAUVpXispvELxOKxerYEpoTxtKybPWgCI=;
+        b=cB8GOAqMhCGj35J08FMlLUg0XiQZ/xHHmixZcorseLX1kUVO8sHhc9JBbFbSA8vCVT
+         zU1PkLue531IDduBy5UwaOZjyIiEvzFjHCoCs2noqHcFFLg4FRe870nVKfEv51uO0IKL
+         6GGEw1Nuzd3aR3WE+o/Ju4/DYg7gTVS0ai5zXfXQWp/XNf/UR9zW5OqxrvNpGB02L5AM
+         8LaM1ju2Gfo8VawIQ73WJIr6VCWhB69siB9LroawTJu5eCTLqzOZQ7DNzehHQRBDmz/e
+         gH6RjqUu16jqqejmh+wGSzCSrMO9ehD0ISKuj+zpVrBAfL6qdJFwdJXzCl9fINStzWIa
+         nQoA==
+X-Gm-Message-State: AJcUukeYH28CIJDa+/YExHVt/aLUsyM9cZFlVqqG5093uAvnwSxqfEzc
+        HIT9jiRjSd+YDBlFryu+0tN4TjQfmTFGr3Pms/qJzw==
+X-Google-Smtp-Source: ALg8bN7qziw5ke6ZFMZZ67p8amVT+BBUpmwbh+BmgcW2amXWWuUj1PqZmekInfJlAVEuVpefQkX/q7hNR/5d+Hq0QrY=
+X-Received: by 2002:a17:906:cb2:: with SMTP id k18-v6mr10838538ejh.129.1548446209086;
+ Fri, 25 Jan 2019 11:56:49 -0800 (PST)
 MIME-Version: 1.0
-References: <20190124164654.1923-1-newren@gmail.com> <20190125165416.17473-1-newren@gmail.com>
- <2f785c2d-161c-b6a3-7743-b071969d60d7@gmail.com> <CABPp-BHTsZBO11ykfTaZ_dzpvrww5D3A57qBM05EgP_wK-iM9g@mail.gmail.com>
-In-Reply-To: <CABPp-BHTsZBO11ykfTaZ_dzpvrww5D3A57qBM05EgP_wK-iM9g@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 25 Jan 2019 14:51:45 -0500
-Message-ID: <CAPig+cRefjWr3gNOfQou9JyW=yfACEvbXPPRzXU+VkJN_gCTzA@mail.gmail.com>
-Subject: Re: [PATCH v2] log,diff-tree: add --combined-with-paths options for
- merges with renames
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <20181204224238.50966-1-jonathantanmy@google.com> <20190125153348.GF6702@szeder.dev>
+In-Reply-To: <20190125153348.GF6702@szeder.dev>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 25 Jan 2019 11:56:38 -0800
+Message-ID: <CAGZ79kZRnuTU3ukP1UdBUZD1x+nubYSwLxYgJse1mcj8JUOa2g@mail.gmail.com>
+Subject: Re: Regression in: [PATCH on sb/more-repo-in-api] revision: use
+ commit graph in get_reference()
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 25, 2019 at 12:52 PM Elijah Newren <newren@gmail.com> wrote:
-> On Fri, Jan 25, 2019 at 9:41 AM Derrick Stolee <stolee@gmail.com> wrote:
-> > On 1/25/2019 11:54 AM, Elijah Newren wrote:
-> > > +     printf "0f9645804ebb04cc3eef91f799eb7fb54d70cefb\0::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR\0file\twith\ttabs\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
-> >
-> > I'm guessing that you use printf here because the
-> > 'cat <<-\EOF' approach doesn't work with the special
-> > tabs? Kudos for putting in the extra effort here for
-> > the special formatting!
->
-> Yeah, I didn't know how to easily get NUL bytes in the stream without
-> printf, and once I was using printf the EOF HEREDOC no longer had a
-> useful purpose.  In the first testcase, since there were only
-> printable characters in the expected output, a HEREDOC worked well.  I
-> guess I could have just used printf for both testcases, but having the
-> literal output shown where it's possible for a human to read it seemed
-> like an advantage worth capitalizing on.
+> Have fun! :)
 
-If the readability of a here-doc is preferred, you should be able to
-achieve the desired result with the q_to_tab() and lf_to_nul()
-functions. For instance:
+$ git gc
+...
+Computing commit graph generation numbers: 100% (164264/164264), done.
+$ ./git version
+git version 2.20.1.775.g2313a6b87fe.dirty
+# pu + one commit addressing
+# https://public-inbox.org/git/CAGZ79kaUg3NTRPRi5mLk6ag87iDB_Ltq_kEiLwZ2HGZ+-Vsd8w@mail.gmail.com/
 
-    q_to_tab <<-\EOF | lf_to_nul >expect &&
-    ...Q...Q...
-    EOF
+$ ./git -c core.commitGraph=false describe --dirty --all
+remotes/gitgitgadget/pu-1-g03745a36e6
+$ ./git -c core.commitGraph=true describe --dirty --all
+remotes/gitgitgadget/pu-1-g03745a36e6
+$ ./git -c core.commitGraph=true describe --dirty
+v2.20.1-776-g03745a36e6
+$ ./git -c core.commitGraph=false describe --dirty
+v2.20.1-776-g03745a36e6
+
+it looks like it is working correctly here?
+Or did I miss some hint as in how to setup the reproduction properly?
