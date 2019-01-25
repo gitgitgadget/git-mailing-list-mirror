@@ -2,174 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54AF41F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 11:36:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F5731F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 12:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726311AbfAYLgZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 06:36:25 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34648 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725909AbfAYLgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 06:36:25 -0500
-Received: by mail-wm1-f65.google.com with SMTP id y185so4592639wmd.1
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 03:36:23 -0800 (PST)
+        id S1728222AbfAYMXe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 07:23:34 -0500
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:33443 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726689AbfAYMXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 07:23:34 -0500
+Received: by mail-ed1-f48.google.com with SMTP id p6so7272066eds.0
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 04:23:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=EdKgURvJuMpDlomuXoBrRsX5p7ymZPzYkduHEqMhv5w=;
-        b=jm5dn6nJ2Jqf1wJHMkdjBByOIPrNZ3DijMceIRW4VZqZccPs0YZuOnQzoO3VAZOmbG
-         +/lvTaVGsgvrkmGxp1gIkoXvDvxQikLqjHPuM0GMSo89S/T6bmle7YxmjMVofObd0oVs
-         N9TNTPIoLFp+xw/JbYe/eX1NHNhIP4rc8UnHbRMC5z/TZ+4GaGCCB8CkSaHpgbJPVqBT
-         BZ51PjZOdEj+316OC54Agoir4JHGRvif2Pm3DdqDE6jzlhyCLkUS4iGPkaedoRlNOZWS
-         Uh3/T1DaAk4yD8uz3cO9rmzRTqwEkS0kcsHEldcjb4zKjE4H5chEtmE9qn6MV6aa+kfo
-         vcQg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=jWQp+OnjGGR/qjsHpDv/5/slcc6yYLWT9gs2Yk2rhoo=;
+        b=pS6Ho2AX4H7m3Az41l7t9fc8jmBtA2IkU/7QdwF4CfPd7atR7xwHm3k/258bJqSRrB
+         8RX2JljA2+zm2+lXtMAklAY2AYDYns9gmphsBXgiAXDntYL8eax894aZIhbbojk5d0vJ
+         9cPGvmSdObKVDdJC94dPh8u34tytraXvVCa+ngHjcuVt6DZ7JDxQ7OCanA6ZMOb8Wb2b
+         yYnyfsh0cVnmdUvoYrgyrrB/SGyTi8S+yN6IIYx9AAfNXpHScmYKgMyqlSqQIGzkADa2
+         HpB+JlkPU0d8HFbljbmHnqVDR/81wGuDC4CxDZt1Dn95W6T/5g6SF/jbj3BIR0cpAyn6
+         qTew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=EdKgURvJuMpDlomuXoBrRsX5p7ymZPzYkduHEqMhv5w=;
-        b=UiMPYG4r5AiqHY9LzTBjHiQ/sOlHRha5UBxWNBTMrCSSUZflf7786KUGE+K/CJ5J49
-         ypxozRbZtDHwh/tWVHTKTt5JqHkWp2E+VLOmedBtkVdoDwDdE8tXfCSabgRd0EQj1MC9
-         hno3bQwutkDqNAFNgmaTMvo2TfUwTkqu8g2j8mudr0vdEpC4t6D0Yk25vxzucKR/1eHy
-         uRc8wMIunC/fuky2d0TPCF1fvnRP5Jf7mmU3TOucN++u4Q+ECTv/1UFRnViISr9NjZrE
-         dUZeJ/b0rvWoDsS9zJeK1pyfvaJbmXcDQSVQl6dhq5wy5/ITLrq7wx5cJCflVcyfxQB9
-         155w==
-X-Gm-Message-State: AJcUukdzYw+7ghjNItVXTxVT5EU9xm5kBrQJvSTxvVrsAxfSWB7SV+5j
-        q2J7w+OB4Z8lotcCEkn8Flvfx8Ec
-X-Google-Smtp-Source: ALg8bN7DFBhpDczN+Gx0qx8omWGJRX6op/acLdTYpkhcL1mmRh0Iwfxi4k97qytwo5XSwyV/mC8Lxg==
-X-Received: by 2002:a1c:87cc:: with SMTP id j195mr6456081wmd.2.1548416182695;
-        Fri, 25 Jan 2019 03:36:22 -0800 (PST)
-Received: from [192.168.1.8] ([31.223.156.16])
-        by smtp.gmail.com with ESMTPSA id n9sm85446536wrx.80.2019.01.25.03.36.21
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=jWQp+OnjGGR/qjsHpDv/5/slcc6yYLWT9gs2Yk2rhoo=;
+        b=uEhwgI7W0tUiG5UaHdZLCazX49SBo6vrMdLJQ0Q5BZKKTe4BzUt5kY63ChqtAGDc+d
+         KqCwH6xADDOEbnoC2gTyPNC0+SkNEuYOsEJwdzWChR6nDCJX0z3f3UtSuwZjqw4Rll6F
+         8RxhTrmI/NZNzvpNLeCQRWSQZWEpRvK6022D4e0h4/o7BRJlhHFK8Q1CjviecV31dAdF
+         JPo0l74CRBJFZd+m9b6psmanWD7pWMzfkDtEYqG6RY1PiAJdEdFFH9Rq5yYPn47YIrgr
+         fPUYont/PrKU8wc4dXS0zSoXP9qWFJK6kdJ9W6RTr7opVOXnYTybdq+1yg9pd0/5THaS
+         VCpA==
+X-Gm-Message-State: AJcUukdTSLXhnl8wxU81jA/BmnBn2FwJdELuwn2maGq08yQI/IdprjoW
+        tXAXe++LReJ7gYrNzm5UehSsJHV4
+X-Google-Smtp-Source: ALg8bN7QH9ZP18BGbFRu4N+Hio7O47hqDzLB/t3lOXFOzHxMba0FyX/6ba+7Sh/CEEMUnj97rrQ75g==
+X-Received: by 2002:a50:f61e:: with SMTP id c30mr10260058edn.197.1548419012240;
+        Fri, 25 Jan 2019 04:23:32 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b46sm12067092edc.57.2019.01.25.04.23.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 25 Jan 2019 03:36:21 -0800 (PST)
-Subject: Re: [PATCH v3 6/7] t3701-add-interactive: test add_i_show_help()
-To:     phillip.wood@dunelm.org.uk,
-        Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <pull.103.v2.git.gitgitgadget@gmail.com>
- <pull.103.v3.git.gitgitgadget@gmail.com>
- <aede733318bb6fccc1c3d16adf442135d3cb0692.1548062019.git.gitgitgadget@gmail.com>
- <4a830716-f627-85e0-39bb-f61d7185ea2b@talktalk.net>
-From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
-Message-ID: <8f7c2f2a-fdb2-33a8-17f9-5d3564d695a7@gmail.com>
-Date:   Fri, 25 Jan 2019 12:36:12 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        Fri, 25 Jan 2019 04:23:31 -0800 (PST)
+Date:   Fri, 25 Jan 2019 04:23:31 -0800 (PST)
+X-Google-Original-Date: Fri, 25 Jan 2019 12:23:23 GMT
+Message-Id: <737767b6f4e0367a7797020bd07a6b4357a47413.1548419009.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.103.v4.git.gitgitgadget@gmail.com>
+References: <pull.103.v3.git.gitgitgadget@gmail.com>
+        <pull.103.v4.git.gitgitgadget@gmail.com>
+From:   "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v4 1/7] diff: export diffstat interface
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <4a830716-f627-85e0-39bb-f61d7185ea2b@talktalk.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Daniel Ferreira <bnmvco@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+From: Daniel Ferreira <bnmvco@gmail.com>
 
-On 25-Jan-19 12:01 PM, Phillip Wood wrote:
-> Hi Slavica
->
-> Having suggested that you move this patch up the series, I thought I
-> should check that it does actually pass before the rewrite.
-> Unfortunately when I run it it fails, but it is due to a missing
-> trailing space in the expected file. I get
->
-> --- expect	2019-01-25 10:42:06.794251740 +0000
-> +++ actual	2019-01-25 10:42:07.044127788 +0000
-> @@ -11,5 +11,5 @@
->   <BOLD>*** Commands ***<RESET>
->     1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3:
-> <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
->     5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7:
-> <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
-> -<BOLD;BLUE>What now<RESET>>
-> +<BOLD;BLUE>What now<RESET>>
->   Bye.
->
-> There should be a space after '<BOLD;BLUE>What now<RESET>>' as the
-> prompt has a space after it. The space is actually in the patch but it
-> got eaten by 'git am' (I have core.whitespace set but I think cleaning
-> up trailing whitespace is on by default anyway). I think the best way to
-> make this patch easier to apply would be to use '$SP' which is already
-> set up in earlier tests to avoid trailing whitespace in here documents.
-> You'll need to change
-> cat >expect <<-\EOF
-> to
-> cat >expect <<-EOF
-> to enable variable interpolation in the here document as well.
+Make the diffstat interface (namely, the diffstat_t struct and
+compute_diffstat) no longer be internal to diff.c and allow it to be used
+by other parts of git.
 
+This is helpful for code that may want to easily extract information
+from files using the diff machinery, while flushing it differently from
+how the show_* functions used by diff_flush() do it. One example is the
+builtin implementation of git-add--interactive's status.
 
-Thanks for checking the test. I had no idea that this might happen.
+Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+---
+ diff.c | 36 ++++++++++++++----------------------
+ diff.h | 18 ++++++++++++++++++
+ 2 files changed, 32 insertions(+), 22 deletions(-)
 
-I'll send new iteration soon, along with this changes.
+diff --git a/diff.c b/diff.c
+index dc9965e836..46a7d8cf29 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2421,22 +2421,6 @@ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
+ 	}
+ }
+ 
+-struct diffstat_t {
+-	int nr;
+-	int alloc;
+-	struct diffstat_file {
+-		char *from_name;
+-		char *name;
+-		char *print_name;
+-		const char *comments;
+-		unsigned is_unmerged:1;
+-		unsigned is_binary:1;
+-		unsigned is_renamed:1;
+-		unsigned is_interesting:1;
+-		uintmax_t added, deleted;
+-	} **files;
+-};
+-
+ static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
+ 					  const char *name_a,
+ 					  const char *name_b)
+@@ -5922,12 +5906,7 @@ void diff_flush(struct diff_options *options)
+ 	    dirstat_by_line) {
+ 		struct diffstat_t diffstat;
+ 
+-		memset(&diffstat, 0, sizeof(struct diffstat_t));
+-		for (i = 0; i < q->nr; i++) {
+-			struct diff_filepair *p = q->queue[i];
+-			if (check_pair_status(p))
+-				diff_flush_stat(p, options, &diffstat);
+-		}
++		compute_diffstat(options, &diffstat);
+ 		if (output_format & DIFF_FORMAT_NUMSTAT)
+ 			show_numstat(&diffstat, options);
+ 		if (output_format & DIFF_FORMAT_DIFFSTAT)
+@@ -6227,6 +6206,19 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
+ 	return ignored;
+ }
+ 
++void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat)
++{
++	int i;
++	struct diff_queue_struct *q = &diff_queued_diff;
++
++	memset(diffstat, 0, sizeof(struct diffstat_t));
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		if (check_pair_status(p))
++			diff_flush_stat(p, options, diffstat);
++	}
++}
++
+ void diff_addremove(struct diff_options *options,
+ 		    int addremove, unsigned mode,
+ 		    const struct object_id *oid,
+diff --git a/diff.h b/diff.h
+index ce5e8a8183..7809db3039 100644
+--- a/diff.h
++++ b/diff.h
+@@ -239,6 +239,22 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
+ void diff_emit_submodule_pipethrough(struct diff_options *o,
+ 				     const char *line, int len);
+ 
++struct diffstat_t {
++	int nr;
++	int alloc;
++	struct diffstat_file {
++		char *from_name;
++		char *name;
++		char *print_name;
++		const char *comments;
++		unsigned is_unmerged:1;
++		unsigned is_binary:1;
++		unsigned is_renamed:1;
++		unsigned is_interesting:1;
++		uintmax_t added, deleted;
++	} **files;
++};
++
+ enum color_diff {
+ 	DIFF_RESET = 0,
+ 	DIFF_CONTEXT = 1,
+@@ -327,6 +343,8 @@ void diff_change(struct diff_options *,
+ 
+ struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
+ 
++void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat);
++
+ #define DIFF_SETUP_REVERSE      	1
+ #define DIFF_SETUP_USE_SIZE_CACHE	4
+ 
+-- 
+gitgitgadget
 
-
--Slavica
-
-
->
-> Best Wishes
->
-> Phillip
->
->
-> On 21/01/2019 09:13, Slavica Djukic via GitGitGadget wrote:
->> From: Slavica Djukic <slawica92@hotmail.com>
->>
->> Add test to t3701-add-interactive to verify that add_i_show_help()
->> outputs expected content.
->> Also, add it before changing git-add--interactive.perl's help_cmd
->> to demonstrate that there are no changes introduced by the
->> conversion to C.
->> Prefix git add -i call with GIT_PAGER_IN_USE=true TERM=vt100
->> to force colored output on Windows.
->>
->> Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
->> ---
->>   t/t3701-add-interactive.sh | 24 ++++++++++++++++++++++++
->>   1 file changed, 24 insertions(+)
->>
->> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
->> index 65dfbc033a..14e3286995 100755
->> --- a/t/t3701-add-interactive.sh
->> +++ b/t/t3701-add-interactive.sh
->> @@ -639,4 +639,28 @@ test_expect_success 'add -p patch editing works with pathological context lines'
->>   	test_cmp expected-2 actual
->>   '
->>   
->> +test_expect_success 'show help from add--helper' '
->> +	git reset --hard &&
->> +	cat >expect <<-\EOF &&
->> +
->> +	<BOLD>*** Commands ***<RESET>
->> +	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
->> +	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
->> +	<BOLD;BLUE>What now<RESET>> <BOLD;RED>status        - show paths with changes<RESET>
->> +	<BOLD;RED>update        - add working tree state to the staged set of changes<RESET>
->> +	<BOLD;RED>revert        - revert staged set of changes back to the HEAD version<RESET>
->> +	<BOLD;RED>patch         - pick hunks and update selectively<RESET>
->> +	<BOLD;RED>diff          - view diff between HEAD and index<RESET>
->> +	<BOLD;RED>add untracked - add contents of untracked files to the staged set of changes<RESET>
->> +	<BOLD>*** Commands ***<RESET>
->> +	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
->> +	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
->> +	<BOLD;BLUE>What now<RESET>>
->> +	Bye.
->> +	EOF
->> +	test_write_lines h | GIT_PAGER_IN_USE=true TERM=vt100 git add -i >actual.colored &&
->> +	test_decode_color <actual.colored >actual &&
->> +	test_i18ncmp expect actual
->> +'
->> +
->>   test_done
->>
