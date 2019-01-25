@@ -2,91 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E39511F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 17:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2055C1F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 17:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729626AbfAYRwY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 12:52:24 -0500
-Received: from mail-vk1-f196.google.com ([209.85.221.196]:34453 "EHLO
-        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729190AbfAYRwU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 12:52:20 -0500
-Received: by mail-vk1-f196.google.com with SMTP id y14so2326484vkd.1
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 09:52:20 -0800 (PST)
+        id S1729041AbfAYRxw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 12:53:52 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:35542 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726329AbfAYRxv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 12:53:51 -0500
+Received: by mail-pf1-f194.google.com with SMTP id z9so5084906pfi.2
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 09:53:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=6XVHJ9T2M2bErgVKQIPEGwbyTu5aoOge7WqFIx2oSHc=;
-        b=H2lQ/Pch4wbLdI0GNYHgegqI5FHeqDilpTGfCUW/jwTRe6qp7oW6bkTNtNxNiH3Msi
-         te0wMLIcLB3FB2IAU60jcWmBGPkbI7ufCyFzvMwabcW2PBta+MCw0plwehg25aRmfnuF
-         k+9VLq6gOR5Mk0sFRYOhmUSjZQH6zzRz32dmwTYItWP1wZZXsuH6Bt5ngDVjE3qMimw3
-         84E2gsBUVG49zV54DQyMffwGs8Pi5dmiERfV9oIQ6/sekAF2sKO/+Si/R5MetCs5JEmX
-         s+xe/YLvH1s4xQ9Z3PbKUjWZUem6aVd2VcezN0vCG9/yiHx/ntFkjNsnTngQ0FWXFUgV
-         zNuA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=d6rZJ+T8EsPl4ViW/lWARrn8fbQlZXmMvwEX5Mpttw8=;
+        b=BmSolqvMSE04OD4/4XJNBWEMWblVmAVUHia+xjVHHq8c95G0xb4qiy3rbaB+hVV6QM
+         9WYNOSKYZkdXiSl47DqQFCMXJ1lpK6+4llM8263POjpPf74qPXepDUBUDY/cAog2X5+i
+         zrxDxsl8KUQHssNRs7FNmctqa+h7mNxWzt7NktoVkuC/E/sX8h4nc7j4yDAwLl4jDD0b
+         6dBSLMYOtY+7gZw/m6WdDIAURWn/4l3/TicliiWy1PJaxb6x25fd678xoeCY4TYtRvIB
+         1AODPyhNbNK/u4TpGExGNiIOxG7KsfY2vCIwWAxfgiI9srdDh4a4o3l0Wma6QGZgYtqz
+         Awpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6XVHJ9T2M2bErgVKQIPEGwbyTu5aoOge7WqFIx2oSHc=;
-        b=Nv5VU88AvCSWMtmA817PpkIY9NOXZ40JtdaHNMNk/NJKL3yXYWoXNt/QVRI1gg1hjH
-         uqict/yk8TeUDVyojuwTLUmVvO4Vq513Ig7TvVOxQag1CN/z1Q6XkzY5MP+YCrFvrLi5
-         EOgpZ2hABkxtHnFoMwcARr4Q/sBzz3dVzV4dzm9wTAia7rrB6ophj9s4TeAezoz0RPsh
-         hQM0CKO+Yc2LV0Z2yLrxLRR1peKdVFF+VUJy6Ae8v1jwoaxdaIuyh8F9FXHxUgMlGqIT
-         eWrAPhZ1MWTFPo1baLeWTG+/cKijGRHtK8rjqzNIcX4Edm1+eW/MX7l0m4CUjpOdkJH2
-         B+/w==
-X-Gm-Message-State: AJcUukf5dIpiV10b/0oMDSKnPC4E2n+OYLvDuHA9v5Gdy5Lx8zeb+NVR
-        Zn91EdpmuAQp1nN+gnpd+j2SSuwdxUshZM88ISGozTSC
-X-Google-Smtp-Source: ALg8bN4VKbn1te5ljOforh3YlkQvJbN7fpH6sa/tgghOKU0n8ctb7kU0wzeYvCiflKmFnZn/0NTi8LKn3v/VTjES8iQ=
-X-Received: by 2002:a1f:a147:: with SMTP id k68mr4768586vke.1.1548438739354;
- Fri, 25 Jan 2019 09:52:19 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=d6rZJ+T8EsPl4ViW/lWARrn8fbQlZXmMvwEX5Mpttw8=;
+        b=O5+7LYTsLWTUALdAHmR6/yssTIydPR4RqzmM4t3mEmVohv9ELVB3N34jQ1L+g4ZzRn
+         wevq8lRIxhgsB8WBBfFFyAXzrmSHNRLSK98JT33lDIvF72xsrQV0juZVNR0PJ65pzL9J
+         S7V2mYIDpSXpDD252b8+z25iLSH6EB4yimH850RfRs9QvA9f5V9kXw/b3IxHyDC8kgQJ
+         rDFuLtclwF9oRmn+O1vJzUZJ74M8ZEx2UaorQCoWP7B8RdqkZoBLsb7SpbzZ+mz6gDR3
+         VsrKb8xMcYrRdO0XZWwDuwK4RP0vyrll9pHrlS9mAloizqMXRoHErYgLVm05tg696fIG
+         Upog==
+X-Gm-Message-State: AJcUukc1sCZH/hbREmZdoWDeeeFz1/kq16F942Mfu/jdqYCQQIXD6Col
+        BA8dhZoz75ZecY80GUcdVEC+3w==
+X-Google-Smtp-Source: ALg8bN7LcoA+MTIT9o2Xtxc17blD1tpb6xyCeeaRD4qA8+w9q9ZfbIzT1MDtn7K0xEVZPNnFiEwcNQ==
+X-Received: by 2002:a63:f615:: with SMTP id m21mr11001097pgh.428.1548438830632;
+        Fri, 25 Jan 2019 09:53:50 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id l64sm34132560pge.73.2019.01.25.09.53.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 25 Jan 2019 09:53:49 -0800 (PST)
+Date:   Fri, 25 Jan 2019 09:53:42 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/14] trace2: Documentation/technical/api-trace2.txt
+Message-ID: <20190125175342.GA72177@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.108.git.gitgitgadget@gmail.com>
+ <1a90de9dab0dd836e54fee9e08ab9e2284e1027a.1548192131.git.gitgitgadget@gmail.com>
+ <20190125131929.GC6702@szeder.dev>
 MIME-Version: 1.0
-References: <20190124164654.1923-1-newren@gmail.com> <20190125165416.17473-1-newren@gmail.com>
- <2f785c2d-161c-b6a3-7743-b071969d60d7@gmail.com>
-In-Reply-To: <2f785c2d-161c-b6a3-7743-b071969d60d7@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 25 Jan 2019 09:52:07 -0800
-Message-ID: <CABPp-BHTsZBO11ykfTaZ_dzpvrww5D3A57qBM05EgP_wK-iM9g@mail.gmail.com>
-Subject: Re: [PATCH v2] log,diff-tree: add --combined-with-paths options for
- merges with renames
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190125131929.GC6702@szeder.dev>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 25, 2019 at 9:41 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 1/25/2019 11:54 AM, Elijah Newren wrote:
-> > +test_expect_success '--combined-with-paths works with -z as well' '
-> > +     printf "0f9645804ebb04cc3eef91f799eb7fb54d70cefb\0::100644 100644=
- 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c=
-2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR\0file\twith\ttab=
-s\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
->
-> I'm guessing that you use printf here because the
-> 'cat <<-\EOF' approach doesn't work with the special
-> tabs? Kudos for putting in the extra effort here for
-> the special formatting!
+On 2019.01.25 14:19, SZEDER Gábor wrote:
+> On Tue, Jan 22, 2019 at 01:22:12PM -0800, Jeff Hostetler via GitGitGadget wrote:
+> > From: Jeff Hostetler <jeffhost@microsoft.com>
+> > 
+> > Created design document for Trace2 feature.
+> > 
+> > Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> > ---
+> >  Documentation/technical/api-trace2.txt | 1158 ++++++++++++++++++++++++
+> >  1 file changed, 1158 insertions(+)
+> >  create mode 100644 Documentation/technical/api-trace2.txt
+> > 
+> > diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+> > new file mode 100644
+> > index 0000000000..501fd770f2
+> > --- /dev/null
+> > +++ b/Documentation/technical/api-trace2.txt
+> > @@ -0,0 +1,1158 @@
+> > +Trace2 API
+> > +==========
+> > +
+> > +The Trace2 API can be used to print debug, performance, and telemetry
+> > +information to stderr or a file.  The Trace2 feature is inactive unless
+> > +explicitly enabled by setting one or more of the `GIT_TR2`, `GIT_TR2_PERF`,
+> > +or `GIT_TR2_EVENT` environment variables.
+> > +
+> > +The Trace2 API is intended to replace the existing (Trace1)
+> > +printf-style tracing provided by the existing `GIT_TRACE` and
+> > +`GIT_TRACE_PERFORMANCE` facilities.  During initial implementation,
+> > +Trace2 and Trace1 may operate in parallel.
+> 
+> Speaking of replacing Trace1, I couldn't find (or managed to overlook)
+> the Trace2 equivalent of the good old "plain"
+> 
+>   trace_printf("Uh-oh!");
+> 
+> which is my go-to tool when chasing elusive heisenbugs and attempting
+> to understand racy situations and flaky tests.
 
-Yeah, I didn't know how to easily get NUL bytes in the stream without
-printf, and once I was using printf the EOF HEREDOC no longer had a
-useful purpose.  In the first testcase, since there were only
-printable characters in the expected output, a HEREDOC worked well.  I
-guess I could have just used printf for both testcases, but having the
-literal output shown where it's possible for a human to read it seemed
-like an advantage worth capitalizing on.  If anyone feels strongly
-that I should use printf for both tests, I can switch them though.
-
-> The rest of the patch looks good.
-
-Thanks for taking a look!
+trace2_printf() is declared in trace2.h (line 387) and defined in
+trace2.c (line 801).
