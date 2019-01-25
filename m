@@ -2,93 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5D171F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 19:25:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88AEA1F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 19:29:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbfAYTZy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 14:25:54 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:42958 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726234AbfAYTZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 14:25:53 -0500
-Received: by mail-lj1-f193.google.com with SMTP id l15-v6so9304397lja.9
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 11:25:52 -0800 (PST)
+        id S1726284AbfAYT3U (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 14:29:20 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:34300 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725778AbfAYT3U (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 14:29:20 -0500
+Received: by mail-wm1-f65.google.com with SMTP id y185so5496429wmd.1
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 11:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=67wY4FTv0uskKxaBiigmWfRnJtSZuF1vcaWqB8QRzM8=;
-        b=uouGemRIslME4tFU/uebY3oKLPreCIdmaGY1muts6IkkRwWdT/ufg/8jh1gE8Tl7GW
-         GKNseWaS8WhD3DrVQfGe1jkzY+2ByCiBuGgdlXjVA8xXDufY03RV5PsQrZbOGJx2tRZU
-         f7owi0Da9G+zJe16r5I4/gSyn3AAGY+KonFh4GjvuKgzTn0nFZpAgIEnD5UFl1hsrWOc
-         0yInumzZWVUCz3NLjtlEq3PFoqsoKu8n0xoPb+foQAWApNM1Emr1pVG48gIkY24tbWOJ
-         MLn3eVdhFTq4RZ4GEQf+6LPQT8aCNWM5Zc1GnxJcHjWOW4i4PaVlIiQO9u4AGOF2NNI1
-         OgnQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ymFx2kHazadmZE8BU71gcALjzhxssqCbeAOeu1Msano=;
+        b=P9PjTjYpke0thv8YNIo7NIWFC17bkpfaR01PnZPDDnks1XJqoo4N+OrlU1hOLGwsZ0
+         ZTQQz0vn6Pw/bFLUMUUzvSuMRrENVHYg2n6Q7QnnZrNnthSeT2QconWd1yQR/PDxM+bq
+         Zx1TBN6y6rUTZulCwSRktlUv0/sT5fixOBtc13/ai6VtUTTTl0T7jwl4F1yp1H2YQ8zG
+         cYU1GmEELhuNAZPs3QoJxttsbr4hL0qUi3SygP9LD/SLgOUB1spad4eDP3vBzAAW35UA
+         Ps8ABIL13FzPpNL/HbWVTsAmPhdN6wW4U5TV3mzx4+PpQHjoiRLfSehtF1Tw86yA+UkU
+         Q1AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=67wY4FTv0uskKxaBiigmWfRnJtSZuF1vcaWqB8QRzM8=;
-        b=pvC7G3x43R6m8cBEbxzXLi9nNZhUmzOpNIg1E8Dtfw4sfz2A0JSTUAkMj0eQ5ZNsRY
-         6zBSEh3hDRr9J+xD2FSMAq3R70mpxIroXvx4mUN0kOCwsE0Z6oc38nWS5yBAGCDyC3lx
-         rnWPUBCkApWxgU7RK3RRM7IO42WWsXSpHComh/Ui8SSJxa1zBKVQyvfVjan9JrZBYgRf
-         ijImo1aC3ZGMhRdxTK27gIRlkZcnAFrHgMavirztO7tQIXUN1IEtCNMLfv7Go2N6bc9A
-         Dr/xpDQN2ZfJcKVON+4bqb1ho46zn4TREABy/U+VRv/v29MFHThhzJDKA8p5gVdJ4q4F
-         wlTw==
-X-Gm-Message-State: AJcUukfAY6xtab8sfpPPxY8jv7XBNFfsa6dq2kJCHAhmkO2GxiT/qXsW
-        U6RwDEwZW4LSfRJIcGyWPEr4djwZjMeyUTN2ahI=
-X-Google-Smtp-Source: ALg8bN5681wHLwd1LvVMixSX45chhraFdOYGs0W3byYrLgIgDQR0TI2+D2uDfabo+K88yT9dk9kYUPeA3j44UDrbb1w=
-X-Received: by 2002:a2e:4a19:: with SMTP id x25-v6mr8726507lja.19.1548444351719;
- Fri, 25 Jan 2019 11:25:51 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ymFx2kHazadmZE8BU71gcALjzhxssqCbeAOeu1Msano=;
+        b=AONrjywalKuHW96qNAOLmegf+MPDxAKpi+Dy6OdBctPDU5zsy3TQYfQGBad4ulAB4Q
+         weoOk5w3rBG9tOekRJcPegNcaaVEdFwEGTSKJawex5EpLYwW9PFScpPKhjHaLyVMIn/W
+         n5BN0clUGimMiwqeWCgguDHSl78i6JvphyQyy3qYL5fLUTHF+zgmDRvhQMDe8Df2OgeP
+         8TFZx19I9OxKFV+cRmn4GChY2L3Arqp7rDe9+YRDXmuwaNb4bQu4wFLOOu1v3VnaJJ9I
+         URPCvR6JKrIQ5OPOWne1PqkGOQNbCQuc2mtCe2tD0K2BUll5TSbR7/MB3Bf0jewM4klb
+         VJVg==
+X-Gm-Message-State: AJcUukeu3zhccIlGIXl+QksbLzs/uF/DAHUXkLa996G9/w6ozRjaXrdx
+        sjiHkGnGMnYbqU3EFg9vT4k4Izzr
+X-Google-Smtp-Source: ALg8bN61A0eb7k4wgjGXdp/dPm0AXDbdRBRry38rloUVAOMgG/uX0LIpKIwsC/Z4oHqm7t50zQt20Q==
+X-Received: by 2002:a7b:c04e:: with SMTP id u14mr8171864wmc.113.1548444557948;
+        Fri, 25 Jan 2019 11:29:17 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m21sm46016034wmi.43.2019.01.25.11.29.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 25 Jan 2019 11:29:17 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] log,diff-tree: add --combined-with-paths options for merges with renames
+References: <20190124164654.1923-1-newren@gmail.com>
+Date:   Fri, 25 Jan 2019 11:29:16 -0800
+In-Reply-To: <20190124164654.1923-1-newren@gmail.com> (Elijah Newren's message
+        of "Thu, 24 Jan 2019 08:46:54 -0800")
+Message-ID: <xmqqmunofsdv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAN0heSq0Nb-WdhDFpdwgjUMrkJNbviAtietn=B5nJg-rDgcR_g@mail.gmail.com>
- <cover.1548186510.git.martin.agren@gmail.com> <f8b021033b887923662eb9fa63f6df1677ebbbb5.1548186510.git.martin.agren@gmail.com>
- <20190123055704.GA19601@sigill.intra.peff.net> <20190124001450.GR423984@genre.crustytoothpaste.net>
-In-Reply-To: <20190124001450.GR423984@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 25 Jan 2019 20:25:39 +0100
-Message-ID: <CAN0heSr6ssaLc6kDdAzny=HxCtxfV8S0+CFJ9-HcU+O1tJ2=rQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] setup: fix memory leaks with `struct repository_format`
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 24 Jan 2019 at 01:15, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Elijah Newren <newren@gmail.com> writes:
+
+> The raw diff format for merges with -c or --cc will only list one
+> filename, even if rename detection is active and a rename was detected
+> for the given path.  Examples:
 >
-> On Wed, Jan 23, 2019 at 12:57:05AM -0500, Jeff King wrote:
-> > > +void clear_repository_format(struct repository_format *format)
-> > > +{
-> > > +   string_list_clear(&format->unknown_extensions, 0);
-> > > +   free(format->work_tree);
-> > > +   free(format->partial_clone);
-> > > +   *format = (struct repository_format)REPOSITORY_FORMAT_INIT;
-> > > +}
-> >
-> > ...this uses that expression not as an initializer, but as a compound
-> > literal. That's also C99, but AFAIK it's the first usage in our code
-> > base. I don't know if it will cause problems or not.
+>   ::100644 100644 100644 fabadb8 cc95eb0 4866510 MM	describe.c
+>   ::100755 100755 100755 52b7a2d 6d1ac04 d2ac7d7 RM	bar.sh
+>   ::100644 100644 100644 e07d6c5 9042e82 ee91881 RR	phooey.c
+>
+> This doesn't let us know what the original name of bar.sh was in the
+> first parent, and doesn't let us know what either of the original
+> names of phooey.c were in either of the parents.  In contrast, for
+> non-merge commits, raw format does provide original filenames (and a
+> rename score to boot).  In order to also provide original filenames
+> for merge commits, add a --combined-with-paths option (which is only
+> useful in conjunction with -c, --raw, and -M and thus implies all
+> those options) so that we can print tab-separated filenames when
+> renames are involved.  This transforms the above output to:
+>
+>   ::100644 100644 100644 fabadb8 cc95eb0 4866510 MM	describe.c
+>   ::100755 100755 100755 52b7a2d 6d1ac04 d2ac7d7 RM	foo.sh	bar.sh
+>   ::100644 100644 100644 e07d6c5 9042e82 ee91881 RR	fooey.c	fuey.c	phooey.c
 
-> > Given how simple it is to fix if it turns out to be a problem, I'm OK
-> > including it as a weather balloon.
+I admit that I designed the original without too much thought.
+Perhaps we should have avoided discarding info, but it is way too
+late to fix with a default behaviour change.
 
-Thanks for pointing out this potential problem.
+I am not sure if it is easy for consumers to guess which name on the
+output line corresponds to which input tree from the status letter,
+though.  Would it make it easier for consumers if this showed names
+in all input trees if any of them is different from the name in the
+resulting tree, I wonder?  Even in that case, the consumer must know
+some rule like "if R or C appears in the status column, then we have
+N preimage names plus the name in the result for N-way merge", so it
+may not be too bad to force them to know "for each of R or C in the
+status column, the name in the preimage tree is emitted, and the
+last name is the name in the result".  I dunno.
 
-> It's my understanding that MSVC doesn't support this construct. If we
-> care about supporting MSVC, then we need to write it without the
-> compound literal. MSVC doesn't support any C99 feature that is not also
-> in C++, unfortunately.
+> +For `-c` and `--cc`, only the destination or final path is shown even
+> +if the file was renamed on any side of history.  With
+> +`--combined-with-paths`, the number of paths printed will be one more
+> +than the number of 'R' characters in the concatenated status.  For
+> +each 'R' in the concatenated status characters, the original pathname
+> +on that side of history will be shown, and the final path shown on the
+> +line will be the path used in the merge.
 
-Ok, better play it safe then. Thanks.
+Is it safe for readers to pay attention to only 'R'?  Will it stay
+forever that way?  My immediate worry is 'C', but there might be
+other cases that original and result have different names.
 
-Martin
+> +--combined-with-paths::
+> +	This flag is similar to -c, but modifies the raw output format for
+> +	merges to also show the original paths when renames are found.
+> +	Implies	-c, -M, and --raw.
+
+So, --cc -p is not allowed to use this?  I was wondering if we want
+to have a separate "even though traditionally we did not show
+preimage names in combined output, this option tells Git to do so,
+regardless of output format used, as long as 'combine-diff' is in
+effect".
