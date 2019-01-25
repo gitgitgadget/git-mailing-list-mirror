@@ -2,293 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9725F211B5
-	for <e@80x24.org>; Fri, 25 Jan 2019 21:14:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64561211B5
+	for <e@80x24.org>; Fri, 25 Jan 2019 21:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729404AbfAYVOD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 16:14:03 -0500
-Received: from siwi.pair.com ([209.68.5.199]:13678 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726262AbfAYVOC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 16:14:02 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 9BB213F4015;
-        Fri, 25 Jan 2019 16:13:59 -0500 (EST)
-Received: from [IPv6:2001:4898:6808:13e:584a:7851:5944:ebfe] (unknown [IPv6:2001:4898:8010:0:4180:7851:5944:ebfe])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 585B43F400D;
-        Fri, 25 Jan 2019 16:13:59 -0500 (EST)
-Subject: Re: [PATCH 01/14] trace2: Documentation/technical/api-trace2.txt
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com
-References: <pull.108.git.gitgitgadget@gmail.com>
- <1a90de9dab0dd836e54fee9e08ab9e2284e1027a.1548192131.git.gitgitgadget@gmail.com>
- <xmqqbm47ayhv.fsf@gitster-ct.c.googlers.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <0ed19c21-4844-79b3-3428-54b2ecb56b0f@jeffhostetler.com>
-Date:   Fri, 25 Jan 2019 16:13:58 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.2
+        id S1726863AbfAYVdM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 16:33:12 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37747 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726321AbfAYVdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 16:33:11 -0500
+Received: by mail-wr1-f65.google.com with SMTP id s12so11802952wrt.4
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 13:33:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=c0muv28MThP0guTZbrlvNs7nLdhVlNNkzIhqmRwL1SY=;
+        b=I61V0mM5z3Kt1G0Y8oyTuSQoXbN26XBNchX2/qNYA6Ea5HWpsFf8jvw9DRTm7/0ECN
+         O6JHdCErMFZV2liohQ24X+Pc8hthfjC0bKsB2XxWxSw+AreV75nHwtLgp6T2gooOJKUy
+         wOvHORw6iuB3ByntVzkEG3LTImFST9XBDxrHoh0VQR05AcEVfuuWj1V97QRUnQi6tauB
+         0GaTpLBJdiWdTofcFFKAg14xbI40vy2xS0rkWOefGegBvZoPTVPsP+E3KvwWTOwE71kz
+         b71Ve8zj0PK4Mukwy6NkpkU0Siyl3KjFYd+5EOHkmIVhXvce63XkXjDtrJ3//QOpv/8a
+         utSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=c0muv28MThP0guTZbrlvNs7nLdhVlNNkzIhqmRwL1SY=;
+        b=O002wov/KHVes4RI+Srx4XmwBMfcjxxiJtO2ksohGBgo5zK9Jw3iA8Xvrx61OIovLr
+         KnE24AgKLTIcTQYCZ95H1P/zP1u9+h9jKWm9wiyUrNNoEu1MG85X9+/qWLD1qvSGutwY
+         2ai/BmCi6VTpaax7ftlqgI6xGHxrYPCGvfpABSVRRlKVIV7//Bb/UKQufrGS/wfUMPgZ
+         NOtmqKQpzD065Q+6JHV7Btc9ML0HgLXzZoebGQDSeDfV0HPwzoo+LVEamu6n0kKPGcH9
+         MxXBfweoMW7r1lUVPfPTKiwV0J25hAgDbcuO104bP3SM9F3KrLkhirrH9HTyIJK77/B/
+         jYPg==
+X-Gm-Message-State: AJcUukdAgSsSo7GPQ8XtEpOyrTiL1KHe8Yt2gIILXsUN5gPBnedgFAya
+        PLqqQDSXJyM7WKWu1pFmpu4=
+X-Google-Smtp-Source: ALg8bN5i0bub6xiZCza2s6pWQ92YIxgxTTWwT9C5Cm85402h3Hg/mUFkyqRSl1uoCjDNXxH31lj0ww==
+X-Received: by 2002:adf:d089:: with SMTP id y9mr13424269wrh.22.1548451989478;
+        Fri, 25 Jan 2019 13:33:09 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j24sm133240670wrd.86.2019.01.25.13.33.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 25 Jan 2019 13:33:08 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Israel\, Daniel M" <dmi1@lanl.gov>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Writing merge strategy?
+References: <244FE6CE-C045-4EC9-8C3F-8D16CF4D09EB@lanl.gov>
+Date:   Fri, 25 Jan 2019 13:33:08 -0800
+In-Reply-To: <244FE6CE-C045-4EC9-8C3F-8D16CF4D09EB@lanl.gov> (Daniel
+        M. Israel's message of "Fri, 25 Jan 2019 00:55:52 +0000")
+Message-ID: <xmqqimycfmnf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqbm47ayhv.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Israel, Daniel M" <dmi1@lanl.gov> writes:
 
+> I need a custom merge strategy (not driver) for a tool I’m writing, and I’m wondering:
+>
+> 1. Is there documentation for the API anywhere?
 
-On 1/23/2019 3:51 PM, Junio C Hamano wrote:
-> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> +These high-level events are written to one or more Trace2 Targets
->> +in a target-specific format.  Each Trace2 Target defines a different
->> +purpose-specific view onto the event data stream.  In this mannor,
-> 
-> "In this manner"
-> 
->> +a single set of Trace2 API event calls in the Git source can drive
->> +different types of analysis.
->> +
->> ...
->> +$ cat ~/log.perf
->> +12:28:42.620675 common-main.c:38                  | d0 | main                     | version      |     |           |           |            | 2.20.1.155.g426c96fcdb
->> +12:28:42.621001 common-main.c:39                  | d0 | main                     | start        |     |           |           |            | git version
->> +12:28:42.621111 git.c:432                         | d0 | main                     | cmd_verb     |     |           |           |            | version (version)
->> +12:28:42.621225 git.c:662                         | d0 | main                     | exit         |     |  0.001227 |           |            | code:0
->> +12:28:42.621259 trace2/tr2_tgt_perf.c:211         | d0 | main                     | atexit       |     |  0.001265 |           |            | code:0
->> +------------
->> ...
->> +
->> +trace2_def_param(...)
-> 
-> Not limited to this single one, but please either
-> 
->   - omit "..." in parens, unless all of these functions take varargs
->     of unspecified type (which I do not think is the case), or
-> 
->   - write a proper prototype for these functions, explain what the
->     function itself and what the parameters are for.
-> 
-> I'll complain about lack of info around here later X-<.
+It used to be far easier to figure out back when git-merge.sh was a
+script before 1c7b76be ("Build in merge", 2008-07-07) and it got
+even harder to figure out after we removed contrib/examples/ at
+49eb8d39 ("Remove contrib/examples/*", 2018-03-25), but you can
+still find in "git show 1c7b76be^:git-merge.sh" output the following
+snippet that shows how your merge strategy is called by the caller:
 
-I documented the prototypes in trace2.h and was hoping to avoid
-duplicating all that text here in this document.  The list of
-functions here in this document was more of an overview of the
-groups of concepts covered.  I'll revisit this.
+-- >8 -- snipsnap -- >8 --
 
+    git-merge-$strategy $common -- "$head_arg" "$@"
+    exit=$?
+    if test "$no_commit" = t && test "$exit" = 0
+    then
+        merge_was_ok=t
+	exit=1 ;# pretend it left conflicts.
+    fi
 
-> 
->> +trace2_def_repo(...)
-> 
->> +----------------
->> +
->> +Git Child Process Events::
->> +
->> +	These are concerned with the various spawned child processes,
->> +	including sub-git processes and hooks,
->> ++
->> +----------------
->> +trace2_child_start(...)
->> +trace2_child_exit(...)
->> +
->> +trace2_exec(...)
->> +trace2_exec_result(...)
->> +----------------
->> +
->> +Git Thread Events::
->> +
->> +	These are concerned with Git thread usage.
->> ++
->> +----------------
->> +trace2_thread_start(...)
->> +trace2_thread_exit(...)
->> +----------------
-> 
-> Lack of _wait()/_join() feels a bit curious, but _exit() from what
-> is being waited would suffice as a substitute.
+    test "$exit" = 0 || {
 
-The 2 trace2_thread_ functions have to be run by the thread-proc itself
-rather than by the code calling the pthread functions.  So to me it made
-more sense inside the thread-proc for them to be named _start and _exit.
-This gives us an event with the elapsed time of the thread in isolation
-using TLS data within each thread.
+	# The backend exits with 1 when conflicts are left to be resolved,
+	# with 2 when it does not handle the given merge at all.
 
-If I understand your question about _wait/_join, adding trace2 calls
-near the pthread_create and pthread_join, would be a bit of a mess
-because of the usual create loop and then later the join loop.  And
-the exit times would be less accurate, since we typically _join them
-in array order rather in the order they finish.
+	if test "$exit" -eq 1
+	then
+	    cnt=`{
+		git diff-files --name-only
+		git ls-files --unmerged
+	    } | wc -l`
+	    if test $best_cnt -le 0 -o $cnt -le $best_cnt
+	    then
+		best_strategy=$strategy
+		best_cnt=$cnt
+	    fi
+	fi
+	continue
+    }
 
-And having the trace2_thread_ calls in the pthread caller doesn't let
-me access the thread's private TLS data.
+    # Automerge succeeded.
+    result_tree=$(git write-tree) && break
 
-Wrapping a region (like I show later in the preload_index() example)
-around both of the pthread loops gives us the overall time for the
-threading and insight into the thread overhead.  (One could even
-have a region around the pthread_create loop and another around the
-pthread_join loop, but that might not be worth the trouble.
+-- 8< -- snipsnap -- 8< --
 
-> 
->> +Initialization::
->> +
->> +	Initialization happens in `main()`.  The initialization code
->> +	determines which, if any, Trace2 Targets should be enabled and
->> +	emits the `version`, `start`, and `exit` events.  It causes an
->> +	`atexit` function and `signal` handler to be registered that
->> +	will emit `atexit` and `signal` events.
->> ++
->> +----------------
->> +int main(int argc, const char **argv)
->> +{
->> +	int exit_code;
->> +
->> +	trace2_initialize();
->> +	trace2_cmd_start(argv);
-> 
-> Nobody other than trace2 integration would make a call to this
-> helper, so it may not matter, but sending av alone without ac, even
-> though ac is almost always redundant, feels somewhat unexpected.
+You'll be called with common ancestor commit(s), double-dash, HEAD
+(i.e. the commit the work by histories are being merged into), and
+the commits being merged, on the command line.  You are expected to
 
-Agreed.  There were other places that took an argv that didn't have
-an argc on hand in the calling code.  So rather than fake up one for
-them, I just omitted it from all the calls in my API.
+ - update the index with the merge result and exit with 0, if you
+   auto-resolved the merge cleanly; or
 
+ - update the index with the cleanly merged result at stage #0, and
+   for conflicted paths, place the common anestor version at stage
+   #1, the version from HEAD at stage #2 and the version(s) from
+   merged commit(s) at stage #3.  Signal that your automerge is
+   usable with manual resolution by exiting with 1; or
 
-> 
->> +Command Details::
->> +
->> +	After the basics are established, additional process
->> +	information can be sent to Trace2 as it is discovered, such as
->> +	the command verb, alias expansion, interesting config
->> +	settings, the repository worktree, error messages, and etc.
->> ++
->> +----------------
->> +int cmd_checkout(int argc, const char **argv)
->> +{
->> +	// emit a single "def_param" event
->> +	trace2_def_param("core.editor", "emacs");
-> 
-> Without knowing what "def_param event" is, this example is hard to
-> fathom.  At this point in the doc, the reader does not even know
-> what "def" stands for.  Is this call to define a param called
-> core.editor?  Is it reporting that the default value for core.editor
-> is emacs?
-> 
->> +	// emit def_params for any config setting matching a pattern
->> +	// in GIT_TR2_CONFIG_PARAMS.
->> +	trace2_cmd_list_config();
-> 
-> As the reader does not know what def_param is, this is also hard to
-> follow.
+ - do nothing and exit with 2, to signal that you were not capable
+   of handling this particular merge.
 
-I'll rewrite that section.  The idea is to define a parameter that
-a perf-tester might consider important.  For example, "core.abbrev"
-used to cause massive perf problems on our mega repo where it might
-take minutes to compute 7 or 8 digit abbreviations for a log or
-branch command (completely dominating the time to actually compute
-the log or branch list).
+The "git merge" command that called your strategy is responsible for
+making a commit out of the index you left, recording the parent
+commits, reacting to "merge --no-commit -S" and other options.
 
+> 2. Does git-merge actually do any magic, or could I just run the
+> script that implements my merge directly?  In other words, is
+> there really any difference between a merge strategy and a script
+> that creates the tree I want and then commits it using
+> git-commit-tree with multiple -p arguments.
 
-> 
->> +	trace2_cmd_verb("checkout");
->> +	trace2_cmd_subverb("branch");
-> 
-> These are guessable.  It probably reports what the codepath is
-> doing.
+Other "magic" we let "git merge" do are things like handling
+fast-forward, iterating over multiple strategies and use what works,
+etc.
 
-These are to help post-processing.  The git command line is parsed
-in 2 or 3 different phases and it takes quite a bit of work to get
-to cmd_*() function (such as skipping over the -c, -C, --exec-path,
-and other such args, and handling the commands where there isn't
-a cmd_*() function (such as "git --exec-path")).  Then within the
-cmd_*() function, a lot of work to see which variant of the command
-is (such as is this checkout checking out a branch or a single
-file).  And there are short and long forms of many arguments. And then 
-there is the alias expansion which wants to rewrite the command line
-(possibly recursively).  And then there is the code to try to run the
-non-builtin dashed form.
+If you are not doing a strategy but a custom script, you'd be
+reinventing "git merge".  As long as your custom script produces a
+commit object that records the resulting tree, parent commits and
+log message correctly, nobody who examines that resulting merge
+commit would not even know you did not use "git merge" to record it.
 
-For post-processing, you want to be able to do something like this:
-
-	select elapsed_time where verb='checkout' and subverb='branch'
-	select elapsed_time where verb='checkout' and subverb='path'
-
-and report averages over those 2 sets independently without having
-to recreate all that argv parsing inside the database query (or perl
-script on the trace log).
-
-> 
->> +	trace2_def_repo(the_repository);
-> 
-> Again, this is not easy to guess.  Is it reporting what the default
-> repository is?
-
-I'll reword this.
-
-
-> 
->> +	if (do_something(...))
->> +	    trace2_cmd_error("Path '%s': cannot do something", path);
-> 
-> This is guessable, which is good.
-> 
->> +void run_child(...)
->> +{
->> +	int child_exit_code;
->> +	struct child_process cmd = CHILD_PROCESS_INIT;
->> +	...
->> +
->> +	trace2_child_start(&cmd);
->> +	child_exit_code = ...();
->> +	trace2_child_exit(&cmd, child_exit_code);
-> 
-> Even though child_exit() has not been explained just like
-> def_param(), this is far more guessable.  I wonder why it is.  The
-> name of the variable passed to it in the example certainly helps, as
-> it is totally unclear where the string constant "emacs" in the
-> earlier example came from (e.g. is it hardcoded in the program?  is
-> it merely illustrating "here is how you report the value you have
-> decided to use for 'core.editor' variable"?).
-
-yes, some of these are synthetic uses of the API to illustrate
-the trace2 concepts.  I just picked 'core.editor' at random.  I'll
-revisit the examples.
-
-
-> 
->> ...
->> +$ cat ~/log.perf
->> +d0 | main                     | version      |     |           |           |            | 2.20.1.160.g5676107ecd.dirty
->> +d0 | main                     | start        |     |           |           |            | git status
->> +d0 | main                     | def_repo     | r1  |           |           |            | worktree:/Users/jeffhost/work/gfw
->> +d0 | main                     | cmd_verb     |     |           |           |            | status (status)
->> +...
->> +d0 | main                     | region_enter | r1  |  0.010988 |           | status     | label:worktrees
-> 
-> It is hard to guess what "d0" and "r1" stand for here.
-> 
-> In an earlier example we also saw an unexplained "d0" there, which I
-> think was OK because the illustration was merely to give the "feel"
-> of the format up there.  But now we are giving a bit more detailed
-> explanation, we probably would want to at least briefly mention what
-> each column means.
-
-yes, the example at the top was just to preview the formats.
-I'll add more info here.
-
-> I'd stop here for now, as I am more interested in reading the code
-> ;-)
-> 
-
-Thanks
-Jeff
+And that is perfectly fine as long as the result suits your needs
