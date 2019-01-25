@@ -2,139 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0679E1F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 02:19:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60DB81F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 02:26:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728416AbfAYCT5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 21:19:57 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33314 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727983AbfAYCT5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 24 Jan 2019 21:19:57 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c162:ac20:e47c:bd21])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D93216042D;
-        Fri, 25 Jan 2019 02:19:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1548382795;
-        bh=xanbhUjNn/YZY7BGmwKyNG+2ry49yV6vM5FSJYDylZY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=oKCF1ThKXGWwJhXMUrFznJHugMcnquk5vMEnkzoOaKZGQ3Q0DhICZoJA1uF5RSO0u
-         aZwYuulfs0RnDnXkj3KF70kyqUYHr78oAIUqOwqv8muKgma1Khn5BwGIXL/co/2e5h
-         6YKIQpdqM2RXvReeILsa9ECJcspAQ2UbuW8sens4jY6Wazqnrx1QFsgDxhRXdDmlqY
-         QhUScmKmHfkHVqni93j2JFGky4voiKTMGw7yCsTiCCgT1Cp0l0/gYIi4gelgS5yGGw
-         wfdk9jzjXzW8sx0qydAwi9AwyXfWXv8SszZvcr0ZPZE1BSLCvMnUSHE/mZ29jBgYjW
-         I/GHRNtZ/mIG+NKyztQw0UvQ1R/ZcJlYKFBUSTmtI4u4MjT1H+fleuCVBXlhbgiowk
-         nwn/5xYH5cXEonXtjwL8ymq5Uw75WHb9DwAWMcbk4ei42nWnWlx76wEICxvMronpgR
-         EseLnIBrujRhXTrjSX3V/nip65fYUBqNNEzTaSwf+Bx5Sj+fwrb
-Date:   Fri, 25 Jan 2019 02:19:50 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] log,diff-tree: add --combined-with-paths options for
- merges with renames
-Message-ID: <20190125021950.GV423984@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-References: <20190124164654.1923-1-newren@gmail.com>
+        id S1728532AbfAYC0x (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 21:26:53 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45011 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728372AbfAYC0x (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 21:26:53 -0500
+Received: by mail-pf1-f193.google.com with SMTP id u6so3966377pfh.11
+        for <git@vger.kernel.org>; Thu, 24 Jan 2019 18:26:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vFbhHYPHhhbsGD6Kh33le+iD57WLZMvZ84QUZLIwQFs=;
+        b=SvGqMiQMAXoWD18//om7vGgSiXGB4lM5bQMtM0AN7glsZDAivXbCAr4xfrMXytXDT0
+         S9Aawe9a9z93S69nGHJ98ENcrgd0UvD+yGpJLrCdDfSN1KZIHs38Euc6gxCqpLowkpRk
+         9vsfqbGEak5wQlU880LY0Wa/NUfwgZiTTaMBFln8e+rRojgFcGZ1pkiOQN0NXIYjqLfH
+         lHULqzVg3ZE81Tj8a6agS32PMectl76dh/cEMQD84SL2m+qHCn+aihqVsjPU1dNy49uT
+         e0ymM2RGeiUfgblMT3Xm6krl/EpLmeNtbr+ujrH9jJ9DInbe32Hyd5pWKl7PID5YZAN1
+         cgoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vFbhHYPHhhbsGD6Kh33le+iD57WLZMvZ84QUZLIwQFs=;
+        b=kh9Yp7NVDQ5iCcoPa4gHqwMWAiCN8QCLVOCTUmVSQ+7JmDlyN1iJr+463+kHhX94Sj
+         1LJWw+wpCvT2+cRpEZpiBYft69KuG+BgxcPSqWUebtcZygAyBRf/i2kici9y0H7hfSiQ
+         f6KbY98g13HPpvwfan/R3Di3mWUjSVjNMa1XcBMeKILuhs/Y5dmYOxO89iAZIRAxseTD
+         7Rnv/BMPvvv4r97uY9Ryl/eJiC8EYc4PL1NYAhDa1bw7HgJEymOqO+oxEhwnjfbggA0y
+         P3YKlXm8PS7/RGajUB+TD660mqNmu7FkdxqG6HequKJSu8dcv2f+oG8ICF/D0g7OlMGJ
+         9tJQ==
+X-Gm-Message-State: AJcUukdN75vDTgJby5N8wDUCMbcoKYeVpJT3mGCItMbGUQ52OEPYrSBC
+        bJeaoUZs6KYyJJ+sBKfzBs8=
+X-Google-Smtp-Source: ALg8bN4YI0KdL2rB97ZplNi3pOQySDXk2LdgA/mVQv7Ab4513Phr++1jHkp08GQKa9DIsPy921lsjw==
+X-Received: by 2002:a63:ff62:: with SMTP id s34mr8315140pgk.325.1548383212387;
+        Thu, 24 Jan 2019 18:26:52 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id u87sm60022772pfi.2.2019.01.24.18.26.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 24 Jan 2019 18:26:51 -0800 (PST)
+Date:   Thu, 24 Jan 2019 18:26:49 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 7/8] checkout: introduce --{,no-}overlay option
+Message-ID: <20190125022649.GA540@google.com>
+References: <20181220134820.21810-1-t.gummerer@gmail.com>
+ <20190108215225.3077-1-t.gummerer@gmail.com>
+ <20190108215225.3077-8-t.gummerer@gmail.com>
+ <20190122235313.GA199923@google.com>
+ <20190123202156.GA11293@hank.intra.tgummerer.com>
+ <xmqqzhrr9j52.fsf@gitster-ct.c.googlers.com>
+ <20190124011244.GE34357@google.com>
+ <xmqq8sz9hd6e.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ubBGeysJ7fFOU9Y9"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190124164654.1923-1-newren@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
+In-Reply-To: <xmqq8sz9hd6e.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
---ubBGeysJ7fFOU9Y9
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> I find --ignore-removal fairly easy to understand, and I had no idea
+>> what --overlay would mean.
+>>
+>> I realize this is just one user's experience.
+>
+> Exactly.  My impression was the exact opposite from yours.
+>
+> The phrase "removal" in the context of checkout does not click for
+> me at all, and neither it does in the context of add, especially
+> given that Git tracks states (i.e. snapshots), not changes.
 
-On Thu, Jan 24, 2019 at 08:46:54AM -0800, Elijah Newren wrote:
-> The critical part of the patch is the few line change to
-> show_raw_diff(), the rest is plumbing to set that up.
->=20
-> This patch was based out of Peff's suggestion[1] to fix diff-tree to
-> do what I needed rather than bending fast-export to cover my usecase;
-> I've been running with a hacky version of this patch for a while and
-> finally cleaned it up.
->=20
-> [1] https://public-inbox.org/git/20181114071454.GB19904@sigill.intra.peff=
-=2Enet/
->=20
-> As an alternative, I considered perhaps trying to sell it as a bugfix
-> (how often do people use -M, -c, and --raw together and have renames
-> in merge commits -- can I just change the format to include the old
-> names), but was worried that since diff-tree is plumbing and that the
-> format was documented to not include original filename(s), that I'd be
-> breaking backward compatibility in an important way for someone and
-> thus opted for a new flag to get the behavior I needed.
->=20
-> I did struggle a bit to come up with a name for the option; if others
-> have better suggestions, I'm happy to switch.
+Thanks.  What do you think of --skip-removals (or --skip-deletions)?
+The idea is "among the changes that you would be making to the
+worktree, skip any unlink() steps".
 
-Maybe --all-names? You should definitely let other people chime in on
-this as well; it should be obvious by now that I'm no expert on naming
-things.
+If that seems sensible, we can use it for "git checkout" and,
+optionally, add it as a synonym for --ignore-removal to "git add" as
+well.
 
-> Range-diff:
-> 1:  29e9ddf532 =3D 1:  29e9ddf532 log,diff-tree: add --combined-with-path=
-s options for merges with renames
->=20
->  Documentation/diff-format.txt      | 23 +++++++++++++---
->  Documentation/git-diff-tree.txt    |  9 +++++--
->  Documentation/rev-list-options.txt |  5 ++++
->  combine-diff.c                     | 42 ++++++++++++++++++++++++++----
->  diff.h                             |  1 +
->  revision.c                         |  7 +++++
->  revision.h                         |  1 +
->  7 files changed, 78 insertions(+), 10 deletions(-)
-
-I think it might be nice to see a test for this option so that we avoid
-breaking it in the future. I'm also curious how this works with -z, and
-a test for that would be interesting as well (as well as illustrative of
-the format). For example, is it still unambiguous for machine parsing,
-even with oddly named files?
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---ubBGeysJ7fFOU9Y9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxKckUACgkQv1NdgR9S
-9os1/RAAg/v7qLWUzETEmPElTrTV/ra7n+zk2mjzdHqQn+wCxtujmAfs55l0pL1Z
-ZmG1ZJdoa6FznFlz0p70WR1K4iUfgOhDvSqTL5ACm1D8EitRNLvqSu8hm5KSF32g
-nOOz5f3ROjWmJFQNygWkapq2VVft+lh2pTVn9nzkpATMy8zRMAowyS7X6v9NuUtI
-L7cuj3CCjBWKOTjpo+dQI8ZvT4lmsf40hhFl85+SiGEfdN5FlqaLoNiFSTIkiXXK
-z4hcu+91piu/rCFWnahBxxKFIt+dxtDOwOBDCKIknNMYh6KhvnUbZ7UEdhfXhbXL
-7CyP2G81x+uc/RRwPtGfMcBRx1NvJkwWE0NTS/9okSueZ/JhBaFBxiSUPkI/n6Y9
-D/z4xS5jJ/nJwO7as3rMSknFk0qWPSmDMKdicvgWYeHOX4Rd9+/ip35vBekGyZO+
-Pez7qrhLPOJUNCfxdbFjfFHt1x4ERWA+B8PReqOMGSMLYCEP+VkHHwBjJ8ZhVet7
-GNuIBQu+ZnS7JNAe0JawSH//VnG57dKoV/tTwoAzNHx1KgYX9J9O/Iy48N/jcl32
-lLVaqlo4iO1kRIeMrq+YAa3D1zC0pAnBS32Aom1ro/xWvGxZBuHM5/tiKgLWbZJI
-y4l2KNfGZ962N3b3onrjgsk+gEGBWdG6SsxzXZS9ZaCjc/B5bC4=
-=Fclo
------END PGP SIGNATURE-----
-
---ubBGeysJ7fFOU9Y9--
+Jonathan
