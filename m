@@ -7,184 +7,213 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F5731F453
-	for <e@80x24.org>; Fri, 25 Jan 2019 12:23:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAFA41F453
+	for <e@80x24.org>; Fri, 25 Jan 2019 12:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728222AbfAYMXe (ORCPT <rfc822;e@80x24.org>);
+        id S1728083AbfAYMXe (ORCPT <rfc822;e@80x24.org>);
         Fri, 25 Jan 2019 07:23:34 -0500
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:33443 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726689AbfAYMXe (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:34527 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725909AbfAYMXe (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 25 Jan 2019 07:23:34 -0500
-Received: by mail-ed1-f48.google.com with SMTP id p6so7272066eds.0
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 04:23:33 -0800 (PST)
+Received: by mail-ed1-f65.google.com with SMTP id b3so7266979ede.1
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 04:23:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=jWQp+OnjGGR/qjsHpDv/5/slcc6yYLWT9gs2Yk2rhoo=;
-        b=pS6Ho2AX4H7m3Az41l7t9fc8jmBtA2IkU/7QdwF4CfPd7atR7xwHm3k/258bJqSRrB
-         8RX2JljA2+zm2+lXtMAklAY2AYDYns9gmphsBXgiAXDntYL8eax894aZIhbbojk5d0vJ
-         9cPGvmSdObKVDdJC94dPh8u34tytraXvVCa+ngHjcuVt6DZ7JDxQ7OCanA6ZMOb8Wb2b
-         yYnyfsh0cVnmdUvoYrgyrrB/SGyTi8S+yN6IIYx9AAfNXpHScmYKgMyqlSqQIGzkADa2
-         HpB+JlkPU0d8HFbljbmHnqVDR/81wGuDC4CxDZt1Dn95W6T/5g6SF/jbj3BIR0cpAyn6
-         qTew==
+        h=date:message-id:in-reply-to:references:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
+        bh=CCGY9evoCg2Nvx0IbI6fLg44aqx7z9e0wKfO9Za2oiw=;
+        b=kvolAKnkKQ9I8ActpkUCZE1ijxcNWh9a1tUCPEqaHb6F2KxF31kTAuvyBgjcHoH1x1
+         e2LgVyGXW30jm23V4NezkSMdN+qO8nRs4LE31LaD9ur+FaTAW/QrLUw2ocUmRk4dYGON
+         LGiOZ1Y9UL+WtUXlCaXzpTpFib3pkdMV+p/XGA99Oxe3nDr6/CYlRJc/XWRpgu8nBDjE
+         insUhOKK3/u9D5fJ2rZgdZxQE+SNUfLQT2Sm+yLWPaBqQSXhEIYHuSHQx1QreTUTXT4k
+         pUzIEWv6VKYc3sUO5B/1xy5Z7Wmvie2a/Myns3pxoOqscqw1KZelJmuCbPidNNHslNGD
+         CRAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jWQp+OnjGGR/qjsHpDv/5/slcc6yYLWT9gs2Yk2rhoo=;
-        b=uEhwgI7W0tUiG5UaHdZLCazX49SBo6vrMdLJQ0Q5BZKKTe4BzUt5kY63ChqtAGDc+d
-         KqCwH6xADDOEbnoC2gTyPNC0+SkNEuYOsEJwdzWChR6nDCJX0z3f3UtSuwZjqw4Rll6F
-         8RxhTrmI/NZNzvpNLeCQRWSQZWEpRvK6022D4e0h4/o7BRJlhHFK8Q1CjviecV31dAdF
-         JPo0l74CRBJFZd+m9b6psmanWD7pWMzfkDtEYqG6RY1PiAJdEdFFH9Rq5yYPn47YIrgr
-         fPUYont/PrKU8wc4dXS0zSoXP9qWFJK6kdJ9W6RTr7opVOXnYTybdq+1yg9pd0/5THaS
-         VCpA==
-X-Gm-Message-State: AJcUukdTSLXhnl8wxU81jA/BmnBn2FwJdELuwn2maGq08yQI/IdprjoW
-        tXAXe++LReJ7gYrNzm5UehSsJHV4
-X-Google-Smtp-Source: ALg8bN7QH9ZP18BGbFRu4N+Hio7O47hqDzLB/t3lOXFOzHxMba0FyX/6ba+7Sh/CEEMUnj97rrQ75g==
-X-Received: by 2002:a50:f61e:: with SMTP id c30mr10260058edn.197.1548419012240;
-        Fri, 25 Jan 2019 04:23:32 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b46sm12067092edc.57.2019.01.25.04.23.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+         :subject:mime-version:content-transfer-encoding:fcc
+         :content-transfer-encoding:to:cc;
+        bh=CCGY9evoCg2Nvx0IbI6fLg44aqx7z9e0wKfO9Za2oiw=;
+        b=PeMSpEqPxLs+teDhbi0ogqr2cIad9cVVManXRDMjK4d3fDG6uYPNmkkmdhV3itCpg2
+         v8614z5HijxOqVe6cYhs/XOkJlg94RQEvS9/LBySQARRbMgTZRIAQQS3fQJMoGEOordf
+         VnhO6Oa0Sd55m2lGDqbbYerlQEj0TC//m9EnkyO/vxHwgsgBMSLmsB5ZBRbaXrQkzZ9V
+         +UP1rJqOmS1gmhjFDksfnn0hvkfPyON2JLZVViWB9zuFs17mCtxjh3bXmuje0/Ibxu9/
+         NtYN54C44UJbS9w3pfOo0hOL3FbpPpD2H0ln16B3Xzbnb6w9hWLfuHiBTFJx8uatagFY
+         np7A==
+X-Gm-Message-State: AJcUukdBnWzmf/F/LGIoG2Z3/mexzppUxNZvxaO+++ZE8YNkrAjXT2aR
+        OAxCd4yVRKxAYaEyYmtP2XMpKRoV
+X-Google-Smtp-Source: ALg8bN4ET70oKlJPIHP+w6guv3VuR/XtZLrZT2O35Qx3YY1q6NQushraZYLwgEhQlryaCW/vAqinaw==
+X-Received: by 2002:a17:906:f189:: with SMTP id gs9mr1123627ejb.164.1548419011219;
         Fri, 25 Jan 2019 04:23:31 -0800 (PST)
-Date:   Fri, 25 Jan 2019 04:23:31 -0800 (PST)
-X-Google-Original-Date: Fri, 25 Jan 2019 12:23:23 GMT
-Message-Id: <737767b6f4e0367a7797020bd07a6b4357a47413.1548419009.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.103.v4.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e51sm11763872edd.35.2019.01.25.04.23.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 25 Jan 2019 04:23:30 -0800 (PST)
+Date:   Fri, 25 Jan 2019 04:23:30 -0800 (PST)
+X-Google-Original-Date: Fri, 25 Jan 2019 12:23:22 GMT
+Message-Id: <pull.103.v4.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.103.v3.git.gitgitgadget@gmail.com>
 References: <pull.103.v3.git.gitgitgadget@gmail.com>
-        <pull.103.v4.git.gitgitgadget@gmail.com>
-From:   "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 1/7] diff: export diffstat interface
+From:   "Slavica =?UTF-8?Q?=C4=90uki=C4=87?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Subject: [PATCH v4 0/7] Turn git add-i into built-in
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Daniel Ferreira <bnmvco@gmail.com>
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Daniel Ferreira <bnmvco@gmail.com>
+This is the first version of a patch series to start porting
+git-add--interactive from Perl to C. Daniel Ferreira's patch series used as
+a head start:
+https://public-inbox.org/git/1494907234-28903-1-git-send-email-bnmvco@gmail.com/t/#u
 
-Make the diffstat interface (namely, the diffstat_t struct and
-compute_diffstat) no longer be internal to diff.c and allow it to be used
-by other parts of git.
+Changes since v3:
 
-This is helpful for code that may want to easily extract information
-from files using the diff machinery, while flushing it differently from
-how the show_* functions used by diff_flush() do it. One example is the
-builtin implementation of git-add--interactive's status.
+ * add error check when calling add--helper's functions from
+   git-add--interactive.perl
+ * replace trailing whitespace in the test with variable $SP used in earlier
+   tests
 
-Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
----
- diff.c | 36 ++++++++++++++----------------------
- diff.h | 18 ++++++++++++++++++
- 2 files changed, 32 insertions(+), 22 deletions(-)
+Cc: Phillip Wood phillip.wood@dunelm.org.uk [phillip.wood@dunelm.org.uk]
 
-diff --git a/diff.c b/diff.c
-index dc9965e836..46a7d8cf29 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2421,22 +2421,6 @@ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
- 	}
- }
- 
--struct diffstat_t {
--	int nr;
--	int alloc;
--	struct diffstat_file {
--		char *from_name;
--		char *name;
--		char *print_name;
--		const char *comments;
--		unsigned is_unmerged:1;
--		unsigned is_binary:1;
--		unsigned is_renamed:1;
--		unsigned is_interesting:1;
--		uintmax_t added, deleted;
--	} **files;
--};
--
- static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
- 					  const char *name_a,
- 					  const char *name_b)
-@@ -5922,12 +5906,7 @@ void diff_flush(struct diff_options *options)
- 	    dirstat_by_line) {
- 		struct diffstat_t diffstat;
- 
--		memset(&diffstat, 0, sizeof(struct diffstat_t));
--		for (i = 0; i < q->nr; i++) {
--			struct diff_filepair *p = q->queue[i];
--			if (check_pair_status(p))
--				diff_flush_stat(p, options, &diffstat);
--		}
-+		compute_diffstat(options, &diffstat);
- 		if (output_format & DIFF_FORMAT_NUMSTAT)
- 			show_numstat(&diffstat, options);
- 		if (output_format & DIFF_FORMAT_DIFFSTAT)
-@@ -6227,6 +6206,19 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
- 	return ignored;
- }
- 
-+void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat)
-+{
-+	int i;
-+	struct diff_queue_struct *q = &diff_queued_diff;
-+
-+	memset(diffstat, 0, sizeof(struct diffstat_t));
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		if (check_pair_status(p))
-+			diff_flush_stat(p, options, diffstat);
-+	}
-+}
-+
- void diff_addremove(struct diff_options *options,
- 		    int addremove, unsigned mode,
- 		    const struct object_id *oid,
-diff --git a/diff.h b/diff.h
-index ce5e8a8183..7809db3039 100644
---- a/diff.h
-+++ b/diff.h
-@@ -239,6 +239,22 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
- void diff_emit_submodule_pipethrough(struct diff_options *o,
- 				     const char *line, int len);
- 
-+struct diffstat_t {
-+	int nr;
-+	int alloc;
-+	struct diffstat_file {
-+		char *from_name;
-+		char *name;
-+		char *print_name;
-+		const char *comments;
-+		unsigned is_unmerged:1;
-+		unsigned is_binary:1;
-+		unsigned is_renamed:1;
-+		unsigned is_interesting:1;
-+		uintmax_t added, deleted;
-+	} **files;
-+};
-+
- enum color_diff {
- 	DIFF_RESET = 0,
- 	DIFF_CONTEXT = 1,
-@@ -327,6 +343,8 @@ void diff_change(struct diff_options *,
- 
- struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
- 
-+void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat);
-+
- #define DIFF_SETUP_REVERSE      	1
- #define DIFF_SETUP_USE_SIZE_CACHE	4
- 
+Daniel Ferreira (4):
+  diff: export diffstat interface
+  add--helper: create builtin helper for interactive add
+  add-interactive.c: implement status command
+  add--interactive.perl: use add--helper --status for status_cmd
+
+Slavica Djukic (3):
+  add-interactive.c: implement show-help command
+  t3701-add-interactive: test add_i_show_help()
+  add--interactive.perl: use add--helper --show-help for help_cmd
+
+ .gitignore                 |   1 +
+ Makefile                   |   2 +
+ add-interactive.c          | 263 +++++++++++++++++++++++++++++++++++++
+ add-interactive.h          |  10 ++
+ builtin.h                  |   1 +
+ builtin/add--helper.c      |  43 ++++++
+ diff.c                     |  36 ++---
+ diff.h                     |  18 +++
+ git-add--interactive.perl  |  17 +--
+ git.c                      |   1 +
+ t/t3701-add-interactive.sh |  24 ++++
+ 11 files changed, 381 insertions(+), 35 deletions(-)
+ create mode 100644 add-interactive.c
+ create mode 100644 add-interactive.h
+ create mode 100644 builtin/add--helper.c
+
+
+base-commit: b21ebb671bb7dea8d342225f0d66c41f4e54d5ca
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-103%2FslavicaDj%2Fadd-i-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-103/slavicaDj/add-i-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/103
+
+Range-diff vs v3:
+
+ 1:  737767b6f4 = 1:  737767b6f4 diff: export diffstat interface
+ 2:  91b1963125 = 2:  91b1963125 add--helper: create builtin helper for interactive add
+ 3:  d247ef69fe = 3:  d247ef69fe add-interactive.c: implement status command
+ 4:  4950c889aa ! 4:  fb3f9378ac add--interactive.perl: use add--helper --status for status_cmd
+     @@ -2,12 +2,21 @@
+      
+          add--interactive.perl: use add--helper --status for status_cmd
+      
+     -    Call the newly introduced add--helper builtin on
+     +    Call the newly introduced add--helper builtin in
+          status_cmd() instead of relying on add--interactive's Perl
+     -    functions to build print the numstat.
+     +    functions to print the numstat.
+     +
+     +    If an error occurs, it will be reported, but the Perl script will
+     +    not exit, since the add--helper is called within an eval block.
+     +
+     +    As the Perl script will go away soon, so will this scenario, where
+     +    the built-in helper is called  from the Perl script. Combined with
+     +    the fact that it would be hard to test, we'll pass on adding
+     +    a regression test for this.
+      
+          Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+          Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+     +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+      
+       diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+       --- a/git-add--interactive.perl
+     @@ -19,7 +28,8 @@
+      -	list_and_choose({ LIST_ONLY => 1, HEADER => $status_head },
+      -			list_modified());
+      -	print "\n";
+     -+	system(qw(git add--helper --status));
+     ++	my @status_cmd = ("git", "add--helper", "--status");
+     ++	!system(@status_cmd) or die "@status_cmd exited with code $?";
+       }
+       
+       sub say_n_paths {
+ 5:  581b108c9c = 5:  ab16afd1d5 add-interactive.c: implement show-help command
+ 6:  aede733318 ! 6:  0a27304a84 t3701-add-interactive: test add_i_show_help()
+     @@ -7,6 +7,7 @@
+          Also, add it before changing git-add--interactive.perl's help_cmd
+          to demonstrate that there are no changes introduced by the
+          conversion to C.
+     +
+          Prefix git add -i call with GIT_PAGER_IN_USE=true TERM=vt100
+          to force colored output on Windows.
+      
+     @@ -21,7 +22,7 @@
+       
+      +test_expect_success 'show help from add--helper' '
+      +	git reset --hard &&
+     -+	cat >expect <<-\EOF &&
+     ++	cat >expect <<-EOF &&
+      +
+      +	<BOLD>*** Commands ***<RESET>
+      +	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
+     @@ -35,7 +36,7 @@
+      +	<BOLD>*** Commands ***<RESET>
+      +	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
+      +	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
+     -+	<BOLD;BLUE>What now<RESET>> 
+     ++	<BOLD;BLUE>What now<RESET>>$SP
+      +	Bye.
+      +	EOF
+      +	test_write_lines h | GIT_PAGER_IN_USE=true TERM=vt100 git add -i >actual.colored &&
+ 7:  b9a1a7e37a ! 7:  ca2a7c4375 add--interactive.perl: use add--helper --show-help for help_cmd
+     @@ -5,7 +5,15 @@
+          Change help_cmd sub in git-add--interactive.perl to use
+          show-help command from builtin add--helper.
+      
+     +    If an error occurs, it will be reported, but the Perl script will
+     +    not exit, since the add--helper is called within an eval block.
+     +
+     +    Just like the change where the Perl script calls the add--helper
+     +    to print the numstat, also here we forgo adding a regression test:
+     +    the Perl script is on its way out (and this patch is part of that journey).
+     +
+          Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+     +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+      
+       diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+       --- a/git-add--interactive.perl
+     @@ -24,7 +32,8 @@
+      -diff          - view diff between HEAD and index
+      -add untracked - add contents of untracked files to the staged set of changes
+      -EOF
+     -+	system(qw(git add--helper --show-help));
+     ++	my @help_cmd = ("git", "add--helper", "--show-help");
+     ++	!system(@help_cmd) or die "@help_cmd exited with code $?";
+       }
+       
+       sub process_args {
+
 -- 
 gitgitgadget
-
