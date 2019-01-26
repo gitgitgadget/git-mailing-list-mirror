@@ -7,144 +7,117 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 125491F453
-	for <e@80x24.org>; Sat, 26 Jan 2019 22:08:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 573731F453
+	for <e@80x24.org>; Sat, 26 Jan 2019 22:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726372AbfAZWIF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Jan 2019 17:08:05 -0500
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:36428 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbfAZWIF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Jan 2019 17:08:05 -0500
-Received: by mail-ua1-f66.google.com with SMTP id j3so4423061uap.3
-        for <git@vger.kernel.org>; Sat, 26 Jan 2019 14:08:04 -0800 (PST)
+        id S1726385AbfAZWMy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Jan 2019 17:12:54 -0500
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:35108 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726377AbfAZWMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Jan 2019 17:12:54 -0500
+Received: by mail-vs1-f66.google.com with SMTP id e7so7747473vsc.2
+        for <git@vger.kernel.org>; Sat, 26 Jan 2019 14:12:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JaQvykSdNzkGbRrxEaWOW+ofwmC9SmEvrtnh9ZSdSds=;
-        b=UafsqSD0TV3MjjMvyJhOcFMH72606+QFD8bWpB0ZP8uHxdqWkJHpb0Rd2VoXn5Ph8K
-         BTZOSiChjcDG7I0D5MSLGUEUzNidEjQncLPDnv0t+uswHPHDZAYlGeRkeEnTprTE1j/B
-         Tt+Nuw4VTQvlgor6pLgJU3LoYIIUH5iNc8+hy5VxTTq55jHTLN8Oh/J2KrVja0kRGefX
-         UcikK1YilZFR+7uh/5yTavYVi10cD4klEJmTmR09+qCkX3XlgHBVO3U693lN+bmQOIFq
-         /2MhK0u23AKMiGCiVdg12hyWqhmaGh1hFKK1JXBOWzHhEcwJ6qqwIkxrsb14nboHUyLE
-         YydA==
+         :cc;
+        bh=BkkAI9B1Bd1DDz36qYwdo/KXr+HNg+x8Dd6wm+nKIWc=;
+        b=W/a3LpRa/CFBVDH8gOIz76GbH56083OfNo8tCt/U4xAeBIOyikEXgeaxxcEfEVEpCJ
+         EqKW9jS/D5of4FE5iyElJbseRbfYnTnU4LGj+Q9Ao173j0z4qgDU3lEY4xlxK8Op1K57
+         cJR8AkXAbfK7GzO9JwyL+LbkkhPc4E6sfAQXivQzze+0gqptVPReBUOyRWId591Ouoo2
+         XrfRDlWUz9KNmDrzWLlX8asNu14ZsZTotFwzIBH2GHDpKbHSidPWAXiOnvco63VdlN5M
+         fatIKKaHCT/WFqsTia1QMhW07IFtGcTWASNiFQgMowYm7pwxzVcid+Jq0YKDlUB7p7oz
+         of7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JaQvykSdNzkGbRrxEaWOW+ofwmC9SmEvrtnh9ZSdSds=;
-        b=WtTQ1GE/1m9FFbDqfvi/oX8JwFuo9iOCdha/y53+oc73HpX5XBnv4f515dby/Sr4uB
-         AcuQZFsLTgnyDT6HASkBmshvaPcV0ksXLWA4EuCAhzLKzo7BJUfhwMqsNfb2fKzK2Ksz
-         sqbbUyrhiZA4RLlFE+I9BVs0vaaNWzY2TDdwNM+GrRPmOnS7uaM4ssR3I6rhUMsaUjF4
-         obuTjU+hVCS+I8XYjA3DNrqJJMyYL/DrMWrcNdJ5CVAtIzMkbwZWKHY4z4TqB1QZ1ujh
-         iPv0q+98jA0dKOEMaPgtgQKGU/PQOpmmRrPxlr3op/5qfuMWyqB8DuSeFRjYSbD/7N6/
-         2dGA==
-X-Gm-Message-State: AJcUukdv9bCRtEPk4jpZLMSxxJMhzFjaPszhE3RQrId59ntPfRkPMvV+
-        tlxoGXtG//Wttggm1jGse/MDlj95BRMG8g4p8HY=
-X-Google-Smtp-Source: ALg8bN7qJxw6hVZnqgpn84SMXur5DTsbVQMR+xDAUpT3oEQ+lvqDqKD4IA+ScyP1EjxW3LRPHFxyZ75MIIcbsl+95tU=
-X-Received: by 2002:ab0:216:: with SMTP id 22mr6675693uas.28.1548540484150;
- Sat, 26 Jan 2019 14:08:04 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=BkkAI9B1Bd1DDz36qYwdo/KXr+HNg+x8Dd6wm+nKIWc=;
+        b=kmtXaa/sqmlyaYhVlYfwphzrzKgLk7m0N8Vw3zc+g2gZqpm62TpI6get4958YAYrPO
+         8Uaqjkm3HPu56CvUJt6K1p4qa74Z3X2Ql4xlZ09vFJlf+xUFpZ9jtYhOtOwqnJ2E9el2
+         ihqEP0jD4C+h08ziFEMKdFXP7AfAPhkhCRuN9jnGifgToJ1Hn/VNK+WPUZgmWNXUmvPW
+         p0CcNjt84Sdsp/1Xb1dY4xb+65ZoSClRqzi0lIqup8t4Cal9GrMabwndMoQgoSssx9+n
+         /AZa3+oU//HceqZXKdr/i8VJMnu+MH4+86O6/jd+TN3jjBZ3siTFNcAVXBO9oXhyLY6R
+         GNcQ==
+X-Gm-Message-State: AJcUukfC/QjIBrn3kq+WLqffPcDUPABFL2pDOeCc9tR/5MFbbkXowarZ
+        pwDoTGXs3Y+Rg+r8n5b7KKjf8Xj/+3rVJJ6N9Ck=
+X-Google-Smtp-Source: ALg8bN4mNXdjdEW8C6EPRzUiMrCvtkQ+uJsndRLjdUjQHAnPkIBdmDUoOLy8ZO2qeeWN1M1v9Zfz7n2MdKDcRblMeFA=
+X-Received: by 2002:a67:e44f:: with SMTP id n15mr6973660vsm.116.1548540772656;
+ Sat, 26 Jan 2019 14:12:52 -0800 (PST)
 MIME-Version: 1.0
-References: <20190124164654.1923-1-newren@gmail.com> <20190125165416.17473-1-newren@gmail.com>
- <2f785c2d-161c-b6a3-7743-b071969d60d7@gmail.com> <CABPp-BHTsZBO11ykfTaZ_dzpvrww5D3A57qBM05EgP_wK-iM9g@mail.gmail.com>
- <CAPig+cRefjWr3gNOfQou9JyW=yfACEvbXPPRzXU+VkJN_gCTzA@mail.gmail.com>
-In-Reply-To: <CAPig+cRefjWr3gNOfQou9JyW=yfACEvbXPPRzXU+VkJN_gCTzA@mail.gmail.com>
+References: <20190124164654.1923-1-newren@gmail.com> <xmqqmunofsdv.fsf@gitster-ct.c.googlers.com>
+ <CABPp-BFjUgY5htSbPpnamPDRM3bCLNsQv-K35uXoRzaT2f85tA@mail.gmail.com> <xmqq8sz8fkfi.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8sz8fkfi.fsf@gitster-ct.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 26 Jan 2019 14:07:52 -0800
-Message-ID: <CABPp-BHU9QUQrr9F9ncQSn-yeBhMUZiRO78jzX+C42zrg55tzA@mail.gmail.com>
-Subject: Re: [PATCH v2] log,diff-tree: add --combined-with-paths options for
+Date:   Sat, 26 Jan 2019 14:12:41 -0800
+Message-ID: <CABPp-BFaVwwM17Oe+-RoP5wt2V58AD=dr01uNPuV=9r4yoF3Qg@mail.gmail.com>
+Subject: Re: [PATCH] log,diff-tree: add --combined-with-paths options for
  merges with renames
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 25, 2019 at 11:51 AM Eric Sunshine <sunshine@sunshineco.com> wr=
-ote:
+On Fri, Jan 25, 2019 at 2:21 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Fri, Jan 25, 2019 at 12:52 PM Elijah Newren <newren@gmail.com> wrote:
-> > On Fri, Jan 25, 2019 at 9:41 AM Derrick Stolee <stolee@gmail.com> wrote=
-:
-> > > On 1/25/2019 11:54 AM, Elijah Newren wrote:
-> > > > +     printf "0f9645804ebb04cc3eef91f799eb7fb54d70cefb\0::100644 10=
-0644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e=
-7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR\0file\twith\=
-ttabs\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
-> > >
-> > > I'm guessing that you use printf here because the
-> > > 'cat <<-\EOF' approach doesn't work with the special
-> > > tabs? Kudos for putting in the extra effort here for
-> > > the special formatting!
-> >
-> > Yeah, I didn't know how to easily get NUL bytes in the stream without
-> > printf, and once I was using printf the EOF HEREDOC no longer had a
-> > useful purpose.  In the first testcase, since there were only
-> > printable characters in the expected output, a HEREDOC worked well.  I
-> > guess I could have just used printf for both testcases, but having the
-> > literal output shown where it's possible for a human to read it seemed
-> > like an advantage worth capitalizing on.
+> Elijah Newren <newren@gmail.com> writes:
 >
-> If the readability of a here-doc is preferred, you should be able to
-> achieve the desired result with the q_to_tab() and lf_to_nul()
-> functions. For instance:
+> > Also, my first version of the patch actually showed all names, on all
+> > lines, but I found the heavy repetition really annoying, and not in
+> > keeping with how non-merge commits are handled (where original
+> > filenames are only shown when they differ).  Granted, my change isn't
+> > the only one.  We could just have all names shown if they are not all
+> > identical, as you suggest and I also considered, but I liked this way
+> > slightly better.  If others feel strongly, I can change it, that was
+> > just my gut feel and preference.
 >
->     q_to_tab <<-\EOF | lf_to_nul >expect &&
->     ...Q...Q...
->     EOF
+> I do not have a strong _preference_; I am only worried about ease of
+> use by consumers of the raw output, i.e. scripts.  From that point
+> of view, --all-names showing all names always even when there is no
+> rename is involved would certainly be the easiest to write a parser
+> for, and lines being overly repetitive is a non-issue.  For human
+> consumption, it would be a separate matter, but they won't be
+> reading from the --raw output that lists blob object names
+> repetitively (the object names may or may not be different, but they
+> are all equally gibberish) before showing the human-readble part,
+> which are names.
 
-I like the idea and I tried it out...but it actually looks harder to read t=
-o me:
+Okay, I've switched it over.
 
-diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
-index 5bccc323f6..ddbd27d16a 100755
---- a/t/t4038-diff-combined.sh
-+++ b/t/t4038-diff-combined.sh
-@@ -457,8 +457,8 @@ test_expect_success 'setup for --combined-with-paths' '
- '
+> > You could kind of ask the same question of -c -p, actually.  I looked
+> > into that, but I was only interested in raw format output and --cc is
+> > only about coalescing uninteresting hunks in patches.  Whenever git
+> > shows a combined diff in patch format, it always lists two files in
+> > the header, e.g.:
+> >   a/foo.c
+> >   b/foo.c
+>
+> Yeah, but with a new option, it does not have to stay that way.  It
+> is OK to show a/foo.c, b/bar.c, c/baz.c, or perhaps an easy way to
+> avoid overlong unreadable lines in these human readable output may
+> be to only show b/foo.c to report the result and list the original
+> names using the "rename from" "rename to" extended diff-headers
+> shown in normal diff output with rename detection enabled.
+>
+> > ...  I guess the "combined" patch is already kind of
+> > special, so it could make sense, ...
+>
+> Absolutely.  -c/--cc output with -p departs from the usual "diff is
+> to compare two things" by having two +/- indicator columns and more
+> than two '@'s in hunk header to begin with.  It is only natural if
+> we are showing more/all names in --raw, we should avoid losing info
+> in the same way.
 
- test_expect_success '--combined-all-names and --raw' '
-- cat <<-\EOF >expect &&
-- ::100644 100644 100644 f00c965d8307308469e537302baa73048488f162
-088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7
-333b9c62519f285e1854830ade0fe1ef1d40ee1b RR "file\twith\ttabs"
-"i\tam\ttabbed" "fickle\tnaming"
-+ q_to_tab <<-\EOF >expect &&
-+ ::100644 100644 100644 f00c965d8307308469e537302baa73048488f162
-088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7
-333b9c62519f285e1854830ade0fe1ef1d40ee1b
-RRQ"file\twith\ttabs"Q"i\tam\ttabbed"Q"fickle\tnaming"
-  EOF
-  git diff-tree -c -M --raw --combined-all-names HEAD >actual.tmp &&
-  sed 1d <actual.tmp >actual &&
-@@ -466,7 +466,13 @@ test_expect_success '--combined-all-names and --raw' '
- '
-
- test_expect_success '--combined-all-names and --raw -and -z' '
-- printf "0f9645804ebb04cc3eef91f799eb7fb54d70cefb\0::100644 100644
-100644 f00c965d8307308469e537302baa73048488f162
-088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7
-333b9c62519f285e1854830ade0fe1ef1d40ee1b
-RR\0file\twith\ttabs\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
-+ q_to_tab <<-\EOF | lf_to_nul >expect &&
-+ 0f9645804ebb04cc3eef91f799eb7fb54d70cefb
-+ ::100644 100644 100644 f00c965d8307308469e537302baa73048488f162
-088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7
-333b9c62519f285e1854830ade0fe1ef1d40ee1b RR
-+ fileQwithQtabs
-+ iQamQtabbed
-+ fickleQnaming
-+ EOF
-  git diff-tree -c -M --raw --combined-all-names -z HEAD >actual &&
-  test_cmp -a expect actual
- '
-
-So I'm going to stick with the original.  Thanks for pointing out
-q_to_tab and lf_to_nul, though; they may come in handy in the future.
+This turned out to be easier to implement than I expected, with one
+small wrinkle: We have the "a/" and "b/" prefixes, and switching to
+"a/", "b/" and "c/" doesn't work due to things like the
+diff.mnemonicPrefix setting -- plus I didn't want to plumb multiple
+prefix options everywhere they'd be needed.  Instead, I decided that
+instead of having a "from" and a "to" header, we would have N "from"
+headers (since all parents are what we came from) and 1 "to" header.
+I hope that makes sense, because otherwise I think this become to
+unwieldy of a change.
