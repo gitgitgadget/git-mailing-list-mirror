@@ -2,84 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 851A51F453
-	for <e@80x24.org>; Sat, 26 Jan 2019 00:53:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 484541F453
+	for <e@80x24.org>; Sat, 26 Jan 2019 01:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725975AbfAZAxB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 19:53:01 -0500
-Received: from mail-yw1-f41.google.com ([209.85.161.41]:34045 "EHLO
-        mail-yw1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725550AbfAZAxB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jan 2019 19:53:01 -0500
-Received: by mail-yw1-f41.google.com with SMTP id g75so4668754ywb.1
-        for <git@vger.kernel.org>; Fri, 25 Jan 2019 16:53:01 -0800 (PST)
+        id S1726091AbfAZBGg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 20:06:36 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:34212 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725550AbfAZBGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 20:06:36 -0500
+Received: by mail-qt1-f196.google.com with SMTP id r14so12818770qtp.1
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 17:06:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=masternode.me; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=he9SDCoUIp9zpwmMMxSh3Fm9tKhR70JjYezuucyHBrw=;
-        b=WjJddiImVaptrWCl5xwD+/IwlBvgfwitbJZ6Tbhqec8knbJ2YaYW85c3sbBWcKUTFR
-         bsc+25ZQW9djzR7wA8WE+TYRwsmnHc2URRaZ8IQNbQ4gGuj2iOVrwiRCJxlYWvgHqEhB
-         tggH/BwedySmm18FyOOXUm0abvbZFvmPVra0mXgknpdcua+O2jw61FJbQkTqGLm3myzn
-         xwCzUs2PzNbrGP184ChXTIv5n8ypc/NaKmL4a66sCWBy63TJrc1V1j+rHxKJISoiXgVN
-         YzkCVDxZiWuTT8hFlhxM1+WFez6dRZWdlSOF3w4ge8Wc55yOuTqqUNJ5P4PVxc7UScah
-         zIYg==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/ywnzIt1rq5TMK3nXkOe+8fRxFi8bT6yknIbfdkVkxc=;
+        b=d/DI0IRA6jcpjOSmIwnhGNagUpwOnmUpaN+2RKtIaa/8FtOrqegwuDxa7bSeN7O0He
+         3vYtm2shqQhOw/Y9L1r84kq2X8/+vtmIHpOkaE8SIzX2Y1PpHspYpIBUGcUZF1pQcEz4
+         cuWWAmXP0WlBJnVPtKzL6/oZdTYrTMINEJVyqeDU3FCt0nNueo1f3ELLOykmOSo93Obx
+         OJ49zQKLrbH/3ZtaT7SCwmNYmx9Qjk16LDCDW9iApSVD0406QI3phG0Dso480SErRCOG
+         rehHqXqK3W9ZEwyWQ0tXXPOm7i4cBRz8Xd5/wdObBrtNX52130kFKBBhaPUTXlpLMFwx
+         l3wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=he9SDCoUIp9zpwmMMxSh3Fm9tKhR70JjYezuucyHBrw=;
-        b=s51rU3OBUujiswxBwxzmDAC3r1dIwmMq0FAJehhP/THfwMmK1rnt1abfVJ0UcEI1g7
-         NdBT8Vl5BnqLOlUaKJqWGu5ZWtZDofSxvS/gysS3wkD4EUQvJaI5yrMDgNvfjMmV1IdJ
-         cPE6uLX0Ny3rb6GvIf5GLfLlN+g28bc/qbY6TCLHvMzUN3R/JnODcZzQIeRJomKONeYn
-         HxqS68WEUdQp93wYVDd626XCmM8kPoMzf+QnnKXqMrmF2Uo5+77u5yP8GaK1IKZpBYeZ
-         4H2aSIuBTx684S0tCWiNX0R23vhBbSxw+E+hUPFnRPvOCIemfLxYqQmCwFIDD/Jd1Lsw
-         ngsg==
-X-Gm-Message-State: AJcUukfaWsEhlJsnMkVYjXPVkO5PAVNJa0tgIZlKpcT6fjiW7H/chbK4
-        /OvWj4of+FAeeUPxAJmS86TXKOF1VAPHajBHAOdGXv5KrT4=
-X-Google-Smtp-Source: ALg8bN7Hqk1RIvSqua4jUyXQ1qqfquUb4WRGTtqO7SFadRpBCbVQTmGNdANiBIGDdZp/22fEHfrBBQg7W8JueMe7VMI=
-X-Received: by 2002:a81:12d4:: with SMTP id 203mr13311721yws.0.1548463980469;
- Fri, 25 Jan 2019 16:53:00 -0800 (PST)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/ywnzIt1rq5TMK3nXkOe+8fRxFi8bT6yknIbfdkVkxc=;
+        b=bxL9aWHwXUnQLyjXQVjt91DRzbHgmQD6ET80L31nu0bQsvNQAh4U/zDds29VCSzd/9
+         giHx80I3AOKm6B9heqkR+tOG2zijbrqd2i4BXNTAYSmezGHcz7ssGlSwmHCMMDTMHe28
+         UAgbhW7EiLp8mhlRMOmPBhoeOUTFcjzr3s7Gpuyh1Vbrw/D2RNT5T4SN6Bh+2YugWXzy
+         tbEYo2T1opITk8WisIs+tNONfZBAnGcAdkQHpqkewxOE2EOnukczrEBvY3uupIa8ca3S
+         qOJf3tV7VcrNPUBAlYWcKN8WC+vZ5xrWQjw0ZR3qjCH13Lz+Iu+8COt7svPK/HoueFpg
+         lbKg==
+X-Gm-Message-State: AJcUukc0vSAB9sA5DN9WiTwGqdR/kyf1BBM+NlkqXSWtvtFv/E8wgBGg
+        VCxpZDx6SE71FWcHbacds/M=
+X-Google-Smtp-Source: ALg8bN5ucq0PTgmNR4Vgd8zxalqtlpgZCU1BgnpCBBd4/shKJr2SMgVVkVWdwG1+Ev3hHk/GNx/0Xg==
+X-Received: by 2002:ac8:164a:: with SMTP id x10mr13434793qtk.67.1548464795385;
+        Fri, 25 Jan 2019 17:06:35 -0800 (PST)
+Received: from whubbs1.gaikai.biz ([100.42.103.5])
+        by smtp.gmail.com with ESMTPSA id v22sm71043291qkl.27.2019.01.25.17.06.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 25 Jan 2019 17:06:34 -0800 (PST)
+Received: (nullmailer pid 4056 invoked by uid 1000);
+        Sat, 26 Jan 2019 01:06:32 -0000
+Date:   Fri, 25 Jan 2019 19:06:32 -0600
+From:   William Hubbs <williamh@gentoo.org>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, chutzpah@gentoo.org
+Subject: Re: [PATCH v2 2/2] tests: add test for separate author and committer
+ idents
+Message-ID: <20190126010632.GA4000@whubbs1.gaikai.biz>
+References: <20190125215955.30032-1-williamh@gentoo.org>
+ <20190125215955.30032-3-williamh@gentoo.org>
+ <875zuc49uj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CANMbfiuUHxkw822AvA+y0cJ+ao=pcrza7w4fgMn7vVx8AZqCwQ@mail.gmail.com>
-In-Reply-To: <CANMbfiuUHxkw822AvA+y0cJ+ao=pcrza7w4fgMn7vVx8AZqCwQ@mail.gmail.com>
-From:   "Moocowmoo ." <moocowmoo@masternode.me>
-Date:   Fri, 25 Jan 2019 19:52:24 -0500
-Message-ID: <CANMbfitE+5HLo1sMowr5erJGwzLVv3Z9sHKEgvOeso5OeWVrBg@mail.gmail.com>
-Subject: env GIT_WORK_TREE ignored by git describe --dirty
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="bp/iNruPH9dso1Pn"
+Content-Disposition: inline
+In-Reply-To: <875zuc49uj.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git describe --dirty shows dirty when cwd not repo work directory.
 
-Confirmed by osse on freenode irc #git
+--bp/iNruPH9dso1Pn
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  ubuntu@wrk:~/tmp$ pwd
-  /home/ubuntu/tmp
-  ubuntu@wrk:~/tmp$ git clone https://github.com/ipfs/go-ipfs.git
-  ubuntu@wrk:~/tmp$ GIT_DIR=/home/ubuntu/tmp/go-ipfs/.git
-GIT_WORK_TREE=/home/ubuntu/tmp/go-ipfs git describe --dirty
-  v0.4.18-381-gca77ecc76-dirty
+On Sat, Jan 26, 2019 at 12:05:08AM +0100, =C6var Arnfj=F6r=F0 Bjarmason wro=
+te:
+>=20
+> On Fri, Jan 25 2019, William Hubbs wrote:
 
-  ubuntu@wrk:~/tmp$ cd go-ipfs
-  ubuntu@wrk:~/tmp/go-ipfs$ GIT_DIR=/home/ubuntu/tmp/go-ipfs/.git
-GIT_WORK_TREE=/home/ubuntu/tmp/go-ipfs git describe --dirty
-  v0.4.18-381-gca77ecc76
+=2E..
 
-workaround:
-use -C arg instead of GIT_WORK_TREE
-  git -C /path/to/work/directory describe --dirty
-  v0.4.18-381-gca77ecc76
+> > +	sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL &&
+> > +	sane_unset GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL &&
+>=20
+> Fine, but FYI sets these variables for the rest of the test.
 
-I tried to find the issue, but git's code isn't easy to grok in a few minutes.
-Thanks to osse and gxt for their help!
+I'm not quite sure what you mean by this. I want the environment
+variables to be *unset*. I don't want them to override anything in the
+config file for this test.
 
-moocowmoo
+Are you saying they will not be set for the test unless I set them,
+so I don't need the SANE_UNSET calls?
+
+Thanks,
+
+William
+
+--bp/iNruPH9dso1Pn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EARECAB0WIQTVeuxEZo4uUHOkQAluVBb0MMRlOAUCXEuykgAKCRBuVBb0MMRl
+OESlAJ9D9LxAfctZfSRciJ2Ioro/3BHUxACfb5hTmNrgsCz4gzNajLvyLV+MJNE=
+=JWiV
+-----END PGP SIGNATURE-----
+
+--bp/iNruPH9dso1Pn--
