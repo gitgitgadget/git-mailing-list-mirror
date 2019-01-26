@@ -2,133 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,URIBL_BLACK,URIBL_DBL_SPAM,URIBL_RED shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84CFF1F453
-	for <e@80x24.org>; Sat, 26 Jan 2019 07:41:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FCD41F453
+	for <e@80x24.org>; Sat, 26 Jan 2019 08:53:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727748AbfAZHlX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Jan 2019 02:41:23 -0500
-Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:38936
-        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727367AbfAZHlX (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 26 Jan 2019 02:41:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1548488481;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=zjoR/mFA1uuRHXSBgtBnCsnbxbofyOcYhdwpoCM0DGQ=;
-        b=piARbUZGPFlWLB5ejomocsUbdgHe7Kh/m6pfv0leduZAtQ6ZxPd1kOWYKmTdzyxI
-        3jlvioMOosFEXRMUBITLW0ApEp789ly8eQXljMsoorqNJOa3dDIcKyT8fYVzJqXPdcG
-        k/cEfl6+DmYHj/K6NtyfrRu8EfNTYJQJnDQSg++Y=
-From:   Ben Woosley <Ben.Woosley@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020168891b1a3e-140bd175-a8cb-4379-a114-de68b1cac5d6-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] rebase: move state_dir to tmp prior to deletion
+        id S1726262AbfAZIxW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Jan 2019 03:53:22 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:36188 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726122AbfAZIxW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Jan 2019 03:53:22 -0500
+Received: by mail-ed1-f65.google.com with SMTP id f23so9173827edb.3
+        for <git@vger.kernel.org>; Sat, 26 Jan 2019 00:53:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=f4edixwqoYhNHuh/TV++3umie84c6WCE/2MQr96rJok=;
+        b=bTYOkkgHYPSS1/Cmsanlwwx1fzis3ZzvSDPvZGk61ANH3ocNuLI0tff7y4DInDbSYn
+         0YiCA6hZ5YvGgu7hWVWkHCeloyF/FZo7UMP2rlPs9/uBRvBkT53gWANusnju+bAZFdk6
+         IZ/BrjqhJkaMgg0W3eEifk/A2X5uPRYCaCrCGX/h6plqZ0Xv3xXi6aGiRLBhKzYuAsJs
+         dHywZ0zzfBNVd12w/jTmlvVJ2hXO1HaPJTs4OWeDbV9N4zF6sESqBOo7muOzBj+fogBz
+         wJPdF2KbnVKdrW8ng0g/30V9PSDIvEAUw56LM6gs18cigVlNjZXwz1cuRXTh8vr71W/d
+         bQnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=f4edixwqoYhNHuh/TV++3umie84c6WCE/2MQr96rJok=;
+        b=mZjAfVcanBmW3JsUDgBVURzxu2DwADqEbAvYoHFzPOu/MezjJ+fZ4tn1NF30eqNNRa
+         vzwDzJtIeeRx5w/wtc0nTb3P7zzlrj20rOub4qYzn5V+g2Kt4yqhrwLlRUrJ7RZVvYsI
+         x+LdrvMpMQ0nG2kAoJf2+tNIHgrqUHuc4mmg0OCFTtoRIbtH24pUefDY862G7LYZ+0Ks
+         hil9c5+zlLBU4NrgkKoAvFxyoXTnaGhS00ZHjS4Th2a0REw4pGukZ8SpwyXezHDWmHPA
+         K9MOVYmBNw9EMZaOayEqNrHzgyN7XAWzj3Y5+lwhZVfoOG3Kq/cs9PDRPmSUUC3NqcBx
+         Qh3w==
+X-Gm-Message-State: AJcUukdojqzK3zCCaY1VvylNZEXLoshU9IC0sdzwnOOQev917HuCresF
+        VyIYZXkIY4KiSU9pQHaAiEFhzC/r
+X-Google-Smtp-Source: ALg8bN7Vvql075ngBGSKF9/7/S1/SSJxqUb2FzcwJ9UKfeefjuYI6DbEbIT1sxVDJ8FGaL/RSGEizQ==
+X-Received: by 2002:a50:8689:: with SMTP id r9mr13204787eda.227.1548492799889;
+        Sat, 26 Jan 2019 00:53:19 -0800 (PST)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id r18-v6sm6811562ejz.22.2019.01.26.00.53.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 26 Jan 2019 00:53:19 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     William Hubbs <williamh@gentoo.org>
+Cc:     git@vger.kernel.org, chutzpah@gentoo.org
+Subject: Re: [PATCH v2 2/2] tests: add test for separate author and committer idents
+References: <20190125215955.30032-1-williamh@gentoo.org> <20190125215955.30032-3-williamh@gentoo.org> <875zuc49uj.fsf@evledraar.gmail.com> <20190126010632.GA4000@whubbs1.gaikai.biz>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190126010632.GA4000@whubbs1.gaikai.biz>
+Date:   Sat, 26 Jan 2019 09:53:18 +0100
+Message-ID: <874l9v4x6p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Sat, 26 Jan 2019 07:41:21 +0000
-X-SES-Outgoing: 2019.01.26-54.240.7.11
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Woosley <ben.woosley@gmail.com>
 
-To avoid partial deletion / zombie rebases.
+On Sat, Jan 26 2019, William Hubbs wrote:
 
-Example behavior under partial deletion, after
-Ctrl-Cing out of a standard rebase:
+> On Sat, Jan 26, 2019 at 12:05:08AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>
+>> On Fri, Jan 25 2019, William Hubbs wrote:
+>
+> ...
+>
+>> > +	sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL &&
+>> > +	sane_unset GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL &&
+>>
+>> Fine, but FYI sets these variables for the rest of the test.
+>
+> I'm not quite sure what you mean by this. I want the environment
+> variables to be *unset*. I don't want them to override anything in the
+> config file for this test.
+>
+> Are you saying they will not be set for the test unless I set them,
+> so I don't need the SANE_UNSET calls?
 
-    $ git rebase target
-    First, rewinding head to replay your work on top of it...
-    Applying: [...]
-    ^C
-    $ git status
-    rebase in progress; onto (null)
-    You are currently rebasing.
-      (all conflicts fixed: run "git rebase --continue")
+Sorry for not being clear. I just meant that unlike "test_config" the
+"sane_unset" function won't reset the state at the end of the
+"test_expect_success".
 
-    Changes to be committed:
-      (use "git reset HEAD <file>..." to unstage)
-    [...]
-    $ git rebase --continue
-    error: could not read '.git/rebase-apply/head-name': No such file or directory
-    $ git rebase --abort
-    error: could not read '.git/rebase-apply/head-name': No such file or directory
+Right now it doesn't matter in practice since this is the last test
+before "test_done", but as tests are added we tend to leak state between
+them, which is why we use these "unset at the end" helper functions.
 
-Others report this issue here:
-https://stackoverflow.com/questions/3685001/git-how-to-fix-corrupted-interactive-rebase
----
- git-legacy-rebase.sh           | 17 ++++++++++++++---
- git-rebase--preserve-merges.sh |  2 +-
- 2 files changed, 15 insertions(+), 4 deletions(-)
+But unlike with config that doesn't matter in this case, since we want
+these unset anyway.
 
-diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
-index b4c7dbfa575d3..878c0e42054d7 100755
---- a/git-legacy-rebase.sh
-+++ b/git-legacy-rebase.sh
-@@ -128,11 +128,22 @@ read_basic_state () {
- 	}
- }
- 
-+remove_rebase_state () {
-+  state_tmpdir=$(mktemp -d -t "git-rebase-state-XXXXXX")
-+  if test -d state_tmpdir
-+  then
-+    exec mv "$state_dir" "$state_tmpdir"
-+    exec rm -rf "$state_tmpdir"
-+  else
-+    exec rm -rf "$state_dir"
-+  fi
-+}
-+
- finish_rebase () {
- 	rm -f "$(git rev-parse --git-path REBASE_HEAD)"
- 	apply_autostash &&
- 	{ git gc --auto || true; } &&
--	rm -rf "$state_dir"
-+	remove_rebase_state
- }
- 
- run_interactive () {
-@@ -194,7 +205,7 @@ run_specific_rebase () {
- 	elif test $ret -eq 2 # special exit status for rebase -p
- 	then
- 		apply_autostash &&
--		rm -rf "$state_dir" &&
-+		remove_rebase_state &&
- 		die "Nothing to do"
- 	fi
- 	exit $ret
-@@ -439,7 +450,7 @@ abort)
- 	exit
- 	;;
- quit)
--	exec rm -rf "$state_dir"
-+	remove_rebase_state
- 	;;
- edit-todo)
- 	run_specific_rebase
-diff --git a/git-rebase--preserve-merges.sh b/git-rebase--preserve-merges.sh
-index afbb65765d461..146b52df14928 100644
---- a/git-rebase--preserve-merges.sh
-+++ b/git-rebase--preserve-merges.sh
-@@ -226,7 +226,7 @@ Once you are satisfied with your changes, run
- 
- die_abort () {
- 	apply_autostash
--	rm -rf "$state_dir"
-+	remove_rebase_state
- 	die "$1"
- }
- 
+Which, looking at this again, you'd only want if a previous test in the
+file was leaking its state. That's not the case, so this isn't needed
+and you can just apply this on top:
 
---
-https://github.com/git/git/pull/569
+    diff --git a/t/t7517-per-repo-email.sh b/t/t7517-per-repo-email.sh
+    index 06c7c0fb78..e5845b0b86 100755
+    --- a/t/t7517-per-repo-email.sh
+    +++ b/t/t7517-per-repo-email.sh
+    @@ -87,8 +87,6 @@ test_expect_success REBASE_P \
+
+     test_expect_success \
+            'author and committer config settings override user config sett=
+ings' '
+    -       sane_unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL &&
+    -       sane_unset GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL &&
+            git config user.name user &&
+            git config user.email user@example.com &&
+            git config author.name author &&
+
+You don't need to be paranoid and unset these, we already unset GIT_*
+variables that aren't on a whitelist in test-lib.sh, see 'A call to
+"unset"' there.
