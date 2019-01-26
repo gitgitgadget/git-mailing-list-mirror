@@ -2,123 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 688DF211B5
-	for <e@80x24.org>; Fri, 25 Jan 2019 23:58:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 851A51F453
+	for <e@80x24.org>; Sat, 26 Jan 2019 00:53:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729474AbfAYX6W (ORCPT <rfc822;e@80x24.org>);
-        Fri, 25 Jan 2019 18:58:22 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33338 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726218AbfAYX6W (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 25 Jan 2019 18:58:22 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c162:ac20:e47c:bd21])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 84B256072F;
-        Fri, 25 Jan 2019 23:58:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1548460700;
-        bh=nbzUEf2re4DjIVID5kdj9YMnCpAACPxTeKfe27Ai8pc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=XhzYU2toW45PuJREz/pYlaVpz4IMi4XeoACW0hKC2kw+5ZQuyJzylHDspwTC566Le
-         ssGkp7nr4iSZxxsGIIYDnMcs+aPy+C8mhzjP5raq2wMC7Wqt3qeM78qZzZcD9tNs9v
-         JY4KR+OmD1KWXpujQkJUbrYGy3NYUefpBpoGLdn55PFm5RWxAl6JpJNdLdi9tkWXtf
-         XNgUKFoYJ/SqK9uHMxo/huyNC7VlCNL1tyB0t4GIH3jVWh1uJzoAgyjcTFtwCeiZfT
-         j3oqGszkxb/IJ3nKDL+QPB98cVO6Lk3wXUUr8x0i4B+9SNlalNEwdFZZVEdBLbRouE
-         ygfwBwz1BYi6VUPRro0/0pn621M43gw1xQRDvSSziBwBpSiGGsWidSkCCUd+hMJ/M/
-         0f1eki7RYmPNXO/3NRQsM/SP1JBEDY9kihYVVPdA8B98ua1z/bSE8prxg1jpHg5Scz
-         cmS15055+I8dZ7EL2PN0ZtZgrGO0z736k8QjXRdQ+U7V1VPADaU
-Date:   Fri, 25 Jan 2019 23:58:11 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Arti Zirk <arti.zirk@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        e@80x24.org, peff@peff.net, jnareb@gmail.com, flavio@polettix.it,
-        wil@nohakostudios.net
-Subject: Re: [PATCH v1] git-instaweb: Add Python builtin http.server support
-Message-ID: <20190125235811.GW423984@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Arti Zirk <arti.zirk@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, e@80x24.org, peff@peff.net, jnareb@gmail.com,
-        flavio@polettix.it, wil@nohakostudios.net
-References: <20190124161331.25945-1-arti.zirk@gmail.com>
- <20190125020451.GU423984@genre.crustytoothpaste.net>
- <xmqqva2cg61l.fsf@gitster-ct.c.googlers.com>
- <5bc3256d49834c96db2a51c12190f2cb7cf7ac42.camel@gmail.com>
+        id S1725975AbfAZAxB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 25 Jan 2019 19:53:01 -0500
+Received: from mail-yw1-f41.google.com ([209.85.161.41]:34045 "EHLO
+        mail-yw1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725550AbfAZAxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jan 2019 19:53:01 -0500
+Received: by mail-yw1-f41.google.com with SMTP id g75so4668754ywb.1
+        for <git@vger.kernel.org>; Fri, 25 Jan 2019 16:53:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=masternode.me; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=he9SDCoUIp9zpwmMMxSh3Fm9tKhR70JjYezuucyHBrw=;
+        b=WjJddiImVaptrWCl5xwD+/IwlBvgfwitbJZ6Tbhqec8knbJ2YaYW85c3sbBWcKUTFR
+         bsc+25ZQW9djzR7wA8WE+TYRwsmnHc2URRaZ8IQNbQ4gGuj2iOVrwiRCJxlYWvgHqEhB
+         tggH/BwedySmm18FyOOXUm0abvbZFvmPVra0mXgknpdcua+O2jw61FJbQkTqGLm3myzn
+         xwCzUs2PzNbrGP184ChXTIv5n8ypc/NaKmL4a66sCWBy63TJrc1V1j+rHxKJISoiXgVN
+         YzkCVDxZiWuTT8hFlhxM1+WFez6dRZWdlSOF3w4ge8Wc55yOuTqqUNJ5P4PVxc7UScah
+         zIYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=he9SDCoUIp9zpwmMMxSh3Fm9tKhR70JjYezuucyHBrw=;
+        b=s51rU3OBUujiswxBwxzmDAC3r1dIwmMq0FAJehhP/THfwMmK1rnt1abfVJ0UcEI1g7
+         NdBT8Vl5BnqLOlUaKJqWGu5ZWtZDofSxvS/gysS3wkD4EUQvJaI5yrMDgNvfjMmV1IdJ
+         cPE6uLX0Ny3rb6GvIf5GLfLlN+g28bc/qbY6TCLHvMzUN3R/JnODcZzQIeRJomKONeYn
+         HxqS68WEUdQp93wYVDd626XCmM8kPoMzf+QnnKXqMrmF2Uo5+77u5yP8GaK1IKZpBYeZ
+         4H2aSIuBTx684S0tCWiNX0R23vhBbSxw+E+hUPFnRPvOCIemfLxYqQmCwFIDD/Jd1Lsw
+         ngsg==
+X-Gm-Message-State: AJcUukfaWsEhlJsnMkVYjXPVkO5PAVNJa0tgIZlKpcT6fjiW7H/chbK4
+        /OvWj4of+FAeeUPxAJmS86TXKOF1VAPHajBHAOdGXv5KrT4=
+X-Google-Smtp-Source: ALg8bN7Hqk1RIvSqua4jUyXQ1qqfquUb4WRGTtqO7SFadRpBCbVQTmGNdANiBIGDdZp/22fEHfrBBQg7W8JueMe7VMI=
+X-Received: by 2002:a81:12d4:: with SMTP id 203mr13311721yws.0.1548463980469;
+ Fri, 25 Jan 2019 16:53:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="JVVqWhpkAs5raV7A"
-Content-Disposition: inline
-In-Reply-To: <5bc3256d49834c96db2a51c12190f2cb7cf7ac42.camel@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <CANMbfiuUHxkw822AvA+y0cJ+ao=pcrza7w4fgMn7vVx8AZqCwQ@mail.gmail.com>
+In-Reply-To: <CANMbfiuUHxkw822AvA+y0cJ+ao=pcrza7w4fgMn7vVx8AZqCwQ@mail.gmail.com>
+From:   "Moocowmoo ." <moocowmoo@masternode.me>
+Date:   Fri, 25 Jan 2019 19:52:24 -0500
+Message-ID: <CANMbfitE+5HLo1sMowr5erJGwzLVv3Z9sHKEgvOeso5OeWVrBg@mail.gmail.com>
+Subject: env GIT_WORK_TREE ignored by git describe --dirty
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+git describe --dirty shows dirty when cwd not repo work directory.
 
---JVVqWhpkAs5raV7A
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Confirmed by osse on freenode irc #git
 
-On Fri, Jan 25, 2019 at 05:22:45PM +0200, Arti Zirk wrote:
-> This is the built in http server that Python comes with (like Ruby
-> users have builtin webrick server). While it is possible to install
-> something else, I don't think many casual git-instaweb users would do
-> it.=20
->=20
-> I haven't looked in depth into it but I'm pretty sure that by simply
-> changing the imports I could make this code also work in python2.
->=20
-> Upstream python2 support ends in ~11 months and would Red Hat/CentOS 7
-> users using new git releases really care about "git instaweb -d python"
-> not working on installations without Python 3?
+  ubuntu@wrk:~/tmp$ pwd
+  /home/ubuntu/tmp
+  ubuntu@wrk:~/tmp$ git clone https://github.com/ipfs/go-ipfs.git
+  ubuntu@wrk:~/tmp$ GIT_DIR=/home/ubuntu/tmp/go-ipfs/.git
+GIT_WORK_TREE=/home/ubuntu/tmp/go-ipfs git describe --dirty
+  v0.4.18-381-gca77ecc76-dirty
 
-I'm sensitive to the fact that upstream is dropping support for Python
-2, and I have no objections to limiting this to Python 3. However,
-whether we like it or not, Red Hat/CentOS 7 is going to be around for
-four years after that.
+  ubuntu@wrk:~/tmp$ cd go-ipfs
+  ubuntu@wrk:~/tmp/go-ipfs$ GIT_DIR=/home/ubuntu/tmp/go-ipfs/.git
+GIT_WORK_TREE=/home/ubuntu/tmp/go-ipfs git describe --dirty
+  v0.4.18-381-gca77ecc76
 
-> In the end I would like to keep the name just "python" to signal that
-> it only needs standard Python installation and nothing else.
+workaround:
+use -C arg instead of GIT_WORK_TREE
+  git -C /path/to/work/directory describe --dirty
+  v0.4.18-381-gca77ecc76
 
-Could you update the documentation to put "Python 3" in parentheses or
-otherwise make it clear in the documentation? My goal is to avoid
-confusing users who are on systems that still have Python 2.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I tried to find the issue, but git's code isn't easy to grok in a few minutes.
+Thanks to osse and gxt for their help!
 
---JVVqWhpkAs5raV7A
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxLopMACgkQv1NdgR9S
-9os+lBAAr4XPN2K2OoQHvG7B6hI4bqDGlBNFnlEkvFnhTU8PNL5TDGWVxHX58Sus
-r5nZqQmHs/LfDzEST+HIergmbMwkaFKAq7kyHhdk759i7yKMzOP4u9pfgIe1yzVJ
-lQPOa28GdkcyB8pB8nogM7MrLrws3JUMGxwt+cyBxdWY3pG4iGzgtwlr2kr5/P10
-S2xYfdGM9Mm6SQbGmgYK9ALgaANQQnOGrDussQ6rVarYbml1XOgYj0pooJy3dZ1O
-eyHJF/qwAaE1jfYRH7ED5y7tH1xneDVo8D6bsSZLt7N03Fscl/J27Q+X7ARPDWHT
-ZzBsv6t0JuDsNGmLkPQMTsWvYN8yx08vdMP3sXIt3lHLjuVkciaDbzfODfMuD6Tz
-qt29VOOYKC/1MehMrHEjtiGPLsAxWItWiAntlfs1TnAXrPkP8xewSgXjOhkPfi0+
-EXsS0ZWWtAVHQT7uJkvXkTxVLGB6b9V4phF18qmEJAcnuMWRJ96VIytZSNNaYglc
-XhFoXpLH8L/ItaGc+cNxZ4Pw1IyLfX+AaKP0CeBvysURRvJ51urKlvVyzHMaRG5I
-TMCt5ODoPN11sMgMjKG0T9qCBhvduWzVnYrUY59EyOU51+hSyrljHwcotTsBblIl
-kgbPzyAgH7qVRVE8uoBTqGlVJn/p8YuCr6tQ7hD2jKcSRUFM7LU=
-=JEyO
------END PGP SIGNATURE-----
-
---JVVqWhpkAs5raV7A--
+moocowmoo
