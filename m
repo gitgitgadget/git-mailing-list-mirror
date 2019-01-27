@@ -2,151 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1873A1F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 00:07:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 390241F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 00:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726375AbfA0AHm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Jan 2019 19:07:42 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:35163 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726283AbfA0AHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Jan 2019 19:07:42 -0500
-Received: by mail-io1-f68.google.com with SMTP id f4so10663399ion.2
-        for <git@vger.kernel.org>; Sat, 26 Jan 2019 16:07:41 -0800 (PST)
+        id S1726283AbfA0AQq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Jan 2019 19:16:46 -0500
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:36450 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726249AbfA0AQp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Jan 2019 19:16:45 -0500
+Received: by mail-ed1-f51.google.com with SMTP id f23so10258150edb.3
+        for <git@vger.kernel.org>; Sat, 26 Jan 2019 16:16:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=H1imBWED3KQcLIqAT3AUgeh7RF0hrl70NFQR7vSKE08=;
-        b=KVGuVhYTCs9cn4tqBdOOf8g0GclhDANeV2N0qHzTm3HY/eXFVzoXIZGC5XfqXV4ZAd
-         N3brxoxPA+K3xhuqXq0gArDzFjYUDsM2o7KxoWbGon7uTrmTCewYeH/o0qNvTfba2bAb
-         5hC0iLt2TSZnS24LzBSgf0m477xwcMDhMRO+K1jMAlpqsbx+vW4bvZd+sgAxhS/SBlT3
-         TElZGeTOe9wuUnEfywSAABIcU4fhwPKM47Wac+nXAPHlghraMrY6h2KyNtvHLUSfJx03
-         EmrSYF/d9tU82dOtw/B/gVE4sO5QSifT1Fxbv8s8ibtJWHqZIUFlsnhkPXQU2VgbPopu
-         mVSg==
+        d=loskot-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=3YPhIKFLKKo17My9qZdQANEM8yUK8GBFmPcr3S2vB6M=;
+        b=WyS3fc6fkis7Oce8fDLKIp5Y4GkmXBlOoVjEdRdbDvhEpJg2asR80qYvfBX8N2b8C7
+         MQt241bz9+7i8TB7sCIsOu0YI/nQ98001+9YoQHB/HFM9xrJOsDy/0qvR4F+tzLBTxiO
+         TxKPxLo0OYnHnPW/LHFZ7HSHUgifFjHj/SkWDIKIVZ0jRpPlKpx051ao/4wAM/+fvKic
+         787oqRIDLC29kFm80bLC6yF/MnFYiBNrxeRGJqtesRr8fX3HeaARVK+fJiojV2J2iIna
+         N4uaUsYCvIKMmjXirBPOGXXBMJv5/ubL2uEeafDzEx14xiGagwF54STAnGh53WAeaEWq
+         xgvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=H1imBWED3KQcLIqAT3AUgeh7RF0hrl70NFQR7vSKE08=;
-        b=VqOKji86zfTt8hvREBQ/Gtd/1fWtBJ+EwB6HtjraTT7n/YBroOyjvgbS5WCXzrCWH3
-         /Oz1DHRZFaMO4mhpxqGcatZ4F83kKL/VNy/Wkl7SHzdA8W0RdVf61bjDNBk4KcZk4Abe
-         v6/DAmoqLQZLzksGRq++180M6mHT2JsExbofn54MfvxU00vJfkn8RbOUwfSyyzCkQPIF
-         vQlIBmsNalttg6NnDR4opWbN4YBBa+CApAcVwRQvnBnu5vBBQSBjITPVUU76IxW0g5yM
-         WLEn5zcaprJ8aYmh5rD2uAKM6jXeXFXCi+vpyk//1tIVt3tYWkjBmimwwbcEoIVtIDoN
-         FBsQ==
-X-Gm-Message-State: AHQUAuZzqqzLalrgeoMFTvUTAXyIm6B+Py/6GYVkTceTCalHILymttHe
-        9T5eq6RRf8E3KtssSp3/4w/HLmT7zzNlRCqz7rI=
-X-Google-Smtp-Source: AHgI3IZW5gw6vPOsIQhaN3ttLHcvpE/605hKjYthA0YH9fZU7asGei49sQMtNznp0VeAl3BqNcu+Ja8D9nf1GyNGNQM=
-X-Received: by 2002:a5d:9456:: with SMTP id x22mr8192530ior.282.1548547661256;
- Sat, 26 Jan 2019 16:07:41 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=3YPhIKFLKKo17My9qZdQANEM8yUK8GBFmPcr3S2vB6M=;
+        b=Vgh2Lzz6XARVkCvgGnEWQ70CZPMansWHv+azqUCnv8YZk+OnpMGy3wrOFZo6kMRWye
+         ykx01GT9tueasDjT4N8NKSv/L3z+j2VCOTjLNIlb+RyejFvXMl5Uu5M256+VEHR7izF4
+         9UUPBPEt/RsT51AwGZVb6Bd2AqZ02BOdHBTMvnbyKHUX+cnHwb9LjtO3YuYOe9UAK8Qq
+         HYWMEFIyOetx4OXM3hiCJCS7W3kZmSHhgNs4UtLYQ3FHggukEPn73WaonVPqQmFtJVOX
+         sGsId7jXvXp64pRY2cri3Fn+8L9XA4yhafV82dX4xAaRU6XwuEmXyRGb64blXptLsIl2
+         lGPg==
+X-Gm-Message-State: AJcUukeMSyvL1aVuqrYtNTF5cvgr6KT4Nf3i6iY+tjD44auuR2MC0qn9
+        gUelF0y4MdSIey+sIn6RqJdNGRYwHsKZdTYVgVQyXtadVDycyjnQ
+X-Google-Smtp-Source: ALg8bN7Q9I7NHmNTtTBMY/CkdeJClOn+WDm7l0CN9ZZn2rN+O/JsV4X3dFb1b98tdO4A9OFcI+mum3ZBsJqkBQ9KOYw=
+X-Received: by 2002:a50:ba5c:: with SMTP id 28mr15779027eds.91.1548548203805;
+ Sat, 26 Jan 2019 16:16:43 -0800 (PST)
 MIME-Version: 1.0
-References: <20190126204951.42455-1-koraktor@gmail.com>
-In-Reply-To: <20190126204951.42455-1-koraktor@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 27 Jan 2019 07:07:14 +0700
-Message-ID: <CACsJy8A6hF+Sxitpt3J9EmDEXjGb2e+AeMtJDaE7Y32fg4NEKA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] Add tests for describe with --work-tree
-To:     Sebastian Staudt <koraktor@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+From:   Mateusz Loskot <mateusz@loskot.net>
+Date:   Sun, 27 Jan 2019 01:16:17 +0100
+Message-ID: <CABUeae_tm__uvHH74UARG805uTa2Sf0v6wYk=pmKvxxH3kvQ8A@mail.gmail.com>
+Subject: Checkout branch and prune everything related to previous checkout
+ (incl. LFS remains)
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 27, 2019 at 3:51 AM Sebastian Staudt <koraktor@gmail.com> wrote:
->
-> The dirty ones are already passing, but just because describe is comparing
-> with the wrong working tree.
->
-> Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
-> ---
->  t/t6120-describe.sh | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
->
-> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-> index d639d94696..9a6bd1541f 100755
-> --- a/t/t6120-describe.sh
-> +++ b/t/t6120-describe.sh
-> @@ -28,6 +28,24 @@ check_describe () {
->         '
->  }
->
-> +check_describe_worktree () {
-> +  cd "$TEST_DIRECTORY"
+Hi,
 
-Strange alignment. We normally do it in a subshell...
-
-> +       expect="$1"
-> +       shift
-> +       R=$(git --git-dir "$TRASH_DIRECTORY/.git" --work-tree "$TRASH_DIRECTORY" describe "$@" 2>err.actual)
-
-These commands should be executed inside test_expect_success, not
-outside. And you need to chain commands with && to make sure if
-something breaks, then the whole test will fai.
-
-If it's too ugly to generate test_expect_success with a shell
-function, then just write a shell function that "describe" and compare
-(i.e. the test body). Then you can write something like this later
-
-test_expect_sucesss 'describe with --worktree foo' '
-        check_describe_worktree foo
-'
-
-and check_describe_worktree can now do
-
-( cd "$TEST_DIRECTORY" && .... )
+I have a repo of a superproject with number of submodules.
+lots of files of both are in Git LFS.
+The repo comes with multiple long-lived release branches.
+The complete clone transfers 20 GB of Git and Git LFS objects.
+Checkout of master deflates the total repo to 40 GB in total,
+that is the objects and the working tree files together.
 
 
+Let's consider three separate clones as canonical way to create
+three working copies, one per the long-lived branch:
 
-> +       S=$?
-> +       cat err.actual >&3
-> +       test_expect_success "describe with --work-tree $*" '
-> +       test $S = 0 &&
-> +       case "$R" in
-> +       $expect)        echo happy ;;
-> +       *)      echo "Oops - $R is not $expect";
-> +               false ;;
-> +       esac
-> +       '
-> +  cd "$TRASH_DIRECTORY"
-> +}
-> +
->  test_expect_success setup '
->
->         test_tick &&
-> @@ -145,14 +163,20 @@ check_describe A-* HEAD
->
->  check_describe "A-*[0-9a-f]" --dirty
->
-> +check_describe_worktree "A-*[0-9a-f]" --dirty
-> +
->  test_expect_success 'set-up dirty work tree' '
->         echo >>file
->  '
->
->  check_describe "A-*[0-9a-f]-dirty" --dirty
->
-> +check_describe_worktree "A-*[0-9a-f]-dirty" --dirty
-> +
->  check_describe "A-*[0-9a-f].mod" --dirty=.mod
->
-> +check_describe_worktree "A-*[0-9a-f].mod" --dirty=.mod
-> +
->  test_expect_success 'describe --dirty HEAD' '
->         test_must_fail git describe --dirty HEAD
->  '
-> --
-> 2.20.1
->
+```
+git clone --branch master      --recursive --jobs 8 https://repo repo_master
+git clone --branch release/1.0 --recursive --jobs 8 https://repo repo_release1
+git clone --branch release/2.0 --recursive --jobs 8 https://repo repo_release2
 
+```
 
+I'm trying to work out a network-optimised equivalent of the above:
+- clone once with the default master checked out
+- make multiple copies of the cloned repo
+- checkout release branches
+
+How to checkout an existing branch fetched from remote,
+delete the previous branch and clean up any remains?
+
+How to clean up everything related to the previously checked out
+master and its working tree, any cached previous LFS downloads etc.?
+
+But, to keep the history of origin/master.
+
+Here is what I have come up with for the the network-optimised workflow:
+
+```
+git clone --branch master --recursive --jobs 8 https://repo repo_master
+
+cp -a repo_master repo_release1
+cp -a repo_master repo_release2
+
+cd repo_release1
+git checkout -b release/1.0 --track origin/release/1.0
+
+git pull
+git submodule update --init --recursive --jobs 8
+
+git branch -D master
+
+git lfs prune
+git submodule foreach --recursive git lfs prune
+
+git lfs checkout
+git submodule foreach --recursive git lfs checkout
+```
+
+Does it look correct or any steps are missing/redundant?
+
+Does it make sense to run any of these, at which point?
+
+git gc --aggressive --prune=now
+git submodule foreach --recursive git gc --aggressive --prune=now
+
+Please, assume, no new commits will happen locally between the
+`git clone --branch master ...` and `cp -a repo_master ...`.
+
+Best regards,
 -- 
-Duy
+Mateusz Loskot, http://mateusz.loskot.net
