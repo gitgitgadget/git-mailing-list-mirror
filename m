@@ -2,167 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 936761F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 21:22:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52A101F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 22:34:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727473AbfA0VWa (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 16:22:30 -0500
-Received: from mout.gmx.net ([212.227.15.18]:59931 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726302AbfA0VWa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 16:22:30 -0500
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MegbQ-1gYZ1E1yYq-00OIzK; Sun, 27
- Jan 2019 22:22:24 +0100
-Date:   Sun, 27 Jan 2019 22:22:23 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 03/21] ci/lib.sh: encapsulate Travis-specific things
-In-Reply-To: <20190125135127.GE6702@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1901272022410.45@tvgsbejvaqbjf.bet>
-References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <2d0b62f1862d5fce3ac0d7b813399f560600917d.1548254412.git.gitgitgadget@gmail.com> <20190125135127.GE6702@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726468AbfA0WeU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 17:34:20 -0500
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:33583 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726361AbfA0WeU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 17:34:20 -0500
+Received: by mail-wr1-f44.google.com with SMTP id p7so16065431wru.0
+        for <git@vger.kernel.org>; Sun, 27 Jan 2019 14:34:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=tgtBDSA/YECoHvSRR1smCLx15AchDGmbASwiA2SQ5Js=;
+        b=SHcuUM/DUFA+UywdDTe8rzojpNexvQmymHIIJtsrjXyONELkXZA87zE3Qg+u4j11cg
+         3bB4WMy1Aa/r3AKCKLaUCwLeGTTknjc2u9UZZhOTilqPXAJtOTbUN87TLELBTfl0jftp
+         rzoyPG9adeHmazbLX45tdUN9wCv2bkuOVYMkUudQIoDbjPqGrGh/IAMl+Qy6ZQMiFWxR
+         eEKIaHCUF/p4oQVJbDMlT+eAbmsEfdst6iMNe8ati24o6urjwGowgDIXDDDHAZvcr+Pr
+         5T6Qu5v1kvim7xkG9zDMmFWbjeIGpoaHcCKJVMHLnxck/R3vs0mdAdPULUBcicrvL60s
+         ro8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=tgtBDSA/YECoHvSRR1smCLx15AchDGmbASwiA2SQ5Js=;
+        b=OcjVc9aZvcuDpnh/TZeYlmfmXSMHB0WU6j8AcNxDm0MzZqgYk2wDOqBIAIt2TSkk+p
+         JKLBojupD3gbT1EqkSyPglZnZds1uHQ2UfI7xN/S8cY3sX/hYPto6GyN/oLuOpJO66kD
+         l3XdJXZmC6deXnFnfx5x1i/yIGs+89ZOShPGcm1lOgYtNILWu5lKQ5pK5akSIjbra4Lx
+         I3IgTfvle3R/5sdYE1sBJC0COUcBux2Mij0TpB9cuJ0ecK/CRDcLjIfMXAMvSv6MIH5g
+         vtmtvYlA3u4YpL2XgPukaf0u0VvvoU9MdC7fhAuLvsI17zTbhU2hfIMi9EH8VdVzRhJY
+         duuw==
+X-Gm-Message-State: AJcUukctSmH9wqk5Iz4pt+icQ+wldYU0NT80/DZUt9gOJh4PD2kvz4WH
+        v/q1b0j3pJl4BEJVCI577IE=
+X-Google-Smtp-Source: ALg8bN6iowIVnQk4GpcgnF/hMvKcYXAgrX2EpVNiu35m4A2Udi210+d1Pjc2f3X+hz1zbu6jrIMaBQ==
+X-Received: by 2002:a5d:410e:: with SMTP id l14mr19426907wrp.61.1548628457828;
+        Sun, 27 Jan 2019 14:34:17 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a132sm97471782wmh.5.2019.01.27.14.34.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 27 Jan 2019 14:34:15 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        zhiyou.jx@alibaba-inc.com,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH/RFC v2 1/1] test-lint: Only use only sed [-n] [-e command] [-f command_file]
+References: <20190110115704.GL4673@szeder.dev>
+        <20190120075350.5950-1-tboegi@web.de>
+        <xmqqo988fpag.fsf@gitster-ct.c.googlers.com>
+        <799c5063-b0a7-df6b-6f86-a92b8b6d679b@web.de>
+        <CAPig+cSDnhvVCDE15koO9M1A8TBg+Mbn2OBsfXVvshmRyybApw@mail.gmail.com>
+        <f7871d8b-a19b-5816-120b-ce583debc4ca@web.de>
+        <xmqq8szbcl9q.fsf@gitster-ct.c.googlers.com>
+        <20190125191224.pgugeqskuhzi34hv@tb-raspi4>
+Date:   Sun, 27 Jan 2019 14:34:14 -0800
+In-Reply-To: <20190125191224.pgugeqskuhzi34hv@tb-raspi4> ("Torsten
+        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Fri, 25 Jan 2019 19:12:24
+ +0000")
+Message-ID: <xmqq1s4xg26x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-236681125-1548624145=:45"
-X-Provags-ID: V03:K1:34hVHM9mP9GI6twBLAjhW1254PontveIdxWdfotG1L0acQ4H+8x
- 8D0RkcYkzEAWssgGFZ4iS1puCnVk+Q+Qwyhd9+Ok2xrjzBBtVY9WZND5Qay5YNGudfekc2t
- CS4UOUq0GuV25AhIeHmjpZc3a5V0nyQdQWrmJp2kpGGN/NfNL1xENfegfV6Fji5Ghlj0P5N
- ozZN+DCMwfek9qaFVk6Tw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LQN0XeiqgLI=:Q8hI8WZbbuEZ2Ty5C9UIhQ
- mWZFeZLSAfF83boSvQ5W8mWY7GGt/3O77YEWi1yyREPVl5qHb0hTaXLi9/rvh0VY3RMmNTerl
- 7FLHQ82xhOuNLf+yI/4Axvr92Xelg/TtiLQTOURpW4hFYDQAoAtfCB9jNXo/uhXLwrXX4mi4D
- NTD5hEGPJuu1FHu6VoTLSmIUojMeI01XejsaUW0nPD2zkUm8gCTskYrR59mCk4AS5WNHbl40T
- Syfpl4S6jTEdb7mcFtruVEQ3a5qKtRmGNwyKeb2eRYT3V+e9BXXuwiy9QAgX1Ts3P9BaeKOvw
- dLjNFS83+aUGDFCio+HMZrDXhm+jYo5ipUj+PIJXg7y6yGMhxA5Dt9wLtrxhtxviAmQFkm2Uq
- pxWGG64/YuDrhj8cQl2OsWqJ8UsWbluQj1U6V8eialZluIvdjrXsE6SZAwfRcOkL2GKhxPAJY
- xCxoW+14mcqXrnr6wJELaorflctdUtB1oG80t3qxP1UXTbgH6oXlMSjHah0/rl79lEHmMZdsW
- YTInljqfhxdsSjjkApDdpw0tImhTzFSGxBdljSW3+jPh6W/ESqBrKWM50/sVdt7iW4QMBvDND
- n7mjvx+Eqd17e0FjaDxaOV3DTKtl6pkHxF3f2yP7acgfmRUR21IjvcYLVpdthTr1GD4F9m+1M
- fTrx52qyKmNdfKGYO18QMnDCpPErRHspMlT56A7/kg92Pz5ueZextvJyQuBo/LquPj5UFIQ/3
- 76QzVv2wfji7ppsrhcqOyotKvhyPFX4YkstlKOKyFjspnnJrKwkciZILSGqMlAL58k1GAR6OU
- JwpJYRqQJPrttWp6Oxff8eFN8KQ7QLFjoEinBw4rrLWcgzPtsmtX5Pg1Qv2uVdVoGRij6wgNP
- 6gSI1ihwwrWwkf//GgqutjnSh1NPQFXjaoY4x3dWaFX9SQpGEidPUu8VkW/lBBsur1m/9Nj9I
- osJJ/csZXcg==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Torsten Bögershausen <tboegi@web.de> writes:
 
---8323328-236681125-1548624145=:45
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+>> Thanks, both.  Eric's proposed message looks good to me too.
+>
+> Do you want to ammend the patch locally ?
 
-Hi Gábor,
+I just amended it; thanks.
 
-On Fri, 25 Jan 2019, SZEDER Gábor wrote:
 
-> On Wed, Jan 23, 2019 at 06:40:16AM -0800, Johannes Schindelin via
-> GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > 
-> > The upcoming patches will allow building git.git via Azure Pipelines
-> > (i.e. Azure DevOps' Continuous Integration), where variable names and
-> > URLs look a bit different than in Travis CI.
-> > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> 
-> > diff --git a/ci/lib.sh b/ci/lib.sh
-> > index c26bb6a274..4456dbbcb0 100755
-> > --- a/ci/lib.sh
-> > +++ b/ci/lib.sh
-> > @@ -1,8 +1,26 @@
-> >  # Library of functions shared by all CI scripts
-> >  
-> > -# When building a PR, TRAVIS_BRANCH refers to the *target* branch. Not what we
-> > -# want here. We want the source branch instead.
-> > -CI_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
-> > +if test true = "$TRAVIS"
-> > +then
-> > +	# When building a PR, TRAVIS_BRANCH refers to the *target* branch. Not
-> > +	# what we want here. We want the source branch instead.
-> > +	CI_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
-> > +	CI_COMMIT="$TRAVIS_COMMIT"
-> > +	CI_JOB_ID="$TRAVIS_JOB_ID"
-> > +	CI_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
-> > +	CI_OS_NAME="$TRAVIS_OS_NAME"
-> > +	CI_REPO_SLUG="$TRAVIS_REPO_SLUG"
-> > +
-> > +	cache_dir="$HOME/travis-cache"
-> > +
-> > +	url_for_job_id () {
-> > +		echo "https://travis-ci.org/$CI_REPO_SLUG/jobs/$1"
-> > +	}
-> > +
-> > +	BREW_INSTALL_PACKAGES="git-lfs gettext"
-> > +	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
-> > +	export GIT_TEST_OPTS="--verbose-log -x --immediate"
-> > +fi
-> 
-> Please set these variables after 'set -x' has been turned on, so the
-> values will be visible in the logs.
-> 
-> https://public-inbox.org/git/20181018220106.GU19800@szeder.dev/
-
-Oooops. Sorry, I overlooked this! I'm sorry. Will fix.
-
-The fix will actually be squashed into 1/21 ("travis: fix skipping tagged
-releases") because due to the re-ordering requested by Junio, this is now
-the first offender.
-
-> > diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-> > index 7aef39a2fd..d2045b63a6 100755
-> > --- a/ci/print-test-failures.sh
-> > +++ b/ci/print-test-failures.sh
-> > @@ -69,7 +69,7 @@ do
-> >  	fi
-> >  done
-> >  
-> > -if [ $combined_trash_size -gt 0 ]
-> > +if [ -n "$TRAVIS_JOB_ID" -a $combined_trash_size -gt 0 ]
-> 
-> Nit: if [ -n "$TRAVIS_JOB_ID" ] && [ $combined_trash_size -gt 0 ]
-> 
-> More importantly: is this necessary, because on Azure Pipelines there
-> is no URL from where the logs could be downloaded conveniently and
-> reliably?  I wonder whether it's worth to spend the extra effort in
-> preparing the base64-encoded trash directories of failed tests in the
-> first place.
-
-You're right, of course. There *should* be a way to extract these from the
-log even on Azure Pipelines. I did find the API to get the logs, but it
-seems that at least for the moment, there is no environment variable
-specifying the number of the current task (on Azure Pipelines, the logs
-are split by task). So I could not actually figure out any way to generate
-the Azure Pipelines equivalent of this URL:
-
-	https://api.travis-ci.org/v3/job/$TRAVIS_JOB_ID/log.txt
-
-But then, this code (which builds tar files of the trash directories of
-the failed tests and then logs a base64 version of it) simply is a
-workaround in the first place, accommodating for the fact that Travis does
-not offer build artifacts. But Azure Pipelines does. So that's what I am
-doing with those trash directories now: publish them as build artifacts
-(which can be downloaded conveniently as .zip files from the web page
-showing the build result).
-
-Thanks for helping me improve this patch series!
-Dscho
-
-> >  then
-> >  	echo "------------------------------------------------------------------------"
-> >  	echo "Trash directories embedded in this log can be extracted by running:"
-> 
-> 
---8323328-236681125-1548624145=:45--
