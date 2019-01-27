@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E3D41F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 00:36:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2FEF1F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 00:36:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726451AbfA0Agg (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Jan 2019 19:36:36 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:36707 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726262AbfA0Agg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Jan 2019 19:36:36 -0500
-Received: by mail-pf1-f193.google.com with SMTP id b85so6372419pfc.3
-        for <git@vger.kernel.org>; Sat, 26 Jan 2019 16:36:35 -0800 (PST)
+        id S1726468AbfA0Agm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Jan 2019 19:36:42 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41891 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726262AbfA0Agl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Jan 2019 19:36:41 -0500
+Received: by mail-pg1-f193.google.com with SMTP id m1so5681258pgq.8
+        for <git@vger.kernel.org>; Sat, 26 Jan 2019 16:36:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=J22SqsrBnIBzBc/MowdG4uEvotFdzYR0VIbQKkBltuM=;
-        b=jRQkrMXxH6L11gocowpgR8gldoBzo/t72NPV9RmPQpgNpTFUKRwViFfInVAShzsN8U
-         RJ+nYYk4wDspnB7ihlkK0C0um5ES5q+ERu3tXWEH7sQPKb2mJTIKPbjA8z+yl/awS1x8
-         TpIIZcqmz91sGFP50z3FV2ITRoQIzCcXErTlKnR+mUUSyM0l/ZnB+5MwmgMY5wyWxpMA
-         lRsLgJFjzrTbxHcgy5bk3V0K4Nga0evvOlJdxjJ6I+V6aMaDoLjbNvKDiS1SFwuK4s4I
-         DVk/E0noQsCs+f2f0l4JeqgpXAhrqZIjYL4cheYSDfmjs628mBQsEDUp5fFddAfYAVh2
-         nZNA==
+        bh=W8NtUzn6U8ttA/Z0NNmJcw4ThCxA2iYJCOa2CongQNI=;
+        b=svoegjkMSl8iWjwcQvWo39NTAx256dLGhzAZSguj43ls1lK2MFPfUB7p6Am8hXPx/u
+         2HRX964qvx71XSQCUKrKizj79QXKduXTyPjhRO6O5zc3qXC427HPwGD0iR6Mm8XJrqwc
+         MTSoHHFy1OD+r9ZIR/ZY/j92QvQ+44wPnO25PbtPQo1KF2xU8O60AJHnF7qB1Ri8D385
+         hd6P+DVptRAKdonwWjh1bULG2mS6loExx6u88aTi/W4fuSU1UE5KbYZrqB/qA0LMYLow
+         IQ61Q7NSY6bQ1zhQORpK8IX0u66r7U+SW1VXDvsdL2Iudbgdk1Kc0yqyl/pWzXYWEbfP
+         AokQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=J22SqsrBnIBzBc/MowdG4uEvotFdzYR0VIbQKkBltuM=;
-        b=Mqu5Sy+jKKg6mcP8Bxebpd/TYnjUAAvIetmcXwkhAuOHv/d6anqoQXkpyKG0Qnzlfr
-         HjxWgGmp1pz6JXHQ5jQmaaQuchsAPFDJpIvDGZ87XXVzB1MXV/STQz4U/PPMwBD/+lih
-         6x7Ac05Cf1lxM4Z2613x83cHq9ztHz+xrBGrM1zkqyPBKbWPxE0kRIjbyzA+MVIIfGEu
-         owTddWtYTQs3uX82Htra3v31GARGSGigA5Oe64yDxSJNkqMoIhtrgJktn077VGrKvz7T
-         gN7FW8V2QeKut6ux3HMXotwbKmtGEMbPG22HZATp/rNPdur5lBsIE0+d14YJ05pcaB0U
-         ODdA==
-X-Gm-Message-State: AJcUukfRjmOr96KyuOZ8fL5lOxyCZ5bnopePFxDL1uanW6wBJ0asgRIB
-        vr4V/HRGXEU9ge7MZsd2/sZZMM8Z
-X-Google-Smtp-Source: ALg8bN5f92rARRzTANOQNglpaWJFkQXRG9JOgEoZzkb93Y+tB2bIo+fPeoxlTgWxrcduZs7lhsHtKg==
-X-Received: by 2002:a62:6143:: with SMTP id v64mr16629511pfb.142.1548549394667;
-        Sat, 26 Jan 2019 16:36:34 -0800 (PST)
+        bh=W8NtUzn6U8ttA/Z0NNmJcw4ThCxA2iYJCOa2CongQNI=;
+        b=I5R/4iPAXQNDV5bBmJdLkSai5/EAFA+oN7JygJS9CvtENBMOlpllGCXTX4s7K/EprT
+         TjEZnJjMEAMJfEVWh8pYFPv1HwfHgFkuQ1KAybpW37kaaD9LkXmzwc5lwBQyjtVmgEf6
+         A7kcwEu1S9tQDLLMk5fyQITWKrg24LltjwO982iYcFPB/laEzxXSRN0HgQ8acwm3x3ec
+         3dX55aYFvIdY67/F62pCgTT3JJOdGcA0jZ9n3VW+dBbmSo7cjUc/DtdZPzOLBODKBQwp
+         /jynobI7RVEKgabheDvQDqnhZD74E/e+Ts/e6k6fnnRg7wbvu5/OP9j5xszTiUGVfTlo
+         X97g==
+X-Gm-Message-State: AJcUukeEFuCOs3QId+yQALFqMFl7ktEGTQ8OTZ7/p4g75EizErRr8Qqc
+        0laXsu1+3eKAPGQqovMCHflMJ2sm
+X-Google-Smtp-Source: ALg8bN6VVGyAj2ybyo8DP8dBm9AiuvWmTeTTFGiZ2r71nXh2BgKeH90wr8SAUBUEXpNea/wm9ygFxg==
+X-Received: by 2002:a62:5f07:: with SMTP id t7mr16547426pfb.108.1548549400790;
+        Sat, 26 Jan 2019 16:36:40 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id x3sm42739901pgt.45.2019.01.26.16.36.31
+        by smtp.gmail.com with ESMTPSA id 12sm36426367pgt.33.2019.01.26.16.36.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 Jan 2019 16:36:34 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sun, 27 Jan 2019 07:36:28 +0700
+        Sat, 26 Jan 2019 16:36:39 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sun, 27 Jan 2019 07:36:35 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 06/14] parse-options: avoid magic return codes
-Date:   Sun, 27 Jan 2019 07:35:27 +0700
-Message-Id: <20190127003535.28341-7-pclouds@gmail.com>
+Subject: [PATCH 07/14] parse-options: allow ll_callback with OPTION_CALLBACK
+Date:   Sun, 27 Jan 2019 07:35:28 +0700
+Message-Id: <20190127003535.28341-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.560.g70ca8b83ee
 In-Reply-To: <20190127003535.28341-1-pclouds@gmail.com>
 References: <20190127003535.28341-1-pclouds@gmail.com>
@@ -71,314 +71,241 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Give names to these magic negative numbers. Make parse_opt_ll_cb
-return an enum to make clear it can actually control parse_options()
-with different return values (parse_opt_cb can too, but nobody needs
-it).
+OPTION_CALLBACK is much simpler/safer to use, but parse_opt_cb does
+not allow access to parse_opt_ctx_t, which sometimes is useful
+(e.g. to obtain the prefix).
+
+Extending parse_opt_cb to take parse_opt_cb could result in a lot of
+changes. Instead let's just allow ll_callback to be used with
+OPTION_CALLBACK. The user will have to be careful, not to change
+anything in ctx, or return wrong result code. But that's the price for
+ll_callback.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/merge.c        |  5 +--
- builtin/update-index.c | 20 ++++++------
- parse-options-cb.c     |  6 ++--
- parse-options.c        | 69 +++++++++++++++++++++++++++---------------
- parse-options.h        | 14 ++++-----
- 5 files changed, 68 insertions(+), 46 deletions(-)
+ builtin/merge.c        |  2 ++
+ builtin/update-index.c | 20 +++++++++++++++-----
+ parse-options-cb.c     |  4 +++-
+ parse-options.c        | 42 ++++++++++++++++++++++++++++--------------
+ parse-options.h        |  5 +++--
+ 5 files changed, 51 insertions(+), 22 deletions(-)
 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index 07839b0bb8..de64d7850e 100644
+index de64d7850e..563a16f38a 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -112,8 +112,9 @@ static int option_parse_message(const struct option *opt,
- 	return 0;
- }
+@@ -114,11 +114,13 @@ static int option_parse_message(const struct option *opt,
  
--static int option_read_message(struct parse_opt_ctx_t *ctx,
--			       const struct option *opt, int unset)
-+static enum parse_opt_result option_read_message(struct parse_opt_ctx_t *ctx,
-+						 const struct option *opt,
-+						 int unset)
+ static enum parse_opt_result option_read_message(struct parse_opt_ctx_t *ctx,
+ 						 const struct option *opt,
++						 const char *arg_not_used,
+ 						 int unset)
  {
  	struct strbuf *buf = opt->value;
  	const char *arg;
+ 
++	BUG_ON_OPT_ARG(arg_not_used);
+ 	if (unset)
+ 		BUG("-F cannot be negated");
+ 
 diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 727a8118b8..21c84e5590 100644
+index 21c84e5590..7abde20169 100644
 --- a/builtin/update-index.c
 +++ b/builtin/update-index.c
-@@ -847,8 +847,8 @@ static int parse_new_style_cacheinfo(const char *arg,
- 	return 0;
+@@ -848,13 +848,15 @@ static int parse_new_style_cacheinfo(const char *arg,
  }
  
--static int cacheinfo_callback(struct parse_opt_ctx_t *ctx,
--				const struct option *opt, int unset)
-+static enum parse_opt_result cacheinfo_callback(
-+	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
+ static enum parse_opt_result cacheinfo_callback(
+-	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
++	struct parse_opt_ctx_t *ctx, const struct option *opt,
++	const char *arg, int unset)
  {
  	struct object_id oid;
  	unsigned int mode;
-@@ -873,8 +873,8 @@ static int cacheinfo_callback(struct parse_opt_ctx_t *ctx,
- 	return 0;
+ 	const char *path;
+ 
+ 	BUG_ON_OPT_NEG(unset);
++	BUG_ON_OPT_ARG(arg);
+ 
+ 	if (!parse_new_style_cacheinfo(ctx->argv[1], &mode, &oid, &path)) {
+ 		if (add_cacheinfo(mode, &oid, path, 0))
+@@ -874,11 +876,13 @@ static enum parse_opt_result cacheinfo_callback(
  }
  
--static int stdin_cacheinfo_callback(struct parse_opt_ctx_t *ctx,
--			      const struct option *opt, int unset)
-+static enum parse_opt_result stdin_cacheinfo_callback(
-+	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
+ static enum parse_opt_result stdin_cacheinfo_callback(
+-	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
++	struct parse_opt_ctx_t *ctx, const struct option *opt,
++	const char *arg, int unset)
  {
  	int *nul_term_line = opt->value;
  
-@@ -887,8 +887,8 @@ static int stdin_cacheinfo_callback(struct parse_opt_ctx_t *ctx,
- 	return 0;
+ 	BUG_ON_OPT_NEG(unset);
++	BUG_ON_OPT_ARG(arg);
+ 
+ 	if (ctx->argc != 1)
+ 		return error("option '%s' must be the last argument", opt->long_name);
+@@ -888,11 +892,13 @@ static enum parse_opt_result stdin_cacheinfo_callback(
  }
  
--static int stdin_callback(struct parse_opt_ctx_t *ctx,
--				const struct option *opt, int unset)
-+static enum parse_opt_result stdin_callback(
-+	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
+ static enum parse_opt_result stdin_callback(
+-	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
++	struct parse_opt_ctx_t *ctx, const struct option *opt,
++	const char *arg, int unset)
  {
  	int *read_from_stdin = opt->value;
  
-@@ -900,8 +900,8 @@ static int stdin_callback(struct parse_opt_ctx_t *ctx,
- 	return 0;
+ 	BUG_ON_OPT_NEG(unset);
++	BUG_ON_OPT_ARG(arg);
+ 
+ 	if (ctx->argc != 1)
+ 		return error("option '%s' must be the last argument", opt->long_name);
+@@ -901,12 +907,14 @@ static enum parse_opt_result stdin_callback(
  }
  
--static int unresolve_callback(struct parse_opt_ctx_t *ctx,
--				const struct option *opt, int unset)
-+static enum parse_opt_result unresolve_callback(
-+	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
+ static enum parse_opt_result unresolve_callback(
+-	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
++	struct parse_opt_ctx_t *ctx, const struct option *opt,
++	const char *arg, int unset)
  {
  	int *has_errors = opt->value;
  	const char *prefix = startup_info->prefix;
-@@ -919,8 +919,8 @@ static int unresolve_callback(struct parse_opt_ctx_t *ctx,
- 	return 0;
+ 
+ 	BUG_ON_OPT_NEG(unset);
++	BUG_ON_OPT_ARG(arg);
+ 
+ 	/* consume remaining arguments. */
+ 	*has_errors = do_unresolve(ctx->argc, ctx->argv,
+@@ -920,12 +928,14 @@ static enum parse_opt_result unresolve_callback(
  }
  
--static int reupdate_callback(struct parse_opt_ctx_t *ctx,
--				const struct option *opt, int unset)
-+static enum parse_opt_result reupdate_callback(
-+	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
+ static enum parse_opt_result reupdate_callback(
+-	struct parse_opt_ctx_t *ctx, const struct option *opt, int unset)
++	struct parse_opt_ctx_t *ctx, const struct option *opt,
++	const char *arg, int unset)
  {
  	int *has_errors = opt->value;
  	const char *prefix = startup_info->prefix;
+ 
+ 	BUG_ON_OPT_NEG(unset);
++	BUG_ON_OPT_ARG(arg);
+ 
+ 	/* consume remaining arguments. */
+ 	setup_work_tree();
 diff --git a/parse-options-cb.c b/parse-options-cb.c
-index e05bcea809..ec01ef722b 100644
+index ec01ef722b..2733393546 100644
 --- a/parse-options-cb.c
 +++ b/parse-options-cb.c
-@@ -170,10 +170,10 @@ int parse_opt_noop_cb(const struct option *opt, const char *arg, int unset)
-  * "-h" output even if it's not being handled directly by
+@@ -171,8 +171,10 @@ int parse_opt_noop_cb(const struct option *opt, const char *arg, int unset)
   * parse_options().
   */
--int parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
--			 const struct option *opt, int unset)
-+enum parse_opt_result parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
-+					   const struct option *opt, int unset)
+ enum parse_opt_result parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
+-					   const struct option *opt, int unset)
++					   const struct option *opt,
++					   const char *arg, int unset)
  {
--	return -2;
-+	return PARSE_OPT_UNKNOWN;
++	BUG_ON_OPT_ARG(arg);
+ 	return PARSE_OPT_UNKNOWN;
  }
  
- /**
 diff --git a/parse-options.c b/parse-options.c
-index 37a56d079a..50c340474c 100644
+index 50c340474c..cec74522e5 100644
 --- a/parse-options.c
 +++ b/parse-options.c
-@@ -20,8 +20,9 @@ int optbug(const struct option *opt, const char *reason)
- 	return error("BUG: switch '%c' %s", opt->short_name, reason);
- }
+@@ -95,7 +95,7 @@ static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
  
--static int get_arg(struct parse_opt_ctx_t *p, const struct option *opt,
--		   int flags, const char **arg)
-+static enum parse_opt_result get_arg(struct parse_opt_ctx_t *p,
-+				     const struct option *opt,
-+				     int flags, const char **arg)
- {
- 	if (p->opt) {
- 		*arg = p->opt;
-@@ -44,9 +45,10 @@ static void fix_filename(const char *prefix, const char **file)
- 	*file = prefix_filename(prefix, *file);
- }
+ 	switch (opt->type) {
+ 	case OPTION_LOWLEVEL_CALLBACK:
+-		return opt->ll_callback(p, opt, unset);
++		return opt->ll_callback(p, opt, NULL, unset);
  
--static int opt_command_mode_error(const struct option *opt,
--				  const struct option *all_opts,
--				  int flags)
-+static enum parse_opt_result opt_command_mode_error(
-+	const struct option *opt,
-+	const struct option *all_opts,
-+	int flags)
- {
- 	const struct option *that;
- 	struct strbuf that_name = STRBUF_INIT;
-@@ -69,16 +71,16 @@ static int opt_command_mode_error(const struct option *opt,
- 		error(_("%s is incompatible with %s"),
- 		      optname(opt, flags), that_name.buf);
- 		strbuf_release(&that_name);
--		return -1;
-+		return PARSE_OPT_ERROR;
- 	}
- 	return error(_("%s : incompatible with something else"),
- 		     optname(opt, flags));
- }
+ 	case OPTION_BIT:
+ 		if (unset)
+@@ -161,16 +161,27 @@ static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
+ 		return err;
  
--static int get_value(struct parse_opt_ctx_t *p,
--		     const struct option *opt,
--		     const struct option *all_opts,
--		     int flags)
-+static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
-+				       const struct option *opt,
-+				       const struct option *all_opts,
-+				       int flags)
- {
- 	const char *s, *arg;
- 	const int unset = flags & OPT_UNSET;
-@@ -208,7 +210,8 @@ static int get_value(struct parse_opt_ctx_t *p,
- 	}
- }
- 
--static int parse_short_opt(struct parse_opt_ctx_t *p, const struct option *options)
-+static enum parse_opt_result parse_short_opt(struct parse_opt_ctx_t *p,
-+					     const struct option *options)
- {
- 	const struct option *all_opts = options;
- 	const struct option *numopt = NULL;
-@@ -239,11 +242,12 @@ static int parse_short_opt(struct parse_opt_ctx_t *p, const struct option *optio
+ 	case OPTION_CALLBACK:
++	{
++		const char *p_arg = NULL;
++		int p_unset;
++
+ 		if (unset)
+-			return (*opt->callback)(opt, NULL, 1) ? (-1) : 0;
+-		if (opt->flags & PARSE_OPT_NOARG)
+-			return (*opt->callback)(opt, NULL, 0) ? (-1) : 0;
+-		if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
+-			return (*opt->callback)(opt, NULL, 0) ? (-1) : 0;
+-		if (get_arg(p, opt, flags, &arg))
++			p_unset = 1;
++		else if (opt->flags & PARSE_OPT_NOARG)
++			p_unset = 0;
++		else if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
++			p_unset = 0;
++		else if (get_arg(p, opt, flags, &arg))
+ 			return -1;
+-		return (*opt->callback)(opt, arg, 0) ? (-1) : 0;
+-
++		else {
++			p_unset = 0;
++			p_arg = arg;
++		}
++		if (opt->callback)
++			return (*opt->callback)(opt, p_arg, p_unset) ? (-1) : 0;
++		else
++			return (*opt->ll_callback)(p, opt, p_arg, p_unset);
++	}
+ 	case OPTION_INTEGER:
+ 		if (unset) {
+ 			*(int *)opt->value = 0;
+@@ -238,7 +249,10 @@ static enum parse_opt_result parse_short_opt(struct parse_opt_ctx_t *p,
+ 			len++;
+ 		arg = xmemdupz(p->opt, len);
+ 		p->opt = p->opt[len] ? p->opt + len : NULL;
+-		rc = (*numopt->callback)(numopt, arg, 0) ? (-1) : 0;
++		if (numopt->callback)
++			rc = (*numopt->callback)(numopt, arg, 0) ? (-1) : 0;
++		else
++			rc = (*numopt->ll_callback)(p, numopt, arg, 0);
  		free(arg);
  		return rc;
  	}
--	return -2;
-+	return PARSE_OPT_UNKNOWN;
- }
- 
--static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
--			  const struct option *options)
-+static enum parse_opt_result parse_long_opt(
-+	struct parse_opt_ctx_t *p, const char *arg,
-+	const struct option *options)
- {
- 	const struct option *all_opts = options;
- 	const char *arg_end = strchrnul(arg, '=');
-@@ -269,7 +273,7 @@ static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
- 			if (*rest)
- 				continue;
- 			p->out[p->cpidx++] = arg - 2;
--			return 0;
-+			return PARSE_OPT_DONE;
- 		}
- 		if (!rest) {
- 			/* abbreviated? */
-@@ -334,11 +338,11 @@ static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
- 			ambiguous_option->long_name,
- 			(abbrev_flags & OPT_UNSET) ?  "no-" : "",
- 			abbrev_option->long_name);
--		return -3;
-+		return PARSE_OPT_HELP;
- 	}
- 	if (abbrev_option)
- 		return get_value(p, abbrev_option, all_opts, abbrev_flags);
--	return -2;
-+	return PARSE_OPT_UNKNOWN;
- }
- 
- static int parse_nodash_opt(struct parse_opt_ctx_t *p, const char *arg,
-@@ -590,22 +594,28 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 		if (arg[1] != '-') {
- 			ctx->opt = arg + 1;
- 			switch (parse_short_opt(ctx, options)) {
--			case -1:
-+			case PARSE_OPT_ERROR:
- 				return PARSE_OPT_ERROR;
--			case -2:
-+			case PARSE_OPT_UNKNOWN:
- 				if (ctx->opt)
- 					check_typos(arg + 1, options);
- 				if (internal_help && *ctx->opt == 'h')
- 					goto show_usage;
- 				goto unknown;
-+			case PARSE_OPT_NON_OPTION:
-+			case PARSE_OPT_HELP:
-+			case PARSE_OPT_COMPLETE:
-+				BUG("parse_short_opt() cannot return these");
-+			case PARSE_OPT_DONE:
-+				break;
- 			}
- 			if (ctx->opt)
- 				check_typos(arg + 1, options);
- 			while (ctx->opt) {
- 				switch (parse_short_opt(ctx, options)) {
--				case -1:
-+				case PARSE_OPT_ERROR:
- 					return PARSE_OPT_ERROR;
--				case -2:
-+				case PARSE_OPT_UNKNOWN:
- 					if (internal_help && *ctx->opt == 'h')
- 						goto show_usage;
- 
-@@ -617,6 +627,12 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 					ctx->argv[0] = xstrdup(ctx->opt - 1);
- 					*(char *)ctx->argv[0] = '-';
- 					goto unknown;
-+				case PARSE_OPT_NON_OPTION:
-+				case PARSE_OPT_COMPLETE:
-+				case PARSE_OPT_HELP:
-+					BUG("parse_short_opt() cannot return these");
-+				case PARSE_OPT_DONE:
-+					break;
- 				}
- 			}
- 			continue;
-@@ -635,12 +651,17 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 		if (internal_help && !strcmp(arg + 2, "help"))
- 			goto show_usage;
- 		switch (parse_long_opt(ctx, arg + 2, options)) {
--		case -1:
-+		case PARSE_OPT_ERROR:
- 			return PARSE_OPT_ERROR;
--		case -2:
-+		case PARSE_OPT_UNKNOWN:
- 			goto unknown;
--		case -3:
-+		case PARSE_OPT_HELP:
- 			goto show_usage;
-+		case PARSE_OPT_NON_OPTION:
-+		case PARSE_OPT_COMPLETE:
-+			BUG("parse_long_opt() cannot return these");
-+		case PARSE_OPT_DONE:
-+			break;
- 		}
- 		continue;
- unknown:
+@@ -414,10 +428,10 @@ static void parse_options_check(const struct option *opts)
+ 				err |= optbug(opts, "should not accept an argument");
+ 			break;
+ 		case OPTION_CALLBACK:
+-			if (!opts->callback)
+-				BUG("OPTION_CALLBACK needs a callback");
+-			if (opts->ll_callback)
+-				BUG("OPTION_CALLBACK needs no ll_callback");
++			if (!opts->callback && !opts->ll_callback)
++				BUG("OPTION_CALLBACK needs one callback");
++			if (opts->callback && opts->ll_callback)
++				BUG("OPTION_CALLBACK can't have two callbacks");
+ 			break;
+ 		case OPTION_LOWLEVEL_CALLBACK:
+ 			if (!opts->ll_callback)
 diff --git a/parse-options.h b/parse-options.h
-index f1f246387c..4e49185027 100644
+index 4e49185027..ce75278804 100644
 --- a/parse-options.h
 +++ b/parse-options.h
-@@ -49,8 +49,8 @@ struct option;
- typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
+@@ -50,7 +50,8 @@ typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
  
  struct parse_opt_ctx_t;
--typedef int parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
--				const struct option *opt, int unset);
-+typedef enum parse_opt_result parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
-+					      const struct option *opt, int unset);
+ typedef enum parse_opt_result parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
+-					      const struct option *opt, int unset);
++					      const struct option *opt,
++					      const char *arg, int unset);
  
  /*
   * `type`::
-@@ -222,12 +222,12 @@ const char *optname(const struct option *opt, int flags);
- 
- /*----- incremental advanced APIs -----*/
- 
--enum {
--	PARSE_OPT_COMPLETE = -2,
--	PARSE_OPT_HELP = -1,
--	PARSE_OPT_DONE,
-+enum parse_opt_result {
-+	PARSE_OPT_COMPLETE = -3,
-+	PARSE_OPT_HELP = -2,
-+	PARSE_OPT_ERROR = -1,	/* must be the same as error() */
-+	PARSE_OPT_DONE = 0,	/* fixed so that "return 0" works */
- 	PARSE_OPT_NON_OPTION,
--	PARSE_OPT_ERROR,
- 	PARSE_OPT_UNKNOWN
- };
+@@ -267,7 +268,7 @@ int parse_opt_commits(const struct option *, const char *, int);
+ int parse_opt_tertiary(const struct option *, const char *, int);
+ int parse_opt_string_list(const struct option *, const char *, int);
+ int parse_opt_noop_cb(const struct option *, const char *, int);
+-int parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx, const struct option *, int);
++int parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx, const struct option *, const char *, int);
+ int parse_opt_passthru(const struct option *, const char *, int);
+ int parse_opt_passthru_argv(const struct option *, const char *, int);
  
 -- 
 2.20.1.560.g70ca8b83ee
