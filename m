@@ -2,115 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-12.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F6EF1F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 19:06:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC8F11F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 19:08:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbfA0TGE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 14:06:04 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49115 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726630AbfA0TGE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 14:06:04 -0500
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMkgl-1gogpM0Xdf-008Xp5; Sun, 27
- Jan 2019 20:05:59 +0100
-Date:   Sun, 27 Jan 2019 20:05:53 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v4 10/21] ci: move the Windows job to the top
-In-Reply-To: <xmqq7eev54gv.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901272003560.45@tvgsbejvaqbjf.bet>
-References: <pull.31.v3.git.gitgitgadget@gmail.com>        <pull.31.v4.git.gitgitgadget@gmail.com>        <5bdc6a08a8b8040de3082b1690f16538fcc08682.1548254412.git.gitgitgadget@gmail.com> <xmqq7eev54gv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726846AbfA0TI4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 14:08:56 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:33455 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726562AbfA0TI4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 14:08:56 -0500
+Received: by mail-lj1-f194.google.com with SMTP id v1-v6so12403753ljd.0
+        for <git@vger.kernel.org>; Sun, 27 Jan 2019 11:08:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hZ2Z1iDkFrA+61891aSaroSloISi/pQWJKtBXLGdtt8=;
+        b=RXX8WxEi+w481YwrOvIoVJSRhbayetTY2oeO1FbdYBkb6DQ1q2ZpcnsBS52OYaPUZB
+         PJkpOwxmMmvXgb5UoHzLhkej/tWxX0vW25I5Ec7A8kYYayjX9CTqKT01Z15kiD8K6uAS
+         mFQzLuVhNhl4KoQsgOffuAiqB6R2vtr0sCPp+SFsF8eWKhgJl4XI3pZaHOUmGBSWXvmq
+         7FlcAzmLXV2HcI7LJS4g5trvd9QyDvGFOJkwm9qKIztYA1M7HdqKlKkhzkXXNH6xsDNA
+         oI0pI8G9qllylX2hzAC0k6v4sP8pch73lDGsRXh8I8TvgpiLukExqDO42KsmmorTDLwR
+         wemg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hZ2Z1iDkFrA+61891aSaroSloISi/pQWJKtBXLGdtt8=;
+        b=OSgRTfSC9AEwXABdq1b3C+87lYlWEDrJy/DTjsTRkw2j2n47cmC5nGQEK/SBT/HLJG
+         Mc28nv/IZn3Udf1TEbYzz7vPooiSUN1f/LsoXIHBLIoCqX5HL3Lzp1Bb729aTrtA2A3M
+         11Tdr/+VKXn3MHMMIuPlz6WPQsWMRReb9gsF+053k3D4iFfE4Q30zxxiL/GMCxKLlFA1
+         tZP8SIqui/IFCoIlEhW4SJLQmoGAcNj5g2YIvfLC9XJLokxl0ea4tVmUnCz972TShcgY
+         L65uXZ+o8yr3gfLLMIHuKRpZ19LRkXT1fsvgFspKdtv/J1xmaFHEb4S6AOT+VXqOUdAQ
+         kWxg==
+X-Gm-Message-State: AJcUukdjEoO5wUB8mAvHMvLVfRi+RA6gKCQ6mI0utnbYvDtswCvaTh10
+        GjrIMh5rv+FJnZo8aIdHu38+ddWnZvbRcrySXGxwZw==
+X-Google-Smtp-Source: ALg8bN5RSiymW+NUV/X15vUm2krUdEAotPf4afWxMthbs2Aiiiwp5vvXc0hcjpaLk2SyN0XTD4K7eGslCSVlv5mqEuU=
+X-Received: by 2002:a2e:9c87:: with SMTP id x7-v6mr14076918lji.196.1548616133969;
+ Sun, 27 Jan 2019 11:08:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VkViaLK1hHL3wesoEkq+JLar5BbDWP5h8JXm6tPsbMHtf4r4ZhU
- A0vQbFOlDTqc01Az6CzpPESTk9lbmJPLn392mDR3rJ2QPtNY2yw1hWa8184UIfs8sbEqP2W
- OMqK6QPKtRZypIWo51qcs2ktEktumOrf1zuZpPfkqXtjmPoD/CQqhNwJ8siJMjt5BQMn4OV
- Z8FXY8EU22yXKCGIVKbgg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JoLXBfXy7No=:HrGkiFHX/SLnuC0kVToXC8
- cjqntT+jKdJ044j33i/cPJeBC/IvIg/PZrrOSok3ih37MZDNRaRgSfkcHPXqxq7W+7XXEU3cQ
- zo+4BoE57YiaFFuB707xCMrxlqKiaI+o1XCEvgW02gYf8ddC2xviXztDGtGQsT/mhmkpD/zD4
- L3agPZtMt3C9LR01oEFDkX3FP0p2fHEoCIb3DdGaiWeQ5eZW0iJFl9rfPv1HANaBB8mQOJg1z
- aXla3QyunTFqz/EeP5owVQNM7X+vSxdh4OM++i7Zl9zKtYNkfQtW82RQhzflZmyaUEK5E5G8V
- mNq+Ta7KogQ7aAeYhhmEzQS7FR7EkL0hgd2zARzLTwMqSJesN90c+XaFPyL1R5v/QepjA2Gdb
- 7aO+fNY8j4r1ImJkHCy+ZVU18D9n/G84Wk5illL6vbUIXPyYG5z4I+ZPAPWmNy+bnZhftcY+0
- xx1aaw2Kc+4ROOIN1rGytGYKhSGIVIEjBb8/zSRX/dGu12L5wlUGh67bdZa1WnhTw4TQ7viA0
- Xh/UuUZfcn30EKhsIP/b2QieOqmLhBDiwjRypgJbKPyYGVxN0QuiqehBoRCJPdyxuxw6Xd0Bo
- HaOLW0B1DmLS1bVC94fqT62UGTHQZ4iYJlyibjNA6w9aGMsmYK+BtYWK/hNcoBx5gI2Ky77Yb
- GT+oQDWKDA6yFT3RJT0cGjntCB0ywdeA+RlHzO6FpbH0npa7Kcr5IMvf77ejfYi3oO8MHUBzy
- xDCPyeyzvt0yI8NK3YcOw+IKqCAoArDWTAcJhpzcf9s4SXT4xFQVL0IurjmYuWr16cb93rZ8S
- MVMeQXFuVMLYv2SQn6joimxNbVefRO6U9O2DZc8SVtyo8kMYzTnuojb4jEnspoeXN3/D9Ox8F
- v/v88glLT+m4IxATcKk0suGL06wtepDdBhF/poffVNauKxTe1+cGgHwQM4ydoBqhC2wajlYNg
- dgSVqJuDOuQ==
+References: <20190121223216.66659-1-sxenos@google.com> <20190121223216.66659-2-sxenos@google.com>
+ <CAGZ79kYiE+VhQw4GMs_VM6kK5yXAQ8An0o4fCVSZ3gr2+rHwiA@mail.gmail.com>
+In-Reply-To: <CAGZ79kYiE+VhQw4GMs_VM6kK5yXAQ8An0o4fCVSZ3gr2+rHwiA@mail.gmail.com>
+From:   Stefan Xenos <sxenos@google.com>
+Date:   Sun, 27 Jan 2019 11:08:42 -0800
+Message-ID: <CAPL8Ziuce2D4iLzkAguzjVvLq8iZXxE_UwxtU7TVKB0D7bG-dA@mail.gmail.com>
+Subject: Re: [PATCH 2/8] evolve: Implement oid_array_contains_nondestructive
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Stefan Xenos <sxenos@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Wed, 23 Jan 2019, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Jan 22, 2019 at 11:51 AM Stefan Beller <sbeller@google.com> wrote:
+>
+> On Mon, Jan 21, 2019 at 2:32 PM <sxenos@google.com> wrote:
 > >
-> > The Windows job currently takes a whopping ~1h20m to complete. Which is
-> > *far* longer than the next-longest job takes (linux-gcc, ~35m). As such,
-> > it makes sense to start the Windows job first, to minimize the overall
-> > run time (which is now pretty safely the run time of the Windows job).
-> 
-> Is the reason why Windows job gets started first is to make sure
-> that it, which is known to take the longest time, never has to wait
-> before starting while other jobs run, in case there is limited
-> parallelism?  The last part of this sentence is what readers of this
-> step will need in order to be convinced by the justification given,
-> because (1) if the jobs run totally serially, the order does not
-> matter much---if anything, running shorter jobs first would give
-> results from more jobs sooner, and (2) if the jobs run totally in
-> parallel, the order does not matter as long as we have enough
-> parallelism.
+>
+> > evolve: Implement oid_array_contains_nondestructive
+>
+> I'd think I would word this
+>
+>     sha1-array: implement oid_array_contains_nondestructive
 
-See my response to the other mail you sent (which seemed to be a first
-draft of this mail I am replying to?).
+Good point. Done.
 
-> > This commit is best viewed with `--color-moved`.
+> as for this patch it is not relevant what we we'll be using it for
+> later, but rather that it touches the oidset class?
+>
+> > From: Stefan Xenos <sxenos@gmail.com>
 > >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  azure-pipelines.yml | 172 ++++++++++++++++++++++----------------------
-> >  1 file changed, 86 insertions(+), 86 deletions(-)
-> 
-> For those who are seeing this azure-pipelines series for the first
-> time, it would probably be unclear what the point of adding an
-> entire file in 09/21 and them moving lines around in 10/21 is.  If
-> somebody asked me why, I wouldn't be able to explain why it is a
-> good idea.
-> 
-> The same comment applies to 11/21.
-> 
-> Would it hurt readability if these steps are combined?
-> 
-> If 09/21 were "copy travis.yml to create a moral-equivalent set-up
-> for azure.yml", then it is an entirely different story (i.e. "we
-> start from an equivalent setup as we have, and then tweak to match
-> our needs better, and we can view the tweak easier as a separate
-> step"), but I did not get the impression that it was what happened
-> there in 09/21.
+> > Implement a "contains_nondestructive" function for oid_array that won't
+> > sort the array if it is unsorted. This can be used to test containment in
+> > the rare situations where the array order matters.
+> >
+> > The function has intentionally been given a name that is more cumbersome
+> > than the "lookup" function, which is what most callers will will want
+> > in most situations.
+>
+> What about naming it oid_array_linear_lookup instead?
+> That would still have the common "lookup" in the name and
+> the "linear" should be enough to scare away the casual
+> user. The non-destructive sounds scary.
 
-Indeed, that *was* the intention. I tried to clarify that, by just *not*
-adding the Windows-specific part in the commit that adds
-azure-pipelines.yml, as it really should imitate .travis.yml closely.
+It probably shouldn't contain the word "lookup" since the lookup
+method returns an index and this new method returns true/false. I
+changed it to oid_array_readonly_contains.
 
-Ciao,
-Dscho
+> Missing sign off
+
+Thanks!
