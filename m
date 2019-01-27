@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39FD71F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 23:27:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF81C1F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 23:27:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726993AbfA0X1L (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 18:27:11 -0500
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:40372 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726920AbfA0X1E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 18:27:04 -0500
-Received: by mail-ed1-f52.google.com with SMTP id g22so11591045edr.7
-        for <git@vger.kernel.org>; Sun, 27 Jan 2019 15:27:03 -0800 (PST)
+        id S1726997AbfA0X1N (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 18:27:13 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:41672 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726403AbfA0X1D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 18:27:03 -0500
+Received: by mail-ed1-f68.google.com with SMTP id a20so11582198edc.8
+        for <git@vger.kernel.org>; Sun, 27 Jan 2019 15:27:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=mErgkvF3RwT1uEOg4N3negTT4Om6xVcCHQyQL+1J7Sw=;
-        b=ia6WC85chyVZJFMn+VHX72+HsU4uTzIx5wRYvjZDUHiT6XxyCGavj7To/8YTplr7Ah
-         AyMUKxtdOPWVTV3HgNx+XN2y/Egio/CdzEnCbKOvIq+zFHUymKbWlO9+jW+kDYA9JzpL
-         bFcRyADK/Us5aLaUNFSelUvdoC4p0z6bPbut4OZX/ZLncZRj5BVBoEcmpUy+AzVxhoBe
-         fuag7WTTp/TA1Nt3JAOZOK4d/P0L4do992KYGcT0QJhLMrKEBSw/NDD9HV9aHaLSXgcP
-         C6Bw88PF+grRUBFMda9FRplLRdFutO4QfuHcVLCEKW6hSqtqW2lyuFC2QLJxMh/S3eD6
-         7E7Q==
+        bh=qFU9SlpnDsxWdLk7t1RD4T2tVhhrbl/R3qfgIkC/7lI=;
+        b=bRNJMImM1ImOwOyBfAtb5XNAY9IAIU2y7JPIfgnub/Zdrao64eFTkd5RIN3G/33S5O
+         F8mbDY5xiUhLXzxnpUiyQZdtanMaToG3VfcO5XVSNzEwo3KVwrcKxhkHWrm5Xft7qWTA
+         p3zCIllr8NpiLYtXWhYnlVJPQZEfwxWbhSF+e9rQj8njfghR2YKJ1EcC4W/E3KP7ZKfu
+         L/wU3xmHcVFbumRxzgp4ca5Qwjdt3Xf1FSQL7hBF9SwKKrRNSwz/q4KOQWveBemFmcFG
+         DFs+zoIUo1BiaF48a+dsrGfi6PeXfhsfyuwUI0MLxkUOOcgzJDEL2gA6xABYyaOBSJn3
+         0ITw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mErgkvF3RwT1uEOg4N3negTT4Om6xVcCHQyQL+1J7Sw=;
-        b=BRY6/pxdOaxhR5b7jIE/BcQqNm+Ghr4JiTxXz+7hhSBKUTyKazpYjVT9pj2oySe/eV
-         QAyHA6BdwWhbJ616HWNmbYEE+HEEdER+ajG2JWgQCtkSuxdfxQHHAMcyUBUM7Tl06LzD
-         YbFF1OUS1ePeGCrX9cbsveb5G5c3YsQvCryBIuglJqL3CQKoWEQx4czSNynxFDY3sxHl
-         GJAsIFTV5ICUH4mQB7LeNaWLPKT45qj24Nx45CceBHJ3DxcRPcOP5o1WbxQJHBva/82d
-         llUAf4xQOdfmx5iNDCrjhR47Iq7QW3uwmLj2JIDC6D3RhyDhm4n76OL33IomsSymn5nY
-         VXAA==
-X-Gm-Message-State: AJcUukeuhFqPtIG0fOSOe6QDgkucCLa9yjJKE8r4UUJ3SvMC4v3sDETu
-        sY2OYgWzqzz39GfmXbSqCFalOm+B
-X-Google-Smtp-Source: ALg8bN5YWm0NRLdhTrvUisiFCpTQ+fuwh/d2klu83Gfmd+4C7kM3FB+ynwdTS81X7/zggtCbwnLFow==
-X-Received: by 2002:a17:906:258f:: with SMTP id m15-v6mr17505266ejb.191.1548631622161;
-        Sun, 27 Jan 2019 15:27:02 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r42sm13689214edd.23.2019.01.27.15.27.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=qFU9SlpnDsxWdLk7t1RD4T2tVhhrbl/R3qfgIkC/7lI=;
+        b=MIpmesY2kcxya7cuu5EoG/wR2IQ41DxVskxK0ZedHRkB42iYkfcpfeZNFweNjpiCQE
+         XmRiIjhhHOjv4BeXHPhFXXsB6aYMgLUV+ywdmFEC+3byBGeZ6vs+lvdyMWugdE+PAIZm
+         ZDL+9PJQrHyeNzvAbnMUVqbxOQD+7tgYkXQJptG0+t8ibHJoB6ej2fDQ7Pn45QoRemm2
+         tmu5/XXJrxf8PgqvCV4ndrWXj2wlisKVFrQZUQn8NiZXZW8U2jxQWCDkSnWAw8L/6ilR
+         b5Gc3ywn5DltB5CC6gIqjCC/xgXzF7qFKzciKLRliD+SiyWKd/L7EXbjMGy9O/9QTMcs
+         UStg==
+X-Gm-Message-State: AJcUukcrH6MhImJoeQTQW1vEpB650YD0GyuKiEu2zc9GBCyYFobGrtjq
+        fPPrwsd/FODcYygBjiuGsC8nd82W
+X-Google-Smtp-Source: AHgI3IZ0sTV9VoHCevLlVtyGjk4GZ8e0HjXQBmj4OwhHuejKAtUPYdsMnNE3pZP6OWB5tGf4XNIFEw==
+X-Received: by 2002:a17:906:b3c9:: with SMTP id cg9mr1075629ejb.159.1548631621351;
         Sun, 27 Jan 2019 15:27:01 -0800 (PST)
-Date:   Sun, 27 Jan 2019 15:27:01 -0800 (PST)
-X-Google-Original-Date: Sun, 27 Jan 2019 23:26:41 GMT
-Message-Id: <dfd3516f39d3b35ed451426d0f87cfbd93ffd06f.1548631608.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z40sm13397797edz.86.2019.01.27.15.27.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 27 Jan 2019 15:27:00 -0800 (PST)
+Date:   Sun, 27 Jan 2019 15:27:00 -0800 (PST)
+X-Google-Original-Date: Sun, 27 Jan 2019 23:26:40 GMT
+Message-Id: <4303bbd4e816a110c18ed29e8ec371ae50afaeba.1548631608.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v5.git.gitgitgadget@gmail.com>
 References: <pull.31.v4.git.gitgitgadget@gmail.com>
         <pull.31.v5.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 15/21] tests: include detailed trace logs with
- --write-junit-xml upon failure
+Subject: [PATCH v5 14/21] tests: avoid calling Perl just to determine file
+ sizes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,120 +72,100 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The JUnit XML format lends itself to be presented in a powerful UI,
-where you can drill down to the information you are interested in very
-quickly.
+It is a bit ridiculous to spin up a full-blown Perl instance (especially
+on Windows, where that means spinning up a full POSIX emulation layer,
+AKA the MSYS2 runtime) just to tell how large a given file is.
 
-For test failures, this usually means that you want to see the detailed
-trace of the failing tests.
+So let's just use the test-tool to do that job instead.
 
-With Travis CI, we passed the `--verbose-log` option to get those
-traces. However, that seems excessive, as we do not need/use the logs in
-almost all of those cases: only when a test fails do we have a way to
-include the trace.
-
-So let's do something different when using Azure DevOps: let's run all
-the tests with `--quiet` first, and only if a failure is encountered,
-try to trace the commands as they are executed.
-
-Of course, we cannot turn on `--verbose-log` after the fact. So let's
-just re-run the test with all the same options, adding `--verbose-log`.
-And then munging the output file into the JUnit XML on the fly.
-
-Note: there is an off chance that re-running the test in verbose mode
-"fixes" the failures (and this does happen from time to time!). That is
-a possibility we should be able to live with. Ideally, we would label
-this as "Passed upon rerun", and Azure Pipelines even know about that
-outcome, but it is not available when using the JUnit XML format for
-now:
-https://github.com/Microsoft/azure-pipelines-agent/blob/master/src/Agent.Worker/TestResults/JunitResultReader.cs
+This command will also be used over the next commits, to allow for
+cutting out individual test cases' verbose log from the file generated
+via --verbose-log.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-path-utils.c | 21 +++++++++++++++++++++
- t/test-lib.sh              | 22 +++++++++++++++++++++-
- 2 files changed, 42 insertions(+), 1 deletion(-)
+ t/helper/test-path-utils.c          | 12 ++++++++++++
+ t/t0021-conversion.sh               |  2 +-
+ t/t1050-large.sh                    |  2 +-
+ t/t5315-pack-objects-compression.sh |  2 +-
+ t/t9303-fast-import-compression.sh  |  2 +-
+ 5 files changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index 30211d6d64..6efde6f5ba 100644
+index ae091d9b3e..30211d6d64 100644
 --- a/t/helper/test-path-utils.c
 +++ b/t/helper/test-path-utils.c
-@@ -303,6 +303,27 @@ int cmd__path_utils(int argc, const char **argv)
+@@ -291,6 +291,18 @@ int cmd__path_utils(int argc, const char **argv)
  		return !!res;
  	}
  
-+	if (argc == 4 && !strcmp(argv[1], "skip-n-bytes")) {
-+		int fd = open(argv[2], O_RDONLY), offset = atoi(argv[3]);
-+		char buffer[65536];
++	if (argc > 2 && !strcmp(argv[1], "file-size")) {
++		int res = 0, i;
++		struct stat st;
 +
-+		if (fd < 0)
-+			die_errno("could not open '%s'", argv[2]);
-+		if (lseek(fd, offset, SEEK_SET) < 0)
-+			die_errno("could not skip %d bytes", offset);
-+		for (;;) {
-+			ssize_t count = read(fd, buffer, sizeof(buffer));
-+			if (count < 0)
-+				die_errno("could not read '%s'", argv[2]);
-+			if (!count)
-+				break;
-+			if (write(1, buffer, count) < 0)
-+				die_errno("could not write to stdout");
-+		}
-+		close(fd);
-+		return 0;
++		for (i = 2; i < argc; i++)
++			if (stat(argv[i], &st))
++				res = error_errno("Cannot stat '%s'", argv[i]);
++			else
++				printf("%"PRIuMAX"\n", (uintmax_t)st.st_size);
++		return !!res;
 +	}
 +
  	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
  		argv[1] ? argv[1] : "(there was none)");
  	return 1;
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index a3b2166cb5..f31a1c8f79 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -639,8 +639,19 @@ test_failure_ () {
- 		junit_insert="<failure message=\"not ok $test_count -"
- 		junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
- 		junit_insert="$junit_insert $(xml_attr_encode \
--			"$(printf '%s\n' "$@" | sed 1d)")"
-+			"$(if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
-+			   then
-+				test-tool path-utils skip-n-bytes \
-+					"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
-+			   else
-+				printf '%s\n' "$@" | sed 1d
-+			   fi)")"
- 		junit_insert="$junit_insert</failure>"
-+		if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
-+		then
-+			junit_insert="$junit_insert<system-err>$(xml_attr_encode \
-+				"$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")</system-err>"
-+		fi
- 		write_junit_xml_testcase "$1" "      $junit_insert"
- 	fi
- 	test_failure=$(($test_failure + 1))
-@@ -931,6 +942,11 @@ test_finish_ () {
- 	echo >&3 ""
- 	maybe_teardown_valgrind
- 	maybe_teardown_verbose
-+	if test -n "$GIT_TEST_TEE_OFFSET"
-+	then
-+		GIT_TEST_TEE_OFFSET=$(test-tool path-utils file-size \
-+			"$GIT_TEST_TEE_OUTPUT_FILE")
-+	fi
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index fd5f1ac649..e10f5f787f 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -24,7 +24,7 @@ generate_random_characters () {
  }
  
- test_skip () {
-@@ -1280,6 +1296,10 @@ then
- 		date +%Y-%m-%dT%H:%M:%S)\""
- 	write_junit_xml --truncate "<testsuites>" "  <testsuite $junit_attrs>"
- 	junit_suite_start=$(test-tool date getnanos)
-+	if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
-+	then
-+		GIT_TEST_TEE_OFFSET=0
-+	fi
- fi
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
  
- # Provide an implementation of the 'yes' utility
+ filter_git () {
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 1a9b21b293..dcb4dbba67 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -8,7 +8,7 @@ test_description='adding and checking out large blobs'
+ # This should be moved to test-lib.sh together with the
+ # copy in t0021 after both topics have graduated to 'master'.
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ test_expect_success setup '
+diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
+index 34c47dae09..df970d7584 100755
+--- a/t/t5315-pack-objects-compression.sh
++++ b/t/t5315-pack-objects-compression.sh
+@@ -7,7 +7,7 @@ test_description='pack-object compression configuration'
+ # This should be moved to test-lib.sh together with the
+ # copy in t0021 after both topics have graduated to 'master'.
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ test_expect_success setup '
+diff --git a/t/t9303-fast-import-compression.sh b/t/t9303-fast-import-compression.sh
+index 856219f46a..5045f02a53 100755
+--- a/t/t9303-fast-import-compression.sh
++++ b/t/t9303-fast-import-compression.sh
+@@ -6,7 +6,7 @@ test_description='compression setting of fast-import utility'
+ # This should be moved to test-lib.sh together with the
+ # copy in t0021 after both topics have graduated to 'master'.
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ import_large () {
 -- 
 gitgitgadget
 
