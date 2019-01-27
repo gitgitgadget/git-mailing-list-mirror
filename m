@@ -2,156 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F4741F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 19:44:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 936761F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 21:22:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727067AbfA0Toh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 14:44:37 -0500
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:44220 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726794AbfA0Tog (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 14:44:36 -0500
-Received: by mail-pl1-f201.google.com with SMTP id b24so10233057pls.11
-        for <git@vger.kernel.org>; Sun, 27 Jan 2019 11:44:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=jHgC/objxk+ZaFKXZ0Ouk5mjEPMOghW/siqZWVSdiHM=;
-        b=BivzZpnTZPYnU/gBAT7OBAwlvQx0nqdotSXjNj9fyoLOcndzhxxLdUjUrkndShIAFZ
-         SpZeqn0EQJrdPK9UW7uHsrl/RQAh2cWsGKXUDz4tO3T2DQhBBeweYDfHWSnyDsLLG3TQ
-         hmbVk7xHa9Jqv3HztvdIDHZBAZLr6XyJiwvDftMgQBEOp/z/dPgmgHKBwubifT0JA6V/
-         /DqtrKH/DGXNIZBc7x0OkMSvloeU5hxd7jxETrROoqutNf/zrLz87J8v1mGIJIzHboDi
-         k7Avp3LpUpUqAiXqywa55PBRAzB3xqcUYn0GGMk/qBSRjHgpp6HN15/OtGQJtXUQkVO+
-         JI9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=jHgC/objxk+ZaFKXZ0Ouk5mjEPMOghW/siqZWVSdiHM=;
-        b=k8KG5bBEhT4K9leLy7Wamj/V2DMjlq9d9wGSxZIKgZhL64/CktiWUKge2AGHIHzzxv
-         3tKrRXvA2sSa4isC7mR3M+W24g3xfsjQ5P5d6PJFetKpfvcVqwD5ALe9aNIJ8ynBHEtm
-         P2bzUTiqU9+plKKpqOtXO4Ibz1QnCYLc+jDhYfXTMr6qFas0HKKkP+hnbqzrybUJ5g4q
-         lWGlzL+QuKTtxHFYTHknMW1akOQC7kK1GqrlOrDOnuhlcp50BFq5d4dnJ2IsJNpOGSe3
-         3iyhHHLrmVIZw3CAqlFIBVjkw08ViKc9X9W29zofiaQvz7nFY98B/zJRg2iehMCM1oK8
-         QzCw==
-X-Gm-Message-State: AJcUukfs08bP9FdaRdYMxEyVS3rQZ2BbcXEky0uuZWD2lSsam0s9ieaQ
-        LUwiKDMC3TCrBN/HeXoClkgbYXo2POWLSCxxJQ2WtlWWs3Xhgfh+VL7Ykk6Ktn+/WvfPkFp3SSQ
-        DuYqdBjPodnKazVZ3yLQjE3Ye5qWIdGMjBAaZqFOC60++XXIUaLkaH+r6Lw==
-X-Google-Smtp-Source: ALg8bN5X4lvD2MFg6gotJip9SnyvSlAwkf02yyIBsTh4qQR8FWo+1xRshuNnCquZ2CalNf2jMstzunHoOmI=
-X-Received: by 2002:a62:860c:: with SMTP id x12mr8405125pfd.39.1548618275728;
- Sun, 27 Jan 2019 11:44:35 -0800 (PST)
-Date:   Sun, 27 Jan 2019 11:44:15 -0800
-In-Reply-To: <20190127194415.171035-1-sxenos@google.com>
-Message-Id: <20190127194415.171035-8-sxenos@google.com>
-Mime-Version: 1.0
-References: <20190127194415.171035-1-sxenos@google.com>
-X-Mailer: git-send-email 2.20.1.495.gaa96b0ce6b-goog
-Subject: [PATCH v3 8/8] evolve: Add the git change list command
-From:   sxenos@google.com
-To:     git@vger.kernel.org
-Cc:     Stefan Xenos <sxenos@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1727473AbfA0VWa (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 16:22:30 -0500
+Received: from mout.gmx.net ([212.227.15.18]:59931 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726302AbfA0VWa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 16:22:30 -0500
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MegbQ-1gYZ1E1yYq-00OIzK; Sun, 27
+ Jan 2019 22:22:24 +0100
+Date:   Sun, 27 Jan 2019 22:22:23 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 03/21] ci/lib.sh: encapsulate Travis-specific things
+In-Reply-To: <20190125135127.GE6702@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1901272022410.45@tvgsbejvaqbjf.bet>
+References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <2d0b62f1862d5fce3ac0d7b813399f560600917d.1548254412.git.gitgitgadget@gmail.com> <20190125135127.GE6702@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-236681125-1548624145=:45"
+X-Provags-ID: V03:K1:34hVHM9mP9GI6twBLAjhW1254PontveIdxWdfotG1L0acQ4H+8x
+ 8D0RkcYkzEAWssgGFZ4iS1puCnVk+Q+Qwyhd9+Ok2xrjzBBtVY9WZND5Qay5YNGudfekc2t
+ CS4UOUq0GuV25AhIeHmjpZc3a5V0nyQdQWrmJp2kpGGN/NfNL1xENfegfV6Fji5Ghlj0P5N
+ ozZN+DCMwfek9qaFVk6Tw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:LQN0XeiqgLI=:Q8hI8WZbbuEZ2Ty5C9UIhQ
+ mWZFeZLSAfF83boSvQ5W8mWY7GGt/3O77YEWi1yyREPVl5qHb0hTaXLi9/rvh0VY3RMmNTerl
+ 7FLHQ82xhOuNLf+yI/4Axvr92Xelg/TtiLQTOURpW4hFYDQAoAtfCB9jNXo/uhXLwrXX4mi4D
+ NTD5hEGPJuu1FHu6VoTLSmIUojMeI01XejsaUW0nPD2zkUm8gCTskYrR59mCk4AS5WNHbl40T
+ Syfpl4S6jTEdb7mcFtruVEQ3a5qKtRmGNwyKeb2eRYT3V+e9BXXuwiy9QAgX1Ts3P9BaeKOvw
+ dLjNFS83+aUGDFCio+HMZrDXhm+jYo5ipUj+PIJXg7y6yGMhxA5Dt9wLtrxhtxviAmQFkm2Uq
+ pxWGG64/YuDrhj8cQl2OsWqJ8UsWbluQj1U6V8eialZluIvdjrXsE6SZAwfRcOkL2GKhxPAJY
+ xCxoW+14mcqXrnr6wJELaorflctdUtB1oG80t3qxP1UXTbgH6oXlMSjHah0/rl79lEHmMZdsW
+ YTInljqfhxdsSjjkApDdpw0tImhTzFSGxBdljSW3+jPh6W/ESqBrKWM50/sVdt7iW4QMBvDND
+ n7mjvx+Eqd17e0FjaDxaOV3DTKtl6pkHxF3f2yP7acgfmRUR21IjvcYLVpdthTr1GD4F9m+1M
+ fTrx52qyKmNdfKGYO18QMnDCpPErRHspMlT56A7/kg92Pz5ueZextvJyQuBo/LquPj5UFIQ/3
+ 76QzVv2wfji7ppsrhcqOyotKvhyPFX4YkstlKOKyFjspnnJrKwkciZILSGqMlAL58k1GAR6OU
+ JwpJYRqQJPrttWp6Oxff8eFN8KQ7QLFjoEinBw4rrLWcgzPtsmtX5Pg1Qv2uVdVoGRij6wgNP
+ 6gSI1ihwwrWwkf//GgqutjnSh1NPQFXjaoY4x3dWaFX9SQpGEidPUu8VkW/lBBsur1m/9Nj9I
+ osJJ/csZXcg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Stefan Xenos <sxenos@google.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This command lists the ongoing changes from the refs/metas
-namespace.
+--8323328-236681125-1548624145=:45
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-Signed-off-by: Stefan Xenos <sxenos@google.com>
----
- builtin/change.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+Hi Gábor,
 
-diff --git a/builtin/change.c b/builtin/change.c
-index ff7eb3b113..b63fe98665 100644
---- a/builtin/change.c
-+++ b/builtin/change.c
-@@ -5,15 +5,66 @@
- #include "config.h"
- 
- static const char * const builtin_change_usage[] = {
-+	N_("git change list [<pattern>...]"),
- 	N_("git change update [--force] [--replace <treeish>...] [--origin <treesih>...] [--content <newtreeish>]"),
- 	NULL
- };
- 
-+static const char * const builtin_list_usage[] = {
-+	N_("git change list [<pattern>...]"),
-+	NULL
-+};
-+
- static const char * const builtin_update_usage[] = {
- 	N_("git change update [--force] [--replace <treeish>...] [--origin <treesih>...] [--content <newtreeish>]"),
- 	NULL
- };
- 
-+static int change_list(int argc, const char **argv, const char* prefix)
-+{
-+	struct option options[] = {
-+		OPT_END()
-+	};
-+	struct ref_filter filter;
-+	// TODO: Sorting temporarily disabled. See comments, below.
-+	//struct ref_sorting *sorting = ref_default_sorting();
-+	struct ref_format format = REF_FORMAT_INIT;
-+	struct ref_array array;
-+	int i;
-+
-+	argc = parse_options(argc, argv, prefix, options, builtin_list_usage, 0);
-+
-+	setup_ref_filter_porcelain_msg();
-+
-+	memset(&filter, 0, sizeof(filter));
-+	memset(&array, 0, sizeof(array));
-+
-+	filter.kind = FILTER_REFS_CHANGES;
-+	filter.name_patterns = argv;
-+
-+	filter_refs(&array, &filter, FILTER_REFS_CHANGES);
-+
-+	// TODO: This causes a crash. It sets one of the atom_value handlers to
-+	// something invalid, which causes a crash later when we call
-+	// show_ref_array_item. Figure out why this happens and put back the sorting.
-+	//ref_array_sort(sorting, &array);
-+
-+	if (!format.format) {
-+		format.format = "%(refname:lstrip=1)";
-+	}
-+
-+	if (verify_ref_format(&format))
-+		die(_("unable to parse format string"));
-+
-+	for (i = 0; i < array.nr; i++) {
-+		show_ref_array_item(array.items[i], &format);
-+	}
-+
-+	ref_array_clear(&array);
-+
-+	return 0;
-+}
-+
- struct update_state {
- 	int options;
- 	const char* change;
-@@ -164,6 +215,8 @@ int cmd_change(int argc, const char **argv, const char *prefix)
- 
- 	if (argc < 1)
- 		usage_with_options(builtin_change_usage, options);
-+	else if (!strcmp(argv[0], "list"))
-+		result = change_list(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "update"))
- 		result = change_update(argc, argv, prefix);
- 	else {
--- 
-2.20.1.495.gaa96b0ce6b-goog
+On Fri, 25 Jan 2019, SZEDER Gábor wrote:
 
+> On Wed, Jan 23, 2019 at 06:40:16AM -0800, Johannes Schindelin via
+> GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> > The upcoming patches will allow building git.git via Azure Pipelines
+> > (i.e. Azure DevOps' Continuous Integration), where variable names and
+> > URLs look a bit different than in Travis CI.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> 
+> > diff --git a/ci/lib.sh b/ci/lib.sh
+> > index c26bb6a274..4456dbbcb0 100755
+> > --- a/ci/lib.sh
+> > +++ b/ci/lib.sh
+> > @@ -1,8 +1,26 @@
+> >  # Library of functions shared by all CI scripts
+> >  
+> > -# When building a PR, TRAVIS_BRANCH refers to the *target* branch. Not what we
+> > -# want here. We want the source branch instead.
+> > -CI_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
+> > +if test true = "$TRAVIS"
+> > +then
+> > +	# When building a PR, TRAVIS_BRANCH refers to the *target* branch. Not
+> > +	# what we want here. We want the source branch instead.
+> > +	CI_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
+> > +	CI_COMMIT="$TRAVIS_COMMIT"
+> > +	CI_JOB_ID="$TRAVIS_JOB_ID"
+> > +	CI_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
+> > +	CI_OS_NAME="$TRAVIS_OS_NAME"
+> > +	CI_REPO_SLUG="$TRAVIS_REPO_SLUG"
+> > +
+> > +	cache_dir="$HOME/travis-cache"
+> > +
+> > +	url_for_job_id () {
+> > +		echo "https://travis-ci.org/$CI_REPO_SLUG/jobs/$1"
+> > +	}
+> > +
+> > +	BREW_INSTALL_PACKAGES="git-lfs gettext"
+> > +	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+> > +	export GIT_TEST_OPTS="--verbose-log -x --immediate"
+> > +fi
+> 
+> Please set these variables after 'set -x' has been turned on, so the
+> values will be visible in the logs.
+> 
+> https://public-inbox.org/git/20181018220106.GU19800@szeder.dev/
+
+Oooops. Sorry, I overlooked this! I'm sorry. Will fix.
+
+The fix will actually be squashed into 1/21 ("travis: fix skipping tagged
+releases") because due to the re-ordering requested by Junio, this is now
+the first offender.
+
+> > diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
+> > index 7aef39a2fd..d2045b63a6 100755
+> > --- a/ci/print-test-failures.sh
+> > +++ b/ci/print-test-failures.sh
+> > @@ -69,7 +69,7 @@ do
+> >  	fi
+> >  done
+> >  
+> > -if [ $combined_trash_size -gt 0 ]
+> > +if [ -n "$TRAVIS_JOB_ID" -a $combined_trash_size -gt 0 ]
+> 
+> Nit: if [ -n "$TRAVIS_JOB_ID" ] && [ $combined_trash_size -gt 0 ]
+> 
+> More importantly: is this necessary, because on Azure Pipelines there
+> is no URL from where the logs could be downloaded conveniently and
+> reliably?  I wonder whether it's worth to spend the extra effort in
+> preparing the base64-encoded trash directories of failed tests in the
+> first place.
+
+You're right, of course. There *should* be a way to extract these from the
+log even on Azure Pipelines. I did find the API to get the logs, but it
+seems that at least for the moment, there is no environment variable
+specifying the number of the current task (on Azure Pipelines, the logs
+are split by task). So I could not actually figure out any way to generate
+the Azure Pipelines equivalent of this URL:
+
+	https://api.travis-ci.org/v3/job/$TRAVIS_JOB_ID/log.txt
+
+But then, this code (which builds tar files of the trash directories of
+the failed tests and then logs a base64 version of it) simply is a
+workaround in the first place, accommodating for the fact that Travis does
+not offer build artifacts. But Azure Pipelines does. So that's what I am
+doing with those trash directories now: publish them as build artifacts
+(which can be downloaded conveniently as .zip files from the web page
+showing the build result).
+
+Thanks for helping me improve this patch series!
+Dscho
+
+> >  then
+> >  	echo "------------------------------------------------------------------------"
+> >  	echo "Trash directories embedded in this log can be extracted by running:"
+> 
+> 
+--8323328-236681125-1548624145=:45--
