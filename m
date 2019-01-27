@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 866DC1F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 18:22:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31FAA1F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 18:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726816AbfA0SWo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 13:22:44 -0500
-Received: from mout.gmx.net ([212.227.15.18]:54025 "EHLO mout.gmx.net"
+        id S1726816AbfA0S0G (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 13:26:06 -0500
+Received: from mout.gmx.net ([212.227.17.21]:56779 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726523AbfA0SWo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 13:22:44 -0500
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3Lw-1hQA2L1lWW-00evwI; Sun, 27
- Jan 2019 19:22:37 +0100
-Date:   Sun, 27 Jan 2019 19:22:37 +0100 (STD)
+        id S1725941AbfA0S0F (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 13:26:05 -0500
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lqm3a-1hRoVe1bGc-00eQ7K; Sun, 27
+ Jan 2019 19:26:00 +0100
+Date:   Sun, 27 Jan 2019 19:26:00 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH v4 10/21] ci: move the Windows job to the top
-In-Reply-To: <xmqqpnsn7zgr.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901271555230.45@tvgsbejvaqbjf.bet>
-References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <5bdc6a08a8b8040de3082b1690f16538fcc08682.1548254412.git.gitgitgadget@gmail.com> <xmqqpnsn7zgr.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v4 08/21] ci/lib.sh: add support for Azure Pipelines
+In-Reply-To: <xmqqimyf54gx.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901271925450.45@tvgsbejvaqbjf.bet>
+References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <178dc9b789caef8e2402ab518bb5ca36da2c32ad.1548254412.git.gitgitgadget@gmail.com> <xmqqimyf54gx.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/VCcvsxkRWJ3Qh8eJmbsnDC7dCCJEt4MRLioYtz68SJT2wGQTnv
- T23FFBwPstojEz0ntZppUSUz9LZXtUXjSTzExHcg9hIk1h8Vawb7vMemDinTFx8FRX8yPKb
- lBH6GQYLPS2WALMGAccyB0Cz3vPH5LR/cS4Sb+ace7y4MIIdghuSPER7OZLJgXbvJRCXM4o
- c4oawok3RagPpXYZEeZVg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:IF+kz99WXCg=:tgMYZFaczAm8mMHzDjESi0
- 0/KkQP9f5LyI9AllscUyMD/qFx6tW61BiERzPesSm05THZgoPI505lUqEYOUizJyOPaaEKPur
- 99i2Bniqw+mg8JHPn8XHkIJ3LpJvWhPboBnhyoTuTHjrTo3pwYweC5zatBiBMZRsvv8NMPrrI
- l6AomOpvAPS3HMXm/OtuMuNseRp1fXzJEphqHz/FgEmpZdVUh/hqcJWx8pzeUaxMe1ddFJRi0
- j0NhFy2JKjqPEUbClfLAbqtB6Q8nS3ZoqW5imjaJuaeogEWf4DDpwRNplE2aMc/O6tRc51Y+P
- Cb0leOyreTGqfJaLTUmXvjG3kXHybTblnId40G5ko6yfPjLRxc+uWgfyuc2IJ540JXLD55c6m
- NF2Fu/dq6IJZ8c677mYImfHy6m7XyNHpbF6wYDyl9rI6HsX2UT69vBx7QhfP2TfMjVZzb1Miz
- kjv/ko9tFtl82n82yxfmFAItInsztZtmGTVciCD8y1GmjY7Taqnci4sXlkqMCWkWlDZzXr7Xw
- jvVArbN81dKM073KnJX66vlY96au1hPa4dFqanLEPCmY792B7WojylEBPK0GRmBIEwd3pWqWK
- IhoeYuW2SlAzn/CI/ERJi3qzqLF2Bl5YnJ/DtbYS9jpOpQma4GEN2ietrIdIVT8RM3CNhdkH5
- W6nx6bwf9A/6yf/Rr3MfWJowEE+lVFAPSCoK8j00dv0TrG4LF9+vsL+Tgwp7GxM/sOjW1ca8T
- ovVrdRVxnelJOo6JAe0eLkXaQr2Xxp+0QjzTckSwTTGRM90GD5vt6yUNG4pk2F2JGaVWkr8/Y
- kI7RFuMMqgYS/wez3+r7FgxSbOzKn8BPPfRg8MUv7piEkoOB2Ny+9nUJSXKhjJKufVLi9WnIc
- a8BMOc2Swg+AT6rbbTRi7vkCeIaVHw70X7XUUdlz+1cVyu0FkUHXUq8bqB8cmKBHvYb6uHRDx
- hN0563v7imQ==
+X-Provags-ID: V03:K1:7QXuuQQ/jP6RfE5BQOSlgEW3ue6W/MPkrCQUnpE0jLEOvXeBjXh
+ oGWm3DamooG0F+hYOnxwwf21vVzsKZbTmPJ4UtgUpCxyiKrPUSqasDfHw0MaHLXWFc+cfUv
+ aS4iqDcxxsDrIvEeuZ3lmRQ7j35gxOzTkZMR8IHqH0xdUpvyjd443FrEtYsmLoluKh4iTp1
+ bv+HLjGlmHj4GT8Hq8CJw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cMX8iUVexbw=:cZO8K0Xk13xCSOJFUXR7cV
+ j+bVy6BdadaJ50i0GTUPbKkYd7pq5a5D+/QzA0I3Dt7qn0wLaiNUk3bgE8WNhsNQWPj9s0kHU
+ vvxY7NQLspDfMTMkZY5UiZQup4EA2G7IC1dCysU23pU1uC40d0Jyy9Acqwm6GQHClNLdnKgBl
+ FoDxkpIyquOGbGnC4iLRwRwISaOu2ez3Ld70khK4vTx9gCrV/MFlDtW0znhsLGkU9iGUgIVFS
+ /2zkgxG+xzr/k8IHMER1HXtp2J4//4z7/Upe/PTp9p7z7Vg/6JX3D5BDt/isy+PAjYNuiH4aU
+ o+tTslPQ/h7Y0PXVfmdqIPTF9IvidllPu9TaEO3iSvQAB79JNWLB4MR8QyhHA0oU72ysPvCEw
+ exhNMTipjyFY3ui3lIRw/WYoF0Su2WGgHE6pZGLFNHOLmzf3NH7kyoIoeE3rykVNmXqta3Q6Q
+ 0idDKxiuf3jPcCS7+g3kngr8+zwIJvk86U3EqNlib6q8RZHtZ08jt0z4bwllYfVaDxY0BVrzL
+ V1kzKjMdaCkFp3HWOWX+N245XgiIjnBW/fE6+4oG9EYgGBgIHtmsOEeyVgNcnMmi3Su4gESdZ
+ gtsAph2KtlMp0RnjicMVn2ZHH7aLqfQQsVq4mbJgy1/Z86ZNur+1tKQiQdAhEOUH4xTd6nHko
+ dRIZeDM/6ijHXzcYvf4MASXSSIHCBpbzPB8kN4THVDGbvwjP1eKYJsVGISph10c9I0DKtXaxy
+ qMzfH4zsgxtiWCuhwxz1hUDyrfoEyguPGQwXFdY5HXMEzKCqhTQkYn5uRNjIHNdGF3ZVs+Jcy
+ GplviI8ND9pdAFDk2b52p2m6pPWrhnWMgyoCOpE5/jkoDq2Og8oTDFjNQA/kasWR/7SI6el+4
+ 4JFTbRdK83QLokIc3QSplc/+YIYwlxv2srXpC0GPibzVfyxjJ7Wcbhd9LQF7vIQSK34RcdH9P
+ ubWavyGhQ2Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,65 +65,67 @@ On Wed, 23 Jan 2019, Junio C Hamano wrote:
 > 
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > The Windows job currently takes a whopping ~1h20m to complete. Which is
-> > *far* longer than the next-longest job takes (linux-gcc, ~35m). As such,
-> > it makes sense to start the Windows job first, to minimize the overall
-> > run time (which is now pretty safely the run time of the Windows job).
-> 
-> Is the reason why Windows job gets started first is to make sure
-> that it, which is known to take the longest time, never has to wait
-> before starting while other jobs run, in case there is limited
-> parallelism?
-
-Yes, in order to optimize the overall run time. Like, if you have N jobs,
-and you know that one of them takes longer than the other combined, it
-really only makes sense to start that one as first one.
-
-> The last part of this sentence is what readers of this
-> step will need in order to be convinced by the justification given,
-> because (1) if the jobs run totally serially, the order does not
-> matter much---if anything, running shorter jobs first would give
-> results from more jobs sooner, and (2) if the jobs run totally in
-> parallel, the order does not matter as long as we have enough
-> parallelism.
-
-Right, I think I totally forgot to mention that Azure Pipelines offers 10
-parallel jobs to open source projects for free. Which means that we will
-run up to 10 jobs in parallel, as long as no other build is running, of
-course.
-
-Will adjust the commit message.
-
-> > This commit is best viewed with `--color-moved`.
+> > This patch introduces a conditional arm that defines some environment
+> > variables and a function that displays the URL given the job id (to
+> > identify previous runs for known-good trees).
 > >
+> > For example, we do not have to install the git-lfs and gettext packages
+> > on Azure Pipelines' macOS agents: they are already installed, and trying
+> > to install them again would result in an error.
+> 
+> The rationale in the second paragraph is shared with the earlier one
+> that introduced BREW_INSTALL_PACKAGES variable in the first place.
+> It would have made more sense if it was explained there (i.e. say
+> "in environments other than Travis, some packages may be pre
+> installed and asking to install them again may cause failure, so
+> make it configurable what to install")---that way, the explanation
+> in this step's log message can just say "Because Azure pipeline's
+> macOS agents already have git-lfs and gettext installed, unlike
+> Travis, we can leave BREW_INSTALL_PACKAGES empty".
+
+Makes sense.
+
+Will do that,
+Dscho
+
+> 
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> >  azure-pipelines.yml | 172 ++++++++++++++++++++++----------------------
-> >  1 file changed, 86 insertions(+), 86 deletions(-)
+> >  ci/lib.sh | 23 +++++++++++++++++++++++
+> >  1 file changed, 23 insertions(+)
+> >
+> > diff --git a/ci/lib.sh b/ci/lib.sh
+> > index 4456dbbcb0..a9eb4f4eae 100755
+> > --- a/ci/lib.sh
+> > +++ b/ci/lib.sh
+> > @@ -20,6 +20,29 @@ then
+> >  	BREW_INSTALL_PACKAGES="git-lfs gettext"
+> >  	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+> >  	export GIT_TEST_OPTS="--verbose-log -x --immediate"
+> > +elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
+> > +then
+> > +	# We are running in Azure Pipelines
+> > +	CI_BRANCH="$BUILD_SOURCEBRANCH"
+> > +	CI_COMMIT="$BUILD_SOURCEVERSION"
+> > +	CI_JOB_ID="$BUILD_BUILDID"
+> > +	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
+> > +	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
+> > +	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
+> > +	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
+> > +	CC="${CC:-gcc}"
+> > +
+> > +	# use a subdirectory of the cache dir (because the file share is shared
+> > +	# among *all* phases)
+> > +	cache_dir="$HOME/test-cache/$SYSTEM_PHASENAME"
+> > +
+> > +	url_for_job_id () {
+> > +		echo "$SYSTEM_TASKDEFINITIONSURI$SYSTEM_TEAMPROJECT/_build/results?buildId=$1"
+> > +	}
+> > +
+> > +	BREW_INSTALL_PACKAGES=
+> > +	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
+> > +	export GIT_TEST_OPTS="--quiet --write-junit-xml"
+> >  fi
+> >  
+> >  skip_branch_tip_with_tag () {
 > 
-> For those who are seeing this azure-pipelines series for the first
-> time, it would probably be unclear what the point of adding an
-> entire file in 09/21 and them moving lines around in 10/21 is.  If
-> somebody asked me why, I wouldn't be able to explain why it is a
-> good idea.
-> 
-> Would it hurt readability if these two steps are combined?
-
-The thing is, I tried (of course) to replicate the Travis configuration as
-closely as possible. And the Windows job was in a specific location there.
-
-However, I just realized that I *added* the Windows job to the Pipelines
-right from the start, and that is definitely not on par with Travis, as
-the Travis configuration did not define a Windows job (instead it has code
-to trigger a dedicated Azure Pipeline).
-
-So what I will do instead is to
-
-- *not* add the Windows-specific part in the commit that adds the initial
-  Azure Pipelines support, and
-
-- explain in the commit message of that commit that the idea is to imitate
-  our existing Travis configuration as closely as possible.
-
-Ciao,
-Dscho
