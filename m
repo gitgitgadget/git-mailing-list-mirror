@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31FAA1F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 18:26:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AF7D1F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 18:30:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726816AbfA0S0G (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 13:26:06 -0500
-Received: from mout.gmx.net ([212.227.17.21]:56779 "EHLO mout.gmx.net"
+        id S1726589AbfA0SaW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 13:30:22 -0500
+Received: from mout.gmx.net ([212.227.17.20]:50241 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725941AbfA0S0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 13:26:05 -0500
+        id S1725941AbfA0SaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 13:30:22 -0500
 Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lqm3a-1hRoVe1bGc-00eQ7K; Sun, 27
- Jan 2019 19:26:00 +0100
-Date:   Sun, 27 Jan 2019 19:26:00 +0100 (STD)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LxcbX-1hGQz33XAZ-017BNL; Sun, 27
+ Jan 2019 19:30:18 +0100
+Date:   Sun, 27 Jan 2019 19:30:18 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH v4 08/21] ci/lib.sh: add support for Azure Pipelines
-In-Reply-To: <xmqqimyf54gx.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901271925450.45@tvgsbejvaqbjf.bet>
-References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <178dc9b789caef8e2402ab518bb5ca36da2c32ad.1548254412.git.gitgitgadget@gmail.com> <xmqqimyf54gx.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v4 09/21] Add a build definition for Azure DevOps
+In-Reply-To: <xmqqd0on54gw.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901271927130.45@tvgsbejvaqbjf.bet>
+References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <eaba471b89976b51ea19fc6772890304135ab539.1548254412.git.gitgitgadget@gmail.com> <xmqqd0on54gw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7QXuuQQ/jP6RfE5BQOSlgEW3ue6W/MPkrCQUnpE0jLEOvXeBjXh
- oGWm3DamooG0F+hYOnxwwf21vVzsKZbTmPJ4UtgUpCxyiKrPUSqasDfHw0MaHLXWFc+cfUv
- aS4iqDcxxsDrIvEeuZ3lmRQ7j35gxOzTkZMR8IHqH0xdUpvyjd443FrEtYsmLoluKh4iTp1
- bv+HLjGlmHj4GT8Hq8CJw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cMX8iUVexbw=:cZO8K0Xk13xCSOJFUXR7cV
- j+bVy6BdadaJ50i0GTUPbKkYd7pq5a5D+/QzA0I3Dt7qn0wLaiNUk3bgE8WNhsNQWPj9s0kHU
- vvxY7NQLspDfMTMkZY5UiZQup4EA2G7IC1dCysU23pU1uC40d0Jyy9Acqwm6GQHClNLdnKgBl
- FoDxkpIyquOGbGnC4iLRwRwISaOu2ez3Ld70khK4vTx9gCrV/MFlDtW0znhsLGkU9iGUgIVFS
- /2zkgxG+xzr/k8IHMER1HXtp2J4//4z7/Upe/PTp9p7z7Vg/6JX3D5BDt/isy+PAjYNuiH4aU
- o+tTslPQ/h7Y0PXVfmdqIPTF9IvidllPu9TaEO3iSvQAB79JNWLB4MR8QyhHA0oU72ysPvCEw
- exhNMTipjyFY3ui3lIRw/WYoF0Su2WGgHE6pZGLFNHOLmzf3NH7kyoIoeE3rykVNmXqta3Q6Q
- 0idDKxiuf3jPcCS7+g3kngr8+zwIJvk86U3EqNlib6q8RZHtZ08jt0z4bwllYfVaDxY0BVrzL
- V1kzKjMdaCkFp3HWOWX+N245XgiIjnBW/fE6+4oG9EYgGBgIHtmsOEeyVgNcnMmi3Su4gESdZ
- gtsAph2KtlMp0RnjicMVn2ZHH7aLqfQQsVq4mbJgy1/Z86ZNur+1tKQiQdAhEOUH4xTd6nHko
- dRIZeDM/6ijHXzcYvf4MASXSSIHCBpbzPB8kN4THVDGbvwjP1eKYJsVGISph10c9I0DKtXaxy
- qMzfH4zsgxtiWCuhwxz1hUDyrfoEyguPGQwXFdY5HXMEzKCqhTQkYn5uRNjIHNdGF3ZVs+Jcy
- GplviI8ND9pdAFDk2b52p2m6pPWrhnWMgyoCOpE5/jkoDq2Og8oTDFjNQA/kasWR/7SI6el+4
- 4JFTbRdK83QLokIc3QSplc/+YIYwlxv2srXpC0GPibzVfyxjJ7Wcbhd9LQF7vIQSK34RcdH9P
- ubWavyGhQ2Q==
+X-Provags-ID: V03:K1:Fhl9H3iwc7xDGz8EVGMYHi3peymHQUxT8ba1/UweYunl89R6E1C
+ A5trzGQWZHXoGy/NM/PSJjSvWIHbSiqVHUoxSYU5DgJmQiCP24j3x/hD+qElw1Z8RVpFyrf
+ 83zN8UDquI0VOK4Ibj15r91UT9eJUcreJgYrIkty/L5rqZ6I0BZfehhoA/EB3ymgRCo93Tv
+ jKSqVDOfKQ6UkwbuecT5Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YOlka5X+tEE=:NBFjpNfEKdr6Ux0xuyfxMc
+ 2JBoobq+l0Q0lgLGhn5LWXvlQTrwC1ZQlUV7OCet1KOAZCC2GbkHirf+iOjUHHX+rS1GcQHa6
+ pl3AGKInoaCi7J0ZikuVbW+kDeA295mFpdxevTVVnCIAmIhHtgys9dP6KZ24r4KND+qgZnSMV
+ sSTW+pDIyK7WUQxf30eGX0AMo8uhl8b3hVFo7G/3GY9uRjZI5tYCNdXSSPKuwmvcgqzl/ok31
+ Rs5jPUdm68P54yzAhilOgyeVVlO9+FT/i8WjgbKTOSnQxo8ftROk74OYX5MfT7TRJmXFMsunl
+ giBL0H4+Hsx7A6vrNDSLCZrHHvCgc51Tdfyjun7LagUQBS4yc1J7rYrRsbnE4kW8m+Q0QJWna
+ VmgWEihHv1Fn9nDhKyybgF60BiLVJhZ+2Fv5xAb0EeT4VCTDLShWrSItKZYuwNPMp/d9P2FNr
+ S7jSX8bl2LmNH8kke23S/tYFMNkj0165+x06JPd5IpkmczTKNSY5j9VZMqshxE1X2xkXmhHyD
+ /HmsLfL19PSOSlfNwmEYdU305xPgcOW2MtI1hI0sB1qCJXsUyHImkjk9ru1odVB4P2AQ3vrqd
+ DC1oMiSE/70A/cR5bS8dQKgRmIc5WhPM/s95B8WTtkWFY1XUamEqbNwnnMbGMbww61q5y0HfP
+ b+vbx9LQ4upsg7y9O0l3ctSZZPKANMunw5AA7q3tdfVBFGRqzN7BsQUu1h2Wv01il+GYSyuOp
+ zNMRL6tSPkKeLYpdpv4y+2s9rVp5q7Vt/dCNwBKWoj5FvewKMe25H5qJ1r6xG5NR+thkn5Ftr
+ 2aeneOW1mszVJXAHSUgHNBKuJvsuyGz8xpHwZgKyJDkxYU4VbNLIhewP0PgEI+UM9dgYQy7aA
+ 0yakKgFFZbWTmyZHqZdBzDcBQ+rXezPp9J9GbzqHdZDSv5zEuOce6nG1tT3M2pSmjtwLRmGH/
+ DTYCVHb2z0Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,67 +65,49 @@ On Wed, 23 Jan 2019, Junio C Hamano wrote:
 > 
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > This patch introduces a conditional arm that defines some environment
-> > variables and a function that displays the URL given the job id (to
-> > identify previous runs for known-good trees).
+> > This commit adds an azure-pipelines.yml file which is Azure DevOps'
+> > equivalent to Travis CI's .travis.yml.
 > >
-> > For example, we do not have to install the git-lfs and gettext packages
-> > on Azure Pipelines' macOS agents: they are already installed, and trying
-> > to install them again would result in an error.
-> 
-> The rationale in the second paragraph is shared with the earlier one
-> that introduced BREW_INSTALL_PACKAGES variable in the first place.
-> It would have made more sense if it was explained there (i.e. say
-> "in environments other than Travis, some packages may be pre
-> installed and asking to install them again may cause failure, so
-> make it configurable what to install")---that way, the explanation
-> in this step's log message can just say "Because Azure pipeline's
-> macOS agents already have git-lfs and gettext installed, unlike
-> Travis, we can leave BREW_INSTALL_PACKAGES empty".
-
-Makes sense.
-
-Will do that,
-Dscho
-
-> 
+> > To make things a bit easier to understand, we refrain from using the
+> > `matrix` feature here because (while it is powerful) it can be a bit
+> > confusing to users who are not familiar with CI setups. Therefore, we
+> > use a separate phase even for similar configurations (such as GCC vs
+> > Clang on Linux, GCC vs Clang on macOS).
+> >
+> > Also, we make use of the shiny new feature we just introduced where the
+> > test suite can output JUnit-style .xml files. This information is made
+> > available in a nice UI that allows the viewer to filter by phase and/or
+> > test number, and to see trends such as: number of (failing) tests, time
+> > spent running the test suite, etc.
+> >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> >  ci/lib.sh | 23 +++++++++++++++++++++++
-> >  1 file changed, 23 insertions(+)
-> >
+> >  azure-pipelines.yml   | 306 ++++++++++++++++++++++++++++++++++++++++++
+> 
+> Way-overlong line in this file bothers me somewhat, but let's say
+> these are not for human consumption and it is OK ;-)
+
+Right ;-)
+
 > > diff --git a/ci/lib.sh b/ci/lib.sh
-> > index 4456dbbcb0..a9eb4f4eae 100755
+> > index a9eb4f4eae..91cf1402bf 100755
 > > --- a/ci/lib.sh
 > > +++ b/ci/lib.sh
-> > @@ -20,6 +20,29 @@ then
-> >  	BREW_INSTALL_PACKAGES="git-lfs gettext"
-> >  	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
-> >  	export GIT_TEST_OPTS="--verbose-log -x --immediate"
-> > +elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
-> > +then
-> > +	# We are running in Azure Pipelines
-> > +	CI_BRANCH="$BUILD_SOURCEBRANCH"
-> > +	CI_COMMIT="$BUILD_SOURCEVERSION"
-> > +	CI_JOB_ID="$BUILD_BUILDID"
-> > +	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
-> > +	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
-> > +	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
-> > +	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
-> > +	CC="${CC:-gcc}"
-> > +
-> > +	# use a subdirectory of the cache dir (because the file share is shared
-> > +	# among *all* phases)
-> > +	cache_dir="$HOME/test-cache/$SYSTEM_PHASENAME"
-> > +
-> > +	url_for_job_id () {
-> > +		echo "$SYSTEM_TASKDEFINITIONSURI$SYSTEM_TEAMPROJECT/_build/results?buildId=$1"
-> > +	}
-> > +
-> > +	BREW_INSTALL_PACKAGES=
-> > +	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
-> > +	export GIT_TEST_OPTS="--quiet --write-junit-xml"
-> >  fi
+> > @@ -42,7 +42,7 @@ then
 > >  
-> >  skip_branch_tip_with_tag () {
+> >  	BREW_INSTALL_PACKAGES=
+> >  	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
+> > -	export GIT_TEST_OPTS="--quiet --write-junit-xml"
+> > +	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
+> >  fi
 > 
+> Interesting to see this change here, not in the previous step.  If
+> we stopped at 08/21, did we even have a chance to enter this elif
+> block?  If not, it probably is sane to squash this hunk to the
+> previous one that introduced the elif block.
+
+Oh my. You're right. I think I just picked the wrong commit to make this
+fixup.
+
+Will squash as suggested,
+Dscho
