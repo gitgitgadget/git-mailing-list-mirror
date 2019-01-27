@@ -7,51 +7,50 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C0C31F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 14:54:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 866DC1F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 18:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726633AbfA0Oy1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 09:54:27 -0500
-Received: from mout.gmx.net ([212.227.15.19]:46803 "EHLO mout.gmx.net"
+        id S1726816AbfA0SWo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 13:22:44 -0500
+Received: from mout.gmx.net ([212.227.15.18]:54025 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726511AbfA0Oy1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 09:54:27 -0500
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0McEI3-1gVGyA1TFv-00JeuQ; Sun, 27
- Jan 2019 15:54:21 +0100
-Date:   Sun, 27 Jan 2019 15:54:20 +0100 (STD)
+        id S1726523AbfA0SWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 13:22:44 -0500
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3Lw-1hQA2L1lWW-00evwI; Sun, 27
+ Jan 2019 19:22:37 +0100
+Date:   Sun, 27 Jan 2019 19:22:37 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH v4 06/21] test-date: add a subcommand to measure times
- in shell scripts
-In-Reply-To: <xmqqo98754gy.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901271547590.45@tvgsbejvaqbjf.bet>
-References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <aa053ed9936ebae0ca5e18d27de96f1d054d7f89.1548254412.git.gitgitgadget@gmail.com> <xmqqo98754gy.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v4 10/21] ci: move the Windows job to the top
+In-Reply-To: <xmqqpnsn7zgr.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901271555230.45@tvgsbejvaqbjf.bet>
+References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <5bdc6a08a8b8040de3082b1690f16538fcc08682.1548254412.git.gitgitgadget@gmail.com> <xmqqpnsn7zgr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:C21pz9apN/VDKBRNKNTZnqIuSHV+U6vSNFqxA4y+JTeex1f41q5
- LKa1TF5ZeTQH9jYbsf5Gp2eGSTYNTFYTQY1Njb0hmRMS1MoY+A2VOvjr7MzROtyiIK+q/5d
- Lsm30CbSr14XSKZS4zEawNXBC98yh71jGnFAFjWBJ+OvRgNOlBMZeoPTYZo5HuIYBohzUt5
- /ZxaZRtWC7bTKwNG0Ueig==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7zAVkgGu000=:hO0MstYt41xIj6az45FV3N
- j1wu1BA6twDQQhhG/LFJKsntl/NY6jCgTdp1QUSKkZvns91uFJhaxdf8EYf3X+Mc4gbjbNy8l
- YhjgMVjxXyZz+7qognnTSm98HOxTHeelSIAfD5M9SeX+d7AFGLtrqogdGe/RGkdp7CzrSfL+S
- 4Tnip2FE64y2RKjI5y2FjygPZHdsE+4YgR8HDbVyW3ai31Azf5TlPbN2U7C5Gtn3Ftbh1Z2mG
- Kn7Uz8wxlU6fnE8CxcwQ+NN1g/PY6twFgoixrNFaRDhpwnzwyn1IWSqqaXnuBgbchCEVA81TV
- h8bmk1TMhPfE2u+9d1V9fEAbQCKgH3wZYmgMS+kTOKeTF4++YucQQP+o2SNwfKblc1mmzIrq4
- CTr5Z5GbJPdKEeekwLF4StasELUzwpzKi672+gadJCScbVW094DbMae+1MqVSgYtIberPImDM
- reSKeWyo46qux1dfcKhhsgF1wTfA6UOGXrt5y3UG3FmC0Z7lKgE5hqW+U/gxqZi3qX4QtwLMd
- ZXwOQk+oYNUwuYKmmYnxgfj1sQPJchl/rjzzk9KGwTWKLNJBr0lLpNXX4nKrk438sfo4qfC8O
- +vrPF3OwtOTtB9vC7uAHquQ/vZQmVsVkg+b95p2RWxLW1L1yrW+JXd5oaHEfY5TzMsnxpb82u
- kLuCMlVc3XV0cRFcQJUyavluMF2GVMDqUOGIP+i/e+zt4EoG96M5bERTuyV1+Ss77qacQllfa
- Lo7B71hj5/ovbvGW8QlHN0LdUXMxYqNciKIEHH70xZItbD1zmLXIKMDBxkiTon2Nyj0LrhggS
- DA73Vb76qBIuFXia9j4e87f2pIK4WsFP3TjrIUiVPUgim58sj6zA3gm6TUJrVVGwhBUk4kAzB
- FNofOaVEzqD/gakTqZdtv/HNccz5z/kt/yZV32vroZc3cgh60BlPTDGmc7GClXJhXouqFkG+j
- +jV5++I9Wzg==
+X-Provags-ID: V03:K1:/VCcvsxkRWJ3Qh8eJmbsnDC7dCCJEt4MRLioYtz68SJT2wGQTnv
+ T23FFBwPstojEz0ntZppUSUz9LZXtUXjSTzExHcg9hIk1h8Vawb7vMemDinTFx8FRX8yPKb
+ lBH6GQYLPS2WALMGAccyB0Cz3vPH5LR/cS4Sb+ace7y4MIIdghuSPER7OZLJgXbvJRCXM4o
+ c4oawok3RagPpXYZEeZVg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:IF+kz99WXCg=:tgMYZFaczAm8mMHzDjESi0
+ 0/KkQP9f5LyI9AllscUyMD/qFx6tW61BiERzPesSm05THZgoPI505lUqEYOUizJyOPaaEKPur
+ 99i2Bniqw+mg8JHPn8XHkIJ3LpJvWhPboBnhyoTuTHjrTo3pwYweC5zatBiBMZRsvv8NMPrrI
+ l6AomOpvAPS3HMXm/OtuMuNseRp1fXzJEphqHz/FgEmpZdVUh/hqcJWx8pzeUaxMe1ddFJRi0
+ j0NhFy2JKjqPEUbClfLAbqtB6Q8nS3ZoqW5imjaJuaeogEWf4DDpwRNplE2aMc/O6tRc51Y+P
+ Cb0leOyreTGqfJaLTUmXvjG3kXHybTblnId40G5ko6yfPjLRxc+uWgfyuc2IJ540JXLD55c6m
+ NF2Fu/dq6IJZ8c677mYImfHy6m7XyNHpbF6wYDyl9rI6HsX2UT69vBx7QhfP2TfMjVZzb1Miz
+ kjv/ko9tFtl82n82yxfmFAItInsztZtmGTVciCD8y1GmjY7Taqnci4sXlkqMCWkWlDZzXr7Xw
+ jvVArbN81dKM073KnJX66vlY96au1hPa4dFqanLEPCmY792B7WojylEBPK0GRmBIEwd3pWqWK
+ IhoeYuW2SlAzn/CI/ERJi3qzqLF2Bl5YnJ/DtbYS9jpOpQma4GEN2ietrIdIVT8RM3CNhdkH5
+ W6nx6bwf9A/6yf/Rr3MfWJowEE+lVFAPSCoK8j00dv0TrG4LF9+vsL+Tgwp7GxM/sOjW1ca8T
+ ovVrdRVxnelJOo6JAe0eLkXaQr2Xxp+0QjzTckSwTTGRM90GD5vt6yUNG4pk2F2JGaVWkr8/Y
+ kI7RFuMMqgYS/wez3+r7FgxSbOzKn8BPPfRg8MUv7piEkoOB2Ny+9nUJSXKhjJKufVLi9WnIc
+ a8BMOc2Swg+AT6rbbTRi7vkCeIaVHw70X7XUUdlz+1cVyu0FkUHXUq8bqB8cmKBHvYb6uHRDx
+ hN0563v7imQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,41 +65,65 @@ On Wed, 23 Jan 2019, Junio C Hamano wrote:
 > 
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > In the next commit, we want to teach Git's test suite to optionally
-> > output test results in JUnit-style .xml files. These files contain
-> > information about the time spent. So we need a way to measure time.
-> >
-> > While we could use `date +%s` for that, this will give us only seconds,
-> > i.e. very coarse-grained timings.
-> >
-> > GNU `date` supports `date +%s.%N` (i.e. nanosecond-precision output),
-> > but there is no equivalent in BSD `date` (read: on macOS, we would not
-> > be able to obtain precise timings).
-> >
-> > So let's introduce `test-tool date getnanos`, with an optional start
-> > time, that outputs preciser values.
+> > The Windows job currently takes a whopping ~1h20m to complete. Which is
+> > *far* longer than the next-longest job takes (linux-gcc, ~35m). As such,
+> > it makes sense to start the Windows job first, to minimize the overall
+> > run time (which is now pretty safely the run time of the Windows job).
 > 
-> I think the goal to have our own stopwatch so that we do not have to
-> worry about differences among system-provided ones makes sense.
+> Is the reason why Windows job gets started first is to make sure
+> that it, which is known to take the longest time, never has to wait
+> before starting while other jobs run, in case there is limited
+> parallelism?
 
-And so that we do not have to worry about all kinds of unportable shell
-commands. That was my main motivation here, TBH.
+Yes, in order to optimize the overall run time. Like, if you have N jobs,
+and you know that one of them takes longer than the other combined, it
+really only makes sense to start that one as first one.
 
-> The only thing that may become an issue is how widely available
-> getnanotime() is.  As "test-date" itself is built on any platform an
-> end-user/developer runs our tests, which is wider set of platforms
-> than what we run Travis and other CIs on, unconditionally relying on
-> its availability might pose an issue.  I dunno.
+> The last part of this sentence is what readers of this
+> step will need in order to be convinced by the justification given,
+> because (1) if the jobs run totally serially, the order does not
+> matter much---if anything, running shorter jobs first would give
+> results from more jobs sooner, and (2) if the jobs run totally in
+> parallel, the order does not matter as long as we have enough
+> parallelism.
 
-Well, getnanotime() itself looks (I checked) at highres_nanos()' output,
-which can be 0 on unsuported platforms, and falls back to
-gettimeofday_nanos(). The worst that can happen there, as far as I can
-tell, is that the platform has a certain granularity (which is true of
-highres_nanos(), too), and that granularity can be 1 second. Which is not
-very good, but if that's the best the platform can provide, I am prepared
-to take it. Which is exactly what this patch does.
+Right, I think I totally forgot to mention that Azure Pipelines offers 10
+parallel jobs to open source projects for free. Which means that we will
+run up to 10 jobs in parallel, as long as no other build is running, of
+course.
 
-Do you have any splendid idea how to improve this approach?
+Will adjust the commit message.
+
+> > This commit is best viewed with `--color-moved`.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  azure-pipelines.yml | 172 ++++++++++++++++++++++----------------------
+> >  1 file changed, 86 insertions(+), 86 deletions(-)
+> 
+> For those who are seeing this azure-pipelines series for the first
+> time, it would probably be unclear what the point of adding an
+> entire file in 09/21 and them moving lines around in 10/21 is.  If
+> somebody asked me why, I wouldn't be able to explain why it is a
+> good idea.
+> 
+> Would it hurt readability if these two steps are combined?
+
+The thing is, I tried (of course) to replicate the Travis configuration as
+closely as possible. And the Windows job was in a specific location there.
+
+However, I just realized that I *added* the Windows job to the Pipelines
+right from the start, and that is definitely not on par with Travis, as
+the Travis configuration did not define a Windows job (instead it has code
+to trigger a dedicated Azure Pipeline).
+
+So what I will do instead is to
+
+- *not* add the Windows-specific part in the commit that adds the initial
+  Azure Pipelines support, and
+
+- explain in the commit message of that commit that the idea is to imitate
+  our existing Travis configuration as closely as possible.
 
 Ciao,
 Dscho
