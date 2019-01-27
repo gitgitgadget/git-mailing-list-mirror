@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD0181F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 00:22:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E4061F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 00:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726283AbfA0AW0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 26 Jan 2019 19:22:26 -0500
-Received: from mail-it1-f196.google.com ([209.85.166.196]:34821 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726249AbfA0AW0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Jan 2019 19:22:26 -0500
-Received: by mail-it1-f196.google.com with SMTP id p197so14750366itp.0
-        for <git@vger.kernel.org>; Sat, 26 Jan 2019 16:22:25 -0800 (PST)
+        id S1726350AbfA0AZv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 26 Jan 2019 19:25:51 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:35059 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726249AbfA0AZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Jan 2019 19:25:51 -0500
+Received: by mail-it1-f194.google.com with SMTP id p197so14754960itp.0
+        for <git@vger.kernel.org>; Sat, 26 Jan 2019 16:25:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=SUsYehfJo8fnf33sVgdnmt4jXzCCou0hM3qVnKyTM3A=;
-        b=o77rA4WbGMySjizX/opJsLvzdqIFuVnjZSR6UVN9rW3/M7eIm6BtUrv1AOME1ecvLG
-         fqYTcs0rrk+YBArG2Dqfy0xGF9W1aKrz9XZGRFQmmM7RZYcZH4EWWIQsuioinOMskdY4
-         BaWxFm0Rw3D1RR7qzHUC1qv2rfgYVbJYgdl3YbVbXfvIrbp/u4r+yuq1z337Kmz7lzVS
-         lNB2aAB2eBOFJKticTj0vXWeFDadM8eNl0D6PzijfTUpHuDMaWRHsRur4lcxAcceOEqx
-         cCrr61AN3zSlKyMf40/vrwYNTae0amZWNt4injdhwkDItDR388vnrKTCF14Dduexq5vP
-         e64w==
+        bh=rZDCypN1wH/BcHLtB8uMwrth9AYQ0TB4iJOQebBsoN0=;
+        b=cqdU7mNmP6m6Q1vz2YawY0Zr4QvvW3I78NFE4FYyZYMsaZJmnM9Sd4TR9RcJ+YSgjB
+         hE7ifq0PXBQJRb4jn1Xtq9FwnRGYQ4BXf9IPbXOWJmTCbK/EMToEgs/e/OfL1VZ8up5S
+         3U+OHOuVgXm+0o0tgg4RFStirdMfrTn6//m6uhj7zl+jMq5GF2dYALQZPBLUdZ/wTYr/
+         rJN+I4Il1zfmB44P+ztx6WMcz2eQ8n2DF/vBio0m2455kgAdFiNbj8sRcdb5xKXpsPpn
+         HfFxQ4WBtDLHWjQWNwj+tNAke6gmqhZuDfIcUcKRkq0DEcR1T3LNFgyII8zeTszLAf1X
+         70rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=SUsYehfJo8fnf33sVgdnmt4jXzCCou0hM3qVnKyTM3A=;
-        b=J67VLPNSrng7DcJHF9WoVpuztZPNh805NuJ8FXfCqd4QSrVFjQKnKZ8EGkbPEJcOHL
-         12XHv8Ox5tGXuQOnBQog1pnLKc9VmNcieHJ3BucX7iiuaLQZk1GCkFXFcKcTPPYKKCGv
-         7M5UbwBp7Qi4ZdNURu+5AcySzAjciIRPwOx5BKFiq+kLEbpUWCSx/Q058gomjG6vJnvJ
-         Rjcz3XsmjHR3g7VxXY0u5CzCCKg5+TnDkc4oqpccVXMMBTy/DQCMfZNi1gpLTbxRYKGg
-         DE9nIo1BoLQVhfGqcmyXBwWKeoBO6DB6V4bPPXXcZUDAilLAkqpNyYWDBexhWojK1Ds1
-         3XsA==
-X-Gm-Message-State: AJcUukcMLxmWPLZLkB3Q3OOjGSlV1yeAtikkfeGU1ohmA8r/qbbJGbL4
-        CSiEejyaMTAgTFElk0J5+WpBJ0LQbmgiAGpAH+4=
-X-Google-Smtp-Source: ALg8bN6Vb+J9kwbE6VqO64RK1xh6ePSp2tZiUj2ocSLGwIyaYhTPCcHk5FU9JWeHgF4w+Ln4MRhPPV6Q8zhMw6F64tQ=
-X-Received: by 2002:a02:183:: with SMTP id 3mr10512626jak.130.1548548545487;
- Sat, 26 Jan 2019 16:22:25 -0800 (PST)
+        bh=rZDCypN1wH/BcHLtB8uMwrth9AYQ0TB4iJOQebBsoN0=;
+        b=mAn9p7UZYPq+usxTVu2672IuQwq8rOLczIGdYQHPwH1k1T+xzFaj5swQpI8/nKS0d1
+         yqiGFGL15JRue2V/X4O8mGUwytUNZxXpAmxslxn/rxfB4o/qJJsFQvEHKyVUVxwPG6vo
+         DoICi1mujcwpf+s3yeG6uls5JB5FlX2Y2gFUwoAVNVy212SgIBtYF11dHo1rWToaIPho
+         HwvJMMXsqYEX5Oe/Wcd8oBIfJD0Q4oBvWknLiE3890U52424SVmZW+7/JdlhqUrH5mu6
+         7Hus+YIssbjnPN7ADkuxAz5IXjqaFRGvNMbCL9FKjrW1XIWCpWbzV9UQXWH1UqI7A8vI
+         Merw==
+X-Gm-Message-State: AJcUukfYpOZ8OPk/x/Z2Cl7Jr9rh3wI/fK63zpKuzlvUEQvPa9+Alm9J
+        F4b2BcfNAeeyuXjCFLX30Kl1Y4/NuHfoTVi39YsDOw==
+X-Google-Smtp-Source: ALg8bN5rPpmll5pDg4Bnen4pYiA4QhKE2ZU6+xl+b1BwZMzxEF8wAzBDgTZ7R0rzgsUyK54VNxzkHO09ITGLRgil7OE=
+X-Received: by 2002:a05:660c:81a:: with SMTP id j26mr7445546itk.70.1548548750806;
+ Sat, 26 Jan 2019 16:25:50 -0800 (PST)
 MIME-Version: 1.0
-References: <20190126204951.42455-1-koraktor@gmail.com> <20190126204951.42455-2-koraktor@gmail.com>
-In-Reply-To: <20190126204951.42455-2-koraktor@gmail.com>
+References: <20190126204951.42455-1-koraktor@gmail.com> <20190126204951.42455-3-koraktor@gmail.com>
+In-Reply-To: <20190126204951.42455-3-koraktor@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 27 Jan 2019 07:21:59 +0700
-Message-ID: <CACsJy8A+QsSDfL_RX2ctNsV35VpBaSp4M7hR00nSObmmULUmvg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] Setup working tree in describe
+Date:   Sun, 27 Jan 2019 07:25:23 +0700
+Message-ID: <CACsJy8C27hKNTyGE5P+F6nzszN_z85chEq8MvQ+BgiDAi=4jww@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] Add test for describe with a bare repository
 To:     Sebastian Staudt <koraktor@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
@@ -63,33 +63,39 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Jan 27, 2019 at 3:51 AM Sebastian Staudt <koraktor@gmail.com> wrote:
 >
-> This ensures the given working tree is used for --dirty.
+> This ensures that nothing breaks the basic functionality of describe for
+> bare repositories. Please note that --broken and --dirty need a working
+> tree.
 >
-> The implementation of --broken uses diff-index which calls
-> setup_work_tree() itself.
-
-It would be nice to have a test case covering --broken even if no fix
-is needed (so that somebody else will not accidentally break it
-later). I did a quick test and thought it was broken, but it turns out
-I tested it wrong :P
-
 > Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
 > ---
->  builtin/describe.c | 1 +
->  1 file changed, 1 insertion(+)
+>  t/t6120-describe.sh | 7 +++++++
+>  1 file changed, 7 insertions(+)
 >
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index cc118448ee..b5b7abdc8f 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -629,6 +629,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
->                         struct argv_array args = ARGV_ARRAY_INIT;
->                         int fd, result;
+> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+> index 9a6bd1541f..ddd8cc307d 100755
+> --- a/t/t6120-describe.sh
+> +++ b/t/t6120-describe.sh
+> @@ -409,4 +409,11 @@ test_expect_success 'describe complains about missing object' '
+>         test_must_fail git describe $ZERO_OID
+>  '
 >
-> +                       setup_work_tree();
->                         read_cache();
->                         refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED,
->                                       NULL, NULL, NULL);
+> +test_expect_success 'describe works from outside repo using --git-dir' "
+> +  BARE_CLONE=$(mktemp -d) &&
+
+No, keep everything in $TRASH_DIRECTORY so it will be automatically cleaned.
+
+> +  git clone --bare '$TRASH_DIRECTORY' \$BARE_CLONE >/Users/koraktor/open-source/others/git/t/out &&
+
+Ehh.. I'm pretty sure I don't have /Users/koraktor on my system :)
+This looks like just debug code, I think you can drop ">.." part for
+all commands.
+
+> +  echo $PWD >/Users/koraktor/open-source/others/git/t/out &&
+> +  git --git-dir \$BARE_CLONE describe 2>&1 >/Users/koraktor/open-source/others/git/t/out
+> +"
+> +
+>  test_done
 > --
 > 2.20.1
 >
