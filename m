@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC1291F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 23:27:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78A111F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 23:27:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726904AbfA0X1A (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 18:27:00 -0500
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:34656 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726511AbfA0X06 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 18:26:58 -0500
-Received: by mail-ed1-f48.google.com with SMTP id b3so11653464ede.1
-        for <git@vger.kernel.org>; Sun, 27 Jan 2019 15:26:56 -0800 (PST)
+        id S1726915AbfA0X1B (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 18:27:01 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:44160 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726403AbfA0X04 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 18:26:56 -0500
+Received: by mail-ed1-f52.google.com with SMTP id y56so11584316edd.11
+        for <git@vger.kernel.org>; Sun, 27 Jan 2019 15:26:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RJiBb8F0ZIhkEzjeNE5PJ80Os/lj+Z9pFBzCKAm8HF8=;
-        b=cpddnDVuJECZm7SqQttSe9vANpntyz1GbFEtkj0ZGKlMOLL7z40RF/dITdEme5sWed
-         LTfe9CeSKuORAwNoN+nLURQghVb/HDtztJIGHabgwVAbhLQbGFexxuLWP3+lj80W37VL
-         6N4dRR0KFbwWlRkMEvxD8BwIIYYbYEdH+i+Jbly4Z0+IaNDfQT6Gi6gy0irxQGJ13wml
-         ps6BkorPPLe52w1Nv5TeUQ5OTup70Yui3NmmnjkB9yBeiAHzDSQ8PhURDjqW+iRtdsna
-         vzOGP0uA8+FATjWjCXVu/ONkpellOV2WLqLmu+G92LHPToW0S0KnyAEFPjGk0uTE2HVF
-         uaRg==
+        bh=oT7R2wDGQ27bqNVq7NMA4Ofuj3PjG2VZGG2HORDkQtU=;
+        b=C8FV+CGKUT7XUUOwSPnrsKtGBUQ8xZbytkbKNF/BS8XRFo94+V8NVWorpysuEwFmQa
+         5KC3uUf0/qC/QdHnvBNRwB15W6ZFAoTsf31c08gsqh79kZCP0aTXRQFwOuWphs9/KrTj
+         jLwrOF2TfAQ6AqcohPb7wnP8cgvexVSOvvN3pget3GhRynwThhWG9BclRHSxBNVOzLib
+         GdEsMIuyr8emhlxTEWEXGdzha8pXX1Zj56YS4uHvKy4SiNGInkBzm0ZiQZllQfJaCAly
+         enc0RRaq3YfPhKS01qjEKAGMlOV5YNKLm4/CBRlCDaIi/AfD8IfQiMi3SjJ0Q81IbgYO
+         7UDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RJiBb8F0ZIhkEzjeNE5PJ80Os/lj+Z9pFBzCKAm8HF8=;
-        b=tbSZNDAR/YrBO7sp9Sg88I1G4nUlkZ60yG6UaPKDqZLpl49n1phxnesywuMMztvu+o
-         UCsTR3WRE/61DibhZO2pH5njF7lq1Kg2fklvMiOBYkCs7BnwSfXBdUj1eJVmfy18+EW5
-         Ek24I9FOxSmmaGOxazCID/Pzot9nq5M7OVeDdsaywPorhMAbpGqhsusaXd1tXsbddz0r
-         evUlG5TBFvoTn28PoNWf+mqmCvOzuXPaMGK+sdZhrM/PfnBhNGXGSsEZYMVATt97Ab1G
-         WcTonr7dIyUZynfAZ9vOVI6wdylNJ2XKm6FZzQqs8OdfoqrfNZkHdP5IK860+qZHv88q
-         N1Bw==
-X-Gm-Message-State: AJcUukcvX1brwehSO8ciX87evUkKVZs/GLOXJaJYys/dt2QNdArS7wrj
-        1ugvduQlr4mlcBK/8SSx9IiIo3oe
-X-Google-Smtp-Source: ALg8bN7kNXT/Nom0lcDHtKqxmtOyJccqzJTUUu7xxCgPuViPGEB+QkED/I5RJq4z2aB4utWdbdXEoQ==
-X-Received: by 2002:aa7:d487:: with SMTP id b7mr18758395edr.256.1548631615922;
-        Sun, 27 Jan 2019 15:26:55 -0800 (PST)
+        bh=oT7R2wDGQ27bqNVq7NMA4Ofuj3PjG2VZGG2HORDkQtU=;
+        b=rf37oioWdDzhKe/sws3Ch6rp2yo8duhQPMo92ns4YrAvv5F7x4yvGd9DgCmqmIt7oX
+         00DkWOhyHPHTxhujzxOLv2PzwrtOYtE/BJQ20t1Iv3atoaJ2HSFqQ3t1RdAynN+WlAdf
+         Yq7r6FUNrM0MC4kb+Xxf3QdhiN9Q+isE9u+pFK4y3p5eGrgvVVx+dKP3i9FdHmbY1Wzu
+         kzymRJLWEqRMtrk3vOvRyDZ4x1tMRLzq4YZZXDRYkO8MS1Cdj6xr8KMn4uH79rR/TEZP
+         kubPw6gBpcbL4aFEq6SQIUaXObAdYil7XE+iFrJMzzFr7GS+rpgCuAjoc6EblbdqLPE0
+         l7Zw==
+X-Gm-Message-State: AJcUukcagQlPpLPQllpK0yQcQdCfBPfALKBN8rkozzZpUa3pry4If+El
+        +8AD1xbTyodDqu60IBOfDLpY2o9b
+X-Google-Smtp-Source: ALg8bN4yQi0l6yKGGM7tEdzN5PjAzzgg5jb3Q8owGiQHyvPRGfKb55t43J/0D/sacUVWapxeTi7zaQ==
+X-Received: by 2002:a50:84a9:: with SMTP id 38mr19279117edq.185.1548631614475;
+        Sun, 27 Jan 2019 15:26:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f4sm13269290edb.21.2019.01.27.15.26.55
+        by smtp.gmail.com with ESMTPSA id k12sm647405eja.60.2019.01.27.15.26.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 27 Jan 2019 15:26:55 -0800 (PST)
-Date:   Sun, 27 Jan 2019 15:26:55 -0800 (PST)
-X-Google-Original-Date: Sun, 27 Jan 2019 23:26:34 GMT
-Message-Id: <47fe8aa84aa11b8da9c01c5e8e88b68909dcfdbd.1548631607.git.gitgitgadget@gmail.com>
+        Sun, 27 Jan 2019 15:26:54 -0800 (PST)
+Date:   Sun, 27 Jan 2019 15:26:54 -0800 (PST)
+X-Google-Original-Date: Sun, 27 Jan 2019 23:26:32 GMT
+Message-Id: <ccf8bf53d7f168e3edea5e4a0cc5e15486abba22.1548631607.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v5.git.gitgitgadget@gmail.com>
 References: <pull.31.v4.git.gitgitgadget@gmail.com>
         <pull.31.v5.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 08/21] ci/lib.sh: add support for Azure Pipelines
+Subject: [PATCH v5 06/21] test-date: add a subcommand to measure times in
+ shell scripts
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,75 +72,69 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch introduces a conditional arm that defines some environment
-variables and a function that displays the URL given the job id (to
-identify previous runs for known-good trees).
+In the next commit, we want to teach Git's test suite to optionally
+output test results in JUnit-style .xml files. These files contain
+information about the time spent. So we need a way to measure time.
 
-Because Azure Pipeline's macOS agents already have git-lfs and gettext
-installed, we can leave `BREW_INSTALL_PACKAGES` empty (unlike in
-Travis' case).
+While we could use `date +%s` for that, this will give us only seconds,
+i.e. very coarse-grained timings.
 
-Note: this patch does not introduce an Azure Pipelines definition yet;
-That is left for the next patch.
+GNU `date` supports `date +%s.%N` (i.e. nanosecond-precision output),
+but there is no equivalent in BSD `date` (read: on macOS, we would not
+be able to obtain precise timings).
+
+So let's introduce `test-tool date getnanos`, with an optional start
+time, that outputs preciser values. Note that this might not actually
+give us nanosecond precision on some platforms, but it will give us as
+precise information as possible, without the portability issues of shell
+commands.
+
+Granted, it is a bit pointless to try measuring times accurately in
+shell scripts, certainly to nanosecond precision. But it is better than
+second-granularity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- ci/lib.sh                 | 25 +++++++++++++++++++++++++
- ci/print-test-failures.sh |  5 +++++
- 2 files changed, 30 insertions(+)
+ t/helper/test-date.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 32a28fd209..5505776876 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -102,6 +102,31 @@ then
- 	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
- 	export GIT_TEST_OPTS="--verbose-log -x --immediate"
- 	export MAKEFLAGS="--jobs=2"
-+elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
-+then
-+	CI_TYPE=azure-pipelines
-+	# We are running in Azure Pipelines
-+	CI_BRANCH="$BUILD_SOURCEBRANCH"
-+	CI_COMMIT="$BUILD_SOURCEVERSION"
-+	CI_JOB_ID="$BUILD_BUILDID"
-+	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
-+	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
-+	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
-+	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
-+	CC="${CC:-gcc}"
+diff --git a/t/helper/test-date.c b/t/helper/test-date.c
+index a0837371ab..792a805374 100644
+--- a/t/helper/test-date.c
++++ b/t/helper/test-date.c
+@@ -7,6 +7,7 @@ static const char *usage_msg = "\n"
+ "  test-tool date parse [date]...\n"
+ "  test-tool date approxidate [date]...\n"
+ "  test-tool date timestamp [date]...\n"
++"  test-tool date getnanos [start-nanos]\n"
+ "  test-tool date is64bit\n"
+ "  test-tool date time_t-is64bit\n";
+ 
+@@ -82,6 +83,15 @@ static void parse_approx_timestamp(const char **argv, struct timeval *now)
+ 	}
+ }
+ 
++static void getnanos(const char **argv, struct timeval *now)
++{
++	double seconds = getnanotime() / 1.0e9;
 +
-+	# use a subdirectory of the cache dir (because the file share is shared
-+	# among *all* phases)
-+	cache_dir="$HOME/test-cache/$SYSTEM_PHASENAME"
++	if (*argv)
++		seconds -= strtod(*argv, NULL);
++	printf("%lf\n", seconds);
++}
 +
-+	url_for_job_id () {
-+		echo "$SYSTEM_TASKDEFINITIONSURI$SYSTEM_TEAMPROJECT/_build/results?buildId=$1"
-+	}
-+
-+	BREW_INSTALL_PACKAGES=
-+	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
-+	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
-+	export MAKEFLAGS="--jobs=10"
- else
- 	echo "Could not identify CI type" >&2
- 	exit 1
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index cf321b474d..e688a26f0d 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -41,6 +41,11 @@ do
- 		case "$CI_TYPE" in
- 		travis)
- 			;;
-+		azure-pipelines)
-+			mkdir -p failed-test-artifacts
-+			mv "$trash_dir" failed-test-artifacts
-+			continue
-+			;;
- 		*)
- 			echo "Unhandled CI type: $CI_TYPE" >&2
- 			exit 1
+ int cmd__date(int argc, const char **argv)
+ {
+ 	struct timeval now;
+@@ -108,6 +118,8 @@ int cmd__date(int argc, const char **argv)
+ 		parse_approxidate(argv+1, &now);
+ 	else if (!strcmp(*argv, "timestamp"))
+ 		parse_approx_timestamp(argv+1, &now);
++	else if (!strcmp(*argv, "getnanos"))
++		getnanos(argv+1, &now);
+ 	else if (!strcmp(*argv, "is64bit"))
+ 		return sizeof(timestamp_t) == 8 ? 0 : 1;
+ 	else if (!strcmp(*argv, "time_t-is64bit"))
 -- 
 gitgitgadget
 
