@@ -2,100 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F4B81F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 23:20:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B4461F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 23:26:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726403AbfA0XUw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 18:20:52 -0500
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:33826 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726302AbfA0XUv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 18:20:51 -0500
-Received: by mail-wr1-f46.google.com with SMTP id f7so16141102wrp.1
-        for <git@vger.kernel.org>; Sun, 27 Jan 2019 15:20:50 -0800 (PST)
+        id S1726535AbfA0X0w (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 18:26:52 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:38148 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726302AbfA0X0w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 18:26:52 -0500
+Received: by mail-ed1-f68.google.com with SMTP id h50so11588667ede.5
+        for <git@vger.kernel.org>; Sun, 27 Jan 2019 15:26:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WGnlEzTNZen1bHX46aLUTYa7IA0jY1W1k+q16MCnaE4=;
-        b=WlUAYuqcBHHKintx4PRoD9VUhU0YjODK2dEoFJspKfhwYTUFoxPt3LqfRty909UZqA
-         4UX+aDixDyy0wqSBtthr76a5gHmxtNEZDUtMDw1Z2gl6qWMb06qmPWYsdUvPfTo9jP+P
-         0CXZyIW6kKe0L+UWYSR8f4f0fQibxdsHa1kQMNdSsd6uV76JWibhVco8tF8mEYDdr76z
-         4rw7tn1zLlcE7LpjayrVS8C+7va2d6TEG4zzV2iLlJ/3WbgjSsi9+M5CtfL1uV7nfT/J
-         hxoLupyMoVeBL+cgKIcpcJD7L6eB8v8RSjdL8figtDRVfjepZFW9khCJvmoUEuW9pUE8
-         TLZA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=OI68Im74sbgIpA2rOJGuaYfRquVrHtJVPXrcFiPB1sA=;
+        b=uofSOiQIwvt8SOPTIcQUBY8BOk9cczh4uU5HOx3rwNjwuFsfxewCIB8lMMSdjWwZXY
+         ubiStitpkKfF/vhmxEe13/OsRdvfRFI+6tsNgDCuygxcFhAFhQgzOem2CqlWjRTXqEYh
+         2MuI6NqIfBZB7r+sHT9MuZoTUAHKdxlNjpAPDqeTgkxvR0/dgT5gbcLTUBcqXAFHhTdq
+         vNlNM3cucBuv/u30ldaA1UXHh4Gkppeh2wJxgDvneUwYcr+oBFJo/ySrWtkYgk5XjOaB
+         p6BVsGlRhWWaHCfXK8q6NYyB/IwMCmMxk7UXb79pFYFK6xACZhwgG3EF2GE9XUQRO5L3
+         dZcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=WGnlEzTNZen1bHX46aLUTYa7IA0jY1W1k+q16MCnaE4=;
-        b=AuavpruGoNvrrQw5hjjSQp8ptxPB124R+GmCyL290mAdywspRZgZR5RfUZoDjAPdmK
-         rORTwP2/nZU21JyTlUkZidgIhWkKkG1NTzO3STJoBaSmvFL9mIe9fC5ZCzTIOCAEifZM
-         mqscyOT2Pvgj16kok5g5/DQ9N6nwGGBp/7NQYAlYg44wIe7aupbt2FQyu6y5jYn+hHu8
-         X4DqJdtdzppzwBsbnYMA08picQPY1sJIoT1gCu1zsxp1DkxOAKR0Xu5nagLoFVLHdpSJ
-         z68dWNLZ64J2+nsuSGD0MGUzAhrzAZyJbTBgL8NjnbD6uql0RmsNP5tGnzYS4ZY8AOIt
-         NbVA==
-X-Gm-Message-State: AJcUukf5sjDLwo+4gyVlhJgDYgMQwB09R5Uw81+MTk+ADToo51IDxuaH
-        R/Wi+5gf67M9Or1gS33xDGw=
-X-Google-Smtp-Source: ALg8bN5rf2uUHv8vHlg5McoZhSFFCjaj6Gzca+65q0qblvEg/p/+7YSn/d8SnVkdMFcgG+zV9RIjJg==
-X-Received: by 2002:a5d:46cd:: with SMTP id g13mr20193055wrs.49.1548631249800;
-        Sun, 27 Jan 2019 15:20:49 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m4sm106083149wmi.3.2019.01.27.15.20.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 27 Jan 2019 15:20:49 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v4 03/21] ci/lib.sh: encapsulate Travis-specific things
-References: <pull.31.v3.git.gitgitgadget@gmail.com>
-        <pull.31.v4.git.gitgitgadget@gmail.com>
-        <2d0b62f1862d5fce3ac0d7b813399f560600917d.1548254412.git.gitgitgadget@gmail.com>
-        <xmqqzhrr54h0.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1901261916340.45@tvgsbejvaqbjf.bet>
-Date:   Sun, 27 Jan 2019 15:20:48 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.1901261916340.45@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Sat, 26 Jan 2019 19:37:40 +0100 (STD)")
-Message-ID: <xmqqlg35elgv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=OI68Im74sbgIpA2rOJGuaYfRquVrHtJVPXrcFiPB1sA=;
+        b=k0AlvnKfyjOza841ZDpWd6dCn7KofnQm0Op0/5PcLbRAwQw54zFx2FgLqV+Q1AsYV+
+         a5MgPIw4Muu/kTQlnJ+KD49szvZhSyhtCycvrM6xc74YWUapRXTg/IulJLbTH8GR48qB
+         tCvlVn8CqX4WBwe+XwRuLd9iaUvpE8mNrmBUrTPKQBxiBZ1v5WhWzvkf05v2+YHyDvB3
+         R8ydJAcxbvKjFKwAL+FG6CgTFgoPpGedod52SybKdEUeM9iZ4rsO1rlpgvDvxYPOkIj2
+         IaAaZd9Bn0052igBtF4JNl3qTi/jfXD0kC8o1kZhplXPiRGKs/IgrupqenIIl8JH5tal
+         QUHg==
+X-Gm-Message-State: AJcUukdUx5Y3QX1Kugz9ebm5auMbrUrX99XMtde/kkeuH9A9jPAgvvBR
+        vqr1B8N3D3E32T6z071MLAPngQvt
+X-Google-Smtp-Source: ALg8bN6zT3gmFmujztWABGMkvp63pMQG0Sdpgg09kd9dsXOSVaEOZHhXWp9SK0RLH3bgXDNgqqR4Dg==
+X-Received: by 2002:a50:880d:: with SMTP id b13mr19025494edb.68.1548631609856;
+        Sun, 27 Jan 2019 15:26:49 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ay20sm1179536ejb.32.2019.01.27.15.26.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 27 Jan 2019 15:26:49 -0800 (PST)
+Date:   Sun, 27 Jan 2019 15:26:49 -0800 (PST)
+X-Google-Original-Date: Sun, 27 Jan 2019 23:26:27 GMT
+Message-Id: <f553fd4fb37c26e04b404b0819d3f7bcd51cd4f2.1548631607.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.31.v5.git.gitgitgadget@gmail.com>
+References: <pull.31.v4.git.gitgitgadget@gmail.com>
+        <pull.31.v5.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v5 01/21] travis: fix skipping tagged releases
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> No, not really. Actually, not at all.
->
->> It would be, under this new arrangement of the code, most natural for
->> Those who want to use gnu-time to arrange it to be somehow added to
->> $BREW_INSTALL_PACKAGES, no?
->
-> The purpose of BREW_INSTALL_PACKAGES is to list the packages necessary to
-> build Git and run its test suite, and the only reason why this is no
-> longer a hard-coded list of packages is that it depends on the CI platform
-> (or more concretely, on the available macOS agents of said CI platform)
-> which packages need to be installed to do so.
->
-> The gnu-time package is not such a package, and it is unlikely to be
-> dependent on the particular CI you want to use.
+When building a PR, TRAVIS_BRANCH refers to the *target branch*.
+Therefore, if a PR targets `master`, and `master` happened to be tagged,
+we skipped the build by mistake.
 
-Those who want to do perf tests in the current setup would need to
-install gnu-time because the current setup is only Travis, whose
-macOS agent does not have it preinstalled.  Other CI platforms'
-macOS agents may already have it, they may not want to get an error
-by trying to install it there.  I am not sure how that is different
-from the situation for gettext etc.?
+Fix this by using TRAVIS_PULL_REQUEST_BRANCH (i.e. the *source branch*)
+when available, falling back to TRAVIS_BRANCH (i.e. for CI builds, also
+known as "push builds").
 
+Let's give it a new variable name, too: CI_BRANCH (as it is different
+from TRAVIS_BRANCH). This also prepares for the upcoming patches which
+will make our ci/* code a bit more independent from Travis and open it
+to other CI systems (in particular to Azure Pipelines).
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ ci/lib-travisci.sh | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-
+diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+index 69dff4d1ec..9c6ddeb374 100755
+--- a/ci/lib-travisci.sh
++++ b/ci/lib-travisci.sh
+@@ -5,18 +5,17 @@ skip_branch_tip_with_tag () {
+ 	# at the same commit as the tip of the branch is pushed, and building
+ 	# both at the same time is a waste.
+ 	#
+-	# Travis gives a tagname e.g. v2.14.0 in $TRAVIS_BRANCH when
+-	# the build is triggered by a push to a tag.  Let's see if
+-	# $TRAVIS_BRANCH is exactly at a tag, and if so, if it is
+-	# different from $TRAVIS_BRANCH.  That way, we can tell if
+-	# we are building the tip of a branch that is tagged and
+-	# we can skip the build because we won't be skipping a build
+-	# of a tag.
+-
+-	if TAG=$(git describe --exact-match "$TRAVIS_BRANCH" 2>/dev/null) &&
+-		test "$TAG" != "$TRAVIS_BRANCH"
++	# When the build is triggered by a push to a tag, $CI_BRANCH will
++	# have that tagname, e.g. v2.14.0.  Let's see if $CI_BRANCH is
++	# exactly at a tag, and if so, if it is different from $CI_BRANCH.
++	# That way, we can tell if we are building the tip of a branch that
++	# is tagged and we can skip the build because we won't be skipping a
++	# build of a tag.
++
++	if TAG=$(git describe --exact-match "$CI_BRANCH" 2>/dev/null) &&
++		test "$TAG" != "$CI_BRANCH"
+ 	then
+-		echo "$(tput setaf 2)Tip of $TRAVIS_BRANCH is exactly at $TAG$(tput sgr0)"
++		echo "$(tput setaf 2)Tip of $CI_BRANCH is exactly at $TAG$(tput sgr0)"
+ 		exit 0
+ 	fi
+ }
+@@ -81,6 +80,10 @@ check_unignored_build_artifacts ()
+ # and installing dependencies.
+ set -ex
+ 
++# When building a PR, TRAVIS_BRANCH refers to the *target* branch. Not what we
++# want here. We want the source branch instead.
++CI_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
++
+ cache_dir="$HOME/travis-cache"
+ good_trees_file="$cache_dir/good-trees"
+ 
+-- 
+gitgitgadget
 
