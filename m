@@ -2,144 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C31881F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 13:29:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C0C31F453
+	for <e@80x24.org>; Sun, 27 Jan 2019 14:54:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726516AbfA0N3A (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 08:29:00 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52003 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726458AbfA0N3A (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 08:29:00 -0500
-Received: by mail-wm1-f66.google.com with SMTP id b11so11085500wmj.1
-        for <git@vger.kernel.org>; Sun, 27 Jan 2019 05:28:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=0BAAaETygoISl+RaPGF8AzvYP3ljIp8cgrS2j/9ylEc=;
-        b=YX5XnY/zgPPONQBdznZJuK78gPphmFTF3kSogFfdnNwN7XTOckeptVCItUqRMmStiq
-         AiZN6/xvQrqCf5HRnrMcoNP4hOVB01/TZ8N84SGrxk3LNDu8RVOL92+ywJTBxsCcO+3s
-         Nm54cQ5qLd5/77Qlv32RzZxcZQMHg5e8GUGQMUh/yTYiVYErZqrUO5iDNcSiSy8IMuGU
-         nCJdQfuM9iACRn9eH90lo3ZpQ6c2EKHdP7DQ85tgYOhxeLjhptqM3jewdqSepKVn1evm
-         /rk1F9XQ/sl3+buTQGOabgb5fZiEap0RTzwwxcuzMLsa0zOBtVmQKD7zt4gD4mGpiSU6
-         FnwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=0BAAaETygoISl+RaPGF8AzvYP3ljIp8cgrS2j/9ylEc=;
-        b=YeLWNPJvRvxpmNk2UOBP8CTYRfaRcamq/UpjEAVJOXtdotMyZdjbS3F4FbC9k1HZis
-         viUQ6GRxB+n4mmtKQkCGkxI2sGKaGhf8oJy48+d6v7rUgybfShCNRwt1p1V96WAoESgJ
-         gv0H+Edo668OeqKgyeCiZCpb6VTzvQUYbHwtVquOM7YEKkGzuyevz4xs9KTihViF1hHI
-         gO6n+GdovcfOudPfORCH8Tu03RlBFJ1i+DPyAMfmKhZFbs/6ydwuDSrc45damcRM32NH
-         163TjVfRdncXfbhwc4wWl4ZtjiUo30JtwkaWZh/4JF6g7CEJcZCguv+xi6wANIGeg8Q7
-         25fg==
-X-Gm-Message-State: AJcUukcV2zfK/HnQUHOE+lerMDJOAz/MwTRHINB/nRa8OFjOD7vVlWsL
-        k+NqUX1Qq1cAbqzHAs2fQvM=
-X-Google-Smtp-Source: ALg8bN4UCIc2H5QFZw6Sz/qIY9N+4642i5mt0wXBa0G6+WY4git+T86cdSLs/eEZO54BUCW3AIKpQQ==
-X-Received: by 2002:a1c:87cc:: with SMTP id j195mr13393625wmd.2.1548595737381;
-        Sun, 27 Jan 2019 05:28:57 -0800 (PST)
-Received: from szeder.dev (x4dbd90dd.dyn.telefonica.de. [77.189.144.221])
-        by smtp.gmail.com with ESMTPSA id f192sm8835732wmd.25.2019.01.27.05.28.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 27 Jan 2019 05:28:56 -0800 (PST)
-Date:   Sun, 27 Jan 2019 14:28:54 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] object_as_type: initialize commit-graph-related fields
- of 'struct commit'
-Message-ID: <20190127132854.GI6702@szeder.dev>
-References: <20190125222126.GH6702@szeder.dev>
- <20190127130832.23652-1-szeder.dev@gmail.com>
+        id S1726633AbfA0Oy1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 09:54:27 -0500
+Received: from mout.gmx.net ([212.227.15.19]:46803 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726511AbfA0Oy1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 09:54:27 -0500
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0McEI3-1gVGyA1TFv-00JeuQ; Sun, 27
+ Jan 2019 15:54:21 +0100
+Date:   Sun, 27 Jan 2019 15:54:20 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v4 06/21] test-date: add a subcommand to measure times
+ in shell scripts
+In-Reply-To: <xmqqo98754gy.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901271547590.45@tvgsbejvaqbjf.bet>
+References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <aa053ed9936ebae0ca5e18d27de96f1d054d7f89.1548254412.git.gitgitgadget@gmail.com> <xmqqo98754gy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190127130832.23652-1-szeder.dev@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:C21pz9apN/VDKBRNKNTZnqIuSHV+U6vSNFqxA4y+JTeex1f41q5
+ LKa1TF5ZeTQH9jYbsf5Gp2eGSTYNTFYTQY1Njb0hmRMS1MoY+A2VOvjr7MzROtyiIK+q/5d
+ Lsm30CbSr14XSKZS4zEawNXBC98yh71jGnFAFjWBJ+OvRgNOlBMZeoPTYZo5HuIYBohzUt5
+ /ZxaZRtWC7bTKwNG0Ueig==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:7zAVkgGu000=:hO0MstYt41xIj6az45FV3N
+ j1wu1BA6twDQQhhG/LFJKsntl/NY6jCgTdp1QUSKkZvns91uFJhaxdf8EYf3X+Mc4gbjbNy8l
+ YhjgMVjxXyZz+7qognnTSm98HOxTHeelSIAfD5M9SeX+d7AFGLtrqogdGe/RGkdp7CzrSfL+S
+ 4Tnip2FE64y2RKjI5y2FjygPZHdsE+4YgR8HDbVyW3ai31Azf5TlPbN2U7C5Gtn3Ftbh1Z2mG
+ Kn7Uz8wxlU6fnE8CxcwQ+NN1g/PY6twFgoixrNFaRDhpwnzwyn1IWSqqaXnuBgbchCEVA81TV
+ h8bmk1TMhPfE2u+9d1V9fEAbQCKgH3wZYmgMS+kTOKeTF4++YucQQP+o2SNwfKblc1mmzIrq4
+ CTr5Z5GbJPdKEeekwLF4StasELUzwpzKi672+gadJCScbVW094DbMae+1MqVSgYtIberPImDM
+ reSKeWyo46qux1dfcKhhsgF1wTfA6UOGXrt5y3UG3FmC0Z7lKgE5hqW+U/gxqZi3qX4QtwLMd
+ ZXwOQk+oYNUwuYKmmYnxgfj1sQPJchl/rjzzk9KGwTWKLNJBr0lLpNXX4nKrk438sfo4qfC8O
+ +vrPF3OwtOTtB9vC7uAHquQ/vZQmVsVkg+b95p2RWxLW1L1yrW+JXd5oaHEfY5TzMsnxpb82u
+ kLuCMlVc3XV0cRFcQJUyavluMF2GVMDqUOGIP+i/e+zt4EoG96M5bERTuyV1+Ss77qacQllfa
+ Lo7B71hj5/ovbvGW8QlHN0LdUXMxYqNciKIEHH70xZItbD1zmLXIKMDBxkiTon2Nyj0LrhggS
+ DA73Vb76qBIuFXia9j4e87f2pIK4WsFP3TjrIUiVPUgim58sj6zA3gm6TUJrVVGwhBUk4kAzB
+ FNofOaVEzqD/gakTqZdtv/HNccz5z/kt/yZV32vroZc3cgh60BlPTDGmc7GClXJhXouqFkG+j
+ +jV5++I9Wzg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 27, 2019 at 02:08:32PM +0100, SZEDER Gábor wrote:
-> When the commit graph and generation numbers were introduced in
-> commits 177722b344 (commit: integrate commit graph with commit
-> parsing, 2018-04-10) and 83073cc994 (commit: add generation number to
-> struct commit, 2018-04-25), they tried to make sure that the
-> corresponding 'graph_pos' and 'generation' fields of 'struct commit'
-> are initialized conservatively, as if the commit were not included in
-> the commit-graph file.
+Hi Junio,
+
+On Wed, 23 Jan 2019, Junio C Hamano wrote:
+
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 > 
-> Alas, initializing those fields only in alloc_commit_node() missed the
-> case when an object that happens to be a commit is first looked up via
-> lookup_unknown_object(), and is then later converted to a 'struct
-> commit' via the object_as_type() helper function (either calling it
-> directly, or as part of a subsequent lookup_commit() call).
-> Consequently, both of those fields incorrectly remain set to zero,
-> which means e.g. that the commit is present in and is the first entry
-> of the commit-graph file.  This will result in wrong timestamp, parent
-> and root tree hashes, if such a 'struct commit' instance is later
-> filled from the commit-graph.
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > In the next commit, we want to teach Git's test suite to optionally
+> > output test results in JUnit-style .xml files. These files contain
+> > information about the time spent. So we need a way to measure time.
+> >
+> > While we could use `date +%s` for that, this will give us only seconds,
+> > i.e. very coarse-grained timings.
+> >
+> > GNU `date` supports `date +%s.%N` (i.e. nanosecond-precision output),
+> > but there is no equivalent in BSD `date` (read: on macOS, we would not
+> > be able to obtain precise timings).
+> >
+> > So let's introduce `test-tool date getnanos`, with an optional start
+> > time, that outputs preciser values.
 > 
-> Extract the initialization of 'struct commit's fields from
-> alloc_commit_node() into a helper function, and call it from
-> object_as_type() as well, to make sure that it properly initializes
-> the two commit-graph-related fields, too.  With this helper function
-> it is hopefully less likely that any new fields added to 'struct
-> commit' in the future would remain uninitialized.
-> 
-> With this change alloc_commit_index() won't have any remaining callers
-> outside of 'alloc.c', so mark it as static.
-> 
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
-> 
-> So, it turns out that ec0c5798ee (revision: use commit graph in
-> get_reference(), 2018-12-04) is not the culprit after all, it merely
-> highlighted a bug that is as old as the commit-graph feature itself.
-> This patch fixes this and all other related issues I reported
-> upthread.
+> I think the goal to have our own stopwatch so that we do not have to
+> worry about differences among system-provided ones makes sense.
 
-And how/why does this affect 'git describe --dirty'?
+And so that we do not have to worry about all kinds of unportable shell
+commands. That was my main motivation here, TBH.
 
-  - 'git describe' first iterates over all refs, and somewhere deep
-    inside for_each_ref() each commit (well, object) a ref points to
-    is looked up via lookup_unknown_object().  This leaves all fields
-    of the created object zero initialized.
+> The only thing that may become an issue is how widely available
+> getnanotime() is.  As "test-date" itself is built on any platform an
+> end-user/developer runs our tests, which is wider set of platforms
+> than what we run Travis and other CIs on, unconditionally relying on
+> its availability might pose an issue.  I dunno.
 
-  - Then it dereferences HEAD for '--dirty' and ec0c5798ee's changes
-    to get_reference() kick in: lookup_commit() doesn't instantiate a
-    brand new and freshly initialized 'struct commit', but returns the
-    object created in the previous step converted into 'struct
-    commit'.  This conversion doesn't set the commit-graph fields in
-    'struct commit', but leaves both as zero.  get_reference() then
-    tries to load HEAD's commit information from the commit-graph,
-    find_commit_in_graph() sees the the still zero 'graph_pos' field
-    and doesn't perform a search through the commit-graph file, and
-    the subsequent fill_commit_in_graph() reads the commit info from
-    the first entry.
+Well, getnanotime() itself looks (I checked) at highres_nanos()' output,
+which can be 0 on unsuported platforms, and falls back to
+gettimeofday_nanos(). The worst that can happen there, as far as I can
+tell, is that the platform has a certain granularity (which is true of
+highres_nanos(), too), and that granularity can be 1 second. Which is not
+very good, but if that's the best the platform can provide, I am prepared
+to take it. Which is exactly what this patch does.
 
-    In case of the failing test I posted earlier, where only the first
-    commit is in the commit-graph but HEAD isn't, this means that the
-    HEAD's 'struct commit' is filled with the info of HEAD^.
+Do you have any splendid idea how to improve this approach?
 
-  - Ultimately, the diff machinery then doesn't compare the worktree
-    to HEAD's tree, but to HEAD^'s, finds that they differ, hence the
-    incorrect '-dirty' flag in the output.
-
-Before ec0c5798ee get_reference() simply called parse_object(), which
-ignored the commit-graph, so the issue could remain hidden.
-
+Ciao,
+Dscho
