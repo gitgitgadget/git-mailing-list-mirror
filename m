@@ -2,186 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 525251F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 12:58:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7C4A211B5
+	for <e@80x24.org>; Mon, 28 Jan 2019 13:05:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbfA1M6I (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 07:58:08 -0500
-Received: from mx2.suse.de ([195.135.220.15]:38342 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726661AbfA1M6I (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 07:58:08 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 633B5AEF5
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 12:58:06 +0000 (UTC)
-Subject: Re: Worktree creation race
-From:   Marketa Calabkova <mcalabkova@suse.cz>
-To:     git@vger.kernel.org
-References: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
-Openpgp: preference=signencrypt
-Autocrypt: addr=mcalabkova@suse.cz; keydata=
- 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
-Message-ID: <2ee89ff3-e672-e940-f601-aa1d2647756a@suse.cz>
-Date:   Mon, 28 Jan 2019 13:58:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.3
+        id S1726669AbfA1NF2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 08:05:28 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53014 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726647AbfA1NF2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 08:05:28 -0500
+Received: by mail-wm1-f65.google.com with SMTP id m1so13919134wml.2
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 05:05:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=d3U72MxOqtvdaanp7QrZD+hdtv6t2+pmqn1Pp0lz11s=;
+        b=Aec47+yCZMfbDbwyLWcjxBGbd4+tdUa1xtqDzuX7nfpndzbaDV3eRWDg5XRM04Z+Sk
+         plpaaIMWFJ3BeS/eUPpfocSDZJGVgxrSbNQFwlspjPdzFz7R2FnYwWH61GoXikszX6b7
+         8aQk3robdE8o6WmlilK0yrhaJCCg067tn3TaC05B9cJGmI+NjcbIoV0S6GeW6pa/J3Mc
+         Tl7xmXEw8CBVih3cwMRH4k9mx4RWrPabad8tk6o05NEly0P7X3REdwtfVPWELpsSSDOC
+         7T8HyxQIkfj9OvtiVBKJMNMrTbvP8CEZyGLmoRscSLNfRrrRdmrBGfP86su2zgIvxfDj
+         axKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=d3U72MxOqtvdaanp7QrZD+hdtv6t2+pmqn1Pp0lz11s=;
+        b=OyURBKgtjbJRrvEFZDVOvWLsoKb+H5dZTR3wpGeYLmls5YKTOu/QKYVTHl+uPF3ahx
+         9jvkE/heGY7aG/5EBUUbQ52e399cIAcrDDn0mRaVTcYTbiZK062sjELeyY7xji6M54S/
+         +Ye1I85UVBb+6/gzWizs8xQp9tA88cImwaT0oDdA5p2h2ZkpJJB3gGm7sJDLhF2H5o4m
+         dgXxEby68jnlfQjYLXjPUum3XdgcdGI8WV7K1QrDVyU2F8YdXXjhEwN+qvFFSJ/946pS
+         5mcGJFerxzIDWxIGfbmvBnhlXR1RxRdXhTLLdaNgTarh4axaQzR1v9ltlXErJh77gGv0
+         JLSw==
+X-Gm-Message-State: AJcUukeotLrlopP49+/tdAMfd86W8XB1bdpukFNuca/QoZ3+wSMyPEig
+        qpysTx+yXsiLAZeeG/sgFK7vj0Uk
+X-Google-Smtp-Source: ALg8bN4Jtf75LYEmjRXnMFyypB/rg/W1zSFhE3j3WkmZQ18J5ITl2vbsQ1Tozt26G2cK24urgz4pfw==
+X-Received: by 2002:a1c:2e0c:: with SMTP id u12mr17113996wmu.81.1548680725218;
+        Mon, 28 Jan 2019 05:05:25 -0800 (PST)
+Received: from szeder.dev (x4dbd8aa4.dyn.telefonica.de. [77.189.138.164])
+        by smtp.gmail.com with ESMTPSA id t5sm50960392wmg.43.2019.01.28.05.05.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 28 Jan 2019 05:05:24 -0800 (PST)
+Date:   Mon, 28 Jan 2019 14:05:13 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     sxenos@google.com
+Cc:     git@vger.kernel.org, Stefan Xenos <sxenos@gmail.com>
+Subject: Re: [PATCH v2 2/8] sha1-array: Implement oid_array_readonly_contains
+Message-ID: <20190128130513.GA12887@szeder.dev>
+References: <20190127194128.161250-1-sxenos@google.com>
+ <20190127194128.161250-2-sxenos@google.com>
 MIME-Version: 1.0
-In-Reply-To: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="yg3jVot8dd2vfGkP4OHcUBh54S2VERJsq"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190127194128.161250-2-sxenos@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---yg3jVot8dd2vfGkP4OHcUBh54S2VERJsq
-Content-Type: multipart/mixed; boundary="dDuGrNNogTzABdj8k6fTT9pR6AKLT6Jg3";
- protected-headers="v1"
-From: Marketa Calabkova <mcalabkova@suse.cz>
-To: git@vger.kernel.org
-Message-ID: <2ee89ff3-e672-e940-f601-aa1d2647756a@suse.cz>
-Subject: Re: Worktree creation race
-References: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
-In-Reply-To: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
+On Sun, Jan 27, 2019 at 11:41:22AM -0800, sxenos@google.com wrote:
+> From: Stefan Xenos <sxenos@gmail.com>
+> 
+> Implement a "readonly_contains" function for oid_array that won't
+> sort the array if it is unsorted. This can be used to test containment in
+> the rare situations where the array order matters.
+> 
+> The function has intentionally been given a name that is more cumbersome
+> than the "lookup" function, which is what most callers will will want
+> in most situations.
+> 
+> Signed-off-by: Stefan Xenos <sxenos@google.com>
+> ---
+>  sha1-array.c               | 15 +++++++++++++++
+>  sha1-array.h               |  2 ++
+>  t/helper/test-sha1-array.c |  6 ++++++
+>  t/t0064-sha1-array.sh      | 22 ++++++++++++++++++++++
+>  4 files changed, 45 insertions(+)
+> 
+> diff --git a/sha1-array.c b/sha1-array.c
+> index b94e0ec0f5..071fce7e90 100644
+> --- a/sha1-array.c
+> +++ b/sha1-array.c
+> @@ -26,6 +26,21 @@ static const unsigned char *sha1_access(size_t index, void *table)
+>  	return array[index].hash;
+>  }
+>  
+> +int oid_array_readonly_contains(const struct oid_array* array,
+> +	const struct object_id* oid)
+> +{
+> +	int i;
+> +	if (array->sorted) {
+> +		return sha1_pos(oid->hash, array->oid, array->nr, sha1_access) >= 0;
+> +	}
 
---dDuGrNNogTzABdj8k6fTT9pR6AKLT6Jg3
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+Style nit: unnecessary braces.  According to CodingGuidelines we tend
+not to use braces when the body of a loop or if statement is only a
+single line.
 
-Hi,
+> +	for (i = 0; i < array->nr; i++) {
+> +		if (hashcmp(array->oid[i].hash, oid->hash) == 0) {
 
-you have probably overseen my email :) . Please, I would like to get it
-fixed.
+Please use oideq() instead.
 
-Does anyone has a suggestion what to do with this bug? It looks like a
-one-line fix probably in builtin/worktree.c, but I have no idea how to
-do it. Sorry.
+> +			return 1;
+> +		}
+> +	}
+> +	return 0;
+> +}
+> +
+>  int oid_array_lookup(struct oid_array *array, const struct object_id *oid)
+>  {
+>  	if (!array->sorted)
 
-Thank you,
-Marketa
+> diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
+> index 5dda570b9a..c1bac6fcdd 100755
+> --- a/t/t0064-sha1-array.sh
+> +++ b/t/t0064-sha1-array.sh
+> @@ -32,6 +32,28 @@ test_expect_success 'ordered enumeration with duplicate suppression' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'readonly_contains finds existing' '
+> +	echo 1 > expect &&
+> +	echoid "" 88 44 aa 55 >> expect &&
 
-On 15/01/2019 15:03, Marketa Calabkova wrote:
-> Hello,
->
-> I am writing to report a bug. The original report is from my colleague,=
- I am also providing his suggestions.
->
-> There is insufficient locking for worktree addition. Adding worktree ma=
-y fail.
->
-> The problem is that git reads the directory entries in $GIT_DIR/worktre=
-es,=20
-> finds a worktree name that does not exist, tries to create it, and if a=
-n=20
-> error is returned adding the worktree fails. When multiple git processe=
-s=20
-> do this in parallel only one adds a worktree and the others fail. Git s=
-hould=20
-> reread the directory and find a new name that does not exist when creat=
-ing=20
-> the worktree directory fails because another git process already create=
-d it.
->
-> I suppose adding PID in the tree name would mitigate the issue to the p=
-oint it will be very unlikely to encounter.
->
-> I need more than the tree in the temporary directory so using the tempo=
-rary directory directly as a tree is out of question.
->
-> to test:
->
-> cd /dev/shm
-> mkdir gittest
-> cd gittest
-> git init gitrepo
-> cd gitrepo
-> git commit --allow-empty -m Empty
-> for n in $(seq 10000) ; do ( tmp=3D$(mktemp -d /dev/shm/gittest/test.XX=
-XXXXXXXXX) ; mkdir $tmp/test ; git worktree add --detach $tmp/test ; ) & =
-done
->
-> (you should see many messages like:=20
-> fatal: could not create directory of '.git/worktrees/test284': File exi=
-sts)
->
-> Greetings,
-> Marketa
->
->
+Style nit: not space between redirection operator and filename.
 
-
-
---dDuGrNNogTzABdj8k6fTT9pR6AKLT6Jg3--
-
---yg3jVot8dd2vfGkP4OHcUBh54S2VERJsq
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEVtVTyN9tQJ/wHqzxIe7T5Pvt6dEFAlxO/F0ACgkQIe7T5Pvt
-6dHiww/+KwJaCDELc9Peqgmtm9W1VE/qS//Tqae3KXiUZ3B27jdQH8FmTXX8oJlM
-fv6hijLYbMyvZMPSksFrZo8dqmpR/+FIw8Fd81z4nwh3JXtgX0KClYemoLhgYnjy
-ckKtUrPTbRo0TzwPESOCC6StQBvgsvY3yEUBNjJLoyAaPBdCdHAoksy4C9fcJVQP
-SbNaOflee29Y/DKZtEi3Zg01q1vc29RmU8wPHnkR+9gD4wjIh0XvsQMiKFW0vg2s
-26g3Vh5XFoSJ0kdUhBckoDwG1liwXJUr404FNs6WhrbeF9q8Jm9LC5XlkHiLnmlP
-1ejnZCNxcjGJZLollKDo/ThoweM3XHHVuIbfYUCTIZOLVozJb9KC7mTaRYAdSh7v
-CQwwBnJ08tzNpAivtqOtVteB/x10ISvjtMfe68WnSyoYiHDzKsMnUlR+/UTbgiWC
-kP2wArG7YLp8DUtDqvPps/Yd7sWYyAN4E2MFCsajJCCofKEmkEqtAGvbFGaprpW3
-UDSwoxr4abhoJMsno3xprj5dB3YPh7sL2AfUvNGiyiWEOWfxmVs2nMOtxnF+wJol
-JFJlfhPhIPBvoXJspytEJ1QhMswNceuY45NwyaYNeA0MsXc83uba7SY5BOjLrHYz
-G4rv6Dn6OtkZebnG5fdgr2MIy3BMH0bOO+P8/T/fQo5YwTd8Hf8=
-=7gQD
------END PGP SIGNATURE-----
-
---yg3jVot8dd2vfGkP4OHcUBh54S2VERJsq--
+> +	{
+> +		echoid append 88 44 aa 55 &&
+> +		echoid readonly_contains 55 &&
+> +		echo for_each
+> +	} | test-tool sha1-array >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'readonly_contains non-existing query' '
+> +	echo 0 > expect &&
+> +	echoid "" 88 44 aa 55 >> expect &&
+> +	{
+> +		echoid append 88 44 aa 55 &&
+> +		echoid readonly_contains 33 &&
+> +		echo for_each
+> +	} | test-tool sha1-array >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'lookup' '
+>  	{
+>  		echoid append 88 44 aa 55 &&
+> -- 
+> 2.20.1.495.gaa96b0ce6b-goog
+> 
