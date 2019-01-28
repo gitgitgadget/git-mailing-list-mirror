@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,URIBL_DBL_SPAM shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FEBE1F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 02:05:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 266041F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 02:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbfA1CFQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 21:05:16 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33976 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726575AbfA1CFQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 21:05:16 -0500
-Received: by mail-wr1-f66.google.com with SMTP id f7so16361906wrp.1
-        for <git@vger.kernel.org>; Sun, 27 Jan 2019 18:05:14 -0800 (PST)
+        id S1726632AbfA1CFV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 21:05:21 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:56057 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726575AbfA1CFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 21:05:21 -0500
+Received: by mail-wm1-f65.google.com with SMTP id y139so12199255wmc.5
+        for <git@vger.kernel.org>; Sun, 27 Jan 2019 18:05:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version;
-        bh=yXVlwczpTEv2NRGY6lLJiMotuJGO6GuzXWsffOyXr6c=;
-        b=FMTKCL+IpGud/S6ahy/8SfbNVlQDn8rojXFIJctuZV3KkntJKo/Ot+LFITJXKyTnt2
-         uxZ9qsBp9OiqHLFZxZdQDm/UDsPWaTNqpfPjxs8mI7wWCslxP3slY/hYbJYj8np8myaU
-         3WnCtuJwyEA1kR0EbBg+DnefmgiIvz7S6omUu1vySimABx7vA5WTFknro/O2sQmlkKWY
-         hKY7yX6LFa1xGef3wGnEgsdjkIsjOb61x0K1og9BukyQKIW0ZA/O9n5MxRrM8Z7it2A1
-         vw+HFjEpPQF7zRYs2HctlmB5H14VJcBNCacuTOFIofdO65m7cf7ClGd7y4qIEBE1dpo9
-         5VGQ==
+        bh=fhacsAJYrFtNXmIAJREUvwlJ+oBC4a0YQbx7b5azitM=;
+        b=swKEeO0R1GUVBIl7Bjw7URK/9YX5bAgVBTPgIOUEYqIjHn8xHGnd5zx8ra9RvdmmtE
+         PgMotfDAmbZyYVhMn7DDK3gkyor/AF09YDht+V1ipuWyKbU26VFR++ykFpcIXg/pkENW
+         7QA+CEth9xAFyqf9oq/yfaj8VN4XDZuEGj2/UXcEYCUo+vfp5KeE60IaflVFcBMGYatR
+         oRveQryY73l6MOck9ERTxTyH8ymHLDxoo9lbXW1H2It4aZm60bdTK79RXSNt6jPEKnx3
+         wlkHwD/990ywg1nHBp2Sou3E9JhwYVU5vEw4cgRbLxfmxMCgZirSz13PwACC/WXm17w9
+         9OQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version;
-        bh=yXVlwczpTEv2NRGY6lLJiMotuJGO6GuzXWsffOyXr6c=;
-        b=VaKBvvkBn7hHsTf6ZeJQD/kU82PxlgUlc9tAymRAfAfCKzAJa53IxzbEVWBGBnVZtY
-         NKbn//HQ/3vWRsn9RummkRcn/+s//zGh8b9UXNL009VbzM/8OAQ6KK5rL6b7CdhrKdBt
-         HqPXpKgNyBsnLCZiZ7cSehwsRoOKDocMIZsAwY8CmpWcASFIuX7xON5h4OE4yo6kVwrn
-         ZsaGY6gF0WMBQ7yqz62y+d8EQBbWYV6hPfBfW2fpXrPbS2PMoZvLnnZj+ATYXlYzaWSS
-         SgVUc7nfoTydVxiTlWv5Yq6sk8+ULAN8Z019Z98ut/509zaOwV8ZFbDP791Ob4mdoBJ+
-         FmuQ==
-X-Gm-Message-State: AJcUukd3t86PHzmAO/D82Jo3ZJnfb21AeyYiQMDPp9XW0d/PksU1UhUh
-        nOj8LeCbr7j610n/YYL2urU=
-X-Google-Smtp-Source: ALg8bN6iwdTY3JUaAn7lp3zgoiNOxRVwJTmxDxBORENs/xuwJb0XuAPGmvT8kPR8sLk+gKTRvwc5lg==
-X-Received: by 2002:a5d:4b01:: with SMTP id v1mr18955860wrq.5.1548641113487;
-        Sun, 27 Jan 2019 18:05:13 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a8sm47252450wme.23.2019.01.27.18.05.12
+        bh=fhacsAJYrFtNXmIAJREUvwlJ+oBC4a0YQbx7b5azitM=;
+        b=kxDymwBHLIHkLLJCU+fHQj+VPXuXwNFMhJd+xpUF777ZORghoe23QwPD2iVhjUPF49
+         JsuqIWE1mCRGzfu04RnLFXGtQ57QYHsLn85Wne6lmj4m6mVUHXRDvrbZju2PBkKZBJ7K
+         D3JXd/tvdZwu/mu+J6SmL7ko7yV/vTI/zrL/cmxUtLnvyzyvwowlUQxe3a/EUbZ0ogac
+         A4TTrNzpAqxubhUZPJXlm0/Bxhk47LphxcLAwMlvWu3DpM/MPpmxtit8mvYr0nt/+TY8
+         4yoyLhCQ12Dy5VdC6X706PXGTZ4dzVPFalu1vmUJ3KadPe4fmZIkdUyWZ12BlgVxM3YS
+         AlRA==
+X-Gm-Message-State: AJcUukfUWR9yAgazbVyigsNasD3D4ZJgwwx42A97iTWz3XrSn3vItc6u
+        qzL2+3o/P9i4agXzLbo4CMg=
+X-Google-Smtp-Source: ALg8bN5UY/DSPg1Mglv1c/TzeLfPp5nNIIcZVScvxdq+DKO7c4oqlk6nxsmgwiWu2iB6Lomnq758Kw==
+X-Received: by 2002:a1c:ab87:: with SMTP id u129mr15145431wme.104.1548641119039;
+        Sun, 27 Jan 2019 18:05:19 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id k19sm190466955wre.5.2019.01.27.18.05.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 27 Jan 2019 18:05:12 -0800 (PST)
+        Sun, 27 Jan 2019 18:05:18 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     sxenos@google.com
-Cc:     git@vger.kernel.org, Stefan Xenos <sxenos@gmail.com>
-Subject: Re: [PATCH v3 2/8] sha1-array: Implement oid_array_readonly_contains
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 4/8] evolve: Add support for parsing metacommits
 References: <20190127194415.171035-1-sxenos@google.com>
-        <20190127194415.171035-2-sxenos@google.com>
-Date:   Sun, 27 Jan 2019 18:05:12 -0800
-Message-ID: <xmqqlg35czaf.fsf@gitster-ct.c.googlers.com>
+        <20190127194415.171035-4-sxenos@google.com>
+Date:   Sun, 27 Jan 2019 18:05:18 -0800
+Message-ID: <xmqqef8xcza9.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,71 +67,140 @@ X-Mailing-List: git@vger.kernel.org
 
 sxenos@google.com writes:
 
-> Subject: Re: [PATCH v3 2/8] sha1-array: Implement oid_array_readonly_contains
-
-Style: s/: Implement/: implement/
-
-> From: Stefan Xenos <sxenos@gmail.com>
-
-This line wants to say "Stefan Xenos <sxenos@google.com>" to match
-S-o-b below (I am assuming that you are following your employer's
-open source recommendation to contribute under your corp address).
-
-Perhaps you would want user.email set to the corp address?  I am
-taking the above as an indication that the commits we are seeing
-here have been made under your @gmail.com address and that is why
-git-send-email is adding the in-body header.
-
-> diff --git a/sha1-array.c b/sha1-array.c
-> index b94e0ec0f5..071fce7e90 100644
-> --- a/sha1-array.c
-> +++ b/sha1-array.c
-> @@ -26,6 +26,21 @@ static const unsigned char *sha1_access(size_t index, void *table)
->  	return array[index].hash;
->  }
->  
-> +int oid_array_readonly_contains(const struct oid_array* array,
-> +	const struct object_id* oid)
+> +/*
+> + * Search the commit buffer for a line starting with the given key. Unlike
+> + * find_commit_header, this also searches the commit message body.
+> + */
+> +static const char *find_key(const char *msg, const char *key, size_t *out_len)
 > +{
-> +	int i;
+> +	int key_len = strlen(key);
+> +	const char *line = msg;
+> +
+> +	while (line) {
+> +		const char *eol = strchrnul(line, '\n');
+> +
+> +		if (eol - line > key_len &&
+> +				!strncmp(line, key, key_len) &&
 
-Style: blank between decl and first stmt, perhaps?
+Use of strncmp() here forces readers to wonder if and why we are
+preparing the code to allow NUL in key[0..key_len] (as line..eol
+would not, because we just used strchrnul()).  But because key_len
+was computed using strlen(key), there is no valid reason to do so.
+If the code used memcmp(), it won't waste readers' time.
 
-> +	if (array->sorted) {
-> +		return sha1_pos(oid->hash, array->oid, array->nr, sha1_access) >= 0;
+> +				line[key_len] == ' ') {
+> +			*out_len = eol - line - key_len - 1;
+> +			return line + key_len + 1;
+> +		}
+> +		line = *eol ? eol + 1 : NULL;
+> +	}
+> +	return NULL;
+> +}
+> +
+> +static struct commit *get_commit_by_index(struct commit_list *to_search, int index)
+> +{
+> +	while (to_search && index) {
+> +		to_search = to_search->next;
+> +		--index;
 
-No need for {} around a single statement.
+Style: unlike some C++ shop, we tend to use post-increment/decrement
+when we do not use the value.
 
 > +	}
-> +	for (i = 0; i < array->nr; i++) {
-> +		if (hashcmp(array->oid[i].hash, oid->hash) == 0) {
-> +			return 1;
+> +
+> +	return to_search->item;
+> +}
 
-Likewise.
+If a maliciously crafted parent-type field has excess ' ' to make
+index larger than the number of "parent" field in the commit object,
+the while() loop terminates upon noticing that to_search has become
+NULL.  And then this return statement dereferences that NULL
+pointer.
 
+> +/*
+> + * Writes the content parent's object id to "content".
+> + * Returns the metacommit type. See the METACOMMIT_TYPE_* constants.
+> + */
+> +int get_metacommit_content(
+> +	struct commit *commit, struct object_id *content)
+> +{
+> +	const char *buffer = get_commit_buffer(commit, NULL);
+> +	size_t parent_types_size;
+> +	const char *parent_types = find_key(buffer, "parent-type",
+> +		&parent_types_size);
+> +	const char *end;
+> +	int index = 0;
+> +	int ret;
+> +	struct commit *content_parent;
+> +
+> +	if (!parent_types) {
+> +		return METACOMMIT_TYPE_NONE;
+
+Unnecessary brace?
+
+> +	}
+> +
+> +	end = &(parent_types[parent_types_size]);
+
+Unnecessary parenthesis?
+
+> +	while (1) {
+> +		char next = *parent_types;
+> +		if (next == ' ') {
+> +			index++;
+> +		}
+> +		if (next == 'c') {
+> +			ret = METACOMMIT_TYPE_NORMAL;
+> +			break;
+> +		}
+> +		if (next == 'a') {
+> +			ret = METACOMMIT_TYPE_ABANDONED;
+> +			break;
+> +		}
+
+The parsing of this seems somewhat loose.  If there is 'x' on the
+line, this loop spins and consumes it without doing anything, which
+means that the same commit with a parent-type field can be encoded
+in different ways by adding arbitrary number of 'x' just after SP
+after the "parent-type" keyword, no?
+
+> +		parent_types++;
+> +		if (parent_types >= end) {
+> +			return METACOMMIT_TYPE_NONE;
 > +		}
 > +	}
-> +	return 0;
+> +
+> +	content_parent = get_commit_by_index(commit->parents, index);
+> +
+> +	if (!content_parent) {
+> +		return METACOMMIT_TYPE_NONE;
+> +	}
+> +
+> +	oidcpy(content, &(content_parent->object.oid));
+> +	return ret;
 > +}
-> ...
-> diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
-> index 5dda570b9a..c1bac6fcdd 100755
-> --- a/t/t0064-sha1-array.sh
-> +++ b/t/t0064-sha1-array.sh
-> @@ -32,6 +32,28 @@ test_expect_success 'ordered enumeration with duplicate suppression' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'readonly_contains finds existing' '
-> +	echo 1 > expect &&
+> diff --git a/metacommit-parser.h b/metacommit-parser.h
+> new file mode 100644
+> index 0000000000..e546f5a7e7
+> --- /dev/null
+> +++ b/metacommit-parser.h
+> @@ -0,0 +1,16 @@
+> +#ifndef METACOMMIT_PARSER_H
+> +#define METACOMMIT_PARSER_H
+> +
+> +// Indicates a normal commit (non-metacommit)
 
-Style: no SP between redirection operator and its target, i.e.
+No C99 // comments please.  Not in the header, and not in the code.
 
-	echo 1 >expect &&
-
-> +	echoid "" 88 44 aa 55 >> expect &&
-
-Likewise.
-
-	echoid "" 88 44 aa 55 >>expect &&
-
+> +#define METACOMMIT_TYPE_NONE 0
+> +// Indicates a metacommit with normal content (non-abandoned)
+> +#define METACOMMIT_TYPE_NORMAL 1
+> +// Indicates a metacommit with abandoned content
+> +#define METACOMMIT_TYPE_ABANDONED 2
+> +
+> +struct commit;
+> +
+> +extern int get_metacommit_content(
+> +	struct commit *commit, struct object_id *content);
+> +
+> +#endif
