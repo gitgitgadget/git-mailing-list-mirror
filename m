@@ -7,113 +7,116 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96CFF1F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 16:02:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF16B1F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 16:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731245AbfA1QCe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 11:02:34 -0500
-Received: from mout.gmx.net ([212.227.15.15]:32809 "EHLO mout.gmx.net"
+        id S1732833AbfA1QKf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 11:10:35 -0500
+Received: from mout.gmx.net ([212.227.17.21]:50123 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730072AbfA1QCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 11:02:33 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfEZG-1gYIGp3feU-00OqoR; Mon, 28
- Jan 2019 17:02:25 +0100
-Date:   Mon, 28 Jan 2019 17:02:09 +0100 (STD)
+        id S1732821AbfA1QKe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 11:10:34 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LcSWg-1hUbqB2fbS-00jpaE; Mon, 28
+ Jan 2019 17:10:25 +0100
+Date:   Mon, 28 Jan 2019 17:10:09 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
 cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v4 04/21] ci: inherit --jobs via MAKEFLAGS in
- run-build-and-tests
-In-Reply-To: <20190125132545.GD6702@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1901281701030.41@tvgsbejvaqbjf.bet>
-References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <83b92a87e7698cee1e2c44252b934ad436d75a90.1548254412.git.gitgitgadget@gmail.com> <xmqqtvhz54gz.fsf@gitster-ct.c.googlers.com> <20190125132545.GD6702@szeder.dev>
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: sparse job, was Re: [PATCH] test-xml-encode: fix sparse NULL pointer
+ warnings
+In-Reply-To: <68a8c70e-dc42-1df3-3616-c096f63cb848@ramsayjones.plus.com>
+Message-ID: <nycvar.QRO.7.76.6.1901281706440.41@tvgsbejvaqbjf.bet>
+References: <68a8c70e-dc42-1df3-3616-c096f63cb848@ramsayjones.plus.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-329022632-1548691345=:41"
-X-Provags-ID: V03:K1:JD94fMlT3v6KVTe6s0w2f6qH+tA4rd5+G7ZAjzpCqKFGrloOLur
- PPr4EpMmYXS5lkFX3HDI579x1mtCs0jEg3kcE4Ya9AlMjmdu8PNEoBJAve6hSosZE+wsiNJ
- hPurzJDATcMUPFhhuuDawemePASYlIuil/A/se3i3iq54kcMOFHggOm6QXxgclzXD13UUUL
- 4wYH1H1tckucU/UciJIJA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Xt3AgZwgZXg=:Nh7vZ2h6B0vpklZ/fvD/Z0
- 0Bk6CK51b6gRIBGCSpko9VLXLgeMMyJItzSkp5YuZ/hLg9s+wbOpYly4lMffJRAl1Pq0tpSnV
- RXf2RrvFpH79dZRYrXknXHgrl3Z/VG4Cp2nRwGHAqoTInTT4Nf1S1hlknyPsJ5X/TMb1SwuLA
- 4MT0mdq/VaybUKNC4LDsc3oYlhhvT0JrbcNLZCFzdVVOaxCZyjZCj6zK3dV505NIwL9QqGl5g
- 9sTvjY8mKd9cc0RvSEZbcIUMw+h1fP2Zf9rOU8DpSvJndmj6NVbgrelMIr4c8B9s2JqkZ4GwS
- TnWtYtghw02+XyuKk/3NdhuOhYCt2quRauTe+tosiuMF/YzDig1o8nhAj+MhBgoy9f8OT/FFM
- e8HL4XfWcP9WBplnkUi2tQUWdkkmV0nuP1uT4aj61FsbN78x10nD3qpwWFFl7d5mKexpBGCTa
- NBKsyJyGfl30LL9vCNNH7uVEoux5aO1v/nqk0OO8q+N1+IdmEypTmTzR07Ml2qgkbiaiyUOGV
- 33F6hG8/KciX6wlOpQiDTNJqmKLUm4JOFYROEBPomXVFzRW3sMU3VM53VA44cyNZOJRhbOaMq
- k9CW5KdXw/sPwPZFYPQB4Z6Kc5CfzZ19SKv59Z9M4ZhHudJsGDmEB5HQd70Tn3fzEYlqop+kM
- x4nS6j4afMMzCWLswLrwx/g6gJKGTBlmUCvbuVugyKV24/cCetI14gxN8UUybjAimy/DV0kjd
- mcOdtIHk0M/c77GLVlvU39qt4b9O1hIB3er4QLJ/1otGqVOa9CKDdiXKbBlm4GAA68UrZFGWh
- XYhemw568M6K8gF8w1bwiJeiByceUvN63Dl4gjKlDRj0m6ax0lZWyTlULgTDN8U/sLbvNcoS7
- aUf6XExdKO/GAIvK83t6+MwYg+zU+/MMzcpnmCgF9r/x1IHdviz02qeHAjtyh91N6t5g/LJ/w
- NnYLkk2eXTQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:I8g9vulrEydKnINssCZi0iYirfilwPcl3tcv7w8XH+KgK9d8H7Y
+ 7YE5zkwj6jh/uv1DemtW7Cvuw5hCNeiitHWgulAYGFSpH8kiHdA2vjeQ8S4sN5Gykerlj4S
+ 7MK71VQYwiCsMPrUPoxVMVCRGHLcrXDUuycZ33YqX/M5WD2+4rWcGLOYj894ZnVy201H56H
+ 7HmTEJlycgZv8UxcnBegA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KmSx0zl9e9o=:sdrxjgTKMbM1KBji5tjmUe
+ LRqs0/ptRHGcXRbT0AD2/nhkY++hoFI8PKn9XjhrL59KUF25Wip2xs1TEoKlb1vu65sYjJQNN
+ sw3dV5FTsRmPAa4jz7jsYfTBkCyN9uOIBjBN7CiX+gXeZa+MQNxpwh6M/gUGN+1PetAqiLABq
+ aZD4OfTC/JQQkTPZeC2460/Va+6MwxGlDpqskJCA689pTC505VmpwCeJOKLt7x7xVrr2FRjSA
+ baHP+EDRLdxHUCodW48IM289SRkN/H9SWVLxnjmcXfbAP8GQy3MuAP3ZT4pkwJA6AZ7Q6mngY
+ 8LrReaNttQWRLqkHBJb79NzReZgYWf0kvzNOfi0nnqqzIfQcSeJpHmtzAcLQtXgG9KnCycUP5
+ i9cmg2IyNwRDuiHo+oQxN0PFqxt+xu0e9DGQrbvMpU11EvShizfUsqrtYT+RgQhpxPRP3qNoR
+ IksOt6+5+Aw0GMqClFxJiUy0ex/BMAbmDoBFRFhCOfCrguSb4l+AnZW1sQwgpqElvglFBEvtH
+ XFi9Mcls8VRw9lUbNb3mMchYslnat6Oxk9XSjPyQhkE2wvym+hEug8kotH3UfInxhrboTYOys
+ A46dBZPzYxN6S/ncDBvdmLklIvNVm5I+07PKCJ0oEjpMySBrnyP0YW5xzDrZoI8B4HYtk5859
+ /4hpz41/76QNfnnj5w+yvOaNRBygPSTzzp3e8Xsto4YYHbTWkIHHMHNsqsGUzsonCNBU9q4Ph
+ AVC4JS8cMpGL+qAHyFH9y8irPS/4jzcdleGDlraFYVWxRvqmP7qUVHveu0lSC1s4bgRMYdsw2
+ DRjRBpfZ0qmxUXmLT3HxClPBsb+pxzuoiTRDCpfRID1IepCXO6zSD7gL9S2UAD9QjPLXmTLSe
+ fSzpPMIQVAt7gpx3aEU48Ul7l+8o2slA0m2TfwHIDUit1T8gFDYTG24bxhQE5G0ZlHcLJa5Rk
+ Zl4VwE60coQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Ramsay,
 
---8323328-329022632-1548691345=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Sat, 26 Jan 2019, Ramsay Jones wrote:
 
-Hi Gábor,
-
-On Fri, 25 Jan 2019, SZEDER Gábor wrote:
-
-> On Wed, Jan 23, 2019 at 02:22:10PM -0800, Junio C Hamano wrote:
-> > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> > writes:
-> > 
-> > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > >
-> > > Let's not decide in the generic ci/ script how many jobs to run in
-> > > parallel; it is easy enough to hand that information down via the
-> > > `MAKEFLAGS`.
-> > >
-> > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > > ---
-> > >  ci/run-build-and-tests.sh | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > >
-> > > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> > > index db342bb6a8..80d72d120f 100755
-> > > --- a/ci/run-build-and-tests.sh
-> > > +++ b/ci/run-build-and-tests.sh
-> > > @@ -7,7 +7,7 @@
-> > >  
-> > >  ln -s "$cache_dir/.prove" t/.prove
-> > >  
-> > > -make --jobs=2
-> > > +make
-> > >  make --quiet test
-> > >  if test "$jobname" = "linux-gcc"
-> > >  then
-> > 
-> > As there is no assignment to MAKEFLAGS in this patch, is it intended
-> > for this step to change behaviour (possibly with the intention to
-> > add "default 2 jobs at least under travis" back later in the
-> > series)?  Not that it matters too much, but it is unnerving to see
-> > that the proposed log message promising "it is easy enough" while
-> > not actually doing so, without expressing an intention.
 > 
-> Furthermore, there are several other 'ci/run-<something>.sh' scripts
-> that still run 'make -j N'.
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+> 
+> Hi Johannes,
+> 
+> If you need to re-roll your 'js/vsts-ci' branch, could you please
+> squash this into the relevant patch (commit af7747e7c7 ("tests: optionally
+> write results as JUnit-style .xml", 2019-01-23)).
 
-Indeed. I removed those `--jobs=2` options from those.
+Certainly!
 
-Granted, I did not audit whether there were `make` calls that did not have
-any `-j` option, but I think it would be safe to parallelize all of them
-via `MAKEFLAGS`.
+BTW would you be interested in working with me on an Azure Pipeline that
+runs `sparse` on all of Junio's branches? (I am now pretty proficient with
+building a software package in one Azure Pipeline, publishing it as a
+build artifact, then consuming it from another Azure Pipeline, so I would
+build the `sparse` package as an Ubuntu package and offer it as a build
+artifact.)
 
-Ciao,
+I seem to recall that you once explained to me what it takes, but that
+mail vanished from my inbox and I cannot find it.
+
+Thanks,
 Dscho
---8323328-329022632-1548691345=:41--
+
+> 
+> Thanks!
+> 
+> ATB,
+> Ramsay Jones
+> 
+>  t/helper/test-xml-encode.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/helper/test-xml-encode.c b/t/helper/test-xml-encode.c
+> index 367c4875e6..a648bbd961 100644
+> --- a/t/helper/test-xml-encode.c
+> +++ b/t/helper/test-xml-encode.c
+> @@ -26,7 +26,7 @@ int cmd__xml_encode(int argc, const char **argv)
+>  		if (tmp2) {
+>  			if ((ch & 0xc0) != 0x80) {
+>  				fputs(utf8_replace_character, stdout);
+> -				tmp2 = 0;
+> +				tmp2 = NULL;
+>  				cur--;
+>  				continue;
+>  			}
+> @@ -34,7 +34,7 @@ int cmd__xml_encode(int argc, const char **argv)
+>  			tmp2++;
+>  			if (--remaining == 0) {
+>  				fwrite(tmp, tmp2 - tmp, 1, stdout);
+> -				tmp2 = 0;
+> +				tmp2 = NULL;
+>  			}
+>  			continue;
+>  		}
+> -- 
+> 2.20.0
+> 
