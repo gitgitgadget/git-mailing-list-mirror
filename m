@@ -2,85 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E90061F453
-	for <e@80x24.org>; Sun, 27 Jan 2019 23:46:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABF38211B5
+	for <e@80x24.org>; Mon, 28 Jan 2019 00:02:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726551AbfA0XqX (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 18:46:23 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:39591 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726403AbfA0XqW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 18:46:22 -0500
-Received: by mail-qk1-f193.google.com with SMTP id c21so8470606qkl.6
-        for <git@vger.kernel.org>; Sun, 27 Jan 2019 15:46:22 -0800 (PST)
+        id S1726695AbfA1AC4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 19:02:56 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55515 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726403AbfA1AC4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 19:02:56 -0500
+Received: by mail-wm1-f65.google.com with SMTP id y139so12036409wmc.5
+        for <git@vger.kernel.org>; Sun, 27 Jan 2019 16:02:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=a4Mf7xCfXJ2xa8PgeRwanR2fA775s2ZofcA3p8JOb+4=;
+        b=CZoEaIMZXM7vNJxEzR9mDwQIxPveNSuIzyMcg1eIy+6wFzYtnEbfBB/2f/8FaPr9Xu
+         IjGMMNgtD3wrx2hGsSni6kCJ0tUKV2C3y2FnvKAwIDzGmhOqgEgCYpp+jUooC1ZFd0Ud
+         PAWbXfdzyaAjBVmWZS33gwtcDbS6Ywm4E6yhd9Gv/CXe4tsYgdXc9JlzXL0HZDFw2k7l
+         O/vjsuM+ePLBiflACd/gPD5H4Wc7qRyw2moyjqvlLOiED4hJhuR2NuFZVGca1LxiJR0u
+         wQ/AI4QBgDYR6ynm/cWayYS1BOCpXq19LK1iy9YAJ3iLbebPaXPc7IxjphLIdSnqzDOh
+         WSFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6iNw0Eo1Mp4knoI/uMSbTwLp/4fyYX7umY1nNHIx280=;
-        b=DquEFTR5cJetYhcK6fa7EHn+q9FVSv8Ntz/lMfTKghq+y64HC6cx/uSbqPphlUGYnN
-         5eGLVvU8OOqT5+GOngXTL49O8MqysS6edO2DYkQH+SkXeJD+bjObdQ5/uohCA+gnFUQU
-         h0v3JATD04EMkvoLivpnEv9HEwabLNmX8JpeG8vvhAFyTemfpGouJF5lf3TTrHWgw/E3
-         Y/NprG+xYRX397xhryj3Y2a15l+SQw4R+Y10WQz3FdCrhATnEtjLR7J2gpext4wlG5fD
-         +SBz4ZQGI0Do6cEI8xBs6U9kL1X0tTzhYCrxS+Gb9M0NdVC5aL49VHXM9OnIZEzHQmvn
-         XiFQ==
-X-Gm-Message-State: AJcUukfDo4PVoV6dRJ/7N2XA2yGmk8l1XSRKlplmtt1q0f0M7JazheSg
-        DhhVCLVhLBfrWDg8v1RnpQWUruHOEuZU8xWXET4=
-X-Google-Smtp-Source: ALg8bN6FL4FRxc9B6/lvBBm1+NlvWm2ASimEyU0fy1sFBCE3tVU5JBWMUqpSVgtlqohXTkORDr+XHj7aEDC/x7wMHX8=
-X-Received: by 2002:a37:9584:: with SMTP id x126mr17708372qkd.36.1548632781654;
- Sun, 27 Jan 2019 15:46:21 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=a4Mf7xCfXJ2xa8PgeRwanR2fA775s2ZofcA3p8JOb+4=;
+        b=TfLecwdJxhFP8kIn8ZZC2cJFwEE73wT6pYaEzHefiA3lnhWI0HGLSgDetIGQgUggK4
+         YxOhf7po95icjEv1U67LSDJ3ImCm85MuXaXOQ+jVjKxHIrXBEsVKNiepWe8Q3ladVNOf
+         hlW1ADHgXc5YKko7TxoUgu3Q0bMMwak8lXbBbV94xzHypBLAPpzaX/q12eFPW7cTIBTU
+         y7G5er1zNsVw4PT52bAeyg8Jo1eIpzrDAso3ZthIUz8B6iY0RnKZWv9mrg0ugztgwQkI
+         /gdYbrrZIvG4ZMxAgyrHA8pAJbl12Kw9hRklpMlvdQp/UijQbYhiPash1k8rJUQWUgwc
+         o9gw==
+X-Gm-Message-State: AJcUukdmy2iiRbnIL0Ryaj/qiJLvSx58KPC/tJP+F25FAJodLMmZEbBI
+        BHIBZG3dc27yi3kL2ISOzmY=
+X-Google-Smtp-Source: ALg8bN4K0pm60iI07UN3m/eHSIMP7kl7NDCqH7IYduMkJTC93MMgx0+rljiV6fkwF/YKkAcGztoA0w==
+X-Received: by 2002:a1c:3282:: with SMTP id y124mr15376535wmy.134.1548633774339;
+        Sun, 27 Jan 2019 16:02:54 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id p10sm9687155wmd.14.2019.01.27.16.02.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 27 Jan 2019 16:02:53 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Arti Zirk <arti.zirk@gmail.com>, git@vger.kernel.org, e@80x24.org,
+        peff@peff.net, jnareb@gmail.com, flavio@polettix.it,
+        wil@nohakostudios.net
+Subject: Re: [PATCH v1] git-instaweb: Add Python builtin http.server support
+References: <20190124161331.25945-1-arti.zirk@gmail.com>
+        <20190125020451.GU423984@genre.crustytoothpaste.net>
+        <xmqqva2cg61l.fsf@gitster-ct.c.googlers.com>
+        <5bc3256d49834c96db2a51c12190f2cb7cf7ac42.camel@gmail.com>
+        <20190125235811.GW423984@genre.crustytoothpaste.net>
+Date:   Sun, 27 Jan 2019 16:02:52 -0800
+In-Reply-To: <20190125235811.GW423984@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Fri, 25 Jan 2019 23:58:11 +0000")
+Message-ID: <xmqqh8dtejir.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190127192740.8678-1-svenvh@gmail.com>
-In-Reply-To: <20190127192740.8678-1-svenvh@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 27 Jan 2019 18:46:10 -0500
-Message-ID: <CAPig+cRLLTYB=tVOY39dojLYZqoX=yxPRZY9fjo9z+5+P2BKKg@mail.gmail.com>
-Subject: Re: [PATCH v2] git-submodule.sh: shorten submodule SHA-1s using rev-parse
-To:     Sven van Haastregt <svenvh@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 27, 2019 at 2:28 PM Sven van Haastregt <svenvh@gmail.com> wrote:
-> Until now, `git submodule summary` was always emitting 7-character
-> SHA-1s that have a higher chance of being ambiguous for larger
-> repositories.  Use `git rev-parse --short` instead, which will
-> determine suitable short SHA-1 lengths.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> On Fri, Jan 25, 2019 at 05:22:45PM +0200, Arti Zirk wrote:
+>> This is the built in http server that Python comes with (like Ruby
+>> users have builtin webrick server). While it is possible to install
+>> something else, I don't think many casual git-instaweb users would do
+>> it. 
+>> 
+>> I haven't looked in depth into it but I'm pretty sure that by simply
+>> changing the imports I could make this code also work in python2.
+>> 
+>> Upstream python2 support ends in ~11 months and would Red Hat/CentOS 7
+>> users using new git releases really care about "git instaweb -d python"
+>> not working on installations without Python 3?
 >
-> We cannot rely on always successfully invoking `git rev-parse` in the
-> submodule directory.  Keep the old method using `cut` as a fallback.
+> I'm sensitive to the fact that upstream is dropping support for Python
+> 2, and I have no objections to limiting this to Python 3. However,
+> whether we like it or not, Red Hat/CentOS 7 is going to be around for
+> four years after that.
 >
-> Signed-off-by: Sven van Haastregt <svenvh@gmail.com>
-> ---
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> @@ -850,8 +850,16 @@ cmd_summary() {
-> +               # Ensure we have crudely abbreviated SHA-1s as fallback in case
-> +               # rev-parse fails to shorten the SHA-1s.
->                 sha1_abbr_src=$(echo $sha1_src | cut -c1-7)
->                 sha1_abbr_dst=$(echo $sha1_dst | cut -c1-7)
-> +
-> +               sha1_abbrev=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_src) &&
-> +               sha1_abbr_src=$sha1_abbrev
-> +               sha1_abbrev=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_dst) &&
-> +               sha1_abbr_dst=$sha1_abbrev
+>> In the end I would like to keep the name just "python" to signal that
+>> it only needs standard Python installation and nothing else.
+>
+> Could you update the documentation to put "Python 3" in parentheses or
+> otherwise make it clear in the documentation? My goal is to avoid
+> confusing users who are on systems that still have Python 2.
 
-This could be made a bit easier to follow by using indentation and ||
-rather than &&. For instance, rewriting the entire block as:
+Calling the option python3 (not python) would give readers the same
+message loud and clear in a simpler way, I would think.  Is there
+any reasonable reason why we'd want to avoid saying python3?  It's
+not like we are afraid of sending an message that we won't stay
+working with python4 that is in the near horizon ;-), and as Arti
+says, those who already live in Python3 world would know, when they
+see either "python" or "python3", that is what they have anyway no?
 
-    # Shorten with hard-coded fallback if rev-parse fails
-    sha1_abbr_src=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_src ||
-        echo $sha1_src | cut -c1-7)
-    sha1_abbr_dst=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_dst ||
-        echo $sha1_dst | cut -c1-7)
 
-In fact, the code is clear enough that the comment isn't even needed.
-
-By the way, if git-rev-parse does fail, is it going to produce an
-error message on stderr that needs to be suppressed?
