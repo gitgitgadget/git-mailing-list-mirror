@@ -7,128 +7,181 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A0ED1F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 09:42:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D9AC1F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 10:07:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726627AbfA1JmG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 04:42:06 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:38101 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726415AbfA1JmG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 04:42:06 -0500
-Received: by mail-pl1-f195.google.com with SMTP id e5so7508409plb.5
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 01:42:05 -0800 (PST)
+        id S1726818AbfA1KHG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 05:07:06 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41924 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726749AbfA1KHF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 05:07:05 -0500
+Received: by mail-pg1-f195.google.com with SMTP id m1so7010678pgq.8
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 02:07:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=tJVodi4wuBKE9ISqxzqIAaoKN/YbqMRC85zVrRMzUE0=;
-        b=kPdHlX8HDcyQQO4BmFsjRduJIEjGnB3iWgVbiBAXOZxCYpeuYhuyna1VbzQHK8Yow/
-         N5TdSEhOAq9g3iV7fFQBY58m+m1dMwBlGFg3UcyVVcRU0tu2cPpB4MrreQNXz3WHjbQL
-         bywLcmriCu14rg+UNwsqeZ9Bj6DX7oiwupz0b/r81u+85BOktAJnagh3+ksOS0QfQTmN
-         AkvtAtVflzoFd5W+jmPVT6KKfNS3mawN/ME0oZ5Bq84dE1PrBc2LdF0zJMKMgTiMqXdk
-         o+KVtbZUMu8TNop+cnQXl7ZMOz7NKu79TWVewaahMhcTXj0+SZUx7Msuv081etngAoCG
-         CKSw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=SJ1UR8poXiwPSDTuTVodONPMTqWf41mi6A6TUTK+3ao=;
+        b=OxbXeCJKoFKB/DxXEcZ1kKQ6ebqZlmH1X6V5p0ipGjzq0bUWoKBHECZPttB7J8+2d9
+         xl1uk7DIycYoZKJ4TLHWN7Rp7UQa6lkL4ivUyAmttgkV1ezkKvs3U4zim3OS4tn6fGO2
+         jJCDYGeK2JMZJuTwVEdklYdXlw7RkrTsEB5epds9od2bJQsQlqQ+K8JLDmwACKCoRe9I
+         rzUc3spl2eK74szg5tcUlf5dMHU/DRrN4Zea6NwF4W+WDEEi7RtikyLqwBELAk9fie/v
+         lfnQEtkwpFNp3uM/xcdFjKPtV1MQiYbXW+365rRa10iTugiuN4bpGdq5MspqE84kzcGa
+         0/Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=tJVodi4wuBKE9ISqxzqIAaoKN/YbqMRC85zVrRMzUE0=;
-        b=e5IISRLG+rVMYRuWePn0TcobX/Q4NmwXxQDbkWW4sChCvc2NT0GF5jTyKvtg+7HnvN
-         AJ3i2iF3mQNurLVCI1O1znQPoOG65xkLB9VdPtZVB0Z4C+ntrXgXkLkuG2IPtHCLP7Un
-         qfF5SQNiuEc4XoEMdo2RfDhi7XNPlzfmEf1qcyejGVPibv/fk4iAGQe55hR5gHxVS7jI
-         3+P9WfEFHIUTqTJyhMgbUvbDl/4nhYFas0i1aTHvt4X8m3N1z89uZ3LWu/aNfYLCCxVK
-         4eWnToX+ybhQo+NPOOeFFOEUafIYz1lyDfed4r34kJwLX2aevCHIcF16yL0T0HStINN1
-         pc8A==
-X-Gm-Message-State: AJcUukcexFSQRpfuKtj4x8jhoPSpM5B5l8tpfEd6htQDVqDt5LC4cJaG
-        id72Y8cYvXuLPht3/8DXa48ps+qn
-X-Google-Smtp-Source: ALg8bN65iCd6imHSI5Q5Z1VcgQ7plsxUEWr/AdNHrL+LqkusDrKA37YXkbGZvRFghae/MP4jVaU9EQ==
-X-Received: by 2002:a17:902:4d46:: with SMTP id o6mr20210927plh.302.1548668525001;
-        Mon, 28 Jan 2019 01:42:05 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=SJ1UR8poXiwPSDTuTVodONPMTqWf41mi6A6TUTK+3ao=;
+        b=ryp+np005e9CHOnD5pDLmOdkwFOxd1CEpgyldy7/cVHaXJb2Nh1iVHYcUjsTTtNYCQ
+         oYwmyvNaa3ILYGwXIclZLHnsyl8OsQLtDC9WdDpWrIrUHKAAr8gjwHuwjJcfoTl140XN
+         NBXt4KwyezNKzf4n/N9FwgCAnL/Wmx82ZAgWju2dezQfzKagWwD1B9j8fgGp6Jx6cFe9
+         mbGJ88EDwt9JrQBEo3FD1oxXllvBn9vEg689SGx9mfcsNw0Cz1Med425xDNinjkJUpRv
+         hXRU32CuUTXx6s9cthpMg/FdW8hIzBH0pq+2kLL2hMdQhEN93hQQjgpIWS3KmV5Hjnt9
+         Yqig==
+X-Gm-Message-State: AJcUukdGCTsdnBXK/n8ntTULrSb9hHzBFpWP0tp5EBs7t4p+Iziv8U8p
+        S/3ny8k+r1NuM+EKPiD9WvA=
+X-Google-Smtp-Source: ALg8bN5eVOLeycPrW/EJQ0V5cHKJ+hIRXtom+FEJV0ilxypY3IYxcGPf/qSOyTZZ8qb7uJF9459nKQ==
+X-Received: by 2002:a63:a401:: with SMTP id c1mr19404740pgf.403.1548670024720;
+        Mon, 28 Jan 2019 02:07:04 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id m67sm54725957pfb.25.2019.01.28.01.42.01
+        by smtp.gmail.com with ESMTPSA id t24sm60262688pfm.127.2019.01.28.02.07.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Jan 2019 01:42:03 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 28 Jan 2019 16:42:00 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH/RFC] completion: complete refs in multiple steps
-Date:   Mon, 28 Jan 2019 16:41:55 +0700
-Message-Id: <20190128094155.2424-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.20.1.560.g70ca8b83ee
+        Mon, 28 Jan 2019 02:07:03 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Mon, 28 Jan 2019 17:06:59 +0700
+Date:   Mon, 28 Jan 2019 17:06:59 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Sebastian Staudt <koraktor@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/3] Add tests for describe with --work-tree
+Message-ID: <20190128100659.GA6257@ash>
+References: <20190126204951.42455-1-koraktor@gmail.com>
+ <CACsJy8A6hF+Sxitpt3J9EmDEXjGb2e+AeMtJDaE7Y32fg4NEKA@mail.gmail.com>
+ <CA+xP2SbLwmeWpqmjCiqojra5Mwrbok7sjvUsvCsaAo6XsWBbtA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+xP2SbLwmeWpqmjCiqojra5Mwrbok7sjvUsvCsaAo6XsWBbtA@mail.gmail.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is in the same spirit of f22f682695 (completion: complete general
-config vars in two steps - 2018-05-27). Instead of considering all full
-refs as completion candidates, it completes one "path" component at a
-time, e.g.
+On Sun, Jan 27, 2019 at 08:13:51AM +0100, Sebastian Staudt wrote:
+> Am So., 27. Jan. 2019 um 01:07 Uhr schrieb Duy Nguyen <pclouds@gmail.com>:
+> >
+> > On Sun, Jan 27, 2019 at 3:51 AM Sebastian Staudt <koraktor@gmail.com> wrote:
+> > >
+> > > The dirty ones are already passing, but just because describe is comparing
+> > > with the wrong working tree.
+> > >
+> > > Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
+> > > ---
+> > >  t/t6120-describe.sh | 24 ++++++++++++++++++++++++
+> > >  1 file changed, 24 insertions(+)
+> > >
+> > > diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+> > > index d639d94696..9a6bd1541f 100755
+> > > --- a/t/t6120-describe.sh
+> > > +++ b/t/t6120-describe.sh
+> > > @@ -28,6 +28,24 @@ check_describe () {
+> > >         '
+> > >  }
+> > >
+> > > +check_describe_worktree () {
+> > > +  cd "$TEST_DIRECTORY"
+> >
+> > Strange alignment. We normally do it in a subshell...
+> 
+> Sure, will fix this.
+> 
+> >
+> > > +       expect="$1"
+> > > +       shift
+> > > +       R=$(git --git-dir "$TRASH_DIRECTORY/.git" --work-tree "$TRASH_DIRECTORY" describe "$@" 2>err.actual)
+> >
+> > These commands should be executed inside test_expect_success, not
+> > outside. And you need to chain commands with && to make sure if
+> > something breaks, then the whole test will fai.
+> >
+> > If it's too ugly to generate test_expect_success with a shell
+> > function, then just write a shell function that "describe" and compare
+> > (i.e. the test body). Then you can write something like this later
+> >
+> > test_expect_sucesss 'describe with --worktree foo' '
+> >         check_describe_worktree foo
+> > '
+> >
+> > and check_describe_worktree can now do
+> >
+> > ( cd "$TEST_DIRECTORY" && .... )
+> >
+> >
+> 
+> My function is a modified version of check_describe().
 
-    $ git switch-branch -d j<TAB>
-    jch/            junio-gpg-pub
+Whoa. That function is 12 years old! I think our style has evolved a
+bit since then.
 
-    $ git switch-branch -d jch/<TAB>
-    Display all 154 possibilities? (y or n)
-    jch/ab/            jch/fc/
-    ....
+> Which does the same thing. I‘m not really experienced in Shell
+> programming, so I didn‘t see a cleaner way.
+>
+> But having the cd commands in the && chain looks broken as it would
+> break the following tests when one test fails and the code was executed
+> in the wrong directory afterwards.
 
-    $ git switch-branch -d jch/nd/<TAB>
-    jch/nd/attr-pathspec-fix
-    jch/nd/attr-pathspec-in-tree-walk
-    ...
+I mean chaining within a test. This is to make sure any failure
+triggers the test failure (as it should, if some command is expected
+to fail, we have other ways to catch it).
 
-For refs organized in multiple levels like this (and I've seen refs in 4
-levels), especially when there a lot of refs, incremental completion
-this way makes it easier to get to what you want.
+I would start with something simple, not using shell function at
+all. Something like this as an example (I added run_describe() because
+that "git" command becomes too long). Have a look at the "do's and
+don'ts" in t/README too.
 
-The cost of course is more complicated completion and also slower on
-systems with slow process creation. So maybe there will be a switch to
-turn this on or off?
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- contrib/completion/git-completion.bash | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 499e56f83d..d74ee79866 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -742,6 +742,17 @@ __git_refs ()
- 	esac
+-- 8< --
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index d639d94696..646bedf4e9 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -28,6 +28,10 @@ check_describe () {
+ 	'
  }
  
-+__git_collapse_refs ()
-+{
-+	local regex="$(echo "$1" | sed 's/[^/]\+/[^\/]*/g')"
-+	case "$regex" in
-+		'') regex='[^\/]*';;
-+		*/) regex="${regex}[^/]*";;
-+	esac
-+	regex="$(echo "$regex" | sed 's/\//\\\//g')"
-+	sed -ne "s/\\($regex\\/\\?\\).*/\\1/p"
++run_describe() {
++	git --git-dir "$TRASH_DIRECTORY/.git" --work-tree "$TRASH_DIRECTORY" describe "$@"
 +}
 +
- # Completes refs, short and long, local and remote, symbolic and pseudo.
- #
- # Usage: __git_complete_refs [<option>]...
-@@ -769,7 +780,7 @@ __git_complete_refs ()
- 		shift
- 	done
+ test_expect_success setup '
  
--	__gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" "$sfx")"
-+	__gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" "$sfx" | __git_collapse_refs "$cur_")"
- }
+ 	test_tick &&
+@@ -145,6 +149,14 @@ check_describe A-* HEAD
  
- # __git_refs2 requires 1 argument (to pass to __git_refs)
--- 
-2.20.1.560.g70ca8b83ee
+ check_describe "A-*[0-9a-f]" --dirty
+ 
++test_expect_success 'describe with --work-tree --dirty' '
++	(
++		cd "$TEST_DIRECTORY" &&
++		run_describe --dirty 2>err.actual >actual &&
++		grep "^A-.*[0-9a-f]$" actual
++	)
++'
++
+ test_expect_success 'set-up dirty work tree' '
+ 	echo >>file
+ '
+-- 8< --
 
+BTW, careful about _success or _failure. You need to make sure bisect
+is not broken. If you add a test to confirm a broken case then it
+should be test_expect_failure (and the test suite will pass). Then
+when you fix it you can flip it to test_expect_success.
+--
+Duy
