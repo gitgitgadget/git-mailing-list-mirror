@@ -2,116 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CDF61F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 18:30:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A39781F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 18:31:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727488AbfA1Saf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 13:30:35 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51704 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726744AbfA1Saf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 13:30:35 -0500
-Received: by mail-wm1-f68.google.com with SMTP id b11so15119127wmj.1
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 10:30:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=iIygQoY1ZT63BYvFEQ2bNnGuUHkr2Wx4Qn3U9xEhSdg=;
-        b=TA1rmsZBdOwowAZe9tndyEfLTsV9EvCESfzpXE35SqJe710Nn1EkE1Dcrmvcpez7dn
-         KfEHF1eXaTou1EkTjnWeQwn3dUPYl6VsyR31bMRkUbr0bT65ePXyjcNvJJbcJt1H/AzL
-         Uh3TKitpRXSRYqkRd/mv14DppjaTtskHiPgbB+meFEMXRkcPG50Yz0+KIYYa1mjQfyoa
-         RwBxSeEc8gscHzbjmrqGTUVSMpU34S3WN3tITJLT68fMQ5NgpY4PQaArz9K5SbiEIPtB
-         d0XfJv+NeZ2BAanRTuwdoacRKfq3zbKdS7JsTR0OjRIs1AYZkruAPDYl6hIgSYRmxgL8
-         +V9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=iIygQoY1ZT63BYvFEQ2bNnGuUHkr2Wx4Qn3U9xEhSdg=;
-        b=D46KnXcujPWKk9RNsQ+2ZMUeKidRsz2i7G7CpgdTQJ73CTMCxHNcqqw+BkxqxjYp+n
-         M3bZMDOvxt4hpek5NpDipBf2DlKAT7U1e2VoAqOrhznwODLwPvXPI3JTh+9KXVXvIUsu
-         e4M3ACDAtNgYw09V9ovEiBmz7QqsNBz6wycHwabeCBfzeA8IatU7lMKPReYtF8ChXiw2
-         tr15QH7XjNLnQeZo3KhmNJeGQlo2P35vED1yhO4xnnajtK4Ke5k0Fb5S7LOGMO3CYROI
-         VwaY2jWX1q8GppJ7s7pcz0SdJTPyHblfPf0Pd8MvPstAvrf0LzBNoton/vhHo48m6uPQ
-         Vh0A==
-X-Gm-Message-State: AJcUukcXjIFndWIUlVZr+QIWYXfGYBXC+vSPN+BgTR3J9avgGL98gsn8
-        Hl+T0iwhVBAqP+KM8x2gGTY=
-X-Google-Smtp-Source: ALg8bN4UD3JJkOBQyps9HvzXAtdcL/ABbMNEKZp92i986MjkS9q0uYSzCoqRacqkg4z1GdDReGsaFQ==
-X-Received: by 2002:a1c:e345:: with SMTP id a66mr17717529wmh.12.1548700232961;
-        Mon, 28 Jan 2019 10:30:32 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c10sm49761682wrr.69.2019.01.28.10.30.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 28 Jan 2019 10:30:32 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Sergey Lukashev <lukashev.s@ya.ru>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
+        id S1727677AbfA1SbU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 13:31:20 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51762 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727672AbfA1SbT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 13:31:19 -0500
+Received: (qmail 8730 invoked by uid 109); 28 Jan 2019 18:31:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 28 Jan 2019 18:31:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27868 invoked by uid 111); 28 Jan 2019 18:31:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 28 Jan 2019 13:31:25 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jan 2019 13:31:17 -0500
+Date:   Mon, 28 Jan 2019 13:31:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     Sergey Lukashev <lukashev.s@ya.ru>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: unclear docs
+Message-ID: <20190128183117.GA13165@sigill.intra.peff.net>
 References: <57362151548583138@iva8-37fc2ad204cd.qloud-c.yandex.net>
-        <20190128160620.GA23588@sigill.intra.peff.net>
-Date:   Mon, 28 Jan 2019 10:30:31 -0800
-In-Reply-To: <20190128160620.GA23588@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 28 Jan 2019 11:06:20 -0500")
-Message-ID: <xmqqzhrkab3s.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+ <13169311548590123@iva1-16f33c6a446b.qloud-c.yandex.net>
+ <20190128160944.GB23588@sigill.intra.peff.net>
+ <1593541548699120@myt6-27270b78ac4f.qloud-c.yandex.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1593541548699120@myt6-27270b78ac4f.qloud-c.yandex.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Jan 28, 2019 at 09:12:00PM +0300, Sergey Lukashev wrote:
 
-> I think it means:
->
->   - if core.autocrlf is false (the default), then the text attribute and
->     core.eol are used
->
->   - if core.autocrlf is true, then that overrides the whole
->     attribute/eol system
+> Thank you. Does the paragraph about core.eol refers to the text
+> attribute? It's written 'property' there. I was thinking it means
+> whether git thinks file is text, using .gitattributes OR otherwise.
+> Maybe changing this word will make it clearer?
 
-I think that matches my understanding.
+Yeah, I think the word "property" is unnecessarily confusing. Here's
+another patch (meant to go on top of the other).
 
-> Subject: [PATCH] doc/gitattributes: clarify "autocrlf overrides eol"
->
-> We only override core.eol with core.autocrlf when the latter is set to
-> "true" (otherwise, core.eol would never do anything!). Let's make this
+-- >8 --
+Subject: [PATCH] docs/config: clarify "text property" in core.eol
 
-I fail to understand what "otherwise..." wants to say.  When
-core.autocrlf is not "true", core.eol would not do anything?
+The word "property" is less clear than "attribute", which is used
+elsewhere in the (surprise!) gitattributes documentation. So let's use
+that.
 
-But I can understand what the patch text says and it matches my
-understanding of the overriding behaviour, so let's queue it.
+While we're here, let's make the paragraph a little easier to read by
+de-emphasizing the "when core.autocrlf is false" bit. Putting it in the
+first sentence obscures the main content, and many readers won't care
+about autocrlf (i.e., anyone who is just following the gitattributes(7)
+advice, which mainly discusses "text" and "core.eol").
 
-Thanks.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/config/core.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-> more clear, and point the reader to the git-config definitions, which
-> discuss this in more detail.
->
-> Noticed-by: Sergey Lukashev <lukashev.s@ya.ru>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  Documentation/gitattributes.txt | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index b8392fc330..0ce8740e44 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -124,7 +124,8 @@ text file is normalized, its line endings are converted to LF in the
->  repository.  To control what line ending style is used in the working
->  directory, use the `eol` attribute for a single file and the
->  `core.eol` configuration variable for all text files.
-> -Note that `core.autocrlf` overrides `core.eol`
-> +Note that setting `core.autocrlf` to `true` overrides `core.eol` (see
-> +the definitions of those options in linkgit:git-config[1]).
->  
->  Set::
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index d0e6635fe0..69c73ffe30 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -121,11 +121,12 @@ core.quotePath::
+ 
+ core.eol::
+ 	Sets the line ending type to use in the working directory for
+-	files that have the `text` property set when core.autocrlf is false.
++	files that have the `text` attribute.
+ 	Alternatives are 'lf', 'crlf' and 'native', which uses the platform's
+ 	native line ending.  The default value is `native`.  See
+ 	linkgit:gitattributes[5] for more information on end-of-line
+-	conversion.
++	conversion. Note that this value is ignored if `core.autocrlf`
++	is set to `true`.
+ 
+ core.safecrlf::
+ 	If true, makes Git check if converting `CRLF` is reversible when
+-- 
+2.20.1.845.g57b86ca485
+
