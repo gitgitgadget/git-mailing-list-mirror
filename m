@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E837F1F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 18:23:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D02251F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 18:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727486AbfA1SXo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 13:23:44 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55847 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727035AbfA1SXo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 13:23:44 -0500
-Received: by mail-wm1-f66.google.com with SMTP id y139so14954654wmc.5
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 10:23:42 -0800 (PST)
+        id S1727182AbfA1SZT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 13:25:19 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52409 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727100AbfA1SZS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 13:25:18 -0500
+Received: by mail-wm1-f65.google.com with SMTP id m1so15088930wml.2
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 10:25:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=7tDRvLM7STgCGad/zTsvXkjpndh0ybSa93ShPA6+yic=;
-        b=RtCO4G2Je1Oa0U2E5xgMgkL8uijHzH3rNxmVQmxE+FOPCwhkRm5SKUHuwJdvMyclOv
-         0swsxuYxr1H88SfEICe/BikT+/t2REK2enwXODZbFA0sr0PvGQ2Xjdsw8RXIGv5Tfx5e
-         qlPAmIKFDDNGhO4qCh0IJM8D1/9LAi3Carpwvsjz4hpOkrNlFhIjAcW3jZX5XlvuEFzc
-         Dr8YsF2ZydPs7Uws6OPHJG8n9louEi03BDokcJle3sZlTaERW4y2u7qFVNiCvgj+lm4E
-         hxQpR0KVv7jWNdz6cgs1D4WXUqfuD9XW/UccQzG97wDx4+K++g7BLXB6EPO17Cue81RQ
-         7M1Q==
+        bh=0XxsYzk9HBO6VVo0d/G1A1BaqEf8VUA8eON0s2QPvl4=;
+        b=ZOx+2ul7aSuxfUR6TIDylteluGPRxyZoJqOIBKMLy+PdYnuBPiV6b3vw4bVlMibVZh
+         C8ZnTe91/sFy8HbKkw7jAzwU+JruzPEwXgREfKEbVCIXeQKJ2IWXETpVMsEPRyIlz/nT
+         /37ne0EAsHqqV8ln3JEhm4ZHLNxEd7+ah3rCGUsTG+r1G4C8dt8kpU/kJZSDR9FIh1lp
+         IBrQOrM7uvP0G4iQxURelX62m58yNYst2R2giq97AhC4qcu/Xo9CVC7yNOEEuBSX+D3I
+         JvPMJmYssfDSDayHTBar4wnMvYnrYHKnQW9R9SIHOEj1+9iD7pYdb41Sv2rxVi2hBJUI
+         9N8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=7tDRvLM7STgCGad/zTsvXkjpndh0ybSa93ShPA6+yic=;
-        b=T6grDV2txUunGnHcTWVGU2eqaWGHgGLaa0OmCyN8zVwxiupMggzuujVHIwzvnqctiH
-         t4HiKxyV6CnYTkQempl0N7enSubRRVjlOG0TsF3mpw6WNDKWSXhw/TII/tA46R6vE5Yh
-         s87y5UPjdFttnvLjzdJPKzbQ7O+qBDxPbkVYbcMqMhBTT8vBEJDMiWaHpLBhCUu0UMRe
-         TnhvZVgijguqHYltqN8oKbtckWCRExXDLxZu4CujEEAxzBeewph7LAv6UrU/5chbJYB3
-         mfJ5e6z6WtgZcn/bSE2rtQQnOYJkQ64aQoXQgPZk5mYDPWQg038HD7EsZqMU55GcUMsS
-         UU+Q==
-X-Gm-Message-State: AJcUukcUnIfXlaUjexTFvOt50JrQdQkbuBUM7utRPenRC0qmRlyqBJrp
-        xacUqNePIUyJVpBcsBXdFR4=
-X-Google-Smtp-Source: ALg8bN5AdsjOTbXdV45hkqtG1vWgLKTyF97pJ0UQBPdCOyiJCRPoMigAAMZE2I0fydGK+2QBucqylA==
-X-Received: by 2002:a1c:760c:: with SMTP id r12mr16905058wmc.127.1548699821814;
-        Mon, 28 Jan 2019 10:23:41 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a18sm140471481wrp.13.2019.01.28.10.23.41
+        bh=0XxsYzk9HBO6VVo0d/G1A1BaqEf8VUA8eON0s2QPvl4=;
+        b=e0eUXEwHUqn+XdbrWsK6CaUlwH2jhPVL1ZBGJPoHy/WwpY7FQkfxJVIW52PabOt1CF
+         0jy1kSHctGPWY26QN2l2VNnOpGATXJUzyANyktdPs/Tm6xllco3KOvUfxwal1CkyvC0h
+         UlGuNNhVBbAtQsCvpb4HLyjNzvhu3dkPXEjHOQerKscF8J9KlmJ/lAsNyBHoFVRqzw/g
+         uw+d6tq9vmu98q/mlRWOiXjNBY/V9NfO5FnXhjk/45qXzUgTWJhLRz2Z0yls6b29fQ54
+         hCnbzJzFEMf2gb1ch9FESc8XQ1NChrn76rztW4zgdIlKRMnp2vs7YF1RSExehR2Gs9Jk
+         HQ0w==
+X-Gm-Message-State: AJcUukdpvWZIPgdrP7Qq7I6CERQGuqjRkHbtP5KuI7+auWCaNhAlozy+
+        uIsmwkvUc6pzhgjZp1S96YQ=
+X-Google-Smtp-Source: ALg8bN5Da7SwSzj8LKqoz3SErkIk+IWg3G5wNDNF6PrJW8I02CuLzwflumhZ5Tdq8xHll4leSIkGkQ==
+X-Received: by 2002:a7b:ce8e:: with SMTP id q14mr19179947wmj.10.1548699915791;
+        Mon, 28 Jan 2019 10:25:15 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t4sm89141816wrb.64.2019.01.28.10.25.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 28 Jan 2019 10:23:41 -0800 (PST)
+        Mon, 28 Jan 2019 10:25:15 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Phillip Wood <phillip.wood@talktalk.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase -x: sanity check command
-References: <20190128102620.18222-1-phillip.wood@talktalk.net>
-Date:   Mon, 28 Jan 2019 10:23:40 -0800
-In-Reply-To: <20190128102620.18222-1-phillip.wood@talktalk.net> (Phillip
-        Wood's message of "Mon, 28 Jan 2019 10:26:20 +0000")
-Message-ID: <xmqqd0ogbpzn.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH] implicit interactive rebase: don't run sequence editor
+References: <20190128102756.19152-1-phillip.wood@talktalk.net>
+Date:   Mon, 28 Jan 2019 10:25:14 -0800
+In-Reply-To: <20190128102756.19152-1-phillip.wood@talktalk.net> (Phillip
+        Wood's message of "Mon, 28 Jan 2019 10:27:56 +0000")
+Message-ID: <xmqq8sz4bpx1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,31 +72,44 @@ Phillip Wood <phillip.wood@talktalk.net> writes:
 
 > From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> If the user gives an empty argument to --exec then the rebase starts to
-> run before erroring out with
+> If GIT_SEQUENCE_EDITOR is set then rebase runs it when executing
+> implicit interactive rebases which are supposed to appear
+> non-interactive to the user. Fix this by setting GIT_SEQUENCE_EDITOR=:
+> rather than GIT_EDITOR=:. A couple of tests relied on the old behavior
+> so they are updated to work with the new regime.
 >
->   error: missing arguments for exec
->   error: invalid line 2: exec
->   You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
->   Or you can abort the rebase with 'git rebase --abort'.
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
 
-Hmph.  I do agree that the above makes an unfortunate end-user
-experience, but I would sort-of imagine that it would even be nicer
-for such an empty exec to behave as if it were "exec false" but with
-less severe error message, i.e. a way for the user to say "I want to
-break the sequence here and get an interactive session".  We may not
-even need to add the "break" insn if we go that way and there is one
-less thing for users to learn.  I dunno, but I tend to prefer giving
-a useful and safe behaviour to interactive users other than erroring
-out, when there _is_ such a safe behaviour that is obvious from the
-situation, and I feel that an empty "exec" is such a case.
+Good eyes, and an excellent execution to override the more specific
+one ;-)
 
-> Also check that the command does not contain any newlines as the
-> todo-list format is unable to cope with multiline commands. Note that
-> this changes the behavior, before this change one could do
+>  builtin/rebase.c                   |  5 +++--
+>  git-legacy-rebase.sh               |  4 ++--
+>  t/t3404-rebase-interactive.sh      |  5 +++++
+>  t/t3430-rebase-merges.sh           |  2 +-
+>  t/t7505-prepare-commit-msg-hook.sh | 10 +++++-----
+>  5 files changed, 16 insertions(+), 10 deletions(-)
 >
-> git rebase --exec='echo one
-> exec echo two'
-
-It is very good to check the input, regardless of what an empty
-"exec" should do.
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 00de70365e..7c11b4ac7f 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -354,7 +354,8 @@ static int run_specific_rebase(struct rebase_options *opts)
+>  		argv_array_pushf(&child.env_array, "GIT_CHERRY_PICK_HELP=%s",
+>  				 resolvemsg);
+>  		if (!(opts->flags & REBASE_INTERACTIVE_EXPLICIT)) {
+> -			argv_array_push(&child.env_array, "GIT_EDITOR=:");
+> +			argv_array_push(&child.env_array,
+> +					"GIT_SEQUENCE_EDITOR=:");
+>  			opts->autosquash = 0;
+>  		}
+>  
+> @@ -475,7 +476,7 @@ static int run_specific_rebase(struct rebase_options *opts)
+>  	if (is_interactive(opts) &&
+>  	    !(opts->flags & REBASE_INTERACTIVE_EXPLICIT)) {
+>  		strbuf_addstr(&script_snippet,
+> -			      "GIT_EDITOR=:; export GIT_EDITOR; ");
+> +			      "GIT_SEQUENCE_EDITOR=:; export GIT_SEQUENCE_EDITOR; ");
+>  		opts->autosquash = 0;
+>  	}
