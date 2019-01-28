@@ -2,109 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6188B211B5
-	for <e@80x24.org>; Mon, 28 Jan 2019 23:01:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD76F1F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 23:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726857AbfA1XBb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 18:01:31 -0500
-Received: from mout.gmx.net ([212.227.17.22]:37413 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726678AbfA1XBb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 18:01:31 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MBIAz-1gviZ52am5-00AGg9; Tue, 29
- Jan 2019 00:01:22 +0100
-Date:   Tue, 29 Jan 2019 00:01:06 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1726805AbfA1XFH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 18:05:07 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:36389 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726694AbfA1XFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 18:05:07 -0500
+Received: by mail-wm1-f53.google.com with SMTP id p6so15734671wmc.1
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 15:05:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=LJBTDdIhqPlzZisRbMFHF9WlmDuUoYbhelxIUYOC0xU=;
+        b=UKfQP3t8Jr5CfwCBTyrAsSQGNqqCBULBDJ5r56qNmygVx6Aiyb85pkIkSt/qpd0NVf
+         CHksxGZpqLa6823R+RnV5mqCTfEDBETpMil+WaciHSf6aBaUmyBckjvzHfbRsHfLaH5P
+         l+CAuvW1/s8EoxVZU2hwE5Ej60v6q8sb8IY6Tlcgr6lRvyr9uLtB0Fmg5nQk3xsFNMa1
+         VsuL2xT7WjIp8RRBmcu4AOr1GnhlucPgWFO7wy4Dd6HNaloAYUiwtWzwKURVOxPuDkiG
+         2DmkRec5qfq78Ir7m2ZIi3ATTK4N2prKrw5egaHyL1TpTpft6A+Daiqu8FDE589un4LY
+         05LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=LJBTDdIhqPlzZisRbMFHF9WlmDuUoYbhelxIUYOC0xU=;
+        b=h2ngiY+9YgxcC+jKa4j7eZ9cbVQ9v+gKyF5np9JFV/hTp9xdE+sOG1c42tJptqGPWM
+         LmJ6IvuxtDOPbxjctQLpqGs68uXaGLFJfOqvGNYruaLQ5yDEKCx0KASDVgLI2tD63Sze
+         k5JUmiDkmndO1L+z7l+s3QMm0UZhzYwGTSusniD/8CEyP+KRTpaLZpae/jZcr3pQho5V
+         zN/ZU4T1aiQ0yQXhAUgZthOminkcm2QJs9As1DfYNAA9EStB4ZIZ1csVGA7Hub1Ecu1q
+         kDVxjC5cCQC1vMXWhND7QE27I54EbgkC+v4glVH6EL+MgSpCucaP2Dc1mRvSi/cEV/Vv
+         XNsA==
+X-Gm-Message-State: AJcUukdhpLkhW4b2NH8pR13/EUpnF1ux+0ZXvOgX6rcGdDGl3FQbfvbH
+        3/bd4AwuFgo9VpGyLKgPeVU=
+X-Google-Smtp-Source: ALg8bN6naCEk6xlfzfM7gf1atkbk2u/jHpbtIfI0nKYdaNrslKzy+5nC8gNh8elvu8+5zZDIc8w/QQ==
+X-Received: by 2002:a1c:5dce:: with SMTP id r197mr17487435wmb.130.1548716704958;
+        Mon, 28 Jan 2019 15:05:04 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t63sm832642wmt.8.2019.01.28.15.05.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 28 Jan 2019 15:05:04 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Subject: Re: [PATCH v4 03/21] ci/lib.sh: encapsulate Travis-specific things
-In-Reply-To: <xmqqlg35elgv.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901282352470.41@tvgsbejvaqbjf.bet>
-References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com> <2d0b62f1862d5fce3ac0d7b813399f560600917d.1548254412.git.gitgitgadget@gmail.com> <xmqqzhrr54h0.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1901261916340.45@tvgsbejvaqbjf.bet>
- <xmqqlg35elgv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+References: <pull.31.v3.git.gitgitgadget@gmail.com>
+        <pull.31.v4.git.gitgitgadget@gmail.com>
+        <2d0b62f1862d5fce3ac0d7b813399f560600917d.1548254412.git.gitgitgadget@gmail.com>
+        <xmqqzhrr54h0.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1901261916340.45@tvgsbejvaqbjf.bet>
+        <xmqqlg35elgv.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1901282352470.41@tvgsbejvaqbjf.bet>
+Date:   Mon, 28 Jan 2019 15:05:03 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1901282352470.41@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 29 Jan 2019 00:01:06 +0100 (STD)")
+Message-ID: <xmqqva288jts.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:rMJW5Uepq6+cSIW0NPMvnbyoaivdSgGm4rCK56lrnQOGSJYMZnT
- tk8+f2LzHwjIwkZVs0IRqpGjKsX493mZok6qeaTIQrClMKcIsmyctwoDEXGNeYjncsAYoG3
- bR7kkWCpQdX7JY00CXMQ8r5gUFHN5ph951ekl11q53EkH0AiuK1EwZ8xkGEyQyYhewFb8em
- tsRutUKSQGaed/0OjhTIA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7z67Hnn8r18=:1L10srV9msYcEBcXI7F8lS
- HHPdYQCKhp+CO7vZOSCo25tQG/vasOvaEDcjq/qEefSZV7CO7XruFo0IwEcUFX0gODikCA786
- VBoJB7GJhwa9ZTeQS9DaA7203eR857ytk4n3Wtr3pzb3EsfrcWXzbah0PbPEb22NpeufnVqK5
- fKCM6WeCeyKAqmvWVzBWUW3EbKo6nuim4dXMGUP+t2hm9mYmhFGvBKwLp/N2ANHdKATLnaMXl
- Sq6D65DduS/odfbVyQOZWJuOej6JLRS9EUpONJJIKSFrChHcH1I2lnE/lEwEr3Vi7f0v8LeMq
- L8L5tBYdCbOYZzGA3et16CQgFm8D2tsOv81jo4KuEnuxFub9djuZHoyUYc/ljrRg2vpHUmafL
- SuMkUK+8EJpR8baUP/WWor5zzdhiZUlk7vJuOnCKnMH3EJ6WMi/yOw82946OdXXIPGgO6e3R9
- 5YFWlDX5z5uZ6I+6c7ceLiWcN9c59K70quBPfBeR6fwVIZijmLp9DEPRPkG27zWZjIABJ4yfU
- hMetFC+sCi8cLmG7rNpR5xSo6Oa7/utNcJnPCuVG1dsOi5r6Clw4j58kAjofJMjA/y8TO0lNU
- EKJaGcatON3F21j5VmRUcYRPIEvLg0uQzTM/cNu9d0Xt4J1kw2NanDy3065Bple67N7eX/1Vl
- 1DSgD3dY1DfbKmmz80qffVgTKLeezhBP+6pFjROZDSX3r3ypY9cJp+ysojGTHXdBDyUEcYKFg
- JuV3GjYqUUTKUCn3w9pzjZwwe9W69Ohp9Nlob7p2S0YDqUfB0SZXeF6GvMPXAYxyRG1dNs093
- z8urZiAtYY1D4/eFk5Y3i6G2HpoxpNPgw/S+gjtexENI1ytau4VPo+n8zg4Ncm5sa2Wv+IXTd
- kAp1sjBx+6WmOnQMlVOPE4Iu28rV9IHFUSQBjgqh3oZKNIFxqZjogB/ZgyyIKT0CLrkOj7guP
- 1P89Di1vMUg==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sun, 27 Jan 2019, Junio C Hamano wrote:
+> The big difference is that gettext is needed to build Git and run its test
+> suite. While gnu-time is only needed if you want to run the perf tests,
+> which is not a part of the CI configuration we have, neither Travis nor
+> Azure Pipelines.
+>
+> So as long as we do not run the perf tests as part of the CI runs, that
+> optional dependency should *not* be included in *CI_TYPE* specific
+> sections of the code.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > No, not really. Actually, not at all.
-> >
-> >> It would be, under this new arrangement of the code, most natural for
-> >> Those who want to use gnu-time to arrange it to be somehow added to
-> >> $BREW_INSTALL_PACKAGES, no?
-> >
-> > The purpose of BREW_INSTALL_PACKAGES is to list the packages necessary to
-> > build Git and run its test suite, and the only reason why this is no
-> > longer a hard-coded list of packages is that it depends on the CI platform
-> > (or more concretely, on the available macOS agents of said CI platform)
-> > which packages need to be installed to do so.
-> >
-> > The gnu-time package is not such a package, and it is unlikely to be
-> > dependent on the particular CI you want to use.
-> 
-> Those who want to do perf tests in the current setup would need to
-> install gnu-time because the current setup is only Travis, whose
-> macOS agent does not have it preinstalled.  Other CI platforms'
-> macOS agents may already have it, they may not want to get an error
-> by trying to install it there.  I am not sure how that is different
-> from the situation for gettext etc.?
-
-The big difference is that gettext is needed to build Git and run its test
-suite. While gnu-time is only needed if you want to run the perf tests,
-which is not a part of the CI configuration we have, neither Travis nor
-Azure Pipelines.
-
-So as long as we do not run the perf tests as part of the CI runs, that
-optional dependency should *not* be included in *CI_TYPE* specific
-sections of the code.
-
-Since the perf test reference in this comment that you keep talking about
-is so clearly intended for some human being who wants to run the scripts
-in ci/ interactively (which pretty much contradicts the "ci" in the name a
-bit), I would even argue that it already is too hidden in the depths of
-the scripts to be useful. But sticking it even deeper into the
-CI_TYPE-specific sections? That would make it *even harder* to find!
-
-So no, I think this suggestion to move that comment into exactly those
-sections (and of course, repeat it, identically, because with this here
-patch series we support *two* CI types) is something that we really want
-to let slide.
-
-Ciao,
-Dscho
+Ah, in that case, I do not think it makes much sense to even keep
+that comment.  As you said, ci/ is about running tests under CI
+platform, and the scripts are not designed to be run manually with
+tweaks, and none of our CI integration runs the perf thing, there is
+no point to even mention it.
