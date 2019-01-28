@@ -7,77 +7,75 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CA891F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 00:21:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BFB41F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 00:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726695AbfA1ATU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 27 Jan 2019 19:19:20 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52027 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726551AbfA1ATT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jan 2019 19:19:19 -0500
-Received: by mail-wm1-f66.google.com with SMTP id b11so12167743wmj.1
-        for <git@vger.kernel.org>; Sun, 27 Jan 2019 16:19:18 -0800 (PST)
+        id S1726647AbfA1AdZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 27 Jan 2019 19:33:25 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:38905 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726511AbfA1AdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jan 2019 19:33:25 -0500
+Received: by mail-wm1-f51.google.com with SMTP id m22so12094768wml.3
+        for <git@vger.kernel.org>; Sun, 27 Jan 2019 16:33:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=qXK49bX9xdl1h1332x+UrOhflLqyd7W6ckN3e8i0IOY=;
-        b=spcui7W0oSe8+rzIUJgkWwlB/36Lvv8vDb1B15/RrhnFIV0EZ+nhkTaSHQAiLeecfx
-         XE8nIkJyg+wfYeM6cIp7gKFd/O4qXGiVP4+4boUSByKy86Hqz/ciGgxmBBEqw1CnPLRu
-         iglUED0qKJD2+NrzzQ6i7jR2GxamMxmcu8f0T/vkQNPNprQ8kYcn3YsFVltwLvT49Smb
-         TKQ5TIUv6ULAqT7hQoBjT7h6txF3PbfuVIoG8zi6iS7k+J9DbiD1OTbO0wyACESYhHcP
-         Suv/ZQCqgnTG0IB/Y3mAkAWTgvbVQenhrydk+VGQtXi0+yhffWPrisngg0SUs+Io7FD7
-         Zrmw==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=MetUxt7R5Cc038xCJFULTM6lMDrZaPKIidYRP2rfWLs=;
+        b=ZpUh2B2N1MGsWljLBugx+WaRWyvhtn4pxbRuwGdOOu+f2M3nRgVRCqwgn6/XUQ5F3r
+         QdqTnOF9/t16g85ycC3y1AGGbBScbJszwhsZQkE+Cn6fT7LnAYTNEiMt6ZF/ULe+ojn8
+         BcD0ppykqDnBOd+2H6shRjH0p7FdC+nn1QEi1O6mUQoOMqHfmofVTWRl4CUjgAV1nmAf
+         R0fFaDVSCics1FGkQJZVu/cQhcqfQ/whKlnTO2LYhLNuHdXEVa2Cxl0TIbs3DRS2le6Y
+         3ob4Z//BGSB/4Qbq04wfELW/Aay0bO8KxXqnqPSNRN/nCPEwlEAuJETQPIHTDmRGzrOv
+         +BoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=qXK49bX9xdl1h1332x+UrOhflLqyd7W6ckN3e8i0IOY=;
-        b=NxdKXRnX37MigShZnR5bIDA4UG3QM24nmbqDXu9k4q0h+Na1gVSkl34618tLC9vQ7v
-         XqfLL4iiljXy3fWN+WY5a7cY7CSfHBBkpYTD1I0w8LyaH3Qr/9dBqiewXo3zZGvDavMa
-         obGq9Snyg8sVJNE/+lUMwYj5v8E4sE0C4SRaLHk7q63e1t5kQSTNZ3nfEdtcL9KR+bYq
-         Bp8WSg6gs2uIvpZAHsfg+CUcCVph+QdE0848x+JuApclADoveARbSG2ffMVd4r/cZNQf
-         dbscdjOHaWCBy3OncmVpNgj6IkG5WbKcSjpRKAnUwZ48iUanOWh1Y/32Yzsb0t0sDMiO
-         /IPg==
-X-Gm-Message-State: AJcUukcpcnnV4wpYUxzoh1p1JM7uGtUdMXPU6oX5inJyFB17qpK3zwKF
-        Rqp3OPh99BRRa6xtx2lx5KLOpdC2
-X-Google-Smtp-Source: ALg8bN5/aAlPKhzPaZH9Dfl7BpMVQ1ZT2iat985wZjqnbUC9GoTKO6q/jT6EkfPewvzi2bRMzVIkWQ==
-X-Received: by 2002:a1c:9c52:: with SMTP id f79mr15229494wme.118.1548634757653;
-        Sun, 27 Jan 2019 16:19:17 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=MetUxt7R5Cc038xCJFULTM6lMDrZaPKIidYRP2rfWLs=;
+        b=KI8d1lb9J1E0p3JdT/vxC5iYfy+lII7IEoAFL1o/hhaS1KIrihjLhGhsgTfwpFtpsx
+         edV3uHxdo0K5pul+evBVKl9RaWeDShG1eKNXdXPb7UDoTr0+8XWq1GIyYBhPqiV8UOxQ
+         rBKSjHrq8AgSUZGeybV0JZRgLf8116G7LawHDva1IMX+pLqEtn6pq/UhHQ/Fx551rVI9
+         adGSSWfN/jYsEcmwsojimiIXN3Q5br03zPPCrDnb1sQ/kZa/WQM/x588wvwaLfkPRzTQ
+         BtZpx/TcdZoix4rMfS4Nl6jayaKb3MxDaUhrBpc63Quz28rDa14UeENiHaVXSXF/Ywpt
+         Yk4w==
+X-Gm-Message-State: AJcUukeObBhhTpk6E0g2RpSfG9g6JLev1XkZv0qBaIisUd56cgRwrZWj
+        aUVdjWVv5267APDVc4YxTAY=
+X-Google-Smtp-Source: ALg8bN42aAEkgKhiu0FX6Lokbfkce73Uwjl+nA7kqgQIwGiUGY/uGCVI0R9yIfL3eCi4BqOoC0AMEw==
+X-Received: by 2002:a1c:f605:: with SMTP id w5mr15524875wmc.116.1548635603261;
+        Sun, 27 Jan 2019 16:33:23 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c15sm51465197wml.27.2019.01.27.16.19.16
+        by smtp.gmail.com with ESMTPSA id o16sm160258241wrn.11.2019.01.27.16.33.22
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 27 Jan 2019 16:19:16 -0800 (PST)
+        Sun, 27 Jan 2019 16:33:22 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] log,diff-tree: add --combined-with-paths options for merges with renames
-References: <20190124164654.1923-1-newren@gmail.com>
-        <xmqqmunofsdv.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BFjUgY5htSbPpnamPDRM3bCLNsQv-K35uXoRzaT2f85tA@mail.gmail.com>
-        <xmqq8sz8fkfi.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BFaVwwM17Oe+-RoP5wt2V58AD=dr01uNPuV=9r4yoF3Qg@mail.gmail.com>
-Date:   Sun, 27 Jan 2019 16:19:16 -0800
-In-Reply-To: <CABPp-BFaVwwM17Oe+-RoP5wt2V58AD=dr01uNPuV=9r4yoF3Qg@mail.gmail.com>
-        (Elijah Newren's message of "Sat, 26 Jan 2019 14:12:41 -0800")
-Message-ID: <xmqqd0oheirf.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 00/14] nd/diff-parseopt part 1
+References: <20190127003535.28341-1-pclouds@gmail.com>
+Date:   Sun, 27 Jan 2019 16:33:21 -0800
+In-Reply-To: <20190127003535.28341-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sun, 27 Jan 2019 07:35:21 +0700")
+Message-ID: <xmqq8sz5ei3y.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> ... Instead, I decided that
-> instead of having a "from" and a "to" header, we would have N "from"
-> headers (since all parents are what we came from) and 1 "to" header.
-> I hope that makes sense, because otherwise I think this become to
-> unwieldy of a change.
+> This is the first part of converting diff_opt_parse() to use
+> parse_options(). Compared to the full series [1] I sent earlier, 03/76
+> is dropped and 02/14 is updated to allow KEEP_UNKNOWN and
+> STOP_AT_NON_OPTION combination, but only for one shot mode.
 
-Yeah, it makes sense for an N-way merge to have N 'from' pathnames
-that resulted in a single 'to' pathname in the resulting tree.
+Looked reasonable.  Will re-queue.
 
+Thanks.
