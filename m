@@ -7,410 +7,252 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF3451F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 21:47:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61C491F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 21:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727115AbfA1Vrp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 16:47:45 -0500
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:39865 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726802AbfA1Vro (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 16:47:44 -0500
-Received: by mail-ed1-f42.google.com with SMTP id b14so14346992edt.6
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 13:47:42 -0800 (PST)
+        id S1727951AbfA1Vrq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 16:47:46 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:46133 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726979AbfA1Vrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 16:47:46 -0500
+Received: by mail-ed1-f65.google.com with SMTP id o10so14293747edt.13
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 13:47:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2Ioufx6Rge6oMnaVIhgoCRI+ZeOmqSp7VFBxlikhKPE=;
-        b=vY4MEe7H/GE2RyShh80Kwnul80W8lbO7JFRgwIzNSHks0NdDAyRg8JSAZMYOhDUyue
-         fny0//KEVuAmLDw+q97mKaS5MzlQPScUE8SlXURUxCjUG7vkHR4ThpGjsDwuO1J6CQdd
-         u9CohqButudAO59QMLyU2tAfs8tAtT4sb9i04Xpu93/+9f1XDXs6TnozhspKmxHUpoiN
-         dfsw5W5llSKDHmeq5Gl+gDAIG8tVDQyXIdlNgcifurGePElGOh+lp7DkjpYMxs19mlIE
-         +A/CW0vptlq64sPPUIQDFVnZLE3dKJ12+ozqBpO6FXjdCBszsgB7S0aS8N5nJ9bXFXjr
-         yWvA==
+        bh=bNJ+Wkw3LUOXEXcei6RLhoMm7z15hycaqBM/ICAwDV4=;
+        b=GMXm/tGXTg3lCrQMRsyogp7wuvoGv+8FYYH4LwhvRyMfYkWC03ycmkgES9/T05Qx87
+         Ixn797PjkPRNXy/hvaixBE0A+T/B4pjeofqmzP6a8xfEnBu+Wonb/QX4K6F8klauKR/2
+         /L8tejvy3l1dR+ws75vdznKKxVzG84Oi6NE3EKdp+QBCNLIHKqG89oX+0JITmP+fht0u
+         DpVLvQnk57So68URSg1vMIKv6BcXkaLDIXy4esOoJ12ORQwbzUYBYVFY5RsCGvRadp9r
+         LQDc8VWk1+ForY+scxdDxQTm8dcFk906D7GeRPRXtdHmZCz56JB2NZAX8Je170z9rHbZ
+         lwaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2Ioufx6Rge6oMnaVIhgoCRI+ZeOmqSp7VFBxlikhKPE=;
-        b=cPzNKaOzmrcGn3DfpSNXBnVcrV7TEXwtZUrEG/pZVBru9+RxWxSIEiL+0szj+fVwN3
-         LtkeXEAt0ormW5M8vu293+CyoAi6eaB987scJOofgVlTMI/jtJDvkncLV3WwKY1gk9BC
-         3XeGuniE6VORQPjsHq8DgtOXa0YjjpwvihLqeopLlZa4MA9tyTrIh13cn65Q99slV8os
-         WaMfaXjTQXnMDOkYAwizwy5YtKWoNgL9BJJSKAsVGVo8rmP02tdp5OJ7D6lstYNtwhDF
-         Pb9W9C4EkLcYAfCtDP23jW7iSdLjcAR68yKIQ1ZSjxX598DDzxQcqTQS42llfF8vvfJo
-         SuAg==
-X-Gm-Message-State: AJcUukf8HfhqOGyfyckZ7xTzWY+Vf5ONS++cDpto5MXvFnzIvbQ2694H
-        UK8XgOyiZQagGGnjuVUyKA7t33/a
-X-Google-Smtp-Source: ALg8bN77NqNExjO7QDACDfaOXf9V7W2W4bwRQ5q8TlLTE3JvVOcsnDZ8GujcS8aTIK1vRXPtyIjTEg==
-X-Received: by 2002:a50:b32f:: with SMTP id q44mr23292409edd.70.1548712061307;
-        Mon, 28 Jan 2019 13:47:41 -0800 (PST)
+        bh=bNJ+Wkw3LUOXEXcei6RLhoMm7z15hycaqBM/ICAwDV4=;
+        b=qycVBfg3EQ3hxzIQe/wTRKooMde7mwRs3RyQuP3Gj4CStZaaNTlYWkHKia5ybBrq8Z
+         oPC4PcnER9aK44nxxPLq5cDZ82aCuS7cRsLhHkgtGTIR9r2rUyMrgJ8FsNoUiWeaU/ct
+         xmamCISrMaKff8vKaAVVNVUAZpQzDgb9kCtN7Jjyrr50YsV7lebhXF94iw4zSQinFvSk
+         hwRvnXikVQceYLl+5QjuKs820pP31clTnH5AmyjD969zIH5Kz4u8svF9myRYk7GjEFkB
+         44DaEeloa/Pz+8QT0yQvvJt72nQ/kszeeqdhxiEGqVj6501wW2VNK1ayMHQs3tWodG+Z
+         Hf+w==
+X-Gm-Message-State: AJcUukfCp3VERvY10T+kgWHiT+nuq+XW/g+E/AUJ49O0WK5Zq4JqFL5k
+        DdA7PRc9zVoMq1hp3uUZ4u1KLjnU
+X-Google-Smtp-Source: ALg8bN7le0UuE6KarxpAumAxciHO1xxc/RO7DGTAjqpXXRVtZTNldGibXbYkYDkHTdWDt06s7lgTBg==
+X-Received: by 2002:a50:e0cb:: with SMTP id j11mr23047780edl.195.1548712064187;
+        Mon, 28 Jan 2019 13:47:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i46sm13811938ede.62.2019.01.28.13.47.40
+        by smtp.gmail.com with ESMTPSA id p21sm13538731edr.67.2019.01.28.13.47.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Jan 2019 13:47:40 -0800 (PST)
-Date:   Mon, 28 Jan 2019 13:47:40 -0800 (PST)
-X-Google-Original-Date: Mon, 28 Jan 2019 21:47:25 GMT
-Message-Id: <pull.108.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.108.git.gitgitgadget@gmail.com>
+        Mon, 28 Jan 2019 13:47:43 -0800 (PST)
+Date:   Mon, 28 Jan 2019 13:47:43 -0800 (PST)
+X-Google-Original-Date: Mon, 28 Jan 2019 21:47:28 GMT
+Message-Id: <5ac061e14a3a0e8cdd81fd0d56c3c70e6a22d171.1548712060.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.108.v2.git.gitgitgadget@gmail.com>
 References: <pull.108.git.gitgitgadget@gmail.com>
+        <pull.108.v2.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 00/14] Trace2 tracing facility
+Subject: [PATCH v2 03/14] trace2: collect platform-specific process
+ information
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>
+Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-V2 addresses: [] "jh/trace2" bad interaction with "js/vsts-ci" in "pu". []
-coccinelle warnings in trace2/tr2_tgt_perf.c reported during CI testing.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Add optional platform-specific code to log information about
+the current process.
 
-----------------------------------------------------------------------------
+On Windows, this includes whether git.exe is running under a
+debugger and information about the ancestors of the process.
 
-This patch series contains a greatly refactored version of my original
-Trace2 series [1] from August 2018.
+The purpose of this information is to help indicate if the
+process was launched interactively or in the background by
+an IDE, for example.
 
-A new design doc in Documentation/technical/api-trace2.txt (in the first
-commit) explains the relationship of Trace2 to the current tracing facility.
-Calls to the current tracing facility have not been changed, rather new
-trace2 calls have been added so that both continue to work in parallel for
-the time being.
-
-[1] https://public-inbox.org/git/pull.29.git.gitgitgadget@gmail.com/
-
-Cc: gitster@pobox.comCc: peff@peff.netCc: jrnieder@gmail.com
-
-Derrick Stolee (1):
-  pack-objects: add trace2 regions
-
-Jeff Hostetler (13):
-  trace2: Documentation/technical/api-trace2.txt
-  trace2: create new combined trace facility
-  trace2: collect platform-specific process information
-  trace2:data: add trace2 regions to wt-status
-  trace2:data: add editor/pager child classification
-  trace2:data: add trace2 sub-process classification
-  trace2:data: add trace2 transport child classification
-  trace2:data: add trace2 hook classification
-  trace2:data: add trace2 instrumentation to index read/write
-  trace2:data: add subverb to checkout command
-  trace2:data: add subverb to reset command
-  trace2:data: add subverb for rebase
-  trace2: t/helper/test-trace2, t0210.sh, t0211.sh, t0212.sh
-
- Documentation/technical/api-trace2.txt | 1158 ++++++++++++++++++++++++
- Makefile                               |   11 +
- builtin/am.c                           |    1 +
- builtin/checkout.c                     |    7 +
- builtin/pack-objects.c                 |   12 +-
- builtin/rebase.c                       |   19 +
- builtin/receive-pack.c                 |    4 +
- builtin/reset.c                        |    6 +
- builtin/submodule--helper.c            |   11 +-
- builtin/worktree.c                     |    1 +
- cache.h                                |    1 +
- common-main.c                          |   13 +-
- compat/mingw.c                         |   11 +-
- compat/mingw.h                         |    3 +-
- compat/win32/ancestry.c                |  102 +++
- config.c                               |    2 +
- config.mak.uname                       |    2 +
- connect.c                              |    3 +
- editor.c                               |    1 +
- exec-cmd.c                             |    2 +
- git-compat-util.h                      |    7 +
- git.c                                  |   65 ++
- pager.c                                |    1 +
- read-cache.c                           |   47 +-
- remote-curl.c                          |    7 +
- repository.c                           |    2 +
- repository.h                           |    3 +
- run-command.c                          |   63 +-
- run-command.h                          |   17 +-
- sequencer.c                            |    2 +
- sh-i18n--envsubst.c                    |    3 +
- sub-process.c                          |    1 +
- submodule.c                            |   11 +-
- t/helper/test-parse-options.c          |    3 +
- t/helper/test-tool.c                   |    4 +
- t/helper/test-tool.h                   |    1 +
- t/helper/test-trace2.c                 |  273 ++++++
- t/t0001-init.sh                        |    1 +
- t/t0210-trace2-normal.sh               |  147 +++
- t/t0210/scrub_normal.perl              |   48 +
- t/t0211-trace2-perf.sh                 |  163 ++++
- t/t0211/scrub_perf.perl                |   76 ++
- t/t0212-trace2-event.sh                |  246 +++++
- t/t0212/parse_events.perl              |  251 +++++
- trace2.c                               |  809 +++++++++++++++++
- trace2.h                               |  403 +++++++++
- trace2/tr2_cfg.c                       |   92 ++
- trace2/tr2_cfg.h                       |   19 +
- trace2/tr2_dst.c                       |   90 ++
- trace2/tr2_dst.h                       |   34 +
- trace2/tr2_sid.c                       |   67 ++
- trace2/tr2_sid.h                       |   18 +
- trace2/tr2_tbuf.c                      |   32 +
- trace2/tr2_tbuf.h                      |   23 +
- trace2/tr2_tgt.h                       |  126 +++
- trace2/tr2_tgt_event.c                 |  606 +++++++++++++
- trace2/tr2_tgt_normal.c                |  331 +++++++
- trace2/tr2_tgt_perf.c                  |  573 ++++++++++++
- trace2/tr2_tls.c                       |  164 ++++
- trace2/tr2_tls.h                       |   95 ++
- trace2/tr2_verb.c                      |   30 +
- trace2/tr2_verb.h                      |   24 +
- transport-helper.c                     |    2 +
- transport.c                            |    1 +
- usage.c                                |   31 +
- wt-status.c                            |   23 +-
- 66 files changed, 6384 insertions(+), 21 deletions(-)
- create mode 100644 Documentation/technical/api-trace2.txt
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ common-main.c           |   1 +
+ compat/win32/ancestry.c | 102 ++++++++++++++++++++++++++++++++++++++++
+ config.mak.uname        |   2 +
+ trace2.h                |  13 +++++
+ 4 files changed, 118 insertions(+)
  create mode 100644 compat/win32/ancestry.c
- create mode 100644 t/helper/test-trace2.c
- create mode 100755 t/t0210-trace2-normal.sh
- create mode 100644 t/t0210/scrub_normal.perl
- create mode 100755 t/t0211-trace2-perf.sh
- create mode 100644 t/t0211/scrub_perf.perl
- create mode 100755 t/t0212-trace2-event.sh
- create mode 100644 t/t0212/parse_events.perl
- create mode 100644 trace2.c
- create mode 100644 trace2.h
- create mode 100644 trace2/tr2_cfg.c
- create mode 100644 trace2/tr2_cfg.h
- create mode 100644 trace2/tr2_dst.c
- create mode 100644 trace2/tr2_dst.h
- create mode 100644 trace2/tr2_sid.c
- create mode 100644 trace2/tr2_sid.h
- create mode 100644 trace2/tr2_tbuf.c
- create mode 100644 trace2/tr2_tbuf.h
- create mode 100644 trace2/tr2_tgt.h
- create mode 100644 trace2/tr2_tgt_event.c
- create mode 100644 trace2/tr2_tgt_normal.c
- create mode 100644 trace2/tr2_tgt_perf.c
- create mode 100644 trace2/tr2_tls.c
- create mode 100644 trace2/tr2_tls.h
- create mode 100644 trace2/tr2_verb.c
- create mode 100644 trace2/tr2_verb.h
 
-
-base-commit: 77556354bb7ac50450e3b28999e3576969869068
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-108%2Fjeffhostetler%2Fcore-trace2-2019-v0-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-108/jeffhostetler/core-trace2-2019-v0-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/108
-
-Range-diff vs v1:
-
-  1:  1a90de9dab =  1:  1a90de9dab trace2: Documentation/technical/api-trace2.txt
-  2:  4aaf4834bf !  2:  ea39b76d31 trace2: create new combined trace facility
-     @@ -3527,7 +3527,7 @@
-      +	if (ctx->nr_open_regions > 0) {
-      +		int len_indent = TR2_INDENT_LENGTH(ctx);
-      +		while (len_indent > dots.len) {
-     -+			strbuf_addf(buf, "%s", dots.buf);
-     ++			strbuf_addbuf(buf, &dots);
-      +			len_indent -= dots.len;
-      +		}
-      +		strbuf_addf(buf, "%.*s", len_indent, dots.buf);
-     @@ -3559,7 +3559,7 @@
-      +	const char *event_name = "version";
-      +	struct strbuf buf_payload = STRBUF_INIT;
-      +
-     -+	strbuf_addf(&buf_payload, "%s", git_version_string);
-     ++	strbuf_addstr(&buf_payload, git_version_string);
-      +
-      +	perf_io_write_fl(file, line, event_name, NULL,
-      +			 NULL, NULL, NULL,
-  3:  5baee8295e =  3:  5ac061e14a trace2: collect platform-specific process information
-  4:  978b9ebf0d =  4:  f9d689a54b trace2:data: add trace2 regions to wt-status
-  5:  3941647097 =  5:  6be101d520 trace2:data: add editor/pager child classification
-  6:  a20cf139ee =  6:  b590f19100 trace2:data: add trace2 sub-process classification
-  7:  49b6b9bd24 =  7:  68192b8dfb trace2:data: add trace2 transport child classification
-  8:  0f8f366bbe =  8:  b373ab640b trace2:data: add trace2 hook classification
-  9:  705c2ece6d =  9:  548ea52742 trace2:data: add trace2 instrumentation to index read/write
- 10:  1aa79cb126 = 10:  3458917811 pack-objects: add trace2 regions
- 11:  8446f69b57 = 11:  86feec03e2 trace2:data: add subverb to checkout command
- 12:  7eea9027f9 = 12:  9abbdf9ccd trace2:data: add subverb to reset command
- 13:  618e5ccb0b = 13:  06ccce9632 trace2:data: add subverb for rebase
- 14:  33a1ca7222 ! 14:  851aa8f34d trace2: t/helper/test-trace2, t0210.sh, t0211.sh, t0212.sh
-     @@ -356,9 +356,11 @@
-      +# Trace2 events will/can be written to each active target (subject
-      +# to whatever filtering that target decides to do).
-      +# This script tests the normal target in isolation.
-     ++#
-     ++# Defer setting GIT_TR2 until the actual command line we want to test
-     ++# because hidden git and test-tool commands run by the test harness
-     ++# can contaminate our output.
-      +
-     -+# Enable "normal" trace2 target.
-     -+GIT_TR2="$(pwd)/trace.normal" && export GIT_TR2
-      +# Enable "brief" feature which turns off "<clock> <file>:<line> " prefix.
-      +GIT_TR2_BRIEF=1 && export GIT_TR2_BRIEF
-      +
-     @@ -382,7 +384,9 @@
-      +
-      +test_expect_success 'normal stream, return code 0' '
-      +	test_when_finished "rm trace.normal actual expect" &&
-     ++	GIT_TR2="$(pwd)/trace.normal" && export GIT_TR2 &&
-      +	$TT trace2 001return 0 &&
-     ++	unset GIT_TR2 &&
-      +	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-      +	cat >expect <<-EOF &&
-      +		version $V
-     @@ -396,7 +400,9 @@
-      +
-      +test_expect_success 'normal stream, return code 1' '
-      +	test_when_finished "rm trace.normal actual expect" &&
-     ++	GIT_TR2="$(pwd)/trace.normal" && export GIT_TR2 &&
-      +	test_must_fail $TT trace2 001return 1 &&
-     ++	unset GIT_TR2 &&
-      +	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-      +	cat >expect <<-EOF &&
-      +		version $V
-     @@ -414,7 +420,9 @@
-      +
-      +test_expect_success 'normal stream, exit code 0' '
-      +	test_when_finished "rm trace.normal actual expect" &&
-     ++	GIT_TR2="$(pwd)/trace.normal" && export GIT_TR2 &&
-      +	$TT trace2 002exit 0 &&
-     ++	unset GIT_TR2 &&
-      +	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-      +	cat >expect <<-EOF &&
-      +		version $V
-     @@ -428,7 +436,9 @@
-      +
-      +test_expect_success 'normal stream, exit code 1' '
-      +	test_when_finished "rm trace.normal actual expect" &&
-     ++	GIT_TR2="$(pwd)/trace.normal" && export GIT_TR2 &&
-      +	test_must_fail $TT trace2 002exit 1 &&
-     ++	unset GIT_TR2 &&
-      +	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-      +	cat >expect <<-EOF &&
-      +		version $V
-     @@ -446,7 +456,9 @@
-      +
-      +test_expect_success 'normal stream, error event' '
-      +	test_when_finished "rm trace.normal actual expect" &&
-     ++	GIT_TR2="$(pwd)/trace.normal" && export GIT_TR2 &&
-      +	$TT trace2 003error "hello world" "this is a test" &&
-     ++	unset GIT_TR2 &&
-      +	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-      +	cat >expect <<-EOF &&
-      +		version $V
-     @@ -551,9 +563,11 @@
-      +# Trace2 events will/can be written to each active target (subject
-      +# to whatever filtering that target decides to do).
-      +# Test each target independently.
-     ++#
-     ++# Defer setting GIT_TR2_PERF until the actual command we want to
-     ++# test because hidden git and test-tool commands in the test
-     ++# harness can contaminate our output.
-      +
-     -+# Enable "perf" trace2 target.
-     -+GIT_TR2_PERF="$(pwd)/trace.perf" && export GIT_TR2_PERF
-      +# Enable "brief" feature which turns off the prefix:
-      +#     "<clock> <file>:<line> | <nr_parents> | "
-      +GIT_TR2_PERF_BRIEF=1 && export GIT_TR2_PERF_BRIEF
-     @@ -569,7 +583,9 @@
-      +
-      +test_expect_success 'perf stream, return code 0' '
-      +	test_when_finished "rm trace.perf actual expect" &&
-     ++	GIT_TR2_PERF="$(pwd)/trace.perf" && export GIT_TR2_PERF &&
-      +	$TT trace2 001return 0 &&
-     ++	unset GIT_TR2_PERF &&
-      +	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
-      +	cat >expect <<-EOF &&
-      +		d0|main|version|||||$V
-     @@ -583,7 +599,9 @@
-      +
-      +test_expect_success 'perf stream, return code 1' '
-      +	test_when_finished "rm trace.perf actual expect" &&
-     ++	GIT_TR2_PERF="$(pwd)/trace.perf" && export GIT_TR2_PERF &&
-      +	test_must_fail $TT trace2 001return 1 &&
-     ++	unset GIT_TR2_PERF &&
-      +	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
-      +	cat >expect <<-EOF &&
-      +		d0|main|version|||||$V
-     @@ -601,7 +619,9 @@
-      +
-      +test_expect_success 'perf stream, error event' '
-      +	test_when_finished "rm trace.perf actual expect" &&
-     ++	GIT_TR2_PERF="$(pwd)/trace.perf" && export GIT_TR2_PERF &&
-      +	$TT trace2 003error "hello world" "this is a test" &&
-     ++	unset GIT_TR2_PERF &&
-      +	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
-      +	cat >expect <<-EOF &&
-      +		d0|main|version|||||$V
-     @@ -647,7 +667,9 @@
-      +
-      +test_expect_success 'perf stream, child processes' '
-      +	test_when_finished "rm trace.perf actual expect" &&
-     ++	GIT_TR2_PERF="$(pwd)/trace.perf" && export GIT_TR2_PERF &&
-      +	$TT trace2 004child $TT trace2 004child $TT trace2 001return 0 &&
-     ++	unset GIT_TR2_PERF &&
-      +	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
-      +	cat >expect <<-EOF &&
-      +		d0|main|version|||||$V
-     @@ -792,9 +814,10 @@
-      +# Trace2 events will/can be written to each active target (subject
-      +# to whatever filtering that target decides to do).
-      +# Test each target independently.
-     -+
-     -+# Enable "event" trace2 target.
-     -+GIT_TR2_EVENT="$(pwd)/trace.event" && export GIT_TR2_EVENT
-     ++#
-     ++# Defer setting GIT_TR2_PERF until the actual command we want to
-     ++# test because hidden git and test-tool commands in the test
-     ++# harness can contaminate our output.
-      +
-      +# We don't bother repeating the 001return and 002exit tests, since they
-      +# have coverage in the normal and perf targets.
-     @@ -805,7 +828,9 @@
-      +
-      +test_expect_success 'event stream, error event' '
-      +	test_when_finished "rm trace.event actual expect" &&
-     ++	GIT_TR2_EVENT="$(pwd)/trace.event" && export GIT_TR2_EVENT &&
-      +	$TT trace2 003error "hello world" "this is a test" &&
-     ++	unset GIT_TR2_EVENT &&
-      +	perl "$TEST_DIRECTORY/t0212/parse_events.perl" <trace.event >actual &&
-      +	sed -e "s/^|//" >expect <<-EOF &&
-      +	|VAR1 = {
-     @@ -842,7 +867,9 @@
-      +
-      +test_expect_success 'event stream, return code 0' '
-      +#	test_when_finished "rm trace.event actual expect" &&
-     ++	GIT_TR2_EVENT="$(pwd)/trace.event" && export GIT_TR2_EVENT &&
-      +	$TT trace2 004child $TT trace2 004child $TT trace2 001return 0 &&
-     ++	unset GIT_TR2_EVENT &&
-      +	perl "$TEST_DIRECTORY/t0212/parse_events.perl" <trace.event >actual &&
-      +	sed -e "s/^|//" >expect <<-EOF &&
-      +	|VAR1 = {
-     @@ -933,7 +960,9 @@
-      +	git config --local t0212.def "hello world" &&
-      +	# delete events generated by the above config commands
-      +	rm trace.event &&
-     ++	GIT_TR2_EVENT="$(pwd)/trace.event" && export GIT_TR2_EVENT &&
-      +	GIT_TR2_CONFIG_PARAMS="t0212.*" $TT trace2 001return 0 &&
-     ++	unset GIT_TR2_EVENT &&
-      +	perl "$TEST_DIRECTORY/t0212/parse_events.perl" <trace.event >actual &&
-      +	sed -e "s/^|//" >expect <<-EOF &&
-      +	|VAR1 = {
-     @@ -966,7 +995,9 @@
-      +
-      +test_expect_success 'basic trace2_data' '
-      +	test_when_finished "rm trace.event actual expect" &&
-     ++	GIT_TR2_EVENT="$(pwd)/trace.event" && export GIT_TR2_EVENT &&
-      +	$TT trace2 006data test_category k1 v1 test_category k2 v2 &&
-     ++	unset GIT_TR2_EVENT &&
-      +	perl "$TEST_DIRECTORY/t0212/parse_events.perl" <trace.event >actual &&
-      +	sed -e "s/^|//" >expect <<-EOF &&
-      +	|VAR1 = {
-
+diff --git a/common-main.c b/common-main.c
+index 6dbdc4adf2..d484aec209 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -37,6 +37,7 @@ int main(int argc, const char **argv)
+ 
+ 	trace2_initialize();
+ 	trace2_cmd_start(argv);
++	trace2_collect_process_info();
+ 
+ 	git_resolve_executable_dir(argv[0]);
+ 
+diff --git a/compat/win32/ancestry.c b/compat/win32/ancestry.c
+new file mode 100644
+index 0000000000..629d8214b9
+--- /dev/null
++++ b/compat/win32/ancestry.c
+@@ -0,0 +1,102 @@
++#include "../../cache.h"
++#include "../../json-writer.h"
++#include <Psapi.h>
++#include <tlHelp32.h>
++
++/*
++ * Find the process data for the given PID in the given snapshot
++ * and update the PROCESSENTRY32 data.
++ */
++static int find_pid(DWORD pid, HANDLE hSnapshot, PROCESSENTRY32 *pe32)
++{
++	pe32->dwSize = sizeof(PROCESSENTRY32);
++
++	if (Process32First(hSnapshot, pe32)) {
++		do {
++			if (pe32->th32ProcessID == pid)
++				return 1;
++		} while (Process32Next(hSnapshot, pe32));
++	}
++	return 0;
++}
++
++/*
++ * Accumulate JSON array:
++ *     [
++ *         exe-name-parent,
++ *         exe-name-grand-parent,
++ *         ...
++ *     ]
++ *
++ * Note: we only report the filename of the process executable; the
++ *       only way to get its full pathname is to use OpenProcess()
++ *       and GetModuleFileNameEx() or QueryfullProcessImageName()
++ *       and that seems rather expensive (on top of the cost of
++ *       getting the snapshot).
++ */
++static void get_processes(struct json_writer *jw, HANDLE hSnapshot)
++{
++	PROCESSENTRY32 pe32;
++	DWORD pid;
++
++	pid = GetCurrentProcessId();
++
++	/* We only want parent processes, so skip self. */
++	if (!find_pid(pid, hSnapshot, &pe32))
++		return;
++	pid = pe32.th32ParentProcessID;
++
++	while (find_pid(pid, hSnapshot, &pe32)) {
++
++		jw_array_string(jw, pe32.szExeFile);
++
++		pid = pe32.th32ParentProcessID;
++	}
++}
++
++/*
++ * Emit JSON data for the current and parent processes.  Individual
++ * trace2 targets can decide how to actually print it.
++ */
++static void get_ancestry(void)
++{
++	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
++
++	if (hSnapshot != INVALID_HANDLE_VALUE) {
++		struct json_writer jw = JSON_WRITER_INIT;
++
++		jw_array_begin(&jw, 0);
++		get_processes(&jw, hSnapshot);
++		jw_end(&jw);
++
++		trace2_data_json("process", the_repository,
++				 "windows/ancestry", &jw);
++
++		jw_release(&jw);
++		CloseHandle(hSnapshot);
++	}
++}
++
++/*
++ * Is a debugger attached to the current process?
++ *
++ * This will catch debug runs (where the debugger started the process).
++ * This is the normal case.  Since this code is called during our startup,
++ * it will not report instances where a debugger is attached dynamically
++ * to a running git process, but that is relatively rare.
++ */
++static void get_is_being_debugged(void)
++{
++	if (IsDebuggerPresent())
++		trace2_data_intmax("process", the_repository,
++			   "windows/debugger_present", 1);
++}
++
++void trace2_collect_process_info(void)
++{
++	if (!trace2_is_enabled())
++		return;
++
++	get_is_being_debugged();
++	get_ancestry();
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index e391431041..13d7c5410f 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -391,6 +391,7 @@ ifeq ($(uname_S),Windows)
+ 	BASIC_CFLAGS = -nologo -I. -I../zlib -Icompat/vcbuild -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
+ 	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
++		compat/win32/ancestry.o \
+ 		compat/win32/dirent.o
+ 	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
+ 	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE
+@@ -528,6 +529,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	COMPAT_CFLAGS += -DNOGDI -Icompat -Icompat/win32
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
++		compat/win32/ancestry.o \
+ 		compat/win32/path-utils.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+ 		compat/win32/dirent.o
+diff --git a/trace2.h b/trace2.h
+index 7ab9f355f3..a4a075d060 100644
+--- a/trace2.h
++++ b/trace2.h
+@@ -387,4 +387,17 @@ __attribute__((format (printf, 1, 2)))
+ void trace2_printf(const char *fmt, ...);
+ #endif
+ 
++/*
++ * Optional platform-specific code to dump information about the
++ * current and any parent process(es).  This is intended to allow
++ * post-processors to know who spawned this git instance and anything
++ * else the platform may be able to tell us about the current process.
++ */
++#if defined(GIT_WINDOWS_NATIVE)
++void trace2_collect_process_info(void);
++#else
++#define trace2_collect_process_info() \
++	do {} while (0)
++#endif
++
+ #endif /* TRACE2_H */
 -- 
 gitgitgadget
+
