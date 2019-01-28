@@ -2,71 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EB691F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 16:57:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68C301F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 17:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388384AbfA1Q5u (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 11:57:50 -0500
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:38492 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388031AbfA1Q5s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 11:57:48 -0500
-Received: by mail-ua1-f65.google.com with SMTP id p9so5846922uaa.5
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 08:57:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=W9tlkOm4rw400nWxx8JPQCte/Snh0rZWUA1xC4TwG44=;
-        b=dpimOF5vvixtw42owyINrEyJC+d5AA2LqR78EaFyEneovo8eo4ITxVNOyH5P1qVkY6
-         dFYJMD3JxzP3nmFwvO5IPesnXrGUSF/Z5zGAsuGJbEVJkraZipTX6vzTOwIQ5mriK9Kw
-         6KeFv9G2YN+ZpZMUirGyAP1c17LzOe2yg8Rxvs0ldkHBxzxSU0vr//L4GCEQmMbxVdwW
-         3JoWsuW9HmMmSPgGDaiGDtB5LpQhShV0UFDFusfDpwjXicRWFTBTi4niKBSH/6POKMq+
-         rLA3RRugLat3i4kNdrbTZkkqNi6JpLU2JJ9PndVPyxhpr0F8Y0O1A7nCa+4AlwPwVwgo
-         I9pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=W9tlkOm4rw400nWxx8JPQCte/Snh0rZWUA1xC4TwG44=;
-        b=aEoiZBPwD8SA32Jn1ySj0Ap8dYgIx1/qNBWrCvI3mXMtjR6GuFXfCLxEDa+5vlTgII
-         RaHYCEo0bUjGQ7cv/7Q73U4N2KlBy0oljCLF1SInTan4UpiEGqKfwdueNYXFNA5i1i6z
-         swLEQknC0w7pvBXeWHDAun3xbIgoKNio3j7shvmMQE85MwiLd/F86okKn+iP2ULcYLkO
-         9egjQMXQgAeq4xlW94HvQFBxS8vVzT12+7DvrBDjuDFXGAMvEtirRQyUH68QbwvzJnBd
-         5PMCVGEJaWsVbwiHwEPwKigl9xAyjSGuDGfBLHrbt7yVWpZP6GfYirTzb6ftGsmHhVxB
-         VJlw==
-X-Gm-Message-State: AJcUukdz7o6nf5uDKN+aRxPvIPVKdxzi1Bpkda9Tle9Uxdy3zk2bUuNt
-        1A2KlvX2W6hbNeqViqgZ8Xik5dyQducx7hzKkuYtJg==
-X-Google-Smtp-Source: ALg8bN4zTjMQBsbW3xKNWd76THH6IhjZWkcvcz3g4vY58xMn/C+hIgXIaH/JslZKSWK3X8LymKM6J+jxGIwwDZX4oAE=
-X-Received: by 2002:ab0:5590:: with SMTP id v16mr9383565uaa.132.1548694667646;
- Mon, 28 Jan 2019 08:57:47 -0800 (PST)
-MIME-Version: 1.0
-References: <20190125222126.GH6702@szeder.dev> <20190127130832.23652-1-szeder.dev@gmail.com>
-In-Reply-To: <20190127130832.23652-1-szeder.dev@gmail.com>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Date:   Mon, 28 Jan 2019 08:57:36 -0800
-Message-ID: <CAGf8dgLzNJLrT-XW25=1SqJiH47hiTNVHf7-sx8efHw5oMnC7Q@mail.gmail.com>
-Subject: Re: [PATCH] object_as_type: initialize commit-graph-related fields of
- 'struct commit'
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+        id S1732915AbfA1RBe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 12:01:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51510 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1732996AbfA1QPF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 11:15:05 -0500
+Received: (qmail 2970 invoked by uid 109); 28 Jan 2019 16:15:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 28 Jan 2019 16:15:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26487 invoked by uid 111); 28 Jan 2019 16:15:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 28 Jan 2019 11:15:11 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jan 2019 11:15:03 -0500
+Date:   Mon, 28 Jan 2019 11:15:03 -0500
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] object_as_type: initialize commit-graph-related fields
+ of 'struct commit'
+Message-ID: <20190128161503.GC23588@sigill.intra.peff.net>
+References: <20190125222126.GH6702@szeder.dev>
+ <20190127130832.23652-1-szeder.dev@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190127130832.23652-1-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 27, 2019 at 5:08 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
->
+On Sun, Jan 27, 2019 at 02:08:32PM +0100, SZEDER Gábor wrote:
+
 > When the commit graph and generation numbers were introduced in
 > commits 177722b344 (commit: integrate commit graph with commit
 > parsing, 2018-04-10) and 83073cc994 (commit: add generation number to
@@ -74,5 +55,67 @@ ote:
 > corresponding 'graph_pos' and 'generation' fields of 'struct commit'
 > are initialized conservatively, as if the commit were not included in
 > the commit-graph file.
+> 
+> Alas, initializing those fields only in alloc_commit_node() missed the
+> case when an object that happens to be a commit is first looked up via
+> lookup_unknown_object(), and is then later converted to a 'struct
+> commit' via the object_as_type() helper function (either calling it
+> directly, or as part of a subsequent lookup_commit() call).
+> Consequently, both of those fields incorrectly remain set to zero,
+> which means e.g. that the commit is present in and is the first entry
+> of the commit-graph file.  This will result in wrong timestamp, parent
+> and root tree hashes, if such a 'struct commit' instance is later
+> filled from the commit-graph.
+> 
+> Extract the initialization of 'struct commit's fields from
+> alloc_commit_node() into a helper function, and call it from
+> object_as_type() as well, to make sure that it properly initializes
+> the two commit-graph-related fields, too.  With this helper function
+> it is hopefully less likely that any new fields added to 'struct
+> commit' in the future would remain uninitialized.
+> 
+> With this change alloc_commit_index() won't have any remaining callers
+> outside of 'alloc.c', so mark it as static.
 
-Thanks for looking into this! The patch looks good to me.
+Good find, and nicely explained.
+
+> ---
+> 
+> So, it turns out that ec0c5798ee (revision: use commit graph in
+> get_reference(), 2018-12-04) is not the culprit after all, it merely
+> highlighted a bug that is as old as the commit-graph feature itself.
+> This patch fixes this and all other related issues I reported
+> upthread.
+> 
+> I couldn't find any other place where an object of unknown type is
+> turned into a 'struct commit', so this might have been the only place
+> that needed fixing.
+
+This should be the only place. We already ran into this with the
+commit-index field, which was what caused us to create object_as_type()
+in the first place, to give a central place for coercing OBJ_NONE into
+other types.
+
+> Other object types seem to be fine, because they contain only fields
+> that should be zero initialized.  At least for now, because a similar
+> issue might arise in the future, if one of them gains a new field that
+> should not be initialized to zero...  but will they ever get such a
+> field?  So I'm not too keen on introducing similar init_tree_node(),
+> etc. helper funcions at the moment.
+
+Agreed. We can deal with those if it ever becomes necessary. In theory
+adding empty placeholder functions might help somebody realize they'd
+need to handle this case, but I have the feeling that they'd be as
+likely to miss init_tree_node() as they would object_as_type().
+
+I dunno. I guess if init_tree_node() were actually called from
+alloc_tree_node(), it might be harder to miss.
+
+>  alloc.c  | 11 ++++++++---
+>  alloc.h  |  2 +-
+>  object.c |  5 +++--
+>  3 files changed, 12 insertions(+), 6 deletions(-)
+
+The patch itself looks good to me.
+
+-Peff
