@@ -2,110 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	RCVD_IN_DNSWL_HI,URIBL_DBL_SPAM,URIBL_RED shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 035191F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 18:49:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80E791F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 18:58:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726714AbfA1Stn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 13:49:43 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34311 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726678AbfA1Stn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 13:49:43 -0500
-Received: by mail-wr1-f68.google.com with SMTP id f7so19361012wrp.1
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 10:49:42 -0800 (PST)
+        id S1726914AbfA1S6W (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 13:58:22 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:41411 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726678AbfA1S6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 13:58:22 -0500
+Received: by mail-qk1-f196.google.com with SMTP id 189so10030368qkj.8
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 10:58:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=bSUZ8LRGWG7EmrMKCnjg0E59KFKO8YFiaeYYx/qF1ms=;
-        b=OyH+l/VYslR+CboLDzwQ6AkkD7wmyc1L7f5D1rxvlTFM1LFTlOTLCYwUJx4PQH9Dk8
-         z1emj04O6QOzOLF96AgWbIpCcUIMbsjU5F+lhcI+hqt9ALR1ap9baFzGYzhjSonGFzrl
-         jMcJsbMAfpGH8JNybHzaFGQAtF4cqIfkZoZwRv07mnJp9/No5LA/RvbYebpY6vSBoZEY
-         Nlga5UZajd0ZebnuCg46MpSYaug1yPOxuoy4Reobm1gZp4jdPiSWFOzZgssj8fbTdgLE
-         YDGvJ4snbBLAV1GRZaZq8rhVuRSWs7W9AAo5+GPflN8dqreViLSwn9+YGpnid2Wg/pfk
-         Zxbg==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Ul5b2zNQrOj2kD3UgmrBLODEX5ljV+C5AHwlNaHUvro=;
+        b=Kw/OqrslI9WY2R16qdBSvjWGgZqg9HB7h/XeZzh803qsUuSWiOhoAzYxhwnULV1+vG
+         rH/fiZS9mymx0zp++n2z8MHqUwGSvcNbGiHkjTGK4YwBercYY2iZK1eGur2XL1dvRHuM
+         eqxTutN+8CGCYdMuMZNo7DTGqT0iexRceoscEcgAJ9CcG6TlY1aHq+VunSTSZITcjPPB
+         1my9Uhlh6Q69dVknrAzBNfsLYoT97vDkDmWjRqscy5FVH/+cPmNXZCPauMozSD+kRmVq
+         IzKe9eBT6NQ5dbFRCZnFO2A+O8LXXDWiufoFR/MybJGADxc8X1ql8UHhaxPbmfz327LV
+         AGlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=bSUZ8LRGWG7EmrMKCnjg0E59KFKO8YFiaeYYx/qF1ms=;
-        b=nVktvq3f7ZO3r0N7GkaVJEMD9xKwhaHNmYR22mCmNyiXZonnlFT3T+yyAM0ikgRv1G
-         CC0XcORWU1rhgzoTa6+MYcAejXs7R21+nkCUI1Zks2UV3MJnXJSozE3ZCWEgekYTEIQt
-         3CwCcYLq98JUPj+KB+HNT/hLCmXbKwWOnuj6FIy7/nvYpqwxcMuv9+GDRoIelA6iLV2u
-         tsHBMVqG9JihmuepkkDaqKQQENCdcdfVgQscfxWV9eF0I0N9RbGmogqtYacRbC5J1B84
-         nKZSLRhpW6ZrIy/ph9RA8pv4kaj8zltStVrVSKYZyzFGg09JK/zBy9dKJnBRIWmrodMj
-         YuOA==
-X-Gm-Message-State: AJcUukfZCw5EqLV1KdXI+LgIhQ3AjxrrqO46KRfNjCOe8ykqYXAubVLl
-        ihtz2z1RAK9tqZ4iqdWGpAg=
-X-Google-Smtp-Source: ALg8bN4uRtfC5pHp8MSBjf3fUEULavP63ZxmOUhBz3psvbankLQfgUTaizjfe7X/ddK6jByu6CESaA==
-X-Received: by 2002:adf:f848:: with SMTP id d8mr24370996wrq.178.1548701381756;
-        Mon, 28 Jan 2019 10:49:41 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t5sm350301wmd.15.2019.01.28.10.49.40
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Ul5b2zNQrOj2kD3UgmrBLODEX5ljV+C5AHwlNaHUvro=;
+        b=ujYXQZzfX7SAObsKrCFM/5BJ1ODRjeuFIUofFJVJysu4um/NJGhb0oOTvD7+oRi8M9
+         +z4ygQoCZqWCiFzSk1aS6E7MzMxyCwUawGTbsBfO4H8/7FGdGkAA3MC6kf6qu39g1eoG
+         UksDJjmZbK5YoeEewPEAzVV96tNu12NHnLU3vE9ZaRJjWmDLVZNAWBQiGwyxFOm6mVDv
+         799XyULoUWEYcuW2H4YahbZ1vVuWDIirQxM1UheUGdx8EYb7TjuxH94jINwaQqNAj8xq
+         PDszh3IntBDcNw7dG/tS64zb8m4EzM2w13uB4WdwiK2vl7Cn6iAJtI85CVI6qU50e6Gg
+         C6nA==
+X-Gm-Message-State: AJcUukeKh5RuSdbKDU2CbpQZgLe61SUPplsTkQ5mZgKemFVhmv+qRQEv
+        kYAqlCUUsIPVXKvBmDLtIDc=
+X-Google-Smtp-Source: ALg8bN6aSrC0l+a6VpNgf3upzWV/bqniBkC+drS30ANHxxj5oOHrJRpDu0DYhFWQ4qpGVLbIrCBctw==
+X-Received: by 2002:a37:bb82:: with SMTP id l124mr20066521qkf.188.1548701900800;
+        Mon, 28 Jan 2019 10:58:20 -0800 (PST)
+Received: from whubbs1.gaikai.biz ([100.42.103.5])
+        by smtp.gmail.com with ESMTPSA id d199sm64685132qkc.76.2019.01.28.10.58.19
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 28 Jan 2019 10:49:41 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 06/21] test-date: add a subcommand to measure times in shell scripts
-References: <pull.31.v3.git.gitgitgadget@gmail.com>
-        <pull.31.v4.git.gitgitgadget@gmail.com>
-        <aa053ed9936ebae0ca5e18d27de96f1d054d7f89.1548254412.git.gitgitgadget@gmail.com>
-        <xmqqo98754gy.fsf@gitster-ct.c.googlers.com>
-        <xmqqsgxdelqy.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 28 Jan 2019 10:49:40 -0800
-In-Reply-To: <xmqqsgxdelqy.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Sun, 27 Jan 2019 15:14:45 -0800")
-Message-ID: <xmqqva28aa7v.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 28 Jan 2019 10:58:19 -0800 (PST)
+Received: (nullmailer pid 28202 invoked by uid 1000);
+        Mon, 28 Jan 2019 18:58:18 -0000
+Date:   Mon, 28 Jan 2019 12:58:17 -0600
+From:   William Hubbs <williamh@gentoo.org>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, chutzpah@gentoo.org, williamh@gentoo.org
+Subject: Re: [PATCH v2 1/2] config: allow giving separate author and
+ committer idents
+Message-ID: <20190128185817.GA28155@whubbs1.gaikai.biz>
+References: <20190125215955.30032-1-williamh@gentoo.org>
+ <20190125215955.30032-2-williamh@gentoo.org>
+ <877ees4a65.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <877ees4a65.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jan 25, 2019 at 11:58:10PM +0100, =C6var Arnfj=F6r=F0 Bjarmason wro=
+te:
+>=20
+> On Fri, Jan 25 2019, William Hubbs wrote:
+>=20
+> > diff --git a/Documentation/config/user.txt b/Documentation/config/user.=
+txt
+> > index b5b2ba1199..18e1ec3c1b 100644
+> > --- a/Documentation/config/user.txt
+> > +++ b/Documentation/config/user.txt
+> > @@ -1,12 +1,39 @@
+> > +author.email::
+> > +	The email address used for the author of newly
+> > +	created commits.  Defaults to the value of the
+> > +	`GIT_AUTHOR_EMAIL` environment variable, or if
+> > +	the environment variable is not set, the `user.email`
+> > +	configuration variable.
+> > +
+> > +author.name::
+> > +	The full name used for the author of newly created commits.
+> > +	Defaults to the value of the `GIT_AUTHOR_NAME` environment variable, =
+or
+> > +	if the environment variable is not set,
+> > +	the `user.email` configuration variable.
+> > +
+> > +committer.email::
+> > +	The email address used for the committer of newly created commits.
+> > +	Defaults to the value of the `GIT_COMMITTER_EMAIL` environment
+> > +	variable, or if the environment variable is not set, the `user.email`
+> > +	configuration variable.
+> > +
+> > +committer.name::
+> > +	The full name used for the committer of newly created commits.
+> > +	Defaults to the value of the `GIT_COMMITTER_NAME` environment
+> > +	variable, or if the environment variable is not set, the `user.name`
+> > +	configuration variable.
+> > +
+> >  user.email::
+> >  	Your email address to be recorded in any newly created commits.
+> >  	Can be overridden by the `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_EMAIL`, a=
+nd
+> > -	`EMAIL` environment variables.  See linkgit:git-commit-tree[1].
+> > +	`EMAIL` environment variables or the `author.email` or
+> > +	`committer.email` settings discussed above. See linkgit:git-commit-tr=
+ee[1].
+> >
+> >  user.name::
+> >  	Your full name to be recorded in any newly created commits.
+> >  	Can be overridden by the `GIT_AUTHOR_NAME` and `GIT_COMMITTER_NAME`
+> > -	environment variables.  See linkgit:git-commit-tree[1].
+> > +	environment variables or the `author.name` or `committer.name`
+> > +	settings discussed above. See linkgit:git-commit-tree[1].
+>=20
+> Looks correct, although I wonder if we're at the point where it would be
+> better to present this info as a table.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I think the goal to have our own stopwatch so that we do not have to
->> worry about differences among system-provided ones makes sense.
->>
->> The only thing that may become an issue is how widely available
->> getnanotime() is.  As "test-date" itself is built on any platform an
->> end-user/developer runs our tests, which is wider set of platforms
->> than what we run Travis and other CIs on, unconditionally relying on
->> its availability might pose an issue.
->
-> Sorry for a false alarm, as the codebase in many places like
-> fsmonitor, progress, trace and wt-status have been assuming
-> getnanotime() to be available for quite some time, and this is just
-> another user of the same function.
+Maybe, but can we have someone do that in a separate patch? I ask
+because the documentation is not in a markup language and that would
+make setting up a table difficult for me at best with my screen reader.
 
-And there was yet another misunderstanding on my part.  I thought
-that the mention of getnanotime() was about
+> > diff --git a/builtin/am.c b/builtin/am.c
+> > index 95370313b6..53fdd22c45 100644
+> > --- a/builtin/am.c
+> > +++ b/builtin/am.c
+> > @@ -1594,7 +1594,7 @@ static void do_commit(const struct am_state *stat=
+e)
+> >  	}
+> >
+> >  	author =3D fmt_ident(state->author_name, state->author_email,
+> > -			state->ignore_date ? NULL : state->author_date,
+> > +			WANT_AUTHOR_IDENT, state->ignore_date ? NULL : state->author_date,
+>=20
+> This & a few other things in this series take the code beyond 79
+> characters.
 
-https://www.freebsd.org/cgi/man.cgi?query=getnanotime&sektion=9
+This doesn't look like it is beyond 79 characters to me, but that may be
+because I use a tab stop width of 4.
 
-and I did not realize that the hits I saw in "git grep getnanotime"
-were referring to an unrelated function trace.c::getnanotime() of
-our own.  Of course, it is safe to use that function in the tests
-;-)
+Can you reply again and flag the lines that are longer than 79
+characters?
 
-Again, sorry for the false alarm.
+Thanks,
 
-We _might_ get a complaint from freebsd devs when they want to use
-their getnanotime(9) to implement highres_nanos(), and the cleanest
-solution to that complaint will be to rename our own getnanotime()
-to git_nanotime() or something, but (1) that is totally outside the
-scope of this series that adds one more caller to the function and
-(2) we can do that when we actually get such a complaint.
-
-
+William
