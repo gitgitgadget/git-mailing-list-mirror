@@ -2,116 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B487C1F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 17:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4ACC81F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 17:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730447AbfA1R3Y (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 12:29:24 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35469 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730712AbfA1R3U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 12:29:20 -0500
-Received: by mail-wr1-f68.google.com with SMTP id 96so19037004wrb.2
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 09:29:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/B6k9F5xXt37Toz27AoboLh3bTo63T+2KlxCdDPyvkk=;
-        b=rAViGfGcTSRfXa4W+fQe0XpXVujCIqTXi0FzEL7NoZShM9ikIogTqwA8j40K6IGEXx
-         UZzV/lSzYPxHT8HMjg3OYdRGD0389BTSqirDj3CdMBFlbtsXBTCT586ko1CuZRdmUAAh
-         voCPQadGSftXk6YgTJbKHAf9Ke3zwx0yVXocSqEDyBGK7BeUDlR9S5PEIZG+o/PjvVpz
-         Qpt98g4FqzI6HgPNmML7Kl65lriLlYewnlfooUEBsIl2Ea6LRC3eN2p83PVew1aIV7t4
-         arvMXPLOOgxvhv7R/3an8FTXbUbWCq4D5tOe8J0Y1r+h4Z5Ayxa5vCHPzMVfVFNLLpz7
-         qNmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/B6k9F5xXt37Toz27AoboLh3bTo63T+2KlxCdDPyvkk=;
-        b=ZDkWxfxz1ovWZrgpGMBEifkNc0cpRpjc30SD89YxZpQhEHX6K+94WuNLoep57pXNka
-         vVI+H/U+9SXjga+R8Sj7s/l5sNUgEeV5YYpMCMxn1mFoABwqjuVgYwNtnuhztmHZo1sk
-         auQUp0sHd7hAz+aOve+fQuL4n1zD9GFmexAbtaQINgz3BM3/hvMsMm/WTKtMEPXUIyHu
-         C2pVu6y6jpJ8Kd48lkG1N0swvSrJFjRR4be1IKFaK6+V67JRiykLsV14k0f0wdMPy6zX
-         FRG+JptU5Aj0EfceTqZAffat4UYo8M0PAS4T/I3DzBBU4mdzQnZ9t85b6qsNJCypC37D
-         BqUA==
-X-Gm-Message-State: AJcUukdYxYNgbexk5OtPLQq5FJ5Y6Dz+GakYY3Z1v1UexPXV7WqxcYOm
-        SH9eMI4LBeex1bNr9fKPNwM=
-X-Google-Smtp-Source: ALg8bN61A2Ne/TkPFKJXJYCNeWik9bIDRsKtoVFRH1eQEV8ra+QObct/K8oBxhfx8XcuwIa0gsBurA==
-X-Received: by 2002:adf:b307:: with SMTP id j7mr23771751wrd.46.1548696558346;
-        Mon, 28 Jan 2019 09:29:18 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n15sm88832287wrt.21.2019.01.28.09.29.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 28 Jan 2019 09:29:17 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'COLLOMB Joris -EXT' <joris.collomb-ext@alstomgroup.com>,
-        git@vger.kernel.org
-Subject: Re: Git checkout multiple options issue
-References: <HE1PR01MB3722DCA42B6E16CB9DEEC29EA9960@HE1PR01MB3722.eurprd01.prod.exchangelabs.com>
-        <000201d4b713$7edcd3d0$7c967b70$@nexbridge.com>
-        <HE1PR01MB3722D90668E75E4BCDBA71F2A9960@HE1PR01MB3722.eurprd01.prod.exchangelabs.com>
-        <000701d4b71c$f3ba57f0$db2f07d0$@nexbridge.com>
-        <20190128165515.GA25995@alpha>
-Date:   Mon, 28 Jan 2019 09:29:17 -0800
-In-Reply-To: <20190128165515.GA25995@alpha> (Kevin Daudt's message of "Mon, 28
-        Jan 2019 17:55:15 +0100")
-Message-ID: <xmqqtvhsbsia.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1731386AbfA1Rbq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 12:31:46 -0500
+Received: from mout.web.de ([212.227.15.3]:44611 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730510AbfA1Rbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 12:31:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1548696703;
+        bh=Iyh8P+pHRTNKU+utcstjCPPH0uehHXK0A4gmyMM+yNU=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=i9Rv9CvJOa3j5jzuRxB9EiS7EV2ga5vSn8yJ3k6kh4Ilsmyi8cr3VgN3CNdgCmSjZ
+         qDT9DRLJnzYsOYiQzdrmPhfZU8XBqageDlct8g/xe9BXM63WtNsQEC8tJvBPQLHjVo
+         mLQaOOW/tcA5udvDd6N5QfY8PZztHaQVOiJplvAg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M3k9J-1h5hi2007F-00rF6O; Mon, 28
+ Jan 2019 18:31:43 +0100
+Date:   Mon, 28 Jan 2019 17:31:42 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Sergey Lukashev <lukashev.s@ya.ru>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: unclear docs
+Message-ID: <20190128173142.5v6varper55t3apk@tb-raspi4>
+References: <57362151548583138@iva8-37fc2ad204cd.qloud-c.yandex.net>
+ <13169311548590123@iva1-16f33c6a446b.qloud-c.yandex.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <13169311548590123@iva1-16f33c6a446b.qloud-c.yandex.net>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:gqEoZvppBRemRYflU1wbZX9GUJxqm+qgJHgc4fJFWeBucibL1UX
+ esLNenC6UTQKtnsqLy++6tL9fr/hEuLNKpOTX7BrDbIzLknSrh1pgdf4h4dHmQdhinK6B9v
+ pKWsrfgDeZXOszd1fYJwd80wYqn3JfCO5YmteTEb7uO5Vj+xaQIuc0RGouwb4dC250nz8L+
+ 1AU0mfB4Hva79E4l4Yx2g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zxmvvLjIM7c=:n+Dqrdy5GZoAsEz3jN8p+7
+ 93EGq+WZGzpWHB5gtO0KxdZKKMc2ZrwWNh4xcCrW88cXVCCQBXGeN8NMrpt04BbPb3bVNN891
+ F1J2Etc+q2o9MGzpusfTNUCs5KnHJzDabqv+ekLgVhv0/c0lV+hz0kRpmDLFz6qKFf5Xr622M
+ GlXpJcQh0x6e3ht9fcFzrYxuvaLek+zle1iHWWGlcFoAqpKn5HTSkL7x0im+LmeMcLMk6D/Gz
+ z+GrgLCo542jdVuJTn2ajvoC1QPInwA0DlAyf/8YBY0ATzmix0eOvdz5M4BNNV6Hk2OpdOaAG
+ KhfZgZYZfYlCqyfwfAwiaC7uaQpGjLNSH4tXANqxpvrlxANfLKjWP/mfH4ZjfuTfDVlBOJWY+
+ P5fsSCbv+K2KDvAtM7EvHIzU78b7jA09H3SlJfZDQSjW/i4QKxadQGvG3eoSPjIxUKJlMQ++J
+ s0tKgPcxsoarTjVU9NzD0M0hv9fBXws+93H8UfNSrqBRv/yCjD1OGyF57r071ScajAcA69bva
+ u2NBb3z4X2wDlDZcV7d2CTvebT8oHiKARcOfDKxKBH6Wa6FLfewMKCrBH2Kgh7pO/5UzQiEdv
+ slRYHb7Dm/1cXjiX1VThV4232X/flz3kg+nfjwYcChTrdv42ynjUM/hYPAU3ScMqTP8zYyld3
+ 5oh0T6Uc2t/RYcB8a50BdNiFDRwa5Xvszk3EezO4Sy8MuL3nGsoesIQZgJyXABy9qEfUcTVCL
+ sR8MoGeWhF3qW0NQv1Pq28p5YQmP1EHE+VD9sOWFgb/dygqLGIHyvRhWdl3+KxmZ9WCmftq6x
+ v+i7mGsUwxb7IYPU+XM/PpXYZV4GQJdDyswTZpFuyYBMoSfJf7MhmCnkshpSwAL4NrNJJ6Y1s
+ QgECEigL1xmTpeOBVuO2mYFFJKk/4c7eyoQHpl3NNmnmfHpnSSbo8F44B0OMKX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kevin Daudt <me@ikke.info> writes:
-
-> On Mon, Jan 28, 2019 at 10:20:02AM -0500, Randall S. Becker wrote:
->> On January 28, 2019 9:25, COLLOMB Joris wrote:
->> ...
->> > git checkout -f -b "branch_name"
->> > gives me " Fatal: A branch named 'branch_name' already exists."
->> 
->> Once the branch is created, you can't force its creation, because it is
->> already created. Just
->> 
->> git checkout "branch_name"
->> 
->> is sufficient at this point. git is correct to complain that you are trying
->> to create a branch that already exists.
+On Sun, Jan 27, 2019 at 02:55:23PM +0300, Sergey Lukashev wrote:
+> A follow up on my previous mail.
 >
-> git checkout -B exists, which does exactly that: force create a branch
-> at a new positon if it already exists.
+> Well, I have two problems:
+> 1) The endings I get with core.autocrlf=3Dfalse depend on whether I have=
+ * text=3Dauto (a file was commited with LFs). At least in git 2.20.1
+> 2) If the quote holds true then autocrlf=3Dfalse is actually "true" (for=
+ output conversion) on Windows by default because default core.eol is 'nat=
+ive', which is CRLF. I believe autocrlf=3Dfalse is supposed to mean "no an=
+y conversion, input or output, read or write the repo as is".
+>
+> 27.01.2019, 13:05, "Sergey Lukashev" <lukashev.s@ya.ru>:
+> > Hello!
+> >
+> > Could somebody please explain what 'core.autocrlf overrides core.eol' =
+means=A0given that we have the following statement=A0in core.eol docs:
+> > "Sets the line ending type to use in the working directory for files t=
+hat have the=A0text=A0property set when core.autocrlf is false".
+> >
+> > I would like to know which line endings I'm supposed to get in the wor=
+king tree if I have core.autocrlf=3Dfalse and '* text=3Dauto' in .gitattri=
+butes on windows. I get CRLFs which is consistent with the last quote but =
+I don't understand what 'core.autocrlf overrides core.eol' means in this c=
+ase.
+> >
+> > Links:
+> > https://git-scm.com/docs/git-config#git-config-coreeol
+> > https://git-scm.com/docs/gitattributes#_checking_out_and_checking_in
 
-Correct.
+Given your .gitattributes file, you will get:
 
-"git checkout -b/-B" is for lazy people to perform two things,
-i.e. "creating a branch" and "checking the branch out", at the same
-time.
+core.autocrlf=3Dfalse core.eol=3DCRLF    gives CRLF
+core.autocrlf=3Dfalse core.eol=3DLF      gives LF
+core.autocrlf=3Dfalse core.eol=3Dnative  gives CRLF under Windows, LF ever=
+ywhere else
+core.autocrlf=3Dtrue                   gives CRLF (regardless of core.eol)
 
-If we did not allow "git checkout -b newbranch othercommit" and only
-allowed "git checkout -b newbranch", i.e. to start a branch at the
-current HEAD, then we could make "git checkout -f -b newbranch" to
-mean "git checkout -B newbranch", because creating a branch at HEAD
-and checking it out will not have a risk of overwriting local
-changes, i.e. no need to force the "checking the branch out" part,
-so the "--force" option can only mean "force creating the branch".
+Does this help ?
 
-But because the new branch can begin at the commit whose tree
-differs at a path that has local modifications, there needs a way to
-tell the command which part, either "creating a branch" or "checking
-the branch out", is being forced.  Hence, "-f" tells the "checking
-out the branch" part to do the forcing (e.g. allowing local changes
-to be overwritten), and "creating a branch" part is told to force
-with the distinction between "-b" and "-B".
 
 
 
