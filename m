@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C712C1F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 21:47:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EACF1F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 21:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728111AbfA1Vrs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 16:47:48 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37947 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727156AbfA1Vrr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 16:47:47 -0500
-Received: by mail-ed1-f66.google.com with SMTP id h50so14335358ede.5
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 13:47:46 -0800 (PST)
+        id S1728114AbfA1Vru (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 16:47:50 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:37874 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726953AbfA1Vrt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 16:47:49 -0500
+Received: by mail-ed1-f68.google.com with SMTP id h15so14345478edb.4
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 13:47:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=m3WRjV0vGcYO/s8Lbvc+ufD3Abycq3lG2DvCDGRaZMY=;
-        b=enT+DEwqoUTwut9qyitHDpLM1XU6huVIn07vUqqjvrwc1uyRwI6dyiyxg/E6kZpZGV
-         Wfgdq7URfhmGQBRj4D10RsLR/hxcHAeQVKk2vpKTONzGQxrQJKQMN7IqxcPiWSjoJtK6
-         co5iVtZojMhYVdIem1YHG8s9+EWw8M23GHxXbPNJS8ZO3UMd1YYxbVlvW4toeZ8IAVbP
-         s8K3j+MHwmCELP1BIJB3k5kXyYY5mQldxG4lDf5LL7QOOPGAXVpYwvW/pKd50lVczlNV
-         K4TxCUXgXHmVsUYDD8MBh3ETOpsUEvFepYwEaLNy8MlqVW5brzjz7InrWm9a+pYOQRQy
-         sIqA==
+        bh=uPrJ5qOuiYsgfwz3PWht0IeUmu6vzl9iKaPfLJVtHt0=;
+        b=Bt0hb3IUE63dW5s+VQvQ78GGM8XqLRB2GQBjN7PY/FapTZGNEBQuKOq0EeZTDKVvSv
+         a7104d/mEuh5nxCrohvBJWQWU2LyKJRz6oBcPc6guoqovEuHu4iek1sonqaH0DLTvzIj
+         pncn+smZr44Ds1PlNc0G9+QVrzojvXGkfxhwYiRmK9hReZH6aa+GfVIi0Sl0aqlrcDAN
+         rd2s5fCS6WLq/J/45v1txcHemQzRIm9Sk6Sta/IvkxWlBgNzvYn6gGCpfKnkvLlqGuhR
+         w2y4dwfl+UpLe2TRhRpAZ3jB4mjKtzGbUr4MrnHcLyizEl2vvyLeGsg3J0gDXkZ8j55L
+         p+LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=m3WRjV0vGcYO/s8Lbvc+ufD3Abycq3lG2DvCDGRaZMY=;
-        b=PhbcpjhEbEnsbWPRC1cu9Ayz2G3JgBU6vFv7HIP/wPRjRYW8NPoQuKLsyHrqeWDFCi
-         6lX0FT9ia3TSlwluULvUVmoZebEsJ98Kq3IEtCYWdTW4jduC6tNW1t++t7HQjawtq0ii
-         cCFBM7mQSRzR4jI5ZH42chDQrtUu12FrXoKJkIcA2B8ussnqZHsBYCdg0jqpUmtolf0r
-         FTwhle2Zmq6Kke0tPrLAb2iZIZlBurG7SH4BaI8vZomxHDP9ULGApfZYAg5YqASvkcUQ
-         ldqrR+SeAQ/Wf9H07q3zRo2yX+WfHWho29MhGg6FFQN1DPiutdPAI4dcJHhYuImuFDkO
-         waRA==
-X-Gm-Message-State: AJcUukeuy5eOAuj2dkj5vt17O+KchS4Jk1eyQHu4pkY4b3ZqKJRC9PPO
-        uait5kKf425z2KbKuat7d7P9VsYC
-X-Google-Smtp-Source: ALg8bN672UeEv5NwTbA5RqYDDOYNR1IuJO4Xufr3o/nTwnn79Gd65YrihVcnUKVQ12OYfrchJHxpkw==
-X-Received: by 2002:a50:d2d6:: with SMTP id q22mr23520632edg.121.1548712065598;
-        Mon, 28 Jan 2019 13:47:45 -0800 (PST)
+        bh=uPrJ5qOuiYsgfwz3PWht0IeUmu6vzl9iKaPfLJVtHt0=;
+        b=qqClHF/4tM1eYzLxt5OvYTr5eZTZ3JRmcgei6TyAjfK4nj2zJkm8VfmG8Ps0VqAjW/
+         Yj5zreaoJ6YcbJQWt6FL1CQ3TA868yMMWy0Qs2RIgLWp7uJQkRkXDFr0c35QW+aIn3jr
+         aHP2IDmf8u0Csdat6fU/evMYkU/Em83S5dgxp6OIEsIvj8biJidMHSmjmnreETQDmEOH
+         geJ5eA9dB1dbqdsg/kC6pWJbGWgarAxYZAJV2CBVL29PFJKcmHeHlCR254QEQsw7m97B
+         vKWQVf7kqamt+YNIERwxNGWz6T9OX0BynHNyC1wx4Bgvq9CU0pAo+Xg27i51eVcBqTSt
+         2sdw==
+X-Gm-Message-State: AJcUukdwPIe1LP1KBOe+bYsb+MFST+VZUvlPnveYc2HHSUbR6faaP0jk
+        pBLVQ+bwQVY1atvabvFSnDfgOcep
+X-Google-Smtp-Source: ALg8bN7ImwXdQXSeR78lElwNnRLW8o9MTZqkrI1bWuuBNb4SR1vtdUzppqduKBdtQesQTSA4IVfKuQ==
+X-Received: by 2002:a50:fc07:: with SMTP id i7mr23142365edr.153.1548712067343;
+        Mon, 28 Jan 2019 13:47:47 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f19-v6sm7663137eje.28.2019.01.28.13.47.45
+        by smtp.gmail.com with ESMTPSA id w10sm14067420eda.77.2019.01.28.13.47.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Jan 2019 13:47:45 -0800 (PST)
-Date:   Mon, 28 Jan 2019 13:47:45 -0800 (PST)
-X-Google-Original-Date: Mon, 28 Jan 2019 21:47:30 GMT
-Message-Id: <6be101d520ac7cc8169e94b9b8f865ec599935b4.1548712060.git.gitgitgadget@gmail.com>
+        Mon, 28 Jan 2019 13:47:46 -0800 (PST)
+Date:   Mon, 28 Jan 2019 13:47:46 -0800 (PST)
+X-Google-Original-Date: Mon, 28 Jan 2019 21:47:32 GMT
+Message-Id: <68192b8dfb42c6991fb5133e4ae6442411fbd71b.1548712060.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v2.git.gitgitgadget@gmail.com>
 References: <pull.108.git.gitgitgadget@gmail.com>
         <pull.108.v2.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 05/14] trace2:data: add editor/pager child classification
+Subject: [PATCH v2 07/14] trace2:data: add trace2 transport child
+ classification
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,39 +72,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add trace2 process classification for editor and pager
-child processes.
+Add trace2 child classification for transport processes.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- editor.c | 1 +
- pager.c  | 1 +
- 2 files changed, 2 insertions(+)
+ connect.c          | 3 +++
+ transport-helper.c | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/editor.c b/editor.c
-index c985eee1f9..71547674ab 100644
---- a/editor.c
-+++ b/editor.c
-@@ -78,6 +78,7 @@ static int launch_specified_editor(const char *editor, const char *path,
- 		p.argv = args;
- 		p.env = env;
- 		p.use_shell = 1;
-+		p.trace2_child_class = "editor";
- 		if (start_command(&p) < 0)
- 			return error("unable to start editor '%s'", editor);
+diff --git a/connect.c b/connect.c
+index 24281b6082..3c6f829a05 100644
+--- a/connect.c
++++ b/connect.c
+@@ -1251,6 +1251,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		conn = NULL;
+ 	} else if (protocol == PROTO_GIT) {
+ 		conn = git_connect_git(fd, hostandport, path, prog, version, flags);
++		conn->trace2_child_class = "transport/git";
+ 	} else {
+ 		struct strbuf cmd = STRBUF_INIT;
+ 		const char *const *var;
+@@ -1293,9 +1294,11 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 				strbuf_release(&cmd);
+ 				return NULL;
+ 			}
++			conn->trace2_child_class = "transport/ssh";
+ 			fill_ssh_args(conn, ssh_host, port, version, flags);
+ 		} else {
+ 			transport_check_allowed("file");
++			conn->trace2_child_class = "transport/file";
+ 			if (version > 0) {
+ 				argv_array_pushf(&conn->env_array, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
+ 						 version);
+diff --git a/transport-helper.c b/transport-helper.c
+index bf225c698f..1eb656b687 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -127,6 +127,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 		argv_array_pushf(&helper->env_array, "%s=%s",
+ 				 GIT_DIR_ENVIRONMENT, get_git_dir());
  
-diff --git a/pager.c b/pager.c
-index a768797fcf..4168460ae9 100644
---- a/pager.c
-+++ b/pager.c
-@@ -100,6 +100,7 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
- 	argv_array_push(&pager_process->args, pager);
- 	pager_process->use_shell = 1;
- 	setup_pager_env(&pager_process->env_array);
-+	pager_process->trace2_child_class = "pager";
- }
- 
- void setup_pager(void)
++	helper->trace2_child_class = helper->args.argv[0]; /* "remote-<name>" */
++
+ 	code = start_command(helper);
+ 	if (code < 0 && errno == ENOENT)
+ 		die(_("unable to find remote helper for '%s'"), data->name);
 -- 
 gitgitgadget
 
