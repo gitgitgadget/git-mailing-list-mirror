@@ -2,76 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38E8F1F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 18:08:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DB6D1F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 18:18:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727094AbfA1SIF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 13:08:05 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33915 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726934AbfA1SIE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 13:08:04 -0500
-Received: by mail-wr1-f67.google.com with SMTP id f7so19220955wrp.1
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 10:08:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=RYqql3QwDNXC1ejY8b5zmJ3K30fi69ZuAdMzxydLp6Y=;
-        b=REczzDCQZu93Lal356maKf0H90ghe9Fsp8B0ZoKj8zFB+9wI83a+mUtGJJN0hQW6df
-         8dcTmwCK1AJ2qQ6ios/PVc4w2mU/a4lKZ4kV6UP0BUmvhcELhO4cHWVecNhXh5Dwy9FG
-         o6orRor4ebOIG0RgLeTAqxV/4JAbxI7MWWscVoIm9OBVmQ6HqtKLOLP+6p2aSfEK+7Gx
-         TLuR7SVapC36O84HT/QIc6lEON3ETRMooiRlV59zBm1MIOpFmEY3Jxgn+POcYJ1eRX7y
-         A/HEv61XHboGolt36W9e2o8lztkCVozgYP+OJj75X3CEh+urYahB1pSRybcld7WiTvDr
-         Hv/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=RYqql3QwDNXC1ejY8b5zmJ3K30fi69ZuAdMzxydLp6Y=;
-        b=Wd2u4z4WXQnDcLcU+nxJhX7UaMGrCWd/JiWtfx+sUpmIYdJkgsJWmy6ShoB6ttxrO0
-         HfYSMhCdI/B2VgrJn1wr6BNeiyTwg/XUTBcVCmBU68tKq96iBZd4bWFFTk/fFmRFGfzl
-         EiOTH9O4T+1ptoqrM88XhknSl9HGQHbAsJCa+0t67vq0a4wXOwYfmkOGFAlgDmmOfyQ4
-         XkKih0SUlHkdt8JGe45bAbKSuEQbZdoXdppzP+rPidytGw+k8ADh96C7kjyMM40hGvE5
-         c9mgZU3p1W/GBndg6uWHnh04ozEq0I8LGu80Z9qj25KiFlAV3MP3OVI5QtxeOPDTrXH5
-         Z4mA==
-X-Gm-Message-State: AJcUukcni+wn1Qmq0kcIiRGkZtDXTlqOA/Z4LYkFsDMMUhC3QH3F40XW
-        FgE7ZINHi1RwnRHLR+Ws9bo=
-X-Google-Smtp-Source: ALg8bN6w34HhIFVxCoNSChM6nEWOpzpEdwpQl0JCrWbQsw5hfzty8uoet+Mkx8TPmPdNIIOzsjZBCg==
-X-Received: by 2002:a5d:568c:: with SMTP id f12mr21483935wrv.101.1548698882570;
-        Mon, 28 Jan 2019 10:08:02 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n82sm54520wma.42.2019.01.28.10.08.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 28 Jan 2019 10:08:01 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Sebastian Gniazdowski <psprint@zdharma.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: There should be a `.gitbless; file, protecting files from git clean
-References: <etPan.5c4e6be4.2ca84d68.4d5@zdharma.org>
-        <CACsJy8BMc9k3Q=P=2CaJ9yyXhc4C_BgGVO=S_J0_R8zDweahLQ@mail.gmail.com>
-Date:   Mon, 28 Jan 2019 10:08:01 -0800
-In-Reply-To: <CACsJy8BMc9k3Q=P=2CaJ9yyXhc4C_BgGVO=S_J0_R8zDweahLQ@mail.gmail.com>
-        (Duy Nguyen's message of "Mon, 28 Jan 2019 12:05:31 +0700")
-Message-ID: <xmqqlg34bqpq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726968AbfA1SSX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 13:18:23 -0500
+Received: from forward500p.mail.yandex.net ([77.88.28.110]:58981 "EHLO
+        forward500p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726266AbfA1SSX (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Jan 2019 13:18:23 -0500
+X-Greylist: delayed 378 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jan 2019 13:18:21 EST
+Received: from mxback19j.mail.yandex.net (mxback19j.mail.yandex.net [IPv6:2a02:6b8:0:1619::95])
+        by forward500p.mail.yandex.net (Yandex) with ESMTP id C6CD694004B;
+        Mon, 28 Jan 2019 21:12:01 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback19j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id aQCsRPQcSF-C0viMsLY;
+        Mon, 28 Jan 2019 21:12:01 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1548699121;
+        bh=rFauTmxocgN+cXvAQ5L69HF/tgHXHwqaqVRhrZAIf1s=;
+        h=From:To:Cc:References:Subject:Date:Message-Id;
+        b=ZecY9lYYrhe3y1+Cce24g5SPpy0wXw4aCga5FdMrYwbD4PL8hYbWk+skNCd0KqREY
+         JUa3eQbI7Fcg2RtacYlHF5l0UKMLltmmHj0bQ5AdsL878zw2dAlYDc3zohUO9/QxKU
+         2Xmz0b1NVz96BiBklHRiRkh4rCh10HC3WzI8Yx58=
+Authentication-Results: mxback19j.mail.yandex.net; dkim=pass header.i=@ya.ru
+Received: by myt6-27270b78ac4f.qloud-c.yandex.net with HTTP;
+        Mon, 28 Jan 2019 21:12:00 +0300
+From:   Sergey Lukashev <lukashev.s@ya.ru>
+Envelope-From: lukashev-s@yandex.ru
+To:     Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+References: <57362151548583138@iva8-37fc2ad204cd.qloud-c.yandex.net>
+         <13169311548590123@iva1-16f33c6a446b.qloud-c.yandex.net> <20190128160944.GB23588@sigill.intra.peff.net>
+Subject: Re: unclear docs
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Mon, 28 Jan 2019 21:12:00 +0300
+Message-Id: <1593541548699120@myt6-27270b78ac4f.qloud-c.yandex.net>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Thank you. Does the paragraph about core.eol refers to the text attribute? It's written 'property' there. I was thinking it means whether git thinks file is text, using .gitattributes OR otherwise. Maybe changing this word will make it clearer?
 
-> There's a patch that adds "precious" git attribute [1]. I was going to
-> resend once the backup-log [2] got reviewed but I might just send it
-> separately to handle the "git clean" case alone.
+28.01.2019, 19:09, "Jeff King" <peff@peff.net>:
+> On Sun, Jan 27, 2019 at 02:55:23PM +0300, Sergey Lukashev wrote:
+>
+>>  Well, I have two problems:
+>>  1) The endings I get with core.autocrlf=false depend on whether I have
+>>     * text=auto (a file was commited with LFs). At least in git 2.20.1
+>
+> That sounds right. The default is that Git will never touch your line
+> endings (going into or out of the working tree). Turning on the
+> "text=auto" attribute for everything will tell it to start doing so
+> (according to core.eol, which on Windows is CRLF).
+>
+>>  2) If the quote holds true then autocrlf=false is actually "true" (for
+>>     output conversion) on Windows by default because default core.eol
+>>     is 'native', which is CRLF. I believe autocrlf=false is supposed to
+>>     mean "no any conversion, input or output, read or write the repo as
+>>     is".
+>
+> No, it only means "do not use the autocrlf feature". If you've
+> separately configured text attributes, it does not disable them.
+>
+> -Peff
 
-Thanks.
