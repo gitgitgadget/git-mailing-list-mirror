@@ -2,175 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 267EE1F453
-	for <e@80x24.org>; Mon, 28 Jan 2019 14:38:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FD061F453
+	for <e@80x24.org>; Mon, 28 Jan 2019 15:17:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726761AbfA1Oid (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 09:38:33 -0500
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:39176 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726266AbfA1Oid (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 09:38:33 -0500
-Received: by mail-wm1-f49.google.com with SMTP id y8so14120545wmi.4
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 06:38:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=IOBeMY7fEh4nlGTRoVfCHMRHT4bv4vkTeDAuc0kyK/Y=;
-        b=XKz6sisbs76CjfyrQ4421qQuxwKHt+8tLawb6svLW/6g2dEWKBJ2QspvXm6UxtV7F0
-         d2W88CK5IVb2V6DB+jVOYY+lY2VqDeqj35MTBIGe4lVXddKU9gWKBu/EJGmrpxRRG+QC
-         ya/ckeAqtEI6y34Jy4Zqcpq6gz7RJ9rxlIFrApALeXdtgPGd7Ak9uRcv4tSfcXV0+fMu
-         RTXTld7i1ToIANwNrWxTjukeEZ6RSKgrPGkAvWVuOjNfxY3wRYGZW7r0PvH5Z8D2eNRK
-         MbT6NW5a4hIu+3CHcveFj/K1SBrhnKmE50zXhN6zspUfirItvkhENQyt2V/3MjIV+IgF
-         eitg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=IOBeMY7fEh4nlGTRoVfCHMRHT4bv4vkTeDAuc0kyK/Y=;
-        b=ZyXnvuU0odeyYWIeYJWwGBgwvbg8XjroRe05emJI0IqanjN+lKFkSTCWyI/Eas1UHm
-         hlcsEmbfeNb6nGnVHKIApj8zwcFMlV6aWc9+RuTEczIw9o3u4XgufX6BgRPs0A3QTsKx
-         YGqbDzYUILGhOj0/x+85UJueBba3IH2B1DMrDB2xBWUqJoq/GgcJYDMpmntteFU+0fZx
-         OssJmplIOOVST2orBPzKicN/JnAsQvOGYO8uSeu2GNIsctU6c2eJdyYgzG5dYqXjtEOQ
-         JKhI1fPZBvyByaPbR8SZ1fhfURHgeuq/5u/s1FCdPX4EIMevQIheKRROl5UFXXtmLqV9
-         eO4Q==
-X-Gm-Message-State: AJcUukcdk/LLXgBKBfsltTIWCCIBGdCAcJS2mQLkWeKOB3ClU4YZ6ruw
-        ynTlYvEq3wIhBZzfeyd7ldk=
-X-Google-Smtp-Source: ALg8bN5YHM8siZSDPwaq4TNZ8m69Wz3yS4iGDJHbDPXjNdkHkaWTjEw/GDHCgyupGXry0NLfTUZyJw==
-X-Received: by 2002:a7b:cb18:: with SMTP id u24mr16631504wmj.138.1548686311643;
-        Mon, 28 Jan 2019 06:38:31 -0800 (PST)
-Received: from szeder.dev (x4dbd8aa4.dyn.telefonica.de. [77.189.138.164])
-        by smtp.gmail.com with ESMTPSA id o2sm8725939wmo.33.2019.01.28.06.38.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Jan 2019 06:38:30 -0800 (PST)
-Date:   Mon, 28 Jan 2019 15:38:28 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] completion: complete refs in multiple steps
-Message-ID: <20190128143828.GJ6702@szeder.dev>
-References: <20190128094155.2424-1-pclouds@gmail.com>
+        id S1726693AbfA1PRs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 10:17:48 -0500
+Received: from esa3.hc595-16.c3s2.iphmx.com ([216.71.158.20]:50744 "EHLO
+        esa3.hc595-16.c3s2.iphmx.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726266AbfA1PRr (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Jan 2019 10:17:47 -0500
+X-Greylist: delayed 2128 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jan 2019 10:17:46 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=alstomgroup.com; i=@alstomgroup.com; q=dns/txt;
+  s=alstomgroup; t=1548688667; x=1580224667;
+  h=from:to:subject:date:message-id:references:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=+ESiG836UxjYyNWjENVmq7ibB4NyBV5UMXdyPhV52LY=;
+  b=S5kZtMN/bJ4VpcuOo/Ht4E585EqgElWWhDb3khD9bpaH2FEUbGgcCzcv
+   jAJY2B8rLJHuMzPAmWePwUuFNtQeI823uAX2TE6Hlcwpe/vbJb0KpewVl
+   7FuFX3OJWdyBG9BtL3JnjWICmr1B+ejN/qt3zHzZ28U2zMI1lOUBAQ2wu
+   k=;
+Received: from mail-db5eur03lp2056.outbound.protection.outlook.com (HELO EUR03-DB5-obe.outbound.protection.outlook.com) ([104.47.10.56])
+  by ob1.hc595-16.c3s2.iphmx.com with ESMTP/TLS/AES256-GCM-SHA384; 28 Jan 2019 15:24:36 +0100
+Received: from HE1PR01MB3722.eurprd01.prod.exchangelabs.com (20.176.161.147)
+ by HE1PR01MB3771.eurprd01.prod.exchangelabs.com (20.176.161.160) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1558.21; Mon, 28 Jan
+ 2019 14:24:34 +0000
+Received: from HE1PR01MB3722.eurprd01.prod.exchangelabs.com
+ ([fe80::255a:24d2:7814:ba6f]) by HE1PR01MB3722.eurprd01.prod.exchangelabs.com
+ ([fe80::255a:24d2:7814:ba6f%6]) with mapi id 15.20.1558.023; Mon, 28 Jan 2019
+ 14:24:33 +0000
+From:   COLLOMB Joris -EXT <joris.collomb-ext@alstomgroup.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Git checkout multiple options issue
+Thread-Topic: Git checkout multiple options issue
+Thread-Index: AdS3DOSUeSahnLF1Sp2hV0Z9qGG2agABpYKAAAAwhIA=
+Date:   Mon, 28 Jan 2019 14:24:33 +0000
+Message-ID: <HE1PR01MB3722D90668E75E4BCDBA71F2A9960@HE1PR01MB3722.eurprd01.prod.exchangelabs.com>
+References: <HE1PR01MB3722DCA42B6E16CB9DEEC29EA9960@HE1PR01MB3722.eurprd01.prod.exchangelabs.com>
+ <000201d4b713$7edcd3d0$7c967b70$@nexbridge.com>
+In-Reply-To: <000201d4b713$7edcd3d0$7c967b70$@nexbridge.com>
+Accept-Language: en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=joris.collomb-ext@alstomgroup.com; 
+x-originating-ip: [165.225.77.64]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;HE1PR01MB3771;6:PMblYZVX1MRa0yiclrAI1lV+Efg5fGsEl11R0C61Uy3ghJrnQ9RpLOKuuL0QRny7dj4PUI0ovzN/dG3UlOs2/1tHbdiAy4q4uEu2cLpbpl9wMH03XDI4cPvj3lKCumMxz6l4eS2J/OaUsghAFQpCf2hicwgIGf7Ftab3Q7NYyPV6AfYpQ1+ar3daIq5nUuBsR8CwnlKGnv7gpw1uDoXXSzGJiQ3nS8J2vSqMkZ3EDc2FYhapdt0ejrLaUlwkJDd1pjKxd3yD7ZYUWgs4OkRqk9u5zTCaPm09WQO8eegylw/EblPmp/R95yb+1TJDN8GpzX3OaT2tPnowLlkJw1swHgJVWi+YVnlNYikc3Am5k+F9BbHm+W3zDbKUWKh/zk05plSY9FUJHRShIXI+82Azd4FD/iBydfM+Oebd+cmf+9RkCz6hBLu0Cz4ZKvOc5VrCftAmqKzugnfTd4odxAT9CA==;5:SwSxWu2ZTNXXCbZ4jtQya6RNCMEj7N5YWv7myuRSRd4gRgu1sCGDE1OCyME9xb/Ji4xwfS/CasdB6SQnXA41eQVbRwDpz91GutHMCWuBgXrgT1RduVNY7iSAbrJNcsWSn/Hnwhz5MsLgn+IlSixMamTb7FbFREN9z44fE0zDIo6R+54j3797rLqWHxRDHSLcAgiC5C+vigZWFLvHNaZGPw==;7:fw4RxqTFC5PwmTwtA+FWD62ypAvfiYjGOxxmIQcGrqDnwOryeMNhoCdqO2dDsciZO7ex9VONBTQXhPL3ic6MJlYnItz6VMCbFLlIgPn2R7uXtlYp4ktjzVMob6xozrZ6jyyPKmk9LSrRnboFJx+CKw==
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-ms-office365-filtering-correlation-id: 5e6895ce-e33d-4565-94eb-08d6852c5320
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(7168020)(4627221)(201703031133081)(201702281549075)(8990200)(5600110)(711020)(4605077)(2017052603328)(7153060)(7193020);SRVR:HE1PR01MB3771;
+x-ms-traffictypediagnostic: HE1PR01MB3771:
+x-microsoft-antispam-prvs: <HE1PR01MB3771A6498FE11DB0E98C1C55A9960@HE1PR01MB3771.eurprd01.prod.exchangelabs.com>
+x-forefront-prvs: 0931CB1479
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(346002)(136003)(396003)(376002)(39860400002)(40434004)(55784004)(189003)(199004)(86362001)(6246003)(55016002)(5024004)(97736004)(68736007)(6436002)(229853002)(71190400001)(71200400001)(53936002)(66066001)(106356001)(105586002)(14444005)(256004)(9686003)(478600001)(2501003)(6506007)(14454004)(446003)(11346002)(2906002)(33656002)(8936002)(99286004)(76176011)(6116002)(8676002)(3846002)(316002)(81156014)(74316002)(81166006)(102836004)(110136005)(476003)(486006)(26005)(305945005)(186003)(7736002)(7696005)(25786009)(55236004);DIR:OUT;SFP:1102;SCL:1;SRVR:HE1PR01MB3771;H:HE1PR01MB3722.eurprd01.prod.exchangelabs.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:0;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: 6bhUCNAai6QObNQMoMu4QyliaORD7fmtMcnC11h+7FUSXKZJE1N++hifOm4fAYnfkHzLtcmOEA+GKI5rAEhxtbsrtVqwRA+59xr+2mCwvLqG4yK5ScAmSKLQrEKDLZ6iNV4fOPTNiAEzI+pJoHtDEdmEPbad59GFvA/K94W5A05HVuVUe6k+MkJnBB5BIVXnmKP81vpEuzSv8csgLw+XZlzDrM6n1H+M84Q8faPcXpdMyL8PbJHHJmlyJIaLzhzkXv5Eab5tV7W8MmzcG3WSRHxczz6kr3+XUaYk0P1GDEDnxH9AdzbGWnTPYhyvU6Napgn+p6Qs4Aks3pjQxK9buuFAxRdUNQc0kHWjcOA+SSLwZ9SeHvFiQ4BlqtAxGPvRn8qbpq2o3gvkgTmprsyOFvzj9zj/6JsT6cIsRnX3S8E=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190128094155.2424-1-pclouds@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-OriginatorOrg: alstomgroup.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5e6895ce-e33d-4565-94eb-08d6852c5320
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Jan 2019 14:24:33.7612
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 0d993ad3-fa73-421a-b129-1fe5590103f3
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR01MB3771
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 28, 2019 at 04:41:55PM +0700, Nguyễn Thái Ngọc Duy wrote:
-> This is in the same spirit of f22f682695 (completion: complete general
-> config vars in two steps - 2018-05-27). Instead of considering all full
-> refs as completion candidates, it completes one "path" component at a
-> time, e.g.
-> 
->     $ git switch-branch -d j<TAB>
+Thanks for answer,
 
-  $ git switch-branch
-  git: 'switch-branch' is not a git command. See 'git --help'.
+git checkout -f -b "branch_name"
+gives me " Fatal: A branch named 'branch_name' already exists."
 
-Please use only existing Git commands in the examples.
+I understand that here the checkout is force, but not the branch creation.
+The opposite option order doesn't work:
 
->     jch/            junio-gpg-pub
-> 
->     $ git switch-branch -d jch/<TAB>
->     Display all 154 possibilities? (y or n)
->     jch/ab/            jch/fc/
->     ....
-> 
->     $ git switch-branch -d jch/nd/<TAB>
->     jch/nd/attr-pathspec-fix
->     jch/nd/attr-pathspec-in-tree-walk
->     ...
-> 
-> For refs organized in multiple levels like this (and I've seen refs in 4
-> levels), especially when there a lot of refs, incremental completion
-> this way makes it easier to get to what you want.
-> 
-> The cost of course is more complicated completion and also slower on
-> systems with slow process creation. So maybe there will be a switch to
-> turn this on or off?
+git checkout -b -f "branch_name"
+gives me "Fatal:  '-f' is not a valid branch name."
 
-Oh, no.  After spending quite some effort to eliminate most of the
-processes and big shell loops from the ref completion code path, I
-find this patch simply terrible ;)
+Once again sorry if this is expected behavior.
 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 499e56f83d..d74ee79866 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -742,6 +742,17 @@ __git_refs ()
->  	esac
->  }
->  
-> +__git_collapse_refs ()
-> +{
-> +	local regex="$(echo "$1" | sed 's/[^/]\+/[^\/]*/g')"
+[For clarity, I'm trying to move a branch and checkout it with one command.=
+]
 
-Surely this could be done using only shell builtins.
-
-> +	case "$regex" in
-> +		'') regex='[^\/]*';;
-
-Should this really escape that '/'?  The 'sed' below would escape it
-anyway, so it would be escaped twice.  And the line below doesn't
-escape it.
-
-> +		*/) regex="${regex}[^/]*";;
-> +	esac
-> +	regex="$(echo "$regex" | sed 's/\//\\\//g')"
-
-And this one, too.
-
-> +	sed -ne "s/\\($regex\\/\\?\\).*/\\1/p"
-> +}
-> +
->  # Completes refs, short and long, local and remote, symbolic and pseudo.
->  #
->  # Usage: __git_complete_refs [<option>]...
-> @@ -769,7 +780,7 @@ __git_complete_refs ()
->  		shift
->  	done
->  
-> -	__gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" "$sfx")"
-> +	__gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" "$sfx" | __git_collapse_refs "$cur_")"
->  }
-
-In general I think it would be much better to rely more on 'git
-for-each-ref' to do the heavy lifting, extending it with new format
-specifiers/options as necessary.
-
-'%(refname:rstrip=-<N>)' already comes somewhat close to what we would
-need for full ref completion (i.e. 'refs/b<TAB>' to complete
-'refs/bisec/bad'), we only have to figure out how many "ref path
-components" to show based on the number of path components in the
-current word to be completed.  Alas, it won't add the trailing '/' for
-"ref directories".
-
-For "regular" refs completion we would need to combine 'rstrip=-<N>'
-with 'lstrip=2' to remove the 'refs/(heads|tags|remotes)/' prefix, but
-ref-filter doesn't support things like that, it allows only one format
-option.  And, of course, the lack of trailing '/' is an issue in this
-case as well.
-
-So perhaps a new format option like '%(refname:path-components=3,2)'
-to show two ref path components starting with the third with a
-trailing '/' appended if necessary, e.g. to turn
-'refs/remotes/jch/nd/attr-pathspec-fix' into 'jch/nd/'.
+Regards,
+Joris
 
 
-Note that we also have __git_head() and __git_tags() to complete only
-branches and only tags.
+-----Message d'origine-----
+De : Randall S. Becker <rsbecker@nexbridge.com>
+Envoy=E9 : lundi 28 janvier 2019 15:12
+=C0 : COLLOMB Joris -EXT <joris.collomb-ext@alstomgroup.com>; git@vger.kern=
+el.org
+Objet : RE: Git checkout multiple options issue
 
+On January 28, 2019 8:25, COLLOMB Joris wrote:
+> git checkout -fb "branch_name"
+> (force branch creation and checkout it)
+>
+> doesn't work (even if option a separated).
+>
+> I don't know if this is consider as an issue, but here it is.
+
+I think you might mean (which works on every platform I have):
+
+git checkout -f -b "branch_name"
+
+There is no provision for aggregating options into one. -fb (invalid) is no=
+t the same as -f -b (valid).
+
+Regards,
+Randall
+
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000  UNIX developer s=
+ince approximately 421664400
+-- In my real life, I talk too much.
+
+
+
+
+
+________________________________
+CONFIDENTIALITY : This e-mail and any attachments are confidential and may =
+be privileged. If you are not a named recipient, please notify the sender i=
+mmediately and do not disclose the contents to another person, use it for a=
+ny purpose or store or copy the information in any medium.
