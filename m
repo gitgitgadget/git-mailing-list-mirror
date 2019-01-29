@@ -2,94 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 698751F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 22:47:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA1801F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 22:50:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729637AbfA2WrN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 17:47:13 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:38619 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727525AbfA2WrN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 17:47:13 -0500
-Received: by mail-wm1-f67.google.com with SMTP id m22so19693340wml.3
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 14:47:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FG6fLOIouqm13X8EiMUzNQ46TZxDLNhcDS+GeZqn3jY=;
-        b=cRp9l3NEj6Y68Iu/jx+v+FmipbRbJP1LBIVmtwaRfFrEDLyZaCevaJs5XlYQNKy8o3
-         boudhAPYK9WfTZ0TguGDHTrR2tDth4cxZWuavfScqyRmXjOHtkQZA64iXQpeTkta0osj
-         6ZhFXE6goMUowdtBwrZm1nF59UHabQm0WHfYP1nzkxwBvEZSHzO2oKNDc22Li1qjbJS5
-         3cQibJymFMIyZWb3xS9oaDiuFcJ3CJ1om8Cz3JYjxuzSZ7tEF9AyHRd6C3nKafoa/oOK
-         CQxMsO6wnwVOorfU2/FaEhdtgoRai9L9LNgyZ0r9QKP8uXQ+t2/1pVHclMLk7cD2q+Pz
-         0kMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=FG6fLOIouqm13X8EiMUzNQ46TZxDLNhcDS+GeZqn3jY=;
-        b=e+u4lPi40Xl/uH+rOTKz/G7IqLoHwkEuPEThw5XyDhs0Z0yjhRvlXZQUllcrMVSIjq
-         nN+N/UNKX4E16H9z7WvMbeED+YbpTTN7BsmaS4QEeonfIGh9eDz1epR3SD0SwcQe7nMe
-         qXD6eUQUfe8aJZF2e8KUKg2oEhgldr9eEXq93Bd40WRf4KqJte5dioNDXTZz1DpNmHHs
-         CI67LjbDTzyXC9sEAgDbzdYoVUq2zmpMqNvZJIQXTNJxSdpVJdrfaMUr4mSq/vYhXyPc
-         boQRRAzo0/LZj+rF5xRZbfNsiKQhNbcWbXP0ES6IrA7zUWaHbwfGEdvu/B7H4L36hWBs
-         W0CQ==
-X-Gm-Message-State: AJcUukc6v14sEZAzELiZl0fyRJmmE6wHPLELNCt/qo5O1MlV3uJgwQ/9
-        5DazX8O9x0IWVOMHtR5tcVQ=
-X-Google-Smtp-Source: ALg8bN6/3QxDwRAhA469x2iSQUolUDiMUDah46GsPOeAMKXfYxnGsPPM/XH11Fvkm6dLcxyE/x/rRQ==
-X-Received: by 2002:a1c:2007:: with SMTP id g7mr22403432wmg.79.1548802031109;
-        Tue, 29 Jan 2019 14:47:11 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f3sm220172wmd.22.2019.01.29.14.47.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 Jan 2019 14:47:10 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH (Apple Git) 02/13] test-lib: Export PERL5LIB for testing git-svn
+        id S1729498AbfA2Wub (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 17:50:31 -0500
+Received: from nwk-aaemail-lapp02.apple.com ([17.151.62.67]:47044 "EHLO
+        nwk-aaemail-lapp02.apple.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727358AbfA2Wub (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 29 Jan 2019 17:50:31 -0500
+Received: from pps.filterd (nwk-aaemail-lapp02.apple.com [127.0.0.1])
+        by nwk-aaemail-lapp02.apple.com (8.16.0.27/8.16.0.27) with SMTP id x0TJbBew031277;
+        Tue, 29 Jan 2019 11:39:37 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=mime-version :
+ content-transfer-encoding : content-type : from : to : cc : subject : date
+ : message-id : in-reply-to : references; s=20180706;
+ bh=tXqg4DvTpKqYzsMuSdOEUNy5EFXkrQjCwc74WAnmBEI=;
+ b=u+tBAm+OKccTyl5fBsVSova4qYMFWKrFqxBoSC/dSvJ/cdPgWERZcuznzjK//zgx5kyQ
+ ZHREXKIK2voDAzMkwf34DgJMVfq7Yj54DMpIdJR4pWWiEgaIxde3mlJWsVWvP3+h8qJ1
+ 1pTLRtd9BW9gFh8yb/8l6v4x5apV5JkejMwyFIL47MyYG0EcZ9KNo9+hhhe/Qh1uCL8/
+ +3UECTAfP8SPNev7Nbm0SCZK3DY767NuuCUaZIfC2MMTHZbZ3sN8Dczzh2I9nvLBA2Xe
+ gtkyuO3ez2uo+46SeuSxKzOtMHxd78wptR0XeM7RVzUb2eGuM9Sjh+lApPh/RV6AlI6D Qw== 
+Received: from ma1-mtap-s03.corp.apple.com (ma1-mtap-s03.corp.apple.com [17.40.76.7])
+        by nwk-aaemail-lapp02.apple.com with ESMTP id 2q8n0rt9dm-2
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+        Tue, 29 Jan 2019 11:39:37 -0800
+MIME-version: 1.0
+Content-transfer-encoding: 7BIT
+Content-type: TEXT/PLAIN
+Received: from nwk-relayp-sz03.apple.com
+ (nwk-relayp-sz03.apple.com [17.128.113.11]) by ma1-mtap-s03.corp.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTPS id <0PM300DUDYM0TQE0@ma1-mtap-s03.corp.apple.com>; Tue,
+ 29 Jan 2019 11:39:37 -0800 (PST)
+Received: from process_viserion-daemon.nwk-relayp-sz03.apple.com by
+ nwk-relayp-sz03.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM300D00Y9OJB00@nwk-relayp-sz03.apple.com>; Tue,
+ 29 Jan 2019 11:39:36 -0800 (PST)
+X-Va-A: 
+X-Va-T-CD: ff40b79dc1582ca1bb0a38bbb8b21c87
+X-Va-E-CD: ffe9239ee5336c79bdae8b021a3b2470
+X-Va-R-CD: e1e9935b7f56b73d09788c6c2f952525
+X-Va-CD: 0
+X-Va-ID: fe55461a-ac14-44c8-8cf7-c059218a33c1
+X-V-A:  
+X-V-T-CD: ff40b79dc1582ca1bb0a38bbb8b21c87
+X-V-E-CD: ffe9239ee5336c79bdae8b021a3b2470
+X-V-R-CD: e1e9935b7f56b73d09788c6c2f952525
+X-V-CD: 0
+X-V-ID: 695bfd83-34de-401d-a7fc-0eaf592893a2
+Received: from process_milters-daemon.nwk-relayp-sz03.apple.com by
+ nwk-relayp-sz03.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM300000YJS3N00@nwk-relayp-sz03.apple.com>; Tue,
+ 29 Jan 2019 11:39:36 -0800 (PST)
+Authentication-results: corp.apple.com; spf=softfail
+ smtp.mailfrom=jeremyhu@apple.com;      dmarc=quarantine header.from=apple.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
+ definitions=2019-01-29_15:,, signatures=0
+Received: from tifa.apple.com (unknown [17.114.130.22])
+ by nwk-relayp-sz03.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTP id <0PM30080GYLYQX50@nwk-relayp-sz03.apple.com>; Tue,
+ 29 Jan 2019 11:39:36 -0800 (PST)
+From:   Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, Matt Wright <mww@apple.com>
+Subject: [PATCH (Apple Git) 11/13] Fix problem found from running the test
+ suite.
+Date:   Tue, 29 Jan 2019 11:38:17 -0800
+Message-id: <20190129193818.8645-12-jeremyhu@apple.com>
+X-Mailer: git-send-email 2.20.0 (Apple Git-115)
+In-reply-to: <20190129193818.8645-1-jeremyhu@apple.com>
 References: <20190129193818.8645-1-jeremyhu@apple.com>
-        <20190129193818.8645-3-jeremyhu@apple.com>
-Date:   Tue, 29 Jan 2019 14:47:09 -0800
-In-Reply-To: <20190129193818.8645-3-jeremyhu@apple.com> (Jeremy Huddleston
-        Sequoia's message of "Tue, 29 Jan 2019 11:38:08 -0800")
-Message-ID: <xmqq1s4v6pzm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-29_15:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
+From: Matt Wright <mww@apple.com>
 
-> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-> ---
->  t/test-lib.sh | 3 +++
->  1 file changed, 3 insertions(+)
+Signed-off-by: Matt Wright <mww@apple.com>
+---
+ git-svn.perl | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-This obviously won't be acceptable as-is to my tree.  Shouldn't this
-be something to be dealt with in config.mak.uname or something that
-is meant to define platform-specific customization?
+diff --git a/git-svn.perl b/git-svn.perl
+index 050f2a36f4..d29730be3b 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1815,6 +1815,36 @@ sub complete_url_ls_init {
+ 
+ sub verify_ref {
+ 	my ($ref) = @_;
++
++	if ($ref =~ /^(.*)\^0$/) {
++		my $baseref = $1;
++		my $p = "$ENV{GIT_DIR}/$baseref";
++		$p = "$ENV{GIT_DIR}/refs/remotes/$baseref" unless -e $p;
++		$p = "$ENV{GIT_DIR}/refs/$baseref" unless -e $p;
++		$p = "$ENV{GIT_DIR}/refs/heads/$baseref" unless -e $p;
++
++		my $resolved = undef;
++		if (-e $p) {
++			open FH, $p;
++			$resolved = <FH>;
++			chomp $resolved;
++			close FH;
++		} elsif (-e "$ENV{GIT_DIR}/packed-refs") {
++			open FH, "$ENV{GIT_DIR}/packed-refs";
++			while (<FH>) {
++				if ($_ =~ /^([0-9a-fA-F]+) ((refs\/)?(remotes\/|heads\/|\/)?$baseref)$/) {
++					$resolved = $1;
++					last;
++				}
++			}
++		}
++
++		if (defined($resolved)) {
++			return verify_ref("$1^0") if $resolved =~ /^ref: (.*)$/;
++			return $resolved
++		}
++	}
++
+ 	eval { command_oneline([ 'rev-parse', '--verify', $ref ],
+ 	                       { STDERR => 0 }); };
+ }
+-- 
+2.20.0 (Apple Git-115)
 
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 0f1faa24b2..4060a53f56 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1017,6 +1017,9 @@ fi
->  
->  GITPERLLIB="$GIT_BUILD_DIR"/perl/build/lib
->  export GITPERLLIB
-> +PERL_VERSION=$(grep DEFAULT /usr/local/versioner/perl/versions | sed 's:^.*= *\([^ ]*\)$:\1:')
-> +PERL5LIB="$GIT_BUILD_DIR"/perl:"$(xcode-select -p)"/Library/Perl/$PERL_VERSION
-> +export PERL5LIB
->  test -d "$GIT_BUILD_DIR"/templates/blt || {
->  	error "You haven't built things yet, have you?"
->  }
