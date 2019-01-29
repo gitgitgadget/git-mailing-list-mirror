@@ -2,68 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7B441F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 10:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A18C2211B5
+	for <e@80x24.org>; Tue, 29 Jan 2019 10:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726456AbfA2Kfx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 05:35:53 -0500
-Received: from forward500o.mail.yandex.net ([37.140.190.195]:43462 "EHLO
-        forward500o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725764AbfA2Kfw (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 29 Jan 2019 05:35:52 -0500
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Jan 2019 05:35:51 EST
-Received: from mxback21g.mail.yandex.net (mxback21g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:321])
-        by forward500o.mail.yandex.net (Yandex) with ESMTP id 45A5D60458;
-        Tue, 29 Jan 2019 13:28:27 +0300 (MSK)
-Received: from localhost (localhost [::1])
-        by mxback21g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id Efd4wnbnX2-SQ44r2b2;
-        Tue, 29 Jan 2019 13:28:26 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1548757706;
-        bh=Akc1LSOyTrqRTzspjM0CbEH5c/Z3akVlPRucgxnvytM=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:Message-Id;
-        b=I5kPHPNiQc0j6VhJXdwgwqc6PATDMHSqHgTC6aY02Su12v++FsgCtIQvx4O52gQ2w
-         q3uBgMckjqlJ3RacKTNAMYP2N6VmKW7r2y9reynEkUXVy9y7nyv4YNXJp4Ytd7fEGh
-         rYLJJSHkKB8EAi5xm9/wOtu4T6s9jou3cx8z0QVc=
-Authentication-Results: mxback21g.mail.yandex.net; dkim=pass header.i=@ya.ru
-Received: by myt1-4903e6646a45.qloud-c.yandex.net with HTTP;
-        Tue, 29 Jan 2019 13:28:26 +0300
-From:   Sergey Lukashev <lukashev.s@ya.ru>
-Envelope-From: lukashev-s@yandex.ru
-To:     =?utf-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-In-Reply-To: <20190129073810.23op5qaibyj2amwq@tb-raspi4>
-References: <57362151548583138@iva8-37fc2ad204cd.qloud-c.yandex.net>
-         <13169311548590123@iva1-16f33c6a446b.qloud-c.yandex.net>
-         <20190128160944.GB23588@sigill.intra.peff.net>
-         <1593541548699120@myt6-27270b78ac4f.qloud-c.yandex.net>
-         <20190128183117.GA13165@sigill.intra.peff.net> <20190129073810.23op5qaibyj2amwq@tb-raspi4>
-Subject: Re: unclear docs
+        id S1728376AbfA2Kvn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 05:51:43 -0500
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:43498 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727207AbfA2Kvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 05:51:43 -0500
+Received: by mail-ed1-f41.google.com with SMTP id f9so15559547eds.10
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 02:51:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mOel0DINcINFD69eeDGcwwVMb2MPAVjK70DxFAqipVE=;
+        b=HVoTGfafjuZq209dlqzKB6RdMxv8fztlCVrcGmIrOqeT5U7VbCciiRSRtYZ+wnc0Co
+         Jou4ByGnGmUMuGkNwHej62jeid7e2Fu3nra4pz09389sDrrUibFoEvsMP5ngsBkvXZEP
+         kqAB+0viWbjwbZZco5OcWal+/TLFq4nqie64+cfYd87Q7PwlRs2e4xp9VnU+zfqYauEb
+         4XNLDr03uVpQcedJ1Ve83qaxnPZ4IXt4NJtWhvkxWoczLztkiz6925Q8rAkJUSSlwQ9z
+         4dSsO6jjbrtkmVMoOFJZUyhbLzaMvRY+LZWRL+dkit/iCmTmTunGPFWJwMxwSIaKBGe6
+         ralg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mOel0DINcINFD69eeDGcwwVMb2MPAVjK70DxFAqipVE=;
+        b=hJLbLuyL4oslxbY/QrAHk+dIFujLOKTbEHHIMCczu+prJqGUXXGnwz2J5ewHLyLm+c
+         yISLsRqe9ag0lfYec/cafAHKMTvvIR35le7XArZZD1V4wctuaafnMgUVoB/NRBaLOirf
+         kWCDb0NYQNLXymLpAAcoZiWf2Qs07yX4YStcMEZtvearlOPkpg3ihd9yPE9ra2pm+T6r
+         Atb41Sg+k7pdyNbjiYKODHB7D5brITHs2r1L6X7IjcWf0hhsLxs928ZNeEpp+8s5ETqv
+         otkCBHzsd75MHhJX1gwGau8yG0OyVQL1TP7tn4fkMGJckUcZufCgCMNa2RQ1Y/cRMpc3
+         e+Kg==
+X-Gm-Message-State: AJcUukedQGVoAAEhtngkG0e7v9/Rly6+Vwja3vHhEXfE/b6RvFO+3tdB
+        gU4agf0yFBQfzNLYcLT20MZ5Qt2pqVfx8I7N+OJfQ+V2
+X-Google-Smtp-Source: ALg8bN6dxDCbBHBa66wTfSKeeGpExBeeCdBOK3XEmyNDdZXwwtD9Yp8gNVWE6qAjIad3IV7D7Pv+Aeu8oKIe4dvDz7c=
+X-Received: by 2002:a50:b0e5:: with SMTP id j92mr23660624edd.188.1548759101288;
+ Tue, 29 Jan 2019 02:51:41 -0800 (PST)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Tue, 29 Jan 2019 13:28:26 +0300
-Message-Id: <577591548757706@myt1-4903e6646a45.qloud-c.yandex.net>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8
+References: <CAHMHMxWpqTDyCQPXPY6WPeMBHFzYGE=Z0Q8pSL=9TecwuP9fwg@mail.gmail.com>
+In-Reply-To: <CAHMHMxWpqTDyCQPXPY6WPeMBHFzYGE=Z0Q8pSL=9TecwuP9fwg@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 29 Jan 2019 11:51:29 +0100
+Message-ID: <CAP8UFD0eQ0hPkd-wsNR8e0hQSJC+dUQatvV1xgdJOUxtXYqC_g@mail.gmail.com>
+Subject: Re: No clear API/Error message to validate a "revision object" using
+ git rev-parse
+To:     =?UTF-8?B?zp3PhM6tzr3PhM6/z4IgzqPPhM6xz43Pgc6/z4I=?= 
+        <stdedos@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is in fact how I got it but it seems to have changed since then.
+Hi,
 
-29.01.2019, 10:38, "Torsten Bögershausen" <tboegi@web.de>:
+On Tue, Jan 29, 2019 at 10:30 AM =CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82=
+ =CE=A3=CF=84=CE=B1=CF=8D=CF=81=CE=BF=CF=82 <stdedos@gmail.com> wrote:
+
+> So, I follow the recommendation to add '--', since I know that I won't
+> be adding any paths:
 >
-> The property was originally meant to say:
-> - Either the "text" attribute is set in .gitattributes
->   or
-> - The "text=auto" attribute is set in .gitattributes and
->   Git auto-detects the file as text (and not as binary).
+> $ git rev-parse version.3 --
+> fatal: bad revision 'version.3'
 >
+> However, what happens with the correct tags is, I get the trailing
+> double dash in:
+> $  git rev-parse version-0.false --
+> d43292476ea9ab8c3d32940352b680549b64e8d8
+> --
+> $
 
+Yeah, it looks like a bug to me.
 
+> A further leading argument, e.g. '' makes the situation worse:
+> $ git rev-parse version-0.false -- ''
+> d43292476ea9ab8c3d32940352b680549b64e8d8
+> --
+>
+> $
+
+This also.
+
+> `--verify`s error message is even more cryptic:
+> $ git rev-parse --verify version.3
+> fatal: Needed a single revision
+
+Yeah, but it works.
+
+The error message could perhaps be improved. On the other hand it has
+been the same for a very very long time and very few people complained
+about it.
+
+As you are writing a script, you can at least easily redirect it to
+/dev/null and output something else.
+
+In fact as `git rev-parse` is a "plumbing command" it's supposed to be
+used mostly by scripts and power user who can easily deal with such an
+error message, which explains why there has not been much incentive to
+change this error message.
+
+> $ git rev-parse --verify version-0.false
+> 80f20b100cca5166b22cbcc1f4a6ac1eae64a0d0
+
+This also works correctly.
+
+And:
+
+$ git rev-parse --verify v2.2.0 --
+74d2a8cf12bf102a8cedaf66736503bb3fe88dfb
+$
+
+also works correctly.
+
+Best,
+Christian.
