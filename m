@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB4D1F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 14:19:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAEA11F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 14:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728139AbfA2OTc (ORCPT <rfc822;e@80x24.org>);
+        id S1728298AbfA2OTt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 09:19:49 -0500
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:46863 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726923AbfA2OTc (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 29 Jan 2019 09:19:32 -0500
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:34447 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727950AbfA2OTa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 09:19:30 -0500
-Received: by mail-ed1-f50.google.com with SMTP id b3so16159153ede.1
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:19:29 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id o10so16042078edt.13
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:19:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=K5KMS5wZelKYFqzAivsyQKAHKJ+aOj+nNi89921c3Uo=;
-        b=JLLXwzFxcm9+r9QFxwrCrU3AXlBlAt67YM9O0eI2Ya6jRIHUk6P99yF1KA/jJhokAa
-         6iH6xrsv3W1B9i5d6WMNyAc1uBhebfZA5L8KKNGIhcFXQld/t2jospCshL957gooMM0G
-         hrQfEGrFZi140VnF+rwpsNnghdZIKk7MVoTrH9UHAgCNdk/kWU9Z0cosHVqC8dKES2bA
-         ASI0HsNeHUD6B8dO6BzZqMM5DrsKT9n5gTjAqWGz4eMHNzwuJeoAoTQt93w/QY888ES2
-         LM/oiwG+uY7t5GglWfrg79I4McozOV54Z00RSFtozG1UjBisme8smRNWC20c1UWuQIQj
-         LSrQ==
+        bh=6QKYRFfu4o2JPn3Gwqn28G35+BXfLMeTFboEI1dxAj4=;
+        b=fwQxWEM4wg8OcPwUiMOf6h51tpb+wCkH+dHCO2cEa0jUlP5GfW3VfzeFuchMTkneo6
+         U6oVhwaFlcPeafjLGxkbiQCpWC8xJIAnaKy/p/5nQpSmDP3xY1WWP7fA0tlRkxJGijGS
+         8b1ujnbJOKLp/WCEO07N7Bezp4dx44i+G/QpAfHH9SZXhyLRQOkqSRrYcg/H8QFfRnXp
+         mdOdOnezOfRK0C3zPgTz/FN0RWySdl7DGS8E6aur3U7O0hgVUB2ATPMbT/xyCK4Cpqwz
+         Tm3gf/g6xekHpATMuVauRI/TE21lHsmPJHLAuSTV5PcKYQN00p2ebF0uEEzjumtemueJ
+         CBPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=K5KMS5wZelKYFqzAivsyQKAHKJ+aOj+nNi89921c3Uo=;
-        b=azDBsGN+AfZV0HO9h0WS1x7C0BPk9cN9Z43kKV/tyrcJTe2S/b6kktxHMS1jIJBy5J
-         cOTMip2QSLb1DDlqgcH4rzxaQpdsTCAXdEK3rDdf+lpfzqtJgpHT9ESZjMHTke4XgX36
-         DmU/m1QT4aEsAarZ//CB3SEG/71j3RzxQs+kv7Q6GW8s7M6B04kLteIXsauZMSr2rsAE
-         xBNL7cMm0vaEc/Ix3Q6Eh5y+dcK7AxjtnOHumVFtFvRsIhT0W8glifON2wfQlsFUlyd5
-         2sMqK0Li9atpVofHsE2W544OI1mAsMA9NrB/mJXqESatpA3qqSrfPY+eOsFUGQdpcgRR
-         nTxw==
-X-Gm-Message-State: AJcUukcG+3WL4sFC1Qj6A5Y5lK4t/P3rvu+U/AUvjCK3FS24W3TnyuQ8
-        32A5GW4HbX2bYVYzP06AMMzTHLhg
-X-Google-Smtp-Source: ALg8bN74kLoksMEwjPJ2vq6ssjhAHs/viC9uft2jpxf/bnb4cw0T/46DPHAJKIvITYSXg2l5JX0ljA==
-X-Received: by 2002:a50:8863:: with SMTP id c32mr24724267edc.156.1548771568529;
-        Tue, 29 Jan 2019 06:19:28 -0800 (PST)
+        bh=6QKYRFfu4o2JPn3Gwqn28G35+BXfLMeTFboEI1dxAj4=;
+        b=PS6DOqMZS9qjcBb33f3HZRwgioUtEurNbxWCyq6blmcGDkAipdtbx3thJk9YMMsDF0
+         m1PkkU3YH3PmcJN/JvbDGZ9M/1dcr+iVFZspwbbmIAwqcjb7S2PlZSqGCgXTODsz3sRq
+         RWo9+sr1cSuzmVW8eSQ1Cuo6eVJp1zNlxaHlSt0CH9Pm/WW19G53Vu4KDeR8unHzmoEw
+         coDJDFNQivvDUN+qMKKwtKBiwqsLktKvk+fmA8hviUqHicULNtxCGZiK/nwTRi8uh/Yn
+         f8vdbXoasY9rOsQ3DEkZDQQmIPN0wP8Ylm3LctofohBXHM3fevMaEuDFZzdYbDpHtN5r
+         h15w==
+X-Gm-Message-State: AJcUukdpsm9Nlc7ldCjPzE85j9N1knlK1baW7XPY8Z+BXx+3ma26nnJa
+        X0H93zB5E1A59czvyZCNKY1+Z1E+
+X-Google-Smtp-Source: ALg8bN4R/yLooj6wjkgCIRl+xlgjs57A809Agp9UbE1V6JQgUuoAaMUqdVHOeArTnLFD4qcg/53k9w==
+X-Received: by 2002:a17:906:1086:: with SMTP id u6-v6mr23196777eju.82.1548771570926;
+        Tue, 29 Jan 2019 06:19:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s46sm14510802edd.9.2019.01.29.06.19.27
+        by smtp.gmail.com with ESMTPSA id z40sm14522402edz.86.2019.01.29.06.19.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Jan 2019 06:19:27 -0800 (PST)
-Date:   Tue, 29 Jan 2019 06:19:27 -0800 (PST)
-X-Google-Original-Date: Tue, 29 Jan 2019 14:19:06 GMT
-Message-Id: <e9a869df573ac8135561110fe2c366df7597ffc4.1548771561.git.gitgitgadget@gmail.com>
+        Tue, 29 Jan 2019 06:19:30 -0800 (PST)
+Date:   Tue, 29 Jan 2019 06:19:30 -0800 (PST)
+X-Google-Original-Date: Tue, 29 Jan 2019 14:19:09 GMT
+Message-Id: <d5651317817a44d8f8b565c2cc14f59dfc432916.1548771561.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v6.git.gitgitgadget@gmail.com>
 References: <pull.31.v5.git.gitgitgadget@gmail.com>
         <pull.31.v6.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 07/21] tests: optionally write results as JUnit-style .xml
+Subject: [PATCH v6 10/21] ci: add a Windows job to the Azure Pipelines
+ definition
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,321 +72,137 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This will come in handy when publishing the results of Git's test suite
-during an automated Azure DevOps run.
+Previously, we did not have robust support for Windows in our CI
+definition, simply because Travis cannot accommodate our needs (even
+after Travis added experimental Windows support very recently, it takes
+longer than Travis' 50 minute timeout to build Git and run the test
+suite on Windows). Instead, we used a hack that started a dedicated
+Azure Pipeline from Travis and waited for the output, often timing out
+(which is quite fragile, as we found out).
 
-Note: we need to make extra sure that invalid UTF-8 encoding is turned
-into valid UTF-8 (using the Replacement Character, \uFFFD) because
-t9902's trace contains such invalid byte sequences, and the task in the
-Azure Pipeline that uploads the test results would refuse to do anything
-if it was asked to parse an .xml file with invalid UTF-8 in it.
+With this commit, we finally have first-class support for Windows in our
+CI definition (in the Azure Pipelines one, that is).
+
+Due to our reliance on Unix shell scripting in the test suite, combined
+with the challenges on executing such scripts on Windows, the Windows
+job currently takes a whopping ~1h20m to complete. Which is *far* longer
+than the next-longest job takes (linux-gcc, ~35m).
+
+Now, Azure Pipelines's free tier for open source projects (such as Git)
+offers up to 10 concurrent jobs for free, meaning that the overall run
+time will be dominated by the slowest job(s).
+
+Therefore, it makes sense to start the Windows job first, to minimize
+the time the entire build takes from start to end (which is now pretty
+safely the run time of the Windows job).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile                   |  1 +
- t/.gitignore               |  1 +
- t/helper/test-tool.c       |  1 +
- t/helper/test-tool.h       |  1 +
- t/helper/test-xml-encode.c | 80 +++++++++++++++++++++++++++++++++
- t/test-lib.sh              | 91 ++++++++++++++++++++++++++++++++++++++
- 6 files changed, 175 insertions(+)
- create mode 100644 t/helper/test-xml-encode.c
+ azure-pipelines.yml | 91 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 91 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 1a44c811aa..044b4f77bd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -754,6 +754,7 @@ TEST_BUILTINS_OBJS += test-submodule-config.o
- TEST_BUILTINS_OBJS += test-submodule-nested-repo-config.o
- TEST_BUILTINS_OBJS += test-subprocess.o
- TEST_BUILTINS_OBJS += test-urlmatch-normalization.o
-+TEST_BUILTINS_OBJS += test-xml-encode.o
- TEST_BUILTINS_OBJS += test-wildmatch.o
- TEST_BUILTINS_OBJS += test-windows-named-pipe.o
- TEST_BUILTINS_OBJS += test-write-cache.o
-diff --git a/t/.gitignore b/t/.gitignore
-index 348715f0e4..91cf5772fe 100644
---- a/t/.gitignore
-+++ b/t/.gitignore
-@@ -2,3 +2,4 @@
- /test-results
- /.prove
- /chainlinttmp
-+/out/
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index bfb195b1a8..4b4b397d93 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -49,6 +49,7 @@ static struct test_cmd cmds[] = {
- 	{ "submodule-nested-repo-config", cmd__submodule_nested_repo_config },
- 	{ "subprocess", cmd__subprocess },
- 	{ "urlmatch-normalization", cmd__urlmatch_normalization },
-+	{ "xml-encode", cmd__xml_encode },
- 	{ "wildmatch", cmd__wildmatch },
- #ifdef GIT_WINDOWS_NATIVE
- 	{ "windows-named-pipe", cmd__windows_named_pipe },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 042f12464b..c0ab65e370 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -45,6 +45,7 @@ int cmd__submodule_config(int argc, const char **argv);
- int cmd__submodule_nested_repo_config(int argc, const char **argv);
- int cmd__subprocess(int argc, const char **argv);
- int cmd__urlmatch_normalization(int argc, const char **argv);
-+int cmd__xml_encode(int argc, const char **argv);
- int cmd__wildmatch(int argc, const char **argv);
- #ifdef GIT_WINDOWS_NATIVE
- int cmd__windows_named_pipe(int argc, const char **argv);
-diff --git a/t/helper/test-xml-encode.c b/t/helper/test-xml-encode.c
-new file mode 100644
-index 0000000000..a648bbd961
---- /dev/null
-+++ b/t/helper/test-xml-encode.c
-@@ -0,0 +1,80 @@
-+#include "test-tool.h"
-+
-+static const char *utf8_replace_character = "&#xfffd;";
-+
-+/*
-+ * Encodes (possibly incorrect) UTF-8 on <stdin> to <stdout>, to be embedded
-+ * in an XML file.
-+ */
-+int cmd__xml_encode(int argc, const char **argv)
-+{
-+	unsigned char buf[1024], tmp[4], *tmp2 = NULL;
-+	ssize_t cur = 0, len = 1, remaining = 0;
-+	unsigned char ch;
-+
-+	for (;;) {
-+		if (++cur == len) {
-+			len = xread(0, buf, sizeof(buf));
-+			if (!len)
-+				return 0;
-+			if (len < 0)
-+				die_errno("Could not read <stdin>");
-+			cur = 0;
-+		}
-+		ch = buf[cur];
-+
-+		if (tmp2) {
-+			if ((ch & 0xc0) != 0x80) {
-+				fputs(utf8_replace_character, stdout);
-+				tmp2 = NULL;
-+				cur--;
-+				continue;
-+			}
-+			*tmp2 = ch;
-+			tmp2++;
-+			if (--remaining == 0) {
-+				fwrite(tmp, tmp2 - tmp, 1, stdout);
-+				tmp2 = NULL;
-+			}
-+			continue;
-+		}
-+
-+		if (!(ch & 0x80)) {
-+			/* 0xxxxxxx */
-+			if (ch == '&')
-+				fputs("&amp;", stdout);
-+			else if (ch == '\'')
-+				fputs("&apos;", stdout);
-+			else if (ch == '"')
-+				fputs("&quot;", stdout);
-+			else if (ch == '<')
-+				fputs("&lt;", stdout);
-+			else if (ch == '>')
-+				fputs("&gt;", stdout);
-+			else if (ch >= 0x20)
-+				fputc(ch, stdout);
-+			else if (ch == 0x09 || ch == 0x0a || ch == 0x0d)
-+				fprintf(stdout, "&#x%02x;", ch);
-+			else
-+				fputs(utf8_replace_character, stdout);
-+		} else if ((ch & 0xe0) == 0xc0) {
-+			/* 110XXXXx 10xxxxxx */
-+			tmp[0] = ch;
-+			remaining = 1;
-+			tmp2 = tmp + 1;
-+		} else if ((ch & 0xf0) == 0xe0) {
-+			/* 1110XXXX 10Xxxxxx 10xxxxxx */
-+			tmp[0] = ch;
-+			remaining = 2;
-+			tmp2 = tmp + 1;
-+		} else if ((ch & 0xf8) == 0xf0) {
-+			/* 11110XXX 10XXxxxx 10xxxxxx 10xxxxxx */
-+			tmp[0] = ch;
-+			remaining = 3;
-+			tmp2 = tmp + 1;
-+		} else
-+			fputs(utf8_replace_character, stdout);
-+	}
-+
-+	return 0;
-+}
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index a1abb1177a..a3b2166cb5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -139,6 +139,9 @@ do
- 		verbose_log=t
- 		tee=t
- 		;;
-+	--write-junit-xml)
-+		write_junit_xml=t
-+		;;
- 	--stress)
- 		stress=t ;;
- 	--stress=*)
-@@ -622,11 +625,24 @@ trap 'exit $?' INT TERM HUP
- # the test_expect_* functions instead.
+diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+index 8cdef105c6..0f7b2125a1 100644
+--- a/azure-pipelines.yml
++++ b/azure-pipelines.yml
+@@ -3,6 +3,97 @@ resources:
+   fetchDepth: 1
  
- test_ok_ () {
-+	if test -n "$write_junit_xml"
-+	then
-+		write_junit_xml_testcase "$*"
-+	fi
- 	test_success=$(($test_success + 1))
- 	say_color "" "ok $test_count - $@"
- }
- 
- test_failure_ () {
-+	if test -n "$write_junit_xml"
-+	then
-+		junit_insert="<failure message=\"not ok $test_count -"
-+		junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
-+		junit_insert="$junit_insert $(xml_attr_encode \
-+			"$(printf '%s\n' "$@" | sed 1d)")"
-+		junit_insert="$junit_insert</failure>"
-+		write_junit_xml_testcase "$1" "      $junit_insert"
-+	fi
- 	test_failure=$(($test_failure + 1))
- 	say_color error "not ok $test_count - $1"
- 	shift
-@@ -635,11 +651,19 @@ test_failure_ () {
- }
- 
- test_known_broken_ok_ () {
-+	if test -n "$write_junit_xml"
-+	then
-+		write_junit_xml_testcase "$* (breakage fixed)"
-+	fi
- 	test_fixed=$(($test_fixed+1))
- 	say_color error "ok $test_count - $@ # TODO known breakage vanished"
- }
- 
- test_known_broken_failure_ () {
-+	if test -n "$write_junit_xml"
-+	then
-+		write_junit_xml_testcase "$* (known breakage)"
-+	fi
- 	test_broken=$(($test_broken+1))
- 	say_color warn "not ok $test_count - $@ # TODO known breakage"
- }
-@@ -897,6 +921,10 @@ test_start_ () {
- 	test_count=$(($test_count+1))
- 	maybe_setup_verbose
- 	maybe_setup_valgrind
-+	if test -n "$write_junit_xml"
-+	then
-+		junit_start=$(test-tool date getnanos)
-+	fi
- }
- 
- test_finish_ () {
-@@ -934,6 +962,13 @@ test_skip () {
- 
- 	case "$to_skip" in
- 	t)
-+		if test -n "$write_junit_xml"
-+		then
-+			message="$(xml_attr_encode "$skipped_reason")"
-+			write_junit_xml_testcase "$1" \
-+				"      <skipped message=\"$message\" />"
-+		fi
+ jobs:
++- job: windows
++  displayName: Windows
++  condition: succeeded()
++  pool: Hosted
++  timeoutInMinutes: 240
++  steps:
++  - powershell: |
++      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
++        net use s: \\gitfileshare.file.core.windows.net\test-cache "$GITFILESHAREPWD" /user:AZURE\gitfileshare /persistent:no
++        cmd /c mklink /d "$(Build.SourcesDirectory)\test-cache" S:\
++      }
++    displayName: 'Mount test-cache'
++    env:
++      GITFILESHAREPWD: $(gitfileshare.pwd)
++  - powershell: |
++      # Helper to check the error level of the latest command (exit with error when appropriate)
++      function c() { if (!$?) { exit(1) } }
 +
- 		say_color skip >&3 "skipping test: $@"
- 		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
- 		: true
-@@ -949,9 +984,51 @@ test_at_end_hook_ () {
- 	:
- }
- 
-+write_junit_xml () {
-+	case "$1" in
-+	--truncate)
-+		>"$junit_xml_path"
-+		junit_have_testcase=
-+		shift
-+		;;
-+	esac
-+	printf '%s\n' "$@" >>"$junit_xml_path"
-+}
++      # Add build agent's MinGit to PATH
++      $env:PATH = $env:AGENT_HOMEDIRECTORY +"\externals\\git\cmd;" +$env:PATH
 +
-+xml_attr_encode () {
-+	printf '%s\n' "$@" | test-tool xml-encode
-+}
++      # Helper to initialize (or update) a Git worktree
++      function init ($path, $url, $set_origin) {
++        if (Test-Path $path) {
++          cd $path; c
++          if (Test-Path .git) {
++            & git init; c
++          } else {
++            & git status
++          }
++        } else {
++          & git init $path; c
++          cd $path; c
++        }
++        & git config core.autocrlf false; c
++        & git config core.untrackedCache true; c
++        if (($set_origin -ne 0) -and !(git config remote.origin.url)) {
++          & git remote add origin $url; c
++        }
++        & git fetch --depth=1 $url master; c
++        & git reset --hard FETCH_HEAD; c
++        & git clean -df; c
++      }
 +
-+write_junit_xml_testcase () {
-+	junit_attrs="name=\"$(xml_attr_encode "$this_test.$test_count $1")\""
-+	shift
-+	junit_attrs="$junit_attrs classname=\"$this_test\""
-+	junit_attrs="$junit_attrs time=\"$(test-tool \
-+		date getnanos $junit_start)\""
-+	write_junit_xml "$(printf '%s\n' \
-+		"    <testcase $junit_attrs>" "$@" "    </testcase>")"
-+	junit_have_testcase=t
-+}
++      # Initialize Git for Windows' SDK
++      $sdk_path = "$(Build.SourcesDirectory)\git-sdk-64"
++      init "$sdk_path" "https://dev.azure.com/git-for-windows/git-sdk-64/_git/git-sdk-64" 0
 +
- test_done () {
- 	GIT_EXIT_OK=t
- 
-+	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
-+	then
-+		test -n "$junit_have_testcase" || {
-+			junit_start=$(test-tool date getnanos)
-+			write_junit_xml_testcase "all tests skipped"
-+		}
++      # Let Git ignore the SDK and the test-cache
++      "/git-sdk-64/`n/test-cache/`n" | Out-File -NoNewLine -Encoding ascii -Append "$(Build.SourcesDirectory)\.git\info\exclude"
++    displayName: 'Initialize the Git for Windows SDK'
++  - powershell: |
++      & "git-sdk-64\git-cmd.exe" --command=usr\\bin\\bash.exe -lc @"
++        export DEVELOPER=1
++        export NO_PERL=1
++        export NO_SVN_TESTS=1
++        export GIT_TEST_SKIP_REBASE_P=1
 +
-+		# adjust the overall time
-+		junit_time=$(test-tool date getnanos $junit_suite_start)
-+		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
-+			<"$junit_xml_path" >"$junit_xml_path.new"
-+		mv "$junit_xml_path.new" "$junit_xml_path"
++        ci/run-build-and-tests.sh || {
++          ci/print-test-failures.sh
++          exit 1
++        }
++      "@
++      if (!$?) { exit(1) }
++    displayName: 'Build & Test'
++    env:
++      HOME: $(Build.SourcesDirectory)
++      MSYSTEM: MINGW64
++  - powershell: |
++      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
++        cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
++      }
++    displayName: 'Unmount test-cache'
++    condition: true
++    env:
++      GITFILESHAREPWD: $(gitfileshare.pwd)
++  - task: PublishTestResults@2
++    displayName: 'Publish Test Results **/TEST-*.xml'
++    inputs:
++      mergeTestResults: true
++      testRunTitle: 'windows'
++      platform: Windows
++      publishRunAttachments: false
++    condition: succeededOrFailed()
++  - task: PublishBuildArtifacts@1
++    displayName: 'Publish trash directories of failed tests'
++    condition: failed()
++    inputs:
++      PathtoPublish: t/failed-test-artifacts
++      ArtifactName: failed-test-artifacts
 +
-+		write_junit_xml "  </testsuite>" "</testsuites>"
-+	fi
-+
- 	if test -z "$HARNESS_ACTIVE"
- 	then
- 		mkdir -p "$TEST_RESULTS_DIR"
-@@ -1178,6 +1255,7 @@ then
- else
- 	mkdir -p "$TRASH_DIRECTORY"
- fi
-+
- # Use -P to resolve symlinks in our working directory so that the cwd
- # in subprocesses like git equals our $PWD (for pathname comparisons).
- cd -P "$TRASH_DIRECTORY" || exit 1
-@@ -1191,6 +1269,19 @@ then
- 	test_done
- fi
- 
-+if test -n "$write_junit_xml"
-+then
-+	junit_xml_dir="$TEST_OUTPUT_DIRECTORY/out"
-+	mkdir -p "$junit_xml_dir"
-+	junit_xml_base=${0##*/}
-+	junit_xml_path="$junit_xml_dir/TEST-${junit_xml_base%.sh}.xml"
-+	junit_attrs="name=\"${junit_xml_base%.sh}\""
-+	junit_attrs="$junit_attrs timestamp=\"$(TZ=UTC \
-+		date +%Y-%m-%dT%H:%M:%S)\""
-+	write_junit_xml --truncate "<testsuites>" "  <testsuite $junit_attrs>"
-+	junit_suite_start=$(test-tool date getnanos)
-+fi
-+
- # Provide an implementation of the 'yes' utility
- yes () {
- 	if test $# = 0
+ - job: linux_clang
+   displayName: linux-clang
+   condition: succeeded()
 -- 
 gitgitgadget
 
