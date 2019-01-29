@@ -7,136 +7,115 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF6541F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 16:35:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 697111F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 16:37:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727616AbfA2Qfp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 11:35:45 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:45985 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726117AbfA2Qfo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 11:35:44 -0500
-Received: by mail-qk1-f195.google.com with SMTP id y78so11850316qka.12
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 08:35:43 -0800 (PST)
+        id S1727499AbfA2Qhh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 11:37:37 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:46437 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726374AbfA2Qhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 11:37:37 -0500
+Received: by mail-qt1-f193.google.com with SMTP id y20so22848292qtm.13
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 08:37:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wLd0z+LV8R/6l/z5tcb0p29tCP5IP6OPhZVUSNOZJyo=;
-        b=BgSHpBdOLSPWzxlIgcO9hYr5+RM3Vv6vq4ELOJLSTvfHyQDO061fXUAWNYjGV+S0NP
-         I8LAW7bfsiJRfPs019o0B9sPVxu4QET/tWCl8yofiKSx11OSD4LXYY08BPr2eq3t6Efs
-         5UhgNKMLtscuPQfMtL1SZmYpLexb6zp22fojOnPgh9Bk6rI18QkuN6eOBOMQ0XOug/4z
-         Ft7sK/C+AeJOmm5WlIADUwUYtHytt+tzhPW/91A0zv2jTJ0z7z8+w8o8svQ7g0raheTX
-         njTk3BwNFbK/me4+utAnTfb0ZCPHzbyNpYFFgyUGHpnL/EzJWVY0UfeHZIkhTMrefzlD
-         CN9w==
+        bh=7XJN0ai2yOkMnsREME4oLNi/n1fQD8JvIBjPa50mr/4=;
+        b=bxvK0FmCHHjHW6RRxaYRUQwQRd833Pvz2R+lJupEYkLs2KcObUHbp3JEDEqXQqbgZH
+         pCl540RFkigODDMvzjlRG/1UbMsiuCTThzRzjXyiDQf4+Z8bolQCsiDXHNGYbwKmpl+I
+         tArsmqkSfti9rJDLBIde2JmKoiyZg6/Gm5ZUYipBRf4rXyGhS/wViFoYpwwEDimxEgVY
+         pbkjw6Evwq4qoyWxR1vcMhTxKnKEwHBH4pAg6IpQ4QiG3DTjs3ffHpKyhA2PtpK5Xh+T
+         MjLwRuj2x9RmHvKjpo7YbBThSG70Wk5hO6DsiO2rP3OlURfkiLDvAFVPZ0JqnfzTnNqH
+         m/kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=wLd0z+LV8R/6l/z5tcb0p29tCP5IP6OPhZVUSNOZJyo=;
-        b=rVoY/2q7hDISrVMbtI3PtG868TyX8GcxJdpqq+ZTvWwKfuuBH/E/S+ZU/cy5es9EKi
-         h2eXGuJYjaSlHKxislsxyZDgnM8+VBdqTFBG2QYkwfw8phj7zQ1/AySi28BWOoMa3tgP
-         PZeDbm/1pCWBR765XckdNfslX1nl96A0U+kT2FIOj0JjwebeIno2hu1GFaeYZetFHbv0
-         +xGeDXj8jKvCAyv4f9cC3s1oyEpAhmi339wZcoVMMoYFvkwqSOwuzloNegDkFLON6Zb0
-         cRcJH1PLX42tZk7IqcHzoRK5YBKko7IMto2CMCeGH2UXWnmxk8+ScTTr00NIzfyNBleO
-         xyqA==
-X-Gm-Message-State: AJcUukcor5L9tl8P2G92w7P6zyh0iXkVFNjkptyfbYc7ZvSejnyRZnuC
-        ptoue/nzwpyrAR86OlCr5Lc=
-X-Google-Smtp-Source: ALg8bN5SoHjJbmaGd/TDc4J43wlarb1UbcyOvZ9nA2bSqcDnkSHOsgowAtMvszpe/E2umzEp8Fxi4w==
-X-Received: by 2002:a37:2e42:: with SMTP id u63mr24160674qkh.249.1548779743202;
-        Tue, 29 Jan 2019 08:35:43 -0800 (PST)
+        bh=7XJN0ai2yOkMnsREME4oLNi/n1fQD8JvIBjPa50mr/4=;
+        b=k31GktlpeT2yiZ8Jzok1zyES5Bf2/heL6JblYwbasdHoXL8oSDnKUvfoasMvEb4riX
+         HlFzmI/bzd5eltkNzg7cJ4IC25STbAFHUTdi/+u43CUJkPxqurpnV0LUT+0IrsURtPBh
+         f7lXwrazYMICPy+HMRetZH8RjpdMmxt/VvyZ2J7fLhEIYNwIk10oRHLOHn87K1H8lfJM
+         i/OtdEEJ6FIHDw5qnHoT5zIOsfNcZQOeuW6ckbANePMT/qJUw8/lzDtcm8zPvOKZ95z4
+         WRojFHCu98hhDM+IEkC+buSN3Kcp74TtlxZ6Bl2vafjoP9sngPl2Hhwghnixb4PeuhlI
+         a+ZQ==
+X-Gm-Message-State: AJcUukeXVCWmUo3fFmC3xSZQqC9efePf1gL5lmhglkfaC2Wi2ejLUZu2
+        k7pFmUREBYSub+JRK1ryE4s=
+X-Google-Smtp-Source: ALg8bN749P90RieOVIoBg97uIkfpkbSayHX1HV2UisNwYJjmtEoiZ8PJrNSSWjRzUOwGdFcRTqNe1A==
+X-Received: by 2002:ac8:518d:: with SMTP id c13mr25875701qtn.254.1548779855384;
+        Tue, 29 Jan 2019 08:37:35 -0800 (PST)
 Received: from ?IPv6:2001:4898:6808:13e:788a:444c:e16b:27e? ([2001:4898:8010:2:61be:444c:e16b:27e])
-        by smtp.gmail.com with ESMTPSA id q63sm65913027qke.44.2019.01.29.08.35.41
+        by smtp.gmail.com with ESMTPSA id u67sm79420052qki.22.2019.01.29.08.37.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Jan 2019 08:35:41 -0800 (PST)
+        Tue, 29 Jan 2019 08:37:34 -0800 (PST)
 Subject: Re: [PATCH 1/1] Makefile: add prove and coverage-prove targets
-To:     Jeff King <peff@peff.net>,
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        Derrick Stolee <dstolee@microsoft.com>
 References: <pull.114.git.gitgitgadget@gmail.com>
  <294187c6968eff952e78bcea808c66fbedbf1f90.1548773766.git.gitgitgadget@gmail.com>
- <20190129160030.GA7083@sigill.intra.peff.net>
+ <20190129155827.GC13764@szeder.dev>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <bb17112d-2869-741f-de13-3971a995032e@gmail.com>
-Date:   Tue, 29 Jan 2019 11:35:41 -0500
+Message-ID: <a5ca8985-f877-b250-d186-32bef40092f5@gmail.com>
+Date:   Tue, 29 Jan 2019 11:37:34 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:65.0) Gecko/20100101
  Thunderbird/65.0
 MIME-Version: 1.0
-In-Reply-To: <20190129160030.GA7083@sigill.intra.peff.net>
+In-Reply-To: <20190129155827.GC13764@szeder.dev>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/29/2019 11:00 AM, Jeff King wrote:
+On 1/29/2019 10:58 AM, SZEDER Gábor wrote:
 > On Tue, Jan 29, 2019 at 06:56:08AM -0800, Derrick Stolee via GitGitGadget wrote:
+>> +prove: all
+>> +	$(MAKE) -C t/ prove
+>> +
 > 
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> When running the test suite for code coverage using
->> 'make coverage-test', a single test failure stops the
->> test suite from completing. This leads to significant
->> undercounting of covered blocks.
->>
->> Add two new targets to the Makefile:
->>
->> * 'prove' runs the test suite using 'prove'.
->>
->> * 'coverage-prove' compiles the source using the
->>   coverage flags, then runs the test suite using
->>   'prove'.
->>
->> These targets are modeled after the 'test' and
->> 'coverage-test' targets.
-> 
-> I think these are reasonable to have (and I personally much prefer
-> "prove" to the raw "make test" output anyway).
-> 
-> For people who don't have "prove" available, I think they could just do
-> "make -k test" to make sure the full suite runs. Should we perhaps be
-> doing that automatically in the sub-make run by coverage-test?
+> You don't need this 'prove' target in the "main" Makefile, because
+> 'make test' will run the test suite using DEFAULT_TEST_TARGET anyway.
 
-I wanted to avoid changing the existing behavior, if I could. But, if
-we can reasonably assume that anyone running 'make coverage-test' wants
-to run the full suite even with failures, then that's fine by me.
+Thanks!
 
-I see from the make docs that '-k' will still result in an error code
-at the end of the command, so no automation would result in an incorrect
-response to a failed test. Am I correct?
-
->> @@ -3077,6 +3080,10 @@ coverage-test: coverage-clean-results coverage-compile
->>  	$(MAKE) CFLAGS="$(COVERAGE_CFLAGS)" LDFLAGS="$(COVERAGE_LDFLAGS)" \
->>  		DEFAULT_TEST_TARGET=test -j1 test
->>  
 >> +coverage-prove: coverage-clean-results coverage-compile
 >> +	$(MAKE) CFLAGS="$(COVERAGE_CFLAGS)" LDFLAGS="$(COVERAGE_LDFLAGS)" \
 >> +		DEFAULT_TEST_TARGET=prove -j1 prove
->> +
 > 
-> You probably don't need to override DEFAULT_TEST_TARGET here, since the
-> "prove" target doesn't look at it. Likewise, "-j1" probably does nothing
-> here, since prove itself is a single target.
+> First I was wondering why do you need a dedicated 'coverage-prove'
+> target, instead of letting DEFAULT_TEST_TARGET from the environment or
+> from 'config.mak' do its thing.  But then I noticed in the hunk
+> context, that, for some reason, the 'coverage-test' target hardcoded
+> 'DEFAULT_TEST_TARGET=test -j1'.  Then I was wondering why would it
+> want to do that, and stumbled upon commit c14cc77c11:
+> 
+>     coverage: set DEFAULT_TEST_TARGET to avoid using prove
+>     
+>     If the user sets DEFAULT_TEST_TARGET=prove in his config.mak, that
+>     carries over into the coverage tests.  Which is really bad if he also
+>     sets GIT_PROVE_OPTS=-j<..> as that completely breaks the coverage
+>     runs.
+>     
+>     Instead of attempting to mess with the GIT_PROVE_OPTS, just force the
+>     test target to 'test' so that we run under make, like we intended all
+>     along.
 
-As Szeder mentioned, I can probably just drop the 'prove' target and use
-DEFAULT_TEST_TARGET instead. Or do we think anyone will want to use
-'make prove' from root?
+Thanks for finding this!
+ 
+> I'm afraid that this issue would badly affect 'coverage-prove' as well
+> (I didn't try).  Or if doesn't (anymore?), then that should be
+> mentioned in the commit message, and then perhaps it's time to remove
+> that '-j1' from the 'coverage-test' target as well.
 
-> I'm not sure why we want to enforce -j1 for these targets, but if it's
-> important to do so for the prove case, as well, you'd need to add it to
-> GIT_PROVE_OPTS.
-
-The '-j1' is necessary because the coverage data is collected in a way that
-is not thread-safe. Our compile options also force single-threaded behavior.
-
-I'll specifically override GIT_PROVE_OPTS here to force -j1, but also send
--j1 to the 'make' command, too.
+I'll fix this by forcing an update to GIT_PROVE_OPTS. It does limit our
+ability to use GIT_PROVE_OPTS as a pass-through, but at least this new
+target will have that assumption built in.
 
 Thanks,
 -Stolee
