@@ -2,139 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A7F81F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 22:42:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 698751F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 22:47:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727980AbfA2WmO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 17:42:14 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:45203 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727332AbfA2WmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 17:42:13 -0500
-Received: by mail-qt1-f196.google.com with SMTP id e5so24145797qtr.12
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 14:42:12 -0800 (PST)
+        id S1729637AbfA2WrN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 17:47:13 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:38619 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727525AbfA2WrN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 17:47:13 -0500
+Received: by mail-wm1-f67.google.com with SMTP id m22so19693340wml.3
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 14:47:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=gA7YI0wvMMbtv6hxx8W1U3ygBvtlKCZ8o9dk86XJMuM=;
-        b=FAKcYFulIa6ef3QmQfPy82qA/3cm9HTOlFHYUVqFogIhIAH2sk2AgjkdHMARHF0k98
-         8nPF6ub+Ai+k80fBRbJCSbFnn/eZ9jd6Iz4mRm+7mo7kWy8JtUiw2l8OYk/RjZkfKs31
-         BazEKuzeXWaAjrORMoieu8lo3e2o2PYsPa9gJSVYs+gDwU5WCF1/S042ZrVZaLEL9Gnv
-         1hFEkUQCXzp3L6bQ4al8M4c4BBKf0tAdS/UhZYflG+vHTh9F9AWXk6UV4SnyhKhUx7kw
-         uUMo27EqIsumjQu+lKgWhoiOxEWdnHvZkp7tpJTzp9pgwQlDwDbZeCarW7FpMoUZLSYG
-         K7Jg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=FG6fLOIouqm13X8EiMUzNQ46TZxDLNhcDS+GeZqn3jY=;
+        b=cRp9l3NEj6Y68Iu/jx+v+FmipbRbJP1LBIVmtwaRfFrEDLyZaCevaJs5XlYQNKy8o3
+         boudhAPYK9WfTZ0TguGDHTrR2tDth4cxZWuavfScqyRmXjOHtkQZA64iXQpeTkta0osj
+         6ZhFXE6goMUowdtBwrZm1nF59UHabQm0WHfYP1nzkxwBvEZSHzO2oKNDc22Li1qjbJS5
+         3cQibJymFMIyZWb3xS9oaDiuFcJ3CJ1om8Cz3JYjxuzSZ7tEF9AyHRd6C3nKafoa/oOK
+         CQxMsO6wnwVOorfU2/FaEhdtgoRai9L9LNgyZ0r9QKP8uXQ+t2/1pVHclMLk7cD2q+Pz
+         0kMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=gA7YI0wvMMbtv6hxx8W1U3ygBvtlKCZ8o9dk86XJMuM=;
-        b=iHX9Pg6R44Y4b4y4xK9XwKJy5WbMK1y/MB6AWmlf3xAwH980AP+yG4DjlkmkIwdrAf
-         KSd2xBQ482mN7/iqJ6Q1Uk+d8Lke/fsz/f+GLOGOh2WsoXsayqG0hHSEBgY1Fm37Jcnm
-         QdvrLwI7iriiZgsOT0J/buiDr+0j49lLA3NyOz4uvBSCbq9f6gD/7sJBy5ODi8zldeFB
-         Nj9dd1iOaKthq937fHEmZCFWMXe8ZQ+KobP7A/HbAeSw5vysn+yp9oYW6CL06BlQmulj
-         jDoX7kWc3tc/6qiKYIn/rG/OVJV6c/p5ku3rY5u4pq1iwLJzb3BYYCO0fpRP5PbEX0qx
-         qpXw==
-X-Gm-Message-State: AJcUukfIqO0tfig1Lxet2PlR2yO6RyMi+Xmc4IiGJaC8S7+zZ0EMoLoS
-        Kfzt7oK5J5bNC93kFRs7yoY=
-X-Google-Smtp-Source: AHgI3Ib4gsZkuSQLZjPYMg/PznTR5TlaY9TZe3PQeCxfRJtblgUTyifbGdkGo9z8R0YPV3mUTHVI2w==
-X-Received: by 2002:aed:2539:: with SMTP id v54mr6703872qtc.211.1548801732451;
-        Tue, 29 Jan 2019 14:42:12 -0800 (PST)
-Received: from whubbs1.gaikai.biz ([100.42.103.5])
-        by smtp.gmail.com with ESMTPSA id l4sm57757959qtf.22.2019.01.29.14.42.10
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=FG6fLOIouqm13X8EiMUzNQ46TZxDLNhcDS+GeZqn3jY=;
+        b=e+u4lPi40Xl/uH+rOTKz/G7IqLoHwkEuPEThw5XyDhs0Z0yjhRvlXZQUllcrMVSIjq
+         nN+N/UNKX4E16H9z7WvMbeED+YbpTTN7BsmaS4QEeonfIGh9eDz1epR3SD0SwcQe7nMe
+         qXD6eUQUfe8aJZF2e8KUKg2oEhgldr9eEXq93Bd40WRf4KqJte5dioNDXTZz1DpNmHHs
+         CI67LjbDTzyXC9sEAgDbzdYoVUq2zmpMqNvZJIQXTNJxSdpVJdrfaMUr4mSq/vYhXyPc
+         boQRRAzo0/LZj+rF5xRZbfNsiKQhNbcWbXP0ES6IrA7zUWaHbwfGEdvu/B7H4L36hWBs
+         W0CQ==
+X-Gm-Message-State: AJcUukc6v14sEZAzELiZl0fyRJmmE6wHPLELNCt/qo5O1MlV3uJgwQ/9
+        5DazX8O9x0IWVOMHtR5tcVQ=
+X-Google-Smtp-Source: ALg8bN6/3QxDwRAhA469x2iSQUolUDiMUDah46GsPOeAMKXfYxnGsPPM/XH11Fvkm6dLcxyE/x/rRQ==
+X-Received: by 2002:a1c:2007:: with SMTP id g7mr22403432wmg.79.1548802031109;
+        Tue, 29 Jan 2019 14:47:11 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id f3sm220172wmd.22.2019.01.29.14.47.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 Jan 2019 14:42:10 -0800 (PST)
-Received: (nullmailer pid 4878 invoked by uid 1000);
-        Tue, 29 Jan 2019 22:42:09 -0000
-Date:   Tue, 29 Jan 2019 16:42:09 -0600
-From:   William Hubbs <williamh@gentoo.org>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, chutzpah@gentoo.org, williamh@gentoo.org
-Subject: Re: [PATCH v2 1/2] config: allow giving separate author and
- committer idents
-Message-ID: <20190129224209.GA3392@whubbs1.gaikai.biz>
-References: <20190125215955.30032-1-williamh@gentoo.org>
- <20190125215955.30032-2-williamh@gentoo.org>
- <877ees4a65.fsf@evledraar.gmail.com>
+        Tue, 29 Jan 2019 14:47:10 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH (Apple Git) 02/13] test-lib: Export PERL5LIB for testing git-svn
+References: <20190129193818.8645-1-jeremyhu@apple.com>
+        <20190129193818.8645-3-jeremyhu@apple.com>
+Date:   Tue, 29 Jan 2019 14:47:09 -0800
+In-Reply-To: <20190129193818.8645-3-jeremyhu@apple.com> (Jeremy Huddleston
+        Sequoia's message of "Tue, 29 Jan 2019 11:38:08 -0800")
+Message-ID: <xmqq1s4v6pzm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <877ees4a65.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 25, 2019 at 11:58:10PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Fri, Jan 25 2019, William Hubbs wrote:
-> 
-> > @@ -480,6 +515,46 @@ int git_ident_config(const char *var, const char *value, void *data)
-> >  		return 0;
-> >  	}
-> >
-> > +	if (!strcmp(var, "author.name")) {
-> > +		if (!value)
-> > +			return config_error_nonbool(var);
-> > +		strbuf_reset(&git_author_name);
-> > +		strbuf_addstr(&git_author_name, value);
-> > +		author_ident_explicitly_given |= IDENT_NAME_GIVEN;
-> > +		ident_config_given |= IDENT_NAME_GIVEN;
-> > +		return 0;
-> > +	}
-> > +
-> > +	if (!strcmp(var, "author.email")) {
-> > +		if (!value)
-> > +			return config_error_nonbool(var);
-> > +		strbuf_reset(&git_author_email);
-> > +		strbuf_addstr(&git_author_email, value);
-> > +		author_ident_explicitly_given |= IDENT_MAIL_GIVEN;
-> > +		ident_config_given |= IDENT_MAIL_GIVEN;
-> > +		return 0;
-> > +	}
-> > +
-> > +	if (!strcmp(var, "committer.name")) {
-> > +		if (!value)
-> > +			return config_error_nonbool(var);
-> > +		strbuf_reset(&git_committer_name);
-> > +		strbuf_addstr(&git_committer_name, value);
-> > +		committer_ident_explicitly_given |= IDENT_NAME_GIVEN;
-> > +		ident_config_given |= IDENT_NAME_GIVEN;
-> > +		return 0;
-> > +	}
-> > +
-> > +	if (!strcmp(var, "committer.email")) {
-> > +		if (!value)
-> > +			return config_error_nonbool(var);
-> > +		strbuf_reset(&git_committer_email);
-> > +		strbuf_addstr(&git_committer_email, value);
-> > +		committer_ident_explicitly_given |= IDENT_MAIL_GIVEN;
-> > +		ident_config_given |= IDENT_MAIL_GIVEN;
-> > +		return 0;
-> > +	}
-> > +
-> 
-> This whole thing should be split into a static function. It's the same
-> code copy/pasted 4x times just with a differnet value for "var", the
-> strbuf variable & IDENT_*_GIVEN.
+Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
 
-I have moved most of this into a separate function in the next version
-of the patch. However, I do not see a way to factor it down further. Let
-me know what you think when I resend.
+> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+> ---
+>  t/test-lib.sh | 3 +++
+>  1 file changed, 3 insertions(+)
 
-Also, if you see anything  longer than 79 characters, please let me know
-where the long lines are and I have no problem reformatting them.
+This obviously won't be acceptable as-is to my tree.  Shouldn't this
+be something to be dealt with in config.mak.uname or something that
+is meant to define platform-specific customization?
 
-Thanks much.
-
-William
-
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 0f1faa24b2..4060a53f56 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1017,6 +1017,9 @@ fi
+>  
+>  GITPERLLIB="$GIT_BUILD_DIR"/perl/build/lib
+>  export GITPERLLIB
+> +PERL_VERSION=$(grep DEFAULT /usr/local/versioner/perl/versions | sed 's:^.*= *\([^ ]*\)$:\1:')
+> +PERL5LIB="$GIT_BUILD_DIR"/perl:"$(xcode-select -p)"/Library/Perl/$PERL_VERSION
+> +export PERL5LIB
+>  test -d "$GIT_BUILD_DIR"/templates/blt || {
+>  	error "You haven't built things yet, have you?"
+>  }
