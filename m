@@ -7,94 +7,114 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFE421F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 14:56:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B5271F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 14:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727100AbfA2O4K (ORCPT <rfc822;e@80x24.org>);
+        id S1727555AbfA2O4L (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 09:56:11 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44212 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726383AbfA2O4K (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 29 Jan 2019 09:56:10 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:34227 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725730AbfA2O4K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 09:56:10 -0500
-Received: by mail-ed1-f65.google.com with SMTP id b3so16261459ede.1
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:56:08 -0800 (PST)
+Received: by mail-ed1-f66.google.com with SMTP id y56so16174851edd.11
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:56:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=y6IM7RY6jn4HlEZE7PVKBCuhY64DsVDdI3KSWEA9U9Q=;
-        b=szNrGLBYi8AcUzLGPTUueB353TGOgtESvPJl2H1UI27prFGMirS4MrQ64pT/NvWyU1
-         +E7Sfmb303/2ZdFBu0LDM2hCKwp4kt0QpCiYlhwE2LJ75/ghYPBR6NB32XpICCXLwdmU
-         t3PRrlY5iWyXG72ksSkyjyKwZNtiecPV3GjS/K1GmJYfU+5w7UlSqxq3fl9UI7y+VRtL
-         HNKBeQD/HqGetDfFZ2PJfNFHwfvwMS7mijZkSkEYlNm0yHb3wC8DIdGyeN29ajel55Jq
-         puYAd7FkTIZyBjkbJOulemF/0Z5F8Pc6dD/ZqM15G87EIiHWD/+r2zf6OAiREBbx0mTM
-         CXDQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=PnR9bnc4EHv2MBFJKEW3rbETmsfSZ+EsvV5BKXOJ2GU=;
+        b=mESRoNfyL1zTQsOXwLddrddw6X+xDXhh4wGtMCPktmntisILxaxFOcFeZTsuw6Qvp5
+         xC7zEwM+rCvZkgWyD9Fqc/Ho91hD9VWIT6KkMzMaUyTxVM6TSVa8XyWWJzMlVI+cnOFi
+         T1qg2P53MGjhiT2l/Xp43nNSkiCcMnNUrZqszMtmXIC/MQ3vaR4pGwHrTTkUyN15hk8u
+         9yxCMUt6tZv62isD86pqpSspmBHuvSBSqWTQy54/Mfk8ylprrhPlgXTWkltnv9NU/TTW
+         alHcpX9kHGFhjNfH2B9QAzT0XxB/VPAoTUN2E4U8KsKSJ1sxViZyuUtFm6wzpugtFj29
+         SjVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=y6IM7RY6jn4HlEZE7PVKBCuhY64DsVDdI3KSWEA9U9Q=;
-        b=DkjjVzHf/v/u1KeTNCGI/QwlE6V7pxD3A9MnHMA9twG688zKy/W35JWKoeE9TGWYV3
-         aL6qWid6HhYVZ/bP2ydPjFgP87RX+YWV+xd6dEsMgExyM7mUIJn2FRtODclduSodiGXe
-         ckc/5/nI+cvm5IrFMKbCk4OxGD81nQrtxjML3xDFNP1zILq7gMXEuzxpyzmxZTe97kAq
-         u61RrnuqS56u6wqbFkenoVhFsaYeYpiWR6PS4SXDND1j4gExExhM12ktpQUe6e6RsBJf
-         NyQytPQ9OuuaT12ffZmu61E6ZGpMfZ1H4pH4MdRXNgLVh8vOpWZIP3yLJqwgCmG2PK8j
-         qC6A==
-X-Gm-Message-State: AJcUukeFQv+e/PhkxB9fP75fKJRxSbvLbfFZieL6nwyIQuAGSStSb2MN
-        a87zsl6bai/swnu9JC24Nlu+fxF7
-X-Google-Smtp-Source: ALg8bN66+q4zpgxw0YiC0WhPcwPgOVxNBYJrC2Jw6H+v/VEs9LVw8E7qoHp36tJLWiwSidubtnYtLA==
-X-Received: by 2002:a50:d643:: with SMTP id c3mr24876538edj.178.1548773768162;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=PnR9bnc4EHv2MBFJKEW3rbETmsfSZ+EsvV5BKXOJ2GU=;
+        b=MBVmcqsKISjCtGMsSvbO4M2b38X6K+m7N0xLUq/qA8GJTcCdNSKJ7HTUq8z0K8k4C0
+         0AWuKU+AnoKEa1EhcUNzDKyVwV8giuCkdYGhS5yFnqfx8AyuHVRTnlidOHjcANNrITSn
+         LMzFqvkdu8dBCX5R47EMRi/XJf40R3QmcsQsM5yyO7/RHBWm3Mg4PCL1k5oPhefeFVOK
+         Ij53SYBlxH7msLEr8xgaHW41U7/MnHbu/Q12P2YsyVdg8VVrgJ8d7UXCbTRYHd8ck8xz
+         RQF19/e7DTg8VBjpFNyX354GUeNKauP7Hv7YuIG0aP6QCobMpwd7L4L0tkYlRbVw7bDo
+         utaQ==
+X-Gm-Message-State: AJcUukcdlp+pn3hu/TN9K69jSRTdFa+hBEp/93a5BEqsYUX4bEp92EPu
+        kf8p7xf3qx5o8hiP1gDg7y41eOaS
+X-Google-Smtp-Source: ALg8bN5l0qDRyaRlJWEoTyJ0oYdSFUu8HbFiN+hLik/zew/lSEwpSclbNy5Eyr+QHgXDt+L7BDTToQ==
+X-Received: by 2002:aa7:da57:: with SMTP id w23mr26021607eds.7.1548773768959;
         Tue, 29 Jan 2019 06:56:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f4sm14387600edb.21.2019.01.29.06.56.07
+        by smtp.gmail.com with ESMTPSA id c22sm1978880ejd.39.2019.01.29.06.56.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Jan 2019 06:56:07 -0800 (PST)
-Date:   Tue, 29 Jan 2019 06:56:07 -0800 (PST)
-X-Google-Original-Date: Tue, 29 Jan 2019 14:56:05 GMT
-Message-Id: <pull.114.git.gitgitgadget@gmail.com>
+        Tue, 29 Jan 2019 06:56:08 -0800 (PST)
+Date:   Tue, 29 Jan 2019 06:56:08 -0800 (PST)
+X-Google-Original-Date: Tue, 29 Jan 2019 14:56:06 GMT
+Message-Id: <294187c6968eff952e78bcea808c66fbedbf1f90.1548773766.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.114.git.gitgitgadget@gmail.com>
+References: <pull.114.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Makefile: add prove and coverage-prove targets
+Subject: [PATCH 1/1] Makefile: add prove and coverage-prove targets
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes there are test failures in the 'pu' branch. This is somewhat
-expected for a branch that takes the very latest topics under development,
-and those sometimes have semantic conflicts that only show up during test
-runs. This also can happen when running the test suite with different
-GIT_TEST_* environment variables that interact in unexpected ways.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-This causes a problem for the test coverage reports, as the typical 'make
-coverage-test coverage-report' run halts at the first failed test. If that
-test is early in the suite, then many valuable tests are not exercising the
-code and the coverage report becomes noisy with false positives.
+When running the test suite for code coverage using
+'make coverage-test', a single test failure stops the
+test suite from completing. This leads to significant
+undercounting of covered blocks.
 
-This patch adds two targets to the Makefile: 'prove' and 'coverage-prove'.
-The idea is to use the 'prove' tool to run the test suite, as it will track
-failed tests but continue running the full suite even with a failure.
+Add two new targets to the Makefile:
 
-If/when this merges down, I will use this new target for the automation
-around the test coverage reports.
+* 'prove' runs the test suite using 'prove'.
 
-Thanks, -Stolee
+* 'coverage-prove' compiles the source using the
+  coverage flags, then runs the test suite using
+  'prove'.
 
-Derrick Stolee (1):
-  Makefile: add prove and coverage-prove targets
+These targets are modeled after the 'test' and
+'coverage-test' targets.
 
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
  Makefile | 7 +++++++
  1 file changed, 7 insertions(+)
 
-
-base-commit: 0d0ac3826a3bbb9247e39e12623bbcfdd722f24c
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-114%2Fderrickstolee%2Fcoverage-prove-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-114/derrickstolee/coverage-prove-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/114
+diff --git a/Makefile b/Makefile
+index 1a44c811aa..ec886635ae 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2665,6 +2665,9 @@ export TEST_NO_MALLOC_CHECK
+ test: all
+ 	$(MAKE) -C t/ all
+ 
++prove: all
++	$(MAKE) -C t/ prove
++
+ perf: all
+ 	$(MAKE) -C t/perf/ all
+ 
+@@ -3077,6 +3080,10 @@ coverage-test: coverage-clean-results coverage-compile
+ 	$(MAKE) CFLAGS="$(COVERAGE_CFLAGS)" LDFLAGS="$(COVERAGE_LDFLAGS)" \
+ 		DEFAULT_TEST_TARGET=test -j1 test
+ 
++coverage-prove: coverage-clean-results coverage-compile
++	$(MAKE) CFLAGS="$(COVERAGE_CFLAGS)" LDFLAGS="$(COVERAGE_LDFLAGS)" \
++		DEFAULT_TEST_TARGET=prove -j1 prove
++
+ coverage-report:
+ 	$(QUIET_GCOV)for dir in $(object_dirs); do \
+ 		$(GCOV) $(GCOVFLAGS) --object-directory=$$dir $$dir*.c || exit; \
 -- 
 gitgitgadget
