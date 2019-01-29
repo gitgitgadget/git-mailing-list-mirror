@@ -2,71 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB6211F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 22:38:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A7F81F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 22:42:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728224AbfA2WiL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 17:38:11 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54068 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727342AbfA2WiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 17:38:11 -0500
-Received: (qmail 20704 invoked by uid 109); 29 Jan 2019 22:38:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 Jan 2019 22:38:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11671 invoked by uid 111); 29 Jan 2019 22:38:17 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 29 Jan 2019 17:38:17 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2019 17:38:07 -0500
-Date:   Tue, 29 Jan 2019 17:38:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] Makefile: add prove and coverage-prove targets
-Message-ID: <20190129223807.GC1895@sigill.intra.peff.net>
-References: <pull.114.git.gitgitgadget@gmail.com>
- <294187c6968eff952e78bcea808c66fbedbf1f90.1548773766.git.gitgitgadget@gmail.com>
- <20190129160030.GA7083@sigill.intra.peff.net>
- <87zhrj2n2l.fsf@evledraar.gmail.com>
+        id S1727980AbfA2WmO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 17:42:14 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:45203 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727332AbfA2WmN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 17:42:13 -0500
+Received: by mail-qt1-f196.google.com with SMTP id e5so24145797qtr.12
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 14:42:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=gA7YI0wvMMbtv6hxx8W1U3ygBvtlKCZ8o9dk86XJMuM=;
+        b=FAKcYFulIa6ef3QmQfPy82qA/3cm9HTOlFHYUVqFogIhIAH2sk2AgjkdHMARHF0k98
+         8nPF6ub+Ai+k80fBRbJCSbFnn/eZ9jd6Iz4mRm+7mo7kWy8JtUiw2l8OYk/RjZkfKs31
+         BazEKuzeXWaAjrORMoieu8lo3e2o2PYsPa9gJSVYs+gDwU5WCF1/S042ZrVZaLEL9Gnv
+         1hFEkUQCXzp3L6bQ4al8M4c4BBKf0tAdS/UhZYflG+vHTh9F9AWXk6UV4SnyhKhUx7kw
+         uUMo27EqIsumjQu+lKgWhoiOxEWdnHvZkp7tpJTzp9pgwQlDwDbZeCarW7FpMoUZLSYG
+         K7Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=gA7YI0wvMMbtv6hxx8W1U3ygBvtlKCZ8o9dk86XJMuM=;
+        b=iHX9Pg6R44Y4b4y4xK9XwKJy5WbMK1y/MB6AWmlf3xAwH980AP+yG4DjlkmkIwdrAf
+         KSd2xBQ482mN7/iqJ6Q1Uk+d8Lke/fsz/f+GLOGOh2WsoXsayqG0hHSEBgY1Fm37Jcnm
+         QdvrLwI7iriiZgsOT0J/buiDr+0j49lLA3NyOz4uvBSCbq9f6gD/7sJBy5ODi8zldeFB
+         Nj9dd1iOaKthq937fHEmZCFWMXe8ZQ+KobP7A/HbAeSw5vysn+yp9oYW6CL06BlQmulj
+         jDoX7kWc3tc/6qiKYIn/rG/OVJV6c/p5ku3rY5u4pq1iwLJzb3BYYCO0fpRP5PbEX0qx
+         qpXw==
+X-Gm-Message-State: AJcUukfIqO0tfig1Lxet2PlR2yO6RyMi+Xmc4IiGJaC8S7+zZ0EMoLoS
+        Kfzt7oK5J5bNC93kFRs7yoY=
+X-Google-Smtp-Source: AHgI3Ib4gsZkuSQLZjPYMg/PznTR5TlaY9TZe3PQeCxfRJtblgUTyifbGdkGo9z8R0YPV3mUTHVI2w==
+X-Received: by 2002:aed:2539:: with SMTP id v54mr6703872qtc.211.1548801732451;
+        Tue, 29 Jan 2019 14:42:12 -0800 (PST)
+Received: from whubbs1.gaikai.biz ([100.42.103.5])
+        by smtp.gmail.com with ESMTPSA id l4sm57757959qtf.22.2019.01.29.14.42.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 29 Jan 2019 14:42:10 -0800 (PST)
+Received: (nullmailer pid 4878 invoked by uid 1000);
+        Tue, 29 Jan 2019 22:42:09 -0000
+Date:   Tue, 29 Jan 2019 16:42:09 -0600
+From:   William Hubbs <williamh@gentoo.org>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, chutzpah@gentoo.org, williamh@gentoo.org
+Subject: Re: [PATCH v2 1/2] config: allow giving separate author and
+ committer idents
+Message-ID: <20190129224209.GA3392@whubbs1.gaikai.biz>
+References: <20190125215955.30032-1-williamh@gentoo.org>
+ <20190125215955.30032-2-williamh@gentoo.org>
+ <877ees4a65.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87zhrj2n2l.fsf@evledraar.gmail.com>
+In-Reply-To: <877ees4a65.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 29, 2019 at 10:03:46PM +0100, Ã†var ArnfjÃ¶rÃ° Bjarmason wrote:
+On Fri, Jan 25, 2019 at 11:58:10PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Jan 25 2019, William Hubbs wrote:
+> 
+> > @@ -480,6 +515,46 @@ int git_ident_config(const char *var, const char *value, void *data)
+> >  		return 0;
+> >  	}
+> >
+> > +	if (!strcmp(var, "author.name")) {
+> > +		if (!value)
+> > +			return config_error_nonbool(var);
+> > +		strbuf_reset(&git_author_name);
+> > +		strbuf_addstr(&git_author_name, value);
+> > +		author_ident_explicitly_given |= IDENT_NAME_GIVEN;
+> > +		ident_config_given |= IDENT_NAME_GIVEN;
+> > +		return 0;
+> > +	}
+> > +
+> > +	if (!strcmp(var, "author.email")) {
+> > +		if (!value)
+> > +			return config_error_nonbool(var);
+> > +		strbuf_reset(&git_author_email);
+> > +		strbuf_addstr(&git_author_email, value);
+> > +		author_ident_explicitly_given |= IDENT_MAIL_GIVEN;
+> > +		ident_config_given |= IDENT_MAIL_GIVEN;
+> > +		return 0;
+> > +	}
+> > +
+> > +	if (!strcmp(var, "committer.name")) {
+> > +		if (!value)
+> > +			return config_error_nonbool(var);
+> > +		strbuf_reset(&git_committer_name);
+> > +		strbuf_addstr(&git_committer_name, value);
+> > +		committer_ident_explicitly_given |= IDENT_NAME_GIVEN;
+> > +		ident_config_given |= IDENT_NAME_GIVEN;
+> > +		return 0;
+> > +	}
+> > +
+> > +	if (!strcmp(var, "committer.email")) {
+> > +		if (!value)
+> > +			return config_error_nonbool(var);
+> > +		strbuf_reset(&git_committer_email);
+> > +		strbuf_addstr(&git_committer_email, value);
+> > +		committer_ident_explicitly_given |= IDENT_MAIL_GIVEN;
+> > +		ident_config_given |= IDENT_MAIL_GIVEN;
+> > +		return 0;
+> > +	}
+> > +
+> 
+> This whole thing should be split into a static function. It's the same
+> code copy/pasted 4x times just with a differnet value for "var", the
+> strbuf variable & IDENT_*_GIVEN.
 
-> > I think these are reasonable to have (and I personally much prefer
-> > "prove" to the raw "make test" output anyway).
-> 
-> I wonder if anyone would mind if we removed the non-prove path.
-> 
-> When I added it in 5099b99d25 ("test-lib: Adjust output to be valid TAP
-> format", 2010-06-24) there were still some commonly shipped OS's that
-> had a crappy old "prove", but now almost a decade later that's not a
-> practical problem, and it's installed by default with perl, and we
-> already depend on perl for the tests.
-> 
-> I don't feel strongly about it, but it would allow us to prune some
-> login in the test library / Makefile.
-> 
-> Maybe something for a show of hands at the contributor summit?
+I have moved most of this into a separate function in the next version
+of the patch. However, I do not see a way to factor it down further. Let
+me know what you think when I resend.
 
-Certainly no argument from me personally, but I do wonder if anybody
-uses the old one. Maybe we could mark it with a deprecation notice or
-something. I'd be happy to do a straw poll at the contributor summit (or
-on the list, if anybody reads this ;) ).
+Also, if you see anything  longer than 79 characters, please let me know
+where the long lines are and I have no problem reformatting them.
 
--Peff
+Thanks much.
+
+William
+
