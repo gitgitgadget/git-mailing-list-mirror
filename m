@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC1551F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 22:58:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E3211F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 23:01:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727687AbfA2W63 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 17:58:29 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:35806 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726846AbfA2W63 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 17:58:29 -0500
-Received: by mail-wm1-f45.google.com with SMTP id t200so19749940wmt.0
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 14:58:28 -0800 (PST)
+        id S1728208AbfA2XB3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 18:01:29 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44196 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727488AbfA2XB3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 18:01:29 -0500
+Received: by mail-wr1-f65.google.com with SMTP id z5so23935090wrt.11
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 15:01:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=/j1IJdJiix2qQZb98V20xX10/pipHZtSxpFuFjQpkZc=;
-        b=UzEHkuBbF7x63aKwNXyUEyKSbyqwlgTlef/O97HIVwlWtxi8BL1gOaMD2S7E58x+WT
-         fBJwb5Cb6Lh6XThMYRjNuAooOJRukDFdbb1BG3M2S2tFiRKuQy803ENvCnOoiPyw9nLc
-         WqsSrDpUoDmqDwI1omtX4BLdmlyhZ5T44AopRxKnvUH1YZ3AOkueBmBYbpGsrkrr4FlQ
-         S1bM4WHC73t6FaJnAOcXBknYdjW0SmDFcAHxTK1FRrwvBxkrLd2Dc0Y2Vt70Y9gJkOJc
-         9mvB3PDywLJKNMvRMTRFHob0smIm9EAutdSEN/DURKuHmlMcyvr5dvTc5/d1g30khZof
-         kasw==
+        bh=be5qmgS0FxyI05Ay7lfHiarQ9vTS4hS4oFatxyAuk7g=;
+        b=eDmryJOfBwaDfTWfvGbN9TtzVvzY+FsRxBWrUQw40Lg3V2kZuT2gf3+FuTjOUNt7rP
+         ETbCNsdy8KhhtV52ZHRxAuzD9Ipz13mahfv3qzjkw50OO2lapwutdXfh8fXWaFkIeIXK
+         1TDQATIkt9YrC+9FdsWkK2QBOGrcwEiHAQMIQiD7RpN+BKZSBvo9zvZweHk6cqPXYcXu
+         EbVOpg1qiBLQzi/fXaFPFUua5xgMQFoXxbVswOZGMmITyy8ittNcL1yA1/9At214/0fD
+         hcAq6ZlvXVdbJfB0unqtTqYCElQlj2PhP0DtOXiwHFUUP5RgZMeJ8S4EwYqvFf7fJRHX
+         zewg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=/j1IJdJiix2qQZb98V20xX10/pipHZtSxpFuFjQpkZc=;
-        b=S+sS/z4r+kXo6I3FlN+y5ESk698WNJ1SMM32xsOFXJoGxaS0dGAwJ1hlQdKLlrfFB3
-         JqKtgzTV5Qz0nHuK6nwmL9sDylblqy4yj168Hr4h44DQ3IYho+co/Bf3g6T5AFT5Vq38
-         ZJdZT2zs7e39rc7TrGx8OjGOcb57zF4KM4h+6gDR/dJ/rKQUGAL/nbn/Rk77/sHcW2zo
-         +SEQ5pYlaC5ayw4hSjUZQId6g0TRW1C1vwqP0Em+E/yuzMB4v/YpYplig4BPJ5DCIVM1
-         OQzlA3hb0ih8Ah4/6DAWEVKDjDsCL+mYxWPbMXmldjQAS46nZ9jECKSIPd2DUnlcWYIn
-         dllw==
-X-Gm-Message-State: AJcUukfdc8zD/EiS+cbDeXnhjCooknEsfy9eAvHODDDMrGN7Tw75fSV/
-        U8L7HcFq+2OYbza71ekGf1A=
-X-Google-Smtp-Source: ALg8bN5rDZu+X9Gjz1IAQETrV1X0L72/kpNB6j0s8hA6b3qEaWwAli5jWF3oW30n5Va4s/U4iZZaRw==
-X-Received: by 2002:a1c:5fd7:: with SMTP id t206mr24120286wmb.145.1548802707263;
-        Tue, 29 Jan 2019 14:58:27 -0800 (PST)
+        bh=be5qmgS0FxyI05Ay7lfHiarQ9vTS4hS4oFatxyAuk7g=;
+        b=iwiz2HZXAEYraMqC0hVNchfM41uOG7JLIFYHEvB5gZjV8N2mI8uCdYjPSbYwVZgG7N
+         GH/AALzzwp2USEshVu1KcXfwPQTXjWgVSc8aIzg7xmMyZfZwxCU9OGabkrZMCddPDiFI
+         i+CH4BmMFajOE9BzoTBCArgCDbKujOJNA+/yeYk7pk3r5NcfcX6srN8EpAn74pcKIsI1
+         dqYI114ttQEF8Xsvd4LIixXMZAnLZd0AKI/uo+YmU87lgvS/u9M2c5avjgH1Sd6yFMo6
+         CsDTVfTD5HnAfBnbdm6w4l1lpRWODBBjnWy1j1PvE1LcqfpmDkrYrU1Rk4EH1JOv3Tws
+         uvlw==
+X-Gm-Message-State: AJcUukc03sZ5Y++weth3NaXF6fQN/olW9zs1JQnausFGwI2yHoPNDCgE
+        K9F8sXgzS8YxWgy7goIEEu/iemQc
+X-Google-Smtp-Source: ALg8bN7whpAxuyY6F4IBtZZdfEHA1iCaWjF4F5MAWjiGhd3lMY0i2bMRyQ4xIk4Bz2bcbWQSX3KK/w==
+X-Received: by 2002:a5d:664a:: with SMTP id f10mr27334785wrw.311.1548802886923;
+        Tue, 29 Jan 2019 15:01:26 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h17sm113270153wrt.59.2019.01.29.14.58.26
+        by smtp.gmail.com with ESMTPSA id s3sm154338wmj.23.2019.01.29.15.01.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 29 Jan 2019 14:58:26 -0800 (PST)
+        Tue, 29 Jan 2019 15:01:26 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-Cc:     git@vger.kernel.org, peff@peff.net,
-        Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCH (Apple Git) 04/13] t4014: git --version can have SP in it
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH (Apple Git) 07/13] HTML documentation is not provided with Apple's git. Make the error message more on point.
 References: <20190129193818.8645-1-jeremyhu@apple.com>
-        <20190129193818.8645-5-jeremyhu@apple.com>
-Date:   Tue, 29 Jan 2019 14:58:26 -0800
-In-Reply-To: <20190129193818.8645-5-jeremyhu@apple.com> (Jeremy Huddleston
-        Sequoia's message of "Tue, 29 Jan 2019 11:38:10 -0800")
-Message-ID: <xmqqwomn5awd.fsf@gitster-ct.c.googlers.com>
+        <20190129193818.8645-8-jeremyhu@apple.com>
+Date:   Tue, 29 Jan 2019 15:01:26 -0800
+In-Reply-To: <20190129193818.8645-8-jeremyhu@apple.com> (Jeremy Huddleston
+        Sequoia's message of "Tue, 29 Jan 2019 11:38:13 -0800")
+Message-ID: <xmqqsgxb5ard.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,38 +69,28 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
 
-> Because the default Git version string looks like "git version
-> 2.10.0-1-g480871e09e", this was mostly OK, but people can change this
-> version string to arbitrary thing while compiling, which can break the
-> assumption if they had SP in it.  Notably, Apple ships modified Git with
-> " (Apple Git-xx)" appended to its version number.
+> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+> ---
+>  builtin/help.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/help.c b/builtin/help.c
+> index 7739a5c155..e001b6157c 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -383,7 +383,7 @@ static void get_html_page_path(struct strbuf *page_path, const char *page)
+>  	if (!strstr(html_path, "://")) {
+>  		if (stat(mkpath("%s/git.html", html_path), &st)
+>  		    || !S_ISREG(st.st_mode))
+> -			die("'%s': not a documentation directory.", html_path);
+> +			die("HTML documentation is not provided by this distribution of git.");
 
-I am not sure if that customization is a sensible thing to do in the
-first place, but ...
+Mentioning HTML in the message may be a good idea, but I feel that
+"distribution of git" is not something we should say in the source
+for those who are building from the source.  Distributors are free
+to munge before they generate their binary distribution, of course
+;-).
 
+>  	}
 >  
-> -git_version="$(git --version | sed "s/.* //")"
-> +git_version="$(git --version | sed "s/git version //")"
->  
-
-... this is good, simply because in help.c::cmd_version() we see
-
-        int cmd_version(int argc, const char **argv, const char *prefix)
-        {
-                ...
-                printf("git version %s\n", git_version_string);
-
-i.e. no matter how heavily modified git_version_string[] is, we will
-always show "git version" at the beginning (unless a builder goes
-one step further to customize the version string by modifying the
-source, at which point all bets are off).
-
-To save reviewers and readers from wasting time wondering what
-happens when a company, which is even less reasonable than Apple,
-modifies the version number to include "git version" in it, the
-updated sed expression probably should anchor the pattern to the
-left edge to clarify the intention, even though it would not make
-any difference in practice, i.e.
-
-	sed 's/^git version //'
-
+>  	strbuf_init(page_path, 0);
