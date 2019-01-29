@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 477101F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 05:22:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0911B1F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 05:22:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725805AbfA2FWE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 00:22:04 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41622 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725267AbfA2FWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 00:22:04 -0500
-Received: by mail-wr1-f65.google.com with SMTP id x10so20517377wrs.8
-        for <git@vger.kernel.org>; Mon, 28 Jan 2019 21:22:03 -0800 (PST)
+        id S1725828AbfA2FWF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 00:22:05 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37990 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725807AbfA2FWF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 00:22:05 -0500
+Received: by mail-wr1-f66.google.com with SMTP id v13so20521190wrw.5
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 21:22:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Syb0g5Lw1wR8A9Zh7rPfDLLl27vZcJo3is+7MIteKd4=;
-        b=ZSAaNcy0oQoI9g7Iuds8/AXTgkSis1s6KJn5B2X5LN/QPjI01bOjV7Iu3VAeYe/Pbd
-         iUcCTr8W4xETOSPNfSudt+BY0AI8pIQ8RGZV9BTuElqo8l1A/rmgjkdIHN55XvIayd4c
-         AX2iRaqYZN0pB0tyK4CR12+F/bPWBi5jPqckvVdc2R6tRES3i+UJGDRO0w4Qw+ZyHbBI
-         +kPPhFrPnhxtNHIwDISY1DnECOdPP3J6EoliE0Y/dnttxOjH/hKmx2z029i6Db5td6y2
-         UWJFqSqvU3LgL1cibG6ycGra6/sBsEr4GrCEvzh7GxhAaDh047w1YEEi1K2bRSHjLDdw
-         Pwcw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=vWc5/f532QW6EynJZlIY671NQMxy3PpskJg8B9OXVE8=;
+        b=Ct9QKkDBO0araE752ISaO9X7bJOAv3KUVsgKcctH3mTj6680DtfdH4eL8XMiEQC03v
+         XQiLLnElXcuupXEukcIey7G10krVGe6Nc27NpNdPVsclgOINPEBYi2WOKueDirZvFwWd
+         j7XbkiVD4Ggi61/oDa/+GW1xnlyNY8eteMVYhtx92o1K3x5MClVxsQeG1I+kVpYUpWdI
+         dc4C+gIZ5v+wPB6m+SlQ69RqYttyYy0x3/VQRyDdjg7Rdi2AfqThbEUWbqCZIjgRzZrR
+         kzXSmMLn+c/1bPafzNKxgvQ0ievFqYSOZBvbKn/+qAKRem24CKZH7+ve1spnxBskiQva
+         +MYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Syb0g5Lw1wR8A9Zh7rPfDLLl27vZcJo3is+7MIteKd4=;
-        b=fxK3iDwzuNaICVy1a8dyCNllpVIQp/Oml0dIqTWLF9dADj8pLVH6ZRFJuLrqnjFYav
-         anne2avNjDDucf9tQ+iu+qwyckFXacHDyDIuQLjJp6UrxKsNkBmY+F7U8LXeaFB7IqA7
-         k2WGZyv1n1JhrbDgmGzGo8hsuczCzjzA4uuP3q1+8gWGpXeh61iOLRKJZKLOtCTuiSFN
-         o0g2vj7AVL/QcjcJuB27cFA7bvi3x8MccIcciyIbUPth0ZTbs4rg35aNcvYzOWEf9QRi
-         PWH9+BOXtjKJw4uiw4LqceD8KvUX6U1oHVDnNgebyv/aoo3NPiIADLePYfwbZcmn6fXZ
-         9JLg==
-X-Gm-Message-State: AJcUukeY0zEIHUO+eqQPfUJwOdZcOSF80C2dbWGINPeWukUWkJhB7RFH
-        rxji7/ZJbcwlGGYCsgQfzgITaqfnObA=
-X-Google-Smtp-Source: ALg8bN7tDxaLhK7PuW2jFr7cndA9hupKuVpgFHT3iPyjHm4RnsbGkQ/Fwvtg4nBlMQ7KP5M463fYGg==
-X-Received: by 2002:a5d:480d:: with SMTP id l13mr25836873wrq.175.1548739322159;
-        Mon, 28 Jan 2019 21:22:02 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=vWc5/f532QW6EynJZlIY671NQMxy3PpskJg8B9OXVE8=;
+        b=WfXk/IC14PCskM5ECW2mQonUBVdUq+Nqqbnf03QgHKDzkoZqBjVEk0SAV/TKssHzA4
+         viU6vvWC0K6lLXAtUkZ6D+bQ+BicQF/yd9yr556udZ/E1Kev5TkuTUvz+sxzIqcKglE3
+         Hvr2BPQjfxkuxe5wrQ0Qlyo9DnSiiiVZFitJAGeYmWTVCOdL43OFzBaqLM2xsQUcgeWN
+         gSuQA8yaAPUGYy3PrG/AyRB2j4leVt80yHpCGxcyBmCKcmaAAoMQAZLfo/mqAns34tw6
+         ER8+FHdKSpOrU57QixR9I1ZE52h2Y6o0Iga6Gsh1R4wiUvAge+1aSYdFjYtgw+JzaucB
+         sB5Q==
+X-Gm-Message-State: AJcUukd+zpABiKiUMkDfw4Z8ZvTiqNtTwruZEUx12Z6cHDX8YTlNfmg+
+        3O9cwu6NsETsTMs5UENyc/jrTm3sGMM=
+X-Google-Smtp-Source: ALg8bN5CqmmhAXUhHNGIlRE+1TjclzcmRODtl9okm45UUKaYC0rw0KwGtSSVv/JVK9pA1MMOrd1z4g==
+X-Received: by 2002:adf:f785:: with SMTP id q5mr25557207wrp.9.1548739323321;
+        Mon, 28 Jan 2019 21:22:03 -0800 (PST)
 Received: from localhost.localdomain (ip5b43d796.dynamic.kabel-deutschland.de. [91.67.215.150])
-        by smtp.gmail.com with ESMTPSA id g67sm2906294wmd.38.2019.01.28.21.21.59
+        by smtp.gmail.com with ESMTPSA id g67sm2906294wmd.38.2019.01.28.21.22.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Jan 2019 21:22:00 -0800 (PST)
+        Mon, 28 Jan 2019 21:22:02 -0800 (PST)
 From:   Sebastian Staudt <koraktor@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>,
         Sebastian Staudt <koraktor@gmail.com>
-Subject: [PATCH v3 1/3] Add tests for describe with --work-tree
-Date:   Tue, 29 Jan 2019 06:18:57 +0100
-Message-Id: <20190129051859.12830-1-koraktor@gmail.com>
+Subject: [PATCH v3 2/3] Setup working tree in describe
+Date:   Tue, 29 Jan 2019 06:18:58 +0100
+Message-Id: <20190129051859.12830-2-koraktor@gmail.com>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190129051859.12830-1-koraktor@gmail.com>
+References: <20190129051859.12830-1-koraktor@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -65,79 +67,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The dirty ones are already passing, but just because describe is comparing
-with the wrong working tree.
+This ensures the given working tree is used for --dirty.
+
+The implementation of --broken uses diff-index which calls
+setup_work_tree() itself.
 
 Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
 ---
- t/t6120-describe.sh | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ builtin/describe.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index d639d94696..c863c4f600 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -145,14 +145,38 @@ check_describe A-* HEAD
+diff --git a/builtin/describe.c b/builtin/describe.c
+index cc118448ee..b5b7abdc8f 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -629,6 +629,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 			struct argv_array args = ARGV_ARRAY_INIT;
+ 			int fd, result;
  
- check_describe "A-*[0-9a-f]" --dirty
- 
-+test_expect_success 'describe --dirty with --work-tree' "
-+	(
-+		cd '$TEST_DIRECTORY' &&
-+		git --git-dir '$TRASH_DIRECTORY/.git' --work-tree '$TRASH_DIRECTORY' describe --dirty >'$TRASH_DIRECTORY/out'
-+	) &&
-+	grep 'A-\d\+-g[0-9a-f]\+' '$TRASH_DIRECTORY/out'
-+"
-+
- test_expect_success 'set-up dirty work tree' '
- 	echo >>file
- '
- 
- check_describe "A-*[0-9a-f]-dirty" --dirty
- 
-+test_expect_success 'describe --dirty with --work-tree' "
-+	(
-+		cd '$TEST_DIRECTORY' &&
-+		git --git-dir '$TRASH_DIRECTORY/.git' --work-tree '$TRASH_DIRECTORY' describe --dirty >'$TRASH_DIRECTORY/out'
-+	) &&
-+	grep 'A-\d\+-g[0-9a-f]\+-dirty' '$TRASH_DIRECTORY/out'
-+"
-+
- check_describe "A-*[0-9a-f].mod" --dirty=.mod
- 
-+test_expect_success 'describe --dirty=.mod with --work-tree' "
-+	(
-+		cd '$TEST_DIRECTORY' &&
-+		git --git-dir '$TRASH_DIRECTORY/.git' --work-tree '$TRASH_DIRECTORY' describe --dirty=.mod >'$TRASH_DIRECTORY/out'
-+	) &&
-+	grep 'A-\d\+-g[0-9a-f]\+.mod' '$TRASH_DIRECTORY/out'
-+"
-+
- test_expect_success 'describe --dirty HEAD' '
- 	test_must_fail git describe --dirty HEAD
- '
-@@ -303,12 +327,21 @@ test_expect_success 'describe chokes on severely broken submodules' '
- 	mv .git/modules/sub1/ .git/modules/sub_moved &&
- 	test_must_fail git describe --dirty
- '
-+
- test_expect_success 'describe ignoring a broken submodule' '
- 	git describe --broken >out &&
- 	test_when_finished "mv .git/modules/sub_moved .git/modules/sub1" &&
- 	grep broken out
- '
- 
-+test_expect_success 'describe with --work-tree ignoring a broken submodule' "
-+	(
-+		cd '$TEST_DIRECTORY' &&
-+		git --git-dir '$TRASH_DIRECTORY/.git' --work-tree '$TRASH_DIRECTORY' describe --broken >'$TRASH_DIRECTORY/out'
-+	) &&
-+	grep broken '$TRASH_DIRECTORY/out'
-+"
-+
- test_expect_success 'describe a blob at a directly tagged commit' '
- 	echo "make it a unique blob" >file &&
- 	git add file && git commit -m "content in file" &&
++			setup_work_tree();
+ 			read_cache();
+ 			refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED,
+ 				      NULL, NULL, NULL);
 -- 
 2.20.1
 
