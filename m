@@ -2,130 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B92951F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 17:34:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6781A1F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 17:39:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727628AbfA2ReO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 12:34:14 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36591 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727498AbfA2ReO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 12:34:14 -0500
-Received: by mail-wm1-f65.google.com with SMTP id p6so18687718wmc.1
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 09:34:13 -0800 (PST)
+        id S1728677AbfA2Rjs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 12:39:48 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46341 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726374AbfA2Rjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 12:39:48 -0500
+Received: by mail-wr1-f65.google.com with SMTP id l9so22983694wrt.13
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 09:39:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=80YVyAPs4v7DgysnixptzWHLxhV1qEvNtXZ3gqzD0LM=;
-        b=Nf+jPT7xpTRNPaNvZI4nGS6VaMCQF60nNhPwuBNYL8h7OvjDnBceZamwA2h2NvgYqf
-         KqixRANKmsSeaCi0GZ/Q1/4wjFX2TKEWXs/lyBdYrCxhpOYnGm1/AVofyVCC8PmRpkEo
-         VyV/N7UIjla+UOKX3refFPxCCBXPWQ7dM9kMYCpppA5LFavAq3+IJsaSDhGZ4IZjfVec
-         hy4cYyuZkt4LtwxkL4v/7PfyRKPfufIVEsvC9O5IxqVBajPYOcLV2K7369/HfoqalHmr
-         9Ki6AQzfIoo1UuYQOBLnZiLkxUJ5dWo7KhdhD99QZL0qGliN/zhCcJSBQS8bpynb66AU
-         5H/A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=h+ifemftFeCBVippVuSMekOFGyuHoDVAvZQ/geGC9yc=;
+        b=V78wjIa7YCKx/FCwnClXeBYxEjk3i2rABp9rDgn4U5jYHsftCSenUZmkm2RmsNQhP7
+         E9qkdeuoF1wijT4nct6QM2XxnMD9NFUeVTA278+ZDDzYhjtLOBNnpaXToLamTciXF8Ov
+         QCvNdtEq1O/g8L6dD54J4gQxf0iNUT5xRt4lsSBQWjQAc/dZ+sHAB2uohtSpto1xxry4
+         4hfG4OjCtm8Z/G96cF0zp4RTTyleJ8nKE7w502BniJfg9bLRy5r+UwguEHN9r9uA4nV6
+         lBbJnCDwfHf4P5RphwEpAiRFhfRgDPSNv2Zzqxao0jwWD3egQCJNM3WLRC+t5CbxqAUV
+         7UVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=80YVyAPs4v7DgysnixptzWHLxhV1qEvNtXZ3gqzD0LM=;
-        b=jdF1cthY5NNW4NJXC0PlSC8md1n1+4rDhuB+jpuI6dMqjoVdyzuTtw4AT4c8cyP7ri
-         B68g9Inwy9IdaODdvK2JZf1mU7jyK3aN13Xs3TqSqPVvjDrMp53B98jTICzDdgumK4aO
-         wExUjU07coU571VEweOohuQPu3mH1V3pOM/rIH5eGPqqDE5zjylkBmrsg1vXWJm/SdRs
-         IMGsEO1z188v/k7kOh4rAJbQJ4wagHpO/Y4AUOat3lOj+2Dc1EsdzR7Ja6yQPkHtVp5C
-         VYOg0hTo//tTUEPA6p0CYHe1eB2uba3X+DZD+oWGfBp9TSxPJ7y8YR0pmDBEY7JU8uSj
-         3lfQ==
-X-Gm-Message-State: AJcUukfSnAL/iFo8fkEpkyqX2I3xhYt9EJk+sCko6ZOzMfDg8rUwqUP1
-        19EApUzMyUFc5KCpDADNHOY=
-X-Google-Smtp-Source: ALg8bN41polHf/aPHr8HY8eYMlMmzaexFF+vCtaTttc/fyiq2UIpkH093AxV/O+TCWIhybdJ2a+rIQ==
-X-Received: by 2002:a7b:c04e:: with SMTP id u14mr22608976wmc.113.1548783252599;
-        Tue, 29 Jan 2019 09:34:12 -0800 (PST)
-Received: from szeder.dev (x4db3778b.dyn.telefonica.de. [77.179.119.139])
-        by smtp.gmail.com with ESMTPSA id c1sm5489922wmb.14.2019.01.29.09.34.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Jan 2019 09:34:11 -0800 (PST)
-Date:   Tue, 29 Jan 2019 18:34:09 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] Makefile: add prove and coverage-prove targets
-Message-ID: <20190129173409.GD13764@szeder.dev>
-References: <pull.114.git.gitgitgadget@gmail.com>
- <294187c6968eff952e78bcea808c66fbedbf1f90.1548773766.git.gitgitgadget@gmail.com>
- <20190129155827.GC13764@szeder.dev>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=h+ifemftFeCBVippVuSMekOFGyuHoDVAvZQ/geGC9yc=;
+        b=UU0p7TE0yfqNhkjVcmu0b5Ql0LYIpM7V9Z2zq0z4UBqrEyQHyU5KV0xixP38RElZ52
+         jcLT+El8/UtB579P7KZ2mae8tQ1FXs3aZ9M13mFs29X/XjEa+KorvOf7wPNqEeTIzyW/
+         TX2ez6Iaw/x5SpBUkKs7UvaIkgSDy8z7IDbRwt7eW4LS2GmVytrVQkFiVVQegCtJ7gR7
+         GZnUeh8q+rSLgz+5W0SHi+3EmLYTgUD74AjVhb9HHkoAb57cwtSTPhLOXUYJkozhtbhC
+         q0lX/FnPiw2HbFdSsCRDVcvjJQWIHEAb9BwucfxQvFLVMlpYz1pNjA5T9QBKUYX62stZ
+         545g==
+X-Gm-Message-State: AJcUukdduece5HttoheKwsv+n+59sKKNE/Y9Wpemui4m9jIgLaYl/Qi6
+        JqYoL+/I75JXYNHkTlkXhQc=
+X-Google-Smtp-Source: ALg8bN5n2ITW9PsJxIKZv+as8mowGjpYi5sKIHkGpkmAyFcX/Lyy24Tvfqh6o1cbz8ijKNgiH9k/8g==
+X-Received: by 2002:adf:e9d1:: with SMTP id l17mr25107414wrn.73.1548783585995;
+        Tue, 29 Jan 2019 09:39:45 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m6sm90777364wrv.24.2019.01.29.09.39.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 29 Jan 2019 09:39:45 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Sebastian Staudt <koraktor@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 2/3] Setup working tree in describe
+References: <20190129051859.12830-1-koraktor@gmail.com>
+        <20190129051859.12830-2-koraktor@gmail.com>
+        <20190129131151.GB22211@sigill.intra.peff.net>
+Date:   Tue, 29 Jan 2019 09:39:44 -0800
+In-Reply-To: <20190129131151.GB22211@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 29 Jan 2019 08:11:51 -0500")
+Message-ID: <xmqqr2cv8isf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190129155827.GC13764@szeder.dev>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 29, 2019 at 04:58:27PM +0100, SZEDER Gábor wrote:
-> On Tue, Jan 29, 2019 at 06:56:08AM -0800, Derrick Stolee via GitGitGadget wrote:
-> > @@ -3077,6 +3080,10 @@ coverage-test: coverage-clean-results coverage-compile
-> >  	$(MAKE) CFLAGS="$(COVERAGE_CFLAGS)" LDFLAGS="$(COVERAGE_LDFLAGS)" \
-> >  		DEFAULT_TEST_TARGET=test -j1 test
-> >  
-> > +coverage-prove: coverage-clean-results coverage-compile
-> > +	$(MAKE) CFLAGS="$(COVERAGE_CFLAGS)" LDFLAGS="$(COVERAGE_LDFLAGS)" \
-> > +		DEFAULT_TEST_TARGET=prove -j1 prove
-> 
-> First I was wondering why do you need a dedicated 'coverage-prove'
-> target, instead of letting DEFAULT_TEST_TARGET from the environment or
-> from 'config.mak' do its thing.  But then I noticed in the hunk
-> context, that, for some reason, the 'coverage-test' target hardcoded
-> 'DEFAULT_TEST_TARGET=test -j1'.  Then I was wondering why would it
-> want to do that, and stumbled upon commit c14cc77c11:
-> 
->     coverage: set DEFAULT_TEST_TARGET to avoid using prove
->     
->     If the user sets DEFAULT_TEST_TARGET=prove in his config.mak, that
->     carries over into the coverage tests.  Which is really bad if he also
->     sets GIT_PROVE_OPTS=-j<..> as that completely breaks the coverage
->     runs.
+Jeff King <peff@peff.net> writes:
 
-So this text is really dramatic and implies (to me, at least), that
-parallelized coverage builds just don't work.  I've just run a
-coverage build with this patch and my usual GIT_PROVE_OPTS containing
-'-j4', and the tests went well and the generated report looks good,
-too (I don't know how it's supposed to look, but at least I didn't
-notice anything obviously wrong with it).  However, this might mean
-nothing, because further digging turned up the follow paragraph in
-901c369af5 (Support coverage testing with GCC/gcov, 2009-02-19):
+> On Tue, Jan 29, 2019 at 06:18:58AM +0100, Sebastian Staudt wrote:
+>
+>> Subject: Re: [PATCH v3 2/3] Setup working tree in describe
+>
+> We usually write subjects as "area: do some thing" which is a little
+> easier when scanning big lists of "git log --oneline".
+>
+> I think it's key, too, that we only do this for the --dirty case, not
+> always. So maybe:
+>
+>   describe: setup working tree for --dirty
+>
+> or something?
 
-    The tests are run serially (with -j1).  The coverage code should
-    theoretically allow concurrent access to its data files, but the
-    author saw random test failures.  Obviously this could be
-    improved.
+Thanks as always for being an excellent reviewer who not just
+reviews but also gives good suggestions.
 
-And in the related email discussion [1]:
-
-  But even though the docs claim it [-j<N>] should be possible,
-  I've been getting "random" test failures when compiled with coverage
-  support, that went away with -j1.  So the tests still run with -j1, as
-  with the first version of the series.
-
-So it doesn't seem to be that bad after all, because it's not
-"completely breaks" but "random test failures".  Still far from ideal,
-but the original coverage patch is just about 3 weeks short of a
-decade old, so maybe things have improved since then, and it'd be
-worth a try to leave GIT_PROVE_OPTS as is and see what happens.
-
-
-[1] https://public-inbox.org/git/200902191512.16755.trast@student.ethz.ch/
-
-
+>> This ensures the given working tree is used for --dirty.
+>
+> There's been a lot of digging and discussion on the list about what
+> happens if we don't do this. Could we summarize it here?
+>
+> Perhaps:
+>
+>   We don't use NEED_WORK_TREE when running the git-describe builtin,
+>   since you should be able to describe a commit even in a bare
+>   repository. However, the --dirty flag does need a working tree. Since
+>   we don't call setup_work_tree(), it uses whatever directory we happen
+>   to be in. That's unlikely to match our index, meaning we'd say "dirty"
+>   even when the real working tree is clean.
+>
+>   We can fix that by calling setup_work_tree() once we know that the
+>   user has asked for --dirty.
+>
+>> The implementation of --broken uses diff-index which calls
+>> setup_work_tree() itself.
+>
+> If I hadn't just read the rest of the thread, I'd probably wonder why we
+> are talking about --broken at all. Maybe:
+>
+>   The --broken option similarly needs a working tree. But because the
+>   current implementation calls an external diff-index to do the work,
+>   we don't have to bother setting up the working tree in the
+>   git-describe process.
+>
+>> diff --git a/builtin/describe.c b/builtin/describe.c
+>> index cc118448ee..b5b7abdc8f 100644
+>> --- a/builtin/describe.c
+>> +++ b/builtin/describe.c
+>> @@ -629,6 +629,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+>>  			struct argv_array args = ARGV_ARRAY_INIT;
+>>  			int fd, result;
+>>  
+>> +			setup_work_tree();
+>>  			read_cache();
+>>  			refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED,
+>>  				      NULL, NULL, NULL);
+>
+> The patch itself looks good. :)
+>
+> -Peff
