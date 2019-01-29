@@ -8,40 +8,40 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC7D11F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 01:39:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86E621F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 01:39:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726965AbfA2Bj4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 20:39:56 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:50464 "EHLO
+        id S1726979AbfA2Bj5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 20:39:57 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:50462 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726790AbfA2Bjz (ORCPT
+        by vger.kernel.org with ESMTP id S1726761AbfA2Bjz (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 28 Jan 2019 20:39:55 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x0T1dFWI008899;
-        Mon, 28 Jan 2019 17:39:51 -0800
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x0T1dFWH008899;
+        Mon, 28 Jan 2019 17:39:50 -0800
 Received: from mail.palantir.com ([8.4.231.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2q8p9rjrj8-5
+        by mx0a-00153501.pphosted.com with ESMTP id 2q8p9rjrj8-4
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
         Mon, 28 Jan 2019 17:39:50 -0800
 Received: from sj-prod-exch-02.YOJOE.local (10.129.18.29) by
  sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1531.3; Mon, 28 Jan 2019 17:39:33 -0800
+ 15.1.1531.3; Mon, 28 Jan 2019 17:39:32 -0800
 Received: from smtp-transport.yojoe.local (10.129.56.124) by
  sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server id
- 15.1.1531.3 via Frontend Transport; Mon, 28 Jan 2019 17:39:45 -0800
+ 15.1.1531.3 via Frontend Transport; Mon, 28 Jan 2019 17:39:44 -0800
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id EB7D8220F6F0;
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id DE519220F6DD;
         Mon, 28 Jan 2019 17:39:47 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     <gitster@pobox.com>
 CC:     <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 6/8] git-legacy-rebase: simplify unnecessary triply-nested if
-Date:   Mon, 28 Jan 2019 17:39:43 -0800
-Message-ID: <20190129013945.17336-7-newren@gmail.com>
+Subject: [PATCH v5 4/8] am, rebase--merge: do not overlook --skip'ed commits with post-rewrite
+Date:   Mon, 28 Jan 2019 17:39:41 -0800
+Message-ID: <20190129013945.17336-5-newren@gmail.com>
 X-Mailer: git-send-email 2.20.1.310.g17ca096f17
 In-Reply-To: <20190129013945.17336-1-newren@gmail.com>
 References: <20181211161139.31686-1-newren@gmail.com>
@@ -54,75 +54,92 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
  malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=601 adultscore=0 classifier=spam adjust=0 reason=mlx
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1810050000 definitions=main-1901290009
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The git-legacy-rebase.sh script previously had code of the form:
+The post-rewrite hook is supposed to be invoked for each rewritten
+commit.  The fact that a commit was selected and processed by the rebase
+operation (even though when we hit an error a user said it had no more
+useful changes), suggests we should write an entry for it.  In
+particular, let's treat it as an empty commit trivially squashed into
+its parent.
 
-if git_am_opt:
-  if interactive:
-    if incompatible_opts:
-      show_error_about_interactive_and_am_incompatibilities
-  if rebase-merge:
-    if incompatible_opts
-      show_error_about_merge_and_am_incompatibilities
-
-which was a triply nested if.  However, the first conditional
-(git_am_opt) and third (incompatible_opts) were somewhat redundant: the
-latter condition was a strict subset of the former.  Simplify this by
-moving the innermost conditional to the outside, allowing us to remove
-the test on git_am_opt entirely and giving us the following form:
-
-if incompatible_opts:
-  if interactive:
-    show_error_about_interactive_and_am_incompatibilities
-  if rebase-merge:
-    show_error_about_merge_and_am_incompatibilities
+This brings the rebase--am and rebase--merge backends in sync with the
+behavior of the interactive rebase backend.
 
 Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- git-legacy-rebase.sh | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ builtin/am.c                 | 9 +++++++++
+ git-rebase--merge.sh         | 2 ++
+ t/t5407-post-rewrite-hook.sh | 3 +++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
-index f4088b7bda..6baf10192d 100755
---- a/git-legacy-rebase.sh
-+++ b/git-legacy-rebase.sh
-@@ -501,21 +501,17 @@ then
- 	git_format_patch_opt="$git_format_patch_opt --progress"
- fi
+diff --git a/builtin/am.c b/builtin/am.c
+index 8f27f3375b..af9d034838 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2000,6 +2000,15 @@ static void am_skip(struct am_state *state)
+ 	if (clean_index(&head, &head))
+ 		die(_("failed to clean index"));
  
--if test -n "$git_am_opt"; then
--	incompatible_opts=$(echo " $git_am_opt " | \
--			    sed -e 's/ -q / /g' -e 's/^ \(.*\) $/\1/')
-+incompatible_opts=$(echo " $git_am_opt " | \
-+		    sed -e 's/ -q / /g' -e 's/^ \(.*\) $/\1/')
-+if test -n "$incompatible_opts"
-+then
- 	if test -n "$interactive_rebase"
- 	then
--		if test -n "$incompatible_opts"
--		then
--			die "$(gettext "fatal: cannot combine am options with interactive options")"
--		fi
-+		die "$(gettext "fatal: cannot combine am options with interactive options")"
- 	fi
--	if test -n "$do_merge"; then
--		if test -n "$incompatible_opts"
--		then
--			die "$(gettext "fatal: cannot combine am options with merge options")"
--		fi
-+	if test -n "$do_merge"
-+	then
-+		die "$(gettext "fatal: cannot combine am options with merge options")"
- 	fi
- fi
- 
++	if (state->rebasing) {
++		FILE *fp = xfopen(am_path(state, "rewritten"), "a");
++
++		assert(!is_null_oid(&state->orig_commit));
++		fprintf(fp, "%s ", oid_to_hex(&state->orig_commit));
++		fprintf(fp, "%s\n", oid_to_hex(&head));
++		fclose(fp);
++	}
++
+ 	am_next(state);
+ 	am_load(state);
+ 	am_run(state, 0);
+diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+index aa2f2f0872..91250cbaed 100644
+--- a/git-rebase--merge.sh
++++ b/git-rebase--merge.sh
+@@ -121,6 +121,8 @@ continue)
+ skip)
+ 	read_state
+ 	git rerere clear
++	cmt="$(cat "$state_dir/cmt.$msgnum")"
++	echo "$cmt $(git rev-parse HEAD^0)" >> "$state_dir/rewritten"
+ 	msgnum=$(($msgnum + 1))
+ 	while test "$msgnum" -le "$end"
+ 	do
+diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+index 6426ec8991..a4a5903cba 100755
+--- a/t/t5407-post-rewrite-hook.sh
++++ b/t/t5407-post-rewrite-hook.sh
+@@ -78,6 +78,7 @@ test_expect_success 'git rebase --skip' '
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+ 	cat >expected.data <<-EOF &&
++	$(git rev-parse C) $(git rev-parse HEAD^)
+ 	$(git rev-parse D) $(git rev-parse HEAD)
+ 	EOF
+ 	verify_hook_input
+@@ -91,6 +92,7 @@ test_expect_success 'git rebase --skip the last one' '
+ 	echo rebase >expected.args &&
+ 	cat >expected.data <<-EOF &&
+ 	$(git rev-parse E) $(git rev-parse HEAD)
++	$(git rev-parse F) $(git rev-parse HEAD)
+ 	EOF
+ 	verify_hook_input
+ '
+@@ -120,6 +122,7 @@ test_expect_success 'git rebase -m --skip' '
+ 	git rebase --continue &&
+ 	echo rebase >expected.args &&
+ 	cat >expected.data <<-EOF &&
++	$(git rev-parse C) $(git rev-parse HEAD^)
+ 	$(git rev-parse D) $(git rev-parse HEAD)
+ 	EOF
+ 	verify_hook_input
 -- 
 2.20.1.310.g17ca096f17
 
