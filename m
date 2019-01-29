@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B763E1F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 15:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C7F81F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 15:36:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728164AbfA2PdK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 10:33:10 -0500
-Received: from mout.gmx.net ([212.227.15.15]:49869 "EHLO mout.gmx.net"
+        id S1727342AbfA2PgC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 10:36:02 -0500
+Received: from mout.gmx.net ([212.227.17.22]:33939 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726135AbfA2PdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 10:33:10 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M86Cn-1h22601t45-00vdbp; Tue, 29
- Jan 2019 16:33:01 +0100
-Date:   Tue, 29 Jan 2019 16:32:45 +0100 (STD)
+        id S1725747AbfA2PgB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 10:36:01 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSp1l-1ggz2V0cz7-00RnmD; Tue, 29
+ Jan 2019 16:35:54 +0100
+Date:   Tue, 29 Jan 2019 16:35:37 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Subject: Re: [PATCH] rebase -x: sanity check command
-In-Reply-To: <13f14cc6-e437-3f18-7f24-1d6edda1cb23@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1901291632070.41@tvgsbejvaqbjf.bet>
-References: <20190128102620.18222-1-phillip.wood@talktalk.net> <nycvar.QRO.7.76.6.1901282257570.41@tvgsbejvaqbjf.bet> <13f14cc6-e437-3f18-7f24-1d6edda1cb23@talktalk.net>
+In-Reply-To: <4e4e46b3-9745-a3db-56cb-58763f7cf994@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1901291633440.41@tvgsbejvaqbjf.bet>
+References: <20190128102620.18222-1-phillip.wood@talktalk.net> <xmqqd0ogbpzn.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1901282253200.41@tvgsbejvaqbjf.bet> <4e4e46b3-9745-a3db-56cb-58763f7cf994@talktalk.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:pfTONvl35xehqdOT//OCdaz1fNJz3g1daYpbce1kHJxr20IOeun
- 0NbEKMLPHJKM2mjU60HRq+PC8DhnHyhAqoViilsGoI9Z/5Cw2AauXDl6V4EbL/k+q1G+zfU
- mRLLeW2UpTvgw+uFIxXkdH6fhLTH5uelpTnfYhwIKH/xvGG2okqj0Quh/dF7s56XzWumFTa
- 2o07CYK8xFb8f1fOzQ6gg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZlLvX/c/ZXM=:vKItTIOWrplQ59J2KbAv8D
- ZwdxM7T+XIhXHfVZdhDEkWpVa5XlBe0eRihuYUN6OA3VAWG75wFlhtqjAgd2pfDCrBbM2gEcR
- MGxzXxPplBU9wHYGsW0AFxnIP6P/XROf70EZnVONV1zJN2a315bksm7mXx3QG+3iQHS2GJ30B
- kWyT2KMGYOfcQxQTtbyqxAVj7VtzMATFQGlwjEY/Ogw1RkA+9qJbNfHidkuiRMHd98YX9/9lQ
- yYViLGqGIGlpARVOFhDMnV+pG/SnWQDqjCu9N98x8FuIRVZd6UZY0LgkHPimPGpOsX4e17VLC
- MGBQbJdkwFsWpcT2Ap+mLf5KzrIORuNPs53b29cGg1/Wa3dFoojJantsRfji4NMuDhNYGsjuj
- feqrMLKq26l8za0/eL+WRb9dmFgZB382GMA/7lxHI5lB+y2vooBI8vtI37M0qloBfzbEV9qi/
- toBZd082Q6xgHQuxorzeDM8Oh3bCI7dXgICzAEHQ5w+QIf7f3EQ+0SBHJs/OXQNbFT6plxT0f
- tce6Qm1hHhIzVTrBzzw6jitA0ReuCwif2lfj7DmKdNUI5mh+oKiJvCv5hBDOebhWgG1Bsw7RS
- dShHKuAyX+Sd3HJDqMnInHtbf/YjzWk9CqiOpGbFDUoFu9H+8+kCW8hcv1xkd6hILNGXrDbhw
- PMSLi4LUmAghs3RASRIWeyzLpJX5YXwucS2kVUYZr7jdMVK5OK8jqImukaYoontv3ioIcXCx4
- 5JUVTWRE1OWap9bVmJR21HVA0aZXmrJJBo3sRTKAjwOumHRt6UV/112bGtb/z6Qw+djXnP7qC
- wVedGROiOydkFo2JeSYP2OzjXHw40MxuYyBNDLZ+mIO5aUOyTZ/r9XxIxsxZApve/eyKI0seb
- PhNlViRux4n6oaYqAcBVMQxGQ4dlXgfiuBMSJU9a0NtpbCteapY2Sop2qnU7jnsFjjHL/UYWS
- a/+NKHLc0xw==
+X-Provags-ID: V03:K1:SH8xx6MDx752dBoYTr10nfL8yzqztJWmc2U9rb6XkV8MThjRgXd
+ jWmVxpnLNEolIPFzGKh5gDUuduQYbaygImVLNNWonF+Pk5AvPEJblA0gZwQHgMNeitkOE6d
+ 2yv9z1Pt7XyzD/1KozsrUXlslC3BQD2bUeorSNn9DgejgsjuTWzSFIXElTwXhP4lHNyy+cG
+ KqReWIJnmWbCBGOnoRYUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:x4MM+pQJLU4=:sHOTfvie/4StH6KAo7tXOH
+ Zb2GrPv0wrAhUgCa2DOHQk9ZZspEuN97D7Usfxw6KkCOw+S5Yc7ahJXvrlSEQEuZ0lipmRaW4
+ om2AHYWA+v3hwkKYhS4e+HOtOK960IFFwQVaQVVUC7/jsW2X14abN9soBcTJpHeYOo1gwyTVJ
+ Oc/ZwSXOhBeTe92XwBOIMkqqSSeOCKZRFgcqDZYabhyBFdODEyRqOVniS7fRmiXW6KMDezPB/
+ c6PAEomXZlvBqCWJUmR6uf2ZNoO7y4iPoS//+ZT3ZMyE0pr0b6K8pjP3ErQ77urnWZS03vGUP
+ Zosw9oJcxd1lGn6XX2GlxYZ4r+r73hDCjUtHqrqV1KKn5E/McT9UAJLGN0G9I1aONjLvfMFxF
+ MFAPQf0TS5r63j1DRUMWxHt3SlyezMQR+lEbl3l6BrtSjRGEUi3NQ8GoDaSv3JQCKYJ008Ozg
+ ZDuqVbFaO1fLAtxtKJJjeIvXj2ysvaKxc4mN4rVXpkMsEN7b3l1B18PVx9wIm9EXlOV7itOW9
+ g1F7QU8rZYiRm/agwH35YzUTZQE9Oi+YD2HifXDdxwYGJM9zqA9N3l9oDzQpLLAKuQC405tOw
+ D2kcRCqpNqf/BIniF+C1We5ELJz22jCxH3m2RpsYC4c9kh7xF1rjYS4XV3VJkWsXSlCZI3lQF
+ iF0eHl22fxpIidtQzGn+QW+iWg2bq83gtf+DCAG6cIurgd8NlZroAyA6rkxUB7t1qagtBrhQ1
+ eKzlYd0Ovj452L/PG4Y7eym+FQ+fS/YIScdsYJhGrbV7ptx3x1jAFXtxylHJURNlOfDp1ourE
+ X52oSWrFJtDx+b+U9iVYlrN9zJy9EycxBi0WyLNI17dTs3OU0oHf2czJxAFWop/uKY2rtn97i
+ gASD3qTaVuVHdWfENLjJqk1xlsQ/wzp6QOIlktuY34autWi+uPcLp+cTOuKSD+kTIVPU1rO08
+ aTPO5FjOJQw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,159 +58,84 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Phillip,
 
-[sorry for the double-send, I dropped the Cc: list by mistake the first
-time I replied]
-
 On Tue, 29 Jan 2019, Phillip Wood wrote:
 
-> On 28/01/2019 22:03, Johannes Schindelin wrote:
-> > Hi Phillip,
+> On 28/01/2019 21:56, Johannes Schindelin wrote:
 > > 
-> > On Mon, 28 Jan 2019, Phillip Wood wrote:
+> > On Mon, 28 Jan 2019, Junio C Hamano wrote:
 > > 
-> >> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >> Phillip Wood <phillip.wood@talktalk.net> writes:
 > >>
-> >> If the user gives an empty argument to --exec then the rebase starts to
-> >> run before erroring out with
+> >>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >>>
+> >>> If the user gives an empty argument to --exec then the rebase starts to
+> >>> run before erroring out with
+> >>>
+> >>>   error: missing arguments for exec
+> >>>   error: invalid line 2: exec
+> >>>   You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
+> >>>   Or you can abort the rebase with 'git rebase --abort'.
 > >>
-> >>   error: missing arguments for exec
-> >>   error: invalid line 2: exec
-> >>   You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
-> >>   Or you can abort the rebase with 'git rebase --abort'.
+> >> Hmph.  I do agree that the above makes an unfortunate end-user
+> >> experience, but I would sort-of imagine that it would even be nicer
+> >> for such an empty exec to behave as if it were "exec false" but with
+> >> less severe error message, i.e. a way for the user to say "I want to
+> >> break the sequence here and get an interactive session".  We may not
+> >> even need to add the "break" insn if we go that way and there is one
+> >> less thing for users to learn.  I dunno, but I tend to prefer giving
+> >> a useful and safe behaviour to interactive users other than erroring
+> >> out, when there _is_ such a safe behaviour that is obvious from the
+> >> situation, and I feel that an empty "exec" is such a case.
 > > 
-> > And that's the same if you specify an incorrect command.
+> > That would make things unnecessarily confusing. An empty command is not
+> > `false` with a gentler error message. An empty command is a missing
+> > command.
 > 
-> Not quite, the issue is that the todo list is invalid, not that the
-> command fails - it never gets that far. Those errors are coming from
-> parse_insn_line() and parse_insn_buffer().
+> I agree that having a special meaning to the empty command would be
+> confusing. Also giving it on the command line only helps if you want to
+> stop after each pick and my impression is that people want to break
+> after specific commits to amend a fixup or something like that.
+> 
+> > I am, however, concerned that special-casing an empty command will not
+> > make things better: if the user called `git rebase --exec=fasle`, they
+> > will *still* have to clean up their edit script.
+> 
+> The empty commands create an invalid todo list which git cannot parse,
+> this patch is not a step down the path of checking that the command
+> exists or is valid shell - I don't think that would be possible in the
+> general case.
 
-Ah! I misunderstood "then the rebase starts to run" part.
+Well, at least the error message is helpful: it suggests --edit-todo.
 
-So please let me withdraw my objections to catch this error.
-
-However, I still would highly recommend to use `strspn()` to simplify the
-code.
+But as I said in another reply, I understand now that your patch validates
+the argument as necessary to produce a valid todo list.
 
 Thanks,
 Dscho
 
-> > In both cases, I would probably heed the second line of the advice: git
-> > rebase --abort.
-> > 
-> >> Instead check for empty commands before starting the rebase.
-> >>
-> >> Also check that the command does not contain any newlines as the
-> >> todo-list format is unable to cope with multiline commands. Note that
-> >> this changes the behavior, before this change one could do
-> >>
-> >> git rebase --exec='echo one
-> >> exec echo two'
-> >>
-> >> and it would insert two exec lines in the todo list, now it will error
-> >> out.
-> > 
-> > This, however, makes a ton of sense to me.
-> > 
-> >> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> >> index 00de70365e..b6c54b03c1 100644
-> >> --- a/builtin/rebase.c
-> >> +++ b/builtin/rebase.c
-> >> @@ -793,6 +793,24 @@ static void set_reflog_action(struct rebase_options *options)
-> >>  	strbuf_release(&buf);
-> >>  }
-> >>  
-> >> +static int check_exec_cmd(const char *cmd)
-> >> +{
-> >> +	int non_blank = 0;
-> >> +
-> >> +	while (*cmd) {
-> >> +		if (*cmd == '\n')
-> >> +			return error(_("exec commands cannot contain newlines"));
-> >> +		if (!isspace(*cmd))
-> >> +			non_blank = 1;
-> >> +		cmd++;
-> >> +	}
-> >> +
-> >> +	if (non_blank)
-> >> +		return 0;
-> > 
-> > We are not in a performance critical path here, so I would prefer the
-> > readability of this code:
-> > 
-> > 	if (strchr(cmd, '\n'))
-> > 		return error(...);
-> > 
-> > And if you *really* must,
-> > 
-> > 	/* Does the command consist purely of whitespace? */
-> > 	if (!cmd[strspn(cmd, " \t\r\n")])
-> > 		return error(...);
-> > 
-> > But as I suggested also in a reply to Junio's answer: where would we stop
-> > to validate the commands?
-> 
-> I'm not trying to validate the command (and I don't think we can/should)
-> - just generate a todo list that can be parsed.
 > 
 > Best Wishes
 > 
 > Phillip
 > 
+> > Or just `git rebase --abort`, which I would do whether I had forgotten to
+> > specify a command or whether I had a typo in my command.
+> > 
+> >>> Also check that the command does not contain any newlines as the
+> >>> todo-list format is unable to cope with multiline commands. Note that
+> >>> this changes the behavior, before this change one could do
+> >>>
+> >>> git rebase --exec='echo one
+> >>> exec echo two'
+> >>
+> >> It is very good to check the input, regardless of what an empty
+> >> "exec" should do.
+> > 
+> > Should we then also check for incorrect quoting, missing commands, other
+> > errors? I am not sure that this path leads to sanity.
 > > 
 > > Ciao,
 > > Dscho
 > > 
-> >> +
-> >> +	return error(_("empty exec command"));
-> >> +}
-> >> +
-> >>  int cmd_rebase(int argc, const char **argv, const char *prefix)
-> >>  {
-> >>  	struct rebase_options options = {
-> >> @@ -1130,6 +1148,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
-> >>  		}
-> >>  	}
-> >>  
-> >> +	for (i = 0; i < exec.nr; i++)
-> >> +		if (check_exec_cmd(exec.items[i].string))
-> >> +			exit(1);
-> >> +
-> >>  	if (!(options.flags & REBASE_NO_QUIET))
-> >>  		argv_array_push(&options.git_am_opts, "-q");
-> >>  
-> >> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> >> index 7a440e08d8..c98f64eb2d 100755
-> >> --- a/t/t3404-rebase-interactive.sh
-> >> +++ b/t/t3404-rebase-interactive.sh
-> >> @@ -147,6 +147,25 @@ test_expect_success 'rebase -i with the exec command checks tree cleanness' '
-> >>  	git rebase --continue
-> >>  '
-> >>  
-> >> +test_expect_success 'rebase -x with empty command fails' '
-> >> +	test_when_finished "git rebase --abort ||:" &&
-> >> +	test_must_fail git rebase -x "" @ 2>actual &&
-> >> +	test_write_lines "error: empty exec command" >expected &&
-> >> +	test_i18ncmp expected actual &&
-> >> +	test_must_fail git rebase -x " " @ 2>actual &&
-> >> +	test_i18ncmp expected actual
-> >> +'
-> >> +
-> >> +LF='
-> >> +'
-> >> +test_expect_success 'rebase -x with newline in command fails' '
-> >> +	test_when_finished "git rebase --abort ||:" &&
-> >> +	test_must_fail git rebase -x "a${LF}b" @ 2>actual &&
-> >> +	test_write_lines "error: exec commands cannot contain newlines" \
-> >> +			 >expected &&
-> >> +	test_i18ncmp expected actual
-> >> +'
-> >> +
-> >>  test_expect_success 'rebase -i with exec of inexistent command' '
-> >>  	git checkout master &&
-> >>  	test_when_finished "git rebase --abort" &&
-> >> -- 
-> >> 2.20.1
-> >>
-> >>
 > 
 > 
