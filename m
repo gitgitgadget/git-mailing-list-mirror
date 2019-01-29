@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0B431F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 14:19:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93A001F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 14:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728194AbfA2OTf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 09:19:35 -0500
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:40947 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728132AbfA2OTe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 09:19:34 -0500
-Received: by mail-ed1-f47.google.com with SMTP id g22so16082887edr.7
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:19:32 -0800 (PST)
+        id S1728148AbfA2OTd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 09:19:33 -0500
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:33088 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728041AbfA2OTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 09:19:31 -0500
+Received: by mail-ed1-f48.google.com with SMTP id p6so16156877eds.0
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:19:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=78IrL+5/ULRbiBWonyqqOoF9pTaUuqJK4U/mjC0vwos=;
-        b=YnOqxuZ1YWlLAIG/aYcdbGaY63FnnhuyWTxVEY2JT/iVC/ciu2QFQ9NuVfMyw0cYFQ
-         5mBr/pulmDXYKttBodLJQVr4ml87RUze892iPIC1NYBjM2EGojCBmYTa53IiooyEPtxf
-         kSlX+4j0c2PyH56DE4Sig57XdmlX23fX+CslJV51zwkOZ4KbFtR6uV+4orbrXkSBZCfC
-         3PAoWxxg5KLoPT/m6q0elc4K8gFQHPoRgCGXkWX2wPzorXEITabOYhOfQayBYBQlWvJX
-         mCrY6n1vZtxWsbmGBzGMx3TlIcrz4+iATqlWEQh4SvJLTByLF7uPt2fcYCyshO24ve1J
-         24FQ==
+        bh=RJiBb8F0ZIhkEzjeNE5PJ80Os/lj+Z9pFBzCKAm8HF8=;
+        b=J+wM78PXA8I+3aOobRUPExpWb/QvX+7dCxq58/q9B3qEkZeFpxMMOpE7G3aaXRuKr9
+         fqjB41UWcRicypTvizH0m4u29K+pZiJMBnDYBj27up+jPcyRNqG83RqXE6hcKcWTChRf
+         E2pTfPSEcmhPu6wGGpBOnVMS7bcDFZBvZbqddKZjkcO8esDgyKqubkgddwlaeeaG5Rdb
+         29CR6crWYKBqTlXcI6wLFH7iwY938rqLvMi1y5DzKdlFh0WBB7eixB1TG7+FwLlblwI5
+         eeyBXaZUd8yWGs99iUq6IJouhmEoMvmSjWHAZPN7gAdzi9zJXNBm64VNmSM3+cgip7Iq
+         AlIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=78IrL+5/ULRbiBWonyqqOoF9pTaUuqJK4U/mjC0vwos=;
-        b=tsS9OOg9pmCNEGdRytgLqbzL2g3uxRsplo6lobRGMYZbZZ8Go4PrTLRSXIqCz9T6hr
-         wKuMyU0uOkOH/SNFWpL5JSAjiOqP0sTASbtw9TclBUPn5RM02Jq6SOhve4oQiGr+TZ9N
-         9igEchoh6GaZHRf4K9Uy16n7vok6IxOXPiHs/o+GYxPp81BgNmEWjRSeB2WDYWZZLkN0
-         VDGvtV22LQBtkDDcYBPiBDkxc4WZRbiq/84UIDFMkvy9X3hXiAMyUb+GUVLx/UJd74qe
-         dT11V4brEYvX0VGEhcVBt6kfAVDc6LQh1qsqqCI+jFUPf+XRFQMRMeNi+8kLqGetn6t2
-         CtxA==
-X-Gm-Message-State: AJcUukc50ZAB60HG1KAJbaOi3nmZj+YbyWHds7dJegYJmR3L+FowOGJi
-        zvIgXWx0VHUbvTT70H5uPUGO8pUI
-X-Google-Smtp-Source: ALg8bN7liZz2FoBqj5Ht4wCgbNW+qcU2HCWzT2Odq7cxQQWvuS/XjnP8HOfiIAccVdNe9H/5ufKdIQ==
-X-Received: by 2002:a17:906:4bd7:: with SMTP id x23-v6mr23278421ejv.105.1548771571549;
-        Tue, 29 Jan 2019 06:19:31 -0800 (PST)
+        bh=RJiBb8F0ZIhkEzjeNE5PJ80Os/lj+Z9pFBzCKAm8HF8=;
+        b=n0ob6o695aoh8tW3mF3PGg9LmKDrPLO/YQQ5V54rbESfXDRE9xTU8FqOuSXAFxotbI
+         cNSPPoxjZ42jt39i5eMWWyP+vAz4jdiHdknypIvQfLZBUclCPBYukNTCqDq7pjN+kHMw
+         oiC1MvfKDZRxghVE+98/iJx9R184tb+GgcdaCn8RhGXRBIOfXdOrfpvCHCm7h7gAVPPH
+         Y0adJGOW59fpTfo390z315fgYBHd+fxABcXRxyXfg/hfYf0aIdXggqxBGKdW6IBAh3Eu
+         LP3wGXUWKaXrtamG/g5JEI/NM6MPdqR2npTERlOpW1rYB53hp+QQYA8y/PKdpIqto018
+         F4TA==
+X-Gm-Message-State: AJcUukeZHIzqDiBoMHKtVKnF6MBlOapRdifgbOGqaMqsIOqDI9X2KxMN
+        Pzfl0N/O8g1q5bomWdKEybsBnNCj
+X-Google-Smtp-Source: ALg8bN6OK/1BqZXsGAhaLfqNOpqU7ALxl+cXIfDzcpoH5Ct273kLbOGaCaQ6IvD9QenWlnhaMBnzvQ==
+X-Received: by 2002:a50:d085:: with SMTP id v5mr25451516edd.61.1548771569448;
+        Tue, 29 Jan 2019 06:19:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j4sm14419592edh.69.2019.01.29.06.19.31
+        by smtp.gmail.com with ESMTPSA id b46sm14859665edc.57.2019.01.29.06.19.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Jan 2019 06:19:31 -0800 (PST)
-Date:   Tue, 29 Jan 2019 06:19:31 -0800 (PST)
-X-Google-Original-Date: Tue, 29 Jan 2019 14:19:10 GMT
-Message-Id: <1ab1d14e063969c86db2accf7340dcd5fcde27e5.1548771561.git.gitgitgadget@gmail.com>
+        Tue, 29 Jan 2019 06:19:28 -0800 (PST)
+Date:   Tue, 29 Jan 2019 06:19:28 -0800 (PST)
+X-Google-Original-Date: Tue, 29 Jan 2019 14:19:07 GMT
+Message-Id: <4c78085af7b41dc66a2757dfad9dd1ab329cff5b.1548771561.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v6.git.gitgitgadget@gmail.com>
 References: <pull.31.v5.git.gitgitgadget@gmail.com>
         <pull.31.v6.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 11/21] ci: use git-sdk-64-minimal build artifact
+Subject: [PATCH v6 08/21] ci/lib.sh: add support for Azure Pipelines
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,89 +71,75 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Instead of a shallow fetch followed by a sparse checkout, we are
-better off by using a separate, dedicated Pipeline that bundles
-the SDK as a build artifact, and then consuming that build artifact
-here.
+This patch introduces a conditional arm that defines some environment
+variables and a function that displays the URL given the job id (to
+identify previous runs for known-good trees).
 
-In fact, since this artifact will be used a lot, we spent substantial
-time on figuring out a minimal subset of the Git for Windows SDK, just
-enough to build and test Git. The result is a size reduction from around
-1GB (compressed) to around 55MB (compressed). This also comes with the
-change where we now call `usr\bin\bash.exe` directly, as `git-cmd.exe`
-is not included in the minimal SDK.
+Because Azure Pipeline's macOS agents already have git-lfs and gettext
+installed, we can leave `BREW_INSTALL_PACKAGES` empty (unlike in
+Travis' case).
 
-That reduces the time to initialize Git for Windows' SDK from anywhere
-between 2m30s-7m to a little over 1m.
-
-Note: in theory, we could also use the DownloadBuildArtifacts@0 task
-here. However, restricted permissions that are in effect when building
-from forks would let this fail for PR builds, defeating the whole
-purpose of the Azure Pipelines support for git.git.
+Note: this patch does not introduce an Azure Pipelines definition yet;
+That is left for the next patch.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- azure-pipelines.yml | 44 +++++++++-----------------------------------
- 1 file changed, 9 insertions(+), 35 deletions(-)
+ ci/lib.sh                 | 25 +++++++++++++++++++++++++
+ ci/print-test-failures.sh |  5 +++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-index 0f7b2125a1..480e841a85 100644
---- a/azure-pipelines.yml
-+++ b/azure-pipelines.yml
-@@ -18,44 +18,18 @@ jobs:
-     env:
-       GITFILESHAREPWD: $(gitfileshare.pwd)
-   - powershell: |
--      # Helper to check the error level of the latest command (exit with error when appropriate)
--      function c() { if (!$?) { exit(1) } }
--
--      # Add build agent's MinGit to PATH
--      $env:PATH = $env:AGENT_HOMEDIRECTORY +"\externals\\git\cmd;" +$env:PATH
--
--      # Helper to initialize (or update) a Git worktree
--      function init ($path, $url, $set_origin) {
--        if (Test-Path $path) {
--          cd $path; c
--          if (Test-Path .git) {
--            & git init; c
--          } else {
--            & git status
--          }
--        } else {
--          & git init $path; c
--          cd $path; c
--        }
--        & git config core.autocrlf false; c
--        & git config core.untrackedCache true; c
--        if (($set_origin -ne 0) -and !(git config remote.origin.url)) {
--          & git remote add origin $url; c
--        }
--        & git fetch --depth=1 $url master; c
--        & git reset --hard FETCH_HEAD; c
--        & git clean -df; c
--      }
--
--      # Initialize Git for Windows' SDK
--      $sdk_path = "$(Build.SourcesDirectory)\git-sdk-64"
--      init "$sdk_path" "https://dev.azure.com/git-for-windows/git-sdk-64/_git/git-sdk-64" 0
-+      $urlbase = "https://dev.azure.com/git-for-windows/git/_apis/build/builds"
-+      $id = ((Invoke-WebRequest -UseBasicParsing "${urlbase}?definitions=22&statusFilter=completed&resultFilter=succeeded&`$top=1").content | ConvertFrom-JSON).value[0].id
-+      $downloadUrl = ((Invoke-WebRequest -UseBasicParsing "${urlbase}/$id/artifacts").content | ConvertFrom-JSON).value[1].resource.downloadUrl
-+      (New-Object Net.WebClient).DownloadFile($downloadUrl,"git-sdk-64-minimal.zip")
-+      Expand-Archive git-sdk-64-minimal.zip -DestinationPath . -Force
-+      Remove-Item git-sdk-64-minimal.zip
- 
-       # Let Git ignore the SDK and the test-cache
--      "/git-sdk-64/`n/test-cache/`n" | Out-File -NoNewLine -Encoding ascii -Append "$(Build.SourcesDirectory)\.git\info\exclude"
--    displayName: 'Initialize the Git for Windows SDK'
-+      "/git-sdk-64-minimal/`n/test-cache/`n" | Out-File -NoNewLine -Encoding ascii -Append "$(Build.SourcesDirectory)\.git\info\exclude"
-+    displayName: 'Download git-sdk-64-minimal'
-   - powershell: |
--      & "git-sdk-64\git-cmd.exe" --command=usr\\bin\\bash.exe -lc @"
-+      & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-         export DEVELOPER=1
-         export NO_PERL=1
-         export NO_SVN_TESTS=1
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 32a28fd209..5505776876 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -102,6 +102,31 @@ then
+ 	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+ 	export GIT_TEST_OPTS="--verbose-log -x --immediate"
+ 	export MAKEFLAGS="--jobs=2"
++elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
++then
++	CI_TYPE=azure-pipelines
++	# We are running in Azure Pipelines
++	CI_BRANCH="$BUILD_SOURCEBRANCH"
++	CI_COMMIT="$BUILD_SOURCEVERSION"
++	CI_JOB_ID="$BUILD_BUILDID"
++	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
++	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
++	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
++	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
++	CC="${CC:-gcc}"
++
++	# use a subdirectory of the cache dir (because the file share is shared
++	# among *all* phases)
++	cache_dir="$HOME/test-cache/$SYSTEM_PHASENAME"
++
++	url_for_job_id () {
++		echo "$SYSTEM_TASKDEFINITIONSURI$SYSTEM_TEAMPROJECT/_build/results?buildId=$1"
++	}
++
++	BREW_INSTALL_PACKAGES=
++	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
++	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
++	export MAKEFLAGS="--jobs=10"
+ else
+ 	echo "Could not identify CI type" >&2
+ 	exit 1
+diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
+index cf321b474d..e688a26f0d 100755
+--- a/ci/print-test-failures.sh
++++ b/ci/print-test-failures.sh
+@@ -41,6 +41,11 @@ do
+ 		case "$CI_TYPE" in
+ 		travis)
+ 			;;
++		azure-pipelines)
++			mkdir -p failed-test-artifacts
++			mv "$trash_dir" failed-test-artifacts
++			continue
++			;;
+ 		*)
+ 			echo "Unhandled CI type: $CI_TYPE" >&2
+ 			exit 1
 -- 
 gitgitgadget
 
