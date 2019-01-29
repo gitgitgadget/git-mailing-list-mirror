@@ -2,126 +2,239 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7D701F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 21:32:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D88B1F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 21:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729609AbfA2Vcf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 16:32:35 -0500
-Received: from ma1-aaemail-dr-lapp03.apple.com ([17.171.2.72]:39706 "EHLO
-        ma1-aaemail-dr-lapp03.apple.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729531AbfA2Vcf (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 29 Jan 2019 16:32:35 -0500
-Received: from pps.filterd (ma1-aaemail-dr-lapp03.apple.com [127.0.0.1])
-        by ma1-aaemail-dr-lapp03.apple.com (8.16.0.27/8.16.0.27) with SMTP id x0TJasc3029331;
-        Tue, 29 Jan 2019 11:39:38 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=mime-version :
- content-transfer-encoding : content-type : from : to : cc : subject : date
- : message-id : in-reply-to : references; s=20180706;
- bh=PcSEQlv2ej7UIOl3joc+2+vIcGSc8qA2iFGc2CB2Fxo=;
- b=ovbZGYN4A1RKmXIeUvjXvJALt7IdU5eh9W5F+0FULrhCj2chzDfPjFzWv1VhVKImamER
- GEkBJ35XeaFW7gJFer/YBT4/7sFzzq82lGi6OHiJFxZ4RNesSbR7VpOlQ+PbAjRE+JDy
- rwNzXsFCrizeaAI1/dOnbctilYcWZH4mY9nO3ZHOJ5gE5eAfBB/S7RQjbeKNpnNjakWP
- H6kbvyu0DSTJDcKRgUDZOR6L6+DAqY/yHFWn/hoLK/kze8phQB8gXjfkH4/cBvkjw/yU
- jh2iNPvnBHo0RXVgEm0xWHkeuvA9x+Wj0UhaRA46Q0z/TxrJOPk16ekzm+9CTX8FutNT LA== 
-Received: from mr2-mtap-s01.rno.apple.com (mr2-mtap-s01.rno.apple.com [17.179.226.133])
-        by ma1-aaemail-dr-lapp03.apple.com with ESMTP id 2q8qe37s2f-2
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
-        Tue, 29 Jan 2019 11:39:37 -0800
-MIME-version: 1.0
-Content-transfer-encoding: 7BIT
-Content-type: TEXT/PLAIN
-Received: from nwk-relayp-sz03.apple.com
- (nwk-relayp-sz03.apple.com [17.128.113.11]) by mr2-mtap-s01.rno.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) with ESMTPS id <0PM300L5TYM0BND0@mr2-mtap-s01.rno.apple.com>; Tue,
- 29 Jan 2019 11:39:37 -0800 (PST)
-Received: from process_viserion-daemon.nwk-relayp-sz03.apple.com by
- nwk-relayp-sz03.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) id <0PM300C00Y9IP900@nwk-relayp-sz03.apple.com>; Tue,
- 29 Jan 2019 11:39:37 -0800 (PST)
-X-Va-A: 
-X-Va-T-CD: ff40b79dc1582ca1bb0a38bbb8b21c87
-X-Va-E-CD: 249c6f1ae3114c2f13bfeafb12b7216f
-X-Va-R-CD: 6c9f092297d979b2478c63065f77f984
-X-Va-CD: 0
-X-Va-ID: f70a43ec-340b-4a19-83dd-dcb39c14d06e
-X-V-A:  
-X-V-T-CD: ff40b79dc1582ca1bb0a38bbb8b21c87
-X-V-E-CD: 249c6f1ae3114c2f13bfeafb12b7216f
-X-V-R-CD: 6c9f092297d979b2478c63065f77f984
-X-V-CD: 0
-X-V-ID: e6cf812c-3b6d-414a-bef4-dca1d0f21847
-Received: from process_milters-daemon.nwk-relayp-sz03.apple.com by
- nwk-relayp-sz03.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) id <0PM300000YJS3N00@nwk-relayp-sz03.apple.com>; Tue,
- 29 Jan 2019 11:39:36 -0800 (PST)
-Authentication-results: corp.apple.com; spf=softfail
- smtp.mailfrom=jeremyhu@apple.com;      dmarc=quarantine header.from=apple.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
- definitions=2019-01-29_15:,, signatures=0
-Received: from tifa.apple.com (unknown [17.114.130.22])
- by nwk-relayp-sz03.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) with ESMTP id <0PM30080GYLYQX50@nwk-relayp-sz03.apple.com>; Tue,
- 29 Jan 2019 11:39:36 -0800 (PST)
-From:   Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-Subject: [PATCH (Apple Git) 13/13] Enable support for Xcode.app-bundled
- gitattributes
-Date:   Tue, 29 Jan 2019 11:38:19 -0800
-Message-id: <20190129193818.8645-14-jeremyhu@apple.com>
-X-Mailer: git-send-email 2.20.0 (Apple Git-115)
-In-reply-to: <20190129193818.8645-1-jeremyhu@apple.com>
-References: <20190129193818.8645-1-jeremyhu@apple.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-29_15:,,
- signatures=0
+        id S1727707AbfA2Vfj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 16:35:39 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36295 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727320AbfA2Vfj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 16:35:39 -0500
+Received: by mail-wr1-f67.google.com with SMTP id u4so23779428wrp.3
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 13:35:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=1O9GpxYm7O6CPjiQGYKwjoVNEdw3b8UdQdSd2fDr6SE=;
+        b=neGgcKIWgg9Z73VIKlLje1rYDgeC5tOIT4dmH9wUmmug54bokIVvuPuDpk3fweXf0c
+         ftlsrwOyZb013SQ0WjeWZxZbeMgebUN1Mbmx1fC/rbAn5LLfc/4sixmr349t0ANLbxVI
+         Zzgb7ejIIZwY8TovgfsuvYgj06AhZrTaBZBzZ3iUJrzh6rYGp2pl94KtDlrKyCM5Ln/e
+         /6y+EApoFabtmDaSXrsK0owLDwZkofFH9yPyc/Kex2XBnhHNQe+TIRVfS841V0IzzoTW
+         WCzzMXYaXlOuDyjHFqD4m9oaDCoSON1GiwRUM1A6LSnqgHVFPMjNwaLManBiPRxrc0xM
+         PSKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=1O9GpxYm7O6CPjiQGYKwjoVNEdw3b8UdQdSd2fDr6SE=;
+        b=sG5m60rXJ95HiE7mm6vsK5BLoc0n+gYWg9FACrx0Wn4Ejvt0I2qSSntfluGxxMnbBd
+         U2mQR4w1fyPpZckUxuX+8XnGmp+eH+LQ/lDZ/lPlEen/sn4H0BgRjcbRm4Wj0RsSSA3r
+         K+hBUcColymOdjHA1wQs6gpDfEv8ZcLERtb2XmRfvkeykR1WRqtYLDPdr1/y8d+c/wKx
+         mOXFVEm+BmuruKDbKAYa55Q1t/fpKH8oO3skGz7L0VUybwDfiv87+wa+jp7wB71eKNph
+         iqoWnE3277uGtUpLb5zaEikzKdNXbIiuiyc1NcoNgzz5a9ek+5xXamT7MX6BLYKL5ri+
+         tNJg==
+X-Gm-Message-State: AJcUuketuQcCDOGGEWO5H3vJhAQiZo2pvRR5l0O0aOEhpzZMp60f3mHb
+        hVsoinWAzPpn5BCSomMG1/CjUJWt
+X-Google-Smtp-Source: ALg8bN6+hZ51HVivSWB0vL6ZWOtHCwcQ9gb7hOki5GIfpdNhO06FuExoCYSQGVJDcOJdOsM41FC0Lw==
+X-Received: by 2002:adf:f101:: with SMTP id r1mr28168909wro.32.1548797736380;
+        Tue, 29 Jan 2019 13:35:36 -0800 (PST)
+Received: from szeder.dev (x4db3778b.dyn.telefonica.de. [77.179.119.139])
+        by smtp.gmail.com with ESMTPSA id k7sm102638913wrl.51.2019.01.29.13.35.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Jan 2019 13:35:35 -0800 (PST)
+Date:   Tue, 29 Jan 2019 22:35:33 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Dmitriy Smirnov <dmitriy.smirnov@jetbrains.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        git@vger.kernel.org,
+        Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+        Aleksey Pivovarov <aleksey.pivovarov@jetbrains.com>
+Subject: Re: git add =?utf-8?B?4oCUaWdub3JlLWVycm9y?= =?utf-8?Q?s?= causes
+ --renormalize
+Message-ID: <20190129213533.GE13764@szeder.dev>
+References: <401130AF-056B-40BF-8001-8492223B8A6B@jetbrains.com>
+ <20190117162711.GA7935@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190117162711.GA7935@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
----
- attr.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+On Thu, Jan 17, 2019 at 11:27:11AM -0500, Jeff King wrote:
+> On Thu, Jan 17, 2019 at 06:22:05PM +0300, Dmitriy Smirnov wrote:
+> 
+> > Calling `git add —ignore-errors` appears to be equal to calling `git add —renormalize`:
+> > 
+> > Main.java is saved with CRLF in repo
+> > git config core.autocrlf = input
+> > 
+> > $ src  git:(master) echo line >> Main.java  
+> > $ src  git:(master) git add --ignore-errors Main.java  
+> > $ src  git:(master) git commit -m "Ignore errors"                          
+> > [master cf24b3b] Ignore errors
+> >  1 file changed, 13 insertions(+), 12 deletions(-)
+> > 
+> > 
+> > The reason appears to be wrong bit mask usage
+> > 
+> > #define ADD_CACHE_IGNORE_ERRORS    4
+> > and
+> > #define HASH_RENORMALIZE  4
+> > 
+> > Looks like a regression since 2.16.0 - 9472935d81eaf9faed771878c9df0216ae0d9045
+> 
+> Thanks for a very clear report! The patch below should fix it.
+> 
+> -- >8 --
+> Subject: [PATCH] add: use separate ADD_CACHE_RENORMALIZE flag
+> 
+> Commit 9472935d81 (add: introduce "--renormalize", 2017-11-16) taught
+> git-add to pass HASH_RENORMALIZE to add_to_index(), which then passes
+> the flag along to index_path(). However, the flags taken by
+> add_to_index() and the ones taken by index_path() are distinct
+> namespaces. We cannot take HASH_* flags in add_to_index(), because they
+> overlap with the ADD_CACHE_* flags we already take (in this case,
+> HASH_RENORMALIZE conflicts with ADD_CACHE_IGNORE_ERRORS).
+> 
+> We can solve this by adding a new ADD_CACHE_RENORMALIZE flag, and using
+> it to set HASH_RENORMALIZE within add_to_index(). In order to make it
+> clear that these two flags come from distinct sets, let's also change
+> the name "newflags" in the function to "hash_flags".
+> 
+> Reported-by: Dmitriy Smirnov <dmitriy.smirnov@jetbrains.com>
+> Signed-off-by: Jeff King <peff@peff.net>
 
-diff --git a/attr.c b/attr.c
-index eaece6658d..1b87905d4a 100644
---- a/attr.c
-+++ b/attr.c
-@@ -823,6 +823,14 @@ static const char *git_etc_gitattributes(void)
- 	return system_wide;
- }
- 
-+static const char *git_xcode_gitattributes(void)
-+{
-+	static const char *xcode_gitattributes;
-+	if (!xcode_gitattributes)
-+		xcode_gitattributes = system_path("share/git-core/gitattributes");
-+	return xcode_gitattributes;
-+}
-+
- static const char *get_home_gitattributes(void)
- {
- 	if (!git_attributes_file)
-@@ -864,6 +872,9 @@ static void bootstrap_attr_stack(const struct index_state *istate,
- 
- 	/* system-wide frame */
- 	if (git_attr_system()) {
-+		e = read_attr_from_file(git_xcode_gitattributes(), 1);
-+		push_stack(stack, e, NULL, 0);
-+
- 		e = read_attr_from_file(git_etc_gitattributes(), 1);
- 		push_stack(stack, e, NULL, 0);
- 	}
--- 
-2.20.0 (Apple Git-115)
+t0025 with '--stress' usually fails within seconds when run on the
+merge of 'jk/add-ignore-errors-bit-assignment-fix' and 'master' [1]:
 
+  + echo *.txt text=auto
+  + git add --renormalize *.txt
+  + cat
+  + sed -e s/     / /g -e s/  */ /g
+  + sort
+  + git ls-files --eol
+  + test_cmp expect actual
+  + diff -u expect actual
+  --- expect      2019-01-29 21:27:34.043344898 +0000
+  +++ actual      2019-01-29 21:27:34.055345252 +0000
+  @@ -1,3 +1,3 @@
+  -i/lf w/crlf attr/text=auto CRLF.txt
+  +i/crlf w/crlf attr/text=auto CRLF.txt
+   i/lf w/lf attr/text=auto LF.txt
+  -i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
+  +i/mixed w/mixed attr/text=auto CRLF_mix_LF.txt
+  error: last command exited with $?=1
+  not ok 2 - renormalize CRLF in repo
+  #       
+  #               echo "*.txt text=auto" >.gitattributes &&
+  #               git add --renormalize "*.txt" &&
+  #               cat >expect <<-\EOF &&
+  #               i/lf w/crlf attr/text=auto CRLF.txt
+  #               i/lf w/lf attr/text=auto LF.txt
+  #               i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
+  #               EOF
+  #               git ls-files --eol |
+  #               sed -e "s/      / /g" -e "s/  */ /g" |
+  #               sort >actual &&
+  #               test_cmp expect actual
+  #       
+
+[1] 'jk/add-ignore-errors-bit-assignment-fix' doesn't contains
+    '--stress' yet, hence the merge to 'master'.
+
+> ---
+>  builtin/add.c               | 2 +-
+>  cache.h                     | 1 +
+>  read-cache.c                | 8 ++++----
+>  t/t0025-crlf-renormalize.sh | 9 +++++++++
+>  4 files changed, 15 insertions(+), 5 deletions(-)
+> 
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 12247b48fd..f481ae548e 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -137,7 +137,7 @@ static int renormalize_tracked_files(const struct pathspec *pathspec, int flags)
+>  			continue; /* do not touch non blobs */
+>  		if (pathspec && !ce_path_match(&the_index, ce, pathspec, NULL))
+>  			continue;
+> -		retval |= add_file_to_cache(ce->name, flags | HASH_RENORMALIZE);
+> +		retval |= add_file_to_cache(ce->name, flags | ADD_CACHE_RENORMALIZE);
+>  	}
+>  
+>  	return retval;
+> diff --git a/cache.h b/cache.h
+> index 49713cc5a5..11b19505fc 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -745,6 +745,7 @@ extern int index_name_pos(const struct index_state *, const char *name, int name
+>  #define ADD_CACHE_JUST_APPEND 8		/* Append only; tree.c::read_tree() */
+>  #define ADD_CACHE_NEW_ONLY 16		/* Do not replace existing ones */
+>  #define ADD_CACHE_KEEP_CACHE_TREE 32	/* Do not invalidate cache-tree */
+> +#define ADD_CACHE_RENORMALIZE 64        /* Pass along HASH_RENORMALIZE */
+>  extern int add_index_entry(struct index_state *, struct cache_entry *ce, int option);
+>  extern void rename_index_entry_at(struct index_state *, int pos, const char *new_name);
+>  
+> diff --git a/read-cache.c b/read-cache.c
+> index bfff271a3d..9783c493a3 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -703,10 +703,10 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+>  	int intent_only = flags & ADD_CACHE_INTENT;
+>  	int add_option = (ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE|
+>  			  (intent_only ? ADD_CACHE_NEW_ONLY : 0));
+> -	int newflags = HASH_WRITE_OBJECT;
+> +	int hash_flags = HASH_WRITE_OBJECT;
+>  
+> -	if (flags & HASH_RENORMALIZE)
+> -		newflags |= HASH_RENORMALIZE;
+> +	if (flags & ADD_CACHE_RENORMALIZE)
+> +		hash_flags |= HASH_RENORMALIZE;
+>  
+>  	if (!S_ISREG(st_mode) && !S_ISLNK(st_mode) && !S_ISDIR(st_mode))
+>  		return error(_("%s: can only add regular files, symbolic links or git-directories"), path);
+> @@ -762,7 +762,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+>  		}
+>  	}
+>  	if (!intent_only) {
+> -		if (index_path(istate, &ce->oid, path, st, newflags)) {
+> +		if (index_path(istate, &ce->oid, path, st, hash_flags)) {
+>  			discard_cache_entry(ce);
+>  			return error(_("unable to index file '%s'"), path);
+>  		}
+> diff --git a/t/t0025-crlf-renormalize.sh b/t/t0025-crlf-renormalize.sh
+> index 9d9e02a211..e13363ade5 100755
+> --- a/t/t0025-crlf-renormalize.sh
+> +++ b/t/t0025-crlf-renormalize.sh
+> @@ -27,4 +27,13 @@ test_expect_success 'renormalize CRLF in repo' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'ignore-errors not mistaken for renormalize' '
+> +	git reset --hard &&
+> +	echo "*.txt text=auto" >.gitattributes &&
+> +	git ls-files --eol >expect &&
+> +	git add --ignore-errors "*.txt" &&
+> +	git ls-files --eol >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
+> -- 
+> 2.20.1.689.g635a1dda8a
+> 
