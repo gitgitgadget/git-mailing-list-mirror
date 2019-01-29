@@ -8,51 +8,50 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86E621F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 01:39:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62FA01F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 01:39:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726979AbfA2Bj5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 20:39:57 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:50462 "EHLO
+        id S1727000AbfA2Bj6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 20:39:58 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:50466 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726761AbfA2Bjz (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 28 Jan 2019 20:39:55 -0500
+        by vger.kernel.org with ESMTP id S1726865AbfA2Bj4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Jan 2019 20:39:56 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x0T1dFWH008899;
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x0T1dFWG008899;
         Mon, 28 Jan 2019 17:39:50 -0800
 Received: from mail.palantir.com ([8.4.231.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2q8p9rjrj8-4
+        by mx0a-00153501.pphosted.com with ESMTP id 2q8p9rjrj8-3
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
         Mon, 28 Jan 2019 17:39:50 -0800
-Received: from sj-prod-exch-02.YOJOE.local (10.129.18.29) by
+Received: from sj-prod-exch-01.YOJOE.local (10.129.18.26) by
  sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
  15.1.1531.3; Mon, 28 Jan 2019 17:39:32 -0800
 Received: from smtp-transport.yojoe.local (10.129.56.124) by
- sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server id
- 15.1.1531.3 via Frontend Transport; Mon, 28 Jan 2019 17:39:44 -0800
+ sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server id
+ 15.1.1531.3 via Frontend Transport; Mon, 28 Jan 2019 17:39:32 -0800
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id DE519220F6DD;
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id C53382098559;
         Mon, 28 Jan 2019 17:39:47 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     <gitster@pobox.com>
 CC:     <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 4/8] am, rebase--merge: do not overlook --skip'ed commits with post-rewrite
-Date:   Mon, 28 Jan 2019 17:39:41 -0800
-Message-ID: <20190129013945.17336-5-newren@gmail.com>
+Subject: [PATCH v5 0/8] Reimplement rebase --merge via interactive machinery
+Date:   Mon, 28 Jan 2019 17:39:37 -0800
+Message-ID: <20190129013945.17336-1-newren@gmail.com>
 X-Mailer: git-send-email 2.20.1.310.g17ca096f17
-In-Reply-To: <20190129013945.17336-1-newren@gmail.com>
+In-Reply-To: <20181211161139.31686-1-newren@gmail.com>
 References: <20181211161139.31686-1-newren@gmail.com>
- <20190129013945.17336-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7BIT
 Content-Type:   text/plain; charset=US-ASCII
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-29_01:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1810050000 definitions=main-1901290009
@@ -61,85 +60,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The post-rewrite hook is supposed to be invoked for each rewritten
-commit.  The fact that a commit was selected and processed by the rebase
-operation (even though when we hit an error a user said it had no more
-useful changes), suggests we should write an entry for it.  In
-particular, let's treat it as an empty commit trivially squashed into
-its parent.
+This series continues the work of making rebase more self-consistent
+by removing inconsistencies between different backends.  In
+particular, this series focuses on making the merge machinery behave
+like the interactive machinery (though a few differences between the am
+and interactive backends are also fixed along the way), and ultimately
+removes the merge backend in favor of reimplementing the relevant
+options on top of the interactive machinery.
 
-This brings the rebase--am and rebase--merge backends in sync with the
-behavior of the interactive rebase backend.
+Differences since v4:
+  - Included Dscho's Acked-by (from
+    https://public-inbox.org/git/nycvar.QRO.7.76.6.1901212200400.41@tvgsbejvaqbjf.bet/)
 
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/am.c                 | 9 +++++++++
- git-rebase--merge.sh         | 2 ++
- t/t5407-post-rewrite-hook.sh | 3 +++
- 3 files changed, 14 insertions(+)
+Elijah Newren (8):
+  rebase: make builtin and legacy script error messages the same
+  rebase: fix incompatible options error message
+  t5407: add a test demonstrating how interactive handles --skip
+    differently
+  am, rebase--merge: do not overlook --skip'ed commits with post-rewrite
+  git-rebase, sequencer: extend --quiet option for the interactive
+    machinery
+  git-legacy-rebase: simplify unnecessary triply-nested if
+  rebase: define linearization ordering and enforce it
+  rebase: implement --merge via the interactive machinery
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 8f27f3375b..af9d034838 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2000,6 +2000,15 @@ static void am_skip(struct am_state *state)
- 	if (clean_index(&head, &head))
- 		die(_("failed to clean index"));
- 
-+	if (state->rebasing) {
-+		FILE *fp = xfopen(am_path(state, "rewritten"), "a");
-+
-+		assert(!is_null_oid(&state->orig_commit));
-+		fprintf(fp, "%s ", oid_to_hex(&state->orig_commit));
-+		fprintf(fp, "%s\n", oid_to_hex(&head));
-+		fclose(fp);
-+	}
-+
- 	am_next(state);
- 	am_load(state);
- 	am_run(state, 0);
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index aa2f2f0872..91250cbaed 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -121,6 +121,8 @@ continue)
- skip)
- 	read_state
- 	git rerere clear
-+	cmt="$(cat "$state_dir/cmt.$msgnum")"
-+	echo "$cmt $(git rev-parse HEAD^0)" >> "$state_dir/rewritten"
- 	msgnum=$(($msgnum + 1))
- 	while test "$msgnum" -le "$end"
- 	do
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 6426ec8991..a4a5903cba 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -78,6 +78,7 @@ test_expect_success 'git rebase --skip' '
- 	git rebase --continue &&
- 	echo rebase >expected.args &&
- 	cat >expected.data <<-EOF &&
-+	$(git rev-parse C) $(git rev-parse HEAD^)
- 	$(git rev-parse D) $(git rev-parse HEAD)
- 	EOF
- 	verify_hook_input
-@@ -91,6 +92,7 @@ test_expect_success 'git rebase --skip the last one' '
- 	echo rebase >expected.args &&
- 	cat >expected.data <<-EOF &&
- 	$(git rev-parse E) $(git rev-parse HEAD)
-+	$(git rev-parse F) $(git rev-parse HEAD)
- 	EOF
- 	verify_hook_input
- '
-@@ -120,6 +122,7 @@ test_expect_success 'git rebase -m --skip' '
- 	git rebase --continue &&
- 	echo rebase >expected.args &&
- 	cat >expected.data <<-EOF &&
-+	$(git rev-parse C) $(git rev-parse HEAD^)
- 	$(git rev-parse D) $(git rev-parse HEAD)
- 	EOF
- 	verify_hook_input
+ .gitignore                        |   1 -
+ Documentation/git-rebase.txt      |  17 +---
+ Makefile                          |   1 -
+ builtin/am.c                      |   9 ++
+ builtin/rebase.c                  |  30 ++----
+ git-legacy-rebase.sh              |  65 ++++++------
+ git-rebase--am.sh                 |   2 +-
+ git-rebase--common.sh             |   2 +-
+ git-rebase--merge.sh              | 164 ------------------------------
+ sequencer.c                       |  23 +++--
+ sequencer.h                       |   1 +
+ t/t3406-rebase-message.sh         |   7 +-
+ t/t3420-rebase-autostash.sh       |  78 ++------------
+ t/t3421-rebase-topology-linear.sh |  10 +-
+ t/t3425-rebase-topology-merges.sh |  15 ++-
+ t/t5407-post-rewrite-hook.sh      |  34 +++++++
+ t/t9903-bash-prompt.sh            |   2 +-
+ 17 files changed, 121 insertions(+), 340 deletions(-)
+ delete mode 100644 git-rebase--merge.sh
+
 -- 
 2.20.1.310.g17ca096f17
 
