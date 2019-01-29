@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DBB71F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 14:19:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D5EB1F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 14:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728180AbfA2OTd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 09:19:33 -0500
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:35052 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727009AbfA2OTd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 09:19:33 -0500
-Received: by mail-ed1-f47.google.com with SMTP id x30so16138650edx.2
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:19:31 -0800 (PST)
+        id S1728227AbfA2OTg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 09:19:36 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:40248 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728191AbfA2OTg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 09:19:36 -0500
+Received: by mail-ed1-f65.google.com with SMTP id g22so16082980edr.7
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:19:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pFbplBFQUOIV1Nh4Mnv6OTr2Rj2NGgBQhiUPNzuNSoI=;
-        b=s92epOeuu0Pc3KHAM5dwk6g0pjYK34waOHm0wpReGCunIfoL6MjS0EUAZT81PfhRYw
-         7PUCp6pYJ8qbh3BMdHmRrd5OLTBEnGhNWjk24HP0pi0eRqcPa5oJvne7kfNwdMwzOjPt
-         vidaJ8PjbNQSEJvHcYeKYY1y26GxfmcmCH9ZtGuNTrh8fDSh804YKs+m8fvXLGWxyHr+
-         t3UehC2jl8aycXOB1xzVk28TyAZqLXMPSu01Mo0mTqwSskCiwczSxwzWfIZYMAfjyquW
-         Hh+IB08BRuBm80LCL+HzInk+lCAleU9MU9LpxgVsatXVqxUSjA2hGWZVMs5w+zh8qiS/
-         psTw==
+        bh=qFU9SlpnDsxWdLk7t1RD4T2tVhhrbl/R3qfgIkC/7lI=;
+        b=G+miTMPSDlCEziHpvQ7tYRIC390JC7zp6Kg0iC2YKaGq2lyymWkoH2LMu4d3UK6OI7
+         IQiqcUkfsGrQ8oz0e/9PYI0nfXUZ/ajhggNcai8kYRVygUlacSdCrX3g8M04E1XjX+2G
+         dhD/1eVlmdG+3/Nwqf+WxcN8NAfk96UwvhOr2mX33nnKzxRR4UrvNKkhqG4tZOoCj8wB
+         IYUKYJsqgicwqAsJyExDAagBHLYkLj+ZFrn5ymXgATyZfBSomqK5cl7X2UEXz661iMtr
+         Di2Uac2PZ4dTYnEwWHihzX8bGD46AJ7MUfyDuFcH3PZnkW5xvW9KET1LpXbjG0Z77TdK
+         Vr+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pFbplBFQUOIV1Nh4Mnv6OTr2Rj2NGgBQhiUPNzuNSoI=;
-        b=jcYtSzoO7qmRZJS0tlogtIRHGl6/QTCFyUj6SwMEZ4xHKh/6HwL54Ap7NFxkQgC2eC
-         h20ChXBi4LSTlitCSI+KAIg8y+MwsWqctcSuHhg3yMaECT14PpCWnoe1OSEGhzgThnar
-         ru0rW0p2ut1QXBq7Y3qVdhZgJRr39bLn7kNAPqGU9AO/hPm4ah44c2nJtMG7HuZYSC8N
-         TH4oWP2JDs8QTGuLXG9ExMQ/pCm0ygcQ4Am2qW2NsDPJ02mmfPjQL+5HB9vaFh/XZnB5
-         6GAMLnPROlr3HD0nqsRrkrS5EgXT/B9PcH0RgzeTiDBkgnsMDQ9Z20/hztB3cZrmHToK
-         IVKA==
-X-Gm-Message-State: AJcUukfeLVI1L/O7Oz9JBm5UlaeNXWA2V0M54sU2HOk+xUyGLv0pd8de
-        wXAcbXKMDt9v9OBF+44P26po4T+Y
-X-Google-Smtp-Source: ALg8bN4uPLpRunLmgMZEjMGdWYdLVhFlV7pxdupOMOus3z+sPHTvVkBOpMR/vhNvfzcnSB94JP+TxA==
-X-Received: by 2002:a17:906:63c1:: with SMTP id u1mr8559476ejk.141.1548771570295;
-        Tue, 29 Jan 2019 06:19:30 -0800 (PST)
+        bh=qFU9SlpnDsxWdLk7t1RD4T2tVhhrbl/R3qfgIkC/7lI=;
+        b=f5Lu74gpOrs6qGI6Fs9nfMmPReerN76GXNg46dKmfYkPy1h2v2T0WaPIeGheRoUCWn
+         NJYiejEgvBmVECWtRo/eVHCR9HrgMsG8et5h+UlAoqbRisfqbzlb5SanaFJ7491psNJL
+         p1FQhtch2nQYRsHIfKOsUkwqQB41EsAvKn2QBFO/V2r6Efeo7CZqJ2RptADCg18Qk3UI
+         2Uqwv/3629G3h/CUybhLHxFJ4lJ/uscn6ufvxN3VqmnX/AXHqKkC/wp16KlG9NRXIs+w
+         CjtFbSixRbstiCJrGb+MNrH3vbHnfWs/yRP6p8Yiq51buMoUxkwgudB2QALP2pt+5LQc
+         YX3A==
+X-Gm-Message-State: AJcUukd/fYyTzDaJ0fMjLzWXK0mGt3XcSEPu7Yi3LD/VNi2PL1Jiqfxx
+        SAyAFuQkSR4uYoG5frlI0ydOqHoB
+X-Google-Smtp-Source: ALg8bN4/ilj3ThHbTFgFE2wB9A+uBh8+TbaZyr+Iw9iqlnqokWGTXnc4RVT1/omQ72G53bL8Fiy0XQ==
+X-Received: by 2002:a17:906:b292:: with SMTP id q18mr22412608ejz.184.1548771573949;
+        Tue, 29 Jan 2019 06:19:33 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d56sm14761674ede.76.2019.01.29.06.19.29
+        by smtp.gmail.com with ESMTPSA id g16sm3044355ejb.65.2019.01.29.06.19.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Jan 2019 06:19:29 -0800 (PST)
-Date:   Tue, 29 Jan 2019 06:19:29 -0800 (PST)
-X-Google-Original-Date: Tue, 29 Jan 2019 14:19:08 GMT
-Message-Id: <d34812bdf60fd9fb0f6c1c7e2ffd5685f643bd80.1548771561.git.gitgitgadget@gmail.com>
+        Tue, 29 Jan 2019 06:19:33 -0800 (PST)
+Date:   Tue, 29 Jan 2019 06:19:33 -0800 (PST)
+X-Google-Original-Date: Tue, 29 Jan 2019 14:19:13 GMT
+Message-Id: <7a5caa2e0f9b38edb6bdcb24da8fe19c2ef373f4.1548771561.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v6.git.gitgitgadget@gmail.com>
 References: <pull.31.v5.git.gitgitgadget@gmail.com>
         <pull.31.v6.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 09/21] Add a build definition for Azure DevOps
+Subject: [PATCH v6 14/21] tests: avoid calling Perl just to determine file
+ sizes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,340 +72,100 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This commit adds an azure-pipelines.yml file which is Azure DevOps'
-equivalent to Travis CI's .travis.yml.
+It is a bit ridiculous to spin up a full-blown Perl instance (especially
+on Windows, where that means spinning up a full POSIX emulation layer,
+AKA the MSYS2 runtime) just to tell how large a given file is.
 
-The main idea is to replicate the Travis configuration as faithfully as
-possible, to make it easy to compare the Azure Pipeline builds to the
-Travis ones (spoiler: some parts, especially the macOS jobs, are way
-faster in Azure Pileines). Meaning: the number and the order of the jobs
-added in this commit faithfully replicates what we have in .travis.yml.
+So let's just use the test-tool to do that job instead.
 
-Note: Our .travis.yml configuration has a Windows part that is *not*
-replicated in the Azure Pipelines definition. The reason is easy to see:
-As Travis cannot support our Windws needs (even with the preliminary
-Windows support that was recently added to Travis after waiting for
-*years* for that feature, our test suite would simply hit Travis'
-timeout every single time).
-
-To make things a bit easier to understand, we refrain from using the
-`matrix` feature here because (while it is powerful) it can be a bit
-confusing to users who are not familiar with CI setups. Therefore, we
-use a separate phase even for similar configurations (such as GCC vs
-Clang on Linux, GCC vs Clang on macOS).
-
-Also, we make use of the shiny new feature we just introduced where the
-test suite can output JUnit-style .xml files. This information is made
-available in a nice UI that allows the viewer to filter by phase and/or
-test number, and to see trends such as: number of (failing) tests, time
-spent running the test suite, etc. (While this seemingly contradicts the
-intention to replicate the Travis configuration as faithfully as
-possible, it is just too nice to show off that capability here already.)
+This command will also be used over the next commits, to allow for
+cutting out individual test cases' verbose log from the file generated
+via --verbose-log.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- azure-pipelines.yml   | 259 ++++++++++++++++++++++++++++++++++++++++++
- ci/mount-fileshare.sh |  25 ++++
- 2 files changed, 284 insertions(+)
- create mode 100644 azure-pipelines.yml
- create mode 100755 ci/mount-fileshare.sh
+ t/helper/test-path-utils.c          | 12 ++++++++++++
+ t/t0021-conversion.sh               |  2 +-
+ t/t1050-large.sh                    |  2 +-
+ t/t5315-pack-objects-compression.sh |  2 +-
+ t/t9303-fast-import-compression.sh  |  2 +-
+ 5 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-new file mode 100644
-index 0000000000..8cdef105c6
---- /dev/null
-+++ b/azure-pipelines.yml
-@@ -0,0 +1,259 @@
-+resources:
-+- repo: self
-+  fetchDepth: 1
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index ae091d9b3e..30211d6d64 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -291,6 +291,18 @@ int cmd__path_utils(int argc, const char **argv)
+ 		return !!res;
+ 	}
+ 
++	if (argc > 2 && !strcmp(argv[1], "file-size")) {
++		int res = 0, i;
++		struct stat st;
 +
-+jobs:
-+- job: linux_clang
-+  displayName: linux-clang
-+  condition: succeeded()
-+  pool: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
++		for (i = 2; i < argc; i++)
++			if (stat(argv[i], &st))
++				res = error_errno("Cannot stat '%s'", argv[i]);
++			else
++				printf("%"PRIuMAX"\n", (uintmax_t)st.st_size);
++		return !!res;
++	}
 +
-+       sudo apt-get update &&
-+       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2-bin &&
-+
-+       export CC=clang || exit 1
-+
-+       ci/install-dependencies.sh || exit 1
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'linux-clang'
-+      platform: Linux
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+  - task: PublishBuildArtifacts@1
-+    displayName: 'Publish trash directories of failed tests'
-+    condition: failed()
-+    inputs:
-+      PathtoPublish: t/failed-test-artifacts
-+      ArtifactName: failed-test-artifacts
-+
-+- job: linux_gcc
-+  displayName: linux-gcc
-+  condition: succeeded()
-+  pool: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo add-apt-repository ppa:ubuntu-toolchain-r/test &&
-+       sudo apt-get update &&
-+       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev apache2 language-pack-is git-svn gcc-8 || exit 1
-+
-+       ci/install-dependencies.sh || exit 1
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'linux-gcc'
-+      platform: Linux
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+  - task: PublishBuildArtifacts@1
-+    displayName: 'Publish trash directories of failed tests'
-+    condition: failed()
-+    inputs:
-+      PathtoPublish: t/failed-test-artifacts
-+      ArtifactName: failed-test-artifacts
-+
-+- job: osx_clang
-+  displayName: osx-clang
-+  condition: succeeded()
-+  pool: Hosted macOS
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       export CC=clang
-+
-+       ci/install-dependencies.sh || exit 1
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'osx-clang'
-+      platform: macOS
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+  - task: PublishBuildArtifacts@1
-+    displayName: 'Publish trash directories of failed tests'
-+    condition: failed()
-+    inputs:
-+      PathtoPublish: t/failed-test-artifacts
-+      ArtifactName: failed-test-artifacts
-+
-+- job: osx_gcc
-+  displayName: osx-gcc
-+  condition: succeeded()
-+  pool: Hosted macOS
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       ci/install-dependencies.sh || exit 1
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'osx-gcc'
-+      platform: macOS
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+  - task: PublishBuildArtifacts@1
-+    displayName: 'Publish trash directories of failed tests'
-+    condition: failed()
-+    inputs:
-+      PathtoPublish: t/failed-test-artifacts
-+      ArtifactName: failed-test-artifacts
-+
-+- job: gettext_poison
-+  displayName: GETTEXT_POISON
-+  condition: succeeded()
-+  pool: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo apt-get update &&
-+       sudo apt-get -y install git gcc make libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext git-email zlib1g-dev &&
-+
-+       export jobname=GETTEXT_POISON || exit 1
-+
-+       ci/run-build-and-tests.sh || {
-+           ci/print-test-failures.sh
-+           exit 1
-+       }
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-build-and-tests.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'gettext-poison'
-+      platform: Linux
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+  - task: PublishBuildArtifacts@1
-+    displayName: 'Publish trash directories of failed tests'
-+    condition: failed()
-+    inputs:
-+      PathtoPublish: t/failed-test-artifacts
-+      ArtifactName: failed-test-artifacts
-+
-+- job: linux32
-+  displayName: Linux32
-+  condition: succeeded()
-+  pool: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       res=0
-+       sudo AGENT_OS="$AGENT_OS" BUILD_BUILDNUMBER="$BUILD_BUILDNUMBER" BUILD_REPOSITORY_URI="$BUILD_REPOSITORY_URI" BUILD_SOURCEBRANCH="$BUILD_SOURCEBRANCH" BUILD_SOURCEVERSION="$BUILD_SOURCEVERSION" SYSTEM_PHASENAME="$SYSTEM_PHASENAME" SYSTEM_TASKDEFINITIONSURI="$SYSTEM_TASKDEFINITIONSURI" SYSTEM_TEAMPROJECT="$SYSTEM_TEAMPROJECT" CC=$CC MAKEFLAGS="$MAKEFLAGS" bash -lxc ci/run-linux32-docker.sh || res=1
-+
-+       sudo chmod a+r t/out/TEST-*.xml
-+       test ! -d t/failed-test-artifacts || sudo chmod a+r t/failed-test-artifacts
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || res=1
-+       exit $res
-+    displayName: 'ci/run-linux32-docker.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+  - task: PublishTestResults@2
-+    displayName: 'Publish Test Results **/TEST-*.xml'
-+    inputs:
-+      mergeTestResults: true
-+      testRunTitle: 'linux32'
-+      platform: Linux
-+      publishRunAttachments: false
-+    condition: succeededOrFailed()
-+  - task: PublishBuildArtifacts@1
-+    displayName: 'Publish trash directories of failed tests'
-+    condition: failed()
-+    inputs:
-+      PathtoPublish: t/failed-test-artifacts
-+      ArtifactName: failed-test-artifacts
-+
-+- job: static_analysis
-+  displayName: StaticAnalysis
-+  condition: succeeded()
-+  pool: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo apt-get update &&
-+       sudo apt-get install -y coccinelle &&
-+
-+       export jobname=StaticAnalysis &&
-+
-+       ci/run-static-analysis.sh || exit 1
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/run-static-analysis.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-+
-+- job: documentation
-+  displayName: Documentation
-+  condition: succeeded()
-+  pool: Hosted Ubuntu 1604
-+  steps:
-+  - bash: |
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
-+
-+       sudo apt-get update &&
-+       sudo apt-get install -y asciidoc xmlto asciidoctor &&
-+
-+       export ALREADY_HAVE_ASCIIDOCTOR=yes. &&
-+       export jobname=Documentation &&
-+
-+       ci/test-documentation.sh || exit 1
-+
-+       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || sudo umount "$HOME/test-cache" || exit 1
-+    displayName: 'ci/test-documentation.sh'
-+    env:
-+      GITFILESHAREPWD: $(gitfileshare.pwd)
-diff --git a/ci/mount-fileshare.sh b/ci/mount-fileshare.sh
-new file mode 100755
-index 0000000000..26b58a8096
---- /dev/null
-+++ b/ci/mount-fileshare.sh
-@@ -0,0 +1,25 @@
-+#!/bin/sh
-+
-+die () {
-+	echo "$*" >&2
-+	exit 1
-+}
-+
-+test $# = 4 ||
-+die "Usage: $0 <share> <username> <password> <mountpoint>"
-+
-+mkdir -p "$4" || die "Could not create $4"
-+
-+case "$(uname -s)" in
-+Linux)
-+	sudo mount -t cifs -o vers=3.0,username="$2",password="$3",dir_mode=0777,file_mode=0777,serverino "$1" "$4"
-+	;;
-+Darwin)
-+	pass="$(echo "$3" | sed -e 's/\//%2F/g' -e 's/+/%2B/g')" &&
-+	mount -t smbfs,soft "smb://$2:$pass@${1#//}" "$4"
-+	;;
-+*)
-+	die "No support for $(uname -s)"
-+	;;
-+esac ||
-+die "Could not mount $4"
+ 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+ 		argv[1] ? argv[1] : "(there was none)");
+ 	return 1;
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index fd5f1ac649..e10f5f787f 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -24,7 +24,7 @@ generate_random_characters () {
+ }
+ 
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ filter_git () {
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 1a9b21b293..dcb4dbba67 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -8,7 +8,7 @@ test_description='adding and checking out large blobs'
+ # This should be moved to test-lib.sh together with the
+ # copy in t0021 after both topics have graduated to 'master'.
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ test_expect_success setup '
+diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
+index 34c47dae09..df970d7584 100755
+--- a/t/t5315-pack-objects-compression.sh
++++ b/t/t5315-pack-objects-compression.sh
+@@ -7,7 +7,7 @@ test_description='pack-object compression configuration'
+ # This should be moved to test-lib.sh together with the
+ # copy in t0021 after both topics have graduated to 'master'.
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ test_expect_success setup '
+diff --git a/t/t9303-fast-import-compression.sh b/t/t9303-fast-import-compression.sh
+index 856219f46a..5045f02a53 100755
+--- a/t/t9303-fast-import-compression.sh
++++ b/t/t9303-fast-import-compression.sh
+@@ -6,7 +6,7 @@ test_description='compression setting of fast-import utility'
+ # This should be moved to test-lib.sh together with the
+ # copy in t0021 after both topics have graduated to 'master'.
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ import_large () {
 -- 
 gitgitgadget
 
