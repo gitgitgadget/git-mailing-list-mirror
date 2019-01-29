@@ -2,77 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 419511F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 12:55:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5781E1F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 13:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727470AbfA2MzT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 07:55:19 -0500
-Received: from mout.gmx.net ([212.227.17.22]:53677 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725783AbfA2MzS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 07:55:18 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwrS8-1hCmBk1fI0-016SQA; Tue, 29
- Jan 2019 13:55:12 +0100
-Date:   Tue, 29 Jan 2019 13:54:55 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: pw/rebase-x-sanity-check, was Re: What's cooking in git.git (Jan
- 2019, #04; Mon, 28)
-In-Reply-To: <xmqq4l9s9zee.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901291353340.41@tvgsbejvaqbjf.bet>
-References: <xmqq4l9s9zee.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726338AbfA2NAe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 08:00:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52954 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725730AbfA2NAe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 08:00:34 -0500
+Received: (qmail 26012 invoked by uid 109); 29 Jan 2019 13:00:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 Jan 2019 13:00:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6199 invoked by uid 111); 29 Jan 2019 13:00:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 29 Jan 2019 08:00:39 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2019 08:00:32 -0500
+Date:   Tue, 29 Jan 2019 08:00:32 -0500
+From:   Jeff King <peff@peff.net>
+To:     Sebastian Staudt <koraktor@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 1/3] Add tests for describe with --work-tree
+Message-ID: <20190129130031.GA22211@sigill.intra.peff.net>
+References: <20190129051859.12830-1-koraktor@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:CqFNZ2z2UEiV94s5QS81NBjd3nS1q5aTlSPf2McIXcT3sMeEEQv
- IspEGeStW2Xr2x4Ey97zjvxgSm7cPb4C7TDDrofBoXYJlzGGuT2Rl4/cayI9rb5Ux+raw/f
- O2WmIos1g62N08k3TR7BGkAt2VVbKf3RTYAOfiz4absbALsXbhB5WqS4JqaU/8l5J+G4LrQ
- loR1wFA4ufQnRhz5/yemg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:S5sLi7vhXEA=:wrDo50Zr/2Xwtj8hommt7q
- R/GJWoyYK/E8xbPNIivdxxoDYVQ/aHqWUg/O9/lYYdaGXTkNb4P6DxBge4XDtU6PtVrkbLfWp
- 18cOPY0x1LW8UiCBotYY/UnDq0r+KxM43allS+IlsKaE0cE5+AoPiYvZ9QAemAVlMnb/kPKCz
- 2mgTbU8A6+ijCmPOf+s0yVLVCD+5wXM4vY9OUPRHPMPhZ7hxd19CuUbi13Jc7vOmc4kWtCKYh
- Zmx6CZ+43IDDMjviuMm5+kNoHMQUlYyBrVykas/0JL+p9M5STd0JCiqKc+uj2vxKsFcJos7LJ
- ZjXbJDiW+nK7KtPgONdHTlRYToFaeouObcnKwV9HyoOECAdCApo+Z1tmcNbVa400jcehBQfid
- 5rhfZHh+zXX9yczRWdYQB2YeHQuE/JTQjwF38ERxTjNusQnJhT1pK7XBY/xzNt9qlpmtgdgFv
- vp/3JkwZa+bgJLWN0JKoF4dT2jkpHuqhrsJKAkWA8Sy2GnhzTzmzem1mfNpZrmMC1NRgC3+Tx
- oIXWZdt1zjp4BWNWhkxJBRoINQqdFY044aEbOo2tM0rry7pljdxgC6jx8kYEwEpfexDjfT0/j
- zomu7fMSaFu6pi3XPr2zEAdJrbSAs+xum8ST7GBq2jui7E2EnPNdc7g7DVZPcg4ipx1Gbm+RT
- FdDjSl4lXjs5TgKoaSJ3h63pyfS1ihFrhxAILdK2T82yWiVgPImuIuXynUy6SZ7MMF10q7WHR
- Wp6evjuueIpBnykMltqKU38jtGvemiXQMQHzDj+lA2sG9QmN+NSt92pgvpaL3UmN8NeFZ5nrQ
- gug0FZ3LNrBA1BWde4pkcnwPP44eQWcNOx0ADwZYaHneHCiW0c2bpnCpMGZ2BLuwlv+0Jz1Gv
- WBVBz+UnUNcDEUfsVlgnRWRWlJTrbtT79dEQYRGyRAFY50xs2BEyZD8InlowsimjDYAKh5bEH
- 1Bsx3L2vHrg==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190129051859.12830-1-koraktor@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, Jan 29, 2019 at 06:18:57AM +0100, Sebastian Staudt wrote:
 
-On Mon, 28 Jan 2019, Junio C Hamano wrote:
-
-> * pw/rebase-x-sanity-check (2019-01-28) 1 commit
->  - rebase -x: sanity check command
+> The dirty ones are already passing, but just because describe is comparing
+> with the wrong working tree.
 > 
->  "git rebase -x $cmd" did not reject multi-line command, even though
->  the command is incapable of handling such a command.  It now is
->  rejected upfront.
+> Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
+> ---
+>  t/t6120-describe.sh | 33 +++++++++++++++++++++++++++++++++
+>  1 file changed, 33 insertions(+)
 > 
->  Will merge to 'next'.
+> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+> index d639d94696..c863c4f600 100755
+> --- a/t/t6120-describe.sh
+> +++ b/t/t6120-describe.sh
+> @@ -145,14 +145,38 @@ check_describe A-* HEAD
+>  
+>  check_describe "A-*[0-9a-f]" --dirty
+>  
+> +test_expect_success 'describe --dirty with --work-tree' "
 
-I offered two suggestions: to use a more readable `strchr()` check for the
-forbidden embedded newlines, and to not bother with special-casing the
-empty command but instead handling it the exact same way as an invalid
-command-line would be handled.
+This should be marked as test_expect_failure, I think, because it does
+not yet pass (and then flipped s/failure/success/ in the next patch).
 
-Ciao,
-Dscho
+> +	(
+> +		cd '$TEST_DIRECTORY' &&
+> +		git --git-dir '$TRASH_DIRECTORY/.git' --work-tree '$TRASH_DIRECTORY' describe --dirty >'$TRASH_DIRECTORY/out'
+> +	) &&
+
+The quoting you've done here is unusual for our test suite, and not
+quite as robust. You've put the whole test snippet into double-quotes,
+which means that $TRASH_DIRECTORY, etc, will be expanded before we eval
+the code.
+
+By putting single-quotes around $TRASH_DIRECTORY, that makes it work
+when the path contains a space. But it would fail if somebody's
+filesystem path contains a single-quote.
+
+The usual style is to put the whole snippet into single-quotes, and then
+double-quote as appropriate within it. Like:
+
+  test_expect_failure 'describe --dirty with --work-tree' '
+	(
+		cd "$TEST_DIRECTORY" &&
+		git --git-dir "$TRASH_DIRECTORY/.git" ...etc
+
+Those variables will be expanded when test_expect_failure eval's the
+snippet.
+
+> +	grep 'A-\d\+-g[0-9a-f]\+' '$TRASH_DIRECTORY/out'
+
+Using "\d" isn't portable.
+
+This regex is pretty broad. What are we checking here? If I understand
+the previous discussion, we just care that it doesn't have "dirty" in
+it, right? I don't think this regex does that, because it doesn't anchor
+the end of string.
+
+If that's indeed what we're checking, then an easier check is perhaps:
+
+  ! grep dirty ...
+
+As a side note, you can also shorten your references to "out" by
+referring to it from the trash directory itself. I.e.:
+
+  (
+	cd "$TEST_DIRECTORY" &&
+	git --git-dir="$TRASH_DIRECTORY/.git" --work-tree "$TRASH_DIRECTORY" \
+	  describe --dirty
+  ) >out &&
+  ! grep dirty out
+
+Same thing, but IMHO a little easier to read.
+
+>  check_describe "A-*[0-9a-f]-dirty" --dirty
+>  
+> +test_expect_success 'describe --dirty with --work-tree' "
+> [...]
+
+Same comments apply to the other blocks you added.
+
+Other than those mechanical things, though, what the tests are actually
+trying to do seems quite reasonable to me.
+
+-Peff
