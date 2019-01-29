@@ -2,82 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 630271F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 12:41:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 419511F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 12:55:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728696AbfA2MlO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 07:41:14 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52920 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727033AbfA2MlO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 07:41:14 -0500
-Received: (qmail 25206 invoked by uid 109); 29 Jan 2019 12:41:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 29 Jan 2019 12:41:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6095 invoked by uid 111); 29 Jan 2019 12:41:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 29 Jan 2019 07:41:20 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2019 07:41:12 -0500
-Date:   Tue, 29 Jan 2019 07:41:12 -0500
-From:   Jeff King <peff@peff.net>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Sergey Lukashev <lukashev.s@ya.ru>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH v2 2/2] docs/config: clarify "text property" in core.eol
-Message-ID: <20190129124112.GB21931@sigill.intra.peff.net>
-References: <20190129124031.GA13084@sigill.intra.peff.net>
+        id S1727470AbfA2MzT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 07:55:19 -0500
+Received: from mout.gmx.net ([212.227.17.22]:53677 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725783AbfA2MzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 07:55:18 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwrS8-1hCmBk1fI0-016SQA; Tue, 29
+ Jan 2019 13:55:12 +0100
+Date:   Tue, 29 Jan 2019 13:54:55 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: pw/rebase-x-sanity-check, was Re: What's cooking in git.git (Jan
+ 2019, #04; Mon, 28)
+In-Reply-To: <xmqq4l9s9zee.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901291353340.41@tvgsbejvaqbjf.bet>
+References: <xmqq4l9s9zee.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190129124031.GA13084@sigill.intra.peff.net>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:CqFNZ2z2UEiV94s5QS81NBjd3nS1q5aTlSPf2McIXcT3sMeEEQv
+ IspEGeStW2Xr2x4Ey97zjvxgSm7cPb4C7TDDrofBoXYJlzGGuT2Rl4/cayI9rb5Ux+raw/f
+ O2WmIos1g62N08k3TR7BGkAt2VVbKf3RTYAOfiz4absbALsXbhB5WqS4JqaU/8l5J+G4LrQ
+ loR1wFA4ufQnRhz5/yemg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:S5sLi7vhXEA=:wrDo50Zr/2Xwtj8hommt7q
+ R/GJWoyYK/E8xbPNIivdxxoDYVQ/aHqWUg/O9/lYYdaGXTkNb4P6DxBge4XDtU6PtVrkbLfWp
+ 18cOPY0x1LW8UiCBotYY/UnDq0r+KxM43allS+IlsKaE0cE5+AoPiYvZ9QAemAVlMnb/kPKCz
+ 2mgTbU8A6+ijCmPOf+s0yVLVCD+5wXM4vY9OUPRHPMPhZ7hxd19CuUbi13Jc7vOmc4kWtCKYh
+ Zmx6CZ+43IDDMjviuMm5+kNoHMQUlYyBrVykas/0JL+p9M5STd0JCiqKc+uj2vxKsFcJos7LJ
+ ZjXbJDiW+nK7KtPgONdHTlRYToFaeouObcnKwV9HyoOECAdCApo+Z1tmcNbVa400jcehBQfid
+ 5rhfZHh+zXX9yczRWdYQB2YeHQuE/JTQjwF38ERxTjNusQnJhT1pK7XBY/xzNt9qlpmtgdgFv
+ vp/3JkwZa+bgJLWN0JKoF4dT2jkpHuqhrsJKAkWA8Sy2GnhzTzmzem1mfNpZrmMC1NRgC3+Tx
+ oIXWZdt1zjp4BWNWhkxJBRoINQqdFY044aEbOo2tM0rry7pljdxgC6jx8kYEwEpfexDjfT0/j
+ zomu7fMSaFu6pi3XPr2zEAdJrbSAs+xum8ST7GBq2jui7E2EnPNdc7g7DVZPcg4ipx1Gbm+RT
+ FdDjSl4lXjs5TgKoaSJ3h63pyfS1ihFrhxAILdK2T82yWiVgPImuIuXynUy6SZ7MMF10q7WHR
+ Wp6evjuueIpBnykMltqKU38jtGvemiXQMQHzDj+lA2sG9QmN+NSt92pgvpaL3UmN8NeFZ5nrQ
+ gug0FZ3LNrBA1BWde4pkcnwPP44eQWcNOx0ADwZYaHneHCiW0c2bpnCpMGZ2BLuwlv+0Jz1Gv
+ WBVBz+UnUNcDEUfsVlgnRWRWlJTrbtT79dEQYRGyRAFY50xs2BEyZD8InlowsimjDYAKh5bEH
+ 1Bsx3L2vHrg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The word "property" is vague here. Let's spell out that we mean the path
-must be marked with the text attribute.
+Hi Junio,
 
-While we're here, let's make the paragraph a little easier to read by
-de-emphasizing the "when core.autocrlf is false" bit. Putting it in the
-first sentence obscures the main content, and many readers won't care
-about autocrlf (i.e., anyone who is just following the gitattributes(7)
-advice, which mainly discusses "text" and "core.eol").
+On Mon, 28 Jan 2019, Junio C Hamano wrote:
 
-Helped-by: Torsten Bögershausen <tboegi@web.de>
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/config/core.txt | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+> * pw/rebase-x-sanity-check (2019-01-28) 1 commit
+>  - rebase -x: sanity check command
+> 
+>  "git rebase -x $cmd" did not reject multi-line command, even though
+>  the command is incapable of handling such a command.  It now is
+>  rejected upfront.
+> 
+>  Will merge to 'next'.
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index d0e6635fe0..7e9b6c8f4c 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -121,11 +121,14 @@ core.quotePath::
- 
- core.eol::
- 	Sets the line ending type to use in the working directory for
--	files that have the `text` property set when core.autocrlf is false.
-+	files that are marked as text (either by having the `text`
-+	attribute set, or by having `text=auto` and Git auto-detecting
-+	the contents as text).
- 	Alternatives are 'lf', 'crlf' and 'native', which uses the platform's
- 	native line ending.  The default value is `native`.  See
- 	linkgit:gitattributes[5] for more information on end-of-line
--	conversion.
-+	conversion. Note that this value is ignored if `core.autocrlf`
-+	is set to `true` or `input`.
- 
- core.safecrlf::
- 	If true, makes Git check if converting `CRLF` is reversible when
--- 
-2.20.1.845.g57b86ca485
+I offered two suggestions: to use a more readable `strchr()` check for the
+forbidden embedded newlines, and to not bother with special-casing the
+empty command but instead handling it the exact same way as an invalid
+command-line would be handled.
+
+Ciao,
+Dscho
