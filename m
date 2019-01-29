@@ -2,196 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A36091F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 06:49:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD77E1F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 07:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbfA2GtD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 01:49:03 -0500
-Received: from 0x63.nu ([109.74.10.199]:48022 "EHLO 0x63.nu"
+        id S1725793AbfA2HWh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 02:22:37 -0500
+Received: from mout.web.de ([212.227.15.14]:52541 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725795AbfA2GtD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 01:49:03 -0500
-Received: from ip6-localhost ([::1] helo=moveme2)
-        by 0x63.nu with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.89)
-        (envelope-from <anders@0x63.nu>)
-        id 1goNCe-0004Fq-Tu; Tue, 29 Jan 2019 07:49:01 +0100
-References: <20181028125025.30952-1-anders@0x63.nu> <20190128213337.24752-1-anders@0x63.nu> <20190128213337.24752-3-anders@0x63.nu> <xmqq8sz49zm1.fsf@gitster-ct.c.googlers.com>
-User-agent: mu4e 0.9.18; emacs 26.0.91
-From:   Anders Waldenborg <anders@0x63.nu>
+        id S1725554AbfA2HWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 02:22:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1548746549;
+        bh=koFJi8zje7aKGCs+u4/mWiTLy1d1QV+AVcTsVJUTFi8=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=gbFEnLuL5H/7mdZKC6fyR9rybECx+LBPf3kQdL9OgLZ57d1v+iFofgJCVey1dONwq
+         sELNbCKbslI/evZJXQCK/61bxl5LENFhTMW3ZRfc6WzhYBRAoE9o+BaUqzxK7dCCpT
+         t+l/Jit4kJlQoCMBLk2+hVMtHCA0csqctrtbWstk=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MEqOg-1gyliB1b2o-00FxMY; Tue, 29
+ Jan 2019 08:22:29 +0100
+Date:   Tue, 29 Jan 2019 07:22:28 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Anders Waldenborg <anders@0x63.nu>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 2/7 update] pretty: allow %(trailers) options with explicit value
-In-reply-to: <xmqq8sz49zm1.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 29 Jan 2019 07:49:00 +0100
-Message-ID: <87r2cwklgj.fsf@0x63.nu>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2019, #04; Mon, 28)
+Message-ID: <20190129072228.dcyyjpcgqk7c44j4@tb-raspi4>
+References: <xmqq4l9s9zee.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-SA-Exim-Connect-IP: ::1
-X-SA-Exim-Mail-From: anders@0x63.nu
-X-SA-Exim-Scanned: No (on 0x63.nu); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4l9s9zee.fsf@gitster-ct.c.googlers.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:EF9sMlW47w1eFUx4VbwDzaQ2QStM8oeloTrUdT1N+sYODOf4IxW
+ OPqGHaZopqVI4p/dblAOg3JSGlPct8R+Hmjukn03UKL1V4l/oBDM1goPjsPBKfSu8h9M+th
+ 9BzB4/q3L9UV7+QPSwkAdR9J0kFE6ne9PsqSWW3qIa85vHcJckF4ShbD8zJmu8hwY+/AgUN
+ 6usrlz2sNZwghijAYrCog==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jOdgT/Tr0yU=:tZszGln4IOn7G/yOuImp9T
+ luHXKKoeQUAvAqmNL86CbQy6SY4HUDR6skr2QZmUUw8tknZtZgZ2DENn9ya033D9/JxkDI7OM
+ IBBUFggOIF6Idag4DhNRRH4Pl+/YLAZcZU3v600SfraHNyw0Ae5SS1u7lyFHrJb+g6Xs9PHsM
+ GDbc/wNDz1rVcx7xtSc5f6azftoeECb8bcH+CZuwVT7enBGwyneiyc/eZotjvZzBFzJqoHg3m
+ cHvripxAC7lymAZi8bfULPv7+/zDpExsVUGn7//J7sBNhEbnbbUtOyKb+L+CY2gSLBaLEU2XW
+ mpvkUoOm73kjkmrA9xPYLPFPvzhtUKjlguB1tjVeX6Ge9qFpr32STscheqaEmE8y1AxomSi/s
+ cyKX9JZIiuhm4ynOKlnZW+nNd7KvY3kyEvmN1LW7NYXMKt8QWrfXW386y+Ol9U0yyL1bqseyW
+ IrLBzwIG7TK1F6zoNO2UuksoahBD8Qba9SViF/gXcfBOTm8dax/6Iqa3OaFd39zNgTBINbFDr
+ QqVJrxlTamu8oXopkZuMuNsvJlIxWiCSPlH16SB+56+oN/avMe3+vl5cyRzgWZrK+AlUIR6qs
+ mkUUKRJsx4tlNcH486dR+pLnyXXR59Ks5IO0oakjFGWdNAOi9EdgUhbzaZUJLsSCJxhPGKWer
+ WqZt3qsrJE/BBfkEcx2EyBvs7GJ4Q4xvWiIQiEzSZO6FRJroHsetNQfSJGm8ti3ahX0e+b/T7
+ WjV1GGAD+OynTIuUn+xCrEVnLG6K46EBQQCUK2DIcsEBCugpqi7QCifFS/CAmZbu6CEKehL9J
+ Ca/a6gAbCnLGl/w/Khx+ZN2BtGhrcfsR8Kw+lUVq4BK5MCnClfxiDFiUcLuZF/RsbuHi8Br6Z
+ 5sI+QYSydvH7JuvJjU6WM0vACamHZlAKQATih2bpZBwdMw/ek5M+ETWlu5eZsu
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Jan 28, 2019 at 02:43:21PM -0800, Junio C Hamano wrote:
 
-In addition to old %(trailers:only) it is now allowed to write
-%(trailers:only=yes)
 
-By itself this only gives (the not quite so useful) possibility to have
-users change their mind in the middle of a formatting
-string (%(trailers:only=true,only=false)). However, it gives users the
-opportunity to override defaults from future options.
+>
+> * tb/utf-16-le-with-explicit-bom (2019-01-22) 1 commit
+>  - Support working-tree-encoding "UTF-16LE-BOM"
+>
+>  A new encoding UTF-16LE-BOM has been invented to force encoding to
+>  UTF-16 with BOM in little endian byte order, which cannot be directly
+>  generated by using iconv.
+>
+>  Will merge to 'next'.
+>
 
-Signed-off-by: Anders Waldenborg <anders@0x63.nu>
----
- Documentation/pretty-formats.txt | 14 ++++++---
- pretty.c                         | 52 +++++++++++++++++++++++++++-----
- t/t4205-log-pretty-formats.sh    | 18 +++++++++++
- 3 files changed, 73 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 86d804fe97..d33b072eb2 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -225,10 +225,16 @@ endif::git-rev-list[]
-                           linkgit:git-interpret-trailers[1]. The
-                           `trailers` string may be followed by a colon
-                           and zero or more comma-separated options:
--** 'only': omit non-trailer lines from the trailer block.
--** 'unfold': make it behave as if interpret-trailer's `--unfold`
--   option was given. E.g., `%(trailers:only,unfold)` unfolds and
--   shows all trailer lines.
-+** 'only[=val]': select whether non-trailer lines from the trailer
-+   block should be included. The `only` keyword may optionally be
-+   followed by an equal sign and one of `true`, `on`, `yes` to omit or
-+   `false`, `off`, `no` to show the non-trailer lines. If option is
-+   given without value it is enabled. If given multiple times the last
-+   value is used.
-+** 'unfold[=val]': make it behave as if interpret-trailer's `--unfold`
-+   option was given. In same way as to for `only` it can be followed
-+   by an equal sign and explicit value. E.g.,
-+   `%(trailers:only,unfold=true)` unfolds and shows all trailer lines.
- 
- NOTE: Some placeholders may depend on other options given to the
- revision traversal engine. For example, the `%g*` reflog options will
-diff --git a/pretty.c b/pretty.c
-index b83a3ecd23..4dfbd38cf6 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1056,13 +1056,26 @@ static size_t parse_padding_placeholder(struct strbuf *sb,
- 	return 0;
- }
- 
--static int match_placeholder_arg(const char *to_parse, const char *candidate,
--				 const char **end)
-+static int match_placeholder_arg_value(const char *to_parse, const char *candidate,
-+				       const char **end, const char **valuestart,
-+				       size_t *valuelen)
- {
- 	const char *p;
- 
- 	if (!(skip_prefix(to_parse, candidate, &p)))
- 		return 0;
-+	if (valuestart) {
-+		if (*p == '=') {
-+			*valuestart = p + 1;
-+			*valuelen = strcspn(*valuestart, ",)");
-+			p = *valuestart + *valuelen;
-+		} else {
-+			if (*p != ',' && *p != ')')
-+				return 0;
-+			*valuestart = NULL;
-+			*valuelen = 0;
-+		}
-+	}
- 	if (*p == ',') {
- 		*end = p + 1;
- 		return 1;
-@@ -1074,6 +1087,34 @@ static int match_placeholder_arg(const char *to_parse, const char *candidate,
- 	return 0;
- }
- 
-+static int match_placeholder_bool_arg(const char *to_parse, const char *candidate,
-+				      const char **end, int *val)
-+{
-+	const char *argval;
-+	char *strval;
-+	size_t arglen;
-+	int v;
-+
-+	if (!match_placeholder_arg_value(to_parse, candidate, end, &argval, &arglen))
-+		return 0;
-+
-+	if (!argval) {
-+		*val = 1;
-+		return 1;
-+	}
-+
-+	strval = xstrndup(argval, arglen);
-+	v = git_parse_maybe_bool(strval);
-+	free(strval);
-+
-+	if (v == -1)
-+		return 0;
-+
-+	*val = v;
-+
-+	return 1;
-+}
-+
- static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 				const char *placeholder,
- 				void *context)
-@@ -1318,11 +1359,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 		if (*arg == ':') {
- 			arg++;
- 			for (;;) {
--				if (match_placeholder_arg(arg, "only", &arg))
--					opts.only_trailers = 1;
--				else if (match_placeholder_arg(arg, "unfold", &arg))
--					opts.unfold = 1;
--				else
-+				if (!match_placeholder_bool_arg(arg, "only", &arg, &opts.only_trailers) &&
-+				    !match_placeholder_bool_arg(arg, "unfold", &arg, &opts.unfold))
- 					break;
- 			}
- 		}
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 978a8a66ff..63730a4ec0 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -578,6 +578,24 @@ test_expect_success '%(trailers:only) shows only "key: value" trailers' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '%(trailers:only=yes) shows only "key: value" trailers' '
-+	git log --no-walk --pretty=format:"%(trailers:only=yes)" >actual &&
-+	grep -v patch.description <trailers >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%(trailers:only=no) shows all trailers' '
-+	git log --no-walk --pretty=format:"%(trailers:only=no)" >actual &&
-+	cat trailers >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%(trailers:only=no,only=true) shows only "key: value" trailers' '
-+	git log --no-walk --pretty=format:"%(trailers:only=yes)" >actual &&
-+	grep -v patch.description <trailers >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '%(trailers:unfold) unfolds trailers' '
- 	git log --no-walk --pretty="%(trailers:unfold)" >actual &&
- 	{
--- 
-2.17.1
-
+Please keep in in pu - I think a reroll is needed.
