@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D5EB1F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 14:19:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C005D1F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 14:19:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728227AbfA2OTg (ORCPT <rfc822;e@80x24.org>);
+        id S1728203AbfA2OTg (ORCPT <rfc822;e@80x24.org>);
         Tue, 29 Jan 2019 09:19:36 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:40248 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728191AbfA2OTg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 09:19:36 -0500
-Received: by mail-ed1-f65.google.com with SMTP id g22so16082980edr.7
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:19:34 -0800 (PST)
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:42745 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728164AbfA2OTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 09:19:34 -0500
+Received: by mail-ed1-f54.google.com with SMTP id y20so16080484edw.9
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 06:19:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qFU9SlpnDsxWdLk7t1RD4T2tVhhrbl/R3qfgIkC/7lI=;
-        b=G+miTMPSDlCEziHpvQ7tYRIC390JC7zp6Kg0iC2YKaGq2lyymWkoH2LMu4d3UK6OI7
-         IQiqcUkfsGrQ8oz0e/9PYI0nfXUZ/ajhggNcai8kYRVygUlacSdCrX3g8M04E1XjX+2G
-         dhD/1eVlmdG+3/Nwqf+WxcN8NAfk96UwvhOr2mX33nnKzxRR4UrvNKkhqG4tZOoCj8wB
-         IYUKYJsqgicwqAsJyExDAagBHLYkLj+ZFrn5ymXgATyZfBSomqK5cl7X2UEXz661iMtr
-         Di2Uac2PZ4dTYnEwWHihzX8bGD46AJ7MUfyDuFcH3PZnkW5xvW9KET1LpXbjG0Z77TdK
-         Vr+g==
+        bh=Nx9l6UGI/Mo+cXJbFVbhoaNDqQugjJei4UPiehgiQbs=;
+        b=Ikjo08ixU2LDC6UFmHKaVpZnhHXbm/FnBUjd7uNuxnYPcZb1qM8DElnKnWwrZgQuPW
+         IuKInvISG9QwnZMOsCzLjSvAVq9vHEtMoPtXcXWV+AFnruPzlbNO7rwCkGGjYDKJQCTr
+         ebI7Vh/RG9PJC+65DkwtSI3wNgBQGf1clBakcxHQRttuIt70qN0qitzUNN0qd0wyWXsX
+         kFT9BVlxsXSFjgnj1HfJboJrF/6zIEUe9aqJXjkC+Ck4dCYSrR8DVFv1WTuqeSbKRrSa
+         LIMZeNJK+xuY98h1+xEaQX4o0LTiezncSXXw26z/k9vnMUi3GCR4zDX3fHXS9VVi5OZM
+         r52g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qFU9SlpnDsxWdLk7t1RD4T2tVhhrbl/R3qfgIkC/7lI=;
-        b=f5Lu74gpOrs6qGI6Fs9nfMmPReerN76GXNg46dKmfYkPy1h2v2T0WaPIeGheRoUCWn
-         NJYiejEgvBmVECWtRo/eVHCR9HrgMsG8et5h+UlAoqbRisfqbzlb5SanaFJ7491psNJL
-         p1FQhtch2nQYRsHIfKOsUkwqQB41EsAvKn2QBFO/V2r6Efeo7CZqJ2RptADCg18Qk3UI
-         2Uqwv/3629G3h/CUybhLHxFJ4lJ/uscn6ufvxN3VqmnX/AXHqKkC/wp16KlG9NRXIs+w
-         CjtFbSixRbstiCJrGb+MNrH3vbHnfWs/yRP6p8Yiq51buMoUxkwgudB2QALP2pt+5LQc
-         YX3A==
-X-Gm-Message-State: AJcUukd/fYyTzDaJ0fMjLzWXK0mGt3XcSEPu7Yi3LD/VNi2PL1Jiqfxx
-        SAyAFuQkSR4uYoG5frlI0ydOqHoB
-X-Google-Smtp-Source: ALg8bN4/ilj3ThHbTFgFE2wB9A+uBh8+TbaZyr+Iw9iqlnqokWGTXnc4RVT1/omQ72G53bL8Fiy0XQ==
-X-Received: by 2002:a17:906:b292:: with SMTP id q18mr22412608ejz.184.1548771573949;
-        Tue, 29 Jan 2019 06:19:33 -0800 (PST)
+        bh=Nx9l6UGI/Mo+cXJbFVbhoaNDqQugjJei4UPiehgiQbs=;
+        b=Y4qSZHgVbC/VB+cNVP/QcebJZ6rAa8PPx2gdgoWnBapsorjLy7k9cZSSG812YOG9dG
+         AUekuqPfIn3tqdgHCKdjHZ8E4UKTiZ5HdOcXxaVW7eBdiVggaLqVxYrgWc3pCInKlmK9
+         Ob2lUFumMSyRFPNKJORJggR0DTVDWEjvvIG3yZXBS7U4buD2suI3uaYY/ROGZPxU3z4u
+         JtWSjMB4dqbbg2YZx/Hr0VJ1NmS17/vo1T6TW/QB6Aymsy5ejlHj8aWm2Cye7/9SFabh
+         YWvvTPmpb35z7XbrtTv/D6mvdfVzz/zbqSFUmC3nSBeldRC9PPhIWqG47Yjm8qKL33ZA
+         aozw==
+X-Gm-Message-State: AJcUukfyEx68rS4ozPlkCZyx3l0QYeXq2GwVM8FAhgQYWPU8lnv6zAAC
+        6mvXST3U//DaH7Tb4Nk4hpkLkoQB
+X-Google-Smtp-Source: ALg8bN6fZbQpKXb8ohuQSina6AjQOD9yXFOuPZx5T2/jUeO1kSgFsDbgwketYmoY1xXHW0RdIWxsbA==
+X-Received: by 2002:aa7:c152:: with SMTP id r18mr26007969edp.258.1548771572464;
+        Tue, 29 Jan 2019 06:19:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g16sm3044355ejb.65.2019.01.29.06.19.33
+        by smtp.gmail.com with ESMTPSA id o23sm979448ejd.1.2019.01.29.06.19.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Jan 2019 06:19:33 -0800 (PST)
-Date:   Tue, 29 Jan 2019 06:19:33 -0800 (PST)
-X-Google-Original-Date: Tue, 29 Jan 2019 14:19:13 GMT
-Message-Id: <7a5caa2e0f9b38edb6bdcb24da8fe19c2ef373f4.1548771561.git.gitgitgadget@gmail.com>
+        Tue, 29 Jan 2019 06:19:31 -0800 (PST)
+Date:   Tue, 29 Jan 2019 06:19:31 -0800 (PST)
+X-Google-Original-Date: Tue, 29 Jan 2019 14:19:11 GMT
+Message-Id: <c1ab8df6772045cbe63b2355904038a8556670c7.1548771561.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v6.git.gitgitgadget@gmail.com>
 References: <pull.31.v5.git.gitgitgadget@gmail.com>
         <pull.31.v6.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 14/21] tests: avoid calling Perl just to determine file
- sizes
+Subject: [PATCH v6 12/21] mingw: be more generous when wrapping up the
+ setitimer() emulation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,100 +72,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-It is a bit ridiculous to spin up a full-blown Perl instance (especially
-on Windows, where that means spinning up a full POSIX emulation layer,
-AKA the MSYS2 runtime) just to tell how large a given file is.
+Every once in a while, the Azure Pipeline fails with some semi-random
 
-So let's just use the test-tool to do that job instead.
+	error: timer thread did not terminate timely
 
-This command will also be used over the next commits, to allow for
-cutting out individual test cases' verbose log from the file generated
-via --verbose-log.
+This error message means that the thread that is used to emulate the
+setitimer() function did not terminate within 1,000 milliseconds.
+
+The most likely explanation (and therefore the one we should assume to
+be true, according to Occam's Razor) is that the timeout of one second
+is simply not enough because we try to run so many tasks in parallel.
+
+So let's give it ten seconds instead of only one. That should be enough.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-path-utils.c          | 12 ++++++++++++
- t/t0021-conversion.sh               |  2 +-
- t/t1050-large.sh                    |  2 +-
- t/t5315-pack-objects-compression.sh |  2 +-
- t/t9303-fast-import-compression.sh  |  2 +-
- 5 files changed, 16 insertions(+), 4 deletions(-)
+ compat/mingw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index ae091d9b3e..30211d6d64 100644
---- a/t/helper/test-path-utils.c
-+++ b/t/helper/test-path-utils.c
-@@ -291,6 +291,18 @@ int cmd__path_utils(int argc, const char **argv)
- 		return !!res;
- 	}
- 
-+	if (argc > 2 && !strcmp(argv[1], "file-size")) {
-+		int res = 0, i;
-+		struct stat st;
-+
-+		for (i = 2; i < argc; i++)
-+			if (stat(argv[i], &st))
-+				res = error_errno("Cannot stat '%s'", argv[i]);
-+			else
-+				printf("%"PRIuMAX"\n", (uintmax_t)st.st_size);
-+		return !!res;
-+	}
-+
- 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
- 		argv[1] ? argv[1] : "(there was none)");
- 	return 1;
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index fd5f1ac649..e10f5f787f 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -24,7 +24,7 @@ generate_random_characters () {
- }
- 
- file_size () {
--	perl -e 'print -s $ARGV[0]' "$1"
-+	test-tool path-utils file-size "$1"
- }
- 
- filter_git () {
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index 1a9b21b293..dcb4dbba67 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -8,7 +8,7 @@ test_description='adding and checking out large blobs'
- # This should be moved to test-lib.sh together with the
- # copy in t0021 after both topics have graduated to 'master'.
- file_size () {
--	perl -e 'print -s $ARGV[0]' "$1"
-+	test-tool path-utils file-size "$1"
- }
- 
- test_expect_success setup '
-diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
-index 34c47dae09..df970d7584 100755
---- a/t/t5315-pack-objects-compression.sh
-+++ b/t/t5315-pack-objects-compression.sh
-@@ -7,7 +7,7 @@ test_description='pack-object compression configuration'
- # This should be moved to test-lib.sh together with the
- # copy in t0021 after both topics have graduated to 'master'.
- file_size () {
--	perl -e 'print -s $ARGV[0]' "$1"
-+	test-tool path-utils file-size "$1"
- }
- 
- test_expect_success setup '
-diff --git a/t/t9303-fast-import-compression.sh b/t/t9303-fast-import-compression.sh
-index 856219f46a..5045f02a53 100755
---- a/t/t9303-fast-import-compression.sh
-+++ b/t/t9303-fast-import-compression.sh
-@@ -6,7 +6,7 @@ test_description='compression setting of fast-import utility'
- # This should be moved to test-lib.sh together with the
- # copy in t0021 after both topics have graduated to 'master'.
- file_size () {
--	perl -e 'print -s $ARGV[0]' "$1"
-+	test-tool path-utils file-size "$1"
- }
- 
- import_large () {
+diff --git a/compat/mingw.c b/compat/mingw.c
+index b459e1a291..e0dfe8844d 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2100,7 +2100,7 @@ static void stop_timer_thread(void)
+ 	if (timer_event)
+ 		SetEvent(timer_event);	/* tell thread to terminate */
+ 	if (timer_thread) {
+-		int rc = WaitForSingleObject(timer_thread, 1000);
++		int rc = WaitForSingleObject(timer_thread, 10000);
+ 		if (rc == WAIT_TIMEOUT)
+ 			error("timer thread did not terminate timely");
+ 		else if (rc != WAIT_OBJECT_0)
 -- 
 gitgitgadget
 
