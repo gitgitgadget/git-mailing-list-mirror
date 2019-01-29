@@ -2,110 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FC51211B5
-	for <e@80x24.org>; Tue, 29 Jan 2019 09:25:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9E061F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 09:46:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726383AbfA2JZ4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 04:25:56 -0500
-Received: from mail-yw1-f45.google.com ([209.85.161.45]:45035 "EHLO
-        mail-yw1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725799AbfA2JZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 04:25:56 -0500
-Received: by mail-yw1-f45.google.com with SMTP id b63so7909823ywc.11
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 01:25:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=oZCq75gDGIxlFQZVGtMwWzTnnYW1veZFta0frIZXmzY=;
-        b=tuTR4r2qlMZ0xLIBnHK8qjKvUA20pR1wx2uEQbY4QgqcVLSCqDlY7Ba6IHoZL4TxUD
-         wzIsOlvfs5+RV0sfd2Y498vYzo343ErWSZtEjMDna7Fo+dFgTt4mYbGzxLSo9m69oHlJ
-         pA/2vIinzEGXoQnal+i/OoxP/+KLYrOtjQoF3Qxix2zJzev9PJEeXBPiqp+q9IzWtpzi
-         OznrrX4ivEW6GcrPDBGRkNXf2vHfcZK7WF80usP8/KmkAp3OTMeNZeNPkA3A5ue0EEcu
-         VxK+wRIPPdOVD/pwOM+0q5ZcWY8FzjEZ22WUkVG2MAsr5snJSoVhLFVEpKg7jG+WqE6U
-         4PHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=oZCq75gDGIxlFQZVGtMwWzTnnYW1veZFta0frIZXmzY=;
-        b=JN2pWMdcrR8wxYe4qlq3v5JHO6HTMU96xfQjzhqBPvcjeboRkeT+AJsMW+KC8ZHVWl
-         KBAHymelfVRw0cDA5pNaa0+aJfFxE2kCy0/gDXgAsRkhidAVB0pKokP07lMmJaUVBv6t
-         0IQhHmoI7fDvPY2y5nuo4LsJQwKHuDvD2HmpNI4nmzwAjjhTIue57mHSEGJDNNbSTtyX
-         OUWZ4evT49ZxiZmGwIfrBffFdU0cxF/yZIWp5dwKDy9VqqKwjBccNU0G23gUe73XuROw
-         cp1e036V0gcdnk/YXkuWIZAF2iSwsvTW95Gv/tPVqhjcGMlh4PCC+kRDGxNVKCsj4LAb
-         sA+A==
-X-Gm-Message-State: AJcUukdTg4EZ6fnstD0DeFHryhTtMJPNgRCs0LnGzLxz+4z8WI2hgK+r
-        mWDIHEfFfYQx2rONO/GiPh8n14YbYtSDTx0dcX3M+sNS
-X-Google-Smtp-Source: ALg8bN4QpJWFy44WJrTnF88jJR6qNmdUTdLwDjNcIsXnPkIeuIoCQwAb/R8e/r62QkIXMUcFCddQQslEVgNNTeg5jDQ=
-X-Received: by 2002:a0d:f541:: with SMTP id e62mr24793155ywf.253.1548753954534;
- Tue, 29 Jan 2019 01:25:54 -0800 (PST)
+        id S1727041AbfA2Jqh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 04:46:37 -0500
+Received: from mout.gmx.net ([212.227.15.15]:43047 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726456AbfA2Jqh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 04:46:37 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2ts6-1h7sXG1m8U-00shkv; Tue, 29
+ Jan 2019 10:46:32 +0100
+Date:   Tue, 29 Jan 2019 10:46:13 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Alban Gruin <alban.gruin@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/4] built-in rebase: call `git am` directly
+In-Reply-To: <dc6830ab-d31c-fb9b-4f8d-24a79a978764@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901291033180.41@tvgsbejvaqbjf.bet>
+References: <pull.24.git.gitgitgadget@gmail.com> <pull.24.v2.git.gitgitgadget@gmail.com> <3c4031868204862ea4e2a53a03cd8d7ec066a891.1547824162.git.gitgitgadget@gmail.com> <dc6830ab-d31c-fb9b-4f8d-24a79a978764@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   =?UTF-8?B?zp3PhM6tzr3PhM6/z4IgzqPPhM6xz43Pgc6/z4I=?= 
-        <stdedos@gmail.com>
-Date:   Tue, 29 Jan 2019 11:25:18 +0200
-Message-ID: <CAHMHMxWpqTDyCQPXPY6WPeMBHFzYGE=Z0Q8pSL=9TecwuP9fwg@mail.gmail.com>
-Subject: No clear API/Error message to validate a "revision object" using git rev-parse
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323328-1027158103-1548755192=:41"
+X-Provags-ID: V03:K1:rzhUg8T7+qfKIgpvtIP7GB0yqh3KV1UYfkIkcXwcjgNnUK99696
+ vB84XA5NHZwCrInPJlRriMR22MJ10cWG62M7iC6V2Mz1juhF/dLfdmsxxgegGMYz5WtdIwk
+ dVL49Vtx4vG0yCfTAQ3roHfWJunIK79e4RxWMAYTMLM5YUsAU9dhQR9/0aEhTOLRGOJtKlZ
+ WiohwQbKTaD9ear6CRzJA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Cz/AGbC+zpU=:SDT4J5InFJomY/mYrt7XX0
+ NDigc9Q9deZwvmh9dgGRbwnbrvmbJYO4d1RCh/dFsE5mA8ynB8wCzFsWk7LyrpCcIrlKf02pa
+ hXATX+hfI/fr2wAxHrJdiWYSrTmiPoT9z3xwyOdddbm+UsWA7OEM2BMZNXoe8xJIPZ5UmEurX
+ 8BJ7lPjXVCmI6Bd3ZVhr0hciZxKRgds8hvW7FIEhbXb1j7ElId8Zl0ZXo+8lEpytzZ2zCAY+e
+ Sceh0OzkSBTUigDTEjAZPLCVEg3l75DCNw6L0H1zAPbpSrzvT4tXcjYQJWQ+lHJadI9cDXCYy
+ x9xwYkqWlnvknnZZkaQbwy7iDXh4bgtfdc2PXP6rIEozIde3blqMPJ3JWs7mVDRrNtjADy8MK
+ Ivv1JpQXEt2JY6CIQdddQq4XRpOf+g7KpeZf6riZ8LjDpLpFIpj/TWWF7vruZvQWulNLVKfII
+ Md6bVhNL5YPz3IdeFxjvS+OuRn5LzNDxWnFbdgELRWzA08KB2yZM2tKE06Oud48mvntRuC0n/
+ 5rv4kn7ndM+Ec/aap00IbD0Cx0Lg3GB2fnogHcCCHumfeeyEuy9IjQTvLIQNcmV2sXV+OkZUe
+ r1houECZ5xhh63XXrVkHrcsu1Te7b+m9ZreORa2+AW+ArfnHaOaNd9KHHCAXyP+wYOpXKdPX8
+ SP0oU5lrMjKG2C7qfaEaaTuRxHtINAEl6kQ0X7BQ4QW4CH7Gf9zff3k+Tsiw3LJHzg3wdeu7l
+ GldvTevv+2WgPlWuY/6wETZQkWJqPdEhTfA2UbCl2HCgC4dsA2+fUhw6lDo0GUjLrjlfRS20/
+ dufrFL/1jjFucXV+VTDTqZHTRxmNMk5Qcs0u69l1+wpsNiQJWCp2NZOCOqGbraQbd2fbrApSm
+ qoQxsy82MdsupiPWPllv5dBe2wyFMyJJ7ovhrkEfHVBNyqxWGZVEenGSKtF/qITEXSRza0Yhp
+ UIdJbBIb2lQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello there everyone,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Minor bug report:
-I have a utility script to find "reference points" that contain a
-commit (git-x-in-y)
+--8323328-1027158103-1548755192=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-The script needs to accept "any valid reference point", that includes
-e.g. tags as well.
-I validate said input by passing whatever argument through git rev-parse.
+Hi Alban,
 
-If the tag name is invalid, say:
-$ git rev-parse version.3
-version.3
-fatal: ambiguous argument 'version.3': unknown revision or path not in
-the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
+On Sat, 26 Jan 2019, Alban Gruin wrote:
 
-So, I follow the recommendation to add '--', since I know that I won't
-be adding any paths:
+> Le 18/01/2019 à 16:09, Johannes Schindelin via GitGitGadget a écrit :
+> > -%<-
+> > +static int run_am(struct rebase_options *opts)
+> > +{
+> > -%<-
+> > +
+> > +	if (!status) {
+> > +		return move_to_original_branch(opts);
+> > +	}
+> > +
+> > +	if (is_directory(opts->state_dir))
+> > +		write_basic_state(opts);
+> > +
+> > +	return status;
+> > +}
+> > +
+> 
+> This means that the state directory will be created only if there is a
+> problem (ie. a conflict), not if the user cancels the rebase by hitting
+> ^C.  In this case, the user will be left in a corrupted state where the
+> builtin rebase cannot abort the rebase properly.
 
-$ git rev-parse version.3 --
-fatal: bad revision 'version.3'
+This is an almost literal translation of
+https://github.com/git/git/blob/v2.20.1/git-rebase--am.sh#L77-L83:
 
-However, what happens with the correct tags is, I get the trailing
-double dash in:
-$  git rev-parse version-0.false --
-d43292476ea9ab8c3d32940352b680549b64e8d8
---
-$
+```sh
+if test 0 != $ret
+then
+        test -d "$state_dir" && write_basic_state
+        return $ret
+fi
 
-A further leading argument, e.g. '' makes the situation worse:
-$ git rev-parse version-0.false -- ''
-d43292476ea9ab8c3d32940352b680549b64e8d8
---
+move_to_original_branch
+```
 
-$
+All I did was to switch the order to handle the simple (and common) case
+first.
 
-`--verify`s error message is even more cryptic:
-$ git rev-parse --verify version.3
-fatal: Needed a single revision
-$ git rev-parse --verify version-0.false
-80f20b100cca5166b22cbcc1f4a6ac1eae64a0d0
+So I do not think that this changes the behavior of the shell-scripted
+`am` backend.
 
-Further attempts do not help either:
-$  git rev-parse --revs-only version-3 ; echo $?
-0
-$
+Looking at the code, for a moment I thought that I had introduced a bug
+where the state_dir is not cleaned up after move_to_original_branch() is
+called, but I call run_am() in run_specific_rebase() and skip directly to
+the finished_rebase label after that, which does take care of calling
+finish_rebase() (which removes the state_dir, among other things such as
+applying the autostash).
 
-Am I writing the command wrong, or is there some part of it I don't understand?
-
-Ntentos Stavros
+Ciao,
+Dscho
+--8323328-1027158103-1548755192=:41--
