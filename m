@@ -7,74 +7,139 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD77E1F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 07:22:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F3F11F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 07:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725793AbfA2HWh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 02:22:37 -0500
-Received: from mout.web.de ([212.227.15.14]:52541 "EHLO mout.web.de"
+        id S1725865AbfA2HiW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 02:38:22 -0500
+Received: from mout.web.de ([212.227.17.11]:42369 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725554AbfA2HWh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 02:22:37 -0500
+        id S1725554AbfA2HiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 02:38:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1548746549;
-        bh=koFJi8zje7aKGCs+u4/mWiTLy1d1QV+AVcTsVJUTFi8=;
+        s=dbaedf251592; t=1548747491;
+        bh=pJwcFfvQih95lCkvTB8BSOogGQ4McmFtDgmJEPkZYP8=;
         h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=gbFEnLuL5H/7mdZKC6fyR9rybECx+LBPf3kQdL9OgLZ57d1v+iFofgJCVey1dONwq
-         sELNbCKbslI/evZJXQCK/61bxl5LENFhTMW3ZRfc6WzhYBRAoE9o+BaUqzxK7dCCpT
-         t+l/Jit4kJlQoCMBLk2+hVMtHCA0csqctrtbWstk=
+        b=bEfF1p7CTGFRlwPbKUuLDSxV0xxkYYNm+UOwfLvg/p26vwC0Q1CqslxKAIOO4xafe
+         fAAZ0onaQoc/2AEqqMgNAzLJrHWvoz0bxOMyzmTVgPO5VflLPl9pEf26kNmixYGX/F
+         iUJM4p0oK+X6ExrOw7SRf4rTBVSD+WNbklW6rUJk=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MEqOg-1gyliB1b2o-00FxMY; Tue, 29
- Jan 2019 08:22:29 +0100
-Date:   Tue, 29 Jan 2019 07:22:28 +0000
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LmLgE-1hOGgb0lus-00ZwW5; Tue, 29
+ Jan 2019 08:38:11 +0100
+Date:   Tue, 29 Jan 2019 07:38:10 +0000
 From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2019, #04; Mon, 28)
-Message-ID: <20190129072228.dcyyjpcgqk7c44j4@tb-raspi4>
-References: <xmqq4l9s9zee.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Sergey Lukashev <lukashev.s@ya.ru>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: unclear docs
+Message-ID: <20190129073810.23op5qaibyj2amwq@tb-raspi4>
+References: <57362151548583138@iva8-37fc2ad204cd.qloud-c.yandex.net>
+ <13169311548590123@iva1-16f33c6a446b.qloud-c.yandex.net>
+ <20190128160944.GB23588@sigill.intra.peff.net>
+ <1593541548699120@myt6-27270b78ac4f.qloud-c.yandex.net>
+ <20190128183117.GA13165@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq4l9s9zee.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20190128183117.GA13165@sigill.intra.peff.net>
 User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:EF9sMlW47w1eFUx4VbwDzaQ2QStM8oeloTrUdT1N+sYODOf4IxW
- OPqGHaZopqVI4p/dblAOg3JSGlPct8R+Hmjukn03UKL1V4l/oBDM1goPjsPBKfSu8h9M+th
- 9BzB4/q3L9UV7+QPSwkAdR9J0kFE6ne9PsqSWW3qIa85vHcJckF4ShbD8zJmu8hwY+/AgUN
- 6usrlz2sNZwghijAYrCog==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jOdgT/Tr0yU=:tZszGln4IOn7G/yOuImp9T
- luHXKKoeQUAvAqmNL86CbQy6SY4HUDR6skr2QZmUUw8tknZtZgZ2DENn9ya033D9/JxkDI7OM
- IBBUFggOIF6Idag4DhNRRH4Pl+/YLAZcZU3v600SfraHNyw0Ae5SS1u7lyFHrJb+g6Xs9PHsM
- GDbc/wNDz1rVcx7xtSc5f6azftoeECb8bcH+CZuwVT7enBGwyneiyc/eZotjvZzBFzJqoHg3m
- cHvripxAC7lymAZi8bfULPv7+/zDpExsVUGn7//J7sBNhEbnbbUtOyKb+L+CY2gSLBaLEU2XW
- mpvkUoOm73kjkmrA9xPYLPFPvzhtUKjlguB1tjVeX6Ge9qFpr32STscheqaEmE8y1AxomSi/s
- cyKX9JZIiuhm4ynOKlnZW+nNd7KvY3kyEvmN1LW7NYXMKt8QWrfXW386y+Ol9U0yyL1bqseyW
- IrLBzwIG7TK1F6zoNO2UuksoahBD8Qba9SViF/gXcfBOTm8dax/6Iqa3OaFd39zNgTBINbFDr
- QqVJrxlTamu8oXopkZuMuNsvJlIxWiCSPlH16SB+56+oN/avMe3+vl5cyRzgWZrK+AlUIR6qs
- mkUUKRJsx4tlNcH486dR+pLnyXXR59Ks5IO0oakjFGWdNAOi9EdgUhbzaZUJLsSCJxhPGKWer
- WqZt3qsrJE/BBfkEcx2EyBvs7GJ4Q4xvWiIQiEzSZO6FRJroHsetNQfSJGm8ti3ahX0e+b/T7
- WjV1GGAD+OynTIuUn+xCrEVnLG6K46EBQQCUK2DIcsEBCugpqi7QCifFS/CAmZbu6CEKehL9J
- Ca/a6gAbCnLGl/w/Khx+ZN2BtGhrcfsR8Kw+lUVq4BK5MCnClfxiDFiUcLuZF/RsbuHi8Br6Z
- 5sI+QYSydvH7JuvJjU6WM0vACamHZlAKQATih2bpZBwdMw/ek5M+ETWlu5eZsu
+X-Provags-ID: V03:K1:KelmjuwWQRwy5UAbSsGb0v0+O3Jjf2H5eGpA1o9cQy5QoMD0Lti
+ G7NX7HY0vF1ioDDw080v1BqW5TVm+jBXyHzIGUSkTQihivMR7aqGJmSw+j2Vl4UcKw0m+xv
+ +UvfLfxM631c/Xz/SAy99L2MXK7HYZ2aT1T8qEOi/EL1nCkVXZBjySpuv/VvDQALWG2tftW
+ xz6r4zbBQAudwaynUQMRA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2EH/tTSFWU8=:9pKOSN8Z1ULrWBlq8bSI0j
+ pGcLDYJvpFv8CANtbqaU6IPfLgsaSaZRDuhiAP/CbzEen19q6/lYeu5SB/xL9uKPnEmk6wqvV
+ Rs3wvo45ws5ZCghBRSSDavozc1XNANrmBjLhiRop7xKEygFCIA4h27CqDxCCs9q53eeiuxYAc
+ wyqdNGFbQaGGOPrr2mBeybes9+owila9E3CMeKSYNypsMsr5t0SfzgCU+81bnHBykfPiUUH1V
+ 1QLaH1T4JVn/nPnZx/PDmLYutt2fQHaQjRWcVbo273wnF2n1/0BPZSfXGfPAyTykO9j4hEf4b
+ +IsHOtJfDN98rjxJHrDq0dOln7qTMeJNBDtBLjLgenuNdbIokNtMdxw8vQDbxD3BfPMJGXD2m
+ bI4496MNQcWJRknEu6S6y0K+XfVsVx/ncIf2b6H8iEwEuKOP3oL8utYRFLFVRCz9sJ50z8Xp6
+ WU/opMsJEatXFPFshXc4YCVc1MdzyVzTdAMpCCBk7kebiGu9j1LlPHZONJqBseFzsfh2WJo4y
+ K7qfGXtmPrZ/37UFNEQVH9Rwvk4MQVMv5xL7iHWC53pZmGWLG1Yu9XpwjNiJecMna3bLoslcK
+ A+mRjJ5rZcOfjfOcr11nDrHx7zpQJ1jcfIcP7zm8IAa+eKMSY6Y6ppwlqOuDH6y9XMz0MbnIo
+ MO0++h3tiO+rwE8p+Y8EMf25Ml0sQ5i2YUJ1DgdxzgQPuu7MVPSOSzeDVmlofzshUZXdZVbQu
+ LnD2YSlK66xc83DT9X6tKJI5ld9Pv23IZw1Mv1dmL0fBnvHgJTZG72kAo3SU74PlrSaK8x78B
+ tCnBKt+au7WQsP/JRgRhXLMYL8zhtzWMMEQDT4gD6i3/W4hSvXdzp7B9BOBG3tGQNlqu9s8RM
+ T1Rg0BYc+wIv/52A83mL/elbbD2PNOuI7CXVBzg52GxL0lICuZytlcTY6fbzXJ
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 28, 2019 at 02:43:21PM -0800, Junio C Hamano wrote:
+On Mon, Jan 28, 2019 at 01:31:17PM -0500, Jeff King wrote:
+> On Mon, Jan 28, 2019 at 09:12:00PM +0300, Sergey Lukashev wrote:
+>
+> > Thank you. Does the paragraph about core.eol refers to the text
+> > attribute? It's written 'property' there. I was thinking it means
+> > whether git thinks file is text, using .gitattributes OR otherwise.
+> > Maybe changing this word will make it clearer?
+>
+> Yeah, I think the word "property" is unnecessarily confusing. Here's
+> another patch (meant to go on top of the other).
+
+The property was originally meant to say:
+- Either the "text" attribute is set in .gitattributes
+  or
+- The "text=3Dauto" attribute is set in .gitattributes and
+  Git auto-detects the file as text (and not as binary).
 
 
->
-> * tb/utf-16-le-with-explicit-bom (2019-01-22) 1 commit
->  - Support working-tree-encoding "UTF-16LE-BOM"
->
->  A new encoding UTF-16LE-BOM has been invented to force encoding to
->  UTF-16 with BOM in little endian byte order, which cannot be directly
->  generated by using iconv.
->
->  Will merge to 'next'.
->
 
-Please keep in in pu - I think a reroll is needed.
+>
+> -- >8 --
+> Subject: [PATCH] docs/config: clarify "text property" in core.eol
+>
+> The word "property" is less clear than "attribute", which is used
+> elsewhere in the (surprise!) gitattributes documentation. So let's use
+> that.
+>
+> While we're here, let's make the paragraph a little easier to read by
+> de-emphasizing the "when core.autocrlf is false" bit. Putting it in the
+> first sentence obscures the main content, and many readers won't care
+> about autocrlf (i.e., anyone who is just following the gitattributes(7)
+> advice, which mainly discusses "text" and "core.eol").
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/config/core.txt | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/config/core.txt b/Documentation/config/core.t=
+xt
+> index d0e6635fe0..69c73ffe30 100644
+> --- a/Documentation/config/core.txt
+> +++ b/Documentation/config/core.txt
+> @@ -121,11 +121,12 @@ core.quotePath::
+>
+>  core.eol::
+>  	Sets the line ending type to use in the working directory for
+> -	files that have the `text` property set when core.autocrlf is false.
+> +	files that have the `text` attribute.
+>  	Alternatives are 'lf', 'crlf' and 'native', which uses the platform's
+>  	native line ending.  The default value is `native`.  See
+>  	linkgit:gitattributes[5] for more information on end-of-line
+> -	conversion.
+> +	conversion. Note that this value is ignored if `core.autocrlf`
+> +	is set to `true`.
+
+Should that be
+ > +	conversion. Note that this value is ignored if `core.autocrlf`
+ > +	is set to `true` or `input`.
+
+As we look at convert.c:
+
+static int text_eol_is_crlf(void)
+{
+  if (auto_crlf =3D=3D AUTO_CRLF_TRUE)
+    return 1;
+  else if (auto_crlf =3D=3D AUTO_CRLF_INPUT)
+    return 0;
+  if (core_eol =3D=3D EOL_CRLF)
+    return 1;
+  if (core_eol =3D=3D EOL_UNSET && EOL_NATIVE =3D=3D EOL_CRLF)
+    return 1;
+  return 0;
+}
+
