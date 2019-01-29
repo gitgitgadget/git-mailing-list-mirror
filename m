@@ -2,54 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B211F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 03:50:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 477101F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 05:22:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727252AbfA2Du0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 22:50:26 -0500
-Received: from fed1rmfepo103.cox.net ([68.230.241.145]:46104 "EHLO
-        fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727029AbfA2DuT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 22:50:19 -0500
-Received: from fed1rmimpo305.cox.net ([68.230.241.173])
-          by fed1rmfepo103.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20190129035018.GXIN4136.fed1rmfepo103.cox.net@fed1rmimpo305.cox.net>
-          for <git@vger.kernel.org>; Mon, 28 Jan 2019 22:50:18 -0500
-Received: from thunderbird.smith.home (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 3E957B81A5E;
-        Mon, 28 Jan 2019 20:50:17 -0700 (MST)
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090211.5C4FCD7A.0012,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.3 cv=Tv9Sewfh c=1 sm=1 tr=0
- a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=3JhidrIBZZsA:10 a=kviXuzpPAAAA:8 a=qrhz1JM_Fw-vKaZgdOYA:9
- a=qrIFiuKZe2vaD64auk6j:22
-X-CM-Score: 0.00
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-From:   "Stephen P. Smith" <ischis2@cox.net>
-To:     git@vger.kernel.org
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v4 5/5] Add `human` date format tests.
-Date:   Mon, 28 Jan 2019 20:50:16 -0700
-Message-Id: <20190129035016.25981-6-ischis2@cox.net>
-X-Mailer: git-send-email 2.20.1.2.gb21ebb671b
-In-Reply-To: <20190129035016.25981-1-ischis2@cox.net>
-References: <20190121053112.4736-1-ischis2@cox.net>
- <20190129035016.25981-1-ischis2@cox.net>
+        id S1725805AbfA2FWE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 00:22:04 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41622 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725267AbfA2FWE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 00:22:04 -0500
+Received: by mail-wr1-f65.google.com with SMTP id x10so20517377wrs.8
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 21:22:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Syb0g5Lw1wR8A9Zh7rPfDLLl27vZcJo3is+7MIteKd4=;
+        b=ZSAaNcy0oQoI9g7Iuds8/AXTgkSis1s6KJn5B2X5LN/QPjI01bOjV7Iu3VAeYe/Pbd
+         iUcCTr8W4xETOSPNfSudt+BY0AI8pIQ8RGZV9BTuElqo8l1A/rmgjkdIHN55XvIayd4c
+         AX2iRaqYZN0pB0tyK4CR12+F/bPWBi5jPqckvVdc2R6tRES3i+UJGDRO0w4Qw+ZyHbBI
+         +kPPhFrPnhxtNHIwDISY1DnECOdPP3J6EoliE0Y/dnttxOjH/hKmx2z029i6Db5td6y2
+         UWJFqSqvU3LgL1cibG6ycGra6/sBsEr4GrCEvzh7GxhAaDh047w1YEEi1K2bRSHjLDdw
+         Pwcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Syb0g5Lw1wR8A9Zh7rPfDLLl27vZcJo3is+7MIteKd4=;
+        b=fxK3iDwzuNaICVy1a8dyCNllpVIQp/Oml0dIqTWLF9dADj8pLVH6ZRFJuLrqnjFYav
+         anne2avNjDDucf9tQ+iu+qwyckFXacHDyDIuQLjJp6UrxKsNkBmY+F7U8LXeaFB7IqA7
+         k2WGZyv1n1JhrbDgmGzGo8hsuczCzjzA4uuP3q1+8gWGpXeh61iOLRKJZKLOtCTuiSFN
+         o0g2vj7AVL/QcjcJuB27cFA7bvi3x8MccIcciyIbUPth0ZTbs4rg35aNcvYzOWEf9QRi
+         PWH9+BOXtjKJw4uiw4LqceD8KvUX6U1oHVDnNgebyv/aoo3NPiIADLePYfwbZcmn6fXZ
+         9JLg==
+X-Gm-Message-State: AJcUukeY0zEIHUO+eqQPfUJwOdZcOSF80C2dbWGINPeWukUWkJhB7RFH
+        rxji7/ZJbcwlGGYCsgQfzgITaqfnObA=
+X-Google-Smtp-Source: ALg8bN7tDxaLhK7PuW2jFr7cndA9hupKuVpgFHT3iPyjHm4RnsbGkQ/Fwvtg4nBlMQ7KP5M463fYGg==
+X-Received: by 2002:a5d:480d:: with SMTP id l13mr25836873wrq.175.1548739322159;
+        Mon, 28 Jan 2019 21:22:02 -0800 (PST)
+Received: from localhost.localdomain (ip5b43d796.dynamic.kabel-deutschland.de. [91.67.215.150])
+        by smtp.gmail.com with ESMTPSA id g67sm2906294wmd.38.2019.01.28.21.21.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 28 Jan 2019 21:22:00 -0800 (PST)
+From:   Sebastian Staudt <koraktor@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Sebastian Staudt <koraktor@gmail.com>
+Subject: [PATCH v3 1/3] Add tests for describe with --work-tree
+Date:   Tue, 29 Jan 2019 06:18:57 +0100
+Message-Id: <20190129051859.12830-1-koraktor@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -57,47 +65,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using `human` several fields are suppressed depending on the time
-difference between the reference date and the local computer date. In
-cases where the difference is less than a year, the year field is
-supppressed. If the time is less than a day; the month and year is
-suppressed.
+The dirty ones are already passing, but just because describe is comparing
+with the wrong working tree.
 
-Use TEST_DATE_NOW environment variable when using the test-tool to
-hold the expected output strings constant.
-
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
 ---
- t/t0006-date.sh | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ t/t6120-describe.sh | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 90930c2aa7..d9fcc829a9 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -128,4 +128,22 @@ check_approxidate '6AM, June 7, 2009' '2009-06-07 06:00:00'
- check_approxidate '2008-12-01' '2008-12-01 19:20:00'
- check_approxidate '2009-12-01' '2009-12-01 19:20:00'
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index d639d94696..c863c4f600 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -145,14 +145,38 @@ check_describe A-* HEAD
  
-+check_date_format_human() {
-+	t=$(($GIT_TEST_DATE_NOW - $1))
-+	echo "$t -> $2" >expect
-+	test_expect_success "human date $t" '
-+		test-tool date human $t >actual &&
-+		test_i18ncmp expect actual
-+'
-+}
+ check_describe "A-*[0-9a-f]" --dirty
+ 
++test_expect_success 'describe --dirty with --work-tree' "
++	(
++		cd '$TEST_DIRECTORY' &&
++		git --git-dir '$TRASH_DIRECTORY/.git' --work-tree '$TRASH_DIRECTORY' describe --dirty >'$TRASH_DIRECTORY/out'
++	) &&
++	grep 'A-\d\+-g[0-9a-f]\+' '$TRASH_DIRECTORY/out'
++"
 +
-+check_date_format_human 18000 "5 hours ago" # 5 hours ago
-+check_date_format_human 432000 "Tue Aug 25 19:20" # 5 days ago
-+check_date_format_human 1728000 "Mon Aug 10 19:20" # 3 weeks ago
-+check_date_format_human 13000000 "Thu Apr 2 08:13" # 5 months ago
-+check_date_format_human 31449600 "Aug 31 2008" # 12 months ago
-+check_date_format_human 37500000 "Jun 22 2008" # 1 year, 2 months ago
-+check_date_format_human 55188000 "Dec 1 2007" # 1 year, 9 months ago
-+check_date_format_human 630000000 "Sep 13 1989" # 20 years ago
+ test_expect_success 'set-up dirty work tree' '
+ 	echo >>file
+ '
+ 
+ check_describe "A-*[0-9a-f]-dirty" --dirty
+ 
++test_expect_success 'describe --dirty with --work-tree' "
++	(
++		cd '$TEST_DIRECTORY' &&
++		git --git-dir '$TRASH_DIRECTORY/.git' --work-tree '$TRASH_DIRECTORY' describe --dirty >'$TRASH_DIRECTORY/out'
++	) &&
++	grep 'A-\d\+-g[0-9a-f]\+-dirty' '$TRASH_DIRECTORY/out'
++"
 +
- test_done
+ check_describe "A-*[0-9a-f].mod" --dirty=.mod
+ 
++test_expect_success 'describe --dirty=.mod with --work-tree' "
++	(
++		cd '$TEST_DIRECTORY' &&
++		git --git-dir '$TRASH_DIRECTORY/.git' --work-tree '$TRASH_DIRECTORY' describe --dirty=.mod >'$TRASH_DIRECTORY/out'
++	) &&
++	grep 'A-\d\+-g[0-9a-f]\+.mod' '$TRASH_DIRECTORY/out'
++"
++
+ test_expect_success 'describe --dirty HEAD' '
+ 	test_must_fail git describe --dirty HEAD
+ '
+@@ -303,12 +327,21 @@ test_expect_success 'describe chokes on severely broken submodules' '
+ 	mv .git/modules/sub1/ .git/modules/sub_moved &&
+ 	test_must_fail git describe --dirty
+ '
++
+ test_expect_success 'describe ignoring a broken submodule' '
+ 	git describe --broken >out &&
+ 	test_when_finished "mv .git/modules/sub_moved .git/modules/sub1" &&
+ 	grep broken out
+ '
+ 
++test_expect_success 'describe with --work-tree ignoring a broken submodule' "
++	(
++		cd '$TEST_DIRECTORY' &&
++		git --git-dir '$TRASH_DIRECTORY/.git' --work-tree '$TRASH_DIRECTORY' describe --broken >'$TRASH_DIRECTORY/out'
++	) &&
++	grep broken '$TRASH_DIRECTORY/out'
++"
++
+ test_expect_success 'describe a blob at a directly tagged commit' '
+ 	echo "make it a unique blob" >file &&
+ 	git add file && git commit -m "content in file" &&
 -- 
-2.20.1.2.gb21ebb671b
+2.20.1
 
