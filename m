@@ -2,94 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2B911F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 00:02:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3C901F453
+	for <e@80x24.org>; Tue, 29 Jan 2019 00:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727467AbfA2ACU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 28 Jan 2019 19:02:20 -0500
-Received: from avasout05.plus.net ([84.93.230.250]:43700 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726746AbfA2ACU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jan 2019 19:02:20 -0500
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id oGr3gAu9wuQOBoGr4g7qnt; Tue, 29 Jan 2019 00:02:19 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=JtDfUvwC c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=xc-_RC1pKzzd67JoAU4A:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: sparse job, was Re: [PATCH] test-xml-encode: fix sparse NULL
- pointer warnings
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-References: <68a8c70e-dc42-1df3-3616-c096f63cb848@ramsayjones.plus.com>
- <nycvar.QRO.7.76.6.1901281706440.41@tvgsbejvaqbjf.bet>
- <a6b689da-b002-0aa2-e9d6-755d004bc320@ramsayjones.plus.com>
- <nycvar.QRO.7.76.6.1901282333350.41@tvgsbejvaqbjf.bet>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <ef5a8623-e5e6-5cc8-5178-0afce7b5499e@ramsayjones.plus.com>
-Date:   Tue, 29 Jan 2019 00:02:14 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1726993AbfA2AoN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 28 Jan 2019 19:44:13 -0500
+Received: from mail-io1-f65.google.com ([209.85.166.65]:36053 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726803AbfA2AoN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jan 2019 19:44:13 -0500
+Received: by mail-io1-f65.google.com with SMTP id m19so15160311ioh.3
+        for <git@vger.kernel.org>; Mon, 28 Jan 2019 16:44:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cvkPn8EX9+m6iq1GHHPUofgIvRHGOOPcX++T9ds9bTA=;
+        b=dDkSs74qbWWN+RmLxUVlSGY4TMA5ZjLWdpjkQMEa+0/WSbP+4KP8uYJhiLuZlqiUuY
+         AfLTyD1AYoEPrtfsQCK8An9o5tMqTdHwkJuuBr7Dhae7/2mQdNpEZdJEaCPBjubcSs+H
+         JxaChQ2dXiiI0Aobz3csFDk2ZoMfDAcK+Wfa1nifdvImrQiku8fZLykZ5BaKojG59uB4
+         oNrHYCFAKfSbQ/eIU5/jvosv+iutRC9eNkq2+DE2/tL2PUCyCx86sbuVllCwL6YEFjV6
+         3qHmgcqLsnnrsR9g3WPhrD/pmZhxyoVdwWvc883jiSTEFfeKZ/Zt/y9PGviuAbZ53+Ww
+         vdWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cvkPn8EX9+m6iq1GHHPUofgIvRHGOOPcX++T9ds9bTA=;
+        b=CLCJvKup2d+Q4ONjxCDZWurUgJF1+E/6nPU3DwF8UP3oqjXoxzE/920BV3K7k5hNaX
+         EZ/FG9D8iui66KJL4DtWY8v/lrNOhEjQPpUNDNTQB9SR9IUUfHRCbEW0t2lpwVTKApZ/
+         xRlZbAYtNBn6ZA9lGFHW6b7oqk1iGxcjz5ii965xw0aFdMd7FAw49mhSrgLW61J1f9dv
+         4gCOLHfzVx/tYrFqtvYlIa/CKRrPr56t5MruZ/r/7YzeR5DKazNKYNEh64JeIB62qZru
+         LCohPPazeT5TMtZFrcmAgQEjxpfo0fNBGgY5zHMYLmk9bVcu7Y6by6m6Bv9maApKkZjy
+         HtGQ==
+X-Gm-Message-State: AHQUAuYS4Asdm+OIt0u3rwSIeHwPFS9FewTh52HP6BKxe5dKV4D3YrdC
+        YLgLIymZwTOnZ6QM63Pdf5sW90cvGc9LzISrgEA=
+X-Google-Smtp-Source: AHgI3IbjzYk9yIThUvIPXWVHvv2NvZMBVg913NhRJ/IPNJQbdZl2kVaXi1siJ41ITHuJ8xukaWCckT3xM8xqZjzCuUM=
+X-Received: by 2002:a5d:9812:: with SMTP id a18mr11659211iol.236.1548722652270;
+ Mon, 28 Jan 2019 16:44:12 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1901282333350.41@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfDNnPmevVdef5DxquOKhKB2K0poTGTl+BfNJ9GvH+UE1c//bna84j0K6myfphYHXRpD7mT6NZpqow7ieMXFt/wGwhfryaizQWc1gd4jtBT/sC2ikYf6g
- PYCZBsz/RpoMOhS5GsU1kU8ZCzq7FIfGXmlYP8ULSPDEJLVXMYCJwFcMzgkrtGiCEQIGO/NpH4zkUg==
+References: <20190128094155.2424-1-pclouds@gmail.com> <20190128143828.GJ6702@szeder.dev>
+ <20190128172707.GA3050@sigill.intra.peff.net>
+In-Reply-To: <20190128172707.GA3050@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 29 Jan 2019 07:43:45 +0700
+Message-ID: <CACsJy8BXfY+bZKV6Jxa7-3VQyyE6hGrFS7ZAnToFwpGq_o1bpw@mail.gmail.com>
+Subject: Re: [PATCH/RFC] completion: complete refs in multiple steps
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jan 29, 2019 at 12:27 AM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Jan 28, 2019 at 03:38:28PM +0100, SZEDER G=C3=A1bor wrote:
+>
+> > > -   __gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" =
+"$sfx")"
+> > > +   __gitcomp_direct "$(__git_refs "$remote" "$track" "$pfx" "$cur_" =
+"$sfx" | __git_collapse_refs "$cur_")"
+> > >  }
+> >
+> > In general I think it would be much better to rely more on 'git
+> > for-each-ref' to do the heavy lifting, extending it with new format
+> > specifiers/options as necessary.
+>
+> FWIW, that was my first thought, too.
 
+I was more concerned whether it's a good idea to begin with. But it
+sounds like you two both think it's good otherwise would have
+objected.
 
-On 28/01/2019 22:34, Johannes Schindelin wrote:
-> Hi Ramsay,
-> 
-> On Mon, 28 Jan 2019, Ramsay Jones wrote:
-> 
->> Hmm, I've never built an Ubuntu package before, so I don't know
->> exactly what would be required (spec file etc.) to create a PPA.
->> But I suspect you are not talking about doing that, right?
-> 
-> I would have gone for `checkinstall`... That still works, right?
+> > '%(refname:rstrip=3D-<N>)' already comes somewhat close to what we woul=
+d
+> > need for full ref completion (i.e. 'refs/b<TAB>' to complete
+> > 'refs/bisec/bad'), we only have to figure out how many "ref path
+> > components" to show based on the number of path components in the
+> > current word to be completed.  Alas, it won't add the trailing '/' for
+> > "ref directories".
+>
+> I think it also makes it hard to do one thing which (I think) people
+> would want: if there is a single deep ref, complete the whole thing.
+> E.g., given:
+>
+>   $ git for-each-ref --refname=3D'%(refname)'
+>   refs/heads/foo/bar
+>   refs/heads/foo/baz
+>   refs/heads/another/deep/one
+>
+> we'd ideally complete "fo" to "foo/" and "ano" to "another/deep/one",
+> rather than making the user tab through each level.
 
-Ah, I never think about using checkinstall - I haven't really used
-it in anger. For some reason, I thought you needed to structure your
-Makefile a certain way (using $DESTDIR or somesuch), but I seem to
-be confusing it with something else. Apparently, no change to the
-Makefile is required - it uses some kind of filesystem watcher to
-note which files are copied into place by 'make install'. heh, go
-figure! :-D
+Ah ha, like github sometimes show nested submodule paths. Just one
+small modification, when doing "refs/heads/<tab>" I would just show
 
-So, I think you only need to set the PREFIX when building (the
-default installation PREFIX is $HOME), or create a local.mk file
-to configure the build (I don't do that).  The 'sparse' build
-does not make use of any 'auto-tools', so no configure script.
+refs/heads/foo/
+refs/heads/another/
 
-Ah, I think you will need to have pkg-config installed. I have
-never built sparse from a tar-ball - I assume it works! ;-)
+not refs/heads/another/deep/one to save space. But when you do
+"refs/heads/a<tab>" then you get "refs/heads/another/deep/one"
+immediately.
 
-So (just typing into my email client - not tested):
+> Doing that requires actually understanding that the refs are in a list,
+> and not formatting each one independently. So I kind of wonder if it
+> would be easier to simply have a completion mode in for-each-mode.
 
-  $ wget http://www.kernel.org/pub/software/devel/sparse/dist/sparse-0.6.0.tar.gz
-  $ tar xvf sparse-0.6.0.tar.gz
-  $ cd sparse-0.6.0
-  $ make PREFIX=/usr/local
-  $ sudo checkinstall make PREFIX=/usr/local install
-
-... should do it. (famous last words).
-
-ATB,
-Ramsay Jones
-
+That also allows more complicated logic. I think sometimes completion
+code gets it wrong (I think it's often the case with rev/path
+ambiguation, but maybe dwim stuff too). And we already have all this
+logic in C.
+--=20
+Duy
