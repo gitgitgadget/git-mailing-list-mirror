@@ -2,176 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DAA61F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 18:43:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A97E1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 18:45:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733195AbfA3SnU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 13:43:20 -0500
-Received: from mout.gmx.net ([212.227.17.20]:53543 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733186AbfA3SnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 13:43:20 -0500
-Received: from MININT-6BKU6QN ([62.119.166.9]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEFqW-1gvTKB2yt6-00FSDN; Wed, 30
- Jan 2019 19:43:04 +0100
-Date:   Wed, 30 Jan 2019 19:42:42 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] Makefile: add prove and coverage-prove targets
-In-Reply-To: <87y3722sz7.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1901301935010.41@tvgsbejvaqbjf.bet>
-References: <pull.114.git.gitgitgadget@gmail.com> <294187c6968eff952e78bcea808c66fbedbf1f90.1548773766.git.gitgitgadget@gmail.com> <20190129160030.GA7083@sigill.intra.peff.net> <87zhrj2n2l.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1901301317120.41@tvgsbejvaqbjf.bet>
- <87y3722sz7.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-645068560-1548873783=:41"
-X-Provags-ID: V03:K1:Lde8yahAbk7au8V8qCjHrRrxuoInQI84hScj/ebmfjjdM0SEp/z
- m69ddz4f0mw05jeKm+9lJv+tL3CinBZ1efElcd2L0vevRnnhvH4heCiNvokz0w31R8gDafi
- JGDzXs+0znAk4O/ghM55HKr/javeMazUHJCa3J6eEY3F1t7SUXNROmJB2Di7o4+8gYajCwX
- In5PmwR6FIRALfkl6+YKw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:X9Y5Do9//h4=:mJuPAs1LmgJlzQv8b0s/CC
- Wv0BArGOZKYcWYxARec0usUfU7hUk7kgzU3gFZklukzYizLnTOtHBbK5dNHWGuI4AMPZRGBtn
- leB756+LGn3pMtWcv4Aj+23sEciz+cmOP8T4j1UjrrfAYk07VU/C6KwiH4Y11f0UK46CECnle
- PWdTiUnUazLAX2HhaR+6eukzezuAarxTNNDVxQoTH2F4HfkDdnpexozAAHaatOFkjHgwEqAFJ
- DMzthrId38gEWvKNGh4O4LpZ7YVs2Bv7IdMwbKme3wDjE04OvQSOQfcLOmb0FKTzBkRMBLcO2
- Fui3shz9ZBjaAFACV8uxA2qh7SEaC1lMIeS7zdH4Bm7Iw3qJmQct6YmRr4NVgfhqSvnuWDUZG
- Lrxshpz4an9pm+kdW1M4r2gyrjcCNZQ0fb4eqSAH7JqoqpcKjrflsc2hhpbLO5AWn7A/4UwQN
- gKfk36Y8SLLoE4po79N4xt9M2GuFRWHResTuuAZUz0wu/rkQyNoruVhhBfxvRYsQwe5/Rcakh
- n8VWSxKyMV8/b/Eu0kpQzHIPLTizDY834bJVTE3JlWXOfXZF04+ECY4y1E6P5OMy4DJdftRGv
- VxcsmkchMSowAx7eNRrGcPS84aSh7GvDeh8rfzGPVul+oe9tBUcvJypzLA/kg1uV3yh5+wW5e
- l1EKmVFByhtR3Xu4+8BnUfrrRbj6924zj2rfl7/7aSCloeQftsEDJKh2e3SiucgvNlj4anBw0
- yQPbEN23OrmObpPVUqL2ZaJSp4W2tzlkf+kfxpcRsOD8O37qUEQZL4Q7ftnHAjlLVB2wF+w5N
- SMaqfb34IYh4c6x42Om1FkgrBM/wYGx7hEw7TJNw9Rl9I2Q7ipPrLqIrAKdp3ZBJjw8HQDe4O
- 2so9ELggcKe8ZQL+vlLYPzl8rdp/gfFz/3uPYW3L+4EqhcOwaEQ5wYx3ByH4eoDULQ4HmjLyR
- fEo0KO8NFMg==
+        id S1733138AbfA3Spt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 13:45:49 -0500
+Received: from nwk-aaemail-lapp01.apple.com ([17.151.62.66]:37598 "EHLO
+        nwk-aaemail-lapp01.apple.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1733116AbfA3Spt (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 30 Jan 2019 13:45:49 -0500
+Received: from pps.filterd (nwk-aaemail-lapp01.apple.com [127.0.0.1])
+        by nwk-aaemail-lapp01.apple.com (8.16.0.27/8.16.0.27) with SMTP id x0UIbGH6045526;
+        Wed, 30 Jan 2019 10:45:41 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=mime-version :
+ content-type : sender : subject : from : in-reply-to : date : cc :
+ content-transfer-encoding : message-id : references : to; s=20180706;
+ bh=aTIdsMVPf2ppS9P2zmexn4a/rqYTAwV8UhtMy2/woAI=;
+ b=s6dtOzO3fJ1nn1L5jG5T4SJbS8NEd2ECaaTJxxFwQa3GfCXWsu03Y5qWMRGnsx/8Y2Ec
+ cjEn1SdD1iSi0rwQl3OEroOaChCgi+W2aHkrTbHnNRyTGB46dZepC9tWZalg5VwwoySt
+ FvvYpZlKtfa+J8Yci+t5sIsRT+xPy9KHcv8q8nURK9MOwGgEwKk/GwMMUcav2Z9Dn11N
+ 4XRv8F9N5I+LCoHNaXTb/XvbsIWJRCKFHGbhtWqupAOVcHsVjmBKNLZa3iiJ6KgwcNF2
+ KqUj5KLTVlpJeeYM+AFSZ+VaHbxWyAoKhvMZ79VM7RhT5zw/lBsSAQQ8VKLGNF19fIfm IQ== 
+Received: from ma1-mtap-s02.corp.apple.com (ma1-mtap-s02.corp.apple.com [17.40.76.6])
+        by nwk-aaemail-lapp01.apple.com with ESMTP id 2q8qc89k53-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+        Wed, 30 Jan 2019 10:45:41 -0800
+MIME-version: 1.0
+Content-type: text/plain; charset=utf-8
+Received: from nwk-mmpp-sz12.apple.com
+ (nwk-mmpp-sz12.apple.com [17.128.115.204]) by ma1-mtap-s02.corp.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTPS id <0PM5004D4QS22D00@ma1-mtap-s02.corp.apple.com>; Wed,
+ 30 Jan 2019 10:45:40 -0800 (PST)
+Received: from process_viserion-daemon.nwk-mmpp-sz12.apple.com by
+ nwk-mmpp-sz12.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM500M00Q42SA00@nwk-mmpp-sz12.apple.com>; Wed,
+ 30 Jan 2019 10:45:38 -0800 (PST)
+X-Va-A: 
+X-Va-T-CD: 482fa0d912b72e62f127af554db2d44f
+X-Va-E-CD: 4df6244c4c4ff15bfbe305f6ad4f9707
+X-Va-R-CD: 548ec5b29d701e5458e59af91772ff94
+X-Va-CD: 0
+X-Va-ID: 2b416624-5c2d-4195-8d3f-bf823384c63b
+X-V-A:  
+X-V-T-CD: 482fa0d912b72e62f127af554db2d44f
+X-V-E-CD: 4df6244c4c4ff15bfbe305f6ad4f9707
+X-V-R-CD: 548ec5b29d701e5458e59af91772ff94
+X-V-CD: 0
+X-V-ID: 3838eae1-b88d-4837-bb5f-11b5809ff3fd
+Received: from process_milters-daemon.nwk-mmpp-sz12.apple.com by
+ nwk-mmpp-sz12.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM500L00Q3EMT00@nwk-mmpp-sz12.apple.com>; Wed,
+ 30 Jan 2019 10:45:38 -0800 (PST)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
+ definitions=2019-01-30_14:,, signatures=0
+Received: from [17.235.14.120] (unknown [17.235.14.120])
+ by nwk-mmpp-sz12.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTPSA id <0PM5002L0QS11460@nwk-mmpp-sz12.apple.com>; Wed,
+ 30 Jan 2019 10:45:38 -0800 (PST)
+Subject: Re: [PATCH (Apple Git) 02/13] test-lib: Export PERL5LIB for testing
+ git-svn
+From:   Jeremy Sequoia <jeremyhu@apple.com>
+X-Mailer: iPhone Mail (16E187)
+In-reply-to: <nycvar.QRO.7.76.6.1901301344430.41@tvgsbejvaqbjf.bet>
+Date:   Wed, 30 Jan 2019 10:45:36 -0800
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        peff@peff.net
+Content-transfer-encoding: quoted-printable
+Message-id: <76E751A1-20C9-451B-919E-FF6B3FB5A384@apple.com>
+References: <20190129193818.8645-1-jeremyhu@apple.com>
+ <20190129193818.8645-3-jeremyhu@apple.com>
+ <xmqq1s4v6pzm.fsf@gitster-ct.c.googlers.com>
+ <09281A61-1EDA-4226-AD59-6A97EDF1B1DB@apple.com>
+ <nycvar.QRO.7.76.6.1901301344430.41@tvgsbejvaqbjf.bet>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-30_14:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-645068560-1548873783=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 
-Hi Ævar,
+Sent from my iPhone...
 
-On Wed, 30 Jan 2019, Ævar Arnfjörð Bjarmason wrote:
+> On Jan 30, 2019, at 04:51, Johannes Schindelin <Johannes.Schindelin@gmx.de=
+> wrote:
+>=20
+> Hi Jeremy,
+>=20
+> On Tue, 29 Jan 2019, Jeremy Huddleston Sequoia wrote:
+>=20
+>>> On Jan 29, 2019, at 2:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>=20
+>>> Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
+>>>=20
+>>>> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+>>>> ---
+>>>> t/test-lib.sh | 3 +++
+>>>> 1 file changed, 3 insertions(+)
+>>>=20
+>>> This obviously won't be acceptable as-is to my tree.  Shouldn't this
+>>> be something to be dealt with in config.mak.uname or something that
+>>> is meant to define platform-specific customization?
+>>=20
+>> The issue here is that we're not locating relocatable perl modules
+>> during testing.  This is a general problem with testing RUNTIME_PREFIX
+>> configurations, and a more general solution to this sledgehammer would
+>> be appropriate.  I don't think config.mak.uname really makes sense since
+>> it's a general RUNTIME_PREFIX issue and not specifically a darwin issue.
+>=20
+> First of all, as others have pointed out, this code is very, very specific=
 
-> On Wed, Jan 30 2019, Johannes Schindelin wrote:
-> 
-> > On Tue, 29 Jan 2019, Ævar Arnfjörð Bjarmason wrote:
-> >
-> >> On Tue, Jan 29 2019, Jeff King wrote:
-> >>
-> >> > On Tue, Jan 29, 2019 at 06:56:08AM -0800, Derrick Stolee via
-> >> > GitGitGadget wrote:
-> >> >
-> >> >> From: Derrick Stolee <dstolee@microsoft.com>
-> >> >>
-> >> >> When running the test suite for code coverage using
-> >> >> 'make coverage-test', a single test failure stops the
-> >> >> test suite from completing. This leads to significant
-> >> >> undercounting of covered blocks.
-> >> >>
-> >> >> Add two new targets to the Makefile:
-> >> >>
-> >> >> * 'prove' runs the test suite using 'prove'.
-> >> >>
-> >> >> * 'coverage-prove' compiles the source using the
-> >> >>   coverage flags, then runs the test suite using
-> >> >>   'prove'.
-> >> >>
-> >> >> These targets are modeled after the 'test' and
-> >> >> 'coverage-test' targets.
-> >> >
-> >> > I think these are reasonable to have (and I personally much prefer
-> >> > "prove" to the raw "make test" output anyway).
-> >>
-> >> I wonder if anyone would mind if we removed the non-prove path.
-> >>
-> >> When I added it in 5099b99d25 ("test-lib: Adjust output to be valid TAP
-> >> format", 2010-06-24) there were still some commonly shipped OS's that
-> >> had a crappy old "prove", but now almost a decade later that's not a
-> >> practical problem, and it's installed by default with perl, and we
-> >> already depend on perl for the tests.
-> >
-> > It's not only about crappy old `prove`, it is also about requiring Perl
-> > (and remember, Perl is not really native in Git for Windows' case;
-> 
-> We require perl now for testing, NO_PERL is just for the installed
-> version of git.
+> to Darwin (not only xcode-select but also Library/Perl/ are very, very
+> specific to that platform, I would even argue it is not even
+> Darwin-specific but instead macOS specific because bare-bones Darwin does
+> not have Library/Perl/, does it?).
 
-Which is confusing, if you want to put it nicely.
+Yes.  I first pointed that out in my emails to Peff and in my 00 email ;).  P=
+eff requested that I send  all of our changes (even ones I considered not up=
+streamable) in order to discuss possible generalized solutions that could ap=
+ply to others as well.
 
-> If you change the various test-lib.sh and test-lib-functions.sh that
-> unconditionally uses "perl" or "$PERL_PATH" hundreds/thousands (didn't
-> take an exact count, just watched fail scroll by) tests fail.
+> So you *definitely* want to put that code into guards testing for that
+> platform (I do not think config.mak.uname is the correct place, though, as=
 
-I know. Oh boy, I know.
+> it should be accessible to test scripts when run directly, i.e. not
+> through `make`).
 
-But we do not have to keep that status quo, nor do we have to make it
-worse.
+It isn=E2=80=99t applicable to anyone outside of Apple internal build engine=
+ers (or maybe folks like OpenDarwin building from our OSS perl and python dr=
+ops too) as it is specific to Apple=E2=80=99s build systems.
 
-It would not surprise me in the least if we could accelerate our entire
-test suite by reducing our heavy reliance on scripting (including Perl) to
-the point that it really takes too little time *not* to run. (Right now,
-if you are on Windows, you better think twice before you start the test
-suite, it will easily take over 3h (!!!) to run in a regular developer
-setup. Even on a regular Mac, I would think twice before starting the run
-that blocks my machine for easily 20 minutes straight. Needless to say
-that few developers, if any, use it to validate their patches, in
-particular on Windows. Meaning: for all real purposes, the test suite is
-nearly useless on Windows.)
+However a generalized solution would be useful to others.
 
-So let's not bake *even more* Perl usage into our test suite. Thanks.
+> But let's take a huge step back first: why? What is the exact problem this=
 
-> So my assumption is that anyone running the tests now has perl anyway,
-> and thus a further hard dependency on it won't hurt anything.
+> commit tries to solve? The commit message unfortunately does not really
+> leave me any wiser.
+>=20
+> So I am left with the unfortunate position of having to guess, which is
+> not really a good use of both of our time. If I allow myself to indulge in=
 
-By that token, the effort to turn many a script into a built-in for better
-performance and substantially better error checking would be totally
-nonsensical. "Because anyone running Git used those scripts anyway, so
-making them a hard dependency won't hurt anything"?
+> the guessing game, I would guess that whatever `perl` executable is used
+> in your scenario picks up some unfortunate environment variable that
+> overrides its internal defaults where to look for Perl modules.
 
-I do not believe even a fraction of a second that that effort is
-nonsensical. Just like I do not believe even a fraction of a second that
-it makes sense for our test suite to rely on scripting so much. Or for us
-to make that reliance even bigger, for that matter.
+The issue is with RUNTIME_PREFIX.  git=E2=80=99s RUNTINE_PREFIX support assu=
+mes that it is the only thing being relocated.  However, with Xcode, svn and=
+ its perl modules are relocated as well.  In order to test git-svn, we need t=
+o locate those perl modules.  Patch 10 takes care of this when running from t=
+he installed location, but we have no svn in the appropriate relative locati=
+on from the build directory, so we add the explicit path here.
 
-> > I still have a hunch that we could save on time *dramatically* by
-> > simply running through regular `make` rather than through `prove`).
-> 
-> My hunch is that on the OS's where this would matter (e.g. Windows) the
-> overhead is mainly spawning the processes, and it doesn't matter if it's
-> make or perl doing the spawning, but I have nothing to back that up...
+> And that simply should not be the case. We are very careful to set
+> GITPERLLIB in bin-wrappers/, *not* PERL5LIB.
+>=20
+> And when we build Git on macOS agents in Travis or Azure Pipelines and
+> then run the test suite, I fail to see any Perl-related error that looks
+> like it could be solved by this here patch.
+>=20
+> In short: this commit is in dear want of a more substantive commit
+> message, and most likely in search for a different solution.
 
-I have at least the experience of several thousands runs of the test suite
-on Windows, together with a couple dozen hours spent recently *just* on
-making the CI of GitGitGadget at least bearable.
+Yes, a number of these patches (like this one) were requested to be sent to t=
+he list in order to spark a discussion for another generalized solution and n=
+ot to be merged into mainline.
 
-So I do not quite understand why you offered a contrary opinion when you
-have nothing to back it up.
+Is there a notation that would help to call that out on the commit?  I figur=
+ed it was pretty obvious that this was one of those.
 
-I mean, I would really like to have an informed discussion with you, to
-benefit from your skills and from your experience to make the entire
-design of our test suite better (there is so much room for improvement, we
-should really be able to put together our knowledge to enhance it). It
-needs to be based on facts, of course.
-
-Ciao,
-Dscho
---8323328-645068560-1548873783=:41--
+>=20
+> Ciao,
+> Johannes
+>=20
+>>=20
+>>>=20
+>>>>=20
+>>>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>>>> index 0f1faa24b2..4060a53f56 100644
+>>>> --- a/t/test-lib.sh
+>>>> +++ b/t/test-lib.sh
+>>>> @@ -1017,6 +1017,9 @@ fi
+>>>>=20
+>>>> GITPERLLIB=3D"$GIT_BUILD_DIR"/perl/build/lib
+>>>> export GITPERLLIB
+>>>> +PERL_VERSION=3D$(grep DEFAULT /usr/local/versioner/perl/versions | sed=
+ 's:^.*=3D *\([^ ]*\)$:\1:')
+>>>> +PERL5LIB=3D"$GIT_BUILD_DIR"/perl:"$(xcode-select -p)"/Library/Perl/$PE=
+RL_VERSION
+>>>> +export PERL5LIB
+>>>> test -d "$GIT_BUILD_DIR"/templates/blt || {
+>>>>    error "You haven't built things yet, have you?"
+>>>> }
+>>=20
+>>=20
