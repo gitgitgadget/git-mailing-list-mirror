@@ -2,108 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11AFD1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 23:05:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB4BF1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 23:07:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726198AbfA3XFM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 18:05:12 -0500
-Received: from siwi.pair.com ([209.68.5.199]:21886 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725535AbfA3XFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 18:05:11 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id C87163F400C;
-        Wed, 30 Jan 2019 17:26:24 -0500 (EST)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 9D5233F4012;
-        Wed, 30 Jan 2019 17:26:24 -0500 (EST)
+        id S1726906AbfA3XHI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 18:07:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56002 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725613AbfA3XHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 18:07:08 -0500
+Received: (qmail 14087 invoked by uid 109); 30 Jan 2019 23:07:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 30 Jan 2019 23:07:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22423 invoked by uid 111); 30 Jan 2019 23:07:14 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 30 Jan 2019 18:07:14 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Jan 2019 00:07:03 +0100
+Date:   Thu, 31 Jan 2019 00:07:03 +0100
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
 Subject: Re: Contributor Summit Topics and Logistics
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Message-ID: <20190130230702.GA25423@sigill.intra.peff.net>
 References: <20190122075027.GA29441@sigill.intra.peff.net>
- <87va253lun.fsf@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <e0173444-c5c4-61d0-5a3d-e37cbfd44bad@jeffhostetler.com>
-Date:   Wed, 30 Jan 2019 17:26:23 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:65.0) Gecko/20100101
- Thunderbird/65.0
 MIME-Version: 1.0
-In-Reply-To: <87va253lun.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190122075027.GA29441@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jan 22, 2019 at 02:50:27AM -0500, Jeff King wrote:
 
+> If you're not coming, you can probably stop reading this message now.
+> The rest is all logistics.
 
-On 1/30/2019 3:57 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Jan 22 2019, Jeff King wrote:
-> 
-...
-> * "Structured remote logging". We had an RFC spec for turning our trace
->    format into something more structural with a way to send it to a
->    remote server. There were both implementation & privacy concernse,
->    last time at least a couple of users of git reported having in-house
->    patches for this (not ready for upstream). Where are we on this now?
+Here are a few additional last-minute logistics:
 
-I won't be attending GitMerge this year, but I can talk about
-this work here.
+> For people who want to try to join remotely, I don't think we're going
+> to have a particularly fancy AV setup. But there should at least be a
+> big screen (which we typically do not really use for presenting), and I
+> hope we can provide some connectivity. I'll be visiting the venue the
+> day before (Jan 30th) in the late afternoon (Brussels time) and I'll try
+> to do a test run. If anybody wants to volunteer to be the guinea pig on
+> the other end of the line, I'd welcome it.
 
-My earlier "structured logging" and/or "telemetry" proposals
-have been replaced by my Trace2 patch series now in "pu".
+The remote connection will be done via Zoom, using this URL which will
+become active shortly before 10:00am (Brussels time):
 
-The Trace2 feature is designed to report trace and performance
-data from within the git process to a local log file, unix
-domain socket, or Windows named pipe.  Functions in the Trace2
-API generate structured data and can write either structured
-(JSON) or non-structured formats to disk.  (It should not be
-hard to add a binary structured format too, but that is beyond
-the scope of the current patch series.)
+  https://github.zoom.us/j/186903655
 
-The JSON stream is suitable for post-processing by a local
-process.  This can be a daemon listening to the stream or a
-cron job processing the trace data after the fact.
+You may need to download an app or other software; solutions are
+available for most platforms, and the zoom site should guide you.
 
-I consider it to be the job of the post-processor (after
-aggregating, filtering or whatever) to decide what to do with
-the data.  This lets the the user and/or sysadmin control how
-and when data is collected.  The post-processor is free to hook
-into something like syslog or ETW or write to a custom DB.
+Note that this is _not_ configured as a one-way webinar. It's a real
+video-conference where joiners can participate in the discussion. So
+spectators from the community are OK, but please leave your camera/mic
+off if you're not actively participating.
 
-Post-processing tools are not included in the patch series.
+> The physical setup this year will actually be 4 round tables, instead of
+> one giant table. I'm hoping this will facilitate breaking off into
+> sub-groups and having more intimate conversations, and maybe avoid the
+> "it's hard to hear people at the other end of the table" issues. Or
+> maybe it will just make it worse as we shout to each other from all four
+> tables. I can't wait to see!
 
+There will be outlets for charging laptops, but probably only about half
+as many as there are people. So plan accordingly.
 
-Internally within Microsoft, we have a local Windows Service
-listening on a named pipe and collecting events from all
-git processes for our GVFS users in the Windows OS repo.
-It computes a summary record for each git command, for example
-combining the argv from the "start" event with the elapsed
-time from the "exit" event into a single record.  The service
-then sends the aggregate records to a centralized database.
+> There's no organized dinner. However, there will be a social/drinks
+> event for the broader conference at 7pm; I'll provide more details
+> that day.
 
-This lets us run various database queries to try to understand
-pain points that our OS developers are experiencing (and that
-may not show up on my machine) and help us prioritize future perf
-and scaling work.
+This is indeed happening, and is open to all Git Merge attendees.
+Details should have been emailed out to the email address you registered
+with. Note that they're asking people to RSVP through a web link. Please
+do so if you're planning on coming!
 
-But again, this service is but one possible post-processor
-and is for internal-use-only.
+See everybody tomorrow at 9:00am.
 
-The Trace2 feature itself does not have any remote capability.
-It just writes data locally.
-
-Jeff
-
-
+-Peff
