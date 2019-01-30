@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 728AA1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 19:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 170491F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 19:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733162AbfA3TvP (ORCPT <rfc822;e@80x24.org>);
+        id S1733219AbfA3TvR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 14:51:17 -0500
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:46662 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733195AbfA3TvP (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Jan 2019 14:51:15 -0500
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:38523 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727760AbfA3TvO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 14:51:14 -0500
-Received: by mail-ed1-f54.google.com with SMTP id h50so640986ede.5
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 11:51:12 -0800 (PST)
+Received: by mail-ed1-f50.google.com with SMTP id o10so593320edt.13
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 11:51:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XtCymizwj1XYxWnQ5U84tXVndJDCA7G0G1rzgs0ilLU=;
-        b=nQn8l6IO61JwEdbRyGtQTTpXzSqZ+xbrHhF3T08AHuVDAGHciH7Que2lhQ/65xDOen
-         4sI+Oqa7sGGecW3rxFXrf47qrP4DHoagLrBoCQOzLKG4uivq7js+ijiATtmnAkb+CNbC
-         hlx4WkYHaGbayqZKl+HiJ5G6AjAvpLwbNwua37EhfHrJ7g9TzrRQKe/OjzIMfM0LAfw8
-         gN3yZz5RUvzbjUGDAJCPVlOCotJ1U6s5bvqRGx4W+CWItGCWVYyfV6emdghi0dmr7iEP
-         YxApacWQHOOCOcdcrwLJNV+oLFPIxcMJLZ8CTg2PPoF7csf0DoKNvUF0ToC41Bv3siow
-         sMSQ==
+        bh=tvKTJiXAJRbFolLQ69BmhTNP+L5fZ0jkQWuYo1oYtd0=;
+        b=HsPLtlasWT0NaNB0taliahvbbmPQDDMY3D4LL5Krpez8+/h7+fq5wyLDHVDSaHGxXf
+         kkySAPDIEoJshwgLLkAIMt+EL1OEAC1+UKZ0xxlqjFOwME6QUeBWCpFrymjAe0nCX9Yd
+         5gy7ZWUxhLlB/txE00M1qO1dXJJ69zLANd7XunMeBf4zs0/aYRttXZzxoz61Me3wF78U
+         Ywv94D0a1+blg2fBTZyWkgzVUvseKm1VKsHsTPLauQAa2Y2cG0l8h74auIZe2epACDar
+         GE9EP2gNPrTU5FaKnRHGO2o4X8Nss/U4kbWL+RCzgcNo9oKuKaDMDRdMuvV8OkspEiiN
+         EIAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XtCymizwj1XYxWnQ5U84tXVndJDCA7G0G1rzgs0ilLU=;
-        b=AQ6GL5gILI7voKrfbCu2OGCuIxWpIoG/j9agv7hGYhBc3mwjfPzERmPhTIdH20V9nK
-         8SmHJAG3QTMMwUMhh8/7QbfN1JiLSqXAmmao2X8SAHGBt+j2ZR5S2cX5ORmi6KHTisAX
-         Tp0uZ9q8GGYRNE1aWazCMq2lDdq4gTHBUWymcbG+xnfanjDufNvztUi+EB2SLuL0F3Qf
-         r39rCG9ENT2jhraADi5osR3rhhNKsa4VXdMh0kKVij5nNpRQLepTKT/pucYHzOqCWuDG
-         CysMsawXiseNmjFBwQpC2uChFCJuFU9HWzSsQMW2kVSoJ6SJPTr9PqdmOpNRqLU+EiQ7
-         cPcQ==
-X-Gm-Message-State: AJcUukefJ9CU11DagpTVuEGPb7INNFsyQ5aH66rSlxDkCxAonB1HL1t0
-        hcsbEMpkW/Ylf+B+BXAuxwX0YKIB
-X-Google-Smtp-Source: ALg8bN7xFoBUSfTdSNl5Qgi4F9Smhs++4VVULosoKPSSNJMmm00jAleYPp43qbs49cpgYamBCgLbjQ==
-X-Received: by 2002:a17:906:33db:: with SMTP id w27mr23941067eja.108.1548877871901;
-        Wed, 30 Jan 2019 11:51:11 -0800 (PST)
+        bh=tvKTJiXAJRbFolLQ69BmhTNP+L5fZ0jkQWuYo1oYtd0=;
+        b=orpxUNxpN3aY2XvyCvap9n5qcRoVVg7fkZDXUObAEFjCGoZFyu3MRCgvZCtXv52R1c
+         bd5x1+TGPMq+TdSbIDq0mJqp2hhUIrjY2QC/qryR9znpasTiwbUS71lHoVjGcKAF2WwM
+         iHNEyDY6C8PGn3569dutFLjMEbP1GwRagbQeU1ydMku9Cj7wQ7hiUjl91/xzjHd50Khn
+         oNflt3NItI5pYc0mf3mfLDTr4/4/RmqlYB4PJS6uxvk83wpYMdpTrWaUqRdl0YZujn6t
+         AMz47/BaaHRsHjSaz3b99/8yQG/jqE0zHE3EdN/+4SaMIN0BxKseq2fBQHorzy52YQAD
+         8ZTg==
+X-Gm-Message-State: AJcUukfiemwIShZP2qgew7d3X5FDhV3v6bZa1nKmIXV31nzMqClx7FGi
+        umVS0QBa8aCB8L/irgBeawmwmuF8
+X-Google-Smtp-Source: ALg8bN5CvbN+hXztuZb2XVvbg4N9zflmlhKqAVYML/Xs9gjg6IXXC/2Gb1fsmKZMAE6PT6gbRPOUiw==
+X-Received: by 2002:a17:906:b318:: with SMTP id n24mr28036951ejz.21.1548877872837;
+        Wed, 30 Jan 2019 11:51:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n10sm708269edq.33.2019.01.30.11.51.11
+        by smtp.gmail.com with ESMTPSA id w4-v6sm454113ejf.9.2019.01.30.11.51.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Jan 2019 11:51:11 -0800 (PST)
-Date:   Wed, 30 Jan 2019 11:51:11 -0800 (PST)
-X-Google-Original-Date: Wed, 30 Jan 2019 19:50:57 GMT
-Message-Id: <52aace533b296efe9b41268a80e82b25c0cc54b5.1548877863.git.gitgitgadget@gmail.com>
+        Wed, 30 Jan 2019 11:51:12 -0800 (PST)
+Date:   Wed, 30 Jan 2019 11:51:12 -0800 (PST)
+X-Google-Original-Date: Wed, 30 Jan 2019 19:50:58 GMT
+Message-Id: <a2bcc6fd2804377a5599acf9bc6b99a017e83575.1548877863.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v3.git.gitgitgadget@gmail.com>
 References: <pull.108.v2.git.gitgitgadget@gmail.com>
         <pull.108.v3.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 08/14] trace2:data: add trace2 hook classification
+Subject: [PATCH v3 09/14] trace2:data: add trace2 instrumentation to index
+ read/write
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,102 +72,115 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Classify certain child processes as hooks.
+Add trace2 events to measure reading and writing the index.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/am.c           | 1 +
- builtin/receive-pack.c | 4 ++++
- builtin/worktree.c     | 1 +
- sequencer.c            | 2 ++
- transport.c            | 1 +
- 5 files changed, 9 insertions(+)
+ read-cache.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 50 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 95370313b6..a81e61c1bc 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -468,6 +468,7 @@ static int run_post_rewrite_hook(const struct am_state *state)
- 
- 	cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
- 	cp.stdout_to_stderr = 1;
-+	cp.trace2_hook_name = "post-rewrite";
- 
- 	ret = run_command(&cp);
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 33187bd8e9..6eef8575b9 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -694,6 +694,8 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
- 	proc.argv = argv;
- 	proc.in = -1;
- 	proc.stdout_to_stderr = 1;
-+	proc.trace2_hook_name = hook_name;
+diff --git a/read-cache.c b/read-cache.c
+index bfff271a3d..240531d70d 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2232,6 +2232,16 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 		load_index_extensions(&p);
+ 	}
+ 	munmap((void *)mmap, mmap_size);
 +
- 	if (feed_state->push_options) {
- 		int i;
- 		for (i = 0; i < feed_state->push_options->nr; i++)
-@@ -807,6 +809,7 @@ static int run_update_hook(struct command *cmd)
- 	proc.stdout_to_stderr = 1;
- 	proc.err = use_sideband ? -1 : 0;
- 	proc.argv = argv;
-+	proc.trace2_hook_name = "update";
++	/*
++	 * TODO trace2: replace "the_repository" with the actual repo instance
++	 * that is associated with the given "istate".
++	 */
++	trace2_data_intmax("index", the_repository, "read/version",
++			   istate->version);
++	trace2_data_intmax("index", the_repository, "read/cache_nr",
++			   istate->cache_nr);
++
+ 	return istate->cache_nr;
  
- 	code = start_command(&proc);
- 	if (code)
-@@ -1190,6 +1193,7 @@ static void run_update_post_hook(struct command *commands)
- 	proc.no_stdin = 1;
- 	proc.stdout_to_stderr = 1;
- 	proc.err = use_sideband ? -1 : 0;
-+	proc.trace2_hook_name = "post-update";
+ unmap:
+@@ -2263,9 +2273,17 @@ int read_index_from(struct index_state *istate, const char *path,
+ 	if (istate->initialized)
+ 		return istate->cache_nr;
  
- 	if (!start_command(&proc)) {
- 		if (use_sideband)
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 3f9907fcc9..6cc094a453 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -402,6 +402,7 @@ static int add_worktree(const char *path, const char *refname,
- 			cp.dir = path;
- 			cp.env = env;
- 			cp.argv = NULL;
-+			cp.trace2_hook_name = "post-checkout";
- 			argv_array_pushl(&cp.args, absolute_path(hook),
- 					 oid_to_hex(&null_oid),
- 					 oid_to_hex(&commit->object.oid),
-diff --git a/sequencer.c b/sequencer.c
-index 213815dbfc..c1e36196a1 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1103,6 +1103,7 @@ static int run_rewrite_hook(const struct object_id *oldoid,
- 	proc.argv = argv;
- 	proc.in = -1;
- 	proc.stdout_to_stderr = 1;
-+	proc.trace2_hook_name = "post-rewrite";
++	/*
++	 * TODO trace2: replace "the_repository" with the actual repo instance
++	 * that is associated with the given "istate".
++	 */
++	trace2_region_enter_printf("index", "do_read_index", the_repository,
++				   "%s", path);
+ 	trace_performance_enter();
+ 	ret = do_read_index(istate, path, 0);
+ 	trace_performance_leave("read cache %s", path);
++	trace2_region_leave_printf("index", "do_read_index", the_repository,
++				   "%s", path);
  
- 	code = start_command(&proc);
- 	if (code)
-@@ -3784,6 +3785,7 @@ static int pick_commits(struct repository *r,
- 				hook.in = open(rebase_path_rewritten_list(),
- 					O_RDONLY);
- 				hook.stdout_to_stderr = 1;
-+				hook.trace2_hook_name = "post-rewrite";
- 				argv_array_push(&hook.args, post_rewrite_hook);
- 				argv_array_push(&hook.args, "rebase");
- 				/* we don't care if this hook failed */
-diff --git a/transport.c b/transport.c
-index 99678153c1..ed5a733c4a 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1061,6 +1061,7 @@ static int run_pre_push_hook(struct transport *transport,
+ 	split_index = istate->split_index;
+ 	if (!split_index || is_null_oid(&split_index->base_oid)) {
+@@ -2281,7 +2299,11 @@ int read_index_from(struct index_state *istate, const char *path,
  
- 	proc.argv = argv;
- 	proc.in = -1;
-+	proc.trace2_hook_name = "pre-push";
+ 	base_oid_hex = oid_to_hex(&split_index->base_oid);
+ 	base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_oid_hex);
++	trace2_region_enter_printf("index", "shared/do_read_index",
++				   the_repository, "%s", base_path);
+ 	ret = do_read_index(split_index->base, base_path, 1);
++	trace2_region_leave_printf("index", "shared/do_read_index",
++				   the_repository, "%s", base_path);
+ 	if (!oideq(&split_index->base_oid, &split_index->base->oid))
+ 		die(_("broken index, expect %s in %s, got %s"),
+ 		    base_oid_hex, base_path,
+@@ -2988,6 +3010,16 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 	istate->timestamp.sec = (unsigned int)st.st_mtime;
+ 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
+ 	trace_performance_since(start, "write index, changed mask = %x", istate->cache_changed);
++
++	/*
++	 * TODO trace2: replace "the_repository" with the actual repo instance
++	 * that is associated with the given "istate".
++	 */
++	trace2_data_intmax("index", the_repository, "write/version",
++			   istate->version);
++	trace2_data_intmax("index", the_repository, "write/cache_nr",
++			   istate->cache_nr);
++
+ 	return 0;
+ }
  
- 	if (start_command(&proc)) {
- 		finish_command(&proc);
+@@ -3007,7 +3039,18 @@ static int commit_locked_index(struct lock_file *lk)
+ static int do_write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 				 unsigned flags)
+ {
+-	int ret = do_write_index(istate, lock->tempfile, 0);
++	int ret;
++
++	/*
++	 * TODO trace2: replace "the_repository" with the actual repo instance
++	 * that is associated with the given "istate".
++	 */
++	trace2_region_enter_printf("index", "do_write_index", the_repository,
++				   "%s", lock->tempfile->filename.buf);
++	ret = do_write_index(istate, lock->tempfile, 0);
++	trace2_region_leave_printf("index", "do_write_index", the_repository,
++				   "%s", lock->tempfile->filename.buf);
++
+ 	if (ret)
+ 		return ret;
+ 	if (flags & COMMIT_LOCK)
+@@ -3092,7 +3135,13 @@ static int write_shared_index(struct index_state *istate,
+ 	int ret;
+ 
+ 	move_cache_to_base_index(istate);
++
++	trace2_region_enter_printf("index", "shared/do_write_index",
++				   the_repository, "%s", (*temp)->filename.buf);
+ 	ret = do_write_index(si->base, *temp, 1);
++	trace2_region_enter_printf("index", "shared/do_write_index",
++				   the_repository, "%s", (*temp)->filename.buf);
++
+ 	if (ret)
+ 		return ret;
+ 	ret = adjust_shared_perm(get_tempfile_path(*temp));
 -- 
 gitgitgadget
 
