@@ -7,108 +7,81 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FDB31F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 10:23:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64C7D1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 10:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730399AbfA3KXy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 05:23:54 -0500
-Received: from mail-lj1-f173.google.com ([209.85.208.173]:34293 "EHLO
-        mail-lj1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727794AbfA3KXy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 05:23:54 -0500
-Received: by mail-lj1-f173.google.com with SMTP id u89-v6so20286388lje.1
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 02:23:52 -0800 (PST)
+        id S1730574AbfA3KYP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 05:24:15 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:44091 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727794AbfA3KYP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 05:24:15 -0500
+Received: by mail-lj1-f195.google.com with SMTP id k19-v6so20204814lji.11
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 02:24:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PLhHpVAcYQQwtjeCFid1g6O+cWXxTRaaoIHu31jAMlM=;
-        b=pUDISgDushLJ8hCUhQ8WhtZWb5N9Kmqlt0g2Zi2fKP+R9LB/HpDhwHZrQRv8tsaFwQ
-         3Og3+0YZ0iMrZv45ME0i3kgP3JaLao9cIr2QDlhYpYfoXlX3FgRrEw8tncylCOweFi7Y
-         HoJEhSKoJGKlA1unLgXbtOGe/LnkB+XdshpsUSbHLCk8fvd9DhCpIyC/ZQF0+Vx86lh9
-         wXMc09VaDR6Sa+C+/4gaGAiE9o1TQuD1QR8wwPBKZDXRq/W+OM7nf7Lnur924FaLYPEq
-         cB5nabHdvRqGUu3WAq2CU1NriXT0P/tvnXjcKqlP8gNYP0FcHm/ZYA5S0WkukPBUctFV
-         a7SA==
+         :cc;
+        bh=1igdGdZwDmI2dV/uiNq8sLiYaq+oy3+jDwf2KFdRZmI=;
+        b=BKBcvwQKuWyqHoVunJtj+I5XbwW7bpwEblnM2u1U4GrUwhgPscfjogq/lNYjF2clzL
+         E9SjyCUovvK5kkST+AFG4iG9gYxHIYoz3y3AxrmK+zbINow5IbZqfk5OdTrc6ISbDt7n
+         Pf9sZeMTd9zs6b4c9ITNmGls53yKCsr1VWxyUHbtmv1pQv602+p7+dCFBD1asEVHj8lC
+         4v2LS1o6rUX/SsVYLWsbrBRWqEvBOP47WZ8FIAX0fguBzf3xr7fnBoJnihlldZwxtNDG
+         YbJQrC/GEiFSdUqS4HrcxqEirSgFMgXVgxbiNZ5a8vp0fbh1mCFjftc9z0e7FrOg2ih4
+         4OrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PLhHpVAcYQQwtjeCFid1g6O+cWXxTRaaoIHu31jAMlM=;
-        b=jsnVNOIg+WdmGAR4WnmMyIsOu2x/e8IU0vvwVPWx8enqkEJzKRu/NqfySxxLN7p+SI
-         yviFIULWCMH8pki/Gv/ygokPue1xLVfUl/OK9FrRwNlF2bduA7rA9JjBnroDd0aDenjL
-         8pGFRFRfOI5/DkIJBlynL3kPKpnnqVlnmxdXexXwMMJafMknZXQxMc4vuBUXKl+IqTLa
-         J9Uj+P5t4rOBtT60vvSW9JaDFxTA3MMMttnJ2vrmF+bB2If2Xwl1HcPopunqnv0SJgsF
-         aIRYipQi47rXUgoSqJ4BYyRkIuTkc4hRZp2BeErOD4bKH4QOAkZp862dz1dSeHTm1p1p
-         RbRw==
-X-Gm-Message-State: AJcUukcl6W+YsJV4wAbmzW0gEcNCMmC0pzb3v9m47FJ32P4gPnXjsP7I
-        GCGFMxa35OZN0U9dMWW9gzzv1JNFQWxSlglIPKA=
-X-Google-Smtp-Source: ALg8bN7ufLMvv+BWYyVkoU5i7oADD5b50s10gRA5jByhMW5GrBtF28gSGp+Vv8XtrY8G1h0xbVA7enKunR0GdfPBf7Q=
-X-Received: by 2002:a2e:2416:: with SMTP id k22-v6mr21493015ljk.80.1548843831687;
- Wed, 30 Jan 2019 02:23:51 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=1igdGdZwDmI2dV/uiNq8sLiYaq+oy3+jDwf2KFdRZmI=;
+        b=jWFA8R8QBWzseR0d30dlpqybDVWnLZVyvsFWOJzqT3WMIcCY9qHchgG6Msl8PhVA+S
+         IJ0m9veOUQ4JBSonE1Wxy/Y37OJ0i/DGmUnAk+cgFxZvMztA1qW03ViRKv7YMFrCC8vZ
+         9hQsyhnsWChCW7NPwNs/I/n8+6Ktj3wP7Vf1KOhnO2KAZuSnGq0j2sp8c47s1sNBSh1q
+         U5Ec5CS1vJ6go0Kv74hufsQiN4YWauWhWNo6V4sY1Tv3EaN4BZZITsivA3Y3kuj2P0ub
+         qxNfd/grp5h6LrOdAiuoiieZWHXqSZwVLkoTwiVyGmssGkXFSXbnWiyOC9BHjlLvqu5i
+         9EwA==
+X-Gm-Message-State: AHQUAuYNveDuY9I26XBWjcDWIqg5d4L1+88wGZ7m920/TGI5O4ENJ3yk
+        OgbmTVVeH6uyCG1uulAzB1mMlXNasYhpoj8phXdzEe+k
+X-Google-Smtp-Source: AHgI3Ia9mjZLkF4UYBNSHH0irvMbmdq828wmQCEq0Sb2FmuyJ6hTLD8v1zUi+mCl3KAXJPszg4t2KSuPYDBvpwQaQfM=
+X-Received: by 2002:a2e:7f04:: with SMTP id a4-v6mr2827585ljd.156.1548843853016;
+ Wed, 30 Jan 2019 02:24:13 -0800 (PST)
 MIME-Version: 1.0
-References: <20190129051859.12830-1-koraktor@gmail.com> <20190129130031.GA22211@sigill.intra.peff.net>
- <xmqqmunj8ifc.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqmunj8ifc.fsf@gitster-ct.c.googlers.com>
+References: <20190129051859.12830-1-koraktor@gmail.com> <20190129051859.12830-3-koraktor@gmail.com>
+ <20190129131243.GC22211@sigill.intra.peff.net>
+In-Reply-To: <20190129131243.GC22211@sigill.intra.peff.net>
 From:   Sebastian Staudt <koraktor@gmail.com>
-Date:   Wed, 30 Jan 2019 11:23:14 +0100
-Message-ID: <CA+xP2Sb1--LQJs+GXqKVE3FjNHujSn6Q-Ow=-LEHtRLcFJJMGA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] Add tests for describe with --work-tree
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+Date:   Wed, 30 Jan 2019 11:23:36 +0100
+Message-ID: <CA+xP2SZnmTHGd5rB8BtXMNnCoz0SEFdgT-vcgRttJxBdA04ciA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] Add test for describe with a bare repository
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Duy Nguyen <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Di., 29. Jan. 2019 um 18:47 Uhr schrieb Junio C Hamano <gitster@pobox.co=
-m>:
+Am Di., 29. Jan. 2019 um 14:12 Uhr schrieb Jeff King <peff@peff.net>:
 >
-> Jeff King <peff@peff.net> writes:
+> On Tue, Jan 29, 2019 at 06:18:59AM +0100, Sebastian Staudt wrote:
 >
-> > The usual style is to put the whole snippet into single-quotes, and the=
-n
-> > double-quote as appropriate within it. Like:
-> >
-> >   test_expect_failure 'describe --dirty with --work-tree' '
-> >       (
-> >               cd "$TEST_DIRECTORY" &&
-> >               git --git-dir "$TRASH_DIRECTORY/.git" ...etc
-> >
-> > Those variables will be expanded when test_expect_failure eval's the
-> > snippet.
+> > This ensures that nothing breaks the basic functionality of describe for
+> > bare repositories. Please note that --broken and --dirty need a working
+> > tree.
 >
-> Good.
-
-Ok, thanks. I=E2=80=99ll change this in the next reroll.
-
+> Makes sense.
 >
-> >> +    grep 'A-\d\+-g[0-9a-f]\+' '$TRASH_DIRECTORY/out'
-> >
-> > Using "\d" isn't portable.
+> > +test_expect_success 'describe works from outside repo using --git-dir' "
+> > +  git clone --bare '$TRASH_DIRECTORY' '$TRASH_DIRECTORY/bare' &&
+> > +  git --git-dir '$TRASH_DIRECTORY/bare' describe
+> > +"
 >
-> True, but not just \d.  I think using \ before special characters to
-> force an otherwise basic regular expression to be ERE (i.e. \+ at
-> the end) is a GNUism.
+> What the test is doing seems sane, but the same quoting comments from
+> the earlier patch apply.
 >
 
-I guess I=E2=80=99ll use the even broader but apparently more portable A-*[=
-0-9a-f]
-then. It=E2=80=99s used in the other checks, so this should be OK?
+Ok, thanks.
 
-> > This regex is pretty broad. What are we checking here? If I understand
-> > the previous discussion, we just care that it doesn't have "dirty" in
-> > it, right? I don't think this regex does that, because it doesn't ancho=
-r
-> > the end of string.
-> >
-> > If that's indeed what we're checking, then an easier check is perhaps:
-> >
-> >   ! grep dirty ...
->
-> Good.
-
-This was copied and pasted from the existing check for describe with a
-clean working tree. So this should be changed, too.
+> -Peff
