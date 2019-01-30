@@ -2,200 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49EB91F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 19:32:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFB311F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 19:32:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387621AbfA3TcO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 14:32:14 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:43305 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727114AbfA3TcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 14:32:14 -0500
-Received: by mail-lj1-f193.google.com with SMTP id q2-v6so569821lji.10
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 11:32:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=8xjdkDFFE2fGjLjYrYYZWK7JNPFyPPHe2kOQrE0/LZY=;
-        b=K9FEPPGv4MCt829H8hRmpLfEDOEC69DYSKb0nzj28a1q8s4HLfXCFhcYOUT9CgL7ke
-         7oQlIRApKNlNMO89Lvo0vojBN+4gdt0eENffOVi+rsgx2QWhyCjrvlJgkOhrqVqMDSnh
-         u2rClX21pIFyM9RcKF39WNdys24UlX2K/GiGZqoQJIzXyQzlbFkWoVUQK7Z6HWLNdSq6
-         bYUCYJ1HCAzOjclQ1paL9hmtE6Oo+c3b8zcSrctdKU1h9Yfw8XBvgj//SQXq1GqbJ+fS
-         PrdLkdn6gUPDXIM/kyHm1LXdukYplZ/IpV2XDg8f77FQ91a1pQWVbGZbz7v5hVUrLAPU
-         tovw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=8xjdkDFFE2fGjLjYrYYZWK7JNPFyPPHe2kOQrE0/LZY=;
-        b=ldwyzejzybCNjDPhKkKX4wp5/BbNNzpUtZmLedcjZaRPdHTxmByi0DSENRkkDPe3VM
-         QBNgsMezx8Te25FTMaH9K0VH7QNxTG7N650CGSFs2gq+UfElNyLq5polnF+0eEhG1dRD
-         rrKf0X7P5BdGHGGYVTHgwtUjk4aZKtz8fBdGv/Tj0WINU76OuhojC+dMGXA5Ajhl8US1
-         vyEoB3Gocq0SnZbkyn01+8rGkYcIyd1ZhlzMOPK8gNbZb0O1C7VNw6tVHVlm+vM4UnRJ
-         n8I+l+ETxhfrVGIqcd4z9AZQ5O+BcHM5OzYIHrxYb4r5SNP0Xr8h+iaXBig2DqhqCyWU
-         u0RQ==
-X-Gm-Message-State: AHQUAuamib7U8nWmFq9E0LabNNnn4n1SPWYF9srJ5/YiUBz9fYuUCUzO
-        JHJuk5jb89fsXJG+XkOwNls=
-X-Google-Smtp-Source: AHgI3IagAXap2qj7ZpFdUviBMtLyTDPZhT6JrPYfyLeH9bwJNHvg39WihKWYSq3AkJtX7VBPIldeLg==
-X-Received: by 2002:a2e:9ad0:: with SMTP id p16-v6mr219637ljj.102.1548876731546;
-        Wed, 30 Jan 2019 11:32:11 -0800 (PST)
-Received: from evledraar ([62.119.166.9])
-        by smtp.gmail.com with ESMTPSA id t9-v6sm411203ljj.87.2019.01.30.11.32.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 30 Jan 2019 11:32:10 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] Makefile: add prove and coverage-prove targets
-References: <pull.114.git.gitgitgadget@gmail.com> <294187c6968eff952e78bcea808c66fbedbf1f90.1548773766.git.gitgitgadget@gmail.com> <20190129160030.GA7083@sigill.intra.peff.net> <87zhrj2n2l.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1901301317120.41@tvgsbejvaqbjf.bet> <87y3722sz7.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1901301935010.41@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <nycvar.QRO.7.76.6.1901301935010.41@tvgsbejvaqbjf.bet>
-Date:   Wed, 30 Jan 2019 20:32:08 +0100
-Message-ID: <87womm2b7r.fsf@evledraar.gmail.com>
+        id S2387667AbfA3Tcw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 14:32:52 -0500
+Received: from mout.gmx.net ([212.227.17.20]:56599 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727114AbfA3Tcv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 14:32:51 -0500
+Received: from MININT-6BKU6QN ([62.119.166.9]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LiTrM-1hRHcb2PgC-00cdRE; Wed, 30
+ Jan 2019 20:32:42 +0100
+Date:   Wed, 30 Jan 2019 20:32:24 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        peff@peff.net
+Subject: Re: [PATCH (Apple Git) 12/13] Enable support for Xcode.app-bundled
+ gitconfig
+In-Reply-To: <7A37A7C1-6B82-44F8-AECB-189A57B94FBD@apple.com>
+Message-ID: <nycvar.QRO.7.76.6.1901302030100.41@tvgsbejvaqbjf.bet>
+References: <20190129193818.8645-1-jeremyhu@apple.com> <20190129193818.8645-13-jeremyhu@apple.com> <xmqqo97z5ac9.fsf@gitster-ct.c.googlers.com> <7A37A7C1-6B82-44F8-AECB-189A57B94FBD@apple.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WvFoedK3vyqUjmJiwE7K3ITwMXn2BUIkkXgDdYSU4RVT6vh15iy
+ EfukpSBPImruvOLeyZWiz8boxfJa6q38510OWow6HwcguLAifB7ENL5Qfok2SebcCm7PuhO
+ BorVPfOjA6tO47h0qY2nL+RXY3DnWVAK1SPUvc2k8EVF6eF+HQudeetMfuRJ4lHOVR+2E8X
+ Grl1ndg8g5XLCiRHpeKtA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ajJVPw6uFZE=:IypXDZUFSQx5ECnfO+WPbt
+ riID/HkM53M5ENypGZg7DGdQWErkk1YRikbbkOAEIbK8gXmw4egk3HsrgYHcom2sKTv1CzmsD
+ 8ynFPFN6HybStWiO7rzhSaHvSVIYBZOi0NL8WjVb5kI+Y3HLTTdqS+rt1tyzKaUdqjO/+XaPD
+ v8tLziz/37m7BIu1lJ+oJjsucY4O/aOXxNGRjunRrk+u/FXp7xFpucnaUNdO0Gj38Ifm7Fc6N
+ H/1T+MQv4S5LMYYAI5gdF2KKQMEYBWtH42FEgwiXz9/fARZAtsZAi6wAcK+szutfFGy2qIz1X
+ fmOCfNS5o/BkgkUsf4oGC3JY/wmQla5Bqc4eGt+dqjwWvX7qPGrAMBL1YiqFXnY7Pq4LM7dPQ
+ QC6NyczriVxCkiL4GjA/NMlLtPPWyAYATDEUNoGPyJr8G4S53LKzv6C7Llj/YMuyIZ7j2Yq5q
+ o7E9OW8DZfk5xK2sUixkkV8gRKQPluGnHFka2Wa6RPUNc1hDyFm2QIEYgSQHysu4i3suGZBZd
+ PLWcOX2qabnuCA1umo7i1fjOxYgw6HjEhU2AwuV+yro1TLaOI9KJyhuVyCYPthvyuPdOD4igU
+ UBCcArlkVkjFYOPvfbwqZ1KfkmgWan39jwsUU44uVBa5caqQ/jOYKzTlDwamIaoPn4QJ65n3e
+ dGgaD9BH5PkHs4fiRZhUevazB1cEg9XCLQcePcImFmx6pssdmERWAl+l1TixehWQYO4EJ8k46
+ XbL2sr6Uc0Z5kbvDxxmlFMlieDP2TEjxlFUCOCE6CdUovNVFf7X8vB5UOzrWLp6w7sxWkfDX7
+ LyMKH5PGK6ngYAATFghA+kTXj68xmkSNqBOZZlZsGFUZ5X9Pqa5DfBn8QS+ELTdFNlodBYZsa
+ x5JqM14raqrgfbi+oS2ckwIJqJEcEn6JplqTjC7dxwlEsFqJEv9WWC2j/3rfQI0ra+5BU5PeQ
+ WseJDfbkIzg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Jeremy,
 
-On Wed, Jan 30 2019, Johannes Schindelin wrote:
+On Tue, 29 Jan 2019, Jeremy Huddleston Sequoia wrote:
 
-> Hi =C3=86var,
->
-> On Wed, 30 Jan 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> On Wed, Jan 30 2019, Johannes Schindelin wrote:
->>
->> > On Tue, 29 Jan 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> >
->> >> On Tue, Jan 29 2019, Jeff King wrote:
->> >>
->> >> > On Tue, Jan 29, 2019 at 06:56:08AM -0800, Derrick Stolee via
->> >> > GitGitGadget wrote:
->> >> >
->> >> >> From: Derrick Stolee <dstolee@microsoft.com>
->> >> >>
->> >> >> When running the test suite for code coverage using
->> >> >> 'make coverage-test', a single test failure stops the
->> >> >> test suite from completing. This leads to significant
->> >> >> undercounting of covered blocks.
->> >> >>
->> >> >> Add two new targets to the Makefile:
->> >> >>
->> >> >> * 'prove' runs the test suite using 'prove'.
->> >> >>
->> >> >> * 'coverage-prove' compiles the source using the
->> >> >>   coverage flags, then runs the test suite using
->> >> >>   'prove'.
->> >> >>
->> >> >> These targets are modeled after the 'test' and
->> >> >> 'coverage-test' targets.
->> >> >
->> >> > I think these are reasonable to have (and I personally much prefer
->> >> > "prove" to the raw "make test" output anyway).
->> >>
->> >> I wonder if anyone would mind if we removed the non-prove path.
->> >>
->> >> When I added it in 5099b99d25 ("test-lib: Adjust output to be valid T=
-AP
->> >> format", 2010-06-24) there were still some commonly shipped OS's that
->> >> had a crappy old "prove", but now almost a decade later that's not a
->> >> practical problem, and it's installed by default with perl, and we
->> >> already depend on perl for the tests.
->> >
->> > It's not only about crappy old `prove`, it is also about requiring Perl
->> > (and remember, Perl is not really native in Git for Windows' case;
->>
->> We require perl now for testing, NO_PERL is just for the installed
->> version of git.
->
-> Which is confusing, if you want to put it nicely.
->
->> If you change the various test-lib.sh and test-lib-functions.sh that
->> unconditionally uses "perl" or "$PERL_PATH" hundreds/thousands (didn't
->> take an exact count, just watched fail scroll by) tests fail.
->
-> I know. Oh boy, I know.
->
-> But we do not have to keep that status quo, nor do we have to make it
-> worse.
->
-> It would not surprise me in the least if we could accelerate our entire
-> test suite by reducing our heavy reliance on scripting (including Perl) to
-> the point that it really takes too little time *not* to run. (Right now,
-> if you are on Windows, you better think twice before you start the test
-> suite, it will easily take over 3h (!!!) to run in a regular developer
-> setup. Even on a regular Mac, I would think twice before starting the run
-> that blocks my machine for easily 20 minutes straight. Needless to say
-> that few developers, if any, use it to validate their patches, in
-> particular on Windows. Meaning: for all real purposes, the test suite is
-> nearly useless on Windows.)
->
-> So let's not bake *even more* Perl usage into our test suite. Thanks.
->
->> So my assumption is that anyone running the tests now has perl anyway,
->> and thus a further hard dependency on it won't hurt anything.
->
-> By that token, the effort to turn many a script into a built-in for better
-> performance and substantially better error checking would be totally
-> nonsensical. "Because anyone running Git used those scripts anyway, so
-> making them a hard dependency won't hurt anything"?
->
-> I do not believe even a fraction of a second that that effort is
-> nonsensical. Just like I do not believe even a fraction of a second that
-> it makes sense for our test suite to rely on scripting so much. Or for us
-> to make that reliance even bigger, for that matter.
->
->> > I still have a hunch that we could save on time *dramatically* by
->> > simply running through regular `make` rather than through `prove`).
->>
->> My hunch is that on the OS's where this would matter (e.g. Windows) the
->> overhead is mainly spawning the processes, and it doesn't matter if it's
->> make or perl doing the spawning, but I have nothing to back that up...
->
-> I have at least the experience of several thousands runs of the test suite
-> on Windows, together with a couple dozen hours spent recently *just* on
-> making the CI of GitGitGadget at least bearable.
->
-> So I do not quite understand why you offered a contrary opinion when you
-> have nothing to back it up.
->
-> I mean, I would really like to have an informed discussion with you, to
-> benefit from your skills and from your experience to make the entire
-> design of our test suite better (there is so much room for improvement, we
-> should really be able to put together our knowledge to enhance it). It
-> needs to be based on facts, of course.
+> > On Jan 29, 2019, at 3:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > 
+> > Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
+> > 
+> >> Useful for setting up osxkeychain in Xcode.app's gitconfig
+> >> 
+> >> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+> >> ---
+> > 
+> > A concern shared with 13/13 is this.
+> > 
+> > While it may not hurt too much to look at one extra location even on
+> > non-Apple platform, it probably is a mistake to have this xcode
+> > specific change in generic part of the system like config.c or
+> > attr.c.  For that matter, would it make sense to force Apple uses to
+> > look at one extra location in the first place?  In other words, we
+> > already have "system wide" location (i.e. system_path(ETC_GITCONFIG))
+> > defined so system owners can give reasonable default to its users.
+> > The value of not using that facility and instead adding yet another
+> > place is dubious.
+> 
+> This allows for per-distribution configuration and could be useful for
+> other applications as well that want customizations specific to their
+> install of git.  For our specific use case, we do not want to munge the
+> system policy when installing Xcode.  Prior to doing things this way, we
+> were just changing the default in our distributed git binary, but this
+> seems a bit more flexible.
 
-Let's get some numbers then. On master, go to the "t" directory and run
-this:
+I think you misunderstood Junio, thinking that he referred to
+/etc/gitconfig. He did not. system_path(ETC_GITCONFIG) refers to
+<prefix>/etc/gitconfig, where <prefix> is that runtime prefix when
+compiled with RUNTIME_PREFIX.
 
-    for f in t[0-9]*.sh; do (echo '#!/bin/sh' && echo "echo ok 1 $f" && ech=
-o sleep 1 && echo echo 1..1) >$f; done
+So you can definitely have your own per-distribution configuration: it
+lives in that very <prefix>/etc/gitconfig where the portable Git is
+installed.
 
-That effectively turns all our tests into a "hello world" with a sleep
-of 1 second.
+And since we have that nice facility, I agree with Junio that we probably
+do not even need an extra config, certainly not one just introduced for
+XCode.
 
-Then run both:
+Ciao,
+Johannes
 
-    time prove -j12 t00[0-9]*.sh
-
-And:
-
-    time make -j12 t00[0-9]*.sh
-
-For some value of -j12 and t00[0-9]*.sh. In my testing "make" is a bit
-faster, but not by any amount that would matter when this is run for
-real.
+> 
+> > 
+> > 
+> > 
+> > 
+> > 
+> > 
+> > 
+> >> config.c | 13 +++++++++++++
+> >> config.h |  2 ++
+> >> 2 files changed, 15 insertions(+)
+> >> 
+> >> diff --git a/config.c b/config.c
+> >> index ff521eb27a..656bfef8ab 100644
+> >> --- a/config.c
+> >> +++ b/config.c
+> >> @@ -1631,6 +1631,14 @@ const char *git_etc_gitconfig(void)
+> >> 	return system_wide;
+> >> }
+> >> 
+> >> +const char *git_xcode_gitconfig(void)
+> >> +{
+> >> +	static const char *xcode_config;
+> >> +	if (!xcode_config)
+> >> +		xcode_config = system_path("share/git-core/gitconfig");
+> >> +	return xcode_config;
+> >> +}
+> >> +
+> >> /*
+> >>  * Parse environment variable 'k' as a boolean (in various
+> >>  * possible spellings); if missing, use the default value 'def'.
+> >> @@ -1673,6 +1681,11 @@ static int do_git_config_sequence(const struct config_options *opts,
+> >> 	else
+> >> 		repo_config = NULL;
+> >> 
+> >> +	current_parsing_scope = CONFIG_SCOPE_XCODE;
+> >> +	if (git_config_system() && git_xcode_gitconfig() && !access_or_die(git_xcode_gitconfig(), R_OK, 0))
+> >> +		ret += git_config_from_file(fn, git_xcode_gitconfig(),
+> >> +					    data);
+> >> +
+> >> 	current_parsing_scope = CONFIG_SCOPE_SYSTEM;
+> >> 	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0))
+> >> 		ret += git_config_from_file(fn, git_etc_gitconfig(),
+> >> diff --git a/config.h b/config.h
+> >> index ee5d3fa7b4..f848423d28 100644
+> >> --- a/config.h
+> >> +++ b/config.h
+> >> @@ -115,6 +115,7 @@ extern int git_config_rename_section_in_file(const char *, const char *, const c
+> >> extern int git_config_copy_section(const char *, const char *);
+> >> extern int git_config_copy_section_in_file(const char *, const char *, const char *);
+> >> extern const char *git_etc_gitconfig(void);
+> >> +extern const char *git_xcode_gitconfig(void);
+> >> extern int git_env_bool(const char *, int);
+> >> extern unsigned long git_env_ulong(const char *, unsigned long);
+> >> extern int git_config_system(void);
+> >> @@ -131,6 +132,7 @@ enum config_scope {
+> >> 	CONFIG_SCOPE_GLOBAL,
+> >> 	CONFIG_SCOPE_REPO,
+> >> 	CONFIG_SCOPE_CMDLINE,
+> >> +	CONFIG_SCOPE_XCODE,
+> >> };
+> >> 
+> >> extern enum config_scope current_config_scope(void);
+> 
+> 
