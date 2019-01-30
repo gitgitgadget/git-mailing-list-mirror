@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49CFB1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 20:57:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CA0F1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 20:57:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387935AbfA3U4a (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 15:56:30 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37692 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387910AbfA3U4a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 15:56:30 -0500
-Received: by mail-ed1-f67.google.com with SMTP id h15so811739edb.4
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 12:56:28 -0800 (PST)
+        id S2388010AbfA3U5J (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 15:57:09 -0500
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:33248 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387922AbfA3U4b (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 15:56:31 -0500
+Received: by mail-ed1-f43.google.com with SMTP id p6so834279eds.0
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 12:56:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wWxV4nv1i3Sj+TzKdE/M42eHEQ+Scronuo/HjRFyFKo=;
-        b=FM/AzoudyGeHQhsiZfL4UKoTEJ3RxrAPIwEMLyiVVs6sBOOHUiWUmUUiP9d2IEM0mG
-         cC0AAa/CIuw3BpCzozpFQe5AOyPNxPwcGJ01OQocLChEyUDR6EDYeEHf6kSDf/1ly86G
-         eTErmuBWGO/Pm5VJdwIYfLEwvIY7At+yPJ4dkk8FLD3SogafnvORoTJwoZdPbnYlNoma
-         seHtUb8vWW/nqqfhDfM8cV/kSogstiKOu/Re8XdLJ2FbsQF7XXSPAQ2mT4d3VBa9k0ia
-         WbOf5GWLJiJm9tEI2OSsov6ThjPn+DV3XaUs3doOzBid49k/6Vok4RzyezLkgzBv3k/M
-         Fzjg==
+        bh=XtCymizwj1XYxWnQ5U84tXVndJDCA7G0G1rzgs0ilLU=;
+        b=B3ln/OAAr+vOT0IEOR1Ll0ZEZcsW1CJOVRZ2RGB/a/N4NUCXnUjz7dakATAlbIYOUi
+         APf1nTPE7341Z/2NfJ6w50wFqfCKwOqi9i63VpHYojQk5LQAYBK8letg9Oav26w7Gpjf
+         YkvUHE8TXUBhfAAvQz3m0LyXKnWG/+7j+NNoOYY9bP7Za8FE4koRspNobabkl+eQIuo4
+         l9YMbOIU588hPO+RlCv6VKiBQ5ah92so8LdMnRCYYD34fgKpLKT3KQJrbbiyu/ta81GP
+         7RcSFFX9caZnuEDirJfvAfv8bcY0RfdMTobIHpp+nflUYqC5UlNaEGW/pmlsl3X1rVFE
+         IDhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wWxV4nv1i3Sj+TzKdE/M42eHEQ+Scronuo/HjRFyFKo=;
-        b=cA9qt53LUMA/6jKm58XSGmK14LtwBOE9AMZJ9xCMD/mligXlZ8oNxwyU6SUl0sqGwx
-         t0u1Dev4/lrxCMGafRNVLKvlrPoytPYlhad5PiIW9V3G2PxBYLG8oD8FSup8QMAJIAwa
-         BC7N53TUFkNvf8lqHrl65tv12ZB2kIGpN2tOaLTIznH6H2vRpa6a2KvDt5S1lxhEGWZv
-         fYkk7tZRmYxayKW+O/pirTVvaGcK3QvgHacw7eqVy4QPLebOW/lkb2uFyHJBH60+15DQ
-         NiqS8GXGvL7ujjRbH6Z67QMnKQRfMhDA4gswTNQlCGokPAB+HcTUEB2HdLMZpIPxOtpS
-         FEcg==
-X-Gm-Message-State: AHQUAuZ9ynpFGtNm1Yf+FSnkCPbivown9okb9NGO39nIMtepzBRW4iHD
-        Z/v1KNKcSWN1xHgt0qhpUEX9DvWe
-X-Google-Smtp-Source: AHgI3IaOrqymGSSYTPGYTBcl+Vs9vcESr+/F6oZdy8XitoUWEvPZ3uGjVSRSXdOSQfdWKwLY6Iyksg==
-X-Received: by 2002:a17:906:1daa:: with SMTP id u10mr3508900ejh.35.1548881787994;
-        Wed, 30 Jan 2019 12:56:27 -0800 (PST)
+        bh=XtCymizwj1XYxWnQ5U84tXVndJDCA7G0G1rzgs0ilLU=;
+        b=dSmtqE1hgqed0+MZXGyu6KhoIy62Sgyc4a18ZYrtuf4HrbdeLfMNXGMkyqSGxEE1HO
+         GvLD3tIwXxaYtji9pcVarPRsQ4b2UQYhYALeq1KLF5ISn1b5+08AndmQ/aZEbRaBnMyG
+         +/ZfRzfzdX/p1FT7MLzBDFvL85ABwnRLZUBnaY5X6W/87n8iT778uhrKn3jLJL2Xux7R
+         6fDXUMc5GY65eHblbILfh8B1V6cHgz47QuL8ah2HwdKmeXOm6iRySq8wyJm8gx4iDtww
+         Aokt7S7A9Dd4CcVjHoy6TqhuQLH4Q4cYhq/+UJEZHr+VFb/oyP2lMxZe3Z7kROSec4+t
+         9SoA==
+X-Gm-Message-State: AJcUukflBNEqSuhuvH08IYFk5q3uNkJ01f3RU4/9eZqJvQ01KQbWe7nA
+        nfY9f2g5v313mHJQfp+XINoEZNHE
+X-Google-Smtp-Source: ALg8bN4dKQYoHrVq3w/9psgWL32PAcuoz8IFzDSORP3yQgFDsw9NgV2i8mYcbmL1iB0M2sARKZDvrQ==
+X-Received: by 2002:a50:8343:: with SMTP id 61mr31616825edh.154.1548881788892;
+        Wed, 30 Jan 2019 12:56:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id by5-v6sm476734ejb.7.2019.01.30.12.56.27
+        by smtp.gmail.com with ESMTPSA id a11sm793334edc.28.2019.01.30.12.56.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Jan 2019 12:56:27 -0800 (PST)
-Date:   Wed, 30 Jan 2019 12:56:27 -0800 (PST)
-X-Google-Original-Date: Wed, 30 Jan 2019 20:56:12 GMT
-Message-Id: <660b83c453d416ed8c1754a2d2934abbd99d0660.1548881779.git.gitgitgadget@gmail.com>
+        Wed, 30 Jan 2019 12:56:28 -0800 (PST)
+Date:   Wed, 30 Jan 2019 12:56:28 -0800 (PST)
+X-Google-Original-Date: Wed, 30 Jan 2019 20:56:13 GMT
+Message-Id: <ab26888126b94d409d8bbbfd3a755ab1ceca28d3.1548881779.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v4.git.gitgitgadget@gmail.com>
 References: <pull.108.v3.git.gitgitgadget@gmail.com>
         <pull.108.v4.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 07/14] trace2:data: add trace2 transport child
- classification
+Subject: [PATCH v4 08/14] trace2:data: add trace2 hook classification
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,51 +71,102 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add trace2 child classification for transport processes.
+Classify certain child processes as hooks.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- connect.c          | 3 +++
- transport-helper.c | 2 ++
- 2 files changed, 5 insertions(+)
+ builtin/am.c           | 1 +
+ builtin/receive-pack.c | 4 ++++
+ builtin/worktree.c     | 1 +
+ sequencer.c            | 2 ++
+ transport.c            | 1 +
+ 5 files changed, 9 insertions(+)
 
-diff --git a/connect.c b/connect.c
-index 24281b6082..3c6f829a05 100644
---- a/connect.c
-+++ b/connect.c
-@@ -1251,6 +1251,7 @@ struct child_process *git_connect(int fd[2], const char *url,
- 		conn = NULL;
- 	} else if (protocol == PROTO_GIT) {
- 		conn = git_connect_git(fd, hostandport, path, prog, version, flags);
-+		conn->trace2_child_class = "transport/git";
- 	} else {
- 		struct strbuf cmd = STRBUF_INIT;
- 		const char *const *var;
-@@ -1293,9 +1294,11 @@ struct child_process *git_connect(int fd[2], const char *url,
- 				strbuf_release(&cmd);
- 				return NULL;
- 			}
-+			conn->trace2_child_class = "transport/ssh";
- 			fill_ssh_args(conn, ssh_host, port, version, flags);
- 		} else {
- 			transport_check_allowed("file");
-+			conn->trace2_child_class = "transport/file";
- 			if (version > 0) {
- 				argv_array_pushf(&conn->env_array, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
- 						 version);
-diff --git a/transport-helper.c b/transport-helper.c
-index 6cf3bb324e..a01cc0093f 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -127,6 +127,8 @@ static struct child_process *get_helper(struct transport *transport)
- 		argv_array_pushf(&helper->env_array, "%s=%s",
- 				 GIT_DIR_ENVIRONMENT, get_git_dir());
+diff --git a/builtin/am.c b/builtin/am.c
+index 95370313b6..a81e61c1bc 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -468,6 +468,7 @@ static int run_post_rewrite_hook(const struct am_state *state)
  
-+	helper->trace2_child_class = helper->args.argv[0]; /* "remote-<name>" */
+ 	cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
+ 	cp.stdout_to_stderr = 1;
++	cp.trace2_hook_name = "post-rewrite";
+ 
+ 	ret = run_command(&cp);
+ 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 33187bd8e9..6eef8575b9 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -694,6 +694,8 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
+ 	proc.argv = argv;
+ 	proc.in = -1;
+ 	proc.stdout_to_stderr = 1;
++	proc.trace2_hook_name = hook_name;
 +
- 	code = start_command(helper);
- 	if (code < 0 && errno == ENOENT)
- 		die(_("unable to find remote helper for '%s'"), data->name);
+ 	if (feed_state->push_options) {
+ 		int i;
+ 		for (i = 0; i < feed_state->push_options->nr; i++)
+@@ -807,6 +809,7 @@ static int run_update_hook(struct command *cmd)
+ 	proc.stdout_to_stderr = 1;
+ 	proc.err = use_sideband ? -1 : 0;
+ 	proc.argv = argv;
++	proc.trace2_hook_name = "update";
+ 
+ 	code = start_command(&proc);
+ 	if (code)
+@@ -1190,6 +1193,7 @@ static void run_update_post_hook(struct command *commands)
+ 	proc.no_stdin = 1;
+ 	proc.stdout_to_stderr = 1;
+ 	proc.err = use_sideband ? -1 : 0;
++	proc.trace2_hook_name = "post-update";
+ 
+ 	if (!start_command(&proc)) {
+ 		if (use_sideband)
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 3f9907fcc9..6cc094a453 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -402,6 +402,7 @@ static int add_worktree(const char *path, const char *refname,
+ 			cp.dir = path;
+ 			cp.env = env;
+ 			cp.argv = NULL;
++			cp.trace2_hook_name = "post-checkout";
+ 			argv_array_pushl(&cp.args, absolute_path(hook),
+ 					 oid_to_hex(&null_oid),
+ 					 oid_to_hex(&commit->object.oid),
+diff --git a/sequencer.c b/sequencer.c
+index 213815dbfc..c1e36196a1 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1103,6 +1103,7 @@ static int run_rewrite_hook(const struct object_id *oldoid,
+ 	proc.argv = argv;
+ 	proc.in = -1;
+ 	proc.stdout_to_stderr = 1;
++	proc.trace2_hook_name = "post-rewrite";
+ 
+ 	code = start_command(&proc);
+ 	if (code)
+@@ -3784,6 +3785,7 @@ static int pick_commits(struct repository *r,
+ 				hook.in = open(rebase_path_rewritten_list(),
+ 					O_RDONLY);
+ 				hook.stdout_to_stderr = 1;
++				hook.trace2_hook_name = "post-rewrite";
+ 				argv_array_push(&hook.args, post_rewrite_hook);
+ 				argv_array_push(&hook.args, "rebase");
+ 				/* we don't care if this hook failed */
+diff --git a/transport.c b/transport.c
+index 99678153c1..ed5a733c4a 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1061,6 +1061,7 @@ static int run_pre_push_hook(struct transport *transport,
+ 
+ 	proc.argv = argv;
+ 	proc.in = -1;
++	proc.trace2_hook_name = "pre-push";
+ 
+ 	if (start_command(&proc)) {
+ 		finish_command(&proc);
 -- 
 gitgitgadget
 
