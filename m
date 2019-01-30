@@ -2,69 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A00071F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 00:07:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E5EF1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 00:36:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727396AbfA3AHt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 19:07:49 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:37748 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726951AbfA3AHt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 19:07:49 -0500
-Received: by mail-io1-f67.google.com with SMTP id g8so17904056iok.4
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 16:07:48 -0800 (PST)
+        id S1727488AbfA3Agx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 19:36:53 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:43638 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727228AbfA3Agx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jan 2019 19:36:53 -0500
+Received: by mail-qt1-f193.google.com with SMTP id i7so24441740qtj.10
+        for <git@vger.kernel.org>; Tue, 29 Jan 2019 16:36:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kjTPufN6FM7WbDto639GJTzelozDEedP0bR65roOd6c=;
-        b=IHI+hVgqNSJbzEGmeTUVhoOP4l4fX6BxDnikzXSNrsQYB3se0hqcNeNCD5+EOcauFw
-         fTZ9K9JmpcOKH+jfDG2oZ+7ZbTLboP99eguJ9AmKZCk3twTl8PEW2mMwzUQ+vT+4rq5b
-         uqHNjH6javjoMdPwyopmabhTjDIALbLAQmgHuH7G7Twr9v3k+cfN8sudk7v1MQP4d40d
-         4JBb1+4byAnxzcXKqumoqfKE8cMXHz7++2i+bEjEddOIOkUk/g0vrhdSQB6jynlwosG+
-         t9j+FsXVgqHuDgPh+ICij4FNijXoiQldBfGxX7jWsG0uVQX1Uh9kt7fAGwb5OsmDDPKg
-         3BkA==
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9nqRPBLuvy2bd/ppaxYCm+9GxJNUQfKqllEkC3RsMEg=;
+        b=bcpRp4x3WtCbJzYkNla7loTLjGT8ZEBvKtfvmBJAVSb+7KXzFsMTRST+JI7jR14/nk
+         hHCjRm8CY4uwawuyNEOZAaOiB+mlx3/uKyXtwMcGF+7VR/BHbTI28yvlyp6SVj+/usxR
+         bk/RIRna18JLtZ/qUpYW4yj8N9Yy+B7gd7CmumPK9xBt9EN0giFd1kzbIOKelyn49B2S
+         0iTSu/MrGvHYgH/bWKp3elWXsSWWrNkN+CtVE92SmvyHUnLCZH55M30VVb9Pf0DZtLjr
+         wabTwz0oqrCT9GPt7cb+4Suwdl/UYQo56ffNchCB+zKMzj5rhN68vXzwkoJTIykb3hq3
+         MkIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kjTPufN6FM7WbDto639GJTzelozDEedP0bR65roOd6c=;
-        b=KnmZk2onGF2NTXfT7NpvtkIfQTSP1G2MhCcvwbE1/PMju9JE5Rb5Nek9UOuDiCwZxO
-         M8m/OQHA1pYUagcpk40IgAXapwBhNTvS+sJuu7e6YpUgE+i8PUaw3d+NujMOBsIaI6Ed
-         jE4cjuKasohBnNnZeIM7GoUB1YLzEEHgnUJ3GzOM4Yc3pdg22YsTdQTZ0ag8mNXZTnmF
-         YYK33hShUqOkTlX3Wgp9ePPJlclxSNjbmSH+xOZmjXDoyDc7gljOwhFMqr1ltWe+zTrU
-         AlcO42rky5cvrxVqUvsBRQu6iy2zK7ofMpaZJ8JElTJScI5AJicytTd/wWZS+1pD/pus
-         UHqw==
-X-Gm-Message-State: AHQUAuZC50NtDa4+65xp2VKSHl8CwpPztowz3/6apvj1Vea5aZEyGske
-        1u3QCE6AbQrYLbTm0Ix2WGGTzTcvjCEOMrEZ4qA=
-X-Google-Smtp-Source: AHgI3IYHGsU3Pw1StL87BMRx3lmAwb7qOUrBRizMYUDBC88b3mEAsKQI1OvtHQTPUTTJKCJT1YgefLA81ZSQXCAULn4=
-X-Received: by 2002:a6b:2b07:: with SMTP id r7mr1675543ior.169.1548806868373;
- Tue, 29 Jan 2019 16:07:48 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=9nqRPBLuvy2bd/ppaxYCm+9GxJNUQfKqllEkC3RsMEg=;
+        b=dOuPUxhB/K2I4k06hNdxobjrT9uE7gQTbfLJ1rh1jKdEqoPoEhN2ILm/KcOz7Bs/Xl
+         dP8B9joRrYRVgincZo0P+yoMpVZ1YMdL69+COTjBOjmHygWv6QEhp+VMxkOO7YQmwGiQ
+         U2SZeu3uk1Fdi/aPa8RuObH/GQ7/x2Md9NS7OPgqmi7f3zt9ZNJPlWLvvLFEAZSt4qd9
+         uQh7mp0CGCuxVgwdnNK/XIHwrFnPusMrc+WgbYMIaNzChLV5s10r0sVffSwk6shmsjqt
+         vKw8qK/0iDkz4fc+nP6v1bfm21imfLnMev0ZleRd5AO3YttRTkHoO0ZhXU/dN65xHYrl
+         5hLA==
+X-Gm-Message-State: AJcUukd80FBZ6fAvfrtJF+JRiy/PRa4sl7j86WfB9fgRA2VWaqtsfxx7
+        7yeXDCihJlENYcYwNAn1OO2to1E5
+X-Google-Smtp-Source: ALg8bN50dMxxID97xKI3vjCTSQvaoMsY3cMlhdC+LtwrZ2hRrBJUiUskNr14S4TyXzpirfrPEye4/w==
+X-Received: by 2002:a0c:fa46:: with SMTP id k6mr26064472qvo.36.1548808612192;
+        Tue, 29 Jan 2019 16:36:52 -0800 (PST)
+Received: from whubbs1.gaikai.biz ([100.42.103.5])
+        by smtp.gmail.com with ESMTPSA id u67sm80871791qki.22.2019.01.29.16.36.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 29 Jan 2019 16:36:51 -0800 (PST)
+Received: (nullmailer pid 15550 invoked by uid 1000);
+        Wed, 30 Jan 2019 00:36:50 -0000
+From:   William Hubbs <williamh@gentoo.org>
+To:     git@vger.kernel.org
+Cc:     williamh@gentoo.org, chutzpah@gentoo.org
+Subject: [PATCH v4 0/1] config: allow giving separate author and committer idents
+Date:   Tue, 29 Jan 2019 18:35:49 -0600
+Message-Id: <20190130003550.15502-1-williamh@gentoo.org>
+X-Mailer: git-send-email 2.19.2
 MIME-Version: 1.0
-References: <20190129193818.8645-1-jeremyhu@apple.com> <20190129193818.8645-3-jeremyhu@apple.com>
- <xmqq1s4v6pzm.fsf@gitster-ct.c.googlers.com> <09281A61-1EDA-4226-AD59-6A97EDF1B1DB@apple.com>
- <20190129235947.GG13764@szeder.dev>
-In-Reply-To: <20190129235947.GG13764@szeder.dev>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 29 Jan 2019 16:07:36 -0800
-Message-ID: <CAPUEsphfxcqjkqRSV8soCBEtC20Q8+wjYz6_zbKM0=SpsSxTSg@mail.gmail.com>
-Subject: Re: [PATCH (Apple Git) 02/13] test-lib: Export PERL5LIB for testing git-svn
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-/usr/local/versioner/perl/versions is also not provided with macOS or
-Xcode AFAIK
+All,
 
-Carlo
+this implements the changes requested in v3 of this patch:
+
+- removes an extra comma from the enum
+- reworks the logic for config handling so that the author and committer
+  variables are handled along with the user variables.
+
+Please review.
+
+William Hubbs (1):
+  config: allow giving separate author and committer idents
+
+ Documentation/config/user.txt | 23 ++++++---
+ blame.c                       |  3 +-
+ builtin/am.c                  |  1 +
+ builtin/commit.c              |  3 +-
+ cache.h                       | 13 ++++-
+ config.c                      |  4 +-
+ ident.c                       | 92 ++++++++++++++++++++++++++++++++---
+ log-tree.c                    |  3 +-
+ sequencer.c                   |  5 +-
+ t/t7517-per-repo-email.sh     | 74 ++++++++++++++++++++++++++++
+ 10 files changed, 197 insertions(+), 24 deletions(-)
+
+-- 
+2.19.2
+
