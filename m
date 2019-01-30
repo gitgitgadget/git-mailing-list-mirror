@@ -6,127 +6,107 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDF28211B5
-	for <e@80x24.org>; Wed, 30 Jan 2019 23:21:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB1431F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 23:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727161AbfA3XV1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 18:21:27 -0500
-Received: from p3plsmtpa06-09.prod.phx3.secureserver.net ([173.201.192.110]:56324
-        "EHLO p3plsmtpa06-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725613AbfA3XV1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 30 Jan 2019 18:21:27 -0500
-X-Greylist: delayed 438 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Jan 2019 18:21:27 EST
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with ESMTPSA
-        id oz3TgzEqkMKAIoz3YgRXHk; Wed, 30 Jan 2019 16:14:09 -0700
-From:   Max Kirillov <max@max630.net>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Max Kirillov <max@max630.net>, git@vger.kernel.org
-Subject: [RFC PATCH] pack-refs: fail on falsely sorted packed-refs
-Date:   Thu, 31 Jan 2019 01:13:59 +0200
-Message-Id: <20190130231359.23978-1-max@max630.net>
-X-Mailer: git-send-email 2.19.0.1202.g68e1e8f04e
+        id S1727359AbfA3Xbq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 18:31:46 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:37542 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725768AbfA3Xbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 18:31:46 -0500
+Received: by mail-qk1-f196.google.com with SMTP id g125so864881qke.4
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 15:31:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=82DxBOi3IYbEExhARB2k9FRhMsoChZysWB5kc+40S6s=;
+        b=llBgmr72UlcVT4vFsdrPSxm7qWEEKD/oYqoqau/fdK2zU90Lyp4bXxqGPk2SHBqkLo
+         lRhXzZ9ekhnL5d0rNlbOmFXClh3Yzvyx4xSuCkzYc5h1PnMsqCkNJJwxzkSD8l+jtzk7
+         rBvQPG2qFgqkQjD4CbuEWCyf7FVR1ZjRB99osUNb2uwdnoAHY81PBjmfEYpREQAkMV3u
+         PybETIP6MmQkbo4mI1eQplvOQhaggu6MAA/4zxT/6PRCiPMAG0+a8moZJqUNmqzNTYkK
+         0wz3KDCQ0p520D8wq2nstjZ5jcTAit6g/s0z92QzGiNrKEaB5P5gacMlexOcdHkjBd7Z
+         E/XQ==
+X-Gm-Message-State: AJcUukeW/fPw35trkv0CBiBIJc9tZwm3Gjv5oBMnkiupEIu2fxmnzMgR
+        6SIovCJVlikNUD/5qzh9eAR2LlngGCJS4LggCj8=
+X-Google-Smtp-Source: ALg8bN5QwwaIMz+x7MnHLhb58XtEdYYB5IBW+5k/vxXteNBMHl5Jdxdtmcs1ZXxztYUubz+aUSgfgmYUDGSf8dIb8Mg=
+X-Received: by 2002:a37:a315:: with SMTP id m21mr29026682qke.152.1548891105222;
+ Wed, 30 Jan 2019 15:31:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfPyRE62HJFQTqcqo8n+0OFWqCkOLE/JDSxXdnCGG+3McIlxDIn9fyS3TofPhZFJ01A2nC3TF/O9AtJNau+CuB8keIH3c6/SB2EBHgsNzIiw+r4th/uTm
- MHUKtiOi9pilnZl3l7L6u2pvTp48EgZEbQuyK9Kbux2TQaMQTyjqb3cwkab6zEa2Xrsfr8L24eqvsKxX3XcA2X7S774WhpPVg8436zsP4jSr7wOFfaELxxYQ
+References: <20190130231359.23978-1-max@max630.net>
+In-Reply-To: <20190130231359.23978-1-max@max630.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 30 Jan 2019 18:31:34 -0500
+Message-ID: <CAPig+cTn2gURyQgWHZQMNf2cZ+zwFhbH1Q4iPmbwuvYjMrPZPg@mail.gmail.com>
+Subject: Re: [RFC PATCH] pack-refs: fail on falsely sorted packed-refs
+To:     Max Kirillov <max@max630.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If packed-refs is marked as sorted but not really sorted it causes
-very hard to comprehend misbehavior of reference resolving - a reference
-is reported as not found.
+On Wed, Jan 30, 2019 at 6:21 PM Max Kirillov <max@max630.net> wrote:
+> If packed-refs is marked as sorted but not really sorted it causes
+> very hard to comprehend misbehavior of reference resolving - a reference
+> is reported as not found.
+>
+> As the scope of the issue is not clear, make it visible by failing
+> pack-refs command - the one which would not suffer performance penalty
+> to verify the sortedness - when it encounters not really sorted existing
+> data.
+>
+> Signed-off-by: Max Kirillov <max@max630.net>
+> ---
+> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> @@ -1088,6 +1088,7 @@ static int write_with_updates(struct packed_ref_store *refs,
+> +       struct strbuf prev_ref = STRBUF_INIT;
+> @@ -1137,6 +1138,20 @@ static int write_with_updates(struct packed_ref_store *refs,
+> +               if (iter)
+> +               {
+> +                       if (prev_ref.len &&  strcmp(prev_ref.buf, iter->refname) > 0)
+> +                       {
+> +                               strbuf_addf(err, "broken sorting in packed-refs: '%s' > '%s'",
+> +                                           prev_ref.buf,
+> +                                           iter->refname);
 
-As the scope of the issue is not clear, make it visible by failing
-pack-refs command - the one which would not suffer performance penalty
-to verify the sortedness - when it encounters not really sorted existing
-data.
+strbuf_release(&prev_ref) either here or after the "error" label.
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
-I happened to have a not really sorted packed-refs file. As you might guess,
-it was quite wtf-ing experience. It worked, mostly, but there was one branch
-which just did not resolve, regardless of existing and being presented in
-for-each-refs output.
+> +                               goto error;
+> +                       }
+> +
+> +                       strbuf_init(&prev_ref, 0);
+> +                       strbuf_addstr(&prev_ref, iter->refname);
+> +               }
+> diff --git a/t/t3212-pack-refs-broken-sorting.sh b/t/t3212-pack-refs-broken-sorting.sh
+> @@ -0,0 +1,26 @@
+> +test_expect_success 'setup' '
+> +       git commit --allow-empty -m commit &&
+> +       for num in $(test_seq 10)
+> +       do
+> +               git branch b$(printf "%02d" $num) || break
 
-I don't know where the corruption came from. I should admit it could even be a manual
-editing but last time I did it (in that reporitory) was several years ago so it is unlikely.
+This should probably be "|| return 1" rather than "|| break" in order
+to fail the test immediately.
 
-I am not sure what should be the proper fix. I did a minimal detection, so that
-it does not go unnoticed. Probably next step would be either fixing in `git fsck` call.
+> +       done &&
+> +       git pack-refs --all &&
+> +       head_object=$(git rev-parse HEAD) &&
+> +       printf "$head_object refs/heads/b00\\n" >>.git/packed-refs &&
+> +       git branch b11
+> +'
+> +
+> +test_expect_success 'off-order branch not found' '
+> +       ! git show-ref --verify --quiet refs/heads/b00
+> +'
 
- refs/packed-backend.c               | 15 +++++++++++++++
- t/t3212-pack-refs-broken-sorting.sh | 26 ++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
- create mode 100755 t/t3212-pack-refs-broken-sorting.sh
+Use test_must_fail() rather than '!' when expecting a Git command to fail.
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index c01c7f5901..505f4535b5 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1088,6 +1088,7 @@ static int write_with_updates(struct packed_ref_store *refs,
- 	FILE *out;
- 	struct strbuf sb = STRBUF_INIT;
- 	char *packed_refs_path;
-+	struct strbuf prev_ref = STRBUF_INIT;
- 
- 	if (!is_lock_file_locked(&refs->lock))
- 		BUG("write_with_updates() called while unlocked");
-@@ -1137,6 +1138,20 @@ static int write_with_updates(struct packed_ref_store *refs,
- 		struct ref_update *update = NULL;
- 		int cmp;
- 
-+		if (iter)
-+		{
-+			if (prev_ref.len &&  strcmp(prev_ref.buf, iter->refname) > 0)
-+			{
-+				strbuf_addf(err, "broken sorting in packed-refs: '%s' > '%s'",
-+					    prev_ref.buf,
-+					    iter->refname);
-+				goto error;
-+			}
-+
-+			strbuf_init(&prev_ref, 0);
-+			strbuf_addstr(&prev_ref, iter->refname);
-+		}
-+
- 		if (i >= updates->nr) {
- 			cmp = -1;
- 		} else {
-diff --git a/t/t3212-pack-refs-broken-sorting.sh b/t/t3212-pack-refs-broken-sorting.sh
-new file mode 100755
-index 0000000000..37a98a6fb1
---- /dev/null
-+++ b/t/t3212-pack-refs-broken-sorting.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+
-+test_description='tests for the falsely sorted refs'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	git commit --allow-empty -m commit &&
-+	for num in $(test_seq 10)
-+	do
-+		git branch b$(printf "%02d" $num) || break
-+	done &&
-+	git pack-refs --all &&
-+	head_object=$(git rev-parse HEAD) &&
-+	printf "$head_object refs/heads/b00\\n" >>.git/packed-refs &&
-+	git branch b11
-+'
-+
-+test_expect_success 'off-order branch not found' '
-+	! git show-ref --verify --quiet refs/heads/b00
-+'
-+
-+test_expect_success 'subsequent pack-refs fails' '
-+	! git pack-refs --all
-+'
-+
-+test_done
--- 
-2.19.0.1202.g68e1e8f04e
+> +test_expect_success 'subsequent pack-refs fails' '
+> +       ! git pack-refs --all
+> +'
 
+Ditto.
