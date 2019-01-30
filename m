@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA84A1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 09:48:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7E0E1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 09:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729280AbfA3Jsx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 04:48:53 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:41149 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726406AbfA3Jsw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 04:48:52 -0500
-Received: by mail-pl1-f193.google.com with SMTP id u6so10821083plm.8
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 01:48:52 -0800 (PST)
+        id S1730137AbfA3Js5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 04:48:57 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:45901 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726406AbfA3Js5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 04:48:57 -0500
+Received: by mail-pl1-f196.google.com with SMTP id a14so10799703plm.12
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 01:48:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/OKrVEIdtHGuBbjw0txuo5PJ5Bolb0l97rR/T1Ood7I=;
-        b=noLqwbHXQCMdQfBrLemZg2JJXVxbVmh7eVy97UcwU4dWW7obeppbyyLvXWrx1ThM8Z
-         dydJSOwk4+V7OHh7opINc8Cw2eqVhvIAVGvGaBE74+Ku6SUIqX3aRHjq1Ht2dpGaqglC
-         OC3yFQpxnNT7GsjYMxSyFUP50pFb1vzZAGt1G5sweN4nBTtTPTfYPCKJ6IGfcQafIhH1
-         LkKzsm7MGPfxqG/jYGgaXj5Seb+jvFEF98P/DYqHOH8Cp0/14RhN6EQ7gDzJbVKvGkT1
-         Rjvkh9fJ5aFA/I+uJT8TyfZdFGijtifwrQNQY72euMBEdOZXheijtB21fmd6aK36R1WK
-         4BfA==
+        bh=sQk9AT2smGrSAzGg2LXGB/pZY5NLA2Xrmm1iKFp6AOE=;
+        b=X37XSIW2Nay+ysrXfsWmntS/n7JpGjSVbJxFqn9UDFh8oeFB6p8MYGU3cYVlfjYPVi
+         AFvyh29loG6qpPTMHTEGya/fvHx9KcP603Fla9wwjL0j8L/c1AtKnjOI8NGrxE4fJ+jy
+         dDub95JNpicBcNNrMxPdc0xCG73XWVk1E9X+j5kz4GqhpcPDSHlaqjP+MY7PW7O3WUuv
+         Asr1ykMAxgTZ0RFBf0z6Z1BjYm2HHBjPmM+FsI7hQe3GdCiRQXg75uFIPRXEnQzSzuMX
+         MtHLZudoGsZBtPhnoqmlEx5wvPeh7HoPod37nKhgfQPWazhafsHNV59m6f7+fCoV0zGW
+         e4JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/OKrVEIdtHGuBbjw0txuo5PJ5Bolb0l97rR/T1Ood7I=;
-        b=REOL4vw6Chp4sDiYRy5L84xb8HP/qFcp7HjF7b7s7j7y4WWqXjgNW749Ta713GBTF+
-         xSjO0cVt2BEC+TyNFg6x+6l1fiM/fvvXfGxtjqXx5eqHxj1FgG/ixF1G6X08FDkQS63d
-         MXoxvxSxZc5Jz5vHMrPvqzN5FEMfTkV1FS/9NOlCLi8V+nsX3gEdQ+XB6XD6bzeAqxcs
-         tmz5bTg6bj7dP49jFwns2maPEtGdjGAFVq4yiIy4PmhKkez8ohiGijHUiVnat1GjPCWe
-         I9kl7JlEN4Fac9aGlADAOyz2LgWvMwwqmPryuDJ6cDs2l17IT1DNP689eDqbMN4xvidk
-         jXeA==
-X-Gm-Message-State: AJcUukdjfKxprV470Gy4USfkThKohndv8jCQthl+gX1CjrXHx3wRwjBl
-        cJu5yWL2tslGh+/dWEbaRxDkc74Q
-X-Google-Smtp-Source: ALg8bN5KJmxQGaQE/qpkDVP+YpcXgWUPmWZQ1hy99wD24qNc84ZucOO3Go7uT4t6Nnnqn+LiMESaag==
-X-Received: by 2002:a17:902:d70b:: with SMTP id w11mr30171490ply.294.1548841732102;
-        Wed, 30 Jan 2019 01:48:52 -0800 (PST)
+        bh=sQk9AT2smGrSAzGg2LXGB/pZY5NLA2Xrmm1iKFp6AOE=;
+        b=ZfN61bAzLAsgan2Ut9RMm11bRQPosdTNj8Hlx7l8ZqctaBogqKKcDY5IUTvyDn+qcW
+         uIXT5z4b01nMqc9d2VokA27NYINayX4bfPbNRuW1Uk0KNlimAwGty3YrHjSAfaVfJ55K
+         wdQoESAGn+dCZOg+WDkdTAasHO9HuaZ/Pu4+2vgJNb/h2k5vRY4mqXnheLHJ/kaIPUd4
+         Jw3kJfQ0v4pQT0wU1N4e08D9cqqxEOcJ4j3vNECTbdspaN2x0V/l1YkDOIH4AHa+sjIi
+         4hXQy16eRXOVO3wGqEAOdU+sYhd4q9fWmVtTBff7ekNbwaXB1qxaP/aTcaEPHpi0DKGJ
+         3jRw==
+X-Gm-Message-State: AJcUuke7a8q1Cs3hG1D8SSpm6oJ9opdt/yzQQTxnBpLZl+vK49EPmYLP
+        6y4m4Rwa8zzZEJ78Ev0Sgqsl0Bci
+X-Google-Smtp-Source: ALg8bN6jqRHbgo34cEqTpH9Do7imfeIEprCfELJt+8TSKuamVDqZ7Zp8BGiShbVc/98nU3obzzXnqg==
+X-Received: by 2002:a17:902:f24:: with SMTP id 33mr29979548ply.65.1548841736794;
+        Wed, 30 Jan 2019 01:48:56 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id 22sm5758411pgd.85.2019.01.30.01.48.49
+        by smtp.gmail.com with ESMTPSA id s15sm1458144pgv.59.2019.01.30.01.48.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Jan 2019 01:48:51 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 30 Jan 2019 16:48:47 +0700
+        Wed, 30 Jan 2019 01:48:56 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 30 Jan 2019 16:48:52 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 03/19] t: rename t2014-switch.sh to t2014-checkout-switch.sh
-Date:   Wed, 30 Jan 2019 16:48:15 +0700
-Message-Id: <20190130094831.10420-4-pclouds@gmail.com>
+Subject: [PATCH 04/19] checkout: factor out some code in parse_branchname_arg()
+Date:   Wed, 30 Jan 2019 16:48:16 +0700
+Message-Id: <20190130094831.10420-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
 In-Reply-To: <20190130094831.10420-1-pclouds@gmail.com>
 References: <20190130094831.10420-1-pclouds@gmail.com>
@@ -69,20 +69,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The old name does not really say that this is about 'checkout -b'. See
-49d833dc07 (Revert "checkout branch: prime cache-tree fully" -
-2009-05-12) for more information
+This is in preparation for the new command restore, which also
+needs to parse opts->source_tree but does not need all the
+disambiguation logic.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- t/{t2014-switch.sh => t2014-checkout-switch.sh} | 0
- 1 file changed, 0 insertions(+), 0 deletions(-)
- rename t/{t2014-switch.sh => t2014-checkout-switch.sh} (100%)
+ builtin/checkout.c | 51 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 20 deletions(-)
 
-diff --git a/t/t2014-switch.sh b/t/t2014-checkout-switch.sh
-similarity index 100%
-rename from t/t2014-switch.sh
-rename to t/t2014-checkout-switch.sh
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f63d864a91..12b7e08d4e 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1068,6 +1068,34 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
+ 	return git_xmerge_config(var, value, NULL);
+ }
+ 
++static void setup_new_branch_info_and_source_tree(
++	struct branch_info *new_branch_info,
++	struct checkout_opts *opts,
++	struct object_id *rev,
++	const char *arg)
++{
++	struct tree **source_tree = &opts->source_tree;
++	struct object_id branch_rev;
++
++	new_branch_info->name = arg;
++	setup_branch_path(new_branch_info);
++
++	if (!check_refname_format(new_branch_info->path, 0) &&
++	    !read_ref(new_branch_info->path, &branch_rev))
++		oidcpy(rev, &branch_rev);
++	else
++		new_branch_info->path = NULL; /* not an existing branch */
++
++	new_branch_info->commit = lookup_commit_reference_gently(the_repository, rev, 1);
++	if (!new_branch_info->commit) {
++		/* not a commit */
++		*source_tree = parse_tree_indirect(rev);
++	} else {
++		parse_commit_or_die(new_branch_info->commit);
++		*source_tree = get_commit_tree(new_branch_info->commit);
++	}
++}
++
+ static int parse_branchname_arg(int argc, const char **argv,
+ 				int dwim_new_local_branch_ok,
+ 				struct branch_info *new_branch_info,
+@@ -1075,10 +1103,8 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 				struct object_id *rev,
+ 				int *dwim_remotes_matched)
+ {
+-	struct tree **source_tree = &opts->source_tree;
+ 	const char **new_branch = &opts->new_branch;
+ 	int argcount = 0;
+-	struct object_id branch_rev;
+ 	const char *arg;
+ 	int dash_dash_pos;
+ 	int has_dash_dash = 0;
+@@ -1200,26 +1226,11 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	argv++;
+ 	argc--;
+ 
+-	new_branch_info->name = arg;
+-	setup_branch_path(new_branch_info);
+-
+-	if (!check_refname_format(new_branch_info->path, 0) &&
+-	    !read_ref(new_branch_info->path, &branch_rev))
+-		oidcpy(rev, &branch_rev);
+-	else
+-		new_branch_info->path = NULL; /* not an existing branch */
++	setup_new_branch_info_and_source_tree(new_branch_info, opts, rev, arg);
+ 
+-	new_branch_info->commit = lookup_commit_reference_gently(the_repository, rev, 1);
+-	if (!new_branch_info->commit) {
+-		/* not a commit */
+-		*source_tree = parse_tree_indirect(rev);
+-	} else {
+-		parse_commit_or_die(new_branch_info->commit);
+-		*source_tree = get_commit_tree(new_branch_info->commit);
+-	}
+-
+-	if (!*source_tree)                   /* case (1): want a tree */
++	if (!opts->source_tree)                   /* case (1): want a tree */
+ 		die(_("reference is not a tree: %s"), arg);
++
+ 	if (!has_dash_dash) {	/* case (3).(d) -> (1) */
+ 		/*
+ 		 * Do not complain the most common case
 -- 
 2.20.1.682.gd5861c6d90
 
