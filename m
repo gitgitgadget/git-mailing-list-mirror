@@ -2,103 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2839B1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 11:41:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC2AA1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 11:47:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729107AbfA3LlQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 06:41:16 -0500
-Received: from nwk-aaemail-lapp01.apple.com ([17.151.62.66]:53926 "EHLO
-        nwk-aaemail-lapp01.apple.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728720AbfA3LlP (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 30 Jan 2019 06:41:15 -0500
-Received: from pps.filterd (nwk-aaemail-lapp01.apple.com [127.0.0.1])
-        by nwk-aaemail-lapp01.apple.com (8.16.0.27/8.16.0.27) with SMTP id x0UBagRj014109;
-        Wed, 30 Jan 2019 03:41:08 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=mime-version :
- content-transfer-encoding : content-type : subject : from : in-reply-to :
- date : cc : message-id : references : to; s=20180706;
- bh=zpZtYTB9vgShPipAJ7eS4hzVpDJVI3nJLIqFDAmPsVE=;
- b=fhVqO2d81n8YXmZkUEsZQ+pSgu95S1TGNZP75uo+7rOmwi3XcXACtlLi2T8YBbX9LmE7
- dLki6Q9u68pAH5PVJ687S6UwxxbqU82TkuYB9srrT5FzZoXVLBh71kp8E+qAAOV57OOg
- MOPJJZWjF+uhvfIr2Hn+8DYcd9IhvBx7LpnTkMyef7lCydl3ml6LATpY1X9VwHKZGBgl
- +jXIj7crdBg4Io3KD52cFMhIXAzZ+s4a6ikA2NkocZZJ9v45M/YeW9v/vW9nPtYixJgZ
- EDJ+DY/cZQtOolUIvrQF8ZMfs8j8jUV9LylWD2hP/r/zFCpCl/8+BbHf0FaYr0YQ2hss hw== 
-Received: from ma1-mtap-s03.corp.apple.com (ma1-mtap-s03.corp.apple.com [17.40.76.7])
-        by nwk-aaemail-lapp01.apple.com with ESMTP id 2q8qc821cb-6
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
-        Wed, 30 Jan 2019 03:41:08 -0800
-MIME-version: 1.0
-Content-transfer-encoding: 7BIT
-Content-type: text/plain; CHARSET=US-ASCII
-Received: from nwk-relayp-sz03.apple.com
- (nwk-relayp-sz03.apple.com [17.128.113.11]) by ma1-mtap-s03.corp.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) with ESMTPS id <0PM500BZZ74G9H90@ma1-mtap-s03.corp.apple.com>; Wed,
- 30 Jan 2019 03:41:08 -0800 (PST)
-Received: from process_viserion-daemon.nwk-relayp-sz03.apple.com by
- nwk-relayp-sz03.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) id <0PM5000006UNDC00@nwk-relayp-sz03.apple.com>; Wed,
- 30 Jan 2019 03:41:07 -0800 (PST)
-X-Va-A: 
-X-Va-T-CD: 1d4b20a60f75d9bb77c59cc55fa1c1c2
-X-Va-E-CD: 4b191ea47c869588dbea83c34d5f132f
-X-Va-R-CD: de96b9fcc174794f3cefb75163f7efd9
-X-Va-CD: 0
-X-Va-ID: a295a4bd-c322-47f3-aec2-2127d154784c
-X-V-A:  
-X-V-T-CD: 1d4b20a60f75d9bb77c59cc55fa1c1c2
-X-V-E-CD: 4b191ea47c869588dbea83c34d5f132f
-X-V-R-CD: de96b9fcc174794f3cefb75163f7efd9
-X-V-CD: 0
-X-V-ID: 4be6cd70-7996-4ab9-ba39-2528ca5161b0
-Received: from process_milters-daemon.nwk-relayp-sz03.apple.com by
- nwk-relayp-sz03.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) id <0PM5000006UICD00@nwk-relayp-sz03.apple.com>; Wed,
- 30 Jan 2019 03:41:07 -0800 (PST)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
- definitions=2019-01-30_09:,, signatures=0
-Received: from [17.234.17.81] (unknown [17.234.17.81])
- by nwk-relayp-sz03.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) with ESMTPS id <0PM5007IA74ICU10@nwk-relayp-sz03.apple.com>; Wed,
- 30 Jan 2019 03:41:07 -0800 (PST)
-Subject: Re: [PATCH (Apple Git) 09/13] Use symbolic links rather than hard
- links for files in libexec
-From:   Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-In-reply-to: <20190130095006.GC24387@genre.crustytoothpaste.net>
-Date:   Wed, 30 Jan 2019 03:41:06 -0800
-Cc:     git@vger.kernel.org, peff@peff.net
-Message-id: <230CA858-D709-4142-9563-20A4887F2ED8@apple.com>
-References: <20190129193818.8645-1-jeremyhu@apple.com>
- <20190129193818.8645-10-jeremyhu@apple.com>
- <20190130095006.GC24387@genre.crustytoothpaste.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-X-Mailer: Apple Mail (2.3445.104.1)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-30_09:,,
- signatures=0
+        id S1727750AbfA3Lry (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 06:47:54 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:34139 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727009AbfA3Lry (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 06:47:54 -0500
+Received: by mail-qk1-f195.google.com with SMTP id q8so13502599qke.1
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 03:47:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AlXiLZb2PUH8afQWrtKTE9dJA2CncIxK5tnl8/g/RXA=;
+        b=b465Klia+2jZfTz4hozDNhV5eQq+CDZOeOZAVd0Xo8erBZk6SG2QGlRt8hSNIS/Fr7
+         L33AMoFsPxZzUkHc2/bnXBy4fcEQ09P6Xr4Yx7UY4wUopTpdW2uUG8yT0GSfQRs7m9zr
+         K42YeD1qqA+r+GFHz9CxmNMXYtBJNoYLkv5w7r5P4cOoy+r9/c3c3YDhb0qccbnyKCMu
+         jnha647zkXH5lYsb+cctM64F/OU1M1tl4sayo05U/6clw2dzSEPfFUBO3RSVxyKbQW5S
+         ica4rpFLME9jcAdu6jcO0xtXS2xPtudficCqMri6LCLUVclaAX1pJvMxiZ2s10WxDY8B
+         IJWQ==
+X-Gm-Message-State: AJcUukdPH5bGZydOsueFRF+cqEhhG3Qfghxqmi0AdQLW3ovKdQ192Hd4
+        wC+Dqj9CimHjvIm39M3AATjNlSKw1e9TKtGaTdE=
+X-Google-Smtp-Source: ALg8bN6N94E8cbf0QmiGOvjCBqRZG3t7RoaW1wor0erLBjB9hhMgHqdAB+uyr90EbfU1hH/XdgfF8+RVFs7Wupe490w=
+X-Received: by 2002:a37:5e42:: with SMTP id s63mr26306478qkb.220.1548848872372;
+ Wed, 30 Jan 2019 03:47:52 -0800 (PST)
+MIME-Version: 1.0
+References: <20190129193818.8645-1-jeremyhu@apple.com> <20190129193818.8645-4-jeremyhu@apple.com>
+In-Reply-To: <20190129193818.8645-4-jeremyhu@apple.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 30 Jan 2019 06:47:41 -0500
+Message-ID: <CAPig+cR_p9ybUjfSqY_Kod39Ztxt9Y7Js=QvFU-WDJh58sb5Yg@mail.gmail.com>
+Subject: Re: [PATCH (Apple Git) 03/13] t0500: New regression test for git add
+ of a path that contains a .git directory
+To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jan 29, 2019 at 4:19 PM Jeremy Huddleston Sequoia
+<jeremyhu@apple.com> wrote:
+> Subject: t0500: New regression test for git add of a path that contains a .git directory
 
+Please describe the actual problem here in the commit message so
+readers of this change can understand what this is all about.
 
-> On Jan 30, 2019, at 01:50, brian m. carlson <sandals@crustytoothpaste.net> wrote:
-> 
-> On Tue, Jan 29, 2019 at 11:38:15AM -0800, Jeremy Huddleston Sequoia wrote:
->> See <rdar://problem/10573201>
-> 
-> It's my understanding that Radars aren't public. Could you summarize the
-> reasons behind this change in the commit message for those of us who
-> don't have access to view this issue?
+> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+> ---
+> diff --git a/t/t0500-apple.sh b/t/t0500-apple.sh
+> @@ -0,0 +1,40 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2012-2016 Apple Inc.
+> +#
+> +# Tests for regressions found by Apple Inc. for issues that upstream does not
+> +# want to fix or accept tests for.
 
-There was a bug in some tool in our packaging pipeline that resulted in hardlinks not being preserved.  That was fixed, but I decided to leave these as symlinks anyways in case users did a file operation on Xcode.app that didn't preserve hard links.
+This is an odd comment for a patch which is intended to be upstreamed.
 
-The point here is that it would probably be nice to have hard vs soft be a configuration option.
+> +test_description='Apple Inc. specific tests'
+
+Is this script actually specific to Apple? If not, a better
+description is likely warranted. Alternatively, place this new test in
+an appropriate existing test script.
+
+> +# <rdar://problem/10238070>
+
+Inaccessible private bug report. Please describe the actual regression here.
+
+> +# This test case addresses a regression introduced between v1.7.3 and v1.7.5
+> +# git bisect good v1.7.3
+> +# git bisect bad v1.7.5
+> +# ...
+> +# found 18e051a3981f38db08521bb61ccf7e4571335353
+
+This commentary isn't very useful going forward, thus not worth having
+in the script itself, although it may make useful information for the
+commit message (though more likely not). Usually, such commentary
+would be placed below the "---" line just under your sign-off.
+
+> +test_expect_success '<rdar://problem/10238070> -- git add of a path that contains a .git directory' '
+
+As above, a better title would be welcome, one which actually means
+something to people without access to the private bug report.
+
+> +       rm -rf .git &&
+> +       mkdir -p orig/sub/dir/otherdir &&
+> +       cd orig/sub &&
+
+We don't 'cd' around inside tests without ensuring that the 'cd' is
+undone automatically even if the test fails. (See below.)
+
+> +       echo "1" > dir/file &&
+> +       echo "2" > dir/otherdir/file &&
+> +       git init --quiet &&
+
+Why --quiet? Output generated by commands is already suppressed by
+default when the test is run normally, but it is useful to have when
+something goes wrong, so we don't usually want to suppress it
+manually. Same comment applies to >/dev/null redirects.
+
+> +       git add -A &&
+> +       git commit -m "Initial Commit" --quiet &&
+> +       cd - > /dev/null &&
+
+If something fails above this point, then this "cd -" will never
+execute, so any tests which get added below this one in the script
+will operate in the wrong directory. The normal way to 'cd' within a
+test is within a subshell so the 'cd' is undone automatically whether
+the test fails or not:
+
+    (
+        cd orig/sub
+        ...
+    )
+
+> +       git init --bare --quiet "${TESTROOT}/git_dir.git" &&
+> +       git --git-dir="${TESTROOT}/git_dir.git" --work-tree=/ add -f -- "${TESTROOT}/orig/sub/" &&
+> +       git --git-dir="${TESTROOT}/git_dir.git" --work-tree=/ add -f -- "${TESTROOT}/orig/" &&
+> +       git --git-dir="${TESTROOT}/git_dir.git" --work-tree=/ commit -m "Commit." |
+> +               grep -q "2 files changed, 2 insertions"
+> +'
+
+We don't normally place a Git command upstream of a pipe since its
+exit status will get swallowed by the pipe, thus potentially losing
+important information. Instead, redirect the command output to a file
+and 'grep' on the file.
+
+Also, the string you're grepping is likely to be localized, so use
+test_i18ngrep() instead.
