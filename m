@@ -7,133 +7,116 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 708E01F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 20:57:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49CFB1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 20:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731848AbfA3U5F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 15:57:05 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42037 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387939AbfA3U4d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 15:56:33 -0500
-Received: by mail-ed1-f65.google.com with SMTP id y20so773745edw.9
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 12:56:31 -0800 (PST)
+        id S2387935AbfA3U4a (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 15:56:30 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37692 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387910AbfA3U4a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 15:56:30 -0500
+Received: by mail-ed1-f67.google.com with SMTP id h15so811739edb.4
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 12:56:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=K7XMEqacsNErwgjvmp6bzVQzRfa2GXAzEYSNV9LuXmU=;
-        b=gz+ArfKexIPcWfdaj8KQpY4QS/b3iWtFtqicbaBpymNe3IJgmVVN/kAdrTfZSJgEuG
-         U8KPJBUVVJrwnJZCrFxk1zxrH0z762sABKogY82s+1VD+DzlNdjxvPM1d6iJhVFZmQRX
-         QMpMkCDYjLL6y4d8QhRYXZKwOUytEImvnQaGi1rNjRQaURyPZsV+EhAFSTpv8YktCPcs
-         odQTFSKS3XvqcJxm/yZK1ieXtparhzamB25KJSZ1tUonNL7r8XckiVUEySl6N8CWG7ic
-         y+pKW165hRYKPC10vKaM+BoqbXoput5Br+YVn+1GFmBmRx9aUiu1+WSN6RlrQt2hlIzY
-         z/Tg==
+        bh=wWxV4nv1i3Sj+TzKdE/M42eHEQ+Scronuo/HjRFyFKo=;
+        b=FM/AzoudyGeHQhsiZfL4UKoTEJ3RxrAPIwEMLyiVVs6sBOOHUiWUmUUiP9d2IEM0mG
+         cC0AAa/CIuw3BpCzozpFQe5AOyPNxPwcGJ01OQocLChEyUDR6EDYeEHf6kSDf/1ly86G
+         eTErmuBWGO/Pm5VJdwIYfLEwvIY7At+yPJ4dkk8FLD3SogafnvORoTJwoZdPbnYlNoma
+         seHtUb8vWW/nqqfhDfM8cV/kSogstiKOu/Re8XdLJ2FbsQF7XXSPAQ2mT4d3VBa9k0ia
+         WbOf5GWLJiJm9tEI2OSsov6ThjPn+DV3XaUs3doOzBid49k/6Vok4RzyezLkgzBv3k/M
+         Fzjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=K7XMEqacsNErwgjvmp6bzVQzRfa2GXAzEYSNV9LuXmU=;
-        b=nVelMeTzK880CU4dQ9Iz6ntiPRozMuDyu/gKQPMC6xRGw9tJGllO2B4fW6aNrGzqgN
-         O8nk/5fjYrkgUCM8PY4jnhAjgzih/kjCOF52iTjpAf2IsvJkCCEJQPKgyP5UmylAb8K/
-         gJzNGa4IGItYPtahMIsPu+4jWZ0KTvJlT0BNpa5KisoKYiWv52Xs4cxzNjQgwiBb31Sm
-         e+sKyK9X7sNyAsz+xmCpKmB2t4WxZnZcuOvMGtt4UVvka8mBHKJe0YpVhx6KQkPmVfHP
-         LZxACsTdq+3ngWLzyQRoJI5R2ZWbfLJjuGD0iFWLITXal8bmWzM6OkylvqIDlfAdSaJQ
-         9Qng==
-X-Gm-Message-State: AJcUukfD5jFbBQHMnzntM7nSyoPa00+FrMvcBRKTXXU0QFBL+WRqYn3h
-        0ttl02c/IP5SvxxaRz4eDpPw4oXD
-X-Google-Smtp-Source: ALg8bN7ke2G/xADYy2HRtVtFkTHMaBO/EmLo0u5SdhOTeOVtirRpLAre0EyRi9g5kCmJTliXIs5sCw==
-X-Received: by 2002:a17:906:d29b:: with SMTP id ay27mr18371836ejb.119.1548881790913;
-        Wed, 30 Jan 2019 12:56:30 -0800 (PST)
+        bh=wWxV4nv1i3Sj+TzKdE/M42eHEQ+Scronuo/HjRFyFKo=;
+        b=cA9qt53LUMA/6jKm58XSGmK14LtwBOE9AMZJ9xCMD/mligXlZ8oNxwyU6SUl0sqGwx
+         t0u1Dev4/lrxCMGafRNVLKvlrPoytPYlhad5PiIW9V3G2PxBYLG8oD8FSup8QMAJIAwa
+         BC7N53TUFkNvf8lqHrl65tv12ZB2kIGpN2tOaLTIznH6H2vRpa6a2KvDt5S1lxhEGWZv
+         fYkk7tZRmYxayKW+O/pirTVvaGcK3QvgHacw7eqVy4QPLebOW/lkb2uFyHJBH60+15DQ
+         NiqS8GXGvL7ujjRbH6Z67QMnKQRfMhDA4gswTNQlCGokPAB+HcTUEB2HdLMZpIPxOtpS
+         FEcg==
+X-Gm-Message-State: AHQUAuZ9ynpFGtNm1Yf+FSnkCPbivown9okb9NGO39nIMtepzBRW4iHD
+        Z/v1KNKcSWN1xHgt0qhpUEX9DvWe
+X-Google-Smtp-Source: AHgI3IaOrqymGSSYTPGYTBcl+Vs9vcESr+/F6oZdy8XitoUWEvPZ3uGjVSRSXdOSQfdWKwLY6Iyksg==
+X-Received: by 2002:a17:906:1daa:: with SMTP id u10mr3508900ejh.35.1548881787994;
+        Wed, 30 Jan 2019 12:56:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d8-v6sm471357ejy.34.2019.01.30.12.56.30
+        by smtp.gmail.com with ESMTPSA id by5-v6sm476734ejb.7.2019.01.30.12.56.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Jan 2019 12:56:30 -0800 (PST)
-Date:   Wed, 30 Jan 2019 12:56:30 -0800 (PST)
-X-Google-Original-Date: Wed, 30 Jan 2019 20:56:15 GMT
-Message-Id: <be707ea9600a86d349471be00829c924ce99b035.1548881779.git.gitgitgadget@gmail.com>
+        Wed, 30 Jan 2019 12:56:27 -0800 (PST)
+Date:   Wed, 30 Jan 2019 12:56:27 -0800 (PST)
+X-Google-Original-Date: Wed, 30 Jan 2019 20:56:12 GMT
+Message-Id: <660b83c453d416ed8c1754a2d2934abbd99d0660.1548881779.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v4.git.gitgitgadget@gmail.com>
 References: <pull.108.v3.git.gitgitgadget@gmail.com>
         <pull.108.v4.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 10/14] pack-objects: add trace2 regions
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v4 07/14] trace2:data: add trace2 transport child
+ classification
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-When studying the performance of 'git push' we would like to know
-how much time is spent at various parts of the command. One area
-that could cause performance trouble is 'git pack-objects'.
+Add trace2 child classification for transport processes.
 
-Add trace2 regions around the three main actions taken in this
-command:
-
-1. Enumerate objects.
-2. Prepare pack.
-3. Write pack-file.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/pack-objects.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ connect.c          | 3 +++
+ transport-helper.c | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 0a70d04604..8a64c2868e 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -33,6 +33,7 @@
- #include "object-store.h"
- #include "dir.h"
- #include "midx.h"
-+#include "trace2.h"
+diff --git a/connect.c b/connect.c
+index 24281b6082..3c6f829a05 100644
+--- a/connect.c
++++ b/connect.c
+@@ -1251,6 +1251,7 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 		conn = NULL;
+ 	} else if (protocol == PROTO_GIT) {
+ 		conn = git_connect_git(fd, hostandport, path, prog, version, flags);
++		conn->trace2_child_class = "transport/git";
+ 	} else {
+ 		struct strbuf cmd = STRBUF_INIT;
+ 		const char *const *var;
+@@ -1293,9 +1294,11 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 				strbuf_release(&cmd);
+ 				return NULL;
+ 			}
++			conn->trace2_child_class = "transport/ssh";
+ 			fill_ssh_args(conn, ssh_host, port, version, flags);
+ 		} else {
+ 			transport_check_allowed("file");
++			conn->trace2_child_class = "transport/file";
+ 			if (version > 0) {
+ 				argv_array_pushf(&conn->env_array, GIT_PROTOCOL_ENVIRONMENT "=version=%d",
+ 						 version);
+diff --git a/transport-helper.c b/transport-helper.c
+index 6cf3bb324e..a01cc0093f 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -127,6 +127,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 		argv_array_pushf(&helper->env_array, "%s=%s",
+ 				 GIT_DIR_ENVIRONMENT, get_git_dir());
  
- #define IN_PACK(obj) oe_in_pack(&to_pack, obj)
- #define SIZE(obj) oe_size(&to_pack, obj)
-@@ -3472,6 +3473,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
-+	trace2_region_enter("pack-objects", "enumerate-objects",
-+			    the_repository);
- 	prepare_packing_data(the_repository, &to_pack);
- 
- 	if (progress)
-@@ -3486,12 +3489,23 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (include_tag && nr_result)
- 		for_each_ref(add_ref_tag, NULL);
- 	stop_progress(&progress_state);
-+	trace2_region_leave("pack-objects", "enumerate-objects",
-+			    the_repository);
- 
- 	if (non_empty && !nr_result)
- 		return 0;
--	if (nr_result)
-+	if (nr_result) {
-+		trace2_region_enter("pack-objects", "prepare-pack",
-+				    the_repository);
- 		prepare_pack(window, depth);
-+		trace2_region_leave("pack-objects", "prepare-pack",
-+				    the_repository);
-+	}
++	helper->trace2_child_class = helper->args.argv[0]; /* "remote-<name>" */
 +
-+	trace2_region_enter("pack-objects", "write-pack-file", the_repository);
- 	write_pack_file();
-+	trace2_region_leave("pack-objects", "write-pack-file", the_repository);
-+
- 	if (progress)
- 		fprintf_ln(stderr,
- 			   _("Total %"PRIu32" (delta %"PRIu32"),"
+ 	code = start_command(helper);
+ 	if (code < 0 && errno == ENOENT)
+ 		die(_("unable to find remote helper for '%s'"), data->name);
 -- 
 gitgitgadget
 
