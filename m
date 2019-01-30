@@ -2,130 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D9281F453
-	for <e@80x24.org>; Tue, 29 Jan 2019 23:59:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF8F11F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 00:01:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727910AbfA2X7x (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 18:59:53 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35244 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727396AbfA2X7w (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 18:59:52 -0500
-Received: by mail-wm1-f67.google.com with SMTP id t200so19859633wmt.0
-        for <git@vger.kernel.org>; Tue, 29 Jan 2019 15:59:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=CybNhAafejy9YUF4wqrqaz38rsv1ED3qJicV0xp1fFI=;
-        b=oPREb6qREuuefTyq8Q4giKMBFloN3Z/oc7rrcDVT2kfhT0nkjiS3wXLcIZKBVKyuQO
-         tJ6InvPzugce/G8NKQddfHyYlzp7aeFinHIn2E0vCnN+oyHwSjM/mHD5vyfJla4yj9JM
-         EHWdzyd0NYQ6zsefeSyDt6RqWawjR5scVBMAhg5RTQm2vKCpVIYyfLmXlORzOVXA5qWi
-         HW0rzT9iXRE2O5AvGNwUrAbJfsZdNodO0AiZWgTOu+/y5DDbKzREzlrHlF6H2lTj39Lr
-         fA2oH2Sm0V0q/f5gIpHS0Bge85tPt2G3EkcwJbiFqwy2XeHy0wZkJGHiRiavuwVfvTR6
-         wY+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CybNhAafejy9YUF4wqrqaz38rsv1ED3qJicV0xp1fFI=;
-        b=FuvZ9qCHXhmpQi2S+trfu5Z1epduBpamAJhUt+VRaAUyfzlHaSb+jm/houn5jE/gYy
-         MJZXnKaRSgL56UOotkdpuAdbF36H+7erNJFMQMzHAVnmaWTRnytDqzceFO9CKc3gpcLD
-         E66BY6WIvA3v9CCm1puqxWKDzF4Kgn7aW3Jcw42WE5nziHKhqCqG3WwDRozNbclg5mPW
-         7BXRfPLDOzWhnG19Jbqb0+K1xlQMSQrXRp9nCCmj2vplv8EOjVR+7JhBt6pWUY95i7BJ
-         lm39waBMjUuP9RBLll1bBwdGHXuFyZaqIA/+r9pHCuTlXX2WpZMJh32SSXeZ4EcnvOPM
-         Na+A==
-X-Gm-Message-State: AJcUukeBXxCEiodBSTj+cyh0IfwErD3UpUA/quBBex9ZULBoZQbXMEHW
-        Uj5lq/ZDt5cSPd7FZ+4Utg4=
-X-Google-Smtp-Source: ALg8bN5O0rS/6ECrwqWh8TB3ujuxnQwhgqt9X8Z3YrNWrSeWyNOf7fW68hWJDYn/O50ogiRxduhgLw==
-X-Received: by 2002:a1c:dc02:: with SMTP id t2mr22476217wmg.78.1548806390369;
-        Tue, 29 Jan 2019 15:59:50 -0800 (PST)
-Received: from szeder.dev (x4db3778b.dyn.telefonica.de. [77.179.119.139])
-        by smtp.gmail.com with ESMTPSA id h16sm239039810wrb.62.2019.01.29.15.59.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Jan 2019 15:59:49 -0800 (PST)
-Date:   Wed, 30 Jan 2019 00:59:47 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        peff@peff.net
+        id S1727646AbfA3ABb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 29 Jan 2019 19:01:31 -0500
+Received: from nwk-aaemail-lapp03.apple.com ([17.151.62.68]:36864 "EHLO
+        nwk-aaemail-lapp03.apple.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727488AbfA3ABb (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 29 Jan 2019 19:01:31 -0500
+Received: from pps.filterd (nwk-aaemail-lapp03.apple.com [127.0.0.1])
+        by nwk-aaemail-lapp03.apple.com (8.16.0.27/8.16.0.27) with SMTP id x0TNqDgh007320;
+        Tue, 29 Jan 2019 16:01:26 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=mime-version :
+ content-type : sender : subject : from : in-reply-to : date : cc :
+ content-transfer-encoding : message-id : references : to; s=20180706;
+ bh=q9qiTZvNGkKcdFOuB1JrS8kzH1pfBfxI17WSn632DQU=;
+ b=uYT0F7rLXFOdEL2DRHz/ywHe4TMnhT6v0RgA7hX+oYnYF4iih/RdvEOi69pQ3OnaBdiJ
+ 1ZGjotMJSq4F7HSZndUhu/uoZ7JtJfR3uY8rVV/t8rgJSWWv9xCYzFQO70uIuQCwLBzl
+ J4L350CKJ8ts9CId3RsQW6fiSJmJcrz2DClWbL1xcUAZocO54SBET93sD59vQEesTG4Y
+ lXPHJUhrLGKmmVfPZ80Y6O6LsyqTrtlbFuvbSIbr2Xl6wuNnSbb9MtxQenPdJibFxBSA
+ pIfwDzPX2bQi0t2LlC/Y/L0eBg35ASDOpc1Q9/YC4Ncm3XYAiwqIcrcsRcIvt3cNTipe hw== 
+Received: from ma1-mtap-s03.corp.apple.com (ma1-mtap-s03.corp.apple.com [17.40.76.7])
+        by nwk-aaemail-lapp03.apple.com with ESMTP id 2q9832ssf2-3
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+        Tue, 29 Jan 2019 16:01:26 -0800
+MIME-version: 1.0
+Content-type: text/plain; charset=utf-8
+Received: from nwk-mmpp-sz10.apple.com
+ (nwk-mmpp-sz10.apple.com [17.128.115.122]) by ma1-mtap-s03.corp.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTPS id <0PM4000D0AQC3080@ma1-mtap-s03.corp.apple.com>; Tue,
+ 29 Jan 2019 16:01:25 -0800 (PST)
+Received: from process_viserion-daemon.nwk-mmpp-sz10.apple.com by
+ nwk-mmpp-sz10.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM400D00AO6NV00@nwk-mmpp-sz10.apple.com>; Tue,
+ 29 Jan 2019 16:01:25 -0800 (PST)
+X-Va-A: 
+X-Va-T-CD: 2a2ad196771b1a60191026596f6db635
+X-Va-E-CD: 4df6244c4c4ff15bfbe305f6ad4f9707
+X-Va-R-CD: 548ec5b29d701e5458e59af91772ff94
+X-Va-CD: 0
+X-Va-ID: cf31428c-5a03-46a0-8ce0-64cb1edf7d07
+X-V-A:  
+X-V-T-CD: 2a2ad196771b1a60191026596f6db635
+X-V-E-CD: 4df6244c4c4ff15bfbe305f6ad4f9707
+X-V-R-CD: 548ec5b29d701e5458e59af91772ff94
+X-V-CD: 0
+X-V-ID: 86c18bdc-25e8-484d-8e5f-dfd233f42b41
+Received: from process_milters-daemon.nwk-mmpp-sz10.apple.com by
+ nwk-mmpp-sz10.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM400D00AO3JN00@nwk-mmpp-sz10.apple.com>; Tue,
+ 29 Jan 2019 16:01:25 -0800 (PST)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
+ definitions=2019-01-29_18:,, signatures=0
+Received: from [17.114.129.255] (unknown [17.114.129.255])
+ by nwk-mmpp-sz10.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTPSA id <0PM400D22AQCK200@nwk-mmpp-sz10.apple.com>; Tue,
+ 29 Jan 2019 16:01:25 -0800 (PST)
 Subject: Re: [PATCH (Apple Git) 02/13] test-lib: Export PERL5LIB for testing
  git-svn
-Message-ID: <20190129235947.GG13764@szeder.dev>
+From:   Jeremy Sequoia <jeremyhu@apple.com>
+X-Mailer: iPhone Mail (16E187)
+In-reply-to: <20190129235947.GG13764@szeder.dev>
+Date:   Tue, 29 Jan 2019 16:01:23 -0800
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        peff@peff.net
+Content-transfer-encoding: quoted-printable
+Message-id: <20C7B5F4-58DA-43E4-9332-B206C0D070F0@apple.com>
 References: <20190129193818.8645-1-jeremyhu@apple.com>
  <20190129193818.8645-3-jeremyhu@apple.com>
  <xmqq1s4v6pzm.fsf@gitster-ct.c.googlers.com>
  <09281A61-1EDA-4226-AD59-6A97EDF1B1DB@apple.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <09281A61-1EDA-4226-AD59-6A97EDF1B1DB@apple.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+ <20190129235947.GG13764@szeder.dev>
+To:     =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-29_18:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 29, 2019 at 03:46:07PM -0800, Jeremy Huddleston Sequoia wrote:
-> 
-> 
-> > On Jan 29, 2019, at 2:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > 
-> > Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
-> > 
-> >> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-> >> ---
-> >> t/test-lib.sh | 3 +++
-> >> 1 file changed, 3 insertions(+)
-> > 
-> > This obviously won't be acceptable as-is to my tree.  Shouldn't this
-> > be something to be dealt with in config.mak.uname or something that
-> > is meant to define platform-specific customization?
-> 
-> The issue here is that we're not locating relocatable perl modules
-> during testing.  This is a general problem with testing
-> RUNTIME_PREFIX configurations, and a more general solution to this
-> sledgehammer would be appropriate.  I don't think config.mak.uname
-> really makes sense since it's a general RUNTIME_PREFIX issue and not
-> specifically a darwin issue.
-
-But this patch is very darwin-specific ...
-
-> >> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> >> index 0f1faa24b2..4060a53f56 100644
-> >> --- a/t/test-lib.sh
-> >> +++ b/t/test-lib.sh
-> >> @@ -1017,6 +1017,9 @@ fi
-> >> 
-> >> GITPERLLIB="$GIT_BUILD_DIR"/perl/build/lib
-> >> export GITPERLLIB
-> >> +PERL_VERSION=$(grep DEFAULT /usr/local/versioner/perl/versions | sed 's:^.*= *\([^ ]*\)$:\1:')
-> >> +PERL5LIB="$GIT_BUILD_DIR"/perl:"$(xcode-select -p)"/Library/Perl/$PERL_VERSION
-
-... because what other platforms could possibly have 'xcode-select'
-installed!?  Consequently:
-
-  $ ./t0000-basic.sh 
-  grep: /usr/local/versioner/perl/versions: No such file or directory
-  ./t0000-basic.sh: 1154: ./test-lib.sh: xcode-select: not found
-  ok 1 - verify that the running shell supports "local"
-  ok 2 - .git/objects should be empty after git init in an empty repo
-  ok 3 - .git/objects should have 3 subdirectories
-  ok 4 - success is reported like this
-  not ok 5 - pretend we have a fully passing test suite
-  <...>
-  # failed 29 among 82 test(s)
 
 
+Sent from my iPhone...
 
-> >> +export PERL5LIB
-> >> test -d "$GIT_BUILD_DIR"/templates/blt || {
-> >> 	error "You haven't built things yet, have you?"
-> >> }
-> 
+> On Jan 29, 2019, at 15:59, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote:=
+
+>=20
+>> On Tue, Jan 29, 2019 at 03:46:07PM -0800, Jeremy Huddleston Sequoia wrote=
+:
+>>=20
+>>=20
+>>> On Jan 29, 2019, at 2:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>=20
+>>> Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
+>>>=20
+>>>> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+>>>> ---
+>>>> t/test-lib.sh | 3 +++
+>>>> 1 file changed, 3 insertions(+)
+>>>=20
+>>> This obviously won't be acceptable as-is to my tree.  Shouldn't this
+>>> be something to be dealt with in config.mak.uname or something that
+>>> is meant to define platform-specific customization?
+>>=20
+>> The issue here is that we're not locating relocatable perl modules
+>> during testing.  This is a general problem with testing
+>> RUNTIME_PREFIX configurations, and a more general solution to this
+>> sledgehammer would be appropriate.  I don't think config.mak.uname
+>> really makes sense since it's a general RUNTIME_PREFIX issue and not
+>> specifically a darwin issue.
+>=20
+> But this patch is very darwin-specific ...
+>=20
+>>>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>>>> index 0f1faa24b2..4060a53f56 100644
+>>>> --- a/t/test-lib.sh
+>>>> +++ b/t/test-lib.sh
+>>>> @@ -1017,6 +1017,9 @@ fi
+>>>>=20
+>>>> GITPERLLIB=3D"$GIT_BUILD_DIR"/perl/build/lib
+>>>> export GITPERLLIB
+>>>> +PERL_VERSION=3D$(grep DEFAULT /usr/local/versioner/perl/versions | sed=
+ 's:^.*=3D *\([^ ]*\)$:\1:')
+>>>> +PERL5LIB=3D"$GIT_BUILD_DIR"/perl:"$(xcode-select -p)"/Library/Perl/$PE=
+RL_VERSION
+>=20
+> ... because what other platforms could possibly have 'xcode-select'
+> installed!?  Consequently:
+>=20
+>  $ ./t0000-basic.sh=20
+>  grep: /usr/local/versioner/perl/versions: No such file or directory
+>  ./t0000-basic.sh: 1154: ./test-lib.sh: xcode-select: not found
+>  ok 1 - verify that the running shell supports "local"
+>  ok 2 - .git/objects should be empty after git init in an empty repo
+>  ok 3 - .git/objects should have 3 subdirectories
+>  ok 4 - success is reported like this
+>  not ok 5 - pretend we have a fully passing test suite
+>  <...>
+>  # failed 29 among 82 test(s)
+
+Yes.  This is one of the patches that I said in the 00 message would certain=
+ly not be upstreamable but for which we should find a general solution to th=
+e problem if one is available.
+
+>=20
+>=20
+>=20
+>>>> +export PERL5LIB
+>>>> test -d "$GIT_BUILD_DIR"/templates/blt || {
+>>>>    error "You haven't built things yet, have you?"
+>>>> }
+>>=20
