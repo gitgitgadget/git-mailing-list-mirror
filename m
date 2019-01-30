@@ -2,117 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E44F1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 16:50:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 040EF211B5
+	for <e@80x24.org>; Wed, 30 Jan 2019 17:49:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732159AbfA3Qui (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 11:50:38 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39861 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728469AbfA3Quh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 11:50:37 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t27so215696wra.6
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 08:50:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=E9tFtcB9/qR5FkIsGBGlQnt3OI/cBOdWepa5pFjcB6U=;
-        b=VDtmhZNq9yLBeCAkrTsb2mkyOvWXguM0GJKTvLnGd8OPUbfKKLwFkSOD3ahxXhaTJE
-         Qdmek9h+9dYaiw4W2lIBh06IfDjSjN3BlXkEkqM+D0zyTHVrz+vPKWJyOpepMaBxIddZ
-         /JhVKXtxIwyzo/M6RVMLGvrZmhbuLfxcq/uZnpYYKYGzZAtR4Gf1HbE3GnXKCBk/rSnD
-         zlIIgL1pyLUeiu3nxn4Oj1XIfUv8VZO9I4sHduufyFwXuJklSkNG/zY5MfRUux/Xpu1x
-         Y6Oc/d0vavn/5tYZqT1Lg2kPueJrMjqtnlhyoVYMW4Z45W2OJW4KnmdJ1bNx9tX3vT/p
-         QbAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=E9tFtcB9/qR5FkIsGBGlQnt3OI/cBOdWepa5pFjcB6U=;
-        b=NNNfMpZPLRoeEUFD/gdImpFcE3zk3CQPwi9dw1Q2jqv3fufyGbqK1nP+gIE4KNbR0D
-         7y43zsNC4k9OiVcX+xM5Unq2U9ZuWvXzmOeiJTXtQ6eYHaD4uGZuAXnjkcRwyGgzVUZJ
-         9r8sToRoHWKfNh0E2odKY3opKD2DKqCnTL582JGfULpjE9nBO3k83fA5Vrummm8e0Xfp
-         +GtgrmotyhZNHLmZ+OR30AQgmGQOWDCXKizRgWjXM179dTQklcp1vLs2pDnzQzwWGze3
-         jsBi55N1Cq1+MFbzWzWfuHoogQrkDDVoawnZ9/3yMAG+Mfs4Mr6YJmbN7XBVFZwcIenc
-         itkQ==
-X-Gm-Message-State: AJcUukehCdJa7Ir59aSZzb+5eO4So8jRqvL3m18DhJU2puH0U87NIcwC
-        /h/Vv7Ta/kNgiTy2Vb6VRN0=
-X-Google-Smtp-Source: ALg8bN5nhodJKvn3tmw5IrvMhOq/RDsAwVEznI+ludyTWpsVDF3+RLJomH9IM189zgssHZVillgM/g==
-X-Received: by 2002:a5d:56d2:: with SMTP id m18mr32552635wrw.113.1548867035005;
-        Wed, 30 Jan 2019 08:50:35 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l20sm3439031wrb.93.2019.01.30.08.50.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 30 Jan 2019 08:50:34 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>,
-        git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH (Apple Git) 07/13] HTML documentation is not provided with Apple's git. Make the error message more on point.
-References: <20190129193818.8645-1-jeremyhu@apple.com>
-        <20190129193818.8645-8-jeremyhu@apple.com>
-        <xmqqsgxb5ard.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1901301444220.41@tvgsbejvaqbjf.bet>
-Date:   Wed, 30 Jan 2019 08:50:33 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.1901301444220.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 30 Jan 2019 14:45:12 +0100 (STD)")
-Message-ID: <xmqqtvhq3x9i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1732313AbfA3Rth (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 12:49:37 -0500
+Received: from mout.web.de ([212.227.15.14]:52741 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727169AbfA3Rth (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 12:49:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1548870574;
+        bh=PgTxU69YfMIPMnX1B/D2zht46waFIBhWVzMBodJ4lvA=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=UPcL59+pS08aRy4E04YLv45XHsmsjreyFiU6BOF7SaZjZegBvsSjhLGLFoaHV3JnR
+         ZBfSD8bGSKkq3xlCOQmP+HU8iaitBKgOzXxqxr83KmeAj77V1nYPDoFtuO2bZgx3eO
+         +FgqdZU0WRBbbi1RH/bDnAkAHP5LWp70U6NaxzP0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lx77p-1hCbps3yTR-016dcJ; Wed, 30
+ Jan 2019 18:49:34 +0100
+Date:   Wed, 30 Jan 2019 17:49:32 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Jason Pyeron <jpyeron@pdinc.us>
+Cc:     git@vger.kernel.org, adrigibal@gmail.com
+Subject: Re: [PATCH v3 1/1] Support working-tree-encoding "UTF-16LE-BOM"
+Message-ID: <20190130174932.lhs3npztu5tusy3e@tb-raspi4>
+References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
+ <20190130150152.23040-1-tboegi@web.de>
+ <000901d4b8af$edaccf20$c9066d60$@pdinc.us>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <000901d4b8af$edaccf20$c9066d60$@pdinc.us>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:1XrVORCNrj0nOV5GVzwYULawAeiXltw94O+OHXyk+6Tvr58/smL
+ 2vgEuhuWx9K6pFht0AYjpNOJrxJnQYdR7TTXr7iA5YpdRAO5GT82gRAdGY2Sv4HO2OYHlzg
+ RiF4caI2P1JNDd2XESBP8Ja2q4umXYcqll5NiimAVAaR7yK/VhOKFCesVNWl7gomit6fC9a
+ dTvK23b271GIYcJGsAneQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VAQ1l02vODk=:T1Z3lgOV0j/xtGvwM53z20
+ Q5ypADbv6LATATVqjdBeyKY+tWbeJq7SxXPti3LR7XnHeaMUAMwvH7S6U9LGrnrBFBT+rx7oE
+ 9wSHOvuC2mWcmmy4ccoq/aFv0GrOtLuxQJ3Qb+yEYpgZ0n4kZLCX3i0Ph3sajOwgGm4mWPx9Z
+ ARyr+lPBs/LB9xOB7ZMOI28Mk4eAb2Ys9q9PtM1pOe8vaF3nq4ALWpjbir9/6y3jxrXXYsrxf
+ 9FJLBuUIdKhuNGC2wYQ9HJVojwg/7S/r5KENv7MrliBChMaHX3cS+FTTH+1fLGnFtMMgHsjvd
+ CovFjxR4GrGHgLn1mz9fnU6/4Asu0iw08Yz69T24vhRkZ68VP/ZAUe72deeVehutRH5l6Ml6Y
+ pkhABzihy9Gk1BftIX3Vmdjxf8Xb9Oa4I6dE6uVydEvrCpAg8eVc7nKE8GDGNAN4C9k1Tyg1v
+ Nbt4XaR3ALSB+8enshE7pTGLn0f/pjrzPvechdgRQFYJvxtMOHcYTnKQNEnFfuIx7PnCInZiT
+ nuYRY9sETeRr5M5UDr2rzIdbjq78P6JqwZyZoEjhmgIB/3JK0InqTIaISeaGuA6jqNFVFWi+3
+ lsf/YWiT6AlN4dzfEN2K9fe97kLnDw7Bw4z4JzMrX+Cs0k6fv/0lzBQKgrjvFnzVEsYdCe4Ok
+ LXF1qpBk+J6r3dfxgATc+plCe3skM2uD00pFnJ5yZ7cM2dIpIp6ay4v7u7mXe4ngb/PPRQraB
+ hb31/NsVQ0ii92EFBoBwScdKPNxRJmbt5mycRG0xRAXHzjPue7a6ifF47ayjbulbkWBqaG2eo
+ IsEwNvY567gpQWBoEczaWp8X4+e8GUDRIWi8k1Col2Cl52c3OVzMoEW4wm+k2u8lKC+vasX/9
+ PsTpz/+HjhsnfyUXuiVBKAoC+rwQ6DdLnFxRY8ta1IJqzS78abbVZqRMZFZxXm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Jan 30, 2019 at 10:24:44AM -0500, Jason Pyeron wrote:
+> > -----Original Message-----
+> > From: git-owner@vger.kernel.org <git-owner@vger.kernel.org> On Behalf =
+Of
+> > tboegi@web.de
+> > Sent: Wednesday, January 30, 2019 10:02 AM
+> > To: git@vger.kernel.org; adrigibal@gmail.com
+> > Cc: Torsten B=F6gershausen <tboegi@web.de>
+> > Subject: [PATCH v3 1/1] Support working-tree-encoding "UTF-16LE-BOM"
+> >
+> > From: Torsten B=F6gershausen <tboegi@web.de>
+> >
+> > Users who want UTF-16 files in the working tree set the .gitattributes
+> > like this:
+> > test.txt working-tree-encoding=3DUTF-16
+> >
+> > The unicode standard itself defines 3 allowed ways how to encode UTF-1=
+6.
+> > The following 3 versions convert all back to 'g' 'i' 't' in UTF-8:
+> >
+> > a) UTF-16, without BOM, big endian:
+> > $ printf "\000g\000i\000t" | iconv -f UTF-16 -t UTF-8 | od -c
+> > 0000000    g   i   t
+> >
+> > b) UTF-16, with BOM, little endian:
+> > $ printf "\377\376g\000i\000t\000" | iconv -f UTF-16 -t UTF-8 | od -c
+> > 0000000    g   i   t
+> >
+> > c) UTF-16, with BOM, big endian:
+> > $ printf "\376\377\000g\000i\000t" | iconv -f UTF-16 -t UTF-8 | od -c
+> > 0000000    g   i   t
+> >
+> > Git uses libiconv to convert from UTF-8 in the index into ITF-16 in th=
+e
+> > working tree.
+> > After a checkout, the resulting file has a BOM and is encoded in "UTF-=
+16",
+> > in the version (c) above.
+> > This is what iconv generates, more details follow below.
+> >
+> > iconv (and libiconv) can generate UTF-16, UTF-16LE or UTF-16BE:
+> >
+> > d) UTF-16
+> > $ printf 'git' | iconv -f UTF-8 -t UTF-16 | od -c
+> > 0000000  376 377  \0   g  \0   i  \0   t
+> >
+> > e) UTF-16LE
+> > $ printf 'git' | iconv -f UTF-8 -t UTF-16LE | od -c
+> > 0000000    g  \0   i  \0   t  \0
+> >
+> > f)  UTF-16BE
+> > $ printf 'git' | iconv -f UTF-8 -t UTF-16BE | od -c
+> > 0000000   \0   g  \0   i  \0   t
+> >
+> > There is no way to generate version (b) from above in a Git working tr=
+ee,
+> > but that is what some applications need.
+> > (All fully unicode aware applications should be able to read all 3
+> > variants,
+> > but in practise we are not there yet).
+> >
+> > When producing UTF-16 as an output, iconv generates the big endian ver=
+sion
+> > with a BOM. (big endian is probably chosen for historical reasons).
+> >
+> > iconv can produce UTF-16 files with little endianess by using "UTF-16L=
+E"
+> > as encoding, and that file does not have a BOM.
+> >
+> > Not all users (especially under Windows) are happy with this.
+> > Some tools are not fully unicode aware and can only handle version (b)=
+.
+> >
+> > Today there is no way to produce version (b) with iconv (or libiconv).
+> > Looking into the history of iconv, it seems as if version (c) will
+> > be used in all future iconv versions (for compatibility reasons).
+>
+>
+> Reading the RFC 2781 section 3.3:
+>
+>    Text in the "UTF-16BE" charset MUST be serialized with the octets
+>    which make up a single 16-bit UTF-16 value in big-endian order.
+>    Systems labelling UTF-16BE text MUST NOT prepend a BOM to the text.
+>
+>    Text in the "UTF-16LE" charset MUST be serialized with the octets
+>    which make up a single 16-bit UTF-16 value in little-endian order.
+>    Systems labelling UTF-16LE text MUST NOT prepend a BOM to the text.
+>
+> I opened a bug with libiconv... https://savannah.gnu.org/bugs/index.php?=
+55609
+>
 
-> Hi Junio,
->
-> On Tue, 29 Jan 2019, Junio C Hamano wrote:
->
->> Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
->> 
->> > Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
->> > ---
->> >  builtin/help.c | 2 +-
->> >  1 file changed, 1 insertion(+), 1 deletion(-)
->> >
->> > diff --git a/builtin/help.c b/builtin/help.c
->> > index 7739a5c155..e001b6157c 100644
->> > --- a/builtin/help.c
->> > +++ b/builtin/help.c
->> > @@ -383,7 +383,7 @@ static void get_html_page_path(struct strbuf *page_path, const char *page)
->> >  	if (!strstr(html_path, "://")) {
->> >  		if (stat(mkpath("%s/git.html", html_path), &st)
->> >  		    || !S_ISREG(st.st_mode))
->> > -			die("'%s': not a documentation directory.", html_path);
->> > +			die("HTML documentation is not provided by this distribution of git.");
->> 
->> Mentioning HTML in the message may be a good idea, but I feel that
->> "distribution of git" is not something we should say in the source
->> for those who are building from the source.  Distributors are free
->> to munge before they generate their binary distribution, of course
->> ;-).
->
-> So maybe something like
->
-> #ifdef MISSING_HTML_MESSAGE
-> 			die(_(MISSING_HTML_MESSAGE));
-> #else
-> 			die("'%s': not a documentation directory.", html_path);
-> #endif
->
-> ?
+UTF-16 may be a), b) or c) from above.
+Every unicode compliant system should be able to read all 3 of them.
 
-No, distributors can fork and build from patched source.  What I
-meant was along these lines:
+When writing, the system/application/converter is free to choose one of th=
+ose.
+Probably out of historical reason, big endian is preferred (in iconv),
+and to be helpful to systems/applications a BOM is written in the beginnin=
+g.
+This is according to the RFC, why do you think that this is a bug ?
 
-    die(_("HTML documentation not installed in '%s'."), html_path));
-    die(_("The installer chose to omit HTML docs from '%s''.", html_path));
+
 
