@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 446E91F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 09:48:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA84A1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 09:48:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729148AbfA3Jss (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 04:48:48 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:41146 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726406AbfA3Jss (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 04:48:48 -0500
-Received: by mail-pl1-f196.google.com with SMTP id u6so10820976plm.8
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 01:48:47 -0800 (PST)
+        id S1729280AbfA3Jsx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 04:48:53 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:41149 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726406AbfA3Jsw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 04:48:52 -0500
+Received: by mail-pl1-f193.google.com with SMTP id u6so10821083plm.8
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 01:48:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qAzFqgUwqjAHLnU7Ja5dEQliPy6wwQ9QDXW/m4Sboe8=;
-        b=nwv0NFoSks/g6PJbjm2ed81wciPN/QNbRIbBknyZY9Am7EMIhHGK3O7EFfa1xJeHCk
-         9MoyWA9U2WgtU6obTX4qWl0A7zKFy9eplPnpRtttYX38s4knb9XJpC7sZB0tZ++nsJ50
-         UGL1vu/oVZphVJvebRh9NwfTdB1ziXg9NGPcx1CcdHHBGGfOBl3bhDe9dx4FtwreBqBn
-         JTE75UFF4NgY0e1xDcdYkF9PHDYbSw4oRwMp4P5Zx0r7B4dX2Iy0uxVFYYyJ3gkJe4vj
-         mICkMS09PqxPzAa5bLWjdQKvONAVJ4sCwvuc2TrHeQcPLX/2pLR/4ykTP63s0J7SysZp
-         DgnA==
+        bh=/OKrVEIdtHGuBbjw0txuo5PJ5Bolb0l97rR/T1Ood7I=;
+        b=noLqwbHXQCMdQfBrLemZg2JJXVxbVmh7eVy97UcwU4dWW7obeppbyyLvXWrx1ThM8Z
+         dydJSOwk4+V7OHh7opINc8Cw2eqVhvIAVGvGaBE74+Ku6SUIqX3aRHjq1Ht2dpGaqglC
+         OC3yFQpxnNT7GsjYMxSyFUP50pFb1vzZAGt1G5sweN4nBTtTPTfYPCKJ6IGfcQafIhH1
+         LkKzsm7MGPfxqG/jYGgaXj5Seb+jvFEF98P/DYqHOH8Cp0/14RhN6EQ7gDzJbVKvGkT1
+         Rjvkh9fJ5aFA/I+uJT8TyfZdFGijtifwrQNQY72euMBEdOZXheijtB21fmd6aK36R1WK
+         4BfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qAzFqgUwqjAHLnU7Ja5dEQliPy6wwQ9QDXW/m4Sboe8=;
-        b=gZT9cr9KfipUDpMDK/+jn1BgMn+NiQnSQ5rNfpWhXKxHZ3UrR16LWWDm15FrmEfLrp
-         rrxmiOWx1c0bt6a22PLwoFZb/uqqNX01aO0ecSkS17XMcKtu1F0AeAhOkL2IEKvWgYit
-         q3SCFoSBDmupSWxPBmpnL0YkOd597eUY2ixlOpc0Zo9vRDBWjd8Dmp/Znkcd/tzNY2An
-         FY1o3ivSpP9cdHIdN5iCtge+38fQy8YSKba7RfwNk8otDteH3ujsX0UTjIF5BGusRHqc
-         vPvg24XgvbPWHSt/eC9WLUcYTje766k9PxDLuVzuJ4yUw9jwZlOlOaOgkVkeQ5jpA6mg
-         fQoA==
-X-Gm-Message-State: AJcUukdR1y5XAoCdlwJIyS7VIaWFcLuM2RXjQj3aVEVrRTvQGfBQdO4f
-        vUJFPDGZLHjwZojP71YjohGuplY2
-X-Google-Smtp-Source: ALg8bN5xY/ihRrGOUkmjZFnvu1U4xZUnxKTTnYp6Y/6a8W5UO+Qutu9ghnXKpNM/Wx2VW8YimmTeqg==
-X-Received: by 2002:a17:902:fa2:: with SMTP id 31mr29866285plz.75.1548841727290;
-        Wed, 30 Jan 2019 01:48:47 -0800 (PST)
+        bh=/OKrVEIdtHGuBbjw0txuo5PJ5Bolb0l97rR/T1Ood7I=;
+        b=REOL4vw6Chp4sDiYRy5L84xb8HP/qFcp7HjF7b7s7j7y4WWqXjgNW749Ta713GBTF+
+         xSjO0cVt2BEC+TyNFg6x+6l1fiM/fvvXfGxtjqXx5eqHxj1FgG/ixF1G6X08FDkQS63d
+         MXoxvxSxZc5Jz5vHMrPvqzN5FEMfTkV1FS/9NOlCLi8V+nsX3gEdQ+XB6XD6bzeAqxcs
+         tmz5bTg6bj7dP49jFwns2maPEtGdjGAFVq4yiIy4PmhKkez8ohiGijHUiVnat1GjPCWe
+         I9kl7JlEN4Fac9aGlADAOyz2LgWvMwwqmPryuDJ6cDs2l17IT1DNP689eDqbMN4xvidk
+         jXeA==
+X-Gm-Message-State: AJcUukdjfKxprV470Gy4USfkThKohndv8jCQthl+gX1CjrXHx3wRwjBl
+        cJu5yWL2tslGh+/dWEbaRxDkc74Q
+X-Google-Smtp-Source: ALg8bN5KJmxQGaQE/qpkDVP+YpcXgWUPmWZQ1hy99wD24qNc84ZucOO3Go7uT4t6Nnnqn+LiMESaag==
+X-Received: by 2002:a17:902:d70b:: with SMTP id w11mr30171490ply.294.1548841732102;
+        Wed, 30 Jan 2019 01:48:52 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id 19sm6026253pfs.108.2019.01.30.01.48.44
+        by smtp.gmail.com with ESMTPSA id 22sm5758411pgd.85.2019.01.30.01.48.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Jan 2019 01:48:46 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 30 Jan 2019 16:48:42 +0700
+        Wed, 30 Jan 2019 01:48:51 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 30 Jan 2019 16:48:47 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 02/19] doc: document --overwrite-ignore
-Date:   Wed, 30 Jan 2019 16:48:14 +0700
-Message-Id: <20190130094831.10420-3-pclouds@gmail.com>
+Subject: [PATCH 03/19] t: rename t2014-switch.sh to t2014-checkout-switch.sh
+Date:   Wed, 30 Jan 2019 16:48:15 +0700
+Message-Id: <20190130094831.10420-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
 In-Reply-To: <20190130094831.10420-1-pclouds@gmail.com>
 References: <20190130094831.10420-1-pclouds@gmail.com>
@@ -69,48 +69,20 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I added this option in git-checkout and git-merge in c1d7036b6b
-(checkout,merge: disallow overwriting ignored files with
---no-overwrite-ignore - 2011-11-27) but did not remember to update
-documentation. This completes that commit.
+The old name does not really say that this is about 'checkout -b'. See
+49d833dc07 (Revert "checkout branch: prime cache-tree fully" -
+2009-05-12) for more information
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/git-checkout.txt | 5 +++++
- Documentation/git-merge.txt    | 4 ++++
- 2 files changed, 9 insertions(+)
+ t/{t2014-switch.sh => t2014-checkout-switch.sh} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename t/{t2014-switch.sh => t2014-checkout-switch.sh} (100%)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index bc7fbdb8d2..9ac01f7967 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -270,6 +270,11 @@ Note that this option uses the no overlay mode by default (see also
- 	out anyway. In other words, the ref can be held by more than one
- 	worktree.
- 
-+--[no-]overwrite-ignore::
-+	Silently overwrite ignored files when switching branches. This
-+	is the default behavior. Use --no-overwrite-ignore to abort
-+	the operation when the new branch contains ignored files.
-+
- --[no-]recurse-submodules::
- 	Using --recurse-submodules will update the content of all initialized
- 	submodules according to the commit recorded in the superproject. If
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 4cc86469f3..0480e9d0f0 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -87,6 +87,10 @@ will be appended to the specified message.
- 	Allow the rerere mechanism to update the index with the
- 	result of auto-conflict resolution if possible.
- 
-+--[no-]overwrite-ignore::
-+	Silently overwrite ignored files from the merge result. This
-+	is the default behavior. Use --no-overwrite-ignore to abort.
-+
- --abort::
- 	Abort the current conflict resolution process, and
- 	try to reconstruct the pre-merge state.
+diff --git a/t/t2014-switch.sh b/t/t2014-checkout-switch.sh
+similarity index 100%
+rename from t/t2014-switch.sh
+rename to t/t2014-checkout-switch.sh
 -- 
 2.20.1.682.gd5861c6d90
 
