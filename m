@@ -7,121 +7,104 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 426EB1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 12:20:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7CCE1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 12:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726967AbfA3MUq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 07:20:46 -0500
-Received: from mout.gmx.net ([212.227.15.15]:49939 "EHLO mout.gmx.net"
+        id S1726455AbfA3M0S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 07:26:18 -0500
+Received: from mout.gmx.net ([212.227.17.22]:52017 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725768AbfA3MUp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 07:20:45 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lh7sF-1hTfKL443D-00oSUL; Wed, 30
- Jan 2019 13:20:31 +0100
-Date:   Wed, 30 Jan 2019 13:20:14 +0100 (STD)
+        id S1725768AbfA3M0S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 07:26:18 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjquD-1hPoSJ0DDl-00boMt; Wed, 30
+ Jan 2019 13:26:10 +0100
+Date:   Wed, 30 Jan 2019 13:25:53 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Jeff King <peff@peff.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] Makefile: add prove and coverage-prove targets
-In-Reply-To: <87zhrj2n2l.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1901301317120.41@tvgsbejvaqbjf.bet>
-References: <pull.114.git.gitgitgadget@gmail.com> <294187c6968eff952e78bcea808c66fbedbf1f90.1548773766.git.gitgitgadget@gmail.com> <20190129160030.GA7083@sigill.intra.peff.net> <87zhrj2n2l.fsf@evledraar.gmail.com>
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] rebase -x: sanity check command
+In-Reply-To: <20190129184327.30391-1-phillip.wood@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1901301325370.41@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1901291632070.41@tvgsbejvaqbjf.bet> <20190129184327.30391-1-phillip.wood@talktalk.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1918758187-1548850831=:41"
-X-Provags-ID: V03:K1:ezrfRtRVB1RDtivpsL0C/e4aVCV6tCWggEb6RSh1mfUyhp7cSrH
- Ufb258ghNU6bDLbdGBbHSt5lK/Wj/sq4RJGiBDD6Q70aS6/9eyipzp5bsDF9oGFdwHhwpjc
- DVtpF3ahfyRPlIzHh0p2fqqodBIv7T+YfQJq2TmmRWEw/UthHyFp/4zad/ty1jzRMZDbFz1
- hKmYWLQmFbJwcFHEHhw8w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eYQGAucZB9M=:mifFDU2NvP8IZAe6GUeTML
- s14/KkwlFMZ6uxrSFSY8i3ZuOmPFirEnw0BEhR0gb9O+OSgIe5D3AK08gVQ/f44ylHVaQ/yp5
- 8ENapGR24VSJw2IzjY65G5kh1qKoBGnxZ9wNxcPC63OMGRTttPXxoM5Jvmg8Zocg303RJgvEU
- ar/WEpd2EvV02HmJzWzpwCEnpOwUtwBGUMcvAJk2jPWQYUKDmMO5GOfcKy8KEjZif/vIUsuf9
- nV2R5FnI/82QIR1Jjjoet5BiCd7ww1rfggu6YpMsXINbcO//kdYBIQ22sL6uiOV2am6JS7oIY
- gb9djfzmOEso9tahosEFaabXccLgG+oBpeTqN/OCmcsC4QwEw/pe7cHgIae/wEqb+4dpTzqZa
- ac04ScTZu55x+qmWZqKSvTTR8+fAZCNbqJgNyo2cuOliSgSyx+K14B2iZI+GW0Uh83X3mo8iy
- J7CBpat4dVICs0CM/vzAvaQlieSoJClyQpwlG7pNvD1RL3xGNbcml5JVvVK+HN7T7hV+1RSSb
- 5VbEqyYvhVwitLZtnJE/1ooVrwYkSlemGJ1J9M/DQDitRzgr2kv6FFvDGIfidsKRypxk0p+aQ
- MQTMxO6OZiGY7+7sW8IKBDM4+HrSgMrzutopkNp0TANtVNCDQyDjDEiOj1zzfCaFK+t7uIDJa
- fBPbCgkrCeRyZJ3Tlmm13Ry0MBRlv3hp3PrA2uh9NNjJp/ikUkWKpDaISi8cPssCu9ZvvnixQ
- GGV29jGYOmXAfDaUUWnKtio4OXtjnnpuUSXF8Vuk4w4rYOHhLTM0GDaB8mOKb/CiTKPyFWtQb
- lEoygLvNddjPspzRh9gwZBkUAZM5opkrLeC2Sr4BCbhmuSxyug3AtAvt501FVsXrIRGTc84Xy
- cZW6nQggsoUljrxCxq8RMY5jaldQKUGQHIxcIg8R+vr+w8cs6ZKUqSqZfAHshJhSD7bZjwXAH
- NKhHPr+ROmA==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:fwt/R5AMncdPyYpaxwmJTXxTzrfXhLQYGHd4BllQrwlJTtJ7HBH
+ EJY6K20N0/a/fspm3dJaXtdmtM9tvkIsILzLbN4ABhzaxdUQpTuwptLlu9CKtTd/v4towN5
+ jkFc37uWDhwFNmY+uXyk9wdtF4UsLoI7ksUB+RL2E/BQMAXmweXaikl0O0OxL92dQyBPJNZ
+ Ki8bfYp6qGqXhQ66dXDrQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CwiY+VWtdZc=:fKTXwhKOHnRSJ2yvGC2x5v
+ WeqdpvKmqmRFtt7HC8nFlODHfN6f3x2Gx9u9Yb/n6NDo9laGSyOlpdEVmgsYj16zHFFRWMS7r
+ HWGrkQ38y4QC83Qp3HszFxCeaQjZuVtiBEmtb4MFfB1XQOCnRvTr3r4SDYT5w5kdPKauv7zHb
+ 82m7rEJzd3KbhbN7Uc718AIZpFpqIgZ0MsVmecHEMIU35A4t83+Fef9RhQZMtpePgbK8AmKHh
+ BDNf7ZvKRlxv+ydA1+doEDdvSH9RSMrS2IHji0QLznksCy9CGoyWhNsd1wPXQbMi30+7kE+ZS
+ AY9SmN1mPcshi54aSOptlXr/jbhPgL4l954RSt6VMfMR/LiH8zNIrOZvB9ZSNqv0CYYvY3UpQ
+ 8IuUSzkSL0t/RFjZdhEPc/TQDVX7FRvWpaVOvqXv7PKxtWesE46ZCM9I9r+s29EkPSRmf9Nvt
+ MxWG0dBt9QLVbxEUEIEFXFVP0x/00S1srUx8ThVVK+TaGUvd9A44o5cFdtzCT/Gig57bqAYvn
+ TVXLjBa8uiRX/6wUeNAXG6rOO5YdyfXsZoopX9qhqnM39dPH7ZlOVNwWjcaY8Jh10QKig0KeI
+ ry3hrPjl+u0eZpQH7X82CT+x6WTN5N036AV7WB0hHFfznujxPakj8x4dIXogjjfhVOZPajMdm
+ IXM5JfQDBOyP0iXphy0QFaa4YSnSMTVVywhSSu/qfTzR9D7T1a5X3cF043D1JaAOoLmwiPOKu
+ hzT3ptfWAz74E6CwBNmxlkcvoCTVBRUYUzVcDYiUYXl2/+2nr4ip5ZR8NQP1QyWhNEZ7Scnvw
+ Krg13MSsCfBiKGbpkLHhOQ57o7QjV7kYEZMyg5/sLsNQDLJWxKwDpT3+5fYDxL868a2nNiFcj
+ g9K0NbVpV3Nk+otDbDs9hT99VnOrEuAa4TDcdQ7uvSiR2ijbRHHGFWlMYljkC+qD12rmOvz4C
+ 5jHJ4AVZ24Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Phillip,
 
---8323328-1918758187-1548850831=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Tue, 29 Jan 2019, Phillip Wood wrote:
 
-Hi Ævar,
+> Range-diff against v1:
+> 1:  9626549aec ! 1:  726b84c300 rebase -x: sanity check command
+>     @@ -2,8 +2,9 @@
+>      
+>          rebase -x: sanity check command
+>      
+>     -    If the user gives an empty argument to --exec then the rebase starts to
+>     -    run before erroring out with
+>     +    If the user gives an empty argument to --exec then git creates a todo
+>     +    list that it cannot parse. The rebase starts to run before erroring out
+>     +    with
+>      
+>            error: missing arguments for exec
+>            error: invalid line 2: exec
+>     @@ -33,21 +34,16 @@
+>       
+>      +static int check_exec_cmd(const char *cmd)
+>      +{
+>     -+	int non_blank = 0;
+>     ++	if (strchr(cmd, '\n'))
+>     ++		return error(_("exec commands cannot contain newlines"));
+>      +
+>     -+	while (*cmd) {
+>     -+		if (*cmd == '\n')
+>     -+			return error(_("exec commands cannot contain newlines"));
+>     -+		if (!isspace(*cmd))
+>     -+			non_blank = 1;
+>     -+		cmd++;
+>     -+	}
+>     ++	/* Does the command consist purely of whitespace? */
+>     ++	if (!cmd[strspn(cmd, " \t\r\f\v")])
+>     ++		return error(_("empty exec command"));
+>      +
+>     -+	if (non_blank)
+>     -+		return 0;
+>     -+
+>     -+	return error(_("empty exec command"));
+>     ++	return 0;
+>      +}
+>     ++
+>      +
+>       int cmd_rebase(int argc, const char **argv, const char *prefix)
+>       {
 
-On Tue, 29 Jan 2019, Ævar Arnfjörð Bjarmason wrote:
+Looks great!
 
-> On Tue, Jan 29 2019, Jeff King wrote:
-> 
-> > On Tue, Jan 29, 2019 at 06:56:08AM -0800, Derrick Stolee via
-> > GitGitGadget wrote:
-> >
-> >> From: Derrick Stolee <dstolee@microsoft.com>
-> >>
-> >> When running the test suite for code coverage using
-> >> 'make coverage-test', a single test failure stops the
-> >> test suite from completing. This leads to significant
-> >> undercounting of covered blocks.
-> >>
-> >> Add two new targets to the Makefile:
-> >>
-> >> * 'prove' runs the test suite using 'prove'.
-> >>
-> >> * 'coverage-prove' compiles the source using the
-> >>   coverage flags, then runs the test suite using
-> >>   'prove'.
-> >>
-> >> These targets are modeled after the 'test' and
-> >> 'coverage-test' targets.
-> >
-> > I think these are reasonable to have (and I personally much prefer
-> > "prove" to the raw "make test" output anyway).
-> 
-> I wonder if anyone would mind if we removed the non-prove path.
-> 
-> When I added it in 5099b99d25 ("test-lib: Adjust output to be valid TAP
-> format", 2010-06-24) there were still some commonly shipped OS's that
-> had a crappy old "prove", but now almost a decade later that's not a
-> practical problem, and it's installed by default with perl, and we
-> already depend on perl for the tests.
-
-It's not only about crappy old `prove`, it is also about requiring Perl
-(and remember, Perl is not really native in Git for Windows' case; I still
-have a hunch that we could save on time *dramatically* by simply running
-through regular `make` rather than through `prove`).
-
-I did start to implement a parallel test runner for use with BusyBox-based
-MinGit, but dropped the ball on that front before I could satisfy myself
-that this is robust enough. Once it *is* robust enough, we could even
-replace the entire `prove` support with a native, test-tool driven test
-framework.
-
-> I don't feel strongly about it, but it would allow us to prune some
-> login in the test library / Makefile.
-> 
-> Maybe something for a show of hands at the contributor summit?
-
-Sure, let's put it up for discussion.
-
-Ciao,
+Thanks,
 Dscho
---8323328-1918758187-1548850831=:41--
