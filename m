@@ -2,141 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C8131F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 19:27:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49EB91F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 19:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387609AbfA3T1H (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 14:27:07 -0500
-Received: from mout.gmx.net ([212.227.15.15]:38077 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727114AbfA3T1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 14:27:07 -0500
-Received: from MININT-6BKU6QN ([62.119.166.9]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTBsk-1ghg0M1qVS-00S98Y; Wed, 30
- Jan 2019 20:26:56 +0100
-Date:   Wed, 30 Jan 2019 20:26:39 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH (Apple Git) 10/13] Support for Xcode.app co-exestince
- and relocation
-In-Reply-To: <20190129193818.8645-11-jeremyhu@apple.com>
-Message-ID: <nycvar.QRO.7.76.6.1901302025490.41@tvgsbejvaqbjf.bet>
-References: <20190129193818.8645-1-jeremyhu@apple.com> <20190129193818.8645-11-jeremyhu@apple.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2387621AbfA3TcO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 14:32:14 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:43305 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727114AbfA3TcO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 14:32:14 -0500
+Received: by mail-lj1-f193.google.com with SMTP id q2-v6so569821lji.10
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 11:32:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=8xjdkDFFE2fGjLjYrYYZWK7JNPFyPPHe2kOQrE0/LZY=;
+        b=K9FEPPGv4MCt829H8hRmpLfEDOEC69DYSKb0nzj28a1q8s4HLfXCFhcYOUT9CgL7ke
+         7oQlIRApKNlNMO89Lvo0vojBN+4gdt0eENffOVi+rsgx2QWhyCjrvlJgkOhrqVqMDSnh
+         u2rClX21pIFyM9RcKF39WNdys24UlX2K/GiGZqoQJIzXyQzlbFkWoVUQK7Z6HWLNdSq6
+         bYUCYJ1HCAzOjclQ1paL9hmtE6Oo+c3b8zcSrctdKU1h9Yfw8XBvgj//SQXq1GqbJ+fS
+         PrdLkdn6gUPDXIM/kyHm1LXdukYplZ/IpV2XDg8f77FQ91a1pQWVbGZbz7v5hVUrLAPU
+         tovw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=8xjdkDFFE2fGjLjYrYYZWK7JNPFyPPHe2kOQrE0/LZY=;
+        b=ldwyzejzybCNjDPhKkKX4wp5/BbNNzpUtZmLedcjZaRPdHTxmByi0DSENRkkDPe3VM
+         QBNgsMezx8Te25FTMaH9K0VH7QNxTG7N650CGSFs2gq+UfElNyLq5polnF+0eEhG1dRD
+         rrKf0X7P5BdGHGGYVTHgwtUjk4aZKtz8fBdGv/Tj0WINU76OuhojC+dMGXA5Ajhl8US1
+         vyEoB3Gocq0SnZbkyn01+8rGkYcIyd1ZhlzMOPK8gNbZb0O1C7VNw6tVHVlm+vM4UnRJ
+         n8I+l+ETxhfrVGIqcd4z9AZQ5O+BcHM5OzYIHrxYb4r5SNP0Xr8h+iaXBig2DqhqCyWU
+         u0RQ==
+X-Gm-Message-State: AHQUAuamib7U8nWmFq9E0LabNNnn4n1SPWYF9srJ5/YiUBz9fYuUCUzO
+        JHJuk5jb89fsXJG+XkOwNls=
+X-Google-Smtp-Source: AHgI3IagAXap2qj7ZpFdUviBMtLyTDPZhT6JrPYfyLeH9bwJNHvg39WihKWYSq3AkJtX7VBPIldeLg==
+X-Received: by 2002:a2e:9ad0:: with SMTP id p16-v6mr219637ljj.102.1548876731546;
+        Wed, 30 Jan 2019 11:32:11 -0800 (PST)
+Received: from evledraar ([62.119.166.9])
+        by smtp.gmail.com with ESMTPSA id t9-v6sm411203ljj.87.2019.01.30.11.32.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 30 Jan 2019 11:32:10 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] Makefile: add prove and coverage-prove targets
+References: <pull.114.git.gitgitgadget@gmail.com> <294187c6968eff952e78bcea808c66fbedbf1f90.1548773766.git.gitgitgadget@gmail.com> <20190129160030.GA7083@sigill.intra.peff.net> <87zhrj2n2l.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1901301317120.41@tvgsbejvaqbjf.bet> <87y3722sz7.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1901301935010.41@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <nycvar.QRO.7.76.6.1901301935010.41@tvgsbejvaqbjf.bet>
+Date:   Wed, 30 Jan 2019 20:32:08 +0100
+Message-ID: <87womm2b7r.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JavjSA/DgqWPvA+BN2BhOre6pbk04j3/bxCWPQTxxubC2a7bevt
- O4onvLyFUy79eJ8tXwLsx7pQtBskKYbhkzKzS6iHlGWW//UXQAjbAh+s6r67a495e+jgs+2
- TA7fzBWHszz8z44ZYIqqeHbGuvoawsrmhRFtWdO3ZnnkRiZW92E2p8e+vLW8G+rLPfkPB8c
- uLE6ufQgbcVsB3rP9AW8A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YdwzlvQgL7M=:y/yqCAQ67l3eEyprhZjsBi
- dQrb7JVVfjcVUXlVwfM3C2CCi7lEL36l/VmzWyExtPcMdC4ddr5hiBhs1R5R4i4ASnz8YQxLy
- G4+7HSfUl/NP4VjBUHqzV3Nd/kcrmCs82lYeW75YD3m+AZJeBl2k2K79iueAKdBvAxqmXRGz4
- ofVZglVTgYcXegqNwqoScn4rk2T5rXpvWyprS/gYxZec0tvb2DqHQwpsp25oiZweU7wlPeeoR
- yFmujblhqEj6SBDoYdjP5NeJAyoG/nFoEp3E2Hm3pjqjUOFumj+8EpuUPifH1otBZTmyMTEUZ
- 5a1NX0+wX0NAOguXU2fObSMqf5Sq/papU5FlLhAR6I22umXH5WWngVP6GHCe/5Te6vARLwJD6
- Thgm3YImvTlwWpIBwg9tt8W7+HIZQsiyKVLM+/dhtnMLy6gk5Ke3YvsTtGINYqCdad8qGXwJw
- cRYmLPNj90q+mxwdFXFS8Zyu4o1C8XCN3zupFbvj8nu+/oYYrSXL1GPPpQwDXcCPHlKe1rcy6
- JcPzZIgEex/fk99F9P069HG4hEIF5+fPhFpKQUUmR7OTFa4zKqbW/98fL4etVJJeLZHv3ZDnP
- vXXnMhtd4Ps0HGrOLp3JNSaNquyGlN6IYug162GcGfmtupHS5OL/PvHukJmFDv4vVy3Gay1gV
- 13q+SQKl+c2ZJT5hK6nmLeIWAywkqkBKQHdOnwNFdqcevh1f2yQ/1X2civYUFRTbRuwky/W2S
- rEBydksRcMkS5YiewePW3HHmkAAfH57oSqu3+PxU4MiOfYghqmgvad6WGEuEhjW9B/3W5CWxK
- HRQjEvLkS++sYi6kezpLumMLMqnT/0V0APq2CxC6ND9UbkGWX9cBe2Fy6D1igJm1/07vpFOoj
- r+tHVs43h5BO4timZ+Wh+dtU6ar+e9UE1MMuqOSWFrX+aLKmzRQAK/mYC6CcU9NQ6IXmXAWYP
- KMBO4bCfWww==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeremy,
 
-On Tue, 29 Jan 2019, Jeremy Huddleston Sequoia wrote:
+On Wed, Jan 30 2019, Johannes Schindelin wrote:
 
-> This patch has been trimmed down significantly from its original version
-> when rebasing on top of git 2.18 because git 2.18 included support for
-> runtime prefix support for darwin, making this patch mostly duplicative.
-> 
-> The remaining changes are needed to ensure that git-perl can find the
-> subversion perl module (which relocates with it) and handle relocation
-> of python scripts.
-> 
-> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+> Hi =C3=86var,
+>
+> On Wed, 30 Jan 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> On Wed, Jan 30 2019, Johannes Schindelin wrote:
+>>
+>> > On Tue, 29 Jan 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> >
+>> >> On Tue, Jan 29 2019, Jeff King wrote:
+>> >>
+>> >> > On Tue, Jan 29, 2019 at 06:56:08AM -0800, Derrick Stolee via
+>> >> > GitGitGadget wrote:
+>> >> >
+>> >> >> From: Derrick Stolee <dstolee@microsoft.com>
+>> >> >>
+>> >> >> When running the test suite for code coverage using
+>> >> >> 'make coverage-test', a single test failure stops the
+>> >> >> test suite from completing. This leads to significant
+>> >> >> undercounting of covered blocks.
+>> >> >>
+>> >> >> Add two new targets to the Makefile:
+>> >> >>
+>> >> >> * 'prove' runs the test suite using 'prove'.
+>> >> >>
+>> >> >> * 'coverage-prove' compiles the source using the
+>> >> >>   coverage flags, then runs the test suite using
+>> >> >>   'prove'.
+>> >> >>
+>> >> >> These targets are modeled after the 'test' and
+>> >> >> 'coverage-test' targets.
+>> >> >
+>> >> > I think these are reasonable to have (and I personally much prefer
+>> >> > "prove" to the raw "make test" output anyway).
+>> >>
+>> >> I wonder if anyone would mind if we removed the non-prove path.
+>> >>
+>> >> When I added it in 5099b99d25 ("test-lib: Adjust output to be valid T=
+AP
+>> >> format", 2010-06-24) there were still some commonly shipped OS's that
+>> >> had a crappy old "prove", but now almost a decade later that's not a
+>> >> practical problem, and it's installed by default with perl, and we
+>> >> already depend on perl for the tests.
+>> >
+>> > It's not only about crappy old `prove`, it is also about requiring Perl
+>> > (and remember, Perl is not really native in Git for Windows' case;
+>>
+>> We require perl now for testing, NO_PERL is just for the installed
+>> version of git.
+>
+> Which is confusing, if you want to put it nicely.
+>
+>> If you change the various test-lib.sh and test-lib-functions.sh that
+>> unconditionally uses "perl" or "$PERL_PATH" hundreds/thousands (didn't
+>> take an exact count, just watched fail scroll by) tests fail.
+>
+> I know. Oh boy, I know.
+>
+> But we do not have to keep that status quo, nor do we have to make it
+> worse.
+>
+> It would not surprise me in the least if we could accelerate our entire
+> test suite by reducing our heavy reliance on scripting (including Perl) to
+> the point that it really takes too little time *not* to run. (Right now,
+> if you are on Windows, you better think twice before you start the test
+> suite, it will easily take over 3h (!!!) to run in a regular developer
+> setup. Even on a regular Mac, I would think twice before starting the run
+> that blocks my machine for easily 20 minutes straight. Needless to say
+> that few developers, if any, use it to validate their patches, in
+> particular on Windows. Meaning: for all real purposes, the test suite is
+> nearly useless on Windows.)
+>
+> So let's not bake *even more* Perl usage into our test suite. Thanks.
+>
+>> So my assumption is that anyone running the tests now has perl anyway,
+>> and thus a further hard dependency on it won't hurt anything.
+>
+> By that token, the effort to turn many a script into a built-in for better
+> performance and substantially better error checking would be totally
+> nonsensical. "Because anyone running Git used those scripts anyway, so
+> making them a hard dependency won't hurt anything"?
+>
+> I do not believe even a fraction of a second that that effort is
+> nonsensical. Just like I do not believe even a fraction of a second that
+> it makes sense for our test suite to rely on scripting so much. Or for us
+> to make that reliance even bigger, for that matter.
+>
+>> > I still have a hunch that we could save on time *dramatically* by
+>> > simply running through regular `make` rather than through `prove`).
+>>
+>> My hunch is that on the OS's where this would matter (e.g. Windows) the
+>> overhead is mainly spawning the processes, and it doesn't matter if it's
+>> make or perl doing the spawning, but I have nothing to back that up...
+>
+> I have at least the experience of several thousands runs of the test suite
+> on Windows, together with a couple dozen hours spent recently *just* on
+> making the CI of GitGitGadget at least bearable.
+>
+> So I do not quite understand why you offered a contrary opinion when you
+> have nothing to back it up.
+>
+> I mean, I would really like to have an informed discussion with you, to
+> benefit from your skills and from your experience to make the entire
+> design of our test suite better (there is so much room for improvement, we
+> should really be able to put together our knowledge to enhance it). It
+> needs to be based on facts, of course.
 
-I am really curious about this kind of problem now. Is it that you want to
-bundle a Perl inside a portable Git, and that Perl is not at all
-relocatable and so you force Git to pretend that it is?
+Let's get some numbers then. On master, go to the "t" directory and run
+this:
 
-Ciao,
-Johannes
+    for f in t[0-9]*.sh; do (echo '#!/bin/sh' && echo "echo ok 1 $f" && ech=
+o sleep 1 && echo echo 1..1) >$f; done
 
-> ---
->  Makefile                                      |  3 +++
->  .../runtime_prefix.template.pl                | 25 +++++++++++++++++++
->  2 files changed, 28 insertions(+)
-> 
-> diff --git a/Makefile b/Makefile
-> index 60711d6abe..97f46444f5 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2171,6 +2171,7 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
->  	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
->  	    -e "s=@@INSTLIBDIR@@=$$INSTLIBDIR=g" \
->  	    -e 's=@@PERLLIBDIR_REL@@=$(perllibdir_relative_SQ)=g' \
-> +	    -e 's=@@PERLVERSION@@=$(shell grep DEFAULT /usr/local/versioner/perl/versions | sed 's:^.*= *\([^ ]*\)$$:\1:')=g' \
->  	    -e 's=@@GITEXECDIR_REL@@=$(gitexecdir_relative_SQ)=g' \
->  	    -e 's=@@LOCALEDIR_REL@@=$(localedir_relative_SQ)=g' \
->  	    $< >$@+ && \
-> @@ -2206,6 +2207,8 @@ $(SCRIPT_PYTHON_GEN): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
->  $(SCRIPT_PYTHON_GEN): % : %.py
->  	$(QUIET_GEN)$(RM) $@ $@+ && \
->  	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
-> +	    -e 's|\(os\.getenv("GITPYTHONLIB"\)[^)]*)|\1,"@@INSTLIBDIR@@")|' \
-> +	    -e 's|"@@INSTLIBDIR@@"|os.path.realpath(os.path.dirname(sys.argv[0])) + "/../../share/git-core/python"|g' \
->  	    $< >$@+ && \
->  	chmod +x $@+ && \
->  	mv $@+ $@
-> diff --git a/perl/header_templates/runtime_prefix.template.pl b/perl/header_templates/runtime_prefix.template.pl
-> index 9d28b3d863..b0b6b0bef1 100644
-> --- a/perl/header_templates/runtime_prefix.template.pl
-> +++ b/perl/header_templates/runtime_prefix.template.pl
-> @@ -1,3 +1,28 @@
-> +# BEGIN XCODE RUNTIME_PREFIX generated code
-> +BEGIN {
-> +    use File::Spec;
-> +    my $PERLVERSION = "@@PERLVERSION@@";
-> +    if ($^V =~ m/v([0-9]+).([0-9]+)/) {
-> +        $PERLVERSION = $1.".".$2;
-> +    }
-> +    my $__prefix = File::Spec->rel2abs( __FILE__ );
-> +
-> +    if ($__prefix =~ m/\/libexec\/git-core\// ) {
-> +        $__prefix =~ s/\/libexec\/git-core\/.*//;
-> +        unshift @INC, $__prefix . "/share/git-core/perl";
-> +        unshift @INC, $__prefix . "/../Library/Perl/".$PERLVERSION."/darwin-thread-multi-2level";
-> +    } elsif ($__prefix =~ m/\/bin\// ) {
-> +        $__prefix =~ s/\/bin\/.*//;
-> +        unshift @INC, $__prefix . "/share/git-core/perl";
-> +        unshift @INC, $__prefix . "/../Library/Perl/".$PERLVERSION."/darwin-thread-multi-2level";
-> +    } elsif ( $__prefix =~ m/\/usr\// ) {
-> +        $__prefix =~ s/\/usr\/.*/\/usr/;
-> +        unshift @INC, $__prefix . "/share/git-core/perl";
-> +        unshift @INC, $__prefix . "/../Library/Perl/".$PERLVERSION."/darwin-thread-multi-2level";
-> +    }
-> +}
-> +# END XCODE RUNTIME_PREFIX generated code.
-> +
->  # BEGIN RUNTIME_PREFIX generated code.
->  #
->  # This finds our Git::* libraries relative to the script's runtime path.
-> -- 
-> 2.20.0 (Apple Git-115)
-> 
-> 
+That effectively turns all our tests into a "hello world" with a sleep
+of 1 second.
+
+Then run both:
+
+    time prove -j12 t00[0-9]*.sh
+
+And:
+
+    time make -j12 t00[0-9]*.sh
+
+For some value of -j12 and t00[0-9]*.sh. In my testing "make" is a bit
+faster, but not by any amount that would matter when this is run for
+real.
