@@ -7,58 +7,60 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEF5A1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 09:48:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 908661F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 09:48:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728111AbfA3Jsi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 04:48:38 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:37432 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726406AbfA3Jsi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 04:48:38 -0500
-Received: by mail-pf1-f196.google.com with SMTP id y126so11178545pfb.4
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 01:48:37 -0800 (PST)
+        id S1728672AbfA3Jsn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 04:48:43 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:46191 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726406AbfA3Jsn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 04:48:43 -0500
+Received: by mail-pl1-f195.google.com with SMTP id t13so10802766ply.13
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 01:48:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qPu4nEBvzBjYyIifKHqOmScHr9Ekt8QGzXV95h1ni3k=;
-        b=dadmuQX1Z1p7/tDLqFQ3FtamYrRQv66QAyb2OguvV5Gq/wc38StMAu7LDChT4eXuYY
-         UvV4KEDqjRvZ9VEXiyMcATUgoPiqByEgsynAfsLqn26JIFIkAY/+6YquhatT1d8SETbm
-         rvt8lsLi1DDMYdHHJ/5JrdQdvMc65bYT/LeEym6f9RXNqXtJt4gU2CemrSk3GwH1HOwh
-         IX0d898Z6u1NwmDmgzr3BIf31nYml1xk3zvBEgqUfq9cF/Mp6d/+5HutxZm3FqtZsbVs
-         28EVG8+BqgDHEVbAo1CbYkUCA+dITiJc8XZ5w9ufM4rbWMEULY/eb5eLTBxHu6tH7phA
-         BY+A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=MBk5a69TGV6LtsCwXdBSZ6V23iSvTPo6GaA6IpkcwYk=;
+        b=kvZ4BP5Dd+ZgEPbsaeMc0jWaavvAK0+e5C+WHjSp0aMBzcdOvj71qBmbqYENy+3Azo
+         IRjbQzTfYcFMEypIs2qjfQ/EtNlz3zS65MZ7WFHshmAvih9wOdX1LYWjKSG0CBqE+0Jh
+         /f78zbJIg7vP2lhRCKrnCjbwJRQtQs+4NUJGbA8yZCHBOhqfBtZrKTbyfiyzJ1FcoZye
+         YtqDVs+nQ6+TSyxREZyCgKwPxZFIwcLzpVgXZKEPjV37MRZUq9VUXUzMT5k6AzKVjve7
+         m3ip4DbEJyV39Tugtn91fqGOoQWexizBK1lTFdXQGmCj6S5Ei7+bZDLRMW1OtOhL2d9Z
+         jWMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qPu4nEBvzBjYyIifKHqOmScHr9Ekt8QGzXV95h1ni3k=;
-        b=VO2ITacYwQ4IQTpLXHiVlatA9xA0e2HlLzoYITKC3Mr5BJwafrLkZY5vSwCYR7e1nP
-         lH+PNQKOlgjwq23Q0CWb60O4jHWuHATOu7i6rQO4ub8yuzt9cN6YhX6JOiD8TNqd3UKx
-         0M4DRVXewHx9i7fEzqVRktdSGx4poTep1GwmiMum4FvXpm239nKtmclaydLsWu5yM3xu
-         p0QWBjbVTwuSriOfCfuKBnAQhD+LLTBivclZ+970cdcISRNlwt7EsqH+HP8NmgPjHzHB
-         wgXB4wjKNVC+Uw+PAjkpbtRNTikRfG3TCmR1bB3Kv0VNpyMprw8/T2qiVMqzEEilReRh
-         8SeQ==
-X-Gm-Message-State: AJcUukcHNStg/Ujx5iiY0H9cISA007P1EMgcCwWwCzEG7cQdgfBmbZyT
-        Kcmkj9l6ByEizfXjur2c7WrnGV8i
-X-Google-Smtp-Source: ALg8bN4jEZFnC2lEM99To+5hs4Mfmq+514EWMb0y0GiSkARXM4xoJnvnyP33ZDM55xMuYv7LVvrj6Q==
-X-Received: by 2002:a63:de46:: with SMTP id y6mr26864663pgi.198.1548841717034;
-        Wed, 30 Jan 2019 01:48:37 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=MBk5a69TGV6LtsCwXdBSZ6V23iSvTPo6GaA6IpkcwYk=;
+        b=na0Cik9v2uXLJYMoOZy+sdRTavXCIG+vsjcQKYQiH8vzea7cYnLD8bmk7thAEp0hn/
+         LGbC3r3MKEE0utng8mT7H2jfKdbp+5xPShk6H7laNnZ0BKQUZAL0IsLt8vH+DsMFAqxk
+         S+bXHggAkzsAsBZQJBaVAQhBivNu52QpusDbB59ZQC3CjFEJMJlwEEAPwwkSFqolvGui
+         0xx0FQzgh7Nxrmp+EiSbLTkl+iFgDRaIGHP7IEhdkfAp7yOtmgR/EpTDQueQVFRSQrOR
+         /Z1jcFu0jwPZCr3RUt0x4qFGHrBdjyNueEjnx21IQKiBk8pb1E/Pvwa8hZ3OVGDBHNs6
+         wEzQ==
+X-Gm-Message-State: AJcUukeljd8guGtCMEaDwU3aroQA2walYO+Mh24Ef85aKu9vJjYIoFbJ
+        79kejnS5Yo9O2crXSrxDTjhxa0QQ
+X-Google-Smtp-Source: ALg8bN6zYcmjQ6MTQkSJ8Bqf2tFm9m8QQDcnzz2z3mgfXSbGt249pU8oEp2MKnMdyQbZ6iX7dbZV3Q==
+X-Received: by 2002:a17:902:1005:: with SMTP id b5mr29793190pla.310.1548841722577;
+        Wed, 30 Jan 2019 01:48:42 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id h74sm4519144pfd.35.2019.01.30.01.48.34
+        by smtp.gmail.com with ESMTPSA id 22sm5754262pgd.85.2019.01.30.01.48.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Jan 2019 01:48:36 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 30 Jan 2019 16:48:32 +0700
+        Wed, 30 Jan 2019 01:48:41 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 30 Jan 2019 16:48:37 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 00/19] Add new command "switch"
-Date:   Wed, 30 Jan 2019 16:48:12 +0700
-Message-Id: <20190130094831.10420-1-pclouds@gmail.com>
+Subject: [PATCH 01/19] git-checkout.txt: fix one syntax line
+Date:   Wed, 30 Jan 2019 16:48:13 +0700
+Message-Id: <20190130094831.10420-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
+In-Reply-To: <20190130094831.10420-1-pclouds@gmail.com>
+References: <20190130094831.10420-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,102 +69,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the first half of the previous "switch-branch and
-restore-files" RFC series [1]. I only focus on switch-branch for now
-because it's already getting long and I still have some work to do on
-restore-files.
+<branch> can be omitted in this syntax, and it's actually documented a
+few paragraphs down:
 
-The command is, as the name implies, for switching branches. And it's
-supposed to be a (hopefully better) alternative for "git checkout". Head
-to 08/19 for the man page, which describes the command (with
-examples!) better than I do here.
+  You could omit <branch>, in which case the command degenerates to
+  "check out the current branch", which is a glorified no-op with
+  rather expensive side-effects to show only the tracking information,
+  if exists, for the current branch.
 
-I think I've addressed most of the issues from the last round. The
-only one left is adding options similar to "git reset" (but with
-better names this time than --soft and --hard, hopefully). I think
-that could be done in a follow-up series.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/git-checkout.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-For a complete picture, you would need to consider "git restore" too
-(the new name of "git restore-files"). Full series is available [2]
-though I still need to work on the "restore from a tree" part of
-that command and thinking whether "restore -p" vs "reset -p" could be
-confusing...
-
-This series is built on top of master + tg/checkout-no-overlay.
-
-PS. One of the things I like about this, after using it for some time,
-is the "no ambiguation" UI design gives better completion support
-(much less useless completion candidates), which makes life much
-better.
-
-[1] https://public-inbox.org/git/20181129215850.7278-1-pclouds@gmail.com/
-[2] https://gitlab.com/pclouds/git/commits/switch-and-restore
-
-Nguyễn Thái Ngọc Duy (19):
-  git-checkout.txt: fix one syntax line
-  doc: document --overwrite-ignore
-  t: rename t2014-switch.sh to t2014-checkout-switch.sh
-  checkout: factor out some code in parse_branchname_arg()
-  checkout: make "opts" in cmd_checkout() a pointer
-  checkout: move 'confict_style' and 'dwim_..' to checkout_opts
-  checkout: split options[] array in three pieces
-  checkout: split part of it to new command switch
-  switch: better names for -b and -B
-  switch: remove -l
-  switch: stop accepting pathspec
-  switch: reject "do nothing" case
-  switch: only allow explicit detached HEAD
-  switch: add short option for --detach
-  switch: no implicit dwim, use --guess to dwim
-  switch: no worktree status unless real branch switch happens
-  t: add tests for switch
-  completion: support switch
-  doc: promote "git switch"
-
- .gitignore                                    |   1 +
- Documentation/config/advice.txt               |  13 +-
- Documentation/config/branch.txt               |   4 +-
- Documentation/config/checkout.txt             |  17 +-
- Documentation/config/diff.txt                 |   3 +-
- Documentation/git-branch.txt                  |   8 +-
- Documentation/git-check-ref-format.txt        |   3 +-
- Documentation/git-checkout.txt                |  48 +-
- Documentation/git-format-patch.txt            |   2 +-
- Documentation/git-merge-base.txt              |   2 +-
- Documentation/git-merge.txt                   |   4 +
- Documentation/git-rebase.txt                  |   2 +-
- Documentation/git-remote.txt                  |   2 +-
- Documentation/git-rerere.txt                  |  10 +-
- Documentation/git-reset.txt                   |  20 +-
- Documentation/git-stash.txt                   |   9 +-
- Documentation/git-switch.txt                  | 236 +++++++++
- Documentation/gitattributes.txt               |   3 +-
- Documentation/gitcore-tutorial.txt            |  18 +-
- Documentation/giteveryday.txt                 |  24 +-
- Documentation/githooks.txt                    |   8 +-
- Documentation/gittutorial.txt                 |   4 +-
- Documentation/revisions.txt                   |   2 +-
- Documentation/user-manual.txt                 |  52 +-
- Makefile                                      |   1 +
- advice.c                                      |  11 +-
- builtin.h                                     |   1 +
- builtin/checkout.c                            | 464 +++++++++---------
- builtin/clone.c                               |   2 +-
- command-list.txt                              |   1 +
- contrib/completion/git-completion.bash        |  26 +
- git.c                                         |   1 +
- parse-options-cb.c                            |  17 +
- parse-options.h                               |   3 +-
- sha1-name.c                                   |   2 +-
- t/t1090-sparse-checkout-scope.sh              |  14 -
- ...014-switch.sh => t2014-checkout-switch.sh} |   0
- t/t2020-checkout-detach.sh                    |   4 +-
- t/t2060-switch.sh                             |  91 ++++
- 39 files changed, 770 insertions(+), 363 deletions(-)
- create mode 100644 Documentation/git-switch.txt
- rename t/{t2014-switch.sh => t2014-checkout-switch.sh} (100%)
- create mode 100755 t/t2060-switch.sh
-
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index ce7d38b8b7..bc7fbdb8d2 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -23,7 +23,7 @@ or the specified tree.  If no paths are given, 'git checkout' will
+ also update `HEAD` to set the specified branch as the current
+ branch.
+ 
+-'git checkout' <branch>::
++'git checkout' [<branch>]::
+ 	To prepare for working on <branch>, switch to it by updating
+ 	the index and the files in the working tree, and by pointing
+ 	HEAD at the branch. Local modifications to the files in the
 -- 
 2.20.1.682.gd5861c6d90
 
