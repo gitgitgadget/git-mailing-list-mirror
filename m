@@ -2,98 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A69A1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 10:31:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC48D1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 11:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730697AbfA3Kby (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 05:31:54 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:46403 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730354AbfA3Kby (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 05:31:54 -0500
-Received: by mail-lj1-f195.google.com with SMTP id v15-v6so20197993ljh.13
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 02:31:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=N8ox4X6Kk0enKCc/A9AHBpc7VBPunmE88lXBu9cwNXs=;
-        b=JVnSjHhxVc+X6mVom2KkzEZOyuFuAd09vFfNjnU+IfIl+8D/zhAyWvSBQY/QQmrZz+
-         92MOxhmRzAh7n7woyIDTUPGjomVC6BghVgaRoZzwyKDRa+6ENAHUX7ylD4tvFrXlGfGR
-         9XCSIbm/WUCjNWZehf6zg/1z56z/cribPR36FelAalSawsbLvmGW1K/GJ8psYH25WyNe
-         pLz8NTHW/zJsSd1l+jcK9+dWLN2TTgJIctXJC0DV1AHmRY5rKTgPwqWXTTSTJCvgklUI
-         B5a+b/QexzZsaBOBL17g6c0RURxbJxxpAKYjCRI6cPgwbIhyZUoRGMDs9q6mR4UoLBRB
-         VzoA==
+        id S1727880AbfA3LdY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 06:33:24 -0500
+Received: from mail-qt1-f173.google.com ([209.85.160.173]:40824 "EHLO
+        mail-qt1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727770AbfA3LdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 06:33:24 -0500
+Received: by mail-qt1-f173.google.com with SMTP id k12so25760451qtf.7
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 03:33:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=N8ox4X6Kk0enKCc/A9AHBpc7VBPunmE88lXBu9cwNXs=;
-        b=UR6xttvK3EtEBmWGE1qTtf2jvjFrGDZ5CnMdkrT9YXC+o4Ds7EWvUfzjmPbgYPPIjl
-         +2idPkeURVfzr9uruZ2o/ty/q52IYk80ZMD6uwHMzm3UEooGaRlce82Z7PaueTRzRuB0
-         ukEFCUvQqEhTtraBzmqZdbTn9qJPvcmoYwB15THqtYXf7isTAK/ovwlTJATAEWp30Uzh
-         27ydny6PI532a8tEUZpFgZoE0TG9jd2af4dXOhfcr/5T2sqxUUXpcKQNaM4WqrnEOAzA
-         O6uRVPIm+Lz5/CJHygMilxJ9yjdUA4dLjxcZKT/VtXxYb4EmzIzDbGULhLOGyEmDoONQ
-         jIdw==
-X-Gm-Message-State: AJcUuke0e/Ae5ajWdZ1LXQDKa1tYMHSnzQNrujLGbwZWJeofdldZdMJn
-        Q/dsymH9bZnUfMEBTy/qeaH6gNtdQIOvfarjdMpx7Ka/
-X-Google-Smtp-Source: ALg8bN6UAnnJ3i8uKCBO2U9WPO3B2/C6M/Ah+zEuQ8FANPGlRsWe2oZITH57sEOm/0Rcc5fLiNenSWFSBE7rt+WzSWQ=
-X-Received: by 2002:a2e:1b47:: with SMTP id b68-v6mr23932628ljb.104.1548844312173;
- Wed, 30 Jan 2019 02:31:52 -0800 (PST)
+        bh=/M/1uXbazTMJhN4uy+HZn/A2BtfnGH0roveIbjWKLt4=;
+        b=ZAKbs7LtAUo4PyK7dKlGUANPM2Z92HLn/yWaXkXRh4Etlu/IST8T35Ufxn0XTF2Vto
+         ueCaEQNFEidrXiNCkPRaMS2tNRZDLtBNXVV0lxs+QujtMH0a3A5RX9ERND0d0Zh+XXAd
+         1Ea+IS8OJNqUIdvkXfzWDAuDBexO41DfMJl6PBl51kKwl7n9AlsbOdH/Lwt4afAyiktq
+         Kpjyt/+86OTCDp97KGXbIfAw99urua4ComHvgIzBYnIr8b8KuSlT8vd6sehLtFJ3Ram4
+         Mz589XWAndRqUIV75iLYsPu4qTGdms2iHswzFvkPCbxQREMLIu4u07TgeRbUOxxUfLxP
+         YT5g==
+X-Gm-Message-State: AJcUukf6Tfqtc9WLe6oJLhXaPyMoTHQk2026RNlxuLA1yEiKppEVKe3P
+        KVteZJi6VWLTIjrwZaXLaz++vFmRl3zRRdIbB8w=
+X-Google-Smtp-Source: ALg8bN73BUxSYdF7td6u4Fri6mWl+ISmGJt1wBjCKTN2d9W7W5k+s3gCKRAtlS+M/tBLVteHmSgCI3LNkeWVATX0GyU=
+X-Received: by 2002:ac8:27c8:: with SMTP id x8mr28950754qtx.352.1548848003374;
+ Wed, 30 Jan 2019 03:33:23 -0800 (PST)
 MIME-Version: 1.0
-References: <20190129051859.12830-1-koraktor@gmail.com> <20190129051859.12830-2-koraktor@gmail.com>
- <20190129131151.GB22211@sigill.intra.peff.net> <CAPig+cRUCmaiYqKG6ON==g1sFph-hz6nK5fTYc-9w2JaNFmdLA@mail.gmail.com>
- <20190129223529.GB1895@sigill.intra.peff.net>
-In-Reply-To: <20190129223529.GB1895@sigill.intra.peff.net>
-From:   Sebastian Staudt <koraktor@gmail.com>
-Date:   Wed, 30 Jan 2019 11:31:15 +0100
-Message-ID: <CA+xP2Sa9mSaBaYgY4LiAwaqX_YN75NV0qA=sTy0D6X1q=SjQeg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] Setup working tree in describe
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
+References: <20190129193818.8645-1-jeremyhu@apple.com> <20190129193818.8645-2-jeremyhu@apple.com>
+In-Reply-To: <20190129193818.8645-2-jeremyhu@apple.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 30 Jan 2019 06:33:12 -0500
+Message-ID: <CAPig+cSkm-M7fP=KLOCO5J8OSYCEyjy950AM=VzTnP9C6AcKxw@mail.gmail.com>
+Subject: Re: [PATCH (Apple Git) 01/13] .gitignore: Remove *.s as it matches
+ *.S on case insensitive filesystem
+To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Di., 29. Jan. 2019 um 23:35 Uhr schrieb Jeff King <peff@peff.net>:
->
-> On Tue, Jan 29, 2019 at 03:53:40PM -0500, Eric Sunshine wrote:
->
-> > > > The implementation of --broken uses diff-index which calls
-> > > > setup_work_tree() itself.
-> > >
-> > > If I hadn't just read the rest of the thread, I'd probably wonder why we
-> > > are talking about --broken at all. Maybe:
-> > >
-> > >   The --broken option similarly needs a working tree. But because the
-> > >   current implementation calls an external diff-index to do the work,
-> > >   we don't have to bother setting up the working tree in the
-> > >   git-describe process.
-> >
-> > This rewrite left me slightly in the dark since I had to infer that
-> > git-diff-index calls setup_work_tree() itself. Perhaps:
-> >
-> >     ...an external diff-index to do the work, which itself calls
-> >     setup_work_tree(), we don't have to bother...
-> >
-> > But that's minor.
->
-> Yeah, my reasoning was that we handed off to diff-index, so if it
-> doesn't work, then it has its own bug. ;) But I agree it is probably
-> better to just be explicit.
+On Tue, Jan 29, 2019 at 3:11 PM Jeremy Huddleston Sequoia
+<jeremyhu@apple.com> wrote:
+> This was causing problems with ppc/sha1ppc.S
 
-Thanks for that valuable feedback.
-Is there some trailer like "Co-authored-commit-message-by:"? ;)
+What problems, exactly?
 
->
-> -Peff
+> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+> ---
+> diff --git a/.gitignore b/.gitignore
+> @@ -195,7 +195,7 @@
+> -*.[aos]
+> +*.[ao]
