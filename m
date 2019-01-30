@@ -2,75 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BD971F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 18:36:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 977391F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 18:37:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733156AbfA3SgR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 13:36:17 -0500
-Received: from mail-io1-f52.google.com ([209.85.166.52]:32808 "EHLO
-        mail-io1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733011AbfA3SgR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 13:36:17 -0500
-Received: by mail-io1-f52.google.com with SMTP id t24so470431ioi.0
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 10:36:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=UYyL0oeQl3wIhRM3KmnkhDP+EsAnZwTsWsl65uWAuK8=;
-        b=YeVvzhtVKpRo1QGsd9HBy4lENSzps0vg6tQenrzh2HQnxOrqCgSod4BKRo84cDi53y
-         deHkQgzSFxXiv0bzsVo2BUk/MZcrkXakQ4WzLVD5OPDX+q/NF7xTP1N0KBpJcS+KbMFD
-         QeiYpKyA5rT/gcDOrFVGolmLnR7Yt1pBB7k4pP7ev4fPi8ZexdQb7KM36uiHhN0BvPaH
-         DHjrviQwvtb+OX/y9t9uFgpFJlNGW2Alo3KzjlDhk0s19YMkgL3mEng8GTe0g0NUTt5A
-         N1vaCYcJw+28f1InLIBZH35fe0UVjRpcofyOMrwOGAv1WdZSsi+E1A4R1+hRK/NKJd/+
-         pjUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=UYyL0oeQl3wIhRM3KmnkhDP+EsAnZwTsWsl65uWAuK8=;
-        b=eBFwoX0k8EPV4bGzuWLceF+Qf4IJp0S7PZ2qHJPJ39rWLq4P2ptvSX2RRqjoGNzcoA
-         3Uv86/2NhFHJrEUcZZ9UVb1CYtyCUnhmP/5i9SheyUDUh3blZUPd2sLIhq/OlmXTObTJ
-         RSRGUmEqFkueYutn4Xa8JfoZrAXxW62KOXnVFQpkZGcVvjlkbfQujAu16WuXjsFCyfBi
-         BeYWlisX4AJQjAM9qh8HZ7a/5Z7f9rkRF9vIr00U3QzGE/IYJ7Uge+Vf96DrRLkDxA4V
-         SqMh4rZcgk/Ufv2ECMoYQICLlmn24To9PTRSuzl7lRC1i4kZEQxaaorGAxfxivBRxOrS
-         z+JA==
-X-Gm-Message-State: AHQUAuZvYp7Gw0ud9tu2Wz5bqlJLsY+oFOwHOFNhDbHr00XyYDl0DmSj
-        Y5EXVn9ljaL7mhU+aUzXEu9Pyw+4bwCQi8iLWLrVJJMSK/k=
-X-Google-Smtp-Source: AHgI3IYEwQ3h2Egb171ieQc3aTZyXFNH09YhJKDHDmVKXDsHiHIZcrApLyGgEt4/Z/LJG78RhFsbGEYgYOKZC1ApmV0=
-X-Received: by 2002:a6b:6e10:: with SMTP id d16mr161430ioh.232.1548873376675;
- Wed, 30 Jan 2019 10:36:16 -0800 (PST)
-MIME-Version: 1.0
-From:   Alireza Alipour <alirezaalipour517@gmail.com>
-Date:   Wed, 30 Jan 2019 22:06:05 +0330
-Message-ID: <CAOYf8At-gCD-Ctm9RevPLSkrfo+B0fj8oXtC1uzxAcntPp9ggA@mail.gmail.com>
-Subject: =?UTF-8?Q?What_is_=E2=80=9Cunable_to_open_object_pack_directory=3A_=2Egi?=
-        =?UTF-8?Q?t=2Fobjects=2Fpack=3A_Not_a_directory=E2=80=9D_error=3F?=
+        id S1733220AbfA3ShG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 13:37:06 -0500
+Received: from pv50p00im-ztbu10021601.me.com ([17.58.6.57]:32970 "EHLO
+        pv50p00im-ztbu10021601.me.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1733094AbfA3ShF (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 30 Jan 2019 13:37:05 -0500
+X-Greylist: delayed 549 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Jan 2019 13:37:05 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=04042017; t=1548872875;
+        bh=4ht9G50SlYlr7BPTCuy+KjNotHQlLEXbSKghIYlF3TI=;
+        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+        b=x9toaHwKdnfBf5faq4ZJfRSFTR/ur0vesjnojc/1bTFm/D2rmfsqaE9bXxPZhUonv
+         FyRkAPyFL9odQgfsi/wZVhf4Oj4chrvwJs0Ry7PKQyIVx9ux22qvF4nzlcD1+ejVzO
+         Mv6ddSl+9kwaC3DGRQFhDgvDIpGXVGQ7YW+jPJUJkwi13ViBQa/bz8EnnS76UytJ/8
+         dX1RbuxI9qs01EV4oekd0k+MnQTt3K8U7zhI/oQKWKW5Q1yp+iGRUlaTvAJcaJcWdj
+         ksXQ23Jr30jr8MxDWdxGnHq9FB1L1NXWAGjGJlGm9GbY0C9I+mtT8FOTQNpl9b8w54
+         wP1JH+gwvMSZg==
+Received: from [192.168.254.102] (unknown [112.198.206.214])
+        by pv50p00im-ztbu10021601.me.com (Postfix) with ESMTPSA id 425176E017A
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 18:27:55 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From:   April joy Diaz <asawaqoh001@icloud.com>
+Mime-Version: 1.0 (1.0)
+Date:   Thu, 31 Jan 2019 02:27:51 +0800
+Subject: hey
+Message-Id: <C354E566-F911-4835-9A9F-6D1F2FF66FE5@icloud.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-Mailer: iPhone Mail (16D39)
+X-Proofpoint-Virus-Version:  vendor=fsecure engine=2.50.10434:,, definitions=2019-01-30_13:,,
+ signatures=0
+X-Proofpoint-Spam-Details:  rule=notspam policy=default score=0 suspectscore=1 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
+ mlxlogscore=286 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1807170000 definitions=main-1901300140
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone
-
-I have asked this question in Super User but I have not got answer. I
-have described details in the my question__ link in available in
-bottom__ but for more information I add following info:
-
-I checked one of my past projects and I notice that
-".git/objects/pack" directory exist but there is not anything in it.
-Now I want to know that what is causes of this problem? And what is
-work around for this problem? And also I want to know that can I
-continue to commit on my current project and push it on my GitHub
-repository without any problems?
-
-My question link on Super User: https://superuser.com/q/1398971/660238
 
 
-Kind regards,
-Alireza Alipour
+Sent from my iPhone
