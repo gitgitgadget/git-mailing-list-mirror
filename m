@@ -2,125 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-0.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 717FE1F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 11:40:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2839B1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 11:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727765AbfA3Lkc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 06:40:32 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33654 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726857AbfA3Lkb (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 30 Jan 2019 06:40:31 -0500
-Received: from genre.crustytoothpaste.net (host-85-27-49-13.dynamic.voo.be [85.27.49.13])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CA5146072F;
-        Wed, 30 Jan 2019 11:40:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1548848428;
-        bh=5/LgxZznW/+mKG521XICqJXUPOoiJUapZghxgNK1Pa8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=QvRYWkUY8Jl/TepivJJ+s3iRdR5/Bv6v4DThBH2IVCEmGdgOxenfHnmxMldhdlH8z
-         OPMFnT92xHeCFUWmZ/pszG/D7xvPNFbn6erFo7gNg7O4AcpI/p7xkIk8lusC/lOF4s
-         E70brvrIC+4b+2r8bmkqyihZcaOLqxxbKeN6G/Gy6hRh2byzpKKoA0oJYtZ1f8WbLh
-         +OlFKm1xNIkPhqbYsejMc8IpBHzRzF8Mif6/CT9sohu1HodqWCktikB+UrPW2D/nz0
-         wwL6Of3arrdkoAsaT0+oWaMMyvTytNQIqiBiyEmsqPngD2bO61n/k1+VHhKmvEdlkT
-         vzeJUCY+VqAiO27vvobF+aK83AMy4ICvp2dwKlXHh5eXwBvBtitw/aepwqHXHsg2xO
-         sc7PzFly4W4EGDFkIXrQzXHv0h5n6A6e5I8gLL2Pl+7fXfp4ruPOXYR8HTwf3cVi4A
-         AmyhGAgoeucjIThDm44uIgm3PxU1ttrC3jVZnlqLxIqXnGYnYTH
-Date:   Wed, 30 Jan 2019 11:40:16 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: t5702 failing under ASan on master
-Message-ID: <20190130114016.GD24387@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <20190130085855.GA24387@genre.crustytoothpaste.net>
- <CACsJy8AVoETLkB5rLft27Rz7V9xPFN9fk=8g9-fCR61fVi4vjw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4zI0WCX1RcnW9Hbu"
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AVoETLkB5rLft27Rz7V9xPFN9fk=8g9-fCR61fVi4vjw@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1729107AbfA3LlQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 06:41:16 -0500
+Received: from nwk-aaemail-lapp01.apple.com ([17.151.62.66]:53926 "EHLO
+        nwk-aaemail-lapp01.apple.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728720AbfA3LlP (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 30 Jan 2019 06:41:15 -0500
+Received: from pps.filterd (nwk-aaemail-lapp01.apple.com [127.0.0.1])
+        by nwk-aaemail-lapp01.apple.com (8.16.0.27/8.16.0.27) with SMTP id x0UBagRj014109;
+        Wed, 30 Jan 2019 03:41:08 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=mime-version :
+ content-transfer-encoding : content-type : subject : from : in-reply-to :
+ date : cc : message-id : references : to; s=20180706;
+ bh=zpZtYTB9vgShPipAJ7eS4hzVpDJVI3nJLIqFDAmPsVE=;
+ b=fhVqO2d81n8YXmZkUEsZQ+pSgu95S1TGNZP75uo+7rOmwi3XcXACtlLi2T8YBbX9LmE7
+ dLki6Q9u68pAH5PVJ687S6UwxxbqU82TkuYB9srrT5FzZoXVLBh71kp8E+qAAOV57OOg
+ MOPJJZWjF+uhvfIr2Hn+8DYcd9IhvBx7LpnTkMyef7lCydl3ml6LATpY1X9VwHKZGBgl
+ +jXIj7crdBg4Io3KD52cFMhIXAzZ+s4a6ikA2NkocZZJ9v45M/YeW9v/vW9nPtYixJgZ
+ EDJ+DY/cZQtOolUIvrQF8ZMfs8j8jUV9LylWD2hP/r/zFCpCl/8+BbHf0FaYr0YQ2hss hw== 
+Received: from ma1-mtap-s03.corp.apple.com (ma1-mtap-s03.corp.apple.com [17.40.76.7])
+        by nwk-aaemail-lapp01.apple.com with ESMTP id 2q8qc821cb-6
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+        Wed, 30 Jan 2019 03:41:08 -0800
+MIME-version: 1.0
+Content-transfer-encoding: 7BIT
+Content-type: text/plain; CHARSET=US-ASCII
+Received: from nwk-relayp-sz03.apple.com
+ (nwk-relayp-sz03.apple.com [17.128.113.11]) by ma1-mtap-s03.corp.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTPS id <0PM500BZZ74G9H90@ma1-mtap-s03.corp.apple.com>; Wed,
+ 30 Jan 2019 03:41:08 -0800 (PST)
+Received: from process_viserion-daemon.nwk-relayp-sz03.apple.com by
+ nwk-relayp-sz03.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM5000006UNDC00@nwk-relayp-sz03.apple.com>; Wed,
+ 30 Jan 2019 03:41:07 -0800 (PST)
+X-Va-A: 
+X-Va-T-CD: 1d4b20a60f75d9bb77c59cc55fa1c1c2
+X-Va-E-CD: 4b191ea47c869588dbea83c34d5f132f
+X-Va-R-CD: de96b9fcc174794f3cefb75163f7efd9
+X-Va-CD: 0
+X-Va-ID: a295a4bd-c322-47f3-aec2-2127d154784c
+X-V-A:  
+X-V-T-CD: 1d4b20a60f75d9bb77c59cc55fa1c1c2
+X-V-E-CD: 4b191ea47c869588dbea83c34d5f132f
+X-V-R-CD: de96b9fcc174794f3cefb75163f7efd9
+X-V-CD: 0
+X-V-ID: 4be6cd70-7996-4ab9-ba39-2528ca5161b0
+Received: from process_milters-daemon.nwk-relayp-sz03.apple.com by
+ nwk-relayp-sz03.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM5000006UICD00@nwk-relayp-sz03.apple.com>; Wed,
+ 30 Jan 2019 03:41:07 -0800 (PST)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
+ definitions=2019-01-30_09:,, signatures=0
+Received: from [17.234.17.81] (unknown [17.234.17.81])
+ by nwk-relayp-sz03.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTPS id <0PM5007IA74ICU10@nwk-relayp-sz03.apple.com>; Wed,
+ 30 Jan 2019 03:41:07 -0800 (PST)
+Subject: Re: [PATCH (Apple Git) 09/13] Use symbolic links rather than hard
+ links for files in libexec
+From:   Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+In-reply-to: <20190130095006.GC24387@genre.crustytoothpaste.net>
+Date:   Wed, 30 Jan 2019 03:41:06 -0800
+Cc:     git@vger.kernel.org, peff@peff.net
+Message-id: <230CA858-D709-4142-9563-20A4887F2ED8@apple.com>
+References: <20190129193818.8645-1-jeremyhu@apple.com>
+ <20190129193818.8645-10-jeremyhu@apple.com>
+ <20190130095006.GC24387@genre.crustytoothpaste.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+X-Mailer: Apple Mail (2.3445.104.1)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-30_09:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---4zI0WCX1RcnW9Hbu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 30, 2019 at 05:07:20PM +0700, Duy Nguyen wrote:
-> If I understand ASan report correctly alternate_shallow_file memory is
-> already gone after the first fetch, when we update the shallow file.
-> But we're doing two fetches in the same process (the tag backfill
-> thingy), the second fetch reuses the dangling alternate_shallow_file
-> pointer and ASan caught it. Resetting the variable seems like the
-> right way to go.
+> On Jan 30, 2019, at 01:50, brian m. carlson <sandals@crustytoothpaste.net> wrote:
+> 
+> On Tue, Jan 29, 2019 at 11:38:15AM -0800, Jeremy Huddleston Sequoia wrote:
+>> See <rdar://problem/10573201>
+> 
+> It's my understanding that Radars aren't public. Could you summarize the
+> reasons behind this change in the commit message for those of us who
+> don't have access to view this issue?
 
-Ah, I think I was missing the fact that we're doing a tag backfill. That
-explains a lot.
+There was a bug in some tool in our packaging pipeline that resulted in hardlinks not being preserved.  That was fixed, but I decided to leave these as symlinks anyways in case users did a file operation on Xcode.app that didn't preserve hard links.
 
-> But should we reset it to an empty string? We would pass
-> "--shallow-file=3D" to "git index-pack", which is treated as "no shallow
-> file" (i.e. complete repo). This sounds wrong because this is still a
-> shallow repository.
->=20
-> I suppose setting alternate_shallow_file to NULL would be ok. "git
-> index-pack" will just go back to reading $GIT_DIR/info/shallow, which
-> has been updated and contains correct info.
-
-Yeah, that sounds like a better choice. I'll send a complete patch which
-does this.
-
-> PS. No idea how ASan blames your series for this. Yeah maybe memory
-> layout and stuff. But it does spot a real problem.
-
-I don't doubt this is a problem. We'll definitely want to fix it before
-the release, since if I see it in development, somebody will likely see
-it in production.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---4zI0WCX1RcnW9Hbu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxRjSAACgkQv1NdgR9S
-9os39g/9Fz/Vga41CTtI1xT1ENPG3KMyDyep9W9RvGGriDdK9wky+BW5nImLClod
-dAKe3nXRqYTV6gvxXq0x+joRI3Jmr/hVZV3H05WEOcvIHRV4tKNKMooxdAV0YK+9
-+wJZALFgytBqY5k1xYsut/+gWSRTyTCmO13yKOykHI1VVMrwiXcUz3SO+V0P8Hrw
-uFIXqfvAFpm52TeRJW8YpCECrykSDNa2RCXnaFx5v3RtVn7qtMV5osLExT0s19z5
-z0YKYrfftpWVtQqk9FHuoKCsIRC10FbHjMnpxs4G6WEvHO2rOvJGilE8p3dGB/no
-zkYFNPn7i7mnyrGbR461/KZk6kOlIYAU9G34iwwCP9weApFa1IQuBj2vDRVfK9JO
-UhFliY1Fuh4pJVKN4TDFQViElywpI9w4Jz61JEoOOL98rV9YgZs/I+e79nDU4sX1
-EjDSnGAHmq78dZvblzeb/gkADEjM6HKAJfiJS/vMVCxHwnhinoXLkf/C7elj8/OF
-SDVn4nWKPKeavFFP4kDDew5R5i4cm7XcpnLMjrylsKgtkXOlBKCMpY8CeEfOAyMm
-wVg97aFalgd3TQ8S57acQJ3wjfQahEr0LPAXVtdlAJU6ROUUnwvi9egLiHqD+Gzz
-Y1xUpkXJQMLvVfPh6KLTB919y7/paAqvzp1dvBbBpivD4Sn9TsE=
-=OwyP
------END PGP SIGNATURE-----
-
---4zI0WCX1RcnW9Hbu--
+The point here is that it would probably be nice to have hard vs soft be a configuration option.
