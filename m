@@ -2,109 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 688161F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 19:08:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA39A1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 19:13:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387403AbfA3TIR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 14:08:17 -0500
-Received: from mout.gmx.net ([212.227.17.22]:53013 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732343AbfA3TIQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 14:08:16 -0500
-Received: from MININT-6BKU6QN ([62.119.166.9]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFgxF-1gu5kq3vML-00EfvX; Wed, 30
- Jan 2019 20:08:10 +0100
-Date:   Wed, 30 Jan 2019 20:07:50 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH (Apple Git) 08/13] git mergetool/difftool doesn't list
- 'opendiff' as an available tool on 10.8
-In-Reply-To: <20190129193818.8645-9-jeremyhu@apple.com>
-Message-ID: <nycvar.QRO.7.76.6.1901302005450.41@tvgsbejvaqbjf.bet>
-References: <20190129193818.8645-1-jeremyhu@apple.com> <20190129193818.8645-9-jeremyhu@apple.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bUZ9vvcEYB274S3tKh5UqDlUs+L9CBJbUaKj3px86zn3GjeNXDl
- zWnq4R/QLqtdqWgR6ccsb3NGYg3qlstoXemSnBRVthwkp0jsXIJ9Lwejplf2fkda8XLHZPy
- njA7DuKfdQAXGn1Yu47Xf1lXi9/zPdOlM+usPJ10kh5jPA1ReIbBHbfF70ul5O95L9PkPFn
- ltfmQhZnRNvUEHb2094JA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0FJXadUjgRk=:D4FgSdn0nhyGviMsXrx6u2
- Oia5ycqjRfj5UzVJUTaswcNcgeSU/si28GmUigEQ30zu1N/YccKiOPPt2oFR941/byBd45TQP
- 3CVxKx65ibV99bX/EIybYR6jbAVh197DQh8XEQHNV3jhxd7l013lXcbGclJGO1DcIT+xXIZKo
- 9jIdaymWz2gGMIuBx5hzVLEYVEfqr8Klm2Y7Q5vdfAXKrauyycvsV2r9PWp+8RwWD+uVWqklH
- VwrgvkvTjIjLjasOGc3ciPUuK5fHmtLdI5y7ijZu5VYrmR7MgTfz7n5Z3bJ1eCNyiMg95u0YO
- f3UsISEFaJ4CVDEQSI/LbfIrSvde8qewsPmfp52Gp4XcZx57cw/CR+4tfrzcbD0ZfIJ87D+eX
- sXT/psFwNgzrfoHmely/RRpck1i0GlmOjS4PV2cnya73aQYmHy0tUG8xpQPvKe5pMwdDAUzH9
- 1TnawPt0/f6vEwPQPVUGIGu2RmzDVMuRpE6O31EIMqnORUPKuUGRKyOdle0oc/lYRp73cUINQ
- i8vVNBfn5z5NVUdZiPHrTP+m351ZFXY2hKp5bMAyZmkhniRliNs1PA8q90I67pMt/LRbgHD/w
- nxyCj3+G3ZZkAbak7o2bpAF3JyZCmPYxxpzR70xfRIjQYS6Q5VReP6u+byz3PoHsc7fVt/Eve
- vSbzT9kpLnnEtZiEmAo5udDSClUNFbiiA9IOMyvIQOTTypacT2NjzLz2oLDkKeAzGaMmQjw2t
- HkULm9nThIub74/NvePOl3ytr0AFw9yEAEcNZfmsYE/8wQwxz2x6uUt6uorIfceq48Z3E60em
- gRFR71NtGNH5w5iX8IcawiyPC07f7iohNNxJRTAjX0joHXP6T7CXr3h+diiltFI7npkHa638o
- xf4kRYOX8gnpHp6kQPMlNM7c7uy3QX63+bBNugpnYprVcgiXA8yB0OuYGKoyeDOGqv4JpXsNz
- 7h9QRiU0xCg==
+        id S1733280AbfA3TNo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 14:13:44 -0500
+Received: from ma1-aaemail-dr-lapp02.apple.com ([17.171.2.68]:45870 "EHLO
+        ma1-aaemail-dr-lapp02.apple.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727114AbfA3TNo (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 30 Jan 2019 14:13:44 -0500
+Received: from pps.filterd (ma1-aaemail-dr-lapp02.apple.com [127.0.0.1])
+        by ma1-aaemail-dr-lapp02.apple.com (8.16.0.27/8.16.0.27) with SMTP id x0UJBgIJ043723;
+        Wed, 30 Jan 2019 11:13:38 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=mime-version :
+ content-transfer-encoding : content-type : subject : from : in-reply-to :
+ date : cc : message-id : references : to; s=20180706;
+ bh=00sGxW2wmXiyxn692DJjJ+MlOHd8jXKT1712YWRvuoc=;
+ b=Bzt+upnoTIRcMpi7glMwM0EYY/ZgG9tQudv7ukCSZ9berFSm2OSw1wIvTCwax73z4qoN
+ 4v4kFz2MbyoRHrYEiGq3sSt7uzqSlefB0BAPN/HexSJbB1rpgFOd+sMkKd5v345Dk8lt
+ dgBkEfi0obkZD6G+b7P6WA05G2Pw7URNjG0Mt7YI++SGZ5TjZ0EzU7W320VcSw7N59qg
+ 3Hz25ogLddIadsmBIMC6JJrYKYdHjHfxJ4dEvLay+Y9PJVIuuJZMXQkNHVL8wGkc+P8d
+ 8K7jP6ot2fYtRBQbWSnw7mD73clZal/Z2Z9xNl6Nc8jPlgZB60chrg81mhl4BOFdmuU0 YA== 
+Received: from ma1-mtap-s01.corp.apple.com (ma1-mtap-s01.corp.apple.com [17.40.76.5])
+        by ma1-aaemail-dr-lapp02.apple.com with ESMTP id 2q8n4386ch-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+        Wed, 30 Jan 2019 11:13:37 -0800
+MIME-version: 1.0
+Content-transfer-encoding: 7BIT
+Content-type: text/plain; CHARSET=US-ASCII
+Received: from nwk-relayp-sz02.apple.com
+ (nwk-relayp-sz02.apple.com [17.128.113.117]) by ma1-mtap-s01.corp.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTPS id <0PM5008FPS2O6NM0@ma1-mtap-s01.corp.apple.com>; Wed,
+ 30 Jan 2019 11:13:37 -0800 (PST)
+Received: from process_viserion-daemon.nwk-relayp-sz02.apple.com by
+ nwk-relayp-sz02.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM500300RGTE400@nwk-relayp-sz02.apple.com>; Wed,
+ 30 Jan 2019 11:13:37 -0800 (PST)
+X-Va-A: 
+X-Va-T-CD: 482fa0d912b72e62f127af554db2d44f
+X-Va-E-CD: 9770a944a70acd20bbc6bfe75bee6297
+X-Va-R-CD: 0fda362c301ac4a128966086672e69af
+X-Va-CD: 0
+X-Va-ID: 765a6094-648d-4a0e-b78a-7dc1e30436bd
+X-V-A:  
+X-V-T-CD: 482fa0d912b72e62f127af554db2d44f
+X-V-E-CD: 9770a944a70acd20bbc6bfe75bee6297
+X-V-R-CD: 0fda362c301ac4a128966086672e69af
+X-V-CD: 0
+X-V-ID: d124c7ef-83b3-4310-80b3-de8527a6d31a
+Received: from process_milters-daemon.nwk-relayp-sz02.apple.com by
+ nwk-relayp-sz02.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) id <0PM500L00S03VB00@nwk-relayp-sz02.apple.com>; Wed,
+ 30 Jan 2019 11:13:37 -0800 (PST)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
+ definitions=2019-01-30_14:,, signatures=0
+Received: from [17.234.17.81] (unknown [17.234.17.81])
+ by nwk-relayp-sz02.apple.com
+ (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
+ 2018)) with ESMTPS id <0PM5002VNS2PNY90@nwk-relayp-sz02.apple.com>; Wed,
+ 30 Jan 2019 11:13:37 -0800 (PST)
+Subject: Re: [PATCH (Apple Git) 01/13] .gitignore: Remove *.s as it matches *.S
+ on case insensitive filesystem
+From:   Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+In-reply-to: <nycvar.QRO.7.76.6.1901301340270.41@tvgsbejvaqbjf.bet>
+Date:   Wed, 30 Jan 2019 11:13:36 -0800
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Message-id: <8B5241CB-2E1E-4521-8FE1-A84C4896AE82@apple.com>
+References: <20190129193818.8645-1-jeremyhu@apple.com>
+ <20190129193818.8645-2-jeremyhu@apple.com>
+ <CAPig+cSkm-M7fP=KLOCO5J8OSYCEyjy950AM=VzTnP9C6AcKxw@mail.gmail.com>
+ <534F20EC-2B29-46C3-BAD9-3CBE7312257F@apple.com>
+ <nycvar.QRO.7.76.6.1901301340270.41@tvgsbejvaqbjf.bet>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Mailer: Apple Mail (2.3445.104.1)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-30_14:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeremy,
 
-On Tue, 29 Jan 2019, Jeremy Huddleston Sequoia wrote:
 
-> See <rdar://problem/12652310>
+> On Jan 30, 2019, at 04:42, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > 
-> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-
-You know yourself how to improve this commit message rather dramatically.
-
-> ---
->  git-mergetool--lib.sh | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+> Hi Jeremy,
 > 
-> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-> index 83bf52494c..f85be7406f 100644
-> --- a/git-mergetool--lib.sh
-> +++ b/git-mergetool--lib.sh
-> @@ -273,9 +273,9 @@ list_merge_tool_candidates () {
->  	then
->  		if test -n "$GNOME_DESKTOP_SESSION_ID"
->  		then
-> -			tools="meld opendiff kdiff3 tkdiff xxdiff $tools"
-> +			tools="meld kdiff3 tkdiff xxdiff $tools"
->  		else
-> -			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
-> +			tools="kdiff3 tkdiff xxdiff meld $tools"
->  		fi
->  		tools="$tools gvimdiff diffuse diffmerge ecmerge"
->  		tools="$tools p4merge araxis bc codecompare"
-> @@ -288,6 +288,8 @@ list_merge_tool_candidates () {
->  		tools="$tools emerge vimdiff"
->  		;;
->  	esac
-> +
-> +	tools="opendiff $tools"
-
-That is a hack, not a solution.
-
-A much better idea would be to leave the `DISPLAY` block alone and to add
-an `elif test -x /path/to/known/location` block.
-
-Ciao,
-Johannes
-
->  }
->  
->  show_tool_help () {
-> -- 
-> 2.20.0 (Apple Git-115)
+> On Wed, 30 Jan 2019, Jeremy Huddleston Sequoia wrote:
 > 
+>>> On Jan 30, 2019, at 03:33, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> 
+>>> On Tue, Jan 29, 2019 at 3:11 PM Jeremy Huddleston Sequoia
+>>> <jeremyhu@apple.com> wrote:
+>>>> This was causing problems with ppc/sha1ppc.S
+>>> 
+>>> What problems, exactly?
+>> 
+>> The file is ignored, but it shouldn't be.
 > 
+> As somebody who sometimes (pretty rarely, but definitely more than once a
+> year) generates the assembler files to have a deeper look, I really
+> understand why *.s is ignored, and I think it should stay ignored.
+> 
+> What you probably want instead is
+> 
+> 	# Accommodate for case-insensitive filesystems where *.s would catch
+> 	!ppc/sha1ppc.S
+> 
+> after the `*.[aos]` line.
+
+Thanks for the suggestion.  I didn't know that was possible with .gitignore.  That's a much better solution.  I was expecting this to just stay in our series as upstreamable, but I'm glad you pointed this out.  I got to learn something new and offload a patch.  Thanks!
+
+I'll now be able include this in my followup series of patches that I think can be upstreamed! =)
+
+> Ciao,
+> Johannes
+> 
+>> 
+>>> 
+>>>> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+>>>> ---
+>>>> diff --git a/.gitignore b/.gitignore
+>>>> @@ -195,7 +195,7 @@
+>>>> -*.[aos]
+>>>> +*.[ao]
+>> 
+>> 
+
