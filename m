@@ -2,109 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 761A91F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 11:37:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 717FE1F453
+	for <e@80x24.org>; Wed, 30 Jan 2019 11:40:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728704AbfA3Lh0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 06:37:26 -0500
-Received: from nwk-aaemail-lapp02.apple.com ([17.151.62.67]:45114 "EHLO
-        nwk-aaemail-lapp02.apple.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727500AbfA3Lh0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 30 Jan 2019 06:37:26 -0500
-Received: from pps.filterd (nwk-aaemail-lapp02.apple.com [127.0.0.1])
-        by nwk-aaemail-lapp02.apple.com (8.16.0.27/8.16.0.27) with SMTP id x0UBafn8032247;
-        Wed, 30 Jan 2019 03:37:20 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=mime-version :
- content-transfer-encoding : content-type : subject : from : in-reply-to :
- date : cc : message-id : references : to; s=20180706;
- bh=ckOZXIFAWLnON3DQxUPAQ5RRGTyrGth2yNDVkXo20mA=;
- b=n/1qC+MNVDrtjyG2tFKfpGPSxJc4BXm7fMz9WY+OB+igZOOeq7PtWWJdGkVD1foQkyWk
- UVIn0SSsjLG3wPgxyOpTl5y5Sea5Fp/MNvDf/GGdTGftOE4lCvE4ch/QpDCnkpe0ggi6
- YCi7xvFs9cEs9Y+SbAECH5stAdBsT1cgOG/JfLykJzqKLJK8JUt076ux6WD5/3u6goIm
- 8Ng4BuqCJOi5XR1RekgUOtsNz4AU/lmywBv14wfoUYCPSANOvXJeA+lizOVc6liKyMOD
- 5PXSKv6IzCuMZPTK1uLC2zIE+UyLO5wwmweJY4iBNmZWu4h3z7SR1F7OSNqmVswKz3eh NA== 
-Received: from ma1-mtap-s03.corp.apple.com (ma1-mtap-s03.corp.apple.com [17.40.76.7])
-        by nwk-aaemail-lapp02.apple.com with ESMTP id 2q8n0shgax-3
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
-        Wed, 30 Jan 2019 03:37:20 -0800
-MIME-version: 1.0
-Content-transfer-encoding: 7BIT
-Content-type: text/plain; CHARSET=US-ASCII
-Received: from nwk-relayp-sz03.apple.com
- (nwk-relayp-sz03.apple.com [17.128.113.11]) by ma1-mtap-s03.corp.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) with ESMTPS id <0PM500BRA6Y59H60@ma1-mtap-s03.corp.apple.com>; Wed,
- 30 Jan 2019 03:37:20 -0800 (PST)
-Received: from process_viserion-daemon.nwk-relayp-sz03.apple.com by
- nwk-relayp-sz03.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) id <0PM5000006UNDD00@nwk-relayp-sz03.apple.com>; Wed,
- 30 Jan 2019 03:37:19 -0800 (PST)
-X-Va-A: 
-X-Va-T-CD: 20246c69c8d4ef0427755ee72490d497
-X-Va-E-CD: 9770a944a70acd20bbc6bfe75bee6297
-X-Va-R-CD: 0fda362c301ac4a128966086672e69af
-X-Va-CD: 0
-X-Va-ID: 3fd2fcf7-5cdf-4539-9b42-2d02c6f4f290
-X-V-A:  
-X-V-T-CD: 20246c69c8d4ef0427755ee72490d497
-X-V-E-CD: 9770a944a70acd20bbc6bfe75bee6297
-X-V-R-CD: 0fda362c301ac4a128966086672e69af
-X-V-CD: 0
-X-V-ID: 52829284-a8b6-4601-86dc-3b7b8e1faf3c
-Received: from process_milters-daemon.nwk-relayp-sz03.apple.com by
- nwk-relayp-sz03.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) id <0PM5000006ULD200@nwk-relayp-sz03.apple.com>; Wed,
- 30 Jan 2019 03:37:19 -0800 (PST)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,,
- definitions=2019-01-30_09:,, signatures=0
-Received: from [17.234.17.81] (unknown [17.234.17.81])
- by nwk-relayp-sz03.apple.com
- (Oracle Communications Messaging Server 8.0.2.3.20181024 64bit (built Oct 24
- 2018)) with ESMTPS id <0PM500EAS6XGIU70@nwk-relayp-sz03.apple.com>; Wed,
- 30 Jan 2019 03:37:19 -0800 (PST)
-Subject: Re: [PATCH (Apple Git) 01/13] .gitignore: Remove *.s as it matches *.S
- on case insensitive filesystem
-From:   Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-In-reply-to: <CAPig+cSkm-M7fP=KLOCO5J8OSYCEyjy950AM=VzTnP9C6AcKxw@mail.gmail.com>
-Date:   Wed, 30 Jan 2019 03:37:18 -0800
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Message-id: <534F20EC-2B29-46C3-BAD9-3CBE7312257F@apple.com>
-References: <20190129193818.8645-1-jeremyhu@apple.com>
- <20190129193818.8645-2-jeremyhu@apple.com>
- <CAPig+cSkm-M7fP=KLOCO5J8OSYCEyjy950AM=VzTnP9C6AcKxw@mail.gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: Apple Mail (2.3445.104.1)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-30_09:,,
- signatures=0
+        id S1727765AbfA3Lkc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 06:40:32 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33654 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726857AbfA3Lkb (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 30 Jan 2019 06:40:31 -0500
+Received: from genre.crustytoothpaste.net (host-85-27-49-13.dynamic.voo.be [85.27.49.13])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CA5146072F;
+        Wed, 30 Jan 2019 11:40:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1548848428;
+        bh=5/LgxZznW/+mKG521XICqJXUPOoiJUapZghxgNK1Pa8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=QvRYWkUY8Jl/TepivJJ+s3iRdR5/Bv6v4DThBH2IVCEmGdgOxenfHnmxMldhdlH8z
+         OPMFnT92xHeCFUWmZ/pszG/D7xvPNFbn6erFo7gNg7O4AcpI/p7xkIk8lusC/lOF4s
+         E70brvrIC+4b+2r8bmkqyihZcaOLqxxbKeN6G/Gy6hRh2byzpKKoA0oJYtZ1f8WbLh
+         +OlFKm1xNIkPhqbYsejMc8IpBHzRzF8Mif6/CT9sohu1HodqWCktikB+UrPW2D/nz0
+         wwL6Of3arrdkoAsaT0+oWaMMyvTytNQIqiBiyEmsqPngD2bO61n/k1+VHhKmvEdlkT
+         vzeJUCY+VqAiO27vvobF+aK83AMy4ICvp2dwKlXHh5eXwBvBtitw/aepwqHXHsg2xO
+         sc7PzFly4W4EGDFkIXrQzXHv0h5n6A6e5I8gLL2Pl+7fXfp4ruPOXYR8HTwf3cVi4A
+         AmyhGAgoeucjIThDm44uIgm3PxU1ttrC3jVZnlqLxIqXnGYnYTH
+Date:   Wed, 30 Jan 2019 11:40:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: t5702 failing under ASan on master
+Message-ID: <20190130114016.GD24387@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20190130085855.GA24387@genre.crustytoothpaste.net>
+ <CACsJy8AVoETLkB5rLft27Rz7V9xPFN9fk=8g9-fCR61fVi4vjw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4zI0WCX1RcnW9Hbu"
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AVoETLkB5rLft27Rz7V9xPFN9fk=8g9-fCR61fVi4vjw@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+--4zI0WCX1RcnW9Hbu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Jan 30, 2019, at 03:33, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> 
-> On Tue, Jan 29, 2019 at 3:11 PM Jeremy Huddleston Sequoia
-> <jeremyhu@apple.com> wrote:
->> This was causing problems with ppc/sha1ppc.S
-> 
-> What problems, exactly?
+On Wed, Jan 30, 2019 at 05:07:20PM +0700, Duy Nguyen wrote:
+> If I understand ASan report correctly alternate_shallow_file memory is
+> already gone after the first fetch, when we update the shallow file.
+> But we're doing two fetches in the same process (the tag backfill
+> thingy), the second fetch reuses the dangling alternate_shallow_file
+> pointer and ASan caught it. Resetting the variable seems like the
+> right way to go.
 
-The file is ignored, but it shouldn't be.
+Ah, I think I was missing the fact that we're doing a tag backfill. That
+explains a lot.
 
-> 
->> Signed-off-by: Jeremy Huddleston Sequoia <jeremyhu@apple.com>
->> ---
->> diff --git a/.gitignore b/.gitignore
->> @@ -195,7 +195,7 @@
->> -*.[aos]
->> +*.[ao]
+> But should we reset it to an empty string? We would pass
+> "--shallow-file=3D" to "git index-pack", which is treated as "no shallow
+> file" (i.e. complete repo). This sounds wrong because this is still a
+> shallow repository.
+>=20
+> I suppose setting alternate_shallow_file to NULL would be ok. "git
+> index-pack" will just go back to reading $GIT_DIR/info/shallow, which
+> has been updated and contains correct info.
 
+Yeah, that sounds like a better choice. I'll send a complete patch which
+does this.
+
+> PS. No idea how ASan blames your series for this. Yeah maybe memory
+> layout and stuff. But it does spot a real problem.
+
+I don't doubt this is a problem. We'll definitely want to fix it before
+the release, since if I see it in development, somebody will likely see
+it in production.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--4zI0WCX1RcnW9Hbu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxRjSAACgkQv1NdgR9S
+9os39g/9Fz/Vga41CTtI1xT1ENPG3KMyDyep9W9RvGGriDdK9wky+BW5nImLClod
+dAKe3nXRqYTV6gvxXq0x+joRI3Jmr/hVZV3H05WEOcvIHRV4tKNKMooxdAV0YK+9
++wJZALFgytBqY5k1xYsut/+gWSRTyTCmO13yKOykHI1VVMrwiXcUz3SO+V0P8Hrw
+uFIXqfvAFpm52TeRJW8YpCECrykSDNa2RCXnaFx5v3RtVn7qtMV5osLExT0s19z5
+z0YKYrfftpWVtQqk9FHuoKCsIRC10FbHjMnpxs4G6WEvHO2rOvJGilE8p3dGB/no
+zkYFNPn7i7mnyrGbR461/KZk6kOlIYAU9G34iwwCP9weApFa1IQuBj2vDRVfK9JO
+UhFliY1Fuh4pJVKN4TDFQViElywpI9w4Jz61JEoOOL98rV9YgZs/I+e79nDU4sX1
+EjDSnGAHmq78dZvblzeb/gkADEjM6HKAJfiJS/vMVCxHwnhinoXLkf/C7elj8/OF
+SDVn4nWKPKeavFFP4kDDew5R5i4cm7XcpnLMjrylsKgtkXOlBKCMpY8CeEfOAyMm
+wVg97aFalgd3TQ8S57acQJ3wjfQahEr0LPAXVtdlAJU6ROUUnwvi9egLiHqD+Gzz
+Y1xUpkXJQMLvVfPh6KLTB919y7/paAqvzp1dvBbBpivD4Sn9TsE=
+=OwyP
+-----END PGP SIGNATURE-----
+
+--4zI0WCX1RcnW9Hbu--
