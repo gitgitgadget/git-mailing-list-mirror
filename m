@@ -2,144 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 526A01F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 07:39:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 471471F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 07:43:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726754AbfAaHjc convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 31 Jan 2019 02:39:32 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:33825 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbfAaHjc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 02:39:32 -0500
-Received: by mail-qt1-f194.google.com with SMTP id r14so2526579qtp.1
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 23:39:31 -0800 (PST)
+        id S1728238AbfAaHn5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 02:43:57 -0500
+Received: from mail-pf1-f180.google.com ([209.85.210.180]:42822 "EHLO
+        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726341AbfAaHn4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 02:43:56 -0500
+Received: by mail-pf1-f180.google.com with SMTP id 64so1100915pfr.9
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 23:43:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hL75AtXnsbZipI4pYOJ1zPZ6hi5aLY9OLen8NXCkLYc=;
+        b=tXhFjBytg6g8YmV5k2Dpd0yzStTZTj14hjs/WYYlvSNDh+tJ4z/ibv+3H+hfNt0wes
+         2x0vh6Sj1XNyWNRcPLuO7YnFjRaqhkb/pEXVFp8MhBtAVOC3LqZnGRy3qIotZ+wm4Avm
+         i+q9wWN08JLjnb/jsBC22W1o82JaIp9ANlxPVK2Gq9AQShOdRgGzdcl61h6X6saPDxRY
+         /9CWClPz8SCw8KxAnp9q7D3iRKAU1vARSGGPL0GUNOY0qjI8f5T7+dv5nnNn44byEMfG
+         81nLH/b8MmP5rkTgqIZcyShewgD5NooZdmhEWCps/0UUbUYrvAdhXg+eVvPu0gIxBLUj
+         9cTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Mvd9zhE3g71mzU3zu4zqAgJWstirSxauo7D4egG4JI8=;
-        b=guPKjaZtZcA3SgosK53xcv876O7NbWcfIk5tUPFFvDsUfrJMRvKSsb2kfzO9ZH7jPc
-         msEhBcBBU8iQnrRpplztck5tSJnlKvzgL7Ar2rS7HTHJxT7pVzhWgIvTfncFoRoNQ5QC
-         cvHip75uAa4nYl2nGVCVZt9HhnDEuzLypmVWnEyweQK1rVaF2OGe8JvCLmQTjwZB7Fjh
-         7z9LX9e9r5RlC9nqVZhT1R9fCFluwj+uJIg6Xty91tjIC9xPll5NZlxrL8r67hrY/K8Z
-         P1cMFC18PT7wFaBHZlQ2qEAIWE2AFZUesy3EjBmZae5UUaiInevlDHLJNVpPrj+CCWlY
-         Gj7g==
-X-Gm-Message-State: AJcUuke953q4RI4xUpOcsy38sd5t+KjRfsvUBAaaCjscEZAkBO0jCae+
-        lTIQ71TV0viZqOnUeB/ctr6IlG9izMhp9Nnfq/oLKZSh
-X-Google-Smtp-Source: ALg8bN4V0ydnIxrSv4qkRbE5jqUuWP6iWEP2cZpPa76qM+pmrEYSsJWIKliBqb+4sfu6k4FtE+r0y7M/4djthKfuynE=
-X-Received: by 2002:a0c:86c1:: with SMTP id 1mr30674885qvg.6.1548920370878;
- Wed, 30 Jan 2019 23:39:30 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hL75AtXnsbZipI4pYOJ1zPZ6hi5aLY9OLen8NXCkLYc=;
+        b=JP9//8dUXsuQiB1qoqEUav3pjQe5Nu5XB4STjCq6DEVjphu9kcJ8PnZ9P9iLhD8okU
+         jCcGY/uqeTmHgx4IAXcHE2GDhCwJkNZOf2r9yrum3pChB9kSBX9a7QMAVmbLXeOS2khy
+         BhkWDDilgy3gilrsQ4wDJnThrmzS8No1URLTgNqgGIkQJ/OaZ+kSf2nGxq+iMwTs5WgJ
+         /SQ5HYYanD4IwB2VCT/KXGftDz454a0fOKRdsLN7omsadOkgjnzunQnIHywbezgkikmN
+         H+A3WEjv3Rh+v1iIZLsKn5Mnoaqt6NRFm6N//SdMjg+ySyZPdscN/gVu0hfPHvvENhGw
+         egNw==
+X-Gm-Message-State: AJcUukf+ZlGxrC3EfxNXOMJzMiybNSJzpAqKc95Vs29PFmZvsP7MjHLe
+        7gRVnaycAXSV1hwxaIP5fvuPkemz
+X-Google-Smtp-Source: ALg8bN48XbMgwaqCi9/hL4HVRKdz4IepZaxxwzcsqn9dR90Te4HvgYq57MCJqKMICRXG7k2a27bQnA==
+X-Received: by 2002:a65:500c:: with SMTP id f12mr30187842pgo.226.1548920636029;
+        Wed, 30 Jan 2019 23:43:56 -0800 (PST)
+Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
+        by smtp.gmail.com with ESMTPSA id r187sm15479669pfc.63.2019.01.30.23.43.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 30 Jan 2019 23:43:55 -0800 (PST)
+Date:   Wed, 30 Jan 2019 23:43:53 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2019, #05; Tue, 29)
+Message-ID: <20190131074353.GA2647@archbookpro.localdomain>
+References: <xmqqa7jj6rg7.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20190130094831.10420-1-pclouds@gmail.com> <20190130094831.10420-20-pclouds@gmail.com>
-In-Reply-To: <20190130094831.10420-20-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 31 Jan 2019 02:39:19 -0500
-Message-ID: <CAPig+cRJJtZv0LcchXhV5FFOnbJTVio9Y_R8hyvGJEAGLsJ69A@mail.gmail.com>
-Subject: Re: [PATCH 19/19] doc: promote "git switch"
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa7jj6rg7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 30, 2019 at 4:50 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> The new command "git switch" is added to avoid the confusion of
-> one-command-do-all "git checkout" for new users. They are also helpful
-> to avoid ambiguation context.
->
-> For these reasons, promote it everywhere possible. This includes
-> documentation, suggestions/advice from other commands...
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> @@ -319,7 +319,7 @@ NOTES
->  If you are creating a branch that you want to checkout immediately, it is
+On Tue, Jan 29, 2019 at 02:15:36PM -0800, Junio C Hamano wrote:
+> * dl/merge-cleanup-scissors-fix (2019-01-27) 5 commits
+>  - init docs: correct a punctuation typo
+>  - merge: add scissors line on merge conflict
+>  - merge: cleanup messages like commit
+>  - t7600: clean up 'merge --squash c3 with c7' test
+>  - commit: extract cleanup_mode functions to sequencer
+> 
+>  The list of conflicted paths shown in the editor while concluding a
+>  conflicted merge was shown above the scissors line when the
+>  clean-up mode is set to "scissors", even though it was commented
+>  out just like the list of updated paths and other information to
+>  help the user explain the merge better.
+> 
+>  Comments?
 
-s/checkout/switch to/
+Not a code review comment but I believe that you mistakenly included the
+"init docs" patch in the branch. That commit wasn't part of my patchset.
 
-> -easier to use the git checkout command with its `-b` option to create
-> +easier to use the "git switch" command with its `-c` option to create
->  a branch and check it out with a single command.
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> @@ -302,22 +302,22 @@ ref: refs/heads/master
->  Examining an old version without creating a new branch
->  ------------------------------------------------------
->
-> -The `git checkout` command normally expects a branch head, but will also
-> +The `git switch` command normally expects a branch head, but will also
->  accept an arbitrary commit; for example, you can check out the commit
->  referenced by a tag:
+Thanks!
 
-This may need to mention --detach explicitly. Perhaps:
-
-    ...normally expects a branch head, but will also accept
-    an arbitrary commit when invoked with --detach;...
-
-> diff --git a/advice.c b/advice.c
-> @@ -191,13 +191,16 @@ void NORETURN die_conclude_merge(void)
->  void detach_advice(const char *new_name)
->  {
->         const char *fmt =
-> -       _("Note: checking out '%s'.\n\n"
-> +       _("Note: checking out '%s'.\n"
-
-Do you also want to adjust this to avoid saying "checking out"?
-
-> +       "\n"
->         "You are in 'detached HEAD' state. You can look around, make experimental\n"
->         "changes and commit them, and you can discard any commits you make in this\n"
-> -       "state without impacting any branches by performing another checkout.\n\n"
-> +       "state without impacting any branches by performing another checkout.\n"
-
-Ditto: "checkout"?
-
-> +       "\n"
->         "If you want to create a new branch to retain commits you create, you may\n"
-> -       "do so (now or later) by using -b with the checkout command again. Example:\n\n"
-> -       "  git checkout -b <new-branch-name>\n\n");
-> +       "do so (now or later) by using -b with the checkout command again. Example:\n"
-
-s/-b/-c/
-s/checkout/switch/
-
-> +       "\n"
-> +       "  git switch -c <new-branch-name>\n\n");
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> @@ -491,7 +491,7 @@ static enum {
->  static const char junk_leave_repo_msg[] =
->  N_("Clone succeeded, but checkout failed.\n"
->     "You can inspect what was checked out with 'git status'\n"
-> -   "and retry the checkout with 'git checkout -f HEAD'\n");
-> +   "and retry the checkout with 'git switch -f HEAD'\n");
-
-Just wondering if these uses of "checkout" and "checked out" need
-adjustment. I don't have any good suggestions, though.
-
-> diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
-> @@ -204,7 +204,7 @@ test_expect_success 'describe_detached_head prints no SHA-1 ellipsis when not as
->         If you want to create a new branch to retain commits you create, you may
->         do so (now or later) by using -b with the checkout command again. Example:
-
-s/-b/-c/
-s/checkout/switch/
-
-> -         git checkout -b <new-branch-name>
-> +         git switch -c <new-branch-name>
-> @@ -280,7 +280,7 @@ test_expect_success 'describe_detached_head does print SHA-1 ellipsis when asked
->         If you want to create a new branch to retain commits you create, you may
->         do so (now or later) by using -b with the checkout command again. Example:
-
-s/-b/-c/
-s/checkout/switch/
-
-> -         git checkout -b <new-branch-name>
-> +         git switch -c <new-branch-name>
+-Denton
