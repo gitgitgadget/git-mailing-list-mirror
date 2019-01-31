@@ -2,104 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B03A1F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 22:40:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 402591F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 23:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727648AbfAaWkZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 17:40:25 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:35558 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726885AbfAaWkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 17:40:25 -0500
-Received: by mail-ed1-f53.google.com with SMTP id x30so3946823edx.2
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 14:40:23 -0800 (PST)
+        id S1728045AbfAaXPe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 18:15:34 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40802 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726390AbfAaXPd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 18:15:33 -0500
+Received: by mail-wm1-f66.google.com with SMTP id f188so4283661wmf.5
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 15:15:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=+Kaz4qSTMr598yayMHCY9udRvBY6A1P1dmBegGSSYBI=;
-        b=inr6hqFVQn6C89HJa5Ymz7x61djtDIxxIB8U3K4/GkwfcTZykefI3ximLaYW7aNPsj
-         eNTurTkWHb7EO8ssCcoa0mtb92iGA7frPsxRcGv/Nnsd8LzhZyqW9tgpfjBi+IMC+zhS
-         Ti0jSA9IrcEGcaCZiXTPn4t0F/jYSpvNsK8HQnz/ahga6BYxhyAokbew/X5qscL/+2jv
-         VIb7r6GqVAogxp4s+PeT8eAwkVXI2Ti0HTaPOaR8V9RetDBL8kUr/cOkWE1OIIwTvL72
-         lNr4M3n/eClwhvqlw1DGqUv+wS9mRAJUSPD+NyQHcFMgwCjHyOMkcLXIkb1b35M/txAQ
-         Z5XQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=9R+OXmRUL5fKeJA9DsNB/eKnFLrQrLoTDu+ehSZEmd0=;
+        b=WKDHxX8+T7PvCKfJi7dd1af+7C5vA5EgchA/0FuNhRoftp7lRcVShqb+Apb0Jw2Y8L
+         uwYblxC2VfQmVRHiOZZmgTmTBQ/8GCom2hfzaK7FnRJ7lLnZdqwQiOf4xLSmEtQE/NGM
+         kVFeJWx3LVzC5DH9G63nXu41bt4C/97ACVUCbISbCOUntnpHDRDJbmrI4na71lha8iQ8
+         1zuD3xZIBzGK7V4POmJ9f13ecvh8C2UJNhC31cv6RqIW0Mnx4ZYJPscHM38DrzSK3RdH
+         xKsojiWaEssj8AJpUX380/EkvN7Zyi+QTEyyOOzDdkE8FMJh0dKC+wWjQQ+gMIpc7cEa
+         ORdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=+Kaz4qSTMr598yayMHCY9udRvBY6A1P1dmBegGSSYBI=;
-        b=ASY3QVKViPDoJC3Rxu94wHQcXXg3iXu3oJ3PGjx5Z8VISYYZO/GpguQ/eZbGyF7GsY
-         24CtTgNbE7ivLkqvkgfGqVZFZSN8PjWPyhx0BO8Dk9GIPXJWW1EDN43ni/Vx5LYM09uj
-         ZV59yriUjv5fuajmGt4+MhgEsw3iRiqQus435r5/EeoYF6QM8nlrQex85aZWC/XV/gHM
-         2fBWHOirM/O77otqibIeDI0mKFq56IDbgOTSJlkAVWMn3HtlkRmZWbm86rU2Hq3weQNC
-         kSHUZIeUXxe+F7RDKlFm93AQU+PTehL58gn9cjpGEpan8OU8fVyMXH8qRIERTlkfxFE9
-         Q84Q==
-X-Gm-Message-State: AJcUukdaDUGEEE4oYxftr6+Is5eySIW1zDBREdzY8wBCpuhqeyu/V73u
-        ZROrQU3rJHY3AnsQ3mUMRAg=
-X-Google-Smtp-Source: ALg8bN7GTFDVWCWN6C42k68jRuoBOMCVrfZ/WAyArz74tvwU51hVMr6TT/o3fpF7qSER6XX9jCToEA==
-X-Received: by 2002:a50:9a01:: with SMTP id o1mr36978429edb.82.1548974423106;
-        Thu, 31 Jan 2019 14:40:23 -0800 (PST)
-Received: from evledraar (ptr-a4kmumi3cjyxp9zp488.18120a2.ip6.access.telenet.be. [2a02:1811:5182:c100:ea6c:e022:ac1f:78a8])
-        by smtp.gmail.com with ESMTPSA id n11sm1597912edn.14.2019.01.31.14.40.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 Jan 2019 14:40:22 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Robert Cathles <rjc.live@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git annex possible bug
-References: <CANny=+C+yj6J0P-W91kR2ehxLcT44pMOCzg=u+gpEiiCpQLaHg@mail.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CANny=+C+yj6J0P-W91kR2ehxLcT44pMOCzg=u+gpEiiCpQLaHg@mail.gmail.com>
-Date:   Thu, 31 Jan 2019 23:40:21 +0100
-Message-ID: <87tvho30yy.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9R+OXmRUL5fKeJA9DsNB/eKnFLrQrLoTDu+ehSZEmd0=;
+        b=FCfOiFcrhiMxSs3WpyiBC4BSFMxJGNQZeY+T9iZp2DogIMhWvoupgMBgtX/3VuzJ3B
+         OP5Hj8zJOYBaiMTT6mVlBPFq70/0+s02uF230eIt4yBhxw3kWwKhWut4XDKsdkxyLmLN
+         2K4y5DQMk0l42Kb5AJnJohGR5+y0l4LQ6AId7lUzdrjgJzU0U7u7Sxiz+FfqldwD/rW1
+         EOUlX7tOaiQbimCeTZVbC3kQ64HbnRTsze3h1UmFLF6UCsHXjVoJIURTVB0Ys3ks3piO
+         QQC8duuXEQ9xwfUVU+0iq1o2WqAZC4tiI+yJxjLPseSPdCIbUlilf2tXNaItLp/cmLmG
+         CGXQ==
+X-Gm-Message-State: AJcUuke+kg31G3lTu1gOox2qejZyqSxmPeSvksCG3mUwX/VJ8RRsVOWJ
+        bqKRxWnMNCUMtXQnpsKvMG8=
+X-Google-Smtp-Source: ALg8bN6tENKuTSh2YB6J4yYeCnLtDa6tzMbqz+Z4jcS89Y3xHlq693dV6cxiBXaUyXUR45sNvy7MOQ==
+X-Received: by 2002:a1c:be11:: with SMTP id o17mr30622656wmf.111.1548976531963;
+        Thu, 31 Jan 2019 15:15:31 -0800 (PST)
+Received: from szeder.dev (x4db675b2.dyn.telefonica.de. [77.182.117.178])
+        by smtp.gmail.com with ESMTPSA id l19sm437077wme.21.2019.01.31.15.15.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 Jan 2019 15:15:31 -0800 (PST)
+Date:   Fri, 1 Feb 2019 00:15:28 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 03/14] trace2: collect platform-specific process
+ information
+Message-ID: <20190131231528.GC10587@szeder.dev>
+References: <pull.108.v3.git.gitgitgadget@gmail.com>
+ <pull.108.v4.git.gitgitgadget@gmail.com>
+ <6167aba76ca43707bbba6de9f7c41a9fcb16063c.1548881779.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6167aba76ca43707bbba6de9f7c41a9fcb16063c.1548881779.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jan 30, 2019 at 12:56:24PM -0800, Jeff Hostetler via GitGitGadget wrote:
+> Add optional platform-specific code to log information about
+> the current process.
+> 
+> On Windows, this includes whether git.exe is running under a
+> debugger and information about the ancestors of the process.
+> 
+> The purpose of this information is to help indicate if the
+> process was launched interactively or in the background by
+> an IDE, for example.
 
-On Thu, Jan 31 2019, Robert Cathles wrote:
+> diff --git a/trace2.h b/trace2.h
+> index a0e99d9c26..cb11a46366 100644
+> --- a/trace2.h
+> +++ b/trace2.h
+> @@ -363,4 +363,18 @@ __attribute__((format (printf, 1, 2)))
+>  void trace2_printf(const char *fmt, ...);
+>  #endif
+>  
+> +/*
+> + * Optional platform-specific code to dump information about the
+> + * current and any parent process(es).  This is intended to allow
+> + * post-processors to know who spawned this git instance and anything
+> + * else the platform may be able to tell us about the current process.
+> + */
+> +#if defined(GIT_WINDOWS_NATIVE)
+> +void trace2_collect_process_info(void);
+> +#else
+> +#define trace2_collect_process_info() \
+> +	do {                          \
+> +	} while (0)
+> +#endif
 
-> We use git annex and found an issue where one machine that had run
-> 'git annex sync' and 'git annex sync --content' was not reporting any
-> issues, but any other machines were report 99 issues when running 'git
-> annex get'.
->
-> The message for each file was that it was not known to exist on any
-> repo. doing some searching I found 'git annex fsck' so ran that in the
-> following fashion on the 'broken' machines: 'git annex fsck
-> --from=LocalMirrorName --fast'. During this we saw git was updating
-> the location log for nearly all the missing files. Running 'git annex
-> get' afterwards resolved the issue and got the files. We found we had
-> to repeat this on all affected machines.
->
-> The machine that did the original sync was running git 2.7.4 and other
-> machines were either running the same, or 2.17.1.
->
-> A test I also tried: I copied one annex file from inside the .git
-> folder of the original machine that ran the sync, and added it to the
-> same location on a broken machine, then ran sync and get, and it
-> reported 98 issues instead.
->
-> Does this seem like a bug with git annex? Is there a possible gap in
-> the way that git annex reports that all is fine - perhaps to do with
-> the index? Or does this seem to be more likely an issue we created
-> ourselves? Would there have been any other commands we could have run
-> to resolve this issue or should have tried out first? (Apart from just
-> deleting each of our clones and starting again)
+Please consider mentioning in the commit message that on other
+platforms this is a noop.  I was scrolling through the whole patch,
+skipping over the Windows-specific parts, to see how you did it on
+Linux, only to find the above do-nothing loop.  It was anticlimactic :)
 
-This may be a bug in git-annex, or not, but in any case you've reached
-the wrong people to ask. The git-annex tool is not part of git itself,
-it's a third-party plugin.
+Why is it a noop on other platforms?  I suspect that (since your main
+focus is supporting Windows devs using Git on Windows) it's along the
+lines of "I just didn't want to bother, and left it as future work for
+anyone interested", which a perfectly valid reason in my book.
+However, if you did look into it, and found some major difficulties or
+downright showstoppers, then that might be worth mentioning.
+(Portability?  I would expect that it would need a bunch of '#elif
+defined(...)')
 
-You'll probably want to file a bug here:
-https://git-annex.branchable.com/bugs/
