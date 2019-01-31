@@ -2,105 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEE651F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 09:24:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E74F01F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 10:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730838AbfAaJYB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 04:24:01 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:46265 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730723AbfAaJYA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 04:24:00 -0500
-Received: by mail-pl1-f194.google.com with SMTP id t13so1197743ply.13
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 01:24:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MiGlz7yML3Of/Q9/vxefjQoH0PBW04lWbmhpe//w+xg=;
-        b=aIb5atAvzIFZligrNVzsECSnh8VNwSBLPSYjNHOAvWaB3Jwu8aREEbPGiFyvxKqV1r
-         obqjercd8EPgetjzoNYeVxZJBqtsCrQeLyA9fg5oUNv2frjhaGJE7yZCAs7x5sKbmEi0
-         PPoxUiHGJBi6dlF+zjypk16CtoKi3lOLQew2GrnIm5UGYh3b+cibMNC+INpYr1tmbFY8
-         cxol0AnbB1jWAgjRoF3dcTQgL7z0quilFhSG4kRHJAw4RGrmanIXqjFhHmkc5PlnEtr5
-         cBFFei7L7Px69zEWPfbzl2hNMClyF/qUugxxgutUQF1PbzRSUTzTwMuz4G6cJVx3wnEz
-         4mcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MiGlz7yML3Of/Q9/vxefjQoH0PBW04lWbmhpe//w+xg=;
-        b=Npjgwci9vHG9R9r/WTYha95MCRp9o2OGv+WKMlxJxJlUS6dbOAnXMt0AzqnIyAjqMB
-         1xu93gZvs7u1NaJnaqwS/2mvYJVgYHDlxDl2/EtZQqVWuqA4uF9DBUOM6als+vaJz3wb
-         3gtDeAe3XywZI/aODcrOIBCRfmdsM31N0yStfxHqiCH7CIw1pkfSOd+CNJQZX+m0/vHS
-         LhDwCTS9L2fnCobkWlqQID6pN/nq3rtUWTo7ZpBBpkFPXl16XKN+oFSVhO2AVKDOezVn
-         rAHlQZ0KkWqLiHQ5uEv9dRKn/r0dYCNMZJy93NUSBRRBitE3v4ppGArue2rswKz4gO6U
-         MvbQ==
-X-Gm-Message-State: AJcUukdj5RCQx03s0oMA9lYdnV/JOhO1PaixNReOWEjUkXhkZRkT5AeW
-        NpopphV625XAXSLyFdhmAaHY/ZN7
-X-Google-Smtp-Source: ALg8bN4g2dAwOO55qJg3mS/VqW3glxIY6QNrBSDStA4QBdWh3+xw2acbt9yRJpZ2AZviWMa9XQzU0g==
-X-Received: by 2002:a17:902:aa4c:: with SMTP id c12mr33838112plr.48.1548926639754;
-        Thu, 31 Jan 2019 01:23:59 -0800 (PST)
-Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id h128sm6583160pgc.15.2019.01.31.01.23.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Jan 2019 01:23:59 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 31 Jan 2019 16:23:56 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] help: align the longest command in the command listing
-Date:   Thu, 31 Jan 2019 16:23:49 +0700
-Message-Id: <20190131092349.11469-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
+        id S1730011AbfAaKMW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 05:12:22 -0500
+Received: from metis.ext.pengutronix.de ([85.220.165.71]:57061 "EHLO
+        metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727009AbfAaKMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 05:12:22 -0500
+Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
+        by metis.ext.pengutronix.de with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <rhi@pengutronix.de>)
+        id 1gp9KX-0006lF-5s; Thu, 31 Jan 2019 11:12:21 +0100
+Received: from rhi by ptx.hi.pengutronix.de with local (Exim 4.89)
+        (envelope-from <rhi@pengutronix.de>)
+        id 1gp9KU-0005PO-Ok; Thu, 31 Jan 2019 11:12:18 +0100
+Date:   Thu, 31 Jan 2019 11:12:18 +0100
+From:   Roland Hieber <rhi@pengutronix.de>
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH] reflog: specify default pretty format in config
+Message-ID: <20190131101218.d6aebwuaxdmyjxoj@pengutronix.de>
+References: <20190130144744.3248-1-rhi@pengutronix.de>
+ <361643257.4118832.1548872569575.JavaMail.zimbra@matthieu-moy.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <361643257.4118832.1548872569575.JavaMail.zimbra@matthieu-moy.fr>
+X-Sent-From: Pengutronix Hildesheim
+X-URL:  http://www.pengutronix.de/
+X-IRC:  #ptxdist @freenode
+X-Accept-Language: de,en
+X-Accept-Content-Type: text/plain
+X-Uptime: 11:11:43 up 9 days, 21:24, 65 users,  load average: 0.16, 0.19, 0.18
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+X-SA-Exim-Mail-From: rhi@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"longest" is used to determine how many extra spaces we need to print
-to keep the command description aligned. For the longest command, we
-should print no extra space instead of one, or we'll get unaligned
-output like this (notice the "checkout" line):
+On Wed, Jan 30, 2019 at 07:22:49PM +0100, Matthieu Moy wrote:
+> Roland Hieber <rhi@pengutronix.de> writes:
+> 
+> > The output of git-reflog is currently only customizable by calling
+> > reflog with --pretty=... or overriding the default "oneline" pretty
+> > format in the configuration.
+> 
+> Sounds like a good idea to me, but the patch needs a bit more work:
 
-    grow, mark and tweak your common history
-       branch     List, create, or delete branches
-       checkout    Switch branches or restore working tree files
-       commit     Record changes to the repository
-       diff       Show changes between commits, commit and ...
-       merge      Join two or more development histories together
-       rebase     Reapply commits on top of another base tip
-       tag        Create, list, delete or verify a tag ...
+Thanks for the review! I'll follow up with a v2.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- help.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ - Roland
 
-diff --git a/help.c b/help.c
-index ff05fd22df..520c9080e8 100644
---- a/help.c
-+++ b/help.c
-@@ -85,7 +85,8 @@ static void print_command_list(const struct cmdname_help *cmds,
- 		if (cmds[i].category & mask) {
- 			size_t len = strlen(cmds[i].name);
- 			printf("   %s   ", cmds[i].name);
--			mput_char(' ', longest > len ? longest - len : 1);
-+			if (longest > len)
-+				mput_char(' ', longest - len);
- 			puts(_(cmds[i].help));
- 		}
- 	}
 -- 
-2.20.1.682.gd5861c6d90
-
+Roland Hieber                     | r.hieber@pengutronix.de     |
+Pengutronix e.K.                  | https://www.pengutronix.de/ |
+Peiner Str. 6-8, 31137 Hildesheim | Phone: +49-5121-206917-5086 |
+Amtsgericht Hildesheim, HRA 2686  | Fax:   +49-5121-206917-5555 |
