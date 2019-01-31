@@ -2,143 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 488961F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 20:38:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE1201F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 20:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727356AbfAaUiv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 15:38:51 -0500
-Received: from mout.web.de ([212.227.15.14]:58651 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727200AbfAaUiv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 15:38:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1548967123;
-        bh=n1rMjyEhZcuO+vDYz1+0Z2JSN1wZmZZ3sxju9rgCgtk=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=CD8v06GKnhOPTWmgjLcgv2xs0Bgn9/oZQy4sMPl+p6ObUBxAFI2q54dkiFA1h8TPT
-         MgmxirIhPdzUT4NND+Jg3y35ig6z3vO+8T88JB1qLZI/S/hWGybTNzRdSPP//3aiAk
-         cMjX3VhPM+0c+MewPGHQtsnXmbd2MVdirweeGWro=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M09uu-1hAGEx0UQ8-00uHCd; Thu, 31
- Jan 2019 21:38:43 +0100
-Date:   Thu, 31 Jan 2019 20:38:42 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Martin Koegler <martin.koegler@chello.at>
-Subject: Re: mk/use-size-t-in-zlib [was: Re: What's cooking in git.git (Jan
- 2019, #05; Tue, 29)]
-Message-ID: <20190131203842.633ztr4yckn7kl2d@tb-raspi4>
-References: <xmqqa7jj6rg7.fsf@gitster-ct.c.googlers.com>
- <994568940.109648.1548957557643@ox.hosteurope.de>
+        id S1728932AbfAaUkq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 15:40:46 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:24328 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727200AbfAaUkq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 15:40:46 -0500
+Received: from [192.168.2.240] ([92.26.116.186])
+        by smtp.talktalk.net with SMTP
+        id pJ8dgK30SwhzSpJ8dgbr2A; Thu, 31 Jan 2019 20:40:44 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1548967244;
+        bh=bGC4pOGph6hUUnVMCWiZyZ5qd8ZG8KSjuuIr9SML1Z4=;
+        h=Reply-To:Subject:To:References:From:Cc:Date:In-Reply-To;
+        b=O+7OwSBe+MNf6gLXKXTXimLl2U+Rhnx+sYrTIPSEQxEg3f7awCCIXn6xC4k4LoHxd
+         oGCIUm9xJYUNGpC2lLjyPENT3YTEIv9i1xTiL+gp5KSQJtkI977aozStcnODVsZsr5
+         jTyqeMUlJs+nHlgZNXeAaDARI54YdpVRt+zDv1H8=
+X-Originating-IP: [92.26.116.186]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=Pfo8oxCPEre7EYRssK5nbQ==:117
+ a=Pfo8oxCPEre7EYRssK5nbQ==:17 a=IkcTkHD0fZMA:10 a=uZvujYp8AAAA:8
+ a=b4LDLZbEAAAA:8 a=UlqV6C1OAAAA:20 a=lHt9L8fR2SPNheQdvnwA:9
+ a=pqQZu3MpBdBQb9Sp:21 a=gh0n3hHsHZsq9kwZ:21 a=QEXdDO2ut3YA:10
+ a=FXZrL07QY1wA:10 a=SLzB8X_8jTLwj6mN0q5r:22 a=20T61YgZp4ItGotXEy2O:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Broken interactive rebase text after some UTF-8 characters
+To:     Alban Gruin <alban.gruin@gmail.com>, phillip.wood@dunelm.org.uk,
+        Michal Nowak <mnowak@startmail.com>, git@vger.kernel.org
+References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
+ <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>
+ <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>
+ <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net>
+ <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Message-ID: <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>
+Date:   Thu, 31 Jan 2019 20:40:43 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <994568940.109648.1548957557643@ox.hosteurope.de>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:RoQkEmzHIQIC4ZTcsnuQQAZr2WFJK519mBEHYllcHh1RuAHG5mH
- RReevwgXuLtpGzGo3O2PjspYQvjcfo84FTh2UGpXhcOWD3am0Gl+Mw3ITsdFGKPmOtaJ+xC
- nZfwnmg+hyby5wbKjPNFUasfqJQlqBqCPvHQyLnKQkCUgrg3eGz7fu+USD6izDJ0WUptz4U
- SUTphNJb+5bEr5rgRIw7g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ydWSdgP/0hg=:ZxQUNG5o9V7Qpc29OoAXhs
- nDwdkiYtLI4v2vb5svqFoD1s7+pP+osKpiJcw/ZTOXIJzlOjaFpxDzFSDhoEncFp8ApEc+ojs
- giaO0Wv9NcMjAf+iBMdpfvNqN8d63T5myffoFRTuFxnABc7C3FfLokWj3gWJLXvBH4I7DGYDn
- UbIPy6at6I2FMUghYSGPZFbtoVNQHwtlG33Wjm2uHR/MoCcsKRaWILWZfhqVd+gFVBQa8JDzT
- VUHYJ9y4ZSNTNC2dEVad2jD7MjBJECymrwC2Q/rUb2wvYknElo1I4I90DJ9C48ieG3VSlvQgf
- oj7dgWj/ygFHTgosplZpy1vVkjyyQzvSuaE+31GAkYwNfEdqyBi9G/PmMayeCISizpuBg/01Y
- KcKTSdEBxWqF1x3BZrQS7YUT1EgHDNt8bsnEnvGvnJk4s6M6vop9ZxiUuIXBfUuph6RwoTZUW
- 50p9J6+fB0XfHd5P81RiiliUGtGlAiC92R6imBskwBFbVfTi4ZD4nZf9pNvmzcCkjsbn8oToV
- HX5px6li0qzJoVzBCncpEufMhsbBJSIICA7EIShbCS9GTjeXQFXvIFlFGCUKEu7L3swDu9s4Z
- AtSAmo4GveQTi6j/Q/E64h+ZXCuhOe/rBEkO9NfybvkGP4hwKAkbcwBtx/EJ4skiCas811O8t
- N/LXjr8ewwhw4ndW8bkXTCJOLp8G+1YzXs/4/hY3IVO82QX9Mm7qLs8EzcvhVGP+MpHWKMlYu
- u6/eawfOgOKL1V9+qOGXH3Tem4bKSldKPIyngNwPiqIDbKCGOTR6oyazCRf+P0IOvfOnqWTOt
- 33ohay2r7zCc2gyi5ishS9c21r/M0Wc82FTNan+ZUE/1fYNFh73G7k4PL/YsVm9KhOfXlhArU
- TF7C1NjkhZOvP7UcyLJwUfromKXJJuL+meh9AoifuC3UJDZ3WbqLXHg/zLopuf
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfKHuPLz97iAzYqOodehWgEwJ6KlSAaYFY5alWGogIEPEN/quZXQJorCp1NVrH6tIvBaW1B60HbBBhDBQDhBCRDA1YxhyiwXO6hS66vmZEXHk6XGH7R7B
+ 8yPxGr7HItGuf9B35vxQ7NSd1JT4B2c3XF6J8LKjQ3RuEmyQQYiy07zJh0rkJtHaOPYlZQ1P2e6gB+6y0MA6dSFIxkIfqxe0/6vVnEUL1VjyFr56cy4HDDC7
+ 7ZJTbKen2ihnQL8o8zXsZ5zJyiIFMf9rGozMVXOQHT5rOIjcfXGJKKyVuU2UDcRCZCP7BnaGQyVtEYtoUEbFqeBqlxcrrPe0I4AQ7ufs5bg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 31, 2019 at 06:59:17PM +0100, Thomas Braun wrote:
-> > Junio C Hamano <gitster@pobox.com> hat am 29. Januar 2019 um 23:15 ges=
-chrieben:
->
-> [...]
->
-> > * mk/use-size-t-in-zlib (2018-10-15) 1 commit
-> >  - zlib.c: use size_t for size
-> >
-> >  The wrapper to call into zlib followed our long tradition to use
-> >  "unsigned long" for sizes of regions in memory, which have been
-> >  updated to use "size_t".
-> >
->
-> I've started playing around with the patch from Thorsten [1] for getting=
- unsigned long replaced in more places so that you can commit large files =
-on platforms like Windows there unsigned long is 32-bit even on 64-bit OSe=
-s.
->
-> And the first thing which bugs out when I do a quick test with committin=
-g a large file and fsck the repo is in zlib.c:
->
-> 	if (s->z.total_out !=3D s->total_out + bytes_produced)
-> 		BUG("total_out mismatch");
->
-> here s->z.total_out is an unsigned long and s->total_out is size_t and t=
-his triggers the BUG message once the unsigned long wraps. There is even a=
-n FAQ entry for zlib at [2] which warns about that potential issue.
->
-> So I would think that something like
->
-> ----------->8
->
-> diff --git a/zlib.c b/zlib.c
-> index 197a1acc7b..9cc6421eba 100644
-> --- a/zlib.c
-> +++ b/zlib.c
-> @@ -51,13 +51,9 @@ static void zlib_post_call(git_zstream *s)
->
->         bytes_consumed =3D s->z.next_in - s->next_in;
->         bytes_produced =3D s->z.next_out - s->next_out;
-> -       if (s->z.total_out !=3D s->total_out + bytes_produced)
-> -               BUG("total_out mismatch");
-> -       if (s->z.total_in !=3D s->total_in + bytes_consumed)
-> -               BUG("total_in mismatch");
->
-> -       s->total_out =3D s->z.total_out;
-> -       s->total_in =3D s->z.total_in;
-> +       s->total_out +=3D bytes_produced;
-> +       s->total_in +=3D bytes_consumed;
->         s->next_in =3D s->z.next_in;
->         s->next_out =3D s->z.next_out;
->         s->avail_in -=3D bytes_consumed;
->
-> -----------8<
->
-> would make the patch [3] more complete IMHO.
->
-> Another potential issue in that patch is that the signature change in gi=
-t_deflate_bound forces size to unsigned long on the call to deflateBound (=
-for newer zlib versions) and if that conversion is not faithful this will =
-certainly not work.
->
-> Just my 2cents I'm not vetoing anything here,
-> Thomas
+Hi Alban
 
-Thanks for digging.
+On 31/01/2019 17:43, Alban Gruin wrote:
+> Hi Phillip and Michal,
+> 
+> I think I found the bug.
 
-Do you think that you can provide a new version of the patch ?
-Or, may be better,  a patch on top of that ?
+Good find! Which os are you on?
+> 
+> If you look at .git/rebase-merge/git-rebase-todo.backup, which is
+> created before the editor is opened, you can see that it does not have
+> this problem.  In between, transform_todos() is called and causes the
+> problem reported by Michal.
+> 
+> This seems to be caused by a single line, sequencer:4661 (on b5101f9297,
+> "Fourth batch after 2.20", 2019-01-29)[1].  If you add just before a
+> something like this:
+> 
+>      fwrite(item->arg, item->arg_len, sizeof(char), stdout);
+> 
+> You will see that the argument is properly written to stdout.  But if
+> you write this:
+> 
+>      printf("%.*s\n", item->arg_len, item->arg);
+> 
+> You will have the same broken output as in the todo file.
+> 
+> Are we misusing C formats?
 
+The C standard and POSIX both say that the * refers to the maximum 
+number of bytes to print but it looks like it is being treated as the 
+maximum number of characters on OpenIndiana.
 
->
-> [1]: http://public-inbox.org/git/20181120050456.16715-1-tboegi@web.de/
-> [2]: http://www.zlib.net/zlib_faq.html#faq32
-> [3]: http://public-inbox.org/git/20181012204229.11890-1-tboegi@web.de/
+Johannes - Perhaps we should change it to use fwrite() unless printf() 
+gets fixed and we're sure no other operating systems are affected?
+
+[1] http://pubs.opengroup.org/onlinepubs/9699919799/functions/fprintf.html
+[2] http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf page 309
+
+Best Wishes
+
+Phillip
+
+> [1] https://github.com/git/git/blob/master/sequencer.c#L4661
+> 
+> Cheers,
+> Alban
+> 
+> 
+
