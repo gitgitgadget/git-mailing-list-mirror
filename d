@@ -1,43 +1,61 @@
-Return-Path: <git-owner@vger.kernel.org>
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
-X-Spam-Level: **
-X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.0 required=3.0 tests=BAYES_50,DATE_IN_PAST_12_24,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
-Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39AF61F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 02:23:06 +0000 (UTC)
+From: "jessica" <noreply@netlogmail.com>
+Subject: my photo l
+Date: Fri, 15 Apr 2011 01:50:44 +0100
+Message-ID: <VPSo7WoKevwC7L4TLMc00000bc1@vps>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="Windows-1250"
+Content-Transfer-Encoding: 7bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat Apr 16 18:53:28 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by lo.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1QB8kR-0008Q2-NB
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Apr 2011 18:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727658AbfA3CXF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 29 Jan 2019 21:23:05 -0500
-Received: from ip151.ip-142-44-132.net ([142.44.132.151]:57673 "EHLO
-        lazyjvranch.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727851AbfA3CXE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jan 2019 21:23:04 -0500
-To:     git@vger.kernel.org
-Subject: Are your photos ready for retouching?
-Message-ID: <98e2410d1ffd534b38cf2870583dccd9@kiefer.com>
-Date:   Tue, 29 Jan 2019 12:57:47 +0100
-From:   "Mindy" <lousivamqi@verizon.net>
-Reply-To: jasfango@sina.com
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+	id S1752338Ab1DPQxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Apr 2011 12:53:23 -0400
+Received: from live.com ([74.63.213.116]:2431 "EHLO vps"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752045Ab1DPQxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2011 12:53:21 -0400
+X-Greylist: delayed 87478 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Apr 2011 12:53:21 EDT
+Received: from User ([88.212.164.253]) by vps with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 14 Apr 2011 17:50:45 -0700
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1081
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+X-OriginalArrivalTime: 15 Apr 2011 00:50:45.0389 (UTC) FILETIME=[275C3BD0:01CBFB07]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+X-Spam-Report: 12.3 points;
+ *  0.0 HS_INDEX_PARAM URI: Link contains a common tracker pattern.
+ * -0.2 BAYES_40 BODY: Bayesian spam probability is 20 to 40%
+ *      [score: 0.3296]
+ *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
+ *      [74.63.213.116 listed in dnsbl.sorbs.net]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?88.212.164.253>]
+ *  2.7 RCVD_IN_NJABL_RELAY RBL: NJABL: sender is confirmed open relay
+ *      [74.63.213.116 listed in combined.njabl.org]
+ *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
+ *      [URIs: sendspace.com]
+ *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171680>
 
-Are your photos ready for retouching? We are waiting to start working for
-you soon.
+i wannted to send u my photo long ago, but i was afraid that u dont like to see me . check on the links u see my photo, i hope u like it
+ 
+Download that and see my photo...
 
-No matter making white background or adding path to your pictures, we can
-do it quickly for you.
-
-We can do test on your current photos, please send some to start.
-
-Thanks,
-Mindy
-
+http://www.sendspace.com/file/hy4wgj
+or
+http://www.2shared.com/file/0dvDh3KX/DSC0189936.html
+or
+http://www.mediafire.com/?nm0xtfraf2r4uip
