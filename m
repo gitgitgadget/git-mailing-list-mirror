@@ -2,101 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74BDF1F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 17:59:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E2C01F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 18:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727903AbfAaR7V (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 12:59:21 -0500
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:37830 "EHLO
-        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727838AbfAaR7V (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 31 Jan 2019 12:59:21 -0500
-Received: from app04-neu.ox.hosteurope.de ([92.51.170.138]); authenticated
-        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
-        id 1gpGcP-00048T-Mo; Thu, 31 Jan 2019 18:59:17 +0100
-Date:   Thu, 31 Jan 2019 18:59:17 +0100 (CET)
-From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Martin Koegler <martin.koegler@chello.at>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Message-ID: <994568940.109648.1548957557643@ox.hosteurope.de>
-In-Reply-To: <xmqqa7jj6rg7.fsf@gitster-ct.c.googlers.com>
-References: <xmqqa7jj6rg7.fsf@gitster-ct.c.googlers.com>
-Subject: mk/use-size-t-in-zlib [was: Re: What's cooking in git.git (Jan
- 2019, #05; Tue, 29)]
+        id S1727885AbfAaSGQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 13:06:16 -0500
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:35910 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727191AbfAaSGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 13:06:16 -0500
+Received: by mail-wm1-f45.google.com with SMTP id p6so3578230wmc.1
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 10:06:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Z30yJskYMxnKQD+WrC6D7XVnz7SwzhYqIc+0QZ+gzPI=;
+        b=C+OupI2eqJl1SrrzrG/0D/8f/2VX7tfehEB0dwXM245g8KdgdAEgprRdfHNODg6xFZ
+         c86Bc2/aJSjn7DDyUucP5W3Bzng9sR1AI669Cd+PetDSiroatl2XqIZsp5qeNzyjrEbP
+         rb0EGUtvNrV+QNYw2e4gxk70ErpyPQWXv60lHzg5pKQ7Yi0bRgL/JYHywbHdYRPqnxQL
+         TVwP4eRkJ8ONz8YNNr6m0qBueLzAy91SqdDZCibY9XK5irxLwJ+Ole8AAQlsZpjUdH8G
+         nNUKSyR1+IruukWCHTFEwTjaBpBRz9YrlBYIou3KUnrgdq8mSIqgR0XKrD6ahKPrRvKf
+         icqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Z30yJskYMxnKQD+WrC6D7XVnz7SwzhYqIc+0QZ+gzPI=;
+        b=gsLogTkpF5ek2nq6GGMciq+2oihf3/MMKMPvxFMLOAXW02Hjuczu5Rw6hKeXyGyUPs
+         1sigLcJ7eeAA83OQBTsaWnhXMHp/F69RJQ+0qTSBj7ifbAJredW0tChyw+6+f/VZkVn8
+         t//XkWyWIatkB6pPixEU6aJgScOYj+HDLBU/ho/AUln+kSFdxgDl1ynHXjWk7pO1rm2m
+         BEaHhdT10x3YjaZrCJPVHPLQJClIc6Q1b4Ho6Dl/gOuEgoxAwC8PyGLUoo//ig9OZT6O
+         1TcfMWBlets0qRdj0Ij8p/ffy7+5Ej3nSmzEhiior19b3fE4zxc2QBuxfZo/xk2v759D
+         vVxg==
+X-Gm-Message-State: AJcUukegTIXj29dT4njxrdJatDY97sewjHqfr9iVZaF2Y9oyAi261HNz
+        T+AHlqXWDOfXuwVDUvJxCfHVTQ6q
+X-Google-Smtp-Source: ALg8bN5eCmcTpQ3bCZTrY80zkmO7CXcxxy2kW1OESkdzHoG9TLiDmpn4zGuoubfqnsXKFUB34ff3bA==
+X-Received: by 2002:a1c:4955:: with SMTP id w82mr31809126wma.33.1548957974198;
+        Thu, 31 Jan 2019 10:06:14 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id k7sm5750135wrl.51.2019.01.31.10.06.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 31 Jan 2019 10:06:13 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH (Apple Git) 12/13] Enable support for Xcode.app-bundled gitconfig
+References: <20190129193818.8645-1-jeremyhu@apple.com>
+        <20190129193818.8645-13-jeremyhu@apple.com>
+        <xmqqo97z5ac9.fsf@gitster-ct.c.googlers.com>
+        <7A37A7C1-6B82-44F8-AECB-189A57B94FBD@apple.com>
+        <nycvar.QRO.7.76.6.1901302030100.41@tvgsbejvaqbjf.bet>
+        <EE1DF652-C42D-4106-8A81-55262EC578D0@apple.com>
+Date:   Thu, 31 Jan 2019 10:06:12 -0800
+In-Reply-To: <EE1DF652-C42D-4106-8A81-55262EC578D0@apple.com> (Jeremy
+        Huddleston Sequoia's message of "Wed, 30 Jan 2019 13:09:32 -0800")
+Message-ID: <xmqqzhrg3dnv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v7.8.4-Rev48
-X-Originating-Client: open-xchange-appsuite
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1548957560;c0c4b272;
-X-HE-SMSGID: 1gpGcP-00048T-Mo
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Junio C Hamano <gitster@pobox.com> hat am 29. Januar 2019 um 23:15 geschrieben:
+Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
 
-[...]
+>>>> A concern shared with 13/13 is this.
+>>>> 
+>>>> While it may not hurt too much to look at one extra location even on
+>>>> non-Apple platform, it probably is a mistake to have this xcode
+>>>> specific change in generic part of the system like config.c or
+>>>> attr.c.  For that matter, would it make sense to force Apple uses to
+>>>> look at one extra location in the first place?  In other words, we
+>>>> already have "system wide" location (i.e. system_path(ETC_GITCONFIG))
+>>>> defined so system owners can give reasonable default to its users.
+>>>> The value of not using that facility and instead adding yet another
+>>>> place is dubious.
+>>> 
+>>> This allows for per-distribution configuration and could be useful for
+>>> other applications as well that want customizations specific to their
+>>> install of git.  For our specific use case, we do not want to munge the
+>>> system policy when installing Xcode.  Prior to doing things this way, we
+>>> were just changing the default in our distributed git binary, but this
+>>> seems a bit more flexible.
+>> 
+>> I think you misunderstood Junio, thinking that he referred to
+>> /etc/gitconfig. He did not. system_path(ETC_GITCONFIG) refers to
+>> <prefix>/etc/gitconfig, where <prefix> is that runtime prefix when
+>> compiled with RUNTIME_PREFIX.
+>
+> Oh!  Awesome.
 
-> * mk/use-size-t-in-zlib (2018-10-15) 1 commit
->  - zlib.c: use size_t for size
-> 
->  The wrapper to call into zlib followed our long tradition to use
->  "unsigned long" for sizes of regions in memory, which have been
->  updated to use "size_t".
-> 
+I do not think you misunderstood.  system_path(ETC_GITCONFIG) may be
+in <prefix>/etc/gitconfig when building with RUNTIME_PREFIX, but
+then I do not think /etc/gitconfig (without <prefix>) comes into the
+picture.  So as long as you want to add "a forced by distribution,
+not editable by end user to set a global policy for the entire box"
+configuration, that goes against the design of the configuration
+system, which wants to have three levels (i.e. per repository, per
+user and per box).
 
-I've started playing around with the patch from Thorsten [1] for getting unsigned long replaced in more places so that you can commit large files on platforms like Windows there unsigned long is 32-bit even on 64-bit OSes.
+I think the arrangement jrnieder illustrates in a message in this
+thread to use the inclusion of distro-provided file from
+/etc/gitconfig, which documents what is happening clearly and still
+allows the user to disable the distro-provided one if needed, is
+probably the best solution under the current design.
 
-And the first thing which bugs out when I do a quick test with committing a large file and fsck the repo is in zlib.c:
-
-	if (s->z.total_out != s->total_out + bytes_produced)
-		BUG("total_out mismatch");
-
-here s->z.total_out is an unsigned long and s->total_out is size_t and this triggers the BUG message once the unsigned long wraps. There is even an FAQ entry for zlib at [2] which warns about that potential issue.
-
-So I would think that something like
-
------------>8
-
-diff --git a/zlib.c b/zlib.c
-index 197a1acc7b..9cc6421eba 100644
---- a/zlib.c
-+++ b/zlib.c
-@@ -51,13 +51,9 @@ static void zlib_post_call(git_zstream *s)
-
-        bytes_consumed = s->z.next_in - s->next_in;
-        bytes_produced = s->z.next_out - s->next_out;
--       if (s->z.total_out != s->total_out + bytes_produced)
--               BUG("total_out mismatch");
--       if (s->z.total_in != s->total_in + bytes_consumed)
--               BUG("total_in mismatch");
-
--       s->total_out = s->z.total_out;
--       s->total_in = s->z.total_in;
-+       s->total_out += bytes_produced;
-+       s->total_in += bytes_consumed;
-        s->next_in = s->z.next_in;
-        s->next_out = s->z.next_out;
-        s->avail_in -= bytes_consumed;
-
------------8<
-
-would make the patch [3] more complete IMHO.
-
-Another potential issue in that patch is that the signature change in git_deflate_bound forces size to unsigned long on the call to deflateBound (for newer zlib versions) and if that conversion is not faithful this will certainly not work.
-
-Just my 2cents I'm not vetoing anything here,
-Thomas
-
-[1]: http://public-inbox.org/git/20181120050456.16715-1-tboegi@web.de/
-[2]: http://www.zlib.net/zlib_faq.html#faq32
-[3]: http://public-inbox.org/git/20181012204229.11890-1-tboegi@web.de/
