@@ -2,81 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76DC31F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 11:29:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87E621F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 13:06:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732258AbfAaL3M (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 06:29:12 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:43408 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726221AbfAaL3L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 06:29:11 -0500
-Received: by mail-io1-f67.google.com with SMTP id b23so2309677ios.10
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 03:29:11 -0800 (PST)
+        id S1732877AbfAaNGo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 08:06:44 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52924 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732565AbfAaNGo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 08:06:44 -0500
+Received: by mail-wm1-f67.google.com with SMTP id m1so2426520wml.2
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 05:06:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TT13xjoyXbACYXsvUn4mf9eid5D0jrSdEEVlibVRQIw=;
-        b=upWXeJ9cfthEcBrRG1QZ0r60bnZDiDkhf+zedjOLvGivLSMHpg0BV+bIthAo04Thlq
-         RSUkCFVlCJh+8PMlNDSSGrKICWptKG/KA8XPS9xHBHXxRuMzSo9jTQ7XMdbCn4UBVYyB
-         eY662G7+3W4+84eEo+4KYeXYO2LuIYuDgq55jFNFHSkZkHeSJL23u3i7aop3jrZ+Vhns
-         fO5GywIqOBwFRqXdC4Hk1y5CdSfsaSy4k4TccoSzvtazj49C2Ft3mUlz/gG13CNBxgAO
-         yK5Z/vv2CLnYJ3V0ssUy2pWgp3cmIPAh2tRnsaEX1V3jEPiqjUfr1MIUnbT+kmmcqPA6
-         SA5A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=bLFNx1cswSW9MB4zbHaNc1a8LG3tIyeTkdmmpo6k/FA=;
+        b=cugygARrburuDUI6j/iCCk2aU0I6ETXvIpNDzP576Ch201R42JoueBDOt1l5rzfG1l
+         j8SOgfLVr6sF7egVY3ybQJK+PGKez/zW2zI8O8k6Zlu/GyBPM+m59XzeywLL08LcU9so
+         Knjk/YnhDteH8sLIm1DaJ4AwaWwSlloi1gLDDFNFidP9XUmTtezoMFQP3Or/Tj+CXXv7
+         W+zvdqJHRvyrk5qTzesCMZmh8m6UDuTx/AxJ/4zQOlRVBz7jVnyIqicM7QbS0co27aAr
+         AUmn0QEXPJjHV25zELYWVlY/3l5ubj2aoO89gmWtctQiNEkIy/YvfhDHk1iZDHZW8q4s
+         o8Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TT13xjoyXbACYXsvUn4mf9eid5D0jrSdEEVlibVRQIw=;
-        b=oWRMS7+uFL0yfYcHiI19Raby3EZ2tSrFTG7boxICyLJ+krFW8HQSlgIf9SUpqxL9f3
-         QBsIkTwZ2zqtFdT4i86LkLn4R+xu/Wi7oVMD2nhIcvhbBq/Lr9c9ERyLcvRf8XUVNu9V
-         bK6+Mzu47+aha1AYr4d6a20kwtktX9qOxmCJUUKhbBJw7MUXW0FrnkzSStjixlF4ZMsB
-         MG0DyRu9UFl5SoSPNVHoys6SpQeJMrtYD/VV/i7oIa0EAK8WCa4Pxd6cdl58PSQBl60R
-         qohoUSfy9nxnTb0Zi1/fgM1RvxOaWqxHPSqum+wDpraNFxiLdQ6y1EZl2gSnjk7o+MlU
-         j/Ig==
-X-Gm-Message-State: AHQUAuZU/OrtSD81Od5+LMOzVxZxIbMyASPMWwRdRFNjhGPdXCESL6DS
-        rIwZhFcQW1QvSlKZ+kW+ifAAIonpB8byDFN4Egc=
-X-Google-Smtp-Source: AHgI3IZW9yeL/N95p4QyiKDqUeCsvxlvyjN4BK78LORyqQ83AZM+X04KOvcWJuOK/GV6Y2PTXVt3eZxi/k9tb625E/k=
-X-Received: by 2002:a5d:9456:: with SMTP id x22mr16860008ior.282.1548934150962;
- Thu, 31 Jan 2019 03:29:10 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bLFNx1cswSW9MB4zbHaNc1a8LG3tIyeTkdmmpo6k/FA=;
+        b=XThSn3Hk+Xr2Tyup+qSKSaqMsUYekKrXZBf1dMa73I7sx1oc1Q9DDtD1wg7dW4b3LP
+         foHs+iYQ9dadUJq0OaBOPdMiLTi21nzy4mD+aXVZ/FM8XcO07xfZmLRSKseVS6YdOwrz
+         aXKgXcAn4o6wlauotAAUXC/fXjYDtnO2+IvJsOZybH73TIg9xWtDHukbRMGCN8ISKlAk
+         7ipOWcaNND2kHnebXYm1Gn911ZFmsAlTI9tanE7V3GSkwXUAUiunEHP5uAstbyG6zn2c
+         zafPN+4fkwgtxCTxeWslqA+c4uawshlgiW87PaojQDgXxlsoPj60Qcy/3iyBY5VIMEt+
+         NO4Q==
+X-Gm-Message-State: AJcUukc4V9lhBRSLclIDotPHiqkzG+sdB/qgzj0IITDsmtuSRFHA7xVv
+        DGnxakBDWy4UjaqX8YblI10=
+X-Google-Smtp-Source: ALg8bN7KGwDPD4mvBHaSq/iDOubdAY95gxAO0VIdbW9wznrk7lPTHY1r6vFYryiJwgQtZQ+EXQM5DQ==
+X-Received: by 2002:a7b:c0c5:: with SMTP id s5mr30533255wmh.40.1548940001748;
+        Thu, 31 Jan 2019 05:06:41 -0800 (PST)
+Received: from szeder.dev (x4db675b2.dyn.telefonica.de. [77.182.117.178])
+        by smtp.gmail.com with ESMTPSA id q12sm4247266wrx.31.2019.01.31.05.06.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 Jan 2019 05:06:40 -0800 (PST)
+Date:   Thu, 31 Jan 2019 14:06:38 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 08/19] checkout: split part of it to new command switch
+Message-ID: <20190131130638.GI13764@szeder.dev>
+References: <20190130094831.10420-1-pclouds@gmail.com>
+ <20190130094831.10420-9-pclouds@gmail.com>
+ <CAPig+cQ3L4NcMojWYV3spazJNzEa6yhBJQ0wwbwcLSzG3Vmzjw@mail.gmail.com>
+ <CACsJy8BKxf6Q1Q-u92enPgw6a18XhAOvYSewZs-G+tB+-MSkNw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20190130094831.10420-1-pclouds@gmail.com> <20190130094831.10420-20-pclouds@gmail.com>
- <CAPig+cRJJtZv0LcchXhV5FFOnbJTVio9Y_R8hyvGJEAGLsJ69A@mail.gmail.com>
-In-Reply-To: <CAPig+cRJJtZv0LcchXhV5FFOnbJTVio9Y_R8hyvGJEAGLsJ69A@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 31 Jan 2019 18:28:44 +0700
-Message-ID: <CACsJy8DEeK7wbDJbk_mVkRjU2rFz7EvRyYRwf8N_8pt+sDKX3w@mail.gmail.com>
-Subject: Re: [PATCH 19/19] doc: promote "git switch"
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BKxf6Q1Q-u92enPgw6a18XhAOvYSewZs-G+tB+-MSkNw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 31, 2019 at 2:39 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > @@ -491,7 +491,7 @@ static enum {
-> >  static const char junk_leave_repo_msg[] =
-> >  N_("Clone succeeded, but checkout failed.\n"
-> >     "You can inspect what was checked out with 'git status'\n"
-> > -   "and retry the checkout with 'git checkout -f HEAD'\n");
-> > +   "and retry the checkout with 'git switch -f HEAD'\n");
->
-> Just wondering if these uses of "checkout" and "checked out" need
-> adjustment. I don't have any good suggestions, though.
+On Thu, Jan 31, 2019 at 12:29:01PM +0700, Duy Nguyen wrote:
+> > > +EXAMPLES
+> > > +To check out commit "HEAD~3" for temporary inspection or experiment
+> > > +without creating a new branch:
+> > > +
+> > > +------------
+> > > +$ git switch --detach HEAD~3
+> > > +HEAD is now at 9fc9555312 Merge branch 'cc/shared-index-permbits'
+> > > +------------
+> > > +
+> > > +If it turns out whatever you have done is worth keeping, you can
+> > > +always create a new name for it (without switching away):
+> > > +
+> > > +------------
+> > > +$ git switch -c good-surprises
+> > > +------------
+> >
+> > I had to go re-read git-branch documentation to understand why you
+> > recommended "git switch -c <new-branch>" (or even why this mode
+> > exists) over plain "git branch <new-branch>". I wonder if the
+> > difference between the two deserves a bit more discussion here and
+> > above in the description of the -c/-C options.
+> 
+> There is this bit in git-branch, will that help?
+> 
+> -- 8< --
+> NOTES
+> -----
+> 
+> If you are creating a branch that you want to checkout immediately, it is
+> easier to use the "git switch" command with its `-c` option to create
+> a branch and check it out with a single command.
+> -- 8< --
+> 
+> Otherwise any suggestions are welcome, I guess I could rephrase it a bit like
+> 
+> -c <new_branch>::
+> --create <new_branch>::
+>         Create a new branch named <new_branch> starting at
+>         <start_point> before switching to the branch. This is similar
+>         to creating a new branch with linkgit:git-branch[1] except
+>         that `git branch` does not switch branches.
 
-I think I'm going to leave this message alone for now. Technically
-"git switch" can replace "git checkout" here but I feel this is more
-about restoring files on worktree than switching branches. So when
-"git restore" comes, I'll change it to say "git restore --from=HEAD
-:/" or something like that instead.
--- 
-Duy
+I think the second sentence, in particular the "except..." part, in
+this description goes backwards by explaining how 'git branch' differs
+from this.  I think the most to-the-point explanation instead of that
+second sentence would be something like this:
+
+  This is a shorthand for 'git branch <new-branch> [<start-point>] &&
+  git switch <new-branch>'.
+
