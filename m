@@ -2,83 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A01C1F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 07:21:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0408E1F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 07:24:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726852AbfAaHVJ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 31 Jan 2019 02:21:09 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:42292 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbfAaHVI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 02:21:08 -0500
-Received: by mail-qt1-f196.google.com with SMTP id d19so2412990qtq.9
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 23:21:08 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+EO4axyVglqb4e0IeQbUEoGxts7dbLXHzKOHPQXW50g=;
-        b=YKwSjsOzLDsDbIyZXID6q8P4UdqyKzwZG4ijcQFguzwpulu8EZBPbkyiPZlbs52A0T
-         Z8ZfugJnKAmncBKxfrfZuH5BW6kqFQoH+IPIGDsIXt/dJ55hxZdmw0J4giR6wQ5bG922
-         4tPzl2bK1kyLs0EbhZdz0d8coCF/OjlNf7lshNOr94Bs17cUAyM/sOKp20Bl8aM30by+
-         mUg34iot69WXBHCXWuBkIKlvBUIEYCa2quHn1QAF9QYXVE0aNjxYTCj1ThLGnYW8KBBW
-         CD7l3y0sXHS/QxtCEDU1xIIo3uw+1a+pmKI4lchU9gBEfr8f5cVhQSp2yJ5DGWmPY4vH
-         nf2A==
-X-Gm-Message-State: AJcUukfXP3rx4t9vq1A1NIHYZrq3PKRtsGMNR43QoYlDH6yrrU20cB6r
-        0eVeTEwMccDsKILc/7hOXvNjcmWVIOphtm25hSo=
-X-Google-Smtp-Source: ALg8bN6u3jV6fIqJfH6/XD9YNZ6ysgLzktYD4VlICEwP2nSumVtYzhFWydeAMoJAPIGeC1+wETTYVCqtBglaZpLUnPY=
-X-Received: by 2002:a0c:9359:: with SMTP id e25mr31506259qve.203.1548919267864;
- Wed, 30 Jan 2019 23:21:07 -0800 (PST)
+        id S1729260AbfAaHYX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 02:24:23 -0500
+Received: from mout.gmx.net ([212.227.17.22]:35683 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725963AbfAaHYW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 02:24:22 -0500
+Received: from [10.10.1.35] ([195.130.156.138]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LZlZ2-1haFEf2Ahg-00lWP1; Thu, 31
+ Jan 2019 08:24:05 +0100
+Date:   Thu, 31 Jan 2019 08:23:48 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] Makefile: add prove and coverage-prove targets
+In-Reply-To: <87womm2b7r.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901310819180.41@tvgsbejvaqbjf.bet>
+References: <pull.114.git.gitgitgadget@gmail.com> <294187c6968eff952e78bcea808c66fbedbf1f90.1548773766.git.gitgitgadget@gmail.com> <20190129160030.GA7083@sigill.intra.peff.net> <87zhrj2n2l.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1901301317120.41@tvgsbejvaqbjf.bet>
+ <87y3722sz7.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1901301935010.41@tvgsbejvaqbjf.bet> <87womm2b7r.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190130094831.10420-1-pclouds@gmail.com> <20190130094831.10420-9-pclouds@gmail.com>
- <CAPig+cQ3L4NcMojWYV3spazJNzEa6yhBJQ0wwbwcLSzG3Vmzjw@mail.gmail.com>
- <CACsJy8BKxf6Q1Q-u92enPgw6a18XhAOvYSewZs-G+tB+-MSkNw@mail.gmail.com> <CAPig+cS4Dmgh+hCMXp8ND5DMy6QFVCJOgvDwpcbwZ0HV4MscpA@mail.gmail.com>
-In-Reply-To: <CAPig+cS4Dmgh+hCMXp8ND5DMy6QFVCJOgvDwpcbwZ0HV4MscpA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 31 Jan 2019 02:20:56 -0500
-Message-ID: <CAPig+cR1bpNE3LUB1jOhDsCJA8FqF9kkTUmSrKFPOW6d6hpBPw@mail.gmail.com>
-Subject: Re: [PATCH 08/19] checkout: split part of it to new command switch
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: multipart/mixed; boundary="8323328-633458180-1548919445=:41"
+X-Provags-ID: V03:K1:AbPT+C93QBa75I5g17XHG32+VFBQ0NfM/EerLpv2EqgL4aJ5m6G
+ CnEBeRlHKqtA2AR7i/1pBmHMbeIJDsOiQR/+QJMS2JUIDWy7LlWeCDPNMCpigOlJwwkobBH
+ aoGRBvMPIIR8dmJX0AvwAbkzdQff6pNqahIetpouyNpovxW+Jepi4moC+i+xtHtoxQzPRVT
+ dJ9qgQ9cOU67l5oqDjRsQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kXuu52KSiYA=:Hx3Ux4eMJ7fHVNjBr1sGId
+ hF563DB/R+P9um8XuyX6rK5mpegbBSB68evowYW60tbOi09pCVfHq8KimvqwJde04fpiMcwla
+ 6JZuVbfkUQP9vORwhOHs2408kaNxxh364+HdqAHqbGjZ5FF8x3VG6ENflFyE9lpY5Ll7TxIBt
+ bCh4eXmh4tPBdHgjPWEstoq+D5X2EUe7qXFuiKZKQAc2rE2d2mE3Lun3hUp46ps00Xz3QIGw5
+ UJ/XQIAXojzYLomHOqmhnkOIv4e9JnQVTXvxRKgFNlawpM2YFrsK/I/89/btGzqnaZ2bcwaJZ
+ cQh3gc8f9A8BAYneRLQTl2H+0hadGcei+Mu4qY+FDZ+P0Y91TaB+tHy5jNFsDsqOx+ocfSgLk
+ MdXGNlrYdwYg2TNJJDHfZ2Dp+R7UiUoWx3ZmSvtnleSQ0Q9wiDJfwEBf43gqmLM5y2sHXBWV2
+ 7JC7J8NiiXR/DkNbru0+EaaU/5tlsyi3RGssUKtLU1Qj/R+bNYNi5bFMM4Bb92Th3Dwt9CtNA
+ pSZ0NnuuvxkvB5OTqp7NYhzzfs2NdB113DZG9nOncAo97zm9X1wpmforSt5ReYfST+e0pCxQV
+ b7wNKkEgsCUP+gs+go3urkVFxm3umyCOi+gJ2xAnp/6k7tbcPXf8UlUbj2uxI+e8GTzTxnZRy
+ memwhDQy//RfeZnBE7m3MpKI4m4eKb7OZRco26fXRiqNyf4chM+RKnsLg9w3FLaRhZMbTR2kZ
+ UIGpl1nLc2mZf3IYUu6xacbTAzGZ4LgIkcGeMJ/BbitwCHG6cKGN2ZWzFPqrEHDx/d3hfNN/p
+ 9blQOdvtocOderFDF/Lbz9tVEomSge47fQ78Uh9qGBm3njjQsPFxj7KMMru4qAIw/5jPRyJx8
+ m29HcqAuYfqV4AzTzXRIRYzChYVf0oA7ujZMs3udg7axD9/M3rRnO66S54m75m0Lo0qk9gjpa
+ 7jmqB1hdEUQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 31, 2019 at 1:24 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, Jan 31, 2019 at 12:29 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> > On Thu, Jan 31, 2019 at 7:50 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > On Wed, Jan 30, 2019 at 4:49 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> > > > +'git switch' [<options>] [--guess] <branch>
-> > > > +'git switch' [<options>] --detach [<start_point>>]
-> > > > +'git switch' [<options>] [[-c|-C|--orphan] <new_branch>] [<start_point>]
-> > >
-> > > What does the third form mean when all optional arguments (that is,
-> > > _all_ arguments) are omitted?
-> >
-> > "git switch" is smart (or too dumb to be clever):
-> >
-> > $ git switch
-> > fatal: nothing to do
->
-> But does it need to be this way? Does it make a good user-experience?
-> I, personally, find it confusing to see that it can accept no
-> arguments. An alternative, perhaps more consistent with UX elsewhere:
->
->     $ git switch
->     fatal: missing branch argument
->
-> or something.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Let me clarify by saying that I don't understand why the third form is
-documented as validly accepting no arguments given that a no-argument
-invocation is an error. That is, I would expect the third form of the
-synopsis to say:
+--8323328-633458180-1548919445=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-    'git switch' [<options>] (-c|-C|--orphan) <new_branch> [<start_point>]
+Hi Ævar,
+
+On Wed, 30 Jan 2019, Ævar Arnfjörð Bjarmason wrote:
+
+> Let's get some numbers then. On master, go to the "t" directory and run
+> this:
+> 
+>     for f in t[0-9]*.sh; do (echo '#!/bin/sh' && echo "echo ok 1 $f" && echo sleep 1 && echo echo 1..1) >$f; done
+>
+> That effectively turns all our tests into a "hello world" with a sleep
+> of 1 second.
+> 
+> Then run both:
+> 
+>     time prove -j12 t00[0-9]*.sh
+> 
+> And:
+> 
+>     time make -j12 t00[0-9]*.sh
+> 
+> For some value of -j12 and t00[0-9]*.sh. In my testing "make" is a bit
+> faster, but not by any amount that would matter when this is run for
+> real.
+
+Hmm. You're right, I basically see a range of 5.17-5.27 seconds, all well
+in the noise.
+
+So apart from the size for Perl (which accounts for about a third of the
+subset of the Git for Windows SDK we have to download into each and every
+CI run, multiple times) it does not hurt that much at the moment, you're
+right.
+
+Still, I would like to get away from our reliance on Perl in the test
+suite. It does not make sense to require Perl even with NO_PERL.
+
+Ciao,
+Dscho
+--8323328-633458180-1548919445=:41--
