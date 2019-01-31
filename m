@@ -2,119 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 402591F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 23:15:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD5B31F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 23:21:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728045AbfAaXPe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 18:15:34 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40802 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726390AbfAaXPd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 18:15:33 -0500
-Received: by mail-wm1-f66.google.com with SMTP id f188so4283661wmf.5
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 15:15:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9R+OXmRUL5fKeJA9DsNB/eKnFLrQrLoTDu+ehSZEmd0=;
-        b=WKDHxX8+T7PvCKfJi7dd1af+7C5vA5EgchA/0FuNhRoftp7lRcVShqb+Apb0Jw2Y8L
-         uwYblxC2VfQmVRHiOZZmgTmTBQ/8GCom2hfzaK7FnRJ7lLnZdqwQiOf4xLSmEtQE/NGM
-         kVFeJWx3LVzC5DH9G63nXu41bt4C/97ACVUCbISbCOUntnpHDRDJbmrI4na71lha8iQ8
-         1zuD3xZIBzGK7V4POmJ9f13ecvh8C2UJNhC31cv6RqIW0Mnx4ZYJPscHM38DrzSK3RdH
-         xKsojiWaEssj8AJpUX380/EkvN7Zyi+QTEyyOOzDdkE8FMJh0dKC+wWjQQ+gMIpc7cEa
-         ORdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9R+OXmRUL5fKeJA9DsNB/eKnFLrQrLoTDu+ehSZEmd0=;
-        b=FCfOiFcrhiMxSs3WpyiBC4BSFMxJGNQZeY+T9iZp2DogIMhWvoupgMBgtX/3VuzJ3B
-         OP5Hj8zJOYBaiMTT6mVlBPFq70/0+s02uF230eIt4yBhxw3kWwKhWut4XDKsdkxyLmLN
-         2K4y5DQMk0l42Kb5AJnJohGR5+y0l4LQ6AId7lUzdrjgJzU0U7u7Sxiz+FfqldwD/rW1
-         EOUlX7tOaiQbimCeTZVbC3kQ64HbnRTsze3h1UmFLF6UCsHXjVoJIURTVB0Ys3ks3piO
-         QQC8duuXEQ9xwfUVU+0iq1o2WqAZC4tiI+yJxjLPseSPdCIbUlilf2tXNaItLp/cmLmG
-         CGXQ==
-X-Gm-Message-State: AJcUuke+kg31G3lTu1gOox2qejZyqSxmPeSvksCG3mUwX/VJ8RRsVOWJ
-        bqKRxWnMNCUMtXQnpsKvMG8=
-X-Google-Smtp-Source: ALg8bN6tENKuTSh2YB6J4yYeCnLtDa6tzMbqz+Z4jcS89Y3xHlq693dV6cxiBXaUyXUR45sNvy7MOQ==
-X-Received: by 2002:a1c:be11:: with SMTP id o17mr30622656wmf.111.1548976531963;
-        Thu, 31 Jan 2019 15:15:31 -0800 (PST)
-Received: from szeder.dev (x4db675b2.dyn.telefonica.de. [77.182.117.178])
-        by smtp.gmail.com with ESMTPSA id l19sm437077wme.21.2019.01.31.15.15.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Jan 2019 15:15:31 -0800 (PST)
-Date:   Fri, 1 Feb 2019 00:15:28 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 03/14] trace2: collect platform-specific process
- information
-Message-ID: <20190131231528.GC10587@szeder.dev>
-References: <pull.108.v3.git.gitgitgadget@gmail.com>
- <pull.108.v4.git.gitgitgadget@gmail.com>
- <6167aba76ca43707bbba6de9f7c41a9fcb16063c.1548881779.git.gitgitgadget@gmail.com>
+        id S1728051AbfAaXVD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 18:21:03 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57198 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726284AbfAaXVD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 18:21:03 -0500
+Received: (qmail 25734 invoked by uid 109); 31 Jan 2019 23:21:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 31 Jan 2019 23:21:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30541 invoked by uid 111); 31 Jan 2019 23:21:09 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 31 Jan 2019 18:21:09 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2019 00:20:58 +0100
+Date:   Fri, 1 Feb 2019 00:20:58 +0100
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Nickolai Belakovski <nbelakovski@gmail.com>, git@vger.kernel.org,
+        Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v6 1/3] ref-filter: add worktreepath atom
+Message-ID: <20190131232057.GA3843@sigill.intra.peff.net>
+References: <20190122232301.95971-1-nbelakovski@gmail.com>
+ <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20190122232301.95971-2-nbelakovski@gmail.com>
+ <xmqq36pjcicw.fsf@gitster-ct.c.googlers.com>
+ <CAC05384+KjC=4_ZF9BrxweMUjwpkaGXNqRNSnwif6yci6TxMMw@mail.gmail.com>
+ <xmqq5zud52ut.fsf@gitster-ct.c.googlers.com>
+ <20190124183235.GA16580@sigill.intra.peff.net>
+ <xmqqd0olj1kj.fsf@gitster-ct.c.googlers.com>
+ <20190124212608.GD16114@sigill.intra.peff.net>
+ <xmqqef8s1p3d.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6167aba76ca43707bbba6de9f7c41a9fcb16063c.1548881779.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqqef8s1p3d.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 30, 2019 at 12:56:24PM -0800, Jeff Hostetler via GitGitGadget wrote:
-> Add optional platform-specific code to log information about
-> the current process.
+On Thu, Jan 31, 2019 at 01:42:14PM -0800, Junio C Hamano wrote:
+
+> > So I'd much rather see us parse the format into a real tree of nodes,
+> > and figure out (once) which properties of each object are required to
+> > fulfill that. Then for each object, we grab those properties, and then
+> > walk the tree to generate the output string.
 > 
-> On Windows, this includes whether git.exe is running under a
-> debugger and information about the ancestors of the process.
-> 
-> The purpose of this information is to help indicate if the
-> process was launched interactively or in the background by
-> an IDE, for example.
+> That sounds like a sensible longer-term strategy.  Let's however
+> leave it outside the scope of this change.
 
-> diff --git a/trace2.h b/trace2.h
-> index a0e99d9c26..cb11a46366 100644
-> --- a/trace2.h
-> +++ b/trace2.h
-> @@ -363,4 +363,18 @@ __attribute__((format (printf, 1, 2)))
->  void trace2_printf(const char *fmt, ...);
->  #endif
->  
-> +/*
-> + * Optional platform-specific code to dump information about the
-> + * current and any parent process(es).  This is intended to allow
-> + * post-processors to know who spawned this git instance and anything
-> + * else the platform may be able to tell us about the current process.
-> + */
-> +#if defined(GIT_WINDOWS_NATIVE)
-> +void trace2_collect_process_info(void);
-> +#else
-> +#define trace2_collect_process_info() \
-> +	do {                          \
-> +	} while (0)
-> +#endif
+Yeah, sorry if I got us too far afield. It's definitely out of scope for
+this series. The takeaway I was trying to get at is that storing the
+worktree map as a static global is actually pretty reasonable given the
+current design.
 
-Please consider mentioning in the commit message that on other
-platforms this is a noop.  I was scrolling through the whole patch,
-skipping over the Windows-specific parts, to see how you did it on
-Linux, only to find the above do-nothing loop.  It was anticlimactic :)
-
-Why is it a noop on other platforms?  I suspect that (since your main
-focus is supporting Windows devs using Git on Windows) it's along the
-lines of "I just didn't want to bother, and left it as future work for
-anyone interested", which a perfectly valid reason in my book.
-However, if you did look into it, and found some major difficulties or
-downright showstoppers, then that might be worth mentioning.
-(Portability?  I would expect that it would need a bunch of '#elif
-defined(...)')
-
+-Peff
