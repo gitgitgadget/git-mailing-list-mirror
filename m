@@ -7,62 +7,65 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD34E1F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 18:51:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B91191F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 19:05:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727936AbfAaSvs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 13:51:48 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38953 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726622AbfAaSvs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 13:51:48 -0500
-Received: by mail-wr1-f67.google.com with SMTP id t27so4495665wra.6
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 10:51:47 -0800 (PST)
+        id S1728469AbfAaTF1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 14:05:27 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52528 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726488AbfAaTF1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 14:05:27 -0500
+Received: by mail-wm1-f67.google.com with SMTP id m1so3650952wml.2
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 11:05:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ZVl3AvVBGshK0GtBFUdLMy/GWN1oQ/s3R5LO4KX7ATg=;
-        b=CKSDCWUwOj2k8o13zzU5pRrZ2VIffUUfREq3Up0vs+nMJQyKOTr9UaTZRNfDpsOdyS
-         A/RlE4SNs7vDT3EbmSk6BdvwKZS879c+kHxewxI1ylmshzXKRJWMvSQ5TryfO1eMv+jv
-         X/TOQ28uyPoDpxDkhO/iOXFEl1L/D5//TY2n4i/EVHPzXi8VZsQeQBtvg7hXn/rEFLlX
-         D0kb59xhqbxBAw6U+9DACyz9B1CuTao8Br6EGihIYsZMnyy2Rlniwe7cQ+SpFI67CBdz
-         BGRqIXJOf1M/QmES/69U3JaHnHASGcntdfMssEEY4HDTha0NaXEj2OYYzrXfuRIm6kVc
-         gOBA==
+        bh=BBS692LNMCjIHdbexKuhR2yXx1lTg4uBWc2YEAP9T6U=;
+        b=ToNxmc0wjVehIwSpm09qzr+NUZSHnKzu0d6MGKHsHuj1yx6QWPPMxzEge7+hIXbM9Y
+         sf+u4FCg0pKX+EUrhyFUrkrCg6fLTBu0HcOU5nE8XNzQtXvpC3Iii8s0uQeKJaAaKApK
+         9W+i1JggoCCB/BjiGDlP8g9Z945PR83DdfXdSZ4ZfuuFa6aGFc1q3CrhrcMuybuflt9W
+         wm9aorNhs9bU5if1WOsRoZKDqMbQSm8Oe2A+dD5UwTi1TKP0p9URUskvxl17fFzuohQj
+         8HRHu3Y659b5/UL2QKORW6RNNbAnGz0kOoE2nIvWmMcdXQfhk3WMzFMwZWjyc04zId2r
+         ATHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZVl3AvVBGshK0GtBFUdLMy/GWN1oQ/s3R5LO4KX7ATg=;
-        b=BrdlDteTNFGSCbNuC4msAigTO2UXoccnVxxml+P2Pd5qjgE5EhlTropBkf4qb3oUGw
-         2GBoXk6uI5JTzFJTnCzs5FJIBNhUZOaYmFXTaOStte558Od1QUp2xuDYox3lWNxjEda+
-         g6I1CyE+ApfZMVsp5JPXhsn1oYtPmxjvm3t+laalKjsmKsfEn9QGY8Xrbde5WbZAzByR
-         ZLEfrm4NKYRTYhBMvN+YU0hnRu8iT76fjK3eHI5MseRTiW7k4G5ILSRpbjyWH6KsE1Sp
-         JMXZQ9x+4LBM+oQ4u7SKG3VtaraH0eYyFZcuPp+F4u9WHPSl7yjxfdYqqtxB+t5GYqgE
-         qS2g==
-X-Gm-Message-State: AJcUukdTvR+BBdZKfFhKO77qpyPKlcnE2F2mcdlMrojqvBYs57a1opND
-        yGfj0T3ApbacfFSuNvI+jpM=
-X-Google-Smtp-Source: ALg8bN4w8GDwMYLCRp/chMD8U2enHz2EI5CLuMHzxftaRCqYMd0AMsHkr8b38Otefk7n1jKV7sRxLA==
-X-Received: by 2002:adf:f703:: with SMTP id r3mr34762014wrp.93.1548960706084;
-        Thu, 31 Jan 2019 10:51:46 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v8sm6829872wrq.53.2019.01.31.10.51.44
+        bh=BBS692LNMCjIHdbexKuhR2yXx1lTg4uBWc2YEAP9T6U=;
+        b=qatdkrLclMpn7omxSl1mME0+zq5tMyH23eIvdyLem3PQwMNJ1m6v3ojh/039CCc+uz
+         xcIOdFsp7onjI3Aq4fwMQkWYl2pfbRKpr5XI5yMcR1+UWr6mAkIBPhQIUsgDszMeb/cV
+         FZBIhsMmzeKCeTVUAD7MjBbjXk7hu7kH/yBQvcPIRDCiWJkzV6ZSjl+MP4P1yLCCvyLT
+         WXvShPk72kbUSwG544AgznXMxZyrawtILOdOGodBUB0uYB9AxRq3aWdxTvBizOQVkiJR
+         0rrj4gPW4GeEaKL6xanQd6YrJ8nwX3zcy1DhPRJalHfXKFAVi1vSJYpmOa32lLJCGHDM
+         kdVA==
+X-Gm-Message-State: AJcUuke7kSXcKNNgFXrZYsROrejJfBcshoZNSBA+pXBlx9HlblAgNBQh
+        duxj/3HU1zhmT3yUwtbcc/ZxEpCP
+X-Google-Smtp-Source: AHgI3IZXxbZVdggmIBUctfA2On/fqGoLVnU/vZqlAGgpvlTzsrcgGisuzQ3AsBpk0QPrRibmVEqqYw==
+X-Received: by 2002:a1c:f518:: with SMTP id t24mr15366314wmh.26.1548961525221;
+        Thu, 31 Jan 2019 11:05:25 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f191sm160123wmg.12.2019.01.31.11.05.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 Jan 2019 10:51:44 -0800 (PST)
+        Thu, 31 Jan 2019 11:05:24 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jeffhost@microsoft.com
-Subject: Re: [PATCH v3 00/14] Trace2 tracing facility
-References: <pull.108.v2.git.gitgitgadget@gmail.com>
-        <pull.108.v3.git.gitgitgadget@gmail.com>
-        <20190131143811.GB10587@szeder.dev>
-        <9b603fd7-d8f0-1ce7-7c7c-8b17484d7d0a@jeffhostetler.com>
-Date:   Thu, 31 Jan 2019 10:51:44 -0800
-In-Reply-To: <9b603fd7-d8f0-1ce7-7c7c-8b17484d7d0a@jeffhostetler.com> (Jeff
-        Hostetler's message of "Thu, 31 Jan 2019 09:53:29 -0500")
-Message-ID: <xmqqbm3w3bjz.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 6/8] checkout: add --cached option
+References: <20181209200449.16342-1-t.gummerer@gmail.com>
+        <20181209200449.16342-7-t.gummerer@gmail.com>
+        <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
+        <xmqqva40lps2.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BGQwtok1T3WmY3ndBG6RjbESSOgmbZxkWiN-avqfUjDVg@mail.gmail.com>
+        <CACsJy8AxUxYCO7bzb98EVvO5DU62ukZQNrF-sEktrdR9m6tfvg@mail.gmail.com>
+        <CACsJy8Bk=wbgzsE+Vo4w_u0E63PdUxxcvG-7e6Hq-8_jrmSErw@mail.gmail.com>
+Date:   Thu, 31 Jan 2019 11:05:24 -0800
+In-Reply-To: <CACsJy8Bk=wbgzsE+Vo4w_u0E63PdUxxcvG-7e6Hq-8_jrmSErw@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 31 Jan 2019 12:54:50 +0700")
+Message-ID: <xmqq7eek3ax7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,46 +74,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
->>>       -+	for_each_builtin(j, tgt_j) {
->>>       ++	for_each_builtin(j, tgt_j)
->>>       ++	{
->>>        +		tgt_j->pfn_term();
->>>        +	}
->>
->> Our CodingGuidelines prefer the opening brace on the same line after
->> the if/for/while/struct/etc. statement, and even omitting the braces
->> if the if arm or loop body consists of a single statement.  So
->> unfortunately a considerable part of this range diff goes in the wrong
->> direction.
+> I've changed my mind. I'm not using --index and --cached for "git
+> restore" (formerly "git restore-files"). So how about this?
 >
-> I know they do and I had them on the same line originally.
+> git restore --from=<tree> <pathspec> will update both the index and worktree.
 >
-> Clang-format was complaining about every use of the for_each_builtin
-> macro, so I changed them to be on the next line to quiet it.
+> git restore --from=<tree> --keep-index <pathspec> will not update the index
+>
+> git restore --from=<tree> --keep-worktree <pathspec> will not update worktree
 
-Well, clang-format is wrong then ;-)
+An action to "restore" with an option to "keep" (i.e. "do not
+touch") smells strongly of double negation.  We are restoring,
+i.e. grabbing something that existed in the past out of another
+place (like tree or index) and depositing it to the working tree to
+recover its previous state, oh, not but not touching the content of
+the working tree (or the index) intact?
 
-> I hesitate to remove braces around a statement adjacent to a
-> for_each macro trick for the usual safety reasons.
+It would be great if you can come up with phrasing that avoids
+specifying what is *not* done, but instructs the command what is to
+be done, perhaps along the lines of "restore --index-only", "restore
+--worktree-only" and "restore --index-and-worktree (which would be
+the default)".
 
-Sorry, but what's "usual safety reasons"?  Isn't a macro that
-requires {} in order to work correctly simply broken?
-
-I see (from a previous iteration---sorry, but I haven't caught up)
-
-#define for_each_builtin(j, tgt_j)                      \
-        for (j = 0, tgt_j = tr2_tgt_builtins[j];        \
-             tgt_j;                                     \
-             j++, tgt_j = tr2_tgt_builtins[j])
-                                  
-
-and I do not think
-
-	for (j = 0, tgt_j = ...; tgt_j; j++, tgt_j = ...)
-		statement;
-
-is unsafe (iow, your macro is not broken).
-
-Puzzled.
