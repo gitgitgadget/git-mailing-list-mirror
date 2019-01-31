@@ -1,64 +1,93 @@
-From: "jessica" <noreply@netlogmail.com>
-Subject: my photo l
-Date: Fri, 15 Apr 2011 19:19:38 +0100
-Message-ID: <20110415182856.AD5B4E413F9@yt333.com>
+From: "CSCC 2015 Invited Special Sessions" <our.conferences@wopu.org>
+Subject: How to organize your Invited Special Session or Workshop within CSCC 2015. See Photos from CSCC 2014 below. 36 ISI Journals will publish the extended versions of all the papers
+Date: Mon, 16 Feb 2015 00:58:28 +0200
+Message-ID: <20150215225828.E4B613973393@genf174.server4you.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1250"
-Content-Transfer-Encoding: 7bit
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Fri Apr 22 11:44:17 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 19 00:34:25 2015
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1QDCuP-0000nc-1R
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Apr 2011 11:44:17 +0200
+	id 1YOE8P-0007Np-Bv
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Feb 2015 00:34:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754474Ab1DVJoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Apr 2011 05:44:12 -0400
-Received: from [210.21.117.13] ([210.21.117.13]:34699 "EHLO yt333.com"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754204Ab1DVJoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2011 05:44:11 -0400
-X-Greylist: delayed 132708 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Apr 2011 05:44:11 EDT
-Received: from User (mail.irwingroup.com [88.212.164.253])
-	by yt333.com (yt333.com) with ESMTPA id AD5B4E413F9;
-	Sat, 16 Apr 2011 02:28:55 +0800 (CST)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2800.1081
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+	id S1751730AbbBRXeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Feb 2015 18:34:21 -0500
+Received: from genf174.server4you.net ([217.172.184.70]:59974 "EHLO
+	genf174.server4you.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751036AbbBRXeU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Feb 2015 18:34:20 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id E14543A22219
+	for <git@vger.kernel.org>; Mon, 16 Feb 2015 21:39:50 +0100 (CET)
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id fbUEdWsQ_zEj for <git@vger.kernel.org>;
+	Mon, 16 Feb 2015 21:39:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by genf174.server4you.net (Postfix) with ESMTP id 821CB3A15AB2
+	for <git@vger.kernel.org>; Mon, 16 Feb 2015 19:13:28 +0100 (CET)
+X-Virus-Scanned: amavisd-new at genf174.server4you.net
+Received: from genf174.server4you.net ([127.0.0.1])
+	by localhost (genf174.server4you.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id vF77IZnlA2pD for <git@vger.kernel.org>;
+	Mon, 16 Feb 2015 19:13:28 +0100 (CET)
+Received: from 10.0.2.15 (genf174.server4you.net [217.172.184.70])
+	by genf174.server4you.net (Postfix) with SMTP id E4B613973393
+	for <git@vger.kernel.org>; Sun, 15 Feb 2015 23:58:27 +0100 (CET)
+X-Priority: 1 (Highest)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 9.2 points;
- *  0.0 HS_INDEX_PARAM URI: Link contains a common tracker pattern.
- * -0.7 BAYES_20 BODY: Bayesian spam probability is 5 to 20%
- *      [score: 0.1238]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?88.212.164.253>]
- *  2.0 URIBL_SC_SWINOG URI's listed in uribl.swinog.ch.
- *      [URIs: sendspace.com]
- *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/171933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/264072>
 
-i wannted to send u my photo long ago, but i was afraid that u dont like to see me . check on the links u see my photo, i hope u like it
- 
-Download that and see my photo...
+Dear Colleagues,
 
-http://www.speedyshare.com/files/27984571/DSC01626921.zip
-or
-http://www.sendspace.com/file/4rq41r
-or
-http://www.mediafire.com/?6zvza2s22x3z5i4
-or
-http://www.filefactory.com/file/cbccd00/n/DSC01626921.zip 
-or
-http://turboupload.com/l4a7bijswotu
-or
-http://www.mlfat4arab.com/lp2x2z5z0ed3/DSC01626921.zip.html
+I hope you know our conference CSCC: Circuits, Systems, Communications and Computers
+www.cscc.co The Conference is now in its 19 year and in 2015 is organized in the
+wonderful and historical island of Zakynthos in Greece (July 16,17,18,19,20 2015 /
+Five days).   
+The conference is indexed in ISI, SCOPUS, Engineering Villeage, EI Compendex, IET etc
+and has collaboration with important scientific societies and 3 universities:
+More Details: www.cscc.co
+Last year the Proceedings of CSCC were published in 12 Volumes (hard-copy) and one
+CD (containing the material of these 12 volumes) and this material was distributed
+to our authors. 
+See a full report and many wonderful photos from the CSCC 2014 here:
+inase-news.blogspot.com/2014/12/post-conference-report-inase_15.html  www.cscc14.org
+
+CSCC has always famous plenary speakers from prestigious universities, IEEE Fellows
+(www.cscc.co / last year: www.cscc14.org) and this year we have arranged
+post-conference publication of all the extended version of all the accepted papers
+in 36 ISI/SCI Indexed Journals. We have also 4 Tutorials by well-known colleagues.
+
+We would like to invite you to organize a Special Session or Workshop. For Special
+Session / Workshop organizers we give financial support (honorarium), free
+publication, air tickets and hotel expenses. Successful special session organizers
+will be automatically included in the committee of CSCC 2016, as well as we will
+jointly examine their participation in the Editorial Board in one of our 36
+collaborating ISI/SCI Journals. Special Session organizers are also appointed
+Associate Editors in the conference Proceedings. We will also give several mailing
+lists to the Session Organizers to send their own Call For Papers.
+
+So, far we have 16 Special Sessions and we believe that we will reach more than 80
+until July. Send the proposal of your Special Session to us now following the
+instructions of cscc.co 
+
+The list of the reviewers that will undertake the peer review process and their
+emails is included in the proceedings and is also sent to ISI, SCOPUS and other
+indexes.
+
+See you in Zakynthos, Greece in July 
+
+The Organizing and Steering Committee
+
+================
+If you do not want to receive more invitations, send an email to cscc2015@gmail.com
+with exactly this SUBJECT (in the Subject line of your email please):
+" REMOVE git@vger.kernel.org "
