@@ -2,111 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-0.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB1431F453
-	for <e@80x24.org>; Wed, 30 Jan 2019 23:31:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5F461F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 00:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727359AbfA3Xbq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 30 Jan 2019 18:31:46 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:37542 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725768AbfA3Xbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jan 2019 18:31:46 -0500
-Received: by mail-qk1-f196.google.com with SMTP id g125so864881qke.4
-        for <git@vger.kernel.org>; Wed, 30 Jan 2019 15:31:45 -0800 (PST)
+        id S1726455AbfAaABk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 30 Jan 2019 19:01:40 -0500
+Received: from mail-pl1-f181.google.com ([209.85.214.181]:42210 "EHLO
+        mail-pl1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbfAaABk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jan 2019 19:01:40 -0500
+Received: by mail-pl1-f181.google.com with SMTP id y1so582864plp.9
+        for <git@vger.kernel.org>; Wed, 30 Jan 2019 16:01:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MJQOvh+ShEwn7Pkji7QAMKICcEftpF2ztop1rjMlwbk=;
+        b=jrBrKXZA6JXYBJmxKRn9nF36at9fQqhpl1MWAm8DpD7ukZFQsgyAuC1rCdhiaJaZzy
+         U1v73dnSLtAFsBkqfgTMqz6Tg3kV3zKTmBoyjV2jt/AvqyBqcBhZdxte/4ZL2g8TXr4r
+         aqgnL7x9tEddrIqkDnoayR452ScV0ZKLht7KD4Mm/TPeZrAQf+IqFzISoeOv5T/IcPAm
+         Azn3QDZvhQZ2KcUk2p0Az+ggPLSGdv0zZWEGyPUsTdoM0luP070Whh4TDx15VPmMly9h
+         xrNfRHtVZIoiswITAsaeTEgKo4nnEe+X4IsGWoYUYXSvpgLXEdkyZwXW6fttlkLOZfs7
+         1jmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=82DxBOi3IYbEExhARB2k9FRhMsoChZysWB5kc+40S6s=;
-        b=llBgmr72UlcVT4vFsdrPSxm7qWEEKD/oYqoqau/fdK2zU90Lyp4bXxqGPk2SHBqkLo
-         lRhXzZ9ekhnL5d0rNlbOmFXClh3Yzvyx4xSuCkzYc5h1PnMsqCkNJJwxzkSD8l+jtzk7
-         rBvQPG2qFgqkQjD4CbuEWCyf7FVR1ZjRB99osUNb2uwdnoAHY81PBjmfEYpREQAkMV3u
-         PybETIP6MmQkbo4mI1eQplvOQhaggu6MAA/4zxT/6PRCiPMAG0+a8moZJqUNmqzNTYkK
-         0wz3KDCQ0p520D8wq2nstjZ5jcTAit6g/s0z92QzGiNrKEaB5P5gacMlexOcdHkjBd7Z
-         E/XQ==
-X-Gm-Message-State: AJcUukeW/fPw35trkv0CBiBIJc9tZwm3Gjv5oBMnkiupEIu2fxmnzMgR
-        6SIovCJVlikNUD/5qzh9eAR2LlngGCJS4LggCj8=
-X-Google-Smtp-Source: ALg8bN5QwwaIMz+x7MnHLhb58XtEdYYB5IBW+5k/vxXteNBMHl5Jdxdtmcs1ZXxztYUubz+aUSgfgmYUDGSf8dIb8Mg=
-X-Received: by 2002:a37:a315:: with SMTP id m21mr29026682qke.152.1548891105222;
- Wed, 30 Jan 2019 15:31:45 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MJQOvh+ShEwn7Pkji7QAMKICcEftpF2ztop1rjMlwbk=;
+        b=dqXCxtxdNFN0Mog8Aiw7IEofrV82vORPll85XUNrIBXYeTc3gPVr7QQotfVyYSF+GK
+         R2bcBb+05/lpJcOQOpbi1LeGVciUtFbHsDWlLW7igWokU/O0gaAP6AwGcqWhbik58c0X
+         4aZEMy4LQio6+RzyL2B5KFLjgQfV5Zzf0Zjqm0vORJ0/wBcIjvYOd6MJFmjn/A+Nm2ea
+         hEWMEEM7wwGmYt8dAzoz/TQ9/PMSD9bmR7+Bjke7FJ7JaswN4Q6xAZRs2GcVcpFAg748
+         dViiOohYeqCSTUOuBTSFjJl6mdoV0En3AQJYkKyXEF3gjILUhdY5nm8UzFHiZ9S04hR4
+         +lOw==
+X-Gm-Message-State: AJcUukdMruu/3ObBsXjtx9kWI+FAjswdk7mgrQnXIeWcAykxqJUKyV0J
+        e6/3ucW6N10SMK4YDXYM/34=
+X-Google-Smtp-Source: ALg8bN5gxPd6tPYE0Egx0cEgliRNa6pyXC3x/FDYcfLTkL2E9lBA2gZqNbhJQF2/59NsxaCVXdj23g==
+X-Received: by 2002:a17:902:d90d:: with SMTP id c13mr26996357plz.31.1548892899414;
+        Wed, 30 Jan 2019 16:01:39 -0800 (PST)
+Received: from gmail.com (105.35.197.35.bc.googleusercontent.com. [35.197.35.105])
+        by smtp.gmail.com with ESMTPSA id o8sm5284442pfa.42.2019.01.30.16.01.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 30 Jan 2019 16:01:38 -0800 (PST)
+Date:   Wed, 30 Jan 2019 16:01:37 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        peff@peff.net
+Subject: Re: [PATCH (Apple Git) 12/13] Enable support for Xcode.app-bundled
+ gitconfig
+Message-ID: <20190131000137.GB23492@gmail.com>
+References: <20190129193818.8645-1-jeremyhu@apple.com>
+ <20190129193818.8645-13-jeremyhu@apple.com>
+ <xmqqo97z5ac9.fsf@gitster-ct.c.googlers.com>
+ <7A37A7C1-6B82-44F8-AECB-189A57B94FBD@apple.com>
+ <nycvar.QRO.7.76.6.1901302030100.41@tvgsbejvaqbjf.bet>
+ <EE1DF652-C42D-4106-8A81-55262EC578D0@apple.com>
+ <8507DB9E-A76E-4038-BDB6-110066865C1E@apple.com>
 MIME-Version: 1.0
-References: <20190130231359.23978-1-max@max630.net>
-In-Reply-To: <20190130231359.23978-1-max@max630.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 30 Jan 2019 18:31:34 -0500
-Message-ID: <CAPig+cTn2gURyQgWHZQMNf2cZ+zwFhbH1Q4iPmbwuvYjMrPZPg@mail.gmail.com>
-Subject: Re: [RFC PATCH] pack-refs: fail on falsely sorted packed-refs
-To:     Max Kirillov <max@max630.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8507DB9E-A76E-4038-BDB6-110066865C1E@apple.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 30, 2019 at 6:21 PM Max Kirillov <max@max630.net> wrote:
-> If packed-refs is marked as sorted but not really sorted it causes
-> very hard to comprehend misbehavior of reference resolving - a reference
-> is reported as not found.
->
-> As the scope of the issue is not clear, make it visible by failing
-> pack-refs command - the one which would not suffer performance penalty
-> to verify the sortedness - when it encounters not really sorted existing
-> data.
->
-> Signed-off-by: Max Kirillov <max@max630.net>
-> ---
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> @@ -1088,6 +1088,7 @@ static int write_with_updates(struct packed_ref_store *refs,
-> +       struct strbuf prev_ref = STRBUF_INIT;
-> @@ -1137,6 +1138,20 @@ static int write_with_updates(struct packed_ref_store *refs,
-> +               if (iter)
-> +               {
-> +                       if (prev_ref.len &&  strcmp(prev_ref.buf, iter->refname) > 0)
-> +                       {
-> +                               strbuf_addf(err, "broken sorting in packed-refs: '%s' > '%s'",
-> +                                           prev_ref.buf,
-> +                                           iter->refname);
+Hi,
 
-strbuf_release(&prev_ref) either here or after the "error" label.
+Jeremy Huddleston Sequoia wrote:
 
-> +                               goto error;
-> +                       }
-> +
-> +                       strbuf_init(&prev_ref, 0);
-> +                       strbuf_addstr(&prev_ref, iter->refname);
-> +               }
-> diff --git a/t/t3212-pack-refs-broken-sorting.sh b/t/t3212-pack-refs-broken-sorting.sh
-> @@ -0,0 +1,26 @@
-> +test_expect_success 'setup' '
-> +       git commit --allow-empty -m commit &&
-> +       for num in $(test_seq 10)
-> +       do
-> +               git branch b$(printf "%02d" $num) || break
+> Unfortunately, I was quick to celebrate.  This picks up the bundled
+> file instead of a system-wide file.  I'd love it if we could still
+> honor system-wide config/attributes in addition to
+> RUNTIME_PREFIX-relative ones (eg: user overrides system which
+> overrides distribution).  I worry that as is, we'd stop referencing
+> the system-wide configs which might confuse users.
+> 
+> Is that something you'd be interested in, or should we just continue
+> to maintain our separate patches?
 
-This should probably be "|| return 1" rather than "|| break" in order
-to fail the test immediately.
+For the internal deployment at Google, what we've done is to put an
+[include] path directive in the global gitconfig:
 
-> +       done &&
-> +       git pack-refs --all &&
-> +       head_object=$(git rev-parse HEAD) &&
-> +       printf "$head_object refs/heads/b00\\n" >>.git/packed-refs &&
-> +       git branch b11
-> +'
-> +
-> +test_expect_success 'off-order branch not found' '
-> +       ! git show-ref --verify --quiet refs/heads/b00
-> +'
+	[include]
+		path = /usr/share/git-core/config
 
-Use test_must_fail() rather than '!' when expecting a Git command to fail.
+Users can edit the global git config in etc, but the distributed
+config at /usr/share/git-core/config is read-only as part of the
+distributed package.
 
-> +test_expect_success 'subsequent pack-refs fails' '
-> +       ! git pack-refs --all
-> +'
+We considered making an upstream change to bake in the distributed
+config in the git binary but decided that this way is a little
+nicer since it lets people comment out the include.path setting if
+they want to e.g. for experimentation.  It's also more explicit
+(hence easier to understand).
 
-Ditto.
+Would a similar approach work for your setup?  Can you say a little
+more about how you'd like things to work from an end-user pov?
+
+Thanks,
+Jonathan
