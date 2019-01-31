@@ -2,93 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCB6C1F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 17:57:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74BDF1F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 17:59:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727821AbfAaR54 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 12:57:56 -0500
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:38068 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726488AbfAaR54 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 12:57:56 -0500
-Received: by mail-wm1-f52.google.com with SMTP id m22so3554610wml.3
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 09:57:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zOgkaZDn3ZLp52e5OHf2B3fIdyWqQH7SkDZB6QieCic=;
-        b=cZF28EUlHZ6RWU+HWYs2jkWSN2PrJ+T+AikMDj1Kk4pkufQUj0ecizMOhE5GL3z7ZV
-         e2g/ocsayygyeRk9wbLpk3znAkV9lCr3QASX9Z3laDnLTb6niFTgx7E99x9y7NS7DwTL
-         Ld8FxjwzZ1noG145SXhgclm5lFBBWe0ni0aIHdDP9bsKM4ezseubhWa5JuchbcCrwkBH
-         P4W5krWb0vePSZAm0HdgmmvUlWl9rEQTXblwJFPpLWNYJCBiWWUuFnj7y5/HaLWccH+I
-         RyELzz26pfHRiU2Y2XN813eqQjaMa4t6FcQp27xVJ47tTqkQ1ozWQrYe9Jgs0AAZr+iG
-         j7yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zOgkaZDn3ZLp52e5OHf2B3fIdyWqQH7SkDZB6QieCic=;
-        b=HaFKd0MtLETzAh+ZZhZYGpKSCPDa53wPx2wBu6Zt2o+TbGQmlM4jO+tYJhLso6JfgG
-         mmP35nBk+AwTaWszXhqGo7BHjTzEqZx3L0342gksEJXo20U+qvoif9pidvpUbXxVphbc
-         8HTCY52ylEAV/3vvAR76stsXAvIcod/028NfKcB/6sz3LE7mFtYNj8n8Tdwp9LhftLZN
-         FsaTEI2g6bmgdRRib3+90/EasManBGQ009t7b0xzYrIqvkCe4e91+KfIRHB1BpZYYU2o
-         iJGj276uPwlqesP+HpX/zBFledFpd2dP1FLhz/Ag1AONnhcWKU2tglbgElw24HUjcdkF
-         KJRw==
-X-Gm-Message-State: AJcUukeKkydy7gdScH7RODdQaxO1n4rK34gWWi0R1VfJ+Jg9wbCDk9ol
-        HcryrzPWKPOW5rgz4yyFEYM=
-X-Google-Smtp-Source: ALg8bN6IKOX7vUWnKLV0oaCxP7yN+XC65QxjiRr64/AZ9/yZBO2YOI2cQAaj+/MFBOaw+gkjTWqDeQ==
-X-Received: by 2002:a1c:e715:: with SMTP id e21mr30637374wmh.101.1548957473422;
-        Thu, 31 Jan 2019 09:57:53 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d4sm7841128wrp.89.2019.01.31.09.57.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 31 Jan 2019 09:57:52 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH (Apple Git) 01/13] .gitignore: Remove *.s as it matches *.S on case insensitive filesystem
-References: <20190129193818.8645-1-jeremyhu@apple.com>
-        <20190129193818.8645-2-jeremyhu@apple.com>
-        <CAPig+cSkm-M7fP=KLOCO5J8OSYCEyjy950AM=VzTnP9C6AcKxw@mail.gmail.com>
-        <534F20EC-2B29-46C3-BAD9-3CBE7312257F@apple.com>
-        <nycvar.QRO.7.76.6.1901301340270.41@tvgsbejvaqbjf.bet>
-        <8B5241CB-2E1E-4521-8FE1-A84C4896AE82@apple.com>
-Date:   Thu, 31 Jan 2019 09:57:52 -0800
-In-Reply-To: <8B5241CB-2E1E-4521-8FE1-A84C4896AE82@apple.com> (Jeremy
-        Huddleston Sequoia's message of "Wed, 30 Jan 2019 11:13:36 -0800")
-Message-ID: <xmqq4l9o4sm7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727903AbfAaR7V (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 12:59:21 -0500
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:37830 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727838AbfAaR7V (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 31 Jan 2019 12:59:21 -0500
+Received: from app04-neu.ox.hosteurope.de ([92.51.170.138]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
+        id 1gpGcP-00048T-Mo; Thu, 31 Jan 2019 18:59:17 +0100
+Date:   Thu, 31 Jan 2019 18:59:17 +0100 (CET)
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Martin Koegler <martin.koegler@chello.at>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Message-ID: <994568940.109648.1548957557643@ox.hosteurope.de>
+In-Reply-To: <xmqqa7jj6rg7.fsf@gitster-ct.c.googlers.com>
+References: <xmqqa7jj6rg7.fsf@gitster-ct.c.googlers.com>
+Subject: mk/use-size-t-in-zlib [was: Re: What's cooking in git.git (Jan
+ 2019, #05; Tue, 29)]
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v7.8.4-Rev48
+X-Originating-Client: open-xchange-appsuite
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1548957560;c0c4b272;
+X-HE-SMSGID: 1gpGcP-00048T-Mo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeremy Huddleston Sequoia <jeremyhu@apple.com> writes:
+> Junio C Hamano <gitster@pobox.com> hat am 29. Januar 2019 um 23:15 geschrieben:
 
->> What you probably want instead is
->> 
->> 	# Accommodate for case-insensitive filesystems where *.s would catch
->> 	!ppc/sha1ppc.S
->> 
->> after the `*.[aos]` line.
->
-> Thanks for the suggestion.  I didn't know that was possible with
-> .gitignore.  That's a much better solution.
+[...]
 
-I still do not see what problem you need a "solution" for in the
-first place---I saw a few comments asking it in the thread, but saw
-no answer.  ppc/sha1ppc.S is already tracked, so any modification
-you make in the working tree can be added to the index with "git
-add" and "git status" would report when you have modification to
-that file in the working tree, without any such extra entry in
-.gitignore, no?
+> * mk/use-size-t-in-zlib (2018-10-15) 1 commit
+>  - zlib.c: use size_t for size
+> 
+>  The wrapper to call into zlib followed our long tradition to use
+>  "unsigned long" for sizes of regions in memory, which have been
+>  updated to use "size_t".
+> 
+
+I've started playing around with the patch from Thorsten [1] for getting unsigned long replaced in more places so that you can commit large files on platforms like Windows there unsigned long is 32-bit even on 64-bit OSes.
+
+And the first thing which bugs out when I do a quick test with committing a large file and fsck the repo is in zlib.c:
+
+	if (s->z.total_out != s->total_out + bytes_produced)
+		BUG("total_out mismatch");
+
+here s->z.total_out is an unsigned long and s->total_out is size_t and this triggers the BUG message once the unsigned long wraps. There is even an FAQ entry for zlib at [2] which warns about that potential issue.
+
+So I would think that something like
+
+----------->8
+
+diff --git a/zlib.c b/zlib.c
+index 197a1acc7b..9cc6421eba 100644
+--- a/zlib.c
++++ b/zlib.c
+@@ -51,13 +51,9 @@ static void zlib_post_call(git_zstream *s)
+
+        bytes_consumed = s->z.next_in - s->next_in;
+        bytes_produced = s->z.next_out - s->next_out;
+-       if (s->z.total_out != s->total_out + bytes_produced)
+-               BUG("total_out mismatch");
+-       if (s->z.total_in != s->total_in + bytes_consumed)
+-               BUG("total_in mismatch");
+
+-       s->total_out = s->z.total_out;
+-       s->total_in = s->z.total_in;
++       s->total_out += bytes_produced;
++       s->total_in += bytes_consumed;
+        s->next_in = s->z.next_in;
+        s->next_out = s->z.next_out;
+        s->avail_in -= bytes_consumed;
+
+-----------8<
+
+would make the patch [3] more complete IMHO.
+
+Another potential issue in that patch is that the signature change in git_deflate_bound forces size to unsigned long on the call to deflateBound (for newer zlib versions) and if that conversion is not faithful this will certainly not work.
+
+Just my 2cents I'm not vetoing anything here,
+Thomas
+
+[1]: http://public-inbox.org/git/20181120050456.16715-1-tboegi@web.de/
+[2]: http://www.zlib.net/zlib_faq.html#faq32
+[3]: http://public-inbox.org/git/20181012204229.11890-1-tboegi@web.de/
