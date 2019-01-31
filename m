@@ -2,77 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E855F1F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 23:21:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A3301F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 23:28:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728076AbfAaXVv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 18:21:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57218 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726284AbfAaXVv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 18:21:51 -0500
-Received: (qmail 25804 invoked by uid 109); 31 Jan 2019 23:21:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 31 Jan 2019 23:21:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30561 invoked by uid 111); 31 Jan 2019 23:21:58 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 31 Jan 2019 18:21:58 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Feb 2019 00:21:47 +0100
-Date:   Fri, 1 Feb 2019 00:21:47 +0100
-From:   Jeff King <peff@peff.net>
-To:     Nickolai Belakovski <nbelakovski@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v6 1/3] ref-filter: add worktreepath atom
-Message-ID: <20190131232146.GA7260@sigill.intra.peff.net>
-References: <20190122232301.95971-1-nbelakovski@gmail.com>
- <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20190122232301.95971-2-nbelakovski@gmail.com>
- <xmqq36pjcicw.fsf@gitster-ct.c.googlers.com>
- <CAC05384+KjC=4_ZF9BrxweMUjwpkaGXNqRNSnwif6yci6TxMMw@mail.gmail.com>
- <xmqq5zud52ut.fsf@gitster-ct.c.googlers.com>
- <20190124183235.GA16580@sigill.intra.peff.net>
- <xmqqd0olj1kj.fsf@gitster-ct.c.googlers.com>
- <20190124212608.GD16114@sigill.intra.peff.net>
- <CAC05385KQPXodr-LymXVK97fBAp5==M=OBr1mRYueGbG1qcepA@mail.gmail.com>
+        id S1728279AbfAaX25 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 18:28:57 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36162 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725915AbfAaX24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 18:28:56 -0500
+Received: by mail-wr1-f68.google.com with SMTP id u4so5185444wrp.3
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 15:28:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=IPSS52lbHh9WWDGaH3elY24RNcFyVJlB9l2+zLuMzJs=;
+        b=NUiVVKtR35HANCsegJtnT/QqzC/0twKJ8ely5JNyiZFWqWu3Nc26qW7qs9dTiF9BkL
+         Z370DZWkNYjAppA75pEagrhSHJcN9n7PsByLEKnfSeQr3prW2PLpDQwxMvLHoEFWS7m7
+         jwOCR7EzLXz0Wqv3agDPlVl//Yshe31XKeUgoW9E+yeoKLX0hXZcqIvgiNEnIXjTvStk
+         4KDe31iVhwYCPyZ8Eh61QhYIsVkZkHUDEgEH2LpValGy6BC9iFkefCsTjnIsHti6gj1D
+         6D9R2mEpDrmKBwcufPgxfaJBycxk4u9nWlawdeo0EUdmm/PkaxcP+8bRGjO5Q6Xx4jmE
+         alSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=IPSS52lbHh9WWDGaH3elY24RNcFyVJlB9l2+zLuMzJs=;
+        b=erXaewcJ20CHzNmwPWSN+WVzSru4ERVM/DgRy8GzslTwNBXS+Z01ssTXPxnzY/cqcr
+         3CWn3helV7fWuWEYGez1g9QrKG/YitIkTyAg7tnnaCxU3T38vo5kHmkUr8nQ4R56je5s
+         xgumA89bASPoNNcvopGglg5UV5fSJ5M3XHBtSNOzHreC25xjNbIzg3k43TTTIdMcIADI
+         cdwt8iOT8p1ECSxgz/ivsIWAikSCUyQNAGwrUic4diwn5iX79+P9vs44r6qCLdcTvAmE
+         ewHqvfA4AcKn0YO2JG0Bw5INWYf/u4KJ8UfJlgcttlmJGB5DNEUzLdpGQkmbYBhVRtsZ
+         PEDg==
+X-Gm-Message-State: AJcUukdAwziCaoSK5O5OmhCRV38DvtIqPjyF8iPNh3tEd0zPJb2De1K0
+        om+9OnZ+iEnn+gnYMQa/q0Y=
+X-Google-Smtp-Source: ALg8bN6dOPVR4xlZtUHptZVYYWGK0Ln1hIBR9QhjvVFcIYZTTVArLQLwag2UEPOGFzAytBNVqnFFqg==
+X-Received: by 2002:adf:d243:: with SMTP id o3mr37462297wri.66.1548977334909;
+        Thu, 31 Jan 2019 15:28:54 -0800 (PST)
+Received: from szeder.dev (x4db675b2.dyn.telefonica.de. [77.182.117.178])
+        by smtp.gmail.com with ESMTPSA id g67sm1284611wmd.38.2019.01.31.15.28.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 Jan 2019 15:28:54 -0800 (PST)
+Date:   Fri, 1 Feb 2019 00:28:51 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 14/14] trace2: t/helper/test-trace2, t0210.sh,
+ t0211.sh, t0212.sh
+Message-ID: <20190131232851.GD10587@szeder.dev>
+References: <pull.108.v3.git.gitgitgadget@gmail.com>
+ <pull.108.v4.git.gitgitgadget@gmail.com>
+ <8d47cd71ede3fd4e932e26756ef8f3f82b41d659.1548881779.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAC05385KQPXodr-LymXVK97fBAp5==M=OBr1mRYueGbG1qcepA@mail.gmail.com>
+In-Reply-To: <8d47cd71ede3fd4e932e26756ef8f3f82b41d659.1548881779.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 31, 2019 at 12:53:24PM -0800, Nickolai Belakovski wrote:
+On Wed, Jan 30, 2019 at 12:56:34PM -0800, Jeff Hostetler via GitGitGadget wrote:
+> Create unit tests for Trace2.
 
-> So where does that leave us for this series? We could move hashmap
-> back into used_atom, but if a user entered
-> --format="%(worktreepath)%(worktreepath:)" we'd end up freeing
-> worktrees twice. Not that that should stop us - that scenario is one
-> where user input isn't sensible and personally I don't think it's
-> necessary to protect against such things (unless the user was
-> reasonably confused, but I don't see that as the case here).
-> 
-> I agree with Jeff that a ref-filter "context" would help. And in more
-> ways than one, it could help us decide ahead of time whether to check
-> if a ref is a branch or a tag before doing a hashmap lookup or just
-> skip the check (i.e. if there are no tags within the context, the
-> check would only add cost). But I do believe that that would be
-> outside the scope of this series.
-> 
-> I think leaving it as globals is a tiny bit safer and also makes it
-> easier to pack it into a context if/when we decide to do that work,
-> but as always I'm open to other interpretations.
+> diff --git a/t/t0212-trace2-event.sh b/t/t0212-trace2-event.sh
+> new file mode 100755
+> index 0000000000..517d5514df
+> --- /dev/null
+> +++ b/t/t0212-trace2-event.sh
+> @@ -0,0 +1,234 @@
 
-Yeah, I agree with this: global for now, and then easily moved into a
-context struct later (along with all the other existing globals).
+> +test_expect_success 'event stream, return code 0' '
+> +	test_when_finished "rm trace.event actual expect" &&
+> +	GIT_TR2_EVENT="$(pwd)/trace.event" test-tool trace2 004child test-tool trace2 004child test-tool trace2 001return 0 &&
+> +	perl "$TEST_DIRECTORY/t0212/parse_events.perl" <trace.event >actual &&
+> +	sed -e "s/^|//" >expect <<-EOF &&
+> +	|VAR1 = {
+> +	|  "_SID0_":{
+> +	|    "argv":[
+> +	|      "_EXE_",
+> +	|      "trace2",
+> +	|      "004child",
+> +	|      "test-tool",
+> +	|      "trace2",
+> +	|      "004child",
+> +	|      "test-tool",
+> +	|      "trace2",
+> +	|      "001return",
+> +	|      "0"
+> +	|    ],
+> +	|    "child":{
+> +	|      "0":{
+> +	|        "child_argv":[
+> +	|          "_EXE_",
+> +	|          "trace2",
+> +	|          "004child",
+> +	|          "test-tool",
+> +	|          "trace2",
+> +	|          "001return",
+> +	|          "0"
+> +	|        ],
 
--Peff
+Just curious about the vertically aligned '|'s: are they there to
+circumvent 'git diff's big red whitespace warnings on these deeply
+indented lines?
+
