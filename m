@@ -2,311 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIMWL_WL_MED,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26BCE1F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 20:46:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF0851F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 20:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727461AbfAaUq3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 15:46:29 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:53771 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbfAaUq2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 15:46:28 -0500
-Received: from [192.168.2.240] ([92.26.116.186])
-        by smtp.talktalk.net with SMTP
-        id pJE9gK3bnwhzSpJE9gbrEH; Thu, 31 Jan 2019 20:46:26 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1548967586;
-        bh=ApWUz5nMwz4t1XypXlx86d9oT+VmTVn/+kNcvCBIbfk=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=jBhplgTdrl/kE1Gn38BQv22nVy8k6GcKtSGxDaU5IgmTgQdgODab5hR3W31wU9mmM
-         K3ol7wnywStik+njibUn7LU9CDy/vKsa/p86305apGHsAXYwLDPAm178aiJ0yPXbKa
-         wUqjIMwpKOjN1+s9Pne1FLJ1KTXSUTcglgFElYLw=
-X-Originating-IP: [92.26.116.186]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=Pfo8oxCPEre7EYRssK5nbQ==:117
- a=Pfo8oxCPEre7EYRssK5nbQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=UlqV6C1OAAAA:20 a=tisMccnxu44uBSEnSt0A:9 a=QEXdDO2ut3YA:10
- a=pHzHmUro8NiASowvMSCR:22 a=nt3jZW36AmriUCFCBwmW:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 07/16] sequencer: refactor
- sequencer_add_exec_commands() to work on a todo_list
-To:     Alban Gruin <alban.gruin@gmail.com>, phillip.wood@dunelm.org.uk,
-        git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190123205821.27459-1-alban.gruin@gmail.com>
- <20190129150159.10588-1-alban.gruin@gmail.com>
- <20190129150159.10588-8-alban.gruin@gmail.com>
- <434cf0f7-1df6-7966-b460-e69e8f8b5e99@talktalk.net>
- <c5e3c1cc-12fa-ddf6-7008-ae47659ddc19@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <5f3c9739-8b12-bf27-681d-5b3563f1c75f@talktalk.net>
-Date:   Thu, 31 Jan 2019 20:46:25 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1728186AbfAaUsM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 15:48:12 -0500
+Received: from mail-vs1-f45.google.com ([209.85.217.45]:39403 "EHLO
+        mail-vs1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbfAaUsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 15:48:12 -0500
+Received: by mail-vs1-f45.google.com with SMTP id h78so2827881vsi.6
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 12:48:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=/yLq1kpAz249cSqKipUHoliIzcckgT2XiYBsr9ftVX4=;
+        b=Tk+Abqr+g2/p2PyoP+xbXooVEvlAuFZtsShcZfHlPU4zSGDTz4l/DZbso2DM6O9/1V
+         1zIu6ivJjBJASv5/GOO1E13DzSDIBHA9Fppdsgoy1sGD5MSxGgWNltKDuibS2G5icPpD
+         2+Hz509MnEqybBRkH6/yXaFI40XC23T8yCy+sDH2Af/trW4dRwJ5oLnAJ7sTxAPwZwGU
+         7dyjoU0E35hQGiKIRE/rtXBhv/gkCBOtDOFYYvJ6WBUERk8oxEO4JKV+rYe9kkULzHMx
+         ielD2fVRAJQu8fOpnIS9TlKtL6KOCNupSE/15jlB+uo3jOOhCawYsl6n3WXjyPH4vD1j
+         1oIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=/yLq1kpAz249cSqKipUHoliIzcckgT2XiYBsr9ftVX4=;
+        b=r9reY0HQQM6eOOH7s21k9d3jViSzOVoK38gWIHgEtujnJVAU5PNn9B9BDF5k3K7d98
+         CPBEz5IpgviJiFk1sCAOKM9kJx+VWN3yCvjpWiTil+6qTYp+JwDTjGK13k4Mlz9jMAQb
+         QWJpSbehmL/klh5G7gLQKL386iF8o14tvCnUOPseOfXpRmw5eBenTL1unXor6NuTwV55
+         xClbsbk/3yVL0CnvqE0gaECYmTIjbDsiPy7gQROF6j9K6TCEbrRy8KhV7fSNOgZCk3oA
+         Mpgh/O2jcls637Jm+/8py8Lu+LFEerkrXpKHlyGxFYi1VdcW1XqpeXCLVDj2FxZJx06f
+         Ma3g==
+X-Gm-Message-State: AJcUukeuUZy9rLy9LvXnOIWyqz3BZguL/k5JE39rsYrJnQipYqA7ALmr
+        cAfFHgQJoP9W5EeU5t+7WCVqFyG1YyjcaTjZYT+2S+QhzpA=
+X-Google-Smtp-Source: ALg8bN5EzJyDf688VBV9oSBzHyWzWs1blyHqc2dOzQ6G+RysToWnyGEGLhKpmhGOA1gmFRmaqmpMxXyc1P2mrJAZ2Kk=
+X-Received: by 2002:a67:e44f:: with SMTP id n15mr15756119vsm.116.1548967690759;
+ Thu, 31 Jan 2019 12:48:10 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <c5e3c1cc-12fa-ddf6-7008-ae47659ddc19@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfEHL7rCZJPLWwD2au5qq2s9ekqw632svv8mhHitjqEVxgClfARY3bl6qUYawJoVrgmg8mztdT234tbLJNJ6I8KU8ggFanEiogKoAUiZPvgsoNlxqlN52
- X8Jb72LH7QZ05eyqlAXqPZOjpo2sl/MJidC/yKG58Ly58NYZm6kRFfsFL/ZLtfccbKYNE1/09zt/IIPhf2iqc12JOf49+ZNRvivbHgSaE7nxB6qP7JOQujXJ
- 0pu+/aHuSfbDBzJrU7ZShFF6FWADq5u7SoKzJk61+t7XuC48rkRDJPOqXEsJRkySrpBO/Dl7qqT9N+BVPBQeCA==
+References: <CABPp-BFC--s+D0ijRkFCRxP5Lxfi+__YF4EdxkpO5z+GoNW7Gg@mail.gmail.com>
+In-Reply-To: <CABPp-BFC--s+D0ijRkFCRxP5Lxfi+__YF4EdxkpO5z+GoNW7Gg@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 31 Jan 2019 21:47:59 +0100
+Message-ID: <CABPp-BHOwfnpd=thMrGNQN0t+btN=jZhWHuhJ59HZ2oH5qDrBA@mail.gmail.com>
+Subject: Re: New command/tool: git filter-repo
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban
+On Thu, Jan 31, 2019 at 9:57 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> Hi everyone,
+>
+> git-filter-repo[1], a filter-branch-like tool for rewriting repository
+> history, is ready for more widespread testing and feedback.
+...
+> What's the future?  (Core command of git.git?  place it in contrib?  keep it
+> in a separate repo?)  I'm hoping to discuss that at the contributor summit
+> today, but feedback on the list is also welcome.
 
-On 31/01/2019 20:37, Alban Gruin wrote:
-> Hi Phillip,
-> 
-> Le 31/01/2019 à 15:30, Phillip Wood a écrit :
->> Hi Alban
->>
->> On 29/01/2019 15:01, Alban Gruin wrote:
->>> This refactors sequencer_add_exec_commands() to work on a todo_list to
->>> avoid redundant reads and writes to the disk.
->>>
->>> Instead of inserting the `exec' commands between the other commands and
->>> re-parsing the buffer at the end, they are appended to the buffer once,
->>> and a new list of items is created.  Items from the old list are copied
->>> across and new `exec' items are appended when necessary.  This
->>> eliminates the need to reparse the buffer, but this also means we have
->>> to use todo_list_write_to_disk() to write the file.
->>>
->>> todo_list_add_exec_commands() and sequencer_add_exec_commands() are
->>> modified to take a string list instead of a string -- one item for each
->>> command.  This makes it easier to insert a new command to the todo list
->>> for each command to execute.
->>>
->>> sequencer_add_exec_commands() still reads the todo list from the disk,
->>> as it is needed by rebase -p.
->>>
->>> complete_action() still uses sequencer_add_exec_commands() for now.
->>> This will be changed in a future commit.
->>>
->>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
->>> ---
->>>   builtin/rebase--interactive.c |  15 +++--
->>>   sequencer.c                   | 110 +++++++++++++++++++++-------------
->>>   sequencer.h                   |   5 +-
->>>   3 files changed, 82 insertions(+), 48 deletions(-)
->>>
->>> diff --git a/builtin/rebase--interactive.c
->>> b/builtin/rebase--interactive.c
->>> index df19ccaeb9..53056ee713 100644
->>> --- a/builtin/rebase--interactive.c
->>> +++ b/builtin/rebase--interactive.c
->>> @@ -65,7 +65,7 @@ static int do_interactive_rebase(struct replay_opts
->>> *opts, unsigned flags,
->>>                    const char *onto, const char *onto_name,
->>>                    const char *squash_onto, const char *head_name,
->>>                    const char *restrict_revision, char *raw_strategies,
->>> -                 const char *cmd, unsigned autosquash)
->>> +                 struct string_list *commands, unsigned autosquash)
->>>   {
->>>       int ret;
->>>       const char *head_hash = NULL;
->>> @@ -116,7 +116,7 @@ static int do_interactive_rebase(struct
->>> replay_opts *opts, unsigned flags,
->>>           discard_cache();
->>>           ret = complete_action(the_repository, opts, flags,
->>>                         shortrevisions, onto_name, onto,
->>> -                      head_hash, cmd, autosquash);
->>> +                      head_hash, commands, autosquash);
->>>       }
->>>   
->>>       free(revisions);
->>> @@ -139,6 +139,7 @@ int cmd_rebase__interactive(int argc, const char
->>> **argv, const char *prefix)
->>>       const char *onto = NULL, *onto_name = NULL, *restrict_revision =
->>> NULL,
->>>           *squash_onto = NULL, *upstream = NULL, *head_name = NULL,
->>>           *switch_to = NULL, *cmd = NULL;
->>> +    struct string_list commands = STRING_LIST_INIT_DUP;
->>>       char *raw_strategies = NULL;
->>>       enum {
->>>           NONE = 0, CONTINUE, SKIP, EDIT_TODO, SHOW_CURRENT_PATCH,
->>> @@ -221,6 +222,12 @@ int cmd_rebase__interactive(int argc, const char
->>> **argv, const char *prefix)
->>>           warning(_("--[no-]rebase-cousins has no effect without "
->>>                 "--rebase-merges"));
->>>   
->>> +    if (cmd && *cmd) {
->>> +        string_list_split(&commands, cmd, '\n', -1);
->>
->> This whole splitting and later skipping 'exec ' is a bit of a shame - it
->> would be much nicer if we could just have one exec command per -x option
->> but I think that is outside the scope of this series (If I have time I'd
->> like to look at calling do_interactive_rebase() directly from
->> builtin/rebase.c without forking rebase--interactive).
->>
-> 
-> Yes, I completely agree with you.  I thought to do this in preparation
-> to drop rebase -r.
-> 
->>> +        if (strlen(commands.items[commands.nr - 1].string) == 0)
->>
->> I'd be tempted just to test the string using !* rather than calling
->> strlen.
->>
-> 
-> Right.  I’m still not used to this pattern.
-> 
->> Also is there ever a case where the last string isn't empty?
-> 
-> I don’t think so.  When rebase.c prepares the arguments for
-> rebase--interactive, it always add a newline at the end[1].  Do you want
-> me to drop this check?
+Turns out we didn't have enough time and didn't discuss it at the
+contributor summit.  So, I'm even more interested in feedback from the
+mailing list.
 
-I think that would be clearer
-
-> 
-> 
->>> +            --commands.nr;
->>> +    }
->>> +
->>>       switch (command) {
->>>       case NONE:
->>>           if (!onto && !upstream)
->>> @@ -228,7 +235,7 @@ int cmd_rebase__interactive(int argc, const char
->>> **argv, const char *prefix)
->>>   
->>>           ret = do_interactive_rebase(&opts, flags, switch_to,
->>> upstream, onto,
->>>                           onto_name, squash_onto, head_name,
->>> restrict_revision,
->>> -                        raw_strategies, cmd, autosquash);
->>> +                        raw_strategies, &commands, autosquash);
->>>           break;
->>>       case SKIP: {
->>>           struct string_list merge_rr = STRING_LIST_INIT_DUP;
->>> @@ -262,7 +269,7 @@ int cmd_rebase__interactive(int argc, const char
->>> **argv, const char *prefix)
->>>           ret = rearrange_squash(the_repository);
->>>           break;
->>>       case ADD_EXEC:
->>> -        ret = sequencer_add_exec_commands(the_repository, cmd);
->>> +        ret = sequencer_add_exec_commands(the_repository, &commands);
->>>           break;
->>>       default:
->>>           BUG("invalid command '%d'", command);
->>> diff --git a/sequencer.c b/sequencer.c
->>> index 266f80d704..3a90b419d7 100644
->>> --- a/sequencer.c
->>> +++ b/sequencer.c
->>> @@ -4446,25 +4446,27 @@ int sequencer_make_script(struct repository
->>> *r, FILE *out,
->>>       return 0;
->>>   }
->>>   
->>> -/*
->>> - * Add commands after pick and (series of) squash/fixup commands
->>> - * in the todo list.
->>> - */
->>> -int sequencer_add_exec_commands(struct repository *r,
->>> -                const char *commands)
->>> +static void todo_list_add_exec_commands(struct todo_list *todo_list,
->>> +                    struct string_list *commands)
->>>   {
->>> -    const char *todo_file = rebase_path_todo();
->>> -    struct todo_list todo_list = TODO_LIST_INIT;
->>> -    struct strbuf *buf = &todo_list.buf;
->>> -    size_t offset = 0, commands_len = strlen(commands);
->>> -    int i, insert;
->>> +    struct strbuf *buf = &todo_list->buf;
->>> +    size_t base_offset = buf->len;
->>> +    int i, insert, nr = 0, alloc = 0;
->>> +    struct todo_item *items = NULL, *base_items = NULL;
->>>   
->>> -    if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
->>> -        return error(_("could not read '%s'."), todo_file);
->>> +    base_items = xcalloc(commands->nr, sizeof(struct todo_item));
->>> +    for (i = 0; i < commands->nr; ++i) {
->>> +        size_t command_len = strlen(commands->items[i].string);
->>>   
->>> -    if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
->>> -        todo_list_release(&todo_list);
->>> -        return error(_("unusable todo list: '%s'"), todo_file);
->>> +        strbuf_addstr(buf, commands->items[i].string);
->>> +        strbuf_addch(buf, '\n');
->>> +
->>> +        base_items[i].command = TODO_EXEC;
->>> +        base_items[i].offset_in_buf = base_offset;
->>> +        base_items[i].arg_offset = base_offset + strlen("exec ");
->>> +        base_items[i].arg_len = command_len - strlen("exec ");
->>> +
->>> +        base_offset += command_len + 1;
->>>       }
->>>   
->>>       /*
->>> @@ -4473,38 +4475,62 @@ int sequencer_add_exec_commands(struct
->>> repository *r,
->>>        * those chains if there are any.
->>>        */
->>>       insert = -1;
->>> -    for (i = 0; i < todo_list.nr; i++) {
->>> -        enum todo_command command = todo_list.items[i].command;
->>> -
->>> -        if (insert >= 0) {
->>> -            /* skip fixup/squash chains */
->>> -            if (command == TODO_COMMENT)
->>> -                continue;
->>> -            else if (is_fixup(command)) {
->>> -                insert = i + 1;
->>> -                continue;
->>> -            }
->>> -            strbuf_insert(buf,
->>> -                      todo_list.items[insert].offset_in_buf +
->>> -                      offset, commands, commands_len);
->>
->> In a todo list that looks like
->> pick abc message
->> #pick cde empty commit
->> This inserts the exec command for the first pick above the commented out
->> pick. I think your translation puts it below the commented out pick as
->> it ignores the value of insert. I think it's probably easiest to add an
->> INSERT_ARRAY macro to insert it in the right place. An alternative might
->> be to track the last insert position and only copy commands across when
->> there is another exec to insert but that might get complicated in cases
->> such as
->>
->> pick abc message
->> #squash cde squash! message //empty commit for rewording
->> fixup 123 fixup! message
->> #pick 456 empty commit
->>
-> 
-> I could do this with MOVE_ARRAY(), no?
-
-Yes, if you extend the array first then you could use MOVE_ARRAY() and 
-COPY_ARRAY() to move the comment down and then insert the exec commands 
-so maybe we don't need a new macro after all.
-
-I've looked through most of the rest of this series (I think I've got 
-three patches left to check) and they all look fine, I'll try and look 
-at the rest tomorrow, but if not I'll get round to it next week.
-
-Best Wishes
-
-Phillip
-
->> Best Wishes
->>
->> Phillip
->>
-> 
-> [1] https://github.com/git/git/blob/master/builtin/rebase.c#L1182-L1191
-> 
-> Cheers,
-> Alban
-> 
-> 
-
+Thanks,
+Elijah
