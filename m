@@ -2,112 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE1201F453
-	for <e@80x24.org>; Thu, 31 Jan 2019 20:40:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDED21F453
+	for <e@80x24.org>; Thu, 31 Jan 2019 20:44:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728932AbfAaUkq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 31 Jan 2019 15:40:46 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:24328 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727200AbfAaUkq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Jan 2019 15:40:46 -0500
-Received: from [192.168.2.240] ([92.26.116.186])
-        by smtp.talktalk.net with SMTP
-        id pJ8dgK30SwhzSpJ8dgbr2A; Thu, 31 Jan 2019 20:40:44 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1548967244;
-        bh=bGC4pOGph6hUUnVMCWiZyZ5qd8ZG8KSjuuIr9SML1Z4=;
-        h=Reply-To:Subject:To:References:From:Cc:Date:In-Reply-To;
-        b=O+7OwSBe+MNf6gLXKXTXimLl2U+Rhnx+sYrTIPSEQxEg3f7awCCIXn6xC4k4LoHxd
-         oGCIUm9xJYUNGpC2lLjyPENT3YTEIv9i1xTiL+gp5KSQJtkI977aozStcnODVsZsr5
-         jTyqeMUlJs+nHlgZNXeAaDARI54YdpVRt+zDv1H8=
-X-Originating-IP: [92.26.116.186]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=Pfo8oxCPEre7EYRssK5nbQ==:117
- a=Pfo8oxCPEre7EYRssK5nbQ==:17 a=IkcTkHD0fZMA:10 a=uZvujYp8AAAA:8
- a=b4LDLZbEAAAA:8 a=UlqV6C1OAAAA:20 a=lHt9L8fR2SPNheQdvnwA:9
- a=pqQZu3MpBdBQb9Sp:21 a=gh0n3hHsHZsq9kwZ:21 a=QEXdDO2ut3YA:10
- a=FXZrL07QY1wA:10 a=SLzB8X_8jTLwj6mN0q5r:22 a=20T61YgZp4ItGotXEy2O:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Broken interactive rebase text after some UTF-8 characters
-To:     Alban Gruin <alban.gruin@gmail.com>, phillip.wood@dunelm.org.uk,
-        Michal Nowak <mnowak@startmail.com>, git@vger.kernel.org
-References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
- <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>
- <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>
- <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net>
- <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Message-ID: <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>
-Date:   Thu, 31 Jan 2019 20:40:43 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1729082AbfAaUoD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 31 Jan 2019 15:44:03 -0500
+Received: from mail-vs1-f44.google.com ([209.85.217.44]:43527 "EHLO
+        mail-vs1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729044AbfAaUnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Jan 2019 15:43:55 -0500
+Received: by mail-vs1-f44.google.com with SMTP id x1so2804655vsc.10
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 12:43:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8AS4AiWFLBKznBq/jHK73rlzMhU42wYa6XUTDhHg+PM=;
+        b=p62zujlpo4rljMp37qC1ttGqEN0Fs1aQT+qOBN3Y2nijcbEFI3IP3LphkTh7X3VpGd
+         YBtMnYkn1rfwLMLtEark2pDm6RT28KjnNr/UNHnKxwsiNwRZJvf/sxwU8xc+NPW+yg11
+         EVRoYG6r/3TJJs/B4Vdc5zFQx9urxeiOll+Hec2M8PQwSTvbbe11r0lvfGU+z/ocwnik
+         hk+cSf4AQBUC91cWR/uDmgigL31z9WuMW4eOfZy4BRHwqtHKdjjarCwNhtRP/5kTyn2y
+         L8EgQ5JvargpcNaMeIX/sdR2XDDa4LTAd6DlcyK6/+AGMSNqhSlXWFRkv7eezA1G3Ptl
+         K1cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8AS4AiWFLBKznBq/jHK73rlzMhU42wYa6XUTDhHg+PM=;
+        b=LxNwuBkC/pflfxK5G6ETJ7wNzXhLiABufLZ9Jef3OAoPWVBaG5KBMy6I+4yzOn92ll
+         f4/3nVXC4bTqmcLvtZGgWHTDTZ0NqJhfChwRZsx6K2I6jDGseh96aneFId4OhjFObamF
+         ZZo0FTFHjAKqQOnBGpvvMUP7upV2f+iEaBm9dnz8VUJa8XFWUsE6pB0C2oTqWrUalMyA
+         RDB5RIAyIY6AmeAe6eyjLzU6XjEVM0KZFJvnRMPXMkOREjRia4f9wVdLwHtpAuKbdhUc
+         yF5zQFLMlOyNwqqrN7dygjSFRlzCGCCKH4qBaI8QzgRfKw+lJujGR7sEsK37kSE7LH9G
+         +wdA==
+X-Gm-Message-State: AJcUukequN+hiTH5SuT7F0ot4rppAbpKxhzyaazPFuxRiNgHaB+9vAtA
+        HPW72WQpBW54MAuwI05TxndCiX4Va4tXF0hkD7M=
+X-Google-Smtp-Source: ALg8bN6xGSqjGpkMvSHiJoqD6ON0Y5oqT5ThLN8PF/9oUB9wc/LX0osQ+7fIFnB+XgdP3LKvJgEuzeyBOHpXAGabvOY=
+X-Received: by 2002:a67:f696:: with SMTP id n22mr16384973vso.175.1548967433609;
+ Thu, 31 Jan 2019 12:43:53 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKHuPLz97iAzYqOodehWgEwJ6KlSAaYFY5alWGogIEPEN/quZXQJorCp1NVrH6tIvBaW1B60HbBBhDBQDhBCRDA1YxhyiwXO6hS66vmZEXHk6XGH7R7B
- 8yPxGr7HItGuf9B35vxQ7NSd1JT4B2c3XF6J8LKjQ3RuEmyQQYiy07zJh0rkJtHaOPYlZQ1P2e6gB+6y0MA6dSFIxkIfqxe0/6vVnEUL1VjyFr56cy4HDDC7
- 7ZJTbKen2ihnQL8o8zXsZ5zJyiIFMf9rGozMVXOQHT5rOIjcfXGJKKyVuU2UDcRCZCP7BnaGQyVtEYtoUEbFqeBqlxcrrPe0I4AQ7ufs5bg=
+References: <CABPp-BFC--s+D0ijRkFCRxP5Lxfi+__YF4EdxkpO5z+GoNW7Gg@mail.gmail.com>
+ <xmqq36p83aq4.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq36p83aq4.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 31 Jan 2019 21:43:42 +0100
+Message-ID: <CABPp-BH==w5APkz9cvUYq7m4qieJ3LWCsYySevgJuZ8bi2RzjQ@mail.gmail.com>
+Subject: Re: New command/tool: git filter-repo
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban
+On Thu, Jan 31, 2019 at 8:09 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > git-filter-repo[1], a filter-branch-like tool for rewriting repository
+> > history, is ready for more widespread testing and feedback.  The rough
+> > edges I previously mentioned have been fixed, and it has several useful
+> > features already, though more development work is ongoing (docs are a
+> > bit sparse right now, though -h provides some help).
+> >
+> > Why filter-repo vs. filter-branch?
+>
+> How does it compare with bfg-repo-cleaner?  Somehow I was led to
+> believe that all serious users of filter-branch like functionality
+> are using bfg-repo-cleaner instead.
 
-On 31/01/2019 17:43, Alban Gruin wrote:
-> Hi Phillip and Michal,
-> 
-> I think I found the bug.
+No, bfg-repo-cleaner only covers an important subset of the usecases.
+bfg-repo-cleaner does a really good job if your goal is to remove a
+few big files and/or to remove some sensitive text (matched via
+regexes) from all blobs.  It was designed for that specific role and
+has more options in this area than filter-repo currently has.  But
+even within this design space it was optimized for, it is missing two
+things that I really want:
 
-Good find! Which os are you on?
-> 
-> If you look at .git/rebase-merge/git-rebase-todo.backup, which is
-> created before the editor is opened, you can see that it does not have
-> this problem.  In between, transform_todos() is called and causes the
-> problem reported by Michal.
-> 
-> This seems to be caused by a single line, sequencer:4661 (on b5101f9297,
-> "Fourth batch after 2.20", 2019-01-29)[1].  If you add just before a
-> something like this:
-> 
->      fwrite(item->arg, item->arg_len, sizeof(char), stdout);
-> 
-> You will see that the argument is properly written to stdout.  But if
-> you write this:
-> 
->      printf("%.*s\n", item->arg_len, item->arg);
-> 
-> You will have the same broken output as in the todo file.
-> 
-> Are we misusing C formats?
+  * pruning of commits which become empty due to filtering
+  * providing a way for the user to know what needs to be cleaned up.
+It has options like --strip-blobs-bigger-than <size> or
+--strip-biggest-blobs <NUM>, but no way for the user to figure out
+what <size> or <NUM> should be.  Also, since it just focuses on really
+big blobs, it misses cases like someone checking in directories with a
+huge number of small-to-moderately sized files (e.g. bower_components/
+or node_modules/, though these could also contain a few big blobs
+too), or someone checking in a lot of moderately sized files of a
+uniform extension (e.g. .webm, .tar.gz, .zip, .mp4, .avi).  I've seen
+cases in the wild where the correct cleaning of history was more about
+filtering out directories or extensions than a couple big files.
+filter-repo's --analyze option creates some reports that help with
+this tremendously.  Also, the options to delete files by glob/basename
+overlook the fact that renames may have occurred.  Having a report
+that mentions renames that have occurred in history (also part of
+filter-repo's --analyze option) can be very helpful.
 
-The C standard and POSIX both say that the * refers to the maximum 
-number of bytes to print but it looks like it is being treated as the 
-maximum number of characters on OpenIndiana.
+Outside of this specific usecase, bfg-repo-cleaner is not very useful.
+It simply lacks more general filtering capabilties:
 
-Johannes - Perhaps we should change it to use fwrite() unless printf() 
-gets fixed and we're sure no other operating systems are affected?
+  * While bfg-repo-cleaner has facilities to remove certain paths, it
+has none to say you only want to keep certain paths.  Unlike
+filter-branch where you can use a pipeline to list all files, grep to
+remove the ones you want to keep from the list, then pipe the
+remainder of paths to xargs git rm, bfg-repo-cleaner doesn't have a
+facility for shell commands.  Instead in bfg-repo-cleaner you would
+need to emulate this by exhaustively listing directories and
+paths/globs of file basenames to delete, but that assumes the user
+knows all paths that have ever existed making this solution not only
+onerous but error prone.  More of the filterings I see these days are
+about just keeping a directory (or perhaps a handful of them) rather
+than just removing or cleaning a few files.  Also, this makes pruning
+of commits which become empty much more important, but as noted above,
+bfg-repo-cleaner lacks that ability.
+  * It has no facilities for renaming paths.  You'd have to use a
+different tool to do that, but then why not use the other tool to do
+the whole job?  Even if you do decide to use both tools, some
+capabilities of one tool can be neutered by such an approach (e.g.
+bfg-repo-cleaner's carefully rewritten commit messages that tried to
+ensure abbreviated commit shas referred to the new commit ids)
+  * It has no facilities for affecting other parts of history, such as
+changing author/committer/tagger names or emails, changing commit
+timestamp or timezone, reparenting commits, splicing repository
+histories together, filtering files differently based on commit
+timestamp, etc. -- all of which can be done with filter-repo (though
+some of those things requires writing a small python script; see basic
+examples in t/lib-usage/*)
 
-[1] http://pubs.opengroup.org/onlinepubs/9699919799/functions/fprintf.html
-[2] http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1548.pdf page 309
+Personally, I also find it kind of annoying that bfg-repo-cleaner
+doesn't automatically repack and shrink the repo when it is done and
+instead prints multiple commands the user can run to achieve that,
+even though it's the core use case for the tool.  Granted, they may
+have had last-ditch recovery-of-the-original-repo in mind in case the
+user ran in a repository they shouldn't have, but I much prefer to
+have the tool just check if the repo looks like a fresh clone and bail
+if not, so that users have a far easier recovery mechanism -- just
+throw away the clone you were filtering and re-clone.  Once you do
+that, auto repacking and shrinking is pretty natural.  (And you can
+always provide a --force option to allow filtering & rewriting in a
+repo that isn't a fresh clone.)
 
-Best Wishes
 
-Phillip
-
-> [1] https://github.com/git/git/blob/master/sequencer.c#L4661
-> 
-> Cheers,
-> Alban
-> 
-> 
-
+Elijah
