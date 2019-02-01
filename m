@@ -2,186 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA9B91F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 11:15:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B18741F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 13:17:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728135AbfBALPf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 06:15:35 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:37446 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727178AbfBALPf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 06:15:35 -0500
-Received: from [192.168.2.240] ([92.26.116.186])
-        by smtp.talktalk.net with SMTP
-        id pWn5gLKJdwhzSpWnCgcFkI; Fri, 01 Feb 2019 11:15:33 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1549019733;
-        bh=2B0In/oUtgjKvuZiOtiicIrBxvhNeB1dW0QVzFU4jEc=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=FYYgDKyRBEnrOLyDUqNniw9fDkYhbAd/mmy7fOx951srFBnhRE90ChBOgPAojpa5y
-         uNOe9OV+D3Cbbv8VZmntOs9MLA6+/F0gNV/NznlCqkJOLWnRfqPFPLUChTE5PGRdkb
-         79kGYUMeZhyYYR8kDhZCn3DBiaRCcl3TRcyRjaIc=
-X-Originating-IP: [92.26.116.186]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=Pfo8oxCPEre7EYRssK5nbQ==:117
- a=Pfo8oxCPEre7EYRssK5nbQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=hSzC6YhCil4ctn9M5b0A:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 16/16] rebase--interactive: move transform_todo_file()
- to rebase--interactive.c
-To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190123205821.27459-1-alban.gruin@gmail.com>
- <20190129150159.10588-1-alban.gruin@gmail.com>
- <20190129150159.10588-17-alban.gruin@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <d00c11bc-013e-5839-9766-6999e99edf34@talktalk.net>
-Date:   Fri, 1 Feb 2019 11:15:23 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1728676AbfBANRF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 08:17:05 -0500
+Received: from mail-pl1-f176.google.com ([209.85.214.176]:39220 "EHLO
+        mail-pl1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726206AbfBANRF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 08:17:05 -0500
+Received: by mail-pl1-f176.google.com with SMTP id 101so3213077pld.6
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 05:17:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Bf8N45xve4krc9qq4KHGg8Cwl6Bz10Ht6S5a9wgs3is=;
+        b=kjH5ntl22SvRJ0GYsughSVd6G2eONjw9KnNfTFQpyEASI00Z37i3NsNVzZVwwfBds0
+         yoIzrEXuatYQMoiHL7PLwFIe+0f0NygOqaXzwM929PKidlHBfF2AvqXqLOHvswg7g51d
+         QusXnljuxQUi8/vKJcah8cWN6GamxsF4/v+i7Kmtc6nOF7/suNp7D+y2lKz8IvgiTlm0
+         Hm7tDXU74rp9Wsv9ZfWq/gFe9iYY1pAK80azhuA0u3byKUjDS9s2sbr+18HTuVfeP//8
+         GGy+PcZuFia6ifer1QGDyPgSZSbIORScXMuf4cI59Xwmtz60jDExbq3RiDp3Dkp0OvFR
+         QofQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Bf8N45xve4krc9qq4KHGg8Cwl6Bz10Ht6S5a9wgs3is=;
+        b=qrqA9IHKAaxxkexekoyZl04wtDbgr82IGZw9nZt5oBnhTpYWBVa1jWlJtT7tQcVqNB
+         QXZAB2a/T/pdC8P+z8BIeUBTodflZyqOVRUIe3n9oaD3kuGJJJocQzxyjDi4PGr3ls5D
+         KUH/jrlzxNwYO8Q7lrz+41lTBEMZad41ZujOOBeNvAiMlBLRjBMugg8IbvoHXxG0DRQx
+         OehlVOb7vT9LkHkLxsIbMRmDUaOmVSwkcOU90fmKd8Y8Ivc/OX+h0Y4NxMGJVD8uDSJr
+         ZstXmqMjw2byozN2JjL1KUBUNegfZ3VnOrpgkmuthL6AWARidywLz7IKFocnQc9TAN3P
+         rzKw==
+X-Gm-Message-State: AJcUuke7ySq2McPpDOBmkkW0p6p6VmyjUIIBRqxuHivaKywJQF0Q7lSA
+        6kEy9gF7pbNu5Hh8rHgj+afIt4OP
+X-Google-Smtp-Source: ALg8bN7Uu0x9lyr3Sq/tIu9KbGNOOnNZndRD3X2qr+NJhU54oyVBn6DFkjkqlq9MgN1ZWbsuW/8Wgg==
+X-Received: by 2002:a17:902:680f:: with SMTP id h15mr38846359plk.40.1549027024488;
+        Fri, 01 Feb 2019 05:17:04 -0800 (PST)
+Received: from ash ([115.72.21.220])
+        by smtp.gmail.com with ESMTPSA id 24sm15986367pfr.75.2019.02.01.05.17.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 01 Feb 2019 05:17:03 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 01 Feb 2019 20:16:59 +0700
+Date:   Fri, 1 Feb 2019 20:16:59 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Marketa Calabkova <mcalabkova@suse.cz>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Worktree creation race
+Message-ID: <20190201131659.GA30564@ash>
+References: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
+ <2ee89ff3-e672-e940-f601-aa1d2647756a@suse.cz>
+ <CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com>
+ <CACsJy8D+zvgtw8RuBefYQsYrvn_vQT1dUO3Veg5ZtfQa2u5QKA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190129150159.10588-17-alban.gruin@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfBp8tKB576YhGrGCM+3cJ5DP8YunZ3aC9CCznwzd7ai4w/QvVJdOxH/s5Ij5i0tY0dWP6PuOYg6QMj4j+rrbqFIiCNagCDD3BHgSMyfNjzsvpVI0t1+N
- w4v7NI+gyJ0VaCUWiyjyiJBh4ggVXX4eTP8Re/3Dp6RkZ9PCmVTRD3WmiA7EcOjNsDpIqUO9PihI4uzK/ue/WP5ARRdfUFSNby50OaC8zT9fboDYogYFAzfm
- tbHmk9BIFJ9XN9aCWqApvjDlKtu8D3nR2MYNoWhuw8ydTgs3E8RZ7mzP2TOD0g65kGPvhC63aXbN1K8RzHx3GQ==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8D+zvgtw8RuBefYQsYrvn_vQT1dUO3Veg5ZtfQa2u5QKA@mail.gmail.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban
+On Fri, Feb 01, 2019 at 02:06:43PM +0700, Duy Nguyen wrote:
+> worrying about races like this. The mkdir loop would be one way to go.
+> But I'm going to add a new option to let the user control this
+> directory name. This is necessary since this name is now exposed via
+> "worktrees/<name>" reference space and should also be reported in "git
+> worktree list". Avoiding the race is a nice bonus.
 
-On 29/01/2019 15:01, Alban Gruin wrote:
-> As transform_todo_file() is only needed inside of rebase--interactive.c,
-> it is moved there from sequencer.c.
+I'm not going to bother you with code yet (although if you want, you
+can check out branch worktree-name on my gitlab repo), but this is
+what the user facing changes look like. Looking good?
 
-I think I'd prefer to minimize the code under builtin and move this to 
-rebase-interactive.c when it is modified earlier in the series. (I'd be 
-quite happy if all the files in builtin just consisted of some option 
-parsing followed by a call to run_git_foo() which resides in libgit)
+PS. I think this also calls for a command to rename working trees.
+Sigh.. this worktree thingy never ends.
 
-Also I wonder if we should be moving more functions (e.g. 
-todo_list_write_file() and possibly add_exec_commands(), 
-rearrange_squash() and the script generation) from sequencer.c to 
-rebase-interactive.c when they're rewritten (possibly in a separate 
-commit for ease of review) but I haven't looked if this is practical or 
-if there are some dependencies that make that tricky. Unless there are 
-some simple cases it should probably be a separate series.
-
-Thanks for working on this series, it's great to see the todo list 
-handling becoming more efficient.
-
-Best Wishes
-
-Phillip
-
-> 
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
->   builtin/rebase--interactive.c | 26 +++++++++++++++++++++++++-
->   sequencer.c                   | 23 -----------------------
->   sequencer.h                   |  1 -
->   3 files changed, 25 insertions(+), 25 deletions(-)
-> 
-> diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
-> index 645ac587f7..7f1e88a087 100644
-> --- a/builtin/rebase--interactive.c
-> +++ b/builtin/rebase--interactive.c
-> @@ -35,6 +35,30 @@ static int edit_todo_file(unsigned flags)
->   	return 0;
->   }
->   
-> +static int transform_todo_file(unsigned flags)
-> +{
-> +	const char *todo_file = rebase_path_todo();
-> +	struct todo_list todo_list = TODO_LIST_INIT;
-> +	int res;
-> +
-> +	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
-> +		return error_errno(_("could not read '%s'."), todo_file);
-> +
-> +	if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
-> +					&todo_list)) {
-> +		todo_list_release(&todo_list);
-> +		return error(_("unusable todo list: '%s'"), todo_file);
-> +	}
-> +
-> +	res = todo_list_write_to_file(the_repository, &todo_list, todo_file,
-> +				      NULL, NULL, -1, flags);
-> +	todo_list_release(&todo_list);
-> +
-> +	if (res)
-> +		return error_errno(_("could not write '%s'."), todo_file);
-> +	return 0;
-> +}
-> +
->   static int get_revision_ranges(const char *upstream, const char *onto,
->   			       const char **head_hash,
->   			       char **revisions, char **shortrevisions)
-> @@ -277,7 +301,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
->   	}
->   	case SHORTEN_OIDS:
->   	case EXPAND_OIDS:
-> -		ret = transform_todo_file(the_repository, flags);
-> +		ret = transform_todo_file(flags);
->   		break;
->   	case CHECK_TODO_LIST:
->   		ret = check_todo_list_from_file(the_repository);
-> diff --git a/sequencer.c b/sequencer.c
-> index 21b04e0642..5239700efc 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4593,29 +4593,6 @@ int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
->   	return res;
->   }
->   
-> -int transform_todo_file(struct repository *r, unsigned flags)
-> -{
-> -	const char *todo_file = rebase_path_todo();
-> -	struct todo_list todo_list = TODO_LIST_INIT;
-> -	int res;
-> -
-> -	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
-> -		return error_errno(_("could not read '%s'."), todo_file);
-> -
-> -	if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
-> -		todo_list_release(&todo_list);
-> -		return error(_("unusable todo list: '%s'"), todo_file);
-> -	}
-> -
-> -	res = todo_list_write_to_file(r, &todo_list, todo_file,
-> -				      NULL, NULL, -1, flags);
-> -	todo_list_release(&todo_list);
-> -
-> -	if (res)
-> -		return error_errno(_("could not write '%s'."), todo_file);
-> -	return 0;
-> -}
-> -
->   static const char edit_todo_list_advice[] =
->   N_("You can fix this with 'git rebase --edit-todo' "
->   "and then run 'git rebase --continue'.\n"
-> diff --git a/sequencer.h b/sequencer.h
-> index 68acab980b..11afd47aa9 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -145,7 +145,6 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
->   
->   int sequencer_add_exec_commands(struct repository *r,
->   				struct string_list *commands);
-> -int transform_todo_file(struct repository *r, unsigned flags);
->   int check_todo_list_from_file(struct repository *r);
->   int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
->   		    const char *shortrevisions, const char *onto_name,
-> 
-
+-- 8< --
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 18469e202e..d5db69dec7 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -9,7 +9,7 @@ git-worktree - Manage multiple working trees
+ SYNOPSIS
+ --------
+ [verse]
+-'git worktree add' [-f] [--detach] [--checkout] [--lock] [-b <new-branch>] <path> [<commit-ish>]
++'git worktree add' [-f] [--detach] [--checkout] [--lock] [-b <new-branch>] [--name <name>] <path> [<commit-ish>]
+ 'git worktree list' [--porcelain]
+ 'git worktree lock' [--reason <string>] <worktree>
+ 'git worktree move' <worktree> <new-path>
+@@ -195,6 +195,13 @@ This can also be set up as the default behaviour by using the
+ --reason <string>::
+ 	With `lock`, an explanation why the working tree is locked.
+ 
++--name <name>::
++	Name of the working tree. Each working tree must have a unique
++	name. This is also the directory name containing all working
++	tree's specific information under `$GIT_COMMON_DIR/worktrees`.
++	If `--name` is not given, the name is based on basename(3)
++	optionally with a number suffix to make it unique.
++
+ <worktree>::
+ 	Working trees can be identified by path, either relative or
+ 	absolute.
+@@ -323,11 +330,15 @@ details on a single line with columns.  For example:
+ 
+ ------------
+ $ git worktree list
+-/path/to/bare-source            (bare)
+-/path/to/linked-worktree        abcd1234 [master]
+-/path/to/other-linked-worktree  1234abc  (detached HEAD)
++(main) /path/to/bare-source            (bare)
++linked /path/to/linked-worktree        abcd1234 [master]
++other  /path/to/other-linked-worktree  1234abc  (detached HEAD)
+ ------------
+ 
++The first column is the name of the working tree. The second column is
++the location of the working tree. The third column is the short commit
++name of the current branch. The branch name is put in square brackets.
++
+ Porcelain Format
+ ~~~~~~~~~~~~~~~~
+ The porcelain format has a line per attribute.  Attributes are listed with a
+@@ -341,10 +352,12 @@ $ git worktree list --porcelain
+ worktree /path/to/bare-source
+ bare
+ 
++name linked
+ worktree /path/to/linked-worktree
+ HEAD abcd1234abcd1234abcd1234abcd1234abcd1234
+ branch refs/heads/master
+ 
++name other
+ worktree /path/to/other-linked-worktree
+ HEAD 1234abc1234abc1234abc1234abc1234abc1234a
+ detached
+-- 8< --
+--
+Duy
