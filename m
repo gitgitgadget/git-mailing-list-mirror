@@ -7,136 +7,87 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 638D41F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 17:30:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3273B1F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 17:57:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730590AbfBARaa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 12:30:30 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:32774 "EHLO
+        id S1730486AbfBAR5v (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 12:57:51 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40212 "EHLO
         mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730062AbfBARaa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 12:30:30 -0500
-Received: by mail-wm1-f67.google.com with SMTP id r24so5044541wmh.0
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 09:30:29 -0800 (PST)
+        with ESMTP id S1726737AbfBAR5u (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 12:57:50 -0500
+Received: by mail-wm1-f67.google.com with SMTP id f188so7077853wmf.5
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 09:57:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Gbyr8v3uTXi7PL7jhNpteu9rYJFaad3lhV79yhtyBiI=;
-        b=Gjtg30mZqocIfjF3Ijbn9WCgvJyJICvTYmfTAToPajLiEcb+6FTj5fskLBEchu8sfA
-         WhIfPFZMAVcxB0zu5Z9H/WVa5vT2g6ZNoeODAficdLnNECqEdQWvF6Ui+uUMMY4K1Xxc
-         rAXu6UurxYveAGqXX/Y4cNQIH0mu60hBJBhFiP2IIAC/aHS28zidZf3a1gCQgloYvVhp
-         bXukmNHXr1rdZ0la6I4Z63gdwIolfYRinPA9XTyFnGLjBLsRToDtHd0azWcJxg7LMV9l
-         N5z+bJF4Y4DtziaFHc8gxRfU/4TbtsAiUC6lmggMkkpqZZicB3H7KWXIM+Ko9oZdEMV8
-         d2hA==
+         :user-agent:mime-version;
+        bh=QB36Wv7UqKhhOQcTtaRLwoqaFdvFUL9mLCZv29ZBuJQ=;
+        b=tBgWPF4OajJxLqMpL37j3nmHgWoIHNTWO+9UZ9mbMtfKDxrz4pGnrukbcbnpCf87BZ
+         2x0BeS6cnSGASjG0uVbO0ii2sfh08RPUjMmHYQ44je4iJX7JnFUB8nJtMfrD1Lu8G4sQ
+         218fjjcZEcdNP4aIl8XFzzI9rjg4Ug37jl2F/1XRpFthTnxHgWHOoLBiq4MK794r1tmO
+         14Ynb/o/4qZATicy2li4PSso9AGojAEqeHP59Be+r7G5OLu5cy2IGqZcZTwxLIKSkymR
+         SB94fU7WHyXkpjhv/ChLyapx3JbUrq3O7PK6XuYoZP/D9jjOE/QT3Yj2hs9DxPtZfsmZ
+         O5jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Gbyr8v3uTXi7PL7jhNpteu9rYJFaad3lhV79yhtyBiI=;
-        b=LfPJeXceRxj0kUS/GOyBTdA5HK1HMBwKUmJZkRU+AYDtT+OrjHe0HC6CEzetLGDC/Z
-         TgUreCyyvqcbIx1V5pJ6EcLr+2LcdlVROC2d+++0S1MCHP3uP1PRRZB8RwmBj14Ui6qC
-         PWRHvLHFZOhjJzXkaccffdZWU77LH7nFq7UsEXmmT1gGwrxHlQOqkrE56LmNLzWjADYp
-         yEGV1suj55UTJrHUSphz54FLM9qQB89CGnZWfnN3wAqRvfb5zaJ9e2J0A2GfTa2lVMm9
-         MOorDHRs05L8hxtdnbH0p4u/D6NIGJSlyNdMQMwJxP4nQQSiSnCVhuNGBDnPTf2EXFX9
-         nVZA==
-X-Gm-Message-State: AHQUAuYRvTYl2cL8ppO5IzF9dy2YfA1c/UXIpiEEAbfe6UBE929OpCiP
-        Zr8ahSO1zGlchlKnzYc8KBA=
-X-Google-Smtp-Source: AHgI3IZChoJ5+XWX4MnTIwbOqojOH6JWrU9UbJIfQdDjSf+steSxY/ubAQkpF9mWJQ2ASjFZV3aZaQ==
-X-Received: by 2002:a1c:1d8e:: with SMTP id d136mr3266036wmd.98.1549042228096;
-        Fri, 01 Feb 2019 09:30:28 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b18sm8320987wrr.43.2019.02.01.09.30.25
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QB36Wv7UqKhhOQcTtaRLwoqaFdvFUL9mLCZv29ZBuJQ=;
+        b=bOmHfqMHzJ9xAfMsN1DNiQ5Gy3Wj/p2RlDxTyx3DWRDVIIxZNvm4vstWTEf3urcV2V
+         NF9Jd4Zy+sf7Lk71acVHUrMd1AQqwNyek+grrf3p1etSkGPOzynmkhaulTCoXzinNjqo
+         ytqYAtVJi6oFOFDW0K2T+YVKwU64Sr6C9miAmgskOYYu3AyElFYJ1kfsezon2rnCJVLd
+         /n2fPHSjaC4oeOVbiw8nq2yTln0q3e6hNckd2QuU0WgwNtTuhmN+Ch+ysO2Y5rJpi2PB
+         NKD9Nv6BBiHI4qNeoR9hB5nDlmRCfU7ZOTJS0n0P2WltlUZuwgTMRiw0YgsMtLUw8zDQ
+         AVBg==
+X-Gm-Message-State: AHQUAuanOoKGcSUFZFfp55WSPXlphaRdKFioyhneRcngAVWqdmbMMB61
+        5atGpNDmXk6Pp9BNXOFcsQw=
+X-Google-Smtp-Source: AHgI3IbIxkXWRUAAkb59YwklZFOdVspGr7dv0iRxUNJp8hGMWepm4SRF7ePJy+Lb4MFk/Fk/nqQswA==
+X-Received: by 2002:a1c:410b:: with SMTP id o11mr3446244wma.109.1549043868709;
+        Fri, 01 Feb 2019 09:57:48 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o8sm10714852wrx.15.2019.02.01.09.57.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Feb 2019 09:30:26 -0800 (PST)
+        Fri, 01 Feb 2019 09:57:46 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michal Nowak <mnowak@startmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Subject: Re: Broken interactive rebase text after some UTF-8 characters
-References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
-        <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>
-        <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>
-        <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net>
-        <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
-        <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>
-        <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
-        <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
-        <nycvar.QRO.7.76.6.1902011530440.41@tvgsbejvaqbjf.bet>
-        <eda7b1c4-5fd6-5440-8998-75eab9f73e47@startmail.com>
-Date:   Fri, 01 Feb 2019 09:30:25 -0800
-In-Reply-To: <eda7b1c4-5fd6-5440-8998-75eab9f73e47@startmail.com> (Michal
-        Nowak's message of "Fri, 1 Feb 2019 17:24:26 +0100")
-Message-ID: <xmqqpnsbzaa6.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 6/8] checkout: add --cached option
+References: <20181209200449.16342-1-t.gummerer@gmail.com>
+        <20181209200449.16342-7-t.gummerer@gmail.com>
+        <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
+        <xmqqva40lps2.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BGQwtok1T3WmY3ndBG6RjbESSOgmbZxkWiN-avqfUjDVg@mail.gmail.com>
+        <CACsJy8AxUxYCO7bzb98EVvO5DU62ukZQNrF-sEktrdR9m6tfvg@mail.gmail.com>
+        <CACsJy8Bk=wbgzsE+Vo4w_u0E63PdUxxcvG-7e6Hq-8_jrmSErw@mail.gmail.com>
+        <xmqq7eek3ax7.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CHHT=9e9ti7VA4X4h3FrZcUKvLuzkL56mXLgjk4c5Qcg@mail.gmail.com>
+Date:   Fri, 01 Feb 2019 09:57:46 -0800
+In-Reply-To: <CACsJy8CHHT=9e9ti7VA4X4h3FrZcUKvLuzkL56mXLgjk4c5Qcg@mail.gmail.com>
+        (Duy Nguyen's message of "Fri, 1 Feb 2019 13:48:56 +0700")
+Message-ID: <xmqqlg2zz90l.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michal Nowak <mnowak@startmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
->> You already have that example. Just take the UTF-8 text in your original
->> bug report, put it into something like
->>
->> 	int main(int argc, char **argv)
->> 	{
->> 		char utf8[] = "... your text here...";
->>
->> 		printf("%.*s", (int)(sizeof(utf8) - 1), utf8);
->>
->> 		return 0;
->> 	}
+> Of course we could just do --index and --worktree, each option
+> restores the respective part. Then it's combinable (and extensible in
+> the future). But then "git restore" means "git restore --index
+> --worktree" and typing "git restore --index" effectively removes the
+> default "--worktree", which seems a bit twisted.
 
-When replayed literally, this is not a very good test.
+Or "git restore --no-worktree" (essentially, instead of saying
+"keep", say "no" to mean "negation").
 
-> {global} newman@lenovo:~ $ cat printf.c
-> #include <stdio.h>
-> //#include <gettext.h>
-> int main(int argc, char **argv) {
->   char utf8[] = "Gergő Mihály Doma\n";
->   printf("%.*s", (int)(sizeof(utf8) - 1), utf8);
->   return 0;
-> }
-
-And this is replaying it literally.
-
-The current working suspicion in this thread is that the platform
-printf("%.*s", num, str) emits up to num "characters" starting at
-str, which is an incorrect implementation, as it should emit up to
-num "bytes".  
-
-Notice that the num in this case is the byte count of that utf8[]
-string.  That number is always larger than the number of "characters"
-for a string with multi-byte character(s) in it.  Let's say that the
-sample string has N "characters", and it is N+X "bytes" long, where
-X > 1.
-
-If the suspicion is correct, i.e. the way the printf implementation
-is broken on this platform is that it shows up to num "characters",
-then the call is asking to show up to N+X "characters".  The buggy
-printf shows all the available N "characters", notices the string
-stops there, and finishes.  So you won't _see_ the bug with that
-test program.
-
-Instead, use something like this.
-
-        #include <stdio.h>
-
-        int main(int ac, char **av)
-        {
-                char utf8[] = "ふabc";
-                printf("%.*s\n", 4, utf8);
-                return 0;
-        }
-
-With or without gettext or i18n, the output must end with 'a' followed
-by a newline, and you must not see 'b' nor 'c'.  Otherwise your printf
-is broken.
+Incidentally, "git restore --no-index" does not have a counterpart
+in "git checkout", but I think it is probably a good thing to add;
+as it has to do far more than "git cat-file blob $tree:$path >$path"
+these days.
