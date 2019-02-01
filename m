@@ -2,106 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 220881F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 11:13:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA9B91F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 11:15:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729815AbfBALNA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 06:13:00 -0500
-Received: from siwi.pair.com ([209.68.5.199]:24247 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726206AbfBALNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 06:13:00 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 344353F4093;
-        Fri,  1 Feb 2019 06:12:59 -0500 (EST)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A386C3F4090;
-        Fri,  1 Feb 2019 06:12:58 -0500 (EST)
-Subject: Re: [PATCH v4 03/14] trace2: collect platform-specific process
- information
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
+        id S1728135AbfBALPf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 06:15:35 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:37446 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727178AbfBALPf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 06:15:35 -0500
+Received: from [192.168.2.240] ([92.26.116.186])
+        by smtp.talktalk.net with SMTP
+        id pWn5gLKJdwhzSpWnCgcFkI; Fri, 01 Feb 2019 11:15:33 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1549019733;
+        bh=2B0In/oUtgjKvuZiOtiicIrBxvhNeB1dW0QVzFU4jEc=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=FYYgDKyRBEnrOLyDUqNniw9fDkYhbAd/mmy7fOx951srFBnhRE90ChBOgPAojpa5y
+         uNOe9OV+D3Cbbv8VZmntOs9MLA6+/F0gNV/NznlCqkJOLWnRfqPFPLUChTE5PGRdkb
+         79kGYUMeZhyYYR8kDhZCn3DBiaRCcl3TRcyRjaIc=
+X-Originating-IP: [92.26.116.186]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=Pfo8oxCPEre7EYRssK5nbQ==:117
+ a=Pfo8oxCPEre7EYRssK5nbQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=hSzC6YhCil4ctn9M5b0A:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6 16/16] rebase--interactive: move transform_todo_file()
+ to rebase--interactive.c
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>
-References: <pull.108.v3.git.gitgitgadget@gmail.com>
- <pull.108.v4.git.gitgitgadget@gmail.com>
- <6167aba76ca43707bbba6de9f7c41a9fcb16063c.1548881779.git.gitgitgadget@gmail.com>
- <20190131231528.GC10587@szeder.dev>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <a1bf3e53-3f79-32f4-f349-a3165c02f595@jeffhostetler.com>
-Date:   Fri, 1 Feb 2019 06:12:57 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:65.0) Gecko/20100101
- Thunderbird/65.0
+References: <20190123205821.27459-1-alban.gruin@gmail.com>
+ <20190129150159.10588-1-alban.gruin@gmail.com>
+ <20190129150159.10588-17-alban.gruin@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <d00c11bc-013e-5839-9766-6999e99edf34@talktalk.net>
+Date:   Fri, 1 Feb 2019 11:15:23 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-In-Reply-To: <20190131231528.GC10587@szeder.dev>
+In-Reply-To: <20190129150159.10588-17-alban.gruin@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfBp8tKB576YhGrGCM+3cJ5DP8YunZ3aC9CCznwzd7ai4w/QvVJdOxH/s5Ij5i0tY0dWP6PuOYg6QMj4j+rrbqFIiCNagCDD3BHgSMyfNjzsvpVI0t1+N
+ w4v7NI+gyJ0VaCUWiyjyiJBh4ggVXX4eTP8Re/3Dp6RkZ9PCmVTRD3WmiA7EcOjNsDpIqUO9PihI4uzK/ue/WP5ARRdfUFSNby50OaC8zT9fboDYogYFAzfm
+ tbHmk9BIFJ9XN9aCWqApvjDlKtu8D3nR2MYNoWhuw8ydTgs3E8RZ7mzP2TOD0g65kGPvhC63aXbN1K8RzHx3GQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Alban
 
+On 29/01/2019 15:01, Alban Gruin wrote:
+> As transform_todo_file() is only needed inside of rebase--interactive.c,
+> it is moved there from sequencer.c.
 
-On 1/31/2019 6:15 PM, SZEDER Gábor wrote:
-> On Wed, Jan 30, 2019 at 12:56:24PM -0800, Jeff Hostetler via GitGitGadget wrote:
->> Add optional platform-specific code to log information about
->> the current process.
->>
->> On Windows, this includes whether git.exe is running under a
->> debugger and information about the ancestors of the process.
->>
->> The purpose of this information is to help indicate if the
->> process was launched interactively or in the background by
->> an IDE, for example.
+I think I'd prefer to minimize the code under builtin and move this to 
+rebase-interactive.c when it is modified earlier in the series. (I'd be 
+quite happy if all the files in builtin just consisted of some option 
+parsing followed by a call to run_git_foo() which resides in libgit)
+
+Also I wonder if we should be moving more functions (e.g. 
+todo_list_write_file() and possibly add_exec_commands(), 
+rearrange_squash() and the script generation) from sequencer.c to 
+rebase-interactive.c when they're rewritten (possibly in a separate 
+commit for ease of review) but I haven't looked if this is practical or 
+if there are some dependencies that make that tricky. Unless there are 
+some simple cases it should probably be a separate series.
+
+Thanks for working on this series, it's great to see the todo list 
+handling becoming more efficient.
+
+Best Wishes
+
+Phillip
+
 > 
->> diff --git a/trace2.h b/trace2.h
->> index a0e99d9c26..cb11a46366 100644
->> --- a/trace2.h
->> +++ b/trace2.h
->> @@ -363,4 +363,18 @@ __attribute__((format (printf, 1, 2)))
->>   void trace2_printf(const char *fmt, ...);
->>   #endif
->>   
->> +/*
->> + * Optional platform-specific code to dump information about the
->> + * current and any parent process(es).  This is intended to allow
->> + * post-processors to know who spawned this git instance and anything
->> + * else the platform may be able to tell us about the current process.
->> + */
->> +#if defined(GIT_WINDOWS_NATIVE)
->> +void trace2_collect_process_info(void);
->> +#else
->> +#define trace2_collect_process_info() \
->> +	do {                          \
->> +	} while (0)
->> +#endif
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>   builtin/rebase--interactive.c | 26 +++++++++++++++++++++++++-
+>   sequencer.c                   | 23 -----------------------
+>   sequencer.h                   |  1 -
+>   3 files changed, 25 insertions(+), 25 deletions(-)
 > 
-> Please consider mentioning in the commit message that on other
-> platforms this is a noop.  I was scrolling through the whole patch,
-> skipping over the Windows-specific parts, to see how you did it on
-> Linux, only to find the above do-nothing loop.  It was anticlimactic :)
+> diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
+> index 645ac587f7..7f1e88a087 100644
+> --- a/builtin/rebase--interactive.c
+> +++ b/builtin/rebase--interactive.c
+> @@ -35,6 +35,30 @@ static int edit_todo_file(unsigned flags)
+>   	return 0;
+>   }
+>   
+> +static int transform_todo_file(unsigned flags)
+> +{
+> +	const char *todo_file = rebase_path_todo();
+> +	struct todo_list todo_list = TODO_LIST_INIT;
+> +	int res;
+> +
+> +	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+> +		return error_errno(_("could not read '%s'."), todo_file);
+> +
+> +	if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
+> +					&todo_list)) {
+> +		todo_list_release(&todo_list);
+> +		return error(_("unusable todo list: '%s'"), todo_file);
+> +	}
+> +
+> +	res = todo_list_write_to_file(the_repository, &todo_list, todo_file,
+> +				      NULL, NULL, -1, flags);
+> +	todo_list_release(&todo_list);
+> +
+> +	if (res)
+> +		return error_errno(_("could not write '%s'."), todo_file);
+> +	return 0;
+> +}
+> +
+>   static int get_revision_ranges(const char *upstream, const char *onto,
+>   			       const char **head_hash,
+>   			       char **revisions, char **shortrevisions)
+> @@ -277,7 +301,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+>   	}
+>   	case SHORTEN_OIDS:
+>   	case EXPAND_OIDS:
+> -		ret = transform_todo_file(the_repository, flags);
+> +		ret = transform_todo_file(flags);
+>   		break;
+>   	case CHECK_TODO_LIST:
+>   		ret = check_todo_list_from_file(the_repository);
+> diff --git a/sequencer.c b/sequencer.c
+> index 21b04e0642..5239700efc 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4593,29 +4593,6 @@ int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
+>   	return res;
+>   }
+>   
+> -int transform_todo_file(struct repository *r, unsigned flags)
+> -{
+> -	const char *todo_file = rebase_path_todo();
+> -	struct todo_list todo_list = TODO_LIST_INIT;
+> -	int res;
+> -
+> -	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+> -		return error_errno(_("could not read '%s'."), todo_file);
+> -
+> -	if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
+> -		todo_list_release(&todo_list);
+> -		return error(_("unusable todo list: '%s'"), todo_file);
+> -	}
+> -
+> -	res = todo_list_write_to_file(r, &todo_list, todo_file,
+> -				      NULL, NULL, -1, flags);
+> -	todo_list_release(&todo_list);
+> -
+> -	if (res)
+> -		return error_errno(_("could not write '%s'."), todo_file);
+> -	return 0;
+> -}
+> -
+>   static const char edit_todo_list_advice[] =
+>   N_("You can fix this with 'git rebase --edit-todo' "
+>   "and then run 'git rebase --continue'.\n"
+> diff --git a/sequencer.h b/sequencer.h
+> index 68acab980b..11afd47aa9 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -145,7 +145,6 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+>   
+>   int sequencer_add_exec_commands(struct repository *r,
+>   				struct string_list *commands);
+> -int transform_todo_file(struct repository *r, unsigned flags);
+>   int check_todo_list_from_file(struct repository *r);
+>   int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+>   		    const char *shortrevisions, const char *onto_name,
 > 
-> Why is it a noop on other platforms?  I suspect that (since your main
-> focus is supporting Windows devs using Git on Windows) it's along the
-> lines of "I just didn't want to bother, and left it as future work for
-> anyone interested", which a perfectly valid reason in my book.
-> However, if you did look into it, and found some major difficulties or
-> downright showstoppers, then that might be worth mentioning.
-> (Portability?  I would expect that it would need a bunch of '#elif
-> defined(...)')
-
-Right, my primary focus was Windows at the time and I only added
-the Windows version.  I'll document that.
-
-Thanks
-Jeff
-
 
