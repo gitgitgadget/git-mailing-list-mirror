@@ -7,90 +7,107 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 318541F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 07:39:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1F7E1F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 07:42:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728287AbfBAHjJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 02:39:09 -0500
-Received: from mout.gmx.net ([212.227.15.19]:45897 "EHLO mout.gmx.net"
+        id S1726114AbfBAHmn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 02:42:43 -0500
+Received: from mout.gmx.net ([212.227.17.21]:56089 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727513AbfBAHjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 02:39:08 -0500
-Received: from [10.10.1.35] ([195.130.156.138]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lz3nU-1hBDKU1pg0-014C9o; Fri, 01
- Feb 2019 08:38:58 +0100
-Date:   Fri, 1 Feb 2019 08:38:56 +0100 (STD)
+        id S1725837AbfBAHmn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 02:42:43 -0500
+Received: from [10.10.1.35] ([195.130.156.138]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbOrg-1gYuWP3kqC-00ImdD; Fri, 01
+ Feb 2019 08:42:37 +0100
+Date:   Fri, 1 Feb 2019 08:42:36 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        phillip.wood@dunelm.org.uk, Michal Nowak <mnowak@startmail.com>,
-        git@vger.kernel.org
-Subject: Re: Broken interactive rebase text after some UTF-8 characters
-In-Reply-To: <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
-References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com> <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net> <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com> <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net> <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
- <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net> <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] help: align the longest command in the command listing
+In-Reply-To: <20190131092349.11469-1-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1902010842010.41@tvgsbejvaqbjf.bet>
+References: <20190131092349.11469-1-pclouds@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:5Io1oGqWPW++f980gZgH6dOeeCehHCV01ht1pr12H0y+XZ5Bo0X
- 9lZ+/hVmhgwQoj9lpAo3hZIwr1KpdYP8ksK6yWp4uyIdzawj5Xdw+PQhg/67tD6UdBj9LA9
- g6hg5RIZgbmXB5g5kDbH2iGjYG6+bTX7lKa6NiZphUUo8Jwz5i3COjUbWLRy4Eh/xhPinnu
- iHEQtTJP9EGyBnkq7AN4w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:j6AjNklp19o=:TK8Em86IYkTgrnw9xLEaWx
- ImG0z0MGX7Pr3nblahtJ9sUB2ebd/Ud3e9hCPZEfe9mMRU/n9wAtyhtBEbSSB7MCqYE0aEVs7
- +EJH9xvTesrc/RSpQYCS1C2W7dbyyzsxxIm1SLKuDR2EwTStsI4KRlJTmiWSmcsQb7X4/LR+E
- u0aiUdpVWp2jtmH3V4MUbkgVthv+SpO/DaZSCgvUYIQn20skVsNTHzyW1/IT3jcbGNgnAwtDZ
- L/wJ9+A84L6xOQCRCi0cEF4fWX7c5mDg68/4fm82ilMpGkPEpRyqEiPk0H143o+e7C65+OyGZ
- u+pzuQqvtWTANdTgIffs0BaG9XZuTSZkbf7awHK4chzvn8kDt8V6PL4vvSUtdwkTyusg164v2
- SLjotwL7N8YXT7kMduvdujIHD5XFjv3lWIw6lDonLI7Qt9Dh+zP5lHJph1rcsOA7kDTokSRlb
- ZkpQ+sA/aFv2WV8uj1WtzD7RMhMUzGbEq817j0N2pDbcTXtrwtPDTVAiFBMbKd6ZBMkEF+eJJ
- Jrq1hgpDrC659QYdC93VmsRR7GMRf1w/MFpjAxDIY7M+hKWJOVynN0ZhzTHmEVtPZdxIqx6p3
- +tnYlUXPl0Zqvc9diw4em/877GqDcW0TbproZxU8ivOoc8jAgKCHRnkQe61umtR3pMohh/E33
- lmBmVx0xCmB6pvAZRTbXMC9W2SlN6qK+U1reafaX1oJ6RXV03XJKZcExTxofoX0kLgNzk0Lpl
- 0MI48gVDz0Sy1pFJH7ib6YiTXkeVunNCjfK9+v9fo6CaMRJbBorqrMr79bqBM6LmS/yNBnfN1
- VqI2bIN4VNGUZY+Kr+Fiqv2Q59cxUpqmianCt4lPKaLftF5KZBK5oAD6J5PTTvIUzZSgYeTKU
- o9peSsKpk9IVlB8wrvcxYT4K974gdtWpsX+lcq9ZMZKz2h4x06g2yxXy2jl1PqAIE7Yx9dnZd
- 41bJs6OYhLQ==
+Content-Type: multipart/mixed; boundary="8323328-660390214-1549006957=:41"
+X-Provags-ID: V03:K1:Imt4eFmnWVhtfV8Fgxqdob5v5JUePDzE041UnYvTUF2x6L8mc42
+ pzi6FZH3y6aGD/Kvl920sWxw4KPJeLa96VIkM2Z24/xeL6+W89/COMk6a5qdzGwjDfP2je+
+ QE+RqVxitgur2w1CAgASEhpwHCsryESsihKh3Im3ECyVmSKHKGlf4etaFVW48gA40HTqpPy
+ cvQEz/FbBMrDwjcHus5Rw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rovvL6Qnt1k=:449jjR3cvcQa9GXL7itpEm
+ XGwQ9ZAbEy1FZEYHwVlUuxwAGV2yll5TxmdU/LiZg16EAX5GQrjpEV8BFzt4n3M0b3Wrw25Ao
+ gPdlp1IBe0Glv1n5Pbk9XwjBgOkM3ihK0jhIUGGLpjRRzfZdIbHEnw2HnhXqokTq8AgrhwCcF
+ 4ufQtYs6wESY/FRS5CzXYZ4M5m/h/xq2+Qnzb0t+JW6oq7EAdBg7zd/NmfdOsofJyw6AJtilY
+ 2jkasU29rF+XjRZkQaFZCNN/wCu6YM55mDvNHtrzhn1yhIedRwiO7EDeVAl0B4NWk9BAGZpkx
+ DPBmAz1NLuqx8LOWjn+qvNHwnLk+kXAH+UdW256tKB6NU9d+pTXzTx00BLGCajsPlgVGiFUgv
+ Yyj8Hm/ip5uC1TfgLkkbdVNyHFi8REKuEpV6BuXEWxHCS91fmuKetv1ShKE9WY0/Rz0s8OWah
+ XtDpPS7GH9k3/Bk0noVC/FFF014i8u2l2ZyjT0E2ugvwXMu5iXJAC26xWoxG9ePic1ju3SZG/
+ xbc4JTNRTjSNjM9769bm+G1GDwXxwb9jupfz7jqQfDlcWkiAOj1fAfw2jFJIwMBSPgpttKkKo
+ Umt4eKDlXVq04cD8fLRS3lIwt7e+ASo5irejBiUDuUJb9lRZKvkLOuVgUszCgUngymTDq3bk9
+ FkxkFZgbVMoz7c9tXynNWzhSZbzg4ojEic6HvoOzdqD3YZrDzZXN/271/3V9g4Kn7H2tL1Nff
+ bDyaXJ+V55AhmppPtyh4yMgWX8TPUOpaJOwkZtJhMCEyks+DxsSrqOpPbRNuVat0Dt2SOsgDA
+ lk+RGexcUJ4LUCBPduNORkdhx0vsMwWNBxH0foBrdfVe0G3xnCc7caSpLf6f8utgxw+UX2N5i
+ 2RZkuNT5qQz57okItDBLgZJy8XVHVR43KlqNrsbIIss/LbCBku4qTqxm8cbJFJQlUS5LuVYYs
+ n6tkd546MxA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 31 Jan 2019, Junio C Hamano wrote:
+--8323328-660390214-1549006957=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> Phillip Wood <phillip.wood@talktalk.net> writes:
+Hi Duy,
+
+On Thu, 31 Jan 2019, Nguyễn Thái Ngọc Duy wrote:
+
+> "longest" is used to determine how many extra spaces we need to print
+> to keep the command description aligned. For the longest command, we
+> should print no extra space instead of one, or we'll get unaligned
+> output like this (notice the "checkout" line):
 > 
-> >> Are we misusing C formats?
-> >
-> > The C standard and POSIX both say that the * refers to the maximum
-> > number of bytes to print but it looks like it is being treated as the
-> > maximum number of characters on OpenIndiana.
-> >
-> > Johannes - Perhaps we should change it to use fwrite() unless printf()
-> > gets fixed and we're sure no other operating systems are affected?
+>     grow, mark and tweak your common history
+>        branch     List, create, or delete branches
+>        checkout    Switch branches or restore working tree files
+>        commit     Record changes to the repository
+>        diff       Show changes between commits, commit and ...
+>        merge      Join two or more development histories together
+>        rebase     Reapply commits on top of another base tip
+>        tag        Create, list, delete or verify a tag ...
 > 
-> Avoid such a rewrite, as "%*.s" that takes (int, char *) are used in
-> many other places in our codebase, if you can.
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  help.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/help.c b/help.c
+> index ff05fd22df..520c9080e8 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -85,7 +85,8 @@ static void print_command_list(const struct cmdname_help *cmds,
+>  		if (cmds[i].category & mask) {
+>  			size_t len = strlen(cmds[i].name);
+>  			printf("   %s   ", cmds[i].name);
+> -			mput_char(' ', longest > len ? longest - len : 1);
+> +			if (longest > len)
+> +				mput_char(' ', longest - len);
 
-Yes, this would be painful in particular in cases like
+Why not simply replace the `1` by `0`?
 
-	master:advice.c:101:           fprintf(stderr, _("%shint: %.*s%s\n"),
+Ciao,
+Dscho
 
-where we want to write more than just a variable-length buffer.
-
-I am curious: is libintl (gettext) used on OpenIndiana? I ask because
-AFAIR fprintf() is overridden in that case, and the bug might be a lot
-easier to fix if it is in libintl rather than in libc.
-
-Of course, it might *still* be a bug in libc by virtue of handing '%.*s'
-through to libc's implementation.
-
-Alban, can you test this with NO_GETTEXT?
-
-Thanks,
-Johannes
+>  			puts(_(cmds[i].help));
+>  		}
+>  	}
+> -- 
+> 2.20.1.682.gd5861c6d90
+> 
+> 
+--8323328-660390214-1549006957=:41--
