@@ -2,156 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BACDA1F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 06:13:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1443211B5
+	for <e@80x24.org>; Fri,  1 Feb 2019 06:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726339AbfBAGLp convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 1 Feb 2019 01:11:45 -0500
-Received: from mail-qt1-f181.google.com ([209.85.160.181]:32861 "EHLO
-        mail-qt1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726060AbfBAGLp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 01:11:45 -0500
-Received: by mail-qt1-f181.google.com with SMTP id l11so6324253qtp.0
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 22:11:44 -0800 (PST)
+        id S1727327AbfBAG1n (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 01:27:43 -0500
+Received: from mail-qk1-f170.google.com ([209.85.222.170]:37844 "EHLO
+        mail-qk1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726557AbfBAG1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 01:27:43 -0500
+Received: by mail-qk1-f170.google.com with SMTP id g125so3412230qke.4
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 22:27:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rx3/Qo1X7SEm5mJxCyJvrMbyxxe6SKYSFi2sL13NRc8=;
-        b=BDiU+PuV8MiCHamJz0kduV/QUVQcgprR5BKp0X+5GmfXbRX9kJMYsgdBfEfmuADlpJ
-         HR35xjT1DX4HOUZ0iOsulwOkHaWfvjHYh6wMHBufBOlcFE7x7O7FIXk2UUdfhGoYOqgu
-         uPg37DO3zrzw+jTilaSd/sbuFTUJPfUshXoUxWf29RNNtBBoYNiHlakJ4sVOX4t7fWjZ
-         C8kEx8R5E4yk9YhbdtHDl0O6GSlX4bbJ+e1Yru5RzVPlbBjOmF8gTPTCr0JFwvWwbjI4
-         EM2wQLPGvvNT/14+0u/CH1QoPTYIKwtnIRkqaLvo2c9B2XCw4ZU44NGolvxf1iKtxtQO
-         +PEw==
-X-Gm-Message-State: AJcUuke6ZAi470fPz7yTxw2aCiysAP8GvzXNcbnn5Odz1tkhlXCP6h7B
-        P8aP2IBkrdOGyd5csteTKZyBZYSYh2czxbFlxf8=
-X-Google-Smtp-Source: ALg8bN4tmDgarm+KZ93Tg22S2/qitR9MDOCG1Dmstj36yWZt+EbOPGaWPB8oA1VMH0LRK71Tu4HIc2a5GgRDAaJZaJ8=
-X-Received: by 2002:ac8:2a81:: with SMTP id b1mr37628139qta.110.1549001503903;
- Thu, 31 Jan 2019 22:11:43 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=7HUg4ydszKHRCGzn1+lZSoIFhnZ6DT9Frw76nzbCzfo=;
+        b=DUD/vlDowE/+h5LI9Wb6wFVzApTrQRlB1fRUUamYySF47svkwIr4EhOkX1X74dB8Mv
+         fY+YN8+RAvzcGM+n/vW3eh9WihE36ngx9ZNNExK4aL5gAddEd2+635HQUCUxnGutRTmE
+         cnTbasFc6yqPMclUbJF7voOuOXCF96eeu3AJ2LUKjIFsh+Daw7tPJPZTymLRyvDX0nQ7
+         KDeYQyQ12KfZeYHo4+Uknv7smHInryN72+Xhu2ZYgwSfCN2OMpujN+MlzXKL2TLxZtfj
+         9uyxd62SlzvH89j4Q/iP1KBOskl7NqgJrR6jFzCQcs4iH8DSQTaNk32yukB7VipmJ3zb
+         YUPw==
+X-Gm-Message-State: AJcUukeqcy+VpNI6SKSQrseLM+akfyTpTUdM3UB8Akg2CgrN6hbGbXys
+        Gv2PhviVEXqN0KkGCofTK6fNNp8J583V8iEoZiA=
+X-Google-Smtp-Source: ALg8bN5lB5zgafegLJkz4Uzn8t5ccwDY77ns79dMtfRfQl3P1YGRCFlxlNCTHSRyoYCczaUmYMVM/SYMeHK4HMq0Bwg=
+X-Received: by 2002:a37:5e42:: with SMTP id s63mr33298254qkb.220.1549002461942;
+ Thu, 31 Jan 2019 22:27:41 -0800 (PST)
 MIME-Version: 1.0
-References: <20190112091754.30985-1-worldhello.net@gmail.com>
- <20190130114736.30357-2-worldhello.net@gmail.com> <xmqq7eek1ozm.fsf@gitster-ct.c.googlers.com>
- <CANYiYbG5vbV1bqbHu-u19XFy7JTpcopg0s=JWAhJBRNGvP7j3g@mail.gmail.com>
-In-Reply-To: <CANYiYbG5vbV1bqbHu-u19XFy7JTpcopg0s=JWAhJBRNGvP7j3g@mail.gmail.com>
+References: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz> <2ee89ff3-e672-e940-f601-aa1d2647756a@suse.cz>
+In-Reply-To: <2ee89ff3-e672-e940-f601-aa1d2647756a@suse.cz>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 1 Feb 2019 01:11:32 -0500
-Message-ID: <CAPig+cS84BOPdrZ+e1Z9ystx6SDyON0MJxVySQyxYE=LYcNRdg@mail.gmail.com>
-Subject: Re: [PATCH v7 1/6] t5323: test cases for git-pack-redundant
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Sun Chao <sunchao9@huawei.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Date:   Fri, 1 Feb 2019 01:27:31 -0500
+Message-ID: <CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com>
+Subject: Re: Worktree creation race
+To:     Marketa Calabkova <mcalabkova@suse.cz>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 1, 2019 at 12:44 AM Jiang Xin <worldhello.net@gmail.com> wrote:
->> Junio C Hamano <gitster@pobox.com> 于2019年2月1日周五 上午5:44写道：
-> > Move this outside loop, not for efficiency but for clarity. This
-> > helper function creates a single empty tree and bunch of commits
-> > that hold the same empty tree, arranged as a single strand of
-> > pearls.
->
-> Will rewrite as:
->
->     create_commits () {
->             parent=
->             T=$(git write-tree) &&
->             for name in A B C D E F G H I J K L M N O P Q R
-
-Don't forget the && at the end of the 'parent=' line to protect
-against someone later adding code above that line. So:
-
-    create_commits () {
-        parent= &&
-        T=$(git write-tree) &&
-        ...
-
-> Nice chart, will edit test_description as follows:
->
->     test_description='git pack-redundant test
->
->     In order to test git-pack-redundant, we will create a number of
-> redundant
->     packs in the repository `master.git`. The relationship between
-> packs (P1-P8)
->     and objects (T,A-R) is show in the following chart:
->
->            | T A B C D E F G H I J K L M N O P Q R
->         ---+--------------------------------------
->         P1 | x x x x x x x                       x
->         P2 |     x x x x   x x x
->         P3 |             x     x x x x x
->         P4 |                     x x x x     x
->         P5 |               x x           x x
->         P6 |                             x x   x
->         P7 |                                 x x
->         P8 |   x
-
-test_description should be a meaningful one-liner; it should not
-contain this other information, but this information should appear as
-comments in the test script.
-
->     Another repoisitory `shared.git` has unique objects (X-Z), while
-> share others
-
-s/repoisitory/repository/
-
-> > > +test_expect_success 'setup master.git' '
-> > > +     git init --bare master.git &&
-> > > +     cd master.git &&
-> > > +     create_commits
-> > > +'
+On Mon, Jan 28, 2019 at 7:58 AM Marketa Calabkova <mcalabkova@suse.cz> wrote:
+> On 15/01/2019 15:03, Marketa Calabkova wrote:
+> > I am writing to report a bug. The original report is from my colleague, I am also providing his suggestions.
 > >
-> > Everything below will be done inside master.git?  Avoid cd'ing
-> > around in random places in the test script, as a failure in any of
-> > the steps that does cd would start later tests in an unexpected
-> > place, if you can.
->
-> The first 10 test cases will run inside master.git, and others will
-> run inside shared.git.  Only run cd inside the two `setup` test cases.
-
-That's not what Junio meant. It's okay for tests to 'cd', but each
-test which does so _must_ ensure that the 'cd' is undone at the end of
-the test, even if the test fails. The correct way to do this within
-each test is by using 'cd' in a subhsell, like this:
-
-    test_expect_success 'setup master.git' '
-        git init --bare master.git &&
-        (
-            cd master.git &&
-            create_commits
-        )
-    '
-
-Then, each test which needs to use "master.git" would 'cd' itself, like this:
-
-    test_expect_success 'some test' '
-        (
-            cd master.git &&
-            ...
-        )
-    '
-
-> > > +test_expect_success 'setup shared.git' '
-> > > +     cd "$TRASH_DIRECTORY" &&
-> > > +     git clone -q --mirror master.git shared.git &&
+> > There is insufficient locking for worktree addition. Adding worktree may fail.
 > >
-> > Why "-q"?
->
-> To make verbose output cleaner.
+> > The problem is that git reads the directory entries in $GIT_DIR/worktrees,
+> > finds a worktree name that does not exist, tries to create it, and if an
+> > error is returned adding the worktree fails. When multiple git processes
+> > do this in parallel only one adds a worktree and the others fail. Git should
+> > reread the directory and find a new name that does not exist when creating
+> > the worktree directory fails because another git process already created it.
+> >
+> > I suppose adding PID in the tree name would mitigate the issue to the point it will be very unlikely to encounter.
+> >
+> > I need more than the tree in the temporary directory so using the temporary directory directly as a tree is out of question.
+> >
+> > cd gitrepo
+> > git commit --allow-empty -m Empty
+> > for n in $(seq 10000) ; do ( tmp=$(mktemp -d /dev/shm/gittest/test.XXXXXXXXXXX) ; mkdir $tmp/test ; git worktree add --detach $tmp/test ; ) & done
+> >
+> > (you should see many messages like:
+> > fatal: could not create directory of '.git/worktrees/test284': File exists)
+> >
+> Does anyone has a suggestion what to do with this bug? It looks like a
+> one-line fix probably in builtin/worktree.c, but I have no idea how to
+> do it. Sorry.
 
-What Junio really meant by asking that question was that you should
-not do this. When something goes wrong with a test, we want as much
-output as possible to help diagnose the problem, so suppressing output
-is undesirable. To summarize, don't use -q, --no-progress, or any
-other such option and don't redirect to /dev/null.
+I doubt this is a one-line fix, and I don't think it has anything to
+do with reading entries in $GIT_DIR/worktrees.
+
+add_worktree() already attempts to give a unique identifier to each
+worktree by adding a numeric suffix and incrementing that suffix if
+the name already exists (such as the 284 in your example error
+message) but there is definitely a race-condition between the time it
+stat()s the name and the time it mkdir()s it.
+
+One possible fix would be to unconditionally use the PID, as you
+suggest, though, this is not necessarily foolproof against races
+either (though it makes collisions very unlikely).
+
+Another possibility would be to skip the stat() and instead do the
+mkdir() in a loop, incrementing the sequence number each time through
+the loop. That should eliminate the race entirely (I think).
