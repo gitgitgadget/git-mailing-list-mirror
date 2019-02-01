@@ -2,95 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D17621F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 07:22:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9521F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 07:24:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726967AbfBAHWX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 02:22:23 -0500
-Received: from mout.gmx.net ([212.227.15.18]:35861 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725807AbfBAHWX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 02:22:23 -0500
-Received: from [10.10.1.35] ([195.130.156.138]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LyVpm-1hBlIB2LNW-015rfT; Fri, 01
- Feb 2019 08:22:21 +0100
-Date:   Fri, 1 Feb 2019 08:22:20 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Comparing rebase --am with --interactive via p3400
-In-Reply-To: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1902010819470.41@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726734AbfBAHYA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 02:24:00 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:43722 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725957AbfBAHX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 02:23:59 -0500
+Received: by mail-qt1-f195.google.com with SMTP id i7so6350931qtj.10
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 23:23:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tLE3UNJBmitZJ/pY6a6p6+HCPmvLWBYTQ22CWmDqiDs=;
+        b=Mm5OXyqU8AIJX2rWL48JitvgOz7xpqrkbrcTXOqmGI3ma1stmXqa0kn57xPV2o7evg
+         JPxWxxk/U/iuAceafgJs09DDSJe7PULe5gpademA/7GY7E8p4ssT2KfJ9PpRfshWiZdf
+         pukK6N33v0vYqcSPTTvwYAWNJ9OtADd1OeyX4PMIgOde32L2WJl9n5MHJjJmVvXA9dxv
+         OyQQPO3XTf6K3jBi+5jdJ2GRdzOmdHFGVmtq7YKb/nNAXtMSgbltQoXD1U8b1wt3DiNK
+         tQZ2vZ2dirP84eXuTlqVqBkHgmxFs6t4ioY9P1CDOopoT91OucQQG1rC4XfdKhonhw5P
+         9dcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tLE3UNJBmitZJ/pY6a6p6+HCPmvLWBYTQ22CWmDqiDs=;
+        b=bijqlY70aDdV8mwuE9OOeapm7bdtgUnfVDM1tPnldakPVhVD6ycgsdqXbpRIeS2kOO
+         ZjzAndpMMhf+RfoWjE11rOxtIBa8GZj8TWgjFrQeJ3wX3iXNqsQidmJQe0oXv/xUKTIo
+         kKInAEkGU5oZDmLB73n5qFKVsMGRrxUyIcw7P6bGjQtG1qQIUYTbQW93Lpsc3eSqbt0K
+         kcKVz02cfDWTAZ0GDKdB1aivI3tAIx0g1zp1LRbEl6Q3w08/JsD2Js+lEMy6Nu4R5HBp
+         +GjTa84/9hhMPhJN5Mgt6qcYtAs6GJNJoZUEw1fv5t3dl7rueMy6kOCMNxPFSewUqqNs
+         l/dQ==
+X-Gm-Message-State: AJcUukdGNNpWkO71zWLinA4gcALe/2TXZL0f/iFGUOMNc5P9znRO8kI3
+        jUHOCzBEHrt3OW/kI4nEr+gMJyqTv+S48tC2T08=
+X-Google-Smtp-Source: ALg8bN4HgYh7JjW1ezINjdaxRh9eG1WpRI9L3aLeD03ib1TkYlPDro10Uwj42mNhoeR7xXurrKsOuO9ymieMP647/oE=
+X-Received: by 2002:a0c:d80f:: with SMTP id h15mr36131145qvj.228.1549005838137;
+ Thu, 31 Jan 2019 23:23:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:oanN/93RFc1QhTNfk2mpnw+BjNDOC9SzrhXdPGJCel7I1Hvn4Tw
- jtscAPb73UOyTbnBhy3vAE0Fr3qRsxoIUtrdfTFbR2eWUQbRr8EydUQO4IAUAtuNP/9n8SG
- 5asoLEPAcaqfpTJvpvjy/kLDXcEKaAeIHwlwF9UQnHynLRi5JkRnmwuawP7jSMjvVFgUX4b
- Ncb6ffh8/zkE9lHa3x/CA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OvUJHynEu+Q=:7aPmXGJvLsWBIAP5GJOIQk
- oYXobU/uN710XsXV7GBHN7M55fIyS+0qkxGCfXxWxwTJxcudRIQP4DxxGnpVYYW4Y4pea6jrR
- Q4freQKbs1mvyciBiRzjBRWQ/utP/Z+VgWGpvn1MALaHeSBlpmurBT+g2KQ755GDgtXUk3cSP
- HUITSH8Dqn3nVMXpRxk5/qbxtdqx5Rz+w9M8t7Az20ZvGXXMpP5wZOXnGwp5bvGwxup7bWh1i
- +o8Z0DGuixg2wQ3/vh3gNFtxDxKIIDGfiXHB0XL4hRYm3YvT4lQy6WtE1JW19rufHadZAbSL1
- CUwtyVDl/NHNCsIkbluFdDXWqv3i+2Vg2awKg6mOCORrrzg2VtxApoBOXBJaDmuJzCVqhQKLW
- SLgerv5e3Dg6qTdqDU56FLxSxdEwd4HCXkfzHO/V4ZaSc5fP9OJg3KTGw3ixN4VE80/C/vZXS
- iQzWasfeiDf0/z6htqf717be3z4zlGXdj8RAs+w/Fwm8PY3TYCGWgzWCgTxmFXg0sZAPFkvW3
- a18+kwXcU/yFTxuqI4mSZCNfFqJyMZR5eIfpKPDpRXWy8gGZaCCCc73zlwcSPqBpp90Ag/teG
- 62ZrZgUChwp71xHik0/sF0kM47vx3VYNyxoG85WAy3E+E/ei9tRLvi+kfCbK5RBM5kM+D6mrx
- zIw4VLThg3Czvw+osViIrSGze7XqrPu11NLx9H5YA126Rzqr/HZO3NKc41Cu85W2d4dn5KkkF
- 93VAYsyWg9yZKIXf0cEFfSFn349zuuCpmfNRd+qxpaMl9wFOhEUDfpmwpSqSCL6tnNb7doms+
- apUZn2k/T9if2CUfJ8yVRPRHGCjrfz8j/d/RfS/REWC1v4TR/3pmxkREX+eKYdHnvROmAeU99
- duZiUrojPjse94R4aK+T2agZgDUhs6Goea9xeLSGBizNXtiZDSK7Y3PpVaka9HchNMt+PMiU4
- XK+VtkCfMQw==
+References: <20190112091754.30985-1-worldhello.net@gmail.com>
+ <20190130114736.30357-2-worldhello.net@gmail.com> <xmqq7eek1ozm.fsf@gitster-ct.c.googlers.com>
+ <CANYiYbG5vbV1bqbHu-u19XFy7JTpcopg0s=JWAhJBRNGvP7j3g@mail.gmail.com> <CAPig+cS84BOPdrZ+e1Z9ystx6SDyON0MJxVySQyxYE=LYcNRdg@mail.gmail.com>
+In-Reply-To: <CAPig+cS84BOPdrZ+e1Z9ystx6SDyON0MJxVySQyxYE=LYcNRdg@mail.gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Fri, 1 Feb 2019 15:23:46 +0800
+Message-ID: <CANYiYbHK9Qozqzpnwu3y9Gq=ieMPUgXfZxr8Ofxwe6mJox9Ohg@mail.gmail.com>
+Subject: Re: [PATCH v7 1/6] t5323: test cases for git-pack-redundant
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Sun Chao <sunchao9@huawei.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Eric Sunshine <sunshine@sunshineco.com> =E4=BA=8E2019=E5=B9=B42=E6=9C=881=
+=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8B=E5=8D=882:11=E5=86=99=E9=81=93=EF=BC=
+=9A
+>
+> On Fri, Feb 1, 2019 at 12:44 AM Jiang Xin <worldhello.net@gmail.com> wrot=
+e:
+> >> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2019=E5=B9=B42=E6=9C=881=
+=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=885:44=E5=86=99=E9=81=93=EF=BC=
+=9A
+> > > Move this outside loop, not for efficiency but for clarity. This
+> > > helper function creates a single empty tree and bunch of commits
+> > > that hold the same empty tree, arranged as a single strand of
+> > > pearls.
+> >
+> > Will rewrite as:
+> >
+> >     create_commits () {
+> >             parent=3D
+> >             T=3D$(git write-tree) &&
+> >             for name in A B C D E F G H I J K L M N O P Q R
+>
+> Don't forget the && at the end of the 'parent=3D' line to protect
+> against someone later adding code above that line. So:
+>
+>     create_commits () {
+>         parent=3D &&
+>         T=3D$(git write-tree) &&
+>         ...
 
-On Fri, 1 Feb 2019, Johannes Schindelin wrote:
+Will do.
 
-> as discussed at the Contributors' Summit, I ran p3400 as-is (i.e. with the
-> --am backend) and then with --keep-empty to force the interactive backend
-> to be used. Here are the best of 10, on my relatively powerful Windows 10
-> laptop, with current `master`.
-> 
-> With regular rebase --am:
-> 
-> 3400.2: rebase on top of a lot of unrelated changes             5.32(0.06+0.15)
-> 3400.4: rebase a lot of unrelated changes without split-index   33.08(0.04+0.18)
-> 3400.6: rebase a lot of unrelated changes with split-index      30.29(0.03+0.18)
-> 
-> with --keep-empty to force the interactive backend:
-> 
-> 3400.2: rebase on top of a lot of unrelated changes             3.92(0.03+0.18)
-> 3400.4: rebase a lot of unrelated changes without split-index   33.92(0.03+0.22)
-> 3400.6: rebase a lot of unrelated changes with split-index      38.82(0.03+0.16)
-> 
-> I then changed it to -m to test the current scripted version, trying to
-> let it run overnight, but my laptop eventually went to sleep and the tests
-> were not even done. I'll let them continue and report back.
+> > Nice chart, will edit test_description as follows:
+> >
+> >     test_description=3D'git pack-redundant test
+> >
+> >     In order to test git-pack-redundant, we will create a number of
+> > redundant
+> >     packs in the repository `master.git`. The relationship between
+> > packs (P1-P8)
+> >     and objects (T,A-R) is show in the following chart:
+> >
+> >            | T A B C D E F G H I J K L M N O P Q R
+> >         ---+--------------------------------------
+> >         P1 | x x x x x x x                       x
+> >         P2 |     x x x x   x x x
+> >         P3 |             x     x x x x x
+> >         P4 |                     x x x x     x
+> >         P5 |               x x           x x
+> >         P6 |                             x x   x
+> >         P7 |                                 x x
+> >         P8 |   x
+>
+> test_description should be a meaningful one-liner; it should not
+> contain this other information, but this information should appear as
+> comments in the test script.
 
-It finally finished:
+In 't/t0000-basic.sh', there is also a very long test_description.
+After read 't/test-lib.sh', the only usage of test_description
+is showing it as help, when runing:
 
-3400.2: rebase on top of a lot of unrelated changes             7.37(0.09+0.19) 
-3400.4: rebase a lot of unrelated changes without split-index 393.96(0.04+0.15)
-3400.6: rebase a lot of unrelated changes with split-index    404.65(0.01+0.24)
+    sh ./t0000-basic.sh
 
-So there is a seemingly significant cost to using the split-index that is
-just very unfortunate. In any case, just switching from the scripted
---merge backend to the built-in interactive backend results in a >10x
-faster execution. So I *definitely* want that scripted `--merge` backend
-to go away. Thank you for doing this.
+So write a long test_description is ok, I think.
 
-Ciao,
-Dscho
+> >     Another repoisitory `shared.git` has unique objects (X-Z), while
+> > share others
+>
+> s/repoisitory/repository/
+
+Thanks, will fix.
+
+> > > > +test_expect_success 'setup master.git' '
+> > > > +     git init --bare master.git &&
+> > > > +     cd master.git &&
+> > > > +     create_commits
+> > > > +'
+> > >
+> > > Everything below will be done inside master.git?  Avoid cd'ing
+> > > around in random places in the test script, as a failure in any of
+> > > the steps that does cd would start later tests in an unexpected
+> > > place, if you can.
+> >
+> > The first 10 test cases will run inside master.git, and others will
+> > run inside shared.git.  Only run cd inside the two `setup` test cases.
+>
+> That's not what Junio meant. It's okay for tests to 'cd', but each
+> test which does so _must_ ensure that the 'cd' is undone at the end of
+> the test, even if the test fails. The correct way to do this within
+> each test is by using 'cd' in a subhsell, like this:
+>
+>     test_expect_success 'setup master.git' '
+>         git init --bare master.git &&
+>         (
+>             cd master.git &&
+>             create_commits
+>         )
+>     '
+>
+> Then, each test which needs to use "master.git" would 'cd' itself, like t=
+his:
+>
+>     test_expect_success 'some test' '
+>         (
+>             cd master.git &&
+>             ...
+>         )
+>     '
+
+Nice explaination, will do.
+
+> > > > +test_expect_success 'setup shared.git' '
+> > > > +     cd "$TRASH_DIRECTORY" &&
+> > > > +     git clone -q --mirror master.git shared.git &&
+> > >
+> > > Why "-q"?
+> >
+> > To make verbose output cleaner.
+>
+> What Junio really meant by asking that question was that you should
+> not do this. When something goes wrong with a test, we want as much
+> output as possible to help diagnose the problem, so suppressing output
+> is undesirable. To summarize, don't use -q, --no-progress, or any
+> other such option and don't redirect to /dev/null.
+
+Thanks.
