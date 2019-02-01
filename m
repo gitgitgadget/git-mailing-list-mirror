@@ -7,63 +7,60 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E964D1F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 16:22:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFD4C1F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 16:22:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728166AbfBAQWX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 11:22:23 -0500
-Received: from mail-pl1-f176.google.com ([209.85.214.176]:36655 "EHLO
-        mail-pl1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726460AbfBAQWX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 11:22:23 -0500
-Received: by mail-pl1-f176.google.com with SMTP id g9so3459042plo.3
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 08:22:23 -0800 (PST)
+        id S1728824AbfBAQW3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 11:22:29 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45652 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728357AbfBAQW3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 11:22:29 -0500
+Received: by mail-pf1-f193.google.com with SMTP id g62so3422352pfd.12
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 08:22:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zaGzBv+5VAU+O2Rk6mfJvWCTkVs6XhzmtPTIrumhYms=;
-        b=eDhAPXQBRMVqOYNISwNPLTxuFp+hevvtztwtuXF9k7SqjjZ6OjObQCLASs9mngoTTb
-         9Ab+er6TwnIbt//0l9AUMphr9kR2TTSHXpIqz/23mlAnAGlIEm88P6tgYU8VNBWEQGsa
-         8sNETP+rPg64X8U7wSPC5ztP0xhpggMW3A5/Dr3M9XWEu04XBahUNxskxrcNhuv70XMx
-         4fqjq4ImDS3MW2vIMVnJlp3aPdXuT4Hjlp4YnL1+ZMf1FpeynqvKze8QwnFMDnL7cxkb
-         WBU3TsoVd8qdb0ZkwvTA9DqVsHv9VziUyhLBMW8PoX3SyLQXTHuSHw/I1hbdVboUqWti
-         jgig==
+        bh=clTtnisEtJp6hRAy0x/TLhfQUCf9WYBfVLJ0GExX3ws=;
+        b=I6kOUmDxMMh0AdfHrn6C+3ta9V4FXdxEw42D9/yd8uBgSK2vKLAJZ/bqhURjeAU3Mj
+         XiQmhvkNDBZXoixsOrXXMx0Uatm2yV9MC1PkALOPEJV2ifa3+b1Y3pILtVi0lHagGFj7
+         VZQZ3p97wGJRxuxQR7i4Sg+IrgJmHdqJFTgFF/RqkShGRl4KpM01r7n8zo6U2bDOiLVd
+         nN72v4iFeULn+vflMFJHY8YDsUEGZPLfvzqdasvQtXzv/eGLzuFramemeGaKpg50LDuE
+         8iIBJodyV0P5Ed30PdzSKZBerBm7jPxvOqxaBJYuha67vvCpQ0rFeWHJgop/2l4FKOnE
+         7j1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zaGzBv+5VAU+O2Rk6mfJvWCTkVs6XhzmtPTIrumhYms=;
-        b=mKQzTAJSmxMePYKKecgRqEgSOQk9cnyRGThHBrNMA0H/9uoPSeMB2dwHt0SF4atFT4
-         Ws5pLU1hCquIw7jF3uCTcc/h/SzWyBLYUwt/pgxykZ2zrKFRddPKurE/M88TrHBGUTUE
-         z2MQdNgLizExk585l1MtBrYtadCfvd9FRycDAmNH4KBYo5uRbpRiryiSIchFja5aE6cO
-         VRCr6+/oIzlMCe452Q0jdVFQwy9QGjEMWz7vP/09Y+6vOlJZAeTn0hIw/WRoDrDXNs+o
-         WrHmmsSBnqpAoIEVXaofJAwZyAkEKOb6LVSyYv2woMbIPsIpKAqyM1MYPBtRz2TSZrX5
-         Q1bw==
-X-Gm-Message-State: AJcUukePrqZhPiZRiYWXvuqNSyatb1OsC0H13owuZqTo+O2EDxzdmL/T
-        RuDBZaMmzO0xHsPXFLLXL7c=
-X-Google-Smtp-Source: ALg8bN4+ir5+YcOPNjl42EG5hW+aXPdtkivuwnE/5RZF57+ph1gYXwy3TNRwjN6vn6WRwvZ5aUmxdw==
-X-Received: by 2002:a17:902:bc3:: with SMTP id 61mr40453982plr.15.1549038142562;
-        Fri, 01 Feb 2019 08:22:22 -0800 (PST)
+        bh=clTtnisEtJp6hRAy0x/TLhfQUCf9WYBfVLJ0GExX3ws=;
+        b=LMkZ22itv+A21m1y4a6KMhr6p3vxjhXyRC5Yy/fJEMCnFfF/63knRDFqiUdXhlv3jg
+         akvjTie8q0w0IxziaFyXLCUoab46Td99so8sNCs3ELrzvqKeyW7PVcjc8S5xIiQvb18k
+         8gPXQSpBagatDvP9+r7vR/w5l/6x68eriBVAxcIfid1zgGhwSJeKq7LupF83+LpJlXvN
+         fZLlXUWRahDfCuQ1c6c2L4xk47P8S+PfNrOY2dpR2y6bqt8vW9RUG18KKC9QmwCR8ynn
+         mVtuh49jq28Nmaq0vOZlFYqQ8qC4QvFNPwxkBYa2G1pUwORmmqrK/2jTO1YC2U/RApLb
+         y8ng==
+X-Gm-Message-State: AJcUukcv39sy/Z9ptleJd/RDcZPYfv7M3UTpgm1ZM8KrpukjVqFqFzBz
+        A+mQNBp0yh7nhgq/5sv3/nc=
+X-Google-Smtp-Source: ALg8bN5vAkyMTSi/El9sZKWC47C3M0qmcu+aArZwPyiQkzMSWXFiWPcZHckVrcy/DhlZ1BDIlkfb/Q==
+X-Received: by 2002:aa7:8045:: with SMTP id y5mr39634853pfm.62.1549038148707;
+        Fri, 01 Feb 2019 08:22:28 -0800 (PST)
 Received: from localhost.localdomain ([2408:84e1:1:ce70:7c5c:7512:51d2:8f91])
-        by smtp.gmail.com with ESMTPSA id x2sm11872694pfx.78.2019.02.01.08.22.12
+        by smtp.gmail.com with ESMTPSA id x2sm11872694pfx.78.2019.02.01.08.22.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Feb 2019 08:22:21 -0800 (PST)
+        Fri, 01 Feb 2019 08:22:27 -0800 (PST)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Sun Chao <sunchao9@huawei.com>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v9 1/6] t5323: test cases for git-pack-redundant
-Date:   Sat,  2 Feb 2019 00:21:47 +0800
-Message-Id: <20190201162152.31136-2-worldhello.net@gmail.com>
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v9 2/6] pack-redundant: delay creation of unique_objects
+Date:   Sat,  2 Feb 2019 00:21:48 +0800
+Message-Id: <20190201162152.31136-3-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.20.1.103.ged0fc2ca7b
 In-Reply-To: <20190130114736.30357-1-worldhello.net@gmail.com>
 References: <20190130114736.30357-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -72,535 +69,76 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Add test cases for git pack-redundant to validate new algorithm for git
-pack-redundant.
+Instead of initializing unique_objects in `add_pack()`, copy from
+all_objects in `cmp_two_packs()`, when unwanted objects are removed from
+all_objects.
+
+This will save memory (no allocate memory for alt-odb packs), and run
+`llist_sorted_difference_inplace()` only once when removing ignored
+objects and removing objects in alt-odb in `scan_alt_odb_packs()`.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Reviewed-by: SZEDER Gábor <szeder.dev@gmail.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Reviewed-by: Sun Chao <sunchao9@huawei.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t5323-pack-redundant.sh | 510 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 510 insertions(+)
- create mode 100755 t/t5323-pack-redundant.sh
+ builtin/pack-redundant.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
-new file mode 100755
-index 0000000000..d224ff3c50
---- /dev/null
-+++ b/t/t5323-pack-redundant.sh
-@@ -0,0 +1,510 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2018 Jiang Xin
-+#
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index cf9a9aabd4..f7dab0ec60 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -254,6 +254,11 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
+ 	struct llist_item *p1_hint = NULL, *p2_hint = NULL;
+ 	const unsigned int hashsz = the_hash_algo->rawsz;
+ 
++	if (!p1->unique_objects)
++		p1->unique_objects = llist_copy(p1->all_objects);
++	if (!p2->unique_objects)
++		p2->unique_objects = llist_copy(p2->all_objects);
 +
-+test_description='Test git pack-redundant
+ 	p1_base = p1->pack->index_data;
+ 	p2_base = p2->pack->index_data;
+ 	p1_base += 256 * 4 + ((p1->pack->index_version < 2) ? 4 : 8);
+@@ -536,7 +541,7 @@ static void scan_alt_odb_packs(void)
+ 	while (alt) {
+ 		local = local_packs;
+ 		while (local) {
+-			llist_sorted_difference_inplace(local->unique_objects,
++			llist_sorted_difference_inplace(local->all_objects,
+ 							alt->all_objects);
+ 			local = local->next;
+ 		}
+@@ -567,8 +572,7 @@ static struct pack_list * add_pack(struct packed_git *p)
+ 		llist_insert_back(l.all_objects, (const struct object_id *)(base + off));
+ 		off += step;
+ 	}
+-	/* this list will be pruned in cmp_two_packs later */
+-	l.unique_objects = llist_copy(l.all_objects);
++	l.unique_objects = NULL;
+ 	if (p->pack_local)
+ 		return pack_list_insert(&local_packs, &l);
+ 	else
+@@ -646,7 +650,6 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+ 
+ 	load_all_objects();
+ 
+-	cmp_local_packs();
+ 	if (alt_odb)
+ 		scan_alt_odb_packs();
+ 
+@@ -663,10 +666,12 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+ 	llist_sorted_difference_inplace(all_objects, ignore);
+ 	pl = local_packs;
+ 	while (pl) {
+-		llist_sorted_difference_inplace(pl->unique_objects, ignore);
++		llist_sorted_difference_inplace(pl->all_objects, ignore);
+ 		pl = pl->next;
+ 	}
+ 
++	cmp_local_packs();
 +
-+In order to test git-pack-redundant, we will create a number of objects and
-+packs in the repository `master.git`. The relationship between packs (P1-P8)
-+and objects (T, A-R) is showed in the following chart. Objects of a pack will
-+be marked with letter x, while objects of redundant packs will be marked with
-+exclamation point, and redundant pack itself will be marked with asterisk.
-+
-+        | T A B C D E F G H I J K L M N O P Q R
-+    ----+--------------------------------------
-+    P1  | x x x x x x x                       x
-+    P2* |     ! ! ! !   ! ! !
-+    P3  |             x     x x x x x
-+    P4* |                     ! ! ! !     !
-+    P5  |               x x           x x
-+    P6* |                             ! !   !
-+    P7  |                                 x x
-+    P8* |   !
-+    ----+--------------------------------------
-+    ALL | x x x x x x x x x x x x x x x x x x x
-+
-+Another repository `shared.git` has unique objects (X-Z), while other objects
-+(marked with letter s) are shared through alt-odb (of `master.git`). The
-+relationship between packs and objects is as follows:
-+
-+        | T A B C D E F G H I J K L M N O P Q R   X Y Z
-+    ----+----------------------------------------------
-+    Px1 |   s s s                                 x x x
-+    Px2 |         s s s                           x x x
-+'
-+
-+. ./test-lib.sh
-+
-+master_repo=master.git
-+shared_repo=shared.git
-+
-+# Note: DO NOT run it in a subshell, otherwise the variables will not be set
-+# Usage: create_commits_in <repo> A B C ...
-+create_commits_in () {
-+	repo="$1" &&
-+	parent=$(git -C "$repo" rev-parse HEAD^{} 2>/dev/null) || parent=
-+	T=$(git -C "$repo" write-tree) &&
-+	shift &&
-+	while test $# -gt 0
-+	do
-+		name=$1 &&
-+		test_tick &&
-+		if test -z "$parent"
-+		then
-+			oid=$(echo $name | git -C "$repo" commit-tree $T)
-+		else
-+			oid=$(echo $name | git -C "$repo" commit-tree -p $parent $T)
-+		fi &&
-+		eval $name=$oid &&
-+		parent=$oid &&
-+		shift ||
-+		return 1
-+	done
-+	git -C "$repo" update-ref refs/heads/master $oid
-+}
-+
-+# Note: DO NOT run it in a subshell, otherwise the variables will not be set
-+create_pack_1 () {
-+	P1=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
-+		$T
-+		$A
-+		$B
-+		$C
-+		$D
-+		$E
-+		$F
-+		$R
-+		EOF
-+	) &&
-+	eval P$P1=P1:$P1
-+}
-+
-+create_pack_2 () {
-+	P2=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
-+		$B
-+		$C
-+		$D
-+		$E
-+		$G
-+		$H
-+		$I
-+		EOF
-+	) &&
-+	eval P$P2=P2:$P2
-+}
-+
-+create_pack_3 () {
-+	P3=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
-+		$F
-+		$I
-+		$J
-+		$K
-+		$L
-+		$M
-+		EOF
-+	) &&
-+	eval P$P3=P3:$P3
-+}
-+
-+create_pack_4 () {
-+	P4=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
-+		$J
-+		$K
-+		$L
-+		$M
-+		$P
-+		EOF
-+	) &&
-+	eval P$P4=P4:$P4
-+}
-+
-+create_pack_5 () {
-+	P5=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
-+		$G
-+		$H
-+		$N
-+		$O
-+		EOF
-+	) &&
-+	eval P$P5=P5:$P5
-+}
-+
-+create_pack_6 () {
-+	P6=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
-+		$N
-+		$O
-+		$Q
-+		EOF
-+	) &&
-+	eval P$P6=P6:$P6
-+}
-+
-+create_pack_7 () {
-+	P7=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
-+		$P
-+		$Q
-+		EOF
-+	) &&
-+	eval P$P7=P7:$P7
-+}
-+
-+create_pack_8 () {
-+	P8=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
-+		$A
-+		EOF
-+	) &&
-+	eval P$P8=P8:$P8
-+}
-+
-+format_packfiles () {
-+	sed \
-+		-e "s#.*/pack-\(.*\)\.idx#\1#" \
-+		-e "s#.*/pack-\(.*\)\.pack#\1#" |
-+	sort -u |
-+	while read p
-+	do
-+		if test -z "$(eval echo \${P$p})"
-+		then
-+			echo $p
-+		else
-+			eval echo "\${P$p}"
-+		fi
-+	done |
-+	sort
-+}
-+
-+test_expect_success 'setup master repo' '
-+	git init --bare "$master_repo" &&
-+	create_commits_in "$master_repo" A B C D E F G H I J K L M N O P Q R
-+'
-+
-+#############################################################################
-+# Chart of packs and objects for this test case
-+#
-+#         | T A B C D E F G H I J K L M N O P Q R
-+#     ----+--------------------------------------
-+#     P1  | x x x x x x x                       x
-+#     P2  |     x x x x   x x x
-+#     P3  |             x     x x x x x
-+#     ----+--------------------------------------
-+#     ALL | x x x x x x x x x x x x x x         x
-+#
-+#############################################################################
-+test_expect_success 'no redundant for pack 1, 2, 3' '
-+	create_pack_1 && create_pack_2 && create_pack_3 &&
-+	(
-+		cd "$master_repo" &&
-+		git pack-redundant --all >out &&
-+		test_must_be_empty out
-+	)
-+'
-+
-+test_expect_success 'create pack 4, 5' '
-+	create_pack_4 && create_pack_5
-+'
-+
-+#############################################################################
-+# Chart of packs and objects for this test case
-+#
-+#         | T A B C D E F G H I J K L M N O P Q R
-+#     ----+--------------------------------------
-+#     P1  | x x x x x x x                       x
-+#     P2* |     ! ! ! !   ! ! !
-+#     P3  |             x     x x x x x
-+#     P4  |                     x x x x     x
-+#     P5  |               x x           x x
-+#     ----+--------------------------------------
-+#     ALL | x x x x x x x x x x x x x x x x x   x
-+#
-+#############################################################################
-+test_expect_success 'one of pack-2/pack-3 is redundant' '
-+	(
-+		cd "$master_repo" &&
-+		cat >expect <<-EOF &&
-+			P2:$P2
-+			EOF
-+		git pack-redundant --all >out &&
-+		format_packfiles <out >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'create pack 6, 7' '
-+	create_pack_6 && create_pack_7
-+'
-+
-+#############################################################################
-+# Chart of packs and objects for this test case
-+#
-+#         | T A B C D E F G H I J K L M N O P Q R
-+#     ----+--------------------------------------
-+#     P1  | x x x x x x x                       x
-+#     P2* |     ! ! ! !   ! ! !
-+#     P3  |             x     x x x x x
-+#     P4* |                     ! ! ! !     !
-+#     P5  |               x x           x x
-+#     P6* |                             ! !   !
-+#     P7  |                                 x x
-+#     ----+--------------------------------------
-+#     ALL | x x x x x x x x x x x x x x x x x x x
-+#
-+#############################################################################
-+test_expect_success 'pack 2, 4, and 6 are redundant' '
-+	(
-+		cd "$master_repo" &&
-+		cat >expect <<-EOF &&
-+			P2:$P2
-+			P4:$P4
-+			P6:$P6
-+			EOF
-+		git pack-redundant --all >out &&
-+		format_packfiles <out >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'create pack 8' '
-+	create_pack_8
-+'
-+
-+#############################################################################
-+# Chart of packs and objects for this test case
-+#
-+#         | T A B C D E F G H I J K L M N O P Q R
-+#     ----+--------------------------------------
-+#     P1  | x x x x x x x                       x
-+#     P2* |     ! ! ! !   ! ! !
-+#     P3  |             x     x x x x x
-+#     P4* |                     ! ! ! !     !
-+#     P5  |               x x           x x
-+#     P6* |                             ! !   !
-+#     P7  |                                 x x
-+#     P8* |   !
-+#     ----+--------------------------------------
-+#     ALL | x x x x x x x x x x x x x x x x x x x
-+#
-+#############################################################################
-+test_expect_success 'pack-8 (subset of pack-1) is also redundant' '
-+	(
-+		cd "$master_repo" &&
-+		cat >expect <<-EOF &&
-+			P2:$P2
-+			P4:$P4
-+			P6:$P6
-+			P8:$P8
-+			EOF
-+		git pack-redundant --all >out &&
-+		format_packfiles <out >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'clean loose objects' '
-+	(
-+		cd "$master_repo" &&
-+		git prune-packed &&
-+		find objects -type f | sed -e "/objects\/pack\//d" >out &&
-+		test_must_be_empty out
-+	)
-+'
-+
-+test_expect_success 'remove redundant packs and pass fsck' '
-+	(
-+		cd "$master_repo" &&
-+		git pack-redundant --all | xargs rm &&
-+		git fsck &&
-+		git pack-redundant --all >out &&
-+		test_must_be_empty out
-+	)
-+'
-+
-+# The following test cases will execute inside `shared.git`, instead of
-+# inside `master.git`.
-+test_expect_success 'setup shared.git' '
-+	git clone --mirror "$master_repo" "$shared_repo" &&
-+	(
-+		cd "$shared_repo" &&
-+		printf "../../$master_repo/objects\n" >objects/info/alternates
-+	)
-+'
-+
-+test_expect_success 'no redundant packs without --alt-odb' '
-+	(
-+		cd "$shared_repo" &&
-+		git pack-redundant --all >out &&
-+		test_must_be_empty out
-+	)
-+'
-+
-+#############################################################################
-+# Chart of packs and objects for this test case
-+#
-+#     ================ master.git ===============
-+#         | T A B C D E F G H I J K L M N O P Q R  <----------+
-+#     ----+--------------------------------------             |
-+#     P1  | x x x x x x x                       x             |
-+#     P3  |             x     x x x x x                       |
-+#     P5  |               x x           x x                   |
-+#     P7  |                                 x x               |
-+#     ----+--------------------------------------             |
-+#     ALL | x x x x x x x x x x x x x x x x x x x             |
-+#                                                             |
-+#                                                             |
-+#     ================ shared.git ===============             |
-+#         | T A B C D E F G H I J K L M N O P Q R  <objects/info/alternates>
-+#     ----+--------------------------------------
-+#     P1* | s s s s s s s                       s
-+#     P3* |             s     s s s s s
-+#     P5* |               s s           s s
-+#     P7* |                                 s s
-+#     ----+--------------------------------------
-+#     ALL | x x x x x x x x x x x x x x x x x x x
-+#
-+#############################################################################
-+test_expect_success 'pack-redundant --verbose: show duplicate packs in stderr' '
-+	(
-+		cd "$shared_repo" &&
-+		cat >expect <<-EOF &&
-+			P1:$P1
-+			P3:$P3
-+			P5:$P5
-+			P7:$P7
-+			EOF
-+		git pack-redundant --all --verbose >out 2>out.err &&
-+		test_must_be_empty out &&
-+		grep "pack$" out.err | format_packfiles >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'remove redundant packs by alt-odb, no packs left' '
-+	(
-+		cd "$shared_repo" &&
-+		cat >expect <<-EOF &&
-+			fatal: Zero packs found!
-+			EOF
-+		git pack-redundant --all --alt-odb | xargs rm &&
-+		git fsck &&
-+		test_must_fail git pack-redundant --all --alt-odb >actual 2>&1 &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Note: DO NOT run function `create_pack_*` in sub shell, or variables are not set
-+create_pack_x1_in () {
-+	repo="$1" &&
-+	Px1=$(git -C "$repo/objects/pack" pack-objects -q pack <<-EOF
-+		$X
-+		$Y
-+		$Z
-+		$A
-+		$B
-+		$C
-+		EOF
-+	) &&
-+	eval P${Px1}=Px1:${Px1}
-+}
-+
-+create_pack_x2_in () {
-+	repo="$1" &&
-+	Px2=$(git -C "$repo/objects/pack" pack-objects -q pack <<-EOF
-+		$X
-+		$Y
-+		$Z
-+		$D
-+		$E
-+		$F
-+		EOF
-+	) &&
-+	eval P${Px2}=Px2:${Px2}
-+}
-+
-+test_expect_success 'create new objects and packs in shared.git' '
-+	create_commits_in "$shared_repo" X Y Z &&
-+	create_pack_x1_in "$shared_repo" &&
-+	create_pack_x2_in "$shared_repo"
-+'
-+
-+test_expect_success 'no redundant without --alt-odb' '
-+	(
-+		cd "$shared_repo" &&
-+		git pack-redundant --all >out &&
-+		test_must_be_empty out
-+	)
-+'
-+
-+#############################################################################
-+# Chart of packs and objects for this test case
-+#
-+#     ================ master.git ===============
-+#         | T A B C D E F G H I J K L M N O P Q R  <----------------+
-+#     ----+--------------------------------------                   |
-+#     P1  | x x x x x x x                       x                   |
-+#     P3  |             x     x x x x x                             |
-+#     P5  |               x x           x x                         |
-+#     P7  |                                 x x                     |
-+#     ----+--------------------------------------                   |
-+#     ALL | x x x x x x x x x x x x x x x x x x x                   |
-+#                                                                   |
-+#                                                                   |
-+#     ================ shared.git =======================           |
-+#         | T A B C D E F G H I J K L M N O P Q R   X Y Z <objects/info/alternates>
-+#     ----+----------------------------------------------
-+#     Px1 |   s s s                                 x x x
-+#     Px2*|         s s s                           ! ! !
-+#     ----+----------------------------------------------
-+#     ALL | s s s s s s s s s s s s s s s s s s s   x x x
-+#
-+#############################################################################
-+test_expect_success 'one pack is redundant' '
-+	(
-+		cd "$shared_repo" &&
-+		git pack-redundant --all --alt-odb >out &&
-+		format_packfiles <out >actual &&
-+		test_line_count = 1 actual
-+	)
-+'
-+
-+#############################################################################
-+# Chart of packs and objects for this test case
-+#
-+#     ================ master.git ===============
-+#         | T A B C D E F G H I J K L M N O P Q R  <----------------+
-+#     ----+--------------------------------------                   |
-+#     P1  | x x x x x x x                       x                   |
-+#     P3  |             x     x x x x x                             |
-+#     P5  |               x x           x x                         |
-+#     P7  |                                 x x                     |
-+#     ----+--------------------------------------                   |
-+#     ALL | x x x x x x x x x x x x x x x x x x x                   |
-+#                                                                   |
-+#                                                                   |
-+#     ================ shared.git =======================           |
-+#         | T A B C D E F G H I J K L M N O P Q R   X Y Z <objects/info/alternates>
-+#     ----+----------------------------------------------
-+#     Px1*|   s s s                                 i i i
-+#     Px2*|         s s s                           i i i
-+#     ----+----------------------------------------------
-+#     ALL | s s s s s s s s s s s s s s s s s s s   i i i
-+#                                                  (ignored objects, marked with i)
-+#
-+#############################################################################
-+test_expect_success 'set ignore objects and all two packs are redundant' '
-+	(
-+		cd "$shared_repo" &&
-+		cat >expect <<-EOF &&
-+			Px1:$Px1
-+			Px2:$Px2
-+			EOF
-+		git pack-redundant --all --alt-odb >out <<-EOF &&
-+			$X
-+			$Y
-+			$Z
-+			EOF
-+		format_packfiles <out >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_done
+ 	minimize(&min);
+ 
+ 	if (verbose) {
 -- 
 2.20.1.103.ged0fc2ca7b
 
