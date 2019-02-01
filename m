@@ -7,53 +7,54 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A2F91F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 22:42:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B693F1F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 22:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727004AbfBAWmB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 17:42:01 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:44819 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726643AbfBAWmA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 17:42:00 -0500
-Received: by mail-qt1-f196.google.com with SMTP id n32so9482165qte.11
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 14:42:00 -0800 (PST)
+        id S1727085AbfBAWqA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 17:46:00 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:36252 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726486AbfBAWqA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 17:46:00 -0500
+Received: by mail-qk1-f195.google.com with SMTP id o125so5145143qkf.3
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 14:46:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yRCMwEZ/BSdQxSNlyt4KtJQyRCq/jrPHd5WNtukrHFY=;
-        b=AlieEFV0aS5OYR7NBFGwar1FClgcMRUMVMxLkM1BpA/QMbm4WRggn9oqub6hxYGG+n
-         wFzNRvI0CuWDG9M7g0qNJZGwIs0nSs+KOjibFl/ignd84Twz0c5HFeLt4eRu9IIyU6Hh
-         L9qHBgsVVPSy7LzglaIvQOcZusWR/6frsrMRforXInmM6MgwVPvUpk62EkRVPthUqnLt
-         VqnId+b9velQ2IoAloZJ4ecnkNYv38EAWZU4A8WMQQY1uyIApcg00y5gkldQB/TSJPyZ
-         7cgAjUU2vvGxwEQn/4ns/uBbXTvPlEkrqcvll0v/FcbPrT9eTFyyrXFHGIstMwG2GT9Z
-         GJQQ==
+        bh=h4avqAN++2NzbM58LCQjB7XDA1MHW1YiaiH7T1LaPnI=;
+        b=sCDWermIb7d7A400gUHnynba9LExecfZRRoFgoA9OyWjKy5yMC5xGJmyhapwn4/qDt
+         nlWD4xgstKlDCqkOp37W+SFyYzq9QLU5uMWSBdBcYJYQizDGll8pQ3KaYkp2RcUqRnTG
+         3b+H7xk/PaJEq5fsEC1omPX2CJUqhfJwt3qBxWMtFfwf+bMpi6gFlZOv9VDD5l+PcaV6
+         PY5EhQZ2HqWVx75e2fJEz+dUyI4eSYgPV+u1FQOy4bkNX628bEVD6CcoKv8e34gsocSC
+         Ni5kOvu8LGzQbhf3FTnS2BnUeVZ0v/yXrR0ziyAfpSqjXTiLcMqnW/6CoRHEtADIklNQ
+         2TQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yRCMwEZ/BSdQxSNlyt4KtJQyRCq/jrPHd5WNtukrHFY=;
-        b=DzJleJhIas2vxyhLa6y+tsA/Py1nMjJwLybENEScH6zAQzGBW/V5tSqJqoK21hwew5
-         MvSarmRnoLdl3wzotKrntij1d375BRSYvn3Ptf8RFl9t6EeTUnI4CChXtGIbHBue8bpR
-         h0Kv8Hs/wnwybrhASMbhrVRGqp7moBwnoRQ59F5RjrrdnNdJV2YyRkcy/mahActQVzX1
-         a48hREIPFm5fTNqfOhmQCN8pWbhbFD2O5ZuDRkgpikOhaisZV6M+rRQHJNfOCkbeI21T
-         gLxPfQScw2vp2IRARIMo8Jpm3zebnurPtLOk4HkfOMxRD6aRqvIRQ8HssOUsyRq6Qg6H
-         suug==
-X-Gm-Message-State: AHQUAuayWdhZkcV6WB+GrdfNp+WJQY/58nwvDER6ywqQV35TCT2GPqaC
-        fqN7QeEigiSgCeDvgsrz7mL0lZFlbWnWQ18xLsw=
-X-Google-Smtp-Source: AHgI3IYnUttp2MVsXsP+/hAPOEXA+FzctEkDfF7xosbD4xMpU8H7RQwLbyApRqXzoBIPveXXzKLgCv6nwayGkCZmJt0=
-X-Received: by 2002:ac8:3399:: with SMTP id c25mr140500qtb.365.1549060919470;
- Fri, 01 Feb 2019 14:41:59 -0800 (PST)
+        bh=h4avqAN++2NzbM58LCQjB7XDA1MHW1YiaiH7T1LaPnI=;
+        b=ORT7D3vFDpEX0hgfZPaGUWAlqrDygdDctMGUCpZKznaJAIBvqTLSc8YE6ZjLYDDcGM
+         cnn5cLzjn4HJeSVcLtYSQVeszDqW8XKtgY+eK8LqanzNGKhamxQgJB0Qk3aA1hqi7Yx0
+         7ZN+1nXKLyDgw3TS3ZtuC3qeVwPvoQwcjukkjni1ie5+bKxM3/RDEBQOJudnhiAkaluX
+         nypiOKFWsCBWvVFvzYnCLrzRRmvOWtPUkiCKAES9ZSBdAPITDQCZCL5RfoUDz30YLzxz
+         TX0/inkPqWLjScdObtrO6/4CdXFTAa+6FBW1NW+5ERbCc4RASceATe84537RVszdTQSb
+         3Wew==
+X-Gm-Message-State: AJcUukdFwxHeHymRKARAWEOJCxUn/+76LHZk1/L5UUKi3Jc97GGZ6AhG
+        TtesVqTqiNIV87qpoGi6rYcbvbWUiePzkw4siT0=
+X-Google-Smtp-Source: ALg8bN5s0UdKF2ae+fvvCDeq8Sw2+tUoTVzI/OAe3XSTkEb5UICcoDvjiIMasz6ad67+pdN8hA4Ygdtu3FLQS8Xv66M=
+X-Received: by 2002:a05:620a:151a:: with SMTP id i26mr37494333qkk.281.1549061159371;
+ Fri, 01 Feb 2019 14:45:59 -0800 (PST)
 MIME-Version: 1.0
 References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20190201220420.36216-1-nbelakovski@gmail.com> <20190201220420.36216-2-nbelakovski@gmail.com>
- <CAPig+cSfw=dun__contMMiHrdsZPPN68U4UzfBGz4Yt8DwO7mQ@mail.gmail.com>
-In-Reply-To: <CAPig+cSfw=dun__contMMiHrdsZPPN68U4UzfBGz4Yt8DwO7mQ@mail.gmail.com>
+ <20190201220420.36216-1-nbelakovski@gmail.com> <20190201220420.36216-4-nbelakovski@gmail.com>
+ <CAPig+cT0OY3vcjjoMUjaZ9JhJ2nKqyqbv4qL1ExiDw3h5GUw4Q@mail.gmail.com>
+In-Reply-To: <CAPig+cT0OY3vcjjoMUjaZ9JhJ2nKqyqbv4qL1ExiDw3h5GUw4Q@mail.gmail.com>
 From:   Nickolai Belakovski <nbelakovski@gmail.com>
-Date:   Fri, 1 Feb 2019 14:41:30 -0800
-Message-ID: <CAC05386a+FZP8hGawYsfZrmA--JuZBqi_aop7202JQnJEfKyJg@mail.gmail.com>
-Subject: Re: [PATCH v7 1/3] ref-filter: add worktreepath atom
+Date:   Fri, 1 Feb 2019 14:45:31 -0800
+Message-ID: <CAC05385Kr7Sg7fwNx+EUkfTKoPHBiguE0HTP4faFwvAQYnKckA@mail.gmail.com>
+Subject: Re: [PATCH v7 3/3] branch: Add an extra verbose output displaying
+ worktree path for refs checked out in a linked worktree
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Rafael Ascensao <rafa.almas@gmail.com>,
@@ -65,83 +66,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 1, 2019 at 2:20 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Fri, Feb 1, 2019 at 2:28 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
 > On Fri, Feb 1, 2019 at 5:04 PM <nbelakovski@gmail.com> wrote:
-> > Add an atom providing the path of the linked worktree where this ref is
-> > checked out, if it is checked out in any linked worktrees, and empty
-> > string otherwise.
-> >
+> > Subject: branch: Add an extra verbose output displaying worktree path for refs checked out in a linked worktree
+>
+> Overlong subject. Perhaps shorten it to:
+>
+>     branch: display worktree path in -v -v mode
+>
+> or something, and use the longer description as the rest of the body
+> of the commit message.
+
+OK
+
+>
 > > Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
 > > ---
-> > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> > @@ -214,6 +214,11 @@ symref::
-> > +worktreepath::
-> > +       The absolute path to the worktree in which the ref is checked
-> > +       out, if it is checked out in any linked worktree. Empty string
-> > +       otherwise.
+> > diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> > @@ -167,8 +167,10 @@ This option is only applicable in non-verbose mode.
+> >         When in list mode,
+> >         show sha1 and commit subject line for each head, along with
+> >         relationship to upstream branch (if any). If given twice, print
+> > -       the name of the upstream branch, as well (see also `git remote
+> > -       show <remote>`).
+> > +       the path of the linked worktree, if applicable (not applicable
+> > +       for main worktree since user's path will already be in main
+> > +       worktree) and the name of the upstream branch, as well (see also
+> > +       `git remote show <remote>`).
 >
-> This may have been asked previously, but is there a reason this name
-> was chosen over the more extensible "worktree:" with "path" as a
-> modifier (i.e. "worktree:path")? I scanned the thread a couple weeks
-> ago and did see mention of "worktree:path" but did not find any
-> followup. I ask because it's conceivable that someone in the future
-> might want to retrieve other information about the worktree beyond its
-> path (such as whether it's bare or detached, etc.). By using the form
-> "worktree:<foo>", we leave that door open. (I'm not suggesting that
-> this patch series needs to implement fetching of any of the other
-> worktree properties, but just asking if "worktree:<foo>" should be
-> considered.)
->
+> I'm not sure I understand the "not applicable" explanation. When you
+> say "user's path", do you mean the current working directory? What
+> happens if the command is invoked from within one of the linked
+> worktrees (not from within the main worktree)?
 
-There's been a little back and forth on it, but my understanding is
-that using the colon separator bypasses the caching mechanism in the
-atoms, so every instance of "worktree:path" in a format string would
-require a lookup. Future atoms should be along the lines of
-"worktreeisdetached", "worktreeisbare", etc. This is consistent with
-several of the other atoms, like objecttype/size/name,
-comitter/name/email/date.
-
-> > diff --git a/ref-filter.c b/ref-filter.c
-> > @@ -1562,6 +1628,13 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
-> >                 if (starts_with(name, "refname"))
-> >                         refname = get_refname(atom, ref);
-> > +               else if (starts_with(name, "worktreepath")) {
->
-> I think this was brought up previously, but shouldn't this be strcmp()
-> rather than starts_with()?
->
-> (starts_with() would be appropriate, if you went with the suggested
-> "worktree:<foo>".)
-
-Not sure about it being brought up previously. starts_with seemed
-consistent with other uses but now I see there's several other
-instance of strcmp in populate value. Seems like a reasonable thing to
-change. I had previously implemented "worktree:<foo>" and must've left
-it alone after we went with worktreepath.
-
->
-> > diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-> > @@ -441,4 +441,19 @@ test_expect_success '--merged is incompatible with --no-merged' '
-> > +test_expect_success '"add" a worktree' '
-> > +       mkdir worktree_dir &&
-> > +       git worktree add -b master_worktree worktree_dir master
-> > +'
->
-> I don't think 'mkdir' is needed since "git worktree add" should create
-> the directory itself.
->
-> > +test_expect_success 'validate worktree atom' '
-> > +       cat >expect <<-EOF &&
-> > +       master: $(pwd)
-> > +       master_worktree: $(pwd)/worktree_dir
-> > +       side: not checked out
-> > +       EOF
-> > +       git for-each-ref --format="%(refname:short): %(if)%(worktreepath)%(then)%(worktreepath)%(else)not checked out%(end)" refs/heads/ >actual &&
-> > +       test_cmp expect actual
-> > +'
->
-> If this is the only test using that newly-created worktree, it might
-> make sense to squash the two tests together.
-
-Sure, can do, on both points.
+I should correct that to say "current worktree" as opposed to main,
+since that's what HEAD will give. And yes user's path means cwd. Does
+that make more sense?
