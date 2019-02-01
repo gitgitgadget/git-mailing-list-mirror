@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF9C81F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 16:13:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA4C61F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 16:15:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730669AbfBAQNc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 11:13:32 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:36394 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726486AbfBAQNc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 11:13:32 -0500
-Received: by mail-wr1-f52.google.com with SMTP id u4so7699497wrp.3
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 08:13:30 -0800 (PST)
+        id S1727823AbfBAQPw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 11:15:52 -0500
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:46532 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726172AbfBAQPw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 11:15:52 -0500
+Received: by mail-wr1-f49.google.com with SMTP id l9so7640866wrt.13
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 08:15:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DE4WY4HZ85oIDvUhwGgtPe6RTM13jIvP+i6DIKzXrLU=;
-        b=DuCk3evg8fRfSs3lQi9DqEbMHm/XS6zy2i/7Rn4q+xg23wHmvMKusCLdKwDJqeLYzk
-         cRcuf2s1VGj7qzebALQQqVIR2V9KIC669VsMKleQzGP+I2D8qBOe/3p3XFxRloD6sdSY
-         FbxMb9skOELt3ZadBSMtma3n305fZfs+aK49m/iJOSLxmmpGYJ2Xa7rnsxa9nSALCplA
-         Bs8tvuMNcQFy32AM0Z30whWF/G0Av/YK14+e91czM2RojJ1aNs5lie6wbOMWItkqo9qL
-         +lR/5DUl00RC2PQqslVykPGgqzhrxukp6kcr+1Iat17KaNsRJsPDIC7qMfXOpLtQUXc2
-         K6WQ==
+         :user-agent:mime-version:in-reply-to:content-language;
+        bh=XNDZkJwPWNzCLfRGdCLdiJh5ex/Lvi8zZ8KTqbNCf/g=;
+        b=iCsQiIZLPWsqfMY8gGXSXCpmoF0vvjDxkIk7ZQx1MTul61vI6m1lWfOejQ3gHjqOir
+         Z/WC+2tALt9NvoW+5LR2wtnX+I7ryrKNcgY1hkLxJmanjO0agSVmDK8n0Yp+9+P3OqyD
+         7OrmG9hvhw0rymC/1CbUd3OV3Cm2YVHtd4ZziPxSuOKJAIgzOFN8HDD+7iNHxwA1vSVV
+         icd5HbRh76jvW+sHuogIo+J5odrrYSpqPQg+UwSsYJoZ6U8FY9oq4Srb9//JYXhEw0N8
+         iWFGVBaefw+EHC1Ub+SW+QOE6t+kPq2Q16TN2YWiMiCv2llQxynsmdO7C8++AyIwAL8a
+         rIZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=DE4WY4HZ85oIDvUhwGgtPe6RTM13jIvP+i6DIKzXrLU=;
-        b=eu5vyrhtf48q1ca0WBJbLgqm9Hr+3r6KAmcYtXyQcwSMTtj+qf01EOs3FoNmyKfDv+
-         LGaK4cFPl4OpQWZHKQhLYZEMgUqsLfbrFSVbxsRqeZ3UQ49YroXbSUolni4Jhns6mx6z
-         tJ3QJa7u6jrP/4ESbgNGwUNrKXdYGfMvwFF9xkpf0tfU3DQtnf3PC+Gk4eiSwd6vwAeQ
-         oa3y2+rHnH6xu1IfdfOcJwsAFW3hkzwriDzeJ2FvMNHGrpU4c+bUEqLT9Iujqv2Mt5aG
-         Q1fy3XdKvMEmBcXcaH8b75QiTcC9abOGgG54HtWUQ7L5S5JuoJK+LeuVwDhOjLHn0i6u
-         7Zgw==
-X-Gm-Message-State: AHQUAubLoBWPavMhAzkLaLycxU1ZdtncCtnwEujRa3WJf7y2Pw0TXHkN
-        pwPM/HBtIfLyGfCOmVsJRlfyCch3
-X-Google-Smtp-Source: AHgI3IZWd2a2zCX40D35fxltUgRaKHFJ5kYGBCm11IDRda7IhC7QXPXvluXZ5r0azgsFCDANXf298g==
-X-Received: by 2002:adf:f848:: with SMTP id d8mr9041186wrq.178.1549037609260;
-        Fri, 01 Feb 2019 08:13:29 -0800 (PST)
+         :content-language;
+        bh=XNDZkJwPWNzCLfRGdCLdiJh5ex/Lvi8zZ8KTqbNCf/g=;
+        b=Jm0mjHb9tX4xPzRTbTReShUSR9gIgbviN570WD6PlwOAFNARDi3Hp+yMp5DScMD2EW
+         jQI43y0ZoeULB/YMsWaCtRZqKtJ0HJqYUsr0rqAfsds22QxWt9YEGESesTK0XHL9WAJW
+         YA6CA7DLXDoBLiylPzYrWNKjarFfX5aE1uQG5euR8P5IHWXwNNBA2YmUglLxUj/QQi+D
+         8KNzCE55w2NT7HXgdUEzHGWV5OdGxBzwy1Q1OD7NNMDR9puSt/d0QDmblCiQXVv230X6
+         d7WvaXTEk2qnJg+RNqoktDQw+sKC6xNcwks/NciKUPtTpsXdlEidZyWYXwvmj2s0rcaC
+         BCMQ==
+X-Gm-Message-State: AJcUukezWeupo5g2NnOtEJPmtEbEuvLaeDn9XYL1TrTcobL/zAU180n1
+        vRVaFPl/gSXTaUeEsHDq3wDPxQOm
+X-Google-Smtp-Source: ALg8bN4RGi6123O/mY+Rl7H2tO1XMtT4GOSaNBM16RG3U7PhAUWOhNCKToEBbphSy/dpEvuPmB3Pgw==
+X-Received: by 2002:adf:e6ce:: with SMTP id y14mr40893725wrm.239.1549037749759;
+        Fri, 01 Feb 2019 08:15:49 -0800 (PST)
 Received: from [192.168.0.104] (atoulouse-658-1-47-104.w86-221.abo.wanadoo.fr. [86.221.54.104])
-        by smtp.gmail.com with ESMTPSA id l20sm15068412wrb.93.2019.02.01.08.13.27
+        by smtp.gmail.com with ESMTPSA id w80sm2750447wme.38.2019.02.01.08.15.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Feb 2019 08:13:28 -0800 (PST)
+        Fri, 01 Feb 2019 08:15:48 -0800 (PST)
 Subject: Re: Broken interactive rebase text after some UTF-8 characters
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        phillip.wood@dunelm.org.uk, Michal Nowak <mnowak@startmail.com>,
-        git@vger.kernel.org
+To:     Michal Nowak <mnowak@startmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org
 References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
  <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>
  <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>
@@ -65,6 +64,7 @@ References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
  <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>
  <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>
  <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
+ <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
 From:   Alban Gruin <alban.gruin@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
@@ -127,66 +127,154 @@ Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
  yl/kHs42wTS/M6EylpBS10/RLxLF1TKK39xgGXtzRz86lqxz9IIEcLpOXsNi2ieoVOfykgbG
  lvAXpIk/WT7BKd1ncK71sTuBGWpnytCjlTFHM6Lp70yZT9TAKaBevkn5JaSlhv4/QcfJtTgJ
  HkyVQTh250fC9P/9C9azPjnxB9hnBktfiihx+wISlDARk/X+JCZfJrM=
-Message-ID: <a3f4a6d2-7461-709a-6d1a-097785bb8664@gmail.com>
-Date:   Fri, 1 Feb 2019 17:13:13 +0100
+Message-ID: <c71f63cb-d956-96f5-4770-581a3b6b5543@gmail.com>
+Date:   Fri, 1 Feb 2019 17:15:48 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.3.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
+Content-Type: multipart/mixed;
+ boundary="------------209DE3EC992342C092EC2371"
 Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+This is a multi-part message in MIME format.
+--------------209DE3EC992342C092EC2371
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Le 01/02/2019 à 08:38, Johannes Schindelin a écrit :
-> Hi,
+Hi Michal,
+
+Le 01/02/2019 à 10:06, Michal Nowak a écrit :
+> Johannes,
 > 
-> On Thu, 31 Jan 2019, Junio C Hamano wrote:
-> 
->> Phillip Wood <phillip.wood@talktalk.net> writes:
+> On Friday, February 1, 2019 at 8:38 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> Hi,
 >>
->>>> Are we misusing C formats?
->>>
->>> The C standard and POSIX both say that the * refers to the maximum
->>> number of bytes to print but it looks like it is being treated as the
->>> maximum number of characters on OpenIndiana.
->>>
->>> Johannes - Perhaps we should change it to use fwrite() unless printf()
->>> gets fixed and we're sure no other operating systems are affected?
+>> On Thu, 31 Jan 2019, Junio C Hamano wrote:
 >>
->> Avoid such a rewrite, as "%*.s" that takes (int, char *) are used in
->> many other places in our codebase, if you can.
+>>> Phillip Wood <phillip.wood@talktalk.net> writes:
+>>>
+>>>>> Are we misusing C formats?
+>>>>
+>>>> The C standard and POSIX both say that the * refers to the maximum
+>>>> number of bytes to print but it looks like it is being treated as the
+>>>> maximum number of characters on OpenIndiana.
+>>>>
+>>>> Johannes - Perhaps we should change it to use fwrite() unless
+>>> printf()
+>>>> gets fixed and we're sure no other operating systems are affected?
+>>>
+>>> Avoid such a rewrite, as "%*.s" that takes (int, char *) are used in
+>>> many other places in our codebase, if you can.
+>>
+>> Yes, this would be painful in particular in cases like
+>>
+>> 	master:advice.c:101:           fprintf(stderr, _("%shint: %.*s%s\n"),
+>>
+>> where we want to write more than just a variable-length buffer.
+>>
+>> I am curious: is libintl (gettext) used on OpenIndiana? I ask because
+>> AFAIR fprintf() is overridden in that case, and the bug might be a lot
+>> easier to fix if it is in libintl rather than in libc.
 > 
-> Yes, this would be painful in particular in cases like
+> here you can see the full output of the OpenIndiana git build: https://hipster.openindiana.org/logs/oi-userland/latest/git.publish.log.
 > 
-> 	master:advice.c:101:           fprintf(stderr, _("%shint: %.*s%s\n"),
+> From what I see there, libintl was found.
 > 
-> where we want to write more than just a variable-length buffer.
+> If you believe this is illumos libc bug, it would be cool if someone created an simple testcase, which I can forward to the illumos developers.
 > 
-> I am curious: is libintl (gettext) used on OpenIndiana? I ask because
-> AFAIR fprintf() is overridden in that case, and the bug might be a lot
-> easier to fix if it is in libintl rather than in libc.
-> 
-> Of course, it might *still* be a bug in libc by virtue of handing '%.*s'
-> through to libc's implementation.
-> 
-> Alban, can you test this with NO_GETTEXT?
 
-Sure. :)
+I attached a test case to this email.  You can build it with `gcc
+test-case.c', and run it with `./a.out'.
 
-The bug no longer happens when git is built with NO_GETTEXT.  All is
-working as expected.
+Output on my Linux system:
 
-> 
+    Before setting locale:
+    Expected output:
+    áaaa
+    Actual output:
+    áaaa
+
+    After setting locale:
+    Expected output:
+    áaaa
+    Actual output:
+    áaaa
+
+Output on an OpenIndiana system:
+
+    Before setting locale:
+    Expected output:
+    áaaa
+    Actual output:
+    áaaa
+
+    After setting locale:
+    Expected output:
+    áaaa
+    Actual output:
+    áaaaa
+
 > Thanks,
-> Johannes
+> Michal
 > 
+>>
+>> Of course, it might *still* be a bug in libc by virtue of handing '%.*s'
+>> through to libc's implementation.
+>>
+>> Alban, can you test this with NO_GETTEXT?
+>>
+>> Thanks,
+>> Johannes
 
 Cheers,
 Alban
 
+
+--------------209DE3EC992342C092EC2371
+Content-Type: text/x-csrc;
+ name="test-case.c"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="test-case.c"
+
+/*
+ * Test case for OpenIndiana '%.*s' bug
+ * Build with `gcc test-case.c'
+ * Run with `./a.out'
+ */
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include <locale.h>
+#include <libintl.h>
+
+static void compare_output(const char *str, int len) {
+	puts("Expected output:");
+	fwrite(str, len, sizeof(char), stdout);
+
+	puts("\nActual output:");
+	printf("%.*s\n", len, str);
+}
+
+int main(int argc, char **argv) {
+	char buf[] =3D "=C3=A1aaaaaa";
+
+	puts("Before setting locale:");
+	compare_output(buf, 5);
+
+	setlocale(LC_ALL, "");
+
+	puts("\nAfter setting locale:");
+	compare_output(buf, 5);
+
+	return EXIT_SUCCESS;
+}
+
+--------------209DE3EC992342C092EC2371--
