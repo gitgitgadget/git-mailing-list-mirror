@@ -2,78 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBED01F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 20:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1715E1F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 20:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730609AbfBAUMP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 15:12:15 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:33747 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725890AbfBAUMP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 15:12:15 -0500
-Received: by mail-qk1-f195.google.com with SMTP id d15so4903515qkj.0
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 12:12:14 -0800 (PST)
+        id S1731144AbfBAUhK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 15:37:10 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:39061 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727077AbfBAUhJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 15:37:09 -0500
+Received: by mail-pg1-f195.google.com with SMTP id r11so3462152pgp.6
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 12:37:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=61h5OcLuSGXOrbWwpKT4fieLLb/sSpwTHV6BW20bjAA=;
+        b=lqia0mdwufk0PjGTZzHqnaR1uVqHHkzz7u8qE01Ql62k53faffDriiRoVgczOOyl+K
+         IDB0xC0sLfWuuofgIiX/VuGT1UY59Ci4xKaKrBZ4YbvyepNqRL+0dPEOm12zzppGW9Yz
+         rM91mULwgqs8zTlGitKKJkn5eRSMHCgUYlnSJmUbAJIZDrTWZU7HzWN3NwqELhTg49BG
+         Z0Rt8d/oClg2veq6Ydrr0KWWahxRRpf+1q3oTEI/oLIMpz4H6GyyG0askCQo4y6EBS+e
+         DckUmaRU1GLD39PfsQu2njq2atFzxIjiozlfUw7i67MWvxiCfkwYTt5nLXlXAQOfMGIJ
+         4YYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kMoARGeIYAJF/Ixxp3jBgRLeBxnctzQMRYv88fNysAU=;
-        b=PRFTMznbrIBe5R3yvXjWE2sFEgXesS3zMOy5aala5S0HJy7NWprVP4BJ4IMxkOk1hS
-         vQyIe2HbfqjJQi30q7FqZ+5ED8mrk904N1SdWeLjXO21ltVrq+PJiamGux4HIIjIF1SE
-         M/W8WpnRkLW1u3MBn3AL0AwqZW/K61/lM6Fm37KVTPXNKy160yYpVNk0ojgjum11ip09
-         ANC7na8raiEHxfOm5/NBZAsGOsoI4VR9w+iBnYXmFf5er6hoN1yOz0TdRTVReGYcKVyJ
-         kNBKpCjtz3lMh9YNas3BUeSVC12Ouc81d9FsWC/N0mprWvLk6U1GT6Nnz5/C+pnE1n8a
-         JCmA==
-X-Gm-Message-State: AHQUAubZiC4j1Wo4IvWu88hJys9WuIqExC+JpO2ssx0EZ9przGrHWkVx
-        Oy1wtv2MzM+uKbz8MAk3rNfvNixxIDtvaff2FAM=
-X-Google-Smtp-Source: AHgI3IYRkPypvCMP+qRBVRYXGnvPR8x4NVhiEPUOZUDA8NNmeEEI3nj8VRjZqROrIyiuek2t42qyo/K8BKW7LsVaOEw=
-X-Received: by 2002:a37:404f:: with SMTP id n76mr2855233qka.26.1549051934379;
- Fri, 01 Feb 2019 12:12:14 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=61h5OcLuSGXOrbWwpKT4fieLLb/sSpwTHV6BW20bjAA=;
+        b=WUu/KRnUSYvIXEJhTaOCb7P1MADUjZXVW1DNQ6376m4KyLrczlaflwSXaz3Qhp8AgE
+         Qmz5hcYcwwVL7W93U7fVUQSnicLBZtHgNc/3a7+GQHA4TEngXX0Qc1ZBmkjmLQb8oPS+
+         cdwFxzZrtTMItJ9lGmRV0WmqbADrI4Cs55Zp/rGvylg72r582YY5v2bPVU6Z/oNM1UDM
+         UEIDK+LQMpZ+qsdsBPzmSpETCt96UNH0QxWp8h7kA38liggObvTBMuGK1Z5xwEcoUl6G
+         DXq8yOCV5Wes0FU6A4axZwhHm+njQlwVKsKU9PxvugfDESLL/S0dWD99535Nh3v9oJW+
+         +euQ==
+X-Gm-Message-State: AHQUAuZlopw/WdDOU5BPKxoOLBO5wrXk1y+M28A+zlNP0sKsoTKRnd53
+        pDdVcl/WEy1Nyoq7djzL4+6KBntCeFcN9Q==
+X-Google-Smtp-Source: AHgI3IZjE4DJcbe+A5+c8+YrbfcjD095tQXcePJgAqZqVMEGvulWSXOkkVbcKKH/SQ2e07hgPjzeew==
+X-Received: by 2002:a63:d104:: with SMTP id k4mr3609748pgg.227.1549053428266;
+        Fri, 01 Feb 2019 12:37:08 -0800 (PST)
+Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
+        by smtp.gmail.com with ESMTPSA id x27sm19314080pfe.178.2019.02.01.12.37.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 01 Feb 2019 12:37:07 -0800 (PST)
+Date:   Fri, 1 Feb 2019 15:37:02 -0500
+From:   Barret Rhoden <brho@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v2 2/3] blame: add the ability to ignore commits and
+ their changes
+Message-ID: <20190201153702.2d029143@gnomeregan.cam.corp.google.com>
+In-Reply-To: <xmqqo987b2g5.fsf@gitster-ct.c.googlers.com>
+References: <20190107213013.231514-1-brho@google.com>
+        <20190117202919.157326-1-brho@google.com>
+        <20190117202919.157326-3-brho@google.com>
+        <f5170cb1-4109-4ae3-7722-8e3b62fb0b92@web.de>
+        <xmqqlg3ch85x.fsf@gitster-ct.c.googlers.com>
+        <20190122143500.397abc8e@gnomeregan.cam.corp.google.com>
+        <xmqqo987b2g5.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20190201135512.68220-1-koraktor@gmail.com>
-In-Reply-To: <20190201135512.68220-1-koraktor@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 1 Feb 2019 15:12:03 -0500
-Message-ID: <CAPig+cQgEVJ6OGn9BRUJoALxE7aDCHK308sq7V0EQVRRn6Vn8g@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] describe: setup working tree for --dirty
-To:     Sebastian Staudt <koraktor@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 1, 2019 at 8:55 AM Sebastian Staudt <koraktor@gmail.com> wrote:
-> We don't use NEED_WORK_TREE when running the git-describe builtin,
-> since you should be able to describe a commit even in a bare repository.
-> However, the --dirty flag does need a working tree. Since we don't call
-> setup_work_tree(), it uses whatever directory we happen to be in. That's
-> unlikely to match our index, meaning we'd say "dirty" even when the real
-> working tree is clean.
-> [...]
-> Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
-> ---
-> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-> @@ -145,14 +145,38 @@ check_describe A-* HEAD
-> +test_expect_success 'describe --dirty with --work-tree' '
-> +       [...]
-> +'
->
-> +test_expect_success 'describe --dirty with --work-tree' '
-> +       [...]
-> +'
+On 2019-01-23 at 11:26 Junio C Hamano <gitster@pobox.com> wrote:
+> Yeah, and if the original had two adjacent lines, and replacement
+> has three adjacent lines, the algorithm would not even know if 
+> 
+>  - the first line in the original was split into first two in the
+>    update and the second line was modified in place; or
+> 
+>  - the first line in the original was modified in place and the
+>    second line was split into the latter two lines in the update
+> 
+> In short, there is no answer to "what is the corresponding line of
+> this line before this commit changed it?" in general, and any
+> algorithm, as long as it tries to see what was the "corresponding
+> line" of the line that is blamed to a commit, would not produce
+> results human readers would expect all the time.
+> 
+> As you said, heuristics may get us far enough to be useful, though
+> ;-).
 
-Can you give these two new tests different titles to make it easier to
-narrow down a problem to one or the other if one of them does fail?
-Perhaps the second test could be titled:
+Yeah.  We can do one more thing: when we ignore a change that added
+more lines than it removed, we can at least not report totally
+unrelated commits.  
 
-    test_expect_success 'describe --dirty with dirty --work-tree' '
+For example, the parent of an ignored commit has this, say at line 11:
 
-or something.
+commit-a 11) void new_func_1(void *x, void *y);
+commit-b 12) void new_func_2(void *x, void *y);
+commit-c 13) some_line_c
+commit-d 14) some_line_d
+
+After a commit 'X', we have:
+
+commit-X 11) void new_func_1(void *x,
+commit-X 12)                 void *y);
+commit-X 13) void new_func_2(void *x,
+commit-X 14)                 void *y);
+commit-c 15) some_line_c
+commit-d 16) some_line_d
+
+In my existing code, if you ignore commit X, the blames look like this:
+
+commit-a 11) void new_func_1(void *x,
+commit-b 12)                 void *y);
+commit-c 13) void new_func_2(void *x,
+commit-d 14)                 void *y);
+commit-c 15) some_line_c
+commit-d 16) some_line_d
+
+Lines 13 and 14 are blamed on the nearby commits C and D.  The reason
+is the blame entry for X is four lines long, rooted at line 11, but when
+we look back through the history, we'll look at the parent's image of
+the file where that diff hunk is only two lines long.  The extra two
+lines just blame whatever follows the diff hunk in the parent's image.
+In this case, it is just the lines C and D repeated again.
+
+I can detect this situation when we ignore the diffs from commit X.  If
+X added more lines than it removed, then I only pass the number of
+lines to the parent that the parent had.  The rest get their own
+blame_entry, marked 'unblamable', which I'll catch when we create the
+output.  The parent can't find blame for lines that don't exist in its
+image of the file.  
+
+With that change, the above example blames like this:
+
+commit-a 11) void new_func_1(void *x,
+commit-b 12)                 void *y);
+00000000 13) void new_func_2(void *x,
+00000000 14)                 void *y);
+commit-c 15) some_line_c
+commit-d 16) some_line_d
+
+As we discussed, we still can never be certain about which commits
+*should* be blamed for which lines.  (Note that line 12 was blamed on
+B, though B was the commit for new_func_2(), not new_func_1()).  But I
+can avoid blaming commits that just happen to be in the area and would
+only be 'correct' due to dumb luck.
+
+This also handles cases where an ignored commit only adds lines,
+which is a specific case of "added more than removed."
+
+Handling this case is a surprisingly small change.  I'll post it once I
+sort out the tests and other comments on this patch series.  
+
+For now, I went with unconditionally marking the commit as all 0s for
+the case where we know it is 'wrong.'  I can do that conditionally
+based on blame.markIgnoredLines if you want, though I think any commit
+attributed to those lines would be misleading.
+
+Thanks,
+
+Barret
+
