@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F08561F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 21:17:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9E311F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 21:46:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726121AbfBAVRT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 16:17:19 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39142 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725797AbfBAVRS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 16:17:18 -0500
-Received: by mail-wr1-f65.google.com with SMTP id t27so8559910wra.6
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 13:17:17 -0800 (PST)
+        id S1726598AbfBAVqR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 16:46:17 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44735 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726193AbfBAVqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 16:46:17 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z5so8591098wrt.11
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 13:46:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=/cex/8kkHxYlUO3LRfAFzJpNT+mVE9XojUvXMs/uXOw=;
-        b=nKLz06iYA4JrQgZfqI/S7m3gEdoHyHKCzetbFTV+c+QVaQos9Xhgm5NpkV763X9gKq
-         F79l2jPuJ2bGM1gyffDqW7WFF4eAFSH5XnAyh7EswL5ShCEUsT4WIivwhoa2ZQ0wA7G3
-         VdXFWnkKMQ9c9gfo6weiT4P9pOepajb2E7005NqM8evKoTDw7CnF2yo4xA4qVNVj2qM6
-         TRU0QSfbLGX/DFp7cMwOtaATlblyLX5XKhy10JxV1o5fwy35cUEUHOgF4D9t9UlyJ90V
-         RXilqUGoTJjv4Psqv794okrLnb52Hzci6oGhjm7hhPA2Qz82PUigD1RpjA7CWCbpoT85
-         En8g==
+        bh=WOg/wY6pFm+Ov8VJd27LYO8uZ3AtOprVbs7jDSZ6w3o=;
+        b=Ffp5KKSiSUeBlLdN9sUzvrLVIJuDEIwP+j7+UM3VHedO9Jf1c4ky75yNPkx3r/ibpC
+         5bbTm+mY6irhJdpNNek3ZPfy09cOaoyhJ0ZvV3GUvNXGUnSJdvSlbmLiwiB97c94ZjPg
+         b8Y1CLWDEkmm6qSFgDygPJ8b8TOYzsEtrK1aFepZxqHYxSFKjtE2LUn7iERCOKgymsEu
+         SiDfwwFgazrUmES0SiBDgtAKIf72Ht8lxafSZgTj/T3rH8J68BxLkf6FgLSDGORR2j1B
+         nQBGvCjotu3iKmzzeVIM+BA/MkLzcNV7Bh/Zgpt7GXYuCg95YTi+Hkm/fNCgMwdaqDL2
+         osWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=/cex/8kkHxYlUO3LRfAFzJpNT+mVE9XojUvXMs/uXOw=;
-        b=ZqLweo6h40a7fq+yXQigYgrq9cz1gkugndWUGlzkrye4+u5A6gU76IjbkiFzwv3yMR
-         NGP24n9pP+rZ+Hui6rH/X7RIO8nf3Br2u0/YexF6BUXd7hpm1NKyV5rEIa0xUE1emEKY
-         6jm5BsG+HOWA+REyw6C0RprLEYi+LGsRrpB79q+izW7E9RSvTpURaNYEfqmbSiS4bFHv
-         kzUiYvhXfSmZbWW8PRwxQ6iflsSh2sHUk1GrFCN4U391h8isC04Y0QZVfwpeZNBeuOkz
-         25J6hhNEwBAgNSCp2wRlfBiOTP5KkxHfQoernMWdFO9rws9sIXceiH/SfxpOSj2pNWtT
-         ymOg==
-X-Gm-Message-State: AJcUukcpP99rZL2dhF8JNIlJ7m5pCxWj9qKdm47Oh5RcG3A3iLexkpfL
-        mKtTA4XDG4CN7jA29iGKjKk=
-X-Google-Smtp-Source: ALg8bN4+LxOt8EryG1UYN2af2GKjoxIWUxIx/14R5h/1yVOsQ9q8On7kp1ne4ue3/IHdw+QJiCdBKw==
-X-Received: by 2002:a5d:6988:: with SMTP id g8mr38582806wru.33.1549055836550;
-        Fri, 01 Feb 2019 13:17:16 -0800 (PST)
+        bh=WOg/wY6pFm+Ov8VJd27LYO8uZ3AtOprVbs7jDSZ6w3o=;
+        b=VKqfeFe7fn1rt5KdhCSA0RaEr2lku+FC8pwmtQ1g1PxShPsMbssnlYrjjECbRTdfHa
+         dBEsD+mUH1Md9vayPstfIe79u9OEELY1mPvKRDxHS/Vdw0P8lZb9gtR/SGwdUvABsztZ
+         H/hqNctQexsxQVPDfIp9OGAyBCzmV/BIdzLhKKMalQRyiZggbbEbdX3WPvwfRXIlxq9x
+         k1ENTstY7vwvHdYb5CfzykZiuCWxnhowtp9sUYbOUit52wAqO/88Mn/IQxSMztZg8EOJ
+         aY0ExOGEh3qrmLATQYF34CAxx/EtWSyoRivOCSi1Xa6SjALKY9+SC6Kuf5Toy23KJ1Vu
+         AF4w==
+X-Gm-Message-State: AJcUukdSVfmSNp7Yj0kiMgk7nZ1A2y3E8YDwT1QBFcySlwDIAwVvy+CE
+        szyTOe/G40oazWWUz6PP30U=
+X-Google-Smtp-Source: ALg8bN5BuNMXNxeNhmnVqb1dotQOSx2fWEx3dHiv7EwvTnqmr5BvjctEDPkp1eH2GFZbLK+Fficn5g==
+X-Received: by 2002:adf:ae41:: with SMTP id u1mr38625942wrd.20.1549057574639;
+        Fri, 01 Feb 2019 13:46:14 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a14sm2013362wrr.13.2019.02.01.13.17.15
+        by smtp.gmail.com with ESMTPSA id z206sm4556197wmc.18.2019.02.01.13.46.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Feb 2019 13:17:15 -0800 (PST)
+        Fri, 01 Feb 2019 13:46:14 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Dan McGregor <dan.mcgregor@usask.ca>
-Cc:     git@vger.kernel.org, masayasuzuki@google.com
-Subject: Re: [PATCH] http: cast result to FILE *
-References: <20190201193004.88736-1-dan.mcgregor@usask.ca>
-Date:   Fri, 01 Feb 2019 13:17:15 -0800
-In-Reply-To: <20190201193004.88736-1-dan.mcgregor@usask.ca> (Dan McGregor's
-        message of "Fri, 1 Feb 2019 13:30:04 -0600")
-Message-ID: <xmqqr2crxl7o.fsf@gitster-ct.c.googlers.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+Subject: Re: [PATCH 1/1] Makefile: improve SPARSE_FLAGS customisation
+References: <3ccf0255-8a15-effc-ce6b-eabb61625f90@ramsayjones.plus.com>
+Date:   Fri, 01 Feb 2019 13:46:13 -0800
+In-Reply-To: <3ccf0255-8a15-effc-ce6b-eabb61625f90@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Fri, 1 Feb 2019 21:03:11 +0000")
+Message-ID: <xmqqmunfxjve.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,45 +68,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dan McGregor <dan.mcgregor@usask.ca> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> Commit 8dd2e88a92 ("http: support file handles for HTTP_KEEP_ERROR",
-> 2019-01-10) introduced an implicit assumption that rewind, fileno, and
-> fflush are functions. At least on FreeBSD fileno is not, and as such
-> passing a void * failed.
+> In order to enable greater user customisation of the SPARSE_FLAGS
+> variable, we introduce a new SP_EXTRA_FLAGS variable to use for
+> target specific settings. Without using the new variable, setting
+> the SPARSE_FLAGS on the 'make' command-line would also override the
+> value set by the target-specific rules in the Makefile (effectively
+> making them useless). In addition, we initialise the SPARSE_FLAGS
+> to the default (empty) value using a conditional assignment (?=).
+> This allows the SPARSE_FLAGS to be set from the environment as
+> well as from the command-line.
 
-I am not strongly opposed to this patch, but shouldn't you be filing
-a bug report against FreeBSD instead?  The implementation is free to
-define fileno(fh) as a macro, but it shouldn't force such a change
-to conformant programs.
+Thanks for a detailed and clear explanation here and in the cover
+letter.  I agree with the motivation and most of the things I see in
+this patch, but one thing that stands out at me is if we still want
+to += append to SP_EXTRA_FLAGS in target specific way.  Before this
+patch, because SPARSE_FLAGS was a dual use variable, it needed +=
+appending to it in these two places, but that rationale is gone with
+this patch.
 
-https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=206146
+Also, don't we want to clear SP_EXTRA_FLAGS at the beginning?
 
-> Explicitly cast result to a FILE * when using standard functions that
-> may ultimately be macros.
->
-> Signed-off-by: Dan McGregor <dan.mcgregor@usask.ca>
+The reason I raise these is because I do not quite see a clear
+answer to "I want to set SP_EXTRA_FLAGS and not SPARSE_FLAGS,
+because ...".
+
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 > ---
->  http.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>  Makefile | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 >
-> diff --git a/http.c b/http.c
-> index 954bebf684..8b9476b151 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1996,12 +1996,12 @@ static int http_request_reauth(const char *url,
->  		strbuf_reset(result);
->  		break;
->  	case HTTP_REQUEST_FILE:
-> -		if (fflush(result)) {
-> +		if (fflush((FILE *)result)) {
->  			error_errno("unable to flush a file");
->  			return HTTP_START_FAILED;
->  		}
-> -		rewind(result);
-> -		if (ftruncate(fileno(result), 0) < 0) {
-> +		rewind((FILE *)result);
-> +		if (ftruncate(fileno((FILE *)result), 0) < 0) {
->  			error_errno("unable to truncate a file");
->  			return HTTP_START_FAILED;
->  		}
+> diff --git a/Makefile b/Makefile
+> index 6e8d017e8e..dc02825c88 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -574,7 +574,7 @@ SPATCH = spatch
+>  
+>  export TCL_PATH TCLTK_PATH
+>  
+> -SPARSE_FLAGS =
+> +SPARSE_FLAGS ?=
+>  SPATCH_FLAGS = --all-includes --patch .
+>  
+>  
+> @@ -2369,10 +2369,10 @@ gettext.sp gettext.s gettext.o: GIT-PREFIX
+>  gettext.sp gettext.s gettext.o: EXTRA_CPPFLAGS = \
+>  	-DGIT_LOCALE_PATH='"$(localedir_relative_SQ)"'
+>  
+> -http-push.sp http.sp http-walker.sp remote-curl.sp imap-send.sp: SPARSE_FLAGS += \
+> +http-push.sp http.sp http-walker.sp remote-curl.sp imap-send.sp: SP_EXTRA_FLAGS += \
+>  	-DCURL_DISABLE_TYPECHECK
+>  
+> -pack-revindex.sp: SPARSE_FLAGS += -Wno-memcpy-max-count
+> +pack-revindex.sp: SP_EXTRA_FLAGS += -Wno-memcpy-max-count
+>  
+>  ifdef NO_EXPAT
+>  http-walker.sp http-walker.s http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
+> @@ -2386,7 +2386,7 @@ endif
+>  ifdef USE_NED_ALLOCATOR
+>  compat/nedmalloc/nedmalloc.sp compat/nedmalloc/nedmalloc.o: EXTRA_CPPFLAGS = \
+>  	-DNDEBUG -DREPLACE_SYSTEM_ALLOCATOR
+> -compat/nedmalloc/nedmalloc.sp: SPARSE_FLAGS += -Wno-non-pointer-null
+> +compat/nedmalloc/nedmalloc.sp: SP_EXTRA_FLAGS += -Wno-non-pointer-null
+>  endif
+>  
+>  git-%$X: %.o GIT-LDFLAGS $(GITLIBS)
+> @@ -2710,7 +2710,7 @@ SP_OBJ = $(patsubst %.o,%.sp,$(C_OBJ))
+>  
+>  $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+>  	$(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
+> -		$(SPARSE_FLAGS) $<
+> +		$(SPARSE_FLAGS) $(SP_EXTRA_FLAGS) $<
+>  
+>  .PHONY: sparse $(SP_OBJ)
+>  sparse: $(SP_OBJ)
