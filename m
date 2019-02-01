@@ -2,406 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIMWL_WL_MED,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67B361F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 14:51:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FE681F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 15:04:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729100AbfBAOvh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 09:51:37 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:24265 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728239AbfBAOvg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 09:51:36 -0500
-Received: from [192.168.2.240] ([92.26.116.186])
-        by smtp.talktalk.net with SMTP
-        id paAHgLlljwhzSpaAIgcPEd; Fri, 01 Feb 2019 14:51:35 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1549032695;
-        bh=w3FBeLDHZKM4RuXpZMBZje6Lg0MHc5Gk7C8RBO+EUig=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=o4pdOUTwNTZ5L8XgPppHQKtB3KgkEW6T2O5vcY6NanvfPNz9jjw6zpEmELKB2XBPm
-         8wbi8buEFiA7mr/YDjT0nTz+bvny/SM4XCRD4TVkyFdVBVQ1Nc2CtRsSavWRtN/TCB
-         h0e9AUZaCv42NQnQOGnBaaosa9NlSfa8n3Bh/1eY=
-X-Originating-IP: [92.26.116.186]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=Pfo8oxCPEre7EYRssK5nbQ==:117
- a=Pfo8oxCPEre7EYRssK5nbQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=5IQ_GxhRbFkyufmtWugA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 07/16] sequencer: refactor
- sequencer_add_exec_commands() to work on a todo_list
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190123205821.27459-1-alban.gruin@gmail.com>
- <20190129150159.10588-1-alban.gruin@gmail.com>
- <20190129150159.10588-8-alban.gruin@gmail.com>
- <434cf0f7-1df6-7966-b460-e69e8f8b5e99@talktalk.net>
-Message-ID: <b95aab1f-25e4-be81-e8c3-5521fe68ef62@talktalk.net>
-Date:   Fri, 1 Feb 2019 14:51:33 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1730064AbfBAPEz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 10:04:55 -0500
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:42913 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730062AbfBAPEz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 10:04:55 -0500
+Received: by mail-ed1-f46.google.com with SMTP id y20so5655850edw.9
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 07:04:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=loskot-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=xZCXpzFaS+gIAv7vpUfpHLWeo2NyJeM9oLmlJyyFUyo=;
+        b=evkBMkP/uVp68PnGzTxxOjBGSFPw5alYOQxv0QDoJZHWl+erZtgvbff60Im1Lk/E4I
+         Tyzp6b5ZWUgQYpejFbvkRxpSfbu9rcZTIWCV40NBz2UUJ5j8lFALicya+Rk5kmAj1qk2
+         mu6xPN8V5VBcKo/AwUZZ6YPm0Msdl1v18JMvrY8rCuqkxe1PEEz+SQgMGM63j4cIvF0U
+         V31j0H0nFsj+PyxWFcXegIIUO814tTEf94ZlMR4ywL9FHJ4/ucAKekbkDADrVNzGRmaR
+         bp14ECNxoB1P/wioFP9YLvEmgbbAmj0MaaBIdqAMjmZPpQ4DqWkzOtckq/Hr+5D+Bhf0
+         pptw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=xZCXpzFaS+gIAv7vpUfpHLWeo2NyJeM9oLmlJyyFUyo=;
+        b=oFmNbF/7XAGohokQOB4TG8vYoQ9E9M8uFVkPG2aLjJElY1OYiRDecD7PcFP29z8a9G
+         cLqmjHfQ+l1xEfO7ZXYQZMFPWQavu8LYxj8Ixus4oSrXzU+FGqGoCmqL6UnaW0zhhfuP
+         FATwDs2o5W6jPByzNo2SrPyb6BysqUoKF9I8W/txSL1BdDOF89w5tE1YEICQjNrGTcMv
+         A5NL5Ff8DozED441MZXUPolP9ciSl7LXlmMdd+M00Q0VrQybbieYVHodERYvqzMlOKdv
+         q9At+wiPxR+TfnAlsuWH5HBza+Ka2rH44NhIU8/YAMR14WWTeDLWqrUhS3YduB8X1BUm
+         fN0g==
+X-Gm-Message-State: AJcUukcun9HrdLCtUabWNulV87IX2Ia61ur8qt9tEw5iZcc1hC/ICps9
+        PS93/TDT9KVEwP/rugCjZzqYovf9d5SMqLewEQ88JGupvZS3dbiD
+X-Google-Smtp-Source: ALg8bN6v97IRN6IQmJDKIMPhNBSEuDmBUFPdpx2T1H/hpyxQS8GyekK1h0Y+Rldy/K4Nn/0Hq9m3WzO4X/UMoe2y1ag=
+X-Received: by 2002:a05:6402:121a:: with SMTP id c26mr38292795edw.104.1549033493226;
+ Fri, 01 Feb 2019 07:04:53 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <434cf0f7-1df6-7966-b460-e69e8f8b5e99@talktalk.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfOhLhm+HlivbHhzfCXzSzmisF0L/G2FidnawIbf56yQOpeYH030k+H4Vybux8mxukT2lE6HAPiRKpaNzwJiizGqSSlYKGmRlvzN3epNDLTJT2art5SUf
- Q4yfP9HhXvTTJWoiP5RPlxuS8xK0+tbbsNW+tSSKUpvrwxbLk2SIP699CU/NMpZzF2SMTnTM8Z+nrrLQU3bguBH4X1ZXolX9fmr0hQ9mznbTIsiogDUwgVsP
- saIfDB60/VnV1C8BpV2N5bWP8dKDhS6E0Sj+3n/cz60W7j7ydkKudh9G0ZQfGTB/gOeYQTS1jNmfGs3+k2pJVQ==
+References: <CAKQS2drF+CQTiKtXD6Kx1ZbH9ZTekWmbfiiHTCJV_BrT5-gAFQ@mail.gmail.com>
+ <CAKQS2dqx9Nux11ot7a-Wxd2qpcdAAWw-e7Li+X3bw7TxJS=Kyw@mail.gmail.com>
+In-Reply-To: <CAKQS2dqx9Nux11ot7a-Wxd2qpcdAAWw-e7Li+X3bw7TxJS=Kyw@mail.gmail.com>
+From:   Mateusz Loskot <mateusz@loskot.net>
+Date:   Fri, 1 Feb 2019 16:04:26 +0100
+Message-ID: <CABUeae8=SLzSiT+UDdPeEbSUJNhU5xVF0-7hGK++v4sHsQWA8w@mail.gmail.com>
+Subject: Re: Submodules & worktree
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 31/01/2019 14:30, Phillip Wood wrote:
-> Hi Alban
-> 
-> On 29/01/2019 15:01, Alban Gruin wrote:
->> This refactors sequencer_add_exec_commands() to work on a todo_list to
->> avoid redundant reads and writes to the disk.
->>
->> Instead of inserting the `exec' commands between the other commands and
->> re-parsing the buffer at the end, they are appended to the buffer once,
->> and a new list of items is created.  Items from the old list are copied
->> across and new `exec' items are appended when necessary.  This
->> eliminates the need to reparse the buffer, but this also means we have
->> to use todo_list_write_to_disk() to write the file.
->>
->> todo_list_add_exec_commands() and sequencer_add_exec_commands() are
->> modified to take a string list instead of a string -- one item for each
->> command.  This makes it easier to insert a new command to the todo list
->> for each command to execute.
->>
->> sequencer_add_exec_commands() still reads the todo list from the disk,
->> as it is needed by rebase -p.
->>
->> complete_action() still uses sequencer_add_exec_commands() for now.
->> This will be changed in a future commit.
->>
->> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
->> ---
->>  builtin/rebase--interactive.c |  15 +++--
->>  sequencer.c                   | 110 +++++++++++++++++++++-------------
->>  sequencer.h                   |   5 +-
->>  3 files changed, 82 insertions(+), 48 deletions(-)
->>
->> diff --git a/builtin/rebase--interactive.c 
->> b/builtin/rebase--interactive.c
->> index df19ccaeb9..53056ee713 100644
->> --- a/builtin/rebase--interactive.c
->> +++ b/builtin/rebase--interactive.c
->> @@ -65,7 +65,7 @@ static int do_interactive_rebase(struct replay_opts 
->> *opts, unsigned flags,
->>                   const char *onto, const char *onto_name,
->>                   const char *squash_onto, const char *head_name,
->>                   const char *restrict_revision, char *raw_strategies,
->> -                 const char *cmd, unsigned autosquash)
->> +                 struct string_list *commands, unsigned autosquash)
->>  {
->>      int ret;
->>      const char *head_hash = NULL;
->> @@ -116,7 +116,7 @@ static int do_interactive_rebase(struct 
->> replay_opts *opts, unsigned flags,
->>          discard_cache();
->>          ret = complete_action(the_repository, opts, flags,
->>                        shortrevisions, onto_name, onto,
->> -                      head_hash, cmd, autosquash);
->> +                      head_hash, commands, autosquash);
->>      }
->>
->>      free(revisions);
->> @@ -139,6 +139,7 @@ int cmd_rebase__interactive(int argc, const char 
->> **argv, const char *prefix)
->>      const char *onto = NULL, *onto_name = NULL, *restrict_revision = 
->> NULL,
->>          *squash_onto = NULL, *upstream = NULL, *head_name = NULL,
->>          *switch_to = NULL, *cmd = NULL;
->> +    struct string_list commands = STRING_LIST_INIT_DUP;
->>      char *raw_strategies = NULL;
->>      enum {
->>          NONE = 0, CONTINUE, SKIP, EDIT_TODO, SHOW_CURRENT_PATCH,
->> @@ -221,6 +222,12 @@ int cmd_rebase__interactive(int argc, const char 
->> **argv, const char *prefix)
->>          warning(_("--[no-]rebase-cousins has no effect without "
->>                "--rebase-merges"));
->>
->> +    if (cmd && *cmd) {
->> +        string_list_split(&commands, cmd, '\n', -1);
-> 
-> This whole splitting and later skipping 'exec ' is a bit of a shame - it 
-> would be much nicer if we could just have one exec command per -x option 
-> but I think that is outside the scope of this series (If I have time I'd 
-> like to look at calling do_interactive_rebase() directly from 
-> builtin/rebase.c without forking rebase--interactive).
-> 
->> +        if (strlen(commands.items[commands.nr - 1].string) == 0)
-> 
-> I'd be tempted just to test the string using !* rather than calling 
-> strlen. Also is there ever a case where the last string isn't empty?
-> 
->> +            --commands.nr;
->> +    }
->> +
->>      switch (command) {
->>      case NONE:
->>          if (!onto && !upstream)
->> @@ -228,7 +235,7 @@ int cmd_rebase__interactive(int argc, const char 
->> **argv, const char *prefix)
->>
->>          ret = do_interactive_rebase(&opts, flags, switch_to, 
->> upstream, onto,
->>                          onto_name, squash_onto, head_name, 
->> restrict_revision,
->> -                        raw_strategies, cmd, autosquash);
->> +                        raw_strategies, &commands, autosquash);
->>          break;
->>      case SKIP: {
->>          struct string_list merge_rr = STRING_LIST_INIT_DUP;
->> @@ -262,7 +269,7 @@ int cmd_rebase__interactive(int argc, const char 
->> **argv, const char *prefix)
->>          ret = rearrange_squash(the_repository);
->>          break;
->>      case ADD_EXEC:
->> -        ret = sequencer_add_exec_commands(the_repository, cmd);
->> +        ret = sequencer_add_exec_commands(the_repository, &commands);
->>          break;
->>      default:
->>          BUG("invalid command '%d'", command);
->> diff --git a/sequencer.c b/sequencer.c
->> index 266f80d704..3a90b419d7 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -4446,25 +4446,27 @@ int sequencer_make_script(struct repository 
->> *r, FILE *out,
->>      return 0;
->>  }
->>
->> -/*
->> - * Add commands after pick and (series of) squash/fixup commands
->> - * in the todo list.
->> - */
->> -int sequencer_add_exec_commands(struct repository *r,
->> -                const char *commands)
->> +static void todo_list_add_exec_commands(struct todo_list *todo_list,
->> +                    struct string_list *commands)
->>  {
->> -    const char *todo_file = rebase_path_todo();
->> -    struct todo_list todo_list = TODO_LIST_INIT;
->> -    struct strbuf *buf = &todo_list.buf;
->> -    size_t offset = 0, commands_len = strlen(commands);
->> -    int i, insert;
->> +    struct strbuf *buf = &todo_list->buf;
->> +    size_t base_offset = buf->len;
->> +    int i, insert, nr = 0, alloc = 0;
->> +    struct todo_item *items = NULL, *base_items = NULL;
->>
->> -    if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
->> -        return error(_("could not read '%s'."), todo_file);
->> +    base_items = xcalloc(commands->nr, sizeof(struct todo_item));
->> +    for (i = 0; i < commands->nr; ++i) {
->> +        size_t command_len = strlen(commands->items[i].string);
->>
->> -    if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
->> -        todo_list_release(&todo_list);
->> -        return error(_("unusable todo list: '%s'"), todo_file);
->> +        strbuf_addstr(buf, commands->items[i].string);
->> +        strbuf_addch(buf, '\n');
->> +
->> +        base_items[i].command = TODO_EXEC;
->> +        base_items[i].offset_in_buf = base_offset;
->> +        base_items[i].arg_offset = base_offset + strlen("exec ");
->> +        base_items[i].arg_len = command_len - strlen("exec ");
->> +
->> +        base_offset += command_len + 1;
->>      }
->>
->>      /*
->> @@ -4473,38 +4475,62 @@ int sequencer_add_exec_commands(struct 
->> repository *r,
->>       * those chains if there are any.
->>       */
->>      insert = -1;
->> -    for (i = 0; i < todo_list.nr; i++) {
->> -        enum todo_command command = todo_list.items[i].command;
->> -
->> -        if (insert >= 0) {
->> -            /* skip fixup/squash chains */
->> -            if (command == TODO_COMMENT)
->> -                continue;
->> -            else if (is_fixup(command)) {
->> -                insert = i + 1;
->> -                continue;
->> -            }
->> -            strbuf_insert(buf,
->> -                      todo_list.items[insert].offset_in_buf +
->> -                      offset, commands, commands_len);
-> 
-> In a todo list that looks like
-> pick abc message
-> #pick cde empty commit
-> This inserts the exec command for the first pick above the commented out 
-> pick. I think your translation puts it below the commented out pick as 
-> it ignores the value of insert. I think it's probably easiest to add an 
-> INSERT_ARRAY macro to insert it in the right place. An alternative might 
-> be to track the last insert position and only copy commands across when 
-> there is another exec to insert but that might get complicated in cases 
-> such as
-> 
-> pick abc message
-> #squash cde squash! message //empty commit for rewording
-> fixup 123 fixup! message
-> #pick 456 empty commit
+On Fri, 1 Feb 2019 at 15:00, Ole Pinto <olepinto@gmail.com> wrote:
+>
+> Adding a worktree from a working copy with submodules doesn't work.
+>
+> In the config file I have
+>     [submodule]
+>         recurse = true
+>
 
-Thinking about this, I'm not sure it can happen as the empty squash 
-commit will be commented out before rearrange_squash() is called so I 
-think it would actually look like
+FYI, https://git-scm.com/docs/git-worktree#_bugs
 
-pick abc message
-fixup 123 fixup! message
-#pick cde squash! message
-#pick 456 empty commit
+"Multiple checkout in general is still experimental, and the support
+for submodules is incomplete.
+It is NOT recommended to make multiple checkouts of a superproject."
 
-So I wonder if we can get away with treating insert as a flag and 
-inserting exec commands when
-insert && command == TODO_COMMENT
-
-We could probably do with some tests for this to be sure.
-
-Best Wishes
-
-Phillip
-
-> 
-> Best Wishes
-> 
-> Phillip
-> 
->> -            offset += commands_len;
->> +    for (i = 0; i < todo_list->nr; i++) {
->> +        enum todo_command command = todo_list->items[i].command;
->> +        if (insert >= 0 && command != TODO_COMMENT && 
->> !is_fixup(command)) {
->> +            ALLOC_GROW(items, nr + commands->nr, alloc);
->> +            COPY_ARRAY(items + nr, base_items, commands->nr);
->> +            nr += commands->nr;
->>              insert = -1;
->>          }
->>
->> -        if (command == TODO_PICK || command == TODO_MERGE)
->> +        ALLOC_GROW(items, nr + 1, alloc);
->> +        items[nr++] = todo_list->items[i];
->> +
->> +        if (command == TODO_PICK || command == TODO_MERGE || 
->> is_fixup(command))
->>              insert = i + 1;
->>      }
->>
->>      /* insert or append final <commands> */
->> -    if (insert >= 0 && insert < todo_list.nr)
->> -        strbuf_insert(buf, todo_list.items[insert].offset_in_buf +
->> -                  offset, commands, commands_len);
->> -    else if (insert >= 0 || !offset)
->> -        strbuf_add(buf, commands, commands_len);
->> +    if (insert >= 0 || nr == todo_list->nr) {
->> +        ALLOC_GROW(items, nr + commands->nr, alloc);
->> +        COPY_ARRAY(items + nr, base_items, commands->nr);
->> +        nr += commands->nr;
->> +    }
->> +
->> +    free(base_items);
->> +    FREE_AND_NULL(todo_list->items);
->> +    todo_list->items = items;
->> +    todo_list->nr = nr;
->> +    todo_list->alloc = alloc;> +}
->>
->> -    i = write_message(buf->buf, buf->len, todo_file, 0);
->> +/*
->> + * Add commands after pick and (series of) squash/fixup commands
->> + * in the todo list.
->> + */
->> +int sequencer_add_exec_commands(struct repository *r,
->> +                struct string_list *commands)
->> +{
->> +    const char *todo_file = rebase_path_todo();
->> +    struct todo_list todo_list = TODO_LIST_INIT;
->> +    int res;
->> +
->> +    if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
->> +        return error_errno(_("could not read '%s'."), todo_file);
->> +
->> +    if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
->> +        todo_list_release(&todo_list);
->> +        return error(_("unusable todo list: '%s'"), todo_file);
->> +    }
->> +
->> +    todo_list_add_exec_commands(&todo_list, commands);
->> +    res = todo_list_write_to_file(r, &todo_list, todo_file, NULL, 
->> NULL, -1, 0);
->>      todo_list_release(&todo_list);
->> -    return i;
->> +
->> +    if (res)
->> +        return error_errno(_("could not write '%s'."), todo_file);
->> +    return 0;
->>  }
->>
->>  static void todo_list_to_strbuf(struct repository *r, struct 
->> todo_list *todo_list,
->> @@ -4735,7 +4761,7 @@ static int skip_unnecessary_picks(struct 
->> repository *r, struct object_id *output
->>
->>  int complete_action(struct repository *r, struct replay_opts *opts, 
->> unsigned flags,
->>              const char *shortrevisions, const char *onto_name,
->> -            const char *onto, const char *orig_head, const char *cmd,
->> +            const char *onto, const char *orig_head, struct 
->> string_list *commands,
->>              unsigned autosquash)
->>  {
->>      const char *shortonto, *todo_file = rebase_path_todo();
->> @@ -4754,8 +4780,8 @@ int complete_action(struct repository *r, struct 
->> replay_opts *opts, unsigned fla
->>      if (autosquash && rearrange_squash(r))
->>          return -1;
->>
->> -    if (cmd && *cmd)
->> -        sequencer_add_exec_commands(r, cmd);
->> +    if (commands->nr)
->> +        sequencer_add_exec_commands(r, commands);
->>
->>      if (strbuf_read_file(buf, todo_file, 0) < 0)
->>          return error_errno(_("could not read '%s'."), todo_file);
->> diff --git a/sequencer.h b/sequencer.h
->> index 1de97f188d..e79f03e213 100644
->> --- a/sequencer.h
->> +++ b/sequencer.h
->> @@ -146,12 +146,13 @@ int sequencer_make_script(struct repository *r, 
->> FILE *out, int argc,
->>                const char **argv,
->>                unsigned flags);
->>
->> -int sequencer_add_exec_commands(struct repository *r, const char 
->> *command);
->> +int sequencer_add_exec_commands(struct repository *r,
->> +                struct string_list *commands);
->>  int transform_todo_file(struct repository *r, unsigned flags);
->>  int check_todo_list_from_file(struct repository *r);
->>  int complete_action(struct repository *r, struct replay_opts *opts, 
->> unsigned flags,
->>              const char *shortrevisions, const char *onto_name,
->> -            const char *onto, const char *orig_head, const char *cmd,
->> +            const char *onto, const char *orig_head, struct 
->> string_list *commands,
->>              unsigned autosquash);
->>  int rearrange_squash(struct repository *r);
->>
->>
-> 
-
+Best regards,
+-- 
+Mateusz Loskot, http://mateusz.loskot.net
