@@ -2,95 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 640F51F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 18:53:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AEF31F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 19:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730383AbfBASxa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 13:53:30 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43192 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728681AbfBASxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 13:53:30 -0500
-Received: by mail-wr1-f65.google.com with SMTP id b4so1289990wrq.10
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 10:53:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=VWjFiA142uTby09pehvYkt/LemCsYsVJP/9kN3K5t9Y=;
-        b=d1K73XUEWC+oWNOsLSs6NYmKwPZDbaKKRgQHAJX9+1xGRmmRF0OaJGsGKyJLykrx6w
-         E+6CfO2zqjcLsAtAev70bvoliNLfFlx4L6zDReR+Q7Lqt0ihTGrzdIw2ERrE8ir/JYT6
-         X0XdHUS2hZgdkM3Ilux3Gv/4uoxfJLpX9WMULJ2pojWIHxS+v+qh/L+VulHTc3sM7p/C
-         BHqSisbJsJJn6xO5MEmt/oSPEQrXOku8iG7HmAWtHJdO06J7Thi2LUISHD7bOX3gYHq9
-         b6yVJD8sRA4GO/fNphnpu33ciK/bULiegI/NPCAc3Ufi7OLKzMFxODRyIf2GxLUCueyu
-         bmyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=VWjFiA142uTby09pehvYkt/LemCsYsVJP/9kN3K5t9Y=;
-        b=WdiZzih7KXuP6DhOHbaKrmAf6qTACrtsasp6dX81dFzaTNYI0YYvQSF71Ote1uBAU1
-         lPTUQUS5GQSoSoqxdxOSoz0O9YR6V4NyEI2rLFtVYpnqw8VvbB1GWljA7SHssmebL/lk
-         +cXRd7Q+XnkNbMQuwQaV5t4cGKQE1dU/AiDcqroaTZQt9DMslm8nUzJ0D3eahfQEC8B8
-         h0j955a850wrwFygI0lLRxCqPsh8dkU6dffw6IJwvSE8YcrlyPqkKELJHM6ilZIsanOD
-         Eazu8zwD7zm5H5bdNtpbyO9Wdx2JRo3E8lAXVbXVOMVhJSe2JxuKTed0f1laWHrr6aZI
-         wjSw==
-X-Gm-Message-State: AJcUukce+huJAjIey27wPuWNtmMDrjQ4PdggDi3jKyxlOf9swTfya8aF
-        0Df4optkQ+h0lNpTmOxMunw=
-X-Google-Smtp-Source: ALg8bN5ZPwzShl9nDf38+J7hfq26GovXv+7LrrqAu0HQMo0Zg8fB2J3SHV7HF8E2b4RxIBF1qdb4+w==
-X-Received: by 2002:adf:bb44:: with SMTP id x4mr41465793wrg.24.1549047208463;
-        Fri, 01 Feb 2019 10:53:28 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e27sm9032713wra.67.2019.02.01.10.53.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Feb 2019 10:53:27 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sebastian Staudt <koraktor@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4 2/2] t6120: test for describe with a bare repository
-References: <20190201135512.68220-1-koraktor@gmail.com>
-        <20190201135512.68220-2-koraktor@gmail.com>
-Date:   Fri, 01 Feb 2019 10:53:27 -0800
-In-Reply-To: <20190201135512.68220-2-koraktor@gmail.com> (Sebastian Staudt's
-        message of "Fri, 1 Feb 2019 14:55:12 +0100")
-Message-ID: <xmqq7eejz6fs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1730511AbfBATAm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 14:00:42 -0500
+Received: from mx-out1.startmail.com ([145.131.90.139]:39930 "EHLO
+        mx-out1.startmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727450AbfBATAl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 14:00:41 -0500
+Subject: Re: Broken interactive rebase text after some UTF-8 characters
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
+        s=2017-11; t=1549047639;
+        bh=bZvzV+vWCfJpE4ZMmb3kFfMEI8XbJfymrRvBM5O1VIg=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=Ll9+gDQHN2MgpaEe0m9Ix6I5YtMwqMaF2fjQ89YEJtcw1wQTLSaJU930XKCYKKhJ1
+         7CCxpwCnKbZ2/fu5dqP3sNGc6Tkfy4y5kNH+IG7QDcy+yt4VfaI21RuCSL7aSBnVnC
+         HArWP1Z065QQQ8ALHR3UxcFaHMhv2PNTJlwzTv/D+PuAx2dOmQ53UoC4p7x8GUIBFe
+         1r7+/p+w6UC6Y0vCvaK8LwQVcc6AvR9HubqWX+MKpzFdlIxIltta5TC1eszLRhlit5
+         y+3fe0oCMKDQn8oDBlgoZPgn5RlGeVh34BUSEmdFkWfdVnXeAYazwr7RkOXV8rx8U+
+         vHlXzPT3nyqzQ==
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org
+References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
+ <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>
+ <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>
+ <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net>
+ <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
+ <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>
+ <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
+ <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
+ <nycvar.QRO.7.76.6.1902011530440.41@tvgsbejvaqbjf.bet>
+ <eda7b1c4-5fd6-5440-8998-75eab9f73e47@startmail.com>
+ <xmqqpnsbzaa6.fsf@gitster-ct.c.googlers.com>
+From:   Michal Nowak <mnowak@startmail.com>
+Message-ID: <7fe4edcd-f4ec-3ad5-a9ea-e4015e4afc37@startmail.com>
+Date:   Fri, 1 Feb 2019 20:00:37 +0100
+Mime-Version: 1.0
+In-Reply-To: <xmqqpnsbzaa6.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sebastian Staudt <koraktor@gmail.com> writes:
+On 02/01/19 06:30 PM, Junio C Hamano wrote:
+> Michal Nowak <mnowak@startmail.com> writes:
+> 
+>>> You already have that example. Just take the UTF-8 text in your original
+>>> bug report, put it into something like
+>>>
+>>> 	int main(int argc, char **argv)
+>>> 	{
+>>> 		char utf8[] = "... your text here...";
+>>>
+>>> 		printf("%.*s", (int)(sizeof(utf8) - 1), utf8);
+>>>
+>>> 		return 0;
+>>> 	}
+> 
+> When replayed literally, this is not a very good test.
+> 
+>> {global} newman@lenovo:~ $ cat printf.c
+>> #include <stdio.h>
+>> //#include <gettext.h>
+>> int main(int argc, char **argv) {
+>>    char utf8[] = "Gergő Mihály Doma\n";
+>>    printf("%.*s", (int)(sizeof(utf8) - 1), utf8);
+>>    return 0;
+>> }
+> 
+> And this is replaying it literally.
+> 
+> The current working suspicion in this thread is that the platform
+> printf("%.*s", num, str) emits up to num "characters" starting at
+> str, which is an incorrect implementation, as it should emit up to
+> num "bytes".
+> 
+> Notice that the num in this case is the byte count of that utf8[]
+> string.  That number is always larger than the number of "characters"
+> for a string with multi-byte character(s) in it.  Let's say that the
+> sample string has N "characters", and it is N+X "bytes" long, where
+> X > 1.
+> 
+> If the suspicion is correct, i.e. the way the printf implementation
+> is broken on this platform is that it shows up to num "characters",
+> then the call is asking to show up to N+X "characters".  The buggy
+> printf shows all the available N "characters", notices the string
+> stops there, and finishes.  So you won't _see_ the bug with that
+> test program.
+> 
+> Instead, use something like this.
+> 
+>          #include <stdio.h>
+> 
+>          int main(int ac, char **av)
+>          {
+>                  char utf8[] = "ふabc";
+>                  printf("%.*s\n", 4, utf8);
+>                  return 0;
+>          }
+> 
+> With or without gettext or i18n, the output must end with 'a' followed
+> by a newline, and you must not see 'b' nor 'c'.  Otherwise your printf
+> is broken.
+> 
 
-> This ensures that nothing breaks the basic functionality of describe for
-> bare repositories. Please note that --broken and --dirty need a working
-> tree.
->
-> Signed-off-by: Sebastian Staudt <koraktor@gmail.com>
-> ---
->  t/t6120-describe.sh | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-> index 7cfed77c52..ea2c3dbe1c 100755
-> --- a/t/t6120-describe.sh
-> +++ b/t/t6120-describe.sh
-> @@ -418,4 +418,9 @@ test_expect_success 'describe complains about missing object' '
->  	test_must_fail git describe $ZERO_OID
->  '
->  
-> +test_expect_success 'describe works from outside repo using --git-dir' ' 
-> +  git clone --bare "$TRASH_DIRECTORY" "$TRASH_DIRECTORY/bare" &&
-> +  git --git-dir "$TRASH_DIRECTORY/bare" describe
-> +'
+The output ends with 'a' for me on OpenIndiana:
 
-OK, it demonstrates that the command exits with status 0.  Do we
-want to validate its output, too?
+{global} newman@lenovo:~ $ gcc tp.c -o tp && ./tp
+ふa
+
+Though, I can reproduce the problem with Alban's test case the exact 
+same way he wrote earlier today.
+
+Michal
