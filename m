@@ -2,134 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 594261F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 14:00:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16E271F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 14:34:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730511AbfBAOAn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 09:00:43 -0500
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:47055 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729885AbfBAOAl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 09:00:41 -0500
-Received: by mail-wr1-f41.google.com with SMTP id l9so7146058wrt.13
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 06:00:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=NexgS791zbz61FiIHesnD9zIPyKczFTlBgyJuiFkJls=;
-        b=aL81ytil610KBL+YbAZuhNZ4qMMETWEHL+8c71yppRBQQ/9zQ13k3c2jA1Q5v/BbUb
-         cTfiHyKdl3vLKI1rnc53wZuhOIhegUyQdjy0HNgvr8ewqO9Aayo2oLJBf9C6/irndE6z
-         aLUBjw6M/5cQR1ck6AFgPJq1gTYJGv7iUE8yta2BsPjd8Bfpu+opHga5Jca4JfMUZGu7
-         /v9UktLucC+xGRFB3pVFDhvYwJDMcn4T27xjKwvBjTU9fTaLvbxx6FugX4mLttJyJa8q
-         w1VixqTocTdtYjTUOGNSkh+no7JbgmKjgdTOq8Nh39uw8WXbJX/sYc7RdlygzFgrKmpZ
-         WGXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=NexgS791zbz61FiIHesnD9zIPyKczFTlBgyJuiFkJls=;
-        b=BqPazYo6yhv9QE/GSbFg08eaA8ka0c78nsv7r+48S2xkQwKNa26909ymvyRcm+kdAR
-         bk9RDhOyZvwqls/Xf0LrPco9jVQ3zLCCjA/Yrm2JlmwZ+uiIqeLzSc/Z/U7qZ8UVOiRX
-         jonFBJ3sAfwTO16mpJN5CXaJfsea4TXNIzwuPN5eKajzvdopQN3y9fzkqVeovOc/F8UR
-         29qcTnLcLwVThT0LFXQFePuXPOhf5uXjK/cb9nXKRr+bLgSNGn601bVAbiy4CtzSqQiH
-         4Ev4IyrFE4lxFgbxkc2WNbaFtgSpELx5z5NLS/8q3TmSyCkcmcFBemxaPC8xpDt2cJgs
-         NY/g==
-X-Gm-Message-State: AJcUukcy5VY+kYtu0zyKwdI6t5ZpLyGB4dQZcgePjEQlD3kVQal0lHFc
-        Dzp3HPxKQwt8nawaDlrg8gf9NW3SyYo08O1QbSkV6uDY
-X-Google-Smtp-Source: ALg8bN7u55EzeKOxqQaBpWOKPkjIqHBeo/2uVULOgbN8i1xahVKIBGcDk0/a37lZU5nEPxabIgyXcFWuSf/dgiuCdcw=
-X-Received: by 2002:a5d:4f10:: with SMTP id c16mr39822809wru.177.1549029639525;
- Fri, 01 Feb 2019 06:00:39 -0800 (PST)
+        id S1728998AbfBAOeH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 09:34:07 -0500
+Received: from mout.gmx.net ([212.227.17.21]:51427 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726849AbfBAOeH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 09:34:07 -0500
+Received: from [10.200.98.186] ([151.248.50.113]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LnPnu-1hM8x02jb4-00hbVS; Fri, 01
+ Feb 2019 15:33:56 +0100
+Date:   Fri, 1 Feb 2019 15:33:55 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Michal Nowak <mnowak@startmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Subject: Re: Broken interactive rebase text after some UTF-8 characters
+In-Reply-To: <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1902011530440.41@tvgsbejvaqbjf.bet>
+References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>    <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>    <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>    <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net>   
+ <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>    <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>    <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>    <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
+ <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAKQS2drF+CQTiKtXD6Kx1ZbH9ZTekWmbfiiHTCJV_BrT5-gAFQ@mail.gmail.com>
-In-Reply-To: <CAKQS2drF+CQTiKtXD6Kx1ZbH9ZTekWmbfiiHTCJV_BrT5-gAFQ@mail.gmail.com>
-From:   Ole Pinto <olepinto@gmail.com>
-Date:   Fri, 1 Feb 2019 15:00:28 +0100
-Message-ID: <CAKQS2dqx9Nux11ot7a-Wxd2qpcdAAWw-e7Li+X3bw7TxJS=Kyw@mail.gmail.com>
-Subject: Fwd: Submodules & worktree
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7Z3Q9zIEbbNNNz/dEqMyBlT1DLvyIRn2kWoip+hdkVwAA3FhfKM
+ NTO4AYjT+q3klWHPc8ptVgIAqokbGyebQw+gzwGI0n8fx/55HtLYeISgeoSWcSsKcyzYDA7
+ 1xKQb8z5JSkUXyYLVUgqo2Ga4hnboYRZsotLFbgRHxi3aXTQhX1E7T5akHoRegU3ivTy3Jm
+ kpYv0wbYnpn1DcaIB9m9Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:1GawshBJBMo=:OniOmvHSq5wdd3D68u6lyN
+ ePJrHnlcrGfjck/iJ0tsCo9DZddxJ6QqHVMo3TVjoSoGZeVpVxnj56ZC1jNZvDUrUmh7/e2Hw
+ JUP6qnHsxwxL5WjpoXqQ7fnzloC3bcagY2WfgRqRmylBaj1tN7tGQuxIf3usHF226IspDN/wX
+ gWT2bEsqmJSxUmrIZT2QI6qt5zophaXXSLYGITAwhC4BI/q7uOy2dGYf1fgWddc2iRlF348nA
+ NGGQcbmUCQTWdDCzKBPEKAIR+tCsw0srf9Eg187ocGyYvvzIaTBT2sds/GwtRsxltdwhPqa1w
+ SGXfiiMYqUWJxlh6ii1BwLX2715+RpFh0trKCiUL1tspg1IyfLX0laWLG4fLOoDNi0INcD84R
+ /GZj7GuuZ5rm0+kJjdMv4PwMrLNKfpKe67S58Ck1jkA8ZD2W3VeL3weKTP98TSWMRjczbhyjG
+ YfZhdbAgE9ECTzp9L6jmBZOCY0GJBtYmO8Ec5Vzuoz9G+jrGlPIh5BytSLW9kOD+ehGCVSa4L
+ ZJLRGwwHGizwYuTbBBxAVWSgWzWQpAFr/NVNB7sVGD8sFoSAUGrvNpXdtSjw2HgVj6I+aZNoa
+ MvWsCjOurCiJ91OXk4oEzmDS2CeHHq3P+N4+12Re40MuEoYCvfHjhjntVpLdJ0kMDkVifcc3z
+ mkqKjwPq6WEeoEw6y4AXSIyhvilkAUnR714lJt7oNqi/iE2tnmqRfSwtdJA9ALIA5EQOAMGPm
+ vldjhEQVcxPZTb21LoPGe5Cph5Xoaml/nqu5EBa0L3dkusPC6ojW37hXHDeKo0tkI+ushdgA7
+ Wn2G7ST82bI5p0UaYDv7ue+B3O8Y3e8zEr+QQn9SqvMop/aVN3DhItxlodVdvt3HBSs1m07zo
+ MITPSz/o0D3uthXAxxIbrV9vPsjHLQ+Bt/Iu6PScgRR5RFGTRpE1QZB72pHwxl4Exm7qD0RL7
+ UTYG7wmTb7g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adding a worktree from a working copy with submodules doesn't work.
+Hi Michal,
 
-In the config file I have
-    [submodule]
-        recurse = true
+On Fri, 1 Feb 2019, Michal Nowak wrote:
 
-It that's not present, I don't find the problem.
+> On Friday, February 1, 2019 at 8:38 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > On Thu, 31 Jan 2019, Junio C Hamano wrote:
+> > 
+> >> Phillip Wood <phillip.wood@talktalk.net> writes:
+> >>
+> >> >> Are we misusing C formats?
+> >> >
+> >> > The C standard and POSIX both say that the * refers to the maximum
+> >> > number of bytes to print but it looks like it is being treated as the
+> >> > maximum number of characters on OpenIndiana.
+> >> >
+> >> > Johannes - Perhaps we should change it to use fwrite() unless
+> >> printf()
+> >> > gets fixed and we're sure no other operating systems are affected?
+> >>
+> >> Avoid such a rewrite, as "%*.s" that takes (int, char *) are used in
+> >> many other places in our codebase, if you can.
+> > 
+> > Yes, this would be painful in particular in cases like
+> > 
+> > 	master:advice.c:101:           fprintf(stderr, _("%shint: %.*s%s\n"),
+> > 
+> > where we want to write more than just a variable-length buffer.
+> > 
+> > I am curious: is libintl (gettext) used on OpenIndiana? I ask because
+> > AFAIR fprintf() is overridden in that case, and the bug might be a lot
+> > easier to fix if it is in libintl rather than in libc.
+> 
+> here you can see the full output of the OpenIndiana git build: https://hipster.openindiana.org/logs/oi-userland/latest/git.publish.log.
+> 
+> From what I see there, libintl was found.
+> 
+> If you believe this is illumos libc bug, it would be cool if someone created an simple testcase, which I can forward to the illumos developers.
 
-# Preparation
+You already have that example. Just take the UTF-8 text in your original
+bug report, put it into something like
 
-$ git --version
-git version 2.20.1
+	int main(int argc, char **argv)
+	{
+		char utf8[] = "... your text here...";
 
-$ cd /tmp/
+		printf("%.*s", (int)(sizeof(utf8) - 1), utf8);
 
-$ git init main_repo
-Initialized empty Git repository in /tmp/main_repo/.git/
+		return 0;
+	}
 
-$ git init repo_submod
-Initialized empty Git repository in /tmp/repo_submod/.git/
+You should first verify, though, that this replicate the problem, and if
+it does not, use libintl (I think you have to `#include <gettext.h>` and
+`-lintl` or some such) and see whether that reproduces your problem.
 
-$ cd repo_submod
+Ciao,
+Johannes
 
-$ echo Some text > file.txt
-
-$ git add file.txt
-
-$ git ci -m "First commit in subrepo"
-[master (root-commit) ebc9325] First commit in subrepo
- 1 file changed, 1 insertion(+)
- create mode 100644 file.txt
-
-$ cd ../main_repo/
-
-$ git submodule add /tmp/repo_submod submod
-Cloning into '/tmp/main_repo/submod'...
-done.
-
-$ git ci -am "First commit, add submodule"
-[master (root-commit) 695b3a1] First commit, add submodule
- 2 files changed, 4 insertions(+)
- create mode 100644 .gitmodules
- create mode 160000 submod
-
-# Problem 1 (can't run worktree add)
-
-$ git worktree add ../wt -b new_branch
-Preparing worktree (new branch 'new_branch')
-fatal: exec '--super-prefix=submod/': cd to 'submod' failed: No such
-file or directory
-error: Submodule 'submod' could not be updated.
-error: Submodule 'submod' cannot checkout new HEAD.
-fatal: Could not reset index file to revision 'HEAD'.
-
-The new directory (../wt) is created and removed (seen with strace).
-The new branch is created and not removed.
-
-# Problem 2 (submodule status seems not to detect some cases)
-
-$ pwd
-/tmp/main_repo
-
-$ git submodule status
- ebc9325f7b19164c9bdfd05263481ded66d7bd7d submod (heads/master)
-
-$ rm submod/file.txt submod/.git
-
-$ git submodule status
- ebc9325f7b19164c9bdfd05263481ded66d7bd7d submod
-
-So, I have a plain, empty directory where the submodule should be. Not
-having any 'first char', I'd expect it to be checked out and up to
-date. Is this expected?
-
-Thanks a lot for the work!
+> 
+> Thanks,
+> Michal
+> 
+> > 
+> > Of course, it might *still* be a bug in libc by virtue of handing '%.*s'
+> > through to libc's implementation.
+> > 
+> > Alban, can you test this with NO_GETTEXT?
+> > 
+> > Thanks,
+> > Johannes
+> 
