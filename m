@@ -7,110 +7,115 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F32431F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 06:49:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B00D1F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 07:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727971AbfBAGtX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 01:49:23 -0500
-Received: from mail-it1-f196.google.com ([209.85.166.196]:40592 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725763AbfBAGtX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 01:49:23 -0500
-Received: by mail-it1-f196.google.com with SMTP id h193so8304049ita.5
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 22:49:23 -0800 (PST)
+        id S1726060AbfBAHHL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 02:07:11 -0500
+Received: from mail-it1-f169.google.com ([209.85.166.169]:38958 "EHLO
+        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725831AbfBAHHK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 02:07:10 -0500
+Received: by mail-it1-f169.google.com with SMTP id a6so8365616itl.4
+        for <git@vger.kernel.org>; Thu, 31 Jan 2019 23:07:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=sIzppIvQ+Qz4/+VUtdh6cwQCLb3VEbbop2D6YVB2EmU=;
-        b=e1ntCqZswZVY/juOZ6d4t8zVRFYAd4dkuP8JW0oiLFZCWcNykpBq3e7F3t5jABzFgg
-         oXnG+57WgHIFmHC6pStz170eTNLfd9Va4Khn4sfqMHwQXtM9ouYWEIUhwWAWJtV+F6+Z
-         F6Gk45gbYms1Av1lz6fcE971EBcoVzS4BN9m6bShiYrWK/7MQtdtPj65v+Nmi6O5j0AW
-         Z91+2qmLQqOQ+DRGjShfcFjfD38+v0zX2inQ28e6P+kdawmp6Gqp6Q5mkBgWoEy4PoEP
-         3MmJ9Liwm1twFL3eO3q+klwr3cz/kNooKMmIbaJJjvvZF2aa8k+KXYFIzDLAMLkqfN9P
-         MBtg==
+        bh=5o+2XGwusC+cGnV3fs8xHt94l3f5J1aAB3OaaydvF78=;
+        b=kz4JSUY2Jtr59iAC6PxiNeGs+RFyByExwx4GNW0bcIFIb1W6pDku5AgT4o3IcmoST2
+         bjFF91q02A9jK1rxZnxwdzqeY7K9gkwJU0O4WCSkxVmREIDtgP/mknU1PSkf5AqaYFuN
+         6euDUlL280E/BSCTWcWZlXt8zU8My9etAFPQL74WLtASsk0WUhJxXg+hUhihiFN5M9zA
+         8n2WtWt3sWk4jtxw/Q7kMPz4mMLPJv2DTiUQgipz3jq3sdr8qQFX1WqqsH3cCBCaO2h3
+         71imrbFnXki87jf3XqidbwvKhOIHQU3CTXSoZ0KHDRb0upenV1xSRWWYKYOlrGOEACdG
+         VMcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=sIzppIvQ+Qz4/+VUtdh6cwQCLb3VEbbop2D6YVB2EmU=;
-        b=IJ+gD+w+N5YdeWYmM5Xl7xa9nzbo7Klk3/OZU4HzCFnaEeb0cD+7in+glTagB+O3se
-         JvNKWNsvbq8EHmtKQAm77dW7Ij5t2JtTwcdRCJeP5hOHBDyZLXgnKpnooN6gzG2gBU49
-         Vp/Ua2xoKEz2bgVcaLbz7XcuPkdAd3MbjHQ8N4IVbSHDqdhyfM/3yomNIM4TxLfrFRSE
-         0a8kAS7YhwvXkEjCXrMZA1afW+XsW4nnvis0p47FZvaQWzU1dmdGQWgVeXXkjEsFjG8+
-         V5t8hjwdqBHTfcxL9/hVcLJWoZuzDXc8cxpVhq5ZPjM5ZMwzx4wGECw3LGzhF0I1lBCn
-         MnnQ==
-X-Gm-Message-State: AJcUukcJQkMjecbKmmKo10qRTVLS5P2vWROozNkYOEdNsS/9OVeyYHTf
-        FCg5VC80zhqZoScYos6mmtNe07Yi1ml1gU0NLcI=
-X-Google-Smtp-Source: ALg8bN5ECY0rvAqCROv8VDIBi2ky88rG1c3fpMZz8xll7xFw6uCQK2cP1O8/+ibQEB1pcWyTSUit/JtprKzD8MXqKv0=
-X-Received: by 2002:a02:183:: with SMTP id 3mr24127721jak.130.1549003762544;
- Thu, 31 Jan 2019 22:49:22 -0800 (PST)
+        bh=5o+2XGwusC+cGnV3fs8xHt94l3f5J1aAB3OaaydvF78=;
+        b=GoubYeTCPBNaXJ1yMapXaFX7HkjAJC7u3AuNd8mkSnwhhwOZFAQeRf91xUnxR3wjWc
+         162Umu4oGXvE8+DVwsWYS27z4KIuewZbeJsPaGWE/h7KF+llbXFSM5y+Z0QsY0v3upTf
+         74+dA1t3BuxClcENBV8DO5d58XwO3IOc2wE3pXez5KxUUgr+TaINL9o1n5BBZjShNoQb
+         9ajNJVMVSEUC3DA6IqscZ6LFQbbzTT+Hedx/GOw8fqe7uFlUHX/cwYALpbarKOfuScL5
+         kE3qwxE7yF2lbAaMt8Qc6oruaeS94DGgnQuGX7gZiJJtLxE+e+jSwi4ukXOXncikqzDh
+         Mt8w==
+X-Gm-Message-State: AJcUukfkjlFVJPlRsTY265Iy2ElWlO3fLnpZOMsff/PgHJBvC2UzOxMk
+        xu66Mp9EqkjMSRu+XzPSOmw8CjtU0hRaHGCfsDs=
+X-Google-Smtp-Source: ALg8bN6TZnMn8DbKYCS8GbxC7AOMfJfLqVRrvfbJiBAEijIm9GUvouK1VuovSkfrMNxivxaz3VMF8+Aw5uPerousqiU=
+X-Received: by 2002:a02:8943:: with SMTP id u3mr22890804jaj.92.1549004829270;
+ Thu, 31 Jan 2019 23:07:09 -0800 (PST)
 MIME-Version: 1.0
-References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-7-t.gummerer@gmail.com>
- <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
- <xmqqva40lps2.fsf@gitster-ct.c.googlers.com> <CABPp-BGQwtok1T3WmY3ndBG6RjbESSOgmbZxkWiN-avqfUjDVg@mail.gmail.com>
- <CACsJy8AxUxYCO7bzb98EVvO5DU62ukZQNrF-sEktrdR9m6tfvg@mail.gmail.com>
- <CACsJy8Bk=wbgzsE+Vo4w_u0E63PdUxxcvG-7e6Hq-8_jrmSErw@mail.gmail.com> <xmqq7eek3ax7.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7eek3ax7.fsf@gitster-ct.c.googlers.com>
+References: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz> <2ee89ff3-e672-e940-f601-aa1d2647756a@suse.cz>
+ <CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com>
+In-Reply-To: <CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 1 Feb 2019 13:48:56 +0700
-Message-ID: <CACsJy8CHHT=9e9ti7VA4X4h3FrZcUKvLuzkL56mXLgjk4c5Qcg@mail.gmail.com>
-Subject: Re: [PATCH 6/8] checkout: add --cached option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Fri, 1 Feb 2019 14:06:43 +0700
+Message-ID: <CACsJy8D+zvgtw8RuBefYQsYrvn_vQT1dUO3Veg5ZtfQa2u5QKA@mail.gmail.com>
+Subject: Re: Worktree creation race
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Marketa Calabkova <mcalabkova@suse.cz>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 1, 2019 at 2:05 AM Junio C Hamano <gitster@pobox.com> wrote:
+Thanks for including me. Apparently I did miss some emails :)
+
+On Fri, Feb 1, 2019 at 1:27 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-> Duy Nguyen <pclouds@gmail.com> writes:
+> On Mon, Jan 28, 2019 at 7:58 AM Marketa Calabkova <mcalabkova@suse.cz> wrote:
+> > On 15/01/2019 15:03, Marketa Calabkova wrote:
+> > > I am writing to report a bug. The original report is from my colleague, I am also providing his suggestions.
+> > >
+> > > There is insufficient locking for worktree addition. Adding worktree may fail.
+> > >
+> > > The problem is that git reads the directory entries in $GIT_DIR/worktrees,
+> > > finds a worktree name that does not exist, tries to create it, and if an
+> > > error is returned adding the worktree fails. When multiple git processes
+> > > do this in parallel only one adds a worktree and the others fail. Git should
+> > > reread the directory and find a new name that does not exist when creating
+> > > the worktree directory fails because another git process already created it.
+> > >
+> > > I suppose adding PID in the tree name would mitigate the issue to the point it will be very unlikely to encounter.
+> > >
+> > > I need more than the tree in the temporary directory so using the temporary directory directly as a tree is out of question.
+> > >
+> > > cd gitrepo
+> > > git commit --allow-empty -m Empty
+> > > for n in $(seq 10000) ; do ( tmp=$(mktemp -d /dev/shm/gittest/test.XXXXXXXXXXX) ; mkdir $tmp/test ; git worktree add --detach $tmp/test ; ) & done
+> > >
+> > > (you should see many messages like:
+> > > fatal: could not create directory of '.git/worktrees/test284': File exists)
+> > >
+> > Does anyone has a suggestion what to do with this bug? It looks like a
+> > one-line fix probably in builtin/worktree.c, but I have no idea how to
+> > do it. Sorry.
 >
-> > I've changed my mind. I'm not using --index and --cached for "git
-> > restore" (formerly "git restore-files"). So how about this?
-> >
-> > git restore --from=<tree> <pathspec> will update both the index and worktree.
-> >
-> > git restore --from=<tree> --keep-index <pathspec> will not update the index
-> >
-> > git restore --from=<tree> --keep-worktree <pathspec> will not update worktree
+> I doubt this is a one-line fix, and I don't think it has anything to
+> do with reading entries in $GIT_DIR/worktrees.
+
+I never thought people would create worktrees "like crazy" to end up
+worrying about races like this. The mkdir loop would be one way to go.
+But I'm going to add a new option to let the user control this
+directory name. This is necessary since this name is now exposed via
+"worktrees/<name>" reference space and should also be reported in "git
+worktree list". Avoiding the race is a nice bonus.
+
+> add_worktree() already attempts to give a unique identifier to each
+> worktree by adding a numeric suffix and incrementing that suffix if
+> the name already exists (such as the 284 in your example error
+> message) but there is definitely a race-condition between the time it
+> stat()s the name and the time it mkdir()s it.
 >
-> An action to "restore" with an option to "keep" (i.e. "do not
-> touch") smells strongly of double negation.  We are restoring,
-> i.e. grabbing something that existed in the past out of another
-> place (like tree or index) and depositing it to the working tree to
-> recover its previous state, oh, not but not touching the content of
-> the working tree (or the index) intact?
-
-It is negation (though not double). The thinking was, since "git
-restore" means restore everything, extra options will amend that to
-"restore everything except ..." and because the parts to keep are more
-important (i.e. data loss), highlighting it on the command sounds a
-bit better to me: "ok i'm going to need to restore this thing, but I
-want this part and that part to stay the same, let's type the
-command..."
-
-> It would be great if you can come up with phrasing that avoids
-> specifying what is *not* done, but instructs the command what is to
-> be done, perhaps along the lines of "restore --index-only", "restore
-> --worktree-only" and "restore --index-and-worktree (which would be
-> the default)".
-
-My biggest problem with --*-only is that they cannot be combined.
-There must be an option for every valid combination. I'm still
-thinking about "git reset" where there are three parts to
-reset/restore: HEAD, index and worktree. So at least there's another
-valid combination "reset HEAD but not index nor worktree", which would
-end becoming another option. This route does not look promising.
-
-Of course we could just do --index and --worktree, each option
-restores the respective part. Then it's combinable (and extensible in
-the future). But then "git restore" means "git restore --index
---worktree" and typing "git restore --index" effectively removes the
-default "--worktree", which seems a bit twisted.
+> One possible fix would be to unconditionally use the PID, as you
+> suggest, though, this is not necessarily foolproof against races
+> either (though it makes collisions very unlikely).
+>
+> Another possibility would be to skip the stat() and instead do the
+> mkdir() in a loop, incrementing the sequence number each time through
+> the loop. That should eliminate the race entirely (I think).
 -- 
 Duy
