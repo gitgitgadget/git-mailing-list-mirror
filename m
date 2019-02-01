@@ -2,142 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2513211B5
-	for <e@80x24.org>; Fri,  1 Feb 2019 09:27:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 097181F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 09:51:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726598AbfBAJ1H (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 04:27:07 -0500
-Received: from mail-vs1-f41.google.com ([209.85.217.41]:34341 "EHLO
-        mail-vs1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725765AbfBAJ1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 04:27:07 -0500
-Received: by mail-vs1-f41.google.com with SMTP id y27so3800797vsi.1
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 01:27:06 -0800 (PST)
+        id S1726190AbfBAJvv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 04:51:51 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:39284 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725765AbfBAJvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 04:51:51 -0500
+Received: by mail-qt1-f196.google.com with SMTP id u47so6726243qtj.6
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 01:51:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=r87wL8ZP+roX2pNjrHTuBFsYFPL0GcnBtfjeSNl7ALw=;
-        b=ldu5nu8Nniejcy1uVJWQQyFAcsvmkuE+fVmDtFG4l+Hog8AKHRkzJzAmOH9shde32V
-         j95oFP95RPBpCOPdKfCDHJbOxs90DbUm1BmC5PxKqXuAppgIpJLyqPkQ/LeUahw+wZ5s
-         AAJO7FZDj5aLI+kgOR1FLfbl5P13Qz0ldGadz+6wni0wvvGw/lAMwVbfmqgAijHGAkwF
-         367ypPfvIa7WfMpnJszSfvUd1klOLIh22unYuecNtS7RhPgJO4BJz5sFHXaLf2rykQLC
-         cAR0oBEjh+uDh2i2zxidjhkpl4BGR0qcPjh/QJLhr5++fodSXlPqWHbXUFDPEWc2tZmY
-         bTUA==
+         :cc:content-transfer-encoding;
+        bh=CmgCoQbFaz23YRSO66fW4S6YlKkj2Zxq7AJ1eeY+6yE=;
+        b=DT0uW2sFPq9qKdfx2xm2yk//TGGAxvPKHXHAcPYPIlgZrkx+NXf4oTnn8ppGtI+e7z
+         Hv4J14vFiQiSCbCt5vOTXGGMM7IBq81ndY9MknecyNm0fgmVSR9ETGYvH4ZfXrALMUTv
+         DQ5QeDMrEdAa1r9qXvjyJ4j0VG+bwknpSL+N2JcFre1orYrCxP4l70i6xaAlfZoC2Khw
+         rDGpbBhocIpIPgHnU1kAJ7e5FUogJEfAuhbw2SgQ7/uDKXvwT1k8CekoZR5/zooZRPbt
+         SPt3WhBdsL3xyoL2Cyo4qUq6/hxWsuPzUJ8ivpU16MCVa1mCpbGg0HJwObXkXPsTokcj
+         k3iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=r87wL8ZP+roX2pNjrHTuBFsYFPL0GcnBtfjeSNl7ALw=;
-        b=lKKW+ExoF4AchwgLLVrjUVkqDEgB44FgEy5TZzFRoI1bAooRQhelMnc674j2MGbYE2
-         YNLwnO94kQta/JlXJN7qaSbAdkpka270K8y9yhOWbN91dgq+cpoeIpdwZh+oLVGfmGFB
-         ZFqF6J1fFFYB9Iad5vQop9cMm/m14viDDr2KtJU/bT315uMWaBMjKKCIc6MZcoLUKcI5
-         c5JdWjLCJsvQ6NJWj9tVylLiriWSEx99pigREik57PJAu7b7CzysdV8KUOvFHBsiMnar
-         tY+dwQ9fF27y+W1/M3k89MbwHT4t/HJIKKM2OkHMFeL7lbm2D6WMqx33FEoluWFAjaJm
-         7jRw==
-X-Gm-Message-State: AJcUukckr1fGjsDgm7AEMme67k+t7sayut6nrItL875oEaXJ+1iECNZj
-        7sLV/uAJwdGpfhdbPyoRfeVL3wCe7ApFAsPwkaWYH7qZzHA=
-X-Google-Smtp-Source: ALg8bN6Ek37Oqx4XVvueSmG5682Z9kXRl06S9st1SqfiQKN6VPHmRDpGCI+Uc9CtPtJQLr/vPG+Q8ZwysyLHqvLyrD8=
-X-Received: by 2002:a67:f696:: with SMTP id n22mr17351594vso.175.1549013225700;
- Fri, 01 Feb 2019 01:27:05 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=CmgCoQbFaz23YRSO66fW4S6YlKkj2Zxq7AJ1eeY+6yE=;
+        b=iwD9gH6G03t11uhpj/hfCFbEDmptllFIr0suwRd66fubJ3IWOGtsSL2nY59Munuch0
+         Z8juB9ioQUsayTeapxi8fQuJmiIqiYRs+3gaHctGUaX5BNu4gt37bpaGbf+GVUlQoRhV
+         AMdKsD2yu332pTVRydDPB9uOxOnEluHYHPcxl7VHFvR+doLAIVJWtlv/LgEK1eqj+ymh
+         7JtAA++L7UkeITH/yL3c+Zpw1C+mapJ+o+yWKp4ABbvJl6QcXFbt9RS+jkZGWprgdGf3
+         iQqWY/qQwP7cap94GnNum7woGSyWaIE2GCbg9/D0obtXg4MbQRYVb8GSUqznRtTHKAOG
+         DZ5w==
+X-Gm-Message-State: AJcUukddXyyCOibJWLh+zkk5xAbn8oOUiDSWKcHQ2L98PCbYTJYQYEnp
+        ADE0bH9xB4DgFNc3qtkL1Tb/Efijzp8I8A9ya9A=
+X-Google-Smtp-Source: ALg8bN6aNkMv2ARagLmTXoRtURkjrxLRtA7FhwThlkIs2ugiE43RY4KerlMPf0OsYGy1I2IpQoaAAFAlZoFM6XmewFU=
+X-Received: by 2002:ac8:f6f:: with SMTP id l44mr38932441qtk.158.1549014709986;
+ Fri, 01 Feb 2019 01:51:49 -0800 (PST)
 MIME-Version: 1.0
-References: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 1 Feb 2019 01:26:53 -0800
-Message-ID: <CABPp-BF=ev03WgODk6TMQmuNoatg2kiEe5DR__gJ0OTVqHSnfQ@mail.gmail.com>
-Subject: Re: Comparing rebase --am with --interactive via p3400
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20190112091754.30985-1-worldhello.net@gmail.com>
+ <20190130114736.30357-2-worldhello.net@gmail.com> <xmqq7eek1ozm.fsf@gitster-ct.c.googlers.com>
+ <CANYiYbG5vbV1bqbHu-u19XFy7JTpcopg0s=JWAhJBRNGvP7j3g@mail.gmail.com> <CAPig+cS84BOPdrZ+e1Z9ystx6SDyON0MJxVySQyxYE=LYcNRdg@mail.gmail.com>
+In-Reply-To: <CAPig+cS84BOPdrZ+e1Z9ystx6SDyON0MJxVySQyxYE=LYcNRdg@mail.gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Fri, 1 Feb 2019 17:51:38 +0800
+Message-ID: <CANYiYbGtXnhLdFCHFfQxT=tWyXGaq1gfuKuhxe1D7crXo6LSHQ@mail.gmail.com>
+Subject: Re: [PATCH v7 1/6] t5323: test cases for git-pack-redundant
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Sun Chao <sunchao9@huawei.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
-
-On Thu, Jan 31, 2019 at 10:04 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+Eric Sunshine <sunshine@sunshineco.com> =E4=BA=8E2019=E5=B9=B42=E6=9C=881=
+=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8B=E5=8D=882:11=E5=86=99=E9=81=93=EF=BC=
+=9A
+> > Everything below will be done inside master.git?  Avoid cd'ing
+> > > around in random places in the test script, as a failure in any of
+> > > the steps that does cd would start later tests in an unexpected
+> > > place, if you can.
+> >
+> > The first 10 test cases will run inside master.git, and others will
+> > run inside shared.git.  Only run cd inside the two `setup` test cases.
 >
-> Hi Elijah,
+> That's not what Junio meant. It's okay for tests to 'cd', but each
+> test which does so _must_ ensure that the 'cd' is undone at the end of
+> the test, even if the test fails. The correct way to do this within
+> each test is by using 'cd' in a subhsell, like this:
 >
-> as discussed at the Contributors' Summit, I ran p3400 as-is (i.e. with the
-> --am backend) and then with --keep-empty to force the interactive backend
-> to be used. Here are the best of 10, on my relatively powerful Windows 10
-> laptop, with current `master`.
->
-> With regular rebase --am:
->
-> 3400.2: rebase on top of a lot of unrelated changes             5.32(0.06+0.15)
-> 3400.4: rebase a lot of unrelated changes without split-index   33.08(0.04+0.18)
-> 3400.6: rebase a lot of unrelated changes with split-index      30.29(0.03+0.18)
->
-> with --keep-empty to force the interactive backend:
->
-> 3400.2: rebase on top of a lot of unrelated changes             3.92(0.03+0.18)
-> 3400.4: rebase a lot of unrelated changes without split-index   33.92(0.03+0.22)
-> 3400.6: rebase a lot of unrelated changes with split-index      38.82(0.03+0.16)
+>     test_expect_success 'setup master.git' '
+>         git init --bare master.git &&
+>         (
+>             cd master.git &&
+>             create_commits
+>         )
+>     '
 
-Awesome, thanks for checking that out.  I ran on both linux and mac
-and saw similar relative performances.  Comparing am-based rebase to
-an implied-interactive rebase on both linux and mac (with a version of
-git including en/rebase-merge-on-sequencer so that -m gives the same
-performance that you'd see with --keep-empty), I saw:
+create_commits should not run in sub-shell, or variables set are lost.
+I write a commit_commits_in function :
+    # Usage: create_commits_in <repo> A B C ...
+    # Note: DO NOT run it in sub shell, or variables are not set
+    create_commits_in () {
+           repo=3D"$1" &&
+            parent=3D$(git -C "$repo" rev-parse HEAD^{} 2>/dev/null) || par=
+ent=3D
+           T=3D$(git -C "$repo" write-tree) &&
+            shift &&
+            while test $# -gt 0
+            do
+                    name=3D$1 &&
+                    test_tick &&
+                    if test -z "$parent"
+                    then
+                           oid=3D$(echo $name | git -C "$repo" commit-tree =
+$T)
+                    else
+                            oid=3D$(echo $name | git -C "$repo"
+commit-tree -p $parent $T)
+                    fi &&
+                    eval $name=3D$oid &&
+                    parent=3D$oid &&
+                    shift ||
+                    return 1
+            done
+            git -C "$repo" update-ref refs/heads/master $oid
+    }
 
-On Linux:
+and use it to create commits like:
 
-am-based rebase (without -m):
-
-3400.2: rebase on top of a lot of unrelated changes             1.87(1.64+0.21)
-3400.4: rebase a lot of unrelated changes without split-index   7.87(6.24+1.00)
-3400.6: rebase a lot of unrelated changes with split-index      5.99(5.05+0.67)
-
-interactive-machinery rebase (with -m):
-
-3400.2: rebase on top of a lot of unrelated changes             1.80(1.60+0.19)
-3400.4: rebase a lot of unrelated changes without split-index   6.78(5.70+0.91)
-3400.6: rebase a lot of unrelated changes with split-index      6.92(5.70+0.89)
-
-
-On Mac:
-
-am-based rebase (without -m):
-
-Test                                                            this tree
--------------------------------------------------------------------------------
-3400.2: rebase on top of a lot of unrelated changes             2.68(1.68+0.68)
-3400.4: rebase a lot of unrelated changes without split-index   8.89(5.86+2.94)
-3400.6: rebase a lot of unrelated changes with split-index      7.87(5.35+2.51)
-
-
-interactive-machinery rebase (with -m):
-
-Test                                                            this tree
--------------------------------------------------------------------------------
-3400.2: rebase on top of a lot of unrelated changes             1.99(1.61+0.77)
-3400.4: rebase a lot of unrelated changes without split-index   8.63(5.38+3.38)
-3400.6: rebase a lot of unrelated changes with split-index      9.36(5.53+3.95)
-
-> I then changed it to -m to test the current scripted version, trying to
-> let it run overnight, but my laptop eventually went to sleep and the tests
-> were not even done. I'll let them continue and report back.
->
-> My conclusion after seeing these numbers is: the interactive rebase is
-> really close to the performance of the --am backend. So to me, it makes a
-> total lot of sense to switch --merge over to it, and to make --merge the
-> default. We still should investigate why the split-index performance is so
-> significantly worse, though.
-
-Cool, I'll update my patches to make --merge the default (building on
-top of en/rebase-merge-on-sequencer) and post it as an RFC.  But yeah,
-we should also check into why the split-index performance becomes a
-bit worse with such a change.
-
-Thanks,
-Elijah
+    create_commits_in master.git A B C D E F G ...
