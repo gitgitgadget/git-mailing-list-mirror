@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7AFC1F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 17:59:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 675321F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 17:59:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731501AbfBAR7F (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 12:59:05 -0500
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:43325 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731489AbfBAR7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 12:59:05 -0500
-Received: by mail-ed1-f47.google.com with SMTP id f9so6115300eds.10
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 09:59:04 -0800 (PST)
+        id S1731533AbfBAR7V (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 12:59:21 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:34938 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731525AbfBAR7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 12:59:12 -0500
+Received: by mail-ed1-f52.google.com with SMTP id x30so6172663edx.2
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 09:59:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=m3WRjV0vGcYO/s8Lbvc+ufD3Abycq3lG2DvCDGRaZMY=;
-        b=bF9rAnpxLbKSa2HCzedH0aV1PtCKpyP2DVGfVLzs7nGw/BwZQTZMnDhUhXipGII+74
-         58cDLQJEg2ftzobSZZh8+XX9R1otIH4UR5aRCbcH6hWOTDCw6Fs7KQFLu5t6HFh4Xn2/
-         IreXfbhXlmElbgULiTCY9KFSg+QJLONG6RpYD2wocPIoVk6UJWIlDkiio0CIRweTAo7P
-         wQ/Y+WfquYtniRXWag8fDTZJQVVazfOWMOoEUIHkLojxHleJyNsM2iECQtPJODsPFzsQ
-         6gKNlCD4eudcaJ8OUMg/M1Yb/MMtY2GOsPiPZBqLKGRXw80FRtxbJdarujYm6cx5OyMd
-         SQjg==
+        bh=ioDtFHTIzlviCcUYUfsHz+hDRR0xugC+voZbLk2CYm0=;
+        b=akQpWA1vRimouPBh8rIACapGdPvbK5nBcYm8w0PF+YoiRYcKqXHXjp9KCiXTrHqCr5
+         ZLzazJBVD/6N1qObTAwHTwNNxr+EncRse1kCm9Eu9GfVnlQ4Syicq69a9MYnljOYbzmy
+         VQDHEKVDVT00H+LlYmZ64E787awmMdEMxZpYE7Gqj/jFsdye3RN2buhjQy4PBdpLa2Nj
+         W8zJneA6E06iuRagBnFch4E+ACp/nVnbc56PHNDEEHHr/mr7aXlJoIhTJ/KHxVnyaaxW
+         b3JYPAQOaLITrUBDpF3qHj4xjPZZTIvxnyo7GjKuajuCRm9aDb4DgGo+I/aoBPWKBGmf
+         U5bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=m3WRjV0vGcYO/s8Lbvc+ufD3Abycq3lG2DvCDGRaZMY=;
-        b=N4d3F5Hh5SR3+hWmAeOfjShj7xKezu5CYu+i0hLNaNFNNeFX6dfCljZjvujj6VEQHV
-         bhazEsgnhXzfEZIe4AP58mUtYoL8eUrjEWnxsujSeC5iOPlaOhaLKXSc3c6iPJbTGCf0
-         gVnc/VbPK8Uq8cub1WicPQuTeOUTAfDV9OrAfmOjU6yVPTkCCDF39ZR5TmhTcwykpneY
-         cmz6eOB81jnYlexYWlS5lON5ocdHKngO5Ah++NjhzKfs0rnVKCUwQ0CQAamSJ/wPCLRt
-         Fa3BpMr76MYnIO3gkpnFTYXWmZekR3RLshgP56svFbZHuuyTKhl90E5/YM4S0vN/XHBB
-         4xFw==
-X-Gm-Message-State: AJcUukcugceyQ03Kqc1ED9eCDUa/DqyLW4JYu79/cKIqsVRL66e0SxnU
-        0Ue+th13LJ0z8PYdVVl2eS7bRCqk
-X-Google-Smtp-Source: ALg8bN7dE9zhiLwIEk40mGxHr8ZXsPvlPx30yec7DrR/2WSnr2tXXd5ACAcf34aZ+Pj0AxzD9NEO8g==
-X-Received: by 2002:a17:906:33db:: with SMTP id w27mr31828505eja.108.1549043943306;
-        Fri, 01 Feb 2019 09:59:03 -0800 (PST)
+        bh=ioDtFHTIzlviCcUYUfsHz+hDRR0xugC+voZbLk2CYm0=;
+        b=p3kTssEY62pg4oHh2eWCXOausapINy7XTsC0Ie/rXUfPi+EXzEl3oSlUFp3DOZJTwS
+         K2xHS6Md7gMBu5oEIxtzLeTAUyiW1LH00vJCZrxy/hFJjbq7C1j12CPOq5gPjGxBVeAr
+         BAeJVagSdUBv5qlX/K+XSkhiLG+yiiR+I3B577en84SYNV2z10i9EMocQBaFF/Wgygg5
+         Uu6V5tw9PH6/J5TFQ4qv/GLe+B9K5twUXVorJOs8DMfDlUH5ATMgdb77yZf8vulMjEGu
+         HeZgET3xXlptc2oIDfRs3nJOGfUWf5VVZR1hHN97s+hwIXuLdXYADs8xiEFilUeb3K0G
+         jfeQ==
+X-Gm-Message-State: AJcUukdjbz2CScQyyQhCsZlFEWQVNMVgi/HqkUgVRvkF/uSgMacFyn/M
+        wJHpFALpH8L9O0xh1bsKU1TWBEGA
+X-Google-Smtp-Source: ALg8bN7M84WgZzNBvu2PFo4Ag9S5sZW3nimlwsqRcnVlVDw7oE0S5cDVSw1hjUYvTQLrKE/9XRrFZQ==
+X-Received: by 2002:a50:c31a:: with SMTP id a26mr40451124edb.160.1549043950469;
+        Fri, 01 Feb 2019 09:59:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f6sm2235011ede.53.2019.02.01.09.59.02
+        by smtp.gmail.com with ESMTPSA id k12sm1331997ejz.4.2019.02.01.09.59.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Feb 2019 09:59:02 -0800 (PST)
-Date:   Fri, 01 Feb 2019 09:59:02 -0800 (PST)
-X-Google-Original-Date: Fri, 01 Feb 2019 17:58:46 GMT
-Message-Id: <30bcea9435558edae4836a24cb2bf5f30a579321.1549043936.git.gitgitgadget@gmail.com>
+        Fri, 01 Feb 2019 09:59:10 -0800 (PST)
+Date:   Fri, 01 Feb 2019 09:59:10 -0800 (PST)
+X-Google-Original-Date: Fri, 01 Feb 2019 17:58:54 GMT
+Message-Id: <cc612010610c2f9ff90e412a6f798976118fc028.1549043937.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v5.git.gitgitgadget@gmail.com>
 References: <pull.108.v4.git.gitgitgadget@gmail.com>
         <pull.108.v5.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 05/15] trace2:data: add editor/pager child classification
+Subject: [PATCH v5 13/15] trace2:data: add subverb for rebase
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,39 +71,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add trace2 process classification for editor and pager
-child processes.
-
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- editor.c | 1 +
- pager.c  | 1 +
- 2 files changed, 2 insertions(+)
+ builtin/rebase.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/editor.c b/editor.c
-index c985eee1f9..71547674ab 100644
---- a/editor.c
-+++ b/editor.c
-@@ -78,6 +78,7 @@ static int launch_specified_editor(const char *editor, const char *path,
- 		p.argv = args;
- 		p.env = env;
- 		p.use_shell = 1;
-+		p.trace2_child_class = "editor";
- 		if (start_command(&p) < 0)
- 			return error("unable to start editor '%s'", editor);
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 774264bae8..f5ac4fe2ea 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -850,6 +850,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		ACTION_EDIT_TODO,
+ 		ACTION_SHOW_CURRENT_PATCH,
+ 	} action = NO_ACTION;
++	static const char *action_names[] = { N_("undefined"),
++					      N_("continue"),
++					      N_("skip"),
++					      N_("abort"),
++					      N_("quit"),
++					      N_("edit_todo"),
++					      N_("show_current_patch"),
++					      NULL };
+ 	const char *gpg_sign = NULL;
+ 	struct string_list exec = STRING_LIST_INIT_NODUP;
+ 	const char *rebase_merges = NULL;
+@@ -1039,6 +1047,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		die(_("The --edit-todo action can only be used during "
+ 		      "interactive rebase."));
  
-diff --git a/pager.c b/pager.c
-index a768797fcf..4168460ae9 100644
---- a/pager.c
-+++ b/pager.c
-@@ -100,6 +100,7 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
- 	argv_array_push(&pager_process->args, pager);
- 	pager_process->use_shell = 1;
- 	setup_pager_env(&pager_process->env_array);
-+	pager_process->trace2_child_class = "pager";
- }
- 
- void setup_pager(void)
++	if (trace2_is_enabled()) {
++		if (is_interactive(&options))
++			trace2_cmd_mode("interactive");
++		else if (exec.nr)
++			trace2_cmd_mode("interactive-exec");
++		else
++			trace2_cmd_mode(action_names[action]);
++	}
++
+ 	switch (action) {
+ 	case ACTION_CONTINUE: {
+ 		struct object_id head;
 -- 
 gitgitgadget
 
