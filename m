@@ -2,242 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B7071F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 05:44:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 439D11F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 06:05:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726753AbfBAFoa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 00:44:30 -0500
-Received: from mail-qt1-f181.google.com ([209.85.160.181]:34012 "EHLO
-        mail-qt1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726652AbfBAFoa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 00:44:30 -0500
-Received: by mail-qt1-f181.google.com with SMTP id r14so6278074qtp.1
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 21:44:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LCBGan4fBo+oZqD0fbnZwKjUM1Su3XtHoLCYiORLhuo=;
-        b=pZDwfsss16ferQ9SpF/Ct1wqA1VDNAQObcurd1CwePi4IWKjdzUIjR8lNXEIkVRTiv
-         t0ElvVtaI4dic9/ueNE+Yrx2AnNNRTq+uanYmxiDYsnLiMr1u+lTe2mBoOBt1SGjz/Hn
-         hXcFruOtVbmRJDKy2HVZH5UJVFoTHPlHASRt5o+xNbRcJmgEcaNpt1nkzjHbrfRBCA+f
-         PILu7ebxddxEFU4owslLrxuhLAO/NiaTgP6ZqeSjT6ULLZMakqCG99IoiCieDhOUEuWS
-         mQSWn4x7n3Mc4ijuUnZpDZ6HY4ZzX5pcjszGHlfYE9iZuG4huHhEoW4IP7H55VmcQd7Q
-         I0VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LCBGan4fBo+oZqD0fbnZwKjUM1Su3XtHoLCYiORLhuo=;
-        b=Icxd4dcXTnFAKNGl2CTkTHNATakbwTVaZU2FOH/D/vnvXowfyf4ckHpmbrPk/vQEju
-         HU8WHqdKs4ZKLLUGB7iRn5hfvao/f7ucsp5+BDilkc4IHrUAIxoWu4nUyfGrCRtvsfzX
-         PGIe3Igkzusa6ah1NtC/1PBz5oUqA7AQuj/5oVuOT6eMRrgvWA5KqEmcHTg0m/Y4rvu+
-         QeVslZENqZhuvmFjo7/oMq4QXsNXw9DpIOO7t/oRR4etVhMczMSI5PfFehmnRTKGpvJW
-         ojNkcQoNZeC660VJ4M8BIULsbVmAxnxGN0cxvbDnCuH+j6IRh/DXkBFiEF5CpDxKUrxB
-         9w/A==
-X-Gm-Message-State: AJcUukeeyWGLI/HTcBYO0/U9hSNkGD2KkhvqgrC9tIKDJEyxAzDvC3JV
-        TEK2LuRYdZU7TLTo/36Mm5nMOQOxG1uD9ycA+kw=
-X-Google-Smtp-Source: ALg8bN7yvj7XzfMFnjOLwAMhyQJ2OkPEJlYezLkiyLBoDHE0K5AuR08UTFl3jZRQEB2HtwhgzTTdB5B3NOkRnYgy3Vk=
-X-Received: by 2002:aed:3746:: with SMTP id i64mr36407781qtb.307.1548999868388;
- Thu, 31 Jan 2019 21:44:28 -0800 (PST)
+        id S1725963AbfBAGEf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 01:04:35 -0500
+Received: from mout.gmx.net ([212.227.17.21]:45927 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725826AbfBAGEe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 01:04:34 -0500
+Received: from [10.10.1.35] ([195.130.156.138]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXDo1-1gcza93rmP-00WCOa; Fri, 01
+ Feb 2019 07:04:33 +0100
+Date:   Fri, 1 Feb 2019 07:04:31 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Comparing rebase --am with --interactive via p3400
+Message-ID: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190112091754.30985-1-worldhello.net@gmail.com>
- <20190130114736.30357-2-worldhello.net@gmail.com> <xmqq7eek1ozm.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7eek1ozm.fsf@gitster-ct.c.googlers.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Fri, 1 Feb 2019 13:44:16 +0800
-Message-ID: <CANYiYbG5vbV1bqbHu-u19XFy7JTpcopg0s=JWAhJBRNGvP7j3g@mail.gmail.com>
-Subject: Re: [PATCH v7 1/6] t5323: test cases for git-pack-redundant
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Sun Chao <sunchao9@huawei.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:mtnCmtgDPg87ZvbQuiJeGT4LPe9mLh2xVGS20vh1w4iDNwLnTbr
+ 4FIGwEjUj0kT9vZb3fn8+CM2uPvOYvEXDmQ7Fu/8PeZ7A+5ndfgfiJpSAAUFkoKRp95vpU8
+ xY6zhQ02dXzDp7WHZpl0qtrfv6RGYvavJvyXtZ0XBoV1dLNB/IFgKccaRNdcG/SVDos/sZ9
+ zb+oHbow/kNPN2ScGa7Zw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3EqOIxtMI2M=:olVGbVlaLQDI1sB5kzlMUz
+ P7Zn5S+y8ZNsi0wvrIBHg8geAgxGLCyL5zw4ZhhEGzsytOPvmnjwT+fJ2Ikc2GVPJa51CNdn4
+ SiEEVPi6HfH73EuVBQn+KEaX/oRcGKGFNBh20E+4RHqDpJ/ikGR3dhq342JvsPd34ih22O/bA
+ Ive9tcHp93wNa56a2M2sFFC/fs59vLduKw6zMho+VBrbAdIHqwn3pLmzev+tqc/AfIL6PvnC+
+ 4/0vLiJRIBizYEkdoOa+ncdya/6vRAUliE5yjKsmb84Dj2tdVi0/5MsUY8mFg6K1TDT1glc3I
+ p+mDCotoqelp31xDefcNkupmhWkP1TM3qADAg72oi2KMAMEWq3kn9MWNE2aTkvZTs44TiaZoX
+ MTl/oCOyEDXCkzgDatgxXFe0KudG0wNDTdJOXk0HxdbWe7GS4/tqqFt/igpR6SG/jo0SlC2BA
+ OV1sXizxB20iL3zqI19mD8Na8+TYfVEWBlctV4pTAWCrts7yX0lG1NLLcKTzvgur2otbk19NV
+ cjMb/YWKDWsBqnYZAfD/URF+SRXVSv7bqGkUS8+RCEKUV6pbaJcj8aj3n/r4OGQgpa9+U+Arb
+ qv1bvovSzeryS8xj6uo17BvPpTzk6jczG3xRnpxagDkueFl+ClTt5ERFV+SgeijRq5p7J0Rsh
+ wo86WYgMPzA7ZjYjrsLGcHOpYqlG9Ppa5HfJLGaWhCv00VLmdqcOigEBzXIn7fe8xEgjaE3aE
+ 9r84nMiWCNI57sFb1sSLwLOgk+SsbDx32UBJvpYfhXo8J0o+a+wnBA7TMf9c6cEa8nspIEyQN
+ y4y3DdosekJiT2nJWIN65wjAuHxrHTXS+hoMW54eg6ERCNx6qfeAh+H6B8r+XI0ldz9npDA8f
+ OSPbXsuCh4HZbBa063WYHM0CRphBwPsZEhP5XuTA3l7WJNZtx1y6CNzZFFnq9MKua4aySgZa9
+ nFMSjN8NH8w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2019=E5=B9=B42=E6=9C=881=E6=97=
-=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=885:44=E5=86=99=E9=81=93=EF=BC=9A
-> > +create_commits () {
-> > +     parent=3D
-> > +     for name in A B C D E F G H I J K L M N O P Q R
-> > +     do
-> > +             test_tick &&
-> > +             T=3D$(git write-tree) &&
->
-> Move this outside loop, not for efficiency but for clarity. This
-> helper function creates a single empty tree and bunch of commits
-> that hold the same empty tree, arranged as a single strand of
-> pearls.
+Hi Elijah,
 
-Will rewrite as:
+as discussed at the Contributors' Summit, I ran p3400 as-is (i.e. with the
+--am backend) and then with --keep-empty to force the interactive backend
+to be used. Here are the best of 10, on my relatively powerful Windows 10
+laptop, with current `master`.
 
-    create_commits () {
-            parent=3D
-            T=3D$(git write-tree) &&
-            for name in A B C D E F G H I J K L M N O P Q R
+With regular rebase --am:
 
->
-> By the way, I had to draw a table like this to figure out ...
->
->      T A B C D E F G H I J K L M N O P Q R
-> 1    x x x x x x x                       x
-> 2        x x x x   x x x
-> 3                x     x x x x x
-> 4                        x x x x     x
-> 5                  x x           x x
-> 6                                x x   x
-> 7                                    x x
-> 8      x
->
-> ... what is going on.  Perhaps something like this would help other
-> readers near the top of the file (or in test_description)?
+3400.2: rebase on top of a lot of unrelated changes             5.32(0.06+0.15)
+3400.4: rebase a lot of unrelated changes without split-index   33.08(0.04+0.18)
+3400.6: rebase a lot of unrelated changes with split-index      30.29(0.03+0.18)
 
-Nice chart, will edit test_description as follows:
+with --keep-empty to force the interactive backend:
 
-    test_description=3D'git pack-redundant test
+3400.2: rebase on top of a lot of unrelated changes             3.92(0.03+0.18)
+3400.4: rebase a lot of unrelated changes without split-index   33.92(0.03+0.22)
+3400.6: rebase a lot of unrelated changes with split-index      38.82(0.03+0.16)
 
-    In order to test git-pack-redundant, we will create a number of
-redundant
-    packs in the repository `master.git`. The relationship between
-packs (P1-P8)
-    and objects (T,A-R) is show in the following chart:
+I then changed it to -m to test the current scripted version, trying to
+let it run overnight, but my laptop eventually went to sleep and the tests
+were not even done. I'll let them continue and report back.
 
-           | T A B C D E F G H I J K L M N O P Q R
-        ---+--------------------------------------
-        P1 | x x x x x x x                       x
-        P2 |     x x x x   x x x
-        P3 |             x     x x x x x
-        P4 |                     x x x x     x
-        P5 |               x x           x x
-        P6 |                             x x   x
-        P7 |                                 x x
-        P8 |   x
+My conclusion after seeing these numbers is: the interactive rebase is
+really close to the performance of the --am backend. So to me, it makes a
+total lot of sense to switch --merge over to it, and to make --merge the
+default. We still should investigate why the split-index performance is so
+significantly worse, though.
 
-    Another repoisitory `shared.git` has unique objects (X-Z), while
-share others
-    objects through alt-odb (of `master.git`).  The relationship
-between packs
-    and objects is as follows:
-
-           | T A B C D E F G H I J K L M N O P Q R   X Y Z
-        ---+----------------------------------------------
-        Px1|   x x x                                 x x x
-        Px2|         x x x                           x x x
-    '
-
->
->
-> > +format_packfiles () {
-> > +     sed \
-> > +             -e "s#.*/pack-\(.*\)\.idx#\1#" \
-> > +             -e "s#.*/pack-\(.*\)\.pack#\1#" |
-> > +     sort -u |
-> > +     while read p
-> > +     do
-> > +             if test -z "$(eval echo \${P$p})"
-> > +             then
-> > +                     echo $p
->
-> All the "expected output" below will expect P$n:${P$n} prepared by
-> various create_pack_$n helpers we saw earlier, so an unknown
-> packfile would be detected as a line that this emits.  Is that the
-> idea?
-
-Right.  During the reroll, a typo makes an empty output, so I decide
-to make this change.
-
-
-> > +             else
-> > +                     eval echo "\${P$p}"
-> > +             fi
-> > +     done |
-> > +     sort
-> > +}
-> > +
-> > +test_expect_success 'setup master.git' '
-> > +     git init --bare master.git &&
-> > +     cd master.git &&
-> > +     create_commits
-> > +'
->
-> Everything below will be done inside master.git?  Avoid cd'ing
-> around in random places in the test script, as a failure in any of
-> the steps that does cd would start later tests in an unexpected
-> place, if you can.
-
-The first 10 test cases will run inside master.git, and others will
-run inside shared.git.  Only run cd inside the two `setup` test cases.
-
-> > +cat >expected <<EOF
-> > +P2:$P2
-> > +EOF
-> > +
-> > +test_expect_success 'one of pack-2/pack-3 is redundant' '
-> > +     git pack-redundant --all >out &&
-> > +     format_packfiles <out >actual &&
-> > +     test_cmp expected actual
-> > +'
->
-> Do the preparation of file "expect" (most of the tests compare
-> 'expect' vs 'actual', not 'expected') _inside_ the next test that
-> uses it.  i.e.
->
->         test_expect_success 'with 1 4 and 5, either 2 or 3 can be omitted=
-' '
->                 cat >expect <<-EOF &&
->                 P2:$P2
->                 EOF
->                 git pack-redundant --all >out &&
->                 format ... >actual &&
->                 test_cmp expect actual
->         '
-
-Will do.
-
-> > +test_expect_success 'setup shared.git' '
-> > +     cd "$TRASH_DIRECTORY" &&
-> > +     git clone -q --mirror master.git shared.git &&
->
-> Why "-q"?
-
-To make verbose output cleaner.
-
-> > +     cd shared.git &&
-> > +     printf "../../master.git/objects" >objects/info/alternates
-> > +'
->
-> Why not echo?  I recall designing the alternates file to be a plain
-> text file.  Is it necessary to leave the line incomplete?
-
-Forgot "\n", will append.
-
->
-> > +test_expect_success 'remove redundant packs by alt-odb, no packs left'=
- '
-> > +     git pack-redundant --all --alt-odb | xargs rm &&
-> > +     git fsck --no-progress &&
->
-> Why "--no-progress"?
-
-To make verbose output cleaner.
-
->
-> > +     test_must_fail git pack-redundant --all --alt-odb >actual 2>&1 &&
-> > +     test_cmp expected actual
-> > +'
-> > +
-> > +create_commits_others () {
-> > +     parent=3D$(git rev-parse HEAD)
-
-Will append "&&".
+Ciao,
+Dscho
