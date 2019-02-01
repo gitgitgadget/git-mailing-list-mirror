@@ -7,62 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAAB01F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 21:03:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F08561F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 21:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726298AbfBAVDb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 16:03:31 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:37823 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725765AbfBAVDb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 16:03:31 -0500
-Received: by mail-wm1-f66.google.com with SMTP id g67so7540044wmd.2
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 13:03:30 -0800 (PST)
+        id S1726121AbfBAVRT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 16:17:19 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39142 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725797AbfBAVRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 16:17:18 -0500
+Received: by mail-wr1-f65.google.com with SMTP id t27so8559910wra.6
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 13:17:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=jL+aCqpKUJCN9UCEgGrlI8E9Vb9bqtw1cks33ggR4AU=;
-        b=WqPzBcN9dC0q8M5NgzahzsE+P7dSJEKseqMsJo1UDPkCVbY+AfT5nxp7v6eaFFsozO
-         nl5U8kwBUNo9i6BxQWyDKYu83uivNhEDFxGjoNHwVzXyArW3cgCp9M+x5LcNlb5Pm0KW
-         b8SbecrJWK+qHnjaqSbBNlJiqgAeD7JnlLoozeEtzBiW3aD7aAyzc9zMBrzwhsmIJXKH
-         1la5tPsPb8xeSFIed23VAZWQCU63g0RodGOKUVR8x06ygOFhsw7xpwCDWpw+lr4T5rcJ
-         jDAh0KYiZNI73vncJAsl2XG5UOuDLy7Kp1M9MDixSA5DfRqaV47K8e97Xt4YceePVVdi
-         i3uQ==
+        bh=/cex/8kkHxYlUO3LRfAFzJpNT+mVE9XojUvXMs/uXOw=;
+        b=nKLz06iYA4JrQgZfqI/S7m3gEdoHyHKCzetbFTV+c+QVaQos9Xhgm5NpkV763X9gKq
+         F79l2jPuJ2bGM1gyffDqW7WFF4eAFSH5XnAyh7EswL5ShCEUsT4WIivwhoa2ZQ0wA7G3
+         VdXFWnkKMQ9c9gfo6weiT4P9pOepajb2E7005NqM8evKoTDw7CnF2yo4xA4qVNVj2qM6
+         TRU0QSfbLGX/DFp7cMwOtaATlblyLX5XKhy10JxV1o5fwy35cUEUHOgF4D9t9UlyJ90V
+         RXilqUGoTJjv4Psqv794okrLnb52Hzci6oGhjm7hhPA2Qz82PUigD1RpjA7CWCbpoT85
+         En8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=jL+aCqpKUJCN9UCEgGrlI8E9Vb9bqtw1cks33ggR4AU=;
-        b=EqlWWjjJUB1Q9jcAFAL5U+k/wZHxNqi1nmPnv+KF4njuMfs4GyoshS8djtz1m3FROK
-         If6Mb4QseY06rIhqMDGdpEQPypq/Qr1KDnWGLKIMszvhSyMP/IJnQ/GPnFLSlPzr31DG
-         nezy6+6iMBJ3nrEHpLnaP7X6yWoaC7lIgh1K/0Azr+tvgcTxkuQWxWhzeFbb+VKM543f
-         ZZat8Cr+K1zK03EKJ2lYdela+nIYhbZEBB/CpwnOIlX5aVOiz7Fp13w3aN5q/B0QH8cL
-         k+AZ0fV50hHcN0eZa/eEbCjQAwiw00zWu6H0LpFWLh7RhKabphu1MhCu6rxpJtJ5pkL5
-         QawA==
-X-Gm-Message-State: AHQUAuayFs34ONc6OVbMRzJRgWaW9HRy0XF7T8hh3vHGWMT66aIkcwPm
-        I65KqbFOT9FlMm871cOo3VE=
-X-Google-Smtp-Source: AHgI3IaXeyupXi0QlONsVY+p4OCm4ISb+gBKlpNJnoUBrnMIEAhP2AOqY7/h9Vop2h2Mgzz03mWP/w==
-X-Received: by 2002:a1c:7ec4:: with SMTP id z187mr3849385wmc.43.1549055009192;
-        Fri, 01 Feb 2019 13:03:29 -0800 (PST)
+        bh=/cex/8kkHxYlUO3LRfAFzJpNT+mVE9XojUvXMs/uXOw=;
+        b=ZqLweo6h40a7fq+yXQigYgrq9cz1gkugndWUGlzkrye4+u5A6gU76IjbkiFzwv3yMR
+         NGP24n9pP+rZ+Hui6rH/X7RIO8nf3Br2u0/YexF6BUXd7hpm1NKyV5rEIa0xUE1emEKY
+         6jm5BsG+HOWA+REyw6C0RprLEYi+LGsRrpB79q+izW7E9RSvTpURaNYEfqmbSiS4bFHv
+         kzUiYvhXfSmZbWW8PRwxQ6iflsSh2sHUk1GrFCN4U391h8isC04Y0QZVfwpeZNBeuOkz
+         25J6hhNEwBAgNSCp2wRlfBiOTP5KkxHfQoernMWdFO9rws9sIXceiH/SfxpOSj2pNWtT
+         ymOg==
+X-Gm-Message-State: AJcUukcpP99rZL2dhF8JNIlJ7m5pCxWj9qKdm47Oh5RcG3A3iLexkpfL
+        mKtTA4XDG4CN7jA29iGKjKk=
+X-Google-Smtp-Source: ALg8bN4+LxOt8EryG1UYN2af2GKjoxIWUxIx/14R5h/1yVOsQ9q8On7kp1ne4ue3/IHdw+QJiCdBKw==
+X-Received: by 2002:a5d:6988:: with SMTP id g8mr38582806wru.33.1549055836550;
+        Fri, 01 Feb 2019 13:17:16 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v6sm5348889wro.57.2019.02.01.13.03.28
+        by smtp.gmail.com with ESMTPSA id a14sm2013362wrr.13.2019.02.01.13.17.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Feb 2019 13:03:28 -0800 (PST)
+        Fri, 01 Feb 2019 13:17:15 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>, Sun Chao <sunchao9@huawei.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v9 1/6] t5323: test cases for git-pack-redundant
-References: <20190130114736.30357-1-worldhello.net@gmail.com>
-        <20190201162152.31136-2-worldhello.net@gmail.com>
-        <CAPig+cRX=ttHWe1C6m1u9-02oT-TpBtHWb48N=-wX4jSYaFuew@mail.gmail.com>
-Date:   Fri, 01 Feb 2019 13:03:28 -0800
-In-Reply-To: <CAPig+cRX=ttHWe1C6m1u9-02oT-TpBtHWb48N=-wX4jSYaFuew@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 1 Feb 2019 14:42:53 -0500")
-Message-ID: <xmqqva23xlun.fsf@gitster-ct.c.googlers.com>
+To:     Dan McGregor <dan.mcgregor@usask.ca>
+Cc:     git@vger.kernel.org, masayasuzuki@google.com
+Subject: Re: [PATCH] http: cast result to FILE *
+References: <20190201193004.88736-1-dan.mcgregor@usask.ca>
+Date:   Fri, 01 Feb 2019 13:17:15 -0800
+In-Reply-To: <20190201193004.88736-1-dan.mcgregor@usask.ca> (Dan McGregor's
+        message of "Fri, 1 Feb 2019 13:30:04 -0600")
+Message-ID: <xmqqr2crxl7o.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,38 +66,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Dan McGregor <dan.mcgregor@usask.ca> writes:
 
-> On Fri, Feb 1, 2019 at 11:22 AM Jiang Xin <worldhello.net@gmail.com> wrote:
->> Add test cases for git pack-redundant to validate new algorithm for git
->> pack-redundant.
->>
->> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
->> ---
->> diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
->> @@ -0,0 +1,510 @@
->> +# Note: DO NOT run it in a subshell, otherwise the variables will not be set
+> Commit 8dd2e88a92 ("http: support file handles for HTTP_KEEP_ERROR",
+> 2019-01-10) introduced an implicit assumption that rewind, fileno, and
+> fflush are functions. At least on FreeBSD fileno is not, and as such
+> passing a void * failed.
+
+I am not strongly opposed to this patch, but shouldn't you be filing
+a bug report against FreeBSD instead?  The implementation is free to
+define fileno(fh) as a macro, but it shouldn't force such a change
+to conformant programs.
+
+https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=206146
+
+> Explicitly cast result to a FILE * when using standard functions that
+> may ultimately be macros.
 >
-> Which variables won't be set? It's not clear what this restriction is about.
-
->> +       git -C "$repo" update-ref refs/heads/master $oid
->> +}
->> +
->> +# Note: DO NOT run it in a subshell, otherwise the variables will not be set
->> +create_pack_1 () {
->> +       P1=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
+> Signed-off-by: Dan McGregor <dan.mcgregor@usask.ca>
+> ---
+>  http.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> Which variables? Note that you can capture output of a subshell into a
-> variable, if necessary.
-
-These helper functions set a bunch of variables $P1, $P2, etc. as
-well as variables whose name begin with P and followed by 40-hex.
-The script wants to use them later when preparing expected output,
-and with the most natural way to organize the code, that "later"
-happens in the process that would have spawned a subshell to run
-this function.
-
-It would have been easier for you to grok if the note instead said
-"this function sets two global shell variables" or something,
-perhaps?  Such a variable would certainly not be visible if this
-function is called inside a subshell to the main process.
+> diff --git a/http.c b/http.c
+> index 954bebf684..8b9476b151 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -1996,12 +1996,12 @@ static int http_request_reauth(const char *url,
+>  		strbuf_reset(result);
+>  		break;
+>  	case HTTP_REQUEST_FILE:
+> -		if (fflush(result)) {
+> +		if (fflush((FILE *)result)) {
+>  			error_errno("unable to flush a file");
+>  			return HTTP_START_FAILED;
+>  		}
+> -		rewind(result);
+> -		if (ftruncate(fileno(result), 0) < 0) {
+> +		rewind((FILE *)result);
+> +		if (ftruncate(fileno((FILE *)result), 0) < 0) {
+>  			error_errno("unable to truncate a file");
+>  			return HTTP_START_FAILED;
+>  		}
