@@ -2,105 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7343E211B5
-	for <e@80x24.org>; Fri,  1 Feb 2019 22:48:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82FFD1F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 22:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727100AbfBAWsR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 17:48:17 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45155 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726486AbfBAWsR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 17:48:17 -0500
-Received: by mail-ed1-f65.google.com with SMTP id d39so6735469edb.12
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 14:48:16 -0800 (PST)
+        id S1727119AbfBAWyK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 17:54:10 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36418 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726542AbfBAWyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 17:54:10 -0500
+Received: by mail-wr1-f65.google.com with SMTP id u4so8766879wrp.3
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 14:54:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/cfyTcuqvoo8YZVWyHU5TA/MwuHjksnN8ry721XByA0=;
-        b=VAU7ZE8qk62d2Ui+Uanjiuc0tyME6sKyafB68WjgSViC8x91g/mZmeBolxP1d+vw1Q
-         pvyrJjAIvww6G7/GaZ8t6FAA4aR5XI2W0CSnykmCjooNu3iLn8lmvKs8PSg8dw1kP54k
-         wEMPVJ9F0Y0Hn9acDTJ02SXAFybV/w8LRkF91Y0bK9qOAw24tg8qlKg85u/jnwG+6RCG
-         V6hMuKhp9n2OZwj1KXsEwuAWLhgRLINdM7VLfxj1XvL7zcj9fXPmN4c4S0OzGLhUgIph
-         AThmgL3kNrWbN//Y/0RJ8IroGFV80ZJKioJ73h6GQdrdFEyWSatBlioJukQDCQnTLtwb
-         GEgw==
+        h=sender:from:to:cc:subject:date:references:message-id:user-agent
+         :mime-version;
+        bh=R9WO9UaOjEH+kOg04utQWbjHbVO6so+E2Iosf+5nlDo=;
+        b=AVYV0P1rvcStFxiF5Z2+re/a8/AzNdL3EUMKRVXi66iBKfED4UixXsS/1LOZM4t358
+         t7opwG3I7Jzehxp7/jO+CQ3DBAoWpihdy0KHsKLSLkgRZj/HPtRbp91+38yNB+MxLc0X
+         5BhWu7lmzU3Z/kSgY68BnIeKlWDRgyl9jDgsKTSU8aTop6GbtMs6yoVFrVBChdw2z4cF
+         v6SbcPh8iOsfvpbaL9sr05o8jO04EH7893mWjmcLngkD+GZTzFS6apaPi2wJ7RqknRAE
+         b7Y40CT/SUH2l59yfZ1R42Gutl70NI09rOOyoAPVSh3YKTAFYdFoktF2gz067Hl33lKO
+         nSew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/cfyTcuqvoo8YZVWyHU5TA/MwuHjksnN8ry721XByA0=;
-        b=dlRoCxGVjt6SSojQil4WRkvnbArHkzYN08DCGMWs1KQxVmKrasRKcT2dX48LJMaGhv
-         jtSNKHXNhkOIosbhB3XofKNEg17R2+7PserM0EUtSgE1zpxFUjI9mOiFi9M3QQTLW+Ov
-         S1xyvk2qWqgnP1hJeGgjtT5+C3pbD1TMtu0fJNVqD9l4RsJWopYuVTUAquS/yWXz8l38
-         HtehVh6mkybB5wCwDRz5riHxCIR0hEGWMv6sEuDZgncOMZ7NnMEG/sqosBsM0YliAqpU
-         a5FjVilAK8nZoGPIWnvoLLKC6R4DjAoaS82ZKazZ6PPh9NSh6Fdt2bj5vf7ATITXV220
-         MICA==
-X-Gm-Message-State: AJcUuke0RR9B8mwMLEds2LwF2mPkPAy0BA39PcYAQA1PV6tgj/bpR0CC
-        aW+lc77/mBZQj2VwUApRDWzkHnu/
-X-Google-Smtp-Source: ALg8bN73rQHgVVxW5lXSY9BmkfK4tpdOFMaqzKtzsJfUSngtndLR6+3idAo0siI2qhKcBjrudErkgQ==
-X-Received: by 2002:a50:86c2:: with SMTP id 2mr40611512edu.34.1549061295382;
-        Fri, 01 Feb 2019 14:48:15 -0800 (PST)
-Received: from ltop.local ([2a02:a03f:40eb:400:6cd3:4d33:1db0:edba])
-        by smtp.gmail.com with ESMTPSA id j16sm1457120ejq.59.2019.02.01.14.48.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Feb 2019 14:48:14 -0800 (PST)
-Date:   Fri, 1 Feb 2019 23:48:14 +0100
-From:   Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] Makefile: improve SPARSE_FLAGS customisation
-Message-ID: <20190201224813.4vykjb4iud5j6xhz@ltop.local>
-References: <3ccf0255-8a15-effc-ce6b-eabb61625f90@ramsayjones.plus.com>
- <xmqqmunfxjve.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:date:references
+         :message-id:user-agent:mime-version;
+        bh=R9WO9UaOjEH+kOg04utQWbjHbVO6so+E2Iosf+5nlDo=;
+        b=DKkGrxXSDSr9u8pPu6MsmhJ3QSpx3B0ooUI3HVxiSWUp4R1wPa85cjT30jGTAtY6yl
+         QG4fuxrTIlZ4T5CfMbEO4SMGrpJfi1z/mWsfAHxMZVYQRrFUP9D5wjeYmUnS2VUHLSZz
+         UvcLlM98CxOZDG4wt83+R/1q75LrBxy5co4QDvC+laamSJ53coTTpNket1lYjit3rQPN
+         dq2urAXs9gFH7Auf8tnKb/D1B7Mx0gA5gj7J99fS/KRJuW81CQ0ilqZFpeMEt25WPD2b
+         Yvt837erVqoPOdFp1J6O630KPbkEkfgpowHtb9JymWdke6dD6o7VIiXEnn1dVVmQKfS9
+         REJw==
+X-Gm-Message-State: AHQUAuapgADcg3R/o0TFjsF+iBYra5fjATcZkVQU/IgUHVkHh6UbbQIP
+        FTagrBr8WrzfEyILw5Rle48=
+X-Google-Smtp-Source: AHgI3IbcWOhp4rrbzhQNiEF1r/7nM+IUCYCTr6exnH2HfEMAiPynIGKvjKKHPChjDK7uXjIvN+DzVg==
+X-Received: by 2002:a5d:55c1:: with SMTP id i1mr732555wrw.149.1549061648157;
+        Fri, 01 Feb 2019 14:54:08 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s66sm2577490wmf.34.2019.02.01.14.54.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 01 Feb 2019 14:54:07 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     nbelakovski@gmail.com
+Cc:     git@vger.kernel.org, peff@peff.net, rafa.almas@gmail.com,
+        avarab@gmail.com
+Subject: Re: [PATCH v7 0/3]
+Date:   Fri, 01 Feb 2019 14:28:04 -0800
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>">
+        <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+        <20190201220420.36216-1-nbelakovski@gmail.com>
+Message-ID: <xmqqwomjw25s.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmunfxjve.fsf@gitster-ct.c.googlers.com>
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 01, 2019 at 01:46:13PM -0800, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
-> > In order to enable greater user customisation of the SPARSE_FLAGS
-> > variable, we introduce a new SP_EXTRA_FLAGS variable to use for
-> > target specific settings. Without using the new variable, setting
-> > the SPARSE_FLAGS on the 'make' command-line would also override the
-> > value set by the target-specific rules in the Makefile (effectively
-> > making them useless). In addition, we initialise the SPARSE_FLAGS
-> > to the default (empty) value using a conditional assignment (?=).
-> > This allows the SPARSE_FLAGS to be set from the environment as
-> > well as from the command-line.
-> 
-> Thanks for a detailed and clear explanation here and in the cover
-> letter.  I agree with the motivation and most of the things I see in
-> this patch, but one thing that stands out at me is if we still want
-> to += append to SP_EXTRA_FLAGS in target specific way.  Before this
-> patch, because SPARSE_FLAGS was a dual use variable, it needed +=
-> appending to it in these two places, but that rationale is gone with
-> this patch.
-> 
-> Also, don't we want to clear SP_EXTRA_FLAGS at the beginning?
-> 
-> The reason I raise these is because I do not quite see a clear
-> answer to "I want to set SP_EXTRA_FLAGS and not SPARSE_FLAGS,
-> because ...".
+nbelakovski@gmail.com writes:
 
-I think the intent here is to *only* use SP_SPARSE_FLAGS as
-the internal-only variable and to use SPARSE_FLAGS *only* 
-as the additional user-controlable flags.
-If it is indeed the case, then I think it looks good but maybe
-it would be better to use another variable's name to make
-this more explicit or add a small comment.
+>   ref-filter: add worktreepath atom
+>   branch: Mark and color a branch differently if it is checked out in a
+>     linked worktree
+>   branch: Add an extra verbose output displaying worktree path for refs
+>     checked out in a linked worktree
 
--- Luc
+As you can see in "git shortlog --no-merges", later two patches
+would look quite out of place by having overlong title and starting
+the description(i.e. after "<area>: ") in a capital letter.
+
+It is still not clear why we would want 2/3, even though I think 3/3
+is a good idea.
+
+This round signs off all the three patches, which is a great
+improvement ;-)
+
