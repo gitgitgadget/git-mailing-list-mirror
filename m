@@ -2,229 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4C701F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 16:23:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F31461F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 16:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730336AbfBAQXD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 11:23:03 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:35822 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728357AbfBAQXC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 11:23:02 -0500
-Received: by mail-pl1-f196.google.com with SMTP id p8so3457638plo.2
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 08:23:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UsYzPFmfEv7A5r/dnG3QtX4UaoMx0fruIY07fmLeWiQ=;
-        b=i6yMrpz9BMBue0VUw1JCbB8yOtzyvWgsBsUVdNm1S+RZiNEccTRmWaPYNbVQq6hZx3
-         wiinHEW0x9uxOGolkZuYFAYUyw6cV1nwB4wpxU/iaYVhM6FtrbKa9vHKGlVCUg3dfkyM
-         jeAENz1WnuUbrAmO7phxMuF183y+FwrtDUmxFco3bf8w3pI9TzKBVNXan+uaBX1Z6FE/
-         bUTVOxPKpheDPvI91Zfixj/v48pTGK3YlGfmYWqW0hFnIfeQeq/xzicMxyDyElUdkWXE
-         Ba6XLu1nMqr3bYhy0oxJIrSzu+UEt6jPkNUowBsNTDmvAG5DgspRMqUbhqsfrQKN3fha
-         43cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UsYzPFmfEv7A5r/dnG3QtX4UaoMx0fruIY07fmLeWiQ=;
-        b=rQdkPk+CfYTu4FrBlg+oP0xdF2w1IL+7vX3hTgoehnaAxnip7z1w59Bg6x1Jr8dSPK
-         f1YMRF33m5bZlzMQ8IZ98zMjEIHC38YUbDyWXJ/5m2XRsvhu+RmOJB9tGIdLkZ5lchwo
-         yKkWiHjLHINmUzLyVzCsjvaUOLy/q+nsZYiQNKgCntAksQd9X2w9ofB2ojGNLYaGyV9i
-         yTV9muRiqhAv3H07qnLdWOnkVumLIxpt94MWI1GXqYZlvd8c2C6/ZWTJUdDqABZMsxwl
-         pKyyDcQIKRL5dH2GdfRD6ITFWiiVC0XO4yzsYlPWErrmiH22Ff3fEy62LAgCWS9OVE6O
-         8dYA==
-X-Gm-Message-State: AJcUuke5WgyaRQ6WYlHfBpvUEyUc0UBIYis9jl41wqU4Aoxaebbsv9cS
-        dFgywP3TKIhiWeMGUokk9Wis1MUz/NbiMQ==
-X-Google-Smtp-Source: ALg8bN4vMPY4a9rMRcUBn8GpFqoLJ7aB03iEtI2qs6353bVM89SbmXUwzO/VJg2LtQdwv8TQgRA/mA==
-X-Received: by 2002:a17:902:7882:: with SMTP id q2mr41297581pll.305.1549038182006;
-        Fri, 01 Feb 2019 08:23:02 -0800 (PST)
-Received: from localhost.localdomain ([2408:84e1:1:ce70:7c5c:7512:51d2:8f91])
-        by smtp.gmail.com with ESMTPSA id x2sm11872694pfx.78.2019.02.01.08.22.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Feb 2019 08:23:01 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Sun Chao <sunchao9@huawei.com>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v9 6/6] pack-redundant: consistent sort method
-Date:   Sat,  2 Feb 2019 00:21:52 +0800
-Message-Id: <20190201162152.31136-7-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.20.1.103.ged0fc2ca7b
-In-Reply-To: <20190130114736.30357-1-worldhello.net@gmail.com>
-References: <20190130114736.30357-1-worldhello.net@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+        id S1730803AbfBAQYi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 11:24:38 -0500
+Received: from mx-out1.startmail.com ([145.131.90.139]:42665 "EHLO
+        mx-out1.startmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726460AbfBAQYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 11:24:38 -0500
+Subject: Re: Broken interactive rebase text after some UTF-8 characters
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
+        s=2017-11; t=1549038275;
+        bh=xiMcrzhkq8W9rpH/xhOtQ/4TibD9KZHVN6+aB6PAxto=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=KsP9ynJZibCweet/tNYxzGuvdjRQ6gY28rAZlfwumv5V3CXJJdr7HCO3h0gp2gM+C
+         UJKvqeWNO5NvnS/sKbQZHqEox1nsX3AtrKXXxS4Lp4fHwZw5XFIbFI18grmwBci9Mt
+         yEWFnT4cjbT2OWTufB4yIVZsNmRKZO3133Q0pEABbDy6IKKNeZSelq+QFDvGgktNsp
+         Llw+gP45HCTK7n++G930g+95g8ALtM2ChUo43Q5gOuQSnEYRd8qVuCjAJBnVZ3krlB
+         bw20dbthcLuD90mdavTgFkrBeXrBc7Z6/1JoVAbbGA3QF69Y6pgjGQOGFcrIVz+PKY
+         sP+RqNlVnU8tQ==
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org
+References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
+ <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>
+ <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>
+ <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net>
+ <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
+ <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>
+ <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
+ <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
+ <nycvar.QRO.7.76.6.1902011530440.41@tvgsbejvaqbjf.bet>
+From:   Michal Nowak <mnowak@startmail.com>
+Message-ID: <eda7b1c4-5fd6-5440-8998-75eab9f73e47@startmail.com>
+Date:   Fri, 1 Feb 2019 17:24:26 +0100
+Mime-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.1902011530440.41@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+On 02/01/19 03:33 PM, Johannes Schindelin wrote:
+> Hi Michal,
+> 
+> On Fri, 1 Feb 2019, Michal Nowak wrote:
+> 
+>> On Friday, February 1, 2019 at 8:38 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>>>
+>>> On Thu, 31 Jan 2019, Junio C Hamano wrote:
+>>>
+>>>> Phillip Wood <phillip.wood@talktalk.net> writes:
+>>>>
+>>>>>> Are we misusing C formats?
+>>>>>
+>>>>> The C standard and POSIX both say that the * refers to the maximum
+>>>>> number of bytes to print but it looks like it is being treated as the
+>>>>> maximum number of characters on OpenIndiana.
+>>>>>
+>>>>> Johannes - Perhaps we should change it to use fwrite() unless
+>>>> printf()
+>>>>> gets fixed and we're sure no other operating systems are affected?
+>>>>
+>>>> Avoid such a rewrite, as "%*.s" that takes (int, char *) are used in
+>>>> many other places in our codebase, if you can.
+>>>
+>>> Yes, this would be painful in particular in cases like
+>>>
+>>> 	master:advice.c:101:           fprintf(stderr, _("%shint: %.*s%s\n"),
+>>>
+>>> where we want to write more than just a variable-length buffer.
+>>>
+>>> I am curious: is libintl (gettext) used on OpenIndiana? I ask because
+>>> AFAIR fprintf() is overridden in that case, and the bug might be a lot
+>>> easier to fix if it is in libintl rather than in libc.
+>>
+>> here you can see the full output of the OpenIndiana git build: https://hipster.openindiana.org/logs/oi-userland/latest/git.publish.log.
+>>
+>>  From what I see there, libintl was found.
+>>
+>> If you believe this is illumos libc bug, it would be cool if someone created an simple testcase, which I can forward to the illumos developers.
+> 
+> You already have that example. Just take the UTF-8 text in your original
+> bug report, put it into something like
+> 
+> 	int main(int argc, char **argv)
+> 	{
+> 		char utf8[] = "... your text here...";
+> 
+> 		printf("%.*s", (int)(sizeof(utf8) - 1), utf8);
+> 
+> 		return 0;
+> 	}
+> 
+> You should first verify, though, that this replicate the problem, and if
+> it does not, use libintl (I think you have to `#include <gettext.h>` and
+> `-lintl` or some such) and see whether that reproduces your problem.
 
-SZEDER reported that test case t5323 has different test result on MacOS.
-This is because `cmp_pack_list_reverse` cannot give identical result
-when two pack being sorted has the same size of remaining_objects.
+Thank you, Johannes for the test case.
 
-Changes to the sorting function will make consistent test result for
-t5323.
+However, I don't see any problem with the output on OpenIndiana:
 
-The new algorithm to find redundant packs is a trade-off to save memory
-resources, and the result of it may be different with old one, and may
-be not the best result sometimes.  Update t5323 for the new algorithm.
+{global} newman@lenovo:~ $ cat printf.c
+#include <stdio.h>
+//#include <gettext.h>
+int main(int argc, char **argv) {
+   char utf8[] = "Gergő Mihály Doma\n";
+   printf("%.*s", (int)(sizeof(utf8) - 1), utf8);
+   return 0;
+}
 
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/pack-redundant.c  | 24 ++++++++++++++++--------
- t/t5323-pack-redundant.sh | 18 +++++++++---------
- 2 files changed, 25 insertions(+), 17 deletions(-)
+{global} newman@lenovo:~ $ gcc printf.c -o printf && ./printf
+Gergő Mihály Doma
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 15cdf233c4..29ff5e99cb 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -33,6 +33,7 @@ static struct pack_list {
- 	struct packed_git *pack;
- 	struct llist *unique_objects;
- 	struct llist *remaining_objects;
-+	size_t all_objects_size;
- } *local_packs = NULL, *altodb_packs = NULL;
- 
- static struct llist_item *free_nodes;
-@@ -340,19 +341,25 @@ static inline off_t pack_set_bytecount(struct pack_list *pl)
- 	return ret;
- }
- 
--static int cmp_pack_list_reverse(const void *a, const void *b)
-+static int cmp_remaining_objects(const void *a, const void *b)
- {
- 	struct pack_list *pl_a = *((struct pack_list **)a);
- 	struct pack_list *pl_b = *((struct pack_list **)b);
--	size_t sz_a = pl_a->remaining_objects->size;
--	size_t sz_b = pl_b->remaining_objects->size;
- 
--	if (sz_a == sz_b)
--		return 0;
--	else if (sz_a < sz_b)
-+	if (pl_a->remaining_objects->size == pl_b->remaining_objects->size) {
-+		/* have the same remaining_objects, big pack first */
-+		if (pl_a->all_objects_size == pl_b->all_objects_size)
-+			return 0;
-+		else if (pl_a->all_objects_size < pl_b->all_objects_size)
-+			return 1;
-+		else
-+			return -1;
-+	} else if (pl_a->remaining_objects->size < pl_b->remaining_objects->size) {
-+		/* sort by remaining objects, more objects first */
- 		return 1;
--	else
-+	} else {
- 		return -1;
-+	}
- }
- 
- /* Sort pack_list, greater size of remaining_objects first */
-@@ -370,7 +377,7 @@ static void sort_pack_list(struct pack_list **pl)
- 	for (n = 0, p = *pl; p; p = p->next)
- 		ary[n++] = p;
- 
--	QSORT(ary, n, cmp_pack_list_reverse);
-+	QSORT(ary, n, cmp_remaining_objects);
- 
- 	/* link them back again */
- 	for (i = 0; i < n - 1; i++)
-@@ -511,6 +518,7 @@ static struct pack_list * add_pack(struct packed_git *p)
- 		llist_insert_back(l.remaining_objects, (const struct object_id *)(base + off));
- 		off += step;
- 	}
-+	l.all_objects_size = l.remaining_objects->size;
- 	l.unique_objects = NULL;
- 	if (p->pack_local)
- 		return pack_list_insert(&local_packs, &l);
-diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
-index 897acaa365..e642240d71 100755
---- a/t/t5323-pack-redundant.sh
-+++ b/t/t5323-pack-redundant.sh
-@@ -210,19 +210,19 @@ test_expect_success 'create pack 4, 5' '
- #         | T A B C D E F G H I J K L M N O P Q R
- #     ----+--------------------------------------
- #     P1  | x x x x x x x                       x
--#     P2* |     ! ! ! !   ! ! !
--#     P3  |             x     x x x x x
-+#     P2  |     x x x x   x x x
-+#     P3* |             !     ! ! ! ! !
- #     P4  |                     x x x x     x
- #     P5  |               x x           x x
- #     ----+--------------------------------------
- #     ALL | x x x x x x x x x x x x x x x x x   x
- #
- #############################################################################
--test_expect_failure 'one of pack-2/pack-3 is redundant (failed on Mac)' '
-+test_expect_success 'one of pack-2/pack-3 is redundant' '
- 	(
- 		cd "$master_repo" &&
- 		cat >expect <<-EOF &&
--			P2:$P2
-+			P3:$P3
- 			EOF
- 		git pack-redundant --all >out &&
- 		format_packfiles <out >actual &&
-@@ -250,7 +250,7 @@ test_expect_success 'create pack 6, 7' '
- #     ALL | x x x x x x x x x x x x x x x x x x x
- #
- #############################################################################
--test_expect_failure 'pack 2, 4, and 6 are redundant (failed on Mac)' '
-+test_expect_success 'pack 2, 4, and 6 are redundant' '
- 	(
- 		cd "$master_repo" &&
- 		cat >expect <<-EOF &&
-@@ -285,7 +285,7 @@ test_expect_success 'create pack 8' '
- #     ALL | x x x x x x x x x x x x x x x x x x x
- #
- #############################################################################
--test_expect_failure 'pack-8 (subset of pack-1) is also redundant (failed on Mac)' '
-+test_expect_success 'pack-8 (subset of pack-1) is also redundant' '
- 	(
- 		cd "$master_repo" &&
- 		cat >expect <<-EOF &&
-@@ -309,7 +309,7 @@ test_expect_success 'clean loose objects' '
- 	)
- '
- 
--test_expect_failure 'remove redundant packs and pass fsck (failed on Mac)' '
-+test_expect_success 'remove redundant packs and pass fsck' '
- 	(
- 		cd "$master_repo" &&
- 		git pack-redundant --all | xargs rm &&
-@@ -329,7 +329,7 @@ test_expect_success 'setup shared.git' '
- 	)
- '
- 
--test_expect_failure 'no redundant packs without --alt-odb (failed on Mac)' '
-+test_expect_success 'no redundant packs without --alt-odb' '
- 	(
- 		cd "$shared_repo" &&
- 		git pack-redundant --all >out &&
-@@ -362,7 +362,7 @@ test_expect_failure 'no redundant packs without --alt-odb (failed on Mac)' '
- #     ALL | x x x x x x x x x x x x x x x x x x x
- #
- #############################################################################
--test_expect_failure 'pack-redundant --verbose: show duplicate packs in stderr (failed on Mac)' '
-+test_expect_success 'pack-redundant --verbose: show duplicate packs in stderr' '
- 	(
- 		cd "$shared_repo" &&
- 		cat >expect <<-EOF &&
--- 
-2.20.1.103.ged0fc2ca7b
+Enabled the gettext header in the source file.
 
+{global} newman@lenovo:~ $ gcc printf.c -o printf_intl -lintl 
+-I/usr/share/gettext/ && ./printf_intl
+Gergő Mihály Doma
+
+{global} newman@lenovo:~ $ ldd printf printf_intl
+printf:
+         libc.so.1 =>     /lib/libc.so.1
+         libm.so.2 =>     /lib/libm.so.2
+printf_intl:
+         libintl.so.1 =>  /lib/libintl.so.1
+         libc.so.1 =>     /lib/libc.so.1
+         libm.so.2 =>     /lib/libm.so.2
+
+{global} newman@lenovo:~ $ locale
+LANG=en_US.UTF-8
+LC_CTYPE="en_US.UTF-8"
+LC_NUMERIC="en_US.UTF-8"
+LC_TIME="en_US.UTF-8"
+LC_COLLATE="en_US.UTF-8"
+LC_MONETARY="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
+LC_ALL=
+
+
+I even tried more arcane characters from 
+https://www.w3.org/2001/06/utf-8-test/UTF-8-demo.html but they are 
+displayed correctly as well.
+
+Michal
+
+> 
+> Ciao,
+> Johannes
+> 
+>>
+>> Thanks,
+>> Michal
+>>
+>>>
+>>> Of course, it might *still* be a bug in libc by virtue of handing '%.*s'
+>>> through to libc's implementation.
+>>>
+>>> Alban, can you test this with NO_GETTEXT?
+>>>
+>>> Thanks,
+>>> Johannes
+>>
