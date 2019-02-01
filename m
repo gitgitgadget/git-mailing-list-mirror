@@ -2,78 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FE681F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 15:04:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 903A71F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 15:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730064AbfBAPEz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 10:04:55 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:42913 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730062AbfBAPEz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 10:04:55 -0500
-Received: by mail-ed1-f46.google.com with SMTP id y20so5655850edw.9
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 07:04:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=loskot-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=xZCXpzFaS+gIAv7vpUfpHLWeo2NyJeM9oLmlJyyFUyo=;
-        b=evkBMkP/uVp68PnGzTxxOjBGSFPw5alYOQxv0QDoJZHWl+erZtgvbff60Im1Lk/E4I
-         Tyzp6b5ZWUgQYpejFbvkRxpSfbu9rcZTIWCV40NBz2UUJ5j8lFALicya+Rk5kmAj1qk2
-         mu6xPN8V5VBcKo/AwUZZ6YPm0Msdl1v18JMvrY8rCuqkxe1PEEz+SQgMGM63j4cIvF0U
-         V31j0H0nFsj+PyxWFcXegIIUO814tTEf94ZlMR4ywL9FHJ4/ucAKekbkDADrVNzGRmaR
-         bp14ECNxoB1P/wioFP9YLvEmgbbAmj0MaaBIdqAMjmZPpQ4DqWkzOtckq/Hr+5D+Bhf0
-         pptw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=xZCXpzFaS+gIAv7vpUfpHLWeo2NyJeM9oLmlJyyFUyo=;
-        b=oFmNbF/7XAGohokQOB4TG8vYoQ9E9M8uFVkPG2aLjJElY1OYiRDecD7PcFP29z8a9G
-         cLqmjHfQ+l1xEfO7ZXYQZMFPWQavu8LYxj8Ixus4oSrXzU+FGqGoCmqL6UnaW0zhhfuP
-         FATwDs2o5W6jPByzNo2SrPyb6BysqUoKF9I8W/txSL1BdDOF89w5tE1YEICQjNrGTcMv
-         A5NL5Ff8DozED441MZXUPolP9ciSl7LXlmMdd+M00Q0VrQybbieYVHodERYvqzMlOKdv
-         q9At+wiPxR+TfnAlsuWH5HBza+Ka2rH44NhIU8/YAMR14WWTeDLWqrUhS3YduB8X1BUm
-         fN0g==
-X-Gm-Message-State: AJcUukcun9HrdLCtUabWNulV87IX2Ia61ur8qt9tEw5iZcc1hC/ICps9
-        PS93/TDT9KVEwP/rugCjZzqYovf9d5SMqLewEQ88JGupvZS3dbiD
-X-Google-Smtp-Source: ALg8bN6v97IRN6IQmJDKIMPhNBSEuDmBUFPdpx2T1H/hpyxQS8GyekK1h0Y+Rldy/K4Nn/0Hq9m3WzO4X/UMoe2y1ag=
-X-Received: by 2002:a05:6402:121a:: with SMTP id c26mr38292795edw.104.1549033493226;
- Fri, 01 Feb 2019 07:04:53 -0800 (PST)
+        id S1730627AbfBAPqI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 10:46:08 -0500
+Received: from avasout05.plus.net ([84.93.230.250]:42326 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730613AbfBAPqG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 10:46:06 -0500
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id pb10gccD3yTttpb12gCN0f; Fri, 01 Feb 2019 15:46:04 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=XuzUx2N9 c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=1XWaLZrsAAAA:8 a=d5Xu0gnGMx4Q3oPxdcYA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v4 5/8] evolve: add the change-table structure
+To:     sxenos@google.com, git@vger.kernel.org
+References: <20190201030925.177124-1-sxenos@google.com>
+ <20190201030925.177124-5-sxenos@google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <f9c093bb-0225-1e0a-94ed-3854fa1f9ee2@ramsayjones.plus.com>
+Date:   Fri, 1 Feb 2019 15:46:02 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-References: <CAKQS2drF+CQTiKtXD6Kx1ZbH9ZTekWmbfiiHTCJV_BrT5-gAFQ@mail.gmail.com>
- <CAKQS2dqx9Nux11ot7a-Wxd2qpcdAAWw-e7Li+X3bw7TxJS=Kyw@mail.gmail.com>
-In-Reply-To: <CAKQS2dqx9Nux11ot7a-Wxd2qpcdAAWw-e7Li+X3bw7TxJS=Kyw@mail.gmail.com>
-From:   Mateusz Loskot <mateusz@loskot.net>
-Date:   Fri, 1 Feb 2019 16:04:26 +0100
-Message-ID: <CABUeae8=SLzSiT+UDdPeEbSUJNhU5xVF0-7hGK++v4sHsQWA8w@mail.gmail.com>
-Subject: Re: Submodules & worktree
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190201030925.177124-5-sxenos@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfL7fQfypEjlP6spB/dIlJUNBnIESJ7DQrHpOk6tEgProYeXegD9ERNysLTSHlpEjqGEn+B83RyOF2rd3eePyekrAD2OzqDrMo6uQMb6DQ4sQYwUtDQ4D
+ k5g7Ma9P7jXz+H/QZ4BaK2C7gCvTSCY8U+7gHA7IIzQX8DOME44hnqd6LQYDlsFHaL00xH3IDveunA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 1 Feb 2019 at 15:00, Ole Pinto <olepinto@gmail.com> wrote:
->
-> Adding a worktree from a working copy with submodules doesn't work.
->
-> In the config file I have
->     [submodule]
->         recurse = true
->
 
-FYI, https://git-scm.com/docs/git-worktree#_bugs
 
-"Multiple checkout in general is still experimental, and the support
-for submodules is incomplete.
-It is NOT recommended to make multiple checkouts of a superproject."
+On 01/02/2019 03:09, sxenos@google.com wrote:
+> From: Stefan Xenos <sxenos@google.com>
+> 
+> A change table stores a list of changes, and supports efficient lookup
+> from a commit hash to the list of changes that reference that commit
+> directly.
+> 
+> It can be used to look up content commits or metacommits at the head
+> of a change, but does not support lookup of commits referenced as part
+> of the commit history.
+> 
+> Signed-off-by: Stefan Xenos <sxenos@google.com>
+> ---
+>  Makefile       |   1 +
+>  change-table.c | 176 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  change-table.h | 127 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 304 insertions(+)
+>  create mode 100644 change-table.c
+>  create mode 100644 change-table.h
+> 
 
-Best regards,
--- 
-Mateusz Loskot, http://mateusz.loskot.net
+[snip]
+
+> diff --git a/change-table.h b/change-table.h
+> new file mode 100644
+> index 0000000000..023bca37d1
+> --- /dev/null
+> +++ b/change-table.h
+> @@ -0,0 +1,127 @@
+> +#ifndef CHANGE_TABLE_H
+> +#define CHANGE_TABLE_H
+> +
+> +#include "oidmap.h"
+> +
+> +struct commit;
+> +struct ref_filter;
+> +
+> +/*
+> + * This struct holds a list of change refs. The first element is stored inline,
+> + * to optimize for small lists.
+> + */
+> +struct change_list {
+> +	/* Ref name for the first change in the list, or null if none.
+> +	 *
+> +	 * This field is private. Use for_each_change_in to read.
+> +	 */
+> +	const char* first_refname;
+> +	/* List of additional change refs. Note that this is empty if the list
+> +	 * contains 0 or 1 elements.
+> +	 *
+> +	 * This field is private. Use for_each_change_in to read.
+> +	 */
+> +	struct string_list additional_refnames;
+> +};
+> +
+> +/*
+> + * Holds information about the head of a single change.
+> + */
+> +struct change_head {
+> +	/*
+> +	 * The location pointed to by the head of the change. May be a commit or a
+> +	 * metacommit.
+> +	 */
+> +	struct object_id head;
+> +	/*
+> +	 * The content commit for the latest commit in the change. Always points to a
+> +	 * real commit, never a metacommit.
+> +	 */
+> +	struct object_id content;
+> +	/*
+> +	 * Abandoned: indicates that the content commit should be removed from the
+> +	 * history.
+> +	 *
+> +	 * Hidden: indicates that the change is an inactive change from the
+> +	 * hiddenmetas namespace. Such changes will be hidden from the user by
+> +	 * default.
+> +	 *
+> +	 * Deleted: indicates that the change has been removed from the repository.
+> +	 * That is the ref was deleted since the time this struct was created. Such
+> +	 * entries should be ignored.
+> +	 */
+> +	int abandoned:1,
+> +		hidden:1,
+> +		remote:1,
+> +		deleted:1;
+
+This causes sparse to issue errors about 'dubious one-bit signed
+bitfield' for each of these fields (and for each file which #includes
+this header file).
+
+The field type should be 'unsigned int', thus:
+
+-- >8 --
+diff --git a/change-table.h b/change-table.h
+index 85bb19c3bf..1c385e076e 100644
+--- a/change-table.h
++++ b/change-table.h
+@@ -50,10 +50,10 @@ struct change_head {
+         * That is the ref was deleted since the time this struct was created. Such
+         * entries should be ignored.
+         */
+-       int abandoned:1,
+-               hidden:1,
+-               remote:1,
+-               deleted:1;
++       unsigned int abandoned:1,
++                       hidden:1,
++                       remote:1,
++                       deleted:1;
+ };
+ 
+ /*
+-- >8 --
+
+[Note: this diff was against the v3 series].
+
+ATB,
+Ramsay Jones
+
