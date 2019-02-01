@@ -2,112 +2,210 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1F7E1F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 07:42:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C436F1F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 08:03:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726114AbfBAHmn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 02:42:43 -0500
-Received: from mout.gmx.net ([212.227.17.21]:56089 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725837AbfBAHmn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 02:42:43 -0500
-Received: from [10.10.1.35] ([195.130.156.138]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbOrg-1gYuWP3kqC-00ImdD; Fri, 01
- Feb 2019 08:42:37 +0100
-Date:   Fri, 1 Feb 2019 08:42:36 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] help: align the longest command in the command listing
-In-Reply-To: <20190131092349.11469-1-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902010842010.41@tvgsbejvaqbjf.bet>
-References: <20190131092349.11469-1-pclouds@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726526AbfBAIDC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 03:03:02 -0500
+Received: from mail-it1-f174.google.com ([209.85.166.174]:40600 "EHLO
+        mail-it1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725786AbfBAIDB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 03:03:01 -0500
+Received: by mail-it1-f174.google.com with SMTP id h193so8516184ita.5
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 00:03:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ifzTaaNi2+AWUXX0d1bVqLxN0g+bcuiFjfvvVxq0F4g=;
+        b=QxxQXAMG5YUcSPSmbwh+TSWcZn0PsM0h5UOcs+WQOtZ0JjQA6ubJR3cTmMpLJmWou2
+         HU2ozrGgFKaTmeln7iofYSforEK7MIgaux9EeH3TxSyMgH63nJhWDj23CpbMJ6TpU8am
+         o6HkJcr+yLQ/Z/VT+V36v6chwX108zFVxaufYqOk2LS1PlyX14gH9IIZ574/pEEVVsc4
+         +OjxpgNpSIoVfhPRPvVvCVw0THphI9DJ4d0/ttkx6mrln3ONxIP/BXgqALGxrZsx+9wA
+         wx2/TM5V8AyOz3/FeWizcQJEOutnE7JP3yhAdwE4DkjrOJPieZWfTGvhVdw+h83R8fkz
+         B6SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ifzTaaNi2+AWUXX0d1bVqLxN0g+bcuiFjfvvVxq0F4g=;
+        b=nO/78qiEz+k6Y/MPuEsE3KJL3mQoyOC0tw1GI36zsJcKqCHS7+bGsk7hdWK0J+qnsN
+         vkdmH4HoIEoXZGiGL53jFutnigVnetVPaEOBAsYb79izCqUT1mgau6d94/PZwaku1iNr
+         SpQ6HV9qtWszmQTkj2LuKp8amuJlbhD22T6U3W/MD8O+s4UAehGmI1mH09FmtbhiU2eD
+         Im5N7WRcySJ37PRXgedYUW8KBIS+/ZYI/zc7R7ruSUkFsuA8rKeGxzuECJg9bTxPyhSR
+         ygfqu1mtXFG9nZiY3YrgfR6PRfY4SO4L9ZNsoU/bMCyC/7ZOToDPQdAElHwblgpwA52T
+         SnZw==
+X-Gm-Message-State: AHQUAuZOSrgjKmVIoHzhuDjJFDdtgsGfGtZ/x/jSTyxRHSiSMAetitLU
+        5lWGHQdeA7jIh967+2Ce4QGFeX3I0wb+TGjTAUSFFPTB
+X-Google-Smtp-Source: AHgI3IbPNdZmFCDj7m4uGejJmu8/J3zrwFLpLykmWLh94NOovcYAhXpJ8Txehj1Y8BKXVQZc26D7ubTWEtKqwkk049M=
+X-Received: by 2002:a24:af07:: with SMTP id t7mr581325ite.168.1549008180456;
+ Fri, 01 Feb 2019 00:03:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-660390214-1549006957=:41"
-X-Provags-ID: V03:K1:Imt4eFmnWVhtfV8Fgxqdob5v5JUePDzE041UnYvTUF2x6L8mc42
- pzi6FZH3y6aGD/Kvl920sWxw4KPJeLa96VIkM2Z24/xeL6+W89/COMk6a5qdzGwjDfP2je+
- QE+RqVxitgur2w1CAgASEhpwHCsryESsihKh3Im3ECyVmSKHKGlf4etaFVW48gA40HTqpPy
- cvQEz/FbBMrDwjcHus5Rw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rovvL6Qnt1k=:449jjR3cvcQa9GXL7itpEm
- XGwQ9ZAbEy1FZEYHwVlUuxwAGV2yll5TxmdU/LiZg16EAX5GQrjpEV8BFzt4n3M0b3Wrw25Ao
- gPdlp1IBe0Glv1n5Pbk9XwjBgOkM3ihK0jhIUGGLpjRRzfZdIbHEnw2HnhXqokTq8AgrhwCcF
- 4ufQtYs6wESY/FRS5CzXYZ4M5m/h/xq2+Qnzb0t+JW6oq7EAdBg7zd/NmfdOsofJyw6AJtilY
- 2jkasU29rF+XjRZkQaFZCNN/wCu6YM55mDvNHtrzhn1yhIedRwiO7EDeVAl0B4NWk9BAGZpkx
- DPBmAz1NLuqx8LOWjn+qvNHwnLk+kXAH+UdW256tKB6NU9d+pTXzTx00BLGCajsPlgVGiFUgv
- Yyj8Hm/ip5uC1TfgLkkbdVNyHFi8REKuEpV6BuXEWxHCS91fmuKetv1ShKE9WY0/Rz0s8OWah
- XtDpPS7GH9k3/Bk0noVC/FFF014i8u2l2ZyjT0E2ugvwXMu5iXJAC26xWoxG9ePic1ju3SZG/
- xbc4JTNRTjSNjM9769bm+G1GDwXxwb9jupfz7jqQfDlcWkiAOj1fAfw2jFJIwMBSPgpttKkKo
- Umt4eKDlXVq04cD8fLRS3lIwt7e+ASo5irejBiUDuUJb9lRZKvkLOuVgUszCgUngymTDq3bk9
- FkxkFZgbVMoz7c9tXynNWzhSZbzg4ojEic6HvoOzdqD3YZrDzZXN/271/3V9g4Kn7H2tL1Nff
- bDyaXJ+V55AhmppPtyh4yMgWX8TPUOpaJOwkZtJhMCEyks+DxsSrqOpPbRNuVat0Dt2SOsgDA
- lk+RGexcUJ4LUCBPduNORkdhx0vsMwWNBxH0foBrdfVe0G3xnCc7caSpLf6f8utgxw+UX2N5i
- 2RZkuNT5qQz57okItDBLgZJy8XVHVR43KlqNrsbIIss/LbCBku4qTqxm8cbJFJQlUS5LuVYYs
- n6tkd546MxA==
+References: <CAHYHVP+ty7i7a_abT-th_HR2X-8X6mLmpHPR_3VXv5LpWUsrhQ@mail.gmail.com>
+ <CAHYHVP+Dvbq_aOMy1_Kq0LHJsd4r+4GiP3N3R4A9ouAoJ4gw9g@mail.gmail.com> <20190131203447.aovalz2vzsjpdjdv@tb-raspi4>
+In-Reply-To: <20190131203447.aovalz2vzsjpdjdv@tb-raspi4>
+From:   Angelo Melonas <angelomelonas@gmail.com>
+Date:   Fri, 1 Feb 2019 10:02:50 +0200
+Message-ID: <CAHYHVPJdbEOPaAoyAhOtJ+wkeXZdowAVqe1Tp_=LOKzuuzA+wQ@mail.gmail.com>
+Subject: Re: Possible minor bug in Git
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Torsten,
 
---8323328-660390214-1549006957=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Thank you so much for getting back to me.
 
-Hi Duy,
+Unfortunately, I believe there is a misunderstanding, as I may have
+explained what I found to be a possible bug incorrectly.
+The file that is originally added (and then later modified) is never
+renamed or moved.
+As you will see below, when a user attempts to add a file, but with
+the incorrect case, the Git CLI responds the same way it would if a
+file was correctly added (i.e., by displaying nothing).
+However, in the above case, when you enter "git status", you find that
+the file was never actually added, and remains unstaged.
+A possible solution to this can be a simple error message similar to
+attempting to add a file with its name misspelt.
 
-On Thu, 31 Jan 2019, Nguyễn Thái Ngọc Duy wrote:
+Using your example, I have illustrated this in the text below:
 
-> "longest" is used to determine how many extra spaces we need to print
-> to keep the command description aligned. For the longest command, we
-> should print no extra space instead of one, or we'll get unaligned
-> output like this (notice the "checkout" line):
-> 
->     grow, mark and tweak your common history
->        branch     List, create, or delete branches
->        checkout    Switch branches or restore working tree files
->        commit     Record changes to the repository
->        diff       Show changes between commits, commit and ...
->        merge      Join two or more development histories together
->        rebase     Reapply commits on top of another base tip
->        tag        Create, list, delete or verify a tag ...
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  help.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/help.c b/help.c
-> index ff05fd22df..520c9080e8 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -85,7 +85,8 @@ static void print_command_list(const struct cmdname_help *cmds,
->  		if (cmds[i].category & mask) {
->  			size_t len = strlen(cmds[i].name);
->  			printf("   %s   ", cmds[i].name);
-> -			mput_char(' ', longest > len ? longest - len : 1);
-> +			if (longest > len)
-> +				mput_char(' ', longest - len);
+    C:\Example>git init
+    Initialized empty Git repository in C:/Example/.git/
 
-Why not simply replace the `1` by `0`?
+    C:\Example>echo AAA > AA.txt
 
-Ciao,
-Dscho
+    C:\Example>git add AA.txt
 
->  			puts(_(cmds[i].help));
->  		}
->  	}
-> -- 
-> 2.20.1.682.gd5861c6d90
-> 
-> 
---8323328-660390214-1549006957=:41--
+    C:\Example>git commit -m AA.txt
+    [master (root-commit) d550af0] AA.txt
+     1 file changed, 1 insertion(+)
+     create mode 100644 AA.txt
+
+    C:\Example>echo BB > AA.txt
+
+    C:\Example>git status
+    On branch master
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git checkout -- <file>..." to discard changes in working direct=
+ory)
+
+            modified:   AA.txt
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+    C:\Example>git add Aa.txt
+
+    C:\Example>git status
+    On branch master
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git checkout -- <file>..." to discard changes in working direct=
+ory)
+
+            modified:   AA.txt
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+    C:\Example>git add A.txt
+    fatal: pathspec 'A.txt' did not match any files
+
+    C:\Example>git add AA.txt
+
+    C:\Example>git status
+    On branch master
+    Changes to be committed:
+      (use "git reset HEAD <file>..." to unstage)
+
+            modified:   AA.txt
+
+I am looking forward to hearing from you again.
+
+Kind regards,
+Angelo Melonas
+
+On Thu, Jan 31, 2019 at 10:34 PM Torsten B=C3=B6gershausen <tboegi@web.de> =
+wrote:
+>
+> On Thu, Jan 31, 2019 at 09:29:28AM +0200, Angelo Melonas wrote:
+> > Just to clarify, I made a mistake above. Instead of "untracked", I
+> > meant "unstaged".
+> > I apologise for the confusion.
+> >
+> > On Thu, Jan 31, 2019 at 9:01 AM Angelo Melonas <angelomelonas@gmail.com=
+> wrote:
+> > >
+> > > Good day,
+> > >
+> > > I found a potential bug in Git for Windows. The bug can be reproduced
+> > > as follows:
+> > >
+> > > 1. Modify a file so that it shows up as "untracked" when executing th=
+e
+> > > "git status" command.
+> > > 2. Attempt to "git add" the file, but change the case of a single
+> > > letter. The command executes but no warning or error is displayed.
+> > > 3. Execute "git status" again and it still shows the file as "untrack=
+ed".
+> > >
+> > > Please let me know if I am mistaken. I also have a screenshot
+> > > demonstrating the "bug" which I cannot attach to this email, but whic=
+h
+> > > can be requested.
+> > >
+> > > Have a great day.
+> > >
+> > > Kind regards,
+> > > Angelo Melonas
+>
+> See the example below, Git tracks AA.txt, so you must run
+> git add AA.txt
+>
+> After a commit, you can tell Git that the file was renamed:
+> git mv AA.txt Aa.txt
+> (and then a commit)
+>
+>
+>
+> ------------------------------
+>
+> user@mac:/tmp/tt2> git init
+> Initialized empty Git repository in /private/tmp/tt2/.git/
+> user@mac:/tmp/tt2> echo AAA > AA.txt
+> user@mac:/tmp/tt2> git add AA.txt
+> user@mac:/tmp/tt2> git commit -m AA.txt
+> [master (root-commit) f102760] AA.txt
+>  1 file changed, 1 insertion(+)
+>   create mode 100644 AA.txt
+>   user@mac:/tmp/tt2> echo BB >AA.txt
+>   user@mac:/tmp/tt2> mv AA.txt  Aa.txt
+>   user@mac:/tmp/tt2> git status
+>   On branch master
+>   Changes not staged for commit:
+>     (use "git add <file>..." to update what will be committed)
+>       (use "git checkout -- <file>..." to discard changes in working dire=
+ctory)
+>
+>         modified:   AA.txt
+>
+> no changes added to commit (use "git add" and/or "git commit -a")
+> user@mac:/tmp/tt2> git add AA.txt
+> user@mac:/tmp/tt2> git status
+> On branch master
+> Changes to be committed:
+>   (use "git reset HEAD <file>..." to unstage)
+>
+>         modified:   AA.txt
+>
+> user@mac:/tmp/tt2>
