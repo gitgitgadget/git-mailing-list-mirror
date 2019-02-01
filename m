@@ -2,82 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 825CC1F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 22:28:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 738331F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 22:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727165AbfBAW2B (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 17:28:01 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:38688 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726843AbfBAW2B (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 17:28:01 -0500
-Received: by mail-qt1-f196.google.com with SMTP id p17so9497635qtl.5
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 14:28:00 -0800 (PST)
+        id S1727205AbfBAWkG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 17:40:06 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:44947 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727181AbfBAWkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 17:40:06 -0500
+Received: by mail-ed1-f67.google.com with SMTP id y56so6725375edd.11
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 14:40:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=qajGL0Qvp/cv4P/ns/8XMED7YmpiJ+/qEQ1zOv5qVbg=;
+        b=GrprXMW9wsl+pr59nzD200jMqh/1IGIYvfMGlLOXhscFQHe6caCrFDpE+u2QjqbZ1M
+         ZFQP2NxXcd/fbHJ7KDHEdWGHpDeEXX52Ppyjy6lfPrdZGDKiJaVHdq68/5fMBJhQHanu
+         a1aG7b8Ovvb6CkTqoAkbJw85shkZ2W/f9u3bFyxWa4kSlUOBZV5jee7DY2dxm3A7VUMk
+         REVLxzyWHjUM5UdDZfEsKtXnXmnwwFmqXSe0P45zWOLkIz2NBtnTs07chblrWhR7QYRZ
+         ya4K2rE3f/uu3i6QTqR4bdhVta7bTJjJDz5i2erRNl2z4vXrOzwOf1hjp8PVY0+LBEsf
+         7oig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=q6fJ6h+pNqsMZ3nAOT15oJDp269r5HFgjVednFkK5N0=;
-        b=eNZ4a2oi/PEtYrjs+KWHKeoSlrxcoHZqV52Ql1b++q+x9v+3UsAyWBHBwENKhedGKs
-         SjYZgx0UoQkEoY+rFlYckKbZoQGN6+75qpDDY/yLQgFctM8II3BeM16LnFaSEsUAzNYy
-         anfidB6bAB7n9qyGASKLNpqFSAMufs7NwSMUbK4Eth4OD3Oatl+24cOH1t06rCqHZO20
-         hi+t+G7KrIYm8GXgDv5tJ7EBd9cYHOB2bM3r8czn9gAr+KmcA+bwedIOn+8VJufBrdgd
-         PkoUdSoAeYE6H9sN2Bd4wWFFbskmJPzAU9JVfGkcJPDU5XBS9b4SXZwd5Kn+wplwesPI
-         xWtw==
-X-Gm-Message-State: AJcUukdvpO8e+t13Mxcs7OR5xIkIPa1Lh5r/NHh6T7TWTPsB2Qa7QcGP
-        00ANdGvPwZ8xX6+ED3oQvropSWvJtwrI0LUqz3g=
-X-Google-Smtp-Source: ALg8bN74BXicUqfVrMieBdIezGe8mla9nZHbZ4Shc+lhVFng4/o7d6MHxOCF+yTt03nQ+bIPFqN4VanmafC/dLWTg7c=
-X-Received: by 2002:ac8:27c8:: with SMTP id x8mr39823301qtx.352.1549060080007;
- Fri, 01 Feb 2019 14:28:00 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=qajGL0Qvp/cv4P/ns/8XMED7YmpiJ+/qEQ1zOv5qVbg=;
+        b=kyvR7EhXOSjf5ulWorhJwLABARZNsFe3jvoeWbLb8yjik/TqrX8mwLNRuyK30Luavd
+         dY886ToVE7vhwUlqi0JesxCsQLM8GIkMy9lo2FtALAR+uT5xqFNncjy+NI2Z4pBTj4gr
+         rOzctlhVjH7xqgnH3nysW56B3EA4/cIGYILSLmRInAl9FOuCMF/7zbuC3fLEwhxm9rBz
+         wQg0OF1mxQ/0o3xxYQPkw9yNYH6DqASZn8cJ95dciifufB/pYziz2+UmdAzw7r/2Wdfy
+         ZU+r4t4mwZ+aNTY/7yNDhIGyFjEbFj1IAuUAG/vyUJ7xhJyxW36J4HZwlYBEpbhVting
+         4D1A==
+X-Gm-Message-State: AJcUukfZUvadPcIZiZRyuf5GZYMCR+5SVOQqW36++AcwasPxPn81Rd+T
+        J9Jt2PqLI3xiaqRSqewUP74=
+X-Google-Smtp-Source: ALg8bN7lIQVtlf8boax0FbtvaTPHE+tWptny33dEl/FyxwrJ6eHNV27TwAztiksdaYQkUQhkB3MeGA==
+X-Received: by 2002:a50:ae64:: with SMTP id c91mr40150865edd.222.1549060804323;
+        Fri, 01 Feb 2019 14:40:04 -0800 (PST)
+Received: from ltop.local ([2a02:a03f:40eb:400:6cd3:4d33:1db0:edba])
+        by smtp.gmail.com with ESMTPSA id r1sm2266870eds.1.2019.02.01.14.40.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 01 Feb 2019 14:40:03 -0800 (PST)
+Date:   Fri, 1 Feb 2019 23:40:00 +0100
+From:   Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH 0/1] Using sparse in a CI job
+Message-ID: <20190201223959.zmlyg4buwolw2b3p@ltop.local>
+References: <78f85f0b-176f-0b54-2ec8-4c13fd386733@ramsayjones.plus.com>
 MIME-Version: 1.0
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20190201220420.36216-1-nbelakovski@gmail.com> <20190201220420.36216-4-nbelakovski@gmail.com>
-In-Reply-To: <20190201220420.36216-4-nbelakovski@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 1 Feb 2019 17:27:48 -0500
-Message-ID: <CAPig+cT0OY3vcjjoMUjaZ9JhJ2nKqyqbv4qL1ExiDw3h5GUw4Q@mail.gmail.com>
-Subject: Re: [PATCH v7 3/3] branch: Add an extra verbose output displaying
- worktree path for refs checked out in a linked worktree
-To:     Nickolai Belakovski <nbelakovski@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Rafael Ascensao <rafa.almas@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <78f85f0b-176f-0b54-2ec8-4c13fd386733@ramsayjones.plus.com>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 1, 2019 at 5:04 PM <nbelakovski@gmail.com> wrote:
-> Subject: branch: Add an extra verbose output displaying worktree path for refs checked out in a linked worktree
+On Fri, Feb 01, 2019 at 09:01:20PM +0000, Ramsay Jones wrote:
+> 
+> I suspect that the Makefile sparse target is not easy to use in a CI
+> job, since the 'sparse' program (via cgcc -no-compile) does not exit
+> with a non-zero value, even when issuing errors and warnings.
 
-Overlong subject. Perhaps shorten it to:
+...
+ 
+> We can change that by passing '-Wsparse-error' to 'sparse':
+> 
+>   $ make SPARSE_FLAGS=-Wsparse-error change-table.sp
+>       SP change-table.c
+>   change-table.h:53:24: error: dubious one-bit signed bitfield
+>   change-table.h:54:25: error: dubious one-bit signed bitfield
+>   change-table.h:55:25: error: dubious one-bit signed bitfield
+>   change-table.h:56:26: error: dubious one-bit signed bitfield
+>   Makefile:2729: recipe for target 'change-table.sp' failed
+>   make: *** [change-table.sp] Error 1
+>   $ echo $?
+>   2
+>   $ 
+> 
+> Note that '-Wsparse-error' not only returns a non-zero exit code (1), but
+> it also changes a 'warning' into an 'error' (see above):
 
-    branch: display worktree path in -v -v mode
+Yes, I know :(
+The fact that, by default, sparse doesn't fail on errors is wanted
+(otherwise it would break the kernel compile). But that the only way
+to return an error is to use -Wsparse-error (which is supposed to
+replace GCC's -Werror) is a real problem.
 
-or something, and use the longer description as the rest of the body
-of the commit message.
-
-> Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
-> ---
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> @@ -167,8 +167,10 @@ This option is only applicable in non-verbose mode.
->         When in list mode,
->         show sha1 and commit subject line for each head, along with
->         relationship to upstream branch (if any). If given twice, print
-> -       the name of the upstream branch, as well (see also `git remote
-> -       show <remote>`).
-> +       the path of the linked worktree, if applicable (not applicable
-> +       for main worktree since user's path will already be in main
-> +       worktree) and the name of the upstream branch, as well (see also
-> +       `git remote show <remote>`).
-
-I'm not sure I understand the "not applicable" explanation. When you
-say "user's path", do you mean the current working directory? What
-happens if the command is invoked from within one of the linked
-worktrees (not from within the main worktree)?
+-- Luc
