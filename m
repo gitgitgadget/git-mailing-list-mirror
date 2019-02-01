@@ -2,129 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AEF31F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 19:00:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 865C41F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 19:40:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730511AbfBATAm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 14:00:42 -0500
-Received: from mx-out1.startmail.com ([145.131.90.139]:39930 "EHLO
-        mx-out1.startmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727450AbfBATAl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 14:00:41 -0500
-Subject: Re: Broken interactive rebase text after some UTF-8 characters
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
-        s=2017-11; t=1549047639;
-        bh=bZvzV+vWCfJpE4ZMmb3kFfMEI8XbJfymrRvBM5O1VIg=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=Ll9+gDQHN2MgpaEe0m9Ix6I5YtMwqMaF2fjQ89YEJtcw1wQTLSaJU930XKCYKKhJ1
-         7CCxpwCnKbZ2/fu5dqP3sNGc6Tkfy4y5kNH+IG7QDcy+yt4VfaI21RuCSL7aSBnVnC
-         HArWP1Z065QQQ8ALHR3UxcFaHMhv2PNTJlwzTv/D+PuAx2dOmQ53UoC4p7x8GUIBFe
-         1r7+/p+w6UC6Y0vCvaK8LwQVcc6AvR9HubqWX+MKpzFdlIxIltta5TC1eszLRhlit5
-         y+3fe0oCMKDQn8oDBlgoZPgn5RlGeVh34BUSEmdFkWfdVnXeAYazwr7RkOXV8rx8U+
-         vHlXzPT3nyqzQ==
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org
-References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
- <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>
- <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>
- <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net>
- <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
- <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>
- <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
- <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
- <nycvar.QRO.7.76.6.1902011530440.41@tvgsbejvaqbjf.bet>
- <eda7b1c4-5fd6-5440-8998-75eab9f73e47@startmail.com>
- <xmqqpnsbzaa6.fsf@gitster-ct.c.googlers.com>
-From:   Michal Nowak <mnowak@startmail.com>
-Message-ID: <7fe4edcd-f4ec-3ad5-a9ea-e4015e4afc37@startmail.com>
-Date:   Fri, 1 Feb 2019 20:00:37 +0100
-Mime-Version: 1.0
-In-Reply-To: <xmqqpnsbzaa6.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+        id S1728611AbfBATkf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 14:40:35 -0500
+Received: from mail525c7.megamailservers.com ([209.235.141.25]:35873 "EHLO
+        mail125c7.megamailservers.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728495AbfBATkf (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 1 Feb 2019 14:40:35 -0500
+X-Greylist: delayed 592 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 Feb 2019 14:40:34 EST
+X-Authenticated-User: danmcgregor@sasktel.net
+X-VIP:  69.49.109.87
+Received: from shadrach.duckdns.org (204-83-204-148.prna.hsdb.sasknet.sk.ca [204.83.204.148])
+        (authenticated bits=0)
+        by mail125c7.megamailservers.com (8.14.9/8.13.1) with ESMTP id x11JUa2c030000
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 1 Feb 2019 14:30:38 -0500
+Received: by shadrach.duckdns.org (Postfix, from userid 1001)
+        id BD14BC112; Fri,  1 Feb 2019 13:30:35 -0600 (CST)
+From:   Dan McGregor <dan.mcgregor@usask.ca>
+To:     git@vger.kernel.org
+Cc:     masayasuzuki@google.com, Dan McGregor <dan.mcgregor@usask.ca>
+Subject: [PATCH] http: cast result to FILE *
+Date:   Fri,  1 Feb 2019 13:30:04 -0600
+Message-Id: <20190201193004.88736-1-dan.mcgregor@usask.ca>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CTCH-RefID: str=0001.0A020206.5C549E5E.009F,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CTCH-VOD: Unknown
+X-CTCH-Spam: Unknown
+X-CTCH-Score: 0.000
+X-CTCH-Rules: 
+X-CTCH-Flags: 0
+X-CTCH-ScoreCust: 0.000
+X-CSC:  0
+X-CHA:  v=2.3 cv=eMY9ckh1 c=1 sm=1 tr=0 a=6cqb4ilmvwuDSF4sbTau3A==:117
+        a=6cqb4ilmvwuDSF4sbTau3A==:17 a=6l96557QvZYA:10 a=CFTnQlWoA9kA:10
+        a=gWDa-L1wAAAA:8 a=KCljDmtMTA85JOKLiEgA:9 a=vg_HiZM2M4GgzivzK9OA:22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/01/19 06:30 PM, Junio C Hamano wrote:
-> Michal Nowak <mnowak@startmail.com> writes:
-> 
->>> You already have that example. Just take the UTF-8 text in your original
->>> bug report, put it into something like
->>>
->>> 	int main(int argc, char **argv)
->>> 	{
->>> 		char utf8[] = "... your text here...";
->>>
->>> 		printf("%.*s", (int)(sizeof(utf8) - 1), utf8);
->>>
->>> 		return 0;
->>> 	}
-> 
-> When replayed literally, this is not a very good test.
-> 
->> {global} newman@lenovo:~ $ cat printf.c
->> #include <stdio.h>
->> //#include <gettext.h>
->> int main(int argc, char **argv) {
->>    char utf8[] = "Gergő Mihály Doma\n";
->>    printf("%.*s", (int)(sizeof(utf8) - 1), utf8);
->>    return 0;
->> }
-> 
-> And this is replaying it literally.
-> 
-> The current working suspicion in this thread is that the platform
-> printf("%.*s", num, str) emits up to num "characters" starting at
-> str, which is an incorrect implementation, as it should emit up to
-> num "bytes".
-> 
-> Notice that the num in this case is the byte count of that utf8[]
-> string.  That number is always larger than the number of "characters"
-> for a string with multi-byte character(s) in it.  Let's say that the
-> sample string has N "characters", and it is N+X "bytes" long, where
-> X > 1.
-> 
-> If the suspicion is correct, i.e. the way the printf implementation
-> is broken on this platform is that it shows up to num "characters",
-> then the call is asking to show up to N+X "characters".  The buggy
-> printf shows all the available N "characters", notices the string
-> stops there, and finishes.  So you won't _see_ the bug with that
-> test program.
-> 
-> Instead, use something like this.
-> 
->          #include <stdio.h>
-> 
->          int main(int ac, char **av)
->          {
->                  char utf8[] = "ふabc";
->                  printf("%.*s\n", 4, utf8);
->                  return 0;
->          }
-> 
-> With or without gettext or i18n, the output must end with 'a' followed
-> by a newline, and you must not see 'b' nor 'c'.  Otherwise your printf
-> is broken.
-> 
+Commit 8dd2e88a92 ("http: support file handles for HTTP_KEEP_ERROR",
+2019-01-10) introduced an implicit assumption that rewind, fileno, and
+fflush are functions. At least on FreeBSD fileno is not, and as such
+passing a void * failed.
 
-The output ends with 'a' for me on OpenIndiana:
+Explicitly cast result to a FILE * when using standard functions that
+may ultimately be macros.
 
-{global} newman@lenovo:~ $ gcc tp.c -o tp && ./tp
-ふa
+Signed-off-by: Dan McGregor <dan.mcgregor@usask.ca>
+---
+ http.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Though, I can reproduce the problem with Alban's test case the exact 
-same way he wrote earlier today.
+diff --git a/http.c b/http.c
+index 954bebf684..8b9476b151 100644
+--- a/http.c
++++ b/http.c
+@@ -1996,12 +1996,12 @@ static int http_request_reauth(const char *url,
+ 		strbuf_reset(result);
+ 		break;
+ 	case HTTP_REQUEST_FILE:
+-		if (fflush(result)) {
++		if (fflush((FILE *)result)) {
+ 			error_errno("unable to flush a file");
+ 			return HTTP_START_FAILED;
+ 		}
+-		rewind(result);
+-		if (ftruncate(fileno(result), 0) < 0) {
++		rewind((FILE *)result);
++		if (ftruncate(fileno((FILE *)result), 0) < 0) {
+ 			error_errno("unable to truncate a file");
+ 			return HTTP_START_FAILED;
+ 		}
+-- 
+2.20.1
 
-Michal
