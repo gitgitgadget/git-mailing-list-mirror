@@ -7,244 +7,401 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 196C81F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 14:37:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67B361F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 14:51:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726849AbfBAOhO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 09:37:14 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:63509 "EHLO
+        id S1729100AbfBAOvh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 09:51:37 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:24265 "EHLO
         smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726282AbfBAOhO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 09:37:14 -0500
+        with ESMTP id S1728239AbfBAOvg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 09:51:36 -0500
 Received: from [192.168.2.240] ([92.26.116.186])
         by smtp.talktalk.net with SMTP
-        id pZwHgLjxJwhzSpZwIgcOmH; Fri, 01 Feb 2019 14:37:10 +0000
+        id paAHgLlljwhzSpaAIgcPEd; Fri, 01 Feb 2019 14:51:35 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1549031830;
-        bh=SHB7ovr2DtNa1DDYJsRdg+U6pgmY476M0wTBuhgd2uM=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=OP8rc+nQMrYfdd3ha33XN4Q06uxODQv8ifGNA+rXMw/zNrqIwHfQZw4on72ZfThd9
-         sMAcvSO9UOLD0OpUJm/3vQb91nxLP8q5rUq9ESAjYxcFvn9+ICRzD08lCc6VR8XCjO
-         B00JEmnWj/UQ7x681+F+1pEwOx25N8LKTZPax2uc=
+        s=cmr1711; t=1549032695;
+        bh=w3FBeLDHZKM4RuXpZMBZje6Lg0MHc5Gk7C8RBO+EUig=;
+        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=o4pdOUTwNTZ5L8XgPppHQKtB3KgkEW6T2O5vcY6NanvfPNz9jjw6zpEmELKB2XBPm
+         8wbi8buEFiA7mr/YDjT0nTz+bvny/SM4XCRD4TVkyFdVBVQ1Nc2CtRsSavWRtN/TCB
+         h0e9AUZaCv42NQnQOGnBaaosa9NlSfa8n3Bh/1eY=
 X-Originating-IP: [92.26.116.186]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=Pfo8oxCPEre7EYRssK5nbQ==:117
- a=Pfo8oxCPEre7EYRssK5nbQ==:17 a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8
- a=pGLkceISAAAA:8 a=evINK-nbAAAA:8 a=w0RzvLSWAAAA:20 a=69EAbJreAAAA:8
- a=TO97B7HopdO3iLdl7IMA:9 a=2AMn5m2I_U_dXayq:21 a=tODdGfVUyniZWpCU:21
- a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=RfR_gqz1fSpA9VikTjo0:22
+ a=Pfo8oxCPEre7EYRssK5nbQ==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=5IQ_GxhRbFkyufmtWugA:9 a=QEXdDO2ut3YA:10
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 0/7] Turn git add-i into built-in
-To:     Slavica Djukic <slavicadj.ip2018@gmail.com>,
-        =?UTF-8?Q?Slavica_=c4=90uki=c4=87_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     phillip.wood@dunelm.org.uk
-References: <pull.103.v3.git.gitgitgadget@gmail.com>
- <pull.103.v4.git.gitgitgadget@gmail.com>
- <c7d3ce15-567a-20b5-1bde-2a7fdd88c4e5@gmail.com>
+Subject: Re: [PATCH v6 07/16] sequencer: refactor
+ sequencer_add_exec_commands() to work on a todo_list
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <2096b6c5-a164-f4eb-df4c-3468ff553abd@talktalk.net>
-Date:   Fri, 1 Feb 2019 14:37:05 +0000
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20190123205821.27459-1-alban.gruin@gmail.com>
+ <20190129150159.10588-1-alban.gruin@gmail.com>
+ <20190129150159.10588-8-alban.gruin@gmail.com>
+ <434cf0f7-1df6-7966-b460-e69e8f8b5e99@talktalk.net>
+Message-ID: <b95aab1f-25e4-be81-e8c3-5521fe68ef62@talktalk.net>
+Date:   Fri, 1 Feb 2019 14:51:33 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.4.0
 MIME-Version: 1.0
-In-Reply-To: <c7d3ce15-567a-20b5-1bde-2a7fdd88c4e5@gmail.com>
+In-Reply-To: <434cf0f7-1df6-7966-b460-e69e8f8b5e99@talktalk.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfKt144Go5NHGRZDPB9RvhPlNrZ+kRjmqb+AXI9LY+ckVMkUpO6vU2oILNH6ACGWYQADIMDmbM3igx/bCRmoL0s+b0FZSswtqcUGyU/pqQ6xuml9XaYAU
- 96svFPvVJxuZ8+9rdMGnBjlgUW/fAbFHuR/B+zyhx2PZYf8tVtqSKaDd1NpYsMTs6YJSTus1OebezytTODaUrrHJaCB0OtuO5vO7S2K/d/i7o77jC3GVbaDI
- +wxbOMN4RdvA8MTW+Sqy9233BmtZ+rmq1Y9J6iorAcnHirabiT8TB9OdbPs7pRU8
+X-CMAE-Envelope: MS4wfOhLhm+HlivbHhzfCXzSzmisF0L/G2FidnawIbf56yQOpeYH030k+H4Vybux8mxukT2lE6HAPiRKpaNzwJiizGqSSlYKGmRlvzN3epNDLTJT2art5SUf
+ Q4yfP9HhXvTTJWoiP5RPlxuS8xK0+tbbsNW+tSSKUpvrwxbLk2SIP699CU/NMpZzF2SMTnTM8Z+nrrLQU3bguBH4X1ZXolX9fmr0hQ9mznbTIsiogDUwgVsP
+ saIfDB60/VnV1C8BpV2N5bWP8dKDhS6E0Sj+3n/cz60W7j7ydkKudh9G0ZQfGTB/gOeYQTS1jNmfGs3+k2pJVQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Slavica
-
-On 25/01/2019 12:37, Slavica Djukic wrote:
-> Hi Phillip,
+On 31/01/2019 14:30, Phillip Wood wrote:
+> Hi Alban
 > 
-> Sorry for omitting you in Cc, again.
-> I accidentally wrote yours and Ævar's email prefixed with Cc:, rather 
-> then separating
-> them with comma, like Johannes said I should.
+> On 29/01/2019 15:01, Alban Gruin wrote:
+>> This refactors sequencer_add_exec_commands() to work on a todo_list to
+>> avoid redundant reads and writes to the disk.
+>>
+>> Instead of inserting the `exec' commands between the other commands and
+>> re-parsing the buffer at the end, they are appended to the buffer once,
+>> and a new list of items is created.  Items from the old list are copied
+>> across and new `exec' items are appended when necessary.  This
+>> eliminates the need to reparse the buffer, but this also means we have
+>> to use todo_list_write_to_disk() to write the file.
+>>
+>> todo_list_add_exec_commands() and sequencer_add_exec_commands() are
+>> modified to take a string list instead of a string -- one item for each
+>> command.  This makes it easier to insert a new command to the todo list
+>> for each command to execute.
+>>
+>> sequencer_add_exec_commands() still reads the todo list from the disk,
+>> as it is needed by rebase -p.
+>>
+>> complete_action() still uses sequencer_add_exec_commands() for now.
+>> This will be changed in a future commit.
+>>
+>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+>> ---
+>>  builtin/rebase--interactive.c |  15 +++--
+>>  sequencer.c                   | 110 +++++++++++++++++++++-------------
+>>  sequencer.h                   |   5 +-
+>>  3 files changed, 82 insertions(+), 48 deletions(-)
+>>
+>> diff --git a/builtin/rebase--interactive.c 
+>> b/builtin/rebase--interactive.c
+>> index df19ccaeb9..53056ee713 100644
+>> --- a/builtin/rebase--interactive.c
+>> +++ b/builtin/rebase--interactive.c
+>> @@ -65,7 +65,7 @@ static int do_interactive_rebase(struct replay_opts 
+>> *opts, unsigned flags,
+>>                   const char *onto, const char *onto_name,
+>>                   const char *squash_onto, const char *head_name,
+>>                   const char *restrict_revision, char *raw_strategies,
+>> -                 const char *cmd, unsigned autosquash)
+>> +                 struct string_list *commands, unsigned autosquash)
+>>  {
+>>      int ret;
+>>      const char *head_hash = NULL;
+>> @@ -116,7 +116,7 @@ static int do_interactive_rebase(struct 
+>> replay_opts *opts, unsigned flags,
+>>          discard_cache();
+>>          ret = complete_action(the_repository, opts, flags,
+>>                        shortrevisions, onto_name, onto,
+>> -                      head_hash, cmd, autosquash);
+>> +                      head_hash, commands, autosquash);
+>>      }
+>>
+>>      free(revisions);
+>> @@ -139,6 +139,7 @@ int cmd_rebase__interactive(int argc, const char 
+>> **argv, const char *prefix)
+>>      const char *onto = NULL, *onto_name = NULL, *restrict_revision = 
+>> NULL,
+>>          *squash_onto = NULL, *upstream = NULL, *head_name = NULL,
+>>          *switch_to = NULL, *cmd = NULL;
+>> +    struct string_list commands = STRING_LIST_INIT_DUP;
+>>      char *raw_strategies = NULL;
+>>      enum {
+>>          NONE = 0, CONTINUE, SKIP, EDIT_TODO, SHOW_CURRENT_PATCH,
+>> @@ -221,6 +222,12 @@ int cmd_rebase__interactive(int argc, const char 
+>> **argv, const char *prefix)
+>>          warning(_("--[no-]rebase-cousins has no effect without "
+>>                "--rebase-merges"));
+>>
+>> +    if (cmd && *cmd) {
+>> +        string_list_split(&commands, cmd, '\n', -1);
+> 
+> This whole splitting and later skipping 'exec ' is a bit of a shame - it 
+> would be much nicer if we could just have one exec command per -x option 
+> but I think that is outside the scope of this series (If I have time I'd 
+> like to look at calling do_interactive_rebase() directly from 
+> builtin/rebase.c without forking rebase--interactive).
+> 
+>> +        if (strlen(commands.items[commands.nr - 1].string) == 0)
+> 
+> I'd be tempted just to test the string using !* rather than calling 
+> strlen. Also is there ever a case where the last string isn't empty?
+> 
+>> +            --commands.nr;
+>> +    }
+>> +
+>>      switch (command) {
+>>      case NONE:
+>>          if (!onto && !upstream)
+>> @@ -228,7 +235,7 @@ int cmd_rebase__interactive(int argc, const char 
+>> **argv, const char *prefix)
+>>
+>>          ret = do_interactive_rebase(&opts, flags, switch_to, 
+>> upstream, onto,
+>>                          onto_name, squash_onto, head_name, 
+>> restrict_revision,
+>> -                        raw_strategies, cmd, autosquash);
+>> +                        raw_strategies, &commands, autosquash);
+>>          break;
+>>      case SKIP: {
+>>          struct string_list merge_rr = STRING_LIST_INIT_DUP;
+>> @@ -262,7 +269,7 @@ int cmd_rebase__interactive(int argc, const char 
+>> **argv, const char *prefix)
+>>          ret = rearrange_squash(the_repository);
+>>          break;
+>>      case ADD_EXEC:
+>> -        ret = sequencer_add_exec_commands(the_repository, cmd);
+>> +        ret = sequencer_add_exec_commands(the_repository, &commands);
+>>          break;
+>>      default:
+>>          BUG("invalid command '%d'", command);
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 266f80d704..3a90b419d7 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -4446,25 +4446,27 @@ int sequencer_make_script(struct repository 
+>> *r, FILE *out,
+>>      return 0;
+>>  }
+>>
+>> -/*
+>> - * Add commands after pick and (series of) squash/fixup commands
+>> - * in the todo list.
+>> - */
+>> -int sequencer_add_exec_commands(struct repository *r,
+>> -                const char *commands)
+>> +static void todo_list_add_exec_commands(struct todo_list *todo_list,
+>> +                    struct string_list *commands)
+>>  {
+>> -    const char *todo_file = rebase_path_todo();
+>> -    struct todo_list todo_list = TODO_LIST_INIT;
+>> -    struct strbuf *buf = &todo_list.buf;
+>> -    size_t offset = 0, commands_len = strlen(commands);
+>> -    int i, insert;
+>> +    struct strbuf *buf = &todo_list->buf;
+>> +    size_t base_offset = buf->len;
+>> +    int i, insert, nr = 0, alloc = 0;
+>> +    struct todo_item *items = NULL, *base_items = NULL;
+>>
+>> -    if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+>> -        return error(_("could not read '%s'."), todo_file);
+>> +    base_items = xcalloc(commands->nr, sizeof(struct todo_item));
+>> +    for (i = 0; i < commands->nr; ++i) {
+>> +        size_t command_len = strlen(commands->items[i].string);
+>>
+>> -    if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
+>> -        todo_list_release(&todo_list);
+>> -        return error(_("unusable todo list: '%s'"), todo_file);
+>> +        strbuf_addstr(buf, commands->items[i].string);
+>> +        strbuf_addch(buf, '\n');
+>> +
+>> +        base_items[i].command = TODO_EXEC;
+>> +        base_items[i].offset_in_buf = base_offset;
+>> +        base_items[i].arg_offset = base_offset + strlen("exec ");
+>> +        base_items[i].arg_len = command_len - strlen("exec ");
+>> +
+>> +        base_offset += command_len + 1;
+>>      }
+>>
+>>      /*
+>> @@ -4473,38 +4475,62 @@ int sequencer_add_exec_commands(struct 
+>> repository *r,
+>>       * those chains if there are any.
+>>       */
+>>      insert = -1;
+>> -    for (i = 0; i < todo_list.nr; i++) {
+>> -        enum todo_command command = todo_list.items[i].command;
+>> -
+>> -        if (insert >= 0) {
+>> -            /* skip fixup/squash chains */
+>> -            if (command == TODO_COMMENT)
+>> -                continue;
+>> -            else if (is_fixup(command)) {
+>> -                insert = i + 1;
+>> -                continue;
+>> -            }
+>> -            strbuf_insert(buf,
+>> -                      todo_list.items[insert].offset_in_buf +
+>> -                      offset, commands, commands_len);
+> 
+> In a todo list that looks like
+> pick abc message
+> #pick cde empty commit
+> This inserts the exec command for the first pick above the commented out 
+> pick. I think your translation puts it below the commented out pick as 
+> it ignores the value of insert. I think it's probably easiest to add an 
+> INSERT_ARRAY macro to insert it in the right place. An alternative might 
+> be to track the last insert position and only copy commands across when 
+> there is another exec to insert but that might get complicated in cases 
+> such as
+> 
+> pick abc message
+> #squash cde squash! message //empty commit for rewording
+> fixup 123 fixup! message
+> #pick 456 empty commit
 
-Don't worry, thanks for emailing here. I've looked at the range diff and 
-I think your patches are good.
+Thinking about this, I'm not sure it can happen as the empty squash 
+commit will be commented out before rearrange_squash() is called so I 
+think it would actually look like
+
+pick abc message
+fixup 123 fixup! message
+#pick cde squash! message
+#pick 456 empty commit
+
+So I wonder if we can get away with treating insert as a flag and 
+inserting exec commands when
+insert && command == TODO_COMMENT
+
+We could probably do with some tests for this to be sure.
 
 Best Wishes
 
 Phillip
 
 > 
-> -Slavica
+> Best Wishes
 > 
-> On 25-Jan-19 1:23 PM, Slavica Đukić via GitGitGadget wrote:
->> This is the first version of a patch series to start porting
->> git-add--interactive from Perl to C. Daniel Ferreira's patch series 
->> used as
->> a head start:
->> https://public-inbox.org/git/1494907234-28903-1-git-send-email-bnmvco@gmail.com/t/#u 
+> Phillip
+> 
+>> -            offset += commands_len;
+>> +    for (i = 0; i < todo_list->nr; i++) {
+>> +        enum todo_command command = todo_list->items[i].command;
+>> +        if (insert >= 0 && command != TODO_COMMENT && 
+>> !is_fixup(command)) {
+>> +            ALLOC_GROW(items, nr + commands->nr, alloc);
+>> +            COPY_ARRAY(items + nr, base_items, commands->nr);
+>> +            nr += commands->nr;
+>>              insert = -1;
+>>          }
+>>
+>> -        if (command == TODO_PICK || command == TODO_MERGE)
+>> +        ALLOC_GROW(items, nr + 1, alloc);
+>> +        items[nr++] = todo_list->items[i];
+>> +
+>> +        if (command == TODO_PICK || command == TODO_MERGE || 
+>> is_fixup(command))
+>>              insert = i + 1;
+>>      }
+>>
+>>      /* insert or append final <commands> */
+>> -    if (insert >= 0 && insert < todo_list.nr)
+>> -        strbuf_insert(buf, todo_list.items[insert].offset_in_buf +
+>> -                  offset, commands, commands_len);
+>> -    else if (insert >= 0 || !offset)
+>> -        strbuf_add(buf, commands, commands_len);
+>> +    if (insert >= 0 || nr == todo_list->nr) {
+>> +        ALLOC_GROW(items, nr + commands->nr, alloc);
+>> +        COPY_ARRAY(items + nr, base_items, commands->nr);
+>> +        nr += commands->nr;
+>> +    }
+>> +
+>> +    free(base_items);
+>> +    FREE_AND_NULL(todo_list->items);
+>> +    todo_list->items = items;
+>> +    todo_list->nr = nr;
+>> +    todo_list->alloc = alloc;> +}
+>>
+>> -    i = write_message(buf->buf, buf->len, todo_file, 0);
+>> +/*
+>> + * Add commands after pick and (series of) squash/fixup commands
+>> + * in the todo list.
+>> + */
+>> +int sequencer_add_exec_commands(struct repository *r,
+>> +                struct string_list *commands)
+>> +{
+>> +    const char *todo_file = rebase_path_todo();
+>> +    struct todo_list todo_list = TODO_LIST_INIT;
+>> +    int res;
+>> +
+>> +    if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+>> +        return error_errno(_("could not read '%s'."), todo_file);
+>> +
+>> +    if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
+>> +        todo_list_release(&todo_list);
+>> +        return error(_("unusable todo list: '%s'"), todo_file);
+>> +    }
+>> +
+>> +    todo_list_add_exec_commands(&todo_list, commands);
+>> +    res = todo_list_write_to_file(r, &todo_list, todo_file, NULL, 
+>> NULL, -1, 0);
+>>      todo_list_release(&todo_list);
+>> -    return i;
+>> +
+>> +    if (res)
+>> +        return error_errno(_("could not write '%s'."), todo_file);
+>> +    return 0;
+>>  }
+>>
+>>  static void todo_list_to_strbuf(struct repository *r, struct 
+>> todo_list *todo_list,
+>> @@ -4735,7 +4761,7 @@ static int skip_unnecessary_picks(struct 
+>> repository *r, struct object_id *output
+>>
+>>  int complete_action(struct repository *r, struct replay_opts *opts, 
+>> unsigned flags,
+>>              const char *shortrevisions, const char *onto_name,
+>> -            const char *onto, const char *orig_head, const char *cmd,
+>> +            const char *onto, const char *orig_head, struct 
+>> string_list *commands,
+>>              unsigned autosquash)
+>>  {
+>>      const char *shortonto, *todo_file = rebase_path_todo();
+>> @@ -4754,8 +4780,8 @@ int complete_action(struct repository *r, struct 
+>> replay_opts *opts, unsigned fla
+>>      if (autosquash && rearrange_squash(r))
+>>          return -1;
+>>
+>> -    if (cmd && *cmd)
+>> -        sequencer_add_exec_commands(r, cmd);
+>> +    if (commands->nr)
+>> +        sequencer_add_exec_commands(r, commands);
+>>
+>>      if (strbuf_read_file(buf, todo_file, 0) < 0)
+>>          return error_errno(_("could not read '%s'."), todo_file);
+>> diff --git a/sequencer.h b/sequencer.h
+>> index 1de97f188d..e79f03e213 100644
+>> --- a/sequencer.h
+>> +++ b/sequencer.h
+>> @@ -146,12 +146,13 @@ int sequencer_make_script(struct repository *r, 
+>> FILE *out, int argc,
+>>                const char **argv,
+>>                unsigned flags);
+>>
+>> -int sequencer_add_exec_commands(struct repository *r, const char 
+>> *command);
+>> +int sequencer_add_exec_commands(struct repository *r,
+>> +                struct string_list *commands);
+>>  int transform_todo_file(struct repository *r, unsigned flags);
+>>  int check_todo_list_from_file(struct repository *r);
+>>  int complete_action(struct repository *r, struct replay_opts *opts, 
+>> unsigned flags,
+>>              const char *shortrevisions, const char *onto_name,
+>> -            const char *onto, const char *orig_head, const char *cmd,
+>> +            const char *onto, const char *orig_head, struct 
+>> string_list *commands,
+>>              unsigned autosquash);
+>>  int rearrange_squash(struct repository *r);
 >>
 >>
->> Changes since v3:
->>
->>   * add error check when calling add--helper's functions from
->>     git-add--interactive.perl
->>   * replace trailing whitespace in the test with variable $SP used in 
->> earlier
->>     tests
->>
->> Cc: Phillip Wood phillip.wood@dunelm.org.uk [phillip.wood@dunelm.org.uk]
->>
->> Daniel Ferreira (4):
->>    diff: export diffstat interface
->>    add--helper: create builtin helper for interactive add
->>    add-interactive.c: implement status command
->>    add--interactive.perl: use add--helper --status for status_cmd
->>
->> Slavica Djukic (3):
->>    add-interactive.c: implement show-help command
->>    t3701-add-interactive: test add_i_show_help()
->>    add--interactive.perl: use add--helper --show-help for help_cmd
->>
->>   .gitignore                 |   1 +
->>   Makefile                   |   2 +
->>   add-interactive.c          | 263 +++++++++++++++++++++++++++++++++++++
->>   add-interactive.h          |  10 ++
->>   builtin.h                  |   1 +
->>   builtin/add--helper.c      |  43 ++++++
->>   diff.c                     |  36 ++---
->>   diff.h                     |  18 +++
->>   git-add--interactive.perl  |  17 +--
->>   git.c                      |   1 +
->>   t/t3701-add-interactive.sh |  24 ++++
->>   11 files changed, 381 insertions(+), 35 deletions(-)
->>   create mode 100644 add-interactive.c
->>   create mode 100644 add-interactive.h
->>   create mode 100644 builtin/add--helper.c
->>
->>
->> base-commit: b21ebb671bb7dea8d342225f0d66c41f4e54d5ca
->> Published-As: 
->> https://github.com/gitgitgadget/git/releases/tag/pr-103%2FslavicaDj%2Fadd-i-v4 
->>
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git 
->> pr-103/slavicaDj/add-i-v4
->> Pull-Request: https://github.com/gitgitgadget/git/pull/103
->>
->> Range-diff vs v3:
->>
->>   1:  737767b6f4 = 1:  737767b6f4 diff: export diffstat interface
->>   2:  91b1963125 = 2:  91b1963125 add--helper: create builtin helper 
->> for interactive add
->>   3:  d247ef69fe = 3:  d247ef69fe add-interactive.c: implement status 
->> command
->>   4:  4950c889aa ! 4:  fb3f9378ac add--interactive.perl: use 
->> add--helper --status for status_cmd
->>       @@ -2,12 +2,21 @@
->>            add--interactive.perl: use add--helper --status for status_cmd
->>       -    Call the newly introduced add--helper builtin on
->>       +    Call the newly introduced add--helper builtin in
->>            status_cmd() instead of relying on add--interactive's Perl
->>       -    functions to build print the numstat.
->>       +    functions to print the numstat.
->>       +
->>       +    If an error occurs, it will be reported, but the Perl 
->> script will
->>       +    not exit, since the add--helper is called within an eval 
->> block.
->>       +
->>       +    As the Perl script will go away soon, so will this 
->> scenario, where
->>       +    the built-in helper is called  from the Perl script. 
->> Combined with
->>       +    the fact that it would be hard to test, we'll pass on adding
->>       +    a regression test for this.
->>            Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
->>            Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
->>       +    Signed-off-by: Ã†var ArnfjÃ¶rÃ° Bjarmason <avarab@gmail.com>
->>         diff --git a/git-add--interactive.perl 
->> b/git-add--interactive.perl
->>         --- a/git-add--interactive.perl
->>       @@ -19,7 +28,8 @@
->>        -    list_and_choose({ LIST_ONLY => 1, HEADER => $status_head },
->>        -            list_modified());
->>        -    print "\n";
->>       -+    system(qw(git add--helper --status));
->>       ++    my @status_cmd = ("git", "add--helper", "--status");
->>       ++    !system(@status_cmd) or die "@status_cmd exited with code 
->> $?";
->>         }
->>         sub say_n_paths {
->>   5:  581b108c9c = 5:  ab16afd1d5 add-interactive.c: implement 
->> show-help command
->>   6:  aede733318 ! 6:  0a27304a84 t3701-add-interactive: test 
->> add_i_show_help()
->>       @@ -7,6 +7,7 @@
->>            Also, add it before changing git-add--interactive.perl's 
->> help_cmd
->>            to demonstrate that there are no changes introduced by the
->>            conversion to C.
->>       +
->>            Prefix git add -i call with GIT_PAGER_IN_USE=true TERM=vt100
->>            to force colored output on Windows.
->>       @@ -21,7 +22,7 @@
->>        +test_expect_success 'show help from add--helper' '
->>        +    git reset --hard &&
->>       -+    cat >expect <<-\EOF &&
->>       ++    cat >expect <<-EOF &&
->>        +
->>        +    <BOLD>*** Commands ***<RESET>
->>        +      1: <BOLD;BLUE>s<RESET>tatus      2: 
->> <BOLD;BLUE>u<RESET>pdate      3: <BOLD;BLUE>r<RESET>evert      4: 
->> <BOLD;BLUE>a<RESET>dd untracked
->>       @@ -35,7 +36,7 @@
->>        +    <BOLD>*** Commands ***<RESET>
->>        +      1: <BOLD;BLUE>s<RESET>tatus      2: 
->> <BOLD;BLUE>u<RESET>pdate      3: <BOLD;BLUE>r<RESET>evert      4: 
->> <BOLD;BLUE>a<RESET>dd untracked
->>        +      5: <BOLD;BLUE>p<RESET>atch      6: 
->> <BOLD;BLUE>d<RESET>iff      7: <BOLD;BLUE>q<RESET>uit      8: 
->> <BOLD;BLUE>h<RESET>elp
->>       -+    <BOLD;BLUE>What now<RESET>>
->>       ++    <BOLD;BLUE>What now<RESET>>$SP
->>        +    Bye.
->>        +    EOF
->>        +    test_write_lines h | GIT_PAGER_IN_USE=true TERM=vt100 git 
->> add -i >actual.colored &&
->>   7:  b9a1a7e37a ! 7:  ca2a7c4375 add--interactive.perl: use 
->> add--helper --show-help for help_cmd
->>       @@ -5,7 +5,15 @@
->>            Change help_cmd sub in git-add--interactive.perl to use
->>            show-help command from builtin add--helper.
->>       +    If an error occurs, it will be reported, but the Perl 
->> script will
->>       +    not exit, since the add--helper is called within an eval 
->> block.
->>       +
->>       +    Just like the change where the Perl script calls the 
->> add--helper
->>       +    to print the numstat, also here we forgo adding a 
->> regression test:
->>       +    the Perl script is on its way out (and this patch is part 
->> of that journey).
->>       +
->>            Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
->>       +    Signed-off-by: Ã†var ArnfjÃ¶rÃ° Bjarmason <avarab@gmail.com>
->>         diff --git a/git-add--interactive.perl 
->> b/git-add--interactive.perl
->>         --- a/git-add--interactive.perl
->>       @@ -24,7 +32,8 @@
->>        -diff          - view diff between HEAD and index
->>        -add untracked - add contents of untracked files to the staged 
->> set of changes
->>        -EOF
->>       -+    system(qw(git add--helper --show-help));
->>       ++    my @help_cmd = ("git", "add--helper", "--show-help");
->>       ++    !system(@help_cmd) or die "@help_cmd exited with code $?";
->>         }
->>         sub process_args {
->>
+> 
 
