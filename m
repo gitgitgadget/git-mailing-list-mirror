@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B62511F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 17:59:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BD501F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 17:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731496AbfBAR7E (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 12:59:04 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:34347 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730936AbfBAR7E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 12:59:04 -0500
-Received: by mail-ed1-f68.google.com with SMTP id b3so6197754ede.1
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 09:59:02 -0800 (PST)
+        id S1731508AbfBAR7G (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 12:59:06 -0500
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:34917 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731492AbfBAR7F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 12:59:05 -0500
+Received: by mail-ed1-f41.google.com with SMTP id x30so6172302edx.2
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 09:59:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6djYe7/03CUDTr2kWoKpxarC+toKY46tdt8i8EI49jQ=;
-        b=aLMRCqnzRM92/ch0X2V97ddxiKXyBJJoura9GtyqD7kZ0MPTs23zsxz1rkjoCEJkDA
-         ABonmSx/mTdYlxWY7YhohFdPNhsepuDNjbFZB+/dkTrpQpHiN2oefMAsuITOrIomPm4V
-         Gcy+0PgdWIPkwG5kGcBVSaC9ak159Jge/+3TVH5v8qEWblltPUao2k2fSFDw9hU4W5aS
-         YqVLJ50e7Eoohj7W0LAnAkU1j0snPfRgEt2kNzahaaTxKnR21EfFXciwNKq9f9h5HUTE
-         00wCKgbZJDtP6RIErkjHWd2cehDw0ytb5EqGFGloiUN7X1b+cgP6PubPOV4FAzGMqcYG
-         clAw==
+        bh=gkl/SeuuBvHNvR1dGTKxIOcbnKIgfgd1oncsXBT5oQU=;
+        b=K3fek57jCW4VgnzV/BHc5GjObxtb4/u1YMf0YTIYpKNNI/f+mrxPkCVn0joZ+jrJve
+         K9bUr2wVanDJkl4EBCMlWntkdXJaq148w+QwwPIbkNcVoeUmRXj+8cVRcGfONef2+Fqp
+         4pkZ9vpePpGwqbLlcdeongpkOLhTxSp8BgJ9pjD2b5Oe8a7+Lo+cpKDXYdkJXAOvS3IZ
+         hkE1VG8GyZzmjP7XJi2vYSF6Qlapc4lEzcZEF+DAv4r3MHb4QthQ1Ko7uMuKuhzQhACx
+         Y56UoZUNb/eZ9eB/dqELpIz97cUJ4QOkDTSCOFK6hDDx0Lsh1CXXcF5O6p468O9dZ1Ko
+         Uh7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6djYe7/03CUDTr2kWoKpxarC+toKY46tdt8i8EI49jQ=;
-        b=Z7iqhPo6XkoxDTp2yXvLJnK24g6QbQeuY0ZEeirGQfuR2xfTr+PtqWtyEV4MlUZpJS
-         3Am06fStTLZlcsaW1j5tvEFhE5QQYl/VU15qKBlmoqjfexEo0h3wysbUESjT4q06l07y
-         5JuPWi3WjG4/O9ZV326+kbOnvyyJYZytpiDXzX6OKeprnQbH+ayWnFncMv5jzRJID/sm
-         eFw1jXN8dApqGJjaL5oKLTb3mXQLAvIa80tr5PkJs6766ZBiKo5hdSlyeqyy2LxnL/V1
-         oDv8HC/uXP05m4Zdba1MorQ13hzDHCcqzSAONTt+qCNNlWL99KYMb40NKMSxdo8e+dAN
-         I+2g==
-X-Gm-Message-State: AJcUukdspNYcuWMApi9cLNKKWD8kxXHHHroANVJeIcUh+YJvImc/ee2U
-        ygoqUIgm1YWC/Et5X8UEcDI+gu+q
-X-Google-Smtp-Source: ALg8bN7JVLXMPHpgw65GidbMTYZ5PekaIWVb1dL2dBHpb8USncYgY8bJamKlPbVD9QMpSRevNHxXJQ==
-X-Received: by 2002:aa7:c0d0:: with SMTP id j16mr39143799edp.173.1549043941711;
-        Fri, 01 Feb 2019 09:59:01 -0800 (PST)
+        bh=gkl/SeuuBvHNvR1dGTKxIOcbnKIgfgd1oncsXBT5oQU=;
+        b=LyLUDC4GW+3v+/lJReHkz0+k3IRazZK3s/OKvjgThxAmPDb+INwTjfk518ZlETQlPX
+         TIAl0FJwywric79xmJ95OjVcBEmeHnzbaCqlmhFd5sSEeKwoBo4PnVdp8Q3Gqf74QcO7
+         LhQzesYNzWHnP/zYJg7qh210wq1zU3XSlt4ZMyQm9WCvy2uLgFeuynNG6V5+9A6QDgYr
+         wkXLINP1Uhx66s0Llt+GCDxiIrx0wcklpX3y9uVyudTW8inlhlmhw5cBnewcRXPrq/bj
+         9pdM5Jb29fgHwsvMrli9Gi/GFkhOC6ABP/dD2s06jfVemjyPKnlBubS3qrNs7yligvAT
+         4Hvg==
+X-Gm-Message-State: AHQUAuYD+2GRYxBe41IY+8kwDYEBE1GV/EvmiLwfT9XLI11zByaT/cve
+        dJOpYbxhyzpuUmxTU1b6IeRU/xay
+X-Google-Smtp-Source: AHgI3Iag3g0pc+dHK3f6/LBVM9Mww0FrPcIK0nNbIOjw5KkU2nVNFBMbsDd5dYB/Qk5igmHwp9Nt4A==
+X-Received: by 2002:a17:906:5387:: with SMTP id g7mr10150083ejo.189.1549043942654;
+        Fri, 01 Feb 2019 09:59:02 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s7sm1336549ejm.11.2019.02.01.09.59.00
+        by smtp.gmail.com with ESMTPSA id s19sm1351884eja.52.2019.02.01.09.59.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Feb 2019 09:59:01 -0800 (PST)
-Date:   Fri, 01 Feb 2019 09:59:01 -0800 (PST)
-X-Google-Original-Date: Fri, 01 Feb 2019 17:58:44 GMT
-Message-Id: <7c987cde860b783782e4ee8e4f6ebd362c0df9a2.1549043936.git.gitgitgadget@gmail.com>
+        Fri, 01 Feb 2019 09:59:02 -0800 (PST)
+Date:   Fri, 01 Feb 2019 09:59:02 -0800 (PST)
+X-Google-Original-Date: Fri, 01 Feb 2019 17:58:45 GMT
+Message-Id: <cd860799f88ba9832d7b15822dcc866a7395d697.1549043936.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v5.git.gitgitgadget@gmail.com>
 References: <pull.108.v4.git.gitgitgadget@gmail.com>
         <pull.108.v5.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 03/15] trace2: collect Windows-specific process information
+Subject: [PATCH v5 04/15] trace2:data: add trace2 regions to wt-status
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,185 +71,70 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add platform-specific interface to log information about the current
-process.
+Add trace2_region_enter() and trace2_region_leave() calls around the
+various phases of a status scan.  This gives elapsed time for each
+phase in the GIT_TR2_PERF and GIT_TR2_EVENT trace target.
 
-On Windows, this interface is used to indicate whether the git process
-is running under a debugger and list names of the process ancestors.
-
-Information for other platforms is left for a future effort.
+Also, these Trace2 calls now use s->repo rather than the_repository.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- common-main.c                            |   1 +
- compat/win32/trace2_win32_process_info.c | 101 +++++++++++++++++++++++
- config.mak.uname                         |   2 +
- trace2.h                                 |  14 ++++
- 4 files changed, 118 insertions(+)
- create mode 100644 compat/win32/trace2_win32_process_info.c
+ wt-status.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/common-main.c b/common-main.c
-index 6dbdc4adf2..d484aec209 100644
---- a/common-main.c
-+++ b/common-main.c
-@@ -37,6 +37,7 @@ int main(int argc, const char **argv)
+diff --git a/wt-status.c b/wt-status.c
+index 0fe3bcd4cd..434636850e 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -748,12 +748,23 @@ static int has_unmerged(struct wt_status *s)
  
- 	trace2_initialize();
- 	trace2_cmd_start(argv);
-+	trace2_collect_process_info();
- 
- 	git_resolve_executable_dir(argv[0]);
- 
-diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
-new file mode 100644
-index 0000000000..253199f812
---- /dev/null
-+++ b/compat/win32/trace2_win32_process_info.c
-@@ -0,0 +1,101 @@
-+#include "../../cache.h"
-+#include "../../json-writer.h"
-+#include <Psapi.h>
-+#include <tlHelp32.h>
+ void wt_status_collect(struct wt_status *s)
+ {
++	trace2_region_enter("status", "worktrees", s->repo);
+ 	wt_status_collect_changes_worktree(s);
+-	if (s->is_initial)
++	trace2_region_leave("status", "worktrees", s->repo);
 +
-+/*
-+ * Find the process data for the given PID in the given snapshot
-+ * and update the PROCESSENTRY32 data.
-+ */
-+static int find_pid(DWORD pid, HANDLE hSnapshot, PROCESSENTRY32 *pe32)
-+{
-+	pe32->dwSize = sizeof(PROCESSENTRY32);
-+
-+	if (Process32First(hSnapshot, pe32)) {
-+		do {
-+			if (pe32->th32ProcessID == pid)
-+				return 1;
-+		} while (Process32Next(hSnapshot, pe32));
++	if (s->is_initial) {
++		trace2_region_enter("status", "initial", s->repo);
+ 		wt_status_collect_changes_initial(s);
+-	else
++		trace2_region_leave("status", "initial", s->repo);
++	} else {
++		trace2_region_enter("status", "index", s->repo);
+ 		wt_status_collect_changes_index(s);
++		trace2_region_leave("status", "index", s->repo);
 +	}
-+	return 0;
-+}
 +
-+/*
-+ * Accumulate JSON array:
-+ *     [
-+ *         exe-name-parent,
-+ *         exe-name-grand-parent,
-+ *         ...
-+ *     ]
-+ *
-+ * Note: we only report the filename of the process executable; the
-+ *       only way to get its full pathname is to use OpenProcess()
-+ *       and GetModuleFileNameEx() or QueryfullProcessImageName()
-+ *       and that seems rather expensive (on top of the cost of
-+ *       getting the snapshot).
-+ */
-+static void get_processes(struct json_writer *jw, HANDLE hSnapshot)
-+{
-+	PROCESSENTRY32 pe32;
-+	DWORD pid;
-+
-+	pid = GetCurrentProcessId();
-+
-+	/* We only want parent processes, so skip self. */
-+	if (!find_pid(pid, hSnapshot, &pe32))
-+		return;
-+	pid = pe32.th32ParentProcessID;
-+
-+	while (find_pid(pid, hSnapshot, &pe32)) {
-+		jw_array_string(jw, pe32.szExeFile);
-+
-+		pid = pe32.th32ParentProcessID;
-+	}
-+}
-+
-+/*
-+ * Emit JSON data for the current and parent processes.  Individual
-+ * trace2 targets can decide how to actually print it.
-+ */
-+static void get_ancestry(void)
-+{
-+	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-+
-+	if (hSnapshot != INVALID_HANDLE_VALUE) {
-+		struct json_writer jw = JSON_WRITER_INIT;
-+
-+		jw_array_begin(&jw, 0);
-+		get_processes(&jw, hSnapshot);
-+		jw_end(&jw);
-+
-+		trace2_data_json("process", the_repository, "windows/ancestry",
-+				 &jw);
-+
-+		jw_release(&jw);
-+		CloseHandle(hSnapshot);
-+	}
-+}
-+
-+/*
-+ * Is a debugger attached to the current process?
-+ *
-+ * This will catch debug runs (where the debugger started the process).
-+ * This is the normal case.  Since this code is called during our startup,
-+ * it will not report instances where a debugger is attached dynamically
-+ * to a running git process, but that is relatively rare.
-+ */
-+static void get_is_being_debugged(void)
-+{
-+	if (IsDebuggerPresent())
-+		trace2_data_intmax("process", the_repository,
-+				   "windows/debugger_present", 1);
-+}
-+
-+void trace2_collect_process_info(void)
-+{
-+	if (!trace2_is_enabled())
-+		return;
-+
-+	get_is_being_debugged();
-+	get_ancestry();
-+}
-diff --git a/config.mak.uname b/config.mak.uname
-index 7b36a1dfe7..a3c03ce2ae 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -391,6 +391,7 @@ ifeq ($(uname_S),Windows)
- 	BASIC_CFLAGS = -nologo -I. -I../zlib -Icompat/vcbuild -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
- 	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
- 		compat/win32/pthread.o compat/win32/syslog.o \
-+		compat/win32/trace2_win32_process_info.o \
- 		compat/win32/dirent.o
- 	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
- 	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE
-@@ -545,6 +546,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	COMPAT_CFLAGS += -DNOGDI -Icompat -Icompat/win32
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
-+		compat/win32/trace2_win32_process_info.o \
- 		compat/win32/path-utils.o \
- 		compat/win32/pthread.o compat/win32/syslog.o \
- 		compat/win32/dirent.o
-diff --git a/trace2.h b/trace2.h
-index fce9891f53..ae5020d0e6 100644
---- a/trace2.h
-+++ b/trace2.h
-@@ -368,4 +368,18 @@ void trace2_printf(const char *fmt, ...);
- /* clang-format on */
- #endif
++	trace2_region_enter("status", "untracked", s->repo);
+ 	wt_status_collect_untracked(s);
++	trace2_region_leave("status", "untracked", s->repo);
  
-+/*
-+ * Optional platform-specific code to dump information about the
-+ * current and any parent process(es).  This is intended to allow
-+ * post-processors to know who spawned this git instance and anything
-+ * else the platform may be able to tell us about the current process.
-+ */
-+#if defined(GIT_WINDOWS_NATIVE)
-+void trace2_collect_process_info(void);
-+#else
-+#define trace2_collect_process_info() \
-+	do {                          \
-+	} while (0)
-+#endif
+ 	wt_status_get_state(s->repo, &s->state, s->branch && !strcmp(s->branch, "HEAD"));
+ 	if (s->state.merge_in_progress && !has_unmerged(s))
+@@ -2291,6 +2302,13 @@ static void wt_porcelain_v2_print(struct wt_status *s)
+ 
+ void wt_status_print(struct wt_status *s)
+ {
++	trace2_data_intmax("status", s->repo, "count/changed", s->change.nr);
++	trace2_data_intmax("status", s->repo, "count/untracked",
++			   s->untracked.nr);
++	trace2_data_intmax("status", s->repo, "count/ignored", s->ignored.nr);
 +
- #endif /* TRACE2_H */
++	trace2_region_enter("status", "print", s->repo);
++
+ 	switch (s->status_format) {
+ 	case STATUS_FORMAT_SHORT:
+ 		wt_shortstatus_print(s);
+@@ -2309,6 +2327,8 @@ void wt_status_print(struct wt_status *s)
+ 		wt_longstatus_print(s);
+ 		break;
+ 	}
++
++	trace2_region_leave("status", "print", s->repo);
+ }
+ 
+ /**
 -- 
 gitgitgadget
 
