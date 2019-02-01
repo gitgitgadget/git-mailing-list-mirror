@@ -2,101 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 738331F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 22:40:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A2F91F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 22:42:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727205AbfBAWkG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 17:40:06 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:44947 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727181AbfBAWkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 17:40:06 -0500
-Received: by mail-ed1-f67.google.com with SMTP id y56so6725375edd.11
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 14:40:05 -0800 (PST)
+        id S1727004AbfBAWmB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 17:42:01 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:44819 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726643AbfBAWmA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 17:42:00 -0500
+Received: by mail-qt1-f196.google.com with SMTP id n32so9482165qte.11
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 14:42:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qajGL0Qvp/cv4P/ns/8XMED7YmpiJ+/qEQ1zOv5qVbg=;
-        b=GrprXMW9wsl+pr59nzD200jMqh/1IGIYvfMGlLOXhscFQHe6caCrFDpE+u2QjqbZ1M
-         ZFQP2NxXcd/fbHJ7KDHEdWGHpDeEXX52Ppyjy6lfPrdZGDKiJaVHdq68/5fMBJhQHanu
-         a1aG7b8Ovvb6CkTqoAkbJw85shkZ2W/f9u3bFyxWa4kSlUOBZV5jee7DY2dxm3A7VUMk
-         REVLxzyWHjUM5UdDZfEsKtXnXmnwwFmqXSe0P45zWOLkIz2NBtnTs07chblrWhR7QYRZ
-         ya4K2rE3f/uu3i6QTqR4bdhVta7bTJjJDz5i2erRNl2z4vXrOzwOf1hjp8PVY0+LBEsf
-         7oig==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yRCMwEZ/BSdQxSNlyt4KtJQyRCq/jrPHd5WNtukrHFY=;
+        b=AlieEFV0aS5OYR7NBFGwar1FClgcMRUMVMxLkM1BpA/QMbm4WRggn9oqub6hxYGG+n
+         wFzNRvI0CuWDG9M7g0qNJZGwIs0nSs+KOjibFl/ignd84Twz0c5HFeLt4eRu9IIyU6Hh
+         L9qHBgsVVPSy7LzglaIvQOcZusWR/6frsrMRforXInmM6MgwVPvUpk62EkRVPthUqnLt
+         VqnId+b9velQ2IoAloZJ4ecnkNYv38EAWZU4A8WMQQY1uyIApcg00y5gkldQB/TSJPyZ
+         7cgAjUU2vvGxwEQn/4ns/uBbXTvPlEkrqcvll0v/FcbPrT9eTFyyrXFHGIstMwG2GT9Z
+         GJQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qajGL0Qvp/cv4P/ns/8XMED7YmpiJ+/qEQ1zOv5qVbg=;
-        b=kyvR7EhXOSjf5ulWorhJwLABARZNsFe3jvoeWbLb8yjik/TqrX8mwLNRuyK30Luavd
-         dY886ToVE7vhwUlqi0JesxCsQLM8GIkMy9lo2FtALAR+uT5xqFNncjy+NI2Z4pBTj4gr
-         rOzctlhVjH7xqgnH3nysW56B3EA4/cIGYILSLmRInAl9FOuCMF/7zbuC3fLEwhxm9rBz
-         wQg0OF1mxQ/0o3xxYQPkw9yNYH6DqASZn8cJ95dciifufB/pYziz2+UmdAzw7r/2Wdfy
-         ZU+r4t4mwZ+aNTY/7yNDhIGyFjEbFj1IAuUAG/vyUJ7xhJyxW36J4HZwlYBEpbhVting
-         4D1A==
-X-Gm-Message-State: AJcUukfZUvadPcIZiZRyuf5GZYMCR+5SVOQqW36++AcwasPxPn81Rd+T
-        J9Jt2PqLI3xiaqRSqewUP74=
-X-Google-Smtp-Source: ALg8bN7lIQVtlf8boax0FbtvaTPHE+tWptny33dEl/FyxwrJ6eHNV27TwAztiksdaYQkUQhkB3MeGA==
-X-Received: by 2002:a50:ae64:: with SMTP id c91mr40150865edd.222.1549060804323;
-        Fri, 01 Feb 2019 14:40:04 -0800 (PST)
-Received: from ltop.local ([2a02:a03f:40eb:400:6cd3:4d33:1db0:edba])
-        by smtp.gmail.com with ESMTPSA id r1sm2266870eds.1.2019.02.01.14.40.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Feb 2019 14:40:03 -0800 (PST)
-Date:   Fri, 1 Feb 2019 23:40:00 +0100
-From:   Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 0/1] Using sparse in a CI job
-Message-ID: <20190201223959.zmlyg4buwolw2b3p@ltop.local>
-References: <78f85f0b-176f-0b54-2ec8-4c13fd386733@ramsayjones.plus.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yRCMwEZ/BSdQxSNlyt4KtJQyRCq/jrPHd5WNtukrHFY=;
+        b=DzJleJhIas2vxyhLa6y+tsA/Py1nMjJwLybENEScH6zAQzGBW/V5tSqJqoK21hwew5
+         MvSarmRnoLdl3wzotKrntij1d375BRSYvn3Ptf8RFl9t6EeTUnI4CChXtGIbHBue8bpR
+         h0Kv8Hs/wnwybrhASMbhrVRGqp7moBwnoRQ59F5RjrrdnNdJV2YyRkcy/mahActQVzX1
+         a48hREIPFm5fTNqfOhmQCN8pWbhbFD2O5ZuDRkgpikOhaisZV6M+rRQHJNfOCkbeI21T
+         gLxPfQScw2vp2IRARIMo8Jpm3zebnurPtLOk4HkfOMxRD6aRqvIRQ8HssOUsyRq6Qg6H
+         suug==
+X-Gm-Message-State: AHQUAuayWdhZkcV6WB+GrdfNp+WJQY/58nwvDER6ywqQV35TCT2GPqaC
+        fqN7QeEigiSgCeDvgsrz7mL0lZFlbWnWQ18xLsw=
+X-Google-Smtp-Source: AHgI3IYnUttp2MVsXsP+/hAPOEXA+FzctEkDfF7xosbD4xMpU8H7RQwLbyApRqXzoBIPveXXzKLgCv6nwayGkCZmJt0=
+X-Received: by 2002:ac8:3399:: with SMTP id c25mr140500qtb.365.1549060919470;
+ Fri, 01 Feb 2019 14:41:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <78f85f0b-176f-0b54-2ec8-4c13fd386733@ramsayjones.plus.com>
-User-Agent: NeoMutt/20180716
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20190201220420.36216-1-nbelakovski@gmail.com> <20190201220420.36216-2-nbelakovski@gmail.com>
+ <CAPig+cSfw=dun__contMMiHrdsZPPN68U4UzfBGz4Yt8DwO7mQ@mail.gmail.com>
+In-Reply-To: <CAPig+cSfw=dun__contMMiHrdsZPPN68U4UzfBGz4Yt8DwO7mQ@mail.gmail.com>
+From:   Nickolai Belakovski <nbelakovski@gmail.com>
+Date:   Fri, 1 Feb 2019 14:41:30 -0800
+Message-ID: <CAC05386a+FZP8hGawYsfZrmA--JuZBqi_aop7202JQnJEfKyJg@mail.gmail.com>
+Subject: Re: [PATCH v7 1/3] ref-filter: add worktreepath atom
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Rafael Ascensao <rafa.almas@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 01, 2019 at 09:01:20PM +0000, Ramsay Jones wrote:
-> 
-> I suspect that the Makefile sparse target is not easy to use in a CI
-> job, since the 'sparse' program (via cgcc -no-compile) does not exit
-> with a non-zero value, even when issuing errors and warnings.
+On Fri, Feb 1, 2019 at 2:20 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Fri, Feb 1, 2019 at 5:04 PM <nbelakovski@gmail.com> wrote:
+> > Add an atom providing the path of the linked worktree where this ref is
+> > checked out, if it is checked out in any linked worktrees, and empty
+> > string otherwise.
+> >
+> > Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
+> > ---
+> > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> > @@ -214,6 +214,11 @@ symref::
+> > +worktreepath::
+> > +       The absolute path to the worktree in which the ref is checked
+> > +       out, if it is checked out in any linked worktree. Empty string
+> > +       otherwise.
+>
+> This may have been asked previously, but is there a reason this name
+> was chosen over the more extensible "worktree:" with "path" as a
+> modifier (i.e. "worktree:path")? I scanned the thread a couple weeks
+> ago and did see mention of "worktree:path" but did not find any
+> followup. I ask because it's conceivable that someone in the future
+> might want to retrieve other information about the worktree beyond its
+> path (such as whether it's bare or detached, etc.). By using the form
+> "worktree:<foo>", we leave that door open. (I'm not suggesting that
+> this patch series needs to implement fetching of any of the other
+> worktree properties, but just asking if "worktree:<foo>" should be
+> considered.)
+>
 
-...
- 
-> We can change that by passing '-Wsparse-error' to 'sparse':
-> 
->   $ make SPARSE_FLAGS=-Wsparse-error change-table.sp
->       SP change-table.c
->   change-table.h:53:24: error: dubious one-bit signed bitfield
->   change-table.h:54:25: error: dubious one-bit signed bitfield
->   change-table.h:55:25: error: dubious one-bit signed bitfield
->   change-table.h:56:26: error: dubious one-bit signed bitfield
->   Makefile:2729: recipe for target 'change-table.sp' failed
->   make: *** [change-table.sp] Error 1
->   $ echo $?
->   2
->   $ 
-> 
-> Note that '-Wsparse-error' not only returns a non-zero exit code (1), but
-> it also changes a 'warning' into an 'error' (see above):
+There's been a little back and forth on it, but my understanding is
+that using the colon separator bypasses the caching mechanism in the
+atoms, so every instance of "worktree:path" in a format string would
+require a lookup. Future atoms should be along the lines of
+"worktreeisdetached", "worktreeisbare", etc. This is consistent with
+several of the other atoms, like objecttype/size/name,
+comitter/name/email/date.
 
-Yes, I know :(
-The fact that, by default, sparse doesn't fail on errors is wanted
-(otherwise it would break the kernel compile). But that the only way
-to return an error is to use -Wsparse-error (which is supposed to
-replace GCC's -Werror) is a real problem.
+> > diff --git a/ref-filter.c b/ref-filter.c
+> > @@ -1562,6 +1628,13 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+> >                 if (starts_with(name, "refname"))
+> >                         refname = get_refname(atom, ref);
+> > +               else if (starts_with(name, "worktreepath")) {
+>
+> I think this was brought up previously, but shouldn't this be strcmp()
+> rather than starts_with()?
+>
+> (starts_with() would be appropriate, if you went with the suggested
+> "worktree:<foo>".)
 
--- Luc
+Not sure about it being brought up previously. starts_with seemed
+consistent with other uses but now I see there's several other
+instance of strcmp in populate value. Seems like a reasonable thing to
+change. I had previously implemented "worktree:<foo>" and must've left
+it alone after we went with worktreepath.
+
+>
+> > diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+> > @@ -441,4 +441,19 @@ test_expect_success '--merged is incompatible with --no-merged' '
+> > +test_expect_success '"add" a worktree' '
+> > +       mkdir worktree_dir &&
+> > +       git worktree add -b master_worktree worktree_dir master
+> > +'
+>
+> I don't think 'mkdir' is needed since "git worktree add" should create
+> the directory itself.
+>
+> > +test_expect_success 'validate worktree atom' '
+> > +       cat >expect <<-EOF &&
+> > +       master: $(pwd)
+> > +       master_worktree: $(pwd)/worktree_dir
+> > +       side: not checked out
+> > +       EOF
+> > +       git for-each-ref --format="%(refname:short): %(if)%(worktreepath)%(then)%(worktreepath)%(else)not checked out%(end)" refs/heads/ >actual &&
+> > +       test_cmp expect actual
+> > +'
+>
+> If this is the only test using that newly-created worktree, it might
+> make sense to squash the two tests together.
+
+Sure, can do, on both points.
