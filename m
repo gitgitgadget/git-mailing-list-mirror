@@ -2,104 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E5D31F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 17:59:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E84901F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 18:06:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731515AbfBAR7V (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 12:59:21 -0500
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:41145 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731523AbfBAR7L (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 12:59:11 -0500
-Received: by mail-ed1-f44.google.com with SMTP id a20so6134489edc.8
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 09:59:10 -0800 (PST)
+        id S1730062AbfBASGI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 13:06:08 -0500
+Received: from mail-wm1-f54.google.com ([209.85.128.54]:35139 "EHLO
+        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726808AbfBASGI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 13:06:08 -0500
+Received: by mail-wm1-f54.google.com with SMTP id t200so7196610wmt.0
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 10:06:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=J256ctfmigu5mFnIJRHP42N6y/j6eTLobV2FjgdQk+0=;
-        b=Or1HRocQWMjpqYJNUo1ZC2QbCb9nr0pEfO0LPBeNtGs52FUbuXok3vLRi/kFzFP4f7
-         hapbKMYWU2Obt692X82rM8Qd9evdzrx52nabg/3lLj2n2b82WM4cD/a9ilaScidNmddC
-         Zeu1d0lcsHhrwEEcF0V2x78+AWG72Dl3srvmktMbofVYirQTCl8BiXNG+giO1+X9mPE6
-         wl89SqeptcbVG4pFyNhk3QPztQ6ZOkPhrAYxwhSjB/ePxmv4jyDHQp67R3iD6fKX3rWK
-         7H7XyraC4HdDiGmzYxTgU/5HaXay+CDH3NjIm6MuJSFaVsU6WHma6un2QlnqCosduHyT
-         H1Vg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=jW51zXoqi8NLKvNeU11/n+WNW2s+bWu6ngPOgqSBAwo=;
+        b=hP72/Y+VPe6g0nsnvQc9+G88DAHeheOlAvUW9nWX5dSM7r5Oy+KF8wgu3/eMwk6o/o
+         B1s6vQLV1FZV2AqujNxW8DZu4t1OBRGgG0sP4Yp0NDxsdJeKYu9TNQUuMKxG9YpkbdtD
+         ZoU6rHmiLV5ynWq/umhPkoNPkv163Px9s5Gw1FyntPl7lE6tTYTPEzIxmE5YtEMScaXh
+         6VDOD/3BBRgKVzmgNUNdWw3VsN0vHdWZWi2BEReRbnlfFEkyn57LtMLmprXU2rwJ44nA
+         6JS47ED1TmXW3c6sKBAPuYKBEXoc589OFle9C7fSw5lep6Rml3Qg1cpX5wN3rxZYY/mi
+         2BaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=J256ctfmigu5mFnIJRHP42N6y/j6eTLobV2FjgdQk+0=;
-        b=o/nzpOmxpgRXL+IHJW1MElukWkG1uYvoGRcdUJMEjaWmtjoBc1IYBuGKq8kSL/yKL9
-         aLSj0gX8gDiXV51d+pNwxLrU5WyQzdJ8KU/fhHSuXQpAuJ1wveRt/Xb0uxU0YkkKqNLJ
-         RfyD7h7SW7AtRZM4LaPfpBxElHhO5sQHtEqmMR4i2Ol2L514tzOcKpsb3dDxip3G+o4r
-         dzokgGUZeAPm7K9pHoCVEwvDnmGbvzqXdnDJQtUujl6iuHIB/azPPVrs7rU/hiDS4hga
-         +s2/W/TAnyG3Wqbc4ZimkL/Hec8QxZe331VprZKD5cBANuv752Jh2x4sRmzHZkxRp35c
-         k1+A==
-X-Gm-Message-State: AJcUukcE9xm1CCPjQsgRRsKWBzjSPcqQQt4z8Vc8jNFM6qewze4ska9T
-        6TiphkYpcWKozmFoEmpN91Y2ssnK
-X-Google-Smtp-Source: ALg8bN5AuVMrEy2XRtpPsQWETt7o/fGgTlHsLv6+kL1E/QstAU0++9AHu6+2FfKhW4GR57/TCJLgXg==
-X-Received: by 2002:a17:906:8596:: with SMTP id v22mr23935481ejx.41.1549043949630;
-        Fri, 01 Feb 2019 09:59:09 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n11sm2208313edn.14.2019.02.01.09.59.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Feb 2019 09:59:09 -0800 (PST)
-Date:   Fri, 01 Feb 2019 09:59:09 -0800 (PST)
-X-Google-Original-Date: Fri, 01 Feb 2019 17:58:53 GMT
-Message-Id: <5c7f0de22859094ac0d1abef0e0c719a61e9e8c1.1549043937.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.108.v5.git.gitgitgadget@gmail.com>
-References: <pull.108.v4.git.gitgitgadget@gmail.com>
-        <pull.108.v5.git.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 12/15] trace2:data: add subverb to reset command
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=jW51zXoqi8NLKvNeU11/n+WNW2s+bWu6ngPOgqSBAwo=;
+        b=tRF9fzJI3xL9Rku8YGMsTpWnQzHi1dIBBWgIETtHSv6yp6u/SvNEvNpGfRWDbxG/wc
+         B2OoFjJQyiZhTUi5PQHPEQO1vfc3/UjjVXGzcWBx809jED+ZKmfturcSKQXvLN5YH1c5
+         20H0rozXipD/K051770Wy8WhCJsZLP/6Paz6FrUKyDbiFThx1jjiCuAF5Lle1UQqwclM
+         5KizN9yUcVG4g2HSS0nx0+vXkiWqPVJy42HLZjclsd5JPWupCZHsKYYbE43fklWYJNRd
+         v/a1JJhVr+EXQ2UD2IsNN9ztN3DfIRQxNMX144ka/1ri7pIYjcTZcRs+6wl2azIfrGxh
+         6U6w==
+X-Gm-Message-State: AHQUAuZJFVL0SrhoorHBBbnozA2lGBeUNNkEdpvh6dfs4+ffvSfli7Jn
+        QpSFqwBWtRm5494Yf89JcdA=
+X-Google-Smtp-Source: AHgI3IaKNLoMox6uPYwz8crhbTOnpEWrGul9oggm5ihFMFn0l4QeSYPiFAAD+zwby2dofhSwnKH6dw==
+X-Received: by 2002:a1c:7616:: with SMTP id r22mr3427554wmc.35.1549044366101;
+        Fri, 01 Feb 2019 10:06:06 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id i13sm6998156wrw.32.2019.02.01.10.06.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 01 Feb 2019 10:06:05 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Marketa Calabkova <mcalabkova@suse.cz>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: Worktree creation race
+References: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
+        <2ee89ff3-e672-e940-f601-aa1d2647756a@suse.cz>
+        <CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com>
+Date:   Fri, 01 Feb 2019 10:06:04 -0800
+In-Reply-To: <CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com>
+        (Eric Sunshine's message of "Fri, 1 Feb 2019 01:27:31 -0500")
+Message-ID: <xmqqh8dnz8mr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- builtin/reset.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+> Another possibility would be to skip the stat() and instead do the
+> mkdir() in a loop, incrementing the sequence number each time through
+> the loop. That should eliminate the race entirely (I think).
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 59898c972e..4e34c61401 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -340,6 +340,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (patch_mode) {
- 		if (reset_type != NONE)
- 			die(_("--patch is incompatible with --{hard,mixed,soft}"));
-+		trace2_cmd_mode("patch-interactive");
- 		return run_add_interactive(rev, "--patch=reset", &pathspec);
- 	}
- 
-@@ -356,6 +357,11 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (reset_type == NONE)
- 		reset_type = MIXED; /* by default */
- 
-+	if (pathspec.nr)
-+		trace2_cmd_mode("path");
-+	else
-+		trace2_cmd_mode(reset_type_names[reset_type]);
-+
- 	if (reset_type != SOFT && (reset_type != MIXED || get_git_work_tree()))
- 		setup_work_tree();
- 
--- 
-gitgitgadget
-
+Yeah, I think that is the only sensible option to rely on the
+atomicity of mkdir() call.
