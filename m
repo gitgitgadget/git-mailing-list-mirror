@@ -2,279 +2,454 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA4C61F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 16:15:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 493651F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 16:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727823AbfBAQPw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 11:15:52 -0500
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:46532 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726172AbfBAQPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 11:15:52 -0500
-Received: by mail-wr1-f49.google.com with SMTP id l9so7640866wrt.13
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 08:15:50 -0800 (PST)
+        id S1727857AbfBAQWN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 11:22:13 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41550 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726460AbfBAQWN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 11:22:13 -0500
+Received: by mail-pg1-f193.google.com with SMTP id m1so3148702pgq.8
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 08:22:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language;
-        bh=XNDZkJwPWNzCLfRGdCLdiJh5ex/Lvi8zZ8KTqbNCf/g=;
-        b=iCsQiIZLPWsqfMY8gGXSXCpmoF0vvjDxkIk7ZQx1MTul61vI6m1lWfOejQ3gHjqOir
-         Z/WC+2tALt9NvoW+5LR2wtnX+I7ryrKNcgY1hkLxJmanjO0agSVmDK8n0Yp+9+P3OqyD
-         7OrmG9hvhw0rymC/1CbUd3OV3Cm2YVHtd4ZziPxSuOKJAIgzOFN8HDD+7iNHxwA1vSVV
-         icd5HbRh76jvW+sHuogIo+J5odrrYSpqPQg+UwSsYJoZ6U8FY9oq4Srb9//JYXhEw0N8
-         iWFGVBaefw+EHC1Ub+SW+QOE6t+kPq2Q16TN2YWiMiCv2llQxynsmdO7C8++AyIwAL8a
-         rIZw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XQr5M6/Lfrtb01iOgyGkQJvUkhLQy7Toyh6cgUypxPc=;
+        b=Bzy2raZzhCmEWFfTQpuWO5WcRKANhKcInsX5R0Jfc1VA5DwgsVeZcv3tJmf+IarN3n
+         6B8nh3TeeAEJ2BDRjYUqdcPXhFj5skgPjmuap8KgO6YyCc8v6EgsAmdlTBFjW99QM+9S
+         peBUfhvnffA50v1Lfj+D/yQg4GtjR2R7F3FxRZ2i/uuC4cGNIJdZ669qYuNHj7kM5Sx/
+         YdcP3G8dwLwQdYN5hjlyeH/B6zvcxwRGu1IaXPDXLPAjec/rT4k6oH4EWZSiK9j89ISC
+         uEkJkyx3Sn2r0NuAyBfuvQtsQzokUt3wkEkIELvxltbrHDcjcT5gJqads06PUwfCN3wk
+         ZjMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language;
-        bh=XNDZkJwPWNzCLfRGdCLdiJh5ex/Lvi8zZ8KTqbNCf/g=;
-        b=Jm0mjHb9tX4xPzRTbTReShUSR9gIgbviN570WD6PlwOAFNARDi3Hp+yMp5DScMD2EW
-         jQI43y0ZoeULB/YMsWaCtRZqKtJ0HJqYUsr0rqAfsds22QxWt9YEGESesTK0XHL9WAJW
-         YA6CA7DLXDoBLiylPzYrWNKjarFfX5aE1uQG5euR8P5IHWXwNNBA2YmUglLxUj/QQi+D
-         8KNzCE55w2NT7HXgdUEzHGWV5OdGxBzwy1Q1OD7NNMDR9puSt/d0QDmblCiQXVv230X6
-         d7WvaXTEk2qnJg+RNqoktDQw+sKC6xNcwks/NciKUPtTpsXdlEidZyWYXwvmj2s0rcaC
-         BCMQ==
-X-Gm-Message-State: AJcUukezWeupo5g2NnOtEJPmtEbEuvLaeDn9XYL1TrTcobL/zAU180n1
-        vRVaFPl/gSXTaUeEsHDq3wDPxQOm
-X-Google-Smtp-Source: ALg8bN4RGi6123O/mY+Rl7H2tO1XMtT4GOSaNBM16RG3U7PhAUWOhNCKToEBbphSy/dpEvuPmB3Pgw==
-X-Received: by 2002:adf:e6ce:: with SMTP id y14mr40893725wrm.239.1549037749759;
-        Fri, 01 Feb 2019 08:15:49 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-658-1-47-104.w86-221.abo.wanadoo.fr. [86.221.54.104])
-        by smtp.gmail.com with ESMTPSA id w80sm2750447wme.38.2019.02.01.08.15.48
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XQr5M6/Lfrtb01iOgyGkQJvUkhLQy7Toyh6cgUypxPc=;
+        b=n7ZimysmgjwZqwAUjzCW4njhUb9lXQbWxQnGlzdYJ8g+Bh2aZGV1gn4bBahCHrRXU/
+         zoeweoKC0ry/Y70DhdSm5fuLpSt+fYPeQJVlrOCA5tpoPRu/IrZdXLdwyhYinXfy53ir
+         s206J9EwABGb1817WHtHH+qKPxJ3Tb7paOnr/BkRP5uDgWjwpS5GUp85a3QoGhjz6nmS
+         CzxuvnEIdg8cAKBbwNVtfSEMAaFH9P+5tGQQgRXixU9Ftb0obSe8RzJisoahdFljkfkv
+         KDNzgbajWnr0OOyk0KsPSh27DbF431tAaKpeb5oaICYjQEIt1b1TDgMU1RuzHh+LZa1T
+         FkgA==
+X-Gm-Message-State: AHQUAuZxsTZr3SN4JAsrKE2UB74bmqYOOFq6UqxNiQAELoyB9tKUGJv+
+        2Va/d9lROz/LTqvw9cpie9A=
+X-Google-Smtp-Source: AHgI3IYelyEaCMwUT9cDUmImjcg+U8LMiGlvxm3qqVAN/x5fdtp+1jsvgmGUo7Ojr22o1Volha85SA==
+X-Received: by 2002:a63:2c0e:: with SMTP id s14mr2895410pgs.132.1549038132188;
+        Fri, 01 Feb 2019 08:22:12 -0800 (PST)
+Received: from localhost.localdomain ([2408:84e1:1:ce70:7c5c:7512:51d2:8f91])
+        by smtp.gmail.com with ESMTPSA id x2sm11872694pfx.78.2019.02.01.08.22.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Feb 2019 08:15:48 -0800 (PST)
-Subject: Re: Broken interactive rebase text after some UTF-8 characters
-To:     Michal Nowak <mnowak@startmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org
-References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
- <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>
- <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>
- <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net>
- <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
- <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>
- <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
- <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <c71f63cb-d956-96f5-4770-581a3b6b5543@gmail.com>
-Date:   Fri, 1 Feb 2019 17:15:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        Fri, 01 Feb 2019 08:22:11 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Sun Chao <sunchao9@huawei.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v9 0/6] pack-redundant: new algorithm to find min packs
+Date:   Sat,  2 Feb 2019 00:21:46 +0800
+Message-Id: <20190201162152.31136-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.20.1.103.ged0fc2ca7b
+In-Reply-To: <20190130114736.30357-1-worldhello.net@gmail.com>
+References: <20190130114736.30357-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
-Content-Type: multipart/mixed;
- boundary="------------209DE3EC992342C092EC2371"
-Content-Language: fr-FR
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------209DE3EC992342C092EC2371
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Sun Chao (my former colleague at Huawei) found a bug of
+git-pack-redundant.  If there are too many packs and many of them
+overlap each other, running `git pack-redundant --all` will
+exhaust all memories and the process will be killed by kernel.
 
-Hi Michal,
+There is a script in commit log of commit 3/6, which can be used to
+create a repository with lots of redundant packs. Running `git
+pack-redundant --all` in it can reproduce this issue.
 
-Le 01/02/2019 à 10:06, Michal Nowak a écrit :
-> Johannes,
-> 
-> On Friday, February 1, 2019 at 8:38 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> Hi,
->>
->> On Thu, 31 Jan 2019, Junio C Hamano wrote:
->>
->>> Phillip Wood <phillip.wood@talktalk.net> writes:
->>>
->>>>> Are we misusing C formats?
->>>>
->>>> The C standard and POSIX both say that the * refers to the maximum
->>>> number of bytes to print but it looks like it is being treated as the
->>>> maximum number of characters on OpenIndiana.
->>>>
->>>> Johannes - Perhaps we should change it to use fwrite() unless
->>> printf()
->>>> gets fixed and we're sure no other operating systems are affected?
->>>
->>> Avoid such a rewrite, as "%*.s" that takes (int, char *) are used in
->>> many other places in our codebase, if you can.
->>
->> Yes, this would be painful in particular in cases like
->>
->> 	master:advice.c:101:           fprintf(stderr, _("%shint: %.*s%s\n"),
->>
->> where we want to write more than just a variable-length buffer.
->>
->> I am curious: is libintl (gettext) used on OpenIndiana? I ask because
->> AFAIR fprintf() is overridden in that case, and the bug might be a lot
->> easier to fix if it is in libintl rather than in libc.
-> 
-> here you can see the full output of the OpenIndiana git build: https://hipster.openindiana.org/logs/oi-userland/latest/git.publish.log.
-> 
-> From what I see there, libintl was found.
-> 
-> If you believe this is illumos libc bug, it would be cool if someone created an simple testcase, which I can forward to the illumos developers.
-> 
+## Changes since reroll v7
 
-I attached a test case to this email.  You can build it with `gcc
-test-case.c', and run it with `./a.out'.
+1. Rewrite [PATCH v9 1/6] (t5323: test cases for git-pack-redundant)
 
-Output on my Linux system:
+   * Add many tables for relationship of packs and objects.
+   * Change dir in subshell and fixed other issues.
 
-    Before setting locale:
-    Expected output:
-    áaaa
-    Actual output:
-    áaaa
+2. New patch file from Sun Chao: [PATCH v9 3/6] (pack-redundant: delete redundant code)
 
-    After setting locale:
-    Expected output:
-    áaaa
-    Actual output:
-    áaaa
+3. Squash patches (remove unused functions) to patch 4/6 (new algorithm to find min packs).
 
-Output on an OpenIndiana system:
+## Range diff
 
-    Before setting locale:
-    Expected output:
-    áaaa
-    Actual output:
-    áaaa
+1:  799e804d5e < -:  ---------- t5323: test cases for git-pack-redundant
+-:  ---------- > 1:  c8dbf8cef2 t5323: test cases for git-pack-redundant
+2:  520f6277fb = 2:  a6300516d7 pack-redundant: delay creation of unique_objects
+-:  ---------- > 3:  fb71973df5 pack-redundant: delete redundant code
+3:  ab1c2c4950 ! 4:  9963d1c49f pack-redundant: new algorithm to find min packs
+    @@ -76,6 +76,113 @@
+      diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+      --- a/builtin/pack-redundant.c
+      +++ b/builtin/pack-redundant.c
+    +@@
+    + 	struct llist *all_objects;
+    + } *local_packs = NULL, *altodb_packs = NULL;
+    + 
+    +-struct pll {
+    +-	struct pll *next;
+    +-	struct pack_list *pl;
+    +-};
+    +-
+    + static struct llist_item *free_nodes;
+    + 
+    + static inline void llist_item_put(struct llist_item *item)
+    +@@
+    + 	return new_item;
+    + }
+    + 
+    +-static void llist_free(struct llist *list)
+    +-{
+    +-	while ((list->back = list->front)) {
+    +-		list->front = list->front->next;
+    +-		llist_item_put(list->back);
+    +-	}
+    +-	free(list);
+    +-}
+    +-
+    + static inline void llist_init(struct llist **list)
+    + {
+    + 	*list = xmalloc(sizeof(struct llist));
+    +@@
+    + 	}
+    + }
+    + 
+    +-static void pll_free(struct pll *l)
+    +-{
+    +-	struct pll *old;
+    +-	struct pack_list *opl;
+    +-
+    +-	while (l) {
+    +-		old = l;
+    +-		while (l->pl) {
+    +-			opl = l->pl;
+    +-			l->pl = opl->next;
+    +-			free(opl);
+    +-		}
+    +-		l = l->next;
+    +-		free(old);
+    +-	}
+    +-}
+    +-
+    +-/* all the permutations have to be free()d at the same time,
+    +- * since they refer to each other
+    +- */
+    +-static struct pll * get_permutations(struct pack_list *list, int n)
+    +-{
+    +-	struct pll *subset, *ret = NULL, *new_pll = NULL;
+    +-
+    +-	if (list == NULL || pack_list_size(list) < n || n == 0)
+    +-		return NULL;
+    +-
+    +-	if (n == 1) {
+    +-		while (list) {
+    +-			new_pll = xmalloc(sizeof(*new_pll));
+    +-			new_pll->pl = NULL;
+    +-			pack_list_insert(&new_pll->pl, list);
+    +-			new_pll->next = ret;
+    +-			ret = new_pll;
+    +-			list = list->next;
+    +-		}
+    +-		return ret;
+    +-	}
+    +-
+    +-	while (list->next) {
+    +-		subset = get_permutations(list->next, n - 1);
+    +-		while (subset) {
+    +-			new_pll = xmalloc(sizeof(*new_pll));
+    +-			new_pll->pl = subset->pl;
+    +-			pack_list_insert(&new_pll->pl, list);
+    +-			new_pll->next = ret;
+    +-			ret = new_pll;
+    +-			subset = subset->next;
+    +-		}
+    +-		list = list->next;
+    +-	}
+    +-	return ret;
+    +-}
+    +-
+    +-static int is_superset(struct pack_list *pl, struct llist *list)
+    +-{
+    +-	struct llist *diff;
+    +-
+    +-	diff = llist_copy(list);
+    +-
+    +-	while (pl) {
+    +-		llist_sorted_difference_inplace(diff, pl->all_objects);
+    +-		if (diff->size == 0) { /* we're done */
+    +-			llist_free(diff);
+    +-			return 1;
+    +-		}
+    +-		pl = pl->next;
+    +-	}
+    +-	llist_free(diff);
+    +-	return 0;
+    +-}
+    +-
+    + static size_t sizeof_union(struct packed_git *p1, struct packed_git *p2)
+    + {
+    + 	size_t ret = 0;
+     @@
+      	return ret;
+      }
+    @@ -221,56 +328,56 @@
+      --- a/t/t5323-pack-redundant.sh
+      +++ b/t/t5323-pack-redundant.sh
+     @@
+    - P2:$P2
+    - EOF
+    - 
+    + #     ALL | x x x x x x x x x x x x x x x x x   x
+    + #
+    + #############################################################################
+     -test_expect_success 'one of pack-2/pack-3 is redundant' '
+    -+test_expect_failure 'one of pack-2/pack-3 is redundant' '
+    - 	git pack-redundant --all >out &&
+    - 	format_packfiles <out >actual &&
+    - 	test_cmp expected actual
+    ++test_expect_failure 'one of pack-2/pack-3 is redundant (failed on Mac)' '
+    + 	(
+    + 		cd "$master_repo" &&
+    + 		cat >expect <<-EOF &&
+     @@
+    - P6:$P6
+    - EOF
+    - 
+    + #     ALL | x x x x x x x x x x x x x x x x x x x
+    + #
+    + #############################################################################
+     -test_expect_success 'pack 2, 4, and 6 are redundant' '
+    -+test_expect_failure 'pack 2, 4, and 6 are redundant' '
+    - 	git pack-redundant --all >out &&
+    - 	format_packfiles <out >actual &&
+    - 	test_cmp expected actual
+    ++test_expect_failure 'pack 2, 4, and 6 are redundant (failed on Mac)' '
+    + 	(
+    + 		cd "$master_repo" &&
+    + 		cat >expect <<-EOF &&
+     @@
+    - P8:$P8
+    - EOF
+    - 
+    + #     ALL | x x x x x x x x x x x x x x x x x x x
+    + #
+    + #############################################################################
+     -test_expect_success 'pack-8 (subset of pack-1) is also redundant' '
+    -+test_expect_failure 'pack-8 (subset of pack-1) is also redundant' '
+    - 	git pack-redundant --all >out &&
+    - 	format_packfiles <out >actual &&
+    - 	test_cmp expected actual
+    ++test_expect_failure 'pack-8 (subset of pack-1) is also redundant (failed on Mac)' '
+    + 	(
+    + 		cd "$master_repo" &&
+    + 		cat >expect <<-EOF &&
+     @@
+    - 	test_must_be_empty out
+    + 	)
+      '
+      
+     -test_expect_success 'remove redundant packs and pass fsck' '
+    -+test_expect_failure 'remove redundant packs and pass fsck' '
+    - 	git pack-redundant --all | xargs rm &&
+    - 	git fsck --no-progress &&
+    - 	git pack-redundant --all >out &&
+    ++test_expect_failure 'remove redundant packs and pass fsck (failed on Mac)' '
+    + 	(
+    + 		cd "$master_repo" &&
+    + 		git pack-redundant --all | xargs rm &&
+     @@
+    - 	printf "../../master.git/objects" >objects/info/alternates
+    + 	)
+      '
+      
+     -test_expect_success 'no redundant packs without --alt-odb' '
+    -+test_expect_failure 'no redundant packs without --alt-odb' '
+    - 	git pack-redundant --all >out &&
+    - 	test_must_be_empty out
+    - '
+    ++test_expect_failure 'no redundant packs without --alt-odb (failed on Mac)' '
+    + 	(
+    + 		cd "$shared_repo" &&
+    + 		git pack-redundant --all >out &&
+     @@
+    - P7:$P7
+    - EOF
+    - 
+    + #     ALL | x x x x x x x x x x x x x x x x x x x
+    + #
+    + #############################################################################
+     -test_expect_success 'pack-redundant --verbose: show duplicate packs in stderr' '
+    -+test_expect_failure 'pack-redundant --verbose: show duplicate packs in stderr' '
+    - 	git pack-redundant --all --verbose >out 2>out.err &&
+    - 	test_must_be_empty out &&
+    - 	grep "pack$" out.err | format_packfiles >actual &&
+    ++test_expect_failure 'pack-redundant --verbose: show duplicate packs in stderr (failed on Mac)' '
+    + 	(
+    + 		cd "$shared_repo" &&
+    + 		cat >expect <<-EOF &&
+4:  3c3a7ea40f < -:  ---------- pack-redundant: remove unused functions
+5:  bc4b681f40 ! 5:  b8f80ad454 pack-redundant: rename pack_list.all_objects
+    @@ -115,11 +115,7 @@
+     +							alt->remaining_objects);
+      			local = local->next;
+      		}
+    --		llist_sorted_difference_inplace(all_objects, alt->all_objects);
+    -+		llist_sorted_difference_inplace(all_objects, alt->remaining_objects);
+      		alt = alt->next;
+    - 	}
+    - }
+     @@
+      		return NULL;
+      
+6:  6cfba5b4b2 ! 6:  8a12ad699e pack-redundant: consistent sort method
+    @@ -83,60 +83,71 @@
+      --- a/t/t5323-pack-redundant.sh
+      +++ b/t/t5323-pack-redundant.sh
+     @@
+    - '
+    - 
+    - cat >expected <<EOF
+    --P2:$P2
+    -+P3:$P3
+    - EOF
+    - 
+    --test_expect_failure 'one of pack-2/pack-3 is redundant' '
+    + #         | T A B C D E F G H I J K L M N O P Q R
+    + #     ----+--------------------------------------
+    + #     P1  | x x x x x x x                       x
+    +-#     P2* |     ! ! ! !   ! ! !
+    +-#     P3  |             x     x x x x x
+    ++#     P2  |     x x x x   x x x
+    ++#     P3* |             !     ! ! ! ! !
+    + #     P4  |                     x x x x     x
+    + #     P5  |               x x           x x
+    + #     ----+--------------------------------------
+    + #     ALL | x x x x x x x x x x x x x x x x x   x
+    + #
+    + #############################################################################
+    +-test_expect_failure 'one of pack-2/pack-3 is redundant (failed on Mac)' '
+     +test_expect_success 'one of pack-2/pack-3 is redundant' '
+    - 	git pack-redundant --all >out &&
+    - 	format_packfiles <out >actual &&
+    - 	test_cmp expected actual
+    + 	(
+    + 		cd "$master_repo" &&
+    + 		cat >expect <<-EOF &&
+    +-			P2:$P2
+    ++			P3:$P3
+    + 			EOF
+    + 		git pack-redundant --all >out &&
+    + 		format_packfiles <out >actual &&
+     @@
+    - P6:$P6
+    - EOF
+    - 
+    --test_expect_failure 'pack 2, 4, and 6 are redundant' '
+    + #     ALL | x x x x x x x x x x x x x x x x x x x
+    + #
+    + #############################################################################
+    +-test_expect_failure 'pack 2, 4, and 6 are redundant (failed on Mac)' '
+     +test_expect_success 'pack 2, 4, and 6 are redundant' '
+    - 	git pack-redundant --all >out &&
+    - 	format_packfiles <out >actual &&
+    - 	test_cmp expected actual
+    + 	(
+    + 		cd "$master_repo" &&
+    + 		cat >expect <<-EOF &&
+     @@
+    - P8:$P8
+    - EOF
+    - 
+    --test_expect_failure 'pack-8 (subset of pack-1) is also redundant' '
+    + #     ALL | x x x x x x x x x x x x x x x x x x x
+    + #
+    + #############################################################################
+    +-test_expect_failure 'pack-8 (subset of pack-1) is also redundant (failed on Mac)' '
+     +test_expect_success 'pack-8 (subset of pack-1) is also redundant' '
+    - 	git pack-redundant --all >out &&
+    - 	format_packfiles <out >actual &&
+    - 	test_cmp expected actual
+    + 	(
+    + 		cd "$master_repo" &&
+    + 		cat >expect <<-EOF &&
+     @@
+    - 	test_must_be_empty out
+    + 	)
+      '
+      
+    --test_expect_failure 'remove redundant packs and pass fsck' '
+    +-test_expect_failure 'remove redundant packs and pass fsck (failed on Mac)' '
+     +test_expect_success 'remove redundant packs and pass fsck' '
+    - 	git pack-redundant --all | xargs rm &&
+    - 	git fsck --no-progress &&
+    - 	git pack-redundant --all >out &&
+    + 	(
+    + 		cd "$master_repo" &&
+    + 		git pack-redundant --all | xargs rm &&
+     @@
+    - 	printf "../../master.git/objects" >objects/info/alternates
+    + 	)
+      '
+      
+    --test_expect_failure 'no redundant packs without --alt-odb' '
+    +-test_expect_failure 'no redundant packs without --alt-odb (failed on Mac)' '
+     +test_expect_success 'no redundant packs without --alt-odb' '
+    - 	git pack-redundant --all >out &&
+    - 	test_must_be_empty out
+    - '
+    + 	(
+    + 		cd "$shared_repo" &&
+    + 		git pack-redundant --all >out &&
+     @@
+    - P7:$P7
+    - EOF
+    - 
+    --test_expect_failure 'pack-redundant --verbose: show duplicate packs in stderr' '
+    + #     ALL | x x x x x x x x x x x x x x x x x x x
+    + #
+    + #############################################################################
+    +-test_expect_failure 'pack-redundant --verbose: show duplicate packs in stderr (failed on Mac)' '
+     +test_expect_success 'pack-redundant --verbose: show duplicate packs in stderr' '
+    - 	git pack-redundant --all --verbose >out 2>out.err &&
+    - 	test_must_be_empty out &&
+    - 	grep "pack$" out.err | format_packfiles >actual &&
+    + 	(
+    + 		cd "$shared_repo" &&
+    + 		cat >expect <<-EOF &&
 
-    After setting locale:
-    Expected output:
-    áaaa
-    Actual output:
-    áaaaa
 
-> Thanks,
-> Michal
-> 
->>
->> Of course, it might *still* be a bug in libc by virtue of handing '%.*s'
->> through to libc's implementation.
->>
->> Alban, can you test this with NO_GETTEXT?
->>
->> Thanks,
->> Johannes
+Jiang Xin (4):
+  t5323: test cases for git-pack-redundant
+  pack-redundant: delay creation of unique_objects
+  pack-redundant: rename pack_list.all_objects
+  pack-redundant: consistent sort method
 
-Cheers,
-Alban
+Sun Chao (2):
+  pack-redundant: delete redundant code
+  pack-redundant: new algorithm to find min packs
 
+ builtin/pack-redundant.c  | 232 +++++++----------
+ t/t5323-pack-redundant.sh | 510 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 602 insertions(+), 140 deletions(-)
+ create mode 100755 t/t5323-pack-redundant.sh
 
---------------209DE3EC992342C092EC2371
-Content-Type: text/x-csrc;
- name="test-case.c"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="test-case.c"
+-- 
+2.20.1.103.ged0fc2ca7b
 
-/*
- * Test case for OpenIndiana '%.*s' bug
- * Build with `gcc test-case.c'
- * Run with `./a.out'
- */
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-#include <locale.h>
-#include <libintl.h>
-
-static void compare_output(const char *str, int len) {
-	puts("Expected output:");
-	fwrite(str, len, sizeof(char), stdout);
-
-	puts("\nActual output:");
-	printf("%.*s\n", len, str);
-}
-
-int main(int argc, char **argv) {
-	char buf[] =3D "=C3=A1aaaaaa";
-
-	puts("Before setting locale:");
-	compare_output(buf, 5);
-
-	setlocale(LC_ALL, "");
-
-	puts("\nAfter setting locale:");
-	compare_output(buf, 5);
-
-	return EXIT_SUCCESS;
-}
-
---------------209DE3EC992342C092EC2371--
