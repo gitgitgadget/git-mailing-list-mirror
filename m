@@ -2,120 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B00D1F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 07:07:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D17621F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 07:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726060AbfBAHHL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 02:07:11 -0500
-Received: from mail-it1-f169.google.com ([209.85.166.169]:38958 "EHLO
-        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725831AbfBAHHK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 02:07:10 -0500
-Received: by mail-it1-f169.google.com with SMTP id a6so8365616itl.4
-        for <git@vger.kernel.org>; Thu, 31 Jan 2019 23:07:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5o+2XGwusC+cGnV3fs8xHt94l3f5J1aAB3OaaydvF78=;
-        b=kz4JSUY2Jtr59iAC6PxiNeGs+RFyByExwx4GNW0bcIFIb1W6pDku5AgT4o3IcmoST2
-         bjFF91q02A9jK1rxZnxwdzqeY7K9gkwJU0O4WCSkxVmREIDtgP/mknU1PSkf5AqaYFuN
-         6euDUlL280E/BSCTWcWZlXt8zU8My9etAFPQL74WLtASsk0WUhJxXg+hUhihiFN5M9zA
-         8n2WtWt3sWk4jtxw/Q7kMPz4mMLPJv2DTiUQgipz3jq3sdr8qQFX1WqqsH3cCBCaO2h3
-         71imrbFnXki87jf3XqidbwvKhOIHQU3CTXSoZ0KHDRb0upenV1xSRWWYKYOlrGOEACdG
-         VMcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5o+2XGwusC+cGnV3fs8xHt94l3f5J1aAB3OaaydvF78=;
-        b=GoubYeTCPBNaXJ1yMapXaFX7HkjAJC7u3AuNd8mkSnwhhwOZFAQeRf91xUnxR3wjWc
-         162Umu4oGXvE8+DVwsWYS27z4KIuewZbeJsPaGWE/h7KF+llbXFSM5y+Z0QsY0v3upTf
-         74+dA1t3BuxClcENBV8DO5d58XwO3IOc2wE3pXez5KxUUgr+TaINL9o1n5BBZjShNoQb
-         9ajNJVMVSEUC3DA6IqscZ6LFQbbzTT+Hedx/GOw8fqe7uFlUHX/cwYALpbarKOfuScL5
-         kE3qwxE7yF2lbAaMt8Qc6oruaeS94DGgnQuGX7gZiJJtLxE+e+jSwi4ukXOXncikqzDh
-         Mt8w==
-X-Gm-Message-State: AJcUukfkjlFVJPlRsTY265Iy2ElWlO3fLnpZOMsff/PgHJBvC2UzOxMk
-        xu66Mp9EqkjMSRu+XzPSOmw8CjtU0hRaHGCfsDs=
-X-Google-Smtp-Source: ALg8bN6TZnMn8DbKYCS8GbxC7AOMfJfLqVRrvfbJiBAEijIm9GUvouK1VuovSkfrMNxivxaz3VMF8+Aw5uPerousqiU=
-X-Received: by 2002:a02:8943:: with SMTP id u3mr22890804jaj.92.1549004829270;
- Thu, 31 Jan 2019 23:07:09 -0800 (PST)
+        id S1726967AbfBAHWX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 02:22:23 -0500
+Received: from mout.gmx.net ([212.227.15.18]:35861 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725807AbfBAHWX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 02:22:23 -0500
+Received: from [10.10.1.35] ([195.130.156.138]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LyVpm-1hBlIB2LNW-015rfT; Fri, 01
+ Feb 2019 08:22:21 +0100
+Date:   Fri, 1 Feb 2019 08:22:20 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: Comparing rebase --am with --interactive via p3400
+In-Reply-To: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1902010819470.41@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz> <2ee89ff3-e672-e940-f601-aa1d2647756a@suse.cz>
- <CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com>
-In-Reply-To: <CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 1 Feb 2019 14:06:43 +0700
-Message-ID: <CACsJy8D+zvgtw8RuBefYQsYrvn_vQT1dUO3Veg5ZtfQa2u5QKA@mail.gmail.com>
-Subject: Re: Worktree creation race
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Marketa Calabkova <mcalabkova@suse.cz>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:oanN/93RFc1QhTNfk2mpnw+BjNDOC9SzrhXdPGJCel7I1Hvn4Tw
+ jtscAPb73UOyTbnBhy3vAE0Fr3qRsxoIUtrdfTFbR2eWUQbRr8EydUQO4IAUAtuNP/9n8SG
+ 5asoLEPAcaqfpTJvpvjy/kLDXcEKaAeIHwlwF9UQnHynLRi5JkRnmwuawP7jSMjvVFgUX4b
+ Ncb6ffh8/zkE9lHa3x/CA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OvUJHynEu+Q=:7aPmXGJvLsWBIAP5GJOIQk
+ oYXobU/uN710XsXV7GBHN7M55fIyS+0qkxGCfXxWxwTJxcudRIQP4DxxGnpVYYW4Y4pea6jrR
+ Q4freQKbs1mvyciBiRzjBRWQ/utP/Z+VgWGpvn1MALaHeSBlpmurBT+g2KQ755GDgtXUk3cSP
+ HUITSH8Dqn3nVMXpRxk5/qbxtdqx5Rz+w9M8t7Az20ZvGXXMpP5wZOXnGwp5bvGwxup7bWh1i
+ +o8Z0DGuixg2wQ3/vh3gNFtxDxKIIDGfiXHB0XL4hRYm3YvT4lQy6WtE1JW19rufHadZAbSL1
+ CUwtyVDl/NHNCsIkbluFdDXWqv3i+2Vg2awKg6mOCORrrzg2VtxApoBOXBJaDmuJzCVqhQKLW
+ SLgerv5e3Dg6qTdqDU56FLxSxdEwd4HCXkfzHO/V4ZaSc5fP9OJg3KTGw3ixN4VE80/C/vZXS
+ iQzWasfeiDf0/z6htqf717be3z4zlGXdj8RAs+w/Fwm8PY3TYCGWgzWCgTxmFXg0sZAPFkvW3
+ a18+kwXcU/yFTxuqI4mSZCNfFqJyMZR5eIfpKPDpRXWy8gGZaCCCc73zlwcSPqBpp90Ag/teG
+ 62ZrZgUChwp71xHik0/sF0kM47vx3VYNyxoG85WAy3E+E/ei9tRLvi+kfCbK5RBM5kM+D6mrx
+ zIw4VLThg3Czvw+osViIrSGze7XqrPu11NLx9H5YA126Rzqr/HZO3NKc41Cu85W2d4dn5KkkF
+ 93VAYsyWg9yZKIXf0cEFfSFn349zuuCpmfNRd+qxpaMl9wFOhEUDfpmwpSqSCL6tnNb7doms+
+ apUZn2k/T9if2CUfJ8yVRPRHGCjrfz8j/d/RfS/REWC1v4TR/3pmxkREX+eKYdHnvROmAeU99
+ duZiUrojPjse94R4aK+T2agZgDUhs6Goea9xeLSGBizNXtiZDSK7Y3PpVaka9HchNMt+PMiU4
+ XK+VtkCfMQw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for including me. Apparently I did miss some emails :)
+Hi Elijah,
 
-On Fri, Feb 1, 2019 at 1:27 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Mon, Jan 28, 2019 at 7:58 AM Marketa Calabkova <mcalabkova@suse.cz> wrote:
-> > On 15/01/2019 15:03, Marketa Calabkova wrote:
-> > > I am writing to report a bug. The original report is from my colleague, I am also providing his suggestions.
-> > >
-> > > There is insufficient locking for worktree addition. Adding worktree may fail.
-> > >
-> > > The problem is that git reads the directory entries in $GIT_DIR/worktrees,
-> > > finds a worktree name that does not exist, tries to create it, and if an
-> > > error is returned adding the worktree fails. When multiple git processes
-> > > do this in parallel only one adds a worktree and the others fail. Git should
-> > > reread the directory and find a new name that does not exist when creating
-> > > the worktree directory fails because another git process already created it.
-> > >
-> > > I suppose adding PID in the tree name would mitigate the issue to the point it will be very unlikely to encounter.
-> > >
-> > > I need more than the tree in the temporary directory so using the temporary directory directly as a tree is out of question.
-> > >
-> > > cd gitrepo
-> > > git commit --allow-empty -m Empty
-> > > for n in $(seq 10000) ; do ( tmp=$(mktemp -d /dev/shm/gittest/test.XXXXXXXXXXX) ; mkdir $tmp/test ; git worktree add --detach $tmp/test ; ) & done
-> > >
-> > > (you should see many messages like:
-> > > fatal: could not create directory of '.git/worktrees/test284': File exists)
-> > >
-> > Does anyone has a suggestion what to do with this bug? It looks like a
-> > one-line fix probably in builtin/worktree.c, but I have no idea how to
-> > do it. Sorry.
->
-> I doubt this is a one-line fix, and I don't think it has anything to
-> do with reading entries in $GIT_DIR/worktrees.
+On Fri, 1 Feb 2019, Johannes Schindelin wrote:
 
-I never thought people would create worktrees "like crazy" to end up
-worrying about races like this. The mkdir loop would be one way to go.
-But I'm going to add a new option to let the user control this
-directory name. This is necessary since this name is now exposed via
-"worktrees/<name>" reference space and should also be reported in "git
-worktree list". Avoiding the race is a nice bonus.
+> as discussed at the Contributors' Summit, I ran p3400 as-is (i.e. with the
+> --am backend) and then with --keep-empty to force the interactive backend
+> to be used. Here are the best of 10, on my relatively powerful Windows 10
+> laptop, with current `master`.
+> 
+> With regular rebase --am:
+> 
+> 3400.2: rebase on top of a lot of unrelated changes             5.32(0.06+0.15)
+> 3400.4: rebase a lot of unrelated changes without split-index   33.08(0.04+0.18)
+> 3400.6: rebase a lot of unrelated changes with split-index      30.29(0.03+0.18)
+> 
+> with --keep-empty to force the interactive backend:
+> 
+> 3400.2: rebase on top of a lot of unrelated changes             3.92(0.03+0.18)
+> 3400.4: rebase a lot of unrelated changes without split-index   33.92(0.03+0.22)
+> 3400.6: rebase a lot of unrelated changes with split-index      38.82(0.03+0.16)
+> 
+> I then changed it to -m to test the current scripted version, trying to
+> let it run overnight, but my laptop eventually went to sleep and the tests
+> were not even done. I'll let them continue and report back.
 
-> add_worktree() already attempts to give a unique identifier to each
-> worktree by adding a numeric suffix and incrementing that suffix if
-> the name already exists (such as the 284 in your example error
-> message) but there is definitely a race-condition between the time it
-> stat()s the name and the time it mkdir()s it.
->
-> One possible fix would be to unconditionally use the PID, as you
-> suggest, though, this is not necessarily foolproof against races
-> either (though it makes collisions very unlikely).
->
-> Another possibility would be to skip the stat() and instead do the
-> mkdir() in a loop, incrementing the sequence number each time through
-> the loop. That should eliminate the race entirely (I think).
--- 
-Duy
+It finally finished:
+
+3400.2: rebase on top of a lot of unrelated changes             7.37(0.09+0.19) 
+3400.4: rebase a lot of unrelated changes without split-index 393.96(0.04+0.15)
+3400.6: rebase a lot of unrelated changes with split-index    404.65(0.01+0.24)
+
+So there is a seemingly significant cost to using the split-index that is
+just very unfortunate. In any case, just switching from the scripted
+--merge backend to the built-in interactive backend results in a >10x
+faster execution. So I *definitely* want that scripted `--merge` backend
+to go away. Thank you for doing this.
+
+Ciao,
+Dscho
