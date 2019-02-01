@@ -2,144 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9E311F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 21:46:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7C991F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 21:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726598AbfBAVqR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 16:46:17 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44735 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726193AbfBAVqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 16:46:17 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z5so8591098wrt.11
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 13:46:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WOg/wY6pFm+Ov8VJd27LYO8uZ3AtOprVbs7jDSZ6w3o=;
-        b=Ffp5KKSiSUeBlLdN9sUzvrLVIJuDEIwP+j7+UM3VHedO9Jf1c4ky75yNPkx3r/ibpC
-         5bbTm+mY6irhJdpNNek3ZPfy09cOaoyhJ0ZvV3GUvNXGUnSJdvSlbmLiwiB97c94ZjPg
-         b8Y1CLWDEkmm6qSFgDygPJ8b8TOYzsEtrK1aFepZxqHYxSFKjtE2LUn7iERCOKgymsEu
-         SiDfwwFgazrUmES0SiBDgtAKIf72Ht8lxafSZgTj/T3rH8J68BxLkf6FgLSDGORR2j1B
-         nQBGvCjotu3iKmzzeVIM+BA/MkLzcNV7Bh/Zgpt7GXYuCg95YTi+Hkm/fNCgMwdaqDL2
-         osWg==
+        id S1726492AbfBAVtn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 16:49:43 -0500
+Received: from mail-qt1-f178.google.com ([209.85.160.178]:36543 "EHLO
+        mail-qt1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726193AbfBAVtn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 16:49:43 -0500
+Received: by mail-qt1-f178.google.com with SMTP id t13so9395832qtn.3
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 13:49:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=WOg/wY6pFm+Ov8VJd27LYO8uZ3AtOprVbs7jDSZ6w3o=;
-        b=VKqfeFe7fn1rt5KdhCSA0RaEr2lku+FC8pwmtQ1g1PxShPsMbssnlYrjjECbRTdfHa
-         dBEsD+mUH1Md9vayPstfIe79u9OEELY1mPvKRDxHS/Vdw0P8lZb9gtR/SGwdUvABsztZ
-         H/hqNctQexsxQVPDfIp9OGAyBCzmV/BIdzLhKKMalQRyiZggbbEbdX3WPvwfRXIlxq9x
-         k1ENTstY7vwvHdYb5CfzykZiuCWxnhowtp9sUYbOUit52wAqO/88Mn/IQxSMztZg8EOJ
-         aY0ExOGEh3qrmLATQYF34CAxx/EtWSyoRivOCSi1Xa6SjALKY9+SC6Kuf5Toy23KJ1Vu
-         AF4w==
-X-Gm-Message-State: AJcUukdSVfmSNp7Yj0kiMgk7nZ1A2y3E8YDwT1QBFcySlwDIAwVvy+CE
-        szyTOe/G40oazWWUz6PP30U=
-X-Google-Smtp-Source: ALg8bN5BuNMXNxeNhmnVqb1dotQOSx2fWEx3dHiv7EwvTnqmr5BvjctEDPkp1eH2GFZbLK+Fficn5g==
-X-Received: by 2002:adf:ae41:: with SMTP id u1mr38625942wrd.20.1549057574639;
-        Fri, 01 Feb 2019 13:46:14 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z206sm4556197wmc.18.2019.02.01.13.46.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Feb 2019 13:46:14 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-Subject: Re: [PATCH 1/1] Makefile: improve SPARSE_FLAGS customisation
-References: <3ccf0255-8a15-effc-ce6b-eabb61625f90@ramsayjones.plus.com>
-Date:   Fri, 01 Feb 2019 13:46:13 -0800
-In-Reply-To: <3ccf0255-8a15-effc-ce6b-eabb61625f90@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Fri, 1 Feb 2019 21:03:11 +0000")
-Message-ID: <xmqqmunfxjve.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mFZ/mZ3cCF4FcIvayzlvYNz2V1EPmwoy5n2TuVf70bk=;
+        b=BKyFFFVNvJUk3K/xcJS6PZVi44Aanxt7+NikFC6f1IepvG9XmbuCpuG7c4zfRXITM8
+         wE/HVrCKyqgKOf1V7wsl8sG/MwfW2Kd8JGzoQV49Dfzf4xOfttZr9+D4QZWgPpKYjn46
+         oX3uJz9BXIJeEBExR6OKAtuju6ub9/NwwWYP9Wt4NGI9C5kH3Lw6dw5G9ow7J/ipxhDn
+         PcC73BotvWt8aFxjQa72Nt20FHgIZXPE5rmw9Ll+vlwCd0ogY6S+ts0PAgegYNdyN6nK
+         oaabAtx5aZxxBFF7B7P0OAia+X73Z2UmgPSO8+VrJWvyY1sHAwOor2nIglACgYnKUjkU
+         Ye0A==
+X-Gm-Message-State: AJcUukexr+QerEFuPvJ5opZtuERAXdsj+Kc5RWQX3+Zql2AhhQcVzMtn
+        USVC+x2OUH4p203Hu4WsCbP9nZVFTL7eop0bUcSCw9Eh
+X-Google-Smtp-Source: ALg8bN6AQB8evQmSTzN8N0F8cTyUTS5/8MLD7+q3MAFm7pw+aShzTBeky88iClHgjaXe5rtvPK4BAARfPqSnLxi7zLA=
+X-Received: by 2002:a0c:981b:: with SMTP id c27mr39939879qvd.184.1549057781432;
+ Fri, 01 Feb 2019 13:49:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190130114736.30357-1-worldhello.net@gmail.com>
+ <20190201162152.31136-2-worldhello.net@gmail.com> <CAPig+cRX=ttHWe1C6m1u9-02oT-TpBtHWb48N=-wX4jSYaFuew@mail.gmail.com>
+ <xmqqva23xlun.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqva23xlun.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 1 Feb 2019 16:49:30 -0500
+Message-ID: <CAPig+cQh5TDKVaDi0gg9LZTo1Og_Qw6S2sH9cPABR9q05gEUfg@mail.gmail.com>
+Subject: Re: [PATCH v9 1/6] t5323: test cases for git-pack-redundant
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>, Sun Chao <sunchao9@huawei.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-
-> In order to enable greater user customisation of the SPARSE_FLAGS
-> variable, we introduce a new SP_EXTRA_FLAGS variable to use for
-> target specific settings. Without using the new variable, setting
-> the SPARSE_FLAGS on the 'make' command-line would also override the
-> value set by the target-specific rules in the Makefile (effectively
-> making them useless). In addition, we initialise the SPARSE_FLAGS
-> to the default (empty) value using a conditional assignment (?=).
-> This allows the SPARSE_FLAGS to be set from the environment as
-> well as from the command-line.
-
-Thanks for a detailed and clear explanation here and in the cover
-letter.  I agree with the motivation and most of the things I see in
-this patch, but one thing that stands out at me is if we still want
-to += append to SP_EXTRA_FLAGS in target specific way.  Before this
-patch, because SPARSE_FLAGS was a dual use variable, it needed +=
-appending to it in these two places, but that rationale is gone with
-this patch.
-
-Also, don't we want to clear SP_EXTRA_FLAGS at the beginning?
-
-The reason I raise these is because I do not quite see a clear
-answer to "I want to set SP_EXTRA_FLAGS and not SPARSE_FLAGS,
-because ...".
-
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->  Makefile | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+On Fri, Feb 1, 2019 at 4:03 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > On Fri, Feb 1, 2019 at 11:22 AM Jiang Xin <worldhello.net@gmail.com> wrote:
+> >> +# Note: DO NOT run it in a subshell, otherwise the variables will not be set
+> >
+> > Which variables won't be set? It's not clear what this restriction is about.
 >
-> diff --git a/Makefile b/Makefile
-> index 6e8d017e8e..dc02825c88 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -574,7 +574,7 @@ SPATCH = spatch
->  
->  export TCL_PATH TCLTK_PATH
->  
-> -SPARSE_FLAGS =
-> +SPARSE_FLAGS ?=
->  SPATCH_FLAGS = --all-includes --patch .
->  
->  
-> @@ -2369,10 +2369,10 @@ gettext.sp gettext.s gettext.o: GIT-PREFIX
->  gettext.sp gettext.s gettext.o: EXTRA_CPPFLAGS = \
->  	-DGIT_LOCALE_PATH='"$(localedir_relative_SQ)"'
->  
-> -http-push.sp http.sp http-walker.sp remote-curl.sp imap-send.sp: SPARSE_FLAGS += \
-> +http-push.sp http.sp http-walker.sp remote-curl.sp imap-send.sp: SP_EXTRA_FLAGS += \
->  	-DCURL_DISABLE_TYPECHECK
->  
-> -pack-revindex.sp: SPARSE_FLAGS += -Wno-memcpy-max-count
-> +pack-revindex.sp: SP_EXTRA_FLAGS += -Wno-memcpy-max-count
->  
->  ifdef NO_EXPAT
->  http-walker.sp http-walker.s http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
-> @@ -2386,7 +2386,7 @@ endif
->  ifdef USE_NED_ALLOCATOR
->  compat/nedmalloc/nedmalloc.sp compat/nedmalloc/nedmalloc.o: EXTRA_CPPFLAGS = \
->  	-DNDEBUG -DREPLACE_SYSTEM_ALLOCATOR
-> -compat/nedmalloc/nedmalloc.sp: SPARSE_FLAGS += -Wno-non-pointer-null
-> +compat/nedmalloc/nedmalloc.sp: SP_EXTRA_FLAGS += -Wno-non-pointer-null
->  endif
->  
->  git-%$X: %.o GIT-LDFLAGS $(GITLIBS)
-> @@ -2710,7 +2710,7 @@ SP_OBJ = $(patsubst %.o,%.sp,$(C_OBJ))
->  
->  $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
->  	$(QUIET_SP)cgcc -no-compile $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) \
-> -		$(SPARSE_FLAGS) $<
-> +		$(SPARSE_FLAGS) $(SP_EXTRA_FLAGS) $<
->  
->  .PHONY: sparse $(SP_OBJ)
->  sparse: $(SP_OBJ)
+> >> +# Note: DO NOT run it in a subshell, otherwise the variables will not be set
+> >> +create_pack_1 () {
+> >> +       P1=$(git -C "$master_repo/objects/pack" pack-objects -q pack <<-EOF
+> >
+> > Which variables? Note that you can capture output of a subshell into a
+> > variable, if necessary.
+>
+> These helper functions set a bunch of variables $P1, $P2, etc. as
+> well as variables whose name begin with P and followed by 40-hex.
+> The script wants to use them later when preparing expected output,
+> and with the most natural way to organize the code, that "later"
+> happens in the process that would have spawned a subshell to run
+> this function.
+>
+> It would have been easier for you to grok if the note instead said
+> "this function sets two global shell variables" or something,
+> perhaps?  Such a variable would certainly not be visible if this
+> function is called inside a subshell to the main process.
+
+Yes, better function comments would facilitate comprehension both for
+the reviewer and those working on the code in the future. For
+instance:
+
+    # Create commit for each argument [...with blah properties...] and
+    # assign [...] to shell variable of same name as argument.
+    # NOTE: Avoid calling this function from a subshell since variable
+    # assignments will disappear when subshell exits.
+
+or something.
+
+But, looking more closely at the patch, I'm wondering why the various
+create_pack_#() functions are defined at all since they are each only
+ever called from a single place.
+
+    create_pack_4 () {
+        ...
+        eval P$P4=P4:$P4
+    }
+   ...
+   test_expect_success 'create pack 4, 5' '
+        create_pack_4 && create_pack_5
+    '
+
+I haven't been able to convince myself that this helps readability --
+especially since the function definition is often far removed from the
+single point of use -- over merely inlining the function body directly
+in the sole test which calls it.
+
+Anyhow, this is all pretty minor, not necessarily worth a re-roll.
