@@ -2,102 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42F821F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 09:06:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2513211B5
+	for <e@80x24.org>; Fri,  1 Feb 2019 09:27:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727742AbfBAJGc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 04:06:32 -0500
-Received: from mx-out2.startmail.com ([145.131.90.155]:44343 "EHLO
-        mx-out2.startmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726339AbfBAJGb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 04:06:31 -0500
-Message-ID: <747726ae27ff52509f831c9615f2b102.startmail@startmail.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
-        s=2017-11; t=1549011989;
-        bh=osnHiBAuA8dNaen9n4cypaC8v0rHnOeGkBr+U3bQl9k=;
-        h=In-Reply-To:References:Date:Subject:From:To:Cc:From;
-        b=HNrF8OK36BRNdCGjP7IYFNEYX3aWwVRllX2zfowBUeX1SblEycBQowAN1ERsSq/jb
-         ivh2ZjXRRABOhOCY+ApKRGoOLzzIkR0sqMz58A+QlOtCRJQVIhPxQiM7XRKekGQFdg
-         KXDwXSrPgkT0AusJs5Ij1/3RvKQA5HXmZoscUvAuSC1fW1SqqxMK0N9M/HN/Ewey6L
-         yV37z27+Zx707/LYrBxImyw/b/nrIR3Mfikz+2MzcNlIBNMxvLrBgAVImJJgAEXxVk
-         V8pE8DJ7ecHLknAfG+MdaXV/SaQLze8K1DUfoflFVZLhE4Yvn/hGSzOsSuc+a16OoX
-         3iPUYTjBPk0qQ==
-In-Reply-To: <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
-References: <a50734d9-4d30-5847-b5df-67a8458a36cb@startmail.com>
-    <339d4dbd-b1bd-cf88-12b0-2af42f35ded7@talktalk.net>
-    <23c60f2f-43ff-94ec-6100-861c655ec80b@startmail.com>
-    <8c43e31b-01d8-a1c5-d19c-8efd0e5c1714@talktalk.net>
-    <505c2e2e-c9bc-aa57-c498-2acced0b8afa@gmail.com>
-    <2cbb5818-643d-bafd-6721-91e0d291a5fd@talktalk.net>
-    <xmqqimy41pdu.fsf@gitster-ct.c.googlers.com>
-    <nycvar.QRO.7.76.6.1902010835210.41@tvgsbejvaqbjf.bet>
-Date:   Fri, 1 Feb 2019 10:06:29 +0100
-Subject: Re: Broken interactive rebase text after some UTF-8 characters
-From:   "Michal Nowak" <mnowak@startmail.com>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     "Junio C Hamano" <gitster@pobox.com>,
-        "Phillip Wood" <phillip.wood@talktalk.net>,
-        "Alban Gruin" <alban.gruin@gmail.com>, phillip.wood@dunelm.org.uk,
-        "Michal Nowak" <mnowak@startmail.com>, git@vger.kernel.org
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        id S1726598AbfBAJ1H (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 04:27:07 -0500
+Received: from mail-vs1-f41.google.com ([209.85.217.41]:34341 "EHLO
+        mail-vs1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725765AbfBAJ1H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 04:27:07 -0500
+Received: by mail-vs1-f41.google.com with SMTP id y27so3800797vsi.1
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 01:27:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=r87wL8ZP+roX2pNjrHTuBFsYFPL0GcnBtfjeSNl7ALw=;
+        b=ldu5nu8Nniejcy1uVJWQQyFAcsvmkuE+fVmDtFG4l+Hog8AKHRkzJzAmOH9shde32V
+         j95oFP95RPBpCOPdKfCDHJbOxs90DbUm1BmC5PxKqXuAppgIpJLyqPkQ/LeUahw+wZ5s
+         AAJO7FZDj5aLI+kgOR1FLfbl5P13Qz0ldGadz+6wni0wvvGw/lAMwVbfmqgAijHGAkwF
+         367ypPfvIa7WfMpnJszSfvUd1klOLIh22unYuecNtS7RhPgJO4BJz5sFHXaLf2rykQLC
+         cAR0oBEjh+uDh2i2zxidjhkpl4BGR0qcPjh/QJLhr5++fodSXlPqWHbXUFDPEWc2tZmY
+         bTUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=r87wL8ZP+roX2pNjrHTuBFsYFPL0GcnBtfjeSNl7ALw=;
+        b=lKKW+ExoF4AchwgLLVrjUVkqDEgB44FgEy5TZzFRoI1bAooRQhelMnc674j2MGbYE2
+         YNLwnO94kQta/JlXJN7qaSbAdkpka270K8y9yhOWbN91dgq+cpoeIpdwZh+oLVGfmGFB
+         ZFqF6J1fFFYB9Iad5vQop9cMm/m14viDDr2KtJU/bT315uMWaBMjKKCIc6MZcoLUKcI5
+         c5JdWjLCJsvQ6NJWj9tVylLiriWSEx99pigREik57PJAu7b7CzysdV8KUOvFHBsiMnar
+         tY+dwQ9fF27y+W1/M3k89MbwHT4t/HJIKKM2OkHMFeL7lbm2D6WMqx33FEoluWFAjaJm
+         7jRw==
+X-Gm-Message-State: AJcUukckr1fGjsDgm7AEMme67k+t7sayut6nrItL875oEaXJ+1iECNZj
+        7sLV/uAJwdGpfhdbPyoRfeVL3wCe7ApFAsPwkaWYH7qZzHA=
+X-Google-Smtp-Source: ALg8bN6Ek37Oqx4XVvueSmG5682Z9kXRl06S9st1SqfiQKN6VPHmRDpGCI+Uc9CtPtJQLr/vPG+Q8ZwysyLHqvLyrD8=
+X-Received: by 2002:a67:f696:: with SMTP id n22mr17351594vso.175.1549013225700;
+ Fri, 01 Feb 2019 01:27:05 -0800 (PST)
+MIME-Version: 1.0
+References: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 1 Feb 2019 01:26:53 -0800
+Message-ID: <CABPp-BF=ev03WgODk6TMQmuNoatg2kiEe5DR__gJ0OTVqHSnfQ@mail.gmail.com>
+Subject: Re: Comparing rebase --am with --interactive via p3400
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes,
+Hi Dscho,
 
-On Friday, February 1, 2019 at 8:38 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Thu, 31 Jan 2019, Junio C Hamano wrote:
-> 
->> Phillip Wood <phillip.wood@talktalk.net> writes:
->>
->> >> Are we misusing C formats?
->> >
->> > The C standard and POSIX both say that the * refers to the maximum
->> > number of bytes to print but it looks like it is being treated as the
->> > maximum number of characters on OpenIndiana.
->> >
->> > Johannes - Perhaps we should change it to use fwrite() unless
->> printf()
->> > gets fixed and we're sure no other operating systems are affected?
->>
->> Avoid such a rewrite, as "%*.s" that takes (int, char *) are used in
->> many other places in our codebase, if you can.
-> 
-> Yes, this would be painful in particular in cases like
-> 
-> 	master:advice.c:101:           fprintf(stderr, _("%shint: %.*s%s\n"),
-> 
-> where we want to write more than just a variable-length buffer.
-> 
-> I am curious: is libintl (gettext) used on OpenIndiana? I ask because
-> AFAIR fprintf() is overridden in that case, and the bug might be a lot
-> easier to fix if it is in libintl rather than in libc.
+On Thu, Jan 31, 2019 at 10:04 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> as discussed at the Contributors' Summit, I ran p3400 as-is (i.e. with the
+> --am backend) and then with --keep-empty to force the interactive backend
+> to be used. Here are the best of 10, on my relatively powerful Windows 10
+> laptop, with current `master`.
+>
+> With regular rebase --am:
+>
+> 3400.2: rebase on top of a lot of unrelated changes             5.32(0.06+0.15)
+> 3400.4: rebase a lot of unrelated changes without split-index   33.08(0.04+0.18)
+> 3400.6: rebase a lot of unrelated changes with split-index      30.29(0.03+0.18)
+>
+> with --keep-empty to force the interactive backend:
+>
+> 3400.2: rebase on top of a lot of unrelated changes             3.92(0.03+0.18)
+> 3400.4: rebase a lot of unrelated changes without split-index   33.92(0.03+0.22)
+> 3400.6: rebase a lot of unrelated changes with split-index      38.82(0.03+0.16)
 
-here you can see the full output of the OpenIndiana git build: https://hipster.openindiana.org/logs/oi-userland/latest/git.publish.log.
+Awesome, thanks for checking that out.  I ran on both linux and mac
+and saw similar relative performances.  Comparing am-based rebase to
+an implied-interactive rebase on both linux and mac (with a version of
+git including en/rebase-merge-on-sequencer so that -m gives the same
+performance that you'd see with --keep-empty), I saw:
 
-From what I see there, libintl was found.
+On Linux:
 
-If you believe this is illumos libc bug, it would be cool if someone created an simple testcase, which I can forward to the illumos developers.
+am-based rebase (without -m):
+
+3400.2: rebase on top of a lot of unrelated changes             1.87(1.64+0.21)
+3400.4: rebase a lot of unrelated changes without split-index   7.87(6.24+1.00)
+3400.6: rebase a lot of unrelated changes with split-index      5.99(5.05+0.67)
+
+interactive-machinery rebase (with -m):
+
+3400.2: rebase on top of a lot of unrelated changes             1.80(1.60+0.19)
+3400.4: rebase a lot of unrelated changes without split-index   6.78(5.70+0.91)
+3400.6: rebase a lot of unrelated changes with split-index      6.92(5.70+0.89)
+
+
+On Mac:
+
+am-based rebase (without -m):
+
+Test                                                            this tree
+-------------------------------------------------------------------------------
+3400.2: rebase on top of a lot of unrelated changes             2.68(1.68+0.68)
+3400.4: rebase a lot of unrelated changes without split-index   8.89(5.86+2.94)
+3400.6: rebase a lot of unrelated changes with split-index      7.87(5.35+2.51)
+
+
+interactive-machinery rebase (with -m):
+
+Test                                                            this tree
+-------------------------------------------------------------------------------
+3400.2: rebase on top of a lot of unrelated changes             1.99(1.61+0.77)
+3400.4: rebase a lot of unrelated changes without split-index   8.63(5.38+3.38)
+3400.6: rebase a lot of unrelated changes with split-index      9.36(5.53+3.95)
+
+> I then changed it to -m to test the current scripted version, trying to
+> let it run overnight, but my laptop eventually went to sleep and the tests
+> were not even done. I'll let them continue and report back.
+>
+> My conclusion after seeing these numbers is: the interactive rebase is
+> really close to the performance of the --am backend. So to me, it makes a
+> total lot of sense to switch --merge over to it, and to make --merge the
+> default. We still should investigate why the split-index performance is so
+> significantly worse, though.
+
+Cool, I'll update my patches to make --merge the default (building on
+top of en/rebase-merge-on-sequencer) and post it as an RFC.  But yeah,
+we should also check into why the split-index performance becomes a
+bit worse with such a change.
 
 Thanks,
-Michal
-
-> 
-> Of course, it might *still* be a bug in libc by virtue of handing '%.*s'
-> through to libc's implementation.
-> 
-> Alban, can you test this with NO_GETTEXT?
-> 
-> Thanks,
-> Johannes
+Elijah
