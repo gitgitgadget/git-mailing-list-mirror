@@ -2,95 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF7821F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 22:54:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD2E81F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 23:14:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727317AbfBAWyN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 17:54:13 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:39445 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726542AbfBAWyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 17:54:12 -0500
-Received: by mail-wm1-f67.google.com with SMTP id y8so7722925wmi.4
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 14:54:10 -0800 (PST)
+        id S1725911AbfBAXOB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 18:14:01 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:38763 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725803AbfBAXOA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 18:14:00 -0500
+Received: by mail-qt1-f195.google.com with SMTP id p17so9621128qtl.5
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 15:14:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:references:message-id:user-agent
-         :mime-version;
-        bh=HxIZ2chfFwPuv+/UpDjePW0Vet5CkJb9+lxssDicMyA=;
-        b=JKFmBtFKoNHDbX93NJx/7//w6Gj8qH/DM3QODj8ZRLxei+cQXMdsYxAJMDgggwoi0w
-         SwdYuHuwpr8i1HCfNIYc+thYXGgOn57pIdzLUi6oYNWEwhSre6YspfmJ8mcLQrbk76pG
-         bJyBIX67Mfa4dApNV9wzsxWPvL3hixiS9dXIfpGReWSjqhwki7WH+a4Vb+skAMdp7kk7
-         bzN4YR3UesgsZhHZb3wwTDG0edxaSxOlCi2f0SQlmIzJ197I6mvz0RaWc4GhK1iLncFk
-         /sgd4MXqg7RIMe/wP1c50t0wcOpNp+m76Lyc6UI4lbjGuku8loEzZ6BTY2DkBSQGjPdR
-         eFCg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DJlGEzkrkBL+Z+nsiYt6tO7i3+QC42tCa2T77G6wV14=;
+        b=WYGGVr3GAu4EtQEturxbcjUxAFFsauxtjs0VCv+2GiaP5Adsh26CqXHul/flFdl/7/
+         qWYoRLvDPE/oLnXTx8SQVjaFVUkmXy70olpG2ADW2HyzO5/M6117fS5J8MbO5BdKluZ8
+         DJXd13Yorn8YbY9mER+kZUKuGFHYz6X+5L/3u3x8oLuQGEnKnSKnJQkx8y1BcBeL3x/Q
+         ECkFQUAu1ZAxVfRW4f8re5wlk7hgot9jEMlXxjwshd71yia/kLOAtTQytVwCWcsuriO+
+         jnAPPogBQsnJrGi67uIxs3pSKEUSs54FRcS2eiFW76+suhHwgCd6tvIqIOqwA46Qd2Nv
+         MoYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:references
-         :message-id:user-agent:mime-version;
-        bh=HxIZ2chfFwPuv+/UpDjePW0Vet5CkJb9+lxssDicMyA=;
-        b=JVfsH+KpAmhtI17RfK/N5V7stVsp3pOJ9+oAhd3sMe56CUxI87JSncKZ7EKzAZqN/L
-         0/lX+WyrE2ixcXHtk+1UmQBxY7AElzlRQG0KIHom7tK7FBcq+OBmxqnbNmjWBP6Vl3dc
-         i4HbplM736yhX32Oy9Pb5rVyJiITu0Ib1BRbgxj7hvZsD7SsoSEYPey8EbP1XUfTZwNI
-         UGmbJfmvLSXUCqH8kjkFsN9F9v6eieAYjDcR/Ff2G5ynX5Hnx1RN6Gw1/AacOENONDSf
-         EnBqvVYH10YNFdFs2oSyC7kd95VEa1UV5nwMHPKXMvwTgxQpZT6KLODs1ajEL9Mpmu3z
-         E8Ng==
-X-Gm-Message-State: AHQUAuZMcVQMCn1WvU03nJwz/URhhNR/4VpAxic8ku+aD3AO0ZikAYsF
-        baqHwBmyFgep4GKaUG8krOE=
-X-Google-Smtp-Source: AHgI3IbwgrID/DY3q7ogKgEoosov2U+eE2xzSq6C8sHcGbpiFUmgnZ/kmYuAkANzJtnx6hmtUegzwA==
-X-Received: by 2002:a1c:23cc:: with SMTP id j195mr4048068wmj.124.1549061649915;
-        Fri, 01 Feb 2019 14:54:09 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t5sm3127548wmg.43.2019.02.01.14.54.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Feb 2019 14:54:09 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     nbelakovski@gmail.com
-Cc:     git@vger.kernel.org, peff@peff.net, rafa.almas@gmail.com,
-        avarab@gmail.com
-Subject: Re: [PATCH v7 2/3] branch: Mark and color a branch differently if it is checked out in a linked worktree
-Date:   Fri, 01 Feb 2019 14:34:45 -0800
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>">
-        <20190201220420.36216-1-nbelakovski@gmail.com>
-        <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
-        <20190201220420.36216-3-nbelakovski@gmail.com>
-Message-ID: <xmqqlg2zw25q.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DJlGEzkrkBL+Z+nsiYt6tO7i3+QC42tCa2T77G6wV14=;
+        b=MCp+tdz/ih7NPFufpZRMCOvT5PP3Bg+l7ijy/VXOT3e0P8FnL4qzvuVyYHnEWhW5JE
+         +PIsyfKT1C+Pe2N/jg8gLNeo2QTKBeulOwZhcgaH0IfYBXsx3fbwd0dPxKMAyqBt7VLx
+         hRYtEyZL/xhD/WaNmpjDb7ZQ4eGMsIAyQGMPBPXebUI8xOo6cPM+kVOdm8o1P/zbUnFk
+         tDPluyNIDCg63+eYbIKF4f/BC014FaUwgy2UtGlYjDICQR1yu2lmwrYIPSUXJKx/OzF3
+         sNFUKML/ga9Krk4lXs4Nt7RqjzTQ0IVWXFiwlnp5AxB23SsbvQr8n1XWBrEZwJVdFesf
+         YOpg==
+X-Gm-Message-State: AJcUukfEmBLJsxKGnLXo5ERq4Y5VGgwkEfI2P2rPKa3KwPfjefZ/JCfW
+        z+6BOw4igHMXr671cu1fz8LKgRecw1X8Hkhyihg=
+X-Google-Smtp-Source: ALg8bN7SfbiZfjmjzcxnSsUwriLrUG+2zYNAgaOl2zfm/cX2HxI95JYEZv/WGC8J3Etm1FwudYYPefyo6VtHvUFWSnc=
+X-Received: by 2002:ac8:108e:: with SMTP id a14mr38126810qtj.86.1549062419912;
+ Fri, 01 Feb 2019 15:06:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190201220420.36216-1-nbelakovski@gmail.com> <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20190201220420.36216-4-nbelakovski@gmail.com> <xmqqftt7w25q.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftt7w25q.fsf@gitster-ct.c.googlers.com>
+From:   Nickolai Belakovski <nbelakovski@gmail.com>
+Date:   Fri, 1 Feb 2019 15:06:31 -0800
+Message-ID: <CAC05386O=9CxkgUNGoYbwEOXiPPcAD7H5Kn97iCqPc1X7kAh6w@mail.gmail.com>
+Subject: Re: [PATCH v7 3/3] branch: Add an extra verbose output displaying
+ worktree path for refs checked out in a linked worktree
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-nbelakovski@gmail.com writes:
+On Fri, Feb 1, 2019 at 2:54 PM Junio C Hamano <gitster@pobox.com> wrote:
 
->  If `--list` is given, or if there are no non-option arguments, existing
-> -branches are listed; the current branch will be highlighted with an
-> -asterisk.  Option `-r` causes the remote-tracking branches to be listed,
-> -and option `-a` shows both local and remote branches. If a `<pattern>`
-> -is given, it is used as a shell wildcard to restrict the output to
-> -matching branches. If multiple patterns are given, a branch is shown if
-> -it matches any of the patterns.  Note that when providing a
-> -`<pattern>`, you must use `--list`; otherwise the command is interpreted
-> +branches are listed; the current branch will be highlighted in green and
-> +marked with an asterisk.  Any branches checked out in linked worktrees will
-> +be highlighted in cyan and marked with a plus sign. Option `-r` causes the
-> +remote-tracking branches to be listed, and option `-a` shows both local and
-> +remote branches. If a `<pattern>` is given, it is used as a shell wildcard to
-> +restrict the output to matching branches. If multiple patterns are given, a
-> +branch is shown if it matches any of the patterns.  Note that when providing
-> +a `<pattern>`, you must use `--list`; otherwise the command is interpreted
->  as branch creation.
+>
+> If the rule were "a branch that is checked out in one of the
+> worktrees connected to the repository is shown with the path to that
+> worktree" (i.e. no exception), I would understand it.  If the rule
+> were "a branch that is ... (the same sentence), unless it is the
+> branch that is checked out in the *current* worktree", then I would
+> understand it too.
+>
 
-I had to apply and then use --color-words to see what is going on.
-Please avoid unnecessary reflowing of the text that makes the patch
-harder than necessary to read.
+It is the latter, as in, yes, I meant "current". I will update the docs as such.
 
-I still do not quite see the point of this step in the series,
-though.
+>
+> In any case, please add a test or two to protect this feature from
+> unintended future breakages.
+>
+> Thanks.
+>
+
+Will do.
