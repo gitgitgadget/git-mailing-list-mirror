@@ -2,99 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F22781F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 23:32:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F79B1F453
+	for <e@80x24.org>; Fri,  1 Feb 2019 23:52:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726906AbfBAXcW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 18:32:22 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:42581 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725803AbfBAXcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 18:32:22 -0500
-Received: by mail-qt1-f195.google.com with SMTP id d19so9630590qtq.9
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 15:32:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PvYsGqSQPkqsWQ2Ly43TIgTGxGfd6JqIu2gltJeq8f0=;
-        b=b/W5by/0JwxlacSr7J6CL+xVDYHXwz7P6K2W6zvKkgqfTvaOL/Ab4aKPNlPoP7sjcL
-         66SHlujdsU976ZTaMaHeHNLDXXm9kePaS8f1s4vjSdmFzzxPtRYyBvpPiKrIVYrCb4sQ
-         KP5qrLhB4CMaY+myiDGKBmj6pYwlGGZUHxkOX3I9rkG4QjQ1PApDWeaKR+IEJACh3mC4
-         5BimwbBsUQdMyThU/kqkYCeJy4fcLtqwlrN/ULVyHPBe5vwo2ddA8XmXyLwAGligjPbT
-         Y5+rHxcv24UCvJZpb6PpqTOshN59QA/kQiDf/LVlUo5u017NJcRgFrDUNBRdBaPwG9lh
-         aAIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PvYsGqSQPkqsWQ2Ly43TIgTGxGfd6JqIu2gltJeq8f0=;
-        b=YmObPIJhuqYvKfQ2rPPz3NwF1cE6pF/M6qAl678LUU/ph/jN40OncVfeVZ3BaCnJBk
-         tzis2MeveM/MXdEw2mkMfWZl4LXZCXVgBE0l19l2W9Iyfm4xyfwvkQgMXP+hjGpb0/4w
-         tGI1tSSO6oEaIHeVrW/IGMWIGpLJvScInSEtAxf87azeGPqPv8s3uiy+Og3x/NvrzcIG
-         t18w0gi6OtJ8T7edQqdakcd2gDnPC3Vf6pYorKGpCIkfMpNnGeicBw8vQwEtbdx1e8p1
-         cCH7svcNCjoIEYKgEUr1XzZULQll7ehxYjd0278G2ifvT4rfYVyibyYaxW4U8+YF5ESC
-         Ke9A==
-X-Gm-Message-State: AJcUukcv2AN2J8R6d1htDyxMMdF7MSppuUwNWhGdZ24xoEsovgsXsfk+
-        s2faGQzVST808wLlJbMKLhMgSxi864jFKGK+33J3rKxS
-X-Google-Smtp-Source: ALg8bN7UxGOHPPHZvMJzaebxUp3+Zf68L8nPNK2N66+gP+xWHSR4hq13n/lzE1ibmmXr0BMbKou3JWuHXEdZ5PnLvpk=
-X-Received: by 2002:ac8:41c8:: with SMTP id o8mr41072845qtm.232.1549063940827;
- Fri, 01 Feb 2019 15:32:20 -0800 (PST)
+        id S1726217AbfBAXwG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 18:52:06 -0500
+Received: from a7-10.smtp-out.eu-west-1.amazonses.com ([54.240.7.10]:52018
+        "EHLO a7-10.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726121AbfBAXwG (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 1 Feb 2019 18:52:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1549065123;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=2xAhwuaHFRVGBw93SosFtSguAi4fwLXh/Kx/lyE/aSE=;
+        b=lE7etJJQrT/ZQm+PEvoOnb//R/wiADAmSRX3pMaK3/zI4w9fsqIoX5ZpIJe4Xt0p
+        A8bYecGpp7R/RDNbLQUR9BVOFqv7SW0k6Zh0sDu/d7gFzQENp7vmHJa9ojrE+Pi0X8Z
+        F4UAcpu1ERYPhPcbUJZay9zs0fP08w2TzU8ASv/U=
+From:   Shahzad Lone <shahzadlone@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020168a8338064-b1c054c4-3e05-4825-b8dc-636d9c63dcfc-000000@eu-west-1.amazonses.com>
+References: <01020168a8338064-b1c054c4-3e05-4825-b8dc-636d9c63dcfc-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v2 [rebased]] [Enhancement] Improve internals / refactoring.
 MIME-Version: 1.0
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20190201220420.36216-1-nbelakovski@gmail.com> <xmqqwomjw25s.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqwomjw25s.fsf@gitster-ct.c.googlers.com>
-From:   Nickolai Belakovski <nbelakovski@gmail.com>
-Date:   Fri, 1 Feb 2019 15:31:52 -0800
-Message-ID: <CAC05386CRvmLUbG+O89=i9oXsOSPsoP3VpnrR-w1HJhMa6U7AA@mail.gmail.com>
-Subject: Re: [PATCH v7 0/3]
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 1 Feb 2019 23:52:03 +0000
+X-SES-Outgoing: 2019.02.01-54.240.7.10
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 1, 2019 at 2:54 PM Junio C Hamano <gitster@pobox.com> wrote:
->
->
-> As you can see in "git shortlog --no-merges", later two patches
-> would look quite out of place by having overlong title and starting
-> the description(i.e. after "<area>: ") in a capital letter.
+Changed to ```consts``` and tried to save arithmetic cost where I could.
 
-Hadn't looked at it that way. OK, will shorten/uncapitalize.
+Sorry my coding OCD bothered me when I didn't see them being ```consts```.
 
->
-> It is still not clear why we would want 2/3, even though I think 3/3
-> is a good idea.
->
-It's interesting to me that you like 3/3 but not 2/3 :)
+Signed-off-by: Shahzad Lone <shahzadlone@gmail.com>
+---
+ builtin/diff.c           |  2 +-
+ builtin/pack-objects.c   | 18 +++++++++---------
+ builtin/pack-redundant.c |  4 ++--
+ pack-revindex.c          | 11 +++++------
+ 4 files changed, 17 insertions(+), 18 deletions(-)
 
-My apologies for restating the commit message, but the point of 2/3 is
-to communicate to the user that highlighted/marked branches will
-behave differently from unhighlighted/unmarked branches for commands
-to check out or delete. I think this is useful since it gives the user
-actionable information ahead of time, as opposed to providing that
-information upon failure of checkout/delete. It also makes sense since
-'git branch' is already highlighting the current branch, i.e. this is
-just an extension of that idea.
+diff --git a/builtin/diff.c b/builtin/diff.c
+index f0393bba23a7d..84a362ff5625b 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -102,7 +102,7 @@ static int builtin_diff_blobs(struct rev_info *revs,
+ 			      int argc, const char **argv,
+ 			      struct object_array_entry **blob)
+ {
+-	unsigned mode = canon_mode(S_IFREG | 0644);
++	const unsigned mode = canon_mode(S_IFREG | 0644);
+ 
+ 	if (argc > 1)
+ 		usage(builtin_diff_usage);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 0a70d046043ec..3017beb8236fa 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -197,8 +197,8 @@ static unsigned long write_large_blob_data(struct git_istream *st, struct hashfi
+ 					   const struct object_id *oid)
+ {
+ 	git_zstream stream;
+-	unsigned char ibuf[1024 * 16];
+-	unsigned char obuf[1024 * 16];
++	unsigned char ibuf[16384];
++	unsigned char obuf[16384];
+ 	unsigned long olen = 0;
+ 
+ 	git_deflate_init(&stream, pack_compression_level);
+@@ -1901,10 +1901,10 @@ static int type_size_sort(const void *_a, const void *_b)
+ {
+ 	const struct object_entry *a = *(struct object_entry **)_a;
+ 	const struct object_entry *b = *(struct object_entry **)_b;
+-	enum object_type a_type = oe_type(a);
+-	enum object_type b_type = oe_type(b);
+-	unsigned long a_size = SIZE(a);
+-	unsigned long b_size = SIZE(b);
++	const enum object_type a_type = oe_type(a);
++	const enum object_type b_type = oe_type(b);
++	const unsigned long a_size = SIZE(a);
++	const unsigned long b_size = SIZE(b);
+ 
+ 	if (a_type > b_type)
+ 		return -1;
+@@ -1919,7 +1919,7 @@ static int type_size_sort(const void *_a, const void *_b)
+ 	if (a->preferred_base < b->preferred_base)
+ 		return 1;
+ 	if (use_delta_islands) {
+-		int island_cmp = island_delta_cmp(&a->idx.oid, &b->idx.oid);
++		const int island_cmp = island_delta_cmp(&a->idx.oid, &b->idx.oid);
+ 		if (island_cmp)
+ 			return island_cmp;
+ 	}
+@@ -2171,7 +2171,7 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
+ 	struct object_entry *child = DELTA_CHILD(me);
+ 	unsigned int m = n;
+ 	while (child) {
+-		unsigned int c = check_delta_limit(child, n + 1);
++		const unsigned int c = check_delta_limit(child, n + 1);
+ 		if (m < c)
+ 			m = c;
+ 		child = DELTA_SIBLING(child);
+@@ -2226,7 +2226,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ 		while (window_memory_limit &&
+ 		       mem_usage > window_memory_limit &&
+ 		       count > 1) {
+-			uint32_t tail = (idx + window - count) % window;
++			const uint32_t tail = (idx + window - count) % window;
+ 			mem_usage -= free_unpacked(array + tail);
+ 			count--;
+ 		}
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index cf9a9aabd4eb2..11bc51456631e 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -166,7 +166,7 @@ static inline struct llist_item * llist_sorted_remove(struct llist *list, const
+ 	l = (hint == NULL) ? list->front : hint;
+ 	prev = NULL;
+ 	while (l) {
+-		int cmp = oidcmp(l->oid, oid);
++		const int cmp = oidcmp(l->oid, oid);
+ 		if (cmp > 0) /* not in list, since sorted */
+ 			return prev;
+ 		if (!cmp) { /* found */
+@@ -264,7 +264,7 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
+ 	while (p1_off < p1->pack->num_objects * p1_step &&
+ 	       p2_off < p2->pack->num_objects * p2_step)
+ 	{
+-		int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
++		const int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
+ 		/* cmp ~ p1 - p2 */
+ 		if (cmp == 0) {
+ 			p1_hint = llist_sorted_remove(p1->unique_objects,
+diff --git a/pack-revindex.c b/pack-revindex.c
+index 3c58784a5f4de..40651ec9fac2e 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -119,7 +119,7 @@ static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
+  */
+ static void create_pack_revindex(struct packed_git *p)
+ {
+-	unsigned num_ent = p->num_objects;
++	const unsigned num_ent = p->num_objects;
+ 	unsigned i;
+ 	const char *index = p->index_data;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+@@ -132,7 +132,7 @@ static void create_pack_revindex(struct packed_git *p)
+ 			(uint32_t *)(index + 8 + p->num_objects * (hashsz + 4));
+ 		const uint32_t *off_64 = off_32 + p->num_objects;
+ 		for (i = 0; i < num_ent; i++) {
+-			uint32_t off = ntohl(*off_32++);
++			const uint32_t off = ntohl(*off_32++);
+ 			if (!(off & 0x80000000)) {
+ 				p->revindex[i].offset = off;
+ 			} else {
+@@ -143,7 +143,7 @@ static void create_pack_revindex(struct packed_git *p)
+ 		}
+ 	} else {
+ 		for (i = 0; i < num_ent; i++) {
+-			uint32_t hl = *((uint32_t *)(index + (hashsz + 4) * i));
++			const uint32_t hl = *((uint32_t *)(index + (hashsz + 4) * i));
+ 			p->revindex[i].offset = ntohl(hl);
+ 			p->revindex[i].nr = i;
+ 		}
+@@ -168,10 +168,10 @@ int find_revindex_position(struct packed_git *p, off_t ofs)
+ {
+ 	int lo = 0;
+ 	int hi = p->num_objects + 1;
+-	struct revindex_entry *revindex = p->revindex;
++	const struct revindex_entry *revindex = p->revindex;
+ 
+ 	do {
+-		unsigned mi = lo + (hi - lo) / 2;
++		const unsigned mi = lo + (hi - lo) / 2;
+ 		if (revindex[mi].offset == ofs) {
+ 			return mi;
+ 		} else if (ofs < revindex[mi].offset)
+@@ -187,7 +187,6 @@ int find_revindex_position(struct packed_git *p, off_t ofs)
+ struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
+ {
+ 	int pos;
+-
+ 	load_pack_revindex(p);
+ 	pos = find_revindex_position(p, ofs);
+ 
 
-As we've stated earlier in this thread, 1/3 allows for users to
-implement this on their own with a custom git branch format.
-Personally I think there's value in making it default, since it's
-adding information in a minimally intrusive way. I do believe that
-merely adding information isn't a good enough reason to change things,
-as information overload is a real thing, but in this case the output
-isn't changed for anyone not using a worktree (same goes for 3/3), and
-for someone using a worktree this provides useful and actionable
-information, IMO.
-
-Does that change your mind at all?
+--
+https://github.com/git/git/pull/572
