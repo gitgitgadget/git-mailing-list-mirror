@@ -7,95 +7,113 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84E5C211B5
-	for <e@80x24.org>; Sat,  2 Feb 2019 11:06:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B16E21F453
+	for <e@80x24.org>; Sat,  2 Feb 2019 11:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727589AbfBBLGp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Feb 2019 06:06:45 -0500
-Received: from mail-it1-f194.google.com ([209.85.166.194]:54816 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726757AbfBBLGp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Feb 2019 06:06:45 -0500
-Received: by mail-it1-f194.google.com with SMTP id i145so13633604ita.4
-        for <git@vger.kernel.org>; Sat, 02 Feb 2019 03:06:44 -0800 (PST)
+        id S1726761AbfBBLVi (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Feb 2019 06:21:38 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:34067 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726540AbfBBLVi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Feb 2019 06:21:38 -0500
+Received: by mail-io1-f68.google.com with SMTP id b16so8057181ior.1
+        for <git@vger.kernel.org>; Sat, 02 Feb 2019 03:21:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=4Az6FhZqY0H1AfOgPeCGMuyFPwY34GSADbUbZOHNGlE=;
-        b=f4/BLzqVYQ5hyOCoqSaqYBMQ6MCI/RuHkzg9NGHJFJtgXOdGTvMLX8of550sj8eUd6
-         sGY9r/tXfNiY6KYkb+LdMT4ePQy5rCF2NXF2+FUUySnL8gVbcL7/3hC4kDh/L6wNcIMX
-         PdRmLODj4yoFRs/pLLneUoRAju4idG2uJGdnLXqcEQTYrlbo3G71cCh01Zcr/Q8yClBq
-         rC0mYsvh7f8rYsFdBfOOU5Au8kWDFmc7DsslR2PFOmguN6Sy3Wp1c74Du7beBEBjYTf6
-         UAI0d6Tb/qbAFJMiiwdPFXaPJYQVTL8aPb0kYCh4f403V+gyDnknjj9djQUqnpUIuXya
-         sq8A==
+        bh=BUKLr+U3BePlfKezhahV5YjRrQ9GHLnB0T9wdlqzCBs=;
+        b=kBXXRdp36vjo9Lh1aqrpjTkzeC+azAzg0oBv8G/FnQ/MV/6FRo6l8tG38XQoofvQ54
+         UIJpwrN/yk1za1ILclUL8KqJAEGUvOZa7O9wAl7g/FSlvMrcmKMBzEJNoxiqI6aBfSXL
+         Wl3JQ1kEbCQyPvWs1yevuF7eRZL6CxiD8mAd8T8t1rcd7BDpQ7FRiVhU0FtOZh8h4ejW
+         Wy8DysR63oS7GENLQffPomN22d3I2oFXAHn+C2JNzDosC6fzRjeRMZRvOJvxpSceboiy
+         pxhH/ZTNuOdHGIvt8FKiX5IkMzK8pPc+mDDgv8KzTMRECwcJd8JptNFZrK8OQLtsImm0
+         CQ6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4Az6FhZqY0H1AfOgPeCGMuyFPwY34GSADbUbZOHNGlE=;
-        b=MUGW2JbQUQq4TsWo0rfSuubPycOVPL/aRu1c4swfE9EDnoNn8rtWsSgCBME5oUBRm0
-         xdramZRM5FsNDdA+YvaLyS64db2YWXNZqeHAEl/Bxes6mGsRXsChDs349QufSOZ26Xe4
-         M6ipY7CarudTQyZk3MOZVhEX1sA+XrRIVtQ2wX/qIcS3aII36cfpNaK6WTMO7s35KFnj
-         TQ2I9aI845/i04pG+M1jbMIWOo4ROLjlO4FKa6MzNZNToa2EfGhmG+rddf+QedGpnDBP
-         Io26oqYkj6d7QlsJg//fQlUmDPnln7cOplLTk2lRL/ZCLQ2b1Oz3OwuYFjWL98mpdWNV
-         DlyA==
-X-Gm-Message-State: AHQUAuZSB1Q3zWDC4PasCFI7lwUnVHGy8PsE82t93ij3XrxclK+kKS6b
-        xha18AsvzHymQ+KuqtaR5CXI9jza886ppiwhCb4=
-X-Google-Smtp-Source: AHgI3IZq+kizLTeFJOwr2U5IrMNx6lGDpmlUOY+UlCdfXuDolmoy0+QS+BW5mRc/mRPzePA/nZZmedD5otC+UslUOPE=
-X-Received: by 2002:a24:e1ce:: with SMTP id n197mr4144271ith.123.1549105603967;
- Sat, 02 Feb 2019 03:06:43 -0800 (PST)
+        bh=BUKLr+U3BePlfKezhahV5YjRrQ9GHLnB0T9wdlqzCBs=;
+        b=eR5zE2iGrnqO+snGYsQV/S78pV2YCR8Aub6omboklK8WxlLa45iuo23sCzmIRjBs/Z
+         VUZGcpg9PWwCYjbR/ZR60Y+JSDX1qORxUSm0xkp5fKEVSG4hKF4LQGyH0eF+fWe69nuC
+         ThFEG/igv/U5rsG32+KjZEX5WEQCiNte6HO2c/162RRdxebQhW6CqaFW0fDj/hbYuJGc
+         1gmW7gzTN2XKn0lkLzWUbChKTYNz9vfIsMG224G+65rHbEhz4SWEKAMpekcVYTqWvhEH
+         Wvj9yP0EgWlt1GUU0fB9BPfhcS9Pgi+x693H9Ggz5HtELR5ZkSdhiNQnTKNdcbZt2/PF
+         qDAw==
+X-Gm-Message-State: AHQUAuYXSjm30YaqTJLmAIn64YYgl5wolLA7KftRNDnIGEgCQDU1aRSm
+        ox4u3aaywd/b35eSyygazVreV4NBPpAxzidN+BA=
+X-Google-Smtp-Source: AHgI3Ia8GpptbqdCKcIP8/J6AMinhKB/FiUHicDfe3gFH2YkT4m38Vu8KutD9dw+KV4SEAIYODorW1vDcWuA/ZAPyWg=
+X-Received: by 2002:a6b:c544:: with SMTP id v65mr18622286iof.118.1549106497263;
+ Sat, 02 Feb 2019 03:21:37 -0800 (PST)
 MIME-Version: 1.0
-References: <20190130094831.10420-1-pclouds@gmail.com> <20190131133731.GK13764@szeder.dev>
- <CACsJy8A7TjYWJsxXETUU31JzZL-aCXcr+rHsQ23Ec1ujeMcQTA@mail.gmail.com> <xmqqk1ik3cvi.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqk1ik3cvi.fsf@gitster-ct.c.googlers.com>
+References: <20190201193004.88736-1-dan.mcgregor@usask.ca> <xmqqr2crxl7o.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr2crxl7o.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 2 Feb 2019 18:06:17 +0700
-Message-ID: <CACsJy8D6+X7b842D4ZDgsLiYHt9+akTPiVtrbjcc8zxJw38TUw@mail.gmail.com>
-Subject: Re: [PATCH 00/19] Add new command "switch"
+Date:   Sat, 2 Feb 2019 18:21:10 +0700
+Message-ID: <CACsJy8B_=qbeimp5=RS-r2gwEjVV9rDE_2_tk_DDqz6rJazvFw@mail.gmail.com>
+Subject: Re: [PATCH] http: cast result to FILE *
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+Cc:     Dan McGregor <dan.mcgregor@usask.ca>,
         Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
+        Masaya Suzuki <masayasuzuki@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 1, 2019 at 1:23 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, Feb 2, 2019 at 4:21 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Duy Nguyen <pclouds@gmail.com> writes:
+> Dan McGregor <dan.mcgregor@usask.ca> writes:
 >
-> >> Adding '--soft|--hard' from 'git reset' would go in the opposite
-> >> direction.
+> > Commit 8dd2e88a92 ("http: support file handles for HTTP_KEEP_ERROR",
+> > 2019-01-10) introduced an implicit assumption that rewind, fileno, and
+> > fflush are functions. At least on FreeBSD fileno is not, and as such
+> > passing a void * failed.
+>
+> I am not strongly opposed to this patch,
+
+Even if this is needed, should it be done behind git-compat-util.h
+instead? That way if fileno(void*) is used elsewhere, we don't have to
+do the casting again.
+
+> but shouldn't you be filing
+> a bug report against FreeBSD instead?  The implementation is free to
+> define fileno(fh) as a macro, but it shouldn't force such a change
+> to conformant programs.
+>
+> https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=206146
+>
+> > Explicitly cast result to a FILE * when using standard functions that
+> > may ultimately be macros.
 > >
-> > If it's about the confusion, I think we can avoid it. If it's about
-> > the one-command-do-all, I think it still fits in the main topic of
-> > git-switch, which is about switching. But in git-reset case it's
-> > switching HEAD, not a normal branch.
->
-> I do not think "switch branch" should update HEAD for the branch.
-> Let it be handled by "reset" (or "branch -f that-other-branch").
+> > Signed-off-by: Dan McGregor <dan.mcgregor@usask.ca>
+> > ---
+> >  http.c | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/http.c b/http.c
+> > index 954bebf684..8b9476b151 100644
+> > --- a/http.c
+> > +++ b/http.c
+> > @@ -1996,12 +1996,12 @@ static int http_request_reauth(const char *url,
+> >               strbuf_reset(result);
+> >               break;
+> >       case HTTP_REQUEST_FILE:
+> > -             if (fflush(result)) {
+> > +             if (fflush((FILE *)result)) {
+> >                       error_errno("unable to flush a file");
+> >                       return HTTP_START_FAILED;
+> >               }
+> > -             rewind(result);
+> > -             if (ftruncate(fileno(result), 0) < 0) {
+> > +             rewind((FILE *)result);
+> > +             if (ftruncate(fileno((FILE *)result), 0) < 0) {
+> >                       error_errno("unable to truncate a file");
+> >                       return HTTP_START_FAILED;
+> >               }
 
-It can already, it's simply a shortcut for "git switch --force-create
-<current-branch> -f <commit>" (or "git checkout -fB <current-branch>
-<commit>"), at least for --hard. --mixed and --soft is just a
-different variant of "-f".
 
-> I personally did not have "it is way too overloaded" problem with
-> "checkout", but it turns out that many others found it so.  You'll
-> see the same happen for your "switch" if you do not resist
-> temptation to add unrelated things (or things you may find related
-> but you see others find unrelated even in this early discussion).
 
-The thing about git-reset is it's also overloaded with updating things
-other than HEAD. All the pathspec form is the same as checkout/restore
-(except checkout updates both index/worktree while reset is more about
-index; but restore can cover all index/worktree combination). But yeah
-maybe just leave it for now. While trying to document the new option
-in switch to replace reset, the verb "rewind" (the tip of the current
-branch) seems fitting well. I might revisit this topic with git-rewind
-or something.
 -- 
 Duy
