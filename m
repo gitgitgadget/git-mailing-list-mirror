@@ -2,79 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F31A1F453
-	for <e@80x24.org>; Sat,  2 Feb 2019 03:09:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F55D1F453
+	for <e@80x24.org>; Sat,  2 Feb 2019 06:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727407AbfBBDJn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 22:09:43 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:38421 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726528AbfBBDJn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 22:09:43 -0500
-Received: by mail-lj1-f196.google.com with SMTP id c19-v6so7465721lja.5
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 19:09:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HmIhnBJ63hXZfC6zQuxm1n1NiQwtgqHyxxL0FOQp5jU=;
-        b=Hgf9wvMDWn+IBTYmDTifG4SNtypRjF6DGQEvE7jcaL1za1ufjbmXi0d18Udu6HCPSk
-         Y6vj/pCF9VFls3JFQ6xIMvCBOTcHATGFXdxpGkke71LMw4PBj4+xIILgO/0fgQWG6hE3
-         f0z0Xq2hbgmmqZB0LURoJo5vvO1P19+kLsLyp80NIzE8VOqjx6XE1YxmhcqGik1huPBp
-         8J1uctlurxRWnBOfnZY+BW7Z0MkLAEYDACTDk/RCWcj/akg1AAVZaidaRGv+OwFv+QEF
-         yIsMUA8mtu2I9Y06EEzNsCp8dGARPWUiP3euESGj+zOJLogAjNUnKXzhVeLjIVrbxU2o
-         cHFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HmIhnBJ63hXZfC6zQuxm1n1NiQwtgqHyxxL0FOQp5jU=;
-        b=JSAUuU/1EfwhO9qomdHxSjv0BDhd/9mJqvCVoNMp51vyMp/ZqIjiROcIIbg6q3svmt
-         0UGlcVGLrVlfSpsjiO29QaQGkzKk1gR6tvlVTnIrdKeWRN7uwqujhjYcO4koz6aG1/o5
-         CFeQ/jLz/LTAwV/tZDP+MPtWw6xpQacNRzH88iJYMpsaHL6ROajvMIFInl37Bz+l0PaE
-         se5LjkKgd8yZuwrjJ+jdmh3/B+37NJ9sYcEeDzBEaij8HniDpPU/Zqq4k1DqDyhpw8tt
-         9q9U77TITqAJdYg12/xVsZBQMsM6ER6mJKRZi56hGpyXuNMeVCLVq7FFSZwY6QiMUFsX
-         e5kQ==
-X-Gm-Message-State: AJcUukftxAnWN+DiizuZsEGPSoHM+rzmKoBMzMDPoalSDrgn0q3o7V3H
-        kJPgYiWifp1Y9VPo1iQ81q8+8cOdxcwzmcTjDcM=
-X-Google-Smtp-Source: ALg8bN44kuG1xUT5qtOll8SaBl62A7msQCCleqPCirultDvIKyreSx0CIb7099tLho/RoKmc3io+xzvJXDYhjG9+mE8=
-X-Received: by 2002:a2e:4299:: with SMTP id h25-v6mr33740609ljf.5.1549076980811;
- Fri, 01 Feb 2019 19:09:40 -0800 (PST)
+        id S1727276AbfBBGic (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Feb 2019 01:38:32 -0500
+Received: from mout.web.de ([212.227.17.11]:47083 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727154AbfBBGib (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Feb 2019 01:38:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1549089509;
+        bh=/tNNHAM1YoIDq34iQjgPZcQCHU9msE9VbLcUOpRAnOA=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=IcOyKEu9PTj6nAZNHU1RZFQxd71PTwadvKAsKutcP6pipDwiivSmlHE/hbpuI7kW5
+         TG4LcxpkpJ7M0sVzHyVx1THImIZ37Ur6nZA65ufFUK9npZYvv8dzSG6qmEbAw4Gz5g
+         ErCF1mhjXTrlslNeAa3SRSIuHKqOHhPjSG5BeRf0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lk8gg-1hRtWQ3j3q-00c89G; Sat, 02
+ Feb 2019 07:38:28 +0100
+Date:   Sat, 2 Feb 2019 06:38:28 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Angelo Melonas <angelomelonas@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Possible minor bug in Git
+Message-ID: <20190202063828.4kjtdmrsm7g4eyg3@tb-raspi4>
+References: <CAHYHVP+ty7i7a_abT-th_HR2X-8X6mLmpHPR_3VXv5LpWUsrhQ@mail.gmail.com>
+ <CAHYHVP+Dvbq_aOMy1_Kq0LHJsd4r+4GiP3N3R4A9ouAoJ4gw9g@mail.gmail.com>
+ <20190131203447.aovalz2vzsjpdjdv@tb-raspi4>
+ <CAHYHVPJdbEOPaAoyAhOtJ+wkeXZdowAVqe1Tp_=LOKzuuzA+wQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <01020168a8338064-b1c054c4-3e05-4825-b8dc-636d9c63dcfc-000000@eu-west-1.amazonses.com>
- <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
-From:   Brandon Richardson <brandon1024.br@gmail.com>
-Date:   Fri, 1 Feb 2019 23:09:29 -0400
-Message-ID: <CAETBDP7jw_z_Nz7X-+jne7sYrJ7G92wWsB3S_ipf3XjJwxYxfw@mail.gmail.com>
-Subject: Re: [PATCH v2 [rebased]] [Enhancement] Improve internals / refactoring.
-To:     Shahzad Lone <shahzadlone@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHYHVPJdbEOPaAoyAhOtJ+wkeXZdowAVqe1Tp_=LOKzuuzA+wQ@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:BZbjd9QB3NqU1lBb0TEaI/U/+6ewrqLomVnlSGYJe5m6crSlA1A
+ eNFp1wfQhmhNO7lm3Xn1Pc6StJApviNqenXuJ/zhVOGvbeFr/pFnDXgQL377E77gVhR+tvf
+ XuQVrlbAXu8R+4icYsIRi1FwafHB+1js9anVsBsrxeIZOfY5QV95oHwlMG6faSkERCwVsOu
+ 1OcZbcs60ax/PCKUs5bxA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Y3zkPB2FDh4=:2Hyzmww+JBa9g4fM/SPiUY
+ GnAB65Fu/zlGOSSouTYCM8dzQmPjdnWaqHGsTb0u0qm2gxmbw+x72AAarmDyuyDQunZtoan8W
+ aoIo3iD+FOjRvjpVSY5ngpiE44Gh/i+FSMol2+++Op82MVq7oH7FqhjlSKl3gixQxHkdPK8DM
+ o5K0ZNGZBsmL91VXTqBpyjeeGPeehaPzFyGSePTpXr/fiXD0IqZBTJj4uWiXeGljBgWsqFCdj
+ xxfV54EiKq/UKJE/50s0iMvWDIXgjSJQnBGS0aiPQ+B3SQS5O0Xya9gEKo1th5Wp2OgaKIV8d
+ qqPjxgZoopHr5eYQX4iT9z33voFZ8LCciWNeiXuhvegI/3FGPjCJvo5dREhlpp+FvLd7LdsFF
+ u0tdLSG/FlahBNibRHSxMjZ4lH4oTprMEQUVP4hMfJ+ga8pk9QazVPDBpg2ovEzBTYGjfu8qY
+ TUjDFky3e4nDddKLgntfV0pxYWL1rmJCCWc3SSubF2hVAzp6rrR3bHcdvWB1FDR6fFm+RtiET
+ NtMy1La/u1uLg2PyG2WDdWuvacMBKpTLWZV1crQGPuTPtRAujpy6UtIu9mEt7rqSM9Ms1vn04
+ abRZ6eAJpl2XJnWwxFa8qbn8PBDLfmjjaQlJeMY5SuZI67pHuMVJK27KyYsTYKQ03SQ89V0/y
+ eQLNLarPYACvZm7kXkwV7zs4jQ/DNOdhY3dOPwm+iAbZHI7Z5EKnCrplmjGKlDA/b9kIVRfsq
+ WipeJRZlkptgtLQoiqKLp+W4TB/Etg+iwi6L6bUAhkv/gmXF+aYKnHZilST1HkvX3Jl2lafmZ
+ okr3LT8095FobJIHhzZ0MYLOAPx6L//scP5zDBLfySs+ZpLk1M8ScQD8OxgehWk9WIKYt+WEq
+ QdZK3L5O3cNJmqDwWvoPgea0mhc9japBcFaG65ts2CQlnB4hrOye8vnrXNJG4e
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Shahzad,
+On Fri, Feb 01, 2019 at 10:02:50AM +0200, Angelo Melonas wrote:
+> Hi Torsten,
+>
+> Thank you so much for getting back to me.
+>
+> Unfortunately, I believe there is a misunderstanding, as I may have
+> explained what I found to be a possible bug incorrectly.
+> The file that is originally added (and then later modified) is never
+> renamed or moved.
+> As you will see below, when a user attempts to add a file, but with
+> the incorrect case, the Git CLI responds the same way it would if a
+> file was correctly added (i.e., by displaying nothing).
+> However, in the above case, when you enter "git status", you find that
+> the file was never actually added, and remains unstaged.
+> A possible solution to this can be a simple error message similar to
+> attempting to add a file with its name misspelt.
+>
+> Using your example, I have illustrated this in the text below:
+>
+>     C:\Example>git init
+>     Initialized empty Git repository in C:/Example/.git/
+>
+>     C:\Example>echo AAA > AA.txt
+>
+>     C:\Example>git add AA.txt
+>
+>     C:\Example>git commit -m AA.txt
+>     [master (root-commit) d550af0] AA.txt
+>      1 file changed, 1 insertion(+)
+>      create mode 100644 AA.txt
+>
+>     C:\Example>echo BB > AA.txt
+>
+>     C:\Example>git status
+>     On branch master
+>     Changes not staged for commit:
+>       (use "git add <file>..." to update what will be committed)
+>       (use "git checkout -- <file>..." to discard changes in working dir=
+ectory)
+>
+>             modified:   AA.txt
+>
+>     no changes added to commit (use "git add" and/or "git commit -a")
+>
+>     C:\Example>git add Aa.txt
+>
+>     C:\Example>git status
+>     On branch master
+>     Changes not staged for commit:
+>       (use "git add <file>..." to update what will be committed)
+>       (use "git checkout -- <file>..." to discard changes in working dir=
+ectory)
+>
+>             modified:   AA.txt
+>
+>     no changes added to commit (use "git add" and/or "git commit -a")
+>
+>     C:\Example>git add A.txt
+>     fatal: pathspec 'A.txt' did not match any files
+>
+>     C:\Example>git add AA.txt
+>
+>     C:\Example>git status
+>     On branch master
+>     Changes to be committed:
+>       (use "git reset HEAD <file>..." to unstage)
+>
+>             modified:   AA.txt
+>
+> I am looking forward to hearing from you again.
+>
+> Kind regards,
+> Angelo Melonas
+>
 
-On Fri, 1 Feb 2019 at 19:54, Shahzad Lone <shahzadlone@gmail.com> wrote:
->         git_zstream stream;
-> -       unsigned char ibuf[1024 * 16];
-> -       unsigned char obuf[1024 * 16];
-> +       unsigned char ibuf[16384];
-> +       unsigned char obuf[16384];
->         unsigned long olen = 0;
+Actually yes, you can call this a minor bug.
 
-This change also brings very little value because most compilers will
-evaluate constant expressions such as this at compile time. A quick
-google query on "Constant Folding" will tell you all about this.
+Does anybody want to work on it ?
+May be as a first-time-Git contribution ?
 
-I love optimization as much as the next guy, but I also feel an argument can
-be made for readability too. The former version is far easier to see that
-the array will be 16KB in size, where 16384 is more difficult to visualize.
+
