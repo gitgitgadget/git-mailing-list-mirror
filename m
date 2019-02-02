@@ -2,112 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21F0F1F453
-	for <e@80x24.org>; Sat,  2 Feb 2019 01:58:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F31A1F453
+	for <e@80x24.org>; Sat,  2 Feb 2019 03:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726410AbfBBB6V (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 20:58:21 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:35922 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725803AbfBBB6U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Feb 2019 20:58:20 -0500
-Received: by mail-pl1-f196.google.com with SMTP id g9so4126830plo.3
-        for <git@vger.kernel.org>; Fri, 01 Feb 2019 17:58:20 -0800 (PST)
+        id S1727407AbfBBDJn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 22:09:43 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:38421 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbfBBDJn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 22:09:43 -0500
+Received: by mail-lj1-f196.google.com with SMTP id c19-v6so7465721lja.5
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 19:09:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YqI6pCt1wLomSS2F3mfrRCAcpazddjQYxhQYHasVGTc=;
-        b=lhwkswu2DgORCvF93o9kDRJTYS2lQ+twFxT6uxdevWGm20fPnUXUqMosLIlmFgV7Vx
-         IH8UIqiW4lvfFXno4QAWpG0Ct1F0aEb2od39cAEhxhjppJKVynRw1rLhxBsGWAwGqtwy
-         qTWJ7FlBwwIxqCNgZZ114kvCYfFb6xbEamQfjQHTt5SfTuNxmjkvkLzhSx/xEl75RcB5
-         k2gF8catuoYlPPkJmu+FfYq5g0C+CqLaRvdawIVwb/xoTFnBPWpBWkxm43mykDD0hbKm
-         dGH+gy9Es4YmI4YMcPboXVGFqnJPnrklaTwQTcZMA1GMQzCp6S7s8syTeTHi+tKL7tjR
-         Q7tQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HmIhnBJ63hXZfC6zQuxm1n1NiQwtgqHyxxL0FOQp5jU=;
+        b=Hgf9wvMDWn+IBTYmDTifG4SNtypRjF6DGQEvE7jcaL1za1ufjbmXi0d18Udu6HCPSk
+         Y6vj/pCF9VFls3JFQ6xIMvCBOTcHATGFXdxpGkke71LMw4PBj4+xIILgO/0fgQWG6hE3
+         f0z0Xq2hbgmmqZB0LURoJo5vvO1P19+kLsLyp80NIzE8VOqjx6XE1YxmhcqGik1huPBp
+         8J1uctlurxRWnBOfnZY+BW7Z0MkLAEYDACTDk/RCWcj/akg1AAVZaidaRGv+OwFv+QEF
+         yIsMUA8mtu2I9Y06EEzNsCp8dGARPWUiP3euESGj+zOJLogAjNUnKXzhVeLjIVrbxU2o
+         cHFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YqI6pCt1wLomSS2F3mfrRCAcpazddjQYxhQYHasVGTc=;
-        b=Sk8M9J1MfFjTL3OTblvQ2wMujKpftrgfqWo3lEIhnIS/6ZnoQNZSuSvFiUze78qCr4
-         GO0/DZSWTlzUfsJq89ewgU06khlALJ/pNdC/r9F/oW+s5BLLfwPNRj8XNc7pKyL2Bwmb
-         O4jAfB9tV7QrU3L4m30TGz6scPGtlTMKPFs6EaY7fs4hy9F5Nx+uiup6/bbWMY/zwU60
-         eH2oDZ65gsGj+Hunw0TlS9qcIhKNmu/SZmhxBClB1rsrbksamPfbws+GdBBGTAY7lvsn
-         0dQnTiLMqZdM3cIKqejWcWvyzwjUYn/PG/awZUdSMmAIZPQOfMwkRLAhErzCeXMzL55F
-         KNcg==
-X-Gm-Message-State: AJcUukdm37mZCYM7le0bKtu/SdYguTSSJDWu1aJdqtnjXEHVV31fEx6S
-        /uZuXyNsYf26uzS1A9v6+bzvyBJr
-X-Google-Smtp-Source: ALg8bN7JcpQCAK+OQiO1cV/63xebIvPk306rGBwBqT6EYj+vjJRdtqHxqvDpsUvIRDD9CN29yY7jGg==
-X-Received: by 2002:a17:902:a40f:: with SMTP id p15mr43178711plq.286.1549072699809;
-        Fri, 01 Feb 2019 17:58:19 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id t24sm11780876pfh.21.2019.02.01.17.58.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Feb 2019 17:58:18 -0800 (PST)
-Date:   Fri, 1 Feb 2019 17:58:17 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <stefanbeller@gmail.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com
-Subject: Re: [PATCH 7/9] submodule: migrate get_next_submodule to use
- repository structs
-Message-ID: <20190202015817.GA241226@google.com>
-References: <20181129002756.167615-1-sbeller@google.com>
- <20181129002756.167615-8-sbeller@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HmIhnBJ63hXZfC6zQuxm1n1NiQwtgqHyxxL0FOQp5jU=;
+        b=JSAUuU/1EfwhO9qomdHxSjv0BDhd/9mJqvCVoNMp51vyMp/ZqIjiROcIIbg6q3svmt
+         0UGlcVGLrVlfSpsjiO29QaQGkzKk1gR6tvlVTnIrdKeWRN7uwqujhjYcO4koz6aG1/o5
+         CFeQ/jLz/LTAwV/tZDP+MPtWw6xpQacNRzH88iJYMpsaHL6ROajvMIFInl37Bz+l0PaE
+         se5LjkKgd8yZuwrjJ+jdmh3/B+37NJ9sYcEeDzBEaij8HniDpPU/Zqq4k1DqDyhpw8tt
+         9q9U77TITqAJdYg12/xVsZBQMsM6ER6mJKRZi56hGpyXuNMeVCLVq7FFSZwY6QiMUFsX
+         e5kQ==
+X-Gm-Message-State: AJcUukftxAnWN+DiizuZsEGPSoHM+rzmKoBMzMDPoalSDrgn0q3o7V3H
+        kJPgYiWifp1Y9VPo1iQ81q8+8cOdxcwzmcTjDcM=
+X-Google-Smtp-Source: ALg8bN44kuG1xUT5qtOll8SaBl62A7msQCCleqPCirultDvIKyreSx0CIb7099tLho/RoKmc3io+xzvJXDYhjG9+mE8=
+X-Received: by 2002:a2e:4299:: with SMTP id h25-v6mr33740609ljf.5.1549076980811;
+ Fri, 01 Feb 2019 19:09:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181129002756.167615-8-sbeller@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <01020168a8338064-b1c054c4-3e05-4825-b8dc-636d9c63dcfc-000000@eu-west-1.amazonses.com>
+ <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
+From:   Brandon Richardson <brandon1024.br@gmail.com>
+Date:   Fri, 1 Feb 2019 23:09:29 -0400
+Message-ID: <CAETBDP7jw_z_Nz7X-+jne7sYrJ7G92wWsB3S_ipf3XjJwxYxfw@mail.gmail.com>
+Subject: Re: [PATCH v2 [rebased]] [Enhancement] Improve internals / refactoring.
+To:     Shahzad Lone <shahzadlone@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Shahzad,
 
-Stefan Beller wrote:
+On Fri, 1 Feb 2019 at 19:54, Shahzad Lone <shahzadlone@gmail.com> wrote:
+>         git_zstream stream;
+> -       unsigned char ibuf[1024 * 16];
+> -       unsigned char obuf[1024 * 16];
+> +       unsigned char ibuf[16384];
+> +       unsigned char obuf[16384];
+>         unsigned long olen = 0;
 
-> This patch tightens the check upfront, such that we do not need
-> to spawn a child process to find out if the submodule is broken.
+This change also brings very little value because most compilers will
+evaluate constant expressions such as this at compile time. A quick
+google query on "Constant Folding" will tell you all about this.
 
-Sounds sensible.
-
-[...]
-> --- a/submodule.c
-> +++ b/submodule.c
-[...]
-> @@ -1319,10 +1338,23 @@ static int get_next_submodule(struct child_process *cp,
->  			argv_array_push(&cp->args, default_argv);
->  			argv_array_push(&cp->args, "--submodule-prefix");
->  			argv_array_push(&cp->args, submodule_prefix.buf);
-> +
-> +			repo_clear(repo);
-> +			free(repo);
->  			ret = 1;
-> +		} else {
-> +			/*
-> +			 * An empty directory is normal,
-> +			 * the submodule is not initialized
-> +			 */
-> +			if (S_ISGITLINK(ce->ce_mode) &&
-> +			    !is_empty_dir(ce->name)) {
-
-What if the directory is nonempty (e.g. contains build artifacts)?
-
-> +				spf->result = 1;
-> +				strbuf_addf(err,
-> +					    _("Could not access submodule '%s'"),
-> +					    ce->name);
-> +			}
-
-Should this exit the loop?  Otherwise, multiple "Could not access"
-messages can go in the same err string a big concatenated line.
-
-Thanks,
-Jonathan
+I love optimization as much as the next guy, but I also feel an argument can
+be made for readability too. The former version is far easier to see that
+the array will be 16KB in size, where 16384 is more difficult to visualize.
