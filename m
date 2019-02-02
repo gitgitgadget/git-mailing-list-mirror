@@ -2,64 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3D0F1F453
-	for <e@80x24.org>; Sat,  2 Feb 2019 15:05:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB0C7211B5
+	for <e@80x24.org>; Sat,  2 Feb 2019 15:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727778AbfBBPFU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Feb 2019 10:05:20 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35278 "EHLO
+        id S1727920AbfBBPJn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Feb 2019 10:09:43 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38011 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727565AbfBBPFU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Feb 2019 10:05:20 -0500
-Received: by mail-wr1-f68.google.com with SMTP id r17so4163923wrp.2
-        for <git@vger.kernel.org>; Sat, 02 Feb 2019 07:05:18 -0800 (PST)
+        with ESMTP id S1726617AbfBBPJn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Feb 2019 10:09:43 -0500
+Received: by mail-wr1-f68.google.com with SMTP id v13so10096490wrw.5
+        for <git@vger.kernel.org>; Sat, 02 Feb 2019 07:09:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=H2Bn7AtKV4aBD3DZzxfuBq7fm82KpvPJFvxvJNFgPk4=;
-        b=KlOLwuf2trHYifBx2X3PDTb+H/pWkoL5dlE4huvrcvSecMoglvkLhRKNI5NInLLn9J
-         Qa1K8aMX08+AM8iVH9jxP1aPp6Pvzh8YqNZr1ZPjDX47xQIsf2JLy+Hl4yRab/BnLNeL
-         hR8j6LuouKU4csJ7xGUVKZeAzv5t4NLVM453ONslbhDBQEVfoUyw+q1nW18CLyeGuhww
-         nKlGeWUgD4bHgNPHDn0YQPCwHi11WpE/1ICHKI/nHJo70sjADUqo6xNBwpMgUi2Zv5KH
-         UUnRr5leZJWgNqOqLByrnObMApDN9ci0OYjPYlM3Cg9ljp0Mo7V0PE0Po6ji5fDP3AT8
-         NkWw==
+        bh=VkGb0swPfg6fmymwwd4+H2Fc8PmFNSAw6lp+zCYKDZk=;
+        b=QfdQ9HSI7orIoE+0VYY9lQ2YRk8SEneEsrus5KtjTG3f+galbnbPNLlrLXZy7Jv2Yd
+         e43G/mVDSky3b9XVlkI4t2ijk8iFvQYx2XgJM4epwiRmzBGJIUUrWpWSIYBpxYlesFKh
+         a/6oAdTp9zNLiMr+VrCp+/spvF3tbiBLkez+Ra7gk/B8WuY6aFYhjgF15wel9Usq211x
+         zHQQD5H6c5n5kNHIUyePmWjKuNL0lctpdc+UBGrC5X30NajThTQLgmNozaFRPV8mf98T
+         T0NrhyQ0D9GAdmRG+IG+5OGrNCOKMb5IPwXKhr0EPl+LviC2rlyOCpZQwmg2eZST75jd
+         mlJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=H2Bn7AtKV4aBD3DZzxfuBq7fm82KpvPJFvxvJNFgPk4=;
-        b=r1ZINeziM4+TLI7q1J+KH71e3T/WKmrHhZrn4E33a/dFKtAGhBx+qgYxuWxiL3p9xj
-         Dx/JgYuEGbeI/cItpq5oMzwwCA2IrLQxw43i1ITMP5kLHDIKJxYpwTszv6v/50JxQMJa
-         diNj7ThYVwo/YhnVjXg7qjMNah1boBnKQRZcJswIyoYEg8YG5S3vzS6aogBAB7gvWXbw
-         c6T22N3Ivqwl99gsoMQ86obejxZ18xxRefB5szJ5ztKVNauRyLMWnnUv65KzLYOeC4qF
-         pWxeUX//mbpiBoUH39sHo9BfUQvakPqd2VpnrqiAmGtBAS/b5jY+4biok4qa3LTH1d3Y
-         imZA==
-X-Gm-Message-State: AJcUuke8pkv8xvW1zTtV3oALID/aS7j00al9XJoCAm4imY/Y5swVgXzs
-        Ex/jNt2Fzp6lriwpm6Oiu+8fUyOI
-X-Google-Smtp-Source: ALg8bN6X/PVmPg25A4+7nSx+RrkaKOL6ABdiqRNeougKCTiGIu4EfgIA6aLRjJeePAPsnOtFIjUHKg==
-X-Received: by 2002:adf:f888:: with SMTP id u8mr41284057wrp.297.1549119917381;
-        Sat, 02 Feb 2019 07:05:17 -0800 (PST)
+        bh=VkGb0swPfg6fmymwwd4+H2Fc8PmFNSAw6lp+zCYKDZk=;
+        b=h7Xh8LPSh+qxTg7eZKHTU/D4ttROiX+eKlCKpHmAhzyKmElzaihn9MSYBOq+LlDCQ1
+         r+0mWwg6psLR39itES4NC6Um9tvy3dIgqS2PMT3cX5dYW828LxhaNLf8wyZ1krYZ6yky
+         f1k5M/hbswHadwfmdS1PY/bnw+c2M+Y+rAUcQD8hdKptYCJEMbk+98df2cnRBIXWuL4c
+         aZIBr9pYY5SNNTpfiqjucJwqWzK0ft9lr8koqq4whUegU2y3Wev64uxa0YVNLe8Avz6o
+         LDFr8P6yvxTp5+65FYc/SKLywgM2mASspSmm9EbKBzt9Eh6F5EoK73Cv4QMVyqqiL3O0
+         NAQQ==
+X-Gm-Message-State: AJcUukdZCZTZ12HQJcu/Vc9+Mnqd1gKsgeqRPO0OaCCCc2D5Y1QCrGzh
+        lJJ1YvNkqhmIKQD1roH1hKs=
+X-Google-Smtp-Source: ALg8bN4F8J0/4OrDixAC52q9oi2CFsmHnzs3T+Qbz6meggdMfDY13HEsnTeiXyny8V/1wNaPOT247g==
+X-Received: by 2002:a5d:42ce:: with SMTP id t14mr43369920wrr.51.1549120180814;
+        Sat, 02 Feb 2019 07:09:40 -0800 (PST)
 Received: from [192.168.0.104] (atoulouse-658-1-47-104.w86-221.abo.wanadoo.fr. [86.221.54.104])
-        by smtp.gmail.com with ESMTPSA id y139sm3318890wmd.22.2019.02.02.07.05.16
+        by smtp.gmail.com with ESMTPSA id f187sm4670988wma.4.2019.02.02.07.09.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Feb 2019 07:05:16 -0800 (PST)
-Subject: Re: [PATCH v6 16/16] rebase--interactive: move transform_todo_file()
- to rebase--interactive.c
+        Sat, 02 Feb 2019 07:09:40 -0800 (PST)
+Subject: Re: [PATCH v6 07/16] sequencer: refactor
+ sequencer_add_exec_commands() to work on a todo_list
 To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
 References: <20190123205821.27459-1-alban.gruin@gmail.com>
  <20190129150159.10588-1-alban.gruin@gmail.com>
- <20190129150159.10588-17-alban.gruin@gmail.com>
- <d00c11bc-013e-5839-9766-6999e99edf34@talktalk.net>
+ <20190129150159.10588-8-alban.gruin@gmail.com>
+ <434cf0f7-1df6-7966-b460-e69e8f8b5e99@talktalk.net>
+ <b95aab1f-25e4-be81-e8c3-5521fe68ef62@talktalk.net>
 From:   Alban Gruin <alban.gruin@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
@@ -122,12 +124,12 @@ Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
  yl/kHs42wTS/M6EylpBS10/RLxLF1TKK39xgGXtzRz86lqxz9IIEcLpOXsNi2ieoVOfykgbG
  lvAXpIk/WT7BKd1ncK71sTuBGWpnytCjlTFHM6Lp70yZT9TAKaBevkn5JaSlhv4/QcfJtTgJ
  HkyVQTh250fC9P/9C9azPjnxB9hnBktfiihx+wISlDARk/X+JCZfJrM=
-Message-ID: <fd7ab34c-3a3f-57e3-0d90-0e97fbbffd3b@gmail.com>
-Date:   Sat, 2 Feb 2019 16:05:15 +0100
+Message-ID: <2e8bb8b1-5a74-d363-5976-b5fc310b5200@gmail.com>
+Date:   Sat, 2 Feb 2019 16:09:39 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.3.0
 MIME-Version: 1.0
-In-Reply-To: <d00c11bc-013e-5839-9766-6999e99edf34@talktalk.net>
+In-Reply-To: <b95aab1f-25e4-be81-e8c3-5521fe68ef62@talktalk.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -136,48 +138,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-Le 01/02/2019 à 12:15, Phillip Wood a écrit :
-> Hi Alban
+Le 01/02/2019 à 15:51, Phillip Wood a écrit :
+>>> @@ -4473,38 +4475,62 @@ int sequencer_add_exec_commands(struct
+>>> repository *r,
+>>>       * those chains if there are any.
+>>>       */
+>>>      insert = -1;
+>>> -    for (i = 0; i < todo_list.nr; i++) {
+>>> -        enum todo_command command = todo_list.items[i].command;
+>>> -
+>>> -        if (insert >= 0) {
+>>> -            /* skip fixup/squash chains */
+>>> -            if (command == TODO_COMMENT)
+>>> -                continue;
+>>> -            else if (is_fixup(command)) {
+>>> -                insert = i + 1;
+>>> -                continue;
+>>> -            }
+>>> -            strbuf_insert(buf,
+>>> -                      todo_list.items[insert].offset_in_buf +
+>>> -                      offset, commands, commands_len);
+>>
+>> In a todo list that looks like
+>> pick abc message
+>> #pick cde empty commit
+>> This inserts the exec command for the first pick above the commented
+>> out pick. I think your translation puts it below the commented out
+>> pick as it ignores the value of insert. I think it's probably easiest
+>> to add an INSERT_ARRAY macro to insert it in the right place. An
+>> alternative might be to track the last insert position and only copy
+>> commands across when there is another exec to insert but that might
+>> get complicated in cases such as
+>>
+>> pick abc message
+>> #squash cde squash! message //empty commit for rewording
+>> fixup 123 fixup! message
+>> #pick 456 empty commit
 > 
-> On 29/01/2019 15:01, Alban Gruin wrote:
->> As transform_todo_file() is only needed inside of rebase--interactive.c,
->> it is moved there from sequencer.c.
+> Thinking about this, I'm not sure it can happen as the empty squash
+> commit will be commented out before rearrange_squash() is called so I
+> think it would actually look like
 > 
-> I think I'd prefer to minimize the code under builtin and move this to
-> rebase-interactive.c when it is modified earlier in the series. (I'd be
-> quite happy if all the files in builtin just consisted of some option
-> parsing followed by a call to run_git_foo() which resides in libgit)
+> pick abc message
+> fixup 123 fixup! message
+> #pick cde squash! message
+> #pick 456 empty commit
 > 
-
-I do agree, but transform_todo_file() is only used by rebase -p.  Once
-it is deprecated, it’s much easier to see this function is no longer
-used if it’s marked as static thanks to -Werror=unused-function.
-
-Now that I think about it, check_todo_list_from_file(),
-rearrange_squash_in_todo_list(), and sequencer_add_exec_commands() are
-only used by rebase -p, but I left them in sequencer.c.
-
-> Also I wonder if we should be moving more functions (e.g.
-> todo_list_write_file() and possibly add_exec_commands(),
-> rearrange_squash() and the script generation) from sequencer.c to
-> rebase-interactive.c when they're rewritten (possibly in a separate
-> commit for ease of review) but I haven't looked if this is practical or
-> if there are some dependencies that make that tricky. Unless there are
-> some simple cases it should probably be a separate series.
+> So I wonder if we can get away with treating insert as a flag and
+> inserting exec commands when
+> insert && command == TODO_COMMENT
+> 
+> We could probably do with some tests for this to be sure.
 > 
 
-It might be doable, but I think it’s a bit more difficult with
-sequencer_make_script() (and especially
-sequencer_make_script_with_merges()).  I will explore this after this
-series.
-
-> Thanks for working on this series, it's great to see the todo list
-> handling becoming more efficient.
-> 
-
-You’re welcome ;-)
+I will try this approach.
 
 -- Alban
 
@@ -185,3 +199,4 @@ You’re welcome ;-)
 > 
 > Phillip
 > 
+
