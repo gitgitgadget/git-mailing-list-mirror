@@ -2,148 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F55D1F453
-	for <e@80x24.org>; Sat,  2 Feb 2019 06:38:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 304621F453
+	for <e@80x24.org>; Sat,  2 Feb 2019 09:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727276AbfBBGic (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Feb 2019 01:38:32 -0500
-Received: from mout.web.de ([212.227.17.11]:47083 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727154AbfBBGib (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Feb 2019 01:38:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1549089509;
-        bh=/tNNHAM1YoIDq34iQjgPZcQCHU9msE9VbLcUOpRAnOA=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=IcOyKEu9PTj6nAZNHU1RZFQxd71PTwadvKAsKutcP6pipDwiivSmlHE/hbpuI7kW5
-         TG4LcxpkpJ7M0sVzHyVx1THImIZ37Ur6nZA65ufFUK9npZYvv8dzSG6qmEbAw4Gz5g
-         ErCF1mhjXTrlslNeAa3SRSIuHKqOHhPjSG5BeRf0=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lk8gg-1hRtWQ3j3q-00c89G; Sat, 02
- Feb 2019 07:38:28 +0100
-Date:   Sat, 2 Feb 2019 06:38:28 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Angelo Melonas <angelomelonas@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Possible minor bug in Git
-Message-ID: <20190202063828.4kjtdmrsm7g4eyg3@tb-raspi4>
-References: <CAHYHVP+ty7i7a_abT-th_HR2X-8X6mLmpHPR_3VXv5LpWUsrhQ@mail.gmail.com>
- <CAHYHVP+Dvbq_aOMy1_Kq0LHJsd4r+4GiP3N3R4A9ouAoJ4gw9g@mail.gmail.com>
- <20190131203447.aovalz2vzsjpdjdv@tb-raspi4>
- <CAHYHVPJdbEOPaAoyAhOtJ+wkeXZdowAVqe1Tp_=LOKzuuzA+wQ@mail.gmail.com>
+        id S1726888AbfBBJO0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Feb 2019 04:14:26 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37209 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725857AbfBBJO0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Feb 2019 04:14:26 -0500
+Received: by mail-wr1-f66.google.com with SMTP id s12so9528810wrt.4
+        for <git@vger.kernel.org>; Sat, 02 Feb 2019 01:14:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=OidYRehJy7kSdLVfOE3YmERTy16TaYEzxJbl+ZK5qCI=;
+        b=Iahvkm6bgaNOugHRsDrq4hMH4OgiK4DDAnI//uLvJTjBQxioUEByqWJ0iip2aYeX6D
+         bv5fgYPtCRgxIaFNjvmK7iePBJ5DtdZaWjEy74Ux1Z0T8N1zPs7/uL5Pu0C9YLbQxD3U
+         p8pLAo23oEOueD+K225K9iE80yZRSl0FBNiZF9ubZ0J32Za9BPOKNHB1ZLg5SyePuvpx
+         aS5HtoCJ0jjv++wDyCPE5xzvSNlZJBpB1J8rTf+roAK3HIrPHksSXepeIsWjQPK4wQof
+         WjbRfWqA4wO1WozaC3u1KaOtbxzCx4VSLVvWZyLmV8XcSdf4XknFc9G0tYvYpIWd6MXN
+         Fa0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=OidYRehJy7kSdLVfOE3YmERTy16TaYEzxJbl+ZK5qCI=;
+        b=cSUQr0/GdCaRzJ+MPiBKb70PKspefKjn4Xx6GTg7Ikg83VQcFoYIrzIeRNg1nM+CMs
+         ER29322FIrcKPWI/zcINwRqVmxulm/ovpW4HpUJlUqqI7XlINOE1pebGEy2xxflmpNz7
+         eiERqql6af4Ib8Ncd24LKNgTbZWmxMVKFy5q/nsNOMnEO+8+A5cwrm8CrOCu/pQwk3gn
+         lOA2c1nnNViJiE05yh04GRxovKG16hocNeQtIIOKGg0TFtABU359WNIAibV8sDnStiGF
+         Y/W/A9/tQMBYS2SLySmgM/yFXXCDn2y6+wytNI5kJGLxqvaApUzCciZqMIqqv0nNChbh
+         AudQ==
+X-Gm-Message-State: AHQUAub9nZhkBJVBN8xobaIDFCJUR8mzqv6a88+PP/1xhOsTvnIEfq/v
+        bGwpwj+Gk7ajDwaU+zMcseISVTvwCJhW0lO+2r0=
+X-Google-Smtp-Source: AHgI3IYDeqJmW9mRpVFj3ELLCtgwoGihld78OMi0K9X9wEV2kcchUA3pkkDWT/FAVF5ewoh7xCU0mV9AKK8TzQy4SU0=
+X-Received: by 2002:adf:9c8a:: with SMTP id d10mr2979908wre.244.1549098864444;
+ Sat, 02 Feb 2019 01:14:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHYHVPJdbEOPaAoyAhOtJ+wkeXZdowAVqe1Tp_=LOKzuuzA+wQ@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:BZbjd9QB3NqU1lBb0TEaI/U/+6ewrqLomVnlSGYJe5m6crSlA1A
- eNFp1wfQhmhNO7lm3Xn1Pc6StJApviNqenXuJ/zhVOGvbeFr/pFnDXgQL377E77gVhR+tvf
- XuQVrlbAXu8R+4icYsIRi1FwafHB+1js9anVsBsrxeIZOfY5QV95oHwlMG6faSkERCwVsOu
- 1OcZbcs60ax/PCKUs5bxA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Y3zkPB2FDh4=:2Hyzmww+JBa9g4fM/SPiUY
- GnAB65Fu/zlGOSSouTYCM8dzQmPjdnWaqHGsTb0u0qm2gxmbw+x72AAarmDyuyDQunZtoan8W
- aoIo3iD+FOjRvjpVSY5ngpiE44Gh/i+FSMol2+++Op82MVq7oH7FqhjlSKl3gixQxHkdPK8DM
- o5K0ZNGZBsmL91VXTqBpyjeeGPeehaPzFyGSePTpXr/fiXD0IqZBTJj4uWiXeGljBgWsqFCdj
- xxfV54EiKq/UKJE/50s0iMvWDIXgjSJQnBGS0aiPQ+B3SQS5O0Xya9gEKo1th5Wp2OgaKIV8d
- qqPjxgZoopHr5eYQX4iT9z33voFZ8LCciWNeiXuhvegI/3FGPjCJvo5dREhlpp+FvLd7LdsFF
- u0tdLSG/FlahBNibRHSxMjZ4lH4oTprMEQUVP4hMfJ+ga8pk9QazVPDBpg2ovEzBTYGjfu8qY
- TUjDFky3e4nDddKLgntfV0pxYWL1rmJCCWc3SSubF2hVAzp6rrR3bHcdvWB1FDR6fFm+RtiET
- NtMy1La/u1uLg2PyG2WDdWuvacMBKpTLWZV1crQGPuTPtRAujpy6UtIu9mEt7rqSM9Ms1vn04
- abRZ6eAJpl2XJnWwxFa8qbn8PBDLfmjjaQlJeMY5SuZI67pHuMVJK27KyYsTYKQ03SQ89V0/y
- eQLNLarPYACvZm7kXkwV7zs4jQ/DNOdhY3dOPwm+iAbZHI7Z5EKnCrplmjGKlDA/b9kIVRfsq
- WipeJRZlkptgtLQoiqKLp+W4TB/Etg+iwi6L6bUAhkv/gmXF+aYKnHZilST1HkvX3Jl2lafmZ
- okr3LT8095FobJIHhzZ0MYLOAPx6L//scP5zDBLfySs+ZpLk1M8ScQD8OxgehWk9WIKYt+WEq
- QdZK3L5O3cNJmqDwWvoPgea0mhc9japBcFaG65ts2CQlnB4hrOye8vnrXNJG4e
+References: <20181028125025.30952-1-anders@0x63.nu> <20181208163647.19538-1-anders@0x63.nu>
+ <20181208163647.19538-3-anders@0x63.nu> <xmqqa7ldkbwr.fsf@gitster-ct.c.googlers.com>
+ <87o99iwmjn.fsf@0x63.nu> <20190129165523.GA7349@sigill.intra.peff.net>
+ <87pnsfkvk1.fsf@0x63.nu> <CAL21Bmmx=EO+R2t+KviNekDhU3fc0wjCcmUmbzLa14bb0PAmHA@mail.gmail.com>
+ <87o97wll60.fsf@0x63.nu>
+In-Reply-To: <87o97wll60.fsf@0x63.nu>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Sat, 2 Feb 2019 12:14:13 +0300
+Message-ID: <CAL21BmnU2aTT_8iqejurgKeHXk-kmmGK1tmXLcVh7G12rwRPOw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/7] pretty: allow %(trailers) options with explicit value
+To:     Anders Waldenborg <anders@0x63.nu>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 01, 2019 at 10:02:50AM +0200, Angelo Melonas wrote:
-> Hi Torsten,
+=D1=87=D1=82, 31 =D1=8F=D0=BD=D0=B2. 2019 =D0=B3. =D0=B2 21:47, Anders Wald=
+enborg <anders@0x63.nu>:
 >
-> Thank you so much for getting back to me.
 >
-> Unfortunately, I believe there is a misunderstanding, as I may have
-> explained what I found to be a possible bug incorrectly.
-> The file that is originally added (and then later modified) is never
-> renamed or moved.
-> As you will see below, when a user attempts to add a file, but with
-> the incorrect case, the Git CLI responds the same way it would if a
-> file was correctly added (i.e., by displaying nothing).
-> However, in the above case, when you enter "git status", you find that
-> the file was never actually added, and remains unstaged.
-> A possible solution to this can be a simple error message similar to
-> attempting to add a file with its name misspelt.
+> =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F write=
+s:
+> >> Oh my. I wasn't aware that there was a totally separate string
+> >> interpolation implementation used for ref filters. That one has
+> >> separated parsing, making it more amenable to good error handling.
+> >> I wonder if that could be generalized and reused for pretty formats.
+> >>
+> >> However I doubt I will have time to dig deeper into that in near time.
+> >>
+> >
+> > Sorry, I haven't read your patch in details. If you will be at Git Merg=
+e
+> > tomorrow, you could ask me any questions, I can explain how for-each-re=
+f
+> > formatting works amd maybe even give you some ideas how to use its logi=
+c in
+> > pretty, I was thinking about it a bit.
 >
-> Using your example, I have illustrated this in the text below:
+> No, unfortunately I'm not at Git Merge.
 >
->     C:\Example>git init
->     Initialized empty Git repository in C:/Example/.git/
->
->     C:\Example>echo AAA > AA.txt
->
->     C:\Example>git add AA.txt
->
->     C:\Example>git commit -m AA.txt
->     [master (root-commit) d550af0] AA.txt
->      1 file changed, 1 insertion(+)
->      create mode 100644 AA.txt
->
->     C:\Example>echo BB > AA.txt
->
->     C:\Example>git status
->     On branch master
->     Changes not staged for commit:
->       (use "git add <file>..." to update what will be committed)
->       (use "git checkout -- <file>..." to discard changes in working dir=
-ectory)
->
->             modified:   AA.txt
->
->     no changes added to commit (use "git add" and/or "git commit -a")
->
->     C:\Example>git add Aa.txt
->
->     C:\Example>git status
->     On branch master
->     Changes not staged for commit:
->       (use "git add <file>..." to update what will be committed)
->       (use "git checkout -- <file>..." to discard changes in working dir=
-ectory)
->
->             modified:   AA.txt
->
->     no changes added to commit (use "git add" and/or "git commit -a")
->
->     C:\Example>git add A.txt
->     fatal: pathspec 'A.txt' did not match any files
->
->     C:\Example>git add AA.txt
->
->     C:\Example>git status
->     On branch master
->     Changes to be committed:
->       (use "git reset HEAD <file>..." to unstage)
->
->             modified:   AA.txt
->
-> I am looking forward to hearing from you again.
->
-> Kind regards,
-> Angelo Melonas
->
+> I think I got how the formatting work. But if you have ideas on how to
+> reuse the logic I'm all ears.
 
-Actually yes, you can call this a minor bug.
-
-Does anybody want to work on it ?
-May be as a first-time-Git contribution ?
+ Maybe my advices will be not suitable: I know how ref-filter works,
+but I know only a few about pretty system. The main point is that we
+need to save backward compatibility, and that means that we can't just
+drop pretty logic and start using ref-filter one there. I guess it's
+not so hard to make like translation table between pretty commands and
+ref-filter one. For example, 'short' in pretty means 'commit
+%(objectname)%0aAuthor: %(author)' in ref-filter. So if I wanted to
+change pretty logic, I would add support of all ref-filter commands
+and make translation table for backward compatibility. Hope it was
+helpful.
 
 
+
+>
