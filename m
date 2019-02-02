@@ -1,202 +1,65 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=2.6 required=3.0 tests=BAYES_50,DATE_IN_PAST_03_06,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB0C7211B5
-	for <e@80x24.org>; Sat,  2 Feb 2019 15:09:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32CB11F453
+	for <e@80x24.org>; Sat,  2 Feb 2019 16:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727920AbfBBPJn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Feb 2019 10:09:43 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38011 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726617AbfBBPJn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Feb 2019 10:09:43 -0500
-Received: by mail-wr1-f68.google.com with SMTP id v13so10096490wrw.5
-        for <git@vger.kernel.org>; Sat, 02 Feb 2019 07:09:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=VkGb0swPfg6fmymwwd4+H2Fc8PmFNSAw6lp+zCYKDZk=;
-        b=QfdQ9HSI7orIoE+0VYY9lQ2YRk8SEneEsrus5KtjTG3f+galbnbPNLlrLXZy7Jv2Yd
-         e43G/mVDSky3b9XVlkI4t2ijk8iFvQYx2XgJM4epwiRmzBGJIUUrWpWSIYBpxYlesFKh
-         a/6oAdTp9zNLiMr+VrCp+/spvF3tbiBLkez+Ra7gk/B8WuY6aFYhjgF15wel9Usq211x
-         zHQQD5H6c5n5kNHIUyePmWjKuNL0lctpdc+UBGrC5X30NajThTQLgmNozaFRPV8mf98T
-         T0NrhyQ0D9GAdmRG+IG+5OGrNCOKMb5IPwXKhr0EPl+LviC2rlyOCpZQwmg2eZST75jd
-         mlJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=VkGb0swPfg6fmymwwd4+H2Fc8PmFNSAw6lp+zCYKDZk=;
-        b=h7Xh8LPSh+qxTg7eZKHTU/D4ttROiX+eKlCKpHmAhzyKmElzaihn9MSYBOq+LlDCQ1
-         r+0mWwg6psLR39itES4NC6Um9tvy3dIgqS2PMT3cX5dYW828LxhaNLf8wyZ1krYZ6yky
-         f1k5M/hbswHadwfmdS1PY/bnw+c2M+Y+rAUcQD8hdKptYCJEMbk+98df2cnRBIXWuL4c
-         aZIBr9pYY5SNNTpfiqjucJwqWzK0ft9lr8koqq4whUegU2y3Wev64uxa0YVNLe8Avz6o
-         LDFr8P6yvxTp5+65FYc/SKLywgM2mASspSmm9EbKBzt9Eh6F5EoK73Cv4QMVyqqiL3O0
-         NAQQ==
-X-Gm-Message-State: AJcUukdZCZTZ12HQJcu/Vc9+Mnqd1gKsgeqRPO0OaCCCc2D5Y1QCrGzh
-        lJJ1YvNkqhmIKQD1roH1hKs=
-X-Google-Smtp-Source: ALg8bN4F8J0/4OrDixAC52q9oi2CFsmHnzs3T+Qbz6meggdMfDY13HEsnTeiXyny8V/1wNaPOT247g==
-X-Received: by 2002:a5d:42ce:: with SMTP id t14mr43369920wrr.51.1549120180814;
-        Sat, 02 Feb 2019 07:09:40 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-658-1-47-104.w86-221.abo.wanadoo.fr. [86.221.54.104])
-        by smtp.gmail.com with ESMTPSA id f187sm4670988wma.4.2019.02.02.07.09.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Feb 2019 07:09:40 -0800 (PST)
-Subject: Re: [PATCH v6 07/16] sequencer: refactor
- sequencer_add_exec_commands() to work on a todo_list
-To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190123205821.27459-1-alban.gruin@gmail.com>
- <20190129150159.10588-1-alban.gruin@gmail.com>
- <20190129150159.10588-8-alban.gruin@gmail.com>
- <434cf0f7-1df6-7966-b460-e69e8f8b5e99@talktalk.net>
- <b95aab1f-25e4-be81-e8c3-5521fe68ef62@talktalk.net>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <2e8bb8b1-5a74-d363-5976-b5fc310b5200@gmail.com>
-Date:   Sat, 2 Feb 2019 16:09:39 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1728332AbfBBQMW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Feb 2019 11:12:22 -0500
+Received: from [185.53.170.125] ([185.53.170.125]:52469 "EHLO shelterness.com"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727843AbfBBQMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Feb 2019 11:12:22 -0500
+X-Greylist: delayed 3666 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Feb 2019 11:12:21 EST
+To:     git@vger.kernel.org
+Subject: Want to retouch?
+Message-ID: <6e6b9f4ec94f6ecde0c6d6c1fac8c28e@artycraftykids.com>
+Date:   Sat, 02 Feb 2019 13:19:44 +0100
+From:   "Grace" <lekkawnzze@verizon.net>
+Reply-To: jiantens@sina.com
 MIME-Version: 1.0
-In-Reply-To: <b95aab1f-25e4-be81-e8c3-5521fe68ef62@talktalk.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
+Content-Type: text/plain; format=flowed; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le 01/02/2019 à 15:51, Phillip Wood a écrit :
->>> @@ -4473,38 +4475,62 @@ int sequencer_add_exec_commands(struct
->>> repository *r,
->>>       * those chains if there are any.
->>>       */
->>>      insert = -1;
->>> -    for (i = 0; i < todo_list.nr; i++) {
->>> -        enum todo_command command = todo_list.items[i].command;
->>> -
->>> -        if (insert >= 0) {
->>> -            /* skip fixup/squash chains */
->>> -            if (command == TODO_COMMENT)
->>> -                continue;
->>> -            else if (is_fixup(command)) {
->>> -                insert = i + 1;
->>> -                continue;
->>> -            }
->>> -            strbuf_insert(buf,
->>> -                      todo_list.items[insert].offset_in_buf +
->>> -                      offset, commands, commands_len);
->>
->> In a todo list that looks like
->> pick abc message
->> #pick cde empty commit
->> This inserts the exec command for the first pick above the commented
->> out pick. I think your translation puts it below the commented out
->> pick as it ignores the value of insert. I think it's probably easiest
->> to add an INSERT_ARRAY macro to insert it in the right place. An
->> alternative might be to track the last insert position and only copy
->> commands across when there is another exec to insert but that might
->> get complicated in cases such as
->>
->> pick abc message
->> #squash cde squash! message //empty commit for rewording
->> fixup 123 fixup! message
->> #pick 456 empty commit
-> 
-> Thinking about this, I'm not sure it can happen as the empty squash
-> commit will be commented out before rearrange_squash() is called so I
-> think it would actually look like
-> 
-> pick abc message
-> fixup 123 fixup! message
-> #pick cde squash! message
-> #pick 456 empty commit
-> 
-> So I wonder if we can get away with treating insert as a flag and
-> inserting exec commands when
-> insert && command == TODO_COMMENT
-> 
-> We could probably do with some tests for this to be sure.
-> 
+Want to retouch your photos? we can help you.
 
-I will try this approach.
+Deep etching or masking for your photos, or even adding clipping path.
+Retouching also if needed.
 
--- Alban
+Hopefully to start something for you soon.
 
-> Best Wishes
-> 
-> Phillip
-> 
+Thanks,
+Grace
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Wesdl
+
+
+Adhaus
 
