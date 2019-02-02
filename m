@@ -2,118 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B16E21F453
-	for <e@80x24.org>; Sat,  2 Feb 2019 11:21:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09B7B1F453
+	for <e@80x24.org>; Sat,  2 Feb 2019 12:35:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726761AbfBBLVi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Feb 2019 06:21:38 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:34067 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726540AbfBBLVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Feb 2019 06:21:38 -0500
-Received: by mail-io1-f68.google.com with SMTP id b16so8057181ior.1
-        for <git@vger.kernel.org>; Sat, 02 Feb 2019 03:21:37 -0800 (PST)
+        id S1727627AbfBBMda (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Feb 2019 07:33:30 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:51080 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727252AbfBBMda (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Feb 2019 07:33:30 -0500
+Received: by mail-wm1-f53.google.com with SMTP id z5so770870wmf.0
+        for <git@vger.kernel.org>; Sat, 02 Feb 2019 04:33:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BUKLr+U3BePlfKezhahV5YjRrQ9GHLnB0T9wdlqzCBs=;
-        b=kBXXRdp36vjo9Lh1aqrpjTkzeC+azAzg0oBv8G/FnQ/MV/6FRo6l8tG38XQoofvQ54
-         UIJpwrN/yk1za1ILclUL8KqJAEGUvOZa7O9wAl7g/FSlvMrcmKMBzEJNoxiqI6aBfSXL
-         Wl3JQ1kEbCQyPvWs1yevuF7eRZL6CxiD8mAd8T8t1rcd7BDpQ7FRiVhU0FtOZh8h4ejW
-         Wy8DysR63oS7GENLQffPomN22d3I2oFXAHn+C2JNzDosC6fzRjeRMZRvOJvxpSceboiy
-         pxhH/ZTNuOdHGIvt8FKiX5IkMzK8pPc+mDDgv8KzTMRECwcJd8JptNFZrK8OQLtsImm0
-         CQ6A==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=4HiiLtkMazyU+hIVpuh6hoPWsf5DHngIWzzsAO7wG0I=;
+        b=t6hxEiYpk9rNxQm8T1A1xmxIxLz+KigW/T/2kd8FJR0e9R20GzoK+B/408RwKLWTKv
+         KOOheu7rlbFudWmXkppVb7b2H405ug7RBPfZlt7AbYH98PNrd50UcEpagzcFGG1mnzuU
+         26GtZyKMzBJ4f67c6/kTNhK8VY7vwnQXd4llI8iPspPzMLXM1YJsAxigfY6XiTg/NXya
+         +fhUnGaxZCwrof7NdwzEaQtzzTdP4dQ8MRleMTQf5L2pFtMgdAkxQsrzYHfhkxT1+vDr
+         q3gtdnCBr+8lsFLweH48gPWDnTEBjPxRVy0IwPe6vtyO7WNuXRk8o1neWvrLqmw+YcY8
+         S7qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BUKLr+U3BePlfKezhahV5YjRrQ9GHLnB0T9wdlqzCBs=;
-        b=eR5zE2iGrnqO+snGYsQV/S78pV2YCR8Aub6omboklK8WxlLa45iuo23sCzmIRjBs/Z
-         VUZGcpg9PWwCYjbR/ZR60Y+JSDX1qORxUSm0xkp5fKEVSG4hKF4LQGyH0eF+fWe69nuC
-         ThFEG/igv/U5rsG32+KjZEX5WEQCiNte6HO2c/162RRdxebQhW6CqaFW0fDj/hbYuJGc
-         1gmW7gzTN2XKn0lkLzWUbChKTYNz9vfIsMG224G+65rHbEhz4SWEKAMpekcVYTqWvhEH
-         Wvj9yP0EgWlt1GUU0fB9BPfhcS9Pgi+x693H9Ggz5HtELR5ZkSdhiNQnTKNdcbZt2/PF
-         qDAw==
-X-Gm-Message-State: AHQUAuYXSjm30YaqTJLmAIn64YYgl5wolLA7KftRNDnIGEgCQDU1aRSm
-        ox4u3aaywd/b35eSyygazVreV4NBPpAxzidN+BA=
-X-Google-Smtp-Source: AHgI3Ia8GpptbqdCKcIP8/J6AMinhKB/FiUHicDfe3gFH2YkT4m38Vu8KutD9dw+KV4SEAIYODorW1vDcWuA/ZAPyWg=
-X-Received: by 2002:a6b:c544:: with SMTP id v65mr18622286iof.118.1549106497263;
- Sat, 02 Feb 2019 03:21:37 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=4HiiLtkMazyU+hIVpuh6hoPWsf5DHngIWzzsAO7wG0I=;
+        b=LLROoLU7YtAKrrHWd+G3VoKTC4I+juUZXVhV/XQ5BqLL3yi8MAT7oGz2MqX5zYKHBa
+         gaH5UtFaPr+PObZXuj54Yz0fK/MtS1YrSwyyvvcI82qYZO9VoVSmovmXUvKzSMejj1JH
+         TOX0rWIS2TBNlk+lDkuwy1EF2kdoV9HwxvnLwDu11EG6q2Y4zi58WdkaEPctz+doRs/x
+         Cb7fA3XcctLufKwGjrQyxCFf79MFRVquyoWh0kxTi8LMqIkTqhV4EpcziR2mdBZTSncd
+         mJJCLRO0PEn8fbN74jCuX7i7AyS+uYdNODZYW3pQYnkl9jVuYrKEeJzWYI5SUhS6CTtl
+         yqTQ==
+X-Gm-Message-State: AHQUAubaqobFLLuWYyiRMoS57bWx3FTJDSl1n9g1eJLmMsGbYDX7wNK/
+        HiNvx2xFkd5aeH03YyBbfdoUhr8U
+X-Google-Smtp-Source: AHgI3Iakj8Hfa9+uauWbxBul4J/nXgqwi2X/vhmvJZb/PCIJdG2oLbx2aKsc+6MhhBO4ZyOiO7Kq3Q==
+X-Received: by 2002:a1c:f207:: with SMTP id s7mr6215473wmc.87.1549110807645;
+        Sat, 02 Feb 2019 04:33:27 -0800 (PST)
+Received: from Laptop-Acer-Aspire-F15 (egc230.neoplus.adsl.tpnet.pl. [83.21.66.230])
+        by smtp.gmail.com with ESMTPSA id o81sm11988505wmd.10.2019.02.02.04.33.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 02 Feb 2019 04:33:26 -0800 (PST)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Contributor Summit Topics and Logistics
+References: <20190122075027.GA29441@sigill.intra.peff.net>
+        <20190130230702.GA25423@sigill.intra.peff.net>
+Date:   Sat, 02 Feb 2019 13:33:22 +0100
+In-Reply-To: <20190130230702.GA25423@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 31 Jan 2019 00:07:03 +0100")
+Message-ID: <86va22qsj1.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-References: <20190201193004.88736-1-dan.mcgregor@usask.ca> <xmqqr2crxl7o.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqr2crxl7o.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 2 Feb 2019 18:21:10 +0700
-Message-ID: <CACsJy8B_=qbeimp5=RS-r2gwEjVV9rDE_2_tk_DDqz6rJazvFw@mail.gmail.com>
-Subject: Re: [PATCH] http: cast result to FILE *
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Dan McGregor <dan.mcgregor@usask.ca>,
-        Git Mailing List <git@vger.kernel.org>,
-        Masaya Suzuki <masayasuzuki@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 2, 2019 at 4:21 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Dan McGregor <dan.mcgregor@usask.ca> writes:
->
-> > Commit 8dd2e88a92 ("http: support file handles for HTTP_KEEP_ERROR",
-> > 2019-01-10) introduced an implicit assumption that rewind, fileno, and
-> > fflush are functions. At least on FreeBSD fileno is not, and as such
-> > passing a void * failed.
->
-> I am not strongly opposed to this patch,
+Jeff King <peff@peff.net> writes:
 
-Even if this is needed, should it be done behind git-compat-util.h
-instead? That way if fileno(void*) is used elsewhere, we don't have to
-do the casting again.
+> On Tue, Jan 22, 2019 at 02:50:27AM -0500, Jeff King wrote:
+>
+>> If you're not coming, you can probably stop reading this message now.
+>> The rest is all logistics.
+>
+> Here are a few additional last-minute logistics:
+>
+>> For people who want to try to join remotely, I don't think we're going
+>> to have a particularly fancy AV setup. But there should at least be a
+>> big screen (which we typically do not really use for presenting), and I
+>> hope we can provide some connectivity. I'll be visiting the venue the
+>> day before (Jan 30th) in the late afternoon (Brussels time) and I'll try
+>> to do a test run. If anybody wants to volunteer to be the guinea pig on
+>> the other end of the line, I'd welcome it.
+>
+> The remote connection will be done via Zoom, using this URL which will
+> become active shortly before 10:00am (Brussels time):
+>
+>   https://github.zoom.us/j/186903655
+>
+> You may need to download an app or other software; solutions are
+> available for most platforms, and the zoom site should guide you.
 
-> but shouldn't you be filing
-> a bug report against FreeBSD instead?  The implementation is free to
-> define fileno(fh) as a macro, but it shouldn't force such a change
-> to conformant programs.
->
-> https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=206146
->
-> > Explicitly cast result to a FILE * when using standard functions that
-> > may ultimately be macros.
-> >
-> > Signed-off-by: Dan McGregor <dan.mcgregor@usask.ca>
-> > ---
-> >  http.c | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/http.c b/http.c
-> > index 954bebf684..8b9476b151 100644
-> > --- a/http.c
-> > +++ b/http.c
-> > @@ -1996,12 +1996,12 @@ static int http_request_reauth(const char *url,
-> >               strbuf_reset(result);
-> >               break;
-> >       case HTTP_REQUEST_FILE:
-> > -             if (fflush(result)) {
-> > +             if (fflush((FILE *)result)) {
-> >                       error_errno("unable to flush a file");
-> >                       return HTTP_START_FAILED;
-> >               }
-> > -             rewind(result);
-> > -             if (ftruncate(fileno(result), 0) < 0) {
-> > +             rewind((FILE *)result);
-> > +             if (ftruncate(fileno((FILE *)result), 0) < 0) {
-> >                       error_errno("unable to truncate a file");
-> >                       return HTTP_START_FAILED;
-> >               }
+Thank you very much for setting this remote connection up.  It did make
+it possible for me to watch the Git Contributor Summit 2019 (and take
+notes for Git Rev News).  I have had Zoom installed already, so it was
+not a problem.  (As I have seen, Szeder G=C3=A1bor was also spectacting ;-)
+
+The audio was not always clear, which depended on where the person
+speaking was positioned; I understand that it is a very difficult
+problem to get good acoustic in such unstructured setup.
+
+> Note that this is _not_ configured as a one-way webinar. It's a real
+> video-conference where joiners can participate in the discussion. So
+> spectators from the community are OK, but please leave your camera/mic
+> off if you're not actively participating.
+
+As far as I know it went untested (but then nobody announced that he or
+she wants to actively participate remotely).
+
+I didn't stay for the 15-17 breakout session (talking in individual
+groups); I wonder how well the remote connection setup would work with
+multiple discussions in parallel.
 
 
+I have noticed a little 'recording' indicator; would recorded session
+(video or audio only) be made available at some point in time?  Did
+anyone take minutes, or take notes (for example of the Summit agenda
+created at the start of the meeting -- when the audio was muted)?  I
+would be very interested in your impressions.
 
--- 
-Duy
+> See everybody tomorrow at 9:00am.
+
+The event actually started at 10:00am CET.
+
+
+Thanks again,
+--
+Jakub Nar=C4=99bski
