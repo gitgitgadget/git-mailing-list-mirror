@@ -2,201 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F79B1F453
-	for <e@80x24.org>; Fri,  1 Feb 2019 23:52:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10FF01F453
+	for <e@80x24.org>; Sat,  2 Feb 2019 00:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726217AbfBAXwG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Feb 2019 18:52:06 -0500
-Received: from a7-10.smtp-out.eu-west-1.amazonses.com ([54.240.7.10]:52018
-        "EHLO a7-10.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726121AbfBAXwG (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 1 Feb 2019 18:52:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1549065123;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=2xAhwuaHFRVGBw93SosFtSguAi4fwLXh/Kx/lyE/aSE=;
-        b=lE7etJJQrT/ZQm+PEvoOnb//R/wiADAmSRX3pMaK3/zI4w9fsqIoX5ZpIJe4Xt0p
-        A8bYecGpp7R/RDNbLQUR9BVOFqv7SW0k6Zh0sDu/d7gFzQENp7vmHJa9ojrE+Pi0X8Z
-        F4UAcpu1ERYPhPcbUJZay9zs0fP08w2TzU8ASv/U=
-From:   Shahzad Lone <shahzadlone@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020168a8338064-b1c054c4-3e05-4825-b8dc-636d9c63dcfc-000000@eu-west-1.amazonses.com>
-References: <01020168a8338064-b1c054c4-3e05-4825-b8dc-636d9c63dcfc-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 [rebased]] [Enhancement] Improve internals / refactoring.
+        id S1726477AbfBBAlv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Feb 2019 19:41:51 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45716 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725915AbfBBAlv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Feb 2019 19:41:51 -0500
+Received: by mail-wr1-f67.google.com with SMTP id t6so8857140wrr.12
+        for <git@vger.kernel.org>; Fri, 01 Feb 2019 16:41:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+Z/6Q3b+FE7JmLbpCPH9BJtXUs0GL8978vF7JkaTdyM=;
+        b=mqc1iF3yj6P9i60Yqd1cOcZjfowiFSLflgWQf4WCFElTc86pGehCnK0/1CKOz0amj8
+         mIw0HA+RfFYMavjEj95dek2nLaue7+tOKNsDhMAHbdbJr3hQuykojyde5yQJJQw6K+Bc
+         aQPCTKy8HXDT1Yy7YQOXXEkNTHWNBf2VpGUPYRTRRdcl9yr9sbTW0HeUuvs6PbUsM30e
+         ckWzPBrrg6CBEG/4uI+EOjstiXrBM4cNQQlcbXw5AQ8snV+TLRHDUB8EIzWJCDAMeHkQ
+         01DKq6544xX69seagi3vulJglscODE+NJcQZrihikYT4xwjVxO0qWIlTFmL7J6rpFP9a
+         663g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+Z/6Q3b+FE7JmLbpCPH9BJtXUs0GL8978vF7JkaTdyM=;
+        b=RZsrycG1CTXNvcv7Oqvg4+hd2V6XTevq39HxQynBJ27uWPVqxl8+8vPXPcFLfdEtj6
+         AK3EZGgqiESSvSOQs4ypy+3rklmcfpRm4EqdRq+rSV2KQjlKhU+fzx9WQc4BzRwDFmqr
+         44P2aa22pijRUR7WWdPNQhCCNElU8RyIZq3KiJ/qoFshb9/Dm6xdscOLFFOOK3YWMvm5
+         rfCZMYTvI7wsrLSTl60Wiiknlv2MF9GPUgR6Mn10GnI3NO49MQzPgJjm2AVw9Bw/sMbh
+         Re4z+vo3WCvNmLvSFIX0BRw0xBIu6hoJ5qyMZ8++dZ3CH7QPupd1QUZdqPvsHlCES36Z
+         yy4Q==
+X-Gm-Message-State: AJcUukcW4OBv3k0TNF58vmKmJgUZNh958jZAqLd4Su5f6tCgWWr/gWBh
+        q8nJEBPP5EzweIVVcO04w4g=
+X-Google-Smtp-Source: ALg8bN6AM788FCh9DjYsxIv2eo6PWAo2bBd2G6+sJAprUTsU9vayw/5VRuqkmr4L7y0APb2g7tVa+g==
+X-Received: by 2002:adf:f009:: with SMTP id j9mr39987639wro.170.1549068109116;
+        Fri, 01 Feb 2019 16:41:49 -0800 (PST)
+Received: from szeder.dev (x4db56e67.dyn.telefonica.de. [77.181.110.103])
+        by smtp.gmail.com with ESMTPSA id a132sm6675649wmh.5.2019.02.01.16.41.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 01 Feb 2019 16:41:48 -0800 (PST)
+Date:   Sat, 2 Feb 2019 01:41:45 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+Subject: Re: [PATCH 0/1] Using sparse in a CI job
+Message-ID: <20190202004145.GE10587@szeder.dev>
+References: <78f85f0b-176f-0b54-2ec8-4c13fd386733@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 1 Feb 2019 23:52:03 +0000
-X-SES-Outgoing: 2019.02.01-54.240.7.10
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <78f85f0b-176f-0b54-2ec8-4c13fd386733@ramsayjones.plus.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changed to ```consts``` and tried to save arithmetic cost where I could.
+On Fri, Feb 01, 2019 at 09:01:20PM +0000, Ramsay Jones wrote:
+> I suspect that the Makefile sparse target is not easy to use in a CI
+> job, since the 'sparse' program (via cgcc -no-compile) does not exit
+> with a non-zero value, even when issuing errors and warnings.
 
-Sorry my coding OCD bothered me when I didn't see them being ```consts```.
+We had the same issue with Coccinelle in the static analysis build job
+on Travis CI, which was happily succeeding even when Coccinelle
+noticed undesired code patterns entering the codebase.  We've dealt
+with that by looking at the patch files generated by 'make
+coccicheck': if they were empty, then all is well, if they are not,
+then dump their contents into the log and 'exit 1'.  See 0860a7641b
+(travis-ci: fail if Coccinelle static analysis found something to
+transform, 2018-07-23).
 
-Signed-off-by: Shahzad Lone <shahzadlone@gmail.com>
----
- builtin/diff.c           |  2 +-
- builtin/pack-objects.c   | 18 +++++++++---------
- builtin/pack-redundant.c |  4 ++--
- pack-revindex.c          | 11 +++++------
- 4 files changed, 17 insertions(+), 18 deletions(-)
+I think we could do something like that with sparse as well.
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index f0393bba23a7d..84a362ff5625b 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -102,7 +102,7 @@ static int builtin_diff_blobs(struct rev_info *revs,
- 			      int argc, const char **argv,
- 			      struct object_array_entry **blob)
- {
--	unsigned mode = canon_mode(S_IFREG | 0644);
-+	const unsigned mode = canon_mode(S_IFREG | 0644);
- 
- 	if (argc > 1)
- 		usage(builtin_diff_usage);
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 0a70d046043ec..3017beb8236fa 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -197,8 +197,8 @@ static unsigned long write_large_blob_data(struct git_istream *st, struct hashfi
- 					   const struct object_id *oid)
- {
- 	git_zstream stream;
--	unsigned char ibuf[1024 * 16];
--	unsigned char obuf[1024 * 16];
-+	unsigned char ibuf[16384];
-+	unsigned char obuf[16384];
- 	unsigned long olen = 0;
- 
- 	git_deflate_init(&stream, pack_compression_level);
-@@ -1901,10 +1901,10 @@ static int type_size_sort(const void *_a, const void *_b)
- {
- 	const struct object_entry *a = *(struct object_entry **)_a;
- 	const struct object_entry *b = *(struct object_entry **)_b;
--	enum object_type a_type = oe_type(a);
--	enum object_type b_type = oe_type(b);
--	unsigned long a_size = SIZE(a);
--	unsigned long b_size = SIZE(b);
-+	const enum object_type a_type = oe_type(a);
-+	const enum object_type b_type = oe_type(b);
-+	const unsigned long a_size = SIZE(a);
-+	const unsigned long b_size = SIZE(b);
- 
- 	if (a_type > b_type)
- 		return -1;
-@@ -1919,7 +1919,7 @@ static int type_size_sort(const void *_a, const void *_b)
- 	if (a->preferred_base < b->preferred_base)
- 		return 1;
- 	if (use_delta_islands) {
--		int island_cmp = island_delta_cmp(&a->idx.oid, &b->idx.oid);
-+		const int island_cmp = island_delta_cmp(&a->idx.oid, &b->idx.oid);
- 		if (island_cmp)
- 			return island_cmp;
- 	}
-@@ -2171,7 +2171,7 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
- 	struct object_entry *child = DELTA_CHILD(me);
- 	unsigned int m = n;
- 	while (child) {
--		unsigned int c = check_delta_limit(child, n + 1);
-+		const unsigned int c = check_delta_limit(child, n + 1);
- 		if (m < c)
- 			m = c;
- 		child = DELTA_SIBLING(child);
-@@ -2226,7 +2226,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 		while (window_memory_limit &&
- 		       mem_usage > window_memory_limit &&
- 		       count > 1) {
--			uint32_t tail = (idx + window - count) % window;
-+			const uint32_t tail = (idx + window - count) % window;
- 			mem_usage -= free_unpacked(array + tail);
- 			count--;
- 		}
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index cf9a9aabd4eb2..11bc51456631e 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -166,7 +166,7 @@ static inline struct llist_item * llist_sorted_remove(struct llist *list, const
- 	l = (hint == NULL) ? list->front : hint;
- 	prev = NULL;
- 	while (l) {
--		int cmp = oidcmp(l->oid, oid);
-+		const int cmp = oidcmp(l->oid, oid);
- 		if (cmp > 0) /* not in list, since sorted */
- 			return prev;
- 		if (!cmp) { /* found */
-@@ -264,7 +264,7 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
- 	while (p1_off < p1->pack->num_objects * p1_step &&
- 	       p2_off < p2->pack->num_objects * p2_step)
- 	{
--		int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
-+		const int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
- 		/* cmp ~ p1 - p2 */
- 		if (cmp == 0) {
- 			p1_hint = llist_sorted_remove(p1->unique_objects,
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 3c58784a5f4de..40651ec9fac2e 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -119,7 +119,7 @@ static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
-  */
- static void create_pack_revindex(struct packed_git *p)
- {
--	unsigned num_ent = p->num_objects;
-+	const unsigned num_ent = p->num_objects;
- 	unsigned i;
- 	const char *index = p->index_data;
- 	const unsigned hashsz = the_hash_algo->rawsz;
-@@ -132,7 +132,7 @@ static void create_pack_revindex(struct packed_git *p)
- 			(uint32_t *)(index + 8 + p->num_objects * (hashsz + 4));
- 		const uint32_t *off_64 = off_32 + p->num_objects;
- 		for (i = 0; i < num_ent; i++) {
--			uint32_t off = ntohl(*off_32++);
-+			const uint32_t off = ntohl(*off_32++);
- 			if (!(off & 0x80000000)) {
- 				p->revindex[i].offset = off;
- 			} else {
-@@ -143,7 +143,7 @@ static void create_pack_revindex(struct packed_git *p)
- 		}
- 	} else {
- 		for (i = 0; i < num_ent; i++) {
--			uint32_t hl = *((uint32_t *)(index + (hashsz + 4) * i));
-+			const uint32_t hl = *((uint32_t *)(index + (hashsz + 4) * i));
- 			p->revindex[i].offset = ntohl(hl);
- 			p->revindex[i].nr = i;
- 		}
-@@ -168,10 +168,10 @@ int find_revindex_position(struct packed_git *p, off_t ofs)
- {
- 	int lo = 0;
- 	int hi = p->num_objects + 1;
--	struct revindex_entry *revindex = p->revindex;
-+	const struct revindex_entry *revindex = p->revindex;
- 
- 	do {
--		unsigned mi = lo + (hi - lo) / 2;
-+		const unsigned mi = lo + (hi - lo) / 2;
- 		if (revindex[mi].offset == ofs) {
- 			return mi;
- 		} else if (ofs < revindex[mi].offset)
-@@ -187,7 +187,6 @@ int find_revindex_position(struct packed_git *p, off_t ofs)
- struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
- {
- 	int pos;
--
- 	load_pack_revindex(p);
- 	pos = find_revindex_position(p, ofs);
- 
+> At the moment, on Linux, the sp-out file is free from any sparse errors
+> or warnings. So are next and pu:
+> 
+>   $ grep error sp-out
+>   $ grep warning sp-out
 
---
-https://github.com/git/git/pull/572
+On 'master' I get:
+
+  $ grep error sp-out 
+  $ grep warning sp-out 
+  connect.c:652:40: warning: incorrect type in argument 2 (invalid types)
+  pack-revindex.c:65:23: warning: memset with byte count of 262144
+  unix-socket.c:83:26: warning: incorrect type in argument 2 (invalid types)
+  unix-socket.c:108:23: warning: incorrect type in argument 2 (invalid types)
+  daemon.c:1041:36: warning: incorrect type in argument 2 (invalid types)
+  daemon.c:1184:67: warning: incorrect type in argument 2 (invalid types)
+  imap-send.c:1022:42: warning: incorrect type in argument 2 (invalid types)
+  credential-cache--daemon.c:180:37: warning: incorrect type in argument 2 (invalid types)
+  $ sparse --version
+  v0.5.0
+
