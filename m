@@ -2,81 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BE2A1F453
-	for <e@80x24.org>; Sat,  2 Feb 2019 18:01:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F9661F453
+	for <e@80x24.org>; Sat,  2 Feb 2019 23:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726414AbfBBSBd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Feb 2019 13:01:33 -0500
-Received: from mail-pl1-f169.google.com ([209.85.214.169]:44974 "EHLO
-        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726278AbfBBSBc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Feb 2019 13:01:32 -0500
-Received: by mail-pl1-f169.google.com with SMTP id p4so1592068plq.11
-        for <git@vger.kernel.org>; Sat, 02 Feb 2019 10:01:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:subject:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=kv5kQjyZGiSKYr7nCkw1Aml/pwh0Qp6wieo1eHTXngo=;
-        b=XMbT/4j2i2jAQplRgSpndoMYFkSKR9vMs4H/r70VHSMtka4aI+PQcI/lfVAeczIFER
-         JvUBMvDaUQ8tqvdbkhG2K6Z/F2ZFOgI38K1iuqin7I84uDNaLVJJ9f38h3/sW5cs5YXn
-         KozwmWTCKDSIr8VnjwXTIGuCWZXDYtwjZDzCUm61GPfH2ENWl+7fp0zbKf/7Q/y3BK07
-         YXywUFCkid52CrV08iFyy+LR7elVt0hTl9oDhIbLNEwZf96kxcirX/EpoZnRuXsv6CYa
-         uAfx8Jsp1zzxVMiQiEbakexdIuI6/0fXutri97dbPjb6cCQ3Wx/+l6cfYMF+VFRejQTF
-         isGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kv5kQjyZGiSKYr7nCkw1Aml/pwh0Qp6wieo1eHTXngo=;
-        b=q8PTODnYk1R56mdJ+JIuOKyZ5VyZ8WE3WZpsqMYeB0YybX1gPKLr8LS3M3LDUkrw5V
-         ZfK36ZxS12/EfjLok9iXQzIPi3svT6A5EqCq+dyuI8bgi24MblJTVlX+QgY34KSVTKxY
-         pVKD3kfFLouX9EYdYQKhc0GgDcf6tW/YeQGtizhSrIrqqYqSut3Uuj139qzROxgEnUYV
-         oI8rlpQQGrYsJMmduaMyqm1BXJJ8p4/hI39U23/HFcRmQ6MPpklJ5iFT2WjhGRjF3DIh
-         tbthZzlPrLfXyZmPNu5SDCTiIDVwKRi8iw3ykWAhLXcXFXteATrCnO0V+m8jRFDtVTZq
-         o5gQ==
-X-Gm-Message-State: AHQUAuaK9TYEnuw7LFhJf1CAE13sYpZpwJkPI0xsi6caSh/XyqK6TGLW
-        stMe8fqhjUfolWNx3OGIy9WoRoYf
-X-Google-Smtp-Source: AHgI3IbEHYlGtMaOFYUyAl2AH9Hr7dQseleH6hRCvFquujE1a5Qdr/M9z/EuQPe4pf1pQNav0qOUMw==
-X-Received: by 2002:a17:902:bf43:: with SMTP id u3mr681300pls.57.1549130491122;
-        Sat, 02 Feb 2019 10:01:31 -0800 (PST)
-Received: from [192.168.43.71] ([27.62.90.100])
-        by smtp.gmail.com with ESMTPSA id l22sm16734304pfj.179.2019.02.02.10.01.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Feb 2019 10:01:30 -0800 (PST)
-From:   "Kaartic.Sivaraam" <kaartic.sivaraam@gmail.com>
-Subject: Re: protocol v2: More data transmitted between client and server
- since v2.20.0
-To:     Jeff King <peff@peff.net>
-Cc:     Git Users <git@vger.kernel.org>
-References: <CA+ARAtpAN_DJ-zgiwPEBqV1EotgsmggRRQWB59u8O_OPR_kFrw@mail.gmail.com>
- <20190128212305.GA23587@sigill.intra.peff.net>
-Message-ID: <0da174c7-40cd-c245-abbf-6aa7a657f5a3@gmail.com>
-Date:   Sat, 2 Feb 2019 23:31:26 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1726872AbfBBXQs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Feb 2019 18:16:48 -0500
+Received: from a7-10.smtp-out.eu-west-1.amazonses.com ([54.240.7.10]:43746
+        "EHLO a7-10.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726710AbfBBXQs (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 2 Feb 2019 18:16:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1549149406;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=7Gl9+qdNIlEkUIdys35ov820WSGDqaS4hEVSqOCKHxY=;
+        b=U/nHSAKqr+iOwvftDvS682oGy8A02PoJ62mQOl21LK3+tbWR9qEG4hgMsmABqFTE
+        pL42KJIVpwN3kSMDlNrVxLfA8VA1q3cEggf9Ohij/NwsGKv7te7V/vw7vH41aQoj75r
+        qFpF0pbUN/9siBCaRXMjJKB1dVdiLS+Pro3TlIBI=
+From:   Shahzad Lone <shahzadlone@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <01020168b080030b-eb0a0634-f2b9-42ed-a3be-76995e7127eb-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
+References: <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v3 [re-fixed] ] [Enhancement] Improve internals /
+ refactoring.
 MIME-Version: 1.0
-In-Reply-To: <20190128212305.GA23587@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
+Date:   Sat, 2 Feb 2019 23:16:45 +0000
+X-SES-Outgoing: 2019.02.02-54.240.7.10
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Changed to ```consts``` and tried to save arithmetic cost where I could.
 
-Thanks for sharing the details about that spooky behaviour! Also, thanks 
-for suggesting an alternative way to show the advantage of using 
-protocol v2. I'll refer your post in that blog's comment to let them know.
+Sorry my coding OCD bothered me when I didn't see them being ```consts```.
 
+Signed-off-by: Shahzad Lone <shahzadlone@gmail.com>
+---
+ builtin/diff.c           |  2 +-
+ builtin/pack-objects.c   | 14 +++++++-------
+ builtin/pack-redundant.c |  4 ++--
+ pack-revindex.c          | 10 +++++-----
+ 4 files changed, 15 insertions(+), 15 deletions(-)
 
-Thanks,
-Sivaraam
+diff --git a/builtin/diff.c b/builtin/diff.c
+index f0393bba23a7d..84a362ff5625b 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -102,7 +102,7 @@ static int builtin_diff_blobs(struct rev_info *revs,
+ 			      int argc, const char **argv,
+ 			      struct object_array_entry **blob)
+ {
+-	unsigned mode = canon_mode(S_IFREG | 0644);
++	const unsigned mode = canon_mode(S_IFREG | 0644);
+ 
+ 	if (argc > 1)
+ 		usage(builtin_diff_usage);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 0a70d046043ec..5c406ab4945f5 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1901,10 +1901,10 @@ static int type_size_sort(const void *_a, const void *_b)
+ {
+ 	const struct object_entry *a = *(struct object_entry **)_a;
+ 	const struct object_entry *b = *(struct object_entry **)_b;
+-	enum object_type a_type = oe_type(a);
+-	enum object_type b_type = oe_type(b);
+-	unsigned long a_size = SIZE(a);
+-	unsigned long b_size = SIZE(b);
++	const enum object_type a_type = oe_type(a);
++	const enum object_type b_type = oe_type(b);
++	const unsigned long a_size = SIZE(a);
++	const unsigned long b_size = SIZE(b);
+ 
+ 	if (a_type > b_type)
+ 		return -1;
+@@ -1919,7 +1919,7 @@ static int type_size_sort(const void *_a, const void *_b)
+ 	if (a->preferred_base < b->preferred_base)
+ 		return 1;
+ 	if (use_delta_islands) {
+-		int island_cmp = island_delta_cmp(&a->idx.oid, &b->idx.oid);
++		const int island_cmp = island_delta_cmp(&a->idx.oid, &b->idx.oid);
+ 		if (island_cmp)
+ 			return island_cmp;
+ 	}
+@@ -2171,7 +2171,7 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
+ 	struct object_entry *child = DELTA_CHILD(me);
+ 	unsigned int m = n;
+ 	while (child) {
+-		unsigned int c = check_delta_limit(child, n + 1);
++		const unsigned int c = check_delta_limit(child, n + 1);
+ 		if (m < c)
+ 			m = c;
+ 		child = DELTA_SIBLING(child);
+@@ -2226,7 +2226,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ 		while (window_memory_limit &&
+ 		       mem_usage > window_memory_limit &&
+ 		       count > 1) {
+-			uint32_t tail = (idx + window - count) % window;
++			const uint32_t tail = (idx + window - count) % window;
+ 			mem_usage -= free_unpacked(array + tail);
+ 			count--;
+ 		}
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index cf9a9aabd4eb2..11bc51456631e 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -166,7 +166,7 @@ static inline struct llist_item * llist_sorted_remove(struct llist *list, const
+ 	l = (hint == NULL) ? list->front : hint;
+ 	prev = NULL;
+ 	while (l) {
+-		int cmp = oidcmp(l->oid, oid);
++		const int cmp = oidcmp(l->oid, oid);
+ 		if (cmp > 0) /* not in list, since sorted */
+ 			return prev;
+ 		if (!cmp) { /* found */
+@@ -264,7 +264,7 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
+ 	while (p1_off < p1->pack->num_objects * p1_step &&
+ 	       p2_off < p2->pack->num_objects * p2_step)
+ 	{
+-		int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
++		const int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
+ 		/* cmp ~ p1 - p2 */
+ 		if (cmp == 0) {
+ 			p1_hint = llist_sorted_remove(p1->unique_objects,
+diff --git a/pack-revindex.c b/pack-revindex.c
+index 3c58784a5f4de..50891f77a26d6 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -119,7 +119,7 @@ static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
+  */
+ static void create_pack_revindex(struct packed_git *p)
+ {
+-	unsigned num_ent = p->num_objects;
++	const unsigned num_ent = p->num_objects;
+ 	unsigned i;
+ 	const char *index = p->index_data;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+@@ -132,7 +132,7 @@ static void create_pack_revindex(struct packed_git *p)
+ 			(uint32_t *)(index + 8 + p->num_objects * (hashsz + 4));
+ 		const uint32_t *off_64 = off_32 + p->num_objects;
+ 		for (i = 0; i < num_ent; i++) {
+-			uint32_t off = ntohl(*off_32++);
++			const uint32_t off = ntohl(*off_32++);
+ 			if (!(off & 0x80000000)) {
+ 				p->revindex[i].offset = off;
+ 			} else {
+@@ -143,7 +143,7 @@ static void create_pack_revindex(struct packed_git *p)
+ 		}
+ 	} else {
+ 		for (i = 0; i < num_ent; i++) {
+-			uint32_t hl = *((uint32_t *)(index + (hashsz + 4) * i));
++			const uint32_t hl = *((uint32_t *)(index + (hashsz + 4) * i));
+ 			p->revindex[i].offset = ntohl(hl);
+ 			p->revindex[i].nr = i;
+ 		}
+@@ -168,10 +168,10 @@ int find_revindex_position(struct packed_git *p, off_t ofs)
+ {
+ 	int lo = 0;
+ 	int hi = p->num_objects + 1;
+-	struct revindex_entry *revindex = p->revindex;
++	const struct revindex_entry *revindex = p->revindex;
+ 
+ 	do {
+-		unsigned mi = lo + (hi - lo) / 2;
++		const unsigned mi = lo + (hi - lo) / 2;
+ 		if (revindex[mi].offset == ofs) {
+ 			return mi;
+ 		} else if (ofs < revindex[mi].offset)
+
+--
+https://github.com/git/git/pull/572
