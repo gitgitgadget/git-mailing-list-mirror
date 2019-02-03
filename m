@@ -2,183 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F9661F453
-	for <e@80x24.org>; Sat,  2 Feb 2019 23:16:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 167321F453
+	for <e@80x24.org>; Sun,  3 Feb 2019 01:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726872AbfBBXQs (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Feb 2019 18:16:48 -0500
-Received: from a7-10.smtp-out.eu-west-1.amazonses.com ([54.240.7.10]:43746
-        "EHLO a7-10.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726710AbfBBXQs (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 2 Feb 2019 18:16:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1549149406;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=7Gl9+qdNIlEkUIdys35ov820WSGDqaS4hEVSqOCKHxY=;
-        b=U/nHSAKqr+iOwvftDvS682oGy8A02PoJ62mQOl21LK3+tbWR9qEG4hgMsmABqFTE
-        pL42KJIVpwN3kSMDlNrVxLfA8VA1q3cEggf9Ohij/NwsGKv7te7V/vw7vH41aQoj75r
-        qFpF0pbUN/9siBCaRXMjJKB1dVdiLS+Pro3TlIBI=
-From:   Shahzad Lone <shahzadlone@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020168b080030b-eb0a0634-f2b9-42ed-a3be-76995e7127eb-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
-References: <01020168ab79f642-10a06c5b-c3f7-441e-86f8-bff5e41ac834-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v3 [re-fixed] ] [Enhancement] Improve internals /
- refactoring.
+        id S1727074AbfBCBZ2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Feb 2019 20:25:28 -0500
+Received: from avasout05.plus.net ([84.93.230.250]:53865 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726862AbfBCBZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Feb 2019 20:25:28 -0500
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id q6XDgficQyTttq6XEgDpch; Sun, 03 Feb 2019 01:25:26 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=XuzUx2N9 c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=H642gA7laEfBm65GI6kA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 1/1] Makefile: improve SPARSE_FLAGS customisation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+References: <3ccf0255-8a15-effc-ce6b-eabb61625f90@ramsayjones.plus.com>
+ <xmqqmunfxjve.fsf@gitster-ct.c.googlers.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <4a8f6b3f-3844-b4e8-2ed2-4078b592dd4b@ramsayjones.plus.com>
+Date:   Sun, 3 Feb 2019 01:25:22 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <xmqqmunfxjve.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-Date:   Sat, 2 Feb 2019 23:16:45 +0000
-X-SES-Outgoing: 2019.02.02-54.240.7.10
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+X-CMAE-Envelope: MS4wfPX/nQUepi7EziEQ55rSKLf5icALG1dJtw3LXQxO77vZnw7JSHhzYcheCPqtMiYOJ5z+gCR/8uhasVu4X+Ge6h7whjRLD4kWI9B0cz0ndQrIUKh9wHMk
+ NvhTq11+QaJVCdeU+Tog521revORCuHVcAH1rFqhICuY7Q4kJjnGtQBiWNCyt0NAO1Gdv2y7E9WrrQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changed to ```consts``` and tried to save arithmetic cost where I could.
 
-Sorry my coding OCD bothered me when I didn't see them being ```consts```.
 
-Signed-off-by: Shahzad Lone <shahzadlone@gmail.com>
----
- builtin/diff.c           |  2 +-
- builtin/pack-objects.c   | 14 +++++++-------
- builtin/pack-redundant.c |  4 ++--
- pack-revindex.c          | 10 +++++-----
- 4 files changed, 15 insertions(+), 15 deletions(-)
+On 01/02/2019 21:46, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+>> In order to enable greater user customisation of the SPARSE_FLAGS
+>> variable, we introduce a new SP_EXTRA_FLAGS variable to use for
+>> target specific settings. Without using the new variable, setting
+>> the SPARSE_FLAGS on the 'make' command-line would also override the
+>> value set by the target-specific rules in the Makefile (effectively
+>> making them useless). In addition, we initialise the SPARSE_FLAGS
+>> to the default (empty) value using a conditional assignment (?=).
+>> This allows the SPARSE_FLAGS to be set from the environment as
+>> well as from the command-line.
+> 
+> Thanks for a detailed and clear explanation here and in the cover
+> letter.  I agree with the motivation and most of the things I see in
+> this patch, but one thing that stands out at me is if we still want
+> to += append to SP_EXTRA_FLAGS in target specific way.  Before this
+> patch, because SPARSE_FLAGS was a dual use variable, it needed +=
+> appending to it in these two places, but that rationale is gone with
+> this patch.
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index f0393bba23a7d..84a362ff5625b 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -102,7 +102,7 @@ static int builtin_diff_blobs(struct rev_info *revs,
- 			      int argc, const char **argv,
- 			      struct object_array_entry **blob)
- {
--	unsigned mode = canon_mode(S_IFREG | 0644);
-+	const unsigned mode = canon_mode(S_IFREG | 0644);
- 
- 	if (argc > 1)
- 		usage(builtin_diff_usage);
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 0a70d046043ec..5c406ab4945f5 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1901,10 +1901,10 @@ static int type_size_sort(const void *_a, const void *_b)
- {
- 	const struct object_entry *a = *(struct object_entry **)_a;
- 	const struct object_entry *b = *(struct object_entry **)_b;
--	enum object_type a_type = oe_type(a);
--	enum object_type b_type = oe_type(b);
--	unsigned long a_size = SIZE(a);
--	unsigned long b_size = SIZE(b);
-+	const enum object_type a_type = oe_type(a);
-+	const enum object_type b_type = oe_type(b);
-+	const unsigned long a_size = SIZE(a);
-+	const unsigned long b_size = SIZE(b);
- 
- 	if (a_type > b_type)
- 		return -1;
-@@ -1919,7 +1919,7 @@ static int type_size_sort(const void *_a, const void *_b)
- 	if (a->preferred_base < b->preferred_base)
- 		return 1;
- 	if (use_delta_islands) {
--		int island_cmp = island_delta_cmp(&a->idx.oid, &b->idx.oid);
-+		const int island_cmp = island_delta_cmp(&a->idx.oid, &b->idx.oid);
- 		if (island_cmp)
- 			return island_cmp;
- 	}
-@@ -2171,7 +2171,7 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
- 	struct object_entry *child = DELTA_CHILD(me);
- 	unsigned int m = n;
- 	while (child) {
--		unsigned int c = check_delta_limit(child, n + 1);
-+		const unsigned int c = check_delta_limit(child, n + 1);
- 		if (m < c)
- 			m = c;
- 		child = DELTA_SIBLING(child);
-@@ -2226,7 +2226,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
- 		while (window_memory_limit &&
- 		       mem_usage > window_memory_limit &&
- 		       count > 1) {
--			uint32_t tail = (idx + window - count) % window;
-+			const uint32_t tail = (idx + window - count) % window;
- 			mem_usage -= free_unpacked(array + tail);
- 			count--;
- 		}
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index cf9a9aabd4eb2..11bc51456631e 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -166,7 +166,7 @@ static inline struct llist_item * llist_sorted_remove(struct llist *list, const
- 	l = (hint == NULL) ? list->front : hint;
- 	prev = NULL;
- 	while (l) {
--		int cmp = oidcmp(l->oid, oid);
-+		const int cmp = oidcmp(l->oid, oid);
- 		if (cmp > 0) /* not in list, since sorted */
- 			return prev;
- 		if (!cmp) { /* found */
-@@ -264,7 +264,7 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
- 	while (p1_off < p1->pack->num_objects * p1_step &&
- 	       p2_off < p2->pack->num_objects * p2_step)
- 	{
--		int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
-+		const int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
- 		/* cmp ~ p1 - p2 */
- 		if (cmp == 0) {
- 			p1_hint = llist_sorted_remove(p1->unique_objects,
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 3c58784a5f4de..50891f77a26d6 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -119,7 +119,7 @@ static void sort_revindex(struct revindex_entry *entries, unsigned n, off_t max)
-  */
- static void create_pack_revindex(struct packed_git *p)
- {
--	unsigned num_ent = p->num_objects;
-+	const unsigned num_ent = p->num_objects;
- 	unsigned i;
- 	const char *index = p->index_data;
- 	const unsigned hashsz = the_hash_algo->rawsz;
-@@ -132,7 +132,7 @@ static void create_pack_revindex(struct packed_git *p)
- 			(uint32_t *)(index + 8 + p->num_objects * (hashsz + 4));
- 		const uint32_t *off_64 = off_32 + p->num_objects;
- 		for (i = 0; i < num_ent; i++) {
--			uint32_t off = ntohl(*off_32++);
-+			const uint32_t off = ntohl(*off_32++);
- 			if (!(off & 0x80000000)) {
- 				p->revindex[i].offset = off;
- 			} else {
-@@ -143,7 +143,7 @@ static void create_pack_revindex(struct packed_git *p)
- 		}
- 	} else {
- 		for (i = 0; i < num_ent; i++) {
--			uint32_t hl = *((uint32_t *)(index + (hashsz + 4) * i));
-+			const uint32_t hl = *((uint32_t *)(index + (hashsz + 4) * i));
- 			p->revindex[i].offset = ntohl(hl);
- 			p->revindex[i].nr = i;
- 		}
-@@ -168,10 +168,10 @@ int find_revindex_position(struct packed_git *p, off_t ofs)
- {
- 	int lo = 0;
- 	int hi = p->num_objects + 1;
--	struct revindex_entry *revindex = p->revindex;
-+	const struct revindex_entry *revindex = p->revindex;
- 
- 	do {
--		unsigned mi = lo + (hi - lo) / 2;
-+		const unsigned mi = lo + (hi - lo) / 2;
- 		if (revindex[mi].offset == ofs) {
- 			return mi;
- 		} else if (ofs < revindex[mi].offset)
+As Luc surmised, in his reply, my intention was that SP_EXTRA_FLAGS
+should be used for any 'internal' settings (not just the target
+specific settings), whereas SPARSE_FLAGS would now be used _only_ for
+user customisation.
 
---
-https://github.com/git/git/pull/572
+The commit message doesn't make that clear, (and the patch text adds
+to the confusion, since only target specific settings are changed) so
+I need to reword that somehow. Also, ...
+
+> Also, don't we want to clear SP_EXTRA_FLAGS at the beginning?
+
+... (Ahem) I just simply forgot to initialise the new variable! :(
+(Yes, it actually doesn't matter, but it gives a wrong impression). ;-)
+
+BTW, the first name I chose was SP_FLAGS, but while editing the second
+hunk I decided that wasn't a good name. On several other projects I have
+seen exactly this 'split' happen, where the user facing variable was
+called <something>_FLAGS and the 'internal' variable was then called
+<something>_EXTRA_FLAGS, so I decided to go with that instead. (Yes, I
+abbreviated SPARSE). However, I have to say that I have also seen (less
+often) the exact opposite: "... if some idiot user wants to add extra
+flags ...". :-D
+
+So, yes SP_EXTRA_FLAGS could be used for other 'internal' uses; for
+example, look back to commit 6bc8606be3 ("config.mak.uname: remove
+SPARSE_FLAGS setting for cygwin", 2018-02-12), which removed:
+'SPARSE_FLAGS = -isystem /usr/include/w32api -Wno-one-bit-signed-bitfield'
+from config.mak.uname. As you can see, although gcc could find the
+win32 header files, sparse needed a little help. Also, the win32 system
+header files had an instance of a 'one-bit signed bitfield', which caused
+sparse to spew many many many errors. If I needed to do something like
+that again, then I would use SP_EXTRA_FLAGS instead.
+
+[Looking back now, I am a little shocked that it seems to have taken
+me nearly 5 years to submit that patch! :-P ]
+
+I could give quite a few examples, but ... Oh wait! ... Hmm, it seems
+that I need to add a new patch to remove line 558 of config.mak.uname.
+This line has a setting for SPARSE_FLAGS in the MINGW section of that
+file. Back in around 2011, having ported sparse to MinGW (the original
+msysgit, not MSYS2), I naturally had the same issue with the Win32
+header files. Since I didn't upstream my sparse patches, I don't think
+anyone can be running sparse on MinGW these days.
+
+Anyway, its late, so I will look at redoing the patches soon.
+
+ATB,
+Ramsay Jones
