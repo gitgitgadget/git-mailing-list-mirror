@@ -2,78 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 102571F453
-	for <e@80x24.org>; Sun,  3 Feb 2019 11:01:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E342A1F453
+	for <e@80x24.org>; Sun,  3 Feb 2019 11:08:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727515AbfBCLBj convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 3 Feb 2019 06:01:39 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:34711 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726765AbfBCLBj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Feb 2019 06:01:39 -0500
-Received: by mail-qt1-f196.google.com with SMTP id b8so2683778qtj.1
-        for <git@vger.kernel.org>; Sun, 03 Feb 2019 03:01:38 -0800 (PST)
+        id S1727563AbfBCLIt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Feb 2019 06:08:49 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36960 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726765AbfBCLIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Feb 2019 06:08:49 -0500
+Received: by mail-wm1-f68.google.com with SMTP id g67so10426691wmd.2
+        for <git@vger.kernel.org>; Sun, 03 Feb 2019 03:08:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=MV1BpLLd4DNYwQ/njxeCLFptvwInEgcxIp00Oo6xQgw=;
+        b=EA90MZ4AVvvGHIzTr6Qc37mKlI3x+RsCoXDHB/2u3ve1GDlWkbBWmFDnAlZtrKI4zZ
+         ay2eC6l4osHTZlrZA3bYBXsSKBZIBSb2bm2nJo8qA0546glT+fzC/px4KD3kj7k6+USV
+         9ILTFbpGaD8BBMgCq7iZyYx8XhfyT+5W7KG/z3ZsQMuBr2ZiTyqi9qBEBU4Fc9aCRi8f
+         x3Ffl5ujqDmmtyiy0us6IY2moUNLM1TZDUAuZv/CiW6Lnx97AT9RqcTOkyMfbN0nnUEe
+         DHv63927cso6uwwYe0YSqcJL2nmr5OlWsK9ODZiqQYBnR8hWnh7n2vdXOmjoLJTNKYx5
+         l8Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=UettPFJPQbJO9Eq9YKxc0yiHoZ3FK2hG8ybVXOyNXiI=;
-        b=lTM+WGhbHoDDkESGtp3epBq7BLbVtcxpeGk8t1xWmmZp4xa/sv8LMbqT7yrehnfthp
-         Fs5MABGdox4blTktfXJsp5Uk6fo+5Bn2ANZ2+rEpusijO0H3gArcffYlQYRDPwyyV+fh
-         32nVF/m9idlq3beYLKMvjxO4WXhyJjnSeW04GxzmR5vIr+iBTFoL1m9MUEmkoS8p0hmX
-         Xrho2u/ItllhQXVt2k4tMpqWxXgX6MpPkLJWf7MZ1fB4x1XYosCG8zlfyh0j5HU4hRX/
-         +XN8jIDaWYwXU+MJ59w82yDh+mDAiVqEjVqZ5peB43+ZMPlLUfAf3+tfkoD0GznDqKAC
-         ESPw==
-X-Gm-Message-State: AJcUukf/Yk360CHiv9dUmmbWcdJP/IHOb/Y/1lr18KMPAq3TbAlaAnHm
-        t6XRTTVnuMdHIa/QtSa1DnB5axeRd6RxUbpTSAw=
-X-Google-Smtp-Source: ALg8bN4hvc+6oiDCdLXx7S63EiKQoV+IafXxPenkz2wzilCi0cDW6LyyXH45we4gcY5QOcOtT0UF6bE/H8I0j3qOhLc=
-X-Received: by 2002:ac8:90c:: with SMTP id t12mr45101006qth.335.1549191698269;
- Sun, 03 Feb 2019 03:01:38 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=MV1BpLLd4DNYwQ/njxeCLFptvwInEgcxIp00Oo6xQgw=;
+        b=m5mY5uc6YStw8yXHRM34KpH9N6UB98Hu9vlkydHg0kC/LIqGNSfl1Yi/QqXOJbhXQf
+         uIdCy0kuqglQyJsW0KNmXxdQ4R8+n8j5xehiNt2QYvg70X1rsXXkN03V1JS4ZJNXUoNl
+         Y/mNNtImi6YMlC/d2nNppGAz9NyW1Zjuja+i/NTUSOg8/XG1BcI3un8lBkESC46jjCWR
+         ad3IDUKra1joZw1NQKu4/n17HRVwe1zTZPPGVmepeXf/2mvGJT6bdH3qUhS5VXQcWt+q
+         3oCxDNgndpbzkchkNKvjAHHvrJq9VAICTjlfeCk51lVTZuBjRFNpd4SvHOhV8aD6nPab
+         WjhQ==
+X-Gm-Message-State: AHQUAubLutRHfM5jTFEzI9naisVSfCdGDedYCgPXotNF6xslJB9DIovT
+        NJASiQirZ3pC5kcHM6i9sVau2T2zzjg=
+X-Google-Smtp-Source: AHgI3IYx+dbBMhItnqqaju/FG5e8BbtDq7eLOuxrfrchplzb0++O1wctGgwEdH8shdbKxcybtww8GA==
+X-Received: by 2002:a1c:b1d5:: with SMTP id a204mr9777384wmf.32.1549192127490;
+        Sun, 03 Feb 2019 03:08:47 -0800 (PST)
+Received: from localhost.localdomain ([46.183.103.8])
+        by smtp.gmail.com with ESMTPSA id m4sm8157113wmi.3.2019.02.03.03.08.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 03 Feb 2019 03:08:46 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v2] doc-diff: don't `cd_to_toplevel` before calling `usage`
+Date:   Sun,  3 Feb 2019 12:08:17 +0100
+Message-Id: <20190203110817.17242-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.20.1.309.g16a465bc01
+In-Reply-To: <CAPig+cT32oi5HLe7tokghrCmaiECwAXxON8U7DrpMYb3GCSNyQ@mail.gmail.com>
+References: <CAPig+cT32oi5HLe7tokghrCmaiECwAXxON8U7DrpMYb3GCSNyQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20190203083545.5877-1-martin.agren@gmail.com> <CAPig+cRN_Jw_vj5=RWZJWp-Wn6-=Vd9oZKQieMWJ02TjAHWwWg@mail.gmail.com>
- <CAPig+cQYuwMmyw8_p863BeSU5RP-xdB=HFMa7EM4G3YALQj3_g@mail.gmail.com> <CAN0heSohuL=TBOLR+Q9=zrGhZrrjSgfvA=VeT-aA0gr57onAsg@mail.gmail.com>
-In-Reply-To: <CAN0heSohuL=TBOLR+Q9=zrGhZrrjSgfvA=VeT-aA0gr57onAsg@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 3 Feb 2019 06:01:27 -0500
-Message-ID: <CAPig+cT32oi5HLe7tokghrCmaiECwAXxON8U7DrpMYb3GCSNyQ@mail.gmail.com>
-Subject: Re: [PATCH] doc-diff: don't `cd_to_toplevel` before calling `usage`
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 3, 2019 at 5:37 AM Martin Ågren <martin.agren@gmail.com> wrote:
-> On Sun, 3 Feb 2019 at 10:12, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Sun, Feb 3, 2019 at 4:08 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > I wonder if a more fruitful, longer-term fix which would save us from
-> > > having to worry about this in the future, would be to make
-> > > git-sh-setup.sh remember the original $0 before cd_to_toplevel() and
-> > > then employ the original value when usage() re-execs with the -h
-> > > option. That would also avoid the slightly ugly repeated
-> > > cd_to_top_level() and 'tmp' assignment in this patch.
-> >
-> > By "original $0", I meant a path which would be suitable for
-> > re-exec'ing (which wouldn't be the literal original $0). Sorry for the
-> > confusion.
->
-> Ok, so I am not too eager to try and tackle this with fallback
-> strategies and what-not. What would you say if I punted on this? I could
-> add something like this to the commit message:
->
->   A more general fix would be to teach git-sh-setup to save away the
->   absolute path for $0 and then use that, instead. I'm not aware of any
->   portable way of doing that, see, e.g., d2addc3b96 ("t7800: readlink
->   may not be available", 2016-05-31), so let's just fix this user
->   instead.
->
-> What do you think? Thanks for your comments.
+`usage` tries to call $0, which might very well be "./doc-diff", so if
+we `cd_to_toplevel` before calling `usage`, we'll end with an error to
+the effect of "./doc-diff: not found" rather than a friendly `doc-diff
+-h` output. Granted, all of these `usage` calls are in error paths, so
+we're about to exit anyway, but the user experience of something like
+`(cd Documentation && ./doc-diff)` could be a bit better than
+"./doc-diff: not found".
 
-Punting and extending the commit message like that sounds reasonable.
+This regressed in ad51743007 ("doc-diff: add --clean mode to remove
+temporary working gunk", 2018-08-31) where we moved the call to
+`cd_to_toplevel` to much earlier. Move it back to where it was, and
+teach the "--clean" code to cd on its own. This way, we only cd once
+we've verified the arguments.
+
+A more general fix would be to teach git-sh-setup to save away the
+absolute path for $0 and then use that, instead. I'm not aware of any
+portable way of doing that, see, e.g., d2addc3b96 ("t7800: readlink
+may not be available", 2016-05-31), so let's just fix this user
+instead.
+
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+
+ > Punting and extending the commit message like that sounds reasonable.
+
+ So here's a v2 doing exactly that.
+
+ Documentation/doc-diff | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/doc-diff b/Documentation/doc-diff
+index dfd9418778..f820febf8f 100755
+--- a/Documentation/doc-diff
++++ b/Documentation/doc-diff
+@@ -39,12 +39,11 @@ do
+ 	shift
+ done
+ 
+-cd_to_toplevel
+-tmp=Documentation/tmp-doc-diff
+-
+ if test -n "$clean"
+ then
+ 	test $# -eq 0 || usage
++	cd_to_toplevel
++	tmp=Documentation/tmp-doc-diff
+ 	git worktree remove --force "$tmp/worktree" 2>/dev/null
+ 	rm -rf "$tmp"
+ 	exit 0
+@@ -66,6 +65,9 @@ to=$1; shift
+ from_oid=$(git rev-parse --verify "$from") || exit 1
+ to_oid=$(git rev-parse --verify "$to") || exit 1
+ 
++cd_to_toplevel
++tmp=Documentation/tmp-doc-diff
++
+ if test -n "$force"
+ then
+ 	rm -rf "$tmp"
+-- 
+2.20.1.309.g16a465bc01
+
