@@ -2,121 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FE211F453
-	for <e@80x24.org>; Sun,  3 Feb 2019 08:17:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEA281F453
+	for <e@80x24.org>; Sun,  3 Feb 2019 08:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727529AbfBCIRQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Feb 2019 03:17:16 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:42294 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725891AbfBCIRQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Feb 2019 03:17:16 -0500
-Received: by mail-vs1-f66.google.com with SMTP id b74so6768774vsd.9
-        for <git@vger.kernel.org>; Sun, 03 Feb 2019 00:17:15 -0800 (PST)
+        id S1727446AbfBCIhN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Feb 2019 03:37:13 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43357 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727025AbfBCIhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Feb 2019 03:37:13 -0500
+Received: by mail-ed1-f67.google.com with SMTP id f9so8769518eds.10
+        for <git@vger.kernel.org>; Sun, 03 Feb 2019 00:37:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uVzfcFKrghj8StrkdwDXtEDJeTtO8K3iJceJRO+9wLY=;
-        b=UsnAznIdzQdWucvbVAWjZN1+mMRB/L4baVQ0R97HQvTWP2qusFx0v33/qUWZejaNWS
-         9fVz+lwIheyH7C2wL6uRZg78WDTRZyIKMcIoR573cpAUrgws5lSXuQT28nJZO3idVt1t
-         rivqns1tWHS0QjmR7y7GQTKomL0U5vwFyaK8uUO8uqv0soziOKJhT1ltOZ8XeA4uzOKI
-         jhvTS3QQ17ZxdFMIkQHS2eBkxQQa/akL7JHE+injpBpxDwg/wHoRTwVP3f9c5ZrKnhlT
-         FYnRa0vzA+3vLqKvKNZnshmNN7l2ryWI5BnsgzzlsSb7jOjn/VIVNvrzt/qrRh309Csf
-         jVCA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JU7VKWR46yjnvf6WYbQ04FVK7rWXGo4ifkW/mZcfXms=;
+        b=m25EDGfUAEJW3rsjeTYaiqtUXN88RFcBxR/nR2Qwz94MYe7CbFv7j2Jehbt8TWyeGy
+         sRRz8BMoqie74v0BiIwTqgQyiC+TS/GsiiSGiOTdF5ru87EJMQ4kuFY9WZ9hj7PrjeiH
+         jAM17fsRwNY2S/NNlqHDPviB9Jm494dj/GCT6n8o4gS2tmCZIcS46u0GkvMEnYko24ni
+         ymiKBy5VOriFJImWY/aZ1oDoGxTOrxc8u5pURKrFerl3PaDDr/GvcDfUG8hAnxpKDqKv
+         zrkVFflKiP37d4Xdhv0KWrN5TmwRZX+96gjDoNahKohnTzjm+CZstOiHz/mEfwKS/Uxb
+         zcjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uVzfcFKrghj8StrkdwDXtEDJeTtO8K3iJceJRO+9wLY=;
-        b=AFPeekvIRbuj/XDOg1XBpKLU7w0jvvg/xgmHe8+DtDPNFDXKxCO2PjTh6n0TdsIAsk
-         4VHu9L+i5oozdFy2cougJ+3tj6cyGJMnBWhoZd95HxnuVA+K6x9udiHHYayYTNdr7Kbx
-         IcMoMoZKHYMsapthC36OjOvf5FteOmObdZLJNSoxcuZpP1AZC+Lnl4I9dtPjAEY66bPY
-         Yn9qRuZ1AwcFiq33UOS30OPaQ8sDgGk3Pw6VbPJFhiQx/NyR9dXWf41CpuQQ0QSoXemY
-         LMMrZJ/6HyLflj9OTJS2ej1IgXF73bT1HzgMUzVeSK6gCJxojBHwW0y5bEd4LJpnKqZk
-         uXTA==
-X-Gm-Message-State: AJcUukflkWkNmuX3McsKixW6wAPCuTjze4EnPJPKg4Q+PuBIPk5L34nJ
-        p5n9W2zBCROWGALRjYPAscy+Mvd7YO4ha400b1exwCTM
-X-Google-Smtp-Source: ALg8bN7cwYPd/sjJXCWk4wLo8575UX9LJoFryL7x+HSgLJwl+lO1XdsMpGh3lqETAxKY1CKoNPfTyO47VkIh6eLpIqs=
-X-Received: by 2002:a67:8513:: with SMTP id h19mr19971723vsd.91.1549181835122;
- Sun, 03 Feb 2019 00:17:15 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JU7VKWR46yjnvf6WYbQ04FVK7rWXGo4ifkW/mZcfXms=;
+        b=FS8LOz44pbM1zPZQtGLXEGdyXS1TQn7nvzGbjnIyIAZBZoFIAi4xU8LpUQphvXtTDq
+         Rj9WSWKwHyMGAAmtgF0K51FQAjg2gSgYefPhY36DLPw/5O97rr7WAKPA1Y24UbsCCoBt
+         rSv0769YaiIYsHyVm9uOarnMjESYBCuQmpuD+xaOis3+0u2t7vex3aeqnjRcTpMO37SB
+         fFUvaEcffSIDPRqAj7wpLrH0l7LhzB5iCdPpu8c/7IwYacNqFC9Ak/2JkrruoqQWHtuo
+         ziF+klkx9sumi2JyR9LlptKeq6QIjT7a3k17lrn+kru9u+Prl4aIF1uwuJklLrlmRTXN
+         1p8w==
+X-Gm-Message-State: AJcUukfZ0rA3eVbvv44ZcxuRcHTNWTYpA05P/70ZJdjSg3rKQTr1c5CH
+        GNX8tCVOH+tgUkQHaIz8T9lPEMo3
+X-Google-Smtp-Source: ALg8bN5bpsHtK/B1dXoBevDHt8Rw/BIzabPAjGOsGzvkqj4M9BnY3dBt5G1tpWCQs1cRYQlUeG/spA==
+X-Received: by 2002:a50:e3cb:: with SMTP id c11mr46644880edm.80.1549183031207;
+        Sun, 03 Feb 2019 00:37:11 -0800 (PST)
+Received: from localhost.localdomain (ptr-a4kws7i1d1ur5f2ahhk.18120a2.ip6.access.telenet.be. [2a02:1811:5184:9200:cd6e:e17a:5948:6508])
+        by smtp.gmail.com with ESMTPSA id 49sm3398748edz.59.2019.02.03.00.37.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 03 Feb 2019 00:37:10 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>
+Subject: [PATCH] doc-diff: don't `cd_to_toplevel` before calling `usage`
+Date:   Sun,  3 Feb 2019 09:35:45 +0100
+Message-Id: <20190203083545.5877-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.20.1.309.g16a465bc01
 MIME-Version: 1.0
-References: <CALjAwxiB1uDfg4iPFjh2dNibEZa5mJ0RwhCzt0R2b87NTVqWfA@mail.gmail.com>
- <20181219232200.GB21283@sigill.intra.peff.net> <CALjAwxg2E_48kQYt1GHkcXvVmaFyPY3PGG9rHZNMp+++UqKfow@mail.gmail.com>
- <20181220151037.GC27361@sigill.intra.peff.net> <CALjAwxjyS5raGbib5KyUPZzS+9UyB1fpCN2fybYoYOctXe7iyA@mail.gmail.com>
-In-Reply-To: <CALjAwxjyS5raGbib5KyUPZzS+9UyB1fpCN2fybYoYOctXe7iyA@mail.gmail.com>
-From:   Sitsofe Wheeler <sitsofe@gmail.com>
-Date:   Sun, 3 Feb 2019 08:16:48 +0000
-Message-ID: <CALjAwxj2oDH8NGoLgoPV_=FZ5yRcS=bCKtsuZ1Vin7o8Y+OuOQ@mail.gmail.com>
-Subject: Re: Periodic hang during git index-pack
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 19 Dec 2018 at 22:59, Sitsofe Wheeler <sitsofe@gmail.com> wrote:
->
-> While using trying to use git to clone a remote repository git
-> index-pack occasionally goes on to hang:
+`usage` tries to call $0, which might very well be "./doc-diff", so if
+we `cd_to_toplevel` before calling `usage`, we'll end with an error to
+the effect of "./doc-diff: not found" rather than a friendly `doc-diff
+-h` output. Granted, all of these `usage` calls are in error paths, so
+we're about to exit anyway, but the user experience of something like
+`(cd Documentation && ./doc-diff)` could be a bit better than
+"./doc-diff: not found".
 
-On Thu, 20 Dec 2018 at 16:48, Sitsofe Wheeler <sitsofe@gmail.com> wrote:
->
-> On Thu, 20 Dec 2018 at 15:11, Jeff King <peff@peff.net> wrote:
-> >
-[snip]
-> >
-> > with each blocking on read() from its predecessor. So you need to find
-> > out why "ssh" is blocking. Unfortunately, short of a bug in ssh, the
-> > likely cause is either:
-> >
-> >   1. The git-upload-pack on the remote side stopped generating data for
-> >      some reason. You may or may not have access on the remotehost to
-> >      dig into that.
-> >
-> >      It's certainly possible there's a deadlock bug between the server
-> >      and client side of a Git conversation. But I'd find it extremely
-> >      unlikely to find such a deadlock bug at this point in the
-> >      conversation, because at this point the client side has nothing
-> >      left to say to the server. The server should just be streaming out
-> >      the packfile bytes and then closing the descriptor.
->
-> I think it's highly unlikely too given how many good runs we generally have.
->
-> >      You mentioned "Phabricator sshd scripts" running on the server.
-> >      I don't know what Phabricator might be sticking in the middle of
-> >      the connection, but that could be the source of the stall.
->
-> I think you're right. I set up a seperate sshd on a different port on
-> the same machine where there were no Phabricator callouts and the
-> problem never manifested...
+This regressed in ad51743007 ("doc-diff: add --clean mode to remove
+temporary working gunk", 2018-08-31) where we moved the call to
+`cd_to_toplevel` to much earlier. Move it back to where it was, and
+teach the "--clean" code to cd on its own. This way, we only cd once
+we've verified the arguments.
 
-Just to finally follow up - this was confirmed to be a bug in the
-Phabricator server side git+ssh wrapper and the issue exists in at
-least Phabricator versions between
-2016 Week 28 - 2019 Week 3. The Phabricator ssh-exec PHP script was
-doing a select() that would very occasionally fail with errno set to
-EINTR and then going on to cause subsequent git data to not be sent to
-the git client. It's unclear why this started happening more
-frequently for us but we had recently changed to a faster/more
-cores/larger AWS instance type and we also switched to a later Ubuntu
-14.04 kernel...
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/doc-diff | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-See https://discourse.phabricator-community.org/t/sporadic-git-cloning-hang-over-ssh/2233
-for a longer description of the issue that was reported to the
-Phabricator developers. That link contains a patch by myself that
-resolves the issue, a link to an upstream Phabricator task made by the
-Phabricator devs and a link to an upstream Phabricator diff that works
-around the issue in a looser manner than my final patch.
+diff --git a/Documentation/doc-diff b/Documentation/doc-diff
+index dfd9418778..f820febf8f 100755
+--- a/Documentation/doc-diff
++++ b/Documentation/doc-diff
+@@ -39,12 +39,11 @@ do
+ 	shift
+ done
+ 
+-cd_to_toplevel
+-tmp=Documentation/tmp-doc-diff
+-
+ if test -n "$clean"
+ then
+ 	test $# -eq 0 || usage
++	cd_to_toplevel
++	tmp=Documentation/tmp-doc-diff
+ 	git worktree remove --force "$tmp/worktree" 2>/dev/null
+ 	rm -rf "$tmp"
+ 	exit 0
+@@ -66,6 +65,9 @@ to=$1; shift
+ from_oid=$(git rev-parse --verify "$from") || exit 1
+ to_oid=$(git rev-parse --verify "$to") || exit 1
+ 
++cd_to_toplevel
++tmp=Documentation/tmp-doc-diff
++
+ if test -n "$force"
+ then
+ 	rm -rf "$tmp"
+-- 
+2.20.1.309.g16a465bc01
 
-Thanks for your rapid reply and guidance Jeff!
-
---
-Sitsofe | http://sucs.org/~sits/
