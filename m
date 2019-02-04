@@ -2,156 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1AF51F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 09:49:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4AD21F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 10:35:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727689AbfBDJtN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 04:49:13 -0500
-Received: from mout.gmx.net ([212.227.17.22]:34911 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725889AbfBDJtN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 04:49:13 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3ARX-1hAKJj2Hu3-00swQf; Mon, 04
- Feb 2019 10:49:04 +0100
-Date:   Mon, 4 Feb 2019 10:49:05 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] travis-ci: make the OSX build jobs' 'brew update' more
- quiet
-In-Reply-To: <20190202163421.19686-1-szeder.dev@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902041045280.41@tvgsbejvaqbjf.bet>
-References: <20190202163421.19686-1-szeder.dev@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728273AbfBDKfG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 05:35:06 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:55829 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727213AbfBDKfG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 05:35:06 -0500
+Received: by mail-it1-f196.google.com with SMTP id m62so19873803ith.5
+        for <git@vger.kernel.org>; Mon, 04 Feb 2019 02:35:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ufBdsd3TVjrlbiMRD3a78JRgdOzWuQProtaZsKlABvY=;
+        b=iyRn2h/i+H29UhdR4Q39adRsjgY5MX6DFpGPkdgDG+MFJ/lka/GVbrak+iwfH4f9BO
+         AuLVNriQ5pzGs3rbaHCLUmHSChnlYSlkEAV6izfpS2BZCrpo2cq8Evxj3s00GNd/QzMC
+         p6DOwvmeWj7gvma0QaxBE/JeolmjOU7STX5llmDjeCWDWkRWl7S304aBLRcWuhitSXrK
+         HCo8PcbHWmz09NKaoEmZjcz41w9HmIbvBkCRxYelLPYiV/wSfZPjES1WUVjSR8Evjsy8
+         I94eQk0V01c5nqCV6yh9m/58MsuG2lj4xnEmgaB0ZVn1OuXQa2wMSEDf15Fv+PQTweRh
+         T/WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ufBdsd3TVjrlbiMRD3a78JRgdOzWuQProtaZsKlABvY=;
+        b=apo0GlramYPAT8bBkTzeBTMMDXf7MdM2caMBmJ2HGISZbaFl8Z13o3O7RFEhuM4EL9
+         b+nQx9m/z6MqzD9TqraQ1fIg8BMPYBhwMuDXkSf9jXHa76TP4Mr1yYyk4/zC06ZgLNn3
+         iG3Uc65TB+ClhhGAIfvDMBjArYXVY8zNhHLHB/scRrDR2SvFtUeiGv+AFRmNjlORpJTK
+         VSn8hI7lt5XctJDHbA5tUmyrt9CssDmYhX8UEr6/NoF3SKN7DaQqBVqnmTV8YCl/P2Fn
+         5Y04d3m6c2iSffKcS/68YdJ9IirCIfd8haf5iQUvLunlVu89ikql8IDkwipttdKmZbcE
+         mAug==
+X-Gm-Message-State: AHQUAuZc4zK6lcY66wRT90LhTYm2uijaiHRHbY2my8R31q2nwNcMLc0Y
+        bdx9trmncG+OaqdbEVjQeVMGeZWRppHqDVfTINA=
+X-Google-Smtp-Source: AHgI3IbYCHZxeYzuwFZuGSuXd5Jww2GIuyNLNMXlRQo6K6BCd7YQcvkGz3y0XE2zFBLPALf+m2qYwNV2gt2a53UJ2m0=
+X-Received: by 2002:a5d:9456:: with SMTP id x22mr25259718ior.282.1549276504907;
+ Mon, 04 Feb 2019 02:35:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-740216550-1549273748=:41"
-X-Provags-ID: V03:K1:nabfjs63fd0WofCfX2JQfynlk6ZNFhVjVnDCrWqwZeY8BhJ2HAN
- xWj8Q4h1STYyOzfpyHwi7div/sQatZqs+pt05xXDBm76KBo6QJT0rvOjKrLxw62a3PC2xa1
- EU8Hj/eM3fPeUTxyvIXS0YMAqIxnf0HPrMbrGnS/AUQZliQOxFtLm8Om3z6sB9qe0FKhc5Y
- UZtWzopJTY3l0ZkAALPzQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NtgeeUo5kPA=:kDwwdrSFtU89zGrk3TwRQq
- Dc1WXQJxO3EpzOGEIurS0pUkbLP//gdIZzHjF0ZbdwwcjQwOLYnzsSOuzDyj/dTaEmqireWbS
- cNLdtMttiyEswMSpe2KfhDQSoZL/6QB8JbEDponh51ZHElc57j02Xz4x63ztgWeX/9WQ8gWWQ
- AdMO2ssLXiVndI3jXmjQ4UeujxB//EAOlYABYLdE+VAysMHAqwjR1CvWFgG7juN42a0l7yEqr
- xXnMyqgrR8i7ENqME1qhFppz3L2yi8x0wD5kT811fZ6ke+DIjJ8q864FE8VPcnWvVUiWXqeS5
- vGxCaKUu1v0BhbSiUdORQKJiAgy8+Jziw/cMHcyy8j3Mqq0q6gIXRn2d4sPGOhdMHsOxwRnJm
- 7ZsiGFDSaiavG4QLF7+mp4SidBwWsSUrgXZpwez6rLaSKjfxK+qkx5j5I8mGVrBUhCyqLPL1F
- gzKXHQXGDo8h/+vLVtOnGycyTBYYbwZ4pOWH9myUpAX9k8/xsCwcW3pCfKaKAsiS8nLbpPyMZ
- L78SkJ3GF1ao6fkhYze3I3YtHeY15suUi2CX5xCbf8NMhegzO4DJqLC4ekXO2Nuab9NSWdAHR
- DedG4kesdKlIH3Ydq4jGKjgOrHbYEjKmBiTPJWwYCoCU2FDcYWxYRAIjUsClaTY1r+AbYJUjy
- JySn9ugvy3pkTSQDH1jU9/YfiDo2N8AULv+F1WRZg3rIyX27+nFCz+ZPI0umNkSvVPm4vOdE7
- u03Fdemc65VOZHVQfeKgxsrrATSATaOyUUSU5Bg/i5WNfvZEaoQuPLPypWmuuYX7ZJxKt9mrh
- Sl6MYcBSvM39Ts5tVoXdFpew/pPV6/xsENVuVhLEf2aAmZkVCltmAqsI+5fcYD/71F/QG/W6V
- p9RQiyCDHWQdpyDQzrMZr86++FzSsC1ar3rgW2ZpKMYVLg6aR0GE41L9AyI5g2c+a3onrNS+Q
- lHVOo+f64pA==
+References: <20190130085855.GA24387@genre.crustytoothpaste.net> <20190204000650.686175-1-sandals@crustytoothpaste.net>
+In-Reply-To: <20190204000650.686175-1-sandals@crustytoothpaste.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 4 Feb 2019 17:34:38 +0700
+Message-ID: <CACsJy8CvVPr+OJ04aLGDeAS-o5__x1+3cKQNuq2+qba5gw5W+g@mail.gmail.com>
+Subject: Re: [PATCH] fetch-pack: clear alternate shallow when complete
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Feb 4, 2019 at 7:06 AM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> When we write an alternate shallow file in update_shallow, we write it
+> into the lock file. The string stored in alternate_shallow_file is
+> copied from the lock file path, but it is freed the moment that the lock
+> file is closed, since we call strbuf_release to free that path.
+>
+> This used to work, since we did not invoke git index-pack more than
+> once, but now that we do, we reuse the freed memory. Ensure we reset the
+> value to NULL to avoid using freed memory. git index-pack will read the
+> repository's shallow file, which will have been updated with the correct
+> information.
 
---8323328-740216550-1549273748=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+It may be worth mentioning bd0b42aed3 (fetch-pack: do not take shallow
+lock unnecessarily - 2019-01-10). I believe this is the same problem
+and a full solution was suggested but not implemented in that commit.
 
-Hi Gábor,
+The problem with dangling alternate_shallow_file is also from that
+commit. When line_received is false at the end of
+receive_shallow_info(), we should clear alternate_shallow_file. I'm
+still debating myself whether we should clear alternate_shallow_file
+in receive_shallow_info() in addition to your changes (which is good
+hygiene anyway) to keep the setup steps of do_fetch_pack() and
+do_fetch_pack_v2() aligned.
 
-On Sat, 2 Feb 2019, SZEDER Gábor wrote:
+pack protocol v1 does this clearing alternate_shallow_file (near the
+end of do_fetch_pack()) so it will not have the same dangling pointer
+problem even if we do two fetches in the same process. But from the
+Tan's commit description, I thought v1 probably faces the same "lock
+twice not supported". But luckily it's never triggered in practice.
+When backfill_tags() is called, if I read it correctly, we either
+disable shallow (TRANS_OPT_DEPTH set to zero) or we start a second
+process. In either case, the lock will not be acquired twice by the
+same process.
 
-> Before installing the necessary dependencies, our OSX build jobs run
-> 'brew update --quiet'.  This is problematic for two reasons:
-> 
->   - This '--quiet' flag apparently broke overnight, resulting in
->     errored builds:
-> 
->       +brew update --quiet
->       ==> Downloading https://homebrew.bintray.com/bottles-portable-ruby/portable-ruby-2.3.7.mavericks.bottle.tar.gz
->       ######################################################################## 100.0%
->       ==> Pouring portable-ruby-2.3.7.mavericks.bottle.tar.gz
->       Usage: brew update_report [--preinstall]
->       The Ruby implementation of brew update. Never called manually.
->               --preinstall                 Run in 'auto-update' mode (faster, less
->                                            output).
->           -f, --force                      Override warnings and enable potentially
->                                            unsafe operations.
->           -d, --debug                      Display any debugging information.
->           -v, --verbose                    Make some output more verbose.
->           -h, --help                       Show this message.
->       Error: invalid option: --quiet
->       The command "ci/install-dependencies.sh" failed and exited with 1 during .
-> 
->     I belive that this breakage will be noticed and fixed soon-ish, so
->     we could probably just wait a bit for this issue to solve itself,
->     but:
-> 
->   - 'brew update --quiet' wasn't really quiet in the first place, as
->     it listed over about 2000 lines worth of available packages that
->     we absolutely don't care about, see e.g. one of the latest
->     'master' builds:
-> 
->       https://travis-ci.org/git/git/jobs/486134962#L113
-> 
-> So drop this '--quiet' option and redirect 'brew update's standard
-> output to /dev/null to make it really quiet, thereby making the OSX
-> builds work again despite the above mentioned breakage.
-> 
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
-> 
-> Notes:
->     There is no conflict with Dscho's Azure Pipelines patch series; the
->     patch contexts overlap a bit, but the auto-merging results look good
->     to me.
+>  fetch-pack.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 577faa6229..2d76287674 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -1489,6 +1489,7 @@ static void update_shallow(struct fetch_pack_args *args,
+>                         rollback_lock_file(&shallow_lock);
+>                 } else
+>                         commit_lock_file(&shallow_lock);
+> +               alternate_shallow_file = NULL;
+>                 return;
+>         }
+>
+> @@ -1512,6 +1513,7 @@ static void update_shallow(struct fetch_pack_args *args,
+>                                                 &alternate_shallow_file,
+>                                                 &extra);
+>                         commit_lock_file(&shallow_lock);
+> +                       alternate_shallow_file = NULL;
+>                 }
+>                 oid_array_clear(&extra);
+>                 return;
+> @@ -1551,6 +1553,7 @@ static void update_shallow(struct fetch_pack_args *args,
+>                 commit_lock_file(&shallow_lock);
+>                 oid_array_clear(&extra);
+>                 oid_array_clear(&ref);
+> +               alternate_shallow_file = NULL;
+>                 return;
+>         }
+>
 
-And this indeed also affects Azure Pipelines.
 
-Since Junio's workflow is very different from GitHub Flow (where this
-issue would be worked around with a simple, single Pull Request), we have
-no prayer at a workaround on our side, though: pretty much *all* of the
-next builds of Junio's branches will be broken, unless he chooses to
-backport your patch to all of the base commits he chose for those
-branches.
-
-So our best bet at not getting overwhelmed with failed builds is to help
-Homebrew get `brew update --quiet` to work again. I just opened a ticket
-to that end:
-
-	https://github.com/Homebrew/brew/issues/5666
-
-I do like your patch, though, and am very much in favor of fast-tracking
-it all the way down to `maint`.
-
-Ciao,
-Dscho
-
->  ci/install-dependencies.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> index 06c3546e1e..5968efdbbe 100755
-> --- a/ci/install-dependencies.sh
-> +++ b/ci/install-dependencies.sh
-> @@ -34,7 +34,7 @@ linux-clang|linux-gcc)
->  	popd
->  	;;
->  osx-clang|osx-gcc)
-> -	brew update --quiet
-> +	brew update >/dev/null
->  	# Uncomment this if you want to run perf tests:
->  	# brew install gnu-time
->  	brew install git-lfs gettext
-> -- 
-> 2.20.1.642.gc55a771460
-> 
-> 
-> 
---8323328-740216550-1549273748=:41--
+-- 
+Duy
