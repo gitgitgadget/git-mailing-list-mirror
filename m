@@ -2,121 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E20B11F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 19:44:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1878D1F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 20:04:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726721AbfBDTof (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 14:44:35 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:32924 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726700AbfBDToe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 14:44:34 -0500
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id qkARgrrDvAOoyqkASgNiH1; Mon, 04 Feb 2019 19:44:33 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=vS6L6dtdCaZhYJcMGsoA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] trace2: fix hdr-check warnings
-To:     Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <ba0549c5-25f1-efcc-e49a-d7e76be73fe3@ramsayjones.plus.com>
- <00e08dc3-a610-0429-e819-1d29d0ddb81a@jeffhostetler.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <d680fda2-7e54-2200-cd00-97772de45b47@ramsayjones.plus.com>
-Date:   Mon, 4 Feb 2019 19:44:30 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1727330AbfBDUEZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 15:04:25 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38760 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727245AbfBDUEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 15:04:25 -0500
+Received: by mail-wm1-f68.google.com with SMTP id m22so1293550wml.3
+        for <git@vger.kernel.org>; Mon, 04 Feb 2019 12:04:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=i5JG8tIfRXONVJ8/JgUK8YZ9qRkr2sS2YRIiN2FIvgQ=;
+        b=h+ljem0mYg0zlNqknEe8gEWYqIKoeepK9NJGn7BwH/bHUTVMmOZ8jvgLSm2y1UFq1k
+         4szO/pOV5ElDK8v/zdOV18jfSOtMZmDNgbuAN55oNYCLRkQu6SJdAgE1sPfTq+T3+zMm
+         34rGlcEMWBB3sdagjhAdG1A1W2uun0Fhor4bQxxR0Jo6OmtpzCAiSdNJWQY4CLPwPSGj
+         x9Askm155wphDJR533Um/IsMGwCyd52SmO+EBREwasJm2dZpOIGX9nsHoz+yDmd7O/fk
+         zLi0RQgy3IRpZTVClHbvdfo6FGCG7Or4gADNg+G2dNJ8SVC5led+mcaos2c+WC1UBYao
+         C2Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=i5JG8tIfRXONVJ8/JgUK8YZ9qRkr2sS2YRIiN2FIvgQ=;
+        b=YdWBVJvisOSJdpxImJUWMt6V+/OrtTNOyV6sbm+7f4vSe7f/CtpMQ9ATZ3lJu6SnbX
+         CljwOzvgVtSAHcv356pUos+QqHtU9B0FipvwMZeBOEcM1nHeC27knWLutgocbxtUKjj0
+         0yjv1M3lcDbOqbMbxz0JusjVq+AUdql5slHlTq9wAZyC1h1uBasj2Oa/+DFdHmT1gFhR
+         B/i9GvGoQNbSWCw7kofoetWIj5pCwc3tFY8/NlinlYd0mEvZCLMuy8p32YzDs9eNIfVz
+         KIHlXBsM7Bp17DGIGYEYAEGLm+/UvrcJFE/1sd6nBsN9AdI4C1YdrH3FMw3poQdifrIR
+         H9sQ==
+X-Gm-Message-State: AHQUAuaxRUcqFwLXWp6fncrjhmVVw980Vsj/g4m45dB2NeHcXLXOp5su
+        0I4TsucYjZjmAivIvJhFfFg=
+X-Google-Smtp-Source: AHgI3IbGRcoI5jhGBImhp/76V5E7ELHP8+nzRF1d4sz8YTTK5BMgxD6ZTZaDj8clNXxXjCDCueTDpg==
+X-Received: by 2002:a1c:a401:: with SMTP id n1mr814732wme.101.1549310662783;
+        Mon, 04 Feb 2019 12:04:22 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id i184sm7931862wmd.26.2019.02.04.12.04.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 04 Feb 2019 12:04:22 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC/PATCH] core.abbrev doc: document and test the abbreviation length
+References: <20160926043442.3pz7ccawdcsn2kzb@sigill.intra.peff.net>
+        <20190204161217.20047-1-avarab@gmail.com>
+Date:   Mon, 04 Feb 2019 12:04:21 -0800
+In-Reply-To: <20190204161217.20047-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 4 Feb 2019 17:12:17 +0100")
+Message-ID: <xmqq36p3uxq2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <00e08dc3-a610-0429-e819-1d29d0ddb81a@jeffhostetler.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfObePbYCTDNs4o9MivcLqnEcDJ23G16TmTy36BmTYmpzX78iV7kwF+Nez+JU2Z50aHiDdcY0jqgsXIpfX8IDDrJmczKBacPujfqpCtJxz++OSVZMjpo5
- 8pQVlggD9ejqx4T3bra2EHqNFR33dMQ+fjaVPoyMLCu2by9EPPPYgw+6vr/HA1VM+eEs9NPlqu6LYQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
+> @@ -773,6 +773,14 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>  					return 1;
+>  				continue;
+>  			}
+> +			if (opt_with_value(arg, "--abbrev-len", &arg)) {
+> +				unsigned long v;
+> +				if (!git_parse_ulong(arg, &v))
+> +					return 1;
+> +				int len = abbrev_length_for_object_count(v);
+> +				printf("%d\n", len);
+> +				continue;
+> +			}
 
-On 30/01/2019 12:29, Jeff Hostetler wrote:
-> 
-> 
-> On 1/26/2019 4:07 PM, Ramsay Jones wrote:
->>
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>
->> Hi Jeff,
->>
->> If you need to re-roll your 'jh/trace2' branch, could you please
->> squash this into the relevant patches (sorry, I didn't look to
->> see which patches need to be modified).
-> 
-> Will do. Thanks.
-> 
-> BTW, how do you find these?  I ran both "make sparse" and
-> "make DEVELOPER=1" and it didn't complain about these items.
+Instead of exposing this pretty-much "test-only" feature as a new
+option to t/helper/test-tool, I think it is OK, if not even better,
+to have it in rev-parse proper like this patch does.
 
-Carlo already replied about 'make hdr-check', but you seem to
-have missed squashing half of the original patch, since the
-re-rolled series still causes 'make -k hdr-check >phcout 2>&1'
-to show:
+I however have a mildly strong suspition that people would expect
+"rev-parse --abbrev-len=<num>" to be a synonym of "--short=<num>"
 
-  $ diff nhcout phcout
-  22a23,34
-  >     HDR trace2/tr2_dst.h
-  >     HDR trace2/tr2_cfg.h
-  >     HDR trace2/tr2_tgt.h
-  >     HDR trace2/tr2_cmd_name.h
-  >     HDR trace2/tr2_sid.h
-  >     HDR trace2/tr2_tls.h
-  > trace2/tr2_tls.h:12:16: error: field ‘thread_name’ has incomplete type
-  >   struct strbuf thread_name;
-  >                 ^~~~~~~~~~~
-  > Makefile:2739: recipe for target 'trace2/tr2_tls.hco' failed
-  > make: *** [trace2/tr2_tls.hco] Error 1
-  >     HDR trace2/tr2_tbuf.h
-  131c143
-  < Makefile:2725: recipe for target 'sha256/gcrypt.hco' failed
-  ---
-  > Makefile:2739: recipe for target 'sha256/gcrypt.hco' failed
-  164a177
-  >     HDR trace2.h
-  $ 
+As this is pretty-much a test-only option, perhaps going longer but
+more descriptive would make sense?  
 
-So, quoting the last part of the original patch:
+	git rev-parse --compute-abbrev-length-for <object-count>
 
-diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
-index 99ea9018ce..bb80e3f8e7 100644
---- a/trace2/tr2_tls.h
-+++ b/trace2/tr2_tls.h
-@@ -1,6 +1,8 @@
- #ifndef TR2_TLS_H
- #define TR2_TLS_H
- 
-+#include "strbuf.h"
-+
- /*
-  * Arbitry limit for thread names for column alignment.
-  */
--- 
+may be an overkill, but something along those lines.
 
-
-ATB,
-Ramsay Jones
-
-
-
+Oh by the way, the code has decl-after-stmt, and perhaps len needs
+to be of type "const int" ;-)
 
