@@ -2,95 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30B1B1F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 09:17:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1AF51F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 09:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728518AbfBDJQ7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 04:16:59 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:40101 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbfBDJQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 04:16:59 -0500
-Received: by mail-ed1-f68.google.com with SMTP id g22so10588884edr.7
-        for <git@vger.kernel.org>; Mon, 04 Feb 2019 01:16:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=uQ77Ldi46WI1pyDAON4lMGXtNhICOOKD8xQriggZJqk=;
-        b=Guhd1gP3Rw+tmfuUnzmLLZT305BR8WQBxZGIjwnccQI2pvHFwRSJGUMkZulDKNr0I5
-         NQQEs90JAjFnr9nFf1LGJDu27U4rg0EhIvW67Y0lJbxdeFrucD1s0/oAikkDg24Q4avY
-         Ro2wSgMRcSLQl9qxK9olktr8X5CbtEJv9iO4/jcR2yuL9N+KKGf2uBjR8cYhvAKDCj2x
-         lsrb1moGW0G5Mer8WHt5/VQglmd+7SdXjLpC4c5mjTWsi2Nw+2/1cHstfFtT77IBOLwS
-         F5HfjQorr5yzc4oWlkEzXKI6vF0ju8Qo9Cdzvtw3eJ1eIXe1GsMZplvVMFEvl/1bLn6Z
-         XWdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=uQ77Ldi46WI1pyDAON4lMGXtNhICOOKD8xQriggZJqk=;
-        b=Kym/hhVC1kiOGbDJiG067TONDqNFlP/qJBuDQWOub6xfdX3cFHMGMhBvJuSgTDThS7
-         PTzF3xNA5tI65koyrWmQD1yjTa5FjUXvJPAyxjJLSZ+ZW5Lwij8WxJJaNoeahOI/sw+X
-         3XIqRkgmpQcrlxba5/RVu09v6f73lZyZhjrhO7c8J4GdvoSF/vF8jENyRZY1GzSJjFAY
-         1Hpl2B5fuBwQK/Udh7VplpI7fQilUxqcmSayA5oHfk9WBj1lVo8CSbQhr1g5SarO57qr
-         atktVSqrDheNwq3Zu9DNJzrsR098U7LvRLSx+zfikKRDwH6Iscu5SAAtMbCWSU8WvpmE
-         n3bw==
-X-Gm-Message-State: AJcUukfi70p8dC5wY4rJJ2QyEx04mwSsjkK4zjlPqjAz+QtK5t6l17SY
-        AaXyjwSG1r0nWuJOWnz4Q0grljp4S18S1qL+y0CLez56fpM=
-X-Google-Smtp-Source: ALg8bN5UKLrgWJq9rbiTNUlIUiBPym7soKAq9lb6N3GPNYecEmaVgqBDMsk6uBzaaMvO1N6iz6nEFYxx+LIHG1aCOd0=
-X-Received: by 2002:a50:b0e5:: with SMTP id j92mr47391897edd.188.1549271816989;
- Mon, 04 Feb 2019 01:16:56 -0800 (PST)
+        id S1727689AbfBDJtN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 04:49:13 -0500
+Received: from mout.gmx.net ([212.227.17.22]:34911 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725889AbfBDJtN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 04:49:13 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3ARX-1hAKJj2Hu3-00swQf; Mon, 04
+ Feb 2019 10:49:04 +0100
+Date:   Mon, 4 Feb 2019 10:49:05 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] travis-ci: make the OSX build jobs' 'brew update' more
+ quiet
+In-Reply-To: <20190202163421.19686-1-szeder.dev@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1902041045280.41@tvgsbejvaqbjf.bet>
+References: <20190202163421.19686-1-szeder.dev@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 4 Feb 2019 10:16:41 +0100
-Message-ID: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
-Subject: GSoC 2019: Git's application submitted
-To:     git <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323328-740216550-1549273748=:41"
+X-Provags-ID: V03:K1:nabfjs63fd0WofCfX2JQfynlk6ZNFhVjVnDCrWqwZeY8BhJ2HAN
+ xWj8Q4h1STYyOzfpyHwi7div/sQatZqs+pt05xXDBm76KBo6QJT0rvOjKrLxw62a3PC2xa1
+ EU8Hj/eM3fPeUTxyvIXS0YMAqIxnf0HPrMbrGnS/AUQZliQOxFtLm8Om3z6sB9qe0FKhc5Y
+ UZtWzopJTY3l0ZkAALPzQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NtgeeUo5kPA=:kDwwdrSFtU89zGrk3TwRQq
+ Dc1WXQJxO3EpzOGEIurS0pUkbLP//gdIZzHjF0ZbdwwcjQwOLYnzsSOuzDyj/dTaEmqireWbS
+ cNLdtMttiyEswMSpe2KfhDQSoZL/6QB8JbEDponh51ZHElc57j02Xz4x63ztgWeX/9WQ8gWWQ
+ AdMO2ssLXiVndI3jXmjQ4UeujxB//EAOlYABYLdE+VAysMHAqwjR1CvWFgG7juN42a0l7yEqr
+ xXnMyqgrR8i7ENqME1qhFppz3L2yi8x0wD5kT811fZ6ke+DIjJ8q864FE8VPcnWvVUiWXqeS5
+ vGxCaKUu1v0BhbSiUdORQKJiAgy8+Jziw/cMHcyy8j3Mqq0q6gIXRn2d4sPGOhdMHsOxwRnJm
+ 7ZsiGFDSaiavG4QLF7+mp4SidBwWsSUrgXZpwez6rLaSKjfxK+qkx5j5I8mGVrBUhCyqLPL1F
+ gzKXHQXGDo8h/+vLVtOnGycyTBYYbwZ4pOWH9myUpAX9k8/xsCwcW3pCfKaKAsiS8nLbpPyMZ
+ L78SkJ3GF1ao6fkhYze3I3YtHeY15suUi2CX5xCbf8NMhegzO4DJqLC4ekXO2Nuab9NSWdAHR
+ DedG4kesdKlIH3Ydq4jGKjgOrHbYEjKmBiTPJWwYCoCU2FDcYWxYRAIjUsClaTY1r+AbYJUjy
+ JySn9ugvy3pkTSQDH1jU9/YfiDo2N8AULv+F1WRZg3rIyX27+nFCz+ZPI0umNkSvVPm4vOdE7
+ u03Fdemc65VOZHVQfeKgxsrrATSATaOyUUSU5Bg/i5WNfvZEaoQuPLPypWmuuYX7ZJxKt9mrh
+ Sl6MYcBSvM39Ts5tVoXdFpew/pPV6/xsENVuVhLEf2aAmZkVCltmAqsI+5fcYD/71F/QG/W6V
+ p9RQiyCDHWQdpyDQzrMZr86++FzSsC1ar3rgW2ZpKMYVLg6aR0GE41L9AyI5g2c+a3onrNS+Q
+ lHVOo+f64pA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-There are now ideas, micro-projects and organization application pages
-for GSoC 2019 on https://git.github.io/
+--8323328-740216550-1549273748=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-It would be nice to have a few more project ideas.
-https://git.github.io/SoC-2019-Ideas/ currently lists only 2 possible
-projects:
+Hi Gábor,
 
-- Unify ref-filter formats with other --pretty formats (which is new)
-- git log --oneline improvements
+On Sat, 2 Feb 2019, SZEDER Gábor wrote:
 
-as I didn't feel that the others were still relevant, though I might be wrong.
+> Before installing the necessary dependencies, our OSX build jobs run
+> 'brew update --quiet'.  This is problematic for two reasons:
+> 
+>   - This '--quiet' flag apparently broke overnight, resulting in
+>     errored builds:
+> 
+>       +brew update --quiet
+>       ==> Downloading https://homebrew.bintray.com/bottles-portable-ruby/portable-ruby-2.3.7.mavericks.bottle.tar.gz
+>       ######################################################################## 100.0%
+>       ==> Pouring portable-ruby-2.3.7.mavericks.bottle.tar.gz
+>       Usage: brew update_report [--preinstall]
+>       The Ruby implementation of brew update. Never called manually.
+>               --preinstall                 Run in 'auto-update' mode (faster, less
+>                                            output).
+>           -f, --force                      Override warnings and enable potentially
+>                                            unsafe operations.
+>           -d, --debug                      Display any debugging information.
+>           -v, --verbose                    Make some output more verbose.
+>           -h, --help                       Show this message.
+>       Error: invalid option: --quiet
+>       The command "ci/install-dependencies.sh" failed and exited with 1 during .
+> 
+>     I belive that this breakage will be noticed and fixed soon-ish, so
+>     we could probably just wait a bit for this issue to solve itself,
+>     but:
+> 
+>   - 'brew update --quiet' wasn't really quiet in the first place, as
+>     it listed over about 2000 lines worth of available packages that
+>     we absolutely don't care about, see e.g. one of the latest
+>     'master' builds:
+> 
+>       https://travis-ci.org/git/git/jobs/486134962#L113
+> 
+> So drop this '--quiet' option and redirect 'brew update's standard
+> output to /dev/null to make it really quiet, thereby making the OSX
+> builds work again despite the above mentioned breakage.
+> 
+> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> ---
+> 
+> Notes:
+>     There is no conflict with Dscho's Azure Pipelines patch series; the
+>     patch contexts overlap a bit, but the auto-merging results look good
+>     to me.
 
-As Olga and Thomas told me at the Git Merge that they could be ok to
-co-mentor with me, they are listed as possible mentors for both of
-these projects.
+And this indeed also affects Azure Pipelines.
 
-Anyway feel free to comment and suggest improvements on those pages,
-especially the micro-projects and ideas one. Pull requests on
-https://github.com/git/git.github.io/ are very much appreciated.
+Since Junio's workflow is very different from GitHub Flow (where this
+issue would be worked around with a simple, single Pull Request), we have
+no prayer at a workaround on our side, though: pretty much *all* of the
+next builds of Junio's branches will be broken, unless he chooses to
+backport your patch to all of the base commits he chose for those
+branches.
 
-The application has been submitted on
-https://summerofcode.withgoogle.com, but it will not be complete until
-someone else volunteers as an org admin. I volunteered, but they
-require "at least 2 and at most 5 Organization Administrators".
+So our best bet at not getting overwhelmed with failed builds is to help
+Homebrew get `brew update --quiet` to work again. I just opened a ticket
+to that end:
 
-So another org admin is needed before Wednesday February 6th, as this
-is the deadline. Invitations have been sent to Peff, Thomas, Olga and
-Matthieu, but anyone can do it and it requires a very low amount of
-work.
+	https://github.com/Homebrew/brew/issues/5666
 
-Thanks,
-Christian.
+I do like your patch, though, and am very much in favor of fast-tracking
+it all the way down to `maint`.
+
+Ciao,
+Dscho
+
+>  ci/install-dependencies.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index 06c3546e1e..5968efdbbe 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -34,7 +34,7 @@ linux-clang|linux-gcc)
+>  	popd
+>  	;;
+>  osx-clang|osx-gcc)
+> -	brew update --quiet
+> +	brew update >/dev/null
+>  	# Uncomment this if you want to run perf tests:
+>  	# brew install gnu-time
+>  	brew install git-lfs gettext
+> -- 
+> 2.20.1.642.gc55a771460
+> 
+> 
+> 
+--8323328-740216550-1549273748=:41--
