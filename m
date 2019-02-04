@@ -2,123 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E37A1F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 19:13:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 676B51F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 19:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729804AbfBDTNo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 14:13:44 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43233 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727691AbfBDTNo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 14:13:44 -0500
-Received: by mail-wr1-f65.google.com with SMTP id r2so1044707wrv.10
-        for <git@vger.kernel.org>; Mon, 04 Feb 2019 11:13:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=6GSvNut0AVa7EM4nZcgZYR6MWws30hUORPyFvHqInkg=;
-        b=swm8kfcl2r/lipQpb+nRm8iSLP6eXh15xGuXStylmmDOARX2xKexuW5CwdM+Arxayr
-         UVAdksX738MnY+Lq0c9xKsT3q3bOJsU9+niSa8Pi6BAfW9wM4AcmFhG3UPmJGo/roZRc
-         /VnsbwKpFZ6zPHNQs9DsZSzIF53uIa+bVh9X7SEWGD8SQYSF/+YOjRKMhRtS7uzSrE1D
-         xGK2n0yxMIpw+8oGAA1V4AUNtJneCnhs54lYnZPu72cNQaL+VLq6WeXtxljwkVPiPccJ
-         9FKHnkmAMG/4/4jzojI3zLtjdYlP99LQ09O0HFTRCGrlU/NB7/C4Zao8Uv0b7963E7Oe
-         puSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=6GSvNut0AVa7EM4nZcgZYR6MWws30hUORPyFvHqInkg=;
-        b=iwNyUYxXsZWHXPySDAtFrdK9+YONhsTcpMv36ra0zPKLY5D/2Y7yJPvx0X0aYkBp3q
-         wtWb/EzvdTDQv4BMNszwuZqEAwDHBwcIRz5+b1j4dgHN6fHDi3uncn0fHYWqoiCNtmgx
-         TRBkQSB+OVaKWhYjMn3UKzZ9+mnOOn+HFH9l6T7XxTGLB8ryUWqNMyMfAIia5jPRR/fZ
-         UNdWV/P9ZzKjfa6KOn3viWQZvMb/AmRm+jVdvMLwKBIFFdrpAxoZOiYF1gxedbXiiZgC
-         vhuQiIY8jt9+IgJOczDm3PO/oQpEdcaQDEv12JzrPJmpHMambk2aR17oaKAtDSm7Z/FS
-         04yQ==
-X-Gm-Message-State: AHQUAua0Rn+bAVFP1c9yzUkVRZexFtl5Ydh3XXqJz1B71P7Q/0tRcjxb
-        umRzk2O171RNSJO29tsyuoQ=
-X-Google-Smtp-Source: AHgI3IYRPkEmznYL5iV8L5M91DOgOhVgReKSKAsBxW06IrohwSZTGfzM6Qde/XOsDmkTVTTfPQSuYA==
-X-Received: by 2002:a5d:438a:: with SMTP id i10mr659693wrq.111.1549307622541;
-        Mon, 04 Feb 2019 11:13:42 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a14sm2582070wrh.47.2019.02.04.11.13.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Feb 2019 11:13:41 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC/PATCH] core.abbrev doc: document and test the abbreviation length
-References: <20160926043442.3pz7ccawdcsn2kzb@sigill.intra.peff.net>
-        <20190204161217.20047-1-avarab@gmail.com>
-Date:   Mon, 04 Feb 2019 11:13:41 -0800
-In-Reply-To: <20190204161217.20047-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 4 Feb 2019 17:12:17 +0100")
-Message-ID: <xmqq7eefv02i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728021AbfBDTUQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 14:20:16 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:58513 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727544AbfBDTUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 14:20:16 -0500
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id qjmvgrp01AOoyqjmwgNhNB; Mon, 04 Feb 2019 19:20:15 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=uNtSAqtRtE-KE_j-Ye8A:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 1/1] Makefile: improve SPARSE_FLAGS customisation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+References: <3ccf0255-8a15-effc-ce6b-eabb61625f90@ramsayjones.plus.com>
+ <xmqqmunfxjve.fsf@gitster-ct.c.googlers.com>
+ <4a8f6b3f-3844-b4e8-2ed2-4078b592dd4b@ramsayjones.plus.com>
+ <xmqqwomfv2w5.fsf@gitster-ct.c.googlers.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <365a9539-4ce1-121a-ec8c-2e52a5828091@ramsayjones.plus.com>
+Date:   Mon, 4 Feb 2019 19:20:12 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqwomfv2w5.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfP6WODDgJT4DsokKUP3RTOdODMTlpRryOu9u3v1xUJWJ15gJUw0QQWYZnL6nxEgzDfkDWxNgTkcN+rMLEvid7W7S5xLRFONQOmX2AXFXV+5/rYSLg23h
+ 40OKkNxp/dS3WJ0QX9Wv/kjzeX2FU1H/+iO4zwJiAr4U2yu4VNK27ZxTw0dERwtysZiE3c8tnMnwzw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> +The algorithm to pick the the current abbreviation length is
-> +considered an implementation detail, and might be changed in the
-> +future. Since Git version 2.11, the length has been configured to
-> +auto-scale based on the estimated number of objects in the
-> +repository. We pick a length such that if all objects in the
-> +repository were abbreviated, we'd have a 50% chance of a *single*
-> +collision.
 
-Correct and reads well.
+On 04/02/2019 18:12, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+>>> Thanks for a detailed and clear explanation here and in the cover
+>>> letter.  I agree with the motivation and most of the things I see in
+>>> this patch, but one thing that stands out at me is if we still want
+>>> to += append to SP_EXTRA_FLAGS in target specific way.  Before this
+>>> patch, because SPARSE_FLAGS was a dual use variable, it needed +=
+>>> appending to it in these two places, but that rationale is gone with
+>>> this patch.
+>>
+>> As Luc surmised, in his reply, my intention was that SP_EXTRA_FLAGS
+>> should be used for any 'internal' settings (not just the target
+>> specific settings), whereas SPARSE_FLAGS would now be used _only_ for
+>> user customisation.
+> 
+> OK, if that is the case, then not using "+= append" on SP_EXTRA_FLAGS
 
-> +For example, with 2^14-1 is the last object count at which we'll pick
-> +a short length of "7", and will roll over to "8" once we have one more
-> +object at 2^14. Since each hexdigit we add (4 bits) allows us to have
-> +four times (2 bits) as many objects in the repository
+Err, no, that clearly wouldn't be an improvement! As I said above,
+this is not just for target specific settings.
 
-Something is missing at this point in the sentence. 
+Am I missing something?
 
-	"without raising the chance of a single collision higher"
-
-or something like that.
-
-> , we'll roll over
-> +to a length of "9" at 2^16 objects, "10" at 2^18 etc.
-
-Correct and reads well.
-
-> We'll never
-> +automatically pick a length less than "7", which effectively hardcodes
-> +2^12 as the minimum number of objects in a repository we'll consider
-> +when choosing the abbreviation length.
-
-This may be technicaly correct, but to me, it seems to place stress
-on the wrong side of the equation.  Since nobody would find "Ah, so
-I can create up to 2^12 objects without fearing that my abbreviated
-object name would become longer than 7", I do not see much point in
-saying "hardcoded floor for the number of objects".
-
-On the other hand, saying that 7 is the hardcoded floor for the
-abbreviation length does make sense, as those adept at math after
-reading the paragraph up to this point would wonder why their tiny
-repository still uses 7 hexdigits, which is way too many to ensure
-the low collision rate for the size of their toy repository.
-
-	We do not use abbreviation shorter than 7 hexdigits by default,
-	so a small repository with less than 2^12 objects may have even
-	smaller chance than 50% to have a single collision.
-
-may be an improvement.
+ATB,
+Ramsay Jones
 
