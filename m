@@ -2,110 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 974471F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 18:57:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 285BD1F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 19:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728731AbfBDS5I (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 13:57:08 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38568 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726585AbfBDS5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 13:57:08 -0500
-Received: by mail-wr1-f65.google.com with SMTP id v13so1026744wrw.5
-        for <git@vger.kernel.org>; Mon, 04 Feb 2019 10:57:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Tw3/lE2CVM8h28faOpQmHVAOJA8G2H2JXqs7vFXuOMc=;
-        b=uToVF68RIPXSE9tNEH4NoYbZSZfRJFErLgqhZtFue39d7TrYgUAmuXW337wP3jwIuH
-         sQyJa1TsuXKDu2f/nlNsTCoJYXineeiaYiosI9LAv9jOG8oBRz4uPqOsK3wE4cE1H+jX
-         F+gqqXcgcCmTO/oZqL8rv36oduNQUhVkHQKtTYOE+t/Tc+h0n0H+hQARimmwOkuLELlx
-         DvClm8CiunE3TiLmGV7XnB3klHF1g7OvqYJSqzmz5GnPgTGbQ41I9DQ9RgqTI2Zr5eEM
-         QSSP/Vc9tT+1fd3RbqXRtlns5y1WAR5n9vIp17WO6CTivzp5bo6JAXSRt0q9fLgrrVm+
-         r6Cw==
+        id S1729630AbfBDTBR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 14:01:17 -0500
+Received: from mail-it1-f193.google.com ([209.85.166.193]:37066 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728853AbfBDTBQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 14:01:16 -0500
+Received: by mail-it1-f193.google.com with SMTP id b5so2362474iti.2
+        for <git@vger.kernel.org>; Mon, 04 Feb 2019 11:01:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Tw3/lE2CVM8h28faOpQmHVAOJA8G2H2JXqs7vFXuOMc=;
-        b=LCWCh/UdA9+B8JMt4kQlR3mWprutrO/iQ2DjfjFKX3WTaZ4dW1REJUxcAor93FEf4T
-         cF3cp9fvCRbFVu7hiOss9TQ0x+VlfOnGlgMc68GFUjjZfffsc+5ErtJjFg1k1Ugi2I/P
-         q4AAuYoS5n7exRz2AKuGA4PsTPrfPX5cMdVYDJCW1T6AshmI3fwhuhVzbgKkLKydOzal
-         XGOeJyMw1xtRMP3gyI7exv9TcaqEQfGynS1PXhKZatGDOQJJqqeDAPdlsZs2q0kXC5Vk
-         lmr7xolryOrZwaYImprUNPB1Mdv4uW47xgBRfTMhHsjkLIAsLMcbje09Sk2PoM5nhLAZ
-         ZdmQ==
-X-Gm-Message-State: AHQUAubr4Uq+Snhv8VOZGFBcCkox7gyffrTXhDVqTxEH+Y8LFoj4TG2D
-        z+gTkXybFxlbUTJVkYQqZfo=
-X-Google-Smtp-Source: AHgI3IYGVU02sM9Rn14UO3jQADiZhIz2TtBdAg3ReqV+5Ymu6FtchgfsXl2OMXX4VKq9jEhuYIvG0Q==
-X-Received: by 2002:a05:6000:114d:: with SMTP id d13mr626927wrx.83.1549306625911;
-        Mon, 04 Feb 2019 10:57:05 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f199sm14434769wmd.25.2019.02.04.10.57.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Feb 2019 10:57:04 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     William Hubbs <williamh@gentoo.org>, git@vger.kernel.org,
-        chutzpah@gentoo.org
-Subject: Re: [PATCH v3 1/1] config: allow giving separate author and committer idents
-References: <20190129230806.5295-1-williamh@gentoo.org>
-        <20190129230806.5295-2-williamh@gentoo.org>
-        <xmqqfttb599s.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1902041314160.41@tvgsbejvaqbjf.bet>
-Date:   Mon, 04 Feb 2019 10:57:04 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.1902041314160.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 4 Feb 2019 13:17:35 +0100 (STD)")
-Message-ID: <xmqqbm3rv0u7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mA+h6wYhFQZRzTNR1kgcIf+OU4zRK0yhICMX7Xj7Q0k=;
+        b=NFRoSVn9XEAH2MRkl7baAfXsXjNXRyJeOvwAuSxoStSFzn6dPXVzhVSRabuPqGwuHP
+         EXPVzN8QR7/j2X7XXxe1QYdScQesxy85Sp2s3P5/hB0vZ2G5j9dg8n9Hcn2o8hhpUGm0
+         6Pi0NL+xYr86kalwWwSFQS4OBMYybjHdNb//t6jv03CFvwk9HsWnC6RcJxFKHeFgeCBe
+         QnY+Vj2f/gMFfLrlHQMDkHzU4MCu3f6x7Ea7+taOfFFcAFtR49ys7H7ew0NN6g6u+oEE
+         Sg71IqacgP1nnMW3LRg+ek/+yVj7sSs58Ku3rtOzwiKTHnwKrhAN2Mxd9H8gHXAupCel
+         Rq/A==
+X-Gm-Message-State: AHQUAuZFuLXXZyDImb6hq6RBcF3MtJ9j+AJwijvB1Ou7PLec1ezmZovY
+        a8xfADvqziVfR01cguLge7/qnxx4wVKx2egf/UgKrA==
+X-Google-Smtp-Source: AHgI3IbdZiLbchVZAipXIbbMJnIJfYo9f0OItXKb2Xhwufoxhj8n2s9Ug1vbq6rT0MuSzj+xLm+pQHlhQngk3XG7TCE=
+X-Received: by 2002:a6b:7903:: with SMTP id i3mr480962iop.273.1549306875985;
+ Mon, 04 Feb 2019 11:01:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190203210027.13272-1-svenvh@gmail.com> <CAPig+cQXuzMwZjHa3n+DwRFL3E76U8uAvhiFiC5S=B23f03Vnw@mail.gmail.com>
+ <xmqqftt3v1ah.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftt3v1ah.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 4 Feb 2019 14:01:04 -0500
+Message-ID: <CAPig+cQezC8_T=pms=XY71+9pP2WgdvdyiF9+UwarFB8sXo+Tw@mail.gmail.com>
+Subject: Re: [PATCH v3] git-submodule.sh: shorten submodule SHA-1s using rev-parse
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sven van Haastregt <svenvh@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, Feb 4, 2019 at 1:47 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > On Sun, Feb 3, 2019 at 4:01 PM Sven van Haastregt <svenvh@gmail.com> wrote:
+> >> We cannot always rely on successfully invoking `git rev-parse` in the
+> >> submodule directory.  Keep the old method using `cut` as a fallback.
+> >
+> > Reviewers and future readers of this patch are left in the dark
+> > regarding the circumstances in which git-rev-parse may fail in the
+> > submodule directory. It would be helpful for the commit message to
+> > explain this potential failure in enough detail for someone working in
+> > this area in the future to understand any implications of changes to
+> > this code.
+>
+> Replace that problematic sentence with something like
+>
+>         As a submodule may not be initialized with "submodule init"
+>         or not cloned, `git rev-parse` may not work in it yet; as a
+>         fallback, use the original method of cutting at 7 hexdigits.
+>
+> perhaps?
 
->> I do not recall we crossed the bridge to allow trailing comma here
->> at the end of enum definition.
->
-> In advice.c:
->
-> 	enum color_advice {
-> 		ADVICE_COLOR_RESET = 0,
-> 		ADVICE_COLOR_HINT = 1,
-> 	};
->
-> In builtin/pack-objects.c:
->
-> 	enum missing_action {
-> 		MA_ERROR = 0,      /* fail if any missing objects are encountered */
-> 		MA_ALLOW_ANY,      /* silently allow ALL missing objects */
-> 		MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
-> 	};
->
-> In builtin/rev-list.c:
->
-> 	enum missing_action {
-> 		MA_ERROR = 0,    /* fail if any missing objects are encountered */
-> 		MA_ALLOW_ANY,    /* silently allow ALL missing objects */
-> 		MA_PRINT,        /* print ALL missing objects in special section */
-> 		MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
-> 	};
->
-> ... and I will stop here. You are correct that the majority of our enums
-> does not let its last item end in a comma. But we did cross that bridge.
-
-Good.  Thanks for eyeballing.
-
-I do not think any of these can be compiled out on a platform with a
-picker compiler, and the one in rev-list.c is from late 2017, so it
-probably be a safe assumption that nobody would mind the trailing
-comma.
-
+That's better.
