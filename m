@@ -2,103 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 909281F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 18:47:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26437211B5
+	for <e@80x24.org>; Mon,  4 Feb 2019 18:49:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729571AbfBDSrY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 13:47:24 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46458 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728589AbfBDSrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 13:47:23 -0500
-Received: by mail-wr1-f67.google.com with SMTP id l9so932205wrt.13
-        for <git@vger.kernel.org>; Mon, 04 Feb 2019 10:47:22 -0800 (PST)
+        id S1729616AbfBDStD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 13:49:03 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:32980 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729278AbfBDStC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 13:49:02 -0500
+Received: by mail-qt1-f194.google.com with SMTP id l11so1132084qtp.0
+        for <git@vger.kernel.org>; Mon, 04 Feb 2019 10:49:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Lv/oKoKkPkHHRz026o70hBqK/UNU/8Y17yG7nson22Y=;
-        b=hP/98zIxyd0d1z+WZN5K6iPAR1rWmJE38bEH9p+hLSn/H2TrDWININOAca7jMqaCjy
-         60LpkGjbw+x3F+SmbOjpSiNESwFZLgNOTR1PH9ydyM6GxZKrsmqsbeMvhpyuBmJYD6uk
-         UM8GvS2yMccn2wAYnZVgO+h43s0rXNTDqCRBFRQGdS1C5b0cufbqY1QoBuwaxqznv1fg
-         bjnIHz4UeNh1GpkDwmgk3BGGkTevNvgPxrQnpYZjAfsw52G+TTgNNezVyiYCoGq379I5
-         kcK9dLmgCfJ4N9KYJvvUr+6LB0ps+qxyUBKvfdeY4oSPXLjbxHPLb6V4+Xtn/QBCTiXg
-         H2nQ==
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yqGUbDGvscki3VVKPD/MvEdPkS9qT7fmhSuIamdVHgk=;
+        b=rLBPc4tICyXUSjQR2A0qM70ZyV+1cg5LEmd+ndEX8o2klmQt7qIQJyWFB4oOLdh5Xi
+         4lnScJwA0NuYfE1mfjpQ5TvE4duqOwgT2ZhPjs2+BCnkxjkSOOLtvV0HkKEwWvM06M99
+         IAiXDLSY3Pw4mg+1Eiaw9LtwQDDC6pTOGULMEIIgGIqFGqdUs6/bx1MMsJLSnVnS2S88
+         peQkeOnBtFtlDbMr48xnMKkx+IqsqpY2xbUKYlkVLh+dhgmWd9qdo5Alx8qIzOJxDqZd
+         lvTwaQ6V8xRYTHw1YpLQfkS1tULoFT2uB7OLBI0Ns/jTv+eV8GPzZi95AeyVmiEvSMUP
+         6m2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Lv/oKoKkPkHHRz026o70hBqK/UNU/8Y17yG7nson22Y=;
-        b=AZfO63HQxhB18SwYKJzGziTSYum7vJNyBwrEiSTldMM2O56ntVMh/l2yTaYMHRLru3
-         jQcTdHPqSslKBDvYFvi7eZu4S7DO+GzBTdxnT54AT8m8/RzC9bzfJCSwxvk31Vlb+ztm
-         39+2ntgVGnbrKk9wwZcnKKkaKnVHWCJSY7hH4YQN39lhPeBoJJjPprYU1WRlmYhnRuQV
-         eNOYxTCDH+e0iRcCpAY4ZrDQy4RIRB1aPvLQ6H+GFEhoY2jHvMqxKEuJGRAKLuVDD/4U
-         mx3rUicaO/T5/NoDGl5bCA6Gc3L3gQ8HHdo/N90F/zRiPh8d5eg8oPcb8/IU8Bq1XMOn
-         rHNg==
-X-Gm-Message-State: AHQUAua8sof972eoqlRDeqTLBEC8s2cp2UdSMKQz45crTPj9oFAX4xJx
-        CPObJj4csbhO3cGT0VGi2xT0KXAO
-X-Google-Smtp-Source: AHgI3IadWlLIws2jAb4i79zV9iwYVW30xyCEEJC5+mAsIFhEqw/FNhf9MOLeFYOaAH8rJqkTFw15cA==
-X-Received: by 2002:adf:aa44:: with SMTP id q4mr555988wrd.307.1549306041666;
-        Mon, 04 Feb 2019 10:47:21 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c18sm9022857wre.32.2019.02.04.10.47.19
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=yqGUbDGvscki3VVKPD/MvEdPkS9qT7fmhSuIamdVHgk=;
+        b=IGNoqpuSu0mS7maOsiFACkK6e/XSVuRVrRxvWJ0XZ4GZv5hwj7SjWUBoSIR3OYVr1C
+         7TjPgvNGq6p+LmYHBzok9l1UlSd+CyX0WIhXecdeCQ3dSmKpTH+5gT46kY9SmnjI2ITD
+         O1nyhjTiyy8jEK2oAqDDSP4Fs/q3Zsoio60AQ1R01cV/eQ7BvlkMdNxwRNwVPPO++YFQ
+         UFJAqp+jyBhNvBidOXHPaTokEa7a0bpzlg9C0h5pgDTDCK0gVI1iZUQzWLUiQT1ETI1T
+         ob86LJuvYch4htu0TPV48GZy4uqzzntb7/HE9qfH2T2n4GUARLhs1Jce63EUhugBG7N1
+         008w==
+X-Gm-Message-State: AHQUAuZJh61hkyY1Gg2N39sp33OsWVDZvrd2RJhPjJaVmQa8Dol3688H
+        fWu++NTfGw2qPJAOZIGUsAtnOKF9
+X-Google-Smtp-Source: AHgI3IbOfWcITk21933YleoXi0COtmivo5+lU/DAioftfDR0lmMAlJdJB5CT0fWluNaaPI8m+We3Zg==
+X-Received: by 2002:ac8:674b:: with SMTP id n11mr667799qtp.104.1549306141546;
+        Mon, 04 Feb 2019 10:49:01 -0800 (PST)
+Received: from whubbs1.gaikai.biz ([100.42.103.5])
+        by smtp.gmail.com with ESMTPSA id w42sm1821695qth.61.2019.02.04.10.48.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Feb 2019 10:47:19 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Sven van Haastregt <svenvh@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v3] git-submodule.sh: shorten submodule SHA-1s using rev-parse
-References: <20190203210027.13272-1-svenvh@gmail.com>
-        <CAPig+cQXuzMwZjHa3n+DwRFL3E76U8uAvhiFiC5S=B23f03Vnw@mail.gmail.com>
-Date:   Mon, 04 Feb 2019 10:47:18 -0800
-In-Reply-To: <CAPig+cQXuzMwZjHa3n+DwRFL3E76U8uAvhiFiC5S=B23f03Vnw@mail.gmail.com>
-        (Eric Sunshine's message of "Sun, 3 Feb 2019 16:28:13 -0500")
-Message-ID: <xmqqftt3v1ah.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 04 Feb 2019 10:49:00 -0800 (PST)
+Received: (nullmailer pid 10088 invoked by uid 1000);
+        Mon, 04 Feb 2019 18:48:59 -0000
+From:   William Hubbs <williamh@gentoo.org>
+To:     git@vger.kernel.org
+Cc:     williamh@gentoo.org, chutzpah@gentoo.org
+Subject: [PATCH v5 0/1] config: allow giving separate author and committer
+Date:   Mon,  4 Feb 2019 12:48:49 -0600
+Message-Id: <20190204184850.10040-1-williamh@gentoo.org>
+X-Mailer: git-send-email 2.19.2
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+*** BLURB HERE ***
+This update adds back the reference to the EMAIL environment variable.
 
-> On Sun, Feb 3, 2019 at 4:01 PM Sven van Haastregt <svenvh@gmail.com> wrote:
->> Until now, `git submodule summary` was always emitting 7-character
->> SHA-1s that have a higher chance of being ambiguous for larger
->> repositories.  Use `git rev-parse --short` instead, which will
->> determine suitable short SHA-1 lengths.
->>
->> We cannot always rely on successfully invoking `git rev-parse` in the
->> submodule directory.  Keep the old method using `cut` as a fallback.
->
-> Reviewers and future readers of this patch are left in the dark
-> regarding the circumstances in which git-rev-parse may fail in the
-> submodule directory. It would be helpful for the commit message to
-> explain this potential failure in enough detail for someone working in
-> this area in the future to understand any implications of changes to
-> this code.
+William Hubbs (1):
+  config: allow giving separate author and committer idents
 
-Replace that problematic sentence with something like
+ Documentation/config/user.txt | 23 ++++++---
+ blame.c                       |  3 +-
+ builtin/am.c                  |  1 +
+ builtin/commit.c              |  3 +-
+ cache.h                       | 13 ++++-
+ config.c                      |  4 +-
+ ident.c                       | 92 ++++++++++++++++++++++++++++++++---
+ log-tree.c                    |  3 +-
+ sequencer.c                   |  5 +-
+ t/t7517-per-repo-email.sh     | 74 ++++++++++++++++++++++++++++
+ 10 files changed, 197 insertions(+), 24 deletions(-)
 
-	As a submodule may not be initialized with "submodule init"
-	or not cloned, `git rev-parse` may not work in it yet; as a
-	fallback, use the original method of cutting at 7 hexdigits.
+-- 
+2.19.2
 
-perhaps?
-
-
->
->> Signed-off-by: Sven van Haastregt <svenvh@gmail.com>
->> ---
->> Differences since v2: Simplify code as suggested by Eric
->> Sunshine <sunshine@sunshineco.com> and suppress stderr.
->
-> This version looks better. Thanks.
