@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 438191F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 10:38:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2CE91F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 10:54:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729157AbfBDKiF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 05:38:05 -0500
-Received: from mout.gmx.net ([212.227.15.15]:35647 "EHLO mout.gmx.net"
+        id S1732930AbfBDKyW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 05:54:22 -0500
+Received: from mout.gmx.net ([212.227.17.21]:55043 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729103AbfBDKiD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 05:38:03 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfCX2-1hSASG3JMm-00or6w; Mon, 04
- Feb 2019 11:38:00 +0100
-Date:   Mon, 4 Feb 2019 11:38:03 +0100 (STD)
+        id S1732921AbfBDKyT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 05:54:19 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M0cs6-1h7rWh0xKA-00up0b; Mon, 04
+ Feb 2019 11:54:17 +0100
+Date:   Mon, 4 Feb 2019 11:54:20 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Johannes Sixt <j6t@kdbg.org>
@@ -27,31 +27,31 @@ cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Subject: Re: [PATCH ps/stash-in-c] strbuf_vinsertf: provide the correct buffer
  size to vsnprintf
-In-Reply-To: <5d521649-0b21-04e3-3182-e8714fcbfeac@kdbg.org>
-Message-ID: <nycvar.QRO.7.76.6.1902041135320.41@tvgsbejvaqbjf.bet>
-References: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org> <5d521649-0b21-04e3-3182-e8714fcbfeac@kdbg.org>
+In-Reply-To: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1902041138550.41@tvgsbejvaqbjf.bet>
+References: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:6TNtIu20Kh8STzEQkNejNGG9c0unnB7lW+neLXUcpQWU7T6dLFD
- mTfdOMI9ijnOIqUFlWIcE5lUiypf/cUX4KZCLV2CX/dJZxN257qwTLWj2SDIoyxswwsO1Po
- yDDacz+dNji4TiGJ2OTaZYXu5RB4Pk3GAZ2hsIQbN0fD9/O+116oUlz+XvRkmwZbOJjs7tu
- 13RrTnOAp23ISx4x3EvlA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:2ca/7q63ryQ=:7FYMudQZ1rKX2kpdtMy7Ox
- 3+8WvnlsthOa7q48D233Kk/aQbbYgBPoiU93+CyD6asIhca0xMhKKywyTNmPttVLjpJyTk1UF
- ZbgyxMjJVAkDAg+NxQAabAmAk1OxNEPrFe5sAdswtmztXP+4CTwUYhK05ubBQfD7k1myU4zhi
- vOcdkcqO7Y0MD3nbyroHyR08mdUwNdvmWjizsedtfbzUWJIECFuDLO5z6ijmUTn9CHwDgWvdo
- q4rn8CFN06ab9fy8+TogM85V3RkGBQ1pjRsXTtznH60jernqIcIgrBxeadcSKo4efpoTBsawE
- Z6ko/Ngkw3AaTb99j+ODdlmi4v8u0anpHZkq1aiBFI4sFw1AHm//KvVFcEzkFV9+C2XZ2Yz5d
- Mttkg3v3UZueNaI5mkR9nkda7/KpP90g3cpJF0RT27GnMsv/vqrMx/2lmSoA0V1bOh831Cv6a
- zgC2uFaOycVunG/YUhNau/4Gs1y7iQky5veOkTnTHmRYoCN+TeftABAlEv9UIAjknpXmIdrYR
- Ds3KmqxAG26LRpuLH0e/zx5Yj5iU/3Jff+m4bvKlKHjFZkBvZ9sqNLng1W/3F2kFISCQkAiIA
- HXoN0UFngw2fW1yO4ox2UMv5LQYYM7xzbV4AKWNizut7TT5ZMXd3w5nCGkiucrtBec567gKwG
- VJISO7K1QC33OhnZzF8nOEQiBJFW3eX9BC6YEd6yNDmUpAK4HLK/+yv4RxEZZSkr3APX4nkEM
- P0qGKoVb2wJVEz6977wVFTPS+wZb9Prn3Be92xNbnzQ98LPJoosGv5cbVqMN4URzggeSyr22p
- sxBPIWsZXTULgx3gHZo+joexckzpXLS0dwokTdswiYexDkGv18Qs+/7ziuE57aAyJZFcyIXLV
- N0SWWoLqg8JJNEaQM6SFl88DGzsD2yxH3qaXwidTZwOHpLktjLVUCjf/f/4xDe37ACSE7TrZo
- 6cQXvrZ3mrw==
+X-Provags-ID: V03:K1:xkZ7NI2kZwnN9gnJPZx6LzmClfhsUO06IwKXzELgJaC7jHNj4Wc
+ Rs+r4l9tRdZiQOCaudWgNB2ihObjqjdQP25UJ+xNv+bzhwugvO0Hei/PU0JafV+3wzcSDpH
+ 7+Mq6Bivg4iyzA/IKNTE81MkAqag7VTwvsvGgpxPWj7nguLP9sJQAVEG3YVWKSj9ZKbxr/F
+ G79IRWe3cT/xTgKd25Y6g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0wLxCJu0Ac8=:e8S5hfslw9t8d2UvkAy32a
+ yhxhH07IXKZn8QHgwpAcoeocPE3DTAkupfWBC8MQOC5DT1WDP4+JMHd896T11xDCpvvtRkuF7
+ tzysDJmkrtBkd/rZHOA9XG0E/S7/rAM0uReRNj+3nibCINSZkkSt7SkV6BHsbL+92YN8skXi3
+ 3C9e+6XBjzc/L2zXnWPpZf0MFdrrtEqOyE5qlyiNqcnrMl1c3UYPbfXuvpvBYTH2guBB0ziL3
+ 6N1CNxh2syFfkN7ydK0F7ZEz/EbhRvk6uOnW8Ro/DDkgexkOfo7NicoGZEhR8Ys8C+knKQ3ei
+ 9p+Y5RfObZPUhw9rf2VJF/bD6NpDVC2VzKXi67NVoIfPvvwoZ9Qh9oDbxTgOkg3htaEBT7sMM
+ aD/4Y7dwAuIoZnxC6eLTUOU5amMQ56/Tv9QkT5EL3lube9IIRKbBBA5F1WAoqqNqoTHh22K/c
+ c1INFPjSZEiU2jBmLnt//1nhcUMtby9m9aGpo6c7Wwq5YDMy99Xz5nvTgThC9hHcTf+4mwSD3
+ 3erV0fKwYqxp4ohk/XC2T4WONbWdEQz8LX7KfkaBa/06qrEGD5H5G1TZ9XhXIX/PhSRajyxLR
+ A2nOEBMr7UjvMkRPb9d+VY/NMBuZKaMsuF2yYogT2QJ4pY/WSQlflgvti6sQ7m/bueTGkrTxD
+ qmHpsgVNHacUjYXZssSo6Fpeht9x9NXR8u2dNXsTrg44y8R1iwFfEK7tM+R5Xv8C2ukrrUECN
+ IGA++Wf4OLWgFshNiX/xnN0Yaw+bxye7bcCJtpiGEtAw/APVfRETJU0UTzHwgeXgTpAs04MO9
+ Ds4O3OYBF9FmhTiJSGVdixd6gMZCJd1OoEeDn7yYar6I48FBtpboE2du70+xt1tab4J6BSKV/
+ Epr3RB0ze8D+MqBsa1Bx6K5fTsvinQ8jGKXvDqZjk1JUHVpaiidVk/+afsmT23LZaOG+JlOTq
+ 11EBjM/T3BQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,105 +59,82 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Hannes,
 
-On Mon, 4 Feb 2019, Johannes Sixt wrote:
+On Sun, 3 Feb 2019, Johannes Sixt wrote:
 
-> Am 03.02.19 um 17:51 schrieb Johannes Sixt:
-> > strbuf_vinsertf inserts a formatted string in the middle of an existing
-> > strbuf value.
+> strbuf_vinsertf inserts a formatted string in the middle of an existing
+> strbuf value. It makes room in the strbuf by moving existing string to
+> the back, then formats the string to insert directly into the hole.
 > 
-> Quite frankly, this is a really unusual operation, and I'd prefer to get
-> rid of it. There is only one call, and it looks like it only wants to be
-> lazy and save one strbuf variable.
+> It uses vsnprintf to format the string. The buffer size provided in the
+> invocation is the number of characters available in the allocated space
+> behind the final string. This does not make any sense at all.
+> 
+> Fix it to pass the length of the inserted string plus one for the NUL.
+> (The functions saves and restores the character that the NUL occupies.)
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  I found this, because in my environment I have to compile with
+>  SNPRINTF_RETURNS_BOGUS. Our implementation of vsnprintf in
+>  compat/snprintf.c writes into the end of the buffer unconditionally,
+>  at a spot that is unrelated to the formatted string, and this leads to
+>  "BUG: a NUL byte in commit log message not allowed" in some "stash"
+>  tests.
+> 
+>  strbuf.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/strbuf.c b/strbuf.c
+> index bfbbdadbf3..87ecf7f975 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -270,7 +270,7 @@ void strbuf_vinsertf(struct strbuf *sb, size_t pos, const char *fmt, va_list ap)
+>  	memmove(sb->buf + pos + len, sb->buf + pos, sb->len - pos);
+>  	/* vsnprintf() will append a NUL, overwriting one of our characters */
+>  	save = sb->buf[pos + len];
+> -	len2 = vsnprintf(sb->buf + pos, sb->alloc - sb->len, fmt, ap);
+> +	len2 = vsnprintf(sb->buf + pos, len + 1, fmt, ap);
 
-The only reason why there are not more callers is that I did not convert
-any of the appropriate places. We have quite a few places where we
-allocate a new strbuf for the sole purpose of formatting something that is
-then inserted into an already existing strbuf (possibly extending the
-buffer, which might require a move of the buffer just because that
-temporary strbuf is in the way).
+It is really unfortunate that we use a non-dynamic code review system
+where it is pretty impossible to increase the amount of context lines
+easily.
 
-It does not sound like good practice to me to allocate things left and
-right, only to reallocate something that was just allocated anyway and to
-copy things into that and then release things left and right.
+And in this instance, a single line before the shown context would
+suffice:
 
-Ciao,
+	strbuf_grow(sb, len);
+
+Which is in line with moving from `pos` to `pos + len`, and it is also in
+line with saving the byte at `pos + len`. And since we must consider that
+byte as part of the buffer, and since `vsnprintf()` wants that size of the
+buffer (including trailing NUL), `len + 1` is correct.
+
+And since `strbuf_grow(sb, len)` would not in general grow the buffer by
+exactly `len` bytes, you indeed fixed a bug.
+
+For historical context, when I first implemented `strbuf_vinsertf()`, I
+first grew the buffer, then let `vsnprintf()` write to the end, and then
+would rotate the bytes into their correct location. This required the
+implementation of an in-place rotation scheme, which was a lot of fun, and
+totally unnecessary. That `sb->alloc - sb->len` parameter you fixed was a
+remainder of that fun side project.
+
+Thanks for fixing it,
 Dscho
 
-> This helper adds way more code than a non-lazy caller would need. There
-> wouldn't even be a mental burden. Like this (except that strbuf_addstr
-> doesn't do what I thought it would do...).
-> 
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 74e6ff62b5..95d202aea3 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -1101,7 +1101,7 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
->  	return ret;
->  }
->  
-> -static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
-> +static int do_create_stash(struct pathspec ps, const char *stash_msg,
->  			   int include_untracked, int patch_mode,
->  			   struct stash_info *info, struct strbuf *patch,
->  			   int quiet)
-> @@ -1117,6 +1117,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
->  	struct strbuf msg = STRBUF_INIT;
->  	struct strbuf commit_tree_label = STRBUF_INIT;
->  	struct strbuf untracked_files = STRBUF_INIT;
-> +	struct strbuf stash_msg_buf = STRBUF_INIT;
->  
->  	prepare_fallback_ident("git stash", "git@stash");
->  
-> @@ -1188,10 +1189,12 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
->  		}
->  	}
->  
-> -	if (!stash_msg_buf->len)
-> -		strbuf_addf(stash_msg_buf, "WIP on %s", msg.buf);
-> -	else
-> -		strbuf_insertf(stash_msg_buf, 0, "On %s: ", branch_name);
-> +	if (!*stash_msg) {
-> +		strbuf_addf(&stash_msg_buf, "WIP on %s", msg.buf);
-> +	} else {
-> +		strbuf_addf(&stash_msg_buf, "On %s: ", branch_name);
-> +		strbuf_addstr(&stash_msg_buf, stash_msg);
-> +	}
->  
->  	/*
->  	 * `parents` will be empty after calling `commit_tree()`, so there is
-> @@ -1206,7 +1209,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
->  			   &parents);
->  	commit_list_insert(head_commit, &parents);
->  
-> -	if (commit_tree(stash_msg_buf->buf, stash_msg_buf->len, &info->w_tree,
-> +	if (commit_tree(stash_msg_buf.buf, stash_msg_buf.len, &info->w_tree,
->  			parents, &info->w_commit, NULL, NULL)) {
->  		if (!quiet)
->  			fprintf_ln(stderr, _("Cannot record "
-> @@ -1216,6 +1219,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
->  	}
->  
->  done:
-> +	strbuf_release(&stash_msg_buf);
->  	strbuf_release(&commit_tree_label);
->  	strbuf_release(&msg);
->  	strbuf_release(&untracked_files);
-> @@ -1236,7 +1240,7 @@ static int create_stash(int argc, const char **argv, const char *prefix)
->  	if (!check_changes_tracked_files(ps))
->  		return 0;
->  
-> -	if (!(ret = do_create_stash(ps, &stash_msg_buf, 0, 0, &info, NULL, 0)))
-> +	if (!(ret = do_create_stash(ps, stash_msg_buf.buf, 0, 0, &info, NULL, 0)))
->  		printf_ln("%s", oid_to_hex(&info.w_commit));
->  
->  	strbuf_release(&stash_msg_buf);
-> @@ -1300,7 +1304,7 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
->  
->  	if (stash_msg)
->  		strbuf_addstr(&stash_msg_buf, stash_msg);
-> -	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
-> +	if (do_create_stash(ps, stash_msg_buf.buf, include_untracked, patch_mode,
->  			    &info, &patch, quiet)) {
->  		ret = -1;
->  		goto done;
+P.S.: Side note: I just realized that we could also write
+
+	save = sb->buf[pos];
+  	memmove(sb->buf + pos + len + 1, sb->buf + pos + 1, sb->len - pos - 1);
+
+instead, i.e. not move the first byte just to have it overwritten by
+vsnprintf() immediately, saving on moving one byte. But quite frankly, in
+this case I do agree that readability is more important than trying to
+squeeze out the last bit of performance.
+
+>  	sb->buf[pos + len] = save;
+>  	if (len2 != len)
+>  		BUG("your vsnprintf is broken (returns inconsistent lengths)");
+> -- 
+> 2.20.1.86.gb0de946387
 > 
