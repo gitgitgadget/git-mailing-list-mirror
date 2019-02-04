@@ -2,164 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAED51F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 10:36:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 438191F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 10:38:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728224AbfBDKgc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 05:36:32 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:53051 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726537AbfBDKgc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 05:36:32 -0500
-Received: by mail-wm1-f67.google.com with SMTP id m1so12574613wml.2
-        for <git@vger.kernel.org>; Mon, 04 Feb 2019 02:36:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ppxFAjs+inN7ugv4TF41bxlGMg78CjeaX7XlxJYwcHU=;
-        b=hJEiuImURQwtgXIgmv76ae3AT6fq3W6FvNcrVOl0irDM2lSJud5KtMh70Vjk0nX39Q
-         PGSfNVRQEgH2K1/KxLgXHwpVjjb4b5ttTRF5SQmoNg4i9+aD57/E+DZTMKc6yxUhrsW/
-         OzFTjhLi+bt+B73A/Ij9lfaaFP2oOPXNdu0kqvgyS91E1eiPAAOZEZKXyzcpoLTY92T4
-         qI6W4677hiW6vasT7ePqswc8WrNux8WxLTA/lnlbSRh98+R0dwxY5gLGBqJOZckt26jB
-         Pi8hRWBEKE5CkmMpArfrCFxutdKTZ/lARNo9lo7RGZ0mZxfXD4Bf0pxRCAr6eOEC7V8C
-         Oshg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ppxFAjs+inN7ugv4TF41bxlGMg78CjeaX7XlxJYwcHU=;
-        b=RLdjXC5VUn2ARblrtAs3YcOaC5pNQNePLFhpODgxAdEBLCj2QAAU9x8qG/gAvFG02E
-         lM4oGUhjBpI590z8vU4nwD4f2uOaIJq/TGgfffCe8M6rxIjVvAYXfFhuXubojj1VA0rK
-         ZBOgAmoOm93vFiwstMBTiwb1Wg9QtEOkbGHj7DiZXQ1+LKTECkzS//zfMb7PL2dsEB6P
-         41LHojGh91abwFYVKX1Y6CKiiE3NqeiQ8YRVVz2mBoD0cVxYWGJ46lp2jV6N05mr6e5O
-         uL4dCVGfHXyrUt2L+qYguj3YVXPYUyBlu03PtgjKhZ+dmcb+HhLKM24iWALInxYvPHtp
-         kJLw==
-X-Gm-Message-State: AHQUAuYbX5sLRS0H2UEmO4MkHCsuwXbqosUDNbe1zfkr6J2zMur29mje
-        CAblwboYwa0FTrBWN/+AA0conpK3vyA=
-X-Google-Smtp-Source: AHgI3IbbnbR7Ti4L1O7EhgcA7xjYF9JLhxThiBVjGgKcZpN9gz83/96pKUKoH3IkrT9cPA0Ef44qJw==
-X-Received: by 2002:a1c:e488:: with SMTP id b130mr13118990wmh.124.1549276587830;
-        Mon, 04 Feb 2019 02:36:27 -0800 (PST)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o9sm7472639wmh.3.2019.02.04.02.36.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Feb 2019 02:36:27 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] diff-tree doc: correct & remove wrong documentation
-Date:   Mon,  4 Feb 2019 11:36:18 +0100
-Message-Id: <20190204103618.17992-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.20.1.611.gfbb209baf1
-In-Reply-To: <1292425376-14550-12-git-send-email-pclouds@gmail.com>
-References: <1292425376-14550-12-git-send-email-pclouds@gmail.com>
+        id S1729157AbfBDKiF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 05:38:05 -0500
+Received: from mout.gmx.net ([212.227.15.15]:35647 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729103AbfBDKiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 05:38:03 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfCX2-1hSASG3JMm-00or6w; Mon, 04
+ Feb 2019 11:38:00 +0100
+Date:   Mon, 4 Feb 2019 11:38:03 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH ps/stash-in-c] strbuf_vinsertf: provide the correct buffer
+ size to vsnprintf
+In-Reply-To: <5d521649-0b21-04e3-3182-e8714fcbfeac@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1902041135320.41@tvgsbejvaqbjf.bet>
+References: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org> <5d521649-0b21-04e3-3182-e8714fcbfeac@kdbg.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:6TNtIu20Kh8STzEQkNejNGG9c0unnB7lW+neLXUcpQWU7T6dLFD
+ mTfdOMI9ijnOIqUFlWIcE5lUiypf/cUX4KZCLV2CX/dJZxN257qwTLWj2SDIoyxswwsO1Po
+ yDDacz+dNji4TiGJ2OTaZYXu5RB4Pk3GAZ2hsIQbN0fD9/O+116oUlz+XvRkmwZbOJjs7tu
+ 13RrTnOAp23ISx4x3EvlA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2ca/7q63ryQ=:7FYMudQZ1rKX2kpdtMy7Ox
+ 3+8WvnlsthOa7q48D233Kk/aQbbYgBPoiU93+CyD6asIhca0xMhKKywyTNmPttVLjpJyTk1UF
+ ZbgyxMjJVAkDAg+NxQAabAmAk1OxNEPrFe5sAdswtmztXP+4CTwUYhK05ubBQfD7k1myU4zhi
+ vOcdkcqO7Y0MD3nbyroHyR08mdUwNdvmWjizsedtfbzUWJIECFuDLO5z6ijmUTn9CHwDgWvdo
+ q4rn8CFN06ab9fy8+TogM85V3RkGBQ1pjRsXTtznH60jernqIcIgrBxeadcSKo4efpoTBsawE
+ Z6ko/Ngkw3AaTb99j+ODdlmi4v8u0anpHZkq1aiBFI4sFw1AHm//KvVFcEzkFV9+C2XZ2Yz5d
+ Mttkg3v3UZueNaI5mkR9nkda7/KpP90g3cpJF0RT27GnMsv/vqrMx/2lmSoA0V1bOh831Cv6a
+ zgC2uFaOycVunG/YUhNau/4Gs1y7iQky5veOkTnTHmRYoCN+TeftABAlEv9UIAjknpXmIdrYR
+ Ds3KmqxAG26LRpuLH0e/zx5Yj5iU/3Jff+m4bvKlKHjFZkBvZ9sqNLng1W/3F2kFISCQkAiIA
+ HXoN0UFngw2fW1yO4ox2UMv5LQYYM7xzbV4AKWNizut7TT5ZMXd3w5nCGkiucrtBec567gKwG
+ VJISO7K1QC33OhnZzF8nOEQiBJFW3eX9BC6YEd6yNDmUpAK4HLK/+yv4RxEZZSkr3APX4nkEM
+ P0qGKoVb2wJVEz6977wVFTPS+wZb9Prn3Be92xNbnzQ98LPJoosGv5cbVqMN4URzggeSyr22p
+ sxBPIWsZXTULgx3gHZo+joexckzpXLS0dwokTdswiYexDkGv18Qs+/7ziuE57aAyJZFcyIXLV
+ N0SWWoLqg8JJNEaQM6SFl88DGzsD2yxH3qaXwidTZwOHpLktjLVUCjf/f/4xDe37ACSE7TrZo
+ 6cQXvrZ3mrw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation saying that diff-tree didn't support anything except
-literal prefixes hasn't been true since
-d38f28093e ("tree_entry_interesting(): support wildcard matching",
-2010-12-15), but this documentation was not updated at the time.
+Hi Hannes,
 
-Since this command uses pathspecs like most other commands, there's no
-need to show examples of how the various "cmd <revs> <paths>"
-invocations work.
+On Mon, 4 Feb 2019, Johannes Sixt wrote:
 
-Furthermore, the "git diff-tree --abbrev 5319e4" example shown here
-never worked. We'd ended up with that through a combination of
-62b42d3487 ("docs: fix some antique example output", 2011-05-26) and
-ac4e086929 ("Adjust core-git documentation to more recent Linus GIT.",
-2005-05-05), but "git diff-tree <tree>" was always invalid.
+> Am 03.02.19 um 17:51 schrieb Johannes Sixt:
+> > strbuf_vinsertf inserts a formatted string in the middle of an existing
+> > strbuf value.
+> 
+> Quite frankly, this is a really unusual operation, and I'd prefer to get
+> rid of it. There is only one call, and it looks like it only wants to be
+> lazy and save one strbuf variable.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/git-diff-tree.txt | 51 +--------------------------------
- 1 file changed, 1 insertion(+), 50 deletions(-)
+The only reason why there are not more callers is that I did not convert
+any of the appropriate places. We have quite a few places where we
+allocate a new strbuf for the sole purpose of formatting something that is
+then inserted into an already existing strbuf (possibly extending the
+buffer, which might require a move of the buffer just because that
+temporary strbuf is in the way).
 
-diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
-index 2319b2b192..43daa7c046 100644
---- a/Documentation/git-diff-tree.txt
-+++ b/Documentation/git-diff-tree.txt
-@@ -31,10 +31,7 @@ include::diff-options.txt[]
- 
- <path>...::
- 	If provided, the results are limited to a subset of files
--	matching one of these prefix strings.
--	i.e., file matches `/^<pattern1>|<pattern2>|.../`
--	Note that this parameter does not provide any wildcard or regexp
--	features.
-+	matching one of the provided pathspecs.
- 
- -r::
-         recurse into sub-trees
-@@ -114,52 +111,6 @@ include::pretty-options.txt[]
- 
- 
- include::pretty-formats.txt[]
--
--
--LIMITING OUTPUT
-----------------
--If you're only interested in differences in a subset of files, for
--example some architecture-specific files, you might do:
--
--	git diff-tree -r <tree-ish> <tree-ish> arch/ia64 include/asm-ia64
--
--and it will only show you what changed in those two directories.
--
--Or if you are searching for what changed in just `kernel/sched.c`, just do
--
--	git diff-tree -r <tree-ish> <tree-ish> kernel/sched.c
--
--and it will ignore all differences to other files.
--
--The pattern is always the prefix, and is matched exactly.  There are no
--wildcards.  Even stricter, it has to match a complete path component.
--I.e. "foo" does not pick up `foobar.h`.  "foo" does match `foo/bar.h`
--so it can be used to name subdirectories.
--
--An example of normal usage is:
--
--  torvalds@ppc970:~/git> git diff-tree --abbrev 5319e4
--  :100664 100664 ac348b... a01513...	git-fsck-objects.c
--
--which tells you that the last commit changed just one file (it's from
--this one:
--
-------------------------------------------------------------------------------
--commit 3c6f7ca19ad4043e9e72fa94106f352897e651a8
--tree 5319e4d609cdd282069cc4dce33c1db559539b03
--parent b4e628ea30d5ab3606119d2ea5caeab141d38df7
--author Linus Torvalds <torvalds@ppc970.osdl.org> Sat Apr 9 12:02:30 2005
--committer Linus Torvalds <torvalds@ppc970.osdl.org> Sat Apr 9 12:02:30 2005
--
--Make "git-fsck-objects" print out all the root commits it finds.
--
--Once I do the reference tracking, I'll also make it print out all the
--HEAD commits it finds, which is even more interesting.
-------------------------------------------------------------------------------
--
--in case you care).
--
--
- include::diff-format.txt[]
- 
- GIT
--- 
-2.20.1.611.gfbb209baf1
+It does not sound like good practice to me to allocate things left and
+right, only to reallocate something that was just allocated anyway and to
+copy things into that and then release things left and right.
 
+Ciao,
+Dscho
+
+> This helper adds way more code than a non-lazy caller would need. There
+> wouldn't even be a mental burden. Like this (except that strbuf_addstr
+> doesn't do what I thought it would do...).
+> 
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 74e6ff62b5..95d202aea3 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -1101,7 +1101,7 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+>  	return ret;
+>  }
+>  
+> -static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
+> +static int do_create_stash(struct pathspec ps, const char *stash_msg,
+>  			   int include_untracked, int patch_mode,
+>  			   struct stash_info *info, struct strbuf *patch,
+>  			   int quiet)
+> @@ -1117,6 +1117,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
+>  	struct strbuf msg = STRBUF_INIT;
+>  	struct strbuf commit_tree_label = STRBUF_INIT;
+>  	struct strbuf untracked_files = STRBUF_INIT;
+> +	struct strbuf stash_msg_buf = STRBUF_INIT;
+>  
+>  	prepare_fallback_ident("git stash", "git@stash");
+>  
+> @@ -1188,10 +1189,12 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
+>  		}
+>  	}
+>  
+> -	if (!stash_msg_buf->len)
+> -		strbuf_addf(stash_msg_buf, "WIP on %s", msg.buf);
+> -	else
+> -		strbuf_insertf(stash_msg_buf, 0, "On %s: ", branch_name);
+> +	if (!*stash_msg) {
+> +		strbuf_addf(&stash_msg_buf, "WIP on %s", msg.buf);
+> +	} else {
+> +		strbuf_addf(&stash_msg_buf, "On %s: ", branch_name);
+> +		strbuf_addstr(&stash_msg_buf, stash_msg);
+> +	}
+>  
+>  	/*
+>  	 * `parents` will be empty after calling `commit_tree()`, so there is
+> @@ -1206,7 +1209,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
+>  			   &parents);
+>  	commit_list_insert(head_commit, &parents);
+>  
+> -	if (commit_tree(stash_msg_buf->buf, stash_msg_buf->len, &info->w_tree,
+> +	if (commit_tree(stash_msg_buf.buf, stash_msg_buf.len, &info->w_tree,
+>  			parents, &info->w_commit, NULL, NULL)) {
+>  		if (!quiet)
+>  			fprintf_ln(stderr, _("Cannot record "
+> @@ -1216,6 +1219,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
+>  	}
+>  
+>  done:
+> +	strbuf_release(&stash_msg_buf);
+>  	strbuf_release(&commit_tree_label);
+>  	strbuf_release(&msg);
+>  	strbuf_release(&untracked_files);
+> @@ -1236,7 +1240,7 @@ static int create_stash(int argc, const char **argv, const char *prefix)
+>  	if (!check_changes_tracked_files(ps))
+>  		return 0;
+>  
+> -	if (!(ret = do_create_stash(ps, &stash_msg_buf, 0, 0, &info, NULL, 0)))
+> +	if (!(ret = do_create_stash(ps, stash_msg_buf.buf, 0, 0, &info, NULL, 0)))
+>  		printf_ln("%s", oid_to_hex(&info.w_commit));
+>  
+>  	strbuf_release(&stash_msg_buf);
+> @@ -1300,7 +1304,7 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
+>  
+>  	if (stash_msg)
+>  		strbuf_addstr(&stash_msg_buf, stash_msg);
+> -	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
+> +	if (do_create_stash(ps, stash_msg_buf.buf, include_untracked, patch_mode,
+>  			    &info, &patch, quiet)) {
+>  		ret = -1;
+>  		goto done;
+> 
