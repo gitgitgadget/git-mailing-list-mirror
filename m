@@ -2,108 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CFC51F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 19:38:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E20B11F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 19:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725888AbfBDTif (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 14:38:35 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37576 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725854AbfBDTie (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 14:38:34 -0500
-Received: by mail-wm1-f68.google.com with SMTP id g67so1214063wmd.2
-        for <git@vger.kernel.org>; Mon, 04 Feb 2019 11:38:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=wBoT2n131taE4KG3hltPx6SDJIVrlhokG4PVQ1sva0g=;
-        b=UvbiFufhzukbKJU0nD8/2LpjFtHF3yHiFwDy96dTCtIIuTCQREDLc1EE7yMRI2EFi0
-         FBvWU2YJsX/P/XCN6K2pqsSScxplD1gHvTpJFTVAIsO5qJBfaVG0S3MtVn531xwEkRyO
-         qRam3SAqD7BDT+/Hd9yu5iamVhLp8+8TTr496KtKsAqe5eqhL36h7pezeElqD5DulKBn
-         QWkgCsZIsQbQnwJPve/GZdNKuXhLGuNpwthZAwqRk28R/K7+0j1QY39tdraRAe5r5IVO
-         T9IA1VN9FftThldG72ajbfmsJxWQHpda61626kSZ4jxNH6GyvVQs2MTFhfRF7WpQCBm/
-         mNdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=wBoT2n131taE4KG3hltPx6SDJIVrlhokG4PVQ1sva0g=;
-        b=Acd0bveayScePJYJbK4rqvPY9nxtgIlxhfyJkbJirLADGqkATVvQSwE0BinGydakcQ
-         ulmYbGZzpn0kxYDVm18DfO3o3LOiKh/9Gf/UzQKoXnWYCtTR5lHRnkXaCy+MXBXaLSK2
-         eVO2t/WaO13oxnz240neeUvo7RQGHcGcWaN0UxIG+NaCgo6qAfCAp1aJ5T4NNaWxQfAN
-         fwB+OTCvweNoypaFk5D9by2s9r4oPrt3+XMwyGp/I2dTb3hbVWygHMZqV81cEZ22UFtD
-         r9kiyewnHMVJSisczaEYx4KsrpTle1lUsM5RoVTzhPs5QhzmN5y5/vHWB3W9djD4rJJd
-         IITQ==
-X-Gm-Message-State: AHQUAuah3aZpVnaMb1+C4QPIC0n44LRlTWNmSeqsh8fTa1Vn/oUF17aS
-        1C/d6R/qflkx9AZIkDeeMJRK/SuA
-X-Google-Smtp-Source: AHgI3IY0H6APxWIWIXJidwJEuk70f0ALsxnyMJWY2iDnqbZQY69sgFfYFKUN5Q/Tghj7DAwvbeJyvA==
-X-Received: by 2002:a1c:7306:: with SMTP id d6mr712406wmb.98.1549309111965;
-        Mon, 04 Feb 2019 11:38:31 -0800 (PST)
-Received: from szeder.dev (x4db609fa.dyn.telefonica.de. [77.182.9.250])
-        by smtp.gmail.com with ESMTPSA id s3sm9485557wmj.23.2019.02.04.11.38.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Feb 2019 11:38:31 -0800 (PST)
-Date:   Mon, 4 Feb 2019 20:38:23 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] travis-ci: make the OSX build jobs' 'brew update' more
- quiet
-Message-ID: <20190204193823.GA4511@szeder.dev>
-References: <20190202163421.19686-1-szeder.dev@gmail.com>
- <xmqqk1ifv296.fsf@gitster-ct.c.googlers.com>
+        id S1726721AbfBDTof (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 14:44:35 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:32924 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726700AbfBDToe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 14:44:34 -0500
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id qkARgrrDvAOoyqkASgNiH1; Mon, 04 Feb 2019 19:44:33 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=vS6L6dtdCaZhYJcMGsoA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] trace2: fix hdr-check warnings
+To:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <ba0549c5-25f1-efcc-e49a-d7e76be73fe3@ramsayjones.plus.com>
+ <00e08dc3-a610-0429-e819-1d29d0ddb81a@jeffhostetler.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <d680fda2-7e54-2200-cd00-97772de45b47@ramsayjones.plus.com>
+Date:   Mon, 4 Feb 2019 19:44:30 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
+In-Reply-To: <00e08dc3-a610-0429-e819-1d29d0ddb81a@jeffhostetler.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqk1ifv296.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-CMAE-Envelope: MS4wfObePbYCTDNs4o9MivcLqnEcDJ23G16TmTy36BmTYmpzX78iV7kwF+Nez+JU2Z50aHiDdcY0jqgsXIpfX8IDDrJmczKBacPujfqpCtJxz++OSVZMjpo5
+ 8pQVlggD9ejqx4T3bra2EHqNFR33dMQ+fjaVPoyMLCu2by9EPPPYgw+6vr/HA1VM+eEs9NPlqu6LYQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 04, 2019 at 10:26:29AM -0800, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
+
+
+On 30/01/2019 12:29, Jeff Hostetler wrote:
 > 
-> >   - This '--quiet' flag apparently broke overnight, resulting in
-> >     errored builds:
-> > ...
-> >     I belive that this breakage will be noticed and fixed soon-ish, so
-> >     we could probably just wait a bit for this issue to solve itself,
 > 
-> Yuck.  Well, an external influence that can break the automated
-> build job overnight should be capable of fixing it overnight ;-)
+> On 1/26/2019 4:07 PM, Ramsay Jones wrote:
+>>
+>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>> ---
+>>
+>> Hi Jeff,
+>>
+>> If you need to re-roll your 'jh/trace2' branch, could you please
+>> squash this into the relevant patches (sorry, I didn't look to
+>> see which patches need to be modified).
+> 
+> Will do. Thanks.
+> 
+> BTW, how do you find these?  I ran both "make sparse" and
+> "make DEVELOPER=1" and it didn't complain about these items.
 
-> If this is truly urgent, I could merge this to 'maint' and merge the
-> result upwards to 'pu' and it would hide the issue on my four
-> integration branches.  But one thing that makes me wonder is if we
-> can (or want to) do anything to help other people who test build
-> with pull requests.  I guess they need to rebase on top of whatever
-> commit that has this fix?  That sounds more like a tail wagging a
-> dog, though.  I dunno.
+Carlo already replied about 'make hdr-check', but you seem to
+have missed squashing half of the original patch, since the
+re-rolled series still causes 'make -k hdr-check >phcout 2>&1'
+to show:
 
-Contributors don't have to rebase to make their PR builds work.  When
-Travis CI builds a PR, it doesn't build the branch on its own, but the
-merge of that branch into 'master' (or whatever the default branch is
-called), assuming can be it merged cleanly.  So as soon as this fix
-lands in master, the PR builds should be fine.  I suppose.
+  $ diff nhcout phcout
+  22a23,34
+  >     HDR trace2/tr2_dst.h
+  >     HDR trace2/tr2_cfg.h
+  >     HDR trace2/tr2_tgt.h
+  >     HDR trace2/tr2_cmd_name.h
+  >     HDR trace2/tr2_sid.h
+  >     HDR trace2/tr2_tls.h
+  > trace2/tr2_tls.h:12:16: error: field ‘thread_name’ has incomplete type
+  >   struct strbuf thread_name;
+  >                 ^~~~~~~~~~~
+  > Makefile:2739: recipe for target 'trace2/tr2_tls.hco' failed
+  > make: *** [trace2/tr2_tls.hco] Error 1
+  >     HDR trace2/tr2_tbuf.h
+  131c143
+  < Makefile:2725: recipe for target 'sha256/gcrypt.hco' failed
+  ---
+  > Makefile:2739: recipe for target 'sha256/gcrypt.hco' failed
+  164a177
+  >     HDR trace2.h
+  $ 
 
-However, they will need to rebase their WIP/not PR-ed/not upstreamable
-branches on top of this fix if they want to run Travis CI builds in
-their own forks.
+So, quoting the last part of the original patch:
 
-Unless, of course, the external influence does manage to fix itself
-overnight :)  Under Dscho's bugreport it looks like they already
-merged a one-liner fix, but how long will it take to tickle down to
-Travis CI, I have no idea.
+diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
+index 99ea9018ce..bb80e3f8e7 100644
+--- a/trace2/tr2_tls.h
++++ b/trace2/tr2_tls.h
+@@ -1,6 +1,8 @@
+ #ifndef TR2_TLS_H
+ #define TR2_TLS_H
+ 
++#include "strbuf.h"
++
+ /*
+  * Arbitry limit for thread names for column alignment.
+  */
+-- 
+
+
+ATB,
+Ramsay Jones
+
+
+
 
