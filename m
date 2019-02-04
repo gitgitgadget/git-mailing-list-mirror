@@ -2,127 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01B9D1F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 07:25:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30B1B1F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 09:17:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728007AbfBDHZn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 02:25:43 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:42408 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727678AbfBDHZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 02:25:43 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43tK4M1cs7z5tlB;
-        Mon,  4 Feb 2019 08:25:39 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 6706230F;
-        Mon,  4 Feb 2019 08:25:38 +0100 (CET)
-Subject: Re: [PATCH ps/stash-in-c] strbuf_vinsertf: provide the correct buffer
- size to vsnprintf
-From:   Johannes Sixt <j6t@kdbg.org>
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org>
-Message-ID: <5d521649-0b21-04e3-3182-e8714fcbfeac@kdbg.org>
-Date:   Mon, 4 Feb 2019 08:25:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1728518AbfBDJQ7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 04:16:59 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:40101 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726320AbfBDJQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 04:16:59 -0500
+Received: by mail-ed1-f68.google.com with SMTP id g22so10588884edr.7
+        for <git@vger.kernel.org>; Mon, 04 Feb 2019 01:16:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=uQ77Ldi46WI1pyDAON4lMGXtNhICOOKD8xQriggZJqk=;
+        b=Guhd1gP3Rw+tmfuUnzmLLZT305BR8WQBxZGIjwnccQI2pvHFwRSJGUMkZulDKNr0I5
+         NQQEs90JAjFnr9nFf1LGJDu27U4rg0EhIvW67Y0lJbxdeFrucD1s0/oAikkDg24Q4avY
+         Ro2wSgMRcSLQl9qxK9olktr8X5CbtEJv9iO4/jcR2yuL9N+KKGf2uBjR8cYhvAKDCj2x
+         lsrb1moGW0G5Mer8WHt5/VQglmd+7SdXjLpC4c5mjTWsi2Nw+2/1cHstfFtT77IBOLwS
+         F5HfjQorr5yzc4oWlkEzXKI6vF0ju8Qo9Cdzvtw3eJ1eIXe1GsMZplvVMFEvl/1bLn6Z
+         XWdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=uQ77Ldi46WI1pyDAON4lMGXtNhICOOKD8xQriggZJqk=;
+        b=Kym/hhVC1kiOGbDJiG067TONDqNFlP/qJBuDQWOub6xfdX3cFHMGMhBvJuSgTDThS7
+         PTzF3xNA5tI65koyrWmQD1yjTa5FjUXvJPAyxjJLSZ+ZW5Lwij8WxJJaNoeahOI/sw+X
+         3XIqRkgmpQcrlxba5/RVu09v6f73lZyZhjrhO7c8J4GdvoSF/vF8jENyRZY1GzSJjFAY
+         1Hpl2B5fuBwQK/Udh7VplpI7fQilUxqcmSayA5oHfk9WBj1lVo8CSbQhr1g5SarO57qr
+         atktVSqrDheNwq3Zu9DNJzrsR098U7LvRLSx+zfikKRDwH6Iscu5SAAtMbCWSU8WvpmE
+         n3bw==
+X-Gm-Message-State: AJcUukfi70p8dC5wY4rJJ2QyEx04mwSsjkK4zjlPqjAz+QtK5t6l17SY
+        AaXyjwSG1r0nWuJOWnz4Q0grljp4S18S1qL+y0CLez56fpM=
+X-Google-Smtp-Source: ALg8bN5UKLrgWJq9rbiTNUlIUiBPym7soKAq9lb6N3GPNYecEmaVgqBDMsk6uBzaaMvO1N6iz6nEFYxx+LIHG1aCOd0=
+X-Received: by 2002:a50:b0e5:: with SMTP id j92mr47391897edd.188.1549271816989;
+ Mon, 04 Feb 2019 01:16:56 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 4 Feb 2019 10:16:41 +0100
+Message-ID: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
+Subject: GSoC 2019: Git's application submitted
+To:     git <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.02.19 um 17:51 schrieb Johannes Sixt:
-> strbuf_vinsertf inserts a formatted string in the middle of an existing
-> strbuf value.
+Hi everyone,
 
-Quite frankly, this is a really unusual operation, and I'd prefer to get
-rid of it. There is only one call, and it looks like it only wants to be
-lazy and save one strbuf variable.
+There are now ideas, micro-projects and organization application pages
+for GSoC 2019 on https://git.github.io/
 
-This helper adds way more code than a non-lazy caller would need. There
-wouldn't even be a mental burden. Like this (except that strbuf_addstr
-doesn't do what I thought it would do...).
+It would be nice to have a few more project ideas.
+https://git.github.io/SoC-2019-Ideas/ currently lists only 2 possible
+projects:
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 74e6ff62b5..95d202aea3 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1101,7 +1101,7 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
- 	return ret;
- }
- 
--static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
-+static int do_create_stash(struct pathspec ps, const char *stash_msg,
- 			   int include_untracked, int patch_mode,
- 			   struct stash_info *info, struct strbuf *patch,
- 			   int quiet)
-@@ -1117,6 +1117,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
- 	struct strbuf msg = STRBUF_INIT;
- 	struct strbuf commit_tree_label = STRBUF_INIT;
- 	struct strbuf untracked_files = STRBUF_INIT;
-+	struct strbuf stash_msg_buf = STRBUF_INIT;
- 
- 	prepare_fallback_ident("git stash", "git@stash");
- 
-@@ -1188,10 +1189,12 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
- 		}
- 	}
- 
--	if (!stash_msg_buf->len)
--		strbuf_addf(stash_msg_buf, "WIP on %s", msg.buf);
--	else
--		strbuf_insertf(stash_msg_buf, 0, "On %s: ", branch_name);
-+	if (!*stash_msg) {
-+		strbuf_addf(&stash_msg_buf, "WIP on %s", msg.buf);
-+	} else {
-+		strbuf_addf(&stash_msg_buf, "On %s: ", branch_name);
-+		strbuf_addstr(&stash_msg_buf, stash_msg);
-+	}
- 
- 	/*
- 	 * `parents` will be empty after calling `commit_tree()`, so there is
-@@ -1206,7 +1209,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
- 			   &parents);
- 	commit_list_insert(head_commit, &parents);
- 
--	if (commit_tree(stash_msg_buf->buf, stash_msg_buf->len, &info->w_tree,
-+	if (commit_tree(stash_msg_buf.buf, stash_msg_buf.len, &info->w_tree,
- 			parents, &info->w_commit, NULL, NULL)) {
- 		if (!quiet)
- 			fprintf_ln(stderr, _("Cannot record "
-@@ -1216,6 +1219,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
- 	}
- 
- done:
-+	strbuf_release(&stash_msg_buf);
- 	strbuf_release(&commit_tree_label);
- 	strbuf_release(&msg);
- 	strbuf_release(&untracked_files);
-@@ -1236,7 +1240,7 @@ static int create_stash(int argc, const char **argv, const char *prefix)
- 	if (!check_changes_tracked_files(ps))
- 		return 0;
- 
--	if (!(ret = do_create_stash(ps, &stash_msg_buf, 0, 0, &info, NULL, 0)))
-+	if (!(ret = do_create_stash(ps, stash_msg_buf.buf, 0, 0, &info, NULL, 0)))
- 		printf_ln("%s", oid_to_hex(&info.w_commit));
- 
- 	strbuf_release(&stash_msg_buf);
-@@ -1300,7 +1304,7 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
- 
- 	if (stash_msg)
- 		strbuf_addstr(&stash_msg_buf, stash_msg);
--	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
-+	if (do_create_stash(ps, stash_msg_buf.buf, include_untracked, patch_mode,
- 			    &info, &patch, quiet)) {
- 		ret = -1;
- 		goto done;
+- Unify ref-filter formats with other --pretty formats (which is new)
+- git log --oneline improvements
+
+as I didn't feel that the others were still relevant, though I might be wrong.
+
+As Olga and Thomas told me at the Git Merge that they could be ok to
+co-mentor with me, they are listed as possible mentors for both of
+these projects.
+
+Anyway feel free to comment and suggest improvements on those pages,
+especially the micro-projects and ideas one. Pull requests on
+https://github.com/git/git.github.io/ are very much appreciated.
+
+The application has been submitted on
+https://summerofcode.withgoogle.com, but it will not be complete until
+someone else volunteers as an org admin. I volunteered, but they
+require "at least 2 and at most 5 Organization Administrators".
+
+So another org admin is needed before Wednesday February 6th, as this
+is the deadline. Invitations have been sent to Peff, Thomas, Olga and
+Matthieu, but anyone can do it and it requires a very low amount of
+work.
+
+Thanks,
+Christian.
