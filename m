@@ -7,121 +7,99 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 206B11F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 17:59:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDB761F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 18:10:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728861AbfBDR7t (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 12:59:49 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53796 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726585AbfBDR7t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 12:59:49 -0500
-Received: by mail-wm1-f65.google.com with SMTP id d15so847426wmb.3
-        for <git@vger.kernel.org>; Mon, 04 Feb 2019 09:59:48 -0800 (PST)
+        id S1729139AbfBDSK5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 13:10:57 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55505 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728056AbfBDSK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 13:10:57 -0500
+Received: by mail-wm1-f67.google.com with SMTP id y139so866430wmc.5
+        for <git@vger.kernel.org>; Mon, 04 Feb 2019 10:10:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Hm8swRS4C6DsDRBKZSOZ1holVrf43DXccYVZPyU+SbI=;
-        b=l7wiJwNrutghyxBYAsPCGJ8e6pLNvsq330bPNWfqHDHIreBaTC6tdPNrzvw8jA8/Ok
-         hA/QANj5s2/3c8PxYawJs+I6aMHO33XWL+kTEZz/nqKqbv4Mnr5UZ1qSc9nQTHowNqN7
-         fFUX3mHPVm/dpparopo3eHdUmZsYTZACP7kSs28LZKmuiWiI/XZujOW5VnVeP2gGpUP8
-         mJm9xyZXqcQsPVUvtLBGHNw+WVFbVnyiZjr10gUSFdd1R4oQUj7Xq3GOjLu+scVuu1Mw
-         R8dQUQSRsb/Tk++pv6vUV1LMS76mMzH4glN5bl++M+oA5nGtBzQn7tm7bYzKFhQSfqJE
-         qo6Q==
+         :user-agent:mime-version;
+        bh=gWiGc1RECpupwDqpwVt/YH5XZ06OMXUQj6nFp7tJKD0=;
+        b=i3HpM/U0l+6IsteR5zLg/Y2KdwlGsiMk1fId7w098vUqd+iHHSrLuvlCL87mnt3a15
+         HBnDdeUx1Y3sRIr09nPv5Fi7A3nV/WhjCf8WVcJF49h/bnPHNWLYKYW7brguJQdO1WP6
+         IbBWK2OdWej+fYW6qqwaAYgRdqp+KQC2N9kKyFbwjd6a3C4k+SLAusREZauldPEVRCM0
+         7rUw2fFE9Oz98lYwMWkH3NMVLQCLVhbnqa2TiL7RZbKqMfVsF6BpTmYWt/ly6KMBFHhw
+         T6DFN8UsTahvzTGnmi7UL+h7jbnEjclyuMWgc2A4VwjDlhLQUl8QMuKsFDu7IDLP7mY+
+         sppA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Hm8swRS4C6DsDRBKZSOZ1holVrf43DXccYVZPyU+SbI=;
-        b=SQhIwAOOd1ieVq08hi1QmwAUPIGBkvqbLKLI8fdHR1JC//qljZeu+Hy63VozGXTq5n
-         YgDLf87FMPS3xuLEmriKR3xPER/58z61h63963pN1PMMTsFwnIg73GIeiY20F6mZWz39
-         oYVeVTGlY6lE+oVObez3VoZQ4AAx6KBYIPWmtP7TURE6kOoSfDQHy8Ah6NnMdc3O5CHu
-         D9vGbhlJZmFlck6jRJ7T1kdZO7OvCaYiBNVeeCywbUdpIwoqIZ2B/D6FrixhAxZ0JGY3
-         5nj5gHfGba4pF/SvZAeAJ36dN1iBeW5Y92ES8DtDFomZpGK0ThYqKJrLJC91iwqN8m1w
-         Kfbw==
-X-Gm-Message-State: AHQUAubalu/rvWjzxcj4Mu5gy/crWv82lknhtUHQngJ363rp4RZbLUYI
-        vaig9hEsmLJoTbrToTbkefg=
-X-Google-Smtp-Source: AHgI3IYSIuIdn3g8RQvaUZILgDV+qr9blAHNuF1JyDKda4v31XXAA3XU6GTTRb/pAKJ8gHkpFyTtqg==
-X-Received: by 2002:a7b:c04e:: with SMTP id u14mr392466wmc.133.1549303186947;
-        Mon, 04 Feb 2019 09:59:46 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id s5sm8845677wmh.37.2019.02.04.09.59.46
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=gWiGc1RECpupwDqpwVt/YH5XZ06OMXUQj6nFp7tJKD0=;
+        b=cOJWWBJoVfAym2HPZkYMWwvGxUp0kH7fyaZeXV0ZcM3K6A+Gx49/y/4X4BOClP6Ykw
+         lWyWbKzKCCoZyY1rxn2ebXmpdr3+4sQU4742YSz020zmLLkNvcienRurY2HrQ2yC8jjZ
+         vKcEGth/O/i8oSEAUw6GYhy2EqGjY8+eOfLkqz2LPrpm+OE0Fpvk/RKO7AbSs9z5T6K0
+         rtwwKNgPlJNRFP9bIokTqXRmPWizy+X4G5/CJ+GLanOsEt2idWTwiKtsiozb0TYiqPaC
+         +EQaAT5PwIZe/jMb23AQCkSWAk2WGJyxL2Jugwe3ejODPNG3n+QjvPm1b9Lzqs+stHVz
+         bbjw==
+X-Gm-Message-State: AHQUAuZRW9nwxCbgFZ2YEpuAeC90TCvfrgNlMLIXMTrE818Hxcs3vr7j
+        fSCHXNkO10K/jMxYzDSkfb8=
+X-Google-Smtp-Source: AHgI3IYGICFFahOwFOTCF6RMXxZ5PL+ENi8saqJvbdeLuMlsmji70AlH+sf4N8L63LloQUasmkZ1Sw==
+X-Received: by 2002:a1c:96c5:: with SMTP id y188mr486711wmd.103.1549303855286;
+        Mon, 04 Feb 2019 10:10:55 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z15sm2581235wml.15.2019.02.04.10.10.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Feb 2019 09:59:46 -0800 (PST)
+        Mon, 04 Feb 2019 10:10:54 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] git-commit.txt: better description what it does
-References: <20190131092112.6197-1-pclouds@gmail.com>
-        <20190201100910.30432-1-pclouds@gmail.com>
-Date:   Mon, 04 Feb 2019 09:59:45 -0800
-In-Reply-To: <20190201100910.30432-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Fri, 1 Feb 2019 17:09:10 +0700")
-Message-ID: <xmqq7eefwi26.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Dan McGregor <dan.mcgregor@usask.ca>,
+        Git Mailing List <git@vger.kernel.org>,
+        Masaya Suzuki <masayasuzuki@google.com>
+Subject: Re: [PATCH] http: cast result to FILE *
+References: <20190201193004.88736-1-dan.mcgregor@usask.ca>
+        <xmqqr2crxl7o.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8B_=qbeimp5=RS-r2gwEjVV9rDE_2_tk_DDqz6rJazvFw@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1902041243220.41@tvgsbejvaqbjf.bet>
+        <CACsJy8BtaxMRTG4-r3iJfUuR9k-=r=4QTRxCkFt3k3p7826Z9A@mail.gmail.com>
+Date:   Mon, 04 Feb 2019 10:10:54 -0800
+In-Reply-To: <CACsJy8BtaxMRTG4-r3iJfUuR9k-=r=4QTRxCkFt3k3p7826Z9A@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 4 Feb 2019 19:13:06 +0700")
+Message-ID: <xmqq1s4nwhjl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> The description of git-commit jumps right into the commit content, which
-> is important, but it fails to mention how the commit is "added" to the
-> repository. Update the first paragraph saying a bit more about branch
-> update to fill this gap.
+>> The disadvantage, of course, would be that other call sites would not
+>> benefit from a manual auditing whether the argument has side effects (and
+>> thus, whether a macro using the argument multiple times would result in
+>> very unexpected multiple side effects).
 >
-> While at there, add a couple linkgit references when the command is
-> first mentioned.
->
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  NOTES section is gone. First paragraph updated.
+> That's just a better reason to "fix" it in compat/. If you define a
+> git_fileno() function and map fileno to it, then you won't have to
+> deal with side effects of FreeBSD's fileno() macro. All evaluation
+> happens before git_fileno() is called.
 
-I haven't been following the discussion in the previous round, but
-this looks like a sensible change.  Thanks, both.
+Hmph, so the idea is to have
 
+	/* do not include git-compat-util.h here */
+	int wrapped_fileno(FILE *f)
+	{
+		return fileno(f);
+	}
 
->
->  Documentation/git-commit.txt | 18 +++++++++++-------
->  1 file changed, 11 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index f970a43422..a85c2c2a4c 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -17,16 +17,20 @@ SYNOPSIS
->  
->  DESCRIPTION
->  -----------
-> -Stores the current contents of the index in a new commit along
-> -with a log message from the user describing the changes.
-> +Create a new commit containing the current contents of the index and
-> +the given log message describing the changes. The new commit is a
-> +direct child of HEAD, usually the tip of the current branch, and the
-> +branch is updated to point to it (unless no branch is associated with
-> +the working tree, in which case HEAD is "detached" as described in
-> +linkgit:git-checkout[1]).
->  
-> -The content to be added can be specified in several ways:
-> +The content to be committed can be specified in several ways:
->  
-> -1. by using 'git add' to incrementally "add" changes to the
-> -   index before using the 'commit' command (Note: even modified
-> -   files must be "added");
-> +1. by using linkgit:git-add[1] to incrementally "add" changes to the
-> +   index before using the 'commit' command (Note: even modified files
-> +   must be "added");
->  
-> -2. by using 'git rm' to remove files from the working tree
-> +2. by using linkgit:git-rm[1] to remove files from the working tree
->     and the index, again before using the 'commit' command;
->  
->  3. by listing files as arguments to the 'commit' command
+in compat/fileno.c and then do something like this
+
+	#ifdef fileno
+	#undef fileno
+	#define fileno(x) wrapped_fileno(x)
+	#endif
+
+for FreeBSD in git-compat-util.h or something like that?
+
+I think I can buy that.
