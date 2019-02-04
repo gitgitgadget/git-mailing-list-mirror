@@ -2,139 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2CE91F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 10:54:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A52071F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 11:07:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732930AbfBDKyW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 05:54:22 -0500
-Received: from mout.gmx.net ([212.227.17.21]:55043 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732921AbfBDKyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 05:54:19 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M0cs6-1h7rWh0xKA-00up0b; Mon, 04
- Feb 2019 11:54:17 +0100
-Date:   Mon, 4 Feb 2019 11:54:20 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH ps/stash-in-c] strbuf_vinsertf: provide the correct buffer
- size to vsnprintf
-In-Reply-To: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org>
-Message-ID: <nycvar.QRO.7.76.6.1902041138550.41@tvgsbejvaqbjf.bet>
-References: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730101AbfBDLGz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 06:06:55 -0500
+Received: from mail-it1-f193.google.com ([209.85.166.193]:53188 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729825AbfBDKnM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 05:43:12 -0500
+Received: by mail-it1-f193.google.com with SMTP id d11so19966128itf.2
+        for <git@vger.kernel.org>; Mon, 04 Feb 2019 02:43:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=E/A2P6h38bSIe8/nHN/76xUFBpLGZIDRuwOtYHY+iPE=;
+        b=Fg4iRFSbT65FZBejoSAc9mISkqHvawE7JQ78BKjfyX5nm7j5jnBk4Nkimpqz/DdDQ0
+         eYT/PwptKblHpXSOqpoC1sYhvzoKJPEyyU3KkLhiAaU3gRGqlvc3O2F+bxhCBr1ayIsR
+         vYvpdGA6nyejF3yL325OTOCk3G7JUq8Xq1ka1RKNWD8fMEAbSB8oCrDzM+UgfJ2+gOki
+         gsaDiZ/mmcO5ndgRUNICRPAao/h2P2zULkuy8X3hrbote3gwKVakznKsIMfCheJ+9tCh
+         B/rROJeBH4q61SN/SxOLraSrT1UR3cM5FNGJBtVqihkm+vEfmTn5GwLge+9v281nldcX
+         Pj5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=E/A2P6h38bSIe8/nHN/76xUFBpLGZIDRuwOtYHY+iPE=;
+        b=bHXyYRXDRrvEx0scJKkOa4AKEWQLCbYC5zhrUjBUXA6P/xi3KTBd9+jLKsJmDWo1/6
+         9+e7FwEpNMdTEQAxAAseGtUpjp9tqN9IzN2lgG24/ik0x6JxEtSrWaYt1MpD/nTxaL0i
+         +eYpCopG0hSZQjMWjCpFUGB2imbNiHA2pdAPp5EQSfP/npdt2UHUxOGZEbGalGdQcEyU
+         a+3vLfGGS5Mb9vBfy2hiy7pCGvDahW1HqdnimYAEAfDSlj15y1eZrF9ujhFrRh5e2ORe
+         B1GlOBELzhvkNKtN1RxgI6lVREpnhW1bGpKdWWMlnnkngenG1wJqs54mtYPApc5MfEpo
+         BjSg==
+X-Gm-Message-State: AHQUAuZdgNj0U4xh83XDEJAxqIT9af9MjtBfa1vp/NxkOk0TIYgls6Z7
+        IFTkx1as/NoU/yjpKZd8F8zn72zzvylYaX8gyC/wrw==
+X-Google-Smtp-Source: AHgI3IbQsHlPnBJcbFJP/ybpY53ZtqebbHj+U7iQCZ9bYMTPS72iQ5bZ8I/FtyY2/bsNNrWVxQgkBdv+6JXeQVWRVg0=
+X-Received: by 2002:a6b:c544:: with SMTP id v65mr23222481iof.118.1549276991907;
+ Mon, 04 Feb 2019 02:43:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:xkZ7NI2kZwnN9gnJPZx6LzmClfhsUO06IwKXzELgJaC7jHNj4Wc
- Rs+r4l9tRdZiQOCaudWgNB2ihObjqjdQP25UJ+xNv+bzhwugvO0Hei/PU0JafV+3wzcSDpH
- 7+Mq6Bivg4iyzA/IKNTE81MkAqag7VTwvsvGgpxPWj7nguLP9sJQAVEG3YVWKSj9ZKbxr/F
- G79IRWe3cT/xTgKd25Y6g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0wLxCJu0Ac8=:e8S5hfslw9t8d2UvkAy32a
- yhxhH07IXKZn8QHgwpAcoeocPE3DTAkupfWBC8MQOC5DT1WDP4+JMHd896T11xDCpvvtRkuF7
- tzysDJmkrtBkd/rZHOA9XG0E/S7/rAM0uReRNj+3nibCINSZkkSt7SkV6BHsbL+92YN8skXi3
- 3C9e+6XBjzc/L2zXnWPpZf0MFdrrtEqOyE5qlyiNqcnrMl1c3UYPbfXuvpvBYTH2guBB0ziL3
- 6N1CNxh2syFfkN7ydK0F7ZEz/EbhRvk6uOnW8Ro/DDkgexkOfo7NicoGZEhR8Ys8C+knKQ3ei
- 9p+Y5RfObZPUhw9rf2VJF/bD6NpDVC2VzKXi67NVoIfPvvwoZ9Qh9oDbxTgOkg3htaEBT7sMM
- aD/4Y7dwAuIoZnxC6eLTUOU5amMQ56/Tv9QkT5EL3lube9IIRKbBBA5F1WAoqqNqoTHh22K/c
- c1INFPjSZEiU2jBmLnt//1nhcUMtby9m9aGpo6c7Wwq5YDMy99Xz5nvTgThC9hHcTf+4mwSD3
- 3erV0fKwYqxp4ohk/XC2T4WONbWdEQz8LX7KfkaBa/06qrEGD5H5G1TZ9XhXIX/PhSRajyxLR
- A2nOEBMr7UjvMkRPb9d+VY/NMBuZKaMsuF2yYogT2QJ4pY/WSQlflgvti6sQ7m/bueTGkrTxD
- qmHpsgVNHacUjYXZssSo6Fpeht9x9NXR8u2dNXsTrg44y8R1iwFfEK7tM+R5Xv8C2ukrrUECN
- IGA++Wf4OLWgFshNiX/xnN0Yaw+bxye7bcCJtpiGEtAw/APVfRETJU0UTzHwgeXgTpAs04MO9
- Ds4O3OYBF9FmhTiJSGVdixd6gMZCJd1OoEeDn7yYar6I48FBtpboE2du70+xt1tab4J6BSKV/
- Epr3RB0ze8D+MqBsa1Bx6K5fTsvinQ8jGKXvDqZjk1JUHVpaiidVk/+afsmT23LZaOG+JlOTq
- 11EBjM/T3BQ==
+References: <1292425376-14550-12-git-send-email-pclouds@gmail.com> <20190204103618.17992-1-avarab@gmail.com>
+In-Reply-To: <20190204103618.17992-1-avarab@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 4 Feb 2019 17:42:45 +0700
+Message-ID: <CACsJy8BnwRfBZvOq9Yng_n4aqAX0DRG4csbMjVe=9CRWSTajbQ@mail.gmail.com>
+Subject: Re: [PATCH] diff-tree doc: correct & remove wrong documentation
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+On Mon, Feb 4, 2019 at 5:36 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+>
+> The documentation saying that diff-tree didn't support anything except
+> literal prefixes hasn't been true since
+> d38f28093e ("tree_entry_interesting(): support wildcard matching",
+> 2010-12-15), but this documentation was not updated at the time.
+>
+> Since this command uses pathspecs like most other commands, there's no
+> need to show examples of how the various "cmd <revs> <paths>"
+> invocations work.
+>
+> Furthermore, the "git diff-tree --abbrev 5319e4" example shown here
+> never worked. We'd ended up with that through a combination of
+> 62b42d3487 ("docs: fix some antique example output", 2011-05-26) and
+> ac4e086929 ("Adjust core-git documentation to more recent Linus GIT.",
+> 2005-05-05), but "git diff-tree <tree>" was always invalid.
 
-On Sun, 3 Feb 2019, Johannes Sixt wrote:
+Nice!
 
-> strbuf_vinsertf inserts a formatted string in the middle of an existing
-> strbuf value. It makes room in the strbuf by moving existing string to
-> the back, then formats the string to insert directly into the hole.
-> 
-> It uses vsnprintf to format the string. The buffer size provided in the
-> invocation is the number of characters available in the allocated space
-> behind the final string. This does not make any sense at all.
-> 
-> Fix it to pass the length of the inserted string plus one for the NUL.
-> (The functions saves and restores the character that the NUL occupies.)
-> 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+I was going to protest "but it does not work!" but I was thinking
+ls-tree instead of diff-tree.
+
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  I found this, because in my environment I have to compile with
->  SNPRINTF_RETURNS_BOGUS. Our implementation of vsnprintf in
->  compat/snprintf.c writes into the end of the buffer unconditionally,
->  at a spot that is unrelated to the formatted string, and this leads to
->  "BUG: a NUL byte in commit log message not allowed" in some "stash"
->  tests.
-> 
->  strbuf.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/strbuf.c b/strbuf.c
-> index bfbbdadbf3..87ecf7f975 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -270,7 +270,7 @@ void strbuf_vinsertf(struct strbuf *sb, size_t pos, const char *fmt, va_list ap)
->  	memmove(sb->buf + pos + len, sb->buf + pos, sb->len - pos);
->  	/* vsnprintf() will append a NUL, overwriting one of our characters */
->  	save = sb->buf[pos + len];
-> -	len2 = vsnprintf(sb->buf + pos, sb->alloc - sb->len, fmt, ap);
-> +	len2 = vsnprintf(sb->buf + pos, len + 1, fmt, ap);
+>  Documentation/git-diff-tree.txt | 51 +--------------------------------
+>  1 file changed, 1 insertion(+), 50 deletions(-)
+>
+> diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tre=
+e.txt
+> index 2319b2b192..43daa7c046 100644
+> --- a/Documentation/git-diff-tree.txt
+> +++ b/Documentation/git-diff-tree.txt
+> @@ -31,10 +31,7 @@ include::diff-options.txt[]
+>
+>  <path>...::
+>         If provided, the results are limited to a subset of files
+> -       matching one of these prefix strings.
+> -       i.e., file matches `/^<pattern1>|<pattern2>|.../`
+> -       Note that this parameter does not provide any wildcard or regexp
+> -       features.
+> +       matching one of the provided pathspecs.
+>
+>  -r::
+>          recurse into sub-trees
+> @@ -114,52 +111,6 @@ include::pretty-options.txt[]
+>
+>
+>  include::pretty-formats.txt[]
+> -
+> -
+> -LIMITING OUTPUT
+> ----------------
+> -If you're only interested in differences in a subset of files, for
+> -example some architecture-specific files, you might do:
+> -
+> -       git diff-tree -r <tree-ish> <tree-ish> arch/ia64 include/asm-ia64
+> -
+> -and it will only show you what changed in those two directories.
+> -
+> -Or if you are searching for what changed in just `kernel/sched.c`, just =
+do
+> -
+> -       git diff-tree -r <tree-ish> <tree-ish> kernel/sched.c
+> -
+> -and it will ignore all differences to other files.
+> -
+> -The pattern is always the prefix, and is matched exactly.  There are no
+> -wildcards.  Even stricter, it has to match a complete path component.
+> -I.e. "foo" does not pick up `foobar.h`.  "foo" does match `foo/bar.h`
+> -so it can be used to name subdirectories.
+> -
+> -An example of normal usage is:
+> -
+> -  torvalds@ppc970:~/git> git diff-tree --abbrev 5319e4
+> -  :100664 100664 ac348b... a01513...   git-fsck-objects.c
+> -
+> -which tells you that the last commit changed just one file (it's from
+> -this one:
+> -
+> -------------------------------------------------------------------------=
+-----
+> -commit 3c6f7ca19ad4043e9e72fa94106f352897e651a8
+> -tree 5319e4d609cdd282069cc4dce33c1db559539b03
+> -parent b4e628ea30d5ab3606119d2ea5caeab141d38df7
+> -author Linus Torvalds <torvalds@ppc970.osdl.org> Sat Apr 9 12:02:30 2005
+> -committer Linus Torvalds <torvalds@ppc970.osdl.org> Sat Apr 9 12:02:30 2=
+005
+> -
+> -Make "git-fsck-objects" print out all the root commits it finds.
+> -
+> -Once I do the reference tracking, I'll also make it print out all the
+> -HEAD commits it finds, which is even more interesting.
+> -------------------------------------------------------------------------=
+-----
+> -
+> -in case you care).
+> -
+> -
+>  include::diff-format.txt[]
+>
+>  GIT
+> --
+> 2.20.1.611.gfbb209baf1
+>
 
-It is really unfortunate that we use a non-dynamic code review system
-where it is pretty impossible to increase the amount of context lines
-easily.
 
-And in this instance, a single line before the shown context would
-suffice:
-
-	strbuf_grow(sb, len);
-
-Which is in line with moving from `pos` to `pos + len`, and it is also in
-line with saving the byte at `pos + len`. And since we must consider that
-byte as part of the buffer, and since `vsnprintf()` wants that size of the
-buffer (including trailing NUL), `len + 1` is correct.
-
-And since `strbuf_grow(sb, len)` would not in general grow the buffer by
-exactly `len` bytes, you indeed fixed a bug.
-
-For historical context, when I first implemented `strbuf_vinsertf()`, I
-first grew the buffer, then let `vsnprintf()` write to the end, and then
-would rotate the bytes into their correct location. This required the
-implementation of an in-place rotation scheme, which was a lot of fun, and
-totally unnecessary. That `sb->alloc - sb->len` parameter you fixed was a
-remainder of that fun side project.
-
-Thanks for fixing it,
-Dscho
-
-P.S.: Side note: I just realized that we could also write
-
-	save = sb->buf[pos];
-  	memmove(sb->buf + pos + len + 1, sb->buf + pos + 1, sb->len - pos - 1);
-
-instead, i.e. not move the first byte just to have it overwritten by
-vsnprintf() immediately, saving on moving one byte. But quite frankly, in
-this case I do agree that readability is more important than trying to
-squeeze out the last bit of performance.
-
->  	sb->buf[pos + len] = save;
->  	if (len2 != len)
->  		BUG("your vsnprintf is broken (returns inconsistent lengths)");
-> -- 
-> 2.20.1.86.gb0de946387
-> 
+--=20
+Duy
