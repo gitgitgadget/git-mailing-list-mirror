@@ -2,26 +2,25 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.5 required=3.0 tests=BAYES_50,DATE_IN_PAST_06_12,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=2.3 required=3.0 tests=BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,
 	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B54FD1F453
-	for <e@80x24.org>; Mon,  4 Feb 2019 19:04:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8424B1F453
+	for <e@80x24.org>; Mon,  4 Feb 2019 15:52:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729491AbfBDTEM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 14:04:12 -0500
-Received: from icicles.com ([185.53.169.21]:33375 "EHLO homeydesign.com"
+        id S1731386AbfBDPwI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 10:52:08 -0500
+Received: from icicles.com ([185.53.169.21]:56247 "EHLO homeydesign.com"
         rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729323AbfBDTEM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 14:04:12 -0500
-X-Greylist: delayed 3738 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Feb 2019 14:04:11 EST
+        id S1731371AbfBDPwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 10:52:08 -0500
 To:     git@vger.kernel.org
-Subject: Need to retouch your photos?
-Message-ID: <9d074b755cdaef379815a8156d0da635@coroflot.com>
-Date:   Mon, 04 Feb 2019 13:00:36 +0100
-From:   "Stacy" <tuenkzanzsat@verizon.net>
+Subject: Need this for your photos?
+Message-ID: <a9a628786a3f3f1956cf91d47b939bfe@coroflot.com>
+Date:   Mon, 04 Feb 2019 14:42:21 +0100
+From:   "Stacy" <tuenkasnzsat@verizon.net>
 Reply-To: foshzhian@sina.com
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset="UTF-8"
@@ -56,8 +55,9 @@ Stacy
 
 
 
+
 Offendbach
 
 
-Heindberg
+Beckudm
 
