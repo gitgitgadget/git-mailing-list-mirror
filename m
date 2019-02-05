@@ -2,83 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDF111F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 15:02:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27C841F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 15:16:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729464AbfBEPC3 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 5 Feb 2019 10:02:29 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:55742 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729461AbfBEPC2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 10:02:28 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x15F2Ive031867
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 5 Feb 2019 10:02:19 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Dani Koretsky'" <Dani@cybereason.com>, <git@vger.kernel.org>
+        id S1729422AbfBEPQ2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 10:16:28 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:37325 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729174AbfBEPQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 10:16:28 -0500
+Received: by mail-ed1-f49.google.com with SMTP id h15so3144974edb.4
+        for <git@vger.kernel.org>; Tue, 05 Feb 2019 07:16:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=QsRtIOP94ssqU4ku5/SISjzdQHTPSFgcEesWDJHg3Yo=;
+        b=MjDPq6M6Tm+xf64K2yQT+YqjYttYP2Ku9YEs6FcIVJMxKL+5ks58w6RTnqEs/qzywj
+         v+JXfEMtSyyKWYWNBMIgEBKajZ04Iyz+KJCHYBXJ7XU5R4PsScD3BaEbd3Qvpoxhy53G
+         Udo01P7r5k50HeWlMfj8o3DG08u/BlKVZXRMY7KJowI7Bc0+aymL/Wvq3hLMmB/icDIu
+         Z33aaX435JtLuVJ3fQGmErKcTjqw9v2tpW+lNtfOTwpF6aBoNSJ1lOgEXTwaEoH/TcDQ
+         B/hV5yFxNJPakIx60tXGLXuSzVjWPGvB5lhkaB0LMPUKk7NvFIxTx8o9qEHMfwYnjHto
+         ZqdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=QsRtIOP94ssqU4ku5/SISjzdQHTPSFgcEesWDJHg3Yo=;
+        b=SQBcleGNWFryTCY3VKpfeYfj8Wiwmu4g4IBdYRfNGRIKLJr4SG+3vIjIhR6B8UUH5U
+         qrN5X9y645A/yF4gjZPP9ubDWZnhSD971154eBzbKBRENPhp6f5xu/u+LG3xqxmxzB7d
+         2ariW7QWLQKOiM48dU2/mdH6mmk6XFsALn5l21zWAgn3vUB3+ojs3bG35zviMvIN/kVc
+         m2p/e/z+7QT6JHsyDAmt9wdlf3s8fI6dZw5RwjJL2/XpS/sHEr1tkiFLvwBD42Rnyd9L
+         P6+O4o1eCHToSMftIwVzGZXgpJwLf4G/KqRjQfuDrhHk8RuDvAvS2n0UZGXNv8ON/X83
+         nOOA==
+X-Gm-Message-State: AHQUAuaEKdHWsBptbtuyHHV3826Ent9qPwFG3j0xnDSN0ZBwbGbatuiQ
+        1wsZNZETWoG5fYUnCv9t/j78Q4hNl80=
+X-Google-Smtp-Source: AHgI3Iaxtmk1LSxvEBONqyH7lhLpVp+NkC4LPKMNEbwqEbI8+eU4PJdbwu2FJXukku3hcxMRQ39lig==
+X-Received: by 2002:a50:ee1a:: with SMTP id g26mr4286660eds.266.1549379786681;
+        Tue, 05 Feb 2019 07:16:26 -0800 (PST)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id n13sm2176151eju.30.2019.02.05.07.16.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 05 Feb 2019 07:16:25 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Dani Koretsky <Dani@cybereason.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG]: git checkout on a new tag with current HEAD shows "head detached" at previous tag
 References: <CANcfovV3Pq3pubtNq4HCSZOJ5OC9dVSm+19VkOiQimAH+fttYw@mail.gmail.com>
-In-Reply-To: <CANcfovV3Pq3pubtNq4HCSZOJ5OC9dVSm+19VkOiQimAH+fttYw@mail.gmail.com>
-Subject: RE: [BUG]: git checkout on a new tag with current HEAD shows "head detached" at previous tag
-Date:   Tue, 5 Feb 2019 10:02:09 -0500
-Message-ID: <000c01d4bd63$c8fc7ff0$5af57fd0$@nexbridge.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <CANcfovV3Pq3pubtNq4HCSZOJ5OC9dVSm+19VkOiQimAH+fttYw@mail.gmail.com>
+Date:   Tue, 05 Feb 2019 16:16:24 +0100
+Message-ID: <87munal0zb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHgwXGMn7Nz/J07H/AVhftWQNshyqW5RAXA
-Content-Language: en-ca
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 5, 2019 4:20, Dani Koretsky wrote:
+
+On Tue, Feb 05 2019, Dani Koretsky wrote:
+
 > I have 2 tags such as release-17.6.230 and release-17.6.220:
 > If I'm changing commits, all works as expected.
-> 
+>
 > If however both are pointing to the same commit, the output is as follows:
-> 
+>
 > git checkout release-17.6.220
 > git status
 > HEAD detached at release-17.6.220
-> 
+>
 > now if I run:
 > git checkout release-17.6.230
 > git status
 > HEAD detached at release-17.6.220
-> 
-> Which is theoretically correct, but I'd expect after checking out a certain tag
-> I'd be see that specific tag...
-> 
-> Sorry if this is intended behavior, I couldn't find clear mention of this
-> behavior on the git checkout documentation online..
+>
+> Which is theoretically correct, but I'd expect after checking out a
+> certain tag I'd be see that specific tag...
+>
+> Sorry if this is intended behavior, I couldn't find clear mention of
+> this behavior on the git checkout documentation online..
+>
+> Let me know if I can help in anyway.
 
-Please use
+You're right about this issue. I haven't dug deep into this, but just
+enough to see why this is. When we "git checkout" something we write to
+the reflog that we moved to such-and-such a ref, we then consult the
+reflog when you run "git status" to see what we detached the HEAD from.
 
-git checkout -b release-17.6.220
+As you can see if you run "git reflog" after you check out the first and
+second tag, that entry doesn't change, and we still note just the first
+tag you checked out.
 
-What your  commands above have done is resolved release-17.6.220 to a commit, then checked out that commit instead of creating a branch. Alternatively, use
+This is going to be because of a short-circuit behavior where we see "oh
+we already checked this out".
 
-git checkout -b new-branch release-17.6.220
-
-to name it something else.
-
-Regards,
-Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+Maybe that needs to be fixed as a bug, but would have more implications,
+i.e. are there cases where you can flip-flop and end up spamming the
+reflog, should the post-checkout hook run or not in those cases, etc.
