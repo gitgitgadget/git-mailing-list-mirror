@@ -2,104 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7291A1F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 16:26:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71FF51F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 17:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728842AbfBEQ0l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 11:26:41 -0500
-Received: from mail-it1-f201.google.com ([209.85.166.201]:43645 "EHLO
-        mail-it1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727943AbfBEQ0l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 11:26:41 -0500
-Received: by mail-it1-f201.google.com with SMTP id p124so6509765itd.8
-        for <git@vger.kernel.org>; Tue, 05 Feb 2019 08:26:40 -0800 (PST)
+        id S1727250AbfBERlQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 12:41:16 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37253 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726534AbfBERlP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 12:41:15 -0500
+Received: by mail-wr1-f66.google.com with SMTP id s12so4605885wrt.4
+        for <git@vger.kernel.org>; Tue, 05 Feb 2019 09:41:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=yEoYdWBeYuvnMUt+BcxO8pTBnFQZgq0bvFvGiSLzWqI=;
-        b=o4aGoB1/ufm/fF4ODsAM9oD5jWUn+af588ujq1ICcV/fIVuTosmfGrl9tpbDI2oYjz
-         UY6g5B0eyr4WhKh+UUEf499zE6Ct+mQopav+t0hvB2BvVk2TZ49TAhSgYr0e88DwJ1ng
-         z8mwNoUUARIKcR4F8IQqS1UDq+q1dn5huBd0ZUBoFnTUMUX6IFYHTZM+Z7JrH9CYw9jK
-         SvOOCituWkjfImyxKL4Ym/971unoKeadvTwXZV/DjoVyTTxQ21h2MEgvzOeMjMcpZBhF
-         NdeuW2OYXU9hE4Dvj0Sa1IP/fhYrmOG9Tks8+bQo5K7LMwnj2OyrpcKkKDUb3Jvq0k1e
-         vPEA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=gBQqJCvtigAs7b5SHb2KQlWqhWk1wLgHWWaDJlQXQC4=;
+        b=fLjfei9BtBSABfxsKJyHItSp8aNQOcVM/Q3IN606PCvSWuYtsValpERSwFXN97jr3q
+         7r24FJiUTz1UY+alT//wRqg1oRRuuz+ceGXEPYI9fi+VS8bLbFCrYtH2p5lTMyXtdq8X
+         HkG+XLD9toMaFPbVI0ar/EUl9MWa6LCOwZsFqGduwkrEA+sQzbVXh/w39Klxjrjmj+Mi
+         vdTltnowIKTFAga7iexrW/LHE6XLbMSqF2tjNJdXapkxfT1wvBNnnn345IuALcXs5MnB
+         wPJj+E0dgXIZVpiqtjEMjaDDECIbTVZIHMClTrOhzAvsC8HCS6StLkWv93dNBOStY20v
+         jjog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=yEoYdWBeYuvnMUt+BcxO8pTBnFQZgq0bvFvGiSLzWqI=;
-        b=U4IdL80id4y6Ioa0vwgflnrj47sv8c0Pf5LUThY0tZKFg9mUDom8u3i8zUkzjJccro
-         O/reTZfRy3A2pdGbsRRcFGoz7kGwGZrdPbPZQpdC6ciEyXLdBLSDPGXvTrcm2b4m1/Mi
-         nnTwEhqOj/ioyKIWeesKV13lGIx9oGBxEtVYr1cmPBqHluSfiipOdTIS4qk3ApHEnXRy
-         cHgZ3yyRKUDVUZJ5DXvMEY6fA2dItcVNvDTq7ui/Uy7O5LwyXBx5uozTzy+ieJKSFgSq
-         eHysKrSruJI5mum8b43FMqsSsqVxpE7pH+tY9Wojv/9+vM5QpxmyyWBRQStD00O4GB1C
-         baDw==
-X-Gm-Message-State: AHQUAuaNV8iK/QJHNyMfn97/VTIFH5bXbW/X2P9Iep/p34KDV+dTSJHZ
-        7xH85Pi78YmpH1vPWQn7dN8PaoWKqj1Lr58/AjKi
-X-Google-Smtp-Source: AHgI3IYwEqVniZlzBRBYbhiOYxDlcnTBKWuKwSXpYVYJf7HgrdeBZ+fetgxCKVSYfLhRCum9oQnkLL/QIFT5bKRWSZNm
-X-Received: by 2002:a24:5948:: with SMTP id p69mr3445045itb.21.1549384000417;
- Tue, 05 Feb 2019 08:26:40 -0800 (PST)
-Date:   Tue,  5 Feb 2019 08:26:36 -0800
-In-Reply-To: <CACsJy8CvVPr+OJ04aLGDeAS-o5__x1+3cKQNuq2+qba5gw5W+g@mail.gmail.com>
-Message-Id: <20190205162636.128901-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CACsJy8CvVPr+OJ04aLGDeAS-o5__x1+3cKQNuq2+qba5gw5W+g@mail.gmail.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH] fetch-pack: clear alternate shallow when complete
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     pclouds@gmail.com
-Cc:     sandals@crustytoothpaste.net, jonathantanmy@google.com,
-        jrnieder@gmail.com, sbeller@google.com, gitster@pobox.com,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=gBQqJCvtigAs7b5SHb2KQlWqhWk1wLgHWWaDJlQXQC4=;
+        b=g2c/1Uk2KsvSbFHCUAn3FF0xaWQ9fI4Rm63kDW9MNn0I4y9USeqphAowfOq5eq+m3U
+         8AkBfl1DuHTAFecRiOVy4UB6HS3CwRKvjLsHAEBgmKkJ4ZNeo3rDIgyKLU4GAGiJf2za
+         Ef9k5EPk32klMMqvSzoBs4tfHIHPo/nslyD+k5pk06FIj1rYTwzI2g0aKEngT+t7XMIQ
+         FZJNyZKqLBha4czd3TbYAHBmCMK8sFksTg/bHgfyNY4SInuzmwRMDIN3fBjRya64+WhQ
+         PRIW3nz4zsV2l3krXcMRBdUaGORY/U98E5JtrUZ6xJVWAT8KD3evSBFQuOFGNSbjzVNG
+         m6AA==
+X-Gm-Message-State: AHQUAuZAp8AmBx/F/3lDkC/VFdgxYwwZpjPB41+wBPr1Jg5iW9dKprqw
+        5gYFa7ywCvATMsLwRhl4BFg=
+X-Google-Smtp-Source: AHgI3IbbFa0lw2a73K6fSz69TGBwy0If3eDj7ZN/E5oyxHvWOwQBsbBCnHxmztCb75Vn1EmCvZyNRw==
+X-Received: by 2002:a5d:6244:: with SMTP id m4mr4434509wrv.314.1549388473788;
+        Tue, 05 Feb 2019 09:41:13 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c65sm18825518wma.24.2019.02.05.09.41.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 05 Feb 2019 09:41:11 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] Revert "rebase: introduce a shortcut for --reschedule-failed-exec"
+References: <pull.118.git.gitgitgadget@gmail.com>
+        <e61ebc30605e21ce71623903bc9c850fd964e826.1549367342.git.gitgitgadget@gmail.com>
+Date:   Tue, 05 Feb 2019 09:41:10 -0800
+In-Reply-To: <e61ebc30605e21ce71623903bc9c850fd964e826.1549367342.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Tue, 05 Feb 2019
+        03:49:04 -0800 (PST)")
+Message-ID: <xmqq8syut9op.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Mon, Feb 4, 2019 at 7:06 AM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> >
-> > When we write an alternate shallow file in update_shallow, we write it
-> > into the lock file. The string stored in alternate_shallow_file is
-> > copied from the lock file path, but it is freed the moment that the lock
-> > file is closed, since we call strbuf_release to free that path.
-> >
-> > This used to work, since we did not invoke git index-pack more than
-> > once, but now that we do, we reuse the freed memory. Ensure we reset the
-> > value to NULL to avoid using freed memory. git index-pack will read the
-> > repository's shallow file, which will have been updated with the correct
-> > information.
-> 
-> It may be worth mentioning bd0b42aed3 (fetch-pack: do not take shallow
-> lock unnecessarily - 2019-01-10). I believe this is the same problem
-> and a full solution was suggested but not implemented in that commit.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-For reference, the full solution is [1], linked from that commit's email
-[2]. (Looking back, I probably should have included all the information
-below the "---" in the commit message proper.) The full solution is more
-related to shallow locks, though, not alternate_shallow_file.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> When contributing the patch series, the cover letter tried to convey
+> clearly that the patch introducing the shortcut -y was included only to
+> show that it is possible, with a slight bias against it.
+>
+> During the review, there were a couple reviewers who agreed with this
+> sentiment, and the author was happy that this patch was not needed and
+> concurred that it should be dropped. See e.g. Stefan Beller's reply:
+> <CAGZ79kZL5CRqCDRb6B-EedUm8Z_i4JuSF2=UtwwdRXMitrrOBw@mail.gmail.com>
+>
+> However, it slipped by the original patch author (yours truly) that the
+> patch *was* included when the branch made it to `next` and then when it
+> made it to `master`.
+>
+> So let's back out that patch before it even slips into an official
+> release (in which case we would even have to support this unwanted
+> flag).
+>
+> This reverts commit 81ef8ee75d5f348d3c71ff633d13d302124e1a5e.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-[1] https://public-inbox.org/git/20181218010811.143608-1-jonathantanmy@google.com/
-[2] https://public-inbox.org/git/20190110193645.34080-1-jonathantanmy@google.com/
+Thanks for catching before feature freeze, but read the above again
+with cooler head.  The revert message is less useful than if you
+said 
 
-> The problem with dangling alternate_shallow_file is also from that
-> commit.
+    The patch was sent for completeness just in case it turns out to
+    be too cumbersome not to have a short-hand option, but during
+    the discussion, reviewers agreed that [FOR SUCH AND SUCH REASONS
+    --- fill in the blank here] we are better off without.  The
+    maintainer missed that conclusion and forgot to drop it while
+    merging the topic down, and contributors did not notice the
+    mistake, either.
 
-You're right - thanks for noticing this.
+As the reason is missing, the only thing a reader can get from it is
+"the patch was not intended to be included, but we screwed up".  I
+do not see why a more useful "why it wasn't intended to be included"
+needs to be hidden behind an external reference.
 
-> When line_received is false at the end of
-> receive_shallow_info(), we should clear alternate_shallow_file. I'm
-> still debating myself whether we should clear alternate_shallow_file
-> in receive_shallow_info() in addition to your changes (which is good
-> hygiene anyway) to keep the setup steps of do_fetch_pack() and
-> do_fetch_pack_v2() aligned.
-
-Clearing alternate_shallow_file when line_received is false at the end
-of receive_shallow_info() sounds like a good idea to me.
