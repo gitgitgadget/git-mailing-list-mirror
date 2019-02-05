@@ -2,79 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 267151F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 11:41:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2ABD1F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 11:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727509AbfBELlO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 06:41:14 -0500
-Received: from mout.gmx.net ([212.227.17.20]:49053 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726065AbfBELlO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 06:41:14 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1FAK-1h6SeS3JEm-00tChi; Tue, 05
- Feb 2019 12:41:08 +0100
-Date:   Tue, 5 Feb 2019 12:41:11 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] travis-ci: make the OSX build jobs' 'brew update' more
- quiet
-In-Reply-To: <20190204193823.GA4511@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1902051240080.41@tvgsbejvaqbjf.bet>
-References: <20190202163421.19686-1-szeder.dev@gmail.com> <xmqqk1ifv296.fsf@gitster-ct.c.googlers.com> <20190204193823.GA4511@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727496AbfBELtG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 06:49:06 -0500
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:44868 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725947AbfBELtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 06:49:06 -0500
+Received: by mail-ed1-f46.google.com with SMTP id y56so2558290edd.11
+        for <git@vger.kernel.org>; Tue, 05 Feb 2019 03:49:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=NuJ6lW+iyOsb8HeJnaCUJnxhNqYZ0HYI9DjjRkceYRc=;
+        b=sVGltspVPTDp66BzK7lF1TPIHrd4BEHiV2EctpmMQVdBgOmQ4hFvEYsNPdhH064rQV
+         8P23sUmf3KnydlCRd+Yn17lxCrq+r6F/6B49ac07tmQ1K1jUIaUqJxvC5mAHYf0E6p87
+         HeTAPU7D5XolSRA0WfUuJlVI4L8zdv9dZpVny6X9sLGFYGFoJDRonmbxXS0J9QkokC93
+         NLC3Tz1wnhUq4/pNYEKYoruH0tHi+CEsZU2G3NtJYwIKncnuiTdCeXlaHsedwYyqV2fU
+         JyETjdbozHmfBwYS5Kl8hC6r3104elRQ5IbTCy7L/2r8BvxDnrsCtWuJdB6qKeSLia54
+         Ap3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NuJ6lW+iyOsb8HeJnaCUJnxhNqYZ0HYI9DjjRkceYRc=;
+        b=rDa2RPZ0YZzrVHQdq3AC4AMK5A1dKU9swrDllObHPK6KdNL4rNdUIpP3queHM8yMaV
+         OAkCzwRT4biTrWyq6+55Ll99HRgQ2ONSBzu4VlyPPsCHZhqP+hbYO1vteNQi4B5u9MbW
+         +Bbk4sgs2gZNog3aZTGxu6pbU/UNoxetKV5wpRUxpMfdHW88IF+D5ZeWVZAuicSN+igR
+         y2GwCid99qZ5pCgmJvSuwArJqN+7/8D5vtALTYxlgyqWb8VKSMxTh1mfUXCtmnIzh08w
+         B/5YkjeEiAduHQZTDCLa4A4xzPv7blMUdKfQnTKkmeuxa3WL1QBBdqpAE1Bwn7OS49Yq
+         +glQ==
+X-Gm-Message-State: AHQUAub16w3Qm4kPnzW3AsIibeC6Rew7ZnvG62qTTzoQbmh4U6VXaYAV
+        Zw6nVa4OAINxr3dZRUSrVKMg6Dpf
+X-Google-Smtp-Source: AHgI3IZfAMNyvOyqyC+3EP2+HV2fLCa7eOX9LS8bEksf6byXNR4K2INwmATf2RLfSAtTbAFRKeND2g==
+X-Received: by 2002:a17:906:8144:: with SMTP id z4mr3196714ejw.205.1549367344188;
+        Tue, 05 Feb 2019 03:49:04 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h1sm2972504ejx.41.2019.02.05.03.49.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Feb 2019 03:49:03 -0800 (PST)
+Date:   Tue, 05 Feb 2019 03:49:03 -0800 (PST)
+X-Google-Original-Date: Tue, 05 Feb 2019 11:49:01 GMT
+Message-Id: <pull.118.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] rebase: drop the unwanted -y 
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1391330865-1549366872=:41"
-X-Provags-ID: V03:K1:MjjhAZw6Yq913WCd+eIhS1/BglQwznUn85Pi4u0BN3UKO7ywwkg
- T9x0TACOiDw6XUU4quO8ZLuGfdMRuwdhtH2N7bOqrf6K3wK69VBcMoP6XdHRFeWVulbRkQF
- IaZLCjziwYyrTCsNc7PsPx+93tIpSndpPpfx4jjzEkFQZdqk46jc2yee+PlFgSF4P79Sv5V
- zVJ90YCigX5pfCSOsYy8g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:g7p3SBYPbh8=:dtbBYlPBomnDR14jO6OxmD
- 2lcV8eF7Ny+1uJ7/RL7cObGTmh/GKb+o2WvY48RrAtOO+gz4OaJCSEQWTczFQ+y1YK8kBfzGR
- +xiax1K1oZum2HUik7wBkYz2qwh+lp8vS2YmoeBa6G2h5Dc/riI+W0m1hJMNBryaJ9z6tdG84
- hTAv6YCc0oja/3ONBpBtyQfHsoOCyfFIjO+N0V2I9aTIDCXnGS6Lm9nn1FTNVlGbwe1jFAAw0
- tXSLgkhpZb4nN3cjzH3NV/HphxLujY3hg+JJvdhluK8EDoSRd277TAbZBKztvZwpgslDkw/TB
- NTgLOliWb8Ah3c5DGxUQiyjQQK6MO/S+t919QBmM8cVb5utomL3GyOBINNgIieQBsgd64NQ5d
- /rEap4Cbnvr2SKlVF4SlCMoJkm3mcRBidCgTGMaXwRmvcFUscSxYqHieHN2SKqqUbI2oDR462
- M01HnUYGst3wGMuK/6JbDHZ5XK7hl5Yoj81ZiLOtHulbRS6JDBX+XTDfCupdtjkOd9FAiI6ng
- c70XBszgW0CyAZMnCRpLIqvXBFvCJio9tb9napNB9rox2WxuF4pcRTNNoiCam9jGRaxo35vWY
- iPfU/IMrsmxcrU/2pC2WSJMuvHk1lfsEzEMLRUkguX5/Gf140Ai1NL9Rg+Pw6DWv5EHwlcLdW
- iAwBYbrZRxe8SnUU6YLQIZHOC6H8xGsGXJRliuqebFslMJSwveJq25/vDEZ/fk/D2oOzsWPkd
- J4jX0MOUhFL1p8ZuyXq0TEbNmRsgVjrPOcr5g5KHRUN6DgKGwgasCuh2IoOmY9f2YhQtpO0r+
- 3AuL5RI3Kmtkl5PL2o6TxG5RBIJ/Es7YJLCT8EqDIO2fyn4xf6iQBMoIJ0/gplCjWrASfyxS5
- trkdGgMpgdfNLncJEsW+mkYOs7KS3m9Vdip7PJUeNjLdQt8AsuCY3J2nw0ukZJJSq0VOAL7fN
- jKA6qvbissQ==
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+I totally missed that this patch, despite my pledge to not include it, made
+it into master. Sorry about that.
 
---8323328-1391330865-1549366872=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Johannes Schindelin (1):
+  Revert "rebase: introduce a shortcut for --reschedule-failed-exec"
 
-Hi Gábor,
+ Documentation/git-rebase.txt |  6 ------
+ builtin/rebase.c             | 21 ---------------------
+ git-legacy-rebase.sh         |  6 ------
+ t/t3418-rebase-continue.sh   |  3 ---
+ 4 files changed, 36 deletions(-)
 
-On Mon, 4 Feb 2019, SZEDER Gábor wrote:
 
-> Under Dscho's bugreport it looks like they already merged a one-liner
-> fix, but how long will it take to tickle down to Travis CI, I have no
-> idea.
-
-Since the fix affected a Homebrew package, it was not so much about
-trickling down to Travis, but about trickling down into the public
-Homebrew repositories. And it seems that that trickling is complete now.
-
-Ciao,
-Dscho
---8323328-1391330865-1549366872=:41--
+base-commit: b5101f929789889c2e536d915698f58d5c5c6b7a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-118%2Fdscho%2Frevert-rebase-y-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-118/dscho/revert-rebase-y-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/118
+-- 
+gitgitgadget
