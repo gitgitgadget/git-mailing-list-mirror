@@ -7,75 +7,76 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A34E31F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 15:52:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4705D1F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 15:54:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729890AbfBEPwL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 10:52:11 -0500
-Received: from mail-vs1-f48.google.com ([209.85.217.48]:40826 "EHLO
-        mail-vs1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728740AbfBEPwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 10:52:11 -0500
-Received: by mail-vs1-f48.google.com with SMTP id z3so2434324vsf.7
-        for <git@vger.kernel.org>; Tue, 05 Feb 2019 07:52:10 -0800 (PST)
+        id S1727119AbfBEPyw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 10:54:52 -0500
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:37735 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbfBEPyv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 10:54:51 -0500
+Received: by mail-vs1-f66.google.com with SMTP id s16so391991vsk.4
+        for <git@vger.kernel.org>; Tue, 05 Feb 2019 07:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LuTqnwS1x0u6A6gnfLiJm/nC0YbwQUeGQNY22lml7Nw=;
-        b=kzClYGKoKoRQgSfnstpf+XavcelZ3mzVeQnQw3YqqmO2v89AmN+AazkCDEDXitRcas
-         pDsW/1K8Na8PzeTBk3XIT6uSzEPB2TKNk7Dtxu1YgxoWjZgz8xjCrGi4hBzg4LdAxBlP
-         tjWwsuhIMOs/IcqtHA6EiWpQp1okk0V+WQztQwGTR5SiymG/O5Uz0EDAcPp/IrXlu3k4
-         YzRzpD9xzIa6wWWqVE6lKrD6ev3hXxX4yNbXPVppaQ1CSLeXCh8pKzqV6EZ7iaVV4Vt7
-         sIsOzS5bOXhrPn6Aneh/utL71CesKjZQQje4o7/4JQkB0HsCJRziSUWp2aiNCoyaofuW
-         57Dg==
+         :cc:content-transfer-encoding;
+        bh=82ldfuO6xtw9uWR0HKZg4Q0Kzpacn3A/n9NgDvf5o6Q=;
+        b=FPtobwXTueIl1Qqb0TwEMyio0SLdsCbG96hKKbRvW+K2QHY5+AryE8YNXeShLJaazr
+         pGJ04VYMOMWGkNLMlM0T3I1X6/7g0cQLbGx20BrRy/AbkT+ucLHeNGKYHZhOrOLhEKWv
+         me0SCQNZCw6MMZkI+npXiWPQBkEL2issiiIxNqasxOYsjBNDcNxzq+knbD2iVuyjf8nh
+         6zSxxRPilZOTcZS3QbIaWcLB5kJO18fzHVp/zGZiD5vkpS6L3hZ0mbI/OK1Hv/T+0Gi9
+         uHDa6b+q57ldBmcrVEoHY8PJzYt7zHGxVnOkLzRHay2M//+TeXMUt2pl5Ntc8M76YPNG
+         5fmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LuTqnwS1x0u6A6gnfLiJm/nC0YbwQUeGQNY22lml7Nw=;
-        b=XO8iUAILvGUvRixbls6xSos3rL5WdIGLR1BN/TWkcs9MYYVfO/kV7tDdhefEdkKqfV
-         LtUtCAUih5g6HVHtAT5IiW9DsBudEUbv1/Fyv3tNK4fIFomlyqYMrAgzvv+ZXQwH/03j
-         7GS6FzNz7PfNsvkmiIykr23FOyNw03rVd0TLm7sAM2jU54CyVX1Bq2MQZ32dalZaSuis
-         iU5rFKf9iU9YSgvJVsvbdj4XTtd1c2uTpz6ViUQr+Og9LHxaMCscWd5XhfLyCO7RkOqv
-         75+Df61bXXXSS7jas2BEA6Wrxywdv0Y7iAFSg2Xp11TIfkWNnf8kcSX/IjKlV3b+4z/r
-         F7fw==
-X-Gm-Message-State: AHQUAubi5/aGUs89+AGvalHFiGoRyhJPcJNodbhXFX6O7FgtrSttCwUB
-        yEKPxoD/yV+0Nu1P/sscODpLTc1c5r0rTyW0rfU=
-X-Google-Smtp-Source: AHgI3Iagg13U7YpGHm98iPh8YiAn8FKHhrDv7eRmjVY49hvqtCGeAo2oRwFq4PUzcDhnTo3wknJc7NxtXLAf2sIDZpI=
-X-Received: by 2002:a67:44c4:: with SMTP id y65mr185701vsf.53.1549381929860;
- Tue, 05 Feb 2019 07:52:09 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=82ldfuO6xtw9uWR0HKZg4Q0Kzpacn3A/n9NgDvf5o6Q=;
+        b=NhGOBahtTFZRUK16RQZANePuBp+/VBA/+EbLGqalkwcHsPclGx4I/HZ1TZykQMfz1n
+         vHLcp3b0n8hDYUY7sz0ICQsLXnpTBrXvh+mj/6NQD9R34QYVSRVAqA19dUC7LsD3tAfG
+         peG3f3xnhWQfHz3cr2rFRbh+ElNRcsntd2tkMWIDI1nwxr+d1PXfD1gYKd+XR/x76F0Y
+         9rZoxV/3zGD4wm/YsGbqi9e7KRUudC2gWzZQPBdp+K/GLQLQf06oiPblduWd2HUAoChA
+         0LX17+skdPeAjy4Gt+ncmNQ8D6BEn4GCoN+7vhKUrdGJJjCtNJsOsS1imuLWcxGKAK9A
+         DsKA==
+X-Gm-Message-State: AHQUAuahRWoNjl/9y1eO8hUFdF4aPkI9yPNMFjR6LBTjN9zNXBwAoLwy
+        Kp1f+EUb6uCQMi6kgq8Reom5jRE05ROMvyFsSNA=
+X-Google-Smtp-Source: AHgI3IY9uEuJ+1II3O4gFbzzwxnPhfP5jI7OhL1fBQIkJqspwdP0okfOJS5h5nbKKGmQhbH8Ge2mGortF0fL+QJenFQ=
+X-Received: by 2002:a67:44c4:: with SMTP id y65mr190628vsf.53.1549382090410;
+ Tue, 05 Feb 2019 07:54:50 -0800 (PST)
 MIME-Version: 1.0
 References: <20190126221811.20241-1-newren@gmail.com> <20190204200754.16413-1-newren@gmail.com>
- <xmqqlg2vtfmo.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqlg2vtfmo.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1902051045460.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1902051045460.41@tvgsbejvaqbjf.bet>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 5 Feb 2019 07:51:56 -0800
-Message-ID: <CABPp-BGyL5BAejK-P-EdscFdH3C6uR7e6CbgNe-9doy-mkw-vg@mail.gmail.com>
+Date:   Tue, 5 Feb 2019 07:54:38 -0800
+Message-ID: <CABPp-BGQ62Mj1jym8-xu5XKN6mJ65yq-QUqXjR-xx=AWFZgNbw@mail.gmail.com>
 Subject: Re: [PATCH v4] log,diff-tree: add --combined-all-names option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 4, 2019 at 1:20 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> There is one place that says combined-all-paths, and everywhere else
-> it says combined-all-names.  The former is probably techincally more
-> correct, I think ;-)
+Hi Dscho,
 
-Looks like I had a mixture of my original name (combined-with-paths)
-and the one someone else suggested (combined-all-names).  Since you
-like the hybrid better, I'll switch them all over to it.
-
-> > The combined diff format for merges will only list one filename, even if
+On Tue, Feb 5, 2019 at 1:48 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> On Mon, 4 Feb 2019, Elijah Newren wrote:
+>
+> > The combined diff format for merges will only list one filename, even i=
+f
 > > rename or copy detection is active.  For example, with raw format one
 > > might see:
 > >
@@ -93,9 +94,12 @@ like the hybrid better, I'll switch them all over to it.
 > > detection active) so that we can print tab-separated filenames when
 > > renames are involved.  This transforms the above output to:
 > >
-> >   ::100644 100644 100644 fabadb8 cc95eb0 4866510 MM   desc.c  desc.c  desc.c
-> >   ::100755 100755 100755 52b7a2d 6d1ac04 d2ac7d7 RM   foo.sh  bar.sh  bar.sh
-> >   ::100644 100644 100644 e07d6c5 9042e82 ee91881 RR   fooey.c fuey.c  phooey.c
+> >   ::100644 100644 100644 fabadb8 cc95eb0 4866510 MM   desc.c  desc.c  d=
+esc.c
+> >   ::100755 100755 100755 52b7a2d 6d1ac04 d2ac7d7 RM   foo.sh  bar.sh  b=
+ar.sh
+> >   ::100644 100644 100644 e07d6c5 9042e82 ee91881 RR   fooey.c fuey.c  p=
+hooey.c
 > >
 > > Further, in patch format, this changes the from/to headers so that
 > > instead of just having one "from" header, we get one for each parent.
@@ -109,12 +113,72 @@ like the hybrid better, I'll switch them all over to it.
 > >   --- a/fooey.c
 > >   --- a/fuey.c
 > >   +++ b/phooey.c
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
 >
-> Do we have the three "rename from fooey.c", "rename from fuey.c" and
-> "rename to "phooey.c" extended headers, too?  That's what I meant in
-> my response, but I do like what I see in the above example ;-)
+> I do not really see where this needs to have tests with filenames
+> containing tabs, but your test does create such files. Which makes it
+> break on filesystems that do not allow tabs in file names, such as
+> NTFS. I need this to make the test pass again:
+>
+> -- snip --
+> diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
+> index 5bccc323f648..596705985baa 100755
+> --- a/t/t4038-diff-combined.sh
+> +++ b/t/t4038-diff-combined.sh
+> @@ -435,7 +435,7 @@ test_expect_success 'combine diff gets tree sorting r=
+ight' '
+>         test_cmp expect actual
+>  '
+>
+> -test_expect_success 'setup for --combined-with-paths' '
+> +test_expect_success FUNNYNAMES 'setup for --combined-with-paths' '
+>         git branch side1c &&
+>         git branch side2c &&
+>         git checkout side1c &&
+> @@ -456,7 +456,7 @@ test_expect_success 'setup for --combined-with-paths'=
+ '
+>         git commit
+>  '
+>
+> -test_expect_success '--combined-all-names and --raw' '
+> +test_expect_success FUNNYNAMES '--combined-all-names and --raw' '
+>         cat <<-\EOF >expect &&
+>         ::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 0=
+88bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d4=
+0ee1b RR    "file\twith\ttabs"      "i\tam\ttabbed" "fickle\tnaming"
+>         EOF
+> @@ -465,13 +465,13 @@ test_expect_success '--combined-all-names and --raw=
+' '
+>         test_cmp expect actual
+>  '
+>
+> -test_expect_success '--combined-all-names and --raw -and -z' '
+> +test_expect_success FUNNYNAMES '--combined-all-names and --raw -and -z' =
+'
+>         printf "0f9645804ebb04cc3eef91f799eb7fb54d70cefb\0::100644 100644=
+ 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c=
+2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR\0file\twith\ttab=
+s\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
+>         git diff-tree -c -M --raw --combined-all-names -z HEAD >actual &&
+>         test_cmp -a expect actual
+>  '
+>
+> -test_expect_success '--combined-all-names and --cc' '
+> +test_expect_success FUNNYNAMES '--combined-all-names and --cc' '
+>         cat <<-\EOF >expect &&
+>         --- "a/file\twith\ttabs"
+>         --- "a/i\tam\ttabbed"
+> -- snap --
+>
+> But maybe you want to get rid of the funny file names? Or test for them i=
+n
+> a separate, dedicated test case so that we do not have to guard *all* of
+> your added tests behind FUNNYNAMES?
 
-Ah, gotcha.  I'll look into whether it's possible to hook it up to
-diff.c's fill_metainfo() .
+I don't want to get rid of them; the initial reviews of my original
+patch thought the format was ambiguous and would mishandle files with
+tabs in them.  But yeah, I can definitely add a few testcases without
+FUNNYNAMES.  Sorry for the headache; I'll fix this up.
 
 Elijah
