@@ -7,91 +7,94 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA4121F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 11:26:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E63E1F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 11:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728708AbfBEL0a (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 06:26:30 -0500
-Received: from mout.gmx.net ([212.227.17.22]:37585 "EHLO mout.gmx.net"
+        id S1728467AbfBELb7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 06:31:59 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54495 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727385AbfBEL0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 06:26:30 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M0hT0-1h86mD47mo-00ur7Z; Tue, 05
- Feb 2019 12:26:20 +0100
-Date:   Tue, 5 Feb 2019 12:26:22 +0100 (STD)
+        id S1727248AbfBELb7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 06:31:59 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQQzk-1ggz4e2ST6-00Tn1M; Tue, 05
+ Feb 2019 12:31:52 +0100
+Date:   Tue, 5 Feb 2019 12:31:55 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-Subject: Re: [PATCH v2 1/2] config.mak.uname: remove obsolete SPARSE_FLAGS
- setting
-In-Reply-To: <41d4bf8a-dea9-5ccd-9fad-e4604017661d@ramsayjones.plus.com>
-Message-ID: <nycvar.QRO.7.76.6.1902051226130.41@tvgsbejvaqbjf.bet>
-References: <41d4bf8a-dea9-5ccd-9fad-e4604017661d@ramsayjones.plus.com>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] travis-ci: make the OSX build jobs' 'brew update' more
+ quiet
+In-Reply-To: <20190204193826.GH10587@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1902051229570.41@tvgsbejvaqbjf.bet>
+References: <20190202163421.19686-1-szeder.dev@gmail.com> <nycvar.QRO.7.76.6.1902041045280.41@tvgsbejvaqbjf.bet> <20190204193826.GH10587@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QwO1SQX2Fp/9gGjf567Fe/+GgqQG8juRk9gbc7rRBY94S4nmeUk
- SlD+eiswNqKUjA8MPJT4w/i+6Qwu7T3HgvbWw04pxpwTpW7L0XGP1+Fn147WzFq6JzUytlr
- VpW0aUajfxhxlyHwORf8Ee0lRVYY5B4QS8dVpD8dO/8w+I1NqtnuIGjpVMjT+9TmbQtGbBh
- rt3XUyjlzNarmp+/An5dA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4eMUj94Md8M=:GYeFo5g9IFNLybbQAIBUss
- c7tgHYp7SemPMhrofxOp2+/PC9F3Ap2nOdO/YY5wXp9NUmVK+ls/x+4vAud1CZ6eLZ/y9SAuQ
- pj9XVfB3eBJbqMkLan3ZSYRPVf55HR7KfwBkSr0OL63CDXD3AN75XQfYT7NzV4EWxDEDef+JX
- 208SiI71oc2nfSHQatzLixRebfCbYMBEmtp0s81xGtrom2k2GW/x4X3Mx1l4iGtLH1quI0ZWA
- HbyXvA6DJUmFfwxZaM/Z75w6WaVMv4yxuQaVfi39O7nHKGnqjjv2iAsVHEJB0HYiISJ82hHxb
- mjhgeYd0OIUNuKAYliAbKL7s0izTr62NLeudoo55vXvqLuET19PsaQnko7ohq1PQpTcZWxhqY
- XTsz8GT6wOUyZ2usoo64eXhrMiDr1I0sHKBwVRQOCOyn+AqQ90nvSx62c+qeaU6g5plI/UdSK
- 4O1/hIK7e8bMeAaObakQbsOlrt6/2B1qcOwWZ0VgCBnSYMWUKu9pVJnTgAeHXsbUUvSO4rphE
- dMWJgl5KgOawEzSh7MDgWLyg59AeR1MqGFd3uTBPFksSjfvkZlmJaeJQ1c6TFmZgcCCWxiC95
- 94FZaCuozKv7/8spDkUvvxJ/zNGUKVGg5UJe0Cg/K+omz98Zx3CSL9Y7fZXcAXP0xyJaK2325
- EF3UYT1UWTXuLkPgqwbhRotQWmmME+ICKr048JiaMrgbe0GBIB6Q0LQZpuzIQRfzNaQkg7EKy
- z1jcyiPcPh3gEG/ZHpm3x2JuP4jRrmFqo6QpZH6oam9yDaKG+AMw6s5RMDILsRKAZVzfl+XJx
- Fx7r7kcq2Cog5Av63fS47eli14ymw8a5wDgPF89RjWfduwC0t6oN4zGLo+8TCFwFecJg4JvaH
- uxA2QJIqgbgbx8ZzZsAmqtrCe2JMquU61iZkRyj5cJrGfzdfvs/3s5OO1dgCER956AFozVy4U
- wKbtZXUNXOA==
+Content-Type: multipart/mixed; boundary="8323328-1499051297-1549366316=:41"
+X-Provags-ID: V03:K1:kYTF/q3VHZnbbQFAnB7T1lhPb3vD6i9rR32kOUpmgFKzfxUdiWa
+ snwOsmczA+uF43EePye5ZwFboB+R/uKv3eqZ76ynqLmTF9W8tuzzYlVy54Rg+1p57BcMQ27
+ 7NVskHjao/uprXaQuNr6IztcbD2zSVSOVVAY84fKOsOExBey71vvhn2qddTGhmURtA3BbRG
+ 3jPeaAQXXdH9Qk3OGzofw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HjzP8fdMdqc=:MuBxHmIdy8vr4S4Ji0B/Yt
+ 9NKILQcRLDqlKPLJRk1ZPsNK1z1XMVetLFsWc9gUyj96qqhNDzcMXrc3sczF6VuNgIpS5uMnu
+ zYER/lhVkBKbgs/CfhUSveqORXmG20hvDP7/ezs1tlJFoqojO2bj/ElpPu128nlz5aXCzYrBj
+ OcSoqONq3BKQHHWty6uVWSn+FsA7kl9c3PFsLXBd5CippecQg91zp6qpumzH0uWgD/mDGQsRx
+ egySQkX7TcDT41MtRfeR0LBEVOM61fKgc50jYJSayxy8wElkWXYcvKOkwVdgToi2fUl2ZzqaR
+ 8HcdttOoKwTF42shfKaPN5X81sZ9iBfPmErpzert/RseDW31++HM26u/F3sU4AkcGwAOm6s91
+ p3Ei6ojPxqaod4PsFBcp7gy42z65Y+11IaCVuIFTrfWbEVb+SMTqNyZld6Vv0ck23TyG42iUy
+ h0TUsb0N8ho6NZVnGSY4D8K1dyCkIgiRAJTGgCl9Ro7ZYQuSM/1T8LvR6wqrbzKXDwPJxH1sb
+ gvM4cwxYn6czmmG6HqUkCt1oN3gmGfUuLUYZVtXTcnRxYN4zsaggEyuznkO1VUpR3ksiM5rue
+ 3w6Vz3IzVV1WOk8cGlg7abNWI9pQ/88p90FqqxZpM2UTljI5m0boR7QV45kfq5anb1bkEm2SD
+ UM/NMnoeKiJac6m0QIm+YhMAeQ3qFIPTN0+LZNqWMlEV9k6N1We+rCL2/nn3MiDL/wTAzElnb
+ paZt6Uo94tyX+n8WluZyjzvjfP8fr1+WobkvRqOD9Uc+dFycfVeGYX5F89Rm3qETOPKs8PWpp
+ Df9PKcnVWFfQAyqG6+PpEM2sT/jdTdPpkpgtlShRVvVDZUZNS+o+pQGiAccLEqJl3LoVOlx78
+ 6dAp7ZQFxdJIAry4X0UIVMoNw8mmEAmA7lYxGd2YA7/x/T32rBJ4h5CGCPy/DDW0g1Kw3fgvZ
+ Tn/YyWlDR+g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ramsay,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 5 Feb 2019, Ramsay Jones wrote:
+--8323328-1499051297-1549366316=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
+Hi Gábor,
+
+On Mon, 4 Feb 2019, SZEDER Gábor wrote:
+
+> On Mon, Feb 04, 2019 at 10:49:05AM +0100, Johannes Schindelin wrote:
 > 
-> An upcoming commit will change the semantics of the SPARSE_FLAGS
-> variable from an internal to a user only customisation variable.
-> The MinGW configuration section contains an obsolete setting for
-> this variable which was used (some years ago) to cater to an error
-> in the Win32 system header files. Since 'sparse' does not currently
-> support the MinGW platform, nobody on that platform can be relying
-> on this setting today. Remove this use of the SPARSE_FLAGS variable.
+> > So our best bet at not getting overwhelmed with failed builds ...
+> 
+> Oh, in my long-time for-fun semi-automated CI experiment [1] all
+> integration branches and cooking topics are still just fine :) they
+> all have been including this patch (among many others) for quite some
+> time now (since when the list of available Homebrew packages was
+> "only" about 1700 lines... about a year ago).
+> 
+> Unfortunately, I never upstreamed it, because that long list of
+> packages is folded up anyway when viewing the logs, so why bother...
+> In hindsight, I should have.  Oh, well.
+> 
+> [1] https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/branches
 
-ACK,
+Heh, I feel ya. 70 branches in Git for Windows' patch thicket are waiting
+(for the most part) to be upstreamed.
+
+> > is to help Homebrew get `brew update --quiet` to work again. I just
+> > opened a ticket to that end:
+> > 
+> > 	https://github.com/Homebrew/brew/issues/5666
+
+And this ticket has been closed with a fix! Yay! I checked, and on Travis,
+`pu` is now only broken for the FUNNYNAMES issue in Elijah's t4038 that I
+already reported.
+
+Ciao,
 Dscho
-
-> 
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->  config.mak.uname | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 7b36a1dfe7..786bb2f913 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -555,7 +555,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
->  	RC = windres -O coff
->  	NATIVE_CRLF = YesPlease
->  	X = .exe
-> -	SPARSE_FLAGS = -Wno-one-bit-signed-bitfield
->  ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
->  	htmldir = doc/git/html/
->  	prefix =
-> -- 
-> 2.20.0
-> 
+--8323328-1499051297-1549366316=:41--
