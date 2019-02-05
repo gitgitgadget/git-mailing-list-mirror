@@ -7,111 +7,93 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 658E51F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 10:35:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B20B1F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 10:38:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726456AbfBEKfC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 05:35:02 -0500
-Received: from mout.gmx.net ([212.227.15.19]:38207 "EHLO mout.gmx.net"
+        id S1726196AbfBEKit (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 05:38:49 -0500
+Received: from mout.gmx.net ([212.227.17.20]:53827 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725934AbfBEKfC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 05:35:02 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LcT2M-1hai9S3sj0-00joXn; Tue, 05
- Feb 2019 11:34:53 +0100
-Date:   Tue, 5 Feb 2019 11:34:54 +0100 (STD)
+        id S1725773AbfBEKis (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 05:38:48 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDE6y-1guFtw14kG-00Gcj4; Tue, 05
+ Feb 2019 11:38:46 +0100
+Date:   Tue, 5 Feb 2019 11:38:43 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] doc-diff: don't `cd_to_toplevel`
-In-Reply-To: <20190204233444.GC2366@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1902051050090.41@tvgsbejvaqbjf.bet>
-References: <20190203230152.GA25608@sigill.intra.peff.net> <20190204205037.32143-1-martin.agren@gmail.com> <20190204233444.GC2366@sigill.intra.peff.net>
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH ps/stash-in-c] strbuf_vinsertf: provide the correct buffer
+ size to vsnprintf
+In-Reply-To: <ea7b1875-1a23-e4e8-e30e-5b769d282323@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1902051136410.41@tvgsbejvaqbjf.bet>
+References: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org> <5d521649-0b21-04e3-3182-e8714fcbfeac@kdbg.org> <nycvar.QRO.7.76.6.1902041135320.41@tvgsbejvaqbjf.bet> <ea7b1875-1a23-e4e8-e30e-5b769d282323@kdbg.org>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1102291879-1549362896=:41"
-X-Provags-ID: V03:K1:PzHSkT8pqpNtiiT4NrrpmdpiH8I5hGxuVB0hcWF47g+ogPXX7rn
- lwKy38g/fIVk9O0rKsVJwF/1QnDL139wzd18bBGbtAua4jDro/jwLKYYBfUd7XCcQthR3u3
- bklqPUNAwRWYoeC9hcyOEI9CQ94hGB9YbvLBNlD5UErRg0qyNvJrcbjDzMBVOp/Y14lhr76
- C6bck1qVbR2azXtAa2ZwQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wRCAJjpAgHE=:WrxsY730uStEz7PO5DQr9k
- CeR6JlPKP4nfZF5PRA+MxXJEQqfn1JxwuKoU1qOiqThRYV5yWlwGl9OZsv0hV3rPlipO0NqCR
- wzMfTZR2C2wFY6nDazm9uCHNwpNHodxE1qCzSf/9WllA9ZpCBdGqH/n+yxgsT5WC/fQqJSnby
- HFX7lrVyVE/KGNS46RTHTJXx009+2rCPkETGHxSspPs/mbsNI2MxPiHzrWK1TpkH/jWqiOO13
- o2ZdeELh1Fgkyc9sAHXEmF3/qZ89aRWB7fnx2t+SjYSst8xIssyruX+VUnnEvwGTywHez6oxW
- dHHVN8gemiz+P5lndHgGlFLBAW/GDADLFUpVoqWeFdGyTFr0KN2rd90I/evtkb/qpO9U6oBbe
- Pc6okHY6IBWSWxH5cGptbGGFYKurfUzSwL0bpJ9bk7feMH4L8d8xq9PGZNYFDyBJV/dXjXB1y
- XwuSILZQKCz9x2ldzkU9XwT1XpudL4Wlb5m4Et/5fWq/cVIUYf9/c+C5jDAOIj0/MtmNyd9BL
- uKnEHRKXggBJM7Ckq/1sCGIn+TICt12R/38iGV6ajNa45L9HIt5uYwYzd0xUfyj6gNFlCCbQK
- mELAoUPyxxd32JMANaH7svHvx9kdn1dtJhZX5xHzwKZZR6q0oTyAwkNzrt8ZG0BBz9AzR+8JS
- jR94Z3u9HtqlpnD1AwwufuBZtducIC0/z2qA2npZAsbN0z86+JCaM5XfMdn/rSwVzIEXrbjd9
- FDsykFZHPLVZj5jmPZIb5m80kv3kKVUXQnvItM6CzFiovnrHs1a4+n/0XXBRQTrfI2CSHwI+2
- SDy0p6m7EE5QYiDfigDKePeLWJCWbA5iZ1hEcksFmoZCJvqYvDzgMMSg2fp4JrVdaBZ9bpkcK
- mnyfmW02NuXFCKtBAsUrEHqQbkWpBXkBfZ5vWHLCd30dpE+Gs4MpIx744Pk53eehL7Z5zQRPb
- LISP4ZtpfSg==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:dZdNqVctMd9KdcABfsLti6v5oE5EtT5f00gENaGLdXGxj1Gf3Zd
+ GuO10IUxvZApHh7jffEkmOMOWgXiD+Xb39cfJMma7s8h3FviWq54GpQZa1nWx0RsK9jsJK5
+ rOvqWUAvPjbwnyN2GYJUbdlc8JPrLi+tWh9uSX19OV2MDef+yVWwq4DYR3s59YcoyHeEAjV
+ W+LI+mheSCxu7JL4OMnNQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Fdjh0KhZUSc=:7HBh6zu5s7uX7Z+jJU6qEy
+ oNd6haDuZklRuRZNzqLmNZ5zbyWjr7lf0KKwD3z35/LhE4USIeC9k0MFMIf00mFbM3OG//XRa
+ OkhetvKJGBnSHqzJQmLQC+nZrpUjNDSD4LSIbmonHI4zJCP/+o9assDGunzVD+WHpwYioWQhg
+ 80Tq6bb/jrM4pMDUchoPrPkgM/oZf98PdMlkqAgY1Yvt9rZaL2AafGy6dAnJx8PSG0XcYqQse
+ 2tYXCtgUevK2B2xJvmCNxHGut30MgoWaYLvp1hHuF256juxcvUEtKjwewxDyl2xSSPNoDP4Cb
+ dKow/ZeXvseDHif13M6xkqhTOlX1yt3rFTj9crNeiDKeRxpjYteUdmKPSUSfnfUXp4Sp8FgWh
+ 02C2dxfiGSxSQrFgOQ1m6W6m3ksHGwtNUN4fW4a0wUQmQq0tyaxwRs66CGIu3KATuhT+oXqNa
+ TlIb/UZXf4gU/Dn5of6+0bWmA8XmAdgLWy6cRCdzKXAuzpEqQwCl2cBIqKtLB1qzpzuKsmSpw
+ x5a6JZGrznZ4sk9s9NEBeAnCwBSFXs59nSKffzNyLOlNT0R89uIXkgWejJ8skg3GJXjE8a7md
+ AmuzlO3MTTAS4mom4u+zLIzGBRgDKyDRUFeas0n8yjVjOWQAmjbySd+HAlsQreEK0Ir+BKdth
+ LjG2/1h8+p4KOTtULI6e1+oDz6tAWOCpmtVVYRjd+B5F5mlp8v+Eh6OHDhnMOzSgMNKVGH6fQ
+ o6K1wxJd2HQxyVyjQrLnVsHP9kPSYwAvrWnu8I5L3j6fh3RQRtymNXLc3VOAp0m6oQzzMbBqp
+ sfxIJBMJWO3Q8QRXMsyKl9ZS3MSFJaki1rHnRUzt3o1QXiFW0tSxWCre5FoKMsc3IR+R+ZBTx
+ pWxQJ6WruZylhZyBcJFG/XizPPAV6xoGO7t5bqzgDCG88ZEFMJdyHy4hetQ8wIBpekO4KQn2+
+ 0k8/bWpaFnQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Hannes,
 
---8323328-1102291879-1549362896=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Mon, 4 Feb 2019, Johannes Sixt wrote:
 
-Hi Peff and Martin,
-
-On Tue, 5 Feb 2019, Jeff King wrote:
-
-> On Mon, Feb 04, 2019 at 09:50:37PM +0100, Martin Ågren wrote:
-> 
-> > `usage` tries to call $0, which might very well be "./doc-diff", so if
-> > we `cd_to_toplevel` before calling `usage`, we'll end with an error to
-> > the effect of "./doc-diff: not found" rather than a friendly `doc-diff
-> > -h` output. This regressed in ad51743007 ("doc-diff: add --clean mode to
-> > remove temporary working gunk", 2018-08-31) where we moved the call to
-> > `cd_to_toplevel` to much earlier.
+> Am 04.02.19 um 11:38 schrieb Johannes Schindelin:
+> > On Mon, 4 Feb 2019, Johannes Sixt wrote:
 > > 
-> > A general fix might be to teach git-sh-setup to save away the absolute
-> > path for $0 and then use that, instead. I'm not aware of any portable
-> > way of doing that, see, e.g., d2addc3b96 ("t7800: readlink may not be
-> > available", 2016-05-31).
+> >> Am 03.02.19 um 17:51 schrieb Johannes Sixt:
+> >>> strbuf_vinsertf inserts a formatted string in the middle of an existing
+> >>> strbuf value.
+> >>
+> >> Quite frankly, this is a really unusual operation, and I'd prefer to get
+> >> rid of it. There is only one call, and it looks like it only wants to be
+> >> lazy and save one strbuf variable.
 > > 
-> > An early version of this patch moved `cd_to_toplevel` back to where it
-> > was before ad51743007 and taught the "--clean" code to cd on its own.
-> > But let's try instead to get rid of the cd-ing entirely. We don't really
-> > need it and we can work with absolute paths instead. There's just one
-> > use of $PWD that we need to adjust by simply dropping it.
+> > The only reason why there are not more callers is that I did not convert
+> > any of the appropriate places. We have quite a few places where we
+> > allocate a new strbuf for the sole purpose of formatting something that is
+> > then inserted into an already existing strbuf (possibly extending the
+> > buffer, which might require a move of the buffer just because that
+> > temporary strbuf is in the way).
+> > 
+> > It does not sound like good practice to me to allocate things left and
+> > right, only to reallocate something that was just allocated anyway and to
+> > copy things into that and then release things left and right.
 > 
-> Thanks, this version looks great to me!
+> I prefer separation of concerns at the expense of a bit of resource
+> consumption that is not measurable. But that is the only argument that I
+> have.
 
-Peff, you asked at the Contributors' Summit for a way to get notified when
-CI fails for your patch, and I was hesitant to add it (even if it would be
-straight-forward, really) because of the false positives.
+As far as I am concerned, the `strbuf_vinsertf()` function does not
+conflate any concerns... It has one, very easily explained concern: to
+interpolate text into the middle of a `strbuf`, much like `strbuf_vaddf()`
+interpolates text at the end of one...
 
-This is one such example, as the test fails:
-
-	https://dev.azure.com/gitgitgadget/git/_build/results?buildId=944
-
-In particular, the tests t2024 and t5552 are broken for
-ma/doc-diff-usage-fix on Windows. The reason seems to be that those are
-already broken for the base commit that Junio picked:
-jk/diff-rendered-docs (actually, not the tip of it, but the commit fixed
-by Martin's patch).
-
-Of course, I understand why Junio picks base commits that are far, far in
-the past (and have regressions that current `master` does not have), it
-makes sense from the point of view where the fixes should be as close to
-the commits they fix.  The downside is that we cannot automate regression
-testing more than we do now, with e.g. myself acting as curator of test
-failures.
+You found a bug in the implementation of that concern, is all, and fixed
+it, for which I am grateful.
 
 Ciao,
 Dscho
-Ciao,
-
---8323328-1102291879-1549362896=:41--
