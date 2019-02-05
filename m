@@ -2,106 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 070AB1F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 20:39:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0791D1F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 20:42:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728234AbfBEUjK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 15:39:10 -0500
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:39105 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726547AbfBEUjK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 15:39:10 -0500
-Received: by mail-wm1-f47.google.com with SMTP id y8so354964wmi.4
-        for <git@vger.kernel.org>; Tue, 05 Feb 2019 12:39:09 -0800 (PST)
+        id S1727090AbfBEUmM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 15:42:12 -0500
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:41075 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726534AbfBEUmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 15:42:12 -0500
+Received: by mail-wr1-f45.google.com with SMTP id x10so5169047wrs.8
+        for <git@vger.kernel.org>; Tue, 05 Feb 2019 12:42:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=wqT1TaC2ydU5MSYi5/Z7rvm6ufdQBatK5YhtuNPZ/zc=;
-        b=gAZ7/oVMimwPvVxq0Fiv5cifTK72oCQq+p73Lc/1l1jtn99POVmZM2/elE0jl+CiHD
-         LYC6Eh00nMhFebgZFMPBfPwCS85WIC3FDzDLuZVLRcHeE21XUW8icSrCYCFjqaE+6mn8
-         Qu6/EYbC/fHEQD0oaN3lzLktvT0ZXZF/VAncV1EatpczeAkTWKUiMVXkwiQga9lW/YeX
-         2+dnoAJEaqc16+hh8OVXLz+0g5azdF7fZ/+0fUBVh15K748m+WlDbGLWVx8TKhHUNGnZ
-         bqopbaTM0oH/GvHJEQCFjuPc2cYXbO5IT60QOadyuvvDg47qiy2EgkwbFy4FgNFv3s+d
-         hYkA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kP1YSqIeNztdqnWKbk0fzDvFe7+OhPrHpKkOoawRECY=;
+        b=JKOFuZjyQcDSQXvKmVpTcgMJRVQbn+b1Uiya867/HXeD3L03GxorEJRzeU+n9zsUM2
+         ISh3UkmMVx3Y2dj5GFI8tQ9j0ZjusGHl8F1gOubMwo8DrBPxOq/N/Yl5AFJzK5y+m/3I
+         gU3k5mU48iVsaqGjh+n8nXvmYMzsCqIVxNn/p/Okigb0ZYiI+rNW88rgrA0yk9KYm6+j
+         7kK+aDVALXhZfwfkvsmFjbYJ6usJWDusLw2U83tL/s/xl6uXzok+SrEvIe1XNSHXAxrP
+         lohh6Yx7ly1v9sW9GnzYEQe8rbRKWU7hJLKAhGuprZqTEFGgjgjO/rdEpsEDjoexWxW3
+         9Qwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=wqT1TaC2ydU5MSYi5/Z7rvm6ufdQBatK5YhtuNPZ/zc=;
-        b=hFhlsae9xiF0jEv+j9vSMNfvuE0DPD71Lht0xvDf/s33FshaP8VMHt8MTQlSi02Lu+
-         nfdQ7x0OUnPVMMLs06arjOIiiCXNOXDDKY4fXaPZ6BhJvHo1zNyizIWtfDaDRLWniBEO
-         DRoBKMZFUwRCf2ELgEGBixhTR2W7U8pILqEA+5w+w2go1WaEk3F3HM0L7CF3m58HAehc
-         N34QOTTUnPG9lUUwhBchlTM2OiI5nICWE0rdX8cwvPqdmHWA15UogEsJXTHj2rfF+3CR
-         hcf/hEDaA8Sx+wVJG8KWvbiuo5bqX8QEhT7zt3HqZU1D4QBMFboFkQd3AGAP4zxZxteB
-         Zi1w==
-X-Gm-Message-State: AHQUAubKq8xfv1DHnHT5AhK9IEVbqqtU+/6XgkIDOurGxDFNzCzkstDC
-        3f+V9uT+VzFyyaM9HPv+FTA=
-X-Google-Smtp-Source: AHgI3IZArRzhM7FaRxGrmb3dCX2Wzlfe87Up2/TNn5TvOYbdBRckJUhJ/yfYq5Xr3wI7jZiv7EuGrg==
-X-Received: by 2002:a1c:1a8a:: with SMTP id a132mr387421wma.109.1549399148285;
-        Tue, 05 Feb 2019 12:39:08 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r14sm1335704wrr.65.2019.02.05.12.39.07
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kP1YSqIeNztdqnWKbk0fzDvFe7+OhPrHpKkOoawRECY=;
+        b=iQtvBDx3LPYALPwkAQYzjV1WestpJaM30tHjurB27TdB/AppiCINyQrVArbhcIaww5
+         VCcMSU7nSmt5j56oK8PpzFLnXK5OrugatvpNgKSHomCYEX449/QvRwN9oz9jE9F6XvOy
+         SItnzCfyZ2+Ei8Av1GRCZlG9KMiuGrnfwItc9sXyQtbQGE2fHIDYLJR8fYO1XJqpbTkk
+         oQ0LKuMlRSRt9is7pkWtVi+ds9owMoM+JBdjH87u2BTFphpysHxlIaMLnXyWwgxj7M2t
+         RzUkPY47T9ILEoFaK3nLKgDz3x7cTe012NcHK1luZvK3uJ7EMFweF0Z8R0pD+b3sQ3QN
+         0h/g==
+X-Gm-Message-State: AHQUAuaRY64jL6ojTGCbHXbDcijFZO8YBujw3vY1zzVtDDA67C/vSX79
+        ErMJuSnuyJnDts1xCOma2y4=
+X-Google-Smtp-Source: AHgI3IZYrAu86dVSppvtLwcGi8hfAkT/xn3xTQ5tU4NT7L4mBTcQ+mGrQGMa1+MT6remFfdeza0i1Q==
+X-Received: by 2002:adf:e38e:: with SMTP id e14mr5414161wrm.142.1549399330759;
+        Tue, 05 Feb 2019 12:42:10 -0800 (PST)
+Received: from localhost ([109.180.252.133])
+        by smtp.gmail.com with ESMTPSA id h10sm22204272wmf.44.2019.02.05.12.42.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Feb 2019 12:39:07 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v4] log,diff-tree: add --combined-all-names option
-References: <20190126221811.20241-1-newren@gmail.com>
-        <20190204200754.16413-1-newren@gmail.com>
-        <xmqqlg2vtfmo.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BGyL5BAejK-P-EdscFdH3C6uR7e6CbgNe-9doy-mkw-vg@mail.gmail.com>
-Date:   Tue, 05 Feb 2019 12:39:07 -0800
-In-Reply-To: <CABPp-BGyL5BAejK-P-EdscFdH3C6uR7e6CbgNe-9doy-mkw-vg@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 5 Feb 2019 07:51:56 -0800")
-Message-ID: <xmqqa7jarmvo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Tue, 05 Feb 2019 12:42:09 -0800 (PST)
+Date:   Tue, 5 Feb 2019 20:42:08 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2019, #05; Tue, 29)
+Message-ID: <20190205204208.GC6085@hank.intra.tgummerer.com>
+References: <xmqqa7jj6rg7.fsf@gitster-ct.c.googlers.com>
+ <20190204211316.GA6085@hank.intra.tgummerer.com>
+ <xmqqh8djtf6n.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh8djtf6n.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On 02/04, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> > There was also some discussion around the naming of the option, but I
+> > don't have a strong opinion on that, so I'm happy with keeping the
+> > --[no-]overlay option.  I just wanted to bring it up again here in
+> > case someone had a very strong opinion, and would prefer it being
+> > changed before this goes into 2.21.  (Not sure if I'm too late for the
+> > series going to master).
+> 
+> I do not mind leaving this topic out of 'master' for now, if that
+> would help migrate people only once instead of twice.  I think the
+> real UI improvement would come with the new pair of commands split
+> out of here, "switch-branches" and "restore-files", which will not
+> happen within the timeframe of the current cycle anyway.
 
->> > Further, in patch format, this changes the from/to headers so that
->> > instead of just having one "from" header, we get one for each parent.
->> > For example, instead of having
->> >
->> >   --- a/phooey.c
->> >   +++ b/phooey.c
->> >
->> > we would see
->> >
->> >   --- a/fooey.c
->> >   --- a/fuey.c
->> >   +++ b/phooey.c
->>
->> Do we have the three "rename from fooey.c", "rename from fuey.c" and
->> "rename to "phooey.c" extended headers, too?  That's what I meant in
->> my response, but I do like what I see in the above example ;-)
->
-> Ah, gotcha.  I'll look into whether it's possible to hook it up to
-> diff.c's fill_metainfo() .
+Agreed, I don't mind having this topic wait a little longer until
+"restore-files" actually becomes a thing.  Just keeping it in 'next'
+for now sounds good to me.
 
-Just to clarify.  I do not think these extended headers are "must
-have"; the "--cc" output is not meant for machine consumption, as it
-simplifies the output by omitting hunks that preimage trees agree
-with each other etc., and making the resulting "patch" not showing
-the whole picture, and these extended header lines might only become
-waste of the screen real estate.
-
-So, do not spend too much effort to emit these textual info that can
-be easily seen with the N+1 plus/minus header lines.
-
-Thanks.
-
+> In any case, I think it is probably sensible to revert this step.
+> Will queue; thanks.
