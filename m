@@ -2,95 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,URIBL_DBL_SPAM shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 605751F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 09:17:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF6491F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 09:19:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727248AbfBEJRB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 04:17:01 -0500
-Received: from mout.gmx.net ([212.227.17.20]:53703 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726567AbfBEJRB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 04:17:01 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lx5hl-1hAZFP0NAn-016c1Z; Tue, 05
- Feb 2019 10:16:46 +0100
-Date:   Tue, 5 Feb 2019 10:16:48 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     William Hubbs <williamh@gentoo.org>
-cc:     git@vger.kernel.org, chutzpah@gentoo.org
-Subject: Re: [PATCH v5 1/1] config: allow giving separate author and committer
- idents
-In-Reply-To: <20190204184850.10040-2-williamh@gentoo.org>
-Message-ID: <nycvar.QRO.7.76.6.1902051016190.41@tvgsbejvaqbjf.bet>
-References: <20190204184850.10040-1-williamh@gentoo.org> <20190204184850.10040-2-williamh@gentoo.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727975AbfBEJT5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 04:19:57 -0500
+Received: from mail-vs1-f41.google.com ([209.85.217.41]:34282 "EHLO
+        mail-vs1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727635AbfBEJT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 04:19:57 -0500
+Received: by mail-vs1-f41.google.com with SMTP id y27so1736529vsi.1
+        for <git@vger.kernel.org>; Tue, 05 Feb 2019 01:19:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cybereason-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=2MnGTEWDnEIEhGyET70VTy7r5QuWSs5Qc5sRNtfMywY=;
+        b=pVO3WWywH8n2EnunUhcl8XJGXATldO/VE8pXnEtBE6Z1BOLPxq7CRFZlCOSXlXECvS
+         xPXi301idNikLHBIjJNM0EGzfkOASLnVVRB8Xn4KQmi2Xte/IkPxRr98mo7qMiSLhROL
+         GD7g9L3BAxfXZmnmo1Seh1qA73BzJyV6+Z0VnseNPPDojT3+KxcrydyleInjHVJsOuPN
+         go42qolqe5SOXpUu8D+GqehHe9IXaPQiWJwvqQ54cxQvXfIosTnXRbr40LwX8YG50ta5
+         X38ps32vZsLZC+prGHAyzrbi66KHwMrp+qz9WcZ4NAN+abLXxL6PlidIFHOW+24Zv4o7
+         8fJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=2MnGTEWDnEIEhGyET70VTy7r5QuWSs5Qc5sRNtfMywY=;
+        b=PZza3UnyEMpOmlVpihaFK+LmqYreR4A/VaEL5SaHMqmRAybGH+WzwfLBvmX8PANFuC
+         I2KiXkYiqdTKAC81E2dyCGW8abSj3P31h5Rz6QlyFU7orQ17lXp5+UqemcNPmyaKE4nk
+         fMlf5pFwsvNQhXc+DqIM4IR+lScC9D2xRIH9X4zrOdP4VG5rRwGlxnOS2gCmiaJMh3t8
+         22/HoAXyp9fXSMIMbsOG3B7A98+zbqcYdsTbMt8jiBvL7Jq6njX9/AHvJul2SdbpdyAB
+         66GQzfE2tYt7vXVjlTst3b9dJYyq79HjakaoYoesOREHCM3DMkdykO4Zr7fdC3kZBLGo
+         qSAQ==
+X-Gm-Message-State: AHQUAua8tcuKBFObKBC7SHdorax7+j2nQsveiNOJI4meR9GyRPAd6nDA
+        zeQEpGf/i8+52q7L7SLuVgyzZbrpj/JguGRT/U0DJUTL9bp30Q==
+X-Google-Smtp-Source: AHgI3IYuxYqUGGzy7lNYL0tft7Emul0r7wbP967hnbj0hVqwr3kZDRUhRpbKbCI74ZZKXd+DKTae8AIUL2XIHvzE+hc=
+X-Received: by 2002:a67:7d86:: with SMTP id y128mr1777787vsc.0.1549358395984;
+ Tue, 05 Feb 2019 01:19:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:C6nRbkPYmw1tuzgQ+vzTPn6Th4+GXgiURNW44A7V+UfmuKdYuVj
- lN2G54wZRbLS3NbHxpHn5A8KGqR39Hye45OgIRv40P3mMbLVoDYvu6JvgHMn/WowIvxvhS/
- uvHlhRsNwoHFieT9pFs8vT6Pz1rbiQXllgY46uHa28BTXTIIoQklyhqZQe5W2C0RhpmVMns
- 5MNGjnutwK4SgytCtqVuQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:T0qR0ckOJUo=:hOmwrrkQm7GZwxuEDBIVdc
- bwPCtioyuaxaUB3TZUg1uY7Y2wD0w2ItnPO4DEK9yYn/7swdnkyPoyA89YJ+GYjd7r9KWjYgG
- JysFrwsvkWMez1M2syTyGuAjylXI3JaEDF/wnR8jQUbCsSzOr/SKKaMnFKyl3TYiRS2EJXawD
- E6RVyw8UWxauvWCcMxZxvVDtiFGS9kVSzRZCtqI0ABq4oDWWV+LBgJ/mrHd0Bxob2HDTbg0/6
- kC9XyVH3TA171T8t18aK43A2A4H8Ml0PYC+gD1JY9cecDHaBYX/hVMGk8sfngsFIXV0jFaIZM
- taiVhtk6tZ+a426ByjpNdyF4ByOb1v7bPN0ydGNjoVZssXhSMh4jEpBjPHZRmk49K7QM5WTWJ
- yKh4lTdX8dvynFhI9qT410ar6iG9bbFoibj/4DZ7Io3L6LgReKSHW8/4KGTQoGAGWB5kK/Cyy
- ZSoG9cFwhI0nW4N0n7lPkeOwun8BSaw97s8+Znd8ciAePFYbwPoJhjoSKgaB37TnzYCQQg7o3
- gSRdJSaxkUjAf6KYFd1XsK/9LBOsANrnMMqcKi1IerTpeCe8ULYgtjoZgLiaOaVg5LObNmY9U
- SnSO9yxDdW8opHLIwinAuV+wrnon/StOjDSGLfYlF+mDe13g5Qkzi4cQTJWaeE6ADVK5fJwRF
- EVeXzUgRxcI3lAvCjiXWhS9G4MCnrIVzGWcy/Rfm3PRcp3TKY0AJAdZXWCEGaT6vB4xd2jQ05
- nwDE9jmHOC4XgYHB9fSUrKfOGWWIgdqZEKNNrA/7so9waYDhH+lnUrvqSfxZqarD99dDZV8P3
- etQ5NzvIW1TmXemsafZUwkS7vrY54/qWd6SOCJHWmhuIVE4lOYv1fdFdqqFDSCnDQtMl3yzgC
- WV40T4YIkktr1QHqnrAzXnUgvoAtgCSURZLmmdzkLKgclhg5KRVFp3xKqtui/OkS+enIlMYio
- xaSCXjfOFiA==
+From:   Dani Koretsky <Dani@cybereason.com>
+Date:   Tue, 5 Feb 2019 11:19:40 +0200
+Message-ID: <CANcfovV3Pq3pubtNq4HCSZOJ5OC9dVSm+19VkOiQimAH+fttYw@mail.gmail.com>
+Subject: [BUG]: git checkout on a new tag with current HEAD shows "head
+ detached" at previous tag
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi William,
+I have 2 tags such as release-17.6.230 and release-17.6.220:
+If I'm changing commits, all works as expected.
 
-On Mon, 4 Feb 2019, William Hubbs wrote:
+If however both are pointing to the same commit, the output is as follows:
 
-> diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
-> index b5b2ba1199..0557cbbceb 100644
-> --- a/Documentation/config/user.txt
-> +++ b/Documentation/config/user.txt
-> @@ -1,12 +1,19 @@
-> -user.email::
-> -	Your email address to be recorded in any newly created commits.
-> -	Can be overridden by the `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_EMAIL`, and
-> -	`EMAIL` environment variables.  See linkgit:git-commit-tree[1].
-> -
->  user.name::
-> -	Your full name to be recorded in any newly created commits.
-> -	Can be overridden by the `GIT_AUTHOR_NAME` and `GIT_COMMITTER_NAME`
-> -	environment variables.  See linkgit:git-commit-tree[1].
-> +user.email::
-> +author.name::
-> +author.email::
-> +committer.name::
-> +committer.email::
-> +	The `user.name` and `user.email` variables determine what ends
-> +	up in the `author` and `committer` field of commit
-> +	objects.
-> +	If you need the `author` or `committer` to be different, the
-> +	`author.name`, `author.email`, `committer.name` or
-> +	`committer.email` variables can be set.
-> +	Also, all of these can be overridden by the `GIT_AUTHOR_NAME`,
-> +	`GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_NAME`,
-> +	`GIT_COMMITTER_EMAIL` and `EMAIL` environment variables.
-> +	See linkgit:git-commit-tree[1] for more information.
+git checkout release-17.6.220
+git status
+HEAD detached at release-17.6.220
 
-Thank you, this looks good to me.
+now if I run:
+git checkout release-17.6.230
+git status
+HEAD detached at release-17.6.220
 
-Ciao,
-Johannes
+Which is theoretically correct, but I'd expect after checking out a
+certain tag I'd be see that specific tag...
+
+Sorry if this is intended behavior, I couldn't find clear mention of
+this behavior on the git checkout documentation online..
+
+Let me know if I can help in anyway.
+
+Cheers,
+Dani Koretsky - Researcher
