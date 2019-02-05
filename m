@@ -7,109 +7,84 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71FF51F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 17:41:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 088F31F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 17:53:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727250AbfBERlQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 12:41:16 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37253 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726534AbfBERlP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 12:41:15 -0500
-Received: by mail-wr1-f66.google.com with SMTP id s12so4605885wrt.4
-        for <git@vger.kernel.org>; Tue, 05 Feb 2019 09:41:14 -0800 (PST)
+        id S1729214AbfBERxc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 12:53:32 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34985 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728868AbfBERxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 12:53:32 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z18so3887507wrh.2
+        for <git@vger.kernel.org>; Tue, 05 Feb 2019 09:53:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=gBQqJCvtigAs7b5SHb2KQlWqhWk1wLgHWWaDJlQXQC4=;
-        b=fLjfei9BtBSABfxsKJyHItSp8aNQOcVM/Q3IN606PCvSWuYtsValpERSwFXN97jr3q
-         7r24FJiUTz1UY+alT//wRqg1oRRuuz+ceGXEPYI9fi+VS8bLbFCrYtH2p5lTMyXtdq8X
-         HkG+XLD9toMaFPbVI0ar/EUl9MWa6LCOwZsFqGduwkrEA+sQzbVXh/w39Klxjrjmj+Mi
-         vdTltnowIKTFAga7iexrW/LHE6XLbMSqF2tjNJdXapkxfT1wvBNnnn345IuALcXs5MnB
-         wPJj+E0dgXIZVpiqtjEMjaDDECIbTVZIHMClTrOhzAvsC8HCS6StLkWv93dNBOStY20v
-         jjog==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=dYKQGjpo+kzUNjO1h7d+aDBWCVf4jERTAsIzZUnEDbY=;
+        b=l8cgCPCDqUTLj2Hi2TB373XpI/mypSSaRx/ghASeEI9KtteWEgSF7cmPCjahEhxzf+
+         tuGeg7ccDIpNFUPpI2s8zCBM6LLONbWK+X9Z7l64UOidG1G1CjpHld4VKLK+1QfXlht9
+         on2Dsmoe1iF7/shiXuXWkgEjEyCV0Tqo2M/1VwdvU+NcJ3848QuFn2rL8Pl62qg+bIqs
+         zsQLWTxdKXAJQrUWC42A6ntFpQwH2mlSfRS4TH9e7Gi0w05fA3JXmWY4nygcuubFyZb/
+         d70DvxBSlZhpFpZqp/0Hx55np8shlTFtclmwuSl7Pg9qQvW6suZRPc5YZiQPSOyn8qVX
+         jMiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=gBQqJCvtigAs7b5SHb2KQlWqhWk1wLgHWWaDJlQXQC4=;
-        b=g2c/1Uk2KsvSbFHCUAn3FF0xaWQ9fI4Rm63kDW9MNn0I4y9USeqphAowfOq5eq+m3U
-         8AkBfl1DuHTAFecRiOVy4UB6HS3CwRKvjLsHAEBgmKkJ4ZNeo3rDIgyKLU4GAGiJf2za
-         Ef9k5EPk32klMMqvSzoBs4tfHIHPo/nslyD+k5pk06FIj1rYTwzI2g0aKEngT+t7XMIQ
-         FZJNyZKqLBha4czd3TbYAHBmCMK8sFksTg/bHgfyNY4SInuzmwRMDIN3fBjRya64+WhQ
-         PRIW3nz4zsV2l3krXcMRBdUaGORY/U98E5JtrUZ6xJVWAT8KD3evSBFQuOFGNSbjzVNG
-         m6AA==
-X-Gm-Message-State: AHQUAuZAp8AmBx/F/3lDkC/VFdgxYwwZpjPB41+wBPr1Jg5iW9dKprqw
-        5gYFa7ywCvATMsLwRhl4BFg=
-X-Google-Smtp-Source: AHgI3IbbFa0lw2a73K6fSz69TGBwy0If3eDj7ZN/E5oyxHvWOwQBsbBCnHxmztCb75Vn1EmCvZyNRw==
-X-Received: by 2002:a5d:6244:: with SMTP id m4mr4434509wrv.314.1549388473788;
-        Tue, 05 Feb 2019 09:41:13 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c65sm18825518wma.24.2019.02.05.09.41.11
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=dYKQGjpo+kzUNjO1h7d+aDBWCVf4jERTAsIzZUnEDbY=;
+        b=hwtimaZun/gj/i6xbkJu/9xzITjmuJzC2pRQ4s1AteelkzWENpj3dX5Ru9XA0Gs97A
+         yD5XdJcabOz+0jI0P3b355qnI9SDS8D7JRn2TBn9fZ8JNmwfx6PUU26d27MxXAJEZONl
+         QjSamm3UbIaZ81myUbZjp65avy3nF60DMiNIsm9WquCKemRnIqAJcT7Jn0QmCaMTbZkp
+         huU+pKVAOWUFnA7ZUq58K758Za7QTuKMwZVRT9fLZwlkReLi+x0sm1oJm/iJGjZ8rGg1
+         27qx7Jw01AUhIAq6d7D8cM+tCpD4njPfUa5x81LslNwoKE+vw9C2geNxJh1VOqCIacV0
+         G6Kg==
+X-Gm-Message-State: AHQUAuaMP0E6wMUMY81s/gWV9owl+jzm83wE4v+IwUMSj5gpqSlFEnPI
+        GceRgAnb6ICgM8Fr8XMETKw=
+X-Google-Smtp-Source: AHgI3IZaynJDwRxqGw7H4js05Lux6pFRe1IdkRFYXBgxt1eR1SxLK7aZVRbTRXwyH5SjNVQAeTbKYw==
+X-Received: by 2002:a5d:6b8b:: with SMTP id n11mr4499850wrx.216.1549389210286;
+        Tue, 05 Feb 2019 09:53:30 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m21sm13504431wmi.43.2019.02.05.09.53.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Feb 2019 09:41:11 -0800 (PST)
+        Tue, 05 Feb 2019 09:53:29 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] Revert "rebase: introduce a shortcut for --reschedule-failed-exec"
-References: <pull.118.git.gitgitgadget@gmail.com>
-        <e61ebc30605e21ce71623903bc9c850fd964e826.1549367342.git.gitgitgadget@gmail.com>
-Date:   Tue, 05 Feb 2019 09:41:10 -0800
-In-Reply-To: <e61ebc30605e21ce71623903bc9c850fd964e826.1549367342.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Tue, 05 Feb 2019
-        03:49:04 -0800 (PST)")
-Message-ID: <xmqq8syut9op.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] travis-ci: make the OSX build jobs' 'brew update' more quiet
+References: <20190202163421.19686-1-szeder.dev@gmail.com>
+        <xmqqk1ifv296.fsf@gitster-ct.c.googlers.com>
+        <20190204193823.GA4511@szeder.dev>
+        <nycvar.QRO.7.76.6.1902051240080.41@tvgsbejvaqbjf.bet>
+Date:   Tue, 05 Feb 2019 09:53:29 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1902051240080.41@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 5 Feb 2019 12:41:11 +0100 (STD)")
+Message-ID: <xmqq4l9it946.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> On Mon, 4 Feb 2019, SZEDER Gábor wrote:
 >
-> When contributing the patch series, the cover letter tried to convey
-> clearly that the patch introducing the shortcut -y was included only to
-> show that it is possible, with a slight bias against it.
+>> Under Dscho's bugreport it looks like they already merged a one-liner
+>> fix, but how long will it take to tickle down to Travis CI, I have no
+>> idea.
 >
-> During the review, there were a couple reviewers who agreed with this
-> sentiment, and the author was happy that this patch was not needed and
-> concurred that it should be dropped. See e.g. Stefan Beller's reply:
-> <CAGZ79kZL5CRqCDRb6B-EedUm8Z_i4JuSF2=UtwwdRXMitrrOBw@mail.gmail.com>
->
-> However, it slipped by the original patch author (yours truly) that the
-> patch *was* included when the branch made it to `next` and then when it
-> made it to `master`.
->
-> So let's back out that patch before it even slips into an official
-> release (in which case we would even have to support this unwanted
-> flag).
->
-> This reverts commit 81ef8ee75d5f348d3c71ff633d13d302124e1a5e.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+> Since the fix affected a Homebrew package, it was not so much about
+> trickling down to Travis, but about trickling down into the public
+> Homebrew repositories. And it seems that that trickling is complete now.
 
-Thanks for catching before feature freeze, but read the above again
-with cooler head.  The revert message is less useful than if you
-said 
+Good news.  Thanks both for reporting and monitoring.
 
-    The patch was sent for completeness just in case it turns out to
-    be too cumbersome not to have a short-hand option, but during
-    the discussion, reviewers agreed that [FOR SUCH AND SUCH REASONS
-    --- fill in the blank here] we are better off without.  The
-    maintainer missed that conclusion and forgot to drop it while
-    merging the topic down, and contributors did not notice the
-    mistake, either.
-
-As the reason is missing, the only thing a reader can get from it is
-"the patch was not intended to be included, but we screwed up".  I
-do not see why a more useful "why it wasn't intended to be included"
-needs to be hidden behind an external reference.
-
+I still think the >/dev/null thing is a good idea, so unless I hear
+otherwise, let's merge it down to 'next', etc.
