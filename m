@@ -6,273 +6,70 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A70AE1F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 02:24:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A7AF1F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 02:25:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727248AbfBECYV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 21:24:21 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:37153 "EHLO
+        id S1727432AbfBECZ5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 21:25:57 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:37243 "EHLO
         avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725917AbfBECYV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 21:24:21 -0500
+        with ESMTP id S1725917AbfBECZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Feb 2019 21:25:56 -0500
 Received: from [10.0.2.15] ([146.198.133.33])
         by smtp with ESMTPA
-        id qqPKgsJFyAOoyqqPLgNq0j; Tue, 05 Feb 2019 02:24:19 +0000
+        id qqQsgsJLuAOoyqqQtgNq1J; Tue, 05 Feb 2019 02:25:56 +0000
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
  a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=LuRNhMQwrr-0NuA3mrAA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=1PHa_mihZMghVkqvNWUA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         GIT Mailing-list <git@vger.kernel.org>,
         Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v2 0/2] Using sparse in a CI job
-Message-ID: <af361187-4d9d-2c41-0850-bf774d5523b2@ramsayjones.plus.com>
-Date:   Tue, 5 Feb 2019 02:24:16 +0000
+Subject: [PATCH v2 1/2] config.mak.uname: remove obsolete SPARSE_FLAGS setting
+Message-ID: <41d4bf8a-dea9-5ccd-9fad-e4604017661d@ramsayjones.plus.com>
+Date:   Tue, 5 Feb 2019 02:25:53 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.4.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfPsF8+oqD6UsxgopudcpG41QcKUfeuPSQagTwgQZUhOPv4FP2OdImR6fSgHMTnivwG2xZoSrDMaXp324umUk0qvthjz1JPJeiFT5Y/g/0v0esxmvvCjd
- Fop0pCaiY4sglrlj6QCrmJnTMG54RxQYcJ6bGQodc73ftny94+TJXfZhmdXrxYeZKz4e0LW7ud51cg==
+X-CMAE-Envelope: MS4wfC2j/thzfiHlrh62WNX5Tc7TWOHdXxzSFPU6Z20bHbDEarKICciUeInnnarGyHigyu7LoDunbEk79yXrxrfQgYy8SnpmKhTmtQJtvQ15pq3WS//cBDmf
+ VQRQRaFBiYyQ0MDgEfVCM4dvnC7x74ZT+yJFcM4CcSwC4H4gmkuR24tAFpmCVkwCB5W6Ysb7z1ZYJg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Changes in v2:
+An upcoming commit will change the semantics of the SPARSE_FLAGS
+variable from an internal to a user only customisation variable.
+The MinGW configuration section contains an obsolete setting for
+this variable which was used (some years ago) to cater to an error
+in the Win32 system header files. Since 'sparse' does not currently
+support the MinGW platform, nobody on that platform can be relying
+on this setting today. Remove this use of the SPARSE_FLAGS variable.
 
-  - Add a new patch #1, which removes an obsolete use of SPARSE_FLAGS
-  - Actually initialise the new SP_EXTRA_FLAGS variable
-  - Reword the commit message (now #2) to, hopefully, clarify the
-    usage of SPARSE_FLAGS and SP_EXTRA_FLAGS
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+ config.mak.uname | 1 -
+ 1 file changed, 1 deletion(-)
 
-A range-diff against v1 is given at the very end.
-
-Original cover-letter content:
-
-I suspect that the Makefile sparse target is not easy to use in a CI
-job, since the 'sparse' program (via cgcc -no-compile) does not exit
-with a non-zero value, even when issuing errors and warnings.
-
-The way I use sparse, this is not an issue. I run sparse over the
-master branch, check that the output file has the no/expected
-errors and warnings, then just diff the output files from the
-next and pu branches. something like:
-
-  $ make sparse >sp-out 2>&1 # on master branch
-  $ vim sp-out # check for errors/warnings
-  ...
-  $ make sparse >nsp-out 2>&1 # on next branch
-  $ diff sp-out nsp-out # any new errors/warnings?
-  ...
-  $ make sparse >psp-out 2>&1 # on pu branch
-  $ diff nsp-out psp-out # any new errors/warnings?
-
-At the moment, on Linux, the sp-out file is free from any sparse errors
-or warnings. So are next and pu:
-
-  $ grep error sp-out
-  $ grep warning sp-out
-  $ diff sp-out nsp-out
-  391a392
-  >     SP fuzz-commit-graph.c
-  $ diff nsp-out psp-out
-  170a171,180
-  >     SP trace2.c
-  >     SP trace2/tr2_cfg.c
-  >     SP trace2/tr2_dst.c
-  >     SP trace2/tr2_sid.c
-  >     SP trace2/tr2_tbuf.c
-  >     SP trace2/tr2_tgt_event.c
-  >     SP trace2/tr2_tgt_normal.c
-  >     SP trace2/tr2_tgt_perf.c
-  >     SP trace2/tr2_tls.c
-  >     SP trace2/tr2_verb.c
-  298a309
-  >     SP builtin/stash.c
-  375a387
-  >     SP t/helper/test-trace2.c
-  376a389
-  >     SP t/helper/test-xml-encode.c
-  $ 
-
-However, if we go back a few days, then the pu branch was not clean:
-
-  $ diff nsp-out psp-out
-  18a20,24
-  >     SP change-table.c
-  > change-table.h:53:24: error: dubious one-bit signed bitfield
-  > change-table.h:54:25: error: dubious one-bit signed bitfield
-  > change-table.h:55:25: error: dubious one-bit signed bitfield
-  > change-table.h:56:26: error: dubious one-bit signed bitfield
-  69a76
-  >     GEN command-list.h
-  93a101,106
-  >     SP metacommit.c
-  > change-table.h:53:24: error: dubious one-bit signed bitfield
-  > change-table.h:54:25: error: dubious one-bit signed bitfield
-  > change-table.h:55:25: error: dubious one-bit signed bitfield
-  > change-table.h:56:26: error: dubious one-bit signed bitfield
-  >     SP metacommit-parser.c
-  170a184,193
-  >     SP trace2.c
-  >     SP trace2/tr2_cfg.c
-  >     SP trace2/tr2_dst.c
-  >     SP trace2/tr2_sid.c
-  >     SP trace2/tr2_tbuf.c
-  >     SP trace2/tr2_tgt_event.c
-  >     SP trace2/tr2_tgt_normal.c
-  >     SP trace2/tr2_tgt_perf.c
-  >     SP trace2/tr2_tls.c
-  >     SP trace2/tr2_verb.c
-  213a237
-  >     SP builtin/change.c
-  298a323
-  >     SP builtin/stash.c
-  375a401
-  >     SP t/helper/test-trace2.c
-  376a403,405
-  >     SP t/helper/test-xml-encode.c
-  > t/helper/test-xml-encode.c:29:40: warning: Using plain integer as NULL pointer
-  > t/helper/test-xml-encode.c:37:40: warning: Using plain integer as NULL pointer
-  $ 
- 
-Note that 'make' does not exit at the first 'error', since the command exit
-code is zero (or not non-zero! :) ):
- 
-  $ make change-table.sp
-      SP change-table.c
-  change-table.h:53:24: error: dubious one-bit signed bitfield
-  change-table.h:54:25: error: dubious one-bit signed bitfield
-  change-table.h:55:25: error: dubious one-bit signed bitfield
-  change-table.h:56:26: error: dubious one-bit signed bitfield
-  $ echo $?
-  0
-  $ 
-
-We can change that by passing '-Wsparse-error' to 'sparse':
-
-  $ make SPARSE_FLAGS=-Wsparse-error change-table.sp
-      SP change-table.c
-  change-table.h:53:24: error: dubious one-bit signed bitfield
-  change-table.h:54:25: error: dubious one-bit signed bitfield
-  change-table.h:55:25: error: dubious one-bit signed bitfield
-  change-table.h:56:26: error: dubious one-bit signed bitfield
-  Makefile:2729: recipe for target 'change-table.sp' failed
-  make: *** [change-table.sp] Error 1
-  $ echo $?
-  2
-  $ 
-
-Note that '-Wsparse-error' not only returns a non-zero exit code (1), but
-it also changes a 'warning' into an 'error' (see above):
-  
-  $ make SPARSE_FLAGS=-Wsparse-error t/helper/test-xml-encode.sp
-      SP t/helper/test-xml-encode.c
-  t/helper/test-xml-encode.c:29:40: error: Using plain integer as NULL pointer
-  t/helper/test-xml-encode.c:37:40: error: Using plain integer as NULL pointer
-  Makefile:2729: recipe for target 't/helper/test-xml-encode.sp' failed
-  make: *** [t/helper/test-xml-encode.sp] Error 1
-  $ echo $?
-  2
-  $ 
-
-Unfortunately, using SPARSE_FLAGS from the 'make' command-line is not
-ideal, since it was not really intended to be used that way. This will
-cause problems for those files which have target specific settings for
-SPARSE_FLAGS. For example:
-
-  $ make pack-revindex.sp
-      SP pack-revindex.c
-  $ make SPARSE_FLAGS=-Wsparse-error pack-revindex.sp
-      SP pack-revindex.c
-  pack-revindex.c:65:23: error: memset with byte count of 262144
-  Makefile:2729: recipe for target 'pack-revindex.sp' failed
-  make: *** [pack-revindex.sp] Error 1
-  $ echo $?
-  2
-  $ 
-
-So, passing SPARSE_FLAGS on the command-line, effectively nullifies the
-target specific settings (making them useless).
-
-This patch splits the duties of SPARSE_FLAGS, by introducing a separate
-SP_EXTRA_FLAGS variable, for use with the target specific settings. In
-addition, we use a conditional assignment (?=) of the default (empty)
-value of SPARSE_FLAGS, to allow setting the value of this variable from
-the environment as well as the command-line. So, after this patch:
-
-  $ make SPARSE_FLAGS=-Wsparse-error pack-revindex.sp
-      SP pack-revindex.c
-  $ echo $?
-  0
-  $ 
-
-  $ SPARSE_FLAGS=-Wsparse-error make pack-revindex.sp
-      SP pack-revindex.c
-  $ echo $?
-  0
-  $ 
-
-Now, we should be able to run the sparse Makefile target in a CI job, and
-still find all sparse errors and warnings (now marked as errors also),
-using something like this:
-
-  $ SPARSE_FLAGS=-Wsparse-error make -k sparse >sp-out 2>&1
-
-Note that the '-k' argument to 'make' is now required. ;-)
-
-
-ATB,
-Ramsay Jones 
-
-
-Ramsay Jones (2):
-  config.mak.uname: remove obsolete SPARSE_FLAGS setting
-  Makefile: improve SPARSE_FLAGS customisation
-
- Makefile         | 14 +++++++++-----
- config.mak.uname |  1 -
- 2 files changed, 9 insertions(+), 6 deletions(-)
-
-Range-diff against v1:
--:  ---------- > 1:  7b15bd9b31 config.mak.uname: remove obsolete SPARSE_FLAGS setting
-1:  889cc64f90 ! 2:  c2b6ce71da Makefile: improve SPARSE_FLAGS customisation
-    @@ -7,10 +7,13 @@
-         target specific settings. Without using the new variable, setting
-         the SPARSE_FLAGS on the 'make' command-line would also override the
-         value set by the target-specific rules in the Makefile (effectively
-    -    making them useless). In addition, we initialise the SPARSE_FLAGS
-    -    to the default (empty) value using a conditional assignment (?=).
-    -    This allows the SPARSE_FLAGS to be set from the environment as
-    -    well as from the command-line.
-    +    making them useless). Also, this enables the SP_EXTRA_FLAGS to be
-    +    used in the future for any other internal customisations, such as
-    +    for some platform specific values.
-    +
-    +    In addition, we initialise the SPARSE_FLAGS to the default (empty)
-    +    value using a conditional assignment (?=). This allows SPARSE_FLAGS
-    +    to be set from the environment as well as from the command-line.
-     
-      diff --git a/Makefile b/Makefile
-      --- a/Makefile
-    @@ -20,7 +23,11 @@
-      export TCL_PATH TCLTK_PATH
-      
-     -SPARSE_FLAGS =
-    ++# user customisation variable for 'sparse' target
-     +SPARSE_FLAGS ?=
-    ++# internal/platform customisation variable for 'sparse'
-    ++SP_EXTRA_FLAGS =
-    ++
-      SPATCH_FLAGS = --all-includes --patch .
-      
-      
+diff --git a/config.mak.uname b/config.mak.uname
+index 7b36a1dfe7..786bb2f913 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -555,7 +555,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	RC = windres -O coff
+ 	NATIVE_CRLF = YesPlease
+ 	X = .exe
+-	SPARSE_FLAGS = -Wno-one-bit-signed-bitfield
+ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+ 	htmldir = doc/git/html/
+ 	prefix =
 -- 
 2.20.0
