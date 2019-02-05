@@ -2,95 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 466641F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 02:01:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D3A51F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 02:15:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726584AbfBECBU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Feb 2019 21:01:20 -0500
-Received: from mail-yb1-f195.google.com ([209.85.219.195]:36841 "EHLO
-        mail-yb1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725874AbfBECBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Feb 2019 21:01:20 -0500
-Received: by mail-yb1-f195.google.com with SMTP id 64so437336ybf.3
-        for <git@vger.kernel.org>; Mon, 04 Feb 2019 18:01:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=XjLHcBrAu0dbmSqhPFD+vvbbcfBZxbSdYWCVxYrKV7Q=;
-        b=LBIkOWmZDfAtXuOVvgWfKpH4BLXTY0De2R3BxNe6D4vrK7QEFcy6wpNM5SiVrHQGQH
-         u1usB4U5NwqtnLztrwPiT08fI85KWEgWu66d1h+EYfhlpBsi/C38TceWu8+ysFwptP7g
-         T2BBqdRX/nwYOUc/Dw8NXCfjgOv8O0W996i1w2+ZV0kHJoJ67ETBeKXkOVBsoKhbUC1G
-         DpCDV2+VkQxNs/yIBjI7g4tIWahHfTU3upZc1aazXoSL0uaiFbZ/P+JTmTEyAkrbxM6L
-         Hemn3/2KesSDLUgU6Lfe3V4M4eZXwkNBGcKzgmnwTHBUJtkxzdXnt0LL+nz5ouVc4RMP
-         aOLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=XjLHcBrAu0dbmSqhPFD+vvbbcfBZxbSdYWCVxYrKV7Q=;
-        b=F7aFDVxrPQyMR1hxI8C9nZKnHZPDf4CIQfPDCfNJ2avp6EQ4hgCUaV5dfTKDDzyPpH
-         PU1UTgHMpS2NG8XRvkXN1zf1JqCcgQM74FtZW29WyU9Rto7sLNi2DHv3Rk9S6Q1DdQhG
-         oTojz3fiP/rBDHVacRmGWtbVPN4LNmSh5trMmItiDFzsDxr53gUeRhzbirVKHjowyPIq
-         SkX38OIRTqNLGRmcOmK79+7mXxeGWFoaWK5Dy40HkvyufIo3nNOpFf+l8KdH4SUxP2eG
-         kFIhwF7fDXwBMx6pg/6DOXKi1FHfXW/pxoBVZ1SW1TMfeEyX0+tgYvtAycbKBEN7tdjp
-         0LaQ==
-X-Gm-Message-State: AHQUAuad5CZC/Rve8lN+W/If6PcxL2MGX/lpODLkho4hVy3aIuu3e0pj
-        3vtVk6+/KKJpqQEV5hknF91WRd+EHPUl1w9o9tMS
-X-Google-Smtp-Source: AHgI3IbU2o/eFTfUjPtwqX5kPvfGKTYNYEcEBtDbgCcjif7Pfor291EVayjYlg13SDcsP14SZHm4ji7Nw/ilTrHDJ5c=
-X-Received: by 2002:a25:d8c2:: with SMTP id p185mr1951100ybg.79.1549332079050;
- Mon, 04 Feb 2019 18:01:19 -0800 (PST)
-MIME-Version: 1.0
-References: <CACwCsY5xU0pUaPZDJMqWNB0dz7DjTx3_b2Lvrft0NjA6cnPvcg@mail.gmail.com>
- <20190205015506.GB527887@genre.crustytoothpaste.net>
-In-Reply-To: <20190205015506.GB527887@genre.crustytoothpaste.net>
-From:   Larry Martell <larry.martell@gmail.com>
-Date:   Mon, 4 Feb 2019 21:00:42 -0500
-Message-ID: <CACwCsY4fwr6=2S5CHe5bH7=7Hukq9np+eT1VO+kUDyBtMLKPcA@mail.gmail.com>
+        id S1726727AbfBECPU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Feb 2019 21:15:20 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33728 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725874AbfBECPU (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 Feb 2019 21:15:20 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c489:9935:372d:73bb])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8BF71603C6;
+        Tue,  5 Feb 2019 02:15:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1549332918;
+        bh=IJMPQlgkspxj4uis9AqnVTD7sGtdQYdugUTUxtSkjns=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=pEdEFxrKUvu99zNM8BIYkJN1OE/G2B6Dsxrn1z8VTzRPcLiffoUJ55hAinWV7K8sa
+         XpG0Dm6VbdAmHDkZyYgKL+Msmu7S1LnjGDhc0vBdV0gUVca10RQg/E8vJWjfSl+a/M
+         bLlvynVTrcbk+PgWo2yXFPpuuLBJnQPilr58Dkf5XzbIdyfw5X6EjnILbVwLPUcPwu
+         vI854qViSAEEeZS+741lRVorUIhIO8cc5CdBFwEA3lAkjRB04USOMXYarA62bcDqZg
+         SIbl+Ypj67Ubwjdukx38bmQIQSGifP7hilYLHiaJymor8MccBonbvpQUAbqNTxq7J3
+         jVUmKXKYULPh+/l8Zu3/CgOKxbLHS6f5R3OesQbwUdmyuSSYDxfEKcvLZX6yzP+qzR
+         dRcANbhYEMHpGPhLts0Yhz1uGMV7iN4q7sirv8pCpKAqHKgQJ5r3ClHnrj7+w6n3Uf
+         +On5LLFeCR640zIEHwbCvHUqDno5Xq8LyTVot/GRHX5QeCZpbr9
+Date:   Tue, 5 Feb 2019 02:15:13 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Larry Martell <larry.martell@gmail.com>
+Cc:     git@vger.kernel.org
 Subject: Re: hook to get info on commit, and include that in a file that is
  part of the commit
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+Message-ID: <20190205021513.GC527887@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Larry Martell <larry.martell@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+References: <CACwCsY5xU0pUaPZDJMqWNB0dz7DjTx3_b2Lvrft0NjA6cnPvcg@mail.gmail.com>
+ <20190205015506.GB527887@genre.crustytoothpaste.net>
+ <CACwCsY4fwr6=2S5CHe5bH7=7Hukq9np+eT1VO+kUDyBtMLKPcA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="1ccMZA6j1vT5UqiK"
+Content-Disposition: inline
+In-Reply-To: <CACwCsY4fwr6=2S5CHe5bH7=7Hukq9np+eT1VO+kUDyBtMLKPcA@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 4, 2019 at 8:55 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On Mon, Feb 04, 2019 at 08:36:10PM -0500, Larry Martell wrote:
-> > Is there any way using a git hook to get info on the commit (id,
-> > message), put that in a file, and include that file in the commit?
-> >
-> > If I try that in a pre-commit hook I do not get the info on the
-> > current commit. I tried it in pre-receive but it does not seem to get
-> > executed at all.
->
-> You cannot include a file in the commit with that commit's ID.
->
-> The object ID of a commit is based on the data it contains, which is in
-> turn based on the data in its top-level tree, which is in turn based on
-> the data in all of its trees and blobs. If you add or change a file in a
-> commit (or the message of that commit), you necessarily result in that
-> commit having a different object ID. This is by design and is valuable
-> for checking the integrity of the history.
->
-> Furthermore, the hooks for a commit are designed for checking and
-> notification, not for editing the commit, with the exception of the
-> commit message hooks, which are designed only for editing the commit
-> message, not the contents.
->
-> The pre-receive hook runs on the server side, so if you aren't running
-> it there, then it won't get called at all.
 
-Thanks for the reply. Any suggestions on how to achieve what I want to do?
+--1ccMZA6j1vT5UqiK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The use case is that we want to have a file that is part of the
-install that has certain info (commit id, date of commit, commit
-message, etc.). and we'd like that to be generated automatically.
+On Mon, Feb 04, 2019 at 09:00:42PM -0500, Larry Martell wrote:
+> Thanks for the reply. Any suggestions on how to achieve what I want to do?
+>=20
+> The use case is that we want to have a file that is part of the
+> install that has certain info (commit id, date of commit, commit
+> message, etc.). and we'd like that to be generated automatically.
+
+If you want to generate a file, you can certainly do that in the
+post-commit hook or using a Makefile target. You just can't check it
+into the repo. Lots of projects do this as part of their build process.
+
+An example of what you could do is "git log --pretty=3D'tformat:%H%n%B' HEA=
+D".
+That will print the commit hash and commit message to standard output
+for each commit. If you want just one commit, you can use "-1".
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--1ccMZA6j1vT5UqiK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxY8bEACgkQv1NdgR9S
+9otPGRAAtk0674RNV17P5vPQdripZMwI1gVRJw3U2oRAT0RfEHYJRbeV4t87BtM/
+8b1aW3k16Jxz79/ZRVv1TGBoVmFihsMseEcGhVOJz1NHd/7LcgQHeSs6tAEiIShp
+mnm7qIzjtE9n+s1WpNdION4SrPSaiJk+gBFK7dSjKu2vns3mlTw6bbG5Tu6IotgU
+V8GozKdSmP5suTPjG7QUHRe9Yy9U6/lQN2733MLxdmcZ3mgcGEZcveBjuYKfjisP
+yUOt9LLZacYt7edY49MxqX78Oo3x+DIRx/gnLukpqGR+40NTJSnqwut0ePKyRIqb
+IMmNcmSWqY303EPFnjidESXFe+abceiA77xzVfwaw11YVBQZUwkIXuKXkdX/8YeS
+kWu/tfvWpOYiKfgdtavcC7N9QHozRw6gv8bOVnpur90u4I6aL0Hp+voTiqsP5hzb
+jlYcVWkITdD6Y+O3N8txsKJmjQRha5rb6DEB4t19toKWsoNAQFBehBe/3PsNBdbq
+es+HDUJy3GAuILX6WeDyLhXqc3XszMCpvwLd7Sq5MsZ94Z2TdXzjGB4arJ+8GBEA
+nK+kkVjqWAg4fCBWxHSxFLCEBxCQSFLuesPTxN9kf+ZD2o773pIIciUe4QDiLrVB
+JEmHUnwwr3sayxF/TwEQZLdUwC9T5xCB3O6ow8kahkeJwDVohrw=
+=+WEr
+-----END PGP SIGNATURE-----
+
+--1ccMZA6j1vT5UqiK--
