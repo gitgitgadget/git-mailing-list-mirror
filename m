@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E63E1F453
-	for <e@80x24.org>; Tue,  5 Feb 2019 11:32:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 267151F453
+	for <e@80x24.org>; Tue,  5 Feb 2019 11:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728467AbfBELb7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 06:31:59 -0500
-Received: from mout.gmx.net ([212.227.15.15]:54495 "EHLO mout.gmx.net"
+        id S1727509AbfBELlO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 06:41:14 -0500
+Received: from mout.gmx.net ([212.227.17.20]:49053 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727248AbfBELb7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 06:31:59 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQQzk-1ggz4e2ST6-00Tn1M; Tue, 05
- Feb 2019 12:31:52 +0100
-Date:   Tue, 5 Feb 2019 12:31:55 +0100 (STD)
+        id S1726065AbfBELlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 06:41:14 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1FAK-1h6SeS3JEm-00tChi; Tue, 05
+ Feb 2019 12:41:08 +0100
+Date:   Tue, 5 Feb 2019 12:41:11 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: [PATCH] travis-ci: make the OSX build jobs' 'brew update' more
  quiet
-In-Reply-To: <20190204193826.GH10587@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1902051229570.41@tvgsbejvaqbjf.bet>
-References: <20190202163421.19686-1-szeder.dev@gmail.com> <nycvar.QRO.7.76.6.1902041045280.41@tvgsbejvaqbjf.bet> <20190204193826.GH10587@szeder.dev>
+In-Reply-To: <20190204193823.GA4511@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1902051240080.41@tvgsbejvaqbjf.bet>
+References: <20190202163421.19686-1-szeder.dev@gmail.com> <xmqqk1ifv296.fsf@gitster-ct.c.googlers.com> <20190204193823.GA4511@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1499051297-1549366316=:41"
-X-Provags-ID: V03:K1:kYTF/q3VHZnbbQFAnB7T1lhPb3vD6i9rR32kOUpmgFKzfxUdiWa
- snwOsmczA+uF43EePye5ZwFboB+R/uKv3eqZ76ynqLmTF9W8tuzzYlVy54Rg+1p57BcMQ27
- 7NVskHjao/uprXaQuNr6IztcbD2zSVSOVVAY84fKOsOExBey71vvhn2qddTGhmURtA3BbRG
- 3jPeaAQXXdH9Qk3OGzofw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HjzP8fdMdqc=:MuBxHmIdy8vr4S4Ji0B/Yt
- 9NKILQcRLDqlKPLJRk1ZPsNK1z1XMVetLFsWc9gUyj96qqhNDzcMXrc3sczF6VuNgIpS5uMnu
- zYER/lhVkBKbgs/CfhUSveqORXmG20hvDP7/ezs1tlJFoqojO2bj/ElpPu128nlz5aXCzYrBj
- OcSoqONq3BKQHHWty6uVWSn+FsA7kl9c3PFsLXBd5CippecQg91zp6qpumzH0uWgD/mDGQsRx
- egySQkX7TcDT41MtRfeR0LBEVOM61fKgc50jYJSayxy8wElkWXYcvKOkwVdgToi2fUl2ZzqaR
- 8HcdttOoKwTF42shfKaPN5X81sZ9iBfPmErpzert/RseDW31++HM26u/F3sU4AkcGwAOm6s91
- p3Ei6ojPxqaod4PsFBcp7gy42z65Y+11IaCVuIFTrfWbEVb+SMTqNyZld6Vv0ck23TyG42iUy
- h0TUsb0N8ho6NZVnGSY4D8K1dyCkIgiRAJTGgCl9Ro7ZYQuSM/1T8LvR6wqrbzKXDwPJxH1sb
- gvM4cwxYn6czmmG6HqUkCt1oN3gmGfUuLUYZVtXTcnRxYN4zsaggEyuznkO1VUpR3ksiM5rue
- 3w6Vz3IzVV1WOk8cGlg7abNWI9pQ/88p90FqqxZpM2UTljI5m0boR7QV45kfq5anb1bkEm2SD
- UM/NMnoeKiJac6m0QIm+YhMAeQ3qFIPTN0+LZNqWMlEV9k6N1We+rCL2/nn3MiDL/wTAzElnb
- paZt6Uo94tyX+n8WluZyjzvjfP8fr1+WobkvRqOD9Uc+dFycfVeGYX5F89Rm3qETOPKs8PWpp
- Df9PKcnVWFfQAyqG6+PpEM2sT/jdTdPpkpgtlShRVvVDZUZNS+o+pQGiAccLEqJl3LoVOlx78
- 6dAp7ZQFxdJIAry4X0UIVMoNw8mmEAmA7lYxGd2YA7/x/T32rBJ4h5CGCPy/DDW0g1Kw3fgvZ
- Tn/YyWlDR+g==
+Content-Type: multipart/mixed; boundary="8323328-1391330865-1549366872=:41"
+X-Provags-ID: V03:K1:MjjhAZw6Yq913WCd+eIhS1/BglQwznUn85Pi4u0BN3UKO7ywwkg
+ T9x0TACOiDw6XUU4quO8ZLuGfdMRuwdhtH2N7bOqrf6K3wK69VBcMoP6XdHRFeWVulbRkQF
+ IaZLCjziwYyrTCsNc7PsPx+93tIpSndpPpfx4jjzEkFQZdqk46jc2yee+PlFgSF4P79Sv5V
+ zVJ90YCigX5pfCSOsYy8g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:g7p3SBYPbh8=:dtbBYlPBomnDR14jO6OxmD
+ 2lcV8eF7Ny+1uJ7/RL7cObGTmh/GKb+o2WvY48RrAtOO+gz4OaJCSEQWTczFQ+y1YK8kBfzGR
+ +xiax1K1oZum2HUik7wBkYz2qwh+lp8vS2YmoeBa6G2h5Dc/riI+W0m1hJMNBryaJ9z6tdG84
+ hTAv6YCc0oja/3ONBpBtyQfHsoOCyfFIjO+N0V2I9aTIDCXnGS6Lm9nn1FTNVlGbwe1jFAAw0
+ tXSLgkhpZb4nN3cjzH3NV/HphxLujY3hg+JJvdhluK8EDoSRd277TAbZBKztvZwpgslDkw/TB
+ NTgLOliWb8Ah3c5DGxUQiyjQQK6MO/S+t919QBmM8cVb5utomL3GyOBINNgIieQBsgd64NQ5d
+ /rEap4Cbnvr2SKlVF4SlCMoJkm3mcRBidCgTGMaXwRmvcFUscSxYqHieHN2SKqqUbI2oDR462
+ M01HnUYGst3wGMuK/6JbDHZ5XK7hl5Yoj81ZiLOtHulbRS6JDBX+XTDfCupdtjkOd9FAiI6ng
+ c70XBszgW0CyAZMnCRpLIqvXBFvCJio9tb9napNB9rox2WxuF4pcRTNNoiCam9jGRaxo35vWY
+ iPfU/IMrsmxcrU/2pC2WSJMuvHk1lfsEzEMLRUkguX5/Gf140Ai1NL9Rg+Pw6DWv5EHwlcLdW
+ iAwBYbrZRxe8SnUU6YLQIZHOC6H8xGsGXJRliuqebFslMJSwveJq25/vDEZ/fk/D2oOzsWPkd
+ J4jX0MOUhFL1p8ZuyXq0TEbNmRsgVjrPOcr5g5KHRUN6DgKGwgasCuh2IoOmY9f2YhQtpO0r+
+ 3AuL5RI3Kmtkl5PL2o6TxG5RBIJ/Es7YJLCT8EqDIO2fyn4xf6iQBMoIJ0/gplCjWrASfyxS5
+ trkdGgMpgdfNLncJEsW+mkYOs7KS3m9Vdip7PJUeNjLdQt8AsuCY3J2nw0ukZJJSq0VOAL7fN
+ jKA6qvbissQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,7 +59,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1499051297-1549366316=:41
+--8323328-1391330865-1549366872=:41
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
 
@@ -67,34 +67,14 @@ Hi Gábor,
 
 On Mon, 4 Feb 2019, SZEDER Gábor wrote:
 
-> On Mon, Feb 04, 2019 at 10:49:05AM +0100, Johannes Schindelin wrote:
-> 
-> > So our best bet at not getting overwhelmed with failed builds ...
-> 
-> Oh, in my long-time for-fun semi-automated CI experiment [1] all
-> integration branches and cooking topics are still just fine :) they
-> all have been including this patch (among many others) for quite some
-> time now (since when the list of available Homebrew packages was
-> "only" about 1700 lines... about a year ago).
-> 
-> Unfortunately, I never upstreamed it, because that long list of
-> packages is folded up anyway when viewing the logs, so why bother...
-> In hindsight, I should have.  Oh, well.
-> 
-> [1] https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/branches
+> Under Dscho's bugreport it looks like they already merged a one-liner
+> fix, but how long will it take to tickle down to Travis CI, I have no
+> idea.
 
-Heh, I feel ya. 70 branches in Git for Windows' patch thicket are waiting
-(for the most part) to be upstreamed.
-
-> > is to help Homebrew get `brew update --quiet` to work again. I just
-> > opened a ticket to that end:
-> > 
-> > 	https://github.com/Homebrew/brew/issues/5666
-
-And this ticket has been closed with a fix! Yay! I checked, and on Travis,
-`pu` is now only broken for the FUNNYNAMES issue in Elijah's t4038 that I
-already reported.
+Since the fix affected a Homebrew package, it was not so much about
+trickling down to Travis, but about trickling down into the public
+Homebrew repositories. And it seems that that trickling is complete now.
 
 Ciao,
 Dscho
---8323328-1499051297-1549366316=:41--
+--8323328-1391330865-1549366872=:41--
