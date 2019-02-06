@@ -2,137 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D91FA1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 22:20:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C7FB1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 22:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726048AbfBFWUf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 17:20:35 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45962 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725928AbfBFWUf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 17:20:35 -0500
-Received: by mail-ed1-f65.google.com with SMTP id t6so6085213edw.12
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 14:20:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=o5LHLhXWQv9J9veWIdbNP+FsmtA7SNBG1oYlrWwrfnA=;
-        b=bhIujHANrkSRzSwwK2LV0nmzAfCbcr/4k2drh3eP962gZ4mYI7FAfg9cxz5RNKoWig
-         iuPwXx3cQuZCWy9wgT6JwFPDd3CBeboYlaRB+8Gn98nzpHTHShV2fm3YgzXBEJ50Wf4R
-         tkz4Y+vw0w1VyxFc9G9S7C5uldz8+vcfng7K1qaT9cg16Wv7bXLVUTvuV2hgZWs6BhGD
-         N8Wn30gZYgYgYjTtf7GMBy8N/x7LD8pqVM104CJIPixwIHKbEobrWYvOK+IIZCG4djEv
-         LmTwOOwsNp0ycCrAofHAl+I37zGdnclz1gcbVwojRPzUxbsuCu0k/muXaWMDGUqncO8s
-         SZlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=o5LHLhXWQv9J9veWIdbNP+FsmtA7SNBG1oYlrWwrfnA=;
-        b=bFJ38bmZS9KsQENbOAt8FnJ8TrW0h2Z8sIaxil9dr3yk4fGBBn7WQG6V5WXsGMq63P
-         vPBsXAAK7OKeSV6gVxn499i3AacKhJagZ/SJRFWxoZQEUjWrcKOI54GKSephldMb6gOu
-         +1QgYl0pVFRu/bV1tSvXWrA0n/Hoe6Cxa9CfRXxfboYWzuAENPTz5rYj0yBWOD37g4ja
-         83wFDN6LXdlOIEZ2kHLePk76ZJPfdC3qKB4k7AVoF25HQ8tRGqsQnsnNpTZs6n5bYLLN
-         8LP7BOxNortf6Gqxz6bN/adhcEl2hqxgIMGJVjRHtU0nldPrr/DHPPMrmZEdIFvR1Mw/
-         NMYQ==
-X-Gm-Message-State: AHQUAuaqjZOJOg9s61/CVrF7uMyS7ps/LRHSTtwt5CJzXtjsvjg0Bh3A
-        fpSwauSiVEMTY/7/bu9b/1BSp3wzFc0=
-X-Google-Smtp-Source: AHgI3IZlvvgbIF3hG3Xccg+YouVZ3QMYEIgmjDtUWBAC6OczNp6yxgv869V2XBfpC6U8GkgJ4T40Cw==
-X-Received: by 2002:a50:983a:: with SMTP id g55mr9985792edb.143.1549491633569;
-        Wed, 06 Feb 2019 14:20:33 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id a27sm6356558eda.65.2019.02.06.14.20.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Feb 2019 14:20:32 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        steadmon@google.com
-Subject: Re: [PATCH 0/8] Resend of GIT_TEST_PROTOCOL_VERSION patches
-References: <cover.1549411880.git.jonathantanmy@google.com> <20190206213458.GC12737@sigill.intra.peff.net> <87ef8klh4g.fsf@evledraar.gmail.com> <20190206221008.GB15378@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190206221008.GB15378@sigill.intra.peff.net>
-Date:   Wed, 06 Feb 2019 23:20:32 +0100
-Message-ID: <87bm3olftb.fsf@evledraar.gmail.com>
+        id S1726319AbfBFWkB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 17:40:01 -0500
+Received: from forward101p.mail.yandex.net ([77.88.28.101]:48646 "EHLO
+        forward101p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725959AbfBFWkB (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 6 Feb 2019 17:40:01 -0500
+X-Greylist: delayed 394 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Feb 2019 17:40:00 EST
+Received: from mxback5j.mail.yandex.net (mxback5j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10e])
+        by forward101p.mail.yandex.net (Yandex) with ESMTP id 97F443280EE4
+        for <git@vger.kernel.org>; Thu,  7 Feb 2019 01:33:24 +0300 (MSK)
+Received: from smtp3p.mail.yandex.net (smtp3p.mail.yandex.net [2a02:6b8:0:1472:2741:0:8b6:8])
+        by mxback5j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id AE8mblLSi8-XOduGADR;
+        Thu, 07 Feb 2019 01:33:24 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narod.ru; s=mail; t=1549492404;
+        bh=enM7DYJj/NojNw7oX7rHFZG1voXuYk33aoR5ZupR1Yc=;
+        h=To:From:Subject:Message-ID:Date;
+        b=hY8frrw2OZqpUCQjRk8vuj27wQJlVMc/lrC5sVROVfcDU6eefrCovxBr1yedsw4a8
+         tL+cJA1hSiw3hlkFIyyHcX5n+6oRDruxcIyxm1PSFMDJ6LrZWXbNZukglzKPv9cQ+Y
+         DosKbTtOEN8Msz8gbwZEj5Heuq8GsyLPjfrveOBQ=
+Authentication-Results: mxback5j.mail.yandex.net; dkim=pass header.i=@narod.ru
+Received: by smtp3p.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id NnPNeot5gA-XNciVTSc;
+        Thu, 07 Feb 2019 01:33:23 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+To:     git@vger.kernel.org
+From:   Victor Porton <porton@narod.ru>
+Subject: Proposal: Output should push to different servers in parallel
+Message-ID: <173ed6e2-7f33-62a0-e1bd-f4663e68490e@narod.ru>
+Date:   Thu, 7 Feb 2019 00:33:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I experienced a slowdown in Git pushing when I push to more than one server.
 
-On Wed, Feb 06 2019, Jeff King wrote:
+I propose:
 
-> On Wed, Feb 06, 2019 at 10:52:15PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> > I wonder if it would be more obvious what's going on if we instead had=
- a
->> > prereq like:
->> >
->> >   test_expect_success !PROTO_V2 'ls-remote --symref' '
->> >      ...
->> >   '
->> >
->> > and just skipped those tests entirely (and in a way that appears in the
->> > TAP output).
->> >
->> > I think it would also future-proof us a bit for v2 becoming the default
->> > (i.e., when GIT_TEST_PROTOCOL_VERSION being blank does mean "use v2").
->> >
->> > I dunno. It probably doesn't matter all that much, so it may not be
->> > worth going back and changing at this point. Just a thought.
->>
->> So far we've had the convention that these GIT_TEST_* variables,
->> e.g. the one for the commit graph, work the same way. Thus we guarantee
->> that we get (in theory) 100% coverage even when running the tests in
->> this special mode. I think it's better to keep it as-is.
->
-> But what's the point of that? Don't you always have to run the test
-> suite _twice_, once with the special variable and once without?
-> Otherwise, you are not testing one case or the other.
->
-> Or are you arguing that one might set many special variables in one go
-> (to prefer running the suite only twice, instead of 2^N times). In which
-> case we are better off running the test (as opposed to skipping it), as
-> it might use one of the _other_ special variables besides
-> GIT_TEST_PROTOCOL_VERSION.
->
-> I can buy that line of reasoning. It still doesn't cover all cases that
-> a true 2^N test would, but that clearly isn't going to be practical.
+Run push to several servers in parallel.
 
-Maybe I'm misunderstanding what you're proposing, but as an example,
-let's say the test suite is just these two tests:
+Not to mix the output, nevertheless serialize the output, that is for 
+example cache the output of the second server push and start to output 
+it immediately after the first server push is finished.
 
-    test_expect_success 'some unrelated thing' '...'
-    test_expect_success 'test protocol v2' 'GIT_TEST_PROTOCOL_VERSION=3D2 .=
-..'
+This approach combines the advantages of the current way (I suppose it 
+is so) to serialize pushes: first push to the first server, then to the 
+second, etc. and of my idea to push in parallel.
 
-And GIT_TEST_PROTOCOL_VERSION=3D0 is the default, let's say I want to test
-with GIT_TEST_PROTOCOL_VERSION=3D1 for whatever reason,
+I think the best way would be use multithreading, but multiprocessing 
+would be a good quick solution.
 
-I'd still like both tests to be run, not just 1/2 with
-GIT_TEST_PROTOCOL_VERSION=3D1 and 2/2 skipped because it's explicitly
-testing for the GIT_TEST_PROTOCOL_VERSION=3D2 case, whereas I asked for a
-GIT_TEST_PROTOCOL_VERSION=3D1.
-
-IOW the point of these tests is to piggy-back on the tests that *aren't*
-aware of the feature you're trying to test. So
-e.g. GIT_TEST_COMMIT_GRAPH=3Dtrue should run our whole test suite with the
-commit graph, and *also* those tests that are explicitly aware of the
-commit graph, including those that for some reason would want to test
-for the case where it isn't enabled (to e.g. test that --contains works
-without the graph).
-
-Otherwise I can't say "I care more about GIT_TEST_COMMIT_GRAPH=3Dtrue than
-not", and run just one test run with that, because I'll have blind spots
-in the commit graph tests themselves, and would then need to do another
-run with GIT_TEST_COMMIT_GRAPH=3D set to make sure I have 100% coverage.
