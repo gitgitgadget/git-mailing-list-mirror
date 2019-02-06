@@ -2,86 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2AA51F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 09:42:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A380E1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 10:13:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728936AbfBFJmu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 04:42:50 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:39422 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbfBFJmu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 04:42:50 -0500
-Received: by mail-pf1-f193.google.com with SMTP id f132so548652pfa.6
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 01:42:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=JcmoG1j346GBdpa+Tmw2qvdxkQ8NNBbT/+FtY20MUbE=;
-        b=T/Ju3wtWZ/CEqR+8suhfEqCpsmc86kLg4rLzq6udZ/lbVb7rtTsLr7at+5Xqi/HeYc
-         75xx60gjcH93qUcy+zUPaAuafGNl+5lSJnw9Iu2J59E2mvpMoZ7H+Y2501TGiFV8VrPk
-         HXeDen+X135USKfTmQ0QIrlwua12NyOC294BHxGwvtqQP7MPfqnEsI2Y1ksO2ME+BAVQ
-         pi+DLq0oMyn2ciG+lVy9vnCT1xpSmdVZg3agAhH9MLn/ts5BrfZL3+6M6jlC06HGS6YG
-         U7HtlsGcqCusyJs0RptCTRImOxmJ/hZOhjevQ0kfDzpmkVF2Ww3AyXZ5U9ntnjFyXXru
-         9JKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=JcmoG1j346GBdpa+Tmw2qvdxkQ8NNBbT/+FtY20MUbE=;
-        b=UR3RZqoD1vfHOpB0G5VTR1QEqCZAn1W2eJ7oUGjIfgecmHbVGJ+kdJhHtmkA5UhVPe
-         2xD6HB3d4vwY8VAIqnSOfG363MiwOqVwcbzzpo8hy2YjRSvNDGbDye+c8waOzvkiD7e/
-         Zv+syNFXguFAF/YYpciFxHJfEUfAOeVxk3+YsltDr8/GxcjkreCVxeYwGBizZtOutrca
-         PgzlJDo9dm+Y/tnJvjR6uNwucMYHwiiEpO//BP3OqUKd8oUx/mxY8+8ScCwFh2o6dog3
-         O9UpIJHvqvDMP8Opqma8ftZwnK5r1fEYPReKsSZWfM3Bz5z7ulcZT9r4z8Wmew72tElQ
-         mO2w==
-X-Gm-Message-State: AHQUAuZe37nKkluDpq296Sgse8ND5UFYi8rVb5l9WF6qmTO2SQ3yMaJP
-        Uoz3P9baIkZr4dSsTZcSUWDOrnK+
-X-Google-Smtp-Source: AHgI3IZouGNtkk1QvrwEOU1rt6FjAXSQjZ8ubAwkIShv/aFRFlNgzxN8ZgmsxJGcojv8QcRtOaAUaA==
-X-Received: by 2002:a62:9305:: with SMTP id b5mr9521936pfe.10.1549446169570;
-        Wed, 06 Feb 2019 01:42:49 -0800 (PST)
-Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id 134sm6752162pgb.78.2019.02.06.01.42.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Feb 2019 01:42:48 -0800 (PST)
-Date:   Wed, 6 Feb 2019 01:42:46 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH] completion: complete git submodule absorbgitdirs
-Message-ID: <fdb618c323d3cde058e19dea1cd15044e34484e1.1549446118.git.liu.denton@gmail.com>
+        id S1728895AbfBFKNr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 05:13:47 -0500
+Received: from mout.gmx.net ([212.227.17.20]:59611 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726598AbfBFKNr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 05:13:47 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ldbqw-1hYbBh2lb0-00imim; Wed, 06
+ Feb 2019 11:13:31 +0100
+Date:   Wed, 6 Feb 2019 11:13:30 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Christopher Diaz Riveros <chrisadr@gentoo.org>
+cc:     git@vger.kernel.org
+Subject: Tyop in the Spanish translation?
+Message-ID: <nycvar.QRO.7.76.6.1902061112050.41@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.11.2 (2019-01-07)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HEAgfdEbNZaGLymsVHjN0cCqW5BG5hVvIbhfkOlmWdoVkH7e6og
+ 7k3Y7WIQq9mA4jvPsJ4ZrL19ItQHsSDkmtQ/tSSibAwAdnu1X5LN+xrbz9kTmXUJF1b1tvd
+ XfohpchN6OmJsFHROegQvCNxlvWiVoZ8zBydB1xch/IptfUsSKqVF6apl4HLauWAAteYZhM
+ 21LjG3NFUZCr1+WqFY4RQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xvQCqRBrv1M=:cOaxU3gv/jRqkLHtoIMxAO
+ 44wDRDivs9ucVyKKvnPY8B501kOwwWpiY6rvq4PzXKTYyyzgWujDAWa4nY/Rb7g0lOaQ0hO/C
+ RM/N4MXKjuMhrwekBDvLuOxBl+SR/Fz3Ox8qT/AQJLtMd5Y9B6IR5gWw9p5YkIJEXodEFX+sb
+ ETuTJgX/Chj2W0IhtKdnpCUyJrSJyEh7vOtWgYVnhQZ1EDBUkorn/rnPztMFlGJQKq7nTwL1R
+ SacUbVsmPTMBoqOuUzS+KVK8kp4zq9FG7ZaH5um0b20PP60s8iko2slKgkX1H9c1BXiylop6+
+ fE6iqVz4Lk2DS31DnTQotQMSKwS8VcWhtPO61ylUmWRSj41abX67H6QK1JZ20rD3jYNwswwSH
+ NMrsb3gHYuQr4TXnDJ/hTP3vmZ+VqTlYWGBYrnHc8oHQrar1vb2rsW/AlnkhVne2Vod8ymYX3
+ A3NNfYk0fHerU3MLlVwi3Pgl1sXho0LQ/EzxEI2WoEg4Va+s45JnIxcXkuE9PMb5GFPRuKwT6
+ +UMBJo7i/PpfAM1UtHxHP6i0ddRPE6yV8wF27tW2CJp4PqHkyVmZSDInkCxt9dGKWZEHBmyiw
+ kMGHXtV9EsSxgFBfBB5wMjbwO/NVaFE1mvGwPLnw7W74dDS8+lE29FVH7ob/y2OAuuqUxR/+w
+ VTEqrkq0aW3Tu9t9/XX6tqq/jUXfkmtp9zEMmep9g9h7h9IhhZBoYaZz4F0+hwDvlpGAbJ9+f
+ mTrOAIPticB3i/lYZxJ2mXsbMiLEmjlEgBcYxjAAoRp0T1Dxk90UMKtRLRuvg5K9MD+/xf4EP
+ H3UGuZK+4iedMcldZ0wSnnVlugxVpUoNOanRXgTz9K15DKBG6Wih/aFlQKD1CG1TMZuo880qz
+ YVcWpD3Hk3yLzJf9vbVqifgW0L270l/4YNt2lysWpheD6Kx2HN8DifsArz7kQLvLG3ma0EwCs
+ u9dVZVfbF+w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Christopher,
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 499e56f83d..de56879960 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2573,7 +2573,7 @@ _git_submodule ()
- {
- 	__git_has_doubledash && return
- 
--	local subcommands="add status init deinit update summary foreach sync"
-+	local subcommands="add status init deinit update summary foreach sync absorbgitdirs"
- 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		case "$cur" in
--- 
-2.20.1.315.gc8c1ecef27
+I just spotted what I believe to be a typo in po/es.po:
+
+	#~ msgstr "git getch-pack: se esperaba ACK/NAK, se obtuvo EOF"
+
+While I am not fluent in Spanish, I am fairly certain that it should be
+"fetch-pack", not "getch-pack".
+
+Correct?
+Johannes
 
