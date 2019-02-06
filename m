@@ -7,82 +7,81 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 687401F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 09:39:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2AA51F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 09:42:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728467AbfBFJjE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 04:39:04 -0500
-Received: from mail-pf1-f182.google.com ([209.85.210.182]:39933 "EHLO
-        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727002AbfBFJjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 04:39:04 -0500
-Received: by mail-pf1-f182.google.com with SMTP id f132so545143pfa.6
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 01:39:03 -0800 (PST)
+        id S1728936AbfBFJmu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 04:42:50 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:39422 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726900AbfBFJmu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 04:42:50 -0500
+Received: by mail-pf1-f193.google.com with SMTP id f132so548652pfa.6
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 01:42:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wjdwUSMYNB58wvKbvRQS3nIiswpgjJTuFW3EVUofQ/8=;
-        b=RqGfpg0EDO+6s1/I767S76C7alvdvoWpDVjTF75jcbJuvmJshwVaxxSh/CwpkODHH0
-         pbd4DJFLwG1PoEEQs5dsgu/BMUQ+mc6PzSqiPf88WttCj1D0ZQSpTpDT4yqKXktvuDOv
-         3kWh67+i1Ojp9/eXoTFTxOWnSIaDtjClsNqgYy1Lzn9EuhO2C6VqDnGHpN/Vfz2ZiMwd
-         D2gQOiDHXQivQqU9CejstX2HBuPh1tFjZVwSVltuVerlyYNwtZyrRNf6tEFi/M1ppehY
-         rHclQ99LxbO1nsxjVumUSK2dMn3Z7jzU9d56ej/DX9AtKBLzTC+pnnoAz+njDbbIYy1U
-         UZqQ==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=JcmoG1j346GBdpa+Tmw2qvdxkQ8NNBbT/+FtY20MUbE=;
+        b=T/Ju3wtWZ/CEqR+8suhfEqCpsmc86kLg4rLzq6udZ/lbVb7rtTsLr7at+5Xqi/HeYc
+         75xx60gjcH93qUcy+zUPaAuafGNl+5lSJnw9Iu2J59E2mvpMoZ7H+Y2501TGiFV8VrPk
+         HXeDen+X135USKfTmQ0QIrlwua12NyOC294BHxGwvtqQP7MPfqnEsI2Y1ksO2ME+BAVQ
+         pi+DLq0oMyn2ciG+lVy9vnCT1xpSmdVZg3agAhH9MLn/ts5BrfZL3+6M6jlC06HGS6YG
+         U7HtlsGcqCusyJs0RptCTRImOxmJ/hZOhjevQ0kfDzpmkVF2Ww3AyXZ5U9ntnjFyXXru
+         9JKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wjdwUSMYNB58wvKbvRQS3nIiswpgjJTuFW3EVUofQ/8=;
-        b=uD+/0vYQWDS4LdLf0LRHD1KzbW95NxiJN2vCbCzitmjat+/s46s+HY0+P1R4EH3fd+
-         dZnFXrJYF7klCCfwWEVUKhFUurcGXy/4q2JtN3IGHehQqq0rfcrQUBOo72GQNN2hBpg1
-         jBPH+TVqJF1u75tyy5gU6DvUtV0GEJMkSEOf6T1o7mJ8sgn/s9zUugT2Z0ly5l0FINhn
-         sUgvmnfdCIfmUJKm6OQpaWPC/kATxb1WSAxsxpebwKVZSwUqBkBh7yeFWJE/heDYmPAv
-         evrKgjHNQsIdazEvZqZiypP8vJtUlSE7ixW9sUdCGhjJSA7AhBmocaCWP1wvpVTW4Pr3
-         Qwwg==
-X-Gm-Message-State: AHQUAuZrQBqMUtbEhZaQSdA9WbrRZD/W4NowXmpZeWak7SgwGidZgLlN
-        5bjrGw0em24qDCUPA8a9zjsKcW3r
-X-Google-Smtp-Source: AHgI3IaE+/MmWd31Yy8Td2UZN/RLoYICujOi/Gr97K4EOf+x62owO6DwPCz2X4UkEYgpgy1yyTQaMw==
-X-Received: by 2002:a63:e63:: with SMTP id 35mr3665946pgo.347.1549445943053;
-        Wed, 06 Feb 2019 01:39:03 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=JcmoG1j346GBdpa+Tmw2qvdxkQ8NNBbT/+FtY20MUbE=;
+        b=UR3RZqoD1vfHOpB0G5VTR1QEqCZAn1W2eJ7oUGjIfgecmHbVGJ+kdJhHtmkA5UhVPe
+         2xD6HB3d4vwY8VAIqnSOfG363MiwOqVwcbzzpo8hy2YjRSvNDGbDye+c8waOzvkiD7e/
+         Zv+syNFXguFAF/YYpciFxHJfEUfAOeVxk3+YsltDr8/GxcjkreCVxeYwGBizZtOutrca
+         PgzlJDo9dm+Y/tnJvjR6uNwucMYHwiiEpO//BP3OqUKd8oUx/mxY8+8ScCwFh2o6dog3
+         O9UpIJHvqvDMP8Opqma8ftZwnK5r1fEYPReKsSZWfM3Bz5z7ulcZT9r4z8Wmew72tElQ
+         mO2w==
+X-Gm-Message-State: AHQUAuZe37nKkluDpq296Sgse8ND5UFYi8rVb5l9WF6qmTO2SQ3yMaJP
+        Uoz3P9baIkZr4dSsTZcSUWDOrnK+
+X-Google-Smtp-Source: AHgI3IZouGNtkk1QvrwEOU1rt6FjAXSQjZ8ubAwkIShv/aFRFlNgzxN8ZgmsxJGcojv8QcRtOaAUaA==
+X-Received: by 2002:a62:9305:: with SMTP id b5mr9521936pfe.10.1549446169570;
+        Wed, 06 Feb 2019 01:42:49 -0800 (PST)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id z1sm7842461pfi.155.2019.02.06.01.39.01
+        by smtp.gmail.com with ESMTPSA id 134sm6752162pgb.78.2019.02.06.01.42.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Feb 2019 01:39:01 -0800 (PST)
-Date:   Wed, 6 Feb 2019 01:39:00 -0800
+        Wed, 06 Feb 2019 01:42:48 -0800 (PST)
+Date:   Wed, 6 Feb 2019 01:42:46 -0800
 From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2019, #01; Tue, 5)
-Message-ID: <20190206093900.GA20697@archbookpro.localdomain>
-References: <xmqq1s4lst7m.fsf@gitster-ct.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Subject: [PATCH] completion: complete git submodule absorbgitdirs
+Message-ID: <fdb618c323d3cde058e19dea1cd15044e34484e1.1549446118.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq1s4lst7m.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 05, 2019 at 03:37:01PM -0800, Junio C Hamano wrote:
-> * dl/merge-cleanup-scissors-fix (2019-01-27) 4 commits
->  - merge: add scissors line on merge conflict
->  - merge: cleanup messages like commit
->  - t7600: clean up 'merge --squash c3 with c7' test
->  - commit: extract cleanup_mode functions to sequencer
-> 
->  The list of conflicted paths shown in the editor while concluding a
->  conflicted merge was shown above the scissors line when the
->  clean-up mode is set to "scissors", even though it was commented
->  out just like the list of updated paths and other information to
->  help the user explain the merge better.
-> 
->  Will merge to 'next'.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-We should pull v6[1] of the patchset before we merge into next. It
-resolves merge conflicts related to the changed function signature of
-`append_conflicts_hint`.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 499e56f83d..de56879960 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2573,7 +2573,7 @@ _git_submodule ()
+ {
+ 	__git_has_doubledash && return
+ 
+-	local subcommands="add status init deinit update summary foreach sync"
++	local subcommands="add status init deinit update summary foreach sync absorbgitdirs"
+ 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		case "$cur" in
+-- 
+2.20.1.315.gc8c1ecef27
 
-[1]: https://public-inbox.org/git/cover.1548219737.git.liu.denton@gmail.com/
