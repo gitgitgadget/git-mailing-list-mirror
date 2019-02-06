@@ -8,104 +8,178 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 040681F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 21:52:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62ADE1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 21:58:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726270AbfBFVwT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 16:52:19 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37225 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725982AbfBFVwS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 16:52:18 -0500
-Received: by mail-ed1-f66.google.com with SMTP id h15so7283557edb.4
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 13:52:17 -0800 (PST)
+        id S1726454AbfBFV6p (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 16:58:45 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40973 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726037AbfBFV6p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 16:58:45 -0500
+Received: by mail-ed1-f67.google.com with SMTP id p15so3019477edy.8
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 13:58:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=BWxHpSopynBd4cKvdRmaQ1p1FA7Xkml+hko0yvJSU9A=;
-        b=H4VteTuxLyiLv8zmo+qBeW8pszmaViNAhFVGTCRHSX6OXJPoLLbZ/fElfW7IiPb/PD
-         Gw0c6s4cUe8YTemhj4Xraq6SU2ROFxH2Gxzsb3CMqdxtdPCpZ3n5rbaYue8xp8FOiIck
-         AC5KB29UdluaU+/xAEjfL+k//+nCWLzNX4F0mdpZf6AsdWktszVwKQyKzpuFxRLVwAzo
-         nxVgvWsr4AUxKICXFAN6oO8A8VtrkTYXvIDE9R/wzuJvXamwhNCChslQ9L+baMtnceDF
-         4YJ7+ou2NTY0pYj2KTRqqL11kTkiyzpGaPXniDtmm4O5pkzPJp6HEyhp7nPRjpM8I7Nq
-         ExIQ==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=7qvenCz9kBYdgAgzh0PZn2IjL9xf02GySU0E+7B3fMs=;
+        b=KrOpwyOe+DtMxGq5qbFZ2+mYaIRYT50sFJW0fq8jGeGDgWSuTInMS1Fut3pCcMVpYj
+         ELn5fKtA0SEzwrxRmEoDfKge550qHQK2a4kmMToNeZKtq9/654NvwCeQzycIcu1cs/mV
+         u6R3Lcc+HCPZMSUuBYuoiYpIZh73j/2qhL1XFvmwpCuKVsl1T6MXbAbCGtIM0164u6J0
+         NO4CNcFDsL/tJrBUwcBD0A/QXkaRNLrXcPhDGPXqQi8i+ExUIryPCIpaItjLyKzFpD9w
+         RCE0axpTEsfmvBS2uNShpX3gGHvcA5+30kCgewZMbktdTGA6zjtfPf2Fn36cNNT4Jhmm
+         SC9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=BWxHpSopynBd4cKvdRmaQ1p1FA7Xkml+hko0yvJSU9A=;
-        b=Y4eM0jW8H9BS4mohRrvRp7I6fHyjFWYRxM4W2LIajHy6YtkfNnD0+5bci3zFOsH6ry
-         6MP4k6APbmFJQ+SCQSIHb5/YKKUosq5LCsatRBb7qjgdqOyLvgP8eyvBkVmWiDYXTGuB
-         Ndio6e9AtSJymcsnvO6Vzt+ZtIBQrHewcBYXdyvabXyXlUPOJuEy6arIVQ1UxT128zKc
-         QVhExfPPta924NR8FF9FNPVf7/FyvaQCW8HSSC39ofbTvXOO+S/4GnZBCkWn4TFkXR2q
-         CQBSL5Vgs/kAabzsrRDvPkPlgJZ/G/0Zqz0vbjLbKN/eQLqXsxfsM0QS8yKr1N3gl8gp
-         gl+w==
-X-Gm-Message-State: AHQUAuZ2YjIkX4V5mEUEocO2bnX/MTPXj57DwtX7E+106mdlRYMTQ8F4
-        KP7/YzOBzn1iRYzs8QEhQEI=
-X-Google-Smtp-Source: AHgI3IYDc9adjBSHYtdPrZa1R0Nxct+9U4zdXsbuc19Rhzx2j1fw9m6BuS2h7uJsTk/OMcsRHB9Mmg==
-X-Received: by 2002:a17:906:45c1:: with SMTP id z1mr9084374ejq.79.1549489936984;
-        Wed, 06 Feb 2019 13:52:16 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=7qvenCz9kBYdgAgzh0PZn2IjL9xf02GySU0E+7B3fMs=;
+        b=U2Rpj8k7Q23+vqr0Z13Ru4KfCeV8k7xhBnMqd+jBZH6bSEML9L7424kZ3/AQdfY8ac
+         TrsVPbupQXadQaU/cErWiVo6tu7J/PbVEonjGm94h8SH1kxGuwBAlL5NYcIuVeChop+f
+         JhSBEKhiowQE1Y9YxsFqQqdgbjLq108tM4mgn+dbw9KnB9u0/RN1QOtJQuYh2MsvaZZC
+         vjXRze7ZWIFns5BI9DXeEiq/rNciwmAMCDkPnCb2i4ZddFUZQlPAp2hf+pThXBwSaJBS
+         MPsL0bDGE/NkorgGUp6/i4fIJz81QCwIwXTcd5qprgCSqGNRos3+4YvmNVgP9Kqs0rwG
+         g6ng==
+X-Gm-Message-State: AHQUAubcmLLoQok8Pn9ACYHfs926WbNsCChcfzyJX3AhI5bu1UwY/dLf
+        hk48Zd4Frlaw8RmwYw2B6x7O1oIM5V0=
+X-Google-Smtp-Source: AHgI3IYmPZIIL7EV3CoHDfIjfr8XLBzw10RvOZOo3e4+5ePIA6yarP66U0i2sHPDWT7J1NLsX0qqBA==
+X-Received: by 2002:a50:c2d9:: with SMTP id u25mr9969624edf.280.1549490322382;
+        Wed, 06 Feb 2019 13:58:42 -0800 (PST)
 Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id gf12sm3755895ejb.26.2019.02.06.13.52.16
+        by smtp.gmail.com with ESMTPSA id f38sm1488683edd.97.2019.02.06.13.58.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Feb 2019 13:52:16 -0800 (PST)
+        Wed, 06 Feb 2019 13:58:41 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        steadmon@google.com
-Subject: Re: [PATCH 0/8] Resend of GIT_TEST_PROTOCOL_VERSION patches
-References: <cover.1549411880.git.jonathantanmy@google.com> <20190206213458.GC12737@sigill.intra.peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, steadmon@google.com
+Subject: Re: [PATCH 1/8] tests: define GIT_TEST_PROTOCOL_VERSION
+References: <cover.1549411880.git.jonathantanmy@google.com> <6e0c6aa9a71d4192591ed406735684cd15a0e3b9.1549411880.git.jonathantanmy@google.com>
 User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190206213458.GC12737@sigill.intra.peff.net>
-Date:   Wed, 06 Feb 2019 22:52:15 +0100
-Message-ID: <87ef8klh4g.fsf@evledraar.gmail.com>
+In-reply-to: <6e0c6aa9a71d4192591ed406735684cd15a0e3b9.1549411880.git.jonathantanmy@google.com>
+Date:   Wed, 06 Feb 2019 22:58:40 +0100
+Message-ID: <87d0o4lgtr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Feb 06 2019, Jeff King wrote:
+On Wed, Feb 06 2019, Jonathan Tan wrote:
 
-> On Tue, Feb 05, 2019 at 04:21:14PM -0800, Jonathan Tan wrote:
+> Define a GIT_TEST_PROTOCOL_VERSION environment variable meant to be used
+> from tests. When set, this ensures protocol.version is at least the
+> given value, allowing the entire test suite to be run as if this
+> configuration is in place for all repositories.
 >
->> This is on the latest master (8feddda32c ("Fifth batch for 2.21",
->> 2019-02-05)) + js/protocol-advertise-multi.
->>
->> This is a resend of [1], which was built on the result of merging many
->> branches. Now that most of the branches have been merged to master, I
->> have rebased it on master. The only branch that I needed to merge was
->> js/protocol-advertise-multi.
+> As of this patch, all tests pass whether GIT_TEST_PROTOCOL_VERSION is
+> unset, set to 0, or set to 1. Some tests fail when
+> GIT_TEST_PROTOCOL_VERSION is set to 2, but this will be dealt with in
+> subsequent patches.
 >
-> Thanks for working on this. With the exception of the final patch, this
-> all seems pretty sane to me from a quick look.
+> This is based on work by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason.
 >
-> There is one thing that your test patches made me wonder. When we have
-> to make an exception to a test (i.e., that doesn't work under v2), you
-> do it by unsetting GIT_TEST_PROTOCOL_VERSION in the environment. That
-> means we'll actually run the test, but not with the version that the
-> caller specified.
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  protocol.c                  | 17 +++++++++++++++--
+>  t/README                    |  3 +++
+>  t/t5400-send-pack.sh        |  2 +-
+>  t/t5551-http-fetch-smart.sh |  3 ++-
+>  4 files changed, 21 insertions(+), 4 deletions(-)
 >
-> I wonder if it would be more obvious what's going on if we instead had a
-> prereq like:
+> diff --git a/protocol.c b/protocol.c
+> index 5664bd7a05..c7a735bfa2 100644
+> --- a/protocol.c
+> +++ b/protocol.c
+> @@ -42,6 +42,10 @@ static const char *format_protocol_version(enum protoc=
+ol_version version)
+>  enum protocol_version get_protocol_version_config(void)
+>  {
+>  	const char *value;
+> +	enum protocol_version retval =3D protocol_v0;
+> +	const char *git_test_k =3D "GIT_TEST_PROTOCOL_VERSION";
+> +	const char *git_test_v =3D getenv(git_test_k);
+> +
+>  	if (!git_config_get_string_const("protocol.version", &value)) {
+>  		enum protocol_version version =3D parse_protocol_version(value);
 >
->   test_expect_success !PROTO_V2 'ls-remote --symref' '
->      ...
->   '
+> @@ -49,10 +53,19 @@ enum protocol_version get_protocol_version_config(voi=
+d)
+>  			die("unknown value for config 'protocol.version': %s",
+>  			    value);
 >
-> and just skipped those tests entirely (and in a way that appears in the
-> TAP output).
+> -		return version;
+> +		retval =3D version;
+> +	}
+> +
+> +	if (git_test_v && strlen(git_test_v)) {
+> +		enum protocol_version env =3D parse_protocol_version(git_test_v);
+> +
+> +		if (env =3D=3D protocol_unknown_version)
+> +			die("unknown value for %s: %s", git_test_k, git_test_v);
+> +		if (retval < env)
+> +			retval =3D env;
+>  	}
 >
-> I think it would also future-proof us a bit for v2 becoming the default
-> (i.e., when GIT_TEST_PROTOCOL_VERSION being blank does mean "use v2").
+> -	return protocol_v0;
+> +	return retval;
+>  }
 >
-> I dunno. It probably doesn't matter all that much, so it may not be
-> worth going back and changing at this point. Just a thought.
+>  void register_allowed_protocol_version(enum protocol_version version)
+> diff --git a/t/README b/t/README
+> index 25864ec883..21e941eb94 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -327,6 +327,9 @@ marked strings" in po/README for details.
+>  GIT_TEST_SPLIT_INDEX=3D<boolean> forces split-index mode on the whole
+>  test suite. Accept any boolean values that are accepted by git-config.
+>
+> +GIT_TEST_PROTOCOL_VERSION=3D<n>, when set, overrides the
+> +'protocol.version' setting to n if it is less than n.
+> +
 
-So far we've had the convention that these GIT_TEST_* variables,
-e.g. the one for the commit graph, work the same way. Thus we guarantee
-that we get (in theory) 100% coverage even when running the tests in
-this special mode. I think it's better to keep it as-is.
+In my version
+(https://public-inbox.org/git/20181213155817.27666-6-avarab@gmail.com/)
+I didn't have this "if it is less than n" caveat. I expect that helped
+with making some tests that were setting e.g. protocol.version=3D2 Just
+Work, is that the reason for this?
+
+Mine also had more docs here, but maybe telling people that they can use
+"env" is too much...
+
+
+>  GIT_TEST_FULL_IN_PACK_ARRAY=3D<boolean> exercises the uncommon
+>  pack-objects code path where there are more than 1024 packs even if
+>  the actual number of packs in repository is below this limit. Accept
+> diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+> index f1932ea431..571d620aed 100755
+> --- a/t/t5400-send-pack.sh
+> +++ b/t/t5400-send-pack.sh
+> @@ -288,7 +288,7 @@ test_expect_success 'receive-pack de-dupes .have line=
+s' '
+>  	$shared .have
+>  	EOF
+>
+> -	GIT_TRACE_PACKET=3D$(pwd)/trace \
+> +	GIT_TRACE_PACKET=3D$(pwd)/trace GIT_TEST_PROTOCOL_VERSION=3D \
+>  	    git push \
+>  		--receive-pack=3D"unset GIT_TRACE_PACKET; git-receive-pack" \
+>  		fork HEAD:foo &&
+> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> index a60dd907bd..8f620e0a35 100755
+> --- a/t/t5551-http-fetch-smart.sh
+> +++ b/t/t5551-http-fetch-smart.sh
+> @@ -44,7 +44,8 @@ test_expect_success 'clone http repository' '
+>  	< Cache-Control: no-cache, max-age=3D0, must-revalidate
+>  	< Content-Type: application/x-git-upload-pack-result
+>  	EOF
+> -	GIT_TRACE_CURL=3Dtrue git clone --quiet $HTTPD_URL/smart/repo.git clone=
+ 2>err &&
+> +	GIT_TRACE_CURL=3Dtrue GIT_TEST_PROTOCOL_VERSION=3D \
+> +		git clone --quiet $HTTPD_URL/smart/repo.git clone 2>err &&
+>  	test_cmp file clone/file &&
+>  	tr '\''\015'\'' Q <err |
+>  	sed -e "
