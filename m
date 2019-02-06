@@ -2,97 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 640F91F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 17:50:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15E0B1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 18:01:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729972AbfBFRuC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 12:50:02 -0500
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:55638 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727299AbfBFRuB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 12:50:01 -0500
-Received: by mail-wm1-f49.google.com with SMTP id y139so3381656wmc.5
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 09:50:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pR3nK+SuLbBe9qLJzLKQRYJzq8j5qrzfutvyPyux2Zg=;
-        b=lIOCDRGLNihjmcjk5y6UT6nZUJPeoLaKAGLiwPk7CiQQch8TEAS4JagAfENBBgU7GY
-         fKyADFtLsOb5And934CaGpyub/wBHE2GnGm5MhUalcm60JdFJ0fEx9rR3x/fgAIf3u00
-         u9h58/HYQCe+rDH3IYOPM1Iaza079XzUdeJVKnOe1SR04DynnAMXPtNWxbSgsT3OeAEu
-         HRF4ASssMUsCtuIU71p7GS3m26ildf3MnQ3E1b5AStp3gcm0t5kWZIQ+WSkaGOeoPd+O
-         Q8Z7yanz1wLxvHbFeOfik8Qnx1m+qDzOUdwx0XniPiuwORmm5BEiSTLYvUVKQ9uh9erV
-         Q3Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pR3nK+SuLbBe9qLJzLKQRYJzq8j5qrzfutvyPyux2Zg=;
-        b=lWnivBgWQrxjmF3xzblUhljZsnQk4bgt3pOulWGF6T5wKtP4LqGCXToyx9hANzX1n+
-         xKDL0b1EyEP1DqCnrQWD45gPShsvZtS6kPmNm5CPJbTqTYk80iVcET1X7YV6guD2wFS9
-         v0ssqtinStqL+8n3OpqQdMUVxcS2c92O6r7uTD1v/atPUqyhfka+Vz8PN1tp2AxuFIHm
-         biETPnmMQ/i80yoitjmxX6FtMUxmhObIEwlQqs/45o7PNXb8QQq5hczjMDVeXLpbf9lp
-         yXykB1uD9PI+QAeAcQ4LrbgGplDXQLIHYQOXHEyO6jyMrq4n7v7beRG0G/qRqBcNijPH
-         5QaA==
-X-Gm-Message-State: AHQUAuYn18x09VXz68zaImIqP4S11L1wjXh8l4jmQvaU8KHGMqpkIa2f
-        dnFxBCRFHJR5DNOxGziGDd0=
-X-Google-Smtp-Source: AHgI3IbrXXN3vNZNYtpJPtEDXY+MvPuUXfhxlqFAtUESuZTnJhd2toUPA7uNFnC5SdZSi68OAG9Qpg==
-X-Received: by 2002:a1c:760c:: with SMTP id r12mr3778488wmc.127.1549475399728;
-        Wed, 06 Feb 2019 09:49:59 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h16sm46622263wrb.62.2019.02.06.09.49.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Feb 2019 09:49:59 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2019, #01; Tue, 5)
-References: <xmqq1s4lst7m.fsf@gitster-ct.c.googlers.com>
-        <b24bfabf-3f79-a290-50b7-5246d870ae12@jeffhostetler.com>
-Date:   Wed, 06 Feb 2019 09:49:58 -0800
-In-Reply-To: <b24bfabf-3f79-a290-50b7-5246d870ae12@jeffhostetler.com> (Jeff
-        Hostetler's message of "Wed, 6 Feb 2019 12:18:35 -0500")
-Message-ID: <xmqqk1icrem1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728984AbfBFSBB convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 6 Feb 2019 13:01:01 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:61206 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726750AbfBFSBB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 13:01:01 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x16I0ms7016734
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 6 Feb 2019 13:00:49 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?iso-8859-1?Q?'Torsten_B=F6gershausen'?=" <tboegi@web.de>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+Cc:     "=?iso-8859-1?Q?'SZEDER_G=E1bor'?=" <szeder.dev@gmail.com>,
+        "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
+References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet> <20190206104243.GJ10587@szeder.dev> <nycvar.QRO.7.76.6.1902061450280.41@tvgsbejvaqbjf.bet> <20190206171517.s5lskawpdodc74ui@tb-raspi4>
+In-Reply-To: <20190206171517.s5lskawpdodc74ui@tb-raspi4>
+Subject: RE: t0025 flakey?
+Date:   Wed, 6 Feb 2019 13:00:43 -0500
+Message-ID: <005501d4be45$e4121c40$ac3654c0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJs/IuaaCkX8/5Ult+TIwKZwFHx1AHYuM18APJkJqYCro2vgqR2wojw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+On February 6, 2019 12:15, Torsten Bögershausen wrote:
+> To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Cc: SZEDER Gábor <szeder.dev@gmail.com>; Jeff King <peff@peff.net>;
+> git@vger.kernel.org
+> Subject: Re: t0025 flakey?
+> 
+> On Wed, Feb 06, 2019 at 02:52:53PM +0100, Johannes Schindelin wrote:
+> > Hi Gábor,
+> >
+> > On Wed, 6 Feb 2019, SZEDER Gábor wrote:
+> >
+> > > On Wed, Feb 06, 2019 at 11:25:38AM +0100, Johannes Schindelin wrote:
+> > >
+> > > > at first I thought that those intermittent test failures were
+> > > > limited to Windows, but they are not: I can see it now in a build
+> > > > on 32-bit Linux.
+> > > > Full logs here:
+> > > >
+> > > > https://dev.azure.com/gitgitgadget/git/_build/results?buildId=1032
+> > > > &_a=summary&view=ms.vss-test-web.build-test-results-tab
+> > > >
+> > > > Excerpt from the failing test case:
+> > > >
+> > > > -- snip --
+> > > > not ok 2 - renormalize CRLF in repo  expecting success:
+> > > > 	echo "*.txt text=auto" >.gitattributes &&
+> > > > 	git add --renormalize "*.txt" &&
+> > > > 	cat >expect <<-\EOF &&
+> > > > 	i/lf w/crlf attr/text=auto CRLF.txt
+> > > > 	i/lf w/lf attr/text=auto LF.txt
+> > > > 	i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
+> > > > 	EOF
+> > > > 	git ls-files --eol |
+> > > > 	sed -e "s/	/ /g" -e "s/  */ /g" |
+> > > > 	sort >actual &&
+> > > > 	test_cmp expect actual
+> > > >
+> > > > + echo *.txt text=auto
+> > > > + git add --renormalize *.txt
+> > > > + cat
+> > > > + sort
+> > > > + sed -e s/	/ /g -e s/  */ /g
+> > > > + git ls-files --eol
+> > > > + test_cmp expect actual
+> > > > + diff -u expect actual
+> > > > --- expect	2019-02-06 09:39:42.080733629 +0000
+> > > > +++ actual	2019-02-06 09:39:42.088733629 +0000
+> > > > @@ -1,3 +1,3 @@
+> > > > -i/lf w/crlf attr/text=auto CRLF.txt
+> > > > +i/crlf w/crlf attr/text=auto CRLF.txt
+> > > >  i/lf w/lf attr/text=auto LF.txt
+> > > > -i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
+> > > > +i/mixed w/mixed attr/text=auto CRLF_mix_LF.txt
+> > > > error: last command exited with $?=1
+> > > > -- snap --
+> > > >
+> > > > Any ideas?
+> > >
+> > > I reported this and Peff looked into it on the way to Git Merge, but
+> > > not working solution yet.
+> > >
+> > > https://public-inbox.org/git/20190129225121.GD1895@sigill.intra.peff
+> > > .net/T/#u
+> >
+> > Thank you!
+> > Dscho
+> 
+> I shortly looked into the pointers here - Is t0025 flaky after the fix
+from Peff:
+> 
+> [PATCH] add: use separate ADD_CACHE_RENORMALIZE flag
+> 
+> Or has it always been shaky ?
+> Does anybody know ?
 
-> On 2/5/2019 6:37 PM, Junio C Hamano wrote:
->> * jh/trace2 (2019-02-01) 15 commits
->>   - trace2: add for_each macros to clang-format
->>   - trace2: t/helper/test-trace2, t0210.sh, t0211.sh, t0212.sh
->>   - trace2:data: add subverb for rebase
->>   - trace2:data: add subverb to reset command
->>   - trace2:data: add subverb to checkout command
->>   - trace2:data: pack-objects: add trace2 regions
->>   - trace2:data: add trace2 instrumentation to index read/write
->>   - trace2:data: add trace2 hook classification
->>   - trace2:data: add trace2 transport child classification
->>   - trace2:data: add trace2 sub-process classification
->>   - trace2:data: add editor/pager child classification
->>   - trace2:data: add trace2 regions to wt-status
->>   - trace2: collect Windows-specific process information
->>   - trace2: create new combined trace facility
->>   - trace2: Documentation/technical/api-trace2.txt
->>
->>   A more structured way to obtain execution trace has been added.
->>
->>   Still needs some fix-ups.
->>   cf. <d91d1d89-5759-2006-7b38-4211db5988af@jeffhostetler.com>
->
-> I just pushed a V6 of this series that addresses the hdr-check warning
-> in trace2/tr2_tls.h.
+The NonStop port has traditionally had issues with t0025, which we tended to
+ignore because things did work. We wrote those off as bash issues in t0025
+since they seemed to be corrected when we picked up a new bash version about
+a year ago. I will keep monitoring this, particularly when 2.21 comes out.
 
-Thanks.
+Cheers,
+Randall
+
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
+
+
+
