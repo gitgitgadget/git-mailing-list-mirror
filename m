@@ -2,122 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E15831F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 10:42:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97E031F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 10:59:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727076AbfBFKms (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 05:42:48 -0500
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:34917 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726750AbfBFKms (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 05:42:48 -0500
-Received: by mail-wr1-f44.google.com with SMTP id z18so6210970wrh.2
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 02:42:46 -0800 (PST)
+        id S1727501AbfBFK7x (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 05:59:53 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38425 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726159AbfBFK7x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 05:59:53 -0500
+Received: by mail-pg1-f193.google.com with SMTP id g189so2734977pgc.5
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 02:59:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=N+uVSwlLyaymP70oOrmMFgB8I8s7vndh7l10FKfSARI=;
-        b=aAV4Anx/BZtH8nTBovfSIz5M/mZ9QCSGzgA5rU8Yiv4cDivvyGbf0sBLGdGIq0UECo
-         ZKW6J5ikutYjVMjEr5ZtzmDTle0ha4d9YQ2qAV8javCCw8RcWRlxYgwhAbsbX8yqPvVK
-         /+t0cFAdaxtyAAscPe23BJLCGFkDJkYwNebYSM6nJc4byYYfrt37FlcH75xFGWrHpge9
-         k7CHqUceN3NbNtzzwY7zU3DEGhBolTcA3/aJN6yntolyoJjI1NlnPPRaAZk3t9CfOQ8a
-         zFbU2IT/BjKluvVVUPeTAKRAB8Vhk6QbdYJluU9xTu6nG3rtU1HJ9GtR2jIZrespwvaQ
-         LBjQ==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=gImO1DLPQyeF7zsCyCu7jJlv0GiDLMYvRsiVh9F/idc=;
+        b=VxBMQTvkS/ByfCcXw/4L+v1OIJIJl1xEqDte4R8ym7TGYMmG4CmYJIOyyBm2S5u/J/
+         z/MGSdwtT9JeBeJMHbt00ePe+Fdv2AqKHG+bbpaWvQiOt5f0b/az/ET4Qk1EIHoUQwCP
+         BVQ/wV1x3u7G7MiUm0P4NPwb9Msj44yqjNJSfG1e4NJuwIYVat0/o3sFs5G+qQ2BsQRk
+         Wo8aSzKCCUIqSb2gssazUrCR5vqMLQtu/4iN2vNonqgJkISd/Nhfoaux20lSx0mN+biB
+         mGCofMobfvbnatRPvVN2Scd5VUaPptYjiuq4dy7ne0RGZ+obG3w/6IsfuEbLfTt8be75
+         SBBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=N+uVSwlLyaymP70oOrmMFgB8I8s7vndh7l10FKfSARI=;
-        b=hXPVMaBoUUtxyiJ4UjEpO5Y72D0/Kpnedeha0USxXK8C07YjPgaSeU3kCCzAYl1nKC
-         1KZfRTeIFtRc8qgheivh8Hlyv+mSsjL605V0wlLhM+ml2E7r0wPc03ps4IHA6y3/JZy4
-         QNazThojvx24JSzy92lPwOaYdaRVjdrfvU+HCjvjHsHXCUeQRSKqi83KRleLtlxyi1L5
-         bdE1tevU8Bjpd3p7UAkj9U+lWK8o20QWDfrK4B9dK8d+BvOTdz/r21as5ZKI4A01bYng
-         AxZ4TF5E6b93D9pF7w4P8pskBTH/wCsFMDCw6zQ1gHKF75L2RifZJDIXbZQS/pI+DtXd
-         ccPQ==
-X-Gm-Message-State: AHQUAuYHQfikFz9oZ1ZABskEg4Sdo9hkyO3m5wE5MyYqDLhBYx8LumtZ
-        gdhnSymIEUk8zG199Vj7fl3xxopk
-X-Google-Smtp-Source: AHgI3IaeQKzjRPMUdsBuCJH0Yi+hHt+Z1rQ8OyFbIW8uVFDuyPwgVafEotc9VaRMBJUiDHxc87EE6w==
-X-Received: by 2002:adf:f009:: with SMTP id j9mr7284539wro.170.1549449766235;
-        Wed, 06 Feb 2019 02:42:46 -0800 (PST)
-Received: from szeder.dev (x4dbda645.dyn.telefonica.de. [77.189.166.69])
-        by smtp.gmail.com with ESMTPSA id j24sm26090825wrd.86.2019.02.06.02.42.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Feb 2019 02:42:45 -0800 (PST)
-Date:   Wed, 6 Feb 2019 11:42:43 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org
-Subject: Re: t0025 flakey?
-Message-ID: <20190206104243.GJ10587@szeder.dev>
-References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=gImO1DLPQyeF7zsCyCu7jJlv0GiDLMYvRsiVh9F/idc=;
+        b=WHCEDD0HpvTksdiFex/gcQPJMNfPi50dsIOpf7XfZL6bIBmQ+vfg2a/XqgpudlzrR0
+         0vGU5WCiRE0cpgxR63ob6u/Lc3qO60NDt3WPn2awkDLJNZF0c3dfx2LAT6l9d5vMSFCl
+         De6pCJwF4R6kNcYT0r/a8ME3wWbIlM3ETobyCzaHm5WBpN6K0tAFa3oQyeyXo8fvtyv4
+         CRfBdx+F+I1E1ON6NND4FeYOCKQl6If0qvaV63U4Wb2mL3SQtb1rQXvMTfIzuJH90/Sa
+         b134KWaYB1IlTyiNWGDiF/OwUvumuOK+3Fbf1CFHIv+3glUQ0ulcdZCETJnAPm+wjYtO
+         jhWg==
+X-Gm-Message-State: AHQUAuYhazmhXx4CyNUdXF9UHcoakUkZHLWv17+SYfy1l5wDcPSSayrS
+        1+hOhHBDdsurjLbaDkqAkLd5VhbV
+X-Google-Smtp-Source: AHgI3IbE+vdA0HLlil7q76v9B/yyWAYyiF62Ofo+XatAb+zh0bu22EQtIcaWNlc1RGMdbqj2JOAHuA==
+X-Received: by 2002:a63:193:: with SMTP id 141mr9112841pgb.136.1549450791970;
+        Wed, 06 Feb 2019 02:59:51 -0800 (PST)
+Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
+        by smtp.gmail.com with ESMTPSA id o6sm6070904pgp.59.2019.02.06.02.59.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 06 Feb 2019 02:59:50 -0800 (PST)
+Date:   Wed, 6 Feb 2019 02:59:48 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Subject: [PATCH 0/3] Teach submodule set-branch subcommand
+Message-ID: <cover.1549450636.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 06, 2019 at 11:25:38AM +0100, Johannes Schindelin wrote:
-> Hi Torsten,
-> 
-> at first I thought that those intermittent test failures were limited to
-> Windows, but they are not: I can see it now in a build on 32-bit Linux.
-> Full logs here:
-> 
-> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=1032&_a=summary&view=ms.vss-test-web.build-test-results-tab
-> 
-> Excerpt from the failing test case:
-> 
-> -- snip --
-> not ok 2 - renormalize CRLF in repo
->  expecting success: 
-> 	echo "*.txt text=auto" >.gitattributes &&
-> 	git add --renormalize "*.txt" &&
-> 	cat >expect <<-\EOF &&
-> 	i/lf w/crlf attr/text=auto CRLF.txt
-> 	i/lf w/lf attr/text=auto LF.txt
-> 	i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
-> 	EOF
-> 	git ls-files --eol |
-> 	sed -e "s/	/ /g" -e "s/  */ /g" |
-> 	sort >actual &&
-> 	test_cmp expect actual
-> 
-> + echo *.txt text=auto
-> + git add --renormalize *.txt
-> + cat
-> + sort
-> + sed -e s/	/ /g -e s/  */ /g
-> + git ls-files --eol
-> + test_cmp expect actual
-> + diff -u expect actual
-> --- expect	2019-02-06 09:39:42.080733629 +0000
-> +++ actual	2019-02-06 09:39:42.088733629 +0000
-> @@ -1,3 +1,3 @@
-> -i/lf w/crlf attr/text=auto CRLF.txt
-> +i/crlf w/crlf attr/text=auto CRLF.txt
->  i/lf w/lf attr/text=auto LF.txt
-> -i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
-> +i/mixed w/mixed attr/text=auto CRLF_mix_LF.txt
-> error: last command exited with $?=1
-> -- snap --
-> 
-> Any ideas?
+Currently, there is no way to set the branch of a submodule without
+manually manipulating the .gitmodules file. This patchset introduces a
+porcelain command that enables this.
 
-I reported this and Peff looked into it on the way to Git Merge, but
-not working solution yet.
 
-https://public-inbox.org/git/20190129225121.GD1895@sigill.intra.peff.net/T/#u
+Denton Liu (3):
+  git-submodule.txt: document default behavior without --branch
+  submodule--helper: teach config subcommand --unset
+  submodule: teach set-branch subcommand
+
+ Documentation/git-submodule.txt        | 10 ++-
+ builtin/submodule--helper.c            | 15 +++--
+ contrib/completion/git-completion.bash |  5 +-
+ git-submodule.sh                       | 75 +++++++++++++++++++--
+ t/t7411-submodule-config.sh            |  9 +++
+ t/t7419-submodule-set-branch.sh        | 93 ++++++++++++++++++++++++++
+ 6 files changed, 197 insertions(+), 10 deletions(-)
+ create mode 100755 t/t7419-submodule-set-branch.sh
+
+-- 
+2.20.1.522.g5f42c252e9
 
