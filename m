@@ -2,155 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,URIBL_DBL_SPAM,URIBL_RED shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E85571F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 01:05:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B5161F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 02:51:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728576AbfBFBFr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 20:05:47 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:34770 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726062AbfBFBFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 20:05:47 -0500
-Received: by mail-ot1-f66.google.com with SMTP id t5so9315705otk.1
-        for <git@vger.kernel.org>; Tue, 05 Feb 2019 17:05:46 -0800 (PST)
+        id S1727207AbfBFCv1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 21:51:27 -0500
+Received: from mail-pg1-f174.google.com ([209.85.215.174]:34800 "EHLO
+        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725981AbfBFCv1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 21:51:27 -0500
+Received: by mail-pg1-f174.google.com with SMTP id d9so2300756pgl.1
+        for <git@vger.kernel.org>; Tue, 05 Feb 2019 18:51:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=L6xAO+GHOU2tAJ500VZrA4Yurp4qRoON6xUWo7GC27E=;
-        b=PNrWEzFD2q6P0zuK4eSF6Bw+vqqVJ92l3H6yCefi67RkATuYPUR7nnMNxLRcCcM7b8
-         VUpUy6roKBGlO0jQ1PsD/El1QiJSW6Lbws5xH5gUk2jM2FpQJepYlPg7eyPBeTHtutPE
-         Z2lwK6Y0NPhD64pujdewD7CNscxbcH4usf0t+XvD5FeONd+B8ArdzTJEJWTjPpx6wkAv
-         z8HvxWbTsdp2NJ+Qf5ZO6sftlRx7h1/YLSv65n0dpCmM/PSODGjUiYC5xw7szVnYyrlJ
-         kJayGzgyQcn1UAGe9xSpk+8U30A2pxgBy4qLl54+FDwvcGIJECfBIarEIxYZ+YrcQfsP
-         sS2g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=dFHvxvoFIc1c27ERWJ8r8SWNd8RmGGxdLUrzzpjLpvE=;
+        b=ZXdul5Kc8L8P0aYsOPfNAar7IUYGbHZ8svXS4BPvZiXi25Vjq+ii8Fn+b73bUZs+qL
+         bOvjVeu1RbhhrGgGPXdpLh0TNggL6mEZEKwtwzaE8z1pDv/NIzx67hVCsJo61CpJYl/Q
+         pO1651I+lg6nRF+baWz8bYiDdhM1P5icFDVSc6Vr63vNhJLKmP0awI0NnwmPyhgnp/gH
+         ufmTadScqodm6UyaFJ190WDoMToBUHzmz0jXeZMj7VyWDiPNiP8RqufBFqNw6qPfltLz
+         WvLUfdgcsdoPTB4qKwc2YKngZdnVQFUdJGYz/NBZdiP0Ai/OHKRqmVH0dDBlFaDehguo
+         zwCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=L6xAO+GHOU2tAJ500VZrA4Yurp4qRoON6xUWo7GC27E=;
-        b=H/QIAzuGrIsp9CIKtAlp5vk7DT+1k8wOFRjUj5RvgUm+KAAvTCL7Asg3M03iirWqjw
-         XpCy4qIV0858oHWJfsnX2fiRCbre8GtUQMgibIQcMWR4LoI4xa+/MFOGLCVpgmYXD2jd
-         wJQzj1gwHb5fRZiKpsYokAdfzAPBgw9eiuPHKqt1to4+nuIK/hXMtu8y2+nfQtVoj6RY
-         JBxVTHcElQh5Bj1CWB6CIe01mqoQOdnXfgSL1u7ScEW49DhyQl9JIz6ZjF+dYIi3e3y3
-         cBuYPTmx71bHiKL+hBrFQjfwvoFZ/si81y3oIqvZQLOvGSMgtHBrjBCoBl8GMDIWbvWK
-         lSxQ==
-X-Gm-Message-State: AHQUAuZUJx6Z9HFXXzSWQN6ztloPY3XIxsin22jW6M4BHA3DIYzXzP3n
-        iJvyDvXFYojmRlRCAIYvm/z7oW9J
-X-Google-Smtp-Source: AHgI3IZooRKQdWBs3Ae1ZPDx90QyNpk1UQnu7cBXISJKcB1zR70J+Sz4qnwFROgtTNlhGjpqBaiVxQ==
-X-Received: by 2002:a05:6808:103:: with SMTP id b3mr445107oie.274.1549415145910;
-        Tue, 05 Feb 2019 17:05:45 -0800 (PST)
-Received: from whubbs1.gaikai.biz ([100.42.103.5])
-        by smtp.gmail.com with ESMTPSA id j23sm10078332oih.22.2019.02.05.17.05.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Feb 2019 17:05:45 -0800 (PST)
-Received: (nullmailer pid 1053 invoked by uid 1000);
-        Wed, 06 Feb 2019 01:05:43 -0000
-Date:   Tue, 5 Feb 2019 19:05:43 -0600
-From:   William Hubbs <williamh@gentoo.org>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        chutzpah@gentoo.org, williamh@gentoo.org
-Subject: Re: [PATCH v6 2/2] config: allow giving separate author and
- committer idents
-Message-ID: <20190206010543.GA1035@whubbs1.gaikai.biz>
-References: <20190204184850.10040-1-williamh@gentoo.org>
- <20190205195212.25550-3-avarab@gmail.com>
- <xmqqef8mrnnj.fsf@gitster-ct.c.googlers.com>
- <87k1iekkea.fsf@evledraar.gmail.com>
- <20190206000413.GA734@whubbs1.gaikai.biz>
- <20190206001558.GB734@whubbs1.gaikai.biz>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=dFHvxvoFIc1c27ERWJ8r8SWNd8RmGGxdLUrzzpjLpvE=;
+        b=nXLwwL1bQ/Ooq+UmF6t4lgHC6hCLhrO8t3YEffB4SdsnV6rhsaqKinBU7x1arIVTWE
+         1dN2t273gydSz6PgaUFe4re5JlckgP7ZNZNATgL3PnCH3DpmfcX2URZu1lK2NCT7Znfp
+         4/QWjt9STjIPv4m5+5OYeOqoWwp+G//+5v9nbi9ZunoxYziqVV+MNAJBtuN4REuz0G/e
+         mU+po0L1NC77e3WiTfP92TjAJY1ZLN04nIuXoPe3LXw6yftL3p8A8bu0eGvR22YRqrY8
+         Fv1DRPAYkWhhxWechwiLrVVLX3Q2o4eOgyweA4u5fg0om8Wqdb7KLr7I3ribk0CCub0a
+         EmCw==
+X-Gm-Message-State: AHQUAuYPY4STvb11C7QcisDQnY34maft1YtYX12ZP+kCO4Xt84Dtwudf
+        UWkcms4vLSQp8GGg3P6DYhs9x+ia
+X-Google-Smtp-Source: AHgI3IZ3nqJlf3EjIvGPQQ1mAcBEVHYiuHl3uNSPyS5caWFwRZVxNGSrVTDXT3b9eXo2QXjggwLJeA==
+X-Received: by 2002:a63:9402:: with SMTP id m2mr7261132pge.93.1549421486106;
+        Tue, 05 Feb 2019 18:51:26 -0800 (PST)
+Received: from ash ([115.72.21.220])
+        by smtp.gmail.com with ESMTPSA id l8sm273193pfb.68.2019.02.05.18.51.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Feb 2019 18:51:25 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 06 Feb 2019 09:51:21 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 0/2] nd/checkout-noisy updates
+Date:   Wed,  6 Feb 2019 09:51:13 +0700
+Message-Id: <20190206025115.26163-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
+In-Reply-To: <xmqqimy8a1gx.fsf@gitster-ct.c.googlers.com>
+References: <xmqqimy8a1gx.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20190206001558.GB734@whubbs1.gaikai.biz>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 05, 2019 at 06:15:58PM -0600, William Hubbs wrote:
-> On Tue, Feb 05, 2019 at 06:04:13PM -0600, William Hubbs wrote:
-> > On Tue, Feb 05, 2019 at 10:14:37PM +0100, =C6var Arnfj=F6r=F0 Bjarmason=
- wrote:
-> > >=20
-> > > On Tue, Feb 05 2019, Junio C Hamano wrote:
-> > >=20
-> > > > =C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
-> > > >
-> > > >> +static int set_ident_internal(const char *var, const char *value,
-> > > >> +			    struct strbuf *sb, const int flag)
-> > > >> +{
-> > > >> +	if (!value)
-> > > >> +		return config_error_nonbool(var);
-> > > >> +	strbuf_reset(sb);
-> > > >> +	strbuf_addstr(sb, value);
-> > > >> +	author_ident_explicitly_given |=3D flag;
-> > > >> +	ident_config_given |=3D flag;
-> > > >> +	return 0;
-> > > >> +}
-> > > >> +
-> > > >> +static int set_ident(const char *var, const char *value)
-> > > >> +{
-> > > >> +	if (!strcmp(var, "author.name"))
-> > > >> +		return set_ident_internal(var, value, &git_author_name,
-> > > >> +					  IDENT_NAME_GIVEN);
-> > > >> +	else if (!strcmp(var, "author.email"))
-> > > >> +		return set_ident_internal(var, value, &git_author_email,
-> > > >> +					  IDENT_MAIL_GIVEN);
-> > > >> +	else if (!strcmp(var, "committer.name"))
-> > > >> +		return set_ident_internal(var, value, &git_committer_name,
-> > > >> +					  IDENT_NAME_GIVEN);
-> > > >> +	else if (!strcmp(var, "committer.email"))
-> > > >> +		return set_ident_internal(var, value, &git_committer_email,
-> > > >> +					  IDENT_MAIL_GIVEN);
-> > > >> +	else if (!strcmp(var, "user.name"))
-> > > >> +		return set_ident_internal(var, value, &git_default_name,
-> > > >> +					  IDENT_NAME_GIVEN);
-> > > >> +	else if (!strcmp(var, "user.email"))
-> > > >> +		return set_ident_internal(var, value, &git_default_email,
-> > > >> +					  IDENT_MAIL_GIVEN);
-> > > >> +	return 0;
-> > > >> +}
-> > > >
-> > > > In the v5 patch from William, author_ident_explicitly_given and
-> > > > committer_ident_explicitly_given were set separately depending on
-> > > > what variable was given (e.g. user.name marked both, author.name
-> > > > marked only author but not committer_ident_explicitly_given).  In
-> > > > the original before the addition of this feature with v6, giving
-> > > > user.name would have set both, as we can see below.
-> > > >
-> > > > Is this change intended?
-> > > >
-> > > > Or did you find that committer_ident_explicitly_given is no longer
-> > > > useful and the variable is not used anymore?
-> > >=20
-> > > No, that's a mistake of mine when porting this over, but also clearly=
- a
-> > > blindspot in our tests since they all pass with this.
-> > >=20
-> > > I haven't dug (don't have time right now) to check what the effect of
-> > > that is. William?
-> >=20
-> > I attempted to save your patches to apply them, but didn't have any luck
->=20
-> More info here. I use mutt and when I tagged the patches and saved them
-> to a mailbox, they went to a mailldir type folder, and "git am" didn't
-> seem to like that, but I'll try again.
+This fixes the misleading message from "git checkout -m". I also
+rephrased the original messages a bit so that when
+tg/checkout-no-overlay is merged, fixing counting file deletion is one
+line change.
 
-I tried one more time, saving the patches to individual files, and they
-still would not apply.
+Nguyễn Thái Ngọc Duy (2):
+  checkout: update count-checkouts messages
+  checkout: count and print -m paths separately
 
-Thanks,
+ builtin/checkout.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-William
+-- 
+2.20.1.682.gd5861c6d90
 
