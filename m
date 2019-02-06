@@ -3,67 +3,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C7FB1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 22:40:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64B561F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 22:43:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726319AbfBFWkB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 17:40:01 -0500
-Received: from forward101p.mail.yandex.net ([77.88.28.101]:48646 "EHLO
-        forward101p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725959AbfBFWkB (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 6 Feb 2019 17:40:01 -0500
-X-Greylist: delayed 394 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Feb 2019 17:40:00 EST
-Received: from mxback5j.mail.yandex.net (mxback5j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10e])
-        by forward101p.mail.yandex.net (Yandex) with ESMTP id 97F443280EE4
-        for <git@vger.kernel.org>; Thu,  7 Feb 2019 01:33:24 +0300 (MSK)
-Received: from smtp3p.mail.yandex.net (smtp3p.mail.yandex.net [2a02:6b8:0:1472:2741:0:8b6:8])
-        by mxback5j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id AE8mblLSi8-XOduGADR;
-        Thu, 07 Feb 2019 01:33:24 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narod.ru; s=mail; t=1549492404;
-        bh=enM7DYJj/NojNw7oX7rHFZG1voXuYk33aoR5ZupR1Yc=;
-        h=To:From:Subject:Message-ID:Date;
-        b=hY8frrw2OZqpUCQjRk8vuj27wQJlVMc/lrC5sVROVfcDU6eefrCovxBr1yedsw4a8
-         tL+cJA1hSiw3hlkFIyyHcX5n+6oRDruxcIyxm1PSFMDJ6LrZWXbNZukglzKPv9cQ+Y
-         DosKbTtOEN8Msz8gbwZEj5Heuq8GsyLPjfrveOBQ=
-Authentication-Results: mxback5j.mail.yandex.net; dkim=pass header.i=@narod.ru
-Received: by smtp3p.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id NnPNeot5gA-XNciVTSc;
-        Thu, 07 Feb 2019 01:33:23 +0300
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (Client certificate not present)
-To:     git@vger.kernel.org
-From:   Victor Porton <porton@narod.ru>
-Subject: Proposal: Output should push to different servers in parallel
-Message-ID: <173ed6e2-7f33-62a0-e1bd-f4663e68490e@narod.ru>
-Date:   Thu, 7 Feb 2019 00:33:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1726037AbfBFWnj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 17:43:39 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:56023 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725928AbfBFWnj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 17:43:39 -0500
+Received: by mail-wm1-f67.google.com with SMTP id r17so438945wmh.5
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 14:43:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=5Rsm2A1LmCCc2J4FBDoyAYFKjxBPjvv+fnCRd3pIThg=;
+        b=u09z+iHfQsXGAPcBD2iNU5deffaRTKAqgheg1MA9wkQnJ4a3T2/ZqazULXeMw5jHwK
+         GqPBhB6ME5H0umKSZ3LUzT3+vfS6e5cJhnHuY0S9FGq9jOxtRvPlYcEIH+IbiDihRAT5
+         Yp6UIlvVKm2kwo6sBNEs9767uoU22h+iE4cRpARdllxLUT6srIOamj047Pq96Fmuz+x1
+         YLz7hS3BqHeUDs/Lb4F/D25RxKO56mJMyDWNyC7RWm615lLtHTliYRGUAp2GKg1YU9dz
+         6uRQDJIlXbBDBpTNnZCSuLMQx+UqIeANDOWsyFTpnLIxaucnWiHcaQLeidN+tAyLZlpF
+         THTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=5Rsm2A1LmCCc2J4FBDoyAYFKjxBPjvv+fnCRd3pIThg=;
+        b=dKDAxQBOKuEntU/hGgr0Pg4O6QyK6ffF/NV4ngnO4XQpSxPOqxZP05HTPH++jSS58i
+         zZfxEepEzqxFdu//9+YnzuISYdMuJbCy5esx8Wtt5gOY556tr9EfgxjHX5HsSc1Kre+x
+         BTWOnJ2eFZ6QNdG/OlXZbl/isusAfOWskqWe9n1GXeVqhKlSLMROXwL4MOOwOa/FZB9a
+         tO68VFvl6kzInyavDILiIJpsdKFRyKlqgP5dEm48TiVvfpnH7LKmM69AVFO3o0igUkza
+         lpbfwttq3SKbCL7Byz4wUqFWSgaJ82yirYURRZSjCJ9ws+mnw3tl8akaHsg0G8qRjN62
+         EYYA==
+X-Gm-Message-State: AHQUAubF4EkmxRYnDr6+Bjv4SnHbRAHbDFX3r0PgMHk9w3YyZLePOflN
+        B8Il0pfNr/egWeJ/wsAqBlY=
+X-Google-Smtp-Source: AHgI3IbxzRDomZUt2Qt0dZByrfaoFP9EW4t8whzhyOqf8PaofbclejT7NCXLZm2n5GPdlPeJLDRL7Q==
+X-Received: by 2002:a1c:7c05:: with SMTP id x5mr4716336wmc.54.1549493016857;
+        Wed, 06 Feb 2019 14:43:36 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g67sm32812068wmd.38.2019.02.06.14.43.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 06 Feb 2019 14:43:36 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, William Hubbs <williamh@gentoo.org>,
+        chutzpah@gentoo.org
+Subject: Re: [PATCH v6 2/2] config: allow giving separate author and committer idents
+References: <20190204184850.10040-1-williamh@gentoo.org>
+        <20190205195212.25550-3-avarab@gmail.com>
+        <xmqqef8mrnnj.fsf@gitster-ct.c.googlers.com>
+        <87k1iekkea.fsf@evledraar.gmail.com>
+        <87h8dhl0zh.fsf@evledraar.gmail.com>
+        <20190206182612.GA10231@sigill.intra.peff.net>
+Date:   Wed, 06 Feb 2019 14:43:35 -0800
+In-Reply-To: <20190206182612.GA10231@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 6 Feb 2019 13:26:12 -0500")
+Message-ID: <xmqqo97opmg8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I experienced a slowdown in Git pushing when I push to more than one server.
+Jeff King <peff@peff.net> writes:
 
-I propose:
+> An alternative view is that anybody who calls git_author_info() to
+> create a commit _should_ be checking author_ident_sufficiently_given(),
+> and it's a bug that they're not.
+>
+> I.e., should we be doing something like this (and probably some other
+> spots, too):
+>
+> diff --git a/commit.c b/commit.c
+> index a5333c7ac6..c99b311a48 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -1419,8 +1419,11 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+>  	}
+>  
+>  	/* Person/date information */
+> -	if (!author)
+> +	if (!author) {
+>  		author = git_author_info(IDENT_STRICT);
+> +		if (!author_ident_sufficiently_given())
+> +			warning("your author ident was auto-detected, etc...");
+> +	}
+>  	strbuf_addf(&buffer, "author %s\n", author);
+>  	strbuf_addf(&buffer, "committer %s\n", git_committer_info(IDENT_STRICT));
+>  	if (!encoding_is_utf8)
+>
+> I dunno. It seems pretty low priority, and nobody has even noticed after
+> all these years. So I'm not sure if it's worth spending too much time on
+> it.
 
-Run push to several servers in parallel.
+That's quite tempting.  But I agree that this is something we can
+leave for a later clean-up, as the topic to add the config variables
+is pretty much orthogonal to it, and we are not making things that
+much worse than the status quo.
 
-Not to mix the output, nevertheless serialize the output, that is for 
-example cache the output of the second server push and start to output 
-it immediately after the first server push is finished.
-
-This approach combines the advantages of the current way (I suppose it 
-is so) to serialize pushes: first push to the first server, then to the 
-second, etc. and of my idea to push in parallel.
-
-I think the best way would be use multithreading, but multiprocessing 
-would be a good quick solution.
-
+Thanks.
