@@ -2,65 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D98AC1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 18:55:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 516FD1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 19:07:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726989AbfBFSzW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 13:55:22 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34884 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726960AbfBFSzW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 13:55:22 -0500
-Received: (qmail 10891 invoked by uid 109); 6 Feb 2019 18:55:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Feb 2019 18:55:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4318 invoked by uid 111); 6 Feb 2019 18:55:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Feb 2019 13:55:30 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Feb 2019 13:55:20 -0500
-Date:   Wed, 6 Feb 2019 13:55:20 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] doc-diff: don't `cd_to_toplevel`
-Message-ID: <20190206185520.GD10231@sigill.intra.peff.net>
-References: <20190203230152.GA25608@sigill.intra.peff.net>
- <20190204205037.32143-1-martin.agren@gmail.com>
- <20190204233444.GC2366@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1902051050090.41@tvgsbejvaqbjf.bet>
- <xmqqimxyrs4w.fsf@gitster-ct.c.googlers.com>
+        id S1726348AbfBFTHE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 14:07:04 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39289 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725982AbfBFTHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 14:07:04 -0500
+Received: by mail-wm1-f65.google.com with SMTP id y8so4042528wmi.4
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 11:07:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=AU2W9kHNefKL/nCt8991HopKigXCLIOX1dKTm7/f0KI=;
+        b=vea04qLFrBHAjA3Ce8k1GGekMYS3LpxRyNLFnfhnPjVZLCxFTVNq4s2GZ9arJUzRT2
+         IY+GQ+Z+uVdsfYngXqpcpKCkNxdMwsWWSxuN09S5Rlh8o/FgtBqXT+A0GWCmPyikLOwD
+         scnVD/SOtLr2ixvOaBz06xXiIE7u1mZvcEJAN62YLCCDiKs1YDw5WKNwqqfaRtMQt5iX
+         BnFaipOkefC6iEDTOZG9SgoYbbrubuhOb6l2aNwlzfBUwU3w79M0KgtfNktCjfw+cuZg
+         BcE3UYglhCkv7xn9b0ePg0m1jEAUf9VPFr/obQB9FJTdStsiK4M+uxg6T5EFvL3Pt1h/
+         Uxvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=AU2W9kHNefKL/nCt8991HopKigXCLIOX1dKTm7/f0KI=;
+        b=ZNqq7uUOdhQEGBQAny92sgllNkmVBWYlOaZEUGE/0j2N3S/WS7Dmfu4sE6DjhgHo82
+         bHeMLGSXy1V0YL96hdOQRHX/FHlp9faWBWhuaoHEc63WwJMgCekBFflhCOlFmhqJbEaY
+         AXkAQcsJO4HyxpcYumsdl9ak0ifSaRZeaR/M78XWaQmSly2HSqigk8s2I2+YkdtPMigE
+         clNYNIEg7so2MsgaAO6EeXHaWPxyaWpdjNt1OyVCgHxGqTUaZ1FKIsho12nbw/35feWe
+         xHFJlI8au5586M3yQFX2kBoWf8Gr4xhZLiRVq/9mHumioQBHijk6vO3U2jAwN0Zp/IeB
+         8vuA==
+X-Gm-Message-State: AHQUAuYgycptZFMRQh8T6izzhWMCREHcDPL6zuOF0Cv3gL4yBFyOjI0i
+        CnKbcvVJ0HzrZUP9TSQu+uY=
+X-Google-Smtp-Source: AHgI3IZat992pnhKPfee3ZfAlOBWU02MfFE/DqErbc9QIIx2vrn5xoEtZEGoes6T1KVjV1WerDyPIA==
+X-Received: by 2002:a1c:4c0c:: with SMTP id z12mr4103407wmf.17.1549480022192;
+        Wed, 06 Feb 2019 11:07:02 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id f134sm17281734wme.31.2019.02.06.11.07.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 06 Feb 2019 11:07:01 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/3] submodule--helper: teach config subcommand --unset
+References: <cover.1549450636.git.liu.denton@gmail.com>
+        <f24f20b024f4d41f106ed014a31508fab4fa5eb2.1549450636.git.liu.denton@gmail.com>
+Date:   Wed, 06 Feb 2019 11:07:00 -0800
+In-Reply-To: <f24f20b024f4d41f106ed014a31508fab4fa5eb2.1549450636.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Wed, 6 Feb 2019 02:59:54 -0800")
+Message-ID: <xmqqbm3orb1n.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqimxyrs4w.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 05, 2019 at 10:45:35AM -0800, Junio C Hamano wrote:
+Denton Liu <liu.denton@gmail.com> writes:
 
->  - Perhaps find the fork point, run tests to find known breakages
->    and exclude them?  This would simply be not practical, as it
->    doubles the number of tests run, for individual topic branches
->    because there are an order of magnitude more of them than the
->    primary integration branches.
+> This teaches submodule--helper config the --unset option, which removes
+> the specified configuration key from the .gitmodule file.
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  builtin/submodule--helper.c | 15 +++++++++++----
+>  t/t7411-submodule-config.sh |  9 +++++++++
+>  2 files changed, 20 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 0e140f176c..336e4429e6 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2149,15 +2149,21 @@ static int module_config(int argc, const char **argv, const char *prefix)
+>  	enum {
+>  		CHECK_WRITEABLE = 1
+>  	} command = 0;
+> +	enum {
+> +		DO_UNSET = 1
+> +	} unset = 0;
+>  
+>  	struct option module_config_options[] = {
+>  		OPT_CMDMODE(0, "check-writeable", &command,
+>  			    N_("check if it is safe to write to the .gitmodules file"),
+>  			    CHECK_WRITEABLE),
+> +		OPT_CMDMODE(0, "unset", &unset,
+> +			    N_("unset the config in the .gitmodules file"),
+> +			    DO_UNSET),
+>  		OPT_END()
+>  	};
 
-I think this can be limited to the tests that failed, which makes things
-much faster. I.e., we run the tests at the tip of topic X and see that
-t1234 fails. We then go back to the fork point and we just need to run
-t1234 again. If it succeeds, then we blame X for the failure. If it
-fails, then we consider it a false positive.
+The way this patch uses OPT_CMDMODE() is wrong.
 
-You do pay the price to do a full build at the fork point, but in my
-experience that is much quicker than the tests.
+The situation in which CMDMODE is meant to be used is that there are
+multiple (that's two or more) choices the end user can make, and the
+end user can choose only one of them at a time, iow, giving more
+than one is an error.  
 
--Peff
+In such a case, the programmer would
+
+ - prepare a single variable to store the single choice the end user
+   makes the choice in and initialize it to zero.
+
+ - have one OPT_CMDMODE() element for each valid choice, all
+   pointing at the same variable, but with different value that is
+   not zero.
+
+The parse_options() call would then make sure that the variable is
+set to non-zero value only once, to detect conflicting command modes
+given from the command line.  The program then can read from the
+single variable to see if the end user made any choice (or left it
+0).
+
+An example of typical and good use of OPT_CMDMODE() mechanism can be
+seen in builtin/tag.c; the 'l(ist)', 'd(elete)' and 'v(erify)' are
+the distinct operating modes of the "git tag" command (i.e. you do
+not delete a tag while listing them), so the &cmdmode variable is
+used to ensure only one of them (or none of them) is given.
+
+The existing use of OPT_CMDMODE we see in this function anticipates
+that there would be new operating modes added other than the
+check-writable mode, so if you are making a new command mode that
+cannot be used with the existing check-writable, then the right way
+to use the OPT_CMDMODE() is to add to the command enum a new
+non-zero value distinct from CHECK_WRITABLE, without introducing a
+new "unset" variable.
+
+If this --unset thing is truly independent from --check-writable,
+i.e. if all four possible combinations of having and not having
+these two options are valid, then you would not want to muck with
+the &command variable, but in that case, wouldn't it make more sense
+for the new --unset thing to simply be using OPT_BOOL()?  After all,
+it is not like you are planning to add new oprating modes in the
+"unset" family that is not "--unset" in the future, no?
