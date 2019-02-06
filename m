@@ -2,118 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 871E81F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 10:33:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E15831F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 10:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729613AbfBFKdZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 05:33:25 -0500
-Received: from mout.gmx.net ([212.227.15.18]:44525 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729011AbfBFKdY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 05:33:24 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MJSLz-1gorPd2BKN-0034zd; Wed, 06
- Feb 2019 11:33:22 +0100
-Date:   Wed, 6 Feb 2019 11:33:21 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Luke Diamand <luke@diamand.org>
-cc:     git@vger.kernel.org
-Subject: Weird (seemingly flakey) p4 breakage in t9833
-Message-ID: <nycvar.QRO.7.76.6.1902061004110.41@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727076AbfBFKms (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 05:42:48 -0500
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:34917 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726750AbfBFKms (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 05:42:48 -0500
+Received: by mail-wr1-f44.google.com with SMTP id z18so6210970wrh.2
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 02:42:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=N+uVSwlLyaymP70oOrmMFgB8I8s7vndh7l10FKfSARI=;
+        b=aAV4Anx/BZtH8nTBovfSIz5M/mZ9QCSGzgA5rU8Yiv4cDivvyGbf0sBLGdGIq0UECo
+         ZKW6J5ikutYjVMjEr5ZtzmDTle0ha4d9YQ2qAV8javCCw8RcWRlxYgwhAbsbX8yqPvVK
+         /+t0cFAdaxtyAAscPe23BJLCGFkDJkYwNebYSM6nJc4byYYfrt37FlcH75xFGWrHpge9
+         k7CHqUceN3NbNtzzwY7zU3DEGhBolTcA3/aJN6yntolyoJjI1NlnPPRaAZk3t9CfOQ8a
+         zFbU2IT/BjKluvVVUPeTAKRAB8Vhk6QbdYJluU9xTu6nG3rtU1HJ9GtR2jIZrespwvaQ
+         LBjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=N+uVSwlLyaymP70oOrmMFgB8I8s7vndh7l10FKfSARI=;
+        b=hXPVMaBoUUtxyiJ4UjEpO5Y72D0/Kpnedeha0USxXK8C07YjPgaSeU3kCCzAYl1nKC
+         1KZfRTeIFtRc8qgheivh8Hlyv+mSsjL605V0wlLhM+ml2E7r0wPc03ps4IHA6y3/JZy4
+         QNazThojvx24JSzy92lPwOaYdaRVjdrfvU+HCjvjHsHXCUeQRSKqi83KRleLtlxyi1L5
+         bdE1tevU8Bjpd3p7UAkj9U+lWK8o20QWDfrK4B9dK8d+BvOTdz/r21as5ZKI4A01bYng
+         AxZ4TF5E6b93D9pF7w4P8pskBTH/wCsFMDCw6zQ1gHKF75L2RifZJDIXbZQS/pI+DtXd
+         ccPQ==
+X-Gm-Message-State: AHQUAuYHQfikFz9oZ1ZABskEg4Sdo9hkyO3m5wE5MyYqDLhBYx8LumtZ
+        gdhnSymIEUk8zG199Vj7fl3xxopk
+X-Google-Smtp-Source: AHgI3IaeQKzjRPMUdsBuCJH0Yi+hHt+Z1rQ8OyFbIW8uVFDuyPwgVafEotc9VaRMBJUiDHxc87EE6w==
+X-Received: by 2002:adf:f009:: with SMTP id j9mr7284539wro.170.1549449766235;
+        Wed, 06 Feb 2019 02:42:46 -0800 (PST)
+Received: from szeder.dev (x4dbda645.dyn.telefonica.de. [77.189.166.69])
+        by smtp.gmail.com with ESMTPSA id j24sm26090825wrd.86.2019.02.06.02.42.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Feb 2019 02:42:45 -0800 (PST)
+Date:   Wed, 6 Feb 2019 11:42:43 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        git@vger.kernel.org
+Subject: Re: t0025 flakey?
+Message-ID: <20190206104243.GJ10587@szeder.dev>
+References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wpSbHI95mVqB9LIj86E3myf2uHP0kUuqz9gJ+mHKICwDD7ADfKe
- 9+lpjFyFVH6SvpzT/4423EVJNi15vJATPcLrF970bi8FGkR+m844KEyruUszhTC6TLyJJb7
- ac5O5I+FNsj6bI/mG1pHKH9ogjqV6JDPjvR2S8kvZS3VsGwigrdqdUY4QzNTKMOmNt7mrWx
- DV/qmjseK2qbQRRC40Www==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kHKcU4w1NKc=:DueMn/KJoTtNKZvv4E4+W4
- mogMFVZ0NJ9yF5hjQPBMaFsT+zxXO08B9p8sdOT6Har736T4VSqcpwQEI904Y5YPZPTBy/0fE
- EN3szKh8QdtDWoe1kF+ZkQZI5rrlPfAJT+Cw1Wv18KK73FIhwdmJbvrvMKYeI4FeGAMF8rgD8
- qz1cfWPEs2iua+WOR6Nu/GmqMsyBTsmgBMJRZTqAozWVDfwobn63wLw1w3hrEJzZO2P0o6eI9
- bwyouXC6rTPLZxLnvnNaw7SibG7Jb2plfIRdUNbORfPhnfpUZwNrUTEmPCcu+w/m1ZmC6dHdZ
- pKNkNJun1lzBAj3IdTJZIEoHLpyHbT1wtiEOPH1rG68qS/qEFpoYd4gU5YkD5v+rrkgXLaLgw
- S1BfeeKdT1AsGMZx+Xj+SLTy9Dj82rJ8ZYYu5g82zjTJ02r85aYwwcdch30+1+AmSTeH6QvsK
- 0p6cJfgPhmDlEJuQ3BvWInRXsaiIVRhWVkjjaaDi1grQstzAodOIDndxNEPm7bl0bc8a/F4Oh
- TYZ0KZihYXeuD1uJdQvpzgXY+v0vosJmwE7O9ilCpUr+N/8zdnc5GDUVnsH03F4VpFaEfBKh4
- mxfFiOBcPO9qNm0n7r5xu1iacGmZoYeW5WvV1eZP77paYncgamjsrNDllKhC5N7Hs/1Owy3Zh
- f61rdV0SlMXxNT+OEw114gzLYyhApkbf8sYj6WPKgj6aYTJAbFO12HKhoPebB3weJtLsKxCmd
- h8Q3GWAs64529BWcEAhNhkptvR/NA6U8h+aUgZFKVpXVlMTXEl+TfQWA2IOefcBk4l1Qd6rDT
- Ntb5t/FSzxJ9tVD2juIe67i4ANf0gpB8ETaMm2QBsvpckaboLhK7aMAZl7WUrBex5rCbfMwKj
- OxYqPjOxHgApDjDLvF0VrCiXCvHyvMo6HHXpZXNhbXk9q5AAiTNFEWQWZ8Wq2+ckG6UNOo3xy
- f8VRmcAhjHg==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Luke,
+On Wed, Feb 06, 2019 at 11:25:38AM +0100, Johannes Schindelin wrote:
+> Hi Torsten,
+> 
+> at first I thought that those intermittent test failures were limited to
+> Windows, but they are not: I can see it now in a build on 32-bit Linux.
+> Full logs here:
+> 
+> https://dev.azure.com/gitgitgadget/git/_build/results?buildId=1032&_a=summary&view=ms.vss-test-web.build-test-results-tab
+> 
+> Excerpt from the failing test case:
+> 
+> -- snip --
+> not ok 2 - renormalize CRLF in repo
+>  expecting success: 
+> 	echo "*.txt text=auto" >.gitattributes &&
+> 	git add --renormalize "*.txt" &&
+> 	cat >expect <<-\EOF &&
+> 	i/lf w/crlf attr/text=auto CRLF.txt
+> 	i/lf w/lf attr/text=auto LF.txt
+> 	i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
+> 	EOF
+> 	git ls-files --eol |
+> 	sed -e "s/	/ /g" -e "s/  */ /g" |
+> 	sort >actual &&
+> 	test_cmp expect actual
+> 
+> + echo *.txt text=auto
+> + git add --renormalize *.txt
+> + cat
+> + sort
+> + sed -e s/	/ /g -e s/  */ /g
+> + git ls-files --eol
+> + test_cmp expect actual
+> + diff -u expect actual
+> --- expect	2019-02-06 09:39:42.080733629 +0000
+> +++ actual	2019-02-06 09:39:42.088733629 +0000
+> @@ -1,3 +1,3 @@
+> -i/lf w/crlf attr/text=auto CRLF.txt
+> +i/crlf w/crlf attr/text=auto CRLF.txt
+>  i/lf w/lf attr/text=auto LF.txt
+> -i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
+> +i/mixed w/mixed attr/text=auto CRLF_mix_LF.txt
+> error: last command exited with $?=1
+> -- snap --
+> 
+> Any ideas?
 
-in a private Azure Pipeline (sorry...) I noticed an intermittent problem
-in the p4 tests on osx-gcc.
+I reported this and Peff looked into it on the way to Git Merge, but
+not working solution yet.
 
-I would point you to a public log, but the Azure Pipelines support *just*
-made it to next, so I *just* set up a public one targeting anything else
-than my `vsts-ci` branch, at
-https://dev.azure.com/gitgitgadget/git/_build/index?definitionId=6. And
-those builds do not show that problem, so it must be a flakey test.
+https://public-inbox.org/git/20190129225121.GD1895@sigill.intra.peff.net/T/#u
 
-But maybe you can spot anything familiar from the log?
-
--- snip --
-[...]
-++ P4TICKETS='/Users/vsts/agent/2.146.0/work/1/s/t/trash
-directory.t9833-errors/cli/tickets'
-++ P4USER=short_expiry_user
-++ echo password
-++ p4 login
-Enter password: 
-User short_expiry_user logged in.
-Perforce db files in '.' will be created if missing...
-++ cd '/Users/vsts/agent/2.146.0/work/1/s/t/trash
-directory.t9833-errors/git'
-++ git p4 sync
-++ true
-+++ time_in_seconds
-+++ cd /
-+++ /usr/bin/python -c 'import time; print(int(time.time()))'
-++ test 1549411312 -gt 1549411605
-++ sleep 1
-Perforce db files in '.' will be created if missing...
-failure accessing depot: perforce ticket expires in 1 seconds
-Performing incremental import into refs/remotes/p4/master git branch
-Depot paths: //depot/
-error: last command exited with $?=1
-++ true
-+++ time_in_seconds
-+++ cd /
-+++ /usr/bin/python -c 'import time; print(int(time.time()))'
-++ test 1549411314 -gt 1549411605
-++ sleep 1
-not ok 6 - git operation with expired ticket
-#	
-#		P4TICKETS="$cli/tickets" &&
-#		P4USER=short_expiry_user &&
-#		echo "password" | p4 login &&
-#		(
-#			cd "$git" &&
-#			git p4 sync &&
-#			sleep 5 &&
-#			test_must_fail git p4 sync 2>errmsg &&
-#			grep "failure accessing depot" errmsg
-#		)
-#	
--- snap --
-
-BTW I find it very odd to see a `sleep 1` in the trace but not in the
-snippet (there is only a `sleep 5` instead, which I fail to see in the
-trace). Odd?
-
-Ciao,
-Johannes
