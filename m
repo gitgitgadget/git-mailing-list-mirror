@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 986BE1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 00:21:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 490611F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 00:21:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727207AbfBFAVp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Feb 2019 19:21:45 -0500
-Received: from mail-vs1-f73.google.com ([209.85.217.73]:54359 "EHLO
-        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727129AbfBFAVp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Feb 2019 19:21:45 -0500
-Received: by mail-vs1-f73.google.com with SMTP id v199so2162855vsc.21
-        for <git@vger.kernel.org>; Tue, 05 Feb 2019 16:21:44 -0800 (PST)
+        id S1727262AbfBFAVs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Feb 2019 19:21:48 -0500
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:53018 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727129AbfBFAVq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Feb 2019 19:21:46 -0500
+Received: by mail-pl1-f202.google.com with SMTP id 71so3603348plf.19
+        for <git@vger.kernel.org>; Tue, 05 Feb 2019 16:21:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=c5eafgfC+uPgjJecVEUZDa4WPYVYyn2cMXyiBBc6yK4=;
-        b=JPyy2KwA4Nq75GqztbRw2djV4AyGFDyCxDTKD4nLVlb5un2A1MzSfK3GpYaUbsqQ0O
-         R2aze1ZgD/vh5elAjUJtaKJ78dDeSIoHSUQhge/9HwFjnpAeLN+bVf9Sv9Y51zsTGwBj
-         PBgxSDsOE+Yd7P/EqGGlvLkqxr4U5N56J3WXNvXcg0EdT32BMTmA5YPMs73WGfLOo7Fi
-         IZXyaXL2GA8hvI62sVnjuYpOF26mYQxMeqg1bp5oOzE6vWd1ElF62SNhlsOSGhKnEKvc
-         AG1KVa4ahrE4wkD6+ba4X0LOOhuJRz+q0+rp3JwuAyhY4bpatnonp8HewzOR29yLF5LP
-         LCng==
+        bh=G2xvV8tnV/PToPTaS5y6rVnMuq8BqsEGObq/fCfkyxc=;
+        b=crdaJsF45aBbyv8rvfzLuaPvoXlgz8A/tFWaA+/5rbDPhuOgZS9U2kYMgrOQ2iI9Ds
+         jFC81Bdf319h5v1iwY41Sj/D5d2gGL5PpJHiBSTTAVO4PpAky5Yc8MmIUU3Hfs3FcYZG
+         /RP6ylctmDPZZvHU5fEe0HVEQ84eEplkQSiHGjVkqNmQZQvFKsocz35YblVqjyAAnjir
+         R1nnBW7fQ7vIKLrcp0NzwrHVFrqfyJcJd65m3CEaCBwnj3D5MMgv+ZlAdTRUf+qwSvjO
+         fROL1x6XJfCXnGrnvERQNp5NrKzxPxTgKV6N8fF3sizevtV1flz5H/h3RAC+7JXYzzYi
+         y69Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=c5eafgfC+uPgjJecVEUZDa4WPYVYyn2cMXyiBBc6yK4=;
-        b=YBBz/fi5JrzmboPWH2tER1lLmKerF8JePYkQMWGsd2BIyZjrLgEMorVT3S6Rx9yr7L
-         dA1SsrUG1HTqkIWAgNJ8HridZVWeUb/ZV1NrvlrH2DH/3DIrRFzYAIlT+eze90MsrW0p
-         rrdcLWP5DZlnZqpN3d2F1a2l9T9sByyAbn8PfXXelLqCgt1UXL7DHpKCN23bGvcJjKud
-         BP5nqF2xLkiYT/LLVHNx9KDGOEUUceGw1dy4DW9xvk4DbKF7B00PnMXEYn4VBT4cSwQe
-         8ZmL5LEk7pMiZApXiopWP+dmYGBaLS5Nm6h0gADJgArUhx/7pnGbTcPbLbGx4FrbK9y6
-         0fcA==
-X-Gm-Message-State: AHQUAuYzNODWSW2ln+Z3nguqP7YnKmyliPXx+hnwBuG+jTbDVBP1K0u2
-        1QGysb0L6IW/DLu6i54Wwm55FJacv/3FXMNv1y8LYCNR4SQJRis0kOGieLq0CKLW4Q/tLwBRCns
-        pu6VrIa1lQMuuhEVrijEs1Zp4D/rVzEA6dwKtkqARCD2CW7E5xhARD26GQUZvpy/s8Y5A/eFBKw
-        TL
-X-Google-Smtp-Source: AHgI3IZzYfLON33hbHdjxHCQaUgKipxNNw1HyE2C9Rii8mmiLZBnDd0+DOzPux/YfruL8Tuoq+c1Y1xlUd/fOVld8BzS
-X-Received: by 2002:ab0:2388:: with SMTP id b8mr4882112uan.16.1549412503853;
- Tue, 05 Feb 2019 16:21:43 -0800 (PST)
-Date:   Tue,  5 Feb 2019 16:21:21 -0800
+        bh=G2xvV8tnV/PToPTaS5y6rVnMuq8BqsEGObq/fCfkyxc=;
+        b=NS+OQxx+hwzG8c2opqRbNESQT7JZ4MaUle0XmbD4bhm+MZeQxs3Z0h2newEIorqJTO
+         EDATRSNcMZCP6xDd9Pap/CYXp/+cgWjbHYnLSmoUMhiws1GUvwysD96Y4R9ufzZVxQjw
+         TRIGIO0M2Yt3l2/WGxm0anLpUp7a1ardGOSrjrnAb1Sx86MrKLEnLDF2DRL+b9+xzebM
+         DoghrgBbSz9Pwmfx5chQm+iLBiqpupo8yW/gd3jUvxF8THBS8UhH4GCu1Guj/c6tJbIZ
+         tYBZ2i5Wrat93cBQD7XcOodkup91hkq4KMjLtqTK+8fpGkofvj1vb7vJZnYOTnDVrs4y
+         Txhg==
+X-Gm-Message-State: AHQUAuZWiLewA15I1vLDvFExHdQFhe9ZaaUhh9ourQKSHLMgwHv0dRSx
+        Z6FBiXhIwS2ZurR75hhvl+D0KIIgYYeT6CUo6RLHLfOiDDPlb/3XE/IjOeodlnTxuGCR9ctBnd0
+        PGwU9CG9BeXV3AD3rU3cwizPbbF+FQxVkmtQNdYGI8Nhixbm01nPEiZ/32yidpo3NvTgEWH0JSZ
+        IG
+X-Google-Smtp-Source: AHgI3IYZdwN7SR/P5M9FD6LGD49dzzqGil38rXb2SuEQCWCk4awQwmn1V3H5s/JM2V9VNOu78ohkG3sa6y4ATMwk8Avx
+X-Received: by 2002:a63:a4b:: with SMTP id z11mr2887545pgk.14.1549412506285;
+ Tue, 05 Feb 2019 16:21:46 -0800 (PST)
+Date:   Tue,  5 Feb 2019 16:21:22 -0800
 In-Reply-To: <cover.1549411880.git.jonathantanmy@google.com>
-Message-Id: <2e8ad7ab247e6b14c0583f0800a228e95bcda095.1549411880.git.jonathantanmy@google.com>
+Message-Id: <8d5ff2fc224e2ce7981bcae492de02a622889208.1549411880.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1549411880.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH 7/8] t5552: compensate for v2 filtering ref adv.
+Subject: [PATCH 8/8] remote-curl: in v2, fill credentials if needed
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, steadmon@google.com
@@ -63,30 +63,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Protocol v2 filters the ref advertisement, but protocol v0 does not. A
-test in t5552 uses the ref advertisement, so fix it to use protocol v0.
+In post_rpc(), remote-curl calls credential_fill() if HTTP_REAUTH is
+returned, but this is not true in proxy_request(). Do this in
+proxy_request() too.
+
+When t5551 is run using GIT_TEST_PROTOCOL_VERSION=2, one of the tests
+that used to fail now pass.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- t/t5552-skipping-fetch-negotiator.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ remote-curl.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
-index 30857b84a8..8a14be51a1 100755
---- a/t/t5552-skipping-fetch-negotiator.sh
-+++ b/t/t5552-skipping-fetch-negotiator.sh
-@@ -127,7 +127,10 @@ test_expect_success 'use ref advertisement to filter out commits' '
- 	# not need to send any ancestors of "c3", but we still need to send "c3"
- 	# itself.
- 	test_config -C client fetch.negotiationalgorithm skipping &&
--	trace_fetch client origin to_fetch &&
-+
-+	# The ref advertisement itself is filtered when protocol v2 is used, so
-+	# use v0.
-+	GIT_TEST_PROTOCOL_VERSION= trace_fetch client origin to_fetch &&
- 	have_sent c5 c4^ c2side &&
- 	have_not_sent c4 c4^^ c4^^^
- '
+diff --git a/remote-curl.c b/remote-curl.c
+index 293bcdb95b..437a8e76d8 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -1295,7 +1295,9 @@ static size_t proxy_out(char *buffer, size_t eltsize,
+ static int proxy_request(struct proxy_state *p)
+ {
+ 	struct active_request_slot *slot;
++	int err;
+ 
++retry:
+ 	slot = get_active_slot();
+ 
+ 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
+@@ -1312,7 +1314,12 @@ static int proxy_request(struct proxy_state *p)
+ 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, proxy_out);
+ 	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, p);
+ 
+-	if (run_slot(slot, NULL) != HTTP_OK)
++	err = run_slot(slot, NULL);
++	if (err == HTTP_REAUTH) {
++		credential_fill(&http_auth);
++		goto retry;
++	}
++	if (err != HTTP_OK)
+ 		return -1;
+ 
+ 	return 0;
 -- 
 2.19.0.271.gfe8321ec05.dirty
 
