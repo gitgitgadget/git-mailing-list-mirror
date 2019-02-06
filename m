@@ -2,66 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF81E1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 10:25:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B63FA1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 10:25:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729047AbfBFKZi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 05:25:38 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34865 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726579AbfBFKZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 05:25:38 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z18so6146417wrh.2
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 02:25:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=yqaugAvQamQUXPmIDtMVqWZ1yJBHrnH8nmlimsJOxEw=;
-        b=BiJ3ibCYE09GmPqq+3iaBcWPMtFs0AwgN6ARZXGlV+OrcAoADpcuSCRSOuHTOS0S7J
-         wljsKtdpakh2DgXppYR7zSids1lo4HCaSA6IU7V3BWSHOPclxpcegBh/gQZjmEJjNJ3K
-         FW/IRoOKxeojFnhZ3IKK4mdvdm1wMTq4/BbGs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=yqaugAvQamQUXPmIDtMVqWZ1yJBHrnH8nmlimsJOxEw=;
-        b=kbQNW7MDzwwQk3tBvj2MA+Od2yGqxsePwLSBqCl+BK5XAYvBqZAzIO+MfQK2mhzJ1A
-         dreMZ0tzlPrli9fqnl8SmFlpnfen1HS9evwt4j/GQ1ZqD/Q6ZEQPO4lp4EmGFgoD7XQa
-         ocJcF1UUkG+saHNHJddG0hil7/unH0N/D/DstABEjAtTPpaS9C0L/OKA71A8gC+lLI28
-         SlvL5vmOSnUA6C1BivR78dYycJYdudW4uUit1KHCaA3QOh6h2Y3j4mV6vFFvZXuDWNer
-         9+5ud4U+yggO8RtFWpV4TC9qTXufzsUFLRcAe3aR5ssclV7Fw16YYsrJ3tLKoYgw0Wgm
-         NFcg==
-X-Gm-Message-State: AHQUAuZXQQrObWqOKP/O00dNQ2xe0q/do4h40MlujbYqeAgvqmdTWLg5
-        I7defDa6fpCkL7CeRhX8ap2MLVqyJWJCwyVaV/DWGVwM/KlvEg==
-X-Google-Smtp-Source: AHgI3IYIUGIBlX32t3g3NzWvVINCmItXt/L6E3K0H7VRAQv+cQduPEZEXXHhKlbKh5MUqEY+IxmtgdzWV6C7EK0h2fA=
-X-Received: by 2002:a5d:5443:: with SMTP id w3mr6879460wrv.4.1549448736241;
- Wed, 06 Feb 2019 02:25:36 -0800 (PST)
+        id S1729244AbfBFKZl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 05:25:41 -0500
+Received: from mout.gmx.net ([212.227.17.20]:33023 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726579AbfBFKZl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 05:25:41 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWgND-1gbg9g1liV-00XsKP; Wed, 06
+ Feb 2019 11:25:39 +0100
+Date:   Wed, 6 Feb 2019 11:25:38 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     git@vger.kernel.org
+Subject: t0025 flakey?
+Message-ID: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   Luke Diamand <luke@diamand.org>
-Date:   Wed, 6 Feb 2019 10:25:25 +0000
-Message-ID: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
-Subject: could not freshen shared index ..../sharedindex.0000000000000000000000000000000000000000'
-To:     Git Users <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:0T54DewqFzvHCgrhVgq02ZEaUPDDTwHiBqOROj3XiA7Pds6a+vC
+ 8jDM/CCGMJsNIXq1aFX69uS+jdpV9W4QIPp6jO/CYziR7KOJ5LoZcIOz5+3yj24Sa6dyxfO
+ OhVgTOjKNBKP+/wOWXNkxVHt1in7xnTrchMI21L717pOkCIYotNt67bfcKg3ZnkkXcMP/eW
+ R3VEa9Bfg4CWcNlS+QQJw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2CGUFa1oWLU=:HQyrBPewtmCVf0farpIEWM
+ DklDyPdU7itLWcCqcPnuluPqAt5mYpvdycgqIcwxFEaM6O4t9dD7vbqQeNyAu/XFRgRjIVJfZ
+ KfG3mn6ZzcOXwyYFgYZfJeAAVWXElte0T0B/KSuNIL2QkQa5YBiH/X04kLYxDmwWmqFs3ktNk
+ NvO7QPMA8X+7UuT3B1WH+FLKdDMSe4W/f7ds7tl47QkhBfP12WJIE54alWILKsN1V9DWRP51z
+ 8bLnKRMwknA6d7U2h6W66Cfn336zlA+Oe1ydX4jbLv6iPEjr214/+wSNz9qJqq3bMIlR8/E7l
+ ULCKEybvhsey/YYG1nJ/sT8j1U1+/kcLDMT6CXOJ5j9lBGe1V9RhN6AszIe0qiUlZWslP9mKs
+ kLSXUCGJNW0Z234FHnNdZc5tC0wA8M20HJO+0RkmVjJItt3BdAgMvXemNzyuNCflOxJHjV0ZO
+ pJY4TMV/UjnqOZGelOVHrFDEClK1fNvqbJ4xjuK3Y0zuS62pRRlfCXZYG8CUQWzAhJxoyRLUj
+ HSM9N57eI6QYjUv5UJ2DvHboQQStepF2WamL8BNazN9xPrIotMcdyUENMx+cCmR0eOKJTYmze
+ UTKrSAIYR1ISeqIzcW2g6Hq0z24omvc54KmY8lasOVg9Qvaei7ztnCVFVoUWibUh2dLGu6+xN
+ 3H5WfBygsqs2nuPS/zdEjfaq61QYgjtPWE3n2onQDcFBRHYx4gTxnu45kJo2iwfX0gtvMzQXF
+ A4RfATqmDs0WuDtN61913eaU36PHEI6MpsTFLOHkp8o2BbHMPmc302Shwn1OglWzAKjkcOrsY
+ RP5POZtDwpXRmNHolIiTbzG4GiP2BNbDImrpZJH4bKEEfOh116Ldx8q2O7IV1Y1tqWquQy7JW
+ WpIOWFo8lHzycyi9oJLco0s3ImkHnd5Ce1CzIrc385IEv0bvnqqxrhXeCTc3fkCgUGHCSukBK
+ f+wfT6T8ndw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've recently started seeing a lot of this message when doing a rebase:
+Hi Torsten,
 
-   warning: could not freshen shared index
-'/home/ldiamand/git/dev_full/.git/worktrees/gcc8-take-2/sharedindex.0000000000000000000000000000000000000000'
+at first I thought that those intermittent test failures were limited to
+Windows, but they are not: I can see it now in a build on 32-bit Linux.
+Full logs here:
 
-(There's a repo called dev_full, and I've got a worktree where I'm
-working on my 3rd attempt to make it work with gcc8).
+https://dev.azure.com/gitgitgadget/git/_build/results?buildId=1032&_a=summary&view=ms.vss-test-web.build-test-results-tab
 
-That file doesn't actually exist but there are a bunch of
-sharedindex.XXX files in there with more convincing looking names.
+Excerpt from the failing test case:
 
-2.20.1.611.gfbb209baf1
+-- snip --
+not ok 2 - renormalize CRLF in repo
+ expecting success: 
+	echo "*.txt text=auto" >.gitattributes &&
+	git add --renormalize "*.txt" &&
+	cat >expect <<-\EOF &&
+	i/lf w/crlf attr/text=auto CRLF.txt
+	i/lf w/lf attr/text=auto LF.txt
+	i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
+	EOF
+	git ls-files --eol |
+	sed -e "s/	/ /g" -e "s/  */ /g" |
+	sort >actual &&
+	test_cmp expect actual
+
++ echo *.txt text=auto
++ git add --renormalize *.txt
++ cat
++ sort
++ sed -e s/	/ /g -e s/  */ /g
++ git ls-files --eol
++ test_cmp expect actual
++ diff -u expect actual
+--- expect	2019-02-06 09:39:42.080733629 +0000
++++ actual	2019-02-06 09:39:42.088733629 +0000
+@@ -1,3 +1,3 @@
+-i/lf w/crlf attr/text=auto CRLF.txt
++i/crlf w/crlf attr/text=auto CRLF.txt
+ i/lf w/lf attr/text=auto LF.txt
+-i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
++i/mixed w/mixed attr/text=auto CRLF_mix_LF.txt
+error: last command exited with $?=1
+-- snap --
+
+Any ideas?
+Johannes
