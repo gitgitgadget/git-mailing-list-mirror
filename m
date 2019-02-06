@@ -2,77 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1443E1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 22:18:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 436581F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 22:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726512AbfBFWSF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 17:18:05 -0500
-Received: from mail-wm1-f50.google.com ([209.85.128.50]:36483 "EHLO
-        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725928AbfBFWSF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 17:18:05 -0500
-Received: by mail-wm1-f50.google.com with SMTP id p6so4591434wmc.1
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 14:18:04 -0800 (PST)
+        id S1726379AbfBFWTz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 17:19:55 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44382 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725928AbfBFWTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 17:19:54 -0500
+Received: by mail-wr1-f66.google.com with SMTP id v16so7511596wrn.11
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 14:19:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JNrfCfrjJNKeyDKd0nZdhSBxAbSzunU2uYWePV+nwl4=;
-        b=aJ9uhYzmdnXYGkk5I4TY7HN29xEFRv2uWs5KZTceNo2Rsym2vibK/9J28FM+2bWYmo
-         1N6IdvRfyhKf+Ija7XVm1j4QELLPZhn0cdz0nrqWlt2ufNR37dush+mdT7MYedo6+SuL
-         3uDPyYMt8fH8OATqDi5ZibDLOilQ5YCwf9oyVjkS71Xw4znLmUETcCPHwlZ3mN/OrzQJ
-         Nj5OT04GRqD4ShKHecmWYTkbUdhLd9kV/4DwE5ro1mU1VaSjh7DU0o0QhzeigN4AhToP
-         1RSvTFj8zdfhvN84RwceqXEqS2bP60lK7g9dLGGgmlei92ei+pVn6TYeVP6UmgmxtG8G
-         10pg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=mM+A3JCrX+rLArbPz196+aKvrys/gtnWhi9EskzdyWw=;
+        b=L+SsAXtZ0NOW/W2GrW0xsTJ8au7bSQ1ISxzxfpy6+4u/yMTJK0QAFkv9ruDGZNeuP0
+         zrraKxWf048TSSsv1B2TdsKe5xVyJeGvvZ9G5yfPxQ8E9eQQcFBhyd+j0f3vRoII3BMb
+         8AzKLh9jrhmWO8JKjOjPzmJvGgd8XpTn9/8Rt+//HgOi0Ue6R+UPpHSLsXe//tfL/mz/
+         Hx2wHr0/jr/RM2RUUYRm35ZY+qS/tO+fKzSEMFWG8XtR0w7XjmMuc/94W+5sAJv3MhBr
+         cfmcqjcJri6hdZEndzOcTk+2oagz1CwREn9+5atdSm71zsafzChb1AuzUtpQRQEvRLsv
+         UfeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JNrfCfrjJNKeyDKd0nZdhSBxAbSzunU2uYWePV+nwl4=;
-        b=S0HuxtBj5p2GWtPc7wlcN0aq15p0fDsGou66861fJsgYVETAfT/hj+fyvFY4Jh99+X
-         G3oycegJ8G74hBWUxWTwGD1ddW0EwFHkIPMKjTZb1k4FHLFU0W5llF/sh19jFovAdQFS
-         cqcbxo8ZF29W+ahHOdl8VtwRdkg8A/BKfU3RbR+bsQ8s8Q3KfBFBq45zgX/aHJcIwrR4
-         9S0+IQZZTduuU3o5bOaSG4meCZtynSADfaoMhbqxW1GeHzAcOMvwT+ntEKEvqxe4nnzI
-         q3UGhktXADXpUOIEFAbc0BcHet22wnbenoenMhRwYh8xXLJdz1x32DZJWmlva7+grnxp
-         97lA==
-X-Gm-Message-State: AHQUAub6A7iOM9YwXUHw7s38y98jQkxhS7XPq0VR8wyf5ZBmzE3J/MCR
-        mfzdLXyrQd55hLmjiuCOW8A=
-X-Google-Smtp-Source: AHgI3IZ1grzxuziStZ2t6XHPy2F4Obb1KAYazWDBrE+VqOlV0+PaQ3hGzyANz8lSHSuROqUnmim+8w==
-X-Received: by 2002:a1c:400b:: with SMTP id n11mr4944141wma.85.1549491483644;
-        Wed, 06 Feb 2019 14:18:03 -0800 (PST)
-Received: from evil (host201-92-dynamic.60-82-r.retail.telecomitalia.it. [82.60.92.201])
-        by smtp.gmail.com with ESMTPSA id 129sm35235727wmd.18.2019.02.06.14.18.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Feb 2019 14:18:03 -0800 (PST)
-From:   "=?UTF-8?q?Giuseppe=20Crin=C3=B2?=" <giuscri@gmail.com>
-X-Google-Original-From: =?UTF-8?q?Giuseppe=20Crin=C3=B2?= <g@evil.localdomain>
-Received: by evil (sSMTP sendmail emulation); Wed, 06 Feb 2019 23:17:59 +0100
-To:     tboegi@web.de
-Cc:     angelomelonas@gmail.com, git@vger.kernel.org
-Subject: Re: Possible minor bug in Git
-Date:   Wed,  6 Feb 2019 23:17:59 +0100
-Message-Id: <20190206221759.338-1-g@evil.localdomain>
-X-Mailer: git-send-email 2.20.1.390.gb5101f9
-In-Reply-To: <20190202063828.4kjtdmrsm7g4eyg3@tb-raspi4>
-References: <20190202063828.4kjtdmrsm7g4eyg3@tb-raspi4>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=mM+A3JCrX+rLArbPz196+aKvrys/gtnWhi9EskzdyWw=;
+        b=QKog2AIEXh5FVhvDhq+XvwKKe0+EWV/pQPEJjqi4fN1TFT50zlH0xO4OOfsyRuiua8
+         a5PPxCSNjV6+hA+12hatq6MN9RlOhYf3EZ3z8L7yywDNUT4lX+CtlkTqOdwMsCovCI42
+         7WGLl7DDmXe6/NFrjGHH/tgHsC1sVn7LMZ7SKuQ6hqzkEpP4nLAqgbJs/NAKZQbdQn2b
+         G1Lep1p6GXGGDOTLUmHTdqTVx9mOKH5NaT1HJ6lFk8bnXF4ZnAn2vsCUZPbc4ogEBlDI
+         YqSPblh8o6eOtVFPcTSp8JEDRY1nVa5WDfMqtFx3ikL6JnVHI5N5H9Ev9lMvESXr0m6u
+         3Nrw==
+X-Gm-Message-State: AHQUAubErLyqKgkFe+02S0wCx+2+oi1OEk/8tJv4peQeLUoW2arzXVYt
+        pNRcIA+LLiPyhO/WkahbMAGBrbE9
+X-Google-Smtp-Source: AHgI3IbQO8puRNCblbnl5KagNHJpmIi0ovUyEYty4Uvr/34NtrAmEciObeOn71mwh+eTTydxWo2SQw==
+X-Received: by 2002:adf:ea81:: with SMTP id s1mr9286948wrm.309.1549491592669;
+        Wed, 06 Feb 2019 14:19:52 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m14sm11192903wrx.59.2019.02.06.14.19.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 06 Feb 2019 14:19:52 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] remote-curl: refactor smart-http discovery
+References: <20181116084427.GA31493@sigill.intra.peff.net>
+        <20181116084725.GA31603@sigill.intra.peff.net>
+        <xmqq5ztxstkh.fsf@gitster-ct.c.googlers.com>
+        <20190206191657.GE10231@sigill.intra.peff.net>
+Date:   Wed, 06 Feb 2019 14:19:51 -0800
+In-Reply-To: <20190206191657.GE10231@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 6 Feb 2019 14:16:57 -0500")
+Message-ID: <xmqqsgx0pnjs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I wanted to have a look at the bug, and I can correctly reproduce it using version 2.20.1.windows.1.
+Jeff King <peff@peff.net> writes:
 
-To start to even think of fixing this bug I need to build the source for Windows, but I got lost on how to do that.
+> Yep. Here it is.
+>
+> Rather than a range-diff, which is quite large due to the code movement,
+> I'll include below the interesting hunk of a diff between the two
+> endpoints (i.e., what we would have seen applying the packet-err-check
+> changes on top of my code movement, which is more or less what I did to
+> generate it).
 
-Is it correct that I should cross-compile from a POSIX system (GNU/Linux), using x86_64-w64-mingw32-gcc and Gnulib to produce a static executable?
+Thanks.  The hunks shown below are to use packet_reader interface in
+check_smart_http(), which is exactly what we want to see in this
+step, and what I was too lazy to recreate as a part of conflict
+resolution ;-)
 
-Am I missing something? How does people here build for Windows?
-
-Giuseppe
+Thanks, queued.
