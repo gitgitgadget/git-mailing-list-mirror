@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 756971F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 17:16:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D32F1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 17:16:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731591AbfBFRQH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 12:16:07 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:37897 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731567AbfBFRQF (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1731593AbfBFRQJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 12:16:09 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37967 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731559AbfBFRQF (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 6 Feb 2019 12:16:05 -0500
-Received: by mail-ed1-f53.google.com with SMTP id h50so6542909ede.5
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 09:16:04 -0800 (PST)
+Received: by mail-ed1-f67.google.com with SMTP id h50so6542856ede.5
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 09:16:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=J256ctfmigu5mFnIJRHP42N6y/j6eTLobV2FjgdQk+0=;
-        b=euEfixk0Fvtl5I74aNTlhTWDvJci6gb558ABxz0v173qX0X7Cqbxc0K+qLKpdarVGx
-         GaaJJRuUNVioxiJkergamVkCYfb0z/KMbz5uuj0UgzY5YWBZMVWn33EQXzZ3OgptC0k4
-         lGg2TKB1aNCmYeahaHW0DqcHLcPw1LEnmGseRFsMBzdI0V00m1KN3yIah9BZBQCn06Co
-         p6vADjCwvLtei+PngiCHAYQP6jBqhPzCESQcswvuq6xHNrXyXUiKlEbro9ScDNXdyRVQ
-         Sc5suMl7EL1lIRQ6pAzovrQ6xd5k8UImkQAz1N5tdbse/rr47eKDlpJGWBLB1mgGQg3V
-         9EKg==
+        bh=jvgohm/bki+d8IckhuMJC3Yx/07SLfOhsR5w/P1dvGI=;
+        b=XQAeHkFrpWTD+75Ws8/cdTy8fwX30kdsukxYTDNyLzv6hDEaVzHFwp282Ft3WyLxb+
+         oKKB9RNIVpVGGM5FCyMGb21AdN4Lb9A195X/UXn3Q4lM29qYDL0dVHoyAzlGUg28g0j+
+         IwIGOsGqwecgL/3yeUJEks/a2v99Y5wUzJKsqY1FhsusvoWNr68kLVQg6n9a5kPal0Ps
+         xetV7SW/MmR55K4hmh9sG1aTry5OaMGz+Nr1SyRz0Y8KJzc7k1FJc2xCpCAw5AaOsWwN
+         oSUFSJomy3zC7yAOb60uwnh9OO4Mi4j2NCbltizJ5dHXrqSdXrAb1GteBmidDE1AMGRb
+         2N4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=J256ctfmigu5mFnIJRHP42N6y/j6eTLobV2FjgdQk+0=;
-        b=ijpXZdv2MAKWQGqyX3uQiENPQP2vhRaua0x3evkWLE8X63qdij/pn1pBmbA7Cx7kYx
-         84f4pczTnXWy/UrmGkKhA6E3EFdjA6eAwX+qZVlQJE1x405emXYlMacwG8iH06dW4eyQ
-         HKtSjI1MyCPFM7GtTOKkCEIK3B1wn/nFHZLFcCuacBY9Xg6epqrxOCeC0qdSGGH5rxA/
-         KI4ShMTfeesUd1wIhG3A7mCeJkWT6IQ1nFyz2l07KlgcPwQtLSFQs+awkS+/+86ac21T
-         RxohvuswUJC1VDxxoQoCtubeFjuRqW61GbAyFWNmivvMNbe18N8ZcUpUfY6rZJ9GGHvk
-         zH+A==
-X-Gm-Message-State: AHQUAubwa6gp9zX6I/fmtAOryFieE3OCjEHiMQeOUr9P28PQyVA//BtM
-        3J+VlfSUzTUSm9J0Husq+Bukqwiy
-X-Google-Smtp-Source: AHgI3IZGJ0kwoOg5vEUhghn0KdmyBRYsRCe92Q4diQTM1ZghNfoEB/to3V9sFLVxliJXGyKL689/Vg==
-X-Received: by 2002:a17:906:6582:: with SMTP id x2mr8295676ejn.62.1549473363896;
-        Wed, 06 Feb 2019 09:16:03 -0800 (PST)
+        bh=jvgohm/bki+d8IckhuMJC3Yx/07SLfOhsR5w/P1dvGI=;
+        b=luvRQxAluDMsKxz5sGDqVlriS+Ofcr+9zL8yNq3lgz7glz8pN9LCXXVSCdo8XXVfYY
+         6DIWGxTUmKNzHhcZbQTZa1B+USMHFbuM1Yc9ekHIYWKw6k61EkWrmF15lza3KUIEFvyD
+         8VG9tmnLMik9V3ZAvoXcSs4w9F8ghzHtHU3qnQXH7DCnvzn5EzAkq1UwFNAGO5GwiIcL
+         WEOI+AZtKWEyYliNDAAk/d0eXsV/3EBEph+zaroC6sVa6W69iAIyUAffjwdcHlIhWTRY
+         plAIIoAdWDvg5szaseN3JfblARBEGZGRHrnF6La2xnt7h3PkXKkU9RIgJEgXKLP3Z6ks
+         uYQw==
+X-Gm-Message-State: AHQUAuZtoCATbZ9cEEnw3L9XyOvoGajH7WoaOP27FTuF3DnLUowJqd0r
+        6a/MH94h9qBnw+7re1QIf9EM3VCr
+X-Google-Smtp-Source: AHgI3Ib+0krLyUs9Y4B9xnQJO2+HvtoRixIQzUyRrqwPze4QVvzGjIzwzTubBpXO5Txskb1gvRQGZw==
+X-Received: by 2002:a17:906:6447:: with SMTP id l7mr2417839ejn.156.1549473362949;
+        Wed, 06 Feb 2019 09:16:02 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o22sm3659464ejb.10.2019.02.06.09.16.03
+        by smtp.gmail.com with ESMTPSA id m20sm3653529ejs.68.2019.02.06.09.16.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Feb 2019 09:16:03 -0800 (PST)
-Date:   Wed, 06 Feb 2019 09:16:03 -0800 (PST)
-X-Google-Original-Date: Wed, 06 Feb 2019 17:15:47 GMT
-Message-Id: <24d8d8d76837e0ae921d79f4534c8bd02b3157ff.1549473350.git.gitgitgadget@gmail.com>
+        Wed, 06 Feb 2019 09:16:02 -0800 (PST)
+Date:   Wed, 06 Feb 2019 09:16:02 -0800 (PST)
+X-Google-Original-Date: Wed, 06 Feb 2019 17:15:46 GMT
+Message-Id: <0191283fffe37f78ac9b7e056b41cbd4f90f2a0b.1549473350.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v6.git.gitgitgadget@gmail.com>
 References: <pull.108.v5.git.gitgitgadget@gmail.com>
         <pull.108.v6.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 12/15] trace2:data: add subverb to reset command
+Subject: [PATCH v6 11/15] trace2:data: add subverb to checkout command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,33 +73,41 @@ From: Jeff Hostetler <jeffhost@microsoft.com>
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/reset.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ builtin/checkout.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 59898c972e..4e34c61401 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -340,6 +340,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (patch_mode) {
- 		if (reset_type != NONE)
- 			die(_("--patch is incompatible with --{hard,mixed,soft}"));
-+		trace2_cmd_mode("patch-interactive");
- 		return run_add_interactive(rev, "--patch=reset", &pathspec);
- 	}
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 6fadf412e8..f911c88bb4 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -262,6 +262,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	int nr_checkouts = 0;
  
-@@ -356,6 +357,11 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (reset_type == NONE)
- 		reset_type = MIXED; /* by default */
- 
-+	if (pathspec.nr)
-+		trace2_cmd_mode("path");
-+	else
-+		trace2_cmd_mode(reset_type_names[reset_type]);
++	trace2_cmd_mode(opts->patch_mode ? "patch" : "path");
 +
- 	if (reset_type != SOFT && (reset_type != MIXED || get_git_work_tree()))
- 		setup_work_tree();
+ 	if (opts->track != BRANCH_TRACK_UNSPECIFIED)
+ 		die(_("'%s' cannot be used with updating paths"), "--track");
  
+@@ -952,6 +954,9 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	void *path_to_free;
+ 	struct object_id rev;
+ 	int flag, writeout_error = 0;
++
++	trace2_cmd_mode("branch");
++
+ 	memset(&old_branch_info, 0, sizeof(old_branch_info));
+ 	old_branch_info.path = path_to_free = resolve_refdup("HEAD", 0, &rev, &flag);
+ 	if (old_branch_info.path)
+@@ -1189,6 +1194,8 @@ static int switch_unborn_to_new_branch(const struct checkout_opts *opts)
+ 	int status;
+ 	struct strbuf branch_ref = STRBUF_INIT;
+ 
++	trace2_cmd_mode("unborn");
++
+ 	if (!opts->new_branch)
+ 		die(_("You are on a branch yet to be born"));
+ 	strbuf_addf(&branch_ref, "refs/heads/%s", opts->new_branch);
 -- 
 gitgitgadget
 
