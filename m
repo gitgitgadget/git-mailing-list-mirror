@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A380E1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 10:13:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF81E1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 10:25:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728895AbfBFKNr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 05:13:47 -0500
-Received: from mout.gmx.net ([212.227.17.20]:59611 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726598AbfBFKNr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 05:13:47 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ldbqw-1hYbBh2lb0-00imim; Wed, 06
- Feb 2019 11:13:31 +0100
-Date:   Wed, 6 Feb 2019 11:13:30 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Christopher Diaz Riveros <chrisadr@gentoo.org>
-cc:     git@vger.kernel.org
-Subject: Tyop in the Spanish translation?
-Message-ID: <nycvar.QRO.7.76.6.1902061112050.41@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729047AbfBFKZi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 05:25:38 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34865 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726579AbfBFKZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 05:25:38 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z18so6146417wrh.2
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 02:25:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=yqaugAvQamQUXPmIDtMVqWZ1yJBHrnH8nmlimsJOxEw=;
+        b=BiJ3ibCYE09GmPqq+3iaBcWPMtFs0AwgN6ARZXGlV+OrcAoADpcuSCRSOuHTOS0S7J
+         wljsKtdpakh2DgXppYR7zSids1lo4HCaSA6IU7V3BWSHOPclxpcegBh/gQZjmEJjNJ3K
+         FW/IRoOKxeojFnhZ3IKK4mdvdm1wMTq4/BbGs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=yqaugAvQamQUXPmIDtMVqWZ1yJBHrnH8nmlimsJOxEw=;
+        b=kbQNW7MDzwwQk3tBvj2MA+Od2yGqxsePwLSBqCl+BK5XAYvBqZAzIO+MfQK2mhzJ1A
+         dreMZ0tzlPrli9fqnl8SmFlpnfen1HS9evwt4j/GQ1ZqD/Q6ZEQPO4lp4EmGFgoD7XQa
+         ocJcF1UUkG+saHNHJddG0hil7/unH0N/D/DstABEjAtTPpaS9C0L/OKA71A8gC+lLI28
+         SlvL5vmOSnUA6C1BivR78dYycJYdudW4uUit1KHCaA3QOh6h2Y3j4mV6vFFvZXuDWNer
+         9+5ud4U+yggO8RtFWpV4TC9qTXufzsUFLRcAe3aR5ssclV7Fw16YYsrJ3tLKoYgw0Wgm
+         NFcg==
+X-Gm-Message-State: AHQUAuZXQQrObWqOKP/O00dNQ2xe0q/do4h40MlujbYqeAgvqmdTWLg5
+        I7defDa6fpCkL7CeRhX8ap2MLVqyJWJCwyVaV/DWGVwM/KlvEg==
+X-Google-Smtp-Source: AHgI3IYIUGIBlX32t3g3NzWvVINCmItXt/L6E3K0H7VRAQv+cQduPEZEXXHhKlbKh5MUqEY+IxmtgdzWV6C7EK0h2fA=
+X-Received: by 2002:a5d:5443:: with SMTP id w3mr6879460wrv.4.1549448736241;
+ Wed, 06 Feb 2019 02:25:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HEAgfdEbNZaGLymsVHjN0cCqW5BG5hVvIbhfkOlmWdoVkH7e6og
- 7k3Y7WIQq9mA4jvPsJ4ZrL19ItQHsSDkmtQ/tSSibAwAdnu1X5LN+xrbz9kTmXUJF1b1tvd
- XfohpchN6OmJsFHROegQvCNxlvWiVoZ8zBydB1xch/IptfUsSKqVF6apl4HLauWAAteYZhM
- 21LjG3NFUZCr1+WqFY4RQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xvQCqRBrv1M=:cOaxU3gv/jRqkLHtoIMxAO
- 44wDRDivs9ucVyKKvnPY8B501kOwwWpiY6rvq4PzXKTYyyzgWujDAWa4nY/Rb7g0lOaQ0hO/C
- RM/N4MXKjuMhrwekBDvLuOxBl+SR/Fz3Ox8qT/AQJLtMd5Y9B6IR5gWw9p5YkIJEXodEFX+sb
- ETuTJgX/Chj2W0IhtKdnpCUyJrSJyEh7vOtWgYVnhQZ1EDBUkorn/rnPztMFlGJQKq7nTwL1R
- SacUbVsmPTMBoqOuUzS+KVK8kp4zq9FG7ZaH5um0b20PP60s8iko2slKgkX1H9c1BXiylop6+
- fE6iqVz4Lk2DS31DnTQotQMSKwS8VcWhtPO61ylUmWRSj41abX67H6QK1JZ20rD3jYNwswwSH
- NMrsb3gHYuQr4TXnDJ/hTP3vmZ+VqTlYWGBYrnHc8oHQrar1vb2rsW/AlnkhVne2Vod8ymYX3
- A3NNfYk0fHerU3MLlVwi3Pgl1sXho0LQ/EzxEI2WoEg4Va+s45JnIxcXkuE9PMb5GFPRuKwT6
- +UMBJo7i/PpfAM1UtHxHP6i0ddRPE6yV8wF27tW2CJp4PqHkyVmZSDInkCxt9dGKWZEHBmyiw
- kMGHXtV9EsSxgFBfBB5wMjbwO/NVaFE1mvGwPLnw7W74dDS8+lE29FVH7ob/y2OAuuqUxR/+w
- VTEqrkq0aW3Tu9t9/XX6tqq/jUXfkmtp9zEMmep9g9h7h9IhhZBoYaZz4F0+hwDvlpGAbJ9+f
- mTrOAIPticB3i/lYZxJ2mXsbMiLEmjlEgBcYxjAAoRp0T1Dxk90UMKtRLRuvg5K9MD+/xf4EP
- H3UGuZK+4iedMcldZ0wSnnVlugxVpUoNOanRXgTz9K15DKBG6Wih/aFlQKD1CG1TMZuo880qz
- YVcWpD3Hk3yLzJf9vbVqifgW0L270l/4YNt2lysWpheD6Kx2HN8DifsArz7kQLvLG3ma0EwCs
- u9dVZVfbF+w==
+From:   Luke Diamand <luke@diamand.org>
+Date:   Wed, 6 Feb 2019 10:25:25 +0000
+Message-ID: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
+Subject: could not freshen shared index ..../sharedindex.0000000000000000000000000000000000000000'
+To:     Git Users <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christopher,
+I've recently started seeing a lot of this message when doing a rebase:
 
-I just spotted what I believe to be a typo in po/es.po:
+   warning: could not freshen shared index
+'/home/ldiamand/git/dev_full/.git/worktrees/gcc8-take-2/sharedindex.0000000000000000000000000000000000000000'
 
-	#~ msgstr "git getch-pack: se esperaba ACK/NAK, se obtuvo EOF"
+(There's a repo called dev_full, and I've got a worktree where I'm
+working on my 3rd attempt to make it work with gcc8).
 
-While I am not fluent in Spanish, I am fairly certain that it should be
-"fetch-pack", not "getch-pack".
+That file doesn't actually exist but there are a bunch of
+sharedindex.XXX files in there with more convincing looking names.
 
-Correct?
-Johannes
-
+2.20.1.611.gfbb209baf1
