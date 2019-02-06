@@ -2,83 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A873E1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 12:27:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FC341F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 13:17:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730103AbfBFM1W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 07:27:22 -0500
-Received: from mout.gmx.net ([212.227.15.18]:49655 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728204AbfBFM1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 07:27:22 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4nt7-1h3WV22pwL-00yvnH; Wed, 06
- Feb 2019 13:27:13 +0100
-Date:   Wed, 6 Feb 2019 13:27:12 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
-Subject: Re: GSoC 2019: Git's application submitted
-In-Reply-To: <20190205211736.GD6085@hank.intra.tgummerer.com>
-Message-ID: <nycvar.QRO.7.76.6.1902061325530.41@tvgsbejvaqbjf.bet>
-References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com> <20190204215251.GB6085@hank.intra.tgummerer.com> <20190205211736.GD6085@hank.intra.tgummerer.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728089AbfBFNRh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 08:17:37 -0500
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:39671 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726716AbfBFNRg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 08:17:36 -0500
+Received: by mail-ed1-f45.google.com with SMTP id b14so5821528edt.6
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 05:17:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=W4QIX1o+WRbDB8BGd1600afjdqozqqQacAMGgv/hBDo=;
+        b=Yr05PVCa0417TJ5/EE3FMl8rWwr2DKL2iOwSHD0HhkaePgWMTkliQCXpVLW2YFQrZw
+         nqWS5q+phIHx+itCuQWaHEGusfYW1141POslXeB4vzuNQAiz1oDgurF3h8CxunUA1/N4
+         tJBsh0RD1MhLZOvzfxSoYs2iVfjiil7mkAcHUOVHYShQ0rke+jNhVnSWRuEkcb1g6/Wc
+         ABk0RKQMye9vDxen5uEcCO/MYQnwpGLn9GJpCa31c2X36b0XgV5nyvnWHoZKejmo6br2
+         oBgnGWmIay3or9RkhVt5Ggr+c3XYxf81XrF4Dt76FcG3JyKwkhd1gIk32gPFtnFgW2qh
+         VHOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=W4QIX1o+WRbDB8BGd1600afjdqozqqQacAMGgv/hBDo=;
+        b=eS/CHK8PoHAqKZO5v8cTxNMuYel5NX+kh+n0vd5Hf0dfusrF1SDgg5vL1k9HLGgXLg
+         zlrFwOGOghr2yeawqdu4khxaQTw9oOLh/laiNqkav2kwy47HW3ypwWba+VLGrviptj8W
+         4RHL6Ibe4aESYQrSuxwSu74fHlnT+j1sPEwDHS1jyEfhJwc1d6xmoiPWRXZsckUCegq/
+         aCZ/a6ak6XAzSudZzeL5qZov8g67H2ySfEzyrQoAyQkMFnxI1QIEfMkZFLuu+F3e1B1H
+         rFxmxPWhF0yrIyttjOqBikwxcGUUzi0jrKtpcinPjpB5LD30wCSFJHYWQlbRDJIjdxOg
+         RRWw==
+X-Gm-Message-State: AHQUAuarSkPpsOI/IzRtO0Rx2hptcvVhU5QbmkFwTrhE9S+g5UzyuicP
+        87jT0xf8LLaod6mnxPgJW+gOvTTQdYr0J8YiDmGC3TqtUOo=
+X-Google-Smtp-Source: AHgI3IauDPK0MwxECb/LgWua51YAEmuZTO0Yu6DLNfxGZngARZJpBIGxLZiDEFljI9p5BTIjUisb0NaqJ2GnAQ3mfI4=
+X-Received: by 2002:a50:94f4:: with SMTP id t49mr8318611eda.24.1549459054828;
+ Wed, 06 Feb 2019 05:17:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HyyLMp/9tjcOEeCaEh/hIzBFt1MDUxJgU1uVsOyxEDSz9B0thet
- Q+sBjmDpGVL7yF97Uj5QkrvRucvmZ925qMfNEOp7NYKLT9k6F8+UDrxrzQa6nMjrQz7Nk+i
- nOSQH3hRmxz51m9Qc9KTjMizM+keZWzxRRnAlb+L5axxAlAhRrgkdqnRKwETlZ1QO8qLkXj
- rA3gfR+nLQhexnLGhsUJQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:An6IAsdGMYk=:ZLzIPWRHBw6x7RQVCkIof2
- x1tCcFlJKWoDjteyd3vxor8PZzVU2zQ6qFbfsC7ZF7oF+Pr0QbF0jWdYfZj6wVtAy1NHMDpZB
- xRu+G33UhhT6V3fQmb4ni+cUmpDT2RPGD1grVVwQEXJvDt1opOjcYI61ndgiuFdNvXTQyRgeP
- LaoPujoiJjU3+6MQcbUbJS6EpL3iqRUfVh8asnzcxzYllg9JrM7jpJanIo+M6XIhGeLn6ESp4
- Fk4/WUllf+ToqqW5WSJ8u9O65Qicq7/nE8Vlp70PThYwrkTDyBFdhCXvc1ClXszqOLt/KfYF1
- zvMlkgq8x46SCi9o3UioN9Jmj4fbkhlY/sCpd9BuF3jbDA747xy4IteLtz27zaMkCiDMiP4rY
- 8IoFDmufSSVRp94VG//NOFm84U/LTFhtqXgXblbZHWKfiX4qCKfaOXVg6HUmrx9KGyVuOJ/qs
- DMjTvferwHXGuDn86FMlQ2oOKMNQiRp4GPAskmY8l2MmFRwzLLRPYxTBjkxM2VZk5Agr7wGXj
- EwKYgCp52nkaHhHXFA8+Rus2bY6WFthVJRZDLP/gJvi97ekfiQPcEBszDqMsOCHZU8/3n7o50
- hGHvKyaLB8pWd28G9WTJXTKq2t5Asc4NzjkHCmMuJU+iIGiiGilaxU4HFeYQ2aKuXX42i33+u
- GTBq4oqHATlP+qC9+6gh1gx4pIT6Ij/7HDcmqtTc7nqQXsq4V26fxY4ynFRaGM4Kqw16b39qt
- KYwttkOgF6CFLb24cKVG+l7kNzbh1bBh1w5PKP+0Kzcma8dvTCaBwg1AbXn00sSrMBoohIC02
- eksH18FUZIm0/UnqalbDKLSfgm0zFV9InQFX5XIh7pepnjFIEDcAVhr6WUWHIvj+EIagLvxhV
- PuQi5PDksPsQ+bw9+Lke6VjYcYjO5es//tAQjWtbDdGYZZcMG+0DHwlBijRIxQJ6gEPuQ/uq9
- NAZSNwM12Nw==
+References: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
+In-Reply-To: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 6 Feb 2019 14:17:23 +0100
+Message-ID: <CAP8UFD3K47mfp_7gt2J19TZCXH4u4kf5D8McXd9ioguWb6umZQ@mail.gmail.com>
+Subject: Re: could not freshen shared index ..../sharedindex.0000000000000000000000000000000000000000'
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+On Wed, Feb 6, 2019 at 11:25 AM Luke Diamand <luke@diamand.org> wrote:
+>
+> I've recently started seeing a lot of this message when doing a rebase:
+>
+>    warning: could not freshen shared index
+> '/home/ldiamand/git/dev_full/.git/worktrees/gcc8-take-2/sharedindex.0000000000000000000000000000000000000000'
 
-On Tue, 5 Feb 2019, Thomas Gummerer wrote:
+Thanks for the report!
 
-> Here's an idea, that I think could make a good GSoC project.  Dscho
-> mentioned this to me at Git Merge, and I liked the idea, but I'd like to
-> get some feedback on the list first before adding it to the project
-> list, to get others opinions on the feasibility.
-> 
-> The idea is to add an option to 'git stash push', so it can stash merge
-> conflicts, and restore them with 'git stash pop'.  The various stages of
-> the files could be represented as commits, and the stash commit would be
-> an octopus merge of those commits, so they could be re-created later.
-> The same idea can also be extended to store staged vs. unstaged changes,
-> so we can re-create the index state as it was before creating the stash.
-> 
-> Thoughts?
-
-Yep, would make for a good GSoC project, as it is straight-forward to
-implement and easy to structure, there is no exploratory work needed.
-
-Ciao,
-Dscho
+Have you tried to run the test suite with GIT_TEST_SPLIT_INDEX set to
+"true" on your machine/environment?
+Also does the rebase fail or otherwise misbehave?
