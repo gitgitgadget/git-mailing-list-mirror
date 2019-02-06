@@ -2,135 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15E0B1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 18:01:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3EDF1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 18:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728984AbfBFSBB convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 6 Feb 2019 13:01:01 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:61206 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726750AbfBFSBB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 13:01:01 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x16I0ms7016734
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 6 Feb 2019 13:00:49 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "=?iso-8859-1?Q?'Torsten_B=F6gershausen'?=" <tboegi@web.de>,
-        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-Cc:     "=?iso-8859-1?Q?'SZEDER_G=E1bor'?=" <szeder.dev@gmail.com>,
-        "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
-References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet> <20190206104243.GJ10587@szeder.dev> <nycvar.QRO.7.76.6.1902061450280.41@tvgsbejvaqbjf.bet> <20190206171517.s5lskawpdodc74ui@tb-raspi4>
-In-Reply-To: <20190206171517.s5lskawpdodc74ui@tb-raspi4>
-Subject: RE: t0025 flakey?
-Date:   Wed, 6 Feb 2019 13:00:43 -0500
-Message-ID: <005501d4be45$e4121c40$ac3654c0$@nexbridge.com>
+        id S1727346AbfBFSMB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 13:12:01 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:32376 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727132AbfBFSMA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 13:12:00 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43vqKB1N20z5tlG;
+        Wed,  6 Feb 2019 19:11:58 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 2F7A0499E;
+        Wed,  6 Feb 2019 19:11:57 +0100 (CET)
+Subject: Re: [PATCH ps/stash-in-c] strbuf_vinsertf: provide the correct buffer
+ size to vsnprintf
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <896ae9dd-7ac3-182e-6692-c09bc4864de0@kdbg.org>
+ <xmqqd0o7tdxt.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1902051140060.41@tvgsbejvaqbjf.bet>
+ <ef5f66fb-7467-93be-00fd-7900ce961f72@kdbg.org>
+ <nycvar.QRO.7.76.6.1902061242380.41@tvgsbejvaqbjf.bet>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <f02e73e6-7e0e-6cd9-3d3a-b2b74d03f6be@kdbg.org>
+Date:   Wed, 6 Feb 2019 19:11:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQJs/IuaaCkX8/5Ult+TIwKZwFHx1AHYuM18APJkJqYCro2vgqR2wojw
+In-Reply-To: <nycvar.QRO.7.76.6.1902061242380.41@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 6, 2019 12:15, Torsten Bögershausen wrote:
-> To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Cc: SZEDER Gábor <szeder.dev@gmail.com>; Jeff King <peff@peff.net>;
-> git@vger.kernel.org
-> Subject: Re: t0025 flakey?
+Am 06.02.19 um 12:56 schrieb Johannes Schindelin:
+> On Tue, 5 Feb 2019, Johannes Sixt wrote:
+>> Am 05.02.19 um 12:06 schrieb Johannes Schindelin:
+>>> The real examples are much more mundane, and very different from what you
+>>> suspected, e.g. inserting the tag header before the tag message in
+>>> `create_tag()` in `builtin/tag.c`. Basically, it is building up a strbuf
+>>> for the sake of calling `strbuf_insert()` to insert that string elsewhere.
+>>
+>> I had a look, and this example does not convince me at all. If
+>> separation of concerns were applied well around the launch_editor APIs,
+>> you would not need strbuf_insert() in the first place. But, alas, these
+>> functions focus more on DRY, and that is often the opposite of
+>> separation of concerns.
 > 
-> On Wed, Feb 06, 2019 at 02:52:53PM +0100, Johannes Schindelin wrote:
-> > Hi Gábor,
-> >
-> > On Wed, 6 Feb 2019, SZEDER Gábor wrote:
-> >
-> > > On Wed, Feb 06, 2019 at 11:25:38AM +0100, Johannes Schindelin wrote:
-> > >
-> > > > at first I thought that those intermittent test failures were
-> > > > limited to Windows, but they are not: I can see it now in a build
-> > > > on 32-bit Linux.
-> > > > Full logs here:
-> > > >
-> > > > https://dev.azure.com/gitgitgadget/git/_build/results?buildId=1032
-> > > > &_a=summary&view=ms.vss-test-web.build-test-results-tab
-> > > >
-> > > > Excerpt from the failing test case:
-> > > >
-> > > > -- snip --
-> > > > not ok 2 - renormalize CRLF in repo  expecting success:
-> > > > 	echo "*.txt text=auto" >.gitattributes &&
-> > > > 	git add --renormalize "*.txt" &&
-> > > > 	cat >expect <<-\EOF &&
-> > > > 	i/lf w/crlf attr/text=auto CRLF.txt
-> > > > 	i/lf w/lf attr/text=auto LF.txt
-> > > > 	i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
-> > > > 	EOF
-> > > > 	git ls-files --eol |
-> > > > 	sed -e "s/	/ /g" -e "s/  */ /g" |
-> > > > 	sort >actual &&
-> > > > 	test_cmp expect actual
-> > > >
-> > > > + echo *.txt text=auto
-> > > > + git add --renormalize *.txt
-> > > > + cat
-> > > > + sort
-> > > > + sed -e s/	/ /g -e s/  */ /g
-> > > > + git ls-files --eol
-> > > > + test_cmp expect actual
-> > > > + diff -u expect actual
-> > > > --- expect	2019-02-06 09:39:42.080733629 +0000
-> > > > +++ actual	2019-02-06 09:39:42.088733629 +0000
-> > > > @@ -1,3 +1,3 @@
-> > > > -i/lf w/crlf attr/text=auto CRLF.txt
-> > > > +i/crlf w/crlf attr/text=auto CRLF.txt
-> > > >  i/lf w/lf attr/text=auto LF.txt
-> > > > -i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
-> > > > +i/mixed w/mixed attr/text=auto CRLF_mix_LF.txt
-> > > > error: last command exited with $?=1
-> > > > -- snap --
-> > > >
-> > > > Any ideas?
-> > >
-> > > I reported this and Peff looked into it on the way to Git Merge, but
-> > > not working solution yet.
-> > >
-> > > https://public-inbox.org/git/20190129225121.GD1895@sigill.intra.peff
-> > > .net/T/#u
-> >
-> > Thank you!
-> > Dscho
-> 
-> I shortly looked into the pointers here - Is t0025 flaky after the fix
-from Peff:
-> 
-> [PATCH] add: use separate ADD_CACHE_RENORMALIZE flag
-> 
-> Or has it always been shaky ?
-> Does anybody know ?
+> So you actually are convinced that it is needed in this instance. Good.
 
-The NonStop port has traditionally had issues with t0025, which we tended to
-ignore because things did work. We wrote those off as bash issues in t0025
-since they seemed to be corrected when we picked up a new bash version about
-a year ago. I will keep monitoring this, particularly when 2.21 comes out.
+I thought I said quite the opposite.
 
-Cheers,
-Randall
+But never mind. Since I'm not going to help refactor any C code anyway
+as long as the result is still C code, who am I to complain about the
+existence of strbuf_vinsertf()?
 
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+-- Hannes
