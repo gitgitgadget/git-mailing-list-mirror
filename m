@@ -2,144 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 516FD1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 19:07:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9991A1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 19:17:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726348AbfBFTHE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 14:07:04 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39289 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725982AbfBFTHE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 14:07:04 -0500
-Received: by mail-wm1-f65.google.com with SMTP id y8so4042528wmi.4
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 11:07:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=AU2W9kHNefKL/nCt8991HopKigXCLIOX1dKTm7/f0KI=;
-        b=vea04qLFrBHAjA3Ce8k1GGekMYS3LpxRyNLFnfhnPjVZLCxFTVNq4s2GZ9arJUzRT2
-         IY+GQ+Z+uVdsfYngXqpcpKCkNxdMwsWWSxuN09S5Rlh8o/FgtBqXT+A0GWCmPyikLOwD
-         scnVD/SOtLr2ixvOaBz06xXiIE7u1mZvcEJAN62YLCCDiKs1YDw5WKNwqqfaRtMQt5iX
-         BnFaipOkefC6iEDTOZG9SgoYbbrubuhOb6l2aNwlzfBUwU3w79M0KgtfNktCjfw+cuZg
-         BcE3UYglhCkv7xn9b0ePg0m1jEAUf9VPFr/obQB9FJTdStsiK4M+uxg6T5EFvL3Pt1h/
-         Uxvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=AU2W9kHNefKL/nCt8991HopKigXCLIOX1dKTm7/f0KI=;
-        b=ZNqq7uUOdhQEGBQAny92sgllNkmVBWYlOaZEUGE/0j2N3S/WS7Dmfu4sE6DjhgHo82
-         bHeMLGSXy1V0YL96hdOQRHX/FHlp9faWBWhuaoHEc63WwJMgCekBFflhCOlFmhqJbEaY
-         AXkAQcsJO4HyxpcYumsdl9ak0ifSaRZeaR/M78XWaQmSly2HSqigk8s2I2+YkdtPMigE
-         clNYNIEg7so2MsgaAO6EeXHaWPxyaWpdjNt1OyVCgHxGqTUaZ1FKIsho12nbw/35feWe
-         xHFJlI8au5586M3yQFX2kBoWf8Gr4xhZLiRVq/9mHumioQBHijk6vO3U2jAwN0Zp/IeB
-         8vuA==
-X-Gm-Message-State: AHQUAuYgycptZFMRQh8T6izzhWMCREHcDPL6zuOF0Cv3gL4yBFyOjI0i
-        CnKbcvVJ0HzrZUP9TSQu+uY=
-X-Google-Smtp-Source: AHgI3IZat992pnhKPfee3ZfAlOBWU02MfFE/DqErbc9QIIx2vrn5xoEtZEGoes6T1KVjV1WerDyPIA==
-X-Received: by 2002:a1c:4c0c:: with SMTP id z12mr4103407wmf.17.1549480022192;
-        Wed, 06 Feb 2019 11:07:02 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f134sm17281734wme.31.2019.02.06.11.07.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Feb 2019 11:07:01 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] submodule--helper: teach config subcommand --unset
-References: <cover.1549450636.git.liu.denton@gmail.com>
-        <f24f20b024f4d41f106ed014a31508fab4fa5eb2.1549450636.git.liu.denton@gmail.com>
-Date:   Wed, 06 Feb 2019 11:07:00 -0800
-In-Reply-To: <f24f20b024f4d41f106ed014a31508fab4fa5eb2.1549450636.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Wed, 6 Feb 2019 02:59:54 -0800")
-Message-ID: <xmqqbm3orb1n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727177AbfBFTRA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 14:17:00 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34938 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726666AbfBFTRA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 14:17:00 -0500
+Received: (qmail 12670 invoked by uid 109); 6 Feb 2019 19:16:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Feb 2019 19:16:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4541 invoked by uid 111); 6 Feb 2019 19:17:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Feb 2019 14:17:08 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Feb 2019 14:16:57 -0500
+Date:   Wed, 6 Feb 2019 14:16:57 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] remote-curl: refactor smart-http discovery
+Message-ID: <20190206191657.GE10231@sigill.intra.peff.net>
+References: <20181116084427.GA31493@sigill.intra.peff.net>
+ <20181116084725.GA31603@sigill.intra.peff.net>
+ <xmqq5ztxstkh.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq5ztxstkh.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Tue, Feb 05, 2019 at 03:29:18PM -0800, Junio C Hamano wrote:
 
-> This teaches submodule--helper config the --unset option, which removes
-> the specified configuration key from the .gitmodule file.
->
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  builtin/submodule--helper.c | 15 +++++++++++----
->  t/t7411-submodule-config.sh |  9 +++++++++
->  2 files changed, 20 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 0e140f176c..336e4429e6 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -2149,15 +2149,21 @@ static int module_config(int argc, const char **argv, const char *prefix)
->  	enum {
->  		CHECK_WRITEABLE = 1
->  	} command = 0;
-> +	enum {
-> +		DO_UNSET = 1
-> +	} unset = 0;
->  
->  	struct option module_config_options[] = {
->  		OPT_CMDMODE(0, "check-writeable", &command,
->  			    N_("check if it is safe to write to the .gitmodules file"),
->  			    CHECK_WRITEABLE),
-> +		OPT_CMDMODE(0, "unset", &unset,
-> +			    N_("unset the config in the .gitmodules file"),
-> +			    DO_UNSET),
->  		OPT_END()
->  	};
+> Jeff King <peff@peff.net> writes:
+> 
+> > After making initial contact with an http server, we have to decide if
+> > the server supports smart-http, and if so, which version. Our rules are
+> > a bit inconsistent:
+> > ...
+> >
+> >  - we now predicate the smart/dumb decision entirely on the presence of
+> >    the correct content-type
+> >
+> >  - we do a real pkt-line parse before deciding how to proceed (and die
+> >    if it isn't valid)
+> >
+> >  - use skip_prefix() for comparing service strings, instead of
+> >    constructing expected output in a strbuf; this avoids dealing with
+> >    memory cleanup
+> >
+> > Note that this _is_ tightening what the client will allow. It's all
+> > according to the spec, but it's possible that other implementations
+> > might violate these. However, violating these particular rules seems
+> > like an odd choice for a server to make.
+> >
+> > [1] Documentation/technical/http-protocol.txt, l. 166-167
+> > [2] Documentation/technical/protocol-v2.txt, l. 63-64
+> > [3] Documentation/technical/http-protocol.txt, l. 247
+> >
+> > Helped-by: Josh Steadmon <steadmon@google.com>
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> >  remote-curl.c | 93 ++++++++++++++++++++++++++++++++-------------------
+> >  1 file changed, 59 insertions(+), 34 deletions(-)
+> 
+> It turns out that this has interactions with 01f9ec64 ("Use
+> packet_reader instead of packet_read_line", 2018-12-29) on the
+> ms/packet-err-check branch.  Can we get this rebased on top of
+> a more recent 'master'?
 
-The way this patch uses OPT_CMDMODE() is wrong.
+Yep. Here it is.
 
-The situation in which CMDMODE is meant to be used is that there are
-multiple (that's two or more) choices the end user can make, and the
-end user can choose only one of them at a time, iow, giving more
-than one is an error.  
+Rather than a range-diff, which is quite large due to the code movement,
+I'll include below the interesting hunk of a diff between the two
+endpoints (i.e., what we would have seen applying the packet-err-check
+changes on top of my code movement, which is more or less what I did to
+generate it).
 
-In such a case, the programmer would
+Josh's original 3/3 isn't needed anymore, since ms/packet-err-check
+covers that case already. However, he did write tests, which
+ms/packet-err-check does not have. So I've converted his final patch
+into just a test addition.
 
- - prepare a single variable to store the single choice the end user
-   makes the choice in and initialize it to zero.
+  [1/3]: remote-curl: refactor smart-http discovery
+  [2/3]: remote-curl: tighten "version 2" check for smart-http
+  [3/3]: t5551: test server-side ERR packet
 
- - have one OPT_CMDMODE() element for each valid choice, all
-   pointing at the same variable, but with different value that is
-   not zero.
+ remote-curl.c                   | 100 ++++++++++++++++++--------------
+ t/lib-httpd.sh                  |   1 +
+ t/lib-httpd/apache.conf         |   4 ++
+ t/lib-httpd/error-smart-http.sh |   3 +
+ t/t5551-http-fetch-smart.sh     |   5 ++
+ 5 files changed, 70 insertions(+), 43 deletions(-)
+ create mode 100644 t/lib-httpd/error-smart-http.sh
 
-The parse_options() call would then make sure that the variable is
-set to non-zero value only once, to detect conflicting command modes
-given from the command line.  The program then can read from the
-single variable to see if the end user made any choice (or left it
-0).
+Here's that hunk:
 
-An example of typical and good use of OPT_CMDMODE() mechanism can be
-seen in builtin/tag.c; the 'l(ist)', 'd(elete)' and 'v(erify)' are
-the distinct operating modes of the "git tag" command (i.e. you do
-not delete a tag while listing them), so the &cmdmode variable is
-used to ensure only one of them (or none of them) is given.
-
-The existing use of OPT_CMDMODE we see in this function anticipates
-that there would be new operating modes added other than the
-check-writable mode, so if you are making a new command mode that
-cannot be used with the existing check-writable, then the right way
-to use the OPT_CMDMODE() is to add to the command enum a new
-non-zero value distinct from CHECK_WRITABLE, without introducing a
-new "unset" variable.
-
-If this --unset thing is truly independent from --check-writable,
-i.e. if all four possible combinations of having and not having
-these two options are valid, then you would not want to muck with
-the &command variable, but in that case, wouldn't it make more sense
-for the new --unset thing to simply be using OPT_BOOL()?  After all,
-it is not like you are planning to add new oprating modes in the
-"unset" family that is not "--unset" in the future, no?
+diff --git a/remote-curl.c b/remote-curl.c
+index b1309f2bdc..bb7421023b 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -333,10 +334,8 @@ static int get_protocol_http_header(enum protocol_version version,
+ static void check_smart_http(struct discovery *d, const char *service,
+ 			     struct strbuf *type)
+ {
+-	char *src_buf;
+-	size_t src_len;
+-	char *line;
+ 	const char *p;
++	struct packet_reader reader;
+ 
+ 	/*
+ 	 * If we don't see x-$service-advertisement, then it's not smart-http.
+@@ -348,45 +347,42 @@ static void check_smart_http(struct discovery *d, const char *service,
+ 	    strcmp(p, "-advertisement"))
+ 		return;
+ 
+-	/*
+-	 * "Peek" at the first packet by using a separate buf/len pair; some
+-	 * cases below require us leaving the originals intact.
+-	 */
+-	src_buf = d->buf;
+-	src_len = d->len;
+-	line = packet_read_line_buf(&src_buf, &src_len, NULL);
+-	if (!line)
++	packet_reader_init(&reader, -1, d->buf, d->len,
++			   PACKET_READ_CHOMP_NEWLINE |
++			   PACKET_READ_DIE_ON_ERR_PACKET);
++	if (packet_reader_read(&reader) != PACKET_READ_NORMAL)
+ 		die("invalid server response; expected service, got flush packet");
+ 
+-	if (skip_prefix(line, "# service=", &p) && !strcmp(p, service)) {
++	if (skip_prefix(reader.line, "# service=", &p) && !strcmp(p, service)) {
+ 		/*
+ 		 * The header can include additional metadata lines, up
+ 		 * until a packet flush marker.  Ignore these now, but
+ 		 * in the future we might start to scan them.
+ 		 */
+-		while (packet_read_line_buf(&src_buf, &src_len, NULL))
+-			;
++		for (;;) {
++			packet_reader_read(&reader);
++			if (reader.pktlen <= 0) {
++				break;
++			}
++		}
+ 
+ 		/*
+ 		 * v0 smart http; callers expect us to soak up the
+ 		 * service and header packets
+ 		 */
+-		d->buf = src_buf;
+-		d->len = src_len;
++		d->buf = reader.src_buffer;
++		d->len = reader.src_len;
+ 		d->proto_git = 1;
+ 
+-	} else if (!strcmp(line, "version 2")) {
++	} else if (!strcmp(reader.line, "version 2")) {
+ 		/*
+ 		 * v2 smart http; do not consume version packet, which will
+ 		 * be handled elsewhere.
+ 		 */
+ 		d->proto_git = 1;
+ 
+-	} else if (skip_prefix(line, "ERR ", &p)) {
+-		die(_("remote error: %s"), p);
+-
+ 	} else {
+-		die("invalid server response; got '%s'", line);
++		die("invalid server response; got '%s'", reader.line);
+ 	}
+ }
+ 
