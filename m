@@ -2,184 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62ADE1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 21:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6092F1F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 22:09:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726454AbfBFV6p (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 16:58:45 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:40973 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726037AbfBFV6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 16:58:45 -0500
-Received: by mail-ed1-f67.google.com with SMTP id p15so3019477edy.8
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 13:58:43 -0800 (PST)
+        id S1726622AbfBFWJr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 17:09:47 -0500
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:39344 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726037AbfBFWJq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 17:09:46 -0500
+Received: by mail-wr1-f41.google.com with SMTP id t27so9339607wra.6
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 14:09:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=7qvenCz9kBYdgAgzh0PZn2IjL9xf02GySU0E+7B3fMs=;
-        b=KrOpwyOe+DtMxGq5qbFZ2+mYaIRYT50sFJW0fq8jGeGDgWSuTInMS1Fut3pCcMVpYj
-         ELn5fKtA0SEzwrxRmEoDfKge550qHQK2a4kmMToNeZKtq9/654NvwCeQzycIcu1cs/mV
-         u6R3Lcc+HCPZMSUuBYuoiYpIZh73j/2qhL1XFvmwpCuKVsl1T6MXbAbCGtIM0164u6J0
-         NO4CNcFDsL/tJrBUwcBD0A/QXkaRNLrXcPhDGPXqQi8i+ExUIryPCIpaItjLyKzFpD9w
-         RCE0axpTEsfmvBS2uNShpX3gGHvcA5+30kCgewZMbktdTGA6zjtfPf2Fn36cNNT4Jhmm
-         SC9w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mo9oGsYjyTgq9hsKCJUelvYyVWdZSjaH7W2sQfd27+U=;
+        b=cpcZomjfWlkn5LY/EaaPRIzrGhIZ9eeyQOW3D5raaJc5rIONqxSfQdqfD1Uyi9a3tH
+         tcUncZEdOp2lYJB0+oyOd7sn4aYJg6Q5a/wweHONnVroi/EN9AyJyVi/UDLC4Cr4AtLe
+         E5fPBNIlUlkYzK8lUKkgXJ1AU8NPqDNLlYs86/+OFw8D2ZC4BLLpq/tJUHf0IEQ03QAM
+         QVkTlBoYiC2/uqz9EYPFFLjYaBeqwFkGFNlQkQhgV9ocyt3bGvkTixbMj7qxg5cggPo8
+         4mlyMO4SwtL/iwGpD3H3PYQdZmHeAnXm1CMgKvSZjzbVFSXN9FSc/5I86dShtCIGqKNP
+         ZY7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=7qvenCz9kBYdgAgzh0PZn2IjL9xf02GySU0E+7B3fMs=;
-        b=U2Rpj8k7Q23+vqr0Z13Ru4KfCeV8k7xhBnMqd+jBZH6bSEML9L7424kZ3/AQdfY8ac
-         TrsVPbupQXadQaU/cErWiVo6tu7J/PbVEonjGm94h8SH1kxGuwBAlL5NYcIuVeChop+f
-         JhSBEKhiowQE1Y9YxsFqQqdgbjLq108tM4mgn+dbw9KnB9u0/RN1QOtJQuYh2MsvaZZC
-         vjXRze7ZWIFns5BI9DXeEiq/rNciwmAMCDkPnCb2i4ZddFUZQlPAp2hf+pThXBwSaJBS
-         MPsL0bDGE/NkorgGUp6/i4fIJz81QCwIwXTcd5qprgCSqGNRos3+4YvmNVgP9Kqs0rwG
-         g6ng==
-X-Gm-Message-State: AHQUAubcmLLoQok8Pn9ACYHfs926WbNsCChcfzyJX3AhI5bu1UwY/dLf
-        hk48Zd4Frlaw8RmwYw2B6x7O1oIM5V0=
-X-Google-Smtp-Source: AHgI3IYmPZIIL7EV3CoHDfIjfr8XLBzw10RvOZOo3e4+5ePIA6yarP66U0i2sHPDWT7J1NLsX0qqBA==
-X-Received: by 2002:a50:c2d9:: with SMTP id u25mr9969624edf.280.1549490322382;
-        Wed, 06 Feb 2019 13:58:42 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id f38sm1488683edd.97.2019.02.06.13.58.41
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mo9oGsYjyTgq9hsKCJUelvYyVWdZSjaH7W2sQfd27+U=;
+        b=JX0hPj82TPMvRRRtU85Tjxk5e872kLCM/7bZM96Lc0QVR5X/ywAmEF+daGFkaU688g
+         nZV+NSabsQvfMtm7hD2TgTO/RSRsQQeZSkz/r6P3b+wypjkcO77CK5p1k/UTvKM4hPZZ
+         XXaDM6vWxH2OCo9W0yCVxnLY2eKPra0GbR3sNIaaPnd9CHkPm0EPKdIb3ZFtDDtqSKMC
+         /pDtiKU8oCP2ZkmhqOKCFBzggAdikrzJOFvr7ear/eTINCU3M7iFx8viomQi+PmbzLhy
+         mlK7m2Q3ruv2KEV2bGAmqpYya+sJ4lf/Z4jZBGjnESPW088W9oDsiz38J29/h1SfqV/E
+         HFvw==
+X-Gm-Message-State: AHQUAuasG+LofEM57RNQuqDasEhhHxjXehEEoHH+INrDmjDym/UDqFjk
+        RA9X/qKwzh9ry0KK3cQOfFw=
+X-Google-Smtp-Source: AHgI3Ib7hzltdtcjHIyLPanpbtJ4dSD15v6LXR5BeGjo8n8c/TU5hKxZFnCteAGw4I+d6REoH5YtnA==
+X-Received: by 2002:a5d:6b8b:: with SMTP id n11mr9322142wrx.216.1549490984100;
+        Wed, 06 Feb 2019 14:09:44 -0800 (PST)
+Received: from localhost ([109.180.252.133])
+        by smtp.gmail.com with ESMTPSA id x3sm30738379wrd.19.2019.02.06.14.09.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Feb 2019 13:58:41 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, steadmon@google.com
-Subject: Re: [PATCH 1/8] tests: define GIT_TEST_PROTOCOL_VERSION
-References: <cover.1549411880.git.jonathantanmy@google.com> <6e0c6aa9a71d4192591ed406735684cd15a0e3b9.1549411880.git.jonathantanmy@google.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <6e0c6aa9a71d4192591ed406735684cd15a0e3b9.1549411880.git.jonathantanmy@google.com>
-Date:   Wed, 06 Feb 2019 22:58:40 +0100
-Message-ID: <87d0o4lgtr.fsf@evledraar.gmail.com>
+        Wed, 06 Feb 2019 14:09:42 -0800 (PST)
+Date:   Wed, 6 Feb 2019 22:09:42 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GSoC 2019: Git's application submitted
+Message-ID: <20190206220942.GE6085@hank.intra.tgummerer.com>
+References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
+ <20190204215251.GB6085@hank.intra.tgummerer.com>
+ <20190205211736.GD6085@hank.intra.tgummerer.com>
+ <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 02/05, Christian Couder wrote:
+> On Tue, Feb 5, 2019 at 10:17 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >
+> > [Dropped Stefan from the Cc list, as his email bounces]
+> >
+> > On 02/04, Thomas Gummerer wrote:
+> 
+> > The idea is to add an option to 'git stash push', so it can stash
+> > merge conflicts, and restore them with 'git stash pop'.  The various
+> > stages of the files could be represented as commits, and the stash
+> > commit would be an octopus merge of those commits, so they could be
+> > re-created later.  The same idea can also be extended to store staged
+> > vs. unstaged changes, so we can re-create the index state as it was
+> > before creating the stash.
+> >
+> > Thoughts?
+> 
+> I think it would be an interesting GSoC project indeed. I think though
+> that over the years we have been favoring refactoring projects over
+> possibly more interesting projects, as the refactoring projects are
+> usually easier to do step by step and to get code merged step by step
+> which is encouraging.
+>
+> In general the refactoring projects are worthwhile to do even if the
+> project is not finished at the end of the GSoC and if the student
+> stops contributing after that. In those cases it is often a good idea
+> to later finish the refactoring either by ourselves or by proposing it
+> to another GSoC student or Outreachy intern.
+> 
+> With a project that implements a feature, there is a risk, if it's too
+> complex or too difficult, that the feature will not be finished and
+> that nothing (or nearly nothing) will have been merged during the
+> GSoC. There is also the risk that another way to implement the feature
+> will appear later in the GSoC and all, or nearly all, the work of the
+> student and mentors will have been mostly wasted. It could also appear
+> that the use cases the feature was envisioned to be used in, are
+> better addressed by other improvements or a different workflow.
 
-On Wed, Feb 06 2019, Jonathan Tan wrote:
+Right, it being too complex or too difficult is my main worry here.  I
+don't necessarily agree that we should draw a line between refactoring
+and feature work here.  The more important distinction in my opinion
+is whether it is possible to implement the project in steps, that
+individually make sense, and further work could be based on.
 
-> Define a GIT_TEST_PROTOCOL_VERSION environment variable meant to be used
-> from tests. When set, this ensures protocol.version is at least the
-> given value, allowing the entire test suite to be run as if this
-> configuration is in place for all repositories.
->
-> As of this patch, all tests pass whether GIT_TEST_PROTOCOL_VERSION is
-> unset, set to 0, or set to 1. Some tests fail when
-> GIT_TEST_PROTOCOL_VERSION is set to 2, but this will be dealt with in
-> subsequent patches.
->
-> This is based on work by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  protocol.c                  | 17 +++++++++++++++--
->  t/README                    |  3 +++
->  t/t5400-send-pack.sh        |  2 +-
->  t/t5551-http-fetch-smart.sh |  3 ++-
->  4 files changed, 21 insertions(+), 4 deletions(-)
->
-> diff --git a/protocol.c b/protocol.c
-> index 5664bd7a05..c7a735bfa2 100644
-> --- a/protocol.c
-> +++ b/protocol.c
-> @@ -42,6 +42,10 @@ static const char *format_protocol_version(enum protoc=
-ol_version version)
->  enum protocol_version get_protocol_version_config(void)
->  {
->  	const char *value;
-> +	enum protocol_version retval =3D protocol_v0;
-> +	const char *git_test_k =3D "GIT_TEST_PROTOCOL_VERSION";
-> +	const char *git_test_v =3D getenv(git_test_k);
-> +
->  	if (!git_config_get_string_const("protocol.version", &value)) {
->  		enum protocol_version version =3D parse_protocol_version(value);
->
-> @@ -49,10 +53,19 @@ enum protocol_version get_protocol_version_config(voi=
-d)
->  			die("unknown value for config 'protocol.version': %s",
->  			    value);
->
-> -		return version;
-> +		retval =3D version;
-> +	}
-> +
-> +	if (git_test_v && strlen(git_test_v)) {
-> +		enum protocol_version env =3D parse_protocol_version(git_test_v);
-> +
-> +		if (env =3D=3D protocol_unknown_version)
-> +			die("unknown value for %s: %s", git_test_k, git_test_v);
-> +		if (retval < env)
-> +			retval =3D env;
->  	}
->
-> -	return protocol_v0;
-> +	return retval;
->  }
->
->  void register_allowed_protocol_version(enum protocol_version version)
-> diff --git a/t/README b/t/README
-> index 25864ec883..21e941eb94 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -327,6 +327,9 @@ marked strings" in po/README for details.
->  GIT_TEST_SPLIT_INDEX=3D<boolean> forces split-index mode on the whole
->  test suite. Accept any boolean values that are accepted by git-config.
->
-> +GIT_TEST_PROTOCOL_VERSION=3D<n>, when set, overrides the
-> +'protocol.version' setting to n if it is less than n.
-> +
+For example in Paul-Sebastians stash-in-c series (just to take a
+recent example, that I was following closely), we didn't get anything
+merged until stash was fully converted into C.  We could possibly have
+merged half of the work, but maybe we would have waited until someone
+else picks it up before merging anything, I don't know how to judge
+that now.
 
-In my version
-(https://public-inbox.org/git/20181213155817.27666-6-avarab@gmail.com/)
-I didn't have this "if it is less than n" caveat. I expect that helped
-with making some tests that were setting e.g. protocol.version=3D2 Just
-Work, is that the reason for this?
+I think the idea here could definitely be split into a couple different
+phases, that could be individually useful, and can be merged
+individually, though I don't know if they would necessarily be.  Of
+the top of my head:
 
-Mine also had more docs here, but maybe telling people that they can use
-"env" is too much...
+ - write test_expect_failure tests for the expected new behaviour
 
+   This may not be worth including in git.git yet, but it can be a
+   very useful starting point for somebody else continuing the feature
+   if the student finds they don't have time for it.
 
->  GIT_TEST_FULL_IN_PACK_ARRAY=3D<boolean> exercises the uncommon
->  pack-objects code path where there are more than 1024 packs even if
->  the actual number of packs in repository is below this limit. Accept
-> diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-> index f1932ea431..571d620aed 100755
-> --- a/t/t5400-send-pack.sh
-> +++ b/t/t5400-send-pack.sh
-> @@ -288,7 +288,7 @@ test_expect_success 'receive-pack de-dupes .have line=
-s' '
->  	$shared .have
->  	EOF
->
-> -	GIT_TRACE_PACKET=3D$(pwd)/trace \
-> +	GIT_TRACE_PACKET=3D$(pwd)/trace GIT_TEST_PROTOCOL_VERSION=3D \
->  	    git push \
->  		--receive-pack=3D"unset GIT_TRACE_PACKET; git-receive-pack" \
->  		fork HEAD:foo &&
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index a60dd907bd..8f620e0a35 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -44,7 +44,8 @@ test_expect_success 'clone http repository' '
->  	< Cache-Control: no-cache, max-age=3D0, must-revalidate
->  	< Content-Type: application/x-git-upload-pack-result
->  	EOF
-> -	GIT_TRACE_CURL=3Dtrue git clone --quiet $HTTPD_URL/smart/repo.git clone=
- 2>err &&
-> +	GIT_TRACE_CURL=3Dtrue GIT_TEST_PROTOCOL_VERSION=3D \
-> +		git clone --quiet $HTTPD_URL/smart/repo.git clone 2>err &&
->  	test_cmp file clone/file &&
->  	tr '\''\015'\'' Q <err |
->  	sed -e "
+ - implement pushing the index state, without dealing with conflicts
+ - implement poping the index state, without dealing with conflicts
+
+   This can already be individually useful, and I think this is
+   something people asked for on the mailing list, though I didn't try
+   digging up old threads for now.  After these two steps stashing and
+   restoring a merge conflict would still not work, but we have a good
+   first step that could be merged.
+
+ - implement pushing/poping conflicted state
+
+   This would obviously be the end goal.
+
+> Another potential issue is that a new feature might be prone to naming
+> or user interface discussions which could last for a long time or
+> could not result in clear decisions.
+
+Yes, this is definitely a potential pitfall.  I haven't thought in
+depth about the interface yet, but I think the discussion around that
+would be something we as mentors could and should guide the student
+through.  We also wouldn't make the feature the default from the
+beginning, but introduce it behind a new flag/maybe a config option,
+to make sure we don't introduce any backwards compatible changes.
+
+It's probably also something the student should include in their
+proposal, so we can get eyes on it early in the process.
+
+> So I think we should be very careful if we propose a project that
+> implements a new feature to a student. We should at least consider the
+> above potential issues and see if they can be mitigated before the
+> project starts.
+
+Thanks for bringing these issues up, they are definitely useful to
+work through.  
+
+> Thank you anyway for proposing this idea,
+> Christian.
