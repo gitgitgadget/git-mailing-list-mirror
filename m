@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D32F1F453
-	for <e@80x24.org>; Wed,  6 Feb 2019 17:16:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78AB21F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 17:16:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731593AbfBFRQJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 12:16:09 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37967 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731559AbfBFRQF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 12:16:05 -0500
-Received: by mail-ed1-f67.google.com with SMTP id h50so6542856ede.5
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 09:16:03 -0800 (PST)
+        id S1731598AbfBFRQL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 12:16:11 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42675 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731551AbfBFRQH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 12:16:07 -0500
+Received: by mail-ed1-f65.google.com with SMTP id r15so5086227eds.9
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 09:16:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jvgohm/bki+d8IckhuMJC3Yx/07SLfOhsR5w/P1dvGI=;
-        b=XQAeHkFrpWTD+75Ws8/cdTy8fwX30kdsukxYTDNyLzv6hDEaVzHFwp282Ft3WyLxb+
-         oKKB9RNIVpVGGM5FCyMGb21AdN4Lb9A195X/UXn3Q4lM29qYDL0dVHoyAzlGUg28g0j+
-         IwIGOsGqwecgL/3yeUJEks/a2v99Y5wUzJKsqY1FhsusvoWNr68kLVQg6n9a5kPal0Ps
-         xetV7SW/MmR55K4hmh9sG1aTry5OaMGz+Nr1SyRz0Y8KJzc7k1FJc2xCpCAw5AaOsWwN
-         oSUFSJomy3zC7yAOb60uwnh9OO4Mi4j2NCbltizJ5dHXrqSdXrAb1GteBmidDE1AMGRb
-         2N4A==
+        bh=+HNHRZvwJJmm0VWKLgMxINFpvo+ixKycoqwfuPzDbZo=;
+        b=AXOIr+UR1WP8VkhHW095QJr9cROEdDhD7d/vATOblYNdUbCBMfb/RFi12uTxBc5B2j
+         TejzXkDHCRC7H/ES1xi9nBYG81R6zYSD/+kq48a+Lu9bYgnVxDz2CdFeAvJ/V+3M8TWQ
+         Y/eJWJVjPvKol9+JisoBm2I6wmQaqze6lF+izzR35nNt09Tl/9DsSvPpgh/TaPDJ15RW
+         uzvz5EWMf742Jaa0UXhYIA+vri6XzTHR/N6A8zdS3bqrRDxiGOJ3kE8VlG/3sYvg3N6m
+         x1PRTdGdRCqE45rhYWS0pCbGkyELa7/3z58U5rw9rOLG+UCKd5BpYn/AK2759s7xVLeI
+         jMRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jvgohm/bki+d8IckhuMJC3Yx/07SLfOhsR5w/P1dvGI=;
-        b=luvRQxAluDMsKxz5sGDqVlriS+Ofcr+9zL8yNq3lgz7glz8pN9LCXXVSCdo8XXVfYY
-         6DIWGxTUmKNzHhcZbQTZa1B+USMHFbuM1Yc9ekHIYWKw6k61EkWrmF15lza3KUIEFvyD
-         8VG9tmnLMik9V3ZAvoXcSs4w9F8ghzHtHU3qnQXH7DCnvzn5EzAkq1UwFNAGO5GwiIcL
-         WEOI+AZtKWEyYliNDAAk/d0eXsV/3EBEph+zaroC6sVa6W69iAIyUAffjwdcHlIhWTRY
-         plAIIoAdWDvg5szaseN3JfblARBEGZGRHrnF6La2xnt7h3PkXKkU9RIgJEgXKLP3Z6ks
-         uYQw==
-X-Gm-Message-State: AHQUAuZtoCATbZ9cEEnw3L9XyOvoGajH7WoaOP27FTuF3DnLUowJqd0r
-        6a/MH94h9qBnw+7re1QIf9EM3VCr
-X-Google-Smtp-Source: AHgI3Ib+0krLyUs9Y4B9xnQJO2+HvtoRixIQzUyRrqwPze4QVvzGjIzwzTubBpXO5Txskb1gvRQGZw==
-X-Received: by 2002:a17:906:6447:: with SMTP id l7mr2417839ejn.156.1549473362949;
-        Wed, 06 Feb 2019 09:16:02 -0800 (PST)
+        bh=+HNHRZvwJJmm0VWKLgMxINFpvo+ixKycoqwfuPzDbZo=;
+        b=Au3QcqH0zYotOE0kASbIHiikLI0zhdEkjNAoVSBvskiNfkdg6UaV/Pda0zBGrksEvA
+         lHAMIgSYq9PgcuFY4/bP5b+PBDDpILyW3eFWIL7m5BnuG++/lyTla5onHsLlk9EqI2lA
+         o3wn3YZSzrDT+N4gKQtLLd2NVo7rm0j0osDKHkP3VXrGGIRSgfeBRJ8HZcT+8iQjzqAc
+         NG0SnkKP8iOzLMfCCvKpdJ0AxT+Uj0UFSjxSr7ag9Y1Emc6tg8rQ1WG4i0gKfKRsYvNS
+         lDFH00uAPhn45D/OP+8YeUPzqNoc8w/9nk8V/xI6YKy279DYv/tIlztt/BVnCq05dz8p
+         v2og==
+X-Gm-Message-State: AHQUAuYKXQc2O/WM/kNExe9qC+uNsSzqHgMieeN+3sbiYIMS77WYbRYJ
+        A7P2W8zR97vFka5EmT5hNPIEtOqQ
+X-Google-Smtp-Source: AHgI3IZSAZ72WeFoXtSFDacBZNykwr2DxlmnRtrUcc9iN4dXNUB8DIsznbAGfPukR1yEZ74RqAcW7g==
+X-Received: by 2002:a50:983a:: with SMTP id g55mr9103352edb.143.1549473366666;
+        Wed, 06 Feb 2019 09:16:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m20sm3653529ejs.68.2019.02.06.09.16.02
+        by smtp.gmail.com with ESMTPSA id a27sm6155080eda.65.2019.02.06.09.16.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Feb 2019 09:16:02 -0800 (PST)
-Date:   Wed, 06 Feb 2019 09:16:02 -0800 (PST)
-X-Google-Original-Date: Wed, 06 Feb 2019 17:15:46 GMT
-Message-Id: <0191283fffe37f78ac9b7e056b41cbd4f90f2a0b.1549473350.git.gitgitgadget@gmail.com>
+        Wed, 06 Feb 2019 09:16:06 -0800 (PST)
+Date:   Wed, 06 Feb 2019 09:16:06 -0800 (PST)
+X-Google-Original-Date: Wed, 06 Feb 2019 17:15:50 GMT
+Message-Id: <93a25d09a15d67ca9f139d1bc1a2fa04840fa463.1549473351.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v6.git.gitgitgadget@gmail.com>
 References: <pull.108.v5.git.gitgitgadget@gmail.com>
         <pull.108.v6.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 11/15] trace2:data: add subverb to checkout command
+Subject: [PATCH v6 15/15] trace2: add for_each macros to clang-format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,41 +73,21 @@ From: Jeff Hostetler <jeffhost@microsoft.com>
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/checkout.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .clang-format | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 6fadf412e8..f911c88bb4 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -262,6 +262,8 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	struct lock_file lock_file = LOCK_INIT;
- 	int nr_checkouts = 0;
+diff --git a/.clang-format b/.clang-format
+index de1c8b5c77..41d4cd23fd 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -149,7 +149,7 @@ Cpp11BracedListStyle: false
  
-+	trace2_cmd_mode(opts->patch_mode ? "patch" : "path");
-+
- 	if (opts->track != BRANCH_TRACK_UNSPECIFIED)
- 		die(_("'%s' cannot be used with updating paths"), "--track");
+ # A list of macros that should be interpreted as foreach loops instead of as
+ # function calls.
+-ForEachMacros: ['for_each_string_list_item']
++ForEachMacros: ['for_each_string_list_item', 'for_each_wanted_builtin', 'for_each_builtin', 'for_each_ut']
  
-@@ -952,6 +954,9 @@ static int switch_branches(const struct checkout_opts *opts,
- 	void *path_to_free;
- 	struct object_id rev;
- 	int flag, writeout_error = 0;
-+
-+	trace2_cmd_mode("branch");
-+
- 	memset(&old_branch_info, 0, sizeof(old_branch_info));
- 	old_branch_info.path = path_to_free = resolve_refdup("HEAD", 0, &rev, &flag);
- 	if (old_branch_info.path)
-@@ -1189,6 +1194,8 @@ static int switch_unborn_to_new_branch(const struct checkout_opts *opts)
- 	int status;
- 	struct strbuf branch_ref = STRBUF_INIT;
- 
-+	trace2_cmd_mode("unborn");
-+
- 	if (!opts->new_branch)
- 		die(_("You are on a branch yet to be born"));
- 	strbuf_addf(&branch_ref, "refs/heads/%s", opts->new_branch);
+ # The maximum number of consecutive empty lines to keep.
+ MaxEmptyLinesToKeep: 1
 -- 
 gitgitgadget
-
