@@ -2,153 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99A6C211B5
-	for <e@80x24.org>; Wed,  6 Feb 2019 17:39:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90F651F453
+	for <e@80x24.org>; Wed,  6 Feb 2019 17:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730036AbfBFRji (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 12:39:38 -0500
-Received: from mail-wm1-f44.google.com ([209.85.128.44]:52119 "EHLO
-        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729715AbfBFRji (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 12:39:38 -0500
-Received: by mail-wm1-f44.google.com with SMTP id b11so3392717wmj.1
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 09:39:35 -0800 (PST)
+        id S1728958AbfBFRtc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 12:49:32 -0500
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:41615 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727299AbfBFRtc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 12:49:32 -0500
+Received: by mail-wr1-f41.google.com with SMTP id x10so8558183wrs.8
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 09:49:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=nH/ezpfvAycANU/2tAthoQ739e4docVakPk1n5pHTc4=;
-        b=K/efxtyauDF5dH6de+lO5DwK6H/3irVtWkeQMGx/5x63fAd7VIZQcyzmxOjVa73XTp
-         p9E3VGn5HfdRZ9GI6kdRsOZcwHqZ+1+9WIeZiS645F8TuSuxiPPhoAd27zDLqwX81HkN
-         w+Wb/GGvmqXk1yRlLjiRyl331Zws7BjMPnZwaA1b1zjYan7vfaUj9Vv7gmjwMApysDuG
-         TCYwZwdhNylVfDfCgutbdMFHHOaaaczuDSu/QKPE4J1nDFn4gkTjPJhisfJ6Fulv9Xy+
-         2YSTb5EZAYSPNP+jqX2DCbp9ZaFH1fNzvhP9CQAkR1004nblZ6v0NKHNR5h6Afb6NYrT
-         4/Yg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=jKVkjsJsQvuAHMGVEwgeRFLM7ql4cEXJE5/ANMI0AUY=;
+        b=IfDSZ1F4gwMdKgA/gNtoqcQ0Km2ctrXHE+c6N20FwiCoUhWzfm80KqwJpdt/h6JVcH
+         /fOxYoV7BDKQML/cj1byY/E17t2nkl5IQ3o7gPydrDgPJrdjYEgCvk74WbHsYp4zVWGs
+         HRBb20sGT2fdPxkLGKUl2CeD3aT1nH5DoNU6UvfRMQwiCFcySi8Il5nacKAm/sQAlJkB
+         4Mgnx3Piu4Rhg2WVz/VvwgKm6PJ0LMSAZO7gFWcLpxfOZrEsRSODw52n1njD+qha9pvl
+         Fn+VO4Z80rmzjvEYassVSNeYb6RE92f+ImU52/Yd0vqCR/DY19DmlQYW++2MmXYW7z2d
+         I2rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=nH/ezpfvAycANU/2tAthoQ739e4docVakPk1n5pHTc4=;
-        b=Elf/rvUbywMpM4sSpYp4UA6NpEndB42NFH2LlaMsmdn2xYfQ5CymERb/n5QTuWN4SW
-         +wVrxNqnUvQVztM//ZTOo+7sxwRtnmt4fJcvoW/eXS2SPnT+qyxmzJ8gYvtGw2DRCZ9W
-         iAMuXn3D242r1vaU4pKQISruf8ss/4YTZ/zo9m3Z1qbmr2jiox3XaR2ZPNQyF8BajSV3
-         GMQUERHAAe3sQi4VZM2InXrzN6UexY1OoumTI2QHYz0xt9sFZbRLNUWeJ2YLQ/Er/F/V
-         Iw9j/jsU1Z+ymfDYVs/ktztSLwLVe9gFN60OslTqdW0HmrNk0bHExXOujjZitZ+Tk62z
-         heeg==
-X-Gm-Message-State: AHQUAuZW++crHG3vzsib8Pl/6ZtlXDMDYCBTHF+nryfa14YiiusW2CLi
-        hoc0IpX4oFp9xug2FM63uH8=
-X-Google-Smtp-Source: AHgI3Iblzsjr/D3m/80Fkxbi/3V1GBbZzdRdTSvnLIr0G5OA6W5UQRwts0uX52ytoQI+Eh5lzL/mKA==
-X-Received: by 2002:a7b:c191:: with SMTP id y17mr4049819wmi.60.1549474774942;
-        Wed, 06 Feb 2019 09:39:34 -0800 (PST)
-Received: from szeder.dev (x4dbda645.dyn.telefonica.de. [77.189.166.69])
-        by smtp.gmail.com with ESMTPSA id h135sm25200709wmd.21.2019.02.06.09.39.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Feb 2019 09:39:34 -0800 (PST)
-Date:   Wed, 6 Feb 2019 18:39:32 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: t0025 flakey?
-Message-ID: <20190206173932.GM10587@szeder.dev>
-References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet>
- <20190206104243.GJ10587@szeder.dev>
- <nycvar.QRO.7.76.6.1902061450280.41@tvgsbejvaqbjf.bet>
- <20190206171517.s5lskawpdodc74ui@tb-raspi4>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=jKVkjsJsQvuAHMGVEwgeRFLM7ql4cEXJE5/ANMI0AUY=;
+        b=jsc1cGFpg+G30Q9sOfBHDC9+ChMT+hynFUPNjEvZo2ltR2TAGwzBenEEkLqf/QA7Ed
+         WD2hZoL6F1+J3JOHuKNagJaqwsXZUEVfycCuFs8hWXiEt0TxNe8qEswoSv8K3d+13/qs
+         qGU+Ajg5pRWbk9XdH2d6MtSi238npogjbC1R6DK13GW68ZVNN1zGs63tRXL0Gz8Di4Lc
+         KT5tebtWAmGSajCdyMELQ0M/D/hvaM7NsVmlYvsN/06szoUTBvDndY1v9LMVSQXrMbWS
+         wFmtEifn9y8nWDRMFnEZo4zXYb6uXokaS2mShPCoyl752EGCaUhTtr7+ilbdCk58nqq2
+         TqFA==
+X-Gm-Message-State: AHQUAubXihsWHGOvEJPeG3uleyZYgaqidU26ARdRxQeHwqPYAODk5nLK
+        qlgpBniIfnfU4QHnyOXS2qmZln+K
+X-Google-Smtp-Source: AHgI3IYiqer1vLXhPfDEzMLTCSTuHZUBN/XClUg48GVK/eTXGc7O8iRw1WNJaFlL7ky8UdHO1LHP4Q==
+X-Received: by 2002:adf:ea81:: with SMTP id s1mr8612016wrm.309.1549475370070;
+        Wed, 06 Feb 2019 09:49:30 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 2sm591164wrg.89.2019.02.06.09.49.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 06 Feb 2019 09:49:28 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2019, #01; Tue, 5)
+References: <xmqq1s4lst7m.fsf@gitster-ct.c.googlers.com>
+        <20190206093900.GA20697@archbookpro.localdomain>
+Date:   Wed, 06 Feb 2019 09:49:28 -0800
+In-Reply-To: <20190206093900.GA20697@archbookpro.localdomain> (Denton Liu's
+        message of "Wed, 6 Feb 2019 01:39:00 -0800")
+Message-ID: <xmqqo97oremv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190206171517.s5lskawpdodc74ui@tb-raspi4>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 06, 2019 at 05:15:17PM +0000, Torsten Bögershausen wrote:
-> On Wed, Feb 06, 2019 at 02:52:53PM +0100, Johannes Schindelin wrote:
-> > Hi Gábor,
-> >
-> > On Wed, 6 Feb 2019, SZEDER Gábor wrote:
-> >
-> > > On Wed, Feb 06, 2019 at 11:25:38AM +0100, Johannes Schindelin wrote:
-> > >
-> > > > at first I thought that those intermittent test failures were limited
-> > > > to Windows, but they are not: I can see it now in a build on 32-bit
-> > > > Linux.
-> > > > Full logs here:
-> > > >
-> > > > https://dev.azure.com/gitgitgadget/git/_build/results?buildId=1032&_a=summary&view=ms.vss-test-web.build-test-results-tab
-> > > >
-> > > > Excerpt from the failing test case:
-> > > >
-> > > > -- snip --
-> > > > not ok 2 - renormalize CRLF in repo
-> > > >  expecting success:
-> > > > 	echo "*.txt text=auto" >.gitattributes &&
-> > > > 	git add --renormalize "*.txt" &&
-> > > > 	cat >expect <<-\EOF &&
-> > > > 	i/lf w/crlf attr/text=auto CRLF.txt
-> > > > 	i/lf w/lf attr/text=auto LF.txt
-> > > > 	i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
-> > > > 	EOF
-> > > > 	git ls-files --eol |
-> > > > 	sed -e "s/	/ /g" -e "s/  */ /g" |
-> > > > 	sort >actual &&
-> > > > 	test_cmp expect actual
-> > > >
-> > > > + echo *.txt text=auto
-> > > > + git add --renormalize *.txt
-> > > > + cat
-> > > > + sort
-> > > > + sed -e s/	/ /g -e s/  */ /g
-> > > > + git ls-files --eol
-> > > > + test_cmp expect actual
-> > > > + diff -u expect actual
-> > > > --- expect	2019-02-06 09:39:42.080733629 +0000
-> > > > +++ actual	2019-02-06 09:39:42.088733629 +0000
-> > > > @@ -1,3 +1,3 @@
-> > > > -i/lf w/crlf attr/text=auto CRLF.txt
-> > > > +i/crlf w/crlf attr/text=auto CRLF.txt
-> > > >  i/lf w/lf attr/text=auto LF.txt
-> > > > -i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
-> > > > +i/mixed w/mixed attr/text=auto CRLF_mix_LF.txt
-> > > > error: last command exited with $?=1
-> > > > -- snap --
-> > > >
-> > > > Any ideas?
-> > >
-> > > I reported this and Peff looked into it on the way to Git Merge, but
-> > > not working solution yet.
-> > >
-> > > https://public-inbox.org/git/20190129225121.GD1895@sigill.intra.peff.net/T/#u
-> >
-> > Thank you!
-> > Dscho
-> 
-> I shortly looked into the pointers here -
-> Is t0025 flaky after the fix from Peff:
-> 
-> [PATCH] add: use separate ADD_CACHE_RENORMALIZE flag
-> 
-> Or has it always been shaky ?
-> Does anybody know ?
+Denton Liu <liu.denton@gmail.com> writes:
 
-I sort-of bisected it, and it pointed to Peff's fix.
+> On Tue, Feb 05, 2019 at 03:37:01PM -0800, Junio C Hamano wrote:
+>> * dl/merge-cleanup-scissors-fix (2019-01-27) 4 commits
+>>  - merge: add scissors line on merge conflict
+>>  - merge: cleanup messages like commit
+>>  - t7600: clean up 'merge --squash c3 with c7' test
+>>  - commit: extract cleanup_mode functions to sequencer
+>> 
+>>  The list of conflicted paths shown in the editor while concluding a
+>>  conflicted merge was shown above the scissors line when the
+>>  clean-up mode is set to "scissors", even though it was commented
+>>  out just like the list of updated paths and other information to
+>>  help the user explain the merge better.
+>> 
+>>  Will merge to 'next'.
+>
+> We should pull v6[1] of the patchset before we merge into next. It
+> resolves merge conflicts related to the changed function signature of
+> `append_conflicts_hint`.
+>
+> [1]: https://public-inbox.org/git/cover.1548219737.git.liu.denton@gmail.com/
 
-Running 't0025 --stress' in the merge of 'sg/stress-test' and
-'jk/add-ignore-errors-bit-assignment-fix' results in a failure within
-seconds or <20 repetitions.  In the merge with
-'jk/add-ignore-errors-bit-assignment-fix^' it runs successfully for
-thousands of repetitions.
+Actually we do not have to, and we probably should not.  Here is
+what I just did [*1*]:
+
+    $ git checkout -b dlv6 master
+    $ git am -s3c ./+dl4-v6-merge-cleanup-scissors-fix
+    $ git checkout -b dlv5+master master
+    $ git merge --rerere-autoupdate dl/merge-cleanup-scissors-fix
+    $ git diff dlv6
+
+and saw no differences in the end.
+
+In other words, what has been queued and been tested in 'pu' (and
+incidentally what I have been using as part of my private build for
+day-to-day job) on dl/merge-cleanup-scissors-fix may conflict when
+merged to 'master' [*2*], but a good resolution for the conflict is
+already known, and becomes identical to v6 applied on master when it
+is merged to 'master'.
+
+So, I'd rather not do the busywork of replacing v5 with v6, which
+also would allow us to avoid risking fat-finger mistakes while doing
+so.
+
+Thanks.
 
 
+[Footnote]
+
+*1* I name my mailbox that holds the v6 of a 4-patch topic to be
+    queued on an/topic-name as ./+an4-v6-topic-name
+
+*2* Or 'next' for that matter.  After preparing dlv6 like so, I
+    can do this:
+
+    $ git checkout -b dlv6next next
+    $ git merge dlv6
+    $ git checkout -b dlv5next next
+    $ git merge --rerere-autoupdate dl/merge-cleanup-scissors-fix
+    $ git diff dlv6next
