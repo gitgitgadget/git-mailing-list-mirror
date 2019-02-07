@@ -2,173 +2,224 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FF8D1F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 10:49:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE9F91F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 11:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726796AbfBGKtq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 05:49:46 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:44411 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726186AbfBGKtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 05:49:46 -0500
-Received: by mail-ed1-f65.google.com with SMTP id y56so8568423edd.11
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 02:49:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=zR/PDu0hpZP7YDv31buHGaI1LKBbZNlX/gom4VqXadE=;
-        b=JFBoFDx2LJzcwh2goNjfwTs+arMcgk0j4KXFDPkP8Nz1NAAruGokWEUEghoam/d6vH
-         PB91RwraiyGWFsVamb4MmGnKrTtpKRkcS7QlO+ZqWV2eszuGuBLC3JWRA6vSIEOtHQMy
-         Vjad1UEWqFuCIumxlyH5EMVBWcQl7KaOURYTjkb+rc9gcSmWNF6YTA7ACzxFTRQ3PLc8
-         608hyRC8tq4ztakfH0VkknQmO/iIKaJKxPT86R1AmLd9fSu0KQLdYCI/Az7ksJ/0587b
-         92BCkWy8Bnjp5CkRJGs44trta6YZ4ygua+aUrJfPfmGpqztLNRBXleq2nG/ezhibJtjq
-         L0Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=zR/PDu0hpZP7YDv31buHGaI1LKBbZNlX/gom4VqXadE=;
-        b=C5F5yXvWxax1/S/sf5FYAot+itr5fJfQTRbdY7TK/9Ruk+txtOxIiQRlBrf+q/6NRc
-         tJhH/+NbvBqRlY5L5EuECWGN0W/EMV3YP3TaZTpeMpXSVNLmVb2D6VRV2YiXYpdQSVzU
-         WBboQRuOo3U7GKD+4hzw4J4Kl31MfuMAusfGKuvK9oqc8klXP2+wauqe04H54lumG/Mu
-         gddtWfxLSQ41+exnun3ZfA/uHTJ7X97aTae/bg/16D7UE0xQU0vgQ/uZrSRb83JWFwoA
-         04HMfHPf1P4Jhal77Fd95gvv+Vnp2+m9EmyK/NKoErbEnPIxSHVYVJ+7OoBsqvoulzWN
-         WfPQ==
-X-Gm-Message-State: AHQUAuYSN/XL7ZGvDom8KfIt+AcluWJ29DM9ldkUatdZwWT6N4pUyvkK
-        Z31YIUnc22oaGGDtXxwP3jDnWYxi
-X-Google-Smtp-Source: AHgI3IbCuu7+DqrJgxXTk80Sb5PcK9qVWJ84gWAiOL635kpdMlYkBHoI8YpanrVkYexpamZ268dBUA==
-X-Received: by 2002:a05:6402:758:: with SMTP id p24mr12317877edy.92.1549536583889;
-        Thu, 07 Feb 2019 02:49:43 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id f6sm6866613ede.53.2019.02.07.02.49.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Feb 2019 02:49:42 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        steadmon@google.com
-Subject: Re: [PATCH 0/8] Resend of GIT_TEST_PROTOCOL_VERSION patches
-References: <cover.1549411880.git.jonathantanmy@google.com> <20190206213458.GC12737@sigill.intra.peff.net> <87ef8klh4g.fsf@evledraar.gmail.com> <20190206221008.GB15378@sigill.intra.peff.net> <87bm3olftb.fsf@evledraar.gmail.com> <20190206230813.GC19901@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190206230813.GC19901@sigill.intra.peff.net>
-Date:   Thu, 07 Feb 2019 11:49:42 +0100
-Message-ID: <877eeblvp5.fsf@evledraar.gmail.com>
+        id S1726642AbfBGLGh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 06:06:37 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:36202 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726186AbfBGLGh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 06:06:37 -0500
+Received: from [192.168.2.201] ([92.26.119.161])
+        by smtp.talktalk.net with SMTP
+        id rhVogRt92AGVrrhVogf1V8; Thu, 07 Feb 2019 11:06:33 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1549537593;
+        bh=J3oLLFFOvVINq7eKSoetLBvujRCWI/v4mH3QYaNY3PI=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=pCLIcG7PqDSqVZ8fGKrYvLIYVYF8JRLvyam8J86yam9jHn7XByOLe+FhB8N9oCFkY
+         m8Im1j2U/jBr2AXHBKqc3E5oxrRgYU9lU4r8GsMc2gSAktvsBybT33j4YqZfDwnaI7
+         tMy2WI1/F6dmh+Gsa8GhHQMd3CgIUWQlSjd5Jvyc=
+X-Originating-IP: [92.26.119.161]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=DtN4Bl3+ c=1 sm=1 tr=0 a=6TU8oh9ZJkj8/yVa3BaM0A==:117
+ a=6TU8oh9ZJkj8/yVa3BaM0A==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=-SdBtPKUdoCwTFasenEA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6 11/16] sequencer: refactor skip_unnecessary_picks() to
+ work on a todo_list
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20190123205821.27459-1-alban.gruin@gmail.com>
+ <20190129150159.10588-1-alban.gruin@gmail.com>
+ <20190129150159.10588-12-alban.gruin@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <046f8a1d-4e2d-b968-2ee7-5291a59c13b6@talktalk.net>
+Date:   Thu, 7 Feb 2019 11:06:32 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
+In-Reply-To: <20190129150159.10588-12-alban.gruin@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfMdtM2cJLHlJsNiSL2A0Rtbk5aM4TxIfDRt1Fs08M59PfzhhPm94Z8g2CT2EZlVROA7xi2KPI40lvCGsFVbxXDCCxEoIT08ZCCrb/kgdJZUdoe1viw94
+ I7Zdshqy0rWN5N61+LJPemiRspEGtc4ucPOgExHu4ZzgCJqUNok0VMWG+IFaxuy/G80WSf3qf6DGG3QCeJpn0h5nmDYBNIQg9WajjbV6PTh/qym4jbY/pn3w
+ bTP6GZPxTOUf3LcxR56Ad3h8Bjx+tEHW/QYNvS7KGm+zqcqbyPZIkq3g78zAxFU7LwzKiqp0mCkv3PwU6C6GTg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Alban
 
-On Thu, Feb 07 2019, Jeff King wrote:
+On 29/01/2019 15:01, Alban Gruin wrote:
+> This refactors skip_unnecessary_picks() to work on a todo_list.  As this
+> function is only called by complete_action() (and thus is not used by
+> rebase -p), the file-handling logic is completely dropped here.
+> 
+> Instead of truncating the todo list’s buffer, the items are moved to
+> the beginning of the list, eliminating the need to reparse the list.
+> This also means its buffer cannot be directly written to the disk.
+> 
+> rewrite_file() is then removed, as it is now unused.
+> 
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>  sequencer.c | 78 ++++++++++++-----------------------------------------
+>  1 file changed, 17 insertions(+), 61 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 2a43ca685b..a817afffa9 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4661,52 +4661,22 @@ int check_todo_list_from_file(struct repository *r)
+>  	return res;
+>  }
+>  
+> -static int rewrite_file(const char *path, const char *buf, size_t len)
+> -{
+> -	int rc = 0;
+> -	int fd = open(path, O_WRONLY | O_TRUNC);
+> -	if (fd < 0)
+> -		return error_errno(_("could not open '%s' for writing"), path);
+> -	if (write_in_full(fd, buf, len) < 0)
+> -		rc = error_errno(_("could not write to '%s'"), path);
+> -	if (close(fd) && !rc)
+> -		rc = error_errno(_("could not close '%s'"), path);
+> -	return rc;
+> -}
+> -
 
-> On Wed, Feb 06, 2019 at 11:20:32PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> >> So far we've had the convention that these GIT_TEST_* variables,
->> >> e.g. the one for the commit graph, work the same way. Thus we guarant=
-ee
->> >> that we get (in theory) 100% coverage even when running the tests in
->> >> this special mode. I think it's better to keep it as-is.
->> >
->> > But what's the point of that? Don't you always have to run the test
->> > suite _twice_, once with the special variable and once without?
->> > Otherwise, you are not testing one case or the other.
->> >
->> > Or are you arguing that one might set many special variables in one go
->> > (to prefer running the suite only twice, instead of 2^N times). In whi=
-ch
->> > case we are better off running the test (as opposed to skipping it), as
->> > it might use one of the _other_ special variables besides
->> > GIT_TEST_PROTOCOL_VERSION.
->> >
->> > I can buy that line of reasoning. It still doesn't cover all cases that
->> > a true 2^N test would, but that clearly isn't going to be practical.
->>
->> Maybe I'm misunderstanding what you're proposing, but as an example,
->> let's say the test suite is just these two tests:
->>
->>     test_expect_success 'some unrelated thing' '...'
->>     test_expect_success 'test protocol v2' 'GIT_TEST_PROTOCOL_VERSION=3D=
-2 ...'
->>
->> And GIT_TEST_PROTOCOL_VERSION=3D0 is the default, let's say I want to te=
-st
->> with GIT_TEST_PROTOCOL_VERSION=3D1 for whatever reason,
->>
->> I'd still like both tests to be run, not just 1/2 with
->> GIT_TEST_PROTOCOL_VERSION=3D1 and 2/2 skipped because it's explicitly
->> testing for the GIT_TEST_PROTOCOL_VERSION=3D2 case, whereas I asked for a
->> GIT_TEST_PROTOCOL_VERSION=3D1.
->
-> But that's my "why". The second test will run identically in both runs,
-> regardless of your setting of GIT_TEST_PROTOCOL_VERSION. So there's
-> value if you're only running the suite once in getting full coverage,
-> but if you are literally going to run it with and without, then you're
-> running the exact same code twice for no reason. And you have to run it
-> both with and without, since otherwise all of the _other_ tests aren't
-> seeing both options.
+It's great to see that going
 
-Yeah, by always running the 2nd test regardless of what
-GIT_TEST_PROTOCOL_VERSION=3D* is set to we're wasting CPU if we know we're
-going to run both with GIT_TEST_PROTOCOL_VERSION=3D1 and
-GIT_TEST_PROTOCOL_VERSION=3D2.
+>  /* skip picking commits whose parents are unchanged */
+> -static int skip_unnecessary_picks(struct repository *r, struct object_id *output_oid)
+> +static int skip_unnecessary_picks(struct repository *r,
+> +				  struct todo_list *todo_list,
+> +				  struct object_id *output_oid)
 
-But we don't know that, and in terms of CPU & time the tests that rely
-on any given GIT_TEST_* flag are such a tiny part of the test suite,
-that I think it's fine to run them twice in such a scenario to guard
-against the case when we just run in one more or the other, and not
-both.
+output_oid is a bit misleading now as we now feed the function the onto
+commit with that parameter. Perhaps we could rename it to base_oid or
+something like that (I've been working on getting rebase -i to start
+without forking rebase--interactive and as part of that re-factoring
+I've changed the caller of this function to take a struct commit* rather
+than a string I got tripped up by this)
 
->> IOW the point of these tests is to piggy-back on the tests that *aren't*
->> aware of the feature you're trying to test. So
->> e.g. GIT_TEST_COMMIT_GRAPH=3Dtrue should run our whole test suite with t=
-he
->> commit graph, and *also* those tests that are explicitly aware of the
->> commit graph, including those that for some reason would want to test
->> for the case where it isn't enabled (to e.g. test that --contains works
->> without the graph).
->>
->> Otherwise I can't say "I care more about GIT_TEST_COMMIT_GRAPH=3Dtrue th=
-an
->> not", and run just one test run with that, because I'll have blind spots
->> in the commit graph tests themselves, and would then need to do another
->> run with GIT_TEST_COMMIT_GRAPH=3D set to make sure I have 100% coverage.
->
-> So if we are still talking about the same 2-test setup above, which only
-> has a GIT_TEST_PROTOCOL_VERSION override, then yeah, I get the point of
-> being able to run a "stock" test, and then one with _both_ of the flags
-> (GIT_TEST_PROTOCOL_VERSION and GIT_TEST_COMMIT_GRAPH) because you don't
-> quite know how each test will interact with all of the "other" flags.
+Best Wishes
 
-Yeah that's another reason not to skip them, although we could imagine a
-prereq where we skip the v2 tests if GIT_TEST_PROTOCOL_VERSION=3D1 is set
-*and* no other GIT_TEST_*=3D* flag is set, but I think that would also be
-a bad idea.
+Phillip
 
-> So now I'm not 100% sure I understand what you're talking about, but I
-> think maybe we are actually in agreement. ;)
+>  {
+> -	const char *todo_file = rebase_path_todo();
+> -	struct strbuf buf = STRBUF_INIT;
+> -	struct todo_list todo_list = TODO_LIST_INIT;
+>  	struct object_id *parent_oid;
+> -	int fd, i;
+> -
+> -	if (!read_oneliner(&buf, rebase_path_onto(), 0))
+> -		return error(_("could not read 'onto'"));
+> -	if (get_oid(buf.buf, output_oid)) {
+> -		strbuf_release(&buf);
+> -		return error(_("need a HEAD to fixup"));
+> -	}
+> -	strbuf_release(&buf);
+> -
+> -	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
+> -		return -1;
+> -	if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list) < 0) {
+> -		todo_list_release(&todo_list);
+> -		return -1;
+> -	}
+> +	int i;
+>  
+> -	for (i = 0; i < todo_list.nr; i++) {
+> -		struct todo_item *item = todo_list.items + i;
+> +	for (i = 0; i < todo_list->nr; i++) {
+> +		struct todo_item *item = todo_list->items + i;
+>  
+>  		if (item->command >= TODO_NOOP)
+>  			continue;
+>  		if (item->command != TODO_PICK)
+>  			break;
+>  		if (parse_commit(item->commit)) {
+> -			todo_list_release(&todo_list);
+>  			return error(_("could not parse commit '%s'"),
+>  				oid_to_hex(&item->commit->object.oid));
+>  		}
+> @@ -4720,37 +4690,21 @@ static int skip_unnecessary_picks(struct repository *r, struct object_id *output
+>  		oidcpy(output_oid, &item->commit->object.oid);
+>  	}
+>  	if (i > 0) {
+> -		int offset = get_item_line_offset(&todo_list, i);
+>  		const char *done_path = rebase_path_done();
+>  
+> -		fd = open(done_path, O_CREAT | O_WRONLY | O_APPEND, 0666);
+> -		if (fd < 0) {
+> -			error_errno(_("could not open '%s' for writing"),
+> -				    done_path);
+> -			todo_list_release(&todo_list);
+> -			return -1;
+> -		}
+> -		if (write_in_full(fd, todo_list.buf.buf, offset) < 0) {
+> +		if (todo_list_write_to_file(r, todo_list, done_path, NULL, NULL, i, 0)) {
+>  			error_errno(_("could not write to '%s'"), done_path);
+> -			todo_list_release(&todo_list);
+> -			close(fd);
+>  			return -1;
+>  		}
+> -		close(fd);
+>  
+> -		if (rewrite_file(rebase_path_todo(), todo_list.buf.buf + offset,
+> -				 todo_list.buf.len - offset) < 0) {
+> -			todo_list_release(&todo_list);
+> -			return -1;
+> -		}
+> +		MOVE_ARRAY(todo_list->items, todo_list->items + i, todo_list->nr - i);
+> +		todo_list->nr -= i;
+> +		todo_list->current = 0;
+>  
+> -		todo_list.current = i;
+> -		if (is_fixup(peek_command(&todo_list, 0)))
+> -			record_in_rewritten(output_oid, peek_command(&todo_list, 0));
+> +		if (is_fixup(peek_command(todo_list, 0)))
+> +			record_in_rewritten(output_oid, peek_command(todo_list, 0));
+>  	}
+>  
+> -	todo_list_release(&todo_list);
+> -
+>  	return 0;
+>  }
+>  
+> @@ -4823,6 +4777,11 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>  		return -1;
+>  	}
+>  
+> +	if (opts->allow_ff && skip_unnecessary_picks(r, &new_todo, &oid)) {
+> +		todo_list_release(&new_todo);
+> +		return error(_("could not skip unnecessary pick commands"));
+> +	}
+> +
+>  	if (todo_list_write_to_file(r, &new_todo, todo_file, NULL, NULL, -1,
+>  				    flags & ~(TODO_LIST_SHORTEN_IDS))) {
+>  		todo_list_release(&new_todo);
+> @@ -4831,9 +4790,6 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>  
+>  	todo_list_release(&new_todo);
+>  
+> -	if (opts->allow_ff && skip_unnecessary_picks(r, &oid))
+> -		return error(_("could not skip unnecessary pick commands"));
+> -
+>  	if (checkout_onto(opts, onto_name, oid_to_hex(&oid), orig_head))
+>  		return -1;
+>  
+> 
 
-I think there's two ways to view these GIT_TEST_FOO=3DBAR facilities:
-
- 1. Run all tests with "FOO" set to "BAR", skip those (via prereq) we
-    know would break in that mode.
-
- 2. Ditto, but if a test says "I'm a test for FOO=3D!BAR" leave it alone.
-
-#2 is what we have now. I read your
-<20190206213458.GC12737@sigill.intra.peff.net> as suggesting that we
-should move to #1.
-
-You're correct that moving to #1 would force us to more exhaustively
-mark things so that if the default moves to "BAR" we just have to flip a
-switch.
