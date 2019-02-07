@@ -2,132 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AD031F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 22:32:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D1DF1F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 22:34:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726796AbfBGWc5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 17:32:57 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50437 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726622AbfBGWc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 17:32:56 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lkjuq-1hPq452Ufk-00aUGt; Thu, 07
- Feb 2019 23:32:49 +0100
-Date:   Thu, 7 Feb 2019 23:32:49 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] ci: make sure we build Git parallel
-In-Reply-To: <xmqqsgwzo0ib.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1902072331060.41@tvgsbejvaqbjf.bet>
-References: <20190207183736.9299-1-szeder.dev@gmail.com> <xmqqbm3npgox.fsf@gitster-ct.c.googlers.com> <xmqq1s4jpgh6.fsf@gitster-ct.c.googlers.com> <xmqqsgwzo0ib.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726728AbfBGWew (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 17:34:52 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:36835 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726622AbfBGWew (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 17:34:52 -0500
+Received: by mail-lf1-f68.google.com with SMTP id q11so1154422lfd.3
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 14:34:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=362+k/Al2oAaCEeMyl5KSDi6ALf0BD6WgX8rtT6EwUc=;
+        b=gXac/ZOycL/77T1p80oICkIS010mVZ1jhbORnucWJDymLtivKx9o0Qgl1jSO7O1wgd
+         hib1puiv1SaZE8ZLDdhV4q43PE0TiztK1V2VI+L4UIPAPURrw/bUrPOAuER58Z4zF88e
+         CwZqvrr4sAOHHEovDA+Wgfs+PJGM3VnhATEkq7c/gDhGDy+w/gO5FzQtELrMYwIt3Ycz
+         CGH2xEZSwPl2N9gi+8UTTbA7/zg7aqgSZEg//rbYPORRMsFDSfcwjURJ9oPow5PO2cFX
+         bV0pnmJrM3SEG/szJii7VuJLqTnveDlBnh+2EpP8Ba6ryy8n0j6LYPZSbLrHhcIHqp5r
+         TwOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=362+k/Al2oAaCEeMyl5KSDi6ALf0BD6WgX8rtT6EwUc=;
+        b=fSM3i21QfQNjQGVxvlsguGhxN0pRWSKXB0L1gBJLzYnx1Hmn9EhYa4usqnXzLEG86w
+         7n2HgzWqMU40v1TqGXYfVW1DP0+IieIy7PCCh2ZL482u74mIdN+273Q22k49zlUvbRDb
+         AEWdiF8euCUZ/25sZX5HJmdgaJ0URzhsI1J1434aMGpbuVi9S1ciSU8RU+RiOT1Xgrms
+         OSgPcbSQMlmqUyVN9qrSlqfaqGSiUUrFr0ijiviIMjIaq+n48RjkTLljGbPbGxk0tVFM
+         /CKz85vcPkzvIZ1MKaXLQ/y1c6eTKyPkK13bUH9vFrct9w2QtIhqxA9GYxSPz60zB/52
+         ebJQ==
+X-Gm-Message-State: AHQUAubdzYjvcJRhEpeNjoOP4tRLTV/E6TMwR6iV7Awdot7fFyeMR3Ri
+        5TPG+QLXrONhz/UOvW+USi6UuVVW0NHX/eEoJQVPNbKBBUk=
+X-Google-Smtp-Source: AHgI3IZRefJQNjPSXaUFm15n1UHPayJUPi992RZYxOSGrKuqD6c00i+/64eZQ2wn9zW4D60VFG+tMxy+Nard5e9fEgg=
+X-Received: by 2002:ac2:55a3:: with SMTP id y3mr11485951lfg.93.1549578889802;
+ Thu, 07 Feb 2019 14:34:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4J5DJA/1+RUm5HC9a6IXWLGSI35VjHFRal0nq6V2hllbnaMjYgS
- 9y6JkSvc+N8datkpDufgsVBaWPjVCNg+e9+sR1XNzGbHkSYo+mA/sKgTpSqzx0ugEA4mhBj
- BipzWVn2wch4zPINhmzn2XwKGV77muXY5uDCOUwtdg5tYODW4NgrzA4HCYJyTP8gqJb4irW
- CXGpmLR1Buc7KvZHqT86w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6fwDte9yJcg=:YSpKpNBm8gjMw4z4tQkdXp
- BtJYiETu8rFeox6J57RKHnOwKcuq82TlwLREyvrKBX1jQN81NsQgTQHUXt8C+LWHe/mV8tpdm
- zxW9sPPNg6VxtJLZuGJkoshPfSCCr/o0lYxpZxMOhcG3KcUtK8rN7RAfqMuw6otdiGHWyMmj0
- v1RPM3yrNQZXjy+4rhvLtRTzOlUGnI7bSXQ3Oy9ShT8tmpXyv1vGvr3yrROwn4on5U8BrI9A1
- d1GkHqU2dDMIoP0HC/WR5d3bJrY2GoMVPsm9yHpw1CgdIs645ZFre/Il2cplMW+i7MhicxVrj
- VRtYHBGrfXO/EEEAoKSwL4/vxJe+RO/9qkQUWgACFTajNDXsi7p7k0nIHgOR1v+4o+SafSvh9
- EnqjgL/7Kc/TIGPebBWA1nJr0U4nOU4Ylse2JGDxzkqd5NjsZcyXQdSlqCASBCkTqF7eT88ar
- /oDLbXr3A0ULHQglIB/hggY1bnL6TJaUjh4qYTBhQji42wCv669Te4RQ5WVJo8b692eWYdAhz
- +6KBuEPONwVMQfLC+U9q7t54tM8vLNTXzzY3iMQ7EsaQh4ZbIS74GFjKcjE9t+TxIISaIRauP
- 0pxjJpAuzCp1NPos1w8+2AbsFh8A3fC0AZYzHUsnb6PpZH8PPkg1nRL1sAnrWj8L4Zi4M/R+o
- qkmU5Xb/Hy567Eua/xscPWCJYrJJ0zT1kQQZqVxAuHCIGkud+vHkS5c5vU9dKCnmPsG++eXdw
- HirashJdg8agnIVEgXYjy+3DlK4druMG+5AVXqJTtj5nSMW588wPj517isUQu+t/Fg+TJEr32
- WJwp+N2hIExdXoVogTu5RCMIst59pVwyBgJPpieeVS1DVgVrgaFu3GIFlxFI1FU4r0AA6X7dc
- zrZqci4f1YRaEtVsSeco3gsecuG9LHm0MKXSS8t4NlULXI3w0YuUHBE+RisH+abTPvWiM7Ijz
- jCgQpDIw3zg==
+References: <cfd86853cce8a2cd5fae9e6fb9a84f1e3d6daaf4.1549538392.git.liu.denton@gmail.com>
+ <xmqqftszpgy1.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftszpgy1.fsf@gitster-ct.c.googlers.com>
+From:   Avery Pennarun <apenwarr@gmail.com>
+Date:   Thu, 7 Feb 2019 17:34:38 -0500
+Message-ID: <CAHqTa-3bDnAm=49uBDLWxLrpOMd6sh1ve1fmmnf5kCbVxHsawg@mail.gmail.com>
+Subject: Re: [PATCH] contrib/subtree: ensure only one rev is provided
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+ ]0;joe - On Thu, Feb 7, 2019 at 1:54 PM Junio C Hamano
+<gitster@pobox.com> wrote:
+> I am not sure if the other caller is OK, though.  cmd_add_repository
+> can get more than one revs, and uses the first one as $rev to read
+> the tree from, expecting that this helper to ignore other ones that
+> are emitted from 'git rev-parse --revs-only "$@"'.
+>
+> For that matter, one of the early things cmd_split does is to call
+> the find_existing_splits helper with $revs, and it seems to be
+> prepared to be red multiple $revs (it is passed to "git log", so I
+> would expect that incoming $revs is allowed to specify bottom to
+> limit the traversal, e.g. "git log maint..master").  The addition of
+> "ensure_single_rev" we saw in an earlier hunk near ll.191 makes such
+> call impossible.  I am not a user of subtree, so I do not know if
+> it is a good change (i.e. making something nonsensical impossible to
+> do is good, making something useful impossible to do is bad).
 
-On Thu, 7 Feb 2019, Junio C Hamano wrote:
+I think this generality is probably not useful and it will probably confuse
+people less if we prevent it.  It was just one of those "if you don't have
+any better ideas, just let people do whatever complicated thing they want"
+approaches I used when I was first writing it and didn't know how people
+would end up using it.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Wouldn't all other hits of "MAKEFLAGS=" in ci/lib.sh also want the
-> > same treatment, though?  We know that "if travis to this, otherwise
-> > if Asure, do that" is the first block to muck with MAKEFLAGS in the
-> > script, but a new assignment before that block can be added in the
-> > future and cause a similar issue unless we do so.
-> >
-> > Of course, at some point we do want to say "we do not want to
-> > inherit it from the outside environment", but then such an
-> > assignment of empty value should be done at the very beginning with
-> > a comment, not with "this happens to be the first one to set, so
-> > let's not append but assign to clear any previous value", I would
-> > think.
-> 
-> That is, in a patch form on top of yours, something like this.
-> 
-> 
->  ci/lib.sh | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> index cee51a4cc4..288a5b3884 100755
-> --- a/ci/lib.sh
-> +++ b/ci/lib.sh
-> @@ -74,6 +74,9 @@ check_unignored_build_artifacts ()
->  	}
->  }
->  
-> +# Clear MAKEFLAGS that may come from the outside world.
-> +export MAKEFLAGS=
-> +
->  # Set 'exit on error' for all CI scripts to let the caller know that
->  # something went wrong.
->  # Set tracing executed commands, primarily setting environment variables
-> @@ -101,7 +104,7 @@ then
->  	BREW_INSTALL_PACKAGES="git-lfs gettext"
->  	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
->  	export GIT_TEST_OPTS="--verbose-log -x --immediate"
-> -	export MAKEFLAGS="--jobs=2"
-> +	MAKEFLAGS="$MAKEFLAGS --jobs=2"
->  elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
->  then
->  	CI_TYPE=azure-pipelines
-> @@ -126,7 +129,7 @@ then
->  	BREW_INSTALL_PACKAGES=gcc@8
->  	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
->  	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
-> -	export MAKEFLAGS="--jobs=10"
-> +	MAKEFLAGS="$MAKEFLAGS --jobs=10"
->  	test windows_nt != "$CI_OS_NAME" ||
->  	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
->  else
-> @@ -185,4 +188,4 @@ GIT_TEST_GETTEXT_POISON)
->  	;;
->  esac
->  
-> -export MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
-> +MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
+> In any case, I do not use subtree, and the last time I looked at
+> this script is a long time ago, so take all of the above with a
+> large grain of salt.
 
-Since this is intended to be run in a CI setting, there is not a whole lot
-of opportunity to set `MAKEFLAGS` outside of the script. And if there is,
-that might open a rabbit hole when debugging issues that somehow in the
-end turn out to come from a hard-coded `MAKEFLAGS` somewhere in the CI
-system.
+I don't use it very often either.  To be honest, I've noticed weird
+behaviour in the version installed with git 2.11.0 in Debian, so I went back
+to my own version at https://github.com/apenwarr/git-subtree.  I've been
+meaning to investigate further to see what patch might have happened that
+caused it to act weird; maybe it's since been fixed.
 
-So I'd rather clear `MAKEFLAGS` at the beginning (i.e. where you `export
-MAKEFLAGS`, I'd simply append a `=`).
+But I don't see any major problems with the patch in this thread.
 
-Ciao,
-Dscho
+Thanks!
+
+Avery
