@@ -7,64 +7,58 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A14F31F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 20:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C28D1F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 20:34:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727356AbfBGUZT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 15:25:19 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35860 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726454AbfBGUZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 15:25:19 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p6so1257176wmc.1
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 12:25:17 -0800 (PST)
+        id S1726911AbfBGUec (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 15:34:32 -0500
+Received: from mail-wm1-f46.google.com ([209.85.128.46]:34940 "EHLO
+        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726614AbfBGUec (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 15:34:32 -0500
+Received: by mail-wm1-f46.google.com with SMTP id t200so1297109wmt.0
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 12:34:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=9s1zqUhPb5AywAP+Uv3AgnW3g0XzAsViDuwuDlYC4Gc=;
-        b=oZ3DZeYQ+kV8Uo3GgeorvkknIMSXNXaQPdyputBFkfIKmTxEExYdBCSw1aL9SIilf9
-         gkaH3U571IIiyCFmBno4XqewGNixX4loU/2oeSEa/cquBmWOqR7Cet/qF0qFNu6bS6w0
-         yYtu3dOGQmGk+a3Ve0ym35mWfGKA/U1fH/EAMfi/4dtlDLzakX6FFrgE6n8KAsmvWCaC
-         ytemWt7GJtjZ3JVmkElo92NTqyC62phR3OZblxEpsFN5KRWdlKMMeTzD+qrPW9g66UxO
-         W9YM7Ahg8gZ2IjHDwkp3ca/acl+UfXt0sW6njG6FZX+sdnL0NB2YkWFjCqfwMWKw13ya
-         QU9w==
+        bh=1zT3t4k/AUmNC8UOpw3mVqr8BOents7RYBT56BT9z/g=;
+        b=sFmUIbSVVENH+ufHiDCm3HedmqPOMdw71XyF9zbyXxO0j+3UjuZrCAJ9PaomJQ3h8/
+         LFHdoiWyoX/LLpIGQ0EzcsGharpmpEtABzN+8ABf3Wpeeae16d6SLCW8JJMWNlci0meQ
+         k/+cRbmKdOpUK17m8OSsotIf/FA1r/WkxVSKoxeuGTXr4VuzFOWH3v+x6DqLgu/7ZlKJ
+         NjoIlihibLIJCgLGuqRlGCjRhPpxrQA0jkUJ8j7GrzPp3bwB2P9bPbfyaOEn/yFYAtLX
+         /UacSveRQGhe/bcx3jdQiRy7LH21ced5GFi3IpKtcbGHb4zPwO6xC0N3XdRzYjjNA4pi
+         ka8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=9s1zqUhPb5AywAP+Uv3AgnW3g0XzAsViDuwuDlYC4Gc=;
-        b=KCRvgR/FzVFRGO3MAwWWXd38W3hBzkVHEmFO3/c6JHezxXjGitM/ZfLrIVcneJmtjD
-         039Gfl6FBT+gKAs01E8AM9gRP8U2esm7G109zWGVyzuokTUKtkDGkIVcpZLDQx8NTZU7
-         bwnYmY/XefQ3pTzpx/V8fuxEUgGNNEsVoHnJzVlaz1GvFd/omQb97jsp5QD71locY+4Q
-         68x5013t7Tq3GWsVyGN31h+VF+2/aIVyumVeHycnAwCYf7GkIT8UWMQ0vZew4lQ27RAn
-         V8sAd7BE8/FRna19zcd3EkAmH9xo82kl5MYJ/Nsf7qUxZ/hZarfyQtKKwDSswT12NiT3
-         ZWYw==
-X-Gm-Message-State: AHQUAuZHzJ51hpDT0ImnYUqVkHgaa9SArnwltTVwc7Oqski4Qkx0BaQy
-        9ZhlL+g6qkvZSDoXLHuwyfY=
-X-Google-Smtp-Source: AHgI3IbOlIR/ggu1AsTWao1H6a20FRxyaU7BCDegXnwTRZwj/Nbn4Mk+tu5wfUgD2kfBs9FuFju6Lw==
-X-Received: by 2002:a1c:c90b:: with SMTP id f11mr8752905wmb.33.1549571116792;
-        Thu, 07 Feb 2019 12:25:16 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f187sm442293wma.4.2019.02.07.12.25.15
+        bh=1zT3t4k/AUmNC8UOpw3mVqr8BOents7RYBT56BT9z/g=;
+        b=H6+t0kwCDxe/UNzrZpNqAM23+sbBlqivkxrHSH0A3gBItmN7LwbGb3rOj7uqp8zqcw
+         D2FAuPGGb9bZcUG6YxdWjp8FBB4pEUG1YkHadpnq252XpD4QO/sqN1twUDun9yWzS38r
+         3W8XpKQOVW7YoMLNQZvcPcmEhT4yK3G9WiyVi6cISSddCy3wZhlITbLStGnbzyc02JFW
+         XlygyMVWH7Q8X/78vf03L4Qdva7l5RyCEKzXyglPmWlQnvB+ype5mZLdxw9geJ1a6J0G
+         P14sQ+1ywqpvdVOSkn2Vb+qBFO9kopcje0eGyyl+a9QkW0+gY9ifRcwT0i45JNBJG02u
+         9azA==
+X-Gm-Message-State: AHQUAuaYF0Y2HCF3zMXb0kAfsRfBNIxpiId4Ce8YEwWX3WFi7g9aAqKL
+        muwIbfgyW1WgpMttdoKYZaY=
+X-Google-Smtp-Source: AHgI3IbuyEbrHKFv8WEMuCpDyK8oorJZm4dpNoiaLNjRmI4Wa1JCtq6cMNWN51bo/fadbRdro98GJg==
+X-Received: by 2002:a1c:96c5:: with SMTP id y188mr9036668wmd.103.1549571670078;
+        Thu, 07 Feb 2019 12:34:30 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q15sm232238wmj.46.2019.02.07.12.34.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Feb 2019 12:25:16 -0800 (PST)
+        Thu, 07 Feb 2019 12:34:29 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v4] log,diff-tree: add --combined-all-names option
-References: <20190126221811.20241-1-newren@gmail.com>
-        <20190204200754.16413-1-newren@gmail.com>
-        <xmqqlg2vtfmo.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BGyL5BAejK-P-EdscFdH3C6uR7e6CbgNe-9doy-mkw-vg@mail.gmail.com>
-        <xmqqa7jarmvo.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BG4WftXZgbzN48zSo1Z5BcWYjdbz+8hGSGBNJbSsYUzAA@mail.gmail.com>
-Date:   Thu, 07 Feb 2019 12:25:15 -0800
-In-Reply-To: <CABPp-BG4WftXZgbzN48zSo1Z5BcWYjdbz+8hGSGBNJbSsYUzAA@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 7 Feb 2019 11:50:15 -0800")
-Message-ID: <xmqqimxvny6s.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.21.0-rc0
+References: <xmqqh8dgqcqn.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1902072049080.41@tvgsbejvaqbjf.bet>
+Date:   Thu, 07 Feb 2019 12:34:28 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1902072049080.41@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 7 Feb 2019 20:50:08 +0100 (STD)")
+Message-ID: <xmqqef8jnxrf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,56 +67,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I think "copy from" and "rename from" should be relatively
-> straightforward.  However, in a combined diff, we could have both a
-> modified status, a renamed status, and a copied status, meaning that
-> we'll need an array of both similarity and dissimilarity indexes...and
-> trying to present that to the user in a way that makes sense seems
-> like a lost cause to me.  Does anyone else know how to represent that?
->  I'm inclined to just leave it out.
+> Hi Junio,
 >
-> Also, I'm afraid "copy to" and "rename to" could be confusing if both
-> appeared, since there's only one "to" path.  If there is both a copy
-> and a rename involved relative to different parents, should these be
-> coalesced into a "copy/rename to" line?
+> On Wed, 6 Feb 2019, Junio C Hamano wrote:
+>
+>> New contributors whose contributions weren't in v2.20.0 are as follows.
+>> Welcome to the Git development community!
+>> 
+>>   Arti Zirk, Brandon Richardson, Chayoung You, Denis Ovsienko, Erin
+>>   Dahlgren, Force Charlie, Frank Dana, Issac Trotts, Laura Abbott,
+>>   Patrick Hogg, Peter Osterlund, Shahzad Lone, and Slavica Djukic.
+>
+> Could you include Tanushree Tumane in that list? Granted, so far they
+> mostly cleaned up Pranit Bauva's patches, keeping the authorship, but
+> still...
 
-There are three possible labels (i.e. 'in-place modification',
-'rename from elsewhere' and 'copy from elsewhere'), and you can say
-"this commit created file F by renaming from X (or by copying X)"
-only when you know path F did not exist _immediately before_ this
-commit.  The distinction between rename and copy is whether the path
-X remains in the resulting commit (i.e. if there is no X, the commit
-created path F by moving X; if there is X, the commit copied the
-contents of X into a new path F).
-
-So telling renames and copies apart is probably straight-forward (if
-you have sufficient information---I am not sure if you do in this
-codepath offhand); as long as you know what pathname each preimage
-(i.e. parent of the perge) tree had and if that pathname is missing
-in the postimage (luckily there is only one---the merge result), it
-was renamed, and otherwise it was copied.
-
-But telling in-place modification and other two might be
-trickier. In one parent path F may be missing but in the other
-parent path F may exist, and the result of the merge is made by
-merging the contents of path X in the first parent and the contents
-of path F in the second parent.  From the view of the transition
-between the first parent to the merge result, we moved the path X to
-path F and made some modifications (i.e. renamed).  From the view of
-the transition from the other branch, we kept the contents in path F
-during the transition and there is no renames or copies involved.
-
-Actually what I had in mind when I mentioned the extended headers
-the first time in this discussion was that we would have "rename
-from", "copy from", etc. separately for each parent, as the contents
-may have come from different paths in these parents.  And that was
-where my earlier "... might only become waste of the screen real
-estate" comes from.
-
-So, again, do not spend too much effort to emit these textual info
-that can be easily seen with the N+1 plus/minus header lines.
-
-Thanks.
-
+There is no provision for manual override in the machinery, so, no.
