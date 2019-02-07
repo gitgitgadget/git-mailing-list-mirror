@@ -2,102 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0997A1F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 15:42:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFD7D1F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 16:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726685AbfBGPm2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 10:42:28 -0500
-Received: from mout.gmx.net ([212.227.17.20]:59129 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726037AbfBGPm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 10:42:28 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfAog-1gU2vc2utu-00Ornq; Thu, 07
- Feb 2019 16:42:14 +0100
-Date:   Thu, 7 Feb 2019 16:41:57 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] doc-diff: don't `cd_to_toplevel`
-In-Reply-To: <20190206185520.GD10231@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1902071632280.41@tvgsbejvaqbjf.bet>
-References: <20190203230152.GA25608@sigill.intra.peff.net> <20190204205037.32143-1-martin.agren@gmail.com> <20190204233444.GC2366@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1902051050090.41@tvgsbejvaqbjf.bet> <xmqqimxyrs4w.fsf@gitster-ct.c.googlers.com>
- <20190206185520.GD10231@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726685AbfBGQ6V convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 7 Feb 2019 11:58:21 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:61408 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726196AbfBGQ6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 11:58:21 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x17GwE39099492
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 7 Feb 2019 11:58:14 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?iso-8859-1?Q?'Torsten_B=F6gershausen'?=" <tboegi@web.de>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+Cc:     "=?iso-8859-1?Q?'SZEDER_G=E1bor'?=" <szeder.dev@gmail.com>,
+        "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
+References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet> <20190206104243.GJ10587@szeder.dev> <nycvar.QRO.7.76.6.1902061450280.41@tvgsbejvaqbjf.bet> <20190206171517.s5lskawpdodc74ui@tb-raspi4> 
+In-Reply-To: 
+Subject: RE: t0025 flakey?
+Date:   Thu, 7 Feb 2019 11:58:08 -0500
+Message-ID: <001501d4bf06$506b8640$f14292c0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:fOtEPtT0kH8S2BYdNEI3NYIQiux8prsJQJeRv4FlL2lgTGUAirg
- TXBn615Th8IoVfaeeIWK4Z4ueUExXRikyWp9oAuC76oIs3PSMWYbkaYUzNEicyIMvC49Bpu
- v/a1IO/5gh0JKK04+lbq3mB4DYDSJjMagsIxmy9SW7f+5B7J+e4AQ/sJ82vzg7om9/ki/yz
- iklUxHUhWNWXXgHkjkCBg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:GgK1fSlfkGs=:vPn2mzSFmS7kEzvQTjt2i7
- pTykkLUZTS+rRRiPLmPb5YuiKuKqbOfvlffIfDO5hNtI5FN2MleKyCO50tHarEpk6aeVINq1V
- GPnefeewWrqZltF9Lj+H7LB3P8bbMEPJb8cwfleI7GefSF1l37dtnWU1zvY49bwGn2Jov1Ie/
- 1MuKoNP2gIwWwmIz/ZJJc278gGha7d647aAqvDma05kXIVGzGz3bhkzAfQcG6m3OC7Gw3pKZq
- +fTeJ+CLDSDGju4l95gM03ebI4S8cFRSbKyHR9w2UeJZJq15iaveqh6DZM4Jkdb0uoN65Kkoz
- 512d/p0mgAOEQgOzgzTWlYTiCMCbHg2jKEbNYFJ7Dy4hW2pDEMrOFt1C27fMAwclpth1Gd2Dr
- +QyXVHq4EQkux6dHhOYPR16aOZP5sxQv4O46GbbFaB3y61bJ63o8PMVY2Fqr+8mD9Rgz/HEUw
- um8c/OPV6yMf5OsEftGd7dy6TGCe9KAzkJVynstWjN/hUT3zrz2YHEPZlstaJR+Ts6vnPGXy6
- V59mQeuYVnP4dR58I1hKH9yqUoijcp8T1XUGkDHImwKBm296+rcgWZx87zTDk+wHWPZ5jd5mz
- 6ltp+2BHH9rIFpjEpEEw205gwbnYsbfGfhazevmJ0yN/or8Va0pPS6AiPmI4jVUTJles1RAhD
- Q7UfPA+sgB0Dn7QVbHMIILtuLe/4JstfRxobN2jAeN3rnRVBlBw8CedHKr6W6p7vgvXSWNWOm
- 7medrR5UjCHtNKXnCU+g8XQa8EaWQ965VqZjajVQB0nAPlpnehXqnPjlK/IoDGKlUMVMyhAw6
- kiv47Vr4YwhL6QEqbtfKJ4x9z9TCnKxcw1tUxXVAA3areW7hIq+3+GWBF5r5lvEg0RilwH76t
- B48tu8TQI7fPPJd+a5/m5zXCedif/GA4mWgpOc92O0al7fA+8+hQgUG4n2q/QpDQJXBMa14zl
- s9qT0IfZLFA==
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJs/IuaaCkX8/5Ult+TIwKZwFHx1AHYuM18APJkJqYCro2vgqR2wojwgAGC4SA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Wed, 6 Feb 2019, Jeff King wrote:
-
-> On Tue, Feb 05, 2019 at 10:45:35AM -0800, Junio C Hamano wrote:
+On February 6, 2019 13:01, I wrote:
+> On February 6, 2019 12:15, Torsten Bögershausen wrote:
+> > To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > Cc: SZEDER Gábor <szeder.dev@gmail.com>; Jeff King <peff@peff.net>;
+> > git@vger.kernel.org
+> > Subject: Re: t0025 flakey?
+> >
+> > On Wed, Feb 06, 2019 at 02:52:53PM +0100, Johannes Schindelin wrote:
+> > > Hi Gábor,
+> > >
+> > > On Wed, 6 Feb 2019, SZEDER Gábor wrote:
+> > >
+> > > > On Wed, Feb 06, 2019 at 11:25:38AM +0100, Johannes Schindelin
+> wrote:
+> > > >
+> > > > > at first I thought that those intermittent test failures were
+> > > > > limited to Windows, but they are not: I can see it now in a
+> > > > > build on 32-bit Linux.
+> > > > > Full logs here:
+> > > > >
+> > > > > https://dev.azure.com/gitgitgadget/git/_build/results?buildId=10
+> > > > > 32 &_a=summary&view=ms.vss-test-web.build-test-results-tab
+> > > > >
+> > > > > Excerpt from the failing test case:
+> > > > >
+> > > > > -- snip --
+> > > > > not ok 2 - renormalize CRLF in repo  expecting success:
+> > > > > 	echo "*.txt text=auto" >.gitattributes &&
+> > > > > 	git add --renormalize "*.txt" &&
+> > > > > 	cat >expect <<-\EOF &&
+> > > > > 	i/lf w/crlf attr/text=auto CRLF.txt
+> > > > > 	i/lf w/lf attr/text=auto LF.txt
+> > > > > 	i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
+> > > > > 	EOF
+> > > > > 	git ls-files --eol |
+> > > > > 	sed -e "s/	/ /g" -e "s/  */ /g" |
+> > > > > 	sort >actual &&
+> > > > > 	test_cmp expect actual
+> > > > >
+> > > > > + echo *.txt text=auto
+> > > > > + git add --renormalize *.txt
+> > > > > + cat
+> > > > > + sort
+> > > > > + sed -e s/	/ /g -e s/  */ /g
+> > > > > + git ls-files --eol
+> > > > > + test_cmp expect actual
+> > > > > + diff -u expect actual
+> > > > > --- expect	2019-02-06 09:39:42.080733629 +0000
+> > > > > +++ actual	2019-02-06 09:39:42.088733629 +0000
+> > > > > @@ -1,3 +1,3 @@
+> > > > > -i/lf w/crlf attr/text=auto CRLF.txt
+> > > > > +i/crlf w/crlf attr/text=auto CRLF.txt
+> > > > >  i/lf w/lf attr/text=auto LF.txt -i/lf w/mixed attr/text=auto
+> > > > > CRLF_mix_LF.txt
+> > > > > +i/mixed w/mixed attr/text=auto CRLF_mix_LF.txt
+> > > > > error: last command exited with $?=1
+> > > > > -- snap --
+> > > > >
+> > > > > Any ideas?
+> > > >
+> > > > I reported this and Peff looked into it on the way to Git Merge,
+> > > > but not working solution yet.
+> > > >
+> > > > https://public-inbox.org/git/20190129225121.GD1895@sigill.intra.pe
+> > > > ff
+> > > > .net/T/#u
+> > >
+> > > Thank you!
+> > > Dscho
+> >
+> > I shortly looked into the pointers here - Is t0025 flaky after the fix
+from
+> Peff:
+> >
+> > [PATCH] add: use separate ADD_CACHE_RENORMALIZE flag
+> >
+> > Or has it always been shaky ?
+> > Does anybody know ?
 > 
-> >  - Perhaps find the fork point, run tests to find known breakages
-> >    and exclude them?  This would simply be not practical, as it
-> >    doubles the number of tests run, for individual topic branches
-> >    because there are an order of magnitude more of them than the
-> >    primary integration branches.
-> 
-> I think this can be limited to the tests that failed, which makes things
-> much faster. I.e., we run the tests at the tip of topic X and see that
-> t1234 fails. We then go back to the fork point and we just need to run
-> t1234 again. If it succeeds, then we blame X for the failure. If it
-> fails, then we consider it a false positive.
+> The NonStop port has traditionally had issues with t0025, which we tended
+> to ignore because things did work. We wrote those off as bash issues in
+> t0025 since they seemed to be corrected when we picked up a new bash
+> version about a year ago. I will keep monitoring this, particularly when
+2.21
+> comes out.
 
-If you mean merge bases by fork points, I wrote an Azure Pipeline to do
-that (so that I could use the cloud as kind of a fast computer), but that
-was still too slow.
+FYI: t0020-t0027 all passed on the NonStop port for 2.21.0-rc0 - so no
+issues for us on this one.
 
-Even when there are even only as much as 12 merge bases to test (which is
-the current number of merge bases between `next` and `pu`), a build takes
-roughly 6 minutes on Windows, and many tests take 1 minute or more to run
-(offenders like t7003 and t7610 take over 400 seconds, i.e. roughly 6
-minutes), we are talking about roughly 1.5h *just* to test the merge
-bases.
+Cheers,
+Randall
 
-And I sadly have to report that that's not the end of it. Back when I
-implemented the automatic bisect after failed builds (for details, see
-https://github.com/git-for-windows/build-extra/commit/c7e01e82c), I had to
-turn it off real quickly because the dumb bisect between `next` and `pu`
-regularly ran into the 4h timeout.
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
-Ciao,
-Dscho
 
-> You do pay the price to do a full build at the fork point, but in my
-> experience that is much quicker than the tests.
-> 
-> -Peff
-> 
+
