@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F10C81F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 10:19:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA2061F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 10:19:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726801AbfBGKTB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 05:19:01 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:44474 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726792AbfBGKTB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 05:19:01 -0500
-Received: by mail-pl1-f194.google.com with SMTP id p4so4552278plq.11
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 02:19:00 -0800 (PST)
+        id S1726824AbfBGKTE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 05:19:04 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:42940 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726792AbfBGKTD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 05:19:03 -0500
+Received: by mail-pl1-f193.google.com with SMTP id s1so4562675plp.9
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 02:19:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=LSguYJ0JwFdSlgtxUqnrD01QHLcQemGRCQs5CQwKXRc=;
-        b=KGpEh9eD8EYDgAooYDH3ihBqFxFsfxLH9CCV8I2aDYf2uw5sdoF3ulEIMo7zUU9y2A
-         FKcVuAbc/Li73PNslWR3QdPwoH8q9pjX5tiNvx+4jc/yavXROt40AkgKZmzKO+tczLbY
-         nSIEpN70HXJvqgdVRIWFnxUb/JgAHRwm75pmAP6zepJzeYTjZE9HjbXpga9sIgwAaasw
-         ktqCo9SNVJZQsU3oZmxPdRmDs975QvTBhaJRLpiNFNQP8KJZsj/rv+hyUiXXYJT9qMLO
-         /+W+XjpiElx3LmUHry5m42yfQ4o7MgBQei8mbXMYyPAwiFt1miBtHyfmAGSGB1Owtceb
-         42Rw==
+        bh=LRiG02KAdsslIb4EAnfa+TDfiu2mb1A5iDISeP6x0q0=;
+        b=A9NhqrVpN2ZR9OMruI5g/pM1/Tl7E3y0W5BMrR1DMgOZ9z5QoS8LuOYkcXRq+cqCDd
+         j3AxfK7XT1ShmXC5iU/JyZxFmbuObyQxR54OCSLy63kZnVL1LVXB/nNJGMdg/bKLMdJI
+         QuvVLsKOTmoOR1WtIzc5uIk0wDof7yujg2ifXxOzfb1g3rAUIoqZhT7Y2eVI4EJfvcvC
+         dUhrSeBQ0wbaphIvt97pyWmzuMT1X/xNT71OyhgY8W0GRxcMveOgGSzUfeWByy4T9gmp
+         LC/wPv3ldAZd8d1HZD1Vcce5DM0nGjCjE6vzaTVMg0tSeHI3Ov8H8+PNTuVql9+2mLKB
+         E1hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LSguYJ0JwFdSlgtxUqnrD01QHLcQemGRCQs5CQwKXRc=;
-        b=gyzILqYqQ4t0OPi5GLujV2jhrKAm3KLJmQCr3cEXzJyuFyBwwrGRu1Zs8hNK/TXp4g
-         b2ztHzntl7MuMuHBxO1z+lTI128v2FH4GZoWo3lGSDxtFskcCZywng6dJiYiLpXrSld9
-         MR5uI2rrUlCk5Zef6Rz5e0LyskkX1wJRhsYrS20xtAquGb/AaKBiiRwuLV8whsiRYb1P
-         p5aeGEdZJ8zJZDZmYrwCOf2kInOwQID+KV8H3XGd547MWaNmS8jhzGfQi7uoUnKt10UC
-         cbhyu4akBF6SHmOS79EpQsPwZ/8AWtRi4dgJNwEmMildeu+CrFOwe974lwvZT/StFFPP
-         Ji6Q==
-X-Gm-Message-State: AHQUAuZ3F4OvOk4fGiJaPWTJdOEVR/US08fxqUFr3AMC25SwXabsmv17
-        Tdf0+mzmiYxrIxcSDcDJvi7flO+m
-X-Google-Smtp-Source: AHgI3IYW/xmQMK3aVbJdEL+YvQ24pB2c0TugBThhyPXrLG5HmWa5dt+9edDPXePQ1mhm1yNyOaSleQ==
-X-Received: by 2002:a17:902:2c03:: with SMTP id m3mr15093562plb.6.1549534740068;
-        Thu, 07 Feb 2019 02:19:00 -0800 (PST)
+        bh=LRiG02KAdsslIb4EAnfa+TDfiu2mb1A5iDISeP6x0q0=;
+        b=aHz9dqAgZWf0E4vd8KVlMR/pOn+PlqSMMmsKFe1b7nybd2OjuBrYZiKjQV9qp1CU9S
+         mKmX6X1IKoUhY6R5H6ItQbT4/dDYNZqDgfYvKgqlK8hISMRR246hvAbEnIRVoLHQRvH6
+         Pxtw4TxuRb3EZM9Ifw9PnD4NwjdWM/yPoGK5GOjYKAsTkO13zwarEZcO8YAvw6WYyVKu
+         SV2nbJrgbC7aIiChokI9LalwKK6gPiglcK4CW/IbgO505Ld4iQP49QAr8oS0bZuGP6Zl
+         61xP7b1z8HDlbIyg8V17h7NcqjE3o/tkvbkA6kxiGkrPpA1LzMr5EiGrVMmznVB8zIQo
+         8g3A==
+X-Gm-Message-State: AHQUAuZ1z18aPHYMzxOO3K/ZdyhheipzUJ8kO5iYw0lBsovBAu4RzgM2
+        I/0w4L3p1ELzxQQ/D64AZp4snSEq
+X-Google-Smtp-Source: AHgI3IZdxRilNL/AjVG9t4Kvj3FTiKS3RmNNF1h2WoWlW7jYFS+6zEAbx1TaU8jKqrBi7fgasjWN2w==
+X-Received: by 2002:a17:902:296a:: with SMTP id g97mr15806307plb.317.1549534742725;
+        Thu, 07 Feb 2019 02:19:02 -0800 (PST)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id w5sm11183652pfn.89.2019.02.07.02.18.59
+        by smtp.gmail.com with ESMTPSA id u73sm7197793pfa.169.2019.02.07.02.19.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Feb 2019 02:18:59 -0800 (PST)
-Date:   Thu, 7 Feb 2019 02:18:57 -0800
+        Thu, 07 Feb 2019 02:19:02 -0800 (PST)
+Date:   Thu, 7 Feb 2019 02:19:00 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com
-Subject: [PATCH v3 2/3] submodule--helper: teach config subcommand --unset
-Message-ID: <e90dfe992e96b33f167d08fe51df49ab1d10ef23.1549534460.git.liu.denton@gmail.com>
+Subject: [PATCH v3 3/3] submodule: teach set-branch subcommand
+Message-ID: <91bb634dfad7f6a17bbed9eaf27f668326fca54e.1549534460.git.liu.denton@gmail.com>
 References: <cover.1549521103.git.liu.denton@gmail.com>
  <cover.1549534460.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -67,85 +67,275 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This teaches submodule--helper config the --unset option, which removes
-the specified configuration key from the .gitmodule file.
-
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
+This teaches git-submodule the set-branch subcommand which allows the
+branch of a submodule to be set through a porcelain command without
+having to manually manipulate the .gitmodules file.
 ---
- builtin/submodule--helper.c | 18 ++++++++++++------
- t/t7411-submodule-config.sh |  9 +++++++++
- 2 files changed, 21 insertions(+), 6 deletions(-)
+ Documentation/git-submodule.txt        |  7 ++
+ contrib/completion/git-completion.bash |  5 +-
+ git-submodule.sh                       | 75 +++++++++++++++++++--
+ t/t7419-submodule-set-branch.sh        | 93 ++++++++++++++++++++++++++
+ 4 files changed, 175 insertions(+), 5 deletions(-)
+ create mode 100755 t/t7419-submodule-set-branch.sh
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index b80fc4ba3d..a86eacf167 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2148,17 +2148,22 @@ static int check_name(int argc, const char **argv, const char *prefix)
- static int module_config(int argc, const char **argv, const char *prefix)
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 4150148fa3..6c608b3b8c 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -14,6 +14,7 @@ SYNOPSIS
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] deinit [-f|--force] (--all|[--] <path>...)
+ 'git submodule' [--quiet] update [<options>] [--] [<path>...]
++'git submodule' [--quiet] set-branch [<options>] [--] <path>
+ 'git submodule' [--quiet] summary [<options>] [--] [<path>...]
+ 'git submodule' [--quiet] foreach [--recursive] <command>
+ 'git submodule' [--quiet] sync [--recursive] [--] [<path>...]
+@@ -168,6 +169,12 @@ submodule with the `--init` option.
+ If `--recursive` is specified, this command will recurse into the
+ registered submodules, and update any nested submodules within.
+ --
++set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>::
++	Sets the default remote tracking branch for the submodule. The
++	`--branch` option allows the remote branch to be specified. The
++	`--default` option removes the submodule.<name>.branch configuration
++	key, which causes the tracking branch to default to 'master'.
++--
+ summary [--cached|--files] [(-n|--summary-limit) <n>] [commit] [--] [<path>...]::
+ 	Show commit summary between the given commit (defaults to HEAD) and
+ 	working tree/index. For a submodule in question, a series of commits
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index de56879960..0fccadfc97 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2573,7 +2573,7 @@ _git_submodule ()
  {
- 	enum {
--		CHECK_WRITEABLE = 1
--	} command = 0;
-+		NONE,
-+		CHECK_WRITEABLE,
-+		DO_UNSET
-+	} command = NONE;
+ 	__git_has_doubledash && return
  
- 	struct option module_config_options[] = {
- 		OPT_CMDMODE(0, "check-writeable", &command,
- 			    N_("check if it is safe to write to the .gitmodules file"),
- 			    CHECK_WRITEABLE),
-+		OPT_CMDMODE(0, "unset", &command,
-+			    N_("unset the config in the .gitmodules file"),
-+			    DO_UNSET),
- 		OPT_END()
- 	};
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper config name [value]"),
-+		N_("git submodule--helper config name [--unset] [value]"),
- 		N_("git submodule--helper config --check-writeable"),
- 		NULL
- 	};
-@@ -2170,15 +2175,16 @@ static int module_config(int argc, const char **argv, const char *prefix)
- 		return is_writing_gitmodules_ok() ? 0 : -1;
- 
- 	/* Equivalent to ACTION_GET in builtin/config.c */
--	if (argc == 2)
-+	if (argc == 2 && command != DO_UNSET)
- 		return print_config_from_gitmodules(the_repository, argv[1]);
- 
- 	/* Equivalent to ACTION_SET in builtin/config.c */
--	if (argc == 3) {
-+	if (argc == 3 || (argc == 2 && command == DO_UNSET)) {
- 		if (!is_writing_gitmodules_ok())
- 			die(_("please make sure that the .gitmodules file is in the working tree"));
- 
--		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
-+		const char *value = (argc == 3) ? argv[2] : NULL;
-+		return config_set_in_gitmodules_file_gently(argv[1], value);
+-	local subcommands="add status init deinit update summary foreach sync absorbgitdirs"
++	local subcommands="add status init deinit update set-branch summary foreach sync absorbgitdirs"
+ 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		case "$cur" in
+@@ -2604,6 +2604,9 @@ _git_submodule ()
+ 			--force --rebase --merge --reference --depth --recursive --jobs
+ 		"
+ 		;;
++	set-branch,--*)
++		__gitcomp "--default --branch"
++		;;
+ 	summary,--*)
+ 		__gitcomp "--cached --files --summary-limit"
+ 		;;
+diff --git a/git-submodule.sh b/git-submodule.sh
+index b5f2beee60..470f681573 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -10,6 +10,7 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
+    or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
++   or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]
+@@ -684,6 +685,72 @@ cmd_update()
  	}
+ }
  
- 	usage_with_options(git_submodule_helper_usage, module_config_options);
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 89690b7adb..fcc0fb82d8 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -142,6 +142,15 @@ test_expect_success 'reading submodules config from the working tree with "submo
- 	)
- '
++#
++# Configures a submodule's default branch
++#
++# $@ = requested path
++#
++cmd_set_branch() {
++	unset_branch=false
++	branch=
++
++	while test $# -ne 0
++	do
++		case "$1" in
++		-q|--quiet)
++			# we don't do anything with this but we need to accept it
++			;;
++		-d|--default)
++			unset_branch=true
++			;;
++		-b|--branch)
++			case "$2" in '') usage ;; esac
++			branch=$2
++			shift
++			;;
++		--)
++			shift
++			break
++			;;
++		-*)
++			usage
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done
++
++	if test $# -ne 1
++	then
++		usage
++	fi
++
++	# we can't use `git submodule--helper name` here because internally, it
++	# hashes the path so a trailing slash could lead to an unintentional no match
++	name="$(git submodule--helper list "$1" | cut -f2)"
++	if test -z "$name"
++	then
++		exit 1
++	fi
++
++	test -n "$branch"; has_branch=$?
++	test "$unset_branch" = true; has_unset_branch=$?
++
++	if test $((!$has_branch != !$has_unset_branch)) -eq 0
++	then
++		usage
++	fi
++
++	if test $has_branch -eq 0
++	then
++		git submodule--helper config submodule."$name".branch "$branch"
++	else
++		git submodule--helper config --unset submodule."$name".branch
++	fi
++}
++
+ #
+ # Show commit summary for submodules in index or working tree
+ #
+@@ -983,7 +1050,7 @@ cmd_absorbgitdirs()
+ while test $# != 0 && test -z "$command"
+ do
+ 	case "$1" in
+-	add | foreach | init | deinit | update | status | summary | sync | absorbgitdirs)
++	add | foreach | init | deinit | update | set-branch | status | summary | sync | absorbgitdirs)
+ 		command=$1
+ 		;;
+ 	-q|--quiet)
+@@ -1024,8 +1091,8 @@ then
+     fi
+ fi
  
-+test_expect_success 'unsetting submodules config from the working tree with "submodule--helper config --unset"' '
+-# "-b branch" is accepted only by "add"
+-if test -n "$branch" && test "$command" != add
++# "-b branch" is accepted only by "add" and "set-branch"
++if test -n "$branch" && (test "$command" != add || test "$command" != set-branch)
+ then
+ 	usage
+ fi
+@@ -1036,4 +1103,4 @@ then
+ 	usage
+ fi
+ 
+-"cmd_$command" "$@"
++"cmd_$(echo $command | sed -e s/-/_/g)" "$@"
+diff --git a/t/t7419-submodule-set-branch.sh b/t/t7419-submodule-set-branch.sh
+new file mode 100755
+index 0000000000..c4b370ea85
+--- /dev/null
++++ b/t/t7419-submodule-set-branch.sh
+@@ -0,0 +1,93 @@
++#!/bin/sh
++#
++# Copyright (c) 2019 Denton Liu
++#
++
++test_description='Test submodules set-branch subcommand
++
++This test verifies that the set-branch subcommand of git-submodule is working
++as expected.
++'
++
++TEST_NO_CREATE_REPO=1
++. ./test-lib.sh
++
++test_expect_success 'submodule config cache setup' '
++	mkdir submodule &&
++	(cd submodule &&
++		git init &&
++		echo a >a &&
++		git add . &&
++		git commit -ma &&
++		git checkout -b topic &&
++		echo b >a &&
++		git add . &&
++		git commit -mb
++	) &&
++	mkdir super &&
 +	(cd super &&
-+		git submodule--helper config --unset submodule.submodule.url &&
-+		git submodule--helper config submodule.submodule.url >actual &&
-+		test_must_be_empty actual
++		git init &&
++		git submodule add ../submodule &&
++		git commit -m "add submodule"
 +	)
 +'
 +
++test_expect_success 'ensure submodule branch is unset' '
++	(cd super &&
++		test_must_fail grep branch .gitmodules
++	)
++'
 +
- test_expect_success 'writing submodules config with "submodule--helper config"' '
- 	(cd super &&
- 		echo "new_url" >expect &&
++test_expect_success 'test submodule set-branch --branch' '
++	(cd super &&
++		git submodule set-branch --branch topic submodule &&
++		grep "branch = topic" .gitmodules &&
++		git submodule update --remote &&
++		cat <<-\EOF >expect &&
++		b
++		EOF
++		git -C submodule show -s --pretty=%s >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'test submodule set-branch --default' '
++	(cd super &&
++		git submodule set-branch --default submodule &&
++		test_must_fail grep branch .gitmodules &&
++		git submodule update --remote &&
++		cat <<-\EOF >expect &&
++		a
++		EOF
++		git -C submodule show -s --pretty=%s >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'test submodule set-branch -b' '
++	(cd super &&
++		git submodule set-branch -b topic submodule &&
++		grep "branch = topic" .gitmodules &&
++		git submodule update --remote &&
++		cat <<-\EOF >expect &&
++		b
++		EOF
++		git -C submodule show -s --pretty=%s >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'test submodule set-branch -d' '
++	(cd super &&
++		git submodule set-branch -d submodule &&
++		test_must_fail grep branch .gitmodules &&
++		git submodule update --remote &&
++		cat <<-\EOF >expect &&
++		a
++		EOF
++		git -C submodule show -s --pretty=%s >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_done
 -- 
 2.20.1.522.g5f42c252e9
 
