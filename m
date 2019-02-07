@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54F281F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 10:34:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 358B41F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 10:34:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726924AbfBGKep (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 05:34:45 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:42848 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726549AbfBGKep (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 05:34:45 -0500
-Received: by mail-pf1-f193.google.com with SMTP id m6so1140734pfa.9
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 02:34:44 -0800 (PST)
+        id S1726934AbfBGKeu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 05:34:50 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38273 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726927AbfBGKeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 05:34:50 -0500
+Received: by mail-pg1-f195.google.com with SMTP id g189so4311122pgc.5
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 02:34:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6co4Ndthljc+PaKdnjotb/2fUnLmuk6OFWLCL8HMI4g=;
-        b=pj/YYiFg2bGpRWuq3OHY8WH2nHa63z/RqL+nJBkjHB7iI6kfN9/qRLnRlKR5YannLq
-         CtgKWIcb2iFhppthmSd9qBo1p3UrLcHYDE3Nv/R4q+imxxKI34wd4/3gUF2Z7za0pxSC
-         PeSPfrnCUuzGnA57UnNngRTe5lxx3Yq2sMnR2itvYvyq6edWCxjjfA/qWD5qGGZV2Z+O
-         h8COiH3+PyKqw0eNz7VjHC0WFsObXsBe68RJ7fujDmWv43TYaodUEcHQ2Ly9x0wGeTG/
-         gheX6jhpw1griuA99vqJzMae7sXUXDYKPD0Cpk4hLmWEgCKnHIbBKJONJUwkw2xbEIdS
-         KoHg==
+        bh=0daa3NeKn4AqsTiEzcRHYU1GYlwzA9M2Rfdmgg9w4O8=;
+        b=LxJAvHxZH1bZjYDWmOWV2nvhvH+D+hjRoF4Bt/Idq/BRbLj3xNB1/TGTo167GKG8W6
+         mV4AluU9xq7Pw1zmUXgDnaBNEoI6Te5bzxSNRtB5lU8J/NNPDKElMjNG7yWsNyZqzeY/
+         rchgST1ki0I5vfzfOgs7niTLVn6cyVUll1H2KvG8L9QKisET8ilM3+0EMMpjNJdCHnMm
+         7UMfJxTeaRmF9pntaxA7WzDpAggSKC9Y3WZWAnfLR9/fmyTfhtAUO93/fv6ai0sVsKfM
+         LxpK5XMjvodRwXjPKwIOCw2QFlOOAR3bUuuCOLR2BsMW2ntRvX6Gq7TZ3LG8qWQYBuyT
+         ETYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6co4Ndthljc+PaKdnjotb/2fUnLmuk6OFWLCL8HMI4g=;
-        b=pfJhqgLnbZ1oRpaJLtZlEPsIIPj3Lrp91l02dgzk93ah2g75dd5zjFtT8LLkLA1GQt
-         kK02Izlt2b3StFCudB8ZOOxOuwbLD5NJAvxlEZEeFOf0D1OAjUTkB2sz4Sld1V4qs3R9
-         3YF8TEakuvHm7U4QW+R93maauRxFNVdc/Cu+KFJwC6DNoAGRht+N9+rWptKpSfU4sOXc
-         thGUk4GZP/eOXAZk38IHqiiTzaLaGvoKGxdT6PtYD+ZlBExth4tzWxnQu6QNQ4+PCtG2
-         4FwFxEwBI7ga98H9kYbPuPXAo+EGYXtVe5c+wX+FjVqFqrPDfiVFb2wMdgDWoSteXM3E
-         M/lg==
-X-Gm-Message-State: AHQUAuaa/sCf2hY8j27rD9KVuz1cJoQ/rPoi0Z6r9Hitv7h4Amw0V9zS
-        She2v+/nGiU/IKtVavBUaLFAX3+z
-X-Google-Smtp-Source: AHgI3Ia6Iyxfy8KNxmfQdj2SMj5LQedJxuyWfQFXIDEfnzyHkFSUjAw2KXoHABWC57paQGBVGyvbrw==
-X-Received: by 2002:a65:64c8:: with SMTP id t8mr3786208pgv.31.1549535683907;
-        Thu, 07 Feb 2019 02:34:43 -0800 (PST)
+        bh=0daa3NeKn4AqsTiEzcRHYU1GYlwzA9M2Rfdmgg9w4O8=;
+        b=KVmnpDPhglq0Ml5vsB8e5BTLpWY3Lq/P27+X1uW2hvltxFRm2yTpsRHdarR4kdsfHX
+         SPwOve4+21HQgLLPYXfp24L/7YwXnEk/AoyyLfzkZ27MC4jrdYFehoQH7EET5zB+UsFJ
+         THOv3F4UVz4DvFgNnmMT8Sg51b6t/x8sZMyPTf5NQqHimzd5GFSdyJEKr1JES/VUfZct
+         5SNmAH1Zb4q2h9+A4P5bmf7AXPIXBxcYnJrQi4O+1N0oojnzskh/TP9AT7qeZsq2qb7d
+         iQnrrhkablj1La09fXu8/U0NTNFtVSLZKU7NmxgZtywuUi/Rm9+B1fmPp2ZYEsshEwcN
+         Y6Sw==
+X-Gm-Message-State: AHQUAuajrAX0tpXT2D1vQqDVjCIEURE73AnHkeNOiCI3VYYDFOkj74sW
+        voDvgAW3AUSnKnYVDrZDpkqJh0Ll
+X-Google-Smtp-Source: AHgI3IYFBmp8rj5AFGoWo3C3TqiIkqJxxDFe4N/4Xy36MP+yD6R+cDQegFHfwoAIkBf88n8bdTKDfg==
+X-Received: by 2002:aa7:87c3:: with SMTP id i3mr3253902pfo.245.1549535688924;
+        Thu, 07 Feb 2019 02:34:48 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id d129sm21448919pfc.31.2019.02.07.02.34.41
+        by smtp.gmail.com with ESMTPSA id y20sm3517475pfd.161.2019.02.07.02.34.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Feb 2019 02:34:43 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 07 Feb 2019 17:34:39 +0700
+        Thu, 07 Feb 2019 02:34:48 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 07 Feb 2019 17:34:44 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 12/21] diff.c: convert --output-*
-Date:   Thu,  7 Feb 2019 17:33:17 +0700
-Message-Id: <20190207103326.10693-13-pclouds@gmail.com>
+Subject: [PATCH 13/21] diff.c: convert -B|--break-rewrites
+Date:   Thu,  7 Feb 2019 17:33:18 +0700
+Message-Id: <20190207103326.10693-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
 In-Reply-To: <20190207103326.10693-1-pclouds@gmail.com>
 References: <20190207103326.10693-1-pclouds@gmail.com>
@@ -70,147 +70,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This also validates that the user specifies a single character in
---output-indicator-*, not a string.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/diff-options.txt | 10 +++++
- diff.c                         | 71 +++++++++++++++++++++++++---------
- 2 files changed, 63 insertions(+), 18 deletions(-)
+ diff.c | 62 ++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 36 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 058d93ec4f..d3e8d634b2 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -41,6 +41,16 @@ ifndef::git-format-patch[]
- 	Implies `-p`.
- endif::git-format-patch[]
- 
-+--output=<file>::
-+	Output to a specific file instead of stdout.
-+
-+--output-indicator-new=<char>::
-+--output-indicator-old=<char>::
-+--output-indicator-context=<char>::
-+	Specify the character used to indicate new, old or context
-+	lines in the generated patch. Normally they are '+', '-' and
-+	' ' respectively.
-+
- ifndef::git-format-patch[]
- --raw::
- ifndef::git-log[]
 diff --git a/diff.c b/diff.c
-index b24f6825a1..8df396cb9a 100644
+index 8df396cb9a..d2139082b7 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4841,6 +4841,19 @@ static int parse_objfind_opt(struct diff_options *opt, const char *arg)
+@@ -4841,6 +4841,30 @@ static int parse_objfind_opt(struct diff_options *opt, const char *arg)
  	return 1;
  }
  
-+static int diff_opt_char(const struct option *opt,
-+			 const char *arg, int unset)
++static int diff_opt_break_rewrites(const struct option *opt,
++				   const char *arg, int unset)
 +{
-+	char *value = opt->value;
++	int *break_opt = opt->value;
++	int opt1, opt2;
 +
 +	BUG_ON_OPT_NEG(unset);
-+	if (arg[1])
-+		return error(_("%s expects a character, got '%s'"),
-+			     opt->long_name, arg);
-+	*value = arg[0];
++	if (!arg)
++		arg = "";
++	opt1 = parse_rename_score(&arg);
++	if (*arg == 0)
++		opt2 = 0;
++	else if (*arg != '/')
++		return error(_("%s expects <n>/<m> form"), opt->long_name);
++	else {
++		arg++;
++		opt2 = parse_rename_score(&arg);
++	}
++	if (*arg != 0)
++		return error(_("%s expects <n>/<m> form"), opt->long_name);
++	*break_opt = opt1 | (opt2 << 16);
 +	return 0;
 +}
 +
- static int diff_opt_compact_summary(const struct option *opt,
- 				    const char *arg, int unset)
+ static int diff_opt_char(const struct option *opt,
+ 			 const char *arg, int unset)
  {
-@@ -4872,6 +4885,23 @@ static int diff_opt_dirstat(const struct option *opt,
- 	return 0;
- }
+@@ -5011,6 +5035,12 @@ static void prep_parse_options(struct diff_options *options)
+ 			       N_("specify the character to indicate a context instead of ' '"),
+ 			       PARSE_OPT_NONEG, diff_opt_char),
  
-+static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *ctx,
-+					     const struct option *opt,
-+					     const char *arg, int unset)
-+{
-+	struct diff_options *options = opt->value;
-+	char *path;
++		OPT_GROUP(N_("Diff rename options")),
++		OPT_CALLBACK_F('B', "break-rewrites", &options->break_opt, N_("<n>[/<m>]"),
++			       N_("break complete rewrite changes into pairs of delete and create"),
++			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
++			       diff_opt_break_rewrites),
 +
-+	BUG_ON_OPT_NEG(unset);
-+	path = prefix_filename(ctx->prefix, arg);
-+	options->file = xfopen(path, "w");
-+	options->close_file = 1;
-+	if (options->use_color != GIT_COLOR_ALWAYS)
-+		options->use_color = GIT_COLOR_NEVER;
-+	free(path);
-+	return 0;
-+}
-+
- static int diff_opt_unified(const struct option *opt,
- 			    const char *arg, int unset)
- {
-@@ -4965,6 +4995,27 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_CALLBACK_F(0, "compact-summary", options, NULL,
- 			       N_("generate compact summary in diffstat"),
- 			       PARSE_OPT_NOARG, diff_opt_compact_summary),
-+		OPT_CALLBACK_F(0, "output-indicator-new",
-+			       &options->output_indicators[OUTPUT_INDICATOR_NEW],
-+			       N_("<char>"),
-+			       N_("specify the character to indicate a new line instead of '+'"),
-+			       PARSE_OPT_NONEG, diff_opt_char),
-+		OPT_CALLBACK_F(0, "output-indicator-old",
-+			       &options->output_indicators[OUTPUT_INDICATOR_OLD],
-+			       N_("<char>"),
-+			       N_("specify the character to indicate an old line instead of '-'"),
-+			       PARSE_OPT_NONEG, diff_opt_char),
-+		OPT_CALLBACK_F(0, "output-indicator-context",
-+			       &options->output_indicators[OUTPUT_INDICATOR_CONTEXT],
-+			       N_("<char>"),
-+			       N_("specify the character to indicate a context instead of ' '"),
-+			       PARSE_OPT_NONEG, diff_opt_char),
-+
-+		OPT_GROUP(N_("Diff other options")),
-+		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
-+		  N_("Output to a specific file"),
-+		  PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
-+
- 		OPT_END()
- 	};
- 
-@@ -4992,16 +5043,8 @@ int diff_opt_parse(struct diff_options *options,
- 	if (ac)
+ 		OPT_GROUP(N_("Diff other options")),
+ 		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
+ 		  N_("Output to a specific file"),
+@@ -5044,12 +5074,7 @@ int diff_opt_parse(struct diff_options *options,
  		return ac;
  
--	/* Output format options */
--	if (skip_prefix(arg, "--output-indicator-new=", &arg))
--		options->output_indicators[OUTPUT_INDICATOR_NEW] = arg[0];
--	else if (skip_prefix(arg, "--output-indicator-old=", &arg))
--		options->output_indicators[OUTPUT_INDICATOR_OLD] = arg[0];
--	else if (skip_prefix(arg, "--output-indicator-context=", &arg))
--		options->output_indicators[OUTPUT_INDICATOR_CONTEXT] = arg[0];
--
  	/* renames options */
--	else if (starts_with(arg, "-B") ||
-+	if (starts_with(arg, "-B") ||
- 		 skip_to_optional_arg(arg, "--break-rewrites", NULL)) {
- 		if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
- 			return error("invalid argument to -B: %s", arg+2);
-@@ -5242,15 +5285,7 @@ int diff_opt_parse(struct diff_options *options,
- 	else if (opt_arg(arg, '\0', "inter-hunk-context",
- 			 &options->interhunkcontext))
- 		;
--	else if ((argcount = parse_long_opt("output", av, &optarg))) {
--		char *path = prefix_filename(prefix, optarg);
--		options->file = xfopen(path, "w");
--		options->close_file = 1;
--		if (options->use_color != GIT_COLOR_ALWAYS)
--			options->use_color = GIT_COLOR_NEVER;
--		free(path);
--		return argcount;
--	} else
-+	else
- 		return 0;
- 	return 1;
+-	if (starts_with(arg, "-B") ||
+-		 skip_to_optional_arg(arg, "--break-rewrites", NULL)) {
+-		if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
+-			return error("invalid argument to -B: %s", arg+2);
+-	}
+-	else if (starts_with(arg, "-M") ||
++	if (starts_with(arg, "-M") ||
+ 		 skip_to_optional_arg(arg, "--find-renames", NULL)) {
+ 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
+ 			return error("invalid argument to -M: %s", arg+2);
+@@ -5328,17 +5353,14 @@ int parse_rename_score(const char **cp_p)
+ 
+ static int diff_scoreopt_parse(const char *opt)
+ {
+-	int opt1, opt2, cmd;
++	int opt1, cmd;
+ 
+ 	if (*opt++ != '-')
+ 		return -1;
+ 	cmd = *opt++;
+ 	if (cmd == '-') {
+ 		/* convert the long-form arguments into short-form versions */
+-		if (skip_prefix(opt, "break-rewrites", &opt)) {
+-			if (*opt == 0 || *opt++ == '=')
+-				cmd = 'B';
+-		} else if (skip_prefix(opt, "find-copies", &opt)) {
++		if (skip_prefix(opt, "find-copies", &opt)) {
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'C';
+ 		} else if (skip_prefix(opt, "find-renames", &opt)) {
+@@ -5346,25 +5368,13 @@ static int diff_scoreopt_parse(const char *opt)
+ 				cmd = 'M';
+ 		}
+ 	}
+-	if (cmd != 'M' && cmd != 'C' && cmd != 'B')
+-		return -1; /* that is not a -M, -C, or -B option */
++	if (cmd != 'M' && cmd != 'C')
++		return -1; /* that is not a -M, or -C option */
+ 
+ 	opt1 = parse_rename_score(&opt);
+-	if (cmd != 'B')
+-		opt2 = 0;
+-	else {
+-		if (*opt == 0)
+-			opt2 = 0;
+-		else if (*opt != '/')
+-			return -1; /* we expect -B80/99 or -B80 */
+-		else {
+-			opt++;
+-			opt2 = parse_rename_score(&opt);
+-		}
+-	}
+ 	if (*opt != 0)
+ 		return -1;
+-	return opt1 | (opt2 << 16);
++	return opt1;
  }
+ 
+ struct diff_queue_struct diff_queued_diff;
 -- 
 2.20.1.682.gd5861c6d90
 
