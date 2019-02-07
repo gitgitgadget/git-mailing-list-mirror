@@ -2,131 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 679B61F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 23:45:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2EEC1F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 23:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726718AbfBGXpu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 18:45:50 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44402 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726622AbfBGXpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 18:45:50 -0500
-Received: by mail-wr1-f67.google.com with SMTP id v16so1680595wrn.11
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 15:45:48 -0800 (PST)
+        id S1726864AbfBGXsk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 18:48:40 -0500
+Received: from mail-vk1-f169.google.com ([209.85.221.169]:45534 "EHLO
+        mail-vk1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726622AbfBGXsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 18:48:37 -0500
+Received: by mail-vk1-f169.google.com with SMTP id n126so414059vke.12
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 15:48:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zY7iGdI/BcTwJP9Q41OdyT75LBQQxPhKHWCGyVc/GWk=;
-        b=ZcJod/cOCvuAlPm23aoLGmK4KVd1/+MPzyzhy15vxUkLHQKRrltbmzdmv4Vjtq0oxB
-         iBAFxs+GrpqkKazBs3IwOvDEqe8lQAYjRGG9HK3FWtXCdlf9e8R18fVnjLsSF/2NKWBA
-         k+i3YA0op+M2pXU2jGxuLM3oXgPJLfiuU7yHBnEEy/bW2I5a3HXSAxQhKkKp/LhHPC1w
-         EFmFsYwDJiaCAM/bosh0xmuVMYhrs7BQ1BIbYUx2s7MeneL5hx82qzA7hd/iR1rcZMIk
-         8OTR1HNxgxQZHfe/a9P62qaezXIsW6tZSNVjM+6Z9L4EKbGRP8P64jHB5g0v0T0ZD9qB
-         GH9w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=h1slQTpEyXwsClEueQRCNexL5ESlFUBxU8p8LdH+9Us=;
+        b=JPJrJq2mpPUc8DxtUnuCo+kAP25K2M7tjB96g0pK0DoYYX0pQ/nS5UHXdklzpu3EMX
+         x1OYQ7g/w02cDQ6UBjjPNkgqwX/cIUsbUsFrMc/plZrHceQ+Q2yrJ5Z9N0SBD7QTyPh8
+         m9KB++DZEwwJXlG8uyI1bhp37b6MEy2mYYwu99t8Dex9Faxrk2htDCfMN6C9/Lw04Osq
+         OK/jpVaKS0AsGO6auUrLOWZiyD1ybQzQ0X70u4L9jSiMSz1jZf2TwNJCQKGf2F1AjaQo
+         N7F0NlghMxI3C3/WOXJRIvqdM8gW0Mti+MYpr43GqiygsIEXYVvxGFGql9x8UJqySyAK
+         Pv2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zY7iGdI/BcTwJP9Q41OdyT75LBQQxPhKHWCGyVc/GWk=;
-        b=CAtO3eBuxIHTWyVb6n1nh7ntG0PDz1smMczRSm6lHNCVvCaa4v9BA9Pyd8NewxE/Yd
-         iYLiRxe+ObHObxVbibqNWNLRyMtte+QDpRzdbytZxj/x5dq66gPXjAaLbD0EEp7P0LRc
-         RnCaIO5JNXJSIKkUhvFY9CseXtuaGIaAHD2EjdzQsR16UMKd0MWnMUMKrqWxZW6gg1/F
-         3xohMXf77wxV4XJ559PlSpMBSav+qgCysiy2jOeOS7avtomZB5MI0zWjAxOJ/+um37Ia
-         ZDRaAR/hPBTz+iWb3A/oE1QL5yT3ZgAk0qIBxbEtOdM1TkQvncWwPtL+R5EXp474izgD
-         CRFg==
-X-Gm-Message-State: AHQUAuYB3vbyenx9/X0+LDSvFeQxE/1cA2pL8NSuEcM4SHb2QvqD1nHw
-        gwbQLbxIyUftN3iifDJKhM6X/ydx
-X-Google-Smtp-Source: AHgI3IZ8VRC01vNAtHHbV82IqctWwmFORGspJ1cL17LVpYj23nnj4c1Hhg09G8+0m6FJo2Uh55Wwyw==
-X-Received: by 2002:a5d:4ecd:: with SMTP id s13mr6084665wrv.110.1549583147789;
-        Thu, 07 Feb 2019 15:45:47 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e27sm734507wra.67.2019.02.07.15.45.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Feb 2019 15:45:47 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] ci: clear and mark MAKEFLAGS exported just once
-References: <20190207183736.9299-1-szeder.dev@gmail.com>
-        <xmqqbm3npgox.fsf@gitster-ct.c.googlers.com>
-        <xmqq1s4jpgh6.fsf@gitster-ct.c.googlers.com>
-        <xmqqsgwzo0ib.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1902072331060.41@tvgsbejvaqbjf.bet>
-        <xmqqh8dfmawn.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 07 Feb 2019 15:45:46 -0800
-In-Reply-To: <xmqqh8dfmawn.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 07 Feb 2019 15:33:28 -0800")
-Message-ID: <xmqqd0o3mac5.fsf_-_@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=h1slQTpEyXwsClEueQRCNexL5ESlFUBxU8p8LdH+9Us=;
+        b=geWKsNWPYaXwJdXlkhiyRMGvPpTX8340wnMXVsRQn7KS7xDg83Pw6178sSmYjCukXP
+         yd/YBMCZKddKcWTVO5Fy8ypgimcbRL45d9jWwiY5wYO25xu2Yq5U0u7Y34OEYLRnNJkM
+         CRIhVkVj+/pht+fGuDGEbTdsP6vI1rPfBqx8OnecJFVfEDxhrmjMcTl5Lt0+8tQaZfAC
+         xUBtok0/42iDiSvGPZcDppVeoLyO9feHuYLjmwpBFvZ2ksua393dh7ohrdHd9QozHAyX
+         8Irf82YQiSu4LjP6YcnKQDuSCv1X6eD9X+RzSK8cQn1V6sQTlCD2aAIf/lj5YbcR9kid
+         rXNg==
+X-Gm-Message-State: AHQUAuYIJ/QcAyp69hKhZqA1Tc614RpiStn0bBb9MTQ8lBygCvCpPirS
+        ew8YL/Hi+WojyjONOZqzSIBbtQ9F2LneuRzV0oTr8ib3i74=
+X-Google-Smtp-Source: AHgI3Ib+FVEBQdOu2uBu9Mn4EIXwpZhdeYFjQkSkFNGf3JWnQTYxZsFryfgLzQULTIbMtnzAJWckMwJfQT+sap4LxME=
+X-Received: by 2002:a1f:e7c5:: with SMTP id e188mr7530961vkh.92.1549583316714;
+ Thu, 07 Feb 2019 15:48:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190126221811.20241-1-newren@gmail.com> <20190204200754.16413-1-newren@gmail.com>
+ <xmqqlg2vtfmo.fsf@gitster-ct.c.googlers.com> <CABPp-BGyL5BAejK-P-EdscFdH3C6uR7e6CbgNe-9doy-mkw-vg@mail.gmail.com>
+ <xmqqa7jarmvo.fsf@gitster-ct.c.googlers.com> <CABPp-BG4WftXZgbzN48zSo1Z5BcWYjdbz+8hGSGBNJbSsYUzAA@mail.gmail.com>
+ <xmqqimxvny6s.fsf@gitster-ct.c.googlers.com> <CABPp-BHyLFNcdh+=hf=R5xhUoNAQHPophxgc5e2HRqgeTU4e8Q@mail.gmail.com>
+ <xmqqlg2rmazz.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlg2rmazz.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 7 Feb 2019 15:48:24 -0800
+Message-ID: <CABPp-BEA9zUpv0-ZH4kjMg+KaQF=jT4D9sozvLC0gv8viN2MYw@mail.gmail.com>
+Subject: Re: [PATCH v4] log,diff-tree: add --combined-all-names option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clearing it once upfront, and turning all the assignment into
-appending, would future-proof the code even more, to prevent
-mistakes the previous one fixed from happening again.
+On Thu, Feb 7, 2019 at 3:31 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > Now, the question: In addition to the two "from" headers, how many
+> > "to" headers do we emit?  In particular, do we emit both a "copied to
+> > F" and a "renamed to F" header, or just a combined "renamed/copied to
+> > F" header?
+>
+> There is only a single path that can be on the "to", as there is
+> only one final result, but _how_ the contents got to that path would
+> be different, so to be technically truly correct, you would end up
+> showing N "to" lines for a N-way merge, each of which gives the same
+> path in the postimage, but some may say renamed, another may say
+> copioed and some others may need to say in-place edited.
+>
+> That would increase the number of necessary lines from N (from) + 1
+> (to) to N*2 (N for each of from and to), which makes it even less
+> economical.
+>
+> And showing a single "renamed/copied" feels more like a cop-out to
+> avoid being techincally incorrect, than giving a useful piece of
+> information to the users.
+>
+> I am inclined to say that we should do _without_ any "to" line.  And
 
-Also, mark the variable exported just once at the beginning.  There
-is no point in marking it exported repeatedly.
+Works for me.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-    >> So I'd rather clear `MAKEFLAGS` at the beginning (i.e. where you `export
-    >> MAKEFLAGS`, I'd simply append a `=`).
+> if we can do without any "to", perhaps we do not need "from", either.
 
-    This time in proper patch form.
+I would be okay with that, but looking through a few of them, I think
+the "from" lines do help a little, just because lengthy filenames are
+not uncommon and it's easy to miss the fact that there is a rename,
+often in some directory somewhere in the middle.  A couple examples:
 
- ci/lib.sh | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index cee51a4cc4..288a5b3884 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -74,6 +74,9 @@ check_unignored_build_artifacts ()
- 	}
- }
- 
-+# Clear MAKEFLAGS that may come from the outside world.
-+export MAKEFLAGS=
-+
- # Set 'exit on error' for all CI scripts to let the caller know that
- # something went wrong.
- # Set tracing executed commands, primarily setting environment variables
-@@ -101,7 +104,7 @@ then
- 	BREW_INSTALL_PACKAGES="git-lfs gettext"
- 	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
- 	export GIT_TEST_OPTS="--verbose-log -x --immediate"
--	export MAKEFLAGS="--jobs=2"
-+	MAKEFLAGS="$MAKEFLAGS --jobs=2"
- elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
- then
- 	CI_TYPE=azure-pipelines
-@@ -126,7 +129,7 @@ then
- 	BREW_INSTALL_PACKAGES=gcc@8
- 	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
- 	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
--	export MAKEFLAGS="--jobs=10"
-+	MAKEFLAGS="$MAKEFLAGS --jobs=10"
- 	test windows_nt != "$CI_OS_NAME" ||
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- else
-@@ -185,4 +188,4 @@ GIT_TEST_GETTEXT_POISON)
- 	;;
- esac
- 
--export MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
-+MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
--- 
-2.21.0-rc0
+diff --combined packages/search/ete/src/test/resources/test-suite.yml
+index 4ae66932ef9,1cc55276946..1cc55276946
+rename from packages/search/src/geb/resources/test-suite.yml
+--- a/packages/search/ete/src/test/resources/test-suite.yml
+--- a/packages/search/src/geb/resources/test-suite.yml
++++ b/packages/search/ete/src/test/resources/test-suite.yml
+@@@ -1,15 -1,5 +1,5 @@@
 
+
+diff --combined packages/search/ete/var/conf/app/public/searchApp.yml
+index 38cc5482e5b,487178ac0a9..487178ac0a9
+rename from packages/search/ete/var/conf/app/public/searchApp
+rename from packages/search/var/conf/app/public/searchApp.yml
+--- a/packages/search/ete/var/conf/app/public/searchApp
+--- a/packages/search/var/conf/app/public/searchApp.yml
++++ b/packages/search/ete/var/conf/app/public/searchApp.yml
+
+
+If there's no renames or copies, then I don't add anything to the
+combined diff.  With renames or copies, people can get the "to" name
+from looking at the "+++ b/" line.
+
+But not a real big deal, I could just omit this if you prefer.
