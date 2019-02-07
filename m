@@ -7,135 +7,155 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F10481F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 13:17:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DFE91F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 14:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726781AbfBGNRc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 08:17:32 -0500
-Received: from mout.gmx.net ([212.227.15.15]:43491 "EHLO mout.gmx.net"
+        id S1726894AbfBGO0t (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 09:26:49 -0500
+Received: from mout.gmx.net ([212.227.15.19]:47843 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726732AbfBGNRc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 08:17:32 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MAhWl-1gz70N0l1n-00Bx9x; Thu, 07
- Feb 2019 14:17:20 +0100
-Date:   Thu, 7 Feb 2019 14:17:03 +0100 (STD)
+        id S1726785AbfBGO0t (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 09:26:49 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0gww-1h6gWd1oT8-00utRO; Thu, 07
+ Feb 2019 15:26:41 +0100
+Date:   Thu, 7 Feb 2019 15:26:21 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add_to_index(): convert forgotten HASH_RENORMALIZE
- check
-In-Reply-To: <20190207020022.GA29974@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1902071416410.41@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet> <20190206104243.GJ10587@szeder.dev> <20190207020022.GA29974@sigill.intra.peff.net>
+cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] doc-diff: don't `cd_to_toplevel`
+In-Reply-To: <20190206184903.GC10231@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1902071518340.41@tvgsbejvaqbjf.bet>
+References: <20190203230152.GA25608@sigill.intra.peff.net> <20190204205037.32143-1-martin.agren@gmail.com> <20190204233444.GC2366@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1902051050090.41@tvgsbejvaqbjf.bet> <20190206184903.GC10231@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-881707564-1549545440=:41"
-X-Provags-ID: V03:K1:ashJ+rD0DJDGyEXsV7aMu2t5QcuqhMAG8GIcBiiue8eoxbA/QUn
- 8QZfYMNN/6Hi5i6Z6GOCRjTn7OZfBbbzz0naVh7TS/OKUMPGwE6WNvJz4WPDViqlifb6lg/
- 7hMleFfLpClFuetgtjgVBnq0q/hQE2G55tQeIawjM7r3L1ZEk+EaT7S6Vt2qKsf1Cwp8uwK
- upRsNuZvnq8vBYiBTL2Ig==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3txntNL0XcE=:RP6ANdX59/VyhZ/k26gz9Z
- T7Syk8ko8Oe1atIiWiOSjob5emNiaIBygfOfucj0E8j0UcTaX9grLi8ZFWdLRm1gg5BS1cddV
- fmmshVVuwXL85QfAfhOM60Bs1T04M9HF1jueRXFTbcU+UdkgsjgInlBtmRcTgaHxGMI+ZcVA/
- HSFUxMfMaZ5+VKE/IXMjsksHvu6sEBYffDbE7qa0XjHDNNlf12YSn0D44jr1yDieRE7J8LQc/
- LySYCpTCW359sGMJ3yaAVm4mITYidFPN+cPq/QHk6W+z3vIpuB33yyfg5x/reCQfnP92HWTNN
- V3dKe6P+7NZ7MS7A8MV0JWEz7cLOu6SBdiAuGfvza9qNTvt4RcteBK7gxCpUi8lY6CZhG6k+7
- ofWvMhToBz1z8aJIavjJla9GxvjYlI44D38VhL2Fr3FQgDX2I+umNm51jENtGWHBUPp0JX2LK
- S7M6mAEPIemg7az9WJwDDTXMtSYevKfsVXa4w/Cv8IePYmLVzNchH/8tDv9jdaIJx/ExPxouK
- Y1nG5DhJ/gWbPfdkt7hGNI8Cydojptr13TpMOGlPwL5eyETpjFeEbfWc6HXRlT+SaAfcbuhNb
- Dwq6jAoKrVa4nqSqktSJuq+1fMlc6/7LWqFs1cbKXrtFu7D4D4yl3kpYqhSx2QNuFfVmQz+bT
- lFK3MLudBV3xeGmPutNngfJSQGP6vrTf+jaCc4WDbGsrKW8Ok7vadNSoT61ZbTyPWPIFURojU
- 1x7EFRCBa4O0M8tkxHjHwi/bJq8NW4isgyAywrHU7/ft9UAEWGgmBF325KcYRZCWIVQqxCFAJ
- IJc5CD0HndgE82QDCtokaJu1KMe4H9MUi2m5Dg0M6z45Y8DHrjGNmI/Fm6PBWype++MAaz6qI
- F6f00kRO6sr28SuOSbg1cIP8e5pbRmY81wJLf4CwEL2WsHlFelDYvpVgT4u/VldyJWW2gTs+4
- 9xqtfLmRanw==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:itB6y0XNzXzjMWU1q0iTxtQdV29nIY3k+AlG7Dq6SpgD/7PsQpp
+ lrqVXperjxt9lUE48nudKSIJMufRYs7odViYap916cn6yc1HhpxGN/7ih9eFWOPI/cRl4aq
+ gM+IKR+xTb5GNHUL88KBxI4twI/53ByhOImJEoSjAto9FqIhYir+KWR1lE4//dY1rmSmO5t
+ 7h9dP37kIa8i5UZed8mQA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+/mPcWULgUM=:v+xfjnke1YjyPRMzyx/13r
+ xg56h1IlqQ97Cnv+NRJJChLxZkVZ9uIqTi8iHgroHBvbqeBcTxs4VO86RZnogiZI/ky/aO/zx
+ ro/Vel/PaajsP2d3GxpK99HbByZzk8+v4qaKDGwimxZkuUrZ9StxepsDSqdL5FINKp+2vLKJg
+ 52kWzth2MkAOa8yMn4hBolfX3OcrupV+UkO+eJGMpowX8LkOrtE9O/o5Q/R5WFCz03su6cBVh
+ xupmALSlGAkADQ4VxE0DtP24EwKLXR/bmwddpFtZefuJeg0MaEoHTwvE56u3G6bG6vbXYA1NJ
+ WcoSLeEnvRrYiIwJWUiKDbo6+zOODkm2XLrL/SG2nyJuycIh1oOseXApSUSkunn+Mz2dHf8NI
+ tPLQYkZ+2D8jj2jTzcImk1yz41f5pa9upYcQ01RHJIKxPuiJ9vqLCl0XSueUT849O4Rra9E+z
+ G0BfuHIzSpQ7kbQ75mgOb72+y5f8qo+rfuS8qWArm0KpilnuEOtmPg836XHgGx3DMbyP35cXo
+ MJiedrLR5mL9hcMslJYv/4EjIUKRi2ytxeqsMwerynJ0CwIFrodt4KIxsE6/SUAUMIQFWNNGH
+ YSKoCNfa0mbiLr96BpgvIHU7WskhEqyBCnUxc0p63wGiyNwUyOR+ELd++6Mjhjh5C4QKKEEL1
+ pBluPn8yUB2xnQ1h2g4MFl7W+YRptapXy/w91KHahoTDjPRlqojc0mryqKzi3/9huoSK6LiFE
+ zeVRsFBRMyP5OA4DEnP8mbARGyjz9G9y7bYQ/WCWbLRqVE3b/HDjTvcCwJpchf9lyzN4/EjSc
+ 0qEle2iD3TXWxYgVx/npILotGG8s5uTExfqJVbDatIeWafg3PEvkbPyAH5l0W3JHeEFRrYp+z
+ Rl29EpZekPji3iu//hSRXqt8m0m0wU9m7jgChX3d1gHvSnJk8S1ywGYpA+YTUPDMEs6L09Ku2
+ gEGN1VgC44A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-881707564-1549545440=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
 Hi Peff,
 
 On Wed, 6 Feb 2019, Jeff King wrote:
 
-> On Wed, Feb 06, 2019 at 11:42:43AM +0100, SZEDER Gábor wrote:
+> On Tue, Feb 05, 2019 at 11:34:54AM +0100, Johannes Schindelin wrote:
 > 
-> > I reported this and Peff looked into it on the way to Git Merge, but
-> > not working solution yet.
+> > Peff, you asked at the Contributors' Summit for a way to get notified
+> > when CI fails for your patch, and I was hesitant to add it (even if it
+> > would be straight-forward, really) because of the false positives.
 > > 
-> > https://public-inbox.org/git/20190129225121.GD1895@sigill.intra.peff.net/T/#u
+> > This is one such example, as the test fails:
+> > 
+> > 	https://dev.azure.com/gitgitgadget/git/_build/results?buildId=944
+> > 
+> > In particular, the tests t2024 and t5552 are broken for
+> > ma/doc-diff-usage-fix on Windows. The reason seems to be that those are
+> > already broken for the base commit that Junio picked:
+> > jk/diff-rendered-docs (actually, not the tip of it, but the commit fixed
+> > by Martin's patch).
+> > 
+> > Of course, I understand why Junio picks base commits that are far, far in
+> > the past (and have regressions that current `master` does not have), it
+> > makes sense from the point of view where the fixes should be as close to
+> > the commits they fix.  The downside is that we cannot automate regression
+> > testing more than we do now, with e.g. myself acting as curator of test
+> > failures.
 > 
-> Oof. Well, now I know why my attempts to fix the test failed. It was not
-> my new test that was failing at all, but rather the existing test. Which
-> implies that I severely bungled the actual code change.
+> Thanks for this real-world example; it's definitely something I hadn't
+> thought too hard about.
 > 
-> Armed with that knowledge, it was pretty easy to find said bungling. The
-> fix is below.
+> I think this is a specific case of more general problems with testing.
+> We strive to have every commit pass all of the tests, so that people
+> building on top have a known-good base. But there are many reasons that
+> may fail in practice (not exhaustive, but just things I've personally
+> seen):
 > 
-> Junio, this should go on top of jk/add-ignore-errors-bit-assignment-fix
-> as soon as possible, as the regression is already in master. And I'll go
-> find a brown paper bag. ;)
+>   - some tests are flaky, and will fail intermittently
+> 
+>   - some tests _used_ to pass, but no longer do if the environment has
+>     changed (e.g., relying on behavior of system tools that change)
+> 
+>   - historical mistakes, where "all tests pass" was only true on one
+>     platform but not others (which I think is what's going on here)
+> 
+> And these are a problem not just for automated CI, but for running "make
+> test" locally. I don't think we'll ever get 100% accuracy, so at some
+> point we have to accept some annoying false positives. The question is
+> how often they come up, and whether they drown out real problems.
+> Testing under Linux, my experience with the first two is that they're
+> uncommon enough not to be a huge burden.
+> 
+> The third class seems like it is likely to be a lot more common for
+> Windows builds, since we haven't historically run tests on them. But it
+> would also in theory be a thing that would get better going forward, as
+> we fix all of those test failures (and new commits are less likely to be
+> built on truly ancient history).
 
-Thank you *so* much for the quick fix!
+Indeed, you are absolutely right: things *are* getting better.
+
+To me, a big difference is the recent speed-up, making it possible for me
+to pay more attention to individual branches (which are now tested, too),
+and if I see any particular breakage in `pu` or `jch` that I saw already
+in the individual branches, I won't bother digging further.
+
+That is already a *huge* relief for me.
+
+Granted, I had originally hoped to speed up the test suite, so that it
+would be faster locally. But I can use the cloud as my computer, too.
+
+> So IMHO this isn't really a show-stopper problem, so much as something
+> that is a sign of the maturing test/CI setup (I say "maturing", not
+> "mature", as it seems we've probably still got a ways to go). As far as
+> notifications go, it probably makes sense for them to be something that
+> requires the user to sign up for anyway, so at that point they're making
+> their own choice about whether the signal to noise ratio is acceptable.
+
+Maybe. I do not even know whether there is an option for that in Azure
+Pipelines, maybe GitHub offers that?
+
+In any case, I just wanted to corroborate with a real-world example what I
+mentioned at the Contributors' Summit: that I would like to not script
+that thing yet where contributors are automatically notified when their
+branches don't pass.
+
+> I also think there are ways to automate away some of these problems
+> (e.g., flake detection by repeating test failures, re-running failures
+> on parent commits to check whether a patch actually introduced the
+> problem). But implementing those is non-trivial work, so I am certainly
+> not asking you to do it.
+
+Indeed. It might be a lot more common than just Git, too, in which case I
+might catch the interest of some of my colleagues who could then implement
+a solid solution that works not only for us, but for everybody using Azure
+Pipelines.
+
+Speaking of which... can we hook it up with https://github.com/git/git,
+now that the Azure Pipelines support is in `master`? I sent you and Junio
+an invitation to https://dev.azure.com/git/git, so that either you or
+Junio (who are the only owners of the GitHub repository) can set it up. If
+you want me to help, please do not hesitate to ping me on IRC.
+
+Ciao,
 Dscho
-
-> -- >8 --
-> Subject: [PATCH] add_to_index(): convert forgotten HASH_RENORMALIZE check
-> 
-> Commit 9e5da3d055 (add: use separate ADD_CACHE_RENORMALIZE flag,
-> 2019-01-17) switched out using HASH_RENORMALIZE in our flags field for a
-> new ADD_CACHE_RENORMALIZE flag. However, it forgot to convert one of the
-> checks for HASH_RENORMALIZE into the new flag, which totally broke "git
-> add --renormalize".
-> 
-> To make matters even more confusing, the resulting code would racily
-> pass the tests!  The forgotten check was responsible for defeating the
-> up-to-date check of the index entry. That meant that "git add
-> --renormalize" would refuse to renormalize things that appeared
-> stat-clean. But most of the time the test commands run fast enough that
-> the file mtime is the same as the index mtime. And thus we err on the
-> conservative side and re-hash the file, which is what "--renormalize"
-> would have wanted.
-> 
-> But if you're unlucky and cross that one-second boundary between writing
-> the file and writing the index (which is more likely to happen on a slow
-> or heavily-loaded system), then the file appears stat-clean. And
-> "--renormalize" would effectively do nothing.
-> 
-> The fix is straightforward: convert this check to use the right flag.
-> 
-> Noticed-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  read-cache.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/read-cache.c b/read-cache.c
-> index 9783c493a3..accc059951 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -746,7 +746,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
->  	if (ignore_case) {
->  		adjust_dirname_case(istate, ce->name);
->  	}
-> -	if (!(flags & HASH_RENORMALIZE)) {
-> +	if (!(flags & ADD_CACHE_RENORMALIZE)) {
->  		alias = index_file_exists(istate, ce->name,
->  					  ce_namelen(ce), ignore_case);
->  		if (alias &&
-> -- 
-> 2.20.1.1122.g2972e48916
-> 
-> 
---8323328-881707564-1549545440=:41--
