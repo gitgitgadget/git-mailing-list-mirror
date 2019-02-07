@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5171C1F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 02:48:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD09F1F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 02:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726873AbfBGCsA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 21:48:00 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:37089 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726424AbfBGCr7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 21:47:59 -0500
-Received: by mail-wm1-f65.google.com with SMTP id g67so5009937wmd.2
-        for <git@vger.kernel.org>; Wed, 06 Feb 2019 18:47:58 -0800 (PST)
+        id S1726606AbfBGCxy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 21:53:54 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:33482 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbfBGCxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 21:53:54 -0500
+Received: by mail-wr1-f66.google.com with SMTP id a16so9896928wrv.0
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 18:53:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=eLzvy9WRk4olPm9YY8PTe3cvCNgy0MUdoCRLMkXRbEQ=;
-        b=T59Iri5S2TrFq7HXpJUWUH/o+oBnXl+Xvtbf9jYO0s3fMrpjl6EaykpLfcTcMLXLAr
-         ib79/Q+C4Qf9CkgwxOipBZw9MzdAoAxysJy3EyQcXRq8OTvnNvUjt3HFItpare1yTcp+
-         ABn+HPA+4BQ+vX3yCuAchH6oYh7xA8xg0iQssMc93rIOjfn42H324Mwdujrg4t8IiRTt
-         ZrOiNuHx0wumAWbTYi8vj3rE1ZUcevU8g8WIu8qsAWTcu8umHf40Hh4XvELlyFnY8WQH
-         wUkwvnfZl9abP0h35k+QnG861duffHdwhwLlNMRL78+2jR9AetlLoHumE3vRD/a3odNb
-         5Y7g==
+        bh=fGTa3133GKJpU49EM44JtcgK5Rsq6kyZHztv9HfGYWI=;
+        b=QIJomqzdXyFU6XydJE+lnD2Ui1G0yrWkymcZ2zH1FBJL4W8ONMLIZLFLW0SdT/cUBG
+         vsTyCe+yLltPSl2Whv+3a9oAc8+Q40/NGmnRJRvLi9l5w00O2R1keEUvqWTWsWPRrlYr
+         Qfi929/Uln5I4EJC4rspxv5Pe0lzQHp1wo8DwKUQ+dZXHXfK4inOY7jYhchLX/7bJbar
+         Rsw1lRVxTCICq55pfopVV4qk9hgX2sJZ0oMwfaEVAy4j0gJWdpLJiBsgnzhEp2ItPfOQ
+         NWZ3d8FwtWvBATYGdSRcgbhHSJYIdE7ED2upcVtqDEt2+9yLTYbkPM3IU5oZmE5ysd7D
+         ob+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=eLzvy9WRk4olPm9YY8PTe3cvCNgy0MUdoCRLMkXRbEQ=;
-        b=qLrLqIU9/6qrnavcH9vZfZWip/J38I9PbMVGGFFI949/gIEk+fuH9Y4gGnjsmTPx9n
-         8tahvwyI8k9gAt2QcZrisIkHx7JpJhV1yEEY4pSJz7fX7LVW3a4Z0WbSX16DrSjp/rqA
-         QmwxiBMOkNp9sRFdk9Q5lsKk7/kfxlxQpl5HDdJtssYMiiEVqLhSV3WMLNd4wZpLVxi1
-         eyxNAO2czgVI0UuHY6w7wKoDF/guTplwz/+JQlMucb0lTD4K/A9QxObCyAU+DDmDbIBW
-         RRnJmbVjG0g72k4mbth0ZEN0q5nzchTqMTU2+OaRiSFygi+YVoz6gHDpV9jHMVox1k/G
-         jGfw==
-X-Gm-Message-State: AHQUAuY9F9cPx0S/b6cJzjShxMj3FqKSdu0bXPlxuGCdHd54560DqTq/
-        mDRaUj7O7pbnAfRBHRQtKqY=
-X-Google-Smtp-Source: AHgI3IZyr5rZYJJS0dfjlIfNgIi7KxwiykY6i6pi9SqqUATmBbGaVIEInJRZtMPNj1XzWrPvSpuRnQ==
-X-Received: by 2002:a1c:7e56:: with SMTP id z83mr5728453wmc.100.1549507677558;
-        Wed, 06 Feb 2019 18:47:57 -0800 (PST)
+        bh=fGTa3133GKJpU49EM44JtcgK5Rsq6kyZHztv9HfGYWI=;
+        b=L1Djc+fi1mSs9HBi1gmnUqUbSIRaDljeU+bchzyv79DjyBB0OeeYkdJyb2CkShQi4d
+         V1ItXZhgc61XzIvO5FZRmyBZdE8iKA8+nKYsmdAo7OQ3YrGyHjPP6gajBPGX/aDBtTQG
+         6Sv8jaErBxx1eONPbHXGykk2nx4FqZjZ/bUac/trM+K4CPrJygkP/RCBvrKnJFDCorWz
+         aQXuGJZ3kBN6opwi13wTMogFFZ2vCI5qbCgIhpC7RCnGDGXoG/VCm05Hqifju6ybI0cV
+         xAWbPwA2XcLWWDxUQYz/otfON0aSQ7iffLmOPX+coPW8/bznkciHBVc4GbJOHldW+jRn
+         aKRw==
+X-Gm-Message-State: AHQUAuaFKpOwiMIEzkjm5ooifDtxoRqZb9+0pBGToZCKn76A389n+kkz
+        vigFr3dod3kb4yq0pSfpUHM=
+X-Google-Smtp-Source: AHgI3Ib01i579OpDXrdngrMHN+SUqGxPEbG3auSZC5UZX/WpDlXdeqHZH5CqFMeL8dmt8b42VURrbg==
+X-Received: by 2002:a5d:620d:: with SMTP id y13mr4249164wru.119.1549508032076;
+        Wed, 06 Feb 2019 18:53:52 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b14sm29250173wrx.36.2019.02.06.18.47.56
+        by smtp.gmail.com with ESMTPSA id a12sm39145544wro.18.2019.02.06.18.53.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Feb 2019 18:47:56 -0800 (PST)
+        Wed, 06 Feb 2019 18:53:51 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -58,10 +58,11 @@ Subject: Re: [PATCH v2] fetch-pack: clear alternate shallow when complete
 References: <20190204000650.686175-1-sandals@crustytoothpaste.net>
         <20190206235937.201663-1-sandals@crustytoothpaste.net>
         <CACsJy8Ae0ZZjh8+f+TwbfJ-V9SzrHpDFyfjwScwKJj+kc7FDTQ@mail.gmail.com>
-Date:   Wed, 06 Feb 2019 18:47:55 -0800
-In-Reply-To: <CACsJy8Ae0ZZjh8+f+TwbfJ-V9SzrHpDFyfjwScwKJj+kc7FDTQ@mail.gmail.com>
-        (Duy Nguyen's message of "Thu, 7 Feb 2019 09:32:21 +0700")
-Message-ID: <xmqq4l9gs49w.fsf@gitster-ct.c.googlers.com>
+        <xmqq4l9gs49w.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 06 Feb 2019 18:53:50 -0800
+In-Reply-To: <xmqq4l9gs49w.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 06 Feb 2019 18:47:55 -0800")
+Message-ID: <xmqqzhr8qpfl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,24 +71,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Feb 7, 2019 at 7:00 AM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
->>
->> When we write an alternate shallow file in update_shallow, we write it
->> into the lock file. The string stored in alternate_shallow_file is
->> copied from the lock file path, but it is freed the moment that the lock
->> file is closed, since we call strbuf_release to free that path.
->>
->> This used to work, since we did not invoke git index-pack more than
->> once. However, we now do, and starting with bd0b42aed3 (fetch-pack: do
->> not take shallow lock unnecessarily - 2019-01-10), we no longer reset
->> this value unconditionally; consequently, we reuse the freed memory.
->> Ensure we reset the value to NULL to avoid using freed memory. git
->> index-pack will read the repository's shallow file, which will have been
->> updated with the correct information.
+>> The patch looks good to me.
 >
-> The patch looks good to me.
+> Thanks, all.
 
-Thanks, all.
+Oops, spoke a bit too fast.  As the previous one is already in
+'next', let's do this instead.
+
+-- >8 --
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Date: Wed, 6 Feb 2019 23:59:37 +0000
+Subject: [PATCH] fetch-pack: clear alternate shallow in one more place
+
+The previous one did not clear the variable in one codepath,
+but we should aim to be complete.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+[jc: made a reroll into incremental, as the previous one already is
+ in the next branch]
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ fetch-pack.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 2d76287674..a92621a388 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1272,6 +1272,8 @@ static void receive_shallow_info(struct fetch_pack_args *args,
+ 		setup_alternate_shallow(&shallow_lock, &alternate_shallow_file,
+ 					NULL);
+ 		args->deepen = 1;
++	} else {
++		alternate_shallow_file = NULL;
+ 	}
+ }
+ 
+-- 
+2.20.1-519-g8feddda32c
+
