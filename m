@@ -2,82 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECAEB1F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 21:13:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3B131F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 21:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727548AbfBGVNy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 16:13:54 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43042 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727445AbfBGVNy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 16:13:54 -0500
-Received: by mail-wr1-f67.google.com with SMTP id r2so1365215wrv.10
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 13:13:53 -0800 (PST)
+        id S1726883AbfBGVd3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 16:33:29 -0500
+Received: from mail-wm1-f46.google.com ([209.85.128.46]:37362 "EHLO
+        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726675AbfBGVd3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 16:33:29 -0500
+Received: by mail-wm1-f46.google.com with SMTP id g67so1408520wmd.2
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 13:33:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=kbkJe8toe/fRJAc97q20UgQP8FN8/EwIHoYHdQHM2WQ=;
-        b=SwtrOpLKN93cemwUp4iaF07hQlqAo4eXZ9wW6C3/us+FPvisRH0M37ajkyL/UR2CEO
-         pfosbM0ZOpy3urbYjLnFTZ7q4gHntjlP6SciupSqKZmnTV6/G1Lp/E7L83xPupK7zdE7
-         HePcTQxVeMFCPx7m/QQ82ZTv0qIhGcd2CGvcPkecMupMnkhMVKQpODGupbhSG5OaKSm4
-         rvKioKqRJ96tQqb7M30vKWDSXhxM3em8zyz/58O6qio+MF/l8wrHPyUWti2w1fTUuB8i
-         wshfTrQ+S+meP4xKNuhYNOy5oArBg4ZWcjGXbve0yGTo66xdKqegwVW8gOm7xW0i4vUf
-         6X2w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Vi/nXLDMZKjLJlM0GMmMhE3Yq4G1Fh/SU6flGAgfTvY=;
+        b=oH7vA3RsNHB/DSQV1ve0s3soklF0HTcCqtTFQ0bjvYUQfq6f42v49sLaZ7sH6FjEh3
+         OAI5CgK8tAIdtIJrwSZ4w+bXBxoBjbb22vKO2JsCDNDsqwhL3yUGlrRkB1Udh7oo4ChG
+         DPIq+W9XcdJ/z95jXMx2/zNDbKeqOK31k7ce+SVYEoQ75O5+OVJ5y3AAktGmbA2vbFBJ
+         +WMIFpHhrjRjyeOqOSFkOtb5Hab+L0BZ5ClQ8IuWA3NIy5cfvp/bo/m8YkW3rfNfg3LU
+         DaAv6n8tDdnhjJTSDwj5Yp/cRd5cJty+37qPtKU1lTH9heJOT8xNRe9HOgVk4n35xdZZ
+         ZZgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=kbkJe8toe/fRJAc97q20UgQP8FN8/EwIHoYHdQHM2WQ=;
-        b=oWrW8v+pqtwVC6Dm2sjMBOKAfzzfgmjHhZpQ921ozhMWXA8Z8J7B6TkUe5vLtLczKM
-         LL0IfJHP11/OSac4YAkWYBnE2vVUIbrLYPVxkO+BFNiDSIu5n7QYJRxyiY1C440Sg0fO
-         4XvViD+mQWXNW3nkuuPMgqjYoD/1KgjW0ZHKN1L5RGBs59FUXeYBLPsOtBv/EMTlPrL5
-         j7RwHvCcBOLGtZ11+/zmMrdFV9rswqS3PTkrNSWdLDYuUa7F1aUhyg0XE66DjcP4BvgG
-         tegaN5MRve0OAhdtZJOfRWfWWpUQKHFHNy7k+XFKama3RBYjBWjeckDPg/HSGHBYN2fD
-         fWfw==
-X-Gm-Message-State: AHQUAuaV2PAozidVPtHSQbvqgAzvfYU6bz+1TZ7069sQde/jHvTH6UNb
-        YnUb017DFw8RkoVg5jYRP7pxU0BF
-X-Google-Smtp-Source: AHgI3IZ9anXZem8KitZe7g2/ORzDthBsDFksNoFfXV1xfIWFAkGc6v1OoPpn8bmjRetjdGr2UZU3bQ==
-X-Received: by 2002:adf:e64d:: with SMTP id b13mr14270817wrn.276.1549574032455;
-        Thu, 07 Feb 2019 13:13:52 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g3sm278837wmh.20.2019.02.07.13.13.51
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Vi/nXLDMZKjLJlM0GMmMhE3Yq4G1Fh/SU6flGAgfTvY=;
+        b=dzlS9qM4k8JJCyRBNLvM/wdeKBrX4a6UdlFKAWk6b/G1872vfA4d/6PZIH+Bj2JP//
+         ac2hJAI03isbvS8OZU/zFl+golN95ufGfHgNoRdmCsdIpihMs8hjI1HQ4Rn3wb8QNr3e
+         5sXrHnZ47RbjRISJC0xxvH1MwydDgH02hk+eJBkcFrleMVbFytTmD7OXQ4wCFbhE3bhu
+         +IoeM5QLSCDm+b+3x+00J6sQNDVWk14VZfJWWyLBEKy0/p2KBB875X2Xtd4+CXR/DprV
+         1JIc2Gs1wQrk6lOmBYrcyH8u8zZ4VLc3dl6fSmKSSWeb41jMDNXf2gcc1yqGkkeDpJLx
+         rxZw==
+X-Gm-Message-State: AHQUAuZrPtfku/PXkLAiI/8alY5ggsmKMB3HP27ZCucX2xbuJ7MpwJhE
+        B0bQXB0HuGP41k0wTrqqCFU=
+X-Google-Smtp-Source: AHgI3IZeaKjTZHv8y1j1533rgOew9T7jG1VjSD1+UzeXt2VjJy7k2ZBT9D69PsUlQkkjs+4cmb8H0g==
+X-Received: by 2002:a1c:6c10:: with SMTP id h16mr504771wmc.84.1549575207920;
+        Thu, 07 Feb 2019 13:33:27 -0800 (PST)
+Received: from localhost ([109.180.252.133])
+        by smtp.gmail.com with ESMTPSA id n6sm366069wmk.9.2019.02.07.13.33.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Feb 2019 13:13:51 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Fix incorrectly reported CPU in 32-bit Windows
-References: <pull.121.git.gitgitgadget@gmail.com>
-Date:   Thu, 07 Feb 2019 13:13:51 -0800
-In-Reply-To: <pull.121.git.gitgitgadget@gmail.com> (Johannes Schindelin via
-        GitGitGadget's message of "Thu, 07 Feb 2019 02:46:05 -0800 (PST)")
-Message-ID: <xmqq36oznvxs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Thu, 07 Feb 2019 13:33:26 -0800 (PST)
+Date:   Thu, 7 Feb 2019 21:33:26 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
+Subject: Re: GSoC 2019: Git's application submitted
+Message-ID: <20190207213326.GF6085@hank.intra.tgummerer.com>
+References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
+ <20190204215251.GB6085@hank.intra.tgummerer.com>
+ <20190205211736.GD6085@hank.intra.tgummerer.com>
+ <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
+ <20190206220942.GE6085@hank.intra.tgummerer.com>
+ <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 02/07, Johannes Schindelin wrote:
+> Hi Thomas,
+> 
+> On Wed, 6 Feb 2019, Thomas Gummerer wrote:
+> >  - implement pushing the index state, without dealing with conflicts
+> >  - implement poping the index state, without dealing with conflicts
+> > 
+> >    This can already be individually useful, and I think this is
+> >    something people asked for on the mailing list, though I didn't try
+> >    digging up old threads for now.  After these two steps stashing and
+> >    restoring a merge conflict would still not work, but we have a good
+> >    first step that could be merged.
+> 
+> We already have `git stash --keep-index`. Is this what you mean here?
 
-> This is yet another patch I forgot to upstream, and I hope that it will make
-> it into v2.21.0-rc1.
+`git stash --keep-index` does something different, what I meant here
+was what `git stash pop --index` already does.   I had forgotten that
+this functionality already exists.
 
-I guess this affects nobody other than you and perhaps J6t, the
-point not being "there are only just two" but being "all of them
-know how to deal with possible breakages if any in this change".
+> >  - implement pushing/poping conflicted state
+> > 
+> >    This would obviously be the end goal.
+> 
+> On second thought, this might actually be super trivial. Right now, we
+> support two modes (not counting the `--untracked` stuff): --keep-index and
+> --no-keep-index. In both cases, we seem to create a merge commit whose
+> tree reflects the working directory and whose first parent is HEAD and
+> whose second parent is a single commit on top of HEAD (which contains
+> either no changes in the case of --no-keep-index, or whose tree reflects
+> the index in case of --keep-index).
+> 
+> To extend that to the conflict case, we could introduce a new flag
+> --with-conflicts, and have the commit structure
+> 
+> 	Worktree
+> 	 |    \
+> 	 |    index stage 0
+> 	 |      /     |     \
+> 	 | stage 1  stage 2  stage 3
+> 	 |    /     /       /
+> 	HEAD ---------------
+> 
+> The only tricky thing I can see is to maintain backwards compatibility if
+> possible, so that old `git stash` will do something at least semi-sensible
+> with those commit structures.
+> 
+> It might be too small a project, after all.
 
-I am tempted to bypass the usual "from pu down to next down to
-master" dance on this one, because of that.
+Yeah, looking at this I think you're right.  Thanks for helping work
+through this.
 
-;-)
-
+> Ciao,
+> Dscho
