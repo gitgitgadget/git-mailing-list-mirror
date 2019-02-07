@@ -2,83 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E30171F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 22:41:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A51751F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 23:25:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726718AbfBGWlm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 17:41:42 -0500
-Received: from mout.gmx.net ([212.227.15.19]:46219 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726642AbfBGWlm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 17:41:42 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LvVUR-1hJ04C2o4p-010dVK; Thu, 07
- Feb 2019 23:41:35 +0100
-Date:   Thu, 7 Feb 2019 23:41:35 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Fix incorrectly reported CPU in 32-bit Windows
-In-Reply-To: <xmqq36oznvxs.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1902072340430.41@tvgsbejvaqbjf.bet>
-References: <pull.121.git.gitgitgadget@gmail.com> <xmqq36oznvxs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dkELtyk2RwNGAQbYUnC4ebg3mnmVx+Fi/8i6adyZPIAS1BtNcRF
- vo+K9g8E5MGHZgp8ouI+LKRYo/O3bQUtrdibmmOYdlgaQavWdNFhslCLnYQFFlpRWTtwV5i
- E0xwuAYMC6HUfMJgI53r8+G/Z5IjQs524t9RqC1cER/vj0JYtWqZEMCxsJzoXqq1eEtQZHN
- XSo2FtOHZDmsswKkzATow==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/k5eh3RCFoI=:lzrzODcyNfk+1vclb36FtN
- L/4K/4On966yUS+18OVj0PaKORi2zfJI5q0j36bumRnIX9957ta1GAc711J7xZ5/yrG0VXokK
- va1cM2vqw3GykNEDjmrJ/jxOR8z1bX/m+rors0+eugOprwSkX42tTg8eBe4QlkVG+yg4M14f+
- YvhgLIwSIZwkKBp51FmDkh51oP1pJWmwkICyjuU8M6bbmHLoDrBE538104UhHnkKPrq+o2NRX
- TrgHXKx6Z3vXKnZGSUluqugcCEyFXEsIYYJEFE/xrxc7eyXcM+VXWdFgNBe8K0arAw3LGf8dX
- UOJC1f9sbATwQid7SzqCAFpWszoaJ1YXQCfm/6uyP3ByeGv0vVp63OX2UOUV4YL/UIhWutDNG
- WUHHhS0+JbwX620Nc/d+a1Le/KMfARAH3oHWQZlJ3+eGDwB24b/SwxXXiNXY3AvOj7fo24mt7
- PQkKFr19aInixQA0WXBN5/vKXv9arfUfGZRKI1Z7/90TkFk+piUj+bIt+ADW2mvHdxpqqpRD4
- Y8JZecswzZwzVKjbfDl0zmiBVvXBSAXrpr9CmQXJfkhePDSGQplKnQDqr2+8stxBjR3ePK3j0
- TbRLklttW3v8+DD0j0KWoxCWNU9d75AKyckgGrTo3Hg5vL/foCSaZxIDVY1Ce/mKaYHe+mkv5
- 9HiZy52aaeg2/TN22VkOtVF4YvzthW9R+Mg+H5JaKfiKpsQjTpBRRNkbGPgj9pS2WW4Eod0hZ
- 1Irz30rBhNDfBZ0lZ4inaPktlOHvifNZXpVxOYOcEGtKPXAHA0FUDq5cHn7nKnzsc3IRSPO9Y
- qbRSfZXaFrgAASvUkRq1EJJFd8zhhGNIMaNKP2mTLlS/TjT8irDAYp8PeWlQiaR10wIGhvdN+
- D461rYcWQZ47TkVJKUs7lQcCJZkCAnFA9mubU+rpm76vFZFIFrmJEdLamkG+2X3uGKE754H3T
- StBf0mvtUGQ==
+        id S1726832AbfBGXZ4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 18:25:56 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55432 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726822AbfBGXZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 18:25:56 -0500
+Received: by mail-wm1-f67.google.com with SMTP id r17so1608506wmh.5
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 15:25:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Mcvmjvt2bCnI7ZYpEOQ17hYUuhMVJzfWG/adBuIXU1w=;
+        b=Cj7j3Iy1sTNbkOyuLmnnlVUTUtXSnv73ozg8hBbbjI2kF78mOdIiDatdcelzHYQo2Q
+         X60CNsmpbQUy6MRtuDxvLgN9NOD9Hf5qHzacyhIuKjkgqF2vXQW3Uao7rMqLQBSARvdw
+         tfD1D74asm+aaLm9NFiKxspS/DViGnJJtEOeE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Mcvmjvt2bCnI7ZYpEOQ17hYUuhMVJzfWG/adBuIXU1w=;
+        b=aNbtruxJkJT/yknbq8w01hcQZUbSViunptEZ4wNTVz/PEqoONg2Y8wxxSEEpcVTda9
+         TNo7+LZlDGMSyC9NiXmYcPJMAIyS4B/WCy1MNkUib4U0YVqVgzYdxn1oi30UX2aYBML0
+         +4T9v5nD7Ng1gnbxnX/iPBduJvPTBIYCrZz6u4jVgKI1X/mhB4PP6ygmJ7mZdhnEiwX0
+         iwXVQ84xC3RJmRIaDP31+RHrd+MXT2Hj2rux47irNU7TsHD05nZH3prO3655n4YbwOKA
+         81lAGwunHm8vxS6P3v3BPPfXn8ft0CZmCxtGa6e4AZQ1alJrHGh24T1/CtR5TEtf2LAg
+         13Tg==
+X-Gm-Message-State: AHQUAuYbw0pAajFRgXW1d40s1Cwd6lrXOooZTZih7RDb5NXZ1fA0SWXb
+        Z0Hc5Aokk9yK8h8WdO8IAXz5TA==
+X-Google-Smtp-Source: AHgI3IZ9IcFE+G/8Mv+x5ZvfuqBVLC3QylBUljtqOFQmIbgv6Dy5a57uhPGPh9zpnRra5EleO9yfrw==
+X-Received: by 2002:a7b:c4c6:: with SMTP id g6mr8008435wmk.4.1549581954532;
+        Thu, 07 Feb 2019 15:25:54 -0800 (PST)
+Received: from ethel ([81.145.207.254])
+        by smtp.gmail.com with ESMTPSA id h133sm1582253wmd.8.2019.02.07.15.25.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 07 Feb 2019 15:25:53 -0800 (PST)
+Date:   Thu, 7 Feb 2019 23:25:52 +0000
+From:   Luke Diamand <luke@diamand.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 0/1] git-p4: remove ticket expiration test
+Message-Id: <20190207232552.4246fec6f3057aea05211141@diamand.org>
+In-Reply-To: <nycvar.QRO.7.76.6.1902071343210.41@tvgsbejvaqbjf.bet>
+References: <20190206151153.20813-1-luke@diamand.org>
+        <nycvar.QRO.7.76.6.1902071343210.41@tvgsbejvaqbjf.bet>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Thu, 7 Feb 2019 13:45:18 +0100 (STD)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-On Thu, 7 Feb 2019, Junio C Hamano wrote:
+> Hi Luke,
+>=20
+> On Wed, 6 Feb 2019, Luke Diamand wrote:
+>=20
+> > As per thread here, this removes the git-p4 ticket expiration
+> > test, since it isn't really that useful.
+> >=20
+> > https://marc.info/?l=3Dgit&m=3D154946136416003&w=3D2
+>=20
+> Thank you for the prompt patch!
+>=20
+> However, like G=E1bor, my feeling is that we would want that test case in=
+ a
+> non-flakey form, if possible. If you think that that is only possible with
+> a mocked p4, so be it, let's remove the test case (because the mocked one
+> will likely look quite a bit different). But if there are easier ways to
+> work around the timing issues (such as dropping the first `sync`), then
+> I'd prefer to have the safety of a regression test.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > This is yet another patch I forgot to upstream, and I hope that it
-> > will make it into v2.21.0-rc1.
-> 
-> I guess this affects nobody other than you and perhaps J6t, the
-> point not being "there are only just two" but being "all of them
-> know how to deal with possible breakages if any in this change".
+I've got a mocked-up p4 wrapper which returns whatever expiration time the =
+test needs. I'll submit it tomorrow.
 
-Correct. This patch is already in Git for Windows, so contributors
-building from that fork will have had the problem already.
+It's just a few lines of python script to generate the marshalled data, so =
+it's not very complicated.
 
-> I am tempted to bypass the usual "from pu down to next down to
-> master" dance on this one, because of that.
-> 
-> ;-)
+>=20
+> Thanks,
+> Dscho
+>=20
+> > Luke Diamand (1):
+> >   git-p4: remove ticket expiry test
+> >=20
+> >  t/t9833-errors.sh | 27 ---------------------------
+> >  1 file changed, 27 deletions(-)
+> >=20
+> > --=20
+> > 2.20.1.611.gfbb209baf1
+> >=20
+> >=20
 
-I would be very grateful for that :-)
 
-Ciao,
-Dscho
+--=20
+Luke Diamand <luke@diamand.org>
