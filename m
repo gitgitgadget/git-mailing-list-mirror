@@ -2,83 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A5221F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 22:29:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AD031F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 22:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726796AbfBGW3Z (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 17:29:25 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34066 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726642AbfBGW3Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 17:29:25 -0500
-Received: by mail-wm1-f67.google.com with SMTP id y185so5431240wmd.1
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 14:29:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZVES83GRTePTHSLGWov5q3pdcPEk6P+ONO09FP+qTko=;
-        b=ilqqhylI1xecclsH9larNyHP4cjYfiPoEviwKmHkOKznIHpzEM3G0bgiTs5uFzva0O
-         1coQf3TnQW4PLyzZot611AkzO9m8FQJQ/O1TsPvl2q+sQnMGUOzkZHh6096drf+sG6gZ
-         V8zTnul/Umv1fk2YikYyFWfV+SFAqvKKBrGig2ZTkd3p0m+qs9v9Z3I5U5yEb6iq8mjb
-         3yxB+4O77aVvxcEb/IyyaYhyVB4tc7U/dU0H5ZZaCHVMtuhBxp7RGg9Roq6uKAjvtgm1
-         RTPz2peJqkta3ZK0HQ8A/h2kxRXoyej2wSEmQN2eqm8bTp4eJV6J97MQdTfY8zxgIkYS
-         okYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZVES83GRTePTHSLGWov5q3pdcPEk6P+ONO09FP+qTko=;
-        b=KOqS7h77oqFnraUmeG4LckpTqPGy6HjJS1Ayd/Kr0nRv0rt8bjpDkbSjxkPaHapxzI
-         nnH3VSc53ZhP4ngqmgzqCTTIEhwUXOmBACg+e5xvbhsrzAeWP5oeJQM5J29DLj58nfTi
-         ZGO8gEmn/0KyBgJB+pv3eElyqBIDOeKT5Oo2JFAWOz2lcjo8lZmzy58R50p9w5EAcZJh
-         7tJW8FFq39ntcExvTkNfIpppYnNezwKfLQbE37MuJiVyYXF0BpDnUGQQMUpn4giHw6Y1
-         iY0B6xzgywGxwF7Q5olTBDyH8+hDu1DD8BGKUg+oYgEmmfdiVYiBbSWxN89bQygqY1Hx
-         V/5A==
-X-Gm-Message-State: AHQUAuYO94SWhYmoHB57tvsh9knloum8EZIlaF0eP9lfqHaSZ9VELvBX
-        ZhgCtNeL41gvxc1bPv9tZFM=
-X-Google-Smtp-Source: AHgI3IZ3855e1/CmnS/qLzXPWhyV97ANTFybtZz5GY5wv5ixuktM4ro8k2jnTI3kvaWU+HDbhN0THg==
-X-Received: by 2002:a1c:2457:: with SMTP id k84mr9053744wmk.139.1549578562897;
-        Thu, 07 Feb 2019 14:29:22 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c18sm479922wre.32.2019.02.07.14.29.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Feb 2019 14:29:22 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] submodule--helper: teach config subcommand --unset
-References: <cover.1549521103.git.liu.denton@gmail.com>
-        <cover.1549534460.git.liu.denton@gmail.com>
-        <e90dfe992e96b33f167d08fe51df49ab1d10ef23.1549534460.git.liu.denton@gmail.com>
-Date:   Thu, 07 Feb 2019 14:29:22 -0800
-In-Reply-To: <e90dfe992e96b33f167d08fe51df49ab1d10ef23.1549534460.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Thu, 7 Feb 2019 02:18:57 -0800")
-Message-ID: <xmqqpns3mdvh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726796AbfBGWc5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 17:32:57 -0500
+Received: from mout.gmx.net ([212.227.17.21]:50437 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726622AbfBGWc4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 17:32:56 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lkjuq-1hPq452Ufk-00aUGt; Thu, 07
+ Feb 2019 23:32:49 +0100
+Date:   Thu, 7 Feb 2019 23:32:49 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] ci: make sure we build Git parallel
+In-Reply-To: <xmqqsgwzo0ib.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1902072331060.41@tvgsbejvaqbjf.bet>
+References: <20190207183736.9299-1-szeder.dev@gmail.com> <xmqqbm3npgox.fsf@gitster-ct.c.googlers.com> <xmqq1s4jpgh6.fsf@gitster-ct.c.googlers.com> <xmqqsgwzo0ib.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:4J5DJA/1+RUm5HC9a6IXWLGSI35VjHFRal0nq6V2hllbnaMjYgS
+ 9y6JkSvc+N8datkpDufgsVBaWPjVCNg+e9+sR1XNzGbHkSYo+mA/sKgTpSqzx0ugEA4mhBj
+ BipzWVn2wch4zPINhmzn2XwKGV77muXY5uDCOUwtdg5tYODW4NgrzA4HCYJyTP8gqJb4irW
+ CXGpmLR1Buc7KvZHqT86w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6fwDte9yJcg=:YSpKpNBm8gjMw4z4tQkdXp
+ BtJYiETu8rFeox6J57RKHnOwKcuq82TlwLREyvrKBX1jQN81NsQgTQHUXt8C+LWHe/mV8tpdm
+ zxW9sPPNg6VxtJLZuGJkoshPfSCCr/o0lYxpZxMOhcG3KcUtK8rN7RAfqMuw6otdiGHWyMmj0
+ v1RPM3yrNQZXjy+4rhvLtRTzOlUGnI7bSXQ3Oy9ShT8tmpXyv1vGvr3yrROwn4on5U8BrI9A1
+ d1GkHqU2dDMIoP0HC/WR5d3bJrY2GoMVPsm9yHpw1CgdIs645ZFre/Il2cplMW+i7MhicxVrj
+ VRtYHBGrfXO/EEEAoKSwL4/vxJe+RO/9qkQUWgACFTajNDXsi7p7k0nIHgOR1v+4o+SafSvh9
+ EnqjgL/7Kc/TIGPebBWA1nJr0U4nOU4Ylse2JGDxzkqd5NjsZcyXQdSlqCASBCkTqF7eT88ar
+ /oDLbXr3A0ULHQglIB/hggY1bnL6TJaUjh4qYTBhQji42wCv669Te4RQ5WVJo8b692eWYdAhz
+ +6KBuEPONwVMQfLC+U9q7t54tM8vLNTXzzY3iMQ7EsaQh4ZbIS74GFjKcjE9t+TxIISaIRauP
+ 0pxjJpAuzCp1NPos1w8+2AbsFh8A3fC0AZYzHUsnb6PpZH8PPkg1nRL1sAnrWj8L4Zi4M/R+o
+ qkmU5Xb/Hy567Eua/xscPWCJYrJJ0zT1kQQZqVxAuHCIGkud+vHkS5c5vU9dKCnmPsG++eXdw
+ HirashJdg8agnIVEgXYjy+3DlK4druMG+5AVXqJTtj5nSMW588wPj517isUQu+t/Fg+TJEr32
+ WJwp+N2hIExdXoVogTu5RCMIst59pVwyBgJPpieeVS1DVgVrgaFu3GIFlxFI1FU4r0AA6X7dc
+ zrZqci4f1YRaEtVsSeco3gsecuG9LHm0MKXSS8t4NlULXI3w0YuUHBE+RisH+abTPvWiM7Ijz
+ jCgQpDIw3zg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Hi Junio,
 
-> +	if (argc == 3 || (argc == 2 && command == DO_UNSET)) {
->  		if (!is_writing_gitmodules_ok())
->  			die(_("please make sure that the .gitmodules file is in the working tree"));
->  
-> -		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
-> +		const char *value = (argc == 3) ? argv[2] : NULL;
+On Thu, 7 Feb 2019, Junio C Hamano wrote:
 
-This introduces decl-after-stmt.  Move it before the "is it OK to
-write?" check.
-
-> +		return config_set_in_gitmodules_file_gently(argv[1], value);
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Wouldn't all other hits of "MAKEFLAGS=" in ci/lib.sh also want the
+> > same treatment, though?  We know that "if travis to this, otherwise
+> > if Asure, do that" is the first block to muck with MAKEFLAGS in the
+> > script, but a new assignment before that block can be added in the
+> > future and cause a similar issue unless we do so.
+> >
+> > Of course, at some point we do want to say "we do not want to
+> > inherit it from the outside environment", but then such an
+> > assignment of empty value should be done at the very beginning with
+> > a comment, not with "this happens to be the first one to set, so
+> > let's not append but assign to clear any previous value", I would
+> > think.
+> 
+> That is, in a patch form on top of yours, something like this.
+> 
+> 
+>  ci/lib.sh | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index cee51a4cc4..288a5b3884 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -74,6 +74,9 @@ check_unignored_build_artifacts ()
 >  	}
+>  }
+>  
+> +# Clear MAKEFLAGS that may come from the outside world.
+> +export MAKEFLAGS=
+> +
+>  # Set 'exit on error' for all CI scripts to let the caller know that
+>  # something went wrong.
+>  # Set tracing executed commands, primarily setting environment variables
+> @@ -101,7 +104,7 @@ then
+>  	BREW_INSTALL_PACKAGES="git-lfs gettext"
+>  	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+>  	export GIT_TEST_OPTS="--verbose-log -x --immediate"
+> -	export MAKEFLAGS="--jobs=2"
+> +	MAKEFLAGS="$MAKEFLAGS --jobs=2"
+>  elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
+>  then
+>  	CI_TYPE=azure-pipelines
+> @@ -126,7 +129,7 @@ then
+>  	BREW_INSTALL_PACKAGES=gcc@8
+>  	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
+>  	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
+> -	export MAKEFLAGS="--jobs=10"
+> +	MAKEFLAGS="$MAKEFLAGS --jobs=10"
+>  	test windows_nt != "$CI_OS_NAME" ||
+>  	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+>  else
+> @@ -185,4 +188,4 @@ GIT_TEST_GETTEXT_POISON)
+>  	;;
+>  esac
+>  
+> -export MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
+> +MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
+
+Since this is intended to be run in a CI setting, there is not a whole lot
+of opportunity to set `MAKEFLAGS` outside of the script. And if there is,
+that might open a rabbit hole when debugging issues that somehow in the
+end turn out to come from a hard-coded `MAKEFLAGS` somewhere in the CI
+system.
+
+So I'd rather clear `MAKEFLAGS` at the beginning (i.e. where you `export
+MAKEFLAGS`, I'd simply append a `=`).
+
+Ciao,
+Dscho
