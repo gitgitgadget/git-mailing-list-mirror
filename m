@@ -2,129 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3B131F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 21:33:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEEB81F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 21:34:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726883AbfBGVd3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 16:33:29 -0500
-Received: from mail-wm1-f46.google.com ([209.85.128.46]:37362 "EHLO
-        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726675AbfBGVd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 16:33:29 -0500
-Received: by mail-wm1-f46.google.com with SMTP id g67so1408520wmd.2
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 13:33:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Vi/nXLDMZKjLJlM0GMmMhE3Yq4G1Fh/SU6flGAgfTvY=;
-        b=oH7vA3RsNHB/DSQV1ve0s3soklF0HTcCqtTFQ0bjvYUQfq6f42v49sLaZ7sH6FjEh3
-         OAI5CgK8tAIdtIJrwSZ4w+bXBxoBjbb22vKO2JsCDNDsqwhL3yUGlrRkB1Udh7oo4ChG
-         DPIq+W9XcdJ/z95jXMx2/zNDbKeqOK31k7ce+SVYEoQ75O5+OVJ5y3AAktGmbA2vbFBJ
-         +WMIFpHhrjRjyeOqOSFkOtb5Hab+L0BZ5ClQ8IuWA3NIy5cfvp/bo/m8YkW3rfNfg3LU
-         DaAv6n8tDdnhjJTSDwj5Yp/cRd5cJty+37qPtKU1lTH9heJOT8xNRe9HOgVk4n35xdZZ
-         ZZgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Vi/nXLDMZKjLJlM0GMmMhE3Yq4G1Fh/SU6flGAgfTvY=;
-        b=dzlS9qM4k8JJCyRBNLvM/wdeKBrX4a6UdlFKAWk6b/G1872vfA4d/6PZIH+Bj2JP//
-         ac2hJAI03isbvS8OZU/zFl+golN95ufGfHgNoRdmCsdIpihMs8hjI1HQ4Rn3wb8QNr3e
-         5sXrHnZ47RbjRISJC0xxvH1MwydDgH02hk+eJBkcFrleMVbFytTmD7OXQ4wCFbhE3bhu
-         +IoeM5QLSCDm+b+3x+00J6sQNDVWk14VZfJWWyLBEKy0/p2KBB875X2Xtd4+CXR/DprV
-         1JIc2Gs1wQrk6lOmBYrcyH8u8zZ4VLc3dl6fSmKSSWeb41jMDNXf2gcc1yqGkkeDpJLx
-         rxZw==
-X-Gm-Message-State: AHQUAuZrPtfku/PXkLAiI/8alY5ggsmKMB3HP27ZCucX2xbuJ7MpwJhE
-        B0bQXB0HuGP41k0wTrqqCFU=
-X-Google-Smtp-Source: AHgI3IZeaKjTZHv8y1j1533rgOew9T7jG1VjSD1+UzeXt2VjJy7k2ZBT9D69PsUlQkkjs+4cmb8H0g==
-X-Received: by 2002:a1c:6c10:: with SMTP id h16mr504771wmc.84.1549575207920;
-        Thu, 07 Feb 2019 13:33:27 -0800 (PST)
-Received: from localhost ([109.180.252.133])
-        by smtp.gmail.com with ESMTPSA id n6sm366069wmk.9.2019.02.07.13.33.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Feb 2019 13:33:26 -0800 (PST)
-Date:   Thu, 7 Feb 2019 21:33:26 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
-Subject: Re: GSoC 2019: Git's application submitted
-Message-ID: <20190207213326.GF6085@hank.intra.tgummerer.com>
-References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
- <20190204215251.GB6085@hank.intra.tgummerer.com>
- <20190205211736.GD6085@hank.intra.tgummerer.com>
- <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
- <20190206220942.GE6085@hank.intra.tgummerer.com>
- <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
+        id S1726902AbfBGVem (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 16:34:42 -0500
+Received: from mout.gmx.net ([212.227.17.22]:43493 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726622AbfBGVem (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 16:34:42 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mh9cj-1gWDph1eJV-00MJeZ; Thu, 07
+ Feb 2019 22:34:32 +0100
+Date:   Thu, 7 Feb 2019 22:34:31 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] doc-diff: don't `cd_to_toplevel`
+In-Reply-To: <xmqqy36rpki1.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1902072233070.41@tvgsbejvaqbjf.bet>
+References: <20190203230152.GA25608@sigill.intra.peff.net> <20190204205037.32143-1-martin.agren@gmail.com> <20190204233444.GC2366@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1902051050090.41@tvgsbejvaqbjf.bet> <xmqqimxyrs4w.fsf@gitster-ct.c.googlers.com>
+ <20190206185520.GD10231@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1902071632280.41@tvgsbejvaqbjf.bet> <xmqqy36rpki1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.11.2 (2019-01-07)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:5XMeWHpzudGh+TUqfdUHt8uTV9fAmmr4POGBPTuAKqprIXdG9GO
+ xae/OfCMbxvh8RbvA9LUAQKaUn49NegEYmPzWGNOI7xk8RD4VgoQUs9PxccJmPW9GqiQXVF
+ LWtzQxpaYOwUdG9f8fSWW2RaTTu3Ev/5tk19aW7z5qi11iVnevfkjpL5emm8Teb2S5o0jWa
+ SVPPgnSI/0dkktBN6xl8Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dFuPYgSkAyA=:Z2B/E585oa0eSg30exq3qi
+ lhWcKRcnjYemwD9TTbBVXNnOf4ESqJlkN+NppDUHDtNvNyDReooYnCQdwWsRyCPROXeouKU6O
+ rUsTD0gAyKDkt10Moz1aykEIzdPY/43D81SE5hq4i5hNZ7Lm4JNcyBOytvRowrqtlY50PDX8a
+ YX3v2iHDzVqJj0dpmqfrR8Lvc+wDO5xogu5/q2piZEKYB++0VVejI+IJigW7wzhAey3v6QTFk
+ hGnFVvVU7jwNrbhlP69JltTGllx8IG4lncDDaaYcZ5zhe0rGY19AtkDSfODvIxSa+ge7UL4j3
+ 4hZBstNt6ZIcl437zC735eb/QMhww3Vu+P8cM3pVDu4H+p1mzn42SuwWpUMBfQB7ycTXsGDof
+ kjGoFk7BmGiJWdQPoPNaQpiCqY1+iNkV/ZimKWzHMFmShuuYxgYZWglrXL/9GqsmqemvTJwlC
+ r/4IJBweMdT4ZanWPwochGP9t6NPgA5jObuK3pj5Uw0FVD9UiRD1kq9x6WO+UfOZqLufa3vG4
+ E0qmpbXD8ZSq+C9MtG5rFf9K3lqM34hErsAxvg4fqphQQ0/M9f/fKVe8DEkGTubDiUh3p6Uqn
+ l0RHVWdILivl5X9Qz7T+7X9fG+XBq3zdDPXVJwcU/U48mT0IG5yBnXYgFuRdaURrqXn1sCwGr
+ w0uG1jr7RF+RnU5AG5qwEjovDkxeyiJ+W57BP4JpGVneWY339/fi1YP0V1rFs0xo7mFJ9/tCg
+ FczBwG10l+PytKRv+/RV6CTzR6aKBoQOLUXb+SIkEoUzx9D9eVETxA3F8JU1G+fMZEfg4vbaj
+ /FWAVJACgSI4dzTODU/APAJlgShgV7IHVdVkvCuLLj727ugs97xJCj3CL+2fBk+SiDkDmDchF
+ squGpZf6YnnUPCkhSRisFQxCVgdPixFy+8QNPRCFLCFV10trtIRiWgRsRrkR69HBznZwtAUE6
+ AJnAXfFZt9w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/07, Johannes Schindelin wrote:
-> Hi Thomas,
-> 
-> On Wed, 6 Feb 2019, Thomas Gummerer wrote:
-> >  - implement pushing the index state, without dealing with conflicts
-> >  - implement poping the index state, without dealing with conflicts
-> > 
-> >    This can already be individually useful, and I think this is
-> >    something people asked for on the mailing list, though I didn't try
-> >    digging up old threads for now.  After these two steps stashing and
-> >    restoring a merge conflict would still not work, but we have a good
-> >    first step that could be merged.
-> 
-> We already have `git stash --keep-index`. Is this what you mean here?
+Hi Junio,
 
-`git stash --keep-index` does something different, what I meant here
-was what `git stash pop --index` already does.   I had forgotten that
-this functionality already exists.
+On Thu, 7 Feb 2019, Junio C Hamano wrote:
 
-> >  - implement pushing/poping conflicted state
-> > 
-> >    This would obviously be the end goal.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> On second thought, this might actually be super trivial. Right now, we
-> support two modes (not counting the `--untracked` stuff): --keep-index and
-> --no-keep-index. In both cases, we seem to create a merge commit whose
-> tree reflects the working directory and whose first parent is HEAD and
-> whose second parent is a single commit on top of HEAD (which contains
-> either no changes in the case of --no-keep-index, or whose tree reflects
-> the index in case of --keep-index).
+> > Even when there are even only as much as 12 merge bases to test (which is
+> > the current number of merge bases between `next` and `pu`),...
+> > ...
+> > And I sadly have to report that that's not the end of it. Back when I
+> > implemented the automatic bisect after failed builds (for details, see
+> > https://github.com/git-for-windows/build-extra/commit/c7e01e82c), I had to
+> > turn it off real quickly because the dumb bisect between `next` and `pu`
+> > regularly ran into the 4h timeout.
 > 
-> To extend that to the conflict case, we could introduce a new flag
-> --with-conflicts, and have the commit structure
-> 
-> 	Worktree
-> 	 |    \
-> 	 |    index stage 0
-> 	 |      /     |     \
-> 	 | stage 1  stage 2  stage 3
-> 	 |    /     /       /
-> 	HEAD ---------------
-> 
-> The only tricky thing I can see is to maintain backwards compatibility if
-> possible, so that old `git stash` will do something at least semi-sensible
-> with those commit structures.
-> 
-> It might be too small a project, after all.
+> Would it make it easier for you if you substituted all the mention
+> of 'next' in your message with 'pu^{/^### match next}'?  
 
-Yeah, looking at this I think you're right.  Thanks for helping work
-through this.
+I was working on this in 2017, and could not make it to work as I wanted.
+Ever since, that bisect code has been dormant.
 
-> Ciao,
-> Dscho
+In the meantime, I was able to parallelize the test suite enough to make
+it feasible to test the topic branches. That usually takes care of things
+really quickly, and I just bite the bullet and bisect manually.
+
+Ciao,
+Dscho
+
+> 
+> That mid-point between 'master' and 'pu' is designed to contain
+> exactly the same set of non-merge commits 'next' has, with the tree
+> that is identical to that of 'next', and from there to the tip of
+> 'pu' forms a single strand of merges of tips of topic branches that
+> are not yet merged to 'next' (by definition, it itself is the merge
+> base of it and 'pu').
+> 
+> Bisecting along the first-parent chain from there to the tip of 'pu'
+> would let us identify which merge is faulty as the first-and-quick
+> pass and currently there are about 20 merges in that range on the
+> first-parent chain.
+> 
+> 
