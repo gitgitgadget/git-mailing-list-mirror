@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BF5D1F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 20:06:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65F271F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 20:06:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727125AbfBGUF7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 15:05:59 -0500
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:45929 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726512AbfBGUF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 15:05:59 -0500
-Received: by mail-pf1-f201.google.com with SMTP id 74so708220pfk.12
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 12:05:58 -0800 (PST)
+        id S1727259AbfBGUGC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 15:06:02 -0500
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:47024 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726512AbfBGUGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 15:06:02 -0500
+Received: by mail-qk1-f202.google.com with SMTP id c84so1048061qkb.13
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 12:06:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
-        bh=peuxNE8YzMQpfH2GQlN7VaP+Z78JSfllS3h/CqLO//U=;
-        b=P4A3boDdHiKZXHBgZ58hjPteQ7dYRIQcC9cVM8YMGtccQDx0DZo41ALvZPEAonweMW
-         Hes3M0iNxMuEwhagD4j6h88poHW37cMuW5u7BgHQGlZmKvhoXHoUIcIpS97+wPD8iJRi
-         mZxwB5oyAjq05N2wf1qusfwerleq8b2FYgNHgn3jLhOnKZ4g2adCvOSoQkgE2goBBluO
-         7rkoRLNtdquCugdXOWoaW6pUNeKMlGrYSkcv6wTXQtHqwhIpU5xOZ5ZxdLhG0EdI4Fkv
-         8A6zjKe3WWOYGqF+sL0O8Gdv9ERo8EGHMn/LmY4gqpL89yYoPKbTQzq9yRFG56Nc7ExB
-         vcFA==
+        bh=nORwMn+u+drxP+kMqOU+K61mCfZGlsZxJSInkrQRJIc=;
+        b=c26xEt81OScXGtB3FXRpsOUkV/F7pqbTBSnhlmdJqDrdMF0y7pELR9y7He1DEhr4Je
+         W7b91n6CWrqJ6kmrX33J93uyz8ICfkKF6wUAQCMP6yrx+7iXY/HSMwz3mOyCwm322ksq
+         Pbm7H/YwFTL5Tq/JYiIS5pT6Z8EdgXyMMuN3z0Jq5rKWVczJpecl4Esp/P1FaYAxVRjm
+         s3XFi9omVShIqw+RE7+rBOydHpLlg7TjmOXp3BLOq6mSxkRwDfRHL+c9vAuGRoOlUCgR
+         R8pc9cSZ0jRFmqZXCtx3lU4GYsZj7GwJwBaydMxZJTW6IcO0/R4lgCgvdQ4Rox/v02E8
+         4bjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to;
-        bh=peuxNE8YzMQpfH2GQlN7VaP+Z78JSfllS3h/CqLO//U=;
-        b=sSSDwrtgm/JIID3yOVxxBzH009e1KkjMYdkDS5q1DVHu/4FqVf4ydWVxxBc3BxHxsj
-         WSrm5m48IrdFEwfgqh3cbFwPF06l8BplAO7zz2rP5fUnzKCNljnakYplV6zGy12CPPab
-         tUZwVnXxYT7Oi0WFrxs/5SHnte4i4X7SPP6jEZ1voWmlbKfSogD33OmzJKmckgW1OBQ8
-         jx1SXJhRmQ5aKVtTne5RGOc7eMqUglLdlzs0x8dAP0DObDlQ6S1WBk7wokWGdEQwkhBI
-         3vTjCqaSucV0JjgXGBgztGxbzxTj33epvUQeKSa/C3Ps/c5xYz6qFh19DgTU65kRiJSh
-         BYlg==
-X-Gm-Message-State: AHQUAuZJC0wGAX33WlU3kMDYZNP5BDKtusbrD9lhf9InZAy4cIVeqj+/
-        2wXVb81rINs9DAZ9NSl4R5Q6tZ4c3q8KcxjPWUFMGXuFa+9ljOJroWgakAWMDPMbvb+lnnoi13Y
-        PeVJCuDjVl1nptmhQCVpTBNAuDZRrPAgaC2MN9zyAhNmUzdq6qV4nzwyaymgfwjU=
-X-Google-Smtp-Source: AHgI3IaDUYcR+vc8EWCDwC7gLxSsQ1zNfwQdRz58zRr9nXIf60mQdUhr/tS+OA4wPBkdX8huVQoOF4g7Pl709Q==
-X-Received: by 2002:a65:5b0d:: with SMTP id y13mr6568279pgq.3.1549569958518;
- Thu, 07 Feb 2019 12:05:58 -0800 (PST)
-Date:   Thu,  7 Feb 2019 12:05:53 -0800
+        bh=nORwMn+u+drxP+kMqOU+K61mCfZGlsZxJSInkrQRJIc=;
+        b=RFEUM7IzBEEQk8BYYrJxp+3YxovTAWzic9qyuJrv3iKFCQDPs1m4KzvudeDi3G6TWX
+         9y/miOu/5bXvGD1LwsU3wyFthdEnnnN1TGeU4L8IiGYT1EoUTLcyisHMTtF/p9T9dtBS
+         xgCJ9Yx5EZer0NhA7aKNn86QXqi5VdD/c1JhLKaat0spYi/lyEwWGgc9sr04fjFpllGo
+         2VYYe1kZUVs7EzH1zJpMzHiXfypSdxUtKQerHOgE2gJlOCVskaNE4fr6OT3nmmv1WQK+
+         ZPUaPAYAduU56yfUYtF7QI2Ji1VIaenGUYvJvRmGGsqFytl/7mbjv9Ythq3Z+3OvqxfQ
+         PzpQ==
+X-Gm-Message-State: AHQUAuYI++k+I1oVoXLqZcLUzVldKLUvvMrVQ3p1DBlgIjum/fBrPmlK
+        /CqGLCNcQKRagPqvWOwDpZSQQUvE9NE4uUXbp966B8wEhIgnfnaIrCbHPcBQks0ZFcTvTEagi1F
+        BOmgEBdKx5DgWfPkdaqV2BaVQCQoA0cjiWd1nuRzi+KuqunNXIV8fO5UPbUOvihg=
+X-Google-Smtp-Source: AHgI3Ib/t2cN/TmedBqeO5y77QfOD8AZNcy5LIL4QlW53dpa8fuo6Lxnan+5RAOZLK7tPATjG5ZWjBC9kJWdMQ==
+X-Received: by 2002:a0c:ef0c:: with SMTP id t12mr3074620qvr.19.1549569960997;
+ Thu, 07 Feb 2019 12:06:00 -0800 (PST)
+Date:   Thu,  7 Feb 2019 12:05:54 -0800
 In-Reply-To: <cover.1549569479.git.steadmon@google.com>
-Message-Id: <2dc66703537cfdbd6eb08ac4a7341c0f278621a1.1549569479.git.steadmon@google.com>
+Message-Id: <9a0495694dc2344ae5fdf2a95b301cfca3ed4a79.1549569479.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <cover.1549569479.git.steadmon@google.com>
 X-Mailer: git-send-email 2.20.1.611.gfbb209baf1-goog
-Subject: [PATCH 1/2] fuzz-commit-graph: initialize repo object
+Subject: [PATCH 2/2] object: fix leak of shallow_stat
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -60,35 +60,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Various #DEFINE "constants" in commit-graph.c now depend on
-the_hash_algo->rawsz, but this object must be initialized before it can
-be used.
+In eee4502baaf ("shallow: migrate shallow information into the object
+parser", 2018-05-17), we added a stat_validity pointer into the
+parsed_object_pool struct, but did not add code to free this in
+parsed_object_pool_clear(). This leak was found by fuzz-commit-graph.
+
+Clear the struct and then free it in parsed_object_pool_clear() to
+prevent the leak.
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- fuzz-commit-graph.c | 3 +++
- 1 file changed, 3 insertions(+)
+ object.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fuzz-commit-graph.c b/fuzz-commit-graph.c
-index cf790c9d04..0157acbf2e 100644
---- a/fuzz-commit-graph.c
-+++ b/fuzz-commit-graph.c
-@@ -1,4 +1,5 @@
- #include "commit-graph.h"
-+#include "repository.h"
- 
- struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 					size_t graph_size);
-@@ -9,7 +10,9 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
- {
- 	struct commit_graph *g;
- 
-+	initialize_the_repository();
- 	g = parse_commit_graph((void *)data, -1, size);
-+	repo_clear(the_repository);
- 	free(g);
- 
- 	return 0;
+diff --git a/object.c b/object.c
+index 5dc5eec367..ca0b093c37 100644
+--- a/object.c
++++ b/object.c
+@@ -557,9 +557,11 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
+ 	clear_alloc_state(o->commit_state);
+ 	clear_alloc_state(o->tag_state);
+ 	clear_alloc_state(o->object_state);
++	stat_validity_clear(o->shallow_stat);
+ 	FREE_AND_NULL(o->blob_state);
+ 	FREE_AND_NULL(o->tree_state);
+ 	FREE_AND_NULL(o->commit_state);
+ 	FREE_AND_NULL(o->tag_state);
+ 	FREE_AND_NULL(o->object_state);
++	FREE_AND_NULL(o->shallow_stat);
+ }
 -- 
 2.20.1.611.gfbb209baf1-goog
 
