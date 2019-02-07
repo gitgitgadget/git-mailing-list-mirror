@@ -2,110 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 130FD1F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 02:00:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D36DF1F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 02:32:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726614AbfBGCAZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Feb 2019 21:00:25 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35506 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726245AbfBGCAZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Feb 2019 21:00:25 -0500
-Received: (qmail 16846 invoked by uid 109); 7 Feb 2019 02:00:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Feb 2019 02:00:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7736 invoked by uid 111); 7 Feb 2019 02:00:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Feb 2019 21:00:33 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Feb 2019 21:00:22 -0500
-Date:   Wed, 6 Feb 2019 21:00:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] add_to_index(): convert forgotten HASH_RENORMALIZE check
-Message-ID: <20190207020022.GA29974@sigill.intra.peff.net>
-References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet>
- <20190206104243.GJ10587@szeder.dev>
+        id S1726593AbfBGCcs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Feb 2019 21:32:48 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:39909 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726245AbfBGCcs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Feb 2019 21:32:48 -0500
+Received: by mail-it1-f195.google.com with SMTP id a6so11071050itl.4
+        for <git@vger.kernel.org>; Wed, 06 Feb 2019 18:32:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pb+WMi2y+SZY+fZ+qz0tnFoFB8EcpSrGc0DjLR2cavg=;
+        b=px/zMkHJ5VcnPWLgR2jsA8tzIEUoKmz+iXLvwbPdQr98g68nXZ8zQXB6L580U+ey8f
+         wtKcf16AYS9UgOIr2WzlX5CDlcfR7DtHDhw48PkaEUVVcrO6KxswSNEehK1gbY8rV94F
+         H5D4RvSK0S4pE+oq7sZF/JEm+gVLPW4LFhBRMIAlN7nT6y2ZrfGZdtx5pqW6PRLgKBrV
+         lfo0833VxkkcbpUPuOYLolljtDoyKz/Xn9TrxvyHLI4/3Y6cgK6+FtJwNlgP1rTkoCQD
+         EU5+GBV1VG0yu20gwW334bp1PQOxHuCSqZuyV0EjksF9VJkyk3o0VL9pL0jBGED2pEgI
+         s7gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pb+WMi2y+SZY+fZ+qz0tnFoFB8EcpSrGc0DjLR2cavg=;
+        b=SQpSF1a4SMHLrXLbZ3T/tf0ZFKkmXA4pOWqXnoYQCM5vcBn25ASVdNHzp0FTNaabWu
+         a3D5G3TKlDbar9wvGOhC3AjCAF04egMC0jMEKe7zSXNCQ1ti6MYvV2kTGdyzWC4oH21r
+         9CbF+0x39MhMVeKADTp7eWT0ymz2pxisBhrZFEcbqi0UeumkxYTAfPePf+L4tdDXol47
+         21kR+1mobDjPxu2SuWY5uSYuerPttF455B5VXuyNUpw5WlC/PcwNxF42pOPbZKxeHp2k
+         xcHefFIxEXeKtnQqN/pcfVZTvSorZ3lHa5PNhdMkFHTKJIUzQtU2cShNXqDJuWO2bnI6
+         LQ8A==
+X-Gm-Message-State: AHQUAuYrPhAgUtmiUIlbu4gVKS7+YmL0ruxnJ1hqGGIN2Xx9JzKQh4D3
+        nWPdoMbzi4eqcEi+KhTjoNLh6P5Zjy6ht845F9g=
+X-Google-Smtp-Source: AHgI3IYwoOweyW3VYOFEOgjUP+ts0Qq06WCmDjRsngLMI21p0csZcLfD6iYdaIjBN9CItVsp9wflNLK5kK2VBp6xVMM=
+X-Received: by 2002:a5d:9812:: with SMTP id a18mr6197819iol.236.1549506767818;
+ Wed, 06 Feb 2019 18:32:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190206104243.GJ10587@szeder.dev>
+References: <20190204000650.686175-1-sandals@crustytoothpaste.net> <20190206235937.201663-1-sandals@crustytoothpaste.net>
+In-Reply-To: <20190206235937.201663-1-sandals@crustytoothpaste.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 7 Feb 2019 09:32:21 +0700
+Message-ID: <CACsJy8Ae0ZZjh8+f+TwbfJ-V9SzrHpDFyfjwScwKJj+kc7FDTQ@mail.gmail.com>
+Subject: Re: [PATCH v2] fetch-pack: clear alternate shallow when complete
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 06, 2019 at 11:42:43AM +0100, SZEDER Gábor wrote:
+On Thu, Feb 7, 2019 at 7:00 AM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> When we write an alternate shallow file in update_shallow, we write it
+> into the lock file. The string stored in alternate_shallow_file is
+> copied from the lock file path, but it is freed the moment that the lock
+> file is closed, since we call strbuf_release to free that path.
+>
+> This used to work, since we did not invoke git index-pack more than
+> once. However, we now do, and starting with bd0b42aed3 (fetch-pack: do
+> not take shallow lock unnecessarily - 2019-01-10), we no longer reset
+> this value unconditionally; consequently, we reuse the freed memory.
+> Ensure we reset the value to NULL to avoid using freed memory. git
+> index-pack will read the repository's shallow file, which will have been
+> updated with the correct information.
 
-> I reported this and Peff looked into it on the way to Git Merge, but
-> not working solution yet.
-> 
-> https://public-inbox.org/git/20190129225121.GD1895@sigill.intra.peff.net/T/#u
+The patch looks good to me.
 
-Oof. Well, now I know why my attempts to fix the test failed. It was not
-my new test that was failing at all, but rather the existing test. Which
-implies that I severely bungled the actual code change.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  fetch-pack.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 577faa6229..a92621a388 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -1272,6 +1272,8 @@ static void receive_shallow_info(struct fetch_pack_args *args,
+>                 setup_alternate_shallow(&shallow_lock, &alternate_shallow_file,
+>                                         NULL);
+>                 args->deepen = 1;
+> +       } else {
+> +               alternate_shallow_file = NULL;
+>         }
+>  }
+>
+> @@ -1489,6 +1491,7 @@ static void update_shallow(struct fetch_pack_args *args,
+>                         rollback_lock_file(&shallow_lock);
+>                 } else
+>                         commit_lock_file(&shallow_lock);
+> +               alternate_shallow_file = NULL;
+>                 return;
+>         }
+>
+> @@ -1512,6 +1515,7 @@ static void update_shallow(struct fetch_pack_args *args,
+>                                                 &alternate_shallow_file,
+>                                                 &extra);
+>                         commit_lock_file(&shallow_lock);
+> +                       alternate_shallow_file = NULL;
+>                 }
+>                 oid_array_clear(&extra);
+>                 return;
+> @@ -1551,6 +1555,7 @@ static void update_shallow(struct fetch_pack_args *args,
+>                 commit_lock_file(&shallow_lock);
+>                 oid_array_clear(&extra);
+>                 oid_array_clear(&ref);
+> +               alternate_shallow_file = NULL;
+>                 return;
+>         }
+>
 
-Armed with that knowledge, it was pretty easy to find said bungling. The
-fix is below.
 
-Junio, this should go on top of jk/add-ignore-errors-bit-assignment-fix
-as soon as possible, as the regression is already in master. And I'll go
-find a brown paper bag. ;)
-
--- >8 --
-Subject: [PATCH] add_to_index(): convert forgotten HASH_RENORMALIZE check
-
-Commit 9e5da3d055 (add: use separate ADD_CACHE_RENORMALIZE flag,
-2019-01-17) switched out using HASH_RENORMALIZE in our flags field for a
-new ADD_CACHE_RENORMALIZE flag. However, it forgot to convert one of the
-checks for HASH_RENORMALIZE into the new flag, which totally broke "git
-add --renormalize".
-
-To make matters even more confusing, the resulting code would racily
-pass the tests!  The forgotten check was responsible for defeating the
-up-to-date check of the index entry. That meant that "git add
---renormalize" would refuse to renormalize things that appeared
-stat-clean. But most of the time the test commands run fast enough that
-the file mtime is the same as the index mtime. And thus we err on the
-conservative side and re-hash the file, which is what "--renormalize"
-would have wanted.
-
-But if you're unlucky and cross that one-second boundary between writing
-the file and writing the index (which is more likely to happen on a slow
-or heavily-loaded system), then the file appears stat-clean. And
-"--renormalize" would effectively do nothing.
-
-The fix is straightforward: convert this check to use the right flag.
-
-Noticed-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- read-cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 9783c493a3..accc059951 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -746,7 +746,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 	if (ignore_case) {
- 		adjust_dirname_case(istate, ce->name);
- 	}
--	if (!(flags & HASH_RENORMALIZE)) {
-+	if (!(flags & ADD_CACHE_RENORMALIZE)) {
- 		alias = index_file_exists(istate, ce->name,
- 					  ce_namelen(ce), ignore_case);
- 		if (alias &&
 -- 
-2.20.1.1122.g2972e48916
-
+Duy
