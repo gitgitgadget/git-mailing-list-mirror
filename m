@@ -2,340 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA2061F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 10:19:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3B9C1F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 10:33:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726824AbfBGKTE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 05:19:04 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:42940 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726792AbfBGKTD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 05:19:03 -0500
-Received: by mail-pl1-f193.google.com with SMTP id s1so4562675plp.9
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 02:19:03 -0800 (PST)
+        id S1726742AbfBGKdp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 05:33:45 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45359 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726549AbfBGKdp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 05:33:45 -0500
+Received: by mail-pf1-f193.google.com with SMTP id j3so2437909pfi.12
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 02:33:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=LRiG02KAdsslIb4EAnfa+TDfiu2mb1A5iDISeP6x0q0=;
-        b=A9NhqrVpN2ZR9OMruI5g/pM1/Tl7E3y0W5BMrR1DMgOZ9z5QoS8LuOYkcXRq+cqCDd
-         j3AxfK7XT1ShmXC5iU/JyZxFmbuObyQxR54OCSLy63kZnVL1LVXB/nNJGMdg/bKLMdJI
-         QuvVLsKOTmoOR1WtIzc5uIk0wDof7yujg2ifXxOzfb1g3rAUIoqZhT7Y2eVI4EJfvcvC
-         dUhrSeBQ0wbaphIvt97pyWmzuMT1X/xNT71OyhgY8W0GRxcMveOgGSzUfeWByy4T9gmp
-         LC/wPv3ldAZd8d1HZD1Vcce5DM0nGjCjE6vzaTVMg0tSeHI3Ov8H8+PNTuVql9+2mLKB
-         E1hQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sPVzCQOa9DrG2SS8xCyClHmXynwU4sMjaaMU5ALmS6g=;
+        b=mTH+NTD3sqVPBMhGNnOqNOX7jna9VNQcADSB0Pv3RyM3/dT6hYC4Ks1WUFMimTq2ik
+         i6wPFB5CQhY0tKlGjR5ATCRw3NO3gUDDeSPQBxaMSTdVxDmG2PGHDGLpkuoa2IaObdPD
+         Irl71BY/b+9Dj72Ipcq8HxV8HzE4Y2TLNjREMGpWn6xpGBbm2erSA8g3JSjxuAxII8eL
+         1xgx0+HNPM6GK7OtxSOryWDH0lFzr5fWmAoKpJ8qdAgXoWQWe1PIg6/CiWm6QKju6yI9
+         b6C1ZUPCMMtvIbNPE6yGofY4KP0WJm06uzmtfpvHhviMzv1mmJQClkhybrALROHRIjQ6
+         7W8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LRiG02KAdsslIb4EAnfa+TDfiu2mb1A5iDISeP6x0q0=;
-        b=aHz9dqAgZWf0E4vd8KVlMR/pOn+PlqSMMmsKFe1b7nybd2OjuBrYZiKjQV9qp1CU9S
-         mKmX6X1IKoUhY6R5H6ItQbT4/dDYNZqDgfYvKgqlK8hISMRR246hvAbEnIRVoLHQRvH6
-         Pxtw4TxuRb3EZM9Ifw9PnD4NwjdWM/yPoGK5GOjYKAsTkO13zwarEZcO8YAvw6WYyVKu
-         SV2nbJrgbC7aIiChokI9LalwKK6gPiglcK4CW/IbgO505Ld4iQP49QAr8oS0bZuGP6Zl
-         61xP7b1z8HDlbIyg8V17h7NcqjE3o/tkvbkA6kxiGkrPpA1LzMr5EiGrVMmznVB8zIQo
-         8g3A==
-X-Gm-Message-State: AHQUAuZ1z18aPHYMzxOO3K/ZdyhheipzUJ8kO5iYw0lBsovBAu4RzgM2
-        I/0w4L3p1ELzxQQ/D64AZp4snSEq
-X-Google-Smtp-Source: AHgI3IZdxRilNL/AjVG9t4Kvj3FTiKS3RmNNF1h2WoWlW7jYFS+6zEAbx1TaU8jKqrBi7fgasjWN2w==
-X-Received: by 2002:a17:902:296a:: with SMTP id g97mr15806307plb.317.1549534742725;
-        Thu, 07 Feb 2019 02:19:02 -0800 (PST)
-Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id u73sm7197793pfa.169.2019.02.07.02.19.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Feb 2019 02:19:02 -0800 (PST)
-Date:   Thu, 7 Feb 2019 02:19:00 -0800
-From:   Denton Liu <liu.denton@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sPVzCQOa9DrG2SS8xCyClHmXynwU4sMjaaMU5ALmS6g=;
+        b=jhrC22AX4TL+MkgxKDJy6gXi5mJvoXRJw6oZNLfH6iVtz6xspDQtugLDWS7H2Nq/e1
+         gtlQq5n8FUIZ2NA1ZG+6hYf1wpYPC+b6yaZcAGAOIL8AZoIMBv7KJudL4xjsaiSn/9DI
+         6S0wPf+LgEuHRjMB2U0ghGVbt7Vtn0od9w1rdM1kW9+iTR25m6Wi7aGAbQpigLNYhfhw
+         d9cc98AIv1RX7PwTOj0CNGnZnJij+P4bwEvYOthr01SinbHM8iNSlgkkyxSEFByo4w1P
+         1d+kPw6whVEMIbdM0+hnqXH4zQutZR5MGLwGeSkImG1zC2ckBTald6p+CODEKLyFTeuh
+         Venw==
+X-Gm-Message-State: AHQUAuZamxGQygzJOuY2E2HrAcAaepIvUyzPrr6sfdzvx4zIFFxfJcLI
+        ncnwvkj4xlpYHIWyAxpVBGMcYAxQ
+X-Google-Smtp-Source: AHgI3IYUqRCSaAB11Bwhqw3KFioU1LAf/vHZn3JhFCKvTi1a1Vd8wLBtmhBPcvU7SYDUAgJBhxuAcA==
+X-Received: by 2002:a65:6684:: with SMTP id b4mr14186570pgw.55.1549535624533;
+        Thu, 07 Feb 2019 02:33:44 -0800 (PST)
+Received: from ash ([115.72.21.220])
+        by smtp.gmail.com with ESMTPSA id p7sm13312814pfa.22.2019.02.07.02.33.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Feb 2019 02:33:43 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 07 Feb 2019 17:33:39 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH v3 3/3] submodule: teach set-branch subcommand
-Message-ID: <91bb634dfad7f6a17bbed9eaf27f668326fca54e.1549534460.git.liu.denton@gmail.com>
-References: <cover.1549521103.git.liu.denton@gmail.com>
- <cover.1549534460.git.liu.denton@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 00/21] nd/diff-parseopt part 2
+Date:   Thu,  7 Feb 2019 17:33:05 +0700
+Message-Id: <20190207103326.10693-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1549534460.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.2 (2019-01-07)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This teaches git-submodule the set-branch subcommand which allows the
-branch of a submodule to be set through a porcelain command without
-having to manually manipulate the .gitmodules file.
----
- Documentation/git-submodule.txt        |  7 ++
- contrib/completion/git-completion.bash |  5 +-
- git-submodule.sh                       | 75 +++++++++++++++++++--
- t/t7419-submodule-set-branch.sh        | 93 ++++++++++++++++++++++++++
- 4 files changed, 175 insertions(+), 5 deletions(-)
- create mode 100755 t/t7419-submodule-set-branch.sh
+"What's cooking" mails seem to indicate that the series will be cooked
+in full there then landed on master later. So here's the second part.
+This continues to convert more diff options to parseopt.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 4150148fa3..6c608b3b8c 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] deinit [-f|--force] (--all|[--] <path>...)
- 'git submodule' [--quiet] update [<options>] [--] [<path>...]
-+'git submodule' [--quiet] set-branch [<options>] [--] <path>
- 'git submodule' [--quiet] summary [<options>] [--] [<path>...]
- 'git submodule' [--quiet] foreach [--recursive] <command>
- 'git submodule' [--quiet] sync [--recursive] [--] [<path>...]
-@@ -168,6 +169,12 @@ submodule with the `--init` option.
- If `--recursive` is specified, this command will recurse into the
- registered submodules, and update any nested submodules within.
- --
-+set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>::
-+	Sets the default remote tracking branch for the submodule. The
-+	`--branch` option allows the remote branch to be specified. The
-+	`--default` option removes the submodule.<name>.branch configuration
-+	key, which causes the tracking branch to default to 'master'.
-+--
- summary [--cached|--files] [(-n|--summary-limit) <n>] [commit] [--] [<path>...]::
- 	Show commit summary between the given commit (defaults to HEAD) and
- 	working tree/index. For a submodule in question, a series of commits
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index de56879960..0fccadfc97 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2573,7 +2573,7 @@ _git_submodule ()
- {
- 	__git_has_doubledash && return
- 
--	local subcommands="add status init deinit update summary foreach sync absorbgitdirs"
-+	local subcommands="add status init deinit update set-branch summary foreach sync absorbgitdirs"
- 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		case "$cur" in
-@@ -2604,6 +2604,9 @@ _git_submodule ()
- 			--force --rebase --merge --reference --depth --recursive --jobs
- 		"
- 		;;
-+	set-branch,--*)
-+		__gitcomp "--default --branch"
-+		;;
- 	summary,--*)
- 		__gitcomp "--cached --files --summary-limit"
- 		;;
-diff --git a/git-submodule.sh b/git-submodule.sh
-index b5f2beee60..470f681573 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -10,6 +10,7 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
-    or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
-+   or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]
-@@ -684,6 +685,72 @@ cmd_update()
- 	}
- }
- 
-+#
-+# Configures a submodule's default branch
-+#
-+# $@ = requested path
-+#
-+cmd_set_branch() {
-+	unset_branch=false
-+	branch=
-+
-+	while test $# -ne 0
-+	do
-+		case "$1" in
-+		-q|--quiet)
-+			# we don't do anything with this but we need to accept it
-+			;;
-+		-d|--default)
-+			unset_branch=true
-+			;;
-+		-b|--branch)
-+			case "$2" in '') usage ;; esac
-+			branch=$2
-+			shift
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		-*)
-+			usage
-+			;;
-+		*)
-+			break
-+			;;
-+		esac
-+		shift
-+	done
-+
-+	if test $# -ne 1
-+	then
-+		usage
-+	fi
-+
-+	# we can't use `git submodule--helper name` here because internally, it
-+	# hashes the path so a trailing slash could lead to an unintentional no match
-+	name="$(git submodule--helper list "$1" | cut -f2)"
-+	if test -z "$name"
-+	then
-+		exit 1
-+	fi
-+
-+	test -n "$branch"; has_branch=$?
-+	test "$unset_branch" = true; has_unset_branch=$?
-+
-+	if test $((!$has_branch != !$has_unset_branch)) -eq 0
-+	then
-+		usage
-+	fi
-+
-+	if test $has_branch -eq 0
-+	then
-+		git submodule--helper config submodule."$name".branch "$branch"
-+	else
-+		git submodule--helper config --unset submodule."$name".branch
-+	fi
-+}
-+
- #
- # Show commit summary for submodules in index or working tree
- #
-@@ -983,7 +1050,7 @@ cmd_absorbgitdirs()
- while test $# != 0 && test -z "$command"
- do
- 	case "$1" in
--	add | foreach | init | deinit | update | status | summary | sync | absorbgitdirs)
-+	add | foreach | init | deinit | update | set-branch | status | summary | sync | absorbgitdirs)
- 		command=$1
- 		;;
- 	-q|--quiet)
-@@ -1024,8 +1091,8 @@ then
-     fi
- fi
- 
--# "-b branch" is accepted only by "add"
--if test -n "$branch" && test "$command" != add
-+# "-b branch" is accepted only by "add" and "set-branch"
-+if test -n "$branch" && (test "$command" != add || test "$command" != set-branch)
- then
- 	usage
- fi
-@@ -1036,4 +1103,4 @@ then
- 	usage
- fi
- 
--"cmd_$command" "$@"
-+"cmd_$(echo $command | sed -e s/-/_/g)" "$@"
-diff --git a/t/t7419-submodule-set-branch.sh b/t/t7419-submodule-set-branch.sh
-new file mode 100755
-index 0000000000..c4b370ea85
---- /dev/null
-+++ b/t/t7419-submodule-set-branch.sh
-@@ -0,0 +1,93 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2019 Denton Liu
-+#
-+
-+test_description='Test submodules set-branch subcommand
-+
-+This test verifies that the set-branch subcommand of git-submodule is working
-+as expected.
-+'
-+
-+TEST_NO_CREATE_REPO=1
-+. ./test-lib.sh
-+
-+test_expect_success 'submodule config cache setup' '
-+	mkdir submodule &&
-+	(cd submodule &&
-+		git init &&
-+		echo a >a &&
-+		git add . &&
-+		git commit -ma &&
-+		git checkout -b topic &&
-+		echo b >a &&
-+		git add . &&
-+		git commit -mb
-+	) &&
-+	mkdir super &&
-+	(cd super &&
-+		git init &&
-+		git submodule add ../submodule &&
-+		git commit -m "add submodule"
-+	)
-+'
-+
-+test_expect_success 'ensure submodule branch is unset' '
-+	(cd super &&
-+		test_must_fail grep branch .gitmodules
-+	)
-+'
-+
-+test_expect_success 'test submodule set-branch --branch' '
-+	(cd super &&
-+		git submodule set-branch --branch topic submodule &&
-+		grep "branch = topic" .gitmodules &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		b
-+		EOF
-+		git -C submodule show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'test submodule set-branch --default' '
-+	(cd super &&
-+		git submodule set-branch --default submodule &&
-+		test_must_fail grep branch .gitmodules &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		a
-+		EOF
-+		git -C submodule show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'test submodule set-branch -b' '
-+	(cd super &&
-+		git submodule set-branch -b topic submodule &&
-+		grep "branch = topic" .gitmodules &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		b
-+		EOF
-+		git -C submodule show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'test submodule set-branch -d' '
-+	(cd super &&
-+		git submodule set-branch -d submodule &&
-+		test_must_fail grep branch .gitmodules &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		a
-+		EOF
-+		git -C submodule show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_done
+Nguyễn Thái Ngọc Duy (21):
+  diff.c: convert --patch-with-raw
+  diff.c: convert --numstat and --shortstat
+  diff.c: convert --dirstat and friends
+  diff.c: convert --check
+  diff.c: convert --summary
+  diff.c: convert --patch-with-stat
+  diff.c: convert --name-only
+  diff.c: convert --name-status
+  diff.c: convert -s|--no-patch
+  diff.c: convert --stat*
+  diff.c: convert --[no-]compact-summary
+  diff.c: convert --output-*
+  diff.c: convert -B|--break-rewrites
+  diff.c: convert -M|--find-renames
+  diff.c: convert -D|--irreversible-delete
+  diff.c: convert -C|--find-copies
+  diff.c: convert --find-copies-harder
+  diff.c: convert --no-renames|--[no--rename-empty
+  diff.c: convert --relative
+  diff.c: convert --[no-]minimal
+  diff.c: convert --ignore-some-changes
+
+ Documentation/diff-options.txt |  20 ++
+ diff.c                         | 510 +++++++++++++++++++--------------
+ 2 files changed, 319 insertions(+), 211 deletions(-)
+
 -- 
-2.20.1.522.g5f42c252e9
+2.20.1.682.gd5861c6d90
 
