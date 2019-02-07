@@ -7,96 +7,94 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C47F81F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 17:38:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DE5A1F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 17:40:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726733AbfBGRiC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 12:38:02 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37198 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726319AbfBGRiC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 12:38:02 -0500
-Received: by mail-wm1-f67.google.com with SMTP id g67so752269wmd.2
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 09:38:01 -0800 (PST)
+        id S1726676AbfBGRkC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 12:40:02 -0500
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:37528 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726319AbfBGRkB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 12:40:01 -0500
+Received: by mail-wr1-f48.google.com with SMTP id c8so774568wrs.4
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 09:40:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZTpfxBdPLlqBMygCQiKE+WAqvDINBktfnWKVtyx+dz4=;
-        b=gfwx4r8ueeJ8V+ocqutMkkH5/ldufckmsFg6k+5CD4ZwhSeLDFvZlqRYSrdngPwm4O
-         05htp7SGALCbdIuK+hJSNfxkRlMAx7rIWGAuJW02uoVkyCXEPVSpHWzNtEpXP/TFPG2L
-         od2trwgwAY8GeLubqfXGNX7MlDmD0XfujnWqdlTL2O+2CEAae7dJZs61XLw41Qc8HMQX
-         d6STbFMWWRh//Fx7oMC3PPY/eJmXOO/FSXUtFNdbjAsGQL25qSAxxHBJtvsrBwR65aMw
-         NzxYUAD47LwHoZKlFMdd4pLRfMbPATy88QkinCvOFMXg6ndeb1YZJCU57j3pct4Brk7R
-         EDfg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=PqYXaQIA2FiGKz2hX7kUNJZMm+XyN+NMhN/gNBRObqg=;
+        b=eZt0YTuBBPwGmgji6n5sSxU6OusSLaJTi54bk5NDhlG7JD+AuRrxEjZxf8gj3yPOjD
+         bLRJBibkXOlbIvLGbodD2K7lt0B8fEXxZUUqfRnqjz0hg2SsVV7egM7wZf12sRmb3k08
+         ogv7AQBsCPr+FHXo62vZP8aoxmejNFzvQ3hvRMCXXODzjDuPVh0NNwH0nQBrqEQdNXfp
+         eBvIqfNpdg+iZGxe51I1BZQm7smW3qomTjGgUCF9pixOZltxQd/Y/nrA/qtKIlM/n120
+         7xHGsUFEDg5OILv1e3KYPzyFpsS6Km9zUZioTkV6OU7NC3sTg6qAAmomRO0wdC2oVxO1
+         pEvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZTpfxBdPLlqBMygCQiKE+WAqvDINBktfnWKVtyx+dz4=;
-        b=O60StQ6ql6lwLZWFwQiuTwInP9GboLs3Q8aXa+KtvzI8C6MleHAM9csakOA3caC+I1
-         sYq6m1zytbqJQzaCF9pdH/U7xsM4po3nqnLn4flQJeCT83+SPqAPgNS4KxSv4oBXiG2I
-         DnFK4Cm1nC+0CtR43ojRYKvi2z9uHvCz0tYRG7/oRy7WWQ6Ytm90I2JG1QUHk0JHVhda
-         kTgFd3NN01Swp8KBI7+1rZACccD1nhIfdHCcWqxt/nDSZdrCNhG7+YlkU9jQ6kmv5WTA
-         h1EbNGKp/hXlNQxXS+X3bndB7Vz4SFxnqz1PoxN8fU2LoBleJv9T8G173oRiR9pUyPON
-         c8AA==
-X-Gm-Message-State: AHQUAuYriRiWNMtd7cqC6Mz8B3kS9XmJbVXFvB7En12+RKzxUT6Jkenn
-        QlWS1yLIMdOj9LWT/VgTmzQ=
-X-Google-Smtp-Source: AHgI3IbkoMjrJpEEuNO+QxyponiTV04SDg8KAKLlcODt43UipuPCIlxFWTREVe1nTGNcZ5uQ1gC/FA==
-X-Received: by 2002:a1c:9dcf:: with SMTP id g198mr7909577wme.116.1549561079996;
-        Thu, 07 Feb 2019 09:37:59 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=PqYXaQIA2FiGKz2hX7kUNJZMm+XyN+NMhN/gNBRObqg=;
+        b=HV5r0Tb6YpFnzwWwASgQ6j9qmx0YarYqGjRYIA0vB198iWv/mXofwqCh7qg9MmiHE/
+         r/lwuHitOdRCAH/Np5reiXAaaBjuhHmG81+Ux29D9lO+ovur0EbD5m1kZD8zmRMMnCnr
+         p0/n1+Qtxb2H2dgq5Yv76rJumVNhfUDino7s65JTyqrBxyANtkJ1o8PWrvZelPMjjATW
+         JTGBdWz2KVazOlz9p6XBbHqk6aggozzjBOx37q12qTAvv0qF/tGaX2DDRAOZ8nYpzhHB
+         6EVqjPmbdm8FUFMCCWW4fAfqPC2YxsnLR4OXhrk1GZFORBMcy7HvgtAwT8PTocXn3keT
+         o0SA==
+X-Gm-Message-State: AHQUAua4lx2oLb0VMatKmk3+SxSdiGeOMcxB66VrD6W9tlgcn7/Oqw04
+        18QCdWCjEUIZ7THxtbeDRVU=
+X-Google-Smtp-Source: AHgI3IaFPKgPpmOgzcM/43hLdwo/n9xFp8Ub2vDYcr0VUrX7t9lBlQSHxF9Eh40Hk+Woj8CDZYym7Q==
+X-Received: by 2002:a5d:52cc:: with SMTP id r12mr3952257wrv.277.1549561199716;
+        Thu, 07 Feb 2019 09:39:59 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i185sm3326462wma.28.2019.02.07.09.37.59
+        by smtp.gmail.com with ESMTPSA id t12sm16447162wra.63.2019.02.07.09.39.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Feb 2019 09:37:59 -0800 (PST)
+        Thu, 07 Feb 2019 09:39:58 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] doc-diff: don't `cd_to_toplevel`
-References: <20190203230152.GA25608@sigill.intra.peff.net>
-        <20190204205037.32143-1-martin.agren@gmail.com>
-        <20190204233444.GC2366@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1902051050090.41@tvgsbejvaqbjf.bet>
-        <xmqqimxyrs4w.fsf@gitster-ct.c.googlers.com>
-        <20190206185520.GD10231@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1902071632280.41@tvgsbejvaqbjf.bet>
-Date:   Thu, 07 Feb 2019 09:37:58 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.1902071632280.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 7 Feb 2019 16:41:57 +0100 (STD)")
-Message-ID: <xmqqy36rpki1.fsf@gitster-ct.c.googlers.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     =?utf-8?Q?'Torsten_B=C3=B6gershausen'?= <tboegi@web.de>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+        =?utf-8?Q?'SZEDER_G=C3=A1bor'?= <szeder.dev@gmail.com>,
+        "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
+Subject: Re: t0025 flakey?
+References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet>
+        <20190206104243.GJ10587@szeder.dev>
+        <nycvar.QRO.7.76.6.1902061450280.41@tvgsbejvaqbjf.bet>
+        <20190206171517.s5lskawpdodc74ui@tb-raspi4>
+        <001501d4bf06$506b8640$f14292c0$@nexbridge.com>
+Date:   Thu, 07 Feb 2019 09:39:58 -0800
+In-Reply-To: <001501d4bf06$506b8640$f14292c0$@nexbridge.com> (Randall
+        S. Becker's message of "Thu, 7 Feb 2019 11:58:08 -0500")
+Message-ID: <xmqqtvhfpkep.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-> Even when there are even only as much as 12 merge bases to test (which is
-> the current number of merge bases between `next` and `pu`),...
-> ...
-> And I sadly have to report that that's not the end of it. Back when I
-> implemented the automatic bisect after failed builds (for details, see
-> https://github.com/git-for-windows/build-extra/commit/c7e01e82c), I had to
-> turn it off real quickly because the dumb bisect between `next` and `pu`
-> regularly ran into the 4h timeout.
+> On February 6, 2019 13:01, I wrote:
+>> On February 6, 2019 12:15, Torsten Bögershausen wrote:
+>> > To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>> > ...
+>> > [PATCH] add: use separate ADD_CACHE_RENORMALIZE flag
+>> >
+>> > Or has it always been shaky ?
+>> > Does anybody know ?
+>> 
+>> The NonStop port has traditionally had issues with t0025, which we tended
+>> to ignore because things did work. We wrote those off as bash issues in
+>> t0025 since they seemed to be corrected when we picked up a new bash
+>> version about a year ago. I will keep monitoring this, particularly when
+> 2.21
+>> comes out.
+>
+> FYI: t0020-t0027 all passed on the NonStop port for 2.21.0-rc0 - so no
+> issues for us on this one.
 
-Would it make it easier for you if you substituted all the mention
-of 'next' in your message with 'pu^{/^### match next}'?  
-
-That mid-point between 'master' and 'pu' is designed to contain
-exactly the same set of non-merge commits 'next' has, with the tree
-that is identical to that of 'next', and from there to the tip of
-'pu' forms a single strand of merges of tips of topic branches that
-are not yet merged to 'next' (by definition, it itself is the merge
-base of it and 'pu').
-
-Bisecting along the first-parent chain from there to the tip of 'pu'
-would let us identify which merge is faulty as the first-and-quick
-pass and currently there are about 20 merges in that range on the
-first-parent chain.
-
+Yup, the preview has both the renormalize fix and another hotfix for
+it Peff made.  Thanks all for quick fixes and confirmations.
