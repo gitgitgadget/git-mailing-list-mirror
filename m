@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 665B41F453
-	for <e@80x24.org>; Thu,  7 Feb 2019 10:33:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4DF1F453
+	for <e@80x24.org>; Thu,  7 Feb 2019 10:33:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726758AbfBGKdu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 05:33:50 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38175 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726728AbfBGKdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Feb 2019 05:33:50 -0500
-Received: by mail-pg1-f196.google.com with SMTP id g189so4310117pgc.5
-        for <git@vger.kernel.org>; Thu, 07 Feb 2019 02:33:49 -0800 (PST)
+        id S1726728AbfBGKdz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 05:33:55 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:38180 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726561AbfBGKdy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 05:33:54 -0500
+Received: by mail-pg1-f194.google.com with SMTP id g189so4310203pgc.5
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 02:33:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lSjxoSUFxifX3ZDrjHz6Bpvg76h8wcPxSWcNwNZuUtI=;
-        b=pITgVFJYPwi7EwEZV+n//rYRxTMlIYXNEmTsRpIlG+E5mDlOoVWEcPlBh5MhzybHvB
-         G92/ybHvdiGTftZHeqlb/wQ4oRS4CYxZSf1SBLvKkNz82aaVJgpPOqe5zYsV3K/EikfQ
-         W0mwf4y3Gj6IZ997uIiG/Pu3YpGW1fZ6IPOSbAZZcZsnoZ3ZddKLZC4AndWMN/pr77hB
-         tT1Wm0Bn50eMZp/3ToZX9RJ9oz82TfqynEanLgE5cLHbmkeyqRrgnr9qH/JW8cf4uhpg
-         gwKLTZjvDfQgm33ifQg7FMaP+GFGlmnh32gxNzAjSgKQG6lz6WXHXg2+UBbg6pu5AycF
-         UUgA==
+        bh=ocb+kuLT07Kohk5lmbSpXj0JAcesvUe1gCKS1iRU19w=;
+        b=nF9hyoNqfDjsr0m3EkAVThGBS4XMHlRT9cOlg1dtgWK6XF+doBhFQ7lufBZoWjUDlq
+         xEJveZDh/YPQkywFIn9x0/I1YLcOpoP7BYFaAkJEqZbPaUOifohTpmDmLmtk4+Z+4y8Z
+         SQ3PY+UzhwzPVMSi0hGDo1E86fHHJ0ri5jTONzlUove3oq/J3Lu7Lcanwp90IPNYU5uu
+         cBj1NJkCEE4SG8TEFyHBL5H/l0bXoun9OG94Y/Nc49O93+wj40HwqTvfPBZ8+e0Y6xSY
+         DUgVma3NCl1fs4/TBv62Ycf4tdkmZ0rc34EakW5Neo6yK1H7sZWv53guXmixv1NV1tTE
+         CVYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lSjxoSUFxifX3ZDrjHz6Bpvg76h8wcPxSWcNwNZuUtI=;
-        b=WvMVEYBthKOIh+EEDp1ezmV1RMUEcY5P4qN3kSuqJ9P/aVlmHrkYM7fFGgijJ4pnKr
-         E/v3OWxyZG1cxK8Bu6EvcVOlx96kPdqDoHDzoakYRiNSR5wBR24+7h46tXBi7jcmBtFQ
-         ftVCPMk3JPq3wo4bhzFjZXVOGKtmyd/jmQsY59bDY5GsjMDYO/Q9aSofeznYBdknJCM+
-         ImmwwoEawePZpqboT2NVOsARtjUuCOWX141puhJbfPbTxwtH4Yntwg0sVykq9qeRic2X
-         b8kMQ8TYcVtJCvsak/FsHE4AXs7uWleNp3klzIOnSapbcsFhBvLvstQZELEC12JmFF8l
-         p9SQ==
-X-Gm-Message-State: AHQUAubbAzX04LgImrNuD1ywStYPJO4+FH9P4R8m6Lc5EuwSQJ2Gp3Ug
-        U/LcwQYzhUv3myFf7uYWKyFU17em
-X-Google-Smtp-Source: AHgI3IbTutuqgkMK4tjDFzPiMz9I1G2kALJr/33dRgPGHVQIL1ZhJF+r6ZN5K2+Z+HkDd9CO8rhClQ==
-X-Received: by 2002:a63:990a:: with SMTP id d10mr14174910pge.279.1549535629350;
-        Thu, 07 Feb 2019 02:33:49 -0800 (PST)
+        bh=ocb+kuLT07Kohk5lmbSpXj0JAcesvUe1gCKS1iRU19w=;
+        b=MWQPwwQtmIiof4TqhdPhENOH+AFp4ZezorQm6HaJg4Q+f99EkvPRtnXo059juvwduM
+         CB2hduCJ5E7IQIXbgokNuJTJfhzD7ONqRF4tTDF9NtIoG87k8PTnnZ4vYG/MB3lCFZrh
+         RJvFbLwJZXpG7ntWBK7TnHjmaGxFFHVc0nTicslOYtCx2acWiJK7VCZxC86VH38FnQbM
+         kKEiv7LUIKRBMqx7hnSv4oOzWW2+447yZ2h81Gm2TBQ4j240dMeA37OFPf7Mjq3rwOGC
+         P3lB2dsU/r4+thmxDYAv1YXukchTQGLNoIXy/PQqRynw9sCFHOl6Z+ChdszCXxISgrFK
+         RZCA==
+X-Gm-Message-State: AHQUAubvX3hpwvFBHK4VqLojczYw2qPjah/LYBaQxKv1BjNVEt4xEpLH
+        1O6IF48DasRtSp8fOLUWOAZJlvId
+X-Google-Smtp-Source: AHgI3IYdBH8tvhkXrEnjCxQ0lMKdfhior8WNnwCQzQYMCDNivcB7te9Xa4WN2NHQrjgzGsNshiTCJg==
+X-Received: by 2002:aa7:849a:: with SMTP id u26mr7521685pfn.157.1549535634131;
+        Thu, 07 Feb 2019 02:33:54 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id h80sm11171569pfd.63.2019.02.07.02.33.46
+        by smtp.gmail.com with ESMTPSA id p2sm11958697pfb.28.2019.02.07.02.33.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Feb 2019 02:33:48 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 07 Feb 2019 17:33:44 +0700
+        Thu, 07 Feb 2019 02:33:53 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 07 Feb 2019 17:33:49 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 01/21] diff.c: convert --patch-with-raw
-Date:   Thu,  7 Feb 2019 17:33:06 +0700
-Message-Id: <20190207103326.10693-2-pclouds@gmail.com>
+Subject: [PATCH 02/21] diff.c: convert --numstat and --shortstat
+Date:   Thu,  7 Feb 2019 17:33:07 +0700
+Message-Id: <20190207103326.10693-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
 In-Reply-To: <20190207103326.10693-1-pclouds@gmail.com>
 References: <20190207103326.10693-1-pclouds@gmail.com>
@@ -72,36 +72,39 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ diff.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 4bc9df7362..12e333c67f 100644
+index 12e333c67f..419b6ac4ae 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4901,6 +4901,10 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_BIT_F(0, "raw", &options->output_format,
- 			  N_("generate the diff in raw format"),
- 			  DIFF_FORMAT_RAW, PARSE_OPT_NONEG),
-+		OPT_BITOP(0, "patch-with-raw", &options->output_format,
-+			  N_("synonym for '-p --raw'"),
-+			  DIFF_FORMAT_PATCH | DIFF_FORMAT_RAW,
-+			  DIFF_FORMAT_NO_OUTPUT),
+@@ -4905,6 +4905,12 @@ static void prep_parse_options(struct diff_options *options)
+ 			  N_("synonym for '-p --raw'"),
+ 			  DIFF_FORMAT_PATCH | DIFF_FORMAT_RAW,
+ 			  DIFF_FORMAT_NO_OUTPUT),
++		OPT_BIT_F(0, "numstat", &options->output_format,
++			  N_("machine friendly --stat"),
++			  DIFF_FORMAT_NUMSTAT, PARSE_OPT_NONEG),
++		OPT_BIT_F(0, "shortstat", &options->output_format,
++			  N_("output only the last line of --stat"),
++			  DIFF_FORMAT_SHORTSTAT, PARSE_OPT_NONEG),
  		OPT_END()
  	};
  
-@@ -4929,10 +4933,7 @@ int diff_opt_parse(struct diff_options *options,
+@@ -4933,11 +4939,7 @@ int diff_opt_parse(struct diff_options *options,
  		return ac;
  
  	/* Output format options */
--	if (!strcmp(arg, "--patch-with-raw")) {
--		enable_patch_output(&options->output_format);
--		options->output_format |= DIFF_FORMAT_RAW;
--	} else if (!strcmp(arg, "--numstat"))
-+	if (!strcmp(arg, "--numstat"))
- 		options->output_format |= DIFF_FORMAT_NUMSTAT;
- 	else if (!strcmp(arg, "--shortstat"))
- 		options->output_format |= DIFF_FORMAT_SHORTSTAT;
+-	if (!strcmp(arg, "--numstat"))
+-		options->output_format |= DIFF_FORMAT_NUMSTAT;
+-	else if (!strcmp(arg, "--shortstat"))
+-		options->output_format |= DIFF_FORMAT_SHORTSTAT;
+-	else if (skip_prefix(arg, "-X", &arg) ||
++	if (skip_prefix(arg, "-X", &arg) ||
+ 		 skip_to_optional_arg(arg, "--dirstat", &arg))
+ 		return parse_dirstat_opt(options, arg);
+ 	else if (!strcmp(arg, "--cumulative"))
 -- 
 2.20.1.682.gd5861c6d90
 
