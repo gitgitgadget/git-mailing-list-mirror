@@ -2,114 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDDA91F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 20:14:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDF151F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 20:23:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727189AbfBHUOt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 15:14:49 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51024 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726222AbfBHUOt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 15:14:49 -0500
-Received: by mail-wm1-f68.google.com with SMTP id z5so5315583wmf.0
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 12:14:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ynJbu6Fm2rT29Iosuxteh1BkS3l6uvaDXmtpA1zI8V8=;
-        b=Z0JRb+ObvRHwQupDb+yxFEpgV+WaDyVYj71wkVSqCsmZHzxO2DlQpe0b8FeSXPRV73
-         uf7LkiQSt8UesIETbMerNQOQYd7ahGQ8aVaOzFFoSLPwVFzb4+M3s9aP9XBWl6UC3jdw
-         qpoVty9HILVyu7edZq8snAEqJLIO4XQYbRsQkHXZWPtelWjN+vmo/orW/DODWEyNjbrJ
-         vSDftNL5qQ4/IKJ6q8uH681fP2qmTEU0TyWHBw6Q1oduKQ80jkGVylcufayclbR6fV8j
-         4gfoLtPjGpwWErkcROEH2x66n6UC52jXU1jc2grYrkJkLuw/jUX+jDX3wnjcexFMaF/z
-         o9Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ynJbu6Fm2rT29Iosuxteh1BkS3l6uvaDXmtpA1zI8V8=;
-        b=a11W71CZHJz/PlCtxnsADajYj3/GoiQkcalqdGLDBAKSyM97zWY7jkiSFjdsAtqzqA
-         yRTD9CPIvTRFXJ1d1geOIXt5D4W2iB5foSBoLJNAuj4H++kVB31D8j2sbUKj88koeuKC
-         I8+AWUkNfhr/UPla0jWaU/BiOSg4Rz0suaVvQ44w8wpaFtv+jeHLe49tONrsnhkH5k7J
-         IDar8QnukAYD9KZFJ6s7e6rOdZzpNpV9g9zuRsheGGw63Q+0iZeK1cD5ZM+63i2TubvI
-         9Ccz4QeCvbPr8CayN98bz2Gq/zCEGRx3VuXxBxUZ/qbXZJFLqzi4Dji5Do+1Gauv9eFz
-         4cbA==
-X-Gm-Message-State: AHQUAub/CJC+sjNRTKdtjPn/VUlJvKpGflQws0uMo3uDt7Wn4xN1uiFv
-        ts5g5fOgLWRAHU/LSWJqaL0=
-X-Google-Smtp-Source: AHgI3IbeP01TEbVogqARDCFS4QJBGnBOHOvTbNhmdFtbvkQR07c90KOI8RafarHyYFGKLeHD132Zag==
-X-Received: by 2002:adf:c711:: with SMTP id k17mr17442899wrg.197.1549656887514;
-        Fri, 08 Feb 2019 12:14:47 -0800 (PST)
-Received: from szeder.dev (x4db62aaa.dyn.telefonica.de. [77.182.42.170])
-        by smtp.gmail.com with ESMTPSA id h133sm6605573wmd.8.2019.02.08.12.14.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Feb 2019 12:14:46 -0800 (PST)
-Date:   Fri, 8 Feb 2019 21:14:45 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Luke Diamand <ldiamand@roku.com>
-Subject: Re: [PATCHv2] git-p4: ticket expiry test: use a fake p4 to avoid use
- of 'sleep'
-Message-ID: <20190208201445.GB10587@szeder.dev>
-References: <20190208190231.8134-1-luke@diamand.org>
+        id S1727132AbfBHUXi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 15:23:38 -0500
+Received: from ikke.info ([178.21.113.177]:41040 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726211AbfBHUXi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 15:23:38 -0500
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 7FCD34400CB; Fri,  8 Feb 2019 21:23:36 +0100 (CET)
+Date:   Fri, 8 Feb 2019 21:23:36 +0100
+From:   Kevin Daudt <me@ikke.info>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Rich Felker <dalias@libc.org>, git@vger.kernel.org,
+        larsxschneider@gmail.com
+Subject: Re: t0028-working-tree-encoding.sh failing on musl based systems
+ (Alpine Linux)
+Message-ID: <20190208202336.GA5284@alpha>
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Rich Felker <dalias@libc.org>, git@vger.kernel.org,
+        larsxschneider@gmail.com
+References: <20190207215935.GA31515@alpha>
+ <20190208001705.GC11927@genre.crustytoothpaste.net>
+ <20190208060403.GA29788@brightrain.aerifal.cx>
+ <20190208114502.GD11927@genre.crustytoothpaste.net>
+ <20190208115511.GA30779@alpha>
+ <20190208135137.GE11927@genre.crustytoothpaste.net>
+ <xmqqr2cikw4w.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190208190231.8134-1-luke@diamand.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqqr2cikw4w.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 08, 2019 at 07:02:31PM +0000, Luke Diamand wrote:
-> +# create a fake version of "p4" which returns a TicketExpiration based
-> +# on $EXPIRY, for testing login expiration
-> +create_fake_p4() {
-> +	(
-> +		cd "$git" && mkdir expire-p4 &&
-> +		cat >>expire-p4/p4 <<-EOF &&
-> +		#!/usr/bin/python
-
-I think this should be $PYTHON_PATH.
-
-> +		import marshal, os, subprocess, sys
-> +		if "login" in sys.argv:
-> +		    marshal.dump({"foo" : "bar", "code" : "stat", "TicketExpiration" : os.environ["EXPIRY"]}, sys.stdout)
-> +		else:
-> +		    subprocess.check_call([os.environ["P4"]] + sys.argv[1:])
-> +		EOF
-> +		chmod 0755 expire-p4/p4
-> +	)
-> +}
->  
->  test_expect_success 'git operation with expired ticket' '
-> -	P4TICKETS="$cli/tickets" &&
-> -	P4USER=short_expiry_user &&
-> -	echo "password" | p4 login &&
-> +	create_fake_p4 &&
-> +	echo "newpassword" | p4 login &&
->  	(
->  		cd "$git" &&
-> -		git p4 sync &&
-> -		sleep 5 &&
-> -		test_must_fail git p4 sync 2>errmsg &&
-> -		grep "failure accessing depot" errmsg
-> +		P4=$(command -v p4) && export P4 &&
-> +		EXPIRY=3600 PATH=$PWD/expire-p4:$PATH git p4 sync &&
-> +		EXPIRY=1 PATH=$PWD/expire-p4:$PATH test_must_fail git p4 sync -v 2>errmsg &&
-> +		grep "failure accessing depot.*expires in 1 second" errmsg
->  	)
->  '
->  
-> -- 
-> 2.20.1.612.g17ebf93fb6.dirty
+On Fri, Feb 08, 2019 at 09:50:07AM -0800, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 > 
+> >> So would you suggest that we just skip this test on Alpine Linux?
+> >
+> > That's not exactly what I said. If Alpine Linux users are never going to
+> > use this functionality and don't care that it's broken, then that's a
+> > fine solution.
+> >
+> > As originally mentioned, musl could change its libiconv to write a BOM,
+> > which would make it compatible with other known iconv implementations.
+> >
+> > There's also the possibility of defining NO_ICONV. That basically means
+> > that your system won't support encodings, and then this test shouldn't
+> > matter.
+> >
+> > Finally, you could try applying a patch to the test to make it write the
+> > BOM for UTF-16 since your iconv doesn't. I expect that the test will
+> > fail again later on once you've done that, though.
+> 
+> Sorry for being late to the party, but is the crux of the issue this
+> piece early in the test?
+> 
+>     printf "$text" | iconv -f UTF-8 -t UTF-16 >test.utf16.raw &&
+>     ...
+>     cp test.utf16.raw test.utf16 &&
+>     ...
+>     git add .gitattributes test.utf16 test.utf16lebom &&
+> 
+> where we expect "iconv -t UTF-16" means "write UTF16 in whatever
+> byteorder of your choice, but do write BOM", and iconv
+> implementations we have seen so far are in line with that
+> expectation, but the one on Apline writes UTF16 in big endian
+> without BOM?
+
+Firstly, the tests expect iconv -t UTF-16 to output a BOM, which it
+indeed does not do on Alpine. Secondly, git itself also expects the BOM
+to be present when the encoding is set to UTF-16, otherwise it will
+complain.
+
+> 
+> If that is the case, I think it is our expectation that is at fault
+> in this case, as I think the most natural interpretation of "UTF-16"
+> without any modifiers (like "BE") ought to be "UTF16 stream
+> expressed in any way of writers choice, as long as it is readable by
+> standard compliant readers", in other words, "write UTF16 in
+> whatever byteorder of your choice, with or without BOM, but if you
+> omit BOM, you SHOULD write in big endian".  So
+> 
+>  - If our later test assumes that test.utf16 is UTF16 with BOM, that
+>    already assumes too much;
+> 
+>  - If our later test assumes that test.utf16 is UTF16 in big endian,
+>    that assumes too much, too.
+> 
+> As suggested earlier in the thread, the easiest workaround would be
+> to update the preparation of test.utf16.raw may to force big endian
+> with BOM by preprending BE-BOM by hand before "iconv -t UTF-32BE"
+> output (I am assuming that UTF-32BE will stay to be "big endian
+> without BOM" in the future).  That would make sure that the
+> assumption later tests have on test.utf16 is held true.
+
+I tried change the test to manually inject a BOM to the file (and
+setting iconv to UTF-16LE / UTF16-BE, which lets the first test go
+through, but test 3 then fails, because git itself output the file
+without BOM, presumably because it's passed through iconv.
+
+So I'm not sure if it's a matter of just fixing the tests.
+
