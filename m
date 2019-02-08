@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A506F1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 09:05:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20FAA1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 09:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727573AbfBHJF5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 04:05:57 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:39020 "EHLO
+        id S1727528AbfBHJGD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 04:06:03 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:35409 "EHLO
         mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727273AbfBHJF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 04:05:57 -0500
-Received: by mail-pf1-f196.google.com with SMTP id f132so1381428pfa.6
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 01:05:56 -0800 (PST)
+        with ESMTP id S1727273AbfBHJGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 04:06:02 -0500
+Received: by mail-pf1-f196.google.com with SMTP id z9so1393575pfi.2
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 01:06:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Sc8aNSrFrkIsJ24E90PonvCAYYh0CKWAqBoNE0dd9TI=;
-        b=pKAECDbpFQbC1yx7/UdLT8MKFPph0mB7ES2+zIfB6g8LSPD5MBTZ8kebwTASBnPvUA
-         M46vd3B2NDUljAM6DBKxDo9UJnkYRaLVwr5l5/JZvIMxyJ5/PaZ+GOfkLYrszlZuWpBT
-         5vbW8TYgg9d6873on93X8uEAXcN2LMBOhWIFhPCCvMEW/P7NTujq2Iu9x+6XKJsK7lr/
-         5jEq9+IS/oMSauftl/ogy7Sjh0iu3343j+n8YVVo0eKDQw/0wPpTTxqKg24hX+frbqhu
-         oJKCOHLqr8n28eDyDhJIi+blzQq29haOLQjhsFEHZOoO9ocl4BSmhLZoHHgrbAP08A6d
-         fa/Q==
+        bh=uiwH6ChY8DaDH9/oTCrsEMxtBwi3+v3tCgHe6diYWzM=;
+        b=jGtFelgdGOZhpvA6AthCBk2EQzYoSiALFMwgpJP/BkHM8g0b+DehoiHPNmeouOsVJY
+         2VTUIYkeekJQPh2LXq1pCHTlP/t8iOcq7Kmst34b1lwo/NTxdkJEdALe2Ke4FukRjhbq
+         zDSEnofdR7qNb/LxQ0pYS0nzJGPoL6qMh3GWA/Nor0lxTk/t1QZaNLBGIqURwZET9Wkz
+         cHQ4C6iZqOeTnvojcoOzcJLxvHGYy2HFmMtLgndkZ0ef5jeYhuWYjuulZMXYt1qnNDeH
+         Qd+csA4OSg5uaTS2Huh2X4Rq6tJMW+izXFSDhWquKErQ3wn+W/iAUIDa+eXDI0sz0Xqm
+         An6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Sc8aNSrFrkIsJ24E90PonvCAYYh0CKWAqBoNE0dd9TI=;
-        b=Y7ctb/TypJXWRktwARyyqYfn7oeM0tTcrw50TQ4hI4A/WE4/R1IVvBIF3HP5c3uS3b
-         Xv5+UVjBZuXiqGczTMuzQpJI9g3729vdEaMzhkMiKyC1Doy2MjalmCyZdFvopr/73EnW
-         N6rU8L2vwOvWGBnxmnBvAVCo6t96oa5//1zZAK8igOOHDhqiY+hg+FIkNVWm7NeFHc81
-         m3nf0QcOGyISE60uvawJgh8V7MDjbwqHVeBDNCwKMMQO+3+Fww1FL6B2+Gp/iOXdmNoj
-         XWu7hgNJEYhBl74BdssWA37H9MEk6e4vXXUL+ZLzlefnSwsF/aO812Da5c9EE3aiiMMH
-         0RVQ==
-X-Gm-Message-State: AHQUAub+i+udf35nCJEsNIffMtS0uQIVM1mbn4BVzDWm1awIhCWi4IVb
-        7jEaHh6XVH9j3atZMqSvprY=
-X-Google-Smtp-Source: AHgI3IYSDBisuLC1qJJj06K6ibLyIgUQp7r7F3lxdR72VkD9TpGTcWZMdHkkJfiMcsJPiIqXfIJseA==
-X-Received: by 2002:a62:2a4b:: with SMTP id q72mr20884525pfq.61.1549616756478;
-        Fri, 08 Feb 2019 01:05:56 -0800 (PST)
+        bh=uiwH6ChY8DaDH9/oTCrsEMxtBwi3+v3tCgHe6diYWzM=;
+        b=NeTGFo5SMy17sgF+tZwYE2RcIj28bGEeqlGcZdM8nrhpS+uB+j1RIzHYCkfn2VIKy6
+         4o/4gi6wsgkdGUvgnoJv43sWvT2fhWgYkj7xjkznL3ySyCSB1YsHxkpfwe+mow7neSZM
+         +bE/q6h2zhG4pZlCofqTf24n6LFNt6ZVT9rLzsYh33N127n8TAjNh84XZZ1EPwBPbwdb
+         rFgyI/nz6eUHRoScKtUmwIQ3CWa1NGxkFb5hbn4yNB8Yg9cTuml9dV3FJtbSmOsvS1/K
+         yG195gqHnpCgebtulfMAxkijGJGzjngbpq81Pxqim9V6cGD/wsZLJuomElUopI9+ROhV
+         y/zA==
+X-Gm-Message-State: AHQUAuYs+khjRVytZ8VxDSaJBsw4Guhb2WRnAhB1MPfLXK0KdmjgfcET
+        nUhuEKMUOxliNiOdPBZtsobvunYW
+X-Google-Smtp-Source: AHgI3IaBd6rYQ7CyHJDSwTyiTkQF7bS9QmHTgkabglAKoDCLTtKSs1PriXAivI+jKxnSRFdO+X2YDg==
+X-Received: by 2002:a65:6151:: with SMTP id o17mr2077427pgv.285.1549616761997;
+        Fri, 08 Feb 2019 01:06:01 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id u186sm1965774pfu.51.2019.02.08.01.05.53
+        by smtp.gmail.com with ESMTPSA id 4sm1930420pfq.10.2019.02.08.01.05.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Feb 2019 01:05:55 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 08 Feb 2019 16:05:51 +0700
+        Fri, 08 Feb 2019 01:06:01 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 08 Feb 2019 16:05:56 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 17/19] t: add tests for switch
-Date:   Fri,  8 Feb 2019 16:03:59 +0700
-Message-Id: <20190208090401.14793-18-pclouds@gmail.com>
+Subject: [PATCH v2 18/19] completion: support switch
+Date:   Fri,  8 Feb 2019 16:04:00 +0700
+Message-Id: <20190208090401.14793-19-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
 In-Reply-To: <20190208090401.14793-1-pclouds@gmail.com>
 References: <20190130094831.10420-1-pclouds@gmail.com>
@@ -71,105 +71,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Completion support for --guess could be made better. If no --detach is
+given, we should only provide a list of refs/heads/* and dwim ones,
+not the entire ref space. But I still can't penetrate that
+__git_refs() function yet.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- t/t2060-switch.sh | 87 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 87 insertions(+)
- create mode 100755 t/t2060-switch.sh
+ contrib/completion/git-completion.bash | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
-new file mode 100755
-index 0000000000..1e1e834c1b
---- /dev/null
-+++ b/t/t2060-switch.sh
-@@ -0,0 +1,87 @@
-+#!/bin/sh
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 499e56f83d..891abb72d7 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2126,6 +2126,32 @@ _git_status ()
+ 	__git_complete_index_file "$complete_opt"
+ }
+ 
++_git_switch ()
++{
++	case "$cur" in
++	--conflict=*)
++		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
++		;;
++	--*)
++		__gitcomp_builtin switch
++		;;
++	*)
++		# check if ---guess was specified to enable DWIM mode
++		local track_opt= only_local_ref=n
++		if [ -n "$(__git_find_on_cmdline "-g --guess")" ]; then
++			track_opt='--track'
++		elif [ -z "$(__git_find_on_cmdline "-d --detach")" ]; then
++			only_local_ref=y
++		fi
++		if [ $only_local_ref = y ]; then
++			__gitcomp_direct "$(__git_heads "" "$cur" " ")"
++		else
++			__git_complete_refs $track_opt
++		fi
++		;;
++	esac
++}
 +
-+test_description='switch basic functionality'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit first &&
-+	git branch first-branch &&
-+	test_commit second &&
-+	test_commit third &&
-+	git remote add origin nohost:/nopath &&
-+	git update-ref refs/remotes/origin/foo first-branch
-+'
-+
-+test_expect_success 'switch branch no arguments' '
-+	test_must_fail git switch
-+'
-+
-+test_expect_success 'switch branch' '
-+	git switch first-branch &&
-+	test_path_is_missing second.t
-+'
-+
-+test_expect_success 'switch to a commit' '
-+	test_must_fail git switch master^{commit}
-+'
-+
-+test_expect_success 'switch and detach' '
-+	test_when_finished git switch master &&
-+	git switch --detach master^{commit} &&
-+	test_must_fail git symbolic-ref HEAD
-+'
-+
-+test_expect_success 'switch and detach current branch' '
-+	test_when_finished git switch master &&
-+	git switch master &&
-+	git switch --detach &&
-+	test_must_fail git symbolic-ref HEAD
-+'
-+
-+test_expect_success 'switch and create branch' '
-+	test_when_finished git switch master &&
-+	git switch -c temp master^ &&
-+	test_cmp_rev master^ refs/heads/temp &&
-+	echo refs/heads/temp >expected-branch &&
-+	git symbolic-ref HEAD >actual-branch &&
-+	test_cmp expected-branch actual-branch
-+'
-+
-+test_expect_success 'force create branch from HEAD' '
-+	test_when_finished git switch master &&
-+	git switch --detach master &&
-+	git switch -C temp &&
-+	test_cmp_rev master refs/heads/temp &&
-+	echo refs/heads/temp >expected-branch &&
-+	git symbolic-ref HEAD >actual-branch &&
-+	test_cmp expected-branch actual-branch
-+'
-+
-+test_expect_success 'new orphan branch' '
-+	test_when_finished git switch master &&
-+	git switch --orphan new-orphan master^ &&
-+	test_commit orphan &&
-+	git cat-file commit refs/heads/new-orphan >commit &&
-+	! grep ^parent commit
-+'
-+
-+test_expect_success 'switching ignores file of same branch name' '
-+	test_when_finished git switch master &&
-+	: >first-branch &&
-+	git switch first-branch &&
-+	echo refs/heads/first-branch >expected &&
-+	git symbolic-ref HEAD >actual &&
-+	test_commit expected actual
-+'
-+
-+test_expect_success 'guess and create branch ' '
-+	test_when_finished git switch master &&
-+	test_must_fail git switch foo &&
-+	git switch --guess foo &&
-+	echo refs/heads/foo >expected &&
-+	git symbolic-ref HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_done
+ __git_config_get_set_variables ()
+ {
+ 	local prevword word config_file= c=$cword
 -- 
 2.20.1.682.gd5861c6d90
 
