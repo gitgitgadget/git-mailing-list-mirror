@@ -2,117 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D433F211B5
-	for <e@80x24.org>; Fri,  8 Feb 2019 22:07:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0016C1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 22:08:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726892AbfBHWHY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 17:07:24 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33928 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726788AbfBHWHY (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 Feb 2019 17:07:24 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:d42:63e7:5548:1ee8])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5907F60737;
-        Fri,  8 Feb 2019 22:07:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1549663640;
-        bh=5adUPoDBIWRM1JiacerL8cpkPybADcWXw8OxBrwwG2g=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=o27cQuAMM86VnKSQlH0Eh3aAK/qCZjvKypLcUVKlxtA9oIHtmgVTMJGZr1CE2LeTe
-         ZGhwQDUITrqITcoFuRHbcflQ+w9m0PT5DwHHIbksYv80ryrfskZvYDU3YxVXDambKD
-         BUNf40X4f/xpNHm+IaIAtKt4rzYjSKI2oCQb+vjENpdez5lNwCEkUr+ufwe5Ng/PHe
-         MJf0ZSaI5f7qzbW/b+eV+RJJHfEeQC1KEzaUZO1FNSQFkV/GxFG2/GVMm0Olt7dXrt
-         UQTnbANGS8PUly5VSIzgBT/Y+ZJa3S7qtUZ6LXLp04VN+i21s0p4177GD8n1qzfIbM
-         SZhW8BtKFGNLOEcFdaMsibdQrZvVkepdwspwoxQeFZVBiQEFV7Afa/IqC3OHHX6AR5
-         Bf8rvfmsqJVzXT30ebcvlGZeOnn0J9gn3+XJluFhqjNXe4bkzbEEWwhBmIQAyRDcjx
-         EtiH6/KVFKELVXxIxax6hskW1++68eD7XN+S8PeG/pMEOoDLVOx
-Date:   Fri, 8 Feb 2019 22:07:15 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
-        'Linux Kernel' <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: Re: [Breakage] Git v2.21.0-rc0 - t5318 (NonStop)
-Message-ID: <20190208220714.GG11927@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
-        'Linux Kernel' <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-References: <000f01d4bf9e$a508eab0$ef1ac010$@nexbridge.com>
- <20190208165052.GC23461@sigill.intra.peff.net>
- <001101d4bfd6$b9430230$2bc90690$@nexbridge.com>
- <20190208180321.GB27673@sigill.intra.peff.net>
- <002501d4bfde$b26e6050$174b20f0$@nexbridge.com>
- <20190208191519.GF27673@sigill.intra.peff.net>
- <002b01d4bfe4$2d617f40$88247dc0$@nexbridge.com>
- <20190208193157.GA30952@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="IuhbYIxU28t+Kd57"
-Content-Disposition: inline
-In-Reply-To: <20190208193157.GA30952@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1727070AbfBHWIR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 17:08:17 -0500
+Received: from sonic307-7.consmr.mail.bf2.yahoo.com ([74.6.134.46]:43173 "EHLO
+        sonic307-7.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726788AbfBHWIQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 Feb 2019 17:08:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1549663695; bh=vl0t8Z8NZ/G7wdqaHej+dFGjzcBZ4QmanUH/0GpV0jE=; h=From:To:Cc:Subject:Date:From:Subject; b=eiupxFBDX29tiXfNLslqL9NXQH7f028pYlvH5w2y0r4GXMom7g73uRMH5LT2Mmx5hSVBZijhHklCn+N4UqaKJUHvZnTEz8YmqdGHUc8oOyPzFmDnVRjTiKpORrQqTE9QOQ2p33TeqbhdiAdmzcNVgOLcWZiRL7Bb21TyANrJHixCUsvzFYK4hTwYRIfRzRrDC61AVH5NT2j/R5lOb1ef/QCDf2Ph95JUZeGD8tWbeQ4qukNbtS5zrrRXTUnC305LD5eJAskn3SngnPTI/eDzcYYAH7hI+kWMe6UF5caY5Yrh8nf+ElgCufNYY/YadbQpaf68G/nI3P64Chr4QUnhvA==
+X-YMail-OSG: fYL7dnUVM1k6oRUrBt2Z0aJvtqBwiZKYLevlT_Hybd4ccccJyIeN8LbMYQt6WTx
+ TTNj6Wp8bWqHyeJS66nGmVL_nvM_UanvmRaSeBIgTZaJvBin2FxDhmpm5Ob2TLS0JIa26I7sPBZd
+ rAZFLsd36rV068d.dM3gQKG70YkV8pVVJhFKIRXoaqXZQsQBhLp8GJKz8VhGaqyccdNO14ElJv6A
+ E_ytsFjw6HEYofFyU0Wh34eTxZqSlklmANKo06F2gts2Bycba6VvB0YPVGvRtFsJ1hScr_Jsye9U
+ S8JXTeKyjdTfmun7BrbGSJhR4H4vJEYq.oOkS3APqrBj2N9VWcHrOp2yXwXa3fkaLfipK062deQ_
+ YlJ2bUUomzxmZAgno5iUeMsLmK4RHoh0ugwiKz.uKVI0aymi2u4IDQ5whrdLGTqyOosCnUgt2KwR
+ 3Vtel_JXv6h9lQwFKImAQzNcxiBXWot9kXBWSb_LyIO24JCBWu5oGFvmRvg_rHIlDXOn6vqX4VZZ
+ fuMbgsZxPGY__UXcCarWnuY7hGP5YDnAb751gQL4uSF7kDczZQ0Zh8JwIKlaPkYNq7wR5EOVaG.V
+ DMYNvUVxULgeyPamv63l8VzfKOBgA64agcJCW.OW7rbmH93mhiIdCWvM45sG_1hdx7bdrkeqJsqa
+ 5rAUy82KQaQvg9e3Z4KsWgX.q2PRm5P5j.WxNXUhZFBy7WO6z1AhbpefDImyvy7UE2QDhGoVTVaH
+ cwDd6HevYQIP0Xk9vWDJInz8uzYxyfCXsi62SJ664B1Mp1f4u_2r4kapIjVTA523mvI6E304Ljl_
+ xrQVMYToQHyPIeKNCax3_HZrUoDWJcEf_tvEz_E18UBeJhpRQtIXbsGTNqy.mwOJQfDRnZCwQmLw
+ 5eFyk4X6leyWcqUDCwfXnr6I.NmaTrBxkr9oLgDD5rVK08D2cIA2q319k3BlH45o7pwVMJEqwU4B
+ ALkm2Pqzgxr99JReHFpkPxaMud6xto6mvAUaHCYR2SXLOf5J4MTqPTpfZd3PvNHXEDaq1tXNLI5V
+ _u3IPWmlniag2aFnE1bswsVobsEq2s608Vva70H8KxiBRC7B3z7QKmaMtZkm2tSb9tlvxg_w1nD5
+ RvOa9eFsJKY2PS.SA6nBOcyqs
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic307.consmr.mail.bf2.yahoo.com with HTTP; Fri, 8 Feb 2019 22:08:15 +0000
+Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO localhost.localdomain) ([99.229.179.249])
+          by smtp410.mail.bf1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID e6c67a19d1d5d60d1db04db6aa9079fd;
+          Fri, 08 Feb 2019 22:08:12 +0000 (UTC)
+From:   randall.s.becker@rogers.com
+To:     git@vger.kernel.org
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: [Fix v2] t5562: remove dependency on /dev/zero
+Date:   Fri,  8 Feb 2019 17:07:51 -0500
+Message-Id: <20190208220751.9936-1-randall.s.becker@rogers.com>
+X-Mailer: git-send-email 2.12.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
---IuhbYIxU28t+Kd57
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Replaced subtest 15 (CONTENT_LENGTH overflow ssite_t) use of /dev/zero
+with yes and a translation of its result to a stream of NULL. This is
+a more portable solution.
 
-On Fri, Feb 08, 2019 at 02:31:57PM -0500, Jeff King wrote:
-> > It is available AFAIK on Linux, POSIX, and Windows under Cygwin.
-> > That's more than /dev/zero has anyway. I have the patch ready if you
-> > want it.
->=20
-> Is it POSIX? Certainly truncate() is, but I didn't think the
-> command-line tool was. If it really is available everywhere, then yeah,
-> I'd be fine with it.
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ t/t5562-http-backend-content-length.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-It's not. POSIX doesn't specify the command, and macOS lacks it, I
-believe.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+index 90d890d02..b8d1913e5 100755
+--- a/t/t5562-http-backend-content-length.sh
++++ b/t/t5562-http-backend-content-length.sh
+@@ -143,14 +143,14 @@ test_expect_success GZIP 'push gzipped empty' '
+ 
+ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
+ 	NOT_FIT_IN_SSIZE=$(ssize_b100dots) &&
+-	env \
++	yes | tr "y" "\\0" | env \
+ 		CONTENT_TYPE=application/x-git-upload-pack-request \
+ 		QUERY_STRING=/repo.git/git-upload-pack \
+ 		PATH_TRANSLATED="$PWD"/.git/git-upload-pack \
+ 		GIT_HTTP_EXPORT_ALL=TRUE \
+ 		REQUEST_METHOD=POST \
+ 		CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
+-		git http-backend </dev/zero >/dev/null 2>err &&
++		git http-backend >/dev/null 2>err &&
+ 	grep "fatal:.*CONTENT_LENGTH" err
+ '
+ 
+-- 
+2.12.3
 
---IuhbYIxU28t+Kd57
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxd/ZIACgkQv1NdgR9S
-9ouCDBAApLzPOIF4gTaK4cvn3e/ADxolMXZ5sRX67D0Zv+bJFf1HLo/T0k+nv/fE
-X/DrzNxTSpmXoHdYJQr2LEjfWHPKhgZhfJ1eiEUwyPhfAGMgT9/wrcB6ZJ8A15fP
-CLZH7UpKcq/HuUEOP18l5QiA20fpX1o42DIlvFvX4H840uCwF05SpxE8Od5izr9Z
-sVs3G7Zdo5fO0QmkpiToZpIRBN0I109JS0mbhS8lCz2Fvg4lm8VcxqsNOC9127BQ
-dpUMUBiTzrMgxfePMq7m3LljBgdlRS7AE/MjMmMHSFTSeT4WXTkwkfK6gAFFsTEU
-SUbK4CkfR4RL/v1CZjwMrgZCCyydiwbPBiMWb8pq3Zpay+55UqrWfUiJeTpmBfEd
-MGzQKHtYUQYzdRsGg59Enkt+4Zdpc5K/Z0AmTUAvpu3r1gu7EWRx62TXc7xFDeKO
-tgNpRf77UHKSoiJbvH74hHAbidKHkMLcPxwt2p0w1X8Dvq3vI3IGYjFgoPmTg3in
-FTUr7wBmYj0QrVwbpXEPMqU0WmV8nQwZoMMZPSCGRjDnE0RRiUAv74rLuXvy+CRE
-cqjKEfpP1cgyVNepTz9a1oJzBREOQBr3AGwrQVjvvz1JuF3z5XCUUaQ0cJWQlQTs
-KVpOKJEkiosY7Ngnz6yWsx9eivC7M3OUgHfS+e3trwkL+SfBLHs=
-=kUFU
------END PGP SIGNATURE-----
-
---IuhbYIxU28t+Kd57--
