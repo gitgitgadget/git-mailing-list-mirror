@@ -2,97 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D74B1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 16:39:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A96F1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 16:47:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727597AbfBHQjE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 11:39:04 -0500
-Received: from mail-wm1-f54.google.com ([209.85.128.54]:35412 "EHLO
-        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727567AbfBHQjD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 11:39:03 -0500
-Received: by mail-wm1-f54.google.com with SMTP id t200so4052028wmt.0
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 08:39:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=x+4YblkFno1J96ZPWi7K8NNKnbD06BGFbWW1jSUojVY=;
-        b=I3ffmH/97NR+4lorfelpZBhCiNShWB2N2fY2TDvlru4lKPi9Tn1+Vw/RS3zihdhCbB
-         c59b1T+I1GOoI2Cg0u7s4GsmvMd+N80YsClwP08eBG6A2LI9UDeoP9I1P6YACC+J7w69
-         b8KKUnM0qYmkjswUFBl+IBuSJdBJABYQRyiek=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=x+4YblkFno1J96ZPWi7K8NNKnbD06BGFbWW1jSUojVY=;
-        b=s8aorUpeEy93xXb/nn5IZPN1J1m04xTq4RK+9He5cEpu7L9l4ZduRwbIz3CcFfYFyt
-         TUXdIQ1q+LSVYH0pQgCI5X1CvK9N1ofqab1GJb+Q7iYI//ofD9eIYq4OXoi01Q5Z0Q4E
-         jSjodIaCBM41Xi7XgkritejmQ/zzMpdzwav7IggEWTqwgWdIrqOx5xgalJXccZEqp0/e
-         sjWejNn6iRN0INDDFDclc7r81gQ/iqbTP4kOl9oEJPjrEo1uLSJKuAipUWoHofHyONIB
-         MXrl6EsJmq2slJNp9Dkw2L8H5N5I9/7xB5eIqo6aao1HTkUWCW4hrsG7kZpIrYknfYYZ
-         nEUw==
-X-Gm-Message-State: AHQUAuaRNrkep05tmafRYN5tjXqc+uW6Q15yGfZYcC0aqyltMu2imRFC
-        RjAOTEs+s18AvkUlwjufe9kYkoeEXZ2vZN2P9T+qpw==
-X-Google-Smtp-Source: AHgI3IYdv2Gz8cCp9Ua2DxbBQoZP3UTD6LZ6eU3IH8eMS60MoARf8DwHPylYuJFivOXZ93GpcpcpRgPgvfYwuEg4h7A=
-X-Received: by 2002:a1c:a70a:: with SMTP id q10mr11550713wme.58.1549643940996;
- Fri, 08 Feb 2019 08:39:00 -0800 (PST)
+        id S1726679AbfBHQrf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 11:47:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37618 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726522AbfBHQre (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 11:47:34 -0500
+Received: (qmail 5837 invoked by uid 109); 8 Feb 2019 16:47:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Feb 2019 16:47:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25397 invoked by uid 111); 8 Feb 2019 16:47:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 08 Feb 2019 11:47:44 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Feb 2019 11:47:33 -0500
+Date:   Fri, 8 Feb 2019 11:47:33 -0500
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: make '--stress' more bisect-friendly
+Message-ID: <20190208164732.GA23461@sigill.intra.peff.net>
+References: <20190208115045.13256-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-References: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
- <20190208100221.GA22283@ash>
-In-Reply-To: <20190208100221.GA22283@ash>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Fri, 8 Feb 2019 16:38:49 +0000
-Message-ID: <CAE5ih7_b_LXfPp5eMcrr4iSuyzaiKxvQqN73Osw+ck9CPrfdqw@mail.gmail.com>
-Subject: Re: could not freshen shared index ..../sharedindex.0000000000000000000000000000000000000000'
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190208115045.13256-1-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 8 Feb 2019 at 10:02, Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Wed, Feb 06, 2019 at 10:25:25AM +0000, Luke Diamand wrote:
-> > I've recently started seeing a lot of this message when doing a rebase:
-> >
-> >    warning: could not freshen shared index
-> > '/home/ldiamand/git/dev_full/.git/worktrees/gcc8-take-2/sharedindex.0000000000000000000000000000000000000000'
->
-> There are only two places in the code that could print this. The one
-> in read_index_from() can't happen unless is_null_oid() is broken (very
-> very unlikely).
->
-> The other one is in write_locked_index() which could happen in theory
-> but I don't understand how it got there. If you could build git, could
-> you try this patch and see if it helps?
+On Fri, Feb 08, 2019 at 12:50:45PM +0100, SZEDER Gábor wrote:
 
-They've gone away!
+>   - Make it exit with failure if a failure is found.
+> 
+>   - Add the '--stress-limit=<N>' option to repeat the test script
+>     at most N times in each of the parallel jobs, and exit with
+>     success when the limit is reached.
+> [...]
+> 
+> This is a case when an external stress script works better, as it can
+> easily check commits in the past...  if someone has such a script,
+> that is.
 
+Heh, I literally just implemented this kind of max-count in my own
+"stress" script[1] to handle this recent t0025 testing. So certainly I
+think it is a good idea.
 
->
-> -- 8< --
-> diff --git a/read-cache.c b/read-cache.c
-> index f68b367613..5ad71478dc 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -3165,6 +3165,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
->                 fill_fsmonitor_bitmap(istate);
->
->         if (!si || alternate_index_output ||
-> +           (si && is_null_oid(&si->base_oid)) ||
->             (istate->cache_changed & ~EXTMASK)) {
->                 if (si)
->                         oidclr(&si->base_oid);
-> -- 8< --
->
+Picking an <N> is tough. Too low and you get a false negative, too high
+and you can wait forever, especially if the script is long. But I don't
+think there's any real way to auto-scale it, except by seeing a few of
+the failing cases and watching how long they take.
 
-Luke
+>  t/README      |  5 +++++
+>  t/test-lib.sh | 18 ++++++++++++++++--
+>  2 files changed, 21 insertions(+), 2 deletions(-)
+
+Patch looks good. A few observations:
+
+> @@ -237,8 +248,10 @@ then
+>  				exit 1
+>  			' TERM INT
+>  
+> -			cnt=0
+> -			while ! test -e "$stressfail"
+> +			cnt=1
+> +			while ! test -e "$stressfail" &&
+> +			      { test -z "$stress_limit" ||
+> +				test $cnt -le $stress_limit ; }
+>  			do
+>  				$TEST_SHELL_PATH "$0" "$@" >"$TEST_RESULTS_BASE.stress-$job_nr.out" 2>&1 &
+>  				test_pid=$!
+
+You switch to 1-indexing the counts here. I think that makes sense,
+since otherwise --stress-limit=300 would end at "1.299", etc.
+
+> @@ -261,6 +274,7 @@ then
+>  
+>  	if test -f "$stressfail"
+>  	then
+> +		stress_exit=1
+>  		echo "Log(s) of failed test run(s):"
+>  		for failed_job_nr in $(sort -n "$stressfail")
+>  		do
+
+I think I'd argue that this missing stress_exit is a bug in the original
+script, and somewhat orthogonal to the limit counter. But I don't think
+it's worth the trouble to split it out (and certainly the theme of "now
+you can run this via bisect" unifies the two changes).
+
+-Peff
