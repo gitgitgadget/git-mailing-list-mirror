@@ -2,101 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A6DC1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 10:01:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77BBF1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 10:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726133AbfBHKBX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 05:01:23 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:36090 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726524AbfBHKBW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 05:01:22 -0500
-Received: by mail-ed1-f66.google.com with SMTP id o59so459807edb.3
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 02:01:21 -0800 (PST)
+        id S1726162AbfBHKC2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 05:02:28 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:35579 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726022AbfBHKC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 05:02:28 -0500
+Received: by mail-pl1-f194.google.com with SMTP id p8so1481223plo.2
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 02:02:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:mime-version
-         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
-        bh=hLbqRr91crcsg18XSaNAIeldaBYIB6SvHOPMpTafb3Y=;
-        b=Lpgm0++uAkSI3JWnFxxjo5DmJUe8o3SGn+tFB1WHsmCbG4L2ybjKj7f9qkFowz8DB1
-         UGyhOM9HPAPLIsB09bpCjH8FjiubFqP7O6/K5Diu7ZnokQIIK2JfdrL6RDuAZDqMn4Xh
-         OssJ4GW03gTs7emXPG1GUzuVNRqYW03ubYmrcMv+jvBtrdgdZP4B5mbWSMeDsBoE/ecK
-         D4Zlxoslxae/lyiwoh/lD5AA9C+KlNJPwc2q4c8dI9hgLpdp0ERZvBASWBGiy5lvEbrJ
-         zqug1YcckD2Ne8Gf+8bikZmJ+Rs1ig6Ibf6SOQd0bqXXc5Ly5+nMEuhkwJklIVoOOZIh
-         JuBQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=L4HpES+3qAJ7uqb9mb6eMrXrC3kEgW5m5Engj/APWlk=;
+        b=C+j8fFBMusHC7QxfQE1088cPW4IDss6MFyUESji+BNDICTZBwonzIZf1W2v2dFU/DO
+         qSX5u2thnDcLWgEYUyEtptuHU82hjbj6Ml0+1sTZsnhpNQpnmyQbuYtFUAB0IfelFRPw
+         A1Lnm4v1enlCDs+fUIDv0k+TSOzrN4tObUEICcheYtf5ZmUqsIxVI5RruYmM7uwm9CJT
+         zKH5mrwcT0JVV3vlPi74aj801ArfmjHqN1EJQELIPEqGCagwP1tOLMPheC7ERijBPr4R
+         VQJpSIRQb+nZZ3oRg5BriTFrpWWvLXQ98eHIvyAjOBL2Ca4gMAINs2BOhExSK8+/WAyO
+         e+Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:mime-version:content-transfer-encoding:fcc
-         :content-transfer-encoding:to:cc;
-        bh=hLbqRr91crcsg18XSaNAIeldaBYIB6SvHOPMpTafb3Y=;
-        b=uQIUGD3YMS/1XM/NtLjvTt2abUl318P9f7ap9E+S/qwbkW2tS+CeZvmPILDNbYQukr
-         wwl8AKR9iP/+Xq5rniA1skeYgQYCXOCPDUrSF0llX4wK9aFosaG66qPKZt7UWb+IPDlX
-         Ncu/3hihDLxzKMMEGVBgkZPQlDCriEhH8DybscSoK6/n0qlOkASv9tkVYTbh4qf9gjU1
-         ENl8ZqLBr2vOmquj13E+QlUnU2BiyAD7zcJk4ajKZ9v4AYtJpLud2QE28y2HC4TX0lg9
-         RMeJm4xGn7/B/bKS9lyHsZiL2Ls42AjqDaaU94INqxvwzfeowQ9/lgnmQTYIqzUC4KFE
-         ayKA==
-X-Gm-Message-State: AHQUAuarYeVdifW+c0vQnh5mtRGGN6FNVE+3l98xDdNH6OHT0KNlM3SY
-        mXqp9fVSgEqkwfQoeApffab8QXoB
-X-Google-Smtp-Source: AHgI3IZwVL0HOV5VuuJ23/qnDY6G2nOf2zwk4OsZdgZIc44ePJgWp9+1JcAaj1ZbdH2W12iBApBOxA==
-X-Received: by 2002:a17:906:228f:: with SMTP id p15mr9318343eja.104.1549620080571;
-        Fri, 08 Feb 2019 02:01:20 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k12sm385336eja.60.2019.02.08.02.01.19
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=L4HpES+3qAJ7uqb9mb6eMrXrC3kEgW5m5Engj/APWlk=;
+        b=YHGs3X5P+qKEOq/MHsZFRlmy1FR8z9qIBLYKgvRFLfj66iF6X85MoMTFv3dICPO2uV
+         rsS0BXP4QY6/x8/6Kye/vlUMxYmGzFSSlOh3DVASKCPdWwc5VvaPw/qp4qdKKNcPVmDN
+         2VAMX3US5T4DsO+avMq7hK+LXDZMx18BrPCq/c1vHcZKWmxUsSt3facVdBPW0id4shQz
+         GodFFJTIQuBmGd67vTQsHW5aFKwdwYO5vboZ6eqzURP9CGEUp4gV+ouekqHMV7ihsxK9
+         TFUhf+/+kGNgyDmOiwS6zsyYeBrV6glfSDauYaqCEVYVpZQEq8g4nE1rubU/lWro6GMk
+         ElQQ==
+X-Gm-Message-State: AHQUAuYcCiEu1pF1AFyqIYXjlUvIaIXIz+3yjKJ14NXjOv9S/PpmLEwF
+        7feG+fxh/Vzl3R9qp+tYvJE=
+X-Google-Smtp-Source: AHgI3IbPYqNnV1Ul7x0qJSdWAI62FIiR5hzAuJN9Bq1bT9sh96nGYZ0qyFx9Qi4F5B20RfAThiNpJA==
+X-Received: by 2002:a17:902:1008:: with SMTP id b8mr21267044pla.252.1549620147659;
+        Fri, 08 Feb 2019 02:02:27 -0800 (PST)
+Received: from ash ([115.72.21.220])
+        by smtp.gmail.com with ESMTPSA id i8sm3699680pgo.19.2019.02.08.02.02.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Feb 2019 02:01:20 -0800 (PST)
-Date:   Fri, 08 Feb 2019 02:01:20 -0800 (PST)
-X-Google-Original-Date: Fri, 08 Feb 2019 10:01:18 GMT
-Message-Id: <4bfffa2b70b3d31681a7e32721985f143f23aad9.1549620078.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.122.git.gitgitgadget@gmail.com>
-References: <pull.122.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] .mailmap: map Clemens Buchacher's mail addresses
+        Fri, 08 Feb 2019 02:02:26 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 08 Feb 2019 17:02:22 +0700
+Date:   Fri, 8 Feb 2019 17:02:22 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Git Users <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: could not freshen shared index
+ ..../sharedindex.0000000000000000000000000000000000000000'
+Message-ID: <20190208100221.GA22283@ash>
+References: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To:     git@vger.kernel.org
-Cc:     Clemens Buchacher <drizzd@gmx.net>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Feb 06, 2019 at 10:25:25AM +0000, Luke Diamand wrote:
+> I've recently started seeing a lot of this message when doing a rebase:
+> 
+>    warning: could not freshen shared index
+> '/home/ldiamand/git/dev_full/.git/worktrees/gcc8-take-2/sharedindex.0000000000000000000000000000000000000000'
 
-We have three email addresses for Clemens in our commit history, two of
-them bouncing. Let's map the latter to the only one that still works.
+There are only two places in the code that could print this. The one
+in read_index_from() can't happen unless is_null_oid() is broken (very
+very unlikely).
 
-Pointed out by Gábor Szeder.
+The other one is in write_locked_index() which could happen in theory
+but I don't understand how it got there. If you could build git, could
+you try this patch and see if it helps?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .mailmap | 2 ++
- 1 file changed, 2 insertions(+)
+-- 8< --
+diff --git a/read-cache.c b/read-cache.c
+index f68b367613..5ad71478dc 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3165,6 +3165,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 		fill_fsmonitor_bitmap(istate);
+ 
+ 	if (!si || alternate_index_output ||
++	    (si && is_null_oid(&si->base_oid)) ||
+ 	    (istate->cache_changed & ~EXTMASK)) {
+ 		if (si)
+ 			oidclr(&si->base_oid);
+-- 8< --
 
-diff --git a/.mailmap b/.mailmap
-index 247a3deb7e..82cd0569d5 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -40,6 +40,8 @@ Cord Seele <cowose@gmail.com> <cowose@googlemail.com>
- Christian Couder <chriscool@tuxfamily.org> <christian.couder@gmail.com>
- Christian Stimming <stimming@tuhh.de> <chs@ckiste.goetheallee>
- Christopher Díaz Riveros <chrisadr@gentoo.org> Christopher Diaz Riveros
-+Clemens Buchacher <drizzd@gmx.net> <drizzd@aon.at>
-+Clemens Buchacher <drizzd@gmx.net> <clemens.buchacher@intel.com>
- Csaba Henk <csaba@gluster.com> <csaba@lowlife.hu>
- Dan Johnson <computerdruid@gmail.com>
- Dana L. How <danahow@gmail.com> <how@deathvalley.cswitch.com>
--- 
-gitgitgadget
+
+> (There's a repo called dev_full, and I've got a worktree where I'm
+> working on my 3rd attempt to make it work with gcc8).
+> 
+> That file doesn't actually exist but there are a bunch of
+> sharedindex.XXX files in there with more convincing looking names.
+> 
+> 2.20.1.611.gfbb209baf1
+--
+Duy
