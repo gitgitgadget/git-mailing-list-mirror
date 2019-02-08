@@ -2,87 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 683471F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 20:13:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDDA91F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 20:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727180AbfBHUN1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 15:13:27 -0500
-Received: from mout.gmx.net ([212.227.15.15]:58053 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727099AbfBHUN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 15:13:27 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LnPGI-1hK8h11OkY-00hdqw; Fri, 08
- Feb 2019 21:13:25 +0100
-Date:   Fri, 8 Feb 2019 21:13:26 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: New command/tool: git filter-repo
-In-Reply-To: <875ztukt77.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902082111320.41@tvgsbejvaqbjf.bet>
-References: <CABPp-BFC--s+D0ijRkFCRxP5Lxfi+__YF4EdxkpO5z+GoNW7Gg@mail.gmail.com> <875ztukt77.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727189AbfBHUOt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 15:14:49 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51024 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726222AbfBHUOt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 15:14:49 -0500
+Received: by mail-wm1-f68.google.com with SMTP id z5so5315583wmf.0
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 12:14:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ynJbu6Fm2rT29Iosuxteh1BkS3l6uvaDXmtpA1zI8V8=;
+        b=Z0JRb+ObvRHwQupDb+yxFEpgV+WaDyVYj71wkVSqCsmZHzxO2DlQpe0b8FeSXPRV73
+         uf7LkiQSt8UesIETbMerNQOQYd7ahGQ8aVaOzFFoSLPwVFzb4+M3s9aP9XBWl6UC3jdw
+         qpoVty9HILVyu7edZq8snAEqJLIO4XQYbRsQkHXZWPtelWjN+vmo/orW/DODWEyNjbrJ
+         vSDftNL5qQ4/IKJ6q8uH681fP2qmTEU0TyWHBw6Q1oduKQ80jkGVylcufayclbR6fV8j
+         4gfoLtPjGpwWErkcROEH2x66n6UC52jXU1jc2grYrkJkLuw/jUX+jDX3wnjcexFMaF/z
+         o9Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ynJbu6Fm2rT29Iosuxteh1BkS3l6uvaDXmtpA1zI8V8=;
+        b=a11W71CZHJz/PlCtxnsADajYj3/GoiQkcalqdGLDBAKSyM97zWY7jkiSFjdsAtqzqA
+         yRTD9CPIvTRFXJ1d1geOIXt5D4W2iB5foSBoLJNAuj4H++kVB31D8j2sbUKj88koeuKC
+         I8+AWUkNfhr/UPla0jWaU/BiOSg4Rz0suaVvQ44w8wpaFtv+jeHLe49tONrsnhkH5k7J
+         IDar8QnukAYD9KZFJ6s7e6rOdZzpNpV9g9zuRsheGGw63Q+0iZeK1cD5ZM+63i2TubvI
+         9Ccz4QeCvbPr8CayN98bz2Gq/zCEGRx3VuXxBxUZ/qbXZJFLqzi4Dji5Do+1Gauv9eFz
+         4cbA==
+X-Gm-Message-State: AHQUAub/CJC+sjNRTKdtjPn/VUlJvKpGflQws0uMo3uDt7Wn4xN1uiFv
+        ts5g5fOgLWRAHU/LSWJqaL0=
+X-Google-Smtp-Source: AHgI3IbeP01TEbVogqARDCFS4QJBGnBOHOvTbNhmdFtbvkQR07c90KOI8RafarHyYFGKLeHD132Zag==
+X-Received: by 2002:adf:c711:: with SMTP id k17mr17442899wrg.197.1549656887514;
+        Fri, 08 Feb 2019 12:14:47 -0800 (PST)
+Received: from szeder.dev (x4db62aaa.dyn.telefonica.de. [77.182.42.170])
+        by smtp.gmail.com with ESMTPSA id h133sm6605573wmd.8.2019.02.08.12.14.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Feb 2019 12:14:46 -0800 (PST)
+Date:   Fri, 8 Feb 2019 21:14:45 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Luke Diamand <ldiamand@roku.com>
+Subject: Re: [PATCHv2] git-p4: ticket expiry test: use a fake p4 to avoid use
+ of 'sleep'
+Message-ID: <20190208201445.GB10587@szeder.dev>
+References: <20190208190231.8134-1-luke@diamand.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-857281582-1549656807=:41"
-X-Provags-ID: V03:K1:gWfL7+RpxhnOIYAH++h51M4Sx/HWvPgoaA6tXuqRRLs59gg57Vd
- Tce8+BcPGYcLPx3tTQbaD3QQA/2Dex7AlGp13Qle9l55vYL1tX2KELRKiDHartpmdqaWJG+
- ACs4Qas4Lo5TpFIXS2855wNwZx+3CqJUmqxfkYIIIHN0HhYM7gQ6vH4oz3Xq1u28uOjDvG/
- v9vzCkCTybFOzk7vmwsJA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QEGW3RH3aWw=:JlyU5mf2S/10gy5lV0KRP3
- x+aWOVxYRbFMmPsxBJk+HnZNBUaT1zvdwS7Qdhm7MZXj6xlL7NXPYYZSaQGinbdUvakfp+5cH
- F3I/lSW+lsBanNIffIVDWM7yJznn+I5w8TF8xkeNO2ETm+bx+07fzeUIKOceA+PPbybntuayf
- 35jZXpZIMpOSjIxPTg2zyOrekUd6v+Q+KEDjGAOmU+9jV9zUCtyqKqAI0HyEBXywtTuDH8dXI
- DKY5qSjrgAmSKs2Y4efD60JRD2N9dsjBD6dJr64KKKKaWG2oDwF6jTY4fLkhHENMJi/wWNUXc
- 6baTOiuvkcsPVXGNJN0cT8Ycx2TZhzxXPA993iZZ8EQMGZa2NXIJy2prqkBb/RafVoEJEWcuC
- U5rKrirBiN8EyLA54inrIqoo/TD2wEaaAUFIxLUP+qpXuUDFjH53zqOjhr2vUzgprHwy+hXHN
- qWoMsF9ucJJG1QD/0r/Mj6VeXzl8jVTB8hnwOSpNRv+UnXyjVUP+1q30YHeDtkir1HhEqmLs8
- 3Loaa0XZfFhvbcuSPRBRLFROm2ulm39sZCJnHDIBP/OBEMDeiyW2IMWDXyPmaAqLqphUv7Cp2
- 9UE0Alx7TjihM5YgH767wHlGRlj049+xIdzJV948vynWTxzO7sWQlej6AsOL1GiWkCyLH3DAA
- tolL79zJSSb/E7eBrLX2Z6uOqNmDRrEs41kEa4Rd7zbma7Q0H6X/xTHy5IUBsSPri4W34kqOr
- odQklltwIqgaQ6+6wmc/b8eWJlgaapaOtUD+WNSn9r9OjyMj/UJMEadcc6FUQ6WPzrGA+7UPF
- SQVfP/h2eb0PoW8z0xGBzeovfm13zVUPMp2locWOWWCT3dNAFdaefQIkrMOUOQnt+5duiAQPg
- yo+Xj29gCaukASZHrnKtc+9T6NvKImgvkQCEpDkD/qTjao7+4ZlmZqP78nwusafsmBrlUAIL6
- pz5ySghnKJQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190208190231.8134-1-luke@diamand.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Feb 08, 2019 at 07:02:31PM +0000, Luke Diamand wrote:
+> +# create a fake version of "p4" which returns a TicketExpiration based
+> +# on $EXPIRY, for testing login expiration
+> +create_fake_p4() {
+> +	(
+> +		cd "$git" && mkdir expire-p4 &&
+> +		cat >>expire-p4/p4 <<-EOF &&
+> +		#!/usr/bin/python
 
---8323328-857281582-1549656807=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+I think this should be $PYTHON_PATH.
 
-Hi Ævar,
-
-On Fri, 8 Feb 2019, Ævar Arnfjörð Bjarmason wrote:
-
-> [...]
->
->   But perhaps there's ways we can in advance deal with a potential
->   future breaking API change. E.g. some Pythonic way of versioning the
->   API, or just prominently documenting whatever (low?) stability
->   guarantees we're making.
-
-Another thing to keep in mind: it being in Python prevents it from being
-distributed with Git for Windows. The Git for Windows installer already
-weighs way more than it used to (it used to be under 30MB, now it is
-44MB), and I am simply not willing to increase the footprint dramatically
-just for one rarely used command.
-
-If only it were written as a built-in...
-
-Ciao,
-Dscho
---8323328-857281582-1549656807=:41--
+> +		import marshal, os, subprocess, sys
+> +		if "login" in sys.argv:
+> +		    marshal.dump({"foo" : "bar", "code" : "stat", "TicketExpiration" : os.environ["EXPIRY"]}, sys.stdout)
+> +		else:
+> +		    subprocess.check_call([os.environ["P4"]] + sys.argv[1:])
+> +		EOF
+> +		chmod 0755 expire-p4/p4
+> +	)
+> +}
+>  
+>  test_expect_success 'git operation with expired ticket' '
+> -	P4TICKETS="$cli/tickets" &&
+> -	P4USER=short_expiry_user &&
+> -	echo "password" | p4 login &&
+> +	create_fake_p4 &&
+> +	echo "newpassword" | p4 login &&
+>  	(
+>  		cd "$git" &&
+> -		git p4 sync &&
+> -		sleep 5 &&
+> -		test_must_fail git p4 sync 2>errmsg &&
+> -		grep "failure accessing depot" errmsg
+> +		P4=$(command -v p4) && export P4 &&
+> +		EXPIRY=3600 PATH=$PWD/expire-p4:$PATH git p4 sync &&
+> +		EXPIRY=1 PATH=$PWD/expire-p4:$PATH test_must_fail git p4 sync -v 2>errmsg &&
+> +		grep "failure accessing depot.*expires in 1 second" errmsg
+>  	)
+>  '
+>  
+> -- 
+> 2.20.1.612.g17ebf93fb6.dirty
+> 
