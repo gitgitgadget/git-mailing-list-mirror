@@ -2,69 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09C9E1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 16:13:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D74B1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 16:39:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727356AbfBHQNj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 11:13:39 -0500
-Received: from 216-12-86-13.cv.mvl.ntelos.net ([216.12.86.13]:59700 "EHLO
-        brightrain.aerifal.cx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726915AbfBHQNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 11:13:39 -0500
-Received: from dalias by brightrain.aerifal.cx with local (Exim 3.15 #2)
-        id 1gs8mS-0000ms-00; Fri, 08 Feb 2019 16:13:32 +0000
-Date:   Fri, 8 Feb 2019 11:13:32 -0500
-From:   Rich Felker <dalias@libc.org>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kevin Daudt <git@lists.ikke.info>, git@vger.kernel.org,
-        larsxschneider@gmail.com
-Subject: Re: t0028-working-tree-encoding.sh failing on musl based systems
- (Alpine Linux)
-Message-ID: <20190208161332.GW23599@brightrain.aerifal.cx>
-References: <20190207215935.GA31515@alpha>
- <20190208001705.GC11927@genre.crustytoothpaste.net>
- <20190208060403.GA29788@brightrain.aerifal.cx>
- <20190208114502.GD11927@genre.crustytoothpaste.net>
- <20190208115511.GA30779@alpha>
+        id S1727597AbfBHQjE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 11:39:04 -0500
+Received: from mail-wm1-f54.google.com ([209.85.128.54]:35412 "EHLO
+        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727567AbfBHQjD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 11:39:03 -0500
+Received: by mail-wm1-f54.google.com with SMTP id t200so4052028wmt.0
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 08:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=x+4YblkFno1J96ZPWi7K8NNKnbD06BGFbWW1jSUojVY=;
+        b=I3ffmH/97NR+4lorfelpZBhCiNShWB2N2fY2TDvlru4lKPi9Tn1+Vw/RS3zihdhCbB
+         c59b1T+I1GOoI2Cg0u7s4GsmvMd+N80YsClwP08eBG6A2LI9UDeoP9I1P6YACC+J7w69
+         b8KKUnM0qYmkjswUFBl+IBuSJdBJABYQRyiek=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=x+4YblkFno1J96ZPWi7K8NNKnbD06BGFbWW1jSUojVY=;
+        b=s8aorUpeEy93xXb/nn5IZPN1J1m04xTq4RK+9He5cEpu7L9l4ZduRwbIz3CcFfYFyt
+         TUXdIQ1q+LSVYH0pQgCI5X1CvK9N1ofqab1GJb+Q7iYI//ofD9eIYq4OXoi01Q5Z0Q4E
+         jSjodIaCBM41Xi7XgkritejmQ/zzMpdzwav7IggEWTqwgWdIrqOx5xgalJXccZEqp0/e
+         sjWejNn6iRN0INDDFDclc7r81gQ/iqbTP4kOl9oEJPjrEo1uLSJKuAipUWoHofHyONIB
+         MXrl6EsJmq2slJNp9Dkw2L8H5N5I9/7xB5eIqo6aao1HTkUWCW4hrsG7kZpIrYknfYYZ
+         nEUw==
+X-Gm-Message-State: AHQUAuaRNrkep05tmafRYN5tjXqc+uW6Q15yGfZYcC0aqyltMu2imRFC
+        RjAOTEs+s18AvkUlwjufe9kYkoeEXZ2vZN2P9T+qpw==
+X-Google-Smtp-Source: AHgI3IYdv2Gz8cCp9Ua2DxbBQoZP3UTD6LZ6eU3IH8eMS60MoARf8DwHPylYuJFivOXZ93GpcpcpRgPgvfYwuEg4h7A=
+X-Received: by 2002:a1c:a70a:: with SMTP id q10mr11550713wme.58.1549643940996;
+ Fri, 08 Feb 2019 08:39:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190208115511.GA30779@alpha>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+References: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
+ <20190208100221.GA22283@ash>
+In-Reply-To: <20190208100221.GA22283@ash>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Fri, 8 Feb 2019 16:38:49 +0000
+Message-ID: <CAE5ih7_b_LXfPp5eMcrr4iSuyzaiKxvQqN73Osw+ck9CPrfdqw@mail.gmail.com>
+Subject: Re: could not freshen shared index ..../sharedindex.0000000000000000000000000000000000000000'
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 08, 2019 at 12:55:11PM +0100, Kevin Daudt wrote:
-> On Fri, Feb 08, 2019 at 11:45:02AM +0000, brian m. carlson wrote:
-> > On Fri, Feb 08, 2019 at 01:04:03AM -0500, Rich Felker wrote:
-> > [..]
-> > > In any case, this test seems mainly relevant to Windows users wanting
-> > > to store source files in UTF-16LE with BOM. This doesn't really make
-> > > sense to do on a Linux/musl system, so I'm not sure any action is
-> > > needed here from either side.
-> > 
-> > I do know that some people use CIFS or the like to share repositories
-> > between Unix and Windows. However, I agree that such people aren't
-> > likely to use UTF-16 on Unix systems. The working tree encoding
-> > functionality also supports other encodings which musl may or may not
-> > support.
-> > 
-> > If you and your users are comfortable with the fact that the test (and
-> > the corresponding functionality) won't work as expected with UTF-16,
-> > then I agree that no action is needed.
-> 
-> So would you suggest that we just skip this test on Alpine Linux?
+On Fri, 8 Feb 2019 at 10:02, Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Wed, Feb 06, 2019 at 10:25:25AM +0000, Luke Diamand wrote:
+> > I've recently started seeing a lot of this message when doing a rebase:
+> >
+> >    warning: could not freshen shared index
+> > '/home/ldiamand/git/dev_full/.git/worktrees/gcc8-take-2/sharedindex.0000000000000000000000000000000000000000'
+>
+> There are only two places in the code that could print this. The one
+> in read_index_from() can't happen unless is_null_oid() is broken (very
+> very unlikely).
+>
+> The other one is in write_locked_index() which could happen in theory
+> but I don't understand how it got there. If you could build git, could
+> you try this patch and see if it helps?
 
-I'm fine with that as an outcome here. Admittedly I'd rather see git
-do this in a way that doesn't make assumptions about what an ambiguous
-"UTF-16" encoding argument to iconv_open does, but nothing is actually
-breaking because of this.
+They've gone away!
 
-Rich
+
+>
+> -- 8< --
+> diff --git a/read-cache.c b/read-cache.c
+> index f68b367613..5ad71478dc 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -3165,6 +3165,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+>                 fill_fsmonitor_bitmap(istate);
+>
+>         if (!si || alternate_index_output ||
+> +           (si && is_null_oid(&si->base_oid)) ||
+>             (istate->cache_changed & ~EXTMASK)) {
+>                 if (si)
+>                         oidclr(&si->base_oid);
+> -- 8< --
+>
+
+Luke
