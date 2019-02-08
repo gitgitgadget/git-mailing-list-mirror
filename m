@@ -2,98 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25FA71F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 20:35:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EBC11F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 20:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726645AbfBHUfq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 15:35:46 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51431 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726351AbfBHUfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 15:35:46 -0500
-Received: by mail-wm1-f65.google.com with SMTP id b11so5435317wmj.1
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 12:35:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=9Xange0qWviuloHWmTgcu+KSGGT91NbAFoDoG5tcB5A=;
-        b=ZyrC/qpBu4rmv46eMOsZRJNlDnEMy27W5ZTQ1WojMQJMbdO+gamNY/dXoMRLESwnws
-         a7cL3E8woQjdf3DARZEelENojeWMwapHjRRBv9nX3YhPNEcjF4IM947jS007Peavs3wR
-         noDi88nCWwEUtWyYnsVextpD5NR1F/UkBmt7tCBPkdWdybaGPlcwqaVzhCEOnvVS6bju
-         wWYDi3RoTsVmCn2MnGW9NiIt6lqNrpk26Z2A1TceuO9ujj+gTZSsl+RbSa/DXtXR7b/n
-         VwJYmHER8ALDGNlNO2kRIt3sReFwf0kJojiob7eqNmcQyJtc+rWxuXQMJx/o0ToFffQx
-         KZfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=9Xange0qWviuloHWmTgcu+KSGGT91NbAFoDoG5tcB5A=;
-        b=UuouKW/jPfB5d57rAXYmobXarhTCZI1aPd0JSo/Ed5L/AlbeKXCCb+BSp0Hj2E9S9M
-         7PrGTdD+U2RJcKoPzGtd5NCBrf0frjHF6iXOL7lT6FcIofLHHH5X7mEuOnMvxSqBBXjX
-         tQBElp5NG8b77Oq1FZ3u8ij3kMfkzyjrm1rPsdSTvw3MC0PsxK0JYQ+NdYQ8x/vxtQIz
-         rzdbpfWy7D7Fy2E5/4xX+xyNWAqqGjMZ2flLPqYkghUwvQf9dI+TFtCI80N3DiAQy8gM
-         7ReDgffka3I3tLh8fNEN1VR1kOIXKz1cNvs0xzt+cw2PKTfrLrMPvBw6WQCsON/rQgXf
-         V1dA==
-X-Gm-Message-State: AHQUAuYcsLn2nZkln9nSZxd8Ro/hxDwHQ1ENdmJmrU0JmEw9AcZfWyW5
-        fWIJtoY+MH9ObNDjnYp0oBo=
-X-Google-Smtp-Source: AHgI3IY5VsAbe/OnEZOwp+kapZkZGZ4EXXzTFMEq9Rl4ELdhWyuh5EbkmWTwIvYWsRPItpd+Lw1QxQ==
-X-Received: by 2002:a1c:494:: with SMTP id 142mr232653wme.111.1549658144747;
-        Fri, 08 Feb 2019 12:35:44 -0800 (PST)
-Received: from szeder.dev (x4db62aaa.dyn.telefonica.de. [77.182.42.170])
-        by smtp.gmail.com with ESMTPSA id m4sm4596039wrq.6.2019.02.08.12.35.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Feb 2019 12:35:43 -0800 (PST)
-Date:   Fri, 8 Feb 2019 21:35:42 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Henning Schild <henning.schild@siemens.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t/lib-gpg: quote path to ${GNUPGHOME}/trustlist.txt
-Message-ID: <20190208203542.GD10587@szeder.dev>
-References: <20190208031746.22683-1-tmz@pobox.com>
- <20190208031746.22683-2-tmz@pobox.com>
- <20190208201105.GA10587@szeder.dev>
- <20190208202505.GE30548@zaya.teonanacatl.net>
+        id S1726703AbfBHUiS convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 8 Feb 2019 15:38:18 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:49204 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726351AbfBHUiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 15:38:18 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x18KcB00091756
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 8 Feb 2019 15:38:12 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jeff King'" <peff@peff.net>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>,
+        "'Linux Kernel'" <linux-kernel@vger.kernel.org>,
+        <git-packagers@googlegroups.com>
+References: <000f01d4bf9e$a508eab0$ef1ac010$@nexbridge.com> <20190208165052.GC23461@sigill.intra.peff.net> <001101d4bfd6$b9430230$2bc90690$@nexbridge.com> <20190208180321.GB27673@sigill.intra.peff.net> <002501d4bfde$b26e6050$174b20f0$@nexbridge.com> <20190208191519.GF27673@sigill.intra.peff.net> <002b01d4bfe4$2d617f40$88247dc0$@nexbridge.com> <20190208193157.GA30952@sigill.intra.peff.net>
+In-Reply-To: <20190208193157.GA30952@sigill.intra.peff.net>
+Subject: RE: [Breakage] Git v2.21.0-rc0 - t5318 (NonStop)
+Date:   Fri, 8 Feb 2019 15:38:05 -0500
+Message-ID: <003a01d4bfee$349245b0$9db6d110$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190208202505.GE30548@zaya.teonanacatl.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQE5rFddSF2c8coPnbFiKb9P+8bdAwH0igmPAiNgz5YBSIw84wKJiaU9Aj0+V9MB8y1xFgJaeDVqppjcFxA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 08, 2019 at 03:25:05PM -0500, Todd Zullinger wrote:
-> SZEDER Gábor wrote:
-> > On Thu, Feb 07, 2019 at 10:17:45PM -0500, Todd Zullinger wrote:
-> >> When gpgsm is installed, lib-gpg.sh attempts to update trustlist.txt to
-> >> relax the checking of some root certificate requirements.  The path to
-> >> "${GNUPGHOME}" contains spaces which cause an "ambiguous redirect"
-> >> warning when bash is used to run the tests:
-> > 
-> > s/error/warning/
+
+
+> -----Original Message-----
+> From: Jeff King <peff@peff.net>
+> Sent: February 8, 2019 14:32
+> To: Randall S. Becker <rsbecker@nexbridge.com>
+> Cc: 'Junio C Hamano' <gitster@pobox.com>; git@vger.kernel.org; 'Linux
+> Kernel' <linux-kernel@vger.kernel.org>; git-packagers@googlegroups.com
+> Subject: Re: [Breakage] Git v2.21.0-rc0 - t5318 (NonStop)
 > 
-> Did you mean s/warning/error/ so the sentence reads:
+> On Fri, Feb 08, 2019 at 02:26:17PM -0500, Randall S. Becker wrote:
 > 
->     The path to "${GNUPGHOME}" contains spaces which cause
->     an "ambiguous redirect" error when bash is used to run
->     the tests
+> > > > For this, we could use truncate -s count file instead of dd to get
+> > > > a fixed size file of nulls. This would remove the need for
+> > > > /dev/zero in
+> > > > t5318 (the patch below probably will wrap badly in my mailer so I
+> > > > can submit a real patch separately.
+> > >
+> > > I don't think "truncate" is portable, though.
+> >
+> > It is available AFAIK on Linux, POSIX, and Windows under Cygwin.
+> > That's more than /dev/zero has anyway. I have the patch ready if you
+> > want it.
+> 
+> Is it POSIX? Certainly truncate() is, but I didn't think the command-line tool
+> was. If it really is available everywhere, then yeah, I'd be fine with it.
+> 
+> > > > > Other cases don't seem to actually care that they're getting
+> > > > > NULs, and are just redirecting stdin from /dev/zero to get an
+> > > > > infinite amount of input. They could probably use "yes" for that.
+> > > >
+> > > > What about reading from /dev/null?
+> > >
+> > > That would yield zero bytes, not an infinite number of them.
+> >
+> > So something like: yes | tr 'y' '\0' | stuff?
+> 
+> Exactly (if we even care about them being NULs; otherwise, we can omit the
+> "tr" invocation).
 
-Oh, wow.  Indeed that's what I meant.
+I'm a bit perplexed about this... Obviously added some debugging info, but why we're getting No REQUEST_METHOD is perplexing. Is this a lack of an apache2 instance?
 
-> Is it worth a resend before Junio queues it?
+expecting success:
+        NOT_FIT_IN_SSIZE=$(ssize_b100dots) &&
+        env \
+                CONTENT_TYPE=application/x-git-upload-pack-request \
+                QUERY_STRING=/repo.git/git-upload-pack \
+                PATH_TRANSLATED="$PWD"/.git/git-upload-pack \
+                GIT_HTTP_EXPORT_ALL=TRUE \
+                REQUEST_METHOD=POST \
+                CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
+                yes | tr "y" "\\0" | git http-backend 2>err &&
+        echo "Err is" &&
+        cat err &&
+        grep "fatal:.*CONTENT_LENGTH" err
 
-I remember Junio taking care of minor touchups to commit messages like
-this, so maybe not.
+Status: 500 Internal Server Error
+Expires: Fri, 01 Jan 1980 00:00:00 GMT
+Pragma: no-cache
+Cache-Control: no-cache, max-age=0, must-revalidate
+
+Err is
+fatal: No REQUEST_METHOD from server
+not ok 15 - CONTENT_LENGTH overflow ssite_t
+
+Cheers,
+Randall
 
