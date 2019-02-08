@@ -2,134 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ACFC1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 22:54:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE0AC1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 23:12:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbfBHWyP convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 8 Feb 2019 17:54:15 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:36259 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726524AbfBHWyP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 17:54:15 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x18Ms0hu098317
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 8 Feb 2019 17:54:01 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jeff King'" <peff@peff.net>
-Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>,
-        "'Linux Kernel'" <linux-kernel@vger.kernel.org>,
-        <git-packagers@googlegroups.com>
-References: <000f01d4bf9e$a508eab0$ef1ac010$@nexbridge.com> <20190208165052.GC23461@sigill.intra.peff.net> <001101d4bfd6$b9430230$2bc90690$@nexbridge.com> <20190208180321.GB27673@sigill.intra.peff.net> <002501d4bfde$b26e6050$174b20f0$@nexbridge.com> <20190208191519.GF27673@sigill.intra.peff.net> <002b01d4bfe4$2d617f40$88247dc0$@nexbridge.com> <20190208193157.GA30952@sigill.intra.peff.net> <20190208220714.GG11927@genre.crustytoothpaste.net> <005901d4bffb$6d0c34c0$47249e40$@nexbridge.com> <20190208223512.GA2135@sigill.intra.peff.net>
-In-Reply-To: <20190208223512.GA2135@sigill.intra.peff.net>
-Subject: RE: [Breakage] Git v2.21.0-rc0 - t5318 (NonStop)
-Date:   Fri, 8 Feb 2019 17:53:53 -0500
-Message-ID: <006601d4c001$2de3a160$89aae420$@nexbridge.com>
+        id S1726791AbfBHXMZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 18:12:25 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36251 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726020AbfBHXMZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 18:12:25 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p6so5943883wmc.1
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 15:12:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=hoXTnNMa8Gt9hYKid6VirzZH4HCvGQFLdCPPWAtDr3c=;
+        b=ATVtuB/LbHTmB5nroqWlPSj4g+J1/qKwwxmrtbjMGkXuhBeDyPmYIFEKAw3FU/3yER
+         a81zyuPLHQK+OwiMShVE9WCVEQPPlw7XFdiuTJ5pRrDzipQ7aUP3pRv5VbkYpmzxiheU
+         PR/DkV5feH7lfEfiZAkfp96Gnx0kB9kDMbxOTG0QW92sRvxIXYoRfyPV1oflwOHQvptA
+         vmHd4Zs9zMfPVljul2Src2TrsPQ2mVXbutCkPAQOC/oyFNnD2qSFoMnWsSVipT6X+Zck
+         YcQGzm9RQxLc04wym++nro3ODG6Xe0NCVcsJWufMljnHUP6X4WbO7u57MyzZ4tWuWonM
+         CX5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=hoXTnNMa8Gt9hYKid6VirzZH4HCvGQFLdCPPWAtDr3c=;
+        b=qsnxH+udxh7I53FI5vFVC+iYGLrKAFXaKz37haU62wg+bqprOsLJjX6KRIeuadtWZO
+         C6kY8QeU58obB2Sdq4eWfVlHN5MF2CWcBs8hdGecDTKvrnItyZhNSbvFErDxEL6leqwN
+         6Lq0ueLCmD0X5FzgF+DebOJcxUyZTCi3P37V00JG2xTJthLvL9u9sF9L71ylWK65x6lr
+         6PeDwPq/GM9KGlTuLxgu4BCf61odrrfLHUaXNWjM80sVkueUD+/2Ckz1GLLMmZx5t7Ri
+         5W8W9bSUKRDN7clCb+bvC03cGF8FA4+g0s2O8DPs4TI+aEt2TB/cmYLcaXpwOuGVcRWA
+         wrEQ==
+X-Gm-Message-State: AHQUAubhLOvTgi5fr4RIEkteMjE6AuvifkqHkgtv0BQvxGO1zp3ntym2
+        Yh2b38WxYfWY/1N1UwRVrX0=
+X-Google-Smtp-Source: AHgI3Ialgi8XAPNykXxLNsyeAkQim0BiFYg5Uc5G8EaWlguiN3lt45l/1310xCRsIRUgWz+MtkyZvw==
+X-Received: by 2002:adf:8273:: with SMTP id 106mr6861898wrb.34.1549667543456;
+        Fri, 08 Feb 2019 15:12:23 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m4sm1900334wml.2.2019.02.08.15.12.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 08 Feb 2019 15:12:22 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Rich Felker <dalias@libc.org>, git@vger.kernel.org,
+        larsxschneider@gmail.com
+Subject: Re: t0028-working-tree-encoding.sh failing on musl based systems (Alpine Linux)
+References: <20190207215935.GA31515@alpha>
+        <20190208001705.GC11927@genre.crustytoothpaste.net>
+        <20190208060403.GA29788@brightrain.aerifal.cx>
+        <20190208114502.GD11927@genre.crustytoothpaste.net>
+        <20190208115511.GA30779@alpha>
+        <20190208135137.GE11927@genre.crustytoothpaste.net>
+        <xmqqr2cikw4w.fsf@gitster-ct.c.googlers.com>
+        <20190208202336.GA5284@alpha>
+        <20190208204219.GF11927@genre.crustytoothpaste.net>
+Date:   Fri, 08 Feb 2019 15:12:22 -0800
+In-Reply-To: <20190208204219.GF11927@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Fri, 8 Feb 2019 20:42:19 +0000")
+Message-ID: <xmqqd0o1kh7t.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE5rFddSF2c8coPnbFiKb9P+8bdAwH0igmPAiNgz5YBSIw84wKJiaU9Aj0+V9MB8y1xFgJaeDVqApzvLgABsopuUQKjTm1tpmFndgA=
-Content-Language: en-ca
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 8, 2019 17:35, Jeff King wrote:
-> On Fri, Feb 08, 2019 at 05:12:43PM -0500, Randall S. Becker wrote:
-> > On February 8, 2019 17:07, brian m. carlson wrote:
-> > > On Fri, Feb 08, 2019 at 02:31:57PM -0500, Jeff King wrote:
-> > > > > It is available AFAIK on Linux, POSIX, and Windows under Cygwin.
-> > > > > That's more than /dev/zero has anyway. I have the patch ready if
-> > > > > you want it.
-> > > >
-> > > > Is it POSIX? Certainly truncate() is, but I didn't think the
-> > > > command-line tool was. If it really is available everywhere, then
-> > > > yeah, I'd be fine with it.
-> > >
-> > > It's not. POSIX doesn't specify the command, and macOS lacks it, I
-> believe.
-> >
-> > I'm happy to modify the test (it is in one spot), to make a decision based
-> on:
-> > a) whether /dev/zero exists
-> > b) whether the system is a NonStop
-> > c) something else
-> >
-> > What would you all prefer? It doesn't matter to me one way or another,
-> > as long as I can get the dependency to /dev/zero removed so tests will
-> > run here.
-> 
-> For the case in t5318, I think we can just put the NULs in a file. Does this
-> work on your platform?
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Yes, should work just fine.
+> +test_lazy_prereq NO_BOM '
+> +	printf abc | iconv -f UTF-8 -t UTF-16 &&
+> +	test $(wc -c) = 6
+> +'
 
-> 
-> ---
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh index
-> 16d10ebce8..6d0ccc7eba 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -383,7 +383,8 @@ corrupt_graph_and_verify() {
->  	cp $objdir/info/commit-graph commit-graph-backup &&
->  	printf "$data" | dd of="$objdir/info/commit-graph" bs=1
-> seek="$pos" conv=notrunc &&
->  	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0
-> &&
-> -	dd if=/dev/zero of="$objdir/info/commit-graph" bs=1
-> seek="$zero_pos" count=$(($orig_size - $zero_pos)) &&
-> +	gen_zero_bytes $(($orig_size - $zero_pos)) >zeroes &&
-> +	dd if=zeroes of="$objdir/info/commit-graph" bs=1 seek="$zero_pos"
-> &&
->  	test_must_fail git commit-graph verify 2>test_err &&
->  	grep -v "^+" test_err >err &&
->  	test_i18ngrep "$grepstr" err
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh index
-> 92cf8f812c..4afab14431 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1302,3 +1302,8 @@ test_set_port () {
->  	port=$(($port + ${GIT_TEST_STRESS_JOB_NR:-0}))
->  	eval $var=$port
->  }
+This must be "just for illustration of idea" patch?  The pipeline
+goes to the standard output, and nobody feeds "wc".
+
+But I think I got the idea.
+
+In the real implementation, it probably is a good idea to allow
+NO_BOM16 and NO_BOM32 be orthogonal.
+
+
 > +
-> +# Generate an output of $1 bytes of all zeroes (NULs, not ASCII zeroes).
-> +gen_zero_bytes () {
-> +	perl -e 'print "\0" x $ARGV[0]' "$@"
-> +}
+> +write_utf16 () {
+> +	test_have_prereq NO_BOM && printf '\xfe\xff'
+> +	iconv -f UTF-8 -t UTF-16
 
-This function does work on platform, so it's good.
+This assumes "iconv -t UTF-16" on the platform gives little endian
+(with or without BOM), which may not be a good assumption.
 
-> For the others that need infinite zeroes, I think using "yes" makes more
-> sense, though we could also teach this function to accept an "infinity"
-> parameter.
+If you are forcing the world to be where UTF-16 (no other
+specificaiton) means LE with BOM, then perhaps doing
 
-You could be sneaky about it, I suppose
-+# Generate an output of $1 bytes of all zeroes (NULs, not ASCII zeroes).
-+ gen_zero_bytes () {
-+ 	if [ $1 -eq -1 ]; then
-+ 	        yes | tr 'y' '\0'
-+ 	else
-+ 	        perl -e 'print "\0" x $ARGV[0]' "$@"
-+ }
-Or something alone those lines. It's not even slightly elegant, though. It would be better inside perl, so just
+	printf '\xfe\xff'; iconv -f UTF-8 -t UTF-16LE
 
-+# Generate an output of $1 bytes of all zeroes (NULs, not ASCII zeroes). If $1 is < 0, output forever.
-+ gen_zero_bytes () {
-+ 	perl -e ' if ($ARGV[0] < 0) { while (-1) { print "\0" } } else { print "\0" x $ARGV[0] }' "$@"
-+ }
+without any lazy prereq may be more explicit and in line with what
+you did in utf8.c::reencode_string_len() below.
 
-Cheers,
-Randall
+> -	printf "$text" | iconv -f UTF-8 -t UTF-16 >test.utf16.raw &&
+> -	printf "$text" | iconv -f UTF-8 -t UTF-32 >test.utf32.raw &&
+> +	printf "$text" | write_utf16 >test.utf16.raw &&
+> +	printf "$text" | write_utf32 >test.utf32.raw &&
 
+> diff --git a/utf8.c b/utf8.c
+> index 83824dc2f4..4aa69cd65b 100644
+> --- a/utf8.c
+> +++ b/utf8.c
+> @@ -568,6 +568,10 @@ char *reencode_string_len(const char *in, size_t insz,
+>  		bom_str = utf16_be_bom;
+>  		bom_len = sizeof(utf16_be_bom);
+>  		out_encoding = "UTF-16BE";
+> +	} else if (same_utf_encoding("UTF-16", out_encoding)) {
+> +		bom_str = utf16_le_bom;
+> +		bom_len = sizeof(utf16_le_bom);
+> +		out_encoding = "UTF-16LE";
+>  	}
+
+I am not sure what is going on here.  When the caller asks for
+"UTF-16", we do not let the platform implementation of iconv() to
+pick one of the allowed ones (i.e. BE with BOM, LE with BOM, or BE
+without BOM) but instead force LE with BOM?
+
+>  	conv = iconv_open(out_encoding, in_encoding);
+> ------ %< ---------
+>
+> This passes for me on glibc, but only on a little-endian system. If this
+> works for musl folks, then I'll add a config option for those people who
+> have UTF-16 without BOM.
