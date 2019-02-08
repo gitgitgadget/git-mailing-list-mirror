@@ -2,66 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1011E1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 10:15:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17E9C1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 10:22:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727485AbfBHKPY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 05:15:24 -0500
-Received: from mout.gmx.net ([212.227.15.19]:37763 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726568AbfBHKPY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 05:15:24 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LztHH-1hEPNq3S6d-01536k; Fri, 08
- Feb 2019 11:15:22 +0100
-Date:   Fri, 8 Feb 2019 11:15:16 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Luke Diamand <luke@diamand.org>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 0/1] git-p4: remove ticket expiration test
-In-Reply-To: <20190207232552.4246fec6f3057aea05211141@diamand.org>
-Message-ID: <nycvar.QRO.7.76.6.1902081114470.41@tvgsbejvaqbjf.bet>
-References: <20190206151153.20813-1-luke@diamand.org> <nycvar.QRO.7.76.6.1902071343210.41@tvgsbejvaqbjf.bet> <20190207232552.4246fec6f3057aea05211141@diamand.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726567AbfBHKWE convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 8 Feb 2019 05:22:04 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:46992 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726524AbfBHKWE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 05:22:04 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x18ALpLV055553
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 8 Feb 2019 05:21:51 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?UTF-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>
+Cc:     "=?UTF-8?Q?'Torsten_B=C3=B6gershausen'?=" <tboegi@web.de>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+        "'Jeff King'" <peff@peff.net>, <git@vger.kernel.org>
+References: <nycvar.QRO.7.76.6.1902061123410.41@tvgsbejvaqbjf.bet> <20190206104243.GJ10587@szeder.dev> <nycvar.QRO.7.76.6.1902061450280.41@tvgsbejvaqbjf.bet> <20190206171517.s5lskawpdodc74ui@tb-raspi4> <001501d4bf06$506b8640$f14292c0$@nexbridge.com> <20190207235726.GR10587@szeder.dev>
+In-Reply-To: <20190207235726.GR10587@szeder.dev>
+Subject: RE: t0025 flakey?
+Date:   Fri, 8 Feb 2019 05:21:44 -0500
+Message-ID: <000901d4bf98$1ab08fe0$5011afa0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/YoL/qZ7Hp0FcywUrnhqii8P8UX+4SEPBHpCq6curWPEJBJN1kU
- hqTj0ApFIEXH6IdOMb+THdGD2Zwwz7x0xj6HOQVEaLnUA5W1dsM+n5wCGHXDCC20a04gysO
- MxrRDMqgypwSJfP5m1xaffdzjz0ldxmOj0wb55hIiWYmYfFIzpZQbFHVNOzarZ1ij/aOdBR
- IPVFWeM5my6akpAVwPqUg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:bqC0GluyTt8=:c1n0tCcSMCpU5hCRzTytSW
- YVlp9P4wGm1PIeDjj2qzjNaXU1u8PJ0HGe9AVe2Pr+4HGqnYdQnXSicYPQ/qQrv7rVCjCCX1t
- lXgQpnz+peAU/tIoZbCedSEgHYNz1xCGajztYjdg6uM/D7BIecVo98DI21ALarRs4cSgQ+F2D
- 0QIFuL8VPFN3tSK4uASrsZUCuLtMpH3u0P6qztiPo4TDCL+7Ge0MCJ5wwYAq7y4ynAuXaJe7e
- wKQ8EZXnJdWU5zPTzTbCxbX0QFIwRirLxksz1zpA0/8w3iuhO7rHatUg8geCRCY/bW92CMlbq
- ZDNbUfcPOEL+dEGgKVXsfPFHLCV95pl+iVEFGqGR0PdtWDtaXQjR7+Gb1nfsaMmpJYcinSXLs
- jKm62ENwB2xxcOYKbQfVIc0+QtOeRO51zojRhj7tEpNyMU5WNlaB/VeHphOW609ojkXb5IO5W
- AjWvfKJ0QNpky+Ie/Rq1ZXjIJJ9LiHCmG3nDXxo7KFAV96hhRA+PtLyK8QIGGZaz4A4ppdu93
- 8EpHdSwNCgqjq4BcHFOZa9uC8l2NUaF3i95wrq6TWyvgKsrKqE7XvGGO7Ry8k6KhMMg6B7/+q
- CMyQ81hOBxkAe9WB+tkbT3HcNBHAJirxQ8ndr9EyHVK3+2CsuiqrOiP2VggLi8tj9nAa5NIvi
- o2eGGy8ZEkgCIsIaXjFYDAoG3v4XLJ3tiDvjWz/VgJRQv8ZjZXDgYGBtukiRCUZGWFnI4G0My
- +wm8C7e+WYHb9nY5VoD2PykzIXWjOHGx+WmVRj69QJyvjxImz6OoahwCu3hTnkdLOK+ijfkDu
- 4oioe2W0wvohG7U5SEGQ3FccdnWLfmChqqKVlGJWVRWxQjWxCBV7KaZHc2U9EGJez7/plE5pz
- B5UEAQEqJ8bI+KHHs9TS7IDySDrdPQyNm44XJTeuErdQYEhWL52lbJPRCQzdhfBJIyYDXElp4
- swqmpwooi5A==
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJs/IuaaCkX8/5Ult+TIwKZwFHx1AHYuM18APJkJqYCro2vggHT53WuAZ/vhoukXcqPcA==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Luke,
+On February 7, 2019 18:57, SZEDER Gábor wrote:
+> On Thu, Feb 07, 2019 at 11:58:08AM -0500, Randall S. Becker wrote:
+> > > The NonStop port has traditionally had issues with t0025, which we
+> > > tended to ignore because things did work. We wrote those off as bash
+> > > issues in
+> > > t0025 since they seemed to be corrected when we picked up a new bash
+> > > version about a year ago. I will keep monitoring this, particularly
+> > > when
+> > 2.21
+> > > comes out.
+> >
+> > FYI: t0020-t0027 all passed on the NonStop port for 2.21.0-rc0 - so no
+> > issues for us on this one.
+> 
+> Note that t0021 is very likely flaky on NonStop, too:
+> 
+>   https://public-inbox.org/git/20190111140408.GC840@szeder.dev/T/#u
 
-On Thu, 7 Feb 2019, Luke Diamand wrote:
+We will keep a watch on it, thanks. t0021 has been stable on this platform for at least a year and passes for 2.21.0-rc0 as well as 2.20.0.
 
-> I've got a mocked-up p4 wrapper which returns whatever expiration time
-> the test needs. I'll submit it tomorrow.
+Cheers,
+Randall
 
-Great!
-Dscho
