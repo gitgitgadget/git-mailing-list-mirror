@@ -2,427 +2,235 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E811C1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 01:13:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F5881F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 01:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726858AbfBHBNG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Feb 2019 20:13:06 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:40518 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726799AbfBHBNF (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 Feb 2019 20:13:05 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x181CbXu013117;
-        Thu, 7 Feb 2019 17:12:52 -0800
-Received: from mail.palantir.com ([198.97.14.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2qgv6hr9yv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Thu, 07 Feb 2019 17:12:52 -0800
-Received: from dc-prod-exch-01.YOJOE.local (10.193.18.14) by
- dc-prod-exch-01.YOJOE.local (10.193.18.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1531.3; Thu, 7 Feb 2019 20:12:50 -0500
-Received: from smtp-transport.yojoe.local (10.129.56.124) by
- dc-prod-exch-01.YOJOE.local (10.193.18.14) with Microsoft SMTP Server id
- 15.1.1531.3 via Frontend Transport; Thu, 7 Feb 2019 20:12:50 -0500
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id CD7EB220FFE8;
-        Thu,  7 Feb 2019 17:12:49 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     <gitster@pobox.com>
-CC:     <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 0/2] add --combined-all-paths option to log and diff-tree
-Date:   Thu, 7 Feb 2019 17:12:45 -0800
-Message-ID: <20190208011247.21021-1-newren@gmail.com>
-X-Mailer: git-send-email 2.20.1.311.gb8408a6075
-In-Reply-To: <20190204200754.16413-1-newren@gmail.com>
-References: <20190204200754.16413-1-newren@gmail.com>
+        id S1727091AbfBHBZS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Feb 2019 20:25:18 -0500
+Received: from mail-vs1-f46.google.com ([209.85.217.46]:32886 "EHLO
+        mail-vs1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727002AbfBHBZS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Feb 2019 20:25:18 -0500
+Received: by mail-vs1-f46.google.com with SMTP id p74so1216141vsc.0
+        for <git@vger.kernel.org>; Thu, 07 Feb 2019 17:25:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iijXsAbVjVdETg+iQYTld8KzkbDoyEyMzc0ToEVEH9Y=;
+        b=Eap4GjLplTeJRKvaHesfP58kKCSoMlfxhSRhZJXpJPKNPWEV49VPd9LxLs2btXJMX2
+         TUroefNCcBN9sLAVngXndM9eJrNHddyFJj1J4kgqva4NZtU1D+IOnqxbl7AJqwf7qj5A
+         HB4S4o0+kgGguv9+aVcS/IuU2bIU5I/mQiJErdbUQ78pL6WcBdX+XPOBn5Ql577uuJnM
+         /JSADTC6EOEzX67KYLtBGgWR6kRntHunU40O1Iel1L51qjvfMgzLLR31IxITMUenuoJN
+         nS/oHCm+80mgJSY6uFBD0TDgNF/F8aNN5rYX5Xgnff5x7A9Rp0npBu1IL5qyVZwWpkAC
+         OPZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iijXsAbVjVdETg+iQYTld8KzkbDoyEyMzc0ToEVEH9Y=;
+        b=VHPAZMVBO1tjZVBlUuD+AexKjkQUNMA7SXsOK1c7JTcUuVemF9sGNDS82eyp9j5Q8y
+         mBZYTB/pJmOB/mWOOQLNX1HgpCLRgdkg10TZ+jgHP8ewGUnKVDsjdM6W/MRGyG+389mu
+         r+7taUDCB8TX77YuhLd5cYatkPNxUKQY2JxWGl8C7MJzIF8HU+F0dqxsLe5Icc9GmCp/
+         O1q5vICoushpiKA5kwA7uuxOCvlv43fiUvlpkCpma+D2rP67kFuGYJe/hUfHMVzSSWVu
+         M6ILfOLJMCucLD6f+2+junXa4wwAU6DK8Y2U0aKBpwkzQAGat93dJbmncJCCQkot8LB9
+         3Gsg==
+X-Gm-Message-State: AHQUAuZ5MIKMzUU3RAgZE7B4yuHuUkbExzdRH4tU1Ucm7Ta+RHgFeANR
+        MXBfezlSqKg/nTV5ifm0nIoYECUq9l2dbCPplN+IVZbS
+X-Google-Smtp-Source: AHgI3IbcqHM7VABWjR8Ejbr0qYSkhll6KMHfE5Gizsv+67Dxj2maCTSXFT34AcTo48YZWEDD3OC+srtTUeNwKk9VFqQ=
+X-Received: by 2002:a67:3edc:: with SMTP id a89mr7742351vsi.136.1549589113952;
+ Thu, 07 Feb 2019 17:25:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-02-07_15:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1902080008
+References: <CABPp-BFC--s+D0ijRkFCRxP5Lxfi+__YF4EdxkpO5z+GoNW7Gg@mail.gmail.com>
+In-Reply-To: <CABPp-BFC--s+D0ijRkFCRxP5Lxfi+__YF4EdxkpO5z+GoNW7Gg@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 7 Feb 2019 17:25:01 -0800
+Message-ID: <CABPp-BGOz8nks0+Tdw5GyGqxeYR-3FF6FT5JcgVqZDYVRQ6qog@mail.gmail.com>
+Subject: Re: New command/tool: git filter-repo
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since v4:
-  * Added a second patch that can be squashed in which will add
-    'rename from' and 'copy from' extended headers.  I like it, but
-    Junio sounded pessimistic about it.  See
-    https://public-inbox.org/git/xmqqlg2rmazz.fsf@gitster-ct.c.googlers.com/
-  * Micro fixes:
-    * Renamed --combined-all-names to --combined-all-paths
-    * Fixed formatting error (missed '+') in diff-generate-patch.txt
-    * Marked tests which used tabs in filenames with FUNNYNAMES prereq
-    * Added tests that didn't depend on FUNNYNAMES
+Hi,
 
-Elijah Newren (2):
-  log,diff-tree: add --combined-all-paths option
-  squash! log,diff-tree: add --combined-all-paths option
+On Thu, Jan 31, 2019 at 12:57 AM Elijah Newren <newren@gmail.com> wrote:
+> git-filter-repo[1], a filter-branch-like tool for rewriting repository
+> history, is ready for more widespread testing and feedback.  The rough
 
- Documentation/diff-format.txt         | 20 +++++-
- Documentation/diff-generate-patch.txt | 20 ++++--
- Documentation/git-diff-tree.txt       | 11 +++-
- Documentation/rev-list-options.txt    |  7 +++
- builtin/diff-tree.c                   |  6 +-
- combine-diff.c                        | 91 +++++++++++++++++++++++----
- diff.h                                |  1 +
- revision.c                            |  6 ++
- revision.h                            |  1 +
- t/t4038-diff-combined.sh              | 88 ++++++++++++++++++++++++++
- 10 files changed, 230 insertions(+), 21 deletions(-)
 
-Range-diff:
-1:  26c64cee8a ! 1:  2205640429 log,diff-tree: add --combined-all-names option
-    @@ -1,6 +1,6 @@
-     Author: Elijah Newren <newren@gmail.com>
-     
-    -    log,diff-tree: add --combined-all-names option
-    +    log,diff-tree: add --combined-all-paths option
-     
-         The combined diff format for merges will only list one filename, even if
-         rename or copy detection is active.  For example, with raw format one
-    @@ -15,7 +15,7 @@
-         of phooey.c were in either of the parents.  In contrast, for non-merge
-         commits, raw format does provide original filenames (and a rename score
-         to boot).  In order to also provide original filenames for merge
-    -    commits, add a --combined-all-names option (which must be used with
-    +    commits, add a --combined-all-paths option (which must be used with
-         either -c or --cc, and is likely only useful with rename or copy
-         detection active) so that we can print tab-separated filenames when
-         renames are involved.  This transforms the above output to:
-    @@ -38,8 +38,6 @@
-           +++ b/phooey.c
-     
-         Signed-off-by: Elijah Newren <newren@gmail.com>
-    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-    -    Message-Id: <20190204200754.16413-1-newren@gmail.com>
-     
-      diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
-      --- a/Documentation/diff-format.txt
-    @@ -54,17 +52,17 @@
-     -Example:
-     +For `-c` and `--cc`, only the destination or final path is shown even
-     +if the file was renamed on any side of history.  With
-    -+`--combined-all-names`, the name of the path in each parent is shown
-    ++`--combined-all-paths`, the name of the path in each parent is shown
-     +followed by the name of the path in the merge commit.
-     +
-    -+Examples for `-c` and `-cc` without `--combined-all-names`:
-    ++Examples for `-c` and `-cc` without `--combined-all-paths`:
-     +------------------------------------------------
-     +::100644 100644 100644 fabadb8 cc95eb0 4866510 MM	desc.c
-     +::100755 100755 100755 52b7a2d 6d1ac04 d2ac7d7 RM	bar.sh
-     +::100644 100644 100644 e07d6c5 9042e82 ee91881 RR	phooey.c
-     +------------------------------------------------
-     +
-    -+Examples when `--combined-all-names` added to either `-c` or `--cc`:
-    ++Examples when `--combined-all-paths` added to either `-c` or `--cc`:
-      
-      ------------------------------------------------
-     -::100644 100644 100644 fabadb8 cc95eb0 4866510 MM	describe.c
-    @@ -79,9 +77,10 @@
-      --- a/Documentation/diff-generate-patch.txt
-      +++ b/Documentation/diff-generate-patch.txt
-     @@
-    + Similar to two-line header for traditional 'unified' diff
-      format, `/dev/null` is used to signal created or deleted
-      files.
-    - 
-    +++
-     +However, if the --combined-all-paths option is provided, instead of a
-     +two-line from-file/to-file you get a N+1 line from-file/to-file header,
-     +where N is the number of parents in the merge commit
-    @@ -94,10 +93,9 @@
-     +This extended format can be useful if rename or copy detection is
-     +active, to allow you to see the original name of the file in different
-     +parents.
-    -+
-    + 
-      4.   Chunk header format is modified to prevent people from
-           accidentally feeding it to `patch -p1`. Combined diff format
-    -      was created for review of merge commit changes, and was not
-     
-      diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
-      --- a/Documentation/git-diff-tree.txt
-    @@ -108,7 +106,7 @@
-      'git diff-tree' [--stdin] [-m] [-s] [-v] [--no-commit-id] [--pretty]
-     -	      [-t] [-r] [-c | --cc] [--root] [<common diff options>]
-     -	      <tree-ish> [<tree-ish>] [<path>...]
-    -+	      [-t] [-r] [-c | --cc] [--combined-all-names] [--root]
-    ++	      [-t] [-r] [-c | --cc] [--combined-all-paths] [--root]
-     +	      [<common diff options>] <tree-ish> [<tree-ish>] [<path>...]
-      
-      DESCRIPTION
-    @@ -117,7 +115,7 @@
-      	itself and the commit log message is not shown, just like in any other
-      	"empty diff" case.
-      
-    -+--combined-all-names::
-    ++--combined-all-paths::
-     +	This flag causes combined diffs (used for merge commits) to
-     +	list the name of the file from all parents.  It thus only has
-     +	effect when -c or --cc are specified, and is likely only
-    @@ -135,7 +133,7 @@
-      	the parents have only two variants and the merge result picks
-      	one of them without modification.
-      
-    -+--combined-all-names::
-    ++--combined-all-paths::
-     +	This flag causes combined diffs (used for merge commits) to
-     +	list the name of the file from all parents.  It thus only has
-     +	effect when -c or --cc are specified, and is likely only
-    @@ -159,7 +157,7 @@
-      "  -r            diff recursively\n"
-     +"  -c            show combined diff for merge commits\n"
-     +"  --cc          show combined diff for merge commits removing uninteresting hunks\n"
-    -+"  --combined-all-names\n"
-    ++"  --combined-all-paths\n"
-     +"                show name of file in all parents for combined diffs\n"
-      "  --root        include the initial commit as diff against /dev/null\n"
-      COMMON_DIFF_OPTIONS_HELP;
-    @@ -182,7 +180,7 @@
-     +	struct combine_diff_path *curr,
-     +	int n,
-     +	int num_parent,
-    -+	int combined_all_names)
-    ++	int combined_all_paths)
-      {
-      	struct diff_queue_struct *q = &diff_queued_diff;
-      	struct combine_diff_path *p, **tail = &curr;
-    @@ -196,7 +194,7 @@
-      			p->parent[n].mode = q->queue[i]->one->mode;
-      			p->parent[n].status = q->queue[i]->status;
-     +
-    -+			if (combined_all_names &&
-    ++			if (combined_all_paths &&
-     +			    filename_changed(p->parent[n].status)) {
-     +				strbuf_init(&p->parent[n].path, 0);
-     +				strbuf_addstr(&p->parent[n].path,
-    @@ -210,7 +208,7 @@
-      			/* p->path not in q->queue[]; drop it */
-      			*tail = p->next;
-     +			for (j = 0; j < num_parent; j++)
-    -+				if (combined_all_names &&
-    ++				if (combined_all_paths &&
-     +				    filename_changed(p->parent[j].status))
-     +					strbuf_release(&p->parent[j].path);
-      			free(p);
-    @@ -220,7 +218,7 @@
-      		oidcpy(&p->parent[n].oid, &q->queue[i]->one->oid);
-      		p->parent[n].mode = q->queue[i]->one->mode;
-      		p->parent[n].status = q->queue[i]->status;
-    -+		if (combined_all_names &&
-    ++		if (combined_all_paths &&
-     +		    filename_changed(p->parent[n].status))
-     +			strbuf_addstr(&p->parent[n].path,
-     +				      q->queue[i]->one->path);
-    @@ -237,7 +235,7 @@
-     -	else
-     -		dump_quoted_path("--- ", a_prefix, elem->path,
-     -				 line_prefix, c_meta, c_reset);
-    -+	if (rev->combined_all_names) {
-    ++	if (rev->combined_all_paths) {
-     +		for (i = 0; i < num_parent; i++) {
-     +			char *path = filename_changed(elem->parent[i].status)
-     +				? elem->parent[i].path.buf : elem->path;
-    @@ -264,7 +262,7 @@
-      	}
-      
-     +	for (i = 0; i < num_parent; i++)
-    -+		if (rev->combined_all_names) {
-    ++		if (rev->combined_all_paths) {
-     +			if (filename_changed(p->parent[i].status))
-     +				write_name_quoted(p->parent[i].path.buf, stdout,
-     +						  inter_name_termination);
-    @@ -282,7 +280,7 @@
-     -	const struct oid_array *parents, struct diff_options *opt)
-     +	const struct oid_array *parents,
-     +	struct diff_options *opt,
-    -+	int combined_all_names)
-    ++	int combined_all_paths)
-      {
-      	struct combine_diff_path *paths = NULL;
-      	int i, num_parent = parents->nr;
-    @@ -292,7 +290,7 @@
-      		diffcore_std(opt);
-     -		paths = intersect_paths(paths, i, num_parent);
-     +		paths = intersect_paths(paths, i, num_parent,
-    -+					combined_all_names);
-    ++					combined_all_paths);
-      
-      		/* if showing diff, show it in requested order */
-      		if (opt->output_format != DIFF_FORMAT_NO_OUTPUT &&
-    @@ -302,7 +300,7 @@
-      		 */
-     -		paths = find_paths_generic(oid, parents, &diffopts);
-     +		paths = find_paths_generic(oid, parents, &diffopts,
-    -+					   rev->combined_all_names);
-    ++					   rev->combined_all_paths);
-      	}
-      	else {
-      		int stat_opt;
-    @@ -311,7 +309,7 @@
-      		struct combine_diff_path *tmp = paths;
-      		paths = paths->next;
-     +		for (i = 0; i < num_parent; i++)
-    -+			if (rev->combined_all_names &&
-    ++			if (rev->combined_all_paths &&
-     +			    filename_changed(tmp->parent[i].status))
-     +				strbuf_release(&tmp->parent[i].path);
-      		free(tmp);
-    @@ -337,9 +335,9 @@
-      		revs->diff = 1;
-      		revs->dense_combined_merges = 0;
-      		revs->combine_merges = 1;
-    -+	} else if (!strcmp(arg, "--combined-all-names")) {
-    ++	} else if (!strcmp(arg, "--combined-all-paths")) {
-     +		revs->diff = 1;
-    -+		revs->combined_all_names = 1;
-    ++		revs->combined_all_paths = 1;
-      	} else if (!strcmp(arg, "--cc")) {
-      		revs->diff = 1;
-      		revs->dense_combined_merges = 1;
-    @@ -347,8 +345,8 @@
-      	}
-      	if (revs->combine_merges)
-      		revs->ignore_merges = 0;
-    -+	if (revs->combined_all_names && !revs->combine_merges)
-    -+		die("--combined-all-names makes no sense without -c or --cc");
-    ++	if (revs->combined_all_paths && !revs->combine_merges)
-    ++		die("--combined-all-paths makes no sense without -c or --cc");
-     +
-      	revs->diffopt.abbrev = revs->abbrev;
-      
-    @@ -361,7 +359,7 @@
-      			verbose_header:1,
-      			ignore_merges:1,
-      			combine_merges:1,
-    -+			combined_all_names:1,
-    ++			combined_all_paths:1,
-      			dense_combined_merges:1,
-      			always_show_header:1;
-      
-    @@ -373,20 +371,61 @@
-      	test_cmp expect actual
-      '
-      
-    -+test_expect_success 'setup for --combined-with-paths' '
-    ++test_expect_success 'setup for --combined-all-paths' '
-     +	git branch side1c &&
-     +	git branch side2c &&
-     +	git checkout side1c &&
-    ++	test_seq 1 10 >filename-side1c &&
-    ++	git add filename-side1c &&
-    ++	git commit -m with &&
-    ++	git checkout side2c &&
-    ++	test_seq 1 9 >filename-side2c &&
-    ++	echo ten >>filename-side2c &&
-    ++	git add filename-side2c &&
-    ++	git commit -m iam &&
-    ++	git checkout -b mergery side1c &&
-    ++	git merge --no-commit side2c &&
-    ++	git rm filename-side1c &&
-    ++	echo eleven >>filename-side2c &&
-    ++	git mv filename-side2c filename-merged &&
-    ++	git add filename-merged &&
-    ++	git commit
-    ++'
-    ++
-    ++test_expect_success '--combined-all-paths and --raw' '
-    ++	cat <<-\EOF >expect &&
-    ++	::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR	filename-side1c	filename-side2c	filename-merged
-    ++	EOF
-    ++	git diff-tree -c -M --raw --combined-all-paths HEAD >actual.tmp &&
-    ++	sed 1d <actual.tmp >actual &&
-    ++	test_cmp expect actual
-    ++'
-    ++
-    ++test_expect_success '--combined-all-paths and --cc' '
-    ++	cat <<-\EOF >expect &&
-    ++	--- a/filename-side1c
-    ++	--- a/filename-side2c
-    ++	+++ b/filename-merged
-    ++	EOF
-    ++	git diff-tree --cc -M --combined-all-paths HEAD >actual.tmp &&
-    ++	grep ^[-+][-+][-+] <actual.tmp >actual &&
-    ++	test_cmp expect actual
-    ++'
-    ++
-    ++test_expect_success FUNNYNAMES 'setup for --combined-all-paths with funny names' '
-    ++	git branch side1d &&
-    ++	git branch side2d &&
-    ++	git checkout side1d &&
-     +	test_seq 1 10 >$(printf "file\twith\ttabs") &&
-     +	git add file* &&
-     +	git commit -m with &&
-    -+	git checkout side2c &&
-    ++	git checkout side2d &&
-     +	test_seq 1 9 >$(printf "i\tam\ttabbed") &&
-     +	echo ten >>$(printf "i\tam\ttabbed") &&
-     +	git add *tabbed &&
-     +	git commit -m iam &&
-    -+	git checkout -b mergery side1c &&
-    -+	git merge --no-commit side2c &&
-    ++	git checkout -b funny-names-mergery side1d &&
-    ++	git merge --no-commit side2d &&
-     +	git rm *tabs &&
-     +	echo eleven >>$(printf "i\tam\ttabbed") &&
-     +	git mv "$(printf "i\tam\ttabbed")" "$(printf "fickle\tnaming")" &&
-    @@ -394,28 +433,28 @@
-     +	git commit
-     +'
-     +
-    -+test_expect_success '--combined-all-names and --raw' '
-    ++test_expect_success FUNNYNAMES '--combined-all-paths and --raw and funny names' '
-     +	cat <<-\EOF >expect &&
-     +	::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR	"file\twith\ttabs"	"i\tam\ttabbed"	"fickle\tnaming"
-     +	EOF
-    -+	git diff-tree -c -M --raw --combined-all-names HEAD >actual.tmp &&
-    ++	git diff-tree -c -M --raw --combined-all-paths HEAD >actual.tmp &&
-     +	sed 1d <actual.tmp >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success '--combined-all-names and --raw -and -z' '
-    -+	printf "0f9645804ebb04cc3eef91f799eb7fb54d70cefb\0::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR\0file\twith\ttabs\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
-    -+	git diff-tree -c -M --raw --combined-all-names -z HEAD >actual &&
-    ++test_expect_success FUNNYNAMES '--combined-all-paths and --raw -and -z and funny names' '
-    ++	printf "aaf8087c3cbd4db8e185a2d074cf27c53cfb75d7\0::100644 100644 100644 f00c965d8307308469e537302baa73048488f162 088bd5d92c2a8e0203ca8e7e4c2a5c692f6ae3f7 333b9c62519f285e1854830ade0fe1ef1d40ee1b RR\0file\twith\ttabs\0i\tam\ttabbed\0fickle\tnaming\0" >expect &&
-    ++	git diff-tree -c -M --raw --combined-all-paths -z HEAD >actual &&
-     +	test_cmp -a expect actual
-     +'
-     +
-    -+test_expect_success '--combined-all-names and --cc' '
-    ++test_expect_success FUNNYNAMES '--combined-all-paths and --cc and funny names' '
-     +	cat <<-\EOF >expect &&
-     +	--- "a/file\twith\ttabs"
-     +	--- "a/i\tam\ttabbed"
-     +	+++ "b/fickle\tnaming"
-     +	EOF
-    -+	git diff-tree --cc -M --combined-all-names HEAD >actual.tmp &&
-    ++	git diff-tree --cc -M --combined-all-paths HEAD >actual.tmp &&
-     +	grep ^[-+][-+][-+] <actual.tmp >actual &&
-     +	test_cmp expect actual
-     +'
-2:  d93e6c5fee < -:  ---------- SQUASH??? fix mark-up
--:  ---------- > 2:  b8408a6075 squash! log,diff-tree: add --combined-all-paths option
--- 
-2.20.1.311.gb8408a6075
+Someone at the Contributor Summit (Michael Haggerty perhaps?) asked me
+about performance numbers on known repositories for filter-repo and
+how it compared to other tools; I gave extremely rough estimates, but
+here I belatedly provide some more detailed figures.  In each case, I
+report both filtering time, and cleanup (gc or clone) time[0]:
 
+
+Testcase 1: Remove a single file (configure.ac) from each commit in git.git:
+
+  * filter-branch[1a]:  2413.978s + 34.812s
+  * BFG (8-core)[1b]:     38.743s + 30.333s
+  * BFG (40-core)[1b]:    24.680s + 35.165s
+  * filter-repo[1c]:      35.582s + 15.690s
+
+  Caveats: filter-repo failed and needed workarounds; see [1d]
+
+Testcase 2: Keep two directories (guides/ and tools/) from rails.git:
+
+  * filter-branch[2a]: 14586.655s + 22.726s
+  * BFG (8-core)[2b]:     27.675s + 15.786s
+  * BFG (40-core)[2b]:    24.883s + 20.463s
+  * filter-repo[2c]:      10.951s + 12.500s
+
+  Caveats: filter-branch failed at the end of this operation; see [2d].
+           AFAICT, BFG can't do this operation; used approximations instead[2e].
+
+Testcase 3: Replacing one string with another throughout all files in linux.git:
+
+  * filter-branch[3a]: Estimated at about 3.5 months (~8.9e6 seconds)
+  * BFG (8-core)[3b]:   2144.904s + 693.79s
+  * BFG (40-core)[3b]:  1178.577s + 636.887s
+  * filter-repo[3c]:    1203.147s + 159.620s
+
+  Caveats: filter-branch failed at ~12 hours; see [3d].
+
+
+Other details about measurements at [4].  Take-aways and biased
+opinions at [5].
+
+
+Hope this was interesting,
+Elijah
+
+
+
+*************** Footnotes (Minutiae for the curious) ***************
+
+[0] git-filter-branch's manpage suggests re-cloning to get rid of old objects,
+    BFG as its last step provides the user commands to execute in order to
+    clean out old objects, and filter-repo automatically runs such commands.
+    As such, time of post-run gc seems like a relevant thing to report.
+    Commands used and timed:
+
+  * filter-branch: time git clone file://$(pwd) ../nuke-me-clone
+  * BFG:           git reflog expire --expire=now --all && time git gc
+--prune=now
+  * filter-repo:   N/A (internally runs same commands as I manually ran for BFG)
+
+
+[1a] time git filter-branch --index-filter 'git rm --quiet --cached
+--ignore-unmatch configure.ac' --tag-name-filter cat --prune-empty --
+--all
+
+[1b] time java -jar ~/Downloads/bfg-1.13.0.jar --delete-files configure.ac
+
+[1c] git tag | grep v1.0rc | xargs git tag -d
+     git tag -d junio-gpg-pub
+     time git filter-repo --path configure.ac --invert-paths
+
+[1d] git fast-export when run with certain flags will abort in repos
+     with tags of blobs or tags of tags.  I had to first delete 7 tags
+     to get this testcase to run, as shown in the commands above in
+     [1c].  I'll probably patch fast-export to fix this.
+
+
+[2a] time git filter-branch --index-filter 'git ls-files -z | tr "\0"
+"\n" | grep -v -e ^guides/ -e ^tools/ | tr "\n" "\0" | xargs -0 git rm
+--quiet --cached --ignore-unmatch' --tag-name-filter cat --prune-empty
+-- --all
+
+[2b] git log --format=%n --name-only | sort | uniq | grep -v ^$ > all-files.txt
+     time java -jar ~/Downloads/bfg-1.13.0.jar --delete-folders
+"{$(grep / all-files.txt | sed -e 's/"//' -e s%/.*%% | uniq | grep -v
+-e guides -e tools | tr '\n' ,)}" --delete-files "{$(comm -23 <(grep
+-v / all-files.txt) <(grep -e guides/ -e tools/ all-files.txt | sed -e
+s%.*/%% | sort) | tr '\n' ,)}"
+
+[2c] time git filter-repo --path guides --path tools
+
+[2d] filter-branch fails at the very end when noting which refs were
+     deleted/rewritten with:
+         error: cannot lock ref 'refs/tags/v0.10.0': is at
+b68b47672e613e94a7859c9549e9cd4b401f7b79 but expected
+e2724aa1856253f4fc48ddc251583042c5f06029
+         Could not delete refs/tags/v0.10.0
+     Turns out b68b47672e613e94a7859c9549e9cd4b401f7b79 is an
+     annotated tag in the original repo pointing to the commit
+     e2724aa1856253f4fc48ddc251583042c5f06029.  I do not know the
+     cause of this bug, but since it was almost at the very end, I
+     just reported the time used before it hit this error.
+
+[2e] Unless I am misunderstanding, BFG is not capable of this
+     filtering operation because it uses basenames for --delete-files
+     and --delete-folders, and some names appear in several
+     directories (e.g. .gitignore, Rakefile, tasks).  As such, with
+     the BFG you either have to delete files/directories that
+     shouldn't be, or leave files and folders around that you wanted
+     to have deleted.  The command in [2b] has some of both, but
+     should still give a good estimate of how long it would take BFG
+     to do this kind of operation if file and directory basenames in
+     the rails repository happened to be named uniquely.
+
+[3a] time git filter-branch -d /dev/shm/tmp --tree-filter 'git
+ls-files | xargs sed -i s/secretly/covertly/' --tag-name-filter cat --
+--all
+
+[3b] time java -jar ~/Downloads/bfg-1.13.0.jar --replace-text <(echo
+'secretly==>covertly')
+
+[3c] time git filter-repo --replace-text <(echo 'secretly==>covertly')
+
+[3d] filter-branch failed after 45704 seconds, predicting another
+     8836429 seconds (~102 days) remaining at the time.  As commits
+     earlier in history tend to be smaller, filter-branch nearly
+     always underestimates the time required, sometimes considerably.
+     filter-branch failed on commit
+     af25e94d4dcfb9608846242fabdd4e6014e5c9f0 due to an empty ident.
+     I possibly could have worked around it with --env-filter, but
+     it's not like I'm going to wait for it to finish anyway.
+
+[4] Other notes about timings:
+  * All tests were run on an 8 cpu system, except for the "BFG
+    40-core" tests which were run on a 40 core system.  (filter-branch
+    and filter-repo are not multi-threaded and gain nothing from more
+    cores.)
+  * More precisely, I ran on AWS with an m4.2xlarge with two 50-GB GP2
+    volumes (150 Iops) for tests.  The 40-core system was an
+    m4.10xlarge.
+  * Before each command, to try to avoid warm disk caches helping or
+    hurting depending on the order I ran commands in, I first ran:
+    * rsync -az --delete ../$REPO-orig/ ./
+    * git status
+    * $TOOL -h
+  * Testing was imperfect; I just ran once and recorded the time.  It took
+    long enough to gather the data as it was.
+  * when additional commands were needed for the filtering
+    (e.g. getting the all-files.txt list to generate the BFG command,
+    or deleting tags that fast-export couldn't handle for
+    filter-repo), I did not include the times of those commands in the
+    overall execution time.  It would have added a few hundredths of a
+    second to filter-repo's git.git time, and about 5-6 seconds to BFG's
+    rails.git time.
+  * filter-repo self-reports time until filtering finishes and time
+    until entirely done.  I took difference between its self-report of
+    overall time and the "time" command's report of overall time (which
+    was typically order ~ 0.1s), and added that to filter-repo's
+    filtering time, assuming that most the discrepancy would be due to
+    python startup.
+
+[5] Performance is only one measurement.  Features, capabilities,
+usability, etc. matter too.  filter-branch is a general purpose
+filtering tool, but in my opinion, not a good one -- and not just
+because of performance.  BFG Repo Cleaner is a good tool, but it is
+special purpose; it is designed for a few particular usecases
+(limiting the kinds of things I could try in my comparison above).  My
+hope is that filter-repo serves as a good general purpose filtering
+tool so that people can stop suffering from filter-branch.
