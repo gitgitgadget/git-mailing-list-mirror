@@ -2,137 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F3391F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 14:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09C9E1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 16:13:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727865AbfBHOTU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 09:19:20 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:32901 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727470AbfBHOTU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 09:19:20 -0500
-Received: by mail-wm1-f67.google.com with SMTP id h22so6914158wmb.0
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 06:19:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=CrPv1apNSk3AeB1JlI9FBDdgoR16sRljIaQ3h0zMGQk=;
-        b=Px895z4soJSa4lc9oKwAQcbLa2SySke15fhfPotzu5axxywvUrLdCf0ruIxJd/r+oz
-         az2kmmVCp+DodMtCqXj286HYHWbt4beP6/ffoBwZ1NijmnYTQ9LHQVBKEBklC+hPm+v5
-         /k744+0rQOpXBfATyxcxmGxIpobS0MmsabwAqVHmdUkAfERzX24JLfbcpOcEwVUTkE/J
-         Z3IlzqLyz49EEEKGe1uwa/pUmZdLOPuiw8yRoMZvW51LYR2JO6+JrntqMx7nCxroU2Qb
-         JpXBm/KDx70IVcXd0/R+CCZ8fDM/lQWz+qznlAqzmnX1jJQVQ6rNe+vSjdCRbeF2HjIW
-         aNzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=CrPv1apNSk3AeB1JlI9FBDdgoR16sRljIaQ3h0zMGQk=;
-        b=BnC55dlRMKKBbrvFlk/39DHD+v5AtFcDSYtZGkMRBacncuilHPG8nuY/926kowQDVe
-         ZIGovoYdK3d1QdYCJCzbM0wTdjD+cArQqenOZ7btO6C1/NHRo1LjRKEDPFbgfcVHQKGz
-         V+mjqdiwRgaSr6ev11fZ+hYzLkVAnHDB9sd/azxsnwsWPjAwh47Btl/Ji4JwNMDPe4N1
-         6sMPH5PEbjnnXwgALJzkcVdSn9P/i2kfipj9fnwNWerXWnGMPFsyiQ638TFnxpKUjCk1
-         fz10lGfYnE4WORbTOS7KqIhh47yN9CDJDk23MaG4G8aP6IJFu1PrMj5cm026cSbmqTY6
-         PN5Q==
-X-Gm-Message-State: AHQUAubIa0hGIl05L+LTz9iAdHP2JYLSyZRcJTV+FyvXxQB3my5NLlid
-        MOE/ctESrJO+aYWeIpntGxU=
-X-Google-Smtp-Source: AHgI3IbQ1f5xQAdYXAjhZ5nKoKn60XvhK9V9zoPKABDgViCQGvHFCmsvkOjtv8icZGZrbMOGds73Cg==
-X-Received: by 2002:a7b:c5d2:: with SMTP id n18mr12144223wmk.30.1549635558746;
-        Fri, 08 Feb 2019 06:19:18 -0800 (PST)
-Received: from szeder.dev (x4db62aaa.dyn.telefonica.de. [77.182.42.170])
-        by smtp.gmail.com with ESMTPSA id y20sm4673750wra.51.2019.02.08.06.19.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Feb 2019 06:19:17 -0800 (PST)
-Date:   Fri, 8 Feb 2019 15:19:15 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 18/19] completion: support switch
-Message-ID: <20190208141915.GX10587@szeder.dev>
-References: <20190130094831.10420-1-pclouds@gmail.com>
- <20190208090401.14793-1-pclouds@gmail.com>
- <20190208090401.14793-19-pclouds@gmail.com>
+        id S1727356AbfBHQNj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 11:13:39 -0500
+Received: from 216-12-86-13.cv.mvl.ntelos.net ([216.12.86.13]:59700 "EHLO
+        brightrain.aerifal.cx" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726915AbfBHQNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 11:13:39 -0500
+Received: from dalias by brightrain.aerifal.cx with local (Exim 3.15 #2)
+        id 1gs8mS-0000ms-00; Fri, 08 Feb 2019 16:13:32 +0000
+Date:   Fri, 8 Feb 2019 11:13:32 -0500
+From:   Rich Felker <dalias@libc.org>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Kevin Daudt <git@lists.ikke.info>, git@vger.kernel.org,
+        larsxschneider@gmail.com
+Subject: Re: t0028-working-tree-encoding.sh failing on musl based systems
+ (Alpine Linux)
+Message-ID: <20190208161332.GW23599@brightrain.aerifal.cx>
+References: <20190207215935.GA31515@alpha>
+ <20190208001705.GC11927@genre.crustytoothpaste.net>
+ <20190208060403.GA29788@brightrain.aerifal.cx>
+ <20190208114502.GD11927@genre.crustytoothpaste.net>
+ <20190208115511.GA30779@alpha>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190208090401.14793-19-pclouds@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20190208115511.GA30779@alpha>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 08, 2019 at 04:04:00PM +0700, Nguyễn Thái Ngọc Duy wrote:
-> Completion support for --guess could be made better. If no --detach is
-> given, we should only provide a list of refs/heads/* and dwim ones,
-> not the entire ref space. But I still can't penetrate that
-> __git_refs() function yet.
+On Fri, Feb 08, 2019 at 12:55:11PM +0100, Kevin Daudt wrote:
+> On Fri, Feb 08, 2019 at 11:45:02AM +0000, brian m. carlson wrote:
+> > On Fri, Feb 08, 2019 at 01:04:03AM -0500, Rich Felker wrote:
+> > [..]
+> > > In any case, this test seems mainly relevant to Windows users wanting
+> > > to store source files in UTF-16LE with BOM. This doesn't really make
+> > > sense to do on a Linux/musl system, so I'm not sure any action is
+> > > needed here from either side.
+> > 
+> > I do know that some people use CIFS or the like to share repositories
+> > between Unix and Windows. However, I agree that such people aren't
+> > likely to use UTF-16 on Unix systems. The working tree encoding
+> > functionality also supports other encodings which musl may or may not
+> > support.
+> > 
+> > If you and your users are comfortable with the fact that the test (and
+> > the corresponding functionality) won't work as expected with UTF-16,
+> > then I agree that no action is needed.
 > 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 26 ++++++++++++++++++++++++++
->  1 file changed, 26 insertions(+)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 499e56f83d..891abb72d7 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -2126,6 +2126,32 @@ _git_status ()
->  	__git_complete_index_file "$complete_opt"
->  }
->  
-> +_git_switch ()
-> +{
-> +	case "$cur" in
-> +	--conflict=*)
-> +		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
-> +		;;
-> +	--*)
-> +		__gitcomp_builtin switch
-> +		;;
-> +	*)
-> +		# check if ---guess was specified to enable DWIM mode
+> So would you suggest that we just skip this test on Alpine Linux?
 
-Nit: s/---/--/
+I'm fine with that as an outcome here. Admittedly I'd rather see git
+do this in a way that doesn't make assumptions about what an ambiguous
+"UTF-16" encoding argument to iconv_open does, but nothing is actually
+breaking because of this.
 
-> +		local track_opt= only_local_ref=n
-> +		if [ -n "$(__git_find_on_cmdline "-g --guess")" ]; then
-> +			track_opt='--track'
-> +		elif [ -z "$(__git_find_on_cmdline "-d --detach")" ]; then
-> +			only_local_ref=y
-> +		fi
-
-Could these two options be used together?  I think they could.  If
-that's the case, then the two conditions shouldn't be chained with
-elif, but should be two separate if statements (even eliminating
-$only_local_ref, while at it?).  If that's not the case, then the two
-__git_find_on_cmdline() calls could be combined into one, and a case
-statement could act according the option found, sparing one of the
-subshells from the two.
-
-> +		if [ $only_local_ref = y ]; then
-> +			__gitcomp_direct "$(__git_heads "" "$cur" " ")"
-> +		else
-> +			__git_complete_refs $track_opt
-> +		fi
-> +		;;
-> +	esac
-> +}
-> +
->  __git_config_get_set_variables ()
->  {
->  	local prevword word config_file= c=$cword
-> -- 
-> 2.20.1.682.gd5861c6d90
-> 
+Rich
