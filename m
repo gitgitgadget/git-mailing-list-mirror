@@ -2,110 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77BBF1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 10:02:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 244591F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 10:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726162AbfBHKC2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 05:02:28 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:35579 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726022AbfBHKC2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 05:02:28 -0500
-Received: by mail-pl1-f194.google.com with SMTP id p8so1481223plo.2
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 02:02:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=L4HpES+3qAJ7uqb9mb6eMrXrC3kEgW5m5Engj/APWlk=;
-        b=C+j8fFBMusHC7QxfQE1088cPW4IDss6MFyUESji+BNDICTZBwonzIZf1W2v2dFU/DO
-         qSX5u2thnDcLWgEYUyEtptuHU82hjbj6Ml0+1sTZsnhpNQpnmyQbuYtFUAB0IfelFRPw
-         A1Lnm4v1enlCDs+fUIDv0k+TSOzrN4tObUEICcheYtf5ZmUqsIxVI5RruYmM7uwm9CJT
-         zKH5mrwcT0JVV3vlPi74aj801ArfmjHqN1EJQELIPEqGCagwP1tOLMPheC7ERijBPr4R
-         VQJpSIRQb+nZZ3oRg5BriTFrpWWvLXQ98eHIvyAjOBL2Ca4gMAINs2BOhExSK8+/WAyO
-         e+Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=L4HpES+3qAJ7uqb9mb6eMrXrC3kEgW5m5Engj/APWlk=;
-        b=YHGs3X5P+qKEOq/MHsZFRlmy1FR8z9qIBLYKgvRFLfj66iF6X85MoMTFv3dICPO2uV
-         rsS0BXP4QY6/x8/6Kye/vlUMxYmGzFSSlOh3DVASKCPdWwc5VvaPw/qp4qdKKNcPVmDN
-         2VAMX3US5T4DsO+avMq7hK+LXDZMx18BrPCq/c1vHcZKWmxUsSt3facVdBPW0id4shQz
-         GodFFJTIQuBmGd67vTQsHW5aFKwdwYO5vboZ6eqzURP9CGEUp4gV+ouekqHMV7ihsxK9
-         TFUhf+/+kGNgyDmOiwS6zsyYeBrV6glfSDauYaqCEVYVpZQEq8g4nE1rubU/lWro6GMk
-         ElQQ==
-X-Gm-Message-State: AHQUAuYcCiEu1pF1AFyqIYXjlUvIaIXIz+3yjKJ14NXjOv9S/PpmLEwF
-        7feG+fxh/Vzl3R9qp+tYvJE=
-X-Google-Smtp-Source: AHgI3IbPYqNnV1Ul7x0qJSdWAI62FIiR5hzAuJN9Bq1bT9sh96nGYZ0qyFx9Qi4F5B20RfAThiNpJA==
-X-Received: by 2002:a17:902:1008:: with SMTP id b8mr21267044pla.252.1549620147659;
-        Fri, 08 Feb 2019 02:02:27 -0800 (PST)
-Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id i8sm3699680pgo.19.2019.02.08.02.02.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Feb 2019 02:02:26 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 08 Feb 2019 17:02:22 +0700
-Date:   Fri, 8 Feb 2019 17:02:22 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Git Users <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: could not freshen shared index
- ..../sharedindex.0000000000000000000000000000000000000000'
-Message-ID: <20190208100221.GA22283@ash>
-References: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
+        id S1726162AbfBHKK7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 05:10:59 -0500
+Received: from mout.gmx.net ([212.227.17.20]:38217 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726063AbfBHKK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 05:10:59 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LfHs4-1hTbr33snQ-00omnW; Fri, 08
+ Feb 2019 11:10:54 +0100
+Date:   Fri, 8 Feb 2019 11:10:54 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] ci: make sure we build Git parallel
+In-Reply-To: <xmqqh8dfmawn.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1902081110310.41@tvgsbejvaqbjf.bet>
+References: <20190207183736.9299-1-szeder.dev@gmail.com> <xmqqbm3npgox.fsf@gitster-ct.c.googlers.com> <xmqq1s4jpgh6.fsf@gitster-ct.c.googlers.com> <xmqqsgwzo0ib.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1902072331060.41@tvgsbejvaqbjf.bet>
+ <xmqqh8dfmawn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE5ih79DuU5Wrk4p+wpQX3j6bgyA2_ZgXYJX-tGvZpYhWazWqA@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:nYzcUXY5yL4ibxYOU3corxryAutTmdBCX72uW1BB6AjfQfncqzA
+ lUeJ2XCJSuW9+uzA8cULOiiyB5SbpY4X3LAdH5oaPXPFvZshFG31ANFW594WTtd99pUGQla
+ LIFsBbVUIPci+aAZ+3FPbcNYIXrd0yjyvuMG9qh9Wl3nGamz+LaWmL0z3gyNgsZXFjWq7Nl
+ vDhWnNn9Be8bsRHZ/dWoQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:7sxfxX+EhOY=:kn3ldbq/6wNfZjZH7cVKBW
+ 0V8gL9ug4tywT8KHBvIUeigxLwMX4UEFnRUoZI5bkEJbnukz/hRDRQIrf7izWA9+fcTki/DRh
+ +y/2s3QbtvmOnAMUgRAxVIQjRuMx/4t0jLDFviekmJF5J56Gbg5aGGPoPAFhWtR8ymiLM7otd
+ FV09gcX/rQD1RDRkbRRTeffLpWSDLxbEhx0+73V/mt4HS0jHcWfavxzts6HH0oRisiCl7cQoT
+ Hra4Xbf0KXxEqkT1F3Pe8+T1SGRr1LfzalfNKRitQcKE+1W/0gxWgPvAImnfyVfu9QdGJqGbc
+ pWEqGUWOr3Cuupdu/IAnJ2SVee8sHqNRgC/YQUF622raZXhByoVp7ITvIHzY9sv0nwAQwEYi8
+ BK8plZ2w+vLHldNJkcJv3C4Gg6jyxeH0fwWY/n7h7ss42yELOni7ouduVzQw3bfF+5PH8TECw
+ w2+xMP4SQGnQ/9H3DSNh8ZWhLMfsQA+Y9iN8uxzOcbK1ReGaZCXy8rELXL8XMnoFPcCTa1pPO
+ vEvSUnkT+wLNiY18A/1rEahfDzvGndmKOdupYqrl3Uf0Ig5uuvnCBh02JK0OOBZaktPMoJfOL
+ JLeoasAmte1RAsnF7vkgT04qzrHso4BSV8kvii6xyubaJ861zAph2vsEXDMzNxJmGDYlJ+2Pv
+ 20XjJ37TrNlZfESXdjstQZ7VQKX7zUodOQMFXgAGHtjq565xdOb7s+OjNQqCcM3kOIfQ1GUeS
+ ML1bdM0nnFDxcxQ09n/L5zI6j7qI5/RGSFQMn7ue0Gls9inqf3hRBQWiRtrlio4OJ/Yw73ock
+ kSUZHBNBcFLDRgG8F1pxtRPOjMhNdxrbxLeESO2NhsSSgiJuarU194YsnaaliDdvHFzf0sGgc
+ 1yqaH5wJe2RNIPJkMXDKg7Ti8tqKwpynjLuFiE1ezZ8B2/6JDfKfK5LgWPG71w94NBgPTxL65
+ awwZFDkgcvg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 06, 2019 at 10:25:25AM +0000, Luke Diamand wrote:
-> I've recently started seeing a lot of this message when doing a rebase:
+Hi Junio,
+
+On Thu, 7 Feb 2019, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
->    warning: could not freshen shared index
-> '/home/ldiamand/git/dev_full/.git/worktrees/gcc8-take-2/sharedindex.0000000000000000000000000000000000000000'
-
-There are only two places in the code that could print this. The one
-in read_index_from() can't happen unless is_null_oid() is broken (very
-very unlikely).
-
-The other one is in write_locked_index() which could happen in theory
-but I don't understand how it got there. If you could build git, could
-you try this patch and see if it helps?
-
--- 8< --
-diff --git a/read-cache.c b/read-cache.c
-index f68b367613..5ad71478dc 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3165,6 +3165,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 		fill_fsmonitor_bitmap(istate);
- 
- 	if (!si || alternate_index_output ||
-+	    (si && is_null_oid(&si->base_oid)) ||
- 	    (istate->cache_changed & ~EXTMASK)) {
- 		if (si)
- 			oidclr(&si->base_oid);
--- 8< --
-
-
-> (There's a repo called dev_full, and I've got a worktree where I'm
-> working on my 3rd attempt to make it work with gcc8).
+> >>  
+> >> +# Clear MAKEFLAGS that may come from the outside world.
+> >> +export MAKEFLAGS=
+> >> +
+> >>  # Set 'exit on error' for all CI scripts to let the caller know that
+> >>  # something went wrong.
+> >>  # Set tracing executed commands, primarily setting environment variables
+> >> @@ -101,7 +104,7 @@ then
+> >>  	BREW_INSTALL_PACKAGES="git-lfs gettext"
+> >>  	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+> >>  	export GIT_TEST_OPTS="--verbose-log -x --immediate"
+> >> -	export MAKEFLAGS="--jobs=2"
+> >> +	MAKEFLAGS="$MAKEFLAGS --jobs=2"
+> >>  elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
+> >>  then
+> >>  	CI_TYPE=azure-pipelines
+> >> @@ -126,7 +129,7 @@ then
+> >>  	BREW_INSTALL_PACKAGES=gcc@8
+> >>  	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
+> >>  	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
+> >> -	export MAKEFLAGS="--jobs=10"
+> >> +	MAKEFLAGS="$MAKEFLAGS --jobs=10"
+> >>  	test windows_nt != "$CI_OS_NAME" ||
+> >>  	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+> >>  else
+> >> @@ -185,4 +188,4 @@ GIT_TEST_GETTEXT_POISON)
+> >>  	;;
+> >>  esac
+> >>  
+> >> -export MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
+> >> +MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
+> >
+> > Since this is intended to be run in a CI setting, there is not a whole lot
+> > of opportunity to set `MAKEFLAGS` outside of the script. And if there is,
+> > that might open a rabbit hole when debugging issues that somehow in the
+> > end turn out to come from a hard-coded `MAKEFLAGS` somewhere in the CI
+> > system.
+> >
+> > So I'd rather clear `MAKEFLAGS` at the beginning (i.e. where you `export
+> > MAKEFLAGS`, I'd simply append a `=`).
 > 
-> That file doesn't actually exist but there are a bunch of
-> sharedindex.XXX files in there with more convincing looking names.
-> 
-> 2.20.1.611.gfbb209baf1
---
-Duy
+> I meant to clear it at the beginning, where I "export MAKEFLAGS=".
+> Did your MUA ate the equal sign at the end, mistaking it with part
+> of text/plain; format=flawed or something?
+
+I could have sworn that there was no equal sign yesterday.
+
+Sorry for the noise,
+Dscho
