@@ -2,114 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B18E21F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 20:11:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1B5A1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 20:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727739AbfBHULL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 15:11:11 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:37781 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727505AbfBHULK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 15:11:10 -0500
-Received: by mail-wm1-f66.google.com with SMTP id g67so5169811wmd.2
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 12:11:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qanc6Uo6bjvTP3aVi73ixK6Hlnu5ahMqiwbpa2DGGzA=;
-        b=Raymjy5EzLQ74AJmxHs8MyJPQmUsf8lL6FD/zfgXwksLEggmaQKY9MRCVDZkgzHZKM
-         b5yspFteK2NOjnePyKL/XjpBkEAbgXC95GLb4WxftW7yOUVM+GhXT86rxcLN/Su50YDl
-         qAyQUPo3i/oSLtDllNkgDFCgGfX0vTLMGJ9DuN9AjFlMsepKPr1eeB2I7jTvU3kOk8UZ
-         C08wzwv+k8kBRPxsBadZuptEqhffNtGkGXdSNR0eQRLLIuUNVTS6pAMsBMC+uhv6M4WF
-         sspo038p5iM7LK5Cir58jyPIAAjJpr5/lY2EL6f6jxdIIEJNBDA2j3gwsDt2qkm/AlMD
-         kkvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qanc6Uo6bjvTP3aVi73ixK6Hlnu5ahMqiwbpa2DGGzA=;
-        b=b3LLxMJ10mlb+nbAh4GVKa/CgB2jPT+3dGhzslNloSzsK8+qwetq4SRRRDjOGUmqgQ
-         FlnjTcbNu6bkqIbFnaxoThDJ/HZHDxO5ElqwYeZEKFZ2nCbsuOXt8OPaYOqOJaAF8p6W
-         D7TeKWBBbMrqFEpPym/iUyIsecPzyOA9AWo+u9lnaC18ph4Nx9NvhEQFbmF1FDZu6yaS
-         u3flhBU0wASjfSvJn598RVNt3/V2HaYktJdahNqSpTK7ya6o1TH4A/UzDn7zsQkjAp4H
-         62v4OSYDc6397N9LFACbkXne/1lLJRWxtwY2eFhio7JETQY99xR54k8ZOAHnawmJrCRy
-         A0HA==
-X-Gm-Message-State: AHQUAuZg1DYEr9g+MV618JWEC73zhEdFP/OPIBeKZ3N6sFDG7TiOu4T0
-        jjiYsOZhUotrKGshOlR6Z/L45sGl
-X-Google-Smtp-Source: AHgI3IYuZhjCfvcMCtVYLJ7c20mddoMm1lE211lMdztNvP7liO+M1wXBlw1nxauQq5iYpIEQKo0y1w==
-X-Received: by 2002:adf:9ec8:: with SMTP id b8mr18900247wrf.164.1549656668768;
-        Fri, 08 Feb 2019 12:11:08 -0800 (PST)
-Received: from szeder.dev (x4db62aaa.dyn.telefonica.de. [77.182.42.170])
-        by smtp.gmail.com with ESMTPSA id r12sm2749655wrq.3.2019.02.08.12.11.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Feb 2019 12:11:07 -0800 (PST)
-Date:   Fri, 8 Feb 2019 21:11:05 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Henning Schild <henning.schild@siemens.com>
-Subject: Re: [PATCH 1/2] t/lib-gpg: quote path to ${GNUPGHOME}/trustlist.txt
-Message-ID: <20190208201105.GA10587@szeder.dev>
-References: <20190208031746.22683-1-tmz@pobox.com>
- <20190208031746.22683-2-tmz@pobox.com>
+        id S1727860AbfBHULf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 15:11:35 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54616 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727415AbfBHULd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 15:11:33 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6CC4D149F6B;
+        Fri,  8 Feb 2019 15:11:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=3Zv1L31uLuHxE
+        GW6DIj7be3q+mw=; b=StFrvc4/+bm6pNuVI+QE+9M49is8e5Huy8g9MW3GfKj4Y
+        6D0JoKC9B8l0h9gBMjR/gz4lclI8hB4pVGYp+mFU+oYFxOJ0WckaR9aWwA/PVmxH
+        waH5J21T8CGGws3b5rFIV1N1/qNo+IF1spDoGsXrwGAHXNzVqwessS2N9IHhjM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=jcQn6+5
+        N3QKhCjOQ82RVLf6GyRo28PcajNlnsPl3x1s0/YYlec7D5wS9VFXCbNAJlcews6K
+        /Zph7DKCTE0y7k8GiVTHdexoqndnZwoSPE9TRsIJwRK9/0rzckdfOXxeXVaABn5C
+        akRhAwqN6XhjNFMnAZf/op+HjtfCk17Na5Rs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 636A5149F6A;
+        Fri,  8 Feb 2019 15:11:31 -0500 (EST)
+Received: from zaya.teonanacatl.net (unknown [71.173.194.225])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CDE64149F69;
+        Fri,  8 Feb 2019 15:11:30 -0500 (EST)
+Date:   Fri, 8 Feb 2019 15:11:29 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Jeff King <peff@peff.net>,
+        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+        'Linux Kernel' <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: Re: [Breakage] Git v2.21.0-rc0 - t5403 (NonStop)
+Message-ID: <20190208201128.GD30548@zaya.teonanacatl.net>
+References: <000d01d4bf9b$d5d48da0$817da8e0$@nexbridge.com>
+ <20190208111002.GU10587@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20190208031746.22683-2-tmz@pobox.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20190208111002.GU10587@szeder.dev>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: B9646A38-2BDD-11E9-8887-DF19F34BB12D-09356542!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 07, 2019 at 10:17:45PM -0500, Todd Zullinger wrote:
-> When gpgsm is installed, lib-gpg.sh attempts to update trustlist.txt to
-> relax the checking of some root certificate requirements.  The path to
-> "${GNUPGHOME}" contains spaces which cause an "ambiguous redirect"
-> warning when bash is used to run the tests:
+SZEDER G=E1bor wrote:
+> On Fri, Feb 08, 2019 at 05:48:27AM -0500, Randall S. Becker wrote:
+>> We have a few new breakages on the NonStop port in 2.21.0-rc0. The fir=
+st is in t5403, as below:
+[...]
+>> The post-checkout hook is:
+>> #!/usr/local/bin/bash
+>> echo "$@" >$GIT_DIR/post-checkout.args
+>>=20
+>> This looks like it is a "bash thing" and $GIT_DIR might have to be in =
+quotes, and is not be specific to the platform. If I replace=20
+>>=20
+>> echo "$@" >$GIT_DIR/post-checkout.args
+>>=20
+>> with
+>>=20
+>> echo "$@" >"$GIT_DIR/post-checkout.args"
+>>=20
+>> The test passes.
+>=20
+> Wow, this is the second time this "redirection to a filename with
+> spaces under Bash" issue pops up today, see the other one here:
+>=20
+>   https://public-inbox.org/git/20190208031746.22683-2-tmz@pobox.com/T/#=
+u
 
-s/error/warning/
+Indeed, I was surprised to see another one today.
 
->   $ bash t7030-verify-tag.sh
->   /git/t/lib-gpg.sh: line 66: ${GNUPGHOME}/trustlist.txt: ambiguous redirect
->   ok 1 - create signed tags
->   ok 2 # skip create signed tags x509  (missing GPGSM)
->   ...
-> 
-> No warning is issued when using bash called as /bin/sh, dash, or mksh.
+It made me wonder how I had missed it in my own testing.
+This one requires SHELL_PATH to be bash, while I only set
+TEST_SHELL_PATH to bash for the improved -x tracing in the
+fedora builds.
 
-Likewise.
+I ran the tests again with SHELL_PATH as bash on fedora and
+this was the only failure I saw (other than the one from my
+earlier message, that is).
 
-POSIX says that no field splitting should be performed on the result
-of a parameter expansion that is used as the target of a redirection,
-but Bash doesn't conform in this respect (unless in POSIX mode).
-
-> Quote the path to ensure the redirect works as intended and sets the
-> GPGSM prereq.  While we're here, drop the space after ">>".
-> 
-> Signed-off-by: Todd Zullinger <tmz@pobox.com>
-> ---
->  t/lib-gpg.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-> index f1277bef4f..207009793b 100755
-> --- a/t/lib-gpg.sh
-> +++ b/t/lib-gpg.sh
-> @@ -63,7 +63,7 @@ then
->  		cut -d" " -f4 |
->  		tr -d '\n' >"${GNUPGHOME}/trustlist.txt" &&
->  
-> -		echo " S relax" >> ${GNUPGHOME}/trustlist.txt &&
-> +		echo " S relax" >>"${GNUPGHOME}/trustlist.txt" &&
->  		(gpgconf --kill gpg-agent >/dev/null 2>&1 || : ) &&
->  		echo hello | gpgsm --homedir "${GNUPGHOME}" >/dev/null \
->  			-u committer@example.com -o /dev/null --sign - 2>&1 &&
-> -- 
-> Todd
+--=20
+Todd
