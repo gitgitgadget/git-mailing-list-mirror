@@ -2,308 +2,242 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1A2B1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 07:02:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19DFA1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 08:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726831AbfBHHCZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 02:02:25 -0500
-Received: from gproxy1-pub.mail.unifiedlayer.com ([69.89.25.95]:46993 "EHLO
-        gproxy1-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726004AbfBHHCY (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 8 Feb 2019 02:02:24 -0500
-X-Greylist: delayed 1840 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Feb 2019 02:02:24 EST
-Received: from cmgw14.unifiedlayer.com (unknown [10.9.0.14])
-        by gproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id 0B09079670AA5
-        for <git@vger.kernel.org>; Thu,  7 Feb 2019 23:13:09 -0700 (MST)
-Received: from host200.hostmonster.com ([74.220.207.200])
-        by cmsmtp with ESMTP
-        id rzPQgginJXFO5rzPQgS6U7; Thu, 07 Feb 2019 23:13:09 -0700
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=whamtech.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-        MIME-Version:Date:Message-ID:To:Subject:From:Reply-To:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=Zp10/4Cl17NR77OH4EDRtOKBFBxzaZizrD6+AlK/MMs=; b=WYbyv4Y8Mea3Z3FrelO0y1CPqd
-        9YbmWzO02kobeJHY+6hlZo3W2Qd1dhTZ1xMRwNWA99glMMjzdfp0xIksbyVHvKRLPnwvRwBfFtYm9
-        rdz9PmUDFNvLqb1VCUUhjW29K;
-Received: from [147.75.195.120] (port=56306 helo=Douglas-Godfrey-2s-Mac-Pro.local)
-        by host200.hostmonster.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.91)
-        (envelope-from <douglas.godfrey@whamtech.com>)
-        id 1grzPQ-001Fdg-90
-        for git@vger.kernel.org; Thu, 07 Feb 2019 23:13:08 -0700
-Reply-To: douglas.godfrey@whamtech.com
-From:   Douglas Godfrey <douglas.godfrey@whamtech.com>
-Subject: undefined symbols building GIT source from githu
-Organization: WhamTech, Inc.
-To:     git@vger.kernel.org
-Message-ID: <1a9f02ca-3bc3-f00f-6923-1bbf050e84ca@whamtech.com>
-Date:   Fri, 8 Feb 2019 01:13:04 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:45.0)
- Gecko/20100101 Thunderbird/45.7.1
+        id S1727250AbfBHIcp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 03:32:45 -0500
+Received: from mout.gmx.net ([212.227.15.15]:44329 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726133AbfBHIcp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 03:32:45 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1Fe4-1h7cZ103qa-00tAMs; Fri, 08
+ Feb 2019 09:32:35 +0100
+Date:   Fri, 8 Feb 2019 09:32:32 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Clemens Buchacher <drizzd@gmx.net>
+Subject: Re: t5570-git-daemon fails with SIGPIPE on OSX
+In-Reply-To: <CAM0VKjkM-THZALy20VrZ-JSMyZjUXUqp1CAoCPrezXRsBfRJ2A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1902080928500.41@tvgsbejvaqbjf.bet>
+References: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com> <CAM0VKjkM-THZALy20VrZ-JSMyZjUXUqp1CAoCPrezXRsBfRJ2A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - host200.hostmonster.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - whamtech.com
-X-BWhitelist: no
-X-Source-IP: 147.75.195.120
-X-Source-L: No
-X-Exim-ID: 1grzPQ-001Fdg-90
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (Douglas-Godfrey-2s-Mac-Pro.local) [147.75.195.120]:56306
-X-Source-Auth: douglas.godfrey@whamtech.com
-X-Email-Count: 1
-X-Source-Cap: d2hhbXRlY2g7d2hhbXRlY2g7aG9zdDIwMC5ob3N0bW9uc3Rlci5jb20=
-X-Local-Domain: yes
+Content-Type: multipart/mixed; boundary="8323328-350591008-1549614756=:41"
+X-Provags-ID: V03:K1:3EYdx5mVWxIhNNu0V4kAY33rCAh0oy+6x6mq9U7d5TIKvTdWN33
+ SHxaF3PKrWnVSqDOGWslQPNJgjIrPvkp146/vLmOiEgS2fs1USs6ae3IStxsfwwKONJ9CNJ
+ 9lNsMLF2s9c0IpPSmoADbU3FCqsRjnhcxpcLKJ37dNv0WhwvaUm5ba44HHoE0A2XliH8EZm
+ w+u9Yee45oJ9f22HQMlug==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eJGSHWHwrFI=:2FpgIz/6vw4NbPfTPD3p2X
+ vdnnbbvULhVXCoL4Zb3+ZHxM3T2xWXIAn0dzsmAgri+yWOxzkC7vflnqIDhxu85pOiI6q1FoJ
+ O57I/WCfgi+g1jAgXAu9dK4u7oZztduUQ7L/vmzJMy3Ic5vfNN+cL2RqNdaMycgZDQqHSslbG
+ HaZ2gmnT7BJjEEkp/QGQYCAvnQQpBUO4xI/sfN4EGs/DGY39FbIbMxejuWWLQuDmYLljrrUEN
+ wbk4M7vNbYUp01anQ72V+BOeHbGignrtbRJDeX476L3K1/JxPLDOmP2jdRaFCZqw1sCqCtrAC
+ vVIAhvnrq6Oe+TTKRrVQr8KR9EK7cX9IlD/iqYGo1T3/XKd8msA8ux6sK11/t0SX1pnj0I1fX
+ /yXiuyaUD3aAcwREAbt+j70QG3ALNF6WmlDeWYmdd/nAOu7JDZvGavYvbLLEdBurFszwn61fn
+ W8UjhPwjt4WCx84mugSS0NUFzT3DOOSy5VZbm8+GfxIadzAgKpDRLSHIKRCh9nHlpSncguH0P
+ 3y9uV1qVdulheHpCYaYG3UAerhEQ75Mw6VfGgQwhjITgQ3ckyfigBdRyf0FjwaNDNLAHzx6UE
+ mw3edANInw+gDov7XAbnGriWlrp6nPryKr+MaZMPMHbPD+NRbd2Y2QsoVZi5VujlDIfpm/no8
+ EcEHAfVf4tH99K/AF2QLA7xT4B+K4M6mKn2astZ01hASlj7dpnVDIhIrTKhDbiv76Jv+3GAMs
+ tIwaS2AwRXjs+KT1MujZGWM9i+VkKPK4LQD337lbsPyH1pWO8Yf40Yt1bMykjHqxDj1VnXejG
+ D2W7FXy/MVmp8vBE1SG4vQICM0k15lu2hJ5aZoD6MUJPH6ZFCbyr2OkprEme0LClCZTL3iQiU
+ IqL82uPQP4BQIJQtpcI32M4x8439DSCxm3dipaKyF7vs75IHbtplECvF3t02t6Dc8VQAsf2tT
+ HrEpTjVTIsg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-MacOS X Snow Leopard
-openssl-1.1.1a installed
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Building git-master downloaded from github on 2/7/2019
-The same error occurs building git-2.9.5
+--8323328-350591008-1549614756=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-What is missing in this project?
+Team,
 
-git-master did not have a configure script so I ran autoconf to generate one.
-git-master did not have a config-guess or config-sub.
+On Mon, 6 Aug 2018, SZEDER Gábor wrote:
 
-Compile with GCC 6.2
+> [Resending with Clemens' last used email address.
+> Clemens, please consider sending a patch to update our .mailmap file.]
+> 
+> 
+> On Mon, Aug 6, 2018 at 5:11 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> >
+> > Travis CI changed its default OSX image to use XCode 9.4 on 2018-07-31
+> > [1].  Since then OSX build jobs fail rather frequently because of a
+> > SIGPIPE in the tests 'fetch notices corrupt pack' or 'fetch notices
+> > corrupt idx' in 't5570-git-daemon.sh' [2].  I think this is a symptom
+> > a real bug in Git affecting other platforms as well, but these tests
+> > are too lax to catch it.
 
-./configure --with-libpcre2 --with-openssl --with-curl
+I am seeing this very frequently now, as it feels like failing in the
+Azure Pipeline about half of the time.
 
-configure: Setting lib to 'lib' (the default)
-configure: Will try -pthread then -lpthread to enable POSIX Threads.
-configure: CHECKS for site configuration
-checking for gcc... /usr/local/Cellar/gcc6/6.2.0/bin/gcc-6
-checking for C compiler default output file name... a.out
-checking whether the C compiler works... yes
-checking whether we are cross compiling... no
-checking for suffix of executables...
-checking for suffix of object files... o
-checking whether we are using the GNU C compiler... yes
-checking whether /usr/local/Cellar/gcc6/6.2.0/bin/gcc-6 accepts -g... yes
-checking for /usr/local/Cellar/gcc6/6.2.0/bin/gcc-6 option to accept ISO C89... none needed
-checking how to run the C preprocessor... /usr/local/Cellar/gcc6/6.2.0/bin/cpp-6
-checking for grep that handles long lines and -e... /usr/bin/grep
-checking for egrep... /usr/bin/grep -E
-checking for ANSI C header files... yes
-checking for sys/types.h... yes
-checking for sys/stat.h... yes
-checking for stdlib.h... yes
-checking for string.h... yes
-checking for memory.h... yes
-checking for strings.h... yes
-checking for inttypes.h... yes
-checking for stdint.h... yes
-checking for unistd.h... yes
-checking for working alloca.h... yes
-checking for alloca... yes
-configure: CHECKS for programs
-checking whether we are using the GNU C compiler... (cached) yes
-checking whether /usr/local/Cellar/gcc6/6.2.0/bin/gcc-6 accepts -g... (cached) yes
-checking for /usr/local/Cellar/gcc6/6.2.0/bin/gcc-6 option to accept ISO C89... (cached) none needed
-checking for inline... inline
-checking if linker supports -R... no
-checking if linker supports -Wl,-rpath,... yes
-checking for gar... gar
-checking for gtar... no
-checking for tar... tar
-checking for gnudiff... no
-checking for gdiff... no
-checking for diff... diff
-checking for asciidoc... asciidoc
-checking for asciidoc version... asciidoc 8.6.9
-Using 'grep -a' for sane_grep
-configure: CHECKS for libraries
-checking for SHA1_Init in -lcrypto... yes
-checking for pcre2_config_8 in -lpcre2-8... yes
-checking for curl_global_init in -lcurl... yes
-checking for curl-config... curl-config
-configure: Setting CURL_LDFLAGS to '-lcurl'
-checking for XML_ParserCreate in -lexpat... yes
-checking for iconv in -lc... no
-checking for iconv in -liconv... yes
-checking for deflateBound in -lz... yes
-checking for socket in -lc... yes
-checking for inet_ntop... yes
-checking for inet_pton... yes
-checking for hstrerror... yes
-checking for basename in -lc... yes
-checking for gettext in -lc... no
-checking libintl.h usability... no
-checking libintl.h presence... no
-checking for libintl.h... no
-configure: CHECKS for header files
-checking sys/select.h usability... yes
-checking sys/select.h presence... yes
-checking for sys/select.h... yes
-checking poll.h usability... yes
-checking poll.h presence... yes
-checking for poll.h... yes
-checking sys/poll.h usability... yes
-checking sys/poll.h presence... yes
-checking for sys/poll.h... yes
-checking for inttypes.h... (cached) yes
-checking for old iconv()... no
-configure: CHECKS for typedefs, structures, and compiler characteristics
-checking for socklen_t... yes
-checking for struct itimerval... yes
-checking for struct stat.st_mtimespec.tv_nsec... yes
-checking for struct stat.st_mtim.tv_nsec... no
-checking for struct dirent.d_type... yes
-checking for struct passwd.pw_gecos... yes
-checking for struct sockaddr_storage... yes
-checking for struct addrinfo... yes
-checking for getaddrinfo... yes
-checking for library containing getaddrinfo... none required
-checking whether the platform regex supports REG_STARTEND... yes
-checking whether system succeeds to read fopen'ed directory... yes
-checking whether snprintf() and/or vsnprintf() return bogus value... no
-checking whether the platform uses typical file type bits... yes
-configure: CHECKS for library functions
-checking libgen.h usability... yes
-checking libgen.h presence... yes
-checking for libgen.h... yes
-checking paths.h usability... yes
-checking paths.h presence... yes
-checking for paths.h... yes
-checking libcharset.h usability... yes
-checking libcharset.h presence... yes
-checking for libcharset.h... yes
-checking for strings.h... (cached) yes
-checking for locale_charset in -liconv... yes
-checking for clock_gettime... no
-checking for CLOCK_MONOTONIC... no
-checking for setitimer... yes
-checking for library containing setitimer... none required
-checking for strcasestr... yes
-checking for library containing strcasestr... none required
-checking for memmem... no
-checking for strlcpy... yes
-checking for library containing strlcpy... none required
-checking for uintmax_t... yes
-checking for strtoumax... yes
-checking for library containing strtoumax... none required
-checking for setenv... yes
-checking for library containing setenv... none required
-checking for unsetenv... yes
-checking for library containing unsetenv... none required
-checking for mkdtemp... yes
-checking for library containing mkdtemp... none required
-checking for initgroups... yes
-checking for library containing initgroups... none required
-checking for getdelim... no
-checking for BSD sysctl... yes
-checking for POSIX Threads with ''... yes
-configure: creating ./config.status
-config.status: creating config.mak.autogen
-config.status: executing config.mak.autogen commands
+The symptom is this:
 
-make
+-- snip --
+++ cp -R '/Users/vsts/agent/2.146.0/work/1/s/t/trash directory.t5570-git-daemon/repo/repo_pack.git' '/Users/vsts/agent/2.146.0/work/1/s/t/trash directory.t5570-git-daemon/repo/repo_bad2.git'
+++ cd '/Users/vsts/agent/2.146.0/work/1/s/t/trash directory.t5570-git-daemon/repo/repo_bad2.git'
++++ ls objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+++ p=objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+++ chmod u+w objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+++ printf %0256d 0
+++ dd of=objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx bs=256 count=1 seek=1 conv=notrunc
+1+0 records in
+1+0 records out
+256 bytes transferred in 0.000018 secs (14316558 bytes/sec)
+++ mkdir repo_bad2.git
+++ cd repo_bad2.git
+++ git --bare init
+Initialized empty Git repository in /Users/vsts/agent/2.146.0/work/1/s/t/trash directory.t5570-git-daemon/repo_bad2.git/
+++ test_must_fail git --bare fetch git://127.0.0.1:5570/repo_bad2.git
+++ case "$1" in
+++ _test_ok=
+++ git --bare fetch git://127.0.0.1:5570/repo_bad2.git
+[13879] Connection from 127.0.0.1:60504
+[13879] Extended attribute "host": 127.0.0.1:5570
+[13879] Extended attribute "protocol": version=0
+[13879] Request upload-pack for '/repo_bad2.git'
+[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+[13879] error: refs/heads/master does not point to a valid object!
+[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+[13879] error: refs/heads/other does not point to a valid object!
+[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
+[13879] fatal: git upload-pack: not our ref b5c2e4226db03597a64815fd226648510b22ba40
+[11833] [13879] Disconnected (with error)
+++ exit_code=141
+++ test 141 -eq 0
+++ test_match_signal 13 141
+++ test 141 = 141
+++ return 0
+++ list_contains '' sigpipe
+++ case ",$1," in
+++ return 1
+++ test 141 -gt 129
+++ test 141 -le 192
+++ echo 'test_must_fail: died by signal 13: git --bare fetch git://127.0.0.1:5570/repo_bad2.git'
+test_must_fail: died by signal 13: git --bare fetch git://127.0.0.1:5570/repo_bad2.git
+++ return 1
+error: last command exited with $?=1
+not ok 10 - fetch notices corrupt idx
+#	
+#		cp -R "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_pack.git "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
+#		(cd "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
+#		 p=$(ls objects/pack/pack-*.idx) &&
+#		 chmod u+w $p &&
+#		 printf %0256d 0 | dd of=$p bs=256 count=1 seek=1 conv=notrunc
+#		) &&
+#		mkdir repo_bad2.git &&
+#		(cd repo_bad2.git &&
+#		 git --bare init &&
+#		 test_must_fail git --bare fetch "$GIT_DAEMON_URL/repo_bad2.git" &&
+#		 test 0 = $(ls objects/pack | wc -l)
+#		)
+#	
+-- snap --
 
-ld: warning: in libgit.a, file was built for unsupported file format which is not the architecture being linked (x86_64)
-ld: warning: in xdiff/lib.a, file was built for unsupported file format which is not the architecture being linked (x86_64)
-Undefined symbols:
-   "_strbuf_addstr_urlencode", referenced from:
-       _store_credential_file in credential-store.o
-       _store_credential_file in credential-store.o
-       _store_credential_file in credential-store.o
-       _store_credential_file in credential-store.o
-   "_attr_start", referenced from:
-       _main in common-main.o
-   "_strbuf_release", referenced from:
-       _parse_credential_file in credential-store.o
-       _store_credential_file in credential-store.o
-   "_string_list_append", referenced from:
-       _cmd_main in credential-store.o
-   "_credential_clear", referenced from:
-       _parse_credential_file in credential-store.o
-   "_initialize_the_repository", referenced from:
-       _main in common-main.o
-   "_strbuf_getline_lf", referenced from:
-       _parse_credential_file in credential-store.o
-       _parse_credential_file in credential-store.o
-   "_usage_with_options", referenced from:
-       _cmd_main in credential-store.o
-   "_credential_from_url", referenced from:
-       _parse_credential_file in credential-store.o
-   "_credential_read", referenced from:
-       _cmd_main in credential-store.o
-   "_commit_lock_file", referenced from:
-       _rewrite_credential_file in credential-store.o
-   "_die_errno", referenced from:
-       _parse_credential_file in credential-store.o
-       _rewrite_credential_file in credential-store.o
-       _rewrite_credential_file in credential-store.o
-   "_credential_match", referenced from:
-       _parse_credential_file in credential-store.o
-   "_string_list_clear", referenced from:
-       _cmd_main in credential-store.o
-   "_git_fopen", referenced from:
-       _parse_credential_file in credential-store.o
-   "_hold_lock_file_for_update_timeout", referenced from:
-       _rewrite_credential_file in credential-store.o
-   "_strbuf_slopbuf", referenced from:
-       _parse_credential_file in credential-store.o
-       _store_credential_file in credential-store.o
-   "_use_gettext_poison", referenced from:
-       _main in common-main.o
-   "_expand_user_path", referenced from:
-       _cmd_main in credential-store.o
-   "_parse_options", referenced from:
-       _cmd_main in credential-store.o
-   "_git_resolve_executable_dir", referenced from:
-       _main in common-main.o
-   "_write_or_die", referenced from:
-       _print_line in credential-store.o
-   "_die", referenced from:
-       _cmd_main in credential-store.o
-       _cmd_main in credential-store.o
-   "_string_list_append_nodup", referenced from:
-       _cmd_main in credential-store.o
-       _cmd_main in credential-store.o
-   "_strbuf_addf", referenced from:
-       _store_credential_file in credential-store.o
-   "_get_tempfile_fd", referenced from:
-       _print_line in credential-store.o
-   "_sanitize_stdfds", referenced from:
-       _main in common-main.o
-   "_strbuf_grow", referenced from:
-       _print_line in credential-store.o
-       _store_credential_file in credential-store.o
-       _store_credential_file in credential-store.o
-       _store_credential_file in credential-store.o
-   "_xdg_config_home", referenced from:
-       _cmd_main in credential-store.o
-ld: symbol(s) not found
-collect2: error: ld returned 1 exit status
-make: *** [git-credential-store] Error 1
-Douglas-Godfrey-2s-Mac-Pro:git-master dgodfrey$
+Any ideas how to fix this test, anyone?
 
+Ciao,
+Dscho
 
-
-
-
-
-
-
-
-
-
+> >
+> > What it boils down to is this sequence:
+> >
+> >   - The test first prepares a repository containing a corrupt pack,
+> >     ready to be server via 'git daemon'.
+> >
+> >   - Then the test runs 'test_must_fail git fetch ....', which connects
+> >     to 'git daemon', which forks 'git upload-pack', which then
+> >     advertises refs (only HEAD) and capabilities.  So far so good.
+> >
+> >   - 'git fetch' eventually calls fetch-pack.c:find_common().  The
+> >     first half of this function assembles a request consisting of a
+> >     want and a flush pkt-line, and sends it via a send_request() call.
+> >
+> >     At this point the scheduling becomes important: let's suppose that
+> >     fetch is slow and upload-pack is fast.
+> >
+> >   - 'git upload-pack' receives the request, parses the want line,
+> >     notices the corrupt pack, responds with an 'ERR upload-pack: not
+> >     our ref' pkt-line, and die()s right away.
+> >
+> >   - 'git fetch' finally approaches the end of the function, where it
+> >     attempts to send a done pkt-line via another send_request() call
+> >     through the now closing TCP socket.
+> >
+> >   - What happens now seems to depend on the platform:
+> >
+> >     - On Linux, both on my machine and on Travis CI, it shows textbook
+> >       example behaviour: write() returns with error and sets errno to
+> >       ECONNRESET.  Since it happens in write_or_die(), 'git fetch'
+> >       die()s with 'fatal: write error: Connection reset by peer', and
+> >       doesn't show the error send by 'git upload-pack'; how could it,
+> >       it doesn't even get as far to receive upload-pack's ERR
+> >       pkt-line.
+> >
+> >       The test only checks that 'git fetch' fails, but it doesn't
+> >       check whether it failed with the right error message, so the
+> >       test still succeeds.  Had it checked the error message as well,
+> >       we most likely had noticed this issue already, it doesn't happen
+> >       all that rarely.
+> >
+> >     - On the new OSX images with XCode 9.4 on Travis CI the write()
+> >       triggers SIGPIPE right away, and 'test_must_fail' notices it and
+> >       fails the test.  I couldn't see any sign of an ECONNRESET or any
+> >       other error that we could act upon to avoid the SIGPIPE.
+> >
+> >     - On OSX with XCode 9.2 on Travis CI there is neither SIGPIPE, nor
+> >       ECONNRESET, but sending the request actually succeeds even
+> >       though there is no process on the other end of the socket
+> >       anymore.  'git fetch' then simply continues execution, reads and
+> >       parses the ERR pkt-line, and then dies()s with 'fatal: remote
+> >       error: upload-pack: not our ref'.  So, on the face of it, it
+> >       shows the desired behaviour, but I have no idea how that write()
+> >       could succeed instead of returning error.
+> >
+> > I don't know what happens on a real Mac as I don't have access to one;
+> > I figured out all the above by enabling packet tracing, adding a
+> > couple of well placed tracing printf() and sleep() calls, running a
+> > bunch of builds on Travis CI, and looking through their logs.  But
+> > without access to a debugger and netstat and what not I can't really
+> > go any further.  So I would now happily pass the baton to those who
+> > have a Mac and know a thing or two about its porting issues to first
+> > check whether OSX on a real Mac shows the same behaviour as it does in
+> > Travis CI's virtualized(?) environment.  And then they can pass the
+> > baton to those who know all the intricacies of the pack protocol and
+> > its implementation to decide what to do with this issue.
+> >
+> > For a mostly reliable reproduction recipe you might want to fetch this
+> > branch:
+> >
+> >   https://github.com/szeder/git t5570-git-daemon-sigpipe
+> >
+> > and then run 'make && cd t && ./t5570-git-daemon.sh -v -x'
+> >
+> >
+> > Have fun! ;)
+> >
+> >
+> > 1 - https://blog.travis-ci.com/2018-07-19-xcode9-4-default-announce
+> >
+> > 2 - On git.git's master:
+> >     https://travis-ci.org/git/git/jobs/411517552#L2717
+> 
+> 
+--8323328-350591008-1549614756=:41--
