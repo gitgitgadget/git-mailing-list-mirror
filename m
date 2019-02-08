@@ -2,121 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	URIBL_SBL,URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 939E71F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 08:39:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EC791F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 08:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727311AbfBHIi4 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 8 Feb 2019 03:38:56 -0500
-Received: from gecko.sbs.de ([194.138.37.40]:51874 "EHLO gecko.sbs.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726115AbfBHIiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 03:38:55 -0500
-X-Greylist: delayed 322 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Feb 2019 03:38:53 EST
-Received: from mail1.sbs.de (mail1.sbs.de [192.129.41.35])
-        by gecko.sbs.de (8.15.2/8.15.2) with ESMTPS id x188XP46015944
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 8 Feb 2019 09:33:25 +0100
-Received: from md1za8fc.ad001.siemens.net ([139.25.0.64])
-        by mail1.sbs.de (8.15.2/8.15.2) with ESMTP id x188XOaw003610;
-        Fri, 8 Feb 2019 09:33:24 +0100
-Date:   Fri, 8 Feb 2019 09:33:24 +0100
-From:   Henning Schild <henning.schild@siemens.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: [PATCH 0/2] t/lib-gpg: a gpgsm fix, a minor improvement, and a
- question
-Message-ID: <20190208093324.7b17f270@md1za8fc.ad001.siemens.net>
-In-Reply-To: <20190208031746.22683-1-tmz@pobox.com>
-References: <20190208031746.22683-1-tmz@pobox.com>
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        id S1727311AbfBHIqz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 03:46:55 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:53841 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726115AbfBHIqz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 03:46:55 -0500
+Received: by mail-it1-f194.google.com with SMTP id g85so7033542ita.3
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 00:46:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=6/PxWmzrfWtl0cMYBhoOhLu/8JFbeLDpnCCMmPLWSp0=;
+        b=ZoEejpF7vrNcSTl71lnMOCWdfINQZF9bxWNi7hhYEag6InoKJmc5GQkserkK9krCvj
+         onBLALsRJSV6LywWYqQa9b330TtJg7InKXAvXu8MsCwVBAHDQfVcNApAQrJcMvxM84v4
+         iIDIy2tkZ1HV9sKt7/l1EKuQtXaxNKDhZUJQA1ldCRGc7xlVzN/3yplg435ImDo9vRQr
+         /tgjH3tb9myU8LyME+wOV3y5oeH0JvSm/g4G5d+Pc0w8Yy0wTADlvH3Ekoa/wP/0FZKh
+         KAwgCl72GBMNaZhSTQnYemZkm5ff7EMpr9j1W1bF/dWel4i/hbUmSpZfZJW/vUDNUbOo
+         d9Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=6/PxWmzrfWtl0cMYBhoOhLu/8JFbeLDpnCCMmPLWSp0=;
+        b=UvKr4VL6aifZ3RU5pdMBV4v4sk6fpYm2Cc+Fio4m0rloR6+H0p3G0KKGQ6j6fNHxaX
+         PEYcRInuEs4ypdwsT/QPgeuLcuvuowuRxY5ZxHX7CYlriF3Obe/8rimgEfnCRptThX1n
+         HflPxRYBr8RK8y7y+VKKiUKx2pCk7cLNm/130U2geSgPjzWsV6zsnIAIrjo2FGwMR2yS
+         nL42Y1Qb9rK5LpS3ogkF5uPWwKxAJjGMIvlG98lMst9byqaZo6QyEr7AIB+AEevHCBzG
+         B+8oeGFM5/y3YeiEGyZFHfJ1QsoypfqmNYLcEYVyz26Yc4BzHvS73tKY0Q846jMBxUsi
+         yTiw==
+X-Gm-Message-State: AHQUAubyNgsTeghKMzsJLyCrK6+99amn3jM1xF3HSk9B7otFqXQa+GGG
+        9AVuw4SxnwkLYgld7U/s+QHdTEKhmGuZfKhWIaE=
+X-Google-Smtp-Source: AHgI3Ib+J9jXkqONlwKPJixpLjdY25bom2jYZUQzUCsUgK4obb1lC/KBLQEyDA5jBRt/+FDTlsYwNS4KXByKKWQvL0g=
+X-Received: by 2002:a02:bb81:: with SMTP id g1mr5499401jan.130.1549615614244;
+ Fri, 08 Feb 2019 00:46:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+References: <20190130094831.10420-1-pclouds@gmail.com> <20190130094831.10420-9-pclouds@gmail.com>
+ <20190131130953.GJ13764@szeder.dev>
+In-Reply-To: <20190131130953.GJ13764@szeder.dev>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 8 Feb 2019 15:46:27 +0700
+Message-ID: <CACsJy8D-vL88JaJYqhXnkJ5Cxvou_=haSFLpwELuX-E9cj_9aQ@mail.gmail.com>
+Subject: Re: [PATCH 08/19] checkout: split part of it to new command switch
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Jan 31, 2019 at 8:09 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+>
+> On Wed, Jan 30, 2019 at 04:48:20PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+> > diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.tx=
+t
+> > new file mode 100644
+> > index 0000000000..953c9747b2
+>
+> > +--orphan <new_branch>::
+> > +     Create a new 'orphan' branch, named <new_branch>, started from
+> > +     <start_point> and switch to it. See explanation of the same
+> > +     option in linkgit:git-checkout[1] for details.
+>
+> Copy-paste error?  An orphan branch, by definition, doesn't have a
+> starting point.
 
-both patches look good to me. Killing the agent once should be enough,
-i remember manually killing it many times as i was looking for a way to
-generate certs and trust (configure gpgsm for the test). That is
-probably why i copied it over in the first place.
-
-Henning
-
-Am Thu, 7 Feb 2019 22:17:44 -0500
-schrieb Todd Zullinger <tmz@pobox.com>:
-
-> Hi,
-> 
-> Looking through the build logs for the fedora git packages, I noticed
-> it was missing the GPGSM prereq.  I added the necessary package to the
-> build requirements but GPGSM was still failing to be set.  This turned
-> out to be due to a use of ${GNUPGHOME} without quoting, which leads
-> to a non-zero exit from echo and the end of the happy && chain when
-> using bash as the test shell.  Fixing this allows the GPGSM test
-> prereq to be set.
-> 
-> While I was poking around I also saw an extra gpgconf call to kill
-> gpg-agent.  This was copied from the GPG block earlier in lib-gpg.sh,
-> but should not be needed (as far as I can tell).  I don't think it can
-> cause any real harm apart from causing gpg and gpgsm to start the
-> agent more often than necessary.  But I didn't run the tests with the
-> --stress option to look for potential issues that could be more
-> serious.
-> 
-> Lastly, the GPG test prereq was failing in two of the tests where it
-> was used, t5573-pull-verify-signatures and
-> t7612-merge-verify-signatures.  I tracked this down to an annoying
-> issue with gnugp-2¹, which recently became the default /bin/gpg in
-> fedora².
-> 
-> Using gnupg2 as /bin/gpg means using gpg-agent by default.  When
-> using a non-standard GNUPGHOME, gpg-agent defaults to putting its
-> socket files in GNUPGHOME and fails if the path for any of them is
-> longer than sun_path (108 chars on linux, 104 on OpenBSD and FreeBSD,
-> and likely similar on other unices).
-> 
-> When building in the typical fedora build tool (mock), the path to the
-> git test dir is "/builddir/build/BUILD/git-2.20.1/t."  That path then
-> has "trash directory.$TEST_NAME$TEST_STRESS_JOB_SFX" appended and a
-> "gpghome" directory within.  For t5573 and t7612, the gpg-agent socket
-> path for S.gpg-agent.browser exceeds the sun_path limit and gpg-agent
-> fails to start.  Sadly, this is handled poorly by gpg and makes the
-> tests fail to set either the GPG or GPGSM prereqs.
-> 
-> For the fedora packages, I decided to pass --root=/tmp/git-t.XXXX (via
-> mktemp, of course) to the test suite which ensures a path short enough
-> to keep gpg-agent happy.
-> 
-> I don't know if there are other packagers or builders who run into
-> this, so maybe it's not worth much effort to try and have the test
-> suite cope better.  It took me longer than I would have liked to
-> track it down, so I thought I'd mention it in case anyone else has
-> run into this or has thoughts on how to improve lib-gpg.sh while
-> waiting for GnuPG to improve this area.
-> 
-> A GIT_TEST_GNUPGHOME_ROOT var to set the root path for the GNUPGHOME
-> dirs in the tests is one thought I had, but didn't try to put it into
-> patch form.  Setting the --root test option is probably enough control
-> for most cases.
-> 
-> ¹ https://dev.gnupg.org/T2964
-> ²
-> https://fedoraproject.org/wiki/Changes/GnuPG2_as_default_GPG_implementation
-> 
-> Todd Zullinger (2):
->   t/lib-gpg: quote path to ${GNUPGHOME}/trustlist.txt
->   t/lib-gpg: drop redundant killing of gpg-agent
-> 
->  t/lib-gpg.sh | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-
+It does not have any parents, true. The "started from <start-point>"
+is not super clear on this, but git-checkout.txt describes more and
+says that it's essentially "git checkout <start_point>" then make an
+orphan branch based on HEAD^{tree}.
+--=20
+Duy
