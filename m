@@ -2,108 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E83A1211B5
-	for <e@80x24.org>; Fri,  8 Feb 2019 23:39:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A4341F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 23:52:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726821AbfBHXi7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 18:38:59 -0500
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:38071 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726788AbfBHXi7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 18:38:59 -0500
-Received: by mail-wm1-f47.google.com with SMTP id v26so6043293wmh.3
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 15:38:57 -0800 (PST)
+        id S1726601AbfBHXwT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 18:52:19 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:38070 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726524AbfBHXwT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 18:52:19 -0500
+Received: by mail-it1-f195.google.com with SMTP id z20so13362146itc.3
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 15:52:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=te6mvbvgKRUzpQfP2ATAEZvvCEkJshhMGZsOhMBGbQU=;
-        b=Bj8cnM2NaUsZkgTNonA6Eag1HBNiaQO3NyIJ5SoABMVZSNZjTXLsxdu4HqXsVcUT8a
-         5tB9AfQj4GCmcNc0GMgQEmjydrliOQwts3zopzfkr9QtJL0+Cuwao5GeCcMmZdCwKLA7
-         MXpn/QXup1tb5ssF98II8+ilkFBaUfNzkv3XLsVff9eLcrTHJfsJYtQs2OuBkwNv8CN/
-         YMPG6n60mS/B9UCCmUlCII9Js22LGLLGNH2YspoXNK7wQyzltfJyyrneWXTDAkT96RZ1
-         eJyBOJKUfH3TFRY/lfnqkmJ+wJUwcA3+4HEEJrPbpKdGmDvdA2dfq3STvXsAlQeHAHTw
-         XHXA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aHjsBl8quLcuR1saUa1tyJgFEv056s8t2IkEJveFje0=;
+        b=hdX4M28y3BW+FsYh2Enox9jD/y7ZrvgOcQXegIZhOvR9Tfc5CBlkPyIajM88bc9VO8
+         kempVwky0XF0E9Wm8xxFoRiCVL3irt66rL4mOxVmT1flSOQN+wlYopn+6YqOkFTcq+1W
+         ErA/i1iYkNcUSaEQxhb7iEsMrP/JjNe8OLRki/TP5xcPriuXdVNCMq7jfaFmXQqfiZ7c
+         7SUIW3XzkcInJLYXaj3h/7s/lC+6JDBdQvC7lM1WfLUYjKpye6krJv8Y9/+pVtHfBSg1
+         P+7yqlt5hWUr/FrKRRfz6O1vkHSA9/WxkZaNL09RSODeqkGzBM266y7Cf2NF0RZWV+RE
+         3pmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=te6mvbvgKRUzpQfP2ATAEZvvCEkJshhMGZsOhMBGbQU=;
-        b=KyybhfvCRS/WmWrxhFO7iAYQdQu1SwrBhudock2dS/XGYt8IKCLVwifLJtZ5vvxsbS
-         JQ1ZlU4UUAXQz0DusU1MX8teq//gH3mj5wOyiTyV6PRpG0sE3ih8TndhxJaQNZo5XC+6
-         OfyewFzbjT+hdvnFbSp7D5YDtzcWtvQBIw8rMbtJuE6h2TGnAfyR9ksfp+u8NaAoF9Mm
-         ZHIqEvlPpzv7EGvt0bruwxIFVJlCyHCS2Y+yTVfpG0dw3G71lcXO28mcd0T77W6zbqoV
-         QBJN3j1wTJUI0cdbdU7AMHfgfs4DMLxL9TPIW8AT/vmFBbPRNXMIUsL9+SfBnjCU53fw
-         hITw==
-X-Gm-Message-State: AHQUAuZscVWX0h9J7evEVnPcoNtpn0efc+Yev22vDoXVM619UuaFh9o1
-        7bagt+O0rMyu/ghx0Uyrgys=
-X-Google-Smtp-Source: AHgI3IYAvjuu/7+CwnsTQihnagsftgD2dkpFieCupPTdYMfvoAiQ05I6cPH8hRj4CRK+ScJrszndtw==
-X-Received: by 2002:adf:f4d0:: with SMTP id h16mr4755178wrp.103.1549669136867;
-        Fri, 08 Feb 2019 15:38:56 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 129sm4870242wmd.18.2019.02.08.15.38.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 08 Feb 2019 15:38:56 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     randall.s.becker@rogers.com
-Cc:     git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [Fix v2] t5562: remove dependency on /dev/zero
-References: <20190208220751.9936-1-randall.s.becker@rogers.com>
-Date:   Fri, 08 Feb 2019 15:38:55 -0800
-In-Reply-To: <20190208220751.9936-1-randall.s.becker@rogers.com> (randall
-        s. becker's message of "Fri, 8 Feb 2019 17:07:51 -0500")
-Message-ID: <xmqq8sypkfzk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aHjsBl8quLcuR1saUa1tyJgFEv056s8t2IkEJveFje0=;
+        b=LEnSjCf2PddbPJOo7Jyizr6A3ImVafUxmYkD463j5QMCrMo/Wzg+9MMxYRPVwUFz5u
+         NUgnIybSE9HHtDy4mLV1LGVwX6Cqvpe/LoBkXZM0Py62iM0HBKa2vcD5uR1/mvbh2WI+
+         sdyQmMNZLLORTr059fjo7710E15hBkU1cWBDKxZopT0OFo2QDRkQsVcugsTs/HGGp8BQ
+         k7UePIOnf75wdqsljJedHiU98M99x01Akh0I1vA2dh992HYD8E1ypjIjxWCVmig3saq1
+         ExKNpsOxgorwJWJDAcnfRxLUPDo7/yPSiyWNMDGsOg0JJfCV1Dy01r72/a4U/yfLcjcX
+         oqpA==
+X-Gm-Message-State: AHQUAuYB0uHofTK/KwBsxsIlhyX3kkHYmdlf4kGZ2/tOhYdTV23Xr2dp
+        cPJQQdpE/WeXd8HnjRisEhF8bAh2d+6UaTvRdHm4hRNHgLU=
+X-Google-Smtp-Source: AHgI3IZ0WP2w8hSjSMUV+9O9o+Th/3oZZhc8E5zuh75QG++CwJaBW9KPlzU8GmDK8xLgoamd4XxR9txkaGdfqkceyCQ=
+X-Received: by 2002:a6b:b408:: with SMTP id d8mr11425569iof.138.1549669938291;
+ Fri, 08 Feb 2019 15:52:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1549534460.git.liu.denton@gmail.com> <cover.1549624679.git.liu.denton@gmail.com>
+ <77af7e4b2fc094d8cd31164625ef3339e97e1cd5.1549624679.git.liu.denton@gmail.com>
+In-Reply-To: <77af7e4b2fc094d8cd31164625ef3339e97e1cd5.1549624679.git.liu.denton@gmail.com>
+From:   Denton Liu <liu.denton@gmail.com>
+Date:   Fri, 8 Feb 2019 15:51:41 -0800
+Message-ID: <CA+eFxx4DWiFY5aqbggQWCLQE0AnWhOvYMjgyPhui1WGSNqQtZQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] submodule: teach set-branch subcommand
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-randall.s.becker@rogers.com writes:
-
-> From: "Randall S. Becker" <rsbecker@nexbridge.com>
->
-> Replaced subtest 15 (CONTENT_LENGTH overflow ssite_t) use of /dev/zero
-> with yes and a translation of its result to a stream of NULL. This is
-> a more portable solution.
->
-> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+On Fri, 8 Feb 2019 at 03:21, Denton Liu <liu.denton@gmail.com> wrote:
+> This teaches git-submodule the set-branch subcommand which allows the
+> branch of a submodule to be set through a porcelain command without
+> having to manually manipulate the .gitmodules file.
 > ---
->  t/t5562-http-backend-content-length.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-> index 90d890d02..b8d1913e5 100755
-> --- a/t/t5562-http-backend-content-length.sh
-> +++ b/t/t5562-http-backend-content-length.sh
-> @@ -143,14 +143,14 @@ test_expect_success GZIP 'push gzipped empty' '
->  
->  test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
->  	NOT_FIT_IN_SSIZE=$(ssize_b100dots) &&
-> -	env \
-> +	yes | tr "y" "\\0" | env \
 
-I do not quite get this use of tr.  The original feeds a stream of
-NULs out of /dev/zero to the command; the yes-to-tr pipe instead
-feeds a stream of alternating NUL and LF.
+Sorry Junio, I forgot to attach my sign-off to this patch. Would it be possible
+for you to tack it on for me please?
 
-Does the actual bytes fed to the consumer make any difference?  If
-not, perhaps we can use 'yes' as-is?
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
 
->  		CONTENT_TYPE=application/x-git-upload-pack-request \
->  		QUERY_STRING=/repo.git/git-upload-pack \
->  		PATH_TRANSLATED="$PWD"/.git/git-upload-pack \
->  		GIT_HTTP_EXPORT_ALL=TRUE \
->  		REQUEST_METHOD=POST \
->  		CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
-> -		git http-backend </dev/zero >/dev/null 2>err &&
-> +		git http-backend >/dev/null 2>err &&
->  	grep "fatal:.*CONTENT_LENGTH" err
->  '
+Thanks,
+
+Denton
