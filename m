@@ -2,207 +2,445 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 281931F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 09:03:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCA8B1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 09:04:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727486AbfBHJDB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 04:03:01 -0500
-Received: from mout.gmx.net ([212.227.15.15]:39659 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726115AbfBHJDA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 04:03:00 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlESk-1hQoZx1P8w-00b22d; Fri, 08
- Feb 2019 10:02:51 +0100
-Date:   Fri, 8 Feb 2019 10:02:49 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Clemens Buchacher <drizzd@gmx.net>
-Subject: Re: t5570-git-daemon fails with SIGPIPE on OSX
-In-Reply-To: <20180814223246.GA2379@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1902080958190.41@tvgsbejvaqbjf.bet>
-References: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com> <20180814223246.GA2379@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727445AbfBHJEZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 04:04:25 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41977 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726115AbfBHJEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 04:04:25 -0500
+Received: by mail-pg1-f193.google.com with SMTP id m1so1303844pgq.8
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 01:04:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=IaVTKtlAO/IC3mpqNvOGGj8zznocueMLsDTZKDCMIV0=;
+        b=m+d4Lhv404ejgNjnJrNQw+iuNkNGcM/CIRVEQHLk/HScbxgRswpWrc/Co4R5gF0uHf
+         3iFXnD5L2OCdNlwZsnLjtHM+MaBiKB1n/czl+h1JxD58Cg5b7+3GpYRBNNW8urYJzYCP
+         9hh00oIMfZaVECDmdVdZHJ5QfsxKP0tP6Kw1+gbvpJBozEw8JwQyl8QaqAzguVppEGBN
+         xhQ3SzeR9K3sxMp0hOBYU8yiKyirRs0ZOg5pin0kpMHS9FoaLdjtxkm9p5T2nTNM+IR5
+         b+Y6v2y5QIMWfTHD37wLDpUxNlKqdDY+gxzyt4Z6vWFfL+gQhg30byLg9l6lF4oCPYib
+         p2Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=IaVTKtlAO/IC3mpqNvOGGj8zznocueMLsDTZKDCMIV0=;
+        b=SqbyIWAqfZPEwVg2y5l797yUjt+F5Zi0QxJMg0ebRnxADnY0lczJ1ncfdVYDJhsju+
+         GoZtnLaCApyfM60PBkMS0na1W32GJ73PFOMgMTb+qWIbwkXRQ7gcztnBOOtfIuRK1u8f
+         1cLoIVYnLnYJiGlv1FtyRoKH4SWtdV2cXafwMeA0au9JFIWI+oFttyMYVubdec8WtvR1
+         qHJsp7t6JwRygiQM4SJNP9bD7LYA/Z2YJkH98MFeibLsCVK08hwXSrxPfFyEIsm4UNI9
+         KysgxIYUbqi7epK9NyzbqwcNnbridwinouX+SOV/IVUOaB7uWJguXjMIC3F/hbqvJyqY
+         LvXA==
+X-Gm-Message-State: AHQUAuZQXPctxjqRe4NTqb0i3Hp08j1KXpeFn8p8oZUu2XS3BsUuoy9v
+        3FbLADdswYqHyTPoi0ep6F0=
+X-Google-Smtp-Source: AHgI3IY1xEZ/5XFSS/IqFvHNQEHpFgQ6heC/2C2fO819QVxhKKuOhizMg54z0wlC1RcPSCQ+j3a1cw==
+X-Received: by 2002:a63:ee4c:: with SMTP id n12mr18828687pgk.21.1549616664116;
+        Fri, 08 Feb 2019 01:04:24 -0800 (PST)
+Received: from ash ([115.72.21.220])
+        by smtp.gmail.com with ESMTPSA id p24sm4785050pfj.72.2019.02.08.01.04.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Feb 2019 01:04:23 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 08 Feb 2019 16:04:18 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 00/19] Add new command "switch"
+Date:   Fri,  8 Feb 2019 16:03:42 +0700
+Message-Id: <20190208090401.14793-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
+In-Reply-To: <20190130094831.10420-1-pclouds@gmail.com>
+References: <20190130094831.10420-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-19373660-1549616572=:41"
-X-Provags-ID: V03:K1:dZ3P2k68f0bpzvWSc8nLDwTYRRsr16oC20uubTYPpviYPQbWvTi
- n9gEj8ngdtgJp2C7ZCU+fY81FC7kBHn19nnL1hhH6hu5CqQL5bE6bRlwfooDE3hbsPWcexa
- BzvISeR+riprukE8rEXy0s2A5fOf9Wj6L8g9M8E3iYlUIb5y+2PwrmRo2I9NUBm7G0eJotV
- 7XYMN/OmVCIzOB9pIfP8Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:R1MUrUG3okg=:gre05+Jm0mDeveW9vxkGya
- LlCDt3yVwQ5vZX9IJ6Yyw7icxfL8xUy99NP0dtRg0ZK0pN5syv+qUpqCfRie/UNl4f8h8EhWT
- mLXfjHFh/ci0Nde8dOVobv5tqGzBqneumG6AYOknFqSCScdpV1sghn5NUI3SKWCdCOHUNcnX0
- xXZIXtGIH/JhBTYpE/2etS1xGhoxo9yVVCTCAmFWdPz+6aKt8FnsD4GhGE4Srpp3WKwSeFvO5
- KuvA37oXeHOPvke7225KtH8Edo7I8Fkj7H0XeQxMifC3uAXj4+vwBwso8KwILze80Z92g6rnA
- EZoJ+FeUH0T+WYV9Rx43/S3zCAKssTv1fXXs8CFXbJQZ+SfRniacEq1x0+E307l5UMdkSXfpG
- xKW1lUh12y18OWYdFPpQji7zF5YQ4Zd+A0Yyz4qMMMa59CgQguBMtbakN3UspBb8GkYrZsIKa
- Y6vrGSNMHak/DTX7KEovoFIocf+AYPcug25FBcH1UqjYbDltjmGvLXqaDJr7VIoeCe0Wel/z1
- IJzfqYLcYNa/i/NmzSwxPJobP/8y/X8LnYZGjSoNVQ39wCMjAvTNrwoHLZNd+gTQ+EBx4u6SI
- BjLiKSVeG+hYQ4+ZXtNCXOKjmoZ//BUXtYjNOQfEDLv9aT/Gxpl5wsVw2bcVbwZVE7q2JdKGo
- 5wgeQxF3CsNaBbgKWQfMQQH1E6aq9e1L6eMSjDkrVYwerjB1TKVrBev1zJxisEevi7uDGvh40
- 7s3vx2C5fIa0esQN02BO3wgUycZmzYyxf5qU193tN1+LFVEIzfYHkVsOvBYenFHA/IZ21VonF
- 1xPDEr8C0Rte1t0b+2FFbnH9nD2xEcZQat0h1HG21ImwHO+izIzdDKA69AcEh6L97CXCGJXKA
- qvbCcL0zI6G8bY0iqo6ISWejJYV1YwJFypMOwrBhZqNLLUcpGpMmRXl2gtgP0N8JWWCjnX06w
- o4I8/pI29hw==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This series adds a new command "switch" for switching branches, an
+alternative for "git checkout".
 
---8323328-19373660-1549616572=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+v2 fixes the comments I got from v1. I think the range-diff below
+summarizes it better than I do. No major changes though.
 
-Hi Peff,
+Range-diff dựa trên v1:
+ 1:  6d550b443c !  1:  2283204090 checkout: split part of it to new command switch
+    @@ -148,24 +148,33 @@
+     +--------
+     +[verse]
+     +'git switch' [<options>] [--guess] <branch>
+    -+'git switch' [<options>] --detach [<start_point>>]
+    -+'git switch' [<options>] [[-c|-C|--orphan] <new_branch>] [<start_point>]
+    ++'git switch' [<options>] --detach [<start-point>]
+    ++'git switch' [<options>] (-c|-C|--orphan) <new-branch> [<start-point>]
+     +
+     +DESCRIPTION
+     +-----------
+    -+Switch to a specified branch and update files in the working tree to
+    -+match it. Optionally a new branch could be created with either `-c` or
+    -+`-C`, or detach from any branch with `--detach`, along with switching.
+    ++Switch to a specified branch. The working tree and the index are
+    ++updated to match the branch. All new commits will be added to the tip
+    ++of this branch.
+    ++
+    ++Optionally a new branch could be created with either `-c` or `-C`, or
+    ++detach the working tree from any branch with `--detach`, along with
+    ++switching.
+    ++
+    ++Switching branches does not require a clean index and working tree
+    ++(i.e. no differences compared to 'HEAD'). The operation is aborted
+    ++however if the switch leads to loss of local changes, unless told
+    ++otherwise.
+     +
+     +OPTIONS
+     +-------
+     +<branch>::
+     +	Branch to switch to.
+     +
+    -+<new_branch>::
+    ++<new-branch>::
+     +	Name for the new branch.
+     +
+    -+<start_point>::
+    ++<start-point>::
+     +	The name of a commit at which to switch to before creating a
+     +	new branch or detach from.
+     ++
+    @@ -177,17 +186,27 @@
+     +base of `A` and `B` if there is exactly one merge base. You can leave
+     +out at most one of `A` and `B`, in which case it defaults to `HEAD`.
+     +
+    -+-c <new_branch>::
+    -+--create <new_branch>::
+    -+	Create a new branch named <new_branch> and start it at
+    -+	<start_point>; see linkgit:git-branch[1] for details.
+    ++-c <new-branch>::
+    ++--create <new-branch>::
+    ++	Create a new branch named <new-branch> starting at
+    ++	<start-point> before switching to the branch. This is a
+    ++	convenient shortcut for:
+    +++
+    ++------------
+    ++$ git branch <new-branch>
+    ++$ git switch <new-branch>
+    ++------------
+     +
+    -+-C <new_branch>::
+    -+--force-create <new_branch>::
+    -+	Creates the branch <new_branch> and start it at <start_point>;
+    -+	if it already exists, then reset it to <start_point>. This is
+    -+	equivalent to running "git branch" with "-f"; see
+    -+	linkgit:git-branch[1] for details.
+    ++-C <new-branch>::
+    ++--force-create <new-branch>::
+    ++	Similar to `--create` except that if <new-branch> already
+    ++	exists, it will be reset to <start-point>. This is a
+    ++	convenient shortcut for:
+    +++
+    ++------------
+    ++$ git branch -f <new-branch>
+    ++$ git switch <new-branch>
+    ++------------
+     +
+     +-d::
+     +--detach::
+    @@ -220,7 +239,9 @@
+     +-f::
+     +--force::
+     +	Proceed even if the index or the working tree differs from
+    -+	HEAD.  This is used to throw away local changes.
+    ++	HEAD. Both the index and working tree are restored to match
+    ++	the switching target. This is used to throw away local
+    ++	changes.
+     +
+     +--[no-]progress::
+     +	Progress status is reported on the standard error stream
+    @@ -270,9 +291,9 @@
+     +	"merge" (default) and "diff3" (in addition to what is shown by
+     +	"merge" style, shows the original contents).
+     +
+    -+--orphan <new_branch>::
+    -+	Create a new 'orphan' branch, named <new_branch>, started from
+    -+	<start_point> and switch to it. See explanation of the same
+    ++--orphan <new-branch>::
+    ++	Create a new 'orphan' branch, named <new-branch>, started from
+    ++	<start-point> and switch to it. See explanation of the same
+     +	option in linkgit:git-checkout[1] for details.
+     +
+     +--ignore-other-worktrees::
+ 2:  e2f94df471 !  2:  deceb221dc switch: better names for -b and -B
+    @@ -61,7 +61,7 @@
+     +		OPT_STRING('c', "create", &opts.new_branch, N_("branch"),
+     +			   N_("create and switch to a new branch")),
+     +		OPT_STRING('C', "force-create", &opts.new_branch_force, N_("branch"),
+    -+			   N_("create/reset and switch to a new branch")),
+    ++			   N_("create/reset and switch to a branch")),
+     +		OPT_END()
+     +	};
+      	int ret;
+ 3:  b3d431a97f =  3:  08f28e9726 switch: remove -l
+ 4:  26738818fa =  4:  9ee4852c8b switch: stop accepting pathspec
+ 5:  79ebe7a68c !  5:  0a7ea4b33b switch: reject "do nothing" case
+    @@ -32,7 +32,7 @@
+     +	    !new_branch_info->name &&
+     +	    !opts->new_branch &&
+     +	    !opts->force_detach)
+    -+		die(_("nothing to do"));
+    ++		die(_("missing branch or commit argument"));
+     +
+      	if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
+      	    !opts->ignore_other_worktrees) {
+ 6:  bc36ac8510 !  6:  eedf82c72b switch: only allow explicit detached HEAD
+    @@ -26,7 +26,7 @@
+      	int ignore_skipworktree;
+     @@
+      	    !opts->force_detach)
+    - 		die(_("nothing to do"));
+    + 		die(_("missing branch or commit argument"));
+      
+     +	if (!opts->implicit_detach &&
+     +	    !opts->force_detach &&
+ 7:  1a761ce8e5 =  7:  9314ff16c9 switch: add short option for --detach
+ 8:  738c560eb9 !  8:  9d8e461df2 switch: no implicit dwim, use --guess to dwim
+    @@ -143,7 +143,7 @@
+     @@
+      			   N_("create and switch to a new branch")),
+      		OPT_STRING('C', "force-create", &opts.new_branch_force, N_("branch"),
+    - 			   N_("create/reset and switch to a new branch")),
+    + 			   N_("create/reset and switch to a branch")),
+     +		OPT_BOOL('g', "guess", &opts.dwim_new_local_branch,
+     +			 N_("second guess 'git switch <no-such-branch>'")),
+      		OPT_END()
+ 9:  456e9340f1 =  9:  749665c457 switch: no worktree status unless real branch switch happens
+10:  cdd132a7e2 ! 10:  e4e0b397eb t: add tests for switch
+    @@ -51,9 +51,7 @@
+     +test_expect_success 'switch and create branch' '
+     +	test_when_finished git switch master &&
+     +	git switch -c temp master^ &&
+    -+	git rev-parse master^ >expected &&
+    -+	git rev-parse refs/heads/temp >actual &&
+    -+	test_cmp expected actual &&
+    ++	test_cmp_rev master^ refs/heads/temp &&
+     +	echo refs/heads/temp >expected-branch &&
+     +	git symbolic-ref HEAD >actual-branch &&
+     +	test_cmp expected-branch actual-branch
+    @@ -63,9 +61,7 @@
+     +	test_when_finished git switch master &&
+     +	git switch --detach master &&
+     +	git switch -C temp &&
+    -+	git rev-parse master >expected &&
+    -+	git rev-parse refs/heads/temp >actual &&
+    -+	test_cmp expected actual &&
+    ++	test_cmp_rev master refs/heads/temp &&
+     +	echo refs/heads/temp >expected-branch &&
+     +	git symbolic-ref HEAD >actual-branch &&
+     +	test_cmp expected-branch actual-branch
+11:  96a97fcab4 = 11:  b9a7662271 completion: support switch
+12:  8d984bc684 ! 12:  7449a0c4cc doc: promote "git switch"
+    @@ -40,14 +40,18 @@
+      +
+      <1> This step and the next one could be combined into a single step with
+     @@
+    + NOTES
+      -----
+      
+    - If you are creating a branch that you want to checkout immediately, it is
+    +-If you are creating a branch that you want to checkout immediately, it is
+     -easier to use the git checkout command with its `-b` option to create
+    -+easier to use the "git switch" command with its `-c` option to create
+    - a branch and check it out with a single command.
+    +-a branch and check it out with a single command.
+    ++If you are creating a branch that you want to switch to immediately,
+    ++it is easier to use the "git switch" command with its `-c` option to
+    ++do the same thing with a single command.
+      
+      The options `--contains`, `--no-contains`, `--merged` and `--no-merged`
+    + serve four related but different purposes:
+     
+      diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
+      --- a/Documentation/git-check-ref-format.txt
+    @@ -473,9 +477,11 @@
+      ------------------------------------------------------
+      
+     -The `git checkout` command normally expects a branch head, but will also
+    +-accept an arbitrary commit; for example, you can check out the commit
+    +-referenced by a tag:
+     +The `git switch` command normally expects a branch head, but will also
+    - accept an arbitrary commit; for example, you can check out the commit
+    - referenced by a tag:
+    ++accept an arbitrary commit when invoked with --detach; for example,
+    ++you can check out the commit referenced by a tag:
+      
+      ------------------------------------------------
+     -$ git checkout v2.6.17
+    @@ -628,36 +634,23 @@
+      {
+      	const char *fmt =
+     -	_("Note: checking out '%s'.\n\n"
+    -+	_("Note: checking out '%s'.\n"
+    ++	_("Note: switching to '%s'.\n"
+     +	"\n"
+      	"You are in 'detached HEAD' state. You can look around, make experimental\n"
+      	"changes and commit them, and you can discard any commits you make in this\n"
+     -	"state without impacting any branches by performing another checkout.\n\n"
+    -+	"state without impacting any branches by performing another checkout.\n"
+    ++	"state without impacting any branches by switching back to a branch.\n"
+     +	"\n"
+      	"If you want to create a new branch to retain commits you create, you may\n"
+     -	"do so (now or later) by using -b with the checkout command again. Example:\n\n"
+     -	"  git checkout -b <new-branch-name>\n\n");
+    -+	"do so (now or later) by using -b with the checkout command again. Example:\n"
+    ++	"do so (now or later) by using -c with the switch command. Example:\n"
+     +	"\n"
+     +	"  git switch -c <new-branch-name>\n\n");
+      
+      	fprintf(stderr, fmt, new_name);
+      }
+     
+    - diff --git a/builtin/clone.c b/builtin/clone.c
+    - --- a/builtin/clone.c
+    - +++ b/builtin/clone.c
+    -@@
+    - static const char junk_leave_repo_msg[] =
+    - N_("Clone succeeded, but checkout failed.\n"
+    -    "You can inspect what was checked out with 'git status'\n"
+    --   "and retry the checkout with 'git checkout -f HEAD'\n");
+    -+   "and retry the checkout with 'git switch -f HEAD'\n");
+    - 
+    - static void remove_junk(void)
+    - {
+    -
+      diff --git a/sha1-name.c b/sha1-name.c
+      --- a/sha1-name.c
+      +++ b/sha1-name.c
+    @@ -675,8 +668,20 @@
+      --- a/t/t2020-checkout-detach.sh
+      +++ b/t/t2020-checkout-detach.sh
+     @@
+    + 
+    + 	# The first detach operation is more chatty than the following ones.
+    + 	cat >1st_detach <<-EOF &&
+    +-	Note: checking out 'HEAD^'.
+    ++	Note: switching to 'HEAD^'.
+    + 
+    + 	You are in 'detached HEAD' state. You can look around, make experimental
+    + 	changes and commit them, and you can discard any commits you make in this
+    +-	state without impacting any branches by performing another checkout.
+    ++	state without impacting any branches by switching back to a branch.
+    + 
+      	If you want to create a new branch to retain commits you create, you may
+    - 	do so (now or later) by using -b with the checkout command again. Example:
+    +-	do so (now or later) by using -b with the checkout command again. Example:
+    ++	do so (now or later) by using -c with the switch command. Example:
+      
+     -	  git checkout -b <new-branch-name>
+     +	  git switch -c <new-branch-name>
+    @@ -684,8 +689,20 @@
+      	HEAD is now at \$commit three
+      	EOF
+     @@
+    + 
+    + 	# The first detach operation is more chatty than the following ones.
+    + 	cat >1st_detach <<-EOF &&
+    +-	Note: checking out 'HEAD^'.
+    ++	Note: switching to 'HEAD^'.
+    + 
+    + 	You are in 'detached HEAD' state. You can look around, make experimental
+    + 	changes and commit them, and you can discard any commits you make in this
+    +-	state without impacting any branches by performing another checkout.
+    ++	state without impacting any branches by switching back to a branch.
+    + 
+      	If you want to create a new branch to retain commits you create, you may
+    - 	do so (now or later) by using -b with the checkout command again. Example:
+    +-	do so (now or later) by using -b with the checkout command again. Example:
+    ++	do so (now or later) by using -c with the switch command. Example:
+      
+     -	  git checkout -b <new-branch-name>
+     +	  git switch -c <new-branch-name>
+13:  91e5442069 <  -:  ---------- checkout: split part of it to new command restore
+14:  6bc8f87c0a <  -:  ---------- restore: take tree-ish from --from option instead
+15:  095a1cd3e3 <  -:  ---------- restore: make pathspec mandatory
+16:  6eb5612187 <  -:  ---------- restore: disable overlay mode by default
+17:  cc79522047 <  -:  ---------- t: add tests for restore
+18:  ed5d7097b6 <  -:  ---------- completion: support restore
+19:  625a4fac68 <  -:  ---------- doc: promote "git restore"
 
-I just had a look at the patch you provided below (for some reason, my
-previous search on public-inbox only turned up Gábor's mail to which you
-responded).
+Nguyễn Thái Ngọc Duy (19):
+  git-checkout.txt: fix one syntax line
+  doc: document --overwrite-ignore
+  t: rename t2014-switch.sh to t2014-checkout-switch.sh
+  checkout: factor out some code in parse_branchname_arg()
+  checkout: make "opts" in cmd_checkout() a pointer
+  checkout: move 'confict_style' and 'dwim_..' to checkout_opts
+  checkout: split options[] array in three pieces
+  checkout: split part of it to new command switch
+  switch: better names for -b and -B
+  switch: remove -l
+  switch: stop accepting pathspec
+  switch: reject "do nothing" case
+  switch: only allow explicit detached HEAD
+  switch: add short option for --detach
+  switch: no implicit dwim, use --guess to dwim
+  switch: no worktree status unless real branch switch happens
+  t: add tests for switch
+  completion: support switch
+  doc: promote "git switch"
 
-Admittedly, I do not really understand all aspects of it, but it applies,
-still, and I kicked off a stress test here:
+ .gitignore                                    |   1 +
+ Documentation/config/advice.txt               |  13 +-
+ Documentation/config/branch.txt               |   4 +-
+ Documentation/config/checkout.txt             |  17 +-
+ Documentation/config/diff.txt                 |   3 +-
+ Documentation/git-branch.txt                  |  12 +-
+ Documentation/git-check-ref-format.txt        |   3 +-
+ Documentation/git-checkout.txt                |  48 +-
+ Documentation/git-format-patch.txt            |   2 +-
+ Documentation/git-merge-base.txt              |   2 +-
+ Documentation/git-merge.txt                   |   4 +
+ Documentation/git-rebase.txt                  |   2 +-
+ Documentation/git-remote.txt                  |   2 +-
+ Documentation/git-rerere.txt                  |  10 +-
+ Documentation/git-reset.txt                   |  20 +-
+ Documentation/git-stash.txt                   |   9 +-
+ Documentation/git-switch.txt                  | 257 ++++++++++
+ Documentation/gitattributes.txt               |   3 +-
+ Documentation/gitcore-tutorial.txt            |  18 +-
+ Documentation/giteveryday.txt                 |  24 +-
+ Documentation/githooks.txt                    |   8 +-
+ Documentation/gittutorial.txt                 |   4 +-
+ Documentation/revisions.txt                   |   2 +-
+ Documentation/user-manual.txt                 |  56 +--
+ Makefile                                      |   1 +
+ advice.c                                      |  11 +-
+ builtin.h                                     |   1 +
+ builtin/checkout.c                            | 464 +++++++++---------
+ command-list.txt                              |   1 +
+ contrib/completion/git-completion.bash        |  26 +
+ git.c                                         |   1 +
+ parse-options-cb.c                            |  17 +
+ parse-options.h                               |   3 +-
+ sha1-name.c                                   |   2 +-
+ t/t1090-sparse-checkout-scope.sh              |  14 -
+ ...014-switch.sh => t2014-checkout-switch.sh} |   0
+ t/t2020-checkout-detach.sh                    |  16 +-
+ t/t2060-switch.sh                             |  87 ++++
+ 38 files changed, 796 insertions(+), 372 deletions(-)
+ create mode 100644 Documentation/git-switch.txt
+ rename t/{t2014-switch.sh => t2014-checkout-switch.sh} (100%)
+ create mode 100755 t/t2060-switch.sh
+-- 
+2.20.1.682.gd5861c6d90
 
-	https://dev.azure.com/git/git/_build/results?buildId=338
-
-It seems that your patch fixes that t5570 flakiness on macOS, and more
-importantly, addresses an important issue on macOS.
-
-Will play a bit more with it and keep you posted.
-
-Ciao,
-Dscho
-
-On Tue, 14 Aug 2018, Jeff King wrote:
-
-> On Mon, Aug 06, 2018 at 05:11:13PM +0200, SZEDER Gábor wrote:
-> 
-> >   - 'git upload-pack' receives the request, parses the want line,
-> >     notices the corrupt pack, responds with an 'ERR upload-pack: not
-> >     our ref' pkt-line, and die()s right away.
-> > 
-> >   - 'git fetch' finally approaches the end of the function, where it
-> >     attempts to send a done pkt-line via another send_request() call
-> >     through the now closing TCP socket.
-> > 
-> >   - What happens now seems to depend on the platform:
-> > 
-> >     - On Linux, both on my machine and on Travis CI, it shows textbook
-> >       example behaviour: write() returns with error and sets errno to
-> >       ECONNRESET.  Since it happens in write_or_die(), 'git fetch'
-> >       die()s with 'fatal: write error: Connection reset by peer', and
-> >       doesn't show the error send by 'git upload-pack'; how could it,
-> >       it doesn't even get as far to receive upload-pack's ERR
-> >       pkt-line.
-> > 
-> >       The test only checks that 'git fetch' fails, but it doesn't
-> >       check whether it failed with the right error message, so the
-> >       test still succeeds.  Had it checked the error message as well,
-> >       we most likely had noticed this issue already, it doesn't happen
-> >       all that rarely.
-> 
-> Hmm. Traditionally we did not send ERR as part of upload-pack at all. It
-> was the message you got from git-daemon if it couldn't start the
-> requested sub-process. It was only later in bdb31eada7 (upload-pack:
-> report "not our ref" to client, 2017-02-23) that we started sending
-> them. So I think that is why it does not check the error message: it is
-> not expecting that case at all (and it is not actually interesting here,
-> as the real problem is that the remote side is corrupt, but it sadly
-> does not say anything so useful).
-> 
-> I think that's somewhat tangential, though. The root of the issue is
-> this:
-> 
-> >     - On the new OSX images with XCode 9.4 on Travis CI the write()
-> >       triggers SIGPIPE right away, and 'test_must_fail' notices it and
-> >       fails the test.  I couldn't see any sign of an ECONNRESET or any
-> >       other error that we could act upon to avoid the SIGPIPE.
-> 
-> Right, as soon as we get SIGPIPE we can't offer any useful message,
-> because we're dead. I would argue that fetch should simply turn off
-> SIGPIPE entirely, and rely on getting EPIPE from write(). But since
-> we're in write_or_die(), it actually turns EPIPE back into a SIGPIPE
-> death!
-> 
-> So we'd probably also want to teach it to use a real write_in_full(),
-> and then output a more useful message in this case. write_or_die()
-> really does produce bad messages regardless, because it doesn't know
-> what it's writing to.
-> 
-> That would give us a baby step in the right direction, because at least
-> we'd always be doing a controlled die() then. And then the next step
-> would be to show the remote error message (even though it's not actually
-> useful in this case, in theory upload-pack could generate something
-> better). And that would mean turning the die() on write into an attempt
-> to drain any ERR messages before either dying or returning an error up
-> the stack.
-> 
-> I suspect the (largely untested) patch below would make your test
-> problems go away. Or instead, we could simply add sigpipe=ok to the
-> test_must_fail invocation, but I agree with you that the current
-> behavior on OS X is not ideal (the user sees no error message).
-> 
-> -Peff
-> 
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 5714bcbddd..3e80604562 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -188,8 +188,10 @@ static void send_request(struct fetch_pack_args *args,
->  	if (args->stateless_rpc) {
->  		send_sideband(fd, -1, buf->buf, buf->len, LARGE_PACKET_MAX);
->  		packet_flush(fd);
-> -	} else
-> -		write_or_die(fd, buf->buf, buf->len);
-> +	} else {
-> +		if (write_in_full(fd, buf->buf, buf->len) < 0)
-> +			die_errno("unable to write to remote");
-> +	}
->  }
->  
->  static void insert_one_alternate_object(struct fetch_negotiator *negotiator,
-> @@ -1167,7 +1169,8 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
->  
->  	/* Send request */
->  	packet_buf_flush(&req_buf);
-> -	write_or_die(fd_out, req_buf.buf, req_buf.len);
-> +	if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-> +		die_errno("unable to write request to remote");
->  
->  	strbuf_release(&req_buf);
->  	return ret;
-> diff --git a/pkt-line.c b/pkt-line.c
-> index a593c08aad..450d0801b1 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -88,13 +88,15 @@ static void packet_trace(const char *buf, unsigned int len, int write)
->  void packet_flush(int fd)
->  {
->  	packet_trace("0000", 4, 1);
-> -	write_or_die(fd, "0000", 4);
-> +	if (write_in_full(fd, "0000", 4) < 0)
-> +		die_errno("unable to write flush packet");
->  }
->  
->  void packet_delim(int fd)
->  {
->  	packet_trace("0001", 4, 1);
-> -	write_or_die(fd, "0001", 4);
-> +	if (write_in_full(fd, "0000", 4) < 0)
-> +		die_errno("unable to write delim packet");
->  }
->  
->  int packet_flush_gently(int fd)
-> 
-> 
---8323328-19373660-1549616572=:41--
