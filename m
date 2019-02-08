@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 445221F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 09:05:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 158541F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 09:05:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727508AbfBHJFr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 04:05:47 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:33294 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727273AbfBHJFq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 04:05:46 -0500
-Received: by mail-pf1-f194.google.com with SMTP id c123so1398193pfb.0
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 01:05:46 -0800 (PST)
+        id S1727571AbfBHJFw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 04:05:52 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:46353 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727273AbfBHJFv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 04:05:51 -0500
+Received: by mail-pl1-f195.google.com with SMTP id o6so1382502pls.13
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 01:05:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HEFUm2a4sT5mm8LJnU83g00VJT5v1AEfuPI2vOmnXbY=;
-        b=h6QxI2wqrDVaMpJlcm1a2NnFwsLUGJtKQU6SNUT+p0HaW/B7PkC9Ixo3EHUm/J4lUT
-         wnWQKyeU99IDiHeZCkeD3cpX960GOBGes6sXyKOMu2kmDxRWMASmAROzzW/3zK+/vipo
-         uV6ZAaBfFiD4ujLruH27Ga7H5qEAoM0G5RxKMYcsEbJ/R2Gct1y4+21zmTydQpYJw67V
-         7n+Thgp+5Za/yUdJr0XJ5Q+/3Rb+bU4pdj5+aH8FhgyqMzWSTpPZux4FaE46NpVhBYbC
-         Y9LqmfVHgxqwL0F7yGRLPFlriaukZtbZ6loA/D28PP7gMudYVXgMonUCUyxUi0wUszyM
-         fU1Q==
+        bh=PW9pmf9wUBbgxGKKXnrijPjDZLhNx1k+xS+j7UTnjFc=;
+        b=Il+8QcPnJu5bR+HhZvOqrOmBjnYhegYOVSV7dndmGJ7wHVjjNdkn7AwlklOARgusBO
+         bjceQ24cYtQPJ1hhEzxUlgR8MPAEIOv/LBOmTIjWJbubD5bd2Kg3H9pevMjvCVBZxZ3t
+         Zc37uKQJqtLpSk2j623M0r+llr792ngrn9UpHNtVLie363BDY70JtREKbeKjmDKf9YOl
+         PKCTW8qKSQsxjRQzG6pRjqki1H3JfzNXV5vF8DdrIrYEb/ZWp3jU0VAovLnXab3pD7Xn
+         f579lnFyqzib8L0KcZuwxT6rtAeMYim4tr9mw3BAokAnAhwNMkIXS3JBfi9fdp/lE44c
+         pUvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HEFUm2a4sT5mm8LJnU83g00VJT5v1AEfuPI2vOmnXbY=;
-        b=U4F096XoDH0fpudBz6oKUgIy/udIzRGfwQLhTe1E3mrCOMa0NmEIbvYED1kqOnWpxt
-         jnx0jYiFES+/IjESgiW6jq13uJaGSTo1DPPjhmz1Q1QUHEEJfHI8ENExtE7v0bfRafW0
-         7xDf+e3dXHzW8rWOoIkcXJYtTbJ+zGDEhY8QlDY2xjYZeK/LXHKsYW6GaTxuGbE3zCrV
-         0aac8Pw7a/YFtno9Pjs9+2pC+eWt8Ed/0JBjX+OOag1RNBf99+MYT4GWt3uN9RnT2U5b
-         yzUCr8JZYla9FF+n+yng786ivZQj2t9DnouylTCTW++9WZEuyg1lREw8o3+MiJjnvp+v
-         ET3Q==
-X-Gm-Message-State: AHQUAubltKNFIZ6ec2TgMzkxFh6KvAT5e8KcgjTEDPwXfQf4YFVY8pGl
-        PtMFvOWslMuu/Xv9/22aZzQ=
-X-Google-Smtp-Source: AHgI3IYs3tZm9AgZUKf62TUr6hG2RzVISXYSDEzC07L0qCE5H2fNqrhvc3sZO3hgheEWCKm0oqnoSA==
-X-Received: by 2002:a63:ee4c:: with SMTP id n12mr18834715pgk.21.1549616745768;
-        Fri, 08 Feb 2019 01:05:45 -0800 (PST)
+        bh=PW9pmf9wUBbgxGKKXnrijPjDZLhNx1k+xS+j7UTnjFc=;
+        b=dAdPrweZJtXpU8we6SGLS9aiyz43/nVXq93+TVuJPb1Lm6dxGIZsI3bBE1ZKZurary
+         C62DHAeEqEWcPqejUQMqd0/ENTOXfDEeYmigOulsSNsiHjF+/7qwwdFmLSIUUYKFMxE7
+         ++mopSqA781QOWzmsvH7kRfKCStRw/Gqv+FkPbkEAfc/frXJeZPwgiOXy8enebZz7M5O
+         TD+lt8Bl7514E5w18DcCcMQR7cSCJrR0l43HipCSq0Ve5yqrYujrHwzWWeL30uhKMIwm
+         sQgUnTdYLUcbsfxiDFoKMVker3Ocwt9vHGCaSk8fFox/xvdJr+cn85tPxSHjJaAMviFN
+         hVIg==
+X-Gm-Message-State: AHQUAuY63OsAkZi+BGZSPzKen2FCyBBpyQHa+Scyer7ngImqaKlrJY2g
+        XZ6vxdSOuhdtDhbofTNAQcs=
+X-Google-Smtp-Source: AHgI3IberC5VA7O9K+VcuES5N0BCSnl/J5KGal6XHSvqe/B7LqsKcR/H5tgWHqTQcuNyVNp6AkvDcg==
+X-Received: by 2002:a17:902:b182:: with SMTP id s2mr21700448plr.89.1549616751104;
+        Fri, 08 Feb 2019 01:05:51 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id o13sm2372168pfk.57.2019.02.08.01.05.42
+        by smtp.gmail.com with ESMTPSA id h10sm2742586pgn.11.2019.02.08.01.05.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Feb 2019 01:05:45 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 08 Feb 2019 16:05:40 +0700
+        Fri, 08 Feb 2019 01:05:50 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 08 Feb 2019 16:05:46 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 15/19] switch: no implicit dwim, use --guess to dwim
-Date:   Fri,  8 Feb 2019 16:03:57 +0700
-Message-Id: <20190208090401.14793-16-pclouds@gmail.com>
+Subject: [PATCH v2 16/19] switch: no worktree status unless real branch switch happens
+Date:   Fri,  8 Feb 2019 16:03:58 +0700
+Message-Id: <20190208090401.14793-17-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.682.gd5861c6d90
 In-Reply-To: <20190208090401.14793-1-pclouds@gmail.com>
 References: <20190130094831.10420-1-pclouds@gmail.com>
@@ -71,167 +71,260 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to automatic detach, this behavior could be confusing because
-it can sometimes create a new branch without a user asking it to,
-especially when the user is still not aware about this feature.
+When we switch from one branch to another, it makes sense to show a
+summary of local changes since there could be conflicts, or some files
+left modified.... When switch is used solely for creating a new
+branch (and "switch" to the same commit) or detaching, we don't really
+need to show anything.
 
-In the future, perhaps we could have a config key to disable these
-safety nets and let 'switch' do automatic detach or dwim
-again. But that will be opt-in after the user knows what is what. For
-now give a short option if you want to use it often.
+"git checkout" does it anyway for historical reasons. But we can start
+with a clean slate with switch and don't have to.
+
+This essentially reverts fa655d8411 (checkout: optimize "git checkout
+-b <new_branch>" - 2018-08-16) and make it default for switch,
+but also for -B and --detach. Users of big repos are encouraged to
+move to switch.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/git-checkout.txt | 37 ++++++++++++++++++++--------------
- builtin/checkout.c             | 16 +++++++--------
- 2 files changed, 30 insertions(+), 23 deletions(-)
+ Documentation/config/checkout.txt |   8 --
+ builtin/checkout.c                | 127 +++---------------------------
+ t/t1090-sparse-checkout-scope.sh  |  14 ----
+ 3 files changed, 9 insertions(+), 140 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 31c6cbef19..bcb7822c27 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -31,22 +31,13 @@ branch.
- 	<branch>.
- +
- If <branch> is not found but there does exist a tracking branch in
--exactly one remote (call it <remote>) with a matching name, treat as
--equivalent to
-+exactly one remote (call it <remote>) with a matching name and
-+--no-guess is not specified, treat as equivalent to
- +
- ------------
- $ git checkout -b <branch> --track <remote>/<branch>
- ------------
- +
--If the branch exists in multiple remotes and one of them is named by
--the `checkout.defaultRemote` configuration variable, we'll use that
--one for the purposes of disambiguation, even if the `<branch>` isn't
--unique across all remotes. Set it to
--e.g. `checkout.defaultRemote=origin` to always checkout remote
--branches from there if `<branch>` is ambiguous but exists on the
--'origin' remote. See also `checkout.defaultRemote` in
--linkgit:git-config[1].
--+
- You could omit <branch>, in which case the command degenerates to
- "check out the current branch", which is a glorified no-op with
- rather expensive side-effects to show only the tracking information,
-@@ -182,6 +173,26 @@ explicitly give a name with `-b` in such a case.
- 	Do not set up "upstream" configuration, even if the
- 	branch.autoSetupMerge configuration variable is true.
+diff --git a/Documentation/config/checkout.txt b/Documentation/config/checkout.txt
+index fc211eca58..2fe24049fe 100644
+--- a/Documentation/config/checkout.txt
++++ b/Documentation/config/checkout.txt
+@@ -17,14 +17,6 @@ and by linkgit:git-worktree[1] when 'git worktree add' refers to a
+ remote branch. This setting might be used for other checkout-like
+ commands or functionality in the future.
  
-+--[no-]guess::
-+	If <branch> is not found but there does exist a tracking
-+	branch in exactly one remote (call it <remote>) with a
-+	matching name, treat as equivalent to
-++
-+------------
-+$ git checkout -b <branch> --track <remote>/<branch>
-+------------
-++
-+If the branch exists in multiple remotes and one of them is named by
-+the `checkout.defaultRemote` configuration variable, we'll use that
-+one for the purposes of disambiguation, even if the `<branch>` isn't
-+unique across all remotes. Set it to
-+e.g. `checkout.defaultRemote=origin` to always checkout remote
-+branches from there if `<branch>` is ambiguous but exists on the
-+'origin' remote. See also `checkout.defaultRemote` in
-+linkgit:git-config[1].
-++
-+Use `--no-guess` to disable this.
-+
- -l::
- 	Create the new branch's reflog; see linkgit:git-branch[1] for
- 	details.
-@@ -284,10 +295,6 @@ Note that this option uses the no overlay mode by default (see also
- 	Just like linkgit:git-submodule[1], this will detach the
- 	submodules HEAD.
- 
----no-guess::
--	Do not attempt to create a branch if a remote tracking branch
--	of the same name exists.
+-checkout.optimizeNewBranch::
+-	Optimizes the performance of "git checkout -b <new_branch>" when
+-	using sparse-checkout.  When set to true, git will not update the
+-	repo based on the current sparse-checkout settings.  This means it
+-	will not update the skip-worktree bit in the index nor add/remove
+-	files in the working directory to reflect the current sparse checkout
+-	settings nor will it show the local changes.
 -
- --[no-]overlay::
+ checkout.overlayMode::
  	In the default overlay mode, `git checkout` never
  	removes files from the index or the working tree.  When
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index a5284391a9..a49ab35b7d 100644
+index a49ab35b7d..21a3fe3fb8 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -52,7 +52,7 @@ struct checkout_opts {
- 	int show_progress;
- 	int count_checkout_paths;
- 	int overlay_mode;
--	int no_dwim_new_local_branch;
-+	int dwim_new_local_branch;
+@@ -25,8 +25,6 @@
+ #include "submodule.h"
+ #include "advice.h"
+ 
+-static int checkout_optimize_new_branch;
+-
+ static const char * const checkout_usage[] = {
+ 	N_("git checkout [<options>] <branch>"),
+ 	N_("git checkout [<options>] [<branch>] -- <file>..."),
+@@ -55,11 +53,7 @@ struct checkout_opts {
+ 	int dwim_new_local_branch;
  	int accept_pathspec;
  	int switch_branch_doing_nothing_is_ok;
+-
+-	/*
+-	 * If new checkout options are added, skip_merge_working_tree
+-	 * should be updated accordingly.
+-	 */
++	int only_merge_on_switching_branches;
  
-@@ -1388,8 +1388,6 @@ static struct option *add_common_switch_branch_options(
- 		OPT_BOOL_F(0, "overwrite-ignore", &opts->overwrite_ignore,
- 			   N_("update ignored files (default)"),
- 			   PARSE_OPT_NOCOMPLETE),
--		OPT_BOOL(0, "no-guess", &opts->no_dwim_new_local_branch,
--			 N_("second guess 'git checkout <no-such-branch>'")),
- 		OPT_BOOL(0, "ignore-other-worktrees", &opts->ignore_other_worktrees,
- 			 N_("do not check if another worktree is holding the given ref")),
- 		OPT_END()
-@@ -1426,7 +1424,6 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	const char *new_branch;
+ 	const char *new_branch_force;
+@@ -556,104 +550,6 @@ static void setup_branch_path(struct branch_info *branch)
+ 	branch->path = strbuf_detach(&buf, NULL);
+ }
+ 
+-/*
+- * Skip merging the trees, updating the index and working directory if and
+- * only if we are creating a new branch via "git checkout -b <new_branch>."
+- */
+-static int skip_merge_working_tree(const struct checkout_opts *opts,
+-	const struct branch_info *old_branch_info,
+-	const struct branch_info *new_branch_info)
+-{
+-	/*
+-	 * Do the merge if sparse checkout is on and the user has not opted in
+-	 * to the optimized behavior
+-	 */
+-	if (core_apply_sparse_checkout && !checkout_optimize_new_branch)
+-		return 0;
+-
+-	/*
+-	 * We must do the merge if we are actually moving to a new commit.
+-	 */
+-	if (!old_branch_info->commit || !new_branch_info->commit ||
+-		!oideq(&old_branch_info->commit->object.oid,
+-		       &new_branch_info->commit->object.oid))
+-		return 0;
+-
+-	/*
+-	 * opts->patch_mode cannot be used with switching branches so is
+-	 * not tested here
+-	 */
+-
+-	/*
+-	 * opts->quiet only impacts output so doesn't require a merge
+-	 */
+-
+-	/*
+-	 * Honor the explicit request for a three-way merge or to throw away
+-	 * local changes
+-	 */
+-	if (opts->merge || opts->force)
+-		return 0;
+-
+-	/*
+-	 * --detach is documented as "updating the index and the files in the
+-	 * working tree" but this optimization skips those steps so fall through
+-	 * to the regular code path.
+-	 */
+-	if (opts->force_detach)
+-		return 0;
+-
+-	/*
+-	 * opts->writeout_stage cannot be used with switching branches so is
+-	 * not tested here
+-	 */
+-
+-	/*
+-	 * Honor the explicit ignore requests
+-	 */
+-	if (!opts->overwrite_ignore || opts->ignore_skipworktree ||
+-		opts->ignore_other_worktrees)
+-		return 0;
+-
+-	/*
+-	 * opts->show_progress only impacts output so doesn't require a merge
+-	 */
+-
+-	/*
+-	 * opts->overlay_mode cannot be used with switching branches so is
+-	 * not tested here
+-	 */
+-
+-	/*
+-	 * If we aren't creating a new branch any changes or updates will
+-	 * happen in the existing branch.  Since that could only be updating
+-	 * the index and working directory, we don't want to skip those steps
+-	 * or we've defeated any purpose in running the command.
+-	 */
+-	if (!opts->new_branch)
+-		return 0;
+-
+-	/*
+-	 * new_branch_force is defined to "create/reset and checkout a branch"
+-	 * so needs to go through the merge to do the reset
+-	 */
+-	if (opts->new_branch_force)
+-		return 0;
+-
+-	/*
+-	 * A new orphaned branch requrires the index and the working tree to be
+-	 * adjusted to <start_point>
+-	 */
+-	if (opts->new_orphan_branch)
+-		return 0;
+-
+-	/*
+-	 * Remaining variables are not checkout options but used to track state
+-	 */
+-
+-	return 1;
+-}
+-
+ static int merge_working_tree(const struct checkout_opts *opts,
+ 			      struct branch_info *old_branch_info,
+ 			      struct branch_info *new_branch_info,
+@@ -1011,6 +907,8 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	void *path_to_free;
+ 	struct object_id rev;
+ 	int flag, writeout_error = 0;
++	int do_merge = 1;
++
+ 	memset(&old_branch_info, 0, sizeof(old_branch_info));
+ 	old_branch_info.path = path_to_free = resolve_refdup("HEAD", 0, &rev, &flag);
+ 	if (old_branch_info.path)
+@@ -1027,16 +925,12 @@ static int switch_branches(const struct checkout_opts *opts,
+ 		if (!new_branch_info->commit)
+ 			die(_("You are on a branch yet to be born"));
+ 		parse_commit_or_die(new_branch_info->commit);
++
++		if (opts->only_merge_on_switching_branches)
++			do_merge = 0;
+ 	}
+ 
+-	/* optimize the "checkout -b <new_branch> path */
+-	if (skip_merge_working_tree(opts, &old_branch_info, new_branch_info)) {
+-		if (!checkout_optimize_new_branch && !opts->quiet) {
+-			if (read_cache_preload(NULL) < 0)
+-				return error(_("index file corrupt"));
+-			show_local_changes(&new_branch_info->commit->object, &opts->diff_options);
+-		}
+-	} else {
++	if (do_merge) {
+ 		ret = merge_working_tree(opts, &old_branch_info, new_branch_info, &writeout_error);
+ 		if (ret) {
+ 			free(path_to_free);
+@@ -1058,11 +952,6 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
  {
- 	struct branch_info new_branch_info;
- 	int dwim_remotes_matched = 0;
--	int dwim_new_local_branch;
+ 	struct checkout_opts *opts = cb;
  
- 	memset(&new_branch_info, 0, sizeof(new_branch_info));
- 	opts->overwrite_ignore = 1;
-@@ -1441,7 +1438,6 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	argc = parse_options(argc, argv, prefix, options, usagestr,
- 			     PARSE_OPT_KEEP_DASHDASH);
- 
--	dwim_new_local_branch = !opts->no_dwim_new_local_branch;
- 	if (opts->show_progress < 0) {
- 		if (opts->quiet)
- 			opts->show_progress = 0;
-@@ -1501,7 +1497,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 		struct object_id rev;
- 		int dwim_ok =
- 			!opts->patch_mode &&
--			dwim_new_local_branch &&
-+			opts->dwim_new_local_branch &&
- 			opts->track == BRANCH_TRACK_UNSPECIFIED &&
- 			!opts->new_branch;
- 		int n = parse_branchname_arg(argc, argv, dwim_ok,
-@@ -1582,12 +1578,14 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_STRING('B', NULL, &opts.new_branch_force, N_("branch"),
- 			   N_("create/reset and checkout a branch")),
- 		OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create reflog for new branch")),
-+		OPT_BOOL(0, "guess", &opts.dwim_new_local_branch,
-+			 N_("second guess 'git checkout <no-such-branch>' (default)")),
- 		OPT_END()
- 	};
- 	int ret;
- 
+-	if (!strcmp(var, "checkout.optimizenewbranch")) {
+-		checkout_optimize_new_branch = git_config_bool(var, value);
+-		return 0;
+-	}
+-
+ 	if (!strcmp(var, "checkout.overlaymode")) {
+ 		opts->overlay_mode = git_config_bool(var, value);
+ 		return 0;
+@@ -1587,6 +1476,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
  	memset(&opts, 0, sizeof(opts));
--	opts.no_dwim_new_local_branch = 0;
-+	opts.dwim_new_local_branch = 1;
+ 	opts.dwim_new_local_branch = 1;
  	opts.switch_branch_doing_nothing_is_ok = 1;
++	opts.only_merge_on_switching_branches = 0;
  	opts.accept_pathspec = 1;
  	opts.implicit_detach = 1;
-@@ -1612,12 +1610,14 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
- 			   N_("create and switch to a new branch")),
- 		OPT_STRING('C', "force-create", &opts.new_branch_force, N_("branch"),
- 			   N_("create/reset and switch to a branch")),
-+		OPT_BOOL('g', "guess", &opts.dwim_new_local_branch,
-+			 N_("second guess 'git switch <no-such-branch>'")),
- 		OPT_END()
- 	};
- 	int ret;
  
- 	memset(&opts, 0, sizeof(opts));
--	opts.no_dwim_new_local_branch = 0;
-+	opts.dwim_new_local_branch = 0;
+@@ -1620,6 +1510,7 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
+ 	opts.dwim_new_local_branch = 0;
  	opts.accept_pathspec = 0;
  	opts.switch_branch_doing_nothing_is_ok = 0;
++	opts.only_merge_on_switching_branches = 1;
  	opts.implicit_detach = 0;
+ 
+ 	options = parse_options_dup(switch_options);
+diff --git a/t/t1090-sparse-checkout-scope.sh b/t/t1090-sparse-checkout-scope.sh
+index 090b7fc3d3..40cc004326 100755
+--- a/t/t1090-sparse-checkout-scope.sh
++++ b/t/t1090-sparse-checkout-scope.sh
+@@ -31,20 +31,6 @@ test_expect_success 'perform sparse checkout of master' '
+ 	test_path_is_file c
+ '
+ 
+-test_expect_success 'checkout -b checkout.optimizeNewBranch interaction' '
+-	cp .git/info/sparse-checkout .git/info/sparse-checkout.bak &&
+-	test_when_finished "
+-		mv -f .git/info/sparse-checkout.bak .git/info/sparse-checkout
+-		git checkout master
+-	" &&
+-	echo "/b" >>.git/info/sparse-checkout &&
+-	test "$(git ls-files -t b)" = "S b" &&
+-	git -c checkout.optimizeNewBranch=true checkout -b fast &&
+-	test "$(git ls-files -t b)" = "S b" &&
+-	git checkout -b slow &&
+-	test "$(git ls-files -t b)" = "H b"
+-'
+-
+ test_expect_success 'merge feature branch into sparse checkout of master' '
+ 	git merge feature &&
+ 	test_path_is_file a &&
 -- 
 2.20.1.682.gd5861c6d90
 
