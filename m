@@ -2,242 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	URIBL_SBL,URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19DFA1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 08:32:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 939E71F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 08:39:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727250AbfBHIcp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 03:32:45 -0500
-Received: from mout.gmx.net ([212.227.15.15]:44329 "EHLO mout.gmx.net"
+        id S1727311AbfBHIi4 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 8 Feb 2019 03:38:56 -0500
+Received: from gecko.sbs.de ([194.138.37.40]:51874 "EHLO gecko.sbs.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726133AbfBHIcp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 03:32:45 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1Fe4-1h7cZ103qa-00tAMs; Fri, 08
- Feb 2019 09:32:35 +0100
-Date:   Fri, 8 Feb 2019 09:32:32 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Clemens Buchacher <drizzd@gmx.net>
-Subject: Re: t5570-git-daemon fails with SIGPIPE on OSX
-In-Reply-To: <CAM0VKjkM-THZALy20VrZ-JSMyZjUXUqp1CAoCPrezXRsBfRJ2A@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902080928500.41@tvgsbejvaqbjf.bet>
-References: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com> <CAM0VKjkM-THZALy20VrZ-JSMyZjUXUqp1CAoCPrezXRsBfRJ2A@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726115AbfBHIiz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 03:38:55 -0500
+X-Greylist: delayed 322 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Feb 2019 03:38:53 EST
+Received: from mail1.sbs.de (mail1.sbs.de [192.129.41.35])
+        by gecko.sbs.de (8.15.2/8.15.2) with ESMTPS id x188XP46015944
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 8 Feb 2019 09:33:25 +0100
+Received: from md1za8fc.ad001.siemens.net ([139.25.0.64])
+        by mail1.sbs.de (8.15.2/8.15.2) with ESMTP id x188XOaw003610;
+        Fri, 8 Feb 2019 09:33:24 +0100
+Date:   Fri, 8 Feb 2019 09:33:24 +0100
+From:   Henning Schild <henning.schild@siemens.com>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] t/lib-gpg: a gpgsm fix, a minor improvement, and a
+ question
+Message-ID: <20190208093324.7b17f270@md1za8fc.ad001.siemens.net>
+In-Reply-To: <20190208031746.22683-1-tmz@pobox.com>
+References: <20190208031746.22683-1-tmz@pobox.com>
+X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-350591008-1549614756=:41"
-X-Provags-ID: V03:K1:3EYdx5mVWxIhNNu0V4kAY33rCAh0oy+6x6mq9U7d5TIKvTdWN33
- SHxaF3PKrWnVSqDOGWslQPNJgjIrPvkp146/vLmOiEgS2fs1USs6ae3IStxsfwwKONJ9CNJ
- 9lNsMLF2s9c0IpPSmoADbU3FCqsRjnhcxpcLKJ37dNv0WhwvaUm5ba44HHoE0A2XliH8EZm
- w+u9Yee45oJ9f22HQMlug==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eJGSHWHwrFI=:2FpgIz/6vw4NbPfTPD3p2X
- vdnnbbvULhVXCoL4Zb3+ZHxM3T2xWXIAn0dzsmAgri+yWOxzkC7vflnqIDhxu85pOiI6q1FoJ
- O57I/WCfgi+g1jAgXAu9dK4u7oZztduUQ7L/vmzJMy3Ic5vfNN+cL2RqNdaMycgZDQqHSslbG
- HaZ2gmnT7BJjEEkp/QGQYCAvnQQpBUO4xI/sfN4EGs/DGY39FbIbMxejuWWLQuDmYLljrrUEN
- wbk4M7vNbYUp01anQ72V+BOeHbGignrtbRJDeX476L3K1/JxPLDOmP2jdRaFCZqw1sCqCtrAC
- vVIAhvnrq6Oe+TTKRrVQr8KR9EK7cX9IlD/iqYGo1T3/XKd8msA8ux6sK11/t0SX1pnj0I1fX
- /yXiuyaUD3aAcwREAbt+j70QG3ALNF6WmlDeWYmdd/nAOu7JDZvGavYvbLLEdBurFszwn61fn
- W8UjhPwjt4WCx84mugSS0NUFzT3DOOSy5VZbm8+GfxIadzAgKpDRLSHIKRCh9nHlpSncguH0P
- 3y9uV1qVdulheHpCYaYG3UAerhEQ75Mw6VfGgQwhjITgQ3ckyfigBdRyf0FjwaNDNLAHzx6UE
- mw3edANInw+gDov7XAbnGriWlrp6nPryKr+MaZMPMHbPD+NRbd2Y2QsoVZi5VujlDIfpm/no8
- EcEHAfVf4tH99K/AF2QLA7xT4B+K4M6mKn2astZ01hASlj7dpnVDIhIrTKhDbiv76Jv+3GAMs
- tIwaS2AwRXjs+KT1MujZGWM9i+VkKPK4LQD337lbsPyH1pWO8Yf40Yt1bMykjHqxDj1VnXejG
- D2W7FXy/MVmp8vBE1SG4vQICM0k15lu2hJ5aZoD6MUJPH6ZFCbyr2OkprEme0LClCZTL3iQiU
- IqL82uPQP4BQIJQtpcI32M4x8439DSCxm3dipaKyF7vs75IHbtplECvF3t02t6Dc8VQAsf2tT
- HrEpTjVTIsg==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-350591008-1549614756=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+both patches look good to me. Killing the agent once should be enough,
+i remember manually killing it many times as i was looking for a way to
+generate certs and trust (configure gpgsm for the test). That is
+probably why i copied it over in the first place.
 
-Team,
+Henning
 
-On Mon, 6 Aug 2018, SZEDER Gábor wrote:
+Am Thu, 7 Feb 2019 22:17:44 -0500
+schrieb Todd Zullinger <tmz@pobox.com>:
 
-> [Resending with Clemens' last used email address.
-> Clemens, please consider sending a patch to update our .mailmap file.]
+> Hi,
 > 
+> Looking through the build logs for the fedora git packages, I noticed
+> it was missing the GPGSM prereq.  I added the necessary package to the
+> build requirements but GPGSM was still failing to be set.  This turned
+> out to be due to a use of ${GNUPGHOME} without quoting, which leads
+> to a non-zero exit from echo and the end of the happy && chain when
+> using bash as the test shell.  Fixing this allows the GPGSM test
+> prereq to be set.
 > 
-> On Mon, Aug 6, 2018 at 5:11 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> >
-> > Travis CI changed its default OSX image to use XCode 9.4 on 2018-07-31
-> > [1].  Since then OSX build jobs fail rather frequently because of a
-> > SIGPIPE in the tests 'fetch notices corrupt pack' or 'fetch notices
-> > corrupt idx' in 't5570-git-daemon.sh' [2].  I think this is a symptom
-> > a real bug in Git affecting other platforms as well, but these tests
-> > are too lax to catch it.
-
-I am seeing this very frequently now, as it feels like failing in the
-Azure Pipeline about half of the time.
-
-The symptom is this:
-
--- snip --
-++ cp -R '/Users/vsts/agent/2.146.0/work/1/s/t/trash directory.t5570-git-daemon/repo/repo_pack.git' '/Users/vsts/agent/2.146.0/work/1/s/t/trash directory.t5570-git-daemon/repo/repo_bad2.git'
-++ cd '/Users/vsts/agent/2.146.0/work/1/s/t/trash directory.t5570-git-daemon/repo/repo_bad2.git'
-+++ ls objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-++ p=objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-++ chmod u+w objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-++ printf %0256d 0
-++ dd of=objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx bs=256 count=1 seek=1 conv=notrunc
-1+0 records in
-1+0 records out
-256 bytes transferred in 0.000018 secs (14316558 bytes/sec)
-++ mkdir repo_bad2.git
-++ cd repo_bad2.git
-++ git --bare init
-Initialized empty Git repository in /Users/vsts/agent/2.146.0/work/1/s/t/trash directory.t5570-git-daemon/repo_bad2.git/
-++ test_must_fail git --bare fetch git://127.0.0.1:5570/repo_bad2.git
-++ case "$1" in
-++ _test_ok=
-++ git --bare fetch git://127.0.0.1:5570/repo_bad2.git
-[13879] Connection from 127.0.0.1:60504
-[13879] Extended attribute "host": 127.0.0.1:5570
-[13879] Extended attribute "protocol": version=0
-[13879] Request upload-pack for '/repo_bad2.git'
-[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-[13879] error: refs/heads/master does not point to a valid object!
-[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-[13879] error: refs/heads/other does not point to a valid object!
-[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-[13879] error: non-monotonic index ./objects/pack/pack-b2175ab283c0abe358895777ca01c36e88a92e35.idx
-[13879] fatal: git upload-pack: not our ref b5c2e4226db03597a64815fd226648510b22ba40
-[11833] [13879] Disconnected (with error)
-++ exit_code=141
-++ test 141 -eq 0
-++ test_match_signal 13 141
-++ test 141 = 141
-++ return 0
-++ list_contains '' sigpipe
-++ case ",$1," in
-++ return 1
-++ test 141 -gt 129
-++ test 141 -le 192
-++ echo 'test_must_fail: died by signal 13: git --bare fetch git://127.0.0.1:5570/repo_bad2.git'
-test_must_fail: died by signal 13: git --bare fetch git://127.0.0.1:5570/repo_bad2.git
-++ return 1
-error: last command exited with $?=1
-not ok 10 - fetch notices corrupt idx
-#	
-#		cp -R "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_pack.git "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
-#		(cd "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
-#		 p=$(ls objects/pack/pack-*.idx) &&
-#		 chmod u+w $p &&
-#		 printf %0256d 0 | dd of=$p bs=256 count=1 seek=1 conv=notrunc
-#		) &&
-#		mkdir repo_bad2.git &&
-#		(cd repo_bad2.git &&
-#		 git --bare init &&
-#		 test_must_fail git --bare fetch "$GIT_DAEMON_URL/repo_bad2.git" &&
-#		 test 0 = $(ls objects/pack | wc -l)
-#		)
-#	
--- snap --
-
-Any ideas how to fix this test, anyone?
-
-Ciao,
-Dscho
-
-> >
-> > What it boils down to is this sequence:
-> >
-> >   - The test first prepares a repository containing a corrupt pack,
-> >     ready to be server via 'git daemon'.
-> >
-> >   - Then the test runs 'test_must_fail git fetch ....', which connects
-> >     to 'git daemon', which forks 'git upload-pack', which then
-> >     advertises refs (only HEAD) and capabilities.  So far so good.
-> >
-> >   - 'git fetch' eventually calls fetch-pack.c:find_common().  The
-> >     first half of this function assembles a request consisting of a
-> >     want and a flush pkt-line, and sends it via a send_request() call.
-> >
-> >     At this point the scheduling becomes important: let's suppose that
-> >     fetch is slow and upload-pack is fast.
-> >
-> >   - 'git upload-pack' receives the request, parses the want line,
-> >     notices the corrupt pack, responds with an 'ERR upload-pack: not
-> >     our ref' pkt-line, and die()s right away.
-> >
-> >   - 'git fetch' finally approaches the end of the function, where it
-> >     attempts to send a done pkt-line via another send_request() call
-> >     through the now closing TCP socket.
-> >
-> >   - What happens now seems to depend on the platform:
-> >
-> >     - On Linux, both on my machine and on Travis CI, it shows textbook
-> >       example behaviour: write() returns with error and sets errno to
-> >       ECONNRESET.  Since it happens in write_or_die(), 'git fetch'
-> >       die()s with 'fatal: write error: Connection reset by peer', and
-> >       doesn't show the error send by 'git upload-pack'; how could it,
-> >       it doesn't even get as far to receive upload-pack's ERR
-> >       pkt-line.
-> >
-> >       The test only checks that 'git fetch' fails, but it doesn't
-> >       check whether it failed with the right error message, so the
-> >       test still succeeds.  Had it checked the error message as well,
-> >       we most likely had noticed this issue already, it doesn't happen
-> >       all that rarely.
-> >
-> >     - On the new OSX images with XCode 9.4 on Travis CI the write()
-> >       triggers SIGPIPE right away, and 'test_must_fail' notices it and
-> >       fails the test.  I couldn't see any sign of an ECONNRESET or any
-> >       other error that we could act upon to avoid the SIGPIPE.
-> >
-> >     - On OSX with XCode 9.2 on Travis CI there is neither SIGPIPE, nor
-> >       ECONNRESET, but sending the request actually succeeds even
-> >       though there is no process on the other end of the socket
-> >       anymore.  'git fetch' then simply continues execution, reads and
-> >       parses the ERR pkt-line, and then dies()s with 'fatal: remote
-> >       error: upload-pack: not our ref'.  So, on the face of it, it
-> >       shows the desired behaviour, but I have no idea how that write()
-> >       could succeed instead of returning error.
-> >
-> > I don't know what happens on a real Mac as I don't have access to one;
-> > I figured out all the above by enabling packet tracing, adding a
-> > couple of well placed tracing printf() and sleep() calls, running a
-> > bunch of builds on Travis CI, and looking through their logs.  But
-> > without access to a debugger and netstat and what not I can't really
-> > go any further.  So I would now happily pass the baton to those who
-> > have a Mac and know a thing or two about its porting issues to first
-> > check whether OSX on a real Mac shows the same behaviour as it does in
-> > Travis CI's virtualized(?) environment.  And then they can pass the
-> > baton to those who know all the intricacies of the pack protocol and
-> > its implementation to decide what to do with this issue.
-> >
-> > For a mostly reliable reproduction recipe you might want to fetch this
-> > branch:
-> >
-> >   https://github.com/szeder/git t5570-git-daemon-sigpipe
-> >
-> > and then run 'make && cd t && ./t5570-git-daemon.sh -v -x'
-> >
-> >
-> > Have fun! ;)
-> >
-> >
-> > 1 - https://blog.travis-ci.com/2018-07-19-xcode9-4-default-announce
-> >
-> > 2 - On git.git's master:
-> >     https://travis-ci.org/git/git/jobs/411517552#L2717
+> While I was poking around I also saw an extra gpgconf call to kill
+> gpg-agent.  This was copied from the GPG block earlier in lib-gpg.sh,
+> but should not be needed (as far as I can tell).  I don't think it can
+> cause any real harm apart from causing gpg and gpgsm to start the
+> agent more often than necessary.  But I didn't run the tests with the
+> --stress option to look for potential issues that could be more
+> serious.
 > 
+> Lastly, the GPG test prereq was failing in two of the tests where it
+> was used, t5573-pull-verify-signatures and
+> t7612-merge-verify-signatures.  I tracked this down to an annoying
+> issue with gnugp-2¹, which recently became the default /bin/gpg in
+> fedora².
 > 
---8323328-350591008-1549614756=:41--
+> Using gnupg2 as /bin/gpg means using gpg-agent by default.  When
+> using a non-standard GNUPGHOME, gpg-agent defaults to putting its
+> socket files in GNUPGHOME and fails if the path for any of them is
+> longer than sun_path (108 chars on linux, 104 on OpenBSD and FreeBSD,
+> and likely similar on other unices).
+> 
+> When building in the typical fedora build tool (mock), the path to the
+> git test dir is "/builddir/build/BUILD/git-2.20.1/t."  That path then
+> has "trash directory.$TEST_NAME$TEST_STRESS_JOB_SFX" appended and a
+> "gpghome" directory within.  For t5573 and t7612, the gpg-agent socket
+> path for S.gpg-agent.browser exceeds the sun_path limit and gpg-agent
+> fails to start.  Sadly, this is handled poorly by gpg and makes the
+> tests fail to set either the GPG or GPGSM prereqs.
+> 
+> For the fedora packages, I decided to pass --root=/tmp/git-t.XXXX (via
+> mktemp, of course) to the test suite which ensures a path short enough
+> to keep gpg-agent happy.
+> 
+> I don't know if there are other packagers or builders who run into
+> this, so maybe it's not worth much effort to try and have the test
+> suite cope better.  It took me longer than I would have liked to
+> track it down, so I thought I'd mention it in case anyone else has
+> run into this or has thoughts on how to improve lib-gpg.sh while
+> waiting for GnuPG to improve this area.
+> 
+> A GIT_TEST_GNUPGHOME_ROOT var to set the root path for the GNUPGHOME
+> dirs in the tests is one thought I had, but didn't try to put it into
+> patch form.  Setting the --root test option is probably enough control
+> for most cases.
+> 
+> ¹ https://dev.gnupg.org/T2964
+> ²
+> https://fedoraproject.org/wiki/Changes/GnuPG2_as_default_GPG_implementation
+> 
+> Todd Zullinger (2):
+>   t/lib-gpg: quote path to ${GNUPGHOME}/trustlist.txt
+>   t/lib-gpg: drop redundant killing of gpg-agent
+> 
+>  t/lib-gpg.sh | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+
