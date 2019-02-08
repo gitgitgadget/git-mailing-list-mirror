@@ -2,228 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8A071F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 12:54:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A03A31F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 13:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727411AbfBHMyl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 07:54:41 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41225 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726641AbfBHMyl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 07:54:41 -0500
-Received: by mail-wr1-f65.google.com with SMTP id x10so3442813wrs.8
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 04:54:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=w/FIrENyqwgNVXB4KjZ2gvkgpqTcoUcdWXHzZoUQvq4=;
-        b=Y3tvOcyUf6vZddeQyNOi5yUH0myZFprnPaHwoZGR2ZGT5PzzkUxjPx1fO9N1mIAJlu
-         qswOdgjxdGP8qw9nr9Omba7DZk1VKoPlKy0q2i7o6Gb35jy1P8LKgZd5bjnR70tqYp5O
-         LkkdzMeJ5hBZpWADZRey25D+oBvKfSQGKcYw99If8KHi02sVQ6SA8MpmFaQOQv2jMvem
-         M3lQYmN82qQREFXyx45T+aYLPl+zWvr17Vw8LurINCteL+Zo5HUNfpEWEsvP04WooZ7X
-         +Ond17wLNm1VWfzoblO5n5L3oFUZgaTHzfxwAa0sD7Jn72rmsXyDO6lvwDwgWOyJrAg4
-         lNlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=w/FIrENyqwgNVXB4KjZ2gvkgpqTcoUcdWXHzZoUQvq4=;
-        b=dU1IMShhpfQs69UMPkd6eRyd8lxNXZDoIser561i5EWKYkF9SdTHUGYhmXCp7lWBcB
-         gwgdVrCe++4jDg8hbq7vc4neJMjnHcHzR/rU4cEzj4mgsz4hwoUYc7FFwkBAapyEUlQZ
-         LSHnonbQA4Ma1Z5nYx5EeW4BvDs+LcSAk1A7gntZwyt13bLGh0oOM8qyeQnvVGeLSsC2
-         meefUTPwz8izzJl/1wILMOBoFB8t4OHpLfiDqwmLhTuKoLmeWmO6KgTl+L1kNz7gFYxP
-         P7MNJ3znmKuQ89lAD0w7UpmEB7RGkTvGk0bneg7iZxplRLdbppyuW6kWW+hrW5wkm9aO
-         3otQ==
-X-Gm-Message-State: AHQUAuaQKYwqkNoGPKcN6UgFBmCunVhRRqrX9NeULMdqJi4fbBQo1PSG
-        /zPg0qkos5g4y4bZQNhXgIc=
-X-Google-Smtp-Source: AHgI3IZsUPP+hsJ97YXU1CZON0vgvxjEm1NrWygfGisq1AUgQa+kNqRtDt+uXLp7nspMVHO9ErQQQQ==
-X-Received: by 2002:adf:eb45:: with SMTP id u5mr15908139wrn.102.1549630478875;
-        Fri, 08 Feb 2019 04:54:38 -0800 (PST)
-Received: from szeder.dev (x4db62aaa.dyn.telefonica.de. [77.182.42.170])
-        by smtp.gmail.com with ESMTPSA id a187sm3413746wmf.33.2019.02.08.04.54.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Feb 2019 04:54:38 -0800 (PST)
-Date:   Fri, 8 Feb 2019 13:54:35 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Clemens Buchacher <drizzd@gmx.net>
-Subject: Re: t5570-git-daemon fails with SIGPIPE on OSX
-Message-ID: <20190208125435.GW10587@szeder.dev>
-References: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com>
- <CAM0VKjkM-THZALy20VrZ-JSMyZjUXUqp1CAoCPrezXRsBfRJ2A@mail.gmail.com>
- <nycvar.QRO.7.76.6.1902080928500.41@tvgsbejvaqbjf.bet>
+        id S1727901AbfBHNvp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 08:51:45 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33886 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727898AbfBHNvp (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 8 Feb 2019 08:51:45 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:d42:63e7:5548:1ee8])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9C79B6042D;
+        Fri,  8 Feb 2019 13:51:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1549633903;
+        bh=0kEdqSw3Q2PnooeMrPvijySU7BsvT4l93ImIsAcj4Q0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=P4u9J08hiUQPlFcGWwY2jQwZP535dHSaHXdd+OiJ82XF6hlut+mvdngTy9VpyR6BE
+         p0JtMtX7bS6ohHkRYZ63keu4X2mecAys4zDl1+ctWw2UV45B7XXrn+SFp63pwm4/my
+         sgVXeMDcGNc5HVNHeN1SCd2HfLYLd+yhwY9QWDV8pM5wZOhzcXrgfCVuA2Lc7fSdbJ
+         dYHlGC+/t23ytJaC0Llk+wudxCJE9Y+T3HNo9NHLccxl8m8dFob2hr8tZaiQtrxkll
+         5cbQ9iUSeXxXJIaV+ohQMlTrhUn0oy9wxM/NFv2Iabs2kBdxSKT4IMTp0eZ+0H6Pvm
+         xv3jBzYweeSDeUiT1RnKRcqvQ6xqKy1JrAkJA8nxx8UYchnikMJVoSTjqEh7I+EgV5
+         rL9l9L7nwIxDQ941N/88mgQ2yNYWMX+ptX15lKQsr3FFS7gcC5QUkTUeYl3F+WJ3J/
+         GkMxmFae7s6cMEpotTjbKNVes0DNdYzUxBggSwCoth88pO5FZCu
+Date:   Fri, 8 Feb 2019 13:51:38 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     Rich Felker <dalias@libc.org>, Kevin Daudt <git@lists.ikke.info>,
+        git@vger.kernel.org, larsxschneider@gmail.com
+Subject: Re: t0028-working-tree-encoding.sh failing on musl based systems
+ (Alpine Linux)
+Message-ID: <20190208135137.GE11927@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Kevin Daudt <me@ikke.info>, Rich Felker <dalias@libc.org>,
+        Kevin Daudt <git@lists.ikke.info>, git@vger.kernel.org,
+        larsxschneider@gmail.com
+References: <20190207215935.GA31515@alpha>
+ <20190208001705.GC11927@genre.crustytoothpaste.net>
+ <20190208060403.GA29788@brightrain.aerifal.cx>
+ <20190208114502.GD11927@genre.crustytoothpaste.net>
+ <20190208115511.GA30779@alpha>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="FN+gV9K+162wdwwF"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <nycvar.QRO.7.76.6.1902080928500.41@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20190208115511.GA30779@alpha>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 08, 2019 at 09:32:32AM +0100, Johannes Schindelin wrote:
-> Team,
-> 
-> On Mon, 6 Aug 2018, SZEDER Gábor wrote:
-> 
-> > [Resending with Clemens' last used email address.
-> > Clemens, please consider sending a patch to update our .mailmap file.]
-> > 
-> > 
-> > On Mon, Aug 6, 2018 at 5:11 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> > >
-> > > Travis CI changed its default OSX image to use XCode 9.4 on 2018-07-31
-> > > [1].  Since then OSX build jobs fail rather frequently because of a
-> > > SIGPIPE in the tests 'fetch notices corrupt pack' or 'fetch notices
-> > > corrupt idx' in 't5570-git-daemon.sh' [2].  I think this is a symptom
-> > > a real bug in Git affecting other platforms as well, but these tests
-> > > are too lax to catch it.
-> 
-> I am seeing this very frequently now, as it feels like failing in the
-> Azure Pipeline about half of the time.
 
-I was wondering whether it's only an issue on Travis CI, and was
-waiting whether you'll complain about it :)  Evidently it is not, but
-I still would like to see a report about macOS running directly on
-someone's Mac hardware, i.e. without all the CI/cloud/whatnot magic.
+--FN+gV9K+162wdwwF
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Any ideas how to fix this test, anyone?
+On Fri, Feb 08, 2019 at 12:55:11PM +0100, Kevin Daudt wrote:
+> On Fri, Feb 08, 2019 at 11:45:02AM +0000, brian m. carlson wrote:
+> > On Fri, Feb 08, 2019 at 01:04:03AM -0500, Rich Felker wrote:
+> > [..]
+> > > In any case, this test seems mainly relevant to Windows users wanting
+> > > to store source files in UTF-16LE with BOM. This doesn't really make
+> > > sense to do on a Linux/musl system, so I'm not sure any action is
+> > > needed here from either side.
+> >=20
+> > I do know that some people use CIFS or the like to share repositories
+> > between Unix and Windows. However, I agree that such people aren't
+> > likely to use UTF-16 on Unix systems. The working tree encoding
+> > functionality also supports other encodings which musl may or may not
+> > support.
+> >=20
+> > If you and your users are comfortable with the fact that the test (and
+> > the corresponding functionality) won't work as expected with UTF-16,
+> > then I agree that no action is needed.
+>=20
+> So would you suggest that we just skip this test on Alpine Linux?
 
-I'm afraid that this is not merely an issue with the test, but a
-platform issue that we should work around somehow.  I would have
-suggested to follow up on what Peff suggested, but I see that you
-already did, and it didn't work out...
+That's not exactly what I said. If Alpine Linux users are never going to
+use this functionality and don't care that it's broken, then that's a
+fine solution.
 
-In the meantime, for lack of a better option, I started to skip the
-two failure-prone tests in the OSX build jobs in my automated CI
-builds with:
+As originally mentioned, musl could change its libiconv to write a BOM,
+which would make it compatible with other known iconv implementations.
 
- -- >8 --
+There's also the possibility of defining NO_ICONV. That basically means
+that your system won't support encodings, and then this test shouldn't
+matter.
 
-Subject: [PATCH] travis-ci: skip flaky tests in 't5570-git-daemon.sh' in OSX
- build jobs
+Finally, you could try applying a patch to the test to make it write the
+BOM for UTF-16 since your iconv doesn't. I expect that the test will
+fail again later on once you've done that, though.
 
-See: https://public-inbox.org/git/CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com/
+I don't have musl so I can't test a patch, but theoretically, you could
+use a Makefile variable and lazy test prerequisite to control the
+behavior of the code and test, and we could apply a patch. I'll try to
+work something up later today which might work and which you could test.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- ci/lib-travisci.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+--FN+gV9K+162wdwwF
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
-index 69dff4d1ec..1cd2c1db7d 100755
---- a/ci/lib-travisci.sh
-+++ b/ci/lib-travisci.sh
-@@ -121,7 +121,9 @@ osx-clang|osx-gcc)
- 	# t9810 occasionally fails on Travis CI OS X
- 	# t9816 occasionally fails with "TAP out of sequence errors" on
- 	# Travis CI OS X
--	export GIT_SKIP_TESTS="t9810 t9816"
-+	# In 't5570-git-daemon.sh', the tests 'fetch notices corrupt pack'
-+	# and 'fetch notices corrupt idx' fail rather frequently.
-+	export GIT_SKIP_TESTS="t9810 t9816 t5570.9 t5570.10"
- 	;;
- GIT_TEST_GETTEXT_POISON)
- 	export GIT_TEST_GETTEXT_POISON=YesPlease
--- 
-2.20.1.940.g8404bb2d1a
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
 
- -- >8 --
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxdiWkACgkQv1NdgR9S
+9osbOBAAjrvBT7J66iaoeQdc6fLvjh21Z0D/3SMGezCTtAB0LeKXTdEDpUwDXdLq
+V5KdB6w2XmKT1XATS2o8r8PhEiOv0aah9yD5GlBrNogRZogRPO8y7xqwDBFh3Hct
+AqfiT82Mif6MXnJGkn/evt9I4BwsvMPOkJucStIE8Q/x/uyXbpTquSxtsAkfWa8e
+x08h50+0gNO1Sz8qD02bJHlJDUwoowoQzIgcIiMAz629VHp8rJynfqWkwp5Jz0hU
+MwsoN4yTPip2KkKoCgiBo8Muh/gx5PfVeuFENUdU+SgAQxyuU12n6Gxvjcf/Iqi0
+YtMkCTT1NpNkNajDa9AedRfsDRxJFO0AZIl8YrIBaM97N3ylwE20+aCTze0efIJ4
+dt4UZiBW74Pidy6dLYdFTRrIG8JFPLw612nTZtEF0Uvh9ury5diliRClJU/NKRrC
+aE3rLaKQj/JXD2JKNrFhewRWy7GlLR3faQjbEWNWbiuPh2c54GXeJI7QnADBuee2
+Wy4iuu1M+UjYm0Cls2ntjkvJHzmbSr++DCIzle3XrQ37y9Z1VL4uxw5HnEHBsuU1
+HGHG+QSV721ceAv2yiMqhuViYyu2Oo+mvfzAHEG6d4Lh4kCC3SBMtqJ98geqQIk5
+VndaHwKm/Fyaehn+fgt8wk5t2SX0i3zuJSWBkmk0p2Y9iQjrgiE=
+=LQ9M
+-----END PGP SIGNATURE-----
 
-
-> > > What it boils down to is this sequence:
-> > >
-> > >   - The test first prepares a repository containing a corrupt pack,
-> > >     ready to be server via 'git daemon'.
-> > >
-> > >   - Then the test runs 'test_must_fail git fetch ....', which connects
-> > >     to 'git daemon', which forks 'git upload-pack', which then
-> > >     advertises refs (only HEAD) and capabilities.  So far so good.
-> > >
-> > >   - 'git fetch' eventually calls fetch-pack.c:find_common().  The
-> > >     first half of this function assembles a request consisting of a
-> > >     want and a flush pkt-line, and sends it via a send_request() call.
-> > >
-> > >     At this point the scheduling becomes important: let's suppose that
-> > >     fetch is slow and upload-pack is fast.
-> > >
-> > >   - 'git upload-pack' receives the request, parses the want line,
-> > >     notices the corrupt pack, responds with an 'ERR upload-pack: not
-> > >     our ref' pkt-line, and die()s right away.
-> > >
-> > >   - 'git fetch' finally approaches the end of the function, where it
-> > >     attempts to send a done pkt-line via another send_request() call
-> > >     through the now closing TCP socket.
-> > >
-> > >   - What happens now seems to depend on the platform:
-> > >
-> > >     - On Linux, both on my machine and on Travis CI, it shows textbook
-> > >       example behaviour: write() returns with error and sets errno to
-> > >       ECONNRESET.  Since it happens in write_or_die(), 'git fetch'
-> > >       die()s with 'fatal: write error: Connection reset by peer', and
-> > >       doesn't show the error send by 'git upload-pack'; how could it,
-> > >       it doesn't even get as far to receive upload-pack's ERR
-> > >       pkt-line.
-> > >
-> > >       The test only checks that 'git fetch' fails, but it doesn't
-> > >       check whether it failed with the right error message, so the
-> > >       test still succeeds.  Had it checked the error message as well,
-> > >       we most likely had noticed this issue already, it doesn't happen
-> > >       all that rarely.
-> > >
-> > >     - On the new OSX images with XCode 9.4 on Travis CI the write()
-> > >       triggers SIGPIPE right away, and 'test_must_fail' notices it and
-> > >       fails the test.  I couldn't see any sign of an ECONNRESET or any
-> > >       other error that we could act upon to avoid the SIGPIPE.
-> > >
-> > >     - On OSX with XCode 9.2 on Travis CI there is neither SIGPIPE, nor
-> > >       ECONNRESET, but sending the request actually succeeds even
-> > >       though there is no process on the other end of the socket
-> > >       anymore.  'git fetch' then simply continues execution, reads and
-> > >       parses the ERR pkt-line, and then dies()s with 'fatal: remote
-> > >       error: upload-pack: not our ref'.  So, on the face of it, it
-> > >       shows the desired behaviour, but I have no idea how that write()
-> > >       could succeed instead of returning error.
-> > >
-> > > I don't know what happens on a real Mac as I don't have access to one;
-> > > I figured out all the above by enabling packet tracing, adding a
-> > > couple of well placed tracing printf() and sleep() calls, running a
-> > > bunch of builds on Travis CI, and looking through their logs.  But
-> > > without access to a debugger and netstat and what not I can't really
-> > > go any further.  So I would now happily pass the baton to those who
-> > > have a Mac and know a thing or two about its porting issues to first
-> > > check whether OSX on a real Mac shows the same behaviour as it does in
-> > > Travis CI's virtualized(?) environment.  And then they can pass the
-> > > baton to those who know all the intricacies of the pack protocol and
-> > > its implementation to decide what to do with this issue.
-> > >
-> > > For a mostly reliable reproduction recipe you might want to fetch this
-> > > branch:
-> > >
-> > >   https://github.com/szeder/git t5570-git-daemon-sigpipe
-> > >
-> > > and then run 'make && cd t && ./t5570-git-daemon.sh -v -x'
-> > >
-> > >
-> > > Have fun! ;)
-> > >
-> > >
-> > > 1 - https://blog.travis-ci.com/2018-07-19-xcode9-4-default-announce
-> > >
-> > > 2 - On git.git's master:
-> > >     https://travis-ci.org/git/git/jobs/411517552#L2717
-> > 
-> > 
-
+--FN+gV9K+162wdwwF--
