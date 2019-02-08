@@ -2,340 +2,443 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE3851F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 11:21:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54DED1F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 11:31:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727262AbfBHLVi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 06:21:38 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:34447 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726068AbfBHLVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 06:21:38 -0500
-Received: by mail-pf1-f195.google.com with SMTP id j18so1543537pfe.1
-        for <git@vger.kernel.org>; Fri, 08 Feb 2019 03:21:37 -0800 (PST)
+        id S1727218AbfBHLbG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 06:31:06 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36133 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726230AbfBHLbF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 06:31:05 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p6so3019577wmc.1
+        for <git@vger.kernel.org>; Fri, 08 Feb 2019 03:31:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=1mzOcIy+7HPLayzQsYtXq7G3ykNjVf0oOnwFWZDqUko=;
-        b=EoLc5aceWwe390TXMZpK6T/vZm5jdE7ZkFnDGglV4NYOehKOh0zDDCWcaSMvETAxdX
-         Pmj5l4DxaPsM3hyxBUNjkvz6Z0/OAgcWA7ypHvXLxqcs1BSM+klgV/+a8g4mIO0f0kml
-         UtY7oEWwsKsIpXnNBcFBcOcAAW1WF9ak4tslZCi+xRtHbLGVSOStfP1Rr6WbDdp1Mg3q
-         HhYa6CaubfqyAeGex5tHl4bukcg9Hcsm+UEyKWs5IN0qMYNk/Z6MMOR2FDRgrP7CMVH3
-         V9cf+wX+vSMBMGr/mZfDGuTiV7HRJfw18re2djgck/AmwxqoSH5mw7vFyp+QDkJzxSWa
-         V4gQ==
+        bh=jX2XnNzOqfysj6U7nRptReo30fKYk58wyjVpba2Mx98=;
+        b=XAxzbwFE7K/qC3Yv7S/VDaztOH81X9nCtHZ0RgTp9Z8imEaePc7WQahFjymSU5Fygf
+         rm+tYwKVKtE9j0fA4t1jqTGyyJk5vC8WaNDXIYAR8C5xAWwPTA7wngXGJ0DjTt5x4rAI
+         HhoQoLUd2fg1QAfUSt9C3AaNc21/H7bOMyQEFCJjhgdOFvB/AvqdWYbU1M8mbxrFk1dz
+         ak/xI7tpuxdY0T86lIbiMs0b3tuya/YFaRig7GZ7C4+XkjovgNAG07WeOaPrXCud2Oy6
+         a+Ic0uPMWC9cpJxY6wQ/T+ir7krO6rJTTL9QOJAb6diZMO6tyKfOwZMCe0IuXjxCuZsi
+         WR3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1mzOcIy+7HPLayzQsYtXq7G3ykNjVf0oOnwFWZDqUko=;
-        b=RvF7qBC1Yha/Gn++25PSzZvTd+IN3m5LsLTHQ+G3asEsBNU52Cak35BPKBs9vNGiMI
-         y0zMcOo2BGP+v46QXIrHxd7OE/FT/Fh4IhTAPknMvKAeymvq6aKW+sdE36HFoJ2BhJWg
-         2p/5Pw3tMASoSf112odiDfcYh05iIlNkrs/zkUwkUfl4smgFre8rhE1tVrEEr1zCVR91
-         C4EeEAqklkaRnVV7+PmgRTAqu42wOdWTjnAaQgS+Blgi/I5mrgSnyFMcHZ/cTTonUXZj
-         v/CxtkL/f/BZ2igQre/1A+pXjTX93tJicL22rl3HdTnc1WPhf6Q8p3Ks5j5nah5fKsrv
-         itQQ==
-X-Gm-Message-State: AHQUAuZcFKlGkOC8EjhYZ5lnOI9J1fou3Vn4X/Jg3v4ksGeehn7xylaQ
-        4cSQ9KKDgGSfAEw8sMY7qwygA0Wh
-X-Google-Smtp-Source: AHgI3Ib35pDYcRWVOaX2feeryTW4AHN5DbDtwfNAJGSFrTLv7KvIu85Lxr3CxNjLCCsT6HEV2R4v1A==
-X-Received: by 2002:a62:6503:: with SMTP id z3mr21144892pfb.169.1549624896609;
-        Fri, 08 Feb 2019 03:21:36 -0800 (PST)
-Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id w128sm3148181pfw.79.2019.02.08.03.21.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 08 Feb 2019 03:21:36 -0800 (PST)
-Date:   Fri, 8 Feb 2019 03:21:34 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH v4 3/3] submodule: teach set-branch subcommand
-Message-ID: <77af7e4b2fc094d8cd31164625ef3339e97e1cd5.1549624679.git.liu.denton@gmail.com>
-References: <cover.1549534460.git.liu.denton@gmail.com>
- <cover.1549624679.git.liu.denton@gmail.com>
+        bh=jX2XnNzOqfysj6U7nRptReo30fKYk58wyjVpba2Mx98=;
+        b=A8W5d2yKiB38fNDoDT3BL8zmN+Y7DE1wUywR7YMGnuGq48EPvaImCD564Iins5r/LZ
+         CS/4HkPC1yMM/XEEgthH2QQK0erV79+Y9Y3bUiYMAia4SUE6zmX/Q6QWZW9fRF8BGkA+
+         AYBtN/4DASHNNZyR8Cdgt3h5aookv00wsyYxLuVcBKpoVI1A5tY4lAB2Zp6ABRFm5mLD
+         FP6gmcOUlfhKIFrS/h/jY3DMjXToTkTYj60KM1yfEIrIupvxP8f/m86qc/jrew7fD3o7
+         znuBeDZWlv59iZKEDVueaSPY0e7dXBY5RZDQClXhbrwGE2fFc0cyNNB+KyYaMIL4qtRQ
+         p/9Q==
+X-Gm-Message-State: AHQUAuYwpPkC8/v0UEpwo9Jds0TCvQoaJ5LmiuFO+myBg1u02WvEdQoU
+        VNgyagconLCna6EOuD4u9gM=
+X-Google-Smtp-Source: AHgI3IacyKf/k4aWPQuXaA/YkAjW92i1aEQzdb2JY0E8yAQZEsr+D8Q9tnlIYYrAluQn4P+DVyvwnw==
+X-Received: by 2002:a1c:ab87:: with SMTP id u129mr11330014wme.104.1549625462378;
+        Fri, 08 Feb 2019 03:31:02 -0800 (PST)
+Received: from szeder.dev (x4db62aaa.dyn.telefonica.de. [77.182.42.170])
+        by smtp.gmail.com with ESMTPSA id d16sm1149475wru.52.2019.02.08.03.31.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Feb 2019 03:31:01 -0800 (PST)
+Date:   Fri, 8 Feb 2019 12:30:59 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org, t.gummerer@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v12 18/26] stash: convert push to builtin
+Message-ID: <20190208113059.GV10587@szeder.dev>
+References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
+ <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1549624679.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.2 (2019-01-07)
+In-Reply-To: <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This teaches git-submodule the set-branch subcommand which allows the
-branch of a submodule to be set through a porcelain command without
-having to manually manipulate the .gitmodules file.
----
- Documentation/git-submodule.txt        |  7 ++
- contrib/completion/git-completion.bash |  5 +-
- git-submodule.sh                       | 75 +++++++++++++++++++--
- t/t7419-submodule-set-branch.sh        | 93 ++++++++++++++++++++++++++
- 4 files changed, 175 insertions(+), 5 deletions(-)
- create mode 100755 t/t7419-submodule-set-branch.sh
+On Thu, Dec 20, 2018 at 09:44:34PM +0200, Paul-Sebastian Ungureanu wrote:
+> Add stash push to the helper.
+> 
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 4150148fa3..4daf144180 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] deinit [-f|--force] (--all|[--] <path>...)
- 'git submodule' [--quiet] update [<options>] [--] [<path>...]
-+'git submodule' [--quiet] set-branch [<options>] [--] <path>
- 'git submodule' [--quiet] summary [<options>] [--] [<path>...]
- 'git submodule' [--quiet] foreach [--recursive] <command>
- 'git submodule' [--quiet] sync [--recursive] [--] [<path>...]
-@@ -168,6 +169,12 @@ submodule with the `--init` option.
- If `--recursive` is specified, this command will recurse into the
- registered submodules, and update any nested submodules within.
- --
-+set-branch ((-d|--default)|(-b|--branch <branch>)) [--] <path>::
-+	Sets the default remote tracking branch for the submodule. The
-+	`--branch` option allows the remote branch to be specified. The
-+	`--default` option removes the submodule.<name>.branch configuration
-+	key, which causes the tracking branch to default to 'master'.
-+
- summary [--cached|--files] [(-n|--summary-limit) <n>] [commit] [--] [<path>...]::
- 	Show commit summary between the given commit (defaults to HEAD) and
- 	working tree/index. For a submodule in question, a series of commits
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 499e56f83d..8b3b5a9d34 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2573,7 +2573,7 @@ _git_submodule ()
- {
- 	__git_has_doubledash && return
- 
--	local subcommands="add status init deinit update summary foreach sync"
-+	local subcommands="add status init deinit update set-branch summary foreach sync"
- 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		case "$cur" in
-@@ -2604,6 +2604,9 @@ _git_submodule ()
- 			--force --rebase --merge --reference --depth --recursive --jobs
- 		"
- 		;;
-+	set-branch,--*)
-+		__gitcomp "--default --branch"
-+		;;
- 	summary,--*)
- 		__gitcomp "--cached --files --summary-limit"
- 		;;
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5e608f8bad..43ec756602 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -10,6 +10,7 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
-    or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
-+   or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]
-@@ -684,6 +685,72 @@ cmd_update()
- 	}
- }
- 
-+#
-+# Configures a submodule's default branch
-+#
-+# $@ = requested path
-+#
-+cmd_set_branch() {
-+	unset_branch=false
-+	branch=
-+
-+	while test $# -ne 0
-+	do
-+		case "$1" in
-+		-q|--quiet)
-+			# we don't do anything with this but we need to accept it
-+			;;
-+		-d|--default)
-+			unset_branch=true
-+			;;
-+		-b|--branch)
-+			case "$2" in '') usage ;; esac
-+			branch=$2
-+			shift
-+			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		-*)
-+			usage
-+			;;
-+		*)
-+			break
-+			;;
-+		esac
-+		shift
-+	done
-+
-+	if test $# -ne 1
-+	then
-+		usage
-+	fi
-+
-+	# we can't use `git submodule--helper name` here because internally, it
-+	# hashes the path so a trailing slash could lead to an unintentional no match
-+	name="$(git submodule--helper list "$1" | cut -f2)"
-+	if test -z "$name"
-+	then
-+		exit 1
-+	fi
-+
-+	test -n "$branch"; has_branch=$?
-+	test "$unset_branch" = true; has_unset_branch=$?
-+
-+	if test $((!$has_branch != !$has_unset_branch)) -eq 0
-+	then
-+		usage
-+	fi
-+
-+	if test $has_branch -eq 0
-+	then
-+		git submodule--helper config submodule."$name".branch "$branch"
-+	else
-+		git submodule--helper config --unset submodule."$name".branch
-+	fi
-+}
-+
- #
- # Show commit summary for submodules in index or working tree
- #
-@@ -980,7 +1047,7 @@ cmd_absorbgitdirs()
- while test $# != 0 && test -z "$command"
- do
- 	case "$1" in
--	add | foreach | init | deinit | update | status | summary | sync | absorbgitdirs)
-+	add | foreach | init | deinit | update | set-branch | status | summary | sync | absorbgitdirs)
- 		command=$1
- 		;;
- 	-q|--quiet)
-@@ -1021,8 +1088,8 @@ then
-     fi
- fi
- 
--# "-b branch" is accepted only by "add"
--if test -n "$branch" && test "$command" != add
-+# "-b branch" is accepted only by "add" and "set-branch"
-+if test -n "$branch" && (test "$command" != add || test "$command" != set-branch)
- then
- 	usage
- fi
-@@ -1033,4 +1100,4 @@ then
- 	usage
- fi
- 
--"cmd_$command" "$@"
-+"cmd_$(echo $command | sed -e s/-/_/g)" "$@"
-diff --git a/t/t7419-submodule-set-branch.sh b/t/t7419-submodule-set-branch.sh
-new file mode 100755
-index 0000000000..c4b370ea85
---- /dev/null
-+++ b/t/t7419-submodule-set-branch.sh
-@@ -0,0 +1,93 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2019 Denton Liu
-+#
-+
-+test_description='Test submodules set-branch subcommand
-+
-+This test verifies that the set-branch subcommand of git-submodule is working
-+as expected.
-+'
-+
-+TEST_NO_CREATE_REPO=1
-+. ./test-lib.sh
-+
-+test_expect_success 'submodule config cache setup' '
-+	mkdir submodule &&
-+	(cd submodule &&
-+		git init &&
-+		echo a >a &&
-+		git add . &&
-+		git commit -ma &&
-+		git checkout -b topic &&
-+		echo b >a &&
-+		git add . &&
-+		git commit -mb
-+	) &&
-+	mkdir super &&
-+	(cd super &&
-+		git init &&
-+		git submodule add ../submodule &&
-+		git commit -m "add submodule"
-+	)
-+'
-+
-+test_expect_success 'ensure submodule branch is unset' '
-+	(cd super &&
-+		test_must_fail grep branch .gitmodules
-+	)
-+'
-+
-+test_expect_success 'test submodule set-branch --branch' '
-+	(cd super &&
-+		git submodule set-branch --branch topic submodule &&
-+		grep "branch = topic" .gitmodules &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		b
-+		EOF
-+		git -C submodule show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'test submodule set-branch --default' '
-+	(cd super &&
-+		git submodule set-branch --default submodule &&
-+		test_must_fail grep branch .gitmodules &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		a
-+		EOF
-+		git -C submodule show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'test submodule set-branch -b' '
-+	(cd super &&
-+		git submodule set-branch -b topic submodule &&
-+		grep "branch = topic" .gitmodules &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		b
-+		EOF
-+		git -C submodule show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'test submodule set-branch -d' '
-+	(cd super &&
-+		git submodule set-branch -d submodule &&
-+		test_must_fail grep branch .gitmodules &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		a
-+		EOF
-+		git -C submodule show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_done
--- 
-2.20.1.522.g5f42c252e9
+This patch causes rare failures in 't3903-stash.sh', I've seen it
+break for the first time today in a Travis CI build:
 
+  +echo bar3
+  +echo bar4
+  +git add file2
+  +git stash -k
+  Saved working directory and index state WIP on stashbranch: d3a23d9 alternate second
+  +cat file
+  +cat file2
+  +test bar,bar4 = bar,bar2
+  error: last command exited with $?=1
+  not ok 20 - stash -k
+
+Steps to reproduce:
+
+  $ git checkout -f fa38428f76
+  HEAD is now at fa38428f76 stash: convert push to builtin
+  
+  # fb7d1e3ac8 (test-lib: add the '--stress' option to run a test
+  # repeatedly under load, 2019-01-05)
+  $ git merge --no-commit fb7d1e3ac8
+  Automatic merge went well; stopped before committing as requested
+  $ make && cd t
+  <snip>
+  $ ./t3903-stash.sh --stress -r 1,13,14,20
+  # wait, it tends to fail in <30 repetitions
+
+I run stress testing on its parent for over 800 repetitions, no sign
+of failure yet.
+
+> ---
+>  builtin/stash--helper.c | 245 +++++++++++++++++++++++++++++++++++++++-
+>  git-stash.sh            |   6 +-
+>  2 files changed, 245 insertions(+), 6 deletions(-)
+> 
+> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> index 080c2f7aa6..c77f62c895 100644
+> --- a/builtin/stash--helper.c
+> +++ b/builtin/stash--helper.c
+> @@ -23,6 +23,9 @@ static const char * const git_stash_helper_usage[] = {
+>  	N_("git stash--helper ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
+>  	N_("git stash--helper branch <branchname> [<stash>]"),
+>  	N_("git stash--helper clear"),
+> +	N_("git stash--helper [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+> +	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
+> +	   "          [--] [<pathspec>...]]"),
+>  	NULL
+>  };
+>  
+> @@ -71,6 +74,13 @@ static const char * const git_stash_helper_create_usage[] = {
+>  	NULL
+>  };
+>  
+> +static const char * const git_stash_helper_push_usage[] = {
+> +	N_("git stash--helper [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+> +	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
+> +	   "          [--] [<pathspec>...]]"),
+> +	NULL
+> +};
+> +
+>  static const char *ref_stash = "refs/stash";
+>  static struct strbuf stash_index_path = STRBUF_INIT;
+>  
+> @@ -1092,7 +1102,7 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+>  
+>  static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
+>  			   int include_untracked, int patch_mode,
+> -			   struct stash_info *info)
+> +			   struct stash_info *info, struct strbuf *patch)
+>  {
+>  	int ret = 0;
+>  	int flags = 0;
+> @@ -1105,7 +1115,6 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
+>  	struct strbuf msg = STRBUF_INIT;
+>  	struct strbuf commit_tree_label = STRBUF_INIT;
+>  	struct strbuf untracked_files = STRBUF_INIT;
+> -	struct strbuf patch = STRBUF_INIT;
+>  
+>  	prepare_fallback_ident("git stash", "git@stash");
+>  
+> @@ -1154,7 +1163,7 @@ static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
+>  		untracked_commit_option = 1;
+>  	}
+>  	if (patch_mode) {
+> -		ret = stash_patch(info, ps, &patch);
+> +		ret = stash_patch(info, ps, patch);
+>  		if (ret < 0) {
+>  			fprintf_ln(stderr, _("Cannot save the current "
+>  					     "worktree state"));
+> @@ -1225,7 +1234,8 @@ static int create_stash(int argc, const char **argv, const char *prefix)
+>  
+>  	memset(&ps, 0, sizeof(ps));
+>  	strbuf_addstr(&stash_msg_buf, stash_msg);
+> -	ret = do_create_stash(ps, &stash_msg_buf, include_untracked, 0, &info);
+> +	ret = do_create_stash(ps, &stash_msg_buf, include_untracked, 0, &info,
+> +			      NULL);
+>  
+>  	if (!ret)
+>  		printf_ln("%s", oid_to_hex(&info.w_commit));
+> @@ -1239,6 +1249,231 @@ static int create_stash(int argc, const char **argv, const char *prefix)
+>  	return ret < 0;
+>  }
+>  
+> +static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
+> +			 int keep_index, int patch_mode, int include_untracked)
+> +{
+> +	int ret = 0;
+> +	struct stash_info info;
+> +	struct strbuf patch = STRBUF_INIT;
+> +	struct strbuf stash_msg_buf = STRBUF_INIT;
+> +
+> +	if (patch_mode && keep_index == -1)
+> +		keep_index = 1;
+> +
+> +	if (patch_mode && include_untracked) {
+> +		fprintf_ln(stderr, _("Can't use --patch and --include-untracked"
+> +				     " or --all at the same time"));
+> +		ret = -1;
+> +		goto done;
+> +	}
+> +
+> +	read_cache_preload(NULL);
+> +	if (!include_untracked && ps.nr) {
+> +		int i;
+> +		char *ps_matched = xcalloc(ps.nr, 1);
+> +
+> +		for (i = 0; i < active_nr; i++)
+> +			ce_path_match(&the_index, active_cache[i], &ps,
+> +				      ps_matched);
+> +
+> +		if (report_path_error(ps_matched, &ps, NULL)) {
+> +			fprintf_ln(stderr, _("Did you forget to 'git add'?"));
+> +			ret = -1;
+> +			free(ps_matched);
+> +			goto done;
+> +		}
+> +		free(ps_matched);
+> +	}
+> +
+> +	if (refresh_cache(REFRESH_QUIET)) {
+> +		ret = -1;
+> +		goto done;
+> +	}
+> +
+> +	if (!check_changes(ps, include_untracked)) {
+> +		if (!quiet)
+> +			printf_ln(_("No local changes to save"));
+> +		goto done;
+> +	}
+> +
+> +	if (!reflog_exists(ref_stash) && do_clear_stash()) {
+> +		ret = -1;
+> +		fprintf_ln(stderr, _("Cannot initialize stash"));
+> +		goto done;
+> +	}
+> +
+> +	if (stash_msg)
+> +		strbuf_addstr(&stash_msg_buf, stash_msg);
+> +	if (do_create_stash(ps, &stash_msg_buf, include_untracked, patch_mode,
+> +			    &info, &patch)) {
+> +		ret = -1;
+> +		goto done;
+> +	}
+> +
+> +	if (do_store_stash(&info.w_commit, stash_msg_buf.buf, 1)) {
+> +		ret = -1;
+> +		fprintf_ln(stderr, _("Cannot save the current status"));
+> +		goto done;
+> +	}
+> +
+> +	printf_ln(_("Saved working directory and index state %s"),
+> +		  stash_msg_buf.buf);
+> +
+> +	if (!patch_mode) {
+> +		if (include_untracked && !ps.nr) {
+> +			struct child_process cp = CHILD_PROCESS_INIT;
+> +
+> +			cp.git_cmd = 1;
+> +			argv_array_pushl(&cp.args, "clean", "--force",
+> +					 "--quiet", "-d", NULL);
+> +			if (include_untracked == INCLUDE_ALL_FILES)
+> +				argv_array_push(&cp.args, "-x");
+> +			if (run_command(&cp)) {
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +		}
+> +		if (ps.nr) {
+> +			struct child_process cp_add = CHILD_PROCESS_INIT;
+> +			struct child_process cp_diff = CHILD_PROCESS_INIT;
+> +			struct child_process cp_apply = CHILD_PROCESS_INIT;
+> +			struct strbuf out = STRBUF_INIT;
+> +
+> +			cp_add.git_cmd = 1;
+> +			argv_array_push(&cp_add.args, "add");
+> +			if (!include_untracked)
+> +				argv_array_push(&cp_add.args, "-u");
+> +			if (include_untracked == INCLUDE_ALL_FILES)
+> +				argv_array_push(&cp_add.args, "--force");
+> +			argv_array_push(&cp_add.args, "--");
+> +			add_pathspecs(&cp_add.args, ps);
+> +			if (run_command(&cp_add)) {
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +
+> +			cp_diff.git_cmd = 1;
+> +			argv_array_pushl(&cp_diff.args, "diff-index", "-p",
+> +					 "--cached", "--binary", "HEAD", "--",
+> +					 NULL);
+> +			add_pathspecs(&cp_diff.args, ps);
+> +			if (pipe_command(&cp_diff, NULL, 0, &out, 0, NULL, 0)) {
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +
+> +			cp_apply.git_cmd = 1;
+> +			argv_array_pushl(&cp_apply.args, "apply", "--index",
+> +					 "-R", NULL);
+> +			if (pipe_command(&cp_apply, out.buf, out.len, NULL, 0,
+> +					 NULL, 0)) {
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +		} else {
+> +			struct child_process cp = CHILD_PROCESS_INIT;
+> +			cp.git_cmd = 1;
+> +			argv_array_pushl(&cp.args, "reset", "--hard", "-q",
+> +					 NULL);
+> +			if (run_command(&cp)) {
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +		}
+> +
+> +		if (keep_index == 1 && !is_null_oid(&info.i_tree)) {
+> +			struct child_process cp_ls = CHILD_PROCESS_INIT;
+> +			struct child_process cp_checkout = CHILD_PROCESS_INIT;
+> +			struct strbuf out = STRBUF_INIT;
+> +
+> +			if (reset_tree(&info.i_tree, 0, 1)) {
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +
+> +			cp_ls.git_cmd = 1;
+> +			argv_array_pushl(&cp_ls.args, "ls-files", "-z",
+> +					 "--modified", "--", NULL);
+> +
+> +			add_pathspecs(&cp_ls.args, ps);
+> +			if (pipe_command(&cp_ls, NULL, 0, &out, 0, NULL, 0)) {
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +
+> +			cp_checkout.git_cmd = 1;
+> +			argv_array_pushl(&cp_checkout.args, "checkout-index",
+> +					 "-z", "--force", "--stdin", NULL);
+> +			if (pipe_command(&cp_checkout, out.buf, out.len, NULL,
+> +					 0, NULL, 0)) {
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +		}
+> +		goto done;
+> +	} else {
+> +		struct child_process cp = CHILD_PROCESS_INIT;
+> +
+> +		cp.git_cmd = 1;
+> +		argv_array_pushl(&cp.args, "apply", "-R", NULL);
+> +
+> +		if (pipe_command(&cp, patch.buf, patch.len, NULL, 0, NULL, 0)) {
+> +			fprintf_ln(stderr, _("Cannot remove worktree changes"));
+> +			ret = -1;
+> +			goto done;
+> +		}
+> +
+> +		if (keep_index < 1) {
+> +			struct child_process cp = CHILD_PROCESS_INIT;
+> +
+> +			cp.git_cmd = 1;
+> +			argv_array_pushl(&cp.args, "reset", "-q", "--", NULL);
+> +			add_pathspecs(&cp.args, ps);
+> +			if (run_command(&cp)) {
+> +				ret = -1;
+> +				goto done;
+> +			}
+> +		}
+> +		goto done;
+> +	}
+> +
+> +done:
+> +	strbuf_release(&stash_msg_buf);
+> +	return ret;
+> +}
+> +
+> +static int push_stash(int argc, const char **argv, const char *prefix)
+> +{
+> +	int keep_index = -1;
+> +	int patch_mode = 0;
+> +	int include_untracked = 0;
+> +	int quiet = 0;
+> +	const char *stash_msg = NULL;
+> +	struct pathspec ps;
+> +	struct option options[] = {
+> +		OPT_BOOL('k', "keep-index", &keep_index,
+> +			 N_("keep index")),
+> +		OPT_BOOL('p', "patch", &patch_mode,
+> +			 N_("stash in patch mode")),
+> +		OPT__QUIET(&quiet, N_("quiet mode")),
+> +		OPT_BOOL('u', "include-untracked", &include_untracked,
+> +			 N_("include untracked files in stash")),
+> +		OPT_SET_INT('a', "all", &include_untracked,
+> +			    N_("include ignore files"), 2),
+> +		OPT_STRING('m', "message", &stash_msg, N_("message"),
+> +			   N_("stash message")),
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options,
+> +			     git_stash_helper_push_usage,
+> +			     0);
+> +
+> +	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL, prefix, argv);
+> +	return do_push_stash(ps, stash_msg, quiet, keep_index, patch_mode,
+> +			     include_untracked);
+> +}
+> +
+>  int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>  {
+>  	pid_t pid = getpid();
+> @@ -1277,6 +1512,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>  		return !!store_stash(argc, argv, prefix);
+>  	else if (!strcmp(argv[0], "create"))
+>  		return !!create_stash(argc, argv, prefix);
+> +	else if (!strcmp(argv[0], "push"))
+> +		return !!push_stash(argc, argv, prefix);
+>  
+>  	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
+>  		      git_stash_helper_usage, options);
+> diff --git a/git-stash.sh b/git-stash.sh
+> index a9b3064ff0..51d7a06601 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -429,7 +429,8 @@ save)
+>  	;;
+>  push)
+>  	shift
+> -	push_stash "$@"
+> +	cd "$START_DIR"
+> +	git stash--helper push "$@"
+>  	;;
+>  apply)
+>  	shift
+> @@ -465,7 +466,8 @@ branch)
+>  *)
+>  	case $# in
+>  	0)
+> -		push_stash &&
+> +		cd "$START_DIR"
+> +		git stash--helper push &&
+>  		say "$(gettext "(To restore them type \"git stash apply\")")"
+>  		;;
+>  	*)
+> -- 
+> 2.20.1.441.g764a526393
+> 
