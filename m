@@ -2,192 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B995B1F453
-	for <e@80x24.org>; Fri,  8 Feb 2019 09:10:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13DC41F453
+	for <e@80x24.org>; Fri,  8 Feb 2019 09:28:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727309AbfBHJK6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Feb 2019 04:10:58 -0500
-Received: from adoakley.name ([88.198.105.104]:55660 "EHLO adoakley.name"
+        id S1726773AbfBHJ2X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Feb 2019 04:28:23 -0500
+Received: from mout.gmx.net ([212.227.17.21]:41713 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727260AbfBHJK6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Feb 2019 04:10:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=adoakley.name; s=2018; h=Content-Transfer-Encoding:MIME-Version:References:
-        In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=rk+98HWIOOjpJvzK3ls3vbTdxw93b0HXMDPTSyC1RLA=; b=SlDgKvEiTcxocWmhEpq2+Kpl8w
-        /y50k+zkjcd+PuAwRhbOMEyPThxtM5EiBRLx90CUEsQ6B3sr1O9BrBIMphg0fu1h2Ajp5+0ovxzaQ
-        FVezi43HytWY6zKdZrslr6lb8lVnL6v7bUP7LB0HGKMemWX1rcnkXD9xpzlhMQ7uwlPo=;
-Received: from ado-amd-gentoo.home.adoakley.name ([2001:8b0:14bb:e93b:b0a2:3603:6426:932f])
-        by adoakley.name with esmtpa (Exim 4.91)
-        (envelope-from <andrew@adoakley.name>)
-        id 1gs2BU-0001wI-5j; Fri, 08 Feb 2019 09:10:56 +0000
-From:   andrew@adoakley.name
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Luke Diamand <luke@diamand.org>,
-        Andrew Oakley <andrew@adoakley.name>
-Subject: [PATCH v2] git-p4: recover from inconsistent perforce history
-Date:   Fri,  8 Feb 2019 09:10:33 +0000
-Message-Id: <20190208091033.12617-1-andrew@adoakley.name>
-X-Mailer: git-send-email 2.19.2
-In-Reply-To: <20190208090704.68154885@ado-amd-gentoo.home.adoakley.name>
-References: <20190208090704.68154885@ado-amd-gentoo.home.adoakley.name>
+        id S1726063AbfBHJ2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Feb 2019 04:28:23 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFz0E-1gvwSo49Ti-00Euq1; Fri, 08
+ Feb 2019 10:28:13 +0100
+Date:   Fri, 8 Feb 2019 10:28:12 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Clemens Buchacher <drizzd@gmx.net>
+Subject: Re: t5570-git-daemon fails with SIGPIPE on OSX
+In-Reply-To: <nycvar.QRO.7.76.6.1902080958190.41@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1902081024550.41@tvgsbejvaqbjf.bet>
+References: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com> <20180814223246.GA2379@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1902080958190.41@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-604727233-1549618094=:41"
+X-Provags-ID: V03:K1:+C8eEiSKU25snwDQpb1TzP6DE1tw7Hny5/0wpVnSmwasq/ekxLM
+ xir2/ctizmhzSQ+OuGRCR4L8bf/ps2aPk+3zt3Hmpsj02eV7MdwuXDBT+E9mN7LVmRKX4JH
+ ytE3FZFr0/RSI43sGeACUKmMW4/N6f2e1SQZnJJUbXZiWFA++22wdg6YGZs2u0yrqrWjhJp
+ tcDs7FZVSIi+FYw0yeZIw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:47BULXNffvk=:CMN/5/tL8LHb4hyXhDpxGc
+ k2s2HAZi4YEeyf0v8BRDUjc/gXR2mUijW2jiWz1C+kewL7ubaLJgsFILIdtgl/o3par01UGFv
+ j+eKw+htFqKQCSL5WFRHbx3I8tF2r6d/V9sE30RR9LiAVkhxVHB6HriXtglP6j3cRbIXPvuPv
+ Vcc8m67dhWpEfEdxEXXOZoy0wH+TrV86g7fkQozVSU1S5OaDT0+mH0TA46gySOViupD68nHAT
+ /B+ClGzoEB+/LnIg4UgQ1KzcYOetRlsVA6HjnSYSVLqz+SOKItkofB7g7niOq33IuJuXFlhz6
+ cvTpSM7ZU4NmCb1OGutdEflqtRmOBo15M9cqS+39H2wTDxAF/arquCkLpGk2mUxaI4VU5Ydno
+ hvjTxmfcrzTb1+7VBX7/1cxXLvArZLHi2AsdHdBxm9tX9swXzsY3VV00nsc+0naw/6LWLRC9G
+ cFUzQL1fkNfgp6kikRO9lNNbnNTH01LhmmqkpRDCWZTOllJtnjjUu1x78VbgA1yegF1mymTCX
+ hQK2mdaFMeCNDtb6jZJSjHZ8sOV0KLLmyfsoO8we4rqoCQ5mLkO9r7ShcL6wuI9tYqaMQEz7q
+ deRdyXn+hQWe/6WH1E6TBV4Ig3ttADhoLU6bvESySxdHSM5VqgkKDzYY0efzxrZAmoKuWuKnn
+ LkcTvODyc5WMvVFs6JWUfRNvi0iCF2IS86Jk9rrSJxrp/icx33J5DnhNmxeDLvZmy7hEKxNIv
+ z0Fjg+eo/AALOUfs1X7eEPUDxia9B3Mw1VOheir60ez7lSZ7l5zMIyPYbk49KF8IUn4BQAozN
+ YAhzxkgYIdM6lOjozbsM+XoBQ1rR/S+4y5LB9a+0mpDMWcmo4KLjLnSV5HAbzQlrnE39c3nDt
+ E5fBoZpsTidZ6Qh1FR8RGFpFcn5H77DCRgj/RGf7+vV/X7JLmnmqeuC48sFfJddPDr8zRdJMQ
+ lFtJ1kF3ekleW05w66QZO5m/XDVzri+RO7Zi01fgO7ZegVZoXfmykUTDvSpzo3wTUvA2HaBVy
+ S9BO/cvil9lutLlHUoK9l0TRq6rg7Q5ck8hpHjgYlObKKgSltneL0rn15TUAnmrLwVJ/yNiVL
+ DfyGIBjQq8afQQlGjSj0hmF2T+5M3N0X1ZY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrew Oakley <andrew@adoakley.name>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Perforce allows you commit files and directories with the same name, so
-you could have files //depot/foo and //depot/foo/bar both checked in.  A
-p4 sync of a repository in this state fails.  Deleting one of the files
-recovers the repository.
+--8323328-604727233-1549618094=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-When this happens we want git-p4 to recover in the same way as perforce.
+Hi Peff,
 
-Signed-off-by: Andrew Oakley <andrew@adoakley.name>
----
- git-p4.py                      | 41 ++++++++++++++++++++++--
- t/t9834-git-p4-file-dir-bug.sh | 58 ++++++++++++++++++++++++++++++++++
- 2 files changed, 96 insertions(+), 3 deletions(-)
- create mode 100755 t/t9834-git-p4-file-dir-bug.sh
+On Fri, 8 Feb 2019, Johannes Schindelin wrote:
 
-diff --git a/git-p4.py b/git-p4.py
-index 3e12774f96..42f6805641 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -3012,6 +3012,40 @@ def hasBranchPrefix(self, path):
-             print('Ignoring file outside of prefix: {0}'.format(path))
-         return hasPrefix
- 
-+    def findShadowedFiles(self, files, change):
-+        # Perforce allows you commit files and directories with the same name,
-+        # so you could have files //depot/foo and //depot/foo/bar both checked
-+        # in.  A p4 sync of a repository in this state fails.  Deleting one of
-+        # the files recovers the repository.
-+        #
-+        # Git will not allow the broken state to exist and only the most recent
-+        # of the conflicting names is left in the repository.  When one of the
-+        # conflicting files is deleted we need to re-add the other one to make
-+        # sure the git repository recovers in the same way as perforce.
-+        deleted = [f for f in files if f['action'] in self.delete_actions]
-+        to_check = set()
-+        for f in deleted:
-+            path = f['path']
-+            to_check.add(path + '/...')
-+            while True:
-+                path = path.rsplit("/", 1)[0]
-+                if path == "/" or path in to_check:
-+                    break
-+                to_check.add(path)
-+        to_check = [p for p in to_check if self.hasBranchPrefix(p)]
-+        if to_check:
-+            stat_result = p4CmdList(
-+                ["fstat", "-T", "depotFile,headRev,headType"] +
-+                    ["%s@%s" % (p, change) for p in to_check])
-+            for record in stat_result:
-+                if record['code'] != 'stat':
-+                    continue
-+                files.append({
-+                    'action': 'add',
-+                    'path': record['depotFile'],
-+                    'rev': record['headRev'],
-+                    'type': record['headType']})
-+
-     def commit(self, details, files, branch, parent = "", allow_empty=False):
-         epoch = details["time"]
-         author = details["user"]
-@@ -3020,11 +3054,12 @@ def commit(self, details, files, branch, parent = "", allow_empty=False):
-         if self.verbose:
-             print('commit into {0}'.format(branch))
- 
-+        files = [f for f in files if self.hasBranchPrefix(f['path'])]
-+        self.findShadowedFiles(files, details["change"])
-+
-         if self.clientSpecDirs:
-             self.clientSpecDirs.update_client_spec_path_cache(files)
--
--        files = [f for f in files
--            if self.inClientSpec(f['path']) and self.hasBranchPrefix(f['path'])]
-+            files = [f for f in files if self.inClientSpec(f['path'])]
- 
-         if gitConfigBool('git-p4.keepEmptyCommits'):
-             allow_empty = True
-diff --git a/t/t9834-git-p4-file-dir-bug.sh b/t/t9834-git-p4-file-dir-bug.sh
-new file mode 100755
-index 0000000000..9839a3d2bb
---- /dev/null
-+++ b/t/t9834-git-p4-file-dir-bug.sh
-@@ -0,0 +1,58 @@
-+#!/bin/sh
-+
-+test_description='git p4 directory/file bug handling
-+
-+This test creates files and directories with the same name in perforce and
-+checks that git-p4 recovers from the error at the same time as the perforce
-+repository.'
-+
-+. ./lib-git-p4.sh
-+
-+test_expect_success 'start p4d' '
-+	start_p4d
-+'
-+
-+test_expect_success 'init depot' '
-+	(
-+		cd "$cli" &&
-+
-+		touch add_file_add_dir_del_file add_file_add_dir_del_dir &&
-+		p4 add add_file_add_dir_del_file add_file_add_dir_del_dir &&
-+		mkdir add_dir_add_file_del_file add_dir_add_file_del_dir &&
-+		touch add_dir_add_file_del_file/file add_dir_add_file_del_dir/file &&
-+		p4 add add_dir_add_file_del_file/file add_dir_add_file_del_dir/file &&
-+		p4 submit -d "add initial" &&
-+
-+		rm -f add_file_add_dir_del_file add_file_add_dir_del_dir &&
-+		mkdir add_file_add_dir_del_file add_file_add_dir_del_dir &&
-+		touch add_file_add_dir_del_file/file add_file_add_dir_del_dir/file &&
-+		p4 add add_file_add_dir_del_file/file add_file_add_dir_del_dir/file &&
-+		rm -rf add_dir_add_file_del_file add_dir_add_file_del_dir &&
-+		touch add_dir_add_file_del_file add_dir_add_file_del_dir &&
-+		p4 add add_dir_add_file_del_file add_dir_add_file_del_dir &&
-+		p4 submit -d "add conflicting" &&
-+
-+		p4 delete -k add_file_add_dir_del_file &&
-+		p4 delete -k add_file_add_dir_del_dir/file &&
-+		p4 delete -k add_dir_add_file_del_file &&
-+		p4 delete -k add_dir_add_file_del_dir/file &&
-+		p4 submit -d "delete conflicting"
-+	)
-+'
-+
-+test_expect_success 'clone with git-p4' '
-+	git p4 clone --dest="$git" //depot/@all
-+'
-+
-+test_expect_success 'check final contents' '
-+	test_path_is_dir "$git/add_file_add_dir_del_file" &&
-+	test_path_is_file "$git/add_file_add_dir_del_dir" &&
-+	test_path_is_dir "$git/add_dir_add_file_del_file" &&
-+	test_path_is_file "$git/add_dir_add_file_del_dir"
-+'
-+
-+test_expect_success 'kill p4d' '
-+	kill_p4d
-+'
-+
-+test_done
--- 
-2.19.2
+> I just had a look at the patch you provided below (for some reason, my
+> previous search on public-inbox only turned up Gábor's mail to which you
+> responded).
+> 
+> Admittedly, I do not really understand all aspects of it, but it applies,
+> still, and I kicked off a stress test here:
+> 
+> 	https://dev.azure.com/git/git/_build/results?buildId=338
+> 
+> It seems that your patch fixes that t5570 flakiness on macOS, and more
+> importantly, addresses an important issue on macOS.
+> 
+> Will play a bit more with it and keep you posted.
 
+Alas, I was fooled. *Fooled*, I say. Apparently the --stress option makes
+the script *succeed* when it fails?
+
+I say that because I wanted to make sure that your patch fixes things and
+reverted your change and started another build, which succeeded. So I
+started another build, then another build, and they all succeeded. Only
+then it dawned on me that I had not looked at the *logs*. And they all
+still report the same issue, even with your patch:
+
+https://dev.azure.com/git/git/_build/results?buildId=338&view=logs&jobId=51041795-01c5-57f3-5561-107b6b9e51a6&taskId=fadc714a-a906-5cf2-cc7a-335e443ad2f8&lineStart=1402&lineEnd=1505&colStart=1&colEnd=32
+
+(You will have to scroll all the way down, or press Ctrl+End, to see that
+"fetch notices corrupt pack" is failing.)
+
+So I am afraid that your patch does not fix the issue nor does it work
+around it.
+
+Ciao,
+Dscho
+
+> On Tue, 14 Aug 2018, Jeff King wrote:
+> 
+> > On Mon, Aug 06, 2018 at 05:11:13PM +0200, SZEDER Gábor wrote:
+> > 
+> > >   - 'git upload-pack' receives the request, parses the want line,
+> > >     notices the corrupt pack, responds with an 'ERR upload-pack: not
+> > >     our ref' pkt-line, and die()s right away.
+> > > 
+> > >   - 'git fetch' finally approaches the end of the function, where it
+> > >     attempts to send a done pkt-line via another send_request() call
+> > >     through the now closing TCP socket.
+> > > 
+> > >   - What happens now seems to depend on the platform:
+> > > 
+> > >     - On Linux, both on my machine and on Travis CI, it shows textbook
+> > >       example behaviour: write() returns with error and sets errno to
+> > >       ECONNRESET.  Since it happens in write_or_die(), 'git fetch'
+> > >       die()s with 'fatal: write error: Connection reset by peer', and
+> > >       doesn't show the error send by 'git upload-pack'; how could it,
+> > >       it doesn't even get as far to receive upload-pack's ERR
+> > >       pkt-line.
+> > > 
+> > >       The test only checks that 'git fetch' fails, but it doesn't
+> > >       check whether it failed with the right error message, so the
+> > >       test still succeeds.  Had it checked the error message as well,
+> > >       we most likely had noticed this issue already, it doesn't happen
+> > >       all that rarely.
+> > 
+> > Hmm. Traditionally we did not send ERR as part of upload-pack at all. It
+> > was the message you got from git-daemon if it couldn't start the
+> > requested sub-process. It was only later in bdb31eada7 (upload-pack:
+> > report "not our ref" to client, 2017-02-23) that we started sending
+> > them. So I think that is why it does not check the error message: it is
+> > not expecting that case at all (and it is not actually interesting here,
+> > as the real problem is that the remote side is corrupt, but it sadly
+> > does not say anything so useful).
+> > 
+> > I think that's somewhat tangential, though. The root of the issue is
+> > this:
+> > 
+> > >     - On the new OSX images with XCode 9.4 on Travis CI the write()
+> > >       triggers SIGPIPE right away, and 'test_must_fail' notices it and
+> > >       fails the test.  I couldn't see any sign of an ECONNRESET or any
+> > >       other error that we could act upon to avoid the SIGPIPE.
+> > 
+> > Right, as soon as we get SIGPIPE we can't offer any useful message,
+> > because we're dead. I would argue that fetch should simply turn off
+> > SIGPIPE entirely, and rely on getting EPIPE from write(). But since
+> > we're in write_or_die(), it actually turns EPIPE back into a SIGPIPE
+> > death!
+> > 
+> > So we'd probably also want to teach it to use a real write_in_full(),
+> > and then output a more useful message in this case. write_or_die()
+> > really does produce bad messages regardless, because it doesn't know
+> > what it's writing to.
+> > 
+> > That would give us a baby step in the right direction, because at least
+> > we'd always be doing a controlled die() then. And then the next step
+> > would be to show the remote error message (even though it's not actually
+> > useful in this case, in theory upload-pack could generate something
+> > better). And that would mean turning the die() on write into an attempt
+> > to drain any ERR messages before either dying or returning an error up
+> > the stack.
+> > 
+> > I suspect the (largely untested) patch below would make your test
+> > problems go away. Or instead, we could simply add sigpipe=ok to the
+> > test_must_fail invocation, but I agree with you that the current
+> > behavior on OS X is not ideal (the user sees no error message).
+> > 
+> > -Peff
+> > 
+> > diff --git a/fetch-pack.c b/fetch-pack.c
+> > index 5714bcbddd..3e80604562 100644
+> > --- a/fetch-pack.c
+> > +++ b/fetch-pack.c
+> > @@ -188,8 +188,10 @@ static void send_request(struct fetch_pack_args *args,
+> >  	if (args->stateless_rpc) {
+> >  		send_sideband(fd, -1, buf->buf, buf->len, LARGE_PACKET_MAX);
+> >  		packet_flush(fd);
+> > -	} else
+> > -		write_or_die(fd, buf->buf, buf->len);
+> > +	} else {
+> > +		if (write_in_full(fd, buf->buf, buf->len) < 0)
+> > +			die_errno("unable to write to remote");
+> > +	}
+> >  }
+> >  
+> >  static void insert_one_alternate_object(struct fetch_negotiator *negotiator,
+> > @@ -1167,7 +1169,8 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+> >  
+> >  	/* Send request */
+> >  	packet_buf_flush(&req_buf);
+> > -	write_or_die(fd_out, req_buf.buf, req_buf.len);
+> > +	if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
+> > +		die_errno("unable to write request to remote");
+> >  
+> >  	strbuf_release(&req_buf);
+> >  	return ret;
+> > diff --git a/pkt-line.c b/pkt-line.c
+> > index a593c08aad..450d0801b1 100644
+> > --- a/pkt-line.c
+> > +++ b/pkt-line.c
+> > @@ -88,13 +88,15 @@ static void packet_trace(const char *buf, unsigned int len, int write)
+> >  void packet_flush(int fd)
+> >  {
+> >  	packet_trace("0000", 4, 1);
+> > -	write_or_die(fd, "0000", 4);
+> > +	if (write_in_full(fd, "0000", 4) < 0)
+> > +		die_errno("unable to write flush packet");
+> >  }
+> >  
+> >  void packet_delim(int fd)
+> >  {
+> >  	packet_trace("0001", 4, 1);
+> > -	write_or_die(fd, "0001", 4);
+> > +	if (write_in_full(fd, "0000", 4) < 0)
+> > +		die_errno("unable to write delim packet");
+> >  }
+> >  
+> >  int packet_flush_gently(int fd)
+> > 
+> > 
+--8323328-604727233-1549618094=:41--
