@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B231D1F453
-	for <e@80x24.org>; Sat,  9 Feb 2019 18:25:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 566C11F453
+	for <e@80x24.org>; Sat,  9 Feb 2019 18:34:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727231AbfBISZa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Feb 2019 13:25:30 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:53461 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727013AbfBISZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Feb 2019 13:25:30 -0500
-Received: by mail-wm1-f67.google.com with SMTP id d15so9462533wmb.3
-        for <git@vger.kernel.org>; Sat, 09 Feb 2019 10:25:28 -0800 (PST)
+        id S1727273AbfBISeZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Feb 2019 13:34:25 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35449 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726977AbfBISeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Feb 2019 13:34:25 -0500
+Received: by mail-wm1-f65.google.com with SMTP id t200so9239705wmt.0
+        for <git@vger.kernel.org>; Sat, 09 Feb 2019 10:34:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=SfO1m4hZTuDru9nixNaihz8VtFbfnwpC3c4MhV4ksyQ=;
-        b=aGjgpfv3lovH3dwJNz2y3JGixQMyet7lqwzQ5opUH8yp+2UO8ns7CgQQR1hDeXGE5l
-         kocN4+W7ofsWxbiBQo9+1mUgutTfzzZW9h7R+fbsBqFHyWK5Fqd7cUttQtCZbqk278Wp
-         O3DRcfLvyHQ5hpIhfdxcfr4/XlBDAyevhBtcalXf2AZXEKN4YBmT0jUh75Bw2dYW+PTR
-         408x7s3EdHx+cb5fVJKb+xTC1PTE9mldnKfpE7k4ixXQ0g2vZwy5jB4ff0LTvzU0pgFg
-         fIvO5ibDg7dGqCNxtwRcmEnfk/XHatA3IRHnvJA6dzpaTB9wHZO6wHLWykBz1wsQ647P
-         Ux9A==
+        bh=fRJnTCIefX0sNXZ1+T8gYUgDYgj9EN1hpK+JLwZXcmM=;
+        b=TIa08UiSsQ++EeBOz1kXkbkMQcsZExtceuW6T6lFu+TiFrXjpSFfUoBs5IaVQfnK6V
+         BDQUsjzwyUL/nQ7TmcIsmg1MfrNkwayOherBzX/7I14GyBPwi9m0STVhUoTPNkq82HQM
+         2Rx4BUXsk0c1jADhx5QqPyUNwvMC9Mz1MV7A1cI9wRD3LAU+z+41wZydxVWGN0CkbApp
+         GQgU54Y4KFOqaZUDM6YzCIBrRIU0A8WC06+EoXtSIE0Ii8jTVzHvxE3tki3chT9DmvCR
+         F8EX0mQImNQfOPh8ld89bcUidAgWifyrSqwctYWRIICpf6nA3NwEJvfkQFQGfSwvAVuq
+         q/iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=SfO1m4hZTuDru9nixNaihz8VtFbfnwpC3c4MhV4ksyQ=;
-        b=ObSSSD/hdEk9NmOZ3s+Od3qqGhuyXTTXS/kKNYBQRL3Cg8p2Y7/BrmYhkpxG5Xoifo
-         beFJvOWh72/AUXlJe7xZn127TX8dvd2cSk9+XvUUL6SOLHHytno7sDpePJFtYcx1Mhjb
-         eMNdJkv/jw3oHs0dlXglUa7yzzrMyPMNbOMF2NGPxCndz0aM4anGbnSftT9U0SoILCpB
-         rf5md2I4QmXH0UNR0Q4HQu8jM9D16DU26HHDxN/OjfV49q8HzJlGqxen5ZCa8jbOm3DX
-         umqZLLMVscKzdeVqr5bqTsgiMF/KepCnSpIxJLmb6L6mCYCvL7+qnVvv3lbpzykp36vX
-         CHkQ==
-X-Gm-Message-State: AHQUAuYpGXmhTiEv+ZPUQTjIs26IIyCv91tS2kX2yT85GC4VJJA79hJo
-        60Y0F2efP85f6jf4WyKo4VQ=
-X-Google-Smtp-Source: AHgI3IalOtlAeHbPr6f/zR1nDgXIXva478ZgCtKf1D31ZEv8W478O5BQ4o6YoZDpnrkK09aBz45j/Q==
-X-Received: by 2002:adf:dd4b:: with SMTP id u11mr10859082wrm.307.1549736727635;
-        Sat, 09 Feb 2019 10:25:27 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i20sm5087786wml.9.2019.02.09.10.25.26
+        bh=fRJnTCIefX0sNXZ1+T8gYUgDYgj9EN1hpK+JLwZXcmM=;
+        b=J4XOwYO2w9HJzmWJ6cZSu4Em4D6Z0mEy23Bb36faQRBc7OObENl4G/GWM+ImpAl1J9
+         YfHI7yaxuKgZlR4e89ui/ZooE558cLJW47mSDTeRvzVD+QKDi0eSXAtZd3Z0CSJ7fayK
+         wsVFIYfIRedEwBz+T94jKBWGQ67I70DteZYSFNXU27FzcoGrW4M4hdNYj5SwbUrfkF2o
+         zqpyIfxBjx/YdaE0OyKOc1KhX7ZNdl2jWDOI/A51QnNrgW9mTNjRwfBoRK/PSnSFDo9V
+         B5Buwo6hTfhbkuWbkndNr2IPO8i78PAHlXGtLpI20mspRVCJJcx+OpLaL4PL77gA2Faj
+         a1Eg==
+X-Gm-Message-State: AHQUAubh4dvybbQGAXzXWqbCLXAs0v34O+zzTUG36BXs6FqRlWYgdidH
+        OwqRv3NKFseIluwZ/W4uGZo=
+X-Google-Smtp-Source: AHgI3IZ3R7Rk58z7fcNibEfZBZ8lCQLNNO1SaZBB6VsBabbK2PUoWkKiFe+YddhpLdLGmSa5eEUWIg==
+X-Received: by 2002:a1c:4681:: with SMTP id t123mr3467733wma.24.1549737262381;
+        Sat, 09 Feb 2019 10:34:22 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a14sm4871922wrr.13.2019.02.09.10.34.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 09 Feb 2019 10:25:26 -0800 (PST)
+        Sat, 09 Feb 2019 10:34:21 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     randall.s.becker@rogers.com, git@vger.kernel.org,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [Fix v2] t5562: remove dependency on /dev/zero
-References: <20190208220751.9936-1-randall.s.becker@rogers.com>
-        <f01141d4-e77e-24ba-2354-e7aebc2c3c57@kdbg.org>
-Date:   Sat, 09 Feb 2019 10:25:26 -0800
-In-Reply-To: <f01141d4-e77e-24ba-2354-e7aebc2c3c57@kdbg.org> (Johannes Sixt's
-        message of "Sat, 9 Feb 2019 09:46:12 +0100")
-Message-ID: <xmqqwom8izu1.fsf@gitster-ct.c.googlers.com>
+To:     Dan McGregor <dan.mcgregor@usask.ca>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] git-compat-util: undefine fileno if defined
+References: <20190201193004.88736-1-dan.mcgregor@usask.ca>
+        <20190209023621.75255-1-dan.mcgregor@usask.ca>
+Date:   Sat, 09 Feb 2019 10:34:21 -0800
+In-Reply-To: <20190209023621.75255-1-dan.mcgregor@usask.ca> (Dan McGregor's
+        message of "Fri, 8 Feb 2019 20:36:21 -0600")
+Message-ID: <xmqqsgwwizf6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,60 +67,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Dan McGregor <dan.mcgregor@usask.ca> writes:
 
-> How many bytes are needed here? yes() in test-lib.sh generates only 99
-> 'y', if I am not mistaken.
+> Commit 8dd2e88a92 ("http: support file handles for HTTP_KEEP_ERROR",
+> 2019-01-10) introduced an implicit assumption that rewind, fileno, and
+> fflush are functions. At least on FreeBSD fileno is not, and as such
+> passing a void * failed.
+>
+> All systems tested (FreeBSD and NetBSD) that define fineo as a macro
 
-I think we will not use "yes" in the end for this topic, which makes
-this comment totally irrelevant to the thread, but I wonder why we
-have the limit of 99 there?  It cannot be "we do not want to worry
-about sigpipe" affecting the end result of the test (after all the
-reader may stop reading from after reading just one, and the status
-of the upstream process that would die with sigpipe is lost anyway).
+s/fineo/fileno/
 
-It turns out it is about sigpipe ;-) but in somewhat a different
-way.  To prevent others from wasting their time wondering about
-this, probably we want to have something like the attached?
+> also have a function defined. Undefine the macro on these systems so
+> that the function is used.
 
- t/README      | 9 +++++++++
- t/test-lib.sh | 6 +++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+That smells like the patch is assuming a bit too much.  A platform
+you did not inspect may have it as a macro but the implementation
+may still be usable without breakage like the one we saw on FreeBSD,
+for example.
 
-diff --git a/t/README b/t/README
-index 1326fd7505..f4e1a82657 100644
---- a/t/README
-+++ b/t/README
-@@ -927,6 +927,15 @@ library for your script to use.
-    test_oid_init or test_oid_cache.  Providing an unknown key is an
-    error.
- 
-+ - yes [<string>]
-+
-+   This is often seen in modern UNIX but some platforms lack it, so
-+   the test harness overrides the platform implementation with a
-+   more limited one.  Use this only when feeding a handful lines of
-+   output to the downstream---unlike the real version, it generates
-+   only up to 99 lines.
-+
-+
- Prerequisites
- -------------
- 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 42b1a0aa7f..541a37f4c0 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1313,7 +1313,11 @@ then
- 	fi
- fi
- 
--# Provide an implementation of the 'yes' utility
-+# Provide an implementation of the 'yes' utility; the upper bound
-+# limit is there to help Windows that cannot stop this loop from
-+# wasting cycles when the downstream stops reading, so do not be
-+# tempted to turn it into an infinite loop. cf. 6129c930 ("test-lib:
-+# limit the output of the yes utility", 2016-02-02)
- yes () {
- 	if test $# = 0
- 	then
+It also robs us the possibility of overriding fileno() with our own
+macro earlier in this file, like we do for many functions you see in
+the output from this:
+
+ $ git grep '#define .* git' git-compat-util.h
+
+In general, I'd like to see people thinking twice about an overly
+simple approach when they justify it with "this should work
+everywhere I know of".
+
+> Signed-off-by: Dan McGregor <dan.mcgregor@usask.ca>
+> ---
+>  git-compat-util.h | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 29a19902aa..b5489bbcf2 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -764,6 +764,15 @@ char *gitstrdup(const char *s);
+>  extern FILE *git_fopen(const char*, const char*);
+>  #endif
+>  
+> +/* Some systems (the various BSDs for eaxmple) define
+
+Style:
+
+/*
+ * Our multi-line comment starts with a lone slash-star
+ * and ends with a lone star-slash, like this.
+ */
+
+> + * fileno as a macro as an optimization. All systems I
+> + * know about also define it as a real funcion, so use
+> + * the real function to allow passing void *s to fileno.
+> + */
+> +#ifdef fileno
+> +# undef fileno
+> +#endif
+> +
+>  #ifdef SNPRINTF_RETURNS_BOGUS
+>  #ifdef snprintf
+>  #undef snprintf
