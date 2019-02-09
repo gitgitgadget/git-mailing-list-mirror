@@ -2,130 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 566C11F453
-	for <e@80x24.org>; Sat,  9 Feb 2019 18:34:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90CAC1F453
+	for <e@80x24.org>; Sat,  9 Feb 2019 18:59:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727273AbfBISeZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Feb 2019 13:34:25 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35449 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726977AbfBISeZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Feb 2019 13:34:25 -0500
-Received: by mail-wm1-f65.google.com with SMTP id t200so9239705wmt.0
-        for <git@vger.kernel.org>; Sat, 09 Feb 2019 10:34:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=fRJnTCIefX0sNXZ1+T8gYUgDYgj9EN1hpK+JLwZXcmM=;
-        b=TIa08UiSsQ++EeBOz1kXkbkMQcsZExtceuW6T6lFu+TiFrXjpSFfUoBs5IaVQfnK6V
-         BDQUsjzwyUL/nQ7TmcIsmg1MfrNkwayOherBzX/7I14GyBPwi9m0STVhUoTPNkq82HQM
-         2Rx4BUXsk0c1jADhx5QqPyUNwvMC9Mz1MV7A1cI9wRD3LAU+z+41wZydxVWGN0CkbApp
-         GQgU54Y4KFOqaZUDM6YzCIBrRIU0A8WC06+EoXtSIE0Ii8jTVzHvxE3tki3chT9DmvCR
-         F8EX0mQImNQfOPh8ld89bcUidAgWifyrSqwctYWRIICpf6nA3NwEJvfkQFQGfSwvAVuq
-         q/iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=fRJnTCIefX0sNXZ1+T8gYUgDYgj9EN1hpK+JLwZXcmM=;
-        b=J4XOwYO2w9HJzmWJ6cZSu4Em4D6Z0mEy23Bb36faQRBc7OObENl4G/GWM+ImpAl1J9
-         YfHI7yaxuKgZlR4e89ui/ZooE558cLJW47mSDTeRvzVD+QKDi0eSXAtZd3Z0CSJ7fayK
-         wsVFIYfIRedEwBz+T94jKBWGQ67I70DteZYSFNXU27FzcoGrW4M4hdNYj5SwbUrfkF2o
-         zqpyIfxBjx/YdaE0OyKOc1KhX7ZNdl2jWDOI/A51QnNrgW9mTNjRwfBoRK/PSnSFDo9V
-         B5Buwo6hTfhbkuWbkndNr2IPO8i78PAHlXGtLpI20mspRVCJJcx+OpLaL4PL77gA2Faj
-         a1Eg==
-X-Gm-Message-State: AHQUAubh4dvybbQGAXzXWqbCLXAs0v34O+zzTUG36BXs6FqRlWYgdidH
-        OwqRv3NKFseIluwZ/W4uGZo=
-X-Google-Smtp-Source: AHgI3IZ3R7Rk58z7fcNibEfZBZ8lCQLNNO1SaZBB6VsBabbK2PUoWkKiFe+YddhpLdLGmSa5eEUWIg==
-X-Received: by 2002:a1c:4681:: with SMTP id t123mr3467733wma.24.1549737262381;
-        Sat, 09 Feb 2019 10:34:22 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a14sm4871922wrr.13.2019.02.09.10.34.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 09 Feb 2019 10:34:21 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dan McGregor <dan.mcgregor@usask.ca>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] git-compat-util: undefine fileno if defined
-References: <20190201193004.88736-1-dan.mcgregor@usask.ca>
-        <20190209023621.75255-1-dan.mcgregor@usask.ca>
-Date:   Sat, 09 Feb 2019 10:34:21 -0800
-In-Reply-To: <20190209023621.75255-1-dan.mcgregor@usask.ca> (Dan McGregor's
-        message of "Fri, 8 Feb 2019 20:36:21 -0600")
-Message-ID: <xmqqsgwwizf6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1727265AbfBIS7p (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Feb 2019 13:59:45 -0500
+Received: from sonic301-7.consmr.mail.bf2.yahoo.com ([74.6.129.46]:43030 "EHLO
+        sonic301-7.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727013AbfBIS7p (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 Feb 2019 13:59:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1549738783; bh=USmud1e/0W9OrSa2RZy71j8gNEDYOvDBIAM8wbwRosk=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject; b=lbhCi4mAKeKawbAOnY0qC8uG9BArlqtP91JgdvznEMHa3Zog4KUocIYPinGhMvGeHBpvTHmWRCzsH2XH5kUbZ8NBOjeGo8osfkbA33eRrKA+P1Mn7Qumy6rdEImxUgSRVTNYhfPYRGKerTgsoMp8voYEzEMVHXwxXVDUfLPLS7mdLCmkWsAfU2W/dV5ZW+3RuPa6agu3cdBoJVxYvwuMsTLNAyk4KMf6ptKWpll35gH51hOLjT9VVtV3BkQeoaFHkNK605z0tRQ/btVP275qrWDhB5EfYZuubLM6I5TnSfy+rA8eW97VuNR+M/A1gyasP23qZ0aoQTniKTDq6Iagyg==
+X-YMail-OSG: H6wFkw0VM1mik.YGgE7NCGQIdVlfstnyT33l5TUc2kiNUULgzFbG_OuKpJOgcZc
+ 5fcxsj_FwVJ69De7Ceip48hA6EWN1lMOrK__azE_8POL067dSL9o3d8NLF1.RJ.UzlGWzj43lD4c
+ 6iEMouNkUsq6vRq9NtV8g4u1PonhrAEqpMYLvZ_ytXQhkrtviwhlj6Zi5sF9xpLO5_0A5tTaeCZp
+ a.iY64jBUZ7bx7B3ITvOl89T4M1Jw0XRkivel3V6BmOzUImM2KwusKV2V2U2X1v0FfteV3lHrL8f
+ BvIMWgQXCg0flgSm.cg3d.d.ZaqV.MXvH7Jj9HsBAscnBqtdszr8J77FdFyNUCJP1RWuiiWSRKiF
+ SPetuWa7RVDz2iCoQYxwN3QFcaOXCujGrvrtu3ketZH6PKKiVulAmaM6AAiJOaJpoAdwc.fsv_e6
+ gEueDmKq9KEyp0vZixUurufqHryxMXMSarkHZ834.8ce1kLXEBT53PWVKRira6E2O58jHCu8POZB
+ LdhjIszZlv6_KfM9g6ZwWJES7LJ5.zsyTODebL6nV6Qh1CS6KNqRLnDQThWSQs8E3G96e0aNhj_G
+ bVOhsEMFZCZLbj6gdSkkwVbmVTwoAA6ANcVdjzOgTiGEIv_W7f3N2P5qLF5lvHpWqUtrGBYxOQhI
+ KNij3swOor6qQxkmWAPTvVDpaz2i3iqCb1jztMlmW3eKg6afUwVH2OfRz1xVE2xPFcQ6H9XsUDX9
+ Ycu5iXwaQIjpzmtJb4jD17r1nqjN6cpADPPAB4TVp_27hvevJzyRUdR2eav4PtybxYq9U4AWvdZk
+ 4zUBy.5cXbauetIdAhbw5q4BkQtxKosM77ngMETJM11K7b.N1XPO_l833qEqKMf3VNyF5178lbul
+ 79bC.TcgSHwUGd8ZCJRfssZ4N0bFdR.uhkO0Hi2awZBg_KDAbW_Ud.7HYZbEGYY8a.WsIV_PB6NL
+ jTASgcBUYyKwgxGbLtzHvXP2nrrIFTQ10Ewd7YgExwwTCY2uvOSvKXIVP_b50gaK0O3tAu6qszEe
+ vcPGlV5iZyaAvs.LD8Rvs1jCOQsVP_l27f79psveG38zh4rSS84Cue8J6gSyfSPRd
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic301.consmr.mail.bf2.yahoo.com with HTTP; Sat, 9 Feb 2019 18:59:43 +0000
+Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO localhost.localdomain) ([99.229.179.249])
+          by smtp423.mail.bf1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 84a16d171cb60baba1591047a4493b27;
+          Sat, 09 Feb 2019 18:59:43 +0000 (UTC)
+From:   randall.s.becker@rogers.com
+To:     git@vger.kernel.org
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: [Patch v1 1/3] test-lib-functions.sh: add generate_zero_bytes function
+Date:   Sat,  9 Feb 2019 13:59:28 -0500
+Message-Id: <20190209185930.5256-2-randall.s.becker@rogers.com>
+X-Mailer: git-send-email 2.12.3
+In-Reply-To: <20190209185930.5256-1-randall.s.becker@rogers.com>
+References: <20190209185930.5256-1-randall.s.becker@rogers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dan McGregor <dan.mcgregor@usask.ca> writes:
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
-> Commit 8dd2e88a92 ("http: support file handles for HTTP_KEEP_ERROR",
-> 2019-01-10) introduced an implicit assumption that rewind, fileno, and
-> fflush are functions. At least on FreeBSD fileno is not, and as such
-> passing a void * failed.
->
-> All systems tested (FreeBSD and NetBSD) that define fineo as a macro
+t5318 and t5562 used /dev/zero, which is not portable. This function
+provides both a fixed block of NUL bytes and an infinite stream of NULs.
 
-s/fineo/fileno/
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ t/test-lib-functions.sh | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-> also have a function defined. Undefine the macro on these systems so
-> that the function is used.
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 92cf8f812..bbf68712c 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -116,6 +116,19 @@ remove_cr () {
+ 	tr '\015' Q | sed -e 's/Q$//'
+ }
+ 
++# Generate an output of $1 bytes of all zeroes (NULs, not ASCII zeroes).
++# If $1 is 'infinity', output forever or until the receiving pipe stops reading,
++# whichever comes first.
++generate_zero_bytes () {
++	perl -e 'if ($ARGV[0] == "infinity") {
++		while (-1) {
++			print "\0"
++		}
++	} else {
++		print "\0" x $ARGV[0]
++	}' "$@"
++}
++
+ # In some bourne shell implementations, the "unset" builtin returns
+ # nonzero status when a variable to be unset was not set in the first
+ # place.
+-- 
+2.12.3
 
-That smells like the patch is assuming a bit too much.  A platform
-you did not inspect may have it as a macro but the implementation
-may still be usable without breakage like the one we saw on FreeBSD,
-for example.
-
-It also robs us the possibility of overriding fileno() with our own
-macro earlier in this file, like we do for many functions you see in
-the output from this:
-
- $ git grep '#define .* git' git-compat-util.h
-
-In general, I'd like to see people thinking twice about an overly
-simple approach when they justify it with "this should work
-everywhere I know of".
-
-> Signed-off-by: Dan McGregor <dan.mcgregor@usask.ca>
-> ---
->  git-compat-util.h | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 29a19902aa..b5489bbcf2 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -764,6 +764,15 @@ char *gitstrdup(const char *s);
->  extern FILE *git_fopen(const char*, const char*);
->  #endif
->  
-> +/* Some systems (the various BSDs for eaxmple) define
-
-Style:
-
-/*
- * Our multi-line comment starts with a lone slash-star
- * and ends with a lone star-slash, like this.
- */
-
-> + * fileno as a macro as an optimization. All systems I
-> + * know about also define it as a real funcion, so use
-> + * the real function to allow passing void *s to fileno.
-> + */
-> +#ifdef fileno
-> +# undef fileno
-> +#endif
-> +
->  #ifdef SNPRINTF_RETURNS_BOGUS
->  #ifdef snprintf
->  #undef snprintf
