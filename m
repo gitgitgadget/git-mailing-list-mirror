@@ -2,129 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BA151F453
-	for <e@80x24.org>; Sat,  9 Feb 2019 19:02:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C4951F453
+	for <e@80x24.org>; Sat,  9 Feb 2019 19:07:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727173AbfBITC2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Feb 2019 14:02:28 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:58879 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727013AbfBITC1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Feb 2019 14:02:27 -0500
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Feb 2019 14:02:26 EST
-Received: from [192.168.1.12] ([92.29.15.245])
-        by smtp.talktalk.net with SMTP
-        id sXlZgdBG8whzSsXlZghPpi; Sat, 09 Feb 2019 18:54:18 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1549738458;
-        bh=1lnMeOsZxMfu7MR9EIAQqUKX4bo7pTVECQT0aj0Z5UQ=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=LqwGSmat5pLuhOSbhnamp3yVrBi4OGu0fLq79Xdx/1OhmGxjibZE8Ux++07v185z/
-         +pGnppChEVfZekvTQG40iwobYMroN51E2eTNPvvugrs5J3YW4vQirOIyiLiFXETUBx
-         ByT3UDg4bBl+ampRrtmBWolvhX72IOaScA99g5Os=
-X-Originating-IP: [92.29.15.245]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=9anTPZJWX8pnfAL1p5p6vw==:117
- a=9anTPZJWX8pnfAL1p5p6vw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=N54-gffFAAAA:8 a=UFTA8MH_AAAA:8 a=AK7OKGO-AAAA:8 a=2g1uuSb1M8MrRi_nwC0A:9
- a=ZwmVkkDuf4i_VqMf:21 a=ZYCCtfU3V3AsOun4:21 a=QEXdDO2ut3YA:10
- a=6l0D2HzqY3Epnrm8mE3f:22
-Subject: Re: [PATCH v3 7/8] checkout: introduce --{,no-}overlay option
-To:     Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <20181220134820.21810-1-t.gummerer@gmail.com>
- <20190108215225.3077-1-t.gummerer@gmail.com>
- <20190108215225.3077-8-t.gummerer@gmail.com>
- <20190122235313.GA199923@google.com>
- <20190123202156.GA11293@hank.intra.tgummerer.com>
- <xmqqzhrr9j52.fsf@gitster-ct.c.googlers.com>
- <20190124011244.GE34357@google.com>
-From:   Philip Oakley <philipoakley@talktalk.net>
-Message-ID: <cff853ae-9339-3827-26af-273a6cf10ec6@talktalk.net>
-Date:   Sat, 9 Feb 2019 18:54:16 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.0
+        id S1727187AbfBITHw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Feb 2019 14:07:52 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:48132 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727013AbfBITHw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Feb 2019 14:07:52 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x19J7YUT061835
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sat, 9 Feb 2019 14:07:35 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Johannes Sixt'" <j6t@kdbg.org>
+Cc:     <git@vger.kernel.org>,
+        "'Randall S. Becker'" <rsbecker@nexbridge.com>
+References: <20190208220751.9936-1-randall.s.becker@rogers.com> <f01141d4-e77e-24ba-2354-e7aebc2c3c57@kdbg.org> <xmqqwom8izu1.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwom8izu1.fsf@gitster-ct.c.googlers.com>
+Subject: RE: [Fix v2] t5562: remove dependency on /dev/zero
+Date:   Sat, 9 Feb 2019 14:07:27 -0500
+Message-ID: <000801d4c0aa$b5f829a0$21e87ce0$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <20190124011244.GE34357@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfNP7tluaSVUxNO3cigGEZI4nAVIGd8CkdyCZza0BTNLXlJzndYnOV/BfE+ByE6rzm9bU76Hmizb1FfNDH9ciz1BbGV6MjkuGpcaH3H9I4SabbB/NV2xY
- A5bC1KoMLGJq8ZmO4Lyyk3A5YSMCaY+Pz/Yik8tyh1QDUcRnvcac826ED1E6WD9hdLj9kiHJoG9RNdyiwimmOtPlLKl2Lbb1V+Fzm415AfM/CboM9RNeRKye
- mt5jNggH1F3SC0v9ZKnSDI/IzLS8EBe1pubHT6yy1A1LO/88zNjiyJB5Azq9YpkZYmC9eeJY8vO0jy1TguwF7lmWWxK8R5wYc0opEPZGDCqkCyFA9CRT0dlh
- P4OZ40O3
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQIc/tXX6nKYZRK3AZUxuMH5inI1NwGK/39SAj4x6dilKQ3SMA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On February 9, 2019 13:25, Junio C Hamano wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+> > How many bytes are needed here? yes() in test-lib.sh generates only 99
+> > 'y', if I am not mistaken.
+> 
+> I think we will not use "yes" in the end for this topic, which makes this
+> comment totally irrelevant to the thread, but I wonder why we have the
+limit
+> of 99 there?  It cannot be "we do not want to worry about sigpipe"
+affecting
+> the end result of the test (after all the reader may stop reading from
+after
+> reading just one, and the status of the upstream process that would die
+with
+> sigpipe is lost anyway).
+> 
+> It turns out it is about sigpipe ;-) but in somewhat a different way.  To
+> prevent others from wasting their time wondering about this, probably we
+> want to have something like the attached?
+> 
+>  t/README      | 9 +++++++++
+>  t/test-lib.sh | 6 +++++-
+>  2 files changed, 14 insertions(+), 1 deletion(-)
+> 
+> diff --git a/t/README b/t/README
+> index 1326fd7505..f4e1a82657 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -927,6 +927,15 @@ library for your script to use.
+>     test_oid_init or test_oid_cache.  Providing an unknown key is an
+>     error.
+> 
+> + - yes [<string>]
+> +
+> +   This is often seen in modern UNIX but some platforms lack it, so
+> +   the test harness overrides the platform implementation with a
+> +   more limited one.  Use this only when feeding a handful lines of
+> +   output to the downstream---unlike the real version, it generates
+> +   only up to 99 lines.
+> +
+> +
+>  Prerequisites
+>  -------------
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh index 42b1a0aa7f..541a37f4c0
+100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1313,7 +1313,11 @@ then
+>  	fi
+>  fi
+> 
+> -# Provide an implementation of the 'yes' utility
+> +# Provide an implementation of the 'yes' utility; the upper bound #
+> +limit is there to help Windows that cannot stop this loop from #
+> +wasting cycles when the downstream stops reading, so do not be #
+> +tempted to turn it into an infinite loop. cf. 6129c930 ("test-lib:
+> +# limit the output of the yes utility", 2016-02-02)
+>  yes () {
+>  	if test $# = 0
+>  	then
 
-On 24/01/2019 01:12, Jonathan Nieder wrote:
-> Hi,
->
-> Junio C Hamano wrote:
->> Thomas Gummerer<t.gummerer@gmail.com>  writes:
->>> Jonathan Nieder wrote:
->>>> Is this analogous to "git add --ignore-removal"?  If so, can we just
->>>> call it --ignore-removal?
->>> Yes, it seems like they are very similar.
->> Hmm, I am not sure if the word "removal" makes sense in the context
->> of "checkout", as "removal" is an_action_  just like "checking out"
->> itself is, and not a_state_.  You'd check out a state out of a tree
->> to the index and the working tree, so "checking out absence of a
->> path" may make sense, though, as "absence of a path" is a state
->> recorded in that source tree object.
-> I find --ignore-removal fairly easy to understand, and I had no idea
-> what --overlay would mean.
+Sadly, I already the other path ready, but did not have a chance to send it.
+I'm ok either way as long as I can get the tests running.
 
-I too had difficulty initially as to what 'overlay' meant, or that there 
-were options.
-
-
->
-> I realize this is just one user's experience.  I'd be happy to do a
-> little informal survey (e.g. taking the description from the manpage
-> and asking people to name the option) if that's useful.
->
-> See alsohttps://dl.acm.org/citation.cfm?id=32212  on this subject.
-
-I did locate a copy at 
-http://zhang.ist.psu.edu/teaching/501/readings/Furnas.pdf
-
-The whole word choosing problem does smack a bit of Orwell's Vocabulary 
-C (OVC) where:
-
-"The [Newspeak] C vocabulary encompasses words that relate specifically 
-to science and to technical fields and disciplines. It is designed to 
-ensure that technical knowledge remains segmented among many fields, so 
-that no one individual can gain access to too much knowledge. In fact, 
-there is no word for “science” " [1]
-
-Most of the DVCS concepts have a newness to them that means that we 
-don't have good words yet, hence the difficulties. Just my 2 cents.
-
->> The word "removal" makes little sense in "git add --ignore-removal",
->> but it and "git add --no-all" outlived their usefulness already, so
->> it may not be worth_fixing_  it.  But I am mildly opposed to spread
->> the earlier mistake to a new option.
-> I think that's a good place to end up: once we flip the default for
-> checkout, then --ignore-removal would be an obscure option in that
-> command as well.  The consistency with "git add" is just a bonus.
->
-> Thanks,
-> Jonathan
-
-Philip
-
-[1] https://www.sparknotes.com/lit/1984/section11/
+Regards,
+Randall
 
