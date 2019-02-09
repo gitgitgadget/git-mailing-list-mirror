@@ -2,88 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 568D81F453
-	for <e@80x24.org>; Sat,  9 Feb 2019 19:26:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8E9A1F453
+	for <e@80x24.org>; Sat,  9 Feb 2019 19:57:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727225AbfBIT0h (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Feb 2019 14:26:37 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35135 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727187AbfBIT0h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Feb 2019 14:26:37 -0500
-Received: by mail-wm1-f67.google.com with SMTP id t200so9388747wmt.0
-        for <git@vger.kernel.org>; Sat, 09 Feb 2019 11:26:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=narcLa+2OVPycDWvsMVBtlPQWBwqLoipfhAadb2eLOI=;
-        b=bNdtu5dz6cwl+d9mM1B4hsAgVdtWV2F10KApNrRcmo0LMUXXFHvlQEooc7LAZK2BcD
-         XnErGCDVUy424x/kUWQMxtM74R51SZ/PoiDqM7fS9KIIQt0NO93AQCZyE7nhosxwyeMj
-         XTUVLAZ+kN8sr1jHLFWEkdLPXfEgInAnC/CFU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=narcLa+2OVPycDWvsMVBtlPQWBwqLoipfhAadb2eLOI=;
-        b=o+zpb1jVj0B5l5qbdCXrmci5+rEJpSPYUATZcx8zxatKoTods8Vy/Qu9ZfZUJlPzZh
-         Hhrnj4zier7+s/5JHXkz+Emu5gDa3zoo6DU/oNCLxiafyGKZ08Zp40FKu0YdrcSff9P2
-         UVe9OhP0bWpgnP79LxEIO0XRAyYuwa3EyYV4ed9QAY75d2GsIiGKF7ZALOBG9J326bJf
-         JRw4yIV4o1N5vX7KghetZM28RzsaIb6scX150PTw4kTbO95QbHdBlmzF6OGVjSDNKLXL
-         9aoRjyhTe64cDZkuIA6vTu7MsNJp7ZRyKppLaevLCw3zmpZn0GtiCqgFHSYxjI1jhfoR
-         IntQ==
-X-Gm-Message-State: AHQUAub2qu+uu8/kWpGS3qu0faA3cH9fLYnjTcfVrRqDsJfOAO+kjhx5
-        KpVSeplV/lWbLWJ1viRq0Vr7bKH649SUHMEtq5UThw==
-X-Google-Smtp-Source: AHgI3IZ/4NAH43PIc5cUW+gCK3lUQLEM8jUZTDaJ4iHNoWVDYcfJ2NGWfKa/3ypuUEj9j+8Ge+i0dSswDh5F9X94WLs=
-X-Received: by 2002:a5d:5004:: with SMTP id e4mr23149725wrt.59.1549740394952;
- Sat, 09 Feb 2019 11:26:34 -0800 (PST)
+        id S1727268AbfBIT5F (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Feb 2019 14:57:05 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:20571 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727130AbfBIT5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Feb 2019 14:57:04 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x19Jv3Do063499
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Sat, 9 Feb 2019 14:57:03 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+References: <000901d4c0b1$1ea15160$5be3f420$@nexbridge.com>
+In-Reply-To: <000901d4c0b1$1ea15160$5be3f420$@nexbridge.com>
+Subject: [Proposed Fix] daemon.c: not initializing revents
+Date:   Sat, 9 Feb 2019 14:56:55 -0500
+Message-ID: <000a01d4c0b1$9ef9ea70$dcedbf50$@nexbridge.com>
 MIME-Version: 1.0
-References: <20190208190231.8134-1-luke@diamand.org> <20190208201445.GB10587@szeder.dev>
- <xmqq4l9ckfab.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq4l9ckfab.fsf@gitster-ct.c.googlers.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Sat, 9 Feb 2019 19:26:24 +0000
-Message-ID: <CAE5ih7_UTONAK5YCj_xYAa-d3zts8RUSkaAFtixa9exnxG8acg@mail.gmail.com>
-Subject: Re: [PATCHv2] git-p4: ticket expiry test: use a fake p4 to avoid use
- of 'sleep'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Users <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Luke Diamand <ldiamand@roku.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHuZCOJOJA2t83onwaMLThpXvGUraWkmm4g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 9 Feb 2019 at 18:06, Junio C Hamano <gitster@pobox.com> wrote:
->
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->
-> > On Fri, Feb 08, 2019 at 07:02:31PM +0000, Luke Diamand wrote:
-> >> +# create a fake version of "p4" which returns a TicketExpiration base=
-d
-> >> +# on $EXPIRY, for testing login expiration
-> >> +create_fake_p4() {
-> >> +    (
-> >> +            cd "$git" && mkdir expire-p4 &&
-> >> +            cat >>expire-p4/p4 <<-EOF &&
-> >> +            #!/usr/bin/python
-> >
-> > I think this should be $PYTHON_PATH.
->
-> OK.
->
-> Luke, I think our mails / work crossed and the tip of 'master'
-> already has a removal.  Please make this into a separate patch that
-> adds (or, resurrects with an improved version) the test for the next
-> cycle.
+Hi All,
 
-OK, thanks!
+I found this while trying to track down a hang in t5562 - this isn't the
+fix, but here it is something that could be considered a code-inspection. If
+there have been random unexplained hangs when git runs as a daemon, this
+might be the cause.
+
+According to many systems (other than Linux), the revents field is supposed
+to be 0 on return to poll(). This was the cause of some heart-ache a while
+back in compat/poll/poll.c. I am not certain whether that copy of poll() is
+used in daemon, but I wanted to point out that the value is being returned
+to poll, outside of compat/poll/poll.c and may present a potential for poll
+returning an error on that FD due to random values that might be in revents.
+
+Please see 61b2a1acaae for a related change/justification.
+
+diff --git a/daemon.c b/daemon.c
+index 9d2e0d20ef..1e275fc8b3 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -1194,6 +1194,7 @@ static int service_loop(struct socketlist *socklist)
+                                }
+                                handle(incoming, &ss.sa, sslen);
+                        }
++                       pfd[i].revents = 0;
+                }
+        }
+ }
+
+Regards,
+Randall
+
