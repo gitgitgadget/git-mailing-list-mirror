@@ -7,127 +7,84 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E09C1211B5
-	for <e@80x24.org>; Sat,  9 Feb 2019 06:28:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 340201F453
+	for <e@80x24.org>; Sat,  9 Feb 2019 06:50:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726601AbfBIG1O (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Feb 2019 01:27:14 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63651 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726268AbfBIG1O (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Feb 2019 01:27:14 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11B841377E0;
-        Sat,  9 Feb 2019 01:27:09 -0500 (EST)
+        id S1726058AbfBIGsa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Feb 2019 01:48:30 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63732 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbfBIGs3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Feb 2019 01:48:29 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C34104DC36;
+        Sat,  9 Feb 2019 01:48:27 -0500 (EST)
+        (envelope-from tmz@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
         :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=/ujQAbpRdjZ+/1A/fXtKw79CtcI=; b=uW8vvde
-        ZqNCdOjRN/T57d7cA9EYRdPOjg/N+Nuom0Cnjef91B9MUcYwuRoWf62p6aujybsp
-        x+RjTDpGze3NRRr0tbEX4K5jfZ5vCkoKb4XdqSLucG58x0LQyeovaAPNEoSCrOE1
-        Ncrpx7I09/768OkP81nY/YaiviHS2W5dmtJM=
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=L2qbjAEHVjALG
+        yGq6TvLhFjL8ho=; b=HlnJacbUgJpuo5T5HcjoaNBs613h8wyFxUa69Vspqs79J
+        TMwd1DYnQHOneSkr0WSp8JfY7wHFKpMmOLIOw2B/00zWq0ACRyOz69j4XKc/CgVC
+        v9sdCD8BpzSJ6H/+EIiOowTpFNivQs2E+2E5DEyfrSB3pF0sh7kUhujYXzxHC4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
         :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=owPHvQYcEdP9S8JneCFhT77fr7bPD3AHP
-        QqXWD67cJ1RUZqRhcS2gd8YW4n71wwdXkLj1nNmoC+QMTnA9sOLc8qwnfp7SRkEt
-        K4XO6JPPSUFwLRfRVLv3cxGe6IJEDdJYCXVecDHeOt2Kf0iwNfB39LhLHr2VyBgZ
-        J5v/yEZWK4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 09BA71377DF;
-        Sat,  9 Feb 2019 01:27:09 -0500 (EST)
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=epqk12h
+        +r/dcsoW6wYYdwaghs6lEiyam8GE4PBGwYE3NCWMzkOD9IN42qBHQ2C/JDBEGmg+
+        vkWbI01D+O6F/DdmVhKDnu0eJo9U4jBqtBxV6p5I+7J6joAxvT+r3ErKAnQb3T1q
+        /bOvJov3x+pfKpJ6M2QUOtBWWUUI0vobv3Yk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BBC464DC35;
+        Sat,  9 Feb 2019 01:48:27 -0500 (EST)
+        (envelope-from tmz@pobox.com)
 Received: from zaya.teonanacatl.net (unknown [71.173.194.225])
         (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 83BE51377DE;
-        Sat,  9 Feb 2019 01:27:08 -0500 (EST)
-Date:   Sat, 9 Feb 2019 01:27:06 -0500
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6DB0D4DC33;
+        Sat,  9 Feb 2019 01:48:24 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Date:   Sat, 9 Feb 2019 01:48:21 -0500
 From:   Todd Zullinger <tmz@pobox.com>
-To:     Sergey Zolotarev <szolot4rev@gmail.com>
-Cc:     git@vger.kernel.org, Keith Smiley <k@keith.so>
-Subject: Re: [PATCH] Add support for 'git remote rm' in Bash completion script
-Message-ID: <20190209062706.GF30548@zaya.teonanacatl.net>
-References: <20190209052434.20616-1-szolot4rev@gmail.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Jeff King <peff@peff.net>,
+        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [Breakage] Git v2.21.0-rc0 - t5403 (NonStop)
+Message-ID: <20190209064821.GG30548@zaya.teonanacatl.net>
+References: <000d01d4bf9b$d5d48da0$817da8e0$@nexbridge.com>
+ <20190208111002.GU10587@szeder.dev>
+ <20190208201128.GD30548@zaya.teonanacatl.net>
+ <20190208203009.GC10587@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20190209052434.20616-1-szolot4rev@gmail.com>
+In-Reply-To: <20190208203009.GC10587@szeder.dev>
 User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: B9EF7672-2C33-11E9-95D6-F733E42159A7-09356542!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: B2A46E42-2C36-11E9-BAD8-D01F9763A999-09356542!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sergey,
+[-cc: linux-kernel & git-packagers]
 
-There was a previous discussion of this in December 2017,
-which might be useful:
+SZEDER G=E1bor wrote:
+> On Fri, Feb 08, 2019 at 03:11:29PM -0500, Todd Zullinger wrote:
+>> It made me wonder how I had missed it in my own testing.
+>> This one requires SHELL_PATH to be bash, while I only set
+>> TEST_SHELL_PATH to bash for the improved -x tracing in the
+>> fedora builds.
+>=20
+> Note that you don't need Bash to use '-x' tracing since a5bf824f3b (t:
+> prevent '-x' tracing from interfering with test helpers' stderr,
+> 2018-02-25) and the followup commits, except for 't1510-repo-setup.sh'
+> (and even t1510 just falls back to ignore '-x' instead of causing
+> failures).
 
-https://public-inbox.org/git/01020160a0004473-277c3d7c-4e3b-4c50-9d44-4a106f37f1d9-000000@eu-west-1.amazonses.com/
+Huh, cool.  I somehow missed that nice improvement.  Thanks
+for all your fine work on the test suite!  It makes my life
+as a packager much better having a robust test suite running
+with each build.
 
-It didn't end with a patch applied, but it's likely worth
-reading to help you make a case for a similar patch.
-
-One of the points in that thread is that the rm subcommand
-is not shown in completion intentionally, as the preferred
-subcommand is remove.  But it should be possible to offer
-completion of the remotes after a user types rm, which I
-imagine is the more helpful part of the completion.
-
-Also, you'll want to add a signoff to the patch if/when you
-resend it (refer to Documentation/SubmittingPatches, if you
-haven't already).
-
-Sergey Zolotarev wrote:
-> ---
->  contrib/completion/git-completion.bash | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 499e56f83d..fa25d689e2 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -2334,7 +2334,7 @@ _git_remote ()
->  {
->  	local subcommands="
->  		add rename remove set-head set-branches
-> -		get-url set-url show prune update
-> +		get-url set-url show prune rm update
->  		"
->  	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-
-So instead of this change you could adjust the subcommand
-line, something like:
-
--	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	# Don't advertise rm by including it in subcommands, but complete
-+	# remotes if it is used.
-+	local subcommand="$(__git_find_on_cmdline "$subcommands rm")"
-
-I haven't test that, but the code looks like it hasn't
-changed since the last time we talked about this -- when I
-did test the suggestion :).
-
->  	if [ -z "$subcommand" ]; then
-> @@ -2379,6 +2379,9 @@ _git_remote ()
->  	prune,--*)
->  		__gitcomp_builtin remote_prune
->  		;;
-> +	rm,--*)
-> +		__gitcomp_builtin remote_rm
-> +		;;
->  	*)
->  		__gitcomp_nl "$(__git_remotes)"
->  		;;
-
-I don't think you need this chunk, do you?  I think that's
-only useful for completing options to the subcommand, which
-'git remote rm' lacks.
-
-I believe you can simply skip it and let the case fall
-through to the last item which simply completes the
-available remotes, just as 'git remote remove' does.
-
-Hope that helps,
-
--- 
+--=20
 Todd
