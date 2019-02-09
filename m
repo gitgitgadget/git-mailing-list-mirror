@@ -2,109 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91E241F453
-	for <e@80x24.org>; Sat,  9 Feb 2019 08:10:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F9A7211B5
+	for <e@80x24.org>; Sat,  9 Feb 2019 08:39:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726741AbfBIIJ7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Feb 2019 03:09:59 -0500
-Received: from mout.web.de ([212.227.15.4]:43469 "EHLO mout.web.de"
+        id S1726866AbfBIIjs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Feb 2019 03:39:48 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:3567 "EHLO bsmtp7.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725946AbfBIIJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Feb 2019 03:09:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1549699789;
-        bh=wq0x6LIPueF36LVaw+EFfOMVZVJLozuXjO33r9K3nHQ=;
-        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
-        b=dqC7GYKOIv4SHaJCpWFwQ9aQ6Hu6njgC81eIVT/oZXcMiZWRyke3j0jNq2URhOSef
-         zdbrLuVYr3RvKagfGwqRWOFTmnwF1xsOZitGDnKxZhcOwnKgVzKdR1KIY8tSUIG9S6
-         TtaUHCDnzeG0FKDvmIbNyuBRUifTI3jUoIJGwuss=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.209.21] ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Mdueb-1gTRMu2SOj-00PZfH; Sat, 09
- Feb 2019 09:09:49 +0100
-Subject: Re: t0028-working-tree-encoding.sh failing on musl based systems
- (Alpine Linux)
-To:     Rich Felker <dalias@libc.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kevin Daudt <git@lists.ikke.info>, git@vger.kernel.org,
-        larsxschneider@gmail.com
-References: <20190207215935.GA31515@alpha>
- <20190208001705.GC11927@genre.crustytoothpaste.net>
- <20190208060403.GA29788@brightrain.aerifal.cx>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <0c3b77bf-2903-1cd0-0fce-2ec01be91d84@web.de>
-Date:   Sat, 9 Feb 2019 09:09:40 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:60.0)
- Gecko/20100101 Thunderbird/60.5.0
+        id S1726702AbfBIIjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Feb 2019 03:39:48 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43xQTY23T5z5tlD;
+        Sat,  9 Feb 2019 09:39:45 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id A77381EA9;
+        Sat,  9 Feb 2019 09:39:44 +0100 (CET)
+Subject: Re: [Breakage] Git v2.21.0-rc0 - t5318 (NonStop)
+To:     Jeff King <peff@peff.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+        'Linux Kernel' <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+References: <001101d4bfd6$b9430230$2bc90690$@nexbridge.com>
+ <20190208180321.GB27673@sigill.intra.peff.net>
+ <002501d4bfde$b26e6050$174b20f0$@nexbridge.com>
+ <20190208191519.GF27673@sigill.intra.peff.net>
+ <002b01d4bfe4$2d617f40$88247dc0$@nexbridge.com>
+ <20190208193157.GA30952@sigill.intra.peff.net>
+ <20190208220714.GG11927@genre.crustytoothpaste.net>
+ <005901d4bffb$6d0c34c0$47249e40$@nexbridge.com>
+ <20190208223512.GA2135@sigill.intra.peff.net>
+ <006601d4c001$2de3a160$89aae420$@nexbridge.com>
+ <20190209042456.GB18286@sigill.intra.peff.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <38f594ed-0787-aeb5-d34f-2f4775243eb7@kdbg.org>
+Date:   Sat, 9 Feb 2019 09:39:43 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-In-Reply-To: <20190208060403.GA29788@brightrain.aerifal.cx>
+In-Reply-To: <20190209042456.GB18286@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zY/btsOnXI1CcO9nRig6h3OZv6FlveZi/LLWTQKFa4hiOz/VPZD
- ziLn9NArRfoQ58YBPrFQag//YQfz0FVo5Eut9EBp70nJHx/e6WvQnUB+ZwjLLkM+uxtOlS2
- 1zqQdssEUL2/6bRCLDQOFrdEQKEpQwCy8U0oBG04hfh21wcrbMQqkW5uJOxAMB60WZG4HSq
- fr62zPsOEK7HUy4mw+JTw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VRcQlwIhcnk=:cXIhG2FxTK6M/QN8WT6hzg
- kjWhoGY4+ldPSPH3RgEs50lGq6Spdr1CljYShUCMd/N1KExVtYBa71/cbWxZFl/ybd59K20Jz
- Ip28BjjYL/Jca6fymr33eEXfaxDmRXmaZhLZnazGC1lJcrKlhd7i6Nt1haaoDDuXhGZSWAyJN
- LE4KUtAkzmbCAc1SQrUtpVRe7JQ25Ix4mHxHb1SJjootD4CVNJzHcWmeNlzO7yqQ14KHf6VuP
- 7Ef7RWjvDdzQzfToVBYVcmCO0Ng0NN650zxDj5x783jixvs+twCLLs61E40yDokqKYOf+qbvK
- g2CveUy0fx8AGMHePKeViAQA/xjN/Ra35mUXX0dtFaFhLpwuNUbl2n/Y8N1sZmqEZj5JQs/B1
- cbbtyZyNWQx2UbkkIyRcyl7FlSWizRh2fD+tt6JJz5YVTlA43I/iy4IzrLZpHEWgkDLiu8dDr
- PqA4Il5zEMBD6XCtbuPLAJyqrytTn+526k6Y+6koASeAPn99EUlEU4DV+6XhLY/rpc+MiBmJ6
- vFikPSVphUXcPnJYsEhYxaVHMoinfSYGW9ezXMfOp+RkEXdL5aANUohKLU0Mn0ZzjX6qN3qOr
- KAoCgf5uWEhiW7VMtg3DuVhIuhM+YER5kZJClzFf8N+0nWtqRVUNbdfRPrSr2Wax5Q9NRe/2d
- BjFuIq4iA9n99IUbHyVD36BKgoH8PosCVA1Oc2oCg/BjKHol5P/UyLnbTUNnZa+3tMHWzyZ+j
- GIvEfbxSe0q0qEvIkcjwNrE+AMIvcLrIV859Nqgh8Lvvo4KfI59t/tJ4nK8EmlLo/HLivk6vv
- 4WRQampc+y7Quj9ed8C2Vzwtd/gr0X2zacZAEPZbHSy5tG6wI0cvtu9NNkS43Az68utdDTdmX
- H+oYp3/I1yAK/wI7+Lo1xfKWvh1DPP3OK3JnwD5Lnx4jVjesMWGQZPlW2JHP7M
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08.02.19 07:04, Rich Felker wrote:
-> On Fri, Feb 08, 2019 at 12:17:05AM +0000, brian m. carlson wrote:
+Am 09.02.19 um 05:24 schrieb Jeff King:
+> On Fri, Feb 08, 2019 at 05:53:53PM -0500, Randall S. Becker wrote:
+> 
+>>> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh index
+>>> 92cf8f812c..4afab14431 100644
+>>> --- a/t/test-lib-functions.sh
+>>> +++ b/t/test-lib-functions.sh
+>>> @@ -1302,3 +1302,8 @@ test_set_port () {
+>>>  	port=$(($port + ${GIT_TEST_STRESS_JOB_NR:-0}))
+>>>  	eval $var=$port
+>>>  }
+>>> +
+>>> +# Generate an output of $1 bytes of all zeroes (NULs, not ASCII zeroes).
+>>> +gen_zero_bytes () {
+>>> +	perl -e 'print "\0" x $ARGV[0]' "$@"
+>>> +}
+>>
+>> This function does work on platform, so it's good.
+> 
+> Great. Since it sounds like you're preparing some patches to deal with
+> /dev/zero elsewhere, do you want to wrap it up in a patch as part of
+> that?
 
-[]
->> Even if Git were to produce a BOM to work around this issue, then we'd
->> still have the problem that any program using musl will write data in
->> UTF-16 without a BOM. Moreover, because musl, in violation of the RFC,
->> doesn't read and process BOMs, someone using little-endian UTF-16 (with
->> a proper BOM) with musl and Git will have their data corrupted,
->> according to my reading of the musl website.
->
-> That information is outdated and someone from our side should update
-> it; since 1.1.19, musl treats "UTF-16" input as ambiguous endianness
-> determined by BOM, defaulting to big if there's no BOM. However output
-> is always big endian, such that processes conforming to the Unicode
-> SHOULD clause will interpret it correctly.
->
-> The portable way to get little endian with a BOM is to open a
-> conversion descriptor for "UTF-16LE" (which should not add any BOM)
-> and write a BOM manually.
->
+Please do not use yes to generate an infinite amount of bytes. Our
+implementation of yes() in test-lib.sh generates only 99 lines.
 
-That is possible in the next upcoming version of Git:
+Perhaps do this.
 
-commit 0fa3cc77ee9fb3b6bb53c73688c9b7500f996b83
-Merge: cfd9167c15 aab2a1ae48
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Wed Feb 6 22:05:21 2019 -0800
+----- 8< -----
+Subject: [PATCH] t5318: avoid /dev/zero
 
-    Merge branch 'tb/utf-16-le-with-explicit-bom'
+Some platforms do not offer /dev/zero. Use printf and tr to generate
+a certain amount of NUL bytes.
 
-    A new encoding UTF-16LE-BOM has been invented to force encoding to
-    UTF-16 with BOM in little endian byte order, which cannot be directly
-    generated by using iconv.
+Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t5318-commit-graph.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-    * tb/utf-16-le-with-explicit-bom:
-      Support working-tree-encoding "UTF-16LE-BOM"
-
-
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 16d10ebce8..04d394274f 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -383,7 +383,8 @@ corrupt_graph_and_verify() {
+ 	cp $objdir/info/commit-graph commit-graph-backup &&
+ 	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
+ 	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0 &&
+-	dd if=/dev/zero of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=$(($orig_size - $zero_pos)) &&
++	printf "%0*d" $(($orig_size - $zero_pos)) 0 | tr 0 '\0' |
++		dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" &&
+ 	test_must_fail git commit-graph verify 2>test_err &&
+ 	grep -v "^+" test_err >err &&
+ 	test_i18ngrep "$grepstr" err
+-- 
+2.20.1.86.gb0de946387
