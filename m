@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 970231F453
-	for <e@80x24.org>; Sat,  9 Feb 2019 17:19:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DBC21F453
+	for <e@80x24.org>; Sat,  9 Feb 2019 17:26:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727473AbfBIRTT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Feb 2019 12:19:19 -0500
-Received: from sonic303-24.consmr.mail.ne1.yahoo.com ([66.163.188.150]:41238
-        "EHLO sonic303-24.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727394AbfBIRTT (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 9 Feb 2019 12:19:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1549732757; bh=WIokRzRqYacxg6QlJ877F7b/8M+Qq9/f5cwd3iJYyLo=; h=From:To:Cc:Subject:Date:From:Subject; b=FEEqLlHBaxnl9zmbXznYx2nmT5CqoYzMLT4qs5mvrSk/7iqFwZXXffCheuAJTsLPTC0LTt1PPcvhZmHEVyTmap/ykB52sVrepAwSLtj4IoWn8Qd/O5HuTzAjkbCbWds9ToLse7/AKRtG8fdzitNlh8bEHbQvvE/J7xa/nk2OkZGbnytI9fIZTHNltBy8bnAjWz5pfRjSSJmgT8kBA1g2/3uCQKX2wPrJj21R50XG5Mzii+ruxUMFi6FyIbQXY8kvFeryCUgBMKMXJJOgCkxlzS+u8S2zNs0sOd3Q9jLJB+gsEz0j7JsVUneGt93OcC6Gra7EjNbzCVec3z80QzPc9w==
-X-YMail-OSG: 2QEdkcMVM1mVXXXJALYwJqyzYeKWkMx_5UIKGaeuguLNSW4whDBZyrPfBUjDpq_
- WwPaIQoE.PbHzwZEMyhqElb8rAMCj48mwAI.iPU2gXEZof4xIRC3Nc6Q0NU8tAIVqhwRmbv2HT.U
- 2gmSZ8dt8IOBqKfODU0XWXGrLiQ181cRIK.k1M7y9NbH4U5p4Y6An4UGN1a3h2v83xKcTr1u0jiE
- Y3WZT73O._DA1L8HK7FdITh5m_bVczaTeH9OE_CzazNOjgyE8duYC2RxHbTLGfKKmEupDJroqq51
- G0JfKCp3zbiyJ1lNGUtZFeA8fED0_7ITShUQWnSOpQCndKobQ4qpaNskLiGfgjGEVrhxCP4Suic1
- RQEZP4tV4mRVBMesIylkTtiPOw.odXMrfTzNoVhSQcbMF5DxNlnms3TvS06iP9.boUueETTa3lKK
- G9JEEETFGNDokxIAovrXvl9Pqp8d4wyRutLmegaLJiRTONqH_bac0ZEkBOWPLUpMGz1fmwwyDbqm
- 2u5BzMNlHdVj.6A4i13cXMB.vbTFlUpO5IR47TnO4Lv1YtqS8Pp9.2UBu9ZBBa5ak7gyJQ2MsqOB
- Fg7iq.9Tgc7NACtp76IVtRGjy9uZPsW.vuTot70EtZzAhqe67e4DiNHFIFMo2jx.MVzbu_2swYMb
- cX4_dt6SW.Rb.AJRtLXCx6uvFDN1gTZ9N4_OGX9DjpKATGQJmcqPRfSuGWFa5Fd9lJJRwV6Attya
- 5yAdaln6vdDCqpuoYta8yBkB.bQ_QWjUNspxkCI5EIqJUa0PkTBbiOAVw4nHsnu7rw3XgxihPmEn
- XV.ZBQAUCfOqpVT2fkPuPOmvU78skayogWW_fsRo_9ICTYOWTBH0LwG3NsI0CWYnl3eMncLuhRAA
- VIQkW7VqKSqzJy1iz83VBhgS4MGoVSiUjJEWT1NZShnMrnw5J5aPHvSDFk5Y3.wf8bx3407sH890
- Ggw32uAy.qa8_13wZr6pVLbp940tt._aA6020HxjnyGIxjTPhgJpCiM02Z42dzkqUjIPCyn3dRYL
- I.hlcLLDhV9RTfleU_3K_aCziXfI9cfsLBZzk4lfGB9TxaL8SHJ2tESpnjP0t9T5OxmyA01BNvcv
- MIWm6pSK9yzoe5r3HQ97aWr0-
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic303.consmr.mail.ne1.yahoo.com with HTTP; Sat, 9 Feb 2019 17:19:17 +0000
+        id S1727695AbfBIR0i (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Feb 2019 12:26:38 -0500
+Received: from sonic311-25.consmr.mail.ne1.yahoo.com ([66.163.188.206]:45777
+        "EHLO sonic311-25.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727684AbfBIR0g (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 Feb 2019 12:26:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1549733195; bh=h/4oaNRCs/98uUzawIilSefMO+f00Z59h8ttSQnUPCY=; h=From:To:Cc:Subject:Date:From:Subject; b=qM5MAWDmDnLqawuOXIUZjwzxFamduqcGbhm3foeRJI0l/17t9di40GSEdP/SBe9zdr1hI9eYC92SJTE2EAIGheLmuFOYD4oPUvvNZ77BkEtL3lqUGQCjE2S9geFzSOaGWGSea/A2C2NBn6g0WNbSrL55zkSvWUccB26Pk2m92V7/v6wAmTPQVlEuxQMutLSBCNILkXlQRnFb/NudkJIWyf0yBzkHo08cCtaSgB0+eGOdrAmc4YiKMjGTkuGqFq8N5O46KLProFN5fJMQqO2ThPHkpemSThEm1wWYtyxWwYuaX/09dhnPT52TW/ReFKIey1IziWrsKpzAx5/j8jXkFw==
+X-YMail-OSG: 0qYV.uIVM1ljSVh.EBY2RA41zbILTtdSCshnBLRa6zAPpdpJFGnIXOfzMzB5oUM
+ YnJlrfn0Hd0LPPTja3alRe042xx6xYDhkvrRBgizskvqr_dlPo3msS4EiaUrJcoO5zwqtfxvrIyQ
+ .F71wsNPLDjL5V80yNdKgCAHatZmCGBuPutO9YUpaEjPXAhwrs_YhlqK71hbee_M2BUBU1F4Abkc
+ wk8HQvq1zWsfc_BE1vK1azfsmPd_o6D.yDr55QdRxjgpI6LvJdiRAmei4erRM1Fs6IBt8R8_RXk0
+ 0YdeVSKtLuKdZFVC2qQyI2reh_s0uRBes3SIKKHtR7Dcbhc2yxhGHXo4s2_BbcLYAYpvQwfFW3nR
+ eTythkXjxRhf3PN6M82Nf6m7LQ7Tfxv6h5ZqOsrTERYeeJ_XrW9.hfm59DCbOpBwyyMIwZAAqnAH
+ Gb0xe6z1ZwVNVeTiIxxECExvtoNI_Vtt_q.6eUequ5yTPURBahUQfvi6Mk0mqqAwQgg23cm6djMW
+ BdeTsOCgn_VYhRQDWwD2vnpOtpW3X02GhdYSLdD.8bO8MY385xHAnY0jmqhOLzeRZMWqClaVVvM2
+ 6VS5dhPdGQFj3Sd0.AOdpN.XxvLcs9WJ9H9ZannUBZ41paSQxr9LcRXwjqAzO1_PCX_gmikIdHnX
+ Tdmd6Cv3NHFV3SMM0wyxHdWj.JNHWu94JkDHa162_TdEsaPUmSAohBYfzCSAb1bAavQkRKEZllIC
+ 2eQLkUuTg6d9aSTcSO0pxTpq1T2P_H281pn5ZwuR6qU1Va2JFBFFJaxn52CD0ccDY_Rzu3a0RHda
+ s_BdEXA.bpBMyqstTXyZ8pdxSCFONG630L8HuOmIs1ltH69jbGlWivobDJ2TqgVR5.ZYK00_ILHl
+ gDo7awzqC6gdR2vBnBK8zCWawlE0gxXwnpeVvQuAVhEXRCrR2hjKdh9XGoUDWaW8YdtWNaCujhoi
+ txeCaTIUMFKzBAMzoKCJyMrHViojToNApvrwALA89HBhyMZkj.Wvu30kQ.O_Od2GVAg9zb3Ghg_c
+ 3xBGYWNDfWg6ynTTkszGHDn4EtHIkn15cxAY7poJ9Z7B7XbjRVv5u0M6U7p2gQSw3kMlArBJ8olx
+ Y0OMG4sFOPU0-
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic311.consmr.mail.ne1.yahoo.com with HTTP; Sat, 9 Feb 2019 17:26:35 +0000
 Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO localhost.localdomain) ([99.229.179.249])
-          by smtp401.mail.ne1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 139f72c060334d5704d6f0c716554d26;
-          Sat, 09 Feb 2019 17:19:12 +0000 (UTC)
+          by smtp425.mail.ne1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 0fbbc3ce2e17e4372638586a0d44ddcf;
+          Sat, 09 Feb 2019 17:26:35 +0000 (UTC)
 From:   randall.s.becker@rogers.com
 To:     git@vger.kernel.org
 Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [Fix v1] config.mak.uname: move location of bash on NonStop to CoreUtils
-Date:   Sat,  9 Feb 2019 12:18:57 -0500
-Message-Id: <20190209171857.17116-1-randall.s.becker@rogers.com>
+Subject: [Fix v2] config.mak.uname: move location of bash on NonStop to CoreUtils
+Date:   Sat,  9 Feb 2019 12:26:11 -0500
+Message-Id: <20190209172611.21340-1-randall.s.becker@rogers.com>
 X-Mailer: git-send-email 2.12.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -56,6 +56,8 @@ of in /usr/local/bin. This version of bash is more stable and
 recommended for all use as of the J06.22 and L18.02 operating
 system revision levels. This new version provides more stability
 of test results.
+
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
 ---
  config.mak.uname | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
