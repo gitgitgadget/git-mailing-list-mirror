@@ -2,111 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A4121F453
-	for <e@80x24.org>; Sat,  9 Feb 2019 17:01:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 970231F453
+	for <e@80x24.org>; Sat,  9 Feb 2019 17:19:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727151AbfBIRBB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Feb 2019 12:01:01 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:57486 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726880AbfBIRBB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Feb 2019 12:01:01 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x19H0wjZ055367
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 9 Feb 2019 12:00:59 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <20190208220751.9936-1-randall.s.becker@rogers.com> <xmqq8sypkfzk.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq8sypkfzk.fsf@gitster-ct.c.googlers.com>
-Subject: RE: [Fix v2] t5562: remove dependency on /dev/zero
-Date:   Sat, 9 Feb 2019 12:00:51 -0500
-Message-ID: <000401d4c099$063ae7c0$12b0b740$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIc/tXX6nKYZRK3AZUxuMH5inI1NwFrWazgpTvVaTA=
+        id S1727473AbfBIRTT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Feb 2019 12:19:19 -0500
+Received: from sonic303-24.consmr.mail.ne1.yahoo.com ([66.163.188.150]:41238
+        "EHLO sonic303-24.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727394AbfBIRTT (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 Feb 2019 12:19:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1549732757; bh=WIokRzRqYacxg6QlJ877F7b/8M+Qq9/f5cwd3iJYyLo=; h=From:To:Cc:Subject:Date:From:Subject; b=FEEqLlHBaxnl9zmbXznYx2nmT5CqoYzMLT4qs5mvrSk/7iqFwZXXffCheuAJTsLPTC0LTt1PPcvhZmHEVyTmap/ykB52sVrepAwSLtj4IoWn8Qd/O5HuTzAjkbCbWds9ToLse7/AKRtG8fdzitNlh8bEHbQvvE/J7xa/nk2OkZGbnytI9fIZTHNltBy8bnAjWz5pfRjSSJmgT8kBA1g2/3uCQKX2wPrJj21R50XG5Mzii+ruxUMFi6FyIbQXY8kvFeryCUgBMKMXJJOgCkxlzS+u8S2zNs0sOd3Q9jLJB+gsEz0j7JsVUneGt93OcC6Gra7EjNbzCVec3z80QzPc9w==
+X-YMail-OSG: 2QEdkcMVM1mVXXXJALYwJqyzYeKWkMx_5UIKGaeuguLNSW4whDBZyrPfBUjDpq_
+ WwPaIQoE.PbHzwZEMyhqElb8rAMCj48mwAI.iPU2gXEZof4xIRC3Nc6Q0NU8tAIVqhwRmbv2HT.U
+ 2gmSZ8dt8IOBqKfODU0XWXGrLiQ181cRIK.k1M7y9NbH4U5p4Y6An4UGN1a3h2v83xKcTr1u0jiE
+ Y3WZT73O._DA1L8HK7FdITh5m_bVczaTeH9OE_CzazNOjgyE8duYC2RxHbTLGfKKmEupDJroqq51
+ G0JfKCp3zbiyJ1lNGUtZFeA8fED0_7ITShUQWnSOpQCndKobQ4qpaNskLiGfgjGEVrhxCP4Suic1
+ RQEZP4tV4mRVBMesIylkTtiPOw.odXMrfTzNoVhSQcbMF5DxNlnms3TvS06iP9.boUueETTa3lKK
+ G9JEEETFGNDokxIAovrXvl9Pqp8d4wyRutLmegaLJiRTONqH_bac0ZEkBOWPLUpMGz1fmwwyDbqm
+ 2u5BzMNlHdVj.6A4i13cXMB.vbTFlUpO5IR47TnO4Lv1YtqS8Pp9.2UBu9ZBBa5ak7gyJQ2MsqOB
+ Fg7iq.9Tgc7NACtp76IVtRGjy9uZPsW.vuTot70EtZzAhqe67e4DiNHFIFMo2jx.MVzbu_2swYMb
+ cX4_dt6SW.Rb.AJRtLXCx6uvFDN1gTZ9N4_OGX9DjpKATGQJmcqPRfSuGWFa5Fd9lJJRwV6Attya
+ 5yAdaln6vdDCqpuoYta8yBkB.bQ_QWjUNspxkCI5EIqJUa0PkTBbiOAVw4nHsnu7rw3XgxihPmEn
+ XV.ZBQAUCfOqpVT2fkPuPOmvU78skayogWW_fsRo_9ICTYOWTBH0LwG3NsI0CWYnl3eMncLuhRAA
+ VIQkW7VqKSqzJy1iz83VBhgS4MGoVSiUjJEWT1NZShnMrnw5J5aPHvSDFk5Y3.wf8bx3407sH890
+ Ggw32uAy.qa8_13wZr6pVLbp940tt._aA6020HxjnyGIxjTPhgJpCiM02Z42dzkqUjIPCyn3dRYL
+ I.hlcLLDhV9RTfleU_3K_aCziXfI9cfsLBZzk4lfGB9TxaL8SHJ2tESpnjP0t9T5OxmyA01BNvcv
+ MIWm6pSK9yzoe5r3HQ97aWr0-
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic303.consmr.mail.ne1.yahoo.com with HTTP; Sat, 9 Feb 2019 17:19:17 +0000
+Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO localhost.localdomain) ([99.229.179.249])
+          by smtp401.mail.ne1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 139f72c060334d5704d6f0c716554d26;
+          Sat, 09 Feb 2019 17:19:12 +0000 (UTC)
+From:   randall.s.becker@rogers.com
+To:     git@vger.kernel.org
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: [Fix v1] config.mak.uname: move location of bash on NonStop to CoreUtils
+Date:   Sat,  9 Feb 2019 12:18:57 -0500
+Message-Id: <20190209171857.17116-1-randall.s.becker@rogers.com>
+X-Mailer: git-send-email 2.12.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 8, 2019 18:39, Junio C Hamano wrote:
-> randall.s.becker@rogers.com writes:
-> > Replaced subtest 15 (CONTENT_LENGTH overflow ssite_t) use of /dev/zero
-> > with yes and a translation of its result to a stream of NULL. This is
-> > a more portable solution.
-> >
-> > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> > ---
-> >  t/t5562-http-backend-content-length.sh | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/t/t5562-http-backend-content-length.sh
-> > b/t/t5562-http-backend-content-length.sh
-> > index 90d890d02..b8d1913e5 100755
-> > --- a/t/t5562-http-backend-content-length.sh
-> > +++ b/t/t5562-http-backend-content-length.sh
-> > @@ -143,14 +143,14 @@ test_expect_success GZIP 'push gzipped empty' '
-> >
-> >  test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
-> >  	NOT_FIT_IN_SSIZE=$(ssize_b100dots) &&
-> > -	env \
-> > +	yes | tr "y" "\\0" | env \
-> 
-> I do not quite get this use of tr.  The original feeds a stream of NULs
-out of
-> /dev/zero to the command; the yes-to-tr pipe instead feeds a stream of
-> alternating NUL and LF.
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
-That's why we're going to go with a generate_zero_bytes function per Peff.
-I'm working on a more comprehensive patch covering t5562, t5318, and
-test-lib-functions.sh that will (hopefully) be satisfactory and remove the
-dependency on /dev/zero and fixes the related new breakages in 2.21.0-rc0.
+The default bash is now officially in /usr/coreutils/bin instead
+of in /usr/local/bin. This version of bash is more stable and
+recommended for all use as of the J06.22 and L18.02 operating
+system revision levels. This new version provides more stability
+of test results.
+---
+ config.mak.uname | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-The test case in t5318 is specific about wanting zero bytes although the
-test is just intending to generate a corrupt block that generates a
-different hash, so yes 'yes' might be sufficient, but I don't like
-randomness myself if we're taking two different tests being involved.
-
-My current intent is to add to test-lib-functions.sh, a method of
-generalizing blocks of zeros to a pipe:
-
-+# Generate an output of $1 bytes of all zeroes (NULs, not ASCII zeroes).
-+# If $1 is < 0, output forever or until the receiving pipe stops reading,
-whichever comes first.
-+ generate_zero_bytes () {
-+ 	perl -e ' if ($ARGV[0] < 0) { while (-1) { print "\0" } } else {
-print "\0" x $ARGV[0] }' "$@"
-+ }
-
-And then fit that into the two tests, then submit as a patch.
-
-> Does the actual bytes fed to the consumer make any difference?  If not,
-> perhaps we can use 'yes' as-is?
-> 
-> >  		CONTENT_TYPE=application/x-git-upload-pack-request \
-> >  		QUERY_STRING=/repo.git/git-upload-pack \
-> >  		PATH_TRANSLATED="$PWD"/.git/git-upload-pack \
-> >  		GIT_HTTP_EXPORT_ALL=TRUE \
-> >  		REQUEST_METHOD=POST \
-> >  		CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
-> > -		git http-backend </dev/zero >/dev/null 2>err &&
-> > +		git http-backend >/dev/null 2>err &&
-> >  	grep "fatal:.*CONTENT_LENGTH" err
-> >  '
-
-Regards,
-Randall
+diff --git a/config.mak.uname b/config.mak.uname
+index 786bb2f91..6bd67eb86 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -507,9 +507,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ 	# RFE 10-120912-4693 submitted to HP NonStop development.
+ 	NO_SETITIMER = UnfortunatelyYes
+ 	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
+-	SHELL_PATH = /usr/local/bin/bash
+-	# as of H06.25/J06.14, we might better use this
+-	#SHELL_PATH = /usr/coreutils/bin/bash
++	SHELL_PATH = /usr/coreutils/bin/bash
+ endif
+ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	pathsep = ;
+-- 
+2.12.3
 
