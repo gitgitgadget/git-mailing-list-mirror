@@ -2,82 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 771BA1F453
-	for <e@80x24.org>; Sat,  9 Feb 2019 20:22:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDDE12141A
+	for <e@80x24.org>; Sat,  9 Feb 2019 21:32:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726931AbfBIUWq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Feb 2019 15:22:46 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:45909 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726836AbfBIUWq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Feb 2019 15:22:46 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x19KMigm064474
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Sat, 9 Feb 2019 15:22:44 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-References: <002301d4bfa9$158716e0$409544a0$@nexbridge.com>
-In-Reply-To: <002301d4bfa9$158716e0$409544a0$@nexbridge.com>
-Subject: RE: [Hang] t5562 subtest 8 on NonStop
-Date:   Sat, 9 Feb 2019 15:22:36 -0500
-Message-ID: <000b01d4c0b5$358b6b50$a0a241f0$@nexbridge.com>
+        id S1726933AbfBIVau (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Feb 2019 16:30:50 -0500
+Received: from smtp2-g21.free.fr ([212.27.42.2]:64062 "EHLO smtp2-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726898AbfBIVau (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Feb 2019 16:30:50 -0500
+Received: from localhost.localdomain (unknown [IPv6:2a01:e0a:d1:f360:33e:2802:50eb:d77d])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id E8FB52003CF;
+        Sat,  9 Feb 2019 22:30:46 +0100 (CET)
+From:   =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH] Fix typos in translatable strings for v2.21.0
+Date:   Sat,  9 Feb 2019 22:30:44 +0100
+Message-Id: <20190209213044.29539-1-jn.avila@free.fr>
+X-Mailer: git-send-email 2.21.0.rc0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQF7XyAaK7kcDLbbZ5zDbowZcN58zqaKqc7A
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 8, 2019 7:23, I wrote:
-> We have suddenly encountered a hung git-http-backend in t5562 in the
-> NonStop port. This is a new problem not seen before on the platform,
-> surprisingly. I am wondering whether this is a result of not actually
-having an
-> apache2 server on-board. Is that a possibility and can that sub-test be
-> bypassed if no apache2 is detected?
-> 
-> We also had subtest 15 and I am investigating, but it may depend on 8's
-data
-> (I had to kill the git-http-backend process, so maybe that's why).
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ builtin/bisect--helper.c | 4 ++--
+ builtin/fetch.c          | 2 +-
+ builtin/rebase.c         | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-I'm back to investigating subtest 8 hanging after dealing with the /dev/zero
-thing. What we end up with two git processes, a git-http-backend, a perl,
-and a few shell processes. The act.err file had:
-
-fatal: request ended in the middle of the gzip stream
-
-Which went through die() and should have unwound the whole thing, but
-didn't. The git-http-backend is waiting to clean up children and each git is
-polling for input. It seems like SIGCHLD did not get back through the
-process that started it, or its parent - but I don't quite follow the flow
-in this test. I have seen the perl port not like SIGCHLD sometimes, so that
-might be what is going on. Is it possible to skip the hanging subtest during
-a whole test run? We don't really have anyone using the http backend on
-platform (SSH is the generally preferred method to get to git on box), so I
-am tempted to ignore the ones that hang as conditional known breakages, if
-that is possible, so that we can get our CI builds back in operation.
-Thoughts? Advice?
-
-Thanks,
-Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index c1cff32661..e7325fe37f 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -173,7 +173,7 @@ static int bisect_reset(const char *commit)
+ 			argv_array_clear(&argv);
+ 			return error(_("could not check out original"
+ 				       " HEAD '%s'. Try 'git bisect"
+-				       "reset <commit>'."), branch.buf);
++				       " reset <commit>'."), branch.buf);
+ 		}
+ 		argv_array_clear(&argv);
+ 	}
+@@ -646,7 +646,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "no-checkout", &no_checkout,
+ 			 N_("update BISECT_HEAD instead of checking out the current commit")),
+ 		OPT_BOOL(0, "no-log", &nolog,
+-			 N_("no log for BISECT_WRITE ")),
++			 N_("no log for BISECT_WRITE")),
+ 		OPT_END()
+ 	};
+ 	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 5a09fe24cd..b620fd54b4 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1480,7 +1480,7 @@ static inline void fetch_one_setup_partial(struct remote *remote)
+ 	if (strcmp(remote->name, repository_format_partial_clone)) {
+ 		if (filter_options.choice)
+ 			die(_("--filter can only be used with the remote "
+-			      "configured in extensions.partialclone"));
++			      "configured in extensions.partialClone"));
+ 		return;
+ 	}
+ 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 96efd40901..1c39abc02e 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1434,7 +1434,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (options.reschedule_failed_exec && !is_interactive(&options))
+-		die(_("--reschedule-failed-exec requires an interactive rebase"));
++		die(_("%s requires an interactive rebase", "--reschedule-failed-exec"));
+ 
+ 	if (options.git_am_opts.argc) {
+ 		/* all am options except -q are compatible only with --am */
+-- 
+2.21.0.rc0
 
