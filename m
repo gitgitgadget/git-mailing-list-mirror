@@ -2,78 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F8801F453
-	for <e@80x24.org>; Sun, 10 Feb 2019 08:53:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC721F453
+	for <e@80x24.org>; Sun, 10 Feb 2019 09:40:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725973AbfBJIhi convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 10 Feb 2019 03:37:38 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:35195 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbfBJIhi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Feb 2019 03:37:38 -0500
-Received: by mail-qk1-f193.google.com with SMTP id w204so4722586qka.2
-        for <git@vger.kernel.org>; Sun, 10 Feb 2019 00:37:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6NhhFeEzpPpYAzf3Ou7usjbCr5mLOBxqHYB4AnsRxzU=;
-        b=AgL7L2P3BN2QssUSelUsRjziMTXV1xMv2Z6k3pRHmwmZmiwYKV0/RDq0WzXZZiTpWX
-         NmzN/s8cNfU3o3TC5CZEUqe8iWEBAmVmLXZsrVfu1so/LCpYbSZT3iUG74ml3c9IoefX
-         x5q76wwGnQrE54Vms92Oq72T96MQITDU5mZ7MpHf+NJrWKA67Fqmx6ly/3jyRAwyEAOH
-         6IQ5lHm9Ue/K0hUxSEXZEeqQ+4anFLaLnjOI0SIyy+SEBzrDPZIzCO5DibX2dGTWMxrG
-         t6C/jsKvRKJxWrKWkH30rr5aehTVnID5mVa4BkPIX+jcEzPPERXs8J8BFSB9xvhO3De4
-         05Ng==
-X-Gm-Message-State: AHQUAuZCpbD47O53xt7gOZ6gEpqkUBaoqoXlgP8Vb3hChShsFV2d//tC
-        1uB1JjPefPBB6GIsKSvU5cuLuvRIsTPIFNwoUqg=
-X-Google-Smtp-Source: AHgI3IazTlStNKfbI4LCiS89r3ul9lDM3Bz4R2rCsX4mOX3J7ui5ITJg5GbEOM+IWbtiNKdIBbZI1LDjrS8l8OIIYrY=
-X-Received: by 2002:a37:a4c2:: with SMTP id n185mr8857618qke.152.1549787857576;
- Sun, 10 Feb 2019 00:37:37 -0800 (PST)
+        id S1726035AbfBJJkt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Feb 2019 04:40:49 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:49699 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725948AbfBJJkt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Feb 2019 04:40:49 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43y3nV3Sv7z5tlF;
+        Sun, 10 Feb 2019 10:40:46 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id C56CE144;
+        Sun, 10 Feb 2019 10:40:45 +0100 (CET)
+Subject: Re: [Breakage] Git v2.21.0-rc0 - t5318 (NonStop)
+To:     Jeff King <peff@peff.net>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+        'Linux Kernel' <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+References: <002501d4bfde$b26e6050$174b20f0$@nexbridge.com>
+ <20190208191519.GF27673@sigill.intra.peff.net>
+ <002b01d4bfe4$2d617f40$88247dc0$@nexbridge.com>
+ <20190208193157.GA30952@sigill.intra.peff.net>
+ <20190208220714.GG11927@genre.crustytoothpaste.net>
+ <005901d4bffb$6d0c34c0$47249e40$@nexbridge.com>
+ <20190208223512.GA2135@sigill.intra.peff.net>
+ <006601d4c001$2de3a160$89aae420$@nexbridge.com>
+ <20190209042456.GB18286@sigill.intra.peff.net>
+ <38f594ed-0787-aeb5-d34f-2f4775243eb7@kdbg.org>
+ <20190209232928.GA7135@sigill.intra.peff.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <de25ab29-e4dc-aee2-7396-657c71a550dd@kdbg.org>
+Date:   Sun, 10 Feb 2019 10:40:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-References: <20190130094831.10420-1-pclouds@gmail.com> <20190208090401.14793-1-pclouds@gmail.com>
- <20190208090401.14793-16-pclouds@gmail.com>
-In-Reply-To: <20190208090401.14793-16-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 10 Feb 2019 03:37:26 -0500
-Message-ID: <CAPig+cQbLLR7QeFXZLtEkHUMENdq+sy=dNvZj7jUkq-7_MXUkQ@mail.gmail.com>
-Subject: Re: [PATCH v2 15/19] switch: no implicit dwim, use --guess to dwim
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20190209232928.GA7135@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 8, 2019 at 4:05 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> Similar to automatic detach, this behavior could be confusing because
-> it can sometimes create a new branch without a user asking it to,
-> especially when the user is still not aware about this feature.
-> [...]
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> @@ -31,22 +31,13 @@ branch.
->  If <branch> is not found but there does exist a tracking branch in
-> +exactly one remote (call it <remote>) with a matching name and
-> +--no-guess is not specified, treat as equivalent to
+Am 10.02.19 um 00:29 schrieb Jeff King:
+> On Sat, Feb 09, 2019 at 09:39:43AM +0100, Johannes Sixt wrote:
+>>  	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0 &&
+>> -	dd if=/dev/zero of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=$(($orig_size - $zero_pos)) &&
+>> +	printf "%0*d" $(($orig_size - $zero_pos)) 0 | tr 0 '\0' |
+>> +		dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" &&
+> 
+> Using stdin instead of the tmpfile is nice, and shouldn't have any
+> problems. I do think your printf suggestion looks nice, but I wondered
+> if it might run into portability issues (not because of anything in
+> particular, but I often find that the more clever a shell solution, the
+> more likely we run into obscure problems).
+> 
+> But if it works everywhere, that's fine by me.
 
-For consistency with typesetting in the rest of this document, you
-probably want s/--no-guess/`&`/, though probably not worth a re-roll,
-though, if this is the only issue with v2.
+Unfortunately, it does not work as intended: the printf solution cannot
+print nothing, but that should be the case in all but one of the tests.
 
-> @@ -182,6 +173,26 @@ explicitly give a name with `-b` in such a case.
-> +--[no-]guess::
-> +       If <branch> is not found but there does exist a tracking
-> +       branch in exactly one remote (call it <remote>) with a
-> +       matching name, treat as equivalent to
-
-Most places in this document typeset these as `<branch>` and `<remote>`.
+-- Hannes
