@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 937D71F453
-	for <e@80x24.org>; Sun, 10 Feb 2019 13:27:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D76AE1F453
+	for <e@80x24.org>; Sun, 10 Feb 2019 13:27:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726811AbfBJN13 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Feb 2019 08:27:29 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51093 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726235AbfBJN1T (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Feb 2019 08:27:19 -0500
-Received: by mail-wm1-f68.google.com with SMTP id z5so12198839wmf.0
-        for <git@vger.kernel.org>; Sun, 10 Feb 2019 05:27:18 -0800 (PST)
+        id S1726819AbfBJN1c (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Feb 2019 08:27:32 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40019 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726634AbfBJN1a (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Feb 2019 08:27:30 -0500
+Received: by mail-wm1-f67.google.com with SMTP id q21so11786057wmc.5
+        for <git@vger.kernel.org>; Sun, 10 Feb 2019 05:27:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GfzLf/bBYUiUtgxa7x3u7/Y9hQyZpK5GQX3yufor5MA=;
-        b=lVbZ87ikC6i2y2q17+80oYBq/yS86fPIhGFGIrn47zS3SiImfHGl01YPT+PzemQTjz
-         pfiGBLZUDM1ML0RenS9OD7wEhEPnHQ3H6CD/fSc6wpIxCiTxr118rrbmBDm5JnNaM18+
-         zD6qVrDZ2gmkPpzIPQt746+WwNX1dxmeOnoECgcFPGQEGjGbFQ8Cer/QLNUDvLRFmckp
-         tipD/Ni5Jan2UgQk2LATDve7GETHBg3ZdNmZkX9bIs6Jhzq0LRN7qXJ8O6p7m6cadbQx
-         GkqEYfZ//70Ugy2ZwtttQPHXse6JCGcJdbMcHQLR9mAyd4lpmQUcvtKj8F+5j/YGsGj8
-         FBuA==
+        bh=GyI1/KTY2mSiSd43Sv7znguxqUauw5shFzD3u75E6Yg=;
+        b=pTmagMTuUVgcWdtvsQov0nhL4bXBWNsGhUi5GRF9AaJGRPCgCB07ItdZXVrbQkRx9x
+         yiHWRhrYHJMEZ12V+jqYA57Ji8815RVelQq+9m7XuLANMafrVMi2z50B054PricACFBZ
+         RdirCNtepu0QnlciaSvbqeP+QAaw+ok1vN+P+ZMWozNVY6bvd1TQrIA6bto/izmiy3tM
+         Jgm8wbCE/WpCHaRWQ7ZY1rd8VcCI8KmOwlTe7NSzJf+/fL7j0dya+qVWSNhjiTXSVxKU
+         Wi7pY9a63LnKzLRKTYt0jCn/iRhCBN4w2aEYrUAx7+FoVGAJOOFi0pMTWVHDeq3ZQunC
+         Yngw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GfzLf/bBYUiUtgxa7x3u7/Y9hQyZpK5GQX3yufor5MA=;
-        b=TPN0WG0Jc+PQ0bzWO0AHVGTgPKeZ/OrGJXduY+7XQ08AFVsauf9zBr3ecIbCf2XhaF
-         6fh0xp2d2Bwjb3DJO4GCJTtK3B+tnapxKX1JJnHZwYiLFnqatiuNWT9pyLjA2qZrcjvv
-         IDANMZiFDGQb5ZxmtYB0mRkRIEEZLFrhXqSWjFrPNdbAvX/ajxNaMcMVS9LzAvpwmVaF
-         pZYARTwPtC0tQVhr0KNy47uAmnWwEk2dxJ0M64Xzr7vVTO+uX/zlTGUj0/OxLdHOS7uv
-         Oim5RvEwvN0KpdT1iLLXv3gVIXsO144Mgrnrqj0BCsvYCNlph4xWtl5/pXJzUkio2Dz1
-         x7Wg==
-X-Gm-Message-State: AHQUAuYOtnL/CKyz6IQDQkRfFYG3G+b9nurYqgdkA4g7s1guhukzxRyN
-        O2trsFz/XR2ydqSz8IBYAhU3CQZ+
-X-Google-Smtp-Source: AHgI3IZc4+oDwMVCC0/b80RJLh5FEE/B22Irmmlmxmt8Lw+6cR+CYJ4e2UZvvpyV2cW/yyJPZrbIcg==
-X-Received: by 2002:a05:6000:1044:: with SMTP id c4mr15731224wrx.296.1549805237097;
-        Sun, 10 Feb 2019 05:27:17 -0800 (PST)
+        bh=GyI1/KTY2mSiSd43Sv7znguxqUauw5shFzD3u75E6Yg=;
+        b=iwZSv7/QkzkAehR1BJQoVZu/5sFEJZrQdLaTxizy7McAgqgW+67u48eHXTWyCrLgNt
+         frjnfwxDVsnDk0jNpcXTdtrte2DZ9/vuZWnk11MwaBB2tsDisy+Xr9BFVjPI2uPhpWEU
+         n/6GWfFaPQgERwDg2J4D+kRgvvif6/Jof7QC377kTAKmypWUBpl9dl37gkPP1wfqiMVB
+         4D2NVb1hiyaIZ//pV5KDTSqpvpkre5JjygD0XZZrXbjnWhESsBZLArI2W9IFmtqNOepS
+         N6Y287TXyff2skRFSFs41vYICPKAGAPwHsB5MSuyDvOtF5u92JaZecdXrTBY3OrxA4mv
+         yE7w==
+X-Gm-Message-State: AHQUAubZi3DrfrhwVamQYQtRoOOWpEkI5SLohOEHraWcNYYEynPaCygy
+        m64/bMy2xoYi6hkP5HaASUJDZ7eV
+X-Google-Smtp-Source: AHgI3IZ+cXq51zGyBF8kLvEPPe0dLxdqQTCGLsBiQlfxxbAo7OlQyzrvnJtbb9gtZ/NiOHdRWvP2Bw==
+X-Received: by 2002:a1c:c441:: with SMTP id u62mr6351608wmf.69.1549805245544;
+        Sun, 10 Feb 2019 05:27:25 -0800 (PST)
 Received: from localhost.localdomain (atoulouse-658-1-21-92.w86-222.abo.wanadoo.fr. [86.222.20.92])
-        by smtp.googlemail.com with ESMTPSA id z26sm5266314wml.44.2019.02.10.05.27.15
+        by smtp.googlemail.com with ESMTPSA id z26sm5266314wml.44.2019.02.10.05.27.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 10 Feb 2019 05:27:16 -0800 (PST)
+        Sun, 10 Feb 2019 05:27:25 -0800 (PST)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v7 09/16] sequencer: make sequencer_make_script() write its script to a strbuf
-Date:   Sun, 10 Feb 2019 14:26:41 +0100
-Message-Id: <20190210132648.12821-10-alban.gruin@gmail.com>
+Subject: [PATCH v7 16/16] rebase--interactive: move several functions to rebase--interactive.c
+Date:   Sun, 10 Feb 2019 14:26:48 +0100
+Message-Id: <20190210132648.12821-17-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190210132648.12821-1-alban.gruin@gmail.com>
 References: <20190129150159.10588-1-alban.gruin@gmail.com>
@@ -69,195 +69,271 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes sequencer_make_script() write its script to a strbuf (ie. the
-buffer of a todo_list) instead of a FILE.  This reduce the amount of
-read/write made by rebase interactive.
+As sequencer_add_exec_commands(), rearrange_squash_in_todo_file(), and
+transform_todo_file() are only needed inside of rebase--interactive.c
+for rebase -p, they are moved there from sequencer.c.
+
+The parameter r (repository) is dropped from them, and the error
+handling of rearrange_squash_in_todo_file() is slightly improved.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
-No changes since v6.
-
- builtin/rebase--interactive.c | 13 ++++++-----
- sequencer.c                   | 41 +++++++++++++++--------------------
- sequencer.h                   |  5 ++---
- 3 files changed, 28 insertions(+), 31 deletions(-)
+ builtin/rebase--interactive.c | 81 +++++++++++++++++++++++++++++++++--
+ sequencer.c                   | 79 ++--------------------------------
+ sequencer.h                   |  7 ++-
+ 3 files changed, 84 insertions(+), 83 deletions(-)
 
 diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
-index 74ebe7a10e..506154b5e2 100644
+index 370d584683..fb11f23692 100644
 --- a/builtin/rebase--interactive.c
 +++ b/builtin/rebase--interactive.c
-@@ -71,7 +71,8 @@ static int do_interactive_rebase(struct replay_opts *opts, unsigned flags,
- 	const char *head_hash = NULL;
- 	char *revisions = NULL, *shortrevisions = NULL;
- 	struct argv_array make_script_args = ARGV_ARRAY_INIT;
--	FILE *todo_list;
-+	FILE *todo_list_file;
+@@ -13,6 +13,81 @@ static GIT_PATH_FUNC(path_state_dir, "rebase-merge/")
+ static GIT_PATH_FUNC(path_squash_onto, "rebase-merge/squash-onto")
+ static GIT_PATH_FUNC(path_interactive, "rebase-merge/interactive")
+ 
++static int add_exec_commands(struct string_list *commands)
++{
++	const char *todo_file = rebase_path_todo();
 +	struct todo_list todo_list = TODO_LIST_INIT;
- 
- 	if (prepare_branch_to_be_rebased(opts, switch_to))
- 		return -1;
-@@ -93,8 +94,8 @@ static int do_interactive_rebase(struct replay_opts *opts, unsigned flags,
- 	if (!upstream && squash_onto)
- 		write_file(path_squash_onto(), "%s\n", squash_onto);
- 
--	todo_list = fopen(rebase_path_todo(), "w");
--	if (!todo_list) {
-+	todo_list_file = fopen(rebase_path_todo(), "w");
-+	if (!todo_list_file) {
- 		free(revisions);
- 		free(shortrevisions);
- 
-@@ -105,10 +106,11 @@ static int do_interactive_rebase(struct replay_opts *opts, unsigned flags,
- 	if (restrict_revision)
- 		argv_array_push(&make_script_args, restrict_revision);
- 
--	ret = sequencer_make_script(the_repository, todo_list,
-+	ret = sequencer_make_script(the_repository, &todo_list.buf,
- 				    make_script_args.argc, make_script_args.argv,
- 				    flags);
--	fclose(todo_list);
-+	fputs(todo_list.buf.buf, todo_list_file);
-+	fclose(todo_list_file);
- 
- 	if (ret)
- 		error(_("could not generate todo list"));
-@@ -121,6 +123,7 @@ static int do_interactive_rebase(struct replay_opts *opts, unsigned flags,
- 
- 	free(revisions);
- 	free(shortrevisions);
++	int res;
++
++	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
++		return error_errno(_("could not read '%s'."), todo_file);
++
++	if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
++					&todo_list)) {
++		todo_list_release(&todo_list);
++		return error(_("unusable todo list: '%s'"), todo_file);
++	}
++
++	todo_list_add_exec_commands(&todo_list, commands);
++	res = todo_list_write_to_file(the_repository, &todo_list,
++				      todo_file, NULL, NULL, -1, 0);
 +	todo_list_release(&todo_list);
- 	argv_array_clear(&make_script_args);
- 
- 	return ret;
++
++	if (res)
++		return error_errno(_("could not write '%s'."), todo_file);
++	return 0;
++}
++
++static int rearrange_squash_in_todo_file(void)
++{
++	const char *todo_file = rebase_path_todo();
++	struct todo_list todo_list = TODO_LIST_INIT;
++	int res = 0;
++
++	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
++		return error_errno(_("could not read '%s'."), todo_file);
++	if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
++					&todo_list)) {
++		todo_list_release(&todo_list);
++		return error(_("unusable todo list: '%s'"), todo_file);
++	}
++
++	res = todo_list_rearrange_squash(&todo_list);
++	if (!res)
++		res = todo_list_write_to_file(the_repository, &todo_list,
++					      todo_file, NULL, NULL, -1, 0);
++
++	todo_list_release(&todo_list);
++
++	if (res)
++		return error_errno(_("could not write '%s'."), todo_file);
++	return 0;
++}
++
++static int transform_todo_file(unsigned flags)
++{
++	const char *todo_file = rebase_path_todo();
++	struct todo_list todo_list = TODO_LIST_INIT;
++	int res;
++
++	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
++		return error_errno(_("could not read '%s'."), todo_file);
++
++	if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
++					&todo_list)) {
++		todo_list_release(&todo_list);
++		return error(_("unusable todo list: '%s'"), todo_file);
++	}
++
++	res = todo_list_write_to_file(the_repository, &todo_list, todo_file,
++				      NULL, NULL, -1, flags);
++	todo_list_release(&todo_list);
++
++	if (res)
++		return error_errno(_("could not write '%s'."), todo_file);
++	return 0;
++}
++
+ static int edit_todo_file(unsigned flags)
+ {
+ 	const char *todo_file = rebase_path_todo();
+@@ -276,16 +351,16 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 	}
+ 	case SHORTEN_OIDS:
+ 	case EXPAND_OIDS:
+-		ret = transform_todo_file(the_repository, flags);
++		ret = transform_todo_file(flags);
+ 		break;
+ 	case CHECK_TODO_LIST:
+ 		ret = check_todo_list_from_file(the_repository);
+ 		break;
+ 	case REARRANGE_SQUASH:
+-		ret = rearrange_squash_in_todo_file(the_repository);
++		ret = rearrange_squash_in_todo_file();
+ 		break;
+ 	case ADD_EXEC:
+-		ret = sequencer_add_exec_commands(the_repository, &commands);
++		ret = add_exec_commands(&commands);
+ 		break;
+ 	default:
+ 		BUG("invalid command '%d'", command);
 diff --git a/sequencer.c b/sequencer.c
-index ffa4c4da1a..dbef2547f7 100644
+index df8b239fdc..7d35f83f4c 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -4215,7 +4215,7 @@ static const char *label_oid(struct object_id *oid, const char *label,
+@@ -4499,8 +4499,8 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+  * Add commands after pick and (series of) squash/fixup commands
+  * in the todo list.
+  */
+-static void todo_list_add_exec_commands(struct todo_list *todo_list,
+-					struct string_list *commands)
++void todo_list_add_exec_commands(struct todo_list *todo_list,
++				 struct string_list *commands)
+ {
+ 	struct strbuf *buf = &todo_list->buf;
+ 	size_t base_offset = buf->len;
+@@ -4559,30 +4559,6 @@ static void todo_list_add_exec_commands(struct todo_list *todo_list,
+ 	todo_list->alloc = alloc;
  }
  
- static int make_script_with_merges(struct pretty_print_context *pp,
--				   struct rev_info *revs, FILE *out,
-+				   struct rev_info *revs, struct strbuf *out,
- 				   unsigned flags)
+-int sequencer_add_exec_commands(struct repository *r,
+-				struct string_list *commands)
+-{
+-	const char *todo_file = rebase_path_todo();
+-	struct todo_list todo_list = TODO_LIST_INIT;
+-	int res;
+-
+-	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+-		return error_errno(_("could not read '%s'."), todo_file);
+-
+-	if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
+-		todo_list_release(&todo_list);
+-		return error(_("unusable todo list: '%s'"), todo_file);
+-	}
+-
+-	todo_list_add_exec_commands(&todo_list, commands);
+-	res = todo_list_write_to_file(r, &todo_list, todo_file, NULL, NULL, -1, 0);
+-	todo_list_release(&todo_list);
+-
+-	if (res)
+-		return error_errno(_("could not write '%s'."), todo_file);
+-	return 0;
+-}
+-
+ static void todo_list_to_strbuf(struct repository *r, struct todo_list *todo_list,
+ 				struct strbuf *buf, int num, unsigned flags)
  {
- 	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
-@@ -4360,7 +4360,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 	 * gathering commits not yet shown, reversing the list on the fly,
- 	 * then outputting that list (labeling revisions as needed).
- 	 */
--	fprintf(out, "%s onto\n", cmd_label);
-+	strbuf_addf(out, "%s onto\n", cmd_label);
- 	for (iter = tips; iter; iter = iter->next) {
- 		struct commit_list *list = NULL, *iter2;
+@@ -4649,29 +4625,6 @@ int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
+ 	return res;
+ }
  
-@@ -4370,9 +4370,9 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 		entry = oidmap_get(&state.commit2label, &commit->object.oid);
- 
- 		if (entry)
--			fprintf(out, "\n%c Branch %s\n", comment_line_char, entry->string);
-+			strbuf_addf(out, "\n%c Branch %s\n", comment_line_char, entry->string);
- 		else
--			fprintf(out, "\n");
-+			strbuf_addch(out, '\n');
- 
- 		while (oidset_contains(&interesting, &commit->object.oid) &&
- 		       !oidset_contains(&shown, &commit->object.oid)) {
-@@ -4385,8 +4385,8 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 		}
- 
- 		if (!commit)
--			fprintf(out, "%s %s\n", cmd_reset,
--				rebase_cousins ? "onto" : "[new root]");
-+			strbuf_addf(out, "%s %s\n", cmd_reset,
-+				    rebase_cousins ? "onto" : "[new root]");
- 		else {
- 			const char *to = NULL;
- 
-@@ -4399,12 +4399,12 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 					       &state);
- 
- 			if (!to || !strcmp(to, "onto"))
--				fprintf(out, "%s onto\n", cmd_reset);
-+				strbuf_addf(out, "%s onto\n", cmd_reset);
- 			else {
- 				strbuf_reset(&oneline);
- 				pretty_print_commit(pp, commit, &oneline);
--				fprintf(out, "%s %s # %s\n",
--					cmd_reset, to, oneline.buf);
-+				strbuf_addf(out, "%s %s # %s\n",
-+					    cmd_reset, to, oneline.buf);
- 			}
- 		}
- 
-@@ -4413,11 +4413,11 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 			entry = oidmap_get(&commit2todo, oid);
- 			/* only show if not already upstream */
- 			if (entry)
--				fprintf(out, "%s\n", entry->string);
-+				strbuf_addf(out, "%s\n", entry->string);
- 			entry = oidmap_get(&state.commit2label, oid);
- 			if (entry)
--				fprintf(out, "%s %s\n",
--					cmd_label, entry->string);
-+				strbuf_addf(out, "%s %s\n",
-+					    cmd_label, entry->string);
- 			oidset_insert(&shown, oid);
- 		}
- 
-@@ -4439,13 +4439,11 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+-int transform_todo_file(struct repository *r, unsigned flags)
+-{
+-	const char *todo_file = rebase_path_todo();
+-	struct todo_list todo_list = TODO_LIST_INIT;
+-	int res;
+-
+-	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+-		return error_errno(_("could not read '%s'."), todo_file);
+-
+-	if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
+-		todo_list_release(&todo_list);
+-		return error(_("unusable todo list: '%s'"), todo_file);
+-	}
+-
+-	res = todo_list_write_to_file(r, &todo_list, todo_file,
+-				      NULL, NULL, -1, flags);
+-	todo_list_release(&todo_list);
+-
+-	if (res)
+-		return error_errno(_("could not write '%s'."), todo_file);
+-	return 0;
+-}
+-
+ static const char edit_todo_list_advice[] =
+ N_("You can fix this with 'git rebase --edit-todo' "
+ "and then run 'git rebase --continue'.\n"
+@@ -4754,8 +4707,6 @@ static int skip_unnecessary_picks(struct repository *r,
  	return 0;
  }
  
--int sequencer_make_script(struct repository *r, FILE *out,
--			  int argc, const char **argv,
--			  unsigned flags)
-+int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
-+			  const char **argv, unsigned flags)
+-static int todo_list_rearrange_squash(struct todo_list *todo_list);
+-
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+ 		    const char *onto, const char *orig_head, struct string_list *commands,
+@@ -4862,7 +4813,7 @@ define_commit_slab(commit_todo_item, struct todo_item *);
+  * message will have to be retrieved from the commit (as the oneline in the
+  * script cannot be trusted) in order to normalize the autosquash arrangement.
+  */
+-static int todo_list_rearrange_squash(struct todo_list *todo_list)
++int todo_list_rearrange_squash(struct todo_list *todo_list)
  {
- 	char *format = NULL;
- 	struct pretty_print_context pp = {0};
--	struct strbuf buf = STRBUF_INIT;
- 	struct rev_info revs;
- 	struct commit *commit;
- 	int keep_empty = flags & TODO_LIST_KEEP_EMPTY;
-@@ -4488,16 +4486,13 @@ int sequencer_make_script(struct repository *r, FILE *out,
+ 	struct hashmap subject2item;
+ 	int rearranged = 0, *next, *tail, i, nr = 0, alloc = 0;
+@@ -5000,27 +4951,3 @@ static int todo_list_rearrange_squash(struct todo_list *todo_list)
  
- 		if (!is_empty && (commit->object.flags & PATCHSAME))
- 			continue;
--		strbuf_reset(&buf);
- 		if (!keep_empty && is_empty)
--			strbuf_addf(&buf, "%c ", comment_line_char);
--		strbuf_addf(&buf, "%s %s ", insn,
-+			strbuf_addf(out, "%c ", comment_line_char);
-+		strbuf_addf(out, "%s %s ", insn,
- 			    oid_to_hex(&commit->object.oid));
--		pretty_print_commit(&pp, commit, &buf);
--		strbuf_addch(&buf, '\n');
--		fputs(buf.buf, out);
-+		pretty_print_commit(&pp, commit, out);
-+		strbuf_addch(out, '\n');
- 	}
--	strbuf_release(&buf);
  	return 0;
  }
- 
+-
+-int rearrange_squash_in_todo_file(struct repository *r)
+-{
+-	const char *todo_file = rebase_path_todo();
+-	struct todo_list todo_list = TODO_LIST_INIT;
+-	int res = 0;
+-
+-	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
+-		return -1;
+-	if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list) < 0) {
+-		todo_list_release(&todo_list);
+-		return -1;
+-	}
+-
+-	res = todo_list_rearrange_squash(&todo_list);
+-	if (!res)
+-		res = todo_list_write_to_file(r, &todo_list, todo_file, NULL, NULL, -1, 0);
+-
+-	todo_list_release(&todo_list);
+-
+-	if (res)
+-		return error_errno(_("could not write '%s'."), todo_file);
+-	return 0;
+-}
 diff --git a/sequencer.h b/sequencer.h
-index add50f04f1..e25f5151d3 100644
+index b0688ba2a1..7cca49eff2 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -142,9 +142,8 @@ int sequencer_remove_state(struct replay_opts *opts);
- #define TODO_LIST_REBASE_COUSINS (1U << 4)
- #define TODO_LIST_APPEND_TODO_HELP (1U << 5)
+@@ -143,15 +143,14 @@ int sequencer_remove_state(struct replay_opts *opts);
+ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 			  const char **argv, unsigned flags);
  
--int sequencer_make_script(struct repository *r, FILE *out, int argc,
--			  const char **argv,
--			  unsigned flags);
-+int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
-+			  const char **argv, unsigned flags);
+-int sequencer_add_exec_commands(struct repository *r,
+-				struct string_list *commands);
+-int transform_todo_file(struct repository *r, unsigned flags);
++void todo_list_add_exec_commands(struct todo_list *todo_list,
++				 struct string_list *commands);
+ int check_todo_list_from_file(struct repository *r);
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+ 		    const char *onto, const char *orig_head, struct string_list *commands,
+ 		    unsigned autosquash, struct todo_list *todo_list);
+-int rearrange_squash_in_todo_file(struct repository *r);
++int todo_list_rearrange_squash(struct todo_list *todo_list);
  
- int sequencer_add_exec_commands(struct repository *r,
- 				struct string_list *commands);
+ extern const char sign_off_header[];
+ 
 -- 
 2.20.1
 
