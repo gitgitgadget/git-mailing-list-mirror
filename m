@@ -7,113 +7,103 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA9031F453
-	for <e@80x24.org>; Sun, 10 Feb 2019 22:17:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0417D1F453
+	for <e@80x24.org>; Sun, 10 Feb 2019 22:47:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbfBJWRQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Feb 2019 17:17:16 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55547 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725971AbfBJWRQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Feb 2019 17:17:16 -0500
-Received: by mail-wm1-f68.google.com with SMTP id r17so13784710wmh.5
-        for <git@vger.kernel.org>; Sun, 10 Feb 2019 14:17:15 -0800 (PST)
+        id S1726118AbfBJWqQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Feb 2019 17:46:16 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55825 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725971AbfBJWqQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Feb 2019 17:46:16 -0500
+Received: by mail-wm1-f67.google.com with SMTP id r17so13863887wmh.5
+        for <git@vger.kernel.org>; Sun, 10 Feb 2019 14:46:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=BVqwhAXmvAHsExwLdwDxe2uZJyqgHeABNEDAY0ToPOA=;
-        b=k1Y4engETV3VPFzdrjlMQjgx8TKPr7tbmAlKEITv/4yVamweqwLJryNuv/7uC6aZe1
-         Fg7Pkjq4x310Nw8Al03sR6QjKBx3P8l3z6Z8RzBqKz6T9eWjCUOua0OOrlk598fuS9g2
-         SUFn4d/jSipaMpqdCuZkaV26nYaibhyQxp5cca5P6bbYzAcXuM9fxtg6+LCfJ2skJVj+
-         IHPMvdOMfnmco0rrpl8GZ473BLsWMhMnPOUBfXTJHWWCxBUGB/SNC6hCJx4MP9xw03do
-         DdQ4nR/gin0XpHSc4zkvIOoZe4Pqh8pneVYNnXE62En4cVOiD3Gl05xoq+EzeFfSuX3O
-         WFuA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=V0+QWfWAhERF91WzSgrbjt6TL5jZwJzhOL7+V/EuAHs=;
+        b=QtZ68f2AuIZlF3Hl7TTZ8avP39OCczlnG9X16TH65zWZd/02ljXjhGjxN5jfYgj2Hc
+         Q0HsO1sp8f/OAiwdg1KkYC0TWlOwuE+U/HtKF9y7R02S3QcEs1/EOPBXdXNQEt3fcdvD
+         24KmA5yRPfrLUeytXLhBpEYZ2n13A+YRKqNkZ2dtTbR3zB3TYhapR1LGUumsMkYpMWJo
+         aorV2XDKjJTOocSwYgVQkXM6jvTqCq9M0q30VUxuJpPVuYHiaD3Gx8A7iXk2rE4+unYw
+         Pv5clNUwTw537EbPoyVWdXYLxUL5ngEvwSV/dHRcvOc+YGN4xxiCcHv8ooZt5mT9/aYm
+         2Zsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=BVqwhAXmvAHsExwLdwDxe2uZJyqgHeABNEDAY0ToPOA=;
-        b=E8lV6q9xhM+pjqAEoJ1BaYiuG3Kd7S4Wahwqng9Gib9E6uV44kbnnCg46lefLRZTbB
-         YFqHvZ8zjUyXW/cFPb7WnLkA2I6ynxAhC95qFzSuoVSSosjaLxLWiXGvLDLDeFxf0ccp
-         oJMEdJfyk4IAi8Y5fo1QBdiDh7Nilf0W++m82vYJ+q1U2QPaI/U86lFkoX/ELs9KKEy5
-         0+FHThig2gsI+nn28kqwppqJpngTdh5eBoQOZW9vX+xsf+n/PtRiGO90OuBsPQ25CaiZ
-         RDWfs1aT1eC9/FedMck0XUh7LgQC0efJz6gkhU6qqaAM8Q23H3i5t2JpULQE0f8pHVUt
-         PS7w==
-X-Gm-Message-State: AHQUAuZrAjmtPwLTColwexA7j2ZUU1Gg/0g+xx3zZjjau1tItaMv2PXC
-        Yg6qcMrY/d54BDa7afP2TWI=
-X-Google-Smtp-Source: AHgI3IaiMvByuOo5d2ixoP5LDudel4ZJJBkopye9Jc6ngFsyfb8UGNsW4lYMf2RiRNL5ioSFXah+XA==
-X-Received: by 2002:a1c:9cce:: with SMTP id f197mr6777200wme.135.1549837034436;
-        Sun, 10 Feb 2019 14:17:14 -0800 (PST)
-Received: from localhost ([109.180.252.133])
-        by smtp.gmail.com with ESMTPSA id y1sm11723525wru.4.2019.02.10.14.17.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 10 Feb 2019 14:17:13 -0800 (PST)
-Date:   Sun, 10 Feb 2019 22:17:12 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v12 18/26] stash: convert push to builtin
-Message-ID: <20190210221712.GA9241@hank.intra.tgummerer.com>
-References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
- <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com>
- <20190208113059.GV10587@szeder.dev>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=V0+QWfWAhERF91WzSgrbjt6TL5jZwJzhOL7+V/EuAHs=;
+        b=S/e4/LXIKKbg/0L12v6B5s6e6ZUUQpaF8hlVATA15ercspY8RqENu7pNjcZ3OZ3Dkh
+         rqd6IhoQ/WtWhe7zhJ3xUkJtvMGlCpkYTcqAQDF4TzLH2GdrcDH1sDvnBE0L+IMHrP+E
+         vG8R2i0tlgLUFdlfvFtwW9YYPn1578RofCXNjaQnn+B1eBG+gCe4g6b/3ltnzxP0mg95
+         KRRVh4ldvegaSoX1Tl/PPCjX4TPYgMEbHX0u0LANhK+KAD1RyJquFpD2b+t6+LZwxUct
+         oTQWWDSPVX7mi32elfuFz+P8NiNI3Ma+pO1zbgF85h/gZmKmZ5AyWKDdt/QLiYSO02u0
+         TDLQ==
+X-Gm-Message-State: AHQUAuZP62cO3RihsN/xeHOVwJxUVoVa9ZpI0BUZru+iiMmWPw70uKjf
+        pREsgoWKfcMv/wW9kktGsi+CVO5KuQs=
+X-Google-Smtp-Source: AHgI3IYJru4d66EcwVeReG6ZzLwEunKXsB5yNqCrARMcRE0XnpNHkDbfdBXmV3rn3XbTMyee3ZGU+w==
+X-Received: by 2002:adf:f40d:: with SMTP id g13mr3307131wro.18.1549838773876;
+        Sun, 10 Feb 2019 14:46:13 -0800 (PST)
+Received: from evil.localdomain (host201-92-dynamic.60-82-r.retail.telecomitalia.it. [82.60.92.201])
+        by smtp.gmail.com with ESMTPSA id s5sm8733106wmh.37.2019.02.10.14.46.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 10 Feb 2019 14:46:13 -0800 (PST)
+Date:   Sun, 10 Feb 2019 23:46:08 +0100
+From:   Giuseppe Crino' <giuscri@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        tboegi@web.de, angelomelonas@gmail.com
+Subject: Re: Possible minor bug in Git
+Message-ID: <20190210224607.GA118@evil.localdomain>
+References: <20190202063828.4kjtdmrsm7g4eyg3@tb-raspi4>
+ <20190206221759.338-1-g@evil.localdomain>
+ <nycvar.QRO.7.76.6.1902072040360.41@tvgsbejvaqbjf.bet>
+ <788eefef-f677-f0ce-7e02-dd85b11da78a@iee.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190208113059.GV10587@szeder.dev>
-User-Agent: Mutt/1.11.2 (2019-01-07)
+In-Reply-To: <788eefef-f677-f0ce-7e02-dd85b11da78a@iee.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/08, SZEDER Gábor wrote:
-> On Thu, Dec 20, 2018 at 09:44:34PM +0200, Paul-Sebastian Ungureanu wrote:
-> > Add stash push to the helper.
-> > 
-> > Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-> 
-> This patch causes rare failures in 't3903-stash.sh', I've seen it
-> break for the first time today in a Travis CI build:
+Setting `true` as the default for GIT_ICASE_PATHSPECS_ENVIRONMENT, when git is built on a Windows system, solves the bug.
 
-Thanks for reporting this.  I was going to take a look at it, but
-unfortunately I can't seem to reproduce the issue even with --stress
-(I let it run for ~1000 repetitions and then aborted it).
+	diff --git a/pathspec.c b/pathspec.c
+	index 12c2b322b3..906cf24e3e 100644
+	--- a/pathspec.c
+	+++ b/pathspec.c
+	@@ -237,7 +237,11 @@ static inline int get_icase_global(void)
+		static int icase = -1;
 
-Which platform did you see/test this on, and which compile options did
-you use?  I went through a failures on
-https://travis-ci.org/git/git/builds, but couldn't find this
-particular one.  Could you point me at the failed run?
+		if (icase < 0)
+	+       #if defined(GIT_WINDOWS_NATIVE) || defined(__CYGWIN__)
+	+               icase = git_env_bool(GIT_ICASE_PATHSPECS_ENVIRONMENT, 1);
+	+       #else
+			icase = git_env_bool(GIT_ICASE_PATHSPECS_ENVIRONMENT, 0);
+	+       #endif
 
->   +echo bar3
->   +echo bar4
->   +git add file2
->   +git stash -k
->   Saved working directory and index state WIP on stashbranch: d3a23d9 alternate second
->   +cat file
->   +cat file2
->   +test bar,bar4 = bar,bar2
->   error: last command exited with $?=1
->   not ok 20 - stash -k
-> 
-> Steps to reproduce:
-> 
->   $ git checkout -f fa38428f76
->   HEAD is now at fa38428f76 stash: convert push to builtin
->   
->   # fb7d1e3ac8 (test-lib: add the '--stress' option to run a test
->   # repeatedly under load, 2019-01-05)
->   $ git merge --no-commit fb7d1e3ac8
->   Automatic merge went well; stopped before committing as requested
->   $ make && cd t
->   <snip>
->   $ ./t3903-stash.sh --stress -r 1,13,14,20
->   # wait, it tends to fail in <30 repetitions
-> 
-> I run stress testing on its parent for over 800 repetitions, no sign
-> of failure yet.
+		return icase;
+	 }
+
+Unfortunately that fix introduces a regression too, tested in t/t3700-add.sh --- `error out when attempting to add ignored ones but add others`.
+
+I already spent some time to understand why, but got no luck: I have to dive deeper into the source code.
+
+In case I can fix the regression, is changing the default value of that env variable a good solution? Should I change the approach?
+
+Like leveraging core.ignorecase somewhere ...?
+
+On Sat, Feb 09, 2019 at 06:19:11PM +0000, Philip Oakley wrote:
+> The root cause of the issues will most probably be use of a case insensitive
+> file system on Windows (and Mac). There is a configuration flag
+> `core.ignoreCase` [1] that is normally auto detected that can be used to
+> decide when the checks should be done and advice [2] or warnings given.
+
+Thanks,
+
+Giuseppe
