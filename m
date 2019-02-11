@@ -2,110 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE9461F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 19:08:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8C661F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 19:12:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387585AbfBKTIF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 14:08:05 -0500
-Received: from smtp-35.italiaonline.it ([213.209.10.35]:44841 "EHLO libero.it"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2387552AbfBKTIF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 14:08:05 -0500
-Received: from DESKTOP-E4U7JCE ([158.148.65.95])
-        by smtp-35.iol.local with ESMTPA
-        id tGvxgGzLNYe7jtGvxg7xqO; Mon, 11 Feb 2019 20:08:02 +0100
-x-libjamoibt: 1601
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
-        t=1549912082; bh=OIo/6GRNWDNVd2pUC0iyyXEoXhB2ZjW7jjTzsXgPpc8=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References;
-        b=q5gxpWpO8TfWoSPdFUU5qHa1YcoFdjDaBSfOrklIVN5+gA67HEskSARGZfbEO22S7
-         YisUsLBBc9+q+R8dFk6HQ2LCDmYNsgnTojGaNN3D+dkRG9L0UbWL8dF/CA7FpeZFsm
-         SEDI9xrywNzRCI00WV5U06kN1BOelC84/t9eoJIvTiSGniwYPhCvHZ/r6FvbulyXUD
-         +6TAeTcj5CI3RwY5Gc6vqNbGmgqujUMxRZsluM00jGDIeJnPQva1FgZW0697N69PQW
-         dcHB4oediGWQpEhcpQE5LE4DHa40jtY6WOsSMNywhv01vRBEkfFcGYa7lEKZyDYD/C
-         QIc3NYd+HzlTw==
-X-CNFS-Analysis: v=2.3 cv=ea/sgIMH c=1 sm=1 tr=0
- a=mYoHSx74mx067AUk1qnVOw==:117 a=mYoHSx74mx067AUk1qnVOw==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=CYsI3UzIqvDnqZrUaXsA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22
-Message-ID: <1549912081.1754.1.camel@libero.it>
-Subject: Re: Am a newby and I cannot compile git
-From:   Fabio Aiuto <polinice83@libero.it>
-To:     Santiago Torres <santiago@nyu.edu>
-Cc:     git@vger.kernel.org
-Date:   Mon, 11 Feb 2019 20:08:01 +0100
-In-Reply-To: <20190210224812.wtn2qqm7lmsiarrh@LykOS.localdomain>
-References: <1549835814.5977.11.camel@libero.it>
-         <20190210224812.wtn2qqm7lmsiarrh@LykOS.localdomain>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-Mime-Version: 1.0
+        id S2388034AbfBKTMm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 14:12:42 -0500
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:37229 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732345AbfBKTMm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 14:12:42 -0500
+Received: by mail-ed1-f42.google.com with SMTP id g4so14641eds.4
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 11:12:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=M+mOxiYYju2EubDiTu6mzC9UORD9ILW1qo0mk8Sfl3M=;
+        b=p+03PODR8c0jxr27jD+q5AcaxUnLeD+Jwbb7/G5suO8AS8APmg1C9vSeSJwZ8QfEgi
+         CMD2wH+ht8n3qPOxypAmIWNHR+AvIxrAggke/s8aEBShIELY6SnIakzWiDaIE/ixuMV3
+         5RV5EvEUWPkdirW256Rt0cerrJvxrF0BIq5qY0sX35r49/ybOIl3Xk2E2cf2/oyBFkGn
+         bib17Kd9QW7kW07o+sKCg2oydqAeQqnc+vmyqkxLGWH5cwE9a4OrF1P7KkttfoW2JSeC
+         Wbyeho1xw42s6Oghyak4HdOlZQdPoGJIoT1f/6twh/g22VxkCebBkR6fqveJqZPPvgOk
+         qhPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=M+mOxiYYju2EubDiTu6mzC9UORD9ILW1qo0mk8Sfl3M=;
+        b=SlCTJuhzi8CZkxFn+YOJfi1kPO2TOt/5y1vzPnmUnN+hTW9sSoslwNmKfBK9soBH+c
+         rZDiBmmYbnYix95wHY4xgfACvSK9Vnt4mrgnCZAcunqMNp0FhHcejUXaoLiyYaLSCcUI
+         cQH4dH0cHi+aywAjRnBRtKYAA4lRI0UcgUU7wjQ8Wd/WPi5wallQ8klhVxf4N0U+rc1O
+         QKD5Ygz6Iks67T/voGr5L480osIwWnJ0Voii0sQhmmD4zsKw8APWgJaS6L7iTsd3lz1G
+         1+JH5Uyw0WfFbddn56F4DKfTDTl8W2OVYW02FVFRqALURu00BpQ0saNxe6k0mUeBwk+f
+         kisQ==
+X-Gm-Message-State: AHQUAuZzAuHEbkhqKMLi3WusSt/dt4VA2G9KpBe1gokdEcBDXo1mv5y6
+        cAaZY9UBE0ddQ8s9RpSBUXXa9ixv
+X-Google-Smtp-Source: AHgI3IZ5o1N8dStLmVCCX1jzCkU4bmpfvUphdfewqirv+4wamA2gaOP8U8imDVJtR9yQ4rMxt70bFg==
+X-Received: by 2002:a50:c11a:: with SMTP id l26mr30276206edf.233.1549912360114;
+        Mon, 11 Feb 2019 11:12:40 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e18sm2475368eji.69.2019.02.11.11.12.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Feb 2019 11:12:39 -0800 (PST)
+Date:   Mon, 11 Feb 2019 11:12:39 -0800 (PST)
+X-Google-Original-Date: Mon, 11 Feb 2019 19:12:37 GMT
+Message-Id: <pull.123.git.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] fixup! trace2: collect Windows-specific process information
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfPDL6RhyHiOd/B1sd3jKPpJGP3DUIwfIXQ/Y8NFQli35GBTM2jX1gmwvoGecVGgeayOA19QkeLVOjDaRcOD5Xwf+c5kc0nT+rApouhEk1HbII6jqXEx4
- nlKpekJ73LsOVBJJY7gI30/yH0YpnhOmyjNFsz3egasUDQBlMeLdV8NDV0KeyEVXKLuolcz8Q8TUc+2mNsnoHCuKRfBuTyt2Sq0=
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     [jeffhost@microsoft.com]@vger.kernel.org (mailto:jeffhost@microsoft.com),
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Santiago,
-I'm running debian Stretch on my machine, and using Eclipse. I'm new in
-linux world so I don't know how could I let you know all packages I've
-installed in a single screenshot.
-However I got the git sources with the following command:
+Fix infinite loop observed on Windows computing process ancestry. This
+should be applied to V6 of "jh/trace2" currently in next.
 
-$ git clone git://git.kernel.org/pub/scm/git/git.git
+See: https://github.com/gitgitgadget/git/pull/108
 
-then I've opened the project inside Eclipse by importing a makefile
-project from existing code. I tried to build several time beacuse of
-some compilation errors that I fixed by installing the following
-packages:
+Thanks Jeff
 
-$ sudo apt-get install zlib1g-dev
-$ sudo apt-get install libcurl-dev
-$ sudo apt-get install libcurl4-openssl-dev
-$ sudo apt-get install libexpat1-dev
+Cc: gitster@pobox.comCc: peff@peff.netCc: jrnieder@gmail.com
 
-At last no building errors detected but when I try to run adebug
-session, the IDE says tat 'Program file does not exist'. And there are
-more errors spread over the project wich are not detected.When i do the
-rebuild by clicking the 'hammer' icon, the message in the console
-window says:
-20:04:07 **** Incremental Build of configuration Default for project
-git ****
-make all 
-    SUBDIR git-gui
-    SUBDIR gitk-git
-    SUBDIR templates
+Jeff Hostetler (1):
+  fixup! trace2: collect Windows-specific process information
 
-20:04:08 Build Finished (took 866ms)
+ compat/win32/trace2_win32_process_info.c | 32 ++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
-Please ask me for more informations!!!!
-Thank you
-Il giorno dom, 10/02/2019 alle 17.48 -0500, Santiago Torres ha scritto:
-> It'd be difficult to debug without more context:
-> 
-> Do you mind sharing your build log and more informationa about your
-> setup? (e.g., what OS are you running, what packages are installed,
-> how
-> did you get the git sources, etc.)
-> 
-> Thanks,
-> -Santiago.
-> 
-> On Sun, Feb 10, 2019 at 10:56:54PM +0100, Fabio Aiuto wrote:
-> > Hello again my problem is that I cannot compile git.
-> > The error message says:
-> > 
-> > 	Type'z_stream' could not be resolved
-> > 
-> > I don't know why, because I installed the package zlib1g-dev and in
-> > the
-> > header file zlib.h this structure is declared. Help me!!!
-> > Fabio.
+
+base-commit: 878e2cd30e1656909c5073043d32fe9d02204daa
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-123%2Fjeffhostetler%2Ftrace2-next-fixup-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-123/jeffhostetler/trace2-next-fixup-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/123
+-- 
+gitgitgadget
