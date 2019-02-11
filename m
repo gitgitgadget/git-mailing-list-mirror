@@ -8,66 +8,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B048F1F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 07:48:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A12B61F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 08:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726074AbfBKHsl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 02:48:41 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:45300 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725931AbfBKHsl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 02:48:41 -0500
-Received: by mail-qk1-f193.google.com with SMTP id y78so5844027qka.12
-        for <git@vger.kernel.org>; Sun, 10 Feb 2019 23:48:40 -0800 (PST)
+        id S1726821AbfBKIJZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 03:09:25 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:45972 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725931AbfBKIJZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 03:09:25 -0500
+Received: by mail-qt1-f194.google.com with SMTP id e5so11090588qtr.12
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 00:09:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=H8vyWm5EWdexVZrgqGSwMErSVC+bRWmYJeT6Ov7yd1I=;
-        b=E7vFkGz/sMidchrHvEhpdh3F30VuZAUoow7IZzfG6SnCc2aaBbusDSwLhydHMWIlkP
-         ypk/Z5LvDuTqQmYL1PBp80AI1W2qABgfOE4lpXYxXecV5NzJfJ3zppEWinuRXPPH5vcr
-         GjHN1sFIoXQncM57Em46bnsoHQ7lh9uUA1smevof3AfSGiK6AEZGCTWDEKjxlPtrnBAH
-         6lgYb/0V0hl9LyFB3kp4I4Fz3RXvaEUSNy8LTCRx/DvEuDLjjAbWsaITgbBN9ppBPKBe
-         vQhjbXYuWIlIfOhiXfsqHB3o83jQZsE6jdhjVOlKBzbsE1EuIbsOhqvW+/1LiFXmUxio
-         BrEg==
+        bh=ueUf7Ug/x3KPZkSnBAlww9m4UnLPPvDGK0LPGh6Kus8=;
+        b=Q2RAkkwN3Is1xXdUxNuGpoDJPhs4RjXb6xuh5FQlMulc9bFRD/ZNARQ8D4Lde+xQy+
+         NaV05V/AXifRxTUtlPSeijSj7TS2zQtk90/4iWnln45kTQzTF4iVSgYObVzHLtwpTa09
+         i32ik19+KqNmua7DyAlwlxErN7KLbCGe41bChM/erKVu8U+lSD1QKWypYl5SerLlob8G
+         hWwKYmrB39nh3CcIj+1QJn4zuF/fKj2D1cr5ltSTkg9dtlBcUpJnVPyHRdGjkgqJtCgv
+         Rpt41NHVjLYsP0F5ywNWj0B7EqUL0HulKjUFqvANSz/FpcAfHNt8mXQ7er5ItJpkxNaJ
+         CZhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=H8vyWm5EWdexVZrgqGSwMErSVC+bRWmYJeT6Ov7yd1I=;
-        b=jp2g0gqHAoh2zG3Y/uh/O6ZEwOjc76VyKp2KI4/EV1yOJFqZ/xBWmXkQZeKvtAJYZ/
-         eJTcVT2gLwye7BUpqtWQKhJIb3UrcDYDgHBTk2HwSUeWa6PRJTHGTKYzXGCJmOzLc45/
-         QCNXdHt/COT+E1pkJ+vY1OihYPR3v9IF3mPRX0Dk7+ciL+S8NO/jEazEOBS8nRE1MQGR
-         1nKMQVbglzIEVbFcc75aajcLfOJQqMSwKbESEyPog8bagH2m5pdJmNyPo06POOj70XYx
-         pVIWMccCIPjpkZiN0GBrIFfbPQng+5X7qjwkamcQ07mxGjYb/lPigyMoF9uYtTqTKXOR
-         illQ==
-X-Gm-Message-State: AHQUAubPL83Dtws8qUsAfHLsbae2k5Cs3YbDlpxlvOygroasFU8jLVTI
-        4lfl/TegYKgi+aXjrQi4PX6UviI7PA0SuGAjbUo=
-X-Google-Smtp-Source: AHgI3IZdqRQgVLhIQ1WXB2Y+Ltl6xXatoN1uSbTemBOV09ZQg4pkOT14L+LTy7FLH0ASXT/9EwjB81+/gnjwwnc32kw=
-X-Received: by 2002:ae9:e211:: with SMTP id c17mr21901718qkc.290.1549871319783;
- Sun, 10 Feb 2019 23:48:39 -0800 (PST)
+        bh=ueUf7Ug/x3KPZkSnBAlww9m4UnLPPvDGK0LPGh6Kus8=;
+        b=jaeR7ZcrzqNupR2tmEGkL5D81mQEcm68TKa9Dhl3hO5RYcmGBKwUkCrN+JtYFarywt
+         jWCRWtuQ0sOtYA5V+bS+TIQj9kYmt5/KTQ9AGzaIHAJPK8A+9eTnxNGylQrEJ6TlceSx
+         OAMpGnOBJgI178ihEb9rlrmlY9rSAkxOF/5s2ya5BfO1aCSfCvVtFAoVWVl74hQkiSsu
+         AdNkWfazPjdE0390DJ4PJdmfGQq30chDfVjvZ4IwAjw0zNwjblR5e8aoqkPPVEeHWGvZ
+         rtgPWGsvQIKl2n6zoz6bdGNFKFAj3AHkrTeU7nSUw/hgu5fZe+vjmG+yhncY6BEYDDkn
+         IKiQ==
+X-Gm-Message-State: AHQUAuYtRCM9saLhR2sHTv3JjayIf8KZnldTz0nmk7Eleqpzsi3vfsnI
+        4VwXOgLVPbrGCXqdACpUqs72OzE+FLSjWIUAvfZZqTgUTZ0=
+X-Google-Smtp-Source: AHgI3IaC9BufQuPNtj4Xj0OM5sQEmjvaQkAg9Agaqefq03RqFpq6JU5ZyX8GzVg032ERuDVG3/biIvqW3NxTWmvy+VU=
+X-Received: by 2002:a0c:fb4d:: with SMTP id b13mr10568861qvq.26.1549872564085;
+ Mon, 11 Feb 2019 00:09:24 -0800 (PST)
 MIME-Version: 1.0
-References: <20190211030639.18761-1-worldhello.net@gmail.com> <CAPig+cSB3Z=tqfN+Homjc-DYCnbNPuY-v=FJRZqrLPR+v8YwWw@mail.gmail.com>
-In-Reply-To: <CAPig+cSB3Z=tqfN+Homjc-DYCnbNPuY-v=FJRZqrLPR+v8YwWw@mail.gmail.com>
+References: <20190209213044.29539-1-jn.avila@free.fr> <20190211064453.5205-1-jn.avila@free.fr>
+In-Reply-To: <20190211064453.5205-1-jn.avila@free.fr>
 From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 11 Feb 2019 15:48:28 +0800
-Message-ID: <CANYiYbGf6Oj0k3-K+s0DSO-bZZ2EXcVcoyxoJtqSbbmHEtg_bQ@mail.gmail.com>
-Subject: Re: [PATCH] Fix typo: "git bisectreset" -> "git bisect reset"
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
+Date:   Mon, 11 Feb 2019 16:09:12 +0800
+Message-ID: <CANYiYbHoNV+6yi6a75oh2nPpihsqEu0Fq+8R_G6O+XOD5JogoQ@mail.gmail.com>
+Subject: Re: [PATCH] Fix typos in translatable strings for v2.21.0
+To:     =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -75,26 +63,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> =E4=BA=8E2019=E5=B9=B42=E6=9C=8811=
-=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=8811:47=E5=86=99=E9=81=93=EF=BC=
+Jean-No=C3=ABl Avila <jn.avila@free.fr> =E4=BA=8E2019=E5=B9=B42=E6=9C=8811=
+=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=882:48=E5=86=99=E9=81=93=EF=BC=
 =9A
 >
-> On Sun, Feb 10, 2019 at 10:07 PM Jiang Xin <worldhello.net@gmail.com> wro=
-te:
-> > diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> > @@ -173,7 +173,7 @@ static int bisect_reset(const char *commit)
-> >                         return error(_("could not check out original"
-> >                                        " HEAD '%s'. Try 'git bisect"
-> > -                                      "reset <commit>'."), branch.buf)=
-;
-> > +                                      " reset <commit>'."), branch.buf=
-);
-> >                 }
->
-> This duplicates a change made by [1], although that patch was
-> withdrawn (temporarily).
->
-> [1]: http://public-inbox.org/git/20190209213044.29539-1-jn.avila@free.fr/
+> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
+> ---
+>  builtin/bisect--helper.c | 4 ++--
+>  builtin/fetch.c          | 2 +-
+>  builtin/rebase.c         | 2 +-
+>  3 files changed, 4 insertions(+), 4 deletions(-)
 
-Thank you for reminding.  Please use Jean-No=C3=ABl's patch v2 (forgot add
-v2 suffix?).
+This re-roll is v2 (forgot suffix v2 in subject), and LGTM.
+Difference between v1 and v2:
+
+     -              die(_("--reschedule-failed-exec requires an
+interactive rebase"));
+    -+              die(_("%s requires an interactive rebase",
+"--reschedule-failed-exec"));
+    ++              die(_("%s requires an interactive rebase"),
+"--reschedule-failed-exec");
+
+>
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index c1cff32661..e7325fe37f 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -173,7 +173,7 @@ static int bisect_reset(const char *commit)
+>                         argv_array_clear(&argv);
+>                         return error(_("could not check out original"
+>                                        " HEAD '%s'. Try 'git bisect"
+> -                                      "reset <commit>'."), branch.buf);
+> +                                      " reset <commit>'."), branch.buf);
+
+fixed typo: git bisectreset -> git bisect reset
+
+>                 }
+>                 argv_array_clear(&argv);
+>         }
+> @@ -646,7 +646,7 @@ int cmd_bisect__helper(int argc, const char **argv, c=
+onst char *prefix)
+>                 OPT_BOOL(0, "no-checkout", &no_checkout,
+>                          N_("update BISECT_HEAD instead of checking out t=
+he current commit")),
+>                 OPT_BOOL(0, "no-log", &nolog,
+> -                        N_("no log for BISECT_WRITE ")),
+> +                        N_("no log for BISECT_WRITE")),
+
+strip trailing writespace.
+
+>                 OPT_END()
+>         };
+>         struct bisect_terms terms =3D { .term_good =3D NULL, .term_bad =
+=3D NULL };
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 5a09fe24cd..b620fd54b4 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1480,7 +1480,7 @@ static inline void fetch_one_setup_partial(struct r=
+emote *remote)
+>         if (strcmp(remote->name, repository_format_partial_clone)) {
+>                 if (filter_options.choice)
+>                         die(_("--filter can only be used with the remote =
+"
+> -                             "configured in extensions.partialclone"));
+> +                             "configured in extensions.partialClone"));
+
+Use camelcase for config variable name.
+
+>                 return;
+>         }
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 96efd40901..7c7bc13e91 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1434,7 +1434,7 @@ int cmd_rebase(int argc, const char **argv, const c=
+har *prefix)
+>         }
+>
+>         if (options.reschedule_failed_exec && !is_interactive(&options))
+> -               die(_("--reschedule-failed-exec requires an interactive r=
+ebase"));
+> +               die(_("%s requires an interactive rebase"), "--reschedule=
+-failed-exec");
+
+Reuse l10n string ("%s requires an interactive rebase") defined in
+builtin/rebase.c:121:
+
+        case REBASE_AM:
+                die(_("%s requires an interactive rebase"), option);
+
+>
+>         if (options.git_am_opts.argc) {
+>                 /* all am options except -q are compatible only with --am=
+ */
+> --
+> 2.21.0.rc0
+>
