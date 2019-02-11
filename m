@@ -2,98 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCFF71F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 20:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35BDA1F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 20:58:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726883AbfBKU5c (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 15:57:32 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33834 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726080AbfBKU5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 15:57:32 -0500
-Received: by mail-wr1-f67.google.com with SMTP id f14so342642wrg.1
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 12:57:31 -0800 (PST)
+        id S1726892AbfBKU6i (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 15:58:38 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40046 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726080AbfBKU6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 15:58:37 -0500
+Received: by mail-wm1-f68.google.com with SMTP id q21so659444wmc.5
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 12:58:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=XrTMQl7UJM+cIX2salrRIiW2PnWlRqPDbNLet4td5qs=;
-        b=HHO+LOynxks5apy7cjgTSKvQB2lh252ITiaYQxkTB5XabrzKEnH4ikxd8FO0PUK3J/
-         WXifbB7z0NZu4/o8DC8UF4iOAsJJ/qSMZNjCKKmxgB4ZkDoJ+E94kdgKSeY/aHuCoj/Q
-         oqvR0We+2e5vl7DLwmOee8r8GBrYJm3XDNb6PgGu20tQ0qH2HA11Ac9A+D/9uto25cEM
-         3mWtTLuZ4rIE1d05tj8xLismMuIzwcai4cj81YAS45wJPn8l6yiz3+Qou2pB8L7Ze6xj
-         fZAckFob8J2oPMYZYjmlGo1jEofPwtQADToErFvyn3Ro2PR2w5cLE667SVkzYmEO0QGA
-         0oqg==
+         :user-agent:mime-version;
+        bh=kj8LekdmTZOD7trB1WeWaA92ks86m50poGZCvgoRdMQ=;
+        b=sMminIfCJa8vWWfWZ2JT0MgIuNOfaSgyEc7DFEj+jQR0viaEGvz76Lg0LRwJOTsDLa
+         gLK8VTXsPwz0cUWHoP9aVCOr46N04zdhsejJiax6yIEtGKyoo/39ZHzIWvdD+MBQmkM+
+         OZ2cv1Twc4kgIcPZVjYl1hj8sDVwGsLGc3GMs964DvELsK/owd3ByC0nBKKXywLQZzLR
+         xX9csn2BsklLmKmrjBguNEpMtCdoRadTjRG/9pL7umeHUdNUIr5w7lr3GGdlT/gOV5TU
+         vtqCK7no3HQnT3U2oiTi0lIzmSc4Qg7IjZqOwTh+klfjKovvHAnYhqvzpbZc6JFRxBJr
+         waYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=XrTMQl7UJM+cIX2salrRIiW2PnWlRqPDbNLet4td5qs=;
-        b=CcDuUZvyGNp4gFCld2XIwPxPu6HYLjEZYsnN7QdcVEf1dHZo5yPkCNXRP41QU5gXti
-         /v6p8N7r/sPDGGHWlxWoJXHu3VW4ebL7VSK5B0a7q4q4OZ8PLRFIAVcEkz+767Wp55DY
-         hV5AGvxVXAcLq6ysxOUmCj5wPnHpR9w1Rx/OecHPlqtTiiOlIqGJG+jwZ/7VCArxl5Lz
-         oWCCTJAeyvHQMlgPrGbGZg8+4Feq0lW4q6HMCC5zpWkISfbRI/AD0pJOGaSIyDGdaBC0
-         aQB4pT0qfLkSlJzoOOghFE8jmTUhZNJBDHqXoJAzvlPyYOrGSOJF3z6whwOvIwjomozq
-         jELQ==
-X-Gm-Message-State: AHQUAubL4/HrJbkEpI23IzJPgOGMR1Axuq1VqmmBJ4q/lN8kHN5WY6EL
-        y1DWvHHq/gl7EDLlensuRls=
-X-Google-Smtp-Source: AHgI3IahYNcfQC2eT2t19cE6LAj+SMf+LLAkgK5ESWg3nkNTURjQRCML5jGWNcqwj+d6LnPwtXAhLQ==
-X-Received: by 2002:adf:e706:: with SMTP id c6mr122934wrm.278.1549918650372;
-        Mon, 11 Feb 2019 12:57:30 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y1sm14805470wru.4.2019.02.11.12.57.29
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=kj8LekdmTZOD7trB1WeWaA92ks86m50poGZCvgoRdMQ=;
+        b=RdYGKsDGnlfO18BFcRsqNfYUqREuU9b2tt/u4vAgHCqpMIGv+pHH7rNzuviCkg+IJx
+         JXefu6hwxCZ85QBHrvuKfGg5FhkcltyUqAKH5UtkCbH+f/KRv8jZkLlRiv2ql+03fLJ+
+         4UZ6NmCizVIFh+BDPKxaQRb/pQ8U6T/cSQhxvjalNdQYS7864/JYl2i4kLyjEZ8sSybh
+         xNroS/HdcO/+jsxO/Q/iY1tknpWFgWTWy0k0em4XMkB2rijDGff65UmthkAmJItOvOOS
+         ObA57Sx/x16kWYv6lyJqYuQQNZ4ABkFpI4fc/W51qehz9QZXCACVHIjkE4m0C92ktS7U
+         VU7w==
+X-Gm-Message-State: AHQUAuZvBPepbKouQT3kKsP5k+EslqMOmHr23MSSphrBxBIifsAcONd0
+        xiI2KSICslbccbKBKSnrHv0=
+X-Google-Smtp-Source: AHgI3Iby7LjNKmk78u4hLmilrmEM21ChLZuX+VN7QhTr1/PqrvsN9SqqjpkwukkYz/azK3uqv0yUPw==
+X-Received: by 2002:a7b:c315:: with SMTP id k21mr92174wmj.145.1549918715820;
+        Mon, 11 Feb 2019 12:58:35 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x81sm666786wmg.17.2019.02.11.12.58.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Feb 2019 12:57:29 -0800 (PST)
+        Mon, 11 Feb 2019 12:58:35 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] Fix typos in translatable strings for v2.21.0
-References: <20190209213044.29539-1-jn.avila@free.fr>
-        <20190211064453.5205-1-jn.avila@free.fr>
-        <CANYiYbHoNV+6yi6a75oh2nPpihsqEu0Fq+8R_G6O+XOD5JogoQ@mail.gmail.com>
-        <1517c545-0028-56e4-fc58-fb3c6d3551fe@free.fr>
-Date:   Mon, 11 Feb 2019 12:57:29 -0800
-In-Reply-To: <1517c545-0028-56e4-fc58-fb3c6d3551fe@free.fr> (=?utf-8?Q?=22?=
- =?utf-8?Q?Jean-No=C3=ABl?=
-        Avila"'s message of "Mon, 11 Feb 2019 09:50:02 +0100")
-Message-ID: <xmqqo97igi12.fsf@gitster-ct.c.googlers.com>
+To:     randall.s.becker@rogers.com
+Cc:     git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [Fix v1] config.mak.uname: add FREAD_READS_DIRECTORIES for NonStop platform
+References: <20190210002016.22556-1-randall.s.becker@rogers.com>
+Date:   Mon, 11 Feb 2019 12:58:34 -0800
+In-Reply-To: <20190210002016.22556-1-randall.s.becker@rogers.com> (randall
+        s. becker's message of "Sat, 9 Feb 2019 19:20:16 -0500")
+Message-ID: <xmqqk1i6ghz9.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-Noël Avila <jn.avila@free.fr> writes:
+randall.s.becker@rogers.com writes:
 
-> On 11 février 2019, Jiang Xin wrote:
+> From: "Randall S. Becker" <rsbecker@nexbridge.com>
 >
->> Jean-Noël Avila <jn.avila@free.fr> 于2019年2月11日周一 下午2:48写道：
->>> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
->>> ---
->>>  builtin/bisect--helper.c | 4 ++--
->>>  builtin/fetch.c          | 2 +-
->>>  builtin/rebase.c         | 2 +-
->>>  3 files changed, 4 insertions(+), 4 deletions(-)
->> This re-roll is v2 (forgot suffix v2 in subject), and LGTM.
->> Difference between v1 and v2:
->>
->>      -              die(_("--reschedule-failed-exec requires an
->> interactive rebase"));
->>     -+              die(_("%s requires an interactive rebase",
->> "--reschedule-failed-exec"));
->>     ++              die(_("%s requires an interactive rebase"),
->> "--reschedule-failed-exec");
-> Thanks for reviewing. The first submission was too hasty and did not
-> even compile.
+> The NonStop platform needs this configuration item specified as
+> UnfortunatelyYes so that config directory files are correctly processed.
+>
+> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> ---
+>  config.mak.uname | 1 +
+>  1 file changed, 1 insertion(+)
 
-Thanks, both.  Will queue.
+Thanks.
+
+
+>
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 6bd67eb86..75ff43f1f 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -490,6 +490,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+>  	OLD_ICONV = UnfortunatelyYes
+>  	NO_REGEX = NeedsStartEnd
+>  	NO_PTHREADS = UnfortunatelyYes
+> +	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+>  
+>  	# Not detected (nor checked for) by './configure'.
+>  	# We don't have SA_RESTART on NonStop, unfortunalety.
