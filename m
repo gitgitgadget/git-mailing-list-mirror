@@ -2,80 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA7041F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 21:28:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 474081F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 21:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727638AbfBKV2L (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 16:28:11 -0500
-Received: from mail-pf1-f169.google.com ([209.85.210.169]:39294 "EHLO
-        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727551AbfBKV2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 16:28:11 -0500
-Received: by mail-pf1-f169.google.com with SMTP id f132so169117pfa.6
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 13:28:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=djsbx-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=49L4cgm8toXAyD2ZEUaHsHpjHOYgAy6IfvXfuPRP5Yk=;
-        b=f73zVJxjYAyw8PhDX8VdpbVfIcvdOLsNTToWaR23Z52zGSCZJXpn2AlUJPBxgQ+pHA
-         a0YPk3m5YGCw0Lw2gqmBIvMIXnSw1VhTGagdYCSHI5kJPNFH0EpddkUXkpHDYleEJlxR
-         WLVhNXlMrh38eiqFdO3Uv4gtALAxW/sPf+yCDBNZdFdJkLsPyyruxI8DQxs1XiF2aF30
-         dfwFcs/wp3lnwz3b+mu5ORFZGO/346ertOBHga+TsZME+2Vwv2xH0kQ1oNElUtvdrvlT
-         mLd3Wpoi1X3/j8aj4BW193u70/9y9AoHjVLsydIgnrdFhozsQCF74gAbjQ5nf9ZP5s9F
-         ptYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=49L4cgm8toXAyD2ZEUaHsHpjHOYgAy6IfvXfuPRP5Yk=;
-        b=pMhtaInqqZsuODDPg3rePDRt9Pi/vNG9+22ZMoIIC3F21B6SCTxaPwvOw/ktwzRYKG
-         XBqDkd0Ga/xVcUYD+LL0r1H58SEe8c1J1PUjctAOm6zMXUnBqwYCHHt0K6mcOaoaaZyQ
-         ojhWUUIbCcIGqpNvKd3gHYDpLDKMO6OvDXwtosRRx3b7kKVIPN7+B/jBUY3SpE3s1Ovs
-         Jk2w180Z1EfGW9G9+/EKWl2IvLhDkUPpjMikKjJVWw3JwFhyjF347jA6TKHm5VS/oW5S
-         e1OffsTfSLqqkeDDemxrIQrhrNctVJNRBwKZjERG/l+zSUwO9IkXqMw9LTxpXI3/Vpln
-         elDg==
-X-Gm-Message-State: AHQUAuYD+GqHhOt+SW0iYTbhxVBvVTvkwIWrSvR2ox21AnoG5LJRmW/g
-        nRczHYTVuDiArCe6H3uOjDw7hmqSG9ZoCIZe3qVLojuf
-X-Google-Smtp-Source: AHgI3IYCLTROgHEX/L6hD7LWnacasSb8gDMwm421VjXt6YGeP0KCd+VjSxxHpUAO9wUOfSF3PNHv//O8PuGJhSu3+PI=
-X-Received: by 2002:a63:40c1:: with SMTP id n184mr255834pga.225.1549920490334;
- Mon, 11 Feb 2019 13:28:10 -0800 (PST)
-MIME-Version: 1.0
-References: <CANFDZM6PikancjUdm+HYgGknD0dPhzxU6yOYFLZpcnCmg8JKdA@mail.gmail.com>
- <CANFDZM7fsbwwqhyWTzfivm4L=GgtCMfCi+DekZurs+SFGqaOjw@mail.gmail.com>
-In-Reply-To: <CANFDZM7fsbwwqhyWTzfivm4L=GgtCMfCi+DekZurs+SFGqaOjw@mail.gmail.com>
-From:   Fernando Chorney <djsbx@djsbx.com>
-Date:   Mon, 11 Feb 2019 15:27:59 -0600
-Message-ID: <CANFDZM5=ffu-=H=vrO3Kr0t2km-3Zg4=msYUWqqJQKGxGojnqA@mail.gmail.com>
-Subject: git commit --verbose shows incorrect diff when pre-commit hook is
- used to modify files
+        id S1727176AbfBKViW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 16:38:22 -0500
+Received: from ikke.info ([178.21.113.177]:48966 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727059AbfBKViW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 16:38:22 -0500
+Received: by vps892.directvps.nl (Postfix, from userid 182)
+        id 3216A4400C5; Mon, 11 Feb 2019 22:38:21 +0100 (CET)
+Received: from epsilon.home.ikke.info (epsilon [10.8.0.2])
+        by vps892.directvps.nl (Postfix) with ESMTP id 3B70A4400BD;
+        Mon, 11 Feb 2019 22:38:20 +0100 (CET)
+From:   Kevin Daudt <me@ikke.info>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Kevin Daudt <me@ikke.info>
+Subject: [PATCH] t0028: fix wrong octal values for BOM in setup
+Date:   Mon, 11 Feb 2019 22:38:18 +0100
+Message-Id: <20190211213818.4941-1-me@ikke.info>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The setup code uses octal values with printf to generate a BOM for
+UTF-16/32 BE/LE. It specifically uses '\777' to emit a 0xff byte. This
+relies on the fact that most shells truncate the value above 0o377.
 
-I am trying to use a pre-commit hook to modify files before they are
-to be committed. The problem I am running into is that if I use "git
-commit --verbose", which I often do so that I can see the diff, the
-diff it displays in the editor is the diff before the pre-commit hook
-was run rather than what the diff would be after the pre-commit was
-run.
+Ash however interprets '\777' as '\77' + a literal '7', resulting in an
+invalid BOM.
 
-I would like to note, that the pre-commit hook is definitely running,
-but when git grabs the diff seems to be in the wrong place.
+Fix this by using the proper value of 0xff: '\377'.
 
-I have set up a simple example on my github to show the problem.
-https://github.com/fchorney/pre-commit-example
+Signed-off-by: Kevin Daudt <me@ikke.info>
+---
+I do wonder why this code is using octal values in the first place,
+rather than using hex values.
 
-Is this intended behaviour, or perhaps an issue?
+ t/t0028-working-tree-encoding.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
- Thanks,
- Fernando Chorney
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index 8936ba6757..c6b68c22ca 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -49,12 +49,12 @@ test_expect_success 'setup test files' '
+ 	# BOM tests
+ 	printf "\0a\0b\0c"                         >nobom.utf16be.raw &&
+ 	printf "a\0b\0c\0"                         >nobom.utf16le.raw &&
+-	printf "\376\777\0a\0b\0c"                 >bebom.utf16be.raw &&
+-	printf "\777\376a\0b\0c\0"                 >lebom.utf16le.raw &&
++	printf "\376\377\0a\0b\0c"                 >bebom.utf16be.raw &&
++	printf "\377\376a\0b\0c\0"                 >lebom.utf16le.raw &&
+ 	printf "\0\0\0a\0\0\0b\0\0\0c"             >nobom.utf32be.raw &&
+ 	printf "a\0\0\0b\0\0\0c\0\0\0"             >nobom.utf32le.raw &&
+-	printf "\0\0\376\777\0\0\0a\0\0\0b\0\0\0c" >bebom.utf32be.raw &&
+-	printf "\777\376\0\0a\0\0\0b\0\0\0c\0\0\0" >lebom.utf32le.raw &&
++	printf "\0\0\376\377\0\0\0a\0\0\0b\0\0\0c" >bebom.utf32be.raw &&
++	printf "\377\376\0\0a\0\0\0b\0\0\0c\0\0\0" >lebom.utf32le.raw &&
+ 
+ 	# Add only UTF-16 file, we will add the UTF-32 file later
+ 	cp test.utf16.raw test.utf16 &&
+-- 
+2.19.1
+
