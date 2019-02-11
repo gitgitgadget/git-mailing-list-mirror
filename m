@@ -2,162 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A12B61F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 08:09:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 658CE1F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 08:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726821AbfBKIJZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 03:09:25 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:45972 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725931AbfBKIJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 03:09:25 -0500
-Received: by mail-qt1-f194.google.com with SMTP id e5so11090588qtr.12
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 00:09:24 -0800 (PST)
+        id S1727175AbfBKIfm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 03:35:42 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:45736 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727091AbfBKIfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 03:35:41 -0500
+Received: by mail-ed1-f52.google.com with SMTP id d9so3213000edh.12
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 00:35:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ueUf7Ug/x3KPZkSnBAlww9m4UnLPPvDGK0LPGh6Kus8=;
-        b=Q2RAkkwN3Is1xXdUxNuGpoDJPhs4RjXb6xuh5FQlMulc9bFRD/ZNARQ8D4Lde+xQy+
-         NaV05V/AXifRxTUtlPSeijSj7TS2zQtk90/4iWnln45kTQzTF4iVSgYObVzHLtwpTa09
-         i32ik19+KqNmua7DyAlwlxErN7KLbCGe41bChM/erKVu8U+lSD1QKWypYl5SerLlob8G
-         hWwKYmrB39nh3CcIj+1QJn4zuF/fKj2D1cr5ltSTkg9dtlBcUpJnVPyHRdGjkgqJtCgv
-         Rpt41NHVjLYsP0F5ywNWj0B7EqUL0HulKjUFqvANSz/FpcAfHNt8mXQ7er5ItJpkxNaJ
-         CZhA==
+         :cc;
+        bh=9r16fH6RoG/NuCBR1Zk+1jK6AmTwEY655anayVo9pzY=;
+        b=Hk9HciPX5xJnJ2dxa34YlCXXG+j3y+NVZM8h2i/T1N0Seq5DA9hVGeaRAaC8zNxHX2
+         ioR6LcC0SW3ecl13TyXI//zWyJ02bK8xIvguyRx8yWLzNBMPv7bXI25xNkMGTdeQKWET
+         EQNsR8r9YsqO6utEz3ANb6AabpHJjT+kSZZDNDFa96SsKHhCjb4fX4yQS4AbxQW9kOVM
+         TBVS181zGxzwAwySsm9UXF6wKcWeVoVyYQXZcjW88KZSi9bRv5Gi1D7Go+hak6mxWYy3
+         4C9M9PSAVDr8XWH6MLetYVfvPC+hAofkZVdrDdiK2VjcVwFE3smlqtD7IfTWwYf2y+ry
+         uzqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ueUf7Ug/x3KPZkSnBAlww9m4UnLPPvDGK0LPGh6Kus8=;
-        b=jaeR7ZcrzqNupR2tmEGkL5D81mQEcm68TKa9Dhl3hO5RYcmGBKwUkCrN+JtYFarywt
-         jWCRWtuQ0sOtYA5V+bS+TIQj9kYmt5/KTQ9AGzaIHAJPK8A+9eTnxNGylQrEJ6TlceSx
-         OAMpGnOBJgI178ihEb9rlrmlY9rSAkxOF/5s2ya5BfO1aCSfCvVtFAoVWVl74hQkiSsu
-         AdNkWfazPjdE0390DJ4PJdmfGQq30chDfVjvZ4IwAjw0zNwjblR5e8aoqkPPVEeHWGvZ
-         rtgPWGsvQIKl2n6zoz6bdGNFKFAj3AHkrTeU7nSUw/hgu5fZe+vjmG+yhncY6BEYDDkn
-         IKiQ==
-X-Gm-Message-State: AHQUAuYtRCM9saLhR2sHTv3JjayIf8KZnldTz0nmk7Eleqpzsi3vfsnI
-        4VwXOgLVPbrGCXqdACpUqs72OzE+FLSjWIUAvfZZqTgUTZ0=
-X-Google-Smtp-Source: AHgI3IaC9BufQuPNtj4Xj0OM5sQEmjvaQkAg9Agaqefq03RqFpq6JU5ZyX8GzVg032ERuDVG3/biIvqW3NxTWmvy+VU=
-X-Received: by 2002:a0c:fb4d:: with SMTP id b13mr10568861qvq.26.1549872564085;
- Mon, 11 Feb 2019 00:09:24 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=9r16fH6RoG/NuCBR1Zk+1jK6AmTwEY655anayVo9pzY=;
+        b=HuERw/6072C9evD0UgGnSHbv3PstLfqxsfs78Lc8MkEmlmIil0HdEenEASns//ZSMD
+         s0/axBcWcE4z9Ku5+rbl3wc91bqB64yHYiqXf24/3V8HvdczfjGv/pcqbAq4e/9sFeiv
+         X4qh84jS3mBu2GToGicgNZk9zBQo2u6LttJhtzwMApuv52oM8JWkQGSGpEvRepJxHUQ+
+         BHjbDFPbKQUo2Xm+DBQTWlJiW41rMz57V/MXoq9pJ+oadpVlwzLQhHjOc+Mw0aBPU6ZT
+         g8k7O4YrPu6qQbnlhnU2ZSLVWrcB1z2uQI1cf/3NL24oVJnNUHebCLHLvyDzv5/ZEb34
+         3m+Q==
+X-Gm-Message-State: AHQUAuYSRg3SJQEB2gu6TsKUKTIfFj9rZesgwgZgaIWuWS7LR3H+FnQq
+        hbzmIOU1zv4EqbKrN21SvaZNPI9caChj/6jSmlK43LQwyaM=
+X-Google-Smtp-Source: AHgI3IbKI9pxlu8i8lPhQUmHT82B2PcfcKP2wJ6RhwOcMMe8sSdD11rP2ZuAKl1OM4dh3AbUZ3BxTM+4Fly9vmzjA6o=
+X-Received: by 2002:aa7:dacd:: with SMTP id x13mr13703002eds.24.1549874139792;
+ Mon, 11 Feb 2019 00:35:39 -0800 (PST)
 MIME-Version: 1.0
-References: <20190209213044.29539-1-jn.avila@free.fr> <20190211064453.5205-1-jn.avila@free.fr>
-In-Reply-To: <20190211064453.5205-1-jn.avila@free.fr>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 11 Feb 2019 16:09:12 +0800
-Message-ID: <CANYiYbHoNV+6yi6a75oh2nPpihsqEu0Fq+8R_G6O+XOD5JogoQ@mail.gmail.com>
-Subject: Re: [PATCH] Fix typos in translatable strings for v2.21.0
-To:     =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
+References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
+ <20190204215251.GB6085@hank.intra.tgummerer.com> <20190205211736.GD6085@hank.intra.tgummerer.com>
+ <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
+ <20190206220942.GE6085@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
+ <20190207213326.GF6085@hank.intra.tgummerer.com>
+In-Reply-To: <20190207213326.GF6085@hank.intra.tgummerer.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 11 Feb 2019 09:35:27 +0100
+Message-ID: <CAP8UFD1Rv+nFqDYf33rRw-kWnfqokSG6=tG8XPFyBoVCU6Te=w@mail.gmail.com>
+Subject: Re: GSoC 2019: Git's application submitted
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-No=C3=ABl Avila <jn.avila@free.fr> =E4=BA=8E2019=E5=B9=B42=E6=9C=8811=
-=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=882:48=E5=86=99=E9=81=93=EF=BC=
-=9A
+On Thu, Feb 7, 2019 at 10:33 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
 >
-> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-> ---
->  builtin/bisect--helper.c | 4 ++--
->  builtin/fetch.c          | 2 +-
->  builtin/rebase.c         | 2 +-
->  3 files changed, 4 insertions(+), 4 deletions(-)
-
-This re-roll is v2 (forgot suffix v2 in subject), and LGTM.
-Difference between v1 and v2:
-
-     -              die(_("--reschedule-failed-exec requires an
-interactive rebase"));
-    -+              die(_("%s requires an interactive rebase",
-"--reschedule-failed-exec"));
-    ++              die(_("%s requires an interactive rebase"),
-"--reschedule-failed-exec");
-
+> On 02/07, Johannes Schindelin wrote:
+> > On Wed, 6 Feb 2019, Thomas Gummerer wrote:
+> > >  - implement pushing/poping conflicted state
+> > >
+> > >    This would obviously be the end goal.
+> >
+> > On second thought, this might actually be super trivial. Right now, we
+> > support two modes (not counting the `--untracked` stuff): --keep-index and
+> > --no-keep-index. In both cases, we seem to create a merge commit whose
+> > tree reflects the working directory and whose first parent is HEAD and
+> > whose second parent is a single commit on top of HEAD (which contains
+> > either no changes in the case of --no-keep-index, or whose tree reflects
+> > the index in case of --keep-index).
+> >
+> > To extend that to the conflict case, we could introduce a new flag
+> > --with-conflicts, and have the commit structure
+> >
+> >       Worktree
+> >        |    \
+> >        |    index stage 0
+> >        |      /     |     \
+> >        | stage 1  stage 2  stage 3
+> >        |    /     /       /
+> >       HEAD ---------------
+> >
+> > The only tricky thing I can see is to maintain backwards compatibility if
+> > possible, so that old `git stash` will do something at least semi-sensible
+> > with those commit structures.
+> >
+> > It might be too small a project, after all.
 >
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index c1cff32661..e7325fe37f 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -173,7 +173,7 @@ static int bisect_reset(const char *commit)
->                         argv_array_clear(&argv);
->                         return error(_("could not check out original"
->                                        " HEAD '%s'. Try 'git bisect"
-> -                                      "reset <commit>'."), branch.buf);
-> +                                      " reset <commit>'."), branch.buf);
+> Yeah, looking at this I think you're right.  Thanks for helping work
+> through this.
 
-fixed typo: git bisectreset -> git bisect reset
+I am not sure it will be too small a project, especially because it is
+a new feature. On top of the coding part, the student will also have
+to come up with good documentation and test cases, and there will
+probably be naming and workflow discussions and possibly refactoring
+opportunities and bug fixes along the way.
 
->                 }
->                 argv_array_clear(&argv);
->         }
-> @@ -646,7 +646,7 @@ int cmd_bisect__helper(int argc, const char **argv, c=
-onst char *prefix)
->                 OPT_BOOL(0, "no-checkout", &no_checkout,
->                          N_("update BISECT_HEAD instead of checking out t=
-he current commit")),
->                 OPT_BOOL(0, "no-log", &nolog,
-> -                        N_("no log for BISECT_WRITE ")),
-> +                        N_("no log for BISECT_WRITE")),
+Yeah, the naming and workflow discussions should actually happen when
+discussing the student's proposal, in which case an important part of
+the work will (hopefully) be done before the GSoC actually starts.
 
-strip trailing writespace.
+Historically though we have always been very optimistic in what we
+thought a student could accomplish in a GSoC. And we are very likely
+to find more ideas for improvements during the GSoC, in case
+everything is "finished" before the end. I actually think that it has
+never happened that a student both "finished" the project before the
+end, and that no idea for improvement on top of the work was found.
 
->                 OPT_END()
->         };
->         struct bisect_terms terms =3D { .term_good =3D NULL, .term_bad =
-=3D NULL };
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 5a09fe24cd..b620fd54b4 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1480,7 +1480,7 @@ static inline void fetch_one_setup_partial(struct r=
-emote *remote)
->         if (strcmp(remote->name, repository_format_partial_clone)) {
->                 if (filter_options.choice)
->                         die(_("--filter can only be used with the remote =
-"
-> -                             "configured in extensions.partialclone"));
-> +                             "configured in extensions.partialClone"));
+I have added a "Note about refactoring projects versus projects that
+implement new features" at the end of the idea list:
 
-Use camelcase for config variable name.
+https://github.com/git/git.github.io/blob/master/SoC-2019-Ideas.md#note-about-refactoring-projects-versus-projects-that-implement-new-features
 
->                 return;
->         }
->
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 96efd40901..7c7bc13e91 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1434,7 +1434,7 @@ int cmd_rebase(int argc, const char **argv, const c=
-har *prefix)
->         }
->
->         if (options.reschedule_failed_exec && !is_interactive(&options))
-> -               die(_("--reschedule-failed-exec requires an interactive r=
-ebase"));
-> +               die(_("%s requires an interactive rebase"), "--reschedule=
--failed-exec");
+and I think that with that note students working on such projects will
+be warned enough, and therefore hopefully have a better chance of
+success.
 
-Reuse l10n string ("%s requires an interactive rebase") defined in
-builtin/rebase.c:121:
+So after all if you are willing to co-mentor such a project, I would
+be ok to co-mentor it with you, and we should add it to the list.
 
-        case REBASE_AM:
-                die(_("%s requires an interactive rebase"), option);
+Thanks,
+Christian.
 
->
->         if (options.git_am_opts.argc) {
->                 /* all am options except -q are compatible only with --am=
- */
-> --
-> 2.21.0.rc0
->
+And yeah it would help improve our idea list as requested by Google.
