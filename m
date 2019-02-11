@@ -2,192 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 691421F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 00:23:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7508B1F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 01:13:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726831AbfBKAXS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Feb 2019 19:23:18 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34088 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726226AbfBKAXS (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 10 Feb 2019 19:23:18 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2C07960443;
-        Mon, 11 Feb 2019 00:23:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1549844595;
-        bh=V6xhfbq/ID/Z9biZq6j2pOMlRYJa/l9Nwn+tvEEBJ+U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=tW6R851WGpwG7uMPYcca9N6FewfsCBH3X4sgPYfhMX/bXWm57Ed3grUfSavscpaD4
-         FxZhZ/6uZ+xRnQRqRGoPfWLxZgUZftoCqO2p28WymVtKlK2b8ilRRWCJGyvWeEMRvg
-         6UXdGRGbvuEW0WktFFFl+x49NeN2qT64OYpimemaCycyiUv+dWwRmJjAEAoNv+N8s/
-         U4pxbJraYlYuTBoQw3r3aD/eHKmKHAnrXsfsyljl+L3evqVh0PqGR0sVR1mqfJXTMr
-         CVbQMKPD/B+93Jb6potfnFusuS/H6YfKbq8MeuqsQQqqdE2xCgANJw8ZLchMAaHYqy
-         H2h1D0rOW+FctixOH20e0UbwoepZMynjbOFnUxKM5d6/wNuN9q+orRWyHHxk3r0vtx
-         UFgaR1EFtOLH5GU+cfbYfKI7C1TopcPGu1vuein82x6nvkxHT4DxQTXw2CDwwRr09P
-         BQvgfTI6SzH69Cn0trGKvxtpABynkE3Th1Wzjz013V4JtszO+y1
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-        Rich Felker <dalias@libc.org>, Kevin Daudt <me@ikke.info>
-Subject: [PATCH v2] utf8: handle systems that don't write BOM for UTF-16
-Date:   Mon, 11 Feb 2019 00:23:07 +0000
-Message-Id: <20190211002307.686048-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.20.1.791.gb4d0f1c61a
-In-Reply-To: <20190209200802.277139-1-sandals@crustytoothpaste.net>
-References: <20190209200802.277139-1-sandals@crustytoothpaste.net>
+        id S1726154AbfBKBNQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Feb 2019 20:13:16 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55026 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbfBKBNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Feb 2019 20:13:16 -0500
+Received: by mail-wm1-f65.google.com with SMTP id a62so14286366wmh.4
+        for <git@vger.kernel.org>; Sun, 10 Feb 2019 17:13:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Eotzm7i150KzxZaFCkznJIXBr0tpMb/oMVp+JkeR3Xc=;
+        b=LCVfHnRh23XQA4SBjgJ2b1cJMjoUs0qVCyjz4tLvywSc3pQr+fOKEzBxxo1MzmnvP7
+         XZ0azHiJd2WsmF6rKtDS1irf68VqSnO4PmPy6Y/n81mWI44dcUp9B740ZImz18E5+o7r
+         oNmQ7eEME7gpVAYGiVDLD29Wmo3FSbubpY6rHoqoNmUY8d1uw4Uu5z/MIqXqekZHX7mC
+         kbGfFGYsHs72X78DHGUnB2hzPWHwgxRYOExoX7SLfGkrgDgdGRZzVbCh724ARw1lOpdH
+         17EmsLIyAz5VKPkA24UZiRfVqo0JRPc6q9eewPbzvqLg0nx8TMBto6+zhUHphZiVO1D8
+         nfrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Eotzm7i150KzxZaFCkznJIXBr0tpMb/oMVp+JkeR3Xc=;
+        b=fMO8hOHQQ08A6LZMaJNMCUl/TdGtZkzaosVwhN3h/KmmqfBJCndcBeeE8VrRiIvY15
+         G/B32ShcWC/wCiJIN1lh0pU5les4o18rZEUeU0cUAF74DfszraT1Z3+jdo2MygKiOHJX
+         wQMJyfOtdH4qHGebrnihcdaDfcnFXvAZkpi3rCuv/4CZV4sJVqghSEswOWvkIeaUnvVT
+         0KVJGj60V7kzUYocP4zoOvKD11+Xo+a8E2/X/G3WeKVQN5fZ/ApCUu4cjgzWDqnj1f9P
+         FQKDX3gynlSbnOVmt0QMdOsDr1xIOJb3ND/G3ytD5ge1z8xvuPvx/+6v55Rxn0Q1qNSA
+         552g==
+X-Gm-Message-State: AHQUAuYugPu8FcFhd9AiAsgmwBc7FIBW9IEIT9J5ZkwxsenosDmkR0Po
+        BgUlHyh0xoF1KFm6S/1gOVs=
+X-Google-Smtp-Source: AHgI3IbdQgiOmEzPRSXoE/+uee8DwZLJ3lZtYaUWfuqiKVbvwfddcyBxGDLWa2JrjTz1fYx9RFyhgg==
+X-Received: by 2002:adf:fd07:: with SMTP id e7mr13699965wrr.175.1549847594404;
+        Sun, 10 Feb 2019 17:13:14 -0800 (PST)
+Received: from szeder.dev (x4d0ca102.dyn.telefonica.de. [77.12.161.2])
+        by smtp.gmail.com with ESMTPSA id y24sm18418437wma.0.2019.02.10.17.13.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 10 Feb 2019 17:13:13 -0800 (PST)
+Date:   Mon, 11 Feb 2019 02:13:06 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v12 18/26] stash: convert push to builtin
+Message-ID: <20190211011306.GA31807@szeder.dev>
+References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
+ <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com>
+ <20190208113059.GV10587@szeder.dev>
+ <20190210221712.GA9241@hank.intra.tgummerer.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <20190210221712.GA9241@hank.intra.tgummerer.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When serializing UTF-16 (and UTF-32), there are three possible ways to
-write the stream. One can write the data with a BOM in either big-endian
-or little-endian format, or one can write the data without a BOM in
-big-endian format.
+On Sun, Feb 10, 2019 at 10:17:12PM +0000, Thomas Gummerer wrote:
+> On 02/08, SZEDER Gábor wrote:
+> > On Thu, Dec 20, 2018 at 09:44:34PM +0200, Paul-Sebastian Ungureanu wrote:
+> > > Add stash push to the helper.
+> > > 
+> > > Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> > 
+> > This patch causes rare failures in 't3903-stash.sh', I've seen it
+> > break for the first time today in a Travis CI build:
+> 
+> Thanks for reporting this.  I was going to take a look at it, but
+> unfortunately I can't seem to reproduce the issue even with --stress
+> (I let it run for ~1000 repetitions and then aborted it).
+> 
+> Which platform did you see/test this on, and which compile options did
+> you use?  I went through a failures on
+> https://travis-ci.org/git/git/builds, but couldn't find this
+> particular one.  Could you point me at the failed run?
 
-Most systems' iconv implementations choose to write it with a BOM in
-some endianness, since this is the most foolproof, and it is resistant
-to misinterpretation on Windows, where UTF-16 and the little-endian
-serialization are very common. For compatibility with Windows and to
-avoid accidental misuse there, Git always wants to write UTF-16 with a
-BOM, and will refuse to read UTF-16 without it.
+It was in a Linux build job in one of my custom CI builds [1]:
 
-However, musl's iconv implementation writes UTF-16 without a BOM,
-relying on the user to interpret it as big-endian. This causes t0028 and
-the related functionality to fail, since Git won't read the file without
-a BOM.
+  https://travis-ci.org/szeder/git-cooking-topics-for-travis-ci/jobs/490420713#L3401
 
-Add a Makefile and #define knob, ICONV_OMITS_BOM, that can be set if the
-iconv implementation has this behavior. When set, Git will write a BOM
-manually for UTF-16 and UTF-32 and then force the data to be written in
-UTF-16BE or UTF-32BE. We choose big-endian behavior here because the
-tests use the raw "UTF-16" encoding, which will be big-endian when the
-implementation requires this knob to be set.
+and I tested it locally on Linux as well.  I don't think there are any
+unusual compiler options.  I run it with --stress on Travis CI's macOS
+as well, but couldn't trigger a failure there.
 
-Update the tests to detect this case and write test data with an added
-BOM if necessary. Always write the BOM in the tests in big-endian
-format, since all iconv implementations that omit a BOM must use
-big-endian serialization according to the Unicode standard.
 
-Preserve the existing behavior for systems which do not have this knob
-enabled, since they may use optimized implementations, including
-defaulting to the native endianness, which may improve performance.
+[1] That build log doesn't include the trash dir of the failed test
+    in the log, most likely because of a faulty merge conflict
+    resolution on my part, but you can find a failed trash dir
+    embedded here:
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Makefile                         |  6 ++++++
- t/t0028-working-tree-encoding.sh | 25 ++++++++++++++++++++++---
- utf8.c                           | 10 ++++++++++
- 3 files changed, 38 insertions(+), 3 deletions(-)
+      https://travis-ci.org/szeder/git/jobs/491401882#L2309
 
-diff --git a/Makefile b/Makefile
-index 571160a2c4..b2a4765e5f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -259,6 +259,9 @@ all::
- # Define OLD_ICONV if your library has an old iconv(), where the second
- # (input buffer pointer) parameter is declared with type (const char **).
- #
-+# Define ICONV_NEEDS_BOM if your iconv implementation does not write a
-+# byte-order mark (BOM) when writing UTF-16 or UTF-32.
-+#
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
- # Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
-@@ -1415,6 +1418,9 @@ ifndef NO_ICONV
- 		EXTLIBS += $(ICONV_LINK) -liconv
- 	endif
- endif
-+ifdef ICONV_NEEDS_BOM
-+	BASIC_CFLAGS += -DICONV_NEEDS_BOM
-+endif
- ifdef NEEDS_LIBGEN
- 	EXTLIBS += -lgen
- endif
-diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-index e58ecbfc44..bfc4a9d4dd 100755
---- a/t/t0028-working-tree-encoding.sh
-+++ b/t/t0028-working-tree-encoding.sh
-@@ -6,6 +6,25 @@ test_description='working-tree-encoding conversion via gitattributes'
- 
- GIT_TRACE_WORKING_TREE_ENCODING=1 && export GIT_TRACE_WORKING_TREE_ENCODING
- 
-+test_lazy_prereq NO_UTF16_BOM '
-+	test $(printf abc | iconv -f UTF-8 -t UTF-16 | wc -c) = 6
-+'
-+
-+test_lazy_prereq NO_UTF32_BOM '
-+	test $(printf abc | iconv -f UTF-8 -t UTF-32 | wc -c) = 12
-+'
-+
-+write_utf16 () {
-+	test_have_prereq NO_UTF16_BOM && printf '\xfe\xff'
-+	iconv -f UTF-8 -t UTF-16
-+
-+}
-+
-+write_utf32 () {
-+	test_have_prereq NO_UTF32_BOM && printf '\x00\x00\xfe\xff'
-+	iconv -f UTF-8 -t UTF-32
-+}
-+
- test_expect_success 'setup test files' '
- 	git config core.eol lf &&
- 
-@@ -13,8 +32,8 @@ test_expect_success 'setup test files' '
- 	echo "*.utf16 text working-tree-encoding=utf-16" >.gitattributes &&
- 	echo "*.utf16lebom text working-tree-encoding=UTF-16LE-BOM" >>.gitattributes &&
- 	printf "$text" >test.utf8.raw &&
--	printf "$text" | iconv -f UTF-8 -t UTF-16 >test.utf16.raw &&
--	printf "$text" | iconv -f UTF-8 -t UTF-32 >test.utf32.raw &&
-+	printf "$text" | write_utf16 >test.utf16.raw &&
-+	printf "$text" | write_utf32 >test.utf32.raw &&
- 	printf "\377\376"                         >test.utf16lebom.raw &&
- 	printf "$text" | iconv -f UTF-8 -t UTF-32LE >>test.utf16lebom.raw &&
- 
-@@ -223,7 +242,7 @@ test_expect_success ICONV_SHIFT_JIS 'check roundtrip encoding' '
- 
- 	text="hallo there!\nroundtrip test here!" &&
- 	printf "$text" | iconv -f UTF-8 -t SHIFT-JIS >roundtrip.shift &&
--	printf "$text" | iconv -f UTF-8 -t UTF-16 >roundtrip.utf16 &&
-+	printf "$text" | write_utf16 >roundtrip.utf16 &&
- 	echo "*.shift text working-tree-encoding=SHIFT-JIS" >>.gitattributes &&
- 
- 	# SHIFT-JIS encoded files are round-trip checked by default...
-diff --git a/utf8.c b/utf8.c
-index 83824dc2f4..133199de0e 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -568,6 +568,16 @@ char *reencode_string_len(const char *in, size_t insz,
- 		bom_str = utf16_be_bom;
- 		bom_len = sizeof(utf16_be_bom);
- 		out_encoding = "UTF-16BE";
-+#ifdef ICONV_NEEDS_BOM
-+	} else if (same_utf_encoding("UTF-16", out_encoding)) {
-+		bom_str = utf16_be_bom;
-+		bom_len = sizeof(utf16_be_bom);
-+		out_encoding = "UTF-16BE";
-+	} else if (same_utf_encoding("UTF-32", out_encoding)) {
-+		bom_str = utf32_be_bom;
-+		bom_len = sizeof(utf32_be_bom);
-+		out_encoding = "UTF-32BE";
-+#endif
- 	}
- 
- 	conv = iconv_open(out_encoding, in_encoding);
