@@ -2,138 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 658CE1F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 08:35:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 186501F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 08:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727175AbfBKIfm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 03:35:42 -0500
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:45736 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727091AbfBKIfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 03:35:41 -0500
-Received: by mail-ed1-f52.google.com with SMTP id d9so3213000edh.12
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 00:35:40 -0800 (PST)
+        id S1727215AbfBKIjR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 03:39:17 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:38754 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727061AbfBKIjR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 03:39:17 -0500
+Received: by mail-wm1-f53.google.com with SMTP id v26so15370794wmh.3
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 00:39:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9r16fH6RoG/NuCBR1Zk+1jK6AmTwEY655anayVo9pzY=;
-        b=Hk9HciPX5xJnJ2dxa34YlCXXG+j3y+NVZM8h2i/T1N0Seq5DA9hVGeaRAaC8zNxHX2
-         ioR6LcC0SW3ecl13TyXI//zWyJ02bK8xIvguyRx8yWLzNBMPv7bXI25xNkMGTdeQKWET
-         EQNsR8r9YsqO6utEz3ANb6AabpHJjT+kSZZDNDFa96SsKHhCjb4fX4yQS4AbxQW9kOVM
-         TBVS181zGxzwAwySsm9UXF6wKcWeVoVyYQXZcjW88KZSi9bRv5Gi1D7Go+hak6mxWYy3
-         4C9M9PSAVDr8XWH6MLetYVfvPC+hAofkZVdrDdiK2VjcVwFE3smlqtD7IfTWwYf2y+ry
-         uzqw==
+         :cc:content-transfer-encoding;
+        bh=+WOl2MMc6eoFS8P5WrYOyWm4Nuc0odJKNJ3jRjUqS4w=;
+        b=rF3iC09tY1AoDW/aFTrejRJgmfPKd8Y6xUFx/D89LsuQPYIepRN2bnsR6VTsaeFdG7
+         m+sFcXZqVTeERN7/1bNWaT4W9OYPD65ULOQp67UNAB3miKpz+T5gunKI7uyEChcFhV0J
+         Z8A0nhU0yBUJkz6XaIsYV+B75rUiMMiC/ftbZYcOEdzp2mwz5ima93YbktG3/LfyxD1g
+         hpNs7bfnIwsp/FU/67Yjli0hiUY/E+wHoD3C+kcdZ7kQf7BIGLRZfwk8OK4ecFFMh+7T
+         c/JBo49Cgm69wJ1VqYwDc9SyoO0EJW5q4v4WgEFneTUkoB9DrLnv6UiYhv1OHana9slo
+         m8zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9r16fH6RoG/NuCBR1Zk+1jK6AmTwEY655anayVo9pzY=;
-        b=HuERw/6072C9evD0UgGnSHbv3PstLfqxsfs78Lc8MkEmlmIil0HdEenEASns//ZSMD
-         s0/axBcWcE4z9Ku5+rbl3wc91bqB64yHYiqXf24/3V8HvdczfjGv/pcqbAq4e/9sFeiv
-         X4qh84jS3mBu2GToGicgNZk9zBQo2u6LttJhtzwMApuv52oM8JWkQGSGpEvRepJxHUQ+
-         BHjbDFPbKQUo2Xm+DBQTWlJiW41rMz57V/MXoq9pJ+oadpVlwzLQhHjOc+Mw0aBPU6ZT
-         g8k7O4YrPu6qQbnlhnU2ZSLVWrcB1z2uQI1cf/3NL24oVJnNUHebCLHLvyDzv5/ZEb34
-         3m+Q==
-X-Gm-Message-State: AHQUAuYSRg3SJQEB2gu6TsKUKTIfFj9rZesgwgZgaIWuWS7LR3H+FnQq
-        hbzmIOU1zv4EqbKrN21SvaZNPI9caChj/6jSmlK43LQwyaM=
-X-Google-Smtp-Source: AHgI3IbKI9pxlu8i8lPhQUmHT82B2PcfcKP2wJ6RhwOcMMe8sSdD11rP2ZuAKl1OM4dh3AbUZ3BxTM+4Fly9vmzjA6o=
-X-Received: by 2002:aa7:dacd:: with SMTP id x13mr13703002eds.24.1549874139792;
- Mon, 11 Feb 2019 00:35:39 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+WOl2MMc6eoFS8P5WrYOyWm4Nuc0odJKNJ3jRjUqS4w=;
+        b=inKfZ4BsMaA/3Hyk+CT8bCOTusbahRexXJSeNfRXWuSHH1/uefXhR+1HZBqEoRZ2X/
+         0vvjcyaIDmb4DnzblNGb4oGY5cGSrWlWGn+daDc3xKIPL+oAklaSY2yMOlS8Wb8rMkV3
+         mwtk0/7IcnZl0DNw7slt5SdYCgkjxl/NpzvI/qp/PfsCEPK9zFliF1dt1dOGRA7VRkkR
+         TPG6rJZeGQUvpwcqOvxRf3241TgSPbAbWa0v9SXmw6P4EmLHkIz3vv8nLp4PlH35F3pi
+         lXxGtMvgBOnjZPmCp7LQ9IkCKtChR674xWWjYCGQG097MO3eQy+HXpRChQxHRK4nRpX5
+         kHSQ==
+X-Gm-Message-State: AHQUAuanlYDotcUtYtMikt4xi53+HVMPgmNPkOACCz8+hdo8npEp3rqr
+        qEk3l3Pl3NccTjJ2hJnqf+TYD7bclIeTn8qxchNMBzOipm4=
+X-Google-Smtp-Source: AHgI3Iat4ct5bGyZOATKwCT4BuADBkb6SsdoX1jz65lbyp6aGwI8O5YeUzDmrsPaHQgpmmTWkIplzOjrKyE2rp2R4Us=
+X-Received: by 2002:adf:8919:: with SMTP id s25mr25693132wrs.38.1549874354349;
+ Mon, 11 Feb 2019 00:39:14 -0800 (PST)
 MIME-Version: 1.0
 References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
  <20190204215251.GB6085@hank.intra.tgummerer.com> <20190205211736.GD6085@hank.intra.tgummerer.com>
  <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
  <20190206220942.GE6085@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
- <20190207213326.GF6085@hank.intra.tgummerer.com>
-In-Reply-To: <20190207213326.GF6085@hank.intra.tgummerer.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 11 Feb 2019 09:35:27 +0100
-Message-ID: <CAP8UFD1Rv+nFqDYf33rRw-kWnfqokSG6=tG8XPFyBoVCU6Te=w@mail.gmail.com>
+ <20190207213326.GF6085@hank.intra.tgummerer.com> <CAL21Bmkkpzp7fhAnjstTjeH+unDFk8-uhFAgKFfuczYzejf2RA@mail.gmail.com>
+ <CAP8UFD24Jgetmb9_ANm07Emwr90obVpiRPyX+HtmaHcL1fYq5g@mail.gmail.com>
+In-Reply-To: <CAP8UFD24Jgetmb9_ANm07Emwr90obVpiRPyX+HtmaHcL1fYq5g@mail.gmail.com>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Mon, 11 Feb 2019 11:31:35 +0300
+Message-ID: <CAL21Bm=n0pe5M0G5eB9svQcmM9dC023J46HFo-jYuDQeyKcwFw@mail.gmail.com>
 Subject: Re: GSoC 2019: Git's application submitted
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
+        Matthieu Moy <Matthieu.Moy@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 7, 2019 at 10:33 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+=D0=BF=D0=BD, 11 =D1=84=D0=B5=D0=B2=D1=80. 2019 =D0=B3. =D0=B2 10:46, Chris=
+tian Couder <christian.couder@gmail.com>:
 >
-> On 02/07, Johannes Schindelin wrote:
-> > On Wed, 6 Feb 2019, Thomas Gummerer wrote:
-> > >  - implement pushing/poping conflicted state
+> On Mon, Feb 11, 2019 at 6:48 AM =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=
+=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
+> >
+> > > It would be nice to have a few more project ideas.
+> >
+> > I am not sure I have additional ideas for 3-month project for the inter=
+n, but
+> >
+> > > https://git.github.io/SoC-2019-Ideas/ currently lists only 2 possible
+> > > projects:
 > > >
-> > >    This would obviously be the end goal.
+> > > - Unify ref-filter formats with other --pretty formats (which is new)
 > >
-> > On second thought, this might actually be super trivial. Right now, we
-> > support two modes (not counting the `--untracked` stuff): --keep-index and
-> > --no-keep-index. In both cases, we seem to create a merge commit whose
-> > tree reflects the working directory and whose first parent is HEAD and
-> > whose second parent is a single commit on top of HEAD (which contains
-> > either no changes in the case of --no-keep-index, or whose tree reflects
-> > the index in case of --keep-index).
-> >
-> > To extend that to the conflict case, we could introduce a new flag
-> > --with-conflicts, and have the commit structure
-> >
-> >       Worktree
-> >        |    \
-> >        |    index stage 0
-> >        |      /     |     \
-> >        | stage 1  stage 2  stage 3
-> >        |    /     /       /
-> >       HEAD ---------------
-> >
-> > The only tricky thing I can see is to maintain backwards compatibility if
-> > possible, so that old `git stash` will do something at least semi-sensible
-> > with those commit structures.
-> >
-> > It might be too small a project, after all.
+> > I am ready to act as a mentor in this task, I know that part of
+> > project good enough.
 >
-> Yeah, looking at this I think you're right.  Thanks for helping work
-> through this.
+> Great! I thought that it would be a good project for you to mentor and
+> that's why I added it.
+>
+> By the way if you would prefer not to mentor the other project I can
+> remove you from its possible mentor list.
 
-I am not sure it will be too small a project, especially because it is
-a new feature. On top of the coding part, the student will also have
-to come up with good documentation and test cases, and there will
-probably be naming and workflow discussions and possibly refactoring
-opportunities and bug fixes along the way.
+I am ready to try mentoring on both projects, but it would be much
+easier for me to work only for this one. I removed my name from the
+other one and made pull request:
+https://github.com/git/git.github.io/pull/355
 
-Yeah, the naming and workflow discussions should actually happen when
-discussing the student's proposal, in which case an important part of
-the work will (hopefully) be done before the GSoC actually starts.
+If project about pretty will not be selected by any of the students, I
+am happy to help other mentors with other projects.
 
-Historically though we have always been very optimistic in what we
-thought a student could accomplish in a GSoC. And we are very likely
-to find more ideas for improvements during the GSoC, in case
-everything is "finished" before the end. I actually think that it has
-never happened that a student both "finished" the project before the
-end, and that no idea for improvement on top of the work was found.
+>
+> > I have additional related task: We have a function called
+> > oid_object_info, it allows to download meta-info of the file. It was
+> > used in cat-file, and inspired by that example, I improved ref-filter,
+> > so now ref-filter works faster with it. Moreover, I have found that
+> > oid_object_info allows to get the contents of the file. It was useful
+> > in ref-filter, and actually it could be also useful in cat-file, but
+> > we still download the file differently in cat-file, and it looks
+> > awkward. I need to make just one last move to finish my patch: it will
+> > close the task about migrating cat-file formatting logic to
+> > ref-filter. But cat-file still will not use general way to download
+> > the file. So, the task is to get rid of additional file-reading logic.
+> > I guess this task is much smaller than original one, but at least the
+> > student will have chance to finish it in 3 months.
+> > My patch is here: https://github.com/git/git/pull/568
+> > But I hope you will also see it this week in the mailing list.
+> > Proposed task is in TODO in the end of ref-filter file.
+>
+> Do you mean the following comment from
+> https://github.com/git/git/blob/c17ed82b8983ea7e172181d869966db546c6a528/=
+ref-filter.c#L2393-L2399:
+>
+> /*
+> * TODO: add support of %(*raw). Need to switch between oi and oi_deref fo=
+r that.
+> * TODO: split logic and printing (as it is done in format_ref_array_item =
+and
+> * show_ref_array_item). After that we could use %(raw) in all
+> ref-filter commands.
+> * TODO: rewrite print_object_or_die so that it will reuse result of gener=
+al
+> * oid_object_info_extended call.
+> */
+>
+> ?
+>
+> It doesn't look like that's it. Could you just copy the task into an
+> email? Or if you think it could be an idea for a GSoC project, could
+> you send a pull request to add it to:
+>
+> https://github.com/git/git.github.io/blob/master/SoC-2019-Ideas.md
+>
+> ?
 
-I have added a "Note about refactoring projects versus projects that
-implement new features" at the end of the idea list:
+Yes, that's it. Particularly, the last TODO. But other TODOs will be
+also solved as a result. I can add it to the list of the projects if
+you find this task suitable.
 
-https://github.com/git/git.github.io/blob/master/SoC-2019-Ideas.md#note-about-refactoring-projects-versus-projects-that-implement-new-features
+>
+> > By the way, we had a letter from Google, it is said that our tasks are
+> > sparsed. I am not sure I understand it correctly. Should I help the
+> > project somehow to solve our issues?
+>
+> Yeah, we got en email from Stephanie Taylor saying that our idea list
+> is quite sparse this year with a link to:
+>
+> https://google.github.io/gsocguides/mentor/defining-a-project-ideas-list
+>
+> which contains:
+>
+> "Even if you are a new organization and only want one or two students
+> showing that you have multiple ideas (a bare minimum of 4 solid ideas)
+> is vital."
+>
+> They also want "more detailed description of [each] project (2-5
+> sentences)", so I think we should work on that too.
 
-and I think that with that note students working on such projects will
-be warned enough, and therefore hopefully have a better chance of
-success.
+I added description for one of projects, it is also in my pull request.
 
-So after all if you are willing to co-mentor such a project, I would
-be ok to co-mentor it with you, and we should add it to the list.
-
-Thanks,
-Christian.
-
-And yeah it would help improve our idea list as requested by Google.
+>
+> So yeah, any help to fix the idea list is very welcome!
+>
+> Thanks,
+> Christian.
