@@ -6,114 +6,83 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A77DA1F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 21:45:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61F871F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 21:48:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727390AbfBKVpB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 16:45:01 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:60737 "EHLO
+        id S1727466AbfBKVs0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 16:48:26 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:60942 "EHLO
         elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727172AbfBKVpB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 16:45:01 -0500
+        with ESMTP id S1727176AbfBKVsZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 16:48:25 -0500
 X-Virus-Scanned: amavisd-new at elehost.com
 Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
         (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1BLisL1002816
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1BLmMw7002896
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 11 Feb 2019 16:44:54 -0500 (EST)
+        Mon, 11 Feb 2019 16:48:23 -0500 (EST)
         (envelope-from rsbecker@nexbridge.com)
 From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <000901d4c0b1$1ea15160$5be3f420$@nexbridge.com>     <000a01d4c0b1$9ef9ea70$dcedbf50$@nexbridge.com> <xmqqsgwugi21.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqsgwugi21.fsf@gitster-ct.c.googlers.com>
-Subject: RE: [Proposed Fix] daemon.c: not initializing revents
-Date:   Mon, 11 Feb 2019 16:44:48 -0500
-Message-ID: <003501d4c253$05f16fd0$11d44f70$@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Duy Nguyen'" <pclouds@gmail.com>
+Cc:     "'Git Mailing List'" <git@vger.kernel.org>
+References: <000801d4c174$05b76860$11263920$@nexbridge.com>     <CACsJy8Bn+2zY6y_QqCjbB3qWM-F=3d0H5vgWj4az=md2FZ8RhA@mail.gmail.com> <xmqqftsughks.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftsughks.fsf@gitster-ct.c.googlers.com>
+Subject: RE: [Breakage] 2.20.0-rc0 t1404: test_i18ngrep reports 1 instead of 0 on NonStop in one case
+Date:   Mon, 11 Feb 2019 16:48:16 -0500
+Message-ID: <003601d4c253$8208dcc0$861a9640$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
         charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHuZCOJOJA2t83onwaMLThpXvGUrQHifX28AeBEHIKliccyIA==
+Thread-Index: AQNDD1TD3hXIgmvW3x+/7VSnrDKF3gHnalkaAbpdw+Gi4Xlh8A==
 Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 11, 2019 15:57, Junio C Hamano wrote:
-> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+On February 11, 2019 16:07, Junio C Hamano wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 > 
-> > Hi All,
+> > On Mon, Feb 11, 2019 at 2:09 AM Randall S. Becker
+> > <rsbecker@nexbridge.com> wrote:
+> >>
+> >> Hi All,
+> >>
+> >> I tracked down a breakage in t1404 subtest 52. The line
+> >>
+> >> test_i18ngrep "Unable to create $Q.*packed-refs.lock$Q: File exists"
+> >> err
 > >
-> > I found this while trying to track down a hang in t5562 - this isn't
-> > the fix, but here it is something that could be considered a
-> > code-inspection. If there have been random unexplained hangs when git
-> > runs as a daemon, this might be the cause.
-> >
-> > According to many systems (other than Linux), the revents field is
-> > supposed to be 0 on return to poll(). This was the cause of some
-> > heart-ache a while back in compat/poll/poll.c.
+> > The message does not match, does it? Here we grep for "File exists"
+> > but the message you showed says "File already exists".
 > 
-> I am having a hard time grokking "supposed to be 0 on return to", but do
-you
-> mean "the caller must clear .revents field before calling poll()"?
-> 
-> http://pubs.opengroup.org/onlinepubs/9699919799/functions/poll.html
-> has this
-> 
->     In each pollfd structure, poll() shall clear the revents member,
->     except that where the application requested a report on a condition
->     by setting one of the bits of events listed above, poll() shall set
->     the corresponding bit in revents if the requested condition is
->     true. In addition, poll() shall set the POLLHUP, POLLERR, and
->     POLLNVAL flag in revents if the condition is true, even if the
->     application did not set the corresponding bit in events.
-> 
-> and I am also having a hard time interpreting the "except that".  If we
-asked
-> to report (e.g. we set POLLIN in the .events field), poll() does not have
-to
-> clear .revents but just set whatever bits it needs to set to report the
-> condition in the field?
-> 
-> If that is the case, it makes it a bug not to clear .revents before
-calling poll;
-> the sample code snippet on the same page in EXAMPLES section does not,
-> though, so I am puzzled.
-> 
-> In any case, no matter what POSIX says, if clearing .revents before
-calling
-> poll() helps on platforms in the real world, the patch is worth taking as
-a fix, I
-> would think.
+> Hmph, this is from strerror(), right?
 
-That's what my intent was - my explanations are suffering from a little
-work-induced sleep deprivation. Would you like this as a formal patch?
+You can reasonably expect that NonStop error messages deviate occasionally.
+Scaping from strerror() is not a good plan. A worse plan is to use errno
+values, which I can guarantee do not match, but that's just an FYI.
 
+> The question is if we should be using grep to match on strerror() result
+in the
+> C locale.  Do we really care that the reason of the failure is due to
+EEXIST for
+> this particular test?
 > 
-> > I am not certain whether that copy of poll() is used in daemon, but I
-> > wanted to point out that the value is being returned to poll, outside
-> > of compat/poll/poll.c and may present a potential for poll returning
-> > an error on that FD due to random values that might be in revents.
-> >
-> > Please see 61b2a1acaae for a related change/justification.
-> >
-> > diff --git a/daemon.c b/daemon.c
-> > index 9d2e0d20ef..1e275fc8b3 100644
-> > --- a/daemon.c
-> > +++ b/daemon.c
-> > @@ -1194,6 +1194,7 @@ static int service_loop(struct socketlist
-*socklist)
-> >                                 }
-> >                                 handle(incoming, &ss.sa, sslen);
-> >                         }
-> > +                       pfd[i].revents = 0;
-> >                 }
-> >         }
-> >  }
+> >> The verbose output, with diagnostics, is:
+> >>
+> >> error: 'grep Unable to create '.*packed-refs.lock': File exists err'
+> >> didn't find a match in:
+> >> error: Unable to create '/home/git/git/t/trash
+> >> directory.t1404-update-ref-errors/.git/packed-refs.lock': File
+> >> already exists.
+> 
+> Otherwise, perhaps we should loosen the grep pattern, not as a part of
+> "NonStop fix" topic, but as "tests should not depend on having a canonical
+> spelling of strerror() result even in C locale" topic.
 
-Regards,
-Randall
+I'm happy not to have the fix I supplied used if there's a better way.
+
 
