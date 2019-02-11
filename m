@@ -2,210 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B852E1F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 21:51:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF94C1F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 22:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727780AbfBKVvH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 16:51:07 -0500
-Received: from [193.29.56.124] ([193.29.56.124]:56844 "EHLO iodev.co.uk"
-        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S1726074AbfBKVvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 16:51:07 -0500
-X-Greylist: delayed 539 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Feb 2019 16:51:06 EST
-From:   Ismael Luceno <ismael@iodev.co.uk>
-To:     git@vger.kernel.org
-Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>,
-        Ismael Luceno <ismael@iodev.co.uk>
-Subject: [PATCH] git-gui: Implement color configuration
-Date:   Mon, 11 Feb 2019 22:42:13 +0100
-Message-Id: <20190211214213.32501-1-ismael@iodev.co.uk>
-X-Mailer: git-send-email 2.20.1
+        id S1726914AbfBKWEy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 17:04:54 -0500
+Received: from forward500j.mail.yandex.net ([5.45.198.250]:36556 "EHLO
+        forward500j.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726358AbfBKWEy (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 17:04:54 -0500
+Received: from mxback14g.mail.yandex.net (mxback14g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:93])
+        by forward500j.mail.yandex.net (Yandex) with ESMTP id A1A3E11C1C46;
+        Tue, 12 Feb 2019 01:04:51 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback14g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id eyQ28hv1WD-4p8CgqKo;
+        Tue, 12 Feb 2019 01:04:51 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1549922691;
+        bh=qJ0Dm51Kj73HGGbmetWvQ9QAnEhkwMWQmBpFb3ZQkF8=;
+        h=From:To:References:Subject:Date:Message-Id;
+        b=wnamvaz4LK4anN1zcRGKjrKSLfmz77YWiu+F9f9DPLxkfkiXrWnCA/StJmwAxNePc
+         T9ASv50T7xDvKdkmjw6i53LfaWc8dYAnVv++vMDnUgkny4cUmO1yPjRmHF5bikQtCF
+         jCcPCm5lhFH21UtBUjuxiWXc/0YrdRTeJJg/yBmw=
+Authentication-Results: mxback14g.mail.yandex.net; dkim=pass header.i=@ya.ru
+Received: by sas1-d856b3d759c7.qloud-c.yandex.net with HTTP;
+        Tue, 12 Feb 2019 01:04:51 +0300
+From:   Sergey Lukashev <lukashev.s@ya.ru>
+Envelope-From: lukashev-s@yandex.ru
+To:     Fernando Chorney <djsbx@djsbx.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CANFDZM6PikancjUdm+HYgGknD0dPhzxU6yOYFLZpcnCmg8JKdA@mail.gmail.com>
+         <CANFDZM7fsbwwqhyWTzfivm4L=GgtCMfCi+DekZurs+SFGqaOjw@mail.gmail.com> <CANFDZM5=ffu-=H=vrO3Kr0t2km-3Zg4=msYUWqqJQKGxGojnqA@mail.gmail.com>
+Subject: Re: git commit --verbose shows incorrect diff when pre-commit hook is used to modify files
 MIME-Version: 1.0
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Tue, 12 Feb 2019 01:04:51 +0300
+Message-Id: <31924311549922691@sas1-d856b3d759c7.qloud-c.yandex.net>
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Ismael Luceno <ismael@iodev.co.uk>
----
- git-gui.sh     | 33 ++++++++++++++++++++++-----------
- lib/option.tcl | 16 ++++++++++++++++
- 2 files changed, 38 insertions(+), 11 deletions(-)
+At the time you see the diff the committing of changes has not yet been initiated. It's only after you type in the message that the ACTUAL committing starts and the hook runs.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index e00d9a345294..01e5462dc70e 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -903,6 +903,8 @@ set font_descs {
- }
- set default_config(gui.stageuntracked) ask
- set default_config(gui.displayuntracked) true
-+set default_config(gui.foreground) black
-+set default_config(gui.background) white
- 
- ######################################################################
- ##
-@@ -2004,7 +2006,7 @@ static unsigned char mask_bits[] = {
-    0xfe, 0x1f, 0xfe, 0x1f, 0xfe, 0x1f};
- }
- 
--image create bitmap file_plain -background white -foreground black -data {
-+image create bitmap file_plain -background [get_config gui.background white] -foreground black -data {
- #define plain_width 14
- #define plain_height 15
- static unsigned char plain_bits[] = {
-@@ -2013,7 +2015,7 @@ static unsigned char plain_bits[] = {
-    0x02, 0x10, 0x02, 0x10, 0xfe, 0x1f};
- } -maskdata $filemask
- 
--image create bitmap file_mod -background white -foreground blue -data {
-+image create bitmap file_mod -background [get_config gui.background] -foreground blue -data {
- #define mod_width 14
- #define mod_height 15
- static unsigned char mod_bits[] = {
-@@ -2022,7 +2024,7 @@ static unsigned char mod_bits[] = {
-    0xfa, 0x17, 0x02, 0x10, 0xfe, 0x1f};
- } -maskdata $filemask
- 
--image create bitmap file_fulltick -background white -foreground "#007000" -data {
-+image create bitmap file_fulltick -background [get_config gui.background] -foreground "#007000" -data {
- #define file_fulltick_width 14
- #define file_fulltick_height 15
- static unsigned char file_fulltick_bits[] = {
-@@ -2031,7 +2033,7 @@ static unsigned char file_fulltick_bits[] = {
-    0x62, 0x10, 0x02, 0x10, 0xfe, 0x1f};
- } -maskdata $filemask
- 
--image create bitmap file_question -background white -foreground black -data {
-+image create bitmap file_question -background [get_config gui.background] -foreground black -data {
- #define file_question_width 14
- #define file_question_height 15
- static unsigned char file_question_bits[] = {
-@@ -2040,7 +2042,7 @@ static unsigned char file_question_bits[] = {
-    0x62, 0x10, 0x02, 0x10, 0xfe, 0x1f};
- } -maskdata $filemask
- 
--image create bitmap file_removed -background white -foreground red -data {
-+image create bitmap file_removed -background [get_config gui.background] -foreground red -data {
- #define file_removed_width 14
- #define file_removed_height 15
- static unsigned char file_removed_bits[] = {
-@@ -2049,7 +2051,7 @@ static unsigned char file_removed_bits[] = {
-    0x1a, 0x16, 0x02, 0x10, 0xfe, 0x1f};
- } -maskdata $filemask
- 
--image create bitmap file_merge -background white -foreground blue -data {
-+image create bitmap file_merge -background [get_config gui.background] -foreground blue -data {
- #define file_merge_width 14
- #define file_merge_height 15
- static unsigned char file_merge_bits[] = {
-@@ -2058,7 +2060,7 @@ static unsigned char file_merge_bits[] = {
-    0xfa, 0x17, 0x02, 0x10, 0xfe, 0x1f};
- } -maskdata $filemask
- 
--image create bitmap file_statechange -background white -foreground green -data {
-+image create bitmap file_statechange -background [get_config gui.background] -foreground green -data {
- #define file_statechange_width 14
- #define file_statechange_height 15
- static unsigned char file_statechange_bits[] = {
-@@ -3187,7 +3189,9 @@ pack .vpane -anchor n -side top -fill both -expand 1
- textframe .vpane.files.workdir -height 100 -width 200
- tlabel .vpane.files.workdir.title -text [mc "Unstaged Changes"] \
- 	-background lightsalmon -foreground black
--ttext $ui_workdir -background white -foreground black \
-+ttext $ui_workdir \
-+	-background [get_config gui.background] \
-+	-foreground [get_config gui.foreground] \
- 	-borderwidth 0 \
- 	-width 20 -height 10 \
- 	-wrap none \
-@@ -3209,7 +3213,9 @@ textframe .vpane.files.index -height 100 -width 200
- tlabel .vpane.files.index.title \
- 	-text [mc "Staged Changes (Will Commit)"] \
- 	-background lightgreen -foreground black
--ttext $ui_index -background white -foreground black \
-+ttext $ui_index \
-+	-background [get_config gui.background] \
-+	-foreground [get_config gui.foreground] \
- 	-borderwidth 0 \
- 	-width 20 -height 10 \
- 	-wrap none \
-@@ -3353,7 +3359,10 @@ if {![is_enabled nocommit]} {
- }
- 
- textframe .vpane.lower.commarea.buffer.frame
--ttext $ui_comm -background white -foreground black \
-+ttext $ui_comm \
-+	-background [get_config gui.background] \
-+	-foreground [get_config gui.foreground] \
-+	-insertbackground [get_config gui.foreground] \
- 	-borderwidth 1 \
- 	-undo true \
- 	-maxundo 20 \
-@@ -3470,7 +3479,9 @@ bind_button3 .vpane.lower.diff.header.path "tk_popup $ctxm %X %Y"
- #
- textframe .vpane.lower.diff.body
- set ui_diff .vpane.lower.diff.body.t
--ttext $ui_diff -background white -foreground black \
-+ttext $ui_diff \
-+	-background [get_config gui.background] \
-+	-foreground [get_config gui.foreground] \
- 	-borderwidth 0 \
- 	-width 80 -height 5 -wrap none \
- 	-font font_diff \
-diff --git a/lib/option.tcl b/lib/option.tcl
-index e43971bfa3e0..fd7ac1c4f3d9 100644
---- a/lib/option.tcl
-+++ b/lib/option.tcl
-@@ -88,6 +88,14 @@ proc save_config {} {
- 	}
- }
- 
-+proc choose_color {title varname} {
-+	upvar 1 $varname var
-+	set color [tk_chooseColor -title $title -initialcolor $var]
-+	if {$color ne ""} {
-+		set var $color
-+	}
-+}
-+
- proc do_options {} {
- 	global repo_config global_config font_descs
- 	global repo_config_new global_config_new
-@@ -162,6 +170,8 @@ proc do_options {} {
- 		{s gui.stageuntracked {mc "Staging of untracked files"} {list "yes" "no" "ask"}}
- 		{b gui.displayuntracked {mc "Show untracked files"}}
- 		{i-1..99 gui.tabsize {mc "Tab spacing"}}
-+		{C gui.foreground {mc "Foreground Color"}}
-+		{C gui.background {mc "Background Color"}}
- 		} {
- 		set type [lindex $option 0]
- 		set name [lindex $option 1]
-@@ -192,6 +202,7 @@ proc do_options {} {
- 				pack $w.$f.$optid -side top -anchor w -fill x
- 			}
- 			c -
-+			C -
- 			t {
- 				${NS}::frame $w.$f.$optid
- 				${NS}::label $w.$f.$optid.l -text [mc "%s:" $text]
-@@ -211,6 +222,11 @@ proc do_options {} {
- 						-command [list popup_btn_menu \
- 							$w.$f.$optid.m $w.$f.$optid.b]
- 					pack $w.$f.$optid.b -side left -anchor w
-+				} elseif {$type eq {C}} {
-+					${NS}::button $w.$f.$optid.b \
-+						-text [mc "Change"] \
-+						-command [list choose_color $text ${f}_config_new($name)]
-+					pack $w.$f.$optid.b -side left -anchor w
- 				}
- 				pack $w.$f.$optid -side top -anchor w -fill x
- 			}
--- 
-2.20.1
+You can print the diff of what your hook has changed by running "git diff" in it before adding changes.
+
+12.02.2019, 00:28, "Fernando Chorney" <djsbx@djsbx.com>:
+> Hi,
+>
+> I am trying to use a pre-commit hook to modify files before they are
+> to be committed. The problem I am running into is that if I use "git
+> commit --verbose", which I often do so that I can see the diff, the
+> diff it displays in the editor is the diff before the pre-commit hook
+> was run rather than what the diff would be after the pre-commit was
+> run.
+>
+> I would like to note, that the pre-commit hook is definitely running,
+> but when git grabs the diff seems to be in the wrong place.
+>
+> I have set up a simple example on my github to show the problem.
+> https://github.com/fchorney/pre-commit-example
+>
+> Is this intended behaviour, or perhaps an issue?
+>
+>  Thanks,
+>  Fernando Chorney
 
