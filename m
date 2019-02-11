@@ -2,74 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01AA01F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 21:08:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA7041F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 21:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727273AbfBKVIq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 16:08:46 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37556 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726177AbfBKVIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 16:08:46 -0500
-Received: by mail-wm1-f67.google.com with SMTP id x10so708219wmg.2
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 13:08:45 -0800 (PST)
+        id S1727638AbfBKV2L (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 16:28:11 -0500
+Received: from mail-pf1-f169.google.com ([209.85.210.169]:39294 "EHLO
+        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727551AbfBKV2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 16:28:11 -0500
+Received: by mail-pf1-f169.google.com with SMTP id f132so169117pfa.6
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 13:28:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FA1BCHEiD39RB9T85SQSF8x/AG5uJpkQkJcZk9Ee5ys=;
-        b=Dw7/enGecU4CXmYrcNkDvUW37llisPwlGFuRFufyKsnzYCfwiH8q1LfGCiRyMfP41I
-         kM+FfJJA/sB7uksyGRXqHlO8EEGAT/VbCtcTERtX4YQsnwP6251Y7xf4KgoqUoBNUqa5
-         sph+gO5klWSbaobczgeZANA6EligTjH4G3Y88NVFX0X2Ob3bjZT4//sI9Vxy9q8wLloY
-         9Pgh2tpdvJljGvVVM1CguSgeWLsL8WfOMV3dM6ZGYK6Nb2BSQjCvJ2FrpkVOLKrqhgW4
-         ybqQ8A4Wqf6GnrSbhfYG2rZsg/DjEKTnsyVmOnX5FiN1S4nxWl2TpwPjPCMJc57kvqYI
-         rJfA==
+        d=djsbx-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=49L4cgm8toXAyD2ZEUaHsHpjHOYgAy6IfvXfuPRP5Yk=;
+        b=f73zVJxjYAyw8PhDX8VdpbVfIcvdOLsNTToWaR23Z52zGSCZJXpn2AlUJPBxgQ+pHA
+         a0YPk3m5YGCw0Lw2gqmBIvMIXnSw1VhTGagdYCSHI5kJPNFH0EpddkUXkpHDYleEJlxR
+         WLVhNXlMrh38eiqFdO3Uv4gtALAxW/sPf+yCDBNZdFdJkLsPyyruxI8DQxs1XiF2aF30
+         dfwFcs/wp3lnwz3b+mu5ORFZGO/346ertOBHga+TsZME+2Vwv2xH0kQ1oNElUtvdrvlT
+         mLd3Wpoi1X3/j8aj4BW193u70/9y9AoHjVLsydIgnrdFhozsQCF74gAbjQ5nf9ZP5s9F
+         ptYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=FA1BCHEiD39RB9T85SQSF8x/AG5uJpkQkJcZk9Ee5ys=;
-        b=Uwf5KFQO3TUlR9/QTSLiJ0cUdr12GCpaMG4YPDExpKYcR+bKgbScIYmWEe5Zy2MiD9
-         u4LS0vgdXHSFz5+fHoL58kBfqr51YwM5y5P7U4XbmO1xgfFrH1uzkGwemquZUU2PKsuB
-         6A06BQQ8a3CT+rVrIATTrWDbCDirVMY8Ka+hKoOZ1Lz5fwEFZRn0K2u1jQ4qfOcpO7Oy
-         trUkpTWt/2TOsEB9OO/pzBuZKCTs8GGRHUjRfJ3Y6TmMlXtt5DWwvpc4Sb0MnAf8Sk5O
-         c+d6TjkTjPMxZhBxEvlLBdDjGs1whDFgLtBTLyOgZrdW6EIoodFwtVKIsBsN4PGPVmiw
-         3MwQ==
-X-Gm-Message-State: AHQUAuZQr6xof/vuwGsRzjHrB/UgPjon4ko5BnHIdmJTDD1rBBV58jGo
-        IH6ptPD+HCDUw907r5XtJbd+sTXO
-X-Google-Smtp-Source: AHgI3IY3x9QXqvVHfAyNgF/R+LrC9WJO5+hY/+F2aUrjoKaFnTPSSiKz9+twuq3s2rI4cUqbBoLHeg==
-X-Received: by 2002:a7b:c315:: with SMTP id k21mr120554wmj.145.1549919324752;
-        Mon, 11 Feb 2019 13:08:44 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 65sm39451966wrb.62.2019.02.11.13.08.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Feb 2019 13:08:44 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] sequencer: make sign_off_header a file local symbol
-References: <93b23b5a-7fcd-e9ec-3411-f8362b601732@ramsayjones.plus.com>
-Date:   Mon, 11 Feb 2019 13:08:43 -0800
-In-Reply-To: <93b23b5a-7fcd-e9ec-3411-f8362b601732@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Mon, 11 Feb 2019 17:16:58 +0000")
-Message-ID: <xmqqbm3ighic.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=49L4cgm8toXAyD2ZEUaHsHpjHOYgAy6IfvXfuPRP5Yk=;
+        b=pMhtaInqqZsuODDPg3rePDRt9Pi/vNG9+22ZMoIIC3F21B6SCTxaPwvOw/ktwzRYKG
+         XBqDkd0Ga/xVcUYD+LL0r1H58SEe8c1J1PUjctAOm6zMXUnBqwYCHHt0K6mcOaoaaZyQ
+         ojhWUUIbCcIGqpNvKd3gHYDpLDKMO6OvDXwtosRRx3b7kKVIPN7+B/jBUY3SpE3s1Ovs
+         Jk2w180Z1EfGW9G9+/EKWl2IvLhDkUPpjMikKjJVWw3JwFhyjF347jA6TKHm5VS/oW5S
+         e1OffsTfSLqqkeDDemxrIQrhrNctVJNRBwKZjERG/l+zSUwO9IkXqMw9LTxpXI3/Vpln
+         elDg==
+X-Gm-Message-State: AHQUAuYD+GqHhOt+SW0iYTbhxVBvVTvkwIWrSvR2ox21AnoG5LJRmW/g
+        nRczHYTVuDiArCe6H3uOjDw7hmqSG9ZoCIZe3qVLojuf
+X-Google-Smtp-Source: AHgI3IYCLTROgHEX/L6hD7LWnacasSb8gDMwm421VjXt6YGeP0KCd+VjSxxHpUAO9wUOfSF3PNHv//O8PuGJhSu3+PI=
+X-Received: by 2002:a63:40c1:: with SMTP id n184mr255834pga.225.1549920490334;
+ Mon, 11 Feb 2019 13:28:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CANFDZM6PikancjUdm+HYgGknD0dPhzxU6yOYFLZpcnCmg8JKdA@mail.gmail.com>
+ <CANFDZM7fsbwwqhyWTzfivm4L=GgtCMfCi+DekZurs+SFGqaOjw@mail.gmail.com>
+In-Reply-To: <CANFDZM7fsbwwqhyWTzfivm4L=GgtCMfCi+DekZurs+SFGqaOjw@mail.gmail.com>
+From:   Fernando Chorney <djsbx@djsbx.com>
+Date:   Mon, 11 Feb 2019 15:27:59 -0600
+Message-ID: <CANFDZM5=ffu-=H=vrO3Kr0t2km-3Zg4=msYUWqqJQKGxGojnqA@mail.gmail.com>
+Subject: git commit --verbose shows incorrect diff when pre-commit hook is
+ used to modify files
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Hi,
 
-> This has been hanging around for a while. I sent it to the list last
-> time in [1], but it seems to have been dropped. (Found while attempting
-> to rebase loads of old branches to a newer base!)
+I am trying to use a pre-commit hook to modify files before they are
+to be committed. The problem I am running into is that if I use "git
+commit --verbose", which I often do so that I can see the diff, the
+diff it displays in the editor is the diff before the pre-commit hook
+was run rather than what the diff would be after the pre-commit was
+run.
 
-Thanks.  Will apply.
+I would like to note, that the pre-commit hook is definitely running,
+but when git grabs the diff seems to be in the wrong place.
+
+I have set up a simple example on my github to show the problem.
+https://github.com/fchorney/pre-commit-example
+
+Is this intended behaviour, or perhaps an issue?
+
+ Thanks,
+ Fernando Chorney
