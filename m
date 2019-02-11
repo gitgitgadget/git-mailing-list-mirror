@@ -7,59 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B94B1F453
-	for <e@80x24.org>; Mon, 11 Feb 2019 21:07:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01AA01F453
+	for <e@80x24.org>; Mon, 11 Feb 2019 21:08:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727216AbfBKVHT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 16:07:19 -0500
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:44856 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727004AbfBKVHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 16:07:18 -0500
-Received: by mail-wr1-f44.google.com with SMTP id v16so304035wrn.11
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 13:07:17 -0800 (PST)
+        id S1727273AbfBKVIq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 16:08:46 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37556 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726177AbfBKVIq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 16:08:46 -0500
+Received: by mail-wm1-f67.google.com with SMTP id x10so708219wmg.2
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 13:08:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=9xy1cEdRfwdyXheMuqXSvD8aMpkTj4uc4QailjKQbfs=;
-        b=ZKsi56dMqDObup3hqI4GCHEG4gMyHchzo466KEAkwn2HWV0dtWDBBy9ovU0i3GQcoC
-         yo3FoXzJkDm6ZB25smevaedMrswk9wQvhXvrG9GERIUNK+mLOWikc1f8z8g+jGMMh+Pf
-         VALat+3xDwb1UBXbz/j/FSVNp0lkZ95SN6/ex2ism0F2AqzYjhpsASFvpiAy72p6tTvK
-         R/9MxevHQQKNpLTu2P17f7iobeE9xxwuHuUlpxmQLnn7qZ6n6w+QzInl2UjmBdQoNkWK
-         QNPJRS/XRmSZYGGDOyeOke2r9H4Ku01HSrxOwyRlm2hMHcSF7f0XON7Iszru7EnGoUSt
-         NejA==
+        bh=FA1BCHEiD39RB9T85SQSF8x/AG5uJpkQkJcZk9Ee5ys=;
+        b=Dw7/enGecU4CXmYrcNkDvUW37llisPwlGFuRFufyKsnzYCfwiH8q1LfGCiRyMfP41I
+         kM+FfJJA/sB7uksyGRXqHlO8EEGAT/VbCtcTERtX4YQsnwP6251Y7xf4KgoqUoBNUqa5
+         sph+gO5klWSbaobczgeZANA6EligTjH4G3Y88NVFX0X2Ob3bjZT4//sI9Vxy9q8wLloY
+         9Pgh2tpdvJljGvVVM1CguSgeWLsL8WfOMV3dM6ZGYK6Nb2BSQjCvJ2FrpkVOLKrqhgW4
+         ybqQ8A4Wqf6GnrSbhfYG2rZsg/DjEKTnsyVmOnX5FiN1S4nxWl2TpwPjPCMJc57kvqYI
+         rJfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=9xy1cEdRfwdyXheMuqXSvD8aMpkTj4uc4QailjKQbfs=;
-        b=oNuM3hpeyjZFso6hqh+7ggn2kRuv33XbnBdV2Y2Taw2iyK5Z+c0rgPcBtK/32UQmgs
-         v18CllbFcLCVl2MxxKb1Adpt8+Ox6rU1X4Yo11Cf412BMbboMgrEgviXglKLpkrv33Ki
-         osHOI+omCpMifyBXptXCSjkW7xBr7BNb8fLaPOSSzQs1Y81EIGOJv2gOB+dVTmVd2nW4
-         OxEcXC6A94plAz7Z1irhMgOR9b+YJOYJEI53ZsbOb+b00K30sGXJLA8ia609xUOgqTeU
-         Y/5QuRBuCOJ2pfTxO9iaxv3/ytRvaHf47YIbeU8cOPCvu2NvEoNc+jDXym34VMKnGISJ
-         Hfyw==
-X-Gm-Message-State: AHQUAubE3RRahHxZKipOxpw3ksTDavGhot8eN6v5bSP2fjZopekggqru
-        Zqs/UNrhP5t7Nk1bqBvX4/o=
-X-Google-Smtp-Source: AHgI3IZZ/Jy4LNSyXySLDlGUAZi3e2pqdq8cO1SFtWWd8rRR917c5g0Im5J06Hef09pOSnwPlToemQ==
-X-Received: by 2002:a5d:6b8f:: with SMTP id n15mr168946wrx.110.1549919236607;
-        Mon, 11 Feb 2019 13:07:16 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id f187sm663379wma.4.2019.02.11.13.07.15
+        bh=FA1BCHEiD39RB9T85SQSF8x/AG5uJpkQkJcZk9Ee5ys=;
+        b=Uwf5KFQO3TUlR9/QTSLiJ0cUdr12GCpaMG4YPDExpKYcR+bKgbScIYmWEe5Zy2MiD9
+         u4LS0vgdXHSFz5+fHoL58kBfqr51YwM5y5P7U4XbmO1xgfFrH1uzkGwemquZUU2PKsuB
+         6A06BQQ8a3CT+rVrIATTrWDbCDirVMY8Ka+hKoOZ1Lz5fwEFZRn0K2u1jQ4qfOcpO7Oy
+         trUkpTWt/2TOsEB9OO/pzBuZKCTs8GGRHUjRfJ3Y6TmMlXtt5DWwvpc4Sb0MnAf8Sk5O
+         c+d6TjkTjPMxZhBxEvlLBdDjGs1whDFgLtBTLyOgZrdW6EIoodFwtVKIsBsN4PGPVmiw
+         3MwQ==
+X-Gm-Message-State: AHQUAuZQr6xof/vuwGsRzjHrB/UgPjon4ko5BnHIdmJTDD1rBBV58jGo
+        IH6ptPD+HCDUw907r5XtJbd+sTXO
+X-Google-Smtp-Source: AHgI3IY3x9QXqvVHfAyNgF/R+LrC9WJO5+hY/+F2aUrjoKaFnTPSSiKz9+twuq3s2rI4cUqbBoLHeg==
+X-Received: by 2002:a7b:c315:: with SMTP id k21mr120554wmj.145.1549919324752;
+        Mon, 11 Feb 2019 13:08:44 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 65sm39451966wrb.62.2019.02.11.13.08.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Feb 2019 13:07:16 -0800 (PST)
+        Mon, 11 Feb 2019 13:08:44 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [Breakage] 2.20.0-rc0 t1404: test_i18ngrep reports 1 instead of 0 on NonStop in one case
-References: <000801d4c174$05b76860$11263920$@nexbridge.com>
-        <CACsJy8Bn+2zY6y_QqCjbB3qWM-F=3d0H5vgWj4az=md2FZ8RhA@mail.gmail.com>
-Date:   Mon, 11 Feb 2019 13:07:15 -0800
-In-Reply-To: <CACsJy8Bn+2zY6y_QqCjbB3qWM-F=3d0H5vgWj4az=md2FZ8RhA@mail.gmail.com>
-        (Duy Nguyen's message of "Mon, 11 Feb 2019 16:56:33 +0700")
-Message-ID: <xmqqftsughks.fsf@gitster-ct.c.googlers.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] sequencer: make sign_off_header a file local symbol
+References: <93b23b5a-7fcd-e9ec-3411-f8362b601732@ramsayjones.plus.com>
+Date:   Mon, 11 Feb 2019 13:08:43 -0800
+In-Reply-To: <93b23b5a-7fcd-e9ec-3411-f8362b601732@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Mon, 11 Feb 2019 17:16:58 +0000")
+Message-ID: <xmqqbm3ighic.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,34 +66,10 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> On Mon, Feb 11, 2019 at 2:09 AM Randall S. Becker
-> <rsbecker@nexbridge.com> wrote:
->>
->> Hi All,
->>
->> I tracked down a breakage in t1404 subtest 52. The line
->>
->> test_i18ngrep "Unable to create $Q.*packed-refs.lock$Q: File exists" err
->
-> The message does not match, does it? Here we grep for "File exists"
-> but the message you showed says "File already exists".
+> This has been hanging around for a while. I sent it to the list last
+> time in [1], but it seems to have been dropped. (Found while attempting
+> to rebase loads of old branches to a newer base!)
 
-Hmph, this is from strerror(), right?
-
-The question is if we should be using grep to match on strerror()
-result in the C locale.  Do we really care that the reason of the
-failure is due to EEXIST for this particular test?
-
->> The verbose output, with diagnostics, is:
->>
->> error: 'grep Unable to create '.*packed-refs.lock': File exists err' didn't
->> find a match in:
->> error: Unable to create '/home/git/git/t/trash
->> directory.t1404-update-ref-errors/.git/packed-refs.lock': File already
->> exists.
-
-Otherwise, perhaps we should loosen the grep pattern, not as a part
-of "NonStop fix" topic, but as "tests should not depend on having a
-canonical spelling of strerror() result even in C locale" topic.
+Thanks.  Will apply.
