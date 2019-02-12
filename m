@@ -2,81 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC1C11F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 20:51:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 147BA1F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 21:43:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730672AbfBLUvE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Feb 2019 15:51:04 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:31295 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727012AbfBLUvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Feb 2019 15:51:04 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43zZYw45QKz5tlC;
-        Tue, 12 Feb 2019 21:51:00 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id EC6BE4388;
-        Tue, 12 Feb 2019 21:50:59 +0100 (CET)
-Subject: Re: [Patch v1 3/3] t5562: replace /dev/zero with a pipe from
- generate_zero_bytes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        randall.s.becker@rogers.com, Git List <git@vger.kernel.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20190209185930.5256-1-randall.s.becker@rogers.com>
- <20190209185930.5256-4-randall.s.becker@rogers.com>
- <CAPig+cQY57w9rmGzVifKMTMVwt209b959iL9+K79AMfEgiVTfg@mail.gmail.com>
- <xmqqd0nwex7w.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <f3b506bb-52eb-3a1f-ba3d-0cf327271ab2@kdbg.org>
-Date:   Tue, 12 Feb 2019 21:50:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqd0nwex7w.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1728434AbfBLVnS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Feb 2019 16:43:18 -0500
+Received: from smtp-36.italiaonline.it ([213.209.10.36]:57394 "EHLO libero.it"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727762AbfBLVnR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Feb 2019 16:43:17 -0500
+Received: from DESKTOP-E4U7JCE ([158.148.89.66])
+        by smtp-36.iol.local with ESMTPA
+        id tfphgNFbbfi5YtfphgGdh0; Tue, 12 Feb 2019 22:43:14 +0100
+x-libjamoibt: 1601
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
+        t=1550007794; bh=enuQksNp3+a8Ngya/4zLV0Qj+8YY0TfcUMOUt6D8Ass=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=ex4thGRZIQfR8VMp+sErixWh5nmzk4cEQeK2F46iC4eHYtq0x78XXfa44vWR9HCKr
+         N8aW5KdcywBsccgvL+jenWdhChgJqnhMatM+UQQG7SNZxDvx1wehzzUnhwCmImjE9m
+         QMB9dQj3dgmqa4WZMF1PderFJg197F0ReIsQ/9J1jK5S6UdDqShfAHpstJ2evc7ucO
+         Yqe7laSjV+NssMGO06eKIjjeielB0WL9enzoKEclKpsxVgfObofWtz8/T1HRgiSV5Y
+         A1GrmIu+d495/C0VYkAIqXFQBBOKiTHhDVCAIki67YkRUStMDm0rbMsJndAFUFB4/m
+         NGa5UO/CMiwAA==
+X-CNFS-Analysis: v=2.3 cv=R+jS5uZX c=1 sm=1 tr=0
+ a=z0TJ0MiZAR6WNZLDJPbulQ==:117 a=z0TJ0MiZAR6WNZLDJPbulQ==:17
+ a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=E5r6RD504_JoPpGtvtsA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22
+Message-ID: <1550007793.1750.1.camel@libero.it>
+Subject: Re: Am a newby and I cannot compile git
+From:   Fabio Aiuto <polinice83@libero.it>
+To:     Santiago Torres <santiago@nyu.edu>
+Cc:     git@vger.kernel.org
+Date:   Tue, 12 Feb 2019 22:43:13 +0100
+In-Reply-To: <1549912081.1754.1.camel@libero.it>
+References: <1549835814.5977.11.camel@libero.it>
+         <20190210224812.wtn2qqm7lmsiarrh@LykOS.localdomain>
+         <1549912081.1754.1.camel@libero.it>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfNTaNae2Weh4TF0Pxoxl8SkFhy63o3SbXoGPe8jpPjWsFh6OWkB1jRRk70AbXrrNiB8zdCJ6fjJRjl1DT/9IoS2Ml5rSYRVdE8uMqw400NEcXWX4dmxp
+ 1nUd3JogCSJfSp4tOdaBhkiU0byMDGeUql7cFx7PYvZlP415eZNlSfpRsVhA3BXszXzeZkD/6LYZMEM+jTH0JXYHZfDc02Nq/qg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.02.19 um 18:24 schrieb Junio C Hamano:
->>> diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
->>> @@ -143,14 +143,14 @@ test_expect_success GZIP 'push gzipped empty' '
->>>  test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
->>>         NOT_FIT_IN_SSIZE=$(ssize_b100dots) &&
->>> -       env \
->>> +       generate_zero_bytes infinity  | env \
->>>                 CONTENT_TYPE=application/x-git-upload-pack-request \
->>>                 QUERY_STRING=/repo.git/git-upload-pack \
->>>                 PATH_TRANSLATED="$PWD"/.git/git-upload-pack \
->>>                 GIT_HTTP_EXPORT_ALL=TRUE \
->>>                 REQUEST_METHOD=POST \
->>>                 CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
->>> -               git http-backend </dev/zero >/dev/null 2>err &&
->>> +               git http-backend >/dev/null 2>err &&
+Ok I typed make install from the terminal, then I attached the the
+project to the executable generated in the local bin directory. So I
+can happily trace in the code. Thank you, hope I will be able to fix
+things in git very soon!!!
+Fabio.
+Il giorno lun, 11/02/2019 alle 20.08 +0100, Fabio Aiuto ha scritto:
+> Hello Santiago,
+> I'm running debian Stretch on my machine, and using Eclipse. I'm new
+> in
+> linux world so I don't know how could I let you know all packages
+> I've
+> installed in a single screenshot.
+> However I got the git sources with the following command:
 > 
-> Doesn't this "inifinity" mode have the same issue that was worked
-> around by 6129c930 ("test-lib: limit the output of the yes utility",
-> 2016-02-02) on Windows?  If I read correctly, the process upstream
-> of the pipe (in this case, perl producing a stream of infinite NULs)
-> would not die when the downstream stops reading with SIGPIPE.
-
-I think we do not have to worry, and the reason is that the
-justification for 6129c930 is simply wrong.
-
-As I did not find the patch series discussed here to pull and test, I
-repeated the timing tests with t7610-mergetool.sh with and without
-6129c930 reverted, and the difference is only in the noise. The reason
-t7610 takes so long on Windows looks more like a consequence of the
-10,000 processes that it spawns. It is a mystery to me how I came to the
-conclusion that the change in 6129c930 would make a difference. :-(
-
--- Hannes
+> $ git clone git://git.kernel.org/pub/scm/git/git.git
+> 
+> then I've opened the project inside Eclipse by importing a makefile
+> project from existing code. I tried to build several time beacuse of
+> some compilation errors that I fixed by installing the following
+> packages:
+> 
+> $ sudo apt-get install zlib1g-dev
+> $ sudo apt-get install libcurl-dev
+> $ sudo apt-get install libcurl4-openssl-dev
+> $ sudo apt-get install libexpat1-dev
+> 
+> At last no building errors detected but when I try to run adebug
+> session, the IDE says tat 'Program file does not exist'. And there
+> are
+> more errors spread over the project wich are not detected.When i do
+> the
+> rebuild by clicking the 'hammer' icon, the message in the console
+> window says:
+> 20:04:07 **** Incremental Build of configuration Default for project
+> git ****
+> make all 
+>     SUBDIR git-gui
+>     SUBDIR gitk-git
+>     SUBDIR templates
+> 
+> 20:04:08 Build Finished (took 866ms)
+> 
+> Please ask me for more informations!!!!
+> Thank you
+> Il giorno dom, 10/02/2019 alle 17.48 -0500, Santiago Torres ha
+> scritto:
+> > It'd be difficult to debug without more context:
+> > 
+> > Do you mind sharing your build log and more informationa about your
+> > setup? (e.g., what OS are you running, what packages are installed,
+> > how
+> > did you get the git sources, etc.)
+> > 
+> > Thanks,
+> > -Santiago.
+> > 
+> > On Sun, Feb 10, 2019 at 10:56:54PM +0100, Fabio Aiuto wrote:
+> > > Hello again my problem is that I cannot compile git.
+> > > The error message says:
+> > > 
+> > > 	Type'z_stream' could not be resolved
+> > > 
+> > > I don't know why, because I installed the package zlib1g-dev and
+> > > in
+> > > the
+> > > header file zlib.h this structure is declared. Help me!!!
+> > > Fabio.
