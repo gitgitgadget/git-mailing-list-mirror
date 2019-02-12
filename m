@@ -2,102 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B475A1F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 13:16:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C7E11F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 13:29:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729841AbfBLNQs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Feb 2019 08:16:48 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33631 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729776AbfBLNQr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Feb 2019 08:16:47 -0500
-Received: by mail-wr1-f65.google.com with SMTP id i12so2680644wrw.0
-        for <git@vger.kernel.org>; Tue, 12 Feb 2019 05:16:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Ie3UqBPbBU/8EXlV43YJTNfjbxZt6mSYmnwl8uMisk0=;
-        b=B0oMaHoNe8mpcdhYq3QwOLBHwO04bEH9ZzKohDZ4Aw5p52DWga4SNnopagEsGGO2De
-         0NobrwvE+LFfWVk76ef/naof/ilqBi5QN1Ud7miSqeaqu/APrOoHzKuX3ySZKd9wjfOu
-         UGkLsnq8MUV4DXajJNyvFBH+xd6XYhLawgUYwBxyH9u1l94P5qHDngqqP1Mxy8HXTsBo
-         GpAjcnrhyid9e3GGvw4imzloytQM1scl4iuqWR6p1/GoBNED6Gmoja0xlwjRZsAX/99j
-         lmKXgAT/x9UTN5Jom8eLWPbiG/ni2+7SUXxJO2+YXipwyPssJNKLgaZv4dkAEUBHPwNb
-         OY9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Ie3UqBPbBU/8EXlV43YJTNfjbxZt6mSYmnwl8uMisk0=;
-        b=sZy39syHpWUp+BW32/30UCY6usqdgQzzj8eVPvCeRmxOSfPnNUw/0GJBppV6EwXENs
-         1u+uqRJNb5B0XupSZAWNbny3ZBYeTejMaBRDDcGnS6SPaLNacV8aKoVLNuY3Od/fs8CJ
-         1N7hvPLFrGHv7MovfgdZE8vRZXSSlZDb69BES1NdbQ6ru8dSCxklNKTj56Rzav2D8FzZ
-         wwJ8IsfZmG8STboH57xakgdbLK76vj8i59z2HLEOrBHXNa8PCBtCvbfC/+x5U1Mercco
-         X21b6sQwkKxbojlMDVo/GuWC1OQNYEx2RSBl4d1GGGZY9e4lDKhGy7ruJ2Ox9fNi4VDP
-         HnrA==
-X-Gm-Message-State: AHQUAuYPJddvhid9RV9fnYmRzfxO3SCtcmKcaiGNruvvM31Wk4YYEt01
-        tfgr2Nh+7BgaAhZsclcasXU=
-X-Google-Smtp-Source: AHgI3IZYyHDqXG1Vt/OmqDuXhPOR2vPmynVW5Opi3wothrvgU66iRA9lNhk7fSONc6F0ZCAxBtK+BQ==
-X-Received: by 2002:adf:f388:: with SMTP id m8mr3041685wro.133.1549977405972;
-        Tue, 12 Feb 2019 05:16:45 -0800 (PST)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id c65sm4452805wma.24.2019.02.12.05.16.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Feb 2019 05:16:45 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        git-packagers@googlegroups.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git v2.21.0-rc0 broken on *BSD, maybe others
-References: <xmqqh8dgqcqn.fsf@gitster-ct.c.googlers.com> <87sgwtjjbk.fsf@evledraar.gmail.com> <20190212124323.GA11677@ash> <CACsJy8D-FVGXHbqKf8BAVWEFchbF5LAN6x8UM5g7v_HLO29CLQ@mail.gmail.com> <87pnrxjghb.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <87pnrxjghb.fsf@evledraar.gmail.com>
-Date:   Tue, 12 Feb 2019 14:16:45 +0100
-Message-ID: <87o97hjgea.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        id S1729563AbfBLN3g (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Feb 2019 08:29:36 -0500
+Received: from smtprelay.synopsys.com ([198.182.60.111]:56028 "EHLO
+        smtprelay.synopsys.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbfBLN3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Feb 2019 08:29:35 -0500
+Received: from mailhost.synopsys.com (dc2-mailhost2.synopsys.com [10.12.135.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtprelay.synopsys.com (Postfix) with ESMTPS id 8C84910C13C9
+        for <git@vger.kernel.org>; Tue, 12 Feb 2019 05:29:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
+        t=1549978175; bh=Ka7sdFnRH3Ag2Egt850lhv8Djv+PqNAsTC1VqxcOnfY=;
+        h=From:To:Subject:Date:From;
+        b=SOjgDsPAdtZn/YXFC1xQhelMDSwU6PL8R1gjQuk/Ez7ezhfjRlZLiE2cGJ4AHLVUL
+         H08l9ZkkZrKCL2pjEppaeIW41nE7f/nsrJBDO7D3QEDSLWjEExUa+Qwa6KXSUZ6lzF
+         SM5V64zZFpb1c0aeaDot+uu+78Xu+zIyCQi/lwn01jE3gM9G179nIyVdwkj51w2XhL
+         cSd4+pV6OHydxxiZtLoMuIUdUupy5SbDOiPP7bz2e3p9tCk4g8KmBd0zzGvIWHdwks
+         3x1Ism8dUg1oV5WrsY+Vug2/jHoamm+WFbcDTO74ZNcecvYkUBTnUAKHxNMOWhuDUF
+         D/1j7+lzTYMMg==
+Received: from US01WEHTC2.internal.synopsys.com (us01wehtc2.internal.synopsys.com [10.12.239.237])
+        (using TLSv1.2 with cipher AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mailhost.synopsys.com (Postfix) with ESMTPS id 7E2F7A0090
+        for <git@vger.kernel.org>; Tue, 12 Feb 2019 13:29:35 +0000 (UTC)
+Received: from DE02WEHTCA.internal.synopsys.com (10.225.19.92) by
+ US01WEHTC2.internal.synopsys.com (10.12.239.237) with Microsoft SMTP Server
+ (TLS) id 14.3.408.0; Tue, 12 Feb 2019 05:28:53 -0800
+Received: from DE02WEMBXB.internal.synopsys.com ([fe80::95ce:118a:8321:a099])
+ by DE02WEHTCA.internal.synopsys.com ([::1]) with mapi id 14.03.0415.000; Tue,
+ 12 Feb 2019 14:28:50 +0100
+From:   Danila Malyutin <danila.malyutin@synopsys.com>
+To:     "'git@vger.kernel.org'" <git@vger.kernel.org>
+Subject: octopus merge when merged branches have unrelated histories
+Thread-Topic: octopus merge when merged branches have unrelated histories
+Thread-Index: AdTC1tCORLNySdkkQ0uz4tR9HjHanw==
+Date:   Tue, 12 Feb 2019 13:28:50 +0000
+Message-ID: <0B0D4F5C9DE2CB42B900F670DF730C0B0BBE6D@DE02WEMBXB.internal.synopsys.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-dg-ref: =?us-ascii?Q?PG1ldGE+PGF0IG5tPSJib2R5LnR4dCIgcD0iYzpcdXNlcnNcZGFuaWxhXGFw?=
+ =?us-ascii?Q?cGRhdGFccm9hbWluZ1wwOWQ4NDliNi0zMmQzLTRhNDAtODVlZS02Yjg0YmEy?=
+ =?us-ascii?Q?OWUzNWJcbXNnc1xtc2ctMjBkYzczZDgtMmVjYS0xMWU5LWE2ZDktODBjZTYy?=
+ =?us-ascii?Q?MTY4YjdmXGFtZS10ZXN0XDIwZGM3M2RhLTJlY2EtMTFlOS1hNmQ5LTgwY2U2?=
+ =?us-ascii?Q?MjE2OGI3ZmJvZHkudHh0IiBzej0iOTY1IiB0PSIxMzE5NDQ1MTcyOTEyMjA3?=
+ =?us-ascii?Q?NjkiIGg9InlQdzhUT0piN0h3NkxzSG93aVFTOTZxQjhMYz0iIGlkPSIiIGJs?=
+ =?us-ascii?Q?PSIwIiBibz0iMSIgY2k9ImNBQUFBRVJIVTFSU1JVRk5DZ1VBQUJRSkFBQWhI?=
+ =?us-ascii?Q?elRqMXNMVUFZcFhwaG1sQUhkcWlsZW1HYVVBZDJvT0FBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFIQUFBQUNrQ0FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFF?=
+ =?us-ascii?Q?QUFRQUJBQUFBTE5ONXRnQUFBQUFBQUFBQUFBQUFBSjRBQUFCbUFHa0FiZ0Jo?=
+ =?us-ascii?Q?QUc0QVl3QmxBRjhBY0FCc0FHRUFiZ0J1QUdrQWJnQm5BRjhBZHdCaEFIUUFa?=
+ =?us-ascii?Q?UUJ5QUcwQVlRQnlBR3NBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUVB?=
+ =?us-ascii?Q?QUFBQUFBQUFBZ0FBQUFBQW5nQUFBR1lBYndCMUFHNEFaQUJ5QUhrQVh3QndB?=
+ =?us-ascii?Q?R0VBY2dCMEFHNEFaUUJ5QUhNQVh3Qm5BR1lBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFRQUFBQUFBQUFBQ0FBQUFB?=
+ =?us-ascii?Q?QUNlQUFBQVpnQnZBSFVBYmdCa0FISUFlUUJmQUhBQVlRQnlBSFFBYmdCbEFI?=
+ =?us-ascii?Q?SUFjd0JmQUhNQVlRQnRBSE1BZFFCdUFHY0FYd0JqQUc4QWJnQm1BQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFCQUFBQUFBQUFBQUlBQUFBQUFKNEFBQUJtQUc4QWRR?=
+ =?us-ascii?Q?QnVBR1FBY2dCNUFGOEFjQUJoQUhJQWRBQnVBR1VBY2dCekFGOEFjd0JoQUcw?=
+ =?us-ascii?Q?QWN3QjFBRzRBWndCZkFISUFaUUJ6QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?RUFBQUFBQUFBQUFnQUFBQUFBbmdBQUFHWUFid0IxQUc0QVpBQnlBSGtBWHdC?=
+ =?us-ascii?Q?d0FHRUFjZ0IwQUc0QVpRQnlBSE1BWHdCekFHMEFhUUJqQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQVFBQUFBQUFBQUFDQUFB?=
+ =?us-ascii?Q?QUFBQ2VBQUFBWmdCdkFIVUFiZ0JrQUhJQWVRQmZBSEFBWVFCeUFIUUFiZ0Js?=
+ =?us-ascii?Q?QUhJQWN3QmZBSE1BZEFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUJBQUFBQUFBQUFBSUFBQUFBQUo0QUFBQm1BRzhB?=
+ =?us-ascii?Q?ZFFCdUFHUUFjZ0I1QUY4QWNBQmhBSElBZEFCdUFHVUFjZ0J6QUY4QWRBQnpB?=
+ =?us-ascii?Q?RzBBWXdBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFFQUFBQUFBQUFBQWdBQUFBQUFuZ0FBQUdZQWJ3QjFBRzRBWkFCeUFIa0FY?=
+ =?us-ascii?Q?d0J3QUdFQWNnQjBBRzRBWlFCeUFITUFYd0IxQUcwQVl3QUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBUUFBQUFBQUFBQUNB?=
+ =?us-ascii?Q?QUFBQUFDZUFBQUFad0IwQUhNQVh3QndBSElBYndCa0FIVUFZd0IwQUY4QWRB?=
+ =?us-ascii?Q?QnlBR0VBYVFCdUFHa0FiZ0JuQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQkFBQUFBQUFBQUFJQUFBQUFBSjRBQUFCekFH?=
+ =?us-ascii?Q?RUFiQUJsQUhNQVh3QmhBR01BWXdCdkFIVUFiZ0IwQUY4QWNBQnNBR0VBYmdB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUVBQUFBQUFBQUFBZ0FBQUFBQW5nQUFBSE1BWVFCc0FHVUFjd0JmQUhF?=
+ =?us-ascii?Q?QWRRQnZBSFFBWlFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFRQUFBQUFBQUFB?=
+ =?us-ascii?Q?Q0FBQUFBQUNlQUFBQWN3QnVBSEFBY3dCZkFHd0FhUUJqQUdVQWJnQnpBR1VB?=
+ =?us-ascii?Q?WHdCMEFHVUFjZ0J0QUY4QU1RQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFCQUFBQUFBQUFBQUlBQUFBQUFKNEFBQUJ6?=
+ =?us-ascii?Q?QUc0QWNBQnpBRjhBYkFCcEFHTUFaUUJ1QUhNQVpRQmZBSFFBWlFCeUFHMEFY?=
+ =?us-ascii?Q?d0J6QUhRQWRRQmtBR1VBYmdCMEFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBRUFBQUFBQUFBQUFnQUFBQUFBbmdBQUFIWUFad0JmQUdzQVpRQjVB?=
+ =?us-ascii?Q?SGNBYndCeUFHUUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQVFBQUFBQUFB?=
+ =?us-ascii?Q?QUFDQUFBQUFBQT0iLz48L21ldGE+?=
+x-originating-ip: [10.121.8.63]
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
-On Tue, Feb 12 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+I want to understand if this behavior is as intended:
+Suppose we have 3 branches A, B, C. A has common history with B and C (due =
+to previous merge, for example), while B and C have unrelated histories.
+Doing regular simple merge from B into A and then from C into A works smoot=
+hly, however when attempting to do an octopus merge into A from B and C sim=
+ultaneously git complains with "fatal: refusing to merge unrelated historie=
+s". With -allow-unrelated-histories git octopus does two simple merges and =
+it works fine.
 
-> On Tue, Feb 12 2019, Duy Nguyen wrote:
->
->> On Tue, Feb 12, 2019 at 7:43 PM Duy Nguyen <pclouds@gmail.com> wrote:
->>> The test failures on NetBSD and Solaris/Sparc, not sure if we can do
->>> anything without test logs or access to these systems.
->>
->> Actually if you could tweak your ci script a bit to run tests with -v,
->> that would help.
->
-> I vaguely remember doing that and running into some issue where it
-> truncated the output, so e.g. I wouldn't see compile warnings on AIX
-> because of the firehose of subsequent test output.
->
-> But yeah, having this in some smart way would be great. I'd be most keen
-> to just work towards offloading this to some smarter test runner as
-> noted to Johannes upthread.
->
-> I.e. a good test_for(SHA1, params) function would run the tests with
-> "prove", and e.g. spot that tests so-and-so failed, and then run those
-> specific ones with -v -x.
->
-> That's how I was going to fix the log overflow problem, but I'd much
-> rather not continue hacking on this gitlab-gccfarm-specific thing, and
-> instead work towards something more general.
+Is this the intended behavior or is this an oversight? From my point of vie=
+w the merges are done from branches B and C into A so it shouldn't matter w=
+hether B and C have related histories or not (and it doesn't matter in prac=
+tice as evidenced by successful merge), only if A has related histories wit=
+h each of them.
 
-Also, I forgot to note that if you'd like to get a login on those boxes
-you can just request an account as noted in
-https://public-inbox.org/git/20180824152016.20286-1-avarab@gmail.com/
+Best regards,
+Danila
+
