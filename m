@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 037181F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 03:48:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1D3C1F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 03:52:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727176AbfBLDr6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 22:47:58 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:44128 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727045AbfBLDr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 22:47:58 -0500
-Received: by mail-qk1-f195.google.com with SMTP id r21so7874067qkl.11
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 19:47:57 -0800 (PST)
+        id S1726961AbfBLDwA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 22:52:00 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:41629 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726226AbfBLDwA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 22:52:00 -0500
+Received: by mail-qk1-f193.google.com with SMTP id u188so7895726qkh.8
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 19:51:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=96Bve2AcJT+G1CGpMjc3RQXKFLL9LqYK/rOEjbIgLX0=;
-        b=L4Ff/kz+vszp8UZnQB/SHvxZDXP4XTiHgn0FzrQRKP/2sVk7uAY1jxP5T37gKESWY8
-         KJ5LYhEeOb1I1at2esERXk3xpEcuHfZdWuE0AAarhedldv1EbaTMRxiQBwvJvQkyPRvH
-         PB/doTA/hpsNl2Ox+xKaFG9oRCLHUkfSsB/F9yyhYHUaJQH+1aqjf0+kXE+CVSABiy1M
-         b+0PqVa6vIoZyhdxuf+AE/VyAL1nRPlojDaK76PuEpk2+joFg45Jn6DjMJs5+mvbplVf
-         Baqf0WdytVgTZU7ciDcsm5qLynn2h+ZXlDLwxqkDRzMjS4USPbyvepTmi9q6Svo4XmVg
-         Didw==
-X-Gm-Message-State: AHQUAubKKbUHsHhJ+UqBEXWimWk6mnDpx1TIRVzE1zNpK1GdualJheHv
-        b8ozHWl8m9x0lF3g9p/aqcvJ0p4mW/6Ycbo0fsk=
-X-Google-Smtp-Source: AHgI3IbMtrWpP4CBHo8O5yB/vJNofdOBr+UxNIhkfiV5jbtMWlTkFLuMJNydwy08xU8KxeS1CLV0ScRrgRvt8IqngHQ=
-X-Received: by 2002:a37:9584:: with SMTP id x126mr1157998qkd.36.1549943277356;
- Mon, 11 Feb 2019 19:47:57 -0800 (PST)
+        bh=8nZinQUlr30DAs62Bcs2iBiqFqUdiYc+gaiUBY9q8XE=;
+        b=cMrJfvNtccSL5hgTqNl2xpIUdPpil8EWLvNPS/gV+RD1rnFmQ5i1/4PPPW3iJeENLW
+         cZ5i3v8QZ5pvJTY3/ev4P85+0Ss1KVLv6bENUchTDdO77XNjNBMdtoDI9vzxDL1ezxBd
+         hL/EfP9R1XbIPB0s31aDuOVIoUEfhuvk9tU6hVfIWbkTfcNnmlMLQz3l1Z/YY8Vg/RQG
+         NV0tePje+GSt+0kkRLgsa2kc8F0g7YDm29HI4jtQzs3HCRnE/FTdWBIi+ekhnMQphgXx
+         HEF/RXewsLJLsrXEhgSIz1CyWf2kqzR61kKQsiVlkIzRdrH5sZFXCg6Xgzi2IOWS8xyf
+         WBwQ==
+X-Gm-Message-State: AHQUAubCmoOLAuDMQ6E1hRXVrsF1+v67HUnPzFeBt+pb9A3mhTtaITh4
+        6sJ2PkGYQqARiuKcyKJDPycfVBfEY5KcT8SHY2I=
+X-Google-Smtp-Source: AHgI3IY4KQ+QAjChnjRVOqHcIY6K6EQMoHhn5EgaVBbzuB1Z2rVmm+7LlCOCQ07v3yrURoP6AfriIXBJgY/ax4MBlmU=
+X-Received: by 2002:a37:404f:: with SMTP id n76mr1196304qka.26.1549943519420;
+ Mon, 11 Feb 2019 19:51:59 -0800 (PST)
 MIME-Version: 1.0
-References: <20190212012256.1005924-1-sandals@crustytoothpaste.net> <20190212012256.1005924-16-sandals@crustytoothpaste.net>
-In-Reply-To: <20190212012256.1005924-16-sandals@crustytoothpaste.net>
+References: <20190212012256.1005924-1-sandals@crustytoothpaste.net> <20190212012256.1005924-20-sandals@crustytoothpaste.net>
+In-Reply-To: <20190212012256.1005924-20-sandals@crustytoothpaste.net>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 11 Feb 2019 22:47:46 -0500
-Message-ID: <CAPig+cRv04mcbxNUn6bRXbJiQvgj2cpwDGLJP=7NdmZ2LXJJfQ@mail.gmail.com>
-Subject: Re: [PATCH 15/31] builtin/pull: make hash-size independent
+Date:   Mon, 11 Feb 2019 22:51:48 -0500
+Message-ID: <CAPig+cQsWrqapzd7XqDEf9Dx+pg3NjnJUG8Sgh21LEu3YWKRcg@mail.gmail.com>
+Subject: Re: [PATCH 19/31] http-walker: replace sha1_to_hex
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git List <git@vger.kernel.org>,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
@@ -52,24 +52,11 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Feb 11, 2019 at 8:23 PM brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> Instead of using get_oid_hex and GIT_SHA1_HEXSZ, use parse_oid_hex to
-> avoid the need for a constant and simplify the code.
+> Since sha1_to_hex is limited to SHA-1, replace the uses of it in this
+> file with hasH_to_hex.  Rename several variables accordingly to reflect
+
+s/hasH/hash/
+
+> that they are no longer limited to SHA-1.
 >
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> @@ -365,9 +365,10 @@ static void get_merge_heads(struct oid_array *merge_heads)
->         while (strbuf_getline_lf(&sb, fp) != EOF) {
-> -               if (get_oid_hex(sb.buf, &oid))
-> +               const char *p;
-> +               if (parse_oid_hex(sb.buf, &oid, &p))
->                         continue;  /* invalid line: does not start with SHA1 */
-
-While you're here, perhaps fix the comment so it doesn't talk about
-SHA1 anymore.
-
-> -               if (starts_with(sb.buf + GIT_SHA1_HEXSZ, "\tnot-for-merge\t"))
-> +               if (starts_with(p, "\tnot-for-merge\t"))
->                         continue;  /* ref is not-for-merge */
->                 oid_array_append(merge_heads, &oid);
->         }
