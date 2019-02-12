@@ -2,111 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0BFC1F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 03:10:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1F771F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 03:32:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726908AbfBLDKk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 22:10:40 -0500
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:36924 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726655AbfBLDKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 22:10:40 -0500
-Received: by mail-wr1-f46.google.com with SMTP id c8so1020664wrs.4
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 19:10:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Nmih1p3Ll09V8Iaxlx8IqwxdcNmTiCOmG/FfAqCnRcU=;
-        b=c4QGzTgLXs79fxym21N5Y07YDW5nBFLIa02C1wuV//SYgFse70mBFvpuMSdxM6rtHF
-         h+5EAn5D9jPJmDkRMhGWOpQ6iTQ8WjZAh4sNDNsXXVAaphpfKYsjuiM98mkxqzuXoBZc
-         kkdGHvPBPy2wYEwTKvWukIL8c3ygX7aN3VRRG/CzJKuk7oCRDNHU1m0o8LTZa3CwGcom
-         BuiQfCzWBU5RUbzxxzaICi4LChQ+7AtoJ1IW1jJYwS27t9yBUe6pVdbd2Exorj/ue9M2
-         xnpezTc6gASy82Ew+SSaUebrnYCFDeEbCAW4Ub4EzwULsVqHP9ZKOWrSp0nMHng618rg
-         rC1Q==
+        id S1726908AbfBLDc1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 22:32:27 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:37445 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726811AbfBLDc1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 22:32:27 -0500
+Received: by mail-qk1-f193.google.com with SMTP id m9so7891357qkl.4
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 19:32:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Nmih1p3Ll09V8Iaxlx8IqwxdcNmTiCOmG/FfAqCnRcU=;
-        b=JbSOTzK3VpEm2v7ywdlTPWowp3vtQLUh8LePn6mONynSXhDvcH12j5chpsY1YRWeub
-         2s6S4WXdmOaXsZyoIN2C1eKX3B3lSu2o9XJSarx1E9hNBHLITGr6NQ4JD+PK+/WZ5Y/P
-         I/rAzHNHG+VkPeMMMMVbZ90wiZNoQw/5lEQbOR4uF0J4YrFECygZVQJCb/z+1ZDaDBqk
-         jpCQUIaw5mQtK7oQwEyo0H1aD0Lnz7Q2ZcOvLDORpmJMSgI+RwiO4b8vuUy53V1BlcXs
-         OQLNy9sUygCUiiQMpAzLterJPLzLcAeFTlsSHgVnypjhjhvZ3gTbHpmnw5nGtAf5MOea
-         rRbQ==
-X-Gm-Message-State: AHQUAubkA0OQ1QY3wy5u4ExuJwXaIXQnTKtPisH29LN4bgXqiTPOWVTD
-        SVsEBgT48zrJmhKDV/fJClE=
-X-Google-Smtp-Source: AHgI3IYurrDqmOCTjTKYdwoqkVVjdDmWvHYyT0/9oUhTNBTkFsu1l+vv6zbz+VeETYlspa+b+kxK4w==
-X-Received: by 2002:adf:e8cf:: with SMTP id k15mr924507wrn.193.1549941038185;
-        Mon, 11 Feb 2019 19:10:38 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y145sm1035956wmd.30.2019.02.11.19.10.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Feb 2019 19:10:37 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Daniels Umanovskis <daniels@umanovskis.se>,
-        Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Feb 2019, #02; Wed, 6)
-References: <xmqqimxwqcqw.fsf@gitster-ct.c.googlers.com>
-        <CACUQV58vvDzhqRrtutZMDV_Kkz137oP6rLUODaniMekfGa5gyQ@mail.gmail.com>
-Date:   Mon, 11 Feb 2019 19:10:36 -0800
-In-Reply-To: <CACUQV58vvDzhqRrtutZMDV_Kkz137oP6rLUODaniMekfGa5gyQ@mail.gmail.com>
-        ("Rafael =?utf-8?Q?Ascens=C3=A3o=22's?= message of "Mon, 11 Feb 2019
- 23:40:08 +0000")
-Message-ID: <xmqq8sylg0r7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z7rXjkbYTNX4agMoP7yoCqt2G2OM25+a3Y1eO3S1PAQ=;
+        b=qu1D8x6BgRO5pyJnUD8ejfS5siHrlSKpA1hUKIi3vCWuc1all2k/kRHkPZ6+xRQxRh
+         HpDWfanFnw/f5CNMB3FRc202tq5IizV5aYSrW6RICMCBU2iMnrS9no9OszFSEWyMMHTl
+         1zhkpO7heCLvaIwKGHRSgpO+BzdTD4OVWW9F4Xn3bgJu8jhjCuuOM4kc5yvtJ3kx+Stm
+         2tAMgL7UPnxTTPCqsYdC2GEjl/Stw3Jz3X7ZLT4dQbwnjdgqxxAbx4iPpNdfr4RVukfQ
+         tdA9lznqKyIeU2tawC+GVoRizlLhn13irjflOL9wbgkBzQUZl6vmFUiwCurZMPIVe29A
+         tqcw==
+X-Gm-Message-State: AHQUAuaMF3TqqhAIDYCAgTs2VFVe6tnANF31dxJkxgmdIISru6bn0avj
+        kAmc3Q687xa0cAkyhaM+jCprTcdIbDkK6wZD7JDiOA==
+X-Google-Smtp-Source: AHgI3IZzzNoCSZp4EXjk80iwH3xkm1rMXCK7dusgOskn++F8LoaoKOY3nWWJrBliNW3wSAQWAioW4s5EYTkC+hW2/Tc=
+X-Received: by 2002:a37:404f:: with SMTP id n76mr1156288qka.26.1549942345916;
+ Mon, 11 Feb 2019 19:32:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20190212012256.1005924-1-sandals@crustytoothpaste.net> <20190212012256.1005924-11-sandals@crustytoothpaste.net>
+In-Reply-To: <20190212012256.1005924-11-sandals@crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 11 Feb 2019 22:32:15 -0500
+Message-ID: <CAPig+cS3i2FWf6mFmpPpctyJJbx4xdHgWXrveRUkjMHct5SbJg@mail.gmail.com>
+Subject: Re: [PATCH 10/31] object-store: rename and expand packed_git's sha1 member
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rafael Ascensão <rafa.almas@gmail.com> writes:
+On Mon, Feb 11, 2019 at 8:23 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> This member is used to represent the pack checksum of the pack in
+> question.  Expand this member to be GIT_MAX_RAWSZ bytes in length so it
+> works with longer hashes and rename it to be "hash" instead of "sha1".
+> [...]
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+> @@ -689,7 +689,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+>         while (pl) {
+>                 printf("%s\n%s\n",
+> -                      sha1_pack_index_name(pl->pack->sha1),
+> +                      sha1_pack_index_name(pl->pack->hash),
 
-> On Thu, Feb 7, 2019 at 7:28 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> * du/branch-show-current (2018-10-26) 1 commit - branch: introduce
->> --show-current display option
->>
->>  "git branch" learned a new subcommand "--show-current".
->>
->>  Will merge to 'next'.
->>
->
-> Did something change? I may have missed it. Until last what's cooking, this was
+I guess there is no oid_pack_index_name() function yet?
 
-Nothing.  I just do not care about this Meh? topic too strongly
-either way.
+> diff --git a/http-walker.c b/http-walker.c
+> @@ -434,7 +434,7 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo, unsigne
+>         if (walker->get_verbosely) {
+>                 fprintf(stderr, "Getting pack %s\n",
+> -                       sha1_to_hex(target->sha1));
+> +                       sha1_to_hex(target->hash));
 
-> marked with:
->
-> On Tue, Feb 5, 2019 at 11:56 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->>  I am personally not yet quite convinced if this is worth pursuing.
->>
->
-> I also suggested a different implementation which simplifies it and should
-> remove some unreachable checks that can be seen in "Git Test Coverage Report
-> (Wednesday, Feb. 6)"
-> https://public-inbox.org/git/20181107225619.6683-1-rafa.almas@gmail.com/
->
-> I was expecting Daniels to squash these changes into his patch or for it to be
-> dropped in favor of something else. For example adding `--list-head` instead,
-> as discussed in early versions of this patch.
-> https://public-inbox.org/git/20181011223457.GB7131@rigel/
+Should this have become oid_to_hex()?
 
-Good.  Then I'll freeze that topic and expect you help Daniels to
-improve the patch further ;-)
+>                 fprintf(stderr, " which contains %s\n",
+>                         sha1_to_hex(sha1));
 
-Thanks.
+The patch isn't touching this sha1 yet, so this is okay(?).
+
+> diff --git a/http.c b/http.c
+> @@ -2262,10 +2262,10 @@ struct http_pack_request *new_http_pack_request(
+>         strbuf_addf(&buf, "objects/pack/pack-%s.pack",
+> -               sha1_to_hex(target->sha1));
+> +               sha1_to_hex(target->hash));
+
+oid_to_hex()?
+
+> @@ -2289,7 +2289,8 @@ struct http_pack_request *new_http_pack_request(
+>                         fprintf(stderr,
+>                                 "Resuming fetch of pack %s at byte %"PRIuMAX"\n",
+> -                               sha1_to_hex(target->sha1), (uintmax_t)prev_posn);
+> +                               sha1_to_hex(target->hash),
+
+oid_to_hex()?
+
+> diff --git a/packfile.c b/packfile.c
+> @@ -722,8 +722,8 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
+>         if (path_len < the_hash_algo->hexsz ||
+> -           get_sha1_hex(path + path_len - the_hash_algo->hexsz, p->sha1))
+> -               hashclr(p->sha1);
+> +           get_sha1_hex(path + path_len - the_hash_algo->hexsz, p->hash))
+> +               hashclr(p->hash);
+
+get_oid_hex()?
