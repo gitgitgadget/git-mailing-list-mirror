@@ -2,77 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED1D91F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 00:44:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B221E1F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 00:52:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727916AbfBLAof (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 19:44:35 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40990 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727317AbfBLAof (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 19:44:35 -0500
-Received: (qmail 20472 invoked by uid 109); 12 Feb 2019 00:44:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Feb 2019 00:44:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19748 invoked by uid 111); 12 Feb 2019 00:44:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 11 Feb 2019 19:44:45 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Feb 2019 19:44:33 -0500
-Date:   Mon, 11 Feb 2019 19:44:33 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org,
-        Henning Schild <henning.schild@siemens.com>
-Subject: Re: [PATCH 0/2] t/lib-gpg: a gpgsm fix, a minor improvement, and a
- question
-Message-ID: <20190212004433.GJ13301@sigill.intra.peff.net>
-References: <20190208031746.22683-1-tmz@pobox.com>
- <20190209140605.GE10587@szeder.dev>
+        id S1727791AbfBLAwR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 19:52:17 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34190 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727492AbfBLAwR (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 19:52:17 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5D0B96042D;
+        Tue, 12 Feb 2019 00:52:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1549932734;
+        bh=7ja4he2rz9W88Jfq3EpJ+htd7FR1/hL+YcGzn/4ZD9E=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=M6IaysvC990U8h9XRodZEpiaZX6zFUfb8tHk9RI4YIhlmIwxw/dtMTcngH8K9QK1G
+         cfV7TIVEc2LgXfDP32zDYoh8TIfhoHtNtYXQf0BKTMzBK0rZIhRmZ2khzFrqpd9SmB
+         BxDkFJa93sMKcKRUW4m6vUYhKU2UZZp8Kql6cN2c16EETfWtBWWZQPJ9POyRAl3mIG
+         OF/ueSbA+NTlUoKPqul8gk/iieh74PkSxokvR+pwTUBk+IYKEfLJiK/JizvEURTrWz
+         auXo3b7qP2zipMaElMPbOGXEPNR0Bux9URFxSPtAggBvSUPZadKYB5ZzJa8F4BBBVJ
+         2gD239ijU7akMX7L/Ba4al6AWmjvR/3BrJwJvpPm1mv8GMGMoGccneNZ30YdrKJ/Ht
+         JU76hYOLMsqJxXDUEN7E7qnWLoR1GBRUK+ZsXBA+G/rgpeLTaQdKrE1z7w19fQvYve
+         H/PNLm2J97K6NgSjYBLhkuh/0HSbowJ/qosOVIgjhLhmNS7zYxa
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+        Rich Felker <dalias@libc.org>, Kevin Daudt <me@ikke.info>
+Subject: [PATCH v4] utf8: handle systems that don't write BOM for UTF-16
+Date:   Tue, 12 Feb 2019 00:52:06 +0000
+Message-Id: <20190212005206.1002049-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.20.1.791.gb4d0f1c61a
+In-Reply-To: <20190209200802.277139-1-sandals@crustytoothpaste.net>
+References: <20190209200802.277139-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190209140605.GE10587@szeder.dev>
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 09, 2019 at 03:06:05PM +0100, SZEDER Gábor wrote:
+When serializing UTF-16 (and UTF-32), there are three possible ways to
+write the stream. One can write the data with a BOM in either big-endian
+or little-endian format, or one can write the data without a BOM in
+big-endian format.
 
-> On Thu, Feb 07, 2019 at 10:17:44PM -0500, Todd Zullinger wrote:
-> > Looking through the build logs for the fedora git packages, I noticed it
-> > was missing the GPGSM prereq.
-> 
-> Just curious: how did you noticed the missing GPGSM prereq?
-> 
-> I'm asking because I use a patch for a good couple of months now that
-> collects the prereqs missed by test cases and prints them at the end
-> of 'make test'.  Its output looks like this:
-> 
->   https://travis-ci.org/szeder/git/jobs/490944032#L2358
-> 
-> Since you seem to be interested in that sort of thing as well, perhaps
-> it would be worth to have something like this in git.git?  It's just
-> that I have been too wary of potentially annoying other contributors
-> by adding (what might be perceived as) clutter to their 'make test'
-> output :)
+Most systems' iconv implementations choose to write it with a BOM in
+some endianness, since this is the most foolproof, and it is resistant
+to misinterpretation on Windows, where UTF-16 and the little-endian
+serialization are very common. For compatibility with Windows and to
+avoid accidental misuse there, Git always wants to write UTF-16 with a
+BOM, and will refuse to read UTF-16 without it.
 
-At first I thought your script found tests which _should_ have been
-marked with a particular prereq but weren't. And I scratched my head
-about how you would find that automatically. If we could, that would be
-amazing. ;)
+However, musl's iconv implementation writes UTF-16 without a BOM,
+relying on the user to interpret it as big-endian. This causes t0028 and
+the related functionality to fail, since Git won't read the file without
+a BOM.
 
-But it looks from the output like it just mentions every prereq that
-wasn't satisfied. I don't think that's particularly useful to show for
-all users, since most of them are platform things that cannot be changed
-(and you'd never get the list to zero, since some of them are mutually
-exclusive).
+Add a Makefile and #define knob, ICONV_OMITS_BOM, that can be set if the
+iconv implementation has this behavior. When set, Git will write a BOM
+manually for UTF-16 and UTF-32 and then force the data to be written in
+UTF-16BE or UTF-32BE. We choose big-endian behavior here because the
+tests use the raw "UTF-16" encoding, which will be big-endian when the
+implementation requires this knob to be set.
 
--Peff
+Update the tests to detect this case and write test data with an added
+BOM if necessary. Always write the BOM in the tests in big-endian
+format, since all iconv implementations that omit a BOM must use
+big-endian serialization according to the Unicode standard.
+
+Preserve the existing behavior for systems which do not have this knob
+enabled, since they may use optimized implementations, including
+defaulting to the native endianness, which may improve performance.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Makefile                         |  7 +++++++
+ t/t0028-working-tree-encoding.sh | 34 +++++++++++++++++++++++++++-----
+ utf8.c                           | 14 +++++++++++++
+ 3 files changed, 50 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 571160a2c4..c6172450af 100644
+--- a/Makefile
++++ b/Makefile
+@@ -259,6 +259,10 @@ all::
+ # Define OLD_ICONV if your library has an old iconv(), where the second
+ # (input buffer pointer) parameter is declared with type (const char **).
+ #
++# Define ICONV_OMITS_BOM if your iconv implementation does not write a
++# byte-order mark (BOM) when writing UTF-16 or UTF-32 and always writes in
++# big-endian format.
++#
+ # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
+ #
+ # Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
+@@ -1415,6 +1419,9 @@ ifndef NO_ICONV
+ 		EXTLIBS += $(ICONV_LINK) -liconv
+ 	endif
+ endif
++ifdef ICONV_OMITS_BOM
++	BASIC_CFLAGS += -DICONV_OMITS_BOM
++endif
+ ifdef NEEDS_LIBGEN
+ 	EXTLIBS += -lgen
+ endif
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index e58ecbfc44..500229a9bd 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -6,6 +6,30 @@ test_description='working-tree-encoding conversion via gitattributes'
+ 
+ GIT_TRACE_WORKING_TREE_ENCODING=1 && export GIT_TRACE_WORKING_TREE_ENCODING
+ 
++test_lazy_prereq NO_UTF16_BOM '
++	test $(printf abc | iconv -f UTF-8 -t UTF-16 | wc -c) = 6
++'
++
++test_lazy_prereq NO_UTF32_BOM '
++	test $(printf abc | iconv -f UTF-8 -t UTF-32 | wc -c) = 12
++'
++
++write_utf16 () {
++	if test_have_prereq NO_UTF16_BOM
++	then
++		printf '\xfe\xff'
++	fi &&
++	iconv -f UTF-8 -t UTF-16
++}
++
++write_utf32 () {
++	if test_have_prereq NO_UTF32_BOM
++	then
++		printf '\x00\x00\xfe\xff'
++	fi &&
++	iconv -f UTF-8 -t UTF-32
++}
++
+ test_expect_success 'setup test files' '
+ 	git config core.eol lf &&
+ 
+@@ -13,8 +37,8 @@ test_expect_success 'setup test files' '
+ 	echo "*.utf16 text working-tree-encoding=utf-16" >.gitattributes &&
+ 	echo "*.utf16lebom text working-tree-encoding=UTF-16LE-BOM" >>.gitattributes &&
+ 	printf "$text" >test.utf8.raw &&
+-	printf "$text" | iconv -f UTF-8 -t UTF-16 >test.utf16.raw &&
+-	printf "$text" | iconv -f UTF-8 -t UTF-32 >test.utf32.raw &&
++	printf "$text" | write_utf16 >test.utf16.raw &&
++	printf "$text" | write_utf32 >test.utf32.raw &&
+ 	printf "\377\376"                         >test.utf16lebom.raw &&
+ 	printf "$text" | iconv -f UTF-8 -t UTF-32LE >>test.utf16lebom.raw &&
+ 
+@@ -124,8 +148,8 @@ do
+ 		test_when_finished "rm -f crlf.utf${i}.raw lf.utf${i}.raw" &&
+ 		test_when_finished "git reset --hard HEAD^" &&
+ 
+-		cat lf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >lf.utf${i}.raw &&
+-		cat crlf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >crlf.utf${i}.raw &&
++		cat lf.utf8.raw | write_utf${i} >lf.utf${i}.raw &&
++		cat crlf.utf8.raw | write_utf${i} >crlf.utf${i}.raw &&
+ 		cp crlf.utf${i}.raw eol.utf${i} &&
+ 
+ 		cat >expectIndexLF <<-EOF &&
+@@ -223,7 +247,7 @@ test_expect_success ICONV_SHIFT_JIS 'check roundtrip encoding' '
+ 
+ 	text="hallo there!\nroundtrip test here!" &&
+ 	printf "$text" | iconv -f UTF-8 -t SHIFT-JIS >roundtrip.shift &&
+-	printf "$text" | iconv -f UTF-8 -t UTF-16 >roundtrip.utf16 &&
++	printf "$text" | write_utf16 >roundtrip.utf16 &&
+ 	echo "*.shift text working-tree-encoding=SHIFT-JIS" >>.gitattributes &&
+ 
+ 	# SHIFT-JIS encoded files are round-trip checked by default...
+diff --git a/utf8.c b/utf8.c
+index 83824dc2f4..3b42fadffd 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -559,6 +559,10 @@ char *reencode_string_len(const char *in, size_t insz,
+ 	/*
+ 	 * For writing, UTF-16 iconv typically creates "UTF-16BE-BOM"
+ 	 * Some users under Windows want the little endian version
++	 *
++	 * We handle UTF-16 and UTF-32 ourselves only if the platform does not
++	 * provide a BOM (which we require), since we want to match the behavior
++	 * of the system tools and libc as much as possible.
+ 	 */
+ 	if (same_utf_encoding("UTF-16LE-BOM", out_encoding)) {
+ 		bom_str = utf16_le_bom;
+@@ -568,6 +572,16 @@ char *reencode_string_len(const char *in, size_t insz,
+ 		bom_str = utf16_be_bom;
+ 		bom_len = sizeof(utf16_be_bom);
+ 		out_encoding = "UTF-16BE";
++#ifdef ICONV_OMITS_BOM
++	} else if (same_utf_encoding("UTF-16", out_encoding)) {
++		bom_str = utf16_be_bom;
++		bom_len = sizeof(utf16_be_bom);
++		out_encoding = "UTF-16BE";
++	} else if (same_utf_encoding("UTF-32", out_encoding)) {
++		bom_str = utf32_be_bom;
++		bom_len = sizeof(utf32_be_bom);
++		out_encoding = "UTF-32BE";
++#endif
+ 	}
+ 
+ 	conv = iconv_open(out_encoding, in_encoding);
