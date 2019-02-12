@@ -7,215 +7,120 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B221E1F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 00:52:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43E151F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 00:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727791AbfBLAwR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 19:52:17 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34190 "EHLO
+        id S1727884AbfBLAxg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 19:53:36 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34208 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727492AbfBLAwR (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 19:52:17 -0500
+        by vger.kernel.org with ESMTP id S1727782AbfBLAxg (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 19:53:36 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5D0B96042D;
-        Tue, 12 Feb 2019 00:52:14 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9913D6042D;
+        Tue, 12 Feb 2019 00:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1549932734;
-        bh=7ja4he2rz9W88Jfq3EpJ+htd7FR1/hL+YcGzn/4ZD9E=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=M6IaysvC990U8h9XRodZEpiaZX6zFUfb8tHk9RI4YIhlmIwxw/dtMTcngH8K9QK1G
-         cfV7TIVEc2LgXfDP32zDYoh8TIfhoHtNtYXQf0BKTMzBK0rZIhRmZ2khzFrqpd9SmB
-         BxDkFJa93sMKcKRUW4m6vUYhKU2UZZp8Kql6cN2c16EETfWtBWWZQPJ9POyRAl3mIG
-         OF/ueSbA+NTlUoKPqul8gk/iieh74PkSxokvR+pwTUBk+IYKEfLJiK/JizvEURTrWz
-         auXo3b7qP2zipMaElMPbOGXEPNR0Bux9URFxSPtAggBvSUPZadKYB5ZzJa8F4BBBVJ
-         2gD239ijU7akMX7L/Ba4al6AWmjvR/3BrJwJvpPm1mv8GMGMoGccneNZ30YdrKJ/Ht
-         JU76hYOLMsqJxXDUEN7E7qnWLoR1GBRUK+ZsXBA+G/rgpeLTaQdKrE1z7w19fQvYve
-         H/PNLm2J97K6NgSjYBLhkuh/0HSbowJ/qosOVIgjhLhmNS7zYxa
+        s=default; t=1549932814;
+        bh=oCQ8tlKI+aA/sHwSU5XXC+zk8yhstOcoaoN72IPuHt8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=r6qRugaxrWRgnt8BuXtDwj9jpbyUCBRbQ14jfvS0dn2V5wIKKxkrtBq499VGBsn7k
+         UGmwpNlDfcApdXAiZWNPchlaWKnijEWZef/Kf6y4LtQ9P5J4k+bocmS0ILTyWNj7bY
+         sAA+dRUnN1hyx+NUbcOygBRTeD4b+Hd+3Bwmb3B1JSUBhhziIQWaIoc9E8OxhO+oQ4
+         s1JrCTptWnJ9eDTQs3wDCuiP6VHVUJd3ZoDA5XD6VKBNDZiKZPhpCJd5/56hE+hOm+
+         YkNDKJUHJsBLooyB7MrxohfolzU2CD63+GUDYnNN6COg/42XrfBgiS477Ol3adBGZ8
+         +Ul4BnDbIGCqLKF3TuSLNUFqvIKgCfXJAf/dUk1rnN8Oopt7K2SPPTs2C9C6F2xTwK
+         CjUG7LXaAJ2YS5zRh2zTCF3KoVlrybVRdkk0Mi+hkwWHeQNzHWA7NibCfkZWxbjajw
+         GfAoACE0Cvs2h0O5ShxuB4xv2h0BITWRRzxu1abX+dfHNXRt8EX
+Date:   Tue, 12 Feb 2019 00:53:29 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org,
+        Lars Schneider <larsxschneider@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-        Rich Felker <dalias@libc.org>, Kevin Daudt <me@ikke.info>
-Subject: [PATCH v4] utf8: handle systems that don't write BOM for UTF-16
-Date:   Tue, 12 Feb 2019 00:52:06 +0000
-Message-Id: <20190212005206.1002049-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.20.1.791.gb4d0f1c61a
-In-Reply-To: <20190209200802.277139-1-sandals@crustytoothpaste.net>
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Rich Felker <dalias@libc.org>
+Subject: Re: [PATCH v3] utf8: handle systems that don't write BOM for UTF-16
+Message-ID: <20190212005329.GD684736@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
+        git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Rich Felker <dalias@libc.org>
 References: <20190209200802.277139-1-sandals@crustytoothpaste.net>
+ <20190211012639.579489-1-sandals@crustytoothpaste.net>
+ <20190211214306.GB14229@alpha>
+ <20190211235835.GB684736@genre.crustytoothpaste.net>
+ <xmqqtvh9g857.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4zI0WCX1RcnW9Hbu"
+Content-Disposition: inline
+In-Reply-To: <xmqqtvh9g857.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When serializing UTF-16 (and UTF-32), there are three possible ways to
-write the stream. One can write the data with a BOM in either big-endian
-or little-endian format, or one can write the data without a BOM in
-big-endian format.
 
-Most systems' iconv implementations choose to write it with a BOM in
-some endianness, since this is the most foolproof, and it is resistant
-to misinterpretation on Windows, where UTF-16 and the little-endian
-serialization are very common. For compatibility with Windows and to
-avoid accidental misuse there, Git always wants to write UTF-16 with a
-BOM, and will refuse to read UTF-16 without it.
+--4zI0WCX1RcnW9Hbu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-However, musl's iconv implementation writes UTF-16 without a BOM,
-relying on the user to interpret it as big-endian. This causes t0028 and
-the related functionality to fail, since Git won't read the file without
-a BOM.
+On Mon, Feb 11, 2019 at 04:31:00PM -0800, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> >> -       cat lf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >lf.utf${i}.raw &&
+> >> -       cat crlf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >crlf.utf${i}.r=
+aw &&
+> >> +       cat lf.utf8.raw | eval "write_utf${i}" >lf.utf${i}.raw &&
+> >> +       cat crlf.utf8.raw | eval "write_utf${i}" >crlf.utf${i}.raw &&
+> >>         cp crlf.utf${i}.raw eol.utf${i} &&
+> >>=20
+> >>         cat >expectIndexLF <<-EOF &&
+> >
+> > I'll squash in this fix, thanks.
+>=20
+> Thanks, all.  In the meantime, what I've pushed out has this
+> applied immediately on top.  Unless there is anything else, I could
+> squash it in in my next pushout I plan to do tonight, before getting
+> ready to tag -rc1 tomorrow.
 
-Add a Makefile and #define knob, ICONV_OMITS_BOM, that can be set if the
-iconv implementation has this behavior. When set, Git will write a BOM
-manually for UTF-16 and UTF-32 and then force the data to be written in
-UTF-16BE or UTF-32BE. We choose big-endian behavior here because the
-tests use the raw "UTF-16" encoding, which will be big-endian when the
-implementation requires this knob to be set.
+I've just sent a v4 with this squashed in. Whether you want to pick that
+up or squash this into v3 is up to you.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Update the tests to detect this case and write test data with an added
-BOM if necessary. Always write the BOM in the tests in big-endian
-format, since all iconv implementations that omit a BOM must use
-big-endian serialization according to the Unicode standard.
+--4zI0WCX1RcnW9Hbu
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Preserve the existing behavior for systems which do not have this knob
-enabled, since they may use optimized implementations, including
-defaulting to the native endianness, which may improve performance.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Makefile                         |  7 +++++++
- t/t0028-working-tree-encoding.sh | 34 +++++++++++++++++++++++++++-----
- utf8.c                           | 14 +++++++++++++
- 3 files changed, 50 insertions(+), 5 deletions(-)
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxiGQkACgkQv1NdgR9S
+9ouIAQ/+LkziuA29KrOf5ysMO028H8vE3N0a5DBEGhL/UsvKsFy+1A7apRiV+rpS
+iZqopazVd+yfMWZjeigDliMaB+3LEHAeXeR79M87ad/BqJdPZ2/GdkqCl9hNejXA
+dExUt8oEcJI2+8k2i149OfVwLrQ2JGt0kVBtnqW84KsPIoE9jbDvKhZm/UZdLDFx
+IcpYQzuUluv4ydj+hJ2zvsRCibfHTjc2gJ5gkv1HQwfqAAPRqyPRMDRylIlAP7Xp
+HqZw4oBmanAv2SbWWIhbIZnVuq5Sidy/PS+QIZTd0FaosyVe+kfGbcFqb5EeoMl3
+J+hJXIcZeFexvVuMQ+nt5Gy6Odw0Rm+eDr5y189gfXfEU9fQI7wtN4U+pESePBTS
+ZI/3nG5SuBaHqBvGrFAYaE96wEzdiUSuslZ7BHMFcKlb0EvSXflZU0omHvqzMZ0A
+xlD+QLKL6G9qq1azR/KZoDvbIGeEsFwPpnesHmEM/HY2RfcoMKgWukdmmR+CDND1
+dqrnBYn0gtOfqhvv7jlYDRwL7sIdrAlKgGRKKLSfYW4pEwSf13pWKDSOslG+DNUc
+KTkxsMSOp8vXBxvsOkjINKRYTwvTTfT6c1lEm2wsB6+5Mn1kZGzHkoSY1TGDivZm
+HpZZK5t0qSeNxDsMl5ocVAPMZUaPmXNgrUjKjRRKDwsPzSd4Jtk=
+=xqN0
+-----END PGP SIGNATURE-----
 
-diff --git a/Makefile b/Makefile
-index 571160a2c4..c6172450af 100644
---- a/Makefile
-+++ b/Makefile
-@@ -259,6 +259,10 @@ all::
- # Define OLD_ICONV if your library has an old iconv(), where the second
- # (input buffer pointer) parameter is declared with type (const char **).
- #
-+# Define ICONV_OMITS_BOM if your iconv implementation does not write a
-+# byte-order mark (BOM) when writing UTF-16 or UTF-32 and always writes in
-+# big-endian format.
-+#
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
- # Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
-@@ -1415,6 +1419,9 @@ ifndef NO_ICONV
- 		EXTLIBS += $(ICONV_LINK) -liconv
- 	endif
- endif
-+ifdef ICONV_OMITS_BOM
-+	BASIC_CFLAGS += -DICONV_OMITS_BOM
-+endif
- ifdef NEEDS_LIBGEN
- 	EXTLIBS += -lgen
- endif
-diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-index e58ecbfc44..500229a9bd 100755
---- a/t/t0028-working-tree-encoding.sh
-+++ b/t/t0028-working-tree-encoding.sh
-@@ -6,6 +6,30 @@ test_description='working-tree-encoding conversion via gitattributes'
- 
- GIT_TRACE_WORKING_TREE_ENCODING=1 && export GIT_TRACE_WORKING_TREE_ENCODING
- 
-+test_lazy_prereq NO_UTF16_BOM '
-+	test $(printf abc | iconv -f UTF-8 -t UTF-16 | wc -c) = 6
-+'
-+
-+test_lazy_prereq NO_UTF32_BOM '
-+	test $(printf abc | iconv -f UTF-8 -t UTF-32 | wc -c) = 12
-+'
-+
-+write_utf16 () {
-+	if test_have_prereq NO_UTF16_BOM
-+	then
-+		printf '\xfe\xff'
-+	fi &&
-+	iconv -f UTF-8 -t UTF-16
-+}
-+
-+write_utf32 () {
-+	if test_have_prereq NO_UTF32_BOM
-+	then
-+		printf '\x00\x00\xfe\xff'
-+	fi &&
-+	iconv -f UTF-8 -t UTF-32
-+}
-+
- test_expect_success 'setup test files' '
- 	git config core.eol lf &&
- 
-@@ -13,8 +37,8 @@ test_expect_success 'setup test files' '
- 	echo "*.utf16 text working-tree-encoding=utf-16" >.gitattributes &&
- 	echo "*.utf16lebom text working-tree-encoding=UTF-16LE-BOM" >>.gitattributes &&
- 	printf "$text" >test.utf8.raw &&
--	printf "$text" | iconv -f UTF-8 -t UTF-16 >test.utf16.raw &&
--	printf "$text" | iconv -f UTF-8 -t UTF-32 >test.utf32.raw &&
-+	printf "$text" | write_utf16 >test.utf16.raw &&
-+	printf "$text" | write_utf32 >test.utf32.raw &&
- 	printf "\377\376"                         >test.utf16lebom.raw &&
- 	printf "$text" | iconv -f UTF-8 -t UTF-32LE >>test.utf16lebom.raw &&
- 
-@@ -124,8 +148,8 @@ do
- 		test_when_finished "rm -f crlf.utf${i}.raw lf.utf${i}.raw" &&
- 		test_when_finished "git reset --hard HEAD^" &&
- 
--		cat lf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >lf.utf${i}.raw &&
--		cat crlf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >crlf.utf${i}.raw &&
-+		cat lf.utf8.raw | write_utf${i} >lf.utf${i}.raw &&
-+		cat crlf.utf8.raw | write_utf${i} >crlf.utf${i}.raw &&
- 		cp crlf.utf${i}.raw eol.utf${i} &&
- 
- 		cat >expectIndexLF <<-EOF &&
-@@ -223,7 +247,7 @@ test_expect_success ICONV_SHIFT_JIS 'check roundtrip encoding' '
- 
- 	text="hallo there!\nroundtrip test here!" &&
- 	printf "$text" | iconv -f UTF-8 -t SHIFT-JIS >roundtrip.shift &&
--	printf "$text" | iconv -f UTF-8 -t UTF-16 >roundtrip.utf16 &&
-+	printf "$text" | write_utf16 >roundtrip.utf16 &&
- 	echo "*.shift text working-tree-encoding=SHIFT-JIS" >>.gitattributes &&
- 
- 	# SHIFT-JIS encoded files are round-trip checked by default...
-diff --git a/utf8.c b/utf8.c
-index 83824dc2f4..3b42fadffd 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -559,6 +559,10 @@ char *reencode_string_len(const char *in, size_t insz,
- 	/*
- 	 * For writing, UTF-16 iconv typically creates "UTF-16BE-BOM"
- 	 * Some users under Windows want the little endian version
-+	 *
-+	 * We handle UTF-16 and UTF-32 ourselves only if the platform does not
-+	 * provide a BOM (which we require), since we want to match the behavior
-+	 * of the system tools and libc as much as possible.
- 	 */
- 	if (same_utf_encoding("UTF-16LE-BOM", out_encoding)) {
- 		bom_str = utf16_le_bom;
-@@ -568,6 +572,16 @@ char *reencode_string_len(const char *in, size_t insz,
- 		bom_str = utf16_be_bom;
- 		bom_len = sizeof(utf16_be_bom);
- 		out_encoding = "UTF-16BE";
-+#ifdef ICONV_OMITS_BOM
-+	} else if (same_utf_encoding("UTF-16", out_encoding)) {
-+		bom_str = utf16_be_bom;
-+		bom_len = sizeof(utf16_be_bom);
-+		out_encoding = "UTF-16BE";
-+	} else if (same_utf_encoding("UTF-32", out_encoding)) {
-+		bom_str = utf32_be_bom;
-+		bom_len = sizeof(utf32_be_bom);
-+		out_encoding = "UTF-32BE";
-+#endif
- 	}
- 
- 	conv = iconv_open(out_encoding, in_encoding);
+--4zI0WCX1RcnW9Hbu--
