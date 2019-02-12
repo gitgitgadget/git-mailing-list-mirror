@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5766E1F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 01:23:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 591671F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 01:23:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727208AbfBLBXg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 20:23:36 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34310 "EHLO
+        id S1727211AbfBLBXh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 20:23:37 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34286 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726140AbfBLBXd (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 20:23:33 -0500
+        by vger.kernel.org with ESMTP id S1727117AbfBLBX3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 20:23:29 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 86C4160E53;
-        Tue, 12 Feb 2019 01:23:30 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3D50860E56;
+        Tue, 12 Feb 2019 01:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1549934610;
-        bh=ew3v3skWNpv8fDanCbUgTUbaHGFtLSUN80DuTfv7fUw=;
+        s=default; t=1549934606;
+        bh=W+BwfM3vhYynj0RTz/3+OCP3aiC/NWJ/DDb0jzsbWEQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=cv6ZH9U/QkBDoDwLdhENyH7lHNbJ2YRdm3pfl3rXlSo/5H4/UlLXhHhaSO+zraH4Y
-         rheYLJRVnOOUD6mc1hGnTF+6WoSYdpZFAcbzYyOH5VIiMQci6GwNQME8+9+GxvtqbW
-         IBveCXT+BwiCVoKlYVVVzUbR5w7HhJHtI8sXXmjjxjESWvFh16xXXqxsytV60j++AT
-         zrwq3mtWvQs1SOuSltYoU0VN5ZpkTGT5kLXw3/l68yBgpbMqJ0S83JVB3gt1kkILNB
-         TWbc+WYsOnJ9ZlbclbNp5ehmHifbsXmU7INZFwBNZTJuiWXGrHHGaR2m04u53hq8uQ
-         +sAG0zSmFGYNprcMo59PwMukQMw+H302vpjQlLgJTyLFc2o3sJgfcDGspQQXObUma8
-         SiPfXZYoMF8CCapqcS4nQ6uZpP4UjbULxZ8MCZ7p/OxNDZrwqESd0wifsKhwgppSCE
-         6usbgj74OBIostk3daF1Vb3N+SQo0klcwCLvqVVemHv/jQ7ng1A
+        b=kIxu4Hlx0dvYYoE99vokiGkVYtcADlxX+r8QKI0jSPTuT1ivNPidWylmFLbJ6vFYu
+         R3fI44TEUi/aHKR7mr58ZREdDV9HuLzn2W7MI1F+a34KaWkkupugijC+L6KQoNDQaV
+         Lt7XtnHUMPftXOZK3DII72S2jUfEg4gJkQe5Vi2ki9N6q5KWibu2vWP9t3JCbo4vrE
+         Bcs9XWKCcMjk/XY1Q5Wo8+Q0YU0pD0wScPCiSCI8o4yD3jhxbMCdFrCg/zNGk4r3Ii
+         X72gpG9rS12ItoyHPnB+22CXK9VDOZ0sY9bXS/KMpN1Pc5DQ3i0xX/msrXyfvhzmJz
+         V9HVM2MNjF3a5gn4iCbu/hOsTgUHt23Z8yBp5ClBJskiDrj8yoUpVvuNfHV7pQNxfw
+         AgPXusJkZALE6G596a0Txyzl3BEQzSxfiYmiPU12AtUT0+RGucLpdY0C1V7pumS3Zi
+         kgrD3kLGutsovpsuP/EVUoeMo3HRuyfoiv13mMCvuS6fBLtB2RB
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH 16/31] http-push: convert to use the_hash_algo
-Date:   Tue, 12 Feb 2019 01:22:41 +0000
-Message-Id: <20190212012256.1005924-17-sandals@crustytoothpaste.net>
+Subject: [PATCH 12/31] fast-import: make hash-size independent
+Date:   Tue, 12 Feb 2019 01:22:37 +0000
+Message-Id: <20190212012256.1005924-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.20.1.791.gb4d0f1c61a
 In-Reply-To: <20190212012256.1005924-1-sandals@crustytoothpaste.net>
 References: <20190212012256.1005924-1-sandals@crustytoothpaste.net>
@@ -53,80 +53,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Switch the lock token code to use the_hash_algo and increase its buffers
-to be allocated using GIT_MAX_* constants.  Update the parsing of object
-paths to use the_hash_algo as well.
+Replace several uses of GIT_SHA1_HEXSZ and 40-based constants with
+references to the_hash_algo.  Update the note handling code here to
+compute path sizes based on GIT_MAX_RAWSZ as well.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- http-push.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ fast-import.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index b313ada515..c4e5142bc9 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -145,7 +145,7 @@ struct remote_lock {
- 	char *url;
- 	char *owner;
- 	char *token;
--	char tmpfile_suffix[41];
-+	char tmpfile_suffix[GIT_MAX_HEXSZ + 1];
- 	time_t start_time;
- 	long timeout;
- 	int refreshing;
-@@ -399,7 +399,7 @@ static void start_put(struct transfer_request *request)
- 	request->dest = strbuf_detach(&buf, NULL);
- 
- 	append_remote_object_url(&buf, repo->url, hex, 0);
--	strbuf_add(&buf, request->lock->tmpfile_suffix, 41);
-+	strbuf_add(&buf, request->lock->tmpfile_suffix, the_hash_algo->hexsz + 1);
- 	request->url = strbuf_detach(&buf, NULL);
- 
- 	slot = get_active_slot();
-@@ -758,8 +758,8 @@ static void handle_lockprop_ctx(struct xml_ctx *ctx, int tag_closed)
- static void handle_new_lock_ctx(struct xml_ctx *ctx, int tag_closed)
- {
- 	struct remote_lock *lock = (struct remote_lock *)ctx->userData;
--	git_SHA_CTX sha_ctx;
--	unsigned char lock_token_sha1[20];
-+	git_hash_ctx hash_ctx;
-+	unsigned char lock_token_hash[GIT_MAX_RAWSZ];
- 
- 	if (tag_closed && ctx->cdata) {
- 		if (!strcmp(ctx->name, DAV_ACTIVELOCK_OWNER)) {
-@@ -771,12 +771,12 @@ static void handle_new_lock_ctx(struct xml_ctx *ctx, int tag_closed)
- 		} else if (!strcmp(ctx->name, DAV_ACTIVELOCK_TOKEN)) {
- 			lock->token = xstrdup(ctx->cdata);
- 
--			git_SHA1_Init(&sha_ctx);
--			git_SHA1_Update(&sha_ctx, lock->token, strlen(lock->token));
--			git_SHA1_Final(lock_token_sha1, &sha_ctx);
-+			the_hash_algo->init_fn(&hash_ctx);
-+			the_hash_algo->update_fn(&hash_ctx, lock->token, strlen(lock->token));
-+			the_hash_algo->final_fn(lock_token_hash, &hash_ctx);
- 
- 			lock->tmpfile_suffix[0] = '_';
--			memcpy(lock->tmpfile_suffix + 1, sha1_to_hex(lock_token_sha1), 40);
-+			memcpy(lock->tmpfile_suffix + 1, hash_to_hex(lock_token_hash), the_hash_algo->hexsz);
- 		}
+diff --git a/fast-import.c b/fast-import.c
+index 7c9a10a77b..eba8c8c919 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1241,7 +1241,7 @@ static void load_tree(struct tree_entry *root)
+ 		c += e->name->str_len + 1;
+ 		hashcpy(e->versions[0].oid.hash, (unsigned char *)c);
+ 		hashcpy(e->versions[1].oid.hash, (unsigned char *)c);
+-		c += GIT_SHA1_RAWSZ;
++		c += the_hash_algo->rawsz;
+ 	}
+ 	free(buf);
+ }
+@@ -1288,7 +1288,7 @@ static void mktree(struct tree_content *t, int v, struct strbuf *b)
+ 		strbuf_addf(b, "%o %s%c",
+ 			(unsigned int)(e->versions[v].mode & ~NO_DELTA),
+ 			e->name->str_dat, '\0');
+-		strbuf_add(b, e->versions[v].oid.hash, GIT_SHA1_RAWSZ);
++		strbuf_add(b, e->versions[v].oid.hash, the_hash_algo->rawsz);
  	}
  }
-@@ -1018,7 +1018,7 @@ static void remote_ls(const char *path, int flags,
- /* extract hex from sharded "xx/x{38}" filename */
- static int get_oid_hex_from_objpath(const char *path, struct object_id *oid)
+ 
+@@ -2047,7 +2047,8 @@ static uintmax_t do_change_note_fanout(
+ 	unsigned int i, tmp_hex_oid_len, tmp_fullpath_len;
+ 	uintmax_t num_notes = 0;
+ 	struct object_id oid;
+-	char realpath[60];
++	char realpath[GIT_MAX_RAWSZ * 3];
++	const unsigned hexsz = the_hash_algo->hexsz;
+ 
+ 	if (!root->tree)
+ 		load_tree(root);
+@@ -2067,7 +2068,7 @@ static uintmax_t do_change_note_fanout(
+ 		 * of 2 chars.
+ 		 */
+ 		if (!e->versions[1].mode ||
+-		    tmp_hex_oid_len > GIT_SHA1_HEXSZ ||
++		    tmp_hex_oid_len > hexsz ||
+ 		    e->name->str_len % 2)
+ 			continue;
+ 
+@@ -2081,7 +2082,7 @@ static uintmax_t do_change_note_fanout(
+ 		tmp_fullpath_len += e->name->str_len;
+ 		fullpath[tmp_fullpath_len] = '\0';
+ 
+-		if (tmp_hex_oid_len == GIT_SHA1_HEXSZ && !get_oid_hex(hex_oid, &oid)) {
++		if (tmp_hex_oid_len == hexsz && !get_oid_hex(hex_oid, &oid)) {
+ 			/* This is a note entry */
+ 			if (fanout == 0xff) {
+ 				/* Counting mode, no rename */
+@@ -2352,7 +2353,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
+ 	struct object_entry *oe;
+ 	struct branch *s;
+ 	struct object_id oid, commit_oid;
+-	char path[60];
++	char path[GIT_MAX_RAWSZ * 3];
+ 	uint16_t inline_data = 0;
+ 	unsigned char new_fanout;
+ 
+@@ -2405,7 +2406,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
+ 		char *buf = read_object_with_reference(&commit_oid,
+ 						       commit_type, &size,
+ 						       &commit_oid);
+-		if (!buf || size < 46)
++		if (!buf || size < the_hash_algo->hexsz)
+ 			die("Not a valid commit: %s", p);
+ 		free(buf);
+ 	} else
+@@ -2456,7 +2457,7 @@ static void file_change_deleteall(struct branch *b)
+ 
+ static void parse_from_commit(struct branch *b, char *buf, unsigned long size)
  {
--	if (strlen(path) != GIT_SHA1_HEXSZ + 1)
-+	if (strlen(path) != the_hash_algo->hexsz + 1)
- 		return -1;
+-	if (!buf || size < GIT_SHA1_HEXSZ + 6)
++	if (!buf || size < the_hash_algo->hexsz + 6)
+ 		die("Not a valid commit: %s", oid_to_hex(&b->oid));
+ 	if (memcmp("tree ", buf, 5)
+ 		|| get_oid_hex(buf + 5, &b->branch_tree.versions[1].oid))
+@@ -2555,7 +2556,7 @@ static struct hash_list *parse_merge(unsigned int *count)
+ 			char *buf = read_object_with_reference(&n->oid,
+ 							       commit_type,
+ 							       &size, &n->oid);
+-			if (!buf || size < 46)
++			if (!buf || size < the_hash_algo->hexsz)
+ 				die("Not a valid commit: %s", from);
+ 			free(buf);
+ 		} else
+@@ -2842,7 +2843,7 @@ static void parse_get_mark(const char *p)
+ 		die("Unknown mark: %s", command_buf.buf);
  
- 	if (hex_to_bytes(oid->hash, path, 1))
-@@ -1026,7 +1026,7 @@ static int get_oid_hex_from_objpath(const char *path, struct object_id *oid)
- 	path += 2;
- 	path++; /* skip '/' */
- 
--	return hex_to_bytes(oid->hash + 1, path, GIT_SHA1_RAWSZ - 1);
-+	return hex_to_bytes(oid->hash + 1, path, the_hash_algo->rawsz - 1);
+ 	xsnprintf(output, sizeof(output), "%s\n", oid_to_hex(&oe->idx.oid));
+-	cat_blob_write(output, GIT_SHA1_HEXSZ + 1);
++	cat_blob_write(output, the_hash_algo->hexsz + 1);
  }
  
- static void process_ls_object(struct remote_ls_ctx *ls)
+ static void parse_cat_blob(const char *p)
+@@ -2872,6 +2873,8 @@ static struct object_entry *dereference(struct object_entry *oe,
+ {
+ 	unsigned long size;
+ 	char *buf = NULL;
++	const unsigned hexsz = the_hash_algo->hexsz;
++
+ 	if (!oe) {
+ 		enum object_type type = oid_object_info(the_repository, oid,
+ 							NULL);
+@@ -2905,12 +2908,12 @@ static struct object_entry *dereference(struct object_entry *oe,
+ 	/* Peel one layer. */
+ 	switch (oe->type) {
+ 	case OBJ_TAG:
+-		if (size < GIT_SHA1_HEXSZ + strlen("object ") ||
++		if (size < hexsz + strlen("object ") ||
+ 		    get_oid_hex(buf + strlen("object "), oid))
+ 			die("Invalid SHA1 in tag: %s", command_buf.buf);
+ 		break;
+ 	case OBJ_COMMIT:
+-		if (size < GIT_SHA1_HEXSZ + strlen("tree ") ||
++		if (size < hexsz + strlen("tree ") ||
+ 		    get_oid_hex(buf + strlen("tree "), oid))
+ 			die("Invalid SHA1 in commit: %s", command_buf.buf);
+ 	}
