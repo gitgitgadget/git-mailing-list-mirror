@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E077D1F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 166431F453
 	for <e@80x24.org>; Tue, 12 Feb 2019 01:23:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727122AbfBLBX2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 20:23:28 -0500
+        id S1727106AbfBLBX0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 20:23:26 -0500
 Received: from injection.crustytoothpaste.net ([192.241.140.119]:34260 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727091AbfBLBX0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 20:23:26 -0500
+        by vger.kernel.org with ESMTP id S1726147AbfBLBXV (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 20:23:21 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0567F60899;
-        Tue, 12 Feb 2019 01:23:24 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 50D0360898;
+        Tue, 12 Feb 2019 01:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1549934605;
-        bh=AKJws+q6ssiLC0vGt7JoLJPhSwxoO7sqP72foWMRhw4=;
+        s=default; t=1549934599;
+        bh=xY01/f579AhsVZN/bnBj89/b9ShunR77xSLUR7h63b0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=DbgXtOXlECdM+8Jb7hC+xMbOIf4QZNygCDsZBYGa5L9Cvh83nVWa+Dd7I69e+FSVM
-         IAE5TgKQSRTF3AU2arAm1xGJuAoZVX4/m2XXv1WH4fvxSsbIdXtGFJRLSgYq2Yc+qT
-         b3W5xxI3+KCk+y7OuoetT+EHMeH6S8S+uYxMrccNUiIsj9fRehJZerw8Gr7Wdy2NBu
-         uIF9TGCEPUfjg3dcU/JAWxDy2Tt5puQeQSl8HaZ0TrFpAS2wQ/YJSkNB3+glpNIWa7
-         /rTqxjqoIrM8v+8oD8I7qKWoKAE7rSVzz7mmhYahnJdmlf+itf4BWqsfe1fjzDD7Ud
-         wcq2I7vl7iHtN+qAGkONYjlWwkkZgrNP5P2NKTOa1SCTtNp10UdyVz3lsNuCiwdINL
-         tmXzbF6TidxeFTZ2rcGMfeup2fwRaP6zLq+M4lyAtlckapauphw+2BuDJdULy8M1Pa
-         amFHE+8LBFXRBQhSBZ4V+2c3w/C3benDbbzIWAERW26H9T2YQb5
+        b=PrkBM3bmEihV+o0AzY1NLMgs24iANEWXjo/YYSjZmWL+J4eew4FPmfz/wYyOkjliV
+         OeUI7C6L5cof8wGxDkoOlZnpgyRIm0U4wzRQZfzdIjL9Ij6AuPNZetjaXin2Qiqy/k
+         QIAgQoUuIVMi37maIEKP+UjKBdFzxsQlKFI3Py/zFysEnruuVALATGnFKt0Sp0HAHN
+         fFEAcZLG943RahruRtNfDCdY7Rb11dTR9tyxj5AU9USzlyfFCL+af8ZVltMCI9g8Zi
+         FM92BIqfQRbx26uQ9U/wtEo15tqAKMEvhQaaGtc3RBmjM1x9V902txuMCxzxbtgvaz
+         FYtpZ/st/f1aBwLzekJFYqV1Tu+wPB95HN/ZYgDgp5INYSUTe0PqpSoL9Ut3Cvm31N
+         G0idCndVZeuknA3IlqP0zHXZ/v71ruXBVWUmsdfuWzoEYCpRjR9ckv3QzrJJkGmRF2
+         Rfyh8cVILENKavncFbEPRgUr45niIsYlEqjX9vqjl+EbcfuWMpH
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH 11/31] builtin/name-rev: make hash-size independent
-Date:   Tue, 12 Feb 2019 01:22:36 +0000
-Message-Id: <20190212012256.1005924-12-sandals@crustytoothpaste.net>
+Subject: [PATCH 06/31] submodule: avoid hard-coded constants
+Date:   Tue, 12 Feb 2019 01:22:31 +0000
+Message-Id: <20190212012256.1005924-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.20.1.791.gb4d0f1c61a
 In-Reply-To: <20190212012256.1005924-1-sandals@crustytoothpaste.net>
 References: <20190212012256.1005924-1-sandals@crustytoothpaste.net>
@@ -53,56 +53,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use the_hash_algo when parsing instead of GIT_SHA1_HEXSZ so that this
-function works with any size hash.  Rename the variable forty to
-counter, as this is a better name and is independent of the hash size.
+Instead of using hard-coded 40-based constants, express these values in
+terms of the_hash_algo and GIT_MAX_HEXSZ.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/name-rev.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ merge-recursive.c | 2 +-
+ submodule.c       | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index f1cb45c227..05ccf53e00 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -361,23 +361,25 @@ static char const * const name_rev_usage[] = {
- static void name_rev_line(char *p, struct name_ref_data *data)
- {
- 	struct strbuf buf = STRBUF_INIT;
--	int forty = 0;
-+	int counter = 0;
- 	char *p_start;
-+	const unsigned hexsz = the_hash_algo->hexsz;
-+
- 	for (p_start = p; *p; p++) {
- #define ishex(x) (isdigit((x)) || ((x) >= 'a' && (x) <= 'f'))
- 		if (!ishex(*p))
--			forty = 0;
--		else if (++forty == GIT_SHA1_HEXSZ &&
-+			counter = 0;
-+		else if (++counter == hexsz &&
- 			 !ishex(*(p+1))) {
- 			struct object_id oid;
- 			const char *name = NULL;
- 			char c = *(p+1);
- 			int p_len = p - p_start + 1;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 4851825aeb..b8bd5d4f8d 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1122,7 +1122,7 @@ static int find_first_merges(struct repository *repo,
+ 	struct commit *commit;
+ 	int contains_another;
  
--			forty = 0;
-+			counter = 0;
- 
- 			*(p+1) = 0;
--			if (!get_oid(p - (GIT_SHA1_HEXSZ - 1), &oid)) {
-+			if (!get_oid(p - (hexsz - 1), &oid)) {
- 				struct object *o =
- 					lookup_object(the_repository,
- 						      oid.hash);
-@@ -390,7 +392,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
- 				continue;
- 
- 			if (data->name_only)
--				printf("%.*s%s", p_len - GIT_SHA1_HEXSZ, p_start, name);
-+				printf("%.*s%s", p_len - hexsz, p_start, name);
- 			else
- 				printf("%.*s (%s)", p_len, p_start, name);
- 			p_start = p + 1;
+-	char merged_revision[42];
++	char merged_revision[GIT_MAX_HEXSZ + 2];
+ 	const char *rev_args[] = { "rev-list", "--merges", "--ancestry-path",
+ 				   "--all", merged_revision, NULL };
+ 	struct rev_info revs;
+diff --git a/submodule.c b/submodule.c
+index 934ecfa294..0e2faaa41b 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -990,7 +990,7 @@ static int submodule_needs_pushing(struct repository *r,
+ 		if (start_command(&cp))
+ 			die("Could not run 'git rev-list <commits> --not --remotes -n 1' command in submodule %s",
+ 					path);
+-		if (strbuf_read(&buf, cp.out, 41))
++		if (strbuf_read(&buf, cp.out, the_hash_algo->hexsz + 1))
+ 			needs_pushing = 1;
+ 		finish_command(&cp);
+ 		close(cp.out);
