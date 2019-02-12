@@ -2,103 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DF9A1F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 02:45:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2F9A1F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 02:47:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726831AbfBLCpF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 21:45:05 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45978 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbfBLCpF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 21:45:05 -0500
-Received: by mail-wr1-f68.google.com with SMTP id w17so936789wrn.12
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 18:45:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=GAcDGZtepajbTY2AZncXzGulvaZDyq4fd4Gwjyd8BYE=;
-        b=cpfv1LOFfTgUUZq4kUlcBNCJ1cOrDjVwz1LDmPoWiDpUg7oEuzqXbnVmWTsTbI/Bqd
-         Qb2tAgixMDa8pTy+XkC/oqDRbnXqw14qnh8p6/g/7CVe/3OgCj6kvKD59VkJhBKNIo02
-         LIPs7wjXQazdP8Dv3GaXRDcEP0FfbH4K3q0/eCKl0PxBJ1XaPAV+UZvHIj2TNf6Dcr9M
-         dvi3ad0K1jnZyCqdB5dr7mUwtYjifyO16zoNClbTXZsRO/LoeI87nnNb9j6fJgGdzaGY
-         ny3fVeMT2IkWjB+2wX3Onr7MznU7MHIsfD0AqC4IVpp0/qEOYjbIwYwPCW9HDkFbCm2n
-         f5CA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=GAcDGZtepajbTY2AZncXzGulvaZDyq4fd4Gwjyd8BYE=;
-        b=qyUviBmVlaASaqUfbNsVCqF56m+/mIcpo7Aac6lJ2cDJhIGOw+l+mfWsaZOY3TMJ4x
-         yVDDCbrfssS+MNGFPHIu3xyrdnzhz+xQCiaKBu1ybrZYD7r+oPoQdgCW0KpyGdAirZZg
-         B6E1CU2N7f/Ym6rl6qrnFMXWjgi8ppofpVz5+BMWOMCbErcCDeSERt/MQP13F2zRx6s3
-         FJ+GpbsTKQLeNDx18pchDK8rEKAC6pc6hjBj5m8XFO11g4aCb73IdOQfjhAnO6IuOos5
-         NP9JGKmFpliP9gRp4ftk9dV9AoQo/3MytmyTGIg+/HI31nGlUK+jJH+C1UmBSm/XsDeJ
-         xMVw==
-X-Gm-Message-State: AHQUAuYZ2eP7EqmY452Xen0LnHZRzkqK0izhQC4jBEsFV7MlvZyzC/nz
-        d9FpDIwWuZca0yia7Vb7nc4=
-X-Google-Smtp-Source: AHgI3IbfdBid14ITNJktaWpoVmf/nNr5OCF9bnqNIso5w5x3g3fASCKrtfWAT932ud7TkDgETJX+LA==
-X-Received: by 2002:adf:b648:: with SMTP id i8mr867976wre.319.1549939503901;
-        Mon, 11 Feb 2019 18:45:03 -0800 (PST)
-Received: from szeder.dev (x4dbe9d5f.dyn.telefonica.de. [77.190.157.95])
-        by smtp.gmail.com with ESMTPSA id m21sm1039050wmi.43.2019.02.11.18.45.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Feb 2019 18:45:02 -0800 (PST)
-Date:   Tue, 12 Feb 2019 03:45:01 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org,
-        Henning Schild <henning.schild@siemens.com>
-Subject: Re: [PATCH 0/2] t/lib-gpg: a gpgsm fix, a minor improvement, and a
- question
-Message-ID: <20190212024501.GB1622@szeder.dev>
-References: <20190208031746.22683-1-tmz@pobox.com>
- <20190209140605.GE10587@szeder.dev>
- <20190212004433.GJ13301@sigill.intra.peff.net>
+        id S1726881AbfBLCra (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 21:47:30 -0500
+Received: from sonic309.consmr.mail.bf2.yahoo.com ([74.6.129.253]:40249 "EHLO
+        sonic309-18.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726655AbfBLCra (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 21:47:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1549939649; bh=Lq2E6MRUQRoA3fCc+tCP6NhJfeLlAizlbwqtNxiwI0A=; h=From:To:Cc:References:In-Reply-To:Subject:Date:From:Subject; b=ar5otU+R/9EnymQ61GW/CMjfq0X4gWUtOe0nWt0S1cRN5hjyxxVTnXUSX/7Wn9grCFDj9Nnwo1ieNuwwjMPbr4gTyf6YKDudSC5zXAsYrLPAY4AHY5raCF8aaLKJ6VxSExXGf663MB7ErTX4dt3zEXLk1PwVzNLNbhEorGba2aVyzpbqE2roOTCza35JRtyQWjKdpY3B+32q7wVxTHwdAmAJxFvi41C1Khl7BCcZLA9t9YDZjPlBpFLnLBFxaQ0s6muQtXvZ5BKzp+ObmUcL6RQLZRrWjuU87Xd+kV3Lp6WeCIhtAdXpXVGgt6fwsjc73Al5ed6sb/OmVbF2C8leEw==
+X-YMail-OSG: UWB10VkVM1mfwWEKBrEyf7_ZxsHsIimc7WWvKba.0dxI7raa56t_oXR0WnUHUW0
+ zOvBd.75vTknUWA4ipitsKA3nXZWPwGjc9xCASk_yEr.1me.vQ4kVrOD.0UU2J6kLqUT5mcQEWus
+ Lv.3I7geI.4Pi5YHCASFk9HG6rRShZwAU6z6c0J.SMiXLeyR5r5W5b0RU6qD7cpiHH6wpQ9fJQSe
+ srM7uoyQvzrnSUvxCy_gk4qVxNhOqTo5sEhb1t_8NJdbgCkm_ZJqjFJAhcWVh0DSBzvD38mADF9_
+ jizj35Rf.m7F1q1wIr4rSYcfsiCW6IST9bYab4uP5ehPwOcTQgz8XjEyDOsqt8wVdOrDgBOAmcN6
+ bT8Im_AUOFmGSivwlDcnt6k3ZSKWNvaXSXL3lO7xn83xst5OwTTuQ3_xIKbkUFAQ.xZqPjvm9pDr
+ jefB_316eI8laYpwGlb_ehaK_7zGoy4Cg0ufMmtMHKkIn22kEEaiRRZDxzkw4VZIFJMmLSdQ7YG2
+ aWuvFlFJhalxqr2CcCkTxlMyB3XGhckP9Qwl3TSQMEqzJOhgMpLHkHLZROuUN.CnamZdepSx7rZM
+ sBhTet9Kykq4CWK_PuJhqgqy6WybglSiFW5lSBUUxSwlfUWB7e5YFGUCUR1x9ysC4uINC_wsD0wW
+ 3fbl1KW3kJzriQDMjgrJFnTr6.qnZpQ32RcBZfHn3.SAXu8U4SK3Cnuubk6PMrW5uCA4zec0jXah
+ 81wZwgVcv2de16045sUSmzbU_59Yn1yKxRZbAfAwzJbMu9AWXivpwOPxK.xOn39LAtW_EIXb3eUm
+ Is8_kPlXcNzL9LUptRiFZPlBJguZ5vG2aiFZoWYZuKpiyUDUTJwS7wTmuq4jUekKMDLdhHhFdd1j
+ BMeu7s3A.3jSWfVHMU4yKA4wGQbfMJpCqCj_7nChuNXrVtJ.TIcjgnQiBo4qQ2_lCvWye_ug73LF
+ 70FO0hCR2zcntFsTQnazm1VhMHOYaq_XdoZLtpRzAqroOsrrQUO.juqr9K0vi8ZZIp87DwnCAVUB
+ KQDmQ_pmrxGYADNqg1BNJ.5RMOm4VVqWdo6IacvSYMAOcgOWJZieuRE0T9OTZGHGv87NmpUhrbKH
+ KgwsN69ofkBgjQX56SCrw81Fr57hXK5RUMw--
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.bf2.yahoo.com with HTTP; Tue, 12 Feb 2019 02:47:29 +0000
+Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO gnash) ([99.229.179.249])
+          by smtp426.mail.bf1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 8f11bff4774df19e6a115700fcb02e53;
+          Tue, 12 Feb 2019 02:47:27 +0000 (UTC)
+From:   <randall.s.becker@rogers.com>
+To:     "'Eric Sunshine'" <sunshine@sunshineco.com>,
+        "'Jeff King'" <peff@peff.net>
+Cc:     "'Git List'" <git@vger.kernel.org>,
+        "'Randall S. Becker'" <rsbecker@nexbridge.com>
+References: <20190209185930.5256-1-randall.s.becker@rogers.com> <20190209185930.5256-2-randall.s.becker@rogers.com> <CAPig+cRARdkKN-wR4EzVSzxuK51VOPf-kFFG57kkEsnFBfe4TA@mail.gmail.com> <20190212003735.GH13301@sigill.intra.peff.net> <CAPig+cQwh8RxVLgbBXR2WtE+k-aFAWnr12nBcTPzccQp_gdEZw@mail.gmail.com>
+In-Reply-To: <CAPig+cQwh8RxVLgbBXR2WtE+k-aFAWnr12nBcTPzccQp_gdEZw@mail.gmail.com>
+Subject: RE: [Patch v1 1/3] test-lib-functions.sh: add generate_zero_bytes function
+Date:   Mon, 11 Feb 2019 21:47:25 -0500
+Message-ID: <001201d4c27d$4980b7e0$dc8227a0$@rogers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190212004433.GJ13301@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGM7GjkJQPJw2ZzFceglcz2DqNUWwDZJf6DAflb4NwBpydqTQG7ktwQpjl3tnA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 11, 2019 at 07:44:33PM -0500, Jeff King wrote:
-> On Sat, Feb 09, 2019 at 03:06:05PM +0100, SZEDER Gábor wrote:
+On February 11, 2019 20:18, Eric Sunshine wrote:
+> On Mon, Feb 11, 2019 at 7:37 PM Jeff King <peff@peff.net> wrote:
+> > On Sat, Feb 09, 2019 at 09:05:04PM -0500, Eric Sunshine wrote:
+> > > On Sat, Feb 9, 2019 at 1:59 PM <randall.s.becker@rogers.com> wrote:
+> > > > +generate_zero_bytes () {
+> > > > +       perl -e 'if ($ARGV[0] == "infinity") {
+> > >
+> > > s/perl/"$PERL_PATH"/
+> >
+> > This shouldn't be necessary. perl() is a function that uses $PERL_PATH
+> > (so you only need $PERL_PATH when you're writing out another script
+> > that doesn't run in the same process space as the rest of the test code).
 > 
-> > On Thu, Feb 07, 2019 at 10:17:44PM -0500, Todd Zullinger wrote:
-> > > Looking through the build logs for the fedora git packages, I noticed it
-> > > was missing the GPGSM prereq.
-> > 
-> > Just curious: how did you noticed the missing GPGSM prereq?
-> > 
-> > I'm asking because I use a patch for a good couple of months now that
-> > collects the prereqs missed by test cases and prints them at the end
-> > of 'make test'.  Its output looks like this:
-> > 
-> >   https://travis-ci.org/szeder/git/jobs/490944032#L2358
+> Thanks for clarifying. I either didn't know or forgot about that.
 
-> But it looks from the output like it just mentions every prereq that
-> wasn't satisfied. I don't think that's particularly useful to show for
-> all users, since most of them are platform things that cannot be changed
-> (and you'd never get the list to zero, since some of them are mutually
-> exclusive).
-
-The idea was that people might notice when a new unmet prereq pops up
-all of a sudden, because they modified something on their setup, or
-because a new prereq was recently introduced, e.g. PERLJSON.  Or they
-might notice that a prereq necessary to test a fundamental feature is
-missing on their setup that they haven't been aware of before, e.g.
-TTY.
+As did I, thank you.
 
