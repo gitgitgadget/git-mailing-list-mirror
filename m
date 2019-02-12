@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D6301F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A68E1F453
 	for <e@80x24.org>; Tue, 12 Feb 2019 01:23:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727305AbfBLBXs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 20:23:48 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34380 "EHLO
+        id S1727319AbfBLBXt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 20:23:49 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34362 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727269AbfBLBXp (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 20:23:45 -0500
+        by vger.kernel.org with ESMTP id S1727259AbfBLBXn (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 20:23:43 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 26CF660E5E;
-        Tue, 12 Feb 2019 01:23:43 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F36FF60E59;
+        Tue, 12 Feb 2019 01:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1549934623;
-        bh=2TtYrNMb/kzBAydNMsK0aKUC/eRRWFYRlEz1ei0ENP0=;
+        s=default; t=1549934621;
+        bh=SRAkzt22seKEh5pn4oaphfXHekT+q2Jm8m9IG0k53B4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=PlFvxd6YRabT1QOOIfIbQVk9N4uaxjWQNi0jspawaBJg0IREa6l+Rv7O7y8GY7sbl
-         LUmikA37+ZTm4CPBWlDRe8hd7ucFJUWgOb81yq3ilx2hFICzu0OI8b+Pd/0Vb9Ds0y
-         CiIWpaP1FgX109dC1gfiK5+VnqU/HuMrNHvL3/i62izFd7SR79ToGj/JO3nAsRqic8
-         rCCtOxt/6EPDXoTOETk9q2HlTPLlRzvHQrTJn/e7l+2Bjf6utS2KbMJpjlXxqSb5Hn
-         73x2sK0ujdi02WBH0U5OTTzwotG4FJd2qNb6wRwsknBAbkwqy5tCxDfomTysCrag/l
-         AvmI90vlsOGjsBaJKdW7gLhQQ6MajMB4LDLMCw8+syFFAlOffiJ3PMZJPI0i/8LcTJ
-         bXt1RAE1UqWfPsSvV5W1sfeVYAv10q18xbN/TtikLmVDeNCUFc9O9qCFbIbGNV1xCm
-         vhhTJJAJu630di1Azl9up6q+iOSVY41WrqjdE7MEiPynAr8f3sW
+        b=nsI0Kt27Gwo9d69Bl7oLLlhHfAN7ZWO0JHzVjXruPAK/VkFa6EGnvca+FGMqux+2V
+         GYdsLvK/MMNexZbXoh4liayh7xvYAyS1pMqSngvvuvNn0ocSOZpKiaJCIMWxo1cpz4
+         GENH4O3oFk4QCCZNo283xcgXt1M3E/23iWTW9VD+fUJp/DW8HQ4Re9QGY+zyAZTfwj
+         XRaE+XGpTv597GJvNHRP9wfnHMu9voWBy/BAqvCEQQNucxzbkF2aPaFWUm+AKKVCzf
+         zICCD20XG+nMcCT/O55L9AqGo/ezHQPC3cunKwcgs+EfW2a1Mrm7HT1JYff5cs7Go6
+         bVnZEw6AsILUtmf9Q3MCTB4AiDnC6JRw/nW88wOKHdentXzk0ziCbI+AaW7rN6VJEY
+         PJP3ZsV0GcVE7jtR2erADwAHS7Yrk/l5mPEM63fUyIci+BGwHwuG4P9hQTYa3cWBOm
+         kDLoCxPba1wr0sqsrg4a1X1ZEulCOiuLOaW4x7rvbXA3zACqYei
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH 28/31] dir: make untracked cache extension hash size independent
-Date:   Tue, 12 Feb 2019 01:22:53 +0000
-Message-Id: <20190212012256.1005924-29-sandals@crustytoothpaste.net>
+Subject: [PATCH 25/31] archive: convert struct archiver_args to object_id
+Date:   Tue, 12 Feb 2019 01:22:50 +0000
+Message-Id: <20190212012256.1005924-26-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.20.1.791.gb4d0f1c61a
 In-Reply-To: <20190212012256.1005924-1-sandals@crustytoothpaste.net>
 References: <20190212012256.1005924-1-sandals@crustytoothpaste.net>
@@ -53,96 +53,125 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using a struct with a flex array member to read and write the
-untracked cache extension, use a shorter, fixed-length struct and add
-the name and hash data explicitly.
+Change the commit_sha1 member to be called "commit_oid" and change it to
+be a pointer to struct object_id.  Additionally, update two uses of
+GIT_SHA1_HEXSZ to use the_hash_algo instead.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- dir.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ archive-tar.c |  6 +++---
+ archive-zip.c | 10 +++++-----
+ archive.c     |  8 ++++----
+ archive.h     |  2 +-
+ 4 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index b2cabadf25..7503b56918 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2545,13 +2545,9 @@ struct ondisk_untracked_cache {
- 	struct stat_data info_exclude_stat;
- 	struct stat_data excludes_file_stat;
- 	uint32_t dir_flags;
--	unsigned char info_exclude_sha1[20];
--	unsigned char excludes_file_sha1[20];
--	char exclude_per_dir[FLEX_ARRAY];
- };
+diff --git a/archive-tar.c b/archive-tar.c
+index a5ba55c11e..3e53aac1e6 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -326,14 +326,14 @@ static int write_tar_entry(struct archiver_args *args,
  
- #define ouc_offset(x) offsetof(struct ondisk_untracked_cache, x)
--#define ouc_size(len) (ouc_offset(exclude_per_dir) + len + 1)
+ static void write_global_extended_header(struct archiver_args *args)
+ {
+-	const unsigned char *hash = args->commit_sha1;
++	const struct object_id *oid = args->commit_oid;
+ 	struct strbuf ext_header = STRBUF_INIT;
+ 	struct ustar_header header;
+ 	unsigned int mode;
  
- struct write_data {
- 	int index;	   /* number of written untracked_cache_dir */
-@@ -2634,20 +2630,21 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
- 	struct write_data wd;
- 	unsigned char varbuf[16];
- 	int varint_len;
--	size_t len = strlen(untracked->exclude_per_dir);
-+	const unsigned hashsz = the_hash_algo->rawsz;
+-	if (hash)
++	if (oid)
+ 		strbuf_append_ext_header(&ext_header, "comment",
+-					 hash_to_hex(hash),
++					 oid_to_hex(oid),
+ 					 the_hash_algo->hexsz);
+ 	if (args->time > USTAR_MAX_MTIME) {
+ 		strbuf_append_ext_header_uint(&ext_header, "mtime",
+diff --git a/archive-zip.c b/archive-zip.c
+index 155ee4a779..4d66b5be6e 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -577,7 +577,7 @@ static void write_zip64_trailer(void)
+ 	write_or_die(1, &locator64, ZIP64_DIR_TRAILER_LOCATOR_SIZE);
+ }
  
--	FLEX_ALLOC_MEM(ouc, exclude_per_dir, untracked->exclude_per_dir, len);
-+	ouc = xcalloc(1, sizeof(*ouc));
- 	stat_data_to_disk(&ouc->info_exclude_stat, &untracked->ss_info_exclude.stat);
- 	stat_data_to_disk(&ouc->excludes_file_stat, &untracked->ss_excludes_file.stat);
--	hashcpy(ouc->info_exclude_sha1, untracked->ss_info_exclude.oid.hash);
--	hashcpy(ouc->excludes_file_sha1, untracked->ss_excludes_file.oid.hash);
- 	ouc->dir_flags = htonl(untracked->dir_flags);
+-static void write_zip_trailer(const unsigned char *sha1)
++static void write_zip_trailer(const struct object_id *oid)
+ {
+ 	struct zip_dir_trailer trailer;
+ 	int clamped = 0;
+@@ -590,14 +590,14 @@ static void write_zip_trailer(const unsigned char *sha1)
+ 	copy_le16_clamp(trailer.entries, zip_dir_entries, &clamped);
+ 	copy_le32(trailer.size, zip_dir.len);
+ 	copy_le32_clamp(trailer.offset, zip_offset, &clamped);
+-	copy_le16(trailer.comment_length, sha1 ? GIT_SHA1_HEXSZ : 0);
++	copy_le16(trailer.comment_length, oid ? the_hash_algo->hexsz : 0);
  
- 	varint_len = encode_varint(untracked->ident.len, varbuf);
- 	strbuf_add(out, varbuf, varint_len);
- 	strbuf_addbuf(out, &untracked->ident);
+ 	write_or_die(1, zip_dir.buf, zip_dir.len);
+ 	if (clamped)
+ 		write_zip64_trailer();
+ 	write_or_die(1, &trailer, ZIP_DIR_TRAILER_SIZE);
+-	if (sha1)
+-		write_or_die(1, sha1_to_hex(sha1), GIT_SHA1_HEXSZ);
++	if (oid)
++		write_or_die(1, oid_to_hex(oid), the_hash_algo->hexsz);
+ }
  
--	strbuf_add(out, ouc, ouc_size(len));
-+	strbuf_add(out, ouc, sizeof(*ouc));
-+	strbuf_add(out, untracked->ss_info_exclude.oid.hash, hashsz);
-+	strbuf_add(out, untracked->ss_excludes_file.oid.hash, hashsz);
-+	strbuf_add(out, untracked->exclude_per_dir, strlen(untracked->exclude_per_dir) + 1);
- 	FREE_AND_NULL(ouc);
+ static void dos_time(timestamp_t *timestamp, int *dos_date, int *dos_time)
+@@ -635,7 +635,7 @@ static int write_zip_archive(const struct archiver *ar,
  
- 	if (!untracked->root) {
-@@ -2834,6 +2831,9 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- 	int ident_len;
- 	ssize_t len;
- 	const char *exclude_per_dir;
-+	const unsigned hashsz = the_hash_algo->rawsz;
-+	const unsigned offset = sizeof(struct ondisk_untracked_cache);
-+	const unsigned exclude_per_dir_offset = offset + 2 * hashsz;
+ 	err = write_archive_entries(args, write_zip_entry);
+ 	if (!err)
+-		write_zip_trailer(args->commit_sha1);
++		write_zip_trailer(args->commit_oid);
  
- 	if (sz <= 1 || end[-1] != '\0')
- 		return NULL;
-@@ -2845,7 +2845,7 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- 	ident = (const char *)next;
- 	next += ident_len;
+ 	strbuf_release(&zip_dir);
  
--	if (next + ouc_size(0) > end)
-+	if (next + exclude_per_dir_offset + 1 > end)
- 		return NULL;
+diff --git a/archive.c b/archive.c
+index 1f98324a93..f2c78a2712 100644
+--- a/archive.c
++++ b/archive.c
+@@ -380,7 +380,7 @@ static void parse_treeish_arg(const char **argv,
+ 		int remote)
+ {
+ 	const char *name = argv[0];
+-	const unsigned char *commit_sha1;
++	const struct object_id *commit_oid;
+ 	time_t archive_time;
+ 	struct tree *tree;
+ 	const struct commit *commit;
+@@ -402,10 +402,10 @@ static void parse_treeish_arg(const char **argv,
  
- 	uc = xcalloc(1, sizeof(*uc));
-@@ -2853,15 +2853,15 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
- 	strbuf_add(&uc->ident, ident, ident_len);
- 	load_oid_stat(&uc->ss_info_exclude,
- 		      next + ouc_offset(info_exclude_stat),
--		      next + ouc_offset(info_exclude_sha1));
-+		      next + offset);
- 	load_oid_stat(&uc->ss_excludes_file,
- 		      next + ouc_offset(excludes_file_stat),
--		      next + ouc_offset(excludes_file_sha1));
-+		      next + offset + hashsz);
- 	uc->dir_flags = get_be32(next + ouc_offset(dir_flags));
--	exclude_per_dir = (const char *)next + ouc_offset(exclude_per_dir);
-+	exclude_per_dir = (const char *)next + exclude_per_dir_offset;
- 	uc->exclude_per_dir = xstrdup(exclude_per_dir);
- 	/* NUL after exclude_per_dir is covered by sizeof(*ouc) */
--	next += ouc_size(strlen(exclude_per_dir));
-+	next += exclude_per_dir_offset + strlen(exclude_per_dir) + 1;
- 	if (next >= end)
- 		goto done2;
+ 	commit = lookup_commit_reference_gently(ar_args->repo, &oid, 1);
+ 	if (commit) {
+-		commit_sha1 = commit->object.oid.hash;
++		commit_oid = &commit->object.oid;
+ 		archive_time = commit->date;
+ 	} else {
+-		commit_sha1 = NULL;
++		commit_oid = NULL;
+ 		archive_time = time(NULL);
+ 	}
  
+@@ -426,7 +426,7 @@ static void parse_treeish_arg(const char **argv,
+ 		tree = parse_tree_indirect(&tree_oid);
+ 	}
+ 	ar_args->tree = tree;
+-	ar_args->commit_sha1 = commit_sha1;
++	ar_args->commit_oid = commit_oid;
+ 	ar_args->commit = commit;
+ 	ar_args->time = archive_time;
+ }
+diff --git a/archive.h b/archive.h
+index 21ac010699..dd022a6b46 100644
+--- a/archive.h
++++ b/archive.h
+@@ -11,7 +11,7 @@ struct archiver_args {
+ 	const char *base;
+ 	size_t baselen;
+ 	struct tree *tree;
+-	const unsigned char *commit_sha1;
++	const struct object_id *commit_oid;
+ 	const struct commit *commit;
+ 	timestamp_t time;
+ 	struct pathspec pathspec;
