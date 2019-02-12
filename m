@@ -2,199 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E2231F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 21:54:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D08151F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 22:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727312AbfBLVyg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Feb 2019 16:54:36 -0500
-Received: from mx0a-00256a01.pphosted.com ([148.163.150.240]:47416 "EHLO
-        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726809AbfBLVyg (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Feb 2019 16:54:36 -0500
-Received: from pps.filterd (m0094546.ppops.net [127.0.0.1])
-        by mx0b-00256a01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x1CLr3VL031732
-        for <git@vger.kernel.org>; Tue, 12 Feb 2019 16:54:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=20180315; bh=1mat0sdy4ZcPRfySu94uaxz0dbL+8OMT8JSj4p0qDmY=;
- b=z2J5p05CK+eVFO4/8gqEkrm8rRJO9T/uMvGlaz04bpbOg94l03ePxAvbk8sHKyTeK5rX
- 9rKM11Gk6zDyXiD5K9l5jD3dLtJLcOuwzFaTF0RjDrfi+SYb5RNWD1Cz7gXWbB3pfic0
- 8iipzNpIu2STM8adwVvKoob3Lv/BWlGPnAxpxE1UujnL0/YZSxXG0IWbuWFAmw/eLW/s
- /o0g98+deo/CbEJBeNGNkXGLM+uCVtAqyQoIHGbu5kKgEhQ4jZlgLinp8XS3LSP4fDg9
- sgs12i8XEjWrwV4Noh3heh4hyBu4CqHBc3BbIfl0kz856isunyuj2at0Q+T+xJFOFzfv jw== 
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-        by mx0b-00256a01.pphosted.com with ESMTP id 2qm1d8epge-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Tue, 12 Feb 2019 16:54:35 -0500
-Received: by mail-qk1-f198.google.com with SMTP id i66so201404qke.21
-        for <git@vger.kernel.org>; Tue, 12 Feb 2019 13:54:34 -0800 (PST)
+        id S1729495AbfBLWNx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Feb 2019 17:13:53 -0500
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:34070 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726882AbfBLWNx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Feb 2019 17:13:53 -0500
+Received: by mail-wm1-f44.google.com with SMTP id y185so428828wmd.1
+        for <git@vger.kernel.org>; Tue, 12 Feb 2019 14:13:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=1mat0sdy4ZcPRfySu94uaxz0dbL+8OMT8JSj4p0qDmY=;
-        b=zpZDehqXV8eyHe2b6SgiXZOhG2ftNDLzaZFmNHXF4zN0+ZL6KwjeBHGL2Pzv8dSCpH
-         goQkO2tS5p0F/LicFcT/2wD2G9ZcGPvI6s2fgygkxBcTOqJu05J6xKKumRUAt/0a3lm9
-         OofnDvdSRc29KlvoluAq5ONG9376DBnmzxO3h/x4+C2zGCYpbaoH+jE+FNuWdPNzEklU
-         1+ciLmQPGr6Q5DWFFcpEc+UiTk8AY6oRvgTIzW4Q40l1vO6jo89eTN8E6CYj6KpdHbae
-         c39SvTsdyRrL36BOIo2xDEZTatVSV/t5orFu+pcv1ymMWbdogvYR/dagpsK9725t9Y7N
-         /aiw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=q98t+yyLch8KgK9M1Kd2tVf6e7mmVth43BaLyH7Yn70=;
+        b=M7svjO0fhXbbV0jrWZViDN3MqLuXTgh6wBiKRZaLTWZYntEwC0/jKTXrZuwL3qeJBd
+         oXDD5kRGcpncIqRXafpDNsDAdanxU+DQKaegyiCZ1j65Ap62RwUE88HIseDhJf5OuMXJ
+         GMlWjPQhZKUdRXM52YUIXy8Yn5iv6VWNps95SrdGgMExNp0rpzOiTYGZGghvs+KBkrSX
+         rfbgZTQ0a7GyX/vNPp1RcCpvCbWBhU97JxZwVfzYhfRbn5BvnIsnDYvM2+fIhsbrxivW
+         qlDzihJwgsKlm3alXzcXP7w5GrXl1UKU6izLVMFOsRHAhoL2WaCD6glaDhw2mzIMWn7d
+         efQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=1mat0sdy4ZcPRfySu94uaxz0dbL+8OMT8JSj4p0qDmY=;
-        b=g1Q36lr8EYUL9Xne6maokhi1bjy0AFPyTZAAuwKjnTtZzSajs5bOxg+l7TXgWZQEr9
-         GTvqdV+2sgzi9vlbu6o521GAsTZe8FLfeamTaDaJjHrC4l3lhqON1RVq2+WZR9PL/e1G
-         7siKwokkxBFarirCe0BnW+us1KtJ8tq7sNbxp+8pH0Jp+W5nhJUqcUiGN0InkV6FPdHI
-         846jCTEM4UNQtSbMrcFhYrOsjZ13mrf8i2JJitVQL1sRAO0UK2uRiW6ZVA3fs7yrJaf5
-         TmwmbqpDdPukzF0AtsZ8YEQryRvltkHpTa4ywI3g/8FH2utP2n/uN2gCSK/wdOI+lU2L
-         aqGg==
-X-Gm-Message-State: AHQUAuaaaZJPtDgra7GNn710YzFtnJSBi55l82bbEtFhp5+EffiyOEGF
-        sypHNZOP0qN6y/p4OSpaO8SSXAWVaHwJ+mGg42elDL3OkX4FovdzrogzhzSKr8OoSNXWY7x+n87
-        vQNiIwySW6Ag=
-X-Received: by 2002:a0c:9a4a:: with SMTP id q10mr4352353qvd.150.1550008473644;
-        Tue, 12 Feb 2019 13:54:33 -0800 (PST)
-X-Google-Smtp-Source: AHgI3IZ2zG7OXby9d2Snwfh02XsOgyTUkBc/+WbZrhjkCOcHxYOyOOf/YQNPBp6WzSdeVgLLbIPjzg==
-X-Received: by 2002:a0c:9a4a:: with SMTP id q10mr4352338qvd.150.1550008473459;
-        Tue, 12 Feb 2019 13:54:33 -0800 (PST)
-Received: from LykOS.localdomain (216-165-95-149.NATPOOL.NYU.EDU. [216.165.95.149])
-        by smtp.gmail.com with ESMTPSA id a3sm20955416qta.21.2019.02.12.13.54.32
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=q98t+yyLch8KgK9M1Kd2tVf6e7mmVth43BaLyH7Yn70=;
+        b=A1/+mJQlNhfhh0uGnYXMY9WMHt4SVawPx1/7p9Jr3D3sL4w7/PEMP/uKr8Hauqaqah
+         bIvkLBz0MQH8r0BjUK2sidl4xkO9NP+WMPvu/f036HdfHSnKADKdqh5oe3wbA+z0IJEc
+         gF74ulCOtVQuUfNpArBFkUuutC6/8CQXNoA+2g7N214JjfiSwwb0uaZjKXtZYhUxa6uJ
+         o4Z8AyOPU0vHBR6TtmUKkj813Gah2jP+yftcCSbLNPApIK2SU3Ycux7642cvL6dbOHeJ
+         ly148pRlHOIc6otsjARFVdxNiHRcTqZKPtWm/VVy8DkOlg10mj65iG95AtDTVKNae1pU
+         a8kg==
+X-Gm-Message-State: AHQUAuZPZO9VdH4EmfMlUaupUlFqFbemXX9QKvOBbxItCPG8hNsT19IL
+        WGZX6fPPYs+4Ct2b2hWALvxTXIWb
+X-Google-Smtp-Source: AHgI3IY0uMz1+V+9/bPloeh0l+GWixhmkdNqWmNDFQjPyTS1Mv+my5V2uwp2LMZYcwajsq/MttrRyw==
+X-Received: by 2002:a1c:80c4:: with SMTP id b187mr730568wmd.23.1550009631112;
+        Tue, 12 Feb 2019 14:13:51 -0800 (PST)
+Received: from localhost ([95.149.189.205])
+        by smtp.gmail.com with ESMTPSA id c18sm21475057wre.32.2019.02.12.14.13.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Feb 2019 13:54:33 -0800 (PST)
-Date:   Tue, 12 Feb 2019 16:54:32 -0500
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Fabio Aiuto <polinice83@libero.it>
-Cc:     git@vger.kernel.org
-Subject: Re: Am a newby and I cannot compile git
-Message-ID: <20190212215431.btbvugcaqfdqnigo@LykOS.localdomain>
-References: <1549835814.5977.11.camel@libero.it>
- <20190210224812.wtn2qqm7lmsiarrh@LykOS.localdomain>
- <1549912081.1754.1.camel@libero.it>
- <1550007793.1750.1.camel@libero.it>
+        Tue, 12 Feb 2019 14:13:49 -0800 (PST)
+Date:   Tue, 12 Feb 2019 22:13:49 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
+Subject: Re: GSoC 2019: Git's application submitted
+Message-ID: <20190212221349.GH6085@hank.intra.tgummerer.com>
+References: <20190205211736.GD6085@hank.intra.tgummerer.com>
+ <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
+ <20190206220942.GE6085@hank.intra.tgummerer.com>
+ <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
+ <20190207213326.GF6085@hank.intra.tgummerer.com>
+ <CAP8UFD1Rv+nFqDYf33rRw-kWnfqokSG6=tG8XPFyBoVCU6Te=w@mail.gmail.com>
+ <20190211221827.GG6085@hank.intra.tgummerer.com>
+ <CAP8UFD3s3-mR528FqV3yuMEZBqT0uP+Mp5hGDcN_a1LfAsR0bg@mail.gmail.com>
+ <20190212202501.GA17681@hank.intra.tgummerer.com>
+ <CAP8UFD19Mhpm4MRjQ3xsPx-_Gc6CweTWC3aHbqyhyy0C0dvR1g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="xkqxl5it2ixknhhz"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1550007793.1750.1.camel@libero.it>
-X-Orig-IP: 209.85.222.198
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=8 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1902120150
+In-Reply-To: <CAP8UFD19Mhpm4MRjQ3xsPx-_Gc6CweTWC3aHbqyhyy0C0dvR1g@mail.gmail.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 02/12, Christian Couder wrote:
+> On Tue, Feb 12, 2019 at 9:25 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >
+> > On 02/12, Christian Couder wrote:
+> 
+> > > Yeah, using more of the libgit.a API, instead of the run_command API,
+> > > and writing technical documentation on the stash commit format look
+> > > like good ideas to me. I think I will add those items to the project
+> > > description if you don't mind.
+> >
+> > Sure that sounds good, thanks!  I think using more of the libgit.a API
+> > should probably be an optional endeavor, but writing the technical
+> > documentation may be a good thing to include in the project.
+> 
+> Ok, there is now the following at the end of the idea:
+> 
+> "This will include writing the technical documentation of the stash
+> format, and optionally refactoring the `git stash` code to use more of
+> the libgit.a API, instead of the run_command API."
 
---xkqxl5it2ixknhhz
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Awesome,
-
-Do consider reading the files under Documentation (as other people
-suggested) to make it easier to contribute. There's CodingGuidelines
-and SubmittingPatches that are super useful :)
-
-Good luck!
--Santiago.
-
-On Tue, Feb 12, 2019 at 10:43:13PM +0100, Fabio Aiuto wrote:
-> Ok I typed make install from the terminal, then I attached the the
-> project to the executable generated in the local bin directory. So I
-> can happily trace in the code. Thank you, hope I will be able to fix
-> things in git very soon!!!
-> Fabio.
-> Il giorno lun, 11/02/2019 alle 20.08 +0100, Fabio Aiuto ha scritto:
-> > Hello Santiago,
-> > I'm running debian Stretch on my machine, and using Eclipse. I'm new
-> > in
-> > linux world so I don't know how could I let you know all packages
-> > I've
-> > installed in a single screenshot.
-> > However I got the git sources with the following command:
-> >=20
-> > $ git clone git://git.kernel.org/pub/scm/git/git.git
-> >=20
-> > then I've opened the project inside Eclipse by importing a makefile
-> > project from existing code. I tried to build several time beacuse of
-> > some compilation errors that I fixed by installing the following
-> > packages:
-> >=20
-> > $ sudo apt-get install zlib1g-dev
-> > $ sudo apt-get install libcurl-dev
-> > $ sudo apt-get install libcurl4-openssl-dev
-> > $ sudo apt-get install libexpat1-dev
-> >=20
-> > At last no building errors detected but when I try to run adebug
-> > session, the IDE says tat 'Program file does not exist'. And there
-> > are
-> > more errors spread over the project wich are not detected.When i do
-> > the
-> > rebuild by clicking the 'hammer' icon, the message in the console
-> > window says:
-> > 20:04:07 **** Incremental Build of configuration Default for project
-> > git ****
-> > make all=A0
-> > =A0=A0=A0=A0SUBDIR git-gui
-> > =A0=A0=A0=A0SUBDIR gitk-git
-> > =A0=A0=A0=A0SUBDIR templates
-> >=20
-> > 20:04:08 Build Finished (took 866ms)
-> >=20
-> > Please ask me for more informations!!!!
-> > Thank you
-> > Il giorno dom, 10/02/2019 alle 17.48 -0500, Santiago Torres ha
-> > scritto:
-> > > It'd be difficult to debug without more context:
-> > >=20
-> > > Do you mind sharing your build log and more informationa about your
-> > > setup? (e.g., what OS are you running, what packages are installed,
-> > > how
-> > > did you get the git sources, etc.)
-> > >=20
-> > > Thanks,
-> > > -Santiago.
-> > >=20
-> > > On Sun, Feb 10, 2019 at 10:56:54PM +0100, Fabio Aiuto wrote:
-> > > > Hello again my problem is that I cannot compile git.
-> > > > The error message says:
-> > > >=20
-> > > > 	Type'z_stream' could not be resolved
-> > > >=20
-> > > > I don't know why, because I installed the package zlib1g-dev and
-> > > > in
-> > > > the
-> > > > header file zlib.h this structure is declared. Help me!!!
-> > > > Fabio.
-
---xkqxl5it2ixknhhz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAlxjQJcACgkQRo8SLOgW
-IpXkMQ/7BScdp8Z8CfX19Hd7hEfJY3CH6LsECECeU3mAjy7E+8fCAJ9bnPrLm4yt
-QDxA6YkaQhQmM1MHeidBZF3kl/ArNm7Et8yz7ewIPalzi/DoFeen0CRI25JG6soh
-Z+/AfdI+ZflwPLUSXLY3UFPT1BrUV99wX1iyMCr6LVbvyZslijqUT875QZ+g68hE
-1IcX2GiHC5v7wO5hXqdEzvv3JNoZW+hY6Dg/wdFChZqkc9kGJvCtCTT4MtbQqZWN
-+vc4UtpT7ytJ4xczfpsB+ogXr1aaXAZuNdk3tLcB4zAAH3WvbfujnpekILeGRm2h
-P942yjorOkJTacm6gKFhIGVSBWvTylaZlnEE9/YPnWRmBtLJtNCLSW1wzenUCCe8
-rxQC4KIguIoJKlND0JTrzlwJM6A3//Tnvxt9vDZS4TgeAdLs8OjgPII6t5DBfPJ4
-YyNI5gcQ0PaC/fDskVL/Gyy3vsYqtwyeolGyV9U3/UrmiTwFEq5ckOCZW3DSn8HS
-SzUS/ifgedOR3ehHxuK6YK3AEdzMpQbg7L7NbAo1JeSP0GbRq8CmkvOj5VNNdOhM
-GFYuMBJc4h9V9SDjgXLFQvIitr4orw0Ua5vmPmzzLeYcKoedDPUfGMsFmcccWtQN
-2h+erMcJauYDrq8T6Y7EE/6bld7wGjoOGqF16TQ8xpr2K72nzWE=
-=X0RZ
------END PGP SIGNATURE-----
-
---xkqxl5it2ixknhhz--
+Thanks, this sounds good to me.
