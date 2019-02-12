@@ -2,61 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1D3C1F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 03:52:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B2EF1F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 04:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726961AbfBLDwA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 22:52:00 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:41629 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726226AbfBLDwA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 22:52:00 -0500
-Received: by mail-qk1-f193.google.com with SMTP id u188so7895726qkh.8
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 19:51:59 -0800 (PST)
+        id S1727648AbfBLEDk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 23:03:40 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:36982 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726940AbfBLEDj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 23:03:39 -0500
+Received: by mail-pg1-f196.google.com with SMTP id q206so609002pgq.4
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 20:03:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=Y5aykyG630kSScQcIXC1ZPaKY34QmazU0FJDYrM4X/8=;
+        b=FhI3YmDHgT2XolqepQR4ApFl7o0mLJtCSD9wvMAMT2xjueLzkDp+ciMi52XjIvqXhz
+         DCsOreh0SeW4/si9ifcHTOc7Bq2MGK5L9Aco81LStmkUbHZnynj6ic2kOQOwqat9FTR+
+         TxS7uEUwlHVBYu5WveFe8n/YMS4FZxo//tq1/NUN3LKCpA0E7rbQuY9gygv3n63eWZfx
+         x1Ba/B8T90c80v1yy+jCITkbvJ/a4JthcXAv3wGZq8dUXhCKw46UcpAd6sctquYvsfcO
+         xZcJEPnzCWMV2G5BNPT7/ICdYfNBRcSJq5AJnrVnDTIgiuvBkbS2DyVgc49Pqekql29Q
+         Zeew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8nZinQUlr30DAs62Bcs2iBiqFqUdiYc+gaiUBY9q8XE=;
-        b=cMrJfvNtccSL5hgTqNl2xpIUdPpil8EWLvNPS/gV+RD1rnFmQ5i1/4PPPW3iJeENLW
-         cZ5i3v8QZ5pvJTY3/ev4P85+0Ss1KVLv6bENUchTDdO77XNjNBMdtoDI9vzxDL1ezxBd
-         hL/EfP9R1XbIPB0s31aDuOVIoUEfhuvk9tU6hVfIWbkTfcNnmlMLQz3l1Z/YY8Vg/RQG
-         NV0tePje+GSt+0kkRLgsa2kc8F0g7YDm29HI4jtQzs3HCRnE/FTdWBIi+ekhnMQphgXx
-         HEF/RXewsLJLsrXEhgSIz1CyWf2kqzR61kKQsiVlkIzRdrH5sZFXCg6Xgzi2IOWS8xyf
-         WBwQ==
-X-Gm-Message-State: AHQUAubCmoOLAuDMQ6E1hRXVrsF1+v67HUnPzFeBt+pb9A3mhTtaITh4
-        6sJ2PkGYQqARiuKcyKJDPycfVBfEY5KcT8SHY2I=
-X-Google-Smtp-Source: AHgI3IY4KQ+QAjChnjRVOqHcIY6K6EQMoHhn5EgaVBbzuB1Z2rVmm+7LlCOCQ07v3yrURoP6AfriIXBJgY/ax4MBlmU=
-X-Received: by 2002:a37:404f:: with SMTP id n76mr1196304qka.26.1549943519420;
- Mon, 11 Feb 2019 19:51:59 -0800 (PST)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=Y5aykyG630kSScQcIXC1ZPaKY34QmazU0FJDYrM4X/8=;
+        b=nGV1QtrH6+fqHCMYcvx/0timVlj/+95AXw+pAtzm4oMFacstV+iB1Vcgh+B+18+LsD
+         xvmmAj5TqWz0HLMF6LHtU2Vz03bKAA3jOBPGJcME32atHcd5Zw7k+ZyZ+5IcuQSDVG+p
+         +Er3q0/HQn5yOeN3rc85erZqUbReiJt0aN4ClrNCRbZzkIuJthBvQsTB8fFz8WDkn3Jn
+         R8X8g+TKPFwOTyn4319/Be5/GhQyJa98jHUncmLU1cO+/lyH+awg9V6Shtg00puNc0lj
+         BOtrSNDZfwdutIkuhWpOwTcy08ggV1QalUEScmH2MTRnzQBVhjVn1+h6hT1RBD5AUmw1
+         FziQ==
+X-Gm-Message-State: AHQUAuby79b/7Yf8fNO4yizO2UzMH+Nc54xfjttcP/M7O2otb2/C22zU
+        LRL6j2YmHJGuaOgruPjk5tWYnclW
+X-Google-Smtp-Source: AHgI3IZiYlERKIlMwoPGtAJiEHonbmmsp6iPpbrjt31c5aXz5/bYzvGFrpuj20fR0UT2Jc3HQTx2nw==
+X-Received: by 2002:a63:4858:: with SMTP id x24mr1726134pgk.420.1549944218504;
+        Mon, 11 Feb 2019 20:03:38 -0800 (PST)
+Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
+        by smtp.gmail.com with ESMTPSA id b29sm13882934pff.34.2019.02.11.20.03.36
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 Feb 2019 20:03:37 -0800 (PST)
+Date:   Mon, 11 Feb 2019 20:03:35 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] git-submodule.txt: document default behavior
+Message-ID: <0b62f65a8016c41b96aa6caead366e1ed9dda333.1549944164.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-References: <20190212012256.1005924-1-sandals@crustytoothpaste.net> <20190212012256.1005924-20-sandals@crustytoothpaste.net>
-In-Reply-To: <20190212012256.1005924-20-sandals@crustytoothpaste.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 11 Feb 2019 22:51:48 -0500
-Message-ID: <CAPig+cQsWrqapzd7XqDEf9Dx+pg3NjnJUG8Sgh21LEu3YWKRcg@mail.gmail.com>
-Subject: Re: [PATCH 19/31] http-walker: replace sha1_to_hex
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 11, 2019 at 8:23 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> Since sha1_to_hex is limited to SHA-1, replace the uses of it in this
-> file with hasH_to_hex.  Rename several variables accordingly to reflect
+This patch documents the default behavior of git-submodule if no
+subcommands are given, similar to how git-remote.txt documents it.
 
-s/hasH/hash/
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Documentation/git-submodule.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> that they are no longer limited to SHA-1.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index ba3c4df550..9bc98da154 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -28,6 +28,9 @@ For more information about submodules, see linkgit:gitsubmodules[7].
+ 
+ COMMANDS
+ --------
++With no arguments, shows the status of existing submodules.  Several
++subcommands are available to perform operations on the submodules.
++
+ add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]::
+ 	Add the given repository as a submodule at the given path
+ 	to the changeset to be committed next to the current
+-- 
+2.20.1.530.g88cfe87ec3
+
