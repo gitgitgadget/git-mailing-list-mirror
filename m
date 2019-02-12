@@ -2,125 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43E151F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 00:53:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5D301F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 01:17:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727884AbfBLAxg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 19:53:36 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34208 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727782AbfBLAxg (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 19:53:36 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9913D6042D;
-        Tue, 12 Feb 2019 00:53:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1549932814;
-        bh=oCQ8tlKI+aA/sHwSU5XXC+zk8yhstOcoaoN72IPuHt8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=r6qRugaxrWRgnt8BuXtDwj9jpbyUCBRbQ14jfvS0dn2V5wIKKxkrtBq499VGBsn7k
-         UGmwpNlDfcApdXAiZWNPchlaWKnijEWZef/Kf6y4LtQ9P5J4k+bocmS0ILTyWNj7bY
-         sAA+dRUnN1hyx+NUbcOygBRTeD4b+Hd+3Bwmb3B1JSUBhhziIQWaIoc9E8OxhO+oQ4
-         s1JrCTptWnJ9eDTQs3wDCuiP6VHVUJd3ZoDA5XD6VKBNDZiKZPhpCJd5/56hE+hOm+
-         YkNDKJUHJsBLooyB7MrxohfolzU2CD63+GUDYnNN6COg/42XrfBgiS477Ol3adBGZ8
-         +Ul4BnDbIGCqLKF3TuSLNUFqvIKgCfXJAf/dUk1rnN8Oopt7K2SPPTs2C9C6F2xTwK
-         CjUG7LXaAJ2YS5zRh2zTCF3KoVlrybVRdkk0Mi+hkwWHeQNzHWA7NibCfkZWxbjajw
-         GfAoACE0Cvs2h0O5ShxuB4xv2h0BITWRRzxu1abX+dfHNXRt8EX
-Date:   Tue, 12 Feb 2019 00:53:29 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kevin Daudt <me@ikke.info>, git@vger.kernel.org,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Rich Felker <dalias@libc.org>
-Subject: Re: [PATCH v3] utf8: handle systems that don't write BOM for UTF-16
-Message-ID: <20190212005329.GD684736@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, Kevin Daudt <me@ikke.info>,
-        git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Rich Felker <dalias@libc.org>
-References: <20190209200802.277139-1-sandals@crustytoothpaste.net>
- <20190211012639.579489-1-sandals@crustytoothpaste.net>
- <20190211214306.GB14229@alpha>
- <20190211235835.GB684736@genre.crustytoothpaste.net>
- <xmqqtvh9g857.fsf@gitster-ct.c.googlers.com>
+        id S1726080AbfBLBR4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 20:17:56 -0500
+Received: from mail-qt1-f182.google.com ([209.85.160.182]:44606 "EHLO
+        mail-qt1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbfBLBRz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 20:17:55 -0500
+Received: by mail-qt1-f182.google.com with SMTP id n32so1072826qte.11
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 17:17:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CViVh+vGbnbwFYmAejMyRfiVpl982Q7Nayf/RnoqZIg=;
+        b=O6HTuLcRRW66r6CE8Df3pNTqJvaBzIItJoGjaNSe0oxtRy9AJ+GhP9EFiTTrGAZKBu
+         UqWejxP5rkq55PrNaeB9pw+zmqTZXkLqdZN4/sJ3YrKFkqRqJMJiOiPUkZtpfEdLCKNo
+         7XwKcpiez6HCQmNMas4U4Zl2q2uystqrAmZ+NTGeZkkAuvk2pboLaHux1+vFt0eTynbp
+         K5PzsZG6uF/djcGCw1oc7MDPdGq2CRFAuJhutpgc+vuu5fv2RNtPC9ux1oL7SGp5cUKq
+         3gG+AvOPojoGH/D+j3Di/dos2TwXytAfgmaF+vIMyeuxmdTrEh5aiiYC0kAqlwGp2yNf
+         B8rg==
+X-Gm-Message-State: AHQUAuYeZ17peJ6F4tb/eDdIcU/MNzpqCSUThIEzSeIr8dRC3IxqfN+d
+        dVaHAPf0+AXOq8BqODsx+8Vpci8yrNvAFsxbWKE=
+X-Google-Smtp-Source: AHgI3IZElqiLwk3fcxxl0p6+e7GNHBsxDqXZ2JhW2z0xnCx7E0epIbrX5UM0EIyvsKr58l+ZzlY8NR1vRa7xDdQ7QFA=
+X-Received: by 2002:ac8:101a:: with SMTP id z26mr895000qti.184.1549934275089;
+ Mon, 11 Feb 2019 17:17:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4zI0WCX1RcnW9Hbu"
-Content-Disposition: inline
-In-Reply-To: <xmqqtvh9g857.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <20190209185930.5256-1-randall.s.becker@rogers.com>
+ <20190209185930.5256-2-randall.s.becker@rogers.com> <CAPig+cRARdkKN-wR4EzVSzxuK51VOPf-kFFG57kkEsnFBfe4TA@mail.gmail.com>
+ <20190212003735.GH13301@sigill.intra.peff.net>
+In-Reply-To: <20190212003735.GH13301@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 11 Feb 2019 20:17:43 -0500
+Message-ID: <CAPig+cQwh8RxVLgbBXR2WtE+k-aFAWnr12nBcTPzccQp_gdEZw@mail.gmail.com>
+Subject: Re: [Patch v1 1/3] test-lib-functions.sh: add generate_zero_bytes function
+To:     Jeff King <peff@peff.net>
+Cc:     randall.s.becker@rogers.com, Git List <git@vger.kernel.org>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---4zI0WCX1RcnW9Hbu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Feb 11, 2019 at 04:31:00PM -0800, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> >> -       cat lf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >lf.utf${i}.raw &&
-> >> -       cat crlf.utf8.raw | iconv -f UTF-8 -t UTF-${i} >crlf.utf${i}.r=
-aw &&
-> >> +       cat lf.utf8.raw | eval "write_utf${i}" >lf.utf${i}.raw &&
-> >> +       cat crlf.utf8.raw | eval "write_utf${i}" >crlf.utf${i}.raw &&
-> >>         cp crlf.utf${i}.raw eol.utf${i} &&
-> >>=20
-> >>         cat >expectIndexLF <<-EOF &&
+On Mon, Feb 11, 2019 at 7:37 PM Jeff King <peff@peff.net> wrote:
+> On Sat, Feb 09, 2019 at 09:05:04PM -0500, Eric Sunshine wrote:
+> > On Sat, Feb 9, 2019 at 1:59 PM <randall.s.becker@rogers.com> wrote:
+> > > +generate_zero_bytes () {
+> > > +       perl -e 'if ($ARGV[0] == "infinity") {
 > >
-> > I'll squash in this fix, thanks.
->=20
-> Thanks, all.  In the meantime, what I've pushed out has this
-> applied immediately on top.  Unless there is anything else, I could
-> squash it in in my next pushout I plan to do tonight, before getting
-> ready to tag -rc1 tomorrow.
+> > s/perl/"$PERL_PATH"/
+>
+> This shouldn't be necessary. perl() is a function that uses $PERL_PATH
+> (so you only need $PERL_PATH when you're writing out another script that
+> doesn't run in the same process space as the rest of the test code).
 
-I've just sent a v4 with this squashed in. Whether you want to pick that
-up or squash this into v3 is up to you.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---4zI0WCX1RcnW9Hbu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxiGQkACgkQv1NdgR9S
-9ouIAQ/+LkziuA29KrOf5ysMO028H8vE3N0a5DBEGhL/UsvKsFy+1A7apRiV+rpS
-iZqopazVd+yfMWZjeigDliMaB+3LEHAeXeR79M87ad/BqJdPZ2/GdkqCl9hNejXA
-dExUt8oEcJI2+8k2i149OfVwLrQ2JGt0kVBtnqW84KsPIoE9jbDvKhZm/UZdLDFx
-IcpYQzuUluv4ydj+hJ2zvsRCibfHTjc2gJ5gkv1HQwfqAAPRqyPRMDRylIlAP7Xp
-HqZw4oBmanAv2SbWWIhbIZnVuq5Sidy/PS+QIZTd0FaosyVe+kfGbcFqb5EeoMl3
-J+hJXIcZeFexvVuMQ+nt5Gy6Odw0Rm+eDr5y189gfXfEU9fQI7wtN4U+pESePBTS
-ZI/3nG5SuBaHqBvGrFAYaE96wEzdiUSuslZ7BHMFcKlb0EvSXflZU0omHvqzMZ0A
-xlD+QLKL6G9qq1azR/KZoDvbIGeEsFwPpnesHmEM/HY2RfcoMKgWukdmmR+CDND1
-dqrnBYn0gtOfqhvv7jlYDRwL7sIdrAlKgGRKKLSfYW4pEwSf13pWKDSOslG+DNUc
-KTkxsMSOp8vXBxvsOkjINKRYTwvTTfT6c1lEm2wsB6+5Mn1kZGzHkoSY1TGDivZm
-HpZZK5t0qSeNxDsMl5ocVAPMZUaPmXNgrUjKjRRKDwsPzSd4Jtk=
-=xqN0
------END PGP SIGNATURE-----
-
---4zI0WCX1RcnW9Hbu--
+Thanks for clarifying. I either didn't know or forgot about that.
