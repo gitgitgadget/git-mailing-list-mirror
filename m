@@ -2,77 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2F9A1F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 02:47:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CEEC1F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 02:59:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726881AbfBLCra (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 21:47:30 -0500
-Received: from sonic309.consmr.mail.bf2.yahoo.com ([74.6.129.253]:40249 "EHLO
-        sonic309-18.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726655AbfBLCra (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 21:47:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1549939649; bh=Lq2E6MRUQRoA3fCc+tCP6NhJfeLlAizlbwqtNxiwI0A=; h=From:To:Cc:References:In-Reply-To:Subject:Date:From:Subject; b=ar5otU+R/9EnymQ61GW/CMjfq0X4gWUtOe0nWt0S1cRN5hjyxxVTnXUSX/7Wn9grCFDj9Nnwo1ieNuwwjMPbr4gTyf6YKDudSC5zXAsYrLPAY4AHY5raCF8aaLKJ6VxSExXGf663MB7ErTX4dt3zEXLk1PwVzNLNbhEorGba2aVyzpbqE2roOTCza35JRtyQWjKdpY3B+32q7wVxTHwdAmAJxFvi41C1Khl7BCcZLA9t9YDZjPlBpFLnLBFxaQ0s6muQtXvZ5BKzp+ObmUcL6RQLZRrWjuU87Xd+kV3Lp6WeCIhtAdXpXVGgt6fwsjc73Al5ed6sb/OmVbF2C8leEw==
-X-YMail-OSG: UWB10VkVM1mfwWEKBrEyf7_ZxsHsIimc7WWvKba.0dxI7raa56t_oXR0WnUHUW0
- zOvBd.75vTknUWA4ipitsKA3nXZWPwGjc9xCASk_yEr.1me.vQ4kVrOD.0UU2J6kLqUT5mcQEWus
- Lv.3I7geI.4Pi5YHCASFk9HG6rRShZwAU6z6c0J.SMiXLeyR5r5W5b0RU6qD7cpiHH6wpQ9fJQSe
- srM7uoyQvzrnSUvxCy_gk4qVxNhOqTo5sEhb1t_8NJdbgCkm_ZJqjFJAhcWVh0DSBzvD38mADF9_
- jizj35Rf.m7F1q1wIr4rSYcfsiCW6IST9bYab4uP5ehPwOcTQgz8XjEyDOsqt8wVdOrDgBOAmcN6
- bT8Im_AUOFmGSivwlDcnt6k3ZSKWNvaXSXL3lO7xn83xst5OwTTuQ3_xIKbkUFAQ.xZqPjvm9pDr
- jefB_316eI8laYpwGlb_ehaK_7zGoy4Cg0ufMmtMHKkIn22kEEaiRRZDxzkw4VZIFJMmLSdQ7YG2
- aWuvFlFJhalxqr2CcCkTxlMyB3XGhckP9Qwl3TSQMEqzJOhgMpLHkHLZROuUN.CnamZdepSx7rZM
- sBhTet9Kykq4CWK_PuJhqgqy6WybglSiFW5lSBUUxSwlfUWB7e5YFGUCUR1x9ysC4uINC_wsD0wW
- 3fbl1KW3kJzriQDMjgrJFnTr6.qnZpQ32RcBZfHn3.SAXu8U4SK3Cnuubk6PMrW5uCA4zec0jXah
- 81wZwgVcv2de16045sUSmzbU_59Yn1yKxRZbAfAwzJbMu9AWXivpwOPxK.xOn39LAtW_EIXb3eUm
- Is8_kPlXcNzL9LUptRiFZPlBJguZ5vG2aiFZoWYZuKpiyUDUTJwS7wTmuq4jUekKMDLdhHhFdd1j
- BMeu7s3A.3jSWfVHMU4yKA4wGQbfMJpCqCj_7nChuNXrVtJ.TIcjgnQiBo4qQ2_lCvWye_ug73LF
- 70FO0hCR2zcntFsTQnazm1VhMHOYaq_XdoZLtpRzAqroOsrrQUO.juqr9K0vi8ZZIp87DwnCAVUB
- KQDmQ_pmrxGYADNqg1BNJ.5RMOm4VVqWdo6IacvSYMAOcgOWJZieuRE0T9OTZGHGv87NmpUhrbKH
- KgwsN69ofkBgjQX56SCrw81Fr57hXK5RUMw--
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic309.consmr.mail.bf2.yahoo.com with HTTP; Tue, 12 Feb 2019 02:47:29 +0000
-Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO gnash) ([99.229.179.249])
-          by smtp426.mail.bf1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 8f11bff4774df19e6a115700fcb02e53;
-          Tue, 12 Feb 2019 02:47:27 +0000 (UTC)
-From:   <randall.s.becker@rogers.com>
-To:     "'Eric Sunshine'" <sunshine@sunshineco.com>,
-        "'Jeff King'" <peff@peff.net>
-Cc:     "'Git List'" <git@vger.kernel.org>,
-        "'Randall S. Becker'" <rsbecker@nexbridge.com>
-References: <20190209185930.5256-1-randall.s.becker@rogers.com> <20190209185930.5256-2-randall.s.becker@rogers.com> <CAPig+cRARdkKN-wR4EzVSzxuK51VOPf-kFFG57kkEsnFBfe4TA@mail.gmail.com> <20190212003735.GH13301@sigill.intra.peff.net> <CAPig+cQwh8RxVLgbBXR2WtE+k-aFAWnr12nBcTPzccQp_gdEZw@mail.gmail.com>
-In-Reply-To: <CAPig+cQwh8RxVLgbBXR2WtE+k-aFAWnr12nBcTPzccQp_gdEZw@mail.gmail.com>
-Subject: RE: [Patch v1 1/3] test-lib-functions.sh: add generate_zero_bytes function
-Date:   Mon, 11 Feb 2019 21:47:25 -0500
-Message-ID: <001201d4c27d$4980b7e0$dc8227a0$@rogers.com>
+        id S1727767AbfBLC7W (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 21:59:22 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37123 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727137AbfBLC7W (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 21:59:22 -0500
+Received: by mail-wr1-f65.google.com with SMTP id c8so1004269wrs.4
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 18:59:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nfEqfq6gzo9sbWJgB5cMFa02DTS3jGlEz5D3TPnU26w=;
+        b=ZalskmYl/K1rrq2Hfj43QhH8GYm/FKqhzKIOgWgIN8D8OtJGXL+/p1CmPAKtQBtFox
+         j8VOcwIxqAir/nIhiF/KfCceOiWjfy5jsMXk7wCEDHanxHd9JpFmwWmjsBrys8QOj1Cg
+         V4wAzg3JecLrPc6wMIQtJkt0nA47EcS8orHh2WrLIVi0/cBIFlKP/bdf5CZy1YLoamlZ
+         +I9vVkN27jWTCwubimrOFul8QOI58M/oDzxeUrO6QM6+x3XlxC6CkTFxOxBVTmHayD8M
+         JRmjaUuYu+J+3Fscn0A+uDS2vLgKEtiJOK4TTRhbFtC+o2WOxmqgHKjOJU7HKO/HFVyF
+         j1mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nfEqfq6gzo9sbWJgB5cMFa02DTS3jGlEz5D3TPnU26w=;
+        b=mswo65smCqSp+KE4Ubr1C5WUmDv1dZwiMR3vp4rHpGD1hzSxGIdJ3ghylFXkCeBGAw
+         ANmy5Yw4FnR5sCcxvLNCyOoiGGgqKkHqex4QAngb+nqZiV2EcnfrYLltvyjnBmF/shmg
+         7TIt4c8YwuiSyVWJfhggWH9gnp3mZqwGhzIx0yNvvWmF+SZaOUlCGNv19kk+Wy8OFPK0
+         6AwIXYwFVIfz+83H/jJ81AbHuWDlTRdIxXdSl3uAMmHLUksrsdqNHtrSrBPjR/LTILmD
+         dFQ6CO8BGYRDdm5jJOoQUYhsVZYUCLRSAXMH2PO81ehJb5enDd9sgQlh7nfmkCL9C9ap
+         rhxQ==
+X-Gm-Message-State: AHQUAuYQ7Db8B0S8z7QmVCgGlRaCzqBMgzxc2A0EuHIYkKVXFtW3Dcv5
+        JKNsXwvNVmgpMK25pljV8dTTCnBe
+X-Google-Smtp-Source: AHgI3IYope+Nf9LIaNvv6BSDotiA28rkH/9HEBI8FDC3DvDKQQ1f2cqHqPqSKAarrfIAVK/OQSRRhQ==
+X-Received: by 2002:adf:eb48:: with SMTP id u8mr950561wrn.198.1549940359910;
+        Mon, 11 Feb 2019 18:59:19 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g10sm20383023wrq.81.2019.02.11.18.59.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 Feb 2019 18:59:19 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [Proposed Fix] daemon.c: not initializing revents
+References: <000901d4c0b1$1ea15160$5be3f420$@nexbridge.com>
+        <000a01d4c0b1$9ef9ea70$dcedbf50$@nexbridge.com>
+        <xmqqsgwugi21.fsf@gitster-ct.c.googlers.com>
+        <003501d4c253$05f16fd0$11d44f70$@nexbridge.com>
+Date:   Mon, 11 Feb 2019 18:59:18 -0800
+In-Reply-To: <003501d4c253$05f16fd0$11d44f70$@nexbridge.com> (Randall
+        S. Becker's message of "Mon, 11 Feb 2019 16:44:48 -0500")
+Message-ID: <xmqqd0nxg1a1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGM7GjkJQPJw2ZzFceglcz2DqNUWwDZJf6DAflb4NwBpydqTQG7ktwQpjl3tnA=
-Content-Language: en-ca
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 11, 2019 20:18, Eric Sunshine wrote:
-> On Mon, Feb 11, 2019 at 7:37 PM Jeff King <peff@peff.net> wrote:
-> > On Sat, Feb 09, 2019 at 09:05:04PM -0500, Eric Sunshine wrote:
-> > > On Sat, Feb 9, 2019 at 1:59 PM <randall.s.becker@rogers.com> wrote:
-> > > > +generate_zero_bytes () {
-> > > > +       perl -e 'if ($ARGV[0] == "infinity") {
-> > >
-> > > s/perl/"$PERL_PATH"/
-> >
-> > This shouldn't be necessary. perl() is a function that uses $PERL_PATH
-> > (so you only need $PERL_PATH when you're writing out another script
-> > that doesn't run in the same process space as the rest of the test code).
-> 
-> Thanks for clarifying. I either didn't know or forgot about that.
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-As did I, thank you.
+>> In any case, no matter what POSIX says, if clearing .revents before
+> calling
+>> poll() helps on platforms in the real world, the patch is worth taking as
+> a fix, I
+>> would think.
+>
+> That's what my intent was - my explanations are suffering from a little
+> work-induced sleep deprivation. Would you like this as a formal patch?
+
+That depends ;-)
+
+At this late in the cycle, I do not see much urgency for this patch
+to be in the upcoming release (after all, this code survived real
+world for quite a long time, so it's only minority platforms like
+NonStop that haven't seen serious porting effort until recently that
+would see improvement---and they have survived without reliably
+working daemon for so long that they can wait for one more release).
+
+Now, the knowledge that we will have long enough time before the
+final version of the formal patch becomes necessary makes me wonder
+what the best use of that time to polish the patch would be.  Ideally
+we'd like to see "this definitely fixed (or 'worked around') such
+and such breakages on platform X, Y and Z" instead of my "Well, we
+could read POSIX that way, so there may be some platforms that would
+require applications to do this, and an extra assignment here would
+certainly not hurt", which was the hand-waving I just did.
+
+I dunno.
 
