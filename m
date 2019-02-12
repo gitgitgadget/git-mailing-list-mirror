@@ -2,82 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FB751F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 12:44:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6FE91F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 12:45:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729525AbfBLMoa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Feb 2019 07:44:30 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35320 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728085AbfBLMo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Feb 2019 07:44:29 -0500
-Received: by mail-wr1-f67.google.com with SMTP id t18so2546679wrx.2
-        for <git@vger.kernel.org>; Tue, 12 Feb 2019 04:44:28 -0800 (PST)
+        id S1728273AbfBLMpx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Feb 2019 07:45:53 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:33177 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726550AbfBLMpx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Feb 2019 07:45:53 -0500
+Received: by mail-it1-f195.google.com with SMTP id q78so1680477itc.0
+        for <git@vger.kernel.org>; Tue, 12 Feb 2019 04:45:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=waM+eMkX0idD+SHnTLcJgJvi9tJ0/HBv8fSpaLGFurc=;
-        b=A+AI4tFr2ILVA9G2emF7NVekI8TfMhifd10JjMR551lPyC/Ex37WF6AwC5jxpQBNR9
-         f2FBCIoQnBO3BNc6XQgjhv/EePp4ZWnqqtx1XjopaRY7y+FlL7HsYncmZaj8KzqwK1Ok
-         dtk4xz33HZyhSCgbXFsC2xkfsDMD190/+KgivKNQufElLH1pEDwIcEJ2siSQQ6YoA8K6
-         LP+I52PIIuXzGR/TkNRh4Hg1K57TXN2xoxHrWQJp+Gyj9srVugh9R+w7s41yyOSvHe47
-         div41tFpdyWmcHKDDEsTfhE/5PyQBxNYVEqw7aTZaoiaFX1L0GdwSJcXn+Vogf7s/9CV
-         XPyQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dZXampR1vCNDN8fqAZdWnzWGbaJYKsVMIxqt0m/jHHI=;
+        b=uWlv/koVJSu1sfy2AmX3xiNQlrhdZpfGqZZVhSepAb5ywwHal/8Pbs7eLZt6PH/0pY
+         LKvLZxwLCUWjyju8eKAnPhWw201ljwO//piB+NNJ8uf+SPaKdcpNepNl6ZfGuRzfTL32
+         ly7M2Iop9UOS29T/Vlt1mw5b0ibwWmPW67pd5xujLyLiWwAQFGDzWnu+7yxCvxUVwUeq
+         +3Jf+e7uTI115Ze0Exfu98MOd3smOqCCTuPAftUWIuVNL/txhA+df9uku/9qxwQuvsFx
+         m2gubvXbGHl/w0Qyje6x9GBchN3wXnNPEl8GFDlUfiGbz06Y/dBaAMqYOpd2ZoK7Ws/M
+         zsww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=waM+eMkX0idD+SHnTLcJgJvi9tJ0/HBv8fSpaLGFurc=;
-        b=DdB6b7z5kjp2d/wRA5bnQe7Q2O/Vr289kGkHujUaydGX6rNlR2OPUo7d/HoY2zd1DZ
-         8XyhfCO6NcpRLmLOn0Eybl8KNtSp+JhFZyvOHe7Tlu4HIDoRMIzZkRk05GgrvWQ4ykDz
-         EFHfw87vpSI02ML/NiZRc2aiVaD8eSkzv5CDXRQZZWPld03gntitSk8vOua5+nKX79Rx
-         eaUCijeoAY21gu6rfxbC3W1Ze5ICVCHaKt4672NNJ8NRtAZ5QCHKSWpnWkcycq2hPc5S
-         uWvPuceE41NXszvfbZ2asEf1D4HFppn9SVhsZ+W+/sv+NY7L7PdF5zMFrmWQTMWYEMPk
-         ViHw==
-X-Gm-Message-State: AHQUAuZsiNFagbYQstGuQlSFb+R7FXXqbYDe5J3Zsd/sLWmCviCHDAup
-        51pT+R2ZoULjyf8cbgrPb8s=
-X-Google-Smtp-Source: AHgI3IaQffmayEyAjS+w54m7MxK2gbpdEIoli5eFnb/GVFj7NyDvXznSXMaKWSyNDmB1vVVMT/wpRw==
-X-Received: by 2002:a5d:540f:: with SMTP id g15mr2979055wrv.126.1549975467866;
-        Tue, 12 Feb 2019 04:44:27 -0800 (PST)
-Received: from szeder.dev (x4dbd7e49.dyn.telefonica.de. [77.189.126.73])
-        by smtp.gmail.com with ESMTPSA id h13sm4511834wrs.42.2019.02.12.04.44.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Feb 2019 04:44:27 -0800 (PST)
-Date:   Tue, 12 Feb 2019 13:44:24 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dZXampR1vCNDN8fqAZdWnzWGbaJYKsVMIxqt0m/jHHI=;
+        b=kIDm02j/Vc1S/maogbHBqa580VnAPReD3Ct3Xv1/p2CJa3W8YHcIAblxRQU+drHH9S
+         I5WfHysetcZ83NsG8jnq8cWFF3+yrULzZzPbMtMO76qHlbwCCllDgq9OiY3IwcFB7gx/
+         8gokufog5TlXFI+Z1CvuY9fVmLe128r663irDmIfc9TrDhnJj6ziFGvoxPiVJwDzfiuP
+         1IVComs3hmUP+WFtknIwn24WrXZUBYeOShbtw/gClsbdNlmTYJyU5PYvg+VTrU0yYwKY
+         ciU1u1jb6+ZqE3OZgQJQ3gJ8XmhPcXDorZB8HTkuyDAOQ5sv0e6PDD1FYacjFMVJ3LgM
+         r8fA==
+X-Gm-Message-State: AHQUAuZHRlrYDKH5AluknNN8K3wZju6Myl6ZceL2zvsosFMg4JuS0+90
+        PeCcfnHhJTjyqHep2I7cH7Ehm7K/FNmKWN6vpqc=
+X-Google-Smtp-Source: AHgI3IZoj1CdS4OVVjZ4I0OY04w4zlJPwBbFKxiOYWnm31j7GI0aWx7fuUFz0MIFZi/k+/439RrC5Y9uxlYvtfXwUA0=
+X-Received: by 2002:a6b:c544:: with SMTP id v65mr1893341iof.118.1549975552900;
+ Tue, 12 Feb 2019 04:45:52 -0800 (PST)
+MIME-Version: 1.0
+References: <xmqqh8dgqcqn.fsf@gitster-ct.c.googlers.com> <87sgwtjjbk.fsf@evledraar.gmail.com>
+ <20190212124323.GA11677@ash>
+In-Reply-To: <20190212124323.GA11677@ash>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 12 Feb 2019 19:45:26 +0700
+Message-ID: <CACsJy8D-FVGXHbqKf8BAVWEFchbF5LAN6x8UM5g7v_HLO29CLQ@mail.gmail.com>
+Subject: Re: Git v2.21.0-rc0 broken on *BSD, maybe others
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
         git-packagers@googlegroups.com,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git v2.21.0-rc0 broken on *BSD, maybe others
-Message-ID: <20190212124424.GF1622@szeder.dev>
-References: <xmqqh8dgqcqn.fsf@gitster-ct.c.googlers.com>
- <87sgwtjjbk.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87sgwtjjbk.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 12, 2019 at 01:13:35PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> As seen on https://gitlab.com/git-vcs/git-ci/branches there are
-> regressions since 2.19.0, e.g. we have hard compile errors on BSD now,
-> and maybe AIX. I haven't dug into it.
+On Tue, Feb 12, 2019 at 7:43 PM Duy Nguyen <pclouds@gmail.com> wrote:
+> The test failures on NetBSD and Solaris/Sparc, not sure if we can do
+> anything without test logs or access to these systems.
 
-Where exactly can we see those?  Could you please give us a link
-pointing directly to such a compile error?
-
+Actually if you could tweak your ci script a bit to run tests with -v,
+that would help.
+-- 
+Duy
