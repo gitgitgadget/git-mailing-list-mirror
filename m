@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1F771F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 03:32:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A31121F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 03:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726908AbfBLDc1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 22:32:27 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:37445 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726811AbfBLDc1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 22:32:27 -0500
-Received: by mail-qk1-f193.google.com with SMTP id m9so7891357qkl.4
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 19:32:26 -0800 (PST)
+        id S1727045AbfBLDoZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 22:44:25 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:45444 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726699AbfBLDoY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Feb 2019 22:44:24 -0500
+Received: by mail-qk1-f196.google.com with SMTP id y78so7860771qka.12
+        for <git@vger.kernel.org>; Mon, 11 Feb 2019 19:44:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Z7rXjkbYTNX4agMoP7yoCqt2G2OM25+a3Y1eO3S1PAQ=;
-        b=qu1D8x6BgRO5pyJnUD8ejfS5siHrlSKpA1hUKIi3vCWuc1all2k/kRHkPZ6+xRQxRh
-         HpDWfanFnw/f5CNMB3FRc202tq5IizV5aYSrW6RICMCBU2iMnrS9no9OszFSEWyMMHTl
-         1zhkpO7heCLvaIwKGHRSgpO+BzdTD4OVWW9F4Xn3bgJu8jhjCuuOM4kc5yvtJ3kx+Stm
-         2tAMgL7UPnxTTPCqsYdC2GEjl/Stw3Jz3X7ZLT4dQbwnjdgqxxAbx4iPpNdfr4RVukfQ
-         tdA9lznqKyIeU2tawC+GVoRizlLhn13irjflOL9wbgkBzQUZl6vmFUiwCurZMPIVe29A
-         tqcw==
-X-Gm-Message-State: AHQUAuaMF3TqqhAIDYCAgTs2VFVe6tnANF31dxJkxgmdIISru6bn0avj
-        kAmc3Q687xa0cAkyhaM+jCprTcdIbDkK6wZD7JDiOA==
-X-Google-Smtp-Source: AHgI3IZzzNoCSZp4EXjk80iwH3xkm1rMXCK7dusgOskn++F8LoaoKOY3nWWJrBliNW3wSAQWAioW4s5EYTkC+hW2/Tc=
-X-Received: by 2002:a37:404f:: with SMTP id n76mr1156288qka.26.1549942345916;
- Mon, 11 Feb 2019 19:32:25 -0800 (PST)
+        bh=0j/jmVDcMGJMkstUOafQGE0liRWOqA4nRb/uRhDA/oM=;
+        b=aufzqv7J//XOQ+3G87R3u79KVJBc1MyhRERmilaE24YUKMV53QVQ/C57p60obNrfzN
+         ea+CaZsNK6AhmKrlsk1LqjZpACxqdy7kZ6Tj2C51z+bSrWS+MEfd7rNluRDS5oWApG2Y
+         rk7QcaLh4y0MK9I0jCEfELyQK5BenwVBWW3adQVm/bJLOaoWeW63SQeWSSjViRRvPNGX
+         p/tJFr/yCimTmz4k5pQU2sBAH0FZVuhdHUqJgbfRm3smrV1KMeynvfm8nCokXirwExCk
+         9YsOUURr8hJz3rsl/VM3ZweB/lzHaIUAIJZ8+OO59dEDrvE4geH4J6jNesVuW6kishPZ
+         hAZA==
+X-Gm-Message-State: AHQUAuaWyUkQIc+qPwQdHO1iOJ8kUQAWZPvCzpEL3KNYVbXC9PZ8FHKH
+        YBijxxhzdrcsKB8+wttpEcn3u7qGb9hxJ5ZhpS4=
+X-Google-Smtp-Source: AHgI3IZlN7rHb0Wlx825TXORz5/q5AM0lQWcQQ4xyUyC8sjoYOKuXihkWhpoyauhaCQPlCHexl7IxciAF7nu1z80UyM=
+X-Received: by 2002:a37:404f:: with SMTP id n76mr1181075qka.26.1549943063343;
+ Mon, 11 Feb 2019 19:44:23 -0800 (PST)
 MIME-Version: 1.0
-References: <20190212012256.1005924-1-sandals@crustytoothpaste.net> <20190212012256.1005924-11-sandals@crustytoothpaste.net>
-In-Reply-To: <20190212012256.1005924-11-sandals@crustytoothpaste.net>
+References: <20190212012256.1005924-1-sandals@crustytoothpaste.net> <20190212012256.1005924-13-sandals@crustytoothpaste.net>
+In-Reply-To: <20190212012256.1005924-13-sandals@crustytoothpaste.net>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 11 Feb 2019 22:32:15 -0500
-Message-ID: <CAPig+cS3i2FWf6mFmpPpctyJJbx4xdHgWXrveRUkjMHct5SbJg@mail.gmail.com>
-Subject: Re: [PATCH 10/31] object-store: rename and expand packed_git's sha1 member
+Date:   Mon, 11 Feb 2019 22:44:12 -0500
+Message-ID: <CAPig+cQivuPjDztK30QO0xKx1Tx+nYDPzTvgXvi9WVyRX5-aRQ@mail.gmail.com>
+Subject: Re: [PATCH 12/31] fast-import: make hash-size independent
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git List <git@vger.kernel.org>,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
@@ -52,57 +52,57 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Feb 11, 2019 at 8:23 PM brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> This member is used to represent the pack checksum of the pack in
-> question.  Expand this member to be GIT_MAX_RAWSZ bytes in length so it
-> works with longer hashes and rename it to be "hash" instead of "sha1".
-> [...]
+> Replace several uses of GIT_SHA1_HEXSZ and 40-based constants with
+> references to the_hash_algo.  Update the note handling code here to
+> compute path sizes based on GIT_MAX_RAWSZ as well.
+>
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
-> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-> @@ -689,7 +689,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
->         while (pl) {
->                 printf("%s\n%s\n",
-> -                      sha1_pack_index_name(pl->pack->sha1),
-> +                      sha1_pack_index_name(pl->pack->hash),
+> diff --git a/fast-import.c b/fast-import.c
+> @@ -2047,7 +2047,8 @@ static uintmax_t do_change_note_fanout(
+> -       char realpath[60];
+> +       char realpath[GIT_MAX_RAWSZ * 3];
 
-I guess there is no oid_pack_index_name() function yet?
+I wonder if the fixed multiplier deserves a comment explaining that
+this is reserving enough space for a hex representation with '/'
+between each digit pair plus NUL. Which leads to the next question: Is
+there is GIT_MAX_HEXSZ constant? If so, this might be more clearly
+represented (or not) by taking advantage of that value.
 
-> diff --git a/http-walker.c b/http-walker.c
-> @@ -434,7 +434,7 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo, unsigne
->         if (walker->get_verbosely) {
->                 fprintf(stderr, "Getting pack %s\n",
-> -                       sha1_to_hex(target->sha1));
-> +                       sha1_to_hex(target->hash));
+Also, there are a number of hardcoded 60's in the code earlier in this
+file, such as:
 
-Should this have become oid_to_hex()?
+    if ((max_packsize && (pack_size + 60 + len) > max_packsize)
+        || (pack_size + 60 + len) < pack_size)
+        cycle_packfile();
 
->                 fprintf(stderr, " which contains %s\n",
->                         sha1_to_hex(sha1));
+Is that just a coincidence or is it related to the 60 characters
+allocated for 'realpath'?
 
-The patch isn't touching this sha1 yet, so this is okay(?).
+> @@ -2405,7 +2406,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
+>                 char *buf = read_object_with_reference(&commit_oid,
+>                                                        commit_type, &size,
+>                                                        &commit_oid);
+> -               if (!buf || size < 46)
+> +               if (!buf || size < the_hash_algo->hexsz)
 
-> diff --git a/http.c b/http.c
-> @@ -2262,10 +2262,10 @@ struct http_pack_request *new_http_pack_request(
->         strbuf_addf(&buf, "objects/pack/pack-%s.pack",
-> -               sha1_to_hex(target->sha1));
-> +               sha1_to_hex(target->hash));
+What exactly did the 46 represent and how does it relate to 'hexsz'?
+Stated differently, why didn't this become:
 
-oid_to_hex()?
+    the_hash_algo->hexsz + 6'
 
-> @@ -2289,7 +2289,8 @@ struct http_pack_request *new_http_pack_request(
->                         fprintf(stderr,
->                                 "Resuming fetch of pack %s at byte %"PRIuMAX"\n",
-> -                               sha1_to_hex(target->sha1), (uintmax_t)prev_posn);
-> +                               sha1_to_hex(target->hash),
+?
 
-oid_to_hex()?
+> @@ -2456,7 +2457,7 @@ static void file_change_deleteall(struct branch *b)
+>  static void parse_from_commit(struct branch *b, char *buf, unsigned long size)
+>  {
+> -       if (!buf || size < GIT_SHA1_HEXSZ + 6)
+> +       if (!buf || size < the_hash_algo->hexsz + 6)
 
-> diff --git a/packfile.c b/packfile.c
-> @@ -722,8 +722,8 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
->         if (path_len < the_hash_algo->hexsz ||
-> -           get_sha1_hex(path + path_len - the_hash_algo->hexsz, p->sha1))
-> -               hashclr(p->sha1);
-> +           get_sha1_hex(path + path_len - the_hash_algo->hexsz, p->hash))
-> +               hashclr(p->hash);
+...as it seems to have here...
 
-get_oid_hex()?
+> @@ -2555,7 +2556,7 @@ static struct hash_list *parse_merge(unsigned int *count)
+> -                       if (!buf || size < 46)
+> +                       if (!buf || size < the_hash_algo->hexsz)
+
+...but not here.
