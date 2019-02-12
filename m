@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32B551F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 01:23:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D6301F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 01:23:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727301AbfBLBXr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 20:23:47 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34384 "EHLO
+        id S1727305AbfBLBXs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 20:23:48 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34380 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727270AbfBLBXq (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 20:23:46 -0500
+        by vger.kernel.org with ESMTP id S1727269AbfBLBXp (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 20:23:45 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 75EA36042D;
-        Tue, 12 Feb 2019 01:23:44 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 26CF660E5E;
+        Tue, 12 Feb 2019 01:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1549934624;
-        bh=hXdBQmxKcdp38XPH0Yx4qOCZOiLkrEgT+oxVjBoJJH4=;
+        s=default; t=1549934623;
+        bh=2TtYrNMb/kzBAydNMsK0aKUC/eRRWFYRlEz1ei0ENP0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=D2EbhrGQYP3K4/dG9qEJEFCXGEyaU8I1TFk43d8fYNyxPlchJUAIXiGTJqGQq3UVF
-         o966d/Ay/cy0JUC99xdPuuPZuTcBt9QGFMoYn3F/nJYkJIJ0JYY6FxWO+S/SwIuEAQ
-         FNX5KNP8aHmKK89zjmDKlG2YfN5yhnNca5zf4ZTPSt9Zild0iHmlr0IavPyil9fOmS
-         gvQ1Jhah2bE9e+VFWo8ZaFV026yAIdHJPZSNDxUQ+uD/w6LNNf6q6ZyCpiC8U/mtRl
-         H3dkIfDUeHn5hME7poI3A6XaXisnkURI9+gLQPSdQVnEc29GNCNIdnP2qshO7stmhq
-         fqFUhesgLN9FwWRv/gbqC9YMHqk2YaNpSefIuTec04r96FW3Sw2euaT4Bd9huq513g
-         LUKIX51ogY7PsbA2IRgyj7nU3a6tCMck6I+ivtbaaQr7zmIepdoiVyoBkPmqTbusVg
-         JL3PUYaOLIhslOg8yEJ3/WkpbhfYuTgwtXzrG3xyC4VAL+lzYed
+        b=PlFvxd6YRabT1QOOIfIbQVk9N4uaxjWQNi0jspawaBJg0IREa6l+Rv7O7y8GY7sbl
+         LUmikA37+ZTm4CPBWlDRe8hd7ucFJUWgOb81yq3ilx2hFICzu0OI8b+Pd/0Vb9Ds0y
+         CiIWpaP1FgX109dC1gfiK5+VnqU/HuMrNHvL3/i62izFd7SR79ToGj/JO3nAsRqic8
+         rCCtOxt/6EPDXoTOETk9q2HlTPLlRzvHQrTJn/e7l+2Bjf6utS2KbMJpjlXxqSb5Hn
+         73x2sK0ujdi02WBH0U5OTTzwotG4FJd2qNb6wRwsknBAbkwqy5tCxDfomTysCrag/l
+         AvmI90vlsOGjsBaJKdW7gLhQQ6MajMB4LDLMCw8+syFFAlOffiJ3PMZJPI0i/8LcTJ
+         bXt1RAE1UqWfPsSvV5W1sfeVYAv10q18xbN/TtikLmVDeNCUFc9O9qCFbIbGNV1xCm
+         vhhTJJAJu630di1Azl9up6q+iOSVY41WrqjdE7MEiPynAr8f3sW
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH 29/31] read-cache: read data in a hash-independent way
-Date:   Tue, 12 Feb 2019 01:22:54 +0000
-Message-Id: <20190212012256.1005924-30-sandals@crustytoothpaste.net>
+Subject: [PATCH 28/31] dir: make untracked cache extension hash size independent
+Date:   Tue, 12 Feb 2019 01:22:53 +0000
+Message-Id: <20190212012256.1005924-29-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.20.1.791.gb4d0f1c61a
 In-Reply-To: <20190212012256.1005924-1-sandals@crustytoothpaste.net>
 References: <20190212012256.1005924-1-sandals@crustytoothpaste.net>
@@ -53,170 +53,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Index entries are structured with a variety of fields up front, followed
-by a hash and one or two flags fields.  Because the hash field is stored
-in the middle of the structure, it's difficult to use one fixed-size
-structure that easily allows access to the hash and flags fields.
-Adjust the structure to hold the maximum amount of data that may be
-needed using a member called "data" and read and write this field
-independently in the various places that need to read and write the
-structure.
+Instead of using a struct with a flex array member to read and write the
+untracked cache extension, use a shorter, fixed-length struct and add
+the name and hash data explicitly.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- read-cache.c | 74 ++++++++++++++++++++--------------------------------
- 1 file changed, 29 insertions(+), 45 deletions(-)
+ dir.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 0e0c93edc9..d9f12c568f 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1634,39 +1634,24 @@ struct ondisk_cache_entry {
- 	uint32_t uid;
- 	uint32_t gid;
- 	uint32_t size;
--	unsigned char sha1[20];
--	uint16_t flags;
--	char name[FLEX_ARRAY]; /* more */
--};
--
--/*
-- * This struct is used when CE_EXTENDED bit is 1
-- * The struct must match ondisk_cache_entry exactly from
-- * ctime till flags
-- */
--struct ondisk_cache_entry_extended {
--	struct cache_time ctime;
--	struct cache_time mtime;
--	uint32_t dev;
--	uint32_t ino;
--	uint32_t mode;
--	uint32_t uid;
--	uint32_t gid;
--	uint32_t size;
--	unsigned char sha1[20];
--	uint16_t flags;
--	uint16_t flags2;
--	char name[FLEX_ARRAY]; /* more */
-+	/*
-+	 * unsigned char hash[hashsz];
-+	 * uint16_t flags;
-+	 * if (flags & CE_EXTENDED)
-+	 *	uint16_t flags2;
-+	 */
-+	unsigned char data[GIT_MAX_RAWSZ + 2 * sizeof(uint16_t)];
-+	char name[FLEX_ARRAY];
+diff --git a/dir.c b/dir.c
+index b2cabadf25..7503b56918 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2545,13 +2545,9 @@ struct ondisk_untracked_cache {
+ 	struct stat_data info_exclude_stat;
+ 	struct stat_data excludes_file_stat;
+ 	uint32_t dir_flags;
+-	unsigned char info_exclude_sha1[20];
+-	unsigned char excludes_file_sha1[20];
+-	char exclude_per_dir[FLEX_ARRAY];
  };
  
- /* These are only used for v3 or lower */
- #define align_padding_size(size, len) ((size + (len) + 8) & ~7) - (size + len)
--#define align_flex_name(STRUCT,len) ((offsetof(struct STRUCT,name) + (len) + 8) & ~7)
-+#define align_flex_name(STRUCT,len) ((offsetof(struct STRUCT,data) + (len) + 8) & ~7)
- #define ondisk_cache_entry_size(len) align_flex_name(ondisk_cache_entry,len)
--#define ondisk_cache_entry_extended_size(len) align_flex_name(ondisk_cache_entry_extended,len)
--#define ondisk_ce_size(ce) (((ce)->ce_flags & CE_EXTENDED) ? \
--			    ondisk_cache_entry_extended_size(ce_namelen(ce)) : \
--			    ondisk_cache_entry_size(ce_namelen(ce)))
-+#define ondisk_data_size(flags, len) (the_hash_algo->rawsz + \
-+				     ((flags & CE_EXTENDED) ? 2 : 1) * sizeof(uint16_t) + len)
-+#define ondisk_data_size_max(len) (ondisk_data_size(CE_EXTENDED, len))
-+#define ondisk_ce_size(ce) (ondisk_cache_entry_size(ondisk_data_size((ce)->ce_flags, ce_namelen(ce))))
+ #define ouc_offset(x) offsetof(struct ondisk_untracked_cache, x)
+-#define ouc_size(len) (ouc_offset(exclude_per_dir) + len + 1)
  
- /* Allow fsck to force verification of the index checksum. */
- int verify_index_checksum;
-@@ -1740,6 +1725,8 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
- 	struct cache_entry *ce;
- 	size_t len;
- 	const char *name;
+ struct write_data {
+ 	int index;	   /* number of written untracked_cache_dir */
+@@ -2634,20 +2630,21 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
+ 	struct write_data wd;
+ 	unsigned char varbuf[16];
+ 	int varint_len;
+-	size_t len = strlen(untracked->exclude_per_dir);
 +	const unsigned hashsz = the_hash_algo->rawsz;
-+	const uint16_t *flagsp = (const uint16_t *)(ondisk->data + hashsz);
- 	unsigned int flags;
- 	size_t copy_len = 0;
- 	/*
-@@ -1752,22 +1739,20 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
- 	int expand_name_field = version == 4;
  
- 	/* On-disk flags are just 16 bits */
--	flags = get_be16(&ondisk->flags);
-+	flags = get_be16(flagsp);
- 	len = flags & CE_NAMEMASK;
+-	FLEX_ALLOC_MEM(ouc, exclude_per_dir, untracked->exclude_per_dir, len);
++	ouc = xcalloc(1, sizeof(*ouc));
+ 	stat_data_to_disk(&ouc->info_exclude_stat, &untracked->ss_info_exclude.stat);
+ 	stat_data_to_disk(&ouc->excludes_file_stat, &untracked->ss_excludes_file.stat);
+-	hashcpy(ouc->info_exclude_sha1, untracked->ss_info_exclude.oid.hash);
+-	hashcpy(ouc->excludes_file_sha1, untracked->ss_excludes_file.oid.hash);
+ 	ouc->dir_flags = htonl(untracked->dir_flags);
  
- 	if (flags & CE_EXTENDED) {
--		struct ondisk_cache_entry_extended *ondisk2;
- 		int extended_flags;
--		ondisk2 = (struct ondisk_cache_entry_extended *)ondisk;
--		extended_flags = get_be16(&ondisk2->flags2) << 16;
-+		extended_flags = get_be16(flagsp + 1) << 16;
- 		/* We do not yet understand any bit out of CE_EXTENDED_FLAGS */
- 		if (extended_flags & ~CE_EXTENDED_FLAGS)
- 			die(_("unknown index entry format 0x%08x"), extended_flags);
- 		flags |= extended_flags;
--		name = ondisk2->name;
-+		name = (const char *)(flagsp + 2);
- 	}
- 	else
--		name = ondisk->name;
-+		name = (const char *)(flagsp + 1);
+ 	varint_len = encode_varint(untracked->ident.len, varbuf);
+ 	strbuf_add(out, varbuf, varint_len);
+ 	strbuf_addbuf(out, &untracked->ident);
  
- 	if (expand_name_field) {
- 		const unsigned char *cp = (const unsigned char *)name;
-@@ -1806,7 +1791,9 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
- 	ce->ce_flags = flags & ~CE_NAMEMASK;
- 	ce->ce_namelen = len;
- 	ce->index = 0;
--	hashcpy(ce->oid.hash, ondisk->sha1);
-+	hashcpy(ce->oid.hash, ondisk->data);
-+	memcpy(ce->name, name, len);
-+	ce->name[len] = '\0';
+-	strbuf_add(out, ouc, ouc_size(len));
++	strbuf_add(out, ouc, sizeof(*ouc));
++	strbuf_add(out, untracked->ss_info_exclude.oid.hash, hashsz);
++	strbuf_add(out, untracked->ss_excludes_file.oid.hash, hashsz);
++	strbuf_add(out, untracked->exclude_per_dir, strlen(untracked->exclude_per_dir) + 1);
+ 	FREE_AND_NULL(ouc);
  
- 	if (expand_name_field) {
- 		if (copy_len)
-@@ -2528,6 +2515,8 @@ static void copy_cache_entry_to_ondisk(struct ondisk_cache_entry *ondisk,
- 				       struct cache_entry *ce)
- {
- 	short flags;
+ 	if (!untracked->root) {
+@@ -2834,6 +2831,9 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	int ident_len;
+ 	ssize_t len;
+ 	const char *exclude_per_dir;
 +	const unsigned hashsz = the_hash_algo->rawsz;
-+	uint16_t *flagsp = (uint16_t *)(ondisk->data + hashsz);
++	const unsigned offset = sizeof(struct ondisk_untracked_cache);
++	const unsigned exclude_per_dir_offset = offset + 2 * hashsz;
  
- 	ondisk->ctime.sec = htonl(ce->ce_stat_data.sd_ctime.sec);
- 	ondisk->mtime.sec = htonl(ce->ce_stat_data.sd_mtime.sec);
-@@ -2539,15 +2528,13 @@ static void copy_cache_entry_to_ondisk(struct ondisk_cache_entry *ondisk,
- 	ondisk->uid  = htonl(ce->ce_stat_data.sd_uid);
- 	ondisk->gid  = htonl(ce->ce_stat_data.sd_gid);
- 	ondisk->size = htonl(ce->ce_stat_data.sd_size);
--	hashcpy(ondisk->sha1, ce->oid.hash);
-+	hashcpy(ondisk->data, ce->oid.hash);
+ 	if (sz <= 1 || end[-1] != '\0')
+ 		return NULL;
+@@ -2845,7 +2845,7 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	ident = (const char *)next;
+ 	next += ident_len;
  
- 	flags = ce->ce_flags & ~CE_NAMEMASK;
- 	flags |= (ce_namelen(ce) >= CE_NAMEMASK ? CE_NAMEMASK : ce_namelen(ce));
--	ondisk->flags = htons(flags);
-+	flagsp[0] = htons(flags);
- 	if (ce->ce_flags & CE_EXTENDED) {
--		struct ondisk_cache_entry_extended *ondisk2;
--		ondisk2 = (struct ondisk_cache_entry_extended *)ondisk;
--		ondisk2->flags2 = htons((ce->ce_flags & CE_EXTENDED_FLAGS) >> 16);
-+		flagsp[1] = htons((ce->ce_flags & CE_EXTENDED_FLAGS) >> 16);
- 	}
- }
+-	if (next + ouc_size(0) > end)
++	if (next + exclude_per_dir_offset + 1 > end)
+ 		return NULL;
  
-@@ -2566,10 +2553,7 @@ static int ce_write_entry(git_hash_ctx *c, int fd, struct cache_entry *ce,
- 		stripped_name = 1;
- 	}
+ 	uc = xcalloc(1, sizeof(*uc));
+@@ -2853,15 +2853,15 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	strbuf_add(&uc->ident, ident, ident_len);
+ 	load_oid_stat(&uc->ss_info_exclude,
+ 		      next + ouc_offset(info_exclude_stat),
+-		      next + ouc_offset(info_exclude_sha1));
++		      next + offset);
+ 	load_oid_stat(&uc->ss_excludes_file,
+ 		      next + ouc_offset(excludes_file_stat),
+-		      next + ouc_offset(excludes_file_sha1));
++		      next + offset + hashsz);
+ 	uc->dir_flags = get_be32(next + ouc_offset(dir_flags));
+-	exclude_per_dir = (const char *)next + ouc_offset(exclude_per_dir);
++	exclude_per_dir = (const char *)next + exclude_per_dir_offset;
+ 	uc->exclude_per_dir = xstrdup(exclude_per_dir);
+ 	/* NUL after exclude_per_dir is covered by sizeof(*ouc) */
+-	next += ouc_size(strlen(exclude_per_dir));
++	next += exclude_per_dir_offset + strlen(exclude_per_dir) + 1;
+ 	if (next >= end)
+ 		goto done2;
  
--	if (ce->ce_flags & CE_EXTENDED)
--		size = offsetof(struct ondisk_cache_entry_extended, name);
--	else
--		size = offsetof(struct ondisk_cache_entry, name);
-+	size = offsetof(struct ondisk_cache_entry,data) + ondisk_data_size(ce->ce_flags, 0);
- 
- 	if (!previous_name) {
- 		int len = ce_namelen(ce);
-@@ -2727,7 +2711,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	struct cache_entry **cache = istate->cache;
- 	int entries = istate->cache_nr;
- 	struct stat st;
--	struct ondisk_cache_entry_extended ondisk;
-+	struct ondisk_cache_entry ondisk;
- 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
- 	int drop_cache_tree = istate->drop_cache_tree;
- 	off_t offset;
