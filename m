@@ -2,111 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 230001F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 00:27:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 113D31F453
+	for <e@80x24.org>; Tue, 12 Feb 2019 00:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727903AbfBLA1d (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Feb 2019 19:27:33 -0500
-Received: from mail-it1-f194.google.com ([209.85.166.194]:53285 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727297AbfBLA1d (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Feb 2019 19:27:33 -0500
-Received: by mail-it1-f194.google.com with SMTP id g85so2989421ita.3
-        for <git@vger.kernel.org>; Mon, 11 Feb 2019 16:27:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WPtx90B985F2P8CvgcEzOeP2eAiTmOhub+gswBm+/8U=;
-        b=Xu4c50DtPy3TnUMqQUtjA5nuXH6OaMfbF3nfd0F0GxYGAeh2A0aS5bBQnpjvAlScHj
-         GJYVPVXtkf5mg5zbbsbmP8ZfnVwCUJcqB/CWSAdOkxIFDOz72KvNWlOagNrOqdKkUoAk
-         isQa1tm3Y425PABboz4ovjOAeHD+8xXPs8v8dSCIR98iyrIjrhBxBOecdaGF9aM+qQzp
-         cairjFnUAS+J7An46K8aWZY0j92k0+O+UHcX2quDIyFqQyILYozqcalL0zjEfnBzaktj
-         suj6YKmIe719RkDQ7jIItmPm2qJxKBqjhsYFRO8fxrfbkZhjfENyzoe1UkYV10iexH9w
-         V5bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WPtx90B985F2P8CvgcEzOeP2eAiTmOhub+gswBm+/8U=;
-        b=Q8Grtr6Xch+k4m1nBCy7fnKZ3Qf4YfOyUK2tx5c6V5LYNYkfsIF9hEUVssiZE9FdDu
-         fQx7981pl1sT2c4JaCumuNJsdeAHHml2Yjs5AJVjuxsjDGfh1sOW1sRkiTwE62NsJtLH
-         PZJT1Hx5AdSD/RNWQAowB8V+LolarFpKmlvqoUMnw9QpGWLqbay0f6m0/xhDkzD6D24B
-         L129+gzhnbrhObGEkOew/VF4tng8ZcOt7efR9Ou/Z/yYK/QBn/T1FW2uOum/jgeW/DxJ
-         UnOGshiiQ9o24jydJjiAVtjpCEFBQTlG/5LW+MVuEbP0pkiFC/lQ0U/BNRHBfsMkEKVi
-         tTtg==
-X-Gm-Message-State: AHQUAubiHgJ8qr8Ts+iflbS2RlufjmGyius0GSmCit6QyioD51LZMely
-        l+3rlH62XB93zVL/aF8bbknjsW+sIifIbV+iBAWFJg==
-X-Google-Smtp-Source: AHgI3IZEtaYpMLfdpHFyMKnADKOwXgKG3aRq4G77wL0K5DIickDOvT/6iY7OC0seBQi0dEq2p08TQoA9okOKw5C4cDU=
-X-Received: by 2002:a24:9102:: with SMTP id i2mr486624ite.4.1549931251772;
- Mon, 11 Feb 2019 16:27:31 -0800 (PST)
+        id S1727662AbfBLA3l (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Feb 2019 19:29:41 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34180 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727485AbfBLA3k (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Feb 2019 19:29:40 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AECAE6042D;
+        Tue, 12 Feb 2019 00:29:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1549931379;
+        bh=O/cvsw79Xymcrdpvj++Z7brWqlC0d0CpfmT6KOMwq2Y=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=h28rxFwrJz9Yeo1/EGfllfWgutSdFIyGMJ0bbYeBpQRyBD4U+79C424yAQUahCBOG
+         K7HJXDZBP4v+cbx3h6DizxPmXa+mC7Cxz18q/beHZJmRXbuNU8T9W8aGvnvwT/lSr/
+         ShWdwPGydUiyRRhwGLQ+TjveuWzJ7xZpzyCEfw2WlnqmdLRbQNVFxFLFHPG/v978f7
+         gu8fvw6JAhRSU/TS9t7QtgYpXcN/Mlo51p8HhN/wEKfPptGmvcE1qEKNuxvmQeEXTP
+         26AG8YHFLo0LUs5rG071M+JXS/z0XmAF+CfiIbkQ0dSYZ4JTWdI9X80X5fccYS7JIL
+         d8/9Xqyt5G6NeSRd/mC5exE46Lv+CyGVHmd1vTB9knvgN4FfcRCWdMUDpkwBHsKllv
+         wdu8swQY1bM5AqkyXzg/8/X+WSWPARWOYTFZu6LiJz5DC239klujeHtHOx6fvLBPm5
+         CuiNHDiJzKzvwfVBibS4TZ/kdVsc+N1WMXUp2wx16pHY1dgqhbt
+Date:   Tue, 12 Feb 2019 00:29:33 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Ismael Luceno <ismael@iodev.co.uk>
+Cc:     git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] git-gui: Handle Ctrl+BS & Ctrl+Del in the commit msg
+Message-ID: <20190212002932.GC684736@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ismael Luceno <ismael@iodev.co.uk>, git@vger.kernel.org,
+        Pat Thoyts <patthoyts@users.sourceforge.net>
+References: <20190211214203.32444-1-ismael@iodev.co.uk>
 MIME-Version: 1.0
-References: <CAHd-oW4p6XUjF_j+XXwYWGt__L_5bTJGwxmgWhxJfpuAFac=dQ@mail.gmail.com>
- <CAP8UFD1_7kBcp1W1kg-C2DObMmYf=rb79MbXvzWhxH7fWf5GTQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD1_7kBcp1W1kg-C2DObMmYf=rb79MbXvzWhxH7fWf5GTQ@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 11 Feb 2019 22:27:20 -0200
-Message-ID: <CAHd-oW4ZV5+u7MsZ7MDXF=KTHd_Gu51Qjh=E2PvOUD0LJwS8OA@mail.gmail.com>
-Subject: Re: [GSoC] Microproject on git-credential-cache
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="5QAgd0e35j3NYeGe"
+Content-Disposition: inline
+In-Reply-To: <20190211214203.32444-1-ismael@iodev.co.uk>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 11, 2019 at 10:09 PM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi,
->
-> On Tue, Feb 12, 2019 at 12:48 AM Matheus Tavares Bernardino
-> <matheus.bernardino@usp.br> wrote:
-> >
-> > Hi, everyone
-> >
-> > I've been contributing to the Linux Kernel for the past semester and
-> > I'm now looking to take my first steps in the git community. I'm also
-> > interested in GSoC 2019.
->
-> Thanks for your interest in Git!
->
 
-Thank you!
+--5QAgd0e35j3NYeGe
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > I started looking at https://git.github.io/SoC-2019-Microprojects/ and
-> > one that got my attention was "Move ~/.git-credential-cache to
-> > ~/.cache/git". But looking around at the code and the mailing list,
-> > this microproject seems to have been already solved at 60759ba
-> > ("credential-cache: use XDG_CACHE_HOME for socket", 2017-03-17),
-> > right?
->
-> Yeah, I think you are right. Sorry for not having the time to check by myself.
->
+On Mon, Feb 11, 2019 at 10:42:03PM +0100, Ismael Luceno wrote:
+> Signed-off-by: Ismael Luceno <ismael@iodev.co.uk>
+> ---
+>  git-gui.sh | 2 ++
+>  1 file changed, 2 insertions(+)
+>=20
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 5bc21b878d41..e00d9a345294 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -3788,6 +3788,8 @@ bind $ui_comm <$M1B-Key-KP_Subtract> {show_less_con=
+text;break}
+>  bind $ui_comm <$M1B-Key-equal> {show_more_context;break}
+>  bind $ui_comm <$M1B-Key-plus> {show_more_context;break}
+>  bind $ui_comm <$M1B-Key-KP_Add> {show_more_context;break}
+> +bind $ui_comm <Control-Key-BackSpace> {%W delete {insert -1 chars wordst=
+art} insert;break}
+> +bind $ui_comm <Control-Key-Delete> {%W delete insert {insert wordend};br=
+eak}
 
-No problem! I submitted a PR to remove it, as suggested by Jeff King.
+I don't use git-gui and I don't understand TCL, but I was interested to
+learn more about these key bindings in case other programs use them and
+they might be useful in my day-to-day life.
 
-Matheus Tavares
+However, your commit message doesn't include a body, so it isn't clear
+to me what this change does and why these are useful keys for git-gui to
+understand. Are they common among many programs? What do they do? Why
+did we pick these keys instead of others?
 
-> > For the microproject "Add configuration options for some commonly used
-> > command-line options", are there some options already known to be good
-> > for adding to configuration file?
->
-> Sorry, but I don't remember very well the previous discussions about
-> this, so I don't know if some presumably good have been mentioned yet.
->
-> > Finally, a non GSoC-related question. Just to confirm my understanding
-> > of Documentation/SubmittingPatches: I must send patches to the mailing
-> > list first and after some feedback from community, send to the
-> > maintainer with CC to the list, is that correct?
->
-> Yes, that's correct.
->
-> Best,
-> Christian.
+Perhaps you could send a v2 with a more comprehensive commit message
+that provides some of these answers.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--5QAgd0e35j3NYeGe
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxiE2wACgkQv1NdgR9S
+9osd4A//ZMYeQf91ArRTQPfREmJr9YEIZm8lfGVQpa35jUZc3anFbj3vlYwscoIf
+IwjYy8Uxgok7CnrX7cfdvR6VAvC2nUCqlMwkgnK49Qk0T+5wTWwdt+KZ9og5x7ec
+cwpWXIpLV7gRX9BMyDb1r39UYwU9g6FDCtQZq0acwQs3tRmXz11vmD7g68P4iRaz
+HFqb1l96yk0jR1E9bR2Lfh9SqIyrvcns40u4b9arDfSYeZflckbQv2ns11jY2WS2
+GfIIqMfptI1J/PjDVpRSwlpp8b0jv2BqqxchlzxZYuMtgltmIZYiUfs6UO9lUDNn
+90pJKSgny7pjftqXVm1kHc/WJg9QWsnashfzEQEY2DbLYURcvpJT9Oy7/kDarDcx
+uLRFC6bONV39zj4p3yYN5KywpxgmwOTasqlualmXH5o9brR8x+l5j7uWrXHIn5QY
+1ZodosbsRUA2DDtkmY/xXJLR8rPq5sw8/F9TfvoJExgLSqYuqp6dXMSumU75CBfa
+IvNlBfn4oixQyK7d49LdMbF5L6L5CMdmujn/3Mo747KfOJqtFZjpU5PHzeVWDlvV
+7TlxTFgB5eZlgLv6UXxCDZAJoDTGsmfNaIfK2wm/KKFP0Hz6FDlcG+rah/Hu611A
+erVVZYeVl6EQLZgzmtDbAgSL28CMRh3JN4EuJvP3yYNNv77GUu4=
+=EiMz
+-----END PGP SIGNATURE-----
+
+--5QAgd0e35j3NYeGe--
