@@ -2,283 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A75D1F453
-	for <e@80x24.org>; Tue, 12 Feb 2019 22:27:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6869D211B5
+	for <e@80x24.org>; Tue, 12 Feb 2019 22:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731115AbfBLW1k (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Feb 2019 17:27:40 -0500
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:34102 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728584AbfBLW1j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Feb 2019 17:27:39 -0500
-Received: by mail-qt1-f201.google.com with SMTP id u32so381789qte.1
-        for <git@vger.kernel.org>; Tue, 12 Feb 2019 14:27:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=G2gCcVluih27GVXEe98PpgMaMYKqsCspf3XB+7FYrPo=;
-        b=hgz18WrVdshcZnSWctOAKnFWbBdIO5IHgZs4cZ0YkgjGPMGPzbMQ4VGHvaGKI1znDN
-         YQPjSWiE0nlt725ZOllG+3RMjzd3D5xmxvDtug2qj/XQeDrY3F2weijn5rtWADJUa80Q
-         gDInBv781wfLjhLbUyeCvgOUyMEPydMO6WQVQ6giTKoaFmqicvtxIOOpVlBEU2BLZp1x
-         /AcjJbgMwXm/ZmteizGvYOSGQl2qvmQ96+dk1HgOyXR7zw36EndocYNNaQpDFa6N2e4L
-         tlcmD+6zGQoVdP55DT3RGtJPzo7uiEIbK+DUfIooGAVi+K9Rd5Quc4PkXKU7BhAMjj+7
-         udKw==
+        id S1729889AbfBLWoz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Feb 2019 17:44:55 -0500
+Received: from mail-qk1-f181.google.com ([209.85.222.181]:33743 "EHLO
+        mail-qk1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727172AbfBLWoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Feb 2019 17:44:54 -0500
+Received: by mail-qk1-f181.google.com with SMTP id x9so252982qkf.0
+        for <git@vger.kernel.org>; Tue, 12 Feb 2019 14:44:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=G2gCcVluih27GVXEe98PpgMaMYKqsCspf3XB+7FYrPo=;
-        b=etFim8u798Zbq5XiL8/sJWqD6DXRMp/HBDxrqHeFCvH0vnBkw+g8aMuTviw+nOlLNE
-         RvYzWwYpWkpChe0py7cGoAQdy3SGw+pJLP4IcrQBZZQNz/JryuOMdD9ndx4pzFgdszs0
-         MtAq220jGlVwVBd04srD8CX5WZrKaWAu1MxwjPBUBNi8lvMoh4d+9vR22FafK+JN39xT
-         s3WlFtSx4fDBsEAa37mULzpiNyvfUTXcRRCdB6LvSTNdlnpyL/otKqgK4ykblbOgRqi8
-         Eq16mRLe0fsSL4hepvPwCTzTq8nRjQFuvjRFZEsf6+7DD44dWd0Sn+RlXlT61VA3hk7N
-         51Tg==
-X-Gm-Message-State: AHQUAuYsNAwl9KqetpNW3qTXt4Xxbfhhv/EtWSyVbu5TeD+cQPOXXwSw
-        +hTSKmsbpjGBOBjLuRO5uck+TmX0MWnmj4yWB4WBCWZlO64LDNt0lfzpIp5l/IUQ1c2BoqCa5dg
-        rmCaDk2M+OhPr1QS8VAXNd8hIAeCSedxxQayQQcheURqp5IZ7ZjCo
-X-Google-Smtp-Source: AHgI3Iaiz2tUo0lsO7+s0rxXzHiUtxGvn96ibfuMbCb5tmbLsPBnc/gXGUgU5XZ+DCTDSGbDwSmoeTsZ
-X-Received: by 2002:a0c:d486:: with SMTP id u6mr3394088qvh.56.1550010457786;
- Tue, 12 Feb 2019 14:27:37 -0800 (PST)
-Date:   Tue, 12 Feb 2019 17:27:22 -0500
-In-Reply-To: <20190212222722.240676-1-brho@google.com>
-Message-Id: <20190212222722.240676-6-brho@google.com>
-Mime-Version: 1.0
-References: <20190212222722.240676-1-brho@google.com>
-X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e-goog
-Subject: [PATCH v3 5/5] blame: add tests for ignoring revisions
-From:   Barret Rhoden <brho@google.com>
-To:     git@vger.kernel.org
-Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
-        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        "=?UTF-8?q?Ren=C3=A9=20Scharfe?=" <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pncE8dXXADpGm/+Bzh6Kyj2PF/pzFMXoDTzw4SOLlL8=;
+        b=T+/ZfC3FwMlQpn2whowHLmobt5b/yfLwjiDuLvNh06YRiMeOK4BmkRPO+wqkJWtOt5
+         SZPBv5pGBH0b3Lj449PPkVMD+kvnuC/aulCnHTCna1ht4Ufxk0DLVI6b+KGyxJ92mTTD
+         40tjB6+KIMe0qOF/0u+u3UQeRJYKR4V5O3e8DreN7O0s6oO3hiktrCdWx1z/2+Z9ogm9
+         h0M36fWqx5y7V0KDwYIyVOG85g2mLdYcbJxOzQZAtWCcIy3TAHUIYWSGEE51ebAd10wM
+         0bpJhRYbJbJkfYS9rzivQ2KAFqEGMdTKbIuZ4FyA+/ODe/p4Cah/3YDIG78aM6dLUBLU
+         gm4g==
+X-Gm-Message-State: AHQUAuZqvCUy4f9Wsk5lMBwpD9TiiPV77CvAxeTrD8NZA0d6c0RShGtT
+        awNVyqeTA4iYEVBFy+treXeZ1xsXw01vkHUCGdoDPERi
+X-Google-Smtp-Source: AHgI3IbQyI8nA+XGkR03QbBTnxBq7SXiXuP4PFwH0Hqs09mn+ZS6e43sRAwWfLvWI0WW31ulQ6AI1PAN6X0WYKDTuHs=
+X-Received: by 2002:a37:c313:: with SMTP id a19mr4254832qkj.220.1550011493557;
+ Tue, 12 Feb 2019 14:44:53 -0800 (PST)
+MIME-Version: 1.0
+References: <0308570E-AAA3-43B8-A592-F4DA9760DBED@synopsys.com>
+In-Reply-To: <0308570E-AAA3-43B8-A592-F4DA9760DBED@synopsys.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 12 Feb 2019 17:44:41 -0500
+Message-ID: <CAPig+cQh8hxeoVjLHDKhAcZVQPpPT5v0AUY8gsL9=qfJ7z-L2A@mail.gmail.com>
+Subject: Re: BUG: git worktree add directory-path fails due to over-aggressive
+ disallowing of worktrees with same suffix
+To:     Cameron Gunnin <cameron.gunnin@synopsys.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Barret Rhoden <brho@google.com>
----
- t/t8013-blame-ignore-revs.sh | 199 +++++++++++++++++++++++++++++++++++
- 1 file changed, 199 insertions(+)
- create mode 100755 t/t8013-blame-ignore-revs.sh
+On Mon, Feb 11, 2019 at 6:50 PM Cameron Gunnin
+<cameron.gunnin@synopsys.com> wrote:
+> The bug:
+>   cd unique-path-1
+>   git --git-dir=../worktree-test-repo/.git worktree add subdir branch1
+>   cd ../unique-path-2
+>   git --git-dir=../worktree-test-repo/.git worktree add subdir branch2
+>   # FAILS WITH: fatal: 'subdir' is a missing but already registered worktree; use 'add -f' to override, or 'prune' or 'remove' to clear
+>
+> This appears to have been introduced by the following commit:
+>       worktree: disallow adding same path multiple times
+>
+> The fix, I think, should be applied to builtin/worktree.c to the
+> validate_worktree_add method. After finding a worktree that matches
+> the suffix (via find_worktree), it should check that the absolute
+> path of the found worktree is the same as the absolute path of the
+> worktree being added, and allow the add when they are different. Or,
+> perhaps there should be a way to invoke 'find_worktree' such that it
+> only finds absolute path matches.
 
-diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
-new file mode 100755
-index 000000000000..3a4ad7cf937a
---- /dev/null
-+++ b/t/t8013-blame-ignore-revs.sh
-@@ -0,0 +1,199 @@
-+#!/bin/sh
-+
-+test_description='ignore revisions when blaming'
-+. ./test-lib.sh
-+
-+# Creates:
-+# 	A--B--X
-+# A added line 1 and B added line 2.  X makes changes to those lines.  Sanity
-+# check that X is blamed for both lines.
-+test_expect_success setup '
-+	test_commit A file line1 &&
-+
-+	echo line2 >> file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m B &&
-+	git tag B &&
-+
-+	test_write_lines line-one line-two > file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m X &&
-+	git tag X &&
-+
-+	git blame --line-porcelain file > blame_raw &&
-+
-+	grep "^[0-9a-f]\+ 1 1" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse X > expect &&
-+	test_cmp expect actual &&
-+
-+	grep "^[0-9a-f]\+ 2 2" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse X > expect &&
-+	test_cmp expect actual
-+	'
-+
-+# Ignore X, make sure A is blamed for line 1 and B for line 2.
-+test_expect_success ignore_rev_changing_lines '
-+	git blame --line-porcelain --ignore-rev X file > blame_raw &&
-+
-+	grep "^[0-9a-f]\+ 1 1" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse A > expect &&
-+	test_cmp expect actual &&
-+
-+	grep "^[0-9a-f]\+ 2 2" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse B > expect &&
-+	test_cmp expect actual
-+	'
-+
-+# For ignored revs that have added more lines than they removed, the extra lines
-+# must be blamed on an all-zeros rev.
-+# 	A--B--X--Y
-+# Where Y changes lines 1 and 2, and adds lines 3 and 4.
-+test_expect_success ignore_rev_adding_lines '
-+	test_write_lines line-one-change line-two-changed new_line3 new_line4 > file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m Y &&
-+	git tag Y &&
-+
-+	git rev-parse Y > expect &&
-+	sed -i -e "s/[0-9a-f]/0/g" expect &&
-+	git blame --line-porcelain file --ignore-rev Y > blame_raw &&
-+
-+	grep "^[0-9a-f]\+ 3 3" blame_raw | sed -e "s/ .*//" > actual &&
-+	test_cmp expect actual &&
-+
-+	grep "^[0-9a-f]\+ 4 4" blame_raw | sed -e "s/ .*//" > actual &&
-+	test_cmp expect actual
-+	'
-+
-+# Ignore X and Y, both in separate files.  Lines 1 == A, 2 == B.
-+test_expect_success ignore_revs_from_files '
-+	git rev-parse X > ignore_x &&
-+	git rev-parse Y > ignore_y &&
-+	git blame --line-porcelain file --ignore-revs-file ignore_x --ignore-revs-file ignore_y > blame_raw &&
-+
-+	grep "^[0-9a-f]\+ 1 1" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse A > expect &&
-+	test_cmp expect actual &&
-+
-+	grep "^[0-9a-f]\+ 2 2" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse B > expect &&
-+	test_cmp expect actual
-+	'
-+
-+# Ignore X from the config option, Y from a file.
-+test_expect_success ignore_revs_from_configs_and_files '
-+	git config --add blame.ignoreRevsFile ignore_x &&
-+	git blame --line-porcelain file --ignore-revs-file ignore_y > blame_raw &&
-+
-+	grep "^[0-9a-f]\+ 1 1" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse A > expect &&
-+	test_cmp expect actual &&
-+
-+	grep "^[0-9a-f]\+ 2 2" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse B > expect &&
-+	test_cmp expect actual
-+	'
-+
-+# Override blame.ignoreRevsFile (ignore_x) with an empty string.  X should be
-+# blamed now for lines 1 and 2, since we are no longer ignoring X.
-+test_expect_success override_ignore_revs_file '
-+	git blame --line-porcelain file --ignore-revs-file "" --ignore-revs-file ignore_y > blame_raw &&
-+	git rev-parse X > expect &&
-+
-+	grep "^[0-9a-f]\+ 1 1" blame_raw | sed -e "s/ .*//" > actual &&
-+	test_cmp expect actual &&
-+
-+	grep "^[0-9a-f]\+ 2 2" blame_raw | sed -e "s/ .*//" > actual &&
-+	test_cmp expect actual
-+	'
-+test_expect_success bad_files_and_revs '
-+	test_must_fail git blame file --ignore-rev NOREV 2> err &&
-+	test_i18ngrep "Cannot find revision NOREV to ignore" err &&
-+
-+	test_must_fail git blame file --ignore-revs-file NOFILE 2> err &&
-+	test_i18ngrep "Could not open object name list: NOFILE" err &&
-+
-+	echo NOREV > ignore_norev &&
-+	test_must_fail git blame file --ignore-revs-file ignore_norev 2> err &&
-+	test_i18ngrep "Invalid object name: NOREV" err
-+	'
-+
-+# Commit Z will touch the first two lines.  Y touched all four.
-+# 	A--B--X--Y--Z
-+# The blame output when ignoring Z should be:
-+# ^Y ... 1)
-+# ^Y ... 2)
-+# Y  ... 3)
-+# Y  ... 4)
-+# We're checking only the first character
-+test_expect_success mark_ignored_lines '
-+	git config --add blame.markIgnoredLines true &&
-+
-+	test_write_lines line-one-Z line-two-Z new_line3 new_line4 > file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m Z &&
-+	git tag Z &&
-+
-+	git blame --ignore-rev Z file > blame_raw &&
-+	echo "*" > expect &&
-+
-+	sed -n "1p" blame_raw | cut -c1 > actual &&
-+	test_cmp expect actual &&
-+
-+	sed -n "2p" blame_raw | cut -c1 > actual &&
-+	test_cmp expect actual &&
-+
-+	sed -n "3p" blame_raw | cut -c1 > actual &&
-+	! test_cmp expect actual &&
-+
-+	sed -n "4p" blame_raw | cut -c1 > actual &&
-+	! test_cmp expect actual
-+	'
-+
-+# Resetting the repo and creating:
-+#
-+# A--B--M
-+#  \   /
-+#   C-+
-+#
-+# 'A' creates a file.  B changes line 1, and C changes line 9.  M merges.
-+test_expect_success ignore_merge '
-+	rm -rf .git/ &&
-+	git init &&
-+
-+	test_write_lines L1 L2 L3 L4 L5 L6 L7 L8 L9 > file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m A &&
-+	git tag A &&
-+
-+	test_write_lines BB L2 L3 L4 L5 L6 L7 L8 L9 > file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m B &&
-+	git tag B &&
-+
-+	git reset --hard A &&
-+	test_write_lines L1 L2 L3 L4 L5 L6 L7 L8 CC > file &&
-+	git add file &&
-+	test_tick &&
-+	git commit -m C &&
-+	git tag C &&
-+
-+	test_merge M B &&
-+	git blame --line-porcelain file --ignore-rev M > blame_raw &&
-+
-+	grep "^[0-9a-f]\+ 1 1" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse B > expect &&
-+	test_cmp expect actual &&
-+
-+	grep "^[0-9a-f]\+ 9 9" blame_raw | sed -e "s/ .*//" > actual &&
-+	git rev-parse C > expect &&
-+	test_cmp expect actual
-+	'
-+
-+test_done
--- 
-2.21.0.rc0.258.g878e2cd30e-goog
+When crafting cb56f55c16 (worktree: disallow adding same path multiple
+times, 2018-08-28), I flip-flopped between two implementations: (1)
+using find_worktree(), and (2) manually scanning the worktree list
+with absolute path comparison. The latter approach, would not have
+suffered from this problem. The one ugly bit of the manual scan was
+that it was a bit too cozy with the underlying worktree
+implementation, so I eventually went with the find_worktree() approach
+despite its obvious drawback of doing suffix matching (though, I
+didn't feel particularly comfortable with the decision).
 
+A likely reasonable approach to fixing it would probably be to
+introduce new worktree API to find a worktree without magic suffix
+matching (i.e. literal absolute path matching) which would avoid
+having to imbue the higher-level "git worktree" command with that
+low-level knowledge, and then take advantage of that new API.
