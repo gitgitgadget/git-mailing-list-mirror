@@ -2,139 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 941E71F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 18:18:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 958B71F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 18:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391164AbfBMSSq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 13:18:46 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:52631 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391106AbfBMSSp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 13:18:45 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1DIIct8036773
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 13 Feb 2019 13:18:38 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Eric Sunshine'" <sunshine@sunshineco.us>
-Cc:     "'Git List'" <git@vger.kernel.org>
-References: <20190209185930.5256-1-randall.s.becker@rogers.com> <20190209185930.5256-3-randall.s.becker@rogers.com>     <CAPig+cTMoYMmnHVuay_4RGr_FN-HWC1tN4TPDsNM4vKCH3GzXw@mail.gmail.com>    <xmqqh8d9diy8.fsf@gitster-ct.c.googlers.com> <xmqqh8d7d2ij.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqh8d7d2ij.fsf@gitster-ct.c.googlers.com>
-Subject: RE: [Patch v1 2/3] t5318: replace use of /dev/zero with generate_zero_bytes
-Date:   Wed, 13 Feb 2019 13:18:31 -0500
-Message-ID: <004701d4c3c8$8a018d20$9e04a760$@nexbridge.com>
+        id S1732531AbfBMSUR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 13:20:17 -0500
+Received: from mail-ot1-f50.google.com ([209.85.210.50]:46020 "EHLO
+        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729458AbfBMSUR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 13:20:17 -0500
+Received: by mail-ot1-f50.google.com with SMTP id 32so5853241ota.12
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 10:20:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=b6nGohsIBYulSaLpQNR0/YxCISzXxh7ha0i6ZyLHYwI=;
+        b=obgaTMXdxnBbprVDjvyzhpQPwE6dJ+upuaUV4HHc38znUM03/2tPx3mAXA2TNPLNnk
+         R+Mx315NZpGEbbwIdaaESzpnm2E4nDwJWsGeDgqAMW/jcP51GtB1UwEOmgNXvRmGcNvB
+         2porRCsHp/rOn7pbSsNyg+K7eR4FMxtuqBGSvbiXa1MCD8UOyzLEKJM8m7O8BFNBTtm6
+         BPi5seg/zibp27hFfddunANVusRh6/X85Vv8ctzZJSM+YUnl7FSnkMDcbVIUUe3TmLf8
+         /YyySmfTAh1imPidXJvr8lIdeKjmD1BLNFuyTItQQK9Bg0MOfSt4UEUy4uBiB01em7lx
+         btvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=b6nGohsIBYulSaLpQNR0/YxCISzXxh7ha0i6ZyLHYwI=;
+        b=HRGfxQlQZFkmt7a4LDPcVNMe+yxuPwkB1Qoa+39lO0G7ou2JLKR0/lOBZWq5K16yLW
+         L8wH+ThDJZ5GPK2LUyDTGaYF0y6crvy2EMaafdUHr3q+PjZsBPgWacKuJ68EbHFlasCv
+         k3IFDQalRZeOugJG0x8A/mrzlraIZZGKZ/UF6yZ++8eUjUeyVRbIfbYh/2UHw7S/yY0Z
+         bVvLTCCJ+7m9lTnK1v7HFr2bK2YrQTE0X83Wq2zhwp75v/xMFQDN63TOE9ancXoM5j4q
+         8JUH2LgwLCaUCzw5Kc2dJ26wyyisHxjcGTpaiucj9tPmw7yPeMljyEc5fPLmMrUdGhan
+         E+Qg==
+X-Gm-Message-State: AHQUAuZtLal7q7FvZkXM9CwWvuihjKvlxZjqnfreQvDGeG7zD3DyT/LI
+        MLX1CTtZvFwTGQ+zquxBlLYWbZKvfbUddwlapTQyoh7m
+X-Google-Smtp-Source: AHgI3IZBfMv+lIkpbvHu151ZxmZ+eswXwcXL3BLpfIpHGa+1m4yxd60QibiwBlvQPr5uHgjFyw9Zuz/bhQx89mPkKvA=
+X-Received: by 2002:aca:4506:: with SMTP id s6mr1014947oia.115.1550081600823;
+ Wed, 13 Feb 2019 10:13:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGM7GjkJQPJw2ZzFceglcz2DqNUWwGXJak9AdRbyOoBXWggQALkfM5xpjBLm0A=
-Content-Language: en-ca
+From:   Maris Razvan <razvan.alex.maris@gmail.com>
+Date:   Wed, 13 Feb 2019 20:13:09 +0200
+Message-ID: <CALZbgSSzpd7bDWE1iyfqAsv9oovsSK22oReDiPGG-Td5D2qgaA@mail.gmail.com>
+Subject: Git-pull Documentation
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Junio C Hamano <jch2355@gmail.com> On Behalf Of Junio C Hamano
-> Sent: February 13, 2019 12:25
-> To: Eric Sunshine <sunshine@sunshineco.us>
-> Cc: randall.s.becker@rogers.com; Git List <git@vger.kernel.org>; Randall
-S.
-> Becker <rsbecker@nexbridge.com>
-> Subject: Re: [Patch v1 2/3] t5318: replace use of /dev/zero with
-> generate_zero_bytes
-> 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Eric Sunshine <sunshine@sunshineco.com> writes:
-> >
-> >> On Sat, Feb 9, 2019 at 2:00 PM <randall.s.becker@rogers.com> wrote:
-> >>> This change removes the dependency on /dev/zero with
-> >>> generate_zero_bytes appending NUL values to blocks generating wrong
-> signatures for test cases.
-> >>
-> >> This commit message says what the patch does but not _why_. At
-> >> minimum, it should explain that /dev/zero is not available on all
-> >> platforms, therefore, not portable, and (perhaps) cite NonStop as an
-> >> example.
-> >
-> > Does sombody want to do the honors?  [PATCH 1/3] would become wasted
-> > effort until that happens.  On the other hand, if this is not urgent
-> > (it is only urgent for those without /dev/zero, and to others it may
-> > be distraction/disruption this close to the final release to add
-> > increased risk of fat finger mistakes), obviously I can wait.
-> 
-> So, before I lose the access to my primary screen (I was told that somehow
-I
-> need to reimage the workstation today X-<), here is what I have now.
-> 
-> -- >8 --
-> From: "Randall S. Becker" <rsbecker@nexbridge.com>
-> Date: Sat, 9 Feb 2019 13:59:29 -0500
-> Subject: [PATCH] t5318: replace use of /dev/zero with generate_zero_bytes
-> 
-> There are platforms (e.g. NonStop) that lack /dev/zero; use the
-> generate_zero_bytes helper we just introduced to append stream of NULs at
-> the end of the file.
-> 
-> The original, even though it uses "dd seek=... count=..." to make it look
-like it
-> is overwriting the middle part of an existing file, has truncated the file
-before
-> this step with another use of "dd", which may make it tricky to see why
-this
-> rewrite is a correct one.
+Hello,
 
-Here is how I interpret the test - might be wrong, but yanno...
-The first dd copies something looking like reasonable data from the test
-case.
-The second dd copies zeros from seek to the end of a fixed size block.
+In the "EXAMPLES" section of the git-pull documentation
+(https://git-scm.com/docs/git-pull#_examples) there is the following:
 
-My first attempt at a fix used truncate that extended the first to the
-correct size (filling with zeros). My worry there is that I'm not sure there
-is a guarantee of zeros, but that shouldn't matter for the test which just
-wants a signature mismatch.
+    "[...] Merge into the current branch the remote branch next:
 
-Others suggested using yes to fill in junk.
+    $ git pull origin next
 
-My second attempt was to create the generate_zero_bytes function to replace
-exactly what the second dd was doing but not user /dev/zero. The fix was not
-to change the conditions of the test - not debating the correctness of that
-here - but to simply replicate the use of /dev/zero in context. So the
-resulting file contains [reasonable-stuff]{seek}[0]{orig_size-seek}, which
-is sufficient to satisfy the conditions of the test.
+    This leaves a copy of next temporarily in FETCH_HEAD, but does not
+update any remote-
+    tracking branches. [...]"
 
-> 
-> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  t/t5318-commit-graph.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh index
-> 16d10ebce8..d4bd1522fe 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -383,7 +383,7 @@ corrupt_graph_and_verify() {
->  	cp $objdir/info/commit-graph commit-graph-backup &&
->  	printf "$data" | dd of="$objdir/info/commit-graph" bs=1
-> seek="$pos" conv=notrunc &&
->  	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0
-> &&
-> -	dd if=/dev/zero of="$objdir/info/commit-graph" bs=1
-> seek="$zero_pos" count=$(($orig_size - $zero_pos)) &&
-> +	generate_zero_bytes $(($orig_size - $zero_pos))
-> +>>"$objdir/info/commit-graph" &&
->  	test_must_fail git commit-graph verify 2>test_err &&
->  	grep -v "^+" test_err >err &&
->  	test_i18ngrep "$grepstr" err
+However, the second bullet-point in the "CONFIGURED REMOTE-TRACKING
+BRANCHES" section of the git-fetch documentation
+(https://git-scm.com/docs/git-fetch#_configured_remote_tracking_branches_a_id_crtb_a)
+states that it is possible for a command of the form "git fetch
+<remote> <branch>" to update a remote-tracking branch.
 
+I checked and the current behaviour of "git pull <remote> <branch>" is
+to update the remote-tracking branch if required, because, as I have
+seen in the code, it just calls "git fetch".
+
+I believe that the quoted example from the git-pull documentation is wrong.
+
+Also, in the beginning of the git-pull documentation there is the
+following paragraph:
+
+    "Default values for <repository> and <branch> are read from the
+"remote" and "merge"
+    configuration for the current branch as set by git-branch[1] --track."
+
+I believe that this paragraph tries to state that if the <remote> and
+the <refspec> arguments are missing, they are replaced with
+branch.<name>.remote and branch.<name>.merge, respectively. However I
+think that this paragraph is unnecessary (and partially wrong), as the
+behaviour of git-pull when no arguments are given is described in the
+"DEFAULT BEHAVIOUR" section
+(https://git-scm.com/docs/git-pull#_default_behaviour) and it is a
+little more complicated than that, as one set of branches are used for
+fetching (e.g. the values of remote.<origin>.fetch) and another set of
+branches are used for merging (e.g. the value of branch.<name>.merge).
+
+
+I hope I did not miss anything.
+
+
+Thank you,
+Razvan Maris
