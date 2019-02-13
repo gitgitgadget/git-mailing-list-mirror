@@ -2,88 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94AF81F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 04:57:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6D01F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 06:49:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732441AbfBME5O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Feb 2019 23:57:14 -0500
-Received: from mail-it1-f170.google.com ([209.85.166.170]:35785 "EHLO
-        mail-it1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726095AbfBME5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Feb 2019 23:57:14 -0500
-Received: by mail-it1-f170.google.com with SMTP id v72so2767313itc.0
-        for <git@vger.kernel.org>; Tue, 12 Feb 2019 20:57:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Ysar9F5fLNN2yVEBzzoKHeFrFjuiS/RVne5Yaud6jrw=;
-        b=oLFtlAi/l4YxSnkVVQyVu5k6Q349kY5sl7UtdDvMQwT3ky62jQxRA0aPj8w1cP17xu
-         RI6pNr7QaqfkDtoJ0GIH0Obh14MFnVcqikEq7DvpQ4d3uwZSocZd04b0su3jdztw3WgP
-         L7+DwmIr1V3eqyHNmb7e5VNVY9BMRjodbZtODlPtguTq+NRM076QNPXJuiwHbcEv0B6S
-         tk+2KIOWgfhpl/BwONyweOxtojmHBXGLkHID3CymafyQ/DqyRPKjUHvC6gzMUny1fujs
-         R31qUPog5V37vr8+VO4BZvLSKx4vVfNPQKETVdFN0JfsxPyh/5zsIiDGggSAojfnRnJv
-         Z9ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Ysar9F5fLNN2yVEBzzoKHeFrFjuiS/RVne5Yaud6jrw=;
-        b=WtAJwUHA5GLlo2YvzQAErE1HI2PGLmx/bHbaowEznLJ1bF0CV6g6aPc8jNTRDgMy9e
-         5W90aIHaxPbDX8GNvyhocalNqCw9jnNByk4L/I6bOKHlTxD7nPe50Lasgs1Oi40DFFb9
-         dalZhD6nZAfZ1dBxg6egAKq+C++enxjfQtyjXbj8er7r3ocg58P1TBJIMjKuy7wEiSuM
-         TQmd/M1/OAjvuH1dF/PqncyoeQ2eKh+J6KYL7oUQVOWNIE+AApQdztjaJetcvGxIQdnL
-         NMFPIcDFDZ0/DWDskxruZJ0ND41g45Soof59Xr7CqyYnE+FMUDr9pxrOhXZ3oeaKmKid
-         iR0g==
-X-Gm-Message-State: AHQUAuY/S33URXk1LWtzcSlRwFXy5pHvYcgZyBaVHkV6WR7/zrEcfJJm
-        2oVA23a0nWpE1d4woQIQKWwrxrGimNMNpSVfmCjcaN6RwIE=
-X-Google-Smtp-Source: AHgI3IZW8wJ+YVzbijYCKaBkq/izpYyuq0OAcSk7+KLEosJvK1B82JjqsbQVjyy69p6aCzgmnHFrx0LanMZhFFLBUTU=
-X-Received: by 2002:a24:5e05:: with SMTP id h5mr1271785itb.103.1550033833186;
- Tue, 12 Feb 2019 20:57:13 -0800 (PST)
+        id S1732639AbfBMGtI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 01:49:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42482 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726411AbfBMGtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 01:49:08 -0500
+Received: (qmail 4711 invoked by uid 109); 13 Feb 2019 06:49:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Feb 2019 06:49:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31256 invoked by uid 111); 13 Feb 2019 06:49:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 13 Feb 2019 01:49:18 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Feb 2019 01:49:06 -0500
+Date:   Wed, 13 Feb 2019 01:49:06 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v3 4/4] tests: define GIT_TEST_SIDEBAND_ALL
+Message-ID: <20190213064906.GA29560@sigill.intra.peff.net>
+References: <cover.1547244620.git.jonathantanmy@google.com>
+ <cover.1547666330.git.jonathantanmy@google.com>
+ <47a98b67113869aa6a887ced52560c8306e55bc0.1547666330.git.jonathantanmy@google.com>
+ <20190129232732.GB218214@google.com>
 MIME-Version: 1.0
-From:   Petri Gynther <pgynther@google.com>
-Date:   Tue, 12 Feb 2019 20:57:01 -0800
-Message-ID: <CAGXr9JHb1hjtMamdWt=oDg_eeBEuiDcbzAx+1XpV+HvvX1xsaA@mail.gmail.com>
-Subject: Feature request on git log --oneline <revision range> -- <path>...
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190129232732.GB218214@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git developers:
+On Tue, Jan 29, 2019 at 03:27:32PM -0800, Jonathan Nieder wrote:
 
-Small feature request on:
-git log --oneline <revision range> -- <path>...
+> Jonathan Tan wrote:
+> 
+> > --- a/t/lib-httpd/apache.conf
+> > +++ b/t/lib-httpd/apache.conf
+> > @@ -78,6 +78,7 @@ PassEnv GNUPGHOME
+> >  PassEnv ASAN_OPTIONS
+> >  PassEnv GIT_TRACE
+> >  PassEnv GIT_CONFIG_NOSYSTEM
+> > +PassEnv GIT_TEST_SIDEBAND_ALL
+> 
+> This is producing
+> 
+>  [env:warn] [pid 248632] AH01506: PassEnv variable GIT_TEST_SIDEBAND_ALL was undefined
+> 
+> when tests are run with "prove".
+> 
+> Should we set the envvar unconditionally in lib-httpd.sh?
 
-Could we add an option to:
-1) display all commits in <revision range> unconditionally
-2) use a special marker (e.g. star) for commits that touch <path>...
-and list the files from <path>... that this commit modified
+Yes, that's the same solution we've had to use for GIT_VALGRIND, etc. I
+don't think there's an easier way.
 
-Sample output:
-git log --oneline (--annotated?) HEAD~5..HEAD -- Makefile kernel/printk/printk.c
-
-  aaaabbbbccc1 uninteresting commit 1
-* aaaabbbbccc2 fix Makefile
-    Makefile
-  aaaabbbbccc3 uninteresting commit 2
-* aaaabbbbccc4 fix Makefile and printk()
-    Makefile
-    kernel/printk/printk.c
-  aaaabbbbccc5 uninteresting commit 3
-
-In other words:
-- commits that don't touch <path>... are still listed (without special markers)
-- commits that touch <path>... are listed with * prefix, and the files
-from <path>... that the commit modified are listed below the commit
-
-This is very useful for kernel LTS merges, when we want to know which
-LTS patches in the merge chain actually touched the files that matter
-for a specific build target.
-
-Is this an easy add-on to git log?
+-Peff
