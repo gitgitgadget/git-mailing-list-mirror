@@ -7,53 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 946521F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 00:11:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A09781F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 00:30:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730110AbfBMALR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Feb 2019 19:11:17 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34488 "EHLO
+        id S1732584AbfBMAav (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Feb 2019 19:30:51 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34494 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728789AbfBMALR (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Feb 2019 19:11:17 -0500
+        by vger.kernel.org with ESMTP id S1728438AbfBMAau (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Feb 2019 19:30:50 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 83A2360443;
-        Wed, 13 Feb 2019 00:11:15 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8D30660443;
+        Wed, 13 Feb 2019 00:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1550016675;
-        bh=WmdaXBGR2JttMQ6AXiPhPcQ0cgjy5ZRvEpteXdkRGKU=;
+        s=default; t=1550017847;
+        bh=QrBV2a8cG8PgrnHVRvRaXvAkfuORNg2ipCg8nAElm+U=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=wX8HHQIfxUpK3lE77FlhGkmL+OXtYpOzHkWseSwZ/s4ZJSZGe/dNWdYdc5pHqJh2D
-         p5oUKyQ1dKUnu+y5t2K0C2tEyC9DREROEwFnU/T2H9rCPPS59JcQtqAXRKZNs4Ia+/
-         p/cB+X4/3ZVgOsBRK4sd5fAmVoOPES10eb3rxbgu9xA2EhEa9l6N0dCluyVFCDj5kK
-         +/8F7oiMB+AUPL1yGfN8OjPLXugUEQJX8Fos+I110RegI6haMPANJyO1kQyE3ENFRj
-         w/rB0oNb33pJwYnCI+Gs2LelQTxEZd6ZzNLovKs6b8erU1kpvSgztfoA3X2YTk/nAG
-         kO3LwGd16mCx/qcStoO/r4lDNoWolq7wyVtinSPHk6nlRaU+Vq2vS84mJtXN3hDRul
-         3FPedmNhkVUCko1QRmRPkOiv9LpCGEu3gwoCCvoWokj4/7D4tcyT6OY5+eMhCiAR9/
-         KcCE/luaSdNxIiwkkZJRj5coz0C7g7MZBh0/HEwL+jAJi2LcNyv
-Date:   Wed, 13 Feb 2019 00:11:11 +0000
+        b=XqIid/kSqFPQkppSE9oIKv5kYIpOk9WTMeKLaVjEmbfxiy6V7BtTjUh3An7GmwP+Z
+         LurUcyb7xyRluWUg+zyimGwvnAoef1jCWUjHAHxK5q09TxgmG+eUVEOiL3gsHOPF1l
+         PG2O30gMeFG1trj/nhTUvlb7F+38x9ZFdhMQAFBcEIK4WDJOW/uTyaz1I5BXcqZun2
+         pkV0WDDQJ/MQW8Zra2nMaH0sQpmiN8IvBN1uLJtCoMTJfNDYEUowVDsrYkc3dLAJIE
+         dbT2uxJ7nHZX1BYYz1LdQTCSJh5ZreRkQA96Z+O9uH9cOU493o5Akt+6UWnVh/HkGI
+         lAbkSk592KHiiOLXwNUe7Nr8NKNrd1ZtZjUbIcdiyvqQaZ0nCgHvT+jFBZpnxZZrna
+         eXl8ENfGCyIjYrXOWTNvzZYH8jpjO3Hj4x4qOp5WYSeYSUS/8HsntMeKr7Ozccvaj1
+         3zEWfBeYKor5VnbJ/pi4p0yfYwc6k5T1FBMxwmKvnQlZnyzoTUZ
+Date:   Wed, 13 Feb 2019 00:30:42 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 24/31] archive-tar: make hash size independent
-Message-ID: <20190213001111.GH684736@genre.crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 28/31] dir: make untracked cache extension hash size
+ independent
+Message-ID: <20190213003041.GI684736@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
         Duy Nguyen <pclouds@gmail.com>
 References: <20190212012256.1005924-1-sandals@crustytoothpaste.net>
- <20190212012256.1005924-25-sandals@crustytoothpaste.net>
- <2a6cf99a-c297-225c-b3c9-c30e1ac83948@web.de>
- <2e0ab97b-2a9f-6820-46fa-ba664c42cd87@web.de>
+ <20190212012256.1005924-29-sandals@crustytoothpaste.net>
+ <87y36ljmcu.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="tcC6YSqBgqqkz7Sb"
+        protocol="application/pgp-signature"; boundary="3U8TY7m7wOx7RL1F"
 Content-Disposition: inline
-In-Reply-To: <2e0ab97b-2a9f-6820-46fa-ba664c42cd87@web.de>
+In-Reply-To: <87y36ljmcu.fsf@evledraar.gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.19.0-2-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -64,96 +66,64 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---tcC6YSqBgqqkz7Sb
+--3U8TY7m7wOx7RL1F
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 12, 2019 at 06:33:39PM +0100, Ren=C3=A9 Scharfe wrote:
-> Am 12.02.2019 um 08:20 schrieb Ren=C3=A9 Scharfe:
-> > That command currently prints the pax comment in tar archives if it
-> > looks like a SHA1 hash based on its length.  It should continue to do
-> > so, and _also_ show longer hashes.  Your change makes it _only_ show
-> > those longer hashes.
-> >
-> > So it could check for all known valid hash lengths in turn, or accept
-> > any payload length between 40 and the_hash_algo->hexsz, or loosen up
-> > totally and show comments of any length.
+On Tue, Feb 12, 2019 at 12:08:01PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
+mason wrote:
+> Both this & the follow-up 29/31 look scary since this is an on-disk
+> structure and this patch & the next one rather than implementing some
+> transition, just changes the structs & code we use to read & write to
+> use the current hash size.
 >=20
-> How about the following patch, as a preparation?
->=20
-> -- >8 --
-> From: Rene Scharfe <l.s.r@web.de>
-> Subject: [PATCH] get-tar-commit-id: parse comment record
->=20
-> Parse pax comment records properly and get rid of magic numbers for
-> acceptable comment length.  This simplifies a later change to handle
-> longer hashes.
->=20
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  builtin/get-tar-commit-id.c | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
->=20
-> diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
-> index 2706fcfaf2..312e44ed05 100644
-> --- a/builtin/get-tar-commit-id.c
-> +++ b/builtin/get-tar-commit-id.c
-> @@ -21,6 +21,8 @@ int cmd_get_tar_commit_id(int argc, const char **argv, =
-const char *prefix)
->  	char *content =3D buffer + RECORDSIZE;
->  	const char *comment;
->  	ssize_t n;
-> +	long len;
-> +	char *end;
->=20
->  	if (argc !=3D 1)
->  		usage(builtin_get_tar_commit_id_usage);
-> @@ -32,10 +34,17 @@ int cmd_get_tar_commit_id(int argc, const char **argv=
-, const char *prefix)
->  		die_errno("git get-tar-commit-id: EOF before reading tar header");
->  	if (header->typeflag[0] !=3D 'g')
->  		return 1;
-> -	if (!skip_prefix(content, "52 comment=3D", &comment))
-> +
-> +	len =3D strtol(content, &end, 10);
-> +	if (errno =3D=3D ERANGE || end =3D=3D content || len < 0)
-> +		return 1;
-> +	if (!skip_prefix(end, " comment=3D", &comment))
-> +		return 1;
-> +	len -=3D comment - content;
-> +	if (len !=3D GIT_SHA1_HEXSZ + 1)
->  		return 1;
+> So what are we going to do when the "current" size is SHA-256 and our
+> on-disk cache is SHA-1? It seems like with this we'd at best (I haven't
+> tested) throw away the SHA-1 UC data, and at worst introduce some silent
+> persistent read failure.
 
-So it turns out I wrote a different patch for this in a later series,
-but I like this style better. I'm going to squash my existing patches
-together and then rework them such that they're based off yours.
+That's a good question. The current design has everything in the .git
+directory other than the loose object table and the pack indices in one
+algorithm. That is, the untracked cache extension, like the rest of the
+index, will always be SHA-256 when the objects are stored in SHA-256.
 
-My technique iterated over the entire header, comparing the entire
-header, which is much less elegant than this solution.
+Having mixed algorithms in the .git directory would add a lot of
+complexity.
+
+> In any case that seems like something we should have tests for with an
+> on-disk format, i.e. write in one hash, see what happens when we read in
+> another, and perhaps instead of not understanding SHA-1 hashes in
+> SHA-256 mode we'd read the SHA-1 and consult the SHA-1<->SHA-256 lookup
+> table we're going to be eventually maintaining on the side?
+
+Correct. The current plan is that when the transition code is fully
+implemented, we'll read object IDs from the user in whatever algorithms
+we support, translate them into the default algorithm, and then use
+them.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---tcC6YSqBgqqkz7Sb
+--3U8TY7m7wOx7RL1F
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.12 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxjYJ4ACgkQv1NdgR9S
-9ou/fA//TCmIuEUzg5Ssl5NSKe0k5LQj6BNt48Oa2M9MvMopIm4xHtQbsvy06W8h
-DuqNnBqQNEiw74TAZorF4pIlWxDDliKbps9XWvgYzwqeF7945KDJy3wJCDki/aBi
-HwoHzysyjV93k5H1KTQoMB7i+Pugx82Dh78nJfs11kCgt1DXEkQM6RdZhWEJ/ACl
-pSoOhFeJqfiEXSL6g5fRIfZCdEQb9JQ/BUPxq2cOkjULes6ufTVy66yryHZFNIkp
-rDJspVHMWPZ8r7gIc0eD2AiCOeazN/kCRRluGCDzBBXOp7/GlVoJr57IMmZh10VP
-qcydLtYZIANUjbBweT5k9fXVTSKx6p+T4e3jZEz3SdpMHwxzH5LoDkc+bPrIr/hZ
-wRQHq8C4J5DmBlLStYXqptdODzrnoVcwWy/nI8I+v7JHJ3nmLvg5MnopyuKus8do
-8tOas+Af1A/yC+qZN7UF/O/fP6wtr3cR/kZkH4GBzXo0RhKBRsDGYYOejfzstFqE
-IM9omj7GdaLQu4LD39rAyPI6k3vtNSofHnavNwvBvZFFWO+nOOL/mFbO7/9kZ2Tr
-EVDMVo4aYQmFgQdF699MeBVuW8cI7uzKIy0ah/DBdsqPMTIZcZE860NDfrjkkHvF
-LiTPshXCfTklS1ZZTv5ECVXV4TSeyQ9QMblwbXpSYWvvNt2vwNo=
-=5Rcm
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxjZTEACgkQv1NdgR9S
+9osTUhAAy/V/Sdvz/s3VGzTEHMlaRd/2cPOxf6X1+0oVB8j7lV3uupNTw7BhAdfJ
+YKF100dK52iYZgxN2su+fXZ4iE60WjjjBkrTiFAMr8wrAKJnRLyvqqMn01U35q41
+v8QylriURCOWF+dRF929WRD2t7haScUvVvEdNV2tPZx77v6O81TY/Yq3pxNcrhiv
+qeVvsviFK3/c72iq+nsUz2Z9JXtcsL7FGAxV4jg5CWWlPpUeIOjWPI020sdSMZHz
+dX3tV1M4L6vObSSl+qfjUsZENI+ku6Hr4YG33fvTKxKwThBCinWvICrue/jNE0wl
+/psoSV9ADHEpDT/N4qkTm2d487FwrR6A2YmEEsOuVcKx+GgX0upt7bkiwCydipFC
+NE5iM5C9RkPfzuqWSMTZlVyeq1s6O6ovnZ8VgS9S8WX77GSXTqlHccVarJyH2CVH
+IUnql3fr6OCoCqfj96m7sVTytaLSMnXfpZge8tWkbXb6URbYGxR9L2CzYzaqAhB2
+VW5Df+/Um+dPdzCvwTeU6A/XGD1gtB89cAb9vrTdl5X9jeV7lRzNi2pUzwsq9dIH
+cLmvei1Zn6ppg8vNlM0hthHb2FtVK+Jz62nlrZZc9eHn7+w2r5FefoOD/ol92UZZ
+WpKnXakqBhf2tNRgS9Few8KcjNSVKvGewRYCZkuSH4AdyGkixYM=
+=cfUb
 -----END PGP SIGNATURE-----
 
---tcC6YSqBgqqkz7Sb--
+--3U8TY7m7wOx7RL1F--
