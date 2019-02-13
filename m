@@ -2,143 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61B46211B5
-	for <e@80x24.org>; Wed, 13 Feb 2019 22:37:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB971F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 22:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392506AbfBMWhG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 17:37:06 -0500
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:43712 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727471AbfBMWhF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 17:37:05 -0500
-Received: by mail-ua1-f66.google.com with SMTP id z11so1358125uaa.10
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 14:37:04 -0800 (PST)
+        id S2395122AbfBMWhw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 17:37:52 -0500
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:33153 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727471AbfBMWhv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 17:37:51 -0500
+Received: by mail-wr1-f47.google.com with SMTP id i12so4413744wrw.0
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 14:37:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1CiWfbLzK7PELX/lplA6gdIZ7N7LCybk3mYeEY+Nc5g=;
-        b=lE85j0Pt4X7S/rntZzjrEPeNZpNkBUkGMzk1/dvnoXsg7ReuGSyZ20cxesoEvdNENf
-         nrKtI+RiDrKElVNi3T6pji8yrv+M9kooljhrcdhQwkn9MyBjBcs2LjcG12rbFYmT+Ze4
-         PkF77cTBeE3ELLg6Kqx0Wppjjvt9tiOedMTlTgl/UbuhGsSp7H0D2/79xnnt8wMzo0hH
-         I0mWY1jZZ6kbytT/fBqG7Vgr8QglTJ5LDcpo06KQycBDkwudyZg2/eZMZzY9iHJU2Y7q
-         C74Hp3dI171anIQYbhJJMZlLpi7NBLzaixtEZ2xqqL6Bp1x+W9Gk66zd8vxEJl9rTGVf
-         wcmA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=/UuO8fiOS4bQxOBXKgz7+LZucg/7sarn+dB6JnWEtVI=;
+        b=CEZ9NRwTMPVnSSfbLdOejcXshYU+AnFaFRYM1xxyoj66wEoh+lreiROGbZWOxVw7NZ
+         SbRcvt9zcHUcmsWAUcyxSUwCnFP2InPZV2pW0go3d+9VbAh6jOdgknWqFpEhlMHYiB6c
+         96StUO+CHbrM7WSZ8Le18mVLJ8z4AFS9Rp2m/+ve5oKIU5AWNFDYBbqRQj/JXWMbUvbd
+         k7yZX2+hRfFBRH0ogNo+/7dmKwArKc6rTsJ0p3KI6wJJpq3rF3CZNcUmGxizTWPjvaY6
+         NQ/PsCTNS8uvAVBuyIw0uGVsX0FD9mNzv98hdCkPUh/xgfSdBLm65NotzutxcQ2FWq6u
+         ORBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1CiWfbLzK7PELX/lplA6gdIZ7N7LCybk3mYeEY+Nc5g=;
-        b=sS+S7Q147hu22OuY0xVh2XyOLFUb08m4ZDYOzRJOvU5Xwk+vTOKr82B/6c4iYSTDi6
-         +8zKCH0c0yDy+FYiI1R8qL5S2kBrVVzJwFnvo+nEdOf17UraODqXbpXgdaLS2yGMHf8J
-         VdgWVMS80BpIusk5KgcvKxDxDG2WbhJBSXhS2h6dTWJ/3Y02tCcXY/tXSQae6TEAWSpl
-         q+1SoB6nzZV+QHsnsNilzL/O6wdECjeFoOFAlT9sVCEra615lzKg3+4nCxL6BKTkG7rH
-         3B63Z1SF2iRdSa/t5nglqTapgtIJGIbgLmCgxBGzJQWRJetWzhYHS+I2OA9qzqoVe4jd
-         4bPw==
-X-Gm-Message-State: AHQUAuYVk2O1IIj/keylk5vdu/mcVj/Jkvsui9fqxWniDmkQEb32WEoU
-        wtH5qg6UfaRipcjLYyJuywVSG/F+NId3oDaeFyw=
-X-Google-Smtp-Source: AHgI3IY25PfOBC2c4aEN4EK61t5A566Hn8vvtUQy9Kb0BA5vtjku2eLeKdWiCXPDutTx5RMajR9GorzevSJm11+uVzo=
-X-Received: by 2002:ab0:7191:: with SMTP id l17mr332933uao.28.1550097424003;
- Wed, 13 Feb 2019 14:37:04 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=/UuO8fiOS4bQxOBXKgz7+LZucg/7sarn+dB6JnWEtVI=;
+        b=HSj1UzoyT0dNKDJCepZTNJwCMfkvJYqDMCCMyjfgbxRyDx/hc7Uk081UfPFd85Zr+Z
+         nonA6WQMHf9bMcVla+csGie5JvasVS2HL4ErmMI1+0eebzZvA3QoZnF1Z8sHNQte/h4U
+         eYsprXeGZSyF7jF/aS/Or8aljlcAO5w0+SZWBjj70g3ybXftmV0BrBO2kbD/OYUuvqj+
+         JWWBSRDWnTgb1a3bZNJdIpsaihdpVs2O2z1VzXDhqEw2JNELhTLsODqZKDgRPBvAKIwQ
+         JrzZmSGdflakI/PRvCnlBYrgJol46fCw/MmkZkmYbK0UFKXL7r4sKt0PvUK3nNWoZefB
+         ynZA==
+X-Gm-Message-State: AHQUAub++JAkSsHrgAPe2XFf4l6/BiWqpx6m0CxNKYw9cS0V2E7gCRJu
+        cgI/UNM8wh8ccT15onG+vPI=
+X-Google-Smtp-Source: AHgI3IYD3jkXirzWf8zyZ33pv0vTkQFzrMwUGk6q50QclnkxNp0dxDB+Bvk83gxe7byuzJmGAOiU7A==
+X-Received: by 2002:adf:d0c9:: with SMTP id z9mr290365wrh.132.1550097469871;
+        Wed, 13 Feb 2019 14:37:49 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z3sm374998wmi.32.2019.02.13.14.37.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Feb 2019 14:37:49 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     William Hubbs <williamh@gentoo.org>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, chutzpah@gentoo.org
+Subject: Re: [PATCH v6 2/2] config: allow giving separate author and committer idents
+References: <20190204184850.10040-1-williamh@gentoo.org>
+        <20190205195212.25550-3-avarab@gmail.com>
+        <xmqqef8mrnnj.fsf@gitster-ct.c.googlers.com>
+        <87k1iekkea.fsf@evledraar.gmail.com>
+        <20190206000413.GA734@whubbs1.gaikai.biz>
+        <xmqqwomdqzik.fsf@gitster-ct.c.googlers.com>
+        <20190213164322.GA3625@whubbs1.dev.av1.gaikai.org>
+Date:   Wed, 13 Feb 2019 14:37:48 -0800
+In-Reply-To: <20190213164322.GA3625@whubbs1.dev.av1.gaikai.org> (William
+        Hubbs's message of "Wed, 13 Feb 2019 10:43:22 -0600")
+Message-ID: <xmqqwom39uwz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
- <20190204215251.GB6085@hank.intra.tgummerer.com> <20190205211736.GD6085@hank.intra.tgummerer.com>
- <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
- <20190206220942.GE6085@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
- <20190207213326.GF6085@hank.intra.tgummerer.com> <CAL21Bmkkpzp7fhAnjstTjeH+unDFk8-uhFAgKFfuczYzejf2RA@mail.gmail.com>
-In-Reply-To: <CAL21Bmkkpzp7fhAnjstTjeH+unDFk8-uhFAgKFfuczYzejf2RA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 13 Feb 2019 14:36:51 -0800
-Message-ID: <CABPp-BGNMN0QZWa4E4kBFOs8RcUQoMuMT2J_zKhwOTQPbaGU4g@mail.gmail.com>
-Subject: Re: GSoC 2019: Git's application submitted
-To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 10, 2019 at 9:51 PM =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=
-=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
->
-> > It would be nice to have a few more project ideas.
->
-> I am not sure I have additional ideas for 3-month project for the intern,=
- but
->
-> > https://git.github.io/SoC-2019-Ideas/ currently lists only 2 possible
-> > projects:
-> >
-> > - Unify ref-filter formats with other --pretty formats (which is new)
->
-> I am ready to act as a mentor in this task, I know that part of
-> project good enough.
-> I have additional related task: We have a function called
-> oid_object_info, it allows to download meta-info of the file. It was
-> used in cat-file, and inspired by that example, I improved ref-filter,
-> so now ref-filter works faster with it. Moreover, I have found that
-> oid_object_info allows to get the contents of the file. It was useful
-> in ref-filter, and actually it could be also useful in cat-file, but
-> we still download the file differently in cat-file, and it looks
-> awkward. I need to make just one last move to finish my patch: it will
-> close the task about migrating cat-file formatting logic to
-> ref-filter. But cat-file still will not use general way to download
-> the file. So, the task is to get rid of additional file-reading logic.
-> I guess this task is much smaller than original one, but at least the
-> student will have chance to finish it in 3 months.
-> My patch is here: https://github.com/git/git/pull/568
-> But I hope you will also see it this week in the mailing list.
-> Proposed task is in TODO in the end of ref-filter file.
->
-> By the way, we had a letter from Google, it is said that our tasks are
-> sparsed. I am not sure I understand it correctly. Should I help the
-> project somehow to solve our issues?
+William Hubbs <williamh@gentoo.org> writes:
 
-I'm a little hesitant to suggest this as I'm not sure how available I
-could be for mentoring and don't view myself as a good mentor, but
-another project idea which has lots of sub-pieces and thus could show
-progress and be useful even if not everything is completed:
+> I am writing back onn this thread because I'm not quite sure of the
+> status. v5 of the patch seemed ok, but there were some changes discussed
+> that would have created a v6. The v6 changes though were never really
+> clear. I'm not sure whether I am supposed to be doing something more or
+> whether I'm waiting for you. ;-)
+>
+> Can you write back and let me know?
 
-Consistency of sequencer commands:
-* The suggestion to fix an interrupted rebase-i or cherry-pick due to
-a commit that became empty via 'git reset HEAD' (in builtin/commit.c)
-instead of 'git rebase --skip' or 'git cherry-pick --skip' ranges from
-annoying to confusing.  (Especially since other interrupted am's and
-rebases both point to am/rebase --skip.).  Note that 'git cherry-pick
---skip' is not yet implemented, so that would have to be added first.
-* There are a handful of flags that am-based rebases support that are
-not available to interactive/merge-based rebases; it'd be nice to
-implement them for the interactive machinery.  (There are also
-numerous flags that only the interactive machinery supports that are
-unavailable to am-based rebases, but I don't care; I want to deprecate
-am-based rebases.)
-  * --ignore-whitespace (transliterate to -Xignore-space-change?)
-  * --whitespace=3D...
-  * --committer-date-is-author-date/--ignore-date
-  * -C4
+In general, unless I ask you to wait, a contributor would almost
+never be waiting for me.
 
-[There's also some empty handling (from "Behavioral Differences" in
-Documentation/git-rebase.txt) that would be nice to address, though
-that might be contentious and I might try to tackle that piece before
-GSoC gets rolling...]
+I think Ævar's v6 was not up to par, but I thought that v5 from you
+(which is in 'next') was good enough to cook in 'next'.  The topic
+will not be moving out of 'next' until the final 2.21 is released
+anyway, so if anything, I'd say the ball is in his court to update
+his version after the release, when your v5 may have a chance to be
+kicked out of 'next' and replaced _if_ there is a better version by
+then.
 
-Bonus: Make a flag to allow rebase to rewrite commit messages that
-refer to older commits that were also rebased.  (i.e. if rebasing
-commits A and B, and commit B says "This reverts commit <sha-of-A>,
-then rewritten B's commit message should say "This reverts commit
-<sha-of-rewritten-A".)  Do this for both sha1sums and sha1sum
-abbreviations in commit messages.
