@@ -2,223 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E2DF1F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 10:05:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ECA41F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 10:08:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732278AbfBMKFn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 05:05:43 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:18158 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727580AbfBMKFn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 05:05:43 -0500
-Received: from [192.168.2.201] ([92.22.24.194])
-        by smtp.talktalk.net with SMTP
-        id trQCgx6cXoI6LtrQCgV5aM; Wed, 13 Feb 2019 10:05:41 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1550052341;
-        bh=/tmZdBK1SVuXxUbnLgqHj9ymFHI035mZrQvPWpauIyA=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=MwTuv0Ri7BrkAQxLqZ0yLSliWtPwJq4f5AqaSa6UAR0N+Lt/L5CQlmEIX5z91NPNG
-         IVt5WaCWmJtzPLMFzG/wM1FfWZrKHY5RHZxUCUHRDhwVO++vU3a9QenJ1FRtCGpfO4
-         sH9kjyuQqYIUAJJmKYz0+7o+daqeUYgjxztb4oxM=
-X-Originating-IP: [92.22.24.194]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=OJBejJTAIYRVoGQ3FWVcuw==:117
- a=OJBejJTAIYRVoGQ3FWVcuw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=-SdBtPKUdoCwTFasenEA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 11/16] sequencer: refactor skip_unnecessary_picks() to
- work on a todo_list
-To:     Alban Gruin <alban.gruin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20190129150159.10588-1-alban.gruin@gmail.com>
- <20190210132648.12821-1-alban.gruin@gmail.com>
- <20190210132648.12821-12-alban.gruin@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <1cc273d3-6d49-20f0-780b-c2d6d2edda87@talktalk.net>
-Date:   Wed, 13 Feb 2019 10:05:42 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S2387978AbfBMKIH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 05:08:07 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51407 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727580AbfBMKIH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 05:08:07 -0500
+Received: by mail-wm1-f66.google.com with SMTP id b11so1783685wmj.1
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 02:08:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=yBiKzc7Vnlz1fwKZjnjDTr5KX/6er3q/hvsf4EYYtvk=;
+        b=hj0mCOPNunarqVgI6fWrIQNF0HnGRiueEVsD0bCMkqiWmFYFwgX2+uVdeS4WMbaMSj
+         HfhH0G4q2kq1FmvyZxzOKY60SHkMXHs2kAJ044imvm6b4IuLftdfOwND/Y9xEUaQ+zFl
+         kE64b5ECoYPh718duNqCMlkLIxn1eCbIB0r8xhtgY/3y1zPnzp9exr0b62F4FgaPIccs
+         xu8pjHimvxsW87I48tA1VpbisQ7yw48aSj9QLWeIDdXjBG6owy4JlwHYnregZQ+bhmff
+         PrLhbR4b30tnR3bX8q3OWxfznJJkEScPVY7yuhrQj4MYUrcBIEiD9x9wsWlZ+m7++U0+
+         7xGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=yBiKzc7Vnlz1fwKZjnjDTr5KX/6er3q/hvsf4EYYtvk=;
+        b=pfs7hZxxLmn0RTn3JjfnNTSc72ABunzC1BPwZxpwXpBGjJDkFX5ThtBVRCEnCQVz0q
+         BvfXf8yEQytH1MG5LrCyIFHsT10yK6flGdkLZ0YsdR12CIb73vSBrPfFOJLf5WRWKixw
+         kVjAa6QNJNEnkguMpXA7ipkqvREhoD2zZlrCShzoe679QPsNXR1Xr33FWjTvj/xV71A/
+         1m67FiXF35ToqA9PMN46UO6KeVkln/8+WXWw9fT7CR3HA7J0YojSxKp/cQZGtgOxca8+
+         Nr9WZMsI1fH7CVUAiFZ9R5ZjZzMj3AhKqtSkCDoBAoYZxG2v01pCnoUC2ERcEQmol5ec
+         rK/Q==
+X-Gm-Message-State: AHQUAubtWSesETnuJZ9PE0EnFLW10R09vMMKPl8AH4iUBEo2zJwcAgzM
+        NZGSWU+rVJ4RCYyW4cbz548=
+X-Google-Smtp-Source: AHgI3IZdw2TaK6pOXRTZ2EImwJqS7jyiRagrQXVrbduETOApcsGDIaqOQzEfbLeDMs5W1ahiK1yFTg==
+X-Received: by 2002:a7b:c112:: with SMTP id w18mr2744218wmi.28.1550052484393;
+        Wed, 13 Feb 2019 02:08:04 -0800 (PST)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id e17sm9826872wrs.79.2019.02.13.02.08.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Feb 2019 02:08:03 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Max Kirillov <max@max630.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+Subject: Re: [RFC PATCH] pack-refs: fail on falsely sorted packed-refs
+References: <20190130231359.23978-1-max@max630.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190130231359.23978-1-max@max630.net>
+Date:   Wed, 13 Feb 2019 11:08:01 +0100
+Message-ID: <87lg2kj91a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190210132648.12821-12-alban.gruin@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfEpgRWTrfxZuPl/rwq68DWRZwPgzWiZ7YlmfOdITo6d8zrXHF+LayHfBdzl764klbH87jHlEgrzsN5DLMl5SWMHwqGdsJyybuMq+zrWtON/tSbQRii+y
- 4SzKrAblFZiSEmMG3x1c+9WD+YupoJ+1yc8N+2YuOMGvEDBzFM45gzS0XkQXUHIU9gqwPT/ZolCVy+Hdt+U5WQVcIZiX/GHo0E3f8mvTEwMx3DQXMXQi1ANI
- JJrCdymhPMHTIQUu8jrnZNTwSzClkKUv/XTrghwad/4xgIMWEBp03GJLavGMsl2pdHQyynzEs71mEepSoe+NbQ==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban
 
-On 10/02/2019 13:26, Alban Gruin wrote:
-> This refactors skip_unnecessary_picks() to work on a todo_list.  As this
-> function is only called by complete_action() (and thus is not used by
-> rebase -p), the file-handling logic is completely dropped here.
-> 
-> Instead of truncating the todo list’s buffer, the items are moved to
-> the beginning of the list, eliminating the need to reparse the list.
-> This also means its buffer cannot be directly written to the disk.
-> 
-> rewrite_file() is then removed, as it is now unused.
-> 
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+On Thu, Jan 31 2019, Max Kirillov wrote:
+
+> If packed-refs is marked as sorted but not really sorted it causes
+> very hard to comprehend misbehavior of reference resolving - a reference
+> is reported as not found.
+>
+> As the scope of the issue is not clear, make it visible by failing
+> pack-refs command - the one which would not suffer performance penalty
+> to verify the sortedness - when it encounters not really sorted existing
+> data.
+>
+> Signed-off-by: Max Kirillov <max@max630.net>
 > ---
->  sequencer.c | 82 +++++++++++++----------------------------------------
->  1 file changed, 19 insertions(+), 63 deletions(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index eb8a622af0..eacaf52250 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4717,52 +4717,22 @@ int check_todo_list_from_file(struct repository *r)
->  	return res;
->  }
->  
-> -static int rewrite_file(const char *path, const char *buf, size_t len)
-> -{
-> -	int rc = 0;
-> -	int fd = open(path, O_WRONLY | O_TRUNC);
-> -	if (fd < 0)
-> -		return error_errno(_("could not open '%s' for writing"), path);
-> -	if (write_in_full(fd, buf, len) < 0)
-> -		rc = error_errno(_("could not write to '%s'"), path);
-> -	if (close(fd) && !rc)
-> -		rc = error_errno(_("could not close '%s'"), path);
-> -	return rc;
-> -}
-> -
->  /* skip picking commits whose parents are unchanged */
-> -static int skip_unnecessary_picks(struct repository *r, struct object_id *output_oid)
-> +static int skip_unnecessary_picks(struct repository *r,
-> +				  struct todo_list *todo_list,
-> +				  struct object_id *base_oid)
+> I happened to have a not really sorted packed-refs file. As you might guess,
+> it was quite wtf-ing experience. It worked, mostly, but there was one branch
+> which just did not resolve, regardless of existing and being presented in
+> for-each-refs output.
+>
+> I don't know where the corruption came from. I should admit it could even be a manual
+> editing but last time I did it (in that reporitory) was several years ago so it is unlikely.
+>
+> I am not sure what should be the proper fix. I did a minimal detection, so that
+> it does not go unnoticed. Probably next step would be either fixing in `git fsck` call.
+>
+>  refs/packed-backend.c               | 15 +++++++++++++++
+>  t/t3212-pack-refs-broken-sorting.sh | 26 ++++++++++++++++++++++++++
+>  2 files changed, 41 insertions(+)
+>  create mode 100755 t/t3212-pack-refs-broken-sorting.sh
 
-Thanks for renaming that parameter, I think it's much clearer.
+This is not an area I'm very familiar with. So mostly commeting on
+cosmetic issues with the patch. FWIW the "years back" issue you had
+could be that an issue didn't manifest until now, i.e. in a sorted file
+format you can get lucky and not see corruption for a while with a
+random insert.
 
-Best Wishes
+> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> index c01c7f5901..505f4535b5 100644
+> --- a/refs/packed-backend.c
+> +++ b/refs/packed-backend.c
+> @@ -1088,6 +1088,7 @@ static int write_with_updates(struct packed_ref_store *refs,
+>  	FILE *out;
+>  	struct strbuf sb = STRBUF_INIT;
+>  	char *packed_refs_path;
+> +	struct strbuf prev_ref = STRBUF_INIT;
+>
+>  	if (!is_lock_file_locked(&refs->lock))
+>  		BUG("write_with_updates() called while unlocked");
+> @@ -1137,6 +1138,20 @@ static int write_with_updates(struct packed_ref_store *refs,
+>  		struct ref_update *update = NULL;
+>  		int cmp;
+>
+> +		if (iter)
+> +		{
+> +			if (prev_ref.len &&  strcmp(prev_ref.buf, iter->refname) > 0)
 
-Phillip
->  {
-> -	const char *todo_file = rebase_path_todo();
-> -	struct strbuf buf = STRBUF_INIT;
-> -	struct todo_list todo_list = TODO_LIST_INIT;
->  	struct object_id *parent_oid;
-> -	int fd, i;
-> -
-> -	if (!read_oneliner(&buf, rebase_path_onto(), 0))
-> -		return error(_("could not read 'onto'"));
-> -	if (get_oid(buf.buf, output_oid)) {
-> -		strbuf_release(&buf);
-> -		return error(_("need a HEAD to fixup"));
-> -	}
-> -	strbuf_release(&buf);
-> -
-> -	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file) < 0)
-> -		return -1;
-> -	if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list) < 0) {
-> -		todo_list_release(&todo_list);
-> -		return -1;
-> -	}
-> +	int i;
->  
-> -	for (i = 0; i < todo_list.nr; i++) {
-> -		struct todo_item *item = todo_list.items + i;
-> +	for (i = 0; i < todo_list->nr; i++) {
-> +		struct todo_item *item = todo_list->items + i;
->  
->  		if (item->command >= TODO_NOOP)
->  			continue;
->  		if (item->command != TODO_PICK)
->  			break;
->  		if (parse_commit(item->commit)) {
-> -			todo_list_release(&todo_list);
->  			return error(_("could not parse commit '%s'"),
->  				oid_to_hex(&item->commit->object.oid));
->  		}
-> @@ -4771,42 +4741,26 @@ static int skip_unnecessary_picks(struct repository *r, struct object_id *output
->  		if (item->commit->parents->next)
->  			break; /* merge commit */
->  		parent_oid = &item->commit->parents->item->object.oid;
-> -		if (!oideq(parent_oid, output_oid))
-> +		if (!oideq(parent_oid, base_oid))
->  			break;
-> -		oidcpy(output_oid, &item->commit->object.oid);
-> +		oidcpy(base_oid, &item->commit->object.oid);
->  	}
->  	if (i > 0) {
-> -		int offset = get_item_line_offset(&todo_list, i);
->  		const char *done_path = rebase_path_done();
->  
-> -		fd = open(done_path, O_CREAT | O_WRONLY | O_APPEND, 0666);
-> -		if (fd < 0) {
-> -			error_errno(_("could not open '%s' for writing"),
-> -				    done_path);
-> -			todo_list_release(&todo_list);
-> -			return -1;
-> -		}
-> -		if (write_in_full(fd, todo_list.buf.buf, offset) < 0) {
-> +		if (todo_list_write_to_file(r, todo_list, done_path, NULL, NULL, i, 0)) {
->  			error_errno(_("could not write to '%s'"), done_path);
-> -			todo_list_release(&todo_list);
-> -			close(fd);
->  			return -1;
->  		}
-> -		close(fd);
->  
-> -		if (rewrite_file(rebase_path_todo(), todo_list.buf.buf + offset,
-> -				 todo_list.buf.len - offset) < 0) {
-> -			todo_list_release(&todo_list);
-> -			return -1;
-> -		}
-> +		MOVE_ARRAY(todo_list->items, todo_list->items + i, todo_list->nr - i);
-> +		todo_list->nr -= i;
-> +		todo_list->current = 0;
->  
-> -		todo_list.current = i;
-> -		if (is_fixup(peek_command(&todo_list, 0)))
-> -			record_in_rewritten(output_oid, peek_command(&todo_list, 0));
-> +		if (is_fixup(peek_command(todo_list, 0)))
-> +			record_in_rewritten(base_oid, peek_command(todo_list, 0));
->  	}
->  
-> -	todo_list_release(&todo_list);
-> -
->  	return 0;
->  }
->  
-> @@ -4879,6 +4833,11 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->  		return -1;
->  	}
->  
-> +	if (opts->allow_ff && skip_unnecessary_picks(r, &new_todo, &oid)) {
-> +		todo_list_release(&new_todo);
-> +		return error(_("could not skip unnecessary pick commands"));
-> +	}
+You have an extra two whitespaces after "&&" there.
+
+> +			{
+> +				strbuf_addf(err, "broken sorting in packed-refs: '%s' > '%s'",
+> +					    prev_ref.buf,
+> +					    iter->refname);
+> +				goto error;
+> +			}
 > +
->  	if (todo_list_write_to_file(r, &new_todo, todo_file, NULL, NULL, -1,
->  				    flags & ~(TODO_LIST_SHORTEN_IDS))) {
->  		todo_list_release(&new_todo);
-> @@ -4887,9 +4846,6 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->  
->  	todo_list_release(&new_todo);
->  
-> -	if (opts->allow_ff && skip_unnecessary_picks(r, &oid))
-> -		return error(_("could not skip unnecessary pick commands"));
-> -
->  	if (checkout_onto(opts, onto_name, oid_to_hex(&oid), orig_head))
->  		return -1;
->  
-> 
+> +			strbuf_init(&prev_ref, 0);
+> +			strbuf_addstr(&prev_ref, iter->refname);
+> +		}
+> +
+>  		if (i >= updates->nr) {
+>  			cmp = -1;
+>  		} else {
+> diff --git a/t/t3212-pack-refs-broken-sorting.sh b/t/t3212-pack-refs-broken-sorting.sh
+> new file mode 100755
+> index 0000000000..37a98a6fb1
+> --- /dev/null
+> +++ b/t/t3212-pack-refs-broken-sorting.sh
+> @@ -0,0 +1,26 @@
+> +#!/bin/sh
+> +
+> +test_description='tests for the falsely sorted refs'
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +	git commit --allow-empty -m commit &&
 
+Looks like just "test_commit A" would do here.
+
+> +	for num in $(test_seq 10)
+> +	do
+> +		git branch b$(printf "%02d" $num) || break
+> +	done &&
+
+We can fail in these sorts of loops. There's a few ways to deal with
+that. Doing it like this with "break" will still silently hide errors:
+
+    $ for i in $(seq 1 3); do if test $i = 2; then false || break; else echo $i; fi; done && echo success
+    1
+    success
+
+One way to deal with that is to e.g. before the loop say "had_fail=",
+then set "had_fail=t" in that "||" case, and test for it after the loop.
+
+But perhaps in this case we're better off e.g. running for-each-ref
+after and either using test_cmp or test_line_count to see that we
+created the refs successfully?
+
+> +	git pack-refs --all &&
+> +	head_object=$(git rev-parse HEAD) &&
+> +	printf "$head_object refs/heads/b00\\n" >>.git/packed-refs &&
+
+Looks like just "echo" here would be simpler since we only use printf to
+add a newline.
+
+> +	git branch b11
+> +'
+> +
+> +test_expect_success 'off-order branch not found' '
+> +	! git show-ref --verify --quiet refs/heads/b00
+> +'
+> +
+> +test_expect_success 'subsequent pack-refs fails' '
+> +	! git pack-refs --all
+> +'
+
+Instead of "! git ..." use "test_must_fail git ...". See t/README. This
+will hide e.g. segfaults.
+
+Also, perhaps:
+
+    test_must_fail git ... 2>stderr &&
+    grep "broken sorting in packed-refs" stderr
+
+Would make this more obvious/self-documenting so we know we failed due
+to that issue in particular.
