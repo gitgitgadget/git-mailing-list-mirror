@@ -2,145 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2F0E1F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 21:46:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66F8B1F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 21:48:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436894AbfBMVqj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 16:46:39 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43020 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729596AbfBMVqj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 16:46:39 -0500
-Received: by mail-wr1-f66.google.com with SMTP id r2so4218943wrv.10
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 13:46:37 -0800 (PST)
+        id S2436951AbfBMVsu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 16:48:50 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43313 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729596AbfBMVst (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 16:48:49 -0500
+Received: by mail-wr1-f68.google.com with SMTP id r2so4225597wrv.10
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 13:48:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dkCG9FNIgJvP8qGCjSdH1gfeS7PZlhv6kQ2bZyQuuGs=;
-        b=RicXG46tG9NNFIc9kHf7nzRshF+NN4nDCZXor08m54RG8HrpT6P3HIzBHX8B3TpmDR
-         Y5vFwq0CQIqVcwz2EsAiPZTqvDYFHh/f3m8DMXoNNsEL+pCEH0XlaF3OjD/vdICIewvK
-         e7wiZclJqTjhXqdFwF8tQGfthv3ohegAgLamuzYolFmftspxAyNceDDZ3LJTJJM/6k6n
-         TgMdrxgDlU+8/a0olQyBBnIrv1ZKHjFJsXs+ExghTME0gUtdzO1ice8E31ziUXkCEVnO
-         9OSPak0WGFQMnHs7vSbiFb5E3mM6o1fbDzf9vPnifCtbpoOLmkjxVNMHWNApm+9c54l+
-         gDVw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=vcEivfl5yD5vq1XYTkJcMUCA0VjXiB5WW8pEQG8LrMQ=;
+        b=WwPYN7f7Jr+2AUm4PepfApt59tFZ2UedkVaQ+0qwBevc/nrYm7efVf48fEo1LJD/N7
+         TyS0ziBoYyqYUASbV4JIxbO56WPqp3dseOgtar5BPI0HT0y3egUtL2vPmLTkIdFrmgeY
+         FvcU1dUyEfI5k7MwfMCQYCLw0Htjfh88ek0YS1dXizz1IBBwffYy/vE7CMOnN5TIM7Tn
+         xCXB6ddgkjYYuRNxutVtjm2zM6dXOxmJ2dF3lus4+4NDeqLIzzwiKZC5azaEu7dFXnP5
+         X+Qd75CWO/iWqQKAx2KUsMQJwX/yzT9gD5yGAwvw/hLhEWQX/A/pXMPI4CVRgKgCDM/G
+         EHcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dkCG9FNIgJvP8qGCjSdH1gfeS7PZlhv6kQ2bZyQuuGs=;
-        b=nFQuMlxcLKDuH6r2+aVcJf9DzqHmt25xrtRpljPW14tQpJFAFKhBVbk95803RLZ6ZP
-         //Eg2ah0PJS02nQ/Cd8D3Byd8LFR07/5d2ybYKFzVrBLAWo4Th3nvc6yi+DtRHD2sIao
-         /5OFawkroHd0XQUuO3TsXcBZzf86QkQZBujLhaZP/Xww9XSgyJRFbqoknvGVZGzI2wkW
-         rzbmGcu1TuFGANfFcBSpNGp6UY4ehkHAHmdWXvcfdDEDOn5D+TKMXIVetddEKgcxIYoV
-         xwjsZ2ASh/tBS360x7RTNQRigKyLqu6GFAmoBuxT1FpVVWGSdjnO8Gb83wpGN830/896
-         Y+dQ==
-X-Gm-Message-State: AHQUAua3qyWnalcpD7YTqGvy1oc+GViL/u2ezEaxNaO01nhyQ7OLa7Jw
-        Y7hHlUTeWHKWtYZ/TKRTRu0=
-X-Google-Smtp-Source: AHgI3Iax9u5EOA4CHsBh34y5VYg5p3OJIdER47WsMVYWE6eY28TX4m3wdqmCq+y7Pmv8DEgsGLgDcg==
-X-Received: by 2002:adf:eac2:: with SMTP id o2mr168226wrn.280.1550094396911;
-        Wed, 13 Feb 2019 13:46:36 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id f2sm653880wmb.19.2019.02.13.13.46.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Feb 2019 13:46:36 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] mingw: use a more canonical method to fix the CPU reporting
-References: <pull.125.git.gitgitgadget@gmail.com>
-        <68df753d12b712ec33943a310f0bc80f4ec78d9a.1550053187.git.gitgitgadget@gmail.com>
-Date:   Wed, 13 Feb 2019 13:46:35 -0800
-In-Reply-To: <68df753d12b712ec33943a310f0bc80f4ec78d9a.1550053187.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Wed, 13 Feb 2019
-        02:19:49 -0800 (PST)")
-Message-ID: <xmqq8syjbbus.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=vcEivfl5yD5vq1XYTkJcMUCA0VjXiB5WW8pEQG8LrMQ=;
+        b=Vt8tfzk/IrflJcV5pOxd/3cF7RTjsJerJeRXy30ugB8a1A+ScMr+ak/8lh8EgiQ+Xk
+         c/wi7lH6T6vU56mVO7u3rV8V412x7HBBwu+6Pihq6W1dwY3D53OQyukYeZrDjynI4tVG
+         0tAhFokyxBaPhWQ1f3sM7Fyd58vm3JbCnW9s9+tNlrQetDHcnwdAZIdqiz6hazjLXfXr
+         cXcLTwkLltwkFlm0HV9DC8YCfmWKTp/gebVRAgsBFlPRnLDqHbbjigsyohGOQ13s/c44
+         yCmIv3HB3gi6Ng4yY2T0vYX7nUauHGmJahXwPFLV8AsDdw+0bzbNRclUcyUFxPogELXI
+         StsA==
+X-Gm-Message-State: AHQUAuZ8j6W4PYHBNu1dNTOZHlwoJj6eRtIospbl509o6KE0z87z8y1T
+        WyVAGgSczUqAio1cxR1MNrw=
+X-Google-Smtp-Source: AHgI3Iahbgub+vpo2rWL56IieuYk2Dcc0iCZYfu6IUgP31zqI2CJnVtEV0x25uCOdu1P0sH8LT4FrQ==
+X-Received: by 2002:a05:6000:1107:: with SMTP id z7mr160980wrw.87.1550094528001;
+        Wed, 13 Feb 2019 13:48:48 -0800 (PST)
+Received: from szeder.dev (x4dbe07c0.dyn.telefonica.de. [77.190.7.192])
+        by smtp.gmail.com with ESMTPSA id c65sm696810wma.24.2019.02.13.13.48.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 Feb 2019 13:48:46 -0800 (PST)
+Date:   Wed, 13 Feb 2019 22:48:44 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>, hsed@unimetic.com
+Subject: Re: [PATCH v2] tests: avoid syntax triggering old dash bug
+Message-ID: <20190213214844.GI1622@szeder.dev>
+References: <xmqqo9a9stbs.fsf@gitster-ct.c.googlers.com>
+ <20190213115951.12096-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190213115951.12096-1-avarab@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, Feb 13, 2019 at 12:59:51PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> Avoid a bug in dash that's been fixed ever since its
+> ec2c84d ("[PARSER] Fix clobbering of checkkwd", 2011-03-15)[1] first
+> released with dash v0.5.7 in July 2011. This failing test was
+> introduced in 5f9674243d ("config: add --expiry-date", 2017-11-18).
+> 
+> This fixes 1/2 tests failing on Debian Lenny & Squeeze. The other
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In `git version --build-options`, we report also the CPU, but in Git for
-> Windows we actually cross-compile the 32-bit version in a 64-bit Git for
-> Windows, so we cannot rely on the auto-detected value.
->
-> In 3815f64b0dd9 (mingw: fix CPU reporting in `git version
-> --build-options`, 2019-02-07), we fixed this by a Windows-only
-> workaround, making use of magic pre-processor constants, which works in
-> GCC, but most likely not all C compilers.
->
-> As pointed out by Eric Sunshine, there is a better way, anyway: to set
-> the Makefile variable HOST_CPU explicitly for cross-compiled Git. So
-> let's do that!
->
-> This reverts commit 3815f64b0dd983bdbf9242a0547706d5d81cb3e6 partially.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  compat/mingw.h   | 19 -------------------
->  config.mak.uname |  2 ++
->  2 files changed, 2 insertions(+), 19 deletions(-)
+Do I understand this "1/2" right?  There are two tests failing on
+Lenny and Squeeze, and this fixes one of those bugs?
 
-Will apply; thanks.
+> failure is due to 1b42f45255 ("git-svn: apply "svn.pathnameencoding"
+> before URL encoding", 2016-02-09).
+> 
+> The dash bug is triggered by this test because the heredoc contains a
+> command embedded in "$()" with a "{}" block coming right after
+> it. Refactoring the "$()" to e.g. be a variable that was set earlier
+> will also work around it, but let's instead break up the "EOF" and the
+> "{}".
+> 
+> An earlier version of this patch[2] mitigated the issue by breaking
+> the "$()" out of the "{}" block, that worked, but just because it
+> broke up the "EOF" and "{}" block. Putting e.g. "echo &&" between the
+> two would also work.
+> 
+> 1. https://git.kernel.org/pub/scm/utils/dash/dash.git/
 
->
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index 363f047df0..8c24ddaa3e 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -6,25 +6,6 @@ typedef _sigset_t sigset_t;
->  #include <winsock2.h>
->  #include <ws2tcpip.h>
->  
-> -#ifdef __MINGW64_VERSION_MAJOR
-> -/*
-> - * In Git for Windows, we cannot rely on `uname -m` to report the correct
-> - * architecture: /usr/bin/uname.exe will report the architecture with which the
-> - * current MSYS2 runtime was built, not the architecture for which we are
-> - * currently compiling (both 32-bit and 64-bit `git.exe` is built in the 64-bit
-> - * Git for Windows SDK).
-> - */
-> -#undef GIT_HOST_CPU
-> -/* This was figured out by looking at `cpp -dM </dev/null`'s output */
-> -#if defined(__x86_64__)
-> -#define GIT_HOST_CPU "x86_64"
-> -#elif defined(__i686__)
-> -#define GIT_HOST_CPU "i686"
-> -#else
-> -#error "Unknown architecture"
-> -#endif
-> -#endif
-> -
->  /* MinGW-w64 reports to have flockfile, but it does not actually have it. */
->  #ifdef __MINGW64_VERSION_MAJOR
->  #undef _POSIX_THREAD_SAFE_FUNCTIONS
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 3ee7da0e23..194f20a8b3 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -553,9 +553,11 @@ else
->  		prefix = /usr/
->  		ifeq (MINGW32,$(MSYSTEM))
->  			prefix = /mingw32
-> +			HOST_CPU = i686
->  		endif
->  		ifeq (MINGW64,$(MSYSTEM))
->  			prefix = /mingw64
-> +			HOST_CPU = x86_64
->  		else
->  			COMPAT_CFLAGS += -D_USE_32BIT_TIME_T
->  			BASIC_LDFLAGS += -Wl,--large-address-aware
+Could you please link directly to the commit fixing that issue?
+
+  https://git.kernel.org/pub/scm/utils/dash/dash.git/commit/?id=ec2c84d3c4dba4b74440d72bdd1de416a9acd2a9
+
+> 2. https://public-inbox.org/git/20181127164253.9832-1-avarab@gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
