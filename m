@@ -7,92 +7,109 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB971F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 22:37:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88E1F1F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 22:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395122AbfBMWhw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 17:37:52 -0500
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:33153 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727471AbfBMWhv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 17:37:51 -0500
-Received: by mail-wr1-f47.google.com with SMTP id i12so4413744wrw.0
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 14:37:50 -0800 (PST)
+        id S2395301AbfBMWni (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 17:43:38 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37580 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392624AbfBMWnf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 17:43:35 -0500
+Received: by mail-wr1-f68.google.com with SMTP id c8so4386297wrs.4
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 14:43:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=/UuO8fiOS4bQxOBXKgz7+LZucg/7sarn+dB6JnWEtVI=;
-        b=CEZ9NRwTMPVnSSfbLdOejcXshYU+AnFaFRYM1xxyoj66wEoh+lreiROGbZWOxVw7NZ
-         SbRcvt9zcHUcmsWAUcyxSUwCnFP2InPZV2pW0go3d+9VbAh6jOdgknWqFpEhlMHYiB6c
-         96StUO+CHbrM7WSZ8Le18mVLJ8z4AFS9Rp2m/+ve5oKIU5AWNFDYBbqRQj/JXWMbUvbd
-         k7yZX2+hRfFBRH0ogNo+/7dmKwArKc6rTsJ0p3KI6wJJpq3rF3CZNcUmGxizTWPjvaY6
-         NQ/PsCTNS8uvAVBuyIw0uGVsX0FD9mNzv98hdCkPUh/xgfSdBLm65NotzutxcQ2FWq6u
-         ORBg==
+         :user-agent:mime-version;
+        bh=tisgE8mYrbIRus/ndLC4LuJceCvpgYbj7a+IEhcMqtc=;
+        b=qKRSTqg92qzkHf4p5sRKGGSchfnB4kXGMM3D38yzJq9qJIFX6tNQT35VdRKXK/03px
+         1960veTVonifKzf0ofxJJwntFpNQo5nYMjP5QgCc6o5PVBeVB8G8psNETIJIlQrNbTSV
+         gzOT7TrnTwKbe+KQ1ftpADwHuAh7fKAKuG5J+uHTAP4xAEuIArB/FR96aKJC5sQmxRmQ
+         4ExfqkJO2AhYc5mz8up4sb7QTBqj1LM1EjEg2YBEc5yctwAkiROhQ/e0DtAQ8wVEPGyP
+         2OwEOcHR0jhJhZxDnmeolAeqKLxmc9Babsdx4MnaJd7Svy856a6a+nA1ayNs05+70AZz
+         vmAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=/UuO8fiOS4bQxOBXKgz7+LZucg/7sarn+dB6JnWEtVI=;
-        b=HSj1UzoyT0dNKDJCepZTNJwCMfkvJYqDMCCMyjfgbxRyDx/hc7Uk081UfPFd85Zr+Z
-         nonA6WQMHf9bMcVla+csGie5JvasVS2HL4ErmMI1+0eebzZvA3QoZnF1Z8sHNQte/h4U
-         eYsprXeGZSyF7jF/aS/Or8aljlcAO5w0+SZWBjj70g3ybXftmV0BrBO2kbD/OYUuvqj+
-         JWWBSRDWnTgb1a3bZNJdIpsaihdpVs2O2z1VzXDhqEw2JNELhTLsODqZKDgRPBvAKIwQ
-         JrzZmSGdflakI/PRvCnlBYrgJol46fCw/MmkZkmYbK0UFKXL7r4sKt0PvUK3nNWoZefB
-         ynZA==
-X-Gm-Message-State: AHQUAub++JAkSsHrgAPe2XFf4l6/BiWqpx6m0CxNKYw9cS0V2E7gCRJu
-        cgI/UNM8wh8ccT15onG+vPI=
-X-Google-Smtp-Source: AHgI3IYD3jkXirzWf8zyZ33pv0vTkQFzrMwUGk6q50QclnkxNp0dxDB+Bvk83gxe7byuzJmGAOiU7A==
-X-Received: by 2002:adf:d0c9:: with SMTP id z9mr290365wrh.132.1550097469871;
-        Wed, 13 Feb 2019 14:37:49 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=tisgE8mYrbIRus/ndLC4LuJceCvpgYbj7a+IEhcMqtc=;
+        b=WNjNmV9/CvZyxCeRDu8/lq57v1hws6i0fL1BhR9DJJhSR8bJGR7c6qmOgyxeJhs59D
+         kdVSSG1hdFanoiOCXBel9onFYaOkiEOCZ2R6Li+GOON34dayZIRCa//rymbf3AXeb61F
+         c7vW1oCbbvMfBVQ8HN6xnOFXEkQs8012qIDUnCuVQGCzGk1bjetLYpFsz4Wj8j9tlefT
+         0hBKkwKJ1R23t9WG3B8gejwBtMpzR0/pwfvQwXAcWy49VL3gB2GP6UpT2ZSntStWcjtn
+         k/vInLsWMZqssVPSFsmXMAyCVuSl2r2WjDs4VFPl5KKh3HFnjKs8mgEBf2sRgmpF7ktV
+         +CNg==
+X-Gm-Message-State: AHQUAuakZ39zWYVTUHAB3qnjaZmAfVE3IRqUdB1qLhDGVKlbWMfTJbKl
+        XPO0TdWoTrXnifeqM50+/zE=
+X-Google-Smtp-Source: AHgI3IYmmUDqTXhhW9BEjR+xTTgMKOUF0oCKfoe2lb3denwxJt1af1asHiMLEml3gpplMb/ZJqkMoQ==
+X-Received: by 2002:a5d:4804:: with SMTP id l4mr294832wrq.177.1550097812719;
+        Wed, 13 Feb 2019 14:43:32 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z3sm374998wmi.32.2019.02.13.14.37.48
+        by smtp.gmail.com with ESMTPSA id j33sm487790wre.91.2019.02.13.14.43.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Feb 2019 14:37:49 -0800 (PST)
+        Wed, 13 Feb 2019 14:43:32 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     William Hubbs <williamh@gentoo.org>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, chutzpah@gentoo.org
-Subject: Re: [PATCH v6 2/2] config: allow giving separate author and committer idents
-References: <20190204184850.10040-1-williamh@gentoo.org>
-        <20190205195212.25550-3-avarab@gmail.com>
-        <xmqqef8mrnnj.fsf@gitster-ct.c.googlers.com>
-        <87k1iekkea.fsf@evledraar.gmail.com>
-        <20190206000413.GA734@whubbs1.gaikai.biz>
-        <xmqqwomdqzik.fsf@gitster-ct.c.googlers.com>
-        <20190213164322.GA3625@whubbs1.dev.av1.gaikai.org>
-Date:   Wed, 13 Feb 2019 14:37:48 -0800
-In-Reply-To: <20190213164322.GA3625@whubbs1.dev.av1.gaikai.org> (William
-        Hubbs's message of "Wed, 13 Feb 2019 10:43:22 -0600")
-Message-ID: <xmqqwom39uwz.fsf@gitster-ct.c.googlers.com>
+To:     Maris Razvan <razvan.alex.maris@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git-pull Documentation
+References: <CALZbgSSzpd7bDWE1iyfqAsv9oovsSK22oReDiPGG-Td5D2qgaA@mail.gmail.com>
+Date:   Wed, 13 Feb 2019 14:43:31 -0800
+In-Reply-To: <CALZbgSSzpd7bDWE1iyfqAsv9oovsSK22oReDiPGG-Td5D2qgaA@mail.gmail.com>
+        (Maris Razvan's message of "Wed, 13 Feb 2019 20:13:09 +0200")
+Message-ID: <xmqqsgwr9ung.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-William Hubbs <williamh@gentoo.org> writes:
+Maris Razvan <razvan.alex.maris@gmail.com> writes:
 
-> I am writing back onn this thread because I'm not quite sure of the
-> status. v5 of the patch seemed ok, but there were some changes discussed
-> that would have created a v6. The v6 changes though were never really
-> clear. I'm not sure whether I am supposed to be doing something more or
-> whether I'm waiting for you. ;-)
->
-> Can you write back and let me know?
+> I checked and the current behaviour of "git pull <remote> <branch>" is
+> to update the remote-tracking branch if required, because, as I have
+> seen in the code, it just calls "git fetch".
 
-In general, unless I ask you to wait, a contributor would almost
-never be waiting for me.
+The thing is, "git fetch origin next" did *NOT* update remote-tracking
+branch refs/remotes/origin/next for a long time, until f2690487
+("fetch: opportunistically update tracking refs", 2013-05-11)
+happend.
 
-I think Ævar's v6 was not up to par, but I thought that v5 from you
-(which is in 'next') was good enough to cook in 'next'.  The topic
-will not be moving out of 'next' until the final 2.21 is released
-anyway, so if anything, I'd say the ball is in his court to update
-his version after the release, when your v5 may have a chance to be
-kicked out of 'next' and replaced _if_ there is a better version by
-then.
+The series did not update the documentation all that much, which was
+why you are seeing neither "git fetch" nor "git pull" documented to
+perform this "opportunistic update of tracking refs".  The only
+change the topic with f2690487 brought in to the Documentation was
+the attached bit.
+
+Documentation updates to both pull and fetch are very much welcomed.
+
+Thanks.
+
+$ git diff --stat -p 67b57a90f4 db400949b31a Documentation/
+ Documentation/pull-fetch-param.txt | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
+index 94a9d32f1d..18cffc25b8 100644
+--- a/Documentation/pull-fetch-param.txt
++++ b/Documentation/pull-fetch-param.txt
+@@ -68,6 +68,11 @@ Some short-cut notations are also supported.
+ +
+ * `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`;
+   it requests fetching everything up to the given tag.
+-* A parameter <ref> without a colon is equivalent to
+-  <ref>: when pulling/fetching, so it merges <ref> into the current
+-  branch without storing the remote branch anywhere locally
++ifndef::git-pull[]
++* A parameter <ref> without a colon fetches that ref into FETCH_HEAD,
++endif::git-pull[]
++ifdef::git-pull[]
++* A parameter <ref> without a colon merges <ref> into the current
++  branch,
++endif::git-pull[]
++  and updates the remote-tracking branches (if any).
+
+
 
