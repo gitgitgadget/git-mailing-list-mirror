@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCA5D1F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 21:09:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E9C01F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 21:12:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387592AbfBMVJg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 16:09:36 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50870 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726200AbfBMVJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 16:09:36 -0500
-Received: by mail-wm1-f65.google.com with SMTP id x7so4093038wmj.0
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 13:09:35 -0800 (PST)
+        id S2436697AbfBMVMa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 16:12:30 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40387 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436689AbfBMVM3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 16:12:29 -0500
+Received: by mail-wm1-f68.google.com with SMTP id q21so3950080wmc.5
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 13:12:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=Bo5a7PjlVAdNeX1bv+r1JuTUY82ouJPlkdLq1PttIiU=;
-        b=MW2QYuLHwT7Yc3NjC8h02qZv9cvYxODWPoREBt656LCBYYjnz0MfYcs6vbIdab4qgG
-         xMUwjW5tDLCxIKLxRMCa7HKoGmZAD5XFbMsUU8VRy5gMISWc7j8FQH+qljPy1veqvByl
-         HZIs4EcUW5yAZsrzmZ+W1dOjdfOIp9DX66GnC2KWwH5utcYQIEirGp6WasNGF/Wn8sJR
-         q+VTYvQ1Wb0oOO7EAz4BPTOifN2Y164oCAdDAbGL9lAX8f6ca1FiygDNV+FlmTyJQwxC
-         ybTsxlsPd0wbgNX5QbtkaB2c+BWvymWeGNVVOe+y2QqUbJ3fIxyL9XG3L+9bZMGAeIWI
-         fT2Q==
+        bh=ENxT7i2qtlH/df8HXA16wJftCj7Ao8TCcRfcoOCd9ws=;
+        b=j3S6zGf6v+mgo+K1AJUoVeUg43zhMNnBzV7Mx9r5QQ6nSVcuajov1ydsnaUN3QcQHO
+         rUu8bcFzLKOju8Yi6bfpR2hzflYRmIVL7iBSTJJo8W2zGANxXT9SawIcLE2/VaDOhFuN
+         hoVoKgEMqxdzOGvUD2hSJIGQh2yZH355jH2HUvUf2VMYVPOWqUalsFx3X97DHZMJmsz4
+         mWgN5uCQouErKWUPfMVjj3aViBNLcNDx9He7yNO6xukj2FRHWqNgCv+NYQFfchAfWqAj
+         pCdb1+/4uQjacgMBhbolaP7Ha69qRErJP3KzZqAygcOvC/pIPZgxAxHg6h+1itq6dCSx
+         N4Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=Bo5a7PjlVAdNeX1bv+r1JuTUY82ouJPlkdLq1PttIiU=;
-        b=XI25P6LJxEL+sBm1vt7REgtZvmwWX3hqtAPZfHQGHcFK8orgEo6bghbsEPAY0+NP7H
-         1XkjQltmhhpyTNqERwqXp/O772nlz3PgO2AZ47WUD54PkrsUW1g5zb/y6ALOhkAN3ks9
-         q/qZD/Tnja9ET1VtkkuOry91nIzvtG7GrF9XHrJqjLZFkNkOUCoejhIzbjJJhnJnsOGp
-         2lb7AQvmqygdjCE9dbWwNu3DWi6FCrq2Tgkb0vE95RQzAcQUV8/d2NS94lQykiLj8ZCO
-         BfOkd3mRPRP/RaVO5eR5auKaPLiiiJLqG0851/V6vTfefClOH7xjrJzdbJmbLpkz3INo
-         bF0Q==
-X-Gm-Message-State: AHQUAubyhU+S0H3O6hH2KXbltVXr8syDykpsBVlT2vEhDe9SpbEJX3xO
-        ooq/yaGLRPaA4VQFDUCq5jQ=
-X-Google-Smtp-Source: AHgI3IZF1o3BmKXfjtyfpE5mBVdZqP1IPyZFFAtZQgGTkMzGEO4MHD4tdEBilB+CYKiBYyDNngM5eQ==
-X-Received: by 2002:a1c:5656:: with SMTP id k83mr70363wmb.125.1550092174653;
-        Wed, 13 Feb 2019 13:09:34 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z15sm575411wrh.18.2019.02.13.13.09.33
+        bh=ENxT7i2qtlH/df8HXA16wJftCj7Ao8TCcRfcoOCd9ws=;
+        b=Kg/ZJHkBvnFTSSZiNDNJNv6QyZuXWcErB3jn7xA4i0tTGmOLaMXW/pGbh923VstDtU
+         16x2lCML1/n6Sl2ZVv446UnLAlh8loToN1yWLA1CQ3PtOjLyx0OGHTRT5BXV+tS/e2K3
+         1dRWroO69nhR59P+A9wl8hndAFtnsYEGA7HjBcHpHZkEFoOzGZ96VmBzoufzp9ONCELE
+         gF9+1DSQKiTGmhPubmYyrXVh9bPyIO3Pv388oRaMqgDvmGK+pOj+KAJ6OYcvrzIZuFoz
+         fpDUvPP9Y5hSUK3F2YYmgIB+u01kpx7QL+bMsRDUBbhD9vpJyBZ4U05RWeaalp7xv6vJ
+         k/oQ==
+X-Gm-Message-State: AHQUAuZh58QlI7o+2bU4nmAumCYCKG71b3j1hFTX6KQNG0BBB2XCEdft
+        KU8Ak6tOFNisQI3ymFh61cw=
+X-Google-Smtp-Source: AHgI3IY01Or2+uW2SaxNW3uEBtS0CTOGVnFotwsAfTt+ELUklBv7pdbbNHpDU4ZGL32of46Q/KjRDQ==
+X-Received: by 2002:a1c:67c2:: with SMTP id b185mr96901wmc.96.1550092346878;
+        Wed, 13 Feb 2019 13:12:26 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u184sm497506wmg.45.2019.02.13.13.12.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Feb 2019 13:09:34 -0800 (PST)
+        Wed, 13 Feb 2019 13:12:26 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Petri Gynther <pgynther@google.com>, git@vger.kernel.org
-Subject: Re: Feature request on git log --oneline <revision range> -- <path>...
-References: <CAGXr9JHb1hjtMamdWt=oDg_eeBEuiDcbzAx+1XpV+HvvX1xsaA@mail.gmail.com>
-        <87k1i4j8aj.fsf@evledraar.gmail.com>
-Date:   Wed, 13 Feb 2019 13:09:33 -0800
-In-Reply-To: <87k1i4j8aj.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+Cc:     wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>, git@vger.kernel.org
+Subject: Re: How to get next commit that just after a specified commit
+References: <87mun0j9vv.fsf@evledraar.gmail.com>
+Date:   Wed, 13 Feb 2019 13:12:25 -0800
+In-Reply-To: <87mun0j9vv.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
  =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 13 Feb 2019 11:24:04 +0100")
-Message-ID: <xmqqmumzbdki.fsf@gitster-ct.c.googlers.com>
+        message of "Wed, 13 Feb 2019 10:49:40 +0100")
+Message-ID: <xmqqimxnbdfq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -72,23 +71,22 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> What do you think such an option should do when it finds negative path
-> specs, e.g. this on git.git:
+> (Replying to
+> https://public-inbox.org/git/383c14cc.9289.168e61d39e8.Coremail.wuzhouhui14@mails.ucas.ac.cn/
+> which curiously I can see there, but not in my inbox (or spam))
 >
->     git log --oneline --stat -- ':!/Makefile' '*Makefile*'
+> Git's data format doesn't make it easy to find "C" given "B" in a commit
+> chain like A->B->C (also there could be any number of "C"
+> successors). We need to walk the graph. This shows how to do it:
 >
-> Should it only render positive matches, or distinguish between
-> matched/blacklisted/not-matched, your example (with no negative
-> patspecs) just shows matched/not-matched.
+> https://sqlite.org/whynotgit.html#git_makes_it_difficult_to_find_successors_descendents_of_a_check_in
 
-Another thing to consider is what this would do to the merge
-simplification.
-
-If I understand it correctly, this is sort-of like a reverse of the
-"--full-diff" option, where the pathspec *is* used to limit and
-simplify the history, but for the purpose of displaying "log -p"
-output, the pathspec is widened to show the entire change.  This
-instead makes the traversal ignore the pathspec and uses it only to
-limit the "log -p" output.  I do not think I would be fundamentally
-opposed to a feature like this.
+Of course, the history is not necessarily linear.  Even though you
+*MUST* know all your parents before having a commit (which means
+that when you ask "what came before this commit", there is a
+definitive answer that everybody in the world would agree on), you
+by definition cannot know all the commits that are children of a
+commit (simply because somebody else may be creating a new one), so
+the question "what's the next commit" does not make any sense from
+that point of view ;-)
 
