@@ -2,103 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E6D11F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 12:31:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C05501F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 13:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404083AbfBMMbt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 07:31:49 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:54041 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730650AbfBMMbs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 07:31:48 -0500
-Received: by mail-it1-f193.google.com with SMTP id x131so4254104itc.3
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 04:31:48 -0800 (PST)
+        id S2389871AbfBMNPm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 08:15:42 -0500
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:51395 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733075AbfBMNPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 08:15:42 -0500
+Received: by mail-wm1-f50.google.com with SMTP id b11so2421740wmj.1
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 05:15:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Y3RiaXaom5h+RR5wj6I1wafG3E8qS1P39MPCuxU0+js=;
-        b=kmkQeub//7OCTeI8Vvqgfl4x8lvzIZkUt9kL+Nn96mwXcJXcn7CGaz9CzTudZSSUEr
-         PbfFk9jSr/3yvkEd1CZ7J8iADT+sHCECnbNWy4uUsVRH+a3h5BOfvIqNBkIbEJcsfie7
-         nkw146vJPvdw4BuzLZ1aBkfRxnBhGGKmQw+QxGoMTi7+knQ2uNAa6dTjKlRopwXoSfrZ
-         OrwH3XDQKPCr3vSZ6dtX9DdfzXpbliNzkUIHMouL15S9BmEzf3flL1DlCtskx1+1LVcI
-         +qxIFvTba4lIQzy3xMCuN0Oe/ISEYkD6TPZ6pBgQ8bGOu4dzSYI4GKlqIEZwqoLmU3vt
-         XnvQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=/UGp7hrBHqzz/T097Hm7RYDZSPCno9EquTNGykP+Mrk=;
+        b=kSksLfGiPn4mrYo/iFaUw+yt394Td2tX4TSeqUh4593AWiD33LZGs0znYnUyGuL9WM
+         SJ0eKItlyU2t227vjah3hk5kzpqVINRGknfwUBiHQ8ta5t3Xsd9TXDBv6I6Q2BsiXy5K
+         RRVjl9G2sxv3XFl8xRv58w9V5MXP1YSMzc0E/0EMlsCcGyJS0rZk2dQabx4Zc5L3a6x6
+         dCYiks2ePyg5lHV3SBWemd/jfNaWH78KsszS8FwxjlFaQNgqA6oUj5tTqxWEnONudEZW
+         McDowU5Ssw37VUL6jlSD15rs/OD7moKp6HutaFZxkMkXTdshlXmG071CtxXCaCG9ecwA
+         RQww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Y3RiaXaom5h+RR5wj6I1wafG3E8qS1P39MPCuxU0+js=;
-        b=o+Bl39ZbZW+H69zXff0/MbXSLjxMiTVnLbG5Xli7CCWRe3BvnGGq/X8LrnbTtavFOp
-         C+9B3J+DP2KtS3s6HLIQJmxR8tqZdDA2447CCbt0BTUnckWNFBLris0kq0BGaglWsHvX
-         d6H0bDGhvhg8gGa1J7ZYpnSA3BPoTsdsTPxqY+s1OMAliVEBQCj+5bmeJem4y6sYxCQz
-         BfVGlfisPcAaCSseKdax+sblE1uVaMxWRqVjU2i5QBlLw/Bs5CIJkYsxUwcwwZLu81Q+
-         7UReNP6Dz8Nj6s2YJuE4E2K5KCiR2cKUPzwNv7ZpyWxuyIhdcmFifIJHhMzvFf7Lqxt3
-         t9Jg==
-X-Gm-Message-State: AHQUAuYJRFHhV7ZzZssiVN1pKIx9HaAd1qucso+0EO1aIGdXVh8vWzoB
-        Yl9gLApkf/MVSrAi+JaKAKWQddKD0PZ8ye/tGN0=
-X-Google-Smtp-Source: AHgI3IZgxjHVQPD6/2N9WYgrVFA/iycRu2Sm5q2Ddmh+ntWb0VhrDJ1oYEM0ZHshP3PO+l2vHeb5XEA6/WQXuAkI77I=
-X-Received: by 2002:a02:9c21:: with SMTP id q30mr152519jak.30.1550061108005;
- Wed, 13 Feb 2019 04:31:48 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=/UGp7hrBHqzz/T097Hm7RYDZSPCno9EquTNGykP+Mrk=;
+        b=q7pSckn5U9RPzoOvxg4e921ciArQI4mXBrVHaohS5NwxMrN/Gbu0S85vAcrkTWTZeT
+         mdhoiLrYRH4EbMaXPmOo4cbiEMymNkh90NC07y/TPpA5wt634kX1t7CwBMhnWLaUTeOG
+         zqjrmi39wNyP+/GvWs8oH4SKysB6S4mcIgIEixBLa231Mp0D3sR0CuF0CrmyWITOAsVN
+         0wE6JJg9Gond8X8Z9f2wwNTZjSwXzKEKIt4lv+dJ3AFLvC1yoPMJdEJJvCzvXEU+u5a1
+         nNVIKKNM/w1EtI/Ee48sHXqB6RNbSYuQeuyKC4G2hnxp8Vyu7mLqmMOAZ9wDzvY9qE0g
+         kH1A==
+X-Gm-Message-State: AHQUAubLq/vV72FVQ2pCctGO/GUzRBdButB9aYwFm6CN0qyYMnyj8oqw
+        6CazljWX/U7ff3eDq3KBt7Q=
+X-Google-Smtp-Source: AHgI3IalnCVD/dXS8xxA9MDitV0FO/Nwdr2BUxuqZoa7iX9uiEQuW6qQDIB4O6FT9LpXbhjOTiH6zQ==
+X-Received: by 2002:a1c:f916:: with SMTP id x22mr279331wmh.87.1550063740105;
+        Wed, 13 Feb 2019 05:15:40 -0800 (PST)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id v6sm33328939wrd.88.2019.02.13.05.15.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Feb 2019 05:15:39 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 14/15] trace2: t/helper/test-trace2, t0210.sh, t0211.sh, t0212.sh
+References: <pull.108.v4.git.gitgitgadget@gmail.com> <pull.108.v5.git.gitgitgadget@gmail.com> <00b25da38bd107b543a34833e5e363385c9eaa37.1549043937.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <00b25da38bd107b543a34833e5e363385c9eaa37.1549043937.git.gitgitgadget@gmail.com>
+Date:   Wed, 13 Feb 2019 14:15:35 +0100
+Message-ID: <87h8d7kex4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAGXr9JHb1hjtMamdWt=oDg_eeBEuiDcbzAx+1XpV+HvvX1xsaA@mail.gmail.com>
-In-Reply-To: <CAGXr9JHb1hjtMamdWt=oDg_eeBEuiDcbzAx+1XpV+HvvX1xsaA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 13 Feb 2019 19:31:21 +0700
-Message-ID: <CACsJy8D2B_6yvBAQSeh3gvYHLOdfLmgiZ5Z=f4ZGeJ891X4Zjw@mail.gmail.com>
-Subject: Re: Feature request on git log --oneline <revision range> -- <path>...
-To:     Petri Gynther <pgynther@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 13, 2019 at 4:27 PM Petri Gynther <pgynther@google.com> wrote:
->
-> git developers:
->
-> Small feature request on:
-> git log --oneline <revision range> -- <path>...
->
-> Could we add an option to:
-> 1) display all commits in <revision range> unconditionally
-> 2) use a special marker (e.g. star) for commits that touch <path>...
-> and list the files from <path>... that this commit modified
->
-> Sample output:
-> git log --oneline (--annotated?) HEAD~5..HEAD -- Makefile kernel/printk/printk.c
->
->   aaaabbbbccc1 uninteresting commit 1
-> * aaaabbbbccc2 fix Makefile
->     Makefile
->   aaaabbbbccc3 uninteresting commit 2
-> * aaaabbbbccc4 fix Makefile and printk()
->     Makefile
->     kernel/printk/printk.c
->   aaaabbbbccc5 uninteresting commit 3
->
-> In other words:
-> - commits that don't touch <path>... are still listed (without special markers)
-> - commits that touch <path>... are listed with * prefix, and the files
-> from <path>... that the commit modified are listed below the commit
->
-> This is very useful for kernel LTS merges, when we want to know which
-> LTS patches in the merge chain actually touched the files that matter
-> for a specific build target.
->
-> Is this an easy add-on to git log?
 
-Adding the "*" is not that hard, I think. The hard part is UI. Soon
-somebody may want to "list commits touching sub/ then add "*" on ones
-that touch sub/dir/". Meanwhile I think you can still achieve that
-with a bit of scripting and processing "git log --raw --oneline
-<revisions>" output.
--- 
-Duy
+On Fri, Feb 01 2019, Jeff Hostetler via GitGitGadget wrote:
+
+> +test_expect_success 'event stream, error event' '
+> +	test_when_finished "rm trace.event actual expect" &&
+> +	GIT_TR2_EVENT="$(pwd)/trace.event" test-tool trace2 003error "hello world" "this is a test" &&
+> +	perl "$TEST_DIRECTORY/t0212/parse_events.perl" <trace.event >actual &&
+
+These & similar tests on some systems ...
+
+> [...]
+> diff --git a/t/t0212/parse_events.perl b/t/t0212/parse_events.perl
+> new file mode 100644
+> index 0000000000..a2776ba216
+> --- /dev/null
+> +++ b/t/t0212/parse_events.perl
+> @@ -0,0 +1,251 @@
+> [...]
+> +use strict;
+> +use warnings;
+> +use JSON::PP;
+> +use Data::Dumper;
+> +use Getopt::Long;
+
+...because JSON::PP is not a core perl module. See
+e.g. t/t9501-gitweb-standalone-http-status.sh for how we deal with this,
+i.e.:
+
+    perl -MJSON::PP -e 0 >/dev/null 2>&1 && test_set_prereq JSON_PP
+
+Then later e.g.:
+
+    test_expect_success JSON_PP 'event stream, error event' '[...]
+    
+
+
