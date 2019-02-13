@@ -2,97 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CDB41F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 10:20:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D3461F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 10:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388598AbfBMKUm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 05:20:42 -0500
-Received: from mout.gmx.net ([212.227.15.19]:42115 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728843AbfBMKUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 05:20:42 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlV71-1hTC0d07E7-00bJFK; Wed, 13
- Feb 2019 11:20:40 +0100
-Date:   Wed, 13 Feb 2019 11:20:24 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     William Chargin <wchargin@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Workflow for GitHub branch model interop: advice?
-In-Reply-To: <CAFW+GMDA9gkih-7n=R2N_5edNK=b4X28qqPgRd7soGG160t94w@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902131115230.41@tvgsbejvaqbjf.bet>
-References: <CAFW+GMDA9gkih-7n=R2N_5edNK=b4X28qqPgRd7soGG160t94w@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2389440AbfBMKYI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 05:24:08 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38971 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732488AbfBMKYH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 05:24:07 -0500
+Received: by mail-wm1-f68.google.com with SMTP id f16so1785823wmh.4
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 02:24:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=w8s4xqarD+TOJ2sn3fzzu9Bu2i3uGYmAngLGkJRW3Hc=;
+        b=BH4akuYirJZlCZo/bNZRW2ECh210CjE/Q6zmF46f/43xckdzemHGAFRBgbMBi/wbvX
+         BMz5RH4sBflQcZiyxwYm79U2g3/VVpwiFfQCpLIhEWkpXbU1rtKwhgmv+5EWcGxLMH7K
+         jZ0ruUY4srRsCCeIgY0rReFGOlaOJB9WSUkCcEi3bCPVJZCgXBv5z+I//x1XUdkomAMW
+         Kc/0qKX/KdNGXBUVCDC6SA2bhQYJNRqv+2n12Wz0SMebLFS5yZSH2aTQ82Yl0cYKkB2e
+         xhOfPZVfGGLUdZI/VomiOtab68YuA9gWuoZUMt1hmlAXLHUxGaoKWO211KCmAWSblwjH
+         ZRyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=w8s4xqarD+TOJ2sn3fzzu9Bu2i3uGYmAngLGkJRW3Hc=;
+        b=USZR1XifPF3wiGD3Ix07nu+bQ4Ud5vkALONuTgBMCmyQVAYtORVsLZCadSDpSCzxZt
+         IN2o+L8AtE9Qx4l4r3U7/gm/bQJJhUXLkIkqw0IcegQ1/NMVZd9xTihY4E1x0Jvm8JVl
+         Hfoq3Z4WiRTEuOgkxH1ZKYgb3bgvWD9+ZYQCYE9ILGGL8l6DqG5Os78rWeCt2ugV9y3n
+         E1/of3IHDOR9vd1s91C6hG8oK+au9L4zquSxHJ9pBbLySmyBYvU8KJIbMjQr3g3l1TaT
+         qPpCm7OUPTUNZU8SDJZaAigH4k+IJ1CXwOf8iU2+qFEPhTxBYAekgir3p6DbduxZb/PH
+         H0ZQ==
+X-Gm-Message-State: AHQUAuap2Fc+0K6zJP0SP+9siBED1PFANlSSXoq8VSZmpJ53jTnOdYi9
+        gi/+NwmF21JGx0uyMFivxmT4BdGC
+X-Google-Smtp-Source: AHgI3IYSBhaov8CFa3YdbElChHAc9QariGBglZVRx7+1XNSSpQCB+yXY71NnPjUkL7UKhmyit61MqQ==
+X-Received: by 2002:a05:600c:2255:: with SMTP id a21mr2830919wmm.31.1550053445921;
+        Wed, 13 Feb 2019 02:24:05 -0800 (PST)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id d4sm4260121wmb.25.2019.02.13.02.24.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Feb 2019 02:24:05 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Petri Gynther <pgynther@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Feature request on git log --oneline <revision range> -- <path>...
+References: <CAGXr9JHb1hjtMamdWt=oDg_eeBEuiDcbzAx+1XpV+HvvX1xsaA@mail.gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <CAGXr9JHb1hjtMamdWt=oDg_eeBEuiDcbzAx+1XpV+HvvX1xsaA@mail.gmail.com>
+Date:   Wed, 13 Feb 2019 11:24:04 +0100
+Message-ID: <87k1i4j8aj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-315037363-1550053240=:41"
-X-Provags-ID: V03:K1:CZVaWCzev4EMJE0pv8LDLhxRBTNbodwKalp376lPUIwC8Id8o4s
- fF+P37TU6HPGYdQEMMXePnZmgWSCgTX0KgQmZaqShzogAVr5/CHvwlrku4XR8tgdcZQW5bx
- BjRPeSt43jDBxVAXXeh/SZr2kGdkUh0+TU+lbwI/c2FYpndv60z+EiL9IBb3WHG0GZzv/Jy
- aBE7ega2Gz/1h4zGklWtg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9frww+9gGU4=:a6RyBNusMwUbCp6zmeKH/P
- yUZ03Bp965Jj16ARYxRkW7opNCuZ4gaRcZ4zDFiTHX3gNNYvJrvtgwhYJKEhpCpdMl7LjzFOP
- RbzDwb45pqEtRjT1RSHXo9CWd8rdDfM3DHoX0FgRhCUOY0u1KyO1vFBj3eNHECiPR/xvHR5mu
- ohLFewhSA+v/ehkJblwEB3U4Qm0eWvcfzDvaI+9B4xsMaSPdrwcO/i+zNF1md1jII+vnGFa6K
- VF+KwS/mlSGKBuD5eQDtEukQyrEcrxy6Ac0yV1yIWv8HzyyPV6lsX/jGfCd1I5c/7fQC+1ykV
- FcmylfcRs7SGlYNvMkWrsTuK8C9bLseJQAKcHGVweL99ki9nl0ISvyF2xWbX8+8qRcarGHJRm
- syb15ZARnTn5J95w+XIVWgjTjy/lWX+M2hedkuMw71g6Xo8zbtzRLNX0Xg6k/Xs7moNaLI0PS
- lKXl81QrBymqlkhye7GTP95Pr6JZXP33NGOzfRSr1tGWPYn0wWT4txooU1C+A9hmTRt99Y4KU
- uYdMPuyqQ32OqJrIZ+qwztGxvgDWilVPWNhoRg34Z62bBVZGtjgDVwvU9qcHwA1fiN7EsBlv+
- NMBB468lPooNuH0PIZDe4HyNIA09WNzYQdF7HBPb/wi7prWdsyE8vK3/qUQnaqHF0/aqg6xqI
- afQimmtTaP220D6xlLvOX1+mV4Nuh1UXdt1Zvkrg9uIbtpClRQF/m8xpok4XCsz/EVLVqntBc
- qT2k8b440zcGBweGUhEqcZCMwsPUpKuMDX8QV7N2DlJtrRsfgEc+ldOyqk1lgeKR7vInlJurC
- w1CYPTDW6do3Zo+CSTdE20puLJmCf8GllxQud9uQvHQ0LQ86JDLxQUbpSp2Em8C7YSmGLCrnx
- 8OFPbpVdXk0I/sZ1haaIc+PNrMB3C7PY7/O1gwcM1dR10YvmgUBP9XWw8ctjInINwqj0107DC
- DcjGkAucJersvhN0CSb22ZypzaHguhJM=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-315037363-1550053240=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Wed, Feb 13 2019, Petri Gynther wrote:
 
-Hi William,
+> git developers:
+>
+> Small feature request on:
+> git log --oneline <revision range> -- <path>...
+>
+> Could we add an option to:
+> 1) display all commits in <revision range> unconditionally
+> 2) use a special marker (e.g. star) for commits that touch <path>...
+> and list the files from <path>... that this commit modified
+>
+> Sample output:
+> git log --oneline (--annotated?) HEAD~5..HEAD -- Makefile kernel/printk/printk.c
+>
+>   aaaabbbbccc1 uninteresting commit 1
+> * aaaabbbbccc2 fix Makefile
+>     Makefile
+>   aaaabbbbccc3 uninteresting commit 2
+> * aaaabbbbccc4 fix Makefile and printk()
+>     Makefile
+>     kernel/printk/printk.c
+>   aaaabbbbccc5 uninteresting commit 3
+>
+> In other words:
+> - commits that don't touch <path>... are still listed (without special markers)
+> - commits that touch <path>... are listed with * prefix, and the files
+> from <path>... that the commit modified are listed below the commit
+>
+> This is very useful for kernel LTS merges, when we want to know which
+> LTS patches in the merge chain actually touched the files that matter
+> for a specific build target.
 
-On Sat, 9 Feb 2019, William Chargin wrote:
+What do you think such an option should do when it finds negative path
+specs, e.g. this on git.git:
 
-> [...] creating a whole worktree is a bit heavy-handed.  Creating a new
-> worktree for linux.git takes about 6 seconds on my laptop, which is not
-> terrible considering that repository’s size, but would be nice to avoid
-> if possible.
+    git log --oneline --stat -- ':!/Makefile' '*Makefile*'
 
-Agreed.
+Should it only render positive matches, or distinguish between
+matched/blacklisted/not-matched, your example (with no negative
+patspecs) just shows matched/not-matched.
 
-> It would be great if I could create a “lazy worktree” and only check out
-> files actually needed for the merge.
+> Is this an easy add-on to git log?
 
-I do use the `git worktree add --no-checkout` trick in one of my scripts
-to have a "super light-weight" worktree.
+It's been a while since I looked at this code, but (depending on the
+answer to the above) I don't think it would be that hard. We already
+pass up what we matched for the --stat machinery. E.g. try on git.git:
 
-To make it work in your case, you'd then have to inspect the changes you
-want to replay, e.g. via `git log --name-only <range>` to craft an
-appropriate `sparse-checkout` file (but don't forget to *also* set the
-config variable `core.sparseCheckout`) before checking out any files. I am
-sure you can even automate generating that `sparse-checkout`.
+    git log --oneline -1 --stat 32ceace39f --
+    git log --oneline -1 --stat 32ceace39f -- '*fetch.c'
 
-> Would the partial clone feature added in v2.19 be helpful here?
-
-I doubt it. The partial clone still needs you to know which files you
-want.
-
-VFS for Git would help you here. But something tells me that you're on
-Linux, and there is no official VFS for Git on Linux yet.
-
-Ciao,
-Johannes
---8323328-315037363-1550053240=:41--
+The former shows a few modified *.c files in the --stat, the latter just
+builtin/fetch.c since it matched.
