@@ -2,144 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DEAR_SOMETHING,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A1F81F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 18:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74EC11F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 19:34:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730865AbfBMS42 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 13:56:28 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:33657 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405269AbfBMSjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 13:39:52 -0500
-Received: by mail-wm1-f65.google.com with SMTP id h22so2526679wmb.0
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 10:39:50 -0800 (PST)
+        id S2387419AbfBMTeZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 14:34:25 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:37165 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728018AbfBMTeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 14:34:25 -0500
+Received: by mail-wm1-f51.google.com with SMTP id x10so3659048wmg.2
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 11:34:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=djcrwep60lUB0gubu0Rf9I9f3qrhuiDCs0KebohQ0eQ=;
-        b=abE67ReLMJz/5v/e/bLklRfCEmTV6vmkRWmBqnUsLXW3wE5ZxX76R/NagwFkrHIvL4
-         lyuzsktOFCNb2cBun5VDXFdTL7bjEmVj66YfXa6Qz0aaGkbTnRpJRGw2Dx9CMzZIPxUf
-         GKQvggJhTAdIH0SqVEYxgKkhg/lMr05gPNcpUHqyl0plao3Kiqi4QDo2xMwOBekCiH4g
-         tet4zWqRnkZxrirHIGrHx647EQnTpow9MumAQpvYxwjs4PQfBL4T+D2ca9qQ0rHOLDwT
-         lI6kEvh27n2tozg0ECrgh4VQDN6BqDKX3MqDKkDarcb6Mu4lXI1DX5Y30ZwKqCSQ7eLS
-         Ek0A==
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=VKE8Hb70agbgwFtF2wcxA/djQqge/RP4My1RKtCv4V4=;
+        b=peQbJ7g5QGlbnpN3tTkrwqgqaZyzLqWU8ueKE1YTniN6j8TvPaRwxOVOl1mQ1r2Kno
+         5dmXtLco/KFqaIISFFrPTlcRMHh+EZ57sYo9ulrw7RCK5vsh9B5n2KXu+ShSxGEwyF81
+         B1IZNecDYC//Vj64TMwoR1z6wkktmLv4I87EWifFYVHcuP0dGLAGsKG+NLbMY31TokTP
+         3bzoKliVJaRKKKsuVJKZ4acH8ve/fRCssL8ZTKg2V7pdJY1gikAU08DRkCRgxbMHfdXO
+         xa1QEzJzYXlxc5ulm9NOSX3BBkQExEelZ64TlK6s5GqvooziL1k6xBN8JztfqZqlExV9
+         0xhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=djcrwep60lUB0gubu0Rf9I9f3qrhuiDCs0KebohQ0eQ=;
-        b=r8AKhabDI19DB8kQd6fh7M6XITHzGHwJWyU9e4y1vwsa7DrTRJrVJXFKKMdNDzznnH
-         x0EPDPAYbgat9iFJnYM3gnylyOnhT/m381e8NEBc2/LiA+W/00yHSWwPGLgGAcDM9why
-         TYKWlHzp0EdUkmGGpwgwQMHcwyd/EhE7WuVhzzCt/CNd6GcWw+c0hffKQcDDIu3x1URG
-         AKeF0kQhhSC704BoEbQr4fQr4ndoLY+1DaA58AJntFfrrJyYKPyknEaOmhynlCz2sAxd
-         Wnd2yIvYLXQCBg6yt/GRz1uIMkxoqGu6CQamFkcGXnoe3vzOERD+zeRB76rj38dTWniA
-         GsqQ==
-X-Gm-Message-State: AHQUAub/yhMOzeGGIJ37+nXskwgcgzSXFsB+RLjMHZ96oMVwlj5CvG2V
-        9zs+nExc93VAcwisfmhLc1U=
-X-Google-Smtp-Source: AHgI3Ib0d0EhBwSwgSkT6iP8ngpAw4QyD4gLDnd/wDgKId5gA+J+bFXpzxsKRwdOvQlyPFb8HVNPQw==
-X-Received: by 2002:a1c:e086:: with SMTP id x128mr1493617wmg.10.1550083189875;
-        Wed, 13 Feb 2019 10:39:49 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a4sm8007wmm.22.2019.02.13.10.39.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Feb 2019 10:39:49 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH v2 3/3] submodule: document default behavior
-References: <0b62f65a8016c41b96aa6caead366e1ed9dda333.1549944164.git.liu.denton@gmail.com>
-        <cover.1549965172.git.liu.denton@gmail.com>
-        <d8785cdd01503f2a7b9a6fbc19105c41a9a04046.1549965172.git.liu.denton@gmail.com>
-Date:   Wed, 13 Feb 2019 10:39:48 -0800
-In-Reply-To: <d8785cdd01503f2a7b9a6fbc19105c41a9a04046.1549965172.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Tue, 12 Feb 2019 01:56:13 -0800")
-Message-ID: <xmqqzhqzbki3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=VKE8Hb70agbgwFtF2wcxA/djQqge/RP4My1RKtCv4V4=;
+        b=KSiTOn7NxL8+LihY0AudjlLF/lNH4HKKfY9rmFXS2SQVg1nL3uPahnZXPuLZavF5gl
+         HYxaPAfKbTq5jrPC45X0BXJXS0XNpv89412ubN+9T4F9z1UYkQvMx/RId8Tr16k+x16m
+         PYMAA+xQT+1qUpRQSY5fBa+CqNDtCUJA9hMSR7c3rX9GfjVuKTn5EHf4bhiCDB0PoOLi
+         h+6+LjnzedtTxDs+mhjTURryHKCB8ou5x/lreuT03FADVltx9thyhtwK6+fWBOlh0Fsd
+         xGn3ZHhpl4cQeZS5WC2WqeG0hccI+ITyp0bI05sjj8yMW3IWOr61uKwU9xeUB7Ml/fI3
+         27CQ==
+X-Gm-Message-State: AHQUAuYzY7PfPWWGAvYNYolIIwHCCeB3ofA1+s990CpNcSZCI5fV2Eps
+        mdNoCRfWT97mTVrIZD3SaZjmH2x2SZYvUQ==
+X-Google-Smtp-Source: AHgI3IYetm+P32w5RymE2f5tjI3qrhN9iZA9f4PSwjEXvoQMqkbIvH/MkZUWnNphg5Ihr0+s2C13Iw==
+X-Received: by 2002:a1c:ce0e:: with SMTP id e14mr1620498wmg.53.1550086463135;
+        Wed, 13 Feb 2019 11:34:23 -0800 (PST)
+Received: from [10.0.1.3] (host86-190-138-187.range86-190.btcentralplus.com. [86.190.138.187])
+        by smtp.gmail.com with ESMTPSA id y24sm221929wma.0.2019.02.13.11.34.22
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 Feb 2019 11:34:22 -0800 (PST)
+From:   Agnieszka Borcz <agaborcz86@gmail.com>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
+Subject: Git - logo commercial use
+Message-Id: <C9D9CE87-105E-4716-BF43-1D64239DD492@gmail.com>
+Date:   Wed, 13 Feb 2019 19:34:21 +0000
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.102.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Dear Sir/Madam,
 
-> This patch documents the default behavior of submodule if no subcommands
-> are given, similar to how remote documents it in both git-remote.txt and
-> in its usage output.
+My partner and I are in the initial stages of setting up an e-commerce =
+business selling high-quality stickers of logos of popular software and =
+libraries. We would mainly be marketing towards software developers, as =
+there are many who enjoy placing stickers of their favorite tech on =
+their laptops for display.
 
-Let's stop saying "This patch does this, this patch does that".
+We would love to be able to include your logo as part of our inventory =
+but aren=E2=80=99t sure of the restrictions regarding its use for =
+commercial purposes, so we would like to find out what your policy is =
+regarding this and if this would be a possibility?
 
-Instead (1) state what you think is wrong with the status quo in the
-present tense, (2) describe what the right approach to make it
-better is and why, and (3) order the codebase to "be like so" to
-make that happen.  Often (1) or (2) can be omitted when they are
-obvious from (3), but be mindful to others---the "obviousness" you
-may feel may come from your staring the problem longer and thinking
-about it deeper than the readers of your patch.  When in doubt, err
-on the side of over-clarity.
+We do not plan to modify or alter the logo in any way or claim that it =
+is ours. To get a better idea of how we plan to use the logo, please see =
+the following website, as this is very similar to what we plan to do: =
+https://www.stickermule.com/unixstickers.
 
-    The SYNOPSIS section for 'git submodule' does not say what the
-    command does when given no subcommand.  Document it.
+I see that others are already using your logo in a similar way on sites =
+such as redbubble.com but wanted to double check your policy with you =
+first.
 
-does (1)+(3), which I think is sufficient.
+We look forward to your response.
 
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  Documentation/git-submodule.txt | 4 ++++
->  git-submodule.sh                | 3 ++-
->  2 files changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index 65a952fb96..2fdf9f4cf3 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -9,6 +9,7 @@ git-submodule - Initialize, update or inspect submodules
->  SYNOPSIS
->  --------
->  [verse]
-> +'git submodule' [--quiet] [--cached]
->  'git submodule' [--quiet] 'add' [<options>] [--] <repository> [<path>]
->  'git submodule' [--quiet] 'status' [--cached] [--recursive] [--] [<path>...]
->  'git submodule' [--quiet] 'init' [--] [<path>...]
-> @@ -28,6 +29,9 @@ For more information about submodules, see linkgit:gitsubmodules[7].
->  
->  COMMANDS
->  --------
-> +With no arguments, the default command is 'status'.  Several subcommands are
-> +available to perform operations on the submodules.
+Warm regards,
 
-I am not sure if "default is status" is really true.
-
-   $ git submodule status --recursive
-   $ git submodule --recursive
-   usage: git submodule [--quiet] ...
-      or: ...
-   $ git submodule -- sha1collisiondetection
-   usage: git submodule [--quiet] ...
-      or: ...
-
-If 'status' were truly the default, wouldn't the form without any
-subcommand take any option and parameter the 'status' subcommand
-would accept? 
-
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 5e608f8bad..1ccc758e79 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -5,7 +5,8 @@
->  # Copyright (c) 2007 Lars Hjemli
->  
->  dashless=$(basename "$0" | sed -e 's/-/ /')
-> -USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
-> +USAGE="[--quiet] [--cached]
-> +   or: $dashless [--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
->     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
->     or: $dashless [--quiet] init [--] [<path>...]
->     or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
+Aga Borcz=
