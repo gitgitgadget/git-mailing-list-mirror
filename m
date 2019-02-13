@@ -2,90 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90FBB1F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 16:43:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 269651F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 17:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404451AbfBMQn0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 11:43:26 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:40350 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403764AbfBMQn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 11:43:26 -0500
-Received: by mail-qt1-f194.google.com with SMTP id j36so3297754qta.7
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 08:43:25 -0800 (PST)
+        id S2388566AbfBMRZ3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 12:25:29 -0500
+Received: from mail-wm1-f43.google.com ([209.85.128.43]:36979 "EHLO
+        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733301AbfBMRZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 12:25:29 -0500
+Received: by mail-wm1-f43.google.com with SMTP id x10so3274272wmg.2
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 09:25:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Lt0I5Yut0McVGFzBkyMC+hlxXJ4BGrNjKgGHPUrexmo=;
-        b=sbM72QnlaX3f9BBi0nsYmGNqaZfldGvZnM0sBWomxVeXeaiEKLNJSmaaLa4UhRaqEN
-         TwHW34oNq7f7cyST65GgD0fGqNPdvE+/9KBV9SuOlNzpb9t0dKwTBqAT+rGDHyagNDVS
-         NdLMPUGqh0e1VLR4S3ztAJUCdCX25ZFeME1sJoLjKOoFdBr/Oy/IIKaWLHRqF2xiGhAc
-         rvIMrhv4zPaVVzxSpyi3AlcEGa4wro4Sz0itZu6Y/WIrqJQQBNDsBgSW0Ywjmvi5Ityn
-         fgOc3rw86RDIkAsT6okEvO02maKh8IETU1Ife/5Y1cwooaF2jXtT5ngVYYKEGD5UGS8B
-         52Gw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=MKq1UBmOVlw6xIeV2A+Sgs6dAeGrF7HF3jrkrqlUGnk=;
+        b=Qrq2dwOUxzKkR0fMv4z1W7HzxKcuxUNY6XokaNK3+0CB2GjiggUfqIn82FV7ep8t2w
+         ktwX8Mc+/mADZx7C/0RDKcsaMy0WjRv4aj/NdHYN2JJLapNQdsrwma3KdUYlPxuIb+p4
+         ILAEz8Pt04pVOieUOeX66hAgKcZt/GLl1lya8OOaFJMc5N+tRUuaEc/UDaeaBj8RdwKm
+         8bmfkta5Kwcpxoi05Q7nHaKX8h7q1vbIGx2Mld7/rN9+ca6vTbQSjiF4qvxvLLfZWI9O
+         fnC9k/zsFjvMrxKH05d+3rl09mCHZOG9Z66JVeTsE9JON0cQVBZhB9h7xKVpGrvK4dsr
+         6T0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Lt0I5Yut0McVGFzBkyMC+hlxXJ4BGrNjKgGHPUrexmo=;
-        b=tr/NRAU8SqzFrbUgU2HQ3kjoEKPR5J36CzzMxHOcDXa9bRiTb6bsmG2wRRkqmhuOF+
-         wposoj6LOfUpo3sT1zzi7GIBZ4spXAPk3FBZFBjWGvkVjc5jLqai90wfAmY006QnnSz/
-         AcVmqKbLGIxB8x6U5tiCRErpN1mbSKSuPEHLuJ2wxMym92rJdvhv+DDZAdOBBCUBaipw
-         qkU2jvVd+wCrnHafUKl0lH8TK7jJoey0PHAGbpa6hjvbt4j8ARIxoHermMUy3QPKReKy
-         SNJL8a1UTTJVYxEizmmX3oNFagaxkFUWPlqmZdZimCXVIZUSOUbNkfnJ/tsyVOSYnaDK
-         EbJQ==
-X-Gm-Message-State: AHQUAubLk6vB4IdcJA0P07C3p1MaEJFqgxoEKlrZsdBdwc3ej/ATO8Wb
-        mkfeZqNKyhbWAvqsYcSoKiL2OmiZ
-X-Google-Smtp-Source: AHgI3IbYLcidYuc8aI8N9wFgo9oBw1XjiZXZRy/fFdZqHhp7U0Vd73X5D+KJwt5QzxCMOhh7rWpVig==
-X-Received: by 2002:aed:2151:: with SMTP id 75mr1214940qtc.24.1550076205485;
-        Wed, 13 Feb 2019 08:43:25 -0800 (PST)
-Received: from whubbs1.gaikai.biz ([100.42.103.5])
-        by smtp.gmail.com with ESMTPSA id z17sm19895402qth.79.2019.02.13.08.43.23
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=MKq1UBmOVlw6xIeV2A+Sgs6dAeGrF7HF3jrkrqlUGnk=;
+        b=dKzdHTTuWEJVB4w9e/jodRrN+/vWWtV74D9/D7pnhTQqMBmTDjB/rraFkMH+JrAOwn
+         4fVeIcsyEwutchXE7NqAIOzcQHrMp1sFQJ2TKyvGbLveBpG6U76ZV+xysGhjo7qJ2MsV
+         WbgKaJlxSsWrtrzhk4x9PtlxZcI9yCwpzlbM6N/gJurUDz+/j8I5Wa/M2RlcTol/v/TW
+         U6co9IGRIspxW3BPNPvYjIaV8EmI+YaVzFWuuM3oWi3jQ06c3QyqyXypom2H/8A3i/6C
+         bawHDoktkadCR5p4pUc5uITovRJL5TSS+r4s0cm+j2ESLD7hGr9s6rPz8LUeaILJZaTw
+         vV7w==
+X-Gm-Message-State: AHQUAubNMHbXr7Qwal/PLDMLFyQaHKXSinFjBX7psoSCtt7FjsElZRk/
+        Ei5gJZpmL4pHtCnVmLhXLX0=
+X-Google-Smtp-Source: AHgI3IaVT4rA4F0vuwA4DC3R7axMPPfMKUFWGkdZbNvdXAvGhdh2cL2byvWQgP8ta2A7ILRRbweJQw==
+X-Received: by 2002:a1c:7dd6:: with SMTP id y205mr1084377wmc.121.1550078726980;
+        Wed, 13 Feb 2019 09:25:26 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c1sm5149900wrw.7.2019.02.13.09.25.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Feb 2019 08:43:24 -0800 (PST)
-Received: (nullmailer pid 3666 invoked by uid 1000);
-        Wed, 13 Feb 2019 16:43:22 -0000
-Date:   Wed, 13 Feb 2019 10:43:22 -0600
-From:   William Hubbs <williamh@gentoo.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, chutzpah@gentoo.org, williamh@gentoo.org
-Subject: Re: [PATCH v6 2/2] config: allow giving separate author and
- committer idents
-Message-ID: <20190213164322.GA3625@whubbs1.dev.av1.gaikai.org>
-References: <20190204184850.10040-1-williamh@gentoo.org>
- <20190205195212.25550-3-avarab@gmail.com>
- <xmqqef8mrnnj.fsf@gitster-ct.c.googlers.com>
- <87k1iekkea.fsf@evledraar.gmail.com>
- <20190206000413.GA734@whubbs1.gaikai.biz>
- <xmqqwomdqzik.fsf@gitster-ct.c.googlers.com>
+        Wed, 13 Feb 2019 09:25:24 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     randall.s.becker@rogers.com, Git List <git@vger.kernel.org>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [Patch v1 2/3] t5318: replace use of /dev/zero with generate_zero_bytes
+References: <20190209185930.5256-1-randall.s.becker@rogers.com>
+        <20190209185930.5256-3-randall.s.becker@rogers.com>
+        <CAPig+cTMoYMmnHVuay_4RGr_FN-HWC1tN4TPDsNM4vKCH3GzXw@mail.gmail.com>
+        <xmqqh8d9diy8.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 13 Feb 2019 09:25:24 -0800
+In-Reply-To: <xmqqh8d9diy8.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 12 Feb 2019 09:18:07 -0800")
+Message-ID: <xmqqh8d7d2ij.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwomdqzik.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I am writing back onn this thread because I'm not quite sure of the
-status. v5 of the patch seemed ok, but there were some changes discussed
-that would have created a v6. The v6 changes though were never really
-clear. I'm not sure whether I am supposed to be doing something more or
-whether I'm waiting for you. ;-)
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>> On Sat, Feb 9, 2019 at 2:00 PM <randall.s.becker@rogers.com> wrote:
+>>> This change removes the dependency on /dev/zero with generate_zero_bytes
+>>> appending NUL values to blocks generating wrong signatures for test cases.
+>>
+>> This commit message says what the patch does but not _why_. At
+>> minimum, it should explain that /dev/zero is not available on all
+>> platforms, therefore, not portable, and (perhaps) cite NonStop as an
+>> example.
+>
+> Does sombody want to do the honors?  [PATCH 1/3] would become wasted
+> effort until that happens.  On the other hand, if this is not urgent
+> (it is only urgent for those without /dev/zero, and to others it may
+> be distraction/disruption this close to the final release to add
+> increased risk of fat finger mistakes), obviously I can wait.
 
-Can you write back and let me know?
+So, before I lose the access to my primary screen (I was told that
+somehow I need to reimage the workstation today X-<), here is what I
+have now.
 
-Thanks,
+-- >8 --
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Date: Sat, 9 Feb 2019 13:59:29 -0500
+Subject: [PATCH] t5318: replace use of /dev/zero with generate_zero_bytes
 
-William
+There are platforms (e.g. NonStop) that lack /dev/zero; use the
+generate_zero_bytes helper we just introduced to append stream
+of NULs at the end of the file.
+
+The original, even though it uses "dd seek=... count=..." to make it
+look like it is overwriting the middle part of an existing file, has
+truncated the file before this step with another use of "dd", which
+may make it tricky to see why this rewrite is a correct one.
+
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t5318-commit-graph.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 16d10ebce8..d4bd1522fe 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -383,7 +383,7 @@ corrupt_graph_and_verify() {
+ 	cp $objdir/info/commit-graph commit-graph-backup &&
+ 	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
+ 	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0 &&
+-	dd if=/dev/zero of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=$(($orig_size - $zero_pos)) &&
++	generate_zero_bytes $(($orig_size - $zero_pos)) >>"$objdir/info/commit-graph" &&
+ 	test_must_fail git commit-graph verify 2>test_err &&
+ 	grep -v "^+" test_err >err &&
+ 	test_i18ngrep "$grepstr" err
+-- 
+2.21.0-rc0-36-ge9bd4aa026
 
