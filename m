@@ -2,202 +2,247 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ECA41F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 10:08:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FA691F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 10:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387978AbfBMKIH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 05:08:07 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:51407 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727580AbfBMKIH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 05:08:07 -0500
-Received: by mail-wm1-f66.google.com with SMTP id b11so1783685wmj.1
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 02:08:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=yBiKzc7Vnlz1fwKZjnjDTr5KX/6er3q/hvsf4EYYtvk=;
-        b=hj0mCOPNunarqVgI6fWrIQNF0HnGRiueEVsD0bCMkqiWmFYFwgX2+uVdeS4WMbaMSj
-         HfhH0G4q2kq1FmvyZxzOKY60SHkMXHs2kAJ044imvm6b4IuLftdfOwND/Y9xEUaQ+zFl
-         kE64b5ECoYPh718duNqCMlkLIxn1eCbIB0r8xhtgY/3y1zPnzp9exr0b62F4FgaPIccs
-         xu8pjHimvxsW87I48tA1VpbisQ7yw48aSj9QLWeIDdXjBG6owy4JlwHYnregZQ+bhmff
-         PrLhbR4b30tnR3bX8q3OWxfznJJkEScPVY7yuhrQj4MYUrcBIEiD9x9wsWlZ+m7++U0+
-         7xGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=yBiKzc7Vnlz1fwKZjnjDTr5KX/6er3q/hvsf4EYYtvk=;
-        b=pfs7hZxxLmn0RTn3JjfnNTSc72ABunzC1BPwZxpwXpBGjJDkFX5ThtBVRCEnCQVz0q
-         BvfXf8yEQytH1MG5LrCyIFHsT10yK6flGdkLZ0YsdR12CIb73vSBrPfFOJLf5WRWKixw
-         kVjAa6QNJNEnkguMpXA7ipkqvREhoD2zZlrCShzoe679QPsNXR1Xr33FWjTvj/xV71A/
-         1m67FiXF35ToqA9PMN46UO6KeVkln/8+WXWw9fT7CR3HA7J0YojSxKp/cQZGtgOxca8+
-         Nr9WZMsI1fH7CVUAiFZ9R5ZjZzMj3AhKqtSkCDoBAoYZxG2v01pCnoUC2ERcEQmol5ec
-         rK/Q==
-X-Gm-Message-State: AHQUAubtWSesETnuJZ9PE0EnFLW10R09vMMKPl8AH4iUBEo2zJwcAgzM
-        NZGSWU+rVJ4RCYyW4cbz548=
-X-Google-Smtp-Source: AHgI3IZdw2TaK6pOXRTZ2EImwJqS7jyiRagrQXVrbduETOApcsGDIaqOQzEfbLeDMs5W1ahiK1yFTg==
-X-Received: by 2002:a7b:c112:: with SMTP id w18mr2744218wmi.28.1550052484393;
-        Wed, 13 Feb 2019 02:08:04 -0800 (PST)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id e17sm9826872wrs.79.2019.02.13.02.08.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Feb 2019 02:08:03 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Max Kirillov <max@max630.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] pack-refs: fail on falsely sorted packed-refs
-References: <20190130231359.23978-1-max@max630.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190130231359.23978-1-max@max630.net>
-Date:   Wed, 13 Feb 2019 11:08:01 +0100
-Message-ID: <87lg2kj91a.fsf@evledraar.gmail.com>
+        id S1732873AbfBMKKc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 05:10:32 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:29045 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729978AbfBMKKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 05:10:32 -0500
+Received: from [192.168.2.201] ([92.22.24.194])
+        by smtp.talktalk.net with SMTP
+        id trUqgx7BYoI6LtrUqgV5i7; Wed, 13 Feb 2019 10:10:29 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1550052629;
+        bh=nkrUAwOnXgql30Mmx9RQ12HSG0ZtdABY3kkrnrezvUI=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=C7NYUEeBvZexvP/muLxytYpsWB92lEoOCBpL9Zjgr6AZMbyKv5+hrIXkr4RUHf7Ch
+         PJAid7L+jucQ3GnSpoNHxX1UHW/Ino2O4jv4wIHp5TD18ULMBW070tdy5OUsHV1sKp
+         CfPh4woAMxH801wLMyTPddyTeEOzEjJO90wC4rAs=
+X-Originating-IP: [92.22.24.194]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=OJBejJTAIYRVoGQ3FWVcuw==:117
+ a=OJBejJTAIYRVoGQ3FWVcuw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=EiqH-dezZdKlYvp6bHYA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 14/16] rebase-interactive: rewrite edit_todo_list() to
+ handle the initial edit
+To:     Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20190129150159.10588-1-alban.gruin@gmail.com>
+ <20190210132648.12821-1-alban.gruin@gmail.com>
+ <20190210132648.12821-15-alban.gruin@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <2dfec48d-70fe-ca69-47ac-2a766db2e80c@talktalk.net>
+Date:   Wed, 13 Feb 2019 10:10:29 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20190210132648.12821-15-alban.gruin@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfHVfiTC/j4kBPGGupK3mZnFQto7/Ie7nkTgH2DL4Z+dLOdhhGS1i8bldXiEi60agJKryXdqFQUpb3Xjt2nfUM0D9nxWt7zxMsY5ghCDOj2cqlk35MKxL
+ srceapVxWqPeaskAS04hIDKCfBE6ISc6vVx4FfgEJDJKtbVF28IzJLcVkN5tMaVzG0N9nNE+ZbF1rW6OEipH37/BmAbFNpILw2YNQAAq9lnbhGE4z8HTrlr7
+ j7kot8QSzd5hGmpDzbibW/42QiJ+8bQYi+QHFDd967HI7odSMh9jdAkhIIsiUpv3RXIcnZs0fayYL8qQNSRZyA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Alban
 
-On Thu, Jan 31 2019, Max Kirillov wrote:
+I think the error handling is fine now, I've got a couple of small
+comments below.
 
-> If packed-refs is marked as sorted but not really sorted it causes
-> very hard to comprehend misbehavior of reference resolving - a reference
-> is reported as not found.
->
-> As the scope of the issue is not clear, make it visible by failing
-> pack-refs command - the one which would not suffer performance penalty
-> to verify the sortedness - when it encounters not really sorted existing
-> data.
->
-> Signed-off-by: Max Kirillov <max@max630.net>
+On 10/02/2019 13:26, Alban Gruin wrote:
+> edit_todo_list() is changed to work on a todo_list, and to handle the
+> initial edition of the todo list (ie. making a backup of the todo
+> list).
+> 
+> It does not check for dropped commits yet, as todo_list_check() does not
+> take the commits that have already been processed by the rebase (ie. the
+> todo list is edited in the middle of a rebase session).
+> 
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 > ---
-> I happened to have a not really sorted packed-refs file. As you might guess,
-> it was quite wtf-ing experience. It worked, mostly, but there was one branch
-> which just did not resolve, regardless of existing and being presented in
-> for-each-refs output.
->
-> I don't know where the corruption came from. I should admit it could even be a manual
-> editing but last time I did it (in that reporitory) was several years ago so it is unlikely.
->
-> I am not sure what should be the proper fix. I did a minimal detection, so that
-> it does not go unnoticed. Probably next step would be either fixing in `git fsck` call.
->
->  refs/packed-backend.c               | 15 +++++++++++++++
->  t/t3212-pack-refs-broken-sorting.sh | 26 ++++++++++++++++++++++++++
->  2 files changed, 41 insertions(+)
->  create mode 100755 t/t3212-pack-refs-broken-sorting.sh
-
-This is not an area I'm very familiar with. So mostly commeting on
-cosmetic issues with the patch. FWIW the "years back" issue you had
-could be that an issue didn't manifest until now, i.e. in a sorted file
-format you can get lucky and not see corruption for a while with a
-random insert.
-
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index c01c7f5901..505f4535b5 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1088,6 +1088,7 @@ static int write_with_updates(struct packed_ref_store *refs,
->  	FILE *out;
->  	struct strbuf sb = STRBUF_INIT;
->  	char *packed_refs_path;
-> +	struct strbuf prev_ref = STRBUF_INIT;
->
->  	if (!is_lock_file_locked(&refs->lock))
->  		BUG("write_with_updates() called while unlocked");
-> @@ -1137,6 +1138,20 @@ static int write_with_updates(struct packed_ref_store *refs,
->  		struct ref_update *update = NULL;
->  		int cmp;
->
-> +		if (iter)
-> +		{
-> +			if (prev_ref.len &&  strcmp(prev_ref.buf, iter->refname) > 0)
-
-You have an extra two whitespaces after "&&" there.
-
-> +			{
-> +				strbuf_addf(err, "broken sorting in packed-refs: '%s' > '%s'",
-> +					    prev_ref.buf,
-> +					    iter->refname);
-> +				goto error;
-> +			}
+>  builtin/rebase--interactive.c | 24 +++++++++++++++++-
+>  rebase-interactive.c          | 48 +++++++++++++++++------------------
+>  rebase-interactive.h          |  4 ++-
+>  sequencer.c                   |  3 +--
+>  sequencer.h                   |  1 +
+>  5 files changed, 52 insertions(+), 28 deletions(-)
+> 
+> diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
+> index 4f2949922f..370d584683 100644
+> --- a/builtin/rebase--interactive.c
+> +++ b/builtin/rebase--interactive.c
+> @@ -13,6 +13,28 @@ static GIT_PATH_FUNC(path_state_dir, "rebase-merge/")
+>  static GIT_PATH_FUNC(path_squash_onto, "rebase-merge/squash-onto")
+>  static GIT_PATH_FUNC(path_interactive, "rebase-merge/interactive")
+>  
+> +static int edit_todo_file(unsigned flags)
+> +{
+> +	const char *todo_file = rebase_path_todo();
+> +	struct todo_list todo_list = TODO_LIST_INIT,
+> +		new_todo = TODO_LIST_INIT;
+> +	int res = 0;
 > +
-> +			strbuf_init(&prev_ref, 0);
-> +			strbuf_addstr(&prev_ref, iter->refname);
-> +		}
+> +	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+> +		return error_errno(_("could not read '%s'."), todo_file);
 > +
->  		if (i >= updates->nr) {
->  			cmp = -1;
->  		} else {
-> diff --git a/t/t3212-pack-refs-broken-sorting.sh b/t/t3212-pack-refs-broken-sorting.sh
-> new file mode 100755
-> index 0000000000..37a98a6fb1
-> --- /dev/null
-> +++ b/t/t3212-pack-refs-broken-sorting.sh
-> @@ -0,0 +1,26 @@
-> +#!/bin/sh
+> +	strbuf_stripspace(&todo_list.buf, 1);
+> +	res = edit_todo_list(the_repository, &todo_list, &new_todo, NULL, NULL, flags);
+> +	if (!res && todo_list_write_to_file(the_repository, &new_todo, todo_file,
+> +					    NULL, NULL, -1, flags & ~(TODO_LIST_SHORTEN_IDS)))
+> +		res = error_errno(_("could not write '%s'"), todo_file);
 > +
-> +test_description='tests for the falsely sorted refs'
-> +. ./test-lib.sh
+> +	todo_list_release(&todo_list);
+> +	todo_list_release(&new_todo);
 > +
-> +test_expect_success 'setup' '
-> +	git commit --allow-empty -m commit &&
-
-Looks like just "test_commit A" would do here.
-
-> +	for num in $(test_seq 10)
-> +	do
-> +		git branch b$(printf "%02d" $num) || break
-> +	done &&
-
-We can fail in these sorts of loops. There's a few ways to deal with
-that. Doing it like this with "break" will still silently hide errors:
-
-    $ for i in $(seq 1 3); do if test $i = 2; then false || break; else echo $i; fi; done && echo success
-    1
-    success
-
-One way to deal with that is to e.g. before the loop say "had_fail=",
-then set "had_fail=t" in that "||" case, and test for it after the loop.
-
-But perhaps in this case we're better off e.g. running for-each-ref
-after and either using test_cmp or test_line_count to see that we
-created the refs successfully?
-
-> +	git pack-refs --all &&
-> +	head_object=$(git rev-parse HEAD) &&
-> +	printf "$head_object refs/heads/b00\\n" >>.git/packed-refs &&
-
-Looks like just "echo" here would be simpler since we only use printf to
-add a newline.
-
-> +	git branch b11
-> +'
+> +	return res;
+> +}
 > +
-> +test_expect_success 'off-order branch not found' '
-> +	! git show-ref --verify --quiet refs/heads/b00
-> +'
+>  static int get_revision_ranges(const char *upstream, const char *onto,
+>  			       const char **head_hash,
+>  			       char **revisions, char **shortrevisions)
+> @@ -241,7 +263,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+>  		break;
+>  	}
+>  	case EDIT_TODO:
+> -		ret = edit_todo_list(the_repository, flags);
+> +		ret = edit_todo_file(flags);
+>  		break;
+>  	case SHOW_CURRENT_PATCH: {
+>  		struct child_process cmd = CHILD_PROCESS_INIT;
+> diff --git a/rebase-interactive.c b/rebase-interactive.c
+> index 807f8370db..96c70d1959 100644
+> --- a/rebase-interactive.c
+> +++ b/rebase-interactive.c
+> @@ -87,35 +87,35 @@ void append_todo_help(unsigned keep_empty, int command_count,
+>  	}
+>  }
+>  
+> -int edit_todo_list(struct repository *r, unsigned flags)
+> +int edit_todo_list(struct repository *r, struct todo_list *todo_list,
+> +		   struct todo_list *new_todo, const char *shortrevisions,
+> +		   const char *shortonto, unsigned flags)
+>  {
+>  	const char *todo_file = rebase_path_todo();
+> -	struct todo_list todo_list = TODO_LIST_INIT;
+> -	int res = 0;
+> -
+> -	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+> -		return error_errno(_("could not read '%s'."), todo_file);
+> -
+> -	strbuf_stripspace(&todo_list.buf, 1);
+> -	todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list);
+> -	if (todo_list_write_to_file(r, &todo_list, todo_file, NULL, NULL, -1,
+> -				    flags | TODO_LIST_SHORTEN_IDS | TODO_LIST_APPEND_TODO_HELP)) {
+> -		todo_list_release(&todo_list);
+> -		return -1;
+> -	}
+> +	unsigned initial = shortrevisions && shortonto;
+>  
+> -	strbuf_reset(&todo_list.buf);
+> -	if (launch_sequence_editor(todo_file, &todo_list.buf, NULL)) {
+> -		todo_list_release(&todo_list);
+> -		return -1;
+> -	}
+> +	if (!initial)
+> +		todo_list_parse_insn_buffer(r, todo_list->buf.buf, todo_list);
+
+It might be worth a comment to explain that we always want to edit the
+file so we deliberately ignore any parsing errors (I'm not sure what we
+end writing to the disc if we can't parse the file though) and that the
+todo list is already parsed in the initial case.
+
+>  
+> -	if (!todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list))
+> -		res = todo_list_write_to_file(r, &todo_list, todo_file, NULL, NULL, -1,
+> -					      flags & ~(TODO_LIST_SHORTEN_IDS));
+> +	if (todo_list_write_to_file(r, todo_list, todo_file, shortrevisions, shortonto,
+> +				    -1, flags | TODO_LIST_SHORTEN_IDS | TODO_LIST_APPEND_TODO_HELP))
+> +		return error_errno(_("could not write '%s'"), todo_file);
+>  
+> -	todo_list_release(&todo_list);
+> -	return res;
+> +	if (initial && copy_file(rebase_path_todo_backup(), todo_file, 0666))
+> +		return error(_("could not copy '%s' to '%s'."), todo_file,
+> +			     rebase_path_todo_backup());
 > +
-> +test_expect_success 'subsequent pack-refs fails' '
-> +	! git pack-refs --all
-> +'
+> +	if (launch_sequence_editor(todo_file, &new_todo->buf, NULL))
+> +		return -2;
+> +
+> +	strbuf_stripspace(&new_todo->buf, 1);
+> +	if (initial && new_todo->buf.len == 0)
+> +		return -3;
+> +
+> +	if (!initial)
+> +		return todo_list_parse_insn_buffer(r, new_todo->buf.buf, new_todo);
 
-Instead of "! git ..." use "test_must_fail git ...". See t/README. This
-will hide e.g. segfaults.
+It might be worth a comment explaining where the list gets parsed for
+the initial edit.
 
-Also, perhaps:
+Best Wishes
 
-    test_must_fail git ... 2>stderr &&
-    grep "broken sorting in packed-refs" stderr
+Phillip
 
-Would make this more obvious/self-documenting so we know we failed due
-to that issue in particular.
+> +
+> +	return 0;
+>  }
+>  
+>  define_commit_slab(commit_seen, unsigned char);
+> diff --git a/rebase-interactive.h b/rebase-interactive.h
+> index 0e5925e3aa..44dbb06311 100644
+> --- a/rebase-interactive.h
+> +++ b/rebase-interactive.h
+> @@ -8,7 +8,9 @@ struct todo_list;
+>  void append_todo_help(unsigned keep_empty, int command_count,
+>  		      const char *shortrevisions, const char *shortonto,
+>  		      struct strbuf *buf);
+> -int edit_todo_list(struct repository *r, unsigned flags);
+> +int edit_todo_list(struct repository *r, struct todo_list *todo_list,
+> +		   struct todo_list *new_todo, const char *shortrevisions,
+> +		   const char *shortonto, unsigned flags);
+>  int todo_list_check(struct todo_list *old_todo, struct todo_list *new_todo);
+>  
+>  #endif
+> diff --git a/sequencer.c b/sequencer.c
+> index 64d698032c..f6ed4e21e9 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -55,8 +55,7 @@ static GIT_PATH_FUNC(rebase_path, "rebase-merge")
+>   * file and written to the tail of 'done'.
+>   */
+>  GIT_PATH_FUNC(rebase_path_todo, "rebase-merge/git-rebase-todo")
+> -static GIT_PATH_FUNC(rebase_path_todo_backup,
+> -		     "rebase-merge/git-rebase-todo.backup")
+> +GIT_PATH_FUNC(rebase_path_todo_backup, "rebase-merge/git-rebase-todo.backup")
+>  
+>  /*
+>   * The rebase command lines that have already been processed. A line
+> diff --git a/sequencer.h b/sequencer.h
+> index c80990659c..b0688ba2a1 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -10,6 +10,7 @@ struct repository;
+>  const char *git_path_commit_editmsg(void);
+>  const char *git_path_seq_dir(void);
+>  const char *rebase_path_todo(void);
+> +const char *rebase_path_todo_backup(void);
+>  
+>  #define APPEND_SIGNOFF_DEDUP (1u << 0)
+>  
+> 
+
