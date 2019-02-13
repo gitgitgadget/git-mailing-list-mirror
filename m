@@ -2,186 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB4E61F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 22:27:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61B46211B5
+	for <e@80x24.org>; Wed, 13 Feb 2019 22:37:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391837AbfBMW1w (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 17:27:52 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50273 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389384AbfBMW1w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 17:27:52 -0500
-Received: by mail-wm1-f65.google.com with SMTP id x7so4290587wmj.0
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 14:27:50 -0800 (PST)
+        id S2392506AbfBMWhG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 17:37:06 -0500
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:43712 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727471AbfBMWhF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 17:37:05 -0500
+Received: by mail-ua1-f66.google.com with SMTP id z11so1358125uaa.10
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 14:37:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=W1ktKL5OfcwaBuKI0pjBdlmGVNFTjD6Z+3IV/uD1jPk=;
-        b=ofCUkwf09EqfMmqdoWAHm4tTid10d2lM2+yaEFG2PblyMNZyyE+Y0iSRaCSvL/2dnZ
-         GqLuacBKBegrM5xkjEoFXEonbW6Qm20HmM2e62khDhRJ7PY4WoMK9HuQsvRnoX+NFwZG
-         H7vp2VgcGSkd4vJaFWGRDf20C3FDWNJyy6rErHJAOCfthaRDSlNgLyVnCiPI3siiO4Y7
-         do1rxz8CDunWGX0vaAAqHVfZhnjf+e4YiV5GSWk+6BBMkpR/viIVFNb/eI7MnmfTJwMX
-         vmFSkYc6gTrAplWNknMaM9SQiHJmkPcUmMZbuwzRzHeQ/tWiM5ue/VuWI06UKFqGHdGA
-         4kvQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1CiWfbLzK7PELX/lplA6gdIZ7N7LCybk3mYeEY+Nc5g=;
+        b=lE85j0Pt4X7S/rntZzjrEPeNZpNkBUkGMzk1/dvnoXsg7ReuGSyZ20cxesoEvdNENf
+         nrKtI+RiDrKElVNi3T6pji8yrv+M9kooljhrcdhQwkn9MyBjBcs2LjcG12rbFYmT+Ze4
+         PkF77cTBeE3ELLg6Kqx0Wppjjvt9tiOedMTlTgl/UbuhGsSp7H0D2/79xnnt8wMzo0hH
+         I0mWY1jZZ6kbytT/fBqG7Vgr8QglTJ5LDcpo06KQycBDkwudyZg2/eZMZzY9iHJU2Y7q
+         C74Hp3dI171anIQYbhJJMZlLpi7NBLzaixtEZ2xqqL6Bp1x+W9Gk66zd8vxEJl9rTGVf
+         wcmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=W1ktKL5OfcwaBuKI0pjBdlmGVNFTjD6Z+3IV/uD1jPk=;
-        b=bTlFtcOdmT9qVW9malyuJon38H416fYIyjQff/2pISQeqkKxaxB3pPNgWgfqWq59xe
-         LJNoQK+HyqHsLORuzAAa+tGWxHV4ZIK/CYeXUjLh9tfi6EOb2H9qnN1K63N06QAaQqPd
-         L8f0YAuHlsStNxVz0lmpsaubYgmU8/sTNOU/5EGZZuN0wFX/pqKYidl+c7KOegkv3s1/
-         +WshmQjuFjBjS4rbZE7gmcnjF0gyvKf0GpYi2p+M24F8JKf4OAP2+zYkBtz8Rwg4SvGp
-         Uz5cDuO6uOgEwAUneiiYnJhZudFSfsx6eXcbSU+Uwblq24h91/U4SNpwTECwfaMLdmOD
-         CoOQ==
-X-Gm-Message-State: AHQUAub+BCc1wTtMIU54EQR+K997YMibWWXDRp//Ndy2bWrwLeITxoFo
-        M+o4Au/rCcMceUACDUJpIAM=
-X-Google-Smtp-Source: AHgI3IZf/3ygWBR3ztH3C8jIsXodub7nJw1/wL3bYDXDEEi7qjuTTTz5Y5l6rKWSADEu5E8y8QOE1Q==
-X-Received: by 2002:a7b:c00f:: with SMTP id c15mr274470wmb.14.1550096869610;
-        Wed, 13 Feb 2019 14:27:49 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c139sm744153wmd.13.2019.02.13.14.27.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Feb 2019 14:27:47 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] read-cache.c: index format v5 -- 30% smaller/faster than v4
-References: <20190213120807.25326-1-pclouds@gmail.com>
-Date:   Wed, 13 Feb 2019 14:27:46 -0800
-In-Reply-To: <20190213120807.25326-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 13 Feb 2019 19:08:07 +0700")
-Message-ID: <xmqq1s4bb9y5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1CiWfbLzK7PELX/lplA6gdIZ7N7LCybk3mYeEY+Nc5g=;
+        b=sS+S7Q147hu22OuY0xVh2XyOLFUb08m4ZDYOzRJOvU5Xwk+vTOKr82B/6c4iYSTDi6
+         +8zKCH0c0yDy+FYiI1R8qL5S2kBrVVzJwFnvo+nEdOf17UraODqXbpXgdaLS2yGMHf8J
+         VdgWVMS80BpIusk5KgcvKxDxDG2WbhJBSXhS2h6dTWJ/3Y02tCcXY/tXSQae6TEAWSpl
+         q+1SoB6nzZV+QHsnsNilzL/O6wdECjeFoOFAlT9sVCEra615lzKg3+4nCxL6BKTkG7rH
+         3B63Z1SF2iRdSa/t5nglqTapgtIJGIbgLmCgxBGzJQWRJetWzhYHS+I2OA9qzqoVe4jd
+         4bPw==
+X-Gm-Message-State: AHQUAuYVk2O1IIj/keylk5vdu/mcVj/Jkvsui9fqxWniDmkQEb32WEoU
+        wtH5qg6UfaRipcjLYyJuywVSG/F+NId3oDaeFyw=
+X-Google-Smtp-Source: AHgI3IY25PfOBC2c4aEN4EK61t5A566Hn8vvtUQy9Kb0BA5vtjku2eLeKdWiCXPDutTx5RMajR9GorzevSJm11+uVzo=
+X-Received: by 2002:ab0:7191:: with SMTP id l17mr332933uao.28.1550097424003;
+ Wed, 13 Feb 2019 14:37:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
+ <20190204215251.GB6085@hank.intra.tgummerer.com> <20190205211736.GD6085@hank.intra.tgummerer.com>
+ <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
+ <20190206220942.GE6085@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
+ <20190207213326.GF6085@hank.intra.tgummerer.com> <CAL21Bmkkpzp7fhAnjstTjeH+unDFk8-uhFAgKFfuczYzejf2RA@mail.gmail.com>
+In-Reply-To: <CAL21Bmkkpzp7fhAnjstTjeH+unDFk8-uhFAgKFfuczYzejf2RA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 13 Feb 2019 14:36:51 -0800
+Message-ID: <CABPp-BGNMN0QZWa4E4kBFOs8RcUQoMuMT2J_zKhwOTQPbaGU4g@mail.gmail.com>
+Subject: Re: GSoC 2019: Git's application submitted
+To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On Sun, Feb 10, 2019 at 9:51 PM =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=
+=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
+>
+> > It would be nice to have a few more project ideas.
+>
+> I am not sure I have additional ideas for 3-month project for the intern,=
+ but
+>
+> > https://git.github.io/SoC-2019-Ideas/ currently lists only 2 possible
+> > projects:
+> >
+> > - Unify ref-filter formats with other --pretty formats (which is new)
+>
+> I am ready to act as a mentor in this task, I know that part of
+> project good enough.
+> I have additional related task: We have a function called
+> oid_object_info, it allows to download meta-info of the file. It was
+> used in cat-file, and inspired by that example, I improved ref-filter,
+> so now ref-filter works faster with it. Moreover, I have found that
+> oid_object_info allows to get the contents of the file. It was useful
+> in ref-filter, and actually it could be also useful in cat-file, but
+> we still download the file differently in cat-file, and it looks
+> awkward. I need to make just one last move to finish my patch: it will
+> close the task about migrating cat-file formatting logic to
+> ref-filter. But cat-file still will not use general way to download
+> the file. So, the task is to get rid of additional file-reading logic.
+> I guess this task is much smaller than original one, but at least the
+> student will have chance to finish it in 3 months.
+> My patch is here: https://github.com/git/git/pull/568
+> But I hope you will also see it this week in the mailing list.
+> Proposed task is in TODO in the end of ref-filter file.
+>
+> By the way, we had a letter from Google, it is said that our tasks are
+> sparsed. I am not sure I understand it correctly. Should I help the
+> project somehow to solve our issues?
 
-> @@ -1749,16 +1750,16 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
->  	 * number of bytes to be stripped from the end of the previous name,
->  	 * and the bytes to append to the result, to come up with its name.
->  	 */
-> -	int expand_name_field = version == 4;
-> +	int expand_name_field = version >= 4;
+I'm a little hesitant to suggest this as I'm not sure how available I
+could be for mentoring and don't view myself as a good mentor, but
+another project idea which has lots of sub-pieces and thus could show
+progress and be useful even if not everything is completed:
 
-The code can be lazy like this, insteasd of being more descriptive
-to say "version 4 or 5", because we won't accept version 6 or later
-anyway.  Which is OK, I guess.
+Consistency of sequencer commands:
+* The suggestion to fix an interrupted rebase-i or cherry-pick due to
+a commit that became empty via 'git reset HEAD' (in builtin/commit.c)
+instead of 'git rebase --skip' or 'git cherry-pick --skip' ranges from
+annoying to confusing.  (Especially since other interrupted am's and
+rebases both point to am/rebase --skip.).  Note that 'git cherry-pick
+--skip' is not yet implemented, so that would have to be added first.
+* There are a handful of flags that am-based rebases support that are
+not available to interactive/merge-based rebases; it'd be nice to
+implement them for the interactive machinery.  (There are also
+numerous flags that only the interactive machinery supports that are
+unavailable to am-based rebases, but I don't care; I want to deprecate
+am-based rebases.)
+  * --ignore-whitespace (transliterate to -Xignore-space-change?)
+  * --whitespace=3D...
+  * --committer-date-is-author-date/--ignore-date
+  * -C4
 
->  	if (flags & CE_EXTENDED) {
-> -		struct ondisk_cache_entry_extended *ondisk2;
-> +		const struct ondisk_cache_entry_extended *ondisk2 = mmap;
->  		int extended_flags;
-> -		ondisk2 = (struct ondisk_cache_entry_extended *)ondisk;
-> +
->  		extended_flags = get_be16(&ondisk2->flags2) << 16;
->  		/* We do not yet understand any bit out of CE_EXTENDED_FLAGS */
->  		if (extended_flags & ~CE_EXTENDED_FLAGS)
+[There's also some empty handling (from "Behavioral Differences" in
+Documentation/git-rebase.txt) that would be nice to address, though
+that might be contentious and I might try to tackle that piece before
+GSoC gets rolling...]
 
-This part may be a good clean-up regardless.
-
-> @@ -1820,6 +1821,113 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
->  	return ce;
->  }
->  
-> +enum same_value_bit {
-> +	DELTA_FORMAT = 1 << 0,
-> +	SAME_CTIME   = 1 << 1, /* only covers sec, not nsec */
-> +	SAME_MTIME   = 1 << 2, /* only covers sec, not nsec */
-> +	SAME_DEV     = 1 << 3,
-> +	SAME_INO     = 1 << 4,
-> +	SAME_MODE    = 1 << 5,
-> +	SAME_UID     = 1 << 6,
-> +	SAME_GID     = 1 << 7,
-> +	SAME_FLAGS   = 1 << 7
-> +};
-
-Hmph, really?
-
-> +static struct cache_entry no_previous_ce;
-> +
-> +static uintmax_t decode_varoffset(const unsigned char **bufp, uintmax_t prev)
-> +{
-> +	uintmax_t val = decode_varint(bufp);
-
-You'd need to make sure (1) !val, which indicates an overflow of the
-varint, and (2) bufp after decoding haven't over-read the mmapped
-index file.  We may want to improve decode_varint() API so that we
-can detect truncated data (i.e. (2)) more reliably without first
-reading too much.  Loose error checking like these would make good
-targets for fuzz tests, I suspect.
-
-> +	return val & 1 ? prev - (val >> 1) : prev + (val >> 1);
-> +}
-
-So, the LSB is used for sign, and the magnitude is shifted by one?
-OK.
-
-> +static uintmax_t decode_varoffset_same(const unsigned char **bufp, uintmax_t prev,
-> +				       int same_flag)
-> +{
-> +	return same_flag ? prev : decode_varoffset(bufp, prev);
-> +}
-> +
-> +static uintmax_t decode_varint_same(const unsigned char **bufp, uintmax_t prev,
-> +				    int same_flag)
-> +{
-> +	return same_flag ? prev : decode_varint(bufp);
-> +}
-
-Likewise about two error conditions.
-
-> @@ -1967,12 +2075,18 @@ static unsigned long load_cache_entry_block(struct index_state *istate,
->  	unsigned long src_offset = start_offset;
->  
->  	for (i = offset; i < offset + nr; i++) {
-> -		struct ondisk_cache_entry *disk_ce;
->  		struct cache_entry *ce;
->  		unsigned long consumed;
->  
-> -		disk_ce = (struct ondisk_cache_entry *)(mmap + src_offset);
-> -		ce = create_from_disk(ce_mem_pool, istate->version, disk_ce, &consumed, previous_ce);
-> +		if (istate->version <= 4)
-> +			ce = create_from_disk(ce_mem_pool, istate->version,
-> +					      mmap + src_offset, &consumed,
-> +					      previous_ce);
-> +		else
-> +			ce = create_from_disk_v5(ce_mem_pool,
-> +						 mmap + src_offset,
-> +						 &consumed,
-> +						 previous_ce);
-
-This goes directly against the spirit of "create_from_disk()"
-internal API, doesn't it?  It takes istate->version because it is an
-implementation detail of that function how bytes at
-&mmap[src_offset] are consumed, possibly using previous_ce
-information.
-
-IOW, I think the version dependent switch should go inside that
-function and not in this loop.
-
-
-> +static int ce_write_varint(git_hash_ctx *c, int fd, uintmax_t value)
-> +{
-> +	unsigned char varint[16];
-
-We may want to do something about these "16".
-
-> +static int ce_write_varoffset(git_hash_ctx *c, int fd, uintmax_t next, uintmax_t prev)
-> +{
-> +	unsigned char varint[16];
-
+Bonus: Make a flag to allow rebase to rewrite commit messages that
+refer to older commits that were also rebased.  (i.e. if rebasing
+commits A and B, and commit B says "This reverts commit <sha-of-A>,
+then rewritten B's commit message should say "This reverts commit
+<sha-of-rewritten-A".)  Do this for both sha1sums and sha1sum
+abbreviations in commit messages.
