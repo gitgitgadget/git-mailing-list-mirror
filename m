@@ -2,105 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 958B71F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 18:20:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B2DF1F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 18:21:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732531AbfBMSUR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 13:20:17 -0500
-Received: from mail-ot1-f50.google.com ([209.85.210.50]:46020 "EHLO
-        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729458AbfBMSUR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 13:20:17 -0500
-Received: by mail-ot1-f50.google.com with SMTP id 32so5853241ota.12
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 10:20:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=b6nGohsIBYulSaLpQNR0/YxCISzXxh7ha0i6ZyLHYwI=;
-        b=obgaTMXdxnBbprVDjvyzhpQPwE6dJ+upuaUV4HHc38znUM03/2tPx3mAXA2TNPLNnk
-         R+Mx315NZpGEbbwIdaaESzpnm2E4nDwJWsGeDgqAMW/jcP51GtB1UwEOmgNXvRmGcNvB
-         2porRCsHp/rOn7pbSsNyg+K7eR4FMxtuqBGSvbiXa1MCD8UOyzLEKJM8m7O8BFNBTtm6
-         BPi5seg/zibp27hFfddunANVusRh6/X85Vv8ctzZJSM+YUnl7FSnkMDcbVIUUe3TmLf8
-         /YyySmfTAh1imPidXJvr8lIdeKjmD1BLNFuyTItQQK9Bg0MOfSt4UEUy4uBiB01em7lx
-         btvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=b6nGohsIBYulSaLpQNR0/YxCISzXxh7ha0i6ZyLHYwI=;
-        b=HRGfxQlQZFkmt7a4LDPcVNMe+yxuPwkB1Qoa+39lO0G7ou2JLKR0/lOBZWq5K16yLW
-         L8wH+ThDJZ5GPK2LUyDTGaYF0y6crvy2EMaafdUHr3q+PjZsBPgWacKuJ68EbHFlasCv
-         k3IFDQalRZeOugJG0x8A/mrzlraIZZGKZ/UF6yZ++8eUjUeyVRbIfbYh/2UHw7S/yY0Z
-         bVvLTCCJ+7m9lTnK1v7HFr2bK2YrQTE0X83Wq2zhwp75v/xMFQDN63TOE9ancXoM5j4q
-         8JUH2LgwLCaUCzw5Kc2dJ26wyyisHxjcGTpaiucj9tPmw7yPeMljyEc5fPLmMrUdGhan
-         E+Qg==
-X-Gm-Message-State: AHQUAuZtLal7q7FvZkXM9CwWvuihjKvlxZjqnfreQvDGeG7zD3DyT/LI
-        MLX1CTtZvFwTGQ+zquxBlLYWbZKvfbUddwlapTQyoh7m
-X-Google-Smtp-Source: AHgI3IZBfMv+lIkpbvHu151ZxmZ+eswXwcXL3BLpfIpHGa+1m4yxd60QibiwBlvQPr5uHgjFyw9Zuz/bhQx89mPkKvA=
-X-Received: by 2002:aca:4506:: with SMTP id s6mr1014947oia.115.1550081600823;
- Wed, 13 Feb 2019 10:13:20 -0800 (PST)
+        id S2389965AbfBMSVF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 13:21:05 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:52917 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729458AbfBMSVF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 13:21:05 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1DIL2UA037033
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 13 Feb 2019 13:21:02 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Max Kirillov'" <max@max630.net>
+Cc:     "'Git List'" <git@vger.kernel.org>
+References: <000501d4c3af$1748b100$45da1300$@rogers.com> <20190213174055.GD3064@jessie.local>
+In-Reply-To: <20190213174055.GD3064@jessie.local>
+Subject: RE: [BUG] More on t5562 hangs randomly in subtests 6,8 and 13 in 2.21.0-rc0
+Date:   Wed, 13 Feb 2019 13:20:55 -0500
+Message-ID: <004801d4c3c8$df9d23c0$9ed76b40$@nexbridge.com>
 MIME-Version: 1.0
-From:   Maris Razvan <razvan.alex.maris@gmail.com>
-Date:   Wed, 13 Feb 2019 20:13:09 +0200
-Message-ID: <CALZbgSSzpd7bDWE1iyfqAsv9oovsSK22oReDiPGG-Td5D2qgaA@mail.gmail.com>
-Subject: Git-pull Documentation
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIyu5uOusPFID78jMdwOugkAl1IxgJU8Yt0pQ9yiCA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On February 13, 2019 12:41, Max Kirillov wrote:
+> On Wed, Feb 13, 2019 at 10:16:26AM -0500, randall.s.becker@rogers.com
+> wrote:
+> > On 2019-02-13, Max Kirillov, wrote:
+> > As far as the unintended reuse of the output file, and issues with
+> > pipes, yes, the NonStop is very sensitive to complex use of pipes and
+> > much of the compatibility issues we have had relate to those (usually
+> > Linux-specific pipe assumptions). That is where I have been looking
+> > when trying to debug this situation (not yet found anything). This
+> > could very well be directly related.
+> 
+> You mentioned cases 6,8,13. These are all related to gipped request body.
+> Could it be the git-http-backend does not clean a sub-process which
+> pervforms the decompression?
 
-In the "EXAMPLES" section of the git-pull documentation
-(https://git-scm.com/docs/git-pull#_examples) there is the following:
+I guess that is possible. I don't know the guts of this part of the code.
 
-    "[...] Merge into the current branch the remote branch next:
-
-    $ git pull origin next
-
-    This leaves a copy of next temporarily in FETCH_HEAD, but does not
-update any remote-
-    tracking branches. [...]"
-
-However, the second bullet-point in the "CONFIGURED REMOTE-TRACKING
-BRANCHES" section of the git-fetch documentation
-(https://git-scm.com/docs/git-fetch#_configured_remote_tracking_branches_a_id_crtb_a)
-states that it is possible for a command of the form "git fetch
-<remote> <branch>" to update a remote-tracking branch.
-
-I checked and the current behaviour of "git pull <remote> <branch>" is
-to update the remote-tracking branch if required, because, as I have
-seen in the code, it just calls "git fetch".
-
-I believe that the quoted example from the git-pull documentation is wrong.
-
-Also, in the beginning of the git-pull documentation there is the
-following paragraph:
-
-    "Default values for <repository> and <branch> are read from the
-"remote" and "merge"
-    configuration for the current branch as set by git-branch[1] --track."
-
-I believe that this paragraph tries to state that if the <remote> and
-the <refspec> arguments are missing, they are replaced with
-branch.<name>.remote and branch.<name>.merge, respectively. However I
-think that this paragraph is unnecessary (and partially wrong), as the
-behaviour of git-pull when no arguments are given is described in the
-"DEFAULT BEHAVIOUR" section
-(https://git-scm.com/docs/git-pull#_default_behaviour) and it is a
-little more complicated than that, as one set of branches are used for
-fetching (e.g. the values of remote.<origin>.fetch) and another set of
-branches are used for merging (e.g. the value of branch.<name>.merge).
-
-
-I hope I did not miss anything.
-
-
-Thank you,
-Razvan Maris
