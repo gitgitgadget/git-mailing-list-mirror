@@ -2,109 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 767821F453
-	for <e@80x24.org>; Wed, 13 Feb 2019 23:31:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2DFC1F453
+	for <e@80x24.org>; Wed, 13 Feb 2019 23:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732453AbfBMXbj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 18:31:39 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35144 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727937AbfBMXbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 18:31:39 -0500
-Received: by mail-wm1-f66.google.com with SMTP id t200so4271730wmt.0
-        for <git@vger.kernel.org>; Wed, 13 Feb 2019 15:31:38 -0800 (PST)
+        id S1731197AbfBMXld (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 18:41:33 -0500
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:38192 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727745AbfBMXld (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 18:41:33 -0500
+Received: by mail-qk1-f202.google.com with SMTP id v64so3594000qka.5
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 15:41:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=hEZGhWGUiFrPRwsZJ0tt2CrsGxtrecNZ0HAvtQNPLeU=;
-        b=dzTpvoU5sEktFtmLoyebWn9cbEqXAjHM2n0QeiHDWQZtsyzKIUUmfnhFoPtx0B1SHh
-         7Cz5rJUp8Iwz2YHByVnzBQbeyGhgNfYrP1ucFeo5X9LHE+RsqCBBTVtG/iKRiXwd8Q9u
-         jStDm0YBR0UNynqlxTBkTLt8VNxqjRD6VB9nnyH/Gl7t1mk37E4qfqzdnO7zJWvahWuK
-         JuXUxPkPvZaqaP3bR0VJP8yZ0mQCFPCkDzPncJz1oqexY582UyeoO0O0JTkeydA4AT1+
-         SOgSIOXxSkXdc5dYs+7GI40MdZYFTbyz7xnVjveTzFimVdZ5AhTnCogWVjJRVje3Om5T
-         e9nQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=i/XDFhIrPfzogvcR06jjsLbjshsNBPw4L2du0uZGXQk=;
+        b=wFVG3WIRz/Yl/byOhxPv9dZJLOB7AZgWTma31sVbY+YYfdiNDc+e3T0hYJRjy0toUv
+         ih7nEqXaZpbQXWCXd64X4Hs0/+1H1s6RVBI8RdxFq+RrghrD/6M5IZ1oD01M8u3SRdPv
+         szDu5qDHTr2aY9yMd+pQqzMveS9boYOIJUgT0YxpJjK+hWDIclFRqrkzh4qXKLEjrsTA
+         4MkDW/waH1tFY0BZrmuVebH2YoyEx1pmjj7Q9wHTkDLJE+U2W8PGFE4sNic1TO27t0jL
+         agyhjGsagppvoZyc5yDYJTopjpxL3j0UdCE1FvnlWAA7+xqH9hGwrDBg+JZWd83M0JtN
+         TpHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=hEZGhWGUiFrPRwsZJ0tt2CrsGxtrecNZ0HAvtQNPLeU=;
-        b=YyzZ4AAW7pjBubhfAueRfZUuDBcpXbeApQEN3Cq0MZof72Bv3CEq6Z9EycOGobTEgs
-         /8Dtqkqyq7ZwQvFIap46mvUUUaT7/3SaFmVdCOGg5kL9kWYHs8gYuo2rB0lGhMxepLS9
-         t3zwbUhaircAlVOGF3G0QoYhbHQfB0zxlw0A4CA6tsrbHbLqk8lm3KYR3XMfpYpiS0yE
-         fvePNdhD0zEr2Dgzn2cXdD5zjxQqg8hTYhD6uvEhdADO3bJAmLVuKX0Ef61WClioytHt
-         aZk1VzQfTeb3TUY2GRvBbR3EsoMdRC4zUkzSMrT6JYDSeCmTVAW1QsdkS2Rftb2ufbCk
-         mE3Q==
-X-Gm-Message-State: AHQUAuZp293LSN8h3agFhPFMeK3v1uxwPmurnFTXbDlZcLLDCHRuNyqP
-        7c97iZJJzxYN+1ZYTpEjI0g=
-X-Google-Smtp-Source: AHgI3IaaUqLFhZfnUWqAGrq0EWK1ffR4r0/tafAxZGAUAFrUy6TzyJytMsNXlbN2xPJkSx3IOQxtHA==
-X-Received: by 2002:a05:600c:2188:: with SMTP id e8mr415389wme.114.1550100697005;
-        Wed, 13 Feb 2019 15:31:37 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id r14sm418104wrv.77.2019.02.13.15.31.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Feb 2019 15:31:36 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Barret Rhoden <brho@google.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
-        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v3 5/5] blame: add tests for ignoring revisions
-References: <20190212222722.240676-1-brho@google.com>
-        <20190212222722.240676-6-brho@google.com>
-Date:   Wed, 13 Feb 2019 15:31:35 -0800
-In-Reply-To: <20190212222722.240676-6-brho@google.com> (Barret Rhoden's
-        message of "Tue, 12 Feb 2019 17:27:22 -0500")
-Message-ID: <xmqqef8b9sfc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=i/XDFhIrPfzogvcR06jjsLbjshsNBPw4L2du0uZGXQk=;
+        b=k6r8o6WwZ5cU/J2KQiuyzMasl36jWtgk4TdEAaqC5MN+PrYN85NozrljfFWL/WPN1G
+         WvrSO2+xqXkTpHSFPzCyNWHw/EjB487Ei17O8tVXzB6+vc2G7DcOhAlAuDYoEFOZfE4R
+         6AP/KZKNHF+6kHy0EaW9Oi7BMhAehjTV1Bdn36cOkg7/SlculO232mmeIblQrAKT4D8A
+         pr0tFlaUWXoWPHLCxgCJrnkeCQgvIrbbBkleCTuk9tG26FPNSFfImi5JDI1yQn0Qpf2S
+         pQ7RE9rXqW3lO6lpKuKmNsfgo4hcjVwpWpBijPXr/0iEzSc/2keY/ASE99fht5961ZmD
+         kPBQ==
+X-Gm-Message-State: AHQUAualPDGRHJlUxIF6ktzJGn3qFplsLB48EdnL2Oo1iOO5TTpaVBML
+        nIVvUlp76IFoFZhlrGh7uZBU7jnD6nF/xhHWaRT5PSw68Jnlp1evC9UatzXPnJ3ClTbYWIHNJQm
+        N2dcm87zbbMnL+MNq8TBlxkqQcCWIf47pi/iOx1nSz7SHUBu4dola2jpl9lfSyNQ=
+X-Google-Smtp-Source: AHgI3IaHpWrVZYuqSlmVCZo0HfsfSqa+RpEXxAay64HTnsKs9542e6r4GdD1BR/HOhdYQrsHfh2S6O59p30APw==
+X-Received: by 2002:a0c:ae41:: with SMTP id z1mr477167qvc.11.1550101291826;
+ Wed, 13 Feb 2019 15:41:31 -0800 (PST)
+Date:   Wed, 13 Feb 2019 15:41:28 -0800
+In-Reply-To: <4ffb11ff776166944673ba3bdb96a9d20eb14df7.1549929088.git.steadmon@google.com>
+Message-Id: <cb1b2834b7365f6277d1ec573cee7fd68a7329d0.1550100949.git.steadmon@google.com>
+Mime-Version: 1.0
+References: <4ffb11ff776166944673ba3bdb96a9d20eb14df7.1549929088.git.steadmon@google.com>
+X-Mailer: git-send-email 2.20.1.791.gb4d0f1c61a-goog
+Subject: [PATCH v2] protocol-capabilities.txt: document symref
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, jrnieder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Barret Rhoden <brho@google.com> writes:
+In 7171d8c15f ("upload-pack: send symbolic ref information as
+capability"), we added a symref capability to the pack protocol, but it
+was never documented. Adapt the patch notes from that commit and add
+them to the capabilities documentation.
 
-> +	git rev-parse Y > expect &&
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+Range-diff against v1:
+1:  4ffb11ff77 ! 1:  cb1b2834b7 protocol-capabilities.txt: document symref
+    @@ -12,6 +12,17 @@
+      diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+      --- a/Documentation/technical/protocol-capabilities.txt
+      +++ b/Documentation/technical/protocol-capabilities.txt
+    +@@
+    + Git Protocol Capabilities
+    + =========================
+    + 
+    ++NOTE: this document describes capabilities for versions 0 and 1 of the pack
+    ++protocol. For version 2, please refer to the link:protocol-v2.html[protocol-v2]
+    ++doc.
+    ++
+    + Servers SHOULD support all capabilities defined in this document.
+    + 
+    + On the very first line of the initial server response of either
+     @@
+      purposes, and MUST NOT be used to programmatically assume the presence
+      or absence of particular features.
 
-Not limited to this one, but lose the SP between the redirection
-operator and its target pathname, i.e. "git rev-parse Y >expect".
+ .../technical/protocol-capabilities.txt        | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-> +	sed -i -e "s/[0-9a-f]/0/g" expect &&
-
-Don't use "sed -i" in-place rewrite, that is not portable.
-
-In the meantime, I'd patch it up with this so that we can keep 'pu'
-working.  Placing "git rev-parse" upstream of a pipe is not kosher,
-but in the meantime...
-
- t/t8013-blame-ignore-revs.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
-index 3a4ad7cf93..e3396a78d0 100755
---- a/t/t8013-blame-ignore-revs.sh
-+++ b/t/t8013-blame-ignore-revs.sh
-@@ -57,8 +57,7 @@ test_expect_success ignore_rev_adding_lines '
- 	git commit -m Y &&
- 	git tag Y &&
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 332d209b58..2b267c0da6 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -1,6 +1,10 @@
+ Git Protocol Capabilities
+ =========================
  
--	git rev-parse Y > expect &&
--	sed -i -e "s/[0-9a-f]/0/g" expect &&
-+	git rev-parse Y | sed -e "s/[0-9a-f]/0/g" >expect &&
- 	git blame --line-porcelain file --ignore-rev Y > blame_raw &&
++NOTE: this document describes capabilities for versions 0 and 1 of the pack
++protocol. For version 2, please refer to the link:protocol-v2.html[protocol-v2]
++doc.
++
+ Servers SHOULD support all capabilities defined in this document.
  
- 	grep "^[0-9a-f]\+ 3 3" blame_raw | sed -e "s/ .*//" > actual &&
-
-
+ On the very first line of the initial server response of either
+@@ -172,6 +176,20 @@ agent strings are purely informative for statistics and debugging
+ purposes, and MUST NOT be used to programmatically assume the presence
+ or absence of particular features.
+ 
++symref
++------
++
++This parameterized capability is used to inform the receiver which symbolic ref
++points to which ref; for example, "symref=HEAD:refs/heads/master" tells the
++receiver that HEAD points to master. This capability can be repeated to
++represent multiple symrefs.
++
++Servers SHOULD include this capability for the HEAD symref if it is one of the
++refs being sent.
++
++Clients MAY use the parameters from this capability to select the proper initial
++branch when cloning a repository.
++
+ shallow
+ -------
+ 
+-- 
+2.20.1.791.gb4d0f1c61a-goog
 
