@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D946C211B5
-	for <e@80x24.org>; Thu, 14 Feb 2019 04:35:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CEE71F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 04:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388757AbfBNEfZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 23:35:25 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43616 "HELO cloud.peff.net"
+        id S2388518AbfBNEhp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 23:37:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43622 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2388518AbfBNEfY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 23:35:24 -0500
-Received: (qmail 30136 invoked by uid 109); 14 Feb 2019 04:35:25 -0000
+        id S1727763AbfBNEhp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 23:37:45 -0500
+Received: (qmail 30267 invoked by uid 109); 14 Feb 2019 04:37:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Feb 2019 04:35:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Feb 2019 04:37:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6323 invoked by uid 111); 14 Feb 2019 04:35:35 -0000
+Received: (qmail 6340 invoked by uid 111); 14 Feb 2019 04:37:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 13 Feb 2019 23:35:35 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 13 Feb 2019 23:37:56 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Feb 2019 23:35:22 -0500
-Date:   Wed, 13 Feb 2019 23:35:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Feb 2019 23:37:43 -0500
+Date:   Wed, 13 Feb 2019 23:37:43 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/3] prune: lazily perform reachability traversal
-Message-ID: <20190214043522.GA19183@sigill.intra.peff.net>
+Subject: [PATCH 2/3] prune: use bitmaps for reachability traversal
+Message-ID: <20190214043743.GB19183@sigill.intra.peff.net>
 References: <20190214043127.GA19019@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,194 +39,148 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The general strategy of "git prune" is to do a full reachability walk,
-then for each loose object see if we found it in our walk. But if we
-don't have any loose objects, we don't need to do the expensive walk in
-the first place.
+Pruning generally has to traverse the whole commit graph in order to
+see which objects are reachable. This is the exact problem that
+reachability bitmaps were meant to solve, so let's use them (if they're
+available, of course).
 
-This patch postpones that walk until the first time we need to see its
-results.
-
-Note that this is really a specific case of a more general optimization,
-which is that we could traverse only far enough to find the object under
-consideration (i.e., stop the traversal when we find it, then pick up
-again when asked about the next object, etc). That could save us in some
-instances from having to do a full walk. But it's actually a bit tricky
-to do with our traversal code, and you'd need to do a full walk anyway
-if you have even a single unreachable object (which you generally do, if
-any objects are actually left after running git-repack).
-
-So in practice this lazy-load of the full walk catches one easy but
-common case (i.e., you've just repacked via git-gc, and there's nothing
-unreachable).
-
-The perf script is fairly contrived, but it does show off the
-improvement:
+Here are timings on git.git:
 
   Test                            HEAD^             HEAD
-  -------------------------------------------------------------------------
-  5304.4: prune with no objects   3.66(3.60+0.05)   0.00(0.00+0.00) -100.0%
+  ------------------------------------------------------------------------
+  5304.6: prune with bitmaps      3.65(3.56+0.09)   1.01(0.92+0.08) -72.3%
 
-and would let us know if we accidentally regress this optimization.
+And on linux.git:
 
-Note also that we need to take special care with prune_shallow(), which
-relies on us having performed the traversal. So this optimization can
-only kick in for a non-shallow repository. Since this is easy to get
-wrong and is not covered by existing tests, let's add an extra test to
-t5304 that covers this case explicitly.
+  Test                            HEAD^               HEAD
+  --------------------------------------------------------------------------
+  5304.6: prune with bitmaps      35.05(34.79+0.23)   3.00(2.78+0.21) -91.4%
+
+The tests show a pretty optimal case, as we'll have just repacked and
+should have pretty good coverage of all refs with our bitmaps. But
+that's actually pretty realistic: normally prune is run via "gc" right
+after repacking.
+
+A few notes on the implementation:
+
+  - the change is actually in reachable.c, so it would improve
+    reachability traversals by "reflog expire --stale-fix", as well.
+    Those aren't performed regularly, though (a normal "git gc" doesn't
+    use --stale-fix), so they're not really worth measuring. There's a
+    low chance of regressing that caller, since the use of bitmaps is
+    totally transparent from the caller's perspective.
+
+  - The bitmap case could actually get away without creating a "struct
+    object", and instead the caller could just look up each object id in
+    the bitmap result. However, this would be a marginal improvement in
+    runtime, and it would make the callers much more complicated. They'd
+    have to handle both the bitmap and non-bitmap cases separately, and
+    in the case of git-prune, we'd also have to tweak prune_shallow(),
+    which relies on our SEEN flags.
+
+  - Because we do create real object structs, we go through a few
+    contortions to create ones of the right type. This isn't strictly
+    necessary (lookup_unknown_object() would suffice), but it's more
+    memory efficient to use the correct types, since we already know
+    them.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-The diff looks nice with --color-moved. I wish there was a way to
-communicate that information in a plaintext email.
+ reachable.c           | 42 ++++++++++++++++++++++++++++++++++++++++++
+ t/perf/p5304-prune.sh | 11 +++++++++++
+ 2 files changed, 53 insertions(+)
 
- builtin/prune.c       | 43 ++++++++++++++++++++++++++++++++-----------
- t/perf/p5304-prune.sh | 24 ++++++++++++++++++++++++
- t/t5304-prune.sh      | 12 ++++++++++++
- 3 files changed, 68 insertions(+), 11 deletions(-)
- create mode 100755 t/perf/p5304-prune.sh
-
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 1ec9ddd751..04b6573945 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -31,16 +31,40 @@ static int prune_tmp_file(const char *fullpath)
- 	return 0;
+diff --git a/reachable.c b/reachable.c
+index 6e9b810d2a..0d00a91de4 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -12,6 +12,7 @@
+ #include "packfile.h"
+ #include "worktree.h"
+ #include "object-store.h"
++#include "pack-bitmap.h"
+ 
+ struct connectivity_progress {
+ 	struct progress *progress;
+@@ -158,10 +159,44 @@ int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
+ 				      FOR_EACH_OBJECT_LOCAL_ONLY);
  }
  
--static int prune_object(const struct object_id *oid, const char *fullpath,
--			void *data)
-+static void perform_reachability_traversal(struct rev_info *revs)
- {
--	struct stat st;
-+	static int initialized;
-+	struct progress *progress = NULL;
-+
-+	if (initialized)
-+		return;
-+
-+	if (show_progress)
-+		progress = start_delayed_progress(_("Checking connectivity"), 0);
-+	mark_reachable_objects(revs, 1, expire, progress);
-+	stop_progress(&progress);
-+	initialized = 1;
++static void *lookup_object_by_type(struct repository *r,
++				   const struct object_id *oid,
++				   enum object_type type)
++{
++	switch (type) {
++	case OBJ_COMMIT:
++		return lookup_commit(r, oid);
++	case OBJ_TREE:
++		return lookup_tree(r, oid);
++	case OBJ_TAG:
++		return lookup_tag(r, oid);
++	case OBJ_BLOB:
++		return lookup_blob(r, oid);
++	default:
++		die("BUG: unknown object type %d", type);
++	}
 +}
 +
-+static int is_object_reachable(const struct object_id *oid,
-+			       struct rev_info *revs)
++static int mark_object_seen(const struct object_id *oid,
++			     enum object_type type,
++			     int exclude,
++			     uint32_t name_hash,
++			     struct packed_git *found_pack,
++			     off_t found_offset)
 +{
-+	perform_reachability_traversal(revs);
++	struct object *obj = lookup_object_by_type(the_repository, oid, type);
++	if (!obj)
++		die("unable to create object '%s'", oid_to_hex(oid));
++
++	obj->flags |= SEEN;
++	return 0;
++}
++
+ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 			    timestamp_t mark_recent, struct progress *progress)
+ {
+ 	struct connectivity_progress cp;
++	struct bitmap_index *bitmap_git;
  
  	/*
- 	 * Do we know about this object?
- 	 * It must have been reachable
- 	 */
--	if (lookup_object(the_repository, oid->hash))
-+	return !!lookup_object(the_repository, oid->hash);
-+}
-+
-+static int prune_object(const struct object_id *oid, const char *fullpath,
-+			void *data)
-+{
-+	struct rev_info *revs = data;
-+	struct stat st;
-+
-+	if (is_object_reachable(oid, revs))
- 		return 0;
+ 	 * Set up revision parsing, and mark us as being interested
+@@ -188,6 +223,13 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 	cp.progress = progress;
+ 	cp.count = 0;
  
- 	if (lstat(fullpath, &st)) {
-@@ -102,7 +126,6 @@ static void remove_temporary_files(const char *path)
- int cmd_prune(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
--	struct progress *progress = NULL;
- 	int exclude_promisor_objects = 0;
- 	const struct option options[] = {
- 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
-@@ -142,17 +165,13 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 
- 	if (show_progress == -1)
- 		show_progress = isatty(2);
--	if (show_progress)
--		progress = start_delayed_progress(_("Checking connectivity"), 0);
- 	if (exclude_promisor_objects) {
- 		fetch_if_missing = 0;
- 		revs.exclude_promisor_objects = 1;
- 	}
- 
--	mark_reachable_objects(&revs, 1, expire, progress);
--	stop_progress(&progress);
- 	for_each_loose_file_in_objdir(get_object_directory(), prune_object,
--				      prune_cruft, prune_subdir, NULL);
-+				      prune_cruft, prune_subdir, &revs);
- 
- 	prune_packed_objects(show_only ? PRUNE_PACKED_DRY_RUN : 0);
- 	remove_temporary_files(get_object_directory());
-@@ -160,8 +179,10 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 	remove_temporary_files(s);
- 	free(s);
- 
--	if (is_repository_shallow(the_repository))
-+	if (is_repository_shallow(the_repository)) {
-+		perform_reachability_traversal(&revs);
- 		prune_shallow(show_only ? PRUNE_SHOW_ONLY : 0);
++	bitmap_git = prepare_bitmap_walk(revs);
++	if (bitmap_git) {
++		traverse_bitmap_commit_list(bitmap_git, mark_object_seen);
++		free_bitmap_index(bitmap_git);
++		return;
 +	}
- 
- 	return 0;
- }
++
+ 	/*
+ 	 * Set up the revision walk - this will move all commits
+ 	 * from the pending list to the commit walking list.
 diff --git a/t/perf/p5304-prune.sh b/t/perf/p5304-prune.sh
-new file mode 100755
-index 0000000000..3c852084eb
---- /dev/null
+index 3c852084eb..83baedb8a4 100755
+--- a/t/perf/p5304-prune.sh
 +++ b/t/perf/p5304-prune.sh
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+
-+test_description='performance tests of prune'
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+test_expect_success 'remove reachable loose objects' '
-+	git repack -ad
-+'
-+
-+test_expect_success 'remove unreachable loose objects' '
-+	git prune
-+'
-+
-+test_expect_success 'confirm there are no loose objects' '
-+	git count-objects | grep ^0
-+'
-+
-+test_perf 'prune with no objects' '
-+	git prune
-+'
-+
-+test_done
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 270da21ac3..2c19a790c1 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -274,6 +274,18 @@ test_expect_success 'prune .git/shallow' '
- 	test_path_is_missing .git/shallow
+@@ -21,4 +21,15 @@ test_perf 'prune with no objects' '
+ 	git prune
  '
  
-+test_expect_success 'prune .git/shallow when there are no loose objects' '
-+	SHA1=$(echo hi|git commit-tree HEAD^{tree}) &&
-+	echo $SHA1 >.git/shallow &&
-+	git update-ref refs/heads/shallow-tip $SHA1 &&
-+	git repack -ad &&
-+	# verify assumption that all loose objects are gone
-+	git count-objects | grep ^0 &&
-+	git prune &&
-+	echo $SHA1 >expect &&
-+	test_cmp expect .git/shallow
++test_expect_success 'repack with bitmaps' '
++	git repack -adb
 +'
 +
- test_expect_success 'prune: handle alternate object database' '
- 	test_create_repo A &&
- 	git -C A commit --allow-empty -m "initial commit" &&
++# We have to create the object in each trial run, since otherwise
++# runs after the first see no object and just skip the traversal entirely!
++test_perf 'prune with bitmaps' '
++	echo "probably not present in repo" | git hash-object -w --stdin &&
++	git prune
++'
++
+ test_done
 -- 
 2.21.0.rc0.586.gffba1126a0
 
