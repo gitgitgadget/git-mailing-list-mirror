@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2ED641F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 05:50:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 316CC1F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 05:50:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405439AbfBNFue (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 00:50:34 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43750 "HELO cloud.peff.net"
+        id S2405502AbfBNFus (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 00:50:48 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43758 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726155AbfBNFud (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 00:50:33 -0500
-Received: (qmail 880 invoked by uid 109); 14 Feb 2019 05:50:34 -0000
+        id S1726155AbfBNFus (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 00:50:48 -0500
+Received: (qmail 890 invoked by uid 109); 14 Feb 2019 05:50:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Feb 2019 05:50:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Feb 2019 05:50:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6927 invoked by uid 111); 14 Feb 2019 05:50:44 -0000
+Received: (qmail 6944 invoked by uid 111); 14 Feb 2019 05:50:58 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Feb 2019 00:50:44 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Feb 2019 00:50:58 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2019 00:50:32 -0500
-Date:   Thu, 14 Feb 2019 00:50:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2019 00:50:46 -0500
+Date:   Thu, 14 Feb 2019 00:50:46 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Cc:     Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH 06/10] pack-objects: drop unused parameter from
- oe_map_new_pack()
-Message-ID: <20190214055031.GF20578@sigill.intra.peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 07/10] files-backend: drop refs parameter from
+ split_symref_update()
+Message-ID: <20190214055045.GG20578@sigill.intra.peff.net>
 References: <20190214054736.GA20091@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,62 +41,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 43fa44fa3b (pack-objects: move in_pack out of struct object_entry,
-2018-04-14), we store the source pack for each object as a small index
-rather than as a pointer. When we see a new pack that has no allocated
-index, we fall back to generating an array of pointers by calling
-oe_map_new_pack().
-
-Perhaps counter-intuitively, that function does not need to actually see
-our new index-less pack. It only allocates and populates the array with
-the existing packs, after which oe_set_in_pack() actually adds the new
-pack to the array.
-
-Let's drop the unused "struct packed_git" argument to oe_map_new_pack()
-to avoid confusion.
+This parameter was added in fcc42ea0c9 (split_symref_update(): add a
+files_ref_store argument, 2016-09-04) without comment, but never used.
+The splitting is purely mechanical, and doesn't depend on the particular
+ref-store. Let's drop this parameter in the name of simplicity.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- pack-objects.c | 3 +--
- pack-objects.h | 6 +++---
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ refs/files-backend.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/pack-objects.c b/pack-objects.c
-index e7cd337bee..ce33b8906e 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -119,8 +119,7 @@ static void prepare_in_pack_by_idx(struct packing_data *pdata)
-  * this fall back code, just stay simple and fall back to using
-  * in_pack[] array.
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index dd8abe9185..ef053f716c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2254,8 +2254,7 @@ static int split_head_update(struct ref_update *update,
+  * Note that the new update will itself be subject to splitting when
+  * the iteration gets to it.
   */
--void oe_map_new_pack(struct packing_data *pack,
--		     struct packed_git *p)
-+void oe_map_new_pack(struct packing_data *pack)
- {
- 	uint32_t i;
- 
-diff --git a/pack-objects.h b/pack-objects.h
-index 6bfacc7d2c..6fde7ce27c 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -247,14 +247,14 @@ static inline struct packed_git *oe_in_pack(const struct packing_data *pack,
- 		return pack->in_pack[e - pack->objects];
- }
- 
--void oe_map_new_pack(struct packing_data *pack,
--		     struct packed_git *p);
-+void oe_map_new_pack(struct packing_data *pack);
-+
- static inline void oe_set_in_pack(struct packing_data *pack,
- 				  struct object_entry *e,
- 				  struct packed_git *p)
- {
- 	if (!p->index)
--		oe_map_new_pack(pack, p);
-+		oe_map_new_pack(pack);
- 	if (pack->in_pack_by_idx)
- 		e->in_pack_idx = p->index;
- 	else
+-static int split_symref_update(struct files_ref_store *refs,
+-			       struct ref_update *update,
++static int split_symref_update(struct ref_update *update,
+ 			       const char *referent,
+ 			       struct ref_transaction *transaction,
+ 			       struct string_list *affected_refnames,
+@@ -2449,7 +2448,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			 * of processing the split-off update, so we
+ 			 * don't have to do it here.
+ 			 */
+-			ret = split_symref_update(refs, update,
++			ret = split_symref_update(update,
+ 						  referent.buf, transaction,
+ 						  affected_refnames, err);
+ 			if (ret)
 -- 
 2.21.0.rc1.567.g648f076c3f
 
