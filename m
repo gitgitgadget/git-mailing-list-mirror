@@ -2,89 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84C98211B5
-	for <e@80x24.org>; Thu, 14 Feb 2019 09:48:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99BE11F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 09:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404318AbfBNJs3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 04:48:29 -0500
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:39008 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389588AbfBNJs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 04:48:29 -0500
-Received: by mail-ed1-f51.google.com with SMTP id b14so4469384edt.6
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 01:48:27 -0800 (PST)
+        id S2438063AbfBNJvH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 04:51:07 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51142 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727937AbfBNJvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 04:51:07 -0500
+Received: by mail-wm1-f65.google.com with SMTP id x7so5539729wmj.0
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 01:51:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bCRb5ygJ6PDwW/f1a+KwLhpxIhxJS4t57G4izxD0tPQ=;
-        b=TsDH3G9jh0OmCJCDFMrYrAklTe7Tqmv90l2a4Goml7EGCMBNn1g0U+jy0l9UVl7DZI
-         umkteW6Ye4E7ZOyNbcBUQLZDU41F+Q5sLJ81MVEdGN3PFnT++67eo3NL06ER1Mc9y39w
-         NSpzPS+Pg7qWhH8Mi72y0bnrOWw1KX7yUOuUgSV0qO5zmO9OH3cAWBdchpHHpfeyJkaA
-         ohjnqHg+48CyYEMxME0cSdo7oeSq/geJ/TnK7zCyYoduQzOvwr35jC/wNm93GxuPBcEw
-         miXoV51owXC7YxGviMkzxVSGU91N8EhSJJ3wMgjXbgv2yzF6OnUYyPZrTFHLHWOfSOm+
-         908A==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=yLkgVMukWWSozBBe5sG5OlstPq7hEzJYwMNpl1Z7OXc=;
+        b=K/727RXEp5iTCXsMyJSur9ahK5BJS3GnRXsh020Zix5OyOgnAuXY6VtquF0UNqdY+e
+         Jx4FobFiD2MDiyg2KgjMyMUE4E/NfjePaVbW1EKxpHOP5YuC2Vu1wU3iJ5QipVPXg9EI
+         JAl9/kbFh+cxHKbD5WBLuomUC2eH0waHlQmFD78KGzEH/Cjaa15nvuIwMcvB6q8GgYRP
+         Fp10SsKETjLoGKy0wJBh3YsFJ0zJB6hZnX6XvtU//VIgd35PhwaI1BYImeL8sNKZcrvv
+         auzgpFUg5LGmEqkRGLs2L6lHTvoHBtDP08NYi4gcdBvB8Qa47/9rB1S8JlPVu20Bvw7C
+         Ab0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bCRb5ygJ6PDwW/f1a+KwLhpxIhxJS4t57G4izxD0tPQ=;
-        b=jZC2qK6fEfTvI9okN+kQqdou/A0h5qMUl8E2wd8tyvIZGdafeVluVNJ8ft7n+dEuTq
-         Hi3ylR028IsnHjLhEXN/4chmMJ0OfJyoGAC4Reew5XaNQsjJ9TWI1bjyPyNY5ldU9D4m
-         VPNWNnNdrzx4spw8/Y8j2AFD74VYjdOwpWeOBMiLY7MQ3eET0tFFsjalSjmNz2S1pJuv
-         jpMN086pnatti+PxHef6vixnbyixPeAkKhc+WyZ7LGzI1pLBKsVwPE61tW2Stejl2szl
-         w69OWxCcbqk2EwCzAf6KSr0I/Y6iaCjm3KmvjbMpZ4fW7rXUdvqKrTCYKa/tmbxAaHxg
-         Q94A==
-X-Gm-Message-State: AHQUAuZo3cdVK9UAT8VV6Ghse/aEKh+eIEoh3rljsG2sFkDHwc/q237y
-        SWiqJJnN/uRwSIbCeeFxHghCZdi1+n7YXeqhcb4=
-X-Google-Smtp-Source: AHgI3IYcrYGeD2vPIn9lZgOUzGvYgZAytfXmsJJJkS8xAZ0RyI+lsfviyo/eDfFCUrdS3PyLuWJa1Hp6pl7Vw4xzna4=
-X-Received: by 2002:a17:906:4988:: with SMTP id p8mr2107318eju.75.1550137706941;
- Thu, 14 Feb 2019 01:48:26 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=yLkgVMukWWSozBBe5sG5OlstPq7hEzJYwMNpl1Z7OXc=;
+        b=MmmEGvFDB4nJaUg6YrmChtJWL6GSvoM1JcbAMk21e0IUFM/1wM7D1zt4+ER2xj5jNj
+         htesJ27BqawXLzEu1BnHnvvBum9afl2E+3p5CaO2Hn2fkY/KPDd2JDNzA6jtEWu7tr1B
+         EvznzE1GaqRJQ9zhTMf7vQOZlIPtor0LJzaSiDan41pLHeGM55lghnDr2V7GxW/6k9Ag
+         6HlXFyAzMEJYK5Z8F45LiT7Ht9ZPiSG1yq6eewPUpRgRml3ezQbwjpZC8kraogpb8Dji
+         MyrJRN6Bf9eaUmGtJmuBf5ANxXChmAwUbON2tBn8u+Ubsmk23cED0ApS7GsZFnjZWFaG
+         FvIQ==
+X-Gm-Message-State: AHQUAuYPK6buxttFGxpiwOWEwXFz76tlGdrfP4OxdaNZz59/CodD+oJ3
+        D241f4aQjaa3OzSQJBWA0Ms=
+X-Google-Smtp-Source: AHgI3Ib/fwc4pE1zIxP3BJhl9KrsDvdD3qmVLuJM9UaHN7xSdxn7IiKhlu/6KmLl9U2jjc7LpuEdXQ==
+X-Received: by 2002:a1c:7312:: with SMTP id d18mr1965632wmb.24.1550137865073;
+        Thu, 14 Feb 2019 01:51:05 -0800 (PST)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id d15sm1594616wrw.36.2019.02.14.01.51.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 14 Feb 2019 01:51:04 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>, hsed@unimetic.com
+Subject: Re: [PATCH v2] tests: avoid syntax triggering old dash bug
+References: <xmqqo9a9stbs.fsf@gitster-ct.c.googlers.com> <20190213115951.12096-1-avarab@gmail.com> <20190213214844.GI1622@szeder.dev>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190213214844.GI1622@szeder.dev>
+Date:   Thu, 14 Feb 2019 10:51:03 +0100
+Message-ID: <87d0nuk8ag.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
- <20190204215251.GB6085@hank.intra.tgummerer.com> <20190205211736.GD6085@hank.intra.tgummerer.com>
- <CAP8UFD0bFWvXyQYb=EQ7QCPD_Va7CXEueEEtrETuEVO3n2X35g@mail.gmail.com>
- <20190206220942.GE6085@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1902072023250.41@tvgsbejvaqbjf.bet>
- <20190207213326.GF6085@hank.intra.tgummerer.com> <CAL21Bmkkpzp7fhAnjstTjeH+unDFk8-uhFAgKFfuczYzejf2RA@mail.gmail.com>
- <CABPp-BGNMN0QZWa4E4kBFOs8RcUQoMuMT2J_zKhwOTQPbaGU4g@mail.gmail.com>
-In-Reply-To: <CABPp-BGNMN0QZWa4E4kBFOs8RcUQoMuMT2J_zKhwOTQPbaGU4g@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 14 Feb 2019 10:48:14 +0100
-Message-ID: <CAP8UFD3kOp0iAX_A8K9wAht5=Zxp6Rea1fsDt8inG9ZpT-TWdw@mail.gmail.com>
-Subject: Re: GSoC 2019: Git's application submitted
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 13, 2019 at 11:37 PM Elijah Newren <newren@gmail.com> wrote:
+
+On Wed, Feb 13 2019, SZEDER G=C3=A1bor wrote:
+
+> On Wed, Feb 13, 2019 at 12:59:51PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> Avoid a bug in dash that's been fixed ever since its
+>> ec2c84d ("[PARSER] Fix clobbering of checkkwd", 2011-03-15)[1] first
+>> released with dash v0.5.7 in July 2011. This failing test was
+>> introduced in 5f9674243d ("config: add --expiry-date", 2017-11-18).
+>>
+>> This fixes 1/2 tests failing on Debian Lenny & Squeeze. The other
 >
-> I'm a little hesitant to suggest this as I'm not sure how available I
-> could be for mentoring and don't view myself as a good mentor, but
-> another project idea which has lots of sub-pieces and thus could show
-> progress and be useful even if not everything is completed:
+> Do I understand this "1/2" right?  There are two tests failing on
+> Lenny and Squeeze, and this fixes one of those bugs?
+
+Yeah, so there's one bug left now, which I haven't tracked down.
+
+>> failure is due to 1b42f45255 ("git-svn: apply "svn.pathnameencoding"
+>> before URL encoding", 2016-02-09).
+>>
+>> The dash bug is triggered by this test because the heredoc contains a
+>> command embedded in "$()" with a "{}" block coming right after
+>> it. Refactoring the "$()" to e.g. be a variable that was set earlier
+>> will also work around it, but let's instead break up the "EOF" and the
+>> "{}".
+>>
+>> An earlier version of this patch[2] mitigated the issue by breaking
+>> the "$()" out of the "{}" block, that worked, but just because it
+>> broke up the "EOF" and "{}" block. Putting e.g. "echo &&" between the
+>> two would also work.
+>>
+>> 1. https://git.kernel.org/pub/scm/utils/dash/dash.git/
 >
-> Consistency of sequencer commands:
-...
+> Could you please link directly to the commit fixing that issue?
+>
+>   https://git.kernel.org/pub/scm/utils/dash/dash.git/commit/?id=3Dec2c84d=
+3c4dba4b74440d72bdd1de416a9acd2a9
 
-Thanks! I like this idea, as it indeed consists in multiple tasks that
-could be worked on independently.
+Should have done that, but I'll hold off on a re-roll for such a minor
+cosmetic issue since I see Junio's merged it down to "next" already. The
+dash.git hash is noted in the commit message, so it's not a practical
+problem to find the commit, but yeah, would be nice if were a clickable
+link.
 
-Also 2 previous GSoC students already worked on the sequencer (in 2008
-and 2010 IIRC), and I think Alban has been working on it too, so it
-would be nice if another one worked on completing that work.
-
-I added it to the Idea page.
+>> 2. https://public-inbox.org/git/20181127164253.9832-1-avarab@gmail.com/
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
