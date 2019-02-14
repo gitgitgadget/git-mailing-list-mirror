@@ -2,112 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3361C1F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 07:00:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F05B81F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 07:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405990AbfBNHA0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 02:00:26 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59602 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405695AbfBNHAZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 02:00:25 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BE3AB5A09A;
-        Thu, 14 Feb 2019 02:00:20 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=dEfz0UDBHhXsa7/U1JcD6Ouf0kY=; b=JpauHry
-        WyYbm1mbGmxvcLH1TtTeA7p7ym3jgdIBvKYgwXUZO2vT8LG0Ngx9ibKInym7RLpd
-        c3zF/iqObcsYLEYkjzO0ISNq/W/AAWhJk3/m044+V7Ta52O09MPXgxIShuqzABwv
-        aci+Q/vatkPQjm+jo2ViYVmpP0A9fKuN9uaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=uzU2wPzIe4A/wVDsl/y0inG9Zjx4vbY+P
-        TaJzDsgC6CgoaES3APxqLxjS7+dH6KPTwGPbJEUymI6TtDSMzi4GjlzCW8M6dtPu
-        GPuN7Oz181YbAWDzk2j6C0M2ay+uon7IBNXLjFKhcOtiMHY4PYU+gjQ+ySRITWrJ
-        EEL1geHt2E=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B607D5A099;
-        Thu, 14 Feb 2019 02:00:20 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Received: from zaya.teonanacatl.net (unknown [71.173.194.225])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7FEA25A098;
-        Thu, 14 Feb 2019 02:00:17 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Date:   Thu, 14 Feb 2019 02:00:14 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/lib-httpd: pass GIT_TEST_SIDEBAND_ALL through Apache
-Message-ID: <20190214070014.GF16125@zaya.teonanacatl.net>
-References: <20190214063513.32041-1-tmz@pobox.com>
- <20190214065226.GA22932@sigill.intra.peff.net>
+        id S2392438AbfBNHYJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 02:24:09 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:33216 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727324AbfBNHYJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 02:24:09 -0500
+Received: by mail-pl1-f195.google.com with SMTP id y10so2691142plp.0
+        for <git@vger.kernel.org>; Wed, 13 Feb 2019 23:24:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=p6tjRmrgBNE7w3ngCd0s2utteA+SNajnrCQ09oxdqUA=;
+        b=b7KR78SJyJk9KNxuEHqfZTxzgjOl6Il4REYXVMc9yJY4aFQAN4fKupY11/L4X4gPkS
+         8xEnbQhJS+ITDK3xPM6uyvxhTBqTiCxV86cT03aXHTOpVOCu6QsC2Un7p3oGwIPB9PUY
+         MmSUkX/Sml6Ki6zUxYFVPsH5nAf3uKL00DRyADyYxuGO1CF5FcwddWUsbiidGysDxBZZ
+         c+peqr+nvT1kYXR9LEFWGOIFxbExrWHDcVefcT70diqtNhdz8OPvfvorikfdl6KqYz7x
+         QEOJCRrWAJrvprxjGJcmSmXkB9DBvJeP7p0bbjdN6819MooaN45fIhfFcq3pJUN6/g4w
+         M/TA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=p6tjRmrgBNE7w3ngCd0s2utteA+SNajnrCQ09oxdqUA=;
+        b=I28Atf7mUub+qZsPAkJqcBe/wO/G8cjIFkgQ+5BaH3OrXL8zE8/iEDu41FaVZ2SQCM
+         xJ8ViUL2liB7ZJDNYczuzIHdabw5VJ9xWTAUPf4fVREec2gW1EO1N2LV395pJkPZqcP5
+         Sj1nPYArWSNg9+ZpWhNosN6K6LunXb1zXFO1MH/TYnBtWnWA4FO6X4Al1tYile4BjQkI
+         DU4eKpr0Phw5zBYl7aGnyeCE+D/xXnYummBcxJ+8NnOPO1gr5KXRUXyWwb8B8UzP2uN8
+         BuVX0w+1/aY8ovkjb0QaOeg2H8OQ6gWIe0YriucgYYQ4jAnXPrBFH49pcRoM7eXuiKK/
+         M90A==
+X-Gm-Message-State: AHQUAubtT6G1nuToDXHCFUqkmLbsR/EaJkMExEFOy2ZqVk4y0Fb0dDI1
+        pA0QXMgghp6d0gYQ4KzLPLo=
+X-Google-Smtp-Source: AHgI3Ia3Xp1BOE7xXtNTOEPMBl8ZIkgEOe3KGUhcLW5Dnk+gBKlXiRt1nhwGaUvld2/B2R38fveTkA==
+X-Received: by 2002:a17:902:bcc6:: with SMTP id o6mr2634842pls.39.1550129048517;
+        Wed, 13 Feb 2019 23:24:08 -0800 (PST)
+Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
+        by smtp.gmail.com with ESMTPSA id z13sm1666951pgf.84.2019.02.13.23.24.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Feb 2019 23:24:07 -0800 (PST)
+Date:   Wed, 13 Feb 2019 23:24:05 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com
+Subject: Re: [PATCH v2 3/3] submodule: document default behavior
+Message-ID: <20190214072405.GA24259@archbookpro.localdomain>
+References: <0b62f65a8016c41b96aa6caead366e1ed9dda333.1549944164.git.liu.denton@gmail.com>
+ <cover.1549965172.git.liu.denton@gmail.com>
+ <d8785cdd01503f2a7b9a6fbc19105c41a9a04046.1549965172.git.liu.denton@gmail.com>
+ <xmqqzhqzbki3.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190214065226.GA22932@sigill.intra.peff.net>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: 2FAA00EE-3026-11E9-A052-D01F9763A999-09356542!pb-smtp20.pobox.com
+In-Reply-To: <xmqqzhqzbki3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Thu, Feb 14, 2019 at 01:35:13AM -0500, Todd Zullinger wrote:
-> 
->> 07c3c2aa16 ("tests: define GIT_TEST_SIDEBAND_ALL", 2019-01-16) added
->> GIT_TEST_SIDEBAND_ALL to the apache.conf PassEnv list.  Avoid warnings
->> from Apache when the variable is unset, as we do for GIT_VALGRIND* and
->> GIT_TRACE, from f628825481 ("t/lib-httpd: handle running under
->> --valgrind", 2012-07-24) and 89c57ab3f0 ("t: pass GIT_TRACE through
->> Apache", 2015-03-13), respectively.
->> 
->> Signed-off-by: Todd Zullinger <tmz@pobox.com>
->> ---
->> I missed this with rc0, but poking through build logs I noticed a number
->> of 'AH01506: PassEnv variable GIT_TEST_SIDEBAND_ALL was undefined'
->> warnings.
->> 
->> I think exporting this in lib-httpd.sh like we do for GIT_VALGRIND* and
->> GIT_TRACE is the way to go, as opposed to in test-lib.sh, as we do for
->> things like GNUPGHOME.  But I could easily be wrong about that.
-> 
-> Yeah, I think this is the right place to put it (and this approach is
-> the right thing to do).
+On Wed, Feb 13, 2019 at 10:39:48AM -0800, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> > diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> > index 65a952fb96..2fdf9f4cf3 100644
+> > --- a/Documentation/git-submodule.txt
+> > +++ b/Documentation/git-submodule.txt
+> > @@ -9,6 +9,7 @@ git-submodule - Initialize, update or inspect submodules
+> >  SYNOPSIS
+> >  --------
+> >  [verse]
+> > +'git submodule' [--quiet] [--cached]
+> >  'git submodule' [--quiet] 'add' [<options>] [--] <repository> [<path>]
+> >  'git submodule' [--quiet] 'status' [--cached] [--recursive] [--] [<path>...]
+> >  'git submodule' [--quiet] 'init' [--] [<path>...]
+> > @@ -28,6 +29,9 @@ For more information about submodules, see linkgit:gitsubmodules[7].
+> >
+> >  COMMANDS
+> >  --------
+> > +With no arguments, the default command is 'status'.  Several subcommands are
+> > +available to perform operations on the submodules.
+>
+> I am not sure if "default is status" is really true.
+>
+>    $ git submodule status --recursive
+>    $ git submodule --recursive
+>    usage: git submodule [--quiet] ...
+>       or: ...
+>    $ git submodule -- sha1collisiondetection
+>    usage: git submodule [--quiet] ...
+>       or: ...
+>
+> If 'status' were truly the default, wouldn't the form without any
+> subcommand take any option and parameter the 'status' subcommand
+> would accept?
 
-Excellent, thanks.
+This is very similar to git-remote. Its default command is 'show' but
+doing something like 'git remote -n' fails, even though
+'git remote show -n' succeeds.
 
->> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
->> index 216281eabc..0dfb48c2f6 100644
->> --- a/t/lib-httpd.sh
->> +++ b/t/lib-httpd.sh
->> @@ -91,6 +91,7 @@ HTTPD_DOCUMENT_ROOT_PATH=$HTTPD_ROOT_PATH/www
->>  # hack to suppress apache PassEnv warnings
->>  GIT_VALGRIND=$GIT_VALGRIND; export GIT_VALGRIND
->>  GIT_VALGRIND_OPTIONS=$GIT_VALGRIND_OPTIONS; export GIT_VALGRIND_OPTIONS
->> +GIT_TEST_SIDEBAND_ALL=$GIT_TEST_SIDEBAND_ALL; export GIT_TEST_SIDEBAND_ALL
->>  GIT_TRACE=$GIT_TRACE; export GIT_TRACE
-> 
-> I applaud your attempt to alphabetize, but the existing list is already
-> out of order. ;) I don't think it really matters much either way,
-> though.
+Would it make sense to revise this back to
 
-It's like a tar pit for catching people with a little OCD.
+	With no arguments, shows the status of existing submodules.
 
-I debated whether to add it at the end, sort them all in a
-prep patch, or just add it after GIT_TRACE.  I'm not sure if
-I should even admit to spending as much time debating it
-with myself as I did. ;)
+which was the phrasing I used in v1? (If this is the case, I'd also like
+to drop the first patch of this series.)
 
--- 
-Todd
+Thanks,
+
+Denton
