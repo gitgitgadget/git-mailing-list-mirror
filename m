@@ -2,150 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56D8E1F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 21:15:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0ED1F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 21:16:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436468AbfBNVP5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 16:15:57 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38522 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392645AbfBNVP5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 16:15:57 -0500
-Received: by mail-wm1-f65.google.com with SMTP id v26so7529895wmh.3
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 13:15:55 -0800 (PST)
+        id S2437705AbfBNVQZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 16:16:25 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:37390 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392645AbfBNVQY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 16:16:24 -0500
+Received: by mail-ed1-f68.google.com with SMTP id m12so6246174edv.4
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 13:16:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=tXFI2k29MLsWHcJcEcfccXwQgnNAVzlV+RTjnKArcvU=;
-        b=cRBSGEIc2uEheMEDpYWEEzGnxBbR+863L7uruV07IL4kPEZPagKntKhSCwW85mRiBs
-         25BUfa/NgkHW8BPioRYdyLuY4yxkET/hskBMbOKHju8ulNzQopwCksHtPFccfAUh+UDU
-         Pl6hSNnZ6GVqCwH8mRMkkuqZKaIv200BWaLb63jjkB7on1o8yygsexwBmQCwKY47Qc25
-         VEulB9PedYMNLkljndUVQmWRKK9jUd9JotPevygIOpgW2ve3neLfOu0BdDHNq6w3WUsE
-         59OIpqU5FHLsshqWXl9HxFS0/jJ8UvGPoKtNuwFEbbZk1uHFuM39/rXaegP342dy3o6M
-         eOeA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=n/0z1N6dHH4YjZ3+VwPUB6FJW74vo0YdCiafXZBSPpA=;
+        b=Wm7TP6uikkSMlOCTrhcvIaqQznXU5SUCBtl+BFqQiPDlL0c0NY6Z5ace02DrmR7ZjA
+         lxwmaW0HtDiipzxflp3xVgywa0qkgsO34QxnEQgZVCaYq6FeQkvz4z/t0zUqFxxvdCSK
+         04mtV3Ovi6FxWNbvwD+KZCHY2e8soR7H3IlSKLdbOyGdvMwq883VeO1FzgQaaSI2/ezZ
+         4VuoTjdrnZBeezC5tqhFWI/iXgrNuRccJ+6GL2n7bGZHCbnsT5ytvgNEgNokY5fajwBc
+         2GPxK3fuuhDnA7pBd2jU0W63fkYNzw9W0JtSWBhiOjyVBwLF67WXbc9e41ypmeZ8lWzJ
+         BT5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=tXFI2k29MLsWHcJcEcfccXwQgnNAVzlV+RTjnKArcvU=;
-        b=IVQX6laU2bZoXZ66pCVYeLoUFuKhFgUb34OqTO7PxBLHR6UFlXFpHNccKnQj04DFAm
-         obKYNn1Rv9rRdUvRXh8j8VdiTufQBIIU/HEbeC932FXS4w2O/5ksCQVz3wBA4cn2/BF0
-         JbU2weRwakhKhaEFFN4329fxwsx5w8uqPMh4u8NEObO+jTANzKoNWC2qw8qsrgD6pxdW
-         0oQsX3rBAH9KdsJIY6OCevW+tNTzT+hvxJhSrzcYBATp0/wtkXc1aPX+SAzzcG1SWGkp
-         EznU7lHskwIDKWCM0a1h/9qV+NhwPHJribDmK6uuH56eAip/79FGTaORD+sbRjTg7f8Z
-         5Mpg==
-X-Gm-Message-State: AHQUAua19bz8XYsp//kGMtgJersTrMZ8WvXhXXtsYtfjQQg47l3lM+bb
-        6C7bMMUike8zKZX8xqPykurVGGW9
-X-Google-Smtp-Source: AHgI3IYa5CCoWO0tMqi7V+4ATJuEzt47/TIvjp5O3Zt7tjOEy1OJFZC8eCTLe+so6mU4PGBFM8658A==
-X-Received: by 2002:a1c:9e4a:: with SMTP id h71mr4283564wme.82.1550178954301;
-        Thu, 14 Feb 2019 13:15:54 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u15sm6244167wmu.17.2019.02.14.13.15.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Feb 2019 13:15:52 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "'Jeff King'" <peff@peff.net>, "'Duy Nguyen'" <pclouds@gmail.com>,
-        "'Git Mailing List'" <git@vger.kernel.org>
-Subject: Re: Re* [Breakage] 2.20.0-rc0 t1404: test_i18ngrep reports 1 instead of 0 on NonStop in one case
-References: <000801d4c174$05b76860$11263920$@nexbridge.com>
-        <CACsJy8Bn+2zY6y_QqCjbB3qWM-F=3d0H5vgWj4az=md2FZ8RhA@mail.gmail.com>
-        <xmqqftsughks.fsf@gitster-ct.c.googlers.com>
-        <20190212002705.GD13301@sigill.intra.peff.net>
-        <xmqqef8a86sr.fsf_-_@gitster-ct.c.googlers.com>
-        <005001d4c4a4$6af097a0$40d1c6e0$@nexbridge.com>
-Date:   Thu, 14 Feb 2019 13:15:51 -0800
-In-Reply-To: <005001d4c4a4$6af097a0$40d1c6e0$@nexbridge.com> (Randall
-        S. Becker's message of "Thu, 14 Feb 2019 15:32:29 -0500")
-Message-ID: <xmqqva1m6ph4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=n/0z1N6dHH4YjZ3+VwPUB6FJW74vo0YdCiafXZBSPpA=;
+        b=kGeBoxbwks1kTU6D5FHBKqrgttLGhQmmFK/BBGWOIxDhZqv8yFCfUFt+ZUSaYx8/DX
+         Puumi7A+HKhh3jFdPaayhE+J43sktY9oJpsZOvzb9gxTkUqvcqGxsjiGaW2TB7OW3zu+
+         AeQIl1C6fI9yGf5Lm0GFzoSGl9z9DJ2SzuqbnTeJbcjy5EA/Qr2sEb2lhvUGbGd4dpLZ
+         z0eH09ewzIsxKDEH7pgW83h0VMx0KGi2irDHFayaynPQoEKIMo4SJPpksXRlEoZi7uIF
+         mkfrnzl9lQ96Nbv0gLBmM2XEccuSdqiK+stvzphAhIK+eVQFyRTSx1J9pRSeJWBqSApi
+         r8IQ==
+X-Gm-Message-State: AHQUAuaPHdlEPINsjoouFyfJQwPfb4oWE7e87sMxswccnF5BsjvI4jtv
+        P7HE7hGjY25J3HnOwe/njozREDmF2POXay7YSmc=
+X-Google-Smtp-Source: AHgI3IZuVLyzlEpUmgtVnqhRv+7jrh85fAQsDVDoixJdA0hlY76vjt9eMJI3yG8Hy+H+pcBVnLMhJC2O4FsGmkswlCM=
+X-Received: by 2002:a17:906:4988:: with SMTP id p8mr4217721eju.75.1550178982963;
+ Thu, 14 Feb 2019 13:16:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190213205554.4086-1-matheus.bernardino@usp.br>
+In-Reply-To: <20190213205554.4086-1-matheus.bernardino@usp.br>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 14 Feb 2019 22:16:11 +0100
+Message-ID: <CAP8UFD1aBn8=KOTp-D=CmO1iEnWUBS1-jR-aqfg3MZ7HZRU7Pg@mail.gmail.com>
+Subject: Re: [GSoC][RFC PATCH] clone: use dir-iterator to avoid explicit dir traversal
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
-
-> On February 14, 2019 15:16, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
->> 
->> > On Mon, Feb 11, 2019 at 01:07:15PM -0800, Junio C Hamano wrote:
->> >
->> >> >> test_i18ngrep "Unable to create $Q.*packed-refs.lock$Q: File
->> >> >> exists" err
->> >> >
->> >> > The message does not match, does it? Here we grep for "File exists"
->> >> > but the message you showed says "File already exists".
->> >>
->> >> Hmph, this is from strerror(), right?
->> >>
->> >> The question is if we should be using grep to match on strerror()
->> >> result in the C locale.
->> >
->> > Yeah, I agree that's questionable. And I'm mildly surprised it hasn't
->> > been a problem before now.
->> >
->> >> Do we really care that the reason of the failure is due to EEXIST for
->> >> this particular test?
->> >
->> > Hmm. We care to _some_ degree, since that's the condition we set up
->> > for making sure that update-ref cannot take the lock. But it would
->> > probably be fine to just confirm that we failed to take the lock. And
->> > there, checking for just "Unable to create $Q.*packed-refs.lock" would
->> > be sufficient.
->> 
->> Yup.
->> 
->> As this came from 6a2a7736 ("t1404: demonstrate two problems with
->> reference transactions", 2017-09-08), that is as old as Git 2.15, I'd
-> throw it
->> into "not so urgent" pile.
->> 
->> -- >8 --
->> Subject: [PATCH] t1404: do not rely on the exact phrasing of strerror()
->> 
->> Not even in C locale, it is wrong to expect that the exact phrasing "File
->> exists" is used to show EEXIST.
->> 
->> Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
->> Helped-by: Duy Nguyen <pclouds@gmail.com>
->> Helped-by: Jeff King <peff@peff.net>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->> 
->>     I've grepped in t/ directory for the exact phrases of all errno on a
->>     recent Debian box, and this was the only hit it found.  There
->>     are two other hits but both in the comments.
->> 
->>  t/t1404-update-ref-errors.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
-> index
->> 51a4f4c0ac..f95a64c911 100755
->> --- a/t/t1404-update-ref-errors.sh
->> +++ b/t/t1404-update-ref-errors.sh
->> @@ -614,7 +614,7 @@ test_expect_success 'delete fails cleanly if packed-
->> refs file is locked' '
->>  	test_when_finished "rm -f .git/packed-refs.lock" &&
->>  	test_must_fail git update-ref -d $prefix/foo >out 2>err &&
->>  	git for-each-ref $prefix >actual &&
->> -	test_i18ngrep "Unable to create $Q.*packed-refs.lock$Q: File exists"
->> err &&
->> +	test_i18ngrep "Unable to create $Q.*packed-refs.lock$Q:" err &&
->>  	test_cmp unchanged actual
->>  '
+On Thu, Feb 14, 2019 at 1:16 PM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
 >
-> This passes on NonStop. Thanks.
+> Replace usage of opendir/readdir/closedir API to traverse directories
+> recursively, at copy_or_link_directory function, by the dir-iterator
+> API.
 >
-> Randall
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> ---
+> This is my microproject for GSoC 2019. It's still a RFC because I have
+> some questions. Any help will be much appreciated.
 
-Thanks.
+Thanks for working on a microproject!
+
+> There're three places inside copy_or_link_directory's loop where
+> die_errno() is called. Should I call dir_iterator_abort, at these
+> places, before die_errno() is called (to free resources)?
+
+I don't think it's necessary. We care about freeing resources when we
+report errors (for example by returning an error code from inside a
+function), but not when we are exiting.
+
+> -static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+> -                                  const char *src_repo, int src_baselen)
+> +static void mkdir_if_missing(const char *pathname, mode_t mode)
+
+It looks like your patch is both splitting copy_or_link_directory()
+into 2 functions and converting it to use the dir-iterator API. Maybe
+it would be better to have 2 patches instead, one for splitting it and
+one for converting it.
+
+>  {
+> -       struct dirent *de;
+> +       /*
+> +        * Tries to create a dir at pathname. If pathname already exists and
+> +        * is a dir, do nothing.
+> +        */
+
+I think we usually put such comments just before the function. And
+maybe it could be shortened to "Create a dir at pathname unless
+there's already one"
