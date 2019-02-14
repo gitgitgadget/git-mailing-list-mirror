@@ -6,76 +6,63 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D28321F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 06:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3DA51F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 06:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390238AbfBNGw3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 01:52:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43872 "HELO cloud.peff.net"
+        id S2390596AbfBNGyG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 01:54:06 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43882 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2389635AbfBNGw3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 01:52:29 -0500
-Received: (qmail 3865 invoked by uid 109); 14 Feb 2019 06:52:28 -0000
+        id S2390519AbfBNGyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 01:54:06 -0500
+Received: (qmail 3958 invoked by uid 109); 14 Feb 2019 06:54:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Feb 2019 06:52:28 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Feb 2019 06:54:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7537 invoked by uid 111); 14 Feb 2019 06:52:39 -0000
+Received: (qmail 7559 invoked by uid 111); 14 Feb 2019 06:54:17 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Feb 2019 01:52:39 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Feb 2019 01:54:17 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2019 01:52:27 -0500
-Date:   Thu, 14 Feb 2019 01:52:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2019 01:54:04 -0500
+Date:   Thu, 14 Feb 2019 01:54:04 -0500
 From:   Jeff King <peff@peff.net>
 To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/lib-httpd: pass GIT_TEST_SIDEBAND_ALL through Apache
-Message-ID: <20190214065226.GA22932@sigill.intra.peff.net>
-References: <20190214063513.32041-1-tmz@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2019, #03; Wed, 13)
+Message-ID: <20190214065404.GB22932@sigill.intra.peff.net>
+References: <xmqq4l979h8d.fsf@gitster-ct.c.googlers.com>
+ <20190214035944.GB7209@sigill.intra.peff.net>
+ <xmqqzhqy9axy.fsf@gitster-ct.c.googlers.com>
+ <20190214055315.GK20578@sigill.intra.peff.net>
+ <20190214064956.GE16125@zaya.teonanacatl.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190214063513.32041-1-tmz@pobox.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190214064956.GE16125@zaya.teonanacatl.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 14, 2019 at 01:35:13AM -0500, Todd Zullinger wrote:
+On Thu, Feb 14, 2019 at 01:49:56AM -0500, Todd Zullinger wrote:
 
-> 07c3c2aa16 ("tests: define GIT_TEST_SIDEBAND_ALL", 2019-01-16) added
-> GIT_TEST_SIDEBAND_ALL to the apache.conf PassEnv list.  Avoid warnings
-> from Apache when the variable is unset, as we do for GIT_VALGRIND* and
-> GIT_TRACE, from f628825481 ("t/lib-httpd: handle running under
-> --valgrind", 2012-07-24) and 89c57ab3f0 ("t: pass GIT_TRACE through
-> Apache", 2015-03-13), respectively.
+> Jeff King wrote:
+> > Yeah, I do have the feeling that not many people really exercise our -rc
+> > candidates. I'm not sure how to improve that. We could try to push
+> > packagers to make them available (and I think Jonathan already does for
+> > Debian's "experimental" track).
 > 
-> Signed-off-by: Todd Zullinger <tmz@pobox.com>
-> ---
-> I missed this with rc0, but poking through build logs I noticed a number
-> of 'AH01506: PassEnv variable GIT_TEST_SIDEBAND_ALL was undefined'
-> warnings.
-> 
-> I think exporting this in lib-httpd.sh like we do for GIT_VALGRIND* and
-> GIT_TRACE is the way to go, as opposed to in test-lib.sh, as we do for
-> things like GNUPGHOME.  But I could easily be wrong about that.
+> Similarly, I try to make them available in Fedora's rawhide
+> channel (as well as less officially as builds for current
+> stable Fedora and RHEL/CentOS releases¹).  I don't have a
+> good sense of how many git users that reaches, but I haven't
+> had many (or perhaps any?) bug reports from the -rc
+> packages.
 
-Yeah, I think this is the right place to put it (and this approach is
-the right thing to do).
-
-> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-> index 216281eabc..0dfb48c2f6 100644
-> --- a/t/lib-httpd.sh
-> +++ b/t/lib-httpd.sh
-> @@ -91,6 +91,7 @@ HTTPD_DOCUMENT_ROOT_PATH=$HTTPD_ROOT_PATH/www
->  # hack to suppress apache PassEnv warnings
->  GIT_VALGRIND=$GIT_VALGRIND; export GIT_VALGRIND
->  GIT_VALGRIND_OPTIONS=$GIT_VALGRIND_OPTIONS; export GIT_VALGRIND_OPTIONS
-> +GIT_TEST_SIDEBAND_ALL=$GIT_TEST_SIDEBAND_ALL; export GIT_TEST_SIDEBAND_ALL
->  GIT_TRACE=$GIT_TRACE; export GIT_TRACE
-
-I applaud your attempt to alphabetize, but the existing list is already
-out of order. ;) I don't think it really matters much either way,
-though.
+Thanks for doing that. Despite what I said earlier, I expect these
+releases at least hit _some_ people (just not as many as I'd wish for in
+an ideal world). And every additional user who may report a bug during
+the -rc period is a win.
 
 -Peff
