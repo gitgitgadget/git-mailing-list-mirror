@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E30FB1F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 20:47:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 350951F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 20:47:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440019AbfBNUrJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 15:47:09 -0500
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:45493 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437874AbfBNUrJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 15:47:09 -0500
-Received: by mail-wr1-f42.google.com with SMTP id w17so7973177wrn.12
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 12:47:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WgGREEDeuzt7ULPqxcPrhIijvrHHnY0VCnEww1vfMeM=;
-        b=SgGNVIKSkzlxvrYjW3Y9+DsWhdyhJvzh1hhe8tc6WiwA3nozUW2cS+9iCjdWmY0FD1
-         n3Inql9PdI9rEcAATZCSWg7sRt7pOoMSbjp4LieES72v729KJrjCxu97jau8jqKmwFuN
-         6IokqPEGotCR5CIkfX6hgQQNRQ4sIp9vR5dxW8sqZEMWDCNHV0c3eNy2SFv0YuUBsCEJ
-         SAOJUB5rpghYeYFYZHe9dOxz+dcxxJRli+ahn8L/AKFi2UOtab2G0mrvnSiKs57IPCu+
-         FuSBDbJOb3GW5BQ/ihxRerK21r61avxspyj1tVcf73/4FnQAhs1zOoW0TTyVoB/SB1RD
-         4hTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=WgGREEDeuzt7ULPqxcPrhIijvrHHnY0VCnEww1vfMeM=;
-        b=ZY2mj7UE9Gho2Zr6x1MnvAeag2PdoLEBLZy5fJDN2k6o4RPQ7+1Kz1v8b7w4FGHVMm
-         afl6iQu1oRdsqTlXNI3T4WH3H+hQlzr+BXMOzpltEOOLl+Hbo96qjp049y0O7j9O+s67
-         4IhajkcrcaWLpbL5J0JzksUgtNWJvV7MTe5ugYjAfHdM9SfwjNP8zzEQRW/3W1jsQJ76
-         qeT5Fm840A1sW6vQf1+J4aNiKGTjDKVQMnbZB1+CEnDtQfvn/upiH8rXtVhIjucr67w9
-         kMmOn+9IWLSYXYvKwlMI1lHSTGBT1V+05EhJpsplLKCKDxw/6ZS+wZfnhiluV+OEs7vk
-         RGxQ==
-X-Gm-Message-State: AHQUAuaFQh9rmaW4JBas4aRIDk9u0+wDXoREkrZi/AToLQED+0RVXrCc
-        zveS1chsyOAGbZmMdbV6rT8=
-X-Google-Smtp-Source: AHgI3IZRvgCJ0Gkyc73kFlwdyq7Lyvt+MQBScIdQU516G5lHKr3Bz2Hec5GI2unualex0OGyhzCoRQ==
-X-Received: by 2002:adf:f543:: with SMTP id j3mr4058810wrp.220.1550177227187;
-        Thu, 14 Feb 2019 12:47:07 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c186sm5433703wmf.34.2019.02.14.12.47.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Feb 2019 12:47:06 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S2406867AbfBNUre (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 15:47:34 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62127 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389639AbfBNUrd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 15:47:33 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C0D4A5BD1E;
+        Thu, 14 Feb 2019 15:47:31 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=c2lQ49NIVub48+IJ8Vy9VX+SHoQ=; b=GQUWNx6
+        5DP6U/ZN02PDQkN2AKPxnZ71lvQtiqEGgGBbqIgt1GIotAcmVxEfCNGZ4K2/f0v/
+        67Prm7q4CNt8sYsXAkKLU5MGTuQPKQunPMDhtfycJWTT/9amUF5bgb0GihomkK/p
+        wSxtNmc4b2XAIJpKFLC8zHaG7jOoshl3x7kE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=Bmrc2o3PuO5WY/CtUm0p5gL40LEEZSK9y
+        DnA+iU42KvxSZ7EDc/YyZ2KskRDBm6g/mcRuuI+jYsrXJ4eLuU76q6smhTiftzKt
+        pSKDkdbfV9F9kRVD2nD94YxiMI6lWZt6vQWrN5pv/V220LQbgMwH2P0ddvHh7M3W
+        gG0R1uA7X0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A71F35BD1D;
+        Thu, 14 Feb 2019 15:47:31 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Received: from zaya.teonanacatl.net (unknown [71.173.194.225])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5649D5BD1C;
+        Thu, 14 Feb 2019 15:47:28 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Date:   Thu, 14 Feb 2019 15:47:25 -0500
+From:   Todd Zullinger <tmz@pobox.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2019, #03; Wed, 13)
-References: <xmqq4l979h8d.fsf@gitster-ct.c.googlers.com>
-        <20190214201006.127960-1-jonathantanmy@google.com>
-Date:   Thu, 14 Feb 2019 12:47:06 -0800
-In-Reply-To: <20190214201006.127960-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Thu, 14 Feb 2019 12:10:06 -0800")
-Message-ID: <xmqqzhqy6qt1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] t/lib-httpd: pass GIT_TEST_SIDEBAND_ALL through Apache
+Message-ID: <20190214204725.GK16125@zaya.teonanacatl.net>
+References: <20190214063513.32041-1-tmz@pobox.com>
+ <20190214201711.130216-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190214201711.130216-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: BE055B4A-3099-11E9-8C4C-EE24A11ADF13-09356542!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
->> * jt/test-protocol-version (2019-02-06) 9 commits
->>  - remote-curl: in v2, fill credentials if needed
->>  - t5552: compensate for v2 filtering ref adv.
->>  - tests: fix protocol version for overspecifications
->>  - t5700: only run with protocol version 1
->>  - t5512: compensate for v0 only sending HEAD symrefs
->>  - t5503: fix overspecification of trace expectation
->>  - tests: always test fetch of unreachable with v0
->>  - tests: define GIT_TEST_PROTOCOL_VERSION
->>  - Merge branch 'js/protocol-advertise-multi' into jt/test-protocol-version
->>  (this branch uses js/protocol-advertise-multi.)
+Jonathan Tan wrote:
+>> 07c3c2aa16 ("tests: define GIT_TEST_SIDEBAND_ALL", 2019-01-16) added
+>> GIT_TEST_SIDEBAND_ALL to the apache.conf PassEnv list.  Avoid warnings
+>> from Apache when the variable is unset, as we do for GIT_VALGRIND* and
+>> GIT_TRACE, from f628825481 ("t/lib-httpd: handle running under
+>> --valgrind", 2012-07-24) and 89c57ab3f0 ("t: pass GIT_TRACE through
+>> Apache", 2015-03-13), respectively.
 >> 
->>  Help developers by making it easier to run most of the tests under
->>  different versions of over-the-wire protocols.
+>> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+>> ---
+>> I missed this with rc0, but poking through build logs I noticed a number
+>> of 'AH01506: PassEnv variable GIT_TEST_SIDEBAND_ALL was undefined'
+>> warnings.
 >> 
->>  Blocked by js/protocol-advertise-multi
->
-> If you don't mind, remove the last patch (remote-curl: in v2, fill
-> credentials if needed) from this set. Peff noticed some issues with it,
-> and I have sent out a separate set [1] that better fixes the issue.
+>> I think exporting this in lib-httpd.sh like we do for GIT_VALGRIND* and
+>> GIT_TRACE is the way to go, as opposed to in test-lib.sh, as we do for
+>> things like GNUPGHOME.  But I could easily be wrong about that.
+> 
+> Thanks for looking into this. I think this is the right way to do it
+> too.
+> 
+> Previous discussion here [1] but I don't think any patches came out of
+> that.
+> 
+> [1] https://public-inbox.org/git/20190129232732.GB218214@google.com/
 
-I certainly do not mind ;-)  Thanks for a ping & an update.
+Hah.  Somehow I missed that thread and Jeff's reply barely
+24 hours before I sent this.  Hopefully this saves Jonathan
+Nieder a few minutes of patch prep & testing.
 
-> Peff also noticed [2] a minor issue with patch 1 - I used
-> strlen(git_test_v) instead of *git_test_v to check that it is non-empty
-> - but that might not be worth a reroll.
->
-> Other than that, this set (with the exception of the last patch that I
-> asked you to remove in the first paragraph) looks good to Peff [3] and
-> me (besides being blocked by js/protocol-advertise-multi).
+Thanks,
 
-Let's see if we can straighten out the blocker first, then, so that
-we can reboot both topics once the current cycle closes.
-
-Thanks.
+-- 
+Todd
