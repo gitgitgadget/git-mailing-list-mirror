@@ -2,95 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF2E91F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 06:07:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D5121F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 06:32:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390641AbfBNGG7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 01:06:59 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43798 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726407AbfBNGG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 01:06:59 -0500
-Received: (qmail 1759 invoked by uid 109); 14 Feb 2019 06:06:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Feb 2019 06:06:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7205 invoked by uid 111); 14 Feb 2019 06:07:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Feb 2019 01:07:10 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Feb 2019 01:06:57 -0500
-Date:   Thu, 14 Feb 2019 01:06:57 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Max Kirillov <max@max630.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] pack-refs: fail on falsely sorted packed-refs
-Message-ID: <20190214060657.GA20997@sigill.intra.peff.net>
-References: <20190130231359.23978-1-max@max630.net>
- <87lg2kj91a.fsf@evledraar.gmail.com>
+        id S2390496AbfBNGcN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 01:32:13 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60334 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726405AbfBNGcM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 01:32:12 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6558B59E07;
+        Thu, 14 Feb 2019 01:32:08 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=b507t2twQBgB5
+        yBY3823tP2Gcpw=; b=h+dh6jsS/aEvKq2MIUwX6Wib05P701n6umaszxhae3pIc
+        gi6a8TgmpyRIfkycnPKgLjfYzVY/veP/qnS/69jsODCUmajbspkDymBzdJirOcT5
+        McS5A+RydM2cNL+CyiAxXCYBQT7OxXrQijlEdWkh7DMuN+vKvA6hLiIlp6e7L4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=VCWRSJf
+        tMRMxvuXGnQeoMuqLmJ2yhYdYpeHAvTm19U35HlzytY8gYghHeHmvi4PRCpalKOd
+        Ia13J+98q6QLrlZC6OtTIDvekpTK5k51bKrzCI6DRSK4Qz7LGItHHsm/qp+uc4pr
+        ss+Yl2O1Jc+EE3KVAi5xSAg+uugHcxYQwzQg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5E12259E06;
+        Thu, 14 Feb 2019 01:32:08 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Received: from zaya.teonanacatl.net (unknown [71.173.194.225])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3616B59E03;
+        Thu, 14 Feb 2019 01:32:05 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Date:   Thu, 14 Feb 2019 01:32:02 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Henning Schild <henning.schild@siemens.com>
+Subject: Re: [PATCH 0/2] t/lib-gpg: a gpgsm fix, a minor improvement, and a
+ question
+Message-ID: <20190214063202.GD16125@zaya.teonanacatl.net>
+References: <20190208031746.22683-1-tmz@pobox.com>
+ <20190209140605.GE10587@szeder.dev>
+ <20190209230553.GI30548@zaya.teonanacatl.net>
+ <20190211195140.GB31807@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87lg2kj91a.fsf@evledraar.gmail.com>
+In-Reply-To: <20190211195140.GB31807@szeder.dev>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: 3EEFD406-3022-11E9-8052-D01F9763A999-09356542!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 13, 2019 at 11:08:01AM +0100, Ævar Arnfjörð Bjarmason wrote:
+SZEDER G=E1bor wrote:
+> On Sat, Feb 09, 2019 at 06:05:53PM -0500, Todd Zullinger wrote:
+>> SZEDER G=E1bor wrote:
+>>> Just curious: how did you noticed the missing GPGSM prereq?
+>>=20
+>> I just grep the build output for '# SKIP|skipped:' and then
+>> filter out those which I expect (thing like MINGW and
+>> NATIVE_CRLF that aren't likely to be in a Fedora build).
+>>=20
+>> Far more manual than the slick method you have below. :)
+>=20
+> Yeah, but yours show the SKIP cases, too, i.e. when the whole test is
+> skipped by:
+>=20
+>   if check-something
+>   then
+>         skip_all=3D"no can do"
+>         test_done
+>   fi
+>=20
+> I didn't bother with that because in those cases the prereq is not
+> denoted by a single word, but rather by a human-readable phrase, and
+> becase 'prove' runs those skipped test scripts at last when running
+> slowest first, so I could already see them anyway.
 
-> > I happened to have a not really sorted packed-refs file. As you might guess,
-> > it was quite wtf-ing experience. It worked, mostly, but there was one branch
-> > which just did not resolve, regardless of existing and being presented in
-> > for-each-refs output.
-> >
-> > I don't know where the corruption came from. I should admit it could even be a manual
-> > editing but last time I did it (in that reporitory) was several years ago so it is unlikely.
-> >
-> > I am not sure what should be the proper fix. I did a minimal detection, so that
-> > it does not go unnoticed. Probably next step would be either fixing in `git fsck` call.
-> >
-> >  refs/packed-backend.c               | 15 +++++++++++++++
-> >  t/t3212-pack-refs-broken-sorting.sh | 26 ++++++++++++++++++++++++++
-> >  2 files changed, 41 insertions(+)
-> >  create mode 100755 t/t3212-pack-refs-broken-sorting.sh
-> 
-> This is not an area I'm very familiar with. So mostly commeting on
-> cosmetic issues with the patch. FWIW the "years back" issue you had
-> could be that an issue didn't manifest until now, i.e. in a sorted file
-> format you can get lucky and not see corruption for a while with a
-> random insert.
+Ahh, good points.
 
-It actually shouldn't be that old a breakage. Until 02b920f3f7
-(read_packed_refs(): ensure that references are ordered when read,
-2017-09-25), we did not assume the file was sorted (even though we
-always wrote it out sorted). And we continue to not assume the file is
-sorted unless it is written out with an explicit "sorted" trait in the
-header (which we started doing in that commit, too).
+>>> I'm asking because I use a patch for a good couple of months now that
+>>> collects the prereqs missed by test cases and prints them at the end
+>>> of 'make test'.  Its output looks like this:
+>>>=20
+>>>   https://travis-ci.org/szeder/git/jobs/490944032#L2358
+>>>=20
+>>> Since you seem to be interested in that sort of thing as well, perhap=
+s
+>>> it would be worth to have something like this in git.git?  It's just
+>>> that I have been too wary of potentially annoying other contributors
+>>> by adding (what might be perceived as) clutter to their 'make test'
+>>> output :)
+>>=20
+>> Indeed, I think that would be useful.  At the very least,
+>> the .missing_prereqs files look quite handy.  I wouldn't
+>> mind the output from 'make test' either, but building
+>> packages surely shifts my perspective toward more verbose
+>> build logs than someone hacking on git regularly and reading
+>> the 'make test' output.
+>=20
+> The problem with those files is that a successful 'make test'
+> automatically and unconditionally removes the whole 'test-results'
+> directory at the end.  So a separate and optional 'make test ; make
+> show-missed-prereqs' wouldn't have worked, that's why I did it this
+> way.
+>=20
+> I think it would be better if we kept the 'test-results' directory
+> even after a successful 'make test', there are some interesting things
+> to be found there:
+>=20
+>   https://public-inbox.org/git/CAM0VKjkVreBKQsvMZ=3DpEE0NN5gG0MM+XJ0MzC=
+bw1rxi_pR+FXQ@mail.gmail.com/
 
-So a years-old manual edit would not have the "sorted" trait, and should
-not have manifested as a problem, even now.  Likewise for a years-old
-bug. It would have to be a bug in a _new_ writer which writes out the
-sorted trait.  If there is such a bug in our implementation, this would
-be the first report we've seen. Given the number of times pack-refs has
-been run, without further evidence I'm inclined to think it was some
-weird manual edit, or maybe an alternate implementation (though one
-would _hope_ they would not write out the sorted trait without actually
-sorting!).
+Maybe that's something which could be controlled with a make
+var, to allow folks like us to keep the tests but clean them
+up by default for everyone else?
 
-I agree with all of the cosmetic issues you mentioned. As far as what
-the patch itself does, I think it's OK. We could probably go further and
-actually sort it (or even just write it out without a "sorted" trait,
-which means the next read would load it all into memory and sort it).
-That's a little friendlier, since just dying leaves the user to fix it
-up themselves. But given that we expect this code to trigger
-approximately never, it's probably not worth spending much time on a
-fancy solution.
+Though even in the fedora package builds, I don't have
+access to poke around in test-results and likely wouldn't
+want to make the effort to extract the results and dump them
+into the build logs (like ci/util/extract-trash-dirs.sh does
+for the trash dirs).
 
--Peff
+>> I can certainly live with setting '--root' to a shorter path
+>> and waiting to see if GnuPG upstream will come up with
+>> something a little more friendly to users like us - running
+>> gpg in a test suite.
+>=20
+> Are they aware of the issue?
+
+Yeah, it was filed as https://dev.gnupg.org/T2964, as a
+result of the gnupg-users thread you mention below.  There
+hasn't been any progress on it since 2017 though, so it's
+doubtful that upstream will fix it anytime soon.  If (or
+when) it's resolved, I wouldn't be surprised if only gnupg
+>=3D 2.3 included the fix.  So we'll probably have numerous
+systems with this issue for quite some time.
+
+>   https://lists.gnupg.org/pipermail/gnupg-users/2017-January/057451.htm=
+l
+>=20
+> suggests to put the socket in '/var/run/user/$(id -u)', but that's for
+> the "regular" use case, and we should take extra steps to prevent the
+> tests' gpg from interfering with the gpg of the user running the
+> tests.  Not sure it would work on macOS.  And ultimately it's not much
+> different from your GIT_TEST_GNUPGHOME_ROOT suggestion.
+>=20
+> Then I stumbled on these patches patches:
+>=20
+>   https://lists.zx2c4.com/pipermail/password-store/2017-May/002932.html
+>=20
+> suggesting that at least one other project is working around this
+> issue instead of waiting for upstream to come up with something.
+
+Heh, the gnupg ticket mentions that the notmuch project
+similarly had to work around gpg2's socket handling for
+their tests:
+
+    https://notmuchmail.org/pipermail/notmuch/2017/024148.html
+
+>> Though if we do just wait it out,
+>> maybe we could/should add a note in t/README or t/lib-gpg.sh
+>> about this to warn others?
+>=20
+> Well, a comment could help others to not waste time on figuring out
+> this "path is too long for a unix domains socket" issue...  but now
+> they will be able to find this thread in the list archives as well :)
+
+True.  Will they curse us for not adding a comment to save
+them some effort or can we just say we were waiting for them
+to submit such a patch? ;)
+
+> On a related note: did you happen to notice occasional failures with
+> gpg2 on Fedora builds?  I observed some lately in tests like
+> './t7004-tag.sh' or 't7030-verify-tag.sh' on the Travis CI macOS
+> builds: it appears as if the gpg process were to die mid-verification.
+> Couldn't make any sense of it yet, though didn't tried particularly
+> hard either.
+
+I have not seen any such failures.  I've done a few dozen
+test builds on fedora systems where /bin/gpg is gnupg-2.2
+and other than the socket path issues, the tests have all
+worked well.  But I'll be sure to mention it if I do run
+into any such failures.
+
+--=20
+Todd
