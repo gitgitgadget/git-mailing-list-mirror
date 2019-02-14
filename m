@@ -2,109 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9C821F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 17:41:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A23A1F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 18:17:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403813AbfBNRlw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 12:41:52 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41358 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393345AbfBNRlw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 12:41:52 -0500
-Received: by mail-wr1-f68.google.com with SMTP id x10so7406602wrs.8
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 09:41:51 -0800 (PST)
+        id S2406491AbfBNSRt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 13:17:49 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:36684 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389024AbfBNSRt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 13:17:49 -0500
+Received: by mail-qk1-f193.google.com with SMTP id o125so4169278qkf.3
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 10:17:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=76bdxgMOcqVqiMbPA89CjK3OOPDke6gL2eD+1W5F6n4=;
-        b=B/BxejZaNFTDTIV7dGJr6sWxK1wPTQkcXfQoY37vwa4o9G8nUhSWc4D/vI2QowAJ4V
-         BBUpJUdxCFgw/HlXKR9ZNH8z9LCWeYUJnBb9TPrLxqSTLsZylgkATH4TgIIwjIh9d1wE
-         xj0lKPwJ5MimdOugI7HQT8t/U5vP5sQ2u1Z71/5oLgcvyRatSL+s7Moa+9nyN/yDpc1L
-         IkOC+oqtJzHXRKgAB1SQIj0ILxXOeoReBl/Wwb0B30C0uNNQrPGmi++cUKxBXCJm3MYN
-         H+Xd4+Wza03yP4aXfjbTtLne0sRo6Kd9akktLrFeS/9RZJKfUwAy/qBXLBAsbAcR8JjF
-         Kwkg==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=nus/wYlBUFfA6APM02nz76uzPusoYYC4m5SaoTGAC3g=;
+        b=iyVTvEs0hfNAKRn8u8PGLjJayrN9x56d1AgF80aTCC0F0de9oIxelqlhXZRQWY3vPB
+         KmochZPVSHVCSToj/5CsrgI9rS8aiKrREbDlZwL/D9CZjzDKi+0ua6KA+Zd7HcT78Kl8
+         E2sJdDkgalYmslCiRc4bADEKaC92RkTskrNFhxSv/CU2yTOpIwxtjGuJtYM9KNzSiZy9
+         EfaSV4AIL1K6nPyaEWIGz46PLnLYDWJCaQKpWjTB+pfUNIToyq9+2QFilSnJUjmNnYYR
+         ARh1Qy7hcobLqaORK2NNigJrIHi2+2Q93Xi49+xm5wk6X6ctuxRBqfJP9YpzmJqdy+t6
+         eZpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=76bdxgMOcqVqiMbPA89CjK3OOPDke6gL2eD+1W5F6n4=;
-        b=s7XBaA7jXOo6SdBGxKBIrJvvaJuHhAUTkT8PHz4OR4xrw4VIGon/Rcy8r/VQbXvSqA
-         3qBAL2SQ6DKmr8WJYMiAF0IDy+P7NPG4EQM6qwmxCXUGaRc8BMfO/9R4x2utxPfv0IM7
-         zEmTYil13toHPExHCNKiGXgswik00qxYuh7aT6ng1jSK1WYstSsRPXiQ+Tn1Y/sYSMnp
-         SrQFgr84z5eMm5dkNezN6q9NCTBbZikKkV3WyzTgFoU9qHO64sq3W3xsjMSDUFxcJea8
-         //SG6pr72goueF5/YD+ZIp0633OwS9j25As2vbPj+8d9SP/XOXtXeigx+ct7GMV2FVI0
-         h9lg==
-X-Gm-Message-State: AHQUAuZVDIALiSJUHAttGPEmMKLU3xPzpRz2XDv2Aa1R/U12VWFoo907
-        nEBA7stR3T6YevqswhgALbk=
-X-Google-Smtp-Source: AHgI3IYdVdYFLXP0cFcYvZyAXHyX6qbxB+krEyo7PhQGmId6WYRNQ6sKiMyS21E4GZLqyrZ29flIrw==
-X-Received: by 2002:a5d:4843:: with SMTP id n3mr3561808wrs.209.1550166110194;
-        Thu, 14 Feb 2019 09:41:50 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v9sm2879402wru.83.2019.02.14.09.41.48
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=nus/wYlBUFfA6APM02nz76uzPusoYYC4m5SaoTGAC3g=;
+        b=O1H8+C1tOP/lYQhBiZj9q8YP9Lg0kDXHF4senWhfyL7BDoj+WykVufY6cVdSO3Yiv9
+         HkHBa4rLHhqXVayjeXumym3WqkEcNExsHQburyjsiciKk+rek/EPFPhxMtbiP3Xp+D3R
+         AMFpJ+Wzbzx2wHVKUTdV83NUTUdbT0iSC+P0r9Zp+f1e5z15asNku53E3sc1VKgN+42o
+         vkkdrez7wenz0YM3oJ/UtU5sClsWrtjg6JcdhqeAurMhBQQEeZ+ChAHrhDr8i4353DA2
+         3mDoIeI1sMA8g+VNnDc4tFgBmP6i1frzhdvO/4ocT/PV4Aoi87WbSfvuZPMRN9s/X5zT
+         2SBw==
+X-Gm-Message-State: AHQUAuYcn7cD50SOOKesQxS/I0Z7hR592WklsJqIT14lRIztvS5Bhkbj
+        4tFK859UV7VgEnuWs++Naps=
+X-Google-Smtp-Source: AHgI3IZd2WN0oUAA3tcHAFopxQJWdGFOtG9FrVLdktn6qjMC1N7f4E52g/EdeDdqJgjm/yDpHYFaCw==
+X-Received: by 2002:a37:7883:: with SMTP id t125mr3830076qkc.201.1550168268322;
+        Thu, 14 Feb 2019 10:17:48 -0800 (PST)
+Received: from whubbs1.gaikai.biz ([100.42.103.5])
+        by smtp.gmail.com with ESMTPSA id n21sm1535211qtl.97.2019.02.14.10.17.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Feb 2019 09:41:48 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH v2 3/3] submodule: document default behavior
-References: <0b62f65a8016c41b96aa6caead366e1ed9dda333.1549944164.git.liu.denton@gmail.com>
-        <cover.1549965172.git.liu.denton@gmail.com>
-        <d8785cdd01503f2a7b9a6fbc19105c41a9a04046.1549965172.git.liu.denton@gmail.com>
-        <xmqqzhqzbki3.fsf@gitster-ct.c.googlers.com>
-        <20190214072405.GA24259@archbookpro.localdomain>
-Date:   Thu, 14 Feb 2019 09:41:48 -0800
-In-Reply-To: <20190214072405.GA24259@archbookpro.localdomain> (Denton Liu's
-        message of "Wed, 13 Feb 2019 23:24:05 -0800")
-Message-ID: <xmqqsgwq8dyb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Thu, 14 Feb 2019 10:17:47 -0800 (PST)
+Received: (nullmailer pid 15601 invoked by uid 1000);
+        Thu, 14 Feb 2019 18:17:45 -0000
+Date:   Thu, 14 Feb 2019 12:17:45 -0600
+From:   William Hubbs <williamh@gentoo.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, chutzpah@gentoo.org, williamh@gentoo.org
+Subject: Re: [PATCH v6 2/2] config: allow giving separate author and
+ committer idents
+Message-ID: <20190214181745.GA15584@whubbs1.dev.av1.gaikai.org>
+References: <20190204184850.10040-1-williamh@gentoo.org>
+ <20190205195212.25550-3-avarab@gmail.com>
+ <xmqqef8mrnnj.fsf@gitster-ct.c.googlers.com>
+ <87k1iekkea.fsf@evledraar.gmail.com>
+ <20190206000413.GA734@whubbs1.gaikai.biz>
+ <xmqqwomdqzik.fsf@gitster-ct.c.googlers.com>
+ <20190213164322.GA3625@whubbs1.dev.av1.gaikai.org>
+ <xmqqwom39uwz.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqwom39uwz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Wed, Feb 13, 2019 at 02:37:48PM -0800, Junio C Hamano wrote:
+> William Hubbs <williamh@gentoo.org> writes:
+>=20
+> > I am writing back onn this thread because I'm not quite sure of the
+> > status. v5 of the patch seemed ok, but there were some changes discussed
+> > that would have created a v6. The v6 changes though were never really
+> > clear. I'm not sure whether I am supposed to be doing something more or
+> > whether I'm waiting for you. ;-)
+> >
+> > Can you write back and let me know?
+>=20
+> In general, unless I ask you to wait, a contributor would almost
+> never be waiting for me.
+>=20
+> I think =C6var's v6 was not up to par, but I thought that v5 from you
+> (which is in 'next') was good enough to cook in 'next'.  The topic
+> will not be moving out of 'next' until the final 2.21 is released
+> anyway, so if anything, I'd say the ball is in his court to update
+> his version after the release, when your v5 may have a chance to be
+> kicked out of 'next' and replaced _if_ there is a better version by
+> then.
 
->> > +With no arguments, the default command is 'status'.  Several subcommands are
->> > +available to perform operations on the submodules.
->>
->> I am not sure if "default is status" is really true.
->>
->>    $ git submodule status --recursive
->>    $ git submodule --recursive
->>    usage: git submodule [--quiet] ...
->>       or: ...
->>    $ git submodule -- sha1collisiondetection
->>    usage: git submodule [--quiet] ...
->>       or: ...
->>
->> If 'status' were truly the default, wouldn't the form without any
->> subcommand take any option and parameter the 'status' subcommand
->> would accept?
->
-> This is very similar to git-remote. Its default command is 'show' but
-> doing something like 'git remote -n' fails, even though
-> 'git remote show -n' succeeds.
->
-> Would it make sense to revise this back to
->
-> 	With no arguments, shows the status of existing submodules.
->
-> which was the phrasing I used in v1? (If this is the case, I'd also like
-> to drop the first patch of this series.)
+Thanks much for the update. I didn't realize that v5 was in next.
 
-It certainly would avoid spreading misinformation to the readers by
-technically more correct ;-).  I wasn't paying close attention to
-the earlier round's review, but was there something specific that we
-wanted to achieve by mentioning "by default we do this"?  If not,
-the "with no arguments ..." you have in your response is concise,
-readable, and informative and is a good description, I think.
+William
 
-Thanks.
