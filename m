@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDC901F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 19:07:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E63441F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 19:07:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2436486AbfBNTHC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 14:07:02 -0500
-Received: from mail-it1-f202.google.com ([209.85.166.202]:52675 "EHLO
-        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405535AbfBNTHB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 14:07:01 -0500
-Received: by mail-it1-f202.google.com with SMTP id z3so11887132itj.2
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 11:07:01 -0800 (PST)
+        id S2438184AbfBNTHH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 14:07:07 -0500
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:33267 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405535AbfBNTHH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 14:07:07 -0500
+Received: by mail-qt1-f201.google.com with SMTP id k5so6663594qte.0
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 11:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=hn2DGlvOL7yGgJk8OzmpXGtx2sIXocLuWyMzm+tphbI=;
-        b=I1m/58JlyXmFN689n+7ureMfNdwiSdvBUKtdpNxUriWRPx64+otSiR6HZhIHjuFNls
-         JDRHKrn+WxdWAtlhf2KZb7rNLnoz4cQBE9XkarAcSDl58tyDPSZNlS3G8wVfit47apOH
-         DPXzTzgMPnmfr4kGN6cTqnZo8RJa3hXs1Ceak5LKFAC37Ec9288xxNXq7xzWYm+N6Pos
-         4yMz1fUG4BN4+Dg/WD0/M4q0ZyG4Ft2Lk1DOPPYf+bDWPZrHdNs1NwlzdVKPd4Ls+5L+
-         hyuxiT9y4Dfb6A4SXFsYMj42NAt4rgS14VCpfHOXE/oGHpAW/iGywuyyK4fQ4qDpw5VK
-         eAGw==
+        bh=vJYsToxEfOw9d2DfGrwa7y7mGOiNHNMjm/rGE2K76+E=;
+        b=tKeaPOGYQAH1EjTtmqFqVGS6kZK4ChoKbeDEKkVfaJjCFnmqrKxWseJRsHqjMVmZXH
+         GgA/UBwhe/ecKgv74o2cuKSqqeQSpcaJk6F2A41+yHfTvOY9qPlf+AlGWSBUiUw6c9t5
+         KKsPAow53oqEBlfPXN5TKdurl5YlZPlT1lfVJDECjgxEGPzVG9FjgpH+4FJvlDe/7tAq
+         WmnIHF6s0iLKVXPwQ/Fo45WSBMU7N/wdieQyD+Uy/P53b77yLsYqOWKm9pmW0ZwUKdBm
+         XSijRrrNNx2DVe3Ciy/paQxLwfRgPIS8S2avf3686G6qEt4b60pnckev4tqHCHPMQM6O
+         eZuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=hn2DGlvOL7yGgJk8OzmpXGtx2sIXocLuWyMzm+tphbI=;
-        b=ELVMcOCZv0CXUjsCx195XOX3oGsC/D7onYGPs6oQCcEqKk/+MWeT/ylobeOBNoQ3bD
-         XuX4Lc19+4lEs9DKv5uqBmTKXaAjJz56q+0svCgdcskEnXuccvoOACPscYWLT4owrmh9
-         5MwLYJVCbnp79m/n/c7RNfjlJM2BXguQ/Na9JWj/1MO4Oc3vceqLJ5uNul3mVhsDm2M+
-         5BnfKPaLDUNcO3EjAixQOyQTNjhB4BwDERatf52nBUfV8oS8kmbhjKH/VTQBYpJRzaD6
-         FLqQtCmNArj2ZcJCV3uhfL+4F1/7vRza74f9zLa0Y8gMo+9YVCH7XM4jQpYzudl8LGnB
-         a6uQ==
-X-Gm-Message-State: AHQUAuZCr5H/EPc5sHoljYhgPGmDB6h/lOQVVmF2XPukS1cGep274r8X
-        V+GF+pHNQmblbUyzrG1/+B9iOcZpCDXSPhXigMZTKOt8Jaaf/UxtNHLuXxHTME0e6K2h5xpRy/W
-        Ymx7gDUmU4u1z5MHpvc9Pj1PpS6DnrWDv8+OXcANc8QhZe7Bjd9qsE5MWasVAhazbXXd8liAnw9
-        lr
-X-Google-Smtp-Source: AHgI3IbSvn68pSsLfwsak4ZqOQB/aoHPjjB3aVMnc9hu3ppGyCu6V2MwhAaQd2lJQBeJLp08xOD3EJvDdMICzJGwlzh3
-X-Received: by 2002:a24:5c8f:: with SMTP id q137mr3280505itb.20.1550171220757;
- Thu, 14 Feb 2019 11:07:00 -0800 (PST)
-Date:   Thu, 14 Feb 2019 11:06:37 -0800
+        bh=vJYsToxEfOw9d2DfGrwa7y7mGOiNHNMjm/rGE2K76+E=;
+        b=W2l+ugitymlY+Ft4el8EavzXV7KL0vgus2rPUWvJaPtxPU7cJiF2LqUHvKZhU+Ab7m
+         bCCAj6VvcM9ZC6Cu6AKk7YvTiknLMCZmMB9S7l7wK/w8aj4FpuiU6D70hV7aB04Gy1VP
+         IhXsNS+EMb63yQZBYL8bCqE0FMAhlXqNUS/MNh8FNOk6yvOcBDvvA48QYsa6WsSZowIY
+         6C9Vmkqi+10026LqB4U8Q7wrNFmDoPNfZ3cbBYFNqx//hnneRHfd+ORmj04bcbvMeeo2
+         R8zHpr35yHtrk+bk47zdxQrfYaiV6CAvm8lutOJELaEXX8sWYudUkjsBlVKhauSVrO/J
+         Ho+A==
+X-Gm-Message-State: AHQUAuYzW4f9yPuItVoXyIElC68GybOKLkJg8Wzkd8iivCMKJiSv9hQv
+        tc6Z6RR660dSyAGyUhFhZBdFeDmfzaeZjFFHZpEOmoTHlpMlZpiYFZRYjK0v4qDMSClOFsS13zy
+        6ERi0ybxOlNZpaun1TV25mNNIadCpNrgvOaaWOM/yBHwobnFHg013A22Fql9Argz3QcCgYWXDLm
+        PP
+X-Google-Smtp-Source: AHgI3IZcjLV0cRXiyDlHDM5OvfGZkuBXg/AEAHCusmA/Npj0DIFcjquwiblfk5MS7j1mEurC8nO42USthHA4uqN+jUEF
+X-Received: by 2002:a0c:d486:: with SMTP id u6mr3045089qvh.56.1550171226042;
+ Thu, 14 Feb 2019 11:07:06 -0800 (PST)
+Date:   Thu, 14 Feb 2019 11:06:38 -0800
 In-Reply-To: <cover.1550170980.git.jonathantanmy@google.com>
-Message-Id: <db10ed20ff11eda56b14ca0667a0b42ab651b0b5.1550170980.git.jonathantanmy@google.com>
+Message-Id: <2357bf6af7798e8e400599d47c89dc92ecd2eb8d.1550170980.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1550170980.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH 3/5] remote-curl: reduce scope of rpc_state.result
+Subject: [PATCH 4/5] remote-curl: refactor reading into rpc_state's buf
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net
@@ -63,100 +63,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The result field in struct rpc_state is only used in rpc_service(), and
-not in any functions it directly or indirectly calls. Refactor it to
-become an argument of rpc_service() instead.
+Currently, whenever remote-curl reads pkt-lines from its response file
+descriptor, only the payload is written to its buf, not the 4 characters
+denoting the length. A future patch will require the ability to also
+write those 4 characters, so in preparation for that, refactor this read
+into its own function.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- remote-curl.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ remote-curl.c | 33 ++++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
 
 diff --git a/remote-curl.c b/remote-curl.c
-index bff0bb9af6..2eb39774d0 100644
+index 2eb39774d0..32c133f636 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -502,7 +502,6 @@ struct rpc_state {
- 	int in;
- 	int out;
- 	int any_written;
--	struct strbuf result;
- 	unsigned gzip_request : 1;
+@@ -506,6 +506,25 @@ struct rpc_state {
  	unsigned initial_buffer : 1;
  };
-@@ -814,7 +813,8 @@ static int post_rpc(struct rpc_state *rpc)
- }
  
- static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
--		       const char **client_argv, const struct strbuf *preamble)
-+		       const char **client_argv, const struct strbuf *preamble,
-+		       struct strbuf *rpc_result)
++/*
++ * Appends the result of reading from rpc->out to the string represented by
++ * rpc->buf and rpc->len if there is enough space. Returns 1 if there was
++ * enough space, 0 otherwise.
++ *
++ * Writes the number of bytes appended into appended.
++ */
++static int rpc_read_from_out(struct rpc_state *rpc, size_t *appended) {
++	size_t left = rpc->alloc - rpc->len;
++	char *buf = rpc->buf + rpc->len;
++
++	if (left < LARGE_PACKET_MAX)
++		return 0;
++
++	*appended = packet_read(rpc->out, NULL, NULL, buf, left, 0);
++	rpc->len += *appended;
++	return 1;
++}
++
+ static size_t rpc_out(void *ptr, size_t eltsize,
+ 		size_t nmemb, void *buffer_)
  {
- 	const char *svc = rpc->service_name;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -835,7 +835,6 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
- 	rpc->buf = xmalloc(rpc->alloc);
- 	rpc->in = client.in;
- 	rpc->out = client.out;
--	strbuf_init(&rpc->result, 0);
+@@ -515,11 +534,12 @@ static size_t rpc_out(void *ptr, size_t eltsize,
  
- 	strbuf_addf(&buf, "%s%s", url.buf, svc);
- 	rpc->service_url = strbuf_detach(&buf, NULL);
-@@ -863,7 +862,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
- 	close(client.in);
- 	client.in = -1;
- 	if (!err) {
--		strbuf_read(&rpc->result, client.out, 0);
-+		strbuf_read(rpc_result, client.out, 0);
- 	} else {
- 		char buf[4096];
- 		for (;;)
-@@ -916,6 +915,7 @@ static int fetch_git(struct discovery *heads,
- 	struct strbuf preamble = STRBUF_INIT;
- 	int i, err;
- 	struct argv_array args = ARGV_ARRAY_INIT;
-+	struct strbuf rpc_result = STRBUF_INIT;
+ 	if (!avail) {
+ 		rpc->initial_buffer = 0;
+-		avail = packet_read(rpc->out, NULL, NULL, rpc->buf, rpc->alloc, 0);
++		rpc->len = 0;
++		if (!rpc_read_from_out(rpc, &avail))
++			BUG("The entire rpc->buf should be larger than LARGE_PACKET_MAX");
+ 		if (!avail)
+ 			return 0;
+ 		rpc->pos = 0;
+-		rpc->len = avail;
+ 	}
  
- 	argv_array_pushl(&args, "fetch-pack", "--stateless-rpc",
- 			 "--stdin", "--lock-pack", NULL);
-@@ -963,10 +963,10 @@ static int fetch_git(struct discovery *heads,
- 	rpc.service_name = "git-upload-pack",
- 	rpc.gzip_request = 1;
+ 	if (max < avail)
+@@ -663,20 +683,15 @@ static int post_rpc(struct rpc_state *rpc)
+ 	 * chunked encoding mess.
+ 	 */
+ 	while (1) {
+-		size_t left = rpc->alloc - rpc->len;
+-		char *buf = rpc->buf + rpc->len;
+-		int n;
++		size_t n;
  
--	err = rpc_service(&rpc, heads, args.argv, &preamble);
--	if (rpc.result.len)
--		write_or_die(1, rpc.result.buf, rpc.result.len);
--	strbuf_release(&rpc.result);
-+	err = rpc_service(&rpc, heads, args.argv, &preamble, &rpc_result);
-+	if (rpc_result.len)
-+		write_or_die(1, rpc_result.buf, rpc_result.len);
-+	strbuf_release(&rpc_result);
- 	strbuf_release(&preamble);
- 	argv_array_clear(&args);
- 	return err;
-@@ -1061,6 +1061,7 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
- 	struct argv_array args;
- 	struct string_list_item *cas_option;
- 	struct strbuf preamble = STRBUF_INIT;
-+	struct strbuf rpc_result = STRBUF_INIT;
+-		if (left < LARGE_PACKET_MAX) {
++		if (!rpc_read_from_out(rpc, &n)) {
+ 			large_request = 1;
+ 			use_gzip = 0;
+ 			break;
+ 		}
+-
+-		n = packet_read(rpc->out, NULL, NULL, buf, left, 0);
+ 		if (!n)
+ 			break;
+-		rpc->len += n;
+ 	}
  
- 	argv_array_init(&args);
- 	argv_array_pushl(&args, "send-pack", "--stateless-rpc", "--helper-status",
-@@ -1094,10 +1095,10 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
- 	memset(&rpc, 0, sizeof(rpc));
- 	rpc.service_name = "git-receive-pack",
- 
--	err = rpc_service(&rpc, heads, args.argv, &preamble);
--	if (rpc.result.len)
--		write_or_die(1, rpc.result.buf, rpc.result.len);
--	strbuf_release(&rpc.result);
-+	err = rpc_service(&rpc, heads, args.argv, &preamble, &rpc_result);
-+	if (rpc_result.len)
-+		write_or_die(1, rpc_result.buf, rpc_result.len);
-+	strbuf_release(&rpc_result);
- 	strbuf_release(&preamble);
- 	argv_array_clear(&args);
- 	return err;
+ 	if (large_request) {
 -- 
 2.19.0.271.gfe8321ec05.dirty
 
