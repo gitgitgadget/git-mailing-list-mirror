@@ -2,95 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D7111F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 22:13:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9119E1F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 22:17:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438203AbfBNWNx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 17:13:53 -0500
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:44349 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388126AbfBNWNx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 17:13:53 -0500
-Received: by mail-wr1-f51.google.com with SMTP id v16so8202294wrn.11
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 14:13:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=quQ6OPYMA+SiU7bGiFboObpMN7YRX5+ndFn3JREs9pA=;
-        b=U76cxepbwAk1NaiJOUORD0Ya+0rl/NkLv3wwDWppdWyHCfTIoV2+Kkzs5jqLQdUnd9
-         fJzHgiYI+5tMbslDpnyq22QFxh/gVzD+YrAJd6YMTH+gfqRas7LJTzK230BaGV7exyQj
-         eU08AU1AMLj36ZO2mwuZWa/Bfro+0oxgyPRqFqxA509bKZevpBWjdjRdoGS8Aoih6aH0
-         rC5rS8k9FvzFNB1xm1xJ4B0qHaRIK45irae7PsAEOW8JJdvJZchHuTw9HVZHa9VZBNHa
-         gcjC3vPVskWzgYhrU0761eRhpM+CZhhEV7EDQGyk83QlDHxYQ5IU8sDL1mj0scS0TRPo
-         /1jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=quQ6OPYMA+SiU7bGiFboObpMN7YRX5+ndFn3JREs9pA=;
-        b=KT30bkysF14F4dG704aXdAd35Fifzc2CblTLnmZ9fMh8CpMz07EHQE7N2s1R7/Rax8
-         gGBqDHh3NbzjxMZ0HWLIxmt7lhOtjQg/beuajrzF95YM+0/SJUc+DZpyiJcpW4MIpxMa
-         4zzpP1OuSrfiRw4jKxGhl53oWOx5AvRc1nnNL+j6Uhm9RX6tiBiYfaqTpgCp5I8NCLl4
-         5xbh5Fs58wyl59nZEkTKRpL2EbYW3A/J9XNGCGCm/Fj/9zcr1t07dpH5LB8xAKvNDkMs
-         lgYS+aRpqfHfA3KfaQTF5i9vxLfvf7iRk2LP/9vt/tqrn5/uKwtkZ0pXtVNuHJ5tAviZ
-         sk+w==
-X-Gm-Message-State: AHQUAubh6sTaDrGT2zDeoF7rYUEoJt8Z139GP5uRx5+xH0aOxgpRU1Be
-        YtZeL6wfLPVePyc/BtZvMTo=
-X-Google-Smtp-Source: AHgI3IaOzcYscWe7IotxUMqLNjzfw4+N/sqFy+EkXVIttycilTVi51PbSzercFVBdOeViwf94K9e4A==
-X-Received: by 2002:adf:c5d3:: with SMTP id v19mr4378340wrg.30.1550182430883;
-        Thu, 14 Feb 2019 14:13:50 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id f2sm4475498wmb.19.2019.02.14.14.13.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Feb 2019 14:13:49 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Randall Becker <rsbecker@nexbridge.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] tests: teach the test-tool to generate NUL bytes and use it
+        id S2438135AbfBNWRl convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 14 Feb 2019 17:17:41 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:54749 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726030AbfBNWRl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 17:17:41 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1EMHXSG038027
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 14 Feb 2019 17:17:34 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Johannes Schindelin via GitGitGadget'" <gitgitgadget@gmail.com>,
+        <git@vger.kernel.org>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Max Kirillov'" <max@max630.net>
 References: <pull.126.git.gitgitgadget@gmail.com>
-        <34cde0f2849a098c17ab83786da5ce06f69cfafa.1550179990.git.gitgitgadget@gmail.com>
-Date:   Thu, 14 Feb 2019 14:13:49 -0800
-In-Reply-To: <34cde0f2849a098c17ab83786da5ce06f69cfafa.1550179990.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Thu, 14 Feb 2019
-        13:33:12 -0800 (PST)")
-Message-ID: <xmqqimxm6msi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+In-Reply-To: <pull.126.git.gitgitgadget@gmail.com>
+Subject: RE: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1
+Date:   Thu, 14 Feb 2019 17:17:26 -0500
+Message-ID: <005401d4c4b3$147aa8c0$3d6ffa40$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJRGauSxHI8crErjTmvoq3vRhvAD6TnMGtw
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On February 14, 2019 16:33, Johannes Schindelin wrote:
+> To: git@vger.kernel.org
+> Cc: Randall Becker <rsbecker@nexbridge.com>; Junio C Hamano
+> <gitster@pobox.com>
+> Subject: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1
+> 
+> The last-minute patch to replace /dev/zero with a Perl script snippet broke
+> the Linux part of the CI builds on Azure Pipelines: it timed out. The culprit is
+> the rb/no-dev-zero-in-test branch (see the build for this branch here
+> [https://dev.azure.com/gitgitgadget/git/_build/results?buildId=1727]).
+> 
+> All of master, next, jch and pu are broken that way. You might see it in the
+> commit status of the active branches
+> [https://github.com/gitgitgadget/git/branches/active].
+> 
+> Turns out that it is that particular Perl script snippet which for some reason
+> hangs the build. If you kill it, t5562.15 succeeds, if you don't kill it, it will hang
+> indefinitely (or until killed).
+> 
+> Sadly, despite my earnest attempts, I could not figure out why it hangs in
+> those Linux agents (I could not reproduce that hang locally), or for that
+> matter, why it does not hang in the Windows and macOS agents.
+> 
+> Let's avoid that hang. This patch fixes things on Azure Pipelines, and my hope
+> is that it also fixes the hang on NonStop.
+> 
+> Johannes Schindelin (1):
+>   tests: teach the test-tool to generate NUL bytes and use it
+> 
+>  Makefile                               |  1 +
+>  t/helper/test-genzeros.c               | 22 ++++++++++++++++++++++
+>  t/helper/test-tool.c                   |  1 +
+>  t/helper/test-tool.h                   |  1 +
+>  t/t5562-http-backend-content-length.sh |  2 +-
+>  t/test-lib-functions.sh                |  8 +-------
+>  6 files changed, 27 insertions(+), 8 deletions(-)  create mode 100644
+> t/helper/test-genzeros.c
+> 
+> 
+> base-commit: 8989e1950a845ceeb186d490321a4f917ca4de47
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-
+> 126%2Fdscho%2Ffix-t5562-hang-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-126/dscho/fix-
+> t5562-hang-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/126
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In cc95bc2025 (t5562: replace /dev/zero with a pipe from
-> generate_zero_bytes, 2019-02-09), we replaced usage of /dev/zero (which
-> is not available on NonStop, apparently) by a Perl script snippet to
-> generate NUL bytes.
->
-> Sadly, it does not seem to work on NonStop, as t5562 reportedly hangs.
-> ...
-> In the end, though, what counts is that this here change incidentally
-> fixes that hang (maybe also on NonStop?). Even more positively, it gets
-> rid of yet another unnecessary Perl invocation.
+Unfortunately, subtest 13 still hangs on NonStop, even with this patch, so our Pipeline still hangs. I'm glad it's better on Azure, but I don't think this actually addresses the root cause of the hang. This is now the fourth attempt at fixing this. Is it possible this is not the test that is failing, but actually the git-http-backend? The code is not in a loop, if that helps. It is not consuming any significant cycles. I don't know that part of the code at all, sadly. The code is here:
 
-Thanks for a quick band-aid.
+* in the operating system from here up *
+  cleanup_children + 0x5D0 (UCr)
+  cleanup_children_on_exit + 0x70 (UCr)
+  git_atexit_dispatch + 0x200 (UCr)
+  __process_atexit_functions + 0xA0 (DLL zcredll)
+  CRE_TERMINATOR_ + 0xB50 (DLL zcredll)
+  exit + 0x2A0 (DLL zcrtldll)
+  die_webcgi + 0x240 (UCr)
+  die_errno + 0x360 (UCr)
+  write_or_die + 0x1C0 (UCr)
+  end_headers + 0x1A0 (UCr)
+  die_webcgi + 0x220 (UCr)
+  die + 0x320 (UCr)
+  inflate_request + 0x520 (UCr)
+  run_service + 0xC20 (UCr)
+  service_rpc + 0x530 (UCr)
+  cmd_main + 0xD00 (UCr)
+  main + 0x190 (UCr)
 
-Will apply directly to 'master' so that we won't forget before -rc2.
+Best guess is that a signal (SIGCHLD?) is possibly getting eaten or neglected somewhere between the test, perl, and git-http-backend.
 
-In the meantime, perhaps somebody who knows Perl interpreter's
-quirks well can tell us what's different between the obvious and
-simple C program and an equivalent in Perl to convince us why this
-is a good solution to the problem.
+Stuck,
+Randall
 
