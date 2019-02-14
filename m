@@ -2,124 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAE521F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 22:04:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D3191F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 22:10:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729212AbfBNWEI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 17:04:08 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:53835 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726307AbfBNWEI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 17:04:08 -0500
-Received: by mail-it1-f195.google.com with SMTP id x131so17974725itc.3
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 14:04:07 -0800 (PST)
+        id S2404880AbfBNWK5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 17:10:57 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40691 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388126AbfBNWK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 17:10:56 -0500
+Received: by mail-wr1-f65.google.com with SMTP id q1so8219304wrp.7
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 14:10:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1qIZF4S0owid7ufd5kSGCvAvy+kafbeufIQPC4TAvW8=;
-        b=FhlC1Ul//gmTWKJIul5WQzuELwTlHuxUsqiN87D4/s1OFA8kFEljluhCk26+A2Hdae
-         N+LEWZ+eCI7KJ3fG3C86fKIE+nesIUUqXuZUzwl1H1uL1SQp8+RuR8jyAgkW6EvOdxLx
-         pFvaZSwjXHcIX8CGFi3GrnVS5idjyDyA1O6X5susrKJ6boz6j1hD1iXE67VFKo8pV8/5
-         i7+dgo3bnAVoc0WbJkvWbFjCCxSicTluiBFbmcQUjY1Mca6sFW5Etl2nK6UiZCj1DMEm
-         YQGXW4hVqBFtp8muTmG8R2uPpHrd85kijUJSZpkLs2RpVXcTWs/rWaRtBetpDOnmwOOJ
-         CmXA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=bXdMgC1C1hHfnZMI0glrzcmdPTr1gkk7aBTn8rKtrek=;
+        b=QfktuJ50Q6iZvaqb0Mn1w9EFU1QDCFFLU///aYVZKFc1ZLXrdPDbp0ubWYOm/d5tnf
+         6RDwdkCzZe3MpVim/AbEzv/VLCF6oiahlHVHatVRPjmFotlgfksfSBP/KooG9JSxWLEx
+         kHfkgXuZex2Uu/22IGCVMiBY/v15rfe/K8p/3TiaQbPH9Hu4aZfJrUJMwH0ruZaRv47n
+         qaFhWYCa30qEiVvsx/2mTscc6y5m9D2J/EoOCt7q+JZZahyZfg7k1sd9CPyvDyOsx5fv
+         71yFEM2TTxxoThNkhebHmGzp47PVHOxAzhpq/iQ2g8UCcfrYgdYIN2dznSrqHWtYZjtJ
+         VewQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1qIZF4S0owid7ufd5kSGCvAvy+kafbeufIQPC4TAvW8=;
-        b=HUW4A1ZT/D5HPJ1u2nuGyrPBMnygcpHXElINhWE1FWWQ5sGZTxrqtyiEXma2tRw/tJ
-         Z/jnWNEJOhmZNZy2DdLXdqdjfH6+7RyNSwwwBcK94aTLXU1C4M/JdUXfuZimRAZoO6Bh
-         uZJv6baXMVAPeih9wdL1mYILuEeygWHou+/A8pzbERDD7Og84ZSLUSmpOhaCTZFYMgin
-         n3xeUuIcRBOKTU45KyFyfSVgL3E7TFOdHbmObLGOpH16DXIqHzs8cOyn2zQANigZo+Cv
-         yVyM/jBESJDuqlX9OCv/ba+MLmfdEq4QH8iuTa4a7g3zfqra0Lw069QU+1jb12x8MPFj
-         SotA==
-X-Gm-Message-State: AHQUAuZ4KIDFNNOaTcibd/xk7wVgUbvtp2aeRG/P/JaxeusVpriXcMJo
-        UAxIfv94FEb0NTLPMXaM0KEolUIjh8zqOeyjTzhTbQ==
-X-Google-Smtp-Source: AHgI3IYIShgcMhqrQDSTgil2+DTr/3EsfgJ8btYA4Q9LQSeUjvhzXLZ7q6agW1At5oRnCnPNeI1L4DFzwYdeXm8610Q=
-X-Received: by 2002:a5d:88ce:: with SMTP id i14mr4405163iol.66.1550181847181;
- Thu, 14 Feb 2019 14:04:07 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=bXdMgC1C1hHfnZMI0glrzcmdPTr1gkk7aBTn8rKtrek=;
+        b=kcc7JNhTNT5Q2VCYAYfg7Q4vKnw9tGSYIwa7nn+Aa7Y+GbU5FuCSDuQAgIONwj8pd9
+         +oRuIxH87cMB/TAb3Ak5jeDi9zA8+ah9NqqOJarCWOV0mJlEAsKLDuc5nqe2yjQiZU7A
+         xcJ8oGB8GSiUE7wfsxxOwNuyeItUo61eIJE5o6tE7p8MwFykGpRs+v2rSQcebjRdj9+z
+         NySW8JJZTmVz8cv+ecywuJgC7nH/gwWoMaEtzrFxwTR4KL2A4h6c5nyK/Rq43nQ4gbhB
+         f69ZiKX+EXrMxvRCI4fk8d4KRpf/XTF8dZvp/L5KjJZpcqyzX8R4r7PpzSDNjU8/yU1b
+         5SEQ==
+X-Gm-Message-State: AHQUAubjI40zlLg/iR6R5ELmlsuEP6zAML0DjlOvauemFg1tKqx65tQI
+        T+bH/fYVhEJN8EDMdbaDPUw=
+X-Google-Smtp-Source: AHgI3IaAvNht/+C4kV/+hrTfl0S9S3zAuFWtBI2Bii+izjzXh43gJXwPn0jmn8fr4iQhTa05zuF5xg==
+X-Received: by 2002:a5d:6785:: with SMTP id v5mr4776445wru.59.1550182254555;
+        Thu, 14 Feb 2019 14:10:54 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j3sm2307694wmb.39.2019.02.14.14.10.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 14 Feb 2019 14:10:53 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        vincent.guittot@linaro.org
+Subject: Re: [Bug report] git diff stat shows unrelated diff
+References: <20190214082258.3mh3hcr2l6dl3wuf@vireshk-i7>
+        <CABPp-BGstumw1eyZ++0itk-AR0Bk5zd0AchgznBpMq35a6ScUg@mail.gmail.com>
+Date:   Thu, 14 Feb 2019 14:10:53 -0800
+In-Reply-To: <CABPp-BGstumw1eyZ++0itk-AR0Bk5zd0AchgznBpMq35a6ScUg@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 14 Feb 2019 13:23:14 -0800")
+Message-ID: <xmqqmumy6mxe.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190213205554.4086-1-matheus.bernardino@usp.br> <CAP8UFD1aBn8=KOTp-D=CmO1iEnWUBS1-jR-aqfg3MZ7HZRU7Pg@mail.gmail.com>
-In-Reply-To: <CAP8UFD1aBn8=KOTp-D=CmO1iEnWUBS1-jR-aqfg3MZ7HZRU7Pg@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 14 Feb 2019 20:03:55 -0200
-Message-ID: <CAHd-oW6uHKfa_P+fZNZxG4+pme=SH_Wi+SJkhxwOtfR+L=0JBA@mail.gmail.com>
-Subject: Re: [GSoC][RFC PATCH] clone: use dir-iterator to avoid explicit dir traversal
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 14, 2019 at 7:16 PM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> On Thu, Feb 14, 2019 at 1:16 PM Matheus Tavares
-> <matheus.bernardino@usp.br> wrote:
-> >
-> > Replace usage of opendir/readdir/closedir API to traverse directories
-> > recursively, at copy_or_link_directory function, by the dir-iterator
-> > API.
-> >
-> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> > ---
-> > This is my microproject for GSoC 2019. It's still a RFC because I have
-> > some questions. Any help will be much appreciated.
->
-> Thanks for working on a microproject!
->
+Elijah Newren <newren@gmail.com> writes:
 
-Hi, Christian. Thank you for the review and comments.
+> The only thing I seem to be able to retain is the following:  "git
+> diff D..E is totally useless and should be an error because (1) it
+> doesn't do what I expect and (2) for folks that want the behavior
+> currently gotten with that syntax can instead just use a space instead
+> of a double dot."
 
-> > There're three places inside copy_or_link_directory's loop where
-> > die_errno() is called. Should I call dir_iterator_abort, at these
-> > places, before die_errno() is called (to free resources)?
->
-> I don't think it's necessary. We care about freeing resources when we
-> report errors (for example by returning an error code from inside a
-> function), but not when we are exiting.
->
+That sums up pretty nicely.  diff is fundamentally an operation
+between two endpoints, so the range notation a..b does not work
+nicely with it at the conceptual level.
 
-Ok, thanks!
+When we realized that we can take advantage of the above fact, and
+reuse a range notation to mean something that is generally useful in
+the context of diff, such as 'one end of the comparison is the merge
+base between a and b, and the other end is b', it was too late to
+use "a..b", as an early adopters of Git was already used to the fact
+that "a..b" happened to mean the same thing as "comparison of one
+end is a, the other end is b", pretty much implemented without much
+thought.
 
-> > -static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
-> > -                                  const char *src_repo, int src_baselen)
-> > +static void mkdir_if_missing(const char *pathname, mode_t mode)
->
-> It looks like your patch is both splitting copy_or_link_directory()
-> into 2 functions and converting it to use the dir-iterator API. Maybe
-> it would be better to have 2 patches instead, one for splitting it and
-> one for converting it.
->
+It might be _possible_ to spend a year (i.e. 4 cycles) to start
+warning when two-dot notation is used for "git diff" (only, not any
+plumbing like "git diff-files") and tell the user to use the more
+logical two-end notation "git diff A B" and then eventually error
+out when two-dot notation is used, while retaining the three-dot
+notation throughout and to the eternity.  I am not sure if it is
+worth the deprecation cost, though.
 
-Got it. As the justification for splitting the function was to use the
-extracted part in the section that was previously recursive, I thought
-both changes should be in the same patch. But I really was in doubt
-about that. Should I split it into two patches and mention that
-justification at the first one? Or just split?
 
-> >  {
-> > -       struct dirent *de;
-> > +       /*
-> > +        * Tries to create a dir at pathname. If pathname already exists and
-> > +        * is a dir, do nothing.
-> > +        */
->
-> I think we usually put such comments just before the function. And
-> maybe it could be shortened to "Create a dir at pathname unless
-> there's already one"
 
-Right, the shortened version does sounds much better, thanks! About
-the comment placement, I followed what I saw in other functions from
-the same file ("copy_alternates", for example). But also, I couldn't
-find any instruction about that at Documentation/CodingGuidelines. So
-should I move it as you suggested?
