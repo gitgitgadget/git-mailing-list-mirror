@@ -2,87 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F51C1F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 20:17:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3722A1F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 20:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390400AbfBNURZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 15:17:25 -0500
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:50300 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728119AbfBNURY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 15:17:24 -0500
-Received: by mail-vk1-f202.google.com with SMTP id v193so2951653vkd.17
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 12:17:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=14j/m4QemE7+a52sUaplrvmwiC86FY07AtLLLtlg8Nk=;
-        b=r4CyRLLesm6ZT1sErlEGc7cW3TwpAjz7kHwMuGdkMeS8aDqGVmwNI/aa4gxbIEawF6
-         LE9i02w2z08VgsUcLocAvKdXX2UCpK7g5U4Qq/TdujnpJlwl60kgcfJNVp/S88YyI4Kc
-         bfzrhXKDKUpFueu4vjoVTi9me3iIOXCfTSFEfbz3r/HnfFo+Q5WFn7mWh6j/C3ac42D9
-         UTfpxk3Ri3/s61n7bxDum35d0CqGLg3OuhPac8Ab5gKydhTXGGsNG0gtSMHUZnf8+e3N
-         6nWxE0b5CH8CsxFunDkDfQjxKqzmKd6rM6zJmYMpJSZu0qdP/Z9MY3K4UDF9zp3mtDiw
-         XZbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=14j/m4QemE7+a52sUaplrvmwiC86FY07AtLLLtlg8Nk=;
-        b=Hue4zTe43Saql5eaCRcAjvbpRhNO+HKLtLRwP3s4xzKSDIiijK2HdC9v8Y2fpcSsAf
-         gfQwI93/DQ+DiqrYeuFXq/cZ5blyFUZdRJGnhWkXBLoXL/Nm6xZdjx28zSVoR4J5CD2R
-         QayMNIbBPlbTkjRY+hWEKnua5T/5bAsCK5FrInxh4FNPcy10iZKJEpVV6jXtx0UfDx5m
-         hl4jU3bt7QGrwdr70PuLWof/zf+T/7vEx+w32OBZrgMQWUkHtyjLvOyfMqha3mI6Dz1k
-         ag+a19jJcygKqqdEseFoHJoasWpkhNiqKmRh9JBFez4WKPyP+daHmPaacBOROpSHVlZo
-         PHIA==
-X-Gm-Message-State: AHQUAuZ7Sl11FpeQ1R+ndr2FjkVlyiJkO6Gn0D3deMyDZVry+rAXqbAa
-        9F/tRZDf8Lpl2CYKpkyW7MA1A5i6q4/khGxxhMKT
-X-Google-Smtp-Source: AHgI3IZ2+Mum+Q9YJQRwRwBGE0f8OuRMRkA7Uvc0gjGcuNAlSZxS/3vzq649TJSa4x82jRyHUWOgjaucIprAiUk0jHXH
-X-Received: by 2002:ab0:7103:: with SMTP id x3mr3566967uan.14.1550175443371;
- Thu, 14 Feb 2019 12:17:23 -0800 (PST)
-Date:   Thu, 14 Feb 2019 12:17:11 -0800
-In-Reply-To: <20190214063513.32041-1-tmz@pobox.com>
-Message-Id: <20190214201711.130216-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190214063513.32041-1-tmz@pobox.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH] t/lib-httpd: pass GIT_TEST_SIDEBAND_ALL through Apache
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     tmz@pobox.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, gitster@pobox.com,
-        peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+        id S2394945AbfBNUZs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 15:25:48 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43190 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2387975AbfBNUZs (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 14 Feb 2019 15:25:48 -0500
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x1EKDqMN003983;
+        Thu, 14 Feb 2019 12:25:46 -0800
+Received: from mail.palantir.com ([198.97.14.70])
+        by mx0a-00153501.pphosted.com with ESMTP id 2qmv9usgnw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+        Thu, 14 Feb 2019 12:25:46 -0800
+Received: from dc-prod-exch-01.YOJOE.local (10.193.18.14) by
+ dc-prod-exch-01.YOJOE.local (10.193.18.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1531.3; Thu, 14 Feb 2019 15:25:43 -0500
+Received: from smtp-transport.yojoe.local (10.129.56.124) by
+ dc-prod-exch-01.YOJOE.local (10.193.18.14) with Microsoft SMTP Server id
+ 15.1.1531.3 via Frontend Transport; Thu, 14 Feb 2019 15:25:43 -0500
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 92658221A360;
+        Thu, 14 Feb 2019 12:25:43 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     <gitster@pobox.com>
+CC:     <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
+Subject: [PATCH] git-rebase.txt: update to reflect merge now implemented on sequencer
+Date:   Thu, 14 Feb 2019 12:25:41 -0800
+Message-ID: <20190214202541.21371-1-newren@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc0.269.g1a574e7a28
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-02-14_10:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> 07c3c2aa16 ("tests: define GIT_TEST_SIDEBAND_ALL", 2019-01-16) added
-> GIT_TEST_SIDEBAND_ALL to the apache.conf PassEnv list.  Avoid warnings
-> from Apache when the variable is unset, as we do for GIT_VALGRIND* and
-> GIT_TRACE, from f628825481 ("t/lib-httpd: handle running under
-> --valgrind", 2012-07-24) and 89c57ab3f0 ("t: pass GIT_TRACE through
-> Apache", 2015-03-13), respectively.
-> 
-> Signed-off-by: Todd Zullinger <tmz@pobox.com>
-> ---
-> I missed this with rc0, but poking through build logs I noticed a number
-> of 'AH01506: PassEnv variable GIT_TEST_SIDEBAND_ALL was undefined'
-> warnings.
-> 
-> I think exporting this in lib-httpd.sh like we do for GIT_VALGRIND* and
-> GIT_TRACE is the way to go, as opposed to in test-lib.sh, as we do for
-> things like GNUPGHOME.  But I could easily be wrong about that.
+Since commit 8fe9c3f21dff (Merge branch 'en/rebase-merge-on-sequencer',
+2019-02-06), --merge now uses the interactive backend (and matches its
+behavior) so there is no separate merge backend anymore.  Fix an
+oversight in the docs that should have been updated with the previous
+change.
 
-Thanks for looking into this. I think this is the right way to do it
-too.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/git-rebase.txt | 2 --
+ 1 file changed, 2 deletions(-)
 
-Previous discussion here [1] but I don't think any patches came out of
-that.
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index daa16403ec..619303adbc 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -554,8 +554,6 @@ commit started empty (had no changes relative to its parent to
+ start with) or ended empty (all changes were already applied
+ upstream in other commits).
+ 
+-The merge backend does the same.
+-
+ The interactive backend drops commits by default that
+ started empty and halts if it hits a commit that ended up empty.
+ The `--keep-empty` option exists for the interactive backend to allow
+-- 
+2.21.0.rc0.269.g1a574e7a28
 
-[1] https://public-inbox.org/git/20190129232732.GB218214@google.com/
