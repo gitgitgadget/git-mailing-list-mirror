@@ -2,79 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2DE41F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 21:37:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAE521F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 22:04:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503300AbfBNVhB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 16:37:01 -0500
-Received: from mout.gmx.net ([212.227.17.22]:32835 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2503285AbfBNVhA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 16:37:00 -0500
-Received: from [192.168.0.171] ([37.201.195.16]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LyB6P-1h61kM1GeD-015YsX; Thu, 14
- Feb 2019 22:36:43 +0100
-Date:   Thu, 14 Feb 2019 22:36:42 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
-        szeder.dev@gmail.com, 'Max Kirillov' <max@max630.net>
-Subject: RE: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results)
-In-Reply-To: <001501d4c476$a94651d0$fbd2f570$@nexbridge.com>
-Message-ID: <nycvar.QRO.7.76.6.1902142234070.45@tvgsbejvaqbjf.bet>
-References: <001501d4c476$a94651d0$fbd2f570$@nexbridge.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729212AbfBNWEI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 17:04:08 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:53835 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbfBNWEI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 17:04:08 -0500
+Received: by mail-it1-f195.google.com with SMTP id x131so17974725itc.3
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 14:04:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1qIZF4S0owid7ufd5kSGCvAvy+kafbeufIQPC4TAvW8=;
+        b=FhlC1Ul//gmTWKJIul5WQzuELwTlHuxUsqiN87D4/s1OFA8kFEljluhCk26+A2Hdae
+         N+LEWZ+eCI7KJ3fG3C86fKIE+nesIUUqXuZUzwl1H1uL1SQp8+RuR8jyAgkW6EvOdxLx
+         pFvaZSwjXHcIX8CGFi3GrnVS5idjyDyA1O6X5susrKJ6boz6j1hD1iXE67VFKo8pV8/5
+         i7+dgo3bnAVoc0WbJkvWbFjCCxSicTluiBFbmcQUjY1Mca6sFW5Etl2nK6UiZCj1DMEm
+         YQGXW4hVqBFtp8muTmG8R2uPpHrd85kijUJSZpkLs2RpVXcTWs/rWaRtBetpDOnmwOOJ
+         CmXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1qIZF4S0owid7ufd5kSGCvAvy+kafbeufIQPC4TAvW8=;
+        b=HUW4A1ZT/D5HPJ1u2nuGyrPBMnygcpHXElINhWE1FWWQ5sGZTxrqtyiEXma2tRw/tJ
+         Z/jnWNEJOhmZNZy2DdLXdqdjfH6+7RyNSwwwBcK94aTLXU1C4M/JdUXfuZimRAZoO6Bh
+         uZJv6baXMVAPeih9wdL1mYILuEeygWHou+/A8pzbERDD7Og84ZSLUSmpOhaCTZFYMgin
+         n3xeUuIcRBOKTU45KyFyfSVgL3E7TFOdHbmObLGOpH16DXIqHzs8cOyn2zQANigZo+Cv
+         yVyM/jBESJDuqlX9OCv/ba+MLmfdEq4QH8iuTa4a7g3zfqra0Lw069QU+1jb12x8MPFj
+         SotA==
+X-Gm-Message-State: AHQUAuZ4KIDFNNOaTcibd/xk7wVgUbvtp2aeRG/P/JaxeusVpriXcMJo
+        UAxIfv94FEb0NTLPMXaM0KEolUIjh8zqOeyjTzhTbQ==
+X-Google-Smtp-Source: AHgI3IYIShgcMhqrQDSTgil2+DTr/3EsfgJ8btYA4Q9LQSeUjvhzXLZ7q6agW1At5oRnCnPNeI1L4DFzwYdeXm8610Q=
+X-Received: by 2002:a5d:88ce:: with SMTP id i14mr4405163iol.66.1550181847181;
+ Thu, 14 Feb 2019 14:04:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:PlyIcMORMciu6lBkWzk6LWzHTCvTw5qUJFlsQMfUPXHBtEHGyWJ
- Kz4xTg3xy2LeVo/tOZ70epvnVg6uFjviPkBDtlpJ4GdOW+1bIMcqOeTAdqYHeRUsDHoGzHp
- xQ4clwEtoN/I5BUy3X8eAg4lQ0JOVAMt3oIBetLVm1KXJoyW6g3oLt1rmJONX6Sc2/jN0Zn
- sOjdl1j2WF7aFtGu0nq+g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3q9pTkY8tBA=:wvqSy3ZFH2YvVbn+7w7/0n
- b0ZrmzGLr5am2G4/UXcokBMua+4SiptLQAlRNsGUVQpL7MEJgDTWwefj0zq8bQH6YphkJ3h7Y
- VJ1n4sgd2zPBmjRDqFK6TjKrJ0yTECCcvuTaiMitMFgcm2NN+snIeq1mW94plGRQvZ+RqJCeI
- RbDbdk4SrG7f3yVcyAGJ2t+9srmpTSwTDut0uwo9wzGSSAkiIubywtDnZNNmox8so9F1j1i8W
- Sn60YTe/RqpZLQleeCj0Of4/vSpFhS4aFmkdVMjBeUKGnBokkXO/nrGdux+lpVVt8qaWDKU+O
- gsUhWCpGN+e/ZaYjlXESAAF+XldsCmfu7Q5+Y+yz0fkuy7w/OCRHfA7Ecg73YuKPMROc64Yod
- FjHHLzu8UAlI2y769+KR0YHl8qlefiuJ6OFzP9Jj369iZNUIqJvpxoGOJTTYVnd3Xt9Cb4I02
- NwrYU8B71VdpKlimgHlCkhJ9UwfNblYyJFOMD8iUZWhjgHyPVliZPgl5mtIgrMzj6h6LXlwlO
- wp6IaXcCH5Og3q4f0nVBsyV/4g4mXO51Ugzow4AtFVuV8gq5e+DIe855qq+XMvSWV8QvxXVv/
- U6Gh0AgnzOBsGjz6fvUTbJKXCoDB2gaTDMEtLy5eC52EBZi68NNW2R8uZ0Ai4M/liHbocomxv
- PegAfL8kZQqg3pIMRVEslzsPSruTKwqGMY0pr2ARc33smvO0o2xyN+molXIMFsT5C83VacDBR
- XUyVzqRdebsQ847RD78Fk7vpEqKO1xwr23JZ0GvV8i7m4T8nKQ896N1yTiru8rWdPG16aWVfG
- jMFt9Chc2+hCQIJxQUW/F3dkZqufo7b2qx13Jh+VXCyRBMws/VMapDDurfMS1DioT9wkUqaoi
- BXOJ51rvjvUKxIZaL8V//0HjnkWYOTI6hVhAiUEYJ1G19vU7JKXUdnVdR+QVXRouMiy29s8L7
- kPDQGxztrHA==
+References: <20190213205554.4086-1-matheus.bernardino@usp.br> <CAP8UFD1aBn8=KOTp-D=CmO1iEnWUBS1-jR-aqfg3MZ7HZRU7Pg@mail.gmail.com>
+In-Reply-To: <CAP8UFD1aBn8=KOTp-D=CmO1iEnWUBS1-jR-aqfg3MZ7HZRU7Pg@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Thu, 14 Feb 2019 20:03:55 -0200
+Message-ID: <CAHd-oW6uHKfa_P+fZNZxG4+pme=SH_Wi+SJkhxwOtfR+L=0JBA@mail.gmail.com>
+Subject: Re: [GSoC][RFC PATCH] clone: use dir-iterator to avoid explicit dir traversal
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Randall,
+On Thu, Feb 14, 2019 at 7:16 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Thu, Feb 14, 2019 at 1:16 PM Matheus Tavares
+> <matheus.bernardino@usp.br> wrote:
+> >
+> > Replace usage of opendir/readdir/closedir API to traverse directories
+> > recursively, at copy_or_link_directory function, by the dir-iterator
+> > API.
+> >
+> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> > ---
+> > This is my microproject for GSoC 2019. It's still a RFC because I have
+> > some questions. Any help will be much appreciated.
+>
+> Thanks for working on a microproject!
+>
 
-On Thu, 14 Feb 2019, Randall S. Becker wrote:
+Hi, Christian. Thank you for the review and comments.
 
-> t5562 still hangs (blocking) - this breaks our CI pipeline since the
-> test hangs and we have no explanation of whether the hang is in git or
-> the tests.
+> > There're three places inside copy_or_link_directory's loop where
+> > die_errno() is called. Should I call dir_iterator_abort, at these
+> > places, before die_errno() is called (to free resources)?
+>
+> I don't think it's necessary. We care about freeing resources when we
+> report errors (for example by returning an error code from inside a
+> function), but not when we are exiting.
+>
 
-I have "good" news: it now also hangs on Ubuntu 16.04 in Azure Pipelines'
-Linux agents.
+Ok, thanks!
 
-There is a silver lining with those good news, though: I found a
-workaround, and it might work for you, too:
+> > -static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+> > -                                  const char *src_repo, int src_baselen)
+> > +static void mkdir_if_missing(const char *pathname, mode_t mode)
+>
+> It looks like your patch is both splitting copy_or_link_directory()
+> into 2 functions and converting it to use the dir-iterator API. Maybe
+> it would be better to have 2 patches instead, one for splitting it and
+> one for converting it.
+>
 
-	https://github.com/gitgitgadget/git/pull/126
+Got it. As the justification for splitting the function was to use the
+extracted part in the section that was previously recursive, I thought
+both changes should be in the same patch. But I really was in doubt
+about that. Should I split it into two patches and mention that
+justification at the first one? Or just split?
 
-(I also submitted this to the Git mailing list, as I really wanted to tag
-Git for Windows' v2.21.0-rc1.windows.1 only with a passing build, and I do
-not want to keep that patch to the Windows port only.)
+> >  {
+> > -       struct dirent *de;
+> > +       /*
+> > +        * Tries to create a dir at pathname. If pathname already exists and
+> > +        * is a dir, do nothing.
+> > +        */
+>
+> I think we usually put such comments just before the function. And
+> maybe it could be shortened to "Create a dir at pathname unless
+> there's already one"
 
-Ciao,
-Johannes
+Right, the shortened version does sounds much better, thanks! About
+the comment placement, I followed what I saw in other functions from
+the same file ("copy_alternates", for example). But also, I couldn't
+find any instruction about that at Documentation/CodingGuidelines. So
+should I move it as you suggested?
