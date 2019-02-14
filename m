@@ -6,74 +6,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACCBA1F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 03:56:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0755A1F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 03:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727086AbfBND4E (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Feb 2019 22:56:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43566 "HELO cloud.peff.net"
+        id S1727083AbfBND7r (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Feb 2019 22:59:47 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43576 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726952AbfBND4E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Feb 2019 22:56:04 -0500
-Received: (qmail 28498 invoked by uid 109); 14 Feb 2019 03:56:04 -0000
+        id S1726906AbfBND7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Feb 2019 22:59:46 -0500
+Received: (qmail 28666 invoked by uid 109); 14 Feb 2019 03:59:47 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Feb 2019 03:56:04 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Feb 2019 03:59:47 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6069 invoked by uid 111); 14 Feb 2019 03:56:15 -0000
+Received: (qmail 6089 invoked by uid 111); 14 Feb 2019 03:59:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 13 Feb 2019 22:56:15 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 13 Feb 2019 22:59:57 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Feb 2019 22:56:02 -0500
-Date:   Wed, 13 Feb 2019 22:56:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Feb 2019 22:59:44 -0500
+Date:   Wed, 13 Feb 2019 22:59:44 -0500
 From:   Jeff King <peff@peff.net>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH v2] protocol-capabilities.txt: document symref
-Message-ID: <20190214035602.GA7209@sigill.intra.peff.net>
-References: <4ffb11ff776166944673ba3bdb96a9d20eb14df7.1549929088.git.steadmon@google.com>
- <cb1b2834b7365f6277d1ec573cee7fd68a7329d0.1550100949.git.steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2019, #03; Wed, 13)
+Message-ID: <20190214035944.GB7209@sigill.intra.peff.net>
+References: <xmqq4l979h8d.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cb1b2834b7365f6277d1ec573cee7fd68a7329d0.1550100949.git.steadmon@google.com>
+In-Reply-To: <xmqq4l979h8d.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 13, 2019 at 03:41:28PM -0800, Josh Steadmon wrote:
+On Wed, Feb 13, 2019 at 07:33:22PM -0800, Junio C Hamano wrote:
 
-> ---
-> Range-diff against v1:
-> 1:  4ffb11ff77 ! 1:  cb1b2834b7 protocol-capabilities.txt: document symref
->     @@ -12,6 +12,17 @@
->       diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
->       --- a/Documentation/technical/protocol-capabilities.txt
->       +++ b/Documentation/technical/protocol-capabilities.txt
->     +@@
->     + Git Protocol Capabilities
->     + =========================
->     + 
->     ++NOTE: this document describes capabilities for versions 0 and 1 of the pack
->     ++protocol. For version 2, please refer to the link:protocol-v2.html[protocol-v2]
->     ++doc.
->     ++
->     + Servers SHOULD support all capabilities defined in this document.
->     + 
->     + On the very first line of the initial server response of either
+> [Graduated to "master"]
+> [...]
+> * js/smart-http-detect-remote-error (2019-02-06) 3 commits
+>   (merged to 'next' on 2019-02-06 at ec1a6f67c1)
+>  + t5551: test server-side ERR packet
+>  + remote-curl: tighten "version 2" check for smart-http
+>  + remote-curl: refactor smart-http discovery
+> 
+>  Some errors from the other side coming over smart HTTP transport
+>  were not noticed, which has been corrected.
 
-I think this makes sense. I wondered to what degree the v2 protocol doc
-may say "...and you can use capabilities from protocol-capabilities.txt
-here". But it doesn't. It newly lists the capabilities, which makes this
-paragraph the right thing to say.
+Hmm, this was maybe a risky one to merge as part of -rc1. It is just
+enforcing the rules from the spec document, but it's possible that it
+may trigger on some poorly-behaved server.
 
-It does mean that if we teach v1 a new capability, we'll have to
-document it in both places. But moving forward, we'd hopefully not be
-doing that too often (I haven't seen talk of flipping the v2 switch yet
-by default, but obviously that's where we want to end up).
-
-I probably would have put this in its own patch, but barring that we
-should probably at least mention in the commit message what this
-paragraph is doing here.
+I'm not worried enough to suggest pulling it back, but it's something we
+should keep an eye on during the -rc period.
 
 -Peff
