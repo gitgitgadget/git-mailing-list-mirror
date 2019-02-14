@@ -2,99 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DEAR_SOMETHING,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 543A11F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 12:37:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CF821F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 13:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732486AbfBNMhA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 07:37:00 -0500
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:35397 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726097AbfBNMg7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 07:36:59 -0500
-Received: by mail-wm1-f41.google.com with SMTP id t200so5949943wmt.0
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 04:36:58 -0800 (PST)
+        id S2438803AbfBNNXI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 08:23:08 -0500
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:40084 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728582AbfBNNXI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 08:23:08 -0500
+Received: by mail-wr1-f46.google.com with SMTP id q1so6446911wrp.7
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 05:23:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=uASDnsKrq0m6bJd7Bw1l5RfGfPzRLDIrhXEDCHGOnnI=;
-        b=eGovvqlrSOnrrH4LF1LW/mXO4NmrzJYxEg17QFgXTzBdS+N+KuKVXvvwZbrNrTgeXy
-         3rfi+EpnxlQtmceMlcrza/N73Pw64irRgOLFpdJ/K+F9OWnAXe+bPT8owaMdQIPJSxMQ
-         SLgVnsrQrlHmAjPTmdLsK8RDUDMcx9i2jtWSuAi2w/rtmSTSFFmMym67SKIKth9gNpKm
-         EhfvlcTHQhWsFIi3ezwlYixigIX6PpOPWTCVZSNwZsbQ5mhBxQSCG0Gadn4yWytpaLg3
-         ehsOKYFNTMqhcgfEoZD63c6Qp33pF78aGttTuATmBdhZjYWb/a59WBTUGYORXxz8r6ur
-         ItEg==
+        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
+        bh=Ur/fYq+aYp/wSUE8f1nAB5TcZBEotZTv917C+S/LaR8=;
+        b=amIJtLiMWXHKeUf5dYpcp9LML+f4s+IG3JjjfAMNwkErzsEsDZGpluGGVckVXDrY+Y
+         cMuJMLZ6IurnUcLF5hNeGluAq/GgI1E/f/i/MzeLzKP/FJR2KaWMvB5fFeabyeIQg654
+         Y3rtZGCkuBWA6sEPqYHbbmOGpzFydwYmzbzzxFNq0ftsVjUIEwsAGZ0R1OPVYDrv5xaF
+         quA3ymED6Tam2qrAgNC95UEtLhpG1KldjTeVZimHfQ9/9JR7aLdNDIADixyxWRJE5mMC
+         oGAs1n0vAmGlZA/5F0cKPVoQNLPZt4HJi3fbA8nH0YsAQmTJzagk7nL9+6wdX2MER0iJ
+         Pfwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=uASDnsKrq0m6bJd7Bw1l5RfGfPzRLDIrhXEDCHGOnnI=;
-        b=SvDpvbyX86htcfhuu7rngby9DYrtS1sAt/LgSBxWawsriIZD0ifg4l1CuiFosIVb4V
-         rnqZuf2PQA8RELB27uwDcXj7JFUJ+1qd4nEITq0TL1sDjl0Q5xua6u5lBYDhTSGThoqP
-         UYW19kSVZWdep2cV40GNmBij/erk/skKAmwLEgFVkzDPoXGiTepig4v1/eveaZQaM6Jc
-         jZ1NpK2hIyHvCMCQTO/qMsJfb/Hnj9JkbM1vU03niV+mDq1nWVZJluzQsw6bOuQMSpTC
-         diSz2NnAOGldPFoe4EIPoYdv1/6lsRMYEP17LZv6oEyS0iaWVChylJ8edFSAuM+pYBxo
-         1tDw==
-X-Gm-Message-State: AHQUAub6kaG2n5GcvwjqICtiQEkmtEkYi6k6hp2kDpvzF1n5P+P23zH1
-        e1myDpDEyoGYFw62IzxqeJg=
-X-Google-Smtp-Source: AHgI3IbpDGtWxEpVgXxKAdsXONg/3JBK8UPGcVgXLaAM6Nr4sU3OpW8kG8yZ5UBKgvRW6IlrfbeGqg==
-X-Received: by 2002:a7b:cb18:: with SMTP id u24mr2461015wmj.138.1550147817240;
-        Thu, 14 Feb 2019 04:36:57 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
+         :mime-version;
+        bh=Ur/fYq+aYp/wSUE8f1nAB5TcZBEotZTv917C+S/LaR8=;
+        b=cicQxoZbD/f+vbPOXUw7jl9h++e05BjlNCrq9AgVQxwx8LeCGvM6b9/yz/kmvimVCJ
+         /P+UyzksVzmcBGjjfC+TVDcRMcN6o9L6zy5ukwBfYMyg2HOF4FQWxLLPl5m7N1qixNw0
+         +Orqg4lsAcOnj7c8M87PugGveXUVaHDc4mzQdx16x5OagD34U8aP5vfZftcuJVPNErtP
+         YHsEXEFbUlji7D5UfmSy3xrma7H96Rfahh/Swy1ZRYlhZKuH3uZfSt+Qwfncvs0QZGo4
+         hyKMOJ15k5n+uduTb0KlaVPvcWIPC7ptVekNcBM6VSb17myikST9skgNpo9urbxVMJkW
+         zKnQ==
+X-Gm-Message-State: AHQUAuZO0qMvxVpI9Faauxhk4pG+Qwk3pgyaUcvLouRSaZjGOn0fkAy1
+        ycXNLwbYAndkkK3Cdny+hRT0uClyPCE=
+X-Google-Smtp-Source: AHgI3IbgPYZMEZmDws6DOtbkHn+EWStRH9428nNJWf4xsRO0ExxWZjoDmsFRAA02L9Ir5TDR8/8BWg==
+X-Received: by 2002:a5d:5289:: with SMTP id c9mr2834015wrv.11.1550150585951;
+        Thu, 14 Feb 2019 05:23:05 -0800 (PST)
 Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id s8sm3356236wrn.44.2019.02.14.04.36.56
+        by smtp.gmail.com with ESMTPSA id f196sm5695867wme.36.2019.02.14.05.23.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Feb 2019 04:36:56 -0800 (PST)
+        Thu, 14 Feb 2019 05:23:05 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Agnieszka Borcz <agaborcz86@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git - logo commercial use
-References: <C9D9CE87-105E-4716-BF43-1D64239DD492@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: BUG: 2.11-era rebase regression when @{upstream} is implicitly used
 User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <C9D9CE87-105E-4716-BF43-1D64239DD492@gmail.com>
-Date:   Thu, 14 Feb 2019 13:36:55 +0100
-Message-ID: <878syik0m0.fsf@evledraar.gmail.com>
+Date:   Thu, 14 Feb 2019 14:23:04 +0100
+Message-ID: <877ee2jyh3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is not a 2.21 release issue, and pre-dates the built-in rebase.
 
-On Wed, Feb 13 2019, Agnieszka Borcz wrote:
+When you clone any repository, e.g. git.git, and add one commit on top
+of the cloned branch, then run "git rebase" you'll get e.g.:
 
-> Dear Sir/Madam,
->
-> My partner and I are in the initial stages of setting up an e-commerce bu=
-siness selling high-quality stickers of logos of popular software and libra=
-ries. We would mainly be marketing towards software developers, as there ar=
-e many who enjoy placing stickers of their favorite tech on their laptops f=
-or display.
->
-> We would love to be able to include your logo as part of our inventory bu=
-t aren=E2=80=99t sure of the restrictions regarding its use for commercial =
-purposes, so we would like to find out what your policy is regarding this a=
-nd if this would be a possibility?
->
-> We do not plan to modify or alter the logo in any way or claim that it is=
- ours. To get a better idea of how we plan to use the logo, please see the =
-following website, as this is very similar to what we plan to do: https://w=
-ww.stickermule.com/unixstickers.
->
-> I see that others are already using your logo in a similar way on sites s=
-uch as redbubble.com but wanted to double check your policy with you first.
->
-> We look forward to your response.
+    $ git rebase
+    First, rewinding head to replay your work on top of it...
+    Applying: foo
 
-Hi. This would fall under the project's trademark policy. See
-https://git-scm.com/about/trademark in particular section 2.5.
+Before 4f21454b55 ("merge-base: handle --fork-point without reflog",
+2016-10-12) you'd get:
 
-I.e. as noted there please contact SFC at trademark@sfconservancy.org
-about this.
+    $ git rebase
+    Current branch master is up to date.
+
+The results are not the same for "git rebase @{u}" or "git rebase $(git
+rev-parse @{u})":
+
+    $ git rev-parse HEAD; ~/g/git/git --exec-path=/home/avar/g/git rebase; git rev-parse HEAD; ~/g/git/git --exec-path=/home/avar/g/git rebase @{u}; git rev-parse HEAD; ~/g/git/git --exec-path=/home/avar/g/git rebase $(git rev-parse @{u}); git rev-parse HEAD
+    d0a1e49341cac6db3226eb0f76ec4a5912f18af8
+    First, rewinding head to replay your work on top of it...
+    Applying: foo
+    3a9261d6e34d9f6d00c8e8411d7ddd8cffa02d97
+    Current branch master is up to date.
+    3a9261d6e34d9f6d00c8e8411d7ddd8cffa02d97
+    Current branch master is up to date.
+    3a9261d6e34d9f6d00c8e8411d7ddd8cffa02d97
+
+With 4f21454b55^ checked-out the SHA-1 always stays the same, i.e. no
+work is done for the same command:
+
+    69bd93d9aa438c6d903b8e62c3bf1c6c5ab8ec0b
+    Current branch master is up to date.
+    69bd93d9aa438c6d903b8e62c3bf1c6c5ab8ec0b
+    Current branch master is up to date.
+    69bd93d9aa438c6d903b8e62c3bf1c6c5ab8ec0b
+    Current branch master is up to date.
+    69bd93d9aa438c6d903b8e62c3bf1c6c5ab8ec0b
