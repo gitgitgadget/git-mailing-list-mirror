@@ -7,61 +7,58 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC5911F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 20:33:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4A3C1F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 20:44:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406859AbfBNUdW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 15:33:22 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37253 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387975AbfBNUdW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 15:33:22 -0500
-Received: by mail-wr1-f65.google.com with SMTP id c8so7963250wrs.4
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 12:33:21 -0800 (PST)
+        id S2389639AbfBNUoS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 15:44:18 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50608 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726328AbfBNUoS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 15:44:18 -0500
+Received: by mail-wm1-f67.google.com with SMTP id x7so7737772wmj.0
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 12:44:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=SI/hJpUHCg4/WJ36dEFwUFaygs2IAPA6BMEmN4TNd8U=;
-        b=pXww+pJuWN5xP02t/k89Qp2LeBVddAbbcBBgFePeWyZovLcMlDT153y/QXEY/b83xW
-         mxW4MmK3kTtqsU+4iVwh7EwVptOkDJe+ye/At47CAFCNPvIgIVsu5uPiCjj593CIc2Ru
-         YcO87Osn04GdEUA7E6un2XOZsEcWxVSjfcMGhQMG/Jch5e6ADmGPqdXsLfwSOuc0lNso
-         /ksuN8K8JsbEVgfT6MQBxzbdRz8Z3XRiNXkY6BKfEggoKtkPDkrdgtqH+v+BidBVBC2d
-         1t49Km+GTfBefAcETVKMEqJhP4RJclPEWlqJOzCSiV9v541BEwWpqCeHDYIkJznn8ahW
-         +mng==
+        bh=v3cxzmsC6mtgR85WsovMOFIpQZS98lqHbHwRV6//C2E=;
+        b=j+hQF+9SvXU+iXw3OwNIUiX19FQq6bWuEAbnuPDQXvdu8won6+njfoczMKwkJiy9vG
+         JgtpbkhecB23mnZLdZjCR30jFXRQILXlNnqGfYffR3LuZOXxofLk3sKGYl8CMD2WVkB9
+         RXlJ75rWb/LLNX40lO7iazWm7S4Ilb2TuXgWqrwZeAwrY1B2psHvNnQ6YRkP9brTO4b2
+         GTwQ/F4ZakjgOgEIwEgv65uXwG3sl+fEOO2BBdtBuMNj2gf3OeUH1c7epqLdIGtv5teO
+         2S/10CT/1hib20sbGDTlD+pmXomL80yzPMNy2J7VcPWeAV2zWWecFCnUQ7uZ3G8Lxev1
+         hVJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=SI/hJpUHCg4/WJ36dEFwUFaygs2IAPA6BMEmN4TNd8U=;
-        b=DzSn6Kn/z0uh0uadO0UX+v72lIs5WDcFPlICytKLMRXCBLDk+MIjLvzVuOJDTGeG/o
-         jCsblMTtwEx9YNUUC/a2NCfdAKLTXYai4DfR75CgiJXsVZC9KOtB4O1o+V9eHOrtD8ev
-         lMpcSUreRWKE/Q/VPE9Gc63zFWEu0kJCVY+MRumB0zg0Ssdf4jdwLKF5fm64LzCPyDlH
-         r3ukhK2PP4vuUrUL7M41vlnYw5PLB8cT6Fwmh1rb9qS/iKP5Ta9XLstK0M6BLPpWG+H+
-         BRMc9SLW55taKUjYg9pUQ0jUYCvs2furekl8Pm61sgowWEsdTaEQP0jdMw3QveKcJZ21
-         JPWw==
-X-Gm-Message-State: AHQUAuYSg89/EkrKTILvgQekUrevglqklJxovQOnmW8DGZoUcFjJcDi1
-        Q7PFloR+fU/xD1DxriHS/e8=
-X-Google-Smtp-Source: AHgI3IZ6z+HSiAzv+0pJOH614QBgUXSF85nCEdK+ahfRjq80vIpCTDvbtReVhSdbFdNZG7aT6UIEJA==
-X-Received: by 2002:adf:91a7:: with SMTP id 36mr4014194wri.77.1550176400556;
-        Thu, 14 Feb 2019 12:33:20 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v6sm3748210wro.57.2019.02.14.12.33.19
+        bh=v3cxzmsC6mtgR85WsovMOFIpQZS98lqHbHwRV6//C2E=;
+        b=no2NH5klNLJARS7Pq1iYBJxexO6JEcQYl+w/lWNhbLyug8LF6MEyvfPEMBtUhQY2Sd
+         kQj4qEKXkJrqzVrN94TK4bFfYjOJqt5HU6dINv88BSf15/uqqSBAM8bFae/6UZhxJxgV
+         aWQm/AiJv/GwIgKkLrXwYuT6Rh4RYkSLolLsSKLVeXb8DpxNY/s2DJE6ON2BGMcXV/dP
+         P2v2yVFtr1Me0NAPxSnqsfMW1iS8KJPtqEy7A8z3PEFDq9vr7OuxrU1ZCJkF3APqw6Bm
+         T+il6c1owyjeRNfBiMMvJihWMxNx0bgXBcNz8ZY2rLOsld7dAWDy+wWyRkI1uFm0dRsf
+         UvVA==
+X-Gm-Message-State: AHQUAuZCIoPWv1zUh+TfWtL9Qk1LBmBD0Q1kaXwHzl7CGS7xBcMe9Gy+
+        Zg2zDKoliXsVAlyG3fyex1s=
+X-Google-Smtp-Source: AHgI3Ibsxp85g24M/f896j0fqs8Zm5tryOtbWyrWC1F7KcdXGpj+TsvqD6siTGDmFTMa8ULt6RNSVQ==
+X-Received: by 2002:a1c:2457:: with SMTP id k84mr3983104wmk.139.1550177055730;
+        Thu, 14 Feb 2019 12:44:15 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z1sm3110157wrw.28.2019.02.14.12.44.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Feb 2019 12:33:19 -0800 (PST)
+        Thu, 14 Feb 2019 12:44:13 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
-        benpeart@microsoft.com, kewillf@microsoft.com,
-        sandals@crustytoothpaste.net
-Subject: Re: [PATCH v2] read-cache: add post-indexchanged hook
-References: <20190208195115.12156-1-peartben@gmail.com>
-        <20190214144241.11240-1-peartben@gmail.com>
-        <2f08ee3b-4511-2838-4c70-640d01fe1658@ramsayjones.plus.com>
-Date:   Thu, 14 Feb 2019 12:33:19 -0800
-In-Reply-To: <2f08ee3b-4511-2838-4c70-640d01fe1658@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Thu, 14 Feb 2019 16:28:09 +0000")
-Message-ID: <xmqqa7iy860g.fsf@gitster-ct.c.googlers.com>
+To:     Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+Cc:     <git@vger.kernel.org>, <nathan.berbezier@etu.univ-lyon1.fr>,
+        <pablo.chabanne@etu.univ-lyon1.fr>, <matthieu.moy@univ-lyon1.fr>
+Subject: Re: [PATCH] doc: format pathnames and URLs as monospace
+References: <20190214163043.7103-1-corentin.bompard@etu.univ-lyon1.fr>
+Date:   Thu, 14 Feb 2019 12:44:13 -0800
+In-Reply-To: <20190214163043.7103-1-corentin.bompard@etu.univ-lyon1.fr>
+        (Corentin BOMPARD's message of "Thu, 14 Feb 2019 17:30:43 +0100")
+Message-ID: <xmqq4l9685ia.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,33 +67,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr> writes:
 
-> On 14/02/2019 14:42, Ben Peart wrote:
->> From: Ben Peart <benpeart@microsoft.com>
->> 
->> Add a post-indexchanged hook that is invoked after the index is written in
->
-> s/post-indexchanged/post-index-changed/
+> diff --git a/Documentation/config/checkout.txt b/Documentation/config/checkout.txt
+> index c4118fa19..8ba92f274 100644
+> --- a/Documentation/config/checkout.txt
+> +++ b/Documentation/config/checkout.txt
+> @@ -1,7 +1,7 @@
+>  checkout.defaultRemote::
+>  	When you run 'git checkout <something>' and only have one
+>  	remote, it may implicitly fall back on checking out and
+> -	tracking e.g. 'origin/<something>'. This stops working as soon
+> +	tracking e.g. `origin/<something>`. This stops working as soon
 
-Good.  I wasn't paying close attention to the previous round, but is
-that the only name-related bikeshedding?  I somehow feel that
-without s/changed/change/ the name does not roll well on my tongue
-and does not sit well together with existing ones like post-receive
-(which is not post-received).  I dunno.
+Are you doing only pathnames and URLs, or are you also doing refnames?
 
-Will queue.  Thanks.
+I am not sure if "this is a pathname, or a URL or a refname, so it
+must be typeset with monospace" is the direction we'd want to go in
+in the first place.  One rule we tried to follow (but with minor
+inconsistencies everywhere, apparently we are not doing a very good
+job at) is "this is a string the user would literally type or see
+when following this description, so it must be typeset with
+monospace".
 
->> do_write_locked_index().
->> 
->> This hook is meant primarily for notification, and cannot affect
->> the outcome of git commands that trigger the index write.
->> 
->> The hook is passed a flag to indicate whether the working directory was
->> updated or not and a flag indicating if a skip-worktree bit could have
->> changed.  These flags enable the hook to optmize its response to the
->
-> s/optmize/optimize/
->
-> ATB,
-> Ramsay Jones
+From that point of view, we'd want the `git checkout <something>` we
+see in the introductory sentence of this paragraph also typeset in
+mono.  In order to match (i.e. to make it clear that the <something>
+part came from what the user typed), the change in this hunk your
+patch makes does make sense.
+
+> diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+> index f98b7c6ed..6643bc39f 100644
+> --- a/Documentation/git-cvsserver.txt
+> +++ b/Documentation/git-cvsserver.txt
+> @@ -140,7 +140,7 @@ CVS_SERVER directly in CVSROOT like
+>  ------
+>  cvs -d ":ext;CVS_SERVER=git cvsserver:user@server/path/repo.git" co <HEAD_name>
+>  ------
+> -This has the advantage that it will be saved in your 'CVS/Root' files and
+> +This has the advantage that it will be saved in your `CVS/Root` files and
+>  you don't need to worry about always setting the correct environment
+>  variable.  SSH users restricted to 'git-shell' don't need to override the default
+>  with CVS_SERVER (and shouldn't) as 'git-shell' understands `cvs` to mean
+
+I am using this hunk as just an example, but "this is what the user
+literally sees or types" point-of-view, `CVS/Root` and `CVS_SERVER`
+in the hunk fall into the same category.  They are both literals in
+the sense that you cannot say "I do not like the words Root or
+SERVER, so in my CVS repository I am using CVS/Leaf and CVS_HELPER
+instead".
+
+> @@ -179,7 +179,7 @@ allowing access over SSH.
+>  ------
+>  --
+>  3. If you didn't specify the CVSROOT/CVS_SERVER directly in the checkout command,
+> -   automatically saving it in your 'CVS/Root' files, then you need to set them
+> +   automatically saving it in your `CVS/Root` files, then you need to set them
+>     explicitly in your environment.  CVSROOT should be set as per normal, but the
+>     directory should point at the appropriate Git repo.  As above, for SSH clients
+>     _not_ restricted to 'git-shell', CVS_SERVER should be set to 'git-cvsserver'.
+
+Even if you are doing only pathnames and URLs, `git-shell` and
+`git-cvsserver` would be candidates to be in monospace, as they are
+names in $GIT_EXEC_PATH/.
+
+> diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+> index 7a2375a55..bbc984235 100644
+> --- a/Documentation/technical/pack-protocol.txt
+> +++ b/Documentation/technical/pack-protocol.txt
+> @@ -107,7 +107,7 @@ Initiating the upload-pack or receive-pack processes over SSH is
+>  executing the binary on the server via SSH remote execution.
+>  It is basically equivalent to running this:
+>  
+> -   $ ssh git.example.com "git-upload-pack '/project.git'"
+> +   $ ssh git.example.com "git-upload-pack `/project.git`"
+>  
+>  For a server to support Git pushing and pulling for a given user over
+>  SSH, that user needs to be able to execute one or both of those
+
+I agree with Eric's comment.  If the user types `/project.git`, it
+would give a funny result ;-).
