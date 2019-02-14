@@ -2,107 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A23A1F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 18:17:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 566A81F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 18:42:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406491AbfBNSRt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 13:17:49 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:36684 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389024AbfBNSRt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 13:17:49 -0500
-Received: by mail-qk1-f193.google.com with SMTP id o125so4169278qkf.3
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 10:17:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=nus/wYlBUFfA6APM02nz76uzPusoYYC4m5SaoTGAC3g=;
-        b=iyVTvEs0hfNAKRn8u8PGLjJayrN9x56d1AgF80aTCC0F0de9oIxelqlhXZRQWY3vPB
-         KmochZPVSHVCSToj/5CsrgI9rS8aiKrREbDlZwL/D9CZjzDKi+0ua6KA+Zd7HcT78Kl8
-         E2sJdDkgalYmslCiRc4bADEKaC92RkTskrNFhxSv/CU2yTOpIwxtjGuJtYM9KNzSiZy9
-         EfaSV4AIL1K6nPyaEWIGz46PLnLYDWJCaQKpWjTB+pfUNIToyq9+2QFilSnJUjmNnYYR
-         ARh1Qy7hcobLqaORK2NNigJrIHi2+2Q93Xi49+xm5wk6X6ctuxRBqfJP9YpzmJqdy+t6
-         eZpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=nus/wYlBUFfA6APM02nz76uzPusoYYC4m5SaoTGAC3g=;
-        b=O1H8+C1tOP/lYQhBiZj9q8YP9Lg0kDXHF4senWhfyL7BDoj+WykVufY6cVdSO3Yiv9
-         HkHBa4rLHhqXVayjeXumym3WqkEcNExsHQburyjsiciKk+rek/EPFPhxMtbiP3Xp+D3R
-         AMFpJ+Wzbzx2wHVKUTdV83NUTUdbT0iSC+P0r9Zp+f1e5z15asNku53E3sc1VKgN+42o
-         vkkdrez7wenz0YM3oJ/UtU5sClsWrtjg6JcdhqeAurMhBQQEeZ+ChAHrhDr8i4353DA2
-         3mDoIeI1sMA8g+VNnDc4tFgBmP6i1frzhdvO/4ocT/PV4Aoi87WbSfvuZPMRN9s/X5zT
-         2SBw==
-X-Gm-Message-State: AHQUAuYcn7cD50SOOKesQxS/I0Z7hR592WklsJqIT14lRIztvS5Bhkbj
-        4tFK859UV7VgEnuWs++Naps=
-X-Google-Smtp-Source: AHgI3IZd2WN0oUAA3tcHAFopxQJWdGFOtG9FrVLdktn6qjMC1N7f4E52g/EdeDdqJgjm/yDpHYFaCw==
-X-Received: by 2002:a37:7883:: with SMTP id t125mr3830076qkc.201.1550168268322;
-        Thu, 14 Feb 2019 10:17:48 -0800 (PST)
-Received: from whubbs1.gaikai.biz ([100.42.103.5])
-        by smtp.gmail.com with ESMTPSA id n21sm1535211qtl.97.2019.02.14.10.17.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Feb 2019 10:17:47 -0800 (PST)
-Received: (nullmailer pid 15601 invoked by uid 1000);
-        Thu, 14 Feb 2019 18:17:45 -0000
-Date:   Thu, 14 Feb 2019 12:17:45 -0600
-From:   William Hubbs <williamh@gentoo.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, chutzpah@gentoo.org, williamh@gentoo.org
-Subject: Re: [PATCH v6 2/2] config: allow giving separate author and
- committer idents
-Message-ID: <20190214181745.GA15584@whubbs1.dev.av1.gaikai.org>
-References: <20190204184850.10040-1-williamh@gentoo.org>
- <20190205195212.25550-3-avarab@gmail.com>
- <xmqqef8mrnnj.fsf@gitster-ct.c.googlers.com>
- <87k1iekkea.fsf@evledraar.gmail.com>
- <20190206000413.GA734@whubbs1.gaikai.biz>
- <xmqqwomdqzik.fsf@gitster-ct.c.googlers.com>
- <20190213164322.GA3625@whubbs1.dev.av1.gaikai.org>
- <xmqqwom39uwz.fsf@gitster-ct.c.googlers.com>
+        id S1730098AbfBNSmN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 13:42:13 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:41706 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726443AbfBNSmN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 13:42:13 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 440lcL1kBnz5tlB;
+        Thu, 14 Feb 2019 19:42:10 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 93DDA309;
+        Thu, 14 Feb 2019 19:42:09 +0100 (CET)
+Subject: Re: [Bug report] git diff stat shows unrelated diff
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     git@vger.kernel.org, vincent.guittot@linaro.org
+References: <20190214082258.3mh3hcr2l6dl3wuf@vireshk-i7>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <d421fd13-5771-d103-5f77-d38a24afaef6@kdbg.org>
+Date:   Thu, 14 Feb 2019 19:42:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <xmqqwom39uwz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190214082258.3mh3hcr2l6dl3wuf@vireshk-i7>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 13, 2019 at 02:37:48PM -0800, Junio C Hamano wrote:
-> William Hubbs <williamh@gentoo.org> writes:
->=20
-> > I am writing back onn this thread because I'm not quite sure of the
-> > status. v5 of the patch seemed ok, but there were some changes discussed
-> > that would have created a v6. The v6 changes though were never really
-> > clear. I'm not sure whether I am supposed to be doing something more or
-> > whether I'm waiting for you. ;-)
-> >
-> > Can you write back and let me know?
->=20
-> In general, unless I ask you to wait, a contributor would almost
-> never be waiting for me.
->=20
-> I think =C6var's v6 was not up to par, but I thought that v5 from you
-> (which is in 'next') was good enough to cook in 'next'.  The topic
-> will not be moving out of 'next' until the final 2.21 is released
-> anyway, so if anything, I'd say the ball is in his court to update
-> his version after the release, when your v5 may have a chance to be
-> kicked out of 'next' and replaced _if_ there is a better version by
-> then.
+Am 14.02.19 um 09:22 schrieb Viresh Kumar:
+> Hello,
+> 
+> I am not sure if it is a bug or not, but the output I got wasn't what
+> I was looking for. And so looking for some help. I was looking to send
+> pull request [1] to PM maintainer and was generating the request
+> against his tree [2], which already has kernel upto v5.0-rc6 merged in
+> it.
+> 
+> These are my local branches:
+> 
+> Branch A:
+> 
+> 55538fbc79e9 cpufreq: qcom: Read voltage LUT and populate OPP
+> f896d06665ec cpufreq: qcom-hw: Move to device_initcall
+> 1c7fc5cbc339 (tag: v5.0-rc2) Linux 5.0-rc2
+> 
+> Branch B:
+> 
+> a4f342b9607d PM / OPP: Introduce a power estimation helper
+> 285881b51eb5 PM / OPP: Remove unused parameter of _generic_set_opp_clk_only()
+> bfeffd155283 (tag: v5.0-rc1) Linux 5.0-rc1
+> 
+> pm/linux-next branch already has Branch B merged in it (with an
+> earlier pull request).
+> 
+> Branch C (7c139d3f0f99) is a merge of Branch A and Branch B. When I
+> try to generate diff-stat with:
+> 
+> git diff -M --stat pm/linux-next..7c139d3f0f99
+> 
+> It shows me the diffstat between v5.0-rc1..v5.0-rc2 as well.
+> 
+> If I do
+> 
+> git diff -M --stat v5.0-rc2..7c139d3f0f99
+> 
+> it shows only the files that have changed in patches in branch A and
+> B.
+> 
+> Since pm/linux-next already has Branch B and all the rcs upto rc6, I
+> was expecting the output of first diffstat to be similar to second one
+> (without branch B stuff). Is the expectation incorrect ?
 
-Thanks much for the update. I didn't realize that v5 was in next.
+Yes, I think your expectation is incorrect.
 
-William
+The meaning of .. is different between diff and the log commands. For
+diff it is mostly just noise, that is your first diff command is
+actually equivalent to
 
+  git diff -M --stat pm/linux-next 7c139d3f0f99
+
+It is quite obvious IMO that this is the diff between two end points.
+What you most likely wanted to see is
+
+  git diff -M --stat pm/linux-next...7c139d3f0f99
+
+It shows the diff between a merge base of the two revisions and the
+second one, i.e. between a where Branch C branched off of pm/linux-next
+and its tip.
+
+-- Hannes
