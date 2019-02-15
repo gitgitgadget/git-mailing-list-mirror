@@ -2,91 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6274D1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 17:51:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D8501F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 17:57:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730107AbfBORv2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 12:51:28 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39081 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728951AbfBORv1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 12:51:27 -0500
-Received: by mail-wr1-f66.google.com with SMTP id l5so10148452wrw.6
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 09:51:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=sHWwglW8lkbirSsC1HadayZtcu2jQvdAeX6URLVsw/0=;
-        b=A6gaISVlju37Ufyahl1jyBbTpxYrI0IxXC3xd+UvWyMXKj109xn7xCO9RqNAgNHRrB
-         sB8RTfQJXZip8nxVmQsnc9YFrtJCYeTnPurSLFzNbiZCJ5uxyaJzKA7OpQEfmiyWomw6
-         0PxMLtFXwxwz6uON3TFOrSBXpgs0E6kHIcAB+NdX85lj4m50V2jRfga79VB/adlJrT+E
-         YRhbIog4/bvBTYgRjsJB6t5WMoMODzov1G9+WS0uNjLZ1Bj777aJqaSm6eKylxoCE/Ox
-         88aM4ts48MdNXStSzhuEzCKuiKhkS6IvMl39k0yj199eWwEUlvJOf1k4TL/XuYEvFyEL
-         8U2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=sHWwglW8lkbirSsC1HadayZtcu2jQvdAeX6URLVsw/0=;
-        b=c6pPsWx4cAKLk1yXYHx5Kvacz0JqxCuxJcEg8rpoXi3D8WgfQe8p3RVWJyNnigVuoz
-         RPJmKaLGxUrudcSdG3Cp+08IG+r4YlQu+ioW8v24x0+7QmC4BZEZ6vmee1LE1FNQ49iG
-         +Rotcef4JCuLUNcEr83bwgcnTGb1x+u7F4eso3BOJ/57LEtEbzKUDCriRcrad9klekP2
-         VSpyWbKKn0yd9THb7MEV2akz2iaNPIXqjOkFtIOVVDIXL8GrXBQzoYAnqaVBNANJL+q3
-         xYAo44f1ZX7bUK+OHf5v/kdIlplNAijnvMM4eG8bAHSTLjaN0/bVzKOg/xE6UfBq3JDL
-         eDxg==
-X-Gm-Message-State: AHQUAuYyiFxkFOH3Q26mKUMOmHYQzAHNQrDIbT5ZQTb4dhfEkM0x3GOq
-        uDq01YU4INv3rOofkyHIWSU=
-X-Google-Smtp-Source: AHgI3IbcChy8vVi9Ot/RhuIk+Jhhc+di+1n/JlNf8hWjbiyh0r2PC0Pp8qN4OvZ/fyYvxkaZ2GI2hg==
-X-Received: by 2002:adf:fa51:: with SMTP id y17mr8085863wrr.233.1550253085644;
-        Fri, 15 Feb 2019 09:51:25 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v196sm6999312wmf.15.2019.02.15.09.51.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Feb 2019 09:51:24 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Re* [Breakage] 2.20.0-rc0 t1404: test_i18ngrep reports 1 instead of 0 on NonStop in one case
-References: <000801d4c174$05b76860$11263920$@nexbridge.com>
-        <CACsJy8Bn+2zY6y_QqCjbB3qWM-F=3d0H5vgWj4az=md2FZ8RhA@mail.gmail.com>
-        <xmqqftsughks.fsf@gitster-ct.c.googlers.com>
-        <20190212002705.GD13301@sigill.intra.peff.net>
-        <xmqqef8a86sr.fsf_-_@gitster-ct.c.googlers.com>
-        <CAN0heSooOiJkkfr=sKn+dkMmU9knabeTnY90EJyEu2fNT8XMzw@mail.gmail.com>
-Date:   Fri, 15 Feb 2019 09:51:23 -0800
-In-Reply-To: <CAN0heSooOiJkkfr=sKn+dkMmU9knabeTnY90EJyEu2fNT8XMzw@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Fri, 15 Feb 2019 07:08:45
- +0100")
-Message-ID: <xmqqwom1549w.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729858AbfBOR5p (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 12:57:45 -0500
+Received: from siwi.pair.com ([209.68.5.199]:33954 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728956AbfBOR5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 12:57:45 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id E5A903F4024;
+        Fri, 15 Feb 2019 12:57:44 -0500 (EST)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id BB1BC3F4022;
+        Fri, 15 Feb 2019 12:57:44 -0500 (EST)
+Subject: Re: [PATCH v6 02/15] trace2: create new combined trace facility
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.108.v5.git.gitgitgadget@gmail.com>
+ <pull.108.v6.git.gitgitgadget@gmail.com>
+ <6bad326bbd27426845734d08428e6987a75d9ad9.1549473350.git.gitgitgadget@gmail.com>
+ <87y36hnit9.fsf@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <e7be277a-169d-f759-dc14-4ea0e7768c89@jeffhostetler.com>
+Date:   Fri, 15 Feb 2019 12:57:43 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:65.0) Gecko/20100101
+ Thunderbird/65.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <87y36hnit9.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
 
-> On Fri, 15 Feb 2019 at 03:13, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Subject: [PATCH] t1404: do not rely on the exact phrasing of strerror()
->>
->> Not even in C locale, it is wrong to expect that the exact phrasing
->> "File exists" is used to show EEXIST.
->
-> s/Not even/Even/? Or s/wrong to expect that/portable to rely on/, or
-> something?
 
-Thanks for catching. Negation is not my forté.
+On 2/15/2019 11:00 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Feb 06 2019, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> +	sa.sun_family = AF_UNIX;
+>> +	strlcpy(sa.sun_path, path, sizeof(sa.sun_path));
+>> +	if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1 ||
+>> +	    connect(fd, (struct sockaddr *)&sa, sizeof(sa)) == -1) {
+>> +		if (tr2_dst_want_warning())
+>> +			warning("trace2: could not connect to socket '%s' for '%s' tracing: %s",
+>> +				path, dst->env_var_name, strerror(errno));
+>> +
+>> +		tr2_dst_trace_disable(dst);
+>> +		return 0;
+>> +	}
+> 
+> Just curious, what do you use af_unix:* for? Is this provided by some
+> Windows emulation ?
+
+On the Mac, I want to send data to a server that only handles
+stream data.  I thought about making the prefix something like
+     "af_unix:stream:<path>"
+and then we could have the correpsonding dgram version too, but
+I didn't add that.
+
+I think I'll add this in the next re-roll.
+
+
+
+> On Linux with systemd, this does not work for logging to systemd's
+> /dev/log. You're opening the socket with SOCK_STREAM, but it needs
+> SOCK_DGRAM. I.e.:
+> 
+>      # fail
+>      echo '{"yay": "testing"}' | nc -U /dev/log
+>      # works
+>      echo '{"yay": "testing"}' | nc -uU /dev/log
+> 
+> So that gives something that'll "work" for "jounalctl -f", but on my
+> system ends up being munged to the invalid JSON:
+> 
+>      '{"yay"[PID]: "testing"}'.
+> 
+> I found, and this may be specific to the systemd/rsyslog setup on RedHat
+> I'm working with, that what /dev/log is expecting is a payload in the
+> syslog format: https://tools.ietf.org/html/rfc5424
+> 
+> So related to my question in
+> https://public-inbox.org/git/87a7iyk0r8.fsf@evledraar.gmail.com/ I
+> wonder what we should do about this. It seems the bare minimal thing
+> that's needed it some way to open a socket with SOCK_DGRAM, maybe we
+> should just do that unconditionally if the connect() fails with
+> EPROTOTYPE?
+> 
+> But it seems that for that to be useful for systemd we'd need to support
+> the syslog.h interface (so different from af_unix:*), or learn how to
+> write a standard syslog packet to an af_unix:* SOCK_DGRAM socket.
+> 
+> I guess we can start with just supporting that by hardcoding the ident &
+> LOG_* values to something sensible, e.g.:
+> 
+>    openlog("git", LOG_PID | (tr2_dst_want_warning() ? LOG_CONS : 0), LOG_USER);
+>    syslog(LOG_USER|LOG_DEBUG, message_or_json);
+>    closelog();
+> 
+> I can write the patches for this. As in the earlier message I'm just
+> looking for some context, whether this is stuff you have WIP already,
+> and whether you have any other/related ideas. Thanks.
+> 
+
+When I created the "af_unix:" prefix for Unix domain sockets, I thought
+we could later do other types of sockets if we wanted to.  The common
+theme being they just need an "fd".
+
+For syslog(), rather than changing the af_unix socket code, you could
+create a new Trace2 target.  For example, copy one of the existing
+targets:
+    trace2/tr2_tgt_normal.c that defines GIT_TR2
+    trace2/tr2_tgt_event.c that defines GIT_TR2_EVENT
+    trace2/tr2_tgt_perf.c that defines GIT_TR2_PERF
+and create:
+    trace2/tr2_tgt_syslog.c that defines GIT_TR2_SYSLOG.
+
+Then in tr2_tgt_syslog.c you have complete control of the formatting
+of the data you send to syslog().  You can omit fields as necessary.
+Or you can printf format it rather than JSON encode it.
+
+Then in trace2/tr2_dst.c add a parser for "syslog:<whatever>".
+All it has to do is set a bit so that tr2_dst_trace_want()
+returns true if you were able to openlog().
+
+Hope that helps,
+Jeff
+
 
