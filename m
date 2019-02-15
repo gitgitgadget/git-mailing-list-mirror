@@ -2,148 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE021F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 12:59:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CE1A1F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 13:02:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731861AbfBOM7k (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 07:59:40 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:32335 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726000AbfBOM7k (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 07:59:40 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1FCxZhI082939
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 15 Feb 2019 07:59:35 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Max Kirillov'" <max@max630.net>
-Cc:     "'Johannes Schindelin via GitGitGadget'" <gitgitgadget@gmail.com>,
-        <git@vger.kernel.org>, "'Junio C Hamano'" <gitster@pobox.com>
-References: <005b01d4c4bd$c5026ac0$4f074040$@nexbridge.com> <20190215034735.GF3064@jessie.local>
-In-Reply-To: <20190215034735.GF3064@jessie.local>
-Subject: RE: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1 (stack traces inside)
-Date:   Fri, 15 Feb 2019 07:59:29 -0500
-Message-ID: <000501d4c52e$4d485320$e7d8f960$@nexbridge.com>
+        id S2394839AbfBONCS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 08:02:18 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33602 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727303AbfBONCS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 08:02:18 -0500
+Received: by mail-wr1-f67.google.com with SMTP id i12so10302957wrw.0
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 05:02:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=ek5JG+VkYDSxQL/pbIY6T1gjw67iznOrCqV2OTZVJII=;
+        b=NWB3Hyib8r2e/ctnOkveoe414I28TidQwMB/1nH7EF3EzJnaHp+w9vZ10jZCGZ7iJa
+         5gt59Z449BnSsh072mtMRGVEwrMyx9+Wd/kNHFhJOMQ9C3KAw8eXFyRGmG1sa8LfEKVh
+         9Gz0zgnF5aoyii/T8fFJ7VAcKE2ezHhBvSyYmZhZvoho97/GH779m1Wjdzc6mjLUB6uh
+         Zi5FyjtBzUCM743XgkGLSV8dwswQb2ZM5QY8Os2DLchnFKbHNRWxpNQ5JQkNwfrNeKv4
+         GFri6ucGos51zup5hsygt6yRxqiI1rdOAJF/AOVJwgyz/RA5ICxM7eP498uYuFx8KSUI
+         E3BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ek5JG+VkYDSxQL/pbIY6T1gjw67iznOrCqV2OTZVJII=;
+        b=TW+Ymvs+9XeE6Os3dffVxKQfQD2bEIW7H/J565vop8JTyZ51Wjf1Z8MSxsqEyZbyW8
+         3T9Vl2f/0QQasSZgL4t5MXHUHkU+e1dnYvqRZV3asChfib2z59HrWjxEAPP3ynQ+o03t
+         HJJf54hPgtefuKPWHtbGv8LyX0JfVj23R6i9RMFAUhZRfnmSQcnloDjJNCDcyX3SIBAP
+         3zAe7uj4f4sPByJLIlwvtMzjI7KByaZmiF9gP3ozzjr7oIxjRBT6yldtfFP/bHz8MaNF
+         3tfG4le3nvolY4IgMYzLPXFocMQ3zZ6/WN8JmcQ/RjO+/gNAUlMufqzQp/0HlJfG3Nze
+         i6zg==
+X-Gm-Message-State: AHQUAubUlzMwjDRk7TQYuNlDFU8aDjBSr5+I+o117/gw6c/d1+T5W+NL
+        A+KONmdfgeHC9AJKb190q75PJDKs
+X-Google-Smtp-Source: AHgI3IYZj9xFncLgRikcCNyzksG2uuo2CPIQAxoR2rrRucJkYJp2vzz0zFE1bMTyEpNwUQhcmcXhow==
+X-Received: by 2002:adf:fd46:: with SMTP id h6mr6697302wrs.170.1550235736680;
+        Fri, 15 Feb 2019 05:02:16 -0800 (PST)
+Received: from szeder.dev (x4db90347.dyn.telefonica.de. [77.185.3.71])
+        by smtp.gmail.com with ESMTPSA id v19sm8502054wmj.36.2019.02.15.05.02.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 15 Feb 2019 05:02:15 -0800 (PST)
+Date:   Fri, 15 Feb 2019 14:02:13 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+        'Max Kirillov' <max@max630.net>
+Subject: Re: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results)
+Message-ID: <20190215130213.GK1622@szeder.dev>
+References: <001501d4c476$a94651d0$fbd2f570$@nexbridge.com>
+ <nycvar.QRO.7.76.6.1902142234070.45@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQH9MiVJPzLpq3Vmc5HKmzZ3bio30wKnWVq4pXq8qfA=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1902142234070.45@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 14, 2019 22:48, Max Kirillov wrote:
-> To: Randall S. Becker <rsbecker@nexbridge.com>
-> Cc: 'Max Kirillov' <max@max630.net>; 'Johannes Schindelin via
-GitGitGadget'
-> <gitgitgadget@gmail.com>; git@vger.kernel.org; 'Junio C Hamano'
-> <gitster@pobox.com>
-> Subject: Re: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1
-(stack
-> traces inside)
+On Thu, Feb 14, 2019 at 10:36:42PM +0100, Johannes Schindelin wrote:
+> On Thu, 14 Feb 2019, Randall S. Becker wrote:
 > 
-> On Thu, Feb 14, 2019 at 06:33:56PM -0500, Randall S. Becker wrote:
-> > Here is the full set of traces (from subtest 6, which just hung).
-> > There are no I/O errors reported on any pipe or file descriptor. There
-> > is one git process waiting for a read to occur but no one is doing any
-> > writing. Most processes are sitting in waitpid, except for the
-> > initiating git, which is waiting on a read that never receives data, so
-> everyone is asleep and hung.
-> > The git process sitting in read is reading from a PIPE, not a file.
-> >
-> > There are no other processes involved in the test that I can see.
-> >
-> > Perl (waiting for output to be read):
-> >   waitpid + 0x130 (SLr)
-> >   $n_EnterPriv + 0x280 (Milli)
-> >   Perl_wait4pid + 0x130 (UCr)
-> >   Perl_my_pclose + 0x4C0 (UCr)
-> >   Perl_io_close + 0x180 (UCr)
-> >   Perl_do_close + 0x620 (UCr)
-> >   Perl_pp_close + 0xA70 (UCr)
-> >   Perl_runops_standard + 0xF0 (UCr)
-> >   S_run_body + 0x870 (UCr)
-> >   perl_run + 0x2D0 (UCr)
-> >   main + 0x3D0 (UCr)
-> >
-> > git-http-backend:
-> >   waitpid + 0x320 (SLr)
-> >   $n_EnterPriv + 0x280 (Milli)
-> >   cleanup_children + 0x5D0 (UCr)
-> >   cleanup_children_on_exit + 0x70 (UCr)
-> >   git_atexit_dispatch + 0x200 (UCr)
-> >   __process_atexit_functions + 0xA0 (DLL zcredll)
-> >   CRE_TERMINATOR_ + 0xB50 (DLL zcredll)
-> >   exit + 0x2A0 (DLL zcrtldll)
-> >   die_webcgi + 0x240 (UCr)
-> >   die_errno + 0x360 (UCr)
-> >   write_or_die + 0x1C0 (UCr)
-> >   end_headers + 0x1A0 (UCr)
-> >   die_webcgi + 0x220 (UCr)
-> >   die + 0x320 (UCr)
-> >   inflate_request + 0x520 (UCr)
-> >   run_service + 0xC20 (UCr)
-> >   service_rpc + 0x530 (UCr)
-> >   cmd_main + 0xD00 (UCr)
-> >   main + 0x190 (UCr)
-> >
-> > git (one of them):
-> >   read64_ + 0x140 (SLr)
-> >   $n_EnterPriv + 0x280 (Milli)
-> >   xread + 0x130 (UCr)
-> >   read_in_full + 0x130 (UCr)
-> >   get_packet_data + 0x4B0 (UCr)
-> >   packet_read_with_status + 0x230 (UCr)
-> >   packet_reader_read + 0x310 (UCr)
-> >   receive_needs + 0x300 (UCr)
-> >   upload_pack + 0x680 (UCr)
-> >   cmd_upload_pack + 0x830 (UCr)
-> >   run_builtin + 0x980 (UCr)
-> >   handle_builtin + 0x570 (UCr)
-> >   run_argv + 0x210 (UCr)
-> >   cmd_main + 0x710 (UCr)
-> >   main + 0x190 (UCr)
-> >
-> > bash:
-> >   waitpid + 0x130 (SLr)
-> >   $n_EnterPriv + 0x280 (Milli)
-> >   waitchld + 0x1F0 (UCr)
-> >   wait_for + 0xFD0 (UCr)
-> >   execute_command_internal + 0x1990 (UCr)
-> >   execute_command + 0xC0 (UCr)
-> >   reader_loop + 0x4F0 (UCr)
-> >   main + 0x1140 (UCr)
-> >
-> > git (the other one):
-> >   waitpid + 0x130 (SLr)
-> >   $n_EnterPriv + 0x280 (Milli)
-> >   wait_or_whine + 0xE0 (UCr)
-> >   finish_command + 0x100 (UCr)
-> >   run_command + 0x1F0 (UCr)
-> >   execv_dashed_external + 0x800 (UCr)
-> >   run_argv + 0x250 (UCr)
-> >   cmd_main + 0x710 (UCr)
-> >   main + 0x190 (UCr)
+> > t5562 still hangs (blocking) - this breaks our CI pipeline since the
+> > test hangs and we have no explanation of whether the hang is in git or
+> > the tests.
 > 
-> This list does not say which process whose child but it seems like #3 is
-child of
-> #2 and #2 waits for #3, but #3 does not exit. Which is strange because it
-> should have send SIGTERM to it. Could the git-upload-pack somehow be
-> masking SIGTERM?
+> I have "good" news: it now also hangs on Ubuntu 16.04 in Azure Pipelines'
+> Linux agents.
 
-SIGTERM cannot be masked or easily caught on the platform, so I don't think
-that's it. waitpid fails if the supplied pid is invalid, so it's not that
-either. However, I am not certain SIGPIPE is raised if a waited read is
-posted on a different pipe.
+I haven't yet seen that hang in the wild and couldn't reproduce it on
+purpose, but there is definitely something fishy with t5562 even on
+Linux and even without that perl generate_zero_bytes helper.
 
+  $ git checkout cc95bc2025^
+  Previous HEAD position was cc95bc2025 t5562: replace /dev/zero with a pipe from generate_zero_bytes
+  HEAD is now at 24b451e77c t5318: replace use of /dev/zero with generate_zero_bytes
+  $ make
+  <snip>
+  $ cd t
+  # take note of the shell's PID
+  $ echo $$
+  15522
+  $ ./t5562-http-backend-content-length.sh --stress |tee LOG
+  OK    3.0
+  OK    1.0
+  OK    6.0
+  OK    0.0
+  <snap>
+
+And then in another terminal run this:
+
+  $ pstree -a -p 15522
+
+or, to make it easier noticable what changed and what stayed the same:
+
+  $ watch -d pstree -a -p 15522
+
+The output will sooner or later will look like this:
+
+  bash,15522
+    └─t5562-http-back,21082 ./t5562-http-backend-content-length.sh --stress
+        ├─t5562-http-back,21089 ./t5562-http-backend-content-length.sh --stress
+        │   └─sh,24906 ./t5562-http-backend-content-length.sh --stress
+        ├─t5562-http-back,21090 ./t5562-http-backend-content-length.sh --stress
+        │   └─sh,26660 ./t5562-http-backend-content-length.sh --stress
+        ├─t5562-http-back,21092 ./t5562-http-backend-content-length.sh --stress
+        │   └─sh,4202 ./t5562-http-backend-content-length.sh --stress
+        │       └─sh,5696 ./t5562-http-backend-content-length.sh --stress
+        │           └─perl,5697 /home/szeder/src/git/t/t5562/invoke-with-content-length.pl push_body.gz.trunc git http-backend
+        │               └─(git,5722)
+        ├─t5562-http-back,21093 ./t5562-http-backend-content-length.sh --stress
+        │   └─sh,25572 ./t5562-http-backend-content-length.sh --stress
+  <snip>
+
+It won't show most of the processes run in the tests, because they are
+just too fast and short-lived.  However, occasionally it does show a
+stuck git process, which is shown as <defunct> in regular 'ps aux'
+output:
+
+  szeder   5722  0.0  0.0      0     0 pts/16   Z+   13:36   0:00 [git] <defunct>
+
+Note that this is not a "proper" hang, in the sense that this process
+is not stuck forever, but only for about 1 minute, after which it
+disappears, and the test continues and eventually finishes with
+success.  I've looked into the logs of a couple of such stuck jobs,
+and it seems that it varies in which test that git process happened to
+get stuck.
+
+
+ 
