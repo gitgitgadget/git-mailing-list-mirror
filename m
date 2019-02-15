@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF0FF1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 15:49:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0867F1F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 15:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387633AbfBOPtZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 10:49:25 -0500
-Received: from mail-qt1-f171.google.com ([209.85.160.171]:43061 "EHLO
-        mail-qt1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726214AbfBOPtZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 10:49:25 -0500
-Received: by mail-qt1-f171.google.com with SMTP id y4so11316025qtc.10
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 07:49:24 -0800 (PST)
+        id S2387693AbfBOPt3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 10:49:29 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:34088 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726214AbfBOPt1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 10:49:27 -0500
+Received: by mail-qk1-f193.google.com with SMTP id a15so5974381qkc.1
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 07:49:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=s/0cvxAKMsdwQaYj9X5pJKCdPorZdzB1E8vwY9Q1HNM=;
-        b=aQjW8jKA+2CdP4NLAe2wuYjqZWTtdtaUmLrAoj4h9uYop8G/taEI/AlJ8g+Tr5PeYg
-         Pu41g+FcAs5AwP3j9oisC/YLnegpg/1XYlA+3WNN7zsu1vnPpdzclXzCxp7ValtsCgw9
-         Tn0/paJC5YFzOGPqdnAIYmUplzGUHRvd+ugPGF3lb2NP5qqw9g4O0U+oqi5RpSV8M6e/
-         U5A5EeRP74v2tP7mo71x8zhSz4QS+4Nz6Z3nRC0nEnmi6X/y9dpopf2H8/nqu0mw+39H
-         o30uwHQpshKwhSKanh8PNVxkR2MR56jVWiD4xi+8BtWdO8ZM5d/3HmdTR9K3DigChvy7
-         RbhQ==
+        bh=yov/dNM3pt+9nYJHrPxxu1ONryOl4ApLkhBhrnkGLO4=;
+        b=COzmX80bwFWOZ65C87AdB4F/acCeVUlP/LMmaZtfXQQScEc54dCmJltAHrpa99NtJC
+         fgVJnXRR/WM5O32xWkbXvhmWwAF7KGAn7snEZMMtPY1/4urOLkFaxR3ta47K5vbR/TG1
+         Lxs+DcVhMZ4ABQ/4NI8lPBDLNHG7m57ivSGx1qypT1pFoJnhd1Ir+rzBgG2kYFxooreq
+         Z7oP1OoW1tjo5lhxPdu74k/mDQ4jG7tWF6LOrudScBVYuDxIRo0QIbADyfGxRwGx6CNi
+         orM3PXHC629K4OC9ksSBn40LewDeqCh7IPx0Njg7b79+uWTHu7MWrtG3AVldJ5s3wP8z
+         RK/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=s/0cvxAKMsdwQaYj9X5pJKCdPorZdzB1E8vwY9Q1HNM=;
-        b=AV99vLg65FzqdG1A1eh0xFpBo4jfOK+Jls7bFVvLt/9bDYdGAIOgTLJs6Pw6vvULwQ
-         2nNeqVrFB+iaPZiyAelpVIy6kDcSMJubaSDqbKLtByvOjfDxCvC0L7YuUZ0Fx8IhywP2
-         qDl+faBXrHm9y7JWfMwCvtvwTBOl1FXBlDAjlL2+lkVrTVcX/vgzD7NhVgDz0y7zfDSL
-         q84e4tPLkmW6/QV/b7ZTWnAfMGxE2PrVDqX3k+MzzDvBlNmMc/2knUdT83xHwQyoV28Q
-         C7zJtCdt8OcJkQJcqcC9RNn2meczSiqEP8/rCoDfzRTfAuotFTXUqmJnOKEQbZ7xDLGt
-         hBuA==
-X-Gm-Message-State: AHQUAubBsxtSVxhc5TwzXlbOI1PLHb4Ivprapl0iCJHgFFis1Bwoonam
-        KKSmPFcGrTw/So13hJN1E4hruvmBtC4=
-X-Google-Smtp-Source: AHgI3Ibk5RYWNxU03kUVf6mHelNtF2pY+c5tyw1x/gIlpQqIGE5KSGz6+BXovWQsERK3o2QHaOoUAg==
-X-Received: by 2002:a0c:d963:: with SMTP id t32mr1345214qvj.231.1550245763789;
-        Fri, 15 Feb 2019 07:49:23 -0800 (PST)
+        bh=yov/dNM3pt+9nYJHrPxxu1ONryOl4ApLkhBhrnkGLO4=;
+        b=bYEsyvfFoL98o63pepN+8Me/adYmBPzVuSd3C4JNKFY0l+JLIxF3vY+t6QD1+HwWqS
+         D6SWsKD/kau7Br8k6jGVk08zU9VamSbjK9C3X5b/dI12SgPnBdSKV56VfQow7OmsHaiv
+         294h5UbYzKWIpbwfXzXcwMFel8CgLrFza1h2xtuq9G+btjivVAI4rZmXklCq+MNZhB2v
+         4PGT/94OVAzmp4BVkhlx35f+bUL3OKeeJ17xtQ1BKHykLHcdhc2LsGmCVofFrWEGVPW1
+         wh2WkMAOGPAE/AYynh5qR0SSw6reOlXL5t6z3wb4AHx8jjezptl1MzbUjzfvbkknLG/u
+         qACw==
+X-Gm-Message-State: AHQUAubW8FrLY4p+ZQjwYszh6HpgBVbhhpXegS+DIQJDwsRaPAGgMqYp
+        EBCVTV7lVfvUn56OmN1opFnp0EyHaQY=
+X-Google-Smtp-Source: AHgI3Ib/02geeqvCkTrHWvnhuf3mIuDkAIiYEGXSzk3tbTcWE8Im8M4XrDXNSofHV4iJEOG+UPwnYA==
+X-Received: by 2002:a37:4244:: with SMTP id p65mr7087550qka.185.1550245765644;
+        Fri, 15 Feb 2019 07:49:25 -0800 (PST)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::2])
-        by smtp.gmail.com with ESMTPSA id j6sm2909593qte.29.2019.02.15.07.49.22
+        by smtp.gmail.com with ESMTPSA id j6sm2909593qte.29.2019.02.15.07.49.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Feb 2019 07:49:23 -0800 (PST)
+        Fri, 15 Feb 2019 07:49:25 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC][PATCH 1/2] clone: extract function from copy_or_link_directory
-Date:   Fri, 15 Feb 2019 13:49:12 -0200
-Message-Id: <20190215154913.18800-2-matheus.bernardino@usp.br>
+Subject: [GSoC][PATCH 2/2] clone: use dir-iterator to avoid explicit dir traversal
+Date:   Fri, 15 Feb 2019 13:49:13 -0200
+Message-Id: <20190215154913.18800-3-matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190215154913.18800-1-matheus.bernardino@usp.br>
 References: <20190215154913.18800-1-matheus.bernardino@usp.br>
@@ -65,62 +65,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extract dir creation code snippet from copy_or_link_directory to its own
-function named mkdir_if_missing. This change will help removing
-copy_or_link_directory's explicit recursion, which will be done in patch
-"clone: use dir-iterator to avoid explicit dir traversal". Also makes
-code more readable.
+Replace usage of opendir/readdir/closedir API to traverse directories
+recursively, at copy_or_link_directory function, by the dir-iterator
+API.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/clone.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ builtin/clone.c | 39 +++++++++++++++++++--------------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 50bde99618..2a1cc4dab9 100644
+index 2a1cc4dab9..66ae347f79 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -392,6 +392,24 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
- 	fclose(in);
- }
- 
-+static void mkdir_if_missing(const char *pathname, mode_t mode)
-+{
-+	/*
-+	 * Create a dir at pathname unless there's already one.
-+	 */
-+	struct stat buf;
-+
-+	if (mkdir(pathname, mode)) {
-+		if (errno != EEXIST)
-+			die_errno(_("failed to create directory '%s'"),
-+				  pathname);
-+		else if (stat(pathname, &buf))
-+			die_errno(_("failed to stat '%s'"), pathname);
-+		else if (!S_ISDIR(buf.st_mode))
-+			die(_("%s exists and is not a directory"), pathname);
-+	}
-+}
-+
+@@ -23,6 +23,8 @@
+ #include "transport.h"
+ #include "strbuf.h"
+ #include "dir.h"
++#include "dir-iterator.h"
++#include "iterator.h"
+ #include "sigchain.h"
+ #include "branch.h"
+ #include "remote.h"
+@@ -413,40 +415,33 @@ static void mkdir_if_missing(const char *pathname, mode_t mode)
  static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
  				   const char *src_repo, int src_baselen)
  {
-@@ -404,14 +422,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
- 	if (!dir)
- 		die_errno(_("failed to open '%s'"), src->buf);
+-	struct dirent *de;
+-	struct stat buf;
+ 	int src_len, dest_len;
+-	DIR *dir;
+-
+-	dir = opendir(src->buf);
+-	if (!dir)
+-		die_errno(_("failed to open '%s'"), src->buf);
++	struct dir_iterator *iter;
++	int iter_status;
  
--	if (mkdir(dest->buf, 0777)) {
--		if (errno != EEXIST)
--			die_errno(_("failed to create directory '%s'"), dest->buf);
--		else if (stat(dest->buf, &buf))
--			die_errno(_("failed to stat '%s'"), dest->buf);
--		else if (!S_ISDIR(buf.st_mode))
--			die(_("%s exists and is not a directory"), dest->buf);
--	}
-+	mkdir_if_missing(dest->buf, 0777);
+ 	mkdir_if_missing(dest->buf, 0777);
  
++	iter = dir_iterator_begin(src->buf);
++
  	strbuf_addch(src, '/');
  	src_len = src->len;
+ 	strbuf_addch(dest, '/');
+ 	dest_len = dest->len;
+ 
+-	while ((de = readdir(dir)) != NULL) {
++	while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
+ 		strbuf_setlen(src, src_len);
+-		strbuf_addstr(src, de->d_name);
++		strbuf_addstr(src, iter->relative_path);
+ 		strbuf_setlen(dest, dest_len);
+-		strbuf_addstr(dest, de->d_name);
+-		if (stat(src->buf, &buf)) {
+-			warning (_("failed to stat %s\n"), src->buf);
+-			continue;
+-		}
+-		if (S_ISDIR(buf.st_mode)) {
+-			if (de->d_name[0] != '.')
+-				copy_or_link_directory(src, dest,
+-						       src_repo, src_baselen);
++		strbuf_addstr(dest, iter->relative_path);
++
++		if (S_ISDIR(iter->st.st_mode)) {
++			if (iter->basename[0] != '.')
++				mkdir_if_missing(dest->buf, 0777);
+ 			continue;
+ 		}
+ 
+ 		/* Files that cannot be copied bit-for-bit... */
+-		if (!strcmp(src->buf + src_baselen, "/info/alternates")) {
++		if (!strcmp(iter->relative_path, "info/alternates")) {
+ 			copy_alternates(src, dest, src_repo);
+ 			continue;
+ 		}
+@@ -463,7 +458,11 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+ 		if (copy_file_with_time(dest->buf, src->buf, 0666))
+ 			die_errno(_("failed to copy file to '%s'"), dest->buf);
+ 	}
+-	closedir(dir);
++
++	if (iter_status != ITER_DONE) {
++		strbuf_setlen(src, src_len);
++		die(_("failed to iterate over '%s'"), src->buf);
++	}
+ }
+ 
+ static void clone_local(const char *src_repo, const char *dest_repo)
 -- 
 2.20.1
 
