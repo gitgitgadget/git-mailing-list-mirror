@@ -2,117 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A991B1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 09:26:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB3231F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 10:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732309AbfBOJ0q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 04:26:46 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:39102 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731311AbfBOJ0o (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 04:26:44 -0500
-Received: by mail-pl1-f194.google.com with SMTP id 101so4674029pld.6
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 01:26:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7j6iNDDugy7n7zn3WqqOh6zjeI9jZ1cvihu4a5oM+N0=;
-        b=AnciH5iIQCIbf3LWSFdh1n8+ms/hm07Z9K778qCHsDri/toCFULP3TE+Ga8BtUj7M8
-         3UElqZrN5nwEGQOZwzMdURIA3WcXrLYOjI6o9ZvdycfsVv91Ec8VVJnX4gQ7FQZ7C9C1
-         BuxJ4dPSgiNpdWGlYch71zk1mzuU/9qCcRZIWYke3MutD/Umewo4m+0AbpKzweyPexhQ
-         1BQW4KWIxJDuXjuCJb5wZTQy9b6wM+NFc2nyYmB8H1DF7dfX5fzUc+6jYYL5KYyBIRlE
-         DTjzmiizr2gtdHGvbDMecORqj2r437Y39kSvyhwkRM/KjYr8TUWdWqihbiyNyr60v41T
-         bScg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7j6iNDDugy7n7zn3WqqOh6zjeI9jZ1cvihu4a5oM+N0=;
-        b=fBtkD11tOs315EkQPpreEcaVZJYwqLntkM7VUvFd7SYuLTduBV5spHyOfhm9o/1D6F
-         Yu/dAjltcwxR7ej/vlDcwG0KW/ZHJ8PiCsqF5FCHdXqP3EyCPuvMeO2MDwrm/Tl5DXL1
-         Lf3BpctW6b8aEsa8vX6EKVPwaPbDKVgXKjS2AUVjpn6qpDmFRNydVykR0jZM3Hh3lruw
-         veEGJ4fffTumHcjOSUTw8Sgog2gAzquaprYxGclX68MgPxAtM5I/CNo6XEi1wnvRHSvr
-         JFRncpamQCSWANlpD4eS7tDNFzY0uhGQ2p3atx4pHyBvTL5dR71JyT8GjmazF+eHLP+e
-         213Q==
-X-Gm-Message-State: AHQUAuZWBewO11PDrTMsiTS3HHpqsHyuiOZ2krhCJQABSVZTYcR4EtEu
-        0J79Cl9hCQWroRNMEUp0LOPD5H9F
-X-Google-Smtp-Source: AHgI3IYKApPcGgXZLLuhEp2IzoEk3Zs8h81kq2E7XM/K/0QIrSdAQ7LN0MwIwgGxx/6exlp3ZvSZpA==
-X-Received: by 2002:a17:902:2966:: with SMTP id g93mr8952359plb.11.1550222803281;
-        Fri, 15 Feb 2019 01:26:43 -0800 (PST)
-Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id z186sm6754757pfz.119.2019.02.15.01.26.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Feb 2019 01:26:42 -0800 (PST)
-Date:   Fri, 15 Feb 2019 01:26:41 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Cc:     pclouds@gmail.com, gitster@pobox.com
-Subject: [PATCH v3 1/1] submodule: document default behavior
-Message-ID: <bc9088f23c0e9d4feedf9b2cc47cf6e6c34cefb2.1550222580.git.liu.denton@gmail.com>
-References: <cover.1549965172.git.liu.denton@gmail.com>
- <cover.1550222580.git.liu.denton@gmail.com>
+        id S2389384AbfBOK6g (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 05:58:36 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:23443 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388545AbfBOK6g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 05:58:36 -0500
+Received: from [192.168.1.12] ([92.29.15.245])
+        by smtp.talktalk.net with SMTP
+        id ubCQg5JjFj87fubCQgFDuJ; Fri, 15 Feb 2019 10:58:33 +0000
+X-Originating-IP: [92.29.15.245]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=NrWvjPVJ c=1 sm=1 tr=0 a=9anTPZJWX8pnfAL1p5p6vw==:117
+ a=9anTPZJWX8pnfAL1p5p6vw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=5rxgeBVgAAAA:8 a=mLKua8RHAAAA:8 a=PpF-6VckHHuDRBiebi8A:9 a=QEXdDO2ut3YA:10
+ a=_xDNj3R8C6EA:10 a=PwKx63F5tFurRwaNxrlG:22 a=ewTM_9iNE6a0vsrYD_ou:22
+Subject: Re: How to get next commit that just after a specified commit
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>, git@vger.kernel.org
+References: <87mun0j9vv.fsf@evledraar.gmail.com>
+ <xmqqimxnbdfq.fsf@gitster-ct.c.googlers.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <fbf09f23-6f9c-2353-2416-8c2a12f9cf48@iee.org>
+Date:   Fri, 15 Feb 2019 10:58:31 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1550222580.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+In-Reply-To: <xmqqimxnbdfq.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfBtQWxIb4Iy0ZDTdWBMxR74kj5n79DzQ8jGgy1NvUs63yPcBKKKcRwCjCW/qA6fJ9pYDKx6L6fo6KI4c9MZMH+vKg/urdKgCpU/IePUqzjuc7y4oO7w2
+ nfNmSOznAkVlVSjID00luR7jyTHQqRXFG3ywtRRgaVyXgSKHLZCIeNz4ZPB9X0vCXjDsD4OpWKND7L92oUNBb7FbczMyeDf2i4PlIPArHJpKATHWCD6eng/L
+ 3VKDPoCfFLsrPjbm0yVbBvO+q7MDZFDxUrXrGwlkhJo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-submodule's default behavior wasn't documented in both git-submodule.txt
-and in the usage text of git-submodule. Document the default behavior
-similar to how git-remote does it.
+On 13/02/2019 21:12, Junio C Hamano wrote:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+>> (Replying to
+>> https://public-inbox.org/git/383c14cc.9289.168e61d39e8.Coremail.wuzhouhui14@mails.ucas.ac.cn/
+>> which curiously I can see there, but not in my inbox (or spam))
+>>
+>> Git's data format doesn't make it easy to find "C" given "B" in a commit
+>> chain like A->B->C (also there could be any number of "C"
+>> successors). We need to walk the graph. This shows how to do it:
+>>
+>> https://sqlite.org/whynotgit.html#git_makes_it_difficult_to_find_successors_descendents_of_a_check_in
+> Of course, the history is not necessarily linear.  Even though you
+> *MUST* know all your parents before having a commit (which means
+> that when you ask "what came before this commit", there is a
+> definitive answer that everybody in the world would agree on), you
+> by definition cannot know all the commits that are children of a
+> commit (simply because somebody else may be creating a new one), so
+> the question "what's the next commit" does not make any sense from
+> that point of view ;-)
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/git-submodule.txt | 4 ++++
- git-submodule.sh                | 3 ++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+It will also depend on which heads (branches) one wishes to trace back 
+from, or even know about. I'd expect that the default would just be the 
+current branch (head) which would definitely limit the potential commit 
+list.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index ba3c4df550..2794e29780 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -9,6 +9,7 @@ git-submodule - Initialize, update or inspect submodules
- SYNOPSIS
- --------
- [verse]
-+'git submodule' [--quiet] [--cached]
- 'git submodule' [--quiet] add [<options>] [--] <repository> [<path>]
- 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
- 'git submodule' [--quiet] init [--] [<path>...]
-@@ -28,6 +29,9 @@ For more information about submodules, see linkgit:gitsubmodules[7].
- 
- COMMANDS
- --------
-+With no arguments, shows the status of existing submodules.  Several
-+subcommands are available to perform operations on the submodules.
-+
- add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]::
- 	Add the given repository as a submodule at the given path
- 	to the changeset to be committed next to the current
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5e608f8bad..1ccc758e79 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -5,7 +5,8 @@
- # Copyright (c) 2007 Lars Hjemli
- 
- dashless=$(basename "$0" | sed -e 's/-/ /')
--USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
-+USAGE="[--quiet] [--cached]
-+   or: $dashless [--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
--- 
-2.20.1.522.gd8785cdd01
+--
+
+Philip
 
