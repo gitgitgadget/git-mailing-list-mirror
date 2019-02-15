@@ -2,440 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE6AB1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 17:59:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57AB21F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 18:03:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730035AbfBOR7c (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 12:59:32 -0500
-Received: from mail-qt1-f182.google.com ([209.85.160.182]:44933 "EHLO
-        mail-qt1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729256AbfBOR7c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 12:59:32 -0500
-Received: by mail-qt1-f182.google.com with SMTP id n32so11813394qte.11
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 09:59:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IwCWcRnqdEJ9e1uCZZLtG8O84OWqYhfR9gygYAxiI44=;
-        b=D6IQDDa9aLIMN0PY8moRA8Bwogh6wks3dDPioFFKM9SQIdOxxvsNR/y3Ea37UTOqh3
-         aS67bzO10Gba2If04YH/iPdinMJRAWF+udm/atV5XQFKQtf8hmQ05Ngm+Ez/MD8pvyTe
-         Ubmbuzl/JoPZ0Rrur76dkVbufCcPkWut0YOtKGVIx97kjM+45DfZb7E430FvG5CjHDwT
-         GoyswssuCGLB8jBRv3f7p+6v632+lJDAOJNG+IB2hXwSnE3ZdLpIj9AZU5CjAm6d2Cy3
-         I47olK4jel0O2c0TRvEWQppnwWZH4KquvY9G8rsXrvTETIQ1wiyp4mD1G33CTe7KS44X
-         9A2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IwCWcRnqdEJ9e1uCZZLtG8O84OWqYhfR9gygYAxiI44=;
-        b=K1s6m5/yTDFo1YZZKESnNqeVKI4rFjet6ytxGkmj7zXCWau7q8cFpHD/jnKA0ftOmW
-         yvmAUoFu+cT20Nia+wz1x6gQ3R3pV2zdsHJcNgULXG0U9zUWUV8+3SqNEdBkWdiI/Tr1
-         IsjTXjPaggV/iMqaxV/6imlvOHuXwuoG4AcF7hm7PJ+R/lYrRUWQXajsRP1dzQvBISjE
-         oZDyuvZAYI/T3sfN0Np/sKR/wr4wqZdNgMicVi6WsRfADhmNK5T5v58gIF7gXQ4gFzDr
-         ZShmNxRXFKUvPT0kyXgaGSO+nsynHRxspkCSrgBfYhvd2ebAnF5HaB3DO75D0LIjY7Bx
-         exEQ==
-X-Gm-Message-State: AHQUAubSr74mUni6XWsm0oU6qDb+gh3ymU2XUvijFQAMA85qid36EJB4
-        vDVj9xfd7O7W9Yph7MzYLwI=
-X-Google-Smtp-Source: AHgI3IYDy8q7Qf2LnImGdHILBG9uDHd0Luf0lzoGkte25yoSkvr6c0VJZ8WqZHOon+CSSz+K4HVcGw==
-X-Received: by 2002:aed:3bb3:: with SMTP id r48mr8787075qte.278.1550253570408;
-        Fri, 15 Feb 2019 09:59:30 -0800 (PST)
-Received: from localhost.localdomain (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id p186sm3087612qkb.69.2019.02.15.09.59.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Feb 2019 09:59:29 -0800 (PST)
-From:   Ben Peart <peartben@gmail.com>
-To:     peartben@gmail.com
-Cc:     benpeart@microsoft.com, git@vger.kernel.org, kewillf@microsoft.com,
-        ramsay@ramsayjones.plus.com, gitster@pobox.com
-Subject: [PATCH v3] read-cache: add post-index-change hook
-Date:   Fri, 15 Feb 2019 12:59:21 -0500
-Message-Id: <20190215175921.13400-1-peartben@gmail.com>
-X-Mailer: git-send-email 2.20.1.windows.1
-In-Reply-To: <20190208195115.12156-1-peartben@gmail.com>
+        id S1731335AbfBOSC6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 13:02:58 -0500
+Received: from mail-eopbgr710118.outbound.protection.outlook.com ([40.107.71.118]:51264
+        "EHLO NAM05-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729065AbfBOSC5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 13:02:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=b3aSyZA9Dr5/bijHktZU+gUIXRhZ6xUFdlyWXm0iXow=;
+ b=gnC3iRX220iSd4z8d/8N9HOUi5a7vmo1aXMXANNJXMSGQ5DNTbWrlav4Uv/o0RPn5v2ertONe/xVb40ATIewYycxS3MANCD678lnkJOcaAoOQtBTXqz1BNkDDTL8GZcu91B3MIGioUSfFI2zU9xTvUnOO1rp9kuacCeI8k21mJs=
+Received: from BL0PR2101MB0914.namprd21.prod.outlook.com (52.132.23.151) by
+ BL0PR2101MB1073.namprd21.prod.outlook.com (52.132.24.19) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1643.0; Fri, 15 Feb 2019 18:02:54 +0000
+Received: from BL0PR2101MB0914.namprd21.prod.outlook.com
+ ([fe80::1556:2bd9:8f67:9ea2]) by BL0PR2101MB0914.namprd21.prod.outlook.com
+ ([fe80::1556:2bd9:8f67:9ea2%6]) with mapi id 15.20.1665.000; Fri, 15 Feb 2019
+ 18:02:54 +0000
+From:   Ben Peart <Ben.Peart@microsoft.com>
+To:     "gitster@pobox.com" <gitster@pobox.com>,
+        Ben Peart <peartben@gmail.com>
+CC:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Kevin Willford <kewillf@microsoft.com>,
+        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>
+Subject: RE: [PATCH v2] read-cache: add post-indexchanged hook
+Thread-Topic: [PATCH v2] read-cache: add post-indexchanged hook
+Thread-Index: AQHUxHORQDVcX/3uREWerDeoqQUKiqXfe6OAgABEkbyAAD3DgIABJvGYgAADLRA=
+Date:   Fri, 15 Feb 2019 18:02:53 +0000
+Message-ID: <BL0PR2101MB0914080996B40B6240322DD2F4600@BL0PR2101MB0914.namprd21.prod.outlook.com>
 References: <20190208195115.12156-1-peartben@gmail.com>
+        <20190214144241.11240-1-peartben@gmail.com>
+        <2f08ee3b-4511-2838-4c70-640d01fe1658@ramsayjones.plus.com>
+        <xmqqa7iy860g.fsf@gitster-ct.c.googlers.com>
+        <dc851640-ac3b-74a1-a753-7ff2a43a4a5b@gmail.com>
+ <xmqq1s496iwe.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq1s496iwe.fsf@gitster-ct.c.googlers.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=benpeart@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-02-15T18:02:52.9160296Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=e0ec5f21-d28d-43b7-98c2-985e8f66bb78;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
+x-originating-ip: [70.33.148.227]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 969cd04c-fde7-40a6-1fc8-08d6936fcef2
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600110)(711020)(4605085)(4618075)(2017052603328)(7193020);SRVR:BL0PR2101MB1073;
+x-ms-traffictypediagnostic: BL0PR2101MB1073:
+x-ld-processed: 72f988bf-86f1-41af-91ab-2d7cd011db47,ExtAddr
+x-microsoft-exchange-diagnostics: =?us-ascii?Q?1;BL0PR2101MB1073;23:6QH28e4XMwl7yw8e9YkPeJcPvoz2mIVGCaHQT5k?=
+ =?us-ascii?Q?lqr8sM4AQMbFiZb57uqv3mWFIejbUmm+iWHgNM9YDG7e5xSOKBKgxJ2+CKa7?=
+ =?us-ascii?Q?35TBfn2s4x2nUkF1gEbPcGR5KS05ztr7jA2Z/gzKX5VDhkrGPz3i+qrZrpUp?=
+ =?us-ascii?Q?fz4fuBOgk8FTUuNM7UVoOQXF8+sV6E8dbChEDwk2VnWI1xSVQkbVjmRO64Mg?=
+ =?us-ascii?Q?YOkr6T4YhYRWTF4EFNp1OkMpZjfs1F5T/6Y8ACB1t4FIY+v8ZGj8MqQ0rMbL?=
+ =?us-ascii?Q?PmbPNHFe28Th2RXSOqW3M2z+UUQE7pxxopBpAVZy+zVgbejOW9pGdwn1ai4L?=
+ =?us-ascii?Q?OlZfNOJGQa991OxlCvznTdiNqQZ/6SqKFLXO98iK9j7jbxL8Fd6XncXx6z5k?=
+ =?us-ascii?Q?pc65iF3t2wbyCjXX1N8lwth4za+92s24xYNdUDqVlHzKpTscCOOSR8f1axQe?=
+ =?us-ascii?Q?TtEuSKF2qgE6uMbZnVDOyiYmrX5Jh0VHeN/3HzX6Dir6an4jLyfxY8JStw7u?=
+ =?us-ascii?Q?2e3mMoO8OXGbzXn4oCcHbi1KAadAN5FAjQ8rrAD2Kqdww9t9r0G6R8gDuRcI?=
+ =?us-ascii?Q?QuMpButWK63B1FNC6P/7Rl4lA3BIghim9a4urC4ZJzDWeM4Cp0fWFkIgfAtK?=
+ =?us-ascii?Q?2MOuuslcKZNEaRIotUeEDHpvop3Jj3FEdoyBQ2bTUB2p2fsh5RzXrGNdnHYh?=
+ =?us-ascii?Q?e4q93k0r331FxjUi3Nw4xcU1Tcbm51V/yRWFMAOxRGtnl6aCOYB+y48rWjKn?=
+ =?us-ascii?Q?JvYgtmEB/PT0NN6b3xFQOy9sGM9qL7f+yEyd9c2Wacrc3nnuD70z4rkJx5iD?=
+ =?us-ascii?Q?O+VXM3VMtL+TArjCzkkXCc2ukUu8DYkZSoFvy1aXznHIjTgQbZpzGlqtcu77?=
+ =?us-ascii?Q?Mx4yhNluYhITmnN0qY0bs0LWkA1yRrVpRsc6bsCPCkoxorV54mPDQYIRS4nz?=
+ =?us-ascii?Q?gAn0FYSIOoPSp+kfq3Bq1Fy9heKmLDjbCw8OIUQKBAMv8BtbommlMhqbWXq8?=
+ =?us-ascii?Q?DHvqXdcytk+OogjRUtUL0wDG6Aq2yAhs50OU4TCz9akp09nRj7PFgs9PjTli?=
+ =?us-ascii?Q?+EU9qRyVFHiZSGThoAmMpFCd8PYGnFfr+GQqabEqV2KFkfAiE/pIPQGV4DQ3?=
+ =?us-ascii?Q?rIcaTSqP1yMUmRYaagbQk+Qvg86oIyraoW4+4adRbDQBqJE127lbUCvhIgOh?=
+ =?us-ascii?Q?5ZEwXf01GNIQtop0Zox8tjuqAVWgvYhNs1Z3PG+e1EHlWB1LBei/wtr527XA?=
+ =?us-ascii?Q?I/fxI6qjXqiz0SLa3xhIS7cpPltcj7WCkJwsvyX7ntq8Adao0W4PhP5bWIB/?=
+ =?us-ascii?Q?FnOmXSQrqP/2S0dVbTFiwj0seX9gPb8JxB/2nm1kynZ7QNcC8kor5J7PCuwE?=
+ =?us-ascii?Q?Sn5Sv+bWw/y+55vu+2BNeol5nT8+YTxmM/MqIBNdtnGvHKe76Rzsqq52HRXO?=
+ =?us-ascii?Q?1JRkpECQjU66vseIMPJV2S2Z++XImIYk=3D?=
+x-microsoft-antispam-prvs: <BL0PR2101MB10734626BC77A1042AEB0029F4600@BL0PR2101MB1073.namprd21.prod.outlook.com>
+x-forefront-prvs: 09497C15EB
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(366004)(39860400002)(346002)(136003)(396003)(199004)(189003)(13464003)(7696005)(76176011)(6436002)(33656002)(106356001)(66066001)(74316002)(110136005)(7736002)(305945005)(229853002)(486006)(8990500004)(71190400001)(10290500003)(71200400001)(316002)(476003)(55016002)(22452003)(446003)(3846002)(6116002)(4326008)(11346002)(81166006)(81156014)(99286004)(8676002)(10090500001)(72206003)(2501003)(25786009)(86362001)(9686003)(26005)(97736004)(102836004)(14444005)(6346003)(256004)(8936002)(14454004)(6506007)(186003)(53546011)(93886005)(2906002)(68736007)(6246003)(54906003)(478600001)(105586002)(53936002)(86612001);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1073;H:BL0PR2101MB0914.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Ben.Peart@microsoft.com; 
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: BtcVl/psxcLoXVP95mDRVbFjCgq8zZED0EiLW4TUn3+QN6pPi1SC524ZdAwDqHM0xlHzxw9SXKHWVnBDQFnrjta7FP3fyqlnoNwSqeNpEVrNHjf1uPspugdMqp+bDyZs0qKgbWMDn8ToCkBZtYKjyQarXqYd87O+YpF+K+wEyq21Y1VIC8zbf9xgPBjd24/V9CAFmrLaSp5gzX5NNegLx5GJIwPH9Sf43opMMo1A4DHxprZrfyOVxlrOJK3x9w+/zr95WNGsZ7W8R8sp9Vm1+/ipqPvkHRmnZlX0iejQkxJgjJUdciGIrEiML4wAuP/T8uFluH3X/jcqTbNa7AyCq1w7NDB90t/Gqwoe6KTZjjJPtipi1WrTdmYNZYjmVXUHZrhw4T3GM4aomR2arvY1iS4vR/NUBx54fpFVtQuFZfo=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 969cd04c-fde7-40a6-1fc8-08d6936fcef2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Feb 2019 18:02:54.0302
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1073
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Peart <benpeart@microsoft.com>
+> -----Original Message-----
+> From: Junio C Hamano <jch2355@gmail.com> On Behalf Of Junio C Hamano
+> Sent: Friday, February 15, 2019 12:50 PM
+> To: Ben Peart <peartben@gmail.com>
+> Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>; git@vger.kernel.org;
+> Ben Peart <Ben.Peart@microsoft.com>; Kevin Willford
+> <kewillf@microsoft.com>; sandals@crustytoothpaste.net
+> Subject: Re: [PATCH v2] read-cache: add post-indexchanged hook
+>=20
+> Ben Peart <peartben@gmail.com> writes:
+>=20
+> > On 2/14/2019 3:33 PM, Junio C Hamano wrote:
+> >> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> >>
+> >>> On 14/02/2019 14:42, Ben Peart wrote:
+> >>>> From: Ben Peart <benpeart@microsoft.com>
+> >>>>
+> >>>> Add a post-indexchanged hook that is invoked after the index is
+> >>>> written in
+> >>>
+> >>> s/post-indexchanged/post-index-changed/
+> >>
+> >> Good.  I wasn't paying close attention to the previous round, but is
+> >> that the only name-related bikeshedding?  I somehow feel that without
+> >> s/changed/change/ the name does not roll well on my tongue and does
+> >> not sit well together with existing ones like post-receive (which is
+> >> not post-received).  I dunno.
+> >>
+> >> Will queue.  Thanks.
+> >
+> > Would you like me to submit another version with the above spelling
+> > corrections in the commit message or is it easier to fix it up
+> > yourself?
+>=20
+> I've already done s/indexchanged/index-changed/ before queuing (there
+> was only one IIRC in the log message), and also the 'optimize' typofix.
+>=20
+> I didn't do anything about dropping 'd' at the end, as I haven't heard an=
+y
+> feedback on that from anybody yet.
+>=20
 
-Add a post-index-change hook that is invoked after the index is written in
-do_write_locked_index().
+I'm ok with either.  post-index-changed sounded clearer to me but you're ri=
+ght, none of the other hooks use the post tense.  I've submitted one with '=
+post-index-change' - feel free to keep/user either.
 
-This hook is meant primarily for notification, and cannot affect
-the outcome of git commands that trigger the index write.
-
-The hook is passed a flag to indicate whether the working directory was
-updated or not and a flag indicating if a skip-worktree bit could have
-changed.  These flags enable the hook to optimize its response to the
-index change notification.
-
-Signed-off-by: Ben Peart <benpeart@microsoft.com>
----
-
-Notes:
-    Base Ref: v2.21.0-rc0
-    Web-Diff: https://github.com/benpeart/git/commit/27001af8db
-    Checkout: git fetch https://github.com/benpeart/git post-index-changed-v3 && git checkout 27001af8db
-    
-    ### Interdiff (v2..v3):
-    
-    diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-    index 94b4dadf30..bfb0be3659 100644
-    --- a/Documentation/githooks.txt
-    +++ b/Documentation/githooks.txt
-    @@ -492,7 +492,7 @@ This hook is invoked by `git-p4 submit`. It takes no parameters and nothing
-     from standard input. Exiting with non-zero status from this script prevent
-     `git-p4 submit` from launching. Run `git-p4 submit --help` for details.
-    
-    -post-index-changed
-    +post-index-change
-     ~~~~~~~~~~~~~~~~~
-    
-     This hook is invoked when the index is written in read-cache.c
-    diff --git a/read-cache.c b/read-cache.c
-    index b6ead7bf8f..862bdf383d 100644
-    --- a/read-cache.c
-    +++ b/read-cache.c
-    @@ -3004,7 +3004,7 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
-     	else
-     		ret = close_lock_file_gently(lock);
-    
-    -	run_hook_le(NULL, "post-index-changed",
-    +	run_hook_le(NULL, "post-index-change",
-     			istate->updated_workdir ? "1" : "0",
-     			istate->updated_skipworktree ? "1" : "0", NULL);
-     	istate->updated_workdir = 0;
-    diff --git a/t/t7113-post-index-changed-hook.sh b/t/t7113-post-index-change-hook.sh
-    similarity index 95%
-    rename from t/t7113-post-index-changed-hook.sh
-    rename to t/t7113-post-index-change-hook.sh
-    index 6231b88fca..f011ad7eec 100755
-    --- a/t/t7113-post-index-changed-hook.sh
-    +++ b/t/t7113-post-index-change-hook.sh
-    @@ -1,6 +1,6 @@
-     #!/bin/sh
-    
-    -test_description='post index changed hook'
-    +test_description='post index change hook'
-    
-     . ./test-lib.sh
-    
-    @@ -14,7 +14,7 @@ test_expect_success 'setup' '
-    
-     test_expect_success 'test status, add, commit, others trigger hook without flags set' '
-     	mkdir -p .git/hooks &&
-    -	write_script .git/hooks/post-index-changed <<-\EOF &&
-    +	write_script .git/hooks/post-index-change <<-\EOF &&
-     		if test "$1" -eq 1; then
-     			echo "Invalid combination of flags passed to hook; updated_workdir is set." >testfailure
-     			exit 1
-    @@ -59,7 +59,7 @@ test_expect_success 'test status, add, commit, others trigger hook without flags
-     '
-    
-     test_expect_success 'test checkout and reset trigger the hook' '
-    -	write_script .git/hooks/post-index-changed <<-\EOF &&
-    +	write_script .git/hooks/post-index-change <<-\EOF &&
-     		if test "$1" -eq 1 && test "$2" -eq 1; then
-     			echo "Invalid combination of flags passed to hook; updated_workdir and updated_skipworktree are both set." >testfailure
-     			exit 1
-    @@ -102,7 +102,7 @@ test_expect_success 'test checkout and reset trigger the hook' '
-     '
-    
-     test_expect_success 'test reset --mixed and update-index triggers the hook' '
-    -	write_script .git/hooks/post-index-changed <<-\EOF &&
-    +	write_script .git/hooks/post-index-change <<-\EOF &&
-     		if test "$1" -eq 1 && test "$2" -eq 1; then
-     			echo "Invalid combination of flags passed to hook; updated_workdir and updated_skipworktree are both set." >testfailure
-     			exit 1
-    
-    ### Patches
-
- Documentation/githooks.txt        |  18 ++++
- builtin/reset.c                   |   1 +
- builtin/update-index.c            |   2 +
- cache.h                           |   4 +-
- read-cache.c                      |  14 ++-
- t/t7113-post-index-change-hook.sh | 144 ++++++++++++++++++++++++++++++
- unpack-trees.c                    |   2 +
- 7 files changed, 182 insertions(+), 3 deletions(-)
- create mode 100755 t/t7113-post-index-change-hook.sh
-
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 959044347e..bfb0be3659 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -492,6 +492,24 @@ This hook is invoked by `git-p4 submit`. It takes no parameters and nothing
- from standard input. Exiting with non-zero status from this script prevent
- `git-p4 submit` from launching. Run `git-p4 submit --help` for details.
- 
-+post-index-change
-+~~~~~~~~~~~~~~~~~
-+
-+This hook is invoked when the index is written in read-cache.c
-+do_write_locked_index.
-+
-+The first parameter passed to the hook is the indicator for the
-+working directory being updated.  "1" meaning working directory
-+was updated or "0" when the working directory was not updated.
-+
-+The second parameter passed to the hook is the indicator for whether
-+or not the index was updated and the skip-worktree bit could have
-+changed.  "1" meaning skip-worktree bits could have been updated
-+and "0" meaning they were not.
-+
-+Only one parameter should be set to "1" when the hook runs.  The hook
-+running passing "1", "1" should not be possible.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 4d18a461fa..e173afcaac 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -380,6 +380,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
- 			if (read_from_tree(&pathspec, &oid, intent_to_add))
- 				return 1;
-+			the_index.updated_skipworktree = 1;
- 			if (!quiet && get_git_work_tree()) {
- 				uint64_t t_begin, t_delta_in_ms;
- 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 02ace602b9..cf731640fa 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1071,6 +1071,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	if (entries < 0)
- 		die("cache corrupted");
- 
-+	the_index.updated_skipworktree = 1;
-+
- 	/*
- 	 * Custom copy of parse_options() because we want to handle
- 	 * filename arguments as they come.
-diff --git a/cache.h b/cache.h
-index 27fe635f62..46eb862d3e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -338,7 +338,9 @@ struct index_state {
- 	struct cache_time timestamp;
- 	unsigned name_hash_initialized : 1,
- 		 initialized : 1,
--		 drop_cache_tree : 1;
-+		 drop_cache_tree : 1,
-+		 updated_workdir : 1,
-+		 updated_skipworktree : 1;
- 	struct hashmap name_hash;
- 	struct hashmap dir_hash;
- 	struct object_id oid;
-diff --git a/read-cache.c b/read-cache.c
-index 0e0c93edc9..862bdf383d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -17,6 +17,7 @@
- #include "commit.h"
- #include "blob.h"
- #include "resolve-undo.h"
-+#include "run-command.h"
- #include "strbuf.h"
- #include "varint.h"
- #include "split-index.h"
-@@ -2999,8 +3000,17 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
- 	if (ret)
- 		return ret;
- 	if (flags & COMMIT_LOCK)
--		return commit_locked_index(lock);
--	return close_lock_file_gently(lock);
-+		ret = commit_locked_index(lock);
-+	else
-+		ret = close_lock_file_gently(lock);
-+
-+	run_hook_le(NULL, "post-index-change",
-+			istate->updated_workdir ? "1" : "0",
-+			istate->updated_skipworktree ? "1" : "0", NULL);
-+	istate->updated_workdir = 0;
-+	istate->updated_skipworktree = 0;
-+
-+	return ret;
- }
- 
- static int write_split_index(struct index_state *istate,
-diff --git a/t/t7113-post-index-change-hook.sh b/t/t7113-post-index-change-hook.sh
-new file mode 100755
-index 0000000000..f011ad7eec
---- /dev/null
-+++ b/t/t7113-post-index-change-hook.sh
-@@ -0,0 +1,144 @@
-+#!/bin/sh
-+
-+test_description='post index change hook'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir -p dir1 &&
-+	touch dir1/file1.txt &&
-+	echo testing >dir1/file2.txt &&
-+	git add . &&
-+	git commit -m "initial"
-+'
-+
-+test_expect_success 'test status, add, commit, others trigger hook without flags set' '
-+	mkdir -p .git/hooks &&
-+	write_script .git/hooks/post-index-change <<-\EOF &&
-+		if test "$1" -eq 1; then
-+			echo "Invalid combination of flags passed to hook; updated_workdir is set." >testfailure
-+			exit 1
-+		fi
-+		if test "$2" -eq 1; then
-+			echo "Invalid combination of flags passed to hook; updated_skipworktree is set." >testfailure
-+			exit 1
-+		fi
-+		if test -f ".git/index.lock"; then
-+			echo ".git/index.lock exists" >testfailure
-+			exit 3
-+		fi
-+		if ! test -f ".git/index"; then
-+			echo ".git/index does not exist" >testfailure
-+			exit 3
-+		fi
-+		echo "success" >testsuccess
-+	EOF
-+	mkdir -p dir2 &&
-+	touch dir2/file1.txt &&
-+	touch dir2/file2.txt &&
-+	: force index to be dirty &&
-+	test-tool chmtime +60 dir1/file1.txt &&
-+	git status &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure &&
-+	git add . &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure &&
-+	git commit -m "second" &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure &&
-+	git checkout -- dir1/file1.txt &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure &&
-+	git update-index &&
-+	test_path_is_missing testsuccess &&
-+	test_path_is_missing testfailure &&
-+	git reset --soft &&
-+	test_path_is_missing testsuccess &&
-+	test_path_is_missing testfailure
-+'
-+
-+test_expect_success 'test checkout and reset trigger the hook' '
-+	write_script .git/hooks/post-index-change <<-\EOF &&
-+		if test "$1" -eq 1 && test "$2" -eq 1; then
-+			echo "Invalid combination of flags passed to hook; updated_workdir and updated_skipworktree are both set." >testfailure
-+			exit 1
-+		fi
-+		if test "$1" -eq 0 && test "$2" -eq 0; then
-+			echo "Invalid combination of flags passed to hook; neither updated_workdir or updated_skipworktree are set." >testfailure
-+			exit 2
-+		fi
-+		if test "$1" -eq 1; then
-+			if test -f ".git/index.lock"; then
-+				echo "updated_workdir set but .git/index.lock exists" >testfailure
-+				exit 3
-+			fi
-+			if ! test -f ".git/index"; then
-+				echo "updated_workdir set but .git/index does not exist" >testfailure
-+				exit 3
-+			fi
-+		else
-+			echo "update_workdir should be set for checkout" >testfailure
-+			exit 4
-+		fi
-+		echo "success" >testsuccess
-+	EOF
-+	: force index to be dirty &&
-+	test-tool chmtime +60 dir1/file1.txt &&
-+	git checkout master &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure &&
-+	test-tool chmtime +60 dir1/file1.txt &&
-+	git checkout HEAD &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure &&
-+	test-tool chmtime +60 dir1/file1.txt &&
-+	git reset --hard &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure &&
-+	git checkout -B test &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure
-+'
-+
-+test_expect_success 'test reset --mixed and update-index triggers the hook' '
-+	write_script .git/hooks/post-index-change <<-\EOF &&
-+		if test "$1" -eq 1 && test "$2" -eq 1; then
-+			echo "Invalid combination of flags passed to hook; updated_workdir and updated_skipworktree are both set." >testfailure
-+			exit 1
-+		fi
-+		if test "$1" -eq 0 && test "$2" -eq 0; then
-+			echo "Invalid combination of flags passed to hook; neither updated_workdir or updated_skipworktree are set." >testfailure
-+			exit 2
-+		fi
-+		if test "$2" -eq 1; then
-+			if test -f ".git/index.lock"; then
-+				echo "updated_skipworktree set but .git/index.lock exists" >testfailure
-+				exit 3
-+			fi
-+			if ! test -f ".git/index"; then
-+				echo "updated_skipworktree set but .git/index does not exist" >testfailure
-+				exit 3
-+			fi
-+		else
-+			echo "updated_skipworktree should be set for reset --mixed and update-index" >testfailure
-+			exit 4
-+		fi
-+		echo "success" >testsuccess
-+	EOF
-+	: force index to be dirty &&
-+	test-tool chmtime +60 dir1/file1.txt &&
-+	git reset --mixed --quiet HEAD~1 &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure &&
-+	git hash-object -w --stdin <dir1/file2.txt >expect &&
-+	git update-index --cacheinfo 100644 "$(cat expect)" dir1/file1.txt &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure &&
-+	git update-index --skip-worktree dir1/file2.txt &&
-+	git update-index --remove dir1/file2.txt &&
-+	test_path_is_file testsuccess && rm -f testsuccess &&
-+	test_path_is_missing testfailure
-+'
-+
-+test_done
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3563daae1a..8665a4a7c0 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1637,6 +1637,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 						  WRITE_TREE_SILENT |
- 						  WRITE_TREE_REPAIR);
- 		}
-+
-+		o->result.updated_workdir = 1;
- 		discard_index(o->dst_index);
- 		*o->dst_index = o->result;
- 	} else {
-
-base-commit: d62dad7a7dca3f6a65162bf0e52cdf6927958e78
--- 
-2.20.1.windows.1
-
+> >>>> do_write_locked_index().
+> >>>>
+> >>>> This hook is meant primarily for notification, and cannot affect
+> >>>> the outcome of git commands that trigger the index write.
+> >>>>
+> >>>> The hook is passed a flag to indicate whether the working directory
+> >>>> was updated or not and a flag indicating if a skip-worktree bit
+> >>>> could have changed.  These flags enable the hook to optmize its
+> >>>> response to the
+> >>>
+> >>> s/optmize/optimize/
+> >>>
+> >>> ATB,
+> >>> Ramsay Jones
