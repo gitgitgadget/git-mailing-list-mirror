@@ -2,104 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDDC31F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 16:14:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE2271F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 16:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727377AbfBOQOE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 11:14:04 -0500
-Received: from siwi.pair.com ([209.68.5.199]:17454 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726168AbfBOQOE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 11:14:04 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 0768D3F4013;
-        Fri, 15 Feb 2019 11:14:03 -0500 (EST)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id CDA973F4012;
-        Fri, 15 Feb 2019 11:14:02 -0500 (EST)
-Subject: Re: [PATCH 1/1] mingw: safe-guard a bit more against getenv()
- problems
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.127.git.gitgitgadget@gmail.com>
- <53e3d159c8c80924188f57c44efd2170612f2ee5.1550243863.git.gitgitgadget@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <96793350-0991-6e8f-6ab2-15777e2071be@jeffhostetler.com>
-Date:   Fri, 15 Feb 2019 11:14:01 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:65.0) Gecko/20100101
- Thunderbird/65.0
+        id S1729439AbfBOQmq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 11:42:46 -0500
+Received: from p3plsmtpa08-02.prod.phx3.secureserver.net ([173.201.193.103]:58764
+        "EHLO p3plsmtpa08-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726146AbfBOQmq (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 15 Feb 2019 11:42:46 -0500
+Received: from jessie.local ([212.149.203.197])
+        by :SMTPAUTH: with ESMTPSA
+        id ugZUgFUoobtsnugZYgWHcO; Fri, 15 Feb 2019 09:42:45 -0700
+From:   Max Kirillov <max@max630.net>
+To:     "Randall S . Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
+Cc:     Max Kirillov <max@max630.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        'Junio C Hamano' <gitster@pobox.com>
+Subject: [PATCH] t5562: do not depend on /dev/zero
+Date:   Fri, 15 Feb 2019 18:42:37 +0200
+Message-Id: <20190215164237.12250-1-max@max630.net>
+X-Mailer: git-send-email 2.19.0.1202.g68e1e8f04e
+In-Reply-To: <20190209185930.5256-4-randall.s.becker@rogers.com>
+References: 
 MIME-Version: 1.0
-In-Reply-To: <53e3d159c8c80924188f57c44efd2170612f2ee5.1550243863.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfKOk/3L17VTbeEhiz0ikNCK1yqUIGafH8bmC2SryVujsBjyWJMjmL52UrD/RCzS1xYcK2k60loLVVMS79/j/dZVZ1pfKtTs1YRECETlPqvZAkqGce03H
+ b9lXB1dVNNYRZEUBx6Fas0ZO33Lzm9cC2JhpWzHmppv1vdI4hkMx1g+ZpdXeMnbjGoGZSwMr9i7yEr4bj7RApuEI/ky2FTHb/ZO3l0OwFdEXSddONmvb3dyA
+ xnikEJyP3jKZUM0LeHK11uu2PfbDNaRKsgsGwjj7zRSIoTv9zkZp81PBfYTJt5ut
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+It was reported [1] that NonStop platform does not have /dev/zero.
 
+The test uses /dev/zero as a dummy input. Passing case (http-backed
+failed because of too big input size) should not be reading anything
+from it. If http-backend would erroneously try to read any data
+returning EOF probably would be even safer than providing some
+meaningless data.
 
-On 2/15/2019 10:17 AM, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> Running up to v2.21.0, we fixed two bugs that were made prominent by the
-> Windows-specific change to retain copies of only the 30 latest getenv()
-> calls' returned strings, invalidating any copies of previous getenv()
-> calls' return values.
-> 
-> While this really shines a light onto bugs of the form where we hold
-> onto getenv()'s return values without copying them, it is also a real
-> problem for users.
-> 
-> And even if Jeff King's patches merged via 773e408881 (Merge branch
-> 'jk/save-getenv-result', 2019-01-29) provide further work on that front,
-> we are far from done. Just one example: on Windows, we unset environment
-> variables when spawning new processes, which potentially invalidates
-> strings that were previously obtained via getenv(), and therefore we
-> have to duplicate environment values that are somehow involved in
-> spawning new processes (e.g. GIT_MAN_VIEWER in show_man_page()).
-> 
-> We do not have a chance to investigate, let address, all of those issues
-> in time for v2.21.0, so let's at least help Windows users by increasing
-> the number of getenv() calls' return values that are kept valid. The
-> number 64 was determined by looking at the average number of getenv()
-> calls per process in the entire test suite run on Windows (which is
-> around 40) and then adding a bit for good measure. And it is a power of
-> two (which would have hit yesterday's theme perfectly).
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   compat/mingw.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 4276297595..8141f77189 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1632,7 +1632,7 @@ int mingw_kill(pid_t pid, int sig)
->    */
->   char *mingw_getenv(const char *name)
->   {
-> -#define GETENV_MAX_RETAIN 30
-> +#define GETENV_MAX_RETAIN 64
->   	static char *values[GETENV_MAX_RETAIN];
->   	static int value_counter;
->   	int len_key, len_value;
-> 
+Replace /dev/zero with /dev/null to avoid issues with platforms which do
+not have /dev/zero.
 
-Why not use a mem_pool for this?  We have that code isolated
-and re-usable now.  Have mingw_getenv() copy the string into
-the pool always return the pointer from within the pool.  The
-pool automatically handles allocating new blocks as necessary.
-And (if we care) we can bulk free the pool before existing.
+[1] https://public-inbox.org/git/20190209185930.5256-4-randall.s.becker@rogers.com/
 
-Jeff
+Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+By the way, I don't think this requires such sofisticated
+fix. In the success case the input would not be read at all.
+You could replace it with /dev/null, the in failure (not 
+immediate fail) git would fail due to truncated input or
+something.
+
+Also, as you experience hang issue [2] in earlier tests, this 
+one should not have contributed to it.
+
+[2] https://public-inbox.org/git/001901d4c22b$194bfe60$4be3fb20$@nexbridge.com/
+ t/t5562-http-backend-content-length.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+index 90d890d02f..436c261c86 100755
+--- a/t/t5562-http-backend-content-length.sh
++++ b/t/t5562-http-backend-content-length.sh
+@@ -150,7 +150,7 @@ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
+ 		GIT_HTTP_EXPORT_ALL=TRUE \
+ 		REQUEST_METHOD=POST \
+ 		CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
+-		git http-backend </dev/zero >/dev/null 2>err &&
++		git http-backend </dev/null >/dev/null 2>err &&
+ 	grep "fatal:.*CONTENT_LENGTH" err
+ '
+ 
+-- 
+2.19.0.1202.g68e1e8f04e
+
