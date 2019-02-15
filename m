@@ -2,98 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80AEE1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 07:50:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9CD61F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 09:00:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390624AbfBOHuS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 02:50:18 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:42018 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726335AbfBOHuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 02:50:17 -0500
-Received: by mail-pf1-f194.google.com with SMTP id n74so4443393pfi.9
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 23:50:17 -0800 (PST)
+        id S2391946AbfBOJAM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 04:00:12 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42800 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727241AbfBOJAK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 04:00:10 -0500
+Received: by mail-ed1-f65.google.com with SMTP id r15so7300531eds.9
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 01:00:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EUpFbwtG1VL5zS4RqXf5ZOy6+PEFWF1/wTJNVaUoubU=;
-        b=EXlTOmMm4Jlp8Dp7KIRrLuaq6sqfu9FQRNM4LdiDJ8zvXK+UR6fLM3yUDk8ErMNAZz
-         d89AKXYI2XmIu0s6iMrMdcrKj27QDVL8i/aWRyRhp+A7f+5tmbqSzdXPAQ1yzcYgeO/T
-         63XSUnu8R0oN7N8th3c0saejmXRgNx9rEjKnrxZ9w2G3bB6v30lVC3nbVscho++KRw/+
-         GHqYn/8HekNjKPtN7XGRGfS53UuRuIgItOxloQz1Muvi3hz07s3LA080qYzg7hSS8e5w
-         Lbmas9ZFjM5KMDjU3xLVaEXVqkD9wSSxpMAxnjZlwHQwDSYIJGI4M1eUgN8Nt6QnU87N
-         IgbA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MLWuBeiKu0gMdXgZXci9PjPKtfOSgLsaQKvbc6+8Tts=;
+        b=Js7Ro82PWlafG/bEedgCEfGgsoXDlHclztUSAh07/Gx0IgETtH1p2FaDn7/BWdzvV0
+         R8zIxUmIF3Sg2HF8/9RnHMOyP5K7wEWh2y9rSLImVVxTMJtPhPWVKZ+l+NuN60ORSoS2
+         wQyw0/FtChUFQJsIX+mGAE614VRBCTUSzmPFRFalCzNpKsqsL8v77HORT8q0l2eywWp+
+         Or4Xsdmy3XJAmuxdpygZHVN1znzo/b0PEtJ4feGBtDsmtXAhvJfy3UCIWYcNHn/vpoRk
+         im7X7itGywRlz49soHmizSeHHgsKdNctAYAD8tGj2pmQLeA1lFnS0rh9/PaTu7FOh5o2
+         tQzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EUpFbwtG1VL5zS4RqXf5ZOy6+PEFWF1/wTJNVaUoubU=;
-        b=oDRyJTv0yeykwQf7IG5P9eSAM6FWPpNzm7nbfQ3XkDBlnTuxfjlxYND2pNCZwq44+H
-         hwTytJzN3cO7PXhXK9JX4KlW4zOgflWLbnlSIy9UD8LVzOo/K5f/Nhiu9P0pX0DvHBEn
-         UDy6R0Pa7H74Rlat2Gt3pSHb/vuyJXYY06KpC9xG6Qs130pqpfpjRMEr3zu85LXXbwS/
-         365nWhONJNxC3WWvWHEqmsJsZdEQrFG8GwCdEX8V0OA2oqS+N79upiu2aDBb6isp/5Dk
-         mMALbyMv1YZQ08t1vy9vBvhwBBCUgTvQcD5hPursMvjJrBmtgEwkSbUtGDlqf2m2QqbJ
-         ge2A==
-X-Gm-Message-State: AHQUAubGabNIMpSxdYfprGI2OHkJX3sGTeQmEHdmiQxeJJQ11OGORRBm
-        +2io/npdehrX3RNv4oVWafPiQxB8QYq38A==
-X-Google-Smtp-Source: AHgI3IZ+mfCYDf4X2WuVkfNu12foAGixr33kqIkeY7devI629d6k2wQjR7DgkDmEzVrCHOWzVzAWFg==
-X-Received: by 2002:a63:2209:: with SMTP id i9mr8034789pgi.325.1550217016958;
-        Thu, 14 Feb 2019 23:50:16 -0800 (PST)
-Received: from localhost.localdomain ([2408:84e1:43:c917:9dbb:5ce9:2c19:a70a])
-        by smtp.gmail.com with ESMTPSA id l19sm8277628pfi.71.2019.02.14.23.50.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Feb 2019 23:50:15 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git 2.21.0 round #2
-Date:   Fri, 15 Feb 2019 15:49:57 +0800
-Message-Id: <20190215074957.11667-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.21.0.rc0.38.ga5fda54cc5
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MLWuBeiKu0gMdXgZXci9PjPKtfOSgLsaQKvbc6+8Tts=;
+        b=rHcxebP0Rs12IpfXFlCIX8G1GAE/Y0ZEpCaAg3xlFwZFFOGG9EIxNHfMCMJGeq62KD
+         6aBylnrQVaf4E4hviJ43ZsMgESZDWJ8XTRFx7HkLHQPXcw/9srqvipF32/fq3Cz4ioFf
+         9aXkr7PEoFNRA971jEIqAxX+jNeExjJE8rSeXbRA5RIUB8Y8skSPTgBg4dFcFpCpFVJk
+         PjGY0j/XZ0NZE4q+Idl836ReUGkbidPDf3Ms3O68DcDgfzTKud6dd00b3mRWHmb+Qdpb
+         QZsGBXHeZPkFFqYUdrgZFLCFasanho9ldYBSOwP/tbrTmwrvrr3KYmPk6iJv50kbmBm6
+         zE9Q==
+X-Gm-Message-State: AHQUAuazNbsXFFFEkJpRz3vvktk5pspcSGgjIxntjcmldEXtA7AMvblS
+        B95HeN3TUtmdffm29XGsHicMKobVwAPmjQanN/0=
+X-Google-Smtp-Source: AHgI3IbQXDK09aUr+oFwun4bs/azmP3vLBF3RhBHPf5QMrAg2c3HrVrxs3D5g+ubmnPZXTyiKONthHpFiGh/Le189K4=
+X-Received: by 2002:a05:6402:185a:: with SMTP id v26mr6640461edy.163.1550221208067;
+ Fri, 15 Feb 2019 01:00:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190213205554.4086-1-matheus.bernardino@usp.br>
+ <CAP8UFD1aBn8=KOTp-D=CmO1iEnWUBS1-jR-aqfg3MZ7HZRU7Pg@mail.gmail.com> <CAHd-oW6uHKfa_P+fZNZxG4+pme=SH_Wi+SJkhxwOtfR+L=0JBA@mail.gmail.com>
+In-Reply-To: <CAHd-oW6uHKfa_P+fZNZxG4+pme=SH_Wi+SJkhxwOtfR+L=0JBA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 15 Feb 2019 09:59:56 +0100
+Message-ID: <CAP8UFD0c7oPdaPkU55mus-3xgYcMmUSa_dsuGcGRF0ijn6r8iw@mail.gmail.com>
+Subject: Re: [GSoC][RFC PATCH] clone: use dir-iterator to avoid explicit dir traversal
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Feb 14, 2019 at 11:04 PM Matheus Tavares Bernardino
+<matheus.bernardino@usp.br> wrote:
+>
+> On Thu, Feb 14, 2019 at 7:16 PM Christian Couder
+> <christian.couder@gmail.com> wrote:
 
-Git v2.21.0-rc1 introduced 3 update messages from commit 32ceace39f
-(Fix typos in translatable strings for v2.21.0, 2019-02-11).  let's start
-new round of git l10n based on the following commit:
+> > > -static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+> > > -                                  const char *src_repo, int src_baselen)
+> > > +static void mkdir_if_missing(const char *pathname, mode_t mode)
+> >
+> > It looks like your patch is both splitting copy_or_link_directory()
+> > into 2 functions and converting it to use the dir-iterator API. Maybe
+> > it would be better to have 2 patches instead, one for splitting it and
+> > one for converting it.
+> >
+>
+> Got it. As the justification for splitting the function was to use the
+> extracted part in the section that was previously recursive, I thought
+> both changes should be in the same patch. But I really was in doubt
+> about that. Should I split it into two patches and mention that
+> justification at the first one? Or just split?
 
-    l10n: git.pot: v2.21.0 round 2 (3 new, 3 removed)
-    
-    Introduce 3 update messages for v2.21.0 l10n round 2 from commit
-    32ceace39f (Fix typos in translatable strings for v2.21.0, 2019-02-11).
-    
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+If 2 patches instead of 1 makes it easier to review and understand
+what's going on, then I think you should indeed send 2 patches and
+mention the justification for splitting the function in the commit
+message of the first patch.
 
-You can get it from the usual place:
+> > I think we usually put such comments just before the function. And
+> > maybe it could be shortened to "Create a dir at pathname unless
+> > there's already one"
+>
+> Right, the shortened version does sounds much better, thanks! About
+> the comment placement, I followed what I saw in other functions from
+> the same file ("copy_alternates", for example).
 
-    https://github.com/git-l10n/git-po/
+Then it's ok to place it like you did. Sorry about the noise.
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in "po/README" file.
+> But also, I couldn't
+> find any instruction about that at Documentation/CodingGuidelines. So
+> should I move it as you suggested?
 
---
-Jiang Xin
+I think we have not been very consistent over the years. Recently I
+think we have tried to add or move API documentation inside header
+files, and in general before functions in the code, but yeah it might
+not have been documented.
