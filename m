@@ -2,152 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE8AC1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 18:59:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89A371F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 19:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403918AbfBOS7g (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 13:59:36 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35628 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390758AbfBOS7g (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 13:59:36 -0500
-Received: by mail-wr1-f65.google.com with SMTP id t18so11461647wrx.2
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 10:59:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=H3phb8IakjilYa3UPvlOGsmvvYzSUw+8aHQT4EFm2PM=;
-        b=kJP3tH6cJflQ31g6XC5RhQFa9KLpUWwJV14KGM7A86h+HcXV0jqbHAF56csv+1vRj0
-         tHog2qW3jy73f8BUtoYE4cKWaY+2rHM5SOXQ4fI314PvxmIuhQHIbSbx/TQNCKw46vRh
-         HocJhFHyy0mLJ38OHVuSOSfawfVmsIIIZ7Lv6ZxwM89q2/9mRW6p79zIj5Z8W3yunSRY
-         M+Sp70A6MpBU7+s7MeEBBKQDLuq1LadU1uMry+9pWJ9jvyzrWift0Wi8YXLJGriH6SvV
-         yDZAId2nEZyIjxt/wfM4tat4IVeWmnzfcjBOHoh5nUExFo4pgBb9DKozbod+28plcmwu
-         hgyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=H3phb8IakjilYa3UPvlOGsmvvYzSUw+8aHQT4EFm2PM=;
-        b=CxaQ9MAC35DFIMkhhMidBBLrl0nnvDKvSPKsxVVOR9ac4KlqAHD5/u9+21CYuir5wA
-         S2ZC87Cz2MxOHUmhJZOjsaxi82wGh4tJ4/wYPGEbx/3poIoyW2UgmasmI5oW5ComLv0E
-         nmrm84BzUzZxsTEWeesWQJ0JrB6sTqLWPD2wCL1bQJhKJdkYouSp5KRVBI5tK4CWhFFE
-         Hjt/BdaGmbH9sXP7TQsLFkJxMjSSboJ/iikjPhi6mucdh1Gskv/3AkfE9NLgaH0WkCk2
-         cvxRiyVej3I2EtJz0KljDIAS57txqxVkM3ak+9hoiM06LmaOa+RmR/9OXAJ3LdQb3Yc0
-         iRpQ==
-X-Gm-Message-State: AHQUAuazMnyQSJ3SIOrI2En0CZzj/G5v0nIt4XKwrne2aNtq2XCxmlX0
-        7piwLKKAa1yiZQ1mtfBaPblINcFf
-X-Google-Smtp-Source: AHgI3IYODPIfCgf3vUGieCN4W01y0F2/0iIzm2Yd8S18vbbBKdWLKuqEXQjG0w+j/jf8gOyqE602Vg==
-X-Received: by 2002:adf:b68a:: with SMTP id j10mr8262819wre.224.1550257174021;
-        Fri, 15 Feb 2019 10:59:34 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o12sm3547910wrp.70.2019.02.15.10.59.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Feb 2019 10:59:33 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michal Suchanek <msuchanek@suse.de>
+        id S1728693AbfBOTNp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 14:13:45 -0500
+Received: from smtp-34.italiaonline.it ([213.209.10.34]:34906 "EHLO libero.it"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726654AbfBOTNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 14:13:45 -0500
+Received: from DESKTOP-E4U7JCE ([158.148.65.100])
+        by smtp-34.iol.local with ESMTPA
+        id uivdgPuqgwlwKuivdgS3XT; Fri, 15 Feb 2019 20:13:42 +0100
+x-libjamoibt: 1601
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
+        t=1550258022; bh=zxRQDJpR2sigT+ubwChDrkuVqsxclBGXNCdwq+yRq3A=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=btQrTOT7RwDsy3vLj+bYYCTXC1W60Ech4nx3uEYIRUk8sb1lZf1SKGDBNgzxDI8FA
+         atqASkcTasoPDSvVLRfZxFqxKi9OeT4/ZEnC7rchjuMrKrcy6vRBY5di8WnICksC/F
+         6iCQW4VwEJcPnXBRGwAyjUMra5g29GoMqmPP3gQ7UD3tePeJeXYAkbeu80IiBJjw2W
+         0z3MnAt4+nL+qywu88+0vKxFIJBMYOmpFsxAzKnas8CUAT7g/YD64tMRESt/3eyt02
+         SR/b9LctygKDkW7X7NE9nSBVXXAYAYDg+xEa/0g7uwagVFDCYxZfJ0tYTPJX5w19Qm
+         T1iczW1oMmvzg==
+X-CNFS-Analysis: v=2.3 cv=O8HoQy1W c=1 sm=1 tr=0
+ a=FcbpsVpHv0FBOxHseI6AIg==:117 a=FcbpsVpHv0FBOxHseI6AIg==:17
+ a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=JLkzXpwfeaL5f91A2ukA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22
+Message-ID: <1550258021.1785.1.camel@libero.it>
+Subject: Re: Am a newby and I cannot compile git
+From:   Fabio Aiuto <polinice83@libero.it>
+To:     Santiago Torres <santiago@nyu.edu>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] worktree: fix worktree add race.
-References: <429046b2c9f02c5e4f0af88db51f6c0c099f08a9.1550254374.git.msuchanek@suse.de>
-Date:   Fri, 15 Feb 2019 10:59:33 -0800
-In-Reply-To: <429046b2c9f02c5e4f0af88db51f6c0c099f08a9.1550254374.git.msuchanek@suse.de>
-        (Michal Suchanek's message of "Fri, 15 Feb 2019 19:16:11 +0100")
-Message-ID: <xmqq8syg6foq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Date:   Fri, 15 Feb 2019 20:13:41 +0100
+In-Reply-To: <20190212215431.btbvugcaqfdqnigo@LykOS.localdomain>
+References: <1549835814.5977.11.camel@libero.it>
+         <20190210224812.wtn2qqm7lmsiarrh@LykOS.localdomain>
+         <1549912081.1754.1.camel@libero.it> <1550007793.1750.1.camel@libero.it>
+         <20190212215431.btbvugcaqfdqnigo@LykOS.localdomain>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfHYU5J5BWHfphaTd+BGPCmx6p3JOA6x7zmmvuSXmuNuE9U5UuaODHzsNdC8wykDzcOY3GdX8uSFj69gHHWDCJVL6jRiAd9gFTHlzn23EeRSrjkMsl+A5
+ n9TAj5RpYuWdfyhVVY+cis0Hy3yVD8kr1QL4eMLrOpM2ldml3S3rJTmNFwyI6VuCTIy82HsepcKrLq95b5q1VA/PcHfqr1Xteu4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michal Suchanek <msuchanek@suse.de> writes:
-
-> Git runs a stat loop to find a worktree name that's available and then does
-> mkdir on the found name. Turn it to mkdir loop to avoid another invocation of
-> worktree add finding the same free name and creating the directory first.
-
-Yeah, relying on the atomicity of mkdir(2) is much saner approach
-than "check -- ah we can use the name -- try to create" that is race
-prone.
-
-Thanks for working on this.
-
-> Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-> ---
->  builtin/worktree.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 3f9907fcc994..e1a2a56c03c5 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -268,10 +268,9 @@ static int add_worktree(const char *path, const char *refname,
->  	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
->  	struct strbuf sb = STRBUF_INIT;
->  	const char *name;
-> -	struct stat st;
->  	struct child_process cp = CHILD_PROCESS_INIT;
->  	struct argv_array child_env = ARGV_ARRAY_INIT;
-> -	int counter = 0, len, ret;
-> +	int counter = 1, len, ret;
->  	struct strbuf symref = STRBUF_INIT;
->  	struct commit *commit = NULL;
->  	int is_branch = 0;
-> @@ -295,19 +294,21 @@ static int add_worktree(const char *path, const char *refname,
->  	if (safe_create_leading_directories_const(sb_repo.buf))
->  		die_errno(_("could not create leading directories of '%s'"),
->  			  sb_repo.buf);
-> -	while (!stat(sb_repo.buf, &st)) {
-> +
-> +	while (mkdir(sb_repo.buf, 0777)) {
->  		counter++;
-> +		if(!counter) break; /* don't loop forever */
->  		strbuf_setlen(&sb_repo, len);
->  		strbuf_addf(&sb_repo, "%d", counter);
-
-Style:
-
-		if (!counter)
-			break; /* don't loop forever */
-
-More importantly, how long would it take to loop thru all possible
-integers (can be simulated by making the parent directory
-unwritable)?  Don't we want to cut off with more conservative upper
-limit, say 1000 rounds or even 100 rounds or so?
-
-Also, is the behaviour for a signed integer wrapping around due to
-getting incremented too many times well defined?  I'd feel safer,
-especially if you are willing to spin for 4 billion times like this
-patch does, if you changed the counter to "unsigned int".
-
-I see you changed "counter" to start from 1, but that would mean
-that these fallback names would start with suffix 2, not 1.  Which
-would look funny.
-
-I would have expected ".1", ".2", etc.  as suffix, but the original
-used "1", "2", etc. so I won't complain on the format, but I do find
-it questionable to start counting from 2.
-
->  	}
-> +	if (!counter)
-> +		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
-
-It would have saved reviewer's time if this die() were inside the
-loop where you punted with "break".
-
->  	name = strrchr(sb_repo.buf, '/') + 1;
->  
->  	junk_pid = getpid();
->  	atexit(remove_junk);
->  	sigchain_push_common(remove_junk_on_signal);
->  
-> -	if (mkdir(sb_repo.buf, 0777))
-> -		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
->  	junk_git_dir = xstrdup(sb_repo.buf);
->  	is_junk = 1;
+Thank you so much Santiago!!! Sorry for late, lot of work these days!!!
+See you soon.
+Fabio.
+Il giorno mar, 12/02/2019 alle 16.54 -0500, Santiago Torres ha scritto:
+> Awesome,
+> 
+> Do consider reading the files under Documentation (as other people
+> suggested) to make it easier to contribute. There's CodingGuidelines
+> and SubmittingPatches that are super useful :)
+> 
+> Good luck!
+> -Santiago.
+> 
+> On Tue, Feb 12, 2019 at 10:43:13PM +0100, Fabio Aiuto wrote:
+> > Ok I typed make install from the terminal, then I attached the the
+> > project to the executable generated in the local bin directory. So
+> > I
+> > can happily trace in the code. Thank you, hope I will be able to
+> > fix
+> > things in git very soon!!!
+> > Fabio.
+> > Il giorno lun, 11/02/2019 alle 20.08 +0100, Fabio Aiuto ha scritto:
+> > > Hello Santiago,
+> > > I'm running debian Stretch on my machine, and using Eclipse. I'm
+> > > new
+> > > in
+> > > linux world so I don't know how could I let you know all packages
+> > > I've
+> > > installed in a single screenshot.
+> > > However I got the git sources with the following command:
+> > > 
+> > > $ git clone git://git.kernel.org/pub/scm/git/git.git
+> > > 
+> > > then I've opened the project inside Eclipse by importing a
+> > > makefile
+> > > project from existing code. I tried to build several time beacuse
+> > > of
+> > > some compilation errors that I fixed by installing the following
+> > > packages:
+> > > 
+> > > $ sudo apt-get install zlib1g-dev
+> > > $ sudo apt-get install libcurl-dev
+> > > $ sudo apt-get install libcurl4-openssl-dev
+> > > $ sudo apt-get install libexpat1-dev
+> > > 
+> > > At last no building errors detected but when I try to run adebug
+> > > session, the IDE says tat 'Program file does not exist'. And
+> > > there
+> > > are
+> > > more errors spread over the project wich are not detected.When i
+> > > do
+> > > the
+> > > rebuild by clicking the 'hammer' icon, the message in the console
+> > > window says:
+> > > 20:04:07 **** Incremental Build of configuration Default for
+> > > project
+> > > git ****
+> > > make all 
+> > >     SUBDIR git-gui
+> > >     SUBDIR gitk-git
+> > >     SUBDIR templates
+> > > 
+> > > 20:04:08 Build Finished (took 866ms)
+> > > 
+> > > Please ask me for more informations!!!!
+> > > Thank you
+> > > Il giorno dom, 10/02/2019 alle 17.48 -0500, Santiago Torres ha
+> > > scritto:
+> > > > It'd be difficult to debug without more context:
+> > > > 
+> > > > Do you mind sharing your build log and more informationa about
+> > > > your
+> > > > setup? (e.g., what OS are you running, what packages are
+> > > > installed,
+> > > > how
+> > > > did you get the git sources, etc.)
+> > > > 
+> > > > Thanks,
+> > > > -Santiago.
+> > > > 
+> > > > On Sun, Feb 10, 2019 at 10:56:54PM +0100, Fabio Aiuto wrote:
+> > > > > Hello again my problem is that I cannot compile git.
+> > > > > The error message says:
+> > > > > 
+> > > > > 	Type'z_stream' could not be resolved
+> > > > > 
+> > > > > I don't know why, because I installed the package zlib1g-dev
+> > > > > and
+> > > > > in
+> > > > > the
+> > > > > header file zlib.h this structure is declared. Help me!!!
+> > > > > Fabio.
