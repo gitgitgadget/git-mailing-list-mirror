@@ -2,79 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB3231F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 10:58:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE021F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 12:59:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389384AbfBOK6g (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 05:58:36 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:23443 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388545AbfBOK6g (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 05:58:36 -0500
-Received: from [192.168.1.12] ([92.29.15.245])
-        by smtp.talktalk.net with SMTP
-        id ubCQg5JjFj87fubCQgFDuJ; Fri, 15 Feb 2019 10:58:33 +0000
-X-Originating-IP: [92.29.15.245]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=NrWvjPVJ c=1 sm=1 tr=0 a=9anTPZJWX8pnfAL1p5p6vw==:117
- a=9anTPZJWX8pnfAL1p5p6vw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=5rxgeBVgAAAA:8 a=mLKua8RHAAAA:8 a=PpF-6VckHHuDRBiebi8A:9 a=QEXdDO2ut3YA:10
- a=_xDNj3R8C6EA:10 a=PwKx63F5tFurRwaNxrlG:22 a=ewTM_9iNE6a0vsrYD_ou:22
-Subject: Re: How to get next commit that just after a specified commit
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>, git@vger.kernel.org
-References: <87mun0j9vv.fsf@evledraar.gmail.com>
- <xmqqimxnbdfq.fsf@gitster-ct.c.googlers.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <fbf09f23-6f9c-2353-2416-8c2a12f9cf48@iee.org>
-Date:   Fri, 15 Feb 2019 10:58:31 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.0
+        id S1731861AbfBOM7k (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 07:59:40 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:32335 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726000AbfBOM7k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 07:59:40 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1FCxZhI082939
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 15 Feb 2019 07:59:35 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Max Kirillov'" <max@max630.net>
+Cc:     "'Johannes Schindelin via GitGitGadget'" <gitgitgadget@gmail.com>,
+        <git@vger.kernel.org>, "'Junio C Hamano'" <gitster@pobox.com>
+References: <005b01d4c4bd$c5026ac0$4f074040$@nexbridge.com> <20190215034735.GF3064@jessie.local>
+In-Reply-To: <20190215034735.GF3064@jessie.local>
+Subject: RE: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1 (stack traces inside)
+Date:   Fri, 15 Feb 2019 07:59:29 -0500
+Message-ID: <000501d4c52e$4d485320$e7d8f960$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqimxnbdfq.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfBtQWxIb4Iy0ZDTdWBMxR74kj5n79DzQ8jGgy1NvUs63yPcBKKKcRwCjCW/qA6fJ9pYDKx6L6fo6KI4c9MZMH+vKg/urdKgCpU/IePUqzjuc7y4oO7w2
- nfNmSOznAkVlVSjID00luR7jyTHQqRXFG3ywtRRgaVyXgSKHLZCIeNz4ZPB9X0vCXjDsD4OpWKND7L92oUNBb7FbczMyeDf2i4PlIPArHJpKATHWCD6eng/L
- 3VKDPoCfFLsrPjbm0yVbBvO+q7MDZFDxUrXrGwlkhJo=
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQH9MiVJPzLpq3Vmc5HKmzZ3bio30wKnWVq4pXq8qfA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/02/2019 21:12, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->> (Replying to
->> https://public-inbox.org/git/383c14cc.9289.168e61d39e8.Coremail.wuzhouhui14@mails.ucas.ac.cn/
->> which curiously I can see there, but not in my inbox (or spam))
->>
->> Git's data format doesn't make it easy to find "C" given "B" in a commit
->> chain like A->B->C (also there could be any number of "C"
->> successors). We need to walk the graph. This shows how to do it:
->>
->> https://sqlite.org/whynotgit.html#git_makes_it_difficult_to_find_successors_descendents_of_a_check_in
-> Of course, the history is not necessarily linear.  Even though you
-> *MUST* know all your parents before having a commit (which means
-> that when you ask "what came before this commit", there is a
-> definitive answer that everybody in the world would agree on), you
-> by definition cannot know all the commits that are children of a
-> commit (simply because somebody else may be creating a new one), so
-> the question "what's the next commit" does not make any sense from
-> that point of view ;-)
+On February 14, 2019 22:48, Max Kirillov wrote:
+> To: Randall S. Becker <rsbecker@nexbridge.com>
+> Cc: 'Max Kirillov' <max@max630.net>; 'Johannes Schindelin via
+GitGitGadget'
+> <gitgitgadget@gmail.com>; git@vger.kernel.org; 'Junio C Hamano'
+> <gitster@pobox.com>
+> Subject: Re: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1
+(stack
+> traces inside)
+> 
+> On Thu, Feb 14, 2019 at 06:33:56PM -0500, Randall S. Becker wrote:
+> > Here is the full set of traces (from subtest 6, which just hung).
+> > There are no I/O errors reported on any pipe or file descriptor. There
+> > is one git process waiting for a read to occur but no one is doing any
+> > writing. Most processes are sitting in waitpid, except for the
+> > initiating git, which is waiting on a read that never receives data, so
+> everyone is asleep and hung.
+> > The git process sitting in read is reading from a PIPE, not a file.
+> >
+> > There are no other processes involved in the test that I can see.
+> >
+> > Perl (waiting for output to be read):
+> >   waitpid + 0x130 (SLr)
+> >   $n_EnterPriv + 0x280 (Milli)
+> >   Perl_wait4pid + 0x130 (UCr)
+> >   Perl_my_pclose + 0x4C0 (UCr)
+> >   Perl_io_close + 0x180 (UCr)
+> >   Perl_do_close + 0x620 (UCr)
+> >   Perl_pp_close + 0xA70 (UCr)
+> >   Perl_runops_standard + 0xF0 (UCr)
+> >   S_run_body + 0x870 (UCr)
+> >   perl_run + 0x2D0 (UCr)
+> >   main + 0x3D0 (UCr)
+> >
+> > git-http-backend:
+> >   waitpid + 0x320 (SLr)
+> >   $n_EnterPriv + 0x280 (Milli)
+> >   cleanup_children + 0x5D0 (UCr)
+> >   cleanup_children_on_exit + 0x70 (UCr)
+> >   git_atexit_dispatch + 0x200 (UCr)
+> >   __process_atexit_functions + 0xA0 (DLL zcredll)
+> >   CRE_TERMINATOR_ + 0xB50 (DLL zcredll)
+> >   exit + 0x2A0 (DLL zcrtldll)
+> >   die_webcgi + 0x240 (UCr)
+> >   die_errno + 0x360 (UCr)
+> >   write_or_die + 0x1C0 (UCr)
+> >   end_headers + 0x1A0 (UCr)
+> >   die_webcgi + 0x220 (UCr)
+> >   die + 0x320 (UCr)
+> >   inflate_request + 0x520 (UCr)
+> >   run_service + 0xC20 (UCr)
+> >   service_rpc + 0x530 (UCr)
+> >   cmd_main + 0xD00 (UCr)
+> >   main + 0x190 (UCr)
+> >
+> > git (one of them):
+> >   read64_ + 0x140 (SLr)
+> >   $n_EnterPriv + 0x280 (Milli)
+> >   xread + 0x130 (UCr)
+> >   read_in_full + 0x130 (UCr)
+> >   get_packet_data + 0x4B0 (UCr)
+> >   packet_read_with_status + 0x230 (UCr)
+> >   packet_reader_read + 0x310 (UCr)
+> >   receive_needs + 0x300 (UCr)
+> >   upload_pack + 0x680 (UCr)
+> >   cmd_upload_pack + 0x830 (UCr)
+> >   run_builtin + 0x980 (UCr)
+> >   handle_builtin + 0x570 (UCr)
+> >   run_argv + 0x210 (UCr)
+> >   cmd_main + 0x710 (UCr)
+> >   main + 0x190 (UCr)
+> >
+> > bash:
+> >   waitpid + 0x130 (SLr)
+> >   $n_EnterPriv + 0x280 (Milli)
+> >   waitchld + 0x1F0 (UCr)
+> >   wait_for + 0xFD0 (UCr)
+> >   execute_command_internal + 0x1990 (UCr)
+> >   execute_command + 0xC0 (UCr)
+> >   reader_loop + 0x4F0 (UCr)
+> >   main + 0x1140 (UCr)
+> >
+> > git (the other one):
+> >   waitpid + 0x130 (SLr)
+> >   $n_EnterPriv + 0x280 (Milli)
+> >   wait_or_whine + 0xE0 (UCr)
+> >   finish_command + 0x100 (UCr)
+> >   run_command + 0x1F0 (UCr)
+> >   execv_dashed_external + 0x800 (UCr)
+> >   run_argv + 0x250 (UCr)
+> >   cmd_main + 0x710 (UCr)
+> >   main + 0x190 (UCr)
+> 
+> This list does not say which process whose child but it seems like #3 is
+child of
+> #2 and #2 waits for #3, but #3 does not exit. Which is strange because it
+> should have send SIGTERM to it. Could the git-upload-pack somehow be
+> masking SIGTERM?
 
-It will also depend on which heads (branches) one wishes to trace back 
-from, or even know about. I'd expect that the default would just be the 
-current branch (head) which would definitely limit the potential commit 
-list.
-
---
-
-Philip
+SIGTERM cannot be masked or easily caught on the platform, so I don't think
+that's it. waitpid fails if the supplied pid is invalid, so it's not that
+either. However, I am not certain SIGPIPE is raised if a waited read is
+posted on a different pipe.
 
