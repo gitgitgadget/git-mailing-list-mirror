@@ -7,21 +7,21 @@ X-Spam-Status: No, score=2.3 required=3.0 tests=BAYES_50,
 	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 449481F453
-	for <e@80x24.org>; Thu, 14 Feb 2019 17:04:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8C881F453
+	for <e@80x24.org>; Thu, 14 Feb 2019 18:56:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393951AbfBNREA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 12:04:00 -0500
-Received: from sa136.saturn.dedi.server-hosting.expert ([5.199.133.18]:35430
+        id S2438188AbfBNS4y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 13:56:54 -0500
+Received: from sa136.saturn.dedi.server-hosting.expert ([5.199.133.18]:35967
         "EHLO themakerista.com" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726291AbfBNRD7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 14 Feb 2019 12:03:59 -0500
-X-Greylist: delayed 3621 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Feb 2019 12:03:58 EST
+        by vger.kernel.org with ESMTP id S2395538AbfBNS4x (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 14 Feb 2019 13:56:53 -0500
+X-Greylist: delayed 3658 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Feb 2019 13:56:52 EST
 To:     git@vger.kernel.org
-Subject: Do you have needs for your photos?
-Message-ID: <dca2a7053a2354eca521f9f66767016b@coroflot.com>
-Date:   Mon, 11 Feb 2019 09:42:28 +0100
-From:   "Cindy" <dufenstim@verizon.net>
+Subject: Have needs to retouch your photos?
+Message-ID: <df17f21463e61e282e85ad4817482f73@coroflot.com>
+Date:   Mon, 11 Feb 2019 09:30:05 +0100
+From:   "Cindy" <dufentism@verizon.net>
 Reply-To: helunko@sina.com
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset="UTF-8"
@@ -55,15 +55,8 @@ Cindy
 
 
 
+Redmscheid
 
 
-
-
-
-
-
-Dordmagen
-
-
-Saarloduis
+Bruchsdal
 
