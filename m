@@ -7,55 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0D811F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 15:49:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF0FF1F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 15:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387558AbfBOPtX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 10:49:23 -0500
-Received: from mail-qk1-f182.google.com ([209.85.222.182]:44789 "EHLO
-        mail-qk1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726214AbfBOPtX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 10:49:23 -0500
-Received: by mail-qk1-f182.google.com with SMTP id r21so5916709qkl.11
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 07:49:22 -0800 (PST)
+        id S2387633AbfBOPtZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 10:49:25 -0500
+Received: from mail-qt1-f171.google.com ([209.85.160.171]:43061 "EHLO
+        mail-qt1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726214AbfBOPtZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 10:49:25 -0500
+Received: by mail-qt1-f171.google.com with SMTP id y4so11316025qtc.10
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 07:49:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0KH9hwXG6fl+yB/XISsJGmSb9/VmBhypVO5UPiCfdww=;
-        b=S6Kn2Jox5XEQNrQq3SMErHhmoydvGFKoSPuZySKdlos+YagUYLpqvLDvled9BGVW9n
-         si/D7dsJCddsUjVPyoWVk6YAZGLsXQ2fWQGk8/Bk6mRn3D+626wGzPfle5gTIUjAnL/s
-         /E6HuxpSDcKYLTyYT7axdiIMPU/m7AezmeyDUUHzkFQIN5pmzOXDwS9Uq3W3IiBVfnNy
-         VtkTksX5yY5Y0XcJDAe44PrV1UmbznHWKE2ci4d5+pm60WhyrGqkIai1GNYKBCGBKY0K
-         UlsUH+XXizVxgi/keN01G+JP2PwbwKPG6bugEINe/STbP3wW/Zb3/adjzF6yWuSjQMdq
-         zDXg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=s/0cvxAKMsdwQaYj9X5pJKCdPorZdzB1E8vwY9Q1HNM=;
+        b=aQjW8jKA+2CdP4NLAe2wuYjqZWTtdtaUmLrAoj4h9uYop8G/taEI/AlJ8g+Tr5PeYg
+         Pu41g+FcAs5AwP3j9oisC/YLnegpg/1XYlA+3WNN7zsu1vnPpdzclXzCxp7ValtsCgw9
+         Tn0/paJC5YFzOGPqdnAIYmUplzGUHRvd+ugPGF3lb2NP5qqw9g4O0U+oqi5RpSV8M6e/
+         U5A5EeRP74v2tP7mo71x8zhSz4QS+4Nz6Z3nRC0nEnmi6X/y9dpopf2H8/nqu0mw+39H
+         o30uwHQpshKwhSKanh8PNVxkR2MR56jVWiD4xi+8BtWdO8ZM5d/3HmdTR9K3DigChvy7
+         RbhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0KH9hwXG6fl+yB/XISsJGmSb9/VmBhypVO5UPiCfdww=;
-        b=cHlwOjV+Q+TvhXsgegF7Mrh7ZnjMaREot2HbuCUhuj/ZjuRpIaP2u3IUeO95H4Kvzu
-         5bKSLs2XVkpeBU61zPHxqxG0TUw2r1wQes+UfumdXZFEhrJmW7Aw1qOBVxUCajbeulzg
-         c0dReNpKgcm2mGjtfAVkp2fEqZbay/ht7671m0INqscYhpn5hwdG33msDjx68FUmZ4z3
-         sjnrIeIJ85rFw2uujTtj+P8o708lz7YA6HsYmzob3LAyvmRWIGw7ZfezG5myge9+gi3U
-         xmstLxj7P+YdXAbzeyt1d1hEyv0WKGSBmRaTOAcr/s/beSbvBFtEh/Co5MHpXShdT8kC
-         i+jA==
-X-Gm-Message-State: AHQUAuZL4Dz4WwWyWo6Q7IMehi7I8Lhv/h5JEdAwFwvAoY3qjz000DRi
-        Mvoc1LPXW2YRji3Z+3p+6MGL192JQkU=
-X-Google-Smtp-Source: AHgI3IbIr2JUFF4b784w9qAlzbmnSLKjY/fRdXsbel2IcJ6C6x7LMC45HZA/nsuiEnzNBLReVnz8Rw==
-X-Received: by 2002:a05:620a:132d:: with SMTP id p13mr7177662qkj.232.1550245761986;
-        Fri, 15 Feb 2019 07:49:21 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=s/0cvxAKMsdwQaYj9X5pJKCdPorZdzB1E8vwY9Q1HNM=;
+        b=AV99vLg65FzqdG1A1eh0xFpBo4jfOK+Jls7bFVvLt/9bDYdGAIOgTLJs6Pw6vvULwQ
+         2nNeqVrFB+iaPZiyAelpVIy6kDcSMJubaSDqbKLtByvOjfDxCvC0L7YuUZ0Fx8IhywP2
+         qDl+faBXrHm9y7JWfMwCvtvwTBOl1FXBlDAjlL2+lkVrTVcX/vgzD7NhVgDz0y7zfDSL
+         q84e4tPLkmW6/QV/b7ZTWnAfMGxE2PrVDqX3k+MzzDvBlNmMc/2knUdT83xHwQyoV28Q
+         C7zJtCdt8OcJkQJcqcC9RNn2meczSiqEP8/rCoDfzRTfAuotFTXUqmJnOKEQbZ7xDLGt
+         hBuA==
+X-Gm-Message-State: AHQUAubBsxtSVxhc5TwzXlbOI1PLHb4Ivprapl0iCJHgFFis1Bwoonam
+        KKSmPFcGrTw/So13hJN1E4hruvmBtC4=
+X-Google-Smtp-Source: AHgI3Ibk5RYWNxU03kUVf6mHelNtF2pY+c5tyw1x/gIlpQqIGE5KSGz6+BXovWQsERK3o2QHaOoUAg==
+X-Received: by 2002:a0c:d963:: with SMTP id t32mr1345214qvj.231.1550245763789;
+        Fri, 15 Feb 2019 07:49:23 -0800 (PST)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::2])
-        by smtp.gmail.com with ESMTPSA id j6sm2909593qte.29.2019.02.15.07.49.20
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id j6sm2909593qte.29.2019.02.15.07.49.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Feb 2019 07:49:21 -0800 (PST)
+        Fri, 15 Feb 2019 07:49:23 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
-Subject: [GSoC][PATCH 0/2] clone: convert explicit traversal to
-Date:   Fri, 15 Feb 2019 13:49:11 -0200
-Message-Id: <20190215154913.18800-1-matheus.bernardino@usp.br>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [GSoC][PATCH 1/2] clone: extract function from copy_or_link_directory
+Date:   Fri, 15 Feb 2019 13:49:12 -0200
+Message-Id: <20190215154913.18800-2-matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190215154913.18800-1-matheus.bernardino@usp.br>
+References: <20190215154913.18800-1-matheus.bernardino@usp.br>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -63,19 +65,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert explicit recursive dir traversal at copy_or_link_directory of
-clone.c to use dir-iterator API.
+Extract dir creation code snippet from copy_or_link_directory to its own
+function named mkdir_if_missing. This change will help removing
+copy_or_link_directory's explicit recursion, which will be done in patch
+"clone: use dir-iterator to avoid explicit dir traversal". Also makes
+code more readable.
 
-This is my microproject for GSoC 2019. Idea taken from
-https://git.github.io/SoC-2019-Microprojects/#use-dir-iterator-to-avoid-explicit-recursive-directory-traversal
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ builtin/clone.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-Matheus Tavares (2):
-  clone: extract function from copy_or_link_directory
-  clone: use dir-iterator to avoid explicit dir traversal
-
- builtin/clone.c | 64 ++++++++++++++++++++++++++++---------------------
- 1 file changed, 37 insertions(+), 27 deletions(-)
-
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 50bde99618..2a1cc4dab9 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -392,6 +392,24 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
+ 	fclose(in);
+ }
+ 
++static void mkdir_if_missing(const char *pathname, mode_t mode)
++{
++	/*
++	 * Create a dir at pathname unless there's already one.
++	 */
++	struct stat buf;
++
++	if (mkdir(pathname, mode)) {
++		if (errno != EEXIST)
++			die_errno(_("failed to create directory '%s'"),
++				  pathname);
++		else if (stat(pathname, &buf))
++			die_errno(_("failed to stat '%s'"), pathname);
++		else if (!S_ISDIR(buf.st_mode))
++			die(_("%s exists and is not a directory"), pathname);
++	}
++}
++
+ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+ 				   const char *src_repo, int src_baselen)
+ {
+@@ -404,14 +422,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+ 	if (!dir)
+ 		die_errno(_("failed to open '%s'"), src->buf);
+ 
+-	if (mkdir(dest->buf, 0777)) {
+-		if (errno != EEXIST)
+-			die_errno(_("failed to create directory '%s'"), dest->buf);
+-		else if (stat(dest->buf, &buf))
+-			die_errno(_("failed to stat '%s'"), dest->buf);
+-		else if (!S_ISDIR(buf.st_mode))
+-			die(_("%s exists and is not a directory"), dest->buf);
+-	}
++	mkdir_if_missing(dest->buf, 0777);
+ 
+ 	strbuf_addch(src, '/');
+ 	src_len = src->len;
 -- 
 2.20.1
 
