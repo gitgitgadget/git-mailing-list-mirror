@@ -2,97 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0339E1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 20:12:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CA9E1F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 20:22:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390308AbfBOUMq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 15:12:46 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39484 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726317AbfBOUMq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 15:12:46 -0500
-Received: by mail-wm1-f68.google.com with SMTP id z84so3799287wmg.4
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 12:12:45 -0800 (PST)
+        id S1728523AbfBOUWQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 15:22:16 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:33434 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725782AbfBOUWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 15:22:16 -0500
+Received: by mail-qk1-f194.google.com with SMTP id x9so6520901qkf.0
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 12:22:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Jxms4kxgcY6xjY9XdNOq2ITzO5kUq0HuvMURdVg75A4=;
-        b=RC0QgFgZQJj2dq4Mt+7LuMlA/aW/Rhvwb2Ln4tWWSHtOxZTQ2cAzCrcupllQg+wArI
-         y26ajK/SejWot2WU4CDwv7Bs4IwnZVJVRM2MzzgWWv3T0hRhAGa5QSMIsmDgI14dypBn
-         XuNO7UIvYSTzrfkc1rxKkazJnwU1pImnyfzEYO2ncd1uXeeqa8psJo4XhxY6blEns5yB
-         LtNp+ajyyR2dfuhBwn+RKBkEevDpH6dQTSKV7wzjWJQi18zxRLLqilPiLVrMO6p6di5o
-         ekVxIBaXZI+rsGKXpQAo7oUqN5bOWrIMXPwNUcr2qQSbLN9v1gP8iH8An9iFUfRP+gqm
-         3yZg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=NBX2DOKIXsBtY9Qc6j4F2aPcHMuyZCOV17bO1CEAaV4=;
+        b=V05Lnhpxl3PtJ2FVpGV5fl6ey26yuZbS9y+383PxKIz0F6BGyVFG+GXWuCdznR8Er4
+         BGA6fyBjIcHhilgxIVY3BD/wA5pEPG45rNQ3qMbeM2RvpIJFVxHpBWPSp/IfpZEIQKqH
+         K9/sIiTHv1lrJmToSOOM4LQLatWwbob71QZcXn0/Oslt7rtTQNMpA3F5VQ5mbDnLNqu7
+         LPRDXVvTDi45PyiqjrPMC+x66kHzuy98j/J0a4XGYX7dp7z2h2CpsBG2pbVVm2W8uJiD
+         Kcx7sn+/dfhsVVwbYleOQ4a49qrWP/UiHebTCPbF7vW8544SEPG846eAWr5SpZCkJcfn
+         CFpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Jxms4kxgcY6xjY9XdNOq2ITzO5kUq0HuvMURdVg75A4=;
-        b=JtVP0fLfRVtz+kf4U67FiYJ9rIxXyY+hikoQVb7I2xjoMcV+b++3AMZgPwckhx23C/
-         j0i9ObYOblFSMtvj3SL8peFIrd8aK5xC134l9Bwfj4wc8o7rKp9w+eNtvRVRuZ//16Jr
-         yzO2Zf1/fTAZDn96Uhb1b0yM0gg7Yuf1+C2wGmp2BynE5ghLqsdHZWpZe3CyIueIip6w
-         YvDQ2Evh0bRLnQ/hLwqDLRm7ibxrvuCUmLTFnVbiabEIvVnXpqV+PuFpH4zpiOQH8mQv
-         QyIfR1dqYlanWNIzgx1pBGABk7u8PPPXuedmlCQzM0BxPl2EzivGhOc0U2zBf+QgqeRe
-         T8vA==
-X-Gm-Message-State: AHQUAuZn6J2u8g3Lgd+ukaXd943eKCcCCaEN7DkN7ANs2ZRIQ5ubFOvZ
-        4N/OO+BXwZDuX5j+1biRuVs=
-X-Google-Smtp-Source: AHgI3IZ1EGtkhkFRKrIcqSUKPkWYbqVDwkv1/pqTYPY9wewjcf6FsP1KNRs2MhCpyVBsze7xGqNDcA==
-X-Received: by 2002:a1c:7f0c:: with SMTP id a12mr7440006wmd.89.1550261564288;
-        Fri, 15 Feb 2019 12:12:44 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y25sm4702023wma.6.2019.02.15.12.12.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Feb 2019 12:12:42 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        vincent.guittot@linaro.org
-Subject: Re: [Bug report] git diff stat shows unrelated diff
-References: <20190214082258.3mh3hcr2l6dl3wuf@vireshk-i7>
-        <CABPp-BGstumw1eyZ++0itk-AR0Bk5zd0AchgznBpMq35a6ScUg@mail.gmail.com>
-        <xmqqmumy6mxe.fsf@gitster-ct.c.googlers.com>
-        <20190215185202.GA28019@dev-l>
-        <CABPp-BEmPQb4Q_38S2A_68m+Cu75VDDD2UV0qWBDjL1OUAug9Q@mail.gmail.com>
-Date:   Fri, 15 Feb 2019 12:12:41 -0800
-In-Reply-To: <CABPp-BEmPQb4Q_38S2A_68m+Cu75VDDD2UV0qWBDjL1OUAug9Q@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 15 Feb 2019 11:25:43 -0800")
-Message-ID: <xmqqzhqw4xqe.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=NBX2DOKIXsBtY9Qc6j4F2aPcHMuyZCOV17bO1CEAaV4=;
+        b=t/u/mZrieHn0pt5UtYTXSHKB95O+AC8btHDF7AS/mAx6F9lD68NqKSGc+Kg7aC2ium
+         zrY4i5tNIgTvQ5vMBv7qhfNgLOl+1BpEdwajnUakN/+mvyw3hcpSu6JLmyBaw7fdc+ii
+         r+8kse8Nmsat7Q362dFFCSb3SQNVr8UCS+xOSonRCkOAhzC6Te3f1DDwO0XWv0LG74yP
+         sruOrzE6OBDKkAQJaKaQ02w8j400+PzHEP6dGxIZwbjWeK9lKTLjt3x1+uBKYuaM9tfX
+         C7gCe1rGVSaOEO7kZ8LcvAs7JcmIFr8kMxNUFwvkJcvWrntY0BSGzJ/fZidBoLB+VLj/
+         BVTQ==
+X-Gm-Message-State: AHQUAubAOuBU1FAM+sfaw9wrtW5fplcPx18EgQUnKCF1mAW1krBsFC5p
+        H1UFn1c0x6F8W4JLP8KjCmA=
+X-Google-Smtp-Source: AHgI3IaWSAYblwsgi4XGbMtV1rJY5sW1QRiycyNZNC3hsqceP4ua1rDdXqNJEpCPKG5Mz+7qruIwhQ==
+X-Received: by 2002:a37:628a:: with SMTP id w132mr8464839qkb.60.1550262134569;
+        Fri, 15 Feb 2019 12:22:14 -0800 (PST)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id m12sm3620351qke.17.2019.02.15.12.22.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 15 Feb 2019 12:22:13 -0800 (PST)
+Subject: Re: [PATCH] read-cache.c: index format v5 -- 30% smaller/faster than
+ v4
+To:     Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20190213120807.25326-1-pclouds@gmail.com>
+ <87bm3ek7qr.fsf@evledraar.gmail.com>
+ <CACsJy8DWXcBk3f3heZp5J7dhTM3JL4MeVco56j4WtJNeskz9pw@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <11875ebb-5a40-4c87-dce7-b337cc922100@gmail.com>
+Date:   Fri, 15 Feb 2019 15:22:12 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CACsJy8DWXcBk3f3heZp5J7dhTM3JL4MeVco56j4WtJNeskz9pw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
 
->> Instead of outright deprecating it, would it make sense to include a
->> configuration option, say "diff.sensibleDots", that would enable a user
->> to set the dots to the other form if they desire?
->
-> I think Junio's suggested steps would still have to come first, and
-> there may also need to be a time period after two-dot notation is an
-> error before we were to try to repurpose it for something else (e.g.
-> to make it behave the same as triple-dot).  Adding a config to change
-> things now without both a deprecation and error period would invite
-> horrible surprises and bug reports; people need time and warning to
-> change workflows and fix existing scripts that might be out there.
 
-Historically, it was a mistake to allow A..B to be used for two
-endpoints, which was made back when we haven't thought things
-through.  That is why I stopped "warn to deprecate and then
-completely remove", as I do not think it would help people very much
-if "git diff A B" can be spelled with two-dots.
+On 2/14/2019 5:14 AM, Duy Nguyen wrote:
+> On Thu, Feb 14, 2019 at 5:02 PM Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+>>> Take a look at stat data, st_dev, st_uid, st_gid and st_mode are the
+>>> same most of the time. ctime should often be the same (or differs just
+>>> slightly). And sometimes mtime is the same as well. st_ino is also
+>>> always zero on Windows. We're storing a lot of duplicate values.
+>>>
+>>> Index v5 handles this
+>>
+>> This looks really promising.
+> 
+> I was going to reply to Junio. But it turns out I underestimated
+> "varint" encoding overhead and it increases read time too much. I
+> might get back and try some optimization when I'm bored, but until
+> then this is yet another failed experiment.
+> 
+>>> As a result of this, v5 reduces file size from 30% (git.git) to
+>>> 36% (webkit.git) compared to v4. Comparing to v2, webkit.git index file
+>>> size is reduced by 63%! A 8.4MB index file is _almost_ acceptable.
+>>>
 
-But in a distant future long after that happens, by the time nobody
-remembers what A..B meant for "git diff", I do not think I'd
-strongly be opposed to reusing it to mean something different.
+Just for kicks, I tried this out on a couple of repos I have handy.
+
+files	version	index size	%savings
+200k	2	25,033,758	0.00%
+	3	25,033,758	0.00%
+	4	15,269,923	39.00%
+	5	9,759,844	61.01%
+			
+3m	2	446,123,848	0.00%
+	3	446,123,848	0.00%
+	4	249,631,640	44.04%
+	5	82,147,981	81.59%
+
+The 81% savings is very impressive.  I didn't measure performance but 
+not writing out an extra 167MB to disk has to help.
+
+I'm definitely also interested in your 'sparse index' format ideas as in 
+our 3M repos, there are typically only a few thousand that don't have 
+the skip-worktree bit set.  I'm not sure if that is the same 'sparse' 
+you had in mind but it would sure be nice!
+
+
+
+I've also contemplated multi-threading the index write code path.  My 
+thought was in the primary thread to allocate a buffer and when it is 
+full have a background thread compute the SHA and write it to disk while 
+the primary thread fills the next buffer.
+
+I'm not sure how much it will buy us as I don't know the relative cost 
+of computing the SHA/writing to disk vs filling the buffer.  I've 
+suspected the filling the buffer thread would end up blocked on the 
+background thread most of the time which is why I haven't tried it yet.
+
+>>> Of course we trade off storage with cpu. We now need to spend more
+>>> cycles writing or even reading (but still plenty fast compared to
+>>> zlib). For reading, I'm counting on multi thread to hide away all this
+>>> even if it becomes significant.
+>>
+>> This would be a bigger change, but have we/you ever done a POC
+>> experiment to see how much of this time is eaten up by zlib that
+>> wouldn't be eaten up with some of the newer "fast but good enough"
+>> compression algorithms, e.g. Snappy and Zstandard?
+> 
+> I'm quite sure I tried zlib at some point, the only lasting impression
+> I have is "not good enough". Other algorithms might improve a bit,
+> perhaps on the uncompress/read side, but I find it unlikely we could
+> reasonably compress like a hundred megabytes in a few dozen
+> milliseconds (a quick google says Snappy compresses 250MB/s, so about
+> 400ms per 100MB, too long). Splitting the files and compressing in
+> parallel might help. But I will probably focus on "sparse index"
+> approach before going that direction.
+> 
