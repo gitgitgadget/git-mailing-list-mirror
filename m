@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-12.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0960C1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 04:31:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A15891F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 04:31:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730500AbfBOEbW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 23:31:22 -0500
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:33733 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727231AbfBOEbV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 23:31:21 -0500
-Received: by mail-vk1-f202.google.com with SMTP id y196so3578714vkd.0
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 20:31:21 -0800 (PST)
+        id S2387487AbfBOEbY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 23:31:24 -0500
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:45402 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727231AbfBOEbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 23:31:23 -0500
+Received: by mail-pf1-f201.google.com with SMTP id 74so6565482pfk.12
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 20:31:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=BnUr70dQjdSP35dYSkLHaX7qPVy/AkZksikxppfXp+o=;
-        b=bGY2t0nnyO4E5BVUlGJrXhq5Rvtp+IITsVKY5/Z5B2vINHzH7/1p2ZG+T22QogKrUr
-         EAlXcygu7jGTBspmlbhUBapAkDNY1bXtAqsQB/I550drt1cTwM5GnI929kcjCq93NqlC
-         tUTQrsixkIhcmy4wbLVdeChJOH7ATNAb8aUy0or8w/oV8wSgE/HruTaQ1RAXRTs8xkmn
-         i7GLTjefnNJgwTPjLGkMeGEKsuTEArp4aPQ8/K4aAZkXjb65/OPodxhciIkFusit+aNb
-         r0aNvedDV2EXU8WHhdnbU+H7FCyPOxGQYi+LVT4pKzav3xUo8blMjwe5w/Oj7hA2u40W
-         bkmQ==
+        bh=6BCP5N9rpIJFppG4ZsdNfLckSwLH1p6veq7OYlKz9Jk=;
+        b=dSraxzmueU9FROSmBuNRqYgiOLJE5VVFHKT6R4QKN3FmgPSwr95p+9xlQYSZXwCn41
+         82qbZjuNDw2Qq0EV/8WSaCRXLZuoQVui71RZGg+PdA8aZnig+WvzF/Ak9z/Lsv/66LkA
+         +mOy7DH0+yMvMFz63Ayd+EH5lic43OkWFIMgwun7ByyCVu1uJh2U+egtYL1pa2uiy2hR
+         EsanX/1ujk+4hnhQbIbSiNaRMRgBuo4v4Sw20ROQHOUtXrZ5Tp88o7eXTwf4GRAoGjGn
+         TbUPqhoW2Ai448L4aQfz30s+hb9VU06DNqe/9+H9HU3O4pWD0P0qVccDLapOg5IX7SMl
+         cGzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=BnUr70dQjdSP35dYSkLHaX7qPVy/AkZksikxppfXp+o=;
-        b=ojuoFDppB+rbNd2G5sez8ddWzrFfzLCc28lUZMx6CGwZtxf1Z5LBErL//R68zWt2Zv
-         D+iSg+30/QHXLJJ+845z0POvVZkxc/mkhl8SZkenP+OnJxtEj4LG/fDjf3lr23X/Omtv
-         0i6TOk7SkD532AfBK1R9yt0q78ie/rfsQjpugxbQZIICVd2gviSPm6/mZwoKqqe15LSL
-         d+n0TKbQA4ApJgK3u/l8QFsED8vdFlR9rWDYx1XZWP++sFZnyZasnrwABVgqcafnRTgB
-         LBmN1hOM831tyLmkpS0fddQ99mO8K6Cqc9lNUy0r79WknH7XrepG8bLyVWX+XUXn0qLw
-         NMXw==
-X-Gm-Message-State: AHQUAua+ERXIW1AVUFlLeWrQKH+1WIbNnPSt7egBUc+TaETVzFCF9g+a
-        wDmSQKpJbiuGKAg4b+YIvZc+WlhnOyPuKHKqCGllRwL4LIiI0SgIzvwyox3ASOC1IdhqE7uHYyn
-        Evv5zhM1GMMnTg3cPoqIi5B1p462NOIrKX+jnI+WR0RUk2ywR7PWAzQkycA==
-X-Google-Smtp-Source: AHgI3Ia4EfH4xpn2Xtcm3QPFm9tS8Si4bjSUIMWycj99bFyQc4ZltbH06pUrgb0VWuei6m/+++7ISPe06IY=
-X-Received: by 2002:a9f:2981:: with SMTP id s1mr4634735uas.9.1550205080571;
- Thu, 14 Feb 2019 20:31:20 -0800 (PST)
-Date:   Thu, 14 Feb 2019 20:30:59 -0800
+        bh=6BCP5N9rpIJFppG4ZsdNfLckSwLH1p6veq7OYlKz9Jk=;
+        b=MlIUs30l9zic0eV11ra1pXPrgrzP4Lngkunmex2J6lkiC7HuX7MKEeSscvX9GNhyVt
+         dUvTjR4B7CWFIayJufP9ViC67KjWjdKBZfo8Vw68v+uBwbPtcwdXsBtAPXIXf4LNrvjK
+         4B3mbmrYkzgsRZTymkbx5bHs2KLN4fLwrI89YrP5L53nv9DHXY+OEpgg4zyfociHAuZ+
+         j5l4Yl2vs3rorbwOAQCjel7wUraao14YikhyK2GPTgRUgjbPmeuMUKbG98DkoVeFWVgJ
+         Q+XHz7By2MPHfiIQXt/GPaXskvQLpGiGVdBETN6Ub8AEbZlWM0c7Goauj0HWtZQDtioF
+         Uy/A==
+X-Gm-Message-State: AHQUAuYG4acBE/pUf0qUxKizSXcDm6p0AYEDq4k0rHKzTNCnBiUkxy5g
+        42IbvCcV8ED0qm6Je0C0mdTAhV2pOntLCACz+7tvhj91IHOB4mQeBNxnXlSr/n4Wv8njSM4w3+6
+        J5iHgQJ+5GvIpUNySln7CJyPT7d2oB5CTpCHfoBuyVxOQls6c8Cw+cgB5dA==
+X-Google-Smtp-Source: AHgI3IaBvDlV89FpCZrK9hp8eIO5t9ilzg/JPbO2SQ5wRc8FEUbxN97OS03VcVmIHhW+TAeRXp1S4MbPzJ8=
+X-Received: by 2002:a17:902:6b48:: with SMTP id g8mr2291808plt.37.1550205083104;
+ Thu, 14 Feb 2019 20:31:23 -0800 (PST)
+Date:   Thu, 14 Feb 2019 20:31:00 -0800
 In-Reply-To: <20190215043105.163688-1-sxenos@google.com>
-Message-Id: <20190215043105.163688-2-sxenos@google.com>
+Message-Id: <20190215043105.163688-3-sxenos@google.com>
 Mime-Version: 1.0
 References: <20190215043105.163688-1-sxenos@google.com>
 X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e-goog
-Subject: [PATCH v5 2/8] sha1-array: implement oid_array_readonly_contains
+Subject: [PATCH v5 3/8] ref-filter: add the metas namespace to ref-filter
 From:   sxenos@google.com
 To:     git@vger.kernel.org
 Cc:     Stefan Xenos <sxenos@google.com>
@@ -64,113 +64,65 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Stefan Xenos <sxenos@google.com>
 
-Implement a "readonly_contains" function for oid_array that won't
-sort the array if it is unsorted. This can be used to test containment in
-the rare situations where the array order matters.
-
-The function has intentionally been given a name that is more cumbersome
-than the "lookup" function, which is what most callers will will want
-in most situations.
+The metas namespace will contain refs for changes in progress. Add
+support for searching this namespace.
 
 Signed-off-by: Stefan Xenos <sxenos@google.com>
 ---
- sha1-array.c               | 13 +++++++++++++
- sha1-array.h               |  2 ++
- t/helper/test-sha1-array.c |  6 ++++++
- t/t0064-sha1-array.sh      | 22 ++++++++++++++++++++++
- 4 files changed, 43 insertions(+)
+ ref-filter.c | 8 ++++++--
+ ref-filter.h | 5 +++--
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/sha1-array.c b/sha1-array.c
-index d922e94e3f..d1adcbfc8a 100644
---- a/sha1-array.c
-+++ b/sha1-array.c
-@@ -26,6 +26,19 @@ static const unsigned char *sha1_access(size_t index, void *table)
- 	return array[index].hash;
- }
+diff --git a/ref-filter.c b/ref-filter.c
+index 422a9c9ae3..4d7bd06880 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1925,7 +1925,8 @@ static int ref_kind_from_refname(const char *refname)
+ 	} ref_kind[] = {
+ 		{ "refs/heads/" , FILTER_REFS_BRANCHES },
+ 		{ "refs/remotes/" , FILTER_REFS_REMOTES },
+-		{ "refs/tags/", FILTER_REFS_TAGS}
++		{ "refs/tags/", FILTER_REFS_TAGS },
++		{ "refs/metas/", FILTER_REFS_CHANGES }
+ 	};
  
-+int oid_array_readonly_contains(const struct oid_array* array,
-+	const struct object_id* oid)
-+{
-+	int i;
-+
-+	if (array->sorted)
-+		return sha1_pos(oid->hash, array->oid, array->nr, sha1_access) >= 0;
-+	for (i = 0; i < array->nr; i++)
-+		if (oideq(&array->oid[i], oid) == 0)
-+			return 1;
-+	return 0;
-+}
-+
- int oid_array_lookup(struct oid_array *array, const struct object_id *oid)
+ 	if (!strcmp(refname, "HEAD"))
+@@ -1943,7 +1944,8 @@ static int filter_ref_kind(struct ref_filter *filter, const char *refname)
  {
- 	if (!array->sorted)
-diff --git a/sha1-array.h b/sha1-array.h
-index 55d016c4bf..06d3ad2994 100644
---- a/sha1-array.h
-+++ b/sha1-array.h
-@@ -13,6 +13,8 @@ struct oid_array {
- void oid_array_append(struct oid_array *array, const struct object_id *oid);
- int oid_array_lookup(struct oid_array *array, const struct object_id *oid);
- void oid_array_clear(struct oid_array *array);
-+int oid_array_readonly_contains(const struct oid_array* array,
-+	const struct object_id* oid);
+ 	if (filter->kind == FILTER_REFS_BRANCHES ||
+ 	    filter->kind == FILTER_REFS_REMOTES ||
+-	    filter->kind == FILTER_REFS_TAGS)
++	    filter->kind == FILTER_REFS_TAGS ||
++	    filter->kind == FILTER_REFS_CHANGES )
+ 		return filter->kind;
+ 	return ref_kind_from_refname(refname);
+ }
+@@ -2128,6 +2130,8 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+ 			ret = for_each_fullref_in("refs/remotes/", ref_filter_handler, &ref_cbdata, broken);
+ 		else if (filter->kind == FILTER_REFS_TAGS)
+ 			ret = for_each_fullref_in("refs/tags/", ref_filter_handler, &ref_cbdata, broken);
++		else if (filter->kind == FILTER_REFS_CHANGES)
++			ret = for_each_fullref_in("refs/metas/", ref_filter_handler, &ref_cbdata, broken);
+ 		else if (filter->kind & FILTER_REFS_ALL)
+ 			ret = for_each_fullref_in_pattern(filter, ref_filter_handler, &ref_cbdata, broken);
+ 		if (!ret && (filter->kind & FILTER_REFS_DETACHED_HEAD))
+diff --git a/ref-filter.h b/ref-filter.h
+index 85c8ebc3b9..19a3e57845 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -18,9 +18,10 @@
+ #define FILTER_REFS_BRANCHES       0x0004
+ #define FILTER_REFS_REMOTES        0x0008
+ #define FILTER_REFS_OTHERS         0x0010
+-#define FILTER_REFS_ALL            (FILTER_REFS_TAGS | FILTER_REFS_BRANCHES | \
+-				    FILTER_REFS_REMOTES | FILTER_REFS_OTHERS)
+ #define FILTER_REFS_DETACHED_HEAD  0x0020
++#define FILTER_REFS_CHANGES        0X0040
++#define FILTER_REFS_ALL            (FILTER_REFS_TAGS | FILTER_REFS_BRANCHES | \
++				    FILTER_REFS_REMOTES | FILTER_REFS_CHANGES | FILTER_REFS_OTHERS)
+ #define FILTER_REFS_KIND_MASK      (FILTER_REFS_ALL | FILTER_REFS_DETACHED_HEAD)
  
- typedef int (*for_each_oid_fn)(const struct object_id *oid,
- 			       void *data);
-diff --git a/t/helper/test-sha1-array.c b/t/helper/test-sha1-array.c
-index ad5e69f9d3..fefb1c984f 100644
---- a/t/helper/test-sha1-array.c
-+++ b/t/helper/test-sha1-array.c
-@@ -25,10 +25,16 @@ int cmd__sha1_array(int argc, const char **argv)
- 			if (get_oid_hex(arg, &oid))
- 				die("not a hexadecimal SHA1: %s", arg);
- 			printf("%d\n", oid_array_lookup(&array, &oid));
-+		} else if (skip_prefix(line.buf, "readonly_contains ", &arg)) {
-+			if (get_oid_hex(arg, &oid))
-+				die("not a hexadecimal SHA1: %s", arg);
-+			printf("%d\n", oid_array_readonly_contains(&array, &oid));
- 		} else if (!strcmp(line.buf, "clear"))
- 			oid_array_clear(&array);
- 		else if (!strcmp(line.buf, "for_each_unique"))
- 			oid_array_for_each_unique(&array, print_oid, NULL);
-+		else if (!strcmp(line.buf, "for_each"))
-+			oid_array_for_each(&array, print_oid, NULL);
- 		else
- 			die("unknown command: %s", line.buf);
- 	}
-diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
-index 5dda570b9a..512dd0f56b 100755
---- a/t/t0064-sha1-array.sh
-+++ b/t/t0064-sha1-array.sh
-@@ -32,6 +32,28 @@ test_expect_success 'ordered enumeration with duplicate suppression' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'readonly_contains finds existing' '
-+	echo 1 >expect &&
-+	echoid "" 88 44 aa 55 >>expect &&
-+	{
-+		echoid append 88 44 aa 55 &&
-+		echoid readonly_contains 55 &&
-+		echo for_each
-+	} | test-tool sha1-array >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'readonly_contains non-existing query' '
-+	echo 0 >expect &&
-+	echoid "" 88 44 aa 55 >>expect &&
-+	{
-+		echoid append 88 44 aa 55 &&
-+		echoid readonly_contains 33 &&
-+		echo for_each
-+	} | test-tool sha1-array >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'lookup' '
- 	{
- 		echoid append 88 44 aa 55 &&
+ struct atom_value;
 -- 
 2.21.0.rc0.258.g878e2cd30e-goog
 
