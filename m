@@ -7,112 +7,86 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A02D1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 17:50:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6274D1F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 17:51:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729605AbfBORuN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 12:50:13 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35182 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729256AbfBORuM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 12:50:12 -0500
-Received: by mail-wr1-f67.google.com with SMTP id t18so11267226wrx.2
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 09:50:11 -0800 (PST)
+        id S1730107AbfBORv2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 12:51:28 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39081 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728951AbfBORv1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 12:51:27 -0500
+Received: by mail-wr1-f66.google.com with SMTP id l5so10148452wrw.6
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 09:51:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=kUBTdZwtYTl1v+SLReuPYZN96Ko0qQvqsE252aeO1ro=;
-        b=dAUZzTfmpMq1kquJXg1GbALYRkUGjzuGFcSIgrwTAJcT1lU47IZ2tN02fBF1pmIMd0
-         SpGB1J5NGMDdHgnOvA/15dAM84M0KrSpLsKu4QQq30H/+Q2avi1ZkLjcS13fjhgIpSMD
-         EPnGC2+C+iKqgvZqrXx2XV3HkU+FBR0SCAz2/atwbazEvte+rocLIsZbo+qUf3ClDQn4
-         J3O+8e8sW4FWkALWTSPL4Mln1xu97nbchqftyCif32WZLyxHesKcH0o6wPNCHto0J1Rf
-         VT8TPUIsOA/sJ3YRuYJNh0a6NtNg7mAeuKF9JMXhh7u4Dg/yv3kJNSNx4HkW1QnNVxt2
-         mwKw==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=sHWwglW8lkbirSsC1HadayZtcu2jQvdAeX6URLVsw/0=;
+        b=A6gaISVlju37Ufyahl1jyBbTpxYrI0IxXC3xd+UvWyMXKj109xn7xCO9RqNAgNHRrB
+         sB8RTfQJXZip8nxVmQsnc9YFrtJCYeTnPurSLFzNbiZCJ5uxyaJzKA7OpQEfmiyWomw6
+         0PxMLtFXwxwz6uON3TFOrSBXpgs0E6kHIcAB+NdX85lj4m50V2jRfga79VB/adlJrT+E
+         YRhbIog4/bvBTYgRjsJB6t5WMoMODzov1G9+WS0uNjLZ1Bj777aJqaSm6eKylxoCE/Ox
+         88aM4ts48MdNXStSzhuEzCKuiKhkS6IvMl39k0yj199eWwEUlvJOf1k4TL/XuYEvFyEL
+         8U2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=kUBTdZwtYTl1v+SLReuPYZN96Ko0qQvqsE252aeO1ro=;
-        b=aY+HQNCYYu00g2gH1gIZfMj4jg8CMjkZBu8qupKY3ct9+0//kOKkShgUojOOmTo4IV
-         wP6AzHoL7arPFTgCCJ01CgCjIxwJz0vyV+ruTijBctGd/Jq+b8w3Yrv1UGcIqFhjVBkq
-         WP+d/BqiDt576I+XNJI6Em2jEjkdQT2m9GfW2PpEciy9BB7XsBywOjC7cBwAevFDzeqY
-         c10qh01/rQarmUHOOqgbfiwopvStz6sjMhSuHe/glmt7neR3CEnEFFiuTfFq7xYZzBOL
-         S2647iWI8/21aNv5so19n11Znqz1RzfJh7SeNTSefwTmP9lzyQGLeDg4uUVSrDiAKoFX
-         abpQ==
-X-Gm-Message-State: AHQUAubS+7s64dTIg2vjZQl+euIogCvaoZTSHNHIVtP/pkuUQYu0s9Fm
-        D8alhx8r2aWT0pj0RJw9URk=
-X-Google-Smtp-Source: AHgI3IZWxhHCUCHRkAKRS2/Z6NGZJs9K0fQM6fh1Z8dCfKIivnybF8+CkJvrbP8JHJG4oKxjkaBtVQ==
-X-Received: by 2002:adf:9d14:: with SMTP id k20mr7343313wre.97.1550253010636;
-        Fri, 15 Feb 2019 09:50:10 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i16sm3301196wru.16.2019.02.15.09.50.09
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=sHWwglW8lkbirSsC1HadayZtcu2jQvdAeX6URLVsw/0=;
+        b=c6pPsWx4cAKLk1yXYHx5Kvacz0JqxCuxJcEg8rpoXi3D8WgfQe8p3RVWJyNnigVuoz
+         RPJmKaLGxUrudcSdG3Cp+08IG+r4YlQu+ioW8v24x0+7QmC4BZEZ6vmee1LE1FNQ49iG
+         +Rotcef4JCuLUNcEr83bwgcnTGb1x+u7F4eso3BOJ/57LEtEbzKUDCriRcrad9klekP2
+         VSpyWbKKn0yd9THb7MEV2akz2iaNPIXqjOkFtIOVVDIXL8GrXBQzoYAnqaVBNANJL+q3
+         xYAo44f1ZX7bUK+OHf5v/kdIlplNAijnvMM4eG8bAHSTLjaN0/bVzKOg/xE6UfBq3JDL
+         eDxg==
+X-Gm-Message-State: AHQUAuYyiFxkFOH3Q26mKUMOmHYQzAHNQrDIbT5ZQTb4dhfEkM0x3GOq
+        uDq01YU4INv3rOofkyHIWSU=
+X-Google-Smtp-Source: AHgI3IbcChy8vVi9Ot/RhuIk+Jhhc+di+1n/JlNf8hWjbiyh0r2PC0Pp8qN4OvZ/fyYvxkaZ2GI2hg==
+X-Received: by 2002:adf:fa51:: with SMTP id y17mr8085863wrr.233.1550253085644;
+        Fri, 15 Feb 2019 09:51:25 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v196sm6999312wmf.15.2019.02.15.09.51.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Feb 2019 09:50:09 -0800 (PST)
+        Fri, 15 Feb 2019 09:51:24 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-        benpeart@microsoft.com, kewillf@microsoft.com,
-        sandals@crustytoothpaste.net
-Subject: Re: [PATCH v2] read-cache: add post-indexchanged hook
-References: <20190208195115.12156-1-peartben@gmail.com>
-        <20190214144241.11240-1-peartben@gmail.com>
-        <2f08ee3b-4511-2838-4c70-640d01fe1658@ramsayjones.plus.com>
-        <xmqqa7iy860g.fsf@gitster-ct.c.googlers.com>
-        <dc851640-ac3b-74a1-a753-7ff2a43a4a5b@gmail.com>
-Date:   Fri, 15 Feb 2019 09:50:09 -0800
-In-Reply-To: <dc851640-ac3b-74a1-a753-7ff2a43a4a5b@gmail.com> (Ben Peart's
-        message of "Thu, 14 Feb 2019 19:14:37 -0500")
-Message-ID: <xmqq1s496iwe.fsf@gitster-ct.c.googlers.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Re* [Breakage] 2.20.0-rc0 t1404: test_i18ngrep reports 1 instead of 0 on NonStop in one case
+References: <000801d4c174$05b76860$11263920$@nexbridge.com>
+        <CACsJy8Bn+2zY6y_QqCjbB3qWM-F=3d0H5vgWj4az=md2FZ8RhA@mail.gmail.com>
+        <xmqqftsughks.fsf@gitster-ct.c.googlers.com>
+        <20190212002705.GD13301@sigill.intra.peff.net>
+        <xmqqef8a86sr.fsf_-_@gitster-ct.c.googlers.com>
+        <CAN0heSooOiJkkfr=sKn+dkMmU9knabeTnY90EJyEu2fNT8XMzw@mail.gmail.com>
+Date:   Fri, 15 Feb 2019 09:51:23 -0800
+In-Reply-To: <CAN0heSooOiJkkfr=sKn+dkMmU9knabeTnY90EJyEu2fNT8XMzw@mail.gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Fri, 15 Feb 2019 07:08:45
+ +0100")
+Message-ID: <xmqqwom1549w.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Martin Ågren <martin.agren@gmail.com> writes:
 
-> On 2/14/2019 3:33 PM, Junio C Hamano wrote:
->> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> On Fri, 15 Feb 2019 at 03:13, Junio C Hamano <gitster@pobox.com> wrote:
 >>
->>> On 14/02/2019 14:42, Ben Peart wrote:
->>>> From: Ben Peart <benpeart@microsoft.com>
->>>>
->>>> Add a post-indexchanged hook that is invoked after the index is written in
->>>
->>> s/post-indexchanged/post-index-changed/
+>> Subject: [PATCH] t1404: do not rely on the exact phrasing of strerror()
 >>
->> Good.  I wasn't paying close attention to the previous round, but is
->> that the only name-related bikeshedding?  I somehow feel that
->> without s/changed/change/ the name does not roll well on my tongue
->> and does not sit well together with existing ones like post-receive
->> (which is not post-received).  I dunno.
->>
->> Will queue.  Thanks.
+>> Not even in C locale, it is wrong to expect that the exact phrasing
+>> "File exists" is used to show EEXIST.
 >
-> Would you like me to submit another version with the above spelling
-> corrections in the commit message or is it easier to fix it up
-> yourself?
+> s/Not even/Even/? Or s/wrong to expect that/portable to rely on/, or
+> something?
 
-I've already done s/indexchanged/index-changed/ before queuing
-(there was only one IIRC in the log message), and also the
-'optimize' typofix.
+Thanks for catching. Negation is not my forté.
 
-I didn't do anything about dropping 'd' at the end, as I haven't
-heard any feedback on that from anybody yet.
-
->>>> do_write_locked_index().
->>>>
->>>> This hook is meant primarily for notification, and cannot affect
->>>> the outcome of git commands that trigger the index write.
->>>>
->>>> The hook is passed a flag to indicate whether the working directory was
->>>> updated or not and a flag indicating if a skip-worktree bit could have
->>>> changed.  These flags enable the hook to optmize its response to the
->>>
->>> s/optmize/optimize/
->>>
->>> ATB,
->>> Ramsay Jones
