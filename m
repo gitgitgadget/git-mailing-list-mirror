@@ -7,67 +7,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB0D1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 23:32:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53E0E1F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 23:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728085AbfBOXcY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 18:32:24 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:54515 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726895AbfBOXcY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 18:32:24 -0500
-Received: by mail-wm1-f68.google.com with SMTP id a62so11676978wmh.4
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 15:32:22 -0800 (PST)
+        id S2388127AbfBOXgS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 18:36:18 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36046 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726895AbfBOXgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 18:36:18 -0500
+Received: by mail-wr1-f66.google.com with SMTP id o17so12017764wrw.3
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 15:36:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ecp6XBE3l8N/0g7TYoErqMwPSR9gV7ipAo8a8alDZr4=;
-        b=MGqwOS9ZSBGiZdM6UfVJlvCNVqLCgDX1mbKq9yoSVnEeXmtAbfXu+wAzDyxuoVCeIm
-         asKvgy3wd7dCYJQL64ctJaDWpkMAquQ592A4C8pYr9rvEhP+o6dTCAVlTSPO/ODrLAhH
-         /Nhm99+tDjbX4jch2PEqLAFx3D6rzrs+63AkcCuGNMS6d8AfCQmsWTvCsKmxcJpWOaDt
-         gJvGsGZj0yNJUiUTGAKwfMxIKRrppxMWoerR0z+BLJNf7LZ9NxYJIEozJPNBYoEacPBA
-         p6iYi4StYJcme65/kF0Xcjopep8fDoKjvMDMPVrOTg6GOqd434kb3USp9uKUigxH/lqm
-         lqGA==
+        bh=vpN7ro8S7iq4VKim1DCe+QXCaGpM6VSOQtNE5hrUB5M=;
+        b=mWCXEGnG0vNcAFQEZ7zvrCaHwue2Wx8fqBsNZiAZ4VyAVPcZkw4kP2J3FwNG1VGoIF
+         oBqiKylEvlOuJVIjwnaLRqV5hN85qubDfQrg+CA3thjGpUIgvJR1ygBnAvCjgwssK7K3
+         OK7HBsn1kJPKwowxRuUKg6k+w1LQyeVsBLky13woiLK0xSFauT1dEbfjQHYiQBrL+lGE
+         1aIf/iu7IKCJyikK78bNLL6MT0QFV70PqTuwHmtGNTmxdl4hEgpwrZtWiXFJg6FQDUGC
+         E30Mzk3pNiuAYWqpalEg+a9ZCyR+FkLd9OVlAJiLGwQKDFOT0HVzQdJ9hC58tjcQ+K94
+         aqwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ecp6XBE3l8N/0g7TYoErqMwPSR9gV7ipAo8a8alDZr4=;
-        b=i4quuMm5tlMlwrNMDrmR9tzTV31WCxmGAJK0343dUBqbp44GvbBzRUCQCRYsP2boUe
-         Yo37cuTsrXK/z5WMEO9C0/CBDJZrA06gY+9Oc9wTwS9cuZ8RdpQNNm0yR6y2RCgPYr5d
-         Ah1J+92hZTz0PQjcznd+GGXC5mHe9pCsXmoa/kd/9xfJMYl4v+/eBSXse/B1/DX00k4N
-         lKB0cHZ0YlTY8BDbZduG0KZdXinLi3fss1VIUPp4/mhUDhf0fVFGZkZDsez35F6xgzwp
-         TWoQfPf2ZEBVr4zQDRmldIg+S6K/ev4fa70DJF1joMgZhInBP50N68drq1LgjLUq/kvp
-         7jxg==
-X-Gm-Message-State: AHQUAuZ/7wGEwLT794Oh1I3/ESz1jZvS9tlku1Lqqu9RfFs7TNrHpW0d
-        GU1oB7eXAXIDVWxoSWB1MEk=
-X-Google-Smtp-Source: AHgI3Ib3m0XP9b4VoOjJDUo1CHzHb/2fCkdVgQsDmElRtPcRACVODxvCkr4iE3q2LzRb2lknjdn+oQ==
-X-Received: by 2002:a1c:7211:: with SMTP id n17mr8477342wmc.92.1550273541159;
-        Fri, 15 Feb 2019 15:32:21 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id u15sm10945230wmu.17.2019.02.15.15.32.20
+        bh=vpN7ro8S7iq4VKim1DCe+QXCaGpM6VSOQtNE5hrUB5M=;
+        b=W5u8Z0KP09KbeQ5zQf0AWx3qI1MHubUKlbAJp61LaiDZyN2G4aB3sxWWh+i8mv/kUt
+         NqBzIC41y1NR9U4W2sZRirjWq/dc8R/HuS9Hg+7pK13C6UdiJUVo5JeNbr0B9/U0civ3
+         0KGbhuTySCfPr3ZCHo5trztq+Oq/+RCiR6i22k7kv2+ADEPftrrmRQjJt0BIrizIyG1E
+         VytIMkJB3AlDW/gxB9Xw5jKPKw9wetghF3jt3GNsHmtIn5ky0Ptqwx+lqV20MsK7IUd4
+         SJYwSvoLCVRe7k7HNgm1aXCvTBOL50XEPbmib93aQvMft2gExPDL+we5MveFWmzn65P2
+         0/zg==
+X-Gm-Message-State: AHQUAub7gHBWou3qKieJSzttqMHN0JyaA8PUnadCJYgDy9+CpP9+S+Gc
+        OjntoB+QtVhTbD+7I74wnaM=
+X-Google-Smtp-Source: AHgI3Ia/GcQNDbkAjE5688N3/dEXAV4d/CPCMIZRxCO+p4YARp7I2LBS8Ls6eYY+ATfm6Y7F07u0kg==
+X-Received: by 2002:adf:cc83:: with SMTP id p3mr8414568wrj.292.1550273776209;
+        Fri, 15 Feb 2019 15:36:16 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v6sm11111415wrd.88.2019.02.15.15.36.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Feb 2019 15:32:20 -0800 (PST)
+        Fri, 15 Feb 2019 15:36:15 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        vincent.guittot@linaro.org
-Subject: Re: [Bug report] git diff stat shows unrelated diff
-References: <20190214082258.3mh3hcr2l6dl3wuf@vireshk-i7>
-        <CABPp-BGstumw1eyZ++0itk-AR0Bk5zd0AchgznBpMq35a6ScUg@mail.gmail.com>
-        <xmqqmumy6mxe.fsf@gitster-ct.c.googlers.com>
-        <20190215185202.GA28019@dev-l>
-        <CABPp-BEmPQb4Q_38S2A_68m+Cu75VDDD2UV0qWBDjL1OUAug9Q@mail.gmail.com>
-        <xmqqzhqw4xqe.fsf@gitster-ct.c.googlers.com>
-        <ad85402e-0ad2-4f4d-3b66-9250115072c0@iee.org>
-Date:   Fri, 15 Feb 2019 15:32:20 -0800
-In-Reply-To: <ad85402e-0ad2-4f4d-3b66-9250115072c0@iee.org> (Philip Oakley's
-        message of "Fri, 15 Feb 2019 22:48:40 +0000")
-Message-ID: <xmqqr2c84ohn.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Xenos <sxenos@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: [PATCH v5 1/8] technical doc: add a design doc for the evolve command
+References: <20190215043105.163688-1-sxenos@google.com>
+        <xmqqlg2g6hcv.fsf@gitster-ct.c.googlers.com>
+        <CAPL8ZiseLQgemzr-U2yFM815Ty+Di_cGznZ_hNAcf3sMy5mXEg@mail.gmail.com>
+Date:   Fri, 15 Feb 2019 15:36:15 -0800
+In-Reply-To: <CAPL8ZiseLQgemzr-U2yFM815Ty+Di_cGznZ_hNAcf3sMy5mXEg@mail.gmail.com>
+        (Stefan Xenos's message of "Fri, 15 Feb 2019 14:18:49 -0800")
+Message-ID: <xmqqmumw4ob4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,34 +68,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.org> writes:
+Stefan Xenos <sxenos@google.com> writes:
 
-> On 15/02/2019 20:12, Junio C Hamano wrote:
->>
->> Historically, it was a mistake to allow A..B to be used for two
->> endpoints, which was made back when we haven't thought things
->> through.  That is why I stopped "warn to deprecate and then
->> completely remove", as I do not think it would help people very much
->> if "git diff A B" can be spelled with two-dots.
->>
->> But in a distant future long after that happens, by the time nobody
->> remembers what A..B meant for "git diff", I do not think I'd
->> strongly be opposed to reusing it to mean something different.
+>> saw a few comments that say "needs further work".
 >
-> Would an option be to add a opt-in config to do the warning, rather
-> than start immediately at a deprecation warning?
+> Could you clarify where you saw those comments? Were they something I
+> wrote ...
 
-Well, anything would be "an option".  I am not sure it would be
-particularly a good option to allow people to "opt" into getting
-warned, only to get a chance to train their fingers not to type
-double-dot instead of a SP, earlier than other people, though.
+Yeah, e.g.
 
-> It would give users the chance to test out their usage early should
-> the so wish/desire/notice.
+       /* TODO: This causes a crash. It sets one of the atom_value handlers to
+        * something invalid, which causes a crash later when we all
+        * show_ref_array_item. Figure out why this happens and put back the sorting.
+        *ref_array_sort(sorting, &array); */
 
-I am somewhat puzzled.  What are you trying to achieve by that?
+was what caught my attention in the previous and this version.  As I
+said, it is OK if the code is not completely finished.  It's an
+iterative process.
 
-Those who do *not* opt into that "early warning" configuration dance
-would eventually be warned whenever they type "diff A..B", and the
-timing for that eventuality is not under their control, so quite
-honestly, I do not see much point in "giving users the chance".
+By the way, our multi-line comments have opening /* and closing */
+on their own lines.
+
+Thanks.
+
