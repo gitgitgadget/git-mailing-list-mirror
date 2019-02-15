@@ -2,138 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E01761F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 22:19:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FCD31F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 22:38:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728593AbfBOWTD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 17:19:03 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:43370 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726000AbfBOWTD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 17:19:03 -0500
-Received: by mail-lf1-f67.google.com with SMTP id j1so8302498lfb.10
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 14:19:02 -0800 (PST)
+        id S2391924AbfBOWiT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 17:38:19 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43579 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390411AbfBOWiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 17:38:18 -0500
+Received: by mail-wr1-f68.google.com with SMTP id r2so11882689wrv.10
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 14:38:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RXvwoO8M2y9+plodqP5D3yEQpDADc/nn7iKOmiBZvkk=;
-        b=XNa5W7M9CheEMxeENQuxxISeLewfqqbb51teyGnoiU5kzgyE9uJ+NqsIoMTKRE+x2g
-         2yuHnpbOGH2/xex6KqeIne/4LG0o903E6WOnpx4nenGjJ2G9YdkD48USd192B8WWhXFs
-         uurAlyUBRqVwFcXS5rW9PTTtIY9bQ8apAnVCrn4ZY7j0M4OYvfnjwWkerY8WoMeEgNAW
-         YOU1uLkBzJO0eUZ0Cj1GfBQ5e8zxz5QarbblhPdANwmX2BCY3GlhY27OurO5u7WGAKl0
-         MAjlWa8b686obwzOIvrREuctDBGbVLbwY8l1uUos8nfDZI0xilDiIH2anGbNE3s00uSG
-         iUIA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=F82OgR9jBtcVgpDdRCh2VH+QzQa7Y650hb51i0Kfs04=;
+        b=rs9vPl2ElhXFjMvxr75sNS9SqSsZVMnvAbxWO91i9ozFPUOjdMEk9lEAGriQlwaWVd
+         1CPe+/aPAeaIXXdNTS8krz12KtMt+WF13NOIjv7rAGFKjKnsmRINkJSH/tIaaWugCaBM
+         yRgsHf5xppBZHEkAUFbRZSaJFQaJWCsfsDLUJDAApvzf576vBf8lVTbP4HDn111RUvFw
+         pfwj8mYhzCvi3FG+NyZyIfC9Lnhw4cdnmW8hqozFIEihmTuw8E2XthHreRZt+LJHeVHk
+         dHkBxffMVjeCD2IGVCbPvaVtUCoBI5UKC//91JzgIaI24TderoT4MvMmCteihETok3Im
+         8cdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RXvwoO8M2y9+plodqP5D3yEQpDADc/nn7iKOmiBZvkk=;
-        b=NEl89kzoLp/qu5IFLYBE7osIj4Srwo2aPoU1gMdXi6q1sM7MW/G+SYn35OycTHCXYF
-         m6cTh/afvOK1siKdIJMdQ1v3JGwJAixLG1A80udpE6rWXc53K/J1B8u9CxlRhRxlcDuj
-         EmgkASSIrMn4b2KvkD4KMvuW73CPWH3lAStltKq7WVetgdhepvgXdKjmnGmAof5AX8fQ
-         vR7aU+OjgnDzhM1ym9qNp09H6PuExLxCa2iQzQMHpdLpu4673UWL8b8CbHOZIoYa8ugL
-         qHHzgEq88r3NpWszfxb8vk4ZXBZPROdeAbLpxI6AhI+lHRXn3uqNZWRxgPcdDJUPyji8
-         wOPA==
-X-Gm-Message-State: AHQUAuYuJzR9tOVYbw2OeH1iDly5ueW8fLJ1TmcASxo52CHJZlaZly3r
-        aNskGe4q8NGOHBjKhzgbG8Whn0Bao+Nmmvj8DshPmQ==
-X-Google-Smtp-Source: AHgI3IbzM01UWyz0bJpk8ODLzyx7Yt8jQshXfauCaSvEYib0uD7sIBWOrkQgppULZlfniQTVgnMvEK1ydKpMG57cX5g=
-X-Received: by 2002:a19:a345:: with SMTP id m66mr6940521lfe.84.1550269140928;
- Fri, 15 Feb 2019 14:19:00 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=F82OgR9jBtcVgpDdRCh2VH+QzQa7Y650hb51i0Kfs04=;
+        b=G12k26GGa51+7AxkhZkKrcq4t3/cLyurgeX2avmBCqE7ee6koef1TgYJJ3mOLXjqVU
+         tF3vlw2OzzW76QWMUJK8K2cEB2HEyLjwwVY0/SV9tjMYGjKRbOW105mJdcqIfaNr2vKy
+         MsOFuk0RivEW0IoExRvzVgr4CN3+G332j3+y7nfGxREO0gmMpX7M/VUSeIGUZTwvGJa4
+         ATmMZ5Ie7p5xzpkAU66JsAxLYdwh/uHC50Q8xxnPyd+ul3ahNP+MsHxCin+9G9EGo6uy
+         /mW7rvfpz0CzaZtHUUPl+4UEnRRAgtWvJIo9A2eFEx923SFHEIPE8dFYkgmevkBsvtI4
+         dy9g==
+X-Gm-Message-State: AHQUAuZkAp5uNkcdkGX93wdzIRtyxOsu+iAusBIpkknTP86fwmdhQJBK
+        kZGOj0DyO3m5ZE8eAeb42MgWWYoT
+X-Google-Smtp-Source: AHgI3IYUFh9iMw+XApuzTOja2ppaxCU7FpOFgj23yrfSXoHA79nWIsU44/pGBTf/C9Ni5GpC3BSJSw==
+X-Received: by 2002:adf:f543:: with SMTP id j3mr8026640wrp.220.1550270296479;
+        Fri, 15 Feb 2019 14:38:16 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id w22sm6534022wmc.9.2019.02.15.14.38.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 15 Feb 2019 14:38:15 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v2 06/19] checkout: move 'confict_style' and 'dwim_..' to checkout_opts
+References: <20190130094831.10420-1-pclouds@gmail.com>
+        <20190208090401.14793-1-pclouds@gmail.com>
+        <20190208090401.14793-7-pclouds@gmail.com>
+Date:   Fri, 15 Feb 2019 14:38:15 -0800
+In-Reply-To: <20190208090401.14793-7-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Fri, 8 Feb 2019 16:03:48 +0700")
+Message-ID: <xmqqva1k4qzs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190215043105.163688-1-sxenos@google.com> <xmqqlg2g6hcv.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqlg2g6hcv.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Xenos <sxenos@google.com>
-Date:   Fri, 15 Feb 2019 14:18:49 -0800
-Message-ID: <CAPL8ZiseLQgemzr-U2yFM815Ty+Di_cGznZ_hNAcf3sMy5mXEg@mail.gmail.com>
-Subject: Re: [PATCH v5 1/8] technical doc: add a design doc for the evolve command
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> It would really need a summary of what changed
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-Sure! In this iteration, I made some minor changes to the technical doc:
-
-- Fixed a number of typos and inconsistent language.
-- Removed the "replace" subcommand from the "changes" command since
-the "update" command is sufficient for this purpose.
-- Removed the "--continue" and "--abort" arguments from "evolve" since
-I don't need them to address the initial use-cases and jrn@ proposed
-some reasonable alternatives that may render them redundant. I'll put
-them back in a follow-up in the event that we go this route.
-- Added some clarifying text.
-- Added a paragraph describing the possibility of cycles between
-changes and how the evolve command will treat them.
-
-I also changed the "git change update" subcommand to add output
-describing which changes were modified by the operation. I did some
-minor refactoring to collect that output.
-
-In general, would you prefer if I keep submitting these as revisions
-of the same patch series, or would it be easier if I created new
-patches on top of what is currently in "pu"? Sorry, I'm new here and
-am unfamiliar with the email workflow -- but I'm happy to accommodate
-whatever you prefer.
-
-> saw a few comments that say "needs further work".
-
-Could you clarify where you saw those comments? Were they something I
-wrote or did I miss a comment on this mailing list asking me to do
-follow-up work that I neglected? To the best of my knowledge, I've
-addressed every concern anyone brought up in the list.
-
-> What's the intention?  Unfinished but soliciting further comments and sanity checks to help polishing the finished parts
-
-To the best of my knowledge, the patches in this series are ready for
-submission. There is further work needed to implement the "evolve"
-command itself (which I haven't started), but that will build on top
-of this code. I am not aware of further refinement required for these
-patches. In earlier patch series I commented about the desire to make
-better use of the memory pool, but I've also included those
-refinements in later versions of the patch series. Does that answer
-your question?
-
->  thanks for working on this.
-
-And thank you for taking the time to review it and consider its inclusion!
-
-  - Stefan
-
-
-On Fri, Feb 15, 2019 at 10:23 AM Junio C Hamano <gitster@pobox.com> wrote:
+> These local variables are referenced by struct option[]. This struct
+> will soon be broken down, moved away and we can't rely on local
+> variables anymore. Move these two to struct checkout_opts in
+> preparation for that.
 >
-> sxenos@google.com writes:
->
-> > From: Stefan Xenos <sxenos@google.com>
-> >
-> > This document describes what a change graph for
-> > git would look like, the behavior of the evolve command,
-> > and the changes planned for other commands.
-> >
-> > Signed-off-by: Stefan Xenos <sxenos@google.com>
-> > ---
->
-> It would really need a summary of what changed since the earlier
-> rounds, if a series this size wants to be re-read by those who
-> helped the previous one.
->
-> I briefly looked at the patches (and the diff against the previous
-> one that has been in 'pu') and saw a few comments that say "needs
-> further work".  What's the intention?  Unfinished but soliciting
-> further comments and sanity checks to help polishing the finished
-> parts (if that is the case that is perfectly fine, but it would help
-> those who want to help if you are clear about it)?
->
-> I'll read them through laster today or tomorrow with fresh set of
-> eyes; thanks for working on this.
->
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+
+Up to this point all patches made sense to me.  Thanks for working
+on this.
