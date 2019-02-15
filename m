@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-12.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E3C01F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 04:31:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7611F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 04:31:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388050AbfBOEbb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Feb 2019 23:31:31 -0500
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:47597 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387875AbfBOEbb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Feb 2019 23:31:31 -0500
-Received: by mail-pg1-f201.google.com with SMTP id f5so5946405pgh.14
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 20:31:30 -0800 (PST)
+        id S2388107AbfBOEbe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Feb 2019 23:31:34 -0500
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:43733 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387875AbfBOEbe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Feb 2019 23:31:34 -0500
+Received: by mail-pf1-f202.google.com with SMTP id b8so6580589pfe.10
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 20:31:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=o094KI3VMqXd0tuJSmsby0vPPmAhdvjJ5vs0TBoEkB8=;
-        b=FA06E/wSXsNwGeytOvpmgv7ncwsUudSsCU1GkxjXqO6Op5Pj82nUuYEgt9yWvtUAcG
-         LcL3Ioo+v3nob+vqcEa/UdqxD78YIbi0lZaPTxQKBOLmYnUU9D37VD1eGnXfhq4ZHTBi
-         Dd/8Phh0OWxMf7xLpBwpqqVKR0EJliUUjW527zpgWrpzv6SbR18B/aljSNSAq5g3w1oB
-         yvNBAEnCS/wjmG1dr7XvlJPI+hOY0Aw0jTeIQBox6GxMl3kFmueYGOT1r/bkHsR9XFcz
-         E4zD7PEZF1b2YYAyvGnTMa1wg0A1CpZLnAFbXJyqeT0kmTPOj8zOfGiQJEyVmraXgAh3
-         vagg==
+        bh=PTHZOpQxOwF15L2Ft15KjpOZF8hSS+cliENOoYJAMEQ=;
+        b=Vh23aKYam9Cthk5snOGZwD+yxEi9gIsBv83+ySfgm7Tr7vH+e1Q43Q4XgURj1tBEAc
+         vgUP4K8e087sRTweY4hb2B+YoPG350+1e18tBEiMpvMsEFP3MrcSmAVUcvHC/fq6BZ9k
+         65O+22S7g29RraRZitLfKgijebzPKwC+SQ1fpARXX22OP8O2RG2AtVvCKBPW7U23Atgn
+         mnJutAiXEA2FF8B8zQ0esu7TtFY2L8Os/+VJqv78vJDFz1K8L8zwk7yFOV0aVpjRnJ/B
+         gCcbDZXphQzmCimIBdAxdcPrJl9nys1YKQGGN3seFKCNRTGPppcOZxUQlkFI6FXCwYya
+         FRvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=o094KI3VMqXd0tuJSmsby0vPPmAhdvjJ5vs0TBoEkB8=;
-        b=oBSHen4ZnA09TjtZ0iLMFhPG5lR6tGjeP0vOyHBjAslUd1QgizI/x4MZdjHidtd6+5
-         PHaozLytn1IiY10UHFKRmQ4nxpQZLMAiRQpqGQ63CretXT92yng2Zasl38Th/QluIksd
-         k3JaxjC8/RlpZGBIzEahsrmaKejhAxG26mFFfxpFDG/qRrNXwQMB+Bq7WmFCsgOYtjWn
-         1Pn6cZFrfpCkg5aCTqb5kpx+jqhWrARqaVzzBqCbPq7e2P7e9nsYEMT5nCN5FrFODcPr
-         NTpAJkTeKe58kX2xphXEWGm36JDQCz8X44xlXzQkIiIE2iWO5KKhHbfYB0/l1ESXqSBs
-         PFvA==
-X-Gm-Message-State: AHQUAuZGUMnzgIcvsLqNBH47VGR7+mzqJsJNnKgB2d/X3JrWA6lGk7jd
-        6lva+pM1+5uqsEwsYqnq/HXKSJoqwrlJtwy+26I7bDT1WBJEGcV6QPmieqR0+rIlwKWRFrW/JEx
-        mC/2d9uk2tc+Cko4Or0ZK5YTMSGbIH0j4PwiN8bWAQ5R4MgjMOQfxqFfUyQ==
-X-Google-Smtp-Source: AHgI3IbUenUmIyotVnKqnyNYYLgGz8tZaCWq1fxv9CeHUAzpjU3d2N1TetIcV4b/51jl8hWKpBZLtXkEx1w=
-X-Received: by 2002:a62:47c6:: with SMTP id p67mr2724924pfi.24.1550205089948;
- Thu, 14 Feb 2019 20:31:29 -0800 (PST)
-Date:   Thu, 14 Feb 2019 20:31:03 -0800
+        bh=PTHZOpQxOwF15L2Ft15KjpOZF8hSS+cliENOoYJAMEQ=;
+        b=BkmEWHBpj/JWBQsxkBH/uJ6d2O2kXVY1KsnbTMl7tKajLjL87HUsZZ1Qt/aA6g9clc
+         nyIfG3mJnkJ2tz4RaOLEkIQ4ug37W+hR8uUR2oAU7w0V2SL/RJrik8FP/hZBTAVtHXQw
+         X8RpA45beCqdRfHpe3277XdEuc9E2Az2DOnG0Te6Fuo55ZCmyt2e64cm44g4/BsDj6Fn
+         bd7UoB2nuCFKHi1++K6BbOGhsWo5Aw6H4jnG8rbQNRDA0oSAT8PU2R0K7QeoeTmtWq/z
+         tMD0wS67jSNRNm1QseOyo7A+tXIufOwHBbPGZhhbFhFcbFYsZT5nBBFKNBPXasXmL09n
+         Lqvg==
+X-Gm-Message-State: AHQUAuY6in6yCO3Pfvi4YkJhKRNkpVhmaEtX3nKIHq6ZDvuqpi/Lqpmx
+        kuUcB4KYmA9CdhblHm0SHCGBwwsphaBFCv11Q7aVX0jXUfi9SgvGx7Fe91gJCAykO3OOFmoMbGD
+        DGJCrJ69EAmsEfDl6FzQTapaFoDBbtAlq7rhLVGuu8Pw9ExP+15PYBQAosQ==
+X-Google-Smtp-Source: AHgI3IY4FXuHgOqWwTBJJHeHXfyhzQdfqJt6Yknk1UFkRH29EUOi3bjNpU9fVK5l8RGOmse8uMt+HQ/aCc8=
+X-Received: by 2002:aa7:8685:: with SMTP id d5mr2646332pfo.42.1550205092538;
+ Thu, 14 Feb 2019 20:31:32 -0800 (PST)
+Date:   Thu, 14 Feb 2019 20:31:04 -0800
 In-Reply-To: <20190215043105.163688-1-sxenos@google.com>
-Message-Id: <20190215043105.163688-6-sxenos@google.com>
+Message-Id: <20190215043105.163688-7-sxenos@google.com>
 Mime-Version: 1.0
 References: <20190215043105.163688-1-sxenos@google.com>
 X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e-goog
-Subject: [PATCH v5 6/8] evolve: add support for writing metacommits
+Subject: [PATCH v5 7/8] evolve: implement the git change command
 From:   sxenos@google.com
 To:     git@vger.kernel.org
 Cc:     Stefan Xenos <sxenos@google.com>
@@ -64,497 +64,280 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Stefan Xenos <sxenos@google.com>
 
-metacommit.c supports the creation of metacommits and
-adds the API needed to create and update changes.
+Implement the git change update command, which
+are sufficient for constructing change graphs.
 
-Create the "modify_change" function that can be called from modification
-commands like "rebase" and "git amend" to record obsolescences in the
-change graph.
+For example, to create a new change (a stable name) that refers to HEAD:
 
-Create the "record_metacommit" function for recording more complicated
-commit relationships in the commit graph.
+git change update -c HEAD
 
-Create the "write_metacommit" function for low-level creation of
-metacommits.
+To record a rebase or amend in the change graph:
+
+git change update -c <new_commit> -r <old_commit>
+
+To record a cherry-pick in the change graph:
+
+git change update -c <new_commit> -o <original_commit>
 
 Signed-off-by: Stefan Xenos <sxenos@google.com>
 ---
- Makefile     |   1 +
- metacommit.c | 395 +++++++++++++++++++++++++++++++++++++++++++++++++++
- metacommit.h |  50 +++++++
- 3 files changed, 446 insertions(+)
- create mode 100644 metacommit.c
- create mode 100644 metacommit.h
+ .gitignore       |   1 +
+ Makefile         |   1 +
+ builtin.h        |   1 +
+ builtin/change.c | 195 +++++++++++++++++++++++++++++++++++++++++++++++
+ git.c            |   1 +
+ 5 files changed, 199 insertions(+)
+ create mode 100644 builtin/change.c
 
+diff --git a/.gitignore b/.gitignore
+index 7374587f9d..6c1384e4cb 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -27,6 +27,7 @@
+ /git-branch
+ /git-bundle
+ /git-cat-file
++/git-change
+ /git-check-attr
+ /git-check-ignore
+ /git-check-mailmap
 diff --git a/Makefile b/Makefile
-index b780f0b782..38f2592ec6 100644
+index 38f2592ec6..ad65b4f8fd 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -940,6 +940,7 @@ LIB_OBJS += merge.o
- LIB_OBJS += merge-blobs.o
- LIB_OBJS += merge-recursive.o
- LIB_OBJS += mergesort.o
-+LIB_OBJS += metacommit.o
- LIB_OBJS += metacommit-parser.o
- LIB_OBJS += midx.o
- LIB_OBJS += name-hash.o
-diff --git a/metacommit.c b/metacommit.c
+@@ -1055,6 +1055,7 @@ BUILTIN_OBJS += builtin/blame.o
+ BUILTIN_OBJS += builtin/branch.o
+ BUILTIN_OBJS += builtin/bundle.o
+ BUILTIN_OBJS += builtin/cat-file.o
++BUILTIN_OBJS += builtin/change.o
+ BUILTIN_OBJS += builtin/check-attr.o
+ BUILTIN_OBJS += builtin/check-ignore.o
+ BUILTIN_OBJS += builtin/check-mailmap.o
+diff --git a/builtin.h b/builtin.h
+index 6538932e99..d2d39d9da8 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -137,6 +137,7 @@ extern int cmd_blame(int argc, const char **argv, const char *prefix);
+ extern int cmd_branch(int argc, const char **argv, const char *prefix);
+ extern int cmd_bundle(int argc, const char **argv, const char *prefix);
+ extern int cmd_cat_file(int argc, const char **argv, const char *prefix);
++extern int cmd_change(int argc, const char **argv, const char *prefix);
+ extern int cmd_checkout(int argc, const char **argv, const char *prefix);
+ extern int cmd_checkout_index(int argc, const char **argv, const char *prefix);
+ extern int cmd_check_attr(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/change.c b/builtin/change.c
 new file mode 100644
-index 0000000000..4064dcb027
+index 0000000000..807d148805
 --- /dev/null
-+++ b/metacommit.c
-@@ -0,0 +1,395 @@
-+#include "cache.h"
++++ b/builtin/change.c
+@@ -0,0 +1,195 @@
++#include "builtin.h"
++#include "ref-filter.h"
++#include "parse-options.h"
 +#include "metacommit.h"
-+#include "commit.h"
 +#include "change-table.h"
-+#include "refs.h"
++#include "config.h"
 +
-+void init_metacommit_data(struct metacommit_data *state)
-+{
-+	memset(state, 0, sizeof(*state));
-+}
-+
-+void clear_metacommit_data(struct metacommit_data *state)
-+{
-+	oid_array_clear(&state->replace);
-+	oid_array_clear(&state->origin);
-+}
-+
-+static void compute_default_change_name(struct commit *initial_commit,
-+	struct strbuf* result)
-+{
-+	const char *buffer = get_commit_buffer(initial_commit, NULL);
-+	const char *subject;
-+	const char *eol;
-+	int len;
-+	find_commit_subject(buffer, &subject);
-+	eol = strchrnul(subject, '\n');
-+	for (len = 0;subject < eol && len < 10; ++subject, ++len) {
-+		char next = *subject;
-+		if (isspace(next))
-+			continue;
-+
-+		strbuf_addch(result, next);
-+	}
-+}
-+
-+/*
-+ * Computes a change name for a change rooted at the given initial commit. Good
-+ * change names should be memorable, unique, and easy to type. They are not
-+ * required to match the commit comment.
-+ */
-+static void compute_change_name(struct commit *initial_commit, struct strbuf* result)
-+{
-+	struct strbuf default_name;
-+	struct object_id unused;
-+
-+	strbuf_init(&default_name, 0);
-+	if (initial_commit)
-+		compute_default_change_name(initial_commit, &default_name);
-+	else
-+		strbuf_addstr(&default_name, "change");
-+	strbuf_addstr(result, "refs/metas/");
-+	strbuf_addbuf(result, &default_name);
-+
-+	/* If there is already a change of this name, append a suffix */
-+	if (!read_ref(result->buf, &unused)) {
-+		int suffix = 2;
-+		int original_length = result->len;
-+
-+		while (1) {
-+			strbuf_addf(result, "%d", suffix);
-+			if (read_ref(result->buf, &unused))
-+				break;
-+			strbuf_remove(result, original_length, result->len - original_length);
-+			++suffix;
-+		}
-+	}
-+
-+	strbuf_release(&default_name);
-+}
-+
-+struct resolve_metacommit_callback_data
-+{
-+	struct change_table* active_changes;
-+	struct string_list *changes;
-+	struct oid_array *heads;
++static const char * const builtin_change_usage[] = {
++	N_("git change update [--force] [--replace <treeish>...] [--origin <treesih>...] [--content <newtreeish>]"),
++	NULL
 +};
 +
-+static int resolve_metacommit_callback(const char *refname, void *cb_data)
++static const char * const builtin_update_usage[] = {
++	N_("git change update [--force] [--replace <treeish>...] [--origin <treesih>...] [--content <newtreeish>]"),
++	NULL
++};
++
++struct update_state {
++	int options;
++	const char* change;
++	const char* content;
++	struct string_list replace;
++	struct string_list origin;
++};
++
++static void init_update_state(struct update_state *state)
 +{
-+	struct resolve_metacommit_callback_data *data = (struct resolve_metacommit_callback_data *)cb_data;
-+	struct change_head *chhead;
++	memset(state, 0, sizeof(*state));
++	state->content = "HEAD";
++	string_list_init(&state->replace, 0);
++	string_list_init(&state->origin, 0);
++}
 +
-+	chhead = get_change_head(data->active_changes, refname);
++static void clear_update_state(struct update_state *state)
++{
++	string_list_clear(&state->replace, 0);
++	string_list_clear(&state->origin, 0);
++}
 +
-+	if (data->changes)
-+		string_list_append(data->changes, refname)->util = &(chhead->head);
-+	if (data->heads)
-+		oid_array_append(data->heads, &(chhead->head));
-+
++static int update_option_parse_replace(const struct option *opt,
++							const char *arg, int unset)
++{
++	struct update_state *state = opt->value;
++	string_list_append(&state->replace, arg);
 +	return 0;
 +}
 +
-+/*
-+ * Produces the final form of a metacommit based on the current change refs.
-+ */
-+static void resolve_metacommit(
-+	struct repository* repo,
-+	struct change_table* active_changes,
-+	const struct metacommit_data *to_resolve,
-+	struct metacommit_data *resolved_output,
-+	struct string_list *to_advance,
-+	int allow_append)
++static int update_option_parse_origin(const struct option *opt,
++							const char *arg, int unset)
 +{
-+	int i;
-+	int len = to_resolve->replace.nr;
-+	struct resolve_metacommit_callback_data cbdata;
-+	int old_change_list_length = to_advance->nr;
-+	struct commit* content;
-+
-+	oidcpy(&resolved_output->content, &to_resolve->content);
-+
-+	/* First look for changes that point to any of the replacement edges in the
-+	 * metacommit. These will be the changes that get advanced by this
-+	 * metacommit. */
-+	resolved_output->abandoned = to_resolve->abandoned;
-+	cbdata.active_changes = active_changes;
-+	cbdata.changes = to_advance;
-+	cbdata.heads = &(resolved_output->replace);
-+
-+	if (allow_append) {
-+		for (i = 0; i < len; i++) {
-+			int old_number = resolved_output->replace.nr;
-+			for_each_change_referencing(active_changes, &(to_resolve->replace.oid[i]),
-+				resolve_metacommit_callback, &cbdata);
-+			/* If no changes were found, use the unresolved value. */
-+			if (old_number == resolved_output->replace.nr)
-+				oid_array_append(&(resolved_output->replace), &(to_resolve->replace.oid[i]));
-+		}
-+	}
-+
-+	cbdata.changes = NULL;
-+	cbdata.heads = &(resolved_output->origin);
-+
-+	len = to_resolve->origin.nr;
-+	for (i = 0; i < len; i++) {
-+		int old_number = resolved_output->origin.nr;
-+		for_each_change_referencing(active_changes, &(to_resolve->origin.oid[i]),
-+			resolve_metacommit_callback, &cbdata);
-+		if (old_number == resolved_output->origin.nr)
-+			oid_array_append(&(resolved_output->origin), &(to_resolve->origin.oid[i]));
-+	}
-+
-+	/* If no changes were advanced by this metacommit, we'll need to create a new
-+	 * one. */
-+	if (to_advance->nr == old_change_list_length) {
-+		struct strbuf change_name;
-+
-+		strbuf_init(&change_name, 80);
-+		content = lookup_commit_reference_gently(repo, &(to_resolve->content), 1);
-+
-+		compute_change_name(content, &change_name);
-+		string_list_append(to_advance, change_name.buf);
-+		strbuf_release(&change_name);
-+	}
-+}
-+
-+static void lookup_commits(
-+	struct repository *repo,
-+	struct oid_array *to_lookup,
-+	struct commit_list **result)
-+{
-+	int i = to_lookup->nr;
-+
-+	while (--i >= 0) {
-+		struct object_id *next = &(to_lookup->oid[i]);
-+		struct commit *commit = lookup_commit_reference_gently(repo, next, 1);
-+		commit_list_insert(commit, result);
-+	}
-+}
-+
-+#define PARENT_TYPE_PREFIX "parent-type "
-+
-+/*
-+ * Creates a new metacommit object with the given content. Writes the object
-+ * id of the newly-created commit to result.
-+ */
-+int write_metacommit(struct repository *repo, struct metacommit_data *state,
-+	struct object_id *result)
-+{
-+	struct commit_list *parents = NULL;
-+	struct strbuf comment;
-+	int i;
-+	struct commit *content;
-+
-+	strbuf_init(&comment, strlen(PARENT_TYPE_PREFIX)
-+		+ 1 + 2 * (state->origin.nr + state->replace.nr));
-+	lookup_commits(repo, &state->origin, &parents);
-+	lookup_commits(repo, &state->replace, &parents);
-+	content = lookup_commit_reference_gently(repo, &state->content, 1);
-+	if (!content) {
-+		strbuf_release(&comment);
-+		free_commit_list(parents);
-+		return -1;
-+	}
-+	commit_list_insert(content, &parents);
-+
-+	strbuf_addstr(&comment, PARENT_TYPE_PREFIX);
-+	strbuf_addstr(&comment, state->abandoned ? "a" : "c");
-+	for (i = 0; i < state->replace.nr; i++)
-+		strbuf_addstr(&comment, " r");
-+
-+	for (i = 0; i < state->origin.nr; i++)
-+		strbuf_addstr(&comment, " o");
-+
-+	/* The parents list will be freed by this call. */
-+	commit_tree(comment.buf, comment.len, repo->hash_algo->empty_tree, parents,
-+		result, NULL, NULL);
-+
-+	strbuf_release(&comment);
++	struct update_state *state = opt->value;
++	string_list_append(&state->origin, arg);
 +	return 0;
 +}
 +
-+/*
-+ * Returns true iff the given metacommit is abandoned, has one or more origin
-+ * parents, or has one or more replacement parents.
-+ */
-+static int is_nontrivial_metacommit(struct metacommit_data *state)
++static int resolve_commit(const char *committish, struct object_id *result)
 +{
-+	return state->replace.nr || state->origin.nr || state->abandoned;
++	struct commit *commit;
++	if (get_oid_committish(committish, result))
++		die(_("Failed to resolve '%s' as a valid revision."), committish);
++	commit = lookup_commit_reference(the_repository, result);
++	if (!commit)
++		die(_("Could not parse object '%s'."), committish);
++	oidcpy(result, &commit->object.oid);
++	return 0;
 +}
 +
-+/*
-+ * Records the relationships described by the given metacommit in the
-+ * repository.
-+ *
-+ * If override_change is NULL (the default), an attempt will be made
-+ * to append to existing changes wherever possible instead of creating new ones.
-+ * If override_change is non-null, only the given change ref will be updated.
-+ *
-+ * options is a bitwise combination of the UPDATE_OPTION_* flags.
-+ */
-+int record_metacommit(
-+	struct repository *repo,
-+	const struct metacommit_data *metacommit, const char *override_change,
-+	int options, struct strbuf *err)
++static void resolve_commit_list(const struct string_list *commitsish_list,
++	struct oid_array* result)
 +{
-+		struct change_table chtable;
-+		struct string_list changes;
-+		int result;
-+
-+		change_table_init(&chtable);
-+		change_table_add_all_visible(&chtable, repo);
-+		string_list_init(&changes, 1);
-+
-+		result = record_metacommit_withresult(repo, &chtable, metacommit,
-+			override_change, options, err, &changes);
-+
-+		string_list_clear(&changes, 0);
-+		change_table_clear(&chtable);
-+		return result;
-+}
-+
-+/*
-+ * Records the relationships described by the given metacommit in the
-+ * repository.
-+ *
-+ * If override_change is NULL (the default), an attempt will be made
-+ * to append to existing changes wherever possible instead of creating new ones.
-+ * If override_change is non-null, only the given change ref will be updated.
-+ *
-+ * The changes list is filled in with the list of change refs that were updated,
-+ * with the util pointers pointing to the old object IDS for those changes.
-+ * The object ID pointers all point to objects owned by the change_table and
-+ * will go out of scope when the change_table is destroyed.
-+ *
-+ * options is a bitwise combination of the UPDATE_OPTION_* flags.
-+ */
-+int record_metacommit_withresult(
-+	struct repository *repo,
-+	struct change_table *chtable,
-+	const struct metacommit_data *metacommit,
-+	const char *override_change,
-+	int options, struct strbuf *err,
-+	struct string_list *changes)
-+{
-+	static const char *msg = "updating change";
-+	struct metacommit_data resolved_metacommit;
-+	struct object_id commit_target;
-+	struct ref_transaction *transaction = NULL;
-+	struct change_head *overridden_head;
-+	const struct object_id *old_head;
-+
 +	int i;
-+	int ret = 0;
-+	int force = (options & UPDATE_OPTION_FORCE);
++	for (i = 0; i < commitsish_list->nr; i++) {
++		struct string_list_item *item = &commitsish_list->items[i];
++		struct object_id next;
++		resolve_commit(item->string, &next);
++		oid_array_append(result, &next);
++	}
++}
 +
-+	init_metacommit_data(&resolved_metacommit);
++/*
++ * Given the command-line options for the update command, fills in a
++ * metacommit_data with the corresponding changes.
++ */
++static void get_metacommit_from_command_line(
++	const struct update_state* commands, struct metacommit_data *result)
++{
++	resolve_commit(commands->content, &(result->content));
++	resolve_commit_list(&(commands->replace), &(result->replace));
++	resolve_commit_list(&(commands->origin), &(result->origin));
++}
 +
-+	resolve_metacommit(repo, chtable, metacommit, &resolved_metacommit, changes,
-+		(options & UPDATE_OPTION_NOAPPEND) == 0);
++static int perform_update(
++	struct repository *repo,
++	const struct update_state *state,
++	struct strbuf *err)
++{
++	struct metacommit_data metacommit;
++	struct change_table chtable;
++	struct string_list changes;
++	int ret;
++	int i;
 +
-+	if (override_change) {
-+		string_list_clear(changes, 0);
-+		overridden_head = get_change_head(chtable, override_change);
-+		if (overridden_head == NULL) {
-+			/* This is an existing change */
-+			old_head = &overridden_head->head;
-+			if (!force) {
-+				if (!oid_array_readonly_contains(&(resolved_metacommit.replace),
-+					&overridden_head->head)) {
-+					/* Attempted non-fast-forward change */
-+					strbuf_addf(err, _("non-fast-forward update to '%s'"),
-+						override_change);
-+					ret = -1;
-+					goto cleanup;
-+				}
-+			}
-+		} else
-+			/* ...then this is a newly-created change */
-+			old_head = &null_oid;
++	change_table_init(&chtable);
++	change_table_add_all_visible(&chtable, repo);
++	string_list_init(&changes, 1);
 +
-+		/* The expected "current" head of the change is stored in the util
-+		 * pointer. */
-+		string_list_append(changes, override_change)->util = (void*)old_head;
++	init_metacommit_data(&metacommit);
++
++	get_metacommit_from_command_line(state, &metacommit);
++
++	ret = record_metacommit_withresult(repo, &chtable, &metacommit, state->change,
++		state->options, err, &changes);
++
++	for (i = 0; i < changes.nr; i++) {
++		struct string_list_item *it = &changes.items[i];
++
++		if (it->util)
++			fprintf(stdout, N_("Updated change %s\n"), it->string);
++		else
++			fprintf(stdout, N_("Created change %s\n"), it->string);
 +	}
 +
-+	if (is_nontrivial_metacommit(&resolved_metacommit)) {
-+		/* If there are any origin or replacement parents, create a new metacommit
-+		 * object. */
-+		if (write_metacommit(repo, &resolved_metacommit, &commit_target) < 0) {
-+			ret = -1;
-+			goto cleanup;
-+		}
-+	} else
-+		/* If the metacommit would only contain a content commit, point to the
-+		 * commit itself rather than creating a trivial metacommit. */
-+		oidcpy(&commit_target, &(resolved_metacommit.content));
-+
-+	/* If a change already exists with this target and we're not forcing an
-+	 * update to some specific override_change && change, there's nothing to do.
-+	 */
-+	if (!override_change
-+		&& change_table_has_change_referencing(chtable, &commit_target))
-+		/* Not an error */
-+		goto cleanup;
-+
-+	transaction = ref_transaction_begin(err);
-+
-+	/* Update the refs for each affected change */
-+	if (!transaction)
-+		ret = -1;
-+	else {
-+		for (i = 0; i < changes->nr; i++) {
-+			struct string_list_item *it = &changes->items[i];
-+
-+			/* The expected current head of the change is stored in the util pointer.
-+			 * It is null if the change should be newly-created. */
-+			if (it->util) {
-+				if (ref_transaction_update(transaction, it->string, &commit_target,
-+					force ? NULL : it->util, 0, msg, err))
-+
-+					ret = -1;
-+			} else {
-+				if (ref_transaction_create(transaction, it->string,
-+					&commit_target, 0, msg, err))
-+
-+					ret = -1;
-+			}
-+		}
-+
-+		if (!ret)
-+			if (ref_transaction_commit(transaction, err))
-+				ret = -1;
-+	}
-+
-+cleanup:
-+	ref_transaction_free(transaction);
-+	clear_metacommit_data(&resolved_metacommit);
++	string_list_clear(&changes, 0);
++	change_table_clear(&chtable);
++	clear_metacommit_data(&metacommit);
 +
 +	return ret;
 +}
 +
-+/*
-+ * Should be invoked after a command that has "modify" semantics - commands that
-+ * create a new commit based on an old commit and treat the new one as a
-+ * replacement for the old one. This method records the replacement in the
-+ * change graph, such that a future evolve operation will rebase children of
-+ * the old commit onto the new commit.
-+ */
-+void modify_change(
-+	struct repository *repo,
-+	const struct object_id *old_commit,
-+	const struct object_id *new_commit,
-+	struct strbuf *err)
++static int change_update(int argc, const char **argv, const char* prefix)
 +{
-+	struct metacommit_data metacommit;
++	int result;
++	int force = 0;
++	int newchange = 0;
++	struct strbuf err = STRBUF_INIT;
++	struct update_state state;
++	struct option options[] = {
++		{ OPTION_CALLBACK, 'r', "replace", &state, N_("commit"),
++			N_("marks the given commit as being obsolete"),
++			0, update_option_parse_replace },
++		{ OPTION_CALLBACK, 'o', "origin", &state, N_("commit"),
++			N_("marks the given commit as being the origin of this commit"),
++			0, update_option_parse_origin },
++		OPT_BOOL('F', "force", &force,
++			N_("overwrite an existing change of the same name")),
++		OPT_STRING('c', "content", &state.content, N_("commit"),
++				 N_("identifies the new content commit for the change")),
++		OPT_STRING('g', "change", &state.change, N_("commit"),
++				 N_("name of the change to update")),
++		OPT_BOOL('n', "new", &newchange,
++			N_("create a new change - do not append to any existing change")),
++		OPT_END()
++	};
 +
-+	init_metacommit_data(&metacommit);
-+	oidcpy(&(metacommit.content), new_commit);
-+	oid_array_append(&(metacommit.replace), old_commit);
++	init_update_state(&state);
 +
-+	record_metacommit(repo, &metacommit, NULL, 0, err);
++	argc = parse_options(argc, argv, prefix, options, builtin_update_usage, 0);
 +
-+	clear_metacommit_data(&metacommit);
++	if (force) state.options |= UPDATE_OPTION_FORCE;
++	if (newchange) state.options |= UPDATE_OPTION_NOAPPEND;
++
++	result = perform_update(the_repository, &state, &err);
++
++	if (result < 0) {
++		error("%s", err.buf);
++		strbuf_release(&err);
++	}
++
++	clear_update_state(&state);
++
++	return result;
 +}
-diff --git a/metacommit.h b/metacommit.h
-new file mode 100644
-index 0000000000..adc3757087
---- /dev/null
-+++ b/metacommit.h
-@@ -0,0 +1,50 @@
-+#ifndef METACOMMIT_H
-+#define METACOMMIT_H
 +
-+struct change_table;
++int cmd_change(int argc, const char **argv, const char *prefix)
++{
++	/* No options permitted before subcommand currently */
++	struct option options[] = {
++		OPT_END()
++	};
++	int result = 1;
 +
-+/* If specified, non-fast-forward changes are permitted. */
-+#define UPDATE_OPTION_FORCE     0x0001
-+/* If specified, no attempt will be made to append to existing changes.
-+ * Normally, if a metacommit points to a commit in its replace or origin
-+ * list and an existing change points to that same commit as its content, the
-+ * new metacommit will attempt to append to that same change. This may replace
-+ * the commit parent with one or more metacommits from the head of the appended
-+ * changes. This option disables this behavior, and will always create a new
-+ * change rather than reusing existing changes. */
-+#define UPDATE_OPTION_NOAPPEND  0x0002
++	argc = parse_options(argc, argv, prefix, options, builtin_change_usage,
++		PARSE_OPT_STOP_AT_NON_OPTION);
 +
-+/* Metacommit Data */
++	if (argc < 1)
++		usage_with_options(builtin_change_usage, options);
++	else if (!strcmp(argv[0], "update"))
++		result = change_update(argc, argv, prefix);
++	else {
++		error(_("Unknown subcommand: %s"), argv[0]);
++		usage_with_options(builtin_change_usage, options);
++	}
 +
-+struct metacommit_data {
-+	struct object_id content;
-+	struct oid_array replace;
-+	struct oid_array origin;
-+	int abandoned;
-+};
-+
-+extern void init_metacommit_data(struct metacommit_data *state);
-+
-+extern void clear_metacommit_data(struct metacommit_data *state);
-+
-+extern int record_metacommit(struct repository *repo,
-+	const struct metacommit_data *metacommit,
-+	const char* override_change, int options, struct strbuf *err);
-+
-+extern int record_metacommit_withresult(
-+	struct repository *repo,
-+	struct change_table *chtable,
-+	const struct metacommit_data *metacommit,
-+	const char *override_change,
-+	int options,
-+	struct strbuf *err,
-+	struct string_list *changes);
-+
-+extern void modify_change(struct repository *repo,
-+	const struct object_id *old_commit, const struct object_id *new_commit,
-+	struct strbuf *err);
-+
-+extern int write_metacommit(struct repository *repo, struct metacommit_data *state,
-+	struct object_id *result);
-+
-+#endif
++	return result ? 1 : 0;
++}
+diff --git a/git.c b/git.c
+index 2dd588674f..33e3a04395 100644
+--- a/git.c
++++ b/git.c
+@@ -453,6 +453,7 @@ static struct cmd_struct commands[] = {
+ 	{ "branch", cmd_branch, RUN_SETUP | DELAY_PAGER_CONFIG },
+ 	{ "bundle", cmd_bundle, RUN_SETUP_GENTLY | NO_PARSEOPT },
+ 	{ "cat-file", cmd_cat_file, RUN_SETUP },
++	{ "change", cmd_change, RUN_SETUP },
+ 	{ "check-attr", cmd_check_attr, RUN_SETUP },
+ 	{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
 -- 
 2.21.0.rc0.258.g878e2cd30e-goog
 
