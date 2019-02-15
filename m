@@ -7,57 +7,61 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 367DF1F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 18:23:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62A1B1F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 18:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389474AbfBOSXd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 13:23:33 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33989 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388999AbfBOSXc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 13:23:32 -0500
-Received: by mail-wr1-f65.google.com with SMTP id f14so11387610wrg.1
-        for <git@vger.kernel.org>; Fri, 15 Feb 2019 10:23:32 -0800 (PST)
+        id S2389621AbfBOSZ2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 13:25:28 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34175 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388405AbfBOSZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 13:25:27 -0500
+Received: by mail-wr1-f67.google.com with SMTP id f14so11392703wrg.1
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 10:25:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=INhaUe5kSv81NTKn97dRJny/93pI9nqbtkzX1eo+TFo=;
-        b=Zt5IJq0WpTkLtPChh7PJYNFs+3gU63uSPvAiIPoWPKG9hcYRILRQNlp0U1vB6kRmgj
-         dZCqKi5gvJGKQX2pquwBId6SvDmtCJQ22mlHZEjBTUk0EPs3vZJ20inSp+lc4SEp+v9e
-         rcjN/dwBEpzGD0dL9dWVa44+u2aB0iDYhYyb+flvA7OfSYSVWAfv6+euOZyIgrzz+tqc
-         eo8sbjJewaVsRdr4JfMN6nmKfeFVhUAVnJ6dIIu8MixI93YHmBR9h+2FROfzOzadqB3M
-         LjuylfczOJonGY0ZJF+n+AQ4Ma7081bSEPBYMZ5SCLlo5MlvNHpmVF89XrI6VRZ1VXMg
-         rNxQ==
+        bh=ogHg3pkB0Clyqmbz0JtS58kA+UwXK/SDb7hFb6uB/7I=;
+        b=HDe+Mdxwst+h8cY0gHvXXnTqhZ6yiaW0VkeqMfd2OYaTeJOke5f7DFVB3dVbjV1vfw
+         LYyKu2oKdPSeT3MwKSfh14BQnUloqcw9VXL99SIRJZvXI9FNNxEICMoN0QxjT/1vvs70
+         lgtJglKEcRLX6aoySfl1AJDkhjs98he8CzTaaYdCCH1wF8g2bJUMhQxc86VPKnk0QY4R
+         HcQvl5u/B8vU9ubij4LxALd2VNCo01MlPvRXiNMLqYbfwHOE/NmXAQaXXQWbUEbkScK4
+         nf36IEAQ7i42f4niieks7XUWNpTcYWgZ18/neB6WqD9nk1Al5whIzFB4D1j/z1v+0HKB
+         Cc1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=INhaUe5kSv81NTKn97dRJny/93pI9nqbtkzX1eo+TFo=;
-        b=t3hR+9JRQcObNTiGojn8E+msKgrewofU292Rkc+TXnafmjHTapIbVTRaYWvQuU+h6q
-         mRzyoUce69JkzF3vM6z3Bt60i1e01oUYvU6WkVf4qSMszao0o3C3YIa3+rwSTV01GMvM
-         wHEyytbbo7jsxnkpNpwHeuHdxrzkw/NF7/5uC5AGzLZIuUszJDGio1q3na3fX9mPIwBM
-         3pAUWirNaEhQuwHO9p2Js/CxsLouFxtlHOGVY74xY9v+CL4b7zSdsnSuzn4SprbkIo/j
-         cNA14J4nvVDt052xbHg2T0FXOxrbjRJDh55AqYWafSnVHsifI9VXROlHWPtH1kU5CpY4
-         Y08A==
-X-Gm-Message-State: AHQUAubfVEB71N6Y8L6lvpHuNF3BENdOTF4fRDRqVqPwyQ10FlQa2S2n
-        QmDq/qsFFFG2AFBcGbbx3fRDnA2A
-X-Google-Smtp-Source: AHgI3IaLgRNXmWCc1HSYl6eEWLxE8qnjisHEe+p7HxXjMSSs7Ehf3Uaz9wKIq+I+Ggmc0Vrct7siZw==
-X-Received: by 2002:adf:f78e:: with SMTP id q14mr8661339wrp.227.1550255010864;
-        Fri, 15 Feb 2019 10:23:30 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 62sm12402724wra.46.2019.02.15.10.23.28
+        bh=ogHg3pkB0Clyqmbz0JtS58kA+UwXK/SDb7hFb6uB/7I=;
+        b=McrAioeSTYtykjZgUSCRA1705Et1s4ntN2T+5qi46cDQmYnIrUCAhNK24tSzp8j5YH
+         MCxwiQbSAh1s/4fhh+kitNkbGgXe+/dlfNqsc+TxZAH/uhjR0jVkyJfTKigNHy8ajXZp
+         9eZuoGcRYQvz/0+yicvlTg5pnftpBqusOAghsArg4LqZDSJUUXcFpwSEMKEMDKTIXBey
+         BOkd3OwduvkJfVRCo5T7Zu5fP8u2K/2O4O1Sv8gl7Qxe5qj1VUogtqbIFP6aB+C5ETcN
+         T2oJmhga2lUcNikf+imKFTURMpxqMprJhCWg1vNIkEUXSzeQtet1uNisuS0kMLFOspn3
+         AElw==
+X-Gm-Message-State: AHQUAuaILk6/u3tfhobNY/h3zZN1IDtGCZA9/wtEixEkns8IJROWDNKi
+        ojV5UucmDSCOGJ0Yeg3/Wrg=
+X-Google-Smtp-Source: AHgI3IZafIwTrzZj+vQXbhFdY84Rx2w4XBBVy/U6rpmJg8pJgW7fdcLKY1phgt5jjRKJpVfEUojP5A==
+X-Received: by 2002:a5d:4e8c:: with SMTP id e12mr7650525wru.21.1550255125327;
+        Fri, 15 Feb 2019 10:25:25 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v132sm9958242wme.20.2019.02.15.10.25.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Feb 2019 10:23:28 -0800 (PST)
+        Fri, 15 Feb 2019 10:25:24 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     sxenos@google.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v5 1/8] technical doc: add a design doc for the evolve command
-References: <20190215043105.163688-1-sxenos@google.com>
-Date:   Fri, 15 Feb 2019 10:23:28 -0800
-In-Reply-To: <20190215043105.163688-1-sxenos@google.com> (sxenos's message of
-        "Thu, 14 Feb 2019 20:30:58 -0800")
-Message-ID: <xmqqlg2g6hcv.fsf@gitster-ct.c.googlers.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] mingw: safe-guard a bit more against getenv() problems
+References: <pull.127.git.gitgitgadget@gmail.com>
+        <53e3d159c8c80924188f57c44efd2170612f2ee5.1550243863.git.gitgitgadget@gmail.com>
+        <96793350-0991-6e8f-6ab2-15777e2071be@jeffhostetler.com>
+Date:   Fri, 15 Feb 2019 10:25:24 -0800
+In-Reply-To: <96793350-0991-6e8f-6ab2-15777e2071be@jeffhostetler.com> (Jeff
+        Hostetler's message of "Fri, 15 Feb 2019 11:14:01 -0500")
+Message-ID: <xmqqh8d46h9n.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,28 +70,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-sxenos@google.com writes:
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-> From: Stefan Xenos <sxenos@google.com>
+>> diff --git a/compat/mingw.c b/compat/mingw.c
+>> index 4276297595..8141f77189 100644
+>> --- a/compat/mingw.c
+>> +++ b/compat/mingw.c
+>> @@ -1632,7 +1632,7 @@ int mingw_kill(pid_t pid, int sig)
+>>    */
+>>   char *mingw_getenv(const char *name)
+>>   {
+>> -#define GETENV_MAX_RETAIN 30
+>> +#define GETENV_MAX_RETAIN 64
+>>   	static char *values[GETENV_MAX_RETAIN];
+>>   	static int value_counter;
+>>   	int len_key, len_value;
+>>
 >
-> This document describes what a change graph for
-> git would look like, the behavior of the evolve command,
-> and the changes planned for other commands.
->
-> Signed-off-by: Stefan Xenos <sxenos@google.com>
-> ---
+> Why not use a mem_pool for this?  We have that code isolated
+> and re-usable now.  Have mingw_getenv() copy the string into
+> the pool always return the pointer from within the pool.  The
+> pool automatically handles allocating new blocks as necessary.
+> And (if we care) we can bulk free the pool before existing.
 
-It would really need a summary of what changed since the earlier
-rounds, if a series this size wants to be re-read by those who
-helped the previous one.
+Probably a good idea in the longer term.  The patch as posted would
+do for the upcoming release, though.
 
-I briefly looked at the patches (and the diff against the previous
-one that has been in 'pu') and saw a few comments that say "needs
-further work".  What's the intention?  Unfinished but soliciting
-further comments and sanity checks to help polishing the finished
-parts (if that is the case that is perfectly fine, but it would help
-those who want to help if you are clear about it)?
-
-I'll read them through laster today or tomorrow with fresh set of
-eyes; thanks for working on this.
+Thanks, both.
 
