@@ -2,94 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9016E211B5
-	for <e@80x24.org>; Fri, 15 Feb 2019 14:59:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F19281F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 15:17:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728567AbfBOO7Z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 09:59:25 -0500
-Received: from mout.gmx.net ([212.227.17.22]:47925 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726831AbfBOO7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 09:59:25 -0500
-Received: from [192.168.0.171] ([37.201.195.16]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYOCL-1gYspj3t6v-00V5qQ; Fri, 15
- Feb 2019 15:59:11 +0100
-Date:   Fri, 15 Feb 2019 15:59:12 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Randall Becker <rsbecker@nexbridge.com>
-Subject: Re: [PATCH 1/1] tests: teach the test-tool to generate NUL bytes
- and use it
-In-Reply-To: <xmqqimxm6msi.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1902151558080.45@tvgsbejvaqbjf.bet>
-References: <pull.126.git.gitgitgadget@gmail.com>        <34cde0f2849a098c17ab83786da5ce06f69cfafa.1550179990.git.gitgitgadget@gmail.com> <xmqqimxm6msi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2387430AbfBOPRq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 10:17:46 -0500
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:33106 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727306AbfBOPRq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 10:17:46 -0500
+Received: by mail-ed1-f54.google.com with SMTP id a2so8275635edi.0
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 07:17:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=BxTbVJqaeBDLVP0H/E2enBB8m7PKD+VYj9vC+RnEXnw=;
+        b=hQN/goav/yEw+Mr+tYC0i78EhbMnxmGWJicbwuVHp3lb+yxQauZaiPajoddoy4aRqn
+         pyW2wK89koEvX+WytLBAb16Fqp0yqF7JdY8a/sHEoIPdgTULziqKe0XuYhwlQRicIbHI
+         F+FGlH86qqb760UfsqiWU1lU7dM6JU6DYxQjEV1kmYgu9KgFYM1v8zoiAnviKFHSvSZI
+         sGNa/Wj6Ko1VKKhcJSvE9R2MQJKMF87MNor4XSWFFtLa3mBM4YHAG1zt6nq38eJAH0gR
+         Y46AYYsbLwTckBJFw9nJnaRVjN87XFI7fsNMz9EW3VJG/zYoBjbhZrs4tLHrdoGU29SU
+         2Y1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=BxTbVJqaeBDLVP0H/E2enBB8m7PKD+VYj9vC+RnEXnw=;
+        b=tWTunRbCDnc+xSMsTQcwIJ/hcUhLbS3HKLgY4PRKzyL1+IT9yJ7q+pCRKgKJCBexNn
+         SjkMBIbfiXPY+1rEexAyv6tElHP2hpV4ECY1widaf/lhMsE2H5w4ASBVmbSAu46PRMDR
+         hLkqUvxEPkAMu5vUL8MWhNcjZXKAvODQbIaH7gkcTdemefhwRwaRMfEtW/VhM88WeerN
+         A0QWdBZ+tcM2bs1J0KTy+Jc4IUHyQGpyzRY04giqHc/ehw7AS9D7Anz+II4oaP71qdBT
+         22dA0zeYWY/h5Q4KRL6OiF2kcOOZrbxZE4SxnRZcNU78QQe/qGmcG/wcM1XlUvnhLdBO
+         Eb4Q==
+X-Gm-Message-State: AHQUAuYVFiSWcdEcDLrw+kHkbtf3W4TVoMZLSjtnj9OFHLJxMWTrogqd
+        QINu0NHG8mzh0bAYMvDrYzrzJykA
+X-Google-Smtp-Source: AHgI3IYepqaxTzKWlQZjaf7gT8OAMLGtc1fpsJb3nOXrm/5DZAyRB9o4ZS2NBhYAvSkKAniTdtwXAA==
+X-Received: by 2002:a17:906:5048:: with SMTP id e8mr7097337ejk.214.1550243864980;
+        Fri, 15 Feb 2019 07:17:44 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h25sm386442ejc.4.2019.02.15.07.17.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 15 Feb 2019 07:17:44 -0800 (PST)
+Date:   Fri, 15 Feb 2019 07:17:44 -0800 (PST)
+X-Google-Original-Date: Fri, 15 Feb 2019 15:17:42 GMT
+Message-Id: <pull.127.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Safe-guard the Windows code a bit more against getenv() problems
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hfjKigIiC0Gs9yeApojnODLRxmytfo7wCerun+CqYi1RJLvAhW2
- bh2dA6tHGt4tvi5p//QK2qzsWM4mU1I7LP3ZIxcyg8DuIA8sE7mqK9NdyF2yZfcLdsElAIa
- HJsDScaslihlvVimqDTrTaPE3BDGt6E9Fcn0nGNOrfuMp+ZnXsaSWJQ1xx4stQUCUapAg/T
- ZAWHBJlUiqedAMsDFU9Jg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LgxaMjv9ni0=:jvOW/CjjoZrxLR6gOSCzkP
- lFIo37aljLig1asNnpH7QK1yTL2gKtO0KSQYuj5QKcXwRQiXU4nh/i2KTBWRfxnlsBoIf+a8U
- +49Gq3Ig2IfQ2qdimaSjXuxx9EQ+qGwlaxm5FQFsh5+r/Dk7Z35SduO/VhQfhRYfIiuyPpH/I
- S4y040b7ta5Lk2XlrxjCTw5yzRH2AlubrjQxFbYo9SaPJA9U5XoO2BlHImAzdBCeSXpezoYPV
- mG7YlKxh15FTOnAjFradKpCgsh3LwCNWVODua6IjEdV3vFuXmxlwwXIcmXRSwjr/PIIkr/DTt
- 2jR1UY9kd2wIplOeSC0rc08JnwIQDOAZwMIrB2fw7ZJQ/O0QzNVfY8IwRqsbcMq1WXXPt6ykg
- 4hfCqLeEhPswmnyxsARvaTMYN5ZaOzDbaZDZ4fZSZZnVF22Yrh3mOoEywLvjUv8VGYHWDhIhc
- fYdoFfME1zSp/AVZnuo9SkTNBl1IsDD/RxBPpGRbKTjU95AARDKBhK58U9WBT0r+ZsjDRp95j
- j9gDDy2Ra+B9cEsfg5FH0ysfYZYGWPV1CcEWdmuXLPdQcYsCkgHC+F/ql/EVGQ2bm759SeyTM
- /mhfXbV/0k2syeLHcdujoHWUiLXW9akMrts9qf5ucsuAOzg4SOXJDQKRgNVaWRB/5aBt5hpt+
- zkXSt8nSIRNtdtvVwWzwKi3U097WeSEA5TqL0AkHX9ZHnt+Rfj9V1y/TK6sYqa/aNVctYsUGk
- KUWrKe8M4RjfHXG/0jlwO+Y+Aur3UEsPsD84nezMocl1xHucyw6sOJJ3VJI9Ceok5/yBuWd7R
- BsVm4E9+xQFe7i4Hr+p8FN0uTuu8ro+NVY8ds1Wlmvl3bK8Uyj+t2g2OUH1wuXs2uxdZ2qKpO
- VCuHnCAZlNu6R7Z0JvtOnkf3R8Sv/DTZQ1dPYFrEVpwVdkprSUMoorRiC7bKW/ByvLALRaYuM
- yFClGCHXFsQ==
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+We saw a couple of getenv() cleanups, where we now immediately duplicate the
+return value of getenv() in order to avoid problems. However, I am really
+uncomfortable with the current value (30) of GETENV_MAX_RETAIN in 
+compat/mingw.c: it strikes me as low, given that the average number of 
+getenv() call per Git process in Git's test suite is already 40.
 
-On Thu, 14 Feb 2019, Junio C Hamano wrote:
+I'd really like to increase it, even if it won't help problems where 
+getenv() is called in a loop whose number of iteration depends on user input
+(like the problem fixed in 6776a84dae (diff: ensure correct lifetime of
+external_diff_cmd, 2019-01-11)). It will still fend off plenty of other
+cases, I believe.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > In cc95bc2025 (t5562: replace /dev/zero with a pipe from
-> > generate_zero_bytes, 2019-02-09), we replaced usage of /dev/zero (which
-> > is not available on NonStop, apparently) by a Perl script snippet to
-> > generate NUL bytes.
-> >
-> > Sadly, it does not seem to work on NonStop, as t5562 reportedly hangs.
-> > ...
-> > In the end, though, what counts is that this here change incidentally
-> > fixes that hang (maybe also on NonStop?). Even more positively, it gets
-> > rid of yet another unnecessary Perl invocation.
-> 
-> Thanks for a quick band-aid.
-> 
-> Will apply directly to 'master' so that we won't forget before -rc2.
+And yes, it's in my TODOs to look back over those getenv() issues after
+v2.21.0 (see https://github.com/git-for-windows/git/pull/2019 for my
+progress).
 
-Thank you, that will be good, as the builds still seem to fail. All of
-them.
+Johannes Schindelin (1):
+  mingw: safe-guard a bit more against getenv() problems
 
-> In the meantime, perhaps somebody who knows Perl interpreter's
-> quirks well can tell us what's different between the obvious and
-> simple C program and an equivalent in Perl to convince us why this
-> is a good solution to the problem.
+ compat/mingw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I would be *really* curious about that, too.
 
-Ciao,
-Dscho
+base-commit: 2d08f3deb9feb73dc8d21d75bfd367839fc1322c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-127%2Fdscho%2Fmingw-retain-more-getenv-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-127/dscho/mingw-retain-more-getenv-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/127
+-- 
+gitgitgadget
