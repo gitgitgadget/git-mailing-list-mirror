@@ -2,101 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 075F11F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 17:13:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63B4F1F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 17:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbfBORNz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 12:13:55 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:28945 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbfBORNz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 12:13:55 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1FHDmvt001567
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 15 Feb 2019 12:13:48 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Max Kirillov'" <max@max630.net>, <git@vger.kernel.org>
-Cc:     "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-References: <20190209185930.5256-4-randall.s.becker@rogers.com> <20190215164237.12250-1-max@max630.net>
-In-Reply-To: <20190215164237.12250-1-max@max630.net>
-Subject: RE: [PATCH] t5562: do not depend on /dev/zero
-Date:   Fri, 15 Feb 2019 12:13:42 -0500
-Message-ID: <001601d4c551$d0f24c30$72d6e490$@nexbridge.com>
+        id S1728593AbfBORZ3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 12:25:29 -0500
+Received: from siwi.pair.com ([209.68.5.199]:29416 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726695AbfBORZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 12:25:29 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 54E1B3F4024;
+        Fri, 15 Feb 2019 12:25:28 -0500 (EST)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 190893F401C;
+        Fri, 15 Feb 2019 12:25:28 -0500 (EST)
+Subject: Re: [PATCH v6 00/15] Trace2 tracing facility
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.108.v5.git.gitgitgadget@gmail.com>
+ <pull.108.v6.git.gitgitgadget@gmail.com> <87a7iyk0r8.fsf@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <0aff8302-371e-cb5e-fe5e-f08e45456559@jeffhostetler.com>
+Date:   Fri, 15 Feb 2019 12:25:26 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:65.0) Gecko/20100101
+ Thunderbird/65.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIP382J2qWF5an7SfxTULbAVk2HKqVq4oog
+In-Reply-To: <87a7iyk0r8.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 15, 2019 11:43, Max Kirillov wrote:
-> It was reported [1] that NonStop platform does not have /dev/zero.
-> 
-> The test uses /dev/zero as a dummy input. Passing case (http-backed failed
-> because of too big input size) should not be reading anything from it. If
-http-
-> backend would erroneously try to read any data returning EOF probably
-> would be even safer than providing some meaningless data.
-> 
-> Replace /dev/zero with /dev/null to avoid issues with platforms which do
-not
-> have /dev/zero.
-> 
-> [1] https://public-inbox.org/git/20190209185930.5256-4-
-> randall.s.becker@rogers.com/
-> 
-> Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
-> Signed-off-by: Max Kirillov <max@max630.net>
-> ---
-> By the way, I don't think this requires such sofisticated fix. In the
-success
-> case the input would not be read at all.
-> You could replace it with /dev/null, the in failure (not immediate fail)
-git
-> would fail due to truncated input or something.
-> 
-> Also, as you experience hang issue [2] in earlier tests, this one should
-not
-> have contributed to it.
-> 
-> [2] https://public-
-> inbox.org/git/001901d4c22b$194bfe60$4be3fb20$@nexbridge.com/
->  t/t5562-http-backend-content-length.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/t5562-http-backend-content-length.sh
-b/t/t5562-http-backend-
-> content-length.sh
-> index 90d890d02f..436c261c86 100755
-> --- a/t/t5562-http-backend-content-length.sh
-> +++ b/t/t5562-http-backend-content-length.sh
-> @@ -150,7 +150,7 @@ test_expect_success 'CONTENT_LENGTH overflow
-> ssite_t' '
->  		GIT_HTTP_EXPORT_ALL=TRUE \
->  		REQUEST_METHOD=POST \
->  		CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
-> -		git http-backend </dev/zero >/dev/null 2>err &&
-> +		git http-backend </dev/null >/dev/null 2>err &&
->  	grep "fatal:.*CONTENT_LENGTH" err
 
-FTR, this particular subtest is not the one that is hanging. This subtest
-passes on NonStop with any and all (now) 4 solutions that have been floating
-around.
 
-Cheers,
-Randall
+On 2/14/2019 7:33 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Feb 06 2019, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> V6 addresses: [] The remaining hdr-check warning in trace2/tr2_tls.h
+>>
+>> There are no other outstanding comments that I'm aware of.
+> 
+> Not a comment on this, just a follow-up question. I started looking into
+> whether this could be driven by config instead of getenv(). A lot easier
+> to set up in some cases than injecting env variables, especialy if the
+> log target supported a strftime() string, is any of that something
+> you've looked into already (so I don't do dupe work...).
+> 
+> There's the chicken & egg problem with wanting to do traces way before
+> we get to reading config, so I expect that such a facility would need to
+> work by always trace record at the beginning until we get far enough to
+> write the config, and then either stop and throw away the buffer, or
+> write out the existing trace to the configured target, and continue.
+> 
+
+Yes, I beat my head against the config settings for quite a while
+before settling on using an env var.
+
+I wanted to get the:
+() full process elapsed time,
+() the full original argv,
+() all of the command dispatch, run-dashed, and alias expansion,
+() and for my atexit() to run last.
+So I hooked into main() before the config is loaded.
+
+In most commands, the config is processed about the same time as
+parse_options() is called.  And we have to insert code in
+git_default_config() to load my settings.  This happens after all
+of the .git dir discovery, "-c" and "-C" processing, alias expansion,
+command dispatch and etc.  And the argv received in the cmd_*()
+function has been modified.  So we lose some information.  (I tried
+this for a while and didn't like the results.)
+
+I also tried using read_early_config() various places, but there
+were problems here too.  Too early and the "-c" settings weren't
+parsed yet.  And there was an issue about when .git dir was discovered,
+so local config settings weren't ready yet.
+
+I also recall having a problem when doing an early iteration with
+side effects (or rather the early iteration caused something to be
+set that caused the real iteration (in cmd_*()) to short-cut), but
+I don't remember the details.
+
+So we have a custom installer that also sets the environment variable
+after git is installed and haven't had any problems.
+
+
+I hesitate to say we should always start allocating a bunch of data
+and spinning up the TLS data and etc. before we know if tracing is
+wanted.  Just seems expensive for most users.
+
+
+I could see having a "~/.git_tr2_config" or something similar in
+some place like "/etc" that only contained the Trace2 settings.
+It would be safe to read very early inside main() and we would not
+consider it to be part of the real config.  For example, "git config"
+would not know about it.  Then you could enforce a system-wide
+setting without any of the env var issues.
+
+
+WRT the strftime() question, we could either add syntax to the
+env var value (or the tr2 config setting) to have some tokens
+for that.  I just stuck with absolute pathnames since I started
+by copying what was done for GIT_TRACE.
+
+Jeff
+
 
