@@ -2,112 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 888401F453
-	for <e@80x24.org>; Fri, 15 Feb 2019 06:40:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80AEE1F453
+	for <e@80x24.org>; Fri, 15 Feb 2019 07:50:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729429AbfBOGkR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 01:40:17 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:46511 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726200AbfBOGkR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 01:40:17 -0500
-Received: by mail-pg1-f193.google.com with SMTP id w7so4315978pgp.13
-        for <git@vger.kernel.org>; Thu, 14 Feb 2019 22:40:16 -0800 (PST)
+        id S2390624AbfBOHuS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 02:50:18 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:42018 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726335AbfBOHuR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 02:50:17 -0500
+Received: by mail-pf1-f194.google.com with SMTP id n74so4443393pfi.9
+        for <git@vger.kernel.org>; Thu, 14 Feb 2019 23:50:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=6oq/Jl2lNXEs3Iig5ILy5WzLTWcMYK4QADpGgLOfG+8=;
-        b=l5mV1lXH6/hzQ/qgBQI99ZtBfOBFXJ3aMNKt5C0unyW/X52c082KtU8DItEn/VJvR+
-         CzBJKN/VbeE0oUeURiT+dX5wZCaCA3NNveYu58bX+c5nDLwC48+JrSYZtim4RENkh+cH
-         8gq00qudRKFuXsKkhSWhtRzrgtURdbi+kMT9q8ZXtTqBGKmD0hHhZbk3SUMoLjv56AsD
-         aPRAQ33H4/zUH0/WQUXj+BiqADtPmTHDi8/PT3uUlG+dFG0dIrpJSphFqFBxiAEyc+5Z
-         Femua72dlfO16L1Jj7azuDYg+GTzE/mDhz/n8tBz/CxN+HXWY4K4ByhWIIR9rbVqfnhr
-         qWHw==
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EUpFbwtG1VL5zS4RqXf5ZOy6+PEFWF1/wTJNVaUoubU=;
+        b=EXlTOmMm4Jlp8Dp7KIRrLuaq6sqfu9FQRNM4LdiDJ8zvXK+UR6fLM3yUDk8ErMNAZz
+         d89AKXYI2XmIu0s6iMrMdcrKj27QDVL8i/aWRyRhp+A7f+5tmbqSzdXPAQ1yzcYgeO/T
+         63XSUnu8R0oN7N8th3c0saejmXRgNx9rEjKnrxZ9w2G3bB6v30lVC3nbVscho++KRw/+
+         GHqYn/8HekNjKPtN7XGRGfS53UuRuIgItOxloQz1Muvi3hz07s3LA080qYzg7hSS8e5w
+         Lbmas9ZFjM5KMDjU3xLVaEXVqkD9wSSxpMAxnjZlwHQwDSYIJGI4M1eUgN8Nt6QnU87N
+         IgbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6oq/Jl2lNXEs3Iig5ILy5WzLTWcMYK4QADpGgLOfG+8=;
-        b=QH5Qr2l+zxjJ0liKnf4a/y7ceGJQNdiEitryc95SUFW8TmyEgGFVMlxaATdShlE+WE
-         Ay2sKxnKh3hQ9uGqP7QyTCR5Qzyyg4HcZeiGW/G8Ffut6Lk24UostXH0kRwUJekZHwbg
-         4Eh7tCdu5GyvcT2GUf2RLzC4BkU9OZow1XjAEHxDFnPLidGt50yd8IXXTFDe+vHw9I6H
-         X6Razy0NHd43W4og7beHE1uBvKkZZhV2kmxunn+Qe5/HgSubsLlu3O8gryE0oynkITXH
-         EI9RBrkRUvKdKi3I1ELGPWH3hBcuUnebhGT6sjc6SIcibWCroN6t2CtuwckARNVlg6D/
-         YVzQ==
-X-Gm-Message-State: AHQUAuZ4h+32gjwuJdutEQ8oiT11SbxTBKdueEMZzNcXC03M+1eO562L
-        yES0y6Qgnm8SBZ0MjhS61drdFA==
-X-Google-Smtp-Source: AHgI3IbX9Z3PINApdGAS2u8pQKaLXpjK5Ao3DhlYGcP5PS/Df4oZueXsLkLrfn/4TdG0CryymlQewg==
-X-Received: by 2002:a65:620a:: with SMTP id d10mr3835375pgv.75.1550212816384;
-        Thu, 14 Feb 2019 22:40:16 -0800 (PST)
-Received: from localhost ([122.172.102.63])
-        by smtp.gmail.com with ESMTPSA id y133sm1999331pfb.107.2019.02.14.22.40.14
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EUpFbwtG1VL5zS4RqXf5ZOy6+PEFWF1/wTJNVaUoubU=;
+        b=oDRyJTv0yeykwQf7IG5P9eSAM6FWPpNzm7nbfQ3XkDBlnTuxfjlxYND2pNCZwq44+H
+         hwTytJzN3cO7PXhXK9JX4KlW4zOgflWLbnlSIy9UD8LVzOo/K5f/Nhiu9P0pX0DvHBEn
+         UDy6R0Pa7H74Rlat2Gt3pSHb/vuyJXYY06KpC9xG6Qs130pqpfpjRMEr3zu85LXXbwS/
+         365nWhONJNxC3WWvWHEqmsJsZdEQrFG8GwCdEX8V0OA2oqS+N79upiu2aDBb6isp/5Dk
+         mMALbyMv1YZQ08t1vy9vBvhwBBCUgTvQcD5hPursMvjJrBmtgEwkSbUtGDlqf2m2QqbJ
+         ge2A==
+X-Gm-Message-State: AHQUAubGabNIMpSxdYfprGI2OHkJX3sGTeQmEHdmiQxeJJQ11OGORRBm
+        +2io/npdehrX3RNv4oVWafPiQxB8QYq38A==
+X-Google-Smtp-Source: AHgI3IZ+mfCYDf4X2WuVkfNu12foAGixr33kqIkeY7devI629d6k2wQjR7DgkDmEzVrCHOWzVzAWFg==
+X-Received: by 2002:a63:2209:: with SMTP id i9mr8034789pgi.325.1550217016958;
+        Thu, 14 Feb 2019 23:50:16 -0800 (PST)
+Received: from localhost.localdomain ([2408:84e1:43:c917:9dbb:5ce9:2c19:a70a])
+        by smtp.gmail.com with ESMTPSA id l19sm8277628pfi.71.2019.02.14.23.50.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Feb 2019 22:40:15 -0800 (PST)
-Date:   Fri, 15 Feb 2019 12:10:13 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Elijah Newren <newren@gmail.com>, gitster@pobox.com
-Cc:     Git Mailing List <git@vger.kernel.org>, j6t@kdbg.org,
-        vincent.guittot@linaro.org
-Subject: Re: [Bug report] git diff stat shows unrelated diff
-Message-ID: <20190215064013.s7yfkmfvfmwfmepc@vireshk-i7>
+        Thu, 14 Feb 2019 23:50:15 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.21.0 round #2
+Date:   Fri, 15 Feb 2019 15:49:57 +0800
+Message-Id: <20190215074957.11667-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc0.38.ga5fda54cc5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABPp-BGstumw1eyZ++0itk-AR0Bk5zd0AchgznBpMq35a6ScUg@mail.gmail.com>
-User-Agent: NeoMutt/20180323-120-3dd1ac
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14-02-19, 13:23, Elijah Newren wrote:
-> I think you're getting tripped up by double-dot vs triple-dot with
-> diff being different than log:
-> 
-> `git diff D..E` means the same thing as `git diff D E`, i.e. diff the
-> two commits D and E.
+Hi,
 
-Right, so both the branches have at least until rc2 (though
-pm/linux-next had until rc6), why will the diff D..E show the diff
-between rc1 and rc2 ?
+Git v2.21.0-rc1 introduced 3 update messages from commit 32ceace39f
+(Fix typos in translatable strings for v2.21.0, 2019-02-11).  let's start
+new round of git l10n based on the following commit:
 
-> `git diff D...E` means the same thing as `git diff $(git merge-base D E) E`
+    l10n: git.pot: v2.21.0 round 2 (3 new, 3 removed)
+    
+    Introduce 3 update messages for v2.21.0 l10n round 2 from commit
+    32ceace39f (Fix typos in translatable strings for v2.21.0, 2019-02-11).
+    
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-I get exactly the same result with both .. and ... in this particular
-case and that's why I wonder if everything is okay or not.
+You can get it from the usual place:
 
-The problem in this case is:
-- PM tree had rc1,2,3,4,5,6 merged earlier into it.
-- Then I got merged one of my branches which was based of rc1 into
-  pm/linux-next.
-- And now I am trying to send pull request for another branch which is
-  a merge of the earlier branch (which got merged, based of rc1) and
-  second branch that has more stuff over rc2.
-- The most recent merge commit common between my branch and
-  pm/linux-next becomes the earlier branch which was based of rc1.
-- Now I expect ... to return the diff between rc1 and rc2 as it will
-  diff against the most recent merge.
-- But I expected ... to not include rc1..rc2 diff.
+    https://github.com/git-l10n/git-po/
 
-> There are some people for whom this state of affairs makes sense.  I
-> am not one of them, and I suspect you aren't either.  The arguments
-> made by those who feel this makes sense seem reasonable to me in the
-> moment when they present them, but I have never been able to remember
-> these arguments longer than briefly.  It just doesn't stick with me.
-> The only thing I seem to be able to retain is the following:  "git
-> diff D..E is totally useless and should be an error because (1) it
-> doesn't do what I expect and (2) for folks that want the behavior
-> currently gotten with that syntax can instead just use a space instead
-> of a double dot."
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
 
-Okay but git request-pull uses .. and not ... and that's where I saw
-the issue in the first place.
-
--- 
-viresh
+--
+Jiang Xin
