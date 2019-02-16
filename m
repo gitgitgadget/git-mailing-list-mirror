@@ -2,63 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B76401F453
-	for <e@80x24.org>; Sat, 16 Feb 2019 08:29:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75A7C1F453
+	for <e@80x24.org>; Sat, 16 Feb 2019 11:12:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728343AbfBPI0k (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Feb 2019 03:26:40 -0500
-Received: from p3plsmtpa11-07.prod.phx3.secureserver.net ([68.178.252.108]:46769
-        "EHLO p3plsmtpa11-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726975AbfBPI0k (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 16 Feb 2019 03:26:40 -0500
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with ESMTPSA
-        id uvIxg7EOA3XF8uvIzg43AQ; Sat, 16 Feb 2019 01:26:39 -0700
-Date:   Sat, 16 Feb 2019 10:26:35 +0200
-From:   Max Kirillov <max@max630.net>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'Max Kirillov' <max@max630.net>,
-        'SZEDER =?utf-8?Q?G=C3=A1bor'?= <szeder.dev@gmail.com>,
-        'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
-        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results)
-Message-ID: <20190216082635.GH3064@jessie.local>
-References: <001501d4c476$a94651d0$fbd2f570$@nexbridge.com>
- <nycvar.QRO.7.76.6.1902142234070.45@tvgsbejvaqbjf.bet>
- <20190215130213.GK1622@szeder.dev>
- <20190215203726.GG3064@jessie.local>
- <002a01d4c573$4784e670$d68eb350$@nexbridge.com>
-MIME-Version: 1.0
+        id S1729016AbfBPLMT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Feb 2019 06:12:19 -0500
+Received: from st43p00im-zteg10071901.me.com ([17.58.63.169]:38914 "EHLO
+        st43p00im-zteg10071901.me.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726012AbfBPLMT (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 16 Feb 2019 06:12:19 -0500
+X-Greylist: delayed 577 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Feb 2019 06:12:19 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=04042017; t=1550314962;
+        bh=gORcQ5eR+p0+qNP4l53yvket3NwncOkPtSbaOdqaovo=;
+        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+        b=tWHCpDF+UihV2sIPijhEnVOSQnEFcKkI0PlZOBSqYqNlJ+0+rEu5d68GdrqJC1qLy
+         xrXuHKLjhnMD/C4xIQ6GKyilU0ezI8BvpPrRVEb9rc+13STpnelkB1Ps8NDXU5ayZI
+         tRYFUTNGW/EWwRPIbsWHgG+84qrv3PLd/I532OcYfRdI/4Hs42lpF2MTBMBFoxhWy6
+         TfNgxzy5YBgZ8wDUm3ftHux0JnBjJe8ZcY1f3MlpMORrPCdcnH4uC3aM0NoqBAlJVt
+         fgy7vmAbeROGDgvgxZ6yi8s14ewv178+zyzauzUEbZdGXKVyJEroqBXVXfUo/Qph/Z
+         15lfgUrgyFHjg==
+Received: from [192.168.1.243] (104-56-191-14.lightspeed.milwwi.sbcglobal.net [104.56.191.14])
+        by st43p00im-zteg10071901.me.com (Postfix) with ESMTPSA id 3D586D80A0F
+        for <git@vger.kernel.org>; Sat, 16 Feb 2019 11:02:42 +0000 (UTC)
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <002a01d4c573$4784e670$d68eb350$@nexbridge.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-CMAE-Envelope: MS4wfGGcLj6+xkJGHWoWT5jpUZejiNa1ZP9Cb2Ep8siaptTp1WiAv1p2AwdOca/8RUD2J2Qz3w7Zmh8MkvIg7TtrXibBMniWs7kiNSTBknEwHkdByDQopyzu
- LrzNmbybn2niLxvS67pB/NhfGNfxLFBnhPd9GKvsZoZf3x2U4pXxa8eD5+bWQJntiH/XzrVh60eXCUiO14zxYhXsldlk7mqV9M+uBAkZd4ZhWFu9FU/ZXfaS
- D4K7dWb1ZRjtGBF0LrIvjk65o37/6DRBp9bv3rUjIjuYmaz4f3ZsQ9i0A2/vHQOAiHEKek72B+2L7MgRlY9FxFKsRJk0FDeF6SnQRIRyhiw=
+Content-Transfer-Encoding: 7bit
+From:   Rick kolinski <regnerpark2015@icloud.com>
+Mime-Version: 1.0 (1.0)
+Date:   Sat, 16 Feb 2019 05:02:41 -0600
+Subject: Debug.protocol
+Message-Id: <3126221B-73C4-41D3-99C0-E3DBA9BA6889@icloud.com>
+To:     git@vger.kernel.org
+X-Mailer: iPad Mail (16C50)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-02-16_09:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
+ mlxlogscore=321 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1812120000 definitions=main-1902160084
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 15, 2019 at 04:13:15PM -0500, Randall S. Becker wrote:
-> Sadly, the fix does not change the results. In fact, it
-> makes the hang far more likely. Subtest 6,7,8 fails here,
-> at close()
 
-Correct, I did not expect it to help, it was for the other
-issue.
 
-As for the hang issue, from your another message it seems to
-me that perl waiting correctly, there are really child
-process which do not exit.
-
-What you could try is
-https://public-inbox.org/git/20181124093719.10705-1-max@max630.net/
-(I'm not sure it would not conflict by now), this would
-remove dependency between tests. If it helps it would be
-very valuable information.
+Sent from my iPad
