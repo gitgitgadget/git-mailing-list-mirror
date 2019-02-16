@@ -2,113 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C587F1F453
-	for <e@80x24.org>; Sat, 16 Feb 2019 18:58:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B60931F453
+	for <e@80x24.org>; Sat, 16 Feb 2019 19:37:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729409AbfBPS55 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Feb 2019 13:57:57 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40400 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbfBPS55 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Feb 2019 13:57:57 -0500
-Received: by mail-wm1-f66.google.com with SMTP id t15so4790598wmi.5
-        for <git@vger.kernel.org>; Sat, 16 Feb 2019 10:57:56 -0800 (PST)
+        id S1732659AbfBPTgL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Feb 2019 14:36:11 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:33576 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728102AbfBPTgL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Feb 2019 14:36:11 -0500
+Received: by mail-ed1-f66.google.com with SMTP id a2so10608534edi.0
+        for <git@vger.kernel.org>; Sat, 16 Feb 2019 11:36:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=7dfV3rjBJWPvIssviARascA0VgxnORUWi3w3Rq6vpoY=;
-        b=Hbmbp5VPYsrI0r1x3ez8m+NyM+1JCyc9m2S3JxkqLUwwZ09f40OdZacSdwATz0reet
-         wPgzceK+iCRv13sFRICZ5+C+GGXFeFWtC9oikUBvoecqrtUCpROQ7sKGlnWLqIZDz6pK
-         Y2W+8glLkI/+Uj+70+uobubE0WO2ljbqKAdp4brepyKwwBCKgpWcSKWxan9N4uRbVwQO
-         HUS/WMOpWOzuryk+b9YtSEUhzA974D0DgwJFzEWgGoPeCLPvJiwy4PS7uxxaB/eGl7N6
-         aiPmlJcUoSXKjiT6TVcTnQkLLkKZ2QPLB5EIvL4n/u4UO7CUiKP1UniTdz0TEF3V3hgd
-         0GSw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=QGP/vwT4P6KXEjh4iFR+0z8W9qT9GrNi0VJszR/zgQU=;
+        b=O4scVU4p06u+p1AnrvK8UWy+ox9cCKnKFO0Ckkw0llm8niIEopk8suJN0NN+OSZMaJ
+         sW/zAhoK2EX2qeDyLzl/yEDWAToFJ/Q/mHLqMNSt8/nHUt3eviSh+QWZ2qSUK4w5tgKK
+         7zp8H9PP3SBlYsdr+mm2zQR7IFvG4pjcVq5aVToLb4GyuXxGeavmgvvfOstxAvyttdyW
+         LEYmyiVHUVW0ghJ/PYLXrYjl7qGc8b1M87+bPnE2DXI9VCln3GKvLsgWVXsZ/Jsn84PX
+         PCgC7/GJyXrWshZCVroq0BxkQvgSpeHVytrTKBk/sTa2dDWngyWlKj3XPvtK9E/nD3x/
+         q00w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=7dfV3rjBJWPvIssviARascA0VgxnORUWi3w3Rq6vpoY=;
-        b=i77nSnHVFZKFepiwAeu5Wt2xIIIlNBIA7m3o4udMgI//BzRXtMSj3IkufZRDtOWiQG
-         dIJ68tAuJJ1Bo+T3mVuiSMmQi6oyHElxs3Y0ZGWJFILNjarj6PuLhCO8r1gmlbxSeL3f
-         VYg2S7dT02odU4tFS+qyaqWHxhbnLuPnlVVxxS6u+9Jy9AiUxrYOznJvNLn4LSbvJsrc
-         Px4pg3toE15TvNayUNW2iVebTBYCVDepIdA7JB33FvS3QA5icwTgNCwZ4rAJR7j8nfZo
-         0lCdjBCx/uLz446kb8GtRIDTrnN0K6gWc25WUN+KSdI7v3v5LTn/gw3FVAZj40E3GvD1
-         vkfw==
-X-Gm-Message-State: AHQUAuaC5Fxz7CMJRLqnWV4xEO52LzjF9R5V6m+hgt7Y/Oy5JKFthl8A
-        Xh/xUfFGt7ZY3GSS0M0j5x0=
-X-Google-Smtp-Source: AHgI3IZf9pnZOT8y0obWkNKxft7HgQU3C4C5FEITBxf6ATVm0rVtk14s3ZR7E/TrytvBHLHdL0Ewcw==
-X-Received: by 2002:a1c:20d0:: with SMTP id g199mr10518273wmg.111.1550343475108;
-        Sat, 16 Feb 2019 10:57:55 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r15sm9351016wrt.37.2019.02.16.10.57.52
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=QGP/vwT4P6KXEjh4iFR+0z8W9qT9GrNi0VJszR/zgQU=;
+        b=hgCgJF0tWHovM8QF+9jykzrwtqzyIOcZhb+PXcvEaJRS/CQo2Ntk9ssYFi/U5k/8Kk
+         A41kiVd6yiQqb6mFJvGGBiP1YAzTyL4Q3t/xzxGhCumntN4Qzf7VK9cITCov1q8QEWX/
+         IYSXWVOkul/7zodDmvR9NoYpU+xPWsJWvIO9JEqLU9ZC8MKFiagBzBU2+YT//GNzQfYu
+         WfkpUFj0DlhbAKhd9e+iTfaIgUkGegrRfDUK8WO5XrK61nODz1vn12HWFYuR/i+0RPQR
+         7PA50Ea4Gk9C5ibyRoWsx1GI9KrAxXlTcReoMmpCNuLe6xIRn+MdECxHMHIMbbKjNmrG
+         qdYQ==
+X-Gm-Message-State: AHQUAuaGp1PH8BAhcOTdlrWzhrIiBJl1MhtjCyte/1MEOt+UQGsVWn6/
+        2A5xp8+Y7iPuju+A/8viGvlm3J+b
+X-Google-Smtp-Source: AHgI3Ia3ZggISz6Oz04BPlT8s3ejPUMg03XGvzkPd+o0h/n4atp5Y768l7zd7yHRwXOeNtK3IpYtMw==
+X-Received: by 2002:aa7:d445:: with SMTP id q5mr1965948edr.294.1550345768519;
+        Sat, 16 Feb 2019 11:36:08 -0800 (PST)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id k26sm2000938ejv.63.2019.02.16.11.36.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 16 Feb 2019 10:57:53 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "'Max Kirillov'" <max@max630.net>,
-        =?utf-8?Q?'SZEDER_G=C3=A1bor'?= <szeder.dev@gmail.com>,
-        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        <git@vger.kernel.org>
-Subject: Re: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results) - Good News
-References: <001201d4c617$de429540$9ac7bfc0$@nexbridge.com>
-        <xmqqftsn4nik.fsf@gitster-ct.c.googlers.com>
-        <000001d4c624$da8e05d0$8faa1170$@nexbridge.com>
-Date:   Sat, 16 Feb 2019 10:57:52 -0800
-In-Reply-To: <000001d4c624$da8e05d0$8faa1170$@nexbridge.com> (Randall
-        S. Becker's message of "Sat, 16 Feb 2019 13:24:23 -0500")
-Message-ID: <xmqq5ztj4l3j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Sat, 16 Feb 2019 11:36:07 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Per Lundberg <per.lundberg@hibox.tv>,
+        Steffen Jost <jost@tcs.ifi.lmu.de>,
+        Joshua Jensen <jjensen@workspacewhiz.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Clemens Buchacher <drizzd@gmx.net>,
+        Holger Hellmuth <hellmuth@ira.uka.de>,
+        Kevin Ballard <kevin@sb.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/1] Introduce "precious" file concept
+References: <20190216114938.18843-1-pclouds@gmail.com> <20190216114938.18843-2-pclouds@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190216114938.18843-2-pclouds@gmail.com>
+Date:   Sat, 16 Feb 2019 20:36:06 +0100
+Message-ID: <87wolzo7a1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
->> > The current condition of the code is (the generate_zero_bytes delete
->> > was previously removed so can be ignored for the patch):
->> 
->> Just to make sure I do not misunderstand, this result is with Max's patch but
->> without the generate_zero_bytes stuff?
+On Sat, Feb 16 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+
+[Re-CC some people involved the last time around]
+
+> A new attribute "precious" is added to indicate that certain files
+> have valuable content and should not be easily discarded even if they
+> are ignored or untracked.
 >
-> Correct.
+> So far there are one part of Git that are made aware of precious
+> files: "git clean" will leave precious files alone.
 
-Thanks for a quick response.  I've been staring at b46221ff ("Merge
-branch 'rb/no-dev-zero-in-test'", 2019-02-13).  IIUC, t5562 wouldn't
-have passed if it still fed http-backend from /dev/zero, no?  The
-shell redirection would have failed, so we do need to keep that part
-of the change---i.e. in order to pass, we do need cc95bc20 ("t5562:
-replace /dev/zero with a pipe from generate_zero_bytes", 2019-02-09)
-and Max's "t5562: do not reuse output files", right?
+Thanks for bringing this up again. There were also some patches recently
+to save away clobbered files, do you/anyone else have any end goal in
+mind here that combines this & that, or some other thing I may not have
+kept up with?
 
-I have been wondering about the whole /dev/zero business.  Although
-we have b46221ff ("Merge branch 'rb/no-dev-zero-in-test'",
-2019-02-13) in 'master', "git grep /dev/zero t" has hits in
-t/helper/test-sha1.sh and t/t4152-am-resume-override-opts.sh, so it
-must have been somewhat incomplete to help platforms that lack
-/dev/zero in the first place.
+My commentary on this whole thing is basically a repeat of what I said
+in https://public-inbox.org/git/87wop0yvxv.fsf@evledraar.gmail.com/
 
-We haven't heard from Dscho in European timezone, but I'm
-inclined to
+I.e. we have a definite problem here somewhere, and there is some
+solution, but this patch feels a bit like navigating that maze in the
+dark without a map.
 
- - keep b46221ff in 'master', not reverted.
- - apply Max's "t5562: do not reuse output files"
+We had users report that the likes of "pull" were eating their data, but
+now with this iteration of "precious" only impacting "clean" the only
+problem anyone with the current semantics is still left unaddressed. My
+memory (I may be wrong) is that "clean" was just brought up (by you?) as
+a "what about this other related case?" in that whole discussion.
 
-to 'master' and hope that we can declare victory in this part of the
-code ;-).  There may be fix-ups for other topics before -rc2 on top
-of that, though.
+So as noted in the E-Mail linked above I think the first step should be
+to enumerate/document/test the cases where we're now eating data
+implicitly, and discuss how that relates to the semantics we desired
+when the data-eating behavior was first introduced (as noted in E-Mails
+linked from the above, my own preliminary digging seems to reveal there
+isn't much of a relationship between the two).
 
->> Thanks, all.  Hopefully we can get this test failures behind us before -rc2;
->> knock, knock...
->
-> Once the fix is integrated and in the usual spots, I can verify
-> with haste. The full test cycle is now at 50 hours (argh), which I
-> will rerun in full at rc2, but this one is fast.
+Only when we have that list of XYZ cases we're supporting now, and can
+see that XYZ is so important to maintain backwards compatibility for
+that we can't change it should way say "we eat your data by default
+because XYZ is so useful/backcompat, set 'precious' ...".
+
+But right now we don't even have the list of XYZ or tests for them (as
+my RFC "garbage" attribute patch revealed). So this whole thing still
+feels like jumping three steps ahead to me in terms of addressing *that*
+issue, but perhaps you have some orthogonal use-case in mind for this?
