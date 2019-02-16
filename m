@@ -2,182 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F9FD1F453
-	for <e@80x24.org>; Sat, 16 Feb 2019 02:33:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF2AC1F453
+	for <e@80x24.org>; Sat, 16 Feb 2019 02:45:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390739AbfBPCdb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 21:33:31 -0500
-Received: from mail-eopbgr660129.outbound.protection.outlook.com ([40.107.66.129]:6280
-        "EHLO CAN01-QB1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727348AbfBPCda (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 21:33:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=usask.ca; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wQiXq/zJX8nZo09GUpm6y7e0TiSJ+mPDDSv40N4Ykls=;
- b=NjyqdCRoqSgW6K3sPhvETOShxD4uq/U7o9nbWvFUGFs/8/03u5hGIXsu2xYAq9G3VttOqoeZQo/9vjVwdpJysQgqSKA+R0J24kaH47mZIm3wKBZT/8Q+u6PNEFgvGpIcDzh2+Wxc0XMKNHIBjJCs8srfKLPP+hkbzVSS2V94d0M=
-Received: from YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM (52.132.76.159) by
- YQXPR0101MB1542.CANPRD01.PROD.OUTLOOK.COM (52.132.82.17) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1622.19; Sat, 16 Feb 2019 02:33:27 +0000
-Received: from YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::9d8c:8e72:e4c5:9735]) by YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::9d8c:8e72:e4c5:9735%3]) with mapi id 15.20.1622.018; Sat, 16 Feb 2019
- 02:33:27 +0000
-From:   Dan McGregor <dkm560@usask.ca>
-To:     Duy Nguyen <pclouds@gmail.com>,
-        "McGregor, Dan" <dan.mcgregor@usask.ca>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-compat-util: undefine fileno if defined
-Thread-Topic: [PATCH v2] git-compat-util: undefine fileno if defined
-Thread-Index: AQHUwCBMiDDpr+E1cEKxVTAhcavJZ6XcMjeAgAWNeoA=
-Date:   Sat, 16 Feb 2019 02:33:27 +0000
-Message-ID: <D8E7C7D0-04E5-4802-80FA-2477F2C0D240@usask.ca>
-References: <20190201193004.88736-1-dan.mcgregor@usask.ca>
- <20190209023621.75255-1-dan.mcgregor@usask.ca> <20190212134537.GA26137@ash>
-In-Reply-To: <20190212134537.GA26137@ash>
-Accept-Language: en-CA, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: YTOPR0101CA0066.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b00:14::43) To YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c00:19::31)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=dan.mcgregor@usask.ca; 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2001:470:30f3:3:64c9:bdf6:fee5:9969]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: cdd95df9-0ea7-4420-78a9-08d693b721a3
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600110)(711020)(4605077)(2017052603328)(7153060)(7193020);SRVR:YQXPR0101MB1542;
-x-ms-traffictypediagnostic: YQXPR0101MB1542:
-x-ms-exchange-purlcount: 1
-x-uofs-origin: Internal
-x-microsoft-exchange-diagnostics: =?utf-8?B?MTtZUVhQUjAxMDFNQjE1NDI7MjM6K1lXSzZOUjZqeXJRK292RUtuWmFETXE1?=
- =?utf-8?B?eFRvQlNkVlJHZnFOcUJweU5aSDhZR1NWeUV2S1RaaUpxdHVBVFcyWnpYVmp5?=
- =?utf-8?B?dzBzY1RXSlNHTVlRQnd4OWtNOG1MUlY5NmlwOTJJYWkyM204SGFxRDdXVDRi?=
- =?utf-8?B?NkltR3BGN3FTVS9DWXhJdFArWkorTGY5UnRBeEtiRmV4SmNacTgyUmlmQWow?=
- =?utf-8?B?a2t1WnY2M3UrWjN6RXQ1YmVzKzIrOFBld1VlcEt6RDkyYk5LVlRkZi9QRmY0?=
- =?utf-8?B?ZkpVWU9LYUtQaU5vOEMyNWVFd3JLZ1U0WXFGc3h6VGNRZHJ5TW0rYktZS3dN?=
- =?utf-8?B?VTBWbTNHWWY0ZTkyQ3JBbldsWVYwM0dkRmhTNStrNlV6c043WGJSSjJMekhj?=
- =?utf-8?B?TDI4ckJMM3ZjZHN5aGEvZUJQRldjck94anFoVzZsR0dOTEZGWmhkcUVmYUs2?=
- =?utf-8?B?ZGRQVEZtVVpHRWN6M0t5d0I2d2xYSnJYTlVrOWVsM2JDSFhnZ1dtT2xzNzZ3?=
- =?utf-8?B?ZS9KWDN2ZWl3TlR1S2h5RlBOa2p1a2hNRDFhaUNsMVdGc2xRMWZZLzRpVjJL?=
- =?utf-8?B?S1hES0thNmtvbjU3K3dmcDYvcFVUWEx6Z0pFVWIrdi9SdlB4SGMraFgwWFFF?=
- =?utf-8?B?amFHSzJvNVl0TzdYWjlsR0krUkZacDltSzZ3ditIemxsWFE3bndDaG82Uk1E?=
- =?utf-8?B?dHZnL2VLdHNJeit6b2JuL3pLVWFzck5RT0diUGo2K1pWZEg4NTBxcUJHb3hB?=
- =?utf-8?B?QzFoWmtwTEQ5dHlwQnd5U2JtZGdqRWNGSG9PTkd4QUtQdFQyTTNtRFRWSGxY?=
- =?utf-8?B?UXVqd2dGTTJpMlhkNEVCQUtjTnFFTm4yRFNkcllzaU00bXRXeVJSbjkzdkVv?=
- =?utf-8?B?VkdteDlTVGJKNWZJekMyWVhjMjh1elk4MkI0djNWK3VmZlRaanBLU0dPUkNX?=
- =?utf-8?B?aC9QWnBjMHIxN3FmYU1xcStjdTR6aFIwTzc3Q2JWa2plSUZjVWozTzRPMzlr?=
- =?utf-8?B?bDRTNktxejNUbUl1MXc3aHZUd0paZTRKSitPNVpIc0R1OW11UkJvekwrT0Rw?=
- =?utf-8?B?R0hkT2YveHJmc1VZTGZtMlZrOVUyY1JrOFlNd3g0OWV3MXJMYVlrRDFIL2NL?=
- =?utf-8?B?dng5ZGJ5cy9tV3lBR2R2d3RRZUtXRHl5bHRvYUdyamwvdTRUQXZwSTA3SlVI?=
- =?utf-8?B?ajF3OFdPd2tzRlNGRXV1ZmpzZ0gyYzVHQUplbXBWRVZ2aTNiVFRWT051R1Vx?=
- =?utf-8?B?MHhXeGxOMEIwckNFL1RVYWdIdUFHeWFXWTYwbnpCTXBueHUvM2g5RlJEYkdh?=
- =?utf-8?B?RXNTcCthUWNvRzVGVTBsNW1FL285amlOU2d4WnJkVDV2bTBYZXpvTGlkbnVk?=
- =?utf-8?B?dVdkL0xoemRUck1CTzMzYXV0cXpaWHEvMFRtV0Zta090elhud05pcmhIaWx1?=
- =?utf-8?B?bHRvOVh5VFlDUTB6QmovQVJRT1Z1ZmFSOEhHNUNXRHZNQzc5bEM1NUJzU2dR?=
- =?utf-8?B?bzFnZTlEMVduTkVmT0l2Ync5clRJZmJWMmRRN0NKM0JqZlpGeVNsSUJub05W?=
- =?utf-8?B?bzhBMW1id2d3QVd4MCthcFJzNTY3bUVOU1gvNFJXNE9YK0ROU09hWUF4YTZy?=
- =?utf-8?B?Y2Rub1RNMDQrWU40Z1VuZWdVanFWWXhNVzM0UjFHclpIcnhJRHhVLzliU1da?=
- =?utf-8?B?YnhQakt3Rml4UUhBYkduaGpvRWRsQXBDTzgvd1VudW40REVpbUExWWNCcjJO?=
- =?utf-8?Q?Tb+B3xc2z3NJxTLWsQTIHM/tbKX3DQcpTofWdMo=3D?=
-x-microsoft-antispam-prvs: <YQXPR0101MB15428D639FA186C0B153BE22E8610@YQXPR0101MB1542.CANPRD01.PROD.OUTLOOK.COM>
-x-forefront-prvs: 0950706AC1
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(136003)(376002)(346002)(366004)(39860400002)(396003)(199004)(189003)(186003)(6506007)(83716004)(71190400001)(105586002)(6116002)(4326008)(36756003)(71200400001)(25786009)(74482002)(8936002)(476003)(2616005)(486006)(106356001)(14444005)(256004)(81166006)(81156014)(6246003)(33656002)(6486002)(6436002)(786003)(46003)(6636002)(2906002)(305945005)(14454004)(54906003)(316002)(110136005)(6512007)(8676002)(6306002)(11346002)(446003)(229853002)(99286004)(966005)(52116002)(102836004)(478600001)(386003)(68736007)(7736002)(97736004)(82746002)(76176011)(53936002)(5660300002);DIR:OUT;SFP:1102;SCL:1;SRVR:YQXPR0101MB1542;H:YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: usask.ca does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: L9TWaXeTfoKeEzPqRj1neUIaFGADZfJyloiVaDmzmRUTEbsEuOeNJ5vtDOps4Xcub83VKLeMvBWSKPaHa94H5m1bmeKrygDzJEAN7FXBN7R8gB/dgjnyAdY9hSITX/ak6+GjptumsFVrwAc3hFObi8POYq76u/cPdRkREeWtdndMhlyQ/ksuHm0oalV6ZYB9QeaNgMsa4syWZXwCl2gtNlVoWzy0fmUY+Ugfn4JlSwTBpHZh4KNreFz6GGShJ4FiAX5S0qPZcypt2oojCfAjKY0hjgnjzlFqeOXGVHUGnBoJynFzsaDBdetvKK0YXe/5NRx4oRojkDu12AECV1SOxYTaUovElxm2ULJlurPndMvbYkbWjThUNUF6U9pVpO8zSbwflFpggtuNF/w9tnqumN/3VU1Rutdlb8Wi+yzL/FY=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <91BDF60DE839434CB953EDCA72ECC6C1@CANPRD01.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+        id S2391712AbfBPCpy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 21:45:54 -0500
+Received: from mail-it1-f173.google.com ([209.85.166.173]:36498 "EHLO
+        mail-it1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730404AbfBPCpx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 21:45:53 -0500
+Received: by mail-it1-f173.google.com with SMTP id h6so26972309itl.1
+        for <git@vger.kernel.org>; Fri, 15 Feb 2019 18:45:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=/zdY2VRqkDH+EM+VBGoqyu1/com18UqjYOnEYWX5BNs=;
+        b=X3Beuty/M/ZBJZcuU1FvOfY8SEBX3C55zXKEahQkkHTB052v9eLQH4B069m9kQSTYN
+         PR/weeFFuRs+xNDI1JDhIwlaPQ2nJ+L0y1OpYGuJBanSHgMWgqv12K7alJF/sYVQqBvl
+         5FkxSA7VznhYTLQctr3+PeqmyC3YC3QgDdAyrsSfYhjCXcB2dFCAVuyOaaVjT+f4lLVg
+         GKci92IQfOHzUlhiRR8wKX8PrQUoX8l6hNjD+Hp9dYr947tBPcbFkI7CCl+Y2ubM0KIa
+         dmALkcsdjt9EAa1whVg8BV5QVeIxpa8M2Ubub9zCL18+yI0RVVDTsiRxJ5cOrtAOSFWI
+         p9Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=/zdY2VRqkDH+EM+VBGoqyu1/com18UqjYOnEYWX5BNs=;
+        b=Kdp9ZBrvmxddXyuLRs1RVoJHWEKA/oY4Xm8vb5gg/VS8GvKzTYMi0bqIAlgT2NAbLA
+         dO7x51tTP+Ze3inSU+0IB4VNso1XV3bF7LaDheU8pe0nkm1/MbTlIENTcX/vhNe7bYOb
+         mSCsRgpwapVWoFqimv+2SLmglE6HRQ46r4LmEVLyC86qaP4JtUeVmE/K0Zay+RwepkEu
+         308x2wksdWe1Ed7KE3OwyMci3eEpWj+J+hAfMtGqHF2Zuatc5VMmCjZ/7oWCMhfZyfTN
+         8DgpWE50V3+CN80fP5NHf1FMYv5Qgcmuc0u/p1EVqYYKonwhKGDNPdIr9Hyg4QXrnpS+
+         Ljow==
+X-Gm-Message-State: AHQUAuZIwTWeZSSBdrcdNM1t6ISatVsA/y/rtTscUn3hafKA0JQlYCrj
+        2n83IaoP9mHYw9gRGdXkJSMHemIxVX8FcHwuwhknfDI537go0A==
+X-Google-Smtp-Source: AHgI3Ib+ILO3ZaG6dLEDECWV2uSIdpojvc5Tiy8nI/D7w6/m9hk9p/a9fcoUNtEsBiODvsejbHHMI5H/6psD5fW5k+Y=
+X-Received: by 2002:a24:2711:: with SMTP id g17mr6004133ita.72.1550285152656;
+ Fri, 15 Feb 2019 18:45:52 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: usask.ca
-X-MS-Exchange-CrossTenant-Network-Message-Id: cdd95df9-0ea7-4420-78a9-08d693b721a3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Feb 2019 02:33:26.8480
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-id: 24ab6cd0-487e-4722-9bc3-da9c4232776c
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQXPR0101MB1542
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Fri, 15 Feb 2019 18:45:42 -0800
+Message-ID: <CAGyf7-FC1q1f4F36_hS53sdP3wCxd7fTgbegSj+tPS4idvF+Hg@mail.gmail.com>
+Subject: 2.21: Change in ref advertisement handling?
+To:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQoNCk9uIEZlYnJ1YXJ5IDEyLCAyMDE5IDc6NDU6MzcgYS5tLiBDU1QsIER1eSBOZ3V5ZW4gPHBj
-bG91ZHNAZ21haWwuY29tPiB3cm90ZToNCj5PbiBGcmksIEZlYiAwOCwgMjAxOSBhdCAwODozNjoy
-MVBNIC0wNjAwLCBEYW4gTWNHcmVnb3Igd3JvdGU6DQo+PiBDb21taXQgOGRkMmU4OGE5MiAoImh0
-dHA6IHN1cHBvcnQgZmlsZSBoYW5kbGVzIGZvciBIVFRQX0tFRVBfRVJST1IiLA0KPj4gMjAxOS0w
-MS0xMCkgaW50cm9kdWNlZCBhbiBpbXBsaWNpdCBhc3N1bXB0aW9uIHRoYXQgcmV3aW5kLCBmaWxl
-bm8sDQo+YW5kDQo+PiBmZmx1c2ggYXJlIGZ1bmN0aW9ucy4gQXQgbGVhc3Qgb24gRnJlZUJTRCBm
-aWxlbm8gaXMgbm90LCBhbmQgYXMgc3VjaA0KPj4gcGFzc2luZyBhIHZvaWQgKiBmYWlsZWQuDQo+
-PiANCj4+IEFsbCBzeXN0ZW1zIHRlc3RlZCAoRnJlZUJTRCBhbmQgTmV0QlNEKSB0aGF0IGRlZmlu
-ZSBmaW5lbyBhcyBhIG1hY3JvDQo+DQo+T3BlbkJTRCBvciBOZXRCU0Q/IEZyb20gdGhpcyBbMV0s
-IGl0IGxvb2tzIGxpa2UgT3BlbkJTRCBmYWlscyB3aGlsZQ0KPk5ldEJTRCBjb21waWxlcyBvayAo
-YW5kIGZhaWxzIHRvIHJ1biBzb21lIHRlc3RzKQ0KPg0KPlsxXSBodHRwczovL2dpdGxhYi5jb20v
-Z2l0LXZjcy9naXQtY2kvcGlwZWxpbmVzLzQ3MTM5NzQxL2ZhaWx1cmVzDQo+DQo+PiBhbHNvIGhh
-dmUgYSBmdW5jdGlvbiBkZWZpbmVkLiBVbmRlZmluZSB0aGUgbWFjcm8gb24gdGhlc2Ugc3lzdGVt
-cyBzbw0KPj4gdGhhdCB0aGUgZnVuY3Rpb24gaXMgdXNlZC4NCj4NCj5JIGRvbid0IHRoaW5rIHRo
-aXMgaXMgZW5vdWdoLiBBdCBsZWFzdCBmYnNkIGRlZmluZXMgdGhpcw0KPg0KPiNkZWZpbmUgICAg
-ZmlsZW5vKHApICAgICghX19pc3RocmVhZGVkID8gX19zZmlsZW5vKHApIDogKGZpbGVubykocCkp
-DQo+DQo+c28gb25lIG9mIHRoZSB0d28gZnVuY3Rpb25zIHdpbGwgYmUgdXNlZCBkZXBlbmRpbmcg
-b24gX19pc3RocmVhZGVkDQo+ZmxhZy4gWW91ciBmb3JjaW5nIHRvIHVzZSBmaWxlbm8sIGlnbm9y
-aW5nIF9fc2ZpbGVubywgaXMgdGVjaG5pY2FsbHkNCj5ub3QgY29ycmVjdC4NCj4NCj5Gb3IgdGhl
-IHJlY29yZCwgYXQgbGVhc3QgZmJzZCBhbHNvIGRlZmluZXMgZmVvZiwgZmVycm9yLCBjbGVhcmVy
-ciwNCj5nZXRjIGFuZCBwdXRjIGluIHRoZSBzYW1lIHdheS4gQnV0IGF0IGxlYXN0IEkgZG9uJ3Qg
-c2VlIGhvdyBzb21ldGhpbmcNCj5saWtlIGZlb2YoZnArKykgY291bGQgY2F1c2UgYmFkIHNpZGUg
-ZWZmZWN0cy4NCj4NCj5TbywgaG93IGFib3V0IHNvbWV0aGluZyBsaWtlIHRoaXM/IEEgdGVlbnkg
-Yml0IGxvbmdlciB0aGFuIHlvdXINCj52ZXJzaW9uLCBidXQgSSB0aGluayBpdCdzIGVhc2llciB0
-byBjb250cm9sIGxvbmcgdGVybS4NCg0KWWVzLCB0aGlzIGxvb2tzIHByZXR0eSByZWFzb25hYmxl
-IHRvIG1lIHRvby4NCj4NCj4tLSA4PCAtLQ0KPmRpZmYgLS1naXQgYS9NYWtlZmlsZSBiL01ha2Vm
-aWxlDQo+aW5kZXggMGUxM2E1YjQ2OS4uNDRjZmM2M2ZjNCAxMDA2NDQNCj4tLS0gYS9NYWtlZmls
-ZQ0KPisrKyBiL01ha2VmaWxlDQo+QEAgLTQzMyw2ICs0MzMsOCBAQCBhbGw6Og0KPiAjDQo+ICMg
-RGVmaW5lIEhBVkVfR0VUREVMSU0gaWYgeW91ciBzeXN0ZW0gaGFzIHRoZSBnZXRkZWxpbSgpIGZ1
-bmN0aW9uLg0KPiAjDQo+KyMgRGVmaW5lIEZJTEVOT19JU19BX01BQ1JPIGlzIGZpbGVubygpIGlz
-IGEgbWFjcm8sIG5vdCBhIHJlYWwNCj5mdW5jdGlvbi4NCj4rIw0KPiAjIERlZmluZSBQQUdFUl9F
-TlYgdG8gYSBTUCBzZXBhcmF0ZWQgVkFSPVZBTCBwYWlycyB0byBkZWZpbmUNCj4jIGRlZmF1bHQg
-ZW52aXJvbm1lbnQgdmFyaWFibGVzIHRvIGJlIHBhc3NlZCB3aGVuIGEgcGFnZXIgaXMgc3Bhd25l
-ZCwNCj5lLmcuDQo+ICMNCj5AQCAtMTgwMCw2ICsxODAyLDExIEBAIGlmZGVmIEhBVkVfV1BHTVBU
-Ug0KPiAJQkFTSUNfQ0ZMQUdTICs9IC1ESEFWRV9XUEdNUFRSDQo+IGVuZGlmDQo+IA0KPitpZmRl
-ZiBGSUxFTk9fSVNfQV9NQUNSTw0KPisJQ09NUEFUX0NGTEFHUyArPSAtREZJTEVOT19JU19BX01B
-Q1JPDQo+KwlDT01QQVRfT0JKUyArPSBjb21wYXQvZmlsZW5vLm8NCj4rZW5kaWYNCj4rDQo+IGlm
-ZXEgKCQoVENMVEtfUEFUSCksKQ0KPiBOT19UQ0xUSyA9IE5vVGhhbmtzDQo+IGVuZGlmDQo+ZGlm
-ZiAtLWdpdCBhL2NvbXBhdC9maWxlbm8uYyBiL2NvbXBhdC9maWxlbm8uYw0KPm5ldyBmaWxlIG1v
-ZGUgMTAwNjQ0DQo+aW5kZXggMDAwMDAwMDAwMC4uN2IxMDVmNGNkNw0KPi0tLSAvZGV2L251bGwN
-Cj4rKysgYi9jb21wYXQvZmlsZW5vLmMNCj5AQCAtMCwwICsxLDcgQEANCj4rI2RlZmluZSBDT01Q
-QVRfQ09ERQ0KPisjaW5jbHVkZSAiLi4vZ2l0LWNvbXBhdC11dGlsLmgiDQo+Kw0KPitpbnQgZ2l0
-X2ZpbGVubyhGSUxFICpzdHJlYW0pDQo+K3sNCj4rCXJldHVybiBmaWxlbm8oc3RyZWFtKTsNCj4r
-fQ0KPmRpZmYgLS1naXQgYS9jb25maWcubWFrLnVuYW1lIGIvY29uZmlnLm1hay51bmFtZQ0KPmlu
-ZGV4IDc4NmJiMmY5MTMuLjAxZjYyNjc0YTQgMTAwNjQ0DQo+LS0tIGEvY29uZmlnLm1hay51bmFt
-ZQ0KPisrKyBiL2NvbmZpZy5tYWsudW5hbWUNCj5AQCAtMjIxLDYgKzIyMSw3IEBAIGlmZXEgKCQo
-dW5hbWVfUyksRnJlZUJTRCkNCj4gCUhBVkVfQlNEX0tFUk5fUFJPQ19TWVNDVEwgPSBZZXNQbGVh
-c2UNCj4gCVBBR0VSX0VOViA9IExFU1M9RlJYIExWPS1jIE1PUkU9RlJYDQo+IAlGUkVBRF9SRUFE
-U19ESVJFQ1RPUklFUyA9IFVuZm9ydHVuYXRlbHlZZXMNCj4rCUZJTEVOT19JU19BX01BQ1JPID0g
-VW5mb3J0dW5hdGVseVllcw0KPiBlbmRpZg0KPiBpZmVxICgkKHVuYW1lX1MpLE9wZW5CU0QpDQo+
-IAlOT19TVFJDQVNFU1RSID0gWWVzUGxlYXNlDQo+QEAgLTIzNCw2ICsyMzUsNyBAQCBpZmVxICgk
-KHVuYW1lX1MpLE9wZW5CU0QpDQo+IAlIQVZFX0JTRF9LRVJOX1BST0NfU1lTQ1RMID0gWWVzUGxl
-YXNlDQo+IAlQUk9DRlNfRVhFQ1VUQUJMRV9QQVRIID0gL3Byb2MvY3VycHJvYy9maWxlDQo+IAlG
-UkVBRF9SRUFEU19ESVJFQ1RPUklFUyA9IFVuZm9ydHVuYXRlbHlZZXMNCj4rCUZJTEVOT19JU19B
-X01BQ1JPID0gVW5mb3J0dW5hdGVseVllcw0KPiBlbmRpZg0KPiBpZmVxICgkKHVuYW1lX1MpLE1p
-ckJTRCkNCj4gCU5PX1NUUkNBU0VTVFIgPSBZZXNQbGVhc2UNCj5kaWZmIC0tZ2l0IGEvZ2l0LWNv
-bXBhdC11dGlsLmggYi9naXQtY29tcGF0LXV0aWwuaA0KPmluZGV4IDI5YTE5OTAyYWEuLjY1NzM4
-MDhlYmQgMTAwNjQ0DQo+LS0tIGEvZ2l0LWNvbXBhdC11dGlsLmgNCj4rKysgYi9naXQtY29tcGF0
-LXV0aWwuaA0KPkBAIC0xMjM0LDYgKzEyMzQsMTQgQEAgc3RydWN0IHRtICpnaXRfZ210aW1lX3Io
-Y29uc3QgdGltZV90ICosIHN0cnVjdA0KPnRtICopOw0KPiAjZGVmaW5lIGdldGNfdW5sb2NrZWQo
-ZmgpIGdldGMoZmgpDQo+ICNlbmRpZg0KPiANCj4rI2lmZGVmIEZJTEVOT19JU19BX01BQ1JPDQo+
-K2ludCBnaXRfZmlsZW5vKEZJTEUgKnN0cmVhbSk7DQo+KyMgaWZuZGVmIENPTVBBVF9DT0RFDQo+
-KyMgIHVuZGVmIGZpbGVubw0KPisjICBkZWZpbmUgZmlsZW5vKHApIGdpdF9maWxlbm8ocCkNCj4r
-IyBlbmRpZg0KPisjZW5kaWYNCj4rDQo+IC8qDQo+ICAqIE91ciBjb2RlIG9mdGVuIG9wZW5zIGEg
-cGF0aCB0byBhbiBvcHRpb25hbCBmaWxlLCB0byB3b3JrIG9uIGl0cw0KPiAgKiBjb250ZW50cyB3
-aGVuIHdlIGNhbiBzdWNjZXNzZnVsbHkgb3BlbiBpdC4gIFdlIGNhbiBpZ25vcmUgYSBmYWlsdXJl
-DQo+LS0gODwgLS0NCj4NCj4tLQ0KPkR1eQ0KDQotLSANClNlbnQgZnJvbSBteSBBbmRyb2lkIGRl
-dmljZSB3aXRoIEstOSBNYWlsLiBQbGVhc2UgZXhjdXNlIG15IGJyZXZpdHkuDQo=
+In Bitbucket Server's Git test suite, we have some lazy tests that use
+a stub HTTP server with mocked payloads to feed a Git client, to test
+its behavior.
+
+For some of those tests, we have the server configured to send a
+response body like this for a ref advertisement:
+76d28b849be7fb3301e4bd14fb28328947b4f5a1<tab>HEAD<newline>
+76d28b849be7fb3301e4bd14fb28328947b4f5a1<tab>refs/heads/master<newline>
+
+There are headers we set, like "Content-Type:
+application/x-git-upload-pack-advertisement", but that's the response.
+It's not packeted or anything.
+
+If I use (for example) Git 2.17.1 and run "git ls-remote <url>" with
+that response, Git happily displays essentially identical output, HEAD
+and master at 76d28b849be7fb3301e4bd14fb28328947b4f5a1.
+
+If I run that "git ls-remote" with 2.21.0-rc1, Git displays "fatal:
+the remote end hung up unexpectedly" and dies.
+
+If I change the mocked response to:
+001e# service=git-upload-pack<newline>
+0000<no newline; wrapping just for display>
+003276d28b849be7fb3301e4bd14fb28328947b4f5a1<sp>HEAD<newline>
+003f76d28b849be7fb3301e4bd14fb28328947b4f5a1<sp>refs/heads/master<newline>
+0000
+
+This works in both 2.17.1 and 2.21.0-rc1. (I was a little surprised
+Git didn't care about the lack of a NUL byte after "HEAD" with the
+capabilities after it, before the newline, but even 2.21 doesn't seem
+to mind.)
+
+First let me say, I had no idea these tests of ours existed, and I'm
+surprised that they worked on Git 2.20 and older, given that the
+response isn't in proper pkt-line format.
+
+I'm not looking for anything to change here, let me hasten to add; I'm
+just interested in some clarification. Why did our invalid ref
+advertisement response work in older Git versions? Why has it stopped
+working in 2.21?
+
+Best regards,
+Bryan Turner
