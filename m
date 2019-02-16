@@ -2,141 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EE3B1F453
-	for <e@80x24.org>; Sat, 16 Feb 2019 00:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F9FD1F453
+	for <e@80x24.org>; Sat, 16 Feb 2019 02:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729617AbfBPASs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Feb 2019 19:18:48 -0500
-Received: from mx2.suse.de ([195.135.220.15]:60570 "EHLO mx1.suse.de"
+        id S2390739AbfBPCdb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Feb 2019 21:33:31 -0500
+Received: from mail-eopbgr660129.outbound.protection.outlook.com ([40.107.66.129]:6280
+        "EHLO CAN01-QB1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726377AbfBPASr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Feb 2019 19:18:47 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id D7228AE25;
-        Sat, 16 Feb 2019 00:18:45 +0000 (UTC)
-Date:   Sat, 16 Feb 2019 01:18:43 +0100
-From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] worktree: fix worktree add race.
-Message-ID: <20190216011843.24d15051@naga>
-In-Reply-To: <xmqq8syg6foq.fsf@gitster-ct.c.googlers.com>
-References: <429046b2c9f02c5e4f0af88db51f6c0c099f08a9.1550254374.git.msuchanek@suse.de>
-        <xmqq8syg6foq.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-suse-linux-gnu)
+        id S1727348AbfBPCda (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Feb 2019 21:33:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=usask.ca; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wQiXq/zJX8nZo09GUpm6y7e0TiSJ+mPDDSv40N4Ykls=;
+ b=NjyqdCRoqSgW6K3sPhvETOShxD4uq/U7o9nbWvFUGFs/8/03u5hGIXsu2xYAq9G3VttOqoeZQo/9vjVwdpJysQgqSKA+R0J24kaH47mZIm3wKBZT/8Q+u6PNEFgvGpIcDzh2+Wxc0XMKNHIBjJCs8srfKLPP+hkbzVSS2V94d0M=
+Received: from YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM (52.132.76.159) by
+ YQXPR0101MB1542.CANPRD01.PROD.OUTLOOK.COM (52.132.82.17) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1622.19; Sat, 16 Feb 2019 02:33:27 +0000
+Received: from YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::9d8c:8e72:e4c5:9735]) by YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::9d8c:8e72:e4c5:9735%3]) with mapi id 15.20.1622.018; Sat, 16 Feb 2019
+ 02:33:27 +0000
+From:   Dan McGregor <dkm560@usask.ca>
+To:     Duy Nguyen <pclouds@gmail.com>,
+        "McGregor, Dan" <dan.mcgregor@usask.ca>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-compat-util: undefine fileno if defined
+Thread-Topic: [PATCH v2] git-compat-util: undefine fileno if defined
+Thread-Index: AQHUwCBMiDDpr+E1cEKxVTAhcavJZ6XcMjeAgAWNeoA=
+Date:   Sat, 16 Feb 2019 02:33:27 +0000
+Message-ID: <D8E7C7D0-04E5-4802-80FA-2477F2C0D240@usask.ca>
+References: <20190201193004.88736-1-dan.mcgregor@usask.ca>
+ <20190209023621.75255-1-dan.mcgregor@usask.ca> <20190212134537.GA26137@ash>
+In-Reply-To: <20190212134537.GA26137@ash>
+Accept-Language: en-CA, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: YTOPR0101CA0066.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b00:14::43) To YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c00:19::31)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dan.mcgregor@usask.ca; 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2001:470:30f3:3:64c9:bdf6:fee5:9969]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: cdd95df9-0ea7-4420-78a9-08d693b721a3
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600110)(711020)(4605077)(2017052603328)(7153060)(7193020);SRVR:YQXPR0101MB1542;
+x-ms-traffictypediagnostic: YQXPR0101MB1542:
+x-ms-exchange-purlcount: 1
+x-uofs-origin: Internal
+x-microsoft-exchange-diagnostics: =?utf-8?B?MTtZUVhQUjAxMDFNQjE1NDI7MjM6K1lXSzZOUjZqeXJRK292RUtuWmFETXE1?=
+ =?utf-8?B?eFRvQlNkVlJHZnFOcUJweU5aSDhZR1NWeUV2S1RaaUpxdHVBVFcyWnpYVmp5?=
+ =?utf-8?B?dzBzY1RXSlNHTVlRQnd4OWtNOG1MUlY5NmlwOTJJYWkyM204SGFxRDdXVDRi?=
+ =?utf-8?B?NkltR3BGN3FTVS9DWXhJdFArWkorTGY5UnRBeEtiRmV4SmNacTgyUmlmQWow?=
+ =?utf-8?B?a2t1WnY2M3UrWjN6RXQ1YmVzKzIrOFBld1VlcEt6RDkyYk5LVlRkZi9QRmY0?=
+ =?utf-8?B?ZkpVWU9LYUtQaU5vOEMyNWVFd3JLZ1U0WXFGc3h6VGNRZHJ5TW0rYktZS3dN?=
+ =?utf-8?B?VTBWbTNHWWY0ZTkyQ3JBbldsWVYwM0dkRmhTNStrNlV6c043WGJSSjJMekhj?=
+ =?utf-8?B?TDI4ckJMM3ZjZHN5aGEvZUJQRldjck94anFoVzZsR0dOTEZGWmhkcUVmYUs2?=
+ =?utf-8?B?ZGRQVEZtVVpHRWN6M0t5d0I2d2xYSnJYTlVrOWVsM2JDSFhnZ1dtT2xzNzZ3?=
+ =?utf-8?B?ZS9KWDN2ZWl3TlR1S2h5RlBOa2p1a2hNRDFhaUNsMVdGc2xRMWZZLzRpVjJL?=
+ =?utf-8?B?S1hES0thNmtvbjU3K3dmcDYvcFVUWEx6Z0pFVWIrdi9SdlB4SGMraFgwWFFF?=
+ =?utf-8?B?amFHSzJvNVl0TzdYWjlsR0krUkZacDltSzZ3ditIemxsWFE3bndDaG82Uk1E?=
+ =?utf-8?B?dHZnL2VLdHNJeit6b2JuL3pLVWFzck5RT0diUGo2K1pWZEg4NTBxcUJHb3hB?=
+ =?utf-8?B?QzFoWmtwTEQ5dHlwQnd5U2JtZGdqRWNGSG9PTkd4QUtQdFQyTTNtRFRWSGxY?=
+ =?utf-8?B?UXVqd2dGTTJpMlhkNEVCQUtjTnFFTm4yRFNkcllzaU00bXRXeVJSbjkzdkVv?=
+ =?utf-8?B?VkdteDlTVGJKNWZJekMyWVhjMjh1elk4MkI0djNWK3VmZlRaanBLU0dPUkNX?=
+ =?utf-8?B?aC9QWnBjMHIxN3FmYU1xcStjdTR6aFIwTzc3Q2JWa2plSUZjVWozTzRPMzlr?=
+ =?utf-8?B?bDRTNktxejNUbUl1MXc3aHZUd0paZTRKSitPNVpIc0R1OW11UkJvekwrT0Rw?=
+ =?utf-8?B?R0hkT2YveHJmc1VZTGZtMlZrOVUyY1JrOFlNd3g0OWV3MXJMYVlrRDFIL2NL?=
+ =?utf-8?B?dng5ZGJ5cy9tV3lBR2R2d3RRZUtXRHl5bHRvYUdyamwvdTRUQXZwSTA3SlVI?=
+ =?utf-8?B?ajF3OFdPd2tzRlNGRXV1ZmpzZ0gyYzVHQUplbXBWRVZ2aTNiVFRWT051R1Vx?=
+ =?utf-8?B?MHhXeGxOMEIwckNFL1RVYWdIdUFHeWFXWTYwbnpCTXBueHUvM2g5RlJEYkdh?=
+ =?utf-8?B?RXNTcCthUWNvRzVGVTBsNW1FL285amlOU2d4WnJkVDV2bTBYZXpvTGlkbnVk?=
+ =?utf-8?B?dVdkL0xoemRUck1CTzMzYXV0cXpaWHEvMFRtV0Zta090elhud05pcmhIaWx1?=
+ =?utf-8?B?bHRvOVh5VFlDUTB6QmovQVJRT1Z1ZmFSOEhHNUNXRHZNQzc5bEM1NUJzU2dR?=
+ =?utf-8?B?bzFnZTlEMVduTkVmT0l2Ync5clRJZmJWMmRRN0NKM0JqZlpGeVNsSUJub05W?=
+ =?utf-8?B?bzhBMW1id2d3QVd4MCthcFJzNTY3bUVOU1gvNFJXNE9YK0ROU09hWUF4YTZy?=
+ =?utf-8?B?Y2Rub1RNMDQrWU40Z1VuZWdVanFWWXhNVzM0UjFHclpIcnhJRHhVLzliU1da?=
+ =?utf-8?B?YnhQakt3Rml4UUhBYkduaGpvRWRsQXBDTzgvd1VudW40REVpbUExWWNCcjJO?=
+ =?utf-8?Q?Tb+B3xc2z3NJxTLWsQTIHM/tbKX3DQcpTofWdMo=3D?=
+x-microsoft-antispam-prvs: <YQXPR0101MB15428D639FA186C0B153BE22E8610@YQXPR0101MB1542.CANPRD01.PROD.OUTLOOK.COM>
+x-forefront-prvs: 0950706AC1
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(136003)(376002)(346002)(366004)(39860400002)(396003)(199004)(189003)(186003)(6506007)(83716004)(71190400001)(105586002)(6116002)(4326008)(36756003)(71200400001)(25786009)(74482002)(8936002)(476003)(2616005)(486006)(106356001)(14444005)(256004)(81166006)(81156014)(6246003)(33656002)(6486002)(6436002)(786003)(46003)(6636002)(2906002)(305945005)(14454004)(54906003)(316002)(110136005)(6512007)(8676002)(6306002)(11346002)(446003)(229853002)(99286004)(966005)(52116002)(102836004)(478600001)(386003)(68736007)(7736002)(97736004)(82746002)(76176011)(53936002)(5660300002);DIR:OUT;SFP:1102;SCL:1;SRVR:YQXPR0101MB1542;H:YQXPR0101MB0982.CANPRD01.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: usask.ca does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: L9TWaXeTfoKeEzPqRj1neUIaFGADZfJyloiVaDmzmRUTEbsEuOeNJ5vtDOps4Xcub83VKLeMvBWSKPaHa94H5m1bmeKrygDzJEAN7FXBN7R8gB/dgjnyAdY9hSITX/ak6+GjptumsFVrwAc3hFObi8POYq76u/cPdRkREeWtdndMhlyQ/ksuHm0oalV6ZYB9QeaNgMsa4syWZXwCl2gtNlVoWzy0fmUY+Ugfn4JlSwTBpHZh4KNreFz6GGShJ4FiAX5S0qPZcypt2oojCfAjKY0hjgnjzlFqeOXGVHUGnBoJynFzsaDBdetvKK0YXe/5NRx4oRojkDu12AECV1SOxYTaUovElxm2ULJlurPndMvbYkbWjThUNUF6U9pVpO8zSbwflFpggtuNF/w9tnqumN/3VU1Rutdlb8Wi+yzL/FY=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <91BDF60DE839434CB953EDCA72ECC6C1@CANPRD01.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: usask.ca
+X-MS-Exchange-CrossTenant-Network-Message-Id: cdd95df9-0ea7-4420-78a9-08d693b721a3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Feb 2019 02:33:26.8480
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-id: 24ab6cd0-487e-4722-9bc3-da9c4232776c
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQXPR0101MB1542
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 15 Feb 2019 10:59:33 -0800
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> Michal Suchanek <msuchanek@suse.de> writes:
-> 
-> > Git runs a stat loop to find a worktree name that's available and then does
-> > mkdir on the found name. Turn it to mkdir loop to avoid another invocation of
-> > worktree add finding the same free name and creating the directory first.  
-> 
-> Yeah, relying on the atomicity of mkdir(2) is much saner approach
-> than "check -- ah we can use the name -- try to create" that is race
-> prone.
-> 
-> Thanks for working on this.
-> 
-> > Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-> > ---
-> >  builtin/worktree.c | 11 ++++++-----
-> >  1 file changed, 6 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/builtin/worktree.c b/builtin/worktree.c
-> > index 3f9907fcc994..e1a2a56c03c5 100644
-> > --- a/builtin/worktree.c
-> > +++ b/builtin/worktree.c
-> > @@ -268,10 +268,9 @@ static int add_worktree(const char *path, const char *refname,
-> >  	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
-> >  	struct strbuf sb = STRBUF_INIT;
-> >  	const char *name;
-> > -	struct stat st;
-> >  	struct child_process cp = CHILD_PROCESS_INIT;
-> >  	struct argv_array child_env = ARGV_ARRAY_INIT;
-> > -	int counter = 0, len, ret;
-> > +	int counter = 1, len, ret;
-> >  	struct strbuf symref = STRBUF_INIT;
-> >  	struct commit *commit = NULL;
-> >  	int is_branch = 0;
-> > @@ -295,19 +294,21 @@ static int add_worktree(const char *path, const char *refname,
-> >  	if (safe_create_leading_directories_const(sb_repo.buf))
-> >  		die_errno(_("could not create leading directories of '%s'"),
-> >  			  sb_repo.buf);
-> > -	while (!stat(sb_repo.buf, &st)) {
-> > +
-> > +	while (mkdir(sb_repo.buf, 0777)) {
-> >  		counter++;
-> > +		if(!counter) break; /* don't loop forever */
-> >  		strbuf_setlen(&sb_repo, len);
-> >  		strbuf_addf(&sb_repo, "%d", counter);  
-> 
-> Style:
-> 
-> 		if (!counter)
-> 			break; /* don't loop forever */
-> 
-> More importantly, how long would it take to loop thru all possible
-> integers (can be simulated by making the parent directory
-> unwritable)?  Don't we want to cut off with more conservative upper
-> limit, say 1000 rounds or even 100 rounds or so?
-> 
-> Also, is the behaviour for a signed integer wrapping around due to
-> getting incremented too many times well defined?  I'd feel safer,
-> especially if you are willing to spin for 4 billion times like this
-> patch does, if you changed the counter to "unsigned int".
-
-If there are 4 billion worktrees ..
-but there is no need to spin if the failure reason is not EEXIST.
-
-> 
-> I see you changed "counter" to start from 1, but that would mean
-> that these fallback names would start with suffix 2, not 1.  Which
-> would look funny.
-> 
-> I would have expected ".1", ".2", etc.  as suffix, but the original
-> used "1", "2", etc. so I won't complain on the format, but I do find
-> it questionable to start counting from 2.
-
-Yes, there is no need to change the starting counter.
-
-> 
-> >  	}
-> > +	if (!counter)
-> > +		die_errno(_("could not create directory of '%s'"), sb_repo.buf);  
-> 
-> It would have saved reviewer's time if this die() were inside the
-> loop where you punted with "break".
-
-Yes, that's a leftover of the existing code structure.
-
-> 
-> >  	name = strrchr(sb_repo.buf, '/') + 1;
-> >  
-> >  	junk_pid = getpid();
-> >  	atexit(remove_junk);
-> >  	sigchain_push_common(remove_junk_on_signal);
-> >  
-> > -	if (mkdir(sb_repo.buf, 0777))
-> > -		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
-> >  	junk_git_dir = xstrdup(sb_repo.buf);
-> >  	is_junk = 1;  
-
-Thanks
-
-Michal
+DQoNCk9uIEZlYnJ1YXJ5IDEyLCAyMDE5IDc6NDU6MzcgYS5tLiBDU1QsIER1eSBOZ3V5ZW4gPHBj
+bG91ZHNAZ21haWwuY29tPiB3cm90ZToNCj5PbiBGcmksIEZlYiAwOCwgMjAxOSBhdCAwODozNjoy
+MVBNIC0wNjAwLCBEYW4gTWNHcmVnb3Igd3JvdGU6DQo+PiBDb21taXQgOGRkMmU4OGE5MiAoImh0
+dHA6IHN1cHBvcnQgZmlsZSBoYW5kbGVzIGZvciBIVFRQX0tFRVBfRVJST1IiLA0KPj4gMjAxOS0w
+MS0xMCkgaW50cm9kdWNlZCBhbiBpbXBsaWNpdCBhc3N1bXB0aW9uIHRoYXQgcmV3aW5kLCBmaWxl
+bm8sDQo+YW5kDQo+PiBmZmx1c2ggYXJlIGZ1bmN0aW9ucy4gQXQgbGVhc3Qgb24gRnJlZUJTRCBm
+aWxlbm8gaXMgbm90LCBhbmQgYXMgc3VjaA0KPj4gcGFzc2luZyBhIHZvaWQgKiBmYWlsZWQuDQo+
+PiANCj4+IEFsbCBzeXN0ZW1zIHRlc3RlZCAoRnJlZUJTRCBhbmQgTmV0QlNEKSB0aGF0IGRlZmlu
+ZSBmaW5lbyBhcyBhIG1hY3JvDQo+DQo+T3BlbkJTRCBvciBOZXRCU0Q/IEZyb20gdGhpcyBbMV0s
+IGl0IGxvb2tzIGxpa2UgT3BlbkJTRCBmYWlscyB3aGlsZQ0KPk5ldEJTRCBjb21waWxlcyBvayAo
+YW5kIGZhaWxzIHRvIHJ1biBzb21lIHRlc3RzKQ0KPg0KPlsxXSBodHRwczovL2dpdGxhYi5jb20v
+Z2l0LXZjcy9naXQtY2kvcGlwZWxpbmVzLzQ3MTM5NzQxL2ZhaWx1cmVzDQo+DQo+PiBhbHNvIGhh
+dmUgYSBmdW5jdGlvbiBkZWZpbmVkLiBVbmRlZmluZSB0aGUgbWFjcm8gb24gdGhlc2Ugc3lzdGVt
+cyBzbw0KPj4gdGhhdCB0aGUgZnVuY3Rpb24gaXMgdXNlZC4NCj4NCj5JIGRvbid0IHRoaW5rIHRo
+aXMgaXMgZW5vdWdoLiBBdCBsZWFzdCBmYnNkIGRlZmluZXMgdGhpcw0KPg0KPiNkZWZpbmUgICAg
+ZmlsZW5vKHApICAgICghX19pc3RocmVhZGVkID8gX19zZmlsZW5vKHApIDogKGZpbGVubykocCkp
+DQo+DQo+c28gb25lIG9mIHRoZSB0d28gZnVuY3Rpb25zIHdpbGwgYmUgdXNlZCBkZXBlbmRpbmcg
+b24gX19pc3RocmVhZGVkDQo+ZmxhZy4gWW91ciBmb3JjaW5nIHRvIHVzZSBmaWxlbm8sIGlnbm9y
+aW5nIF9fc2ZpbGVubywgaXMgdGVjaG5pY2FsbHkNCj5ub3QgY29ycmVjdC4NCj4NCj5Gb3IgdGhl
+IHJlY29yZCwgYXQgbGVhc3QgZmJzZCBhbHNvIGRlZmluZXMgZmVvZiwgZmVycm9yLCBjbGVhcmVy
+ciwNCj5nZXRjIGFuZCBwdXRjIGluIHRoZSBzYW1lIHdheS4gQnV0IGF0IGxlYXN0IEkgZG9uJ3Qg
+c2VlIGhvdyBzb21ldGhpbmcNCj5saWtlIGZlb2YoZnArKykgY291bGQgY2F1c2UgYmFkIHNpZGUg
+ZWZmZWN0cy4NCj4NCj5TbywgaG93IGFib3V0IHNvbWV0aGluZyBsaWtlIHRoaXM/IEEgdGVlbnkg
+Yml0IGxvbmdlciB0aGFuIHlvdXINCj52ZXJzaW9uLCBidXQgSSB0aGluayBpdCdzIGVhc2llciB0
+byBjb250cm9sIGxvbmcgdGVybS4NCg0KWWVzLCB0aGlzIGxvb2tzIHByZXR0eSByZWFzb25hYmxl
+IHRvIG1lIHRvby4NCj4NCj4tLSA4PCAtLQ0KPmRpZmYgLS1naXQgYS9NYWtlZmlsZSBiL01ha2Vm
+aWxlDQo+aW5kZXggMGUxM2E1YjQ2OS4uNDRjZmM2M2ZjNCAxMDA2NDQNCj4tLS0gYS9NYWtlZmls
+ZQ0KPisrKyBiL01ha2VmaWxlDQo+QEAgLTQzMyw2ICs0MzMsOCBAQCBhbGw6Og0KPiAjDQo+ICMg
+RGVmaW5lIEhBVkVfR0VUREVMSU0gaWYgeW91ciBzeXN0ZW0gaGFzIHRoZSBnZXRkZWxpbSgpIGZ1
+bmN0aW9uLg0KPiAjDQo+KyMgRGVmaW5lIEZJTEVOT19JU19BX01BQ1JPIGlzIGZpbGVubygpIGlz
+IGEgbWFjcm8sIG5vdCBhIHJlYWwNCj5mdW5jdGlvbi4NCj4rIw0KPiAjIERlZmluZSBQQUdFUl9F
+TlYgdG8gYSBTUCBzZXBhcmF0ZWQgVkFSPVZBTCBwYWlycyB0byBkZWZpbmUNCj4jIGRlZmF1bHQg
+ZW52aXJvbm1lbnQgdmFyaWFibGVzIHRvIGJlIHBhc3NlZCB3aGVuIGEgcGFnZXIgaXMgc3Bhd25l
+ZCwNCj5lLmcuDQo+ICMNCj5AQCAtMTgwMCw2ICsxODAyLDExIEBAIGlmZGVmIEhBVkVfV1BHTVBU
+Ug0KPiAJQkFTSUNfQ0ZMQUdTICs9IC1ESEFWRV9XUEdNUFRSDQo+IGVuZGlmDQo+IA0KPitpZmRl
+ZiBGSUxFTk9fSVNfQV9NQUNSTw0KPisJQ09NUEFUX0NGTEFHUyArPSAtREZJTEVOT19JU19BX01B
+Q1JPDQo+KwlDT01QQVRfT0JKUyArPSBjb21wYXQvZmlsZW5vLm8NCj4rZW5kaWYNCj4rDQo+IGlm
+ZXEgKCQoVENMVEtfUEFUSCksKQ0KPiBOT19UQ0xUSyA9IE5vVGhhbmtzDQo+IGVuZGlmDQo+ZGlm
+ZiAtLWdpdCBhL2NvbXBhdC9maWxlbm8uYyBiL2NvbXBhdC9maWxlbm8uYw0KPm5ldyBmaWxlIG1v
+ZGUgMTAwNjQ0DQo+aW5kZXggMDAwMDAwMDAwMC4uN2IxMDVmNGNkNw0KPi0tLSAvZGV2L251bGwN
+Cj4rKysgYi9jb21wYXQvZmlsZW5vLmMNCj5AQCAtMCwwICsxLDcgQEANCj4rI2RlZmluZSBDT01Q
+QVRfQ09ERQ0KPisjaW5jbHVkZSAiLi4vZ2l0LWNvbXBhdC11dGlsLmgiDQo+Kw0KPitpbnQgZ2l0
+X2ZpbGVubyhGSUxFICpzdHJlYW0pDQo+K3sNCj4rCXJldHVybiBmaWxlbm8oc3RyZWFtKTsNCj4r
+fQ0KPmRpZmYgLS1naXQgYS9jb25maWcubWFrLnVuYW1lIGIvY29uZmlnLm1hay51bmFtZQ0KPmlu
+ZGV4IDc4NmJiMmY5MTMuLjAxZjYyNjc0YTQgMTAwNjQ0DQo+LS0tIGEvY29uZmlnLm1hay51bmFt
+ZQ0KPisrKyBiL2NvbmZpZy5tYWsudW5hbWUNCj5AQCAtMjIxLDYgKzIyMSw3IEBAIGlmZXEgKCQo
+dW5hbWVfUyksRnJlZUJTRCkNCj4gCUhBVkVfQlNEX0tFUk5fUFJPQ19TWVNDVEwgPSBZZXNQbGVh
+c2UNCj4gCVBBR0VSX0VOViA9IExFU1M9RlJYIExWPS1jIE1PUkU9RlJYDQo+IAlGUkVBRF9SRUFE
+U19ESVJFQ1RPUklFUyA9IFVuZm9ydHVuYXRlbHlZZXMNCj4rCUZJTEVOT19JU19BX01BQ1JPID0g
+VW5mb3J0dW5hdGVseVllcw0KPiBlbmRpZg0KPiBpZmVxICgkKHVuYW1lX1MpLE9wZW5CU0QpDQo+
+IAlOT19TVFJDQVNFU1RSID0gWWVzUGxlYXNlDQo+QEAgLTIzNCw2ICsyMzUsNyBAQCBpZmVxICgk
+KHVuYW1lX1MpLE9wZW5CU0QpDQo+IAlIQVZFX0JTRF9LRVJOX1BST0NfU1lTQ1RMID0gWWVzUGxl
+YXNlDQo+IAlQUk9DRlNfRVhFQ1VUQUJMRV9QQVRIID0gL3Byb2MvY3VycHJvYy9maWxlDQo+IAlG
+UkVBRF9SRUFEU19ESVJFQ1RPUklFUyA9IFVuZm9ydHVuYXRlbHlZZXMNCj4rCUZJTEVOT19JU19B
+X01BQ1JPID0gVW5mb3J0dW5hdGVseVllcw0KPiBlbmRpZg0KPiBpZmVxICgkKHVuYW1lX1MpLE1p
+ckJTRCkNCj4gCU5PX1NUUkNBU0VTVFIgPSBZZXNQbGVhc2UNCj5kaWZmIC0tZ2l0IGEvZ2l0LWNv
+bXBhdC11dGlsLmggYi9naXQtY29tcGF0LXV0aWwuaA0KPmluZGV4IDI5YTE5OTAyYWEuLjY1NzM4
+MDhlYmQgMTAwNjQ0DQo+LS0tIGEvZ2l0LWNvbXBhdC11dGlsLmgNCj4rKysgYi9naXQtY29tcGF0
+LXV0aWwuaA0KPkBAIC0xMjM0LDYgKzEyMzQsMTQgQEAgc3RydWN0IHRtICpnaXRfZ210aW1lX3Io
+Y29uc3QgdGltZV90ICosIHN0cnVjdA0KPnRtICopOw0KPiAjZGVmaW5lIGdldGNfdW5sb2NrZWQo
+ZmgpIGdldGMoZmgpDQo+ICNlbmRpZg0KPiANCj4rI2lmZGVmIEZJTEVOT19JU19BX01BQ1JPDQo+
+K2ludCBnaXRfZmlsZW5vKEZJTEUgKnN0cmVhbSk7DQo+KyMgaWZuZGVmIENPTVBBVF9DT0RFDQo+
+KyMgIHVuZGVmIGZpbGVubw0KPisjICBkZWZpbmUgZmlsZW5vKHApIGdpdF9maWxlbm8ocCkNCj4r
+IyBlbmRpZg0KPisjZW5kaWYNCj4rDQo+IC8qDQo+ICAqIE91ciBjb2RlIG9mdGVuIG9wZW5zIGEg
+cGF0aCB0byBhbiBvcHRpb25hbCBmaWxlLCB0byB3b3JrIG9uIGl0cw0KPiAgKiBjb250ZW50cyB3
+aGVuIHdlIGNhbiBzdWNjZXNzZnVsbHkgb3BlbiBpdC4gIFdlIGNhbiBpZ25vcmUgYSBmYWlsdXJl
+DQo+LS0gODwgLS0NCj4NCj4tLQ0KPkR1eQ0KDQotLSANClNlbnQgZnJvbSBteSBBbmRyb2lkIGRl
+dmljZSB3aXRoIEstOSBNYWlsLiBQbGVhc2UgZXhjdXNlIG15IGJyZXZpdHkuDQo=
