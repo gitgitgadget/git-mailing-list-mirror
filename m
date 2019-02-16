@@ -2,191 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 079591F453
-	for <e@80x24.org>; Sat, 16 Feb 2019 14:44:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D8A61F453
+	for <e@80x24.org>; Sat, 16 Feb 2019 16:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728414AbfBPOia (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Feb 2019 09:38:30 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36119 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725294AbfBPOia (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Feb 2019 09:38:30 -0500
-Received: by mail-wm1-f66.google.com with SMTP id j125so12480322wmj.1
-        for <git@vger.kernel.org>; Sat, 16 Feb 2019 06:38:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=eokDVpHGs8ksJYI8sQp2BI0JHLvgcobbWqm8HsG/vsY=;
-        b=iU8c01hpHNqDamSnpobMIcNnJQ4AJxcY1HHFGK+CVpdQ8XaQxd7XPY2RvMGE3MuF12
-         JYK35sANF68A1+Wun+gR/ODoilMqrwTgHFuAFGebx0BJ676zAljgsSOUXAjBkNtz4Jjk
-         pGtgzL3T8JJY4b5WefxfOnRJ0NN3Zri0BAhZ8axUGe+WU/V0kWBWc1KXc2O3HiQ/MW5/
-         MHRnKXKaoZbmYihTZWkzdUSFP5/dbVqM95TIJ6WYA/+3cwgGtyY2MsnxJvbVsvdR30Op
-         /9uVfh5J3sOGfBxc8DTSchgJmyC89FHHt+soRHCvdzGkSGOuSkMfCPqqa8eYJnWaKYMq
-         R6lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=eokDVpHGs8ksJYI8sQp2BI0JHLvgcobbWqm8HsG/vsY=;
-        b=R/8vhwjWIzH03xDyx0s8uakpxeeauAzJAVaBvQxLJmqD8DBg2vybc8bTESMloGACwd
-         RbC3a8NDXp0odgFJUUWc3ya/DwCSh48bjWj6ePoLpgsT8LCCXJBWWkUD6/rKLe/O8X6i
-         cxTQ3MSSLKSHG8yRuvChmZ0dduB/RcoV6YNHreKKYvqh9pLTkBDD4Tyz+MA9tsWnqQQ4
-         1/UU6cp1A6AKJqToHxbHczTQosczNzQslnqnwkspNJ5BgKuHVcMksNU2Jf4DY18xzYvt
-         SE56A9zvacDwp3t9ju3e2nXncXVuS1l2ej8/UQhyiINDwJLaFV3Fm4Q1ZXqtdhl8eOYL
-         MuAQ==
-X-Gm-Message-State: AHQUAuakqJ2/Jbx0zrjcQfbZdO8mce+iAZ9l9Xp+BLJly8mr0AdQt16K
-        ydy+I6gTnZ3auh9FAQ6+o16PGBQg
-X-Google-Smtp-Source: AHgI3IYuLx8y6frceLam59lZE1n+Y2rYeR+smfmQlncRj/CTpvqAMY39k/3glJGPHy8zWoFXg42MOA==
-X-Received: by 2002:a1c:1dcd:: with SMTP id d196mr2577724wmd.146.1550327907513;
-        Sat, 16 Feb 2019 06:38:27 -0800 (PST)
-Received: from localhost ([95.149.189.205])
-        by smtp.gmail.com with ESMTPSA id m21sm14941837wmi.43.2019.02.16.06.38.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 16 Feb 2019 06:38:25 -0800 (PST)
-Date:   Sat, 16 Feb 2019 14:38:24 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSoC][PATCH 2/2] clone: use dir-iterator to avoid explicit dir
- traversal
-Message-ID: <20190216143824.GJ6085@hank.intra.tgummerer.com>
-References: <20190215154913.18800-1-matheus.bernardino@usp.br>
- <20190215154913.18800-3-matheus.bernardino@usp.br>
+        id S1731438AbfBPQvl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Feb 2019 11:51:41 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:44599 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731077AbfBPQvl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Feb 2019 11:51:41 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1GGpVev011092
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sat, 16 Feb 2019 11:51:31 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Max Kirillov'" <max@max630.net>
+Cc:     "=?iso-8859-1?Q?'SZEDER_G=E1bor'?=" <szeder.dev@gmail.com>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+        "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+Subject: RE: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results) - Good News
+Date:   Sat, 16 Feb 2019 11:51:25 -0500
+Message-ID: <001201d4c617$de429540$9ac7bfc0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190215154913.18800-3-matheus.bernardino@usp.br>
-User-Agent: Mutt/1.11.2 (2019-01-07)
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdTGF7G45MU+cyGrT/mSSjg0mHHeOg==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/15, Matheus Tavares wrote:
-> Replace usage of opendir/readdir/closedir API to traverse directories
-> recursively, at copy_or_link_directory function, by the dir-iterator
-> API.
+On February 16, 2019 3:27, Max Kirillov wrote:
+> On Fri, Feb 15, 2019 at 04:13:15PM -0500, Randall S. Becker wrote:
+> > Sadly, the fix does not change the results. In fact, it makes the hang
+> > far more likely. Subtest 6,7,8 fails here, at close()
 > 
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> ---
->  builtin/clone.c | 39 +++++++++++++++++++--------------------
->  1 file changed, 19 insertions(+), 20 deletions(-)
+> Correct, I did not expect it to help, it was for the other issue.
 > 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 2a1cc4dab9..66ae347f79 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -23,6 +23,8 @@
->  #include "transport.h"
->  #include "strbuf.h"
->  #include "dir.h"
-> +#include "dir-iterator.h"
-> +#include "iterator.h"
->  #include "sigchain.h"
->  #include "branch.h"
->  #include "remote.h"
-> @@ -413,40 +415,33 @@ static void mkdir_if_missing(const char *pathname, mode_t mode)
->  static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
->  				   const char *src_repo, int src_baselen)
->  {
-
-The src_baselen parameter is now unused, and should be removed.  Our
-codebase currently doesn't compile with -Wunused-parameter, so this is
-not something the compiler can catch at the moment unfortunately.
-However there is some work going on towards removing unused parameter
-from the codebase, so it would be nice to not make things worse here.
-
-*1*: https://public-inbox.org/git/20190214054736.GA20091@sigill.intra.peff.net
-
-> -	struct dirent *de;
-> -	struct stat buf;
->  	int src_len, dest_len;
-> -	DIR *dir;
-> -
-> -	dir = opendir(src->buf);
-> -	if (!dir)
-> -		die_errno(_("failed to open '%s'"), src->buf);
-> +	struct dir_iterator *iter;
-> +	int iter_status;
->  
->  	mkdir_if_missing(dest->buf, 0777);
->  
-> +	iter = dir_iterator_begin(src->buf);
-> +
->  	strbuf_addch(src, '/');
->  	src_len = src->len;
->  	strbuf_addch(dest, '/');
->  	dest_len = dest->len;
->  
-> -	while ((de = readdir(dir)) != NULL) {
-> +	while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
->  		strbuf_setlen(src, src_len);
-> -		strbuf_addstr(src, de->d_name);
-> +		strbuf_addstr(src, iter->relative_path);
->  		strbuf_setlen(dest, dest_len);
-> -		strbuf_addstr(dest, de->d_name);
-> -		if (stat(src->buf, &buf)) {
-> -			warning (_("failed to stat %s\n"), src->buf);
-> -			continue;
-> -		}
-
-Why was this warning removed?  I don't see a corresponding warning in
-the iterator API.  The one thing the iterator API is doing is that it
-does an lstat on the path to check if it exists.  However that does
-not follow symlinks, and ignores possible other errors such as
-permission errors.
-
-If there is a good reason to remove the warning, that would be useful
-to describe in the commit message.
-
-> -		if (S_ISDIR(buf.st_mode)) {
-> -			if (de->d_name[0] != '.')
-> -				copy_or_link_directory(src, dest,
-> -						       src_repo, src_baselen);
-> +		strbuf_addstr(dest, iter->relative_path);
-> +
-> +		if (S_ISDIR(iter->st.st_mode)) {
-> +			if (iter->basename[0] != '.')
-> +				mkdir_if_missing(dest->buf, 0777);
->  			continue;
->  		}
->  
->  		/* Files that cannot be copied bit-for-bit... */
-> -		if (!strcmp(src->buf + src_baselen, "/info/alternates")) {
-> +		if (!strcmp(iter->relative_path, "info/alternates")) {
->  			copy_alternates(src, dest, src_repo);
->  			continue;
->  		}
-> @@ -463,7 +458,11 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
->  		if (copy_file_with_time(dest->buf, src->buf, 0666))
->  			die_errno(_("failed to copy file to '%s'"), dest->buf);
->  	}
-> -	closedir(dir);
-> +
-> +	if (iter_status != ITER_DONE) {
-> +		strbuf_setlen(src, src_len);
-> +		die(_("failed to iterate over '%s'"), src->buf);
-> +	}
-
-Interestingly enough, this is not something that can currently
-happen if I read the dir-iterator code correctly.  Even though the
-dir_iterator_advance function says it can return ITER_ERROR, it never
-actually does.  The only way the iter_status can be not ITER_DONE at
-this point is if we would 'break' out of the loop.
-
-I don't think it hurts to be defensive here in case someone decides to
-break out of the loop in the future, just something odd I noticed
-while reviewing the code.
-
->  }
->  
->  static void clone_local(const char *src_repo, const char *dest_repo)
-> -- 
-> 2.20.1
+> As for the hang issue, from your another message it seems to me that perl
+> waiting correctly, there are really child process which do not exit.
 > 
+> What you could try is
+> https://public-inbox.org/git/20181124093719.10705-1-max@max630.net/
+> (I'm not sure it would not conflict by now), this would remove dependency
+> between tests. If it helps it would be very valuable information.
+
+Good news. This patch does seem to do the trick. I wonder whether this fixes
+the Azure build also.
+
+I have run the test under the following conditions:
+Run 1 (system idle): Pass
+Run 2 (system idle): Pass
+Run 3 (system idle): Pass
+Run 4 (system idle): Pass
+Run 5 (system idle): Pass
+Run 6 (system mild load, heavy file system): Pass
+Run 7 (system mild load, moderate file system load - git fetch): Pass
+Run 8 (heavy system load, heavy file system load): Pass
+Run 9 (--verbose, heavy system load, heavy file system load): Pass
+Run 10 (GIT_TRACE=true, --verbose, heavy system load, heavy file system
+load): Pass
+Run 11 (very heavy system load, very heavy file system load): Pass
+
+The current condition of the code is (the generate_zero_bytes delete was
+previously removed so can be ignored for the patch):
+
+diff --git a/t/t5562-http-backend-content-length.sh
+b/t/t5562-http-backend-content-length.sh
+index bbadde2c6e..f0f425b2cf 100755
+--- a/t/t5562-http-backend-content-length.sh
++++ b/t/t5562-http-backend-content-length.sh
+@@ -8,12 +8,12 @@ test_lazy_prereq GZIP 'gzip --version'
+ verify_http_result() {
+        # some fatal errors still produce status 200
+        # so check if there is the error message
+-       if grep 'fatal:' act.err
++       if grep 'fatal:' act.err.$test_count
+        then
+                return 1
+        fi
+
+-       if ! grep "Status" act.out >act
++       if ! grep "Status" act.out.$test_count >act
+        then
+                printf "Status: 200 OK\r\n" >act
+        fi
+@@ -33,7 +33,7 @@ test_http_env() {
+                REQUEST_METHOD=POST \
+                "$PERL_PATH" \
+                "$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl \
+-                   "$request_body" git http-backend >act.out 2>act.err
++                   "$request_body" git http-backend >act.out.$test_count
+2>act.err.$test_count
+ }
+
+ ssize_b100dots() {
+@@ -143,14 +143,14 @@ test_expect_success GZIP 'push gzipped empty' '
+
+ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
+        NOT_FIT_IN_SSIZE=$(ssize_b100dots) &&
+-       generate_zero_bytes infinity  | env \
++       env \
+                CONTENT_TYPE=application/x-git-upload-pack-request \
+                QUERY_STRING=/repo.git/git-upload-pack \
+                PATH_TRANSLATED="$PWD"/.git/git-upload-pack \
+                GIT_HTTP_EXPORT_ALL=TRUE \
+                REQUEST_METHOD=POST \
+                CONTENT_LENGTH="$NOT_FIT_IN_SSIZE" \
+-               git http-backend >/dev/null 2>err &&
++               git http-backend </dev/null >/dev/null 2>err &&
+        grep "fatal:.*CONTENT_LENGTH" err
+ '
+
+@@ -161,7 +161,7 @@ test_expect_success 'empty CONTENT_LENGTH' '
+                GIT_HTTP_EXPORT_ALL=TRUE \
+                REQUEST_METHOD=GET \
+                CONTENT_LENGTH="" \
+-               git http-backend <empty_body >act.out 2>act.err &&
++               git http-backend <empty_body >act.out.$test_count
+2>act.err.$test_count &&
+        verify_http_result "200 OK"
+ '
+
+
+
