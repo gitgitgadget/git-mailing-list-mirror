@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC2011F453
-	for <e@80x24.org>; Sun, 17 Feb 2019 10:09:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B68431F453
+	for <e@80x24.org>; Sun, 17 Feb 2019 10:09:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728155AbfBQKJh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Feb 2019 05:09:37 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:39711 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726638AbfBQKJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Feb 2019 05:09:37 -0500
-Received: by mail-pl1-f193.google.com with SMTP id 101so7264020pld.6
-        for <git@vger.kernel.org>; Sun, 17 Feb 2019 02:09:36 -0800 (PST)
+        id S1728165AbfBQKJm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Feb 2019 05:09:42 -0500
+Received: from mail-pg1-f176.google.com ([209.85.215.176]:41543 "EHLO
+        mail-pg1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726638AbfBQKJm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Feb 2019 05:09:42 -0500
+Received: by mail-pg1-f176.google.com with SMTP id m1so6988116pgq.8
+        for <git@vger.kernel.org>; Sun, 17 Feb 2019 02:09:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=jPYtTRLwux9hMzUqlJGatGdu9dXwTazzNksmbv6zUi4=;
-        b=D/Qw3HO2D49on087p2QXgeTPYh2ttFelfLyFrEHSX5lz5dnAlInzgCCyG20lUm/o6A
-         hd8ox2s92PZTmHIGaXOjhbpYnahRxuji2mRwezt3wePmAxObok3Bl8Zrv/kwP/PuX7Mi
-         SuxVY7149az+qZjnNQf6hOalxTJ2Coc7FTu5cBIYKqmUWInK1T8745WcdRpm6d3m1gg4
-         fGhsL3mtLKOfL4VpmKq7fHt9kxmDW2riYZyDEy/UTdai3QD/Q/v2E5ePUIKcdRY9sjQW
-         HZHUFlOvQBkoD6oRHxKv21P+tuB1YLrwlQWS/DByIvoJWodFNzlUl6z7yFgCte1RPWxU
-         Mc3A==
+        bh=uOGJAjALw4ShWpymMwXQoi649DtE3cJee05xIVCBrl0=;
+        b=FF9NkC5Xum+nP5lsoGS0ZTagYv7fHEzfsUjr75aKZFm6SNMdYeCzNVrxiOSoho2XFB
+         AKe9/r/eHj/3KJcBUe2YoVoVNykKbNLVldjB2agyu5wTtVn8CTt+SdQllhsybdXFDOX6
+         lHmSNC4BX/rwz0dDADcyAuAMtveGiC/totGc5PfurRlPD/v+Z8GCYWpjpKrZTw4OtfOm
+         NRseBACFueATw4ax8UxAGybnzVbj59XFiJokUqme34jXbNJcTv8yH8ZWQkOlVXlNHHAd
+         XcuoXJNTLLMDN+WG6Tp7++Wq6i8Uf0nrVm8vmXmQqJpn8Lg/qreQaFISVPblvhirQEs9
+         uAZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jPYtTRLwux9hMzUqlJGatGdu9dXwTazzNksmbv6zUi4=;
-        b=UdkaSm7guMKqK536mItHPhd8EKQ2YL02lSY/5gTVf7eWbn/UsV1Vxip8MQGl4XH5AZ
-         ZIImovS4kcV+e7ImHIaj8rk09YpaBnbUfhHdFfoOwbwlMlYXbbtQzG16Ma7Y0bSc/gnt
-         bgmPtLLQbv5vv5bzZoUMjGt+RU1TslzUSLHPiVKCvMEigArTRPX9ADLM7P7ZdLy1+VxQ
-         8r409UDx0POopCbfa3ZbkHPXKo9oUyWpjDvGVQWG+tB2A/N5u4zhOnITrEHtXCbTm6FM
-         j6YwFVMI+hx6srk1bb1Diino3HP4jG6LUyUAwHqK/+JjxntMLJ1wqbtx325Pz86Mk+jm
-         xPMg==
-X-Gm-Message-State: AHQUAua0SF8qYWX++rjdbEE1kqTqtGP6xprtvbW1q5NpcUW3K6Zq4ZfO
-        wRWTqcVIdGaqgAiJ5QOrm0pmH0Kj
-X-Google-Smtp-Source: AHgI3IamyUG8+JlF6n28H9oQ6SYPHB1INxpjLE2CdxbZF+ya+CbXWf1Iz3P0PPih+lOgkIzjgMYkbg==
-X-Received: by 2002:a17:902:724c:: with SMTP id c12mr9682514pll.110.1550398176444;
-        Sun, 17 Feb 2019 02:09:36 -0800 (PST)
+        bh=uOGJAjALw4ShWpymMwXQoi649DtE3cJee05xIVCBrl0=;
+        b=PTeeOFSkLNXQOIoBcfxKO1YanN8wAewXVcIesOtidSaNGKoD9ygDRoWD5xlKaN9wqy
+         W2J6/IAGk1coyjeO9zLlEg4mBGpjJQ9u4aMyshzooH+PggHbnmsQVMI12NobjdEtw3nD
+         AUmXRzlnN35SvV6Z/L0XmaKoPBqj9Q3ykhcz3baNnNo0IMpanbKVjNHSQkF19UW+bZ6Q
+         9Z+msY0960ufL/xqR4gAOUxRgQ2bCqo4lQFYjhNl+d92NQwqdPDSrgynR/pHta/bzn9l
+         lSosq0+1fsxrdZOEeGkAdwgw4L6t/uq6jOEivZ4gNueMQBvLxTjwzJiNNfxKMvLlfPRt
+         JBSg==
+X-Gm-Message-State: AHQUAuY8uLJ8YaE2EdO5naV6uJcQbs12+Gd4+u0xxhb8iC/+l3pWeCCW
+        g9lm+d6AOBxTD8YC08Yb1vzCS8Yn
+X-Google-Smtp-Source: AHgI3IZ6bISTSu6aWsEaamoVk2L3kNAZK8Q2eWYm8+oFzXprxjEoPyYfLRVsouvsqOsbJt9jrDSx0w==
+X-Received: by 2002:a62:2ad1:: with SMTP id q200mr1029568pfq.34.1550398180870;
+        Sun, 17 Feb 2019 02:09:40 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id b80sm4720834pfc.20.2019.02.17.02.09.34
+        by smtp.gmail.com with ESMTPSA id f13sm14375536pfa.132.2019.02.17.02.09.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Feb 2019 02:09:35 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sun, 17 Feb 2019 17:09:32 +0700
+        Sun, 17 Feb 2019 02:09:40 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sun, 17 Feb 2019 17:09:36 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 04/31] refs.c: remove the_repo from substitute_branch_name()
-Date:   Sun, 17 Feb 2019 17:08:46 +0700
-Message-Id: <20190217100913.4127-5-pclouds@gmail.com>
+Subject: [PATCH 05/31] refs.c: remove the_repo from expand_ref()
+Date:   Sun, 17 Feb 2019 17:08:47 +0700
+Message-Id: <20190217100913.4127-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc0.328.g0e39304f8d
 In-Reply-To: <20190217100913.4127-1-pclouds@gmail.com>
 References: <20190217100913.4127-1-pclouds@gmail.com>
@@ -71,90 +71,69 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache.h     | 8 ++++++--
- refs.c      | 9 +++++----
- sha1-name.c | 8 ++++++--
- 3 files changed, 17 insertions(+), 8 deletions(-)
+ refs.c        | 10 ++++++----
+ refs.h        |  2 +-
+ upload-pack.c |  2 +-
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 27fe635f62..aa52850d84 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1442,8 +1442,12 @@ extern int parse_oid_hex(const char *hex, struct object_id *oid, const char **en
- #define INTERPRET_BRANCH_LOCAL (1<<0)
- #define INTERPRET_BRANCH_REMOTE (1<<1)
- #define INTERPRET_BRANCH_HEAD (1<<2)
--extern int interpret_branch_name(const char *str, int len, struct strbuf *,
--				 unsigned allowed);
-+int repo_interpret_branch_name(struct repository *r,
-+			       const char *str, int len,
-+			       struct strbuf *buf,
-+			       unsigned allowed);
-+#define interpret_branch_name(str, len, buf, allowed) \
-+	repo_interpret_branch_name(the_repository, str, len, buf, allowed)
- extern int get_oid_mb(const char *str, struct object_id *oid);
- 
- extern int validate_headref(const char *ref);
 diff --git a/refs.c b/refs.c
-index 3dde824aab..44df049796 100644
+index 44df049796..1f5864aa36 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -539,10 +539,11 @@ void expand_ref_prefix(struct argv_array *prefixes, const char *prefix)
-  * later free()ing) if the string passed in is a magic short-hand form
-  * to name a branch.
-  */
--static char *substitute_branch_name(const char **string, int *len)
-+static char *substitute_branch_name(struct repository *r,
-+				    const char **string, int *len)
- {
- 	struct strbuf buf = STRBUF_INIT;
--	int ret = interpret_branch_name(*string, *len, &buf, 0);
-+	int ret = repo_interpret_branch_name(r, *string, *len, &buf, 0);
- 
- 	if (ret == *len) {
- 		size_t size;
-@@ -556,7 +557,7 @@ static char *substitute_branch_name(const char **string, int *len)
- 
+@@ -558,12 +558,13 @@ static char *substitute_branch_name(struct repository *r,
  int dwim_ref(const char *str, int len, struct object_id *oid, char **ref)
  {
--	char *last_branch = substitute_branch_name(&str, &len);
-+	char *last_branch = substitute_branch_name(the_repository, &str, &len);
- 	int   refs_found  = expand_ref(str, len, oid, ref);
+ 	char *last_branch = substitute_branch_name(the_repository, &str, &len);
+-	int   refs_found  = expand_ref(str, len, oid, ref);
++	int   refs_found  = expand_ref(the_repository, str, len, oid, ref);
  	free(last_branch);
  	return refs_found;
-@@ -596,7 +597,7 @@ int expand_ref(const char *str, int len, struct object_id *oid, char **ref)
- 
- int dwim_log(const char *str, int len, struct object_id *oid, char **log)
- {
--	char *last_branch = substitute_branch_name(&str, &len);
-+	char *last_branch = substitute_branch_name(the_repository, &str, &len);
- 	const char **p;
- 	int logs_found = 0;
- 	struct strbuf path = STRBUF_INIT;
-diff --git a/sha1-name.c b/sha1-name.c
-index 6dda2c16df..d535bb82f7 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1427,13 +1427,17 @@ static int interpret_branch_mark(const char *name, int namelen,
- 	return len + at;
  }
  
--int interpret_branch_name(const char *name, int namelen, struct strbuf *buf,
--			  unsigned allowed)
-+int repo_interpret_branch_name(struct repository *r,
-+			       const char *name, int namelen,
-+			       struct strbuf *buf,
-+			       unsigned allowed)
+-int expand_ref(const char *str, int len, struct object_id *oid, char **ref)
++int expand_ref(struct repository *repo, const char *str, int len,
++	       struct object_id *oid, char **ref)
  {
- 	char *at;
- 	const char *start;
- 	int len;
+ 	const char **p, *r;
+ 	int refs_found = 0;
+@@ -578,8 +579,9 @@ int expand_ref(const char *str, int len, struct object_id *oid, char **ref)
+ 		this_result = refs_found ? &oid_from_ref : oid;
+ 		strbuf_reset(&fullref);
+ 		strbuf_addf(&fullref, *p, len, str);
+-		r = resolve_ref_unsafe(fullref.buf, RESOLVE_REF_READING,
+-				       this_result, &flag);
++		r = refs_resolve_ref_unsafe(get_main_ref_store(repo),
++					    fullref.buf, RESOLVE_REF_READING,
++					    this_result, &flag);
+ 		if (r) {
+ 			if (!refs_found++)
+ 				*ref = xstrdup(r);
+diff --git a/refs.h b/refs.h
+index 5627570241..b630d5bde7 100644
+--- a/refs.h
++++ b/refs.h
+@@ -148,7 +148,7 @@ int refname_match(const char *abbrev_name, const char *full_name);
+ struct argv_array;
+ void expand_ref_prefix(struct argv_array *prefixes, const char *prefix);
  
-+	if (r != the_repository)
-+		BUG("interpret_branch_name() does not really use 'r' yet");
- 	if (!namelen)
- 		namelen = strlen(name);
+-int expand_ref(const char *str, int len, struct object_id *oid, char **ref);
++int expand_ref(struct repository *r, const char *str, int len, struct object_id *oid, char **ref);
+ int dwim_ref(const char *str, int len, struct object_id *oid, char **ref);
+ int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
  
+diff --git a/upload-pack.c b/upload-pack.c
+index d098ef5982..56505d60c3 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -834,7 +834,7 @@ static int process_deepen_not(const char *line, struct string_list *deepen_not,
+ 	if (skip_prefix(line, "deepen-not ", &arg)) {
+ 		char *ref = NULL;
+ 		struct object_id oid;
+-		if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
++		if (expand_ref(the_repository, arg, strlen(arg), &oid, &ref) != 1)
+ 			die("git upload-pack: ambiguous deepen-not: %s", line);
+ 		string_list_append(deepen_not, ref);
+ 		free(ref);
 -- 
 2.21.0.rc0.328.g0e39304f8d
 
