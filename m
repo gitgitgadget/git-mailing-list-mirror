@@ -2,74 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7716D1F453
-	for <e@80x24.org>; Sun, 17 Feb 2019 07:14:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0725F1F453
+	for <e@80x24.org>; Sun, 17 Feb 2019 09:32:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726565AbfBQHO1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Feb 2019 02:14:27 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:41142 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbfBQHO0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Feb 2019 02:14:26 -0500
-Received: by mail-qk1-f196.google.com with SMTP id u188so8295849qkh.8
-        for <git@vger.kernel.org>; Sat, 16 Feb 2019 23:14:26 -0800 (PST)
+        id S1727130AbfBQJcY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Feb 2019 04:32:24 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:50684 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725769AbfBQJcY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Feb 2019 04:32:24 -0500
+Received: by mail-it1-f194.google.com with SMTP id m137so4638837ita.0
+        for <git@vger.kernel.org>; Sun, 17 Feb 2019 01:32:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=DlEzlLAMdUb5vmMUGAm7bk/27hNR3nqCJmPPvouRZL0=;
+        b=g9vgNgulkIjLRkMkgRV7d9XHq/eboVNFroe/5LVdUqj0IH1XLtT7w9JMfcoWlF3/Nf
+         rwQ/9V8OAmsB0OPYRIio5PiRCbn2LGBokJYujwVbuBsuAthJjdJ2Bih4D6MP1pYAhtql
+         AIa48Jm7Ljb3V6N7Oibrewd8n7u+7e4EXk7J2lFHnEEsmNh6Xj5oMVqzP4iyJ1zEP3Vy
+         /BGTK2pTz0UDkbdm/NoYipK0PNNJuYekSbfnoX0v8bH/Xxg5eENi1IK55pqFRw2E6tFO
+         uuB9eIB+92VsnlwfIfdGeI9k9Hi2zUgT6WAiewa3AlY7Zr6DtrQEqGzIuxrZwSevoRg/
+         pYEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gtkOL1f/i017XH9kLQc15kiahojxgRcR3zcJKk3/Tug=;
-        b=A/tvbFRTnR2PJkeOpNZ26z1Fl7zecutJmkBOMGq3ysLVY50h4rzC16QyQ9bza9geOv
-         bUxoVQd6/tfCN6xrskz5PoOqqOWyadYuVQu9h2CoV7gAl1II7zhV5vN770NYo4Bz+3aL
-         +w0R/apUb8G4HU7rKtKlz2srQRO3jDcVqPlxqJaene+WS7ODfDAa9IrXCTN9ILiQFzNC
-         lye6CR7miBTdrNI7jOwL3NqhmX9AmypWtGC1nunax1+CsBpzmnW/j9UCxjceTwCZEpiA
-         f4tiJFgcSSYpahvOYAVvEHmcYs8o8FyKywQw2yXJJ+psB/38bLZx13hgsUZq3/ZPE5ff
-         3O4A==
-X-Gm-Message-State: AHQUAubLpRKnUFePdhv9Gp6MtrPfw0XvkRrKmKeG2yiahbye9U5hP4bE
-        RVUPI9YCnrm0qjgcaHfsZXg4HF2lvqfIwrkHcQD8+nYu
-X-Google-Smtp-Source: AHgI3IZ3TZ+Sg0456n1EuVsbqkcnRgQg2UQrW8U+y0NQspVlGd9e7rmTAxzpHMzLrnkUwnov9ac6iKNEUZVl7AWr2a8=
-X-Received: by 2002:a37:a4c2:: with SMTP id n185mr12494543qke.152.1550387665658;
- Sat, 16 Feb 2019 23:14:25 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=DlEzlLAMdUb5vmMUGAm7bk/27hNR3nqCJmPPvouRZL0=;
+        b=T0eo1ADSLfAqa1PIntefZ5yXMpRfwqDXb5qtkSyFGuzseuZMHbLXLnTevpHImAzdR/
+         r3DJDlTmaW/nviAABTkwZofhqcrVtN1fiJGdeqF4530lPtncLuNWySqNTbweqOe1SIR6
+         dxcVtb8rhxWoBsL3GKIGQ+/bKfNF3RPGeJHYAisSEESudlT06Ltv4KjP4WgNU26i9nIG
+         v32R95qUvmJ/ahBUZme2A9khutg3SPw5OmtKioKe2Q/TY5QJxLoOvlM8UDWYSrD871Wc
+         Y6gNx0GLGctHufgMHuYxT1fbtlccUqKGJj/ogd/lw8FVO4qxaQPNQgdti0Nzl6Jhzkk+
+         xtMQ==
+X-Gm-Message-State: AHQUAuac3ol3m747AlNxiB6I+ILUAykNB0gBuKjyebtM40P9KUId358S
+        mLhpV23mAtJdq+yPlTECU9gTkJ3bO6xzA/wuBrc=
+X-Google-Smtp-Source: AHgI3IZ60wp8cMCRrT3E8jXGWlaKfbbct2cXsYUPeabHXzjkbBlKTVYBtrPiX6wanHlRwVJGRC7Ilcb+mKYwlqdtdbA=
+X-Received: by 2002:a5e:8416:: with SMTP id h22mr9861749ioj.118.1550395943203;
+ Sun, 17 Feb 2019 01:32:23 -0800 (PST)
 MIME-Version: 1.0
-References: <429046b2c9f02c5e4f0af88db51f6c0c099f08a9.1550254374.git.msuchanek@suse.de>
- <dd42ab7054077c7d29ad62e7481c00ab5c1bf864.1550254374.git.msuchanek@suse.de>
-In-Reply-To: <dd42ab7054077c7d29ad62e7481c00ab5c1bf864.1550254374.git.msuchanek@suse.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 17 Feb 2019 02:14:14 -0500
-Message-ID: <CAPig+cTS0MNvwx67ZVbYUvi9bA63KWnNnSmWdFjLuqc_SNAy8A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] setup: don't fail if commondir is deleted.
-To:     Michal Suchanek <msuchanek@suse.de>
-Cc:     Git List <git@vger.kernel.org>
+References: <20190216114938.18843-1-pclouds@gmail.com> <20190216114938.18843-2-pclouds@gmail.com>
+ <87wolzo7a1.fsf@evledraar.gmail.com>
+In-Reply-To: <87wolzo7a1.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 17 Feb 2019 16:31:56 +0700
+Message-ID: <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] Introduce "precious" file concept
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Per Lundberg <per.lundberg@hibox.tv>,
+        Steffen Jost <jost@tcs.ifi.lmu.de>,
+        Joshua Jensen <jjensen@workspacewhiz.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Clemens Buchacher <drizzd@gmx.net>,
+        Holger Hellmuth <hellmuth@ira.uka.de>,
+        Kevin Ballard <kevin@sb.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 15, 2019 at 1:16 PM Michal Suchanek <msuchanek@suse.de> wrote:
-> When adding wotktrees git can die in get_common_dir_noenv while
-> examining existing worktrees because the commondir file does not exist.
-> Handle ENOENT so adding a worktree does not fail because of incompletely
-> set-up other worktree.
+On Sun, Feb 17, 2019 at 2:36 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-> ---
-> diff --git a/setup.c b/setup.c
-> @@ -274,22 +274,25 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
-> +               if (strbuf_read_file(&data, path.buf, 0) <= 0) {
-> +                       if (errno != ENOENT)
-> +                               die_errno(_("failed to read %s"), path.buf);
+>
+> On Sat, Feb 16 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+> [Re-CC some people involved the last time around]
+>
+> > A new attribute "precious" is added to indicate that certain files
+> > have valuable content and should not be easily discarded even if they
+> > are ignored or untracked.
+> >
+> > So far there are one part of Git that are made aware of precious
+> > files: "git clean" will leave precious files alone.
+>
+> Thanks for bringing this up again. There were also some patches recently
+> to save away clobbered files, do you/anyone else have any end goal in
+> mind here that combines this & that, or some other thing I may not have
+> kept up with?
 
-Documentation for strbuf_read_file() in strbuf.h does not state that
-'errno' has any meaningful value when this function fails, however,
-the actual implementation in strbuf.c is careful to preserve 'errno'
-when something goes wrong. Therefore, it is safe to consult 'errno'
-here. Fine.
+I assume you mean the clobbering untracked files by merge/checkout.
+Those files will be backed up [1] if backup-log is implemented. Even
+files deleted by "git clean" could be saved but that might go a little
+too far.
 
-It might be a good idea to fix the documentation of strbuf_read_file()
-to mention 'errno' explicitly, as a preparatory patch of this series
-(though not at all a requirement when re-rolling; just a suggestion to
-assist reviewers).
+[1] https://public-inbox.org/git/20181209104419.12639-20-pclouds@gmail.com/
+
+> My commentary on this whole thing is basically a repeat of what I said
+> in https://public-inbox.org/git/87wop0yvxv.fsf@evledraar.gmail.com/
+>
+> I.e. we have a definite problem here somewhere, and there is some
+> solution, but this patch feels a bit like navigating that maze in the
+> dark without a map.
+>
+> We had users report that the likes of "pull" were eating their data, but
+> now with this iteration of "precious" only impacting "clean" the only
+> problem anyone with the current semantics is still left unaddressed. My
+> memory (I may be wrong) is that "clean" was just brought up (by you?) as
+> a "what about this other related case?" in that whole discussion.
+>
+> So as noted in the E-Mail linked above I think the first step should be
+> to enumerate/document/test the cases where we're now eating data
+> implicitly, and discuss how that relates to the semantics we desired
+> when the data-eating behavior was first introduced (as noted in E-Mails
+> linked from the above, my own preliminary digging seems to reveal there
+> isn't much of a relationship between the two).
+>
+> Only when we have that list of XYZ cases we're supporting now, and can
+> see that XYZ is so important to maintain backwards compatibility for
+> that we can't change it should way say "we eat your data by default
+> because XYZ is so useful/backcompat, set 'precious' ...".
+>
+> But right now we don't even have the list of XYZ or tests for them (as
+> my RFC "garbage" attribute patch revealed). So this whole thing still
+> feels like jumping three steps ahead to me in terms of addressing *that*
+> issue, but perhaps you have some orthogonal use-case in mind for this?
+
+I'm not addressing the accidentally losing data in this patch. My
+answer for that would still be backup-log, if it ever gets merged. But
+this patch is about _known_ files that I want to keep when doing "git
+clean", no more.
+--=20
+Duy
