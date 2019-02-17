@@ -2,134 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0725F1F453
-	for <e@80x24.org>; Sun, 17 Feb 2019 09:32:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 749141F453
+	for <e@80x24.org>; Sun, 17 Feb 2019 10:09:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727130AbfBQJcY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Feb 2019 04:32:24 -0500
-Received: from mail-it1-f194.google.com ([209.85.166.194]:50684 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725769AbfBQJcY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Feb 2019 04:32:24 -0500
-Received: by mail-it1-f194.google.com with SMTP id m137so4638837ita.0
-        for <git@vger.kernel.org>; Sun, 17 Feb 2019 01:32:23 -0800 (PST)
+        id S1728117AbfBQKJU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Feb 2019 05:09:20 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:41504 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726638AbfBQKJU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Feb 2019 05:09:20 -0500
+Received: by mail-pf1-f195.google.com with SMTP id b7so7069801pfi.8
+        for <git@vger.kernel.org>; Sun, 17 Feb 2019 02:09:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=DlEzlLAMdUb5vmMUGAm7bk/27hNR3nqCJmPPvouRZL0=;
-        b=g9vgNgulkIjLRkMkgRV7d9XHq/eboVNFroe/5LVdUqj0IH1XLtT7w9JMfcoWlF3/Nf
-         rwQ/9V8OAmsB0OPYRIio5PiRCbn2LGBokJYujwVbuBsuAthJjdJ2Bih4D6MP1pYAhtql
-         AIa48Jm7Ljb3V6N7Oibrewd8n7u+7e4EXk7J2lFHnEEsmNh6Xj5oMVqzP4iyJ1zEP3Vy
-         /BGTK2pTz0UDkbdm/NoYipK0PNNJuYekSbfnoX0v8bH/Xxg5eENi1IK55pqFRw2E6tFO
-         uuB9eIB+92VsnlwfIfdGeI9k9Hi2zUgT6WAiewa3AlY7Zr6DtrQEqGzIuxrZwSevoRg/
-         pYEA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4fIyGnUVfLLlETPhu4SUSwFuztaClDKWE+1izuuFin0=;
+        b=gLqHD2md4W/5+iOfKqtMYAAtx4+Rb5Sb4dU2vnN7CCkcJNpASBkqHZp87P3Dfq4y3k
+         HyP0idZVH7CwPuBJM/KT3u5zltgrgGbq5EtJUAHLBg/P7kIcFcdC4Lw1infU0sodAvNb
+         3idkhV65EkGqVm530WVU+b1NniU/SyVzWEPvn+B0P9pwwwTObGv++4zdGxs2jtm5yTFB
+         iRhHda36u4Obgx0xuwoMMebR9tY/JV12uFQ/AOUKnycmDjn/b4walmEawypSPd2VIvfP
+         PCYnparNerwL3PseTpEPB8Gamcbj6cmUV48rq0Rx4aLxBYj2+Ufs0j4Pm+v40P4CZdRV
+         hpyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DlEzlLAMdUb5vmMUGAm7bk/27hNR3nqCJmPPvouRZL0=;
-        b=T0eo1ADSLfAqa1PIntefZ5yXMpRfwqDXb5qtkSyFGuzseuZMHbLXLnTevpHImAzdR/
-         r3DJDlTmaW/nviAABTkwZofhqcrVtN1fiJGdeqF4530lPtncLuNWySqNTbweqOe1SIR6
-         dxcVtb8rhxWoBsL3GKIGQ+/bKfNF3RPGeJHYAisSEESudlT06Ltv4KjP4WgNU26i9nIG
-         v32R95qUvmJ/ahBUZme2A9khutg3SPw5OmtKioKe2Q/TY5QJxLoOvlM8UDWYSrD871Wc
-         Y6gNx0GLGctHufgMHuYxT1fbtlccUqKGJj/ogd/lw8FVO4qxaQPNQgdti0Nzl6Jhzkk+
-         xtMQ==
-X-Gm-Message-State: AHQUAuac3ol3m747AlNxiB6I+ILUAykNB0gBuKjyebtM40P9KUId358S
-        mLhpV23mAtJdq+yPlTECU9gTkJ3bO6xzA/wuBrc=
-X-Google-Smtp-Source: AHgI3IZ60wp8cMCRrT3E8jXGWlaKfbbct2cXsYUPeabHXzjkbBlKTVYBtrPiX6wanHlRwVJGRC7Ilcb+mKYwlqdtdbA=
-X-Received: by 2002:a5e:8416:: with SMTP id h22mr9861749ioj.118.1550395943203;
- Sun, 17 Feb 2019 01:32:23 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4fIyGnUVfLLlETPhu4SUSwFuztaClDKWE+1izuuFin0=;
+        b=IB2HxPGecvw46wgPxsE8hIGXWTmCX0uN6XnlqCREWp7MIDmGNxihxxlsoPqcb6c8rm
+         8todyD0Go9HEYKdt1yZmEmR0OdBjhIF3feNY+qST9xIL9ExAT1KDM/uobt/kG6J2RmkR
+         r7mthJ464R7wX2Qe0AbeTbiw7XvTQG97ADeHuCVU7N7VU+Rg8pEQ50JJNPnM299SZOFw
+         M+0q0JuCEu98CUhCFm0PCYJdJ0cK74pTeDaH+wgXEAWrFzeCB4UofYN9D7JBX5wXec9e
+         UAXffDWiugu06ZGwBLcTPTdeKdshJAHQEeJq4L4kLa9Z+fkO8FPuaEI0VWYbvMk0s7wH
+         P4vQ==
+X-Gm-Message-State: AHQUAuYwn9x3LgaHCenx5IWUZsz7mPeWv/5w554dujX1IyuDrGR66h7h
+        LnAYm7lyBquJEEn9S0i6WuXaqxts
+X-Google-Smtp-Source: AHgI3IYrscQeHNwQGaPU7NBenFooA5CfThfYrLqp8e3iFUEDGPOQc3xrAmACDQr9VTKUX/hR2pyekg==
+X-Received: by 2002:a65:4383:: with SMTP id m3mr12911737pgp.96.1550398158980;
+        Sun, 17 Feb 2019 02:09:18 -0800 (PST)
+Received: from ash ([115.72.21.220])
+        by smtp.gmail.com with ESMTPSA id n6sm11388122pgv.86.2019.02.17.02.09.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 17 Feb 2019 02:09:17 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sun, 17 Feb 2019 17:09:13 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 00/31] Kill the_repository in sha1-name.c
+Date:   Sun, 17 Feb 2019 17:08:42 +0700
+Message-Id: <20190217100913.4127-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc0.328.g0e39304f8d
 MIME-Version: 1.0
-References: <20190216114938.18843-1-pclouds@gmail.com> <20190216114938.18843-2-pclouds@gmail.com>
- <87wolzo7a1.fsf@evledraar.gmail.com>
-In-Reply-To: <87wolzo7a1.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 17 Feb 2019 16:31:56 +0700
-Message-ID: <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Introduce "precious" file concept
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        Holger Hellmuth <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 17, 2019 at 2:36 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Sat, Feb 16 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
-> [Re-CC some people involved the last time around]
->
-> > A new attribute "precious" is added to indicate that certain files
-> > have valuable content and should not be easily discarded even if they
-> > are ignored or untracked.
-> >
-> > So far there are one part of Git that are made aware of precious
-> > files: "git clean" will leave precious files alone.
->
-> Thanks for bringing this up again. There were also some patches recently
-> to save away clobbered files, do you/anyone else have any end goal in
-> mind here that combines this & that, or some other thing I may not have
-> kept up with?
+This whole series is to fix a known issue from
+ao/submodule-wo-gitmodules-checked-out. Commit 76e9bdc437 (submodule:
+support reading .gitmodules when it's not in the working tree -
+2018-10-25) makes "git grep --recurse-submodules" print
 
-I assume you mean the clobbering untracked files by merge/checkout.
-Those files will be backed up [1] if backup-log is implemented. Even
-files deleted by "git clean" could be saved but that might go a little
-too far.
+    warning: nested submodules ... not supported yet
 
-[1] https://public-inbox.org/git/20181209104419.12639-20-pclouds@gmail.com/
+one line per submodule. And it's really annoying when a repo has lots
+of (non-nested) submodules.
 
-> My commentary on this whole thing is basically a repeat of what I said
-> in https://public-inbox.org/git/87wop0yvxv.fsf@evledraar.gmail.com/
->
-> I.e. we have a definite problem here somewhere, and there is some
-> solution, but this patch feels a bit like navigating that maze in the
-> dark without a map.
->
-> We had users report that the likes of "pull" were eating their data, but
-> now with this iteration of "precious" only impacting "clean" the only
-> problem anyone with the current semantics is still left unaddressed. My
-> memory (I may be wrong) is that "clean" was just brought up (by you?) as
-> a "what about this other related case?" in that whole discussion.
->
-> So as noted in the E-Mail linked above I think the first step should be
-> to enumerate/document/test the cases where we're now eating data
-> implicitly, and discuss how that relates to the semantics we desired
-> when the data-eating behavior was first introduced (as noted in E-Mails
-> linked from the above, my own preliminary digging seems to reveal there
-> isn't much of a relationship between the two).
->
-> Only when we have that list of XYZ cases we're supporting now, and can
-> see that XYZ is so important to maintain backwards compatibility for
-> that we can't change it should way say "we eat your data by default
-> because XYZ is so useful/backcompat, set 'precious' ...".
->
-> But right now we don't even have the list of XYZ or tests for them (as
-> my RFC "garbage" attribute patch revealed). So this whole thing still
-> feels like jumping three steps ahead to me in terms of addressing *that*
-> issue, but perhaps you have some orthogonal use-case in mind for this?
+Fixing it requires resolving an extended SHA-1 syntax from a separate
+repository. Which basically means the whole sha1-name.c has to be
+aware of 'struct repository' (and a bit more from refs.c as well).
 
-I'm not addressing the accidentally losing data in this patch. My
-answer for that would still be backup-log, if it ever gets merged. But
-this patch is about _known_ files that I want to keep when doing "git
-clean", no more.
---=20
-Duy
+Technically merge-recursive.c, tree-walk.c and config.c have to take
+'struct repository *' too, but I reduce the scope a bit since it's
+already long.
+
+The main fix is 28/31. The rest is just converting code to use 'struct
+repository *'. Patches after 28/31 are technically not needed, but
+since I have converted most of sha1-name.c, might as well convert the
+rest.
+
+There is a new function get_oidf() from another series on 'pu', which
+can't be converted right now of course. But it could be fixed easily
+later. It also causes a conflict in cache.h but resolving is straight
+forward.
+
+Nguyễn Thái Ngọc Duy (31):
+  packfile.c: add repo_approximate_object_count()
+  refs.c: add refs_ref_exists()
+  refs.c: add refs_shorten_unambiguous_ref()
+  refs.c: remove the_repo from substitute_branch_name()
+  refs.c: remove the_repo from expand_ref()
+  refs.c: add repo_dwim_ref()
+  refs.c: add repo_dwim_log()
+  refs.c: remove the_repo from read_ref_at()
+  commit.c: add repo_get_commit_tree()
+  sha1-name.c: remove the_repo from sort_ambiguous()
+  sha1-name.c: remove the_repo from find_abbrev_len_packed()
+  sha1-name.c: add repo_find_unique_abbrev_r()
+  sha1-name.c: store and use repo in struct disambiguate_state
+  sha1-name.c: add repo_for_each_abbrev()
+  sha1-name.c: remove the_repo from get_short_oid()
+  sha1-name.c: remove the_repo from interpret_nth_prior_checkout()
+  sha1-name.c: remove the_repo from interpret_branch_mark()
+  sha1-name.c: add repo_interpret_branch_name()
+  sha1-name.c: remove the_repo from get_oid_oneline()
+  sha1-name.c: remove the_repo from get_describe_name()
+  sha1-name.c: remove the_repo from get_oid_basic()
+  sha1-name.c: remove the_repo from get_oid_1()
+  sha1-name.c: remove the_repo from handle_one_ref()
+  sha1-name.c: remove the_repo from diagnose_invalid_index_path()
+  sha1-name.c: remove the_repo from resolve_relative_path()
+  sha1-name.c: remove the_repo from get_oid_with_context_1()
+  sha1-name.c: add repo_get_oid()
+  submodule-config.c: use repo_get_oid for reading .gitmodules
+  sha1-name.c: remove the_repo from maybe_die_on_misspelt_object_name
+  sha1-name.c: remove the_repo from other get_oid_*
+  sha1-name.c: remove the_repo from get_oid_mb()
+
+ builtin/show-branch.c              |   6 +-
+ cache.h                            |  50 ++--
+ commit.c                           |   5 +-
+ commit.h                           |   3 +-
+ dir.c                              |   8 +
+ dir.h                              |   4 +-
+ packfile.c                         |  14 +-
+ packfile.h                         |   3 +-
+ refs.c                             |  71 ++++--
+ refs.h                             |   9 +-
+ setup.c                            |   7 +-
+ sha1-name.c                        | 388 ++++++++++++++++++-----------
+ submodule-config.c                 |  20 +-
+ t/t7814-grep-recurse-submodules.sh |   6 +-
+ upload-pack.c                      |   2 +-
+ 15 files changed, 371 insertions(+), 225 deletions(-)
+
+-- 
+2.21.0.rc0.328.g0e39304f8d
+
