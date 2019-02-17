@@ -2,123 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B60931F453
-	for <e@80x24.org>; Sat, 16 Feb 2019 19:37:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F00E1F453
+	for <e@80x24.org>; Sun, 17 Feb 2019 03:34:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732659AbfBPTgL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Feb 2019 14:36:11 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33576 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728102AbfBPTgL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Feb 2019 14:36:11 -0500
-Received: by mail-ed1-f66.google.com with SMTP id a2so10608534edi.0
-        for <git@vger.kernel.org>; Sat, 16 Feb 2019 11:36:09 -0800 (PST)
+        id S1727352AbfBQDes (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Feb 2019 22:34:48 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51140 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726751AbfBQDes (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Feb 2019 22:34:48 -0500
+Received: by mail-wm1-f65.google.com with SMTP id x7so13877318wmj.0
+        for <git@vger.kernel.org>; Sat, 16 Feb 2019 19:34:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=QGP/vwT4P6KXEjh4iFR+0z8W9qT9GrNi0VJszR/zgQU=;
-        b=O4scVU4p06u+p1AnrvK8UWy+ox9cCKnKFO0Ckkw0llm8niIEopk8suJN0NN+OSZMaJ
-         sW/zAhoK2EX2qeDyLzl/yEDWAToFJ/Q/mHLqMNSt8/nHUt3eviSh+QWZ2qSUK4w5tgKK
-         7zp8H9PP3SBlYsdr+mm2zQR7IFvG4pjcVq5aVToLb4GyuXxGeavmgvvfOstxAvyttdyW
-         LEYmyiVHUVW0ghJ/PYLXrYjl7qGc8b1M87+bPnE2DXI9VCln3GKvLsgWVXsZ/Jsn84PX
-         PCgC7/GJyXrWshZCVroq0BxkQvgSpeHVytrTKBk/sTa2dDWngyWlKj3XPvtK9E/nD3x/
-         q00w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Ov6DjY2s725mnwSF5l4yDhB+4C+EZth0Cx/w1SLgKd8=;
+        b=u6krwUWcpyMpZJQtEFZ+6wX0hv65CgG/hHtnCKQT9jteciXNUX0wChLVqZRzcT1xjt
+         V3oUs6adcuQT/JHJb/Hedw1JTm7fn2/YpN4KDIlXjxlw9KU0tJJ9+qpgX5+LRCRWzeJh
+         Qh4nD+1jbAJbqupYANNV4WVhcq8QyQs7eJExw+6PhCNenCzH8rA5OgmcscI8IvYigEEY
+         hkyAs4/ak4itow7CG3pl/TV2EItdCtOpbtvTopx36FagqW61+PtLmGhFnaiI1dLUvn3P
+         0XMlxfGKdfv7NUI9P8Kziu0IFIwz+NBC+s3kgSmynxlgLdxh29w0N5MfODYhA0qQ6u0R
+         5hjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=QGP/vwT4P6KXEjh4iFR+0z8W9qT9GrNi0VJszR/zgQU=;
-        b=hgCgJF0tWHovM8QF+9jykzrwtqzyIOcZhb+PXcvEaJRS/CQo2Ntk9ssYFi/U5k/8Kk
-         A41kiVd6yiQqb6mFJvGGBiP1YAzTyL4Q3t/xzxGhCumntN4Qzf7VK9cITCov1q8QEWX/
-         IYSXWVOkul/7zodDmvR9NoYpU+xPWsJWvIO9JEqLU9ZC8MKFiagBzBU2+YT//GNzQfYu
-         WfkpUFj0DlhbAKhd9e+iTfaIgUkGegrRfDUK8WO5XrK61nODz1vn12HWFYuR/i+0RPQR
-         7PA50Ea4Gk9C5ibyRoWsx1GI9KrAxXlTcReoMmpCNuLe6xIRn+MdECxHMHIMbbKjNmrG
-         qdYQ==
-X-Gm-Message-State: AHQUAuaGp1PH8BAhcOTdlrWzhrIiBJl1MhtjCyte/1MEOt+UQGsVWn6/
-        2A5xp8+Y7iPuju+A/8viGvlm3J+b
-X-Google-Smtp-Source: AHgI3Ia3ZggISz6Oz04BPlT8s3ejPUMg03XGvzkPd+o0h/n4atp5Y768l7zd7yHRwXOeNtK3IpYtMw==
-X-Received: by 2002:aa7:d445:: with SMTP id q5mr1965948edr.294.1550345768519;
-        Sat, 16 Feb 2019 11:36:08 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id k26sm2000938ejv.63.2019.02.16.11.36.07
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Ov6DjY2s725mnwSF5l4yDhB+4C+EZth0Cx/w1SLgKd8=;
+        b=ga6Oht3ffgCMeGAI/Nq4tdhnLGnlRt22PTPYM3ViKaQaUbV5x/x1p8XCNPRFp7JgnI
+         Gtvbe/HjNB+mGeOxPrO2GnHjdsieCkPzMypLy8FxYOyYV3atdExJWebf5YClQMXuYs4H
+         p1a+SAR0Gy9oMl+U8n3VOzwGSfKIbkksjOzne+m8GshJ7/e2RlhwTtk54kV/Ro018bJY
+         3D6IW2THpKqLUKYIm2LnlD79NmEkpuQNAACS7YFMmqFmXpx9TK8gRd1GBxqI93sjDLp7
+         uPhRmy9wF8x4gNnlKOtPMRHWkddlTi7YqnIJ9Xt5Q/qpNXrJXly4+hw0Lxs7id/FTkti
+         QSng==
+X-Gm-Message-State: AHQUAuYgDmQQ4rMW7bS2o0NGVxNSe9biaGSC+rby0eZvEEXV1wPcyAtR
+        lp8htwUjDIYLZ18F63QK4Qs=
+X-Google-Smtp-Source: AHgI3IaU9DX7PnzrNcftAvO5w8c63J/DJM8yXArlypvd/d8S2AyqvOx/dEwO+Um6oR1z8ajAru13aA==
+X-Received: by 2002:a1c:7306:: with SMTP id d6mr10940850wmb.98.1550374486325;
+        Sat, 16 Feb 2019 19:34:46 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id i10sm19010707wrx.54.2019.02.16.19.34.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 16 Feb 2019 11:36:07 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        Holger Hellmuth <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/1] Introduce "precious" file concept
-References: <20190216114938.18843-1-pclouds@gmail.com> <20190216114938.18843-2-pclouds@gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190216114938.18843-2-pclouds@gmail.com>
-Date:   Sat, 16 Feb 2019 20:36:06 +0100
-Message-ID: <87wolzo7a1.fsf@evledraar.gmail.com>
+        Sat, 16 Feb 2019 19:34:45 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        vincent.guittot@linaro.org
+Subject: Re: [Bug report] git diff stat shows unrelated diff
+References: <20190214082258.3mh3hcr2l6dl3wuf@vireshk-i7>
+        <CABPp-BGstumw1eyZ++0itk-AR0Bk5zd0AchgznBpMq35a6ScUg@mail.gmail.com>
+        <xmqqmumy6mxe.fsf@gitster-ct.c.googlers.com>
+        <20190215185202.GA28019@dev-l>
+        <CABPp-BEmPQb4Q_38S2A_68m+Cu75VDDD2UV0qWBDjL1OUAug9Q@mail.gmail.com>
+        <xmqqzhqw4xqe.fsf@gitster-ct.c.googlers.com>
+        <ad85402e-0ad2-4f4d-3b66-9250115072c0@iee.org>
+        <xmqqr2c84ohn.fsf@gitster-ct.c.googlers.com>
+        <dca9622d-c8e7-abcb-2e13-73bd8bb9dd84@iee.org>
+Date:   Sat, 16 Feb 2019 19:34:44 -0800
+In-Reply-To: <dca9622d-c8e7-abcb-2e13-73bd8bb9dd84@iee.org> (Philip Oakley's
+        message of "Sat, 16 Feb 2019 12:47:52 +0000")
+Message-ID: <xmqq1s473x63.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Philip Oakley <philipoakley@iee.org> writes:
 
-On Sat, Feb 16 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-
-[Re-CC some people involved the last time around]
-
-> A new attribute "precious" is added to indicate that certain files
-> have valuable content and should not be easily discarded even if they
-> are ignored or untracked.
+>> Those who do *not* opt into that "early warning" configuration dance
+>> would eventually be warned whenever they type "diff A..B", and the
+>> timing for that eventuality is not under their control, so quite
+>> honestly, I do not see much point in "giving users the chance".
 >
-> So far there are one part of Git that are made aware of precious
-> files: "git clean" will leave precious files alone.
+> With the opposite hat on, not giving users the choice does seem unfair
+> to those that are trying to keep up. If we are warning (in the release
+> notes) of an upcoming deprecation (in the code) then it does seem
+> helpful that users could buy into the deprecation early, and at their
+> convenience, to assist in the unlearning of an old habit, which can be
+> much harder than learning a new habit, hence my comment.
+>
+> You are right that those who neither notice nor care will be surprised
+> later, but we shouldn't let that limit others.
 
-Thanks for bringing this up again. There were also some patches recently
-to save away clobbered files, do you/anyone else have any end goal in
-mind here that combines this & that, or some other thing I may not have
-kept up with?
+I still do not quite get where you are coming from.  Are you saying
+that those who do not opt into the early warning may get 2 cycles
+(just picked out of thin-air) of deprecation period, and with an
+optional early warning feature, those who feel that 2 cycles is not
+long enough to train their fingers would spend 3 cycles and they
+will be helped than without?
 
-My commentary on this whole thing is basically a repeat of what I said
-in https://public-inbox.org/git/87wop0yvxv.fsf@evledraar.gmail.com/
+That line of thinking sounds somewhat ridiculous---where does it
+end?  If those who opt into would find it sufficient to have 3
+cycles to train, there may still be people who feel 3 is not enough
+and want to have 4.  As we make it longer, we'd cover more people
+and at some point we'd reach the point of diminishing returns.
 
-I.e. we have a definite problem here somewhere, and there is some
-solution, but this patch feels a bit like navigating that maze in the
-dark without a map.
+Wouldn't it be even better, and far simper, to just extend the
+deprecation period to that many cycles to make it long enough for
+majority of users' needs, without any early warning option?  
 
-We had users report that the likes of "pull" were eating their data, but
-now with this iteration of "precious" only impacting "clean" the only
-problem anyone with the current semantics is still left unaddressed. My
-memory (I may be wrong) is that "clean" was just brought up (by you?) as
-a "what about this other related case?" in that whole discussion.
+The thing is, once you train your fingers, it does not matter to you
+if the deprecation warning is still there, as you'd not be typing
+"diff A..B" at that point.  So I am not sure who you are trying to
+help by the early warning option.
 
-So as noted in the E-Mail linked above I think the first step should be
-to enumerate/document/test the cases where we're now eating data
-implicitly, and discuss how that relates to the semantics we desired
-when the data-eating behavior was first introduced (as noted in E-Mails
-linked from the above, my own preliminary digging seems to reveal there
-isn't much of a relationship between the two).
+Thanks.
 
-Only when we have that list of XYZ cases we're supporting now, and can
-see that XYZ is so important to maintain backwards compatibility for
-that we can't change it should way say "we eat your data by default
-because XYZ is so useful/backcompat, set 'precious' ...".
-
-But right now we don't even have the list of XYZ or tests for them (as
-my RFC "garbage" attribute patch revealed). So this whole thing still
-feels like jumping three steps ahead to me in terms of addressing *that*
-issue, but perhaps you have some orthogonal use-case in mind for this?
