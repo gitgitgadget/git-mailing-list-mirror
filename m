@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 896751F453
-	for <e@80x24.org>; Sun, 17 Feb 2019 10:11:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58EED1F453
+	for <e@80x24.org>; Sun, 17 Feb 2019 10:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728295AbfBQKK5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Feb 2019 05:10:57 -0500
-Received: from mail-pl1-f171.google.com ([209.85.214.171]:43428 "EHLO
-        mail-pl1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728285AbfBQKK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Feb 2019 05:10:56 -0500
-Received: by mail-pl1-f171.google.com with SMTP id f90so7257466plb.10
-        for <git@vger.kernel.org>; Sun, 17 Feb 2019 02:10:56 -0800 (PST)
+        id S1728340AbfBQKLG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Feb 2019 05:11:06 -0500
+Received: from mail-pf1-f174.google.com ([209.85.210.174]:43325 "EHLO
+        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726638AbfBQKLF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Feb 2019 05:11:05 -0500
+Received: by mail-pf1-f174.google.com with SMTP id q17so7064821pfh.10
+        for <git@vger.kernel.org>; Sun, 17 Feb 2019 02:11:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EeZA/W0wtwDNt0/mo5MctN1ToL1s6AwWhwlY5Ap4rjs=;
-        b=HRiwP+ZvkEvolHuRZi9mIpiBCVGgp2Z7G6LbKS9kS3emm28p11k/oIinZmXesGgxeT
-         Hm2RhusHPtH1sIZQ6Jky4/fqdU3bwGbFzs5qAwG4IP3F/U50+Epl9g9q15iqz05eGifT
-         nwThnEUActPgW97Qn8u3pdsK9rS0RnxwwxMKWeJDbZjSCOD4o1h+krO3Exa53Xo8f5Kh
-         UeDW33Uxzuq3cEZRX8o8Zm+B74pFxHA70A8XezHFqeW49soUarxCMNygGhGliZGApUsz
-         6vs2gqTTWN5Q8qKQ+qoI1g6w4D3I1wU4Sc9kBH8aKBg7WdI4vCh9i9wDdCfQVa0YbwZj
-         b1Og==
+        bh=CbokgRJkMgF/9sHbeCDQL1g26TTG3yb/vBRZkif6kHk=;
+        b=QwfTjwBCoJb7qfXvb10ZcO193mPJ1dd23aqwWbuROUh86oWWKrvLh6D8GDxIsX4aUl
+         QorlSEi0Ng9AhvOvh0+IkMauimDBbx2/Gyi3FUKyZm8f9OWGSTWE9rKNiD2Mn79rqgBd
+         1ptXgdbOB2yJS34YXtDz4/h9HmyUr7TntE/AJcPO/2HRJCdiGiCCH64r9Ng9TmtaAsdF
+         jNRZO1ZShywlMywrv6jX95OLxl+WpaC8yA0I4grBbqENBGUawu3GWFld6BtZH538qkA3
+         Qp7WGlaFfSEEs6YtrcoQ2B6NyOGRGV6swZL+YI5eJPkvV6s85TwPe8N4E/d9iZROCt/x
+         ccyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EeZA/W0wtwDNt0/mo5MctN1ToL1s6AwWhwlY5Ap4rjs=;
-        b=TQ+qx0DyGwVE9pDU/Qf583oD1esZfdfqZiqUb1XaO/kg1hGYuivo5GJZM77cISMUX6
-         E35BPPNLkV+B6RsQRRNj5owPvhOOW9pjw3m8Funw1DD4jX6Kuzd1NxhzjdKUZzdkNFHU
-         xgRU/g6YF89LTwe+Xo3ZPasmzQRuREXc8wTQRVBfEbLOK1iYKTOV4qC5UjiYROZPltWY
-         Y8cBdEvP0pYfnMpQVco1tkYfuuin3p7Wha2rG5kR0eLH9wSOPgDdPvQNf/vr8AB0v69b
-         EQeGOO1zv2NX1CKFEiK88srDKfsYXBNa0Jyp9H+PtIyGwynZMte0ng91XlYxCgvw3Nh1
-         n4Sg==
-X-Gm-Message-State: AHQUAuZXMDZu9zpUvgEpovbtd/mmz6iWme3O3rfDZ61zuSZX9eNizPPg
-        j4b/Y1cSu6+/tbfjdPdroDu6YVBC
-X-Google-Smtp-Source: AHgI3IbCmWEfdxmnLEQ3gXhQ/E9loqIUVQW2soIPkkcLnpOWRi18W2D1XlDOIwL9+70NNHQozeSHuw==
-X-Received: by 2002:a17:902:7d89:: with SMTP id a9mr3402795plm.33.1550398255551;
-        Sun, 17 Feb 2019 02:10:55 -0800 (PST)
+        bh=CbokgRJkMgF/9sHbeCDQL1g26TTG3yb/vBRZkif6kHk=;
+        b=LnVB1u0Akvj7XKNiJe4yCqZmPpGvxY2A8tE5oXdhZS1gNdT3mnzwrZrj/4ngYcngmh
+         oha9oJsSfUhWAFzYWuUIgTTFfDmqWeD3nkn5xZ1IxZCfR01niGZ2Yp9axoKRzzxeufKT
+         7v/CPO26DJTwIIFLe/yqZdzcPgSxQYdAKLRaSkp91S043BAV9E9aLT4hZxI710yThE+D
+         mYcjqyXhz8AL7qRq6dblZhtVUd7mBlw2aJRiutHy+6Gz3lin5LILZyT93DjiU3/xwBQ5
+         XiTdFF8ejyjuDSVl9hxJEeBSanxsVrSg4f8N01VpvtLPRhhuIjBvTShCWrTGsUzWqg2l
+         G/gw==
+X-Gm-Message-State: AHQUAuY+BH9iGzYWHWk6OXswJhNpPbUOqSi4yyHHxh59oFSAE2XWDKwi
+        p92JuEhJmPIEKUzkW/eMVktkGhqo
+X-Google-Smtp-Source: AHgI3IZ1K4UuW03BxhqjYfIEaf32eNwI3A0S+9o6tiIZN+qssg2L+FxCTaZqmyL2ZTa3GtSv7pm4JQ==
+X-Received: by 2002:a63:6a07:: with SMTP id f7mr13660248pgc.118.1550398264489;
+        Sun, 17 Feb 2019 02:11:04 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id 33sm5815412pgs.81.2019.02.17.02.10.53
+        by smtp.gmail.com with ESMTPSA id z18sm11447727pfl.164.2019.02.17.02.11.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Feb 2019 02:10:55 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sun, 17 Feb 2019 17:10:51 +0700
+        Sun, 17 Feb 2019 02:11:03 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sun, 17 Feb 2019 17:11:00 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 22/31] sha1-name.c: remove the_repo from get_oid_1()
-Date:   Sun, 17 Feb 2019 17:09:04 +0700
-Message-Id: <20190217100913.4127-23-pclouds@gmail.com>
+Subject: [PATCH 24/31] sha1-name.c: remove the_repo from diagnose_invalid_index_path()
+Date:   Sun, 17 Feb 2019 17:09:06 +0700
+Message-Id: <20190217100913.4127-25-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc0.328.g0e39304f8d
 In-Reply-To: <20190217100913.4127-1-pclouds@gmail.com>
 References: <20190217100913.4127-1-pclouds@gmail.com>
@@ -69,227 +69,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is a cyclic dependency between one of these functions so they
-cannot be converted one by one, so all related functions are converted
-at once.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache.h     |  7 +++++--
- sha1-name.c | 59 ++++++++++++++++++++++++++++-------------------------
- 2 files changed, 36 insertions(+), 30 deletions(-)
+ dir.c       | 8 ++++++++
+ dir.h       | 4 +++-
+ sha1-name.c | 7 ++++---
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 92973e7ae0..9ff5af0bef 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1465,8 +1465,11 @@ extern void *read_object_with_reference(const struct object_id *oid,
- 					unsigned long *size,
- 					struct object_id *oid_ret);
+diff --git a/dir.c b/dir.c
+index b2cabadf25..e6d97343f4 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2315,6 +2315,14 @@ int file_exists(const char *f)
+ 	return lstat(f, &sb) == 0;
+ }
  
--extern struct object *peel_to_type(const char *name, int namelen,
--				   struct object *o, enum object_type);
-+struct object *repo_peel_to_type(struct repository *r,
-+				 const char *name, int namelen,
-+				 struct object *o, enum object_type);
-+#define peel_to_type(name, namelen, obj, type) \
-+	repo_peel_to_type(the_repository, name, namelen, obj, type)
++int repo_file_exists(struct repository *repo, const char *path)
++{
++	if (repo != the_repository)
++		BUG("do not know how to check file existence in arbitrary repo");
++
++	return file_exists(path);
++}
++
+ static int cmp_icase(char a, char b)
+ {
+ 	if (a == b)
+diff --git a/dir.h b/dir.h
+index e3ec26143d..47c5409ced 100644
+--- a/dir.h
++++ b/dir.h
+@@ -269,7 +269,9 @@ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *el, int srcpos);
+ extern void clear_exclude_list(struct exclude_list *el);
+ extern void clear_directory(struct dir_struct *dir);
+-extern int file_exists(const char *);
++
++int repo_file_exists(struct repository *repo, const char *path);
++int file_exists(const char *);
  
- enum date_mode_type {
- 	DATE_NORMAL = 0,
+ extern int is_inside_dir(const char *dir);
+ extern int dir_inside_of(const char *subdir, const char *dir);
 diff --git a/sha1-name.c b/sha1-name.c
-index d4c135aea8..5741a9f821 100644
+index d9050776dd..6caf3f4e3a 100644
 --- a/sha1-name.c
 +++ b/sha1-name.c
-@@ -770,7 +770,7 @@ static inline int push_mark(const char *string, int len)
- 	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
+@@ -1664,11 +1664,12 @@ static void diagnose_invalid_oid_path(const char *prefix,
  }
  
--static enum get_oid_result get_oid_1(const char *name, int len, struct object_id *oid, unsigned lookup_flags);
-+static enum get_oid_result get_oid_1(struct repository *r, const char *name, int len, struct object_id *oid, unsigned lookup_flags);
- static int interpret_nth_prior_checkout(struct repository *r, const char *name, int namelen, struct strbuf *buf);
- 
- static int get_oid_basic(struct repository *r, const char *str, int len,
-@@ -921,18 +921,19 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 	return 0;
- }
- 
--static enum get_oid_result get_parent(const char *name, int len,
-+static enum get_oid_result get_parent(struct repository *r,
-+				      const char *name, int len,
- 				      struct object_id *result, int idx)
+ /* Must be called only when :stage:filename doesn't exist. */
+-static void diagnose_invalid_index_path(struct index_state *istate,
++static void diagnose_invalid_index_path(struct repository *r,
+ 					int stage,
+ 					const char *prefix,
+ 					const char *filename)
  {
- 	struct object_id oid;
--	enum get_oid_result ret = get_oid_1(name, len, &oid,
-+	enum get_oid_result ret = get_oid_1(r, name, len, &oid,
- 					    GET_OID_COMMITTISH);
- 	struct commit *commit;
- 	struct commit_list *p;
- 
- 	if (ret)
- 		return ret;
--	commit = lookup_commit_reference(the_repository, &oid);
-+	commit = lookup_commit_reference(r, &oid);
- 	if (parse_commit(commit))
- 		return MISSING_OBJECT;
- 	if (!idx) {
-@@ -950,7 +951,8 @@ static enum get_oid_result get_parent(const char *name, int len,
- 	return MISSING_OBJECT;
- }
- 
--static enum get_oid_result get_nth_ancestor(const char *name, int len,
-+static enum get_oid_result get_nth_ancestor(struct repository *r,
-+					    const char *name, int len,
- 					    struct object_id *result,
- 					    int generation)
- {
-@@ -958,10 +960,10 @@ static enum get_oid_result get_nth_ancestor(const char *name, int len,
- 	struct commit *commit;
- 	int ret;
- 
--	ret = get_oid_1(name, len, &oid, GET_OID_COMMITTISH);
-+	ret = get_oid_1(r, name, len, &oid, GET_OID_COMMITTISH);
- 	if (ret)
- 		return ret;
--	commit = lookup_commit_reference(the_repository, &oid);
-+	commit = lookup_commit_reference(r, &oid);
- 	if (!commit)
- 		return MISSING_OBJECT;
- 
-@@ -974,20 +976,20 @@ static enum get_oid_result get_nth_ancestor(const char *name, int len,
- 	return FOUND;
- }
- 
--struct object *peel_to_type(const char *name, int namelen,
--			    struct object *o, enum object_type expected_type)
-+struct object *repo_peel_to_type(struct repository *r, const char *name, int namelen,
-+				 struct object *o, enum object_type expected_type)
- {
- 	if (name && !namelen)
- 		namelen = strlen(name);
- 	while (1) {
--		if (!o || (!o->parsed && !parse_object(the_repository, &o->oid)))
-+		if (!o || (!o->parsed && !parse_object(r, &o->oid)))
- 			return NULL;
- 		if (expected_type == OBJ_ANY || o->type == expected_type)
- 			return o;
- 		if (o->type == OBJ_TAG)
- 			o = ((struct tag*) o)->tagged;
- 		else if (o->type == OBJ_COMMIT)
--			o = &(get_commit_tree(((struct commit *)o))->object);
-+			o = &(repo_get_commit_tree(r, ((struct commit *)o))->object);
- 		else {
- 			if (name)
- 				error("%.*s: expected %s type, but the object "
-@@ -999,8 +1001,8 @@ struct object *peel_to_type(const char *name, int namelen,
- 	}
- }
- 
--static int peel_onion(const char *name, int len, struct object_id *oid,
--		      unsigned lookup_flags)
-+static int peel_onion(struct repository *r, const char *name, int len,
-+		      struct object_id *oid, unsigned lookup_flags)
- {
- 	struct object_id outer;
- 	const char *sp;
-@@ -1050,15 +1052,15 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
- 	else if (expected_type == OBJ_TREE)
- 		lookup_flags |= GET_OID_TREEISH;
- 
--	if (get_oid_1(name, sp - name - 2, &outer, lookup_flags))
-+	if (get_oid_1(r, name, sp - name - 2, &outer, lookup_flags))
- 		return -1;
- 
--	o = parse_object(the_repository, &outer);
-+	o = parse_object(r, &outer);
- 	if (!o)
- 		return -1;
- 	if (!expected_type) {
--		o = deref_tag(the_repository, o, name, sp - name - 2);
--		if (!o || (!o->parsed && !parse_object(the_repository, &o->oid)))
-+		o = deref_tag(r, o, name, sp - name - 2);
-+		if (!o || (!o->parsed && !parse_object(r, &o->oid)))
- 			return -1;
- 		oidcpy(oid, &o->oid);
- 		return 0;
-@@ -1069,7 +1071,7 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
- 	 * if we do not get the needed object, we should
- 	 * barf.
- 	 */
--	o = peel_to_type(name, len, o, expected_type);
-+	o = repo_peel_to_type(r, name, len, o, expected_type);
- 	if (!o)
- 		return -1;
- 
-@@ -1089,7 +1091,7 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
- 
- 		prefix = xstrndup(sp + 1, name + len - 1 - (sp + 1));
- 		commit_list_insert((struct commit *)o, &list);
--		ret = get_oid_oneline(the_repository, prefix, oid, list);
-+		ret = get_oid_oneline(r, prefix, oid, list);
- 		free(prefix);
- 		return ret;
- 	}
-@@ -1120,7 +1122,8 @@ static int get_describe_name(struct repository *r,
- 	return -1;
- }
- 
--static enum get_oid_result get_oid_1(const char *name, int len,
-+static enum get_oid_result get_oid_1(struct repository *r,
-+				     const char *name, int len,
- 				     struct object_id *oid,
- 				     unsigned lookup_flags)
- {
-@@ -1149,25 +1152,25 @@ static enum get_oid_result get_oid_1(const char *name, int len,
- 		if (!num && len1 == len - 1)
- 			num = 1;
- 		if (has_suffix == '^')
--			return get_parent(name, len1, oid, num);
-+			return get_parent(r, name, len1, oid, num);
- 		/* else if (has_suffix == '~') -- goes without saying */
--		return get_nth_ancestor(name, len1, oid, num);
-+		return get_nth_ancestor(r, name, len1, oid, num);
++	struct index_state *istate = r->index;
+ 	const struct cache_entry *ce;
+ 	int pos;
+ 	unsigned namelen = strlen(filename);
+@@ -1708,7 +1709,7 @@ static void diagnose_invalid_index_path(struct index_state *istate,
+ 			    ce_stage(ce), filename);
  	}
  
--	ret = peel_onion(name, len, oid, lookup_flags);
-+	ret = peel_onion(r, name, len, oid, lookup_flags);
- 	if (!ret)
- 		return FOUND;
- 
--	ret = get_oid_basic(the_repository, name, len, oid, lookup_flags);
-+	ret = get_oid_basic(r, name, len, oid, lookup_flags);
- 	if (!ret)
- 		return FOUND;
- 
- 	/* It could be describe output that is "SOMETHING-gXXXX" */
--	ret = get_describe_name(the_repository, name, len, oid);
-+	ret = get_describe_name(r, name, len, oid);
- 	if (!ret)
- 		return FOUND;
- 
--	return get_short_oid(the_repository, name, len, oid, lookup_flags);
-+	return get_short_oid(r, name, len, oid, lookup_flags);
- }
- 
- /*
-@@ -1741,7 +1744,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 	memset(oc, 0, sizeof(*oc));
- 	oc->mode = S_IFINVALID;
- 	strbuf_init(&oc->symlink_path, 0);
--	ret = get_oid_1(name, namelen, oid, flags);
-+	ret = get_oid_1(repo, name, namelen, oid, flags);
- 	if (!ret)
- 		return ret;
- 	/*
-@@ -1822,7 +1825,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 		sub_flags &= ~GET_OID_DISAMBIGUATORS;
- 		sub_flags |= GET_OID_TREEISH;
- 
--		if (!get_oid_1(name, len, &tree_oid, sub_flags)) {
-+		if (!get_oid_1(repo, name, len, &tree_oid, sub_flags)) {
- 			const char *filename = cp+1;
- 			char *new_filename = NULL;
- 
+-	if (file_exists(filename))
++	if (repo_file_exists(r, filename))
+ 		die("Path '%s' exists on disk, but not in the index.", filename);
+ 	if (is_missing_file_error(errno))
+ 		die("Path '%s' does not exist (neither on disk nor in the index).",
+@@ -1814,7 +1815,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+ 			pos++;
+ 		}
+ 		if (only_to_die && name[1] && name[1] != '/')
+-			diagnose_invalid_index_path(repo->index, stage, prefix, cp);
++			diagnose_invalid_index_path(repo, stage, prefix, cp);
+ 		free(new_path);
+ 		return -1;
+ 	}
 -- 
 2.21.0.rc0.328.g0e39304f8d
 
