@@ -2,94 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3C321F453
-	for <e@80x24.org>; Mon, 18 Feb 2019 19:41:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DA9C1F453
+	for <e@80x24.org>; Mon, 18 Feb 2019 20:14:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726013AbfBRTl6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 14:41:58 -0500
-Received: from mail-yb1-f193.google.com ([209.85.219.193]:34313 "EHLO
-        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbfBRTl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Feb 2019 14:41:58 -0500
-Received: by mail-yb1-f193.google.com with SMTP id j62so7229406ybb.1
-        for <git@vger.kernel.org>; Mon, 18 Feb 2019 11:41:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=d96iHWSvQUGWMlC3GKCyKlisF+VJNmGwVyRV6oNw38o=;
-        b=X1iycLEWzmoHqcg5WRVBpPOk+837QCXk/RNJiBUxho+czjg1tceqI4eCYesYwOrw90
-         q3Feho5p6K6ELElhoXzGzOBhm/A4OTPen2QuJIZbQSSRPrmSMIsAHqm9+hPR6+v/nCrg
-         RP0yE/QNEX4ZQNhYPT+yWJK1MMksnEP1haOuh8bZmXKtqh/K6NSekjTl0aqh7fFJNbTB
-         lhCR5YKQE6d52cGEv57pPiNm6SBaMs+UDFLbGOdviKVVTllIXz77LzVjOu7hbK2+n6Fp
-         JHBoDnXD6Nc5kh3WmLc4MGz4flMhRj96q0gT9jHnHezTLHv8Tt48OMVnuTP39NHru7gA
-         NcIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=d96iHWSvQUGWMlC3GKCyKlisF+VJNmGwVyRV6oNw38o=;
-        b=KWj/XVI5YMKMim7TQxA5VJwNsY0gKXLe8gsZWBz09qxrou3l4Ac6mEisHdeFeBjIEK
-         hGRd6zIG4IGOtcm6OBFaCpnml1FABIC3qi21nmKrOSraqTLx2eg+FkU33/daiyEX7QQR
-         jxmyTn643flvxc2ueQbBduCUoJV2rB6hs4Fawj4pQgcz5j85mJWcPMYsJc8kOgyIZIn7
-         BdC9pv9pV0Ma9X/mqcUICG+uUUdVR6K9XQTZTvKgEMqFiV6SdHvToukr08WyEtHuY0C1
-         SO/1EVHtW5Kg87fgMS4n26MJxvPEeWf6QBg982Dixkwl0XMcI8Bg6JzNrb/pdCsgvCMb
-         YWRg==
-X-Gm-Message-State: AHQUAuYBNYAt7wY0bMxAHjmU//Xi541EbZsFNDjCFSd65WdwtqYhrRMc
-        C1RirFQiKuXO32Y3iMCta+l1J5Kh
-X-Google-Smtp-Source: AHgI3Ib/z3bqXIEz17AF9kxluqIPIdgcUIhxPwCXSaKnJoJPaxOvd4DCWWwIatsm4qc9DkNTVBQirg==
-X-Received: by 2002:a25:6b0c:: with SMTP id g12mr20797168ybc.217.1550518916994;
-        Mon, 18 Feb 2019 11:41:56 -0800 (PST)
-Received: from [192.168.1.13] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id i188sm5666511ywa.88.2019.02.18.11.41.56
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Feb 2019 11:41:56 -0800 (PST)
-Subject: Re: How to get next commit that just after a specified commit
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>, git@vger.kernel.org
-References: <87mun0j9vv.fsf@evledraar.gmail.com>
- <xmqqimxnbdfq.fsf@gitster-ct.c.googlers.com>
- <87ef8bjrqv.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8f4bc4cf-cfe4-ddf5-cee3-294ebc5fc88c@gmail.com>
-Date:   Mon, 18 Feb 2019 14:41:55 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
- Thunderbird/66.0
+        id S1728701AbfBRUOM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 15:14:12 -0500
+Received: from mout.gmx.net ([212.227.15.19]:57295 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725308AbfBRUOM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Feb 2019 15:14:12 -0500
+Received: from [192.168.0.171] ([37.201.195.16]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOOpx-1h12V63Nqv-005tOV; Mon, 18
+ Feb 2019 21:14:05 +0100
+Date:   Mon, 18 Feb 2019 21:14:07 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Max Kirillov <max@max630.net>
+cc:     randall.s.becker@rogers.com, 'Git List' <git@vger.kernel.org>
+Subject: Re: [BUG] More on t5562 hangs randomly in subtests 6,8 and 13 in
+ 2.21.0-rc0
+In-Reply-To: <20190213174055.GD3064@jessie.local>
+Message-ID: <nycvar.QRO.7.76.6.1902182105520.45@tvgsbejvaqbjf.bet>
+References: <000501d4c3af$1748b100$45da1300$@rogers.com> <20190213174055.GD3064@jessie.local>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <87ef8bjrqv.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ShTNEY9hovVGQe0uaFLB4OTBX2dnJFZFInXBnVJmO+RYLWcV+RA
+ RxAhRLv0rIEL49GaF7M3rEixi5dlNWZ1Rwgt+X21QFStuwl3ciAXrcBvpL9sS2FpCTzUit1
+ 0JfT3eBVcFe619vZfsiUY+DvR5eNlXZ0/7XPFj0a+WOKKOzbAEWUwjnzRSWoNwEI+YA983x
+ nIq2rYI+PEoy7cixq1spw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WtsYGdX52X8=:M0BDIsh3yZDfS4WrLr6SeA
+ kdqeB1Hnq1la6aa0BqakF+AhgeREgxokr6YngJrC/rdegP/FlspyFXZ19nAGVsz1as7yo8znC
+ GReA0Qo0j5rvUixbH4LW8xC1sjTKxZWZHMF4+hwiUTPRtpN23wXTl0Rkibtp9O1Hu0dJxEWAo
+ Sx7c7o2fneApy+2SFdTasbSjpoX41DFrG4gnM9yBlGCxkOQywe7JOWa3mTnwZsP5r1kO82qrl
+ Qv1+fjZFt+3fBcH3jV4Eo/V6JFKo8/LMBjF0HV0IkWJ4TNB/9OxfntDr2vL0E24XNpa0KFMBl
+ PCs8y2DCclnZRPSz4D3GiEW+vgC6qqunmGObqNaEsTj5UiSNT3AvWmrJzepJp2dQaZL06YDWf
+ nT88WJmo39CaH3w/03YwB/Iic/SlH0w+d3NcdRpphfU4EXXmc+u7Qxf4rEN5eQ5jP16rjq8dG
+ NQUx48AgEXDxY4Znxl56mnM1y3+8A+eowXnck/paEw3DD6NglSWrR/w5yvoywKpDcLnfwt9nY
+ Qp064fZJOiXvfZAYRj+wvnvXfq5Z/Ll+WAvbMdPgvhssm3VLN4lk09GNzPogrsrKftKdhrK2I
+ l7e8RQtDwq+40+Ox96t8DlPmIBoOnA7833dJCfs9JyWJ1A04erSzX1MltwHwo9L8SjEq6zsUG
+ S/Ze3ieyEU4ZJVacYDb1+BQ6I4W3VSfLAv/Cm+/RuQCJRrnJTYX9kcU0QFpF4M34f6LjFTyyd
+ Md8Rk1yW11XmIOFHNodaf5X+3W9BKmsN/G8cJTnCa9LqRmQ27JAPz0oDJj4GlPKjiwuF6aA19
+ ZZzonyTNAAS+e9VzxKKeBItdWqOGrMlh2bNg/UO5OsB6bzVZlRv/lrIu9HINoi47tgevO4Mms
+ JKRstcg0JjdfCqfPpPRBdkkP9cjIGD4DQmnA7SdTLLykar/PkxOKzTqw5HtntsCTWH/9YguvO
+ kHr6qMi7R4A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/13/2019 4:36 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Feb 13 2019, Junio C Hamano wrote:
-> 
->> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
-> Their point in comparing it to git is that there's nothing intuitive in
-> the UI that exposes this information for the *current* graph, whereas in
-> fossil this is a built-in command:
-> https://fossil-scm.org/xfer/help/descendants
-> 
-> Perhaps this information is cheaper to extract these days with the
-> commit graph and we could expose it somehow?
+Hi Max,
 
-I believe the recent changes (collected in commit-reach.c) that improve
-'git branch --contains' or 'git tag --contains' are important in helping
-this descendants list. There is likely more work to be done to show this
-list in a rev-list call.
+On Wed, 13 Feb 2019, Max Kirillov wrote:
 
-Thanks,
--Stolee 
+> On Wed, Feb 13, 2019 at 10:16:26AM -0500, randall.s.becker@rogers.com wrote:
+> > On 2019-02-13, Max Kirillov, wrote:
+> > As far as the unintended reuse of the output file, and issues with pipes,
+> > yes, the NonStop is very sensitive to complex use of pipes and much of the
+> > compatibility issues we have had relate to those (usually Linux-specific
+> > pipe assumptions). That is where I have been looking when trying to debug
+> > this situation (not yet found anything). This could very well be directly
+> > related.
+> 
+> You mentioned cases 6,8,13. These are all related to gipped
+> request body. Could it be the git-http-backend does not
+> clean a sub-process which pervforms the decompression?
+
+That is an interesting question. From what I can see, the
+`gzipped_request` flag guards a call to `inflate_request()`, which does
+not explicitly close stdin, is all I could see. But it does not spawn a
+sub-process from what I can see, other than the regular backend
+("upload-pack" or "receive-pack").
+
+Ciao,
+Dscho
