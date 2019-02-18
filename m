@@ -2,153 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 324641F453
-	for <e@80x24.org>; Mon, 18 Feb 2019 21:50:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06BF31F453
+	for <e@80x24.org>; Mon, 18 Feb 2019 21:57:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730984AbfBRVuJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 16:50:09 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:37014 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726955AbfBRVuI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Feb 2019 16:50:08 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1ILo1RZ083404
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 18 Feb 2019 16:50:02 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Johannes Schindelin via GitGitGadget'" <gitgitgadget@gmail.com>,
-        <git@vger.kernel.org>, "'Max Kirillov'" <max@max630.net>
-References: <pull.126.git.gitgitgadget@gmail.com>        <005401d4c4b3$147aa8c0$3d6ffa40$@nexbridge.com> <xmqqef8a6lnb.fsf@gitster-ct.c.googlers.com> <005901d4c4b9$3b9a2a60$b2ce7f20$@nexbridge.com> <nycvar.QRO.7.76.6.1902182139490.45@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1902182139490.45@tvgsbejvaqbjf.bet>
-Subject: RE: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1
-Date:   Mon, 18 Feb 2019 16:49:54 -0500
-Message-ID: <005c01d4c7d3$e5a3c850$b0eb58f0$@nexbridge.com>
+        id S1730984AbfBRV5a (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 16:57:30 -0500
+Received: from mout.gmx.net ([212.227.17.21]:55349 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726955AbfBRV5a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Feb 2019 16:57:30 -0500
+Received: from [192.168.0.171] ([37.201.195.16]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M35iN-1hDw7z2g4t-00szcW; Mon, 18
+ Feb 2019 22:57:12 +0100
+Date:   Mon, 18 Feb 2019 22:57:13 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Max Kirillov' <max@max630.net>,
+        =?UTF-8?Q?'SZEDER_G=C3=A1bor'?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results) - Good News
+In-Reply-To: <nycvar.QRO.7.76.6.1902182008270.45@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1902182249140.45@tvgsbejvaqbjf.bet>
+References: <001201d4c617$de429540$9ac7bfc0$@nexbridge.com> <xmqqftsn4nik.fsf@gitster-ct.c.googlers.com> <000001d4c624$da8e05d0$8faa1170$@nexbridge.com> <xmqq5ztj4l3j.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1902182008270.45@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQJRGauSxHI8crErjTmvoq3vRhvADwFUx24oAWoQp5kCOMthgQH1BI6TpLYM9LA=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:SC3gsXfJyXE0pz+pDgr+j+vk143rZzAizSGGFiBfhSc+a8eIYJY
+ jsYwqyoT4r+CyYAMNb1BZg6C2bgDEASnukjw+/Pi8AqmYEO36gBlqRwScyLdZ3kWAX2cSsL
+ B/l2GgRwYk/FrbjjbfLHpGTqShbhvxrRJGivRZopDv6QHnbc6ZrjDwNY+Hi2LNGsZWfG7kW
+ kVDs7rMfc2oAbu7bl7SnA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:o2iMJ8152nI=:tJF9Ki1NE38p7STr9V8CF6
+ LnMaZzZ9qdLj9smD4dwr7VPjcRP+x6YoSKHEhU8nG8z4d1YxyCipf7O+OxQfbZBXh1H+rAk/W
+ ub5zBK7sJPRWP2RgQ7jhC7jgWn7tg0DP3+FY0HDepylexN5jXzyldVuXIKBo7gpxkU2kY0txa
+ oX9d5Lb6//CmNQqMHxCsJnot3lzFWeampoNoNJge/9jRXC4N8ZDehpyVDZEB9jvNiA9OC98Dz
+ k3qB+09TKKmKUDQVDct4pEYcaAkRpyz9N26I7f7DcjqeQsizww37tyPLDKsJ2Naay48bq2Ds6
+ OImSmrGKfFjdnIS+ZSLBMW1EYZdtVzU53Kua5TDcM7g6NCL50qj0v9R0z895x9Oq1imk9sEv2
+ ZQVArwBrLQgYMwUC86ulfJzwmb84IsukwWTHpzi3LSUXUJ7LmJvqvI9bmdQ/yuMpFTiyy7um/
+ hZCrvFBZqsteWImsLpaN2MHGY2nygbZ6HLT4AxbkNEK5eq5ItW+uz3CGF//OVA4oEEHWOzjAl
+ iYGohKhDVh6MvIkYFQzLeH0nqbgslViCIyyU6jEPspF4eBO4Zu+wDiHSMHaeG83cZEO/xIGQZ
+ 0/KQQgKb8/883loxtsDXJznR/SZ0PhE0WUtL7uFsMX8rffSkeGNkTPuVnIlgJkZZciGpRT8cG
+ mKtKeDigbTNCZy9/9yXRaULtwIUb9LQUu4Cqc46GaRhKmk25haXA49CFZFrl9+s1X3GtdgAY0
+ HJ3JGx9D34HkuPzYH2Yca9wiZgNekjuqlZGdm27WeULoYVULXY8feNqUCrm1tf8d6Kqfua3zw
+ I7yYMW9+Z2bv3fGjb2YyP87e/zsBB0Yqg/MCMlp95UnTkb5dz7Fzh/a6ZzbC09l83gt2L8VvM
+ oOHpERe94JAWosGcOYPvLIxU1r2OnJtMR7zBPYaElvkD/bAYEFWoiqS01gKiDRLiRQMDnrTcW
+ 2D6c452GxyA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 18, 2019 15:41, Johannes Schindelin wrote:
-> To: Randall S. Becker <rsbecker@nexbridge.com>
-> Cc: 'Junio C Hamano' <gitster@pobox.com>; 'Johannes Schindelin via
-> GitGitGadget' <gitgitgadget@gmail.com>; git@vger.kernel.org; 'Max
-Kirillov'
-> <max@max630.net>
-> Subject: RE: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1
-> 
-> Hi Randall,
-> 
-> On Thu, 14 Feb 2019, Randall S. Becker wrote:
-> 
-> > On February 14, 2019 17:39, Junio C Hamano wrote:
-> > > To: Randall S. Becker <rsbecker@nexbridge.com>
-> > > Cc: 'Johannes Schindelin via GitGitGadget' <gitgitgadget@gmail.com>;
-> > > git@vger.kernel.org; 'Max Kirillov' <max@max630.net>
-> > > Subject: Re: [PATCH 0/1] Fix hang in t5562, introduced in
-> > > v2.21.0-rc1
-> > >
-> > > "Randall S. Becker" <rsbecker@nexbridge.com> writes:
-> > >
-> > > > Unfortunately, subtest 13 still hangs on NonStop, even with this
-> > > > patch, so our Pipeline still hangs. I'm glad it's better on Azure,
-> > > > but I don't think this actually addresses the root cause of the
-hang.
-> > >
-> > > Sigh.
-> > >
-> > > > possible this is not the test that is failing, but actually the
-> > > > git-http-backend? The code is not in a loop, if that helps. It is
-> > > > not consuming any significant cycles. I don't know that part of
-> > > > the code at all, sadly. The code is here:
-> > > >
-> > > > * in the operating system from here up *
-> > > >   cleanup_children + 0x5D0 (UCr)
-> > > >   cleanup_children_on_exit + 0x70 (UCr)
-> > > >   git_atexit_dispatch + 0x200 (UCr)
-> > > >   __process_atexit_functions + 0xA0 (DLL zcredll)
-> > > >   CRE_TERMINATOR_ + 0xB50 (DLL zcredll)
-> > > >   exit + 0x2A0 (DLL zcrtldll)
-> > > >   die_webcgi + 0x240 (UCr)
-> > > >   die_errno + 0x360 (UCr)
-> > > >   write_or_die + 0x1C0 (UCr)
-> > > >   end_headers + 0x1A0 (UCr)
-> > > >   die_webcgi + 0x220 (UCr)
-> > > >   die + 0x320 (UCr)
-> > > >   inflate_request + 0x520 (UCr)
-> > > >   run_service + 0xC20 (UCr)
-> > > >   service_rpc + 0x530 (UCr)
-> > > >   cmd_main + 0xD00 (UCr)
-> > > >   main + 0x190 (UCr)
-> > > >
-> > > > Best guess is that a signal (SIGCHLD?) is possibly getting eaten
-> > > > or neglected somewhere between the test, perl, and git-http-backend.
-> > >
-> > > So we are trying to die(), which actually happens in die_webcgi(),
-> > > and
-> > then try
-> > > to write some message _but_ notice an error inside
-> > > write_or_dir() and try to exit because we do not want to recurse
-> > > forever trying to die, giving a message to say how/why we died, and
-> > > die because failing to give that message, forever.
-> > >
-> > > But in our attempt to exit(), we try to "cleanup children" and that
-> > > is
-> > what gets
-> > > stuck.
-> > >
-> > > One big difference before and after the /dev/zero change is that the
-> > process
-> > > is now on a downstream of the pipe.  If we prepare a large file with
-> > > a
-> > finite
-> > > size full of NULs and replace /dev/null with it, instead of feeding
-> > > NULs
-> > from
-> > > the pipe, would it change the equation?
-> >
-> > Doubtful. The processes are still around, and are waiting on read but
-> > not actively reading (CPU time is not going up, so we're not reading
-> > an infinite stream). To me, this is a pipe situation where there is
-> > simply nothing waiting on the pipe (maybe a flush missing?). I'm
-> > grasping are straws without knowing the actual process architecture of
-the
-> test to debug it.
-> 
-> So could you try with this patch?
-> 
-> -- snipsnap --
-> diff --git a/http-backend.c b/http-backend.c index d5cea0329a..7c1b4a2555
-> 100644
-> --- a/http-backend.c
-> +++ b/http-backend.c
-> @@ -427,6 +427,7 @@ static void inflate_request(const char *prog_name,
-> int out, int buffer_input, ss
-> 
->  done:
->  	git_inflate_end(&stream);
-> +	close(0);
->  	close(out);
->  	free(full_request);
->  }
+Hi,
 
-Based on d62dad7a7d (v2.21.0-rc0) undoing all of the fixes, this change on
-its own makes no difference to the hang situation - it is still there as it
-was when originally reported. Using POSIX::_exit does not change the outcome
-of the test either on its own or in conjunction with this fix.
+On Mon, 18 Feb 2019, Johannes Schindelin wrote:
 
+> On Sat, 16 Feb 2019, Junio C Hamano wrote:
+> 
+> > [...] but I'm inclined to
+> > 
+> >  - keep b46221ff in 'master', not reverted.
+> >  - apply Max's "t5562: do not reuse output files"
+> > 
+> > to 'master' and hope that we can declare victory in this part of the
+> > code ;-).  There may be fix-ups for other topics before -rc2 on top
+> > of that, though.
+> 
+> [...] in the meantime, I tested it, and Max' test seems to work:
+> 
+> https://dev.azure.com/git-for-windows/git/_build/results?buildId=31274
+
+I have to take that assessment back. So sad.
+
+After that build, I cherry-picked the commit on top of shears/pu (which is
+Git for Windows' ever-green branch that continuously rebases Git for
+Windows' `master` onto git.git's `pu`), and the build seems to hang again:
+
+https://dev.azure.com/git-for-windows/git/_build/results?buildId=31291
+
+I kicked off another build with Max' patch reverted, and my `test-tool
+genzeros` patch applied on top:
+
+https://dev.azure.com/git-for-windows/git/_build/results?buildId=31293
+
+I won't be able to wait for its outcome before logging off for the night
+(read: feel free to check its progress yourself, if the linux-clang job is
+still running 10 minutes after I send this mail, it is probably safe to
+assume that it hangs, otherwise it is fine), but I am fairly certain that
+it will work around the issue again, as it did exactly that before in
+several tests (and also in v2.21.0-rc1.windows.1).
+
+Ciao,
+Dscho
