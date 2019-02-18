@@ -6,19 +6,19 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C7A31F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id E24E51F453
 	for <e@80x24.org>; Mon, 18 Feb 2019 17:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388074AbfBRRFW (ORCPT <rfc822;e@80x24.org>);
+        id S2388082AbfBRRFW (ORCPT <rfc822;e@80x24.org>);
         Mon, 18 Feb 2019 12:05:22 -0500
-Received: from mx2.suse.de ([195.135.220.15]:56220 "EHLO mx1.suse.de"
+Received: from mx2.suse.de ([195.135.220.15]:56230 "EHLO mx1.suse.de"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1731720AbfBRRFW (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2388056AbfBRRFW (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 18 Feb 2019 12:05:22 -0500
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id DA056ADD3;
-        Mon, 18 Feb 2019 17:05:20 +0000 (UTC)
+        by mx1.suse.de (Postfix) with ESMTP id 38564AE1F;
+        Mon, 18 Feb 2019 17:05:21 +0000 (UTC)
 From:   Michal Suchanek <msuchanek@suse.de>
 To:     git@vger.kernel.org
 Cc:     Michal Suchanek <msuchanek@suse.de>,
@@ -26,10 +26,12 @@ Cc:     Michal Suchanek <msuchanek@suse.de>,
         Marketa Calabkova <mcalabkova@suse.cz>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] worktree add race fix
-Date:   Mon, 18 Feb 2019 18:04:55 +0100
-Message-Id: <cover.1550508544.git.msuchanek@suse.de>
+Subject: [PATCH 1/2] worktree: fix worktree add race.
+Date:   Mon, 18 Feb 2019 18:04:56 +0100
+Message-Id: <c7c66ca1f954e20dad8eeec3fb10c53ad844c800.1550508544.git.msuchanek@suse.de>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <cover.1550508544.git.msuchanek@suse.de>
+References: <cover.1550508544.git.msuchanek@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -37,52 +39,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Git runs a stat loop to find a worktree name that's available and then does
+mkdir on the found name. Turn it to mkdir loop to avoid another invocation of
+worktree add finding the same free name and creating the directory first.
 
-I am running a git automation script that crates a tree and commmits it into a
-git repository repeatedly.
-
-I noticed that the step which creates a tree is most time-consuming part of the
-script and when a lot of data is to be automatically added to the repository it
-is benefical to parallelize this part.
-
-To do so I had the script create a dozen worktrees and share the work between
-them. The problem is automatically creating several worktrees occasioanlly
-fails.
-
-The most common problem is in the worktree add implementation itself which
-tries to find an available directory name and then mkdir() it. Of course, doing
-that several times in parallel causes issues.
-
-When running stress-test to make sure the fix is effective I uncovered
-additional issues in get_common_dir_noenv. This function is used on each
-worktree to build a worktree list.
-
-Apparently it can happen that stat() claims there is a commondir file but when
-trying to open the file it is missing.
-
-Another even rarer issue is that the file might be zero size because another
-process initializing a worktree opened the file but has not written is content
-yet.
-
-When any of this happnes git aborts failing to create a worktree because
-unrelated worktree is not yet fully initialized.
-
-I have tested that these patches fix the issue. However, I expect race against
-removing/pruning worktrees is still possible.
-
-For previous discussion see
-
-http://public-inbox.org/git/CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com/
-
-Michal Suchanek (2):
-  worktree: fix worktree add race.
-  setup: don't fail if commondir reference is deleted.
-
+Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+---
+v2:
+- simplify loop exit condition
+- exit early if the mkdir fails for reason other than already present
+worktree
+- make counter unsigned
+---
  builtin/worktree.c | 12 +++++++-----
- setup.c            | 16 +++++++++++-----
- 2 files changed, 18 insertions(+), 10 deletions(-)
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 3f9907fcc994..85a604cfe98c 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -268,10 +268,10 @@ static int add_worktree(const char *path, const char *refname,
+ 	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *name;
+-	struct stat st;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	struct argv_array child_env = ARGV_ARRAY_INIT;
+-	int counter = 0, len, ret;
++	unsigned int counter = 0;
++	int len, ret;
+ 	struct strbuf symref = STRBUF_INIT;
+ 	struct commit *commit = NULL;
+ 	int is_branch = 0;
+@@ -295,8 +295,12 @@ static int add_worktree(const char *path, const char *refname,
+ 	if (safe_create_leading_directories_const(sb_repo.buf))
+ 		die_errno(_("could not create leading directories of '%s'"),
+ 			  sb_repo.buf);
+-	while (!stat(sb_repo.buf, &st)) {
++
++	while (mkdir(sb_repo.buf, 0777)) {
+ 		counter++;
++		if ((errno != EEXIST) || !counter /* overflow */)
++			die_errno(_("could not create directory of '%s'"),
++				  sb_repo.buf);
+ 		strbuf_setlen(&sb_repo, len);
+ 		strbuf_addf(&sb_repo, "%d", counter);
+ 	}
+@@ -306,8 +310,6 @@ static int add_worktree(const char *path, const char *refname,
+ 	atexit(remove_junk);
+ 	sigchain_push_common(remove_junk_on_signal);
+ 
+-	if (mkdir(sb_repo.buf, 0777))
+-		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
+ 	junk_git_dir = xstrdup(sb_repo.buf);
+ 	is_junk = 1;
+ 
 -- 
 2.20.1
 
