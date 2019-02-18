@@ -2,124 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_DNOT,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C20011F453
-	for <e@80x24.org>; Mon, 18 Feb 2019 18:39:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 209971F453
+	for <e@80x24.org>; Mon, 18 Feb 2019 18:41:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726692AbfBRSjy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 13:39:54 -0500
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:51672 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726166AbfBRSjy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Feb 2019 13:39:54 -0500
-Received: by mail-wm1-f47.google.com with SMTP id n19so115310wmi.1
-        for <git@vger.kernel.org>; Mon, 18 Feb 2019 10:39:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/lOAJz1I97PuV3rJSz4zFo4rNu+Jr17MsJmo1ASkdFo=;
-        b=C1px27uq47OKdIJ4912IfJ2G5b0YVVeFKGP0TF6NcjRD+Bz4oQ3j53porPjpRwrW3m
-         VSv3+D34p18oVgdbKRpUlFyDpahYykrNWQ6AHdaJRrDrUiOXAuCMOmsg8vDABGFCG6Cg
-         pd7UOiN8MA7uBFTWu27QBAg5IgUL2hRIxMVTzDw9lsx8XwCnxeVLz0/aTC757NyAjd8l
-         CFWPzjG79yNtXFz4VMe0O9chLQ+us6yDQszYGG7KytzP6ld5ALfM57WgIjDmnwaYq17T
-         5Xxauts5GKTzsT2yJauKjmPiU85r/Mq1WBh4iAY4099TmKnbHODPA+17UYfuwO0grTJo
-         uEug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/lOAJz1I97PuV3rJSz4zFo4rNu+Jr17MsJmo1ASkdFo=;
-        b=OSrrz6Z9ky0yogIvm1Gns1l40tlnut1FgMGlWIcaRurB07uJiPgE01cJaeSNclH5uU
-         FERkWzGteBgxcBbERh2vaU26y45NQ9+DvkbYnxvWhzbPvzIbKwNwyRX7VrJqQCRp5Pk1
-         vgpI6HTqPt5RcnT1CbN71gCwOc4PZlZTMQRXFtFyEj4bInadchZCrv6nyqLUJ7ysfFZL
-         jc7r5WgDEcw6I3yu3xiwwPwySKZXVNcnTMpzxGP0QBV2coz/Tg4MLmLj0M+HkKc8SO4j
-         p7Ao3yD5qmgXsNi1bKhrUz/vFwCUSmRp+Au/QdNlEq/+XbcbSASw4O2KonTjjzWtCg/n
-         qVPQ==
-X-Gm-Message-State: AHQUAuYRT1RS30igP06MyrSbuNMpm78uMKRcUrvfitJqVlKGdKgwmuLq
-        fSe92rr6cyltHsrCZu/qKuk=
-X-Google-Smtp-Source: AHgI3IZ0UDv/FqpQO9z7WJzB0UY7aWnd8rGl4prWCofnnSWSh9sGtNOuArRJ460WBq6GYNxU+2xtDw==
-X-Received: by 2002:a1c:1cf:: with SMTP id 198mr141409wmb.52.1550515191473;
-        Mon, 18 Feb 2019 10:39:51 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 90sm33505256wrk.95.2019.02.18.10.39.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 Feb 2019 10:39:50 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "'Senol Yazici'" <sypsilon@googlemail.com>, <git@vger.kernel.org>
-Subject: Re: [RFE] Demilitarize Documentation (was RE: Delivery Status Notification (Failure))
-References: <001601d4c7aa$460c0e70$d2242b50$@nexbridge.com>
-Date:   Mon, 18 Feb 2019 10:39:50 -0800
-In-Reply-To: <001601d4c7aa$460c0e70$d2242b50$@nexbridge.com> (Randall
-        S. Becker's message of "Mon, 18 Feb 2019 11:51:57 -0500")
-Message-ID: <xmqqimxh2b61.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726213AbfBRSl5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 13:41:57 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58416 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725616AbfBRSl4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 18 Feb 2019 13:41:56 -0500
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x1IIcrwD013104;
+        Mon, 18 Feb 2019 10:41:51 -0800
+Received: from mail.palantir.com ([8.4.231.70])
+        by mx0a-00153501.pphosted.com with ESMTP id 2qph8ra814-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+        Mon, 18 Feb 2019 10:41:51 -0800
+Received: from sj-prod-exch-02.YOJOE.local (10.129.18.29) by
+ sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Mon, 18 Feb 2019 10:41:47 -0800
+Received: from smtp-transport.yojoe.local (10.129.56.124) by
+ sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server id
+ 15.1.1713.5 via Frontend Transport; Mon, 18 Feb 2019 10:41:47 -0800
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 20B0D2215C18;
+        Mon, 18 Feb 2019 10:41:49 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     <gitster@pobox.com>
+CC:     <git@vger.kernel.org>,
+        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: 
+Date:   Mon, 18 Feb 2019 10:41:47 -0800
+Message-ID: <20190218184147.7563-1-newren@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc1.264.g6c9e06a32d
+In-Reply-To: <5C481202020000A10002F4AE@gwsmtp1.uni-regensburg.de>
+References: <5C481202020000A10002F4AE@gwsmtp1.uni-regensburg.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-02-18_14:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+Hi Ulrich,
 
->> Taking a lesson from other Open Source projects, Jenkins has deprecated
->> Master/Slave in favour of Controller/Agent. This seems not only more
->> acceptable to some, but in my view more descriptive. The terms on the page
->> above do not actually make any descriptive sense to a newbie. And confusion
->> could ensue from the dictionary definitions:
->> 
->> * Lieutenant: an aide or representative of another in the performance of
->> duty : assistant (not what that repository is for)
->> * Dictator: one holding complete autocratic control : a person with unlimited
->> governmental power (not how the git team behaves)
->> * Blessed: honored in worship : hallowed; of or enjoying happiness (although
->> I can see the happiness part of this one)
+Sorry for the late reply...
+
+On Tue, Jan 22, 2019 at 11:04 PM Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de> wrote:
+> >>> Elijah Newren <newren@gmail.com> schrieb am 22.01.2019 um 22:29 in
+> Nachricht
+> > On Tue, Jan 22, 2019 at 1:05 PM Ulrich Windl
+> > <Ulrich.Windl@rz.uni-regensburg.de> wrote:
+> >>
+> >> Using git version 2.16.4 on OpenSUSE Leap 15.0, it seems that "--no-commit"
+> >> no
+> >> longer does what it did before (AFAIR, but I mostly did --no-ff merges in
+> >> SLES11):
+> >>
+> >> > git merge --no-commit local/f-linux-firefox
+> >> Aktualisiere 520aaae..c11e3da
+> >> Fast-forward
+....
+> > Indeed; the changes were committed before you ran "git merge"; they
+> > were all part of the local/f-linux-firefox branch.
 >
-> It probably would be worth submitting this as an issue to the
-> documentation project at
-> https://github.com/git/git-scm.com. Depending on the response from
-> the committers, I might be willing to take that on, but digging
-> deeper, I'm not sure the terms I proposed as sufficient.
+> Actually no: The changes were on a different local "remote" branch; otherwise
+> I wouldn't need the merge, I guess
 
-I personally do not feel these three words are so problematic to
-spend bandwidth discussing on here; it probably is partly because I
-am not a native speaker and am not too much disturbed by connotations
-they may make those who are more fluent with the language feel.
+Yes, they were on a different branch, but since the commits already exist they don't need to be created again.  The current branch can just be updated from the current commit to the commit on the end of the other branch.  No merge is needed because the histories of the two branches have not diverged, so the merge short-circuits itself (doing what is sometimes called a "fast-forward merge" instead and avoiding almost all the normal merge logic).
 
-The page describing various ways a project can be structured uses
-the kernel project as one of the examples, and over there, at least
-"lieutenant" is a well understood term to describe those who feed
-Linus (because Linus does not scale otherwise).  I do not know if
-Linus is called "dictator" there but I trust those who wrote that
-"distributed" page knew what the words commonly used in the example
-project they chose.  Deviating from the words they use would make
-the example harder to understand.
+> >> Reading
+> >> https://stackoverflow.com/questions/8640887/git-merge-without-auto-commit
+> it
+> >> seems that without "--no-ff" this ioption is effectively ignored.
+>
+> Note: If you see the number of upvotes to the answer there, it seems I'm not
+> the only one who got confused. ;-)
 
-For that matter, I do not know why borrowing vocabulary from any
-well understood area, be it military or religion, is a bad idea to
-begin with.  I personally have no issues with people who worship
-deity of their own (or none). That probably is also due to where I
-come from, where we have 8 million of them ;-)
+Indeed, and looking at that stackoverflow post, it makes it clear that the manpage is actually misleading.  I'll post a patch to correct it.
 
-So, if the reason why some people feel "blessed" is a bad phrasing
-to use is because it came from a particilar religion and other
-religions have no such concept, I do not agree with such a feeling
-at all, as long as those who hear it all know what the speaker means
-by the word.  I would have more problems if we pick a word rarely
-used that nobody would understand.
+> Is moving commits from one branch to to another done without any new commit?
+> Just updating the refs, or what? I didn't know that.
 
-I _think_ that is what the distinction between "acceptable" vs "more
-descriptive" mentioned in the early part I quoted in this message
-talks about---I do not quite by "acceptable" part, but I care more
-about "more descriptive" part.
+If the two branches have not diverged at all, and only one side has some commits that the other doesn't, then indeed there is no need for creating any new commits.  If the histories have diverged, then you need to create a merge commit and have a real merge.
 
-Thansk.
+> > If you want the branch to not get updated, then yes you'd need both
+> > --no-ff and --no-commit in some cases.  But that's always been true.
+> > It's possible in the past that you just didn't run into those cases.
+>
+> So it seems a commit is something other than I'd expected: To me anything that
+> changes what "git log" outputs is a commit ;-) Or anything that chenges the
+> reflog...
 
+A commit is an object that records its parents (most commits have exactly one parent), its author, its committer, a commit message, and the tree involved.  Creating a new commit is a common reason to change the reflog and would cause git log to have more output for subsequent invocations.  Most merges will of necessity create a merge commit, to reflect that diverging histories have been merged (and such a commit will have more than one parent, one for each branch being merged).  But, as noted above, if histories haven't diverged then we don't need a new multi-parent commit; we can just short-circuit the merge logic and use the existing commits on the other branch.
 
+> > Alternatively, we could update the documentation to point out this
+> > special case under --no-commit to point out that when an ff-update
+> > occurs no commit creation is involved and thus --no-commit has no
+> > effect.  Would that help?
+>
+> Maybe (I'm unsure where the concepts are described best to check the current
+> version(s)) try to explain the concepts of "commit" and "fast forward" in some
+> greater detail. Maybe I was just expecting the wrong things to happen behind
+> the scenes. Maybe add a statement like "fast-forwards never create a new
+> commit, so --no-commit doesn't make sense when fast-forwarding."
+>
+> Thanks for the explanations.
+
+Hopefully the patch below answers what you originally needed to know and prevents others from running into similar problems.
+
+Thanks,
+Elijah
+
+-- 8< --
+Subject: [PATCH] merge-options.txt: correct wording of --no-commit option
+
+The former wording implied that --no-commit would always cause the
+merge operation to abort and allow the user to make further changes
+and/or provide a special commit message for the merge commit.  This
+is not the case for fast-forward merges, as there is no merge commit
+to create.  Without a merge commit, there is no place where it makes
+sense to "stop the merge and allow the user to tweak changes"; doing
+that would require a full rebase of some sort.
+
+Modify the wording to correctly address fast-forward cases as well,
+and suggest using --no-ff with --no-commit if the point is to ensure
+that the merge aborts.
+
+Reported-by: Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/merge-options.txt | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index c2a263ba74..d1061b8cf7 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -3,9 +3,15 @@
+ 	Perform the merge and commit the result. This option can
+ 	be used to override --no-commit.
+ +
+-With --no-commit perform the merge but pretend the merge
+-failed and do not autocommit, to give the user a chance to
+-inspect and further tweak the merge result before committing.
++With --no-commit perform the merge and stop just before creating
++a merge commit, to give the user a chance to inspect and further
++tweak the merge result before committing.
+++
++Note that fast-forward updates do not need to create a merge
++commit and therefore there is no way to stop those merges with
++--no-commit.  Thus, if you want to ensure your branch is not
++changed or updated by the merge command, use --no-ff with
++--no-commit.
+ 
+ --edit::
+ -e::
+-- 
+2.21.0.rc1.264.g6c9e06a32d
 
