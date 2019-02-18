@@ -2,93 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PI_DNOT,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B0DE1F453
-	for <e@80x24.org>; Mon, 18 Feb 2019 17:05:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48AAB1F453
+	for <e@80x24.org>; Mon, 18 Feb 2019 17:26:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390243AbfBRRFX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 12:05:23 -0500
-Received: from mx2.suse.de ([195.135.220.15]:56254 "EHLO mx1.suse.de"
+        id S1731145AbfBRR0l convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 18 Feb 2019 12:26:41 -0500
+Received: from mx2.suse.de ([195.135.220.15]:35454 "EHLO mx1.suse.de"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2388060AbfBRRFW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Feb 2019 12:05:22 -0500
+        id S1730154AbfBRR0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Feb 2019 12:26:41 -0500
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 8213DAED7;
-        Mon, 18 Feb 2019 17:05:21 +0000 (UTC)
-From:   Michal Suchanek <msuchanek@suse.de>
-To:     git@vger.kernel.org
-Cc:     Michal Suchanek <msuchanek@suse.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Marketa Calabkova <mcalabkova@suse.cz>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] setup: don't fail if commondir reference is deleted.
-Date:   Mon, 18 Feb 2019 18:04:57 +0100
-Message-Id: <6f9c8775817117c2b36539eb048e2462a650ab8f.1550508544.git.msuchanek@suse.de>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cover.1550508544.git.msuchanek@suse.de>
-References: <cover.1550508544.git.msuchanek@suse.de>
+        by mx1.suse.de (Postfix) with ESMTP id ACB6DACEF;
+        Mon, 18 Feb 2019 17:26:39 +0000 (UTC)
+Date:   Mon, 18 Feb 2019 18:26:38 +0100
+From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     "'Senol Yazici'" <sypsilon@googlemail.com>, <git@vger.kernel.org>
+Subject: Re: [RFE] Demilitarize Documentation (was RE: Delivery Status
+ Notification (Failure))
+Message-ID: <20190218182638.6a30b53b@kitsune.suse.cz>
+In-Reply-To: <001601d4c7aa$460c0e70$d2242b50$@nexbridge.com>
+References: <001601d4c7aa$460c0e70$d2242b50$@nexbridge.com>
+Organization: SUSE Linux
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When adding wotktrees git can die in get_common_dir_noenv while
-examining existing worktrees because the commondir file does not exist.
-Rather than testing if the file exists before reading it handle ENOENT.
+Hello,
 
-Signed-off-by: Michal Suchanek <msuchanek@suse.de>
----
-v2:
-- do not test file existence first, just read it and handle ENOENT.
-- handle zero size file correctly
----
- setup.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+On Mon, 18 Feb 2019 11:51:57 -0500
+"Randall S. Becker" <rsbecker@nexbridge.com> wrote:
 
-diff --git a/setup.c b/setup.c
-index ca9e8a949ed8..dd865f280d34 100644
---- a/setup.c
-+++ b/setup.c
-@@ -270,12 +270,20 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
- {
- 	struct strbuf data = STRBUF_INIT;
- 	struct strbuf path = STRBUF_INIT;
--	int ret = 0;
-+	int ret;
- 
- 	strbuf_addf(&path, "%s/commondir", gitdir);
--	if (file_exists(path.buf)) {
--		if (strbuf_read_file(&data, path.buf, 0) <= 0)
-+	ret = strbuf_read_file(&data, path.buf, 0);
-+	if (ret <= 0) {
-+		/*
-+		 * if file is missing or zero size (just being written)
-+		 * assume default, bail otherwise
-+		 */
-+		if (ret && errno != ENOENT)
- 			die_errno(_("failed to read %s"), path.buf);
-+		strbuf_addstr(sb, gitdir);
-+		ret = 0;
-+	} else {
- 		while (data.len && (data.buf[data.len - 1] == '\n' ||
- 				    data.buf[data.len - 1] == '\r'))
- 			data.len--;
-@@ -286,8 +294,6 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
- 		strbuf_addbuf(&path, &data);
- 		strbuf_add_real_path(sb, path.buf);
- 		ret = 1;
--	} else {
--		strbuf_addstr(sb, gitdir);
- 	}
- 
- 	strbuf_release(&data);
--- 
-2.20.1
+> On February 18, 2019 11:13, I wrote:
+> > To: 'Senol Yazici' <sypsilon@googlemail.com>; git@vger.kernel.org
+> > Subject: RE: Delivery Status Notification (Failure)
+> > 
+> > On February 18, 2019 5:47, Senol Yazici  
+> > > I just stumbled over following page
+> > >
+> > > https://git-scm.com/about/distributed
+> > >
+> > > and was wondering if it is possible to
+> > >
+> > > - demilitarise that “dictator/lieutenant” thing and
+> > > - de-religionise that “blessed” thing
+> > >
+> > > I did not had the feeling that git is “pro military”, or is against “non  
+> > religious”  
+> > > developers/users.  
 
+I have not. Using common terminology to describe a concept makes it
+easier to understand.
+
+'dictator' is not military at all. 'lieutenant' is often used in
+military context but according to The Collaborative International
+Dictionary of English v.0.48 the most common meaning is "An officer who
+supplies the place of a superior in his absence; a representative of,
+or substitute for, another in the performance of any duty."
+
+> > 
+> > I think there is a point here. In some of my customers, we have
+> > replaced these terms with the following (the Repository is optional
+> > in the second two):
+> > 
+> > * Blessed: Repository of Record
+
+I think 'Blessed' is way easier to understand than 'Repository of
+Record'. Also 'blessed' is not necessarily connected to religion. For
+example, you can get your parent's blessing even when they are not
+religious, whatever it's worth.
+
+> > * Dictator: Committer [Repository]
+> > * Lieutenant: Contributor [Repository]
+> > 
+> > This seems more closely aligned with the real roles being applied to activities
+> > associated with the repositories involved.
+> > 
+> > Taking a lesson from other Open Source projects, Jenkins has deprecated
+> > Master/Slave in favour of Controller/Agent. This seems not only more
+> > acceptable to some, but in my view more descriptive. 
+
+Of course, master/slave can have connotations with some not so nice
+historical episodes.
+
+I think that to some 'agent' might be less acceptable because it might
+have connotation with some other not so nice historical episodes which
+are described with some literary license in the '1984' novel.
+
+As far as descriptivity goes both terminologies are misleading in
+different ways. Only when you are aware that it has changed it makes
+things actually clearer.
+
+> The terms on the page
+> > above do not actually make any descriptive sense to a newbie. And confusion
+> > could ensue from the dictionary definitions:
+> > 
+> > * Lieutenant: an aide or representative of another in the performance of
+> > duty : assistant (not what that repository is for)
+I beg to differ. That's exactly what the repository is for.
+> > * Dictator: one holding complete autocratic control : a person with unlimited
+> > governmental power (not how the git team behaves)
+If you are the sole person with the right to change the 'blessed' or
+'master' repository then this describes the role quite well.
+
+Thanks
+
+Michal
