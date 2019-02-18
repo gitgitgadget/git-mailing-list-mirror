@@ -2,115 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 430471F453
-	for <e@80x24.org>; Mon, 18 Feb 2019 00:22:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 212021F453
+	for <e@80x24.org>; Mon, 18 Feb 2019 04:34:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727820AbfBRAWC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Feb 2019 19:22:02 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:38264 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727298AbfBRAWB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Feb 2019 19:22:01 -0500
-Received: by mail-wm1-f67.google.com with SMTP id v26so15284562wmh.3
-        for <git@vger.kernel.org>; Sun, 17 Feb 2019 16:22:00 -0800 (PST)
+        id S1727247AbfBREe6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Feb 2019 23:34:58 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:33744 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727003AbfBREe5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Feb 2019 23:34:57 -0500
+Received: by mail-pg1-f195.google.com with SMTP id h11so5437376pgl.0
+        for <git@vger.kernel.org>; Sun, 17 Feb 2019 20:34:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HJ3JN57+gyIdB8GC6RL8cmsPw/X1STE6yV/6qxr4ddw=;
-        b=BHRqhLPXGMkESGWUfdm5GjB6he1wKWSsA23ELd68bfgePsSg46K1dEDe2mYR6jmr5A
-         31rGl0BRYe1GykcI7HCFHlEqmaXUXDy0Dr4uP9gEqYuyeNPNrqFCEmGnspVNXEtX4oIN
-         7ie3jC8K8z4rpYScITs88epCTeGAV8MGEY5CFdFGVMhwfCSVkGyBE4+aF2bgsgU/NvuC
-         9j0ncD3ZeNP6rZCHtzlEULsjm0yqI/Od0UgA1ZiuabgZ0glHSSRudwB70Qm+mdgIkLCH
-         LQImgR4vnfvGdt//Y2YtchOXxTdWYVj1CmMHr3sKFtd8Jay2NDL1VjGxgB/3GTB1XN6t
-         ONMA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0jMUYF94GVSSmCZmBhszB12uW0+xsST28Mj4MCCXpiE=;
+        b=qnNGhUdWUjpYeHPzFwpBa+gSIqlTUTJjOBjrs12FgRG6gUQA/fiTW4jCWjHo31Fmq9
+         rs8m4oeuQyXMBb9451EZcsc15eEvIsdNsOC9ADqovOhmcAbUVgti71xHteFl2yvScd5D
+         ThqekmD0qfH54P6A8ZyihSbIKFikCoc5db89AQ9Na9h71jI6Od5YF6DX7pwXqnXk7fsn
+         PHc3vZ/n1mCSX5ZPNJS48j5qp8Evjx+mC9j9BdtCTE2JicICuGgiJ8ZZUdMyGUXGcpm0
+         XGVhPdG7/9SzGDysQUUN1iL/VoMl+95iY+1w1dqyJm1Unl9WgTpNWnI5zNCipJNjPa/x
+         TfWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HJ3JN57+gyIdB8GC6RL8cmsPw/X1STE6yV/6qxr4ddw=;
-        b=qnRvktnRtZm5cdf0CKuF8oy3MLjrHtY5JoQ/KEWB5WQUurkOR1vJh1QLpRZL+3JFhh
-         MKbQJGsZvMLoeeL1mKO2lOYS0Ri0qcBYUcNsPDnNgTVjKHqXpsTA9MOVTpio4uyjU/B1
-         X7dFkv9Fu+t/IkyG6VWM8X8UJ+5yLO/vK2E+3U6FkZmYLNJxc+nRbmObEyoA6StPDp1S
-         /GuZE26VUltxn7VGlyQhxa/+C7S4Fyn9F908jtaZalfEivJe6o+CghCQ7YpW/E1wRgK2
-         i0PnSi4qrpiWm5iQnW7uLpYuHLxzG5jV806L1ynrB4y6xLM9W8dKyESkNj8BwsYYCymH
-         msVg==
-X-Gm-Message-State: AHQUAubrcK/de0FrMRo/7RA3jgrxqkDi+t2Msm4Fj0B64DEkn5L7Zl4v
-        xxaOubFkUGQQYpPaVfcNP8U=
-X-Google-Smtp-Source: AHgI3IaibH/vYRa6HKDiAp2tJ3/o2c+lY6PqE0PIAb7eqyZnoX7c0RtN8nq8YVOP2oqzxBhnSlu4MA==
-X-Received: by 2002:a1c:6788:: with SMTP id b130mr14715439wmc.102.1550449318899;
-        Sun, 17 Feb 2019 16:21:58 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h137sm10003205wmg.41.2019.02.17.16.21.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 17 Feb 2019 16:21:56 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0jMUYF94GVSSmCZmBhszB12uW0+xsST28Mj4MCCXpiE=;
+        b=dLIkR/S26DaDAz/R0WkHgdc7j7swtgvoWZEH2pODpRIHYIUjrv8S8ulHsbzLO9ZDiR
+         CTEP9XW6VqfzbHdIEnS6XscipsnLGAL/a8gJPaBsojFi/9m+rXapP7kOFSkSbZj3e/Zn
+         I3Xfk0BZkwcXFjyheuvwT+EOLjm4/Y3Eox87cAMq40bxgo0LL3YYhGat1L6sdBhfvF+2
+         ox5SGnfc1EkLw51HJLlM8eqP0h3VGP3j2aI4das6TrQVAbrpykoG5pwdpw6SH/204ssA
+         uu8MpjXQDS9aK1NF0gQOk1ahJn1DYLhvF43Cs3OXWLthGgcaBoTTzAGhoSQOSvZYOVrP
+         MPFw==
+X-Gm-Message-State: AHQUAubphdC9MYgIN2aisL96/driVHkZJWY2DXNmiBDbaezzZ/BZvTuy
+        58c43Xb58i1Ru2u03lc/dsAMTp3ZUkE=
+X-Google-Smtp-Source: AHgI3IaXYhKxhCSGchwsClzYY8MtFvFI7n/pWILdDI4//szwMRXmYy+66uXUM2eo5TgKWJoUzWEORQ==
+X-Received: by 2002:aa7:854d:: with SMTP id y13mr22267268pfn.175.1550464496816;
+        Sun, 17 Feb 2019 20:34:56 -0800 (PST)
+Received: from localhost ([122.172.102.63])
+        by smtp.gmail.com with ESMTPSA id d131sm19271269pfd.108.2019.02.17.20.34.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 17 Feb 2019 20:34:55 -0800 (PST)
+Date:   Mon, 18 Feb 2019 10:04:53 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>,
-        vincent.guittot@linaro.org
+        Johannes Sixt <j6t@kdbg.org>, vincent.guittot@linaro.org
 Subject: Re: [Bug report] git diff stat shows unrelated diff
-References: <20190214082258.3mh3hcr2l6dl3wuf@vireshk-i7>
-        <CABPp-BGstumw1eyZ++0itk-AR0Bk5zd0AchgznBpMq35a6ScUg@mail.gmail.com>
-        <xmqqmumy6mxe.fsf@gitster-ct.c.googlers.com>
-        <20190215185202.GA28019@dev-l>
-        <CABPp-BEmPQb4Q_38S2A_68m+Cu75VDDD2UV0qWBDjL1OUAug9Q@mail.gmail.com>
-        <xmqqzhqw4xqe.fsf@gitster-ct.c.googlers.com>
-        <ad85402e-0ad2-4f4d-3b66-9250115072c0@iee.org>
-        <xmqqr2c84ohn.fsf@gitster-ct.c.googlers.com>
-        <dca9622d-c8e7-abcb-2e13-73bd8bb9dd84@iee.org>
-        <xmqq1s473x63.fsf@gitster-ct.c.googlers.com>
-        <d2127f77-9124-0e01-e96b-b6a1650ebc59@iee.org>
-Date:   Sun, 17 Feb 2019 16:21:55 -0800
-In-Reply-To: <d2127f77-9124-0e01-e96b-b6a1650ebc59@iee.org> (Philip Oakley's
-        message of "Sun, 17 Feb 2019 23:34:53 +0000")
-Message-ID: <xmqqpnrq2bfg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Message-ID: <20190218043453.b3jkt365bvg2deox@vireshk-i7>
+References: <CABPp-BGstumw1eyZ++0itk-AR0Bk5zd0AchgznBpMq35a6ScUg@mail.gmail.com>
+ <20190215064013.s7yfkmfvfmwfmepc@vireshk-i7>
+ <CABPp-BFpj8DBxgsqe9Rqnzb4vx5fPqNc+sUj8LzrFMj2bacoBQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BFpj8DBxgsqe9Rqnzb4vx5fPqNc+sUj8LzrFMj2bacoBQ@mail.gmail.com>
+User-Agent: NeoMutt/20180323-120-3dd1ac
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.org> writes:
+On 15-02-19, 08:09, Elijah Newren wrote:
+> Hi Viresh,
+> 
+> On Thu, Feb 14, 2019 at 10:40 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+> >
+> > On 14-02-19, 13:23, Elijah Newren wrote:
+> > > I think you're getting tripped up by double-dot vs triple-dot with
+> > > diff being different than log:
+> > >
+> > > `git diff D..E` means the same thing as `git diff D E`, i.e. diff the
+> > > two commits D and E.
+> >
+> > Right, so both the branches have at least until rc2 (though
+> > pm/linux-next had until rc6), why will the diff D..E show the diff
+> > between rc1 and rc2 ?
+> 
+> I don't think it does; it includes the diff between rc2 and rc6.
+> First, `git diff D..E` will show you roughly the same thing as if you
+> have two clones of linux, one with D checked out, one with E checked
+> out, and then you run 'diff -ru linux-copy1/ linux-copy2/'.
+> 
+> But let's go back to your example, you had
+> 
+> Branch A: commit 55538fbc79e9
+> Branch B: commit a4f342b9607d
+> Branch C: commit 7c139d3f0f99
+> Branch pm/linux-next: unspecified, but I'll guess commit a06639e89e4
 
-> It was my understanding that the end point would be total removal of
-> any options and the typing of the double dot would be an error. Given
-> that hard end point I was looking to ensure that users of double dots
-> have a manageable route to unlearning old bad habits. Thus the first
-> phase would be opt-in,
+I mentioned that at the bottom of the email, d26ff2405272 :)
 
-Sorry, but I do not see any logical connection in this "Thus".  If
-we are still undecided if deprecating double-dot is a good idea and
-trying to gauge the impact, then perhaps an early "opt-in" to leave
-the door open for aborting the transition plan might make sense (as
-an escape hatch for _us_ the project developers to make excuse to
-the end users).  But I am getting an impression that it is not the
-plan you have in mind.
+And yes I got confused somehow earlier, ran all the commands again to
+verify the diffs, sorry about that.
 
-> To train the fingers, and to check local scripts and aliases, the user
-> needs feedback, preferably at a time of their convenience (as opposed
-> to being a time of inconvenience), so assuming they have been paying
-> moderate attention to the release notes, providing the opt-in phase
-> gives them that.
-
-And to those who haven't been paying attention, what happens when
-your "first phase" period expires?
-
-I would be a lot more sympathetic if your argument were "some people
-will not be ready to start training, and they will be helped if we
-had an opt-out knob early in the long deprecation period".  Even
-those who have not been paying attention at all _will_ be hit by
-deprecation warning, and that is when they can decide if they want
-to start training or they are not ready and want to postpone, so in
-that sense, "initial opt-out" may make sense, but I do not see how
-"initial opt-in" can be a viable thing.
-
+-- 
+viresh
