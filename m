@@ -2,88 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BF171F453
-	for <e@80x24.org>; Mon, 18 Feb 2019 15:09:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC3FE1F453
+	for <e@80x24.org>; Mon, 18 Feb 2019 15:17:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730640AbfBRPJK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 10:09:10 -0500
-Received: from forward105p.mail.yandex.net ([77.88.28.108]:33661 "EHLO
-        forward105p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730522AbfBRPJK (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 18 Feb 2019 10:09:10 -0500
-Received: from mxback13j.mail.yandex.net (mxback13j.mail.yandex.net [IPv6:2a02:6b8:0:1619::88])
-        by forward105p.mail.yandex.net (Yandex) with ESMTP id D98704D42478;
-        Mon, 18 Feb 2019 18:09:07 +0300 (MSK)
-Received: from smtp4p.mail.yandex.net (smtp4p.mail.yandex.net [2a02:6b8:0:1402::15:6])
-        by mxback13j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id h9LOdJB31U-97maoRsJ;
-        Mon, 18 Feb 2019 18:09:07 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1550502547;
-        bh=mFWoef4ns3c0UrenuH5ufzb+dsbD/qeG8SKGxQu+WbU=;
-        h=Date:From:Subject:To:Cc:Message-Id:In-Reply-To:References;
-        b=nHptYO1NKozoVv8gI5JRqf0spJhhVHlUPMIJ5v5CbKHJn0lQrVz0/aw2vaujrLdw3
-         8Y1DosiF57NkFymer3vg7Sw4WMVJxEDuGR+bqKxIM/Bm3ra67b0pnjZNNr7A16JL9B
-         L9Zm3YR/XRXA27jnuudjtjO6S+xLPhQ8tRW7Z/bc=
-Authentication-Results: mxback13j.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by smtp4p.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id rHz1NV7Blt-97OKqgY3;
-        Mon, 18 Feb 2019 18:09:07 +0300
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (Client certificate not present)
-Date:   Mon, 18 Feb 2019 18:09:06 +0300
-From:   hi-angel@yandex.ru
-Subject: Re: git gc fails with "unable to resolve reference" for worktree
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Message-Id: <1550502546.2865.1@yandex.ru>
-In-Reply-To: <CACsJy8Bjryv5Of0kN-wwiQs5S3Km=z=WRDTPcBD_Sgsm6Mvjag@mail.gmail.com>
-References: <1550500586.2865.0@yandex.ru>
-        <CACsJy8Bjryv5Of0kN-wwiQs5S3Km=z=WRDTPcBD_Sgsm6Mvjag@mail.gmail.com>
-X-Mailer: geary/master~g2c4fe9b7
+        id S1731035AbfBRPRb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 10:17:31 -0500
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:32921 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729556AbfBRPRb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Feb 2019 10:17:31 -0500
+Received: by mail-wr1-f44.google.com with SMTP id i12so18841530wrw.0
+        for <git@vger.kernel.org>; Mon, 18 Feb 2019 07:17:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yO61odtHCBc0Q5y6QHDc0hnfF+jsLIwgxpbAb2/qI5w=;
+        b=TRDOlWO5Y13I6F/uWec1zwI8vuWoOdMAkGGWeKjhUxTKtYZjGj1XqZHd0mPyugId0X
+         0gJk3Q/me6Tvb9LWpsG5oH4QoVt/nBy1E/DWwfphZnhbIeDX8sN71y95UmE7hh3ujEKE
+         HYeHpvi24m4HzC5vCswhJ/tymhIePTLw/ooYFkx2CVlIkEdtS/GSoqkWUAImMmfr/l70
+         tHwL59SwosLJZZumx351Zpb3rYdan7DZBYhg3UxWoud5dq7EucNpwtG1S7/4u8bZr9nv
+         ZWsu27Wg+8du2sjo1IVH8najC4cK7artip0RDF6hjUD6/h8/8XgMVFgcnAj2RyYjBqu6
+         JW2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yO61odtHCBc0Q5y6QHDc0hnfF+jsLIwgxpbAb2/qI5w=;
+        b=REz0+VkBcJ4MJpv8pZ+YZtUIFheMYCkhcTrvKH76H0JgT1IrXcie7XxFQp30jZ0H/O
+         UEFWsHSWn+dCivnYuDeYwtEwo7Mz4yzPZAGmcBMArQCQunDF8xZ1H43cudwWkBLc3koP
+         GTpJe6EhcPf5jVIFfg6S1u+N0vwxeC9BRgqU9MksVRf1si5u173QJXXQLvGi+B0A7xTi
+         ThTiXvZfS52uEdbCvQwwY3RVdoFHPhZ0fpKLeFpiDPeaa5EhwyAXohIJnECwy3VUMmNw
+         ZpEGZ4DPVCES0F2KVa4dpIsmaNlohZGxvAzmgj7HU9sDWA/gzTtJKmXjeTxhedriYaLk
+         qMxg==
+X-Gm-Message-State: AHQUAuYpK6mJuTAtr+NkfoE2ExqSSu4iaujTzUdesg7VjYpIlbbd5llG
+        3ARCA6MJsdYxlsgaqxG2Mu9kaHNw
+X-Google-Smtp-Source: AHgI3IaLDROzUKwQt8ytFHZh4I/CcQjg2ui6tBbDhri7RirxvFzaIPBHuj62u8LFNh3cuEdAiwTLxg==
+X-Received: by 2002:adf:eb01:: with SMTP id s1mr16459403wrn.101.1550503049263;
+        Mon, 18 Feb 2019 07:17:29 -0800 (PST)
+Received: from szeder.dev (x4db52463.dyn.telefonica.de. [77.181.36.99])
+        by smtp.gmail.com with ESMTPSA id t18sm2641187wmt.8.2019.02.18.07.17.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Feb 2019 07:17:28 -0800 (PST)
+Date:   Mon, 18 Feb 2019 16:17:25 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Joe Ranieri <jranieri@grammatech.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] ls-files showing deleted files (unchecked lstat return
+ value)
+Message-ID: <20190218151725.GL1622@szeder.dev>
+References: <1ff48830-f3de-11f4-9014-c20eb3890c21@grammatech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-5; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1ff48830-f3de-11f4-9014-c20eb3890c21@grammatech.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Feb 17, 2019 at 08:49:39AM -0500, Joe Ranieri wrote:
+> "git ls-files -m" can show deleted files, despite -d not having been
+> specified. 
+
+To my understanding that's intentional: a deleted file is considered
+modified, because its content clearly doesn't match the tracked
+content.
 
 
-On =BF=DD, Feb 18, 2019 at 6:02 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Feb 18, 2019 at 9:44 PM <hi-angel@yandex.ru> wrote:
->>=20
->>  # Steps to reproduce (in terms of terminal commands)
->>=20
->>      $ mkdir foo
->>      $ cd foo
->>      $ git init
->>      Initialized empty Git repository in /tmp/foo/.git/
->>      $ echo hello > testfile
->>      $ git add testfile && git commit -m "my commit1"
->>      [master (root-commit) d5f0b47] my commit1
->>      1 file changed, 1 insertion(+)
->>      create mode 100644 testfile
->>      $ git checkout -b bar
->>      Switched to a new branch 'bar'
->>      $ git worktree add ../bar\ \(worktree\) master
->>      Preparing worktree (checking out 'master')
->>      HEAD is now at d5f0b47 my commit1
->>      $ git gc
->>      error: cannot lock ref 'worktrees/bar (worktree)/HEAD': unable=20
->> to
->>  resolve reference 'worktrees/bar (worktree)/HEAD': Invalid argument
->=20
-> Thanks for reporting. This is not a valid reference and causes the
-> problem. The worktree's name has to sanitized. I'll fix it tomorrow.
->>=20
-
-You mean, you want to prohibit such directory names as a worktree? But=20
-it's a proper directory naming, can perhaps git do the sanitizing=20
-transparently for end-user?
-
-=
-
+> This is due to ls-files.c's show_files function calling lstat but
+> not checking the return value before calling ie_modified with the
+> uninitialized stat structure.
+> 
+> This problem was found using the static analysis tool GrammaTech CodeSonar.
