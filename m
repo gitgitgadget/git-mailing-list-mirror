@@ -2,136 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F6271F453
-	for <e@80x24.org>; Mon, 18 Feb 2019 21:06:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11EB21F453
+	for <e@80x24.org>; Mon, 18 Feb 2019 21:13:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726302AbfBRVG0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 16:06:26 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:41412 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725806AbfBRVG0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Feb 2019 16:06:26 -0500
-Received: by mail-ed1-f66.google.com with SMTP id x7so14946764eds.8
-        for <git@vger.kernel.org>; Mon, 18 Feb 2019 13:06:24 -0800 (PST)
+        id S1730347AbfBRVNa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 16:13:30 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:38773 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726302AbfBRVNa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Feb 2019 16:13:30 -0500
+Received: by mail-it1-f195.google.com with SMTP id l66so1280084itg.3
+        for <git@vger.kernel.org>; Mon, 18 Feb 2019 13:13:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=oQrA1tviDkZO+JqcZStX1Wzx/CBbohMMuDb0GvpcqA0=;
-        b=c528skxYdM1cIOF656rqZozsAQRVd0HKBwYCAVZ8udpISNiVzP+3CW2VF2IjYMegRU
-         Afjcnnp4vD5CmEhq72YI3mHDSagZZANk7MfbqEvrp5kYc/RaqenAQuIOWxdQf/QiA4Ec
-         SI6Av51b6sivGyZcergeplwrkl7LmE9nlDGjmAm+LPxOOlVFEVnTtMHWXZRfphFxQxNn
-         9AFiFCVoqHnrn3UnHE/5LugEmJNeIBLhjcoS3WgMEV7h4tzWRUKwd1P6F2Cyge0n1Zm1
-         EZ44NhKK4kJkQ7vwnbsmptfb3eQJjKtc+cxQ3kVpUBtsD0kefboYmtIUbRb5gs7Kvars
-         g8wg==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GdpD6k2ezEYTfJrkUuDrw5PKTNv/rtEzlxT7orct30M=;
+        b=QH28D5XLGgVZNqxpPSQBNMtetP8ZcYb+DMmpa8oYnzBDvAVojvOvR5XMjZnXocdGL5
+         kd0y+KWiY1PaS+X+gc3SwIpUooz2+/XvTijr+gYgHq/QGo91bKDQDzH1q6YajZZS9lYp
+         DOHq60oW6eMzPqbB+dz+AHI/HzTqDK1lzKbeUJ8WtdD0orvhLAOYzFpypn6tt8lGzDAQ
+         e5HeJelh1pNaUqKDgx0jq808oC8+SHo4DIiGf+SCp/zs0C2WXTZ9GggKzhDJ2j74y0hL
+         k4Rc6LjAEGADO2o9RZjzAU1UgwFm7kuNGPYTnbH/T3ohwVCNhHOaRz5Lup+qDH0ZaXVs
+         i7MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=oQrA1tviDkZO+JqcZStX1Wzx/CBbohMMuDb0GvpcqA0=;
-        b=fWrnT4UAp0pvZoabVRERuuwA5/mFuusaek7JTw1jNUdIeHJhQDBYQblzgfS9VchoRm
-         YytnOtdMgLRBHccmiABhKX2qkZOIc8tZYCuZ5dwIA6Z/fBFoOhurNOePPx50jvp9YR+S
-         QkDdQl2fPbCYK1sXPd/QTrxlZgG4onWTBG0qPnobEKp/v81CteGVNcZ2jwh0Ys9dlkVG
-         Sh8WwQ8WuicEvhC0RzrysUdzZfR7SaWLVBZGMybQA5+CS1VREH1WDtQ1hRP7a2o5fx//
-         /LAeWRiNVZbi4RyLzcWmnbH8gX77NMKxXMO0PahUEffVo8u8cgAX3WZ0OJsYNuF7umPx
-         6AdA==
-X-Gm-Message-State: AHQUAuY+fEVcP5X/fHTY03v6qxBrSrZlEsyykOONwVCvS4BV+GmxzFQH
-        XtvzTRyHLyG+xK5r+FLaKlM=
-X-Google-Smtp-Source: AHgI3IY9ITtE//9kNo3JDS5KLoRatMgt02wlIT5izDk/tDfgaKo5Gv6kg2PXBzQ9LlX5cYQFQS2cmQ==
-X-Received: by 2002:a50:a4ce:: with SMTP id x14mr20147455edb.229.1550523984071;
-        Mon, 18 Feb 2019 13:06:24 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id c41sm119921edb.64.2019.02.18.13.06.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 Feb 2019 13:06:23 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Johannes Schindelin via GitGitGadget' 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        'Max Kirillov' <max@max630.net>
-Subject: Re: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1
-References: <pull.126.git.gitgitgadget@gmail.com> <005401d4c4b3$147aa8c0$3d6ffa40$@nexbridge.com> <xmqqef8a6lnb.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <xmqqef8a6lnb.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 18 Feb 2019 22:06:21 +0100
-Message-ID: <87pnroolgy.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GdpD6k2ezEYTfJrkUuDrw5PKTNv/rtEzlxT7orct30M=;
+        b=AMkBKQNCpaP2tPICtRrwZqSTjR0Bx3gLExNgpxgRdeb1klJ/oo1aPR4echvjCZL6mB
+         fPsphnyFeW0AAGhK26efcO94UvgzGpuKlC2EBOnROl9jCGlpDH8SVOwaseY+kSTYyhxo
+         WzLj4X3QDgUJ1ugdsQ6hNzQ2/xZmPi6wsAsZTqT0XSDSB6/4Z98LM/rYpQNmaMAR5hW1
+         KTfx12N8KTJSze8G0SnVPX0zvj6zrLLJZbm9Ap3ndreB9o3uIS+zKogyrnHAPAygfDPw
+         7dND70TXg4v0Q4J3Yb5HBqf8JrYLfeI3yh5XAs2NHXhrRcq/djgbxlB4KXc+knmk8CjN
+         JNkQ==
+X-Gm-Message-State: AHQUAuaDRg/uIFRlzFF+VpJvxN0uZaJfMyl+1KOsqgcNTFeWIubldNGy
+        OIZ5ozPtpF6TIrmjWn6EuwdzRkci7q29nmtfnR4DZw==
+X-Google-Smtp-Source: AHgI3IaxW+n1L1iVBI4+qoA1aXUpzHFE0VBjxIRzbqNKgkAQggE0JFHlcW7EQc+SPqVuNESw3ecmm6eF3fteI0uk8D4=
+X-Received: by 2002:a24:8788:: with SMTP id f130mr520588ite.90.1550524408578;
+ Mon, 18 Feb 2019 13:13:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190215154913.18800-1-matheus.bernardino@usp.br>
+ <20190215154913.18800-3-matheus.bernardino@usp.br> <20190216143824.GJ6085@hank.intra.tgummerer.com>
+In-Reply-To: <20190216143824.GJ6085@hank.intra.tgummerer.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Mon, 18 Feb 2019 18:13:16 -0300
+Message-ID: <CAHd-oW60a+zz9J+u0HiRuTy-FKYN4s95fCcR3mgJz0hUokhTCQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 2/2] clone: use dir-iterator to avoid explicit dir traversal
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Feb 14 2019, Junio C Hamano wrote:
-
-> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+On Sat, Feb 16, 2019 at 12:38 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
 >
->> Unfortunately, subtest 13 still hangs on NonStop, even with this
->> patch, so our Pipeline still hangs. I'm glad it's better on Azure,
->> but I don't think this actually addresses the root cause of the
->> hang.
+> On 02/15, Matheus Tavares wrote:
+> > Replace usage of opendir/readdir/closedir API to traverse directories
+> > recursively, at copy_or_link_directory function, by the dir-iterator
+> > API.
+> >
+> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> > ---
+> >  builtin/clone.c | 39 +++++++++++++++++++--------------------
+> >  1 file changed, 19 insertions(+), 20 deletions(-)
+> >
+> > diff --git a/builtin/clone.c b/builtin/clone.c
+> > index 2a1cc4dab9..66ae347f79 100644
+> > --- a/builtin/clone.c
+> > +++ b/builtin/clone.c
+> > @@ -23,6 +23,8 @@
+> >  #include "transport.h"
+> >  #include "strbuf.h"
+> >  #include "dir.h"
+> > +#include "dir-iterator.h"
+> > +#include "iterator.h"
+> >  #include "sigchain.h"
+> >  #include "branch.h"
+> >  #include "remote.h"
+> > @@ -413,40 +415,33 @@ static void mkdir_if_missing(const char *pathname, mode_t mode)
+> >  static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+> >                                  const char *src_repo, int src_baselen)
+> >  {
 >
-> Sigh.
+
+Hi, Thomas. Thanks for the review.
+
+> The src_baselen parameter is now unused, and should be removed.  Our
+> codebase currently doesn't compile with -Wunused-parameter, so this is
+> not something the compiler can catch at the moment unfortunately.
+> However there is some work going on towards removing unused parameter
+> from the codebase, so it would be nice to not make things worse here.
 >
->> possible this is not the test that is failing, but actually the
->> git-http-backend? The code is not in a loop, if that helps. It is
->> not consuming any significant cycles. I don't know that part of
->> the code at all, sadly. The code is here:
->>
->> * in the operating system from here up *
->>   cleanup_children + 0x5D0 (UCr)
->>   cleanup_children_on_exit + 0x70 (UCr)
->>   git_atexit_dispatch + 0x200 (UCr)
->>   __process_atexit_functions + 0xA0 (DLL zcredll)
->>   CRE_TERMINATOR_ + 0xB50 (DLL zcredll)
->>   exit + 0x2A0 (DLL zcrtldll)
->>   die_webcgi + 0x240 (UCr)
->>   die_errno + 0x360 (UCr)
->>   write_or_die + 0x1C0 (UCr)
->>   end_headers + 0x1A0 (UCr)
->>   die_webcgi + 0x220 (UCr)
->>   die + 0x320 (UCr)
->>   inflate_request + 0x520 (UCr)
->>   run_service + 0xC20 (UCr)
->>   service_rpc + 0x530 (UCr)
->>   cmd_main + 0xD00 (UCr)
->>   main + 0x190 (UCr)
->>
->> Best guess is that a signal (SIGCHLD?) is possibly getting eaten
->> or neglected somewhere between the test, perl, and
->> git-http-backend.
+
+Nice! I will fix that in v2.
+
+> *1*: https://public-inbox.org/git/20190214054736.GA20091@sigill.intra.peff.net
 >
-> So we are trying to die(), which actually happens in die_webcgi(),
-> and then try to write some message _but_ notice an error inside
-> write_or_dir() and try to exit because we do not want to recurse
-> forever trying to die, giving a message to say how/why we died, and
-> die because failing to give that message, forever.
+> > -     struct dirent *de;
+> > -     struct stat buf;
+> >       int src_len, dest_len;
+> > -     DIR *dir;
+> > -
+> > -     dir = opendir(src->buf);
+> > -     if (!dir)
+> > -             die_errno(_("failed to open '%s'"), src->buf);
+> > +     struct dir_iterator *iter;
+> > +     int iter_status;
+> >
+> >       mkdir_if_missing(dest->buf, 0777);
+> >
+> > +     iter = dir_iterator_begin(src->buf);
+> > +
+> >       strbuf_addch(src, '/');
+> >       src_len = src->len;
+> >       strbuf_addch(dest, '/');
+> >       dest_len = dest->len;
+> >
+> > -     while ((de = readdir(dir)) != NULL) {
+> > +     while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
+> >               strbuf_setlen(src, src_len);
+> > -             strbuf_addstr(src, de->d_name);
+> > +             strbuf_addstr(src, iter->relative_path);
+> >               strbuf_setlen(dest, dest_len);
+> > -             strbuf_addstr(dest, de->d_name);
+> > -             if (stat(src->buf, &buf)) {
+> > -                     warning (_("failed to stat %s\n"), src->buf);
+> > -                     continue;
+> > -             }
 >
-> But in our attempt to exit(), we try to "cleanup children" and that
-> is what gets stuck.
+> Why was this warning removed?  I don't see a corresponding warning in
+> the iterator API.  The one thing the iterator API is doing is that it
+> does an lstat on the path to check if it exists.  However that does
+> not follow symlinks, and ignores possible other errors such as
+> permission errors.
+>
 
-I have not paid enough attention to this thread to say if this is dumb,
-but just in case it's useful. For this class of problem where cleanup
-bites you for whatever reason in Perl, you can sometimes use this:
+You are right. I didn't know the differences from lstat and stat. And
+reflecting on this now, I realize that the problem is even deeper:
+copy_or_link_directory follows symlinks but dir-iterator don't, so I
+cannot use dir-iterator without falling back to recursion on
+copy_or_link_directory. Because of that, I thought off adding an
+option for dir-iterator to follow symlinks. Does this seem like a good
+idea?
 
-    use POSIX ();
-    POSIX::_exit($code);
+Also, I just noticed that dir-iterator follows hidden paths while
+copy_or_link_directory don't. Maybe another option to add for
+dir-iterator?
 
-This will call "exit" from "stdlib" instead of Perl's "exit". So go away
-*now* and let the OS deal with the mess. Perl's will run around cleaning
-up stuff, freeing memory, running destructors etc, all of which might
-have side effects you don't want/care about, and might (as maybe in this
-case?) cause some hang.
+> If there is a good reason to remove the warning, that would be useful
+> to describe in the commit message.
+>
+> > -             if (S_ISDIR(buf.st_mode)) {
+> > -                     if (de->d_name[0] != '.')
+> > -                             copy_or_link_directory(src, dest,
+> > -                                                    src_repo, src_baselen);
+> > +             strbuf_addstr(dest, iter->relative_path);
+> > +
+> > +             if (S_ISDIR(iter->st.st_mode)) {
+> > +                     if (iter->basename[0] != '.')
+> > +                             mkdir_if_missing(dest->buf, 0777);
+> >                       continue;
+> >               }
+> >
+> >               /* Files that cannot be copied bit-for-bit... */
+> > -             if (!strcmp(src->buf + src_baselen, "/info/alternates")) {
+> > +             if (!strcmp(iter->relative_path, "info/alternates")) {
+> >                       copy_alternates(src, dest, src_repo);
+> >                       continue;
+> >               }
+> > @@ -463,7 +458,11 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+> >               if (copy_file_with_time(dest->buf, src->buf, 0666))
+> >                       die_errno(_("failed to copy file to '%s'"), dest->buf);
+> >       }
+> > -     closedir(dir);
+> > +
+> > +     if (iter_status != ITER_DONE) {
+> > +             strbuf_setlen(src, src_len);
+> > +             die(_("failed to iterate over '%s'"), src->buf);
+> > +     }
+>
+> Interestingly enough, this is not something that can currently
+> happen if I read the dir-iterator code correctly.  Even though the
+> dir_iterator_advance function says it can return ITER_ERROR, it never
+> actually does.  The only way the iter_status can be not ITER_DONE at
+> this point is if we would 'break' out of the loop.
+>
+> I don't think it hurts to be defensive here in case someone decides to
+> break out of the loop in the future, just something odd I noticed
+> while reviewing the code.
+>
 
-> One big difference before and after the /dev/zero change is that the
-> process is now on a downstream of the pipe.  If we prepare a large
-> file with a finite size full of NULs and replace /dev/null with it,
-> instead of feeding NULs from the pipe, would it change the equation?
+Yes, I also noticed that. But I thought it would be nice to make this
+check so that this code stays consistent to the documentation at
+dir-iterator.h (although implementation is different).
+
+Something I just noticed now is that copy_or_link_directory dies upon
+an opendir error, but dir-iterator just prints a warning and keeps
+going (looking for another file/dir to return for the caller). Is this
+ok? Or should I, perhaps, add a "pedantic" option to dir-iterator so
+that, when enabled, it immediately returns ITER_ERROR when an error
+occurs instead of keep going?
+
+I'm proposing some new options to dir-iterator because as the patch
+that adds it says "There are obviously a lot of features that could
+easily be added to this class", and maybe those would be useful for
+other dir-iterator users. But I don't know if that would be the best
+way of doing it, so any feedback on this will be much appreciated.
+Also, I saw on public-inbox[1] a patchset from 2017 proposing new
+features/options for dir-iterator, but I don't really know if (and
+why) it was rejected. (I couldn't find the patches on master/pu log)
+
+[1] https://public-inbox.org/git/1493226219-33423-1-git-send-email-bnmvco@gmail.com/
+
+Thanks,
+Matheus Tavares
+
+
+> >  }
+> >
+> >  static void clone_local(const char *src_repo, const char *dest_repo)
+> > --
+> > 2.20.1
+> >
