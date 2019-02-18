@@ -2,99 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,PI_DNOT,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 511F41F453
-	for <e@80x24.org>; Mon, 18 Feb 2019 20:59:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49C881F453
+	for <e@80x24.org>; Mon, 18 Feb 2019 21:00:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729924AbfBRU7k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 15:59:40 -0500
-Received: from mout.gmx.net ([212.227.15.18]:47065 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729486AbfBRU7k (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Feb 2019 15:59:40 -0500
-Received: from [192.168.0.171] ([37.201.195.16]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOO6X-1h12fk3KFx-005n21; Mon, 18
- Feb 2019 21:59:37 +0100
-Date:   Mon, 18 Feb 2019 21:59:39 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Senol Yazici <sypsilon@googlemail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Delivery Status Notification (Failure)
-In-Reply-To: <CAFacdQ8NDKfd0p8=9Rh3s4FPeS9mbqpQt8mw3AZoJn9jHjriPg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902182158040.45@tvgsbejvaqbjf.bet>
-References: <5c62b41d.1c69fb81.fe791.877b@mx.google.com> <CAFacdQ-soWD176VHgd+raHaV=VPpzKXrDrLFavPcNEoewZwBYA@mail.gmail.com> CAFacdQ-soWD176VHgd+raHaV=VPpzKXrDrLFavPcNEoewZwBYA@mail.gmail.com <5c657002.1c69fb81.d433c.32ce.GMR@mx.google.com>
- <CAFacdQ8NDKfd0p8=9Rh3s4FPeS9mbqpQt8mw3AZoJn9jHjriPg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729934AbfBRVAi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 16:00:38 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37122 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729486AbfBRVAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Feb 2019 16:00:38 -0500
+Received: by mail-ed1-f67.google.com with SMTP id m12so14941450edv.4
+        for <git@vger.kernel.org>; Mon, 18 Feb 2019 13:00:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=+ax/mle+Zl8n60cLDzOTuJxK1dhMrPAJOCk4y5vz/k8=;
+        b=KwIsD6YjCSydvZPe+Ve/i+eoL7ZWY0FqL5Qyo0sDzH89e2BfH4FAMzqxsDC501h0Bg
+         dLNVNnwl8BmppNGQc5h83+zeQG97omQYd5ZJkHXEATYhaH1JWHhcqufj1QROcDXlco83
+         J3F4imn9Qt+vXh+cmQFQiWolmBXgo14jTKQEOD45G06TxgqxsufkGU2WIazaXIBGwAtj
+         hkrRMpDOY/6jkTcR3xCHfvyI/z840FUpbqjLbDoKrO7pPukmgeppnF1qfZ9v4n7RJ7kv
+         dVYkI7WxBsgR0s7Bnfi1Gp43awyoPoa5KfUS8lbMGdNSohiwf70/W0K6qEA7ejoiHnG2
+         tndw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=+ax/mle+Zl8n60cLDzOTuJxK1dhMrPAJOCk4y5vz/k8=;
+        b=g8PMPjnXAG1vJvVxPQs4dnLcLuQvBGqCf4TbOzKk8KidJrSNbEArawhVm82TkciFnQ
+         ITtTHqtVJNOWrWGYuVS7i7ZG3Gw6odmQCc4NeYQ9t5DnUG43v2511Lu6kgW7+TZq8G+V
+         OpxX8MBZveX+FDcxsw3pXqt2bJIUGq95qisn0X2znRoyT7ZG21OmUecVqYFohrE1WYug
+         w3wu5YBb9WpX6H0WjOtBJl1QlAAUMAbBDW1+uqjlTn0w3hxC/xOmoQkpRYwOeVoaKlql
+         1zYc8juLY3GHuW+GRO+7A+UOAPI11T7kTijs7BVo6j2IpNi+ktk+KEb314U51Ki99B9T
+         xKmQ==
+X-Gm-Message-State: AHQUAubsmjF0XqOypfXd4CTRNOd6dUxiHBxuKz0AU9uJ7vJ+EmbKTThs
+        mmvyNVY6E1n+YXl1oARKgBc=
+X-Google-Smtp-Source: AHgI3IZbRdLILMtFaA5lpcwv9N5fPT8E/U+BsTRNSKU/WDpsGwDM8E6Sqk2ZjN6mDX0ZKBO+y36PTA==
+X-Received: by 2002:a17:906:1d0d:: with SMTP id n13mr10237570ejh.23.1550523636205;
+        Mon, 18 Feb 2019 13:00:36 -0800 (PST)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id x7sm581476eju.12.2019.02.18.13.00.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 18 Feb 2019 13:00:35 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 30/31] Git.pm: make hash size independent
+References: <20190212012256.1005924-1-sandals@crustytoothpaste.net> <20190212012256.1005924-31-sandals@crustytoothpaste.net> <87zhr1jmr4.fsf@evledraar.gmail.com> <20190218190920.GL684736@genre.crustytoothpaste.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190218190920.GL684736@genre.crustytoothpaste.net>
+Date:   Mon, 18 Feb 2019 22:00:33 +0100
+Message-ID: <87r2c4olqm.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-87851427-1550523580=:45"
-X-Provags-ID: V03:K1:NzSY7FWW92vXzEKjFZ9SBKLfMWace794YNgVAvg5WgrWKKFQjME
- /XJ1Q5eWosFo15OD83AgArpSlRWU7+PyjLghzad+M/KTSawhgxfLSy76jnZ+KHujfl4HCZF
- eO7nCZJva4v5sSZNB98EqdYrC+XGph40xIDbt5rVzCFNFjWdbpxSAKJelJhj6YJNgNo7Dqi
- SaXZ39xY9oFjXEU/zMbcw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PnbxO9VizD4=:4mKAoYQJAJgc/CBx1ReBrF
- ogsHPmvXTiehe006A3lDUWmYMUHURMTwl9/RPrYRSYU5/3rxClhYkBpF6EocG9t7kVYi4hhd9
- xZAbUHkfAuLe6sMjYgMx6L3VA6bilzSanOSDB+gP2roFnWMbmflyaRQpKWglmr0IvE5Pfi+YB
- cUiiD6IFmI5v9Y6g+9edc7IN+AzI42Q+k47LZVeq47f8Vks5l5Ua6VUQjzH6ybLoLiYpD47Ma
- Bzh8ftZJNUmRxkfdyx/zjwOfjQ+3keEvvI5AHc9jnJyTEE9XKImAxhn2SEk67LqliCCcrMKy/
- lPVF0dXOcQ0jYcSbi28WPG2SZSvDN8Pho3Ccntb+wuK7X71xcvu88bqBW0yFLrMCeD2ny6x5U
- lvY8M/Cd2rjSbUusP+UMMNu8GWAdH2m7dJxV3U+ugj5GshN4gyJEsDkVIhcJgQuBONdcB/hcU
- BPpjP8ytaB56O8injlUTGnhdB/UCUP0efmzwsCwyU8NpNcs5AUnxzTglfxOMr3R75o/4F0Qiv
- I6wHG29zQeoC1s6OS1iRXfyEsH2hkgacSf4QbgJhqTfY9yn+e+2YAry1fXG17rPC2KnXODg7y
- pF70fl++mjLLW9sM6pb7vGtATQd2BonY2yAyo9bZLHA0UvdOMgugWrl47hR9wqqM0sDXYLZPt
- V68IWM0prSeEyydxcE8XaczGBhTrXOERwmTwZm8gOjDFp2YMtKc1i52Q6DAZG54QUDRXh5p5A
- 64mqsSy7e5oBSCLxX6WACxfDXoyvmJhZkiaBNK8rBLNtpWSB9Ju4P78PE7wVGzqidq7e7BIg7
- 0aIsqRCvxjz+N56cNikhqpGFcvO2lwhW+rf4mojC3saFB1pV4tUuU8OxY7G7/IZsNn6d1P6xp
- pSE5Nmljzs9q23rY2X2eyPX1VwmcpOk7gqkDnUhwFL6v1+2btKmnTNNd6dxCWv9CB0qBizRHT
- YLa8VlV9o7Q==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-87851427-1550523580=:45
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Mon, Feb 18 2019, brian m. carlson wrote:
 
-Hi,
+> On Tue, Feb 12, 2019 at 11:59:27AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> The gitweb code doesn't load Git.pm now, but does anyone know a reason
+>> for why we'd avoid any perl/* dependency in the gitweb code? If not the
+>> regex here & in gitweb could be factored into e.g. a tiny Git::OID
+>> library which would either just expose a $GIT::OID_REGEX, or something
+>> like the sort of interface (might not be worth it) that I suggested in
+>> my feedback to 31/31.
+>
+> I think one potential issue here is that some distributors bundle the
+> Perl modules with git send-email and not gitweb, and they're packaged
+> independently. I'm not opposed to seeing a patch to do that, but it
+> probably belongs in its own series.
 
+In packaging terms that one's easy to juggle, FWIW I'm just aware of
+e.g. RedHat packaging perl-Git as its own thing depended on by git-svn,
+git-email & friends, not anyone who packages it with git-send-email
+specifically.
 
-On Mon, 18 Feb 2019, Senol Yazici wrote:
+But according to gitweb/README it's also meant to be used as a
+stand-alone script. So:
 
-> Hi all,
-> 
-> I just stumbled over following page
-> 
-> https://git-scm.com/about/distributed
-> 
-> and was wondering if it is possible to
-> 
-> - demilitarise that “dictator/lieutenant” thing and
-> - de-religionise that “blessed” thing
-> 
-> I did not had the feeling that git is “pro military”, or is against
-> “non religious” developers/users.
+ * You can wget it from the git.git repo & run it
+ * You can run it with any (reasonable) version of git
+ * If you're missing perl modules, those are all on CPAN (just CGI.pm
+   should be missing these days)
 
-Those are valid concerns, and I value your feedback.
-
-It would probably be a good thing to change this, and you can even do it
-yourself: create a Pull Request to change this file:
-
-https://github.com/git/git-scm.com/blob/master/app/views/about/_distributed.html.erb
-
-Looking forward to your enhancements,
-Johannes
-
-> 
-> Thank you very much,
-> 
-> Senol Yazici
-> 
---8323328-87851427-1550523580=:45--
+Making it depend on any module we ship would break all those things. I
+don't know if anyone cares, but avoiding this very minor copy/pasting
+seems like a bad reason to wake that particular dragon.
