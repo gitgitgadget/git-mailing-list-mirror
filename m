@@ -2,84 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_DNOT,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A2FE1F453
-	for <e@80x24.org>; Mon, 18 Feb 2019 16:52:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C7A31F453
+	for <e@80x24.org>; Mon, 18 Feb 2019 17:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733096AbfBRQwI convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 18 Feb 2019 11:52:08 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:27605 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732945AbfBRQwH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Feb 2019 11:52:07 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1IGq4IP070121
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 18 Feb 2019 11:52:04 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Senol Yazici'" <sypsilon@googlemail.com>, <git@vger.kernel.org>
-Subject: Re: [RFE] Demilitarize Documentation (was RE: Delivery Status Notification (Failure))
-Date:   Mon, 18 Feb 2019 11:51:57 -0500
-Message-ID: <001601d4c7aa$460c0e70$d2242b50$@nexbridge.com>
+        id S2388074AbfBRRFW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 12:05:22 -0500
+Received: from mx2.suse.de ([195.135.220.15]:56220 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1731720AbfBRRFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Feb 2019 12:05:22 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id DA056ADD3;
+        Mon, 18 Feb 2019 17:05:20 +0000 (UTC)
+From:   Michal Suchanek <msuchanek@suse.de>
+To:     git@vger.kernel.org
+Cc:     Michal Suchanek <msuchanek@suse.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Marketa Calabkova <mcalabkova@suse.cz>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] worktree add race fix
+Date:   Mon, 18 Feb 2019 18:04:55 +0100
+Message-Id: <cover.1550508544.git.msuchanek@suse.de>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AdTHqkJ6IWmUK/DnRVGjEUlr0cRnHQ==
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 18, 2019 11:13, I wrote:
-> To: 'Senol Yazici' <sypsilon@googlemail.com>; git@vger.kernel.org
-> Subject: RE: Delivery Status Notification (Failure)
-> 
-> On February 18, 2019 5:47, Senol Yazici
-> > I just stumbled over following page
-> >
-> > https://git-scm.com/about/distributed
-> >
-> > and was wondering if it is possible to
-> >
-> > - demilitarise that “dictator/lieutenant” thing and
-> > - de-religionise that “blessed” thing
-> >
-> > I did not had the feeling that git is “pro military”, or is against “non
-> religious”
-> > developers/users.
-> 
-> I think there is a point here. In some of my customers, we have replaced
-> these terms with the following (the Repository is optional in the second two):
-> 
-> * Blessed: Repository of Record
-> * Dictator: Committer [Repository]
-> * Lieutenant: Contributor [Repository]
-> 
-> This seems more closely aligned with the real roles being applied to activities
-> associated with the repositories involved.
-> 
-> Taking a lesson from other Open Source projects, Jenkins has deprecated
-> Master/Slave in favour of Controller/Agent. This seems not only more
-> acceptable to some, but in my view more descriptive. The terms on the page
-> above do not actually make any descriptive sense to a newbie. And confusion
-> could ensue from the dictionary definitions:
-> 
-> * Lieutenant: an aide or representative of another in the performance of
-> duty : assistant (not what that repository is for)
-> * Dictator: one holding complete autocratic control : a person with unlimited
-> governmental power (not how the git team behaves)
-> * Blessed: honored in worship : hallowed; of or enjoying happiness (although
-> I can see the happiness part of this one)
+Hello,
 
-It probably would be worth submitting this as an issue to the documentation project at https://github.com/git/git-scm.com. Depending on the response from the committers, I might be willing to take that on, but digging deeper, I'm not sure the terms I proposed as sufficient.
+I am running a git automation script that crates a tree and commmits it into a
+git repository repeatedly.
+
+I noticed that the step which creates a tree is most time-consuming part of the
+script and when a lot of data is to be automatically added to the repository it
+is benefical to parallelize this part.
+
+To do so I had the script create a dozen worktrees and share the work between
+them. The problem is automatically creating several worktrees occasioanlly
+fails.
+
+The most common problem is in the worktree add implementation itself which
+tries to find an available directory name and then mkdir() it. Of course, doing
+that several times in parallel causes issues.
+
+When running stress-test to make sure the fix is effective I uncovered
+additional issues in get_common_dir_noenv. This function is used on each
+worktree to build a worktree list.
+
+Apparently it can happen that stat() claims there is a commondir file but when
+trying to open the file it is missing.
+
+Another even rarer issue is that the file might be zero size because another
+process initializing a worktree opened the file but has not written is content
+yet.
+
+When any of this happnes git aborts failing to create a worktree because
+unrelated worktree is not yet fully initialized.
+
+I have tested that these patches fix the issue. However, I expect race against
+removing/pruning worktrees is still possible.
+
+For previous discussion see
+
+http://public-inbox.org/git/CAPig+cSdpq0Bfq3zSK8kJd6da3dKixK7qYQ24=ZwbuQtsaLNZw@mail.gmail.com/
+
+Michal Suchanek (2):
+  worktree: fix worktree add race.
+  setup: don't fail if commondir reference is deleted.
+
+ builtin/worktree.c | 12 +++++++-----
+ setup.c            | 16 +++++++++++-----
+ 2 files changed, 18 insertions(+), 10 deletions(-)
+
+-- 
+2.20.1
 
