@@ -7,72 +7,61 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI,RCVD_IN_RP_RNBL shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 589821F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 22:37:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE65E1F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 22:38:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729828AbfBSWg6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 17:36:58 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45049 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727375AbfBSWg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 17:36:57 -0500
-Received: by mail-wr1-f66.google.com with SMTP id w2so9135730wrt.11
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 14:36:56 -0800 (PST)
+        id S1728541AbfBSWiI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 17:38:08 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:43990 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726778AbfBSWiI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 17:38:08 -0500
+Received: by mail-wr1-f65.google.com with SMTP id d17so9323626wre.10
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 14:38:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=uLH0zp1OqiJa2Xc74I+ahx52c/mQLX8f4eQN5+HyzZY=;
-        b=V85N54i63YUzdOLLd4OW5xqsl8C1jwJnd2LJlUHORV0TuoaQHpdYasRHCOLRHWSaRU
-         jfeRkRjW40G1/Z2MYjDyg4FhRvmM87I1+9BMErTqwwkl+2/uxfrWmehN8CnTkOceIauH
-         ++4gMg4dUuy/gUGVCRpIGGsK6owIR7F4bzGLIxeJrruHC82gpRIB3KNgSUt3/cyIM0k8
-         +wj7H3jqwHIWoJcmkE0SZ+eY0O9XaPqLIq3riEeUNcvNgywOUcWZm7pVSFOgD3W0Tb0q
-         JHNuvryYwTa/oN7gPFT3aBLqmTITH6t3o3KObu2v8TJp81zUAGlT7CiRXR8bP/1IALm1
-         hX9g==
+        bh=fTnf3eXE6rIsE/1imd0wN4bK9/V/APCc6Gb8GMPQS0I=;
+        b=kCUXdqUpd3eNW1u8EwRVG87IoH0wMXopQ2+8yY8ae1eW0wKDI+q8QiYxN2KTUvervL
+         8/hrVDWMfI4w6qB+2hQgMRkFyDW6c8MMlYPQmugJdUmseufNWVOVYJIPNOj0jMm4PHh9
+         nBRbH/gD9QNnczOahk7ec8i3amhU5dby/XCzEJyxrRBtyUAhsACZW3Bu2Hozx4YX/qax
+         LoMzGY4N62VQKWWTI0K5ZmNYKlMaGi+aeP457dcYy+zVx34LJezk/oUuUNX9CNv1ZXaY
+         p78np8AHmUv5dHxj9i/M8sNpotKk04I+gN4FFdh1nV/YioI2eImfiSZqYsnQupcuhW8c
+         oTBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=uLH0zp1OqiJa2Xc74I+ahx52c/mQLX8f4eQN5+HyzZY=;
-        b=J8AZ5XdrWhgVap4EgjHhfGM7PdAjHGR/AEiPsoors2ysYk7uJcj/rc32CeuuxlXcO8
-         6if2Gn7mJkwpCiyfiUDZwbDy4nNY76zCmS9q+lHWwguOAt3Gan6XafddYLd+7ES6Uc2O
-         1glSCkWRR+o0v0RUwRxZV/eB15rvaqPkgBAeiYHT4CjznrHSYIH4MPJVQh4Qxc9L4CRL
-         9WFd/N/gOmg0sLvlNYYa7UCbkdzQbhfHitPrHCUwldq6N95mQPh73UiJsYh3qcWTan/B
-         2gibHt+6FH4saifzfG8BHn6G5cOcZyN+1ipywNjgR4X76r8sl2Uikv7i7DaF5riDG2E4
-         Kw7Q==
-X-Gm-Message-State: AHQUAuZAkMHm82oQ5hmutbMRQt8VKAcF/jkLxCd1wbjDiaTfCEk3SyhX
-        bVJ2Vq/sR8jKrxlgfzt2SgRgTCGo
-X-Google-Smtp-Source: AHgI3IZCUMOJTG5uiK4fvDxO2YvJyFVUtG/KqNXSJKeDBSqnOZFweEgxVHrM/FR1Yi5I49Bnd7QY2g==
-X-Received: by 2002:a5d:6b8f:: with SMTP id n15mr22711000wrx.110.1550615815309;
-        Tue, 19 Feb 2019 14:36:55 -0800 (PST)
+        bh=fTnf3eXE6rIsE/1imd0wN4bK9/V/APCc6Gb8GMPQS0I=;
+        b=lhO1H8xIQiodFo+OAIer2aIl4K2DiaJLDx8BTUi+V+Lkf5WhMJTB1mjsq0t/fg2mH7
+         z3He7TZA/mc+F9FnM9sUBRFQzsGurEfERCbyGbzSouZ8NfD3DPIReSMet/lbHF65Sr/L
+         CLDZn6BaqNBb2qXmf1taI5TUje5wPA0xWBvG5Xs1R8cRv4o6o3ZlrnrenQK3VOBnpYMr
+         nyaMI0tcjawbrawfAkKMl3KtyhOepdPpw3Vh1lUAlCN6zCPqy9tjHVz8Ysmmt3r39e/b
+         HpVLurX3noJ9Vn+5nB530UFzIl89+U9pkaY1eysGny6n/5BXltwyRiWjFonRvz/57t5Q
+         Ez9w==
+X-Gm-Message-State: AHQUAubUFybMnsYAPvCuGUnwpPFP6oO6imFUrn/C+qhj0PlbK0Kr2FRj
+        OkQB3sfL7pPTANtNuktK3Tn6f+p5
+X-Google-Smtp-Source: AHgI3IYpFxI/VYO0592M7uJjlOMd5GGivSpW4zvUtKtY5j9zKoWW5uiRdnXGy2Oh0uQyS0apOvMB+A==
+X-Received: by 2002:adf:f543:: with SMTP id j3mr21309042wrp.220.1550615886274;
+        Tue, 19 Feb 2019 14:38:06 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d24sm55231470wrb.47.2019.02.19.14.36.54
+        by smtp.gmail.com with ESMTPSA id y185sm3954442wmg.34.2019.02.19.14.38.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Feb 2019 14:36:54 -0800 (PST)
+        Tue, 19 Feb 2019 14:38:05 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Elijah Newren <newren@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 6/8] checkout: add --cached option
-References: <20181209200449.16342-1-t.gummerer@gmail.com>
-        <20181209200449.16342-7-t.gummerer@gmail.com>
-        <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
-        <xmqqva40lps2.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BGQwtok1T3WmY3ndBG6RjbESSOgmbZxkWiN-avqfUjDVg@mail.gmail.com>
-        <CACsJy8AxUxYCO7bzb98EVvO5DU62ukZQNrF-sEktrdR9m6tfvg@mail.gmail.com>
-        <CACsJy8Bk=wbgzsE+Vo4w_u0E63PdUxxcvG-7e6Hq-8_jrmSErw@mail.gmail.com>
-        <xmqq7eek3ax7.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8CHHT=9e9ti7VA4X4h3FrZcUKvLuzkL56mXLgjk4c5Qcg@mail.gmail.com>
-        <xmqqlg2zz90l.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8CQhWeC3b6eGPePuRejfOx7c17X61-wqq5kOiRzYkRESw@mail.gmail.com>
-        <CABPp-BGkJOgKqE_vHsA1fkjQ80U10Hv7-HCvScq7WOgj1UF9=Q@mail.gmail.com>
-        <xmqqsgwj1ts9.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BGp53DrP6=FpYpxy5cmWkcygCz_nrunXisC55KV1ydyXg@mail.gmail.com>
-Date:   Tue, 19 Feb 2019 14:36:54 -0800
-In-Reply-To: <CABPp-BGp53DrP6=FpYpxy5cmWkcygCz_nrunXisC55KV1ydyXg@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 19 Feb 2019 14:24:28 -0800")
-Message-ID: <xmqqsgwjz9q1.fsf@gitster-ct.c.googlers.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
+Subject: Re: [PATCH v2] merge-options.txt: correct wording of --no-commit option
+References: <5C6BAA4E020000A10002FBFF@gwsmtp1.uni-regensburg.de>
+        <20190219170709.25463-1-newren@gmail.com>
+        <xmqqk1hv1sms.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BGGujXxdmdv0P+TwHwwKaK2maA6rJ7=WpiJYq7ZZivkpw@mail.gmail.com>
+Date:   Tue, 19 Feb 2019 14:38:05 -0800
+In-Reply-To: <CABPp-BGGujXxdmdv0P+TwHwwKaK2maA6rJ7=WpiJYq7ZZivkpw@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 19 Feb 2019 14:31:50 -0800")
+Message-ID: <xmqqo977z9o2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -83,24 +72,25 @@ X-Mailing-List: git@vger.kernel.org
 
 Elijah Newren <newren@gmail.com> writes:
 
->> As long as worktree-only mode does not lose track of a
->> previously-untracked path in the index (perhaps use the i-t-a bit),
->> I do not have a strong objection against making the worktree-only
->> mode the default.
+>>   $ git checkout master^0
+>>   $ git merge --no-commit next
+>>   warning: defaulting to --no-ff, given a --no-commit request
+>>   Automatic merge went well; stopped before committing as requested
+>>   hint: if you'd rather have a fast-forward without creating a commit,
+>>   hint: do "git reset --keep next" now.
 >
-> Could you unpack that for me a bit?
+> Good points.  I thought of this last one before sending, though
+> without pre- and post- warnings/hints; without such text it definitely
+> seemed too magical and possibly leading to unexpected surprises in a
+> different direction, so I dismissed it without further thought.  But
+> the warnings/hints help.
+>
+>> I do not have a strong preference among three (the third option
+>> being not doing anything), but if pressed, I'd say that the last one
+>> might be the most user-friendly, even though it feels a bit too
+>> magical and trying to be smarter than its own good.
+>
+> I also lack a strong preference.  Maybe mark it #leftoverbits for
+> someone that does?
 
-Suppose in an ancient version v1.0 there was a file called
-README.txt but these days such a file does not exist (there may be
-README.md added though).  By default, the command does not stuff the
-contents to the index out of the tree and instead operate only on
-the working tree.
-
-  $ git restore-path --source v1.0 README.txt
-
-At this point, you are assuming that README.txt will become
-untracked and the user needs to manually add it.  I was asking if it
-makes sense to at least make the index "aware of" it with I-T-A bit,
-and I am leaning towards answering "yes" to that question.
-
-
+This definitely is outside the scope of the documentation update.
