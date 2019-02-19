@@ -2,95 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B50D71F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 11:23:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E389F1F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 11:38:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727246AbfBSLXQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 06:23:16 -0500
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:44859 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726388AbfBSLXQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 06:23:16 -0500
-Received: by mail-ed1-f50.google.com with SMTP id b20so16361950edw.11
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 03:23:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=iHIsR9c0qL/74l96fgpa1F9X0OtjKzrGKUwZim66Opc=;
-        b=PGQVlJjoGKNyTkWNMVrYLx2xWDBsbgQtEeIzRhzIzR50hjPPv1KJ8lgiwwKhSlGUov
-         +Y9Wa+ZWZN2gHwaPXGHT1ElUSAx0BVq0nmoWI06bUVGWrEyTHLbDkKGSW1bgRE7O/J+N
-         kqeaJv03sftwqJc+mi2UKeuephXiXVL+RGJmPabgAj87JLmq+hVrqbbwojRnP7HBLLcj
-         Z/xPw3fopx707CbJamFY/BN+Iu1kQm4+PEGifhHLLxuXB57m8vz/8N659+1UpYXsYN13
-         MIZSs66zgjleZ2kog5kwKQyfoezq8CtxfBm58ntVQPcimMRYpzbGOf4XikC4MqoomCQ5
-         6cmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=iHIsR9c0qL/74l96fgpa1F9X0OtjKzrGKUwZim66Opc=;
-        b=bvgKh90bmBxUq65LqlIGNTpwrtUdy4ulAN6pRuQ/ANVXHRrq7o/tiH1JoNewnc3FXb
-         wEAjyl9/613xVEGhHn7DlYBxxhfOwBhJfTY0plvRtN8gIkpc0DNWDwxYLb1DXmnA20u5
-         rlT87Fm2AG68KjfrbEU6K6Froj2Yd7VVTGNKsJxw20f/RODKff6nqMeDr4k/qmhc8IPL
-         KBWdvdrV1he7niccoz1vFChEDnSa6ZKWssQcmy0E3QDGQ8FiVReH9DbIV0ec12nXwnA8
-         kMISWkLxvymPimrlZ4lMxH7cAdQn9NCPhTIxsC1Wk5532hnVLp/p7vvjxZnp1SxsV6dj
-         gibg==
-X-Gm-Message-State: AHQUAubSCDWZBVWrYFip61mdPYRFK/bKNu5ExhOVfcOMoMs2eV1BLinQ
-        q+Euq4OSjvpwbYetLvBWfWo=
-X-Google-Smtp-Source: AHgI3IbYuqcui+XCQl+WAyQyLcm5yFYxnC2eg0/O81L1vHiB63RMWr2Xf3DG/1xoz70GGq0SSZ4hpw==
-X-Received: by 2002:a17:906:3543:: with SMTP id s3mr20145892eja.108.1550575394384;
-        Tue, 19 Feb 2019 03:23:14 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id n12sm3531083ejx.23.2019.02.19.03.23.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Feb 2019 03:23:13 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
+        id S1727601AbfBSLi4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 06:38:56 -0500
+Received: from cpanel4.indieserve.net ([199.212.143.9]:55904 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727496AbfBSLi4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 06:38:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=RAJ028+08AMTwfCB1cR8TFoPzFZodWC7SiCMEtlx2DA=; b=Jyk3nZL1LGppuo3sP92mySNM4
+        h4ZOV5tUoSHYnRa2b0iQkVLn8z210fB+sq+LKWZ5RePke4b6y25+bNbqjpu5wjK8HNyIECzS1RyDC
+        HO+JDcFHEMN4NeYkY42EP+ZyLvj1jBV0beC2DTryXtQiPwwkv7dTpey/4NpNIIojX6SpY42UA6T2+
+        kgeXNekgeJ8QQZ1xLLk/DHJF2/+WpNNUaPYDGwOCsNGhfH24ppNSSkWQD5eFP4pbtkWm8zwCtwAVn
+        2i3Js6atl4uvSpY/h5/k5CiykADs+Dshg9i6ZEFOz6t/k8DawO3IBiRgiSP4W9uhNWdYKd8+SaJDH
+        JTUB++7LA==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:47466 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1gw3jh-00DwC4-Qs; Tue, 19 Feb 2019 06:38:54 -0500
+Date:   Tue, 19 Feb 2019 06:38:52 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+cc:     Git Mailing list <git@vger.kernel.org>
 Subject: Re: why no mention of "hooks.allownonascii" in any man page?
-References: <alpine.LFD.2.21.1902190544470.23739@localhost.localdomain>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <alpine.LFD.2.21.1902190544470.23739@localhost.localdomain>
-Date:   Tue, 19 Feb 2019 12:23:13 +0100
-Message-ID: <87mums58f2.fsf@evledraar.gmail.com>
+In-Reply-To: <87mums58f2.fsf@evledraar.gmail.com>
+Message-ID: <alpine.LFD.2.21.1902190629490.25090@localhost.localdomain>
+References: <alpine.LFD.2.21.1902190544470.23739@localhost.localdomain> <87mums58f2.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-1521906173-1550576334=:25090"
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, Feb 19 2019, Robert P. J. Day wrote:
+--8323328-1521906173-1550576334=:25090
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
->   was just perusing the sample hook scripts, and the sample pre-commit
-> script provided with git does the following check:
->
-> # If you want to allow non-ASCII filenames set this variable to true.
-> allownonascii=$(git config --bool hooks.allownonascii)
->
->   but that config variable (hooks.allownonascii) is not mentioned in
-> any man page. its entire existence in the git code base consists of:
->
-> $ grep -r allownonascii *
-> templates/hooks--pre-commit.sample:allownonascii=$(git config --bool hooks.allownonascii)
-> templates/hooks--pre-commit.sample:if [ "$allownonascii" != "true" ] &&
-> templates/hooks--pre-commit.sample:  git config hooks.allownonascii true
->
->   technically, there's nothing wrong with that, i just thought it was
-> a bit weird that a sample hook script refers to a config variable that
-> is not referred to in any way elsewhere.
+On Tue, 19 Feb 2019, Ævar Arnfjörð Bjarmason wrote:
 
-The hook itself spontaneously introduces it and uses it. There's nothing
-magical about config variable, e.g. it could also be "xyz.abc" instead
-of "hooks.allownonascii".
+>
+> On Tue, Feb 19 2019, Robert P. J. Day wrote:
+>
+> >   was just perusing the sample hook scripts, and the sample pre-commit
+> > script provided with git does the following check:
+> >
+> > # If you want to allow non-ASCII filenames set this variable to true.
+> > allownonascii=$(git config --bool hooks.allownonascii)
+> >
+> >   but that config variable (hooks.allownonascii) is not mentioned in
+> > any man page. its entire existence in the git code base consists of:
+> >
+> > $ grep -r allownonascii *
+> > templates/hooks--pre-commit.sample:allownonascii=$(git config --bool hooks.allownonascii)
+> > templates/hooks--pre-commit.sample:if [ "$allownonascii" != "true" ] &&
+> > templates/hooks--pre-commit.sample:  git config hooks.allownonascii true
+> >
+> >   technically, there's nothing wrong with that, i just thought it was
+> > a bit weird that a sample hook script refers to a config variable that
+> > is not referred to in any way elsewhere.
+>
+> The hook itself spontaneously introduces it and uses it. There's
+> nothing magical about config variable, e.g. it could also be
+> "xyz.abc" instead of "hooks.allownonascii".
+>
+> But perhaps it should be documented as the functionality of the
+> default hook in githooks(5), similarly to how we document
+> hooks.allowunannotated. Patches welcome :)
 
-But perhaps it should be documented as the functionality of the default
-hook in githooks(5), similarly to how we document
-hooks.allowunannotated. Patches welcome :)
+  sure, i'll take care of that.
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
+--8323328-1521906173-1550576334=:25090--
