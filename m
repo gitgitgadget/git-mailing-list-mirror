@@ -2,94 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C3851F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 16:51:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06AA81F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 17:07:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729089AbfBSQve (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 11:51:34 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:37634 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728490AbfBSQve (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 11:51:34 -0500
-Received: by mail-ed1-f53.google.com with SMTP id m12so17321552edv.4
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 08:51:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=loskot-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=u+wkIivKCfARh+UzqFXSF5Zg8t0zBjbfawtnxOy7lOU=;
-        b=e4MoupaSoCvr+62f3QKh6F9B63iMRqjw+WsPg039BZjZPyTobEPRWPoieaB6MnTUiV
-         66pMmk8q5Wn9VRm3ItCzIDZFtF/0lv8vZN9/YcJWc2wnqVqbigowXMClStXWIAKd/EPR
-         2Qca3G1tBQN4A8kInjKvhEYPOyHnqcPdNApWyxBSnLglguJGqBGlXdcGHYAZkuL/zXwi
-         /vMNRwj2nXNS/OR+4zrZsTYoWss0BVfL8LRRxo7l3wpcmXQMT2vfZgnskCKCc6jvu7YY
-         meBvr5tLE9xTgunay29LHQKtyG9O1MIclBsLdDfMN6hsSnewMB8mFsla9Jf05l9kjz3Q
-         99uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=u+wkIivKCfARh+UzqFXSF5Zg8t0zBjbfawtnxOy7lOU=;
-        b=pyg1+Zr0A83OrVSX9jWbb8KaVlNaZ99a6guVRCZRRoHuXgrBxh4TVcoak91WQNHFL0
-         jzYfoZXVNO1mBXhuOOVDsrBLkASuTpHhMzUynTuKJqRR+L1Lfhqj8sl+iQXW8rjXUOcZ
-         7v2UkwnX8UuXoXWkjknT7aVtpIrEAdE+8OdIbtNOflVw/EQFh2Q4c7EXGJ8iS4Rncbxo
-         7r1cduozjbJTxlTJQHQ+Kf5LzWpTtszOAG12GIDZNQxBiOZFlhjqBj5EzGEdFw6rPfn1
-         mNC75C2vv18su3LZNfTbQ8GO96Wce3JAOHFGXch/aSOEnaiWL38Zg/7FY0WYVUo/WccA
-         UHJw==
-X-Gm-Message-State: AHQUAuaZ7xnD0BivOkG26FadtEmh+RIyPMk8HShamC0ezkOoHVUNEVeH
-        7M7RVvTe2m2XF2h5Gzn6Ar6qipJ29BshasRpqs6MsS05irTFzw==
-X-Google-Smtp-Source: AHgI3IYiMi4QQf+I3IfYGgYNEoa8uuO1sMcF2Zhn/MqFoafT5CPeXLxsAQc3Uk9jpUoTr2RB66N01MSjeL5v3wfSvRM=
-X-Received: by 2002:aa7:c153:: with SMTP id r19mr24088621edp.139.1550595091910;
- Tue, 19 Feb 2019 08:51:31 -0800 (PST)
+        id S1729393AbfBSRHS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 12:07:18 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:52758 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727048AbfBSRHS (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 19 Feb 2019 12:07:18 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x1JGvoB0020208;
+        Tue, 19 Feb 2019 09:07:13 -0800
+Received: from mail.palantir.com ([8.4.231.70])
+        by mx0a-00153501.pphosted.com with ESMTP id 2qpg9rkw8y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+        Tue, 19 Feb 2019 09:07:13 -0800
+Received: from sj-prod-exch-01.YOJOE.local (10.129.18.26) by
+ sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1531.3; Tue, 19 Feb 2019 09:06:55 -0800
+Received: from smtp-transport.yojoe.local (10.129.56.124) by
+ sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server id
+ 15.1.1531.3 via Frontend Transport; Tue, 19 Feb 2019 09:06:55 -0800
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id B187C2216320;
+        Tue, 19 Feb 2019 09:07:11 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     <gitster@pobox.com>
+CC:     <git@vger.kernel.org>,
+        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v2] merge-options.txt: correct wording of --no-commit option
+Date:   Tue, 19 Feb 2019 09:07:09 -0800
+Message-ID: <20190219170709.25463-1-newren@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc1.264.g6c9e06a32d
+In-Reply-To: <5C6BAA4E020000A10002FBFF@gwsmtp1.uni-regensburg.de>
+References: <5C6BAA4E020000A10002FBFF@gwsmtp1.uni-regensburg.de>
 MIME-Version: 1.0
-From:   Mateusz Loskot <mateusz@loskot.net>
-Date:   Tue, 19 Feb 2019 17:51:05 +0100
-Message-ID: <CABUeae_N3NFXn-E1+LHORL3RDf5iTCFn=zyuOo3c2Aot2QF7pg@mail.gmail.com>
-Subject: "Submodule registered for path" output with config aliases mixed in
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-02-19_11:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The former wording implied that --no-commit would always cause the
+merge operation to "pause" and allow the user to make further changes
+and/or provide a special commit message for the merge commit.  This
+is not the case for fast-forward merges, as there is no merge commit
+to create.  Without a merge commit, there is no place where it makes
+sense to "stop the merge and allow the user to tweak changes"; doing
+that would require a full rebase of some sort.
 
-$ git version
-git version 2.20.1.windows.1
+Since users may be unaware of whether their branches have diverged or
+not, modify the wording to correctly address fast-forward cases as well
+and suggest using --no-ff with --no-commit if the point is to ensure
+that the merge stops before completing.
 
-I'm running `git clone --recurse-submodules https://XXX`
-The command seems to run well and completes with success.
+Reported-by: Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+Changes since v1:
+  - Tweaked commit message
 
-However, I noticed strange output from git:
+ Documentation/merge-options.txt | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-```
-Submodule 'Binary/A' (https://XXX) registered for path '!f() {
-~/AppData/Local/Fork/Fork.exe $PWD; }; fBinary/A'
-Submodule 'Binary/B' (https://XXX) registered for path '=C3=80   =E2=99=82=
-=E2=99=A6Binary/Intergraph'
-Submodule 'Binary/C' (https://XXX) registered for path '!sh -c 'git
-log $1@{1}..$1@{0} $@'Binary/C'
-Submodule 'Binary/D' (https://XXX) registered for path 'ls-files -o -i
---exclude-standardBinary/D'
-Submodule 'Binary/E' (https://XXX) registered for path
-'mergetool.TortoiseGitMerge.trustexitcodeBinary/E'
-```
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index c2a263ba74..d1061b8cf7 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -3,9 +3,15 @@
+ 	Perform the merge and commit the result. This option can
+ 	be used to override --no-commit.
+ +
+-With --no-commit perform the merge but pretend the merge
+-failed and do not autocommit, to give the user a chance to
+-inspect and further tweak the merge result before committing.
++With --no-commit perform the merge and stop just before creating
++a merge commit, to give the user a chance to inspect and further
++tweak the merge result before committing.
+++
++Note that fast-forward updates do not need to create a merge
++commit and therefore there is no way to stop those merges with
++--no-commit.  Thus, if you want to ensure your branch is not
++changed or updated by the merge command, use --no-ff with
++--no-commit.
+ 
+ --edit::
+ -e::
+-- 
+2.21.0.rc1.264.g6c9e06a32d
 
-I managed to identify where that garbage injections come from:
-from git aliases I've got configured [1]
-
-Could anyone explain what is happening here?
-Is there anything wrong with my ~/.gitconfig [1] ?
-
-
-[1] https://github.com/mloskot/wsl-config/tree/master/git
-
---=20
-Best regards,
-Mateusz =C5=81oskot, http://mateusz.loskot.net
