@@ -2,89 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,PI_DNOT,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C638C1F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 01:08:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 018621F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 04:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732582AbfBSBIw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 20:08:52 -0500
-Received: from mail.pdinc.us ([67.90.184.27]:40046 "EHLO mail1.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732571AbfBSBIw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Feb 2019 20:08:52 -0500
-Received: from blackfat (five-58.pdinc.us [192.168.5.58])
-        (authenticated bits=0)
-        by mail1.pdinc.us (8.14.4/8.14.4) with ESMTP id x1J18kf8020361
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 18 Feb 2019 20:08:47 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail1.pdinc.us x1J18kf8020361
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1550538527; bh=/rRQWDtjZbL3aezlYYJqalmYcuEr+aBjgY0cABnTIJk=;
-        h=From:To:Cc:References:In-Reply-To:Subject:Date:From;
-        b=YGS8tu59h9S8WsrFimZTRFwnY5s+V6qLNwEV+MJ9dIiOq+1IUS9jnI/ThNaMsvrKH
-         5IHpSm/wz7kbwxVrypSRnb6G1f1grDV6NtZB7piYFIkJbWM3+0ulJWEaZF+zmKxadi
-         w7B8ehx0V/tbqdehdUeIacbrgQOzZjwh+k9tRBRawXFtmWHrrnxrDslW2U/YjEKUzB
-         GWeMRwrTqF3uyc2Jo4xpnBOibxNtsf5KfWAz9G3+tut51ZPzXV3MkN1sib4rBWPV8E
-         pevL1XKWbGBr11nBDbo1T690yNjG8K2IbrKS4dH1Mnw2LwsM/uGO0Bvgasxz/Qv+92
-         WTJUY74kdXGTA==
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     <git@vger.kernel.org>
-Cc:     "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        "'Senol Yazici'" <sypsilon@googlemail.com>
-References: <5c62b41d.1c69fb81.fe791.877b@mx.google.com> <CAFacdQ-soWD176VHgd+raHaV=VPpzKXrDrLFavPcNEoewZwBYA@mail.gmail.com> CAFacdQ-soWD176VHgd+raHaV=VPpzKXrDrLFavPcNEoewZwBYA@mail.gmail.com <5c657002.1c69fb81.d433c.32ce.GMR@mx.google.com> <CAFacdQ8NDKfd0p8=9Rh3s4FPeS9mbqpQt8mw3AZoJn9jHjriPg@mail.gmail.com> <nycvar.QRO.7.76.6.1902182158040.45@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1902182158040.45@tvgsbejvaqbjf.bet>
-Subject: RE: Delivery Status Notification (Failure)
-Date:   Mon, 18 Feb 2019 20:08:50 -0500
-Organization: PD Inc
-Message-ID: <35a401d4c7ef$acf14070$06d3c150$@pdinc.us>
+        id S1725808AbfBSESL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 23:18:11 -0500
+Received: from mail-it1-f176.google.com ([209.85.166.176]:52381 "EHLO
+        mail-it1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725497AbfBSESK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Feb 2019 23:18:10 -0500
+Received: by mail-it1-f176.google.com with SMTP id r11so3129074itc.2
+        for <git@vger.kernel.org>; Mon, 18 Feb 2019 20:18:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=hw4ZV4leVh+/O3w8z/jSey6kN61tovdU+QmkDyXAiaI=;
+        b=UCggXIdr+A/KOJvo1/WF/7L29FOHukyBS5LM5wFEmGcWHW8LpCqBRVhbQolC56TAA2
+         lAQLgdsxZVrU2u7KCMlLEX5UVv39MlWIvU7RPf59m/yi5xJlJ4XwpuZmL0yP1+xSy4SC
+         oxJvqSLYfRW/IBqQvRUABevxbxSN1Fja7wRsDd+lfLfRBHKunF7M03M/4X9wb5a2lgf2
+         WBWcJ4OGMm9DPLDjGTwEew9iRmhClpNwP2Ax/1qt0UsH81rZ8A2++jyvp0LPPe1DOqzJ
+         oW9BZbZdRFYXTHlY2jRFNzl8oxjkJTOhfQHKP4tz7OE64AqLp55nscxsAJGxSMLtqlXb
+         Phew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=hw4ZV4leVh+/O3w8z/jSey6kN61tovdU+QmkDyXAiaI=;
+        b=Yxp2OMi0CdyNu6wi04YzCzBQWvHhHR0/EPNXf2TDYuodPrroLPQiNWYKtL1VNbtWjt
+         /BDNBnCvKXrvzO8zzSeOkxTQHr98Tnxzn0AicIaeW7/PoKPkxL+dAbPL30eiWZ046/9R
+         Nq6/hxMd2EJqoV7TL4l5dVFCzOLAK2MGDmv34YniCKmsp+djOxKzbyTYz0LOGpaAecZ1
+         8/yjdh+Oqc13kl/cTmNGyPTugxLkdCOPnwslCyE4hvNOUKdhUJ+cYxWAFBzu1dQJapD+
+         Zql+3P9ibpmZL2xx4ZJAC06xHrXkTTsosRyYiRnmjKc2RC89xd5mO2vbeHGlzJqXMfIr
+         dpRQ==
+X-Gm-Message-State: AHQUAubjdDpBDFrvrtKUnsNcdiOor9jB8ZDbYovV+K2TSLBIVf7huQpJ
+        mjXQ9TU8jSNA5vLdcYuKjFIyNjUgJqU2QFIm4/0WBmt4
+X-Google-Smtp-Source: AHgI3IZBTv0hgwyHG/fQ6MHNvJykNps597HCs6O1NAJMkvNRy9FNOdDbanswhG/nor7iwEwZ1neNAhBKrp26Ny0gdSg=
+X-Received: by 2002:a02:a397:: with SMTP id y23mr12942363jak.41.1550549889804;
+ Mon, 18 Feb 2019 20:18:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIG8tPn8ZhkYxBZqOqCto1UqajiFwGSg2oqAmc8qhwCvsNoFQKxUghvpTap7jA=
-Content-Language: en-us
+From:   =?UTF-8?Q?Sebasti=C3=A1n_Mancilla?= <smancill.m@gmail.com>
+Date:   Tue, 19 Feb 2019 01:17:59 -0300
+Message-ID: <CAJPSwc1GuifK9BdssWQsf+oVY0Aw+PLM1pgAiis7UdV1tZrpew@mail.gmail.com>
+Subject: git rebase --continue after solving conflicts doesn't work anymore
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Johannes Schindelin
-> Sent: Monday, February 18, 2019 4:00 PM
->=20
-> On Mon, 18 Feb 2019, Senol Yazici wrote:
-> >
-> > I just stumbled over following page
-> >
-> > https://git-scm.com/about/distributed
-> >
-> > and was wondering if it is possible to
-> >
-> > - demilitarise that =E2=80=9Cdictator/lieutenant=E2=80=9D thing and
-> > - de-religionise that =E2=80=9Cblessed=E2=80=9D thing
-> >
-> > I did not had the feeling that git is =E2=80=9Cpro =
-military=E2=80=9D, or is against
-> > =E2=80=9Cnon religious=E2=80=9D developers/users.
->=20
-> Those are valid concerns, and I value your feedback.
->=20
-> It would probably be a good thing to change this, and you can even do =
-it
-> yourself: create a Pull Request to change this file:
->=20
-> =
-https://github.com/git/git-scm.com/blob/master/app/views/about/_distribut=
-ed.html.erb
->=20
+I've always used "git rebase --continue" as the help shows:
 
-Curious, where are the sources for the PNGs saved? I did not find any =
-obvious vector or art project files.
+    Resolve all conflicts manually, mark them as resolved with
+    "git add/rm <conflicted_files>", then run "git rebase --continue".
 
--Jason
+and Git would apply the conflicted commit without issues and the rebase would
+continue.
 
+But since Git 2.20.x it doesn't work anymore. Now after solving the conflicts
+and running "git rebase --continue" I get this error most of the time:
+
+    error: unable to dequote value of 'GIT_AUTHOR_DATE'
+    error: you have staged changes in your working tree
+    If these changes are meant to be squashed into the previous commit, run:
+
+      git commit --amend
+
+    If they are meant to go into a new commit, run:
+
+      git commit
+
+    In both cases, once you're done, continue with:
+
+      git rebase --continue
+
+    error: could not commit staged changes.
+
+Now I have to run "git commit" first to commit manually and then do the "git
+rebase --continue".
+
+I've compiled 2.18.2 and 2.19.2 to check and the error doesn't happen.
+
+It is present in 2.20.x and current master v2.21.0-rc1-9-gca1b411648.
+
+
+Is it a regression because of the new rebase written in C?
+
+
+-- 
+Sebastian Mancilla
