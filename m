@@ -2,115 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43F631F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 20:10:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01A861F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 20:15:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726342AbfBSUK0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 15:10:26 -0500
-Received: from mail-ot1-f74.google.com ([209.85.210.74]:56781 "EHLO
-        mail-ot1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726110AbfBSUK0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 15:10:26 -0500
-Received: by mail-ot1-f74.google.com with SMTP id q11so18542642otl.23
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 12:10:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=ZDRH7fewrCGqghdaskB/VBYVoubtmPypaGT07Q+KxAU=;
-        b=enElxOUAnuoxdizic3aj5WD7NZVSBj7SqkPUMUCQdJaKJtCHMggYU4v8D7po7umZgQ
-         pqlJ51IDMhBLsT8X0Sa9F3H4kq3sgXFCyjVNgN3FRRENa1wyI/YwfSUT1UM6SDBCku2g
-         GJR75QnZOdXtuXnTuMlXn50QUrnvaVGVlMDMyrlzBvhEF/H8i3lCPwLoGXfE/e8HyQjs
-         WNHAKCvnnm91mS79tvD2JKhZ73LX3tHHwuXolP6jCfXnIp5VacYieymoRY6M8vF5Ue94
-         lvcrVpA+vDFseapuCzglX71eaNGNN5NHLK1u0kOGjJ8DTYIXyibg8xG9JXgFKSwmDSWi
-         mfbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=ZDRH7fewrCGqghdaskB/VBYVoubtmPypaGT07Q+KxAU=;
-        b=YMJzBtGGGqRmWZzIaTe5kabB+26Aa8eFm+vYx8K58x0fTYk4N0JQUq27XX58a39zxa
-         w+itbSanTSBSB93L3QQVCSZV7VNBwRiyWqN2FNKv0N6ji1I/Z4awHmc0fIbtOn6laUIz
-         akCobc7KPlMQpMnhXmBDWaerc4/fDEAqiL6CZWcrbEKNhoY/4AlbS+x2xOT+pnQ0b/UP
-         0U0F4N8wqphDFfQnIwaQbQB9DLt9OhV5r9r//2P/fO8FTXTtziIIMjY0X0fYIK6KBeUj
-         7iNXtks2ffoJ7juSaitzuC3KRlakz+slbCcE2sXA+Zq1ap2sQ/C038z8kzDGhY8sDuN9
-         r4zQ==
-X-Gm-Message-State: AHQUAuaCKtASMj2A+S7wcrsLWnF3FzhvMkM3I37twD14hUQFRgqMQPNr
-        EmNcj9w/z8pa9Jq9b/29RbcGi6vwchh4AexnRUbr
-X-Google-Smtp-Source: AHgI3IZLBY5kL6Gv9QrCxFjvALv517bYPxFpCdtB+dkXZySALZOCgPMVRcFKeTlHZSvgh+YO7MSVh+nMDfxDE5ei5U3Y
-X-Received: by 2002:a9d:650f:: with SMTP id i15mr16817804otl.70.1550607025703;
- Tue, 19 Feb 2019 12:10:25 -0800 (PST)
-Date:   Tue, 19 Feb 2019 12:10:22 -0800
-In-Reply-To: <CAP8UFD0VPZEhBTUb--n5RHECUkO81aPcGkTYGi0fqd35rnKr3Q@mail.gmail.com>
-Message-Id: <20190219201022.237430-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CAP8UFD0VPZEhBTUb--n5RHECUkO81aPcGkTYGi0fqd35rnKr3Q@mail.gmail.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     christian.couder@gmail.com
-Cc:     jonathantanmy@google.com, sandals@crustytoothpaste.net,
+        id S1726239AbfBSUPo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 15:15:44 -0500
+Received: from p3plsmtpa12-02.prod.phx3.secureserver.net ([68.178.252.231]:33610
+        "EHLO p3plsmtpa12-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725875AbfBSUPo (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 19 Feb 2019 15:15:44 -0500
+Received: from jessie.local ([212.149.203.197])
+        by :SMTPAUTH: with ESMTPSA
+        id wBnlgvbgJHcJvwBnqgAAqF; Tue, 19 Feb 2019 13:15:44 -0700
+Date:   Tue, 19 Feb 2019 22:15:36 +0200
+From:   Max Kirillov <max@max630.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Max Kirillov' <max@max630.net>,
+        'SZEDER =?utf-8?Q?G=C3=A1bor'?= <szeder.dev@gmail.com>,
         git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results) - Good News
+Message-ID: <20190219201536.GA2354@jessie.local>
+References: <001201d4c617$de429540$9ac7bfc0$@nexbridge.com>
+ <xmqqftsn4nik.fsf@gitster-ct.c.googlers.com>
+ <000001d4c624$da8e05d0$8faa1170$@nexbridge.com>
+ <xmqq5ztj4l3j.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1902182008270.45@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.1902182249140.45@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1902182249140.45@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-CMAE-Envelope: MS4wfFMtOBcOxp3eDBUnzUmHyr4/SgBzjFsPkxK8277Pbsv6tA7frg6HevUMM/ozluMMTkFEmSttsXc09bgWk9icz/EQoqs3e06LjSKQmQxXz97EEftY8og8
+ xiHoVmSEqGs1Ad5xcW1WXB4sl1Mz1ecuehDk7mXes1T9Y5Fj28Lj9Cbpx3jHpsJv9Rv5uUwmqFAsVXqFChslJIxUdWPaarJE4EKolA/hNm8h8YaxcWgEEBXV
+ aLukjq+hWxgsyOY6KnGYUGhh25rGbvvbCb1q+a4hXgEmV0kBtkeW1QbHnltil3vV1TncqYdJxHvdAGTMTYwV+iWrMUBAdu8m5KuwaMSmEmc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > Good points about SSH support and the client needing to control which
-> > protocols the server will send URIs for. I'll include a line in the
-> > client request in which the client can specify which protocols it is OK
-> > with.
+On Mon, Feb 18, 2019 at 10:57:13PM +0100, Johannes Schindelin wrote:
+> I have to take that assessment back. So sad.
 > 
-> What if a client is ok to fetch from some servers but not others (for
-> example github.com and gitlab.com but nothing else)?
+> After that build, I cherry-picked the commit on top of shears/pu (which is
+> Git for Windows' ever-green branch that continuously rebases Git for
+> Windows' `master` onto git.git's `pu`), and the build seems to hang again:
 > 
-> Or what if a client is ok to fetch using SSH from some servers and
-> HTTPS from other servers but nothing else?
+> https://dev.azure.com/git-for-windows/git/_build/results?buildId=31291
 
-The objects received from the various CDNs are still rehashed by the
-client (so they are identified with the correct name), and if the client
-is fetching from a server, presumably it can trust the URLs it receives
-(just like it trusts ref names, and so on). Do you know of a specific
-case in which a client wants to fetch from some servers but not others?
-(In any case, if this happens, the client can just disable the CDN
-support.)
+Hi.
 
-> I also wonder in general how this would interact with promisor/partial
-> clone remotes.
-> 
-> When we discussed promisor/partial clone remotes in the thread
-> following this email:
-> 
-> https://public-inbox.org/git/20181016174304.GA221682@aiede.svl.corp.google.com/
-> 
-> it looked like you were ok with having many promisor remotes, which I
-> think could fill the same use cases especially related to large
-> objects.
->
-> As clients would configure promisor remotes explicitly, there would be
-> no issues about which protocol and servers are allowed or not.
-> 
-> If the issue is that you want the server to decide which promisor
-> remotes would be used without the client having to do anything, maybe
-> that could be something added on top of the possibility to have many
-> promisor remotes.
+You seem to be talking about the hang like it's some old
+thing, I probably have missed some earlier discussion. I
+have not heard before that it hangs on linux. The 60 seconds
+hang because of lost SIGCHILD is not it. Also the hang
+observed at NonStop is not it as well since the no-reuse
+hack did not help (though numbered output files probably
+would be more sure to avoid duplications expecially at
+Windows where you cannot just unlink busy file and reuse its
+place in directory)
 
-It's true that there is a slight overlap with respect to large objects,
-but this protocol can also handle large sets of objects being offloaded
-to CDN, not only single ones. (The included implementation only handles
-single objects, as a minimum viable product, but it is conceivable that
-the server implementation is later expanded to allow offloading of sets
-of objects.)
+From the tasks you have posted there seem to be no details
+available. The test is not reported as completed, and the
+overall build fails, and there seem to no additional data
+except the log available.
 
-And this protocol is meant to be able to use CDNs to help serve objects,
-whether single objects or sets of objects. In the case of promisor
-remotes, the thing we fetch from has to be a Git server. (We could use
-dumb HTTP from a CDN, but that defeats the purpose in at least one way -
-with dumb HTTP, we have to fetch objects individually, but with URL
-support, we can fetch objects as sets too.)
+Have you or somebody else been investigating it or is there
+otherwise any information about those hangs?
+
+-- 
+Max
