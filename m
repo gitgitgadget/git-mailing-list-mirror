@@ -2,125 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	RCVD_IN_RP_RNBL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A73B1F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 20:54:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 121BA1F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 22:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726511AbfBSUyM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 15:54:12 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:24717 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726321AbfBSUyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 15:54:12 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1JKs0p2063517
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 19 Feb 2019 15:54:01 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Max Kirillov'" <max@max630.net>,
-        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "=?iso-8859-1?Q?'SZEDER_G=E1bor'?=" <szeder.dev@gmail.com>,
-        <git@vger.kernel.org>
-References: <001201d4c617$de429540$9ac7bfc0$@nexbridge.com> <xmqqftsn4nik.fsf@gitster-ct.c.googlers.com> <000001d4c624$da8e05d0$8faa1170$@nexbridge.com> <xmqq5ztj4l3j.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1902182008270.45@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1902182249140.45@tvgsbejvaqbjf.bet> <20190219201536.GA2354@jessie.local>
-In-Reply-To: <20190219201536.GA2354@jessie.local>
-Subject: RE: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results) - Good News
-Date:   Tue, 19 Feb 2019 15:53:53 -0500
-Message-ID: <010e01d4c895$3c997800$b5cc6800$@nexbridge.com>
+        id S1728881AbfBSWFJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 17:05:09 -0500
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:35249 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727431AbfBSWFJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 17:05:09 -0500
+Received: by mail-ua1-f65.google.com with SMTP id k5so2713207uao.2
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 14:05:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Uv4WO+LIujL4IosazL39DsWMt3jbAP48f4X4caFggMM=;
+        b=LwHWLka2DK2g3U1fe0Sy6RyQfWKlRuQHYbVfDCxI9KACwyNqRRc2/rDwwYootUrTvR
+         JxrT57goADMyRdT5XsRdxg9hzW3MT+FTVie8g8v9ThUlQRcY/lpfj0yBYuqbOB9g8BsM
+         eZkmwbiuva8Zh15SGDzfj4XUwpQYTmALrsCvTiI2MxJHgzdCJkDknUt99YJQPbwqvdXX
+         ATVFv/2dj2zQibPyo9ziGWbQ+zCsKBrW7AxQ60+unQYz951y10/epDhF9V0B/OOeqYRG
+         /V4paN3hqOJjwN5U05Yf9+WDW9OcS6f0q9RcXW/8Ag57f3MRONsIDPSCaQFkUahKWkUp
+         5yFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Uv4WO+LIujL4IosazL39DsWMt3jbAP48f4X4caFggMM=;
+        b=dHgTuzvyA2GGewrUtTHcVpwthmHBhH7q2HdD+I4183Zb7VB/De03jpXzyoXYb98999
+         al6L4zwQiqppemEJmASgNjD7KwxumMQjhqydbpqPUvUvPDomuzSgZGnmc+fhCALMoZG3
+         ckblqYDYcPgghHpTqxhsENc0dQ8WYTFlTmxi/NV8za2VRe3dH42Okmv1nmzmVml3RgbI
+         j7KZTc1ehUA3oQYXv7cbcHZt+TA6Tq8yTzjIejXZ0hjkEe5oYAAKtILg+A5+cXJl7557
+         SqH2FUo+0pfk9xFJ+rgKyi4Vxg9Wze/WXO2hUmDgU8bqchpFr/wo2PTFRXMfVGkLx5Yy
+         bCTw==
+X-Gm-Message-State: AHQUAuYTF1qKfg5o+a4phPlB/htkagNdvTcrSgvf8yhgzI/89vUmUiVS
+        p+jPCJHLWCuTStGgn8P9i7VFohUl43TsAxqxcMs=
+X-Google-Smtp-Source: AHgI3IakqI8srVXCwlsV8QJPBaUxgSQOeDXcX0V7FvhLBWardNg2YBV2EqXOrNoXa42b3vql92cBm6I8cy6HH/tP0Fg=
+X-Received: by 2002:ab0:7191:: with SMTP id l17mr16018121uao.28.1550613908131;
+ Tue, 19 Feb 2019 14:05:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQFycQzmW9pNbu02MZcMspejNiBnQQDz28D8AaU7wHUB79R99QIiKXPzAibawYMCKTnR7KZUbdTg
+References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-7-t.gummerer@gmail.com>
+ <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
+ <xmqqva40lps2.fsf@gitster-ct.c.googlers.com> <CABPp-BGQwtok1T3WmY3ndBG6RjbESSOgmbZxkWiN-avqfUjDVg@mail.gmail.com>
+ <CACsJy8AxUxYCO7bzb98EVvO5DU62ukZQNrF-sEktrdR9m6tfvg@mail.gmail.com>
+ <CACsJy8Bk=wbgzsE+Vo4w_u0E63PdUxxcvG-7e6Hq-8_jrmSErw@mail.gmail.com>
+ <xmqq7eek3ax7.fsf@gitster-ct.c.googlers.com> <CACsJy8CHHT=9e9ti7VA4X4h3FrZcUKvLuzkL56mXLgjk4c5Qcg@mail.gmail.com>
+ <xmqqlg2zz90l.fsf@gitster-ct.c.googlers.com> <CACsJy8CQhWeC3b6eGPePuRejfOx7c17X61-wqq5kOiRzYkRESw@mail.gmail.com>
+ <xmqqwolv1tzw.fsf@gitster-ct.c.googlers.com> <xmqqo9771tnj.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqo9771tnj.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 19 Feb 2019 14:04:56 -0800
+Message-ID: <CABPp-BERuEtdjHhqaao+2=rsLXiPdkG4SbeULQ6=59hgWS5BLg@mail.gmail.com>
+Subject: Re: [PATCH 6/8] checkout: add --cached option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 19, 2019 15:16, Max Kirillov <max@max630.net> wrote:
-> On Mon, Feb 18, 2019 at 10:57:13PM +0100, Johannes Schindelin wrote:
-> > I have to take that assessment back. So sad.
-> >
-> > After that build, I cherry-picked the commit on top of shears/pu
-> > (which is Git for Windows' ever-green branch that continuously rebases
-> > Git for Windows' `master` onto git.git's `pu`), and the build seems to
-hang
-> again:
-> >
-> > https://dev.azure.com/git-for-windows/git/_build/results?buildId=31291
-> 
-> Hi.
-> 
-> You seem to be talking about the hang like it's some old thing, I probably
-> have missed some earlier discussion. I have not heard before that it hangs
-on
-> linux. The 60 seconds hang because of lost SIGCHILD is not it. Also the
-hang
-> observed at NonStop is not it as well since the no-reuse hack did not help
-> (though numbered output files probably would be more sure to avoid
-> duplications expecially at Windows where you cannot just unlink busy file
-and
-> reuse its place in directory)
-> 
-> >From the tasks you have posted there seem to be no details
-> available. The test is not reported as completed, and the overall build
-fails,
-> and there seem to no additional data except the log available.
-> 
-> Have you or somebody else been investigating it or is there otherwise any
-> information about those hangs?
+On Tue, Feb 19, 2019 at 11:10 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > I am getting the impression that to save typing, you would want to
+> > make "--index --worktree" the default (i.e. among the above, only
+> > --no-index and --no-worktree need to be spelled explicitly), but
+> > there is one glitch.  Updating from the index must be spelled
+> > explicitly with "--no-index --worktree".
+>
+> And after getting reminded by Elijah, the default pair is
+> <--no-index, --worktree>.
 
-The no-reuse hack made a big different
-(https://public-inbox.org/git/20181124093719.10705-1-max@max630.net/) in
-conjunction with replacing </dev/zero with </dev/null. It was the sleep
-hack, and generate_zero_bytes that had no effect. I previously supplied a
-multi-run result. Please refer to that fix/test for reference, which I paste
-below:
+Why would you want --no-index or --no-worktree as flags?  That seems
+to presume a default of modifying both the index and the working tree,
+as these names imply undoing pieces of such a default.
 
-On February 16, 2019 13:06, Junio C Hamano wrote:
-> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
-> > On February 16, 2019 3:27, Max Kirillov wrote:
-> >> What you could try is
-> >> https://public-inbox.org/git/20181124093719.10705-1-
-> max@max630.net/
-> >> (I'm not sure it would not conflict by now), this would remove 
-> >> dependency between tests. If it helps it would be very valuable
-> information.
-> >
-> > Good news. This patch does seem to do the trick. I wonder whether 
-> > this fixes the Azure build also.
-> >
-> > I have run the test under the following conditions:
-> > Run 1 (system idle): Pass
-> > Run 2 (system idle): Pass
-> > Run 3 (system idle): Pass
-> > Run 4 (system idle): Pass
-> > Run 5 (system idle): Pass
-> > Run 6 (system mild load, heavy file system): Pass Run 7 (system mild 
-> > load, moderate file system load - git fetch): Pass Run 8 (heavy 
-> > system load, heavy file system load): Pass Run 9 (--verbose, heavy 
-> > system load, heavy file system load): Pass Run 10 (GIT_TRACE=true, 
-> > --verbose, heavy system load, heavy file system
-> > load): Pass
-> > Run 11 (very heavy system load, very heavy file system load): Pass
-> 
-> That indeed is a good news.
-> 
-> > The current condition of the code is (the generate_zero_bytes delete 
-> > was previously removed so can be ignored for the patch):
-> 
-> Just to make sure I do not misunderstand, this result is with Max's 
-> patch but without the generate_zero_bytes stuff?
+I'd rather have a flag like --worktree which alone only modifies the
+working tree and is presumed to be the default (but useful to be
+explicit or as mentioned later), have a flag for applying the changes
+to the index instead (--index?), and treat applying to both the
+working tree and the index as unusual and require either both flags
+(--worktree --index ?) or some special flag that likely has a longer
+name (--worktree-and-index?).
 
-Correct.
-
-
-
+I _think_ Duy does the latter reading over his manpage that he linked
+to, but maybe I'm just reading my own biases into it.
