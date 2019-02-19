@@ -2,155 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PI_DNOT,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0A5C1F462
-	for <e@80x24.org>; Tue, 19 Feb 2019 09:39:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0AD61F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 09:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727582AbfBSJjL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 04:39:11 -0500
-Received: from mx2.suse.de ([195.135.220.15]:45110 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727638AbfBSJjK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 04:39:10 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 2194DAD1A;
-        Tue, 19 Feb 2019 09:39:08 +0000 (UTC)
-Date:   Tue, 19 Feb 2019 10:39:06 +0100
-From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-To:     Senol Yazici <sypsilon@googlemail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
-        Johannes.Schindelin@gmx.de, jpyeron@pdinc.us
-Subject: Re: [RFE] Demilitarize Documentation (was RE: Delivery Status
- Notification (Failure))
-Message-ID: <20190219103906.3fc4c231@naga.suse.cz>
-In-Reply-To: <CAFacdQ_9=2hbC8-5+N=RdrGs=Anu2ku+TAj7x07OQNpa1b+gcg@mail.gmail.com>
-References: <001601d4c7aa$460c0e70$d2242b50$@nexbridge.com>
-        <xmqqimxh2b61.fsf@gitster-ct.c.googlers.com>
-        <CAFacdQ_9=2hbC8-5+N=RdrGs=Anu2ku+TAj7x07OQNpa1b+gcg@mail.gmail.com>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-suse-linux-gnu)
+        id S1727501AbfBSJ73 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 04:59:29 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:21210 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727048AbfBSJ73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 04:59:29 -0500
+Received: from [192.168.2.240] ([92.22.15.194])
+        by smtp.talktalk.net with SMTP
+        id w2BRgTnKC2CiLw2BRg9DeM; Tue, 19 Feb 2019 09:59:26 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1550570366;
+        bh=NBErZhz3ArSIH00vbUSAa6GFuygeaKxaZAV4ay5EA5A=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=VlzA/zOseso/4/U7YcLoKffQI5a9Ex+6VzO53Yn8nqIvkm7MloHfuNKMrgsX/nZQN
+         LFosfZmM4dYe7LoZzDMiE9b060vPPAyzdBHzu8Yy9HKRuhlvIF2wD/78czREpyvBB2
+         XNdLbfc7pBflEOYZ11gjaaaLPJr3yiqzswoCpNII=
+X-Originating-IP: [92.22.15.194]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=ZPWpZkzb c=1 sm=1 tr=0 a=SbQTfhO/oL0pg4h8lvBCaA==:117
+ a=SbQTfhO/oL0pg4h8lvBCaA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=pGLkceISAAAA:8 a=7cJx0I7WwtomyTNB2RAA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: git rebase --continue after solving conflicts doesn't work
+ anymore
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Sebasti=c3=a1n_Mancilla?= <smancill.m@gmail.com>
+Cc:     git <git@vger.kernel.org>
+References: <CAJPSwc1GuifK9BdssWQsf+oVY0Aw+PLM1pgAiis7UdV1tZrpew@mail.gmail.com>
+ <CAP8UFD22QMJyiJmQO1YVFmBkZuzex58+QBbTbdCCVHa8OGCQJA@mail.gmail.com>
+ <CAPig+cQHx_BuxwZS7+juBdgKyAWhStU=9kFhs2hf=wjOMGAd7Q@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <317468c6-40cc-9f26-8ee3-3392c3908efb@talktalk.net>
+Date:   Tue, 19 Feb 2019 09:59:24 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <CAPig+cQHx_BuxwZS7+juBdgKyAWhStU=9kFhs2hf=wjOMGAd7Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfOMCTj3t7iVrOyb+m6y7xtejL2OFbDseWOJkmLUYtIC7yKZgjx063aCBzsuYEm0zT1jA27VkS3O3nVtn45O6O3r/ElV8c1bkh0sgG03waCY1d2XQoQqa
+ ScSMxCGf76gLVzgrpswoNdsIN9RUETmmvXW31GuAAGkun/PWEdXlJxJxQ5pFftu4BxO4RWYimDj/QpFb7wjwHRLcQGrqJAJCIQWQkbyd7gMaY2oAAlTTfaxs
+ woY/5ajfmbBTSssCFbTfTOSQn+nul/b0aPr1s+Jq7zcd2mUGnvKYQOo+OWWWfmxn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 19 Feb 2019 09:02:43 +0100
-Senol Yazici <sypsilon@googlemail.com> wrote:
+Dear Sebastián
 
-> Dear all,
-> 
-> Thank you for the quick response and apologize my late reply (good
-> morning from Europe).
-> 
-> I understand that well "established" concepts might make it easier
-> grasping concepts.
-> 
-> My concerns towards using these particular expressions
-> (dictator/lieutenant/blessed) are nevertheless motivated.
-> 
-> 1. Dictator
-> Concern: "Bad" connotation.
-> 
-> I agree, dictator is not military, but it is not "not military at
-> all", see https://www.merriam-webster.com/dictionary/dictator.
-> Except of case 1 a (and 2, which is not applicable in this context),
-> cases b and c are related to either "autocrat" or "fascist dictator".
-> Both of these historical "figures" majorities abused their military
-> power to "rule" in an oppresive way.
-> Further, "googling" dictator does not give Linus as a result in (at
-> least my) search (bubble).
-> It gives the well known bad examples of dictators usually having
-> abused or are abusing their powers in an oppressive/tyrannical way.
+On 19/02/2019 07:22, Eric Sunshine wrote:
+> [cc:+phillip.wood@talktalk.net]
 
-You could say that serves as a reminder that authority comes with
-responsibility ;-)
-> 
-> Suggestion for substitution: Principal or principal integrator.
-> 
-> 2. Lieutenant (somehow I manage to misspell this word most of the times)
-> Concern: Strong relation to military.
-> 
-> I also agree here, lieutenant is not military, again see
-> https://www.merriam-webster.com/dictionary/principal.
-> The connotation here is also not as negative as it is with dictator.
-> However, googling lieutenant results in mostly military figures.
-> 
-> Suggestion for substitution: Assistant or assistant integrator.
+Thanks Eric
 
-So now the terms sound a lot like a corporate lingo. Is it now turn for
-enthusiasts and entrepreneurs to feel excluded because git is meant
-only for corporations, and for people who had bad experience as
-corporate employees to feel offended?
+> On Tue, Feb 19, 2019 at 1:45 AM Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> On Tue, Feb 19, 2019 at 5:20 AM Sebastián Mancilla <smancill.m@gmail.com> wrote:
+>>> But since Git 2.20.x it doesn't work anymore. Now after solving the conflicts
+>>> and running "git rebase --continue" I get this error most of the time:
+>>>
+>>>      error: unable to dequote value of 'GIT_AUTHOR_DATE'
+>>
+>> It looks like this can happen only when an "author-script" file (most
+>> likely .git/rebase-merge/author-script)
 
+or it could be .git/rebase-apply/author-script depending on the options 
+passed to rebase when it started (the sequencer and am use the same code 
+for reading the author script now)
+
+>> is read by the sequencer
+>> mechanism. Could you show us the content of this file on your machine?
 > 
-> 3. Blessed repository
-> Concern: Rather exclusive than inclusive.
-> 
-> I agree, blessed is not a bad phrasing. But if one is not
-> attached/related to a religion in some way, one somehow feels left
-> out.
-> It is creating some troubles explaining this to the "curious young
-> mind" (i.e. children) without having to mention religion at some point
-> of the explanation.
-> Why should one need to go there in a discussion of how "big projects"
-> are dealt with?
-> Of course, one could say "it is another word for approved" and neglect
-> the origin of the word.
-> What would then be left as a motivation to use this word at all, and
-> not use approved?
-> 
-> The more I try to understand what "blessed" in a context of a
-> repository wants to tell me about it's current state, the less I am
-> understanding.
-> 
-> I think the state of the repository is something like "Approved by
-> principal integrator" or "Principal integrator (PI) approved", thus...
-> 
-> Suggestion for substitution: PI-Approved repository
-> 
-> Words have their weight.
+> A very good suggestion considering that there have been changes
+> recently specifically related to the parsing of GIT_AUTHOR_DATE in C
+> code.
 
-The problem is they all have weight, and different words have different
-weights for different people.
+That would be very helpful, without seeing that it's hard to know what 
+the problem is.
 
-> In times where the entire world is accessible by the "click of a
-> finger" it is becoming more and more important to be inclusive.
-> Further, in a world where hundred of millions live in conditions ruled
-> by dictators or military regimes _I_ care more about acceptable than
-> "descriptive".
+Best Wishes
 
-I would like to point out that dictators rarely call themselves
-'dictator' so whatever negative connotations people living in actual
-dictatorships are most likely connected with the person of the dictator
-or the title the dictator chose for themselves and not the actual word
-'dictator'.
+Phillip
 
-Also once you go down this route you will find that most words have
-some negative connotation to some people. If you manage to find a few
-purely neutral words and write your documentation with them people will
-likely learn to hate them over time because they will read them again
-and again in vague politically correct documentation that does not
-describe what it is supposed to document in fear of offending somebody.
-
-At that point you can just delete the page from the documentation and
-be done with it.
-
-> 
-> I am not sure if someone in a "warlike" situation will feel "included"
-> finding these expressions when it is about software development
-> projects!
-
-I don't feel included in projects where the documentation is
-unintelligible for use of vague and non-descriptitve words.
-
-Thanks
-
-Michal
