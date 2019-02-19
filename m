@@ -7,69 +7,61 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF57C1F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 18:08:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3F881F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 18:38:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726895AbfBSSIT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 13:08:19 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:50549 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725885AbfBSSIT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 13:08:19 -0500
-Received: by mail-wm1-f68.google.com with SMTP id x7so3817032wmj.0
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 10:08:18 -0800 (PST)
+        id S1728343AbfBSSio (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 13:38:44 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44650 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726342AbfBSSin (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 13:38:43 -0500
+Received: by mail-wr1-f67.google.com with SMTP id w2so8511249wrt.11
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 10:38:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=ZP3WjSdh50nQMUVWagPhG48UkkLQ6ls+xKPsbZD0o24=;
-        b=aN1vE1UOwrOZEiJpo0CyXxjUhrWk9HT/b6APe8HKKkuPehNHwtgNL+c0W8cuCo0KyZ
-         cgwjHtLFgvajkvPtbyS+Z1bvQsXR2iESsFbNk3APDD68Vf1tWGhscCIABFtF1EcBWY4/
-         VvbLoYWxeYuoPH4oz41CvXIjZ5NTdSY6ytsr5Ak5ebHEAaiChXCINxjI9fjAhciULwuA
-         zbtwmCevj7J6i/D78ClJgZQpqQEm3ACY9YJ6v68TTjeVQHM3CMEPymlDwzrcr314EBbX
-         mXOBZTnly24xVTEqy4NDCdJi8r27RB6S2qDWiO9UeyHodznn0pR4PamqeEcbBD3T9yMN
-         sgqQ==
+        bh=JVf66xxrQwzHnS6OqOYyeP1qJVZLdPraG8eimcTy/ko=;
+        b=if/xeOlv2/rRoRU1gU0uUfH2ta9QoqZ6Q+XvjLKS2W8p3q+vUCDcavGDkc3JtS4LhW
+         YJbRYS4NG74o64AC87rgoGuJ4OMFL1OkDn/eDYmZQ5guX0Ulk19HLYnAzyNCVn8KLvHe
+         uK5mUiS9ZWcrJbBviWaZ4S8gHKeorhHMiNatvUcsAKVgM0aspqad3CAmsNC8wIzCDyM3
+         i4mi3NHzsf/xKFpc0etjkhz5lPzkORKjTVRu5Km1Sa+6HVVIARKpU2TJufRQ7+SCI2TD
+         3v5/VuaVuj36mFOmG99YW/50IK9Zu8Lc8p2GNmJoYyxiWaWWXF6GB97/qf1sfz3Xm3wu
+         7hew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=ZP3WjSdh50nQMUVWagPhG48UkkLQ6ls+xKPsbZD0o24=;
-        b=f7f24ESuMQ5Yt2Atg5RxmtpWI/QhevjumeVr5rNU29CxjhLlPkSNPSzGnMiKs4DfTB
-         srNPsW0unCXDMbf6LzFbUc9n23xBAANMCEQFHooL9T1dybKGcgkDI593g4I4RO7dj9iA
-         /g3iukOP0aIzAmGnfK3x1nKli2JjL0cyrG/A4oecN94ah955aGnytfk8W9MqeH2aga/i
-         ipFkw0rysvYyKbp4THyqWzd8Tb13NW91CNnI0kV2q1tACEvH/sfuODb3WrVrLkF/e0e0
-         ns30PcDdK8AW5ML5mUnQdsRr7bXRgjodt74jEphBOtExANu939Ha9/UIXyFVi7Sp/8Bp
-         b6pQ==
-X-Gm-Message-State: AHQUAubvu6BmYpjKyT6XFZczLnps2dafeMrOki2TeQX1RI3i/SjEpbgA
-        ov1iqim8dwpJr2q+PWPrScY=
-X-Google-Smtp-Source: AHgI3Ib4cF2TI8YeSytt6WNxUktiGJD1rySYMowFI/C9GiF0t98rf3J2/o6/Apl2DeOuSDHT/xZf3g==
-X-Received: by 2002:a1c:7ec4:: with SMTP id z187mr3657112wmc.43.1550599697408;
-        Tue, 19 Feb 2019 10:08:17 -0800 (PST)
+        bh=JVf66xxrQwzHnS6OqOYyeP1qJVZLdPraG8eimcTy/ko=;
+        b=CNh5P5kZ5XefS59+k8JKXBp8kZ3sGCdtidwtyTT/1kZWj99WHwdFNtu9vJqLHLGB5r
+         7Q5dtHjDvrMO7P+Yg5Lr2s9KqWOrPSQWVKlqPfCK0huNsDSxqf5B7M1MnD054WgoKbKg
+         QvWUFZvlpTAW1DTOJe+GVkULvg4r2mD78+g+iZI/X2IQWsE5Wr6nWEYBmWfDsmHsoY1X
+         xndyDxIIZeOC1z0VMtzbVJsIrRWSIv2lMvYk0vsKj42hKnJd1EGgru8F+s6wT8k+pZH8
+         dmklCcgY9mB2VLoR/83fTz3EjzW/TKVKvS8Cj7NgsKiWGSrFuQJcqzLSInz+//UWxTGc
+         rIbw==
+X-Gm-Message-State: AHQUAua6nSKjHOE3U/OqMOM+ZAhY0fT+iNmZAD3PpAruZgeyujkg517t
+        FctVLlmKKasZqw/Hjop1BPk=
+X-Google-Smtp-Source: AHgI3IZM3QTleh+n1X0g5WSPkbjtPyTV7UjinYi2pzxpbDi+BbXYmBTYl0TauzlbAvSBqAkS6fVbbw==
+X-Received: by 2002:a5d:620d:: with SMTP id y13mr21738803wru.119.1550601521133;
+        Tue, 19 Feb 2019 10:38:41 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a9sm2550498wmm.10.2019.02.19.10.08.16
+        by smtp.gmail.com with ESMTPSA id l125sm5999933wml.18.2019.02.19.10.38.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Feb 2019 10:08:16 -0800 (PST)
+        Tue, 19 Feb 2019 10:38:40 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        Holger Hellmuth <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH 1/1] Introduce "precious" file concept
-References: <20190216114938.18843-1-pclouds@gmail.com>
-        <20190216114938.18843-2-pclouds@gmail.com>
-        <87wolzo7a1.fsf@evledraar.gmail.com>
-        <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com>
-Date:   Tue, 19 Feb 2019 10:08:16 -0800
-In-Reply-To: <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com>
-        (Duy Nguyen's message of "Sun, 17 Feb 2019 16:31:56 +0700")
-Message-ID: <xmqq8syb3b3j.fsf@gitster-ct.c.googlers.com>
+To:     Max Kirillov <max@max630.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH] t5562: chunked sleep to avoid lost SIGCHILD
+References: <20190218205028.32486-1-max@max630.net>
+Date:   Tue, 19 Feb 2019 10:38:39 -0800
+In-Reply-To: <20190218205028.32486-1-max@max630.net> (Max Kirillov's message
+        of "Mon, 18 Feb 2019 22:50:28 +0200")
+Message-ID: <xmqq1s4339ow.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -79,47 +71,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Max Kirillov <max@max630.net> writes:
 
-> On Sun, Feb 17, 2019 at 2:36 AM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->>
->>
->> On Sat, Feb 16 2019, Nguyễn Thái Ngọc Duy wrote:
->>
->> [Re-CC some people involved the last time around]
->>
->> > A new attribute "precious" is added to indicate that certain files
->> > have valuable content and should not be easily discarded even if they
->> > are ignored or untracked.
->> >
->> > So far there are one part of Git that are made aware of precious
->> > files: "git clean" will leave precious files alone.
->>
->> Thanks for bringing this up again. There were also some patches recently
->> to save away clobbered files, do you/anyone else have any end goal in
->> mind here that combines this & that, or some other thing I may not have
->> kept up with?
+> If was found during stress-test run that a test may hang by 60 seconds.
+> It supposedly happens because SIGCHILD was received before sleep has
+> started.
 >
-> I assume you mean the clobbering untracked files by merge/checkout.
-> Those files will be backed up [1] if backup-log is implemented. Even
-> files deleted by "git clean" could be saved but that might go a little
-> too far.
+> Fix by looping by smaller chunks, checking $exited after each of them.
+> Then lost SIGCHILD would not cause longer delay than 1 second.
+>
+> Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+> Signed-off-by: Max Kirillov <max@max630.net>
+> ---
+> Submitting as proper patch. Note: I believe it does not relate to other issues
+> discussed in this thread.
+>  t/t5562/invoke-with-content-length.pl | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t5562/invoke-with-content-length.pl b/t/t5562/invoke-with-content-length.pl
+> index 0943474af2..257e280e3b 100644
+> --- a/t/t5562/invoke-with-content-length.pl
+> +++ b/t/t5562/invoke-with-content-length.pl
+> @@ -29,7 +29,12 @@
+>  }
+>  print $out $body_data or die "Cannot write data: $!";
+>  
+> -sleep 60; # is interrupted by SIGCHLD
 
-I agree with Ævar that it is a very good idea to ask what the
-endgame should look like.  I would have expected that, with an
-introduction of new "ignored but unexpendable" class of file
-(i.e. "precious" here), operations such as merge and checkout will
-be updated to keep them in situations where we would remove "ignored
-and expendable" files (i.e. "ignored").  And it is perfectly OK if
-the very first introduction of the "precious" support begins only
-with a single operation, such as "clean", as long as the end-goal is
-clear.
+Ah, of course.  If SIGCHLD interrupts, sets $existed in the handler,
+then we won't go back to sleep.  But if the signal came before the
+sleep starts, we spend full 60 seconds here before we check $exited.
 
-I personally do not believe in "backup log"; if we can screw up and
-can fail to stop an operation that must avoid losing info, then we
-can screw up the same way and fail to design and implement "backup"
-to save info before an operation loses it.  If we do a good job in
-supporting "precious" in various operations, we can rely less on
-"backup log" and still be safe ;-)
+Makes sense.
 
+> +my $counter = 0;
+> +while (not $exited and $counter < 60) {
+> +        sleep 1;
+> +        $counter = $counter + 1;
+> +}
+> +
+>  if (!$exited) {
+>          close($out);
+>          die "Command did not exit after reading whole body";
