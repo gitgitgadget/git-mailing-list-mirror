@@ -2,175 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82D321F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 14:03:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4CB21F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 14:09:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728897AbfBSODe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 09:03:34 -0500
-Received: from mail-it1-f178.google.com ([209.85.166.178]:55294 "EHLO
-        mail-it1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726388AbfBSODe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 09:03:34 -0500
-Received: by mail-it1-f178.google.com with SMTP id f10so6176405ita.4
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 06:03:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=hlNJHau4ddFANa0nhitoHhWwaI+hXQwosgSzXsdJ8ic=;
-        b=PEknoEZYpc27fToM5x4z1R2xN8O3+h1XUyOw4NJBNndZ0EFfyy77cuxLAyayaxN93b
-         Ug+M8tKFaV3DcUt7eHN2Hp1xff1CeUBo7+gxC8G2Zow+iozdYoFtgOg9VSVfHUYbgulm
-         6fKFxIIzMYOgXjdJk/7zWHhkEQqCvNqohTrbUiGwEIUmdCFRBamOhG4Q5idskREIiKSt
-         wLdecGIk1UZOKEidNj4EEWWjc1uCATdQgl9tgStn7SBLhmhgwolApFmsia86gUhN0d0i
-         3RVRAxlEJ3q6T+Q09cOyzW+ES/EJiE+7GtkH968NEIUEdw6Uzm2uXWDeqLBI2b0pa7tO
-         thIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hlNJHau4ddFANa0nhitoHhWwaI+hXQwosgSzXsdJ8ic=;
-        b=Gc4xeaRMPNYvzpejJEZP31tpvBR7eRLcmnnAnbvitIslKQJGSrcJoVo/nz68/THKDB
-         BvvybphHDZyycOGvzl0tr68Y2VXHdS2l9/NdY1/8N/5Mx9aaSNSGTJJqYH+j4TWKQwAL
-         ZFElo5i0OJJygtVEsq8UWR/0P5zp8VuoHD2Gr6JXYZQmKr6kVW6rrYEt4Izw16VgeDeK
-         0X3ngmuYU1lTNzUNAFOKxwJtbfqKo/aUvJyV69YFJ4TbAp4sWktSrYaAA/3yrWdVh9S+
-         Z6pgtvfkXmeoTucWvcZee4FfUsZZqGmOou1JQvCDpBEPU75bFeknmgtbPdQg/zgMpopd
-         Xnug==
-X-Gm-Message-State: AHQUAuaQbOSZVskHiK8K5B5ZhKpYIvR+n/HllCCDjH5Mqtesje1vyPpN
-        oxteEWM5my4I0baq5QJzDyK8GenyoPqgrdIH54tLlPUR
-X-Google-Smtp-Source: AHgI3IbwryOwl5wGA7ewdSC0UdXDZLQ3dNoEc9YpOPOILVYduUbuXDvZPDlIamPFPOpLpX/dnK1WJA5HwYsA+E543TE=
-X-Received: by 2002:a6b:dd16:: with SMTP id f22mr16281279ioc.148.1550585012953;
- Tue, 19 Feb 2019 06:03:32 -0800 (PST)
+        id S1726180AbfBSOJv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 09:09:51 -0500
+Received: from mout.gmx.net ([212.227.17.20]:37559 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725845AbfBSOJv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 09:09:51 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MKt5A-1gw65U2Fii-0004aV; Tue, 19
+ Feb 2019 15:09:32 +0100
+Date:   Tue, 19 Feb 2019 15:09:15 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Max Kirillov <max@max630.net>
+cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Junio C Hamano' <gitster@pobox.com>,
+        'Johannes Schindelin via GitGitGadget' 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Fix hang in t5562, introduced in v2.21.0-rc1
+In-Reply-To: <20190218205725.GB3373@jessie.local>
+Message-ID: <nycvar.QRO.7.76.6.1902191507380.41@tvgsbejvaqbjf.bet>
+References: <pull.126.git.gitgitgadget@gmail.com> <005401d4c4b3$147aa8c0$3d6ffa40$@nexbridge.com> <xmqqef8a6lnb.fsf@gitster-ct.c.googlers.com> <005901d4c4b9$3b9a2a60$b2ce7f20$@nexbridge.com> <nycvar.QRO.7.76.6.1902182139490.45@tvgsbejvaqbjf.bet>
+ <005001d4c7cb$0cc4ce60$264e6b20$@nexbridge.com> <20190218205725.GB3373@jessie.local>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAJPSwc1GuifK9BdssWQsf+oVY0Aw+PLM1pgAiis7UdV1tZrpew@mail.gmail.com>
- <CAP8UFD22QMJyiJmQO1YVFmBkZuzex58+QBbTbdCCVHa8OGCQJA@mail.gmail.com>
- <CAPig+cQHx_BuxwZS7+juBdgKyAWhStU=9kFhs2hf=wjOMGAd7Q@mail.gmail.com> <317468c6-40cc-9f26-8ee3-3392c3908efb@talktalk.net>
-In-Reply-To: <317468c6-40cc-9f26-8ee3-3392c3908efb@talktalk.net>
-From:   =?UTF-8?Q?Sebasti=C3=A1n_Mancilla?= <smancill.m@gmail.com>
-Date:   Tue, 19 Feb 2019 11:03:22 -0300
-Message-ID: <CAJPSwc0Xu=HoF5XrqnFj_1ZrshM3HFb78tJkXOTWZ=HJX8Akgg@mail.gmail.com>
-Subject: Re: git rebase --continue after solving conflicts doesn't work anymore
-To:     phillip.wood@dunelm.org.uk
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:67DUJBw7pFC+JnhTbrn3qtTe/yb5L8F9Pz8YE/slrVETNaA3XWm
+ ZExfhunnbJOFhSNZaOVTS45pCY67xUiDCZnfG2jdDgoTz6/4W90+lbsXasEr9QsFmUkhPEW
+ kRoYiS/0kTbBZvyANyYbQmdqyjQdpHE8uj5Elw9tRP7mkKZ/DxplcV+Cff/LOHe+XwzCoV6
+ BPpTHIPcEBLVmnIon2r5w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XtcrjogT5Co=:K7IJ+CFRzPNB58p/FPjrkc
+ m35927QkRnDzLOSevoLI9TYPR3gx/u1WzzPTj3TXAqqqeXPnHsaSsDqVcLcJXpJJC4IDSs36y
+ vSG2ylcH6nRHfpe6eJ7G7Ggfp2plItwkjm+eq06O9F65D/UPiVGNoJ1vB64oH9sFdJVpaEpUS
+ +jdB+5JOinHi7F0ZVW0SR1MgnNtErol7Qmw/iWaWFhXcuJ/YKI7G//P9cDKRF1dOJMNAxa7fu
+ /d/YHPam4wZterU2t+JmEaThIkNzqAPOJdAdOsVV6M+5bHsNTrQRdJD0DGgJeYKjcF8+nB7qC
+ G1DC79w89q/UXj1jDcisYoNwDq2gXgbxlnw33Qr+9e3TUdjorcVD9mephQteQOy8yNoSMVSD9
+ 52RD829105PJRcBu07hpKsORBG71gmI/xRnErkGnOpOU78boNbjuuw9gI+sbpXO7fQJQcIgRZ
+ s5R5ChMYsgIDrmeYhAGYFhLM0468nBfdF/Eg99YeO8/FIgWECvtbHZ+JOcGE2yDxyrNIRqXn9
+ Xlp9ICig9RAuso6+68opilcC4MB001yzhXV9vX8f2EEQv0MYJB0YdtagtKWyTAQ7NfjGeTDoz
+ 4PdGrssiOmkNDe0o70OURrmGJywsKqHcCiqOCiKM7fAyR2QKdIbJjApQJbs/48GiRxczxQCxI
+ i9HfLT9Wfi0mhLNRVk74xyHWswpxPlybmorGILGYk6KcxqUj/5HwnbfduaRxWvT3qIaMxdJ7f
+ k9NOfzT+F5uMQ8ynebn7Bw/VvJE7FAXxTqm55MMvxWi3IuEu8JVp9X+F5AQf2Tg1l001pDXvz
+ H5rfDIgICmR3l6cSo5siKSMv/tkdm4408x2lRxMgAsx1oSc92HyB8WDd20UcoMZ7Zz6CRGq0n
+ xzTuDD4NAp4ut7lBSd7T09AYT74RsGuGQsz7d2EzvXll+63iWiJIzeP8BiciIAHQV4hteGXQZ
+ vZrI0YNwU8w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-My system is macOS Mojave 10.14.2. I normally use Git from Homebrew (curren=
-tly
-Git 2.20.1).
+Hi Max & Randall,
 
-I investigated this further, and I think I found the problem on my end.
+On Mon, 18 Feb 2019, Max Kirillov wrote:
 
-When I actually run "git rebase --interactive <commit>" from the terminal,
-everything works fine.
+> On Mon, Feb 18, 2019 at 03:46:34PM -0500, Randall S. Becker wrote:
+> > On February 18, 2019 15:41, Johannes Schindelin wrote:
+> > > So could you try with this patch?
+> > > 
+> > > -- snipsnap --
+> > > diff --git a/http-backend.c b/http-backend.c index d5cea0329a..7c1b4a2555
+> > > 100644
+> > > --- a/http-backend.c
+> > > +++ b/http-backend.c
+> > > @@ -427,6 +427,7 @@ static void inflate_request(const char *prog_name,
+> > > int out, int buffer_input, ss
+> > > 
+> > >  done:
+> > >  	git_inflate_end(&stream);
+> > > +	close(0);
+> > >  	close(out);
+> > >  	free(full_request);
+> > >  }
+> > 
+> > In isolation or with the other fixes associated with t5562? Or, which
+> > baseline commit should I use? 8989e1950a or d92031209a or some other?
+> 
+> As far as I understand, it should be tried instead of 
+> https://public-inbox.org/git/20181124093719.10705-1-max@max630.net/
 
-But almost every time I start my rebases from inside "tig" [0], for which I
-have this mapping:
+Don't ask me which patches you need to try this with. I was just answering
+to the observation that the hangs happen in the gzip-encoding test cases,
+and this was my guess as to what is going wrong there. I have no idea
+whether other patches try to address the same thing, are obsoleted by this
+diff, or whatever, as I have not been able to pay attention to the Git
+mailing list in the past 5 days.
 
-        bind main R <git rebase -i %(commit)
-
-tig will exit after running that command, and then I normally continue work=
-ing
-on the rebase from the shell. And it is when I start the rebase this way th=
-at
-"git rebase --continue" fails after solving conflicts.
-
-Second, I have tig installed with the Nix package manager [1], which shows
-
-        $ ~/.nix-profile/bin/tig --version
-        tig version 2.4.1
-        ncursesw version 6.1.20180127
-        readline version 6.3
-
-So, I decided to try with tig from Homebrew, and then the problem
-doesn't happen.
-The Hombrew version of tig shows:
-
-        $ /usr/local/bin/tig --version
-        tig version 2.4.1
-        ncurses version 5.7.20081102
-        readline version 8.0
-
-I will keep using tig from Homebrew to avoid issues for now.
-
-
-In summary, the problem only happens when I start the rebase from inside ti=
-g,
-but only when tig is the version from the Nix package manager, which has
-different dependencies than the Homebrew version of tig.
-And it happens for Git 2.20.x and master. Git <=3D 2.19.x works fine.
-
-
-I also did bisect Git (I never though I would be bisecting Git itself).
-It landed in this commit: 4d010a757c (sequencer: use read_author_script(),
-2018-10-31).
-
-And the content of .git/rebase-merge/author-script is always the same:
-
-        GIT_AUTHOR_NAME=3D'Sebasti=C3=A1n Mancilla'
-        GIT_AUTHOR_EMAIL=3D'smancill@jlab.org'
-        GIT_AUTHOR_DATE=3D'@1550530007 -0300
-
-
-Regards
-
-
-[0]: https://github.com/jonas/tig
-[1]: https://nixos.org/nix/
-
-El mar., 19 de feb. de 2019 a la(s) 06:59, Phillip Wood
-(phillip.wood@talktalk.net) escribi=C3=B3:
->
-> Dear Sebasti=C3=A1n
->
-> On 19/02/2019 07:22, Eric Sunshine wrote:
-> > [cc:+phillip.wood@talktalk.net]
->
-> Thanks Eric
->
-> > On Tue, Feb 19, 2019 at 1:45 AM Christian Couder
-> > <christian.couder@gmail.com> wrote:
-> >> On Tue, Feb 19, 2019 at 5:20 AM Sebasti=C3=A1n Mancilla <smancill.m@gm=
-ail.com> wrote:
-> >>> But since Git 2.20.x it doesn't work anymore. Now after solving the c=
-onflicts
-> >>> and running "git rebase --continue" I get this error most of the time=
-:
-> >>>
-> >>>      error: unable to dequote value of 'GIT_AUTHOR_DATE'
-> >>
-> >> It looks like this can happen only when an "author-script" file (most
-> >> likely .git/rebase-merge/author-script)
->
-> or it could be .git/rebase-apply/author-script depending on the options
-> passed to rebase when it started (the sequencer and am use the same code
-> for reading the author script now)
->
-> >> is read by the sequencer
-> >> mechanism. Could you show us the content of this file on your machine?
-> >
-> > A very good suggestion considering that there have been changes
-> > recently specifically related to the parsing of GIT_AUTHOR_DATE in C
-> > code.
->
-> That would be very helpful, without seeing that it's hard to know what
-> the problem is.
->
-> Best Wishes
->
-> Phillip
->
-
-
---=20
-Sebastian Mancilla
+Ciao,
+Johannes
