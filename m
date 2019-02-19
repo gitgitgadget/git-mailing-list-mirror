@@ -7,90 +7,172 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7790C1F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 10:05:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE86A1F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 10:48:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728416AbfBSKFm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 05:05:42 -0500
-Received: from mout.gmx.net ([212.227.15.19]:55411 "EHLO mout.gmx.net"
+        id S1728292AbfBSKsK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 05:48:10 -0500
+Received: from mout.gmx.net ([212.227.17.20]:37747 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726289AbfBSKFl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 05:05:41 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1Ee8-1hBEhy3ekS-00tBfp; Tue, 19
- Feb 2019 11:05:19 +0100
-Date:   Tue, 19 Feb 2019 11:05:01 +0100 (STD)
+        id S1725767AbfBSKsK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 05:48:10 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8mCe-1gmAVX0Y2e-00CBM8; Tue, 19
+ Feb 2019 11:48:07 +0100
+Date:   Tue, 19 Feb 2019 11:47:51 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-cc:     'Junio C Hamano' <gitster@pobox.com>,
-        'Max Kirillov' <max@max630.net>,
-        =?UTF-8?Q?'SZEDER_G=C3=A1bor'?= <szeder.dev@gmail.com>,
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
         git@vger.kernel.org
-Subject: RE: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results) - Good News
-In-Reply-To: <002401d4c7ba$d95a1130$8c0e3390$@nexbridge.com>
-Message-ID: <nycvar.QRO.7.76.6.1902191103050.41@tvgsbejvaqbjf.bet>
-References: <001201d4c617$de429540$9ac7bfc0$@nexbridge.com> <xmqqftsn4nik.fsf@gitster-ct.c.googlers.com> <000001d4c624$da8e05d0$8faa1170$@nexbridge.com> <xmqq5ztj4l3j.fsf@gitster-ct.c.googlers.com> <xmqqef852awh.fsf@gitster-ct.c.googlers.com>
- <002401d4c7ba$d95a1130$8c0e3390$@nexbridge.com>
+Subject: Re: [PATCH v12 18/26] stash: convert push to builtin
+In-Reply-To: <20190219002336.GN1622@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet>
+References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com> <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com> <20190208113059.GV10587@szeder.dev> <20190210221712.GA9241@hank.intra.tgummerer.com>
+ <20190211011306.GA31807@szeder.dev> <20190212231837.GI6085@hank.intra.tgummerer.com> <20190219002336.GN1622@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7mOirRZBj0+oavKeVB53lWH9m7YnXVUGiKKI67z8GAaYrkJXHTI
- BaeSOG0wi51TXzxL9UzsPdcI2kdc5MHZ/P4X8NN/kUqLCsH0Z0LgvYZqZbyDHArARaurpXe
- wZ76ZUaBeIjm/cPiM/WcS/OmRsz+XWdGr/Ezk+YSVVP8/bI6GyFcFcAmtoRnbMJT4iRDUFX
- xAWK/dbzBc9pUF4LER7tA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5aa8ijTIfyQ=:ZOAe5AxR0zxLg2aEt8j6dO
- +zPvH6pTcNY6QneRzejDg9jgggY/wgnn5KArDrp6pZUjKNY0lw7Gibd53SOxGFA9yNVu620qF
- 5ALrGfFWBg0yqczUSJFW+kMEj6lX3c249+KQk67f6cqW00ZIgkR0BJLRdzN6BBZOxVzkPNbel
- tXrDTxw75wwcZj2/rC77vrIegsxFaL2l48L3BsUFlj3Zt1jGyqPVUlzj3O6o7Uehuelj5MITx
- vLH8T0HaBwADZCduzmu/lOcIH7DTLLclkRLGAmKhqFWmkVO33VkYoHq8UQj09x1udgzkZABVR
- 88sPPIksacqop+QOiQBRGN7JfrRi57g14iBG/z7pYVgHGy0ts8WwuVk1G8WOo2dpvMTu2fTh4
- /kj9CUrASJ6RkUTHdd1C9dRdv5J9S/EhiXdD7LE6jtOi/dICRzJZkbAF5tpz/JiSmcDJMpHsL
- Td1xfo620P8CaBgTunz7Zb0S97oIEQYZBrBX3PPF76zqvVEn2A8l8s+w1nD+1kEyxkFBjZxqu
- yof5fdt9n/lHExglC6y/WxGRH7NfXUesRVbNUBfx2hSbM0MztD80B4OizsszS0hzp0Ae7aWL0
- sKYTkqPTYupx6Wzh0sq2jD74028iBL7sFolbBqBbZj4pRy6yRvMeC+pZbW7RmA1GBJ5E9S0ZI
- WyhTDVa1CdVuUqOKqWQ3/tX8AKhldcq8dATyEqyoGDP/ruyp5O4A9NH+j60b27u7jHBmnJCAG
- 5Rp0MVbvu1qQYSSbeF9OVcIBc1wFufVaQYeFhJ+7k8lsLhtQg+T72WkWUK3b7feSKMi7AYfLQ
- h4ZhbScTjKobrgzhxbZ3KN3bYbifRRXPUc6nA0g8eQigNKaiSM2hdXfxAAlhxXrcpKI6XzEiZ
- t9plaeWoALqKq/ebctVigfigG8Yr5fFIHKVc9BbIzhuBk7z65deAiNq1FAD49kDvbsWVw9NQX
- 9eVHlzMWiig==
+Content-Type: multipart/mixed; boundary="8323328-2007833076-1550573287=:41"
+X-Provags-ID: V03:K1:Gb+6MprF7F3VCREkJi9cfCacDnP98PvI5wYG8nsx2b7nlpWvO4f
+ JjZUeOmX0UyGCLDWY7ugnczF07rranjpVRfLf3R1WBw44W2PXkMTTmLbiqL3zVjEHxDgWxw
+ ie5RkFg39lv43q0lCvmBxsxvHpz1d0ySxTYYbQJ7O6llxgLNzb1FETNGQm+1Sl1rhvWYyhL
+ elbceDwVseLdDNlPh7zgg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:v343ZZxCcSI=:68s7WhVxCX9KoQ//wP2NAJ
+ 2PG1cWs7VDGilY8KmDERpIMq/cHq4qFIM9QrEu2/l24+FvbvnVbHm82zpu4ksJNHSkn7fiKlf
+ R0Pd9H56cQItnR8O/h/gVjUya2zInXOYo6TMsYpgcb4vb4m4M2FhCwjtMEQxdh4WvQb4Aw1QI
+ EpNwvGSBOPPEUzPAVGdDxuEn497qriQQK6Upn01BlPO7PlCeqEdnc1AQfekK6UGrPQw772+/P
+ SP9kBpzcbP8XAUQAz7grok9wWelHd0rXRlSp6uHW9P2vlga7xQJJ8B1QtleLc3+2XGkkfnFUG
+ akBeRw4gBFubYWF+UYYDtXCnIR06pV/ctQpX6pa5nq+bFJHKgoAHco9QcjCAYdHG8fOgW6+e9
+ 91qamqsdjBy/6dxJ0isPUmmoJZ830Q3zFC5XdiRBita9Vu+maqwZGyBFvI9dSP2zv3YeWLrfy
+ 7ooqa0fu8UXrlLNQMLyDyQ3Iv4QQxnSDkMJZ+miiF2S/cyxBqUtFPX3aKKKu44gv15qwypBnS
+ h9/oGQjHxu4OKz7bqxvcA3qWCmqsX3ohlYRrAO6j5SVAEWK+5fU722Cb9epKNoNoUXhg6MTTO
+ uPFyaPe+70O+V03jyapOIaS490IbRKhcttAyxpcgclxXK8HemCtt8c32K/h5xhe1N/o8ry21c
+ 02JBaJbkS8Js3pjvD6QWicHDF3N76/pklisreyNFwYaKywbNFzOreZ9caPbCh4sYmlyQuDKuY
+ 8PVZWPpJwTdmA6nmaybB65c/czOHNyToWj1j8yG5hbgnCQNIT1tGX6EcGsvd+7SmXYisEEI7s
+ eQ1zFliHw106h4CScvfKTJeyfYM8zOHlizeoSQOGzyVMMbqjQ/gfJdGYWzp/dsTX7RK4P+r51
+ AFx9977WrwkbpJjtHHGok8lt8vMGqs7nJlmG27QRiDWbFqWruptD4HAHUst8uMMXJgBMVvRtu
+ MoXArFyx8pw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 18 Feb 2019, Randall S. Becker wrote:
+--8323328-2007833076-1550573287=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> On February 18, 2019 13:46, Junio C Hamano wrote:
-> > Junio C Hamano <gitster@pobox.com> writes:
+Hi Gábor & Thomas,
+
+On Tue, 19 Feb 2019, SZEDER Gábor wrote:
+
+> On Tue, Feb 12, 2019 at 11:18:37PM +0000, Thomas Gummerer wrote:
+> > Thanks.  I still didn't manage to reproduce it locally, but I was now
+> > able to test it on Travis CI.
 > > 
-> > > I have been wondering about the whole /dev/zero business.  Although we
-> > > have b46221ff ("Merge branch 'rb/no-dev-zero-in-test'",
-> > > 2019-02-13) in 'master', "git grep /dev/zero t" has hits in
-> > > t/helper/test-sha1.sh and t/t4152-am-resume-override-opts.sh, so it
-> > > must have been somewhat incomplete to help platforms that lack
-> > > /dev/zero in the first place.
-> > >
-> > > We haven't heard from Dscho in European timezone, but I'm inclined to
-> > >
-> > >  - keep b46221ff in 'master', not reverted.
-> > >  - apply Max's "t5562: do not reuse output files"
-> > >
-> > > to 'master' and hope that we can declare victory in this part of the
-> > > code ;-).  There may be fix-ups for other topics before -rc2 on top of
-> > > that, though.
-> > 
-> > Just to make sure you didn't miss the exchange, the above plan is still the
-> > latest ("Max's patch is [1]).  As I'll be offline most of the day today, you still
-> > have time to stop or make me change course to avoid disaster by interjecting
-> > (which would be very much appreciated).
+> > The diff below fixes the issue, but I still need to spend some time to
+> > better understand why it does.
 > 
-> No interjection expected. That is what I have been testing, so anticipate that this is correct.
+> There is nothing like a fix that works, but you have no idea why :)
 
-As I wrote in nycvar.QRO.7.76.6.1902182249140.45@tvgsbejvaqbjf.bet, Max'
-patch did not actually fix the hang on the Linux agents.
+I know why. Now. See below for the analysis.
 
-So unfortunately this plan won't work,
-Johannes
+> FWIW, I'm at a couple of thousands of '--stress' repetitions with your
+> patch below, and not a single failure yet.
+
+Good, and yes, there is a problem.
+
+> > I'll hopefully be in a position to
+> > send a patch with a proper log message why this is the right fix in
+> > the next couple of days.
+> > 
+> > diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> > index c77f62c895..3dab488bd6 100644
+> > --- a/builtin/stash--helper.c
+> > +++ b/builtin/stash--helper.c
+> > @@ -231,6 +231,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
+> >  	struct tree *tree;
+> >  	struct lock_file lock_file = LOCK_INIT;
+> >  
+> > +	discard_cache();
+> >  	read_cache_preload(NULL);
+> >  	if (refresh_cache(REFRESH_QUIET))
+> >  		return -1;
+> > 
+
+So this is working, but it is not the correct spot for that
+`discard_cache()`, as it forces unnecessary cycles on code paths calling
+`reset_tree()` (which corresponds to `git read-tree`, admittedly a bit
+confusing) with a fully up to date index.
+
+The real fix, I believe, is this:
+
+-- snip --
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 2d6dfce883..516dee0fa4 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1372,6 +1372,7 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
+ 			}
+ 		} else {
+ 			struct child_process cp = CHILD_PROCESS_INIT;
++			discard_cache();
+ 			cp.git_cmd = 1;
+ 			argv_array_pushl(&cp.args, "reset", "--hard", "-q",
+ 					 NULL);
+-- snap --
+
+And the reason this is needed: we spawn a `git reset --hard` here, which
+will change the index, but outside of the current process. So the
+in-process copy is stale. And when the index' mtime does not help us
+detect that, we run into that test breakage.
+
+Now, I seriously believe that we missed the best time to move
+ps/stash-in-c into `next` for cooking. The best time would have been just
+after Paul submitted the latest patch series: we know for a fact that he
+is too busy to really take care of this patch series, so keeping it in
+`pu` puts everybody into that awkward spot where nobody wants to step on
+Paul's toes messing with his patch series, but where Paul also lacks the
+time to push it further, so everything is stuck in a limbo and is *so very
+much* not cooking at all. You might say that it has turned bad because we
+failed to stoke the fire appropriately.
+
+Since it is now way too late in the v2.21.0 process, this problem is only
+exacerbated, because it won't even enter `next` "better late than never".
+
+To address this unfortunate situation, my current plan is to take over
+from Paul (we had been chatting about this privately in the past, and he
+is okay with this because of University eating all his time).
+
+I will open the whole bag again, most likely squashing the late fixups
+into the patches that introduced the problems, re-review with a much finer
+comb than the patch series has enjoyed on the Git mailing list (even just
+a quick look at `do_apply_stash()` revealed an unnecessary `reset_tree()`
+call that *no* reviewer spotted, even I myself, but then, I am hardly
+solely responsible for that review), and most likely I'll even take my
+sweet little time changing the code to avoid more spawned Git processes.
+
+It will take a long time, and the `stash` project that has been discussed
+recently to be given to GSoC students is no longer available, as I will
+take care of it before GSoC even starts, and I won't spend much time
+reviewing other people's code in the meantime.
+
+I will start that only after v2.21.0 final is out, obviously.
+
+Once I submit a new iteration, it will look quite a bit different from
+before, and reviewers will have to re-review *everything*, wasting
+everybody's time even more. It will have to be re-reviewed in its entirety
+anyway because it has been *such* a long time since the latest review, and
+that's just the price we all have to pay for missing the right moment to
+advance this to `next`. Thomas, I will ask you to review, and Gábor, I
+will expect you to review that iteration, too, as you are now a bit
+familiar with the code, and I will really need your help here.
+
+Anyway, that's my plan for now.
+
+Ciao,
+Dscho
+--8323328-2007833076-1550573287=:41--
