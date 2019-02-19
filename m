@@ -2,144 +2,211 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	RCVD_IN_RP_RNBL shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFC191F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 23:45:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B3891F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 23:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728743AbfBSXpL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 18:45:11 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45504 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727476AbfBSXpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 18:45:11 -0500
-Received: by mail-wr1-f66.google.com with SMTP id w17so23851584wrn.12
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 15:45:09 -0800 (PST)
+        id S1728753AbfBSX7S (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 18:59:18 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52437 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727476AbfBSX7S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 18:59:18 -0500
+Received: by mail-wm1-f65.google.com with SMTP id m1so4714740wml.2
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 15:59:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=MY/pMfdzirM69uQpNtYNP1qiw6WEw+q23JzWeKbXC0o=;
-        b=N8E6v6JIum1VMxVtYZqbeXvoWc2hmbGlTRLyShqHd41tq2p2zeCct3t6DqxkLoe2O/
-         blhUP6V/XC6hz7aoemMLy+p5OKDuBn3kO7iIKBQDe1zEVHm3P0bC5rWa4ysrD4Kyrxmm
-         KE//RFHTqgYddAmOMqnGW5QIWi3ZvzQilomzr/2hkZdnTbZIJr31/5jRgdQrRibYgHRz
-         /nhP9z4whJlD9rE6WhCOJK+9iv4kqQd1IycKUdRIxo9MFUAdZWUm9C+gsgzkPC4NTODi
-         IQ0nEwJbM5NgY7uuqpMR13HfjGe0VLxlk1XdDY7n2sSBxofRjpBCrde7TieTuY1Blxbh
-         j6fA==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=M+xXtH6VYkwCm90PbtQxA3+fCHFMeG+zGgNwG7/WnI0=;
+        b=JXMOi1fGRgk0FKdCEvr0RwdyZBv+Et1uNQsT5RT0ghW3vncDLgGs7/lGR5l4NHkbai
+         Pa8n3336OaAmdqqlEkGBIRC+grfmjwxFDeGBtUyj5W+ah5Az+sz72wdsQh7T7/Ifj5wI
+         e8yvwksIUWpeR4DEVKII5xRwiCN7gM0+djlwurw17CHl4TZ4I/kqt63PRFAXuXAh1XxJ
+         hOZWO5XwntRzOsLpRj3OPV3cny6MY5bc9BmKmLUDa1khxFYXDbcFvdGNsiusaD+EKDj7
+         obXxWyHKYbnlj6UXuNwLluvrRxFV8+yclORYInCMecAq/dRQ6spUVxOp6SVVxFFMv4jP
+         OB1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MY/pMfdzirM69uQpNtYNP1qiw6WEw+q23JzWeKbXC0o=;
-        b=sFGSv49aGqOxctaZ/89W3DahPCKlogE2m+WPt26Lhn79GyGJuE5F+BsjJwsijT0YjZ
-         TQNWIuJnGfgo5JunVayb2IIhqG9f69ttbMAdC4+eDQpb8fNTr0GCcNC5SH1I0u2drWbV
-         UXtPkq3KH/FOyq7OThO6Wg8Xye1AaIX7fLgDw7kiLiwUAO0Tch+dOI12Fb3FK0MVZAhY
-         m/KeRbK3LdmFGqW0j4ZDP8La32IZsWgpd9INCv0rr0sriz/1Wy5x70sQ1k808gYHiqvx
-         qgEGIy16/Tm14WfPAKpdPuAK9BRdVYeJNUPvQ3apvJlFfdyel1s7PB3fWAzpCfiRAsyJ
-         q1UQ==
-X-Gm-Message-State: AHQUAuZW9O5S0OGZVPmM2kHg2NMi7CtfNHA/zavMm+SCZiI/kTB+pqsa
-        KgityebVQFdNnEEumKXbNDo=
-X-Google-Smtp-Source: AHgI3IadGQOsvw4O15KASsnXiOck4tQoN38fLxu2+E0dPk1Udp6G6yS/QdThiXQViYnyoGTT3G8sMg==
-X-Received: by 2002:a5d:650d:: with SMTP id x13mr51281wru.119.1550619908698;
-        Tue, 19 Feb 2019 15:45:08 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=M+xXtH6VYkwCm90PbtQxA3+fCHFMeG+zGgNwG7/WnI0=;
+        b=dmthV+Sx/9HXqdX1DZmidhQRaeZaK0HTNXeZPywNasBEjfKEJMaF0P6JB8rzO5wcbe
+         iKAOVtt8iw34xJNNg5JVA7a0/nr8nASRM1sC8wU9VJ35XGLpObZAdMxoJE0k1sXE0gwT
+         8+O4IUZogi/3JU8KjUXcRw8ANesHDaSiOYbdvKxt8hFW9v50o1ZPF3gV0bDWl5uh8IY4
+         uHI6rS5uDE3TAWpWEFKiqXhCt4YI/fkgP1kgK5qAlmyLSOX6ZMyTgmOggCocWZ6bS/pk
+         iMrmTou5LdXLGz6ytKBV6HpIhi6ZBBob4qXmak1pFiTAWYqpEMYRAjw+VZWAIpYHAyIL
+         vuuQ==
+X-Gm-Message-State: AHQUAuaP42z/s/esLi9OpLAfeMtvQYGoAxzB7ge1XmeJbmphxoX4sE04
+        vd9Slfj1RJ+0KmuF02liKPI=
+X-Google-Smtp-Source: AHgI3Ibh7HiYKNRx37c6gjboTnVIGc52ToSQtTkhDPU0qWQUTLHVVKS5aJA94e3nzsw8uGu8hwGi+g==
+X-Received: by 2002:a1c:a185:: with SMTP id k127mr4439214wme.134.1550620755569;
+        Tue, 19 Feb 2019 15:59:15 -0800 (PST)
 Received: from localhost ([95.149.189.205])
-        by smtp.gmail.com with ESMTPSA id e193sm5671594wmg.18.2019.02.19.15.45.06
+        by smtp.gmail.com with ESMTPSA id h137sm7198078wmg.41.2019.02.19.15.59.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Feb 2019 15:45:07 -0800 (PST)
-Date:   Tue, 19 Feb 2019 23:45:06 +0000
+        Tue, 19 Feb 2019 15:59:14 -0800 (PST)
+Date:   Tue, 19 Feb 2019 23:59:13 +0000
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GSoC][PATCH 2/2] clone: use dir-iterator to avoid explicit dir
- traversal
-Message-ID: <20190219234506.GL6085@hank.intra.tgummerer.com>
-References: <20190215154913.18800-1-matheus.bernardino@usp.br>
- <20190215154913.18800-3-matheus.bernardino@usp.br>
- <20190216143824.GJ6085@hank.intra.tgummerer.com>
- <CAHd-oW60a+zz9J+u0HiRuTy-FKYN4s95fCcR3mgJz0hUokhTCQ@mail.gmail.com>
- <20190218233541.GK6085@hank.intra.tgummerer.com>
- <CAHd-oW6m6JSgxwdE6U5vBw=DcPigK+P8eODoie0_Mag3Lg_eYw@mail.gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v12 18/26] stash: convert push to builtin
+Message-ID: <20190219235913.GM6085@hank.intra.tgummerer.com>
+References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
+ <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com>
+ <20190208113059.GV10587@szeder.dev>
+ <20190210221712.GA9241@hank.intra.tgummerer.com>
+ <20190211011306.GA31807@szeder.dev>
+ <20190212231837.GI6085@hank.intra.tgummerer.com>
+ <20190219002336.GN1622@szeder.dev>
+ <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAHd-oW6m6JSgxwdE6U5vBw=DcPigK+P8eODoie0_Mag3Lg_eYw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet>
 User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/19, Matheus Tavares Bernardino wrote:
-> On Mon, Feb 18, 2019 at 8:35 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > > Also, I just noticed that dir-iterator follows hidden paths while
-> > > copy_or_link_directory don't. Maybe another option to add for
-> > > dir-iterator?
-> >
-> > That feels like quite a special case in 'copy_or_link_directory()'.  I
-> > don't think it's worth adding a feature like that for now, at least
-> > not until we find another use case for it.  It's easy enough to skip
-> > over hidden directories here.
-> >
+On 02/19, Johannes Schindelin wrote:
+> Hi Gábor & Thomas,
 > 
-> Ok, I agree. I noticed copy_or_link_directory only skips hidden
-> directories, not hidden files. And I couldn't think why we would want
-> to skip one but not the other... Could that be unintentional? I mean,
-> maybe the idea was to skip just "." and ".."? If that is the case, I
-> don't even need to make an if check at copy_or_link_directory, since
-> dir-iterator already skips "." and "..". What do you think about that?
-
-I don't know.  The best way to look at these things is usually to use
-'git blame' and have a look at the commit that introduced whatever you
-are looking at, in this case why we are skipping anything starting
-with a '.'.  But looking at that commit it's just the translation from
-shell script to builtin.  It's also more than 10 years old by now, so
-it's unlikely that the original author would still remember why
-exactly they made this choice.  (Note that I didn't take the time to
-actually dig into the original shell script).
-
-I feel like you are probably right in that it could be unintentional,
-and I don't think anyone should be messing with the objects
-directory.  However that is no guarantee that changing this wouldn't
-break *something*.
-
-For the purpose of this change I would try to keep the same behaviour
-as we currently have where possible, to not increase the scope too
-much.
-
-> > > I'm proposing some new options to dir-iterator because as the patch
-> > > that adds it says "There are obviously a lot of features that could
-> > > easily be added to this class", and maybe those would be useful for
-> > > other dir-iterator users. But I don't know if that would be the best
-> > > way of doing it, so any feedback on this will be much appreciated.
-> > > Also, I saw on public-inbox[1] a patchset from 2017 proposing new
-> > > features/options for dir-iterator, but I don't really know if (and
-> > > why) it was rejected. (I couldn't find the patches on master/pu log)
-> >
-> > I don't think we should necessarily add new options because the
-> > original patch said we should do so.  Instead the best way to
-> > introduce new options is to introduce them when they are actually
-> > going to be needed in subsequent patches.  So it would be nice to
-> > implement features that are actually needed by your patches, but I
-> > don't think it's worth trying to introduce new features that could
-> > potentially be useful in the future, but where we don't know yet
-> > whether they really will be or not.
-> >
+> On Tue, 19 Feb 2019, SZEDER Gábor wrote:
 > 
-> Yes, I agree with you. What I meant is that there is some space for
-> new features at dir-iterator and maybe those that I suggested could be
-> nice not just for my patch, on clone.c, but for others. But I see your
-> point. We really should try to keep it simpler and just add the
-> feature when (and if) there is a more expressive usage for it.
+> > > I'll hopefully be in a position to
+> > > send a patch with a proper log message why this is the right fix in
+> > > the next couple of days.
+> > > 
+> > > diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> > > index c77f62c895..3dab488bd6 100644
+> > > --- a/builtin/stash--helper.c
+> > > +++ b/builtin/stash--helper.c
+> > > @@ -231,6 +231,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
+> > >  	struct tree *tree;
+> > >  	struct lock_file lock_file = LOCK_INIT;
+> > >  
+> > > +	discard_cache();
+> > >  	read_cache_preload(NULL);
+> > >  	if (refresh_cache(REFRESH_QUIET))
+> > >  		return -1;
+> > > 
+> 
+> So this is working, but it is not the correct spot for that
+> `discard_cache()`, as it forces unnecessary cycles on code paths calling
+> `reset_tree()` (which corresponds to `git read-tree`, admittedly a bit
+> confusing) with a fully up to date index.
+> 
+> The real fix, I believe, is this:
+> 
+> -- snip --
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 2d6dfce883..516dee0fa4 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -1372,6 +1372,7 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
+>  			}
+>  		} else {
+>  			struct child_process cp = CHILD_PROCESS_INIT;
+> +			discard_cache();
+>  			cp.git_cmd = 1;
+>  			argv_array_pushl(&cp.args, "reset", "--hard", "-q",
+>  					 NULL);
+> -- snap --
+> 
+> And the reason this is needed: we spawn a `git reset --hard` here, which
+> will change the index, but outside of the current process. So the
+> in-process copy is stale. And when the index' mtime does not help us
+> detect that, we run into that test breakage.
 
-Right, if you wanted to pursue this, that could be a separate patch
-series.  However generally patch series that just introduce something
-that might be used later, but doesn't add much value on its own tend
-to be much more likely to be rejected.
+Right, I agree with this assessment, and also agree that this is a
+better place to discard the cache, rather than doing it in
+'reset_tree()'.
 
-> Thanks again for all the help and feedback.
+> Now, I seriously believe that we missed the best time to move
+> ps/stash-in-c into `next` for cooking. The best time would have been just
+> after Paul submitted the latest patch series: we know for a fact that he
+> is too busy to really take care of this patch series, so keeping it in
+> `pu` puts everybody into that awkward spot where nobody wants to step on
+> Paul's toes messing with his patch series, but where Paul also lacks the
+> time to push it further, so everything is stuck in a limbo and is *so very
+> much* not cooking at all. You might say that it has turned bad because we
+> failed to stoke the fire appropriately.
+> 
+> Since it is now way too late in the v2.21.0 process, this problem is only
+> exacerbated, because it won't even enter `next` "better late than never".
+>
+> To address this unfortunate situation, my current plan is to take over
+> from Paul (we had been chatting about this privately in the past, and he
+> is okay with this because of University eating all his time).
+> 
+> I will open the whole bag again, most likely squashing the late fixups
+> into the patches that introduced the problems, re-review with a much finer
+> comb than the patch series has enjoyed on the Git mailing list (even just
+> a quick look at `do_apply_stash()` revealed an unnecessary `reset_tree()`
+> call that *no* reviewer spotted, even I myself, but then, I am hardly
+> solely responsible for that review), and most likely I'll even take my
+> sweet little time changing the code to avoid more spawned Git processes.
+> 
+> It will take a long time, and the `stash` project that has been discussed
+> recently to be given to GSoC students is no longer available, as I will
+> take care of it before GSoC even starts, and I won't spend much time
+> reviewing other people's code in the meantime.
+>
+> I will start that only after v2.21.0 final is out, obviously.
+> 
+> Once I submit a new iteration, it will look quite a bit different from
+> before, and reviewers will have to re-review *everything*, wasting
+> everybody's time even more. It will have to be re-reviewed in its entirety
+> anyway because it has been *such* a long time since the latest review, and
+> that's just the price we all have to pay for missing the right moment to
+> advance this to `next`. Thomas, I will ask you to review, and Gábor, I
+> will expect you to review that iteration, too, as you are now a bit
+> familiar with the code, and I will really need your help here.
+> 
+> Anyway, that's my plan for now.
 
-Thanks for working on this!
+I must say I am not very happy about this plan.  The series has been
+marked as "Will merge to 'next'" in previous iterations, but then we
+found some issues that prevented that.  However I thought we were fine
+fixing those on top at this point, rather than starting with a new
+iteration again.
+
+I was always under the impression that once the problem that was
+discovered here was fixed we'd advance the series to 'next' with the
+patch that comes out of this discussion on top.  Whether it's in next
+shortly before 2.21 or not doesn't seem to make much of a difference
+to me, as this wasn't going to make the 2.21 release anyway.  My hope
+was that we could get it into 'next' shortly after 2.21 is released to
+get the series some further exposure (which may well turn up some
+other issues that we are not aware of yet, but such is the life of
+software).
+
+Sure there are some things that no reviewer spotted, but I'd think so
+will there be next time and the time after that.  I don't believe that
+code review can eliminate all issues, but I think we all did our best
+to avoid a good chunk of them and unfortunately missed some in the
+process.
+
+Reviewing this series again in a slightly new form is not something I
+am personally looking forward to.  I'd be more than happy to review
+patches on top of this series, but after reading it many times over,
+in slightly different versions, it gets harder and harder to review
+and to find the motivation to review this.  Now if we really think
+this series has to be completely overhauled, so be it, but I don't
+think we would end up with a better end result than if we were to
+continue to work on top of this.
+
+> Ciao,
+> Dscho
+
