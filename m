@@ -2,89 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PI_DNOT,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D64341F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 10:01:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7790C1F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 10:05:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727246AbfBSKBl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 05:01:41 -0500
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:35545 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727023AbfBSKBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 05:01:41 -0500
-Received: by mail-wr1-f44.google.com with SMTP id t18so21528257wrx.2
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 02:01:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ICiv9cDE9XPIBrGusDboh6en7gq86LnG4INCcBFtyJE=;
-        b=YwPi5lxkO7C+JCQTKUlcYrosGiHTYSws+jPMHhhdsR2hWmzohGraAwFrNpgKNfCcja
-         5WgxR4J0wntObJOUFkNEU4eSivm/YOAQu0IueHBrcAd1vO3q44zkGO8gfxJLaTMszu5c
-         pJhX7APyVgXImZRmS5TSfnvDEYAjMtBD5vtR1LvAW8h4q81fMJKiTADYEh2G+sle6aSi
-         1FsqTVH9Vbgln/AsQc7ueNHuKhf/kintO15lI0KG1jJslMd8m3tpKr41K97zgJtedyfr
-         ZMGPSxEsxoVbf/7EIwyFSJ3ieFmIFrsSyXBP6lvLvNVLFMtW26VitbKx8f3Ok8lN4okz
-         6oQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ICiv9cDE9XPIBrGusDboh6en7gq86LnG4INCcBFtyJE=;
-        b=seloxlUweFnlv241s1H3ze751mg1JRo4JX2yVZjG6nuR4pJBmiNTHYND8iUjFSZDhP
-         mTcStxWKL27k30gD72w7+I43YQwklhtjrOyOKsRI8W7cY0JfaMsEPTtThrgcL0jiTney
-         +NBj3pczGLs3+oTJp9cW4edzaUj3i6Zo/NIgKjQ8tqdcp/I/IyryfNWQvcmBmKD6l/AO
-         60+Zp37ZGMWhjkh6FDGDoIosoMKHPc8YuKj1vVrvnrcEWJdHM4Ie9Ts5vmO5j5GJjWf6
-         d8rg7xgC/4i0YrHJoziuMiHwe6yHXcRCU/Rj5y5eanYjoN0q16X/3IMBRRvtru9YI7e3
-         YQIw==
-X-Gm-Message-State: AHQUAuZCtXRMB8iYg1K9EFCSsp30SaOVsv4kySIK8iu4xpvUJ6JnqEL1
-        dYOc8k7+qXmLI//GXQZqznY=
-X-Google-Smtp-Source: AHgI3Iab1vc4ufDwmmt+e7Cp1P03nn9ZBBtSnbVuLckb+D8riH11OgBzH7ghwFE8U3eY7FBM3bzs9g==
-X-Received: by 2002:a5d:5681:: with SMTP id f1mr19894308wrv.95.1550570499338;
-        Tue, 19 Feb 2019 02:01:39 -0800 (PST)
-Received: from szeder.dev (x4d0c1b1a.dyn.telefonica.de. [77.12.27.26])
-        by smtp.gmail.com with ESMTPSA id e23sm2226753wme.15.2019.02.19.02.01.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Feb 2019 02:01:38 -0800 (PST)
-Date:   Tue, 19 Feb 2019 11:01:36 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Senol Yazici <sypsilon@googlemail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
-        msuchanek@suse.de, Johannes.Schindelin@gmx.de, jpyeron@pdinc.us
-Subject: Re: [RFE] Demilitarize Documentation (was RE: Delivery Status
- Notification (Failure))
-Message-ID: <20190219100136.GO1622@szeder.dev>
-References: <001601d4c7aa$460c0e70$d2242b50$@nexbridge.com>
- <xmqqimxh2b61.fsf@gitster-ct.c.googlers.com>
- <CAFacdQ_9=2hbC8-5+N=RdrGs=Anu2ku+TAj7x07OQNpa1b+gcg@mail.gmail.com>
+        id S1728416AbfBSKFm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 05:05:42 -0500
+Received: from mout.gmx.net ([212.227.15.19]:55411 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726289AbfBSKFl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 05:05:41 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1Ee8-1hBEhy3ekS-00tBfp; Tue, 19
+ Feb 2019 11:05:19 +0100
+Date:   Tue, 19 Feb 2019 11:05:01 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+cc:     'Junio C Hamano' <gitster@pobox.com>,
+        'Max Kirillov' <max@max630.net>,
+        =?UTF-8?Q?'SZEDER_G=C3=A1bor'?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: RE: [ANNOUNCE] Git v2.21.0-rc1 (NonStop Results) - Good News
+In-Reply-To: <002401d4c7ba$d95a1130$8c0e3390$@nexbridge.com>
+Message-ID: <nycvar.QRO.7.76.6.1902191103050.41@tvgsbejvaqbjf.bet>
+References: <001201d4c617$de429540$9ac7bfc0$@nexbridge.com> <xmqqftsn4nik.fsf@gitster-ct.c.googlers.com> <000001d4c624$da8e05d0$8faa1170$@nexbridge.com> <xmqq5ztj4l3j.fsf@gitster-ct.c.googlers.com> <xmqqef852awh.fsf@gitster-ct.c.googlers.com>
+ <002401d4c7ba$d95a1130$8c0e3390$@nexbridge.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFacdQ_9=2hbC8-5+N=RdrGs=Anu2ku+TAj7x07OQNpa1b+gcg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7mOirRZBj0+oavKeVB53lWH9m7YnXVUGiKKI67z8GAaYrkJXHTI
+ BaeSOG0wi51TXzxL9UzsPdcI2kdc5MHZ/P4X8NN/kUqLCsH0Z0LgvYZqZbyDHArARaurpXe
+ wZ76ZUaBeIjm/cPiM/WcS/OmRsz+XWdGr/Ezk+YSVVP8/bI6GyFcFcAmtoRnbMJT4iRDUFX
+ xAWK/dbzBc9pUF4LER7tA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5aa8ijTIfyQ=:ZOAe5AxR0zxLg2aEt8j6dO
+ +zPvH6pTcNY6QneRzejDg9jgggY/wgnn5KArDrp6pZUjKNY0lw7Gibd53SOxGFA9yNVu620qF
+ 5ALrGfFWBg0yqczUSJFW+kMEj6lX3c249+KQk67f6cqW00ZIgkR0BJLRdzN6BBZOxVzkPNbel
+ tXrDTxw75wwcZj2/rC77vrIegsxFaL2l48L3BsUFlj3Zt1jGyqPVUlzj3O6o7Uehuelj5MITx
+ vLH8T0HaBwADZCduzmu/lOcIH7DTLLclkRLGAmKhqFWmkVO33VkYoHq8UQj09x1udgzkZABVR
+ 88sPPIksacqop+QOiQBRGN7JfrRi57g14iBG/z7pYVgHGy0ts8WwuVk1G8WOo2dpvMTu2fTh4
+ /kj9CUrASJ6RkUTHdd1C9dRdv5J9S/EhiXdD7LE6jtOi/dICRzJZkbAF5tpz/JiSmcDJMpHsL
+ Td1xfo620P8CaBgTunz7Zb0S97oIEQYZBrBX3PPF76zqvVEn2A8l8s+w1nD+1kEyxkFBjZxqu
+ yof5fdt9n/lHExglC6y/WxGRH7NfXUesRVbNUBfx2hSbM0MztD80B4OizsszS0hzp0Ae7aWL0
+ sKYTkqPTYupx6Wzh0sq2jD74028iBL7sFolbBqBbZj4pRy6yRvMeC+pZbW7RmA1GBJ5E9S0ZI
+ WyhTDVa1CdVuUqOKqWQ3/tX8AKhldcq8dATyEqyoGDP/ruyp5O4A9NH+j60b27u7jHBmnJCAG
+ 5Rp0MVbvu1qQYSSbeF9OVcIBc1wFufVaQYeFhJ+7k8lsLhtQg+T72WkWUK3b7feSKMi7AYfLQ
+ h4ZhbScTjKobrgzhxbZ3KN3bYbifRRXPUc6nA0g8eQigNKaiSM2hdXfxAAlhxXrcpKI6XzEiZ
+ t9plaeWoALqKq/ebctVigfigG8Yr5fFIHKVc9BbIzhuBk7z65deAiNq1FAD49kDvbsWVw9NQX
+ 9eVHlzMWiig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 19, 2019 at 09:02:43AM +0100, Senol Yazici wrote:
-> 1. Dictator
-> Concern: "Bad" connotation.
+Hi,
 
-"Benevolent dictator" is a well-established term in open source
-projects, and it has an inherently good connotation.
- 
-> Further, "googling" dictator does not give Linus as a result in (at
-> least my) search (bubble).
+On Mon, 18 Feb 2019, Randall S. Becker wrote:
 
-https://en.wikipedia.org/wiki/Benevolent_dictator_for_life
+> On February 18, 2019 13:46, Junio C Hamano wrote:
+> > Junio C Hamano <gitster@pobox.com> writes:
+> > 
+> > > I have been wondering about the whole /dev/zero business.  Although we
+> > > have b46221ff ("Merge branch 'rb/no-dev-zero-in-test'",
+> > > 2019-02-13) in 'master', "git grep /dev/zero t" has hits in
+> > > t/helper/test-sha1.sh and t/t4152-am-resume-override-opts.sh, so it
+> > > must have been somewhat incomplete to help platforms that lack
+> > > /dev/zero in the first place.
+> > >
+> > > We haven't heard from Dscho in European timezone, but I'm inclined to
+> > >
+> > >  - keep b46221ff in 'master', not reverted.
+> > >  - apply Max's "t5562: do not reuse output files"
+> > >
+> > > to 'master' and hope that we can declare victory in this part of the
+> > > code ;-).  There may be fix-ups for other topics before -rc2 on top of
+> > > that, though.
+> > 
+> > Just to make sure you didn't miss the exchange, the above plan is still the
+> > latest ("Max's patch is [1]).  As I'll be offline most of the day today, you still
+> > have time to stop or make me change course to avoid disaster by interjecting
+> > (which would be very much appreciated).
+> 
+> No interjection expected. That is what I have been testing, so anticipate that this is correct.
 
-> Suggestion for substitution: Principal or principal integrator.
+As I wrote in nycvar.QRO.7.76.6.1902182249140.45@tvgsbejvaqbjf.bet, Max'
+patch did not actually fix the hang on the Linux agents.
 
-These are poor substitutions.
-
+So unfortunately this plan won't work,
+Johannes
