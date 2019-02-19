@@ -8,44 +8,44 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_RP_RNBL shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 352E61F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 22:14:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 442CA1F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 22:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727035AbfBSWOG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 17:14:06 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:38373 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726583AbfBSWOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 17:14:06 -0500
-Received: by mail-vs1-f65.google.com with SMTP id h132so928933vsd.5
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 14:14:05 -0800 (PST)
+        id S1726986AbfBSWYm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 17:24:42 -0500
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:45169 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726583AbfBSWYm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 17:24:42 -0500
+Received: by mail-ua1-f65.google.com with SMTP id e16so7518579uam.12
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 14:24:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ltky84VZghR6Y2v7CzMLKdxPZODG/4NqGCHw9cxAF94=;
-        b=psvNhK/zyCQXGfgPyA1vTICl21syRIi0zNzvR/1GuOLZVeQhmn72cPMlruEm2JUKnl
-         O/2iXH5ws8VGanWH6yvJDZvHTrRnH55U4rxxolKx4GeTKJdFfk1QAh2kQC7/uTkQgY+5
-         GKk934HsgEKRP84ufU1bZOrSOKUyyTpM2Cynwec5qHUuNWiLS+g1U8DJ74kiNNvSKo51
-         cEClxIoX4nfw54gAzFmycIEKUK5bC1KVebJLWa7unY9Idt9TlqTP/qA1PifLoi7ej6SB
-         yHX0TuF7bMB1xLMnhaOYYuganjpEeiaof1Yf6gfdAgOAYj9+a7NzyupB+6UKkF3QZuKr
-         BRyQ==
+        bh=z8TRICOrAr1bWM6XboCbqMvYcF0cj9rAmSB4jMJ9FWg=;
+        b=afXP5gEvJ3hIJfIvBPRJ+cTRKQMNQJvSYf+JBxb4noNBxtJFKb4xc2Ll77SxqR5W81
+         QnWWnbiXXR1DKtfUFynI+8AHip88mk5y7bdu8GOz2xa/TyMDmJss5Eg1XSvXcIWQS+tb
+         rV1ioRFrYMK0pdqZYdMEFSb8g1UGchgCgImIiZUq1uRFvx+v0xK+Ffm3wt5Wck8D8YC7
+         sFciCFiJCUsuSB6Rlzr4Kjd4c7LYXFkevHqQKQ87rUl57ywpYzniU9rAfh6dnNl/eHpO
+         FFJ24pwr9A5HKd9uAgoH9I6nGFeYIX5TumKjxXJO5MXy7VtGTSshfqV6MIDAcbmfUZti
+         Uzgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ltky84VZghR6Y2v7CzMLKdxPZODG/4NqGCHw9cxAF94=;
-        b=o9PCkO7gpZKpniHlYLZTxeT47laTeqxfJJYYEwFOPDpSYexQ7mlHiVSWYNetViPUy4
-         Mf1Vf4HjPWa/2O1Zo+sr2wOBe2YUPDwQ2osomlocI6N/M200C0RN0715Cg0cF9h6gVej
-         NHmczQTw0447d2Q9epSjfyVdMp3D+VFAtn/pAp6xsO+VZu/Pq34+cwiFvufLZ1cO9Ilj
-         ThNQOWTncWbE7Ol1Ubtvjma2eJPsthOTE804/mW4jkK/tOn9KL+ui++Cojek/l6Im5Zq
-         lGQmikXN+yK7wuPwxpyuIur28xqDxkZk2BT624FSV2TnI9Z9SbK6CYyA+NZyEUjZB1Wm
-         npsQ==
-X-Gm-Message-State: AHQUAuZIUS7kt0HxUjL/tlPtZTQsMCDrwEXYNSebrIvGHqa8c7Q8f/F9
-        F96ja/iRRiIs5vJFEtlOwYknWXSadRhveU6e/GQ=
-X-Google-Smtp-Source: AHgI3IbbWnO4GsUa/SGn8v65DSh8bqYhe9TWegq16vxPrDuKdS8vjPqWJwkbHEp1VdZ5Z4ZjeHB4s7jCHxYbWKaKCaE=
-X-Received: by 2002:a67:f696:: with SMTP id n22mr17103051vso.175.1550614445103;
- Tue, 19 Feb 2019 14:14:05 -0800 (PST)
+        bh=z8TRICOrAr1bWM6XboCbqMvYcF0cj9rAmSB4jMJ9FWg=;
+        b=rjFckms4v0dEHzJnqsX+TSEkR2860qT38Iirp3sHuTcb8eJ5zQ7iHq4PS+35Aa7Q51
+         PPaSzwRL4in2js80nFUgB622YYKAl1nuuBuzLSVjGPv7Yc1/Fw6AM93Sgnie4bqpN30z
+         R84rqUlA2W8gfRIM6W+rPKXfdNDVdQM4RdQeS6TAHsqpWRdqLOMzeeM8XBegclTPzI6D
+         ECdxxjd5dPqImZiBw8B2PdamOIz+xjFkcGk8jazEvdMu3UhYkbE4nGAndCtRbYIuspjk
+         1STkyFnfRcSzvrQDQec72ySuaxqSw/W2JX9GUnVn8/Kk3RsCYD+Fz9z68mOlaKtpBUHb
+         Pt9w==
+X-Gm-Message-State: AHQUAuaIC2Lhn83cS+1R2MldFgYhm6PJDIM0tdV5XTtKBvRMQJ8z4Eo8
+        97pO9W83GGw97b78hvPB05RW3h7/yOUPmnDGjqc=
+X-Google-Smtp-Source: AHgI3IZwZ6WgovouzX2p8fodwtSQnC18LjKxooYZ9JHXEziVixvOGBfNlkGR2eqRpiEqWElntMwetxOoK3gXi89DwFk=
+X-Received: by 2002:ab0:2046:: with SMTP id g6mr15788196ual.19.1550615080680;
+ Tue, 19 Feb 2019 14:24:40 -0800 (PST)
 MIME-Version: 1.0
 References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-7-t.gummerer@gmail.com>
  <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
@@ -54,11 +54,11 @@ References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-
  <CACsJy8Bk=wbgzsE+Vo4w_u0E63PdUxxcvG-7e6Hq-8_jrmSErw@mail.gmail.com>
  <xmqq7eek3ax7.fsf@gitster-ct.c.googlers.com> <CACsJy8CHHT=9e9ti7VA4X4h3FrZcUKvLuzkL56mXLgjk4c5Qcg@mail.gmail.com>
  <xmqqlg2zz90l.fsf@gitster-ct.c.googlers.com> <CACsJy8CQhWeC3b6eGPePuRejfOx7c17X61-wqq5kOiRzYkRESw@mail.gmail.com>
- <xmqqwolv1tzw.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqwolv1tzw.fsf@gitster-ct.c.googlers.com>
+ <CABPp-BGkJOgKqE_vHsA1fkjQ80U10Hv7-HCvScq7WOgj1UF9=Q@mail.gmail.com> <xmqqsgwj1ts9.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsgwj1ts9.fsf@gitster-ct.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 19 Feb 2019 14:13:52 -0800
-Message-ID: <CABPp-BEsK8grsGCMq9-QCWd4fgYzm7GfzQudbhFvGj_C55LNyA@mail.gmail.com>
+Date:   Tue, 19 Feb 2019 14:24:28 -0800
+Message-ID: <CABPp-BGp53DrP6=FpYpxy5cmWkcygCz_nrunXisC55KV1ydyXg@mail.gmail.com>
 Subject: Re: [PATCH 6/8] checkout: add --cached option
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Duy Nguyen <pclouds@gmail.com>,
@@ -70,16 +70,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 19, 2019 at 11:03 AM Junio C Hamano <gitster@pobox.com> wrote:
->  * --no-index --worktree <path>...
+On Tue, Feb 19, 2019 at 11:07 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->    Update only the working tree files without touching the index
->    (new feature that cannot be done with the current Git, although
->    "cat-file -p >path" may be close enough at times), from the index
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > Overall this looks good, but there's just one part that confuses me.
+> > Here you seem to suggest that if you pass --source but neither --index
+> > or --worktree that both the index and working tree will be written to.
+> > Why are "restored" changes considered ready for commit?  That seems
+> > confusing to me (and was one of the bugs of checkout, IMO).  See also
+> > second half of https://public-inbox.org/git/xmqq1s6yezk3.fsf@gitster-ct.c.googlers.com/
+>
+> As long as worktree-only mode does not lose track of a
+> previously-untracked path in the index (perhaps use the i-t-a bit),
+> I do not have a strong objection against making the worktree-only
+> mode the default.
 
-I worry slightly that wording like this might paint ourselves into a
-similar corner of only correctly handling files as paths, rather than
-also handling directories as paths, and/or which presumes the
-no-overlay mode that I find problematic.  Maybe your "at times" just
-meant "when dealing with a path that is a file that existed in the
-given source", but I wonder if you are pushing more than that?
+Could you unpack that for me a bit?  My assumption is that
+worktree-only mode doesn't touch the index (other than maybe reading
+from it), and treating the index as read-only means by definition it
+can't lose anything from there -- but then you mentioned using the
+intent-to-add bit, and I feel like I'm missing an important puzzle
+piece somewhere.  Trying to make sense of it, I'm wondering if you are
+objecting to using overlay mode in general, or are trying to connect
+this to the new "precious" concept being advanced, or if there's
+something else you are considering here.
