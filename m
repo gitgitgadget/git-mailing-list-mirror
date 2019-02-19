@@ -2,136 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B41B1F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 19:59:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43F631F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 20:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726473AbfBST7g (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 14:59:36 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33867 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726110AbfBST7g (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 14:59:36 -0500
-Received: by mail-wr1-f67.google.com with SMTP id f14so23440117wrg.1
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 11:59:34 -0800 (PST)
+        id S1726342AbfBSUK0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 15:10:26 -0500
+Received: from mail-ot1-f74.google.com ([209.85.210.74]:56781 "EHLO
+        mail-ot1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726110AbfBSUK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 15:10:26 -0500
+Received: by mail-ot1-f74.google.com with SMTP id q11so18542642otl.23
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 12:10:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=QDq57+RdOgsEfGLkOla5iNNETLHuK6CagP9znkeV8t8=;
-        b=X5HKjKyrf2sUGF2HVPdnVLTgf4K3QWQ0U9gfqlZqW/S4c26H/e5i2xTsP61LXcHJng
-         0bIyxE1s8iF4RI9XzuqPys1FsrT79d0aUz2HMAGPR3XiWehlGK0AXZSh04iw/SVYnGgq
-         CsM6X83KS0fhGNq+J523ostdHQCfBKTxqmjReP4kDXeF8to+QIyKebd0Wjs21u+g6/b9
-         mfeR9ADqvYFUsNPc3MTA0HzMaKIpOHlZtLocAZ6L6hp92pjORBBU+kuYKEdjCAVDDmmR
-         Fp8NGVjKul0YLr6uCnF/7f0fWE+FYZfMxggQ1YQkXeBLeLiAM1s8Q2rDOvFMQSwyoRMd
-         q6sA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=ZDRH7fewrCGqghdaskB/VBYVoubtmPypaGT07Q+KxAU=;
+        b=enElxOUAnuoxdizic3aj5WD7NZVSBj7SqkPUMUCQdJaKJtCHMggYU4v8D7po7umZgQ
+         pqlJ51IDMhBLsT8X0Sa9F3H4kq3sgXFCyjVNgN3FRRENa1wyI/YwfSUT1UM6SDBCku2g
+         GJR75QnZOdXtuXnTuMlXn50QUrnvaVGVlMDMyrlzBvhEF/H8i3lCPwLoGXfE/e8HyQjs
+         WNHAKCvnnm91mS79tvD2JKhZ73LX3tHHwuXolP6jCfXnIp5VacYieymoRY6M8vF5Ue94
+         lvcrVpA+vDFseapuCzglX71eaNGNN5NHLK1u0kOGjJ8DTYIXyibg8xG9JXgFKSwmDSWi
+         mfbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=QDq57+RdOgsEfGLkOla5iNNETLHuK6CagP9znkeV8t8=;
-        b=eN5zNvsszEkqtwvkWzRR/uGcNTJGRw2qRZE9lL02/Br708DVPZL3h9nrBuIPsER/H9
-         lU2/tLd5KX8bDjoTGjpxJO4LYY4bgpLA5WXKL/3qYX1/XGBNQoVuBdeWv6s8cls2FQzy
-         +vlI967xmN13Ipx0oKCpO8ZArEwuOFmA3CfcyxJw+aw/eb071Dmbco8wjwXBaXZkyzv0
-         7ahAvjm0zZxAZHY1ZjRaoCv7/cfw+AnBFbQAj9V4BVCaq4GqexiqVVSgJR0+/Jg7SzHy
-         nuXAj2dR3YWuWABM3tIgAvVMam/0u8ejLNR1vpt6j6m06M5NZmqsMWys1a9mha3GKTZ5
-         0uwQ==
-X-Gm-Message-State: AHQUAua0VU2H23D1cd3U76vkVsldW4tlPpFokMvY0/fcgjEWKa1p4c58
-        qZ4yxQNASO6lnqFySrJkBMA=
-X-Google-Smtp-Source: AHgI3IZjCV4kDDvFurVCm/rKqjnCNcP5YzB628ECJ2wKO+lcFgK4wXR7ACXumE2wWv/piEfo/pEt8g==
-X-Received: by 2002:adf:ee8e:: with SMTP id b14mr21157360wro.71.1550606373840;
-        Tue, 19 Feb 2019 11:59:33 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b8sm3624059wmj.35.2019.02.19.11.59.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Feb 2019 11:59:32 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=ZDRH7fewrCGqghdaskB/VBYVoubtmPypaGT07Q+KxAU=;
+        b=YMJzBtGGGqRmWZzIaTe5kabB+26Aa8eFm+vYx8K58x0fTYk4N0JQUq27XX58a39zxa
+         w+itbSanTSBSB93L3QQVCSZV7VNBwRiyWqN2FNKv0N6ji1I/Z4awHmc0fIbtOn6laUIz
+         akCobc7KPlMQpMnhXmBDWaerc4/fDEAqiL6CZWcrbEKNhoY/4AlbS+x2xOT+pnQ0b/UP
+         0U0F4N8wqphDFfQnIwaQbQB9DLt9OhV5r9r//2P/fO8FTXTtziIIMjY0X0fYIK6KBeUj
+         7iNXtks2ffoJ7juSaitzuC3KRlakz+slbCcE2sXA+Zq1ap2sQ/C038z8kzDGhY8sDuN9
+         r4zQ==
+X-Gm-Message-State: AHQUAuaCKtASMj2A+S7wcrsLWnF3FzhvMkM3I37twD14hUQFRgqMQPNr
+        EmNcj9w/z8pa9Jq9b/29RbcGi6vwchh4AexnRUbr
+X-Google-Smtp-Source: AHgI3IZLBY5kL6Gv9QrCxFjvALv517bYPxFpCdtB+dkXZySALZOCgPMVRcFKeTlHZSvgh+YO7MSVh+nMDfxDE5ei5U3Y
+X-Received: by 2002:a9d:650f:: with SMTP id i15mr16817804otl.70.1550607025703;
+ Tue, 19 Feb 2019 12:10:25 -0800 (PST)
+Date:   Tue, 19 Feb 2019 12:10:22 -0800
+In-Reply-To: <CAP8UFD0VPZEhBTUb--n5RHECUkO81aPcGkTYGi0fqd35rnKr3Q@mail.gmail.com>
+Message-Id: <20190219201022.237430-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CAP8UFD0VPZEhBTUb--n5RHECUkO81aPcGkTYGi0fqd35rnKr3Q@mail.gmail.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     christian.couder@gmail.com
+Cc:     jonathantanmy@google.com, sandals@crustytoothpaste.net,
         git@vger.kernel.org
-Subject: Re: [PATCH v12 18/26] stash: convert push to builtin
-References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
-        <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com>
-        <20190208113059.GV10587@szeder.dev>
-        <20190210221712.GA9241@hank.intra.tgummerer.com>
-        <20190211011306.GA31807@szeder.dev>
-        <20190212231837.GI6085@hank.intra.tgummerer.com>
-        <20190219002336.GN1622@szeder.dev>
-        <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet>
-Date:   Tue, 19 Feb 2019 11:59:32 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 19 Feb 2019 11:47:51 +0100 (STD)")
-Message-ID: <xmqqbm371rdn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > Good points about SSH support and the client needing to control which
+> > protocols the server will send URIs for. I'll include a line in the
+> > client request in which the client can specify which protocols it is OK
+> > with.
+> 
+> What if a client is ok to fetch from some servers but not others (for
+> example github.com and gitlab.com but nothing else)?
+> 
+> Or what if a client is ok to fetch using SSH from some servers and
+> HTTPS from other servers but nothing else?
 
->> > diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
->> > index c77f62c895..3dab488bd6 100644
->> > --- a/builtin/stash--helper.c
->> > +++ b/builtin/stash--helper.c
->> > @@ -231,6 +231,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
->> >  	struct tree *tree;
->> >  	struct lock_file lock_file = LOCK_INIT;
->> >  
->> > +	discard_cache();
->> >  	read_cache_preload(NULL);
->> >  	if (refresh_cache(REFRESH_QUIET))
->> >  		return -1;
->> > 
+The objects received from the various CDNs are still rehashed by the
+client (so they are identified with the correct name), and if the client
+is fetching from a server, presumably it can trust the URLs it receives
+(just like it trusts ref names, and so on). Do you know of a specific
+case in which a client wants to fetch from some servers but not others?
+(In any case, if this happens, the client can just disable the CDN
+support.)
+
+> I also wonder in general how this would interact with promisor/partial
+> clone remotes.
+> 
+> When we discussed promisor/partial clone remotes in the thread
+> following this email:
+> 
+> https://public-inbox.org/git/20181016174304.GA221682@aiede.svl.corp.google.com/
+> 
+> it looked like you were ok with having many promisor remotes, which I
+> think could fill the same use cases especially related to large
+> objects.
 >
-> So this is working, but it is not the correct spot for that
-> `discard_cache()`, as it forces unnecessary cycles on code paths calling
-> `reset_tree()` (which corresponds to `git read-tree`, admittedly a bit
-> confusing) with a fully up to date index.
->
-> The real fix, I believe, is this:
->
-> -- snip --
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 2d6dfce883..516dee0fa4 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -1372,6 +1372,7 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
->  			}
->  		} else {
->  			struct child_process cp = CHILD_PROCESS_INIT;
-> +			discard_cache();
->  			cp.git_cmd = 1;
->  			argv_array_pushl(&cp.args, "reset", "--hard", "-q",
->  					 NULL);
-> -- snap --
->
-> And the reason this is needed: we spawn a `git reset --hard` here, which
-> will change the index, but outside of the current process. So the
-> in-process copy is stale. And when the index' mtime does not help us
-> detect that, we run into that test breakage.
+> As clients would configure promisor remotes explicitly, there would be
+> no issues about which protocol and servers are allowed or not.
+> 
+> If the issue is that you want the server to decide which promisor
+> remotes would be used without the client having to do anything, maybe
+> that could be something added on top of the possibility to have many
+> promisor remotes.
 
-In non-patch mode with pathspec, there is an invocation of "apply
---index -R" of a patch that takes the contents of the HEAD to what
-is in the index, updating the on-disk index and making our in-core
-copy stale.  Wouldn't we need to do the same?  Otherwise, the same
-"reset_tree()" you are tryhing to protect with this discard_cache()
-will call read_cache_preload(), no?
+It's true that there is a slight overlap with respect to large objects,
+but this protocol can also handle large sets of objects being offloaded
+to CDN, not only single ones. (The included implementation only handles
+single objects, as a minimum viable product, but it is conceivable that
+the server implementation is later expanded to allow offloading of sets
+of objects.)
 
-Among the calls to reset_tree() in this file, I think the one that
-follows the "reset --hard" (your fix above) and "apply --index -R"
-(the other side of the same if/else) is the only one that wants to
-read from the result of an external command we just spawned from the
-on-disk index, so perhaps moving discard_cache() to just before that
-call may be a better fix.
-
-
-
+And this protocol is meant to be able to use CDNs to help serve objects,
+whether single objects or sets of objects. In the case of promisor
+remotes, the thing we fetch from has to be a Git server. (We could use
+dumb HTTP from a CDN, but that defeats the purpose in at least one way -
+with dumb HTTP, we have to fetch objects individually, but with URL
+support, we can fetch objects as sets too.)
