@@ -2,104 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06AA81F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 17:07:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0C281F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 18:01:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729393AbfBSRHS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 12:07:18 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:52758 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727048AbfBSRHS (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 19 Feb 2019 12:07:18 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x1JGvoB0020208;
-        Tue, 19 Feb 2019 09:07:13 -0800
-Received: from mail.palantir.com ([8.4.231.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2qpg9rkw8y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Tue, 19 Feb 2019 09:07:13 -0800
-Received: from sj-prod-exch-01.YOJOE.local (10.129.18.26) by
- sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1531.3; Tue, 19 Feb 2019 09:06:55 -0800
-Received: from smtp-transport.yojoe.local (10.129.56.124) by
- sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server id
- 15.1.1531.3 via Frontend Transport; Tue, 19 Feb 2019 09:06:55 -0800
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id B187C2216320;
-        Tue, 19 Feb 2019 09:07:11 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     <gitster@pobox.com>
-CC:     <git@vger.kernel.org>,
-        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2] merge-options.txt: correct wording of --no-commit option
-Date:   Tue, 19 Feb 2019 09:07:09 -0800
-Message-ID: <20190219170709.25463-1-newren@gmail.com>
-X-Mailer: git-send-email 2.21.0.rc1.264.g6c9e06a32d
-In-Reply-To: <5C6BAA4E020000A10002FBFF@gwsmtp1.uni-regensburg.de>
-References: <5C6BAA4E020000A10002FBFF@gwsmtp1.uni-regensburg.de>
+        id S1726244AbfBSSBh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 13:01:37 -0500
+Received: from egnor-li.ofb.net ([23.92.24.4]:39928 "EHLO egnor-li.ofb.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726110AbfBSSBh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 13:01:37 -0500
+Received: from ofb.net (163.242.197.104.bc.googleusercontent.com [104.197.242.163])
+        by egnor-li.ofb.net (Postfix) with ESMTP id F24B811801C;
+        Tue, 19 Feb 2019 17:54:33 +0000 (UTC)
+Received: from localhost.localdomain (unknown [173.239.75.234])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ofb.net (Postfix) with ESMTPSA id B23663EE5A;
+        Tue, 19 Feb 2019 09:54:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ofb.net; s=ofb;
+        t=1550598873; bh=L6MXgl/PBdei5igHOr7dKmUSglgRwgJSFkxgqTV+gEA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=AVx6XIJT2Yk0hGYgfOOqTDYAKQz8w2mHUtdyiop3j3GXR0t48KwWHyCST6+rNDkEa
+         32FyoxsXUu78AlakmarrbMqd926X7JxAIYjk7ZibSM1VI+AilB+qFccFJGlhEYRd5j
+         kppHKxZJVRcmHci/bk2FZJ7ykJHeJONx5KqsTqmRTtwV0OXQISUM+2HvNGR6p4LbGn
+         WGkoQgVz7Fzr+94bzBdiNzJrrQ6cYy7pC0FQTL4aoa4IhRze9syVhpvmT9lA6ZprGH
+         RtIChMkdb+MlFnLcRYvBIv/AfHuehvB2ojmglKFxAiN4P1Ncn1TalvDomSG9Cn/1Fg
+         TxfXwJVlhyeXg==
+Received: from frederik by localhost.localdomain with local (Exim 4.91)
+        (envelope-from <frederik@localhost.localdomain>)
+        id 1gw9bF-0004lj-5J; Tue, 19 Feb 2019 09:54:33 -0800
+From:   Frederick Eaton <frederik@ofb.net>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "Theodore Y. Ts'o" <tytso@mit.edu>,
+        Frederick Eaton <frederik@ofb.net>
+Subject: [PATCH 0/1] de-alphabetize command list
+Date:   Tue, 19 Feb 2019 09:54:12 -0800
+Message-Id: <20190219175413.18292-1-frederik@ofb.net>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <xmqqva8e5dxj.fsf@gitster-ct.c.googlers.com>
+References: <xmqqva8e5dxj.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-02-19_11:,,
- signatures=0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The former wording implied that --no-commit would always cause the
-merge operation to "pause" and allow the user to make further changes
-and/or provide a special commit message for the merge commit.  This
-is not the case for fast-forward merges, as there is no merge commit
-to create.  Without a merge commit, there is no place where it makes
-sense to "stop the merge and allow the user to tweak changes"; doing
-that would require a full rebase of some sort.
+This is a follow-up to my proposal to de-alphabetize the command
+listings in the git(1) manual page, from 6 July 2018.
 
-Since users may be unaware of whether their branches have diverged or
-not, modify the wording to correctly address fast-forward cases as well
-and suggest using --no-ff with --no-commit if the point is to ensure
-that the merge stops before completing.
+Some projects have manual page items listed in alphabetical order,
+some don't. As I argued in my proposal, I find it easier to learn from
+material which is not alphabetized. If this patch is accepted, I hope
+that it will make the Git documentation more accessible to myself and
+others.
 
-Reported-by: Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-Changes since v1:
-  - Tweaked commit message
+I produced the reordered command list in this patch using several
+sources, as indicated by comments in the new command-list.txt file.
+First, all the commands in the main part of "gittutorial(7)" appear in
+order, then the commands in giteveryday(7). Then appear additional
+commands from a friend's shell history, in reverse order of frequency.
+Then gittutorial-2(7), then gitcore-tutorial(7). After that there is a
+list of "guides", followed by about 100 commands not appearing in the
+earlier lists. I kept the guides and the remaining commands in their
+category groupings (guide, mainporcelain, ancillarymanipulators,
+etc.), but ordered the commands within each category according to my
+own judgment after skimming each manual page.
 
- Documentation/merge-options.txt | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+To verify that the new list is a permutation of the most recent list,
+I use the following command (it should produce no output and exit 0):
 
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index c2a263ba74..d1061b8cf7 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -3,9 +3,15 @@
- 	Perform the merge and commit the result. This option can
- 	be used to override --no-commit.
- +
--With --no-commit perform the merge but pretend the merge
--failed and do not autocommit, to give the user a chance to
--inspect and further tweak the merge result before committing.
-+With --no-commit perform the merge and stop just before creating
-+a merge commit, to give the user a chance to inspect and further
-+tweak the merge result before committing.
-++
-+Note that fast-forward updates do not need to create a merge
-+commit and therefore there is no way to stop those merges with
-+--no-commit.  Thus, if you want to ensure your branch is not
-+changed or updated by the merge command, use --no-ff with
-+--no-commit.
- 
- --edit::
- -e::
+    diff <(git show master:command-list.txt | grep -v '^#' | sort ) <(cat command-list.txt | grep -v '^#' | sort)
+
+Note this patch changes the order of commands appearing in the
+generated file "command-list.h", which mostly seems to be used by
+"help.c". Probably due to the various occurrences of QSORT in
+"help.c", I think this reordering has no visible effect. I am willing
+to do any additional testing which may be recommended to ensure that
+this patch has no undesired consequences.
+
+Frederick Eaton (1):
+  Prioritize list of commands appearing in git(1), via command-list.txt.
+    Don't invoke 'sort' in Documentation/cmd-list.perl.
+
+ Documentation/cmd-list.perl |   2 +-
+ command-list.txt            | 295 +++++++++++++++++++-----------------
+ 2 files changed, 158 insertions(+), 139 deletions(-)
+
 -- 
-2.21.0.rc1.264.g6c9e06a32d
+2.20.1
 
