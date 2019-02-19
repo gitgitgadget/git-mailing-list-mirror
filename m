@@ -2,96 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 018621F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 04:18:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52ECC1F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 04:21:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725808AbfBSESL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 23:18:11 -0500
-Received: from mail-it1-f176.google.com ([209.85.166.176]:52381 "EHLO
-        mail-it1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725497AbfBSESK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Feb 2019 23:18:10 -0500
-Received: by mail-it1-f176.google.com with SMTP id r11so3129074itc.2
-        for <git@vger.kernel.org>; Mon, 18 Feb 2019 20:18:10 -0800 (PST)
+        id S1726317AbfBSEVQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 23:21:16 -0500
+Received: from mail-it1-f193.google.com ([209.85.166.193]:55761 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725730AbfBSEVP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Feb 2019 23:21:15 -0500
+Received: by mail-it1-f193.google.com with SMTP id z131so3098806itf.5
+        for <git@vger.kernel.org>; Mon, 18 Feb 2019 20:21:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=hw4ZV4leVh+/O3w8z/jSey6kN61tovdU+QmkDyXAiaI=;
-        b=UCggXIdr+A/KOJvo1/WF/7L29FOHukyBS5LM5wFEmGcWHW8LpCqBRVhbQolC56TAA2
-         lAQLgdsxZVrU2u7KCMlLEX5UVv39MlWIvU7RPf59m/yi5xJlJ4XwpuZmL0yP1+xSy4SC
-         oxJvqSLYfRW/IBqQvRUABevxbxSN1Fja7wRsDd+lfLfRBHKunF7M03M/4X9wb5a2lgf2
-         WBWcJ4OGMm9DPLDjGTwEew9iRmhClpNwP2Ax/1qt0UsH81rZ8A2++jyvp0LPPe1DOqzJ
-         oW9BZbZdRFYXTHlY2jRFNzl8oxjkJTOhfQHKP4tz7OE64AqLp55nscxsAJGxSMLtqlXb
-         Phew==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=w3BIHBkYjP/yUUTO5RFHFSF04w45ET8O0WMyHZPVez8=;
+        b=EkRCnCZdLCaHnKzcWRbNOG7KCKZMJ4+JDJNR6zDn3RQH5RWGUZUyyd0lXjpCICVlQp
+         isG4W9y4oCyDWA5FcoPtPI74FN7CXUD0WwtOo6+lrPfTn0IikCgNGAOwtDQfmg7bpsQb
+         WGFL+utm0skhbaQ4jruvFhOj+54G7SbZu9L9Kc37exWMN/LfE024eUwWbrjl+b9wm4cJ
+         f3YSPXMWQbBksezcyndth+pEyo8KRNmhr5cJoVgoerjL6BKAQbCu6yTKZcVzIxUGTcFq
+         7glkqj5qGlGLFtbLJ7DnQHZikfgQ/CAhiqT7uMqqRf74FeqCNJA9f6ChSb9jE2T+KEJw
+         DCcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=hw4ZV4leVh+/O3w8z/jSey6kN61tovdU+QmkDyXAiaI=;
-        b=Yxp2OMi0CdyNu6wi04YzCzBQWvHhHR0/EPNXf2TDYuodPrroLPQiNWYKtL1VNbtWjt
-         /BDNBnCvKXrvzO8zzSeOkxTQHr98Tnxzn0AicIaeW7/PoKPkxL+dAbPL30eiWZ046/9R
-         Nq6/hxMd2EJqoV7TL4l5dVFCzOLAK2MGDmv34YniCKmsp+djOxKzbyTYz0LOGpaAecZ1
-         8/yjdh+Oqc13kl/cTmNGyPTugxLkdCOPnwslCyE4hvNOUKdhUJ+cYxWAFBzu1dQJapD+
-         Zql+3P9ibpmZL2xx4ZJAC06xHrXkTTsosRyYiRnmjKc2RC89xd5mO2vbeHGlzJqXMfIr
-         dpRQ==
-X-Gm-Message-State: AHQUAubjdDpBDFrvrtKUnsNcdiOor9jB8ZDbYovV+K2TSLBIVf7huQpJ
-        mjXQ9TU8jSNA5vLdcYuKjFIyNjUgJqU2QFIm4/0WBmt4
-X-Google-Smtp-Source: AHgI3IZBTv0hgwyHG/fQ6MHNvJykNps597HCs6O1NAJMkvNRy9FNOdDbanswhG/nor7iwEwZ1neNAhBKrp26Ny0gdSg=
-X-Received: by 2002:a02:a397:: with SMTP id y23mr12942363jak.41.1550549889804;
- Mon, 18 Feb 2019 20:18:09 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=w3BIHBkYjP/yUUTO5RFHFSF04w45ET8O0WMyHZPVez8=;
+        b=YlntJzgDpk/cBI9JFeflZuiVqdsr82/wWn+ZMZql9D/PtWDSA8YbvQ4i0E6nP6gqfX
+         HQi3c4jgozpj10s/KZHfcGOZV8Ytp8+rk3P8gKrrAabsFroN1fxLiuusM73tofS9gVp+
+         4kWZaSjq389Qwa2S7leF9PzW5bfVwZNfB5beQnjeFxn6GLTSQUGo6F5Ug4fFW5AuamY4
+         CtvOqAdaoyOuanMgrZ+YkeqNYgosKYp3C+O/DpHP8rBdcUCh8Da62TRO/GNG7fq4kdvA
+         fiBhs3TTdZlAtgzjNChiXV0oNL41RH948V7CaUi84G1rpE+HLMtV/tL0Vm12pTd2l8J8
+         FHSg==
+X-Gm-Message-State: AHQUAuaqascThi3B+7aEix/Y99su80SMpeW/PPBWGF1s44GKw1xUdvGA
+        nCLfcJ7oAXvpcsJCpu3NWz4neN92SmjOOmWGkNg=
+X-Google-Smtp-Source: AHgI3Ibm68oQqg55IRky4kL+1b4jT3Ry4gzsyB1xXP9hrdFglZg4pv3/H5sQGG/jn2FcrIlat4xM3LLGKpLjSvH/rTs=
+X-Received: by 2002:a02:568a:: with SMTP id u10mr14624014jad.130.1550550074771;
+ Mon, 18 Feb 2019 20:21:14 -0800 (PST)
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Sebasti=C3=A1n_Mancilla?= <smancill.m@gmail.com>
-Date:   Tue, 19 Feb 2019 01:17:59 -0300
-Message-ID: <CAJPSwc1GuifK9BdssWQsf+oVY0Aw+PLM1pgAiis7UdV1tZrpew@mail.gmail.com>
-Subject: git rebase --continue after solving conflicts doesn't work anymore
-To:     git@vger.kernel.org
+References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-7-t.gummerer@gmail.com>
+ <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
+ <xmqqva40lps2.fsf@gitster-ct.c.googlers.com> <CABPp-BGQwtok1T3WmY3ndBG6RjbESSOgmbZxkWiN-avqfUjDVg@mail.gmail.com>
+ <CACsJy8AxUxYCO7bzb98EVvO5DU62ukZQNrF-sEktrdR9m6tfvg@mail.gmail.com>
+ <CACsJy8Bk=wbgzsE+Vo4w_u0E63PdUxxcvG-7e6Hq-8_jrmSErw@mail.gmail.com>
+ <xmqq7eek3ax7.fsf@gitster-ct.c.googlers.com> <CACsJy8CHHT=9e9ti7VA4X4h3FrZcUKvLuzkL56mXLgjk4c5Qcg@mail.gmail.com>
+ <xmqqlg2zz90l.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlg2zz90l.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 19 Feb 2019 11:20:48 +0700
+Message-ID: <CACsJy8CQhWeC3b6eGPePuRejfOx7c17X61-wqq5kOiRzYkRESw@mail.gmail.com>
+Subject: Re: [PATCH 6/8] checkout: add --cached option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've always used "git rebase --continue" as the help shows:
+On Sat, Feb 2, 2019 at 12:57 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+> > Of course we could just do --index and --worktree, each option
+> > restores the respective part. Then it's combinable (and extensible in
+> > the future). But then "git restore" means "git restore --index
+> > --worktree" and typing "git restore --index" effectively removes the
+> > default "--worktree", which seems a bit twisted.
+>
+> Or "git restore --no-worktree" (essentially, instead of saying
+> "keep", say "no" to mean "negation").
+>
+> Incidentally, "git restore --no-index" does not have a counterpart
+> in "git checkout", but I think it is probably a good thing to add;
+> as it has to do far more than "git cat-file blob $tree:$path >$path"
+> these days.
 
-    Resolve all conflicts manually, mark them as resolved with
-    "git add/rm <conflicted_files>", then run "git rebase --continue".
+OK this hopefully will be the final design
 
-and Git would apply the conflicted commit without issues and the rebase would
-continue.
+(git restore) "[--worktree] <paths>" restores worktree paths from index
 
-But since Git 2.20.x it doesn't work anymore. Now after solving the conflicts
-and running "git rebase --continue" I get this error most of the time:
+"--index <paths>" restores the index from HEAD (aka "git reset")
 
-    error: unable to dequote value of 'GIT_AUTHOR_DATE'
-    error: you have staged changes in your working tree
-    If these changes are meant to be squashed into the previous commit, run:
+"--source <tree> (--index|--worktree) <paths>" restores index or
+worktree (or both) from <tree>
 
-      git commit --amend
-
-    If they are meant to go into a new commit, run:
-
-      git commit
-
-    In both cases, once you're done, continue with:
-
-      git rebase --continue
-
-    error: could not commit staged changes.
-
-Now I have to run "git commit" first to commit manually and then do the "git
-rebase --continue".
-
-I've compiled 2.18.2 and 2.19.2 to check and the error doesn't happen.
-
-It is present in 2.20.x and current master v2.21.0-rc1-9-gca1b411648.
-
-
-Is it a regression because of the new rebase written in C?
-
-
+I'm a bit reluctant to support "git restore --index --worktree
+<paths>" without --source, which should default to HEAD, since it's a
+bit unclear/inconsistent ("git restore --worktree <paths>" defaults to
+index as the source, but here we use a different default source).
 -- 
-Sebastian Mancilla
+Duy
