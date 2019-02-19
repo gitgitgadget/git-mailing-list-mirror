@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBF741F462
-	for <e@80x24.org>; Tue, 19 Feb 2019 00:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59FC21F462
+	for <e@80x24.org>; Tue, 19 Feb 2019 00:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732351AbfBSAG3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Feb 2019 19:06:29 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34716 "EHLO
+        id S1732349AbfBSAG2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Feb 2019 19:06:28 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34784 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1732214AbfBSAF5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 18 Feb 2019 19:05:57 -0500
+        by vger.kernel.org with ESMTP id S1732272AbfBSAGL (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 18 Feb 2019 19:06:11 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DC0F261094;
-        Tue, 19 Feb 2019 00:05:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CA172610A0;
+        Tue, 19 Feb 2019 00:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1550534755;
-        bh=ZgJiDZe71IdN0eGb4vsIIvfqbAhK+NM/W4cs2L7qU7Q=;
+        s=default; t=1550534770;
+        bh=/zpJdikSDXgMnhDCMz+ScWFQRvpcHde1awFK5hwKfRw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=nWZbRSn0v8WdInG6RIMW8CBkfr4mY9SgqtK+oML6AKxmnvMMo0FdgqhFoX67pADXn
-         pwj433TDP2eva+JYz28hJK1LhuLkuZviCBV7uWS1L4VLer5sASwtG4XA21hQYrQEQ5
-         WXsTUdIBZaUfnqizq1aKtDtL2xfvFe/j1BpUW9kSBEZo9MUBSwdUByLvsNQxhpgZNn
-         uDIo4TVXph827iZ2rpaleBGjua1Q76PmTmqMzrK9rqUFHZYqkPDzfj+EYslD6+xUyi
-         G79trZb2e5sBkIIM1nnglBdz4z/UdTvg/qP/E9wlU/kRkO27uTnut7591d7JPW66de
-         fmamQaYc9VHL5OQxc403EWR0+3WqrgbN7rHWJxqMM2wvwKQjv+lBGKbeEq2MV9U6qL
-         jCQGBi2cnlHBrS0eVrln/By6PTVLlv/9nbfozLH4E7QiO4B/3VpWUxyWAxMq2ZJ/NL
-         b+yOxa8gVzj6V+9pKSMI8bHdsBDlL/SM+A6+AP+bWnf1o6ISlPt
+        b=o1SvExm7JV2Byp4l0GJCvHOhHFw2TWFnEJ1rbs/3mbIu8CGXHtLSFWsl14aHE4lQ8
+         nY+pEkRCkVuCB5I5oWZJYJDQ+AtAUWOk9+nU1jbYH+u50JrCDRtLfNa7Fikn5jRemv
+         ypUl5Sit0nYhX5mE+toTngzCmIDjQGcZm7gxc5tsHmwumc9hdAKxQkGRJgXpumzyXD
+         xPTlusERdDxM1ZWMt9nO0IK6AxDDY271isrqXMjkRZUjUyW4nQNRSc78HpfwsVfEdm
+         sQ2mfbQHIdUS6i1ooshoeKGJy0uTulusfbuB6Z+ndftP0o0i7TnFnwSlTbhpZdLh4M
+         lwJVUE1UcbbGKLKYBDlqHi7o++W/FJDGrowkg8KSEsITFunS2+GGOnzT5KGoR7X3il
+         o1rjxoAp4iySC/YLxc8fnyvugyAAguxrJfW755ueEqAN6WXynmonNn8wgmI+yyiEl4
+         /IGZf5wHj4R60vl45i0t0S2e9Qcs3aw7kZqJn70V3WyYrFNTBK5
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Jeff King <peff@peff.net>
-Subject: [PATCH v2 16/35] builtin/am: make hash size independent
-Date:   Tue, 19 Feb 2019 00:05:07 +0000
-Message-Id: <20190219000526.476553-17-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 28/35] builtin/get-tar-commit-id: make hash size independent
+Date:   Tue, 19 Feb 2019 00:05:19 +0000
+Message-Id: <20190219000526.476553-29-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e
 In-Reply-To: <20190219000526.476553-1-sandals@crustytoothpaste.net>
 References: <20190219000526.476553-1-sandals@crustytoothpaste.net>
@@ -55,44 +55,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using GIT_SHA1_HEXSZ, switch to using the_hash_algo and
-parse_oid_hex to parse the lines involved in rebasing notes.
+To make this code independent of the hash size, verify that the length
+of the comment is equal to that of any supported hash algorithm.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/am.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ builtin/get-tar-commit-id.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 58a2aef28b..584baf1c7e 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -485,23 +485,24 @@ static int copy_notes_for_rebase(const struct am_state *state)
+diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
+index 312e44ed05..491af9202d 100644
+--- a/builtin/get-tar-commit-id.c
++++ b/builtin/get-tar-commit-id.c
+@@ -41,7 +41,8 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
+ 	if (!skip_prefix(end, " comment=", &comment))
+ 		return 1;
+ 	len -= comment - content;
+-	if (len != GIT_SHA1_HEXSZ + 1)
++	if (len < 1 || !(len % 2) ||
++	    hash_algo_by_length((len - 1) / 2) == GIT_HASH_UNKNOWN)
+ 		return 1;
  
- 	while (!strbuf_getline_lf(&sb, fp)) {
- 		struct object_id from_obj, to_obj;
-+		const char *p;
- 
--		if (sb.len != GIT_SHA1_HEXSZ * 2 + 1) {
-+		if (sb.len != the_hash_algo->hexsz * 2 + 1) {
- 			ret = error(invalid_line, sb.buf);
- 			goto finish;
- 		}
- 
--		if (get_oid_hex(sb.buf, &from_obj)) {
-+		if (parse_oid_hex(sb.buf, &from_obj, &p)) {
- 			ret = error(invalid_line, sb.buf);
- 			goto finish;
- 		}
- 
--		if (sb.buf[GIT_SHA1_HEXSZ] != ' ') {
-+		if (*p != ' ') {
- 			ret = error(invalid_line, sb.buf);
- 			goto finish;
- 		}
- 
--		if (get_oid_hex(sb.buf + GIT_SHA1_HEXSZ + 1, &to_obj)) {
-+		if (get_oid_hex(p + 1, &to_obj)) {
- 			ret = error(invalid_line, sb.buf);
- 			goto finish;
- 		}
+ 	if (write_in_full(1, comment, len) < 0)
