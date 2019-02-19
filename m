@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D68981F453
-	for <e@80x24.org>; Tue, 19 Feb 2019 08:31:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 584571F453
+	for <e@80x24.org>; Tue, 19 Feb 2019 08:31:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727435AbfBSIbz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 03:31:55 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38824 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725765AbfBSIbz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 03:31:55 -0500
-Received: by mail-pg1-f196.google.com with SMTP id m2so7522587pgl.5
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 00:31:54 -0800 (PST)
+        id S1727486AbfBSIb6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 03:31:58 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:40396 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725765AbfBSIb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 03:31:57 -0500
+Received: by mail-pf1-f196.google.com with SMTP id h1so9891638pfo.7
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 00:31:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=vxOct4GsP0BHQxLS+IUw97H+bkcRyDlG/nI7j1zTdUA=;
-        b=PAe7khtFb1J4HHIWm513Yle5o2tJHCjjCYJyiR+OSlrsz/KmAxltxVN86lKkCN9dzM
-         ZfXfAdW9zT87S9RzYXP2m0KznMuOYxuWfOAiGxe22Zd7Q0NRrupr72x75dL++skr9eI9
-         euvtSOTZLD0ExT24D7LZctIrr4KDUu+mwQh4zYAEdSGE8NUe9C2gCeBaXLkxu2v3KTqO
-         8iJhmz9um7ummX1X4wAKpFwj7peVuZbqUXw4Y/64jluOMe9Sn2Dia6mQCjetzTCw3Kzc
-         ofaSV/M1ncz/JLpn2q8wZInN/vkFiJcvCcuw4cryH1NB2G9xDbRUM+PMOo/oeAHR9ICh
-         Zpcw==
+        bh=OcwuXzolieEJG3QK60YjJ+vQjkbl2ZDmrsAYvclLmjw=;
+        b=OpsPKi4mr3SQpI4w3sCvEiGJK+JaGkGkeOMqXiSAfVEsPfVzCislPA3ZqNT3zEgXLk
+         CMoPXy01zwqQkeqRIxi1jo6DpUn+RSPiMXHqeTvGnHMVrXYTEDMA88PQvRZGAMcPH7rX
+         u3l06t2B+oDAhaS2upIeDzaTW2kkTofPDqNBkTIfrtnj9NyZqcBLNCdbt8G0Vt73C3rr
+         sKfxriOoehdtuaLG6N2V40k/GanFN5YNcNVUYsabt8yqBChjBHM2U4hcU4Ndo5AzUAHS
+         tjOf1JwI6h+DBcCY1kwtbF6lYfsWnuXGtXG/KpoKPnjidk+oCEdJPncoNRVBS5JzmlUg
+         hkmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=vxOct4GsP0BHQxLS+IUw97H+bkcRyDlG/nI7j1zTdUA=;
-        b=sTiSus7TjSCgb0P9f84D7ubTo8mbeHAR69wshmnR73rKR1SHztfCO0qaWarxce+fc4
-         GYDvRPJKTK0F6s94ZkY2dE1GyMUgtUQdSxG38ThCR7q9+/J3ndPZ5PVHi5VbisE1JVnA
-         vPkJEwHEZQmiUkWBmMpXabY0ySfhOYkHmnGJIJL+FVaTCkvh4HjrZS3iuDuqTVLWC1Rv
-         LOodhjAJmfNRitWPL1tAsvoYgNPJMTR32m4OvJlCFreoNVI2o+dweZXwVkaoH5Y+YwlF
-         ZTABEDNWpw1knRkpURqAMPIuhzANSZGxrPuJco+8lt1XLbdCPFH/n6gZd52FyiXXvhIg
-         mjag==
-X-Gm-Message-State: AHQUAuageSn7KCe8GHnkcZE7A851G1E/vkixQ1Afe7CQWkAR5tuLoadB
-        XUyxbM8vlU8Fu8jgo/RHlz0cUm0t
-X-Google-Smtp-Source: AHgI3Ib61hCrk/qNWSMSjy5GNjtN6R7hwH0mH1wof79kLgF1ejgIXz+HhaILI+fdMBxcvgwJ9ek28w==
-X-Received: by 2002:a65:6497:: with SMTP id e23mr22610210pgv.89.1550565114019;
-        Tue, 19 Feb 2019 00:31:54 -0800 (PST)
+        bh=OcwuXzolieEJG3QK60YjJ+vQjkbl2ZDmrsAYvclLmjw=;
+        b=OFJgEsmR6oZBBK1TT7HSusyw9qO397XSxG27dWRtc6jCmh+t3WyKOz/3zOs/j42NT8
+         Hw/wqOqsDrvaC/6JrlgDzf2iOmB02Cvx3yWvGM72MfI1t5hoZO4x7Ie+eNfpubSgZRzt
+         jj1aKV9CqC5baXPc7PRBv474ksYBi1nH40czrF0lhLy412SoscMQV60/Lj3M1ZLES1GA
+         30JdN+7HdzoxeuEUVkf1eG08qWgHOORbTggVhUfC8rhQKvlo8Q3b+ehJJoc75631FyHF
+         35KQmis80QQCXYvZaYufeGUOdIwr4ifs64+mr+RI5XFN6dONS9pa0YlAX3x5DXXXIqjd
+         mvTA==
+X-Gm-Message-State: AHQUAuYQhoO1vfZHvr9+LzUp2uCKtF9IpetsGuR5wgLVLAAgIboFY9sY
+        UPkVt7o1qftWN09nTsz9Qsk9Zr+G
+X-Google-Smtp-Source: AHgI3IbxVpKlC22ytKzZVBa5GCBuNxCCmoG8MHdvlR4mI7f98siqNpYEsnXANZBrsU7hEab0NbGXOg==
+X-Received: by 2002:a62:18d8:: with SMTP id 207mr6158474pfy.57.1550565116286;
+        Tue, 19 Feb 2019 00:31:56 -0800 (PST)
 Received: from localhost.localdomain (pdadde822.hkidnt01.ap.so-net.ne.jp. [218.221.232.34])
-        by smtp.gmail.com with ESMTPSA id f62sm25190120pgc.67.2019.02.19.00.31.49
+        by smtp.gmail.com with ESMTPSA id f62sm25190120pgc.67.2019.02.19.00.31.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 19 Feb 2019 00:31:53 -0800 (PST)
+        Tue, 19 Feb 2019 00:31:55 -0800 (PST)
 From:   nbelakovski@gmail.com
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, rafa.almas@gmail.com, gitster@pobox.com,
         avarab@gmail.com, Nickolai Belakovski <nbelakovski@gmail.com>
-Subject: [PATCH v8 1/3] ref-filter: add worktreepath atom
-Date:   Tue, 19 Feb 2019 17:31:21 +0900
-Message-Id: <20190219083123.27686-2-nbelakovski@gmail.com>
+Subject: [PATCH v8 2/3] branch: update output to include worktree info
+Date:   Tue, 19 Feb 2019 17:31:22 +0900
+Message-Id: <20190219083123.27686-3-nbelakovski@gmail.com>
 X-Mailer: git-send-email 2.14.2
 In-Reply-To: <20190219083123.27686-1-nbelakovski@gmail.com>
 References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
@@ -69,177 +69,156 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Nickolai Belakovski <nbelakovski@gmail.com>
 
-Add an atom providing the path of the linked worktree where this ref is
-checked out, if it is checked out in any linked worktrees, and empty
-string otherwise.
+The output of git branch is modified to mark branches checkout out in a
+linked worktree with a "+" and color them in cyan (in contrast to the
+current branch, which will still be denoted with a "*" and colored in green)
+
+This is meant to communicate to the user that the branches that are
+marked or colored will behave differently from other branches if the user
+attempts to check them out or delete them, since branches checked out in
+another worktree cannot be checked out or deleted.
 
 Signed-off-by: Nickolai Belakovski <nbelakovski@gmail.com>
 ---
- Documentation/git-for-each-ref.txt |  5 +++
- ref-filter.c                       | 78 ++++++++++++++++++++++++++++++++++++++
- t/t6302-for-each-ref-filter.sh     | 11 ++++++
- 3 files changed, 94 insertions(+)
+ Documentation/git-branch.txt |  6 ++++--
+ builtin/branch.c             | 12 ++++++++----
+ t/t3200-branch.sh            |  8 ++++----
+ t/t3203-branch-output.sh     | 21 +++++++++++++++++++++
+ 4 files changed, 37 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 774cecc7ed..6dcd39f6f6 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -214,6 +214,11 @@ symref::
- 	`:lstrip` and `:rstrip` options in the same way as `refname`
- 	above.
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 3bd83a7cbd..f2e5a07d64 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -26,8 +26,10 @@ DESCRIPTION
+ -----------
  
-+worktreepath::
-+	The absolute path to the worktree in which the ref is checked
-+	out, if it is checked out in any linked worktree. Empty string
-+	otherwise.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
-diff --git a/ref-filter.c b/ref-filter.c
-index 422a9c9ae3..05531b7534 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -20,6 +20,8 @@
- #include "commit-slab.h"
- #include "commit-graph.h"
- #include "commit-reach.h"
-+#include "worktree.h"
-+#include "hashmap.h"
+ If `--list` is given, or if there are no non-option arguments, existing
+-branches are listed; the current branch will be highlighted with an
+-asterisk.  Option `-r` causes the remote-tracking branches to be listed,
++branches are listed; the current branch will be highlighted in green and
++marked with an asterisk.  Any branches checked out in linked worktrees will
++be highlighted in cyan and marked with a plus sign. Option `-r` causes the
++remote-tracking branches to be listed,
+ and option `-a` shows both local and remote branches. If a `<pattern>`
+ is given, it is used as a shell wildcard to restrict the output to
+ matching branches. If multiple patterns are given, a branch is shown if
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 1be727209b..c2a86362bb 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -47,6 +47,7 @@ static char branch_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_NORMAL,       /* LOCAL */
+ 	GIT_COLOR_GREEN,        /* CURRENT */
+ 	GIT_COLOR_BLUE,         /* UPSTREAM */
++	GIT_COLOR_CYAN,         /* WORKTREE */
+ };
+ enum color_branch {
+ 	BRANCH_COLOR_RESET = 0,
+@@ -54,7 +55,8 @@ enum color_branch {
+ 	BRANCH_COLOR_REMOTE = 2,
+ 	BRANCH_COLOR_LOCAL = 3,
+ 	BRANCH_COLOR_CURRENT = 4,
+-	BRANCH_COLOR_UPSTREAM = 5
++	BRANCH_COLOR_UPSTREAM = 5,
++	BRANCH_COLOR_WORKTREE = 6
+ };
  
- static struct ref_msg {
- 	const char *gone;
-@@ -75,6 +77,27 @@ static struct expand_data {
- 	struct object_info info;
- } oi, oi_deref;
+ static const char *color_branch_slots[] = {
+@@ -64,6 +66,7 @@ static const char *color_branch_slots[] = {
+ 	[BRANCH_COLOR_LOCAL]	= "local",
+ 	[BRANCH_COLOR_CURRENT]	= "current",
+ 	[BRANCH_COLOR_UPSTREAM] = "upstream",
++	[BRANCH_COLOR_WORKTREE] = "worktree",
+ };
  
-+struct ref_to_worktree_entry {
-+	struct hashmap_entry ent; /* must be the first member! */
-+	struct worktree *wt; /* key is wt->head_ref */
-+};
-+
-+static int ref_to_worktree_map_cmpfnc(const void *unused_lookupdata,
-+				      const void *existing_hashmap_entry_to_test,
-+				      const void *key,
-+				      const void *keydata_aka_refname)
-+{
-+	const struct ref_to_worktree_entry *e = existing_hashmap_entry_to_test;
-+	const struct ref_to_worktree_entry *k = key;
-+	return strcmp(e->wt->head_ref,
-+		keydata_aka_refname ? keydata_aka_refname : k->wt->head_ref);
-+}
-+
-+static struct ref_to_worktree_map {
-+	struct hashmap map;
-+	struct worktree **worktrees;
-+} ref_to_worktree_map;
-+
- /*
-  * An atom is a valid field atom listed below, possibly prefixed with
-  * a "*" to denote deref_tag().
-@@ -480,6 +503,7 @@ static struct {
- 	{ "flag", SOURCE_NONE },
- 	{ "HEAD", SOURCE_NONE, FIELD_STR, head_atom_parser },
- 	{ "color", SOURCE_NONE, FIELD_STR, color_atom_parser },
-+	{ "worktreepath", SOURCE_NONE },
- 	{ "align", SOURCE_NONE, FIELD_STR, align_atom_parser },
- 	{ "end", SOURCE_NONE },
- 	{ "if", SOURCE_NONE, FIELD_STR, if_atom_parser },
-@@ -1525,6 +1549,48 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 	return 0;
- }
+ static struct string_list output = STRING_LIST_INIT_DUP;
+@@ -342,9 +345,10 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+ 	struct strbuf local = STRBUF_INIT;
+ 	struct strbuf remote = STRBUF_INIT;
  
-+static void populate_worktree_map(struct hashmap *map, struct worktree **worktrees)
-+{
-+	int i;
-+
-+	for (i = 0; worktrees[i]; i++) {
-+		if (worktrees[i]->head_ref) {
-+			struct ref_to_worktree_entry *entry;
-+			entry = xmalloc(sizeof(*entry));
-+			entry->wt = worktrees[i];
-+			hashmap_entry_init(entry, strhash(worktrees[i]->head_ref));
-+
-+			hashmap_add(map, entry);
-+		}
-+	}
-+}
-+
-+static void lazy_init_worktree_map(void)
-+{
-+	if (ref_to_worktree_map.worktrees)
-+		return;
-+
-+	ref_to_worktree_map.worktrees = get_worktrees(0);
-+	hashmap_init(&(ref_to_worktree_map.map), ref_to_worktree_map_cmpfnc, NULL, 0);
-+	populate_worktree_map(&(ref_to_worktree_map.map), ref_to_worktree_map.worktrees);
-+}
-+
-+static char *get_worktree_path(const struct used_atom *atom, const struct ref_array_item *ref)
-+{
-+	struct hashmap_entry entry;
-+	struct ref_to_worktree_entry *lookup_result;
-+
-+	lazy_init_worktree_map();
-+
-+	hashmap_entry_init(&entry, strhash(ref->refname));
-+	lookup_result = hashmap_get(&(ref_to_worktree_map.map), &entry, ref->refname);
-+
-+	if (lookup_result)
-+		return xstrdup(lookup_result->wt->path);
-+	else
-+		return xstrdup("");
-+}
-+
- /*
-  * Parse the object referred by ref, and grab needed value.
-  */
-@@ -1562,6 +1628,13 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+-	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %s%%(end)",
+-		    branch_get_color(BRANCH_COLOR_CURRENT),
+-		    branch_get_color(BRANCH_COLOR_LOCAL));
++	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)%%(if)%%(worktreepath)%%(then)+ %s%%(else)  %s%%(end)%%(end)",
++			branch_get_color(BRANCH_COLOR_CURRENT),
++			branch_get_color(BRANCH_COLOR_WORKTREE),
++			branch_get_color(BRANCH_COLOR_LOCAL));
+ 	strbuf_addf(&remote, "  %s",
+ 		    branch_get_color(BRANCH_COLOR_REMOTE));
  
- 		if (starts_with(name, "refname"))
- 			refname = get_refname(atom, ref);
-+		else if (!strcmp(name, "worktreepath")) {
-+			if (ref->kind == FILTER_REFS_BRANCHES)
-+				v->s = get_worktree_path(atom, ref);
-+			else
-+				v->s = xstrdup("");
-+			continue;
-+		}
- 		else if (starts_with(name, "symref"))
- 			refname = get_symref(atom, ref);
- 		else if (starts_with(name, "upstream")) {
-@@ -2045,6 +2118,11 @@ void ref_array_clear(struct ref_array *array)
- 		free_array_item(array->items[i]);
- 	FREE_AND_NULL(array->items);
- 	array->nr = array->alloc = 0;
-+	if (ref_to_worktree_map.worktrees) {
-+		hashmap_free(&(ref_to_worktree_map.map), 1);
-+		free_worktrees(ref_to_worktree_map.worktrees);
-+		ref_to_worktree_map.worktrees = NULL;
-+	}
- }
- 
- static void do_merge_filter(struct ref_filter_cbdata *ref_cbdata)
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index fc067ed672..4ad20615d5 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -441,4 +441,15 @@ test_expect_success '--merged is incompatible with --no-merged' '
- 	test_must_fail git for-each-ref --merged HEAD --no-merged HEAD
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 478b82cf9b..e404f6e23c 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -292,7 +292,7 @@ test_expect_success 'git branch --list -v with --abbrev' '
+ test_expect_success 'git branch --column' '
+ 	COLUMNS=81 git branch --column=column >actual &&
+ 	cat >expected <<\EOF &&
+-  a/b/c     bam       foo       l       * master    n         o/p       r
++  a/b/c   + bam       foo       l       * master    n         o/p       r
+   abc       bar       j/k       m/m       master2   o/o       q
+ EOF
+ 	test_cmp expected actual
+@@ -307,7 +307,7 @@ test_expect_success 'git branch --column with an extremely long branch name' '
+ 	cat >expected <<EOF &&
+   a/b/c
+   abc
+-  bam
+++ bam
+   bar
+   foo
+   j/k
+@@ -332,7 +332,7 @@ test_expect_success 'git branch with column.*' '
+ 	git config --unset column.branch &&
+ 	git config --unset column.ui &&
+ 	cat >expected <<\EOF &&
+-  a/b/c   bam   foo   l   * master    n     o/p   r
++  a/b/c + bam   foo   l   * master    n     o/p   r
+   abc     bar   j/k   m/m   master2   o/o   q
+ EOF
+ 	test_cmp expected actual
+@@ -349,7 +349,7 @@ test_expect_success 'git branch -v with column.ui ignored' '
+ 	cat >expected <<\EOF &&
+   a/b/c
+   abc
+-  bam
+++ bam
+   bar
+   foo
+   j/k
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index ee6787614c..94ab05ad59 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -240,6 +240,27 @@ test_expect_success 'git branch --format option' '
+ 	test_i18ncmp expect actual
  '
  
-+test_expect_success 'validate worktree atom' '
-+	cat >expect <<-EOF &&
-+	master: $(pwd)
-+	master_worktree: $(pwd)/worktree_dir
-+	side: not checked out
-+	EOF
-+	git worktree add -b master_worktree worktree_dir master &&
-+	git for-each-ref --format="%(refname:short): %(if)%(worktreepath)%(then)%(worktreepath)%(else)not checked out%(end)" refs/heads/ >actual &&
++test_expect_success '"add" a worktree' '
++	mkdir worktree_dir &&
++	git worktree add -b master_worktree worktree_dir master
++'
++
++cat >expect <<'EOF'
++* <GREEN>(HEAD detached from fromtag)<RESET>
++  ambiguous<RESET>
++  branch-one<RESET>
++  branch-two<RESET>
++  master<RESET>
+++ <CYAN>master_worktree<RESET>
++  ref-to-branch<RESET> -> branch-one
++  ref-to-remote<RESET> -> origin/branch-one
++EOF
++test_expect_success TTY 'worktree colors correct' '
++	test_terminal git branch >actual.raw &&
++	test_decode_color <actual.raw >actual &&
 +	test_cmp expect actual
 +'
 +
- test_done
+ test_expect_success "set up color tests" '
+ 	echo "<RED>master<RESET>" >expect.color &&
+ 	echo "master" >expect.bare &&
 -- 
 2.14.2
 
