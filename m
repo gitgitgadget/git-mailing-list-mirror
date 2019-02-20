@@ -2,81 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,PI_DNOT,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 158B41F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 19:55:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F4551F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 20:05:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725989AbfBTTza (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 14:55:30 -0500
-Received: from mout.gmx.net ([212.227.17.22]:41873 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725806AbfBTTza (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 14:55:30 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxt3Q-1h8Wtp0poC-015JYq; Wed, 20
- Feb 2019 20:55:13 +0100
-Date:   Wed, 20 Feb 2019 20:54:54 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Senol Yazici <sypsilon@googlemail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
-        jpyeron@pdinc.us
-Subject: Re: [RFE] Demilitarize Documentation (was RE: Delivery Status
- Notification (Failure))
-In-Reply-To: <20190219172025.5577eb31@kitsune.suse.cz>
-Message-ID: <nycvar.QRO.7.76.6.1902202054260.41@tvgsbejvaqbjf.bet>
-References: <001601d4c7aa$460c0e70$d2242b50$@nexbridge.com> <xmqqimxh2b61.fsf@gitster-ct.c.googlers.com> <CAFacdQ_9=2hbC8-5+N=RdrGs=Anu2ku+TAj7x07OQNpa1b+gcg@mail.gmail.com> <20190219100136.GO1622@szeder.dev> <nycvar.QRO.7.76.6.1902191547510.41@tvgsbejvaqbjf.bet>
- <20190219172025.5577eb31@kitsune.suse.cz>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726368AbfBTUFr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 15:05:47 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51893 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725847AbfBTUFq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 15:05:46 -0500
+Received: by mail-wm1-f68.google.com with SMTP id n19so7901106wmi.1
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 12:05:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=xo9RCWQ7grQv1FwGSnDs477aHsbZIvEy9Pd8GSaQGuE=;
+        b=HxPFOm1VK62pfgijlRw1PoleaLD7dTvxmqOJw3xC4zB1Esy6Z3Hcw7DNGS6uVghuUe
+         mxzhzkOCTrhvDp2r/BPw6JQuMHBRpvaZLzSLUgWiUYXCn30JKaTT4x+HE+emo96hrTG/
+         8XlyF3GdBYI75fbV/4tRNGYebm5sDpLO+fugd5gpw2vNRyPUr+3Zo5WTNsaEP/+pl5ju
+         yfVIAzBdbKy8PoWfJBdXe6Cl84JUqfEtxf7Nr7NruYG/ECyV1XpG+MCsF0Xk29eQOP+G
+         mVHyLJBrpciGozHrxcAqCjzAHzNcviXJ9/vtp51m9AtKnTc+tsUXC3IEUROShfji+Ti9
+         CUyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=xo9RCWQ7grQv1FwGSnDs477aHsbZIvEy9Pd8GSaQGuE=;
+        b=BLmdHoryBn8+5aXvv7YeqCCq169yZrhXcaWJqg2l4Y8VfUATrojMkcRyi7S+Xx/Ou0
+         vSrOzoEdsdd4c2MaAd1lbbS47r1M97EQRGLdfbqYFXC6PmH1jFUsMofznOBja+ATZ69w
+         9uZ/1upyTlQ/Ms3swlVLwfLr0sqSxNJA9XkVgLDHVGe3ndi6bGRFqL0ic7/FHlyxFRwo
+         HWony3pp7kqkTfdE14zuHWLsXor7cif1pEmc/GoutOAJ1I67kSbzNKkP9SrG1mqI9h5J
+         fDTkxvV2v9o5KAWp/sXE+cD1ixJaXxtEoBxhQaIJ6gGFbhxOwP/qZ2sanAQRd8+4ZD+V
+         OWHw==
+X-Gm-Message-State: AHQUAubC3cpuMzhF0SvDCnOkxU/2gg1+EuV31PWxmXFeM3AoVRm1mxY7
+        ziu7L0myBqCguZyVLM3p6C4=
+X-Google-Smtp-Source: AHgI3IZ3L+YNmLVw4Dv+QldRYlQpQ9vshH9NF1G+S4xDmkTFHt9fA8uaYDEtPZZEGmXa5hz2WtaewA==
+X-Received: by 2002:a1c:9692:: with SMTP id y140mr8078414wmd.67.1550693143904;
+        Wed, 20 Feb 2019 12:05:43 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 93sm13636607wrh.15.2019.02.20.12.05.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 20 Feb 2019 12:05:43 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ismael Luceno <ismael@iodev.co.uk>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH v2] git-gui: Handle Ctrl + BS/Del in the commit msg
+References: <20190216031051.8859-1-ismael@iodev.co.uk>
+Date:   Wed, 20 Feb 2019 12:05:42 -0800
+In-Reply-To: <20190216031051.8859-1-ismael@iodev.co.uk> (Ismael Luceno's
+        message of "Sat, 16 Feb 2019 04:10:52 +0100")
+Message-ID: <xmqqbm36w7hl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1685681152-1550692513=:41"
-X-Provags-ID: V03:K1:rLcr7FLqCaEcQNwNeMDUY5qm5gghpInVHMNq/0kpKn7LIfW0CvX
- tEahSxoSyWXknpTOZ8Fbd3yLMnYrZye20n+MhjOaa0mImLe7gS951sCvB/lCLe1Fvq510pT
- UBAV9Vvs9bKzqqhZMn2KhWnD0FBrZ1AHil1TPXJY60oYS/4gLDYHKxmm20JAVm+k0A5+ztW
- PTlTBzJtz+lH2SlJOzb1Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:be0uG0CMIi8=:5wWdKIorZ1gO2x/4eY3J7j
- UruJOW3JkiH36lcowRpB3WT3Fz1+s4h9ykOcyG2EhAgH2ANsx6uv1NQRNRJTnMl8Z8uq2pj9N
- gg7T8p/umG6cENeWXYV4WYgZCoQ/Kz+oQH9jR4qz0Se8OrmgQ0sFD1jpZJMD3agS2XP9JK5Wg
- 8qq0t792kl2bZwg6sIFnyAgGRajDKwZrwYyeFaT3RF370pgm7qP8y1tzF+5I5FDInTUZrUY8X
- 3C8MykywmT/GCjjQoUYcGN5F6CK+5bb1nmUGwwUgAGi5NXPxArRm6bOIJMtE4Sk0+WATcaabk
- kpJ95urUZlMBSrwmakCwA02jQXWVyMwoR8mEPW5bODqoG3byXuuj7zP2dpiNrGoAvJ9nI9LgF
- Npx6E/XMV83OU8/oMhDvD59qdge/MPZ9F0eXkgzlZCjmqMlT6OZSkPj3OAtpXtZFnJZ616Rz+
- xmfMN1lBuDB9vEHgtVHinMDMKjust5RQnOi7FtXY0IMSnLARsAFsT4cFJK6B7Yj+Oup/JEiiZ
- Ln2N5zWjLlknCwd3ukCRzKB9MHud/bip7p8kMrzfaSP7C42QQDGQDqCcufjUOdJ9kwcX6vNiX
- NO+Pl/O6lJK5E5td71xXAyi4UOfboapFpy/JKYnRi5z/2y5xoEISoLPOUy3/QVCN1TowfsTuz
- KpjcNyXqgoJviqVM4nO1HLN/nCh8YRMKGc3w0z5/feSCSojFWDrkToCFKB5aK4ijne36n3PD3
- qmRQ97NyaXLpE76J6btQM4/aE/jDJdVHOPdhNHoCzlZejEYXwBgw9pQYMAdpwxGr4Hcuwsg28
- b401PE3Kbugq0tL5Itfgs3XS/5/O83BWV+iV63PE1tkEQECHK+rZCuaZmCDvXOcrVZC1+VgmV
- iY76Ecu5fGcj0J+ipTrLkfFHNUdlcHW2mgT3pYs8YcK4btiE9sesNfV+jf/XBArA0kttP9yzy
- wg1pe/MIorA==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Ismael Luceno <ismael@iodev.co.uk> writes:
 
---8323328-1685681152-1550692513=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+> - Control+BackSpace: Delete word to the left of the cursor.
+> - Control+Delete   : Delete word to the right of the cursor.
+>
+> Originally introduced by BRIEF and Turbo Vision between 1985 and 1992,
+> they were adopted by most CUA-Compliant UIs, including those of: OS/2,
+> Windows, Mac OS, Qt, GTK, Open/Libre Office, Gecko, and GNU Emacs.
+>
+> Signed-off-by: Ismael Luceno <ismael@iodev.co.uk>
+> ---
+>
+> Notes:
+>     Changes since v1:
+>     - Improved commit message.
 
-Hi Michal,
+I do not use git-gui, but as a bystander, the intent of the change
+sounds sane.  deleting from the insertion cursor to the end of the
+word where the insertion cursor is looks like the right way to
+delete the word to the right of the cursor.  I am not sure if going
+back by one character from where the current insertion cursor is and
+further go back to the wordstart would give the beginning of the
+word to the left of the cursor, though.
 
-On Tue, 19 Feb 2019, Michal Suchánek wrote:
+A larger issue is that we haven't heard from Pat, who has been
+helping git-gui.sh maintenance, for quite a while, so we'd need to
+find a volunteer to act as a replacement maintainer.  If you are
+willing to, that would be great ;-)
 
-> It is very poor reply to critique to say that better alternative should
-> be provided.
+Thanks.
 
-Well, then we are at an impasse here.
 
-Ciao,
-Johannes
---8323328-1685681152-1550692513=:41--
+>  git-gui.sh | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 5bc21b878d41..e00d9a345294 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -3788,6 +3788,8 @@ bind $ui_comm <$M1B-Key-KP_Subtract> {show_less_context;break}
+>  bind $ui_comm <$M1B-Key-equal> {show_more_context;break}
+>  bind $ui_comm <$M1B-Key-plus> {show_more_context;break}
+>  bind $ui_comm <$M1B-Key-KP_Add> {show_more_context;break}
+> +bind $ui_comm <Control-Key-BackSpace> {%W delete {insert -1 chars wordstart} insert;break}
+> +bind $ui_comm <Control-Key-Delete> {%W delete insert {insert wordend};break}
+>  
+>  bind $ui_diff <$M1B-Key-x> {tk_textCopy %W;break}
+>  bind $ui_diff <$M1B-Key-X> {tk_textCopy %W;break}
