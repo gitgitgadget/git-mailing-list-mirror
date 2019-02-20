@@ -2,97 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42E9B1F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 18:07:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8138A1F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 18:36:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726120AbfBTSHA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 13:07:00 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:39020 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725796AbfBTSHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 13:07:00 -0500
-Received: by mail-pf1-f196.google.com with SMTP id i20so1860060pfo.6
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 10:07:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=exactasystems-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=thnTxFgTOmJPPK2R1yCKo96qXY/m0+oHxkkCKFAI824=;
-        b=kEC6Mnn2rrwHTsYSXPpp4npYTKbaMWgbH8T/EXSDMHogBnT6NE8diI7xzG9I3QP+pP
-         nYme6s79GR3tErmAOuvM4e+A75r7H73jA2wKRaI0lzeIZRaZca0UDRN8EWEgYtc4dUdW
-         y08cpEWcHHJF8VNLh9DbcittELIXdZEv3G78qXSAxmXrG3m/xx3xGkdCDzDvbZhuAjJO
-         lQWPUJXOizP8fXfvp9u13p7ojM5iYuergInp/bhZfTb5QuRA59/ekPHOfaXUuj0ut8IN
-         wdGGuMqxzZjcuU9PHFd3JIT0RfgNMQbyKLTip+00RQKt8vEK9pvUMSBhBsuVOWvirt5l
-         TJ2Q==
+        id S1725989AbfBTSgK convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 20 Feb 2019 13:36:10 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:35276 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725834AbfBTSgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 13:36:10 -0500
+Received: by mail-qt1-f195.google.com with SMTP id p48so28410654qtk.2
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 10:36:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=thnTxFgTOmJPPK2R1yCKo96qXY/m0+oHxkkCKFAI824=;
-        b=sJt71FgP5fD9tbJ5YSoRc2PlwT2/aCOGTUMKJxfLKaAI3GZizBceUoTeKabfAUYCwI
-         CfnMZ9FD2gw7ZrK3AJTZDe5zbqgq8K806Z7CZNGCfOc6DBTsSh18Bw5GyX8kmBu3VkjJ
-         9EmsKCJkbvOELU/RaiBbkiKzuMPtF3V0axnAMG04jNucP3/dXN+TSiyKfzRHRc7i4NfJ
-         o9uToVquczKJu5ICnaKbOEtT+R19v+PFOUJwrMHhyGl6fAwxt/frA1pRji4Kixbp7WD6
-         C2bXipnajM91yazaAvNo5YbL+P/sni9Ngrw2BD0jTuH6tUcdif1t5jdmCT1mVobcS3gN
-         +UQA==
-X-Gm-Message-State: AHQUAuZi5Z9kide8JNDQktX5KVQ/c+E2jaSfZJ5ZN+PqKNWQDCdpW0TZ
-        9aKs1adGBSLUA532Y+2cF1tgy9O5bPhwbg3WD89QIMEv
-X-Google-Smtp-Source: AHgI3IaJU77jgvSXz7/LgFA21eugjTcqv2kV4UezK4QU+AVUGsjgJWd40UtsH6MffLq0YFHEptn+MALMUrRm5GOpT54=
-X-Received: by 2002:a63:e309:: with SMTP id f9mr30151348pgh.280.1550686019683;
- Wed, 20 Feb 2019 10:06:59 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=koeB0aJGzfl+Y0Z4Ab8+Bgqz/jNzsHYuTpvxBFrqHXw=;
+        b=nLpGASKAGTl648c5hbJ0L2jidN0oAiWuDZFsYVPLmpz9kboPqzUn/5dI9xwKvnpCMP
+         jHQL/1/jcRkV7ow//owfGf26sjZiNpbuX6K6q/pu7TWzWaxog0CQFIjmZksVx6wtL7+d
+         6EP9AvDj8lJURKMSbLWAM852L3g0+5CN2TvpBaTemKAA3AY3qn6y1EJD2D6lI+opBASC
+         r78iOecvohe5Jtv7g4WgwDHzI9AAkM+mRR39iduzz1//N2ejP5jweBlQBMINTmdbnlVi
+         kyIJj3Rudd03mBihjaUtqxr66IgyE2u7Ow1/QmzsZAGvhUl7BxYXIRMNnyyjcw6IsGmU
+         W0mw==
+X-Gm-Message-State: AHQUAuZ3Twkl4BxdUTNq5uQo3klZJYdfrCn5B5nsH/30tPo8GCIdmGwG
+        qSXxXaBWPuoGnlwH5NskR5K/cqKzeDRKhBUhj2cR4NyL
+X-Google-Smtp-Source: AHgI3IYXQVtTrvuNuAkuImkwT1S2gmQA4nkFFF3dCc9NQecB3HCxXfg6NDgB8+xnxKQYrfI2kgKWaO93DVGlujuBoPo=
+X-Received: by 2002:aed:3fd9:: with SMTP id w25mr28062686qth.352.1550687768786;
+ Wed, 20 Feb 2019 10:36:08 -0800 (PST)
 MIME-Version: 1.0
-References: <CAApa7v-F7Y_WR11V-3jc-R4Y1qSv5PPof6GWvJuF_XMeTcC2zw@mail.gmail.com>
- <CACsJy8AS5eNO6gACGtRZq=qdQGkQ3jmQPVivPG+=du9u9hKYcg@mail.gmail.com>
-In-Reply-To: <CACsJy8AS5eNO6gACGtRZq=qdQGkQ3jmQPVivPG+=du9u9hKYcg@mail.gmail.com>
-From:   Joe Enzminger <joe.enzminger@exactasystems.com>
-Date:   Wed, 20 Feb 2019 12:06:49 -0600
-Message-ID: <CAApa7v_noujdWcogGNJUS7ZJRzPRxK5PPv53tST-0JoEk8+9Mw@mail.gmail.com>
-Subject: Re: Feature Request git clone shallow-include
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <cover.1550508544.git.msuchanek@suse.de> <37df7fd81c3dee990bd7723f18c94713a0d842b6.1550679076.git.msuchanek@suse.de>
+ <CAPig+cQZNOWvaa5H2PKOs149KvRtEYRzrdLvzvFRDo4Qxaecaw@mail.gmail.com> <20190220181605.60bbc28d@kitsune.suse.cz>
+In-Reply-To: <20190220181605.60bbc28d@kitsune.suse.cz>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 20 Feb 2019 13:35:57 -0500
+Message-ID: <CAPig+cS4vZpyj4Cx=Q89v3xTrCG4WbtX8EhTfOT2RKytjV-HrA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] setup: don't fail if commondir reference is deleted.
+To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Marketa Calabkova <mcalabkova@suse.cz>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-That is correct.  What you suggest is actually what I tried (using
-sha-1 syntax).  For my purposes, excluding the tag's parent's but
-including the tag is sufficient, but if is fairly straightforward to
-extend support to the other use cases I'm sure someone would find is
-useful.
-
-Joe
-
-
-On Tue, Feb 19, 2019 at 7:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Wed, Feb 20, 2019 at 7:07 AM Joe Enzminger
-> <joe.enzminger@exactasystems.com> wrote:
+On Wed, Feb 20, 2019 at 12:16 PM Michal Suchánek <msuchanek@suse.de> wrote:
+> On Wed, 20 Feb 2019 11:55:46 -0500
+> Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > On Wed, Feb 20, 2019 at 11:17 AM Michal Suchanek <msuchanek@suse.de> wrote:
+> > > Apparently it can happen that stat() claims there is a commondir file but when
+> > > trying to open the file it is missing.
 > >
-> > Currently, git clone supports shallow-exclude=<tag-name>.  The client
-> > will clone up to, but not including, the commit with the tag.
+> > Under what circumstances?
+>
+> I would like to know that as well. The only command tested was worktree
+> add which should not remove the file. Nonetheless running many woktree
+> add commands in parallel can cause the file to go away for some of
+> them.
+
+You actually encountered this particular error message, correct? Was
+that before or after you fixed the race in builtin/worktree.c itself
+via patch 1/2? Did the reported 'errno' indicate that the file did not
+exist or was it some other error?
+
+> For many commands git calls itself recursively so there is
+> probably much more going on than the single function that creates the
+> worktree.
+
+"git worktree add" is careful to invoke other Git commands only after
+"commondir" exists, so it's not clear how this circumstance arises if
+the file is indeed missing by the time the other Git command is run.
+
+> > > Another even rarer issue is that the file might be zero size because another
+> > > process initializing a worktree opened the file but has not written is content
+> > > yet.
 > >
-> > It would be useful to have the ability to include the commit with the
-> > tag.  The suggestion would be to add a "shallow-include" options to
-> > clone to support this behavior.
+> > Based upon the explanation thus far, I'm having trouble understanding
+> > under what circumstances these race conditions can arise. Are you
+> > trying to invoke Git commands in a particular worktree even as the
+> > worktree itself is being created?
 >
-> So exclude the tag's parents and everything before, but keep the tag, correct?
+> It's explained in the following paragraph. If you have multiple
+> worktrees some *other* worktreee may be uninitialized.
+
+I understand that, but setup.c:get_common_dir_noenv() is concerned
+only with _this_ worktree -- the one in which the Git command is being
+run -- so it's not clear if or how some other partially-initialized
+worktree could have any impact. (And, I'm having trouble fathoming how
+it could, which is why I'm asking these questions).
+
+Is it possible that when you saw that error message, it actually arose
+from some code other than setup.c:get_common_dir_noenv()?
+
+> > > -       if (file_exists(path.buf)) {
+> > > -               if (strbuf_read_file(&data, path.buf, 0) <= 0)
+> > > +       ret = strbuf_read_file(&data, path.buf, 0);
+> > > +       if (ret <= 0) {
+> > > +               /*
+> > > +                * if file is missing or zero size (just being written)
+> > > +                * assume default, bail otherwise
+> > > +                */
+> > > +               if (ret && errno != ENOENT && errno != ENOTDIR)
+> > >                         die_errno(_("failed to read %s"), path.buf);
+> >
+> > It's not clear from the explanation given in the commit message if the
+> > new behavior is indeed sensible. The original intent of the code, as I
+> > understand it, is to validate "commondir", to ensure that it is not
+> > somehow corrupt (such as the user editing it and making it empty).
 >
-> I think if we support --shallow-exclude=<tag>^ then it should work the
-> way you want (if the tag is a normal merge you may need to add
-> --shallow-exclude=<tag>^2 as well). And you can do even fancier thing
-> like --shallow-exclude=<tag>~3 (i.e. exclude the  grand grand parent
-> of the tag, but keep the tag and grand parents). We will need to
-> restrict extended SHA-1 syntax to a safe subset of course.
+> How is it validated in the code below when it is non-zero size?
+
+Checking whether the file has content _is_ a form of validation, even
+if not extensive validation.
+
+> There is *no* validation whatsoever. Yet zero size is somehow totally
+> unacceptable and requires that git working in *any* worktree aborts if
+> commondir file in *any* worktree is zero size.
+
+As noted above, it's not clear from the commit message how this case
+can arise given that setup.c:get_common_dir_noenv() is presumably
+concerned with and only consults _this_ worktree, so I'm having
+trouble understanding how the state of other worktrees could impact
+it.
+
+> > Following this change, that particular validation no longer takes
+> > place. But, more importantly, what does it mean to fall back to
+> > "default" for this particular worktree? I'm having trouble
+> > understanding how the new behavior can be correct or desirable. (Am I
+> > missing something obvious?)
 >
-> > I have tried to use shallow-exclude with a follow on git fetch
-> > --deepen=1, but it always returns "fatal: error in object; unshallow
-> > <sha1>"
-> --
-> Duy
+> If the file can be missing altogether and it is not an error how it is
+> incorrect or undesirable to ignore zero size file?
+
+Because the _presence_ of that file indicates a linked worktree,
+whereas it's absence indicates the main worktree. If the file is
+present but empty, then that is an abnormal condition, i.e. some form
+of corruption.
+
+The difference is significant, and that's why I'm asking if the new
+behavior is correct or desirable. If you start interpreting this
+abnormal condition as a non-error, then get_common_dir_noenv() will be
+reporting that this is the main worktree when in fact it is (a somehow
+corrupted) linked worktree. Such false reporting could trigger
+undesirable and outright wrong behavior in callers.
