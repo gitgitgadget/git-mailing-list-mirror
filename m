@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC59C1F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 11:41:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C3F41F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 11:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727499AbfBTLlg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 06:41:36 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:41301 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727432AbfBTLlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 06:41:35 -0500
-Received: by mail-ed1-f65.google.com with SMTP id x7so19575618eds.8
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 03:41:33 -0800 (PST)
+        id S1726469AbfBTLle (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 06:41:34 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:44357 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727417AbfBTLld (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 06:41:33 -0500
+Received: by mail-ed1-f68.google.com with SMTP id b20so19540771edw.11
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 03:41:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0Rcb6ln1StKe8v7QuBEjzmyR+1dgsbFgspac//KqD00=;
-        b=PWjN4YsBT+bWgolfH42p5qKo34jcgWhrwjIPS1gch39DBBA0ZTR/6/Ncm+Jt9kxLj7
-         UzlwGbwY63kRGJrTKi1i4ebQmNsWUUtAsLzEQrDSAU7JDo92t+5diSqvdDe4XN3kn29c
-         VDBZWWYupbUDqy31Z/bNkf5fyJlG+k0hDbvsouNVcG2CQsYNUag5n9f1laSQzfIXpwDl
-         jEwS1A4CMGh3A+z9yGIqeoeeEiuJ7NPLAdNNnUfJZX44u0n/Jcv4A5GArQ8KukA0bgS0
-         1UOfbh1NVNd9iwqBhd004NR6nWYV5+9dWTWVgFmesxKNaY1Beiw4h4Mpd63vhzZdXpc7
-         lTnw==
+        bh=Tzuao/CTh05RT927rsqrYv5mmnpve7y3eFEkUR9P/Uc=;
+        b=YfX5sDywoc2Cabw4JCQ8leFqp/j2+MeEB3VLlj16j6Cfig9vurzTpCTra8KTUkZBCq
+         rp2j5KnLIrD4Lg8mYTC3I2NlhfXoaD+OlQQh5MvgPs+IGrsxUwY+d16GAtoe0QU1i3RV
+         jwbJNwJqYxZxLLStxJngDMrs0QQUUHLyUOo9DJ2bhFctoYbl4IZEclI9psnMdFcHzPvo
+         wvbqpKoW/oJkV6STpAji0U8IPTRbqAObLqb30o7w4NHB78d6VTz0Dh4XR8mvkRK46YK0
+         ybLa4l27WCrWgWAECrL3RQHaJPxAkLl+zFDl+RTF9ux23tZQfFFeyTj+d+gzbTYUOYVM
+         Elfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0Rcb6ln1StKe8v7QuBEjzmyR+1dgsbFgspac//KqD00=;
-        b=p3m4ImqvwF3Thls/So4iLmjel/qhJZQHsxmaWMsd29l3W9blXaA1TapNWsgYVIJbAb
-         TK11ZSDnppV5M0gqwYbHtcp9nREc8Dv0mGIuiijIckc5MxVO2yhGzh4rwZc6TygKR7SW
-         ql3CQp653dvLS1llqM/5LHY3e+ttQaiCTH9bSIKy9PraGkOTASMcL/4sdtMSajvrGmq/
-         cosk65WOOFRWDtMbCX4Qx0fjm9IM+lnCVdY25sP8LTrqR1ZUr+BL8KtFfDEer/Mcem60
-         kaozMfwNSRnK0a8IFukmP1ThFfAzkZ+UViZbXivdmkDk2UINY2x6c9ahHe4OcvnD+Ace
-         caJQ==
-X-Gm-Message-State: AHQUAub1qtvJ7bVj/QcHx207duWfIcLO1I1N8KUt5VHpxLfK99PXRfSi
-        1UNCXDovwzDAZZ4jrs7pPOtRmdN6
-X-Google-Smtp-Source: AHgI3IYUJeIfOcdK75YxNJiliLefwUH3YAp7466N9Mc3cvAofmOM/bNUjqqUAhScgYjQxIH6ZGrqfg==
-X-Received: by 2002:a50:98a6:: with SMTP id j35mr27090355edb.141.1550662892609;
-        Wed, 20 Feb 2019 03:41:32 -0800 (PST)
+        bh=Tzuao/CTh05RT927rsqrYv5mmnpve7y3eFEkUR9P/Uc=;
+        b=ED+ojaYs88t32VDlXZ/mxezgc441wKDD7d46goT1TFHWw8WPJPfoneD8aC2juPIrxa
+         st6DfR9dSeDA5NETYhpTpN7Rn/fFxQVLxH5hMhewWraVc21yrLWy6QGexMdGGAcv21bT
+         g0k7FBibhu6CjLGPE7go6unV51+iC7KRHukFuko1qe7gBB6XsqT2wTi9Do98N4lbwpvB
+         nEGdqXb5yOHFdX/y0/vEuGwZHSaHr3z8iPUbvaRBBrYJkuxktqVWi9Pys2ZFs1Byi+Cb
+         6fMUxhvSZL+/IsxuCg7Rj8AX6C70men0oXyXdZzQm5+rPBCAFQMHoC8lztZ08n489Rj/
+         JDIg==
+X-Gm-Message-State: AHQUAubFvIeNHpfmMjtLhQBQhdhS/beJT6O5VuIZ8UJcyzEhc5c3IKxY
+        bm/C/5KYOOv5y5JLLQAY1ttbMSjz
+X-Google-Smtp-Source: AHgI3IaE7t84NYo4gWZbrmnTT72g2bJy3ymTrDvDPxhYh7h9rsYTUPP0IC/XI96WcAlu7EgyKxCvoA==
+X-Received: by 2002:a17:906:bf2:: with SMTP id z18mr16846072ejg.52.1550662891094;
+        Wed, 20 Feb 2019 03:41:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y45sm3576639edd.33.2019.02.20.03.41.32
+        by smtp.gmail.com with ESMTPSA id f1sm4351904ejl.65.2019.02.20.03.41.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Feb 2019 03:41:32 -0800 (PST)
-Date:   Wed, 20 Feb 2019 03:41:32 -0800 (PST)
-X-Google-Original-Date: Wed, 20 Feb 2019 11:41:22 GMT
-Message-Id: <9a72aabe6cf1001d373c933086a79ace29b98806.1550662887.git.gitgitgadget@gmail.com>
+        Wed, 20 Feb 2019 03:41:30 -0800 (PST)
+Date:   Wed, 20 Feb 2019 03:41:30 -0800 (PST)
+X-Google-Original-Date: Wed, 20 Feb 2019 11:41:20 GMT
+Message-Id: <8790ffaa394603279927f9cd4c80f1d06bb5f976.1550662887.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.103.v5.git.gitgitgadget@gmail.com>
 References: <pull.103.v4.git.gitgitgadget@gmail.com>
         <pull.103.v5.git.gitgitgadget@gmail.com>
 From:   "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 05/10] add-interactive.c: implement status command
+Subject: [PATCH v5 03/10] add-interactive.c: implement list_modified
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,240 +73,238 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Slavica Djukic <slawica92@hotmail.com>
 
-Implement add --interactive's status command in add-interactive.c and
-use it in builtin add--helper.c.
-This is the first interactive add command implemented in C of those
-anticipated by the previous commit, which introduced
-the add--helper built-in.
+Implement list_modified from Perl, which will be used
+by most of the *_cmd functions, including status in the
+following commit.
 
-Implement additional helper functions dealing with struct choice and
-colors.
+It lists a numstat comparing changed files between a) the worktree and
+the index; b) the index and the HEAD.
 
-Use list_modified to get the data, and then pass it to list_and_choose
-to show it in appropriate format.
+To do so, we use run_diff_index() and run_diff_files() to get changed
+files, use the diffstat API on them to get the numstat and use a
+combination of a hashmap and qsort() to print the result in
+O(n) + O(n lg n) complexity.
 
-We're a bit lax with the command-line parsing, as the command is
-intended to be called only by one internal user: the add--interactive script.
+Add new file: add-interactive.c which will be used for implementing
+"application logic" of git add -i (alongside with add-interactive.h,
+added in later commit), whereas add--helper.c will be used mostly
+for parsing the command line.
 
 Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Original-patch-by: Daniel Ferreira <bnmvco@gmail.com>
 Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
 ---
- add-interactive.c     | 119 ++++++++++++++++++++++++++++++++++++++++++
- add-interactive.h     |   8 +++
- builtin/add--helper.c |  32 ++++++++++++
- 3 files changed, 159 insertions(+)
- create mode 100644 add-interactive.h
+ Makefile          |   1 +
+ add-interactive.c | 188 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 189 insertions(+)
+ create mode 100644 add-interactive.c
 
+diff --git a/Makefile b/Makefile
+index e64e202deb..1b3c06b633 100644
+--- a/Makefile
++++ b/Makefile
+@@ -847,6 +847,7 @@ LIB_H = $(shell $(FIND) . \
+ 	-name '*.h' -print)
+ 
+ LIB_OBJS += abspath.o
++LIB_OBJS += add-interactive.o
+ LIB_OBJS += advice.o
+ LIB_OBJS += alias.o
+ LIB_OBJS += alloc.o
 diff --git a/add-interactive.c b/add-interactive.c
-index 9a475a5d48..6bf8a90d9d 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -1,3 +1,4 @@
-+#include "add-interactive.h"
- #include "cache.h"
- #include "commit.h"
- #include "color.h"
-@@ -7,6 +8,8 @@
- 
- #define HEADER_INDENT "      "
- 
-+#define HEADER_MAXLEN 30
-+
- enum collection_phase {
- 	WORKTREE,
- 	INDEX
-@@ -29,6 +32,11 @@ struct collection_status {
- 	struct hashmap file_map;
- };
- 
-+struct command {
-+	char *name;
-+	void (*command_fn)(void);
-+};
-+
- struct list_and_choose_options {
- 	int column_n;
- 	unsigned singleton:1;
-@@ -84,6 +92,42 @@ static const char *get_color(enum color_add_i ix)
- 	return "";
- }
- 
-+static int parse_color_slot(const char *slot)
-+{
-+	if (!strcasecmp(slot, "prompt"))
-+		return COLOR_PROMPT;
-+	if (!strcasecmp(slot, "header"))
-+		return COLOR_HEADER;
-+	if (!strcasecmp(slot, "help"))
-+		return COLOR_HELP;
-+	if (!strcasecmp(slot, "error"))
-+		return COLOR_ERROR;
-+
-+	return -1;
-+}
-+
-+int add_i_config(const char *var,
-+		 const char *value, void *cbdata)
-+{
-+	const char *name;
-+
-+	if (!strcmp(var, "color.interactive")) {
-+		use_color = git_config_colorbool(var, value);
-+		return 0;
-+	}
-+
-+	if (skip_prefix(var, "color.interactive.", &name)) {
-+		int slot = parse_color_slot(name);
-+		if (slot < 0)
-+			return 0;
-+		if (!value)
-+			return config_error_nonbool(var);
-+		return color_parse(value, colors[slot]);
-+	}
-+
-+	return git_default_config(var, value, cbdata);
-+}
-+
- static int hash_cmp(const void *unused_cmp_data, const void *entry,
- 		    const void *entry_or_key, const void *keydata)
- {
-@@ -313,3 +357,78 @@ static struct choices *list_and_choose(struct choices *data,
- 		return NULL;
- 	}
- }
-+
-+static struct choice *make_choice(const char *name )
-+{
-+	struct choice *choice;
-+	FLEXPTR_ALLOC_STR(choice, name, name);
-+	return choice;
-+}
-+
-+static struct choice *add_choice(struct choices *choices, const char type,
-+				 struct file_stat *file, struct command *command)
-+{
-+	struct choice *choice;
-+	switch (type) {
-+		case 'f':
-+			choice = make_choice(file->name);
-+			choice->u.file.index.added = file->index.added;
-+			choice->u.file.index.deleted = file->index.deleted;
-+			choice->u.file.worktree.added = file->worktree.added;
-+			choice->u.file.worktree.deleted = file->worktree.deleted;
-+			break;
-+		case 'c':
-+			choice = make_choice(command->name);
-+			choice->u.command_fn = command->command_fn;
-+			break;
-+	}
-+	choice->type = type;
-+
-+	ALLOC_GROW(choices->choices, choices->nr + 1, choices->alloc);
-+	choices->choices[choices->nr++] = choice;
-+
-+	return choice;
-+}
-+
-+static void free_choices(struct choices *choices)
-+{
-+	int i;
-+
-+	for (i = 0; i < choices->nr; i++)
-+		free(choices->choices[i]);
-+	free(choices->choices);
-+	choices->choices = NULL;
-+	choices->nr = choices->alloc = 0;
-+}
-+
-+void add_i_status(void)
-+{
-+	struct collection_status *s;
-+	struct list_and_choose_options opts = { 0 };
-+	struct hashmap *map;
-+	struct hashmap_iter iter;
-+	struct choices choices = CHOICES_INIT;
-+	struct file_stat *entry;
-+	const char *modified_fmt = _("%12s %12s %s");
-+	const char type = 'f';
-+
-+	opts.header = xmalloc(sizeof(char) * (HEADER_MAXLEN + 1));
-+	snprintf(opts.header, HEADER_MAXLEN + 1, modified_fmt,
-+		 _("staged"), _("unstaged"), _("path"));
-+
-+	s = list_modified(the_repository, NULL);
-+	if (s == NULL)
-+		return;
-+
-+	map = &s->file_map;
-+	hashmap_iter_init(map, &iter);
-+	while ((entry = hashmap_iter_next(&iter))) {
-+		add_choice(&choices, type, entry, NULL);
-+	}
-+
-+	list_and_choose(&choices, &opts);
-+
-+	hashmap_free(&s->file_map, 1);
-+	free(s);
-+	free_choices(&choices);
-+}
-diff --git a/add-interactive.h b/add-interactive.h
 new file mode 100644
-index 0000000000..8ef3d2e82b
+index 0000000000..7d096207d4
 --- /dev/null
-+++ b/add-interactive.h
-@@ -0,0 +1,8 @@
-+#ifndef ADD_INTERACTIVE_H
-+#define ADD_INTERACTIVE_H
-+
-+int add_i_config(const char *var, const char *value, void *cbdata);
-+
-+void add_i_status(void);
-+
-+#endif
-diff --git a/builtin/add--helper.c b/builtin/add--helper.c
-index 6a97f0e191..464d2245f3 100644
---- a/builtin/add--helper.c
-+++ b/builtin/add--helper.c
-@@ -1,6 +1,38 @@
-+#include "add-interactive.h"
- #include "builtin.h"
++++ b/add-interactive.c
+@@ -0,0 +1,188 @@
++#include "cache.h"
++#include "commit.h"
++#include "color.h"
 +#include "config.h"
++#include "diffcore.h"
 +#include "revision.h"
 +
-+static const char * const builtin_add_helper_usage[] = {
-+	N_("git add-interactive--helper <command>"),
-+	NULL
++enum collection_phase {
++	WORKTREE,
++	INDEX
 +};
 +
-+enum cmd_mode {
-+	DEFAULT = 0,
-+	STATUS
++struct file_stat {
++	struct hashmap_entry ent;
++	struct {
++		uintmax_t added, deleted;
++	} index, worktree;
++	char name[FLEX_ARRAY];
 +};
- 
- int cmd_add__helper(int argc, const char **argv, const char *prefix)
- {
-+	enum cmd_mode mode = DEFAULT;
 +
-+	struct option options[] = {
-+		OPT_CMDMODE(0, "status", &mode,
-+			    N_("print status information with diffstat"), STATUS),
-+		OPT_END()
-+	};
++struct collection_status {
++	enum collection_phase phase;
 +
-+	git_config(add_i_config, NULL);
-+	argc = parse_options(argc, argv, NULL, options,
-+			     builtin_add_helper_usage,
-+			     PARSE_OPT_KEEP_ARGV0);
++	const char *reference;
++	struct pathspec pathspec;
 +
-+	if (mode == STATUS)
-+		add_i_status();
-+	else
-+		usage_with_options(builtin_add_helper_usage,
-+				   options);
++	struct hashmap file_map;
++};
 +
- 	return 0;
- }
++static int hash_cmp(const void *unused_cmp_data, const void *entry,
++		    const void *entry_or_key, const void *keydata)
++{
++	const struct file_stat *e1 = entry, *e2 = entry_or_key;
++	const char *name = keydata ? keydata : e2->name;
++
++	return strcmp(e1->name, name);
++}
++
++static int alphabetical_cmp(const void *a, const void *b)
++{
++	struct file_stat *f1 = *((struct file_stat **)a);
++	struct file_stat *f2 = *((struct file_stat **)b);
++
++	return strcmp(f1->name, f2->name);
++}
++
++static void collect_changes_cb(struct diff_queue_struct *q,
++			       struct diff_options *options,
++			       void *data)
++{
++	struct collection_status *s = data;
++	struct diffstat_t stat = { 0 };
++	int i;
++
++	if (!q->nr)
++		return;
++
++	compute_diffstat(options, &stat);
++
++	for (i = 0; i < stat.nr; i++) {
++		struct file_stat *entry;
++		const char *name = stat.files[i]->name;
++		unsigned int hash = strhash(name);
++
++		entry = hashmap_get_from_hash(&s->file_map, hash, name);
++		if (!entry) {
++			FLEX_ALLOC_STR(entry, name, name);
++			hashmap_entry_init(entry, hash);
++			hashmap_add(&s->file_map, entry);
++		}
++
++		if (s->phase == WORKTREE) {
++			entry->worktree.added = stat.files[i]->added;
++			entry->worktree.deleted = stat.files[i]->deleted;
++		} else if (s->phase == INDEX) {
++			entry->index.added = stat.files[i]->added;
++			entry->index.deleted = stat.files[i]->deleted;
++		}
++	}
++}
++
++static void collect_changes_worktree(struct collection_status *s)
++{
++	struct rev_info rev;
++
++	s->phase = WORKTREE;
++
++	init_revisions(&rev, NULL);
++	setup_revisions(0, NULL, &rev, NULL);
++
++	rev.max_count = 0;
++
++	rev.diffopt.flags.ignore_dirty_submodules = 1;
++	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
++	rev.diffopt.format_callback = collect_changes_cb;
++	rev.diffopt.format_callback_data = s;
++
++	run_diff_files(&rev, 0);
++}
++
++static void collect_changes_index(struct collection_status *s)
++{
++	struct rev_info rev;
++	struct setup_revision_opt opt = { 0 };
++
++	s->phase = INDEX;
++
++	init_revisions(&rev, NULL);
++	opt.def = s->reference;
++	setup_revisions(0, NULL, &rev, &opt);
++
++	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
++	rev.diffopt.format_callback = collect_changes_cb;
++	rev.diffopt.format_callback_data = s;
++
++	run_diff_index(&rev, 1);
++}
++
++static int is_inital_commit(void)
++{
++	struct object_id sha1;
++	if (get_oid("HEAD", &sha1))
++		return 1;
++	return 0;
++}
++
++static const char *get_diff_reference(void)
++{
++	if(is_inital_commit())
++		return empty_tree_oid_hex();
++	return "HEAD";
++}
++
++static void filter_files(const char *filter, struct hashmap *file_map,
++			 struct file_stat **files)
++{
++
++	for (int i = 0; i < hashmap_get_size(file_map); i++) {
++		struct file_stat *f = files[i];
++
++		if ((!(f->worktree.added || f->worktree.deleted)) &&
++		   (!strcmp(filter, "file-only")))
++				hashmap_remove(file_map, f, NULL);
++
++		if ((!(f->index.added || f->index.deleted)) &&
++		   (!strcmp(filter, "index-only")))
++				hashmap_remove(file_map, f, NULL);
++	}
++}
++
++static struct collection_status *list_modified(struct repository *r, const char *filter)
++{
++	int i = 0;
++	struct collection_status *s = xcalloc(1, sizeof(*s));
++	struct hashmap_iter iter;
++	struct file_stat **files;
++	struct file_stat *entry;
++
++	if (repo_read_index(r) < 0) {
++		printf("\n");
++		return NULL;
++	}
++
++	s->reference = get_diff_reference();
++	hashmap_init(&s->file_map, hash_cmp, NULL, 0);
++
++	collect_changes_worktree(s);
++	collect_changes_index(s);
++
++	if (hashmap_get_size(&s->file_map) < 1) {
++		printf("\n");
++		return NULL;
++	}
++
++	hashmap_iter_init(&s->file_map, &iter);
++
++	files = xcalloc(hashmap_get_size(&s->file_map), sizeof(struct file_stat *));
++	while ((entry = hashmap_iter_next(&iter))) {
++		files[i++] = entry;
++	}
++	QSORT(files, hashmap_get_size(&s->file_map), alphabetical_cmp);
++
++	if (filter)
++		filter_files(filter, &s->file_map, files);
++
++	free(files);
++	return s;
++}
 -- 
 gitgitgadget
 
