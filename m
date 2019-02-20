@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 453E41F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 11:41:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F1071F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 11:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727208AbfBTLlc (ORCPT <rfc822;e@80x24.org>);
+        id S1727429AbfBTLlc (ORCPT <rfc822;e@80x24.org>);
         Wed, 20 Feb 2019 06:41:32 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:39396 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726213AbfBTLlb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 06:41:31 -0500
-Received: by mail-ed1-f53.google.com with SMTP id p27so12033092edc.6
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 03:41:30 -0800 (PST)
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:33265 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726469AbfBTLlc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 06:41:32 -0500
+Received: by mail-ed1-f66.google.com with SMTP id c55so1846088edb.0
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 03:41:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+9eD0YtFGoh1BM612J1vEUvognradigDRhsqHPidzjE=;
-        b=aVHTw5TmSorYi9pqGD5oEpj2LmyKV7LAGNsXZN/pXKEVk2LiQAd32bfp7FHmEO5T4+
-         U8WHsVz2z+DJ8baf7ghID+XHfaQ7gWbImzgIW+alL2q7y3DhIrfo1cnpxx2WGBJfqmo9
-         QGvodx6MWvQ7e0uM6BntueAU3j/ncFNgnSSSq7xWRBsGB3x3+voFnoGZbAch6jxMt2Js
-         T+7PO8jXfYxDb60MeGBmWYVRKvDF50iorQghnWGCvQAvsX8hAkEB1pdqG8P5DvhPttmD
-         GQCeNi+qk3FFzv8c4Jz7OV3mL41Cm3jWVlhjGaDNDd0XJqwtos1nE49GlwdFley0GlFy
-         276g==
+        bh=IexQ6Me58SUukPm6bR+UsHfgWpM5fMfQ77DJoKkSyVo=;
+        b=atxDuhEipID8Uypcj9aasxMoMAfZEtEDqtl7FKobxI91rOLr6/w1iO9uMJMQSeFZXA
+         M57oP6bp4UPrYncC62VHGXNn9bIreJeRAfLtMRcbillYasAMy6+hrmfhI9rtgnMqzeDK
+         Q/37ygJ5ClJYCfawoaGh5VkJy8ijvgtmcMJfmCuFDGKj45Fa2ThYm3xcbBPbPYRGMe6a
+         dgpcJMyBLG/EUbWQhhVhmy9guNYUCoHFvwsbO3uTaoNKNVqymO5eeFC2U4Mdhv4xjwuY
+         UmFpNHSvYqWkQCOa6KKPzDyW+eQ0sorRbL2Gcwq44/k9vw85SNoF3HnbBZR9Ke36qhjR
+         dotQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+9eD0YtFGoh1BM612J1vEUvognradigDRhsqHPidzjE=;
-        b=NdH+JUQ9VQXHMwb4M5sQzBOLpWEBIz8WaqCzoH1MVSKaGkAyHGRVXxWgEH/dRpzCbQ
-         7JLFegxOFDBAEN8tfwfFrWxhKEQ6WNhlpeXH2Yn7RtI3qKY0u6Ozi7YW30hz/fGOZASf
-         HKIqE8ZE7dbG5R98ZDaPfkg6JiPA7AVS69a8Ij+wTOmUJSTI7i8//YzEfzLV0NLSHW7s
-         S97XPTN0BCYQb+tjwqo7B2cHKN2w35EwLXb+oi1JJeoJAchiImGajgpTGigPbsEDtLYR
-         y1X5Fk/ujAKnTA53H133J7zRWhNu0fOKPHzn9OartEc5j5mx3IEe5YmDr+Fhiurj1TII
-         4jgg==
-X-Gm-Message-State: AHQUAuaR9D+NYKGIjz5HptM1MeoquvGj8j3W6CF37y4ywafyzyjimLL7
-        SWUcJVd6Flg+MSNgczS6wkWuaLDm
-X-Google-Smtp-Source: AHgI3IbSa19MMOkvlZ6qtPNVCSGqx9EjamSRmblk3hUsBzjGsVttNJO/3brOC/OcYaK/73dxF1/gzg==
-X-Received: by 2002:aa7:db04:: with SMTP id t4mr10054599eds.173.1550662889440;
-        Wed, 20 Feb 2019 03:41:29 -0800 (PST)
+        bh=IexQ6Me58SUukPm6bR+UsHfgWpM5fMfQ77DJoKkSyVo=;
+        b=kwuLgfRsfQGmnr8vkM+ObGlSk/hJYmJCdr+ZF+5WKJeC0RH+Pz4hipSFUP7Ge/pC7l
+         3fapiYBH8vnLrtg6TL6yUBMWx3dz6xrficcymzveNYcLjSc2ZQZHqy8f/jbuk1IetUgf
+         VG6vLGHqEUQEEyayEbFkZ2e1Ch3EZHvwjttrBkqERnUnizK0rYD7oWlA3EeS6o/hwE3A
+         wT+nFI8NFuzgMDedOKu0Hv6U04d6d60uyRxUwyDM35NPFTlmdQk/UerxD6fmHjlGT8Uh
+         kfEkMbZFc7pdpRqJ2WGdJcrmNAnyT544TEz417lURibfp7Y9zMK6nlikwVzWMQW1Hm+Q
+         ebdg==
+X-Gm-Message-State: AHQUAuYSIpwGlfGNufcIsMQcx3ULoonX3o8/kzPMHENIK6Bzwwhqqr8w
+        DhXg73LhD4MeF0jaBhBDwTQYduuc
+X-Google-Smtp-Source: AHgI3IZLo++ddCKrGAkEj7t2O8k559APMSd0DY5YhSBb17UjseRUBf05x45C6jFrNQKVkDSEcFYrKw==
+X-Received: by 2002:aa7:cb52:: with SMTP id w18mr15965821edt.257.1550662890271;
+        Wed, 20 Feb 2019 03:41:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i1-v6sm4001553eja.43.2019.02.20.03.41.28
+        by smtp.gmail.com with ESMTPSA id y24sm5756151eds.35.2019.02.20.03.41.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Wed, 20 Feb 2019 03:41:29 -0800 (PST)
 Date:   Wed, 20 Feb 2019 03:41:29 -0800 (PST)
-X-Google-Original-Date: Wed, 20 Feb 2019 11:41:18 GMT
-Message-Id: <d839f0c082ece5298647f8dfbfd0566d59c58172.1550662887.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Wed, 20 Feb 2019 11:41:19 GMT
+Message-Id: <304c3863b123e08536412019e881967bf01dc4a4.1550662887.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.103.v5.git.gitgitgadget@gmail.com>
 References: <pull.103.v4.git.gitgitgadget@gmail.com>
         <pull.103.v5.git.gitgitgadget@gmail.com>
 From:   "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 01/10] diff: export diffstat interface
+Subject: [PATCH v5 02/10] add--helper: create builtin helper for interactive
+ add
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,120 +74,89 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Daniel Ferreira <bnmvco@gmail.com>
 
-Make the diffstat interface (namely, the diffstat_t struct and
-compute_diffstat) no longer be internal to diff.c and allow it to be used
-by other parts of git.
+Create a builtin helper for git-add--interactive, which at this point
+is not doing anything.
 
-This is helpful for code that may want to easily extract information
-from files using the diff machinery, while flushing it differently from
-how the show_* functions used by diff_flush() do it. One example is the
-builtin implementation of git-add--interactive's status.
+This is the first step in an effort to convert git-add--interactive.perl
+to a C builtin, in search for better portability, expressibility and
+performance (specially on non-POSIX systems like Windows).
+
+Additionally, an eventual complete port of git-add--interactive would
+remove the last "big" Git script to have Perl as a dependency, allowing
+most Git users to have a NOPERL build running without big losses.
 
 Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
 Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
 ---
- diff.c | 36 ++++++++++++++----------------------
- diff.h | 18 ++++++++++++++++++
- 2 files changed, 32 insertions(+), 22 deletions(-)
+ .gitignore            | 1 +
+ Makefile              | 1 +
+ builtin.h             | 1 +
+ builtin/add--helper.c | 6 ++++++
+ git.c                 | 1 +
+ 5 files changed, 10 insertions(+)
+ create mode 100644 builtin/add--helper.c
 
-diff --git a/diff.c b/diff.c
-index 5306c48652..e290a95f4b 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2489,22 +2489,6 @@ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
- 	}
- }
+diff --git a/.gitignore b/.gitignore
+index 7374587f9d..7b6d7681f9 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -16,6 +16,7 @@
+ /git
+ /git-add
+ /git-add--interactive
++/git-add--helper
+ /git-am
+ /git-annotate
+ /git-apply
+diff --git a/Makefile b/Makefile
+index f0b2299172..e64e202deb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1043,6 +1043,7 @@ LIB_OBJS += xdiff-interface.o
+ LIB_OBJS += zlib.o
  
--struct diffstat_t {
--	int nr;
--	int alloc;
--	struct diffstat_file {
--		char *from_name;
--		char *name;
--		char *print_name;
--		const char *comments;
--		unsigned is_unmerged:1;
--		unsigned is_binary:1;
--		unsigned is_renamed:1;
--		unsigned is_interesting:1;
--		uintmax_t added, deleted;
--	} **files;
--};
--
- static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
- 					  const char *name_a,
- 					  const char *name_b)
-@@ -6001,12 +5985,7 @@ void diff_flush(struct diff_options *options)
- 	    dirstat_by_line) {
- 		struct diffstat_t diffstat;
+ BUILTIN_OBJS += builtin/add.o
++BUILTIN_OBJS += builtin/add--helper.o
+ BUILTIN_OBJS += builtin/am.o
+ BUILTIN_OBJS += builtin/annotate.o
+ BUILTIN_OBJS += builtin/apply.o
+diff --git a/builtin.h b/builtin.h
+index 6538932e99..dd811ef7d5 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -128,6 +128,7 @@ extern void setup_auto_pager(const char *cmd, int def);
+ extern int is_builtin(const char *s);
  
--		memset(&diffstat, 0, sizeof(struct diffstat_t));
--		for (i = 0; i < q->nr; i++) {
--			struct diff_filepair *p = q->queue[i];
--			if (check_pair_status(p))
--				diff_flush_stat(p, options, &diffstat);
--		}
-+		compute_diffstat(options, &diffstat);
- 		if (output_format & DIFF_FORMAT_NUMSTAT)
- 			show_numstat(&diffstat, options);
- 		if (output_format & DIFF_FORMAT_DIFFSTAT)
-@@ -6306,6 +6285,19 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
- 	return ignored;
- }
- 
-+void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat)
+ extern int cmd_add(int argc, const char **argv, const char *prefix);
++extern int cmd_add__helper(int argc, const char **argv, const char *prefix);
+ extern int cmd_am(int argc, const char **argv, const char *prefix);
+ extern int cmd_annotate(int argc, const char **argv, const char *prefix);
+ extern int cmd_apply(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/add--helper.c b/builtin/add--helper.c
+new file mode 100644
+index 0000000000..6a97f0e191
+--- /dev/null
++++ b/builtin/add--helper.c
+@@ -0,0 +1,6 @@
++#include "builtin.h"
++
++int cmd_add__helper(int argc, const char **argv, const char *prefix)
 +{
-+	int i;
-+	struct diff_queue_struct *q = &diff_queued_diff;
-+
-+	memset(diffstat, 0, sizeof(struct diffstat_t));
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		if (check_pair_status(p))
-+			diff_flush_stat(p, options, diffstat);
-+	}
++	return 0;
 +}
-+
- void diff_addremove(struct diff_options *options,
- 		    int addremove, unsigned mode,
- 		    const struct object_id *oid,
-diff --git a/diff.h b/diff.h
-index b512d0477a..a4a986ad6e 100644
---- a/diff.h
-+++ b/diff.h
-@@ -240,6 +240,22 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
- void diff_emit_submodule_pipethrough(struct diff_options *o,
- 				     const char *line, int len);
+diff --git a/git.c b/git.c
+index 2dd588674f..cb42591f37 100644
+--- a/git.c
++++ b/git.c
+@@ -444,6 +444,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
  
-+struct diffstat_t {
-+	int nr;
-+	int alloc;
-+	struct diffstat_file {
-+		char *from_name;
-+		char *name;
-+		char *print_name;
-+		const char *comments;
-+		unsigned is_unmerged:1;
-+		unsigned is_binary:1;
-+		unsigned is_renamed:1;
-+		unsigned is_interesting:1;
-+		uintmax_t added, deleted;
-+	} **files;
-+};
-+
- enum color_diff {
- 	DIFF_RESET = 0,
- 	DIFF_CONTEXT = 1,
-@@ -328,6 +344,8 @@ void diff_change(struct diff_options *,
- 
- struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
- 
-+void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat);
-+
- #define DIFF_SETUP_REVERSE      	1
- #define DIFF_SETUP_USE_SIZE_CACHE	4
- 
+ static struct cmd_struct commands[] = {
+ 	{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
++	{ "add--helper", cmd_add__helper, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "am", cmd_am, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "annotate", cmd_annotate, RUN_SETUP | NO_PARSEOPT },
+ 	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
 -- 
 gitgitgadget
 
