@@ -2,109 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C727C1F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 03:52:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E50AF1F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 04:37:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728691AbfBTDwb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 22:52:31 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:52408 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726884AbfBTDwb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 22:52:31 -0500
-Received: by mail-it1-f195.google.com with SMTP id r11so12108074itc.2
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 19:52:30 -0800 (PST)
+        id S1728979AbfBTEhV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 23:37:21 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55935 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726952AbfBTEhV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 23:37:21 -0500
+Received: by mail-wm1-f65.google.com with SMTP id q187so5134562wme.5
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 20:37:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nezX/ohiwECinffb7er2EE9/vr7JXP7qCNdBNXfYyek=;
-        b=kgqckKZKjkMYZsNM7BBh5x81wX6RUHpgntsFCALiYjOLjyBIxXYGXYHj2xvmgGyR6K
-         vfwtsKiGVqIV/5Ds7Ekj+26UYV6w+lnSfsNP6qYxXzM80I4x1/FokCOkObms/fo3htjT
-         qSffVVdkHFKbI+BaweDMK4x1xQ6LS5oXd9y4AyAQCq3VLL+lze1HelrvoMSp41Bc+CIQ
-         yBcDmjBpNlIyLAJ31HsSaUgrN76LJsgC4Wbnr0DPxq68tvqZ0nocSMlcZuBx+eDGn45w
-         LdYn2qyNIVdZtONiV0v8V+mYtXqqJnT8zATxdJLQysCI56bDc+bfa1YOzA7vzbRMla9v
-         ITMA==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=YnicO3d8lelJtCnnMBMfvI1fLiA+ILy1xW10wcBUs+A=;
+        b=gZAcqzKFEG8vUj4FkLforAUcZTmrXrxY9yGdYHdnnRIGS/7Qmy/YwoZSquGMf79AXL
+         ZQ33PP4dIDy4kitmlCgcGdgMW0RH+oeV05bDNlTmNud4llHPNN/nLnHQacAz5o4yS3yJ
+         /emXyzWgLt42t5UvHSCq0nValpSvJeD6t+SwsTmmHxWU3g1zPlPOQnMUYOGJRvjwbIqj
+         7AV+zhk7XEsCKxwlJkhU/alXFx2VC7Yc9QawzqRedhjgETwBGO3NozgD0DWHUFIcAZoe
+         d99kHBRuzvuq5AFu7lnCq89LxNhs1QUkaFHghE1GoylokU9BKAQurXuG/ji+KXksM1yj
+         KjBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nezX/ohiwECinffb7er2EE9/vr7JXP7qCNdBNXfYyek=;
-        b=QXPZw9tMaSax9bRgusCyUAFnOZtHJm81e5AlThvngsTiHiZZ+VXeALTvff1a36Vn0s
-         ZOba9pghRERn34yh1w8RtkXywQD1Zy4tsnNLa/KFggFr0xkvFvkRc9sfiWzkJJJE4KCA
-         FCHNn+ko14lQ86ilDQ5WIfLdgizAK5ApcyO+Z4TaMSwQbvun6rj88aAOrJSYayTqQqBN
-         w546TRzxldf/y/cXI7fb1Mdr7huweg0Og8FjwMX+v4hMzhuiLb2kdast8gDuUzHebj69
-         F6JPI23ooQZUAtJ2utBkTUbl6vRAqQHkqsNArLttIfYHs3FWVWhuRhhjg1dbbkBNbS3d
-         oGwg==
-X-Gm-Message-State: AHQUAuZZ150gKViqFvvkBl/7kBYsvpptLRJkkNWDWW5zdWhWrvoAhxcS
-        7Cky2JVUlDRS6eEa/XF3uH9efHB6o8AFdR3sOUk=
-X-Google-Smtp-Source: AHgI3IbFQ4byKdF4U8TPqVEMTaf1C0k1Dlv9w1lAGnTONdjbJlz1Cw2J+pN7U0RcLyCdacS9sc75zbS49t3hZ6PqAL0=
-X-Received: by 2002:a6b:6b18:: with SMTP id g24mr16472806ioc.282.1550634750430;
- Tue, 19 Feb 2019 19:52:30 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version;
+        bh=YnicO3d8lelJtCnnMBMfvI1fLiA+ILy1xW10wcBUs+A=;
+        b=QoZpIPhJ+ov5Czk/CwE0vejEC6wrATKoh8M8MYsPUM0SuIiIsMrhuX/3Rg5DCbKuWq
+         54v8zXvs2uGAgzOg+e6hWQmp0tdihR216OQSHnTiy6pW61+IqStin40XtanjKFrHOrs4
+         FrC4kgCC48T4HVgikZ4WTQyX6/XuffxGDvjvCe5Xvcb2WGayVTmU/CC3TPPCLHIhcy0C
+         z8t8PNUx9DyE3yuzt91Kq2b7siqp6YUocL9vl94J36e0tpTenLRC6uj3TByUFIKH4Cbn
+         X5lZYFq3YQtsEAxA3EDBQfwFzdBsbzHSuT8VSWdu4ODaYj/+Jfntq3UwSycpC0ZrL32c
+         0xiA==
+X-Gm-Message-State: AHQUAub/gqj4bqypWlIuVaMMU8dvOBlMNvnhIh05Yt35ndtTNHNRPuNe
+        0x8iYAPFFwvse/uVVuS+jy0=
+X-Google-Smtp-Source: AHgI3IZG3Vzulvg69AGztk696GYOzhBV21J93vH+KisRPb/GJp4XXSMsFQw40CLQdfI5Gx6+FroG7Q==
+X-Received: by 2002:a05:600c:224c:: with SMTP id a12mr3579996wmm.103.1550637437695;
+        Tue, 19 Feb 2019 20:37:17 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n129sm1053285wmf.21.2019.02.19.20.37.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 19 Feb 2019 20:37:16 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
+        <szeder.dev@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v12 18/26] stash: convert push to builtin
+References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
+        <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com>
+        <20190208113059.GV10587@szeder.dev>
+        <20190210221712.GA9241@hank.intra.tgummerer.com>
+        <20190211011306.GA31807@szeder.dev>
+        <20190212231837.GI6085@hank.intra.tgummerer.com>
+        <20190219002336.GN1622@szeder.dev>
+        <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet>
+        <20190219235913.GM6085@hank.intra.tgummerer.com>
+Date:   Tue, 19 Feb 2019 20:37:15 -0800
+Message-ID: <xmqqmumrvzwk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-7-t.gummerer@gmail.com>
- <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
- <xmqqva40lps2.fsf@gitster-ct.c.googlers.com> <CABPp-BGQwtok1T3WmY3ndBG6RjbESSOgmbZxkWiN-avqfUjDVg@mail.gmail.com>
- <CACsJy8AxUxYCO7bzb98EVvO5DU62ukZQNrF-sEktrdR9m6tfvg@mail.gmail.com>
- <CACsJy8Bk=wbgzsE+Vo4w_u0E63PdUxxcvG-7e6Hq-8_jrmSErw@mail.gmail.com>
- <xmqq7eek3ax7.fsf@gitster-ct.c.googlers.com> <CACsJy8CHHT=9e9ti7VA4X4h3FrZcUKvLuzkL56mXLgjk4c5Qcg@mail.gmail.com>
- <xmqqlg2zz90l.fsf@gitster-ct.c.googlers.com> <CACsJy8CQhWeC3b6eGPePuRejfOx7c17X61-wqq5kOiRzYkRESw@mail.gmail.com>
- <xmqqwolv1tzw.fsf@gitster-ct.c.googlers.com> <xmqqo9771tnj.fsf@gitster-ct.c.googlers.com>
- <CABPp-BERuEtdjHhqaao+2=rsLXiPdkG4SbeULQ6=59hgWS5BLg@mail.gmail.com>
-In-Reply-To: <CABPp-BERuEtdjHhqaao+2=rsLXiPdkG4SbeULQ6=59hgWS5BLg@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 20 Feb 2019 10:52:03 +0700
-Message-ID: <CACsJy8BbBx4jrmUKsDOEGcQay5FuGfc0DzCUjkYKLaq21yimVQ@mail.gmail.com>
-Subject: Re: [PATCH 6/8] checkout: add --cached option
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 20, 2019 at 5:05 AM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Feb 19, 2019 at 11:10 AM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > > I am getting the impression that to save typing, you would want to
-> > > make "--index --worktree" the default (i.e. among the above, only
-> > > --no-index and --no-worktree need to be spelled explicitly), but
-> > > there is one glitch.  Updating from the index must be spelled
-> > > explicitly with "--no-index --worktree".
-> >
-> > And after getting reminded by Elijah, the default pair is
-> > <--no-index, --worktree>.
->
-> Why would you want --no-index or --no-worktree as flags?  That seems
-> to presume a default of modifying both the index and the working tree,
-> as these names imply undoing pieces of such a default.
->
-> I'd rather have a flag like --worktree which alone only modifies the
-> working tree and is presumed to be the default (but useful to be
-> explicit or as mentioned later), have a flag for applying the changes
-> to the index instead (--index?), and treat applying to both the
-> working tree and the index as unusual and require either both flags
-> (--worktree --index ?) or some special flag that likely has a longer
-> name (--worktree-and-index?).
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-I'd prefer separate options. I even gave --worktree and --index
-shortcuts so we could write "git restore -IW" if "git restore --index
---worktree" is used often (and I think it could be an alternative for
-"git reset --hard HEAD" if --force is also specified)
+>> Now, I seriously believe that we missed the best time to move
+>> ps/stash-in-c into `next` for cooking. The best time would have been just
+>> ...
+>> Anyway, that's my plan for now.
+>
+> I must say I am not very happy about this plan.  The series has been
+> marked as "Will merge to 'next'" in previous iterations, but then we
+> found some issues that prevented that.  However I thought we were fine
+> fixing those on top at this point, rather than starting with a new
+> iteration again.
 
-> I _think_ Duy does the latter reading over his manpage that he linked
-> to, but maybe I'm just reading my own biases into it.
+First before going into anything else, let me thank, and let me
+invite readers of this thread to join me thanking, Paul (Sebi) for
+sticking with this topic for this long.  It is above and beyond what
+GSoC calls for.
 
-Nah you read it right. The "examples" section also shows it.
--- 
-Duy
+Having said that.
+
+I too was somehow led to believe that the topic was in a good enough
+shape, with some room for clean-up by reordering the patches to make
+them into a more logical progression and squashing an existing and
+recently figured out "oops, that was wrong" fixes into the patches
+where the breakages originate.
+
+And that was where the "Will merge to" originally came from.  Thanks
+to tools like range-diff, a topic that goes through such reordering
+and squashing of patches should not have to "waste" a lot of review
+cycles out of those who have seen the previous round.
+
+It however is a totally different matter if the topic was so
+unsalvageable that it needs a total rewrite---that would need
+another round of careful review, of course, and it would be
+irresponsive to merge a topic in such a messy state to 'next'.  But
+my impression was that the topic was not _that_ bad, so Dscho's
+message and the plan were something that was totally unexpected to
+me, too..
+
+> I was always under the impression that once the problem that was
+> discovered here was fixed we'd advance the series to 'next' with the
+> patch that comes out of this discussion on top.  Whether it's in next
+> shortly before 2.21 or not doesn't seem to make much of a difference
+> to me, as this wasn't going to make the 2.21 release anyway.  My hope
+> was that we could get it into 'next' shortly after 2.21 is released to
+> get the series some further exposure (which may well turn up some
+> other issues that we are not aware of yet, but such is the life of
+> software).
+
+I was hoping similar, but also was hoping that people would use the
+time wisely while waiting for the next cycle to polish the topic with
+reordering and squashing, so that it can hit 'next' early once the
+tree opens.
+
+Anyway.
+
+I actually have a different issue with this topic, though.  It is
+wonderful to see a GSoC student's continued involvement in the
+project, but it is not healthy that we need so much work on top of
+what was marked "done" at the end of the GSoC period.  Especially
+the impression I am getting for the post GSoC work of this topic is
+not "we are already done converting to built-in during GSoC, and now
+we are extending the command", but "we ran out of time during GSoC;
+here is what we would have seen at the end of GSoC in an ideal
+world."
+
+I wonder if this is an unfortunate indication that our expectation
+is unrealistically high when we accept students' applications.
+Being overly ambitious is *not* students' fault, but those of us on
+the list, especially those who mentor, have far deeper experience
+with how our code and project is structured than any students do.
+We should be able to, and should not hesitate to, say things like
+"that's overly ambitious---for such and such, you'd need to even
+invent an internal API---can we reduce the scope and still produce a
+useful end result?"
+
+One suggestion I have is to have success criteria (e.g. "gets merged
+to 'master' before GSoC ends" [*1*]) clearly spelled out in the
+application.  Something like that would help managing the
+expectation and biting way too much for a summer, I'd hope.
+
+    Side note *1*.  Of course, depending on the alignment of the
+    stars ^W our ~10-12 week development cycle and the end of GSoC,
+    getting merged to 'master' might become impossible if it
+    coincides with the pre-release freeze period.  But we on the
+    list and the mentors know how the project works, and can help
+    stating a more realistic success criterion if the development
+    cycle and other quirks specific to this project gets in the way.
+
+Thanks.
