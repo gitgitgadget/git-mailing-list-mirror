@@ -2,88 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5640C1F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 16:35:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 408671F462
+	for <e@80x24.org>; Wed, 20 Feb 2019 16:50:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726344AbfBTQfH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 11:35:07 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:41348 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725877AbfBTQfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 11:35:07 -0500
-Received: by mail-qk1-f194.google.com with SMTP id y15so897599qki.8
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 08:35:06 -0800 (PST)
+        id S1726643AbfBTQuy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 11:50:54 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38797 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726012AbfBTQux (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 11:50:53 -0500
+Received: by mail-wm1-f68.google.com with SMTP id v26so7101037wmh.3
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 08:50:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=UCfSUSSd7hf6Kjc8e3ABbRoedir8/a3RPHBL8WjiNCY=;
+        b=P+FgtuNRYRr4eBaU0b8vU2T+tYwevWetjfG/dPNoFHfqQ9kSf9eHO+PYr93NBZsB95
+         d58z+rTc5JVFNb5Tif7r/c5w9m80p4zBw2jWgKsf3u+9LCd5vtHAHGnc8cpczv7pJZlo
+         5tbtFfkq1+jxCe1zu+MKGuI4jnAjUYlBJb0bNm1EMryR3oIIGeUuyowt7MnYxSxGQQsH
+         798aYhFWicc1AlcOyRxVVU/7N9OH2x9IVJukcQkv1Oy9OPwuALYzLS5amKpD/2Rt84xo
+         UizYAB8dYsWxDHx5/xFOfhPKVzW53grMXQ7YvIjXCdnkfLNPQ9HyqMdPctm2xUSLBELL
+         qpBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KNf3/qh0Ny9/ii+vu5P4+aW+az32boZ9SLTLs4TTn3E=;
-        b=PPAKUShPDepIbasseYlYtjxtQglg2kP5DFPTClIoaAjEc3+qMTniJYWrsfNNE1TRSs
-         9QfCAoJXtmNp3usk9J9Emu89wlwUYZhpUta7b6hoSm9ydW+XmB81mic2p4/mNO+x8i1F
-         0+LJDH0UBkI8RIFhqfdBpdXM8aybyUoNgJWCZ8asuLdjF7cmXgFFRo3shQu3OaI5zYuj
-         vuL9thWNLmJq6rhqJ41DD6+aa3XXxLx7iN0OrOxTPeXpHO1dpXssJdFQsRVCXrnRQkey
-         OZxTf4+TB6zYFLhlCktICCKrdk7biZhk+jPbm1kO0+32AGHx+CtrE1cg2umZQalAdDmE
-         ENfg==
-X-Gm-Message-State: AHQUAuY5lNcij//G3r4qhZrSLHv8EctT+er5RFC2FZeXkd59dYGtZxZm
-        Z4N3Qydqzg8U7pawe5r44aeIfSPHcmuMlbZKGQE=
-X-Google-Smtp-Source: AHgI3IaiWTSZQ6gVMhdvZrrTQahzYe2hFosyr8pW0b8U1vL3Dq8RU+vpWwlgFIciBrfwoTRCo8W3jjgGyB83uV+JIjI=
-X-Received: by 2002:a37:c313:: with SMTP id a19mr24422694qkj.220.1550680506000;
- Wed, 20 Feb 2019 08:35:06 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=UCfSUSSd7hf6Kjc8e3ABbRoedir8/a3RPHBL8WjiNCY=;
+        b=ozhz8TGFe0mP4/0zKbvpq/ozhbEzBrgHzLkhT0FYN13G3xtr9IuB6HrEJGby94R21h
+         wniY74dbov/jNT1bEB+7H7CZ+ZLVXNwdlxOOlAhiai143uBBLgcVQ0OIrX3V5C+8f44K
+         mlEFzc0ejZMdzEfJY2SXlMhMvzA+xwFWba3aa3MFsCVA7Mt5P81jO2zGtVFpzBhfzjXA
+         ht88H9sJPGJM9Spzxx+Yi6cfVuc7Oea2Vr8hcopDXgmmYKqdTNBy6ul5vOTiPYddmzXS
+         4FFNpx9qWF3fACEJT8fkxWi64aNSJP8EOtc8Ksw4suk1ldPGAAv1PHQ2Soowc7h+QnZ8
+         OjXQ==
+X-Gm-Message-State: AHQUAubh5erPa+69HUQROU8t031Mbl8AqCGMTqd9eDUEwx8bkXSNsJBm
+        JafskBlOs6ip7/iGtBIVY8c=
+X-Google-Smtp-Source: AHgI3IYkDKTrFjTEaWwxNQbwWnGhwzo9q16s4q9asXXhzaVLWj5u36ygNJuAmkcYFf0DXJcaPZ9eSQ==
+X-Received: by 2002:a1c:5fc5:: with SMTP id t188mr7125120wmb.86.1550681451500;
+        Wed, 20 Feb 2019 08:50:51 -0800 (PST)
+Received: from szeder.dev (x4db9774d.dyn.telefonica.de. [77.185.119.77])
+        by smtp.gmail.com with ESMTPSA id d15sm43283011wrw.36.2019.02.20.08.50.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Feb 2019 08:50:50 -0800 (PST)
+Date:   Wed, 20 Feb 2019 17:50:48 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, stolee@gmail.com, peff@peff.net
+Subject: Re: [PATCH v6 2/3] commit-graph: fix buffer read-overflow
+Message-ID: <20190220165048.GR1622@szeder.dev>
+References: <cover.1544048946.git.steadmon@google.com>
+ <cover.1547590928.git.steadmon@google.com>
+ <d7b137650f9203148c1fb998a3dd4af7a2105e62.1547590928.git.steadmon@google.com>
+ <87d0nm5x1d.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <cover.1550508544.git.msuchanek@suse.de> <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
-In-Reply-To: <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 20 Feb 2019 11:34:54 -0500
-Message-ID: <CAPig+cSdA8XRwCJQD3o6DZLwesBLRTys7OV6u0wy9Ve3Hp6XPA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] worktree: fix worktree add race.
-To:     Michal Suchanek <msuchanek@suse.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Marketa Calabkova <mcalabkova@suse.cz>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87d0nm5x1d.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 20, 2019 at 11:17 AM Michal Suchanek <msuchanek@suse.de> wrote:
-> Git runs a stat loop to find a worktree name that's available and then does
-> mkdir on the found name. Turn it to mkdir loop to avoid another invocation of
-> worktree add finding the same free name and creating the directory first.
->
-> Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-> ---
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> @@ -295,8 +295,12 @@ static int add_worktree(const char *path, const char *refname,
->         if (safe_create_leading_directories_const(sb_repo.buf))
->                 die_errno(_("could not create leading directories of '%s'"),
->                           sb_repo.buf);
-> -       while (!stat(sb_repo.buf, &st)) {
-> +       while (mkdir(sb_repo.buf, 0777)) {
->                 counter++;
-> +               if ((errno != EEXIST) || !counter /* overflow */)
-> +                       die_errno(_("could not create directory of '%s'"),
-> +                                 sb_repo.buf);
->                 strbuf_setlen(&sb_repo, len);
->                 strbuf_addf(&sb_repo, "%d", counter);
->         }
-> @@ -306,8 +310,6 @@ static int add_worktree(const char *path, const char *refname,
->         atexit(remove_junk);
->         sigchain_push_common(remove_junk_on_signal);
-> -       if (mkdir(sb_repo.buf, 0777))
-> -               die_errno(_("could not create directory of '%s'"), sb_repo.buf);
->         junk_git_dir = xstrdup(sb_repo.buf);
->         is_junk = 1;
+On Wed, Feb 20, 2019 at 03:55:58PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> > @@ -376,11 +377,15 @@ corrupt_graph_and_verify() {
+> >  	data="${2:-\0}"
+> >  	grepstr=$3
+> >  	cd "$TRASH_DIRECTORY/full" &&
+> > +	orig_size=$(wc -c < $objdir/info/commit-graph) &&
+> > +	zero_pos=${4:-${orig_size}} &&
+> >  	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+> >  	cp $objdir/info/commit-graph commit-graph-backup &&
+> >  	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
+> > +	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0 &&
+> > +	dd if=/dev/zero of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=$(($orig_size - $zero_pos)) &&
+> 
+> In the limited time I had to dig it starts failing at test 46, when
+> count=0 is given. dd on NetBSD exits with 127 when given count=0 it
+> seems.
 
-Did you audit this "junk" handling to verify that stuff which ought to
-be cleaned up still is cleaned up now that the mkdir() and die() have
-been moved above the atexit(remove_junk) invocation?
+So the first 'dd' is supposed to truncate the commit-graph file at
+$zero_pos.  I don't think we need 'count=0' for that: in the absence
+of the 'if=...' operand, 'dd' reads from standard input, which is
+redirected from /dev/null in our test scripts, i.e. there is nothing
+to read, and, consequently, there is nothing to write, either.
 
-I did just audit it, and I _think_ that it still works as expected,
-but it would be good to hear that someone else has come to the same
-conclusion.
+Though not strictly necessary, I would feel more comfortable if
+'if=/dev/null' would be explicitly specified, and even more so with a
+"# truncate at $zero_pos" comment above that command.
+
+As to the second 'dd', I think we should not run it at all when count
+would be zero, i.e. when $orig_size = $zero_pos, because in
+combination with 'if=/dev/zero' it's asking for trouble.  According to
+POSIX [1]:
+
+  count=n
+      Copy only n input blocks. If n is zero, it is unspecified
+      whether no blocks or all blocks are copied.
+
+Imagine a 'dd' that implements the second option: there are infinite
+blocks in /dev/zero to copy!  OTOH, if an implementation chooses the
+first option (e.g. the usual Linux 'dd' from coreutils), then both of
+these 'dd' invocations will leave the commit-graph file as-is, so it
+doesn't matter whether we run them or not.
+
+
+[1] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/dd.html
+
