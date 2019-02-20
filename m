@@ -2,120 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 408671F462
-	for <e@80x24.org>; Wed, 20 Feb 2019 16:50:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D56CE1F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 16:55:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726643AbfBTQuy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 11:50:54 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38797 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726012AbfBTQux (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 11:50:53 -0500
-Received: by mail-wm1-f68.google.com with SMTP id v26so7101037wmh.3
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 08:50:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=UCfSUSSd7hf6Kjc8e3ABbRoedir8/a3RPHBL8WjiNCY=;
-        b=P+FgtuNRYRr4eBaU0b8vU2T+tYwevWetjfG/dPNoFHfqQ9kSf9eHO+PYr93NBZsB95
-         d58z+rTc5JVFNb5Tif7r/c5w9m80p4zBw2jWgKsf3u+9LCd5vtHAHGnc8cpczv7pJZlo
-         5tbtFfkq1+jxCe1zu+MKGuI4jnAjUYlBJb0bNm1EMryR3oIIGeUuyowt7MnYxSxGQQsH
-         798aYhFWicc1AlcOyRxVVU/7N9OH2x9IVJukcQkv1Oy9OPwuALYzLS5amKpD/2Rt84xo
-         UizYAB8dYsWxDHx5/xFOfhPKVzW53grMXQ7YvIjXCdnkfLNPQ9HyqMdPctm2xUSLBELL
-         qpBg==
+        id S1726428AbfBTQz6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 11:55:58 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:40410 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725885AbfBTQz6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 11:55:58 -0500
+Received: by mail-qt1-f195.google.com with SMTP id j36so27946026qta.7
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 08:55:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=UCfSUSSd7hf6Kjc8e3ABbRoedir8/a3RPHBL8WjiNCY=;
-        b=ozhz8TGFe0mP4/0zKbvpq/ozhbEzBrgHzLkhT0FYN13G3xtr9IuB6HrEJGby94R21h
-         wniY74dbov/jNT1bEB+7H7CZ+ZLVXNwdlxOOlAhiai143uBBLgcVQ0OIrX3V5C+8f44K
-         mlEFzc0ejZMdzEfJY2SXlMhMvzA+xwFWba3aa3MFsCVA7Mt5P81jO2zGtVFpzBhfzjXA
-         ht88H9sJPGJM9Spzxx+Yi6cfVuc7Oea2Vr8hcopDXgmmYKqdTNBy6ul5vOTiPYddmzXS
-         4FFNpx9qWF3fACEJT8fkxWi64aNSJP8EOtc8Ksw4suk1ldPGAAv1PHQ2Soowc7h+QnZ8
-         OjXQ==
-X-Gm-Message-State: AHQUAubh5erPa+69HUQROU8t031Mbl8AqCGMTqd9eDUEwx8bkXSNsJBm
-        JafskBlOs6ip7/iGtBIVY8c=
-X-Google-Smtp-Source: AHgI3IYkDKTrFjTEaWwxNQbwWnGhwzo9q16s4q9asXXhzaVLWj5u36ygNJuAmkcYFf0DXJcaPZ9eSQ==
-X-Received: by 2002:a1c:5fc5:: with SMTP id t188mr7125120wmb.86.1550681451500;
-        Wed, 20 Feb 2019 08:50:51 -0800 (PST)
-Received: from szeder.dev (x4db9774d.dyn.telefonica.de. [77.185.119.77])
-        by smtp.gmail.com with ESMTPSA id d15sm43283011wrw.36.2019.02.20.08.50.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Feb 2019 08:50:50 -0800 (PST)
-Date:   Wed, 20 Feb 2019 17:50:48 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, stolee@gmail.com, peff@peff.net
-Subject: Re: [PATCH v6 2/3] commit-graph: fix buffer read-overflow
-Message-ID: <20190220165048.GR1622@szeder.dev>
-References: <cover.1544048946.git.steadmon@google.com>
- <cover.1547590928.git.steadmon@google.com>
- <d7b137650f9203148c1fb998a3dd4af7a2105e62.1547590928.git.steadmon@google.com>
- <87d0nm5x1d.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BD7/M9NEUtZqwvCOvwPE+BuuYvr8qp+yBc/ZUvEsois=;
+        b=cfH0ow0ZKDURqr2ZRt1sEm54/d9dn4vVj7rOlmWRguZ1WAlc+bKkK4/MypW+3dPEcL
+         lphgB4lEXFg+hoqWqsqJznzlZ71hIAdgBHYx8R+HKNosuBCMIovO5D3XZ0V25ub2QxqS
+         1QXVuP0TWbee/+qlpIhpkk8mcYIG3TgFH6lu84jrjt3l/DtTcG8R+H1IYAO7GCiMIToH
+         PT5TW7JGD7SuyrUl+lP5N/diSS89gqykrMIyG1dFDXgQy/OBDCA+JAABOU9zxY0DY/fJ
+         R9B0LFVkStvy1JgJmV48AQres41BxIOBKngXfoUPDJ5fwjln8ahFASgNnBoU1sPico8c
+         8Rnw==
+X-Gm-Message-State: AHQUAuZc/gT8SeWaq7fMWXHHxKW0oEp26NWcUg/QY+yGz792QY97LZGT
+        lAh+C72VW0OQRw1fV+5TpS/zZmEG9PL0WfFstvM=
+X-Google-Smtp-Source: AHgI3IZyUkTFdV4dlta8ksbsxLHxDjeQbk1popgkI1embGAqFKVjIoy7vIy0F47PD/ZkrCVkW9gPOXEhQSmNxa+M97U=
+X-Received: by 2002:a0c:87b1:: with SMTP id 46mr16022480qvj.203.1550681757407;
+ Wed, 20 Feb 2019 08:55:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87d0nm5x1d.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <cover.1550508544.git.msuchanek@suse.de> <37df7fd81c3dee990bd7723f18c94713a0d842b6.1550679076.git.msuchanek@suse.de>
+In-Reply-To: <37df7fd81c3dee990bd7723f18c94713a0d842b6.1550679076.git.msuchanek@suse.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 20 Feb 2019 11:55:46 -0500
+Message-ID: <CAPig+cQZNOWvaa5H2PKOs149KvRtEYRzrdLvzvFRDo4Qxaecaw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] setup: don't fail if commondir reference is deleted.
+To:     Michal Suchanek <msuchanek@suse.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Marketa Calabkova <mcalabkova@suse.cz>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 20, 2019 at 03:55:58PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > @@ -376,11 +377,15 @@ corrupt_graph_and_verify() {
-> >  	data="${2:-\0}"
-> >  	grepstr=$3
-> >  	cd "$TRASH_DIRECTORY/full" &&
-> > +	orig_size=$(wc -c < $objdir/info/commit-graph) &&
-> > +	zero_pos=${4:-${orig_size}} &&
-> >  	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
-> >  	cp $objdir/info/commit-graph commit-graph-backup &&
-> >  	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
-> > +	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0 &&
-> > +	dd if=/dev/zero of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=$(($orig_size - $zero_pos)) &&
-> 
-> In the limited time I had to dig it starts failing at test 46, when
-> count=0 is given. dd on NetBSD exits with 127 when given count=0 it
-> seems.
+On Wed, Feb 20, 2019 at 11:17 AM Michal Suchanek <msuchanek@suse.de> wrote:
+> Apparently it can happen that stat() claims there is a commondir file but when
+> trying to open the file it is missing.
 
-So the first 'dd' is supposed to truncate the commit-graph file at
-$zero_pos.  I don't think we need 'count=0' for that: in the absence
-of the 'if=...' operand, 'dd' reads from standard input, which is
-redirected from /dev/null in our test scripts, i.e. there is nothing
-to read, and, consequently, there is nothing to write, either.
+Under what circumstances?
 
-Though not strictly necessary, I would feel more comfortable if
-'if=/dev/null' would be explicitly specified, and even more so with a
-"# truncate at $zero_pos" comment above that command.
+> Another even rarer issue is that the file might be zero size because another
+> process initializing a worktree opened the file but has not written is content
+> yet.
 
-As to the second 'dd', I think we should not run it at all when count
-would be zero, i.e. when $orig_size = $zero_pos, because in
-combination with 'if=/dev/zero' it's asking for trouble.  According to
-POSIX [1]:
+Based upon the explanation thus far, I'm having trouble understanding
+under what circumstances these race conditions can arise. Are you
+trying to invoke Git commands in a particular worktree even as the
+worktree itself is being created?
 
-  count=n
-      Copy only n input blocks. If n is zero, it is unspecified
-      whether no blocks or all blocks are copied.
+Without this information being spelled out clearly, it is going to be
+difficult for someone in the future to reason about why the code is
+the way it is following this change.
 
-Imagine a 'dd' that implements the second option: there are infinite
-blocks in /dev/zero to copy!  OTOH, if an implementation chooses the
-first option (e.g. the usual Linux 'dd' from coreutils), then both of
-these 'dd' invocations will leave the commit-graph file as-is, so it
-doesn't matter whether we run them or not.
+> When any of this happnes git aborts failing to perform perfectly valid
+> command because unrelated worktree is not yet fully initialized.
 
+s/happnes/happens/
 
-[1] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/dd.html
+> Rather than testing if the file exists before reading it handle ENOENT
+> and ENOTDIR.
 
+One more comment below...
+
+> Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+> ---
+> diff --git a/setup.c b/setup.c
+> @@ -270,12 +270,20 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
+>  {
+>         strbuf_addf(&path, "%s/commondir", gitdir);
+> -       if (file_exists(path.buf)) {
+> -               if (strbuf_read_file(&data, path.buf, 0) <= 0)
+> +       ret = strbuf_read_file(&data, path.buf, 0);
+> +       if (ret <= 0) {
+> +               /*
+> +                * if file is missing or zero size (just being written)
+> +                * assume default, bail otherwise
+> +                */
+> +               if (ret && errno != ENOENT && errno != ENOTDIR)
+>                         die_errno(_("failed to read %s"), path.buf);
+
+It's not clear from the explanation given in the commit message if the
+new behavior is indeed sensible. The original intent of the code, as I
+understand it, is to validate "commondir", to ensure that it is not
+somehow corrupt (such as the user editing it and making it empty).
+Following this change, that particular validation no longer takes
+place. But, more importantly, what does it mean to fall back to
+"default" for this particular worktree? I'm having trouble
+understanding how the new behavior can be correct or desirable. (Am I
+missing something obvious?)
+
+> +               strbuf_addstr(sb, gitdir);
+> +               ret = 0;
+> +       } else {
