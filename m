@@ -2,112 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A26771F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 21:09:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FC401F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 21:10:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726671AbfBTVI7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 16:08:59 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36909 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726613AbfBTVI7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 16:08:59 -0500
-Received: by mail-wr1-f66.google.com with SMTP id c8so27633551wrs.4
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 13:08:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=dRXxPFmiIHjZelKQzzmk+a170yFVxkQ/pTfzJMGy7gg=;
-        b=B8u7Q1qSzmadHeSI8NAX3A3ISAWyMnQDwMmiD7i2odrmI8wTyxOsaTwe0Ab/WEMLQb
-         WZfIScg7+4o4EJ4tmZekDY6VRkgkusc3R4ALelG9jUYPSvcg71XCTyTodtjAnV20P5d3
-         RRVRDOGbG9SuWzA+5yoE9RGTDcfmrNMRih7dzNlynY78hpwqv4rK0FWGSS67xa9Dic2g
-         W6trjyueU2UYfGz27TquBgzmCzG/IVQFt3PQXBJ+WXw++77fi8TWdxIPhw+CwF3DCXLc
-         qCw5pgB9oarYG9hHjtHKdJlTDmDyQgxCQjj7aJP1jwTS2POn2r7u34JGuWmZNgcp8xXz
-         pVvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=dRXxPFmiIHjZelKQzzmk+a170yFVxkQ/pTfzJMGy7gg=;
-        b=uJSZoFEsQOzu/tVS/0PmjHM7aooQDs062vaqmN+NUCMaNI9O4sDSNCiWUUBQMxax7W
-         KMksluu7EBvRjZig+CZJUuXqTEYtwMFkeX1nFsoVATaBPzViipmvu2gIJgETtswi5vcK
-         rQ8SX2w7rhTKkyctk8ZfDDq5gbPm2CX8g7wGfPWwXXlpcK2Eq4JesKwVKgHn0KJSuoE0
-         5fMyciZFn5Ulz566dk23TxUFWW54oG/TUChKQd1DmhgvY9+WmLixE5P58h9lN1UQJgEz
-         h+YwSp+O0v9xKMZ0DczJ8mAG9bqEceNwv6FmyvIQoKakEsE2gtdAS3iTJYf4tH2E94iP
-         csfw==
-X-Gm-Message-State: AHQUAuYapeydrVVDOoSR56oJ0RDNseBj1VXtb+RprjfvBCN11lF0OLEp
-        2MGJq8gAI5dtTQg7Ss0is68H4gAF
-X-Google-Smtp-Source: AHgI3IZ7Zb+jET9/oGle6TKi/iiZ8IEk61IuJkG+M+tj7/BmKgkuGPofvX/706/AjCfgTTGRi+StbQ==
-X-Received: by 2002:adf:9123:: with SMTP id j32mr27422564wrj.122.1550696937153;
-        Wed, 20 Feb 2019 13:08:57 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a184sm7459710wmh.37.2019.02.20.13.08.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Feb 2019 13:08:56 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 10/21] diff-parseopt: convert --stat*
-References: <20190207103326.10693-1-pclouds@gmail.com>
-        <20190216113655.25728-1-pclouds@gmail.com>
-        <20190216113655.25728-11-pclouds@gmail.com>
-Date:   Wed, 20 Feb 2019 13:08:56 -0800
-In-Reply-To: <20190216113655.25728-11-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Sat, 16 Feb 2019 18:36:44 +0700")
-Message-ID: <xmqq1s42w4k7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726227AbfBTVKX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 16:10:23 -0500
+Received: from mout.gmx.net ([212.227.15.19]:35165 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725798AbfBTVKX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 16:10:23 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0y47-1hAwic2zzb-00v7Bx; Wed, 20
+ Feb 2019 22:10:17 +0100
+Date:   Wed, 20 Feb 2019 22:10:01 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v12 18/26] stash: convert push to builtin
+In-Reply-To: <xmqqmumrvzwk.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1902202205470.41@tvgsbejvaqbjf.bet>
+References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com> <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com> <20190208113059.GV10587@szeder.dev> <20190210221712.GA9241@hank.intra.tgummerer.com>
+ <20190211011306.GA31807@szeder.dev> <20190212231837.GI6085@hank.intra.tgummerer.com> <20190219002336.GN1622@szeder.dev> <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> <20190219235913.GM6085@hank.intra.tgummerer.com>
+ <xmqqmumrvzwk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7nJpQj5jLLHkYXWbV49fpaFuapFcMWJkGU5OGn72V3upl/tGcdj
+ 00OVnq87155oXEFykhCtg3xL+yYWJWOdHrqYw82LDrnJ7/NeX/C1eUlz7jow6KGF9XVheVD
+ g3DuWRjF89Q5UhZwx35ImPRZzwhXpYUaxRa0Xpmf5HWyABxOdj1v8HdnsEuMgRqCNjq93rG
+ rCRlx32exz9a0SAZdTRMw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iJhdZ/SbIXY=:gWrSz6pKpd3VaEI40m/HsC
+ TcLFHWA1lb7tYcWBdbhDHAWzbrE68ezCzocx88wTf17pnywZNukP2Z0vRo4g62UmBzYs5IxE5
+ JsQ1LXgCUx1mO9xGSEW6Qa6d5IEQUgLzPCRMDslmO1Lm8yn9x4ZvOa6C57TP7QQjX7j0dOxOm
+ D5lD5SIqwfQ2VIn6uyMQMtN9cfHkPBYmPolr9oA/0oZ2qZWX2/PljpK1swpvqAJehyabdbNZG
+ laeRu8UQHLc+56ObRl8/vxV1189pMb3at8JrSyZ0jxduVXOMST9LueYM9qyJxOngINLfVtc0L
+ 7yAdle/zH/EPsDQIlFz0ybEPkLjkRD2bPTtroZvUoF+GkR1kwiMpP5gyjeGXGuWczTk4DDZ9F
+ AfBSN9A5161+1JfAoNtyx7+Xf+A+n/7+1TnVmw7Yr4GHameVxzzlpF3wCA+MItNR8sQFisvNt
+ 60ljkHLVpO1fRDe8t/tuTRAqV+bMR3/UqOgxrem9fIGpicjKIYA9kXrdJYSroJeETs9YD/yIj
+ uq/NUkETrmdXbUHodWdV/JiZ1sDYLxNBPrtc/XqsFUCXf1KPTFkuV6ToU5nh6q2Qpi2clNE7j
+ iF+PF+3gDhl262xGU1TFozkOdPPmnd5AUIJbmHrRRws1CUuTqAbQIyev+8ArBOHc26GUX5VlB
+ 4c+GvgudktWc66T+Mnwta9j9Sdn+PhiXMZnJhSUaG8UrM0ZQtqhJJmoTsesey7lIK1HRdB36/
+ OF6M4hv/62DS3WP8V3SaQloKzyOLWTBtyMsM3igzwoJX1oDmbxZPw8tYUziPuV3rhS7JIsCUt
+ 7oMMdNLJDjoCm4WbQPIcawnNDrhn8JVQKTDJUs4+5s/9kXPm5gbv0mQATEG81pctODtCRry0N
+ v8Be5yfxIBLOu2xvjnYpsFy/VGaAU24UfVoUoZ/cCapgmJThlGMaCLNpt/bjxsrrGvxBWzouv
+ 4IUmnDFhMAQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Hi Junio,
 
-> -static int stat_opt(struct diff_options *options, const char **av)
-> +static int diff_opt_stat(const struct option *opt, const char *value, int unset)
->  {
-> -	const char *arg = av[0];
-> -	char *end;
-> +	struct diff_options *options = opt->value;
-> ...
-> -	switch (*arg) {
-> -	case '-':
-> -		if (skip_prefix(arg, "-width", &arg)) {
-> -			if (*arg == '=')
-> -				width = strtoul(arg + 1, &end, 10);
-> -			else if (!*arg && !av[1])
-> -				die_want_option("--stat-width");
-> -			else if (!*arg) {
-> -				width = strtoul(av[1], &end, 10);
-> -				argcount = 2;
-> -			}
-> ...
-> +	if (!strcmp(opt->long_name, "stat")) {
-> +		if (value) {
-> +			width = strtoul(value, &end, 10);
-> +			if (*end == ',')
-> +				name_width = strtoul(end+1, &end, 10);
-> +			if (*end == ',')
-> +				count = strtoul(end+1, &end, 10);
-> +			if (*end)
-> +				return error(_("invalid --stat value: %s"), value);
->  		}
+On Tue, 19 Feb 2019, Junio C Hamano wrote:
 
-It took me a while to recall and figure out what the original is
-doing, primarily because the code was designed to handle both
-"-$option $arg" and "--$option=$arg".  But thanks to the switch to
-parse-options API, this helper no longer has to worry about that,
-which is a very big plus.  It only needs to parse what is in value.
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> >> Now, I seriously believe that we missed the best time to move
+> >> ps/stash-in-c into `next` for cooking. The best time would have been just
+> >> ...
+> >> Anyway, that's my plan for now.
+> >
+> > I must say I am not very happy about this plan.  The series has been
+> > marked as "Will merge to 'next'" in previous iterations, but then we
+> > found some issues that prevented that.  However I thought we were fine
+> > fixing those on top at this point, rather than starting with a new
+> > iteration again.
+> 
+> First before going into anything else, let me thank, and let me
+> invite readers of this thread to join me thanking, Paul (Sebi) for
+> sticking with this topic for this long.  It is above and beyond what
+> GSoC calls for.
 
-Very nice.
+Indeed. He put in quite a few dozen hours of work *after* GSoC.
+
+> Having said that.
+> 
+> I too was somehow led to believe that the topic was in a good enough
+> shape, with some room for clean-up by reordering the patches to make
+> them into a more logical progression and squashing an existing and
+> recently figured out "oops, that was wrong" fixes into the patches
+> where the breakages originate.
+> 
+> And that was where the "Will merge to" originally came from.  Thanks
+> to tools like range-diff, a topic that goes through such reordering
+> and squashing of patches should not have to "waste" a lot of review
+> cycles out of those who have seen the previous round.
+> 
+> It however is a totally different matter if the topic was so
+> unsalvageable that it needs a total rewrite---that would need
+> another round of careful review, of course, and it would be
+> irresponsive to merge a topic in such a messy state to 'next'.  But
+> my impression was that the topic was not _that_ bad, so Dscho's
+> message and the plan were something that was totally unexpected to
+> me, too..
+
+My throwing hands into the air and giving up on advancing it in the
+current form to `next` was based on its rotting away in `pu`...
+
+If it had been in `next` while Hannes, others and I found and fixed bugs,
+then it would truly be cooking, but in `pu`? It kind of stopped pretty
+much all the development around it.
+
+And that's the only reason why I came up with that plan (that will require
+at least 50 hours from my side, I know that): because I thought that your
+not advancing the patches to `next` meant that this extra work was exactly
+what you were expecting.
+
+> > I was always under the impression that once the problem that was
+> > discovered here was fixed we'd advance the series to 'next' with the
+> > patch that comes out of this discussion on top.  Whether it's in next
+> > shortly before 2.21 or not doesn't seem to make much of a difference
+> > to me, as this wasn't going to make the 2.21 release anyway.  My hope
+> > was that we could get it into 'next' shortly after 2.21 is released to
+> > get the series some further exposure (which may well turn up some
+> > other issues that we are not aware of yet, but such is the life of
+> > software).
+> 
+> I was hoping similar, but also was hoping that people would use the
+> time wisely while waiting for the next cycle to polish the topic with
+> reordering and squashing, so that it can hit 'next' early once the
+> tree opens.
+> 
+> Anyway.
+> 
+> I actually have a different issue with this topic, though.  It is
+> wonderful to see a GSoC student's continued involvement in the
+> project, but it is not healthy that we need so much work on top of
+> what was marked "done" at the end of the GSoC period.  Especially
+> the impression I am getting for the post GSoC work of this topic is
+> not "we are already done converting to built-in during GSoC, and now
+> we are extending the command", but "we ran out of time during GSoC;
+> here is what we would have seen at the end of GSoC in an ideal
+> world."
+> 
+> I wonder if this is an unfortunate indication that our expectation
+> is unrealistically high when we accept students' applications.
+
+Yes, you are right. This is on me. Guilty as charged.
+
+And I don't mean this flippantly. I thought long and hard about this, and
+I've come to the conclusion that I will not offer to mentor this round of
+GSoC as a consequence.
+
+Ciao,
+Dscho
+
+> Being overly ambitious is *not* students' fault, but those of us on
+> the list, especially those who mentor, have far deeper experience
+> with how our code and project is structured than any students do.
+> We should be able to, and should not hesitate to, say things like
+> "that's overly ambitious---for such and such, you'd need to even
+> invent an internal API---can we reduce the scope and still produce a
+> useful end result?"
+> 
+> One suggestion I have is to have success criteria (e.g. "gets merged
+> to 'master' before GSoC ends" [*1*]) clearly spelled out in the
+> application.  Something like that would help managing the
+> expectation and biting way too much for a summer, I'd hope.
+> 
+>     Side note *1*.  Of course, depending on the alignment of the
+>     stars ^W our ~10-12 week development cycle and the end of GSoC,
+>     getting merged to 'master' might become impossible if it
+>     coincides with the pre-release freeze period.  But we on the
+>     list and the mentors know how the project works, and can help
+>     stating a more realistic success criterion if the development
+>     cycle and other quirks specific to this project gets in the way.
+> 
+> Thanks.
+> 
