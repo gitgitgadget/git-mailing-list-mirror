@@ -2,105 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3194F1F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 16:16:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F3C71F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 16:30:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726428AbfBTQQy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 11:16:54 -0500
-Received: from mx2.suse.de ([195.135.220.15]:38350 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725881AbfBTQQy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 11:16:54 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 1A98DADD4;
-        Wed, 20 Feb 2019 16:16:53 +0000 (UTC)
-From:   Michal Suchanek <msuchanek@suse.de>
-To:     git@vger.kernel.org
-Cc:     Michal Suchanek <msuchanek@suse.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Marketa Calabkova <mcalabkova@suse.cz>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/2] setup: don't fail if commondir reference is deleted.
-Date:   Wed, 20 Feb 2019 17:16:49 +0100
-Message-Id: <37df7fd81c3dee990bd7723f18c94713a0d842b6.1550679076.git.msuchanek@suse.de>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <cover.1550508544.git.msuchanek@suse.de>
-References: <cover.1550508544.git.msuchanek@suse.de>
+        id S1726180AbfBTQak (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 11:30:40 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:36847 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725796AbfBTQak (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 11:30:40 -0500
+Received: by mail-ed1-f67.google.com with SMTP id g9so9868826eds.3
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 08:30:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=loskot-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=Nj+LSKWBzi+PJMmwRKeH6eh8WhZ4EVN/2BAzma3hjMQ=;
+        b=B8ZlEANi/rxMDH5wlOr4o/fT4dr2B5lweqdy0bBbX7JEoOOwoUmJtZFqd0UlEsUczz
+         cvHdwYP9ZGuNOSwXNkJsrySGlSjrwNAvyTr4cPZX1fhfkSf4MnKig2SOiN/3BATtGI8s
+         f6wC9wQ9t1SiCxH74jFDAP7tB+f/+6SfjOIXZxcvX91xp/TSGaaFHmsBov63GD7TFMTP
+         IPCvF4xlsLHJcpwOuDzn2gTq7+JMzunQV86xd7W0Xfr2y5WI6v4EgMYHtus0LMHAaD3Z
+         IOFVI3qkcxz6ay4FGjdiFUUtVjPxNhW7l0EDUtlfypcyh6ihz/Ll9DUwpUDDeyCtKekO
+         hTyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=Nj+LSKWBzi+PJMmwRKeH6eh8WhZ4EVN/2BAzma3hjMQ=;
+        b=o457hiT3vWBllJNDnjfbqTBq00IvIO555NYKlWH43IQDeFq1ELS4kGg4k+YrkjmWj6
+         IEp2jDaUHuyDTdhabsa4sj5XtjvjIFA898MvQid5w3Z0o4ZZc7yjWdZK33N++1EYAl3M
+         +NgUu4MGc+klGKmjc4SegKup427/3DCeTkyAyElf28TkNQHiM82V1L/wp7iKRGeTHvWT
+         hF+4+j60ckbKfVTSRI4/VdkrIjQN3x+4o9aCxZkXO7sGs9+O9LY2JztbgAEBp5D0SqPU
+         N8mM3NbpIbmlP84T/4u4HnKakUpOMIJPmgSezUaXq0LvBKz38Nhjn3tPxmutocgsmeRM
+         IyVQ==
+X-Gm-Message-State: AHQUAuYQqDGqDQBuVgDj1koHIuym3x2HiDMGfsD84UCTC4U08N3fkb+S
+        QcdfApPsTSt8hO9cxPK16cPTAhToXBYW0Cn+fsycqZCCq8E=
+X-Google-Smtp-Source: AHgI3IZENjyZGD4QZa+y8yan2bKA6U5R09esB6NeJrdKhgZZ3OmrGx0RDV6b+iRNHsJYzMcC/mB0lJiib8AxQWUOOmk=
+X-Received: by 2002:a50:9622:: with SMTP id y31mr26444097eda.248.1550680238468;
+ Wed, 20 Feb 2019 08:30:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CABUeae_N3NFXn-E1+LHORL3RDf5iTCFn=zyuOo3c2Aot2QF7pg@mail.gmail.com>
+In-Reply-To: <CABUeae_N3NFXn-E1+LHORL3RDf5iTCFn=zyuOo3c2Aot2QF7pg@mail.gmail.com>
+From:   Mateusz Loskot <mateusz@loskot.net>
+Date:   Wed, 20 Feb 2019 17:30:12 +0100
+Message-ID: <CABUeae9vyjWszUkfUJ7-JNmrX-7dAQDcvn9488zM4Lcr3VGwqw@mail.gmail.com>
+Subject: Re: "Submodule registered for path" output with config aliases mixed in
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apparently it can happen that stat() claims there is a commondir file but when
-trying to open the file it is missing.
+Hmm, sorry for pushing, but no ideas, really?
+Doesn't it seem like a bug?
 
-Another even rarer issue is that the file might be zero size because another
-process initializing a worktree opened the file but has not written is content
-yet.
+Matz
 
-When any of this happnes git aborts failing to perform perfectly valid
-command because unrelated worktree is not yet fully initialized.
+On Tue, 19 Feb 2019 at 17:51, Mateusz Loskot <mateusz@loskot.net> wrote:
+>
+> Hi,
+>
+> $ git version
+> git version 2.20.1.windows.1
+>
+> I'm running `git clone --recurse-submodules https://...`
+> The command seems to run well and completes with success.
+>
+> However, I noticed strange output from git:
+>
+> ```
+> Submodule 'Binary/A' (https://...) registered for path '!f() { ~/AppData/=
+Local/Fork/Fork.exe $PWD; }; fBinary/A'
+> Submodule 'Binary/B' (https://...) registered for path '=C3=80   =E2=99=
+=82=E2=99=A6Binary/Intergraph'
+> Submodule 'Binary/C' (https://....) registered for path '!sh -c 'git log =
+$1@{1}..$1@{0} $@'Binary/C'
+> Submodule 'Binary/D' (https://...) registered for path 'ls-files -o -i --=
+exclude-standardBinary/D'
+> Submodule 'Binary/E' (https://...) registered for path 'mergetool.Tortois=
+eGitMerge.trustexitcodeBinary/E'
+> ```
+>
+> I managed to identify where that garbage injections come from:
+> from git aliases I've got configured [1]
+>
+> Could anyone explain what is happening here?
+> Is there anything wrong with my ~/.gitconfig [1] ?
+>
+>
+> [1] https://github.com/mloskot/wsl-config/tree/master/git
+>
+> --
+> Best regards,
+> Mateusz =C5=81oskot, http://mateusz.loskot.net
 
-Rather than testing if the file exists before reading it handle ENOENT
-and ENOTDIR.
 
-Signed-off-by: Michal Suchanek <msuchanek@suse.de>
----
-v2:
-- do not test file existence first, just read it and handle ENOENT.
-- handle zero size file correctly
-v3:
-- handle ENOTDIR as well
-- add more details to commit message
----
- setup.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/setup.c b/setup.c
-index ca9e8a949ed8..49306e36990d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -270,12 +270,20 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
- {
- 	struct strbuf data = STRBUF_INIT;
- 	struct strbuf path = STRBUF_INIT;
--	int ret = 0;
-+	int ret;
- 
- 	strbuf_addf(&path, "%s/commondir", gitdir);
--	if (file_exists(path.buf)) {
--		if (strbuf_read_file(&data, path.buf, 0) <= 0)
-+	ret = strbuf_read_file(&data, path.buf, 0);
-+	if (ret <= 0) {
-+		/*
-+		 * if file is missing or zero size (just being written)
-+		 * assume default, bail otherwise
-+		 */
-+		if (ret && errno != ENOENT && errno != ENOTDIR)
- 			die_errno(_("failed to read %s"), path.buf);
-+		strbuf_addstr(sb, gitdir);
-+		ret = 0;
-+	} else {
- 		while (data.len && (data.buf[data.len - 1] == '\n' ||
- 				    data.buf[data.len - 1] == '\r'))
- 			data.len--;
-@@ -286,8 +294,6 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
- 		strbuf_addbuf(&path, &data);
- 		strbuf_add_real_path(sb, path.buf);
- 		ret = 1;
--	} else {
--		strbuf_addstr(sb, gitdir);
- 	}
- 
- 	strbuf_release(&data);
--- 
-2.20.1
-
+--=20
+Mateusz Loskot, http://mateusz.loskot.net
