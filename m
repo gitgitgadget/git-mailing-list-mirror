@@ -7,107 +7,90 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32A111F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 22:39:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF0911F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 22:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726380AbfBTWjQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 17:39:16 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37088 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725851AbfBTWjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 17:39:15 -0500
-Received: by mail-wm1-f67.google.com with SMTP id x10so7965988wmg.2
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 14:39:14 -0800 (PST)
+        id S1726120AbfBTWvz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 17:51:55 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39925 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725847AbfBTWvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 17:51:55 -0500
+Received: by mail-wm1-f68.google.com with SMTP id z84so8046767wmg.4
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 14:51:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=RgbxEeGkSZ6ufzgLBzLzvL/Hm3PDMt+DyysF+7258o4=;
-        b=iDJ7QtfPU2d4EAZN6rYYiaa0/+yhubwgDhqBIUv0uiYXfu53nZVxjOFPZDy0CpwMb2
-         KQwjnT2WMhz/ZMnTke8RWT7s63WTWtF/QDBXkI+1GV7SnXhCDAl7ipcAfHEfqnO+rb0t
-         p7fwWHHIIg++H4YfuQCso85FeVdK9apKMqmDap6H1ebZBAUTpyfIwBjQp+jgm95jASly
-         fW5/ZyyE/XtfMG15rnMojC0oKOMP4h2lQ4P+BKUxgln/Zf4l2IIYCsBlVS0sRyt6udu5
-         jspTvrNA/QFUehCdGD3b1ACMfFVFx1397wJEB1GA+VV/O1gJ8Nllndje5Bp2XjU/Ufpr
-         R7ag==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=a2YkxdqbLHl9BAgJAKOqRbcbrGXE2t8LLAvOTBdYJNs=;
+        b=P9gIeuXdR5RdrouytPzHaQ3z2/PXyltNaW4CgD9E9ofYv4UM2liZil6vkK5dIG1luI
+         Q3Pw4nD2OMkBJoP6/VD89RehpTEQJX/HCRLNoGcXEgcy00xkc8Nl1wrH1Ecpvpk1QB4W
+         fz2NLu8XNw2D2ednRp2OUYBODiv6ZEFZLnV5P1FesTF4Qh3/kC4pM4GNdtgMPNhziJIp
+         zvVYyJiNBDugh2iL04499kNNvAa1XRVAPVKKJGBRkHa4G0FkV5/8/VY7oT4cu1htD6Mc
+         +yk6n2HZKLefVf7XZORQmZNSnjM08zGixCPGYEsvvwNhplZwnS0M7oYa//yE2+tOmVRe
+         r0sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=RgbxEeGkSZ6ufzgLBzLzvL/Hm3PDMt+DyysF+7258o4=;
-        b=gfQxyWSiX8iaVRbW1grwCBEgTF5tu380cw31FFu6KBftR0zQA18+Dg78ViIDFVFsjc
-         LeBH3QkzP7ov5lRP9zhK2oqrWJCLQylCDokm2TahL6eQ25CJLSPbScNw/+chRzE9PDmq
-         UjbTX938WzRwJSOlqD2yDWIanFvUfXNDqdhz04aN+oO57uEEc/rX2zvTumV23eIIwVsv
-         0SnhAoX3j6cVLLhQTcCMcKHY3h7qG1i1NQaceHkWRIvA4f1SytYgrq1dAS+PZC2pLcDU
-         3ykLkoB38vV0JVBsLrb9AHBnZiW32egTbXILdF4fR7Q7hHxY6zeIMKfAfkcwq/9PplSM
-         NEsA==
-X-Gm-Message-State: AHQUAuYWBQrlPHT97vLnJW89f2ZWC6OAPnbRTwrkBeNel2uRkthEHOoG
-        PykhdxQbSuUh9guXE7V2YYM=
-X-Google-Smtp-Source: AHgI3IZjphI3zyUGuDO95tuOykybme/Qn8955L48FosaI2um5PnkwzOVdmdMWUNCvdwA26uPgcbyng==
-X-Received: by 2002:a1c:9acd:: with SMTP id c196mr8538470wme.145.1550702353657;
-        Wed, 20 Feb 2019 14:39:13 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=a2YkxdqbLHl9BAgJAKOqRbcbrGXE2t8LLAvOTBdYJNs=;
+        b=nayOaDe5rubH/gg9tg88z7P5Ek+wrtez1whTr8zUPiJaaYCnA7PdDlfnpsVdt+xTOv
+         KjMkiEp+cKDpU/8VqhmUf+vwxyAAcgZERNZ2sakEVw/L5POWTufim6naoHcwTr4MYRvK
+         BRMg/+C/W5K4FdKuCY81bD/3dANIUcyz758B4DaduktDQ7Aqi1a+vlr1PjH9TW5L+DUv
+         PMAFq67QkjZUEnKH5CnQPICXCB43Dx/h7OjwpB3M8ZcDWwTCrKHZoIG0VwjH+hQRIZ5g
+         vi6GnGJPYGaaT19amGkSAb82beJKXrEMTf59/HqCDhFCNjaXY4LZ6YCPp9h4lrykAgBv
+         j0gQ==
+X-Gm-Message-State: AHQUAubsN6DSv9ypOuiqWIogRdfobd5zkJbJOUWFgHfABlqIEccxfrBe
+        yGLzO/2SBitbw6wpNoYEN60=
+X-Google-Smtp-Source: AHgI3IbGxZVTkZK87BbXVeJpKoQ5tfQ9MYOLcp8vcP85WtxMvQpaGD9anJB1skX+QZAOm6L6Hx/kXg==
+X-Received: by 2002:a1c:c489:: with SMTP id u131mr7593947wmf.127.1550703113394;
+        Wed, 20 Feb 2019 14:51:53 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m4sm4147411wml.2.2019.02.20.14.39.12
+        by smtp.gmail.com with ESMTPSA id 12sm13634723wme.25.2019.02.20.14.51.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Feb 2019 14:39:12 -0800 (PST)
+        Wed, 20 Feb 2019 14:51:52 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        Holger Hellmuth <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH 1/1] Introduce "precious" file concept
-References: <20190216114938.18843-1-pclouds@gmail.com>
-        <20190216114938.18843-2-pclouds@gmail.com>
-        <87wolzo7a1.fsf@evledraar.gmail.com>
-        <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com>
-        <xmqq8syb3b3j.fsf@gitster-ct.c.googlers.com>
-        <87h8cy6cme.fsf@evledraar.booking.com>
-        <CACsJy8B15hORnaOdYW8TNE3Gniv9NBJopyLYmHR5iF0U3beq6g@mail.gmail.com>
-Date:   Wed, 20 Feb 2019 14:39:12 -0800
-In-Reply-To: <CACsJy8B15hORnaOdYW8TNE3Gniv9NBJopyLYmHR5iF0U3beq6g@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 20 Feb 2019 16:41:51 +0700")
-Message-ID: <xmqqo976ultb.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Joe Ranieri <jranieri@grammatech.com>, git@vger.kernel.org
+Subject: Re: [BUG] ls-files showing deleted files (unchecked lstat return value)
+References: <1ff48830-f3de-11f4-9014-c20eb3890c21@grammatech.com>
+        <20190218151725.GL1622@szeder.dev>
+Date:   Wed, 20 Feb 2019 14:51:52 -0800
+In-Reply-To: <20190218151725.GL1622@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Mon, 18 Feb 2019 16:17:25 +0100")
+Message-ID: <xmqqh8cyul87.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> There is a trade off somewhere. "new user first" should not come at
-> the cost for more experienced users.
+> On Sun, Feb 17, 2019 at 08:49:39AM -0500, Joe Ranieri wrote:
+>> "git ls-files -m" can show deleted files, despite -d not having been
+>> specified. 
+>
+> To my understanding that's intentional: a deleted file is considered
+> modified, because its content clearly doesn't match the tracked
+> content.
 
-Probably.  Nobody will stay being newbie forever.
+Hmph, I am not so sure about that.
 
-> Making "git checkout/merge" abort while it's working before breaks
-> scripts. And requiring to mark trashable files manually duplicates a
-> lot of ignore patterns. Have a look at any .gitignore file, the
-> majority of them is for discardable files because "ignored" class was
-> created with those in mind (*.o and friends).
+It seems that b0391890 ("Show modified files in git-ls-files",
+2005-09-19) fixes one of its draft version's bugs in
+"http://public-inbox.org/git/43179E59.80106@didntduck.org/" by not
+letting it use ce_match_stat() directly, but introducing
+ce_modified() that inspects the data for actual changes.  The effort
+however did not spot the other bug, namely, lstat() returning an
+error for ENOENT.
 
-Very true.  That is why we were OK for so long with "ignored" that
-means "ignored and expendable".  We know in some situations we want
-"ignored but precious", and that is why we are discussing this topic.
-
-> So now you would need to
-> add more or less the same set of ignore rules in .gitattributes to
-> mark them trashable, and gitignore/gitattributes rules are not exactly
-> compatible, you can't just blindly copy them over. Every time you add
-> one more .gitignore rule, there's a good chance you need to add a
-> similar rule for trashable attribute.
-
-I am not sure why you would even need to _duplicate_.
-
-Are you saying for each and every rule that specify "ignored and
-expendable" in .gitignore there always will be "ignored but
-precious" exception that match the pattern?  Given that we have been
-OK for so long without even needing "precious", I find it somewhat
-unrealistic to assume so.
+I think the original intent was for "ls-files -d", "ls-files -m" and
+"ls-files -d m" all can be used in a meaningful way by keeping these
+two selectors independent.  The buggy implementation did not realize
+that intent correctly, though.
