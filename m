@@ -2,95 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF0911F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 22:51:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB6291F463
+	for <e@80x24.org>; Wed, 20 Feb 2019 22:59:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726120AbfBTWvz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 17:51:55 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39925 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725847AbfBTWvz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 17:51:55 -0500
-Received: by mail-wm1-f68.google.com with SMTP id z84so8046767wmg.4
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 14:51:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=a2YkxdqbLHl9BAgJAKOqRbcbrGXE2t8LLAvOTBdYJNs=;
-        b=P9gIeuXdR5RdrouytPzHaQ3z2/PXyltNaW4CgD9E9ofYv4UM2liZil6vkK5dIG1luI
-         Q3Pw4nD2OMkBJoP6/VD89RehpTEQJX/HCRLNoGcXEgcy00xkc8Nl1wrH1Ecpvpk1QB4W
-         fz2NLu8XNw2D2ednRp2OUYBODiv6ZEFZLnV5P1FesTF4Qh3/kC4pM4GNdtgMPNhziJIp
-         zvVYyJiNBDugh2iL04499kNNvAa1XRVAPVKKJGBRkHa4G0FkV5/8/VY7oT4cu1htD6Mc
-         +yk6n2HZKLefVf7XZORQmZNSnjM08zGixCPGYEsvvwNhplZwnS0M7oYa//yE2+tOmVRe
-         r0sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=a2YkxdqbLHl9BAgJAKOqRbcbrGXE2t8LLAvOTBdYJNs=;
-        b=nayOaDe5rubH/gg9tg88z7P5Ek+wrtez1whTr8zUPiJaaYCnA7PdDlfnpsVdt+xTOv
-         KjMkiEp+cKDpU/8VqhmUf+vwxyAAcgZERNZ2sakEVw/L5POWTufim6naoHcwTr4MYRvK
-         BRMg/+C/W5K4FdKuCY81bD/3dANIUcyz758B4DaduktDQ7Aqi1a+vlr1PjH9TW5L+DUv
-         PMAFq67QkjZUEnKH5CnQPICXCB43Dx/h7OjwpB3M8ZcDWwTCrKHZoIG0VwjH+hQRIZ5g
-         vi6GnGJPYGaaT19amGkSAb82beJKXrEMTf59/HqCDhFCNjaXY4LZ6YCPp9h4lrykAgBv
-         j0gQ==
-X-Gm-Message-State: AHQUAubsN6DSv9ypOuiqWIogRdfobd5zkJbJOUWFgHfABlqIEccxfrBe
-        yGLzO/2SBitbw6wpNoYEN60=
-X-Google-Smtp-Source: AHgI3IbGxZVTkZK87BbXVeJpKoQ5tfQ9MYOLcp8vcP85WtxMvQpaGD9anJB1skX+QZAOm6L6Hx/kXg==
-X-Received: by 2002:a1c:c489:: with SMTP id u131mr7593947wmf.127.1550703113394;
-        Wed, 20 Feb 2019 14:51:53 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 12sm13634723wme.25.2019.02.20.14.51.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Feb 2019 14:51:52 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Joe Ranieri <jranieri@grammatech.com>, git@vger.kernel.org
-Subject: Re: [BUG] ls-files showing deleted files (unchecked lstat return value)
-References: <1ff48830-f3de-11f4-9014-c20eb3890c21@grammatech.com>
-        <20190218151725.GL1622@szeder.dev>
-Date:   Wed, 20 Feb 2019 14:51:52 -0800
-In-Reply-To: <20190218151725.GL1622@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Mon, 18 Feb 2019 16:17:25 +0100")
-Message-ID: <xmqqh8cyul87.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726174AbfBTW7B (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 17:59:01 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:53376 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726003AbfBTW67 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 20 Feb 2019 17:58:59 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x1KMqt0d004444;
+        Wed, 20 Feb 2019 14:58:51 -0800
+Received: from mail.palantir.com ([8.4.231.70])
+        by mx0a-00153501.pphosted.com with ESMTP id 2qsc6x0bje-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+        Wed, 20 Feb 2019 14:58:51 -0800
+Received: from sj-prod-exch-01.YOJOE.local (10.129.18.26) by
+ sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1531.3; Wed, 20 Feb 2019 14:58:31 -0800
+Received: from smtp-transport.yojoe.local (10.129.56.124) by
+ sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server id
+ 15.1.1531.3 via Frontend Transport; Wed, 20 Feb 2019 14:58:31 -0800
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 252F22216327;
+        Wed, 20 Feb 2019 14:58:49 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     <git@vger.kernel.org>
+CC:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        David Barr <david.barr@cordelta.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: [RFC PATCH 5/5] fast-import: fix erroneous handling of get-mark with empty orphan commits
+Date:   Wed, 20 Feb 2019 14:58:46 -0800
+Message-ID: <20190220225846.10658-6-newren@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc2.5.g8f70af2367
+In-Reply-To: <20190220225846.10658-1-newren@gmail.com>
+References: <20190220225846.10658-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-02-20_18:,,
+ signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+When get-mark was introduced in commit 28c7b1f7b7b7 ("fast-import: add a
+get-mark command", 2015-07-01), it followed the precedent of the
+cat-blob command to be allowed on any line other than in the middle of a
+data directive; see commit 777f80d7429b ("fast-import: Allow cat-blob
+requests at arbitrary points in stream", 2010-11-28).  It was useful to
+allow cat-blob directives in the middle of a commit to get more data
+that would be used in writing the current commit object.  get-mark is
+not similarly useful since fast-import can already use either object id
+or mark.  Further, trying to allow this command anywhere caused parsing
+bugs.  Fix the parsing problems by only allowing get-mark commands to
+appear when other commands have completed.
 
-> On Sun, Feb 17, 2019 at 08:49:39AM -0500, Joe Ranieri wrote:
->> "git ls-files -m" can show deleted files, despite -d not having been
->> specified. 
->
-> To my understanding that's intentional: a deleted file is considered
-> modified, because its content clearly doesn't match the tracked
-> content.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/git-fast-import.txt | 4 ----
+ fast-import.c                     | 8 ++------
+ t/t9300-fast-import.sh            | 4 ++--
+ 3 files changed, 4 insertions(+), 12 deletions(-)
 
-Hmph, I am not so sure about that.
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 982f82b0b3..33cce1e150 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -971,10 +971,6 @@ might want to refer to in their commit messages.
+ 	'get-mark' SP ':' <idnum> LF
+ ....
+ 
+-This command can be used anywhere in the stream that comments are
+-accepted.  In particular, the `get-mark` command can be used in the
+-middle of a commit but not in the middle of a `data` command.
+-
+ See ``Responses To Commands'' below for details about how to read
+ this output safely.
+ 
+diff --git a/fast-import.c b/fast-import.c
+index 338db61e6e..064c55e8be 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1748,8 +1748,6 @@ static int read_next_command(void)
+ 	}
+ 
+ 	for (;;) {
+-		const char *p;
+-
+ 		if (unread_command_buf) {
+ 			unread_command_buf = 0;
+ 		} else {
+@@ -1782,10 +1780,6 @@ static int read_next_command(void)
+ 			rc->prev->next = rc;
+ 			cmd_tail = rc;
+ 		}
+-		if (skip_prefix(command_buf.buf, "get-mark ", &p)) {
+-			parse_get_mark(p);
+-			continue;
+-		}
+ 		if (command_buf.buf[0] == '#')
+ 			continue;
+ 		return 0;
+@@ -3318,6 +3312,8 @@ int cmd_main(int argc, const char **argv)
+ 			parse_ls(v, NULL);
+ 		else if (skip_prefix(command_buf.buf, "cat-blob ", &v))
+ 			parse_cat_blob(v);
++		else if (skip_prefix(command_buf.buf, "get-mark ", &v))
++			parse_get_mark(v);
+ 		else if (!strcmp("checkpoint", command_buf.buf))
+ 			parse_checkpoint();
+ 		else if (!strcmp("done", command_buf.buf))
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index c304c8c47c..3668263c40 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -3276,11 +3276,11 @@ cat >>W-input <<-W_INPUT_END
+ 	LFsget-mark :1
+ 	W_INPUT_END
+ 
+-test_expect_failure !MINGW 'W: get-mark & empty orphan commit with no newlines' '
++test_expect_success !MINGW 'W: get-mark & empty orphan commit with no newlines' '
+ 	sed -e s/LFs// W-input | tr L "\n" | git fast-import
+ '
+ 
+-test_expect_failure !MINGW 'W: get-mark & empty orphan commit with one newline' '
++test_expect_success !MINGW 'W: get-mark & empty orphan commit with one newline' '
+ 	sed -e s/LFs/L/ W-input | tr L "\n" | git fast-import
+ '
+ 
+-- 
+2.21.0.rc2.5.g8f70af2367
 
-It seems that b0391890 ("Show modified files in git-ls-files",
-2005-09-19) fixes one of its draft version's bugs in
-"http://public-inbox.org/git/43179E59.80106@didntduck.org/" by not
-letting it use ce_match_stat() directly, but introducing
-ce_modified() that inspects the data for actual changes.  The effort
-however did not spot the other bug, namely, lstat() returning an
-error for ENOENT.
-
-I think the original intent was for "ls-files -d", "ls-files -m" and
-"ls-files -d m" all can be used in a meaningful way by keeping these
-two selectors independent.  The buggy implementation did not realize
-that intent correctly, though.
