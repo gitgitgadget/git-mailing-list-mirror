@@ -2,66 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_RP_RNBL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,RCVD_IN_RP_RNBL,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EED5E1F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 00:06:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C5521F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 00:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730241AbfBTAGC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 19:06:02 -0500
-Received: from mail-pl1-f169.google.com ([209.85.214.169]:44865 "EHLO
-        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730121AbfBTAFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 19:05:42 -0500
-Received: by mail-pl1-f169.google.com with SMTP id c4so6192583pls.11
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 16:05:41 -0800 (PST)
+        id S1727790AbfBTAcb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 19:32:31 -0500
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:36549 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726986AbfBTAcb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 19:32:31 -0500
+Received: by mail-qt1-f202.google.com with SMTP id p5so21762540qtp.3
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 16:32:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=exactasystems-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=te8BsjZZSRH6rdYl01qimlPZ46ry2nBmNLge+1yQ918=;
-        b=pbpnskTAYU8wOeEMvM6RMIoBnm7T//IXCNfRw9C3YZeClcQDje4xDZrzvprHxvASY9
-         0dbhyb1E7IV/dZt5ibAtAMafDELne4aBu05jOGjQtdFV4QxuVTOVRP6Sw/cwZW3WSIGj
-         eS/qJgCFKqRYi/zUHhL7BeoBhIFZHZRS9XrBYikkIbhToiug37nbrXDSlNtazJMMnint
-         otTdIeK1nzXh/6SFmuDHQ701Aelg03c82+eGs67AHh0ISA9QqrrQlyG4pBFb0Bzedf8I
-         9Z0kwgDMqPLJxLZNzaEq0lHCUWXSrRRUklG4dOju+UP4vVc7nDJiw3WXUaBEgcOyvOE5
-         h6AQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=8DDtVBi42UkVtf5w55eIv1TkowA6XOJs1WfSo/YGn2E=;
+        b=G2jOUpUJouMt6Pa4nkgXPC2Zr8OMIWZsqgCcQ8kyk+aQJYxKL6n4iUyvMIHGEtBVSF
+         bre3Y3/DGDKKHVoblf4AHjX+QMEAJUQtAc8ncstCaQGyjRLNjRM3SWXQu+l+h7eUskiP
+         7Ldka3zySLxz4kOYJNiQYtvEF3VQ85+/7f06ukB42PYtzRX+FALtgc4AYjgeY3JfXFJI
+         Qlxde/2ZikSJD27o6f5kDueTFgiF7ynWPMjdemzbpfLhCqK6s5k4v0R9vojdUhITp1mx
+         h6XyTHcrLzYtB5bOxkapWbmtrQPkE4+HiUn2U/WURMhiXLkDLsS+sCHJE6UHJgmFAZ34
+         fYGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=te8BsjZZSRH6rdYl01qimlPZ46ry2nBmNLge+1yQ918=;
-        b=dqzuD/eVejfFXR2NC9QZ9zuXPqLZSkzzzWZR4LgYD9ESGhc7XuZsb1ODrcczFa5wZx
-         QYAUiDFMDGDuS/iVc/+KFqq4pHI4De/PZoqdknHlKi6Io9m/Ahamo+sbJEYl+Fhusc7e
-         w3Y3OQLCxb/TAj3qzF/GVLvNeY8sjTm5Z97fJb0uAsvnDrEggBiPDXYx6olZ/iZkSQM0
-         z/Xwse99JNl9JuywG+yJrKZfDqx88c2BpZQp5xAaoblylo4mqrTGAlcVxNcHWrwbhQ7A
-         ghxdVIMFZHKeypkKLN336GMlG7oAOcod93gFn/5Pn/Ak4ZG6iO+ex7bdDDTjhxaGsySC
-         3Haw==
-X-Gm-Message-State: AHQUAub1+WeoovGv9VyyhQTC23//+NIsX7Lf+BoIJZ+VefVm3cCph0PM
-        9HI1tYw4Yzr8KgQD+8P8dQOrPE69AjyrvTTtxlyKLZW8PrQ=
-X-Google-Smtp-Source: AHgI3IZ+xTZjkw6UHHzfrWATTy3PYfGC+hRDfnCFWNUwclp/Crf8JoaCs8BWbXqusNMntt16J5fcg4546tf2n4ZX6J8=
-X-Received: by 2002:a17:902:a7:: with SMTP id a36mr33567489pla.295.1550621141305;
- Tue, 19 Feb 2019 16:05:41 -0800 (PST)
-MIME-Version: 1.0
-From:   Joe Enzminger <joe.enzminger@exactasystems.com>
-Date:   Tue, 19 Feb 2019 18:05:30 -0600
-Message-ID: <CAApa7v-F7Y_WR11V-3jc-R4Y1qSv5PPof6GWvJuF_XMeTcC2zw@mail.gmail.com>
-Subject: Feature Request git clone shallow-include
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=8DDtVBi42UkVtf5w55eIv1TkowA6XOJs1WfSo/YGn2E=;
+        b=DkE68aSRoV5B8G8axoiMKJyr2qSx9DtuXSmzth9fYjcbVFl+J1goD+EfhAZEjuF0Yw
+         Cziaq7TcovkjX3V20KFyDRotj9RfWUUmPhvUpoOhuEAlfxoCVgl5MtxUX9LwAN5K/rob
+         FkcJRIKBt1NDTV2P1pcLLFACTNw3YArsr5IBykregZQNWIGLKD+e2SXHYcLRtagJUvxV
+         brKTzk1tPjb21QGqr3phJx0GdmnL684H2Tn2x+nsnr6KUT1GSH3E9cxS8K+8QTaHTIK+
+         NeZIhSXjkbqic4zVfPu5XmpAXC30mDgCNJb6tWNVzAlp9Tq8IlOYGN21k5c4kxC7SstY
+         RDpA==
+X-Gm-Message-State: AHQUAuZjBGCTJv1HGPeE2vCmorJDBJE4yWIRW1ErUNbO62ctvqGRCrUE
+        5nJjlS2WbSdLbRz2M+peU2M4XS26cPYtfNeViI1HdnwB+glhljirCHi5VdyizB0MZhtHdGoPshz
+        H7U7aY1rykDlH+fe8OX+QpJnuXuTweXfrzbo0zZe0J1BjFxGJZoi16fEMPiGiWU4=
+X-Google-Smtp-Source: AHgI3IaBYeN97CTnKE2rpsBHFsvalfxz2tRrfLIK5qyFvGFXxItL/AGXDQ39/KhRiGeIFP5qy0BAYXhKDs+O8w==
+X-Received: by 2002:a37:2f82:: with SMTP id v124mr18538014qkh.33.1550622749817;
+ Tue, 19 Feb 2019 16:32:29 -0800 (PST)
+Date:   Tue, 19 Feb 2019 16:32:26 -0800
+In-Reply-To: <4ffb11ff776166944673ba3bdb96a9d20eb14df7.1549929088.git.steadmon@google.com>
+Message-Id: <f8de6411ffccf98f51dfa2eaf16073515933e4ec.1550622671.git.steadmon@google.com>
+Mime-Version: 1.0
+References: <4ffb11ff776166944673ba3bdb96a9d20eb14df7.1549929088.git.steadmon@google.com>
+X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e-goog
+Subject: [PATCH v3] protocol-capabilities.txt: document symref
+From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
+Cc:     peff@peff.net, jrnieder@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, git clone supports shallow-exclude=<tag-name>.  The client
-will clone up to, but not including, the commit with the tag.
+In 7171d8c15f ("upload-pack: send symbolic ref information as
+capability"), we added a symref capability to the pack protocol, but it
+was never documented. Adapt the patch notes from that commit and add
+them to the capabilities documentation.
 
-It would be useful to have the ability to include the commit with the
-tag.  The suggestion would be to add a "shallow-include" options to
-clone to support this behavior.
+While we're at it, add a disclaimer to the top of
+protocol-capabilities.txt noting that the doc only applies to v0/v1 of
+the wire protocol.
 
-I have tried to use shallow-exclude with a follow on git fetch
---deepen=1, but it always returns "fatal: error in object; unshallow
-<sha1>"
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ .../technical/protocol-capabilities.txt        | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/technical/protocol-capabilities.txt
+index 332d209b58..2b267c0da6 100644
+--- a/Documentation/technical/protocol-capabilities.txt
++++ b/Documentation/technical/protocol-capabilities.txt
+@@ -1,6 +1,10 @@
+ Git Protocol Capabilities
+ =========================
+ 
++NOTE: this document describes capabilities for versions 0 and 1 of the pack
++protocol. For version 2, please refer to the link:protocol-v2.html[protocol-v2]
++doc.
++
+ Servers SHOULD support all capabilities defined in this document.
+ 
+ On the very first line of the initial server response of either
+@@ -172,6 +176,20 @@ agent strings are purely informative for statistics and debugging
+ purposes, and MUST NOT be used to programmatically assume the presence
+ or absence of particular features.
+ 
++symref
++------
++
++This parameterized capability is used to inform the receiver which symbolic ref
++points to which ref; for example, "symref=HEAD:refs/heads/master" tells the
++receiver that HEAD points to master. This capability can be repeated to
++represent multiple symrefs.
++
++Servers SHOULD include this capability for the HEAD symref if it is one of the
++refs being sent.
++
++Clients MAY use the parameters from this capability to select the proper initial
++branch when cloning a repository.
++
+ shallow
+ -------
+ 
+-- 
+2.21.0.rc0.258.g878e2cd30e-goog
+
