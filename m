@@ -2,144 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PI_DNOT,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 534C21F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 11:11:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 797521F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 11:17:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726989AbfBTLLl convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 20 Feb 2019 06:11:41 -0500
-Received: from mout.gmx.net ([212.227.15.18]:45517 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725812AbfBTLLl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 06:11:41 -0500
-Received: from android-574c69d4b059187a ([217.149.160.51]) by mail.gmx.com
- (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0Lmqxo-1hWpvX0bro-00h3Co; Wed, 20 Feb 2019 12:11:19 +0100
-Date:   Wed, 20 Feb 2019 12:11:12 +0100
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CACsJy8B15hORnaOdYW8TNE3Gniv9NBJopyLYmHR5iF0U3beq6g@mail.gmail.com>
-References: <20190216114938.18843-1-pclouds@gmail.com> <20190216114938.18843-2-pclouds@gmail.com> <87wolzo7a1.fsf@evledraar.gmail.com> <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com> <xmqq8syb3b3j.fsf@gitster-ct.c.googlers.com> <87h8cy6cme.fsf@evledraar.booking.com> <CACsJy8B15hORnaOdYW8TNE3Gniv9NBJopyLYmHR5iF0U3beq6g@mail.gmail.com>
+        id S1727918AbfBTLRJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 06:17:09 -0500
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:41638 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726209AbfBTLRJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 06:17:09 -0500
+Received: by mail-wr1-f51.google.com with SMTP id n2so13341480wrw.8
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 03:17:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Yx90io3oQN6lvhsrFRfHQj7zTnpUzY/vxnpAUV48a2U=;
+        b=ZPfjEfrhGIs9eGrcaXa4BEskkaBwQ6ae0a1ESANYsuRHHMZklKhtS1UJie7a9MT+/c
+         75sk/Sk61YmkJA0+McYUkEw38n6qPHTLNg707xkZSZyUCe4ubSyRp+3dm//VSnvSwziG
+         RYJFlSXlag8ndOLrTBnYN0A4FO7e6LU0+k4xHdZOC0iRIdzSnvI1SwnG5lejeHVlvLF2
+         L3+j4Y8U+5q7MNW5mxpWeaoVlwBQScyNntu/kA9HNHkKziC1l1+AjYgT/A2FDzr16Hfq
+         gdDvsCxKbKKfaF8vCWZOWV0ZMT2IpKoVeS5VmrfishrW7LteAuAg0KwpT816Z2+mi3y+
+         Lfiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Yx90io3oQN6lvhsrFRfHQj7zTnpUzY/vxnpAUV48a2U=;
+        b=ON0ESvAnEFKC+soO6f4C/CKiAsoV3hWdZND5C5k5klBsV1APIPPDHHAzs1voJwubcQ
+         Bo9jIy28wLvZvJmE9DJux/GRyPqfIrffmHtIC/PJFRkJiRcVdyDsLJ9B4xVALdyGL4TG
+         /zMfyphNXujqs44OaEQMkqcuLuGqUKgS9Txqn+N4LbvWEuESep7GVFFaY2X3020Ayp+L
+         7UWjBxn9j/uSrlcHNYnD9ywt4rwyjaoxbWH/rHJTJ+/E+JJz8Lw0+3NWUZQZGAUjlzGq
+         xHS7ytLQUI6GYMsDsFpOKV+uJ+33KF+VOKr/huXRgHZEeqcIveno/jNGV2y+M62OGrRW
+         8xRA==
+X-Gm-Message-State: AHQUAuZlwETF0M+G7+tHEOiQ3kpfzpAiN86y4mJZVZbrxEMTSGwQ5Q/b
+        3KRf9Va+LkZhCjQUmt+72cdbbUFu
+X-Google-Smtp-Source: AHgI3IYUbfawR9Uxwzki21fxmJ8ka6zHxCQgkKfSeRhiKtTeleDhzAQCp2RQq5bQbC0/YMG9u3Tx/g==
+X-Received: by 2002:a5d:4f11:: with SMTP id c17mr15325777wru.242.1550661427263;
+        Wed, 20 Feb 2019 03:17:07 -0800 (PST)
+Received: from szeder.dev (x4db9774d.dyn.telefonica.de. [77.185.119.77])
+        by smtp.gmail.com with ESMTPSA id j124sm5349224wmb.48.2019.02.20.03.17.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Feb 2019 03:17:06 -0800 (PST)
+Date:   Wed, 20 Feb 2019 12:17:03 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Senol Yazici <sypsilon@googlemail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
+        msuchanek@suse.de, jpyeron@pdinc.us
+Subject: Re: [RFE] Demilitarize Documentation (was RE: Delivery Status
+ Notification (Failure))
+Message-ID: <20190220111703.GP1622@szeder.dev>
+References: <001601d4c7aa$460c0e70$d2242b50$@nexbridge.com>
+ <xmqqimxh2b61.fsf@gitster-ct.c.googlers.com>
+ <CAFacdQ_9=2hbC8-5+N=RdrGs=Anu2ku+TAj7x07OQNpa1b+gcg@mail.gmail.com>
+ <20190219100136.GO1622@szeder.dev>
+ <nycvar.QRO.7.76.6.1902191547510.41@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 8BIT
-Autocrypt: addr=drizzd@gmx.net; keydata=
- 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
- ot18p18pwfiv+HM8r6TH1/NTwGg=
-Subject: Re: [PATCH 1/1] Introduce "precious" file concept
-To:     Duy Nguyen <pclouds@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-CC:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Holger Hellmuth <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
-From:   Clemens Buchacher <drizzd@gmx.net>
-Message-ID: <B168DCB1-7A69-4729-89C7-B513464DD468@gmx.net>
-X-Provags-ID: V03:K1:8WsDd1YiNI4uG2X3T+x77D7HWMrEUBWxCsbOUQbQJM5ZmMmKCmN
- D6xbNgQjln84G8dNxeF4yhxAXqdfn79vX4fvck05eDBgwVJgk7zzIEC6NUwVBp+1oeqv34r
- MtFRYY/qFo7Iw3grxfPNxuicZqFLMkunTA5V48eANIlJdKcjHa/pWsV2pSnAJmjF3rmm8r/
- orlJlW6Jz/NTpyR1x7lsg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SVy1tlWU6/g=:eh6c2OPviuCwyGOk9LZUC6
- +6HBTcYzQUNavyPcn72KI725Tcuke7fNH3wuVpmJl7UzhZH8NzZI+WkrEvgXwheDhYyYVK7Gl
- JVPqf8mCOim3PEYJHXZxvVL6I+2Wj/gYcgHdRh4xXOwatgMoPP3Yv8qC3e43IPCEqzdt6jLKo
- 9f09obzcdxLtZ5tEG+SUgvBCUhm/H9xh4fxn/tilv6T3lwHZFQ7McHXuIjAt2PhdF8UxZRvOd
- b3GuMF0yEe8AgwUlPUoqsV8kSOP+dM4LT6YfkYcXq9b29vFQi5NosYD2L257r/Zye1DM4+Fvu
- PCy13evd7U4gVILfT8OED+K7OAXaqxqNu0ioF7GiM1MlNB31Ln2YNw4JW3Nw/Cq5K2C/T65dn
- af7YdLLWWyXtAhDGawK+igxNSkU+lse244xj7+W6cNWwFk4QI5fWSxgZkUler8n1E/5F7yd0g
- PcYpUVQSHS6taSSXMbSka+SvT0wmlZPivz0SBb8InfJ7oWkndngL81cqozPowqBlVBWyDFsf7
- shN1wWFhUy4MFLvv3lKZZEg5RAaGCH3sUAIt0FbOqbHEiwyMlTqFXeaHTasISNyE4AoCw8NCD
- pKScZfsFL3lepUb3k6OBhXxg5irOAlF5YYlRYFUsz0aYvKFPffHkgxnvW64GD0Rzffl1lVCYE
- f3PzVnV5p37kR9Yy7g+tKC/+56jXyV0/IAnGcHzBG4mXG7DYyKy3i9IRmjXEeG7PsPCyIBpWI
- 8J7ABeJIk00GA0NI1XgYjyrI+a7CTzEWn6SV+23ptYzfrRH9motLLvkCHMhBJfGr+B0CPpw8q
- eVqdOlCrrH0Esb/vebn3MyN7lJp6sYnVa5xsmsVSZv2Q5DD6NeN9cnCtmT+P23dQEEJQqsWeA
- mHfP/bhTn/HJHicyPfR+pnwIZljUiDo3gZj14U/+ZM4KLIpm2nV5Oioh0FRskCGoQQRuHMgg0
- ByAO372463g==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1902191547510.41@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Feb 19, 2019 at 03:58:00PM +0100, Johannes Schindelin wrote:
+> On Tue, 19 Feb 2019, SZEDER Gábor wrote:
+> 
+> > On Tue, Feb 19, 2019 at 09:02:43AM +0100, Senol Yazici wrote:
+> > > 1. Dictator
+> > > Concern: "Bad" connotation.
+> > 
+> > "Benevolent dictator" is a well-established term in open source
+> > projects, and it has an inherently good connotation.
+> 
+> It is a well-established term, alright. Does it have an inherently good
+> connotation? No, absolutely not. Every time anybody calls me the BDFL of
+> Git for Windows, it annoys me, to say the least.
+
+I would consider this an honour, but I'm not in danger of being
+labelled as such.
 
 
-On February 20, 2019 10:41:51 AM GMT+01:00, Duy Nguyen <pclouds@gmail.com> wrote:
->Making "git checkout/merge" abort while it's working before breaks
->scripts.
+> > > Suggestion for substitution: Principal or principal integrator.
+> > 
+> > These are poor substitutions.
+> 
+> I agree that those are poor substitutions, but shooting down without
+> giving better alternatives is a poor way to reply ;-)
 
-Change is always a trade-off. We should not reject change without considering the merits. Once we agree on the desired state, we can think about the migration strategy. 
+I'm not interested in changing these words, but I'd like to prevent
+making things worse, so I'll leave the burden of providing better
+alternatives with those who actually want to pursue these changes.
 
->And requiring to mark trashable files manually duplicates a
->lot of ignore patterns. Have a look at any .gitignore file, the
->majority of them is for discardable files because "ignored" class was
->created with those in mind (*.o and friends). So now you would need to
->add more or less the same set of ignore rules in .gitattributes to
->mark them trashable, and gitignore/gitattributes rules are not exactly
->compatible, you can't just blindly copy them over. Every time you add
->one more .gitignore rule, there's a good chance you need to add a
->similar rule for trashable attribute.
-
-I agree that ignored precious files are typically a small subset of the ignore files. Maintaining separate rules for ignored files and for trashable files would result in a lot of duplication.
-
-On the other hand, how frequently do we really have to trash ignored files? Trashing a file should only be necessary if a tracked file overwrites an ignored file. When does this happen? I don't think it will happen for *.o files. So in most cases, there is simply no need to specify which files are precious. The default could simply be that all files are precious.
-
-To support more complex use cases, we could specify precious files in addition to ignored files. Only if we specify precious files (and/or enable the ignored-are-trashable config option on a repository level), all other files become trashable.
-
-Functionally this is equivalent the newbie option which you suggest, but I think it is not an issue of newbie vs experienced users but an issue of common vs special use cases.
-
->Maybe we just add a new "newbie" config knob and turn on the safety
->nets on. Leave the knob on by default. And I will turn it off in my
->~/.gitconfig as soon as it's real.
