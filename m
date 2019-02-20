@@ -7,80 +7,134 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A35BE1F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 01:22:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9D1D1F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 01:36:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730186AbfBTBWu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Feb 2019 20:22:50 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:51942 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726176AbfBTBWu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Feb 2019 20:22:50 -0500
-Received: by mail-it1-f193.google.com with SMTP id y184so11416909itc.1
-        for <git@vger.kernel.org>; Tue, 19 Feb 2019 17:22:49 -0800 (PST)
+        id S1727797AbfBTBgJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Feb 2019 20:36:09 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:56248 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725616AbfBTBgJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Feb 2019 20:36:09 -0500
+Received: by mail-it1-f195.google.com with SMTP id z131so11431088itf.5
+        for <git@vger.kernel.org>; Tue, 19 Feb 2019 17:36:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a16UZaqjjxqBWWmP8lhpDhlrG2FwcAJZK9wyagyiKi0=;
-        b=NGyCGe5vWGmW37WunGYFqPb0Jpf+JDeYHMTdJz6/XQ74KlRRtYFGF1cKuiiaFdf6Fm
-         EyLE2c8eo30Dpqeq6DomUN4JS5coH8JHlnjBwFOgL7sdOsHibDnbDSm2A5phZXnBB7bR
-         Pcd9zypxEwI+d9bbDv0af4FfihNCrAiOvl7Bjp5c7f1o2QLtBBqy8kHaYcYwnCeATZeD
-         GhnLmAfb6BYke4odMG1OpnK4JeOannqYKc6kStJ9AhYU4AeiZkEQGdyJnvBlqdbmRP2e
-         sTYTdI0EMRw2O6CMGMxF+s7P591zELZ0yTnULUCAcWrOkWAgjhfDHJYJZHOBBg6y9CxH
-         3ROg==
+         :cc:content-transfer-encoding;
+        bh=QBJDWOGi6MINvI/ganTCCnzcoVkVHwBJwWJ5HOOExjo=;
+        b=Epokzg05hwGex2SGfUvaSficu3dKVWnYGEhsxfJTbyVOlrOpCqqv7fulaGjHYcPjsD
+         cqMSmOchKaxicB7zNX7diU4NUN3yEGLAfAfriNbIi1ucDA+Hh3GM+Mp6oXowHutOkhRB
+         u8/kSranGAaN769HxjchehJwcbCCjmKuXZEc/xYvsEb6Vj/OXLjWeC3vfPYDUZHq4uiB
+         wbbOhVqU7TzLjMCvvHX0uTE861U97lwPLImSg7+RlOkp3KYzOofMmIm9olzMYCnI/NMN
+         x91BWaaf1utGOO0nvALTggVZ9Avi8AmFB29jzxFNOhBMiST/UEWh4t/JhM6DRJV8EY4B
+         sjBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a16UZaqjjxqBWWmP8lhpDhlrG2FwcAJZK9wyagyiKi0=;
-        b=nIF8RLfGmXJ+xpAL5jMHzPAXQ9ELIFbNmhAYIzL7vw8iF3umVZaWZQaGcGAeCwfFbp
-         4OFVOs0FFq0lNQeqQIi9XpNd90kB5KCWPY/kKeW/4foMg6dRI4JJ7PiiP414m6msg5Jw
-         xJx2DVSPfK07gJkhF6VMdV9X4JV/QIOo71yT1ASK9O2lMEu+5OV1USYmWCdcUwCqWLYr
-         l+h+sD+5/rp6j5EmXBBNUhmavbrCWTt2TI0bb5CFEp05tErkRU8cYw/jkeSjtCVTgVa4
-         y91q6E/C5CA591dajMuaPKN7iSVwuKZOTMI8GzwkYU8wdmU/atMTpeMu6Xhlj+B2wEc8
-         qUSg==
-X-Gm-Message-State: AHQUAubdboE7zaJBrlV/gJInhMqtn3Al8NScMuioU8Mbuz0eCoIXdCae
-        S7hd2SahWMHdiz03QRz+4F32stX+5xfj32nBUtb/PQ==
-X-Google-Smtp-Source: AHgI3IZriHLyO9tsAz6VmIYKnxmbRqul4TniDcQDURmpeUGspwwqnAnGT67wJb7zKU/83ZyRMB79J2udVRVphbrzA3s=
-X-Received: by 2002:a24:c056:: with SMTP id u83mr3518710itf.10.1550625769309;
- Tue, 19 Feb 2019 17:22:49 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QBJDWOGi6MINvI/ganTCCnzcoVkVHwBJwWJ5HOOExjo=;
+        b=fFfvH19WybwCNNtzcxQKmDM541vqx4l3VejKkLeWl70DHpwuyb4rOFYl5RPPS0EtsG
+         2hWK7MZF3esu7gf1FwZQCmhRBY/iB2VYYZgpnCHHBTY3+KQVuxw5kHolDJ+Kvo7N/RzF
+         jdWCgB3OibU+WaPT8Rekd4vE2Ckl1DpTbb99KEH0VU+SzFpp/ahoMfYzf9dtPyk5UAuQ
+         rdrtKqK5DKnndYLTQ1FZyUNjBC0nugcboUG1N04Vb/Xa4cbcHamlT+kkW0msCIaWf9wr
+         a7rUtA9Ak+U/LYXazrgN5wAeHJeCh/w1bli9M6pk4whVknNNM+T5FhXJPA1LT3CLu1uE
+         7exw==
+X-Gm-Message-State: AHQUAubWc33Yoty9RW2MYQy6A+xgU7PrO6l4uZ0H1krgcgytISIIOCiJ
+        BLZVWvfKKZdm4X+E+kjA1vyZJxUfMqkbDq7ygJ4=
+X-Google-Smtp-Source: AHgI3Iaz6xzjM05r7PNNNRd/OH3vdMLBCOgwZlnLpFzd4Vm43+Mg60E2kU3aats+dxncvOti2O+N5jSqInpYYDmCW2U=
+X-Received: by 2002:a24:c056:: with SMTP id u83mr3540164itf.10.1550626568407;
+ Tue, 19 Feb 2019 17:36:08 -0800 (PST)
 MIME-Version: 1.0
-References: <CAApa7v-F7Y_WR11V-3jc-R4Y1qSv5PPof6GWvJuF_XMeTcC2zw@mail.gmail.com>
-In-Reply-To: <CAApa7v-F7Y_WR11V-3jc-R4Y1qSv5PPof6GWvJuF_XMeTcC2zw@mail.gmail.com>
+References: <20190216114938.18843-1-pclouds@gmail.com> <20190216114938.18843-2-pclouds@gmail.com>
+ <87wolzo7a1.fsf@evledraar.gmail.com> <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com>
+ <xmqq8syb3b3j.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8syb3b3j.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 20 Feb 2019 08:22:23 +0700
-Message-ID: <CACsJy8AS5eNO6gACGtRZq=qdQGkQ3jmQPVivPG+=du9u9hKYcg@mail.gmail.com>
-Subject: Re: Feature Request git clone shallow-include
-To:     Joe Enzminger <joe.enzminger@exactasystems.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 20 Feb 2019 08:35:41 +0700
+Message-ID: <CACsJy8Dq9_uFofs40XwjLkmiBNWXCpic96W1MK_tjLQyaF0+BA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] Introduce "precious" file concept
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Per Lundberg <per.lundberg@hibox.tv>,
+        Steffen Jost <jost@tcs.ifi.lmu.de>,
+        Joshua Jensen <jjensen@workspacewhiz.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Clemens Buchacher <drizzd@gmx.net>,
+        Holger Hellmuth <hellmuth@ira.uka.de>,
+        Kevin Ballard <kevin@sb.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 20, 2019 at 7:07 AM Joe Enzminger
-<joe.enzminger@exactasystems.com> wrote:
+On Wed, Feb 20, 2019 at 1:08 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Currently, git clone supports shallow-exclude=<tag-name>.  The client
-> will clone up to, but not including, the commit with the tag.
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> It would be useful to have the ability to include the commit with the
-> tag.  The suggestion would be to add a "shallow-include" options to
-> clone to support this behavior.
+> > On Sun, Feb 17, 2019 at 2:36 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> >>
+> >>
+> >> On Sat, Feb 16 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> >>
+> >> [Re-CC some people involved the last time around]
+> >>
+> >> > A new attribute "precious" is added to indicate that certain files
+> >> > have valuable content and should not be easily discarded even if the=
+y
+> >> > are ignored or untracked.
+> >> >
+> >> > So far there are one part of Git that are made aware of precious
+> >> > files: "git clean" will leave precious files alone.
+> >>
+> >> Thanks for bringing this up again. There were also some patches recent=
+ly
+> >> to save away clobbered files, do you/anyone else have any end goal in
+> >> mind here that combines this & that, or some other thing I may not hav=
+e
+> >> kept up with?
+> >
+> > I assume you mean the clobbering untracked files by merge/checkout.
+> > Those files will be backed up [1] if backup-log is implemented. Even
+> > files deleted by "git clean" could be saved but that might go a little
+> > too far.
+>
+> I agree with =C3=86var that it is a very good idea to ask what the
+> endgame should look like.  I would have expected that, with an
+> introduction of new "ignored but unexpendable" class of file
+> (i.e. "precious" here), operations such as merge and checkout will
+> be updated to keep them in situations where we would remove "ignored
+> and expendable" files (i.e. "ignored").  And it is perfectly OK if
+> the very first introduction of the "precious" support begins only
+> with a single operation, such as "clean", as long as the end-goal is
+> clear.
 
-So exclude the tag's parents and everything before, but keep the tag, correct?
+I think the sticking point is how to deal with the surprise factor and
+"precious" will not help at all in this aspect. In my mind there are
+three classes
 
-I think if we support --shallow-exclude=<tag>^ then it should work the
-way you want (if the tag is a normal merge you may need to add
---shallow-exclude=<tag>^2 as well). And you can do even fancier thing
-like --shallow-exclude=<tag>~3 (i.e. exclude the  grand grand parent
-of the tag, but keep the tag and grand parents). We will need to
-restrict extended SHA-1 syntax to a safe subset of course.
+ - total expectation, i know i want git to not touch some files, i
+tell git so (e.g. with "precious")
 
-> I have tried to use shallow-exclude with a follow on git fetch
-> --deepen=1, but it always returns "fatal: error in object; unshallow
-> <sha1>"
--- 
+ - surprises sometimes, but in known classes. This is the main use
+case of backup log, where I may accidentally do "git commit
+-amsomething" after carefully preparing the index. Saving overwritten
+files by merge/checkout could be done here as an alternative to
+"garbage" attribute.
+
+> I personally do not believe in "backup log"; if we can screw up and
+> can fail to stop an operation that must avoid losing info, then we
+> can screw up the same way and fail to design and implement "backup"
+> to save info before an operation loses it.  If we do a good job in
+> supporting "precious" in various operations, we can rely less on
+> "backup log" and still be safe ;-)
+
+and this is the third class, something completely unexpected. Yes
+backup-log can't help here, but I don't think "precious" can either.
+And I have no good proposal for this case.
+--=20
 Duy
