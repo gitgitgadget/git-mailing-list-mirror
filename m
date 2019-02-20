@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 621441F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 22:33:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32A111F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 22:39:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726237AbfBTWdD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 17:33:03 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42842 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726070AbfBTWdC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 17:33:02 -0500
-Received: by mail-wr1-f67.google.com with SMTP id r5so14478816wrg.9
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 14:33:01 -0800 (PST)
+        id S1726380AbfBTWjQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 17:39:16 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37088 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725851AbfBTWjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 17:39:15 -0500
+Received: by mail-wm1-f67.google.com with SMTP id x10so7965988wmg.2
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 14:39:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=PKVyYBZP4M4LaOe3A7LurKKlGh2uzWJD/IAihg4W4FI=;
-        b=gdvDhmEjIUzyhGaw9ya4olM30hAP2R5XZJd1hJbLxL7l4x+n6Mu1LrrWRJ8jW5gDnc
-         wTl4HNtl0Z60Uq9Y1e9I6qGRw5uB7CL47jk0kTkAH72o6jKqs+iGvDvAp1pAj9vzIYK6
-         eu7Gp9Thicg/H3pnvedjeEp55Y76QYKoij1RGRLnF80DCGBTOMGjM1atzTqo05A0Exqk
-         GatkxH6t9AN1kBYoGJ1D3mZJF/Hn3U5ue+wl/8FNOKaJ/C7CzdVZ5JCPeBlwO8Rvonkl
-         TBpfIzDQDTKwt74COcYi0Z/cD6o0Zitl5dzYfXiTNLPNYvTyqB92sCWt69Pls17gfF5D
-         hstA==
+        bh=RgbxEeGkSZ6ufzgLBzLzvL/Hm3PDMt+DyysF+7258o4=;
+        b=iDJ7QtfPU2d4EAZN6rYYiaa0/+yhubwgDhqBIUv0uiYXfu53nZVxjOFPZDy0CpwMb2
+         KQwjnT2WMhz/ZMnTke8RWT7s63WTWtF/QDBXkI+1GV7SnXhCDAl7ipcAfHEfqnO+rb0t
+         p7fwWHHIIg++H4YfuQCso85FeVdK9apKMqmDap6H1ebZBAUTpyfIwBjQp+jgm95jASly
+         fW5/ZyyE/XtfMG15rnMojC0oKOMP4h2lQ4P+BKUxgln/Zf4l2IIYCsBlVS0sRyt6udu5
+         jspTvrNA/QFUehCdGD3b1ACMfFVFx1397wJEB1GA+VV/O1gJ8Nllndje5Bp2XjU/Ufpr
+         R7ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=PKVyYBZP4M4LaOe3A7LurKKlGh2uzWJD/IAihg4W4FI=;
-        b=Sc7X/qyTNnyiUaZQoQbI6xBXYB+PrJHjhii6EaB+BEk3v8eDP4cUGsgxqhB+v/WDb+
-         geOJGoLp4efuGCLpBGQQJOkyn+bXApi8LTpqCpUuSkM48KzEvVN+8qVTmNvREhubqGhw
-         WbhTtDuotm2W1vsvSYSS3mI5GMtxGlcHMTamyCBrht6GOwOZYMev26Up5d81CG1PXWwi
-         1nLCOxz4c4X5ZKiqtagDQhrYwqwYyao4hfFQoJHpDeigRftuMo4+iB8BfwkpEVlNNBy7
-         J6tqp+ZiJ+9ydrsQdaVlgBGfusORP5pZdCg86o/RbPNfXqBSz5QJJRVb01bA2PFnLXiS
-         RbSA==
-X-Gm-Message-State: AHQUAuahYWq1ZXXE1a2zF/8eD6/q7h3jaEZnNb+MXTF3znERZMD0UDXW
-        N8kVIGS+iQ5W1LvWyRys7tE=
-X-Google-Smtp-Source: AHgI3IZ85Hx7+83ExbqO3OSllBfMdSep6poazsLd+9XMIM37fmkKor7aRjHWk5Nggm692wUYYkk7vw==
-X-Received: by 2002:adf:f145:: with SMTP id y5mr27787001wro.240.1550701980600;
-        Wed, 20 Feb 2019 14:33:00 -0800 (PST)
+        bh=RgbxEeGkSZ6ufzgLBzLzvL/Hm3PDMt+DyysF+7258o4=;
+        b=gfQxyWSiX8iaVRbW1grwCBEgTF5tu380cw31FFu6KBftR0zQA18+Dg78ViIDFVFsjc
+         LeBH3QkzP7ov5lRP9zhK2oqrWJCLQylCDokm2TahL6eQ25CJLSPbScNw/+chRzE9PDmq
+         UjbTX938WzRwJSOlqD2yDWIanFvUfXNDqdhz04aN+oO57uEEc/rX2zvTumV23eIIwVsv
+         0SnhAoX3j6cVLLhQTcCMcKHY3h7qG1i1NQaceHkWRIvA4f1SytYgrq1dAS+PZC2pLcDU
+         3ykLkoB38vV0JVBsLrb9AHBnZiW32egTbXILdF4fR7Q7hHxY6zeIMKfAfkcwq/9PplSM
+         NEsA==
+X-Gm-Message-State: AHQUAuYWBQrlPHT97vLnJW89f2ZWC6OAPnbRTwrkBeNel2uRkthEHOoG
+        PykhdxQbSuUh9guXE7V2YYM=
+X-Google-Smtp-Source: AHgI3IZjphI3zyUGuDO95tuOykybme/Qn8955L48FosaI2um5PnkwzOVdmdMWUNCvdwA26uPgcbyng==
+X-Received: by 2002:a1c:9acd:: with SMTP id c196mr8538470wme.145.1550702353657;
+        Wed, 20 Feb 2019 14:39:13 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v6sm6305137wml.42.2019.02.20.14.32.59
+        by smtp.gmail.com with ESMTPSA id m4sm4147411wml.2.2019.02.20.14.39.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Feb 2019 14:32:59 -0800 (PST)
+        Wed, 20 Feb 2019 14:39:12 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
@@ -66,11 +66,12 @@ References: <20190216114938.18843-1-pclouds@gmail.com>
         <87wolzo7a1.fsf@evledraar.gmail.com>
         <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com>
         <xmqq8syb3b3j.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8Dq9_uFofs40XwjLkmiBNWXCpic96W1MK_tjLQyaF0+BA@mail.gmail.com>
-Date:   Wed, 20 Feb 2019 14:32:59 -0800
-In-Reply-To: <CACsJy8Dq9_uFofs40XwjLkmiBNWXCpic96W1MK_tjLQyaF0+BA@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 20 Feb 2019 08:35:41 +0700")
-Message-ID: <xmqqsgwium3o.fsf@gitster-ct.c.googlers.com>
+        <87h8cy6cme.fsf@evledraar.booking.com>
+        <CACsJy8B15hORnaOdYW8TNE3Gniv9NBJopyLYmHR5iF0U3beq6g@mail.gmail.com>
+Date:   Wed, 20 Feb 2019 14:39:12 -0800
+In-Reply-To: <CACsJy8B15hORnaOdYW8TNE3Gniv9NBJopyLYmHR5iF0U3beq6g@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 20 Feb 2019 16:41:51 +0700")
+Message-ID: <xmqqo976ultb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -81,28 +82,32 @@ X-Mailing-List: git@vger.kernel.org
 
 Duy Nguyen <pclouds@gmail.com> writes:
 
->  - surprises sometimes, but in known classes. This is the main use
-> case of backup log, where I may accidentally do "git commit
-> -amsomething" after carefully preparing the index. Saving overwritten
-> files by merge/checkout could be done here as an alternative to
-> "garbage" attribute.
+> There is a trade off somewhere. "new user first" should not come at
+> the cost for more experienced users.
 
-The problem with either of these is not the "saving" half, but
-"restoring".  For different people, and for different cases even to
-the same person, granularity of what is perceived as a single action
-is different, so "give me the state of my working tree files before
-the last operation" is a request that does not have a good
-definition.  After finishing "git rebase" that replays 3 changes,
-one of which needs manual conflict resolution, you may realize that
-you made an incorrect resolution for one path but not others.  How
-would you let the user say "no, I do not want to undo the whole
-rebase, I want to go back to the state where I replayed the first
-change, saw the conflicts while replaying the second change, and
-resolved them in these files, but before touching that last one I
-screwed up resolving, so that I can correct"?
+Probably.  Nobody will stay being newbie forever.
 
-Piling many "backups" (or "snapshots") on top of each other is the
-easier part; I'd expect that it would be a much harder design
-problem to let users make use of them in meaningful ways, and that
-is the primary reason why I am skeptical.
+> Making "git checkout/merge" abort while it's working before breaks
+> scripts. And requiring to mark trashable files manually duplicates a
+> lot of ignore patterns. Have a look at any .gitignore file, the
+> majority of them is for discardable files because "ignored" class was
+> created with those in mind (*.o and friends).
 
+Very true.  That is why we were OK for so long with "ignored" that
+means "ignored and expendable".  We know in some situations we want
+"ignored but precious", and that is why we are discussing this topic.
+
+> So now you would need to
+> add more or less the same set of ignore rules in .gitattributes to
+> mark them trashable, and gitignore/gitattributes rules are not exactly
+> compatible, you can't just blindly copy them over. Every time you add
+> one more .gitignore rule, there's a good chance you need to add a
+> similar rule for trashable attribute.
+
+I am not sure why you would even need to _duplicate_.
+
+Are you saying for each and every rule that specify "ignored and
+expendable" in .gitignore there always will be "ignored but
+precious" exception that match the pattern?  Given that we have been
+OK for so long without even needing "precious", I find it somewhat
+unrealistic to assume so.
