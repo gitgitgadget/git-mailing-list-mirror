@@ -2,87 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A20711F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 12:48:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB9DE1F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 12:53:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727613AbfBTMsI convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 20 Feb 2019 07:48:08 -0500
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:33202 "EHLO
-        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726414AbfBTMsH (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 20 Feb 2019 07:48:07 -0500
-Received: from app08-neu.ox.hosteurope.de ([92.51.170.142]); authenticated
-        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
-        id 1gwRIC-0004Pp-QO; Wed, 20 Feb 2019 13:48:04 +0100
-Date:   Wed, 20 Feb 2019 13:48:04 +0100 (CET)
-From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Message-ID: <2139295744.18413.1550666884748@ox.hosteurope.de>
-In-Reply-To: <20181109104202.GA8717@sigill.intra.peff.net>
-References: <20181109104202.GA8717@sigill.intra.peff.net>
-Subject: Git Merge Conference Recordings [was: Re: [ANNOUNCE] Git Merge
- Contributor's Summit Jan 31, 2019, Brussels]
+        id S1727651AbfBTMxI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 07:53:08 -0500
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:34782 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726172AbfBTMxI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 07:53:08 -0500
+Received: by mail-wr1-f49.google.com with SMTP id f14so25925741wrg.1
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 04:53:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0fWiCd5m2wN1yucnSXfg1M9v2YQWMxnTvTETdiyNhKw=;
+        b=gJR/p4KactYdhPd3M/anz80dSZnDcGNQSSm3bsgV+0BAzuSCXvzt8ywYWzh6+Lk2Wr
+         TtsLiR0f4v3Rk9V2s+ud3r8G5AIzUDrZ73EXBhkJJUgla5ke3Op9Xn2zgj0/QX5Wlk3I
+         Bfm+dMJLs4ihdNQD4zyvVPs+tfLdDrRydmbzgtuxriv0YnmfrAGcPL+S6QnhQlFwxCJD
+         FUlOFRhJSHfD5TACn7lfhwZO8mHtsCz6NTZ4IStqqszOWuo3zc/cX6PYLUCUOUTduV/C
+         xxBsc7wMlSnY9ClO7+4gLfgluM66qODGCNzBdnwmwSUF2SItwpaV2So5FbrewwnpR5cB
+         xI9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0fWiCd5m2wN1yucnSXfg1M9v2YQWMxnTvTETdiyNhKw=;
+        b=kLGT3PdxYlGgPDalbl2xs/GD82oClFMEyC+M/CQ3lXJxtH/XhjDEnjD20BBLRgRfvA
+         XW6FaQROaYyDyn8ectnZwPMaZT6mJ3+VLch8rFUgJ8113ueb9xxW81U/HmP4Pw2+rPQG
+         XktgHZnsuebhkKPdkVf0phbgwhsGb8JW3EtQGdQIC0zNGoUCSwyxpJq5mpku0pqYIuG3
+         1uyjnk910KD/Y/ZgYOZYzKkqNSfE8K/maDIi6bHoldIaXcmY9IZseFelAMSB5Ff7Yrls
+         kQankMR6PRXQCEAHp27ylYVxBRz175p4xXEe4TwIdIUXFzLnvFkba7Euv9xIR7Bq1fv/
+         nrpw==
+X-Gm-Message-State: AHQUAuaqmcFjsbxK1rCC61dj+7HGAs8vce6MhkUjWs0DqXKT6R1vGeO1
+        KjZCVFYY8PteVv/WLqe5p4Qp7PDH
+X-Google-Smtp-Source: AHgI3Iavdp5eB8XeXdaKhjp6M0s1QKWK7ssNa70u7d6K/c0bu0FH58OT9J64x/ods88fg4G1X9+pJA==
+X-Received: by 2002:adf:8447:: with SMTP id 65mr23417047wrf.328.1550667186256;
+        Wed, 20 Feb 2019 04:53:06 -0800 (PST)
+Received: from szeder.dev (x4db9774d.dyn.telefonica.de. [77.185.119.77])
+        by smtp.gmail.com with ESMTPSA id c2sm11314466wrt.93.2019.02.20.04.53.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Feb 2019 04:53:05 -0800 (PST)
+Date:   Wed, 20 Feb 2019 13:53:03 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [Breakage] t0021 Subtest 15 v2.21.0.-rc2 on NonStop.
+Message-ID: <20190220125303.GQ1622@szeder.dev>
+References: <000f01d4c915$9c4c76a0$d4e563e0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v7.8.4-Rev51
-X-Originating-Client: open-xchange-appsuite
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1550666886;9b21c875;
-X-HE-SMSGID: 1gwRIC-0004Pp-QO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <000f01d4c915$9c4c76a0$d4e563e0$@nexbridge.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+On Wed, Feb 20, 2019 at 07:12:49AM -0500, Randall S. Becker wrote:
+> Sadly I have to report that this subtest breaks on NonStop as of
+> v2.21.0-rc2. It succeeds when run with --verbose, but not without,
+> making this difficult to diagnose.
 
-I wanted to point a colleague of mine to one of the talks. Unfortunately I could not find the recordings of the talks anywhere.
+That particular test is known to be flaky, see:
 
-Are these available?
+  https://public-inbox.org/git/000901d4bf98$1ab08fe0$5011afa0$@nexbridge.com/T/#u
 
-Thanks,
-Thomas
-
-> Jeff King <peff@peff.net> hat am 9. November 2018 um 11:42 geschrieben:
-> 
-> 
-> Git Merge 2019 is happening on February 1st. There will be a
-> Contributor's Summit the day before. Here are the details:
-> 
->   When: Thursday, January 31, 2019. 10am-5pm.
->   Where: The Egg[1], Brussels, Belgium
->   What: Round-table discussion about Git
->   Who: All contributors to Git or related projects in the Git ecosystem
->        are invited; if you're not sure if you qualify, please ask!
-> 
-> This email is just to announce the date so people can start planning.
-> You'll need to register eventually, but I don't have the invite codes
-> yet.  Registration should be similar to past years. In particular, if
-> you're coming to the contrib summit, DON'T register for the main
-> conference yet. I think the codes I get will cover both (and as with
-> previous years, contrib summit attendees will have the option of a
-> complimentary pass to the main conference, or can pay €99 that goes to
-> Software Freedom Conservancy).
-> 
-> The content / agenda is whatever we choose. There's some more discussion
-> on format in this thread from August:
-> 
->   https://public-inbox.org/git/20180813163108.GA6731@sigill.intra.peff.net/
-> 
-> though it sounds like people are mostly on board with what we've done in
-> past years. I'm looking into getting better A/V for remote attendance,
-> but I'm not sure yet what will be possible.
-> 
-> Any thoughts or discussion on format, content, etc are welcome. The only
-> thing set so far is the time and place. :)
-> 
-> -Peff
-> 
-> [1] This is the same venue as 2017: https://goo.gl/maps/E36qCGJhK8J2
->
