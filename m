@@ -2,108 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F3C71F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 16:30:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5640C1F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 16:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726180AbfBTQak (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 11:30:40 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:36847 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725796AbfBTQak (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 11:30:40 -0500
-Received: by mail-ed1-f67.google.com with SMTP id g9so9868826eds.3
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 08:30:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=loskot-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=Nj+LSKWBzi+PJMmwRKeH6eh8WhZ4EVN/2BAzma3hjMQ=;
-        b=B8ZlEANi/rxMDH5wlOr4o/fT4dr2B5lweqdy0bBbX7JEoOOwoUmJtZFqd0UlEsUczz
-         cvHdwYP9ZGuNOSwXNkJsrySGlSjrwNAvyTr4cPZX1fhfkSf4MnKig2SOiN/3BATtGI8s
-         f6wC9wQ9t1SiCxH74jFDAP7tB+f/+6SfjOIXZxcvX91xp/TSGaaFHmsBov63GD7TFMTP
-         IPCvF4xlsLHJcpwOuDzn2gTq7+JMzunQV86xd7W0Xfr2y5WI6v4EgMYHtus0LMHAaD3Z
-         IOFVI3qkcxz6ay4FGjdiFUUtVjPxNhW7l0EDUtlfypcyh6ihz/Ll9DUwpUDDeyCtKekO
-         hTyQ==
+        id S1726344AbfBTQfH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 11:35:07 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:41348 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725877AbfBTQfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 11:35:07 -0500
+Received: by mail-qk1-f194.google.com with SMTP id y15so897599qki.8
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 08:35:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=Nj+LSKWBzi+PJMmwRKeH6eh8WhZ4EVN/2BAzma3hjMQ=;
-        b=o457hiT3vWBllJNDnjfbqTBq00IvIO555NYKlWH43IQDeFq1ELS4kGg4k+YrkjmWj6
-         IEp2jDaUHuyDTdhabsa4sj5XtjvjIFA898MvQid5w3Z0o4ZZc7yjWdZK33N++1EYAl3M
-         +NgUu4MGc+klGKmjc4SegKup427/3DCeTkyAyElf28TkNQHiM82V1L/wp7iKRGeTHvWT
-         hF+4+j60ckbKfVTSRI4/VdkrIjQN3x+4o9aCxZkXO7sGs9+O9LY2JztbgAEBp5D0SqPU
-         N8mM3NbpIbmlP84T/4u4HnKakUpOMIJPmgSezUaXq0LvBKz38Nhjn3tPxmutocgsmeRM
-         IyVQ==
-X-Gm-Message-State: AHQUAuYQqDGqDQBuVgDj1koHIuym3x2HiDMGfsD84UCTC4U08N3fkb+S
-        QcdfApPsTSt8hO9cxPK16cPTAhToXBYW0Cn+fsycqZCCq8E=
-X-Google-Smtp-Source: AHgI3IZENjyZGD4QZa+y8yan2bKA6U5R09esB6NeJrdKhgZZ3OmrGx0RDV6b+iRNHsJYzMcC/mB0lJiib8AxQWUOOmk=
-X-Received: by 2002:a50:9622:: with SMTP id y31mr26444097eda.248.1550680238468;
- Wed, 20 Feb 2019 08:30:38 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=KNf3/qh0Ny9/ii+vu5P4+aW+az32boZ9SLTLs4TTn3E=;
+        b=PPAKUShPDepIbasseYlYtjxtQglg2kP5DFPTClIoaAjEc3+qMTniJYWrsfNNE1TRSs
+         9QfCAoJXtmNp3usk9J9Emu89wlwUYZhpUta7b6hoSm9ydW+XmB81mic2p4/mNO+x8i1F
+         0+LJDH0UBkI8RIFhqfdBpdXM8aybyUoNgJWCZ8asuLdjF7cmXgFFRo3shQu3OaI5zYuj
+         vuL9thWNLmJq6rhqJ41DD6+aa3XXxLx7iN0OrOxTPeXpHO1dpXssJdFQsRVCXrnRQkey
+         OZxTf4+TB6zYFLhlCktICCKrdk7biZhk+jPbm1kO0+32AGHx+CtrE1cg2umZQalAdDmE
+         ENfg==
+X-Gm-Message-State: AHQUAuY5lNcij//G3r4qhZrSLHv8EctT+er5RFC2FZeXkd59dYGtZxZm
+        Z4N3Qydqzg8U7pawe5r44aeIfSPHcmuMlbZKGQE=
+X-Google-Smtp-Source: AHgI3IaiWTSZQ6gVMhdvZrrTQahzYe2hFosyr8pW0b8U1vL3Dq8RU+vpWwlgFIciBrfwoTRCo8W3jjgGyB83uV+JIjI=
+X-Received: by 2002:a37:c313:: with SMTP id a19mr24422694qkj.220.1550680506000;
+ Wed, 20 Feb 2019 08:35:06 -0800 (PST)
 MIME-Version: 1.0
-References: <CABUeae_N3NFXn-E1+LHORL3RDf5iTCFn=zyuOo3c2Aot2QF7pg@mail.gmail.com>
-In-Reply-To: <CABUeae_N3NFXn-E1+LHORL3RDf5iTCFn=zyuOo3c2Aot2QF7pg@mail.gmail.com>
-From:   Mateusz Loskot <mateusz@loskot.net>
-Date:   Wed, 20 Feb 2019 17:30:12 +0100
-Message-ID: <CABUeae9vyjWszUkfUJ7-JNmrX-7dAQDcvn9488zM4Lcr3VGwqw@mail.gmail.com>
-Subject: Re: "Submodule registered for path" output with config aliases mixed in
-To:     git@vger.kernel.org
+References: <cover.1550508544.git.msuchanek@suse.de> <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
+In-Reply-To: <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 20 Feb 2019 11:34:54 -0500
+Message-ID: <CAPig+cSdA8XRwCJQD3o6DZLwesBLRTys7OV6u0wy9Ve3Hp6XPA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] worktree: fix worktree add race.
+To:     Michal Suchanek <msuchanek@suse.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Marketa Calabkova <mcalabkova@suse.cz>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hmm, sorry for pushing, but no ideas, really?
-Doesn't it seem like a bug?
+On Wed, Feb 20, 2019 at 11:17 AM Michal Suchanek <msuchanek@suse.de> wrote:
+> Git runs a stat loop to find a worktree name that's available and then does
+> mkdir on the found name. Turn it to mkdir loop to avoid another invocation of
+> worktree add finding the same free name and creating the directory first.
+>
+> Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+> ---
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -295,8 +295,12 @@ static int add_worktree(const char *path, const char *refname,
+>         if (safe_create_leading_directories_const(sb_repo.buf))
+>                 die_errno(_("could not create leading directories of '%s'"),
+>                           sb_repo.buf);
+> -       while (!stat(sb_repo.buf, &st)) {
+> +       while (mkdir(sb_repo.buf, 0777)) {
+>                 counter++;
+> +               if ((errno != EEXIST) || !counter /* overflow */)
+> +                       die_errno(_("could not create directory of '%s'"),
+> +                                 sb_repo.buf);
+>                 strbuf_setlen(&sb_repo, len);
+>                 strbuf_addf(&sb_repo, "%d", counter);
+>         }
+> @@ -306,8 +310,6 @@ static int add_worktree(const char *path, const char *refname,
+>         atexit(remove_junk);
+>         sigchain_push_common(remove_junk_on_signal);
+> -       if (mkdir(sb_repo.buf, 0777))
+> -               die_errno(_("could not create directory of '%s'"), sb_repo.buf);
+>         junk_git_dir = xstrdup(sb_repo.buf);
+>         is_junk = 1;
 
-Matz
+Did you audit this "junk" handling to verify that stuff which ought to
+be cleaned up still is cleaned up now that the mkdir() and die() have
+been moved above the atexit(remove_junk) invocation?
 
-On Tue, 19 Feb 2019 at 17:51, Mateusz Loskot <mateusz@loskot.net> wrote:
->
-> Hi,
->
-> $ git version
-> git version 2.20.1.windows.1
->
-> I'm running `git clone --recurse-submodules https://...`
-> The command seems to run well and completes with success.
->
-> However, I noticed strange output from git:
->
-> ```
-> Submodule 'Binary/A' (https://...) registered for path '!f() { ~/AppData/=
-Local/Fork/Fork.exe $PWD; }; fBinary/A'
-> Submodule 'Binary/B' (https://...) registered for path '=C3=80   =E2=99=
-=82=E2=99=A6Binary/Intergraph'
-> Submodule 'Binary/C' (https://....) registered for path '!sh -c 'git log =
-$1@{1}..$1@{0} $@'Binary/C'
-> Submodule 'Binary/D' (https://...) registered for path 'ls-files -o -i --=
-exclude-standardBinary/D'
-> Submodule 'Binary/E' (https://...) registered for path 'mergetool.Tortois=
-eGitMerge.trustexitcodeBinary/E'
-> ```
->
-> I managed to identify where that garbage injections come from:
-> from git aliases I've got configured [1]
->
-> Could anyone explain what is happening here?
-> Is there anything wrong with my ~/.gitconfig [1] ?
->
->
-> [1] https://github.com/mloskot/wsl-config/tree/master/git
->
-> --
-> Best regards,
-> Mateusz =C5=81oskot, http://mateusz.loskot.net
-
-
-
---=20
-Mateusz Loskot, http://mateusz.loskot.net
+I did just audit it, and I _think_ that it still works as expected,
+but it would be good to hear that someone else has come to the same
+conclusion.
