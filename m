@@ -7,60 +7,64 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DC591F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 11:41:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15B3D1F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 11:41:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727534AbfBTLli (ORCPT <rfc822;e@80x24.org>);
+        id S1727549AbfBTLlk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 06:41:40 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35394 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727442AbfBTLli (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 20 Feb 2019 06:41:38 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45200 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726197AbfBTLlg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 06:41:36 -0500
-Received: by mail-ed1-f67.google.com with SMTP id d9so19542011edh.12
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 03:41:35 -0800 (PST)
+Received: by mail-ed1-f66.google.com with SMTP id g19so10607711edp.2
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 03:41:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=KbbtFYNMvfDeyEUTpj+UtfCRufl4UzTuKPZCT5cAS0I=;
-        b=koOT5z8lIV857zPzXQ9UHSjipXSDq6Al0i4m5UOyU5+OlOqFTI8CXOEU0bQ22qFpGk
-         mNYb+vuhy6qfNNRQI866705Q8OJxT7LDYGTIs4yBY6V4I/uyxp5UI4iTvm7/T0NGhKvq
-         YhXoC+Y74DycPcRRUJmZkH66B5kyz9UmAyErGfZoNtCbokJaaCqN50wk3nv6fo1O0h0Z
-         PMlfRCBiqjhtuPdu03KK0xbiI1Crc+5LeCTyzjKWAJfSr4qTpvUAwd1tYn+6XFUn9zqC
-         MSSK0nK6bO3knzGafiz75OQk1uAr+RjrLBrRXowDWYxzAynXZQXY/GxbGGrWz4BpzSd+
-         Z9RA==
+        h=date:message-id:in-reply-to:references:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
+        bh=vWvZwd8ddG+CblAEqu3PKbtCl1nm8ciFqGKmDAbRAwA=;
+        b=Dy5oJcoDiWaVnoUdZXCfsulR3SNc5g7+oOtayP6zWA78Rq5fqCM4/78wSjaZuPMLpK
+         QPFDJOlNkIZ7x2XA8nVLyLNCiBrVebIcWZmyFivQ0DpLbuXkzuVakVnXU+GimPRYb48e
+         xS6on27oj4IVs1QPbJk7JXWkp5K4Tlabt6gRNtMdWEnvVNzHxnAR+JYHQ1Oo3j7vquP7
+         5phR37NXmgd4bGNQ/3lolZBkZQVt+zxdZHfTFaGo+cuhlJ+4Xq2BUmmV75dbrOfWbjp9
+         Vts0y71qOLY88wplw/98NU4FIeZx3kKfqcVc2uCOEiUo7QGOMV0UZhUgbn8CJmEx+Wtv
+         uiEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KbbtFYNMvfDeyEUTpj+UtfCRufl4UzTuKPZCT5cAS0I=;
-        b=fByhdQTLlvRKZmdrwJw9SOxIv3pr+phdlSng4w9/UMUvjO5AvYDXlEUeiZNW47S1KC
-         SFEEGfJeLB+oXBABvJ95WNjPr7VnWudQtlckknaKuulLvaRWd1D3hgPwyWQStPqq60FU
-         88g+9Qux0XE1ANR5P3pSoZfrJI1RKxOndcNsYg/fMoyHTks9LxWJxoJ18foHPPkJrNs4
-         dERjgoIaBqUd2RtNaJvzyZSXRBl8SF6QJbWM23gjJAmFuqiqFoxO0/aaDxkdLmT65N+Q
-         UxzhsAIdVKw2j0zDmVhgECrXepQnAbwqqQ4PigJIC6K8h70M8YJqw3jWCDmY7Mr7RAN+
-         P0PA==
-X-Gm-Message-State: AHQUAuYcBfQO9NAG514a2V5bHy9jb/tYK15cISQ9fPDZ6apUFxPhrzJ6
-        81J/3eJurr+nlZhCZQc6F8fRukRN
-X-Google-Smtp-Source: AHgI3Ib8zJCCOJ3F+9Gvj/1I2do2OMcuJN5cHmAgEziMNCDqvat0KzUkolzIDdOshNJP73trWYOgQw==
-X-Received: by 2002:a17:906:b742:: with SMTP id fx2mr18252451ejb.199.1550662894925;
-        Wed, 20 Feb 2019 03:41:34 -0800 (PST)
+         :subject:mime-version:content-transfer-encoding:fcc
+         :content-transfer-encoding:to:cc;
+        bh=vWvZwd8ddG+CblAEqu3PKbtCl1nm8ciFqGKmDAbRAwA=;
+        b=IGOUMOcUuukYXbgJofATO1rUR2rSxw0R7xPMQD9RrBmPdAosrPYm3X83Y8SqxHoJM1
+         /bUnN88M0VwVZAaNsNv+9ZhtzZwsNKqxGfewqI7DgnTTyuxhknp/k2FlUILeAmp+j+Ia
+         N1zKZqEkjDCy7AP14uwdg4Y2DUHAIxNNKizAXG9p+VQ3zzl+yvT0LBieatNp1Wd/goVg
+         F9alCnyX5j7V/RKWv8Vmmucey60IdXN1plsfghomWsO7f43w8CD0qPTi+nX2Ii5Klj9i
+         vYtDophe/9fQSgiJHulFhhHO9anylsK2WH+SvwEyHpLiqEmfYqNMj7MQ2xiCi7S94PMG
+         cHlw==
+X-Gm-Message-State: AHQUAuYsY23rvixT7DuBwvMinszmW14c+RT+SYuPpGylmCuuiZAyzzNP
+        tx4zG1WP8cNprrKTWyZHucjmbjz5
+X-Google-Smtp-Source: AHgI3IZ4OD/cIFZ03aCj4UsXFcdhdP3U7/P4f8ec9IZoxwtDLVMTThuH/xaDDYrAJl505VUQXYN4Xw==
+X-Received: by 2002:a50:9012:: with SMTP id b18mr21933015eda.30.1550662896340;
+        Wed, 20 Feb 2019 03:41:36 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k8sm5625012edn.14.2019.02.20.03.41.34
+        by smtp.gmail.com with ESMTPSA id g18sm5823763edh.39.2019.02.20.03.41.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Feb 2019 03:41:34 -0800 (PST)
-Date:   Wed, 20 Feb 2019 03:41:34 -0800 (PST)
-X-Google-Original-Date: Wed, 20 Feb 2019 11:41:25 GMT
-Message-Id: <441321fc3dbbb8427ea7ec2663b4c21db8771c6c.1550662887.git.gitgitgadget@gmail.com>
+        Wed, 20 Feb 2019 03:41:35 -0800 (PST)
+Date:   Wed, 20 Feb 2019 03:41:35 -0800 (PST)
+X-Google-Original-Date: Wed, 20 Feb 2019 11:41:27 GMT
+Message-Id: <2b4bdce7300f3b6ba70f00a9eb524f5fa1ceff8f.1550662887.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.103.v5.git.gitgitgadget@gmail.com>
 References: <pull.103.v4.git.gitgitgadget@gmail.com>
         <pull.103.v5.git.gitgitgadget@gmail.com>
 From:   "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 08/10] add-interactive.c: implement show-help command
+Subject: [PATCH v5 10/10] add--interactive.perl: use add--helper --show-help
+ for help_cmd
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
@@ -73,90 +77,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Slavica Djukic <slawica92@hotmail.com>
 
-Implement show-help command in add-interactive.c and use it in
-builtin add--helper.c.
+Change help_cmd sub in git-add--interactive.perl to use
+show-help command from builtin add--helper.
 
-Use command name "show-help" instead of "help": add--helper is
-builtin, hence add--helper --help would be intercepted by
-handle_builtin and re-routed to the help command, without ever
-calling cmd_add__helper().
+If an error occurs, it will be reported, but the Perl script will
+not exit, since the add--helper is called within an eval block.
+
+Just like the change where the Perl script calls the add--helper
+to print the numstat, also here we forgo adding a regression test:
+the Perl script is on its way out (and this patch is part of that journey).
 
 Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- add-interactive.c     | 17 +++++++++++++++++
- add-interactive.h     |  2 ++
- builtin/add--helper.c |  7 ++++++-
- 3 files changed, 25 insertions(+), 1 deletion(-)
+ git-add--interactive.perl | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 3c2e972413..ad05bf7e1f 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -800,3 +800,20 @@ void add_i_status(void)
- 	free(s);
- 	free_choices(&choices);
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index c2c6b4d5e3..88b7be6602 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1718,16 +1718,8 @@ sub quit_cmd {
  }
-+
-+void add_i_show_help(void)
-+{
-+	const char *help_color = get_color(COLOR_HELP);
-+	color_fprintf_ln(stdout, help_color, "status        - %s",
-+			 _("show paths with changes"));
-+	color_fprintf_ln(stdout, help_color, "update        - %s",
-+			 _("add working tree state to the staged set of changes"));
-+	color_fprintf_ln(stdout, help_color, "revert        - %s",
-+			 _("revert staged set of changes back to the HEAD version"));
-+	color_fprintf_ln(stdout, help_color, "patch         - %s",
-+			 _("pick hunks and update selectively"));
-+	color_fprintf_ln(stdout, help_color, "diff          - %s",
-+			 _("view diff between HEAD and index"));
-+	color_fprintf_ln(stdout, help_color, "add untracked - %s",
-+			 _("add contents of untracked files to the staged set of changes"));
-+}
-diff --git a/add-interactive.h b/add-interactive.h
-index 8ef3d2e82b..ddeedd3a33 100644
---- a/add-interactive.h
-+++ b/add-interactive.h
-@@ -5,4 +5,6 @@ int add_i_config(const char *var, const char *value, void *cbdata);
  
- void add_i_status(void);
+ sub help_cmd {
+-# TRANSLATORS: please do not translate the command names
+-# 'status', 'update', 'revert', etc.
+-	print colored $help_color, __ <<'EOF' ;
+-status        - show paths with changes
+-update        - add working tree state to the staged set of changes
+-revert        - revert staged set of changes back to the HEAD version
+-patch         - pick hunks and update selectively
+-diff          - view diff between HEAD and index
+-add untracked - add contents of untracked files to the staged set of changes
+-EOF
++	my @help_cmd = ("git", "add--helper", "--show-help");
++	!system(@help_cmd) or die "@help_cmd exited with code $?";
+ }
  
-+void add_i_show_help(void);
-+
- #endif
-diff --git a/builtin/add--helper.c b/builtin/add--helper.c
-index 464d2245f3..1fe64bc7fb 100644
---- a/builtin/add--helper.c
-+++ b/builtin/add--helper.c
-@@ -10,7 +10,8 @@ static const char * const builtin_add_helper_usage[] = {
- 
- enum cmd_mode {
- 	DEFAULT = 0,
--	STATUS
-+	STATUS,
-+	HELP
- };
- 
- int cmd_add__helper(int argc, const char **argv, const char *prefix)
-@@ -20,6 +21,8 @@ int cmd_add__helper(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "status", &mode,
- 			    N_("print status information with diffstat"), STATUS),
-+		OPT_CMDMODE(0, "show-help", &mode,
-+			    N_("show help"), HELP),
- 		OPT_END()
- 	};
- 
-@@ -30,6 +33,8 @@ int cmd_add__helper(int argc, const char **argv, const char *prefix)
- 
- 	if (mode == STATUS)
- 		add_i_status();
-+	else if (mode == HELP)
-+		add_i_show_help();
- 	else
- 		usage_with_options(builtin_add_helper_usage,
- 				   options);
+ sub process_args {
 -- 
 gitgitgadget
-
