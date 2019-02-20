@@ -2,123 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 884381F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 21:01:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A26771F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 21:09:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726876AbfBTVBu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 16:01:50 -0500
-Received: from mout.gmx.net ([212.227.15.15]:51095 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725798AbfBTVBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 16:01:50 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MFcg9-1gqqUP2hAj-00EcXs; Wed, 20
- Feb 2019 22:01:44 +0100
-Date:   Wed, 20 Feb 2019 22:01:27 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v12 18/26] stash: convert push to builtin
-In-Reply-To: <xmqqbm371rdn.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1902202201061.41@tvgsbejvaqbjf.bet>
-References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com> <a6692eef2ca7c9d9e4701f087269d537248a4941.1545331726.git.ungureanupaulsebastian@gmail.com> <20190208113059.GV10587@szeder.dev> <20190210221712.GA9241@hank.intra.tgummerer.com>
- <20190211011306.GA31807@szeder.dev> <20190212231837.GI6085@hank.intra.tgummerer.com> <20190219002336.GN1622@szeder.dev> <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> <xmqqbm371rdn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726671AbfBTVI7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 16:08:59 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36909 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726613AbfBTVI7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 16:08:59 -0500
+Received: by mail-wr1-f66.google.com with SMTP id c8so27633551wrs.4
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 13:08:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=dRXxPFmiIHjZelKQzzmk+a170yFVxkQ/pTfzJMGy7gg=;
+        b=B8u7Q1qSzmadHeSI8NAX3A3ISAWyMnQDwMmiD7i2odrmI8wTyxOsaTwe0Ab/WEMLQb
+         WZfIScg7+4o4EJ4tmZekDY6VRkgkusc3R4ALelG9jUYPSvcg71XCTyTodtjAnV20P5d3
+         RRVRDOGbG9SuWzA+5yoE9RGTDcfmrNMRih7dzNlynY78hpwqv4rK0FWGSS67xa9Dic2g
+         W6trjyueU2UYfGz27TquBgzmCzG/IVQFt3PQXBJ+WXw++77fi8TWdxIPhw+CwF3DCXLc
+         qCw5pgB9oarYG9hHjtHKdJlTDmDyQgxCQjj7aJP1jwTS2POn2r7u34JGuWmZNgcp8xXz
+         pVvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=dRXxPFmiIHjZelKQzzmk+a170yFVxkQ/pTfzJMGy7gg=;
+        b=uJSZoFEsQOzu/tVS/0PmjHM7aooQDs062vaqmN+NUCMaNI9O4sDSNCiWUUBQMxax7W
+         KMksluu7EBvRjZig+CZJUuXqTEYtwMFkeX1nFsoVATaBPzViipmvu2gIJgETtswi5vcK
+         rQ8SX2w7rhTKkyctk8ZfDDq5gbPm2CX8g7wGfPWwXXlpcK2Eq4JesKwVKgHn0KJSuoE0
+         5fMyciZFn5Ulz566dk23TxUFWW54oG/TUChKQd1DmhgvY9+WmLixE5P58h9lN1UQJgEz
+         h+YwSp+O0v9xKMZ0DczJ8mAG9bqEceNwv6FmyvIQoKakEsE2gtdAS3iTJYf4tH2E94iP
+         csfw==
+X-Gm-Message-State: AHQUAuYapeydrVVDOoSR56oJ0RDNseBj1VXtb+RprjfvBCN11lF0OLEp
+        2MGJq8gAI5dtTQg7Ss0is68H4gAF
+X-Google-Smtp-Source: AHgI3IZ7Zb+jET9/oGle6TKi/iiZ8IEk61IuJkG+M+tj7/BmKgkuGPofvX/706/AjCfgTTGRi+StbQ==
+X-Received: by 2002:adf:9123:: with SMTP id j32mr27422564wrj.122.1550696937153;
+        Wed, 20 Feb 2019 13:08:57 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a184sm7459710wmh.37.2019.02.20.13.08.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 20 Feb 2019 13:08:56 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3 10/21] diff-parseopt: convert --stat*
+References: <20190207103326.10693-1-pclouds@gmail.com>
+        <20190216113655.25728-1-pclouds@gmail.com>
+        <20190216113655.25728-11-pclouds@gmail.com>
+Date:   Wed, 20 Feb 2019 13:08:56 -0800
+In-Reply-To: <20190216113655.25728-11-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sat, 16 Feb 2019 18:36:44 +0700")
+Message-ID: <xmqq1s42w4k7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Stv8orsNu+7yegyags6Kc+9knV+iPw45mfqKHjxU6ByALkUkX5L
- Sk7WttRiPQ8HgZjLFI1Uae02UuWJnjxm4UMAw3/PTmhA8UKkoD7+djGor+Hz5eswNrCp/jo
- ma1gvavpyGxuL+LZoyBecLN49L/XNA+6TRJwmkoHx52t8xAS8mGiJrW/Nh5Fo5ZWvA6psMG
- q5iWAV3jfnHoESEWz/AYg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:n5UNDosTunc=:Ysbw6LNoN5KbWMOU9TGGQa
- oNJYkPBt0sy1cEPXNwgHc7bPePPzqll2In5ZtnqrsuJh2dJ4FPFvamxuE70dXGeC8I5V048LI
- u6LkZX+axcWmib6S4R6TKIBqHQtvEhIsN8SskxNme5Cvgwp2siLBOrbJobHjBEpu3VizNMupo
- tbePG8le7R/Np7iDiI311Z2o1eCQ+8o7U3PC87QIGgtKdtfBMziVBwDj5+cxmdVJFhoUqVuuV
- Uz+izgOUqDoKDvVUMR0hVF5QzIsqDAzOXytSEUo6ka5r5+w1TzP1zJC4C/X2/kLJOj2B9djJq
- hewmMfdB9OegoS4r0rFN9isPRTm2qEN5+vSmGuNxL+IX9OOWLkcdZUbML9JXYDTXgPda2jigv
- NwQF6svls6udNlV6BjZJ5bSU/2LaYFCblmW9n56LxbIsZkou+SesqmmwmEVZlFcKEPFtx3gve
- DXhIPXnXq6NUh2diu/sw27Gsyx0+ZnvFzfUYN2gik0/8PI7tXPo1mrdc9zhTLJPbiRj4ClL7M
- DxJzLAOrgrxdj3brFLkWqCcNJ5tMYoImph7229pOP9SPJPiJnqu+TGKPLXB5DMViEk/mueCVj
- 3ceW13wSLp/CgQscKEYYjtEoIM5iBn/lnCvUwZqDvBdpMVwTXwOICbX2qyVpxxtK6qSTO0bwl
- WBJujaKImUsfdYNkPAc44T8E8Yb+U4BJzovVqIWfmjKlrublpXT0UJ7kLT8BTm4REkzAPvkuJ
- nxNHpNdvWisC6NeNrpaNn7bV/PIoz88EEiZIae7ClnwZg+qFqho8icLQhDOtXHdhSvV5IYFWT
- UneQdHm8yQADDLY1PXNt4qezzKo92JV4nqdZKSKo+enx+AE+cHT7l0YDETwgkXBGxKXJ9YAwW
- GVIRsZOjdKTnowOHc7csYLjQUr0BYHaOCn7HqxddEbsAw+iuWZ0181T+mtDZhTqdahwDONXts
- IkYHJSYdIEA==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-On Tue, 19 Feb 2019, Junio C Hamano wrote:
+> -static int stat_opt(struct diff_options *options, const char **av)
+> +static int diff_opt_stat(const struct option *opt, const char *value, int unset)
+>  {
+> -	const char *arg = av[0];
+> -	char *end;
+> +	struct diff_options *options = opt->value;
+> ...
+> -	switch (*arg) {
+> -	case '-':
+> -		if (skip_prefix(arg, "-width", &arg)) {
+> -			if (*arg == '=')
+> -				width = strtoul(arg + 1, &end, 10);
+> -			else if (!*arg && !av[1])
+> -				die_want_option("--stat-width");
+> -			else if (!*arg) {
+> -				width = strtoul(av[1], &end, 10);
+> -				argcount = 2;
+> -			}
+> ...
+> +	if (!strcmp(opt->long_name, "stat")) {
+> +		if (value) {
+> +			width = strtoul(value, &end, 10);
+> +			if (*end == ',')
+> +				name_width = strtoul(end+1, &end, 10);
+> +			if (*end == ',')
+> +				count = strtoul(end+1, &end, 10);
+> +			if (*end)
+> +				return error(_("invalid --stat value: %s"), value);
+>  		}
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> > diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> >> > index c77f62c895..3dab488bd6 100644
-> >> > --- a/builtin/stash--helper.c
-> >> > +++ b/builtin/stash--helper.c
-> >> > @@ -231,6 +231,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
-> >> >  	struct tree *tree;
-> >> >  	struct lock_file lock_file = LOCK_INIT;
-> >> >  
-> >> > +	discard_cache();
-> >> >  	read_cache_preload(NULL);
-> >> >  	if (refresh_cache(REFRESH_QUIET))
-> >> >  		return -1;
-> >> > 
-> >
-> > So this is working, but it is not the correct spot for that
-> > `discard_cache()`, as it forces unnecessary cycles on code paths calling
-> > `reset_tree()` (which corresponds to `git read-tree`, admittedly a bit
-> > confusing) with a fully up to date index.
-> >
-> > The real fix, I believe, is this:
-> >
-> > -- snip --
-> > diff --git a/builtin/stash.c b/builtin/stash.c
-> > index 2d6dfce883..516dee0fa4 100644
-> > --- a/builtin/stash.c
-> > +++ b/builtin/stash.c
-> > @@ -1372,6 +1372,7 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
-> >  			}
-> >  		} else {
-> >  			struct child_process cp = CHILD_PROCESS_INIT;
-> > +			discard_cache();
-> >  			cp.git_cmd = 1;
-> >  			argv_array_pushl(&cp.args, "reset", "--hard", "-q",
-> >  					 NULL);
-> > -- snap --
-> >
-> > And the reason this is needed: we spawn a `git reset --hard` here, which
-> > will change the index, but outside of the current process. So the
-> > in-process copy is stale. And when the index' mtime does not help us
-> > detect that, we run into that test breakage.
-> 
-> In non-patch mode with pathspec, there is an invocation of "apply
-> --index -R" of a patch that takes the contents of the HEAD to what
-> is in the index, updating the on-disk index and making our in-core
-> copy stale.  Wouldn't we need to do the same?  Otherwise, the same
-> "reset_tree()" you are tryhing to protect with this discard_cache()
-> will call read_cache_preload(), no?
-> 
-> Among the calls to reset_tree() in this file, I think the one that
-> follows the "reset --hard" (your fix above) and "apply --index -R"
-> (the other side of the same if/else) is the only one that wants to
-> read from the result of an external command we just spawned from the
-> on-disk index, so perhaps moving discard_cache() to just before that
-> call may be a better fix.
+It took me a while to recall and figure out what the original is
+doing, primarily because the code was designed to handle both
+"-$option $arg" and "--$option=$arg".  But thanks to the switch to
+parse-options API, this helper no longer has to worry about that,
+which is a very big plus.  It only needs to parse what is in value.
 
-Good catch!
-Dscho
+Very nice.
