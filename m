@@ -7,586 +7,156 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA9951F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 11:41:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DC591F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 11:41:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727472AbfBTLlf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 06:41:35 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:33264 "EHLO
+        id S1727534AbfBTLli (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 06:41:38 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:45200 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726197AbfBTLlc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 06:41:32 -0500
-Received: by mail-ed1-f67.google.com with SMTP id c55so1846045edb.0
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 03:41:29 -0800 (PST)
+        with ESMTP id S1726197AbfBTLlg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 06:41:36 -0500
+Received: by mail-ed1-f67.google.com with SMTP id d9so19542011edh.12
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 03:41:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:mime-version
-         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
-        bh=AtrggfmFiOB16TUEQoZ2wGO5nGjyN/I+wgNC4I9lG5E=;
-        b=E47oM1Z1TQg2GpEZXOpB5RaPSY42EDO4yqLAK3gmNMGqHuIO9ZJIFhbkj5OWnpQ7NO
-         6uETaQnSiT7ustU0XaQldCm3AAQ/MP0txIlstQakKH0seKutreorVBWSIRIFwp7ti8oe
-         PlIc2dHJAd4ZV0Si/NQIWUWpc3MKaUEaPSCX2gBz1c9+6/OV5R3Lvmc3qrp9wqH2VkEJ
-         +j9enUwHZgWs5CISl1uLDJiBnV+jtU3b70fvsmUXevSrsk8nXrEueBEDPHr7eAgApJyt
-         /RZoTJ4VCHNigj+b9jQRmQbuVrejA6D7OLsbywmBg294ue0rJ6rLrgKxjzsK54bMsH/7
-         /XBg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KbbtFYNMvfDeyEUTpj+UtfCRufl4UzTuKPZCT5cAS0I=;
+        b=koOT5z8lIV857zPzXQ9UHSjipXSDq6Al0i4m5UOyU5+OlOqFTI8CXOEU0bQ22qFpGk
+         mNYb+vuhy6qfNNRQI866705Q8OJxT7LDYGTIs4yBY6V4I/uyxp5UI4iTvm7/T0NGhKvq
+         YhXoC+Y74DycPcRRUJmZkH66B5kyz9UmAyErGfZoNtCbokJaaCqN50wk3nv6fo1O0h0Z
+         PMlfRCBiqjhtuPdu03KK0xbiI1Crc+5LeCTyzjKWAJfSr4qTpvUAwd1tYn+6XFUn9zqC
+         MSSK0nK6bO3knzGafiz75OQk1uAr+RjrLBrRXowDWYxzAynXZQXY/GxbGGrWz4BpzSd+
+         Z9RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:mime-version:content-transfer-encoding:fcc
-         :content-transfer-encoding:to:cc;
-        bh=AtrggfmFiOB16TUEQoZ2wGO5nGjyN/I+wgNC4I9lG5E=;
-        b=AiX4ckjQ+Xu/rCo5R0VlazrGtaEqgFqy3US3ufR3RE915t3zr6Qx+I4l5qpHUL93sN
-         7z1dAABgfxI8MhjQNsEiUfHfGmUeKsIOE8U4/Qg5V9eO52giecBfHVSkcS1UzE39nTMH
-         i0Jqy2braWuhCXJSNT0c0oc0AXO7tux0PiEiA0eco8AkJPbuF+vaOoHs8Bul5qtaVs5R
-         LDg+mWKd08xTxKb2ZBgy9jiFq7R4uNx6bcf9rl0wfmcuC3cyWtLX1lRBNY6ZyUmmjG6t
-         T+dhun48nFP2GApNmgCHZC76Y2y9m6UwDvhgowJWyuAC07ko4v52ARR8K/1N3WrUYdn6
-         haRA==
-X-Gm-Message-State: AHQUAua8rqL/7QY5pNcgvKmSfcOOFdqnXZCOLHWhqHyK+JX6JiLXcLUk
-        O1jAkCyzt4JYs5uEu+m5vNOSyR5E
-X-Google-Smtp-Source: AHgI3IY4vxZ6slzGOSdTsmc3at3ljHbRdP8LX5qRcWUhRGil3xqF/xU5OMZtx4KZhP5+9+TQX8S1yw==
-X-Received: by 2002:a05:6402:164a:: with SMTP id s10mr12191925edx.6.1550662888748;
-        Wed, 20 Feb 2019 03:41:28 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KbbtFYNMvfDeyEUTpj+UtfCRufl4UzTuKPZCT5cAS0I=;
+        b=fByhdQTLlvRKZmdrwJw9SOxIv3pr+phdlSng4w9/UMUvjO5AvYDXlEUeiZNW47S1KC
+         SFEEGfJeLB+oXBABvJ95WNjPr7VnWudQtlckknaKuulLvaRWd1D3hgPwyWQStPqq60FU
+         88g+9Qux0XE1ANR5P3pSoZfrJI1RKxOndcNsYg/fMoyHTks9LxWJxoJ18foHPPkJrNs4
+         dERjgoIaBqUd2RtNaJvzyZSXRBl8SF6QJbWM23gjJAmFuqiqFoxO0/aaDxkdLmT65N+Q
+         UxzhsAIdVKw2j0zDmVhgECrXepQnAbwqqQ4PigJIC6K8h70M8YJqw3jWCDmY7Mr7RAN+
+         P0PA==
+X-Gm-Message-State: AHQUAuYcBfQO9NAG514a2V5bHy9jb/tYK15cISQ9fPDZ6apUFxPhrzJ6
+        81J/3eJurr+nlZhCZQc6F8fRukRN
+X-Google-Smtp-Source: AHgI3Ib8zJCCOJ3F+9Gvj/1I2do2OMcuJN5cHmAgEziMNCDqvat0KzUkolzIDdOshNJP73trWYOgQw==
+X-Received: by 2002:a17:906:b742:: with SMTP id fx2mr18252451ejb.199.1550662894925;
+        Wed, 20 Feb 2019 03:41:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i33sm5634132edc.8.2019.02.20.03.41.27
+        by smtp.gmail.com with ESMTPSA id k8sm5625012edn.14.2019.02.20.03.41.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Feb 2019 03:41:27 -0800 (PST)
-Date:   Wed, 20 Feb 2019 03:41:27 -0800 (PST)
-X-Google-Original-Date: Wed, 20 Feb 2019 11:41:17 GMT
-Message-Id: <pull.103.v5.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.103.v4.git.gitgitgadget@gmail.com>
+        Wed, 20 Feb 2019 03:41:34 -0800 (PST)
+Date:   Wed, 20 Feb 2019 03:41:34 -0800 (PST)
+X-Google-Original-Date: Wed, 20 Feb 2019 11:41:25 GMT
+Message-Id: <441321fc3dbbb8427ea7ec2663b4c21db8771c6c.1550662887.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.103.v5.git.gitgitgadget@gmail.com>
 References: <pull.103.v4.git.gitgitgadget@gmail.com>
-From:   "Slavica =?UTF-8?Q?=C4=90uki=C4=87?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Subject: [PATCH v5 00/10] Turn git add-i into built-in
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        <pull.103.v5.git.gitgitgadget@gmail.com>
+From:   "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v5 08/10] add-interactive.c: implement show-help command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Slavica Djukic <slawica92@hotmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the first version of a patch series to start porting
-git-add--interactive from Perl to C. Daniel Ferreira's patch series used as
-a head start:
-https://public-inbox.org/git/1494907234-28903-1-git-send-email-bnmvco@gmail.com/t/#u
+From: Slavica Djukic <slawica92@hotmail.com>
 
-Changes since v4:
+Implement show-help command in add-interactive.c and use it in
+builtin add--helper.c.
 
- * rename print_modified to list_modifed
- * the big change was implementing list_and_choose, which resulted in code
-   refactoring, i.e. separating list_modified and status_cmd and making
-   status_cmd use both list_modified and list_and_choose
- * implement struct choice instead of struct stuff_item as main data
-   structure for list_and_choose
- * introduce list_only option and implement support for !list_only users
- * introduce highlighting of unique prefixes
+Use command name "show-help" instead of "help": add--helper is
+builtin, hence add--helper --help would be intercepted by
+handle_builtin and re-routed to the help command, without ever
+calling cmd_add__helper().
 
-Note that authorship handling is slightly changed. In some of the commits, I
-used Original-patch-by instead of listing Daniel Ferreira as author.
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+---
+ add-interactive.c     | 17 +++++++++++++++++
+ add-interactive.h     |  2 ++
+ builtin/add--helper.c |  7 ++++++-
+ 3 files changed, 25 insertions(+), 1 deletion(-)
 
-Also, I would like to point out that my Outreachy internship is going to
-finish on March 4 and I would really appreciate reviews before it does.
-
-Daniel Ferreira (3):
-  diff: export diffstat interface
-  add--helper: create builtin helper for interactive add
-  add--interactive.perl: use add--helper --status for status_cmd
-
-Slavica Djukic (7):
-  add-interactive.c: implement list_modified
-  add-interactive.c: implement list_and_choose
-  add-interactive.c: implement status command
-  add-interactive.c: add support for list_only option
-  add-interactive.c: implement show-help command
-  t3701-add-interactive: test add_i_show_help()
-  add--interactive.perl: use add--helper --show-help for help_cmd
-
- .gitignore                 |   1 +
- Makefile                   |   2 +
- add-interactive.c          | 819 +++++++++++++++++++++++++++++++++++++
- add-interactive.h          |  10 +
- builtin.h                  |   1 +
- builtin/add--helper.c      |  43 ++
- diff.c                     |  36 +-
- diff.h                     |  18 +
- git-add--interactive.perl  |  17 +-
- git.c                      |   1 +
- t/t3701-add-interactive.sh |  24 ++
- 11 files changed, 937 insertions(+), 35 deletions(-)
- create mode 100644 add-interactive.c
- create mode 100644 add-interactive.h
- create mode 100644 builtin/add--helper.c
-
-
-base-commit: ca1b4116483b397e78483376296bcd23916ab553
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-103%2FslavicaDj%2Fadd-i-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-103/slavicaDj/add-i-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/103
-
-Range-diff vs v4:
-
-  1:  737767b6f4 !  1:  d839f0c082 diff: export diffstat interface
-     @@ -11,6 +11,7 @@
-          how the show_* functions used by diff_flush() do it. One example is the
-          builtin implementation of git-add--interactive's status.
-      
-     +    Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-          Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-          Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-      
-  2:  91b1963125 !  2:  304c3863b1 add--helper: create builtin helper for interactive add
-     @@ -2,8 +2,8 @@
-      
-          add--helper: create builtin helper for interactive add
-      
-     -    Create a builtin helper for git-add--interactive, which right now is not
-     -    able to do anything.
-     +    Create a builtin helper for git-add--interactive, which at this point
-     +    is not doing anything.
-      
-          This is the first step in an effort to convert git-add--interactive.perl
-          to a C builtin, in search for better portability, expressibility and
-     @@ -13,6 +13,7 @@
-          remove the last "big" Git script to have Perl as a dependency, allowing
-          most Git users to have a NOPERL build running without big losses.
-      
-     +    Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-          Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-          Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-      
-  3:  d247ef69fe !  3:  8790ffaa39 add-interactive.c: implement status command
-     @@ -1,17 +1,12 @@
-     -Author: Daniel Ferreira <bnmvco@gmail.com>
-     +Author: Slavica Djukic <slawica92@hotmail.com>
-      
-     -    add-interactive.c: implement status command
-     +    add-interactive.c: implement list_modified
-      
-     -    Add new files: add-interactive.c and add-interactive.h, which
-     -    will be used for implementing "application logic" of git add -i,
-     -    whereas add--helper.c will be used mostly for parsing the command line.
-     -    We're a bit lax with the command-line parsing, as the command is
-     -    intended to be called only by one internal user: the add--interactive script.
-     +    Implement list_modified from Perl, which will be used
-     +    by most of the *_cmd functions, including status in the
-     +    following commit.
-      
-     -    Implement add --interactive's status command in add-interactive.c and
-     -    use it in builtin add--helper.c.
-     -
-     -    It prints a numstat comparing changed files between a) the worktree and
-     +    It lists a numstat comparing changed files between a) the worktree and
-          the index; b) the index and the HEAD.
-      
-          To do so, we use run_diff_index() and run_diff_files() to get changed
-     @@ -19,11 +14,13 @@
-          combination of a hashmap and qsort() to print the result in
-          O(n) + O(n lg n) complexity.
-      
-     -    This is the first interactive add command implemented in C of those
-     -    anticipated by the previous commit, which introduced
-     -    the add--helper built-in.
-     +    Add new file: add-interactive.c which will be used for implementing
-     +    "application logic" of git add -i (alongside with add-interactive.h,
-     +    added in later commit), whereas add--helper.c will be used mostly
-     +    for parsing the command line.
-      
-     -    Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-     +    Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-     +    Original-patch-by: Daniel Ferreira <bnmvco@gmail.com>
-          Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-      
-       diff --git a/Makefile b/Makefile
-     @@ -43,7 +40,6 @@
-       --- /dev/null
-       +++ b/add-interactive.c
-      @@
-     -+#include "add-interactive.h"
-      +#include "cache.h"
-      +#include "commit.h"
-      +#include "color.h"
-     @@ -51,8 +47,6 @@
-      +#include "diffcore.h"
-      +#include "revision.h"
-      +
-     -+#define HEADER_INDENT "      "
-     -+
-      +enum collection_phase {
-      +	WORKTREE,
-      +	INDEX
-     @@ -75,66 +69,8 @@
-      +	struct hashmap file_map;
-      +};
-      +
-     -+static int use_color = -1;
-     -+enum color_add_i {
-     -+	COLOR_PROMPT,
-     -+	COLOR_HEADER,
-     -+	COLOR_HELP,
-     -+	COLOR_ERROR
-     -+};
-     -+
-     -+static char colors[][COLOR_MAXLEN] = {
-     -+	GIT_COLOR_BOLD_BLUE, /* Prompt */
-     -+	GIT_COLOR_BOLD,      /* Header */
-     -+	GIT_COLOR_BOLD_RED,  /* Help */
-     -+	GIT_COLOR_BOLD_RED   /* Error */
-     -+};
-     -+
-     -+static const char *get_color(enum color_add_i ix)
-     -+{
-     -+	if (want_color(use_color))
-     -+		return colors[ix];
-     -+	return "";
-     -+}
-     -+
-     -+static int parse_color_slot(const char *slot)
-     -+{
-     -+	if (!strcasecmp(slot, "prompt"))
-     -+		return COLOR_PROMPT;
-     -+	if (!strcasecmp(slot, "header"))
-     -+		return COLOR_HEADER;
-     -+	if (!strcasecmp(slot, "help"))
-     -+		return COLOR_HELP;
-     -+	if (!strcasecmp(slot, "error"))
-     -+		return COLOR_ERROR;
-     -+
-     -+	return -1;
-     -+}
-     -+
-     -+int add_i_config(const char *var,
-     -+		const char *value, void *cbdata)
-     -+{
-     -+	const char *name;
-     -+
-     -+	if (!strcmp(var, "color.interactive")) {
-     -+		use_color = git_config_colorbool(var, value);
-     -+		return 0;
-     -+	}
-     -+
-     -+	if (skip_prefix(var, "color.interactive.", &name)) {
-     -+		int slot = parse_color_slot(name);
-     -+		if (slot < 0)
-     -+			return 0;
-     -+		if (!value)
-     -+			return config_error_nonbool(var);
-     -+		return color_parse(value, colors[slot]);
-     -+	}
-     -+
-     -+	return git_default_config(var, value, cbdata);
-     -+}
-     -+
-      +static int hash_cmp(const void *unused_cmp_data, const void *entry,
-     -+			const void *entry_or_key, const void *keydata)
-     ++		    const void *entry_or_key, const void *keydata)
-      +{
-      +	const struct file_stat *e1 = entry, *e2 = entry_or_key;
-      +	const char *name = keydata ? keydata : e2->name;
-     @@ -151,8 +87,8 @@
-      +}
-      +
-      +static void collect_changes_cb(struct diff_queue_struct *q,
-     -+					 struct diff_options *options,
-     -+					 void *data)
-     ++			       struct diff_options *options,
-     ++			       void *data)
-      +{
-      +	struct collection_status *s = data;
-      +	struct diffstat_t stat = { 0 };
-     @@ -222,128 +158,73 @@
-      +	run_diff_index(&rev, 1);
-      +}
-      +
-     -+void add_i_print_modified(void)
-     ++static int is_inital_commit(void)
-      +{
-     -+	int i = 0;
-     -+	struct collection_status s;
-     -+	/* TRANSLATORS: you can adjust this to align "git add -i" status menu */
-     -+	const char *modified_fmt = _("%12s %12s %s");
-     -+	const char *header_color = get_color(COLOR_HEADER);
-      +	struct object_id sha1;
-     ++	if (get_oid("HEAD", &sha1))
-     ++		return 1;
-     ++	return 0;
-     ++}
-     ++
-     ++static const char *get_diff_reference(void)
-     ++{
-     ++	if(is_inital_commit())
-     ++		return empty_tree_oid_hex();
-     ++	return "HEAD";
-     ++}
-     ++
-     ++static void filter_files(const char *filter, struct hashmap *file_map,
-     ++			 struct file_stat **files)
-     ++{
-     ++
-     ++	for (int i = 0; i < hashmap_get_size(file_map); i++) {
-     ++		struct file_stat *f = files[i];
-     ++
-     ++		if ((!(f->worktree.added || f->worktree.deleted)) &&
-     ++		   (!strcmp(filter, "file-only")))
-     ++				hashmap_remove(file_map, f, NULL);
-      +
-     ++		if ((!(f->index.added || f->index.deleted)) &&
-     ++		   (!strcmp(filter, "index-only")))
-     ++				hashmap_remove(file_map, f, NULL);
-     ++	}
-     ++}
-     ++
-     ++static struct collection_status *list_modified(struct repository *r, const char *filter)
-     ++{
-     ++	int i = 0;
-     ++	struct collection_status *s = xcalloc(1, sizeof(*s));
-      +	struct hashmap_iter iter;
-      +	struct file_stat **files;
-      +	struct file_stat *entry;
-      +
-     -+	if (read_cache() < 0)
-     -+		return;
-     ++	if (repo_read_index(r) < 0) {
-     ++		printf("\n");
-     ++		return NULL;
-     ++	}
-      +
-     -+	s.reference = !get_oid("HEAD", &sha1) ? "HEAD": empty_tree_oid_hex();
-     -+	hashmap_init(&s.file_map, hash_cmp, NULL, 0);
-     ++	s->reference = get_diff_reference();
-     ++	hashmap_init(&s->file_map, hash_cmp, NULL, 0);
-      +
-     -+	collect_changes_worktree(&s);
-     -+	collect_changes_index(&s);
-     ++	collect_changes_worktree(s);
-     ++	collect_changes_index(s);
-      +
-     -+	if (hashmap_get_size(&s.file_map) < 1) {
-     ++	if (hashmap_get_size(&s->file_map) < 1) {
-      +		printf("\n");
-     -+		return;
-     ++		return NULL;
-      +	}
-      +
-     -+	printf(HEADER_INDENT);
-     -+	color_fprintf(stdout, header_color, modified_fmt, _("staged"),
-     -+			_("unstaged"), _("path"));
-     -+	printf("\n");
-     -+
-     -+	hashmap_iter_init(&s.file_map, &iter);
-     ++	hashmap_iter_init(&s->file_map, &iter);
-      +
-     -+	files = xcalloc(hashmap_get_size(&s.file_map), sizeof(struct file_stat *));
-     ++	files = xcalloc(hashmap_get_size(&s->file_map), sizeof(struct file_stat *));
-      +	while ((entry = hashmap_iter_next(&iter))) {
-      +		files[i++] = entry;
-      +	}
-     -+	QSORT(files, hashmap_get_size(&s.file_map), alphabetical_cmp);
-     ++	QSORT(files, hashmap_get_size(&s->file_map), alphabetical_cmp);
-      +
-     -+	for (i = 0; i < hashmap_get_size(&s.file_map); i++) {
-     -+		struct file_stat *f = files[i];
-     -+
-     -+		char worktree_changes[50];
-     -+		char index_changes[50];
-     -+
-     -+		if (f->worktree.added || f->worktree.deleted)
-     -+			snprintf(worktree_changes, 50, "+%"PRIuMAX"/-%"PRIuMAX, f->worktree.added,
-     -+					f->worktree.deleted);
-     -+		else
-     -+			snprintf(worktree_changes, 50, "%s", _("nothing"));
-     -+
-     -+		if (f->index.added || f->index.deleted)
-     -+			snprintf(index_changes, 50, "+%"PRIuMAX"/-%"PRIuMAX, f->index.added,
-     -+					f->index.deleted);
-     -+		else
-     -+			snprintf(index_changes, 50, "%s", _("unchanged"));
-     -+
-     -+		printf(" %2d: ", i + 1);
-     -+		printf(modified_fmt, index_changes, worktree_changes, f->name);
-     -+		printf("\n");
-     -+	}
-     -+	printf("\n");
-     ++	if (filter)
-     ++		filter_files(filter, &s->file_map, files);
-      +
-      +	free(files);
-     -+	hashmap_free(&s.file_map, 1);
-     ++	return s;
-      +}
-     -
-     - diff --git a/add-interactive.h b/add-interactive.h
-     - new file mode 100644
-     - --- /dev/null
-     - +++ b/add-interactive.h
-     -@@
-     -+#ifndef ADD_INTERACTIVE_H
-     -+#define ADD_INTERACTIVE_H
-     -+
-     -+int add_i_config(const char *var, const char *value, void *cbdata);
-     -+
-     -+void add_i_print_modified(void);
-     -+
-     -+#endif
-     - \ No newline at end of file
-     -
-     - diff --git a/builtin/add--helper.c b/builtin/add--helper.c
-     - --- a/builtin/add--helper.c
-     - +++ b/builtin/add--helper.c
-     -@@
-     -+#include "add-interactive.h"
-     - #include "builtin.h"
-     -+#include "config.h"
-     -+#include "revision.h"
-     -+
-     -+static const char * const builtin_add_helper_usage[] = {
-     -+	N_("git add-interactive--helper <command>"),
-     -+	NULL
-     -+};
-     -+
-     -+enum cmd_mode {
-     -+	DEFAULT = 0,
-     -+	STATUS
-     -+};
-     - 
-     - int cmd_add__helper(int argc, const char **argv, const char *prefix)
-     - {
-     -+	enum cmd_mode mode = DEFAULT;
-     -+
-     -+	struct option options[] = {
-     -+		OPT_CMDMODE(0, "status", &mode,
-     -+			 N_("print status information with diffstat"), STATUS),
-     -+		OPT_END()
-     -+	};
-     -+
-     -+	git_config(add_i_config, NULL);
-     -+	argc = parse_options(argc, argv, NULL, options,
-     -+			     builtin_add_helper_usage,
-     -+			     PARSE_OPT_KEEP_ARGV0);
-     -+
-     -+	if (mode == STATUS)
-     -+		add_i_print_modified();
-     -+	else
-     -+		usage_with_options(builtin_add_helper_usage,
-     -+				   options);
-     -+
-     - 	return 0;
-     - }
-  -:  ---------- >  4:  a97b29d274 add-interactive.c: implement list_and_choose
-  -:  ---------- >  5:  9a72aabe6c add-interactive.c: implement status command
-  4:  fb3f9378ac !  6:  883963ee6e add--interactive.perl: use add--helper --status for status_cmd
-     @@ -14,6 +14,7 @@
-          the fact that it would be hard to test, we'll pass on adding
-          a regression test for this.
-      
-     +    Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-          Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-          Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-  -:  ---------- >  7:  7912f37517 add-interactive.c: add support for list_only option
-  5:  ab16afd1d5 !  8:  441321fc3d add-interactive.c: implement show-help command
-     @@ -10,31 +10,32 @@
-          handle_builtin and re-routed to the help command, without ever
-          calling cmd_add__helper().
-      
-     +    Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-          Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-      
-       diff --git a/add-interactive.c b/add-interactive.c
-       --- a/add-interactive.c
-       +++ b/add-interactive.c
-      @@
-     - 	free(files);
-     - 	hashmap_free(&s.file_map, 1);
-     + 	free(s);
-     + 	free_choices(&choices);
-       }
-      +
-      +void add_i_show_help(void)
-      +{
-      +	const char *help_color = get_color(COLOR_HELP);
-      +	color_fprintf_ln(stdout, help_color, "status        - %s",
-     -+			_("show paths with changes"));
-     ++			 _("show paths with changes"));
-      +	color_fprintf_ln(stdout, help_color, "update        - %s",
-     -+			_("add working tree state to the staged set of changes"));
-     ++			 _("add working tree state to the staged set of changes"));
-      +	color_fprintf_ln(stdout, help_color, "revert        - %s",
-     -+			_("revert staged set of changes back to the HEAD version"));
-     ++			 _("revert staged set of changes back to the HEAD version"));
-      +	color_fprintf_ln(stdout, help_color, "patch         - %s",
-     -+			_("pick hunks and update selectively"));
-     ++			 _("pick hunks and update selectively"));
-      +	color_fprintf_ln(stdout, help_color, "diff          - %s",
-     -+			_("view diff between HEAD and index"));
-     ++			 _("view diff between HEAD and index"));
-      +	color_fprintf_ln(stdout, help_color, "add untracked - %s",
-     -+			_("add contents of untracked files to the staged set of changes"));
-     ++			 _("add contents of untracked files to the staged set of changes"));
-      +}
-      
-       diff --git a/add-interactive.h b/add-interactive.h
-     @@ -42,13 +43,11 @@
-       +++ b/add-interactive.h
-      @@
-       
-     - void add_i_print_modified(void);
-     + void add_i_status(void);
-       
-     --#endif
-     - \ No newline at end of file
-      +void add_i_show_help(void);
-      +
-     -+#endif
-     + #endif
-      
-       diff --git a/builtin/add--helper.c b/builtin/add--helper.c
-       --- a/builtin/add--helper.c
-     @@ -66,16 +65,16 @@
-      @@
-       	struct option options[] = {
-       		OPT_CMDMODE(0, "status", &mode,
-     - 			 N_("print status information with diffstat"), STATUS),
-     + 			    N_("print status information with diffstat"), STATUS),
-      +		OPT_CMDMODE(0, "show-help", &mode,
-     -+			 N_("show help"), HELP),
-     ++			    N_("show help"), HELP),
-       		OPT_END()
-       	};
-       
-      @@
-       
-       	if (mode == STATUS)
-     - 		add_i_print_modified();
-     + 		add_i_status();
-      +	else if (mode == HELP)
-      +		add_i_show_help();
-       	else
-  6:  0a27304a84 !  9:  315ae8b211 t3701-add-interactive: test add_i_show_help()
-     @@ -11,6 +11,7 @@
-          Prefix git add -i call with GIT_PAGER_IN_USE=true TERM=vt100
-          to force colored output on Windows.
-      
-     +    Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-          Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-      
-       diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-  7:  ca2a7c4375 ! 10:  2b4bdce730 add--interactive.perl: use add--helper --show-help for help_cmd
-     @@ -12,6 +12,7 @@
-          to print the numstat, also here we forgo adding a regression test:
-          the Perl script is on its way out (and this patch is part of that journey).
-      
-     +    Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-          Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-      
-
+diff --git a/add-interactive.c b/add-interactive.c
+index 3c2e972413..ad05bf7e1f 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -800,3 +800,20 @@ void add_i_status(void)
+ 	free(s);
+ 	free_choices(&choices);
+ }
++
++void add_i_show_help(void)
++{
++	const char *help_color = get_color(COLOR_HELP);
++	color_fprintf_ln(stdout, help_color, "status        - %s",
++			 _("show paths with changes"));
++	color_fprintf_ln(stdout, help_color, "update        - %s",
++			 _("add working tree state to the staged set of changes"));
++	color_fprintf_ln(stdout, help_color, "revert        - %s",
++			 _("revert staged set of changes back to the HEAD version"));
++	color_fprintf_ln(stdout, help_color, "patch         - %s",
++			 _("pick hunks and update selectively"));
++	color_fprintf_ln(stdout, help_color, "diff          - %s",
++			 _("view diff between HEAD and index"));
++	color_fprintf_ln(stdout, help_color, "add untracked - %s",
++			 _("add contents of untracked files to the staged set of changes"));
++}
+diff --git a/add-interactive.h b/add-interactive.h
+index 8ef3d2e82b..ddeedd3a33 100644
+--- a/add-interactive.h
++++ b/add-interactive.h
+@@ -5,4 +5,6 @@ int add_i_config(const char *var, const char *value, void *cbdata);
+ 
+ void add_i_status(void);
+ 
++void add_i_show_help(void);
++
+ #endif
+diff --git a/builtin/add--helper.c b/builtin/add--helper.c
+index 464d2245f3..1fe64bc7fb 100644
+--- a/builtin/add--helper.c
++++ b/builtin/add--helper.c
+@@ -10,7 +10,8 @@ static const char * const builtin_add_helper_usage[] = {
+ 
+ enum cmd_mode {
+ 	DEFAULT = 0,
+-	STATUS
++	STATUS,
++	HELP
+ };
+ 
+ int cmd_add__helper(int argc, const char **argv, const char *prefix)
+@@ -20,6 +21,8 @@ int cmd_add__helper(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "status", &mode,
+ 			    N_("print status information with diffstat"), STATUS),
++		OPT_CMDMODE(0, "show-help", &mode,
++			    N_("show help"), HELP),
+ 		OPT_END()
+ 	};
+ 
+@@ -30,6 +33,8 @@ int cmd_add__helper(int argc, const char **argv, const char *prefix)
+ 
+ 	if (mode == STATUS)
+ 		add_i_status();
++	else if (mode == HELP)
++		add_i_show_help();
+ 	else
+ 		usage_with_options(builtin_add_helper_usage,
+ 				   options);
 -- 
 gitgitgadget
+
