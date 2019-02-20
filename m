@@ -2,90 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5410D1F453
-	for <e@80x24.org>; Wed, 20 Feb 2019 17:29:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42E9B1F453
+	for <e@80x24.org>; Wed, 20 Feb 2019 18:07:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726952AbfBTR30 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 12:29:26 -0500
-Received: from mx2.suse.de ([195.135.220.15]:49698 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726913AbfBTR3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 12:29:24 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 715FFAD5D;
-        Wed, 20 Feb 2019 17:29:23 +0000 (UTC)
-Date:   Wed, 20 Feb 2019 18:29:22 +0100
-From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Marketa Calabkova <mcalabkova@suse.cz>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] worktree: fix worktree add race.
-Message-ID: <20190220182922.21693fa7@kitsune.suse.cz>
-In-Reply-To: <CAPig+cSdA8XRwCJQD3o6DZLwesBLRTys7OV6u0wy9Ve3Hp6XPA@mail.gmail.com>
-References: <cover.1550508544.git.msuchanek@suse.de>
-        <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
-        <CAPig+cSdA8XRwCJQD3o6DZLwesBLRTys7OV6u0wy9Ve3Hp6XPA@mail.gmail.com>
-Organization: SUSE Linux
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
+        id S1726120AbfBTSHA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 13:07:00 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39020 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725796AbfBTSHA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Feb 2019 13:07:00 -0500
+Received: by mail-pf1-f196.google.com with SMTP id i20so1860060pfo.6
+        for <git@vger.kernel.org>; Wed, 20 Feb 2019 10:07:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=exactasystems-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=thnTxFgTOmJPPK2R1yCKo96qXY/m0+oHxkkCKFAI824=;
+        b=kEC6Mnn2rrwHTsYSXPpp4npYTKbaMWgbH8T/EXSDMHogBnT6NE8diI7xzG9I3QP+pP
+         nYme6s79GR3tErmAOuvM4e+A75r7H73jA2wKRaI0lzeIZRaZca0UDRN8EWEgYtc4dUdW
+         y08cpEWcHHJF8VNLh9DbcittELIXdZEv3G78qXSAxmXrG3m/xx3xGkdCDzDvbZhuAjJO
+         lQWPUJXOizP8fXfvp9u13p7ojM5iYuergInp/bhZfTb5QuRA59/ekPHOfaXUuj0ut8IN
+         wdGGuMqxzZjcuU9PHFd3JIT0RfgNMQbyKLTip+00RQKt8vEK9pvUMSBhBsuVOWvirt5l
+         TJ2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=thnTxFgTOmJPPK2R1yCKo96qXY/m0+oHxkkCKFAI824=;
+        b=sJt71FgP5fD9tbJ5YSoRc2PlwT2/aCOGTUMKJxfLKaAI3GZizBceUoTeKabfAUYCwI
+         CfnMZ9FD2gw7ZrK3AJTZDe5zbqgq8K806Z7CZNGCfOc6DBTsSh18Bw5GyX8kmBu3VkjJ
+         9EmsKCJkbvOELU/RaiBbkiKzuMPtF3V0axnAMG04jNucP3/dXN+TSiyKfzRHRc7i4NfJ
+         o9uToVquczKJu5ICnaKbOEtT+R19v+PFOUJwrMHhyGl6fAwxt/frA1pRji4Kixbp7WD6
+         C2bXipnajM91yazaAvNo5YbL+P/sni9Ngrw2BD0jTuH6tUcdif1t5jdmCT1mVobcS3gN
+         +UQA==
+X-Gm-Message-State: AHQUAuZi5Z9kide8JNDQktX5KVQ/c+E2jaSfZJ5ZN+PqKNWQDCdpW0TZ
+        9aKs1adGBSLUA532Y+2cF1tgy9O5bPhwbg3WD89QIMEv
+X-Google-Smtp-Source: AHgI3IaJU77jgvSXz7/LgFA21eugjTcqv2kV4UezK4QU+AVUGsjgJWd40UtsH6MffLq0YFHEptn+MALMUrRm5GOpT54=
+X-Received: by 2002:a63:e309:: with SMTP id f9mr30151348pgh.280.1550686019683;
+ Wed, 20 Feb 2019 10:06:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <CAApa7v-F7Y_WR11V-3jc-R4Y1qSv5PPof6GWvJuF_XMeTcC2zw@mail.gmail.com>
+ <CACsJy8AS5eNO6gACGtRZq=qdQGkQ3jmQPVivPG+=du9u9hKYcg@mail.gmail.com>
+In-Reply-To: <CACsJy8AS5eNO6gACGtRZq=qdQGkQ3jmQPVivPG+=du9u9hKYcg@mail.gmail.com>
+From:   Joe Enzminger <joe.enzminger@exactasystems.com>
+Date:   Wed, 20 Feb 2019 12:06:49 -0600
+Message-ID: <CAApa7v_noujdWcogGNJUS7ZJRzPRxK5PPv53tST-0JoEk8+9Mw@mail.gmail.com>
+Subject: Re: Feature Request git clone shallow-include
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 20 Feb 2019 11:34:54 -0500
-Eric Sunshine <sunshine@sunshineco.com> wrote:
+That is correct.  What you suggest is actually what I tried (using
+sha-1 syntax).  For my purposes, excluding the tag's parent's but
+including the tag is sufficient, but if is fairly straightforward to
+extend support to the other use cases I'm sure someone would find is
+useful.
 
-> On Wed, Feb 20, 2019 at 11:17 AM Michal Suchanek <msuchanek@suse.de> wrote:
-> > Git runs a stat loop to find a worktree name that's available and then does
-> > mkdir on the found name. Turn it to mkdir loop to avoid another invocation of
-> > worktree add finding the same free name and creating the directory first.
+Joe
+
+
+On Tue, Feb 19, 2019 at 7:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Wed, Feb 20, 2019 at 7:07 AM Joe Enzminger
+> <joe.enzminger@exactasystems.com> wrote:
 > >
-> > Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-> > ---
-> > diff --git a/builtin/worktree.c b/builtin/worktree.c
-> > @@ -295,8 +295,12 @@ static int add_worktree(const char *path, const char *refname,
-> >         if (safe_create_leading_directories_const(sb_repo.buf))
-> >                 die_errno(_("could not create leading directories of '%s'"),
-> >                           sb_repo.buf);
-> > -       while (!stat(sb_repo.buf, &st)) {
-> > +       while (mkdir(sb_repo.buf, 0777)) {
-> >                 counter++;
-> > +               if ((errno != EEXIST) || !counter /* overflow */)
-> > +                       die_errno(_("could not create directory of '%s'"),
-> > +                                 sb_repo.buf);
-> >                 strbuf_setlen(&sb_repo, len);
-> >                 strbuf_addf(&sb_repo, "%d", counter);
-> >         }
-> > @@ -306,8 +310,6 @@ static int add_worktree(const char *path, const char *refname,
-> >         atexit(remove_junk);
-> >         sigchain_push_common(remove_junk_on_signal);
-> > -       if (mkdir(sb_repo.buf, 0777))
-> > -               die_errno(_("could not create directory of '%s'"), sb_repo.buf);
-> >         junk_git_dir = xstrdup(sb_repo.buf);
-> >         is_junk = 1;  
-> 
-> Did you audit this "junk" handling to verify that stuff which ought to
-> be cleaned up still is cleaned up now that the mkdir() and die() have
-> been moved above the atexit(remove_junk) invocation?
-> 
-> I did just audit it, and I _think_ that it still works as expected,
-> but it would be good to hear that someone else has come to the same
-> conclusion.
-
-The die() is executed only when mkdir() fails so there is no junk to
-clean up in that case.
-
-Thanks
-
-Michal
+> > Currently, git clone supports shallow-exclude=<tag-name>.  The client
+> > will clone up to, but not including, the commit with the tag.
+> >
+> > It would be useful to have the ability to include the commit with the
+> > tag.  The suggestion would be to add a "shallow-include" options to
+> > clone to support this behavior.
+>
+> So exclude the tag's parents and everything before, but keep the tag, correct?
+>
+> I think if we support --shallow-exclude=<tag>^ then it should work the
+> way you want (if the tag is a normal merge you may need to add
+> --shallow-exclude=<tag>^2 as well). And you can do even fancier thing
+> like --shallow-exclude=<tag>~3 (i.e. exclude the  grand grand parent
+> of the tag, but keep the tag and grand parents). We will need to
+> restrict extended SHA-1 syntax to a safe subset of course.
+>
+> > I have tried to use shallow-exclude with a follow on git fetch
+> > --deepen=1, but it always returns "fatal: error in object; unshallow
+> > <sha1>"
+> --
+> Duy
