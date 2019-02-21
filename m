@@ -2,107 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C38C01F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 23:15:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5519B1F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 23:40:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727128AbfBUXPe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 18:15:34 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38574 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726871AbfBUXPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 18:15:34 -0500
-Received: by mail-wr1-f68.google.com with SMTP id v13so336626wrw.5
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 15:15:33 -0800 (PST)
+        id S1726237AbfBUXkO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 18:40:14 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40600 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726050AbfBUXkO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 18:40:14 -0500
+Received: by mail-wm1-f66.google.com with SMTP id t15so302359wmi.5
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 15:40:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=iUUliVwtkRMlt59l0AXMgk5nsp/1S5qnXHdMpM2yImA=;
-        b=rmCbcmkUKc5vKRd7XHPDvp+rsxOhxRLtm0Kxg3/i4PRpuPAFTuY8UOhvMvkjgBMFn5
-         T7g2rH92oTtldxNjqmzftrfUby5p8laj7kV/aJ+52BJaizxpxo45BPQC7pmwfWKVvCtT
-         cJonpQbYMVrl52SlnpdnpMSWhQlPbmdMkVOyXHAZwthIit/VffUjGFtTdt/cYMZcU9Ej
-         imD2zl0YuJxh514ddGeCowHP5XwbM3DrH0wbBbADxAmbHRK/kphLb2DPn7VRyB1ElkWg
-         zOW/IqtBe2WYTXv66d59tOiIKivR+DGj5iK8c9ubY0Ah2PQJZgjxwl91yjtMfOqHT9Bt
-         POrg==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=3D1RE1fNvkvC7I75U9yrk6byIAvoCYvY+ImRlWfTs+E=;
+        b=g60Ba44y2C46Fk9GY9vJ7kJSGEWZBWAMfidQV5T80SPnXJpYoaNr4M1G1qqH4BcQoZ
+         hQ2e6641oLr0nJDXoAsn2nPDAzOJezCLWvS/cJUB88zZh94TboxSp7EmqgzcoBu2kLva
+         nVIAT/SRc6WRgtADXR6Ix+wmqBuk2oeOW8czbiKvp3OT3kYy1ATLbru5ijZJv37ZJ4i4
+         S/tbwyokABiGEhD5LbLBfmhlo8XBi42GNha8fuHxudPLmoYsGAwwFqunU0eT9gCA9UFn
+         /63KY0JJx1X3YIbuAv6DTdq4h39q321rzGfkaMkJAzaLcfuAhVVQaf9jP+HvDUou6yTQ
+         BzUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=iUUliVwtkRMlt59l0AXMgk5nsp/1S5qnXHdMpM2yImA=;
-        b=J2gs4vHta1sUKDiLKOf9IGfGFQnXJURpbgXr/Y/VzphnihH28KDO+RLusKErDIptgb
-         Yiw7+WxyWO6rjpyKp3eg7aq8jnrdNHEpmrpMAuOg89XNheP4/bpV417lY/ekxU+VHJUu
-         UTLcE86oBOQdiMDSU7K7OGk4bpU8+AeEntbbEq7A2lm42QUdSzR+ZO8wXZqolaqkHk4z
-         9SSBZJTZahpQ6zkCMAATjZPumgTVMl7ZVHAq9GdN/icbyNxNf4UWjo5il78ccGXt16WT
-         yaHLCqXjymzQg+MVJ7kGove8tskIblLGGNevP9MstYLuY6jQx7gJQ2gMhAAaHPFuHwUj
-         LvWA==
-X-Gm-Message-State: AHQUAua6W6gB5QoH0aysVXm5FaQ2XUHi9C+s/lxOi9LytZ9BXETqHjNZ
-        mlrJnT576A8mm/mNRTTUv2s=
-X-Google-Smtp-Source: AHgI3Ib9jWPd1HYHrTcN3AJsYbuhz1LjDx1271uEW9yobErIQurJgjvfoxYqhgM0uQ1UTh5W61lpOw==
-X-Received: by 2002:adf:e9c2:: with SMTP id l2mr577835wrn.315.1550790932792;
-        Thu, 21 Feb 2019 15:15:32 -0800 (PST)
-Received: from szeder.dev (x4db54a94.dyn.telefonica.de. [77.181.74.148])
-        by smtp.gmail.com with ESMTPSA id r70sm129024wme.46.2019.02.21.15.15.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Feb 2019 15:15:31 -0800 (PST)
-Date:   Fri, 22 Feb 2019 00:15:25 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 6/8] commit-graph verify: detect inability to read the
- graph
-Message-ID: <20190221231525.GA13328@szeder.dev>
-References: <20190221223753.20070-1-avarab@gmail.com>
- <20190221223753.20070-7-avarab@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=3D1RE1fNvkvC7I75U9yrk6byIAvoCYvY+ImRlWfTs+E=;
+        b=USh8Y6fUZxCYVo9QYP92ykMPEueniYBPH8b34Gvlg9HpLKjpZjs1CWD7FIdqZN7Umh
+         ZChVBb1B3akO3zGv1/07p+GvXgICF7uS1HNdz+SI3lKP8bfbAHJ5nkqbNdzKFxF7/JTP
+         CcSCtoRzTAndsmcuD+TBYuTjnQFtCiFLF0ecG67rcgDa9htxPKB+J+ywhArtf6TyQDGN
+         B3QaRvubyL6Du6MYXz/Gzm7qacf6nPxD2ltPn70L/RK751JEmXAxoUf6Kk/Qtmf74rCu
+         jYkDsk7roz5BzUcArjYjJyktsLxhE1w9w56aiYihDw8mZh+lreRbVmeyQgsmJ7i3YD3W
+         gePg==
+X-Gm-Message-State: AHQUAuZjdvq8H3i/R7KabTtibLnvnlyBdY89LwSA/E2WhhW8xKH7yJ9+
+        IkE7HtaT9az8pqpU87jMFv0=
+X-Google-Smtp-Source: AHgI3IYac3MCoOwgOC5O96uw7uQEyB8zpUZyTH6qoLa1KmIeIpcXLKYMCa7n7b1l0RVVwjglBUni5Q==
+X-Received: by 2002:a1c:9693:: with SMTP id y141mr572557wmd.33.1550792411725;
+        Thu, 21 Feb 2019 15:40:11 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id y139sm245517wmd.22.2019.02.21.15.40.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 21 Feb 2019 15:40:10 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
+        <stdedos@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: git format-patch can clobber existing patch
+References: <CAHMHMxVdpOnTkf9RHzCa+YjjvpqJApsSE03Jjyb_VbJp_4q-jw@mail.gmail.com>
+        <CAHMHMxUfjnNXFikVD=rys_t5BUho=7uRw4LsXgAphFwSf3xOnw@mail.gmail.com>
+Date:   Thu, 21 Feb 2019 15:40:09 -0800
+Message-ID: <xmqqpnrksobq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190221223753.20070-7-avarab@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 21, 2019 at 11:37:51PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index 0d012f55e5..1ee00fa333 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -400,6 +400,18 @@ corrupt_graph_and_verify() {
->  
->  }
->  
-> +test_expect_success 'detect permission problem' '
-> +	corrupt_graph_setup &&
-> +	chmod 000 $objdir/info/commit-graph &&
+Σταύρος Ντέντος  <stdedos@gmail.com> writes:
 
-This needs the POSIXPERM prereq.
+> During my work flow, I tend to use `git format-patch` to move patches
+> around (nasty, I know, but bear with me)
+>
+> It has occured to me that, it is possible that `git format-patch` can
+> clobber existing files, if they match in the name and in the "patch
+> order".
+> However, if the patch is one, then, it will normally start with `0001-x.patch`
+>
+> It was fine for me when I pushed updates of the same "patch series".
+> Now that I wanted to diff a "previous patch file" with the patch
+> upstream, however, it was almost a "disaster". :-)
+>
+> Would it make sense / be easy enough to have some clobbering check / flag?
 
-> +
-> +	# Skip as root, or in other cases (odd fs or OS) where a
-> +	# "chmod 000 file" does not yield EACCES on e.g. "cat file"
-> +	if ! test -r $objdir/info/commit-graph
+Given that use of '-o' to redirect to a fresh/new directory would
+reduce the risk of such clobbering, and use of '-v' to force
+different filenames would reduce the risk of such clobbering,
+it seems to me that aborting the operation when we fail to open
+the output, without any option to override and allow clobbering,
+would make sense.  If existing files record 4 patch series
+0001-x.patch, 0002-y.patch, 0003-z.patch, and 0004-w.patch, and you
+generate with "format-patch --allow-clobbering" a three-patch series,
+it would overwrite 0001 thru 0003 but will not remove 0004, so the
+end result will still be confusing.
 
-And this condition would be unnecessary with the SANITY prereq.
+This is not even compile-tested, but something along these lines may
+work.  I am reasonably sure that existing tests won't let this patch
+alone pass, as some may depend on being able to overwrite output
+files left behind by previous tests.
 
-> +	then
-> +		corrupt_graph_verify "Could not open"
-> +	fi
-> +'
-> +
->  test_expect_success 'detect too small' '
->  	corrupt_graph_setup &&
->  	echo "a small graph" >$objdir/info/commit-graph &&
-> -- 
-> 2.21.0.rc0.258.g878e2cd30e
-> 
+ builtin/log.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/log.c b/builtin/log.c
+index 3e145fe502..cb7a9eb7f9 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -864,6 +864,16 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ static const char *output_directory = NULL;
+ static int outdir_offset;
+ 
++static FILE *fopen_excl(const char *filename)
++{
++	int fd = open(filename, O_CREAT | O_EXCL | O_WRONLY, 0666);
++	if (fd < 0) {
++		error_errno("%s", filename);
++		return NULL;
++	}
++	return fdopen(fd, "w");
++}
++
+ static int open_next_file(struct commit *commit, const char *subject,
+ 			 struct rev_info *rev, int quiet)
+ {
+@@ -890,7 +900,7 @@ static int open_next_file(struct commit *commit, const char *subject,
+ 	if (!quiet)
+ 		printf("%s\n", filename.buf + outdir_offset);
+ 
+-	if ((rev->diffopt.file = fopen(filename.buf, "w")) == NULL) {
++	if ((rev->diffopt.file = fopen_excl(filename.buf)) == NULL) {
+ 		error_errno(_("Cannot open patch file %s"), filename.buf);
+ 		strbuf_release(&filename);
+ 		return -1;
