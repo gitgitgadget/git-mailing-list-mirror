@@ -2,81 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B0D1F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 13:10:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFA9F1F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 13:22:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725920AbfBUNK1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 08:10:27 -0500
-Received: from mail-it1-f177.google.com ([209.85.166.177]:39302 "EHLO
-        mail-it1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725385AbfBUNK1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 08:10:27 -0500
-Received: by mail-it1-f177.google.com with SMTP id l15so22653975iti.4
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 05:10:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ydT7GfFoKzsAi8PlQ7SrWIzjYidZ3jBEPML2XPVJ5eU=;
-        b=UEi5LtDWKwkOMaOcRTzE5+nRWQZZJa7+ie+LFJ8rnmwAmxiLCIkr7UeD6eXbNCOZRF
-         j/282UEF1XjrjibFfqRy9SLe8dtPVRsUxj9XI15W3OuYkeQzUlQDYXKDhLA7LKYk8zq7
-         3oXRd2VCyW00ALdL6VGFFrpPeHKqi2itQFB7la+/iiQIJ8qNOS6yreznv7151v0JPyQV
-         z4IId1i/amrZyt2h4pMHRFgiD8Z2a8r0hJ8o0gCqn2XSh4Zg5ygydVErJLU3jp9ogA4c
-         rr69VXC+mtPNIZO09WSAvJ7miIsG/CrEuua17lNsspXkLtFCQL6VRylxdwGeQxN5ytAD
-         x5WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ydT7GfFoKzsAi8PlQ7SrWIzjYidZ3jBEPML2XPVJ5eU=;
-        b=nqPDtDxtBKUv5EyWb0TvDWSl2HjHO67k9mYawxbxaeYwukjugwm7MJuutNC18OLsuU
-         MDn5WTdSKXcbW+AjM/+dprWGVDpcrKyre1Ds4Lqa+GMlo8cFW4QoPBWCmRQHRD0dzyKX
-         9SBvAeEIANmEZMP7JA996LZFiSCwT8nEs20sqPiEkGD3FHjPrtE03qSMI5rvgSenlsZl
-         9vmPpR8h/Sy9cWpb39/QA8zsQQ9u/vh+b1MN7i6L7Nh+5hiM/sKTDovNjKLu25OSk7sj
-         I8c9YMIEbdBD2rfHoVC/i2Fsu6S5heYkNQv5Yr0yL2FWKg6AqSz2vHFCtJ3wdRrv2N4V
-         ZG6Q==
-X-Gm-Message-State: AHQUAuZZHQFib5gjKkxWfhUl4w0HZ7Is7VX7r40awmwo13sqRqYhqtkt
-        FuZL1yXcrHZa+h43cwnEUEVqhtWToRzJdHws0Oma/A==
-X-Google-Smtp-Source: AHgI3IYxcFQS+Dv4mAT5Rf7IFzepGIi0cQGkDaK+B2z1XzAYAeCJ4YCTAxEHymz17cnn4zQVbM3hDYWtDxMv2lqtzIQ=
-X-Received: by 2002:a02:568a:: with SMTP id u10mr22118533jad.130.1550754626490;
- Thu, 21 Feb 2019 05:10:26 -0800 (PST)
+        id S1726251AbfBUNWM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 08:22:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52482 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725845AbfBUNWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 08:22:12 -0500
+Received: (qmail 20107 invoked by uid 109); 21 Feb 2019 13:22:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Feb 2019 13:22:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12080 invoked by uid 111); 21 Feb 2019 13:22:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Feb 2019 08:22:25 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2019 08:22:10 -0500
+Date:   Thu, 21 Feb 2019 08:22:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, hi-angel@yandex.ru, sunshine@sunshineco.com
+Subject: Re: [PATCH v2 1/1] worktree add: sanitize worktree names
+Message-ID: <20190221132210.GC20536@sigill.intra.peff.net>
+References: <20190221110026.23135-1-pclouds@gmail.com>
+ <20190221121943.19778-1-pclouds@gmail.com>
+ <20190221121943.19778-2-pclouds@gmail.com>
 MIME-Version: 1.0
-References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com> <012601d4c8b5$54f1b730$fed52590$@nexbridge.com>
- <xmqqftsiw8l8.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqftsiw8l8.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 21 Feb 2019 20:10:00 +0700
-Message-ID: <CACsJy8D=-+TqZSf1oyTJs_O+=KAV66OE_As5cTKXxHoXAhzkGw@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.21.0-rc2
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190221121943.19778-2-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 21, 2019 at 2:41 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Another mention of /dev/zero appears in t/helper/test-sha1.sh (not
-> to be confused with t/helper/test-sha1.c).  This seems to be run
-> only with an explicit "make -C t/helper check-sha1" request, so
-> perhaps nobody on your platform ran it to get hit by it.  I wonder
-> if anybody runs this on any platform, to be honest, though.
+On Thu, Feb 21, 2019 at 07:19:43PM +0700, Nguyễn Thái Ngọc Duy wrote:
 
-I vaguely remember Brian added something to test SHA-512 performance
-but I can't find it. Maybe when he adds something (if it's not there
-already) we can retire this script, or update it to check sha-512 too.
+> +/*
+> + * worktree name is part of refname and has to pass
+> + * check_refname_component(). Remove unallowed characters to make it
+> + * valid.
+> + */
+> +static void sanitize_worktree_name(struct strbuf *name)
+> +{
+> +	char *orig_name = xstrdup(name->buf);
+> +	int i;
+> +
+> +	/*
+> +	 * All special chars replaced with dashes. See
+> +	 * check_refname_component() for reference.
+> +	 * Note that .lock is also turned to -lock, removing its
+> +	 * special status.
+> +	 */
+> +	for (i = 0; i < name->len; i++) {
+> +		if (strchr(":?[]\\~ \t@{}*/.", name->buf[i]))
+> +			name->buf[i] = '-';
+> +	}
 
-> Duy Cc'ed as the last person to touch that particular target---yes, I
-> know I was guilty of introducing it in b65bc21e ("Makefile: add
-> framework to verify and bench sha1 implementations.", 2006-06-24).
--- 
-Duy
+This is reject-known-bad, but I think there are still some other
+characters that are not allowed in refnames (e.g., ASCII control
+characters). Which would lead to us hitting the BUG() below.
+
+It might make sense to provide access to refname_disposition() and use
+it here. Alternatively, I think if we did an allow-known-good, it might
+be OK to have a slightly more restrictive scheme (say, alnum plus
+dashes, plus high-bit chars).
+
+> +	/* remove consecutive dashes, leading or trailing dashes */
+> +	for (i = 0; i < name->len; i++) {
+> +		while (name->buf[i] == '-' &&
+> +		       (i == 0 ||
+> +			i == name->len - 1 ||
+> +			(i < name->len - 1 && name->buf[i + 1] == '-')))
+> +			strbuf_remove(name, i, 1);
+> +	}
+
+I think this is correct, though it is possibly to be quadratic in the
+string length due to the O(n) remove. I think this kind of sanitizing is
+more readable if done between two strings rather than in-place, like:
+
+  for (i = 0; i < name->len; i++) {
+	if (is_allowed(name->buf[i])) {
+		strbuf_addch(&dest, name->buf[i]);
+		last_was_dash = 0;
+	} else if (!last_was_dash && dest->len)
+		strbuf_addch(&dest, '-');
+		last_was_dash = 1;
+	}
+  }
+  /* still must handle removal from end of stray "-" and ".lock" */
+  strbuf_swap(name, &dest);
+  strbuf_release(&dest);
+
+but that may just be personal preference. I'm OK with it if you prefer
+the in-place way.
+
+-Peff
