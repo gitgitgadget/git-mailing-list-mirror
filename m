@@ -2,126 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E49C1F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 17:41:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 314011F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 17:44:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726527AbfBURl5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 12:41:57 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:49861 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726165AbfBURl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 12:41:57 -0500
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id wsM6gR5bAAOoywsM7gbp11; Thu, 21 Feb 2019 17:41:55 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=vaJtXVxTAAAA:8 a=pGLkceISAAAA:8 a=fQSkxHNNLfOiytYfSZAA:9
- a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 1/1] worktree add: sanitize worktree names
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, hi-angel@yandex.ru, sunshine@sunshineco.com
-References: <20190221110026.23135-1-pclouds@gmail.com>
- <20190221121943.19778-1-pclouds@gmail.com>
- <20190221121943.19778-2-pclouds@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <6fe399f0-98ad-37e6-f4b1-3a3f6e4bce03@ramsayjones.plus.com>
-Date:   Thu, 21 Feb 2019 17:41:53 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1728582AbfBURow (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 12:44:52 -0500
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:34164 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728546AbfBURow (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 12:44:52 -0500
+Received: by mail-vk1-f196.google.com with SMTP id k64so1627347vke.1
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 09:44:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lcz3+uGYK+X0TCrpB3zemTqa4Suv9EN17+Lh3ETQqKk=;
+        b=VIQDwAnif2i3xVSuFdBsnuleoLymXfyGwCPnEItaxuzTrFTkzUOy4yQCKz4Lr+bO0H
+         cXb9sA3UphhKlmFkJempDTcnnY/CvkD+6n3IYBJByuNYmt7fOiV2dgT7hONhrMki0CxE
+         0Sn42biBaPBukzoxFbE62JWyLRerNXoejqExZYu3NHRnBfiXWqkJC1kIUJJxaZI2yUIh
+         RYfrSTbArYYv+sdduR3NdPztRCNI9AF4ucBR7a+8qZ3mmtQNoiWUTs0etRl7wi+nNMVL
+         tpu/5R1NJmcTPis3xGoDz/AkioUZpavQRF9TKBBDpxg2hFxd6aK1JvhSBUjnBomJ0Otl
+         06PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lcz3+uGYK+X0TCrpB3zemTqa4Suv9EN17+Lh3ETQqKk=;
+        b=ahjNJ1zAN2n9UZZI/X0P5xVI9NnWyYCmJVXvk77JGbGpEBptWKQojdJuhXRY8uBNvw
+         hLtWL6ks1wEkJQuzuUu/eLGCe+RKlaGp2Yb1qgR+f6ypDR22TjeYTVGbAHIJLK3/91nn
+         rBR4jGJwABXzQZqiriDXNxIO7gfr1qo44+vKLcuck6jCx/cCxMeaL30Buz0spmeQO0N6
+         TMIaAGM8TymQlPocd1RM+gqGoWGcdkJAn+clL1INhBTeCBulrXg9i3IylQgmRPVkyHM/
+         uv8dyxKFKqa6/GY/BmWrwH8kmVdwNb8NDaoYT1/RcBOABExWOaiwjPA2PDOq065JBqVL
+         ryBA==
+X-Gm-Message-State: AHQUAubSK59R/JQCzaTxvWOfow3WeC176dmHySg9335igKlI3NqiLjIv
+        1qPMGU0sOQ5ixXI1gPQzYqtaGSDEevMjsYVZsZ0=
+X-Google-Smtp-Source: AHgI3IbKqP6V3qc6204m83fa8mH6WZ6hHtwtBuHR/jC3gATHam+nmOdQJm/KDi9+BsJDBg9k6E+LkrPwxWFOjyOth2Q=
+X-Received: by 2002:a1f:ab03:: with SMTP id u3mr4269719vke.1.1550771090229;
+ Thu, 21 Feb 2019 09:44:50 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20190221121943.19778-2-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfObJzbX4RMOsVOZT7BRMpE56yysipu0DKo/YKzbzA+rF09OqPgOZgU6UNLvDXeyxyuw7YofSp0oEIBt3PH8rHHkprWm5SlmUz1+EngorjFnAtRZ5uz16
- MDJmzjukyf9EUw/Fc0Stp75fxAnC7MHlLjtjTkx0F9WObbhTpcZ1nDFJa/SW2uDTSfb9C6M4e28LKg==
+References: <20181122044841.20993-1-newren@gmail.com> <20181211161139.31686-1-newren@gmail.com>
+ <20181211161139.31686-6-newren@gmail.com> <nycvar.QRO.7.76.6.1901211709090.41@tvgsbejvaqbjf.bet>
+ <CABPp-BFrgjW-c8NKGYKs1VaH--Oc8yUu0enQMSp1pQVUwBOBwA@mail.gmail.com>
+ <xmqqy37ce8ad.fsf@gitster-ct.c.googlers.com> <63822309-1c58-a4a2-fa2b-d694bd9b8663@talktalk.net>
+In-Reply-To: <63822309-1c58-a4a2-fa2b-d694bd9b8663@talktalk.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 21 Feb 2019 09:44:37 -0800
+Message-ID: <CABPp-BENWQGSCj5F1FWm5s8vD6aYexJNbpGY8MGjs4AmZOnnYg@mail.gmail.com>
+Subject: Re: [PATCH v4 5/8] git-rebase, sequencer: extend --quiet option for
+ the interactive machinery
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Pratik Karki <predatoramigo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Phillip,
 
+On Wed, Feb 20, 2019 at 3:00 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+> On 22/01/2019 20:39, Junio C Hamano wrote:
+> > Elijah Newren <newren@gmail.com> writes:
+> >
+> >> Also, I have a fuzzy memory of discussing a very similar case with
+> >> some rebase-oriented option and its on-disk representation, where the
+> >> concern was more about users upgrading git versions during an
+> >> incomplete rebase rather than power users looking at internal file
+> >> contents.  And I think either Phillip or Junio made some statement
+> >> about considering these internal details and that they felt the worry
+> >> about upgrade mid-rebase was overly worrying.  But I can't find the
+> >> emails right now, and it's been so long (at least half a year) that I
+> >> might be imagining things.
+> >
+> > I do recall saying that mid-rebase upgrade is probably not worth
+> > getting worried about.
+> >
+>
+> In light of yesterday's bug report [1] about those other changes I'm
+> more concerned about this change. We were worrying about whether or not
+> to worry about a mid-rebase upgrade but it seems people can have two
+> different versions of git installed - one bundled with something like
+> tig and another they use on the command line. If they start a rebase
+> with a version containing this patch and try to continue it with a
+> version that does not then the older version will fail with a complaint
+> about a missing quiet file. The other way round they'll potentially get
+> the wrong quiet setting which isn't such a problem. It's probably a bit
+> late in the release cycle now to change this? But we could flag it up in
+> the release notes and bear it in mind when making changes in the future.
 
-On 21/02/2019 12:19, Nguyễn Thái Ngọc Duy wrote:
-> Worktree names are based on $(basename $GIT_WORK_TREE). They aren't
-> significant until 3a3b9d8cde (refs: new ref types to make per-worktree
-> refs visible to all worktrees - 2018-10-21), where worktree name could
-> be part of a refname and must follow refname rules.
-> 
-> Update 'worktree add' code to remove special characters to follow
-> these rules. The code could replace chars with '-' more than
-> necessary, but it keeps the code simple. In the future the user will
-> be able to specify the worktree name by themselves if they're not
-> happy with this dumb character substitution.
-> 
-> Reported-by: Konstantin Kharlamov <hi-angel@yandex.ru>
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  builtin/worktree.c      | 51 ++++++++++++++++++++++++++++++++++++++++-
->  t/t2025-worktree-add.sh |  7 ++++++
->  2 files changed, 57 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 3f9907fcc9..53e41db229 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -262,6 +262,50 @@ static void validate_worktree_add(const char *path, const struct add_opts *opts)
->  	free_worktrees(worktrees);
->  }
->  
-> +/*
-> + * worktree name is part of refname and has to pass
-> + * check_refname_component(). Remove unallowed characters to make it
-> + * valid.
-> + */
-> +static void sanitize_worktree_name(struct strbuf *name)
-> +{
-> +	char *orig_name = xstrdup(name->buf);
-> +	int i;
-> +
-> +	/*
-> +	 * All special chars replaced with dashes. See
-> +	 * check_refname_component() for reference.
-> +	 * Note that .lock is also turned to -lock, removing its
-> +	 * special status.
-> +	 */
-> +	for (i = 0; i < name->len; i++) {
-> +		if (strchr(":?[]\\~ \t@{}*/.", name->buf[i]))
-> +			name->buf[i] = '-';
-> +	}
-> +
-> +	/* remove consecutive dashes, leading or trailing dashes */
-
-Why? So, '[fred]' will be 'sanitized' to 'fred' (rather than '-fred-'),
-which would increase the chance of a 'collision' with the 'fred'
-worktree (not very likely, but still). Is that useful? How about
-'x86_64-*-gnu' which now becomes 'x86_64-gnu'?
- 
-> +	for (i = 0; i < name->len; i++) {
-> +		while (name->buf[i] == '-' &&
-> +		       (i == 0 ||
-> +			i == name->len - 1 ||
-> +			(i < name->len - 1 && name->buf[i + 1] == '-')))
-> +			strbuf_remove(name, i, 1);
-> +	}
-> +
-> +	/*
-> +	 * a worktree name of only special chars would be reduced to
-> +	 * an empty string
-> +	 */> +	if (name->len == 0)
-> +		strbuf_addstr(name, "worktree");
-
-If you didn't 'collapse' the name above, you could check for
-an empty name at the top and wouldn't need this (presumably
-an empty name would not be valid).
-
-ATB,
-Ramsay Jones
+Thanks for the heads up; I'll try to keep it in mind for the future.
