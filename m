@@ -2,91 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E4BF1F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 17:33:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7406C1F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 17:38:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726183AbfBURdu convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 21 Feb 2019 12:33:50 -0500
-Received: from mx2.suse.de ([195.135.220.15]:50414 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725823AbfBURdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 12:33:50 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 08B18ABD5;
-        Thu, 21 Feb 2019 17:33:49 +0000 (UTC)
-Date:   Thu, 21 Feb 2019 18:33:48 +0100
-From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Marketa Calabkova <mcalabkova@suse.cz>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] setup: don't fail if commondir reference is
- deleted.
-Message-ID: <20190221183348.30f759c2@kitsune.suse.cz>
-In-Reply-To: <CAPig+cTQMZFF-oX-SOzB5JR=V1WThBihC+kNm-2wjbpAWf-OHA@mail.gmail.com>
-References: <cover.1550508544.git.msuchanek@suse.de>
-        <6f9c8775817117c2b36539eb048e2462a650ab8f.1550508544.git.msuchanek@suse.de>
-        <CACsJy8AWezO7TFq8ne1a2pSAJZoc6oYqnNNxmVW_FkA9--ntbQ@mail.gmail.com>
-        <20190221145056.53b98b2a@kitsune.suse.cz>
-        <adc0f7f9-aa41-780e-6fce-94d493fac318@talktalk.net>
-        <CAPig+cTQMZFF-oX-SOzB5JR=V1WThBihC+kNm-2wjbpAWf-OHA@mail.gmail.com>
-Organization: SUSE Linux
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
+        id S1728208AbfBURiK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 12:38:10 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:32936 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726125AbfBURiJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 12:38:09 -0500
+Received: by mail-wr1-f66.google.com with SMTP id i12so31634624wrw.0
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 09:38:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=YCoIBngrwQzVsdcEtomd6auLNV7g527fPKBaWFwKHwI=;
+        b=KcranNYvm6k93kONGNA8firC0HKjR6e7P4LR/NhC+HCbtnFDqmCk9goPE0Gaf+6klm
+         GzUucgRIx31W4qnkVbgbIYwoBa5KYDY/w5ntTZaXaISgv+Fr3dXZ4tCdKGq4t/c1jdLA
+         i8zGW8/quBS11LCgg7NkklqfJtsNXYqFLcTtM+ogFP22GJXicwUATixxHkQVf/6nMEXb
+         s7DO7vQT9hBP0q2+JxeemZb9jYatFF6NwlaQGBehMt5T7OYGKKc50wpUWaJrhR3in5U/
+         CYnfXxhOUbVIo9k+G8DpAUAcAw1zdHYE+9/0Egpx2jO/sBfVDkYs+l/rOCDDifljC/d1
+         u8GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=YCoIBngrwQzVsdcEtomd6auLNV7g527fPKBaWFwKHwI=;
+        b=D3t6QCHLfeoUXNmAyzI55nHALVMnZO14YVyESRSlNdMjtYGMoIXzVi8aypwbmvWxFu
+         VV8iyJlppvCQdZc+blG9m4ra55/ER8izNlrBkn08rA+z68kxqgqTUkajmwAaR9EV1ZTQ
+         9h4Cl1pOmECEiBMqXSy3LMw0gr/m+OIemTBIO9c2S+NgbXrcKwd/Ifn0l4Ybepm5nzjd
+         t6phEp6EIRuunG07qXys00Y7pokHWb+X5PQgw9lsy23SrRYh+TZ+Lr3RPIf8eEb3y3lB
+         6lQCEo54rAsJDUjxRHsIo3+p5MPy0XPLFXlA4IePaU4bwlbnyG2uGNupAIG8D6r+9TMs
+         1z4g==
+X-Gm-Message-State: AHQUAua7l4Ulhyw0jivI0xq8E5L60BgAPdbgUMXnXdMezyCUUzWrZFU2
+        QCQsMOd3Qs63PYAhFpOKtpA=
+X-Google-Smtp-Source: AHgI3Iam386Gb0+NcE+kn2+V1I8RVq6yFDTXmnogNSLsry96wvQqT84Tw0bbhSReTNdQ/2R6Yp3lOw==
+X-Received: by 2002:adf:f3d0:: with SMTP id g16mr29057891wrp.29.1550770687690;
+        Thu, 21 Feb 2019 09:38:07 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x24sm16337879wmi.5.2019.02.21.09.38.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 21 Feb 2019 09:38:06 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH v2] protocol-capabilities.txt: document symref
+References: <4ffb11ff776166944673ba3bdb96a9d20eb14df7.1549929088.git.steadmon@google.com>
+        <cb1b2834b7365f6277d1ec573cee7fd68a7329d0.1550100949.git.steadmon@google.com>
+        <20190214035602.GA7209@sigill.intra.peff.net>
+        <20190220003248.GA160251@google.com>
+Date:   Thu, 21 Feb 2019 09:38:05 -0800
+In-Reply-To: <20190220003248.GA160251@google.com> (Josh Steadmon's message of
+        "Tue, 19 Feb 2019 16:32:48 -0800")
+Message-ID: <xmqqd0nlujnm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 21 Feb 2019 12:12:28 -0500
-Eric Sunshine <sunshine@sunshineco.com> wrote:
+Josh Steadmon <steadmon@google.com> writes:
 
-> On Thu, Feb 21, 2019 at 12:07 PM Phillip Wood <phillip.wood@talktalk.net> wrote:
-> > On 21/02/2019 13:50, Michal Suchánek wrote:  
-> > >> On Tue, Feb 19, 2019 at 12:05 AM Michal Suchanek <msuchanek@suse.de> wrote:  
-> > > The problem is we don't forbid worktree names ending with ".lock".
-> > > Which means that if we start to forbid them now existing worktrees
-> > > might become inaccessible.  
-> >
-> > I think it is also racy as the renaming breaks the use of mkdir erroring
-> > out if the directory already exists. One solution is to have a lock
-> > entry in $GIT_COMMON_DIR/worktree-locks and make sure the code that
-> > iterates over the entries in $GIT_COMMON_DIR/worktrees skips any that
-> > have a corresponding ignores in $GIT_COMMON_DIR/worktree-locks. If the
-> > worktree-locks/<dir> is created before worktree/<dir> then it should be
-> > race free (you will have to remove the lock if the real entry cannot be
-> > created and then increment the counter and try again). Entries could
-> > also be locked on removal to prevent a race there.  
-> 
-> I wonder, though, how much this helps or hinders the use-case which
-> prompted this patch series in the first place; to wit, creating
-> hundreds or thousands of worktrees. Doing so serially was too slow, so
-> the many "git worktree add" invocations were instead run in parallel
-> (which led to "discovery" of race conditions). Using a global worktree
-> lock would serialize worktree creation, thus slowing it down once
-> again.
+> On 2019.02.13 22:56, Jeff King wrote:
+> ...
+>> may say "...and you can use capabilities from protocol-capabilities.txt
+>> here". But it doesn't. It newly lists the capabilities, which makes this
+>> paragraph the right thing to say.
+>> 
+>> It does mean that if we teach v1 a new capability, we'll have to
+>> document it in both places. But moving forward, we'd hopefully not be
+>> doing that too often (I haven't seen talk of flipping the v2 switch yet
+>> by default, but obviously that's where we want to end up).
 
-I created thousands of worktrees only for stress-testing. The real
-workload needs only a dozen of them. That still leads to hitting a
-race condition occasionally and automation failure.
+Yes.
 
-Creating a separate lock directory will probably work. The question is
-when do you need to take the lock. Before adding a worktree, sure.
-Before deleting it as well. The problem is that deleting a worktree
-successfully without creating some broken state needs to exclude
-processes that might add stuff in the worktree directory. How many
-operations then do *not* need to take the lock?
+>> I probably would have put this in its own patch, but barring that we
+>> should probably at least mention in the commit message what this
+>> paragraph is doing here.
+>> 
+>> -Peff
+>
+> Done in V3. Thanks!
 
-Thanks
+Will replace (easy to do as nothing is moving to 'next', unless it
+is for the upcoming release, during the freeze anyway ;-)
 
-Michal
+Thanks.
