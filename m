@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BCA21F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 22:38:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 426F51F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 22:38:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726749AbfBUWiW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 17:38:22 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33318 "EHLO
+        id S1726842AbfBUWiY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 17:38:24 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39224 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726660AbfBUWiV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 17:38:21 -0500
-Received: by mail-wr1-f66.google.com with SMTP id i12so282326wrw.0
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 14:38:19 -0800 (PST)
+        with ESMTP id S1726074AbfBUWiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 17:38:22 -0500
+Received: by mail-wr1-f66.google.com with SMTP id l5so250591wrw.6
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 14:38:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Xf+RDQbELZWmCG/+ME47E/jtVElZ+sHjlL4YxLzAOM4=;
-        b=ZqipmpRSAPfN2LssBLpcz3DhXRjdA4jxsWeMEfOcGcuq9wYpJe9siBMZ18mVyhMhKI
-         7e99ozPSV2ltk88svZULFBLlTZ/pat8890to472zq9qowTJ2GEEBF3kIWyUBe0B1EBXu
-         dALOOuHLamA4G68DmhdtLjeDSJSZn0q97GBWCKMppDQJPNMi4o+ZcjA4jHn8bmW9X9N0
-         B95hVqZaRX2OIuWKpNrjFt6dthVQ2zTobE4K+B2Yi4bAe/KEOMIemhqDImYWU+/JjH1O
-         6z5mE+E4/BIKhjqse+Ew3vgFmaJ+lJ3DlnM+ulqHFX38wM2Al6Q2MwGgC4zYQMVik4Io
-         3T+Q==
+        bh=T0sJfRS9dXupnKNHFtKtzRpAKFcoZwVmcCxoE7dzQ6c=;
+        b=LjXrK0SV7UJjmLcbpA/1xJ7c75okC2/EjY+OJPF/LhS6rrUWdolKsCO8XSCc36PPr6
+         y9tsiUmxeHAW3R9rXah62AxLJzMuNkqh1UklCnOpN82FZ3XX9VT1pkX8qW7h2hxU1d67
+         oofBnI/ndknY23Ny9j5mzi2qeYHYPoKkOR05fdsJDhQGoy1ErzqCS6wRfCMz+w7Gm+e3
+         zyw55E2zEg53SxF7eJryo7OZK8aANEzJeZhXm8Yd/dmQDSocrslpCvaxR/gAyGEkUnTa
+         NFM1tQyewzocd0cY9mzmK9iaIxA1rQOA1c050kgY6A3CC7HXY8EYtY26f9BdhiTx8048
+         zaSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Xf+RDQbELZWmCG/+ME47E/jtVElZ+sHjlL4YxLzAOM4=;
-        b=ujT8gINFYHIVHre9E/aI1dE/HduGv2y5mHQ/SXUcmJwAqM15xKEa5Fq0pXD2v6aBc8
-         t5MiIVH3JMfRaHkj8A/e7f665TrAtidLlx7L4HavBi46rPzSAeK3K0wRGDPfKFhWoH6E
-         oFUu8kHLmE779uCrDNa9IXNQq5F2SUbVfzsovuI4gFj59CSgSGxzLYT8dJNAzdHoPO/e
-         s/yStflixvFR5Q46DFLE2lZ5rUOUcMulCMCUZ5VV7p18L9MYpxopr3FVBpfFQaHaXmCQ
-         LqnEYsQAV60WX21N54yddSUaxXuxYdfL1uUfy5B+elhMtpsSUetkD0BvxvQNP1v7fD2M
-         Cedg==
-X-Gm-Message-State: AHQUAubLK93I17PQBv7Mpltwz5AvNEl2WE8RuRs+tYIEUCiJPJzq7n0A
-        HWXwgTrEnpMn7r/ipuEut9lhstRb3Go=
-X-Google-Smtp-Source: AHgI3Ib40IXVOs1WxRkGV/bDmnJORos0QzUcHuKDVYZleafHbwgO9si2rWQy6e4RIS3v/pKXmqiguA==
-X-Received: by 2002:adf:fd46:: with SMTP id h6mr547449wrs.170.1550788697984;
-        Thu, 21 Feb 2019 14:38:17 -0800 (PST)
+        bh=T0sJfRS9dXupnKNHFtKtzRpAKFcoZwVmcCxoE7dzQ6c=;
+        b=glH/xUw9g5V5kP700sMWeomq/3TND1uA9j+GCoqR1hfqORMJRR8Nk1TLUW9CoRSpCk
+         mnuf98Zh9jpfD8XRJoYtcxOsitdPnxEMOw/XpheT8zHAvt8JWraksqeIzFlwBb+79wLq
+         O3E890jPUpugP/X2pxYk0VNppoKkv/Rt+b12A77UdEQ4PzWDD71oP67LvqIagTw4VDiU
+         cnjlpoLH6us+v3t0WDgxoEzyhbI0Ya3mjVTjKAaZYC7n2d0SLE/5l7tXDkC06Qha8rty
+         ZBm8OhWjqyjC1Ri1v9IiZEQsZ9nG5ukWHcc+S8oyM/Y9ODB5u31iDW21TBFq3pz627qw
+         sr2A==
+X-Gm-Message-State: AHQUAuYJegq9BORKbIn6TkLBPbuvm9YqQ1Ypqoyd2gdYjx7iSkHfjXbC
+        O/mDjr+eDiCBrYjRd6Wu24haiugi8cs=
+X-Google-Smtp-Source: AHgI3IaWjFkVJiVQu8QkfC+sj3Z79oSeTZ8bfoGRmPFPCJhX3pVtelCL+7jvpphFY7QwEqa6RvtLlA==
+X-Received: by 2002:adf:8224:: with SMTP id 33mr554992wrb.264.1550788699155;
+        Thu, 21 Feb 2019 14:38:19 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v196sm110803wmf.15.2019.02.21.14.38.16
+        by smtp.gmail.com with ESMTPSA id v196sm110803wmf.15.2019.02.21.14.38.18
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 21 Feb 2019 14:38:17 -0800 (PST)
+        Thu, 21 Feb 2019 14:38:18 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 7/8] commit-graph write: don't die if the existing graph is corrupt
-Date:   Thu, 21 Feb 2019 23:37:52 +0100
-Message-Id: <20190221223753.20070-8-avarab@gmail.com>
+Subject: [PATCH 8/8] commit-graph: improve & i18n error messages
+Date:   Thu, 21 Feb 2019 23:37:53 +0100
+Message-Id: <20190221223753.20070-9-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e
 In-Reply-To: <20190221223753.20070-1-avarab@gmail.com>
 References: <20190221223753.20070-1-avarab@gmail.com>
@@ -70,157 +70,190 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the commit-graph is written we end up calling
-parse_commit(). This will in turn invoke code that'll consult the
-existing commit-graph about the commit, if the graph is corrupted we
-die.
+Change the error emitted when a commit-graph file is corrupt so that
+we actually mention the commit-graph, e.g. change errors like:
 
-We thus get into a state where a failing "commit-graph verify" can't
-be followed-up with a "commit-graph write" if core.commitGraph=true is
-set, the graph either needs to be manually removed to proceed, or
-core.commitGraph needs to be set to "false".
+    error: improper chunk offset 0000000000385e0c
 
-Change the "commit-graph write" codepath to use a new
-parse_commit_no_graph() helper instead of parse_commit() to avoid
-this. The latter will call repo_parse_commit_internal() with
-use_commit_graph=1 as seen in 177722b344 ("commit: integrate commit
-graph with commit parsing", 2018-04-10).
+To:
 
-Just fixing the current issue would be likely to result in code that's
-inadvertently broken in the future. New code might use the
-commit-graph at a distance. To detect such cases introduce a
-"GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD" setting used when we do our
-corruption tests, and test that a "write/verify" combo works after
-every one of our current test cases where we now detect commit-graph
-corruption.
+    error: commit-graph improper chunk offset 0000000000385e0c
 
-Some of the code changes here might be strictly unnecessary, e.g. I
-was unable to find cases where the parse_commit() called from
-write_graph_chunk_data() didn't exit early due to
-"item->object.parsed" being true in
-repo_parse_commit_internal() (before the use_commit_graph=1 has any
-effect). But let's also convert those cases for good measure, we do
-not have exhaustive tests for all possible types of commit-graph
-corruption.
+As discussed in the commits leading up to this one the commit-graph
+machinery is now used by common commands like "status". If the graph
+was corrupt we'd often emit some error that gave no indication what
+was wrong. Now some of them are still cryptic, but they'll at least
+mention "commit-graph" to give the user a hint as to where to look.
 
-This might need to be re-visited if we learn to write the commit-graph
-incrementally.
+While I'm at it mark some of the strings that hadn't been marked for
+translation. It's clear from the commit history and the code that this
+was merely forgotten at the time, and wasn't intentional.p5
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- commit-graph.c          | 10 +++++++---
- commit-graph.h          |  1 +
- commit.h                |  6 ++++++
- t/t5318-commit-graph.sh | 11 +++++++++--
- 4 files changed, 23 insertions(+), 5 deletions(-)
+ commit-graph.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index d945e8f3e0..6b3ade9496 100644
+index 6b3ade9496..4cf7d6c294 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -281,6 +281,10 @@ static int prepare_commit_graph(struct repository *r)
- 	struct object_directory *odb;
- 	int config_value;
+@@ -150,21 +150,21 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
  
-+	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD, 0))
-+		die("Dying as requested by the '%s' variable on commit-graph load!",
-+		    GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD);
-+
- 	if (r->objects->commit_graph_attempted)
- 		return !!r->objects->commit_graph;
- 	r->objects->commit_graph_attempted = 1;
-@@ -545,7 +549,7 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
- 		uint32_t packedDate[2];
- 		display_progress(progress, ++*progress_cnt);
- 
--		parse_commit(*list);
-+		parse_commit_no_graph(*list);
- 		hashwrite(f, get_commit_tree_oid(*list)->hash, hash_len);
- 
- 		parent = (*list)->parents;
-@@ -742,7 +746,7 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
- 		display_progress(progress, i + 1);
- 		commit = lookup_commit(the_repository, &oids->list[i]);
- 
--		if (commit && !parse_commit(commit))
-+		if (commit && !parse_commit_no_graph(commit))
- 			add_missing_parents(oids, commit);
+ 	graph_signature = get_be32(data);
+ 	if (graph_signature != GRAPH_SIGNATURE) {
+-		error(_("graph signature %X does not match signature %X"),
++		error(_("commit-graph signature %X does not match signature %X"),
+ 		      graph_signature, GRAPH_SIGNATURE);
+ 		return NULL;
  	}
- 	stop_progress(&progress);
-@@ -991,7 +995,7 @@ void write_commit_graph(const char *obj_dir,
+ 
+ 	graph_version = *(unsigned char*)(data + 4);
+ 	if (graph_version != GRAPH_VERSION) {
+-		error(_("graph version %X does not match version %X"),
++		error(_("commit-graph version %X does not match version %X"),
+ 		      graph_version, GRAPH_VERSION);
+ 		return NULL;
+ 	}
+ 
+ 	hash_version = *(unsigned char*)(data + 5);
+ 	if (hash_version != oid_version()) {
+-		error(_("hash version %X does not match version %X"),
++		error(_("commit-graph hash version %X does not match version %X"),
+ 		      hash_version, oid_version());
+ 		return NULL;
+ 	}
+@@ -187,7 +187,7 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 
+ 		if (data + graph_size - chunk_lookup <
+ 		    GRAPH_CHUNKLOOKUP_WIDTH) {
+-			error(_("chunk lookup table entry missing; graph file may be incomplete"));
++			error(_("commit-graph chunk lookup table entry missing; file may be incomplete"));
+ 			free(graph);
+ 			return NULL;
+ 		}
+@@ -198,7 +198,7 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 		chunk_lookup += GRAPH_CHUNKLOOKUP_WIDTH;
+ 
+ 		if (chunk_offset > graph_size - the_hash_algo->rawsz) {
+-			error(_("improper chunk offset %08x%08x"), (uint32_t)(chunk_offset >> 32),
++			error(_("commit-graph improper chunk offset %08x%08x"), (uint32_t)(chunk_offset >> 32),
+ 			      (uint32_t)chunk_offset);
+ 			free(graph);
+ 			return NULL;
+@@ -235,7 +235,7 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 		}
+ 
+ 		if (chunk_repeated) {
+-			error(_("chunk id %08x appears multiple times"), chunk_id);
++			error(_("commit-graph chunk id %08x appears multiple times"), chunk_id);
+ 			free(graph);
+ 			return NULL;
+ 		}
+@@ -1162,7 +1162,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+ 		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
+ 
+ 		if (i && oidcmp(&prev_oid, &cur_oid) >= 0)
+-			graph_report("commit-graph has incorrect OID order: %s then %s",
++			graph_report(_("commit-graph has incorrect OID order: %s then %s"),
+ 				     oid_to_hex(&prev_oid),
+ 				     oid_to_hex(&cur_oid));
+ 
+@@ -1172,14 +1172,14 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+ 			uint32_t fanout_value = get_be32(g->chunk_oid_fanout + cur_fanout_pos);
+ 
+ 			if (i != fanout_value)
+-				graph_report("commit-graph has incorrect fanout value: fanout[%d] = %u != %u",
++				graph_report(_("commit-graph has incorrect fanout value: fanout[%d] = %u != %u"),
+ 					     cur_fanout_pos, fanout_value, i);
+ 			cur_fanout_pos++;
+ 		}
+ 
+ 		graph_commit = lookup_commit(r, &cur_oid);
+ 		if (!parse_commit_in_graph_one(r, g, graph_commit))
+-			graph_report("failed to parse %s from commit-graph",
++			graph_report(_("failed to parse commit %s from commit-graph"),
+ 				     oid_to_hex(&cur_oid));
+ 	}
+ 
+@@ -1187,7 +1187,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+ 		uint32_t fanout_value = get_be32(g->chunk_oid_fanout + cur_fanout_pos);
+ 
+ 		if (g->num_commits != fanout_value)
+-			graph_report("commit-graph has incorrect fanout value: fanout[%d] = %u != %u",
++			graph_report(_("commit-graph has incorrect fanout value: fanout[%d] = %u != %u"),
+ 				     cur_fanout_pos, fanout_value, i);
+ 
+ 		cur_fanout_pos++;
+@@ -1209,14 +1209,14 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+ 		graph_commit = lookup_commit(r, &cur_oid);
+ 		odb_commit = (struct commit *)create_object(r, cur_oid.hash, alloc_commit_node(r));
+ 		if (parse_commit_internal(odb_commit, 0, 0)) {
+-			graph_report("failed to parse %s from object database",
++			graph_report(_("failed to parse commit %s from object database for commit-graph"),
+ 				     oid_to_hex(&cur_oid));
  			continue;
+ 		}
  
- 		commits.list[commits.nr] = lookup_commit(the_repository, &oids.list[i]);
--		parse_commit(commits.list[commits.nr]);
-+		parse_commit_no_graph(commits.list[commits.nr]);
+ 		if (!oideq(&get_commit_tree_in_graph_one(r, g, graph_commit)->object.oid,
+ 			   get_commit_tree_oid(odb_commit)))
+-			graph_report("root tree OID for commit %s in commit-graph is %s != %s",
++			graph_report(_("root tree OID for commit %s in commit-graph is %s != %s"),
+ 				     oid_to_hex(&cur_oid),
+ 				     oid_to_hex(get_commit_tree_oid(graph_commit)),
+ 				     oid_to_hex(get_commit_tree_oid(odb_commit)));
+@@ -1226,13 +1226,13 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
  
- 		for (parent = commits.list[commits.nr]->parents;
- 		     parent; parent = parent->next)
-diff --git a/commit-graph.h b/commit-graph.h
-index 36d8109901..6021ababa2 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -7,6 +7,7 @@
- #include "cache.h"
+ 		while (graph_parents) {
+ 			if (odb_parents == NULL) {
+-				graph_report("commit-graph parent list for commit %s is too long",
++				graph_report(_("commit-graph parent list for commit %s is too long"),
+ 					     oid_to_hex(&cur_oid));
+ 				break;
+ 			}
  
- #define GIT_TEST_COMMIT_GRAPH "GIT_TEST_COMMIT_GRAPH"
-+#define GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD "GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD"
+ 			if (!oideq(&graph_parents->item->object.oid, &odb_parents->item->object.oid))
+-				graph_report("commit-graph parent for %s is %s != %s",
++				graph_report(_("commit-graph parent for %s is %s != %s"),
+ 					     oid_to_hex(&cur_oid),
+ 					     oid_to_hex(&graph_parents->item->object.oid),
+ 					     oid_to_hex(&odb_parents->item->object.oid));
+@@ -1245,16 +1245,16 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+ 		}
  
- struct commit;
+ 		if (odb_parents != NULL)
+-			graph_report("commit-graph parent list for commit %s terminates early",
++			graph_report(_("commit-graph parent list for commit %s terminates early"),
+ 				     oid_to_hex(&cur_oid));
  
-diff --git a/commit.h b/commit.h
-index 42728c2906..5d33477e78 100644
---- a/commit.h
-+++ b/commit.h
-@@ -89,6 +89,12 @@ static inline int repo_parse_commit(struct repository *r, struct commit *item)
- {
- 	return repo_parse_commit_gently(r, item, 0);
- }
-+
-+static inline int parse_commit_no_graph(struct commit *commit)
-+{
-+	return repo_parse_commit_internal(the_repository, commit, 0, 0);
-+}
-+
- #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
- #define parse_commit_internal(item, quiet, use) repo_parse_commit_internal(the_repository, item, quiet, use)
- #define parse_commit_gently(item, quiet) repo_parse_commit_gently(the_repository, item, quiet)
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 1ee00fa333..6db658ed66 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -377,7 +377,13 @@ corrupt_graph_verify() {
- 	test_must_fail git commit-graph verify 2>test_err &&
- 	grep -v "^+" test_err >err &&
- 	test_i18ngrep "$grepstr" err &&
--	git status --short
-+	if test -z "$NO_WRITE_TEST_BACKUP"
-+	then
-+		cp $objdir/info/commit-graph commit-graph-pre-write-test
-+	fi &&
-+	git status --short &&
-+	GIT_TEST_COMMIT_GRAPH_DIE_ON_LOAD=true git commit-graph write &&
-+	git commit-graph verify
- }
+ 		if (!graph_commit->generation) {
+ 			if (generation_zero == GENERATION_NUMBER_EXISTS)
+-				graph_report("commit-graph has generation number zero for commit %s, but non-zero elsewhere",
++				graph_report(_("commit-graph has generation number zero for commit %s, but non-zero elsewhere"),
+ 					     oid_to_hex(&cur_oid));
+ 			generation_zero = GENERATION_ZERO_EXISTS;
+ 		} else if (generation_zero == GENERATION_ZERO_EXISTS)
+-			graph_report("commit-graph has non-zero generation number for commit %s, but zero elsewhere",
++			graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
+ 				     oid_to_hex(&cur_oid));
  
- # usage: corrupt_graph_and_verify <position> <data> <string> [<zero_pos>]
-@@ -408,7 +414,7 @@ test_expect_success 'detect permission problem' '
- 	# "chmod 000 file" does not yield EACCES on e.g. "cat file"
- 	if ! test -r $objdir/info/commit-graph
- 	then
--		corrupt_graph_verify "Could not open"
-+		NO_WRITE_TEST_BACKUP=1 corrupt_graph_verify "Could not open"
- 	fi
- '
+ 		if (generation_zero == GENERATION_ZERO_EXISTS)
+@@ -1269,13 +1269,13 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+ 			max_generation--;
  
-@@ -528,6 +534,7 @@ test_expect_success 'git fsck (checks commit-graph)' '
- 	git fsck &&
- 	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
- 		"incorrect checksum" &&
-+	cp commit-graph-pre-write-test $objdir/info/commit-graph &&
- 	test_must_fail git fsck
- '
+ 		if (graph_commit->generation != max_generation + 1)
+-			graph_report("commit-graph generation for commit %s is %u != %u",
++			graph_report(_("commit-graph generation for commit %s is %u != %u"),
+ 				     oid_to_hex(&cur_oid),
+ 				     graph_commit->generation,
+ 				     max_generation + 1);
  
+ 		if (graph_commit->date != odb_commit->date)
+-			graph_report("commit date for commit %s in commit-graph is %"PRItime" != %"PRItime,
++			graph_report(_("commit date for commit %s in commit-graph is %"PRItime" != %"PRItime),
+ 				     oid_to_hex(&cur_oid),
+ 				     graph_commit->date,
+ 				     odb_commit->date);
 -- 
 2.21.0.rc0.258.g878e2cd30e
 
