@@ -6,122 +6,70 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E1941F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 14:08:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE031F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 14:10:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726109AbfBUOIN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 09:08:13 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52626 "HELO cloud.peff.net"
+        id S1727396AbfBUOKp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 09:10:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52642 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725385AbfBUOIN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 09:08:13 -0500
-Received: (qmail 20573 invoked by uid 109); 21 Feb 2019 14:08:11 -0000
+        id S1726199AbfBUOKo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 09:10:44 -0500
+Received: (qmail 20607 invoked by uid 109); 21 Feb 2019 14:10:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Feb 2019 14:08:11 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Feb 2019 14:10:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12786 invoked by uid 111); 21 Feb 2019 14:08:24 -0000
+Received: (qmail 12882 invoked by uid 111); 21 Feb 2019 14:10:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Feb 2019 09:08:24 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Feb 2019 09:10:57 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2019 09:08:09 -0500
-Date:   Thu, 21 Feb 2019 09:08:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2019 09:10:42 -0500
+Date:   Thu, 21 Feb 2019 09:10:42 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] http: use --stdin and --keep when downloading pack
-Message-ID: <20190221140809.GA21759@sigill.intra.peff.net>
-References: <20190221001447.124088-1-jonathantanmy@google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: BUG: 2.11-era rebase regression when @{upstream} is implicitly
+ used
+Message-ID: <20190221141042.GA21737@sigill.intra.peff.net>
+References: <877ee2jyh3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190221001447.124088-1-jonathantanmy@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <877ee2jyh3.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 20, 2019 at 04:14:47PM -0800, Jonathan Tan wrote:
+On Thu, Feb 14, 2019 at 02:23:04PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> This is part of the work of CDN offloading of fetch responses.
+> This is not a 2.21 release issue, and pre-dates the built-in rebase.
 > 
-> I have plans to use the http_pack_request suite of functions to
-> implement the part where we download from CDN over HTTP(S), but need
-> this change to be able to do so. I think it's better from the code
-> quality perspective to reuse these functions, but this necessitates a
-> behavior change in that we no longer use the filename as declared by the
-> server, so I'm sending this as RFC to see what the community thinks.
+> When you clone any repository, e.g. git.git, and add one commit on top
+> of the cloned branch, then run "git rebase" you'll get e.g.:
+> 
+>     $ git rebase
+>     First, rewinding head to replay your work on top of it...
+>     Applying: foo
+> 
+> Before 4f21454b55 ("merge-base: handle --fork-point without reflog",
+> 2016-10-12) you'd get:
+> 
+>     $ git rebase
+>     Current branch master is up to date.
 
-I think it makes sense. We don't use the server names for any of the
-other protocols, and I'm happy to see one less place where we may
-inherit a stupid or malicious item of data from the server.
+I'm not entirely sure this is a regression, and not the patch bringing
+the behavior into line with what would happen when you _do_ have a
+reflog.
 
-> diff --git a/http-push.c b/http-push.c
-> index b22c7caea0..409b266b0c 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -586,11 +586,16 @@ static void finish_request(struct transfer_request *request)
->  			fprintf(stderr, "Unable to get pack file %s\n%s",
->  				request->url, curl_errorstr);
->  		} else {
-> +			char *lockfile;
-> +
->  			preq = (struct http_pack_request *)request->userData;
->  
->  			if (preq) {
-> -				if (finish_http_pack_request(preq) == 0)
-> +				if (finish_http_pack_request(preq,
-> +							     &lockfile) == 0) {
-> +					unlink(lockfile);
->  					fail = 0;
-> +				}
->  				release_http_pack_request(preq);
->  			}
->  		}
+> The results are not the same for "git rebase @{u}" or "git rebase $(git
+> rev-parse @{u})":
 
-I was puzzled that you had to touch http-push.c. But indeed, it seems to
-have some fetching code in it, too? I'm willing to throw up my hands in
-disgust at the http-push code without looking further at this point. :)
-
->  	argv_array_push(&ip.args, "index-pack");
-> -	argv_array_pushl(&ip.args, "-o", tmp_idx, NULL);
-> -	argv_array_push(&ip.args, preq->tmpfile.buf);
-> +	argv_array_push(&ip.args, "--stdin");
-> +	argv_array_pushf(&ip.args, "--keep=git %"PRIuMAX, (uintmax_t)getpid());
->  	ip.git_cmd = 1;
-> -	ip.no_stdin = 1;
-> -	ip.no_stdout = 1;
-> +	ip.in = tmpfile_fd;
-> +	ip.out = -1;
->  
-> -	if (run_command(&ip)) {
-> -		unlink(preq->tmpfile.buf);
-> -		unlink(tmp_idx);
-> -		free(tmp_idx);
-> -		return -1;
-> +	if (start_command(&ip)) {
-> +		ret = -1;
-> +		goto cleanup;
->  	}
->  
-> -	unlink(sha1_pack_index_name(p->sha1));
-> +	*lockfile = index_pack_lockfile(ip.out);
-> +	close(ip.out);
-
-We're now doing bi-directional I/O with index-pack. But it should be
-deadlock-free, because we know the output is small and will only come at
-the end after we've closed its stdin.
-
-> -	if (finalize_object_file(preq->tmpfile.buf, sha1_pack_name(p->sha1))
-> -	 || finalize_object_file(tmp_idx, sha1_pack_index_name(p->sha1))) {
-> -		free(tmp_idx);
-> -		return -1;
-> +	if (finish_command(&ip)) {
-> +		ret = -1;
-> +		goto cleanup;
->  	}
-
-If the command fails but we got something in *lockfile, should we clean
-it up? Likewise, do we need to be installing a signal handler to clean
-it up in case we die in other code paths (or by a signal)?
+Those aren't using "--fork-point", so they're going to behave
+differently. The default with no arguments is basically "--fork-point
+@{u}".
 
 -Peff
