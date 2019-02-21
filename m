@@ -2,73 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D64421F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 13:51:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 465AE1F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 13:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727929AbfBUNvA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 08:51:00 -0500
-Received: from mx2.suse.de ([195.135.220.15]:37268 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725820AbfBUNvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 08:51:00 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 1D257AF81;
-        Thu, 21 Feb 2019 13:50:59 +0000 (UTC)
-Date:   Thu, 21 Feb 2019 14:50:56 +0100
-From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Marketa Calabkova <mcalabkova@suse.cz>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] setup: don't fail if commondir reference is
- deleted.
-Message-ID: <20190221145056.53b98b2a@kitsune.suse.cz>
-In-Reply-To: <CACsJy8AWezO7TFq8ne1a2pSAJZoc6oYqnNNxmVW_FkA9--ntbQ@mail.gmail.com>
-References: <cover.1550508544.git.msuchanek@suse.de>
-        <6f9c8775817117c2b36539eb048e2462a650ab8f.1550508544.git.msuchanek@suse.de>
-        <CACsJy8AWezO7TFq8ne1a2pSAJZoc6oYqnNNxmVW_FkA9--ntbQ@mail.gmail.com>
-Organization: SUSE Linux
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
+        id S1728194AbfBUNwK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 08:52:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52574 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725385AbfBUNwJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 08:52:09 -0500
+Received: (qmail 20396 invoked by uid 109); 21 Feb 2019 13:52:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Feb 2019 13:52:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12536 invoked by uid 111); 21 Feb 2019 13:52:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Feb 2019 08:52:22 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2019 08:52:07 -0500
+Date:   Thu, 21 Feb 2019 08:52:07 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] mingw: safe-guard a bit more against getenv()
+ problems
+Message-ID: <20190221135207.GA20899@sigill.intra.peff.net>
+References: <pull.127.git.gitgitgadget@gmail.com>
+ <53e3d159c8c80924188f57c44efd2170612f2ee5.1550243863.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <53e3d159c8c80924188f57c44efd2170612f2ee5.1550243863.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 21 Feb 2019 17:50:38 +0700
-Duy Nguyen <pclouds@gmail.com> wrote:
+On Fri, Feb 15, 2019 at 07:17:45AM -0800, Johannes Schindelin via GitGitGadget wrote:
 
-> On Tue, Feb 19, 2019 at 12:05 AM Michal Suchanek <msuchanek@suse.de> wrote:
-> >
-> > When adding wotktrees git can die in get_common_dir_noenv while
-> > examining existing worktrees because the commondir file does not exist.
-> > Rather than testing if the file exists before reading it handle ENOENT.  
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> I don't think we could go around fixing every access to incomplete
-> worktrees like this. If this is because of racy 'worktree add', then
-> perhaps a better solution is make it absolutely clear it's not ready
-> for anybody to access.
+> Running up to v2.21.0, we fixed two bugs that were made prominent by the
+> Windows-specific change to retain copies of only the 30 latest getenv()
+> calls' returned strings, invalidating any copies of previous getenv()
+> calls' return values.
 > 
-> For example, we can suffix the worktree directory name with ".lock"
-> and make sure get_worktrees() ignores entries ending with ".lock".
-> That should protect other commands while 'worktree add' is still
-> running. Only when the worktree is complete that 'worktree add' should
-> rename the directory to lose ".lock" and run external commands like
-> git-checkout to populate the worktree.
+> While this really shines a light onto bugs of the form where we hold
+> onto getenv()'s return values without copying them, it is also a real
+> problem for users.
+> 
+> And even if Jeff King's patches merged via 773e408881 (Merge branch
+> 'jk/save-getenv-result', 2019-01-29) provide further work on that front,
+> we are far from done. Just one example: on Windows, we unset environment
+> variables when spawning new processes, which potentially invalidates
+> strings that were previously obtained via getenv(), and therefore we
+> have to duplicate environment values that are somehow involved in
+> spawning new processes (e.g. GIT_MAN_VIEWER in show_man_page()).
 
-The problem is we don't forbid worktree names ending with ".lock".
-Which means that if we start to forbid them now existing worktrees
-might become inaccessible.
+Belated review, as this is already in master, but: yes, I absolutely
+support this patch, even on top of my patches. Those were just the cases
+I found by poking around for a few minutes, and I'm sure there are many
+more.
 
-Thanks
-
-Michal
+-Peff
