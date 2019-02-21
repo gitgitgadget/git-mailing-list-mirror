@@ -2,186 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57E161F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 12:59:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 650401F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 13:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725955AbfBUM7z (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 07:59:55 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52436 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725845AbfBUM7z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 07:59:55 -0500
-Received: (qmail 19905 invoked by uid 109); 21 Feb 2019 12:59:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Feb 2019 12:59:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11884 invoked by uid 111); 21 Feb 2019 13:00:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Feb 2019 08:00:07 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2019 07:59:52 -0500
-Date:   Thu, 21 Feb 2019 07:59:52 -0500
-From:   Jeff King <peff@peff.net>
-To:     nbelakovski@gmail.com
-Cc:     git@vger.kernel.org, rafa.almas@gmail.com, gitster@pobox.com,
-        avarab@gmail.com
-Subject: Re: [PATCH v8 3/3] branch: add worktree info on verbose output
-Message-ID: <20190221125952.GB13403@sigill.intra.peff.net>
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20190219083123.27686-4-nbelakovski@gmail.com>
+        id S1727809AbfBUNG5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 08:06:57 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:40213 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725831AbfBUNG4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 08:06:56 -0500
+Received: by mail-io1-f68.google.com with SMTP id p17so1380597iol.7
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 05:06:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=quoMpV3d6DjGWAFZ7AaYGfgon4xOGnK4m/zOSYRNAKc=;
+        b=asFfJJKf5EnmKscHaS9DOcNht9uOtDfNUJJ+KHU4zVRkpXR4xYat/VO3sxeKNL1x0Q
+         cMDwb2+rho2j6396hTx/B3GNoKLwTZXPEsd9HRZ3D5ie63SoVVINW47Ci43uVkYt7IhT
+         IEIadNKoHF7F15LwoLnHPv/aJi6I2s41TSmCgdCmXeJO1slid5lJHJxr13fnrUudT6x+
+         qSATBemyAgOWG78YRtueqox+FWkZKXfXZjfdjdHyMsf8nhV/FPDScVW6UPp6dLIQIkp+
+         mCxgo7hquAvD1gmXZQM4Ct97QUUDXE/J9E/ODzqskvForhCY4431T6mCxJ7eiV9TZ8P3
+         hnJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=quoMpV3d6DjGWAFZ7AaYGfgon4xOGnK4m/zOSYRNAKc=;
+        b=FCsgcGZbDzgUsQ1Vu1U0QkzvNAdoq3u0ejvWXIbxPzc41yanFj3mtMfYuxckDSDA6o
+         6NQ3PoxxkomRgW1X45FDuT3upvOJImsqbPGSI700yCVAb63gEFQpToGYaHB4XcGReAk+
+         zYfhbaNbyG3QllES7OPSDP+M8pj/a5RjreB4OqNIprVtsqUA/FrGGkiV6YBgk04OIDLr
+         uG6d40mm7YKYMJ/jLusxRXC+JWx3KY67fJ/i/8PgQCWZfokZUlDv+bv84Z0intN+gC9b
+         WMLZ/q4bWwiwXVnUuVwtEY7yXGS2IKE8B08x2ob4B/JVzFtgVzk2sSTUovoVUVcxj2kf
+         pkxg==
+X-Gm-Message-State: AHQUAuZ6FrE+anWdBgkrKEey7lAP1W8p+MiT1oQN2XG5eqUkmuxdNsVK
+        tBpkTecCgaHFB5Jsnp6CJpO6d8yDE0Lu8RwYJRZC2g==
+X-Google-Smtp-Source: AHgI3IbxkqMKtXwfVMVN9B7gk+pddK/jvABnY6eWxf2SN9LxjHJF/vtQdgYQy/bi4iutRNSAbQSxF5Q2uuIcs/XjLdQ=
+X-Received: by 2002:a5d:9357:: with SMTP id i23mr10700303ioo.236.1550754415327;
+ Thu, 21 Feb 2019 05:06:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190219083123.27686-4-nbelakovski@gmail.com>
+References: <CAApa7v-F7Y_WR11V-3jc-R4Y1qSv5PPof6GWvJuF_XMeTcC2zw@mail.gmail.com>
+ <CACsJy8AS5eNO6gACGtRZq=qdQGkQ3jmQPVivPG+=du9u9hKYcg@mail.gmail.com> <CAApa7v_noujdWcogGNJUS7ZJRzPRxK5PPv53tST-0JoEk8+9Mw@mail.gmail.com>
+In-Reply-To: <CAApa7v_noujdWcogGNJUS7ZJRzPRxK5PPv53tST-0JoEk8+9Mw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 21 Feb 2019 20:06:29 +0700
+Message-ID: <CACsJy8D9h2yT18V6pH+TKOaFPNQUf=Gd6YtgVkqUW_hvS1ZFaA@mail.gmail.com>
+Subject: Re: Feature Request git clone shallow-include
+To:     Joe Enzminger <joe.enzminger@exactasystems.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 19, 2019 at 05:31:23PM +0900, nbelakovski@gmail.com wrote:
+On Thu, Feb 21, 2019 at 1:07 AM Joe Enzminger
+<joe.enzminger@exactasystems.com> wrote:
+>
+> That is correct.  What you suggest is actually what I tried (using
+> sha-1 syntax).  For my purposes, excluding the tag's parent's but
+> including the tag is sufficient, but if is fairly straightforward to
+> extend support to the other use cases I'm sure someone would find is
+> useful.
 
-> From: Nickolai Belakovski <nbelakovski@gmail.com>
-> 
-> To display worktree path for refs checked out in a linked worktree
+It's not hard to do. I hope I will find some time to do it soon. My
+only concern is whether reuse the current code or write new. The
+former makes it easy to accidentally accept some extended sha-1 syntax
+that should not run on the server side. On the other hand, the latter
+will not be as thoroughly tested because it only runs by shallow code.
+That's my problem though. I think I might be able to find a third
+option somewhere in between.
 
-This would be a good place to describe why this is useful. :)
+>
+> Joe
+>
+>
+> On Tue, Feb 19, 2019 at 7:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
+> >
+> > On Wed, Feb 20, 2019 at 7:07 AM Joe Enzminger
+> > <joe.enzminger@exactasystems.com> wrote:
+> > >
+> > > Currently, git clone supports shallow-exclude=<tag-name>.  The client
+> > > will clone up to, but not including, the commit with the tag.
+> > >
+> > > It would be useful to have the ability to include the commit with the
+> > > tag.  The suggestion would be to add a "shallow-include" options to
+> > > clone to support this behavior.
+> >
+> > So exclude the tag's parents and everything before, but keep the tag, correct?
+> >
+> > I think if we support --shallow-exclude=<tag>^ then it should work the
+> > way you want (if the tag is a normal merge you may need to add
+> > --shallow-exclude=<tag>^2 as well). And you can do even fancier thing
+> > like --shallow-exclude=<tag>~3 (i.e. exclude the  grand grand parent
+> > of the tag, but keep the tag and grand parents). We will need to
+> > restrict extended SHA-1 syntax to a safe subset of course.
+> >
+> > > I have tried to use shallow-exclude with a follow on git fetch
+> > > --deepen=1, but it always returns "fatal: error in object; unshallow
+> > > <sha1>"
+> > --
+> > Duy
 
-I do not have an opinion myself. Patch 2 makes a lot of sense to me, but
-I don't know if people would like this one or not. I don't use "-v"
-myself, though, so what do I know. :)
 
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> index f2e5a07d64..326a45f648 100644
-> --- a/Documentation/git-branch.txt
-> +++ b/Documentation/git-branch.txt
-> @@ -168,8 +168,10 @@ This option is only applicable in non-verbose mode.
->  	When in list mode,
->  	show sha1 and commit subject line for each head, along with
->  	relationship to upstream branch (if any). If given twice, print
-> -	the name of the upstream branch, as well (see also `git remote
-> -	show <remote>`).
-> +	the path of the linked worktree, if applicable (not applicable
-> +	for current worktree since user's path will already be in current
-> +	worktree) and the name of the upstream branch, as well (see also
-> +	`git remote show <remote>`).
 
-That parenthetical feels a bit awkward. Maybe:
-
-  ...print the path of the linked worktree (if any) and the name of the
-  upstream branch, as well (see also `git remote show <remote>`). Note
-  that the current worktree's HEAD will not have its path printed (it
-  will always be your current directory).
-
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index c2a86362bb..0b8ba9e4c5 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -367,9 +367,13 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
->  		strbuf_addf(&local, " %s ", obname.buf);
->  
->  		if (filter->verbose > 1)
-> +		{
-> +			strbuf_addf(&local, "%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)(%s%%(worktreepath)%s) %%(end)%%(end)",
-> +				    branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
->  			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
->  				    "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
->  				    branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
-> +		}
-
-Another unreadable long line (both the one you're adding, and the existing
-one!). I don't know if it's worth trying to clean these up, but if we
-do, it might be worth hitting the existing ones, too.
-
-I'm OK if that comes as a patch on top later on, though.
-
-> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-> index 94ab05ad59..012ddde7f2 100755
-> --- a/t/t3203-branch-output.sh
-> +++ b/t/t3203-branch-output.sh
-> @@ -241,7 +241,6 @@ test_expect_success 'git branch --format option' '
->  '
->  
->  test_expect_success '"add" a worktree' '
-> -	mkdir worktree_dir &&
->  	git worktree add -b master_worktree worktree_dir master
->  '
-
-Here's that mysterious mkdir going away. :)
-
-> @@ -285,4 +284,24 @@ test_expect_success '--color overrides auto-color' '
->  	test_cmp expect.color actual
->  '
->  
-> +# This test case has some special code to strip the first 30 characters or so
-> +# of the output so that we do not have to put commit hashes into the expect
-> +test_expect_success 'verbose output lists worktree path' '
-> +	cat >expect <<-EOF &&
-> +	one
-> +	one
-> +	two
-> +	one
-> +	two
-> +	($(pwd)/worktree_dir) two
-> +	two
-> +	two
-> +	EOF
-> +	git branch -vv >tmp &&
-> +	SUBSTRLENGTH=$(head -1 tmp | awk "{print index(\$0, \"one\")}") &&
-> +	awk -v substrlength="$SUBSTRLENGTH" "{print substr(\$0,substrlength,length(\$0))}" <tmp >actual &&
-> +	test_cmp expect actual
-> +'
-
-It's hard to tell if this awk is doing the right thing. I guess it works
-because git-branch tries to line up all of the hashes. I think the
-result might be easier to verify if we simply blanked the hashes.
-Unfortunately the output is actually pretty hard to parse. Since there
-are only two tip commits, perhaps it would not be so bad to just do
-something like this:
-
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 012ddde7f2..8065279be6 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -284,22 +284,20 @@ test_expect_success '--color overrides auto-color' '
- 	test_cmp expect.color actual
- '
- 
--# This test case has some special code to strip the first 30 characters or so
--# of the output so that we do not have to put commit hashes into the expect
- test_expect_success 'verbose output lists worktree path' '
-+	one=$(git rev-parse --short HEAD) &&
-+	two=$(git rev-parse --short master) &&
- 	cat >expect <<-EOF &&
--	one
--	one
--	two
--	one
--	two
--	($(pwd)/worktree_dir) two
--	two
--	two
-+	* (HEAD detached from fromtag) $one one
-+	  ambiguous                    $one one
-+	  branch-one                   $two two
-+	  branch-two                   $one one
-+	  master                       $two two
-+	+ master_worktree              $two ($(pwd)/worktree_dir) two
-+	  ref-to-branch                $two two
-+	  ref-to-remote                $two two
- 	EOF
--	git branch -vv >tmp &&
--	SUBSTRLENGTH=$(head -1 tmp | awk "{print index(\$0, \"one\")}") &&
--	awk -v substrlength="$SUBSTRLENGTH" "{print substr(\$0,substrlength,length(\$0))}" <tmp >actual &&
-+	git branch -vv >actual &&
- 	test_cmp expect actual
- '
- 
-
-I don't like how it depends on the space alignment of the branches, but
-I do like that you can clearly see which branch is being annotated.
-
--Peff
+-- 
+Duy
