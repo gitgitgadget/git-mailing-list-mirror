@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35FD21F462
-	for <e@80x24.org>; Thu, 21 Feb 2019 11:16:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24E7B1F462
+	for <e@80x24.org>; Thu, 21 Feb 2019 11:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726729AbfBULQo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 06:16:44 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:40200 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725814AbfBULQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 06:16:43 -0500
-Received: by mail-pg1-f193.google.com with SMTP id u9so10110496pgo.7
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 03:16:43 -0800 (PST)
+        id S1726755AbfBULQt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 06:16:49 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:35277 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726737AbfBULQs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 06:16:48 -0500
+Received: by mail-pg1-f194.google.com with SMTP id s198so13653174pgs.2
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 03:16:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NIC5BMrDA/jjPY8ux1gqOzAv6/Ta0xgWF86dLsG8TNU=;
-        b=QJLFHHI+txyqPKb9fY+gtqw9CE/U7AKzh6pzVkzKXqsP5GTTEvPGxJ931+SOgb4KtU
-         frS3m7ykZwBuqsf46H4s9weypMFQFfXIDgEoC1L6u6TKCvaJum2kWnDGC+4WBkMp5lZI
-         dXnUY0+9Bq6oDfS1mP4jVR8M8g/F93qYW+WGZRdkzoFLYCJcOJNaXw6oq/rnfhRBBj1y
-         rUEqbnGf0em2xvG0DtLMgqUp3X4R/w7dA/5uXBGqbWQEgin1RLkmLBgOL85NfxfHT0jG
-         3jQFlzZcRo9dFbo4cfjig7iiqYzNOpAuLRypBzKd2r5TqYqXHVQ7tRJ1tUvfcuTzyJns
-         JV5g==
+        bh=eKtFaj/7qrmko2KxgPeNx8BlYd+XqJ5Xd1/U7NqoTJ4=;
+        b=RMwYI1vhtAOYMc8BKGhjrze4VomtHs55yPSg9B735KHOSYO9qPnpQD+ScV+U30DcCy
+         wyXI2IvQIoyK13uOhZ9kfhda5ZOpt7SHRjXAKuDSpbQwEAObKjC4OmLBBGVpw1z0qMdh
+         et8s/H7MNIh6ktzOaziae3EakPiWMh39QRpXcRoElJ8/m4SWiFLkivlFxWs6VCrTPT8m
+         hmpXFfDUW55DMPi4phgreGhnH0gTV8SQAVxqQsmLdyLve94rou5PHubukTBsEDymKq1b
+         vNIM/n1sikthl5US7rRrmpM8LUcMb2Qp895Zic3SDUF1ZOmKbGCLbZB4Mhox/Ji+AubG
+         ZPUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NIC5BMrDA/jjPY8ux1gqOzAv6/Ta0xgWF86dLsG8TNU=;
-        b=ZPTVxjndslPoA6iZ57r0ajvjpj5+aaZ9GrzMF2yOEpvL+/sv9VPvYpQLGHaXKych+p
-         ihapBOP4nZ4zPoEBLtRSo+SxfdpNMga62lz4jBSyx3PJzx3KWdfb2rBpVR27mQyf/mqw
-         u+a3f6MQhwgJWxMeGF9J2jBpzBeGcSb8Rw2Gnnz+j8lYvhS07YLhgSlIrG/iY5G01fsJ
-         vQQuGBl+y5cGnosKjDcC4FB1EOzP+008/syNwJFlO+v5BEtUwlFNC8CRgT0fKz/2HMzP
-         KJNXyHVsSUylvSij9ZAw4h6twCZkahI5fUsFwHNj+4p1rgTKpV5TulXgWkFx3OCNCBty
-         To7w==
-X-Gm-Message-State: AHQUAubXIY9GgdeZotLpNVQbj7kB8wzVAsKFXRyH/+UU4oCpLqQPVtby
-        ekfBSnhaALzIazVQkRqcAcuwyaPB
-X-Google-Smtp-Source: AHgI3IaRaNZu7NCGprPD0GWG/ExqdYi+wVZ2raJsHNQiBB5Dpvt8MZP9Bt2citutgWb9Om+gzG+/TA==
-X-Received: by 2002:a63:575d:: with SMTP id h29mr19413752pgm.442.1550747802826;
-        Thu, 21 Feb 2019 03:16:42 -0800 (PST)
+        bh=eKtFaj/7qrmko2KxgPeNx8BlYd+XqJ5Xd1/U7NqoTJ4=;
+        b=koIibB06htLZnUDE7h1cmWRhRIgopxoZ/NjbZifY8AQzwahbCCdGKNJ5ld3U/VlQ4i
+         a/JA9VqATFe/wmJlWxaqtodNkxPFGlLyO4QDd9/LCXFWeVxOG0CPHeNHG3mzWt33qh+E
+         555Jenojr4j59DNLBby2md2nr0o/ChFtUtvq3gHWf69lqiS6NoDyz5zLz0ghGozzY4JI
+         f+6/M6CJU+JwwZ5c77jWhlxSuEVRyaD2Qo3ZqhhF8isLebDX3FKpq8+f2OHNpqNLdjMh
+         keJWuwIa8s0fyMhJQElDH4gaMeTNNgc/IgRzSa8X3CZVwnZesvCGsIVOZpwQgWOQT7Dd
+         33lw==
+X-Gm-Message-State: AHQUAuYPqD/NBgSAHorAxLpqbF1Z9h0zsab+GznXgGUx45Pe1rSZSzK8
+        0EG4rj+qEZJlprCZYzJh2R+166Gq
+X-Google-Smtp-Source: AHgI3IbCy3DsvUKrSWucr6WC9PTQRVXSyIW86KsXC83J1gaDSTCeQLmETXe/2S7QieArZnTNKBRdfg==
+X-Received: by 2002:a62:a504:: with SMTP id v4mr5990477pfm.22.1550747807712;
+        Thu, 21 Feb 2019 03:16:47 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id v15sm28363044pfa.75.2019.02.21.03.16.39
+        by smtp.gmail.com with ESMTPSA id v9sm32339743pfg.144.2019.02.21.03.16.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Feb 2019 03:16:41 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 21 Feb 2019 18:16:37 +0700
+        Thu, 21 Feb 2019 03:16:46 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 21 Feb 2019 18:16:43 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, rybak.a.v@gmail.com,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 02/21] diff-parseopt: convert --numstat and --shortstat
-Date:   Thu, 21 Feb 2019 18:16:02 +0700
-Message-Id: <20190221111621.27180-3-pclouds@gmail.com>
+Subject: [PATCH v4 03/21] diff-parseopt: convert --dirstat and friends
+Date:   Thu, 21 Feb 2019 18:16:03 +0700
+Message-Id: <20190221111621.27180-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
 In-Reply-To: <20190221111621.27180-1-pclouds@gmail.com>
 References: <20190216113655.25728-1-pclouds@gmail.com>
@@ -72,41 +72,100 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ Documentation/diff-options.txt |  7 ++++++
+ diff.c                         | 39 +++++++++++++++++++++++++---------
+ 2 files changed, 36 insertions(+), 10 deletions(-)
 
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 0711734b12..7b81b852ca 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -148,6 +148,7 @@ These parameters can also be set individually with `--stat-width=<width>`,
+ 	number of modified files, as well as number of added and deleted
+ 	lines.
+ 
++-X[<param1,param2,...>]::
+ --dirstat[=<param1,param2,...>]::
+ 	Output the distribution of relative amount of changes for each
+ 	sub-directory. The behavior of `--dirstat` can be customized by
+@@ -192,6 +193,12 @@ directories with less than 10% of the total amount of changed files,
+ and accumulating child directory counts in the parent directories:
+ `--dirstat=files,10,cumulative`.
+ 
++--cumulative::
++	Synonym for --dirstat=cumulative
++
++--dirstat-by-file[=<param1,param2>...]::
++	Synonym for --dirstat=files,param1,param2...
++
+ --summary::
+ 	Output a condensed summary of extended header information
+ 	such as creations, renames and mode changes.
 diff --git a/diff.c b/diff.c
-index 12e333c67f..419b6ac4ae 100644
+index 419b6ac4ae..1cdbe8e688 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4905,6 +4905,12 @@ static void prep_parse_options(struct diff_options *options)
- 			  N_("synonym for '-p --raw'"),
- 			  DIFF_FORMAT_PATCH | DIFF_FORMAT_RAW,
- 			  DIFF_FORMAT_NO_OUTPUT),
-+		OPT_BIT_F(0, "numstat", &options->output_format,
-+			  N_("machine friendly --stat"),
-+			  DIFF_FORMAT_NUMSTAT, PARSE_OPT_NONEG),
-+		OPT_BIT_F(0, "shortstat", &options->output_format,
-+			  N_("output only the last line of --stat"),
-+			  DIFF_FORMAT_SHORTSTAT, PARSE_OPT_NONEG),
+@@ -4867,6 +4867,22 @@ static int parse_objfind_opt(struct diff_options *opt, const char *arg)
+ 	return 1;
+ }
+ 
++static int diff_opt_dirstat(const struct option *opt,
++			    const char *arg, int unset)
++{
++	struct diff_options *options = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++	if (!strcmp(opt->long_name, "cumulative")) {
++		if (arg)
++			BUG("how come --cumulative take a value?");
++		arg = "cumulative";
++	} else if (!strcmp(opt->long_name, "dirstat-by-file"))
++		parse_dirstat_opt(options, "files");
++	parse_dirstat_opt(options, arg ? arg : "");
++	return 0;
++}
++
+ static int diff_opt_unified(const struct option *opt,
+ 			    const char *arg, int unset)
+ {
+@@ -4911,6 +4927,18 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_BIT_F(0, "shortstat", &options->output_format,
+ 			  N_("output only the last line of --stat"),
+ 			  DIFF_FORMAT_SHORTSTAT, PARSE_OPT_NONEG),
++		OPT_CALLBACK_F('X', "dirstat", options, N_("<param1,param2>..."),
++			       N_("output the distribution of relative amount of changes for each sub-directory"),
++			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
++			       diff_opt_dirstat),
++		OPT_CALLBACK_F(0, "cumulative", options, NULL,
++			       N_("synonym for --dirstat=cumulative"),
++			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
++			       diff_opt_dirstat),
++		OPT_CALLBACK_F(0, "dirstat-by-file", options, N_("<param1,param2>..."),
++			       N_("synonym for --dirstat=files,param1,param2..."),
++			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
++			       diff_opt_dirstat),
  		OPT_END()
  	};
  
-@@ -4933,11 +4939,7 @@ int diff_opt_parse(struct diff_options *options,
+@@ -4939,16 +4967,7 @@ int diff_opt_parse(struct diff_options *options,
  		return ac;
  
  	/* Output format options */
--	if (!strcmp(arg, "--numstat"))
--		options->output_format |= DIFF_FORMAT_NUMSTAT;
--	else if (!strcmp(arg, "--shortstat"))
--		options->output_format |= DIFF_FORMAT_SHORTSTAT;
--	else if (skip_prefix(arg, "-X", &arg) ||
-+	if (skip_prefix(arg, "-X", &arg) ||
- 		 skip_to_optional_arg(arg, "--dirstat", &arg))
- 		return parse_dirstat_opt(options, arg);
- 	else if (!strcmp(arg, "--cumulative"))
+-	if (skip_prefix(arg, "-X", &arg) ||
+-		 skip_to_optional_arg(arg, "--dirstat", &arg))
+-		return parse_dirstat_opt(options, arg);
+-	else if (!strcmp(arg, "--cumulative"))
+-		return parse_dirstat_opt(options, "cumulative");
+-	else if (skip_to_optional_arg(arg, "--dirstat-by-file", &arg)) {
+-		parse_dirstat_opt(options, "files");
+-		return parse_dirstat_opt(options, arg);
+-	}
+-	else if (!strcmp(arg, "--check"))
++	if (!strcmp(arg, "--check"))
+ 		options->output_format |= DIFF_FORMAT_CHECKDIFF;
+ 	else if (!strcmp(arg, "--summary"))
+ 		options->output_format |= DIFF_FORMAT_SUMMARY;
 -- 
 2.21.0.rc1.337.gdf7f8d0522
 
