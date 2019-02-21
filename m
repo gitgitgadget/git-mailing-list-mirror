@@ -2,159 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DFFC1F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 22:26:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E8161F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 22:38:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726660AbfBUW0a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 17:26:30 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38719 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726035AbfBUW0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 17:26:30 -0500
-Received: by mail-wr1-f65.google.com with SMTP id v13so230885wrw.5
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 14:26:29 -0800 (PST)
+        id S1726178AbfBUWiF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 17:38:05 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45105 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726074AbfBUWiF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 17:38:05 -0500
+Received: by mail-wr1-f68.google.com with SMTP id w17so216225wrn.12
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 14:38:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=oU0FSVOqHu8pbWqPMOD3msWyX5PkHq1FZ8s4R7Bil+o=;
-        b=VFd3eWpKT+fBk0tn1lDFsXi3eNjJ0i50fWEx9PUkzJ001pd/3Kni04xi7ncn3Mvv4o
-         qaiswoH+nfsZHmADXFBwnTWJmkuIusIL9HaDzlqTvtKzXsvVHHXm2sFpdZ4Fkw0MK2O3
-         NuvGtp03Oq+ogIt7FTPf9KRUxgQ8r9a/DIvxqGXXQESb9jOK+MOPexE7MJeIS0vW/KFE
-         lSGDXWd40u0Di/x05KHs/yuenjJc8fwmoleJ3qEilt9bogYdS5Mv9+EEhRNQGDHsSAzH
-         6QN18/Cv/7gXMuziiPQlxIIdnl+tDddjqFMnQF1HqrrRA090+cFCNa38ok/SXSbyX2o7
-         MtlA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zuGPdWJ32PjFlO5fS6vQnMQ6W862mY1gUj5TTFGqfRo=;
+        b=MO55TERkScl5XGRlFLjm/8AuTyDLy0CcET0a9iCkwZ1hXK5mSg0WDyBgWTwFjnSiQB
+         i14z+Exk9E8cxge/E9QYx9i9QFT9cN0VWr8poBdpsFTdSyrZ3lXQxm/7egtPh8WlsLom
+         Vh8OURiIm8Ftw+96Bp4QCMbEQwzW3AGBlq4+F9Ha5EecOGz/hJl8rVsrzE6VZ9YGNtnP
+         4LwZCBCSpyqZEemcwtTzHAdbCbeXGZK7tUwFkWXFlcBJfF98wmCbckMrrUztExo/oY6s
+         8lf69mo1POO5eqb5lbilrlEG6gMj68WhL4npGfkjgrvrDesAYbBwDoKTsXtwhl7Jpnzq
+         yzTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=oU0FSVOqHu8pbWqPMOD3msWyX5PkHq1FZ8s4R7Bil+o=;
-        b=cN4Vhgrkvdpyc7msIEJveGFjd/j/lnAx8SUXA/bIAwTZ6wBhJl7nSjm92F3GZC0zuL
-         mJqb7B1IO7B3Kf3WACtZfHRRTdKiaRitz03iOFKQyyG0UD4i1PUXdcEiOXwPQzmEZtMS
-         Brcrfy/OLswk21aFOGEtSbMaTZkWw+C+J9l2kZwaSarwok24INMnFNCc6WceAwBMSVfM
-         Eiu0dZm4Li98wspiVFGwnErqgygLCeXSnTr0xiJbyymwz+sP6n0tscXGDKIgjm/EoYKB
-         SWv5nr2DDYANyu+gQvt+O6IQkV4Tq+gShqKEpemL2QYqqwUInh3Mk9C894yWD8xC92If
-         yRlA==
-X-Gm-Message-State: AHQUAubIpfK9J0NpgPXhxIxgfFadhrYGOYPjJrgKuud5uUR6X1QCf7J5
-        2mNLbgFMeVREZ49KCiOqNNY7ww1t+nA=
-X-Google-Smtp-Source: AHgI3IbQSBKpDJzJXIYcs0XfO4HDA7CpTc2EndFDxQU13AnmqwjBnFr1iA5Qyx2tvcb6z+oTUaKPGg==
-X-Received: by 2002:adf:f3d0:: with SMTP id g16mr517204wrp.29.1550787988355;
-        Thu, 21 Feb 2019 14:26:28 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id b8sm58096wmj.35.2019.02.21.14.26.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Feb 2019 14:26:27 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Sebastian Staudt <koraktor@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] commit-graph tests: fix cryptic unportable "dd" invocation
-References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com> <20190221192849.6581-3-avarab@gmail.com> <20190221204310.GS1622@szeder.dev>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190221204310.GS1622@szeder.dev>
-Date:   Thu, 21 Feb 2019 23:26:26 +0100
-Message-ID: <878sy86anh.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zuGPdWJ32PjFlO5fS6vQnMQ6W862mY1gUj5TTFGqfRo=;
+        b=QBC+HTJLeFwVFhdM/O7U+zCQSCEf2ADA32Y8Qck+r2e9CJnoEL345sFk27RS+UvvRt
+         0LGvdckkNuSdtBbgGuYKT4rqe/60EjTwoDJ0/d2v9aTzr3A5G/Ebt5N7SLpYLA/JnMBf
+         UJp8qS77fT0wl9NIWxUCeC/yYuGD01EWiVpKJJazyneAiAbe916s1DB+OBwtuNGQyewW
+         EEHErgKc8yuB2lKepLKtdIX8Ob2wrA3bHUMt9NS5g3RlnsTLDYXGJ2Swtee4cU+8c+T6
+         rbGNmjb4wM8BvrBp2wNaTBtxeL3S6+jr9Eh2LUGU5FKRhiqLBKh8QyQdjnevB0lGhPgK
+         sN5Q==
+X-Gm-Message-State: AHQUAuZ1Q+vCZbN0+6f2Uz2cKLPY2ISEaDAEdHpjZXZVMnMhcuegV1SH
+        N5Gaz9tfmRhkhHCzaUPUTn4fa/DDZy8=
+X-Google-Smtp-Source: AHgI3Ia4vxE4tqEegAgTjXnPOxG4JekBea0iraOPZ+vJAHDihiYzELqAu78adBwLFfU6/+jdE/cijQ==
+X-Received: by 2002:a5d:428b:: with SMTP id k11mr574181wrq.17.1550788682925;
+        Thu, 21 Feb 2019 14:38:02 -0800 (PST)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id v196sm110803wmf.15.2019.02.21.14.38.01
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 21 Feb 2019 14:38:02 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/8] commit-graph: segfault & other fixes for broken graphs
+Date:   Thu, 21 Feb 2019 23:37:45 +0100
+Message-Id: <20190221223753.20070-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This one isn't for 2.21.0, these issues are already in v2.20.0, I just
+spotted them when looking at & fixing the commit-graph test broken on
+NetBSD[1].
 
-On Thu, Feb 21 2019, SZEDER G=C3=A1bor wrote:
+This series touches (among other things) some of the same test code,
+but merges cleanly with that "dd" fix, and it's not required for
+testing it (unless you're on NetBSD).
 
-> On Thu, Feb 21, 2019 at 08:28:49PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> Change an unportable invocation of "dd" that truncated the
->> commit-graph to call Perl's truncate() function instead.
->>
->> In POSIX it is unspecified what happens when count=3D0 is
->> provided[1]. The NetBSD "dd" behavior differs from GNU (and seemingly
->> other BSDs), which as left this test broken since
->> d2b86fbaa1 ("commit-graph: fix buffer read-overflow", 2019-01-15).
->>
->> In POSIX the truncate(2) and ftruncate(2) functions are
->> portable. We've used the latter since 271421cd34 ("Update partial HTTP
->> transfers.", 2005-09-30), but the truncate(1) command-line tool is
->> GNU-specific. Thus let's use Perl's version of it. We could also just
->> introduce a "test-tool truncate" in the future if we wanted to avoid
->> shelling out to perl.
->>
->> On Linux and NetBSD we don't need the "if -s $ARGV[0] > $ARGV[1]"
->> condition I'm adding. We never have a $zero_pos longer than the file
->> being truncated. But let's have that condition to future-proof the
->> code, and because "the behavior is undefined if LENGTH is greater than
->> the length of the file" (perldoc -f truncate).
->>
->> 1. http://pubs.opengroup.org/onlinepubs/9699919799/utilities/dd.html
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  t/t5318-commit-graph.sh | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
->> index d4bd1522fe..d99bea6cce 100755
->> --- a/t/t5318-commit-graph.sh
->> +++ b/t/t5318-commit-graph.sh
->> @@ -382,7 +382,8 @@ corrupt_graph_and_verify() {
->>  	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
->>  	cp $objdir/info/commit-graph commit-graph-backup &&
->>  	printf "$data" | dd of=3D"$objdir/info/commit-graph" bs=3D1 seek=3D"$p=
-os" conv=3Dnotrunc &&
->> -	dd of=3D"$objdir/info/commit-graph" bs=3D1 seek=3D"$zero_pos" count=3D=
-0 &&
->> +	perl -we 'truncate $ARGV[0], $ARGV[1] if -s $ARGV[0] > $ARGV[1]' \
->> +		$objdir/info/commit-graph $zero_pos &&
->
-> This will make Dscho unhappy :)
+Instrumenting the commit-graph tests reveals that if you have a broken
+commit-graph git will either segfault or abort early with cryptic
+errors on such basic commands as "status".
 
-Sorry Dscho :)
+Furthemore, if our graph is corrupt and we've set
+core.commitGraph=true we can't even write a new commit-graph, because
+writing a new one has grown to implicitly depend on reading the old
+one!
 
-Although this is a one-off in one test, as opposed to a new "perl -e" in
-test-lib-functions.sh
+This series fixes all of that.
 
-> Is there a problem with:
->
->   dd if=3D/dev/null of=3D"$objdir/info/commit-graph" bs=3D1 seek=3D"$zero=
-_pos"
->
-> ?
->
-> To my understanding of the specs it's well-defined what it should do,
-> even when $zero_pos is larget than the file size,  it's shorter,
-> simpler, and doesn't introduce yet another Perl dependency.
+1. https://public-inbox.org/git/20190221192849.6581-3-avarab@gmail.com/
 
-I tried that as a one-off and it indeed works as a "truncate" on NetBSD
-& GNU.
+Ævar Arnfjörð Bjarmason (8):
+  commit-graph tests: split up corrupt_graph_and_verify()
+  commit-graph tests: test a graph that's too small
+  commit-graph: fix segfault on e.g. "git status"
+  commit-graph: don't early exit(1) on e.g. "git status"
+  commit-graph: don't pass filename to load_commit_graph_one_fd_st()
+  commit-graph verify: detect inability to read the graph
+  commit-graph write: don't die if the existing graph is corrupt
+  commit-graph: improve & i18n error messages
 
-My reading of POSIX "dd" and "lseek" docs is that we'd need some similar
-guard if we're going to be paranoid about a $zero_pos value past the end
-of the file. It doesn't look like that's portable, my assumption from
-reading the docs is that the seek=3D* will devolve without a stat() check
-on some "dd" implementations to an "lseek".
+ builtin/commit-graph.c  |  23 +++++--
+ commit-graph.c          | 132 +++++++++++++++++++++++++++-------------
+ commit-graph.h          |   4 ++
+ commit.h                |   6 ++
+ t/t5318-commit-graph.sh |  48 +++++++++++++--
+ 5 files changed, 160 insertions(+), 53 deletions(-)
 
-I'm not going to submit a re-roll of this because it works, and I'd
-still trust Perl's truncate(...) portability over dd.
+-- 
+2.21.0.rc0.258.g878e2cd30e
 
-But more importantly because it takes me *ages* to fully re-test
-anything on the slow BSD VMs I have access to, and I already tore town
-my one-off hacking env there after testing these patches...
-
->>  	generate_zero_bytes $(($orig_size - $zero_pos)) >>"$objdir/info/commit=
--graph" &&
->>  	test_must_fail git commit-graph verify 2>test_err &&
->>  	grep -v "^+" test_err >err &&
->> --
->> 2.21.0.rc0.258.g878e2cd30e
->>
