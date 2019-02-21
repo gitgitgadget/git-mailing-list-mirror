@@ -2,72 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 662DE1F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 08:22:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43DA71F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 09:27:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727356AbfBUIWV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 03:22:21 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52056 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727088AbfBUIWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 03:22:20 -0500
-Received: (qmail 17126 invoked by uid 109); 21 Feb 2019 08:22:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Feb 2019 08:22:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9267 invoked by uid 111); 21 Feb 2019 08:22:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Feb 2019 03:22:33 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2019 03:22:18 -0500
-Date:   Thu, 21 Feb 2019 03:22:18 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        git@vger.kernel.org
-Subject: Re: Git Merge Conference Recordings [was: Re: [ANNOUNCE] Git Merge
- Contributor's Summit Jan 31, 2019, Brussels]
-Message-ID: <20190221082218.GA3335@sigill.intra.peff.net>
-References: <20181109104202.GA8717@sigill.intra.peff.net>
- <2139295744.18413.1550666884748@ox.hosteurope.de>
- <87ef82628j.fsf@evledraar.gmail.com>
- <20190221045904.GA29732@sigill.intra.peff.net>
+        id S1725891AbfBUJ1d convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 21 Feb 2019 04:27:33 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:41650 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725814AbfBUJ1d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 04:27:33 -0500
+Received: by mail-qk1-f193.google.com with SMTP id y15so2399185qki.8
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 01:27:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=f0X0t53D49BWC/AteBtJsriXHmoZDVUZNOMqzq+t1SM=;
+        b=SwPjJYvqWjIZPnpDpVuyYzfojsc3sBC3Qps16+bbJjhPRFHoCy4nh4Je5JFgUXrhdg
+         qfVlQlk3t97xCHzV3Oc+qJ1c6UXtTZChZbCUI1ASHj95UYLZ5hejJz7JPYQyF90VtAlv
+         A+yjj8d5U7OMRbN41HA11K+olmkAx0BKYPaE4jrvzeunwCLjM51ZMA5Ui48sZbF41B78
+         farCXLt3MvjpFQ5CkqdukPgLEwN3mQnsCz7f+aXVEjMiMTk+ZfD12ffEIjkebasfXtLe
+         E7Pr2oxCrgZMEcJFRGZAKaRFC6AT9S18nldSAl2h+2Pl5EN/ZsvrE30xH0GsI6xRpAZ8
+         xFwA==
+X-Gm-Message-State: AHQUAuYjIQBDcAC8gkxPydIrtiFQaYJ5FlsWTm0rYiCTb6HIzmD6JahK
+        fg/F+KfNY+TjnK1tAWkWE6GTpPkqlW+Lt7ivgDI=
+X-Google-Smtp-Source: AHgI3IYSyvf46UZHo6Ovf+EOEOFa2K0ADGpAX1jItfQhs+hWwUxkFJL1M1U0P+IRdChmYvHrE0grmEFteG/wgAPrKQ4=
+X-Received: by 2002:a37:404f:: with SMTP id n76mr28673358qka.26.1550741252232;
+ Thu, 21 Feb 2019 01:27:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190221045904.GA29732@sigill.intra.peff.net>
+References: <cover.1550508544.git.msuchanek@suse.de> <37df7fd81c3dee990bd7723f18c94713a0d842b6.1550679076.git.msuchanek@suse.de>
+ <CAPig+cQZNOWvaa5H2PKOs149KvRtEYRzrdLvzvFRDo4Qxaecaw@mail.gmail.com>
+ <20190220181605.60bbc28d@kitsune.suse.cz> <CAPig+cS4vZpyj4Cx=Q89v3xTrCG4WbtX8EhTfOT2RKytjV-HrA@mail.gmail.com>
+In-Reply-To: <CAPig+cS4vZpyj4Cx=Q89v3xTrCG4WbtX8EhTfOT2RKytjV-HrA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 21 Feb 2019 04:27:21 -0500
+Message-ID: <CAPig+cT48d9JJyqVx0WvBiFV+BLqAqo5dX3yndNhoJZmKRPgEg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] setup: don't fail if commondir reference is deleted.
+To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Marketa Calabkova <mcalabkova@suse.cz>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 20, 2019 at 11:59:04PM -0500, Jeff King wrote:
-
-> On Wed, Feb 20, 2019 at 02:03:40PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> > > I wanted to point a colleague of mine to one of the talks.
-> > > Unfortunately I could not find the recordings of the talks anywhere.
+On Wed, Feb 20, 2019 at 1:35 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Wed, Feb 20, 2019 at 12:16 PM Michal Suchánek <msuchanek@suse.de> wrote:
+> > On Wed, 20 Feb 2019 11:55:46 -0500
+> > Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > > On Wed, Feb 20, 2019 at 11:17 AM Michal Suchanek <msuchanek@suse.de> wrote:
+> > > > Another even rarer issue is that the file might be zero size because another
+> > > > process initializing a worktree opened the file but has not written is content
+> > > > yet.
 > > >
-> > > Are these available?
-> > 
-> > I have no insider knowledge, but can tell you that in past years it's
-> > taken GitHub a bit to process these and put them on YouTube[1].
-> > 
-> > E.g. last year's conference was in early March, and the videos trickled
-> > in in late-March to early April, the year before that it was in February
-> > and the videos were published in May of that year.
-> > 
-> > Historically the 3-4 month delay has been more of the norm than 1-2.
-> 
-> I think they're shooting to have them out sometime in March, but I've
-> asked if they have a more specific ETA.
+> > > Based upon the explanation thus far, I'm having trouble understanding
+> > > under what circumstances these race conditions can arise. Are you
+> > > trying to invoke Git commands in a particular worktree even as the
+> > > worktree itself is being created?
+> >
+> > It's explained in the following paragraph. If you have multiple
+> > worktrees some *other* worktreee may be uninitialized.
+>
+> I understand that, but setup.c:get_common_dir_noenv() is concerned
+> only with _this_ worktree -- the one in which the Git command is being
+> run -- so it's not clear if or how some other partially-initialized
+> worktree could have any impact. (And, I'm having trouble fathoming how
+> it could, which is why I'm asking these questions).
 
-The word I got today was that they're trying to have them up before the
-end of the month.
+I still can't see how setup.c:get_common_dir_noenv() could be
+responsible for the behavior you're describing of _any_ Git command
+erroring out due to _any_ worktree being incompletely-initialized.
+However, I can imagine "git worktree add" itself being racy and
+failing due to a missing or empty "commondir" file for some other
+worktree since that command _does_ consult other worktree entries when
+validating the "add" operation via
+builtin/worktree.c:validate_worktree_add() which calls
+get_worktrees(). If get_worktrees() is subject to that raciness
+problem, then "git worktree add" will inherit that undesirable
+raciness behavior (as will other "git worktree" commands which call
+get_worktrees(), such as "git worktree list").
 
--Peff
+> Is it possible that when you saw that error message, it actually arose
+> from some code other than setup.c:get_common_dir_noenv()?
+
+So, I'm suspecting get_worktrees() or some function it calls (and so
+on) as the racy culprit.
