@@ -2,118 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FEAF1F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 19:29:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5A51F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 19:59:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726360AbfBUT3G (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 14:29:06 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38167 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726198AbfBUT3F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 14:29:05 -0500
-Received: by mail-wm1-f68.google.com with SMTP id v26so10383671wmh.3
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 11:29:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=n0Q+QAff76GfhL89YDmI0kJqjN6CgmIygA79rwBjInM=;
-        b=o+qNul56Aw1bumaa8uRmwr1IX7pjTIVnHLnimr2waWlM0+c5uYeeBXM0as4otweqtB
-         ErP90wfGJId3Hl0AvgktlamkCPkKATV/Dh8n229r42Pi18s6ZNzKdEA0ixfHXnTQqKni
-         a1ujE8r4jh6ErVIT+F3kLVrIcINxhnBR31nDyuy/zBAx9glHsdaFqX330dmV3NWIoqhg
-         42YvPZvj8A8zETDsyFtziRNxgFuxTeORumhbuDwefx3F4gkfuZdIecj1tbjiGzWlPR1I
-         S/JS7mqEM21XBawyy7b5ySdPB7eXkw4+W00ToR81fSzEXeuyExRP/UOZYtORQvW0n7tT
-         GxAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=n0Q+QAff76GfhL89YDmI0kJqjN6CgmIygA79rwBjInM=;
-        b=jXCmrlhq0kagOeWl+i8NtwpVwzMh/D/4pGE6HGXERKryeOjZPsFCfs5GJwdN067VGj
-         3GAW5yIfu1mVrEy4RFyEoGfEwEPZjY17XpOKL7sgM+A+++hCmek/CaJ8qj606b1PGeVW
-         TuHu+4R+xGttnH9SpJorUpUS2HeymHfrJmgvuQQtCElMskoGynWWEjZ5FcigqVXXs51R
-         eR7ZwEihwDAj/odRD6XM+H5QaIc5SMxjtqMP5IWyywgiTdXP0IH78XLpq0Zvaqk/zSEO
-         cUlaCbxNeBkywnaTsr25jU4kGuMaRi3f1vB8F6px8vXlssR9QP8XyqJcnpN8M5PY3PT4
-         9Z3Q==
-X-Gm-Message-State: AHQUAubrdIDGJJiirXo9kHsc7Ub4Ttl1C8PYjlrtwuq/czVSIZSxOOd/
-        xNHqujZiF1L5DQZ+F+74RMqVMFZw
-X-Google-Smtp-Source: AHgI3IbLcHdl0wmxk0DszvsdGqApXCoS4H0i79/VfY+MthM7kFyX+qo+8p7SitoruKU1QHEvycWAeA==
-X-Received: by 2002:a1c:f406:: with SMTP id z6mr57759wma.107.1550777343812;
-        Thu, 21 Feb 2019 11:29:03 -0800 (PST)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n2sm35237429wrq.58.2019.02.21.11.29.02
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 21 Feb 2019 11:29:03 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Sebastian Staudt <koraktor@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/2] commit-graph tests: fix cryptic unportable "dd" invocation
-Date:   Thu, 21 Feb 2019 20:28:49 +0100
-Message-Id: <20190221192849.6581-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e
-In-Reply-To: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com>
-References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com>
+        id S1726272AbfBUT7z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 14:59:55 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:38498 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726209AbfBUT7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 14:59:54 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1LJxkVb053973
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 21 Feb 2019 14:59:47 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>,
+        "'Johannes Schindelin'" <johannes.schindelin@gmx.de>,
+        "'Duy Nguyen'" <pclouds@gmail.com>
+References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com>        <012601d4c8b5$54f1b730$fed52590$@nexbridge.com> <xmqqftsiw8l8.fsf@gitster-ct.c.googlers.com> 
+In-Reply-To: 
+Subject: RE: [ANNOUNCE] Git v2.21.0-rc2
+Date:   Thu, 21 Feb 2019 14:59:40 -0500
+Message-ID: <003701d4ca1f$fe7bf340$fb73d9c0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQC1VVUPHT7/O/TkZraQz8YJYJGYJwJcqRQXAcGx2NeoCFhCsIAASB/Q
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change an unportable invocation of "dd" that truncated the
-commit-graph to call Perl's truncate() function instead.
+On February 21, 2019 10:55, I wrote:
+> On February 20, 2019 14:42, Junio C Hamano wrote:
+> > "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> >
+> > > On February 19, 2019 18:29, Junio C Hamano wrote:
+> > >> A release candidate Git v2.21.0-rc2 is now available for testing at
+> > >> the usual places.  It is comprised of 474 non-merge commits since
+> > >> v2.20.0, contributed by 61 people, 16 of which are new faces.
+> > >
+> > > Thanks. t5562 works properly on NonStop (3 tests under various loads).
+> > > I am starting a full regression test now - see you in two days or so
+> > > with a full report.
+> >
+> > Thanks.  In the end I ended up doing the following:
+> >
+> >  - kept most of your "feed NULs generated from a helper program via
+> >    pipe, instead of reading from /dev/zero" patch,
+> >
+> >  - replaced the helper program used in the above with the test-tool
+> >    one by Dscho,
+> >
+> >  - used Max's "do not reuse the output file---the background writer
+> >    about to die may still have it open when the next test starts",
+> >
+> >  - used Max's "when testing the program with overly large input
+> >    declared with content-length, do not have to feed from /dev/zero;
+> >    /dev/null suffices as a mistaken program attempting to read would
+> >    die when seeing EOF anyway" patch to reduce one mention of
+> >    /dev/zero (or one pipe from the helper output) further.
+> >
+> > Hopefully Dscho's Azure thing would also be happy with one less use of
+> > Perl script.
+> >
+> > As I said earlier, a few places in t/ still mention /dev/zero and I
+> > think it is a real bug on platforms without /dev/zero in t4153:
+> >
+> >     $ git grep -h dev/zero t/
+> >             test_must_fail test_terminal git am --3way </dev/zero &&
+> >             test_must_fail test_terminal git am --reject </dev/zero &&
+> >
+> > Curiously, applying the attached patch and running the test on Linux
+> > would notice that we do not have such a device file, and the use of
+> > test_must_fail does *not* make it a-OK [*].  I am not sure why you are
+> > not getting hit by the same issue.
+> >
+> > 	Side note: test_must_fail is to ensure that the command
+> > 	exits in a controlled way without segfault, so at the first
+> > 	glance, replacing /dev/zero with something nonsensical and
+> > 	nonexistent ought to make the command pass, but that is not
+> > 	the case.  The shell notices redirection failure and aborts
+> > 	the &&-chain.  This behaviour matches what we want, so I
+> > 	won't complain ;-)
+> >
+> > Another mention of /dev/zero appears in t/helper/test-sha1.sh (not to
+> > be confused with t/helper/test-sha1.c).  This seems to be run only
+> > with an explicit "make -C t/helper check-sha1" request, so perhaps
+> > nobody on your platform ran it to get hit by it.  I wonder if anybody
+> > runs this on any platform, to be honest, though.  Duy Cc'ed as the
+> > last person to touch that particular target---yes, I know I was guilty
+> > of introducing it in b65bc21e ("Makefile: add framework to verify and
+> bench sha1 implementations.", 2006-06-24).
+> >
+> >  t/t4153-am-resume-override-opts.sh | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/t/t4153-am-resume-override-opts.sh b/t/t4153-am-resume-
+> > override-opts.sh index 8ea22d1bcb..29ef22c94f 100755
+> > --- a/t/t4153-am-resume-override-opts.sh
+> > +++ b/t/t4153-am-resume-override-opts.sh
+> > @@ -40,7 +40,7 @@ test_expect_success TTY '--3way overrides --no-
+> 3way' '
+> >
+> >  	# Applying side1 with am --3way will succeed due to the threeway-
+> > merge.
+> >  	# Applying side2 will fail as --3way does not apply to it.
+> > -	test_must_fail test_terminal git am --3way </dev/zero &&
+> > +	test_must_fail test_terminal git am --3way </dev/zarro &&
+> >  	test_path_is_dir .git/rebase-apply &&
+> >  	test side1 = "$(cat file2)"
+> >  '
+> > @@ -94,7 +94,7 @@ test_expect_success TTY '--reject overrides --no-
+> reject'
+> > '
+> >  	test_path_is_dir .git/rebase-apply &&
+> >  	test_path_is_missing file.rej &&
+> >
+> > -	test_must_fail test_terminal git am --reject </dev/zero &&
+> > +	test_must_fail test_terminal git am --reject </dev/zarro &&
+> >  	test_path_is_dir .git/rebase-apply &&
+> >  	test_path_is_file file.rej
+> >  '
+> 
+> Here's what we get with this patch (and without it):
+> 
+> /home/git/git/t: sh t4153-am-resume-override-opts.sh ok 1 - setup ok 2 #
+> skip --3way overrides --no-3way (missing TTY) ok 3 - --no-quiet overrides
+--
+> quiet ok 4 - --signoff overrides --no-signoff ok 5 # skip --reject
+overrides --
+> no-reject (missing TTY) # passed all 5 test(s)
+> 1..5
+> 
+> Technically, we have TTY, but not that dev. The TTYs are not under
+/dev/tty*,
+> however.
 
-In POSIX it is unspecified what happens when count=0 is
-provided[1]. The NetBSD "dd" behavior differs from GNU (and seemingly
-other BSDs), which as left this test broken since
-d2b86fbaa1 ("commit-graph: fix buffer read-overflow", 2019-01-15).
+Final NonStop test results on 2.21.0-rc2:
+t0021 subtest 15 failed - apparently flakey test case
+t9001 subtests 33,81,117,118,145 failed - Not new. This is unsurprising as
+this never worked. It might be nice to fix, but $DAYJOB.
+t9020 subtests 1,2,5,6 failed - Not new. unsurprising as there is no SVN or
+perl with SVN module on platform. It might be useful to have a detection to
+skip of Perl SVN is not present.
 
-In POSIX the truncate(2) and ftruncate(2) functions are
-portable. We've used the latter since 271421cd34 ("Update partial HTTP
-transfers.", 2005-09-30), but the truncate(1) command-line tool is
-GNU-specific. Thus let's use Perl's version of it. We could also just
-introduce a "test-tool truncate" in the future if we wanted to avoid
-shelling out to perl.
+Overall, pass and much better than prior releases.
 
-On Linux and NetBSD we don't need the "if -s $ARGV[0] > $ARGV[1]"
-condition I'm adding. We never have a $zero_pos longer than the file
-being truncated. But let's have that condition to future-proof the
-code, and because "the behavior is undefined if LENGTH is greater than
-the length of the file" (perldoc -f truncate).
-
-1. http://pubs.opengroup.org/onlinepubs/9699919799/utilities/dd.html
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t5318-commit-graph.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index d4bd1522fe..d99bea6cce 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -382,7 +382,8 @@ corrupt_graph_and_verify() {
- 	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
- 	cp $objdir/info/commit-graph commit-graph-backup &&
- 	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
--	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0 &&
-+	perl -we 'truncate $ARGV[0], $ARGV[1] if -s $ARGV[0] > $ARGV[1]' \
-+		$objdir/info/commit-graph $zero_pos &&
- 	generate_zero_bytes $(($orig_size - $zero_pos)) >>"$objdir/info/commit-graph" &&
- 	test_must_fail git commit-graph verify 2>test_err &&
- 	grep -v "^+" test_err >err &&
--- 
-2.21.0.rc0.258.g878e2cd30e
+Cheers,
+Randall
 
