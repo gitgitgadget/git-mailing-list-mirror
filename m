@@ -2,94 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B5E01F462
-	for <e@80x24.org>; Thu, 21 Feb 2019 17:03:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4DC1F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 17:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728612AbfBURDN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 12:03:13 -0500
-Received: from mail-io1-f53.google.com ([209.85.166.53]:40894 "EHLO
-        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726621AbfBURDM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 12:03:12 -0500
-Received: by mail-io1-f53.google.com with SMTP id p17so2245874iol.7
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 09:03:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=xqPTwTG0EiUuK1w9UUF5t5dOUrhxT3fR0pAH1jkJkww=;
-        b=k2tD4YIM0MrBLCQpIt7YZmGIBKwQ1AxpBaUeLklceDqPav22sodk0qq6/uvP4FU/K0
-         ebSdSVU2G0949VArEVtG7OCRGYwksy+InKg1YVMBokH924nQ1rkXmqPZyXtdHVbohYdV
-         VyWLgqcmBd21G3mRx/lWF3J+Rr78A7T+nVKOeH4aHnsU0a8paHQBvjHiBfW95teh6JCX
-         N+mkZBWgf2x+PeU8a/EXKb1B8L2rjRxrpFOc8Uxs5s8HFPsLKqpPG8gtvdgZjkW0Pfom
-         S6cBH0iu4cqPfbTKdeepqeY4GgL+IkUuLkL7wA3oC5ukLZ6u86nqe6IfrRvKMOqCo1VD
-         0+Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=xqPTwTG0EiUuK1w9UUF5t5dOUrhxT3fR0pAH1jkJkww=;
-        b=jIJGsv3/lC+UqK/zsia3IMjY6Q3C8BqSDNy8vw3WMO3L6nOiL1V/K1xZM/tmlFCW2A
-         puO+Qh6TE3RC3xajLconH4w8+x+rhQtgJPjXQKFK56AqwJTkfTf+gDTgoZV+Mo6hEHIa
-         gsPNznaEpwIJfwZWhe4wUCR0dvQyee4/LjihuspdC/d2vXyrcdItHV9jP/KqY7j359P0
-         w+V7bM/A5b+LGleb0eOF+3fiughunS7b67oNNafGhV8omXdPowGqttCi1VzsFXQreWYJ
-         l/jYlrk9VHVjkveCLS2EGTTXDFUflbNArfhljvC/fmF2DGQEqj4ltqPDUQKBExFYokNL
-         aH+Q==
-X-Gm-Message-State: AHQUAubmeMIaQfnGUUBwRUpcMeZzoug3RaJ+U/sdqIf/okXPQthX8081
-        bfQ/N9eI4k2umVVPqouuchYFfhDh02VJBE0F8RajaMq/pHQ=
-X-Google-Smtp-Source: AHgI3IbFw/Y6uXTiBH4uLPUDQRvujWba8aPS3tl9oXzwk+976Qn5July5cKX9PxDAGVxmYQoCcJJNlE6y8ZjBcDmaTQ=
-X-Received: by 2002:a05:660c:44e:: with SMTP id d14mr8000579itl.99.1550768591123;
- Thu, 21 Feb 2019 09:03:11 -0800 (PST)
+        id S1726361AbfBURH4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 12:07:56 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:61689 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725823AbfBURHz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 12:07:55 -0500
+Received: from [192.168.2.240] ([92.22.15.194])
+        by smtp.talktalk.net with SMTP
+        id wrp8gs9WY6cDmwrp8gNf6Z; Thu, 21 Feb 2019 17:07:52 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1550768872;
+        bh=RqkeBo/zgVhkz7zKMT6lLF5MFUlXgAp2VnkRtDZEd2g=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Ty442tIotNPQznnYg9Dfi5SZBdvAsGouMUn0AmMGWinXsXBhJhn79BHZ5Pcx7LNtW
+         VsXWb4R/jJiLGKszey+IaRt9VEzLyruxa3BMc4w85WVqQijeq2e41BQK/Lnm7EozIN
+         +MIaIfP77ZD0MNx4pjMbWZHbJ+OAkQh22L2fytrI=
+X-Originating-IP: [92.22.15.194]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Cal2G4jl c=1 sm=1 tr=0 a=SbQTfhO/oL0pg4h8lvBCaA==:117
+ a=SbQTfhO/oL0pg4h8lvBCaA==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=qfsCWp7gufaGXcusNysA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/2] setup: don't fail if commondir reference is deleted.
+To:     =?UTF-8?Q?Michal_Such=c3=a1nek?= <msuchanek@suse.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Marketa Calabkova <mcalabkova@suse.cz>,
+        Junio C Hamano <gitster@pobox.com>
+References: <cover.1550508544.git.msuchanek@suse.de>
+ <6f9c8775817117c2b36539eb048e2462a650ab8f.1550508544.git.msuchanek@suse.de>
+ <CACsJy8AWezO7TFq8ne1a2pSAJZoc6oYqnNNxmVW_FkA9--ntbQ@mail.gmail.com>
+ <20190221145056.53b98b2a@kitsune.suse.cz>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <adc0f7f9-aa41-780e-6fce-94d493fac318@talktalk.net>
+Date:   Thu, 21 Feb 2019 17:07:50 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.0
 MIME-Version: 1.0
-From:   Dominik Salvet <dominik.salvet@gmail.com>
-Date:   Thu, 21 Feb 2019 18:02:54 +0100
-Message-ID: <CAEXP2g92_pnbh4_V8VOgzzdUv6w5eDhCsXf=+NOdsRwyjQUb5A@mail.gmail.com>
-Subject: Fetching master branch with tags associated with it
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190221145056.53b98b2a@kitsune.suse.cz>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfMpYNSCHnYUO1kima3o+ObEl3RV0CRshfLc5zi1uF477V4IyWAFvcTZ2BgE4pJblhWyw86oPOz8e2YIZaIdgnAO2TBB+z6+i39qj4A/GL6YWXHDG9UZK
+ txxUEIwlhGOz/+Nnbt0X5e2k3J/oz4jmNJsrgg4EiKWGD4otTUJYUTOoosFQ+SwbE9dX5NnJpK0cWI8aJ5zRRV3N96HzDJxHCfbxYDntCZZAQuxGjVAg8vGu
+ ZkQbmRwVjK4onXjmjSxTzGb2VoFF4K9dMB1l69h3B5Oum3uCtPsc2IYgzjWQsCeIPA7YcW5c1UesTRii5Vw4QsVgteFHaWPl31GkDhUIDlI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git community,
-For quite some time I am trying to solve a problem with fetching the
-master branch from a remote with tags that are pointing only to the
-master branch.
+Hi Michal/Duy
 
-Cloning the master branch of a repository with tags only pointing to
-that branch is working, though. In this case, the following command
-will do the work: `git clone --branch master --single-branch <url> .`
+On 21/02/2019 13:50, Michal Suchánek wrote:
+> On Thu, 21 Feb 2019 17:50:38 +0700
+> Duy Nguyen <pclouds@gmail.com> wrote:
+> 
+>> On Tue, Feb 19, 2019 at 12:05 AM Michal Suchanek <msuchanek@suse.de> wrote:
+>>>
+>>> When adding wotktrees git can die in get_common_dir_noenv while
+>>> examining existing worktrees because the commondir file does not exist.
+>>> Rather than testing if the file exists before reading it handle ENOENT.
+>>
+>> I don't think we could go around fixing every access to incomplete
+>> worktrees like this. If this is because of racy 'worktree add', then
+>> perhaps a better solution is make it absolutely clear it's not ready
+>> for anybody to access.
+>>
+>> For example, we can suffix the worktree directory name with ".lock"
+>> and make sure get_worktrees() ignores entries ending with ".lock".
+>> That should protect other commands while 'worktree add' is still
+>> running. Only when the worktree is complete that 'worktree add' should
+>> rename the directory to lose ".lock" and run external commands like
+>> git-checkout to populate the worktree.
+> 
+> The problem is we don't forbid worktree names ending with ".lock".
+> Which means that if we start to forbid them now existing worktrees
+> might become inaccessible.
 
-Now, I want to refresh the repository the same way - fetching only
-commits from the master branch and tags that are pointing to the
-master branch and also refresh those tags as well in case of their
-target commit change at the remote (you can expect that it always
-points to a master commit). Nevertheless, I don't really know how to
-do it. The closest I got, are the following commands:
+I think it is also racy as the renaming breaks the use of mkdir erroring 
+out if the directory already exists. One solution is to have a lock 
+entry in $GIT_COMMON_DIR/worktree-locks and make sure the code that 
+iterates over the entries in $GIT_COMMON_DIR/worktrees skips any that 
+have a corresponding ignores in $GIT_COMMON_DIR/worktree-locks. If the 
+worktree-locks/<dir> is created before worktree/<dir> then it should be 
+race free (you will have to remove the lock if the real entry cannot be 
+created and then increment the counter and try again). Entries could 
+also be locked on removal to prevent a race there.
 
-```sh
-git fetch --tags origin master &&
-git merge FETCH_HEAD
-```
+Best Wishes
 
-However, there obviously are some problems with this solution. The
-`--tags` flag will cause to fetch tags from all branches. Furthermore,
-it will fetch also their commits, which is absolutely what I don't
-want to.
+Phillip
 
-I have Git 2.17.1 (on Ubuntu 18.04.2) and in its `git fetch --help` is
-stated, if I understood it correctly, that without passing neither
-`--tags` nor `--no-tags`, it will do exactly what I want.
-Nevertheless, without using any of the mentioned flags, it behaves
-more like using `--no-tags`.
+> Thanks
+> 
+> Michal
+> 
 
-Am I missing something? Do you want any additional information? I
-would really appreciate your help.
-
-Thank you for all your effort
--- 
-Dominik Salvet
