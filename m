@@ -2,228 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05B981F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 00:14:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F6931F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 01:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726157AbfBUAOv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Feb 2019 19:14:51 -0500
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:47734 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726016AbfBUAOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Feb 2019 19:14:51 -0500
-Received: by mail-pl1-f202.google.com with SMTP id b10so8491073pla.14
-        for <git@vger.kernel.org>; Wed, 20 Feb 2019 16:14:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=LTTTAwzoLNB2q/ICQM/l3fX1ULO9xa/fXrdUbe2L+Bw=;
-        b=j8jk5nH2JYpYJWlituEQt0F1ifN0gk6+qJRAqdSSZ6JtgNPyd7Jn6Xbh0/7Ntv0BeG
-         SSyejLr7Zb4PDpkyBu0CvbRGwF9UcXmDDXZfQhhKG48rtGOi9gtqS71syKmeXzuK8vjN
-         QW+nrhAdgoadxM+BW0oWZnWGkohQZY6ERBqIaknXSQukI+4osVhODQEgF41h9FflfQxV
-         d5LTxpX8DdkBUEXudEeO2iPMpI3rEPiElDUMk1dAydLTIZEVWARZP8b/ki7cLD5bCgTn
-         u2ankUZFzuwr5dLLOzdHFWs23CSEb1WY2PgXwFdGx/dCAuo18Pw0UL5DINDh5WNaGoO7
-         lk5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=LTTTAwzoLNB2q/ICQM/l3fX1ULO9xa/fXrdUbe2L+Bw=;
-        b=aUV7cucIGx2CTHDkCCnOvFMWTCpt+meiGOSonAvVynlgJaLPZHZ+VFgNT2MF7+cVGF
-         rmeo80XXDT8au26aAuxpMQNxNGEhP/CKXf0g32F/DGcIMuRRq/39QAKz0ZNQmsDfXaHC
-         KTY2A+9jIIhShHWuMe0cKclXmdg3uxGyoHWfGFPLcwq4Q/vhAkXo9EjgmvYvnJN/Zojz
-         cqkjmNXoJRCdOi8FYF0SIY6JGJyFFQ8z4QJvzA46Q9c//6SLhxhaSjEmyor/N3thdZN3
-         3yiLD+f6y+51/AtsT2rYagzstj9HkguBQgqMDPTyqtPu21/ETB2UBRjZ/QEHciwXH095
-         i/dA==
-X-Gm-Message-State: AHQUAua0Kz4haHwvisE1qVooocWUEYRyaghUG7rAS4gn+l/DLQ/+9Bnq
-        IMroZiLSmazstLDIKHivdVPwMu+BZ5y2iMxtRrKEY74bbeU1ESsVVuzyzpU5YMY89yVaIMnq4Ds
-        ZHB7rCAKhy6dQ+/0UhGZNggIVBjXFkXNkKXoqNyTJTATsLbKBkD60xbSjUGOxcXI04JI+WN5ypI
-        Un
-X-Google-Smtp-Source: AHgI3IYYf7AHuyJ9rS2e50XVb6EeWhkBB1DlrDurN5Y6aqh/k9UQX1Mph2nSxVuAy3QZlmZGkzwBpJrkIDVPuqufoMqU
-X-Received: by 2002:a62:a42:: with SMTP id s63mr13628718pfi.77.1550708090600;
- Wed, 20 Feb 2019 16:14:50 -0800 (PST)
-Date:   Wed, 20 Feb 2019 16:14:47 -0800
-Message-Id: <20190221001447.124088-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [RFC PATCH] http: use --stdin and --keep when downloading pack
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726700AbfBUBJU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Feb 2019 20:09:20 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34960 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726090AbfBUBJU (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 20 Feb 2019 20:09:20 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 746C7603C6;
+        Thu, 21 Feb 2019 01:09:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1550711354;
+        bh=LBMRXzgFAvTEgtHUsbQBqa77reCpJklAsqiyu6zza3E=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=uUNiwkY+SdfdyXuyeEGZZrkD6gACDXX+esdDc3qWS6tP+rv7dId8/BW+Y+jy7DSeG
+         Fxru7caqhlUkeZg3yothW8oc7Gqk/pPGSSJ7BJd5CnHhGwmZxrpQQ9oVakD86qP21N
+         1vOtoJpCt3n1egEgGE0Yh8UnR/EpkwltooASXhqxHUVCRVHda32fQkJO/aC6BEcNwm
+         It/mOvQiJvsfF/f8F05TAeDZsA89gS59Tn6EY6130TVGEkYyCFstPueUmINNgv634p
+         eBiM/swqf3fJ1iZaG+P1sysJxgAq815TQUN99uF4WnUZ8ToyB9Kcl2nZwNiOZQnaEu
+         A6nXacHV6OKx9ytglJAnLiFV2de6ppWNUlRKIVAL1WUW6ldTbs/guZw2zJ+Gt28M5j
+         RGFr93yk+UgifJ51r2eJK/I+4ngzunduNwj6y5/8R5qxaRkE+32bEhD7YF5au8fEvW
+         rOCd5yIuA5iCgqfNbOAmF5UkeeKMMRx7qSQzPQkWBP8dgxT4iPR
+Date:   Thu, 21 Feb 2019 01:09:09 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
+Message-ID: <20190221010909.GA488342@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+References: <cover.1543879256.git.jonathantanmy@google.com>
+ <0461b362569362c6d0e73951469c547a03a1b59d.1543879256.git.jonathantanmy@google.com>
+ <20181204015446.GX890086@genre.crustytoothpaste.net>
+ <87lg2b6gg0.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
+Content-Disposition: inline
+In-Reply-To: <87lg2b6gg0.fsf@evledraar.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When Git fetches a pack using dumb HTTP, it does at least 2 things
-differently from when it fetches using fetch-pack or receive-pack: (1)
-it reuses the server's name for the packfile (which incorporates a hash)
-for the packfile, and (2) it does not create a .keep file to avoid race
-conditions with repack.
 
-A subsequent patch will allow downloading packs over HTTP(S) as part of
-a fetch. These downloads will not necessarily be from a Git repository,
-and thus may not have a hash as part of its name. Also, generating a
-.keep file will be necessary to avoid race conditions with repack (until
-the fetch has successfully written the new refs).
+--AhhlLboLdkugWU4S
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thus, teach http to pass --stdin and --keep to index-pack, the former so
-that we have no reliance on the server's name for the packfile, and the
-latter so that we have the .keep file.
+On Tue, Feb 19, 2019 at 02:44:31PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
+mason wrote:
+>=20
+> On Tue, Dec 04 2018, brian m. carlson wrote:
+> > First, I'd like to see a section (and a bit in the implementation)
+> > requiring HTTPS if the original protocol is secure (SSH or HTTPS).
+> > Allowing the server to downgrade to HTTP, even by accident, would be a
+> > security problem.
+>=20
+> Maybe I've misunderstood the design (I'm writing some other follow-up
+> E-Mails in this thread which might clarify things for me), but I don't
+> see why.
+>=20
+> We get the ref advertisement from the server. We don't need to trust the
+> CDN server or the transport layer. We just download whatever we get from
+> there, validate the packfile with SHA-1 (and in the future SHA-256). It
+> doesn't matter if the CDN transport is insecure.
+>=20
+> You can do this offline with git today, you don't need to trust me to
+> trust that my copy of git.git I give you on a sketchy USB stick is
+> genuine. Just unpack it, then compare the SHA-1s you get with:
+>=20
+>     git ls-remote https://github.com/git/git.git
+>=20
+> So this is a case similar to Debian's where they distribute packages
+> over http, but manifests over https: https://whydoesaptnotusehttps.com
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-This is part of the work of CDN offloading of fetch responses.
+This assumes that integrity of the data is the only reason you'd want to
+use HTTPS. There's also confidentiality. Perhaps a user is downloading
+data that will help them circumvent the Great Firewall of China. A
+downgrade to HTTP could result in a long prison sentence.
 
-I have plans to use the http_pack_request suite of functions to
-implement the part where we download from CDN over HTTP(S), but need
-this change to be able to do so. I think it's better from the code
-quality perspective to reuse these functions, but this necessitates a
-behavior change in that we no longer use the filename as declared by the
-server, so I'm sending this as RFC to see what the community thinks.
----
- http-push.c   |  7 ++++++-
- http-walker.c |  5 ++++-
- http.c        | 42 ++++++++++++++++++++----------------------
- http.h        |  2 +-
- 4 files changed, 31 insertions(+), 25 deletions(-)
+Furthermore, some ISPs tamper with headers to allow tracking, and some
+environments (e.g. schools and libraries) perform opportunistic
+filtering on HTTP connections to filter certain content (and a lot of
+this filtering is really simplistic).
 
-diff --git a/http-push.c b/http-push.c
-index b22c7caea0..409b266b0c 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -586,11 +586,16 @@ static void finish_request(struct transfer_request *request)
- 			fprintf(stderr, "Unable to get pack file %s\n%s",
- 				request->url, curl_errorstr);
- 		} else {
-+			char *lockfile;
-+
- 			preq = (struct http_pack_request *)request->userData;
- 
- 			if (preq) {
--				if (finish_http_pack_request(preq) == 0)
-+				if (finish_http_pack_request(preq,
-+							     &lockfile) == 0) {
-+					unlink(lockfile);
- 					fail = 0;
-+				}
- 				release_http_pack_request(preq);
- 			}
- 		}
-diff --git a/http-walker.c b/http-walker.c
-index 8ae5d76c6a..804dc82304 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -425,6 +425,7 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo, unsigne
- 	int ret;
- 	struct slot_results results;
- 	struct http_pack_request *preq;
-+	char *lockfile;
- 
- 	if (fetch_indices(walker, repo))
- 		return -1;
-@@ -457,7 +458,9 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo, unsigne
- 		goto abort;
- 	}
- 
--	ret = finish_http_pack_request(preq);
-+	ret = finish_http_pack_request(preq, &lockfile);
-+	if (!ret)
-+		unlink(lockfile);
- 	release_http_pack_request(preq);
- 	if (ret)
- 		return ret;
-diff --git a/http.c b/http.c
-index a32ad36ddf..5f8e602cd2 100644
---- a/http.c
-+++ b/http.c
-@@ -2200,13 +2200,13 @@ void release_http_pack_request(struct http_pack_request *preq)
- 	free(preq);
- }
- 
--int finish_http_pack_request(struct http_pack_request *preq)
-+int finish_http_pack_request(struct http_pack_request *preq, char **lockfile)
- {
- 	struct packed_git **lst;
- 	struct packed_git *p = preq->target;
--	char *tmp_idx;
--	size_t len;
- 	struct child_process ip = CHILD_PROCESS_INIT;
-+	int tmpfile_fd;
-+	int ret = 0;
- 
- 	close_pack_index(p);
- 
-@@ -2218,35 +2218,33 @@ int finish_http_pack_request(struct http_pack_request *preq)
- 		lst = &((*lst)->next);
- 	*lst = (*lst)->next;
- 
--	if (!strip_suffix(preq->tmpfile.buf, ".pack.temp", &len))
--		BUG("pack tmpfile does not end in .pack.temp?");
--	tmp_idx = xstrfmt("%.*s.idx.temp", (int)len, preq->tmpfile.buf);
-+	tmpfile_fd = xopen(preq->tmpfile.buf, O_RDONLY);
- 
- 	argv_array_push(&ip.args, "index-pack");
--	argv_array_pushl(&ip.args, "-o", tmp_idx, NULL);
--	argv_array_push(&ip.args, preq->tmpfile.buf);
-+	argv_array_push(&ip.args, "--stdin");
-+	argv_array_pushf(&ip.args, "--keep=git %"PRIuMAX, (uintmax_t)getpid());
- 	ip.git_cmd = 1;
--	ip.no_stdin = 1;
--	ip.no_stdout = 1;
-+	ip.in = tmpfile_fd;
-+	ip.out = -1;
- 
--	if (run_command(&ip)) {
--		unlink(preq->tmpfile.buf);
--		unlink(tmp_idx);
--		free(tmp_idx);
--		return -1;
-+	if (start_command(&ip)) {
-+		ret = -1;
-+		goto cleanup;
- 	}
- 
--	unlink(sha1_pack_index_name(p->sha1));
-+	*lockfile = index_pack_lockfile(ip.out);
-+	close(ip.out);
- 
--	if (finalize_object_file(preq->tmpfile.buf, sha1_pack_name(p->sha1))
--	 || finalize_object_file(tmp_idx, sha1_pack_index_name(p->sha1))) {
--		free(tmp_idx);
--		return -1;
-+	if (finish_command(&ip)) {
-+		ret = -1;
-+		goto cleanup;
- 	}
- 
- 	install_packed_git(the_repository, p);
--	free(tmp_idx);
--	return 0;
-+cleanup:
-+	close(tmpfile_fd);
-+	unlink(preq->tmpfile.buf);
-+	return ret;
- }
- 
- struct http_pack_request *new_http_pack_request(
-diff --git a/http.h b/http.h
-index 4eb4e808e5..20d1c85d0b 100644
---- a/http.h
-+++ b/http.h
-@@ -212,7 +212,7 @@ struct http_pack_request {
- 
- extern struct http_pack_request *new_http_pack_request(
- 	struct packed_git *target, const char *base_url);
--extern int finish_http_pack_request(struct http_pack_request *preq);
-+int finish_http_pack_request(struct http_pack_request *preq, char **lockfile);
- extern void release_http_pack_request(struct http_pack_request *preq);
- 
- /* Helpers for fetching object */
--- 
-2.19.0.271.gfe8321ec05.dirty
+Moreover, Google is planning on using this and filters in place of Git
+LFS for large objects. I expect that if this approach becomes viable, it
+may actually grow authentication functionality, or, depending on how the
+series uses the existing code, it may already have it. In such a case,
+we should not allow authentication to go over a plaintext connection
+when the user thinks that the connection they're using is encrypted
+(since they used an SSH or HTTPS URL to clone or fetch).
 
+Downgrades from HTTPS to HTTP are generally considered CVE-worthy. We
+need to make sure that we refuse to allow a downgrade on the client
+side, even if the server ignores our request for a secure protocol.
+
+> > Second, this feature likely should be opt-in for SSH. One issue I've
+> > seen repeatedly is that people don't want to use HTTPS to fetch things
+> > when they're using SSH for Git. Many people in corporate environments
+> > have proxies that break HTTP for non-browser use cases[0], and using SSH
+> > is the only way that they can make a functional Git connection.
+>=20
+> Yeah, there should definitely be accommodations for such clients, per my
+> reading clients can always ignore the CDN and proceed with a normal
+> negotiation. Isn't that enough, or is something extra needed?
+
+I think at least a config option and a command line flag are needed to
+be able to turn CDN usage off. There needs to be an easy way for people
+in broken environments to circumvent the breakage.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--AhhlLboLdkugWU4S
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxt+jQACgkQv1NdgR9S
+9ovFcRAAzu5/9EzgN+Zy6ju4gGN3FplEXrvDJ0wBa0CvA6wjKLMF+nu9+gMbplCP
+Uvj+PA9s+XECpcVwFgXXfZfrhLdPTfbsI1uqvM9VH0l3IhiKSlvVqBLX9nH8LJyZ
+O7d1vl3DnUb4M/qqRNG8c6wD0Bk8kVxDu9mvWjcIHlxUqhd0iSKL3Jvy2e3IYBmV
+aVprXPTYizzE5KXUVTGuMfU4Pd1RRvsjFP84TAVnoSP30hiOyKURFZbzYUviqLvq
+AUkR65LYmsN1HYTOg+LHaJjcLDc3u4tz46AnmDWRrkQUZt9ggencfqHvrAnzYAbA
+G1byiij/GFu4GMs9QM6Yz+8vLzAXia5S4IaMFE8iqcOYuR7rhA9oaHu/cVT6mWot
+OFxrHKGIy0+Amq6YjSdoWXDMnJuo+2x98LKKKTYVxZCoPtOzuW6RxaOo9TZMCvpH
+dHQAA5xJUqdJ717B77/E1dvxYJ+Phz5FHBk3oh78SlG0NYoUCkIDrHZTsBi23s06
+nnqeCyeXETljEzMLeFygiTB/6v3vG2ADQrOKjavja3aiv5cT16qvylsPrXivvhJh
+r0J7ndW/368Vn8X5SAzB4qknjuGCyRxCFE9G/5jD9HzGlaKQnYNVkfDOIh0xRv0B
+ODx4XULjMJIxkvV0ky6n/qiW3Y4/o0S6sc8wpqRPHhbFs13IURI=
+=xEUJ
+-----END PGP SIGNATURE-----
+
+--AhhlLboLdkugWU4S--
