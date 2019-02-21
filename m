@@ -2,135 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98CB81F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 10:51:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 405331F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 10:53:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726260AbfBUKvG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 05:51:06 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:40299 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725831AbfBUKvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 05:51:06 -0500
-Received: by mail-it1-f193.google.com with SMTP id i2so22085938ite.5
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 02:51:05 -0800 (PST)
+        id S1725978AbfBUKxl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 05:53:41 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:38444 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725831AbfBUKxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 05:53:41 -0500
+Received: by mail-ed1-f67.google.com with SMTP id h58so22694238edb.5
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 02:53:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EWguzgz4l+yIUBrRtYoXy6+tubL33wI2+URcVlBFNyc=;
-        b=eyDIm0HrI+6wx4gMWI1UpCCH16xNCXrzx1AYbWu/sUgeLVa152sQ802ZADKo8Vk9oe
-         QuukX2/sxtm5fGo3PnPEIvaAvil2VyIJ8fYFJoi984fTDcKre4h71uo7uz1D9qHfSj0a
-         ISD5oR6MN9uws1vOtsoT38EGEq1W6zva+3G7a0hpSibsx6Ez/fm/dzRQwh2KQVWSDDfE
-         kdIoRDAfhxgGSd1cHhMn4MHqXDAyhGOIosaGUGss/BNB5RqtSRDsYObdo9jh4jxxsMZb
-         GXoUvgyEaGCVjW7RcldQ9pLTSsU6wE9X992Zcu54Yv6b/KL9Ws0cH8Wsxqep+v1/ZnMN
-         OwZQ==
+        d=loskot-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=udyGE2O7bYer0AwMLNCk0mHXs7CpAw5KE52IsyulFj0=;
+        b=cV3CLbaiTvIBtIzZpJzFBAxx4fXIuTz7yLZOuS35+AqAfwQs3USA2xj7Lsr2lQWM/v
+         vmDK+UV3E5fAsVRCOY2Lp7VQ+14V9DaIy6fERwAojvq6FT61JxFJNIRcW9fTfGFHdLFU
+         zkv8AfM88zh3vNwokcmHsetbm0UOxzChIvYv/f9CxKFrHPduTgAN2VHbfIvifimROevQ
+         t1f2D5jKiBKYaFWuEsHqQJLnC8GNBJ2uUXtJ6rFbpQUGEssdYvzk+gZEXtMVgp1/aROm
+         o9SBtwFj39wis0RxwLD8aZRV64gsvNDa8IopcKRXNZ58nnCG/COzLKd0jhjatqcDz6ny
+         irSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EWguzgz4l+yIUBrRtYoXy6+tubL33wI2+URcVlBFNyc=;
-        b=incHTDZDwd76Qw0mgVsPcVQcggXDi5f6QIhYulvXtmllvtGYZcW/F9+wfyf/ryJpVi
-         1HAlBzUZxiELkagolAC/6YrKMDMmRVI6f7VO8dT5GVhXNzQlB3y0LbuBJ2JKhnnX6anN
-         KtYJUam/CSUh2o6nrIRcypCvFj+FjCs0/+l2W/ACls4EC+Xhdab4Yh0FWgk3kV/rZZy4
-         7m8EySzrJiiJWR4eunxWRPC0ll53U4j0DSP5kLgXhxg8Fvc78oV45cj/pUAfeeIARqUy
-         8dqWmXL2i1AXaMgcXiF7uQccHkPxHte/kQecKFCVFREm/ZMML4gCsi5QV0lY9w9Nsv8S
-         2m6Q==
-X-Gm-Message-State: AHQUAuaUhurXWicFZv7I5c4rMa+z5t1LiPy9UCBSDtAxYHMn71IUuJHG
-        LGGgiBt+tLjQax0hE/sv5n1FcdJSTj8KBTM3ohs=
-X-Google-Smtp-Source: AHgI3IbXQOH79GEYdIsBzvO79v2F0hssMLG+k8HePIr1oMjuW1/PV8fuRV4ozZ1oqjm5QkLjkrqyWpM/9eUJLqNZeQU=
-X-Received: by 2002:a02:9c21:: with SMTP id q30mr20086205jak.30.1550746264985;
- Thu, 21 Feb 2019 02:51:04 -0800 (PST)
+         :message-id:subject:to;
+        bh=udyGE2O7bYer0AwMLNCk0mHXs7CpAw5KE52IsyulFj0=;
+        b=I/dmpguxJSTZSG6uqRt4UWNekkTuWA0FvwD9NvhzxCIgAcC+hfp9Soh2hO45Co/LZd
+         R+ekib/qzfjk1CoHys3a3+PVK7xSiWCkb8BMvb82LO8gZ6fcU3r/xQ7DYZyLEBsVH4Zm
+         aVqnL7A5U14uBMBOO0LtdsEn4902nn0Sra7bQHB8DNnqWJy93H6imzyJbZ65vHfn9y42
+         JKo2j1/fpDVJepQuqdWA5pBHhwa4LVglSi10CZ+qtQ41Hmffl5S7dqveykxSqmeY1TIT
+         J3ZAX3Q1vyFPb8qAonYk9mYsx+q8Dz6suz+eG7tRsBrDPIrTa0hlt4FlU6bherwgCKxH
+         DhpQ==
+X-Gm-Message-State: AHQUAubfGRXdGboVFR+QOyr5Aowo8qX+LYV8WN5q0XUzJfPXi8GIpVEd
+        gDtctOFpsoruPY1vRND46CHu21B4+28zx6RCkKBTuz1hor7CNF1T
+X-Google-Smtp-Source: AHgI3Ib0zzpLsDkQFqXSS5mB+cHHLemvXFqZzJnz3UM6uT6G0jocE+Dz/y5tcTNot/nVJ7MjftTHFBQNW2fO2YN31Cc=
+X-Received: by 2002:a50:a48f:: with SMTP id w15mr6020243edb.91.1550746418917;
+ Thu, 21 Feb 2019 02:53:38 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1550508544.git.msuchanek@suse.de> <6f9c8775817117c2b36539eb048e2462a650ab8f.1550508544.git.msuchanek@suse.de>
-In-Reply-To: <6f9c8775817117c2b36539eb048e2462a650ab8f.1550508544.git.msuchanek@suse.de>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 21 Feb 2019 17:50:38 +0700
-Message-ID: <CACsJy8AWezO7TFq8ne1a2pSAJZoc6oYqnNNxmVW_FkA9--ntbQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] setup: don't fail if commondir reference is deleted.
-To:     Michal Suchanek <msuchanek@suse.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Marketa Calabkova <mcalabkova@suse.cz>,
-        Junio C Hamano <gitster@pobox.com>
+References: <CABUeae_N3NFXn-E1+LHORL3RDf5iTCFn=zyuOo3c2Aot2QF7pg@mail.gmail.com>
+ <20190221021825.GB488342@genre.crustytoothpaste.net> <CACsJy8BKhroHhVWCj5fvwxk2z4XsdSK_pSQ=o8hxZcZsAn3R-w@mail.gmail.com>
+ <20190221041756.GA28389@sigill.intra.peff.net>
+In-Reply-To: <20190221041756.GA28389@sigill.intra.peff.net>
+From:   Mateusz Loskot <mateusz@loskot.net>
+Date:   Thu, 21 Feb 2019 11:53:12 +0100
+Message-ID: <CABUeae81zRSZrAce86R7OQgGFoc3R1Lk2X8Ujg4ZPUAGVVSknw@mail.gmail.com>
+Subject: Re: "Submodule registered for path" output with config aliases mixed in
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 19, 2019 at 12:05 AM Michal Suchanek <msuchanek@suse.de> wrote:
+On Thu, 21 Feb 2019 at 05:17, Jeff King <peff@peff.net> wrote:
+> On Thu, Feb 21, 2019 at 10:47:45AM +0700, Duy Nguyen wrote:
 >
-> When adding wotktrees git can die in get_common_dir_noenv while
-> examining existing worktrees because the commondir file does not exist.
-> Rather than testing if the file exists before reading it handle ENOENT.
-
-I don't think we could go around fixing every access to incomplete
-worktrees like this. If this is because of racy 'worktree add', then
-perhaps a better solution is make it absolutely clear it's not ready
-for anybody to access.
-
-For example, we can suffix the worktree directory name with ".lock"
-and make sure get_worktrees() ignores entries ending with ".lock".
-That should protect other commands while 'worktree add' is still
-running. Only when the worktree is complete that 'worktree add' should
-rename the directory to lose ".lock" and run external commands like
-git-checkout to populate the worktree.
-
-> Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-> ---
-> v2:
-> - do not test file existence first, just read it and handle ENOENT.
-> - handle zero size file correctly
-> ---
->  setup.c | 16 +++++++++++-----
->  1 file changed, 11 insertions(+), 5 deletions(-)
+> > > > I managed to identify where that garbage injections come from:
+> > > > from git aliases I've got configured [1]
+> > > >
+> > > > Could anyone explain what is happening here?
+> > > > Is there anything wrong with my ~/.gitconfig [1] ?
+> > >
+> > > I see the right behavior on my system (Debian amd64/sid) with
+> > > 2.21.0.rc0.258.g878e2cd30e and with master. I've built with ASan and
+> > > don't see any memory warnings on my system.
+> >
+> > I ran valgrind yesterday (gentoo amd64) and didn't find the problem
+> > either even though it clearly looked like some dangling pointers. I
+> > also audited this code and couldn't find anything obviously wrong. My
+> > only suspicion is maybe some strange getenv() behavior on Windows
+> > (_if_ the super prefix is used, but I can't see how...) and that's
+> > just a dead end for me.
 >
-> diff --git a/setup.c b/setup.c
-> index ca9e8a949ed8..dd865f280d34 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -270,12 +270,20 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
->  {
->         struct strbuf data = STRBUF_INIT;
->         struct strbuf path = STRBUF_INIT;
-> -       int ret = 0;
-> +       int ret;
+> Certainly we fixed a bunch of getenv() problems in the upcoming 2.21
+> release, including 8aac69038f (get_super_prefix(): copy getenv() result,
+> 2019-01-11).
 >
->         strbuf_addf(&path, "%s/commondir", gitdir);
-> -       if (file_exists(path.buf)) {
-> -               if (strbuf_read_file(&data, path.buf, 0) <= 0)
-> +       ret = strbuf_read_file(&data, path.buf, 0);
-> +       if (ret <= 0) {
-> +               /*
-> +                * if file is missing or zero size (just being written)
-> +                * assume default, bail otherwise
-> +                */
-> +               if (ret && errno != ENOENT)
->                         die_errno(_("failed to read %s"), path.buf);
-> +               strbuf_addstr(sb, gitdir);
-> +               ret = 0;
-> +       } else {
->                 while (data.len && (data.buf[data.len - 1] == '\n' ||
->                                     data.buf[data.len - 1] == '\r'))
->                         data.len--;
-> @@ -286,8 +294,6 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
->                 strbuf_addbuf(&path, &data);
->                 strbuf_add_real_path(sb, path.buf);
->                 ret = 1;
-> -       } else {
-> -               strbuf_addstr(sb, gitdir);
->         }
->
->         strbuf_release(&data);
-> --
-> 2.20.1
->
+> Mateusz, can you try with the one of the v2.21.0 release candidates (or
+> the current tip of "master")?
 
+Jeff, I have just tried git version 2.21.0.rc2.windows.1 and
+I no longer see the problem.
+It seems like a bug in earlier version indeed, that has been fixed now.
 
+Brian, yes, the .gitmodules was perfectly correct.
+
+Brian, Duy, Jeff, thank you all for responding; the problem has
+been solved for me now.
+
+Best regards,
 -- 
-Duy
+Mateusz Loskot, http://mateusz.loskot.net
