@@ -2,93 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8651F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 13:07:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74B0D1F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 13:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727551AbfBUNHT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 08:07:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52466 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725820AbfBUNHT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 08:07:19 -0500
-Received: (qmail 19994 invoked by uid 109); 21 Feb 2019 13:07:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Feb 2019 13:07:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12023 invoked by uid 111); 21 Feb 2019 13:07:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Feb 2019 08:07:32 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Feb 2019 08:07:17 -0500
-Date:   Thu, 21 Feb 2019 08:07:17 -0500
-From:   Jeff King <peff@peff.net>
-To:     Mateusz Loskot <mateusz@loskot.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: "Submodule registered for path" output with config aliases mixed
- in
-Message-ID: <20190221130717.GB20536@sigill.intra.peff.net>
-References: <CABUeae_N3NFXn-E1+LHORL3RDf5iTCFn=zyuOo3c2Aot2QF7pg@mail.gmail.com>
- <20190221021825.GB488342@genre.crustytoothpaste.net>
- <CACsJy8BKhroHhVWCj5fvwxk2z4XsdSK_pSQ=o8hxZcZsAn3R-w@mail.gmail.com>
- <20190221041756.GA28389@sigill.intra.peff.net>
- <CABUeae81zRSZrAce86R7OQgGFoc3R1Lk2X8Ujg4ZPUAGVVSknw@mail.gmail.com>
+        id S1725920AbfBUNK1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 08:10:27 -0500
+Received: from mail-it1-f177.google.com ([209.85.166.177]:39302 "EHLO
+        mail-it1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725385AbfBUNK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 08:10:27 -0500
+Received: by mail-it1-f177.google.com with SMTP id l15so22653975iti.4
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 05:10:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ydT7GfFoKzsAi8PlQ7SrWIzjYidZ3jBEPML2XPVJ5eU=;
+        b=UEi5LtDWKwkOMaOcRTzE5+nRWQZZJa7+ie+LFJ8rnmwAmxiLCIkr7UeD6eXbNCOZRF
+         j/282UEF1XjrjibFfqRy9SLe8dtPVRsUxj9XI15W3OuYkeQzUlQDYXKDhLA7LKYk8zq7
+         3oXRd2VCyW00ALdL6VGFFrpPeHKqi2itQFB7la+/iiQIJ8qNOS6yreznv7151v0JPyQV
+         z4IId1i/amrZyt2h4pMHRFgiD8Z2a8r0hJ8o0gCqn2XSh4Zg5ygydVErJLU3jp9ogA4c
+         rr69VXC+mtPNIZO09WSAvJ7miIsG/CrEuua17lNsspXkLtFCQL6VRylxdwGeQxN5ytAD
+         x5WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ydT7GfFoKzsAi8PlQ7SrWIzjYidZ3jBEPML2XPVJ5eU=;
+        b=nqPDtDxtBKUv5EyWb0TvDWSl2HjHO67k9mYawxbxaeYwukjugwm7MJuutNC18OLsuU
+         MDn5WTdSKXcbW+AjM/+dprWGVDpcrKyre1Ds4Lqa+GMlo8cFW4QoPBWCmRQHRD0dzyKX
+         9SBvAeEIANmEZMP7JA996LZFiSCwT8nEs20sqPiEkGD3FHjPrtE03qSMI5rvgSenlsZl
+         9vmPpR8h/Sy9cWpb39/QA8zsQQ9u/vh+b1MN7i6L7Nh+5hiM/sKTDovNjKLu25OSk7sj
+         I8c9YMIEbdBD2rfHoVC/i2Fsu6S5heYkNQv5Yr0yL2FWKg6AqSz2vHFCtJ3wdRrv2N4V
+         ZG6Q==
+X-Gm-Message-State: AHQUAuZZHQFib5gjKkxWfhUl4w0HZ7Is7VX7r40awmwo13sqRqYhqtkt
+        FuZL1yXcrHZa+h43cwnEUEVqhtWToRzJdHws0Oma/A==
+X-Google-Smtp-Source: AHgI3IYxcFQS+Dv4mAT5Rf7IFzepGIi0cQGkDaK+B2z1XzAYAeCJ4YCTAxEHymz17cnn4zQVbM3hDYWtDxMv2lqtzIQ=
+X-Received: by 2002:a02:568a:: with SMTP id u10mr22118533jad.130.1550754626490;
+ Thu, 21 Feb 2019 05:10:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABUeae81zRSZrAce86R7OQgGFoc3R1Lk2X8Ujg4ZPUAGVVSknw@mail.gmail.com>
+References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com> <012601d4c8b5$54f1b730$fed52590$@nexbridge.com>
+ <xmqqftsiw8l8.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftsiw8l8.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 21 Feb 2019 20:10:00 +0700
+Message-ID: <CACsJy8D=-+TqZSf1oyTJs_O+=KAV66OE_As5cTKXxHoXAhzkGw@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.21.0-rc2
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 21, 2019 at 11:53:12AM +0100, Mateusz Loskot wrote:
+On Thu, Feb 21, 2019 at 2:41 AM Junio C Hamano <gitster@pobox.com> wrote:
+> Another mention of /dev/zero appears in t/helper/test-sha1.sh (not
+> to be confused with t/helper/test-sha1.c).  This seems to be run
+> only with an explicit "make -C t/helper check-sha1" request, so
+> perhaps nobody on your platform ran it to get hit by it.  I wonder
+> if anybody runs this on any platform, to be honest, though.
 
-> On Thu, 21 Feb 2019 at 05:17, Jeff King <peff@peff.net> wrote:
-> > On Thu, Feb 21, 2019 at 10:47:45AM +0700, Duy Nguyen wrote:
-> >
-> > > > > I managed to identify where that garbage injections come from:
-> > > > > from git aliases I've got configured [1]
-> > > > >
-> > > > > Could anyone explain what is happening here?
-> > > > > Is there anything wrong with my ~/.gitconfig [1] ?
-> > > >
-> > > > I see the right behavior on my system (Debian amd64/sid) with
-> > > > 2.21.0.rc0.258.g878e2cd30e and with master. I've built with ASan and
-> > > > don't see any memory warnings on my system.
-> > >
-> > > I ran valgrind yesterday (gentoo amd64) and didn't find the problem
-> > > either even though it clearly looked like some dangling pointers. I
-> > > also audited this code and couldn't find anything obviously wrong. My
-> > > only suspicion is maybe some strange getenv() behavior on Windows
-> > > (_if_ the super prefix is used, but I can't see how...) and that's
-> > > just a dead end for me.
-> >
-> > Certainly we fixed a bunch of getenv() problems in the upcoming 2.21
-> > release, including 8aac69038f (get_super_prefix(): copy getenv() result,
-> > 2019-01-11).
-> >
-> > Mateusz, can you try with the one of the v2.21.0 release candidates (or
-> > the current tip of "master")?
-> 
-> Jeff, I have just tried git version 2.21.0.rc2.windows.1 and
-> I no longer see the problem.
-> It seems like a bug in earlier version indeed, that has been fixed now.
+I vaguely remember Brian added something to test SHA-512 performance
+but I can't find it. Maybe when he adds something (if it's not there
+already) we can retire this script, or update it to check sha-512 too.
 
-Great, thanks for confirming.
-
-Junio, Johannes: I don't know if there were particular plans to pick up
-those getenv() fixes for "maint", but if we're going to do a v2.20.2, it
-might be worth it.  It's also possible that it's just due to ca1b411648
-(mingw: safe-guard a bit more against getenv() problems, 2019-02-15),
-but I'd consider that to be maint-worthy as well.
-
-It may be that we just don't do a v2.20.2, though, since v2.21 is so
-close to release.
-
--Peff
+> Duy Cc'ed as the last person to touch that particular target---yes, I
+> know I was guilty of introducing it in b65bc21e ("Makefile: add
+> framework to verify and bench sha1 implementations.", 2006-06-24).
+-- 
+Duy
