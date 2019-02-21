@@ -2,90 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C08A1F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 21:07:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1751B1F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 21:25:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726644AbfBUVG7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 16:06:59 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34390 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726146AbfBUVG6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 16:06:58 -0500
-Received: by mail-wr1-f67.google.com with SMTP id f14so53805wrg.1
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 13:06:57 -0800 (PST)
+        id S1726191AbfBUVZ0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 16:25:26 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38778 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725802AbfBUVZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 16:25:26 -0500
+Received: by mail-wr1-f65.google.com with SMTP id v13so82589wrw.5
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 13:25:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=JtsbtGNDj9cJL0vJuV8YYSkxHPv54Gj5zVBkzCa6Hxg=;
-        b=f6YAG3Tvzkx/HEg3Z8U+DN6FF+H5lcyv5VcMOATv0c2+Ei2MskgtQOhmS8zLICZu5/
-         oP6k+zMURxMhZfOGSic8WaxWcaDYpqXY+VJ8Uh+0BBbqRF8L3zLTZ9ci2dSml/1U+pZ9
-         +W4RZWbxpZ0u+dguM+Mik9aG6hn+jEEm4tXvR4LK1TVKbS+L4U/WEuywULGXohy49RUi
-         aFKDZNcuH6m+qFkzVjTTVep5iQIRZYR2KnbsYW/9xeyYFHclztE/ZJPZiQmUPcVzFd8R
-         GG3oVtqyjG3YlzwYr2aVQha74G/nz7uo742gkFrNNZU+rF+UuAPTbE+Ul6Vk6a4bN6Sw
-         pkhw==
+        bh=sCu4DgdnXbaBXDeMflcnceMsImVi0D0TAZiObdo3Bzk=;
+        b=j13u2IpJ9o53rMySdNDt1PUzTCOjEQOq31C8RBAhOf0wV/82fZz2zf1dQFQPPfmxQf
+         uJ3Xf80Dz6I8sZjq/tHne1oiLVcnI0t5XQspL4jCv0n8PvQmyOB5dG35taT+ltpB9q3c
+         Cudcib8crj7pdyDI9d02RHtyooOGECMeShN9CIJYmgatxrU5had4REiEaWNNFHr6/p2U
+         fYH/o/AJ32jtjKPrHmBIv9vtB5LqC++0kHd5kizmxi/Yhi4x44g0C86UQ9DDxyhryw1g
+         No39booL+xnFFpghlG8AatfZsvE2h8IjFsEJHd4yx9QNXRGzQ80fPEa4YgX8CeTXYQn8
+         H0AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JtsbtGNDj9cJL0vJuV8YYSkxHPv54Gj5zVBkzCa6Hxg=;
-        b=Ju8+oS7bq+V5kqEu6OCTsrcOcDRSD9rx7grMvPZ6oZh9HogvAkyqBvHEYKvOzjPQ/u
-         s5+8ltbFHW6tYfoXpsmpqDHXKlg+pdyPHMbeNPPt7k+2/K00alif522geS6zj/AlmlbZ
-         EW68b5Kzs81X7YWJH7V9EDLVlIvX+Q65y+7OM+MQDs3jiUsiB6ZFj5UsGs6cdo5t+aU1
-         SF4VhKvA47TLJK3qW13Gf42hIRzxETNbPCSPmXtH0d9EPhs+Hqm9OxVtYqfVtG+RtAas
-         urtpW6uOVr1i5aXI3FePAnC9bVIByNst6d/HLGAm9KmxEPctGJa7xNYgZBjZsR2qOFu6
-         jUAA==
-X-Gm-Message-State: AHQUAub56rl5yx3UEQ27aFmWNgz3mCWxRRgLsDccI4Tc4n5+IryinXYG
-        Hj92Bcyt9MIWnWRn4ha9k9c=
-X-Google-Smtp-Source: AHgI3IYOuWyxRHXwrwj/NDBafysEmRpaX7pVNXq5IC26UhBT3jDO3CyNzNgfuE7cd1g1j5oVXJXS9Q==
-X-Received: by 2002:adf:9167:: with SMTP id j94mr375156wrj.106.1550783217116;
-        Thu, 21 Feb 2019 13:06:57 -0800 (PST)
-Received: from szeder.dev (x4db54a94.dyn.telefonica.de. [77.181.74.148])
-        by smtp.gmail.com with ESMTPSA id q17sm12799492wrx.38.2019.02.21.13.06.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Feb 2019 13:06:56 -0800 (PST)
-Date:   Thu, 21 Feb 2019 22:06:54 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
-        'Johannes Schindelin' <johannes.schindelin@gmx.de>,
-        'Duy Nguyen' <pclouds@gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.21.0-rc2
-Message-ID: <20190221210654.GT1622@szeder.dev>
-References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com>
- <012601d4c8b5$54f1b730$fed52590$@nexbridge.com>
- <xmqqftsiw8l8.fsf@gitster-ct.c.googlers.com>
- <001501d4c9fd$bf80dfb0$3e829f10$@nexbridge.com>
+        bh=sCu4DgdnXbaBXDeMflcnceMsImVi0D0TAZiObdo3Bzk=;
+        b=BQsQxdSElDgnlaWXj+HcB+wH0hPkYfoTtku1lHRd05q7zTNbymROR6cuNtnsGyG+PU
+         gVPwbXCh4rNsfBiLwkFA9XehHOraYIrvCTxhgUtiiSrYPPdM1/5uxRb0XuaIp4cGCPgk
+         9hxv0NjpmnIieDwMUPjNZN1iu/FGAuaPnA/4+uM3lVzFxpI3DVfTuIhQUjgUXVfeazpL
+         qQ7LHGoaohEw+SKe7LSUqingCQZaopCJS8wCoNtrFyMDqO72wOBTveofy0XM7z6Y4zc3
+         eSYypdl/XbccG//+Aup4NncdxRHdgZfCE+lYpS8ujm7cJ4ZAusRLzJrSErVvbl+1eh+t
+         9oiw==
+X-Gm-Message-State: AHQUAuYsJrDeezChuaS49LALBBK9x/E+ydcjM2f+kZMX+XZZ8AYURVV3
+        irRBjQhueOuisKGEok62Sgo=
+X-Google-Smtp-Source: AHgI3Ia3pUQkuArRg3e9OnyHnUkDVsz1a8Rxmw36rkKODHAk7Ts5vq51LekenEhJsx+VVNAj9X1tBg==
+X-Received: by 2002:a05:6000:1252:: with SMTP id j18mr376717wrx.11.1550784324307;
+        Thu, 21 Feb 2019 13:25:24 -0800 (PST)
+Received: from localhost ([95.149.189.205])
+        by smtp.gmail.com with ESMTPSA id d15sm51537366wrw.36.2019.02.21.13.25.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 21 Feb 2019 13:25:23 -0800 (PST)
+Date:   Thu, 21 Feb 2019 21:25:22 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC][PATCH 2/2] clone: use dir-iterator to avoid explicit dir
+ traversal
+Message-ID: <20190221212522.GO6085@hank.intra.tgummerer.com>
+References: <20190215154913.18800-1-matheus.bernardino@usp.br>
+ <20190215154913.18800-3-matheus.bernardino@usp.br>
+ <20190216143824.GJ6085@hank.intra.tgummerer.com>
+ <CAHd-oW60a+zz9J+u0HiRuTy-FKYN4s95fCcR3mgJz0hUokhTCQ@mail.gmail.com>
+ <20190218233541.GK6085@hank.intra.tgummerer.com>
+ <CAHd-oW6m6JSgxwdE6U5vBw=DcPigK+P8eODoie0_Mag3Lg_eYw@mail.gmail.com>
+ <20190219234506.GL6085@hank.intra.tgummerer.com>
+ <CAHd-oW6VPrHMo1QjAXn6G8P_gmJOQ91LVO+UDK1a8T7uhuM9uQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <001501d4c9fd$bf80dfb0$3e829f10$@nexbridge.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CAHd-oW6VPrHMo1QjAXn6G8P_gmJOQ91LVO+UDK1a8T7uhuM9uQ@mail.gmail.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 21, 2019 at 10:54:31AM -0500, Randall S. Becker wrote:
-> /home/git/git/t: sh t4153-am-resume-override-opts.sh
-> ok 1 - setup
-> ok 2 # skip --3way overrides --no-3way (missing TTY)
-> ok 3 - --no-quiet overrides --quiet
-> ok 4 - --signoff overrides --no-signoff
-> ok 5 # skip --reject overrides --no-reject (missing TTY)
-> # passed all 5 test(s)
-> 1..5
+On 02/21, Matheus Tavares Bernardino wrote:
+> Ok, I think I'm almost there and I should be able to send a v2 on the
+> weekend. But again, a few questions arose while I'm coding v2. Please,
+> see inline.
 > 
-> Technically, we have TTY, but not that dev. The TTYs are not under
-> /dev/tty*, however.
+> On Tue, Feb 19, 2019 at 8:45 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >
+> > On 02/19, Matheus Tavares Bernardino wrote:
+> > > Ok, I agree. I noticed copy_or_link_directory only skips hidden
+> > > directories, not hidden files. And I couldn't think why we would want
+> > > to skip one but not the other... Could that be unintentional? I mean,
+> > > maybe the idea was to skip just "." and ".."? If that is the case, I
+> > > don't even need to make an if check at copy_or_link_directory, since
+> > > dir-iterator already skips "." and "..". What do you think about that?
+> 
+> [...]
+> 
+> > I feel like you are probably right in that it could be unintentional,
+> > and I don't think anyone should be messing with the objects
+> > directory.  However that is no guarantee that changing this wouldn't
+> > break *something*.
+> >
+> > For the purpose of this change I would try to keep the same behaviour
+> > as we currently have where possible, to not increase the scope too
+> > much.
+> >
+> 
+> I understand your point, but to make copy_or_link_directory() skip
+> just hidden directories using dir-iterator seems, now, a little
+> tricker than I though before. The "if (iter->basename[0] != '.')"
+> statement in the patch I sent for v1 only skips the hidden directories
+> creation, but it does not avoid the attempt to copy the hidden
+> directory contents (which would obviously fail). If we were to do
+> that, we would need to check every directory in the relative path
+> string of each iteration entry looking for a hidden directory. That
+> seems a little too much, IMHO. Because of that and the intuition that
+> skipping over hidden dirs was an unintentional operation, I think we
+> could modify copy_or_link_directory() to skip '.' and '..', only.
+> Also, hidden dirs/files are not expected to be at .git/objects anyway,
+> are they?
 
-The TTY prereq is not about /dev/tty, but about whether
-'t/test-terminal.perl' can simulate a pseudo-terminal, i.e. the
-necessary Perl modules are installed and working appropriately.
+No, as far as I know hidden dirs/files should not be in .git/objects.
+The only reason they would be there is if somebody would create them
+manually.  I didn't think of hidden child directories, which as you
+noticed should be excluded as well to keep current behaviour.
 
+With that in mind, I think I agree with the change of only excluding
+'.' and '..', for which we don't need to do anything in your
+dir-iterator patches.  Also thinking of what the worst case that could
+happen is, it's that while cloning a repository locally a few more
+directories could be copied, which is not all that bad.
+
+So I think I was overly paranoid here and am on board with skipping
+'.' and '..' only.  I even think that this can be just described in
+detail in the commit message, rather than being done in a separate
+patch, though others may disagree with that.  
+
+> And to have copy_or_link_directory()'s behaviour changed as little as
+> possible, I could add the option to not follow hidden paths (dirs and
+> regular files) at dir-iterator.c and use it at
+> copy_or_link_directory() (now that I'm adding the 'pedantic' option,
+> this won't be so difficult, anyway). Would these suggestions be a good
+> plan?
+
+I think this would be a valid plan as well, however thinking this
+through again I don't feel like it is necessary.  I'm happy with
+whichever way you prefer here.
+
+> Thanks,
+> Matheus Tavares
