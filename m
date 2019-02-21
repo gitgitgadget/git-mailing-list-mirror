@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BC941F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 19:29:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70A521F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 19:29:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbfBUT3B (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 14:29:01 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:53940 "EHLO
+        id S1726273AbfBUT3E (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 14:29:04 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:53942 "EHLO
         mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726198AbfBUT3B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 14:29:01 -0500
-Received: by mail-wm1-f67.google.com with SMTP id e74so10088119wmg.3
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 11:29:00 -0800 (PST)
+        with ESMTP id S1726198AbfBUT3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 14:29:03 -0500
+Received: by mail-wm1-f67.google.com with SMTP id e74so10088199wmg.3
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 11:29:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eHvTJ1OY4x4rAVEkAoIEb8c/GvOzNLKcggRUO7F2jEc=;
-        b=mAGyog3Nvlcx+OJ2vRRl7hULGnwF9Q/5uURQ6/BgTfw9mSIgEfY9IkZxpk0sTFBRyf
-         D2YT3/ksoDo9VgBRAJN/7e8LkAM3lH96HOm3my/C03pOm47FL53ewQIGnRMw/o4APuU8
-         2l6Mr1QDXorcF+TMzrkgm8YqOJjf4NSd52wj6O//835Br7nMxJ/F7q5lD5BoAUVQjSZB
-         y8esvdCHj7rIam4pNxNqE1/N68pgbpcehADal4c4+hi6A1EKpL2KgHia2BEqC8sqnVRb
-         x1YvCflcDdjq8XuYRpFBO8l1hl2Bzo93qBf1/nxoU+j3foB4Pg0rSbGnmp7jrEao0lu1
-         PQPw==
+        bh=j5D9OoOe0Xr2OQHa2pYMKmHQkJXZW/yqiXHHgMpb3Cc=;
+        b=ontvspfKgi9EOcHcLvrk60xfsH2nPgnnRUS9r03G3t9dedRFCiIW10ku+o1P0loK79
+         8roA9SpErfXEkdGelSymmF04HWTzn4gfsK/8r6vskA8kyX0p/lt6yH/pvttN2rNjEOB1
+         JsnLOgBeXcyeGgJeFZgUPi3qqSRLjbko5ZD4COfroMWY/IZLwFSicCBj7ylfnSP22qOy
+         96hdYmWoWOmTORFPOn4LotJzSgxUJOxFfCD1eaP6qjnG0o+oDqu++vLItmfhBVhG6rIg
+         y3AfyIFhWMse1l5wkbhpV1fzIvddKp0AOQbb+/iE0j/yzutxK5otYwHhvFQAzOJ3jDFT
+         bwTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eHvTJ1OY4x4rAVEkAoIEb8c/GvOzNLKcggRUO7F2jEc=;
-        b=tGrm+aOYV6KdAatULq9ZMFssNZpHqLp6zWkiXkQGiDV6Sb0/09X5U4tfP3mw9IkbHd
-         fM3FbdVCKVYFhrF4YRDGNMtb706IUKjYCON5S9GIhuGRpCqnk06Uuz8XeDciWyuZvelG
-         58W4xYAnPCNMdk0QMbekewJZjzc6C9RQQHV7PuNoCFHLLJrXFva0caxz0cGWmTm6p80l
-         9ds7uyM7wBC7s5+gDdYjFZ1b3h7DANdfuumM3ne4FZ3fDTq5tpOpCMkTd5NnCYLFfbxo
-         8Yp3GjCQ16Zawm/2j0u93ZD0BR63a1yLJxGBt2nutD3YewP/rxDeoJyKaDwaAovi6xkl
-         C0+Q==
-X-Gm-Message-State: AHQUAuYRjA6h1W5ACJMRx7A4FLwGiKGqc/h6LTz9sm1Sl0SowGcfxbK4
-        RD88tgvPVT614kT5QFXeZSi3DYaW
-X-Google-Smtp-Source: AHgI3IYjMREIs9/7qVxcSjEQ6zIyeX67Y3a9H2Fz1B+GnhExnJFTpLsDzs/80XAHGsWjPL26GTdeIg==
-X-Received: by 2002:a1c:2d4c:: with SMTP id t73mr79796wmt.142.1550777339352;
-        Thu, 21 Feb 2019 11:28:59 -0800 (PST)
+        bh=j5D9OoOe0Xr2OQHa2pYMKmHQkJXZW/yqiXHHgMpb3Cc=;
+        b=ZpUVwDPRt+lumr5e8D3HQgW96AbC4h++5BnNwE7Km6aLHcaLkXbY3nUnNk68wF8jwn
+         X05BmRBkopBUPju3aR8kDI9Sc0vdtqg7GSVdelW8r5IF4yYJ83be8KhuAbnilXqGfjda
+         U+e0PisSPTgVEohaJkBpvXLqqiHLyAUy+9K5m57mg55X5nonMqUTG1fGKL6l86XbqH2p
+         HVGGw2rOcLnaP0Ydxa9EE+C4Uz/Epy91La7i38APm2Q/PENH6cX7joC3jeVExXqm0isi
+         T86TTH+mDgF1yjf7tyx4TyND6V5iTtM9jx7604alM5hDiOSoVa+ztDKcn0EkOttHUCSk
+         MSOA==
+X-Gm-Message-State: AHQUAub8KD1rfHFKF6xlVV3ES6mN/opz21JCB5LmpPMk1wKkriSYIsYE
+        bMxLheyLocu/UFfxc/jzwg5aArj+
+X-Google-Smtp-Source: AHgI3IZ0qP1QWicd6YoxnGn03sznYwsLGBHxn5J77YtXspKCDcvNbzc8a4xtFdgMMyFiZja51T1tuQ==
+X-Received: by 2002:a1c:7f0c:: with SMTP id a12mr63540wmd.89.1550777341101;
+        Thu, 21 Feb 2019 11:29:01 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n2sm35237429wrq.58.2019.02.21.11.28.58
+        by smtp.gmail.com with ESMTPSA id n2sm35237429wrq.58.2019.02.21.11.29.00
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 21 Feb 2019 11:28:58 -0800 (PST)
+        Thu, 21 Feb 2019 11:29:00 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/2] BSD portability fixes for 2.21.0-rc2
-Date:   Thu, 21 Feb 2019 20:28:47 +0100
-Message-Id: <20190221192849.6581-1-avarab@gmail.com>
+Subject: [PATCH 1/2] tests: fix unportable "\?" and "\+" regex syntax
+Date:   Thu, 21 Feb 2019 20:28:48 +0100
+Message-Id: <20190221192849.6581-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e
 In-Reply-To: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com>
 References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com>
@@ -72,23 +72,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Last-minute fixes for two issues new in 2.21, not in 2.20.
+Fix widely supported but non-POSIX basic regex syntax introduced in
+[1] and [2]. On GNU, NetBSD and FreeBSD the following works:
 
-This fixes a NetBSD portability issue I noted in
-https://public-inbox.org/git/87d0nm5x1d.fsf@evledraar.gmail.com/
-thanks to SZEDER for the help.
+    $ echo xy >f
+    $ grep 'xy\?' f; echo $?
+    xy
+    0
 
-Then there's a another fix for a test breaking on OpenBSD due to
-recently merged unportable regex syntax.
+The same goes for "\+". The "?" and "+" syntax is not in the BRE
+syntax, just in ERE, but on some implementations it can be invoked by
+prefixing the meta-operator with "\", but not on OpenBSD:
 
-Ævar Arnfjörð Bjarmason (2):
-  tests: fix unportable "\?" and "\+" regex syntax
-  commit-graph tests: fix cryptic unportable "dd" invocation
+    $ uname -a
+    OpenBSD obsd.my.domain 6.2 GENERIC#132 amd64
+    $ grep --version
+    grep version 0.9
+    $ grep 'xy\?' f; echo $?
+    1
 
- t/t5318-commit-graph.sh | 3 ++-
- t/t6120-describe.sh     | 8 ++++----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+Let's fix this by moving to ERE syntax instead, where "?" and "+" are
+universally supported:
 
+    $ grep -E 'xy?' f; echo $?
+    xy
+    0
+
+1. 2ed5c8e174 ("describe: setup working tree for --dirty", 2019-02-03)
+2. c801170b0c ("t6120: test for describe with a bare repository",
+   2019-02-03)
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t6120-describe.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index ee5b03ee18..2b883d8174 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -146,7 +146,7 @@ check_describe A-* HEAD
+ test_expect_success 'describe works from outside repo using --git-dir' '
+ 	git clone --bare "$TRASH_DIRECTORY" "$TRASH_DIRECTORY/bare" &&
+ 	git --git-dir "$TRASH_DIRECTORY/bare" describe >out &&
+-	grep "^A-[1-9][0-9]\?-g[0-9a-f]\+$" out
++	grep -E "^A-[1-9][0-9]?-g[0-9a-f]+$" out
+ '
+ 
+ check_describe "A-*[0-9a-f]" --dirty
+@@ -156,7 +156,7 @@ test_expect_success 'describe --dirty with --work-tree' '
+ 		cd "$TEST_DIRECTORY" &&
+ 		git --git-dir "$TRASH_DIRECTORY/.git" --work-tree "$TRASH_DIRECTORY" describe --dirty >"$TRASH_DIRECTORY/out"
+ 	) &&
+-	grep "^A-[1-9][0-9]\?-g[0-9a-f]\+$" out
++	grep -E "^A-[1-9][0-9]?-g[0-9a-f]+$" out
+ '
+ 
+ test_expect_success 'set-up dirty work tree' '
+@@ -170,7 +170,7 @@ test_expect_success 'describe --dirty with --work-tree (dirty)' '
+ 		cd "$TEST_DIRECTORY" &&
+ 		git --git-dir "$TRASH_DIRECTORY/.git" --work-tree "$TRASH_DIRECTORY" describe --dirty >"$TRASH_DIRECTORY/out"
+ 	) &&
+-	grep "^A-[1-9][0-9]\?-g[0-9a-f]\+-dirty$" out
++	grep -E "^A-[1-9][0-9]?-g[0-9a-f]+-dirty$" out
+ '
+ 
+ check_describe "A-*[0-9a-f].mod" --dirty=.mod
+@@ -180,7 +180,7 @@ test_expect_success 'describe --dirty=.mod with --work-tree (dirty)' '
+ 		cd "$TEST_DIRECTORY" &&
+ 		git --git-dir "$TRASH_DIRECTORY/.git" --work-tree "$TRASH_DIRECTORY" describe --dirty=.mod >"$TRASH_DIRECTORY/out"
+ 	) &&
+-	grep "^A-[1-9][0-9]\?-g[0-9a-f]\+.mod$" out
++	grep -E "^A-[1-9][0-9]?-g[0-9a-f]+.mod$" out
+ '
+ 
+ test_expect_success 'describe --dirty HEAD' '
 -- 
 2.21.0.rc0.258.g878e2cd30e
 
