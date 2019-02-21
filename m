@@ -2,108 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 019201F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 21:39:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12E211F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 21:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725963AbfBUVjt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 16:39:49 -0500
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:46855 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725802AbfBUVjt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 16:39:49 -0500
-Received: by mail-wr1-f42.google.com with SMTP id i16so73533wrs.13
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 13:39:48 -0800 (PST)
+        id S1726527AbfBUVlK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 16:41:10 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39535 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725802AbfBUVlK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 16:41:10 -0500
+Received: by mail-wr1-f65.google.com with SMTP id l5so116039wrw.6
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 13:41:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=GE7XqaYx+gWZFtB+bBpsmTqRxUEVlnig2fiRkERJUEQ=;
-        b=LfQT+TUOyqBc8YImPQRBddok+eH6f5r+4p69FDBY8cQlbjG3zeAyAonGS8x+thCHV5
-         IfLKPt1EOIumq9P/5hM9EpGwVGaxbaRKY+D0sT4gKeuMOETXaQKC9tbzqvr02liRPNKV
-         n08ruWiFxJMuqRct2L1WZfoIIn9JwNE5lbNNRKyBA9cf6dlG5/3FXmtT/Ki9kzzIjjLn
-         FKMqZMVJJraA/4VCEf4boDQABdvwF43Oh9/CLaglccumgtnB4ZaGNtmGt7sVDm3pWDu8
-         8QQkUl2VjYd3O53zXn6XeaLe6NURwC2pd+IEeCr8dspuUANKyi+0tjl2d6c1v0oKBuDg
-         usRg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=d64EjQoW4MRYWDa4TRvA2PUMvbnV6no72KEsThEAne0=;
+        b=JaJZTaSuRcsn7hYM7FxKcqLpEO9kQfMLIgpVrg0NKRp4P7/ZuaXAlEO1lVdcg3Z1ks
+         702RJ0EsEMmuFn7+oaBZzxB4sj84DyMPouLUIm6nK93dw4hsuwiT4Odmfqp1McmF7D+A
+         IS1/4OMIna0nOEg14DTVG8WbrIyqPWRlNX1/9O5NkSUp0KxxHbWXGL0ZJddPRR40bELr
+         jIBAJ+s8Tx2f2bwsayPt9VDOsB853ToEgsXPakUZPNEYk07CnxlWOCyOoMC7mAOpNDlU
+         5uG0pDamtpJA8dxqt5mCZSqGdZXUVUMm33nyDjSPUhWe6ak5um19GBTEk2jxneaP2P+Q
+         xGtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=GE7XqaYx+gWZFtB+bBpsmTqRxUEVlnig2fiRkERJUEQ=;
-        b=H9zI42wXyfH0e2ueHp0Trnw5GO56+6rP1Fop5KCjp8nORfVqrxcxg0CPGq+4xCCkDq
-         0IS9AVXk7psCxKNGg9gUIHg7JEUkGJBSq4le8aE4AkCyNeN6Oz4qsZFmAZ/h/3ONfNyV
-         o/td0XbTbhHGfVwoccXgbFrftChDNwxyEbkAvQyBfSzrtlDBhvDW+KtWMl6ykn69Spa8
-         c+ROqp5NcnDYZ0ebGQMaRK3OReie/Grf6GbDgUpx2zaYQ3VSQPES3oIEkEAQF4wfdKxM
-         7pZPt6pzFoMjFp4iQnuxqzbKrSElpdKdTObvVyVfDhW7waPJwUGXzfBj9EygfR/475ox
-         4abQ==
-X-Gm-Message-State: AHQUAuYmPADE7zMYoBLVa2rtFzAe2dk0P9W3u9KtRNqlib8SZj4aASij
-        cyoaYOwJwtuWNh9K76FdZB/bU1uN
-X-Google-Smtp-Source: AHgI3IZ1TKDgO4zABuLqeLtebM6q1QHM29r3R313tDVjEi0FjzfpMbALA5mCD+3NXa/5TmQBPpzrmA==
-X-Received: by 2002:adf:9b11:: with SMTP id b17mr430597wrc.168.1550785187342;
-        Thu, 21 Feb 2019 13:39:47 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p16sm1009wro.25.2019.02.21.13.39.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Feb 2019 13:39:46 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bartosz Baranowski <bbaranow@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git bisect - good vs bad output is different.
-References: <CAEpy5fTnyPjH0sVyjnGHi1qxo+_dpaerxwaD7MmNPbmLx6qyJA@mail.gmail.com>
-Date:   Thu, 21 Feb 2019 13:39:46 -0800
-In-Reply-To: <CAEpy5fTnyPjH0sVyjnGHi1qxo+_dpaerxwaD7MmNPbmLx6qyJA@mail.gmail.com>
-        (Bartosz Baranowski's message of "Thu, 21 Feb 2019 11:47:29 +0100")
-Message-ID: <xmqq1s40u8gt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=d64EjQoW4MRYWDa4TRvA2PUMvbnV6no72KEsThEAne0=;
+        b=P5VbUxAJgIqiIqisTijBKDbOHXLM/XFbvPZQ/0lES+e495doVzxjCsjBQb9+RjZdiL
+         fn1VQYxf4JbaN4MZbgHHhg7OL9uQo3z+NSYfb0bTq29aXltPTmVaEQX3/MbGrHmMNpPI
+         FIyfSV5GqVaRoS1PrBmSiV2GCHO+vIHXhWyL6WaDgP7iWReNM4RNPElXQtFalK0+R8SN
+         7bSBuFipvsuFML7SrrE9vArWeMIg02qkzvSKS6jBqoO/0S6Y+D+i/Si9FNNmCANu85Bx
+         b9iSBk69lucl+u5KVfP3PjHY+/ZvFyLXKCbYZM4X8GQ/SZ18sy6DAxNdi0UPBE44yvcG
+         qjTA==
+X-Gm-Message-State: AHQUAuaMnlCmJ2nes5KMQmWXpyrOkjWzVx5hq1TXRtelYKzkNZ2XvBa5
+        uAW/4dy61o200reLJbBfWbZTeQMwQnk=
+X-Google-Smtp-Source: AHgI3IYPhHZTaxX6Bk+cmBnyK5fmzUKqKmvfc0axSbEGPUJrJkk3BxTosi6CxHHXiKYW2Ukz7huE7Q==
+X-Received: by 2002:a5d:6a88:: with SMTP id s8mr404091wru.303.1550785267594;
+        Thu, 21 Feb 2019 13:41:07 -0800 (PST)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id k6sm17536972wrq.82.2019.02.21.13.41.06
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 21 Feb 2019 13:41:06 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        John Keeping <john@keeping.me.uk>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/2] rebase: fix 2.11.0-era --fork-point regression
+Date:   Thu, 21 Feb 2019 22:40:57 +0100
+Message-Id: <20190221214059.9195-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc0.258.g878e2cd30e
+In-Reply-To: <20190221151009.GA24309@sigill.intra.peff.net>
+References: <20190221151009.GA24309@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bartosz Baranowski <bbaranow@redhat.com> writes:
+On Thu, Feb 21 2019, Jeff King wrote:
 
-> Depending how you end bisecting, result/report is either one liner or
-> dumps commit information:
+> On Thu, Feb 21, 2019 at 03:50:38PM +0100, Ævar Arnfjörð Bjarmason wrote:
 >
+>> > Those aren't using "--fork-point", so they're going to behave
+>> > differently. The default with no arguments is basically "--fork-point
+>> > @{u}".
+>> 
+>> Yeah, that's what it *should* do, but it's not equivalent to using
+>> --fork-point manually:
+>> 
+>>     # my series on top of origin/master
+>>     $ git rev-parse HEAD
+>>     2a67977d3f70fa7fc4bce89db24a1218dc9ab2aa
+>>     
+>>     # Junio's origin/master upstream
+>>     $ git rev-parse @{u}
+>>     35ee755a8c43bcb3c2786522d423f006c23d32df
+>>     
+>>     # Where my fork point is
+>>     $ git merge-base --fork-point @{u}
+>>     35ee755a8c43bcb3c2786522d423f006c23d32df
+>>     
+>>     # OK
+>>     $ git rebase 35ee755a8c43bcb3c2786522d423f006c23d32df
+>>     Current branch master is up to date.
+>>     
+>>     # OK
+>>     $ git rebase $(git merge-base --fork-point @{u})
+>>     Current branch master is up to date.
+>>     
+>>     # ???
+>>     $ git rebase
+>>     First, rewinding head to replay your work on top of it...
+>>     [...]
 >
-> $ git bisect bad
-> 77c044d8d66f9f9bebdb805853409e920e537d59 is the first bad commit
-> commit 77c044d8d66f9f9bebdb805853409e920e537d59
-> Author: XXXX
-> Date:   Tue Jan 22 09:24:02 2019 -0500
+> Have you tried with "git rebase --fork-point"? It does more than just
+> pass --fork-point to merge-base. It seems to also skip some of the "is
+> up to date", I think due to 1e0dacdbdb (rebase: omit patch-identical
+> commits with --fork-point, 2014-07-16).
 >
->    ISSUE-11626 Bad fish in the sea of comment
->
-> :040000 040000 ef2280aa5f7e0c23f8750c43a0bf05c0a9639fe3
-> f63bea979784cade7dffd653d939f665ff6a53b7 M      clustering
-> :040000 040000 6f4667c819106f6e9ddbb902253862212a2558f5
-> 4d8c4dc85872c0665eb77957a6fd69c49c173188 M      triton
-> :040000 040000 0400075b3d5f7cb9e68683b25b8ede93fb1b293b
-> 35ba4c831c4834f9ce612e394621dde382bc72f1 M      web-common
->
-> vs
->
->
-> git bisect good
-> 3a9388eef42efc87c78ce22158d55e69a278b4eb is the first bad commit
->
-> git --version
-> git version 2.14.1
+> I'm still not clear on whether my 4f21454b55 actually changed something
+> menaingful here, or if it's simply that you're getting the fork-point
+> behavior more consistently.
 
+Yes it's a regression. Here's a fix for it. As seen in 2/2 how we got
+to the point of regressing was an interesting combination of factors.
 
-Are you sure (and if so how did you reach that conclusion) that the
-above difference comes from the last 'bad' vs 'good' you finished,
-and not comes from the difference between 77c044d8 vs 3a9388ee?
+Ævar Arnfjörð Bjarmason (2):
+  rebase tests: test linear branch topology
+  rebase: don't rebase linear topology with --fork-point
 
-At the end of the bisection session, bisect.c::show_diff_tree() is
-called on that "culprit" commit.  Is it possible that 3a9388ee is a
-simple and trivial merge that does not have anything worth reporting
-for "git diff-tree"?
+ builtin/rebase.c                  |  6 +++--
+ t/t3421-rebase-topology-linear.sh | 44 +++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 2 deletions(-)
 
+-- 
+2.21.0.rc0.258.g878e2cd30e
 
