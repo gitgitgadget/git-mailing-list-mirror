@@ -2,126 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F22771F462
-	for <e@80x24.org>; Thu, 21 Feb 2019 11:18:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C3401F453
+	for <e@80x24.org>; Thu, 21 Feb 2019 11:19:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727714AbfBULST (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 06:18:19 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:40351 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726814AbfBULSS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 06:18:18 -0500
-Received: by mail-pf1-f195.google.com with SMTP id h1so13593720pfo.7
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 03:18:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Q1STGAwhspv4W/QiXrlxh+NSfu/xQMHcVrif1RNV0oI=;
-        b=i73RCWScYMaSwEtVbMHmdt21IE0bqWoixpvmtelsn5PqfuSwTHfbBYTo+ftSRQyZDb
-         099UZEZw/qBKA0zjTE3hXerEX7fx+QSVyU2XF2Ei/cU1T3H5KqclSrqUd0V91fz43X7/
-         5UgeNKXG19IW3G4o402gqvaZsRNZTLG9EzW7alwMfAOdIjho0ffeq3MdxfXd7b+BXtsP
-         mKlreU3ihz8R5mp5IqtoGu4/KseFz5VwerP+rXD/W7jmBAPUvxJnf0gZ9uEmxlLAVYNU
-         bTQ/AwprrWdV4nmYrptVYUgDimyX6IaeHM7ortaQEk8oHG4IgURw3HRqfkClBF/7NW1u
-         MjoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Q1STGAwhspv4W/QiXrlxh+NSfu/xQMHcVrif1RNV0oI=;
-        b=Vb/6Miho23r+PLCBiyYIUCN8PunnQGA62A5urY6EHWFWmG1gowtjvYBKoBz5oAWz9Z
-         iOPjSmfYyw9qQxNVBmrtuz+cKT5JZ/k6SuhLRY1ZbFrI+F6JO6BQpR8OuqhNhE5LbyAX
-         7MWTMU6wsK69XMb0OX/vE48EW+zXvyb3o5BEowcT0+Rvscoei5L0DVNs9GQ2seG7fHIT
-         WvVZmHqtS2EfNKnlJ353Ygf/oJvg4bhxnwxT1Hw1S7IY0xYWgdbnfE4jISlhYNytnAPh
-         T38B19iE8y3dQztyU4j5GDUWCSVEuDgKjK8myRuKil4hcjuGWWfUJRJ01eY3J2P25CkY
-         RIMw==
-X-Gm-Message-State: AHQUAuZGUzQCGu2yuA6m6MJ9FSm79LMHD3ftqbNQq+BcxVVGwiDeP8Ca
-        QxYyRtVj+R0qsrIzNbrtrXlhGF5+
-X-Google-Smtp-Source: AHgI3IbFyvX/WuPOvhRCG+7SFF5ktYuNZoLbIOtDkCutxU/MbccvVxNdEGTWgVBf2PI2yOBewNI9rA==
-X-Received: by 2002:a63:c40a:: with SMTP id h10mr34343027pgd.131.1550747898052;
-        Thu, 21 Feb 2019 03:18:18 -0800 (PST)
-Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id n19sm54659056pfg.67.2019.02.21.03.18.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Feb 2019 03:18:17 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 21 Feb 2019 18:18:13 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, rybak.a.v@gmail.com,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v4 21/21] diff-parseopt: convert --ignore-some-changes
-Date:   Thu, 21 Feb 2019 18:16:21 +0700
-Message-Id: <20190221111621.27180-22-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
-In-Reply-To: <20190221111621.27180-1-pclouds@gmail.com>
-References: <20190216113655.25728-1-pclouds@gmail.com>
- <20190221111621.27180-1-pclouds@gmail.com>
+        id S1725891AbfBULTx convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 21 Feb 2019 06:19:53 -0500
+Received: from mx2.suse.de ([195.135.220.15]:42028 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725385AbfBULTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Feb 2019 06:19:53 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id DC5EBACB5;
+        Thu, 21 Feb 2019 11:19:51 +0000 (UTC)
+Date:   Thu, 21 Feb 2019 12:19:50 +0100
+From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Marketa Calabkova <mcalabkova@suse.cz>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] setup: don't fail if commondir reference is
+ deleted.
+Message-ID: <20190221121950.12d24e53@naga.suse.cz>
+In-Reply-To: <CAPig+cS4vZpyj4Cx=Q89v3xTrCG4WbtX8EhTfOT2RKytjV-HrA@mail.gmail.com>
+References: <cover.1550508544.git.msuchanek@suse.de>
+        <37df7fd81c3dee990bd7723f18c94713a0d842b6.1550679076.git.msuchanek@suse.de>
+        <CAPig+cQZNOWvaa5H2PKOs149KvRtEYRzrdLvzvFRDo4Qxaecaw@mail.gmail.com>
+        <20190220181605.60bbc28d@kitsune.suse.cz>
+        <CAPig+cS4vZpyj4Cx=Q89v3xTrCG4WbtX8EhTfOT2RKytjV-HrA@mail.gmail.com>
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-suse-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+On Wed, 20 Feb 2019 13:35:57 -0500
+Eric Sunshine <sunshine@sunshineco.com> wrote:
 
-diff --git a/diff.c b/diff.c
-index 33492e754f..a63ee4a44d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5109,6 +5109,21 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_BIT(0, "minimal", &options->xdl_opts,
- 			N_("produce the smallest possible diff"),
- 			XDF_NEED_MINIMAL),
-+		OPT_BIT_F('w', "ignore-all-space", &options->xdl_opts,
-+			  N_("ignore whitespace when comparing lines"),
-+			  XDF_IGNORE_WHITESPACE, PARSE_OPT_NONEG),
-+		OPT_BIT_F('b', "ignore-space-change", &options->xdl_opts,
-+			  N_("ignore changes in amount of whitespace"),
-+			  XDF_IGNORE_WHITESPACE_CHANGE, PARSE_OPT_NONEG),
-+		OPT_BIT_F(0, "ignore-space-at-eol", &options->xdl_opts,
-+			  N_("ignore changes in whitespace at EOL"),
-+			  XDF_IGNORE_WHITESPACE_AT_EOL, PARSE_OPT_NONEG),
-+		OPT_BIT_F(0, "ignore-cr-at-eol", &options->xdl_opts,
-+			  N_("ignore carrier-return at the end of line"),
-+			  XDF_IGNORE_CR_AT_EOL, PARSE_OPT_NONEG),
-+		OPT_BIT_F(0, "ignore-blank-lines", &options->xdl_opts,
-+			  N_("ignore changes whose lines are all blank"),
-+			  XDF_IGNORE_BLANK_LINES, PARSE_OPT_NONEG),
- 
- 		OPT_GROUP(N_("Diff other options")),
- 		OPT_CALLBACK_F(0, "relative", options, N_("<prefix>"),
-@@ -5147,17 +5162,7 @@ int diff_opt_parse(struct diff_options *options,
- 		return ac;
- 
- 	/* xdiff options */
--	if (!strcmp(arg, "-w") || !strcmp(arg, "--ignore-all-space"))
--		DIFF_XDL_SET(options, IGNORE_WHITESPACE);
--	else if (!strcmp(arg, "-b") || !strcmp(arg, "--ignore-space-change"))
--		DIFF_XDL_SET(options, IGNORE_WHITESPACE_CHANGE);
--	else if (!strcmp(arg, "--ignore-space-at-eol"))
--		DIFF_XDL_SET(options, IGNORE_WHITESPACE_AT_EOL);
--	else if (!strcmp(arg, "--ignore-cr-at-eol"))
--		DIFF_XDL_SET(options, IGNORE_CR_AT_EOL);
--	else if (!strcmp(arg, "--ignore-blank-lines"))
--		DIFF_XDL_SET(options, IGNORE_BLANK_LINES);
--	else if (!strcmp(arg, "--indent-heuristic"))
-+	if (!strcmp(arg, "--indent-heuristic"))
- 		DIFF_XDL_SET(options, INDENT_HEURISTIC);
- 	else if (!strcmp(arg, "--no-indent-heuristic"))
- 		DIFF_XDL_CLR(options, INDENT_HEURISTIC);
--- 
-2.21.0.rc1.337.gdf7f8d0522
+> On Wed, Feb 20, 2019 at 12:16 PM Michal Suchánek <msuchanek@suse.de> wrote:
+> > On Wed, 20 Feb 2019 11:55:46 -0500
+> > Eric Sunshine <sunshine@sunshineco.com> wrote:  
 
+> > > Following this change, that particular validation no longer takes
+> > > place. But, more importantly, what does it mean to fall back to
+> > > "default" for this particular worktree? I'm having trouble
+> > > understanding how the new behavior can be correct or desirable. (Am I
+> > > missing something obvious?)  
+> >
+> > If the file can be missing altogether and it is not an error how it is
+> > incorrect or undesirable to ignore zero size file?  
+> 
+> Because the _presence_ of that file indicates a linked worktree,
+> whereas it's absence indicates the main worktree. If the file is
+> present but empty, then that is an abnormal condition, i.e. some form
+> of corruption.
+> 
+> The difference is significant, and that's why I'm asking if the new
+> behavior is correct or desirable. If you start interpreting this
+> abnormal condition as a non-error, then get_common_dir_noenv() will be
+> reporting that this is the main worktree when in fact it is (a somehow
+> corrupted) linked worktree. Such false reporting could trigger
+> undesirable and outright wrong behavior in callers.
+
+This is not an issue introduced with this patch, however. The worktree
+is not initialized atomically. First the worktree directory is created
+and then it is populated with content including the commondir reference.
+
+Because there is no big repository lock that everyone takes to access
+a repository other running git processes can see the wotktree without
+the commondir file. 
+
+The way this is mitigated in users of get_worktrees() is an assumption
+that the first worktree is the main worktree.
+
+If this is sufficient is not something this patchset aims to address.
+It merely addresses get_worktrees() aborting due to hitting specific
+stage in the initialization of a worktree.
+
+Thanks
+
+Michal
