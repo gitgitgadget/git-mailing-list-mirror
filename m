@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0D1F20248
-	for <e@80x24.org>; Fri, 22 Feb 2019 14:41:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B67420248
+	for <e@80x24.org>; Fri, 22 Feb 2019 14:41:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726926AbfBVOlq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 09:41:46 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:33888 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726818AbfBVOlp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 09:41:45 -0500
-Received: by mail-wm1-f67.google.com with SMTP id y185so9052731wmd.1
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 06:41:44 -0800 (PST)
+        id S1726970AbfBVOlr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 09:41:47 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:50492 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726278AbfBVOlr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 09:41:47 -0500
+Received: by mail-wm1-f53.google.com with SMTP id x7so2186528wmj.0
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 06:41:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BgVE0w7bPrTA+9VDpvEvfPMR9dlb31pdMoQs1NVAwfg=;
-        b=venCf/L+v1Qsaq3Iw38t9qYbdTF0JD6PItFd7/foPFVkCaNcX/fvpBtEzZivQAGiYl
-         yfIl9JgUDWjRbHd5fPXgbrEjevQkY80BRzTg+vI+CUK1SZye584MWZRDuCJgLtcviyOl
-         CzGFDz7AIHkeGomOoa8f15CABcZ7VXT8KAGTEc/yIg4l1TioFJjxVINO7cighgXbj16A
-         GRfnvwxpprka6U5MAedKz9KcO7ngheXYXjjBWVrzH5Ma/7ikpA7tfNqLZNPWmFh1DXxB
-         r4ZBF/ZtHOP7WF399ymR9p2N+mI9UmNVu3Yd1cIUqQ6LcGAXqNa/d5i3gI9Cw4LsICcc
-         g/GA==
+        bh=Tch+rR4heKSelh7R9yZAXzfWicJAI1834Pdg9GQ/7fI=;
+        b=F883w93dbBi6LC17QWCOIUsd2B6wyTK1qDoHvIW2VO9Xh2hcNhJhQTPKRhC0vadA+w
+         yXpFu+VA2hPEELT8hVNcW290HRCPC9Hfg01SAOnnh+Sz8f/iNgzy94RxBfXNnNSln32P
+         XyMu2IOS1wCXtzQObOkZpOTeSW88B+drAjgddcDqrveaebzPrqfrxvWMxlu40gs7eO+z
+         Asf58rmlW48IyE/j/TaENOQtlc/z3SAypBsYQTYK+exS6cxd4ztPAKH+a5ZmS9xY4a+G
+         8TijE5OnSuWhhP5PfppPnanhXJVZxP7TL/4DhHtWprszA8dQ/sbfps0Ip+w3AEKaBNp1
+         h9oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BgVE0w7bPrTA+9VDpvEvfPMR9dlb31pdMoQs1NVAwfg=;
-        b=VwccOWSe2aw4J5kCshscFRBdgB2/N64VYaxehoOBeeu9gqLLszh3LrXCaKQfn4YWbY
-         PqpT9UoT8R4sTz5+HHEHhMaPKtqtCsw7a5anVBGZ7uEYI3gTpX2fSUAUxzowfgIqDo9n
-         oNYLNbcIxtjqYZGhhSX3T62r/kZv3hQFAJgHNQYfyfC4AbcTRrUfa0D7ab6K8xHZnjt4
-         +MhvHvxES5vFLIujBXvSlLkMNyOq/X3314u/haO+muIxOohdqWmE91Rs+noi3peCyMbZ
-         uU0E0Nz4kKl3QeDxlFArr1RLaubCheu6SfsVDyJPDTBvfKTvE6jr7tepAOmU/sVJU/Bi
-         M0bA==
-X-Gm-Message-State: AHQUAuYwzbLQyZyrjQ0e2gRJn+JD/Vc57Ad/p+MSFEw94FYzKCGhx7N8
-        kqLWMEr1JsDROxOnXd18wnRhNmCJKWA=
-X-Google-Smtp-Source: AHgI3IaXGfDW9lxRrkbaFQtLmzSx++8iWiEPw2qmp06E08/PfINlDLBtAsG1Ul42ti+zZpu592STYg==
-X-Received: by 2002:a7b:cc18:: with SMTP id f24mr2926750wmh.42.1550846502914;
-        Fri, 22 Feb 2019 06:41:42 -0800 (PST)
+        bh=Tch+rR4heKSelh7R9yZAXzfWicJAI1834Pdg9GQ/7fI=;
+        b=bl3+1FirkLk/Nxk2n+1wVTjQA/wUnMr9b5IDkS29+TLttqT3iXLQcn0ZwWHGYLUCD8
+         UpDxGSbZxUgCIPXr5vrTVHTud4beKIT1BjEebSwtTBa6yZJpdqkqBM7JA461kvoMuJVj
+         /difv6YF4khMTalYrNerv2TDoDTjwqYe3GN/w6yWbNSxvCgh6DuJZWpTMJJA060G32Ku
+         DDp2isrTsb0Ow05aQbPI1BwPZZSdGqwUAL7r3BSaP5uhuPc+ahinrBnIm9mH4TUlbjHQ
+         qdauTTRXhbw/1/AvElJLhjuaJQlIm9v6prTtApjcWcO59QmWXMQTTCGKyUI7lqu64LD7
+         2wRA==
+X-Gm-Message-State: AHQUAuau0/gbuCYc18C/G3ISROkQhP4jOgba9aK6gWHjOlGGRAhbqNWt
+        WcAAEy7n1Cj9v7eVWqW8XlerObTZIbE=
+X-Google-Smtp-Source: AHgI3Ibb2JZcV6nZr+nmbAqcOI0UuzJpoPtkBzIUG0dRXe8J4s1321jX6CQ/J/u36v8B27sepg4g0Q==
+X-Received: by 2002:a1c:dc0a:: with SMTP id t10mr2748152wmg.101.1550846504492;
+        Fri, 22 Feb 2019 06:41:44 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z15sm1481689wmi.46.2019.02.22.06.41.41
+        by smtp.gmail.com with ESMTPSA id z15sm1481689wmi.46.2019.02.22.06.41.43
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 22 Feb 2019 06:41:42 -0800 (PST)
+        Fri, 22 Feb 2019 06:41:43 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Matthieu Moy <Matthieu.Moy@imag.fr>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/6] Makefile: move "strip" assignment down from flags
-Date:   Fri, 22 Feb 2019 15:41:23 +0100
-Message-Id: <20190222144127.32248-3-avarab@gmail.com>
+Subject: [PATCH v2 3/6] Makefile: add/remove comments at top and tweak whitespace
+Date:   Fri, 22 Feb 2019 15:41:24 +0100
+Message-Id: <20190222144127.32248-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc2.261.ga7da99ff1b
 In-Reply-To: <20190222105658.26831-1-avarab@gmail.com>
 References: <20190222105658.26831-1-avarab@gmail.com>
@@ -74,39 +74,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the assignment of the "STRIP" variable down to where we're
-setting variables with the names of other programs.
+The top of the Makfile is mostly separated into logical steps like set
+default configuration, set programs etc., but there's some deviation
+from that.
 
-For consistency with those use "=" for the assignment instead of
-"?=". I can't imagine why this would need to be different than the
-rest, and 4dc00021f7 ("Makefile: add 'strip' target", 2006-01-12)
-which added it doesn't provide an explanation.
+Let's add mostly comments where they're missing, remove those that
+don't add anything. The whitespace tweaking makes subsequent patches
+smaller.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 97e922cc41..c53727e44b 100644
+index c53727e44b..0870fd4651 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -512,7 +512,6 @@ CFLAGS = -g -O2 -Wall
+@@ -507,15 +507,14 @@ GIT-VERSION-FILE: FORCE
+ -include GIT-VERSION-FILE
+ 
+ # CFLAGS and LDFLAGS are for the users to override from the command line.
+-
+ CFLAGS = -g -O2 -Wall
  LDFLAGS =
  ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
  ALL_LDFLAGS = $(LDFLAGS)
--STRIP ?= strip
- 
- # Create as necessary, replace existing, make ranlib unneeded.
+-
+-# Create as necessary, replace existing, make ranlib unneeded.
  ARFLAGS = rcs
-@@ -576,6 +575,7 @@ CURL_CONFIG = curl-config
- PTHREAD_LIBS = -lpthread
- PTHREAD_CFLAGS =
- GCOV = gcov
-+STRIP = strip
- SPATCH = spatch
  
- export TCL_PATH TCLTK_PATH
++# Set our default configuration.
++#
+ # Among the variables below, these:
+ #   gitexecdir
+ #   template_dir
+@@ -560,6 +559,7 @@ perllibdir_relative = $(patsubst $(prefix)/%,%,$(perllibdir))
+ 
+ export prefix bindir sharedir sysconfdir gitwebdir perllibdir localedir
+ 
++# Set our default programs
+ CC = cc
+ AR = ar
+ RM = rm -f
+@@ -587,10 +587,6 @@ SP_EXTRA_FLAGS =
+ 
+ SPATCH_FLAGS = --all-includes --patch .
+ 
+-
+-
+-### --- END CONFIGURATION SECTION ---
+-
+ BASIC_CFLAGS = -I.
+ BASIC_LDFLAGS =
+ 
 -- 
 2.21.0.rc2.1.g2d5e20a900.dirty
 
