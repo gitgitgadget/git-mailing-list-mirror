@@ -2,141 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4720C1F453
-	for <e@80x24.org>; Fri, 22 Feb 2019 09:03:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEE371F453
+	for <e@80x24.org>; Fri, 22 Feb 2019 09:14:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726413AbfBVJDy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 04:03:54 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40602 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725860AbfBVJDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 04:03:53 -0500
-Received: by mail-wm1-f68.google.com with SMTP id t15so1194846wmi.5
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 01:03:52 -0800 (PST)
+        id S1726278AbfBVJOZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 04:14:25 -0500
+Received: from mail-it1-f179.google.com ([209.85.166.179]:37814 "EHLO
+        mail-it1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726117AbfBVJOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 04:14:25 -0500
+Received: by mail-it1-f179.google.com with SMTP id z124so2185686itc.2
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 01:14:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=+uez40vx1Nea3WgtjlS8pvtNUSKnfMCkK2kOs3YbcqE=;
-        b=RNzVBy1hGTH5k+dmZtA6+Vs3SQkdGwJoe6sLboFZJfqao/91siXTJTaFBw++WLWJMx
-         dHPwKmgb96wbI0+lSgI3dJtNMMYstcDI06u1w6y+dImzqShZZzW+UAucRUBd+mrf57yh
-         2D6W9AnO7mh25IxQHzry0fXHzNhCdG39pF/dEe0RKkz0/4tNzcxttpdMPfphr5epRUe5
-         Ra3tYJ2bcW2BeuH1ON5fxkTRfL9xUHE7lr4nBiFbxmtBsRHBP0FajWxPOZA0Q/aRc5Bv
-         GZoRSjLJ7guenq8tz6emMBhJh0ImUyGPbWIBhweVWCV8SZCbEwleJPGB9jJHJ2cWFAmk
-         p6Fg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=GdLLRVsynaS4rXxQc/oKTFo/aLVHwzlsUI53G+EQrsQ=;
+        b=gth8vsPUtaAiGIy2g4dR5M5MX4cbjZbO9cRRnPGE+Dn61VLNpT36P2+Ti5/Qm7beLC
+         qA9DoxY3fzKPNaD8D0iQVFBlHs+JRKjfWJxSCAsomZGa/3/HYO5ThOAUGdqP53HPOybq
+         XYPFXlU9GaeCxet6yDV0Ztt0xJyQXbCYrSDTR4ulNvgZcSc1YaeV15WOsC3wI+8m6wAX
+         f84FpQJKFkfW24nIpfQPrE7F01/X9KRiHaXecrLIrnkRpN+xLCpRs4YbslaZMf0mBkPO
+         E5TqIG3dxAtkGoqSEzCNd6BDsa/6Lk6Qriv1qSwtI/Vx5jHZR7xzWI2a/tZ5vRZ09FMH
+         kplA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=+uez40vx1Nea3WgtjlS8pvtNUSKnfMCkK2kOs3YbcqE=;
-        b=BeGrRSsUf7X4ySlqFMHJ0kRs/UKsfjyoAxskM4cjrXhak/lnndSmoVNj5Wgj/yttZc
-         rwIwVRomT61Zw3tfzvJ1/McUACSDO+7Tke1/F3qcq8WmiISC2Z1OllyhMU4E2QpU4nvN
-         ZrML3qCXUpPs4a6biOSAP8ThYzYeI0pWq8a9CtDqwa5mhkDeCkspmOx08NUv3R2iv1zK
-         mAsQp7KOXGftcX/cbAq40h3K23QKXW6GqyGIPzcP7IyOw/j+An8USI24VmWgFQUG8gyZ
-         +4Qyj0JWB5o78L8Gi/hjHIFynczLG9FjshlP8dLcpt1OdZ8geeX7AF7DRzgMCNZyFQLn
-         4q+w==
-X-Gm-Message-State: AHQUAuaUmg05+CDYGChfOeftK5yt6QXsJajlAOJcBHiVVeMZO7lXhv0r
-        IdD7nfXxzmIJb71yDogYWQrrU/X2
-X-Google-Smtp-Source: AHgI3Ia5VXC97hBnAbGJmIT4BgO9wRkax5QB1xFsUCuPrEQ/sKnTGENWKhM7mDdQ7Uls5DscoHbqsg==
-X-Received: by 2002:a1c:be09:: with SMTP id o9mr1708492wmf.3.1550826231927;
-        Fri, 22 Feb 2019 01:03:51 -0800 (PST)
-Received: from [192.168.1.3] ([31.223.156.163])
-        by smtp.gmail.com with ESMTPSA id h9sm1425259wrv.11.2019.02.22.01.03.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Feb 2019 01:03:51 -0800 (PST)
-Subject: Re: [PATCH v5 01/10] diff: export diffstat interface
-To:     Junio C Hamano <gitster@pobox.com>,
-        Daniel Ferreira via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Daniel Ferreira <bnmvco@gmail.com>
-References: <pull.103.v4.git.gitgitgadget@gmail.com>
- <pull.103.v5.git.gitgitgadget@gmail.com>
- <d839f0c082ece5298647f8dfbfd0566d59c58172.1550662887.git.gitgitgadget@gmail.com>
- <xmqq4l8xuiy9.fsf@gitster-ct.c.googlers.com>
-From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
-Message-ID: <0f6b3dc7-eccf-3352-22a8-97ef052a6ada@gmail.com>
-Date:   Fri, 22 Feb 2019 10:03:49 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=GdLLRVsynaS4rXxQc/oKTFo/aLVHwzlsUI53G+EQrsQ=;
+        b=DnwdbaT3siAfdLV0BMcjRXzU2fYc1zBylTZ03DqdB/9XsI1ZuaaeHTriRQ7Vwr9VBd
+         xIZ6O2iQO1zIuBjOuWpoGjGxe800h0h15VDSEqmBn9N+nw+oyqWAQ1Jo/1A5hpJQfcJv
+         usbhdlTzZYlGOweOeA8JDgZgkkdd04kudhGpx5l0z5VeWIvQc6dyzx6cRafxo25HkpQo
+         yFjTEx1OccgLc8c3VzKuDW7S7F1K/OPfozN0YXlvWYYHdVehzqC1T2GQNQ0gL6Kkos6m
+         JlUzGDvLd0ouRCiNHfizoptiMCtadVWtocSfO2kUjquDz2T0LsMl/HPZ4l8y/690+nfm
+         R2pQ==
+X-Gm-Message-State: AHQUAuYmm2dJlpySHOoqPXUzV1ssKLV6l/L4d9u4kL3wFrJjMJ82uzb2
+        ukXh3Eyy0dxmi33dFx8VvqIEiG7Nr/K2rbu9Vlo=
+X-Google-Smtp-Source: AHgI3IbAZ+ywRBeomD49I8jUUyZ8e3k66n1b/Sf1GcPSu4hz714RkYIWYhTpHbXuccLktci83UGJ85d3lb5j4AH/rXo=
+X-Received: by 2002:a24:7542:: with SMTP id y63mr237796itc.70.1550826864535;
+ Fri, 22 Feb 2019 01:14:24 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqq4l8xuiy9.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com> <012601d4c8b5$54f1b730$fed52590$@nexbridge.com>
+ <xmqqftsiw8l8.fsf@gitster-ct.c.googlers.com> <CACsJy8D=-+TqZSf1oyTJs_O+=KAV66OE_As5cTKXxHoXAhzkGw@mail.gmail.com>
+ <20190221235534.GC488342@genre.crustytoothpaste.net>
+In-Reply-To: <20190221235534.GC488342@genre.crustytoothpaste.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 22 Feb 2019 16:13:58 +0700
+Message-ID: <CACsJy8BMSWLWwsFbjBbO5sZnibiqp5KYD2Zk+5YUEkTiVQwWLQ@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.21.0-rc2
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Junio,
+On Fri, Feb 22, 2019 at 6:55 AM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On Thu, Feb 21, 2019 at 08:10:00PM +0700, Duy Nguyen wrote:
+> > On Thu, Feb 21, 2019 at 2:41 AM Junio C Hamano <gitster@pobox.com> wrote:
+> > > Another mention of /dev/zero appears in t/helper/test-sha1.sh (not
+> > > to be confused with t/helper/test-sha1.c).  This seems to be run
+> > > only with an explicit "make -C t/helper check-sha1" request, so
+> > > perhaps nobody on your platform ran it to get hit by it.  I wonder
+> > > if anybody runs this on any platform, to be honest, though.
+> >
+> > I vaguely remember Brian added something to test SHA-512 performance
+> > but I can't find it. Maybe when he adds something (if it's not there
+> > already) we can retire this script, or update it to check sha-512 too.
+>
+> Doing git blame on that script seems to show that it was written mostly
+> by Junio. I think you may be thinking of test-tool hash-speed, which can
+> be used to benchmark a hash implementation. That's what I used for most
+> of my testing.
+>
+> We may not need both anymore, though.
 
-Thank you for suggestions and for taking time to look at
-this patch series.
-
-On 21-Feb-19 6:53 PM, Junio C Hamano wrote:
-> "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> @@ -6001,12 +5985,7 @@ void diff_flush(struct diff_options *options)
->>   	    dirstat_by_line) {
->>   		struct diffstat_t diffstat;
->>   
->> -		memset(&diffstat, 0, sizeof(struct diffstat_t));
->> -		for (i = 0; i < q->nr; i++) {
->> -			struct diff_filepair *p = q->queue[i];
->> -			if (check_pair_status(p))
->> -				diff_flush_stat(p, options, &diffstat);
->> -		}
->> +		compute_diffstat(options, &diffstat);
->>   		if (output_format & DIFF_FORMAT_NUMSTAT)
->>   			show_numstat(&diffstat, options);
->>   		if (output_format & DIFF_FORMAT_DIFFSTAT)
-> In the post-context of this hunk there are series of "if we are
-> showing this kind of diffstat, pass &diffstat to a helper that shows
-> it" calls, and this piece of code itself is guarded by "if we are
-> showing any of these kinds of diffstat, enter this block".  So a
-> helper function that computes necessary data in &diffstat upfront
-> does make sense and makes the code readable quite a lot.
->
-> But...
->
->
->> +void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat)
->> +{
->> +	int i;
->> +	struct diff_queue_struct *q = &diff_queued_diff;
-> ... as a reusable helper, it would make a saner API if you did not
-> to hardcode the dependency to the singleton diff_queued_diff
-> (i.e. instead, pass a pointer to struct diff_queue_struct as a
-> parameter---the caller has it as 'q' at the callsite).
->
-> Other than that, makes sense to me; thanks.
->
-> Here is a meta question, which is mostly meant to those who use
-> gitgitgadget@.  The person who wanted to send this copy of the patch
-> this time (i.e. Slavica, not Daniel) is not shown anywhere on the
-> header of the e-mail, so the response to the message will not go to
-> Slavica at all, even though it probably is visible by monitoring
-> where gitgitgadget@ delivers (i.e. the PR comments).
->
-> Is that desirable as a reviewee?  I manually added Slavica's address
-> taken from the S-o-b: line to this response just in case, but if it
-> is not desirable, I'll stop doing so.
-
-
-Since gitgitgadget puts reviewer's e-mails in PR comments and send
-e-mails (to me) as well, you don't need to add manually my address.
-
-But thanks for thinking about this and doing it just in case
-I don't get e-mails.
-
-
->
-> Thanks.
->
+Well since you're basically killing sha-1 everywhere. I'll leave it to
+you to delete check-sha1.sh if you delete hash-speed too :)
+-- 
+Duy
