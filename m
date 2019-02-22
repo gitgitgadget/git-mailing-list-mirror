@@ -7,100 +7,102 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 844FA1F453
-	for <e@80x24.org>; Fri, 22 Feb 2019 09:21:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E76641F453
+	for <e@80x24.org>; Fri, 22 Feb 2019 09:26:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726278AbfBVJVo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 04:21:44 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:50179 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726272AbfBVJVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 04:21:44 -0500
-Received: by mail-it1-f195.google.com with SMTP id m137so2066829ita.0
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 01:21:43 -0800 (PST)
+        id S1727072AbfBVJ0i (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 04:26:38 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:53239 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726632AbfBVJ0i (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 04:26:38 -0500
+Received: by mail-it1-f194.google.com with SMTP id r11so2062857itc.2
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 01:26:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=G4yOuMWzqCnkssT5pK6e0Bz8obcMG4ycf0Zlu0E/dIg=;
-        b=Jv54Oi4DnxPpMNUwwV59vjNaMUDFPlbO7n5Ojd55tPcf/bXh6Psy8kMgvgMEtJ0b5B
-         lBgirZSVnHxv02PJrfgrIMFob+Gs0v4Yd9UzLkI7IvtZ528Y5vdtN4hMKoPEOXcPgzXm
-         FHNBucwK4BnoT5nEsUTloh5VIZBmIp2yIraZs8UmNyQihAkPvqL4f2l+H7+SWCAJkStd
-         tvotifhHg/yuDlFwjIrRanCor81923M61uD0+Avumhd32ws1C/CtjoF7daQ084HiXjpQ
-         Y9YyXR/j/hFMrpo90vHDIw5dsBSqpQ2wD3kv03Bj0MiQOYOPvbrXrKVhKJTSj2ZIqKcw
-         KBPw==
+         :cc:content-transfer-encoding;
+        bh=pnJl8Vt8mS6t8Xxbtff3+Q5ln9q6SQJ9glR2H49mQM0=;
+        b=PDz8Licqly+YiA3mm8+rH38smHCMkDnbIcifAAUQdZUw8uPSDB1fvYXICBSNza3phb
+         Z35Bv5JVjUfuMsoo8grw63EE8SM3NHfCBr2ST7gENY9zhqxK88FnFtBQiXofnG7x1EPM
+         3hItsASMFj9p8tcE9feCtX13jJAVkLH4jwuwdCP4Cj0vAZbmB+rouUubyfy1zsjBZncN
+         /HNP+5fE1R8G7fbljZ1Qu4JR9ngnZfGv6VPF4kZGFY0u/iw1JB4NYRv80UMWvhOxoBy0
+         7QnOiZDFxtTRvbJBt6jFMoCtjxcYF0U/C+3+HP2ut39YYfm04hSinm3cVSxTtwqcRHXt
+         fC0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=G4yOuMWzqCnkssT5pK6e0Bz8obcMG4ycf0Zlu0E/dIg=;
-        b=d2FyJiwnHj4vIR5iWs99BE3Isq/i87c2ZMCXc438qO4D9h068lOm5aNyI+MkRKiv6t
-         wazukuykICu/69hx5C1WRmqOZlgCsCS8m2opdC246UCjovP2rTIcXWJiIqFYpacElc9a
-         7L5lL9QxZrVi4cSlNhFsJNcDrLhE/pvvS9799zGPjqieyuabu1fXX5krx7vtTlwhElYn
-         SAZ42vhr6oMtG115Y3T3dmpcn+9ZcywhMDUD3b+EaSoVGL5E2VLjFWL5E2k1EeokmuIQ
-         fbSwKcv1uZJOAwwKzaLE3zhYvK4XegG3kAzAh8bugpzRNrmB5GNAMDeG22hguP2B4d/+
-         fMBQ==
-X-Gm-Message-State: AHQUAuY1Vqb7xdZ2JHM61w4QPzs06ZT1k9VChVgp3XRuBRqZ6BYQkvZt
-        A6GP7uCHMj06XrM36oZ+WlDDcmZXV/NjYYgkZU4=
-X-Google-Smtp-Source: AHgI3IYGWm7RwTUV0Egz30warBdnfRmH4LVCe14xuvBZPEpWIl4SgP9TbNLcd/FkozgZYOEtdaf3RZ/J3iGUDw9jXek=
-X-Received: by 2002:a24:7542:: with SMTP id y63mr252023itc.70.1550827302901;
- Fri, 22 Feb 2019 01:21:42 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=pnJl8Vt8mS6t8Xxbtff3+Q5ln9q6SQJ9glR2H49mQM0=;
+        b=SLsTL6SSajYAsAp1jmfw2acJNrvVTtUtGrdls6x9tSB3c/yUTRSxoBMtWZjlnnVjyc
+         y43aIlczc6qKorgZZ5LI5JYona1g/i3JaIEk1yT5d3C15e99KWjkFGjz+pYWI/qJW/S3
+         KsoE0xmGLa8Z5exs0LuFyseCcXhjwXLIBXZs1BFvMNNGrxvbNVfJnHhTJNmYOFfm2kZT
+         77O91NdxXV62NcpXVUgIR11AkiNnAb7mLZLdMxrzt7LT/oL7ONS6AcWK+uFtaM8eDRqP
+         DIUCicCTsLf8//X7obK1ByqxiIQMgZ2/3K9BfYZI89bmqgdwlMWfGKW6i+QUFXD3tz7e
+         aBrA==
+X-Gm-Message-State: AHQUAuaC1hXgsz9GJ++u4x/omaIBHF7iE/in0Th+OtBGyWQ1hB8HZFv9
+        hWrxbgiY7a+XgaxaeU10/qvvBPQXZRRqqbVpUB4=
+X-Google-Smtp-Source: AHgI3IaVJEAcxD7OifpzAmBbpi8Pntcpv0JA7QpuEshXEzy5GolsURqG6duXiHxShQcTPj2hHzZt1XNd+uSAn7sz1+U=
+X-Received: by 2002:a24:c056:: with SMTP id u83mr1484074itf.10.1550827597277;
+ Fri, 22 Feb 2019 01:26:37 -0800 (PST)
 MIME-Version: 1.0
-References: <20190221110026.23135-1-pclouds@gmail.com> <20190221121943.19778-1-pclouds@gmail.com>
- <20190221121943.19778-2-pclouds@gmail.com> <6fe399f0-98ad-37e6-f4b1-3a3f6e4bce03@ramsayjones.plus.com>
-In-Reply-To: <6fe399f0-98ad-37e6-f4b1-3a3f6e4bce03@ramsayjones.plus.com>
+References: <cover.1550508544.git.msuchanek@suse.de> <6f9c8775817117c2b36539eb048e2462a650ab8f.1550508544.git.msuchanek@suse.de>
+ <CACsJy8AWezO7TFq8ne1a2pSAJZoc6oYqnNNxmVW_FkA9--ntbQ@mail.gmail.com> <20190221145056.53b98b2a@kitsune.suse.cz>
+In-Reply-To: <20190221145056.53b98b2a@kitsune.suse.cz>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 22 Feb 2019 16:21:16 +0700
-Message-ID: <CACsJy8Dw0y7qX7jgNH4j_e4YOg-vv0OVDQv99AzT-koZ=Fq-TQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] worktree add: sanitize worktree names
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Date:   Fri, 22 Feb 2019 16:26:10 +0700
+Message-ID: <CACsJy8CGtYe-d_0gXg4HLqvE6eR62yXsX-abz8NZ-Ln_+VdUqQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] setup: don't fail if commondir reference is deleted.
+To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Konstantin Kharlamov <hi-angel@yandex.ru>,
-        Eric Sunshine <sunshine@sunshineco.com>
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Marketa Calabkova <mcalabkova@suse.cz>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 22, 2019 at 12:42 AM Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
-> > +static void sanitize_worktree_name(struct strbuf *name)
-> > +{
-> > +     char *orig_name = xstrdup(name->buf);
-> > +     int i;
-> > +
-> > +     /*
-> > +      * All special chars replaced with dashes. See
-> > +      * check_refname_component() for reference.
-> > +      * Note that .lock is also turned to -lock, removing its
-> > +      * special status.
-> > +      */
-> > +     for (i = 0; i < name->len; i++) {
-> > +             if (strchr(":?[]\\~ \t@{}*/.", name->buf[i]))
-> > +                     name->buf[i] = '-';
-> > +     }
-> > +
-> > +     /* remove consecutive dashes, leading or trailing dashes */
+On Thu, Feb 21, 2019 at 8:50 PM Michal Such=C3=A1nek <msuchanek@suse.de> wr=
+ote:
 >
-> Why? So, '[fred]' will be 'sanitized' to 'fred' (rather than '-fred-'),
-> which would increase the chance of a 'collision' with the 'fred'
-> worktree (not very likely, but still). Is that useful? How about
-> 'x86_64-*-gnu' which now becomes 'x86_64-gnu'?
+> On Thu, 21 Feb 2019 17:50:38 +0700
+> Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> > On Tue, Feb 19, 2019 at 12:05 AM Michal Suchanek <msuchanek@suse.de> wr=
+ote:
+> > >
+> > > When adding wotktrees git can die in get_common_dir_noenv while
+> > > examining existing worktrees because the commondir file does not exis=
+t.
+> > > Rather than testing if the file exists before reading it handle ENOEN=
+T.
+> >
+> > I don't think we could go around fixing every access to incomplete
+> > worktrees like this. If this is because of racy 'worktree add', then
+> > perhaps a better solution is make it absolutely clear it's not ready
+> > for anybody to access.
+> >
+> > For example, we can suffix the worktree directory name with ".lock"
+> > and make sure get_worktrees() ignores entries ending with ".lock".
+> > That should protect other commands while 'worktree add' is still
+> > running. Only when the worktree is complete that 'worktree add' should
+> > rename the directory to lose ".lock" and run external commands like
+> > git-checkout to populate the worktree.
+>
+> The problem is we don't forbid worktree names ending with ".lock".
+> Which means that if we start to forbid them now existing worktrees
+> might become inaccessible.
 
-It is useful when you want to specify HEAD of [fred] for example.
-Writing worktrees/fred/HEAD is a bit better than
-worktrees/-fred-/HEAD. I haven't done it yet, but these names will be
-shown in "git worktree list" too and lots of dashes does not improve
-readability. Collision is not a problem because if fred is taken, the
-final name would be fred1 or fred<some other number>.
+Worktrees ending with .lock will not work well now anyway. While [1]
+reports the problem with worktree names having a whitespace, ".lock"
+is in the same class (not a valid refname) and will result the same
+error. So if you have "*.lock" worktrees now you're already in
+trouble.
 
-If you're really bothered with this, you will be able to specify the
-name you want (you can't, yet). You still have to pass the valid
-refname check, but you have a lot more flexibility.
-
-So this code only needs to work mostly ok for the common case and I
-could go either way, clean up consecutive dashes or not. I suppose
-simpler code would be the tie breaker.
--- 
+[1] https://public-inbox.org/git/1550673274.30738.0@yandex.ru/T/#m9d86e0a38=
+8fd4961bc102c2c69e8bc3b2db07a42
+--=20
 Duy
