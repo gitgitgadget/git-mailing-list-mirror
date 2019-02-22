@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E83C420248
-	for <e@80x24.org>; Fri, 22 Feb 2019 17:39:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C405820248
+	for <e@80x24.org>; Fri, 22 Feb 2019 17:49:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727325AbfBVRjI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 12:39:08 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36777 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726131AbfBVRjH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 12:39:07 -0500
-Received: by mail-wm1-f68.google.com with SMTP id j125so2721008wmj.1
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 09:39:06 -0800 (PST)
+        id S1726753AbfBVRtr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 12:49:47 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44231 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726498AbfBVRtr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 12:49:47 -0500
+Received: by mail-wr1-f67.google.com with SMTP id w2so3258229wrt.11
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 09:49:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=3LUtDZWr2yGTiPDDNqYCN6T4uCW+X6Ad0op2Ic3wDiE=;
-        b=msdj1ZXXOH1vbnklyIdmIiJeXesc1sCY+loOhi8qQooq+8Ml9EMo+taI/ovtLJbTEI
-         Mjn3cuS3uMZTn9VH5P25q2mNuPI7Nu0GhKL60FEcWGsQhKdHged8owvGDUhVhpmNw4om
-         r+DMiqPu+30+bYfsLXPZHeoDrWPLEmb6kX+6Zprf4+v+qbV6pXVtdnZ2NjECUCkL4D65
-         KLGJDvJVCiJ2rN3hKMfk6DB8Oa/XU6K3wFIr5tHtktTm+5GCB2mCcvDBabQ3CbGrmt9N
-         Yx4/ra4iloZkpKgOFSSszKlY9w6IWtBeBnwAsVXFM7IjyjImw5qrtbfYvqA/wqPc2uIH
-         /kew==
+        bh=48prnI7ICAJvaxl/1irMGseD6K35ciekiMhV5LneKOw=;
+        b=hIMDPUeg+gwGLlrhukDKn4UNWswWB9IA9rJbV3mwwz9yzV5p5LtmwG5hZ/ZXjfa+u4
+         BCBlY/+8vTS5R7AAGXVnMbH6yUpFeZIiR5VP7mpIlhg1VnI8QKZSedg5suk8cabULdDB
+         R95BOusTIjNZdAoreXXHc7ss9xRz0jBSnSnyPQyBJUhtZE7/JUF/SvDHMIZhHwm94vET
+         3de7NwPY7EvUUvHICfPUin/UjXNHfybT89AAtXT0xvAoZXUtBc2zeR4wNn1yp9jfVqCG
+         I5lKg07GDzpMxY70tDj6kyyXbpYNmW05TbTuF/A530+nNXQhkkmQg6DlxNcbJpqz0L7H
+         jlxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=3LUtDZWr2yGTiPDDNqYCN6T4uCW+X6Ad0op2Ic3wDiE=;
-        b=AY7nB6ohP1oXMPGaxPVkcEt9HW6wKZcRsDQq/K3pexXSapE10mplQpQhYoUb+NzpcV
-         wV822Iy5A1w8L6YubfJ3GGKU7+o+L7O82nJQGuMq+l9W2ABhfL1POOmBo9huhCOuPTZ0
-         wR3ksNORF5RYg98P6BtcETLHcAZk1ewd/wswMoqPT9gbm7MXTsNfwRkjGgVEPWZdXp6u
-         50ROEjIAwmO+dozNwoQzxgRPlFI0Uy4kJMGFtZbn3UP7Dtm2xUwAUbSOccId1Xse71mG
-         oMrZPUdSeqnOmEOZrFscdap5QH/AKEQElYx/5fv9PecxAHi/IEL0cAGw7nISWnENGg7M
-         PG1A==
-X-Gm-Message-State: AHQUAuY47WimP/ftoMmSpla/pZnIbGNq2Kw2D2a0wNsfzSjtHNSFL6Ct
-        4TOb+I9nBRRpfHd2JPN7oBY=
-X-Google-Smtp-Source: AHgI3Ib02ckrfrykuycc0GIH0nEKHBpGzj4CIe7hRuaDcHoyN6rIjZXSs0I7KCSLxgQVyA+XR64I8g==
-X-Received: by 2002:a1c:14e:: with SMTP id 75mr3064699wmb.48.1550857144920;
-        Fri, 22 Feb 2019 09:39:04 -0800 (PST)
+        bh=48prnI7ICAJvaxl/1irMGseD6K35ciekiMhV5LneKOw=;
+        b=PD5jpRumQKymUuHJTIJ54MgoeDCrjW4LKCvYJjwTvOlguSkyixcOE39ESztwqFMN93
+         xzhWOD0GV005jvHWMpLlv8G00UCGJ/1Br5XOl/wlpZ/IfJWwZc4U3r7XJrewC09/01vM
+         sj1BRGasSKPKa9BAsQu79ZC/xDR5lnbarJrj38i1YvgEaXIdj+GFss+2X047t0ZOKXJh
+         RnoxyPybLYs8yjPbyl4/P+BMs6xCJl9ENOWV8lXJKOET7TXcrak6tiwVo3J62yKzkyEd
+         HxRNVxYA4nZRN+A/0N72lWHH1fQeh2C4Yhmh4+LAbutivEmnKAGvjBR/qiLGLYPdiEWD
+         9FmQ==
+X-Gm-Message-State: AHQUAuZ33Y4veSdo0kTOLC4nqph0I/jcikaJjYNo0nJdE/omUSxgCI/R
+        6SI6uL4GHEapn8pWEEwK/Jo=
+X-Google-Smtp-Source: AHgI3IZG9YsOBp2GRHVTtiSyVyZ9BWU7tsuJ9Hwjn9hOFRSjAvcUU5VgbmCyh8lPAe1GYMluYnhHbQ==
+X-Received: by 2002:adf:e58f:: with SMTP id l15mr2999071wrm.309.1550857785254;
+        Fri, 22 Feb 2019 09:49:45 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u12sm2117045wmf.44.2019.02.22.09.39.03
+        by smtp.gmail.com with ESMTPSA id h71sm2789862wme.20.2019.02.22.09.49.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 22 Feb 2019 09:39:04 -0800 (PST)
+        Fri, 22 Feb 2019 09:49:44 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Christian Couder <christian.couder@gmail.com>,
         Bartosz Baranowski <bbaranow@redhat.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/3] prettier bisect output
-References: <CAEpy5fTnyPjH0sVyjnGHi1qxo+_dpaerxwaD7MmNPbmLx6qyJA@mail.gmail.com>
-        <xmqq1s40u8gt.fsf@gitster-ct.c.googlers.com>
-        <20190222061949.GA9875@sigill.intra.peff.net>
-Date:   Fri, 22 Feb 2019 09:39:03 -0800
-In-Reply-To: <20190222061949.GA9875@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 22 Feb 2019 01:19:49 -0500")
-Message-ID: <xmqqwolrradk.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 3/3] bisect: make diff-tree output prettier
+References: <20190222061949.GA9875@sigill.intra.peff.net>
+        <20190222062327.GC10248@sigill.intra.peff.net>
+Date:   Fri, 22 Feb 2019 09:49:44 -0800
+In-Reply-To: <20190222062327.GC10248@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 22 Feb 2019 01:23:28 -0500")
+Message-ID: <xmqqsgwfr9vr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,39 +70,50 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> I've run across this many times, too. Since it's been bugging me for a
-> decade, I thought I'd finally try to address it. Here are some patches.
+> After completing a bisection, we print out the commit we found using an
+> internal version of diff-tree. The result is aesthetically lacking:
 >
-> There was some discussion about a year ago about just using "git show"
-> for this output:
+>   - it shows a raw diff, which is generally less informative for human
+>     readers than "--stat --summary" (which we already decided was nice
+>     for humans in format-patch's output).
 >
->   https://public-inbox.org/git/CAP8UFD3QhTUj+j3vBGrm0sTQ2dSOLS-m2_PwFj6DZS4VZHKRTQ@mail.gmail.com/
+>   - by not abbreviating hashes, the result is likely to wrap on most
+>     people's terminals
 >
-> Christian seemed generally OK with tweaking the output, but preferred
-> not to move all the way to running an external "git show". I'm not sure
-> I completely agree, but it was easy enough to get the results I wanted
-> just by fiddling the current code a bit. ;)
+>   - we don't use "-r", so if the commit touched files in a directory,
+>     you only get to see the top-level directory mentioned
 >
->   [1/3]: bisect: use string arguments to feed internal diff-tree
->   [2/3]: bisect: fix internal diff-tree config loading
->   [3/3]: bisect: make diff-tree output prettier
+>   - we don't specify "--cc" or similar, so merges print nothing (not
+>     even the commit message!)
 >
->  bisect.c                    | 19 +++++--------------
->  t/t6030-bisect-porcelain.sh |  6 +++---
->  2 files changed, 8 insertions(+), 17 deletions(-)
+> Even though bisect might be driven by scripts, there's no reason to
+> consider this part of the output as machine-readable (if anything, the
+> initial "$hash is the first bad commit" might be parsed, but we won't
+> touch that here). Let's make it prettier and more informative for a
+> human reading the output.
 
-Looks good from a quick glance.
+Sounds very sensible.  One potential point that makes me worried is
+this move might tempt people to make the output even larger (e.g. a
+full diff with "--patch" is overkill if done unconditionally).
 
-One unrelated thing that made me curious was that the output from
+> While we're tweaking the options, let's also switch to using the diff
+> "ui" config. If we're accepting that this is human-readable output, then
+> we should respect the user's options for how to display it.
+> ...
+> If we do care about the change in exit code from bisect, then it
+> probably does make sense to go with an external process. Then it can
+> happily die on the corruption, while bisect continues with the rest of
+> the high-level operation. I'm not sure it really matters much, though.
+> Once your repository is corrupted, all bets are off. It's nice that we
+> can bisect in such a state at all.
 
-	git grep 'is the first '
-
-had these two lines:
-
-bisect.c:		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
-git-bisect.sh:		if sane_grep "is the first $TERM_BAD commit" "$GIT_DIR/BISECT_RUN" >/dev/null
-
-which means that we cannot localize this message without thought,
-unlike the usual "hey, this is end-user facing, so wrap it in _()
-out of spinal reflex."
+This is about showing the very final message after finding which one
+is the culprit.  Is there any other "clean-up" action we need to do
+after showing the message?  I do not care too much about the exit
+code from the bisection, but if dying from diff-tree can interfere
+with such a clean-up, that would bother me a lot more, and at that
+point, given especially that this is not a performance sensitive
+thing at all (it is not even invoked log(n) times---just once at the
+end), moving to external process may make it a lot simpler and
+cleaner.
 
