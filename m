@@ -2,111 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 786FB20248
-	for <e@80x24.org>; Fri, 22 Feb 2019 15:39:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DF0520248
+	for <e@80x24.org>; Fri, 22 Feb 2019 15:49:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726623AbfBVPjl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 10:39:41 -0500
-Received: from mail.xcmg-erc.com ([217.7.126.107]:52063 "EHLO
-        mail.xcmg-erc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726131AbfBVPjk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 10:39:40 -0500
-Received: from SRV-ERC-MAIL01.XCMG-ERC.LOCAL (10.10.4.13) by
- SRV-ERC-MAIL01.XCMG-ERC.LOCAL (10.10.4.13) with Microsoft SMTP Server (TLS)
- id 15.0.1395.4; Fri, 22 Feb 2019 16:39:54 +0100
-Received: from SRV-ERC-MAIL01.XCMG-ERC.LOCAL ([10.10.4.13]) by
- SRV-ERC-MAIL01.XCMG-ERC.LOCAL ([10.10.4.13]) with mapi id 15.00.1395.000;
- Fri, 22 Feb 2019 16:39:54 +0100
-From:   "Celestino, Federico" <Celestino@xcmg-erc.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: .gitignore alleged bug
-Thread-Topic: .gitignore alleged bug
-Thread-Index: AdTKxNqE6kyTDHqgQLG6yVJKIKWOAg==
-Date:   Fri, 22 Feb 2019 15:39:53 +0000
-Message-ID: <b23df617fddf45389406da2360dceb63@SRV-ERC-MAIL01.XCMG-ERC.LOCAL>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.10.4.150]
-x-esetresult: clean, is OK
-x-esetid: 37303A2986AD6E6C617D66
-Content-Type: multipart/mixed;
-        boundary="_002_b23df617fddf45389406da2360dceb63SRVERCMAIL01XCMGERCLOCA_"
+        id S1726214AbfBVPtw convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 22 Feb 2019 10:49:52 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:46304 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbfBVPtw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 10:49:52 -0500
+Received: by mail-qk1-f193.google.com with SMTP id i5so1357839qkd.13
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 07:49:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=veMfZjTRmbeP9yF6H4A8xQpbXVofvjfKjqXU9atB8xI=;
+        b=CgkfW7qE4bVJiisdss7r88qoQ1aarhh6ctKhtNnLIJ3Yu9QUeHYh9huOjI2KmOwZsH
+         WpvKqEHQt5gk0VNHGrA8GolaM8EO+xWapzI79J3LyVfq6Qf6ZjMeXORis7kwV48aS0NC
+         4I0HwdTy32tEE9UKdkIhkTL+bWSnMQBZsjfYCKtu65+P3ho62t0By/ejQ2RULuaLoTwc
+         E3UnlJlOjxAJS9sG8fHbzPlUOKHI4cDdW9CxYyYDhjHCFkcnikhPQ/iVTbG82arxLIMh
+         uxB/m+tHqAfYhBSUU+XS+aDLblaAlnzkYepo/r0kMg7Rm6/o5ZYcGcsVieaQ743wGxgu
+         OROw==
+X-Gm-Message-State: AHQUAuZEaKOqv8WqSFFtb1yDzGsTOX+ccILvR5ko/YmXXJy9IOIC8lYr
+        WN4V2LFL+WEFqLKvVAIG/pqOEmcAMaF74PZ9ISI=
+X-Google-Smtp-Source: AHgI3IaN6bY6nJ41qBV3MFX0NRLWwS/IBEbzRjGF1EzupZrc8cSuka3uiVwErf+qImBShzP8in9OKHywITgjLb9RuN4=
+X-Received: by 2002:a37:9584:: with SMTP id x126mr3451170qkd.36.1550850591592;
+ Fri, 22 Feb 2019 07:49:51 -0800 (PST)
 MIME-Version: 1.0
+References: <20190222105658.26831-1-avarab@gmail.com> <20190222144127.32248-5-avarab@gmail.com>
+In-Reply-To: <20190222144127.32248-5-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 22 Feb 2019 10:49:41 -0500
+Message-ID: <CAPig+cTwVYPLWnAJscOuNNRoBpuheQoQgQX-K8ia4gJ-5zAyiw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/6] Makefile: Move *_LIBS assignment into its own section
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Beat Bolli <dev+git@drbeat.li>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---_002_b23df617fddf45389406da2360dceb63SRVERCMAIL01XCMGERCLOCA_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+On Fri, Feb 22, 2019 at 9:41 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> Now the only other non-program assignment in the previous list is
+> PTHREAD_CFLAGS, which'll be moved elsewhere in a follow-up chang.
 
-Dear Support Team,
+s/chang/change/
 
-I am facing a serious issue with .gitignore (see attachment).
-
-The problem is that the folder contents of 04 - Software/SW Code/STM32/Lib/=
-Drivers/CMSIS/Device/ are ignored because of a suspected misinterpretation =
-of .gitignore.
-
-Here are some results that you could find useful:
-
-$ git clean -ndX
-Would remove 04 - Software/SW Code/STM32/Lib/Drivers/CMSIS/Device/
-
-$ git check-ignore -v "04 - Software/SW Code/STM32/Lib/Drivers/CMSIS/Device=
-/"
-04 - Software/SW Code/STM32/Lib/Drivers/CMSIS/.gitignore:2:Device       04 =
-- Software/SW Code/STM32/Lib/Drivers/CMSIS/Device/
-
-Since in the path there is no '~' (tilde) character, it seems a bug to me.
-
-Git version: 2.20.1.windows.1
-
-Freundliche Gr=FC=DFe / Kind regards
-i.A. Federico Celestino
-Entwicklungsingenieur
-
-
-Fon +49 2151 7830 324
-Fax +49 2151 7830 499
-www.xcmg-erc.com
-Celestino@xcmg-erc.com
-
----------------------------------------------------------------------------=
----------
-XCMG European Research Center GmbH
-Europark Fichtenhain B4
-47807 Krefeld
-Deutschland
-Amtsgericht Krefeld
-Handelsregister HRB 14302
-Gesch=E4ftsf=FChrer: Dr.-Ing. Oliver-Carlos G=F6hler, Dr.-Ing. Hui Sun=20
----------------------------------------------------------------------------=
----------=20
-
---_002_b23df617fddf45389406da2360dceb63SRVERCMAIL01XCMGERCLOCA_
-Content-Type: application/octet-stream; name="ATT44153.gitignore"
-Content-Description: ATT44153.gitignore
-Content-Disposition: attachment; filename="ATT44153.gitignore"; size=413;
-	creation-date="Fri, 22 Feb 2019 14:01:11 GMT";
-	modification-date="Fri, 22 Feb 2019 14:01:11 GMT"
-Content-Transfer-Encoding: base64
-
-Ki5hdXgNCn4qDQoqLm8NCiouZA0KKi5vYmoNCi54ZGNoZWxwDQpEZWJ1Zy8NCiFEZWJ1Zy8qLm1h
-cA0KIURlYnVnLyoub3V0DQpSZWxlYXNlLw0KIVJlbGVhc2UvKi5tYXANCiFSZWxlYXNlLyoub3V0
-DQouY29uZmlnLw0KLmxhdW5jaGVzLw0KKi5sZGINCjA0W1s6c3BhY2U6XV0tW1s6c3BhY2U6XV1T
-b2Z0d2FyZS9TV1tbOnNwYWNlOl1dQ29kZS9UTVM1NzAvUGxhdGZvcm1zL05hdGl2ZS9IZXJjdWxl
-cy9wcm9qZWN0cy9TSUwyX01DVVNUX0hlcmN1bGVzX0xpYi9UTVM1NzBMUzMxMzcvTW9kdWxlcy9z
-b3VyY2UvKi5wcA0KMDRbWzpzcGFjZTpdXS1bWzpzcGFjZTpdXVNvZnR3YXJlL1NXW1s6c3BhY2U6
-XV1Db2RlL1RNUzU3MC9QbGF0Zm9ybXMvTmF0aXZlL0hlcmN1bGVzL2xpYi9TSUwyX01DVVNUX1RN
-UzU3MExTMzEzNy5saWI=
-
---_002_b23df617fddf45389406da2360dceb63SRVERCMAIL01XCMGERCLOCA_--
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
