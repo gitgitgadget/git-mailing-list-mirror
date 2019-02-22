@@ -2,68 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.9 required=3.0 tests=BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MISSING_SUBJECT,PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62FAE1F453
-	for <e@80x24.org>; Fri, 22 Feb 2019 12:01:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 238D51F453
+	for <e@80x24.org>; Fri, 22 Feb 2019 12:18:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726400AbfBVMB5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 07:01:57 -0500
-Received: from mail-lj1-f172.google.com ([209.85.208.172]:36348 "EHLO
-        mail-lj1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725926AbfBVMB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 07:01:57 -0500
-Received: by mail-lj1-f172.google.com with SMTP id v10so1523398lji.3
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 04:01:55 -0800 (PST)
+        id S1727095AbfBVMSI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 07:18:08 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36697 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725942AbfBVMSI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 07:18:08 -0500
+Received: by mail-wm1-f66.google.com with SMTP id j125so1782694wmj.1
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 04:18:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:to:mime-version:content-transfer-encoding;
-        bh=So4S5EBp/259hn6kpuuHBFx1VmxEHGQSGQm7falLHkw=;
-        b=oUQ+6j1/vIdLPbekqhvPxRaqIY3A+CdeWZToUyzwQUTrgaquyQDxNsY4AHlLIvIkIz
-         OdsbIhkKveGruFzJ9lwYhJC5YxxVIZ9/bJDq872Oe3vQOAEQCPkNhOn4OdVkcsluMi2l
-         v0CszKK3VPI5U4W+ngseLZd24zJqlkWHDAyhGq6XQ+JdR4o80ckSP89e1YPY0KqAzv0c
-         kD1oj9UZeT+yBu2jub31BdpEuG1iIvdD9t7u1O3Ht6S4m1D+0rHM32xTYWH+Riu4u91i
-         bgQh1+Je9WWwD4AIGvMW3xuVks+JTg0s2qNvtGCbl6K9Z74RR4+2dM4IN6bVhGrMMn1e
-         bksQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=AiDBwavqkUsd7J7O3m2oe1J/d/10vhMLom4d0K0JLFs=;
+        b=PXX0uCscSeccv9YzmoJ/H1vsFGayc9Uad5UbLgVdGXdFZiMBphmvFVM+WN0WV7xiu8
+         2VR43bO0SIzzF+kDxJgryLk+5QhmTWgMDPNnSIxlreUkhyduzy8wDLIVTeaRujhiKWa1
+         22A1tyM7gYskNlIzl1fcaQsS5MQsJY0RByw9XAJz9V+f5a2/wHscRc9zTaY5z/KG0ofg
+         BjuAEOWuDeWrmKIu1hD6t0rkB7aYib1BF+m5oXtUz8BEk52eTxe5SKuO9pnmLpTmD9wA
+         OUPvcR9Rl7+0FzKXrmIuxFZrs7d3T4OzQORmb+8jHWxWJqvSUvs2eMpkCnCa6E90OAEV
+         YWpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:to:mime-version
-         :content-transfer-encoding;
-        bh=So4S5EBp/259hn6kpuuHBFx1VmxEHGQSGQm7falLHkw=;
-        b=YaCCVR2c6IHxcxVJlJMyqYu2m0YIZuIoN2pi047KEor4kZ6GMi5hwr4dtB5SJSh2la
-         QbGdqSLOmVUNsLVA74ZYffQAXGKxAXS9ORDh7hFbie5Rzij7/TyQb2zlhSuY4qPLta0o
-         4NdYk9TWsgQaHfg8LMzJT6lJ9394zRqRbLL3I7lXisM07pQAxBUvL3v4cPP+tX+I4WFq
-         yV9QjQbdMAQGxVOxXF+lopcYFGnauwQVqJeFuo/AB1LYwMjWpaRuuGQfcpKrb1OWWvol
-         gOqgzyKuVFPjT5bqrp4D5yL78/u39igx7qQEVmERJ7fjSc2autN8ufzNtvvo/2TIOeLD
-         JfnQ==
-X-Gm-Message-State: AHQUAuaEOltXZxLn+BQlkuPBAfn991ljynNmcEQYNIfQ+4LuMwePRDsW
-        k3wG3gQmv0wNtLMNz/Vl4rZx6t7u
-X-Google-Smtp-Source: AHgI3Iavxu0Cg1zfOkrqbzVySof8Q6AA6Ng5dVHKE6b8LGZNGRM0QSd0Ks2OJSauB8Nvd1UvJOjvjA==
-X-Received: by 2002:a2e:9d17:: with SMTP id t23-v6mr2171317lji.57.1550836914379;
-        Fri, 22 Feb 2019 04:01:54 -0800 (PST)
-Received: from ?IPv6:2a00:1fa0:4291:4c8e:1946:ec70:a378:ccf4? ([2a00:1fa0:4291:4c8e:1946:ec70:a378:ccf4])
-        by smtp.gmail.com with ESMTPSA id l11sm444042lja.38.2019.02.22.04.01.52
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=AiDBwavqkUsd7J7O3m2oe1J/d/10vhMLom4d0K0JLFs=;
+        b=c9f0Af6uSfOi1pHZWWGU8Z5Dk+vP0ZChN5XgBVJqV8xFHlbBTlKpiNjLXkSVgC1nFp
+         tFoXZw/PaWt+u9NMqts+ni39LwhMkFVAk6gguXqIw6mYsvauYltugKDcVGjrA5vyYamP
+         SyfbnkhcSQC6ZHN+dK7tLVdyTG4Od7jBF5K6IdJ/l//ni/WK2CU2Hg0Pz/JlwAxD6UVi
+         G/Bw75mi3djVCTdfEyh45BLbaec/RGTc7X3KiAgmwqTHWtPpyuYntmJoFmRD78qQ7ho1
+         dSa+j6sHKpesA5PPLUpp0DpK6MYGZkE4Fq+XTL6DufCezUQ6G5SlZQxCklow9L3iWFhO
+         xwSg==
+X-Gm-Message-State: AHQUAubbF1S8j6WmEKJg2SkSZRatP4FVcKc7gZ4kjH/cBi3xSGD89BnF
+        IxxDfT8EQsxhr957wVka7k8=
+X-Google-Smtp-Source: AHgI3IbeXirVH0Q4FJHEUCWseJnceJUclccV68RJg4ssuriwm33FoadjOOtFsJfWPUcSTfFhfdCHsg==
+X-Received: by 2002:a1c:7f0c:: with SMTP id a12mr2244022wmd.89.1550837884493;
+        Fri, 22 Feb 2019 04:18:04 -0800 (PST)
+Received: from [192.168.1.3] ([31.223.156.163])
+        by smtp.gmail.com with ESMTPSA id y22sm1267608wmj.6.2019.02.22.04.18.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Feb 2019 04:01:53 -0800 (PST)
-Date:   Fri, 22 Feb 2019 15:01:58 +0300
-X-Priority: 3
-Message-ID: <-qf9epy9ivlg9-g633b7-brtu27ym5ulf-j9u6c2-64sbnh4csgdv4x8rzrdplkje3vvfvs-feb3d3ak92mbta8qhue2im5bg9p5hg-wdwlbs-zayhb7jljy5z-vjq4j8-33d6la-qcec233enabx522txh.1550836918627@email.android.com>
-From:   =?UTF-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCh0LrQvtGA0LrQuNC9?= 
-        <skorkinao046@gmail.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
+        Fri, 22 Feb 2019 04:18:03 -0800 (PST)
+Subject: Re: [PATCH v5 03/10] add-interactive.c: implement list_modified
+To:     Junio C Hamano <gitster@pobox.com>,
+        Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.103.v4.git.gitgitgadget@gmail.com>
+ <pull.103.v5.git.gitgitgadget@gmail.com>
+ <8790ffaa394603279927f9cd4c80f1d06bb5f976.1550662887.git.gitgitgadget@gmail.com>
+ <xmqqtvgxt0ze.fsf@gitster-ct.c.googlers.com>
+ <xmqqef80ubsu.fsf@gitster-ct.c.googlers.com>
+From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
+Message-ID: <d9fda542-3a40-068e-280f-a1ea9f678b0e@gmail.com>
+Date:   Fri, 22 Feb 2019 13:18:01 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+In-Reply-To: <xmqqef80ubsu.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-CgrQntGC0L/RgNCw0LLQu9C10L3QviDRgSDQvNC+0LXQs9C+INGD0YHRgtGA0L7QudGB0YLQstCw
-IEh1YXdlaQ==
 
+On 21-Feb-19 9:27 PM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> A few things I missed in the previous message.
+>
+>>> +	for (i = 0; i < stat.nr; i++) {
+>>> +		struct file_stat *entry;
+>>> +		const char *name = stat.files[i]->name;
+>>> +		unsigned int hash = strhash(name);
+>>> +
+>>> +		entry = hashmap_get_from_hash(&s->file_map, hash, name);
+>>> +		if (!entry) {
+>>> +			FLEX_ALLOC_STR(entry, name, name);
+>>> +			hashmap_entry_init(entry, hash);
+>>> +			hashmap_add(&s->file_map, entry);
+>>> +		}
+>> The path may already be in the collection_status.file_map from the
+>> previous run when "diff-index --cached" is run, in which case we avoid
+>> adding it twice, which makes sense.
+>>
+>>> +		if (s->phase == WORKTREE) {
+>>> +			entry->worktree.added = stat.files[i]->added;
+>>> +			entry->worktree.deleted = stat.files[i]->deleted;
+>>> +		} else if (s->phase == INDEX) {
+>>> +			entry->index.added = stat.files[i]->added;
+>>> +			entry->index.deleted = stat.files[i]->deleted;
+>>> +		}
+>> As the set of phases will not going to grow, not having the final
+>> 'else BUG("phase is neither WORKTREE nor INDEX");' here is OK.
+>>
+>> But stepping back a bit, if we know we will not grow the phases,
+>> then it may be simpler *and* equally descriptive to rename .phase
+>> field to a boolean ".collecting_from_index" that literally means
+>> "are we collecting from the index?" and that way we can also get rid
+>> of the enum.
+> ... so that this can become
+>
+> 	if (s->collecting_from_index) {
+> 		entry->index.added = stat.files[i]->added;
+> 		entry->index.deleted = stat.files[i]->deleted;
+> 	} else {
+> 		...
+> 	}
+>
+> without "else if" and without having to worry about "what if phase
+> is neither?".
+>
+>> Grep for "unborn" in the codebase.  It probably makes sense to call
+>> it on_unborn_branch() instead.
+>>
+>> 	static int on_unborn_branch(void)
+>> 	{
+>> 		struct object_id oid;
+>> 		return !!get_oid("HEAD", &oid);
+>> 	}
+>>
+>> Eventually, the users of "unborn" in sequencer.c and builtin/reset.c
+>> may want to share the implementation but the helper is so small that
+>> we probably should not worry about it until the topic is done and
+>> leave it for a later clean-up.
+> And before such a clean-up happens, the implementation of the helper
+> would want to be improved.  "Does 'rev-parse --verify HEAD' work?"
+> was an easiest way to see if we are on an unborn branch from a
+> script that works most of the time, but as we are rewriting it in C,
+> we should use the more direct and correct API to see if "HEAD" is
+> a symref, and if it points at a branch that does not yet exist,
+> which is available in the refs API as resolve_ref_unsafe().
+>
+> One issue with lazy use of get_oid("HEAD") is that the function
+> dwims and tries to find HEAD in common hierarchies like
+> .git/refs/heads/HEAD etc. when .git/HEAD does not work.  We do not
+> want such a dwimmery when seeing "are we on an unborn branch?".
+>
+>>> +static struct collection_status *list_modified(struct repository *r, const char *filter)
+>>> +{
+>>> +	int i = 0;
+>>> +	struct collection_status *s = xcalloc(1, sizeof(*s));
+>>> +	struct hashmap_iter iter;
+>>> +	struct file_stat **files;
+>>> +	struct file_stat *entry;
+>>> +
+>>> +	if (repo_read_index(r) < 0) {
+>>> +		printf("\n");
+>>> +		return NULL;
+>>> +	}
+>>> +
+>>> +	s->reference = get_diff_reference();
+>>> +	hashmap_init(&s->file_map, hash_cmp, NULL, 0);
+>>> +
+>>> +	collect_changes_worktree(s);
+>>> +	collect_changes_index(s);
+>>> +
+>>> +	if (hashmap_get_size(&s->file_map) < 1) {
+>>> +		printf("\n");
+>>> +		return NULL;
+>>> +	}
+> The non-error codepath of this function does not do any output, but
+> we see two "just emit newline" before returning NUULL to signal an
+> error to the caller" in the above.  Such a printing from this level
+> in the callchain (although we haven't seen callers of this function
+> yet at this point in the series) is wrong.  Presumably, the caller,
+> when it obtains a non-NULL 's', does something useful and maybe as a
+> part of the "useful" thing prints something to the standard output.
+> Then the caller is also responsible for handling a NULL return.  I.e.
+> upon seeing such a NULL collection status, if the party that invoked
+> the caller wants to see a single empty line for whatever reason (which
+> in turn is a questionable practice, if you ask me, but at this point
+> in the series we haven't seen what that invoker is doing, so for now
+> lets assume that it is sane to want to see an empty line), the caller
+> should do the putchar('\n').
+
+
+Caller of list_modified is add_i_status in the later commit, and yes
+it should definitely take care of this newline.
+It should print it after calling list_modified *and* list_and_choose.
+
+It is done in the same way in the Perl script:
+sub status_cmd {
+     list_and_choose({ LIST_ONLY => 1, HEADER => $status_head },
+             list_modified());
+     print "\n";
+}
+
+I overlooked this because print_modified (now list_modified) in
+the previous iteration was equivalent of status command, and
+everything was handled there.
+After refactoring, I missed to pick up those printfs.
+
+
+> Also, these two "return NULL" leaks 's'.
+
+
+I guess I missed some more things. Thank you.
+
+
+>
