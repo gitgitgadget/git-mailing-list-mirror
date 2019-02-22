@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DB5020248
-	for <e@80x24.org>; Fri, 22 Feb 2019 14:41:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0D1F20248
+	for <e@80x24.org>; Fri, 22 Feb 2019 14:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726860AbfBVOlo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 09:41:44 -0500
-Received: from mail-wm1-f44.google.com ([209.85.128.44]:37649 "EHLO
-        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726278AbfBVOln (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 09:41:43 -0500
-Received: by mail-wm1-f44.google.com with SMTP id x10so2177470wmg.2
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 06:41:42 -0800 (PST)
+        id S1726926AbfBVOlq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 09:41:46 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:33888 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726818AbfBVOlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 09:41:45 -0500
+Received: by mail-wm1-f67.google.com with SMTP id y185so9052731wmd.1
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 06:41:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7AP9OjMrjnu/pgnXty4OBPLkHrwIV0UcEuqp+9Rxo28=;
-        b=fdfyMVaCNzS+PEBnt2EnXMXgmLBQD0xtNUlpK1uioin+NnguMvVSnPuUJ14877F9ti
-         V0MoJR82KZ4ow3pYZwk4niYMlSb4zjYWoJ47zvV4jpY1DCfKXo9+N6c/NLVaH82xwqik
-         Olb6sUTz95bbJ4wkJysOPNc96YY5FJuM+Mr7hngAycpjZ6ypy7OVVu5AUgz13iVH+LB+
-         QcZQyEurxK4jqu5D502AK4r+0krb2i80qrHMGkm0iMgmX0aSHmc9eQW29zeONWztsqjJ
-         J1xehdAI9p9JdJDV4ifVm9ZD9s5RKMdEX9mvSOLcpP5qURFxxp0Eetle+2AeNc3ZyeXV
-         TOwA==
+        bh=BgVE0w7bPrTA+9VDpvEvfPMR9dlb31pdMoQs1NVAwfg=;
+        b=venCf/L+v1Qsaq3Iw38t9qYbdTF0JD6PItFd7/foPFVkCaNcX/fvpBtEzZivQAGiYl
+         yfIl9JgUDWjRbHd5fPXgbrEjevQkY80BRzTg+vI+CUK1SZye584MWZRDuCJgLtcviyOl
+         CzGFDz7AIHkeGomOoa8f15CABcZ7VXT8KAGTEc/yIg4l1TioFJjxVINO7cighgXbj16A
+         GRfnvwxpprka6U5MAedKz9KcO7ngheXYXjjBWVrzH5Ma/7ikpA7tfNqLZNPWmFh1DXxB
+         r4ZBF/ZtHOP7WF399ymR9p2N+mI9UmNVu3Yd1cIUqQ6LcGAXqNa/d5i3gI9Cw4LsICcc
+         g/GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7AP9OjMrjnu/pgnXty4OBPLkHrwIV0UcEuqp+9Rxo28=;
-        b=YJCY0dp3kNbuBV8hXOyGXyLzcuxYmGiAhfNF6X4c3VRhIbBgroN68EIFi+txT/Dtmn
-         13d5yttzmmGEEnFurFDwmq5PWcvMIN4tbqL1Gg5qTgrdQ6D67HZ4tDyYOgLGxRL4u4Ik
-         jfgH+Uu7CRi6+blcOzGf1pXCfxmbRbTFvggD9FYAXnRPJ/a0VBmU0peYPaClu6C1KFhG
-         NFpI7kNd49fE3RD6Vl7QIQW+OWpDSh5/bopwJc8hau0cRzTKarqfIfN4nxn9BlHOz87K
-         bNvTCkr1blRUl4hBkL4GHI91iauiqytwjLyvNrUJKA5RrgmD15a/2yWJExOq9eji/xPo
-         GY2A==
-X-Gm-Message-State: AHQUAubyRp7ong7aCVarpvAPm7IWONG/N55UTBaOVnokDUhRY8Y87jVV
-        DpSZHsx/vkMfDVgoBrypBLd908BWLPY=
-X-Google-Smtp-Source: AHgI3IZuc5BFQevketaAhyrLJIbtvH3CRAMt1MYDFmft+CLsVIDQlkzY0T+znrZK2CIlrL5SDOUGBQ==
-X-Received: by 2002:a1c:96c5:: with SMTP id y188mr2777374wmd.103.1550846501380;
-        Fri, 22 Feb 2019 06:41:41 -0800 (PST)
+        bh=BgVE0w7bPrTA+9VDpvEvfPMR9dlb31pdMoQs1NVAwfg=;
+        b=VwccOWSe2aw4J5kCshscFRBdgB2/N64VYaxehoOBeeu9gqLLszh3LrXCaKQfn4YWbY
+         PqpT9UoT8R4sTz5+HHEHhMaPKtqtCsw7a5anVBGZ7uEYI3gTpX2fSUAUxzowfgIqDo9n
+         oNYLNbcIxtjqYZGhhSX3T62r/kZv3hQFAJgHNQYfyfC4AbcTRrUfa0D7ab6K8xHZnjt4
+         +MhvHvxES5vFLIujBXvSlLkMNyOq/X3314u/haO+muIxOohdqWmE91Rs+noi3peCyMbZ
+         uU0E0Nz4kKl3QeDxlFArr1RLaubCheu6SfsVDyJPDTBvfKTvE6jr7tepAOmU/sVJU/Bi
+         M0bA==
+X-Gm-Message-State: AHQUAuYwzbLQyZyrjQ0e2gRJn+JD/Vc57Ad/p+MSFEw94FYzKCGhx7N8
+        kqLWMEr1JsDROxOnXd18wnRhNmCJKWA=
+X-Google-Smtp-Source: AHgI3IaXGfDW9lxRrkbaFQtLmzSx++8iWiEPw2qmp06E08/PfINlDLBtAsG1Ul42ti+zZpu592STYg==
+X-Received: by 2002:a7b:cc18:: with SMTP id f24mr2926750wmh.42.1550846502914;
+        Fri, 22 Feb 2019 06:41:42 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z15sm1481689wmi.46.2019.02.22.06.41.40
+        by smtp.gmail.com with ESMTPSA id z15sm1481689wmi.46.2019.02.22.06.41.41
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 22 Feb 2019 06:41:40 -0800 (PST)
+        Fri, 22 Feb 2019 06:41:42 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Matthieu Moy <Matthieu.Moy@imag.fr>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/6] Makefile: remove an out-of-date comment
-Date:   Fri, 22 Feb 2019 15:41:22 +0100
-Message-Id: <20190222144127.32248-2-avarab@gmail.com>
+Subject: [PATCH v2 2/6] Makefile: move "strip" assignment down from flags
+Date:   Fri, 22 Feb 2019 15:41:23 +0100
+Message-Id: <20190222144127.32248-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc2.261.ga7da99ff1b
 In-Reply-To: <20190222105658.26831-1-avarab@gmail.com>
 References: <20190222105658.26831-1-avarab@gmail.com>
@@ -74,37 +74,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove a comment referring to a caveat that hasn't been applicable
-since 18b0fc1ce1 ("Git.pm: Kill Git.xs for now", 2006-09-23).
+Move the assignment of the "STRIP" variable down to where we're
+setting variables with the names of other programs.
 
-At the time of 8d7f586f13 ("Git.pm: Support for perl/ being built by a
-different compiler", 2006-06-25) some of the code in perl would be
-built by a C compiler, but support for that went away a few months
-later in 18b0fc1ce1 discussed above.
-
-Since my 20d2a30f8f ("Makefile: replace perl/Makefile.PL with simple
-make rules", 2017-12-10) the perl/ directory doesn't even have its own
-build process.
+For consistency with those use "=" for the assignment instead of
+"?=". I can't imagine why this would need to be different than the
+rest, and 4dc00021f7 ("Makefile: add 'strip' target", 2006-01-12)
+which added it doesn't provide an explanation.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 3 ---
- 1 file changed, 3 deletions(-)
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index c5240942f2..97e922cc41 100644
+index 97e922cc41..c53727e44b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -591,9 +591,6 @@ SPATCH_FLAGS = --all-includes --patch .
+@@ -512,7 +512,6 @@ CFLAGS = -g -O2 -Wall
+ LDFLAGS =
+ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+-STRIP ?= strip
  
- ### --- END CONFIGURATION SECTION ---
+ # Create as necessary, replace existing, make ranlib unneeded.
+ ARFLAGS = rcs
+@@ -576,6 +575,7 @@ CURL_CONFIG = curl-config
+ PTHREAD_LIBS = -lpthread
+ PTHREAD_CFLAGS =
+ GCOV = gcov
++STRIP = strip
+ SPATCH = spatch
  
--# Those must not be GNU-specific; they are shared with perl/ which may
--# be built by a different compiler. (Note that this is an artifact now
--# but it still might be nice to keep that distinction.)
- BASIC_CFLAGS = -I.
- BASIC_LDFLAGS =
- 
+ export TCL_PATH TCLTK_PATH
 -- 
 2.21.0.rc2.1.g2d5e20a900.dirty
 
