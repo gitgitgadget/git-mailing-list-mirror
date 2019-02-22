@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A384820248
-	for <e@80x24.org>; Fri, 22 Feb 2019 22:25:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62FB720248
+	for <e@80x24.org>; Fri, 22 Feb 2019 22:25:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727003AbfBVWZK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 17:25:10 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:38792 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbfBVWZJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 17:25:09 -0500
-Received: by mail-ed1-f53.google.com with SMTP id h58so3100380edb.5
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 14:25:08 -0800 (PST)
+        id S1726766AbfBVWZG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 17:25:06 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:42049 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726443AbfBVWZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 17:25:06 -0500
+Received: by mail-ed1-f68.google.com with SMTP id j89so3074094edb.9
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 14:25:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lEO2zm4D+RRdgd0jZP3xHjEnfHFoC5J4c6eHcxbWOoE=;
-        b=NTWf5ZYUGsdWZkBXHr7//TgteW7qaR5am2DNzTh3HGXbm8357pKRINF/YYGFzzig0w
-         gdeb1C1+/grjP2D1+tJZl0hxglqomLo4xenM5SZ3hOFKcvIRg2siUYy7Hhaj/r032nbY
-         QFh/c1BuF4tyfPImuzOgEAMfSghkq70biC79+hRv4M00ql8T+IAES7TKg2U5svaLxUTe
-         GXpgv6GSYQ34Y4qlGoaNyi6NrC5di3/2J5XrlEejMb231xlVHSBQ/Mx1Xai3uZUYUF3L
-         GfP8GILgTKNgtyqs4nJgQHpQumkFgl8WzzaqjGzK12cpcT4NNBMgnX/W/DRhPPLAyU5Q
-         tL1A==
+        bh=gkl/SeuuBvHNvR1dGTKxIOcbnKIgfgd1oncsXBT5oQU=;
+        b=VbY0MnoTq06jIq1OVonAMM/hbeSF2Jxx2NrlgXh30PGNhZGFOPpuwhI7m+3w7cNNvU
+         KHQAQFT2VQUdYoVPlPB6KLy7rlOO7lhOSCb8TPJKthDqe2D71lVEOFL9/rOZKE/6ASDy
+         L70boI6L0Y9jWPlzJ/23QtmsUwhT9nqpOGUgi6W8X1m/H9hcY5a2GG9Vv+9g1iJVPoLn
+         GfFHznmgL7BS7eQmPKlt9JI0mfDZpvpLb155Lo5cNkZfsKmXh0p1U0PoqN9eXaG4WKc0
+         +pHONNPse4H2gl9dB2cu0jpbRDIandU7KgVzqNSZ+AFYBI0ZfFp6tY/OG05fDndFeunm
+         Wx2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lEO2zm4D+RRdgd0jZP3xHjEnfHFoC5J4c6eHcxbWOoE=;
-        b=Av60ocAH5CW4N/SRtFLp67A3ZVat6gAY8DXHLrsZYFpxLDf98Jc9Xo0o7uFrHznzxq
-         Lz6Fwl3tcfS+JX96BEnBGF7GgMNN2FBR6BygDgGSxqqTTEoD7SyAQQT0SDBXwj712rMD
-         Kc8tCUJ+feNs8sYsofm7Y/sKmVeBeBJcC+Rei6eve5UrvAeCi2/W9rLVNEEF+nohLWvJ
-         770TYjJ4Yb62NVaenVJOiqQUuIUuVdAw7RsgNQftl64rUWNGQvzw4ScH8/N9eLKC2eoP
-         PUceWHCIsSrR/gESj21YZTH01WESgwr21QlaHttGRsC6tZ5ut/lfx8OlpMeh9oCdclSP
-         IY1Q==
-X-Gm-Message-State: AHQUAubprCgrS8MX+PDeCxo2qCXQ7ysMkmvou1G7zlVDuZF5PugwuPGm
-        n/06CmmbKh7YY7In+rd6huRrml5h
-X-Google-Smtp-Source: AHgI3IZ9OMrEiV7e7SOS+8+/DBmkshNT9FE2+omlj6FWm6SOTtyKUfOC6qK3URXVxdCDGQidc+xtJA==
-X-Received: by 2002:a50:91ac:: with SMTP id g41mr5000747eda.249.1550874305480;
-        Fri, 22 Feb 2019 14:25:05 -0800 (PST)
+        bh=gkl/SeuuBvHNvR1dGTKxIOcbnKIgfgd1oncsXBT5oQU=;
+        b=DTJbVUn/27vgNpNfrGX4W1EdUjSw7/9FBuJB0NAbeIQBDWuWJ/k1L3ypE+7GHgB4cj
+         zhb8rxsrCDi+GhkNr0A575zT+dhgSBFl2ARTC5iwa9c0ctIkpk3b+r0WkbTAkEXY7v7z
+         vMdwbIXUEYtdfbV3tW9iV7hJmS0vmp4wulCC3q6bKKGLIhKQVmiQeB34uCt/B+q8JAti
+         iNvgqObHBhHkpf5MDRtKo0i5GdqIQcILtbWxbxH/WX+y6Ibp1yzuyhaUDvS0I6QIs1pp
+         uRlARUchxY06otXbDDZxQpoHnwAqq96AHGvp6IJtWDWDsSGqrlaF8I0gzAz80ezjzeEf
+         Gfvw==
+X-Gm-Message-State: AHQUAuYR+arrbZY/S15vii4Pd7BD85Oc0KeccyG1wyXbo41AJxvJnKZJ
+        7O+PG45KgHVsMfNGxWNVs2saztJg
+X-Google-Smtp-Source: AHgI3IaJ945mGANB6Ll8+1Ruy0/hd1HgG2SwhNmcpLUVjMFPodr826eU2pAVSsYk3R4+lQuSvfMTHQ==
+X-Received: by 2002:a17:906:d51:: with SMTP id r17mr4465270ejh.101.1550874303835;
+        Fri, 22 Feb 2019 14:25:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n19sm418349eja.38.2019.02.22.14.25.04
+        by smtp.gmail.com with ESMTPSA id m32sm728933edc.17.2019.02.22.14.25.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Feb 2019 14:25:05 -0800 (PST)
-Date:   Fri, 22 Feb 2019 14:25:05 -0800 (PST)
-X-Google-Original-Date: Fri, 22 Feb 2019 22:24:49 GMT
-Message-Id: <ec7d7cd4c773eeb29dc8c371c5d9eb223c70e509.1550874298.git.gitgitgadget@gmail.com>
+        Fri, 22 Feb 2019 14:25:03 -0800 (PST)
+Date:   Fri, 22 Feb 2019 14:25:03 -0800 (PST)
+X-Google-Original-Date: Fri, 22 Feb 2019 22:24:47 GMT
+Message-Id: <40411100c3dfe142646fe0eac66e138d0ce062d1.1550874298.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v7.git.gitgitgadget@gmail.com>
 References: <pull.108.v6.git.gitgitgadget@gmail.com>
         <pull.108.v7.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v7 06/15] trace2:data: add trace2 sub-process classification
+Subject: [PATCH v7 04/15] trace2:data: add trace2 regions to wt-status
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,26 +71,70 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add trace2 classification for long-running processes
-started in sub-process.c
+Add trace2_region_enter() and trace2_region_leave() calls around the
+various phases of a status scan.  This gives elapsed time for each
+phase in the GIT_TR2_PERF and GIT_TR2_EVENT trace target.
+
+Also, these Trace2 calls now use s->repo rather than the_repository.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- sub-process.c | 1 +
- 1 file changed, 1 insertion(+)
+ wt-status.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/sub-process.c b/sub-process.c
-index 8d2a1707cf..3f4af93555 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -88,6 +88,7 @@ int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, co
- 	process->out = -1;
- 	process->clean_on_exit = 1;
- 	process->clean_on_exit_handler = subprocess_exit_handler;
-+	process->trace2_child_class = "subprocess";
+diff --git a/wt-status.c b/wt-status.c
+index 0fe3bcd4cd..434636850e 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -748,12 +748,23 @@ static int has_unmerged(struct wt_status *s)
  
- 	err = start_command(process);
- 	if (err) {
+ void wt_status_collect(struct wt_status *s)
+ {
++	trace2_region_enter("status", "worktrees", s->repo);
+ 	wt_status_collect_changes_worktree(s);
+-	if (s->is_initial)
++	trace2_region_leave("status", "worktrees", s->repo);
++
++	if (s->is_initial) {
++		trace2_region_enter("status", "initial", s->repo);
+ 		wt_status_collect_changes_initial(s);
+-	else
++		trace2_region_leave("status", "initial", s->repo);
++	} else {
++		trace2_region_enter("status", "index", s->repo);
+ 		wt_status_collect_changes_index(s);
++		trace2_region_leave("status", "index", s->repo);
++	}
++
++	trace2_region_enter("status", "untracked", s->repo);
+ 	wt_status_collect_untracked(s);
++	trace2_region_leave("status", "untracked", s->repo);
+ 
+ 	wt_status_get_state(s->repo, &s->state, s->branch && !strcmp(s->branch, "HEAD"));
+ 	if (s->state.merge_in_progress && !has_unmerged(s))
+@@ -2291,6 +2302,13 @@ static void wt_porcelain_v2_print(struct wt_status *s)
+ 
+ void wt_status_print(struct wt_status *s)
+ {
++	trace2_data_intmax("status", s->repo, "count/changed", s->change.nr);
++	trace2_data_intmax("status", s->repo, "count/untracked",
++			   s->untracked.nr);
++	trace2_data_intmax("status", s->repo, "count/ignored", s->ignored.nr);
++
++	trace2_region_enter("status", "print", s->repo);
++
+ 	switch (s->status_format) {
+ 	case STATUS_FORMAT_SHORT:
+ 		wt_shortstatus_print(s);
+@@ -2309,6 +2327,8 @@ void wt_status_print(struct wt_status *s)
+ 		wt_longstatus_print(s);
+ 		break;
+ 	}
++
++	trace2_region_leave("status", "print", s->repo);
+ }
+ 
+ /**
 -- 
 gitgitgadget
 
