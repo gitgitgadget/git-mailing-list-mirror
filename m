@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D18820248
-	for <e@80x24.org>; Fri, 22 Feb 2019 22:25:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85DE120248
+	for <e@80x24.org>; Fri, 22 Feb 2019 22:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727072AbfBVWZM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 17:25:12 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:40415 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726773AbfBVWZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 17:25:11 -0500
-Received: by mail-ed1-f66.google.com with SMTP id 10so3089644eds.7
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 14:25:10 -0800 (PST)
+        id S1727087AbfBVWZN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 17:25:13 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:39924 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726874AbfBVWZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 17:25:13 -0500
+Received: by mail-ed1-f52.google.com with SMTP id p27so3098134edc.6
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 14:25:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jvgohm/bki+d8IckhuMJC3Yx/07SLfOhsR5w/P1dvGI=;
-        b=OV+q/8FyKZgvKJgn1ZjLLe6YIvxvDRZN4nbvzf+94hAh6baxemPUxpY+TtG9sgFDrf
-         mevOCx1Lv/LDkNsm55yMqYIomhLbX27GviuaeWc70byWkS0FODwZx8FMohvlF1frRXgI
-         IOUlKC6yY1heXStla/Fa880f2eYlspt2Nf7qQTGG6sd+tALZHSvBysCLR7nbudEObXtv
-         cLuhEOwbjya8Q0Sb+tkfo+zpIQaaX0VZN2IvJ1RgrEIMvtw3kAye+mA3zYw1dacWjpVY
-         XtRFbsskimyibjc01hxJElTwze9tpuJzbnKH4oB12kEEkwXMtZhjrZzzKnKnS547FrpM
-         /3zQ==
+        bh=ioDtFHTIzlviCcUYUfsHz+hDRR0xugC+voZbLk2CYm0=;
+        b=ZDw823pH5qt0VcgBLZrYz8+PbxsGspt+1eiHysJ928OFiCO9gVYDggcDtW+YRGqjDE
+         n2CZ0zFFmIHTRY80YWXjxdBAvVYKvn5z0RxfWHsoT5kUwzWMDsopl8tWUpXbqREBqxvM
+         pyyD3sRcGYS12BWzA/VquLt/8tqG966wrq9Z0blD4gZ/bZtzx7adhbQOowPzfFXF3nLY
+         Ff276IsMy5/ZVn5XerUcJZXKNjxsek1eMG5k2b21O/reSPBQj2/LPkB02tuMyeF25xKy
+         4j4KXmwtYwglxh0jZApXWeSoj/Yw3W13er1zNoG2m/IBlvUjtgH9HrTY6nx9Xu32t2+h
+         OI3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jvgohm/bki+d8IckhuMJC3Yx/07SLfOhsR5w/P1dvGI=;
-        b=DFq19FMLefTJBWOjGvbXXUftp3VSzonXrWcdpfzjnpJK1r0zs7nEiHOW16yxbngco+
-         fwmyFZGE5Jh0JwDOR1fRiT2AHgAHVeLP1s2IPRMmPtK4TNhVcvEEKKWlzK7oUWzo6Nrv
-         13A1Z/1ZNlxYOZsWdokJN6kYZ8Djslpn4YDYbZOqD7s3C6j2I13wCjXV4utkox16xDYX
-         Owfr7nzVgHIi8d3yS/AAkDEqI7uatC5Q9dO7WuqDDH9Ao4TYwrzMrIJCbaUGvkrxJrx/
-         OuBhwLJCQb8kpKe7Ae/SENfQGFObfNx+vfTHBbU0KuoFrynfQL43vDsZR3b8VmVvEQtt
-         V+KA==
-X-Gm-Message-State: AHQUAuYpDLWv2UISJttlH4syfNP8XsBTO/KMIpvOu+tABvgLCh9+zvVV
-        t1ZZZpICBr16nN+VYkxWalDCjvLY
-X-Google-Smtp-Source: AHgI3IZU0R3YwMd+kpBdom9RXN+tgnXADj0POx5ervJYzy/GHF9WTJZI29q7lOEmZqMya6xfA0EbVg==
-X-Received: by 2002:a50:a55d:: with SMTP id z29mr4985675edb.269.1550874309292;
-        Fri, 22 Feb 2019 14:25:09 -0800 (PST)
+        bh=ioDtFHTIzlviCcUYUfsHz+hDRR0xugC+voZbLk2CYm0=;
+        b=OZty3IKyFa6dhiYqmSYyFqhBoDf9XgNGnJm3iZSkNiltpQ9YEebwr1uZaaenHkHBmP
+         LdHk7KJ8LJF87aVfm07YDGlZZdcZxY65nsDwqqGG0/ZBHRrpAk/AqJ4ndeP1JDH/zzr0
+         /dVVtDanlRIZ3HCC0qUZVmD+K/o8bS+CfxAEtYSHhD7foOUZlUoSgwamr+3/vB3UARGv
+         dDLjlspk7VOalmrqKz7JQnS4/1PLdcIf9fxsmqhX/cPhrIVF5eZxB79NHu8eK4Mz7TSX
+         tRXbhigzHfRMyr+QSDyDT9oJahBHGK3xn9gY/t8GQsRJY19Ec93AfzfpfM66f8FtJY1I
+         Ij0w==
+X-Gm-Message-State: AHQUAuZnGOwFxcJXFI3cVhKLiJoobaQwxRzs4ilbNyC98qkvcNgOUJJM
+        +nfePZS52kKDNux2mZhBmWxfO15x
+X-Google-Smtp-Source: AHgI3IbiFXrbpyfunLNZWGkuKGwpT9li4e+wn1EtRF4ioMHxaU0cHddK29pwtNnk4lFf14yT6C6uQA==
+X-Received: by 2002:a17:906:e201:: with SMTP id gf1mr4491604ejb.10.1550874310721;
+        Fri, 22 Feb 2019 14:25:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b10sm676275edy.80.2019.02.22.14.25.08
+        by smtp.gmail.com with ESMTPSA id b5sm462435eju.74.2019.02.22.14.25.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Feb 2019 14:25:08 -0800 (PST)
-Date:   Fri, 22 Feb 2019 14:25:08 -0800 (PST)
-X-Google-Original-Date: Fri, 22 Feb 2019 22:24:54 GMT
-Message-Id: <2a5aa3a8dc7e580938a72b28f322421f9b1d861e.1550874298.git.gitgitgadget@gmail.com>
+        Fri, 22 Feb 2019 14:25:10 -0800 (PST)
+Date:   Fri, 22 Feb 2019 14:25:10 -0800 (PST)
+X-Google-Original-Date: Fri, 22 Feb 2019 22:24:56 GMT
+Message-Id: <3e6fee40b07b29eb62c96c08bae4a615d247de85.1550874298.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v7.git.gitgitgadget@gmail.com>
 References: <pull.108.v6.git.gitgitgadget@gmail.com>
         <pull.108.v7.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v7 11/15] trace2:data: add subverb to checkout command
+Subject: [PATCH v7 13/15] trace2:data: add subverb for rebase
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,41 +73,44 @@ From: Jeff Hostetler <jeffhost@microsoft.com>
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/checkout.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ builtin/rebase.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 6fadf412e8..f911c88bb4 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -262,6 +262,8 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	struct lock_file lock_file = LOCK_INIT;
- 	int nr_checkouts = 0;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 774264bae8..f5ac4fe2ea 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -850,6 +850,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		ACTION_EDIT_TODO,
+ 		ACTION_SHOW_CURRENT_PATCH,
+ 	} action = NO_ACTION;
++	static const char *action_names[] = { N_("undefined"),
++					      N_("continue"),
++					      N_("skip"),
++					      N_("abort"),
++					      N_("quit"),
++					      N_("edit_todo"),
++					      N_("show_current_patch"),
++					      NULL };
+ 	const char *gpg_sign = NULL;
+ 	struct string_list exec = STRING_LIST_INIT_NODUP;
+ 	const char *rebase_merges = NULL;
+@@ -1039,6 +1047,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		die(_("The --edit-todo action can only be used during "
+ 		      "interactive rebase."));
  
-+	trace2_cmd_mode(opts->patch_mode ? "patch" : "path");
++	if (trace2_is_enabled()) {
++		if (is_interactive(&options))
++			trace2_cmd_mode("interactive");
++		else if (exec.nr)
++			trace2_cmd_mode("interactive-exec");
++		else
++			trace2_cmd_mode(action_names[action]);
++	}
 +
- 	if (opts->track != BRANCH_TRACK_UNSPECIFIED)
- 		die(_("'%s' cannot be used with updating paths"), "--track");
- 
-@@ -952,6 +954,9 @@ static int switch_branches(const struct checkout_opts *opts,
- 	void *path_to_free;
- 	struct object_id rev;
- 	int flag, writeout_error = 0;
-+
-+	trace2_cmd_mode("branch");
-+
- 	memset(&old_branch_info, 0, sizeof(old_branch_info));
- 	old_branch_info.path = path_to_free = resolve_refdup("HEAD", 0, &rev, &flag);
- 	if (old_branch_info.path)
-@@ -1189,6 +1194,8 @@ static int switch_unborn_to_new_branch(const struct checkout_opts *opts)
- 	int status;
- 	struct strbuf branch_ref = STRBUF_INIT;
- 
-+	trace2_cmd_mode("unborn");
-+
- 	if (!opts->new_branch)
- 		die(_("You are on a branch yet to be born"));
- 	strbuf_addf(&branch_ref, "refs/heads/%s", opts->new_branch);
+ 	switch (action) {
+ 	case ACTION_CONTINUE: {
+ 		struct object_id head;
 -- 
 gitgitgadget
 
