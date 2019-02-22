@@ -2,155 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6951020248
-	for <e@80x24.org>; Fri, 22 Feb 2019 16:50:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E83C420248
+	for <e@80x24.org>; Fri, 22 Feb 2019 17:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727023AbfBVQuB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 11:50:01 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33859 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726019AbfBVQuB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 11:50:01 -0500
-Received: by mail-wr1-f65.google.com with SMTP id f14so3122930wrg.1
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 08:50:00 -0800 (PST)
+        id S1727325AbfBVRjI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 12:39:08 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36777 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726131AbfBVRjH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 12:39:07 -0500
+Received: by mail-wm1-f68.google.com with SMTP id j125so2721008wmj.1
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 09:39:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=bZCOLeS7RiVpNgVEbSO1X3DPcXEfZ51aUl715t/pTqc=;
-        b=rN1fTlQoNbsnsGaw8eeIiX71ZaN3hcncKEwB5YSTYpRjpA6DzWSGfYGvCEtL5L7aPB
-         o+BeOtXL+mIV+Ks3xkIENUPRkVsjnEtIanATMba87YBsxmmhuituosy+0JLxI0jD1e87
-         0ElZh6Iq+JdTMZgH3m72hu73MitHptlzUdvxKnA2l0YRnPv9Am2iI5q+RsKNJmruE+FY
-         OxabmC2S/6eqY/JswwMlSZYLdgqoM81gb+8mOq8PGttnVAXuY2mn+s6drTZC5oPmuSZb
-         fp5CphNkrHyIm3H32mJ1lgRZ/eSxIXLeTEPjKgfQlcwdFOUUmBfaNqk0NjUZv53SO+W8
-         GvCg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3LUtDZWr2yGTiPDDNqYCN6T4uCW+X6Ad0op2Ic3wDiE=;
+        b=msdj1ZXXOH1vbnklyIdmIiJeXesc1sCY+loOhi8qQooq+8Ml9EMo+taI/ovtLJbTEI
+         Mjn3cuS3uMZTn9VH5P25q2mNuPI7Nu0GhKL60FEcWGsQhKdHged8owvGDUhVhpmNw4om
+         r+DMiqPu+30+bYfsLXPZHeoDrWPLEmb6kX+6Zprf4+v+qbV6pXVtdnZ2NjECUCkL4D65
+         KLGJDvJVCiJ2rN3hKMfk6DB8Oa/XU6K3wFIr5tHtktTm+5GCB2mCcvDBabQ3CbGrmt9N
+         Yx4/ra4iloZkpKgOFSSszKlY9w6IWtBeBnwAsVXFM7IjyjImw5qrtbfYvqA/wqPc2uIH
+         /kew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=bZCOLeS7RiVpNgVEbSO1X3DPcXEfZ51aUl715t/pTqc=;
-        b=jwsTsqIa360uG7LnRkTJqdFTYfB13giHQC2pNQHrNwHoOuOfbfmtRX4rlSKn5spGJF
-         Pp79rel3eB1h84E0w6Tx4I+IGY/ewxzgaFBldcqRXq7ksu/QqdCmQo23S/lWFIBczjNC
-         vKg7RMmtQCapAp5uShHIalB0WhzlO7Yvdo0cH9V+QYyHJ7IkYTvbkpVIukQ2HXS9AJy8
-         eaEh5vcvl0yTIrX/bVi/wk44tMZSsw62JoJqq6FxZMiHcbF62l/r1L9FiPhJAb4BJ7Xa
-         XakeBoq1Wgr5pEHtGhjY7UgIeP4mifJDmJPuuapKWd8KzJMk60cOoDDvPEWcrPGV6rNo
-         oC4A==
-X-Gm-Message-State: AHQUAublsEWk6El/bHLaZ+vLhjti3ioQp/M/9VYkdsrhGFVMTviW/rdb
-        DnzPgap0ZB+mrq8YwvWwC/lYVAnX85E=
-X-Google-Smtp-Source: AHgI3IYsukr2W+jnscaPnu+NWuNAU8EJ1mYzYbWLRHMBQstnp2J70OgYkSA7URz+IZqWmvAkBCfWWA==
-X-Received: by 2002:adf:ffcd:: with SMTP id x13mr3597197wrs.20.1550854199242;
-        Fri, 22 Feb 2019 08:49:59 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id n6sm1999193wrt.23.2019.02.22.08.49.58
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3LUtDZWr2yGTiPDDNqYCN6T4uCW+X6Ad0op2Ic3wDiE=;
+        b=AY7nB6ohP1oXMPGaxPVkcEt9HW6wKZcRsDQq/K3pexXSapE10mplQpQhYoUb+NzpcV
+         wV822Iy5A1w8L6YubfJ3GGKU7+o+L7O82nJQGuMq+l9W2ABhfL1POOmBo9huhCOuPTZ0
+         wR3ksNORF5RYg98P6BtcETLHcAZk1ewd/wswMoqPT9gbm7MXTsNfwRkjGgVEPWZdXp6u
+         50ROEjIAwmO+dozNwoQzxgRPlFI0Uy4kJMGFtZbn3UP7Dtm2xUwAUbSOccId1Xse71mG
+         oMrZPUdSeqnOmEOZrFscdap5QH/AKEQElYx/5fv9PecxAHi/IEL0cAGw7nISWnENGg7M
+         PG1A==
+X-Gm-Message-State: AHQUAuY47WimP/ftoMmSpla/pZnIbGNq2Kw2D2a0wNsfzSjtHNSFL6Ct
+        4TOb+I9nBRRpfHd2JPN7oBY=
+X-Google-Smtp-Source: AHgI3Ib02ckrfrykuycc0GIH0nEKHBpGzj4CIe7hRuaDcHoyN6rIjZXSs0I7KCSLxgQVyA+XR64I8g==
+X-Received: by 2002:a1c:14e:: with SMTP id 75mr3064699wmb.48.1550857144920;
+        Fri, 22 Feb 2019 09:39:04 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id u12sm2117045wmf.44.2019.02.22.09.39.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 22 Feb 2019 08:49:58 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        Fri, 22 Feb 2019 09:39:04 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        John Keeping <john@keeping.me.uk>,
-        Pratik Karki <predatoramigo@gmail.com>
-Subject: Re: [PATCH 2/2] rebase: don't rebase linear topology with --fork-point
-References: <20190221151009.GA24309@sigill.intra.peff.net> <20190221214059.9195-3-avarab@gmail.com> <20190222150852.GB5090@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190222150852.GB5090@sigill.intra.peff.net>
-Date:   Fri, 22 Feb 2019 17:49:57 +0100
-Message-ID: <871s3z6a4q.fsf@evledraar.gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Bartosz Baranowski <bbaranow@redhat.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] prettier bisect output
+References: <CAEpy5fTnyPjH0sVyjnGHi1qxo+_dpaerxwaD7MmNPbmLx6qyJA@mail.gmail.com>
+        <xmqq1s40u8gt.fsf@gitster-ct.c.googlers.com>
+        <20190222061949.GA9875@sigill.intra.peff.net>
+Date:   Fri, 22 Feb 2019 09:39:03 -0800
+In-Reply-To: <20190222061949.GA9875@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 22 Feb 2019 01:19:49 -0500")
+Message-ID: <xmqqwolrradk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-On Fri, Feb 22 2019, Jeff King wrote:
-
-> On Thu, Feb 21, 2019 at 10:40:59PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> I've run across this many times, too. Since it's been bugging me for a
+> decade, I thought I'd finally try to address it. Here are some patches.
 >
->> Fix a regression introduced in 4f21454b55 ("merge-base: handle
->> --fork-point without reflog", 2016-10-12).
->> [...]
+> There was some discussion about a year ago about just using "git show"
+> for this output:
 >
-> OK, your explanation mostly makes sense to me, except for one thing.
+>   https://public-inbox.org/git/CAP8UFD3QhTUj+j3vBGrm0sTQ2dSOLS-m2_PwFj6DZS4VZHKRTQ@mail.gmail.com/
 >
->> Then in 4f21454b55 ("merge-base: handle --fork-point without reflog",
->> 2016-10-12) which introduced the regression being fixed here, a bug
->> fix for "git merge-base --fork-point" being run stand-alone by proxy
->> broke this use-case git-rebase.sh was relying on, since it was still
->> assuming that if we didn't have divergent history we'd have no output.
+> Christian seemed generally OK with tweaking the output, but preferred
+> not to move all the way to running an external "git show". I'm not sure
+> I completely agree, but it was easy enough to get the results I wanted
+> just by fiddling the current code a bit. ;)
 >
-> I still don't quite see how 4f21454b55 is involved here, except by
-> returning a fork-point value when there is no reflog, and thus
-> triggering the bug in more cases.
+>   [1/3]: bisect: use string arguments to feed internal diff-tree
+>   [2/3]: bisect: fix internal diff-tree config loading
+>   [3/3]: bisect: make diff-tree output prettier
 >
-> In particular, imagine this case:
->
->   git init
->   for i in $(seq 1 3); do echo $i >$i; git add $i; git commit -m $i; done
->   git checkout -t -b other
->   for i in $(seq 4 6); do echo $i >$i; git add $i; git commit -m $i; done
->   git rebase
->
-> With the current code, that will rewind and replay 4-6, and I understand
-> that to be a bug from your description. And it happens at 4f21454b55,
-> too. But it _also_ happens at 4f21454b55^.
->
-> I.e., I still think that the only thing that commit changed is that we
-> found a fork-point in more cases. But the bug was still demonstrably
-> there when you actually have a reflog entry.
->
-> With the fix you have here, that case now produces "Current branch other
-> is up to date".
->
-> This is splitting hairs a little (and of course I'm trying to exonerate
-> the commit I'm responsible for ;) ), but I just want to make sure we
-> understand fully what's going on.
+>  bisect.c                    | 19 +++++--------------
+>  t/t6030-bisect-porcelain.sh |  6 +++---
+>  2 files changed, 8 insertions(+), 17 deletions(-)
 
-Yes. I didn't dig far enough into this and will re-word & re-submit,
-also with the feedback you had on 1/2.
+Looks good from a quick glance.
 
-So here's my current understanding of this.
+One unrelated thing that made me curious was that the output from
 
-It's b6266dc88b ("rebase--am: use --cherry-pick instead of
---ignore-if-in-upstream", 2014-07-15) that broke this in the general
-case.
+	git grep 'is the first '
 
-I.e. if you set a tracking branch within the same repo (which I'd
-betnobody does) but *also* if you have an established clone you have a
-reflog for the upstream. Then we'll find the fork point, and we'll
-always redundantly rebase.
+had these two lines:
 
-But this hung on by a thread until your 4f21454b55 ("merge-base: handle
---fork-point without reflog", 2016-10-12). In particular when you:
+bisect.c:		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
+git-bisect.sh:		if sane_grep "is the first $TERM_BAD commit" "$GIT_DIR/BISECT_RUN" >/dev/null
 
- 1. Clone some *new* repo
- 2. commit on top
- 3. git pull --rebase
+which means that we cannot localize this message without thought,
+unlike the usual "hey, this is end-user facing, so wrap it in _()
+out of spinal reflex."
 
-You'll redundantly rebase on top, even though you have nothing to
-do. Since there's no reflog.
-
-This is why I ran into this most of the time, because my "patch some
-random thing" is that, and I have pull.rebase=3Dtrue in my config.
-
-What had me confused about this being the primary cause was that when
-trying to test this I was re-cloning, so I'd always get this empty
-reflog case.
-
-> Your fix looks plausibly correct to me, but I admit I don't quite grok
-> all the details of that conditional.
-
-We just consider whether we can fast-forward now, and then don't need to
-rebase (unless "git rebase -i" etc.). I.e. that --fork-point was
-considered for "do we need to do stuff" was a bug introduced in
-b6266dc88b.
