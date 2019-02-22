@@ -8,126 +8,136 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A08720248
-	for <e@80x24.org>; Fri, 22 Feb 2019 16:05:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37A2E20248
+	for <e@80x24.org>; Fri, 22 Feb 2019 16:05:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727313AbfBVQFu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 11:05:50 -0500
-Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:44896
-        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727196AbfBVQFs (ORCPT
+        id S1727300AbfBVQFt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 11:05:49 -0500
+Received: from a7-10.smtp-out.eu-west-1.amazonses.com ([54.240.7.10]:33624
+        "EHLO a7-10.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727202AbfBVQFs (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 22 Feb 2019 11:05:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1550851545;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=3fYIMeYyY85cRkCc9W47QCD7qpgLl13vZMOdPBD3upE=;
-        b=dC+x5S+Av3gCHEKQNqcjv+S33hfXB50+kIcFLufNRj8pdZsyjUhbxb633jcBglVK
-        jR2xyk01h0lZ2u+2uQb/VwNE0DYselLf8o7b1FCtZO5UVg3LOHo7Itjd4Xa0oFfemX9
-        1BGLIAahHEXJX5dBYexWEznOIeVNaubVJsGOrVS4=
+        bh=Pd46mE7DV6EWDoOV2OATzjz/ZmJqBK24XE2K0SVy/GI=;
+        b=qqKTzKmo2eraUMfUAq6mGVpY3pNrBBSaF7Tb7miaVnGMBU9etBYeEbtfXFrWcS9I
+        8/93eE4A15743LaFNn7q+7kTfo+F7sV80ioh+ezEwFqi9gBlYDcJfUyPtDbsYkfGs3k
+        hoVDb4a8iaBwY7UXNTHCft1G/3zegY0wHj1wt9h0=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016915f49a54-e28b7a40-d51c-4dd4-85a3-0eea83d4f0cb-000000@eu-west-1.amazonses.com>
+Message-ID: <0102016915f49a75-65264938-9d50-4cf0-a55a-c5b7892c15b0-000000@eu-west-1.amazonses.com>
 In-Reply-To: <0102016915f499b8-5813fc52-230b-469e-b939-a1244e83a2b9-000000@eu-west-1.amazonses.com>
 References: <0102016915f499b8-5813fc52-230b-469e-b939-a1244e83a2b9-000000@eu-west-1.amazonses.com>
-Subject: [PATCH RFC 08/20] cat-file: remove rest from expand_data
+Subject: [PATCH RFC 19/20] cat-file: tests for new atoms added
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Fri, 22 Feb 2019 16:05:45 +0000
-X-SES-Outgoing: 2019.02.22-54.240.7.18
+X-SES-Outgoing: 2019.02.22-54.240.7.10
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Get rid of rest field in struct expand_data.
-expand_data may be global further as we use it in ref-filter also,
-so we need to remove cat-file specific fields from it.
-
-All globals that I add through this patch will be deleted in the end,
-so treat it just as the middle step.
+Add some tests for new formatting atoms from ref-filter.
+Some of new atoms are supported automatically,
+some of them are expanded into empty string
+(because they are useless for some types of objects).
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 ---
- builtin/cat-file.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ t/t1006-cat-file.sh | 48 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index f6470380f55b3..e52646c0e6b5b 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -29,9 +29,10 @@ struct batch_options {
- };
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 43c4be1e5ef55..3c848f2773bbb 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -20,6 +20,19 @@ maybe_remove_timestamp () {
+     fi
+ }
  
- static const char *force_path;
--/* Next 2 vars will be deleted at the end of this patch */
-+/* Next 3 vars will be deleted at the end of this patch */
- static int mark_query;
- static int skip_object_info;
-+static const char *rest;
++test_atom () {
++    name=$1
++    sha1=$2
++    atoms=$3
++    expected=$4
++
++    test_expect_success "$name" '
++	echo "$expected" >expect &&
++	echo $sha1 | git cat-file --batch-check="$atoms" >actual &&
++	test_cmp expect actual
++    '
++}
++
+ run_tests () {
+     type=$1
+     sha1=$2
+@@ -119,6 +132,13 @@ $content"
+ 	maybe_remove_timestamp "$(cat actual.full)" $no_ts >actual &&
+ 	test_cmp expect actual
+     '
++
++    for atom in refname parent body trailers upstream push symref flag
++    do
++	test_atom "Check %($atom) gives empty output" "$sha1" "%($atom)" ""
++    done
++
++    test_atom "Check %(HEAD) gives only one space as output" "$sha1" '%(HEAD)' ' '
+ }
  
- static int filter_object(const char *path, unsigned mode,
- 			 const struct object_id *oid,
-@@ -197,7 +198,6 @@ struct expand_data {
- 	enum object_type type;
- 	unsigned long size;
- 	off_t disk_size;
--	const char *rest;
- 	struct object_id delta_base_oid;
+ hello_content="Hello World"
+@@ -140,6 +160,12 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
+ 	test_cmp expect actual
+ '
  
- 	/*
-@@ -238,8 +238,8 @@ static void expand_atom(struct strbuf *sb, const char *atom, int len,
- 		else
- 			strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)data->disk_size);
- 	} else if (is_atom("rest", atom, len)) {
--		if (data->rest)
--			strbuf_addstr(sb, data->rest);
-+		if (rest)
-+			strbuf_addstr(sb, rest);
- 	} else if (is_atom("deltabase", atom, len)) {
- 		if (mark_query)
- 			data->info.delta_base_sha1 = data->delta_base_oid.hash;
-@@ -287,25 +287,25 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 			char *contents;
- 			unsigned long size;
++shortname=`echo $hello_sha1 | sed 's/^.\{0\}\(.\{7\}\).*/\1/'`
++test_atom 'Check format option %(objectname:short) works' "$hello_sha1" '%(objectname:short)' "$shortname"
++
++test_atom 'Check format option %(align) is not broken' \
++    "$hello_sha1" "%(align:8)%(objecttype)%(end)%(objectname)" "blob    $hello_sha1"
++
+ test_oid_init
  
--			if (!data->rest)
-+			if (!rest)
- 				die("missing path for '%s'", oid_to_hex(oid));
+ tree_sha1=$(git write-tree)
+@@ -159,6 +185,17 @@ $commit_message"
  
- 			if (opt->cmdmode == 'w') {
--				if (filter_object(data->rest, 0100644, oid,
-+				if (filter_object(rest, 0100644, oid,
- 						  &contents, &size))
- 					die("could not convert '%s' %s",
--					    oid_to_hex(oid), data->rest);
-+					    oid_to_hex(oid), rest);
- 			} else if (opt->cmdmode == 'c') {
- 				enum object_type type;
- 				if (!textconv_object(the_repository,
--						     data->rest, 0100644, oid,
-+						     rest, 0100644, oid,
- 						     1, &contents, &size))
- 					contents = read_object_file(oid,
- 								    &type,
- 								    &size);
- 				if (!contents)
- 					die("could not convert '%s' %s",
--					    oid_to_hex(oid), data->rest);
-+					    oid_to_hex(oid), rest);
- 			} else
- 				BUG("invalid cmdmode: %c", opt->cmdmode);
- 			batch_write(opt, contents, size);
-@@ -555,7 +555,7 @@ static int batch_objects(struct batch_options *opt)
- 				while (*p && strchr(" \t", *p))
- 					*p++ = '\0';
- 			}
--			data.rest = p;
-+			rest = p;
- 		}
+ run_tests 'commit' $commit_sha1 $commit_size "$commit_content" "$commit_content" 1
  
- 		batch_one_object(input.buf, &output, opt, &data);
++test_atom "Check format option %(if) is not broken" "$commit_sha1" \
++    "%(if)%(author)%(then)%(objectname)%(end)" "$commit_sha1"
++test_atom "Check %(tree) works for commit" "$commit_sha1" "%(tree)" "$tree_sha1"
++test_atom "Check %(numparent) works for commit" "$commit_sha1" "%(numparent)" "0"
++test_atom "Check %(authorname) works for commit" "$commit_sha1" "%(authorname)" "$GIT_AUTHOR_NAME"
++test_atom "Check %(authoremail) works for commit" "$commit_sha1" "%(authoremail)" "<$GIT_AUTHOR_EMAIL>"
++test_atom "Check %(committername) works for commit" "$commit_sha1" "%(committername)" "$GIT_COMMITTER_NAME"
++test_atom "Check %(committeremail) works for commit" "$commit_sha1" "%(committeremail)" "<$GIT_COMMITTER_EMAIL>"
++test_atom "Check %(subject) works for commit" "$commit_sha1" "%(subject)" "$commit_message"
++test_atom "Check %(contents) works for commit" "$commit_sha1" "%(contents)" "$commit_message"
++
+ tag_header_without_timestamp="object $hello_sha1
+ type blob
+ tag hellotag
+@@ -173,6 +210,17 @@ tag_size=$(strlen "$tag_content")
+ 
+ run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_content" 1
+ 
++test_atom "Check %(object) works for tag" "$tag_sha1" "%(object)" "$hello_sha1"
++test_atom "Check %(type) works for tag" "$tag_sha1" "%(type)" "blob"
++test_atom "Check %(tag) works for tag" "$tag_sha1" "%(tag)" "hellotag"
++test_atom "Check %(taggername) works for tag" "$tag_sha1" "%(taggername)" "$GIT_COMMITTER_NAME"
++test_atom "Check %(taggeremail) works for tag" "$tag_sha1" "%(taggeremail)" "<$GIT_COMMITTER_EMAIL>"
++test_atom "Check %(subject) works for tag" "$tag_sha1" "%(subject)" "$tag_description"
++test_atom "Check %(contents) works for tag" "$tag_sha1" "%(contents)" "$tag_description"
++
++test_atom "Check %(color) gives no additional output" "$sha1" \
++    "%(objectname) %(color:green) %(objecttype)" "$sha1  $type"
++
+ test_expect_success \
+     "Reach a blob from a tag pointing to it" \
+     "test '$hello_content' = \"\$(git cat-file blob $tag_sha1)\""
 
 --
 https://github.com/git/git/pull/568
