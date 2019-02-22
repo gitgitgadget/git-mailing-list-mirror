@@ -2,124 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5770620248
-	for <e@80x24.org>; Fri, 22 Feb 2019 13:22:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 836F520248
+	for <e@80x24.org>; Fri, 22 Feb 2019 13:27:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726441AbfBVNWQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 08:22:16 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:58198 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725944AbfBVNWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 08:22:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=BLRUUUB7lI06e/aPNzmSkp+LKSKD7NNXiH/1lD833VM=; b=MIsexhow4DzdAIgGTbsjBkdiTp
-        FgfOK6Bub2jza7qU1QTzwUUrhZJQ681c1gYweQwgeA7nI4jfUaEF6Jpo+YRQxb3obV8PTz6O3Jlfy
-        72fXnQYLHtK33Zbpj1QrI2D5mFc+AeeV5LtNgLojXhZ3WfdpuaISgHLSmVMQq6ughVLlSBZ2v9IGF
-        W1fbb74mBiBE/P9l6bkbVR+LYqH+Lp7qdrOaqILvcstE6mhAOyvWXRksNfH76gntb37EuFYXp5cd1
-        +Tp6QS/7euFX+d7RCfs1+0vhBx+EDW9OMfM9QPC2XHJMPleEs1XadSCGh/r24alE7tRGswW4g257G
-        dRJ61n6g==;
-Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:38044 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1gxAmL-00BLBg-V9
-        for git@vger.kernel.org; Fri, 22 Feb 2019 08:22:14 -0500
-Date:   Fri, 22 Feb 2019 08:22:12 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: how does one interpret "git diff <commit> ^<commit>"
-Message-ID: <alpine.LFD.2.21.1902220816010.6353@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1726090AbfBVN1O (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 08:27:14 -0500
+Received: from mail-it1-f182.google.com ([209.85.166.182]:36871 "EHLO
+        mail-it1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725926AbfBVN1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 08:27:14 -0500
+Received: by mail-it1-f182.google.com with SMTP id z124so3062201itc.2
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 05:27:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=wFCxeyZ4bwm77G5V+PmcdbNQ2s1tYiyRBRoo5RbO3mA=;
+        b=FCa7Xli/fyBfMPNgPXwO/rxOQoSk8YAvnOuu8gf4YIy9Ybwf3stx0ruCp6QyMXoGcz
+         SG4kMBdYubTLualKPNBw6p6ddi01DFm1OP061EM7ShGuvKU1gMw8HxAHP2IWfvqKlaVX
+         /IyFeJ2jGlpYySKOtCVchNqSVmlPrwiqGxqMbCQASLhMDzvf4dcyVH2ymj4pwKBmsJzK
+         4AJKUvjiBWju+tS8l/oLaqLLBEwTMN5QHGGo5ZuDYGW0nbBvOXz0uBJbbuMejzqZVHRn
+         33RCgG/WJAGlNhnOiE2N9W5URf96ViT/UV7cqGOuCgkCIBbqgghYdq01k44DsNLdnhIQ
+         TNIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=wFCxeyZ4bwm77G5V+PmcdbNQ2s1tYiyRBRoo5RbO3mA=;
+        b=dTFi2O9NU4UjB5dGZx8ezP05iMJAxxR4VV7IMqVIP7b3E9H45X0E/srYy6czp3xPJB
+         QIDF3BNWz3OA34O1RPV6HWK62j1w00Ly94Qf6LRiA3a0f7+X4rsyxjxSolx0t0mMIcKo
+         ItAc/9dGOot8U8jbmiXR0gSpyTLQSCR11QhqFTtjbd5M7dHHHiIrQvph4h8e5jUJkcIA
+         qDavd+Z/64PT0P6YItdQhx0oSLm/hAlBYKbPZta+MuxEzbjdMnlA+gKIVtqQ7Sf9klk9
+         bnIoVXL9H4CjY4lrsPpOCZcLF43LT/B1h1ytMsvsUJafWYTLZ0DUEiMDohJ94GPhaTzz
+         51Wg==
+X-Gm-Message-State: AHQUAubMQlciccEAJLy4AV0X0SnKC86foBVU/4Tc9WzX+cWTYVVHBaYe
+        6ux3QpgmM3dl+2IpO98d0xVG6Gp42V1g81MO9u80E0Do
+X-Google-Smtp-Source: AHgI3IZoEoJCVPByjosFzhOF0r6TKzFotGm8cbc+NBI3xa6wRNuR/DP3cM11DoFCus8dy9DUwClKtgU4vurs36VYS6g=
+X-Received: by 2002:a24:6344:: with SMTP id j65mr1987976itc.40.1550842032869;
+ Fri, 22 Feb 2019 05:27:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+From:   Krzysztof Sobierajczyk <sobierajczyk.krzysztof@gmail.com>
+Date:   Fri, 22 Feb 2019 14:26:51 +0100
+Message-ID: <CAM3o+_mX6euHa8Trq5cArcYBc9Wm0FH2L56S6Z3ojdhTcc0CWQ@mail.gmail.com>
+Subject: bug - git version 2.20.1.windows.1
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+for example, I've created a simple repository. Containing two files
+('to rename.txt' and 'to remove.txt'). I wanted to prepare for the
+index changing the name of the first file and deleting the second
+file. what git shows you looks wrong. Please check the four
+instructions
 
-  was perusing the git FAQ and ran across this:
+$ git add .
+$ git commit -m " first commit"
+$ git mv to\ rename.txt new\ name.txt
+$ git rm to\ remove.txt
 
-  How do I obtain a list of files which have changed in a given commit?
-
-     $ git diff --name-only <commit>^!
 
 
-after playing with "git rev-parse", i figured out that the above was
-equivalent to (using kernel "v4.19" tag as an example):
 
-$ git diff v4.19 ^v4.19^
-diff --git a/Makefile b/Makefile
-index bf3786e4ffec..69fa5c0310d8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2,8 +2,8 @@
- VERSION = 4
- PATCHLEVEL = 19
- SUBLEVEL = 0
--EXTRAVERSION = -rc8
--NAME = Merciless Moray
-+EXTRAVERSION =
-+NAME = "People's Front"
 
- # *DOCUMENTATION*
- # To see a list of typical targets execute "make help"
-$
+SAMPLE REPOSITORY AND TEST
 
-  but i get exactly the same output if i reverse the arguments:
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
 
-$ git diff ^v4.19^ v4.19
-diff --git a/Makefile b/Makefile
-index bf3786e4ffec..69fa5c0310d8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2,8 +2,8 @@
- VERSION = 4
- PATCHLEVEL = 19
- SUBLEVEL = 0
--EXTRAVERSION = -rc8
--NAME = Merciless Moray
-+EXTRAVERSION =
-+NAME = "People's Front"
+        to remove.txt
+        to rename.txt
 
- # *DOCUMENTATION*
- # To see a list of typical targets execute "make help"
+nothing added to commit but untracked files present (use "git add" to track)
 
-  so i'm confused as to how to "git diff" interprets and processes
-those two arguments, as "v4.19" is, of course, a reference to a
-specific commit, but "^v4.19^" appears to define all those commits not
-reachable from "v4.19^". how should one read this?
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git add .
 
-rday
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git status
+On branch master
 
--- 
+No commits yet
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
 
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+        new file:   to remove.txt
+        new file:   to rename.txt
+
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git commit -m " first commit"
+[master (root-commit) 46011e3]  first commit
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 to remove.txt
+ create mode 100644 to rename.txt
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ ls -all
+total 8
+drwxr-xr-x 1 ksobierajczyk 1049089 0 lut 22 13:40  ./
+drwxr-xr-x 1 ksobierajczyk 1049089 0 lut 22 13:38  ../
+drwxr-xr-x 1 ksobierajczyk 1049089 0 lut 22 13:41  .git/
+-rw-r--r-- 1 ksobierajczyk 1049089 0 lut 22 13:38 'to remove.txt'
+-rw-r--r-- 1 ksobierajczyk 1049089 0 lut 22 13:40 'to rename.txt'
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git mv to\ rename.txt new\ name.txt
+                        <--- rename
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        renamed:    to rename.txt -> new name.txt
+                <--- rename is ok
+
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ ls -la
+total 8
+drwxr-xr-x 1 ksobierajczyk 1049089 0 lut 22 13:42  ./
+drwxr-xr-x 1 ksobierajczyk 1049089 0 lut 22 13:38  ../
+drwxr-xr-x 1 ksobierajczyk 1049089 0 lut 22 13:42  .git/
+-rw-r--r-- 1 ksobierajczyk 1049089 0 lut 22 13:40 'new name.txt'
+-rw-r--r-- 1 ksobierajczyk 1049089 0 lut 22 13:38 'to remove.txt'
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+
+$ git rm to\ remove.txt
+                                   <---- remove file
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        renamed:    to remove.txt -> new name.txt
+                     <------------  AND FAIL
+        deleted:    to rename.txt
+
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git commit -m"second commit"
+[master 30beac5] second commit
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ rename to remove.txt => new name.txt (100%)
+ delete mode 100644 to rename.txt
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+
+ksobierajczyk@KME43 MINGW64 /d/Simple repository (master)
+$ git show
+commit 30beac5b0578d4e4b6e64ea3a3c9a323f14e6277 (HEAD -> master)
+Author: Krzysztof Sobierajczyk <sobierajczyk.krzysztof@gmail.com>
+Date:   Fri Feb 22 13:45:21 2019 +0100
+
+    second commit
+
+diff --git a/to remove.txt b/new name.txt
+    <------- Wrong information
+similarity index 100%
+rename from to remove.txt
+rename to new name.txt
+diff --git a/to rename.txt b/to rename.txt
+deleted file mode 100644
+index e69de29..0000000
