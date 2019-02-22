@@ -2,85 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F38E3202AA
-	for <e@80x24.org>; Fri, 22 Feb 2019 16:28:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F33C202AA
+	for <e@80x24.org>; Fri, 22 Feb 2019 16:35:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727383AbfBVQ2C (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 11:28:02 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54935 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726572AbfBVQ2B (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 11:28:01 -0500
-Received: by mail-wm1-f65.google.com with SMTP id a62so2504922wmh.4
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 08:28:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=OtE0dDhWMpUFgJSxExnjjHv96MtALnTrrQhTwxsgsoo=;
-        b=uGpbJs+z2sl+Er0ekv9JE3Y+5prsOR+mrnEX720ZbDBuztQ3qFqAxm0bsI/j380GbD
-         A4psAGBZPItHvQipT4VinBRD+u+zE3LwQyrN5/Xux05M8yTokPkvScOa1wNQujljzUMp
-         1rucoHVTgBbmxCmHgI5n0ZVH0WyZGZR+Mo6ucT7/Hn31QTD+ghtISP2LwpUhdX5EQfeo
-         Mx7c+pPDvRJHVTwwiVVRaotG8XOIeQ5f58j8orTeWG2Skr6YlEgAcArSGwt2UpRxL6eZ
-         Ya8t9Vhu4yjjMTfg502EKj7gwai34xkeLcmAb9YvnL4LsqtDMyYr0g+8w9NKcsQG+3TP
-         eyTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=OtE0dDhWMpUFgJSxExnjjHv96MtALnTrrQhTwxsgsoo=;
-        b=q44iMvXEjGYxhzM4xrOsVPejEJsM+jdhYM420+A4BEIVOXuav4hB6MitSYRNPSgR9k
-         U6c5Wf51uS9kbrKeKnKG0D9PHtAyuEDdBiJQfnerl2R77f3TAJvSykBPfYpRBo9We4+H
-         0Rg4J8X/W3tFrVwYt55F9oxmwvrXfc0PVWYQ6AE6rqRA83kvpDY/zQyNtqcBwHxdt3Bs
-         GRE5hZcnLcl+uIIE1dgVlAwBTHmVY5ZKnbD5wQufeaH0E6SjWqGuvr5cdD3OSnSeth74
-         482qpuVN9hQ/uA8eq5zNGxJi7yMEdcquRhv7XYqqpletTy4sZ9LtyjvR5rIDuLpStEqC
-         Cu8g==
-X-Gm-Message-State: AHQUAuYZAy2J9LqrtJ5NCt5+LxCg/TU+lBK9bK5PNMnAA1E0JHQGcDBD
-        BEvEVmkM6kwkvm8DpsCpYrHQQkv94nU5/8aLK34Vhg==
-X-Google-Smtp-Source: AHgI3IYYTMU9Rwsk0S+57BqWCTyjwF0ffijtVqRg5sdKY7qTmftTk6YPU7u3LumyeUr/Kws2zipJBRVfX9x2cgyckgs=
-X-Received: by 2002:a7b:c14f:: with SMTP id z15mr3110752wmi.3.1550852880050;
- Fri, 22 Feb 2019 08:28:00 -0800 (PST)
+        id S1726680AbfBVQf3 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 22 Feb 2019 11:35:29 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:55807 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbfBVQf3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 11:35:29 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1MGZIiv017958
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 22 Feb 2019 11:35:19 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jeff King'" <peff@peff.net>,
+        "'Dominik Salvet'" <dominik.salvet@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <CAEXP2g92_pnbh4_V8VOgzzdUv6w5eDhCsXf=+NOdsRwyjQUb5A@mail.gmail.com> <20190222160722.GA22531@sigill.intra.peff.net>
+In-Reply-To: <20190222160722.GA22531@sigill.intra.peff.net>
+Subject: RE: Fetching master branch with tags associated with it
+Date:   Fri, 22 Feb 2019 11:35:11 -0500
+Message-ID: <000801d4cacc$981e2ac0$c85a8040$@nexbridge.com>
 MIME-Version: 1.0
-References: <CAL21BmnVkKtYWa1cRL1EJAwtchGcVUzhu0136AuV8uXAi5Kuew@mail.gmail.com>
- <CAPig+cSDtU1pbuzCvNPf+nmwS5LLKPm5RSY7wYxWg=s1e53enw@mail.gmail.com>
-In-Reply-To: <CAPig+cSDtU1pbuzCvNPf+nmwS5LLKPm5RSY7wYxWg=s1e53enw@mail.gmail.com>
-From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Date:   Fri, 22 Feb 2019 19:19:23 +0300
-Message-ID: <CAL21Bmmwr=F+-sTNFcHxk3kdCE3ahV2eQzTNCDteb=7vZVB2aw@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/20] cat-file: start using formatting logic from ref-filter
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJ0KRRU5QStWoFS8sMyJ3GRdr7vCgKjZ1k0pJgoVXA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=D0=BF=D1=82, 22 =D1=84=D0=B5=D0=B2=D1=80. 2019 =D0=B3. =D0=B2 19:09, Eric =
-Sunshine <sunshine@sunshineco.com>:
->
-> On Fri, Feb 22, 2019 at 10:58 AM Olga Telezhnaya
-> <olyatelezhnaya@gmail.com> wrote:
-> > I also have a question about site https://git-scm.com/docs/
-> > I thought it is updated automatically based on Documentation folder in
-> > the project, but it is not true. I edited docs for for-each-ref in
-> > December, I still see my patch in master, but for-each-ref docs in
-> > git-csm is outdated. Is it OK?
->
-> If you look at https://git-scm.com/docs/git-for-each-ref, you'll find
-> a pop-up control at the top of the page which allows you to select
-> documentation for a particular release of Git (say, 2.19.1). Your
-> change to git-for-each-ref.txt may be in "master" but is not yet in
-> any official final release. It will be in 2.21.0, but that release is
-> still in the RC stage, thus doesn't appear at
-> https://git-scm.com/docs/git-for-each-ref.
+On February 22, 2019 11:07, Jeff King wrote:
+> To: Dominik Salvet <dominik.salvet@gmail.com>
+> Cc: git@vger.kernel.org
+> Subject: Re: Fetching master branch with tags associated with it
+> 
+> On Thu, Feb 21, 2019 at 06:02:54PM +0100, Dominik Salvet wrote:
+> 
+> > Now, I want to refresh the repository the same way - fetching only
+> > commits from the master branch and tags that are pointing to the
+> > master branch and also refresh those tags as well in case of their
+> > target commit change at the remote (you can expect that it always
+> > points to a master commit). Nevertheless, I don't really know how to
+> > do it. The closest I got, are the following commands:
+> >
+> > ```sh
+> > git fetch --tags origin master &&
+> > git merge FETCH_HEAD
+> > ```
+> >
+> > However, there obviously are some problems with this solution. The
+> > `--tags` flag will cause to fetch tags from all branches. Furthermore,
+> > it will fetch also their commits, which is absolutely what I don't
+> > want to.
+> >
+> > I have Git 2.17.1 (on Ubuntu 18.04.2) and in its `git fetch --help` is
+> > stated, if I understood it correctly, that without passing neither
+> > `--tags` nor `--no-tags`, it will do exactly what I want.
+> > Nevertheless, without using any of the mentioned flags, it behaves
+> > more like using `--no-tags`.
+> 
+> Generally yes, that's how it's supposed to work. However, I think tag-
+> following does not kick in when you've given a specific refspec.
+> 
+> So take this toy setup for example:
+> 
+> -- >8 --
+> git init repo
+> cd repo
+> 
+> # one tags accessible from master
+> git commit --allow-empty -m one
+> git tag one
+> 
+> # one tag accessible only from "other"
+> git checkout -b other
+> git commit --allow-empty -m two
+> git tag two
+> 
+> # now fetch into another repository
+> git init child
+> cd child
+> git remote add origin ..
+> git fetch origin master
+> -- 8< --
+> 
+> That won't pick up the "one" tag in that final fetch. But if you use the normal
+> configured refspec (but tell it only to grab "master"):
+> 
+>   git config remote.origin.fetch
+> refs/heads/master:refs/remotes/origin/master
+>   git fetch origin
+> 
+> then it works. I don't know if there's a less-awkward way to get what you
+> want, though. It really seems like there should be a "--tags=follow"
+> or similar.
 
-Oh, thank you, I missed that.
+This may be restating, but I had a received request a while back to fetch only tags commits known to the repository. The scenario here is as follows:
+
+git clone --depth=1 url-ish
+git fetch --depth=1 --tags
+
+This actually fetches all tags and expands the depth of the repository to the whole history to provide the basis for all of the tags. What I would have anticipated is that the HEAD commit from the depth=1, if it had a tag, would fetch that tag, and then expand the history of the tag in support of it, but only if the tag were signed. If the tag is not signed, I'm not sure that the history to build it is required, since the same argument could be made for the HEAD commit itself. If there was no tag on the HEAD commit, there would be no tag fetched in this situation.
+
+So to further the request above, a fetch of tags of known unsigned tags seems reasonable, in a depth restricted situation or a branch limited situation. In an island of sparceness situation, with gaps in the history, I can see how git describe would give wildly wrong answers, but having those gaps could break the validation of signed tags anyway.
+
+Of course, my expectations may be completely wrong here.
+
+Regards,
+Randall 
+
