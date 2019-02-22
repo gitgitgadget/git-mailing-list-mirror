@@ -2,126 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D86E91F453
-	for <e@80x24.org>; Fri, 22 Feb 2019 09:46:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 748A81F453
+	for <e@80x24.org>; Fri, 22 Feb 2019 09:52:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726135AbfBVJqv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 04:46:51 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:38687 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbfBVJqu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 04:46:50 -0500
-Received: by mail-io1-f68.google.com with SMTP id p18so1271249ioh.5
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 01:46:50 -0800 (PST)
+        id S1726122AbfBVJwm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 04:52:42 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:37222 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725915AbfBVJwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 04:52:41 -0500
+Received: by mail-wm1-f66.google.com with SMTP id x10so1346037wmg.2
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 01:52:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=FhCILuFoa1sZYpDECAO/FTHwmse9u5AFxgTreZ+F3gU=;
-        b=nfkM/IvZ0ld0IQkCLaxgI3n7a6Yj9kwtF3XRIcx7dve5i5+icHN9V5D4aEmOty0uR3
-         XnvlZVeRhtZk/Ftgl0XFqJzj4pWgnAaw2f3nLOC4x9/rLUrKLK4pg7mAd9i/teo3D2kM
-         2fL++UrFilso1AEhqcz69UvfcEcURFET0V/cyS2cIHGnFndPMuM8j7Zmu4S/ZUkPqFtI
-         NYV7ogHpIXNZ52vsNr9XzubN5mfdyyfVZKQrKdwbfPIS+R9e0fxq51aFe2C/cbBJfoqR
-         PeBxRRTKLUteyoRJZFP3FeGN3hnIUFqu4j3BA5MOlQGmVHHb5yCIB078D9gQ0lFWZjmj
-         pahg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=SnpIeZi4pGC8IOMzbUuKGKeZARg1h9mFP2Eua9weirw=;
+        b=QFzz2nmhgY9U2Ce3msmDmKUo8aGGlPoSVYlGJcBwC6v4u2z0IcSCP270F55FaENp+1
+         oCDGOVjzWU5p32ymxl8bEKvA975eLLTLGakX8kjj3hDWGCQFTBIEOUGqBmC2wz+pT1zA
+         N4yeFFdkfXrCK/fX5ee/Kje0PEUhaSHnef0WBgcu7B+FKTWRpQmky3ErOMz+2lLV3pT+
+         eLW4yrSseFCtJe1dW4JPyC1UNkzPTwFMcnxSUYqPTRSSJEF9B57AwV27vsar2IVuu0WZ
+         Koz0erJQqi8tHZlZPoSzx8YDocRq+dGQCcvYGgMDVpZsZHPGzDZSdUuigISk8JwkVeZ0
+         R9FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=FhCILuFoa1sZYpDECAO/FTHwmse9u5AFxgTreZ+F3gU=;
-        b=An4oikLQgdOCBj9UvRo+rtXfzj1g2Ym5ieTYdCcFML4XJQ/4i7xtmE+00VfRVpviWC
-         BD/m9LNUJYy24QYFIEFI1IEsiy/yw88fUTJtuFqaqiL/+5hPcs2ip3wr2A+1hzJtaSGg
-         0hCpUSt/+Sa+Y7njKJOWP3xZQy8v/UBtZ+BXdv3vwgmpu62zAD5zmumjTjh04Nyoxr0q
-         pnKFGQB/pp0bvr8x7pKUgml/gCXRAbxUx8Nw+peH4cM7Go+Tih3WPbrYdy7T+YWUORIf
-         FD6VHmVfi4t+/6vGYHQPjanqbKWuxnGjdq/7BDB62HrXSzicFaIqVUOS6RCmMYAcNiLa
-         VzYA==
-X-Gm-Message-State: AHQUAuakvm/hOdXLlFLVVGH81hxwJB7cohORDQMjgpMg5BROJPT95v9G
-        +g5auC/ceLoow/0H+8CTz2CWiBhRscnH7xJvPS0=
-X-Google-Smtp-Source: AHgI3IbCpXWpY2pgzOmrIvkA+vTFZqmlnW2pQc2JRN2cVxKGY2KZv7Hi10HjnAPEOLwAPnnkrwoIo5JC+J08/WzImpQ=
-X-Received: by 2002:a5e:8416:: with SMTP id h22mr1812016ioj.118.1550828809640;
- Fri, 22 Feb 2019 01:46:49 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=SnpIeZi4pGC8IOMzbUuKGKeZARg1h9mFP2Eua9weirw=;
+        b=oCVuNM/1LIB0nxCr7HzboF/4W+Nc3FflWmchZVNcj37sKCScS0YVchKSAn4/rd967v
+         JzJfB03G23y1mClrKdwK2V1QyozPxz3Uggr7pF4jy6BBRaN8CtMIzDggQekc4owXkyLJ
+         7Ka6EeLWkdQjNHodVBaeKqancuQRn8jB/wiSoGPKv4uX1zf7pbN25CDKFyZF2yytgY2v
+         oih6byG/lB4ds+/PoROXVLVHHwmKr1yQ3fu1W4xinlqLnk4zqNxKi6AG4cV9/tuBqBHv
+         COPolI9QtvEWdYD82jy8220OYWe7246UAdeoF3CHrtRdF14aTw2glEfADdTVl2JNZY4i
+         b0LQ==
+X-Gm-Message-State: AHQUAubJTMm1qkCo8QKhjEDfeq73bGJ1pJ0SiA0bbSrBBF6RtNJC3LYj
+        mIAA8c67958lSJnozGJpk0s=
+X-Google-Smtp-Source: AHgI3IbyIrWXDW0kUiMtNkrFR1jdfW9x1tMVYzgkEtJWDV7ZuTYYufmYAKJVwaVn08F4ApzM48inIA==
+X-Received: by 2002:a1c:f901:: with SMTP id x1mr1894308wmh.84.1550829159858;
+        Fri, 22 Feb 2019 01:52:39 -0800 (PST)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id u134sm713482wmf.21.2019.02.22.01.52.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 22 Feb 2019 01:52:38 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Ideas for even more compact fetch.output=compact output
+References: <20190125095122.28719-1-pclouds@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190125095122.28719-1-pclouds@gmail.com>
+Date:   Fri, 22 Feb 2019 10:52:38 +0100
+Message-ID: <875ztc5evt.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20190216114938.18843-1-pclouds@gmail.com> <20190216114938.18843-2-pclouds@gmail.com>
- <87wolzo7a1.fsf@evledraar.gmail.com> <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com>
- <xmqq8syb3b3j.fsf@gitster-ct.c.googlers.com> <87h8cy6cme.fsf@evledraar.booking.com>
- <CACsJy8B15hORnaOdYW8TNE3Gniv9NBJopyLYmHR5iF0U3beq6g@mail.gmail.com> <B168DCB1-7A69-4729-89C7-B513464DD468@gmx.net>
-In-Reply-To: <B168DCB1-7A69-4729-89C7-B513464DD468@gmx.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 22 Feb 2019 16:46:23 +0700
-Message-ID: <CACsJy8C377NmLv9edNYjinKAQf-P1y5+Nwhdj3vRkz_E__x43Q@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Introduce "precious" file concept
-To:     Clemens Buchacher <drizzd@gmx.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Holger Hellmuth <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 20, 2019 at 6:11 PM Clemens Buchacher <drizzd@gmx.net> wrote:
-> >And requiring to mark trashable files manually duplicates a
-> >lot of ignore patterns. Have a look at any .gitignore file, the
-> >majority of them is for discardable files because "ignored" class was
-> >created with those in mind (*.o and friends). So now you would need to
-> >add more or less the same set of ignore rules in .gitattributes to
-> >mark them trashable, and gitignore/gitattributes rules are not exactly
-> >compatible, you can't just blindly copy them over. Every time you add
-> >one more .gitignore rule, there's a good chance you need to add a
-> >similar rule for trashable attribute.
+
+On Fri, Jan 25 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+
+> I have a remote named "jch" and it has a branch with the same name. And
+> fetch.output is set to "compact". Fetching this remote looks like this
 >
-> I agree that ignored precious files are typically a small subset of the i=
-gnore files. Maintaining separate rules for ignored files and for trashable=
- files would result in a lot of duplication.
+>  From https://github.com/gitster/git
+>   + eb7fd39f6b...835363af2f jch                -> */jch  (forced update)
+>     6f11fd5edb..59b12ae96a  nd/config-move-to  -> jch/*
+>   * [new branch]            nd/diff-parseopt   -> jch/*
+>   * [new branch]            nd/the-index-final -> jch/*
 >
-> On the other hand, how frequently do we really have to trash ignored file=
-s? Trashing a file should only be necessary if a tracked file overwrites an=
- ignored file. When does this happen? I don't think it will happen for *.o =
-files. So in most cases, there is simply no need to specify which files are=
- precious. The default could simply be that all files are precious.
+> Notice that the local side of branch jch starts with "*" instead of
+> ending with it like the rest. It's not exactly wrong. It just looks
+> weird.
 >
-> To support more complex use cases, we could specify precious files in add=
-ition to ignored files. Only if we specify precious files (and/or enable th=
-e ignored-are-trashable config option on a repository level), all other fil=
-es become trashable.
+> This patch changes the find-and-replace code a bit to try finding prefix
+> first before falling back to strstr() which finds a substring from left
+> to right. Now we have something less OCD
 >
-> Functionally this is equivalent the newbie option which you suggest, but =
-I think it is not an issue of newbie vs experienced users but an issue of c=
-ommon vs special use cases.
+>  From https://github.com/gitster/git
+>   + eb7fd39f6b...835363af2f jch                -> jch/*  (forced update)
+>     6f11fd5edb..59b12ae96a  nd/config-move-to  -> jch/*
+>   * [new branch]            nd/diff-parseopt   -> jch/*
+>   * [new branch]            nd/the-index-final -> jch/*
 
-So far the two conflicting cases are "git checkout/merge" and "git
-clean". Ignored files are valuable by default in the former, while
-it's expendable by default in the latter.
+This patch works great. The existence of fetch.output=3Dcompact had
+somehow passed me by until a few weeks ago, now using it and it looks
+great. Thanks.
 
-So if you add this ignored-are-trashable config key (defaults to
-false), git-clean -if will not do anything anymore. We _could_ advice
-the user to turn the config on (with all the consequences). I don't
-know if we have any other use cases that deserve the same advice.
+Just using this as a bounce-off point for a related discussion, one case
+where I still see duplicates is things like:
 
-Another option is simply leave the expendable/precious nature of
-ignored files undefined like it is now and handle case by case:
+    From github.com:git/git
+       a7da99ff1b..28d0017056  next                -> origin/*
+     + e911e946c2...9cc6aca6e9 pu                  -> origin/*  (forced upd=
+ate)
+       a7da99ff1b..28d0017056  refs/pull/412/head  -> origin/pull/412/head
+     + 1dbcd06490...6b1f08d3ef refs/pull/412/merge -> origin/pull/412/merge=
+  (forced update)
+     + e911e946c2...9cc6aca6e9 refs/pull/444/head  -> origin/pull/444/head =
+ (forced update)
+     + 8131760e3b...ed5bbbbcec refs/pull/444/merge -> origin/pull/444/merge=
+  (forced update)
 
- - git-clean learns to use a new attribute "clean". Undefined
-attribute is seen as +clean. To keep some files "precious" you update
-.gitattributes and add -clean rules.
- - git merge/checkout learns another attribute,
-checkout-overwrite-ignore? Undefined attribute is seen as
--checkout-overwrite-ignore (i.e. abort the operation).
+I.e. the duplicate strings for the "pull" namespace I'm fetching.
 
-We stay away from any generic attribute name in this direction to make
-clear it's only applicable to specific use cases.
---=20
-Duy
+Now, there's no room with the current syntax to represent that
+unambiguously, I started to patch it, but wasn't sure I liked the syntax
+I came up with.
+
+This is also one of the rare cases where bikeshedding the idea can
+productively done without a patch so I thought I'd start that discussion
+first.
+
+If we had this:
+
+    From github.com:git/git
+       a7da99ff1b..28d0017056  next                -> origin/*
+     + e911e946c2...9cc6aca6e9 pu                  -> origin/*  (forced upd=
+ate)
+       a7da99ff1b..28d0017056  refs/[pull/412/head]  -> origin/*
+     + 1dbcd06490...6b1f08d3ef refs/[pull/412/merge] -> origin/*  (forced u=
+pdate)
+     + e911e946c2...9cc6aca6e9 refs/[pull/444/head]  -> origin/*  (forced u=
+pdate)
+     + 8131760e3b...ed5bbbbcec refs/[pull/444/merge] -> origin/*  (forced u=
+pdate)
+
+We could de-duplicate such output. I.e. used [] as "capture" delimiters
+for the subsequent "*" since "[" and "]" aren't valid in ref names (but
+"()" and "{}" are!).
+
+Or maybe more generally using it consistently throughout, also for next/pu:
+
+    From github.com:git/git
+       a7da99ff1b..28d0017056  [next]                -> origin/*
+     + e911e946c2...9cc6aca6e9 [pu]                  -> origin/*  (forced u=
+pdate)
+       a7da99ff1b..28d0017056  refs/[pull/412/head]  -> origin/*
+    [...]
+
+The things that suck the most about this are that you can no longer
+copy/paste the ref on the LHS as-is, and that it'll only show up in rare
+cases, so it'll probably confuse even experienced users.
+
+What do you think?
