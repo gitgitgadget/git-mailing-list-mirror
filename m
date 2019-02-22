@@ -2,63 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A092B1F453
-	for <e@80x24.org>; Thu, 21 Feb 2019 23:55:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1F331F453
+	for <e@80x24.org>; Fri, 22 Feb 2019 00:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726318AbfBUXzm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 18:55:42 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34980 "EHLO
+        id S1726311AbfBVALx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Feb 2019 19:11:53 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34988 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726267AbfBUXzm (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Feb 2019 18:55:42 -0500
+        by vger.kernel.org with ESMTP id S1726035AbfBVALx (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Feb 2019 19:11:53 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:3dc7:72ec:75fa:fee5])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A25ED60489;
-        Thu, 21 Feb 2019 23:55:39 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DE70260489;
+        Fri, 22 Feb 2019 00:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1550793340;
-        bh=MdLaOVGUJPJnATdEkBem89+o6UefXqJ5oWPZZw+PzC8=;
+        s=default; t=1550794311;
+        bh=CKXF/wkjSf1WsoqtUuBjVScLrI3F38HxufgtJwvO3t4=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=CfM65odq0oOp8xwg6p8qbcJgcpHZw7jJ4a1m9PZWnGt2cdW5HDF9M8F170W+FSonD
-         h9em+tmVKRFc38npAYD5/cnYZbdKrYdgKCTIyqdq+nPTb0byifgIaD6VGzNC6P2nj4
-         7hIiVtuu5Q+mOM3hGw2W0ECQXPFuUIKsPLIjqOcl1szhiH6z4fKwN9s+8+4kSdHrUo
-         d60orX0Ks/6IxmkQPk+llPOo5ZJcq+lHY64YIcZ/pZNjILHc7G1+0GFAT9sDwo/SRJ
-         3B6ABGLTCSBz8WmmwdonPOxvpoGJwA0wUNtEWjqqjS4/VoVd+oMtICLgOXsiUJLO+x
-         YylRxpx2Fpb32rzTo1vr69MaqEbvf6To3tvtS9VeRp8DDJMpgei911U+hyylNCrxqi
-         PNSYhV14of1dpJ4lTVQVUzFig/yTX+rbldxWOQ1cLFt2uh2tDLzVNXPKU5/TtGgZxM
-         PO6jDTIwSlg5Wo/ugb5PTlRsoQ/XusmYV276c+YCXrZA15i++J/
-Date:   Thu, 21 Feb 2019 23:55:34 +0000
+        b=Y8s7NXCpSvRE5Z74pE4gTmGrYHHTYddgvu2xhqfDABTOD4KZRODBj0ai2LtmBhQNS
+         1fJr8llkCGGM/NWJHigYJC6EUOlCJqG9QCD0ile06hD3j2i9hziHmflugwnRGCrzp2
+         8bSyrJth1Fu7jco4qBYQf+F6wCpkjjm8dFrogpCZmVyaCokX81UZ2ugaHtlaCeQJIa
+         3aQ0EiGVFTbh0Cb8/wleW2wjuFKxJ47ACKawyP8AhKUjooRK5RhpBNlVOMCvS30lwt
+         wi+WhIU54FIV7ok5FwVAHGAdSVCco+BKhpnqgdF0rcKEYfzD5G2jY4QZyfXFNSchXw
+         FNZO90i0KOlNftjra5Lrf/lqBKtnkgOO2yS9BS1VXl884uoWhzxPS4aNgi/kerPNZd
+         I+fQTNdsAYhjd2+zzJ67T26XDwEUnGeR0787Lr12bhi89z1Je+8+v5dO3AIbAG5/lF
+         yB1MmOIB7DJA8oZga8SwjsqYAkLDvo909RQRKuw8zFF9fJ/mTvu
+Date:   Fri, 22 Feb 2019 00:11:46 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] Git v2.21.0-rc2
-Message-ID: <20190221235534.GC488342@genre.crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
+        <stdedos@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: git format-patch can clobber existing patch
+Message-ID: <20190222001145.GD488342@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com>
- <012601d4c8b5$54f1b730$fed52590$@nexbridge.com>
- <xmqqftsiw8l8.fsf@gitster-ct.c.googlers.com>
- <CACsJy8D=-+TqZSf1oyTJs_O+=KAV66OE_As5cTKXxHoXAhzkGw@mail.gmail.com>
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= <stdedos@gmail.com>,
+        git <git@vger.kernel.org>
+References: <CAHMHMxVdpOnTkf9RHzCa+YjjvpqJApsSE03Jjyb_VbJp_4q-jw@mail.gmail.com>
+ <CAHMHMxUfjnNXFikVD=rys_t5BUho=7uRw4LsXgAphFwSf3xOnw@mail.gmail.com>
+ <xmqqpnrksobq.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="OBd5C1Lgu00Gd/Tn"
+        protocol="application/pgp-signature"; boundary="NklN7DEeGtkPCoo3"
 Content-Disposition: inline
-In-Reply-To: <CACsJy8D=-+TqZSf1oyTJs_O+=KAV66OE_As5cTKXxHoXAhzkGw@mail.gmail.com>
+In-Reply-To: <xmqqpnrksobq.fsf@gitster-ct.c.googlers.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.19.0-2-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -69,52 +65,57 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---OBd5C1Lgu00Gd/Tn
+--NklN7DEeGtkPCoo3
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 21, 2019 at 08:10:00PM +0700, Duy Nguyen wrote:
-> On Thu, Feb 21, 2019 at 2:41 AM Junio C Hamano <gitster@pobox.com> wrote:
-> > Another mention of /dev/zero appears in t/helper/test-sha1.sh (not
-> > to be confused with t/helper/test-sha1.c).  This seems to be run
-> > only with an explicit "make -C t/helper check-sha1" request, so
-> > perhaps nobody on your platform ran it to get hit by it.  I wonder
-> > if anybody runs this on any platform, to be honest, though.
+On Thu, Feb 21, 2019 at 03:40:09PM -0800, Junio C Hamano wrote:
+> =CE=A3=CF=84=CE=B1=CF=8D=CF=81=CE=BF=CF=82 =CE=9D=CF=84=CE=AD=CE=BD=CF=84=
+=CE=BF=CF=82  <stdedos@gmail.com> writes:
+> > Would it make sense / be easy enough to have some clobbering check / fl=
+ag?
 >=20
-> I vaguely remember Brian added something to test SHA-512 performance
-> but I can't find it. Maybe when he adds something (if it's not there
-> already) we can retire this script, or update it to check sha-512 too.
+> Given that use of '-o' to redirect to a fresh/new directory would
+> reduce the risk of such clobbering, and use of '-v' to force
+> different filenames would reduce the risk of such clobbering,
+> it seems to me that aborting the operation when we fail to open
+> the output, without any option to override and allow clobbering,
+> would make sense.  If existing files record 4 patch series
+> 0001-x.patch, 0002-y.patch, 0003-z.patch, and 0004-w.patch, and you
+> generate with "format-patch --allow-clobbering" a three-patch series,
+> it would overwrite 0001 thru 0003 but will not remove 0004, so the
+> end result will still be confusing.
 
-Doing git blame on that script seems to show that it was written mostly
-by Junio. I think you may be thinking of test-tool hash-speed, which can
-be used to benchmark a hash implementation. That's what I used for most
-of my testing.
+I think a flag for this would be useful. For people that store tarballs
+(or pristine-tar files) and patches in their repository, overwriting the
+existing files is definitely desired.
 
-We may not need both anymore, though.
+My personal preference is that the flag be --no-clobber, but I can see
+arguments for the other side as well.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---OBd5C1Lgu00Gd/Tn
+--NklN7DEeGtkPCoo3
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.12 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxvOnYACgkQv1NdgR9S
-9osU9hAAlmkjtTYMooKaSmKD246Cc6Zi/Ph8+cnUw7FzvVTdG2v3ohF0UP1iyBTc
-/paZKAy4dwNY1dKHG4DyAeFEWd/UM9jjoZBIPYSALIUOt3+CEXAph+b2wu1+0BcJ
-1McyER2oUnmKJEpZBvOyPl7KN/jzDcbdfYC3AAARIyxN3Ew1lPvqLNS5LG5olv/u
-U7Otqf44Xa/A5w6Zx04azAznPVOxiNrp3vz3RAorZlERQjO0J4NPgtvyLBHZ2i2s
-tde1SsZfuSo/oHBhqws/60xIx4Efng1y4fkp+iXzTG5QMsIVufYhIdUB37p4ECxZ
-TmMElOGzcc9E4xxneS94DwTBE9lO/WsQ4NmMsujXJXo9To29/GZaqjf+I2BQZaCx
-IWdkimGhbTg6t1PXq47fkbam00dqwi0RX6fRreKPb7CWKof4S5xQc/0REE0felFt
-39ein/hIGyHAk/pT7RsXhS0q4uou2Mzb6lU6Im7UaeueokOLe1Rur+m/f7j5SCII
-UiJr+E6PGa+BDUksvPWDJ79qYGR/Z8h5P3XYnmh5LMb1FxGnRfFXA9AK3oIZy8fV
-GjJGcuFf+o0zkHG+LULDmzcFgwUc1nGOgMz/6zACtyq1D6v23TDOu7+eC2Ilrh+b
-WAKTyUg3yawJ8kqK1sf9cTY0zzaKonW90bbai99rJ1+DAF81wO8=
-=NhzF
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxvPkEACgkQv1NdgR9S
+9ouzpRAAhitX3pSdNbZylpghkYAwG+1FQpGE/JIP3Teh4vP1fGuBflKigq7/fsIk
+R0RSBhx8mLmZh42aD08kBtT2IWa9+MzgUmunjZ68OLv2ZDWHzteu8wiyHsy9pVF0
+7TGaHCWvEpj28Dct8/zte3SbH4gsk7Ptn1zRcqlTWDzceaycid3W2gQUC2BDFSqR
++iHe9gKREv9InTy7reg46EXAi3+yvUmnTgmrDciDtUk+O+IV/G+effYOSKuZ/E0W
+I3kLC9+tmmE5sOEP0FjKDB/fZ+w/Dlt+xzscNS1GP+zyEFlC2x0DSF37ItwjQ+U1
+KyIAEyVY2oilrLO/w+LV4pJljilpXRpUGYdbXfM/VkIDn+eHtOLSEU4ZLHTUWSPH
+dsszeZZYXkk/aJlGNlgKilw/wa+X/y1GoLyUqnUU/joWWtDqP0pzWW4zRT7lZInO
+CWvyHyY0wD1RKCic+Kse6VGzh5Cxsd3QR2/QrW/Bg7gP2l4QkVow518xwjwu8We6
+jNeL1U6665ei5R4wbqacKpwcG4uM7XxcQ7jlu+2wYNUmCaRHlzXu6ZtH/+pfVWVL
+KYKfCNaW8uqVX8p5IuerC1SWMCnNZEEUVHfzRcO7iAgopb3lowjq+195dyxaxI2w
+zwgKs783oRpcU8RKdHXZCWyRtucNDs/SkIcBmhxX0emAcGDRzVU=
+=XgX4
 -----END PGP SIGNATURE-----
 
---OBd5C1Lgu00Gd/Tn--
+--NklN7DEeGtkPCoo3--
