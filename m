@@ -8,192 +8,239 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9FF220248
-	for <e@80x24.org>; Fri, 22 Feb 2019 16:05:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C4DC20248
+	for <e@80x24.org>; Fri, 22 Feb 2019 16:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727276AbfBVQFr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 11:05:47 -0500
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:35960
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727228AbfBVQFr (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 22 Feb 2019 11:05:47 -0500
+        id S1727294AbfBVQFt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 11:05:49 -0500
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:41308
+        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727145AbfBVQFs (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 22 Feb 2019 11:05:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1550851545;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=KIwMEX8isseoq2YJTm0KpxNxDPKxdNGF0UHcKIjFw7Q=;
-        b=ZbqcHQaUWcwfAkTuVdkQWXL9GodYVhyRSvQ/MPhHQci98s8QmKOxSoBejI4Cpgt8
-        fN5l8LvOmdDcJORv6CbnuhKxGa/Aum6ITyjzLwQkmRX0SCYVvQ4crO9/tFZ/63FDbe3
-        o+gtlRW1YGAq55MKLhjdMzHFjy2cycgIZKngxWmU=
+        bh=nI4xNrV9odkN5qeCI6Lq6X6D7q9HrKyjucidS8bLDqI=;
+        b=P+C5TNInw+8aMUv5hlX5k9WXZ9Rx8A5E2RLM7/BeB3yOjq4NBfvcXybwk8GMrrro
+        JAPz1RMepQQow/YXl4JhwwJNXyPF/vvrdFNRT4rol12Ub460WrALe4k3AgVfMuenUon
+        ioL4TGj/u+lUwqTPkvkEHXDBXHPGi/+ikXRpHhrw=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016915f49a66-7e179c2f-b7d4-4d4d-935f-ff1431f86a77-000000@eu-west-1.amazonses.com>
+Message-ID: <0102016915f49a72-81347643-bf78-47fe-8cee-d22ce2a18db0-000000@eu-west-1.amazonses.com>
 In-Reply-To: <0102016915f499b8-5813fc52-230b-469e-b939-a1244e83a2b9-000000@eu-west-1.amazonses.com>
 References: <0102016915f499b8-5813fc52-230b-469e-b939-a1244e83a2b9-000000@eu-west-1.amazonses.com>
-Subject: [PATCH RFC 14/20] cat-file: move print_object_or_die to ref-filter
+Subject: [PATCH RFC 18/20] cat-file: get rid of expand_data
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Fri, 22 Feb 2019 16:05:45 +0000
-X-SES-Outgoing: 2019.02.22-54.240.7.12
+X-SES-Outgoing: 2019.02.22-54.240.7.20
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move printing function to ref-filter, it is logical because
-we move all formatting/printing logic to ref-filter.
-It could be much better if we embed this logic into current
-flows in ref-filter, but it looks like the task for another patch.
+Clean up cat-file after moving all formatting logic
+to ref-filter.
+We do not need to use struct expand_data anymore.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 ---
- builtin/cat-file.c | 51 ---------------------------------------------
- ref-filter.c       | 52 ++++++++++++++++++++++++++++++++++++++++++++++
- ref-filter.h       |  3 +++
- 3 files changed, 55 insertions(+), 51 deletions(-)
+ builtin/cat-file.c | 43 +++++++++++++++++++++++--------------------
+ ref-filter.c       | 11 ++++++++++-
+ ref-filter.h       | 12 ------------
+ 3 files changed, 33 insertions(+), 33 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 2066ff1e697e4..6c0cbf71f0f0c 100644
+index 6fa100d1bea72..ee7557e1e0975 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -226,57 +226,6 @@ static size_t expand_format(struct strbuf *sb, const char *start, void *data)
- 	return end - start + 1;
- }
+@@ -28,8 +28,6 @@ struct batch_options {
+ };
  
--static void print_object_or_die(struct expand_data *data, int cmdmode,
--				int buffered, const char *rest)
--{
--	const struct object_id *oid = &data->oid;
--	unsigned long size;
--	char *contents;
--
--	assert(data->info.typep);
--
--	if (data->type != OBJ_BLOB) {
--		enum object_type type;
--		contents = read_object_file(oid, &type, &size);
--		if (!contents)
--			die("object %s disappeared", oid_to_hex(oid));
--		if (type != data->type)
--			die("object %s changed type!?", oid_to_hex(oid));
--		if (data->info.sizep && size != data->size)
--			die("object %s changed size!?", oid_to_hex(oid));
--
--		write_or_die(1, contents, size);
--		free(contents);
--		return;
--	}
--
--	if (buffered)
--		fflush(stdout);
--	if (!cmdmode) {
--		if (stream_blob_to_fd(1, oid, NULL, 0))
--			die("unable to stream %s to stdout", oid_to_hex(oid));
--		return;
--	}
--
--	if (!rest)
--		die("missing path for '%s'", oid_to_hex(oid));
--
--	if (cmdmode == 'w') {
--		if (filter_object(rest, 0100644, oid, &contents, &size))
--			die("could not convert '%s' %s", oid_to_hex(oid), rest);
--	} else if (cmdmode == 'c') {
--		enum object_type type;
--		if (!textconv_object(the_repository, rest, 0100644, oid, 1,
--				     &contents, &size))
--			contents = read_object_file(oid, &type, &size);
--		if (!contents)
--			die("could not convert '%s' %s", oid_to_hex(oid), rest);
--	} else
--		BUG("invalid cmdmode: %c", cmdmode);
--	write_or_die(1, contents, size);
--	free(contents);
--}
--
+ static const char *force_path;
+-/* global rest will be deleted at the end of this patch */
+-static const char *rest;
+ 
+ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 			int unknown_type)
+@@ -170,16 +168,19 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
  static void batch_object_write(const char *obj_name,
  			       struct strbuf *scratch,
  			       struct batch_options *opt,
-diff --git a/ref-filter.c b/ref-filter.c
-index 65b94ea21e54f..68d9741a56468 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -20,6 +20,7 @@
- #include "commit-slab.h"
- #include "commit-graph.h"
- #include "commit-reach.h"
-+#include "streaming.h"
+-			       struct expand_data *data)
++			       struct ref_array_item *item)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+-	struct ref_array_item item = { data->oid };
+-	item.request_rest = rest;
+-	item.check_obj = 1;
++	/*
++	 * TODO: get rid of memory leak. The best way is to reuse ref_array
++	 * in batch_objects and then call ref_array_clear.
++	 */
++	item->value = 0;
++	item->check_obj = 1;
+ 	strbuf_reset(scratch);
  
- static struct ref_msg {
- 	const char *gone;
-@@ -2366,3 +2367,54 @@ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
+-	if (format_ref_array_item(&item, &opt->format, scratch, &err)) {
+-		printf("%s missing\n", obj_name ? obj_name : oid_to_hex(&item.oid));
++	if (format_ref_array_item(item, &opt->format, scratch, &err)) {
++		printf("%s missing\n", obj_name ? obj_name : oid_to_hex(&item->oid));
+ 		fflush(stdout);
+ 		return;
+ 	}
+@@ -189,7 +190,7 @@ static void batch_object_write(const char *obj_name,
+ 	strbuf_release(&err);
  
+ 	if (opt->print_contents) {
+-		print_raw_object_or_die(&item, opt->cmdmode, opt->buffer_output);
++		print_raw_object_or_die(item, opt->cmdmode, opt->buffer_output);
+ 		write_or_die(1, "\n", 1);
+ 	}
+ }
+@@ -197,14 +198,14 @@ static void batch_object_write(const char *obj_name,
+ static void batch_one_object(const char *obj_name,
+ 			     struct strbuf *scratch,
+ 			     struct batch_options *opt,
+-			     struct expand_data *data)
++			     struct ref_array_item *item)
+ {
+ 	struct object_context ctx;
+ 	int flags = opt->follow_symlinks ? GET_OID_FOLLOW_SYMLINKS : 0;
+ 	enum get_oid_result result;
+ 
+ 	result = get_oid_with_context(the_repository, obj_name,
+-				      flags, &data->oid, &ctx);
++				      flags, &item->oid, &ctx);
+ 	if (result != FOUND) {
+ 		switch (result) {
+ 		case MISSING_OBJECT:
+@@ -242,12 +243,12 @@ static void batch_one_object(const char *obj_name,
+ 		return;
+ 	}
+ 
+-	batch_object_write(obj_name, scratch, opt, data);
++	batch_object_write(obj_name, scratch, opt, item);
+ }
+ 
+ struct object_cb_data {
+ 	struct batch_options *opt;
+-	struct expand_data *expand;
++	struct ref_array_item *item;
+ 	struct oidset *seen;
+ 	struct strbuf *scratch;
+ };
+@@ -255,8 +256,8 @@ struct object_cb_data {
+ static int batch_object_cb(const struct object_id *oid, void *vdata)
+ {
+ 	struct object_cb_data *data = vdata;
+-	oidcpy(&data->expand->oid, oid);
+-	batch_object_write(NULL, data->scratch, data->opt, data->expand);
++	oidcpy(&data->item->oid, oid);
++	batch_object_write(NULL, data->scratch, data->opt, data->item);
  	return 0;
  }
-+
-+void print_object_or_die(struct expand_data *data, int cmdmode,
-+			 int buffered, const char *rest)
-+{
-+	const struct object_id *oid = &data->oid;
+ 
+@@ -306,20 +307,20 @@ static int batch_objects(struct batch_options *opt)
+ {
+ 	struct strbuf input = STRBUF_INIT;
+ 	struct strbuf output = STRBUF_INIT;
+-	struct expand_data data;
+ 	int save_warning;
+ 	int retval = 0;
+ 	int is_rest = strstr(opt->format.format, "%(rest)") != NULL || opt->cmdmode;
+-	memset(&data, 0, sizeof(data));
+ 
+ 	if (opt->all_objects) {
+ 		struct object_cb_data cb;
++		struct ref_array_item item;
++		memset(&item, 0, sizeof(item));
+ 
+ 		if (repository_format_partial_clone)
+ 			warning("This repository has extensions.partialClone set. Some objects may not be loaded.");
+ 
+ 		cb.opt = opt;
+-		cb.expand = &data;
++		cb.item = &item;
+ 		cb.scratch = &output;
+ 
+ 		if (opt->unordered) {
+@@ -358,6 +359,8 @@ static int batch_objects(struct batch_options *opt)
+ 	warn_on_object_refname_ambiguity = 0;
+ 
+ 	while (strbuf_getline(&input, stdin) != EOF) {
++		struct ref_array_item item;
++		memset(&item, 0, sizeof(item));
+ 		if (is_rest) {
+ 			/*
+ 			 * Split at first whitespace, tying off the beginning
+@@ -369,10 +372,10 @@ static int batch_objects(struct batch_options *opt)
+ 				while (*p && strchr(" \t", *p))
+ 					*p++ = '\0';
+ 			}
+-			rest = p;
++			item.request_rest = p;
+ 		}
+ 
+-		batch_one_object(input.buf, &output, opt, &data);
++		batch_one_object(input.buf, &output, opt, &item);
+ 	}
+ 
+ 	strbuf_release(&input);
+diff --git a/ref-filter.c b/ref-filter.c
+index 45d163246e3f3..3f9bd2fc6a76a 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -65,7 +65,16 @@ struct refname_atom {
+ 	int lstrip, rstrip;
+ };
+ 
+-static struct expand_data oi, oi_deref;
++static struct expand_data {
++	struct object_id oid;
++	enum object_type type;
 +	unsigned long size;
-+	char *contents;
++	off_t disk_size;
++	struct object_id delta_base_oid;
++	void *content;
 +
-+	assert(data->info.typep);
-+
-+	if (data->type != OBJ_BLOB) {
-+		enum object_type type;
-+		contents = read_object_file(oid, &type, &size);
-+		if (!contents)
-+			die("object %s disappeared", oid_to_hex(oid));
-+		if (type != data->type)
-+			die("object %s changed type!?", oid_to_hex(oid));
-+		if (data->info.sizep && size != data->size)
-+			die("object %s changed size!?", oid_to_hex(oid));
-+
-+		write_or_die(1, contents, size);
-+		free(contents);
-+		return;
-+	}
-+
-+	if (buffered)
-+		fflush(stdout);
-+	if (!cmdmode) {
-+		if (stream_blob_to_fd(1, oid, NULL, 0))
-+			die("unable to stream %s to stdout", oid_to_hex(oid));
-+		return;
-+	}
-+
-+	if (!rest)
-+		die("missing path for '%s'", oid_to_hex(oid));
-+
-+	if (cmdmode == 'w') {
-+		if (filter_object(rest, 0100644, oid, &contents, &size))
-+			die("could not convert '%s' %s", oid_to_hex(oid), rest);
-+	} else if (cmdmode == 'c') {
-+		enum object_type type;
-+		if (!textconv_object(the_repository, rest, 0100644, oid, 1,
-+				     &contents, &size))
-+			contents = read_object_file(oid, &type, &size);
-+		if (!contents)
-+			die("could not convert '%s' %s", oid_to_hex(oid), rest);
-+	} else
-+		BUG("invalid cmdmode: %c", cmdmode);
-+	write_or_die(1, contents, size);
-+	free(contents);
-+}
++	struct object_info info;
++} oi, oi_deref;
+ 
+ /*
+  * An atom is a valid field atom listed below, possibly prefixed with
 diff --git a/ref-filter.h b/ref-filter.h
-index fc61457d4d660..3422f39e64b5b 100644
+index e8cd97a49632c..237eed9818949 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -157,4 +157,7 @@ struct ref_array_item *ref_array_push(struct ref_array *array,
- 				      const char *refname,
- 				      const struct object_id *oid);
+@@ -5,7 +5,6 @@
+ #include "refs.h"
+ #include "commit.h"
+ #include "parse-options.h"
+-#include "object-store.h"
  
-+void print_object_or_die(struct expand_data *data, int cmdmode,
-+			 int buffered, const char *rest);
-+
- #endif /*  REF_FILTER_H  */
+ /* Quoting styles */
+ #define QUOTE_NONE 0
+@@ -75,17 +74,6 @@ struct ref_filter {
+ 		verbose;
+ };
+ 
+-struct expand_data {
+-	struct object_id oid;
+-	enum object_type type;
+-	unsigned long size;
+-	off_t disk_size;
+-	struct object_id delta_base_oid;
+-	void *content;
+-
+-	struct object_info info;
+-};
+-
+ struct ref_format {
+ 	/*
+ 	 * Set these to define the format; make sure you call
 
 --
 https://github.com/git/git/pull/568
