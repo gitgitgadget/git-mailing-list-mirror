@@ -2,81 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9762D202AA
-	for <e@80x24.org>; Fri, 22 Feb 2019 13:18:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5770620248
+	for <e@80x24.org>; Fri, 22 Feb 2019 13:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726362AbfBVNSS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 08:18:18 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:39457 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726352AbfBVNSS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 08:18:18 -0500
-Received: by mail-qt1-f196.google.com with SMTP id o6so2372183qtk.6
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 05:18:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DMNrU3/B9xxorLgT2Bdmsoy94hyKO5s2nYkINKeBgBA=;
-        b=UJYnE8TwcsQlN/Mc3b7L7/JoEjfNW7++VRaHWiHm1uBr/zHwxpO84gXfjen53Luh4l
-         e6pl7Ud78tntW3D7kv8t//IWR0NdUXKJwlqsGdIDi6JeYYIeqnf9vdglUgSvSqYCMVUx
-         jUvL2a4OYFWwNedmSGfkt7YvCjJXCt9D2LdcGR9E+m6+6krdrWAjzP0XmB+dSyn459+I
-         QmNR6nkQLD42ruVpmxArd3BtPHY/+S/6VXZ61wA4/N/Gpu7Qi9vhnpkDZ/8FFEc+zk0w
-         L9hKXOGHOuy9LtZ+thMvPuln5xlewtXHjiNXvxLJ/rWBzvHl2mZu3wJqu76qxrzQkKtz
-         xhBQ==
-X-Gm-Message-State: AHQUAuY4JOKOn23dO64nOliOB/JekMdgqXqbt08Qb/m9h592nN+ev58k
-        DY3sS0cMk17W/Halp49ke6/wZCfFuFzlp/PG/PA=
-X-Google-Smtp-Source: AHgI3IYaCWosiBTJ/RfwKKbQURiC4HJONm4Gpkm9n8rKDNfL7DaIBdZtR/qCu3GnWrVhiCpqNFmAqN4Ew7QGXSSkrzI=
-X-Received: by 2002:aed:3fd9:: with SMTP id w25mr3003310qth.352.1550841496984;
- Fri, 22 Feb 2019 05:18:16 -0800 (PST)
+        id S1726441AbfBVNWQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 08:22:16 -0500
+Received: from cpanel4.indieserve.net ([199.212.143.9]:58198 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725944AbfBVNWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 08:22:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=BLRUUUB7lI06e/aPNzmSkp+LKSKD7NNXiH/1lD833VM=; b=MIsexhow4DzdAIgGTbsjBkdiTp
+        FgfOK6Bub2jza7qU1QTzwUUrhZJQ681c1gYweQwgeA7nI4jfUaEF6Jpo+YRQxb3obV8PTz6O3Jlfy
+        72fXnQYLHtK33Zbpj1QrI2D5mFc+AeeV5LtNgLojXhZ3WfdpuaISgHLSmVMQq6ughVLlSBZ2v9IGF
+        W1fbb74mBiBE/P9l6bkbVR+LYqH+Lp7qdrOaqILvcstE6mhAOyvWXRksNfH76gntb37EuFYXp5cd1
+        +Tp6QS/7euFX+d7RCfs1+0vhBx+EDW9OMfM9QPC2XHJMPleEs1XadSCGh/r24alE7tRGswW4g257G
+        dRJ61n6g==;
+Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:38044 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1gxAmL-00BLBg-V9
+        for git@vger.kernel.org; Fri, 22 Feb 2019 08:22:14 -0500
+Date:   Fri, 22 Feb 2019 08:22:12 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: how does one interpret "git diff <commit> ^<commit>"
+Message-ID: <alpine.LFD.2.21.1902220816010.6353@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-References: <cover.1550170980.git.jonathantanmy@google.com>
- <cover.1550780213.git.jonathantanmy@google.com> <b0ff17d324d46822da9db898d187dcc5fb0467ca.1550780213.git.jonathantanmy@google.com>
-In-Reply-To: <b0ff17d324d46822da9db898d187dcc5fb0467ca.1550780213.git.jonathantanmy@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 22 Feb 2019 08:18:06 -0500
-Message-ID: <CAPig+cQNg26zHm=ns3PsmPHEsNo4M7hTSG8=oO_uKqEa4wf3Vw@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] remote-curl: use post_rpc() for protocol v2 also
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 21, 2019 at 3:25 PM Jonathan Tan <jonathantanmy@google.com> wrote:
-> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-> @@ -542,7 +542,38 @@ test_expect_success 'clone with http:// using protocol v2' '
-> +test_expect_success 'clone big repository with http:// using protocol v2' '
-> +       test_when_finished "rm -f log" &&
-> +
-> +       git init "$HTTPD_DOCUMENT_ROOT_PATH/big" &&
-> +       # Ensure that the list of wants is greater than http.postbuffer below
-> +       for i in $(test_seq 1 1500)
-> +       do
-> +               # do not use here-doc, because it requires a process
-> +               # per loop iteration
-> +               echo "commit refs/heads/too-many-refs-$i" &&
-> +               echo "committer git <git@example.com> $i +0000" &&
-> +               echo "data 0" &&
-> +               echo "M 644 inline bla.txt" &&
-> +               echo "data 4" &&
-> +               echo "bla"
-> +       done | git -C "$HTTPD_DOCUMENT_ROOT_PATH/big" fast-import &&
 
-Although not outright wrong, maintaining an &&-chain in the loop body
-is a bit misleading here for a couple reasons. First, without "|| exit
-1" at the end of the body, neither the loop nor the test itself will
-abort early if some command within the body fails. Second, the exit
-status of the loop is lost anyhow due to being upstream of a pipe.
+  was perusing the git FAQ and ran across this:
 
-By the way, I see that this same script already contains a couple
-tests with loops neglecting the trailing "|| exit 1", hence they too
-fail to abort early if something goes wrong inside the body (which, in
-both cases, contains a test_commit() invocation). Fixing those might
-be fodder as a follow-up patch for someone.
+  How do I obtain a list of files which have changed in a given commit?
+
+     $ git diff --name-only <commit>^!
+
+
+after playing with "git rev-parse", i figured out that the above was
+equivalent to (using kernel "v4.19" tag as an example):
+
+$ git diff v4.19 ^v4.19^
+diff --git a/Makefile b/Makefile
+index bf3786e4ffec..69fa5c0310d8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,8 +2,8 @@
+ VERSION = 4
+ PATCHLEVEL = 19
+ SUBLEVEL = 0
+-EXTRAVERSION = -rc8
+-NAME = Merciless Moray
++EXTRAVERSION =
++NAME = "People's Front"
+
+ # *DOCUMENTATION*
+ # To see a list of typical targets execute "make help"
+$
+
+  but i get exactly the same output if i reverse the arguments:
+
+$ git diff ^v4.19^ v4.19
+diff --git a/Makefile b/Makefile
+index bf3786e4ffec..69fa5c0310d8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,8 +2,8 @@
+ VERSION = 4
+ PATCHLEVEL = 19
+ SUBLEVEL = 0
+-EXTRAVERSION = -rc8
+-NAME = Merciless Moray
++EXTRAVERSION =
++NAME = "People's Front"
+
+ # *DOCUMENTATION*
+ # To see a list of typical targets execute "make help"
+
+  so i'm confused as to how to "git diff" interprets and processes
+those two arguments, as "v4.19" is, of course, a reference to a
+specific commit, but "^v4.19^" appears to define all those commits not
+reachable from "v4.19^". how should one read this?
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
