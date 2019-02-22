@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEC4F20248
-	for <e@80x24.org>; Fri, 22 Feb 2019 20:11:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0906020248
+	for <e@80x24.org>; Fri, 22 Feb 2019 20:11:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726610AbfBVULU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 15:11:20 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:33030 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726261AbfBVULT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 15:11:19 -0500
-Received: by mail-wm1-f68.google.com with SMTP id h22so9629444wmb.0
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 12:11:18 -0800 (PST)
+        id S1726023AbfBVULW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 15:11:22 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51466 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726770AbfBVULW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 15:11:22 -0500
+Received: by mail-wm1-f65.google.com with SMTP id n19so3039788wmi.1
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 12:11:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZNDxXppE7nH0fWCErNbMZhZ1yF5puIu3VXNpVSWJHrQ=;
-        b=KdCAV/ziBJC0otZCAjytpwgkltEFWP8jLAPdyO8MDSwDnJTL9wRkZ6x8qj9lPQWKBl
-         esbBFp8COPz5oyq2p2iHIPo6a5fpypG6yA/QrPBURvVv0Uz8xMVb8pfe7KW94xTPRlG5
-         KyBpAiq9Xhyw7E/XYKKD7M2u6KlrqbcgsIbw6u8ljahffBQTfPnKcqs7s0woMbQkTjfM
-         QJwcjX7o3AI9diN+iyMxpKTEVGn6YCm88n/LlwDUr+Oyv8t9nLEKh+CDJb9C5fY2ncob
-         sRFelk+yU09SKGwbEkykQKI/1QIn9cS3uH7arSW1W7FUvABKg5BeNMD2XQyuXk/N8pFO
-         DCpg==
+        bh=MYg+qRPhzgJQ5b9SjZSbZuWQ/CsSGE+0ce2fhPvM/X8=;
+        b=BWpsUmTErhMADcEQq93COE0NtRBI3PGgWEuZUtWm9cly8JaRq3jxvF+5najWAKX4TJ
+         eyoI+IB8gfC1ylt9Y34qJbvohkMlUlRPo3MTK/jCf+4j0hh4iUilx2+E6kGvj55RUGKY
+         8ttQtBARg/HJon6zCYh3mqdlQYLr+Mnr4QIoMu6Wd8nZCKIKIjpGi5jc5Jg2mTRbJGkc
+         e/Q38BTq8yGBCrZP6nRJyjGsIpiU2NQM6OK2f4y4NlGZVzkW/nMSX1Vg/Ju/uMpaRdFm
+         NMzYSvudt1NoGgcOG7K9qJPdYjJQ4Dl4CJe14BJ60YRg9lrV+hYnCRMjz3ShF52Ag1qW
+         KLIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=ZNDxXppE7nH0fWCErNbMZhZ1yF5puIu3VXNpVSWJHrQ=;
-        b=EKBPUHaLKRlsEnuPMN/Z2nEdmsT2CBIgbTXWVMxJK/A+iF2b0DYHb42v64oGbVeOz+
-         dL1pmYiQ3ZYnq9l6WQonFlHoFTLazxsRgJqhiP/Wm80Ta3cI4XAQsQVOJA3a/RrAPNyY
-         nNJNB2VpeaQEJl2SBbR5KdyDcJ+2zFf6MdRy7C34l72LFcziHIXvX3y7hwhoD1/O8AjB
-         TbjeOGlULW8FMETiFt2Fx488XZyk80ms/C/GjLBRZh6I7jLhBI4W6y+1Ni57DdgijIZ5
-         36bEziw+N4b4XUSaRWSBLXcQwhOHemux6Ny3Ddzg5DYiQzOsRrB6SQipeEzgmTN2n9Xg
-         TFfw==
-X-Gm-Message-State: AHQUAuYI3h/YuU6ieGvlGWE3fLJ4dNTtCwSGmlyZ/JSw2d5LCj2BY02s
-        eIC+TmBYKbWKyocOWK/Y2yF0fMJF
-X-Google-Smtp-Source: AHgI3IY22O8rHVNuZ9q/UnJdUEpulNAsoi8snUser7rRxcPyNb9kvpIKQ8p7H4yhTY+vNjOv/t/Kvw==
-X-Received: by 2002:a1c:e701:: with SMTP id e1mr3456416wmh.1.1550866277191;
-        Fri, 22 Feb 2019 12:11:17 -0800 (PST)
+        bh=MYg+qRPhzgJQ5b9SjZSbZuWQ/CsSGE+0ce2fhPvM/X8=;
+        b=WegAi8J04e/sUJN96Cyoi9T1qmjKuUFB0otjqVl+YxWjSQ3+4xtaQ3WojhoAODSYSt
+         isL1rm2kR++MrGNfymD0VzUqQKPueaT69h8rEFQCY08tPN+aKwaVdwxnXGebsw2BUHqa
+         IGWCmJOu0ly6jKuUsJEqmD4i6AimBjJSBE7+9zzgAOU+1HfSM/alGT0WMu6OYLhTAyRe
+         4YCXKYtUfZQJh8ziRgwaTV39Gr0q2AhIs8wyilUn2x05EDCJPImbOVeD015Ap8NgmmPP
+         iEY9Cl6oO4sKrnvkxiDbxjPIg/elIFDI7JiOl4/RYUjQ1SL2qHhCarx2UtOmDgkmmKIL
+         zuTg==
+X-Gm-Message-State: AHQUAuYSqrhHiboMlgTyzuf/UedlkJEKkezKyHyZQgkYbK6es9juJMe3
+        l7DpE/LpiDLCE2Vu127pwfJ7jezI
+X-Google-Smtp-Source: AHgI3IZmoxyJY90dnCyWWBLppilldHq5rliddjD+qnslBd6KDgd64wWfdNBdwC01w3c6BDIHaWoHQw==
+X-Received: by 2002:a05:600c:224c:: with SMTP id a12mr3464541wmm.103.1550866279644;
+        Fri, 22 Feb 2019 12:11:19 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c8sm1312116wrx.6.2019.02.22.12.11.15
+        by smtp.gmail.com with ESMTPSA id a1sm3288830wrq.96.2019.02.22.12.11.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 22 Feb 2019 12:11:15 -0800 (PST)
+        Fri, 22 Feb 2019 12:11:17 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: [PATCH 2/3] format-patch: notice failure to open cover letter for writing
-Date:   Fri, 22 Feb 2019 12:11:10 -0800
-Message-Id: <20190222201111.98196-3-gitster@pobox.com>
+Subject: [PATCH 3/3] format-patch: --no-clobber refrains from overwriting output files
+Date:   Fri, 22 Feb 2019 12:11:11 -0800
+Message-Id: <20190222201111.98196-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.21.0-rc2
 In-Reply-To: <20190222201111.98196-1-gitster@pobox.com>
 References: <20190222201111.98196-1-gitster@pobox.com>
@@ -64,46 +64,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The make_cover_letter() function is supposed to open a new file for
-writing, and let the caller write into it via FILE *rev->diffopt.file
-but because the function does not return anything, the caller does not
-bother checking the return value.
+If you keep an output for an older iteration of the same topic in
+the same directory around and use "git format-patch" to prepare a
+newer iteration of the topic, those commits that happen to be at the
+same position in the series that have not been retitled will get the
+same filename---and the command opens them for writing without any
+check.
 
-Make sure it dies, instead of keep going with a NULL output
-filestream and relying on it to cause a crash, when it fails to
-open the file.
+Existing "-o outdir" and "-v number" options are both good ways to
+avoid such name collisions, and in general helps to give good ways
+to compare the latest iteration with older iteration(s), but let's
+see if "--no-clobber" option that forbids overwrting existing files
+would also help people.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/log.c           | 2 +-
- t/t4014-format-patch.sh | 6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ Documentation/git-format-patch.txt |  8 +++++++-
+ builtin/log.c                      | 32 ++++++++++++++++++++++++------
+ t/t4014-format-patch.sh            | 16 +++++++++++++++
+ 3 files changed, 49 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 1af85d404f..540822b3b4 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -25,7 +25,7 @@ SYNOPSIS
+ 		   [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
+ 		   [--interdiff=<previous>]
+ 		   [--range-diff=<previous> [--creation-factor=<percent>]]
+-		   [--progress]
++		   [--progress] [--[no-]clobber]
+ 		   [<common diff options>]
+ 		   [ <since> | <revision range> ]
+ 
+@@ -93,6 +93,12 @@ include::diff-options.txt[]
+ 	Use <dir> to store the resulting files, instead of the
+ 	current working directory.
+ 
++--clobber::
++--no-clobber::
++	(experimental)
++	Allow overwriting existing files, which is the default.  To
++	make the command refrain from overwriting, use `--no-clobber`.
++
+ -n::
+ --numbered::
+ 	Name output in '[PATCH n/m]' format, even with a single patch.
 diff --git a/builtin/log.c b/builtin/log.c
-index f2d1fbf18a..ca86611efe 100644
+index ca86611efe..7421f1cc93 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -1050,7 +1050,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+@@ -867,8 +867,16 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ static const char *output_directory = NULL;
+ static int outdir_offset;
+ 
++static FILE *fopen_excl(const char *filename)
++{
++	int fd = open(filename, O_CREAT | O_EXCL | O_WRONLY, 0666);
++	if (fd < 0)
++		return NULL;
++	return fdopen(fd, "w");
++}
++
+ static int open_next_file(struct commit *commit, const char *subject,
+-			 struct rev_info *rev, int quiet)
++			  struct rev_info *rev, int quiet, int clobber)
+ {
+ 	struct strbuf filename = STRBUF_INIT;
+ 	int suffix_len = strlen(rev->patch_suffix) + 1;
+@@ -893,7 +901,12 @@ static int open_next_file(struct commit *commit, const char *subject,
+ 	if (!quiet)
+ 		printf("%s\n", filename.buf + outdir_offset);
+ 
+-	if ((rev->diffopt.file = fopen(filename.buf, "w")) == NULL) {
++	if (clobber)
++		rev->diffopt.file = fopen(filename.buf, "w");
++	else
++		rev->diffopt.file = fopen_excl(filename.buf);
++
++	if (!rev->diffopt.file) {
+ 		error_errno(_("cannot open patch file %s"), filename.buf);
+ 		strbuf_release(&filename);
+ 		return -1;
+@@ -1030,7 +1043,8 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 			      struct commit *origin,
+ 			      int nr, struct commit **list,
+ 			      const char *branch_name,
+-			      int quiet)
++			      int quiet,
++			      int clobber)
+ {
+ 	const char *committer;
+ 	const char *body = "*** SUBJECT HERE ***\n\n*** BLURB HERE ***\n";
+@@ -1049,7 +1063,8 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	committer = git_committer_info(0);
  
  	if (!use_stdout &&
- 	    open_next_file(NULL, rev->numbered_files ? NULL : "cover-letter", rev, quiet))
--		return;
-+		die(_("failed to create cover-letter file"));
+-	    open_next_file(NULL, rev->numbered_files ? NULL : "cover-letter", rev, quiet))
++	    open_next_file(NULL, rev->numbered_files ? NULL : "cover-letter",
++			   rev, quiet, clobber))
+ 		die(_("failed to create cover-letter file"));
  
  	log_write_email_headers(rev, head, &pp.after_subject, &need_8bit_cte, 0);
+@@ -1509,6 +1524,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int use_patch_format = 0;
+ 	int quiet = 0;
++	int clobber = 1;
+ 	int reroll_count = -1;
+ 	char *branch_name = NULL;
+ 	char *base_commit = NULL;
+@@ -1595,6 +1611,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
+ 		OPT_BOOL(0, "progress", &show_progress,
+ 			 N_("show progress while generating patches")),
++		OPT_BOOL(0, "clobber", &clobber,
++			 N_("allow overwriting output files")),
+ 		OPT_CALLBACK(0, "interdiff", &idiff_prev, N_("rev"),
+ 			     N_("show changes against <rev> in cover letter or single patch"),
+ 			     parse_opt_object_name),
+@@ -1885,7 +1903,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		if (thread)
+ 			gen_message_id(&rev, "cover");
+ 		make_cover_letter(&rev, use_stdout,
+-				  origin, nr, list, branch_name, quiet);
++				  origin, nr, list, branch_name,
++				  quiet, clobber);
+ 		print_bases(&bases, rev.diffopt.file);
+ 		print_signature(rev.diffopt.file);
+ 		total++;
+@@ -1940,7 +1959,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		}
  
+ 		if (!use_stdout &&
+-		    open_next_file(rev.numbered_files ? NULL : commit, NULL, &rev, quiet))
++		    open_next_file(rev.numbered_files ? NULL : commit, NULL,
++				   &rev, quiet, clobber))
+ 			die(_("failed to create output files"));
+ 		shown = log_tree_commit(&rev, commit);
+ 		free_commit_buffer(the_repository->parsed_objects,
 diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 909c743c13..b6e2fdbc44 100755
+index b6e2fdbc44..384a1fd9e7 100755
 --- a/t/t4014-format-patch.sh
 +++ b/t/t4014-format-patch.sh
-@@ -589,6 +589,12 @@ test_expect_success 'excessive subject' '
- 	ls patches/0004-This-is-an-excessively-long-subject-line-for-a-messa.patch
+@@ -595,6 +595,22 @@ test_expect_success 'failure to write cover-letter aborts gracefully' '
+ 	test_must_fail git format-patch --no-renames --cover-letter -1
  '
  
-+test_expect_success 'failure to write cover-letter aborts gracefully' '
-+	test_when_finished "rmdir 0000-cover-letter.patch" &&
-+	mkdir 0000-cover-letter.patch &&
-+	test_must_fail git format-patch --no-renames --cover-letter -1
++test_expect_success 'refrain from overwriting a patch with --no-clobber' '
++	rm -f 000[01]-*.patch &&
++	git format-patch --no-clobber --no-renames --cover-letter -1 >filelist &&
++	# empty the files output by the command ...
++	for f in $(cat filelist)
++	do
++		: >"$f" || return 1
++	done &&
++	test_must_fail git format-patch --no-clobber --cover-letter --no-renames -1 &&
++	# ... and make sure they stay empty
++	for f in $(cat filelist)
++	do
++		! test -s "$f" || return 1
++	done
 +'
 +
  test_expect_success 'cover-letter inherits diff options' '
