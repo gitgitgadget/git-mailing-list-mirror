@@ -2,129 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3ECB21F453
-	for <e@80x24.org>; Fri, 22 Feb 2019 11:28:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 648CD1F453
+	for <e@80x24.org>; Fri, 22 Feb 2019 11:35:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726154AbfBVL2I (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 06:28:08 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:36965 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726090AbfBVL2H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 06:28:07 -0500
-Received: by mail-pg1-f193.google.com with SMTP id q206so1021143pgq.4
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 03:28:07 -0800 (PST)
+        id S1726553AbfBVLfO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 06:35:14 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:41129 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725944AbfBVLfO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 06:35:14 -0500
+Received: by mail-ed1-f49.google.com with SMTP id x7so1478571eds.8
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 03:35:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Dr+6LrWOlKq1ONwr70jWSyPIVEh7Tb3g0XfCeqnZhXE=;
-        b=EQHjqMGwXyR8WnmMIsz44CqnuETs4tJiMgGOT+jh94CJB5LJHcS8JuUi0DyzneumGi
-         F/qkYR95dq9n9G4RTpIvCfJS2MLBgrQ2IZHhPL6uGMRZNEb+0ZfxKZdsd9oEjepgWrYK
-         5mDSjX13gjt1OvX3TQO0w2SM8EVkL0YriG9MB6d+ZQLNSPkFUeqDhahBQFpHy7+BlyVw
-         E4bFiumPZnCuIwD/wpnbAaCpDr8rNGOTVpI3BYNYnGYRmXurYoM1cszijmPzuaWFXBJi
-         6x1pVjODN3EeQcmd+nWFerhdeiAOENup9V8kvPKatq4AAumrVfBIhNuZHfgdblLaFOlj
-         +XyQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2r4WIXr3ulJsb5/lKYr9J3LV3uHSu/s3x/DOSkmnl8I=;
+        b=WJnhvChClikPo0wdj5dN5jdNFeZL0+rH5YxKSp/zsI8+UYqcPov0T2qWSziK+/8vF/
+         iUbsf+HYIMLqhgVNgwcZ0pP5XUnXiEmanZwVvcXqELRIOB5i0RsveF5vqQXWt0UZpuSH
+         V37cS9ujVayX6mXhPqo38VIOI+f51PznU1/W2SqHMeWUzNMUjAS6o2VjRqCQwtvQn7E+
+         GoY/20gBYEWUea8TGVWQcdDhBpJOhVcDWB3DuNaJF36//hiPFsc5vTN7nQSNwN44Foh/
+         VM+TWJV9RZbBTEXMH/z7N3k2cSVrn2EDk28YrMNcerp3VolrU1DE/s+0IBGhun7Udw3n
+         vOJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Dr+6LrWOlKq1ONwr70jWSyPIVEh7Tb3g0XfCeqnZhXE=;
-        b=SvY46rLJg7K2Eq7bJU7J75NyEVBHYhIKxiJVtYk+X8mtT2/eipBVfIjBQt0cnM9c+K
-         dKk5jRq9Xj6jn+8HvZqxA92TsoX+PEYQ3TpMkEcY0BfCfrnnPKowQoMVNSlxhwJYyIzZ
-         nZZD752QI/z1Gsc2l7E2L+B2N+pCzYXo7EDCd11tmNKm7l81ZAq8kAsnh86WaQYPWx58
-         NYU3E+lZNjswzu8HBJX0EhJUt3Zm+7vDyyCEES7FL4VGElZZcdltP2DDVuBcZ6MC8fh9
-         tTTxH2o6QsDK/81f23FYPZXjCbqZAiCT2rEkZZ8l6U19/WgQ4YXD2QkXHB4EIpBDJQzq
-         7bfw==
-X-Gm-Message-State: AHQUAuZP6mEyqMAg/fP9aHcgvMhK+wX1qfthJ0GpYBFsiSrMtLrz+yAN
-        1+2L0Ly2sbhtUDCuDcoNs0yhH+4m
-X-Google-Smtp-Source: AHgI3IY5uAe67rmpyYcSiDiesMz5a52Dzpq8sO/8dZL2uZoyc8N38y+Q+mNF2J6RPCWCTWOE0CS1Kg==
-X-Received: by 2002:a63:6a88:: with SMTP id f130mr3530910pgc.114.1550834886469;
-        Fri, 22 Feb 2019 03:28:06 -0800 (PST)
-Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id v15sm1754553pgf.75.2019.02.22.03.28.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Feb 2019 03:28:05 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 22 Feb 2019 18:28:01 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] Delete check-racy.c
-Date:   Fri, 22 Feb 2019 18:27:57 +0700
-Message-Id: <20190222112757.20035-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2r4WIXr3ulJsb5/lKYr9J3LV3uHSu/s3x/DOSkmnl8I=;
+        b=C7sTwOUyk/7YBO4LgKKdKTrtRg8la6NJfg/z04sgmPHESgOYNN46L2nACXANEqBJIf
+         2/2F9kEjvFWD3egsbezq9/RxoUPvPKLhyLA4vn146fHNWKsurf21NYl5DQ8P9Xpa2/zd
+         qX4pT3UTF6F2a8JXu/BWVDf9uizhZBosMrZk0K2aY09hSOdnOggRoRuuZnhZpRQ1SVMw
+         bLyhwjnUHw5mDckUBkumyuxB830EEtK6o4T75LAeQoWxftbmI0Y9+FCa9OUxt4WwzdRR
+         FvZNv+Cl7s9BAXEvgkIeVr9Oi7lNeYeNGKE7N4bs/QUxtYDkF5r1x/jJJRxjI01dGME0
+         UDHw==
+X-Gm-Message-State: AHQUAuYpWOElmke/fvSYLtbeuvDYrO5qpHREHR1pJf4svtB0Rt0nRJwc
+        UMu9mTLVH7dYt2AaP4P8oxVszifUGp9VCK8MgZ1VBVDNaR4=
+X-Google-Smtp-Source: AHgI3IaKT6Rin8/fiDF3R0Kq8clsIamat0A5uQwGl1xZ071WvOJWcLgEMOM4e7psejvLFzj1A1w+WlsB/e/V9eMK3iI=
+X-Received: by 2002:a50:8f86:: with SMTP id y6mr2914588edy.131.1550835311809;
+ Fri, 22 Feb 2019 03:35:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAP8UFD0VPZEhBTUb--n5RHECUkO81aPcGkTYGi0fqd35rnKr3Q@mail.gmail.com>
+ <20190219201022.237430-1-jonathantanmy@google.com>
+In-Reply-To: <20190219201022.237430-1-jonathantanmy@google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 22 Feb 2019 12:35:00 +0100
+Message-ID: <CAP8UFD16fvtu_dg3S_J9BjGpxAYvgp8SXscdh=TJB5jvAbzi4A@mail.gmail.com>
+Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is git-checy-racy command, added a long time ago [1] and was never
-part of the default build. Naturally after some makefile changes [2],
-git-check-racy was no longer recognized as a build target. Even if it
-compiles to day, it will not link after the introduction of
-common-main.c [3].
+On Tue, Feb 19, 2019 at 9:10 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> > > Good points about SSH support and the client needing to control which
+> > > protocols the server will send URIs for. I'll include a line in the
+> > > client request in which the client can specify which protocols it is OK
+> > > with.
+> >
+> > What if a client is ok to fetch from some servers but not others (for
+> > example github.com and gitlab.com but nothing else)?
+> >
+> > Or what if a client is ok to fetch using SSH from some servers and
+> > HTTPS from other servers but nothing else?
+>
+> The objects received from the various CDNs are still rehashed by the
+> client (so they are identified with the correct name), and if the client
+> is fetching from a server, presumably it can trust the URLs it receives
+> (just like it trusts ref names, and so on). Do you know of a specific
+> case in which a client wants to fetch from some servers but not others?
 
-Racy index has not been a problem for a long time [4].  It's time to let
-this code go. I briefly consider if check-racy should be part of
-test-tool.  But I don't think it's worth the effort.
+For example I think the Great Firewall of China lets people in China
+use GitHub.com but not Google.com. So if people start configuring
+their repos on GitHub so that they send packs that contain Google.com
+CDN URLs (or actually anything that the Firewall blocks), it might
+create many problems for users in China if they don't have a way to
+opt out of receiving packs with those kind of URLs.
 
-[1] 42f774063d (Add check program "git-check-racy" - 2006-08-15)
-[2] c373991375 (Makefile: list generated object files in OBJECTS -
-    2010-01-26)
-[3] 3f2e2297b9 (add an extra level of indirection to main() -
-    2016-07-01)
-[4] I pretend I don't remember anything about the recent split-index's
-    racy problem
+> (In any case, if this happens, the client can just disable the CDN
+> support.)
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- check-racy.c (gone) | 28 ----------------------------
- 1 file changed, 28 deletions(-)
+Would this mean that people in China will not be able to use the
+feature at all, because too many of their clones could be blocked? Or
+that they will have to create forks to mirror any interesting repo and
+ reconfigure those forks to work well from China?
 
-diff --git a/check-racy.c b/check-racy.c
-deleted file mode 100644
-index 24b6542352..0000000000
---- a/check-racy.c
-+++ /dev/null
-@@ -1,28 +0,0 @@
--#include "cache.h"
--
--int main(int ac, char **av)
--{
--	int i;
--	int dirty, clean, racy;
--
--	dirty = clean = racy = 0;
--	read_cache();
--	for (i = 0; i < active_nr; i++) {
--		struct cache_entry *ce = active_cache[i];
--		struct stat st;
--
--		if (lstat(ce->name, &st)) {
--			error_errno("lstat(%s)", ce->name);
--			continue;
--		}
--
--		if (ce_match_stat(ce, &st, 0))
--			dirty++;
--		else if (ce_match_stat(ce, &st, CE_MATCH_RACY_IS_DIRTY))
--			racy++;
--		else
--			clean++;
--	}
--	printf("dirty %d, clean %d, racy %d\n", dirty, clean, racy);
--	return 0;
--}
--- 
-2.21.0.rc1.337.gdf7f8d0522
+> > I also wonder in general how this would interact with promisor/partial
+> > clone remotes.
+> >
+> > When we discussed promisor/partial clone remotes in the thread
+> > following this email:
+> >
+> > https://public-inbox.org/git/20181016174304.GA221682@aiede.svl.corp.google.com/
+> >
+> > it looked like you were ok with having many promisor remotes, which I
+> > think could fill the same use cases especially related to large
+> > objects.
+> >
+> > As clients would configure promisor remotes explicitly, there would be
+> > no issues about which protocol and servers are allowed or not.
+> >
+> > If the issue is that you want the server to decide which promisor
+> > remotes would be used without the client having to do anything, maybe
+> > that could be something added on top of the possibility to have many
+> > promisor remotes.
+>
+> It's true that there is a slight overlap with respect to large objects,
+> but this protocol can also handle large sets of objects being offloaded
+> to CDN, not only single ones.
 
+Isn't partial clone also designed to handle large sets of objects?
+
+> (The included implementation only handles
+> single objects, as a minimum viable product, but it is conceivable that
+> the server implementation is later expanded to allow offloading of sets
+> of objects.)
+>
+> And this protocol is meant to be able to use CDNs to help serve objects,
+> whether single objects or sets of objects. In the case of promisor
+> remotes, the thing we fetch from has to be a Git server.
+
+When we discussed the plan for many promisor remotes, Jonathan Nieder
+(in the email linked above) suggested:
+
+ 2. Simplifying the protocol for fetching missing objects so that it
+    can be satisfied by a lighter weight object storage system than
+    a full Git server.  The ODB helpers introduced in this series are
+    meant to speak such a simpler protocol since they are only used
+    for one-off requests of a collection of missing objects instead of
+    needing to understand refs, Git's negotiation, etc.
+
+and I agreed with that point.
+
+Is there something that you don't like in many promisor remotes?
+
+> (We could use
+> dumb HTTP from a CDN, but that defeats the purpose in at least one way -
+> with dumb HTTP, we have to fetch objects individually, but with URL
+> support, we can fetch objects as sets too.)
