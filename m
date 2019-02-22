@@ -2,144 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E679D20248
-	for <e@80x24.org>; Fri, 22 Feb 2019 14:34:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F5A820248
+	for <e@80x24.org>; Fri, 22 Feb 2019 14:41:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726376AbfBVOed (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 09:34:33 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40529 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725942AbfBVOed (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 09:34:33 -0500
-Received: by mail-wr1-f67.google.com with SMTP id q1so2605339wrp.7
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 06:34:31 -0800 (PST)
+        id S1726602AbfBVOll (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 09:41:41 -0500
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:45055 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726278AbfBVOll (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 09:41:41 -0500
+Received: by mail-wr1-f47.google.com with SMTP id w2so2611525wrt.11
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 06:41:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=PX2lOUxVyHAH7XNYYaa2p7TjVUR/I4UWc7FHgSWDNl0=;
-        b=puIW+l9UsYtDscxdXtcTkYwlOQ4bmUQ9M8o2xyOJlankCq4ledR/CwYGE5t4WF05gP
-         XJd2Y8d4geQ6YROLa7D2dgSzH1kuZjPo5M/IVdRiSxHbnp0ITuFt07JL+HA0E4FurmTh
-         WgnH0e0e4rXLNC4FjLKc4/NOVcGfx7znD+yhjTK1eOJO2oJrNvtIi6QMbQpcDmuXmk3Q
-         run5bH2Qi3duODOPyh9S32ioSIXOmwvBbQpVUi/s6SrOUHb2XwiSTDLchHb+1jheT75p
-         9dzkodhQTe4BAs5PL3JWBW7x8P4npjpSNGks6BPy1hMZLd0M3ZAPRDsV6qh5khSKmJY5
-         ti2g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0NK6R8n6R6c1ZisBkUksBDV6KF91mF4QH39BcqYKH4A=;
+        b=E/Xzk7AZv/CD4Br9OiXTbM4JjSrZ9H3+CBVKBi/v6bHpbwpPvC25W9qmEFpb+YLmVJ
+         wgwz/6H6S8vbTRZxd39of1XH1Qz72UapbyGByL/H1LhrexT3nt8Bg9KTijSAGK4DFRJR
+         DnwgmJc5C2VcKQcMXXyd33umh6UzDUIVIUmk1cTzDQdXltB+RUypSAF/1iMZJcI5VNaD
+         Lx4epNZzh/QXtTtsDiRJOkM7eEgezbcir9ONbwb3+Ta5gCwb8Z4w0JyUz0nZ3MnPZmfa
+         aQdAQxtn6/fGtalE+VOB8izSxmoy6NP4GqAxX0Ht4iDW2vU0AacJl+YAHSCyZcjYrUvR
+         cjrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=PX2lOUxVyHAH7XNYYaa2p7TjVUR/I4UWc7FHgSWDNl0=;
-        b=aS+IPYeV0YRbuNEwkruOFiuxaklTiK7dHlm1WrgzKVJLn/CkWsNCDsKjNPw2QeQeun
-         eYo+4Iae9DFkWYQWIVRadXSgtwoj48sMSv2GVnfpQa42c2wgfO6AGTDIIGC/kBHXnzwk
-         QdOz0w/gssL13Yj26o/ZauiylABlmjwUOM8UR4DSxEOF2jxT9eXcuaxwUMttN7l1II45
-         kaEE9bc0komSOVRufknz/2QYuikVnUD0P4krrV6LgigXwrLiGd4oGCWmVi0dvZeH8HmG
-         NP6gE5ZEY0gEjUOP4pnE9QowqzZzLcUBz5LBeqAwvamHWAcEL4YHUOPju/MyVgaQag+g
-         Cx0g==
-X-Gm-Message-State: AHQUAuaQsRmtlGBA+aCHx7yVRW2zvXaiAm7ykQpK9gHZjssGaLRBw6Zn
-        Dca/MRNGXjJVCqmI4S1NZFaH4ihfdrs=
-X-Google-Smtp-Source: AHgI3IY6hGc1jv72m6hL3/OflM4D2Jw07RH4Crh9dz2a7VfPvGKzEPjDgie1eNbtbxjR+eUs6bU5tA==
-X-Received: by 2002:a05:6000:1142:: with SMTP id d2mr3134852wrx.43.1550846070802;
-        Fri, 22 Feb 2019 06:34:30 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id b10sm1844803wru.92.2019.02.22.06.34.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 22 Feb 2019 06:34:29 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Sebastian Staudt <koraktor@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] commit-graph tests: fix cryptic unportable "dd" invocation
-References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com> <20190221192849.6581-3-avarab@gmail.com> <20190221204310.GS1622@szeder.dev> <878sy86anh.fsf@evledraar.gmail.com> <20190222105053.GU1622@szeder.dev>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190222105053.GU1622@szeder.dev>
-Date:   Fri, 22 Feb 2019 15:34:28 +0100
-Message-ID: <8736of6gej.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0NK6R8n6R6c1ZisBkUksBDV6KF91mF4QH39BcqYKH4A=;
+        b=XQCb9wHhfE8G/RUpjfKDp7dSOeeCSNhqp3YmvECMthhsR5tlNSo/AFTmRV0AANsoUI
+         xGIRwGUrsqb0K9Gjy28BUqW4eCEK9E2zU33NtXhsZWN/pSSGu+gm7lovIjeK83vSnfKd
+         H5dpKtmv3ql7Qwzjr/fF4nnJoGoyLgj/H/uxi7NpjHMg5jPGAxF9/sEeudN/pqm/aqEi
+         dhXKQG3H+6SPHAWBJp0tKypij90JG75H3JlcI7D6bvsrlnxHSTfXPqkktXlP/bsw2kvp
+         zPTDJTdJEJoXKmkmSavVcot/eq7RhrVMnRBp3EJUQMeL44RxxBKaxG8N6cnkHhYVxrYo
+         gm9A==
+X-Gm-Message-State: AHQUAubtbthATudLe7bcOXU0cBuXJZ6+wJUByvERtkQtQ+HnO+UZBNy2
+        bfkrkAV/dAAzHME1896R1k2tjiguHPw=
+X-Google-Smtp-Source: AHgI3IZ+TcC4Ev7RppdxD3isE806Z88mKd0jwRSop/lY8N1JoUjmcswzZFQh5Ws2DPOvvcI7NDD7Og==
+X-Received: by 2002:adf:e8cf:: with SMTP id k15mr3092871wrn.193.1550846499375;
+        Fri, 22 Feb 2019 06:41:39 -0800 (PST)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id z15sm1481689wmi.46.2019.02.22.06.41.37
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 22 Feb 2019 06:41:38 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Beat Bolli <dev+git@drbeat.li>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/6] Makefile: allow for combining DEVELOPER= and CFLAGS="..."
+Date:   Fri, 22 Feb 2019 15:41:21 +0100
+Message-Id: <20190222144127.32248-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc2.261.ga7da99ff1b
+In-Reply-To: <20190222105658.26831-1-avarab@gmail.com>
+References: <20190222105658.26831-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This fixes a long-standing annoyance of mine of not being able to set
+my own CFLAGS combined with DEVELOPER="...".
 
-On Fri, Feb 22 2019, SZEDER G=C3=A1bor wrote:
+There *should* be no other functional changes, but I'm moving around
+some core Makefile logic, so this needs to be carefully reviewed.
 
-> On Thu, Feb 21, 2019 at 11:26:26PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> >> -	dd of=3D"$objdir/info/commit-graph" bs=3D1 seek=3D"$zero_pos" count=
-=3D0 &&
->> >> +	perl -we 'truncate $ARGV[0], $ARGV[1] if -s $ARGV[0] > $ARGV[1]' \
->> >> +		$objdir/info/commit-graph $zero_pos &&
->> >
->> > This will make Dscho unhappy :)
->>
->> Sorry Dscho :)
->>
->> Although this is a one-off in one test, as opposed to a new "perl -e" in
->> test-lib-functions.sh
->>
->> > Is there a problem with:
->> >
->> >   dd if=3D/dev/null of=3D"$objdir/info/commit-graph" bs=3D1 seek=3D"$z=
-ero_pos"
->> >
->> > ?
->> >
->> > To my understanding of the specs it's well-defined what it should do,
->> > even when $zero_pos is larget than the file size,  it's shorter,
->> > simpler, and doesn't introduce yet another Perl dependency.
->>
->> I tried that as a one-off and it indeed works as a "truncate" on NetBSD
->> & GNU.
->>
->> My reading of POSIX "dd" and "lseek" docs is that we'd need some similar
->> guard if we're going to be paranoid about a $zero_pos value past the end
->> of the file. It doesn't look like that's portable, my assumption from
->> reading the docs is that the seek=3D* will devolve without a stat() check
->> on some "dd" implementations to an "lseek".
->
-> Could you point to the part of the specs where your assumption comes
-> from?  The specs are quite clear on what should happen:
->
->   If the size of the seek plus the size of the input file is less than
->   the previous size of the output file, the output file shall be
->   shortened by the copy. If the input file is empty and either the
->   size of the seek is greater than the previous size of the output
->   file or the output file did not previously exist, the size of the
->   output file shall be set to the file offset after the seek.
->
-> IOW no such guard is necessary.
+I've tried installing with this, setting flags involved etc. It works
+as expected, but we have no tests for the Makefile itself, so I might
+have missed something.
 
-It was my reading of the seek=3D* section ("the implementation shall seek
-to the specified offset"). I didn't spot that bit covered in of=3D*. Yeah,
-I see that's defined & safe after reading that.
+I sent a stand-alone "Makefile: remove an out-of-date comment"[1] a
+bit too soon as it turns out. I thought it could be stand-alone, but
+as it turns out I needed to move some code adjacent to it. It would
+conflict with this, so it's now bundled up with it as a v2.
 
-> I checked the man pages of FreeBSD's, NetBSD's, OpenBSD's and Solaris'
-> 'dd', and they are clearly following the specs in this respect.  I
-> tried NetBSD 6.0's and 8.0's 'dd', and both behave as advertised.
->
-> And using 'dd' doesn't add a condition after statement...
+1. https://public-inbox.org/git/20190222105658.26831-1-avarab@gmail.com/
 
->> I'm not going to submit a re-roll of this because it works, and I'd
->> still trust Perl's truncate(...) portability over dd.
->>
->> But more importantly because it takes me *ages* to fully re-test
->> anything on the slow BSD VMs I have access to, and I already tore town
->> my one-off hacking env there after testing these patches...
->>
->> >>  	generate_zero_bytes $(($orig_size - $zero_pos)) >>"$objdir/info/com=
-mit-graph" &&
->> >>  	test_must_fail git commit-graph verify 2>test_err &&
->> >>  	grep -v "^+" test_err >err &&
->> >> --
->> >> 2.21.0.rc0.258.g878e2cd30e
->> >>
+Ævar Arnfjörð Bjarmason (6):
+  Makefile: remove an out-of-date comment
+  Makefile: move "strip" assignment down from flags
+  Makefile: add/remove comments at top and tweak whitespace
+  Makefile: Move *_LIBS assignment into its own section
+  Makefile: move the setting of *FLAGS closer to "include"
+  Makefile: allow for combining DEVELOPER=1 and CFLAGS="..."
+
+ Makefile       | 63 ++++++++++++++++++++++++++------------------------
+ config.mak.dev | 44 +++++++++++++++++------------------
+ 2 files changed, 55 insertions(+), 52 deletions(-)
+
+-- 
+2.21.0.rc2.1.g2d5e20a900.dirty
+
