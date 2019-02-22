@@ -7,58 +7,73 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27CAF20248
-	for <e@80x24.org>; Fri, 22 Feb 2019 17:54:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1053320248
+	for <e@80x24.org>; Fri, 22 Feb 2019 18:07:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726310AbfBVRym (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 12:54:42 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46960 "EHLO
+        id S1727370AbfBVSHq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 13:07:46 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40139 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725832AbfBVRym (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 12:54:42 -0500
-Received: by mail-wr1-f66.google.com with SMTP id i16so3266622wrs.13
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 09:54:41 -0800 (PST)
+        with ESMTP id S1725986AbfBVSHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 13:07:46 -0500
+Received: by mail-wr1-f66.google.com with SMTP id q1so3335381wrp.7
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 10:07:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=gYPkYVDB8ZDHA4TSG38L98qM+OEKAzi3sMk2bP/SVgY=;
-        b=NcClNx1KQTPmAbygfhjyOvSp1EhmB250L1V03UXLMfO/uwRYSR54EVpqqPH29pGmY9
-         FUMRlC1GHT+bbUFiNr2nmUpJ5AIcFVAywfimeYKsM0CSR2o3C7TvBq0fnPomFnYGAyWO
-         0TJ1wmie2ozRaxAiGJmEjtCTco7YQmMs6k0I/k2PmJoaFHA2W14DkCo9bDCRYwefZBAA
-         9RjT1L8hA8uW0u+QFSE5P2UNZ8pv/6KEahLzK/cI3Pxfdnqzgx4GGg/l1nuggZD9DHGl
-         6uX49YyfcEeBuWKloZHII6se5r4dFN57KlO7IWPX1YZihvc03ZS9FJPbZC84Qu7z8u2y
-         KWBQ==
+        bh=rWlA6C148azDzPkoorAVpadRNtrhvIpvyPF5RdZ45wk=;
+        b=BkaMLNrmYVP92R3Xlwysy2MjSUdVp/waWLJiJoIQ8zQDkjKOeNS4MEZUF64oPtEIGt
+         I9lVxSp7X6IOE+1kAxTtzBYO4+XZMrL/ZVONUDpYKlx7eEjB5DMt4kI2arYNLftBh0wl
+         FMTUZZGzGC5idXkksHmvOiVTG/bFa9IstcKkkRhYBXHZ8ZSKed9NIWeJjSQI2U2a9Y3Q
+         UDLLC88v7KotbfadC5HbsBvNM/akXgdQDAXraBTJlYMti9cjcK+Wh2koKmp9Z6mClz4/
+         DSyd4as8zJXBZVJBDcixQE8K9VUAu1te/Dil7vtwaHKvG0n57EE9gAYyre8s9/qJGgu9
+         WKmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=gYPkYVDB8ZDHA4TSG38L98qM+OEKAzi3sMk2bP/SVgY=;
-        b=SODB9sf22ZCcBHoCp15VdtD1EcWIiwg6rZIzLBJIvptHxiQFcm1G9otkC3N28NiEjp
-         LxXHhlaFmLcEcouecEbyIKk5bsEBHzCl617LXVV66G13N5FjXez/7yEshQaj5Ivs8ESb
-         H56Cxy62n7qvIpzIyHAFVosUhiFADxv6iO+Cjoxl4uiWfPExjXF2iFFNUceRaZ4PFDu1
-         VLhjxFKj+Ry5+CjEbP83kOGzUs89xV/53oGzazUR2g8k1NExA5X10DiDtyASKdXuO/NZ
-         LxZTs7ekbtFebJwPczShKhRmNDlsdcL5dQS7apDOkkKopbRWFrhI32PnQihLVsDZkE3Z
-         EA3g==
-X-Gm-Message-State: AHQUAuZ3TphmdSZsrfnxNP4vm9Vi7raEAOCB/g0QfMxkzewS9donNYVe
-        rnieAyI2uCWpCycM2UcjpqkgIXmh
-X-Google-Smtp-Source: AHgI3IYhpFCLQgUSoCpq/cfN4Hu1gwg6Jtgv+SliH9Wwtyusy999uLuyyywvai0Vy2YjkEPXDEkeRw==
-X-Received: by 2002:a5d:5544:: with SMTP id g4mr3748249wrw.269.1550858080438;
-        Fri, 22 Feb 2019 09:54:40 -0800 (PST)
+        bh=rWlA6C148azDzPkoorAVpadRNtrhvIpvyPF5RdZ45wk=;
+        b=tRiupZW7IsuaX8BSRa3RW5jsgRCAGlEJhKUUDaqo/PZW0W4tc5HWlRU3I/iOzhN/Nd
+         Q9iogbDVA2SnxFZUkGZO/Q2pA8C9MaRSZA6TPQGezRTkiwvYkQ9AqqmJPp4E4Nj3qK/g
+         HJS7kbb3o6yUG68A8GKCisk458wzmEVtFVBP1yzPoumGlYge8DqGVZrdK7ZgC3Z7TMbu
+         pep9rYHjwPtaYEzet7Yoy+yKg+9T4cpGdov+mwtnDBLLseVWWjE68nkHeN7xBKYyihB5
+         D00dSvTKs0ikWXUQ1W69SAJUbeaObW+OXKKg280kY9HyJ6gCroSOV0GbTH4Kzw01Avt4
+         9URw==
+X-Gm-Message-State: AHQUAuYwYmmo6KnOLxScV0G32WolREC7N7+YpqLpUw2Drux3TE3DeIsw
+        a0FYTKOMjqrMALJ0kriN5yU=
+X-Google-Smtp-Source: AHgI3IZjtl/vGPRs9MhyOTTYwNb/CTDew8LL+AAomQwDGb49Jp67TNHA5BLiZAJzYK2rcj/TuZk93w==
+X-Received: by 2002:a5d:6112:: with SMTP id v18mr3766121wrt.207.1550858864756;
+        Fri, 22 Feb 2019 10:07:44 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n6sm2105970wrt.23.2019.02.22.09.54.39
+        by smtp.gmail.com with ESMTPSA id o18sm5554531wrg.40.2019.02.22.10.07.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 22 Feb 2019 09:54:39 -0800 (PST)
+        Fri, 22 Feb 2019 10:07:43 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] format-patch: notice failure to open cover letter for writing
-References: <xmqqlg28snv0.fsf@gitster-ct.c.googlers.com>
-        <20190222062606.GD10248@sigill.intra.peff.net>
-Date:   Fri, 22 Feb 2019 09:54:39 -0800
-In-Reply-To: <20190222062606.GD10248@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 22 Feb 2019 01:26:07 -0500")
-Message-ID: <xmqqo973r9nk.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Per Lundberg <per.lundberg@hibox.tv>,
+        Steffen Jost <jost@tcs.ifi.lmu.de>,
+        Joshua Jensen <jjensen@workspacewhiz.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Clemens Buchacher <drizzd@gmx.net>,
+        Holger Hellmuth <hellmuth@ira.uka.de>,
+        Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH 1/1] Introduce "precious" file concept
+References: <20190216114938.18843-1-pclouds@gmail.com>
+        <20190216114938.18843-2-pclouds@gmail.com>
+        <87wolzo7a1.fsf@evledraar.gmail.com>
+        <CACsJy8CR7VGp7htC_wKC9BUCaQsmkp5Zd4+M7bddPL-jKyfDMQ@mail.gmail.com>
+        <xmqq8syb3b3j.fsf@gitster-ct.c.googlers.com>
+        <87h8cy6cme.fsf@evledraar.booking.com>
+        <CACsJy8B15hORnaOdYW8TNE3Gniv9NBJopyLYmHR5iF0U3beq6g@mail.gmail.com>
+        <xmqqo976ultb.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CB=P9T0XJMWQetExgwDyFN78nuJZq8FtmzG+V1fBY4ig@mail.gmail.com>
+Date:   Fri, 22 Feb 2019 10:07:43 -0800
+In-Reply-To: <CACsJy8CB=P9T0XJMWQetExgwDyFN78nuJZq8FtmzG+V1fBY4ig@mail.gmail.com>
+        (Duy Nguyen's message of "Fri, 22 Feb 2019 16:35:44 +0700")
+Message-ID: <xmqqk1hrr91s.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,21 +82,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> I'd suggest s/F/f/ in the message to match our usual style, though I see
-> this code has a lot of capitalized errors already. :)
-
-Yup, I'd prepare a prelim clean-up before this step.
-
->> +test_expect_success 'failure to write cover-letter aborts gracefully' '
->> +	test_when_finished "rmdir 0000-cover-letter.patch" &&
->> +	mkdir 0000-cover-letter.patch &&
->> +	test_must_fail git format-patch --no-renames --cover-letter -1
->> +'
+> On Thu, Feb 21, 2019 at 5:39 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> > So now you would need to
+>> > add more or less the same set of ignore rules in .gitattributes to
+>> > mark them trashable, and gitignore/gitattributes rules are not exactly
+>> > compatible, you can't just blindly copy them over. Every time you add
+>> > one more .gitignore rule, there's a good chance you need to add a
+>> > similar rule for trashable attribute.
+>>
+>> I am not sure why you would even need to _duplicate_.
+>>
+>> Are you saying for each and every rule that specify "ignored and
+>> expendable" in .gitignore there always will be "ignored but
+>> precious" exception that match the pattern?  Given that we have been
+>> OK for so long without even needing "precious", I find it somewhat
+>> unrealistic to assume so.
 >
-> Cute test. :)
+> If all ignored files are now redefined as precious and we mark them
+> expendable with trashable attribute, then we need to duplicate most of
+> the rules. The "precious" attribute of course does not have this
+> problem since precious-and-ignored files should be rare.
 
-Those who can find this "cute" would probably know, but for others,
-this is a trick to test codepath for "cannot create a file" error
-without requiring SANITY prerequisite.
+Ah, so you are saying that ignored (the traditional one we always
+had) plus precious is a better combination than ignored (repurposed
+to mean ignored-but-precious) plus trashable, because the latter
+will cause people configure with a lot of duplication?
+
+If that is the case, I'd agree ;-)
