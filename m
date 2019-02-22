@@ -2,126 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8168520248
-	for <e@80x24.org>; Fri, 22 Feb 2019 15:31:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 786FB20248
+	for <e@80x24.org>; Fri, 22 Feb 2019 15:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726978AbfBVPbB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 10:31:01 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:40521 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725892AbfBVPbB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 10:31:01 -0500
-Received: by mail-wm1-f65.google.com with SMTP id t15so2322145wmi.5
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 07:31:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=E8vYee1cK3SreKxdZk56uzdXxWwaNlhtE7XsJOfN6cg=;
-        b=HljIwripWVtCbeHDHlCzZddSd2D5j0mE7CVA/7nasm2vmkekTXDyXYybiu3R/HhNe3
-         Y0jJF2XI+ZNtF097fNDC3/vzSqAGRypLOFHrvhun8sVuL9pgBVnTZig5vy4kRu0R3t05
-         aZ08Dxtv9FTeO3HET1DhmhyQ9OIkfrR4l3ojUhZrqHftT9K+f0fJVE1EXQQYGPwyvvhG
-         1b7ECu3MQnLvsK1xJqfdk2NSq73bEEOAov0dOrbMyjiB7c5nnDfE3BgmCG99vnE5n8X6
-         EMWzqOzlLpH3WowcsLpycXaBG7mBkEfFWedNGkOGwA8ufhUodwXzm+sVJXKg0YjPXeXN
-         zxYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=E8vYee1cK3SreKxdZk56uzdXxWwaNlhtE7XsJOfN6cg=;
-        b=qeGUFB44rObN71JHx883XLoHMuJjesuhwjaij6HDZ4XhaXl7sgLL1T+stmrNmOMsRr
-         9T1tabL6mmBUCerh2sOgtYUqbwBnNfAxe9WNZx6CCPq2sj+QA/LTIZ+Z2kIdcY8x0Xa7
-         qvKxBcqS+f2UymDGwFRQjKwEsiCdkiArMtWW9OzpnNc1/SYaScm701oCfb2IWStaw8gA
-         gcOL+ODvWLuJhB9u3dMDakdZyr/ilmG7fAl8AH9KbpmVpDGQnXyGYoKEAGItd+gdhqn+
-         fTDBXrNJVkzLJCcpuULc7xqk/J+tvAz0RQpP6ckRx1Ztl6S6cV+h4XpOLdIGr28D+Gz7
-         400A==
-X-Gm-Message-State: AHQUAuaORcZR2yTS/ievUuW83eKS5emMrCEEPCNrsbsxKfReUqjE6nYg
-        nlFVP60n1A5n0j4HCwpeYn0=
-X-Google-Smtp-Source: AHgI3IZe48ar+i60149lSoyQVZudspNpypMpIUJu9g5HdTR+rKsSG2ZIMPJVf7vMzMG2GkStwX3hwA==
-X-Received: by 2002:a1c:4406:: with SMTP id r6mr2825928wma.114.1550849459083;
-        Fri, 22 Feb 2019 07:30:59 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a1sm2248831wrq.96.2019.02.22.07.30.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 22 Feb 2019 07:30:58 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: how does one interpret "git diff <commit> ^<commit>"
-References: <alpine.LFD.2.21.1902220816010.6353@localhost.localdomain>
-Date:   Fri, 22 Feb 2019 07:30:57 -0800
-In-Reply-To: <alpine.LFD.2.21.1902220816010.6353@localhost.localdomain>
-        (Robert P. J. Day's message of "Fri, 22 Feb 2019 08:22:12 -0500
-        (EST)")
-Message-ID: <xmqq1s3zsuvi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726623AbfBVPjl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 10:39:41 -0500
+Received: from mail.xcmg-erc.com ([217.7.126.107]:52063 "EHLO
+        mail.xcmg-erc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726131AbfBVPjk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 10:39:40 -0500
+Received: from SRV-ERC-MAIL01.XCMG-ERC.LOCAL (10.10.4.13) by
+ SRV-ERC-MAIL01.XCMG-ERC.LOCAL (10.10.4.13) with Microsoft SMTP Server (TLS)
+ id 15.0.1395.4; Fri, 22 Feb 2019 16:39:54 +0100
+Received: from SRV-ERC-MAIL01.XCMG-ERC.LOCAL ([10.10.4.13]) by
+ SRV-ERC-MAIL01.XCMG-ERC.LOCAL ([10.10.4.13]) with mapi id 15.00.1395.000;
+ Fri, 22 Feb 2019 16:39:54 +0100
+From:   "Celestino, Federico" <Celestino@xcmg-erc.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: .gitignore alleged bug
+Thread-Topic: .gitignore alleged bug
+Thread-Index: AdTKxNqE6kyTDHqgQLG6yVJKIKWOAg==
+Date:   Fri, 22 Feb 2019 15:39:53 +0000
+Message-ID: <b23df617fddf45389406da2360dceb63@SRV-ERC-MAIL01.XCMG-ERC.LOCAL>
+Accept-Language: de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.10.4.150]
+x-esetresult: clean, is OK
+x-esetid: 37303A2986AD6E6C617D66
+Content-Type: multipart/mixed;
+        boundary="_002_b23df617fddf45389406da2360dceb63SRVERCMAIL01XCMGERCLOCA_"
 MIME-Version: 1.0
-Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+--_002_b23df617fddf45389406da2360dceb63SRVERCMAIL01XCMGERCLOCA_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
->   was perusing the git FAQ and ran across this:
->
->   How do I obtain a list of files which have changed in a given commit?
->
->      $ git diff --name-only <commit>^!
->
->
-> after playing with "git rev-parse", i figured out that the above was
-> equivalent to (using kernel "v4.19" tag as an example):
->
-> $ git diff v4.19 ^v4.19^
+Dear Support Team,
 
-A "rev" argument on the command line can have two (and a half but
-that one does not come into picture in this discussion) polarity.
-Normal and negative.  Negative revs are written with "^" prefix (not
-to be confused with "^" suffix which means "the first parent of),
-and normal revs are written without "^" prefix.
+I am facing a serious issue with .gitignore (see attachment).
 
-There are some short-hands like <rev>^!, but they expand to
-combination of the normal and negative rev arguments at the bottom.
-The one you used, "rev^!", on the command line expands to "rev --not
-rev^1 rev^2... --not" for all its parents.  Here "--not" means
-"treat all revs that follow have opposite polarity than they are
-written until you see the next "--not".  For a non-merge commit,
-that's equivalent to "rev --not rev^", which in turn is "rev ^rev^.
+The problem is that the folder contents of 04 - Software/SW Code/STM32/Lib/=
+Drivers/CMSIS/Device/ are ignored because of a suspected misinterpretation =
+of .gitignore.
 
-Now these normal and negative revs are often used for specifying
-ranges to revision walking operations (think: "git log" etc.)  When
-used to specify revision range, the set of commits a range specifies
-is anything reachable from any one or more of normal revs, excluding
-the ones reachable from any one or more of negative revs.  So "git
-log v4.18..v4.19", which is a short-hand for "git log ^v4.18 v4.19"
-(because A..B is a short-hand that expands to "^A B"), i.e. list all
-commits that are reachable from v4.19, but I am not interested in
-the ones that are reachable from v4.18.
+Here are some results that you could find useful:
 
-"git diff" is about comparing two endpoints, so these normal and
-negative revs are used differently.  With one negative and one
-normal rev, you can tell "compare negative with normal to produce
-a patch that takes the tree of the negative one to the tree of the
-normal one".
+$ git clean -ndX
+Would remove 04 - Software/SW Code/STM32/Lib/Drivers/CMSIS/Device/
 
-So with "git diff v4.19^!", aka "git diff ^v4.19^ v4.19" (as v4.19
-is not a merge), you are asking
+$ git check-ignore -v "04 - Software/SW Code/STM32/Lib/Drivers/CMSIS/Device=
+/"
+04 - Software/SW Code/STM32/Lib/Drivers/CMSIS/.gitignore:2:Device       04 =
+- Software/SW Code/STM32/Lib/Drivers/CMSIS/Device/
 
-	git diff v4.19^..v4.19
+Since in the path there is no '~' (tilde) character, it seems a bug to me.
 
-which is equivalent to asking
+Git version: 2.20.1.windows.1
 
-	git diff v4.19^ v4.19
+Freundliche Gr=FC=DFe / Kind regards
+i.A. Federico Celestino
+Entwicklungsingenieur
 
-which is "give me difference to bring the tree of the first parent
-of v4.19 to that of v4.19".
 
-For interactive use to see "What happend at v4.19?", it is much
-easier to type "git show v4.19" than "git diff v4.19^!", though.
+Fon +49 2151 7830 324
+Fax +49 2151 7830 499
+www.xcmg-erc.com
+Celestino@xcmg-erc.com
+
+---------------------------------------------------------------------------=
+---------
+XCMG European Research Center GmbH
+Europark Fichtenhain B4
+47807 Krefeld
+Deutschland
+Amtsgericht Krefeld
+Handelsregister HRB 14302
+Gesch=E4ftsf=FChrer: Dr.-Ing. Oliver-Carlos G=F6hler, Dr.-Ing. Hui Sun=20
+---------------------------------------------------------------------------=
+---------=20
+
+--_002_b23df617fddf45389406da2360dceb63SRVERCMAIL01XCMGERCLOCA_
+Content-Type: application/octet-stream; name="ATT44153.gitignore"
+Content-Description: ATT44153.gitignore
+Content-Disposition: attachment; filename="ATT44153.gitignore"; size=413;
+	creation-date="Fri, 22 Feb 2019 14:01:11 GMT";
+	modification-date="Fri, 22 Feb 2019 14:01:11 GMT"
+Content-Transfer-Encoding: base64
+
+Ki5hdXgNCn4qDQoqLm8NCiouZA0KKi5vYmoNCi54ZGNoZWxwDQpEZWJ1Zy8NCiFEZWJ1Zy8qLm1h
+cA0KIURlYnVnLyoub3V0DQpSZWxlYXNlLw0KIVJlbGVhc2UvKi5tYXANCiFSZWxlYXNlLyoub3V0
+DQouY29uZmlnLw0KLmxhdW5jaGVzLw0KKi5sZGINCjA0W1s6c3BhY2U6XV0tW1s6c3BhY2U6XV1T
+b2Z0d2FyZS9TV1tbOnNwYWNlOl1dQ29kZS9UTVM1NzAvUGxhdGZvcm1zL05hdGl2ZS9IZXJjdWxl
+cy9wcm9qZWN0cy9TSUwyX01DVVNUX0hlcmN1bGVzX0xpYi9UTVM1NzBMUzMxMzcvTW9kdWxlcy9z
+b3VyY2UvKi5wcA0KMDRbWzpzcGFjZTpdXS1bWzpzcGFjZTpdXVNvZnR3YXJlL1NXW1s6c3BhY2U6
+XV1Db2RlL1RNUzU3MC9QbGF0Zm9ybXMvTmF0aXZlL0hlcmN1bGVzL2xpYi9TSUwyX01DVVNUX1RN
+UzU3MExTMzEzNy5saWI=
+
+--_002_b23df617fddf45389406da2360dceb63SRVERCMAIL01XCMGERCLOCA_--
