@@ -7,60 +7,62 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D17220248
-	for <e@80x24.org>; Fri, 22 Feb 2019 20:47:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 655A420248
+	for <e@80x24.org>; Fri, 22 Feb 2019 21:46:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726434AbfBVUrq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 15:47:46 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:56025 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725980AbfBVUrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 15:47:45 -0500
-Received: by mail-wm1-f68.google.com with SMTP id q187so3120957wme.5
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 12:47:44 -0800 (PST)
+        id S1725990AbfBVVqT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 16:46:19 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41080 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725900AbfBVVqT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 16:46:19 -0500
+Received: by mail-wr1-f66.google.com with SMTP id n2so3870492wrw.8
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 13:46:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Oz5xX8nQjAs33zA3PT+lN53z56+uvFllD9Q/mHuFBgY=;
-        b=pPxDn5B4AYbULb7AxfR1srdV8Z+qpqVgPQtblc5l24QsUL4jfrRT+o8NdUed+deh+0
-         tqkkaWbIxvw4lfg41nvkkj4T/kVxPRzACIKhPjp8qM9YxRpoe6QleLkAtqTo90N6H03K
-         sDeRsi4aov4cTzP26ImEsjbjrMmYrnLvyMddUjnKzFSAfuS6KHYGge6Hwr3XGqh2tpYQ
-         Aciqy2oYyqvYU/PF49snOm7Jb6N8gNU2Lky3PdyLDwDZOGL0BhBUbnsBaLXxGZD7ts2n
-         wYmJ2HGrR7MgRc0VAse5oNf+TDkQ33dsi+MIFRl28r1iQX5CyGRUp5oFEl5eYqoMICOX
-         dLJA==
+        bh=KR0s17nwbV+xZB8ydJeAQEHLpqlPuX02TqA4BDCotvU=;
+        b=raQYmDWYQDWYD/+a50Vl9V1zdY+qUc+y6t/kdv43ZEbPWZ7Gq1hCbBspKns79pzI2x
+         KlFnie3GWgpuYyWZ/lOPBeh7i8quA+U+BhAy17UvrbmuV4oLT0yGNc2CeJriR6yDDxSZ
+         22bxSryDXOKnYS+4nmHmyb5qMujbgjvq+Yir8r0ZUWNbw79BHjAYH5dIrhoje9H7CEJb
+         9eAHFe/1YK49U7Pjf+MuLTRHz2LDTzWl/C2o+bq/AAInK5KkGlW1TNiEbNSIbtAevlkb
+         bsXeA+TC1Bvgq6ojFt9TJl7wxBSidfYpknJewfgBvyD1ITodS3Qn+2Jc+xC1MQPu8aKs
+         2VEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=Oz5xX8nQjAs33zA3PT+lN53z56+uvFllD9Q/mHuFBgY=;
-        b=fxTob8vjv0XPvUWhBVZnMh0B49LnuO9ng+ba5fL8AoCh60QHzO+f1SRoSopRvb1MQa
-         dsXUsdAiow+s4wl3uCZUa/u/1Qa369EbvSmMAhtag32kP0xyBWwJVu4tW3BlOB2Et3Q9
-         wJKbZiGhfaOyrzb/YL2CZMvSVs9tRus3l+hE6x6WQSIlZUDpVu6qQjEVGNhO3uy8EMpK
-         dA4N99+y0AKveGi4qRckZsZiCuJlozwu/oqrd/9s9zgzOlt2C3gn/z6UWbGPoVmq1kP9
-         vAc56tfyLAC6xRqtqmKdFQk6d5zArD86qLyAkTpyBWNIAouEsmpZu66qLyfkcWfPLsmJ
-         BvcA==
-X-Gm-Message-State: AHQUAua+9g1Mzwpk0zMafRjs6IfhnWFgJA2Tm68kENmFvAha37K1oWSZ
-        HBI1gt1EDm5B+T5jc2DrN54xYkIv
-X-Google-Smtp-Source: AHgI3IYPySwYNKvcu0tdkTrkOPyPvX/Sm+qJBKJcpKJkt3ZfL4qe3TAo+EW3uMHMbemRkNSbE2lmOg==
-X-Received: by 2002:a1c:6589:: with SMTP id z131mr3532496wmb.120.1550868463696;
-        Fri, 22 Feb 2019 12:47:43 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id k20sm1775247wre.41.2019.02.22.12.47.42
+        bh=KR0s17nwbV+xZB8ydJeAQEHLpqlPuX02TqA4BDCotvU=;
+        b=HZ1XWnPIEPmxSI7u4H8ZJ0bPQF4tL6J30H92Ztoq4e4HIV15E0D/MVmqgkXJ3uZHN2
+         ZRvGxjsZGvU/2bW67wP2LVwiI429WJxXTJcWHI68pZuGFp5VdRzueZyRQ46nYQUv7Wdt
+         M7AMuTxoc+Es7/fptbqx+fUmN1GIg9qQeLE9tKdtNYzKFN6707KiyjYtCLR6bGcb+5WB
+         /Z/lss5G4l+3V3JImTypoGYJVEr9ZaoxoQAMl6XQIupQU08hZNo5+0FBbzTgW6xdR+Yh
+         0uGydyWhVCfkFSCaIp2iDSaKlbyThzbv/relJWFhLeE9awW6uMgiBwJb/Yk4E55wIZPE
+         AkTg==
+X-Gm-Message-State: AHQUAuayx/Qa+erQMaGnqLzLIrg22A065/VPOy1Uq9xbtXPkF/fKmCVI
+        iTqr1KNNPNeCcCrv2xold/E=
+X-Google-Smtp-Source: AHgI3IZVsZqV/CdMsC5EMXUUacTLmnRhFcUHKw+UahrdNkmpiHEACxS37Ev2r8wuMDbpnN73wgzetA==
+X-Received: by 2002:a5d:55c5:: with SMTP id i5mr4812440wrw.245.1550871975879;
+        Fri, 22 Feb 2019 13:46:15 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c14sm3596035wrn.12.2019.02.22.13.46.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 22 Feb 2019 12:47:42 -0800 (PST)
+        Fri, 22 Feb 2019 13:46:15 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        steadmon@google.com
-Subject: Re: [PATCH 2/8] tests: always test fetch of unreachable with v0
-References: <20190211203011.GB9072@sigill.intra.peff.net>
-        <20190214195825.125751-1-jonathantanmy@google.com>
-        <20190221134954.GC21406@sigill.intra.peff.net>
-Date:   Fri, 22 Feb 2019 12:47:42 -0800
-In-Reply-To: <20190221134954.GC21406@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 21 Feb 2019 08:49:54 -0500")
-Message-ID: <xmqqimxbpn2p.fsf@gitster-ct.c.googlers.com>
+To:     "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Slavica Djukic <slawica92@hotmail.com>
+Subject: Re: [PATCH v5 04/10] add-interactive.c: implement list_and_choose
+References: <pull.103.v4.git.gitgitgadget@gmail.com>
+        <pull.103.v5.git.gitgitgadget@gmail.com>
+        <a97b29d2741e0e5ae8cf45b1c7cafc56afaa66ef.1550662887.git.gitgitgadget@gmail.com>
+Date:   Fri, 22 Feb 2019 13:46:14 -0800
+In-Reply-To: <a97b29d2741e0e5ae8cf45b1c7cafc56afaa66ef.1550662887.git.gitgitgadget@gmail.com>
+        (Slavica Djukic via GitGitGadget's message of "Wed, 20 Feb 2019
+        03:41:31 -0800 (PST)")
+Message-ID: <xmqqd0njpkd5.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,52 +71,211 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Thu, Feb 14, 2019 at 11:58:25AM -0800, Jonathan Tan wrote:
->
->> > On Tue, Feb 05, 2019 at 04:21:16PM -0800, Jonathan Tan wrote:
->> > 
->> > > Some tests check that fetching an unreachable object fails, but protocol
->> > > v2 allows such fetches. Unset GIT_TEST_PROTOCOL_VERSION so that these
->> > > tests are always run using protocol v0.
->> > 
->> > I think this is reasonable, but just musing on a few things:
->> > 
->> >   1. Are we sure going forward that we want to retain this behavior? I
->> >      feel like we discussed this on the list recently with no real
->> >      conclusion, but I'm having trouble digging it up in the archive.
->> 
->> One such discussion is here:
->> https://public-inbox.org/git/20181214101232.GC13465@sigill.intra.peff.net/
->
-> Thanks, that was what I was thinking of, though there doesn't seem to
-> have been much discussion in response. :)
->
->> >   2. If it does change, is there any way we could automatically find
->> >      spots like this that would then need to be undone? I cannot think
->> >      of a good solution, and I don't think it's a show-stopper not to
->> >      have one, but I thought I'd put it forward as a concept.
->> 
->> We can do so now either by "blaming" one and finding the originating
->> commit, or by searching for "support fetching unadvertised objects" (I
->> used the same comment everywhere in the commit [1] so that people can do
->> this), but I don't know how to enforce this for future work. (We can add
->> a special variable, but I think it's unnecessary and we can't enforce
->> that people use that new special variable instead of
->> GIT_TEST_PROTOCOL_VERSION anyway.)
->
-> Yeah, I think we can find them once we know they need fixing. I was more
-> wondering whether we would remember to do so. I.e., is there a way the
-> test suite could remind us when our assumptions change. I can't think of
-> an easy way to do so, though.
+> +#define HEADER_INDENT "      "
+> +
+>  enum collection_phase {
+>  	WORKTREE,
+>  	INDEX
+> @@ -27,6 +29,61 @@ struct collection_status {
+>  	struct hashmap file_map;
+>  };
+>  
+> +struct list_and_choose_options {
+> +	int column_n;
+> +	unsigned singleton:1;
+> +	unsigned list_flat:1;
+> +	unsigned list_only:1;
+> +	unsigned list_only_file_names:1;
+> +	unsigned immediate:1;
+> +	char *header;
+> +	const char *prompt;
 
-Perhaps looking it a different way may help.  Instead of saying "v2
-will not protect unreachable objects, so this test must be run with
-v0", think of it like "Git ought to protect unreachable objects, so
-test with different versions of protocols to make sure all satisfy
-the requirement---for now, v2 is known to be broken, so write it
-with test_expect_failure".  IOW, have one test for each version,
-some of them may document a known breakage.
+Makes a reader wonder if "header" can also be const (not to be taken
+as a suggestion to bend backwards to make it so).
 
+> +	void (*on_eof_fn)(void);
+> +};
+> +
+> +struct choice {
+> +	struct hashmap_entry e;
+> +	char type;
 
+If this is for choosing among the member of union, possible value(s)
+for the type member and which value corresponds to which union
+member must be documented somewhere, perhaps as a comment around
+here.
+
+> +	union {
+> +		void (*command_fn)(void);
+> +		struct {
+> +			struct {
+> +				uintmax_t added, deleted;
+> +			} index, worktree;
+> +		} file;
+> +	} u;
+> +	size_t prefix_length;
+> +	const char *name;
+> +};
+> +
+> +struct choices {
+> +	struct choice **choices;
+
+In general, do not name an array in plural.  An exception is when
+the code mostly refers to the array as a whole.
+
+When most accesses are to individual elements, then it would be a
+big win to be able to see choice[2] and pronounce it "the second
+choice" (you do not say "the second choices").
+
+> +	size_t alloc, nr;
+> +};
+> +#define CHOICES_INIT { NULL, 0, 0 }
+> +
+> +static int use_color = -1;
+> +enum color_add_i {
+> +	COLOR_PROMPT,
+> +	COLOR_HEADER,
+> +	COLOR_HELP,
+> +	COLOR_ERROR
+> +};
+> +
+> +static char colors[][COLOR_MAXLEN] = {
+
+Do not be overly selfish to assume that this will stay to be the
+only color pallette in this file.  If this is the color palette for
+list_and_choose, then have it in its name, e.g. list_and_choose_color[]
+or something like that.
+
+> +	GIT_COLOR_BOLD_BLUE, /* Prompt */
+> +	GIT_COLOR_BOLD,      /* Header */
+> +	GIT_COLOR_BOLD_RED,  /* Help */
+> +	GIT_COLOR_RESET      /* Reset */
+> +};
+
+Is the above list of values and comments correct?  
+
+Doesn't each member of enum correspond to each element in
+list_and_choose_color[][COLOR_MAXLEN] array?  It does not exactly
+match my intuition to have help text in red and error messages in
+plain color.
+
+> @@ -186,3 +243,73 @@ static struct collection_status *list_modified(struct repository *r, const char
+>  	free(files);
+>  	return s;
+>  }
+> +
+> +static struct choices *list_and_choose(struct choices *data,
+> +				       struct list_and_choose_options *opts)
+> +{
+> +	if (!data)
+> +		return NULL;
+> +
+> +	while (1) {
+> +		int last_lf = 0;
+> +
+> +		if (opts->header) {
+> +			const char *header_color = get_color(COLOR_HEADER);
+> +			if (!opts->list_flat)
+> +				printf(HEADER_INDENT);
+
+I won't complain if this is sufficient for the application, but the
+above would not allow different level of indentation depending on
+what header is being shown.  It may make sense to get rid of list_flat
+boolean and instead allow a new "const char *header_indent" member
+in the opts structure supplied by the caller.
+
+Don't use printf() when you _know_ you want to show a simple string
+without any % interpolation.  fputs(HEADER_INDENT, stdout) would suffice.
+
+> +			color_fprintf_ln(stdout, header_color, "%s", opts->header);
+> +		}
+> +
+> +		for (int i = 0; i < data->nr; i++) {
+
+We do not say "for (int i" (see a previous review).
+
+> +			struct choice *c = data->choices[i];
+> +			char *print;
+> +			const char *modified_fmt = _("%12s %12s %s");
+> +			char worktree_changes[50];
+> +			char index_changes[50];
+> +			char print_buf[100];
+
+It appears that many of these variables are only needed inside "we
+are showing 'f' and not just names" block.  Can their scope be
+narrowed?
+
+> +			print = (char *)c->name;
+
+Yuck.  Stuff c->name into print_buf[] instead and get rid of "print"
+pointer.
+
+> +			if ((data->choices[i]->type == 'f') && (!opts->list_only_file_names)) {
+> +				uintmax_t worktree_added = c->u.file.worktree.added;
+> +				uintmax_t worktree_deleted = c->u.file.worktree.deleted;
+> +				uintmax_t index_added = c->u.file.index.added;
+> +				uintmax_t index_deleted = c->u.file.index.deleted;
+> +
+> +				if (worktree_added || worktree_deleted)
+> +					snprintf(worktree_changes, 50, "+%"PRIuMAX"/-%"PRIuMAX,
+> +						 worktree_added, worktree_deleted);
+> +				else
+> +					snprintf(worktree_changes, 50, "%s", _("nothing"));
+> +				if (index_added || index_deleted)
+> +					snprintf(index_changes, 50, "+%"PRIuMAX"/-%"PRIuMAX,
+> +						 index_added, index_deleted);
+> +				else
+> +					snprintf(index_changes, 50, "%s", _("unchanged"));
+> +
+> +				snprintf(print_buf, 100, modified_fmt, index_changes,
+> +					 worktree_changes, print);
+
+All of the above look overly repetitious; a helper function that
+takes a pointer to "struct { uintmax_t a, d; }" and populates
+changes[] buffer would cut them down by half, but other than that
+I do not see a room for drastic improvement here X-<.
+
+Oh, it would greatly help to use two strbuf for wt/ix_changes that
+are defined outside the loop that is strbuf_reset() after each
+iteration and use things like strbuf_addf().
+
+> +				print = xmalloc(strlen(print_buf) + 1);
+> +				snprintf(print, 100, "%s", print_buf);
+
+Likewise.
+
+> +			}
+> +
+> +			printf(" %2d: %s", i + 1, print);
+> +			if ((opts->list_flat) && ((i + 1) % (opts->column_n))) {
+> +				printf("\t");
+> +				last_lf = 0;
+> +			}
+> +			else {
+> +				printf("\n");
+> +				last_lf = 1;
+> +			}
+> +
+> +		}
+> +
+> +		if (!last_lf)
+> +			printf("\n");
+> +
+> +		return NULL;
+> +	}
+> +}
+
+This obviously only lists but does not let you choose at this step
+in the series, but that is OK.
+
+But I see a deeper problem with the design of this helper.  The
+things this helper can list is quite limited.
+
+The original was designed so that the shown strings are prepared by
+the caller and this helper is solely responsible for showing the
+choices, giving prompt, and accepting choice (in various abbreviated
+forms), all _WITHOUT_ having to know the meaning of what is in the
+list.  It gave us a much better separation of labor and
+responsibility between the caller and the callee, I would think.
