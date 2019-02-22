@@ -2,146 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE9221F453
-	for <e@80x24.org>; Fri, 22 Feb 2019 10:06:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9E491F453
+	for <e@80x24.org>; Fri, 22 Feb 2019 10:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726174AbfBVKGY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 05:06:24 -0500
-Received: from mail-it1-f179.google.com ([209.85.166.179]:53987 "EHLO
-        mail-it1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725894AbfBVKGY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 05:06:24 -0500
-Received: by mail-it1-f179.google.com with SMTP id x131so2179904itc.3
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 02:06:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qVCWo9aYGU5iGZRbGU74REyP9LxKxqADphAtbAqLcdI=;
-        b=BxMxZAAm4aCU/DKr8iYk+G3IxVXn+ppBQgyxOSOPnlivDfNWB3bAmbjoLD0sQP9yYv
-         aMELfZRfsGYM1++kW+IZqIgRkZcYUtwvT++5BHztibliauq2EvmDvnyTG4dJQzKP6NPt
-         BzmCqEVWQTaWlBGFdfp3XrIs/RCHyRuEoKeqDFdhq1cc9bvra6dXD57JiDnge1rKx5MI
-         uGMqG9UsTXytqH2q/PgIT4lGy7R7ItbT95l/BO8u2qalSPiewn/rFvdX9OhNZ8qtzUXH
-         TAeENK4m+/pOBaLeLkTptRWbwZUb6f5MCh1autRKl/CFh7TxmbqaKSrwmGOdRDRj2hh3
-         OX2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qVCWo9aYGU5iGZRbGU74REyP9LxKxqADphAtbAqLcdI=;
-        b=E188ewurf2MSe+Chb7nY6ww5TU2v62sOTqyCRkc16xmhJ4Ks4V2xGLWKwzSH9RNPUF
-         iQ2uzd/tC+HC/lmzZPBjPtCkXZvXFGKqRdPOwsC9S8OOiTYmRKXapf9GrgcQkN4MgmZJ
-         /pJg1XNoVFz/5aSjPJWqaeiycAgZUlnTEeTIKaG8S7oH4j6xNAqKoS+guQ1BgEjnVfnW
-         FGcXyi1QsLQLj8dTOS7j2MD/gCBJ81+NR9HT1UngUJUTXNDGnPVhVOOUEdbd4BwBi5no
-         AT+pCR480bDKMl4QOxM7bqBEy0D4E4rmbUKbmX7CVCbmfZXaUgyoCxtxmPgrh9zBSGmJ
-         B64A==
-X-Gm-Message-State: AHQUAuZADD28PjmUQBSLywNrLgB1Vl8KlZmajeYUmZUYQgBb43ipwwjK
-        8aFoLveF+NhrFanKsHLUI2TZ1T7Ex/mPn8gHTOc=
-X-Google-Smtp-Source: AHgI3IZKWN307eTt1e0oi8vZjxqgi4q/dtXMOS9GhzRzXVXEnoSzDSheXdkMRzoGZdLvcJm11FWI1Pww/jpnYC/F9K0=
-X-Received: by 2002:a24:c056:: with SMTP id u83mr1540251itf.10.1550829983119;
- Fri, 22 Feb 2019 02:06:23 -0800 (PST)
+        id S1726694AbfBVKUe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 05:20:34 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:22337 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726135AbfBVKUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 05:20:34 -0500
+Received: from [192.168.2.240] ([92.22.15.194])
+        by smtp.talktalk.net with SMTP
+        id x7wRgtVbF6cDmx7wSgNuaz; Fri, 22 Feb 2019 10:20:30 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1550830830;
+        bh=qLEe67d72S3u6S0n9KAp8R/uwNxn5a2iOG79O5aYm8s=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=kaYENiaUZB5kNf2an540dmgHoxd2f2h7BJTmQOj4EScjJqWmvwWsQQ605thkQxOwU
+         TGv2HONJxcCVgx2Cvy9daP1v0Es/jor7PPqNDsRHJm4gCpH+5lFLq87oCowAvVLrjL
+         nRiSRCCYs258ScXXqeF+9F9XyTtrU2xAQpdmy/p4=
+X-Originating-IP: [92.22.15.194]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Cal2G4jl c=1 sm=1 tr=0 a=SbQTfhO/oL0pg4h8lvBCaA==:117
+ a=SbQTfhO/oL0pg4h8lvBCaA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=pGLkceISAAAA:8 a=DhgQeCj3QoOSJyUbrTYA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/2] setup: don't fail if commondir reference is deleted.
+To:     Duy Nguyen <pclouds@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     =?UTF-8?Q?Michal_Such=c3=a1nek?= <msuchanek@suse.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Marketa Calabkova <mcalabkova@suse.cz>,
+        Junio C Hamano <gitster@pobox.com>
+References: <cover.1550508544.git.msuchanek@suse.de>
+ <6f9c8775817117c2b36539eb048e2462a650ab8f.1550508544.git.msuchanek@suse.de>
+ <CACsJy8AWezO7TFq8ne1a2pSAJZoc6oYqnNNxmVW_FkA9--ntbQ@mail.gmail.com>
+ <20190221145056.53b98b2a@kitsune.suse.cz>
+ <adc0f7f9-aa41-780e-6fce-94d493fac318@talktalk.net>
+ <CACsJy8B2HRyBKQd+S7hjfU+xGFH+_y0YKcw8397znc2eGUBogQ@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <1e0e8a07-f310-adc7-0538-c1b738da0e98@talktalk.net>
+Date:   Fri, 22 Feb 2019 10:20:27 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.0
 MIME-Version: 1.0
-References: <20190125095122.28719-1-pclouds@gmail.com> <875ztc5evt.fsf@evledraar.gmail.com>
-In-Reply-To: <875ztc5evt.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 22 Feb 2019 17:05:56 +0700
-Message-ID: <CACsJy8DJvxuhVJBpgTNiFHt+0ZOFqm4agvxrJfa2D1jvDojaRQ@mail.gmail.com>
-Subject: Re: Ideas for even more compact fetch.output=compact output
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACsJy8B2HRyBKQd+S7hjfU+xGFH+_y0YKcw8397znc2eGUBogQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfK2j9D3xHy4VG2gS1knb2VtI1e35byHuktCe0Zub6TxackgXe9iQQrQtbKo33QWCMYgr0BCQUoggxrHK4gbg+PXmFpCSwbBh/CeFZ6iyYW5nj9f2GMY9
+ DBR90zYpjsFv9j5oCRCqj8Bh1LaY5kTfbG/eSPCUU4PqMPI/h5f8gZ5aKb9FAwNN1Ou6ABhv1fw3NCBIocET9A23wE1KPXz2tbuq8t7kdVQ84Wd2pnlpCHHz
+ euTm2sRhocZKBdRaldK9ntB07IKlMtioS3EefRLMdLsW524TltZ7M4cbP9mMvhI/8RoQtkGfUTxGeGPBmXeQOtiWdPSlJGIDam2oyrpWdZu4QxwGs9U49Gmh
+ iI7agPAT9XC0k6w9H/ar1xbafapMhQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 22, 2019 at 4:52 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Just using this as a bounce-off point for a related discussion, one case
-> where I still see duplicates is things like:
->
->     From github.com:git/git
->        a7da99ff1b..28d0017056  next                -> origin/*
->      + e911e946c2...9cc6aca6e9 pu                  -> origin/*  (forced u=
-pdate)
->        a7da99ff1b..28d0017056  refs/pull/412/head  -> origin/pull/412/hea=
-d
->      + 1dbcd06490...6b1f08d3ef refs/pull/412/merge -> origin/pull/412/mer=
-ge  (forced update)
->      + e911e946c2...9cc6aca6e9 refs/pull/444/head  -> origin/pull/444/hea=
-d  (forced update)
->      + 8131760e3b...ed5bbbbcec refs/pull/444/merge -> origin/pull/444/mer=
-ge  (forced update)
->
-> I.e. the duplicate strings for the "pull" namespace I'm fetching.
->
-> Now, there's no room with the current syntax to represent that
-> unambiguously, I started to patch it, but wasn't sure I liked the syntax
-> I came up with.
->
-> This is also one of the rare cases where bikeshedding the idea can
-> productively done without a patch so I thought I'd start that discussion
-> first.
->
-> If we had this:
->
->     From github.com:git/git
->        a7da99ff1b..28d0017056  next                -> origin/*
->      + e911e946c2...9cc6aca6e9 pu                  -> origin/*  (forced u=
-pdate)
->        a7da99ff1b..28d0017056  refs/[pull/412/head]  -> origin/*
->      + 1dbcd06490...6b1f08d3ef refs/[pull/412/merge] -> origin/*  (forced=
- update)
->      + e911e946c2...9cc6aca6e9 refs/[pull/444/head]  -> origin/*  (forced=
- update)
->      + 8131760e3b...ed5bbbbcec refs/[pull/444/merge] -> origin/*  (forced=
- update)
->
-> We could de-duplicate such output. I.e. used [] as "capture" delimiters
-> for the subsequent "*" since "[" and "]" aren't valid in ref names (but
-> "()" and "{}" are!).
+Hi Duy
 
-First impression, I think the square brackets makes it harder to read
-the left column.
+On 22/02/2019 09:32, Duy Nguyen wrote:
+> On Fri, Feb 22, 2019 at 12:07 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+>>
+>> Hi Michal/Duy
+>>
+>> On 21/02/2019 13:50, Michal Suchánek wrote:
+>>> On Thu, 21 Feb 2019 17:50:38 +0700
+>>> Duy Nguyen <pclouds@gmail.com> wrote:
+>>>
+>>>> On Tue, Feb 19, 2019 at 12:05 AM Michal Suchanek <msuchanek@suse.de> wrote:
+>>>>>
+>>>>> When adding wotktrees git can die in get_common_dir_noenv while
+>>>>> examining existing worktrees because the commondir file does not exist.
+>>>>> Rather than testing if the file exists before reading it handle ENOENT.
+>>>>
+>>>> I don't think we could go around fixing every access to incomplete
+>>>> worktrees like this. If this is because of racy 'worktree add', then
+>>>> perhaps a better solution is make it absolutely clear it's not ready
+>>>> for anybody to access.
+>>>>
+>>>> For example, we can suffix the worktree directory name with ".lock"
+>>>> and make sure get_worktrees() ignores entries ending with ".lock".
+>>>> That should protect other commands while 'worktree add' is still
+>>>> running. Only when the worktree is complete that 'worktree add' should
+>>>> rename the directory to lose ".lock" and run external commands like
+>>>> git-checkout to populate the worktree.
+>>>
+>>> The problem is we don't forbid worktree names ending with ".lock".
+>>> Which means that if we start to forbid them now existing worktrees
+>>> might become inaccessible.
+>>
+>> I think it is also racy as the renaming breaks the use of mkdir erroring
+>> out if the directory already exists.
+> 
+> You mean the part where we see "fred" exists and decide to try the
+> name "fred1" instead (i.e. patch 1/2)?
+> 
+> I don't think it's the problem if that's the case. We mkdir
+> "fred.lock" _then_ check if "fred" exists. If it does, remove
+> fred.lock and move on to fred1.lock. Then we rename fred1.lock to
+> fred1 and error out if rename fails.
 
-I was going to suggest coloring, which could be used to highlight the
-common parts. But I think that would mess it up even more because it
-kinda steals focus.
+Ah you're right, if another process tries to create fred.lock as we're 
+renaming it either their mkdir fred.lock will fail or they'll see fred 
+once they've made fred.lock
 
-Another option is simply display refspec on the right hand side, e.g.
+Sorry for the confusion
 
- refs/pull/412/merge -> refs/*:origin/*  (forced update)
- refs/pull/444/head  -> refs/*:origin/*  (forced update)
- refs/pull/444/merge -> refs/*:origin/*  (forced update)
-
-This keeps the right column boring and mostly the same without losing
-meaning, while the left column is left untouched. It does make you
-think a bit to find out what the actual ref on the right hand side is
-though.
-
-> Or maybe more generally using it consistently throughout, also for next/p=
-u:
->
->     From github.com:git/git
->        a7da99ff1b..28d0017056  [next]                -> origin/*
->      + e911e946c2...9cc6aca6e9 [pu]                  -> origin/*  (forced=
- update)
->        a7da99ff1b..28d0017056  refs/[pull/412/head]  -> origin/*
->     [...]
->
-> The things that suck the most about this are that you can no longer
-> copy/paste the ref on the LHS as-is, and that it'll only show up in rare
-> cases, so it'll probably confuse even experienced users.
->
-> What do you think?
-
-
-
---=20
-Duy
+Phillip
