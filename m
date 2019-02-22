@@ -2,117 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9E491F453
-	for <e@80x24.org>; Fri, 22 Feb 2019 10:20:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5056A1F453
+	for <e@80x24.org>; Fri, 22 Feb 2019 10:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726694AbfBVKUe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Feb 2019 05:20:34 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:22337 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726135AbfBVKUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 05:20:34 -0500
-Received: from [192.168.2.240] ([92.22.15.194])
-        by smtp.talktalk.net with SMTP
-        id x7wRgtVbF6cDmx7wSgNuaz; Fri, 22 Feb 2019 10:20:30 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1550830830;
-        bh=qLEe67d72S3u6S0n9KAp8R/uwNxn5a2iOG79O5aYm8s=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=kaYENiaUZB5kNf2an540dmgHoxd2f2h7BJTmQOj4EScjJqWmvwWsQQ605thkQxOwU
-         TGv2HONJxcCVgx2Cvy9daP1v0Es/jor7PPqNDsRHJm4gCpH+5lFLq87oCowAvVLrjL
-         nRiSRCCYs258ScXXqeF+9F9XyTtrU2xAQpdmy/p4=
-X-Originating-IP: [92.22.15.194]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Cal2G4jl c=1 sm=1 tr=0 a=SbQTfhO/oL0pg4h8lvBCaA==:117
- a=SbQTfhO/oL0pg4h8lvBCaA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=pGLkceISAAAA:8 a=DhgQeCj3QoOSJyUbrTYA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/2] setup: don't fail if commondir reference is deleted.
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     =?UTF-8?Q?Michal_Such=c3=a1nek?= <msuchanek@suse.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Marketa Calabkova <mcalabkova@suse.cz>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1550508544.git.msuchanek@suse.de>
- <6f9c8775817117c2b36539eb048e2462a650ab8f.1550508544.git.msuchanek@suse.de>
- <CACsJy8AWezO7TFq8ne1a2pSAJZoc6oYqnNNxmVW_FkA9--ntbQ@mail.gmail.com>
- <20190221145056.53b98b2a@kitsune.suse.cz>
- <adc0f7f9-aa41-780e-6fce-94d493fac318@talktalk.net>
- <CACsJy8B2HRyBKQd+S7hjfU+xGFH+_y0YKcw8397znc2eGUBogQ@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <1e0e8a07-f310-adc7-0538-c1b738da0e98@talktalk.net>
-Date:   Fri, 22 Feb 2019 10:20:27 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.0
+        id S1726324AbfBVKvA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 05:51:00 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:54489 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726072AbfBVKu7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 05:50:59 -0500
+Received: by mail-wm1-f68.google.com with SMTP id a62so1527096wmh.4
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 02:50:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=yKMCW3tdl6mYs5IZ57Xmj1jBrhvM5yRu3Lk5M76VGQg=;
+        b=S+ExCGxbouZc8oC8d2juFlcQzG+cfW7h+dBJub3q313dUAqftYiKPGmP4DGVhHSQ8E
+         5VhVZwoUJQVXta+nUKbAPUyppjC58Om7nBfXm8/CbB2VBYubcSG0ePztZWEts/wcEcyf
+         +R+fwqrIvLTi1NXwpvdgKF3oJ7+RkGYrQ9+9j5+bivt/LKPr3ydnMmL/PBpRQf3lvqOT
+         BlBfToLCuImovIjxchMHx+5FmRDnml3KQA+sqkAzlmzm8V5auHFxTOEPLOGGZnlPpAy5
+         7Ns9ajQbR9P1MZ1RLRR7fK7ibMANh7WK8H4pFVvO47TvGSoW2qJCHaWaTU2g3eJ/BxBl
+         pWLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=yKMCW3tdl6mYs5IZ57Xmj1jBrhvM5yRu3Lk5M76VGQg=;
+        b=G9oaWMj4pE8t5WsHuNlPr3rYWPqXvfGiyU+PhyEzEiJdrNScr5QCBp6WunkgaTdMNT
+         Nzc/GzeIYWIxGmYZF9sRXIUTeJe3QKBY0s+p3RB03BXRWr0Y7SPosmgcbFa1JeEVYwdA
+         myWpNlKYrWTw1QnMJCTbiCp7a4yo2blWOqby1eRWSFGHLW/X5JrRG96UA9FxTtZC8QgN
+         3k3Z63qryCu4nblPH116asGJG/tvugoGCQbdTD2TEmoVI+wAXK7l5UKsxYSnQQbf3KvL
+         1HY0JEe3W/wQvIVYYyX9eFttceKJXz8QmUxn70WNTDPUiSISZ4PW0WljGXivEULJ241Y
+         PYYQ==
+X-Gm-Message-State: AHQUAuYV3g/Z+wTUPlpVK2Ad3ye8zUtW313qM7fvKe5Q3Zv7FVGNUHEA
+        ybbIL/d02dbeqn0JbtY8r+U=
+X-Google-Smtp-Source: AHgI3IaXHPQQcEFhBqiuGqGAS6l9X2pymaQYbbDGeYOfb5x4iP5U4k7lv2+SDLHkt9IjgddZUnwh7g==
+X-Received: by 2002:a1c:7eca:: with SMTP id z193mr2254097wmc.140.1550832657170;
+        Fri, 22 Feb 2019 02:50:57 -0800 (PST)
+Received: from szeder.dev (x4dbd721b.dyn.telefonica.de. [77.189.114.27])
+        by smtp.gmail.com with ESMTPSA id b195sm2940119wmg.36.2019.02.22.02.50.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Feb 2019 02:50:56 -0800 (PST)
+Date:   Fri, 22 Feb 2019 11:50:53 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Sebastian Staudt <koraktor@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] commit-graph tests: fix cryptic unportable "dd"
+ invocation
+Message-ID: <20190222105053.GU1622@szeder.dev>
+References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com>
+ <20190221192849.6581-3-avarab@gmail.com>
+ <20190221204310.GS1622@szeder.dev>
+ <878sy86anh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8B2HRyBKQd+S7hjfU+xGFH+_y0YKcw8397znc2eGUBogQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfK2j9D3xHy4VG2gS1knb2VtI1e35byHuktCe0Zub6TxackgXe9iQQrQtbKo33QWCMYgr0BCQUoggxrHK4gbg+PXmFpCSwbBh/CeFZ6iyYW5nj9f2GMY9
- DBR90zYpjsFv9j5oCRCqj8Bh1LaY5kTfbG/eSPCUU4PqMPI/h5f8gZ5aKb9FAwNN1Ou6ABhv1fw3NCBIocET9A23wE1KPXz2tbuq8t7kdVQ84Wd2pnlpCHHz
- euTm2sRhocZKBdRaldK9ntB07IKlMtioS3EefRLMdLsW524TltZ7M4cbP9mMvhI/8RoQtkGfUTxGeGPBmXeQOtiWdPSlJGIDam2oyrpWdZu4QxwGs9U49Gmh
- iI7agPAT9XC0k6w9H/ar1xbafapMhQ==
+In-Reply-To: <878sy86anh.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy
-
-On 22/02/2019 09:32, Duy Nguyen wrote:
-> On Fri, Feb 22, 2019 at 12:07 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->>
->> Hi Michal/Duy
->>
->> On 21/02/2019 13:50, Michal Suchánek wrote:
->>> On Thu, 21 Feb 2019 17:50:38 +0700
->>> Duy Nguyen <pclouds@gmail.com> wrote:
->>>
->>>> On Tue, Feb 19, 2019 at 12:05 AM Michal Suchanek <msuchanek@suse.de> wrote:
->>>>>
->>>>> When adding wotktrees git can die in get_common_dir_noenv while
->>>>> examining existing worktrees because the commondir file does not exist.
->>>>> Rather than testing if the file exists before reading it handle ENOENT.
->>>>
->>>> I don't think we could go around fixing every access to incomplete
->>>> worktrees like this. If this is because of racy 'worktree add', then
->>>> perhaps a better solution is make it absolutely clear it's not ready
->>>> for anybody to access.
->>>>
->>>> For example, we can suffix the worktree directory name with ".lock"
->>>> and make sure get_worktrees() ignores entries ending with ".lock".
->>>> That should protect other commands while 'worktree add' is still
->>>> running. Only when the worktree is complete that 'worktree add' should
->>>> rename the directory to lose ".lock" and run external commands like
->>>> git-checkout to populate the worktree.
->>>
->>> The problem is we don't forbid worktree names ending with ".lock".
->>> Which means that if we start to forbid them now existing worktrees
->>> might become inaccessible.
->>
->> I think it is also racy as the renaming breaks the use of mkdir erroring
->> out if the directory already exists.
+On Thu, Feb 21, 2019 at 11:26:26PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> >> -	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0 &&
+> >> +	perl -we 'truncate $ARGV[0], $ARGV[1] if -s $ARGV[0] > $ARGV[1]' \
+> >> +		$objdir/info/commit-graph $zero_pos &&
+> >
+> > This will make Dscho unhappy :)
 > 
-> You mean the part where we see "fred" exists and decide to try the
-> name "fred1" instead (i.e. patch 1/2)?
+> Sorry Dscho :)
 > 
-> I don't think it's the problem if that's the case. We mkdir
-> "fred.lock" _then_ check if "fred" exists. If it does, remove
-> fred.lock and move on to fred1.lock. Then we rename fred1.lock to
-> fred1 and error out if rename fails.
+> Although this is a one-off in one test, as opposed to a new "perl -e" in
+> test-lib-functions.sh
+> 
+> > Is there a problem with:
+> >
+> >   dd if=/dev/null of="$objdir/info/commit-graph" bs=1 seek="$zero_pos"
+> >
+> > ?
+> >
+> > To my understanding of the specs it's well-defined what it should do,
+> > even when $zero_pos is larget than the file size,  it's shorter,
+> > simpler, and doesn't introduce yet another Perl dependency.
+> 
+> I tried that as a one-off and it indeed works as a "truncate" on NetBSD
+> & GNU.
+> 
+> My reading of POSIX "dd" and "lseek" docs is that we'd need some similar
+> guard if we're going to be paranoid about a $zero_pos value past the end
+> of the file. It doesn't look like that's portable, my assumption from
+> reading the docs is that the seek=* will devolve without a stat() check
+> on some "dd" implementations to an "lseek".
 
-Ah you're right, if another process tries to create fred.lock as we're 
-renaming it either their mkdir fred.lock will fail or they'll see fred 
-once they've made fred.lock
+Could you point to the part of the specs where your assumption comes
+from?  The specs are quite clear on what should happen:
 
-Sorry for the confusion
+  If the size of the seek plus the size of the input file is less than
+  the previous size of the output file, the output file shall be
+  shortened by the copy. If the input file is empty and either the
+  size of the seek is greater than the previous size of the output
+  file or the output file did not previously exist, the size of the
+  output file shall be set to the file offset after the seek.
 
-Phillip
+IOW no such guard is necessary.
+
+I checked the man pages of FreeBSD's, NetBSD's, OpenBSD's and Solaris'
+'dd', and they are clearly following the specs in this respect.  I
+tried NetBSD 6.0's and 8.0's 'dd', and both behave as advertised.
+
+And using 'dd' doesn't add a condition after statement...
+
+> I'm not going to submit a re-roll of this because it works, and I'd
+> still trust Perl's truncate(...) portability over dd.
+>
+> But more importantly because it takes me *ages* to fully re-test
+> anything on the slow BSD VMs I have access to, and I already tore town
+> my one-off hacking env there after testing these patches...
+> 
+> >>  	generate_zero_bytes $(($orig_size - $zero_pos)) >>"$objdir/info/commit-graph" &&
+> >>  	test_must_fail git commit-graph verify 2>test_err &&
+> >>  	grep -v "^+" test_err >err &&
+> >> --
+> >> 2.21.0.rc0.258.g878e2cd30e
+> >>
