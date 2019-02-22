@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85DE120248
-	for <e@80x24.org>; Fri, 22 Feb 2019 22:25:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0449220248
+	for <e@80x24.org>; Fri, 22 Feb 2019 22:25:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727087AbfBVWZN (ORCPT <rfc822;e@80x24.org>);
+        id S1727108AbfBVWZP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 17:25:15 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:33439 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726773AbfBVWZN (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 22 Feb 2019 17:25:13 -0500
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:39924 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726874AbfBVWZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Feb 2019 17:25:13 -0500
-Received: by mail-ed1-f52.google.com with SMTP id p27so3098134edc.6
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 14:25:11 -0800 (PST)
+Received: by mail-ed1-f65.google.com with SMTP id c55so3129345edb.0
+        for <git@vger.kernel.org>; Fri, 22 Feb 2019 14:25:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ioDtFHTIzlviCcUYUfsHz+hDRR0xugC+voZbLk2CYm0=;
-        b=ZDw823pH5qt0VcgBLZrYz8+PbxsGspt+1eiHysJ928OFiCO9gVYDggcDtW+YRGqjDE
-         n2CZ0zFFmIHTRY80YWXjxdBAvVYKvn5z0RxfWHsoT5kUwzWMDsopl8tWUpXbqREBqxvM
-         pyyD3sRcGYS12BWzA/VquLt/8tqG966wrq9Z0blD4gZ/bZtzx7adhbQOowPzfFXF3nLY
-         Ff276IsMy5/ZVn5XerUcJZXKNjxsek1eMG5k2b21O/reSPBQj2/LPkB02tuMyeF25xKy
-         4j4KXmwtYwglxh0jZApXWeSoj/Yw3W13er1zNoG2m/IBlvUjtgH9HrTY6nx9Xu32t2+h
-         OI3Q==
+        bh=+HNHRZvwJJmm0VWKLgMxINFpvo+ixKycoqwfuPzDbZo=;
+        b=dNxXK9KW27Mxhp+iaHchEo8pTABT5hWnmmrEFWN3cMG60kTvBI8zdGosg6Jd09RfBH
+         nKIjkxsKyfXNctxoOyVNHJ/PmnHYz083oFJOpwb0qpnp0tpNazj/egYchuNSEOxhFR6b
+         llyis3ZkC/N9fvX3bcoS/A3FVtBLQvZPr0JE8tAqTNBMi0xUqYUJwueWB6rZWvmfqgCN
+         9iLliLbTuGvwPt1mo2L0YiMNg3VJ6/Xs8FZvRaoeDLVldi1EGT8TBrcUxTyE/QISQKr7
+         muRiOigsTlsv/Xeyph01zM0pH9MQ0om1nXGygn7Ta7QWrxao+jbXz7Cew9wLCWJ6uKG0
+         PhTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ioDtFHTIzlviCcUYUfsHz+hDRR0xugC+voZbLk2CYm0=;
-        b=OZty3IKyFa6dhiYqmSYyFqhBoDf9XgNGnJm3iZSkNiltpQ9YEebwr1uZaaenHkHBmP
-         LdHk7KJ8LJF87aVfm07YDGlZZdcZxY65nsDwqqGG0/ZBHRrpAk/AqJ4ndeP1JDH/zzr0
-         /dVVtDanlRIZ3HCC0qUZVmD+K/o8bS+CfxAEtYSHhD7foOUZlUoSgwamr+3/vB3UARGv
-         dDLjlspk7VOalmrqKz7JQnS4/1PLdcIf9fxsmqhX/cPhrIVF5eZxB79NHu8eK4Mz7TSX
-         tRXbhigzHfRMyr+QSDyDT9oJahBHGK3xn9gY/t8GQsRJY19Ec93AfzfpfM66f8FtJY1I
-         Ij0w==
-X-Gm-Message-State: AHQUAuZnGOwFxcJXFI3cVhKLiJoobaQwxRzs4ilbNyC98qkvcNgOUJJM
-        +nfePZS52kKDNux2mZhBmWxfO15x
-X-Google-Smtp-Source: AHgI3IbiFXrbpyfunLNZWGkuKGwpT9li4e+wn1EtRF4ioMHxaU0cHddK29pwtNnk4lFf14yT6C6uQA==
-X-Received: by 2002:a17:906:e201:: with SMTP id gf1mr4491604ejb.10.1550874310721;
-        Fri, 22 Feb 2019 14:25:10 -0800 (PST)
+        bh=+HNHRZvwJJmm0VWKLgMxINFpvo+ixKycoqwfuPzDbZo=;
+        b=nwLOOijRCms6wWjM6+VyLkFl94MXolvUmRP8XVVehf9LF7EnPucqO1VI7/PTN71lKG
+         5t1qsINSxZ6YlOJQ0cCpR3YtxoAXNBkeLAJa+Wo3CdjXnB6aOMLNYJuyEqPeSMvhcWoC
+         6qqXU+L1Of5Vt2G7p9cmPo8tjap3tDi6Ww/vVU+HsZD+J1+wOeBtvzrlsyE/pFreXUS4
+         7d6K6LlfS89bEpNKY/qp/QwwS/RHQfkWoIwhIHOUQSk3OwS6s4M08pxPASEGOfijg0oz
+         WvlwqrCy04Z5iFuCZWlptLBolDgM3DWCZNwcbf8uSVo/ksyyIZJWNMB/Cx39rAQblpUU
+         1GXw==
+X-Gm-Message-State: AHQUAuaIxuR7MdrvjK0/Opn0GOHqpYlaAy8JPItfv0amY3lZa2+WzWSF
+        b9LhESzTjFrbfhSJTQ+iHwyzXjQE
+X-Google-Smtp-Source: AHgI3IZyTYAtQ4vAWdqUsm2RWPZJ/OkP4xuSF3Fs+XKtmy/cKBy4IxhlscHkH3MKNLOMZiX1Ftbi/w==
+X-Received: by 2002:a50:92cb:: with SMTP id l11mr4859493eda.25.1550874312001;
+        Fri, 22 Feb 2019 14:25:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b5sm462435eju.74.2019.02.22.14.25.10
+        by smtp.gmail.com with ESMTPSA id g24sm702088edc.67.2019.02.22.14.25.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Feb 2019 14:25:10 -0800 (PST)
-Date:   Fri, 22 Feb 2019 14:25:10 -0800 (PST)
-X-Google-Original-Date: Fri, 22 Feb 2019 22:24:56 GMT
-Message-Id: <3e6fee40b07b29eb62c96c08bae4a615d247de85.1550874298.git.gitgitgadget@gmail.com>
+        Fri, 22 Feb 2019 14:25:11 -0800 (PST)
+Date:   Fri, 22 Feb 2019 14:25:11 -0800 (PST)
+X-Google-Original-Date: Fri, 22 Feb 2019 22:24:58 GMT
+Message-Id: <662201f49e2da012422b8a70d39b24e387c8fc7d.1550874298.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.v7.git.gitgitgadget@gmail.com>
 References: <pull.108.v6.git.gitgitgadget@gmail.com>
         <pull.108.v7.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v7 13/15] trace2:data: add subverb for rebase
+Subject: [PATCH v7 15/15] trace2: add for_each macros to clang-format
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,44 +73,21 @@ From: Jeff Hostetler <jeffhost@microsoft.com>
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/rebase.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ .clang-format | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 774264bae8..f5ac4fe2ea 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -850,6 +850,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		ACTION_EDIT_TODO,
- 		ACTION_SHOW_CURRENT_PATCH,
- 	} action = NO_ACTION;
-+	static const char *action_names[] = { N_("undefined"),
-+					      N_("continue"),
-+					      N_("skip"),
-+					      N_("abort"),
-+					      N_("quit"),
-+					      N_("edit_todo"),
-+					      N_("show_current_patch"),
-+					      NULL };
- 	const char *gpg_sign = NULL;
- 	struct string_list exec = STRING_LIST_INIT_NODUP;
- 	const char *rebase_merges = NULL;
-@@ -1039,6 +1047,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		die(_("The --edit-todo action can only be used during "
- 		      "interactive rebase."));
+diff --git a/.clang-format b/.clang-format
+index de1c8b5c77..41d4cd23fd 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -149,7 +149,7 @@ Cpp11BracedListStyle: false
  
-+	if (trace2_is_enabled()) {
-+		if (is_interactive(&options))
-+			trace2_cmd_mode("interactive");
-+		else if (exec.nr)
-+			trace2_cmd_mode("interactive-exec");
-+		else
-+			trace2_cmd_mode(action_names[action]);
-+	}
-+
- 	switch (action) {
- 	case ACTION_CONTINUE: {
- 		struct object_id head;
+ # A list of macros that should be interpreted as foreach loops instead of as
+ # function calls.
+-ForEachMacros: ['for_each_string_list_item']
++ForEachMacros: ['for_each_string_list_item', 'for_each_wanted_builtin', 'for_each_builtin', 'for_each_ut']
+ 
+ # The maximum number of consecutive empty lines to keep.
+ MaxEmptyLinesToKeep: 1
 -- 
 gitgitgadget
-
