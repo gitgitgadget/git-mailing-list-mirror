@@ -7,58 +7,62 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 466741F453
-	for <e@80x24.org>; Fri, 22 Feb 2019 04:53:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8167E1F453
+	for <e@80x24.org>; Fri, 22 Feb 2019 05:00:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726298AbfBVExu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Feb 2019 23:53:50 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:33490 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726178AbfBVExu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Feb 2019 23:53:50 -0500
-Received: by mail-wm1-f66.google.com with SMTP id h22so8058264wmb.0
-        for <git@vger.kernel.org>; Thu, 21 Feb 2019 20:53:49 -0800 (PST)
+        id S1725854AbfBVFAf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Feb 2019 00:00:35 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39564 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725710AbfBVFAf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Feb 2019 00:00:35 -0500
+Received: by mail-wr1-f67.google.com with SMTP id l5so930104wrw.6
+        for <git@vger.kernel.org>; Thu, 21 Feb 2019 21:00:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=sfzaNi8olj17vh4CaUCFrKcWbCRQQKjQJ70UB4sbpsg=;
-        b=QBEfXJUE1Y1XPgMtHIhMQ0GQZUi2tgAQYWAP+WX32741Robj7a4YQHzhkMmmnWkWkf
-         +viShKRm1iXRdPq9FTcY0yXwLBOyVR1FokdVvWqoKvzapbY8S0Rhjz7JL4HcLMa/4HBm
-         r3jV0z+lLPzhz/S9crk7JweigcS89QWC7w2aeexndBEeTM1NyypXaDLkYGRo9C64XbQ5
-         APWZ5SwRmFwAyNvWd2yop/u+rSlSLzHm2Ui5Zv+arsqqi7L4nrqKMQeip3I16VhOCu9C
-         yeioPgVTI06BmVAc5jC49ede938CAgfG7A+33rayB3q9D3TdYcHZ4qxw4J1harlb5WFq
-         SXGg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=jKnS51G5dwoxBQD1NiZPALfOpFrLNx2OSVLgUZ4eBJY=;
+        b=QaHepY+jrVZfAF/K0m2qXu1pgKl071HcLeegDVvvXgXUTRCqIreLlQvUyFITI+QsQd
+         Dk5/DgDqP+7n2SiHDSzmaZ/j5UuPpdGbGenwcfm2qrYwZsXPNr5+2fIvYV3D1rPuUlLY
+         lDKGUL5Q+vL5r9sn7c624n2z2nuBnlORrN3Vbz/UofvCKzAEKb/RVUw4Phu7vCVe6lLq
+         ExjC5zxUNy/Uh/stcsYn1skR6e+yPnt6oaBulfGKEXSRsDa8T9Q6qNKsX3OS76WwOM9q
+         s7k7WhRUkVnCZqsNt7NTd4U1cIdkZ1W4B7T6vHZ5IFvMegBAb6jEb29Rm1B7Zs2ZWo3p
+         MAyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=sfzaNi8olj17vh4CaUCFrKcWbCRQQKjQJ70UB4sbpsg=;
-        b=ah2DDp0yfzyvB73TNZZ3DtQ8HOwuYEXM3bngkiA9V5MrfKtiBQbF+yGY/c7bDbHlI8
-         u5IvPxovyOzny+trYY+YzzAMFLdlx9bi/5lCt08ENbwx5cBMf8ZibFt7ZOaRXnGe+2Aa
-         Su6XoHgBBi2SfGaybJL5leZ7QIYSqmYqUEXSyJMrJNo9qOpU6x1kWQB+5YmxAOHzsVQI
-         /KKgXpG3YwO3P4mGYKiX+T1BO6TFZaFaJApQjsmh9cJIR9Edz2aewHt6YuTnQG6r4IRE
-         E+upIKCYBZ4DTTb6NiGuLrSL0aInTXt7nm0imDkzfMzZAYub0PvaGOEp56f4T5SbwiOt
-         AmGQ==
-X-Gm-Message-State: AHQUAubmZHXi+NxiUyg3cPmTlRG4Ktw1EhQZLDtAiDdaXYqVKFHirsI4
-        MMveGraKK0XMX14v3/UQiy0=
-X-Google-Smtp-Source: AHgI3IaSoMLxZZRUcGOzIdEA80z040VRbzje7BXhlX8C7SE1dXprm2JARekHgH2/EOEV6WJBufNR3A==
-X-Received: by 2002:a1c:a58c:: with SMTP id o134mr1049456wme.79.1550811228377;
-        Thu, 21 Feb 2019 20:53:48 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o18sm1531684wrg.40.2019.02.21.20.53.45
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=jKnS51G5dwoxBQD1NiZPALfOpFrLNx2OSVLgUZ4eBJY=;
+        b=TJZvHc7cJICf0AlwlRoeOPQENBweUROjATGP1vrdfuBvgO2AcAK9lSCNEhKWOJPWES
+         7KdhRZHZ1upNU4PzMFffC+CRPVgVpxZABxDILr05fxdWy5rAXBfQABZjKQLi0u7hta4X
+         OsJXYtzPdHbnNoRNt2JZHXzZ6I13NWUPiaqNLnqEK1FZM3OQu2GnA++ZxyY0Ut+HBbfM
+         SnMIfuBfopZPRSfSm2ShEzbqVyIEO2DtJYfWWwJwntimSGEaCTAmxitW5PQYalaueixU
+         zseO8Bty50vUN8LQI3D3NYxWZdQGJlfW7oZICuwnniKRjH4IeefF8ay4l5DFjhDKq48k
+         0Xlg==
+X-Gm-Message-State: AHQUAuar+l+JuhDzX5gSCLHcMQC5P8piajUE0CZqRR5zzO6EiPizV9eC
+        OzAkdfGz1BbiDFEhsNnTs90=
+X-Google-Smtp-Source: AHgI3Ia6wsXNFbJ711voK6Lmglk8x+lm08FM58V+3zi1qiXsZcUAfeKZfwI4wwvHKsh1nmRSInwk7A==
+X-Received: by 2002:adf:e706:: with SMTP id c6mr1352666wrm.278.1550811633190;
+        Thu, 21 Feb 2019 21:00:33 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a14sm163775wrr.13.2019.02.21.21.00.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Feb 2019 20:53:45 -0800 (PST)
+        Thu, 21 Feb 2019 21:00:32 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Slavica_=C4=90uki=C4=87_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v5 00/10] Turn git add-i into built-in
-References: <pull.103.v4.git.gitgitgadget@gmail.com>
-        <pull.103.v5.git.gitgitgadget@gmail.com>
-Date:   Thu, 21 Feb 2019 20:53:45 -0800
-Message-ID: <xmqqef80s9t2.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Sebastian Staudt <koraktor@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 1/2] tests: fix unportable "\?" and "\+" regex syntax
+References: <xmqq8sybz7b2.fsf@gitster-ct.c.googlers.com>
+        <20190221192849.6581-2-avarab@gmail.com>
+Date:   Thu, 21 Feb 2019 21:00:32 -0800
+In-Reply-To: <20190221192849.6581-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 21 Feb 2019 20:28:48 +0100")
+Message-ID: <xmqqa7ios9hr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -68,26 +72,20 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Slavica Đukić via GitGitGadget"  <gitgitgadget@gmail.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> This is the first version of a patch series to start porting
-> git-add--interactive from Perl to C. Daniel Ferreira's patch series used as
-> a head start:
-> https://public-inbox.org/git/1494907234-28903-1-git-send-email-bnmvco@gmail.com/t/#u
+> Fix widely supported but non-POSIX basic regex syntax introduced in
+> [1] and [2]. On GNU, NetBSD and FreeBSD the following works:
 >
-> Changes since v4:
+>     $ echo xy >f
+>     $ grep 'xy\?' f; echo $?
+>     xy
+>     0
 >
->  * rename print_modified to list_modifed
->  * the big change was implementing list_and_choose, which resulted in code
->    refactoring, i.e. separating list_modified and status_cmd and making
->    status_cmd use both list_modified and list_and_choose
->  * implement struct choice instead of struct stuff_item as main data
->    structure for list_and_choose
->  * introduce list_only option and implement support for !list_only users
->  * introduce highlighting of unique prefixes
->
-> Note that authorship handling is slightly changed. In some of the commits, I
-> used Original-patch-by instead of listing Daniel Ferreira as author.
+> The same goes for "\+". The "?" and "+" syntax is not in the BRE
+> syntax, just in ERE, but on some implementations it can be invoked by
+> prefixing the meta-operator with "\", but not on OpenBSD:
 
-Sounds good to me.
-
+Yup, thanks for testing, spotting and fixing.  I do recall finding
+one of these during my review during recent couple of cycles, but
+apparently eyeballing will not always catch everything X-<.
