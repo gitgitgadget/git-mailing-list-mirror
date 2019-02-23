@@ -2,143 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D602220248
-	for <e@80x24.org>; Sat, 23 Feb 2019 18:32:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BA7620248
+	for <e@80x24.org>; Sat, 23 Feb 2019 19:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726467AbfBWScW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Feb 2019 13:32:22 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:49400 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbfBWScW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 13:32:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=uydfzEArZ4Uj48OEK4N6LcFjFf1qHHloxGSuxyWB7dc=; b=v7oCohPtNY/LI0/VQp0Vk0o16
-        zEiJxZMFMu0I68fedAZveUQPi47mJo67/STQE+3G5hiIoyW2U9RibehUgog55ST7SMTUb2qOvAtbl
-        kprBLh6uBqTE9tESa8CiivdFwbeCWTtV9BhOc4ZTryYMPwiD/ofCDCuxFQVNleTFrWIFLWn1Ymtv+
-        vjqgu1By9XYUzT6KWDjRmiBUjkChRO2olxAYgL0Y0bQ7YE9gMcO9NR6kcy9xT+eC+wSOjdSeHPDEp
-        Z4YM/xRqyHhlr+MuwOCbzCrCvfJOPEk4j/zwAeOtPF2a6X5as5d0Y3/iFmXxR0VZ33RYA6Yd76NtL
-        VnoiSDz4g==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:37996 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1gxc5x-00GqPu-SN; Sat, 23 Feb 2019 13:32:19 -0500
-Date:   Sat, 23 Feb 2019 13:32:16 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: does "git clean" deliberately ignore "core.excludesFile"?
-In-Reply-To: <nycvar.QRO.7.76.6.1902231912370.45@tvgsbejvaqbjf.bet>
-Message-ID: <alpine.LFD.2.21.1902231328560.2222@localhost.localdomain>
-References: <alpine.LFD.2.21.1902231008530.28936@localhost.localdomain> <xmqqimxao76b.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1902231905180.45@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1902231912370.45@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1726526AbfBWTDW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 14:03:22 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:33059 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726217AbfBWTDV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Feb 2019 14:03:21 -0500
+Received: by mail-qk1-f195.google.com with SMTP id x9so3126313qkf.0
+        for <git@vger.kernel.org>; Sat, 23 Feb 2019 11:03:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IUrYx7kpDgdZN97hUvbm5A21VdmjRSYT6dRlq7E5Z14=;
+        b=nBUUvBCiOGsUxL8afQ9H/60VZt+p3YMJwLgeU/RJ/ilR1DCrfpoLg6fbGu/muadixq
+         v8GW88qOTZBbHlbZRhxl1pA8iEV2R3/avkVhM9KI9wbPEragmbYfYzqHn7TqPdTNmcUN
+         SQsiEMEyqwwgOcBM/2v/snAXjY04PSLSBtfjXr+l84933xUwT8Vi4BnqgipvHnJxOnVI
+         W4YLBsO7J4iMQHvR6AasEmPOACTAe7BvIh2dUyAFBLvp7dM+xvjIvov/6sDgD20+k2ch
+         tOstYo9NNfRb7ZnzY9RF7q178Mfiex57KCXh6MTHKvf0RBal0EhzZOgFOG44vCgfgJ9Y
+         P/HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=IUrYx7kpDgdZN97hUvbm5A21VdmjRSYT6dRlq7E5Z14=;
+        b=XSd1vWxbTWEPPGwcgg0VKasFGUSjuShqJLnRcyf3bO5ucs/UEXewDNTLiyjn6whAhE
+         F8z1KVDdkLyT3lcq5do1Yy/EnEGXMhbwCVZEsX+70JOBwx3vBAR1PAozyzaE8u1wgBp4
+         s8HoaOHNHklOPntqmkzP9rVtQDNV12qMozr6y7T8QUd7kSUYEddthORVwTXPkZfBQWkp
+         VvruZVWqCc7EWlTUGN+c3JekUCkwNmWq6ut/1NAsBAaLixxeIvs3yJgUfDB0zLsfYbNV
+         V6DXCwqUlTd7lRgz+38vMLccDoITpUVfgj4YwHa5+vLVfxfJ9VAxn1hXzFAaoGU+kw5P
+         PXHA==
+X-Gm-Message-State: AHQUAuZjRJYOpNXki4DmIyX2lLYGZti0kKCzPTgSYbSwXCKWDpe4T6jD
+        DB/+vueUEmZL7ESc45OJbEu86yz6C28=
+X-Google-Smtp-Source: AHgI3IbwCczj1I4GYjOQljnAIIBvsikxy7tVTOpIcAMQ19DvCt0JmCUSAfYsvau2DTeJzDWchv/LZQ==
+X-Received: by 2002:a37:59c4:: with SMTP id n187mr7713173qkb.156.1550948600437;
+        Sat, 23 Feb 2019 11:03:20 -0800 (PST)
+Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
+        by smtp.gmail.com with ESMTPSA id j9sm1028064qtb.30.2019.02.23.11.03.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 Feb 2019 11:03:19 -0800 (PST)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     git@vger.kernel.org
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [GSoC][PATCH 0/3] clone: convert explicit dir traversal to dir-iterator
+Date:   Sat, 23 Feb 2019 16:03:06 -0300
+Message-Id: <20190223190309.6728-1-matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1955465509-1550946738=:2222"
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Add pedantic option to dir_iterator_begin at dir-iterator.c and convert
+explicit recursive directory traversal at copy_or_link_directory
+(builtin/clone.c) to the dir-iterator API.
 
---8323328-1955465509-1550946738=:2222
-Content-Type: text/plain; charset=ISO-8859-7
-Content-Transfer-Encoding: 8BIT
+This is my microproject for GSoC 2019. Idea taken from
+https://git.github.io/SoC-2019-Microprojects/#use-dir-iterator-to-avoid-explicit-recursive-directory-traversal
 
-On Sat, 23 Feb 2019, Johannes Schindelin wrote:
+Build: https://travis-ci.org/MatheusBernardino/git/builds/497512561
 
-> Hi,
->
-> On Sat, 23 Feb 2019, Johannes Schindelin wrote:
->
-> > On Sat, 23 Feb 2019, Junio C Hamano wrote:
-> >
-> > > "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
-> > >
-> > > >   am i misreading something? and if not, is there a reason git clean
-> > > > does not consult core.excludesFile?
-> > >
-> > > Can you ask "git log" and "git blame" whch of  core.excludesFile and
-> > > "clean -x" features came earlier and by how big a difference?
-> >
-> > Or maybe we can have a look why the `core.excludesfile` regression test
-> > case in t7300 does not catch this?
-> >
-> > https://github.com/git/git/blob/v2.21.0-rc2/t/t7300-clean.sh#L408-L417
->
-> I actually doubt that `git clean` ignores `core.excludesFile`: in
-> https://github.com/git/git/blob/v2.21.0-rc2/config.c#L1297-L1298,
-> `git_default_core_config()` (which is called via the `git_clean_config()`
-> -> `git_color_default_config()` -> `git_default_config()` chain from
-> `cmd_clean()`) does interpret `core.excludesFile`:
->
-> 	if (!strcmp(var, "core.excludesfile"))
-> 		return git_config_pathname(&excludes_file, var, value);
->
-> Then, `cmd_clean()` goes on to parse the options, setting the `ignored`
-> variable upon `-x` and then doing
-> [this](https://github.com/git/git/blob/v2.21.0-rc2/builtin/clean.c#L957-L958):
->
-> 	if (!ignored)
-> 		setup_standard_excludes(&dir);
->
-> This function specifically looks at `excludes_file` in
-> https://github.com/git/git/blob/v2.21.0-rc2/dir.c#L2481-L2483:
->
-> 	if (excludes_file && !access_or_warn(excludes_file, R_OK, 0))
-> 		add_excludes_from_file_1(dir, excludes_file,
-> 					 dir->untracked ? &dir->ss_excludes_file : NULL);
->
-> So I am quite puzzled by the claim that `git clean` might not consult
-> `core.excludesFile`.
->
-> Robert, care to come up with an example demonstrating where it does not?
+Matheus Tavares (3):
+  dir-iterator: add pedantic option to dir_iterator_begin
+  clone: extract function from copy_or_link_directory
+  clone: use dir-iterator to avoid explicit dir traversal
 
-  sorry i wasn't clear, all i was pointing out was that "man
-git-clean" *explicitly* mentioned two locations related to cleaning:
-
-  -x
-        Don¢t use the standard ignore rules read from .gitignore
-        (per directory) and $GIT_DIR/info/exclude, ...
-
-without additionally *explicitly* mentioning core.excludesFile. if the
-man page simply said something like, "using the standard ignore
-processing" and left it at that, it would be fine, but to list two of
-the locations without the third is potentially confusing.
-
-rday
+ builtin/clone.c      | 72 ++++++++++++++++++++++++++++----------------
+ dir-iterator.c       | 23 ++++++++++++--
+ dir-iterator.h       | 16 ++++++++--
+ refs/files-backend.c |  2 +-
+ 4 files changed, 81 insertions(+), 32 deletions(-)
 
 -- 
+2.20.1
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
---8323328-1955465509-1550946738=:2222--
