@@ -7,58 +7,55 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAEB020248
-	for <e@80x24.org>; Sat, 23 Feb 2019 19:03:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A123C20248
+	for <e@80x24.org>; Sat, 23 Feb 2019 19:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726828AbfBWTDZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Feb 2019 14:03:25 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:34423 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726217AbfBWTDZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 14:03:25 -0500
-Received: by mail-qk1-f195.google.com with SMTP id a15so3117610qkc.1
-        for <git@vger.kernel.org>; Sat, 23 Feb 2019 11:03:24 -0800 (PST)
+        id S1726948AbfBWTD1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 14:03:27 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:42234 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726217AbfBWTD1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Feb 2019 14:03:27 -0500
+Received: by mail-qt1-f193.google.com with SMTP id b8so6259367qtr.9
+        for <git@vger.kernel.org>; Sat, 23 Feb 2019 11:03:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JMbGWAL9DB2Kop5ENb0TYtL0kLnchra4Ikt+IocMdJU=;
-        b=COAxcGmIyOz7extlKyRoyvQD6FSOYWr6+FNFKu5/Lj/WR9u0A7Wxlqqto45yvcs7gp
-         vfJ+OknMKreX+Lzz231AORxZUwRT7gMmuXtOKBlaFHKNu1oUfjRY+WIM9SED2LBurkR7
-         tjDQD2rzgiQYIupE2bVwlQZUlz6fTnIXTaPwvun02/NSeUr84DSR5MwBBYVaElBNrplC
-         Yl/A5haE2Hg9HqIXEpKKqh/ON4vq6+anIrh5KXH1A52y76B5rWFivLhgx0xcT0oKhZng
-         kE61E5T7wGLeiJgr0S/ihQRy+eJckMOeSzyLTLYUNhatrEjE+TjIT+W9uqnJvPJiOEJh
-         0Zbw==
+        bh=uLzpTkGGuuz2c9KHoEMBVbriZveRTPqJsE9UiePug6g=;
+        b=hP9XIkjjR5/teyGYBQzF1JxkmqjE1EhHnsn5C6/E6ZMXFlAwaw6T8TeAV1o0vsXZjw
+         8vGjD0AxSutE7onpxNBW6EWumbsTAptrVuYkZPTIYP8q7Fo0oO7DGIBhb1GtZJcL97Zh
+         0nrvbtyoqX+HAhq1tmRjCl/2C6tarqMXUOv81XxEheAChl9wuRO/4GRAShYwBUkmpDWt
+         cJbOxQaAmUOg9J850I24Xc6udcx5qzQmCLzmy2H/juGgRXwwC9E5CEt3IxsaLUwferq8
+         FxB2lRkXoP1kA2HZnD8j3RIc531KCGe6WqUJGYmAaEzzYLktLHQO3VJ5O8xh68qqUZMx
+         wE7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JMbGWAL9DB2Kop5ENb0TYtL0kLnchra4Ikt+IocMdJU=;
-        b=mXukcf0JgRunzSugup7VOepFIBXDDSh6+MLH2I+0e4lSBd1GwaKLgkiJdUWjkSDXAZ
-         59A00J/8DopmAYxtyc4iDuAh9jJkSaeEdvH93whigkMv0BwWzbn+vytYXWC72Kcj5VAR
-         JY2gnY5qwaLSEad0CSJrHkMDjLpcGkBcbzgqXZ61uYPosogbgnCGV01cUfbZ9EhKHw5E
-         hgKAeRuV2k0xQnQVayXSY4OaH7abPKLokGfBML26XnNVVXz+UqwiRvpB/xrjegK6aCxc
-         nueFnzI+bwIo2m3XpicsUQ42ejm6X/P546fwmli8ALteUxvLljt+AlijadcD3k1ZJNaq
-         /ayA==
-X-Gm-Message-State: AHQUAubgCy9X9y4NFWYEEeVpDy/UZFptzNxqda2j/Z3w8zXJPwYY4ht9
-        UwnJbKt/sWtDh7cX4YryhF4QBFJgegc=
-X-Google-Smtp-Source: AHgI3IY73zYmbRg8UyGopuBJ9PgoO1qx2xDeVvWBeP0odDLn8cfF32NMUcxDKyKGMesySoZOe5ObVQ==
-X-Received: by 2002:a37:4751:: with SMTP id u78mr7373486qka.280.1550948604161;
-        Sat, 23 Feb 2019 11:03:24 -0800 (PST)
+        bh=uLzpTkGGuuz2c9KHoEMBVbriZveRTPqJsE9UiePug6g=;
+        b=Obl7mp6QlmRNSmoMo6VRdCZtMob5TNWDOFt34ktLa1Sb00huIWAhXGyhzW2IMKbyuX
+         SSA1wpMlcqn4iMYDEjL13JgZhAA5bNY4xWncwbfzvvoCEqN0Ag6SzjFrfkoSXCPmrSJt
+         9nkY/gVNHh+9HV1MSfjhnX0gma2SRHI5eJ0UGyqBnm2A4cubPwbXcSEWWL9zaAp7WaEk
+         zh0yNj8UD5st+GabcFasj1mBc1KWFvwpVmByE2Iu4ZvtN8mxKo3DeuwP1kegy/58B79S
+         GMomSnVKvN1y1Ld/bQVRIHRnjCceEcz7c/KVpqfdXcV16qYUMZabjEcwoN4I1VsSatXI
+         Io6Q==
+X-Gm-Message-State: AHQUAuaIW705ukYWeUnw7L5k2yrSc/rq7jn+Oygqkghqpq2evak4C1iL
+        i88Ms0VamZsmWk17M4rdKxsiohxBGUc=
+X-Google-Smtp-Source: AHgI3IbSC/zA4npwlqkPxXhxVrydyTwdUa7X3O+7PrABnJhsjg3DBPFr//dfMjOw6MUOcCAuFedF8w==
+X-Received: by 2002:a0c:d01c:: with SMTP id u28mr8130352qvg.157.1550948606159;
+        Sat, 23 Feb 2019 11:03:26 -0800 (PST)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::3])
-        by smtp.gmail.com with ESMTPSA id j9sm1028064qtb.30.2019.02.23.11.03.21
+        by smtp.gmail.com with ESMTPSA id j9sm1028064qtb.30.2019.02.23.11.03.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 Feb 2019 11:03:23 -0800 (PST)
+        Sat, 23 Feb 2019 11:03:25 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [GSoC][PATCH 1/3] dir-iterator: add pedantic option to dir_iterator_begin
-Date:   Sat, 23 Feb 2019 16:03:07 -0300
-Message-Id: <20190223190309.6728-2-matheus.bernardino@usp.br>
+        Junio C Hamano <gitster@pobox.com>
+Subject: [GSoC][PATCH 2/3] clone: extract function from copy_or_link_directory
+Date:   Sat, 23 Feb 2019 16:03:08 -0300
+Message-Id: <20190223190309.6728-3-matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190223190309.6728-1-matheus.bernardino@usp.br>
 References: <20190223190309.6728-1-matheus.bernardino@usp.br>
@@ -69,159 +66,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the pedantic option to dir-iterator's initialization function,
-dir_iterator_begin. When this option is set to true,
-dir_iterator_advance will immediately return ITER_ERROR when failing to
-fetch the next entry. When set to false, dir_iterator_advance will emit
-a warning and keep looking for the next entry.
-
-Also adjust refs/files-backend.c to the new dir_iterator_begin
-signature.
+Extract dir creation code snippet from copy_or_link_directory to its own
+function named mkdir_if_missing. This change will help removing
+copy_or_link_directory's explicit recursion, which will be done in a
+following patch. Also makes code more readable.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
 Changes in v2:
- - Added in v2
+ - Replaced explicit reference to a following patch at patch message to
+   a more generic reference.
+ - Changed struct stat variable name to st, which is the most common
+   name for such variables in git's code.
 
- dir-iterator.c       | 23 +++++++++++++++++++++--
- dir-iterator.h       | 16 +++++++++++++---
- refs/files-backend.c |  2 +-
- 3 files changed, 35 insertions(+), 6 deletions(-)
+ builtin/clone.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/dir-iterator.c b/dir-iterator.c
-index f2dcd82fde..070a656555 100644
---- a/dir-iterator.c
-+++ b/dir-iterator.c
-@@ -48,6 +48,13 @@ struct dir_iterator_int {
- 	 * that will be included in this iteration.
- 	 */
- 	struct dir_iterator_level *levels;
-+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 50bde99618..862d2ea69c 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -392,6 +392,24 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
+ 	fclose(in);
+ }
+ 
++static void mkdir_if_missing(const char *pathname, mode_t mode)
++{
 +	/*
-+	 * Boolean value to define dir-iterator's behaviour when failing to
-+	 * fetch next entry. See comments on dir_iterator_begin at
-+	 * dir-iterator.h
++	 * Create a dir at pathname unless there's already one.
 +	 */
-+	int pedantic;
- };
- 
- int dir_iterator_advance(struct dir_iterator *dir_iterator)
-@@ -71,6 +78,8 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 
- 			level->dir = opendir(iter->base.path.buf);
- 			if (!level->dir && errno != ENOENT) {
-+				if (iter->pedantic)
-+					goto error_out;
- 				warning("error opening directory %s: %s",
- 					iter->base.path.buf, strerror(errno));
- 				/* Popping the level is handled below */
-@@ -122,6 +131,8 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 			if (!de) {
- 				/* This level is exhausted; pop up a level. */
- 				if (errno) {
-+					if (iter->pedantic)
-+						goto error_out;
- 					warning("error reading directory %s: %s",
- 						iter->base.path.buf, strerror(errno));
- 				} else if (closedir(level->dir))
-@@ -139,10 +150,13 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 
- 			strbuf_addstr(&iter->base.path, de->d_name);
- 			if (lstat(iter->base.path.buf, &iter->base.st) < 0) {
--				if (errno != ENOENT)
-+				if (errno != ENOENT) {
-+					if (iter->pedantic)
-+						goto error_out;
- 					warning("error reading path '%s': %s",
- 						iter->base.path.buf,
- 						strerror(errno));
-+				}
- 				continue;
- 			}
- 
-@@ -159,6 +173,10 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 			return ITER_OK;
- 		}
- 	}
++	struct stat st;
 +
-+error_out:
-+	dir_iterator_abort(dir_iterator);
-+	return ITER_ERROR;
- }
- 
- int dir_iterator_abort(struct dir_iterator *dir_iterator)
-@@ -182,7 +200,7 @@ int dir_iterator_abort(struct dir_iterator *dir_iterator)
- 	return ITER_DONE;
- }
- 
--struct dir_iterator *dir_iterator_begin(const char *path)
-+struct dir_iterator *dir_iterator_begin(const char *path, int pedantic)
++	if (mkdir(pathname, mode)) {
++		if (errno != EEXIST)
++			die_errno(_("failed to create directory '%s'"),
++				  pathname);
++		else if (stat(pathname, &st))
++			die_errno(_("failed to stat '%s'"), pathname);
++		else if (!S_ISDIR(st.st_mode))
++			die(_("%s exists and is not a directory"), pathname);
++	}
++}
++
+ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+ 				   const char *src_repo, int src_baselen)
  {
- 	struct dir_iterator_int *iter = xcalloc(1, sizeof(*iter));
- 	struct dir_iterator *dir_iterator = &iter->base;
-@@ -195,6 +213,7 @@ struct dir_iterator *dir_iterator_begin(const char *path)
+@@ -404,14 +422,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+ 	if (!dir)
+ 		die_errno(_("failed to open '%s'"), src->buf);
  
- 	ALLOC_GROW(iter->levels, 10, iter->levels_alloc);
+-	if (mkdir(dest->buf, 0777)) {
+-		if (errno != EEXIST)
+-			die_errno(_("failed to create directory '%s'"), dest->buf);
+-		else if (stat(dest->buf, &buf))
+-			die_errno(_("failed to stat '%s'"), dest->buf);
+-		else if (!S_ISDIR(buf.st_mode))
+-			die(_("%s exists and is not a directory"), dest->buf);
+-	}
++	mkdir_if_missing(dest->buf, 0777);
  
-+	iter->pedantic = pedantic;
- 	iter->levels_nr = 1;
- 	iter->levels[0].initialized = 0;
- 
-diff --git a/dir-iterator.h b/dir-iterator.h
-index 970793d07a..50ca8e1a27 100644
---- a/dir-iterator.h
-+++ b/dir-iterator.h
-@@ -19,7 +19,7 @@
-  * A typical iteration looks like this:
-  *
-  *     int ok;
-- *     struct iterator *iter = dir_iterator_begin(path);
-+ *     struct iterator *iter = dir_iterator_begin(path, 0);
-  *
-  *     while ((ok = dir_iterator_advance(iter)) == ITER_OK) {
-  *             if (want_to_stop_iteration()) {
-@@ -65,9 +65,15 @@ struct dir_iterator {
-  * The iteration includes all paths under path, not including path
-  * itself and not including "." or ".." entries.
-  *
-- * path is the starting directory. An internal copy will be made.
-+ * Parameters are:
-+ * - path is the starting directory. An internal copy will be made.
-+ * - pedantic is a boolean value. If true, dir-iterator will free
-+ *   resources and return ITER_ERROR immediately, in case of an error
-+ *   while trying to fetch the next entry in dir_iterator_advance. If
-+ *   false, it will just emit a warning and keep looking for the next
-+ *   entry.
-  */
--struct dir_iterator *dir_iterator_begin(const char *path);
-+struct dir_iterator *dir_iterator_begin(const char *path, int pedantic);
- 
- /*
-  * Advance the iterator to the first or next item and return ITER_OK.
-@@ -76,6 +82,10 @@ struct dir_iterator *dir_iterator_begin(const char *path);
-  * dir_iterator and associated resources and return ITER_ERROR. It is
-  * a bug to use iterator or call this function again after it has
-  * returned ITER_DONE or ITER_ERROR.
-+ *
-+ * Note that whether dir_iterator_advance will return ITER_ERROR when
-+ * failing to fetch the next entry or keep going is defined by the
-+ * 'pedantic' option at dir-iterator's initialization.
-  */
- int dir_iterator_advance(struct dir_iterator *iterator);
- 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index dd8abe9185..c3d3b6c454 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2143,7 +2143,7 @@ static struct ref_iterator *reflog_iterator_begin(struct ref_store *ref_store,
- 
- 	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable, 0);
- 	strbuf_addf(&sb, "%s/logs", gitdir);
--	iter->dir_iterator = dir_iterator_begin(sb.buf);
-+	iter->dir_iterator = dir_iterator_begin(sb.buf, 0);
- 	iter->ref_store = ref_store;
- 	strbuf_release(&sb);
- 
+ 	strbuf_addch(src, '/');
+ 	src_len = src->len;
 -- 
 2.20.1
 
