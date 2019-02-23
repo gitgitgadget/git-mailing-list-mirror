@@ -2,72 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F083520248
-	for <e@80x24.org>; Sat, 23 Feb 2019 09:29:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AC3E20248
+	for <e@80x24.org>; Sat, 23 Feb 2019 09:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727045AbfBWJ3i convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 23 Feb 2019 04:29:38 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:34860 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725820AbfBWJ3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 04:29:37 -0500
-Received: by mail-qk1-f194.google.com with SMTP id z13so2635740qki.2
-        for <git@vger.kernel.org>; Sat, 23 Feb 2019 01:29:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tzTx2mG0itLCrRy3UQMMvRlOrOfFTKFIYs45GzldQXM=;
-        b=lmL+LuM0IHEwUEm5Oy7hISFOd60N3RydvtEiIyJWoIQVG05vgi63iREeb2kaCLyHWk
-         H2rHH4lqRr4gXSn/36rqLnzFspt9MZ/PF225kiDDFHt9sG9eR3JqrTG6MAYdPBamIWTo
-         BzrS0kL7/W26P9joH9o7FXEvXaGhj9yFc3AFIxNv84p5Le49Dn1jAws30Zi77krYOTsT
-         Xz+d1jOznBy7Nps8znSauckc/pdid7iamoCJT0kD2Kp/cd+5xA3QTT70FXLc8cVxUsSX
-         MjawMan0AH9fAkWhzq29UrKg1QMEjfskIzkOgrzfkg8B0MlzRqx3kmX7JE2GTze6hZBB
-         6nCQ==
-X-Gm-Message-State: AHQUAuaCGpWOvikKDTNmA8B48EX9z3HD7fCINFRaKI0jkjw9Ez6ji0CY
-        zCF2sjxw4k8yVNC7TBwricquJ1L3o4woR2LhIVs=
-X-Google-Smtp-Source: AHgI3IYv8J/9+dPQZ8hqvFTkxcqBNCf+9f+VFXz8jyHFfeZqSoA5B+nti3Lr34GayYP/l6aMAHYoHJC0re8xezBKINc=
-X-Received: by 2002:a37:a4c2:: with SMTP id n185mr5998655qke.152.1550914176879;
- Sat, 23 Feb 2019 01:29:36 -0800 (PST)
-MIME-Version: 1.0
-References: <20190221223753.20070-1-avarab@gmail.com> <20190221223753.20070-8-avarab@gmail.com>
- <xmqqzhqno1r3.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqzhqno1r3.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 23 Feb 2019 04:29:26 -0500
-Message-ID: <CAPig+cRb78wPKJGjWaMiUkazDK5LpidikDLKR8nbQ-+u1=2w=A@mail.gmail.com>
-Subject: Re: [PATCH 7/8] commit-graph write: don't die if the existing graph
- is corrupt
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
+        id S1725921AbfBWJiL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 04:38:11 -0500
+Received: from smtp-32.italiaonline.it ([213.209.10.32]:58574 "EHLO libero.it"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725820AbfBWJiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Feb 2019 04:38:11 -0500
+Received: from DESKTOP-E4U7JCE ([5.169.49.65])
+        by smtp-32.iol.local with ESMTPA
+        id xTl2gURkl6rc5xTl2gK3BW; Sat, 23 Feb 2019 10:38:09 +0100
+x-libjamoibt: 1601
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
+        t=1550914689; bh=5xM+Ch0Uyeybk9wAYhX/1QdqifGEkG9WZJ9bDtCZjLU=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=m5+rMnSRcuqOJtbfcvTRpqSeVeA3TZelRRO0CeHDCqiOWhlnJeuAtyfB3lQYxgq87
+         hzOtg0upp5nAFBiCtnM8XBGqt86G2FpY8tef0rP9HP7FHX4wqQyCx7fkr37s3VkHxE
+         nOPstTUxIDSnFpeh9qFWqTAPO8W+3bPqynr9LUpff1PZ9hjLh49OwJiJlPFckQ3N6k
+         6NN+LeGVH7rR66wL/pXR+8rdV4V9qrfcFzEebMk77ZeyEnjBnXK6DMFuRfn0BFm4Xs
+         Xy2JbDZcFre/dVYgJ3qfKAJuAYOobIe7OaKxRcUvjOKSdPIksn3NGth69YfAaAtNJ2
+         vV+oPlH/YsFKw==
+X-CNFS-Analysis: v=2.3 cv=d7kkNirE c=1 sm=1 tr=0
+ a=zYX2uk1tt1KodCNUFRWNOA==:117 a=zYX2uk1tt1KodCNUFRWNOA==:17
+ a=IkcTkHD0fZMA:10 a=ccfrtNQW8_P8NkmYPPAA:9 a=QEXdDO2ut3YA:10
+Message-ID: <1550914688.2346.1.camel@libero.it>
+Subject: Re: Am a newby and I cannot compile git
+From:   Fabio Aiuto <polinice83@libero.it>
+To:     Santiago Torres <santiago@nyu.edu>
+Cc:     git@vger.kernel.org
+Date:   Sat, 23 Feb 2019 10:38:08 +0100
+In-Reply-To: <20190210224812.wtn2qqm7lmsiarrh@LykOS.localdomain>
+References: <1549835814.5977.11.camel@libero.it>
+         <20190210224812.wtn2qqm7lmsiarrh@LykOS.localdomain>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOJtELmdAYrqhnH+IhQxIAFXrwo/DKxFC6WLnu8qtgEBIusUKkC2suOmmBMHjoV6TRoZ710YevOIRWhLXUMC2m6aa683Rg3HucGV8BjJ8QAn1ohXvv/x
+ 1Uc//EgD8VLuIcht57hui/HZIjS9en78qVRlcYiYZn3XLrHQnWf2wz07YEHy69g/bCGr0qgcgci/2Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 22, 2019 at 6:13 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
-> > diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> > @@ -408,7 +414,7 @@ test_expect_success 'detect permission problem' '
-> >       # "chmod 000 file" does not yield EACCES on e.g. "cat file"
-> >       if ! test -r $objdir/info/commit-graph
-> >       then
-> > -             corrupt_graph_verify "Could not open"
-> > +             NO_WRITE_TEST_BACKUP=1 corrupt_graph_verify "Could not open"
->
-> This would not work as you think it would; corrupt_graph_verify is a
-> shell function, so you cannot VAR=VAL prefix to export an environment
-> variable only for the duration of the command.
+Hello Santiago,
+how could I get a first task? A simple one please, I'd like being
+introduced to git developing as a participant in order to get used to
+submitting patches, and all the tools I need.
+Thank you in advance.
+Fabio.
 
-As of a0a630192d (t/check-non-portable-shell: detect "FOO=bar
-shell_func", 2018-07-13), this sort of problem is correctly flagged by
-"make test-lint", which typically is run as part of "make test" or
-"make prove".
+Il giorno dom, 10/02/2019 alle 17.48 -0500, Santiago Torres ha scritto:
+> It'd be difficult to debug without more context:
+> 
+> Do you mind sharing your build log and more informationa about your
+> setup? (e.g., what OS are you running, what packages are installed,
+> how
+> did you get the git sources, etc.)
+> 
+> Thanks,
+> -Santiago.
+> 
+> On Sun, Feb 10, 2019 at 10:56:54PM +0100, Fabio Aiuto wrote:
+> > Hello again my problem is that I cannot compile git.
+> > The error message says:
+> > 
+> > 	Type'z_stream' could not be resolved
+> > 
+> > I don't know why, because I installed the package zlib1g-dev and in
+> > the
+> > header file zlib.h this structure is declared. Help me!!!
+> > Fabio.
