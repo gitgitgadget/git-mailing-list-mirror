@@ -2,76 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF50020248
-	for <e@80x24.org>; Sat, 23 Feb 2019 13:25:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B6ED20248
+	for <e@80x24.org>; Sat, 23 Feb 2019 13:28:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727888AbfBWNZL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Feb 2019 08:25:11 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55494 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726269AbfBWNZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 08:25:11 -0500
-Received: (qmail 22594 invoked by uid 109); 23 Feb 2019 13:25:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 23 Feb 2019 13:25:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4115 invoked by uid 111); 23 Feb 2019 13:25:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 23 Feb 2019 08:25:25 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Feb 2019 08:25:09 -0500
-Date:   Sat, 23 Feb 2019 08:25:09 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        steadmon@google.com
-Subject: Re: [PATCH 2/8] tests: always test fetch of unreachable with v0
-Message-ID: <20190223132509.GC22403@sigill.intra.peff.net>
-References: <20190211203011.GB9072@sigill.intra.peff.net>
- <20190214195825.125751-1-jonathantanmy@google.com>
- <20190221134954.GC21406@sigill.intra.peff.net>
- <xmqqimxbpn2p.fsf@gitster-ct.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqimxbpn2p.fsf@gitster-ct.c.googlers.com>
+        id S1727792AbfBWN2V (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 08:28:21 -0500
+Received: from smtp-32.italiaonline.it ([213.209.10.32]:35452 "EHLO libero.it"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725859AbfBWN2V (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Feb 2019 08:28:21 -0500
+Received: from DESKTOP-E4U7JCE ([5.169.49.65])
+        by smtp-32.iol.local with ESMTPA
+        id xXLlgXdZy6rc5xXLmgMKDw; Sat, 23 Feb 2019 14:28:18 +0100
+x-libjamoibt: 1601
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
+        t=1550928498; bh=IHOMYSAkJrjad1ZJEB1yS3SM2QT2/bUqecI1Z6XDu2Q=;
+        h=Subject:From:To:Date:In-Reply-To:References;
+        b=f8my15Ts3rTOW7s/FeGUOBcid09kiuBo6M/p/iHFFf+26Gm4uPcejwptVDyVYp+IO
+         3tFVO+bMZ0t3mHH5+KvspnM779VWzl0OgASwmIOsyaI/kJQbZxg8ZdA5DZoPMHUQee
+         Bwp0fPgb82cyFvMveBtWOWrRJ4oLMJHog4d1qgBGFnTrywTpbTkK5mVoZ0DWu7kO0J
+         ksAfAz2Ksy1KJqBuvh+/c4WHhphqBudBomJAEwjrfgAcNY4Gbv09xwuB+HWbM8saSt
+         BBwlElb+E7J5l9Rf/QAkR3PNcI0+Btsda72p4lWlkimlCboeza6VIzXh82AJAJptc4
+         O02zT45uNkX1A==
+X-CNFS-Analysis: v=2.3 cv=d7kkNirE c=1 sm=1 tr=0
+ a=zYX2uk1tt1KodCNUFRWNOA==:117 a=zYX2uk1tt1KodCNUFRWNOA==:17
+ a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=08cpZRoF9MTHr67id2AA:9 a=QEXdDO2ut3YA:10
+ a=vk3CbCNW2PIA:10 a=AjGcO6oz07-iQ99wixmX:22
+Message-ID: <1550928497.2346.8.camel@libero.it>
+Subject: Re: Students projects: looking for small and medium project ideas
+From:   Fabio Aiuto <polinice83@libero.it>
+To:     Matthieu Moy <git@matthieu-moy.fr>, git@vger.kernel.org
+Date:   Sat, 23 Feb 2019 14:28:17 +0100
+In-Reply-To: <86fttvcehs.fsf@matthieu-moy.fr>
+References: <86fttvcehs.fsf@matthieu-moy.fr>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfCtj/SWh5FJSGrgf88BPL4iPnNNAVNmHHXHlH+FS+xA60ltEubSkePnfTT5YGAAgwZWfOB9qnQQjS6EN0RjQONlfTbp09sGNx69/QY6DAl1d9B7Jtodi
+ RJyCDvovRpfJqbu+SNKyD1WIgUxvZOrQvhwTpxiHW1bW33HsnJmobg5kJuQw8AcU0IpH8w1WPeYFfMA+xnblaoWcg5f5bxGLQOY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 22, 2019 at 12:47:42PM -0800, Junio C Hamano wrote:
-
-> >> We can do so now either by "blaming" one and finding the originating
-> >> commit, or by searching for "support fetching unadvertised objects" (I
-> >> used the same comment everywhere in the commit [1] so that people can do
-> >> this), but I don't know how to enforce this for future work. (We can add
-> >> a special variable, but I think it's unnecessary and we can't enforce
-> >> that people use that new special variable instead of
-> >> GIT_TEST_PROTOCOL_VERSION anyway.)
-> >
-> > Yeah, I think we can find them once we know they need fixing. I was more
-> > wondering whether we would remember to do so. I.e., is there a way the
-> > test suite could remind us when our assumptions change. I can't think of
-> > an easy way to do so, though.
+Il giorno lun, 14/01/2019 alle 18.53 +0100, Matthieu Moy ha scritto:
+> Hi,
 > 
-> Perhaps looking it a different way may help.  Instead of saying "v2
-> will not protect unreachable objects, so this test must be run with
-> v0", think of it like "Git ought to protect unreachable objects, so
-> test with different versions of protocols to make sure all satisfy
-> the requirement---for now, v2 is known to be broken, so write it
-> with test_expect_failure".  IOW, have one test for each version,
-> some of them may document a known breakage.
-
-Ah, yeah, that would work. It means writing out the test twice, once for
-each protocol version. But if we're explicitly expecting two different
-behaviors, then that's exactly what we ought to be doing.
-
-I'm still not sure if there's consensus on whether the v2 behavior is a
-problem or not, though.
-
--Peff
+> I haven't been active for a while on this list, but for those who
+> don't
+> know me, I'm a CS teacher and I'm regularly offering my students to
+> contribute to open-source projects as part of their school projects.
+> A
+> few nice features like "git rebase -i --exec" or many of the hints in
+> "git status" were implemented as part of these projects.
+> 
+> I'm starting another instance of such project next week.
+> 
+> Part of the work of students is to choose which feature they want to
+> work on, but I try to prepare this for them. I'm keeping a list of
+> ideas
+> here:
+> 
+>   https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
+> 
+> (At some point, I should probably migrate this to git.github.io,
+> since
+> the wiki only seems half-alive these days).
+> 
+> I'm looking for small to medium size projects (typically, a GSoC
+> project
+> is far too big in comparison, but we may expect more than just
+> microprojects).
+> 
+> You may suggest ideas by editting the wiki page, or just by replying
+> to
+> this email (I'll point my students to the thread). Don't hesitate to
+> remove entries (or ask me to do so) on the wiki page if you think
+> they
+> are not relevant anymore.
+> 
+> Thanks in advance,
+> 
+Hi Matthieu and to all developers,
+I'm Fabio, no more a student and I'm brand new in community
+development. I joined the git mailing-list about two weeks ago and I'm
+looking for some first fix or tasks. I apologize myself in advance for
+my little know of the subject.  Hope to have some useful information to
+start workin'.
+Thank you in advance
+Fabio.
