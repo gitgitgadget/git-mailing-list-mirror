@@ -2,161 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 642F720248
-	for <e@80x24.org>; Sat, 23 Feb 2019 22:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 499DC20248
+	for <e@80x24.org>; Sat, 23 Feb 2019 23:39:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727908AbfBWWki (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Feb 2019 17:40:38 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42546 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726773AbfBWWki (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 17:40:38 -0500
-Received: by mail-ed1-f68.google.com with SMTP id j89so4644093edb.9
-        for <git@vger.kernel.org>; Sat, 23 Feb 2019 14:40:36 -0800 (PST)
+        id S1727907AbfBWXjF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 18:39:05 -0500
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:34581 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726773AbfBWXjF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Feb 2019 18:39:05 -0500
+Received: by mail-pl1-f201.google.com with SMTP id s16so4443374plr.1
+        for <git@vger.kernel.org>; Sat, 23 Feb 2019 15:39:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=mm7bknK140kq1DHMw4LdXUENHsnUqovvxOMxzmwQ6Ls=;
-        b=m77kU5DywhxsgIUDW4jaduy2N83glHFfwrPXFJikdoSloXozvD7GUd92AupIUCg3uv
-         GVLN/1Y/kFi/pXiHnteCkafjasil2hFbbjXjDCHsl3xO18jRV6fspCsaPzhe7s7p3tkW
-         V7ClbjqV7/LaGqyQoIkizCS5ZGBVd3kNEnEaq/YSkUiBiGbUOprmdudORLMOV60lXPLw
-         h4WpmWeEMTwdqwUisCGYzbepI6aqpS6LuUeivoVXK2+mVQeKqLXTu0pYwo5QEnmgmSH6
-         lTG4Nt9AJi1x3zf3H9x236XXz7i3SZcSH80kwbuS3oYvga680aSzf7QGMgXEPSHa3DTr
-         l0KA==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=QZz1zDYwaY8FzSXezD4hGcTeCBDXw2PvDHXk7hNU/dY=;
+        b=LDkHB77TaRAcixXlpNBGnfr6BWfgXbroskn0zXWV2nanhl1RNVpruo2uL2cJn4HNRU
+         0ocC4k/TrxRcTT6vlNVdhngsRprv6sBBOMkiG7lJAQeSppV6HdmCk0IlW2u4S1Xt+KIj
+         tl8jkGKZiBc2Yea4wwr8WUOXPVce6CIO1L+UU2BCfYBRLuHYOPnCBf7h/doTxXe00feq
+         gsnehQc/b/sSZPXm5FDpnZUbUIqqwJ7q/UmG5xQ4q/Y++oeoah4PwQWRm8WrGXsi+NtG
+         scjz9X2mA5S+Gbh+OsWimfJZHZj7OykszMmfRRNmv7YU6QBcLG0Zzx4kxitqLLJ3xSwX
+         YKDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=mm7bknK140kq1DHMw4LdXUENHsnUqovvxOMxzmwQ6Ls=;
-        b=bVg5T+F8Vf+wU6bmicxKPsSPxfGNvOsUQdBmj1zNj2xAmqEvXtTPeBhcY7koIJOEJN
-         fL+fWFC77iz1Exqsnk0dta3uTdhX8LmQD+jfM2vc4331y/8+4vtylr87EXeorgZLRsxD
-         hR5nbgKjMRNpR82xjgSG+eSVIev5h6Ro2vtQMxBdJGOCUTbL7soZivm9VDE+yVnWfEdJ
-         SgogxDO9VIvFA0uiDCCMMwVBXAJ3YJo7PygPcV+6m9VWa4xr8wGqEFI8dF6YlE7Ocb19
-         H+UoUvtRL77+MjggE4EDVtMJVTL6FSJFRrelmasn/voOQRd43pYN7THD8FwYt0S4uMij
-         gSPA==
-X-Gm-Message-State: AHQUAuY97XJceziu7rdYY76xzm0pdWR+ABXWtETt4zEs0EOlbw+C9+kN
-        8xX92JuFoSZzqVx9exqsnE0=
-X-Google-Smtp-Source: AHgI3IYQ6/Fk0sFLlF5bUCPxw1EfKtIH1m7efkQZQw2SmpCIoSQyEvHz7ZZJkUluadOAoNfdclA+ng==
-X-Received: by 2002:aa7:d987:: with SMTP id u7mr8521635eds.194.1550961635810;
-        Sat, 23 Feb 2019 14:40:35 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id a51sm1469261edd.57.2019.02.23.14.40.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 23 Feb 2019 14:40:33 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [GSoC][PATCH 3/3] clone: use dir-iterator to avoid explicit dir traversal
-References: <20190223190309.6728-1-matheus.bernardino@usp.br> <20190223190309.6728-4-matheus.bernardino@usp.br>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190223190309.6728-4-matheus.bernardino@usp.br>
-Date:   Sat, 23 Feb 2019 23:40:33 +0100
-Message-ID: <87va1a3z8e.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=QZz1zDYwaY8FzSXezD4hGcTeCBDXw2PvDHXk7hNU/dY=;
+        b=kF7W4M9pqRpeZDP4ABlCU34JyCbABpj9WCx0nqSNvyoPg3o3gHsUp+S0Ze32RZmBCv
+         rgNnKoHiVn+FYoVB8lI/LWC/q1xY4P/zUH7XW6jJMZvLvu/1Oaroq9B8xNxF9EfA/hI+
+         uzpt/YNtsjMQa3oIleK/DLRy0kS4/RKkECTGjSIcIOtbZH1oWH/Y475+OpGU55OTN9+I
+         Ow4FI8KoItwWQdyoZzWd/o34MuOzKWHGCFhFVYT9PcFJkcflolnKDGGqnmuP0mlVqDC1
+         +nhBcoYvteYmGGe0y0P8o6DZyjOIRWXYcYZaEF33z/slPyKGYQ3l5u2nKz6FMzGagqLo
+         BpRg==
+X-Gm-Message-State: AHQUAubrubqsquwjQlE7geG6JMDTQnOiPc2dBTkUwEIxnng0I1WD8vRA
+        yiPJhWdbw/K2RlGfOWXDHB9Wg43x5kk7L6HSgr6kCq7X1C/KCSnB50YU0eoJqm8i5I3dzeDlUu1
+        keo+1c3gKq0lCRKBIUikAZc0ICE27xzx8XmFGW07juGX82QsgZiQ3etckAW1riueB7YZZN447YL
+        4o
+X-Google-Smtp-Source: AHgI3IYtSyM2O5dXcRQrdjHlqlh115fmQBMdOi1a8Zy5/JUW8JhZFNKykkvNYMr8msundEz88aHrOAgeklBg/Xt/rRi0
+X-Received: by 2002:a17:902:7b87:: with SMTP id w7mr3435868pll.43.1550965144209;
+ Sat, 23 Feb 2019 15:39:04 -0800 (PST)
+Date:   Sat, 23 Feb 2019 15:38:54 -0800
+Message-Id: <cover.1550963965.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: [WIP 0/7] CDN offloading of fetch response
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        peff@peff.net, christian.couder@gmail.com, avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+It's been a while, so here is an updated version of what I previously
+sent [1]. The main difference is that fetch-pack now actually downloads
+whatever the server tells it to. The second main difference is that
+we no longer buffer progress messages and suspend keepalives - we
+no longer need to, because the sideband-all patches have been merged.
 
-On Sat, Feb 23 2019, Matheus Tavares wrote:
+I think I've address all the technical comments in [1], except one
+comment of Junio's [2] that I still don't understand:
 
-> Replace usage of opendir/readdir/closedir API to traverse directories
-> recursively, at copy_or_link_directory function, by the dir-iterator
-> API. This simplifies the code and avoid recursive calls to
-> copy_or_link_directory.
+> And the "fix" I was alluding to was to update that "else" clause to
+> make it a no-op that keeps os->used non-zero, which would not call
+> send-client-data.
+>
+> When that fix happens, the part that early in the function this
+> patch added "now we know we will call send-client-data, so let's say
+> 'here comes packdata' unless we have already said that" is making
+> the decision too early.  Depending on the value of os->used when we
+> enter the code and the number of bytes xread() reads from the
+> upstream, we might not call send-client-data yet (namely, when we
+> have no buffered data and we happened to get only one byte).
 
-Sounds good in principle.
+With or without this fix, I don't think there is ever a time when we
+say "here comes packdata" without calling send-client-data - we say
+"here comes packdata" only when we see the string "PACK", which forms
+part of the packfile, and thus we should have no problem sending any
+client data. Having said that, maybe this is a moot point - Junio says
+that this only happens when the fix is implemented, and the fix is not
+implemented.
 
-> This process also brings some safe behaviour changes to
-> copy_or_link_directory:
+There are probably some more design discussions to be had:
 
-I ad-hoc tested some of these, and could spot behavior changes. We
-should have tests for these.
+ - Requirement that all pointed-to CDNs support byte ranges for
+   resumability, and to guarantee that the packfiles will be there
+   permanently. After some thought, it is a good idea for CDNs to
+   support that, but I think that we should support CDNs that can only
+   give temporal guarantees (e.g. if/when we start implementing
+   resumption, we could read the Cache headers). I didn't add any
+   mention of this issue in the documentation.
 
->  - It will no longer follows symbolic links. This is not a problem,
->    since the function is only used to copy .git/objects directory, and
->    symbolic links are not expected there.
+ - Client-side whitelist of protocol and hostnames. I've implemented
+   whitelist of protocol, but not hostnames.
 
-I don't think we should make that assumption, and I don't know of
-anything else in git that does.
+ - Any sort of follow-up fetch - for example, if the download from the
+   CDN fails or if we allow the server to tell us of best-effort
+   packfiles (but the client still must check and formulate the correct
+   request to the server to fetch the rest). This protocol seems like a
+   prerequisite to all those, and is independently useful, so maybe all
+   of those can be future work.
 
-I've certainly symlinked individual objects or packs into a repo for
-debugging / recovery, and it would be unexpected to clone that and miss
-something.
+Please take a look. Feel free to comment on anything, but I prefer
+comments on the major things first (e.g. my usage of a separate process
+(http-fetch) to fetch packfiles, since as far as I know, Git doesn't
+link to libcurl; any of the design decisions I described above). I know
+that there are some implementation details that could be improved (e.g.
+parallelization of the CDN downloads, starting CDN downloads *after*
+closing the first HTTP request, holding on to the .keep locks until
+after the refs are set), but will work on those once the overall design
+is more or less finalized.
 
-So in the general case we should be strict in what we generate, but
-permissive in what we accept. We don't want a "clone" of an existing
-repo to fail, or "fsck" to fail after clone...
+Note that the first patch is exactly the same as one I've previously
+sent [3].
 
-When trying to test this I made e.g. objects/c4 a symlink to /tmp/c4,
-and a specific object in objects/4d/ a symlink to /tmp too.
+[1] https://public-inbox.org/git/cover.1543879256.git.jonathantanmy@google.com/
+[2] https://public-inbox.org/git/xmqqmupi89ub.fsf@gitster-ct.c.googlers.com/
+[3] https://public-inbox.org/git/20190221001447.124088-1-jonathantanmy@google.com/
 
-Without this patch the individual object is still a symlink, but the
-object under the directory gets resolved, and "un-symlinked", also with
---dissociate, which seems like an existing bug.
+Jonathan Tan (7):
+  http: use --stdin and --keep when downloading pack
+  http: improve documentation of http_pack_request
+  http-fetch: support fetching packfiles by URL
+  Documentation: order protocol v2 sections
+  Documentation: add Packfile URIs design doc
+  upload-pack: refactor reading of pack-objects out
+  upload-pack: send part of packfile response as uri
 
-With your patch that symlink structure is copied as-is. That's more
-faithful under --local, but a regression for --dissociate (which didn't
-work fully to begin with...).
+ Documentation/git-http-fetch.txt         |   7 +-
+ Documentation/technical/packfile-uri.txt |  79 ++++++++++++
+ Documentation/technical/protocol-v2.txt  |  22 ++--
+ builtin/pack-objects.c                   |  63 +++++++++
+ fetch-pack.c                             |  58 +++++++++
+ http-fetch.c                             |  65 ++++++++--
+ http-push.c                              |   7 +-
+ http-walker.c                            |   5 +-
+ http.c                                   |  83 +++++++-----
+ http.h                                   |  26 +++-
+ t/t5550-http-fetch-dumb.sh               |  18 +++
+ t/t5702-protocol-v2.sh                   |  54 ++++++++
+ upload-pack.c                            | 155 +++++++++++++++++------
+ 13 files changed, 542 insertions(+), 100 deletions(-)
+ create mode 100644 Documentation/technical/packfile-uri.txt
 
-I was paranoid that "no longer follows symbolic links" could also mean
-"will ignore those objects", but it seems to more faithfully copy things
-as-is for *that* case.
+-- 
+2.19.0.271.gfe8321ec05.dirty
 
-But then I try with --no-hardlinks and stock git dereferences my symlink
-structure, but with your patches fails completely:
-
-    Cloning into bare repository 'repo2'...
-    error: copy-fd: read returned: Is a directory
-    fatal: failed to copy file to 'repo2/objects/c4': Is a directory
-    fatal: the remote end hung up unexpectedly
-    fatal: cannot change to 'repo2': No such file or directory
-
-So there's at least one case in a few minutes of prodding this where we
-can't clone a working repo now, however obscure the setup.
-
->  - Hidden directories won't be skipped anymore. In fact, it is odd that
->    the function currently skip hidden directories but not hidden files.
->    The reason for that could be unintentional: probably the intention
->    was to skip '.' and '..' only, but it ended up accidentally skipping
->    all directories starting with '.'. Again, it must not be a problem
->    not to skip hidden dirs since hidden dirs/files are not expected at
->    .git/objects.
-
-I reproduce this with --local. A ".foo" isn't copied before, now it
-is. Good, I guess. We'd have already copied a "foo".
-
->  - Now, copy_or_link_directory will call die() in case of an error on
->    openddir, readdir or lstat, inside dir_iterator_advance. That means
->    it will abort in case of an error trying to fetch any iteration
->    entry.
-
-Good, but really IMNSHO this series is tweaking some critical core code
-and desperately needs tests.
-
-Unfortunately, in this as in so many edge case we have no existing
-tests.
-
-This would be much easier to review and would give reviewers more
-confidence if the parts of this that changed behavior started with a
-patch or patches that just manually objects/ dirs with various
-combinations of symlinks, hardlinks etc., and asserted that the various
-options did exactly what they're doing now, and made sure the
-source/target repos were the same after/both passed "fsck".
-
-Then followed by some version of this patch which changes the behavior,
-and would be forced to tweak those tests. To make it clear e.g. that
-some cases where we have a working "clone" are now a hard error.
-
-Thanks for working on this!
