@@ -2,109 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C13220248
-	for <e@80x24.org>; Sat, 23 Feb 2019 17:12:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD2E120248
+	for <e@80x24.org>; Sat, 23 Feb 2019 17:27:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727707AbfBWRML (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Feb 2019 12:12:11 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62601 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbfBWRMK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 12:12:10 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C9E7957C02;
-        Sat, 23 Feb 2019 12:12:06 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=Y0TVID5hek8Om
-        ioBtKBZv1yFlGs=; b=efnDckPHUTHzjWEzL94LAZT7wzmaOpqmmHSBzASdXONLL
-        Hjg8SzEbUJZFiKW7iiRVbyIygXyN0lFeMWfYI3kE3xbLM8QiVamzmFmYW8hMJKOo
-        5jbF6/7E6jRq2h7E/TGFNLnSoIEax+ytXuWLFDzRseb3mMYZaviLEWrb1tiA7Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=hqqMNc5
-        HIGWujnvBKv85aR2AAo6BYv2VBvB1c0/UzHLUN4P5dev9WE6qyfo5A/L+aZWJ6+V
-        VIKJ2gxMAQNTR3TlmPqc2R06DgAeO5ortHHPsahyt1qImEb5HZse22IUGzZsC5Du
-        9ctwMvPoqdUkuPS9U5w3cNLJ1EA+3ngNCz/g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C29E457C01;
-        Sat, 23 Feb 2019 12:12:06 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Received: from zaya.teonanacatl.net (unknown [71.173.194.225])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B0C5857C00;
-        Sat, 23 Feb 2019 12:12:03 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Date:   Sat, 23 Feb 2019 12:12:00 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
+        id S1726172AbfBWR1g (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 12:27:36 -0500
+Received: from cpanel4.indieserve.net ([199.212.143.9]:59582 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726125AbfBWR1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Feb 2019 12:27:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=Gg3EvCRS2HJNavPfpCnbp0rTA/G4aholLQroxNrGq6c=; b=hJNgo3n06oKMhuUCEy82X0ozh
+        b2BkvC9W3TgMeRmk9Jh4K2+QdaKUXn7+6MVMk9069e6ykWSiv3yOqQTRgmC1HzKYHpWYBbjgaQdeP
+        rlC0ZiOnS1bHJbzXGJK7XqhyK4N+7Rju6z5suH6J/0DCIlBA7tn6QzWrSBMbfPuMUtndLj7sXZx1S
+        anTSk9C9iclSwNSiCFpmEu8PjfwXVwm/ugcwxJPdDNLdFbKNbR8RZc9avKm2J+KKF/+uBoz3k8auZ
+        YvEqOAulD16rJsyFL3tttKZtST653nkoNqdrrK6LxklOIlpIfKixbJ0iFQwOG37h/6i12Ht8VJ8Np
+        iYwhXtxMQ==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:36734 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1gxb5J-00GetA-F8; Sat, 23 Feb 2019 12:27:34 -0500
+Date:   Sat, 23 Feb 2019 12:27:32 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Todd Zullinger <tmz@pobox.com>
+cc:     Git Mailing list <git@vger.kernel.org>
 Subject: Re: on fedora, "man gitweb" exists but actual gitweb command is
  missing
-Message-ID: <20190223171200.GB16125@zaya.teonanacatl.net>
-References: <alpine.LFD.2.21.1902230756280.24879@localhost.localdomain>
+In-Reply-To: <20190223171200.GB16125@zaya.teonanacatl.net>
+Message-ID: <alpine.LFD.2.21.1902231226440.555@localhost.localdomain>
+References: <alpine.LFD.2.21.1902230756280.24879@localhost.localdomain> <20190223171200.GB16125@zaya.teonanacatl.net>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1902230756280.24879@localhost.localdomain>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: 23E7F2E2-378E-11E9-8526-EE24A11ADF13-09356542!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-942634826-1550942854=:555"
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Robert P. J. Day wrote:
->=20
->   not so much a git issue as what looks like a fedora packaging issue.
+--8323328-942634826-1550942854=:555
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Yeah, it's just a minor packaging issue.  The gitweb
-manpages are included in the main git package rather than in
-the gitweb package with the rest of the gitweb files.  I'll
-fix that for future releases and when f29 is updated to 2.21
-it will pick that up=B9.
+On Sat, 23 Feb 2019, Todd Zullinger wrote:
 
-Since gitweb requires git, you'd be sure to have the
-documentation after installing gitweb.  If we made it
-possible to install gitweb without getting the
-documentation, that would be more annoying. :)
+> Hi,
+>
+> Robert P. J. Day wrote:
+> >
+> >   not so much a git issue as what looks like a fedora packaging
+> >   issue.
+>
+> Yeah, it's just a minor packaging issue.  The gitweb manpages are
+> included in the main git package rather than in the gitweb package
+> with the rest of the gitweb files.  I'll fix that for future
+> releases and when f29 is updated to 2.21 it will pick that up¹.
 
-=B9 https://src.fedoraproject.org/fork/tmz/rpms/git/c/0d9ad786
+  ... snip ...
 
-> it took only a few seconds to determine that fedora bundles that
-> functionality in two separate packages which are not dependencies of
-> "git": "gitweb" and "git-instaweb" (output abbreviated):
->=20
->   $ sudo dnf install git-instaweb
->   ...
->   Installing:
->    git-instaweb
->   Installing dependencies:
->    gitweb
->    perl-CGI
->=20
-> and now "git-instaweb" works fine.
->=20
->   the question is, is it not inconsistent for fedora's basic "git"
-> package to include the man page for gitweb, without including the
-> corresponding functionality? is this something i should submit a
-> fedora bugzilla report for? or am i misunderstanding something?
+  ah, eggcellent, so i can remove this from my TODO list, thanks.
 
-If I hadn't seen this thread, then a report in the fedora
-bugzilla would be the way to go to ensure one of the fedora
-git maintainers noticed it.
+rday
 
-Thanks,
+-- 
 
---=20
-Todd
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
+--8323328-942634826-1550942854=:555--
