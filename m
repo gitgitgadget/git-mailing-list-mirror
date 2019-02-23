@@ -7,49 +7,53 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 499DC20248
+	by dcvr.yhbt.net (Postfix) with ESMTP id 655D4202AA
 	for <e@80x24.org>; Sat, 23 Feb 2019 23:39:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727907AbfBWXjF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Feb 2019 18:39:05 -0500
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:34581 "EHLO
+        id S1727923AbfBWXjI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 18:39:08 -0500
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:52103 "EHLO
         mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726773AbfBWXjF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 18:39:05 -0500
-Received: by mail-pl1-f201.google.com with SMTP id s16so4443374plr.1
-        for <git@vger.kernel.org>; Sat, 23 Feb 2019 15:39:04 -0800 (PST)
+        with ESMTP id S1726773AbfBWXjH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Feb 2019 18:39:07 -0500
+Received: by mail-pl1-f201.google.com with SMTP id f10so4387852plr.18
+        for <git@vger.kernel.org>; Sat, 23 Feb 2019 15:39:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=QZz1zDYwaY8FzSXezD4hGcTeCBDXw2PvDHXk7hNU/dY=;
-        b=LDkHB77TaRAcixXlpNBGnfr6BWfgXbroskn0zXWV2nanhl1RNVpruo2uL2cJn4HNRU
-         0ocC4k/TrxRcTT6vlNVdhngsRprv6sBBOMkiG7lJAQeSppV6HdmCk0IlW2u4S1Xt+KIj
-         tl8jkGKZiBc2Yea4wwr8WUOXPVce6CIO1L+UU2BCfYBRLuHYOPnCBf7h/doTxXe00feq
-         gsnehQc/b/sSZPXm5FDpnZUbUIqqwJ7q/UmG5xQ4q/Y++oeoah4PwQWRm8WrGXsi+NtG
-         scjz9X2mA5S+Gbh+OsWimfJZHZj7OykszMmfRRNmv7YU6QBcLG0Zzx4kxitqLLJ3xSwX
-         YKDQ==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=bJhW754qe07OnuZcLV28LYcPl0aiVIopN6BGE7qNgmA=;
+        b=mv537SeJjIQbaIvDwNIV5pjE0Cwj+NDk92Ob9kqYupaaXblU5dpzGKSya3hsEABNmV
+         pn2sQcs4Fapf1GCxnpFkiMBgqbHzwneuf/j6YBNl6/IyaWrDYcMRZbWODNWTr+DkrlDm
+         8ttZAO9b6Kx+q6b4k2YC65MVZWq8DD27D5BzPjLpyK6/yW5sIVhWrE1hZnPVzMs0uy+D
+         GIXk0C7R4xhjfmlFJ0S9/zuvb/l9KSdPuVfbFrF3fBV7/K+SRAo3S2fFgUsvg2HgSuxZ
+         fqrjtOtEUvCzQJp4Xy5wrSpcegpCGItqhMNzCfy5TW5x8oLF96ShXaYXV6nYA4ACmBAc
+         wSpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=QZz1zDYwaY8FzSXezD4hGcTeCBDXw2PvDHXk7hNU/dY=;
-        b=kF7W4M9pqRpeZDP4ABlCU34JyCbABpj9WCx0nqSNvyoPg3o3gHsUp+S0Ze32RZmBCv
-         rgNnKoHiVn+FYoVB8lI/LWC/q1xY4P/zUH7XW6jJMZvLvu/1Oaroq9B8xNxF9EfA/hI+
-         uzpt/YNtsjMQa3oIleK/DLRy0kS4/RKkECTGjSIcIOtbZH1oWH/Y475+OpGU55OTN9+I
-         Ow4FI8KoItwWQdyoZzWd/o34MuOzKWHGCFhFVYT9PcFJkcflolnKDGGqnmuP0mlVqDC1
-         +nhBcoYvteYmGGe0y0P8o6DZyjOIRWXYcYZaEF33z/slPyKGYQ3l5u2nKz6FMzGagqLo
-         BpRg==
-X-Gm-Message-State: AHQUAubrubqsquwjQlE7geG6JMDTQnOiPc2dBTkUwEIxnng0I1WD8vRA
-        yiPJhWdbw/K2RlGfOWXDHB9Wg43x5kk7L6HSgr6kCq7X1C/KCSnB50YU0eoJqm8i5I3dzeDlUu1
-        keo+1c3gKq0lCRKBIUikAZc0ICE27xzx8XmFGW07juGX82QsgZiQ3etckAW1riueB7YZZN447YL
-        4o
-X-Google-Smtp-Source: AHgI3IYtSyM2O5dXcRQrdjHlqlh115fmQBMdOi1a8Zy5/JUW8JhZFNKykkvNYMr8msundEz88aHrOAgeklBg/Xt/rRi0
-X-Received: by 2002:a17:902:7b87:: with SMTP id w7mr3435868pll.43.1550965144209;
- Sat, 23 Feb 2019 15:39:04 -0800 (PST)
-Date:   Sat, 23 Feb 2019 15:38:54 -0800
-Message-Id: <cover.1550963965.git.jonathantanmy@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=bJhW754qe07OnuZcLV28LYcPl0aiVIopN6BGE7qNgmA=;
+        b=aLyvB+M+LLXQRCL27KggpTwXeLPhWOoSvZDyrmm0hD/bjl585wdfVHCKWn0Y9AsteW
+         /gFKCC/ZTowuS3RaA/l0uSOobPL4kMijQ01/WWA3exPebK8doQAdPzE32nq+Fnl+3FwJ
+         8IUdPQDFU86Vg8yOec3gRJikdm4Py7++5yV42KTuUkZnmnSEI5r0iCMUs6OB/VyweBSS
+         WPkKgH24oC3XCfoLdFYcdkR5NXXESOZaHIRJffKX9lpRQ3hvYfQPDuUiM1kGwpES1RaZ
+         GeVIkfErZRSg5T8ebi/KDUu5+YN9hcZHjZISOK2c9RDR8O8RGD3Wb+xkHO9BJylGc6HJ
+         iTRg==
+X-Gm-Message-State: AHQUAubgC6VnkgvmVpMJ2ToG089NosE2Kdh6a3Fu9xcmcYxQRKrf9aCf
+        SXNN0WHSxZWb8McSNiqW4kfQhrHysXOzAZjRGEaL8yfCuQ7ucLNgxmRLGf7VeWB43jyKIXlnRx1
+        AtBpACcIq9qjuQgbfbqIZPJJ8SiQHHq2ZWTBN3+CsoliooEhv2IxOnU+/8tA7JE3U/XdRSuotwq
+        Dc
+X-Google-Smtp-Source: AHgI3IaQl9f7rpnmSKnY2S7PrwnK9eLlALaE4BNXAkj8Sd6W5yhYjnwHLfkPMduIm+w7y56hKYCjCmhIxWnhizwk523x
+X-Received: by 2002:a62:42d6:: with SMTP id h83mr4206120pfd.52.1550965146689;
+ Sat, 23 Feb 2019 15:39:06 -0800 (PST)
+Date:   Sat, 23 Feb 2019 15:38:55 -0800
+In-Reply-To: <cover.1550963965.git.jonathantanmy@google.com>
+Message-Id: <5ed3a4442e38165d0c45d53de5c8620b58a01015.1550963965.git.jonathantanmy@google.com>
 Mime-Version: 1.0
+References: <cover.1550963965.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [WIP 0/7] CDN offloading of fetch response
+Subject: [WIP 1/7] http: use --stdin and --keep when downloading pack
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
@@ -60,97 +64,162 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's been a while, so here is an updated version of what I previously
-sent [1]. The main difference is that fetch-pack now actually downloads
-whatever the server tells it to. The second main difference is that
-we no longer buffer progress messages and suspend keepalives - we
-no longer need to, because the sideband-all patches have been merged.
+When Git fetches a pack using dumb HTTP, it does at least 2 things
+differently from when it fetches using fetch-pack or receive-pack: (1)
+it reuses the server's name for the packfile (which incorporates a hash)
+for the packfile, and (2) it does not create a .keep file to avoid race
+conditions with repack.
 
-I think I've address all the technical comments in [1], except one
-comment of Junio's [2] that I still don't understand:
+A subsequent patch will allow downloading packs over HTTP(S) as part of
+a fetch. These downloads will not necessarily be from a Git repository,
+and thus may not have a hash as part of its name. Also, generating a
+.keep file will be necessary to avoid race conditions with repack (until
+the fetch has successfully written the new refs).
 
-> And the "fix" I was alluding to was to update that "else" clause to
-> make it a no-op that keeps os->used non-zero, which would not call
-> send-client-data.
->
-> When that fix happens, the part that early in the function this
-> patch added "now we know we will call send-client-data, so let's say
-> 'here comes packdata' unless we have already said that" is making
-> the decision too early.  Depending on the value of os->used when we
-> enter the code and the number of bytes xread() reads from the
-> upstream, we might not call send-client-data yet (namely, when we
-> have no buffered data and we happened to get only one byte).
+Thus, teach http to pass --stdin and --keep to index-pack, the former so
+that we have no reliance on the server's name for the packfile, and the
+latter so that we have the .keep file.
 
-With or without this fix, I don't think there is ever a time when we
-say "here comes packdata" without calling send-client-data - we say
-"here comes packdata" only when we see the string "PACK", which forms
-part of the packfile, and thus we should have no problem sending any
-client data. Having said that, maybe this is a moot point - Junio says
-that this only happens when the fix is implemented, and the fix is not
-implemented.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ http-push.c   |  7 ++++++-
+ http-walker.c |  5 ++++-
+ http.c        | 42 ++++++++++++++++++++----------------------
+ http.h        |  2 +-
+ 4 files changed, 31 insertions(+), 25 deletions(-)
 
-There are probably some more design discussions to be had:
-
- - Requirement that all pointed-to CDNs support byte ranges for
-   resumability, and to guarantee that the packfiles will be there
-   permanently. After some thought, it is a good idea for CDNs to
-   support that, but I think that we should support CDNs that can only
-   give temporal guarantees (e.g. if/when we start implementing
-   resumption, we could read the Cache headers). I didn't add any
-   mention of this issue in the documentation.
-
- - Client-side whitelist of protocol and hostnames. I've implemented
-   whitelist of protocol, but not hostnames.
-
- - Any sort of follow-up fetch - for example, if the download from the
-   CDN fails or if we allow the server to tell us of best-effort
-   packfiles (but the client still must check and formulate the correct
-   request to the server to fetch the rest). This protocol seems like a
-   prerequisite to all those, and is independently useful, so maybe all
-   of those can be future work.
-
-Please take a look. Feel free to comment on anything, but I prefer
-comments on the major things first (e.g. my usage of a separate process
-(http-fetch) to fetch packfiles, since as far as I know, Git doesn't
-link to libcurl; any of the design decisions I described above). I know
-that there are some implementation details that could be improved (e.g.
-parallelization of the CDN downloads, starting CDN downloads *after*
-closing the first HTTP request, holding on to the .keep locks until
-after the refs are set), but will work on those once the overall design
-is more or less finalized.
-
-Note that the first patch is exactly the same as one I've previously
-sent [3].
-
-[1] https://public-inbox.org/git/cover.1543879256.git.jonathantanmy@google.com/
-[2] https://public-inbox.org/git/xmqqmupi89ub.fsf@gitster-ct.c.googlers.com/
-[3] https://public-inbox.org/git/20190221001447.124088-1-jonathantanmy@google.com/
-
-Jonathan Tan (7):
-  http: use --stdin and --keep when downloading pack
-  http: improve documentation of http_pack_request
-  http-fetch: support fetching packfiles by URL
-  Documentation: order protocol v2 sections
-  Documentation: add Packfile URIs design doc
-  upload-pack: refactor reading of pack-objects out
-  upload-pack: send part of packfile response as uri
-
- Documentation/git-http-fetch.txt         |   7 +-
- Documentation/technical/packfile-uri.txt |  79 ++++++++++++
- Documentation/technical/protocol-v2.txt  |  22 ++--
- builtin/pack-objects.c                   |  63 +++++++++
- fetch-pack.c                             |  58 +++++++++
- http-fetch.c                             |  65 ++++++++--
- http-push.c                              |   7 +-
- http-walker.c                            |   5 +-
- http.c                                   |  83 +++++++-----
- http.h                                   |  26 +++-
- t/t5550-http-fetch-dumb.sh               |  18 +++
- t/t5702-protocol-v2.sh                   |  54 ++++++++
- upload-pack.c                            | 155 +++++++++++++++++------
- 13 files changed, 542 insertions(+), 100 deletions(-)
- create mode 100644 Documentation/technical/packfile-uri.txt
-
+diff --git a/http-push.c b/http-push.c
+index b22c7caea0..409b266b0c 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -586,11 +586,16 @@ static void finish_request(struct transfer_request *request)
+ 			fprintf(stderr, "Unable to get pack file %s\n%s",
+ 				request->url, curl_errorstr);
+ 		} else {
++			char *lockfile;
++
+ 			preq = (struct http_pack_request *)request->userData;
+ 
+ 			if (preq) {
+-				if (finish_http_pack_request(preq) == 0)
++				if (finish_http_pack_request(preq,
++							     &lockfile) == 0) {
++					unlink(lockfile);
+ 					fail = 0;
++				}
+ 				release_http_pack_request(preq);
+ 			}
+ 		}
+diff --git a/http-walker.c b/http-walker.c
+index 8ae5d76c6a..804dc82304 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -425,6 +425,7 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo, unsigne
+ 	int ret;
+ 	struct slot_results results;
+ 	struct http_pack_request *preq;
++	char *lockfile;
+ 
+ 	if (fetch_indices(walker, repo))
+ 		return -1;
+@@ -457,7 +458,9 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo, unsigne
+ 		goto abort;
+ 	}
+ 
+-	ret = finish_http_pack_request(preq);
++	ret = finish_http_pack_request(preq, &lockfile);
++	if (!ret)
++		unlink(lockfile);
+ 	release_http_pack_request(preq);
+ 	if (ret)
+ 		return ret;
+diff --git a/http.c b/http.c
+index a32ad36ddf..5f8e602cd2 100644
+--- a/http.c
++++ b/http.c
+@@ -2200,13 +2200,13 @@ void release_http_pack_request(struct http_pack_request *preq)
+ 	free(preq);
+ }
+ 
+-int finish_http_pack_request(struct http_pack_request *preq)
++int finish_http_pack_request(struct http_pack_request *preq, char **lockfile)
+ {
+ 	struct packed_git **lst;
+ 	struct packed_git *p = preq->target;
+-	char *tmp_idx;
+-	size_t len;
+ 	struct child_process ip = CHILD_PROCESS_INIT;
++	int tmpfile_fd;
++	int ret = 0;
+ 
+ 	close_pack_index(p);
+ 
+@@ -2218,35 +2218,33 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 		lst = &((*lst)->next);
+ 	*lst = (*lst)->next;
+ 
+-	if (!strip_suffix(preq->tmpfile.buf, ".pack.temp", &len))
+-		BUG("pack tmpfile does not end in .pack.temp?");
+-	tmp_idx = xstrfmt("%.*s.idx.temp", (int)len, preq->tmpfile.buf);
++	tmpfile_fd = xopen(preq->tmpfile.buf, O_RDONLY);
+ 
+ 	argv_array_push(&ip.args, "index-pack");
+-	argv_array_pushl(&ip.args, "-o", tmp_idx, NULL);
+-	argv_array_push(&ip.args, preq->tmpfile.buf);
++	argv_array_push(&ip.args, "--stdin");
++	argv_array_pushf(&ip.args, "--keep=git %"PRIuMAX, (uintmax_t)getpid());
+ 	ip.git_cmd = 1;
+-	ip.no_stdin = 1;
+-	ip.no_stdout = 1;
++	ip.in = tmpfile_fd;
++	ip.out = -1;
+ 
+-	if (run_command(&ip)) {
+-		unlink(preq->tmpfile.buf);
+-		unlink(tmp_idx);
+-		free(tmp_idx);
+-		return -1;
++	if (start_command(&ip)) {
++		ret = -1;
++		goto cleanup;
+ 	}
+ 
+-	unlink(sha1_pack_index_name(p->sha1));
++	*lockfile = index_pack_lockfile(ip.out);
++	close(ip.out);
+ 
+-	if (finalize_object_file(preq->tmpfile.buf, sha1_pack_name(p->sha1))
+-	 || finalize_object_file(tmp_idx, sha1_pack_index_name(p->sha1))) {
+-		free(tmp_idx);
+-		return -1;
++	if (finish_command(&ip)) {
++		ret = -1;
++		goto cleanup;
+ 	}
+ 
+ 	install_packed_git(the_repository, p);
+-	free(tmp_idx);
+-	return 0;
++cleanup:
++	close(tmpfile_fd);
++	unlink(preq->tmpfile.buf);
++	return ret;
+ }
+ 
+ struct http_pack_request *new_http_pack_request(
+diff --git a/http.h b/http.h
+index 4eb4e808e5..20d1c85d0b 100644
+--- a/http.h
++++ b/http.h
+@@ -212,7 +212,7 @@ struct http_pack_request {
+ 
+ extern struct http_pack_request *new_http_pack_request(
+ 	struct packed_git *target, const char *base_url);
+-extern int finish_http_pack_request(struct http_pack_request *preq);
++int finish_http_pack_request(struct http_pack_request *preq, char **lockfile);
+ extern void release_http_pack_request(struct http_pack_request *preq);
+ 
+ /* Helpers for fetching object */
 -- 
 2.19.0.271.gfe8321ec05.dirty
 
