@@ -2,77 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1F2020248
-	for <e@80x24.org>; Sat, 23 Feb 2019 06:34:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BF2420248
+	for <e@80x24.org>; Sat, 23 Feb 2019 07:09:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725938AbfBWGdw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Feb 2019 01:33:52 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:43751 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725773AbfBWGdw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 01:33:52 -0500
-Received: by mail-qk1-f195.google.com with SMTP id f196so2483029qke.10
-        for <git@vger.kernel.org>; Fri, 22 Feb 2019 22:33:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=0/1gpZYwIlYIUrhUbOlNabHPRAxyohEpg3ZZtpYgajY=;
-        b=RR6j3QoN1ttVZESwCF8cevzZBe2SmJr3NRVCjMNaMyYwyQpuyd9ChezeP5qG0VRVhu
-         IUiNgfQPjZ55R7V1pLMJoE2Py8UYE2E2Q1ybjCyXdU0bajTL59m3ZiTFJuSJSlUtFB2V
-         oClGSUnjXsKs+OfJWBNkc+rZmEiqdePYZJXcg7bn0Srv9tSCuMdgqqXgAMdEyW41mlZn
-         3wuYS2AwRZ1BoxFshWl21LnUyG1DGVnqn1uvmxKZzGUMi57fG9dk3exUB+TCvsZoMxRE
-         f4tCkrzetM6uEH2dAEHaIhSh+Dmqtb7lGaXAmZetzauEGL58ZjQ5lzADs82dzHNyh/kp
-         SRzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=0/1gpZYwIlYIUrhUbOlNabHPRAxyohEpg3ZZtpYgajY=;
-        b=jJJvghmaCaBbbvjhqaHJjI0k4I8h5yC7sFX25SCOQb73ItE+1yY9cvvcbXuyh3MNDU
-         9+VF7U8Qr4F8PGQRiIUgzSKAsSdjbibJh47hj8eNPh2zcAI9bZk0MQo7q6k3dptOnbnM
-         qlBVdkyHL9wubZKiuqyVOurBJ3haxU0wZxVK90bGrfqsCcS1DiI2MJWqDKO6f7se2YEx
-         q7OqYOCX6f8+4xzVyEP5U7+E5mAt2SVIbAfMJgX4zX2I7bhUqB/bDwfELPoZVo3XMNZm
-         k/P5U4b2aLgDwbQq/aXXKSBtJv5Hy06SJ5dKKQfMIXSJyJ9Wm1mIeWx+ERk2RcRYXS+t
-         EhpQ==
-X-Gm-Message-State: AHQUAuaXxdKfv5QoHNgtrNvhwsbtxjzlm/Hczbl1l2KN2W65kG27e8iV
-        bMKL0lQSYk4TpigzIake285A8krn7KceKZ97d6xePugK
-X-Google-Smtp-Source: AHgI3IZJhdOuT98TTijTOHoibCE2RHMq9WLaUDxdiThBqo+JH1erTqRrdQmvwHNepdEBUioYR8gCohmw4VrKYvHkas4=
-X-Received: by 2002:ae9:ddc3:: with SMTP id r186mr5755859qkf.163.1550903631040;
- Fri, 22 Feb 2019 22:33:51 -0800 (PST)
+        id S1725934AbfBWHJT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 02:09:19 -0500
+Received: from p3plsmtpa06-03.prod.phx3.secureserver.net ([173.201.192.104]:60843
+        "EHLO p3plsmtpa06-03.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725773AbfBWHJS (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 23 Feb 2019 02:09:18 -0500
+Received: from jessie.local ([212.149.203.197])
+        by :SMTPAUTH: with ESMTPSA
+        id xRQwgawhr6dqMxRQzgfERM; Sat, 23 Feb 2019 00:09:18 -0700
+Date:   Sat, 23 Feb 2019 09:09:14 +0200
+From:   Max Kirillov <max@max630.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Max Kirillov <max@max630.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+Subject: Re: [RFC PATCH] pack-refs: fail on falsely sorted packed-refs
+Message-ID: <20190223070914.GC2354@jessie.local>
+References: <20190130231359.23978-1-max@max630.net>
+ <87lg2kj91a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Date:   Sat, 23 Feb 2019 15:33:40 +0900
-Message-ID: <CAF5D8-tHxFyFD-ZvdYRauT_Egz8RWzF_TDL487SmuwTVO-oyhQ@mail.gmail.com>
-Subject: [PATCH] Fix the quotation mark in the explanation of "git checkout -".
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87lg2kj91a.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-CMAE-Envelope: MS4wfHgEjER6T0wIodnsbIP9axV5G4J71sJloIdWSMrH1tJaERDn9ZoMhcO0zSVTV6wT7L4O0J5I074YxuRKhtBPUdJ6EOnpMgLb8GlSAj1sSiRS294mwo9A
+ eRT0d+xPrKb6A0k3YIKphVJotvUXD/37WyT288jeniqDQe7ngy5qQjJZ2oHhsRzwtR/JZCB30TlP2TbDbftygGS9PqsXZFHx3i/mykQ23jWJyubJXaqhn2wn
+ /Xwoj5hDnyibnCNeSOU1Iw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Yoichi Nakayama <yoichi.nakayama@gmail.com>
----
- Documentation/git-checkout.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, Feb 13, 2019 at 11:08:01AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> You have an extra two whitespaces after "&&" there.
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 801de2f764..55eb39a897 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -285,7 +285,7 @@ section of linkgit:git-add[1] to learn how to
-operate the `--patch` mode.
- +
- You can use the `"@{-N}"` syntax to refer to the N-th last
- branch/commit checked out using "git checkout" operation. You may
--also specify `-` which is synonymous to `"@{-1}`.
-+also specify `-` which is synonymous to `"@{-1}"`.
- +
- As a special case, you may use `"A...B"` as a shortcut for the
- merge base of `A` and `B` if there is exactly one merge base. You can
--- 
-2.19.1
+Thanks, will check it.
+
+>> +	git commit --allow-empty -m commit &&
+> Looks like just "test_commit A" would do here.
+
+About this I'm not sure. AFAIK test_commit does lots of stuff,
+so can it be considered "just" compared to "commit
+--allow-empty" or the opposite? I could replace it with
+test_commit for uniformity reason though.
+
+> We can fail in these sorts of loops. There's a few ways to deal with
+> that. Doing it like this with "break" will still silently hide errors:
+
+Thanks, this was pointed point
+
+>> +	printf "$head_object refs/heads/b00\\n" >>.git/packed-refs &&
+> 
+> Looks like just "echo" here would be simpler since we only use printf to
+> add a newline.
+
+Could it happen so that "echo" adds '\r\n' at Windows? I
+could use echo.
+
+> Instead of "! git ..." use "test_must_fail git ...". See t/README. This
+> will hide e.g. segfaults.
+
+Thanks, this was pointed point
+
+> Also, perhaps:
+> 
+>     test_must_fail git ... 2>stderr &&
+>     grep "broken sorting in packed-refs" stderr
+> 
+> Would make this more obvious/self-documenting so we know we failed due
+> to that issue in particular.
+
+Thanks, will change it
