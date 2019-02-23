@@ -2,95 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC26E20248
-	for <e@80x24.org>; Sat, 23 Feb 2019 13:44:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DAAA20248
+	for <e@80x24.org>; Sat, 23 Feb 2019 14:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727096AbfBWNoz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Feb 2019 08:44:55 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55536 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726422AbfBWNoz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 08:44:55 -0500
-Received: (qmail 22973 invoked by uid 109); 23 Feb 2019 13:44:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 23 Feb 2019 13:44:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4239 invoked by uid 111); 23 Feb 2019 13:45:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 23 Feb 2019 08:45:08 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Feb 2019 08:44:53 -0500
-Date:   Sat, 23 Feb 2019 08:44:53 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Bartosz Baranowski <bbaranow@redhat.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] bisect: make diff-tree output prettier
-Message-ID: <20190223134452.GE22403@sigill.intra.peff.net>
-References: <20190222061949.GA9875@sigill.intra.peff.net>
- <20190222062327.GC10248@sigill.intra.peff.net>
- <xmqqsgwfr9vr.fsf@gitster-ct.c.googlers.com>
+        id S1727828AbfBWOtZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 09:49:25 -0500
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:37771 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725859AbfBWOtY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Feb 2019 09:49:24 -0500
+Received: by mail-ed1-f45.google.com with SMTP id m12so4164171edv.4
+        for <git@vger.kernel.org>; Sat, 23 Feb 2019 06:49:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=cK0o6S5wj6zkQDwahG549mrJgcxN5qBAJ+L4TLBGsuc=;
+        b=P3p7LtzCFHOjQxkUVTktE77YkgAVd7Ql/ABKTAEvfAYlOkhTxuPqjFGOqHREGGkRQP
+         MqmXkudfdC/7o6N4dKYgHIqthP/u2+dIY117QHhMrWE9GIskbgfqkj/YqloJ68hTxRet
+         EjSzMkCyIZR2qx3BraMl52m9e4pVQBifXABJ+1KRWAP2lDkypOlc1T4qjcDPzcsp/i+y
+         NhWP9kqSjqVDU+PdjoKA+hgiwQPXo7KAWTOe76Q5TOlZwMh/udkoM54Dl0IrNYR9jtDX
+         4kbdbPnrQ1/3NFV+XUi76e+9B7Gl1tsxdWa8L2QEAjaRxMGKkTJ+7baR1u+N8HxzHUmd
+         jdRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cK0o6S5wj6zkQDwahG549mrJgcxN5qBAJ+L4TLBGsuc=;
+        b=c5GKZIao1YDRH9dUSGllT6pKlONQjbBRegQPRS8KbZgsKSnIvqpRCPRdYLlmSpghIs
+         oJ+B9hPkgyPcx8P63ig+gZZ3y2LqHSq9dVxI5Drn0Y/Kvn5JxPHnRTxQOj2KupxT9ABd
+         FU98glCrCyI3OAc3h4rujFIxGvxiXkdb3u+MfamC10NrO0jJoTkeWExSddXYGtQ+YNzy
+         tcJpEsv5Wl1gRIyoObskGGAcEkZnyzqvAYwYVAK5qli2jnkWKNlkW1m3wnWKvhztZ+ep
+         5UIES6FUsXHMxP27XN/1m+Tz9Yy7uBR8Bdj8X7i/+LKRSA1AHvNUlLSd0/SSlV+Hpxq7
+         hmZQ==
+X-Gm-Message-State: AHQUAubuSFTCBW/M0reCHxXMWJ1wXDjv1QeoGI5PJea7UOJiEgf/YlkO
+        Hd+YqHcd9iBWZgL/TxOfVr0dDE8F
+X-Google-Smtp-Source: AHgI3IYp6Ny8YpdiThH5pRwIdldPvbr9Edi7fDGHQFbya+MSCltqLVd1JaljIGLouIfkcNq8ZLDxBQ==
+X-Received: by 2002:a50:858a:: with SMTP id a10mr7720536edh.1.1550933362932;
+        Sat, 23 Feb 2019 06:49:22 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d5sm789803ejj.26.2019.02.23.06.49.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 Feb 2019 06:49:22 -0800 (PST)
+Date:   Sat, 23 Feb 2019 06:49:22 -0800 (PST)
+X-Google-Original-Date: Sat, 23 Feb 2019 14:49:20 GMT
+Message-Id: <pull.128.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Adjust the Azure Pipeline badge in our README
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqsgwfr9vr.fsf@gitster-ct.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 22, 2019 at 09:49:44AM -0800, Junio C Hamano wrote:
+We now have an official Azure Pipeline (not the temporary, for-testing one I
+used during development), thanks to Peff! Let's link to it, too.
 
-> > Even though bisect might be driven by scripts, there's no reason to
-> > consider this part of the output as machine-readable (if anything, the
-> > initial "$hash is the first bad commit" might be parsed, but we won't
-> > touch that here). Let's make it prettier and more informative for a
-> > human reading the output.
-> 
-> Sounds very sensible.  One potential point that makes me worried is
-> this move might tempt people to make the output even larger (e.g. a
-> full diff with "--patch" is overkill if done unconditionally).
+Johannes Schindelin (1):
+  README: adjust for final Azure Pipeline ID
 
-Yeah, I agree that would be overkill. What I have here isn't actually
-much bigger. It mostly trades one line of --raw for one line of --stat.
-The big change is that we actually bother to recurse, but I think the
-old behavior was just buggy.
+ README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-At any rate, I think we can discuss such a patch if and when it comes
-up.
 
-> > If we do care about the change in exit code from bisect, then it
-> > probably does make sense to go with an external process. Then it can
-> > happily die on the corruption, while bisect continues with the rest of
-> > the high-level operation. I'm not sure it really matters much, though.
-> > Once your repository is corrupted, all bets are off. It's nice that we
-> > can bisect in such a state at all.
-> 
-> This is about showing the very final message after finding which one
-> is the culprit.  Is there any other "clean-up" action we need to do
-> after showing the message?  I do not care too much about the exit
-> code from the bisection, but if dying from diff-tree can interfere
-> with such a clean-up, that would bother me a lot more, and at that
-> point, given especially that this is not a performance sensitive
-> thing at all (it is not even invoked log(n) times---just once at the
-> end), moving to external process may make it a lot simpler and
-> cleaner.
-
-Thanks, I had a vague feeling along these lines, but you nicely put it
-into words. As far as I can tell, no, we're not missing any important
-cleanup in that process; it looks like the only call to show_diff_tree()
-then calls exit(10) immediately after.
-
-However, that does change our exit code, which git-bisect.sh then
-propagates instead of writing the entry into the BISECT_LOG.
-
-I'm still not convinced this is really worth caring about, as it implies
-a corrupt repo. But if we did want to fix it, then I think the external
-diff-tree would still be the right thing (since it's hard for
-git-bisect.sh to tell the different between this death and another one).
-
--Peff
+base-commit: c65a2884eae159bad540135479bc8afe20ff62d1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-128%2Fdscho%2Fazure-pipelines-badge-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-128/dscho/azure-pipelines-badge-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/128
+-- 
+gitgitgadget
