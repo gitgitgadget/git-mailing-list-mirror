@@ -2,98 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B6ED20248
-	for <e@80x24.org>; Sat, 23 Feb 2019 13:28:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4FA20248
+	for <e@80x24.org>; Sat, 23 Feb 2019 13:34:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727792AbfBWN2V (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Feb 2019 08:28:21 -0500
-Received: from smtp-32.italiaonline.it ([213.209.10.32]:35452 "EHLO libero.it"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725859AbfBWN2V (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Feb 2019 08:28:21 -0500
-Received: from DESKTOP-E4U7JCE ([5.169.49.65])
-        by smtp-32.iol.local with ESMTPA
-        id xXLlgXdZy6rc5xXLmgMKDw; Sat, 23 Feb 2019 14:28:18 +0100
-x-libjamoibt: 1601
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
-        t=1550928498; bh=IHOMYSAkJrjad1ZJEB1yS3SM2QT2/bUqecI1Z6XDu2Q=;
-        h=Subject:From:To:Date:In-Reply-To:References;
-        b=f8my15Ts3rTOW7s/FeGUOBcid09kiuBo6M/p/iHFFf+26Gm4uPcejwptVDyVYp+IO
-         3tFVO+bMZ0t3mHH5+KvspnM779VWzl0OgASwmIOsyaI/kJQbZxg8ZdA5DZoPMHUQee
-         Bwp0fPgb82cyFvMveBtWOWrRJ4oLMJHog4d1qgBGFnTrywTpbTkK5mVoZ0DWu7kO0J
-         ksAfAz2Ksy1KJqBuvh+/c4WHhphqBudBomJAEwjrfgAcNY4Gbv09xwuB+HWbM8saSt
-         BBwlElb+E7J5l9Rf/QAkR3PNcI0+Btsda72p4lWlkimlCboeza6VIzXh82AJAJptc4
-         O02zT45uNkX1A==
-X-CNFS-Analysis: v=2.3 cv=d7kkNirE c=1 sm=1 tr=0
- a=zYX2uk1tt1KodCNUFRWNOA==:117 a=zYX2uk1tt1KodCNUFRWNOA==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=08cpZRoF9MTHr67id2AA:9 a=QEXdDO2ut3YA:10
- a=vk3CbCNW2PIA:10 a=AjGcO6oz07-iQ99wixmX:22
-Message-ID: <1550928497.2346.8.camel@libero.it>
-Subject: Re: Students projects: looking for small and medium project ideas
-From:   Fabio Aiuto <polinice83@libero.it>
-To:     Matthieu Moy <git@matthieu-moy.fr>, git@vger.kernel.org
-Date:   Sat, 23 Feb 2019 14:28:17 +0100
-In-Reply-To: <86fttvcehs.fsf@matthieu-moy.fr>
-References: <86fttvcehs.fsf@matthieu-moy.fr>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfCtj/SWh5FJSGrgf88BPL4iPnNNAVNmHHXHlH+FS+xA60ltEubSkePnfTT5YGAAgwZWfOB9qnQQjS6EN0RjQONlfTbp09sGNx69/QY6DAl1d9B7Jtodi
- RJyCDvovRpfJqbu+SNKyD1WIgUxvZOrQvhwTpxiHW1bW33HsnJmobg5kJuQw8AcU0IpH8w1WPeYFfMA+xnblaoWcg5f5bxGLQOY=
+        id S1727329AbfBWNeV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Feb 2019 08:34:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55510 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725954AbfBWNeV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Feb 2019 08:34:21 -0500
+Received: (qmail 22857 invoked by uid 109); 23 Feb 2019 13:34:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 23 Feb 2019 13:34:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4154 invoked by uid 111); 23 Feb 2019 13:34:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 23 Feb 2019 08:34:34 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 23 Feb 2019 08:34:19 -0500
+Date:   Sat, 23 Feb 2019 08:34:19 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/3] format-patch: --no-clobber refrains from overwriting
+ output files
+Message-ID: <20190223133418.GD22403@sigill.intra.peff.net>
+References: <20190222201111.98196-1-gitster@pobox.com>
+ <20190222201111.98196-4-gitster@pobox.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190222201111.98196-4-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Il giorno lun, 14/01/2019 alle 18.53 +0100, Matthieu Moy ha scritto:
-> Hi,
+On Fri, Feb 22, 2019 at 12:11:11PM -0800, Junio C Hamano wrote:
+
+> If you keep an output for an older iteration of the same topic in
+> the same directory around and use "git format-patch" to prepare a
+> newer iteration of the topic, those commits that happen to be at the
+> same position in the series that have not been retitled will get the
+> same filename---and the command opens them for writing without any
+> check.
 > 
-> I haven't been active for a while on this list, but for those who
-> don't
-> know me, I'm a CS teacher and I'm regularly offering my students to
-> contribute to open-source projects as part of their school projects.
-> A
-> few nice features like "git rebase -i --exec" or many of the hints in
-> "git status" were implemented as part of these projects.
-> 
-> I'm starting another instance of such project next week.
-> 
-> Part of the work of students is to choose which feature they want to
-> work on, but I try to prepare this for them. I'm keeping a list of
-> ideas
-> here:
-> 
->   https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
-> 
-> (At some point, I should probably migrate this to git.github.io,
-> since
-> the wiki only seems half-alive these days).
-> 
-> I'm looking for small to medium size projects (typically, a GSoC
-> project
-> is far too big in comparison, but we may expect more than just
-> microprojects).
-> 
-> You may suggest ideas by editting the wiki page, or just by replying
-> to
-> this email (I'll point my students to the thread). Don't hesitate to
-> remove entries (or ask me to do so) on the wiki page if you think
-> they
-> are not relevant anymore.
-> 
-> Thanks in advance,
-> 
-Hi Matthieu and to all developers,
-I'm Fabio, no more a student and I'm brand new in community
-development. I joined the git mailing-list about two weeks ago and I'm
-looking for some first fix or tasks. I apologize myself in advance for
-my little know of the subject.  Hope to have some useful information to
-start workin'.
-Thank you in advance
-Fabio.
+> Existing "-o outdir" and "-v number" options are both good ways to
+> avoid such name collisions, and in general helps to give good ways
+> to compare the latest iteration with older iteration(s), but let's
+> see if "--no-clobber" option that forbids overwrting existing files
+> would also help people.
+
+I suspect it won't help much, because remembering to use --no-clobber is
+just as hard as remembering to clean up the stale patches in the first
+place.
+
+If we were starting from scratch, I'd suggest that --no-clobber be the
+default[1]. But at this point I wonder if people would be annoyed
+(because the clobbering behavior is convenient and works _most_ of the
+time, as long as you don't add, remove, reorder, or retitle patches).
+
+I suppose that implies having a config option, so at least people who
+want it only have to remember once.
+
+>  Documentation/git-format-patch.txt |  8 +++++++-
+>  builtin/log.c                      | 32 ++++++++++++++++++++++++------
+>  t/t4014-format-patch.sh            | 16 +++++++++++++++
+>  3 files changed, 49 insertions(+), 7 deletions(-)
+
+The patch itself looks well done.
+
+-Peff
+
+[1] Actually, I'd suggest that --stdout be the default, which is what I
+    always use. But then I typically feed the result into mutt anyway.
+    Separate files is probably nicer if you're hand-editing.
