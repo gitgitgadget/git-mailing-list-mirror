@@ -2,112 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F26520248
-	for <e@80x24.org>; Sun, 24 Feb 2019 15:54:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C36C720248
+	for <e@80x24.org>; Sun, 24 Feb 2019 16:35:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728240AbfBXPyu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Feb 2019 10:54:50 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:32936 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727752AbfBXPyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Feb 2019 10:54:50 -0500
-Received: by mail-wm1-f66.google.com with SMTP id h22so12184512wmb.0
-        for <git@vger.kernel.org>; Sun, 24 Feb 2019 07:54:48 -0800 (PST)
+        id S1728346AbfBXQfE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Feb 2019 11:35:04 -0500
+Received: from mail-io1-f67.google.com ([209.85.166.67]:33954 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725860AbfBXQfE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Feb 2019 11:35:04 -0500
+Received: by mail-io1-f67.google.com with SMTP id e1so5669357iok.1
+        for <git@vger.kernel.org>; Sun, 24 Feb 2019 08:35:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=r7ZTgjUgRTidWqkxUNmR2ccq1FlKOCeJj+Gw0n4e39s=;
-        b=cTPeygPIJGWPv8tkEj+JQ6uP5WENdQC0aHinBMHqEhMQKRxKc6JPsKKQ/5M62jDc74
-         LPzBwRtHWPZszgPXQAyKjpd3GTf+Yqgv4oJRx8u2brEulusUJ43TE9GAiGqv15qHnROR
-         HflPNo19P4fowoFlsigoDAhJhB11hjhvRK1rZqihufyC9wC7L9KDpmUuBvekx25ottsn
-         AkY4/c/Be2DGjv5H2iFHeGzYTEA0Xs4JJAueb5BlTv6fXh5OxNqOvYetHuYeWhY8UEyY
-         DO/pMB6vBjM98l8/GfuElamH/p43uKi5Pc2vbz/EJNZIgW7fj89yn5U6JQV3AdHEHmBU
-         ImaQ==
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FiwKaaQTvklw7TbF0cc4uo2LS10yzDYwnSWXYPbwpeg=;
+        b=dz5u8GyiFudHZsVPo3saW+HEUkx45RaQl/K9esLa5oPTwNZ9oPF0LW9Fsog7OIf+/4
+         4htc37RIWYNIPaoFO44AxYyELZZIE36H/1Etm0W1BkbHzmAKdN9P+/aUfzBxp2PcXR7L
+         buUFKLKJNOVUcPWqaFD5aI6Qwj38RIY0PZn1jmRZJYdQBqKuuZdO8CdY5I5kXqM3TxnE
+         4s7Myu264PNLDl12CQUg7/OMXPQSXOg+MTJQ1tUTea8pNG61XfyjPYuNIwybt6aZesP6
+         XPgrqB2AuVinOSTi7BuTTMYh92Noojmq6OFF6a3DDd8iN61U+AiaKRMjc/ePwsXzURHH
+         Egog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=r7ZTgjUgRTidWqkxUNmR2ccq1FlKOCeJj+Gw0n4e39s=;
-        b=G8ws4WOhwbUkmtPdpxParuZFf9SFisNzfzicaeOQ5LTNThoV+buyKaCKD6GJ2bEKtn
-         I3jprMTzw5cBiMk5oZkrVLnMXp3A4tBWVQ/hRyvzxPTvlNHhdWMeUgZ7Lmnh4n5lkguV
-         0xVHb2gyYKtcuUtOIoQ+/YLBvNCasIIf3XMZFZAe3H9cEB3uzqckX6epFCqUS/0VDU56
-         XxUYwETkUlBkQMSpddl9W1imAgRkBc/lvMuIYk4mlC9FrnqQxU9hXVWGSbYaiWASTXAm
-         yAdGaT7aA2toxsROqBHZoEdaRcWPjzvtK3n9elxRMInYvsAGr9Yj/Y9ueGlhFSkn1bxM
-         OtoA==
-X-Gm-Message-State: AHQUAubU+Dem5wnqaFLS2VO1VvYzsOOlXzDJhwhnslRRrVJAeDDLTERR
-        pRYEk+viehw3azRfsI11bKk=
-X-Google-Smtp-Source: AHgI3IawaR+O+PWB+HMO4tXshX7sgsY7qL0rEic4txMo/RLzlOeRB8MmwpkwJrfeWB1Lsv8wNrAKwA==
-X-Received: by 2002:a1c:a8d7:: with SMTP id r206mr8326366wme.115.1551023687364;
-        Sun, 24 Feb 2019 07:54:47 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id d1sm2686494wrs.13.2019.02.24.07.54.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 24 Feb 2019 07:54:45 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, christian.couder@gmail.com,
-        avarab@gmail.com
-Subject: Re: [WIP 7/7] upload-pack: send part of packfile response as uri
-References: <cover.1550963965.git.jonathantanmy@google.com>
-        <aae0f669627d7be45a967c6df464bf1ecdabce6d.1550963965.git.jonathantanmy@google.com>
-Date:   Sun, 24 Feb 2019 07:54:44 -0800
-In-Reply-To: <aae0f669627d7be45a967c6df464bf1ecdabce6d.1550963965.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Sat, 23 Feb 2019 15:39:01 -0800")
-Message-ID: <xmqqef7xmbaz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FiwKaaQTvklw7TbF0cc4uo2LS10yzDYwnSWXYPbwpeg=;
+        b=avaTEG284UvS2CkrgNvnWMT7MF5S30jtWoKCx1XEnRZ1Co3+o0LYNEAfdk3QS/uDNK
+         kyEF913Vv0chbOImjc/jpdROqHpb8GsBQtnwH6objRHlxECaFDYW9A/9AamzPZQmgdWe
+         FirF/539d5e/kBpPnAq/C4aIMDl/2IxyZU4Fk1DwFn8aiWaZ6G6VtILuErzTlBnhGQGh
+         thWzHBrV0O9NzCag9L7okFD5lR5f4wOo4x/Y6jDf51yoGCKSueWTKUelgBf/ZwaKQK1j
+         19yeKk70PBcNL2cAqcaM8HVTzVEvQ2yWx+tF9c+vK/JDtG2ZNMg56MiK5tzTJHqDM/rk
+         Y6ow==
+X-Gm-Message-State: AHQUAuZp3wWlOv+x7K8OOSsJJxGEu05r5mD1ih318dALRZYOcmGZ05Td
+        DmG/+DrGERudWIBob1Y/NsYZPBWg550vzN64HA0CPg==
+X-Google-Smtp-Source: AHgI3Ib6HhbebXft1HQLksWLl3XlNySaUP/9ij0DyOK4mPDlvrVjg715sYzQWMyOfJkZ5HnJNqiXKigYRsoiR/ZIU34=
+X-Received: by 2002:a6b:7941:: with SMTP id j1mr7549730iop.262.1551026102432;
+ Sun, 24 Feb 2019 08:35:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190223190309.6728-1-matheus.bernardino@usp.br> <20190223215906.GR6085@hank.intra.tgummerer.com>
+In-Reply-To: <20190223215906.GR6085@hank.intra.tgummerer.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Sun, 24 Feb 2019 13:34:51 -0300
+Message-ID: <CAHd-oW5zQQkJ7WCcKpz0V7btNAbwuwCn0fvkcvAmXE1U9BhMxA@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 0/3] clone: convert explicit dir traversal to dir-iterator
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Sat, Feb 23, 2019 at 6:59 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>
+> On 02/23, Matheus Tavares wrote:
+> > Add pedantic option to dir_iterator_begin at dir-iterator.c and convert
+> > explicit recursive directory traversal at copy_or_link_directory
+> > (builtin/clone.c) to the dir-iterator API.
+>
+> Thanks for another iteration of this.
+>
+> To make life easier for reviewers, please include a link (or the
+> message-ID) to all previous iteration of the series.  We often use
+> links to the public-inbox mirror for this,
+> e.g. https://public-inbox.org/git/20190215154913.18800-1-matheus.bernardino@usp.br/.
+>
+> This helps reviewers go back quickly to previous iterations of the
+> series, and refresh their memory on the comments that were left
+> there.
+>
+> You can also use the --in-reply-to option in 'git send-email' to chain
+> the threads, which also makes life easier for reviewers.
+>
+> An additional way to help reviewers is to include a 'range-diff'
+> between the previous iteration of the series, and the current
+> iteration.  See the 'git range-diff' command or the '--range-diff'
+> option to 'git format-patch' for that.  That helps reviewers to
+> quickly see what changed between iterations, so that they don't have
+> to re-review everything, if they can still remember the last round
+> well enough.
+>
+> I also added Christian Couder back to the Cc list, as he commented on
+> the RFC.  It's good to keep people that commented on the series in Cc,
+> as they have shown some interest in the series, so keeping them in the
+> Cc list helps highlight those emails for them, and makes it more
+> likely that the patches get reviewed quickly.
+>
 
-> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-> index db4ae09f2f..6dbe2e9584 100755
-> --- a/t/t5702-protocol-v2.sh
-> +++ b/t/t5702-protocol-v2.sh
-> @@ -656,6 +656,60 @@ test_expect_success 'when server does not send "ready", expect FLUSH' '
->  	test_i18ngrep "expected no other sections to be sent after no .ready." err
->  '
->  
-> +test_expect_success 'part of packfile response provided as URI' '
-> ...
-> +		if test "$(grep "^[0-9a-f]\{40\} " out | wc -l)" = 1
-> +		then
+Ok, thanks for all the tips, Thomas! Now I started to notice the
+public-inbox references for previous iterations in other people's
+patches, too.
 
-Against this, test-lint-shell-syntax barks.  You'd have seen it if
-you did "make test".
+I am part of a FLOSS group here at USP called FLUSP
+(https://flusp.ime.usp.br/), and I plan to write some posts on our
+website about what I am learning in the git community so that other
+people in the group can have as a base if they decide to start
+contributing to git too. So all this tips and explanations are of
+great value, not only for me but for others here! Thanks a lot.
 
-I am not sure hard-coding 40 here is a good idea for longer term, as
-we are *not* testing that the output from "verify-pack --verbose"
-shows the full object name in SHA-1 hash.
-
-Perhaps squash something like this in ("16" is of course negotiable)?
-
- t/t5702-protocol-v2.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 6dbe2e9584..e9950f0853 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -694,7 +694,10 @@ test_expect_success 'part of packfile response provided as URI' '
- 	for idx in http_child/.git/objects/pack/*.idx
- 	do
- 		git verify-pack --verbose $idx >out &&
--		if test "$(grep "^[0-9a-f]\{40\} " out | wc -l)" = 1
-+		{
-+			grep "^[0-9a-f]\{16,\} " out || :
-+		} >out.objectlist &&
-+		if test_line_count = 1 out.objectlist
- 		then
- 			if grep $(cat h) out
- 			then
+> > This is my microproject for GSoC 2019. Idea taken from
+> > https://git.github.io/SoC-2019-Microprojects/#use-dir-iterator-to-avoid-explicit-recursive-directory-traversal
+> >
+> > Build: https://travis-ci.org/MatheusBernardino/git/builds/497512561
+> >
+> > Matheus Tavares (3):
+> >   dir-iterator: add pedantic option to dir_iterator_begin
+> >   clone: extract function from copy_or_link_directory
+> >   clone: use dir-iterator to avoid explicit dir traversal
+> >
+> >  builtin/clone.c      | 72 ++++++++++++++++++++++++++++----------------
+> >  dir-iterator.c       | 23 ++++++++++++--
+> >  dir-iterator.h       | 16 ++++++++--
+> >  refs/files-backend.c |  2 +-
+> >  4 files changed, 81 insertions(+), 32 deletions(-)
+> >
+> > --
+> > 2.20.1
+> >
