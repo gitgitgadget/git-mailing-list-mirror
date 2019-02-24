@@ -2,181 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BFC120248
-	for <e@80x24.org>; Sun, 24 Feb 2019 07:16:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C728120248
+	for <e@80x24.org>; Sun, 24 Feb 2019 08:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726457AbfBXHQy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Feb 2019 02:16:54 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:43362 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725928AbfBXHQy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Feb 2019 02:16:54 -0500
-Received: by mail-pl1-f193.google.com with SMTP id m10so3004730plt.10
-        for <git@vger.kernel.org>; Sat, 23 Feb 2019 23:16:53 -0800 (PST)
+        id S1726424AbfBXIgA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Feb 2019 03:36:00 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:33160 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726001AbfBXIgA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Feb 2019 03:36:00 -0500
+Received: by mail-ed1-f65.google.com with SMTP id c55so5152641edb.0
+        for <git@vger.kernel.org>; Sun, 24 Feb 2019 00:35:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZAqmzbIlhPhTzrtvjIUKoSZai5YRXv2g4giZO9XKaBw=;
-        b=TA5iWkLOTlGwFysV2kWLr+upV/46B4Lm2r38IqiiGXUeNAkR+fNwrTJ3+lTmxZL0YO
-         38ewoXXAoJbwKU3DGanm3Faq5zf763l6ysVTr8K9M+2bK/m8+idua2MSx1MWDBghLcj1
-         fTk5HCFycUxrs2YKzzvblwEUpCAk/s3Z5/gko+zuwHAv+nK1b8DgVaWpXTuh7mXcrumV
-         cXfTcwtKnW6GdRvO/J6SWZ8mM9O7Znk3MVO+/HJ2j93lvXMXHvQibRaamyzvSvJgbJt/
-         v3ycAVMz1VjY9qm4SEUImHz9Auhfc2ZTDAgprmZTaZACnT9QSs29H6Eh0lk1VOOnEYPw
-         ifWw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4W/on94kO6cMZhUbKmQlTTfsqfBw1wKMMDbZLVWr1AE=;
+        b=oi7sNZKGx7mvfuPMGYGmTrXYVnz1rZ3mhxTXXxAIMrNzPalz4AWcfSa0X4PZF9Ips2
+         QST7K2lUzrsrIZ/oOlLnW1bm4KDEEdL3lLx7XOP1uLY6nu0sW7IRTJIZYEWkbeMrH7vX
+         ++hywX3MRJ4YeNhG6UfGjvmGOwqbiLBg8/qHwZl42p93O8dpAv3rcmywCrWrHQx+FGNp
+         9lvwrbUR5LIYDL+5IFzPhM/ETjSG2HSYlDBdKo4XWZp4ImNIOzfJ/rfWDBDrbV0sFcAt
+         dSblc/LSOj4FX+Fe5fFT7SRX8zPEwfMr2LBq+p9kup2H/4CoUAm0TOJVdOxrF40N0WxY
+         +A8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ZAqmzbIlhPhTzrtvjIUKoSZai5YRXv2g4giZO9XKaBw=;
-        b=n71AEgpkNcAMOisNcgQSK6pl9PRgcOGZZaNyZrc34d32jE8hPlUyoFDIJ9458PRbFy
-         L07mMPvK+vwrra6BLtunrGmtEllSVnqOnPoCK2AgDQZUnBYCQNli6xcwLMwjbizOLdUd
-         BKhTiuUe2oKc4IVwMf1vN3IDclYSk7fu/Jw3saWjRaLiKzZ6fY5ol2HYDbdlYedch/q7
-         Grj/XiyFdOsS+VA58pObvlUhe5yS8RRQRZ1l3OkKWVR5A9bkBt+3fZarToeGi8Y+fckF
-         utrvViWyZDNKhLUgQqS4MXg2ChlWlZJLpaR3tigITYIU0bOsrUKEaiAHJw8zexQTqGcJ
-         G/Cw==
-X-Gm-Message-State: AHQUAua5XQwVHInUb/PU+Baupx2AOJb8Xnsg4RlbUu0gSTWsKud0IXXI
-        PSNvBXRaMDexSYs86PxZJ64=
-X-Google-Smtp-Source: AHgI3IaPf3jSPmZmbYPL+pkZU6/PacLj2F7jimwdkFw1voVKS3Fhkqp9mo4OT2M1yG9mVGBi4wTOxA==
-X-Received: by 2002:a17:902:9a98:: with SMTP id w24mr12495392plp.247.1550992613026;
-        Sat, 23 Feb 2019 23:16:53 -0800 (PST)
-Received: from localhost.localdomain ([124.64.19.102])
-        by smtp.gmail.com with ESMTPSA id o25sm9235334pfk.185.2019.02.23.23.16.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 Feb 2019 23:16:51 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Alexander Shopov <ash@kambanaria.org>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        Christopher Diaz Riveros <chrisadr@gentoo.org>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Fabien Villepinte <fabien.villepinte@cdbdx.biz>,
-        Fangyi Zhou <fangyi.zhou@yuriko.moe>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Peter Krefting <peter@softwolves.pp.se>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Sebastian Staudt <koraktor@gmail.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Vasco Almeida <vascomalmeida@sapo.pt>,
-        Zhilei Han <linusboyle@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.21 round 2
-Date:   Sun, 24 Feb 2019 15:16:30 +0800
-Message-Id: <20190224071630.5639-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.21.0.rc1.19.g6993b9cd58
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4W/on94kO6cMZhUbKmQlTTfsqfBw1wKMMDbZLVWr1AE=;
+        b=nCeBEB/MO4517Ya0ISzwm/4mtMA0lVxWOpbvjXpVACcYpYo7cqlWHVNCfPH6WGsVVm
+         YVDWA0om4vOSGcDE4l29B+Bmh4+5nAgnY6zMLGoxya2inkuHaYDZ1jtjPTHf2tGkJ/OX
+         M5T08QNyEsJemR0tPFTnN9KQ1S1wl0HmheuJxF+ieIJmdRuTlWB1OtBdOIxFamWG9SVJ
+         acR4T4PhsXF1nWQBuG3v3UgNseAUevgwNqF3ZzhKd+Tww46G2nQLZAkV5Onpc+s1VOfl
+         E4VCea8FfO32RkRP7mlC6XamtVTWs3CPvJu7fQjQ6EgSHcxfPtheheFhC3QAXVy16WZ3
+         MlpQ==
+X-Gm-Message-State: AHQUAuauqJxXsEUXo6Pe3K1jFhaxmg55HxlbZX+RzdMAobbq5S5oWdAQ
+        7HPD/yelBwoSvE3OODUmK6KDah+mYLOTwDZIaMo=
+X-Google-Smtp-Source: AHgI3IagBEDXwMTrMpeHZdAK/tX2iboGCC0ck3g2/qiSRb8QkNCGk5FNmXJFwEI9J5PJR5n5e7uv0c/QTeNo0stkJf8=
+X-Received: by 2002:a50:8f86:: with SMTP id y6mr10265263edy.131.1550997357997;
+ Sun, 24 Feb 2019 00:35:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20190223190309.6728-1-matheus.bernardino@usp.br>
+ <20190223190309.6728-2-matheus.bernardino@usp.br> <20190223213527.GP6085@hank.intra.tgummerer.com>
+In-Reply-To: <20190223213527.GP6085@hank.intra.tgummerer.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 24 Feb 2019 09:35:46 +0100
+Message-ID: <CAP8UFD0uZbzG7pjqLAQ5374_0vBTbaQ89u-rhiY7c7GXSKb8tw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 1/3] dir-iterator: add pedantic option to dir_iterator_begin
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Sat, Feb 23, 2019 at 10:37 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>
+> On 02/23, Matheus Tavares wrote:
+> > Add the pedantic option to dir-iterator's initialization function,
+> > dir_iterator_begin. When this option is set to true,
+> > dir_iterator_advance will immediately return ITER_ERROR when failing to
+> > fetch the next entry. When set to false, dir_iterator_advance will emit
+> > a warning and keep looking for the next entry.
+> >
+> > Also adjust refs/files-backend.c to the new dir_iterator_begin
+> > signature.
+>
+> Thanks, this makes sense to me.  This commit message describes what we
+> are doing in this patch, but not why we are doing it.  From previously
+> reviewing this series, I know this is going to be used in a subsequent
+> patch, but it is nice to give reviewers and future readers of this
+> patch that context as well.  Just something like "This behaviour is
+> going to be used in a subsequent patch." should be enough here.
 
-Please pull the following l10n updates for Git 2.21.  These updates come
-from nine l10n teams (Bulgarian, Catalan, German, Greek, Spanish, French,
-Italian, Swedish and Simplified Chinese).  Jimmy contributed the essential
-translation for Greek and formed a new l10n team.  Alessandro made the first
-contribution for Italian since 2013 and became the new Italian team leader.
+I agree that it's a good idea to add just that.
 
-The following changes since commit 2d08f3deb9feb73dc8d21d75bfd367839fc1322c:
+> >  int dir_iterator_advance(struct dir_iterator *dir_iterator)
+> > @@ -71,6 +78,8 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+> >
+> >                       level->dir = opendir(iter->base.path.buf);
+> >                       if (!level->dir && errno != ENOENT) {
+> > +                             if (iter->pedantic)
+> > +                                     goto error_out;
+>
+> I think we should also print an error here.  The caller doesn't have
+> any context on what went wrong, and will probably just 'die()' if an
+> error is encountered.  I think it would make sense to call
+> 'error(...)' here before 'goto error_out;' to give a useful error
+> message here.
 
-  Merge branch 'ea/rebase-compat-doc-fix' (2019-02-14 14:28:22 -0800)
+If we start to give error messages, then we might as well give error
+messages all the times when we error out. This will avoid the callers
+wondering if they need to give an error message or not.
 
-are available in the Git repository at:
+I am not sure it's necessary here though. And I think if it's useful,
+it can be added in another patch or another patch series.
 
-  git://github.com/git-l10n/git-po tags/l10n-2.21.0-rnd2
+> >                               warning("error opening directory %s: %s",
+> >                                       iter->base.path.buf, strerror(errno));
+> >                               /* Popping the level is handled below */
 
-for you to fetch changes up to ab8f4f5d73caaf2713346b456de095df690e8cf5:
+> > -struct dir_iterator *dir_iterator_begin(const char *path)
+> > +struct dir_iterator *dir_iterator_begin(const char *path, int pedantic)
+>
+> Thinking about the future evolution of this interface, it might make
+> more sense to have that second parameter be a "struct
+> dir_iterator_opts".  For now it would just have one member "pedantic",
+> but in the future we could add additional options there instead of
+> adding additional parameters.
 
-  l10n: bg.po: Updated Bulgarian translation (4363t) (2019-02-23 23:29:23 +0200)
+I think it's ok with `int pedantic` for now as improvements can be
+done when they are really needed. And we will perhaps find out that
+it's better to just change `int pedantic` to `unsigned flags` instead
+of `struct dir_iterator_opts`.
 
-----------------------------------------------------------------
-l10n-2.21.0-rnd2
-
-----------------------------------------------------------------
-Alessandro Menti (1):
-      l10n: it: update the Italian translation
-
-Alexander Shopov (1):
-      l10n: bg.po: Updated Bulgarian translation (4363t)
-
-Christopher Díaz Riveros (1):
-      l10n: es: 2.21.0 round 2
-
-Fabien Villepinte (2):
-      l10n: fr.po Fix some typos
-      l10n: fr.po Fix some typos from round3
-
-Fangyi Zhou (1):
-      l10n: zh_CN: Revision for git v2.21.0 l10n
-
-Jean-Noël Avila (1):
-      l10n: fr.po v2.21.0 rnd 2
-
-Jiang Xin (11):
-      Merge branch 'master' of https://github.com/Softcatala/git-po
-      Merge branch 'master' of github.com:linusboyle/git
-      Merge branch 'master' of git://github.com/git-l10n/git-po
-      l10n: git.pot: v2.21.0 round 1 (214 new, 38 removed)
-      Merge branch 'master' of git://git.kernel.org/pub/scm/git/git
-      l10n: git.pot: v2.21.0 round 2 (3 new, 3 removed)
-      Merge branch 'fr_2.21.0_rnd2' of git://github.com/jnavila/git
-      Merge branch 'master' of https://github.com/Softcatala/git-po
-      l10n: zh_CN: for git v2.21.0 l10n round 1~2
-      Merge branch 'bg-submodule-helper-typo' of github.com:pclouds/git-po
-      Merge branch 'master' of https://github.com/ralfth/git-po-de
-
-Jimmy Angelakos (1):
-      l10n: el: add Greek l10n team and essential translations
-
-Jordi Mas (2):
-      l10n: Update Catalan translation
-      l10n: Fixes to Catalan translation
-
-Nguyễn Thái Ngọc Duy (1):
-      l10n: bg.po: correct typo
-
-Peter Krefting (1):
-      l10n: Update Swedish translation (4363t0f0u)
-
-Ralf Thielow (1):
-      l10n: update German translation
-
-Sebastian Staudt (3):
-      l10n: de.po: consistent translation of 'root commit'
-      l10n: de.po: fix a message for index-pack.c
-      l10n: de.po: fix grammar in message for tag.c
-
-Zhilei Han (1):
-      l10n: zh_CN: fix typo of submodule init message
-
- po/TEAMS    |     9 +-
- po/bg.po    |  6799 +++++++++-------
- po/ca.po    |   199 +-
- po/de.po    |  7203 +++++++++--------
- po/el.po    | 21468 +++++++++++++++++++++++++++++++++++++++++++++++++++
- po/es.po    |  6789 +++++++++-------
- po/fr.po    |  7376 +++++++++++-------
- po/git.pot  |  6725 +++++++++-------
- po/it.po    | 24299 +++++++++++++++++++++++++++++++++++++++++++++++++---------
- po/sv.po    |  6811 +++++++++-------
- po/zh_CN.po |  6720 +++++++++-------
- 11 files changed, 69785 insertions(+), 24613 deletions(-)
- create mode 100644 po/el.po
-
---
-Jiang Xin
+Thanks,
+Christian.
