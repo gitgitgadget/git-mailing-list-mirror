@@ -7,558 +7,787 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DC7920248
-	for <e@80x24.org>; Sun, 24 Feb 2019 18:17:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB7420248
+	for <e@80x24.org>; Sun, 24 Feb 2019 18:18:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727679AbfBXSRw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Feb 2019 13:17:52 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50415 "EHLO
+        id S1728033AbfBXSSH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Feb 2019 13:18:07 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55361 "EHLO
         mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726206AbfBXSRw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Feb 2019 13:17:52 -0500
-Received: by mail-wm1-f67.google.com with SMTP id x7so6041926wmj.0;
-        Sun, 24 Feb 2019 10:17:49 -0800 (PST)
+        with ESMTP id S1726206AbfBXSSH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Feb 2019 13:18:07 -0500
+Received: by mail-wm1-f67.google.com with SMTP id q187so6057273wme.5
+        for <git@vger.kernel.org>; Sun, 24 Feb 2019 10:18:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ncVa0jf8EHoXuGPJuTlM/XX7LrdkNaejKzgNSYn5KhU=;
-        b=ZtK4zurnrw6u995iv1tLDgKQFEfDC4pskCUNlhoegIlgwxdmVM+D+LHSrtHjBl4rzN
-         QRVlkFPjXfzHPlXs/rRjO6+IhBDlywFiBcSmbnRF6h8pJjakwv6rDgzHw6d1S+dg9G+O
-         dzaIN72u89aIZUAuNi+yYKKg3uk3zdDesVPwNxzsaCCwzLYKtG1VmNp9jdOFhLOzTQAE
-         sN2fPsn+FTp3eXqqhBvwXX/UogoWJ76bYYxv5cS/3ukIHjsg1v+FeP5bxsyIZ0N4BDrh
-         kysZXXYoNV4XNQYH4NM5+KvW5PrFNK8D7JQ6ZiWrwAQ1oxMO/5drF85gZ3WbM/8C5bR1
-         IfIw==
+        h=sender:from:to:subject:date:message-id:user-agent:mime-version;
+        bh=nhkTUkhT+8vFmRfkHJmn7AJIn95LMFnVg0D4aVV1cxU=;
+        b=LredYiG9djnxzK5FnpsfjWdbyqNGy8UGzAUYdUvbFQbp0kSuaijF7Wd2xRFnOZHueV
+         jss3+Irk1yi6Vc1pzHAs0b49cvEGcjcS9Pc8mXmgU4hk4vn6pXn9CU0WW/6zazB99lyD
+         RkSsmx1ZH3v/KuuqKCbZtfVE0LXRcxkMeZk8GRlJUfMR3CPqfSq72UHUE23+hESGv72C
+         Rb7aZOgFqipssJKazVSzwmjxypSN/zgdGpJfm+3s9x77tAcvPb7mNUBWE/L2uw60sLs7
+         bUWx4u1qT8Viyj2zs5j6lz/wjnS/qPqikRBccbbqZCfQK5gCyhIRPomY4X3Ip6rbRdDz
+         jZ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ncVa0jf8EHoXuGPJuTlM/XX7LrdkNaejKzgNSYn5KhU=;
-        b=UYv3CpkssjqoPdycg7FGLeyM93V1KuYgI5Rpz6A7DCwVlZMW4gGq5Gh8U5gihAN1FR
-         2dhBF2g+BGESkW9g/Dy1C7AA926kjuOyLAblcmHivSjnrMU+8kLIeuG8wtwe0xPFEyJh
-         aAgL3HFepY3tvqGjvP0ZGt5x4uzmSV81hqMID5fRzHWV2chkhdMKkzOsJK3pd8kgOLrK
-         LZZx0RmKB8otmDNAs0NllWIYpJXbioARPSVNG2iPkSvJG8r8Nqg8+KABMAH4MFP3yCyE
-         A3Ag8BFjhSQwgXjVJAi12DvB3pusIZUo5Gr3WJo5uBjsOl/9CLeRohE5Im5ddE3PHgmu
-         PxKA==
-X-Gm-Message-State: AHQUAuboKYAUJUfvXNI0Ikc78wFLaiGmDNuQ6P18PBWuLMt3Kv9s3R6o
-        xIe79+8l6aDy3C13NfB3AGromk0k
-X-Google-Smtp-Source: AHgI3IYyuDgSeepBZIgzwNpnqKWMfvsiYO5zexACH6dKUw8YbyTRO+HbkryQJCBh2jcBjGJ8aiSu6w==
-X-Received: by 2002:a1c:d18a:: with SMTP id i132mr8376960wmg.27.1551032268184;
-        Sun, 24 Feb 2019 10:17:48 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e23sm6553274wme.15.2019.02.24.10.17.46
+        h=x-gm-message-state:sender:from:to:subject:date:message-id
+         :user-agent:mime-version;
+        bh=nhkTUkhT+8vFmRfkHJmn7AJIn95LMFnVg0D4aVV1cxU=;
+        b=GPTGLRrx76LVj498FEmf2rb3tTu+1c9ZbKQ8DrJkWXKL1bkEKyndTMJSOoolwErLhJ
+         r50KeGrj1nteCZim9V5/nrWV3AMAQaZEn3LQtcxdo18hobP1xEuewF4f9ktv71kcMJWo
+         CkNsKmcw7pSML64EnKcNb+bdWQr7TqCdaEM/wgXTRh2UvaoX9zUMirXizUSeLp+P7gc3
+         uuFAacdLh2AgJrnYL21buWMyR4tqFN5jsXO433ASLHo8BIA6esZTWaPCCc9S9+UU8buC
+         gvPhgrMXqX59LwQJ8YMzkuOy0zqFJoS3wTuTizMWNpiAJhhAX8cD3RLy99eXnQdCG1OA
+         DcYQ==
+X-Gm-Message-State: AHQUAuZukC7XiiZLo5dDn1u5lQmK09aVwLrY7GjfJOH8SYT28oyhpCcj
+        9v5NrSNtYZm9i7B+g5VZNsT4wyf3M3l2Mg==
+X-Google-Smtp-Source: AHgI3Ia4sUvexCgefsY1JoykIe/yXlufyqJxljIs+63dePQR1GrvMqya9viqxadyhZJas+Yezj6Pxg==
+X-Received: by 2002:a1c:3d84:: with SMTP id k126mr8365015wma.60.1551032281594;
+        Sun, 24 Feb 2019 10:18:01 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id d2sm7517478wrq.94.2019.02.24.10.18.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 24 Feb 2019 10:17:46 -0800 (PST)
+        Sun, 24 Feb 2019 10:18:01 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.21.0
-Date:   Sun, 24 Feb 2019 10:17:45 -0800
-Message-ID: <xmqqtvgtkq46.fsf@gitster-ct.c.googlers.com>
+Subject: What's cooking in git.git (Feb 2019, #04; Sun, 24)
+X-master-at: 8104ec994ea3849a968b4667d072fedd1e688642
+X-next-at: f09ad664505d66643a151851aa987add29db1009
+Date:   Sun, 24 Feb 2019 10:18:00 -0800
+Message-ID: <xmqqmumlkq3r.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The latest feature release Git v2.21.0 is now available at the
-usual places.  It is comprised of 500 non-merge commits since
-v2.20.0, contributed by 74 people, 20 of which are new faces.
-
-The tarballs are found at:
-
-    https://www.kernel.org/pub/software/scm/git/
-
-The following public repositories all have a copy of the 'v2.21.0'
-tag and the 'master' branch that the tag points at:
-
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
-
-New contributors whose contributions weren't in v2.20.0 are as follows.
-Welcome to the Git development community!
-
-  Alessandro Menti, Arti Zirk, Brandon Richardson, Chayoung
-  You, Denis Ovsienko, Emilio Cobos Álvarez, Erin Dahlgren,
-  Fabien Villepinte, Force Charlie, Frank Dana, Issac Trotts,
-  Katrin Leinweber, Laura Abbott, Patrick Hogg, Peter Osterlund,
-  Shahzad Lone, Slavica Djukic, Yoichi Nakayama, Zhilei Han, and
-  Tanushree Tumane.
+Here are the topics that have been cooking.  Commits prefixed with
+'-' are only in 'pu' (proposed updates) while commits prefixed with
+'+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
-
-  Ævar Arnfjörð Bjarmason, Alexander Shopov, Ben Peart,
-  Brandon Williams, brian m. carlson, Carlo Marcelo Arenas Belón,
-  Christian Couder, Christopher Díaz Riveros, David Turner,
-  Derrick Stolee, Elijah Newren, Eric Sunshine, Eric Wong, Fangyi
-  Zhou, Jean-Noël Avila, Jeff King, Jiang Xin, Jimmy Angelakos,
-  Johannes Schindelin, Jonathan Nieder, Jonathan Tan, Jordi
-  Mas, Josh Steadmon, Junio C Hamano, Kevin Daudt, Kim Gybels,
-  Kyle Meyer, Linus Torvalds, Luke Diamand, Martin Ågren,
-  Masaya Suzuki, Matthew DeVore, Matthieu Moy, Max Kirillov,
-  Nguyễn Thái Ngọc Duy, Olga Telezhnaya, Orgad Shaneh, Peter
-  Krefting, Phillip Wood, Pranit Bauva, Ralf Thielow, Ramsay Jones,
-  Randall S. Becker, René Scharfe, Sebastian Staudt, Sergey
-  Organov, Stefan Beller, Stephen P. Smith, Sven van Haastregt,
-  SZEDER Gábor, Thomas Braun, Thomas Gummerer, Todd Zullinger,
-  and Torsten Bögershausen.
+Git 2.21 has been tagged and pushed out.
 
-----------------------------------------------------------------
+I'll be offline for a week, and will reopen the tree for the next
+cycle in Asia/Tokyo timezone after that.  Some topics marked as
+"Will cook in 'next'" will be merged to 'master' then.  This also is
+a good week to nominate the topics that are already in 'next' but
+should be kicked back to 'pu' to allow them to be replaced with a
+better iteration, instead of piling ugly "oops, that was wrong"
+fixes on top.
 
-Git 2.21 Release Notes
-======================
+You can find the changes described here in the integration branches
+of the repositories listed at
 
-Backward Compatibility Notes
-----------------------------
+    http://git-blame.blogspot.com/p/git-public-repositories.html
 
- * Historically, the "-m" (mainline) option can only be used for "git
-   cherry-pick" and "git revert" when working with a merge commit.
-   This version of Git no longer warns or errors out when working with
-   a single-parent commit, as long as the argument to the "-m" option
-   is 1 (i.e. it has only one parent, and the request is to pick or
-   revert relative to that first parent).  Scripts that relied on the
-   behaviour may get broken with this change.
+--------------------------------------------------
+[Graduated to "master"]
 
+* ab/bsd-fixes (2019-02-21) 2 commits
+  (merged to 'next' on 2019-02-21 at 28d0017056)
+ + commit-graph tests: fix cryptic unportable "dd" invocation
+ + tests: fix unportable "\?" and "\+" regex syntax
 
-Updates since v2.20
--------------------
+ Test portability fix.
 
-UI, Workflows & Features
 
- * The "http.version" configuration variable can be used with recent
-   enough versions of cURL library to force the version of HTTP used
-   to talk when fetching and pushing.
+* ab/workaround-dash-bug-in-test (2019-02-13) 1 commit
+  (merged to 'next' on 2019-02-13 at c90e329c70)
+ + tests: avoid syntax triggering old dash bug
 
- * Small fixes and features for fast-export and fast-import, mostly on
-   the fast-export side has been made.
+ Test portability fix.
 
- * "git push $there $src:$dst" rejects when $dst is not a fully
-   qualified refname and it is not clear what the end user meant.  The
-   codepath has been taught to give a clearer error message, and also
-   guess where the push should go by taking the type of the pushed
-   object into account (e.g. a tag object would want to go under
-   refs/tags/).
 
- * "git checkout [<tree-ish>] path..." learned to report the number of
-   paths that have been checked out of the index or the tree-ish,
-   which gives it the same degree of noisy-ness as the case in which
-   the command checks out a branch.  "git checkout -m <pathspec>" to
-   undo conflict resolution gives a similar message.
+* js/test-tool-gen-nuls (2019-02-19) 2 commits
+  (merged to 'next' on 2019-02-19 at 489765a538)
+ + tests: teach the test-tool to generate NUL bytes and use it
+ + Revert "t5562: replace /dev/zero with a pipe from generate_zero_bytes"
+ (this branch is tangled with mk/t5562-no-input-to-too-large-an-input-test.)
 
- * "git quiltimport" learned "--keep-non-patch" option.
+ Part 3 of the test update, to rewrite "generate stream of NULs" in C.
 
- * "git worktree remove" and "git worktree move" refused to work when
-   there is a submodule involved.  This has been loosened to ignore
-   uninitialized submodules.
 
- * "git cherry-pick -m1" was forbidden when picking a non-merge
-   commit, even though there _is_ parent number 1 for such a commit.
-   This was done to avoid mistakes back when "cherry-pick" was about
-   picking a single commit, but is no longer useful with "cherry-pick"
-   that can pick a range of commits.  Now the "-m$num" option is
-   allowed when picking any commit, as long as $num names an existing
-   parent of the commit.
+* mk/t5562-do-not-reuse-output-files (2019-02-19) 1 commit
+  (merged to 'next' on 2019-02-19 at 2978db23ef)
+ + t5562: do not reuse output files
 
- * Update "git multimail" from the upstream.
+ Part 1 of the t5562 breakage fix.
 
- * "git p4" update.
 
- * The "--format=<placeholder>" option of for-each-ref, branch and tag
-   learned to show a few more traits of objects that can be learned by
-   the object_info API.
+* mk/t5562-no-input-to-too-large-an-input-test (2019-02-19) 2 commits
+  (merged to 'next' on 2019-02-19 at 1134c39218)
+ + t5562: do not depend on /dev/zero
+ + Revert "t5562: replace /dev/zero with a pipe from generate_zero_bytes"
+ (this branch is tangled with js/test-tool-gen-nuls.)
 
- * "git rebase -i" learned to re-execute a command given with 'exec'
-   to run after it failed the last time.
+ Part 2 of the fix to t5562 regression, to avoid feeding
+ http-backend from a pipe.
 
- * "git diff --color-moved-ws" updates.
 
- * Custom userformat "log --format" learned %S atom that stands for
-   the tip the traversal reached the commit from, i.e. --source.
+* yn/checkout-doc-fix (2019-02-23) 1 commit
+  (merged to 'next' on 2019-02-23 at d72a40f470)
+ + checkout doc: fix an unmatched double-quote pair
 
- * "git instaweb" learned to drive http.server that comes with
-   "batteries included" Python installation (both Python2 & 3).
+ Doc fix.
 
- * A new encoding UTF-16LE-BOM has been invented to force encoding to
-   UTF-16 with BOM in little endian byte order, which cannot be directly
-   generated by using iconv.
+--------------------------------------------------
+[New Topics]
 
- * A new date format "--date=human" that morphs its output depending
-   on how far the time is from the current time has been introduced.
-   "--date=auto:human" can be used to use this new format (or any
-   existing format) when the output is going to the pager or to the
-   terminal, and otherwise the default format.
+* bp/post-index-change-hook (2019-02-15) 1 commit
+  (merged to 'next' on 2019-02-23 at 70cc07cebe)
+ + read-cache: add post-index-change hook
 
+ A new hook "post-index-change" is called when the on-disk index
+ file changes, which can help e.g. a virtualized working tree
+ implementation.
 
-Performance, Internal Implementation, Development Support etc.
+ Will cook in 'next'.
 
- * Code clean-up with optimization for the codepath that checks
-   (non-)existence of loose objects.
 
- * More codepaths have become aware of working with in-core repository
-   instances other than the default "the_repository".
+* dl/doc-submodule-wo-subcommand (2019-02-15) 1 commit
+  (merged to 'next' on 2019-02-23 at 2f1c1428f1)
+ + submodule: document default behavior
 
- * The "strncat()" function is now among the banned functions.
+ Doc update.
 
- * Portability updates for the HPE NonStop platform.
+ Will cook in 'next'.
 
- * Earlier we added "-Wformat-security" to developer builds, assuming
-   that "-Wall" (which includes "-Wformat" which in turn is required
-   to use "-Wformat-security") is always in effect.  This is not true
-   when config.mak.autogen is in use, unfortunately.  This has been
-   fixed by unconditionally adding "-Wall" to developer builds.
 
- * The loose object cache used to optimize existence look-up has been
-   updated.
+* jk/diff-no-index-initialize (2019-02-24) 1 commit
+  (merged to 'next' on 2019-02-24 at f37a814eb0)
+ + diff: reuse diff setup for --no-index case
 
- * Flaky tests can now be repeatedly run under load with the
-   "--stress" option.
+ "git diff --no-index" may still want to access Git goodies like
+ --ext-diff and --textconv, but so far these have been ignored,
+ which has been corrected.
 
- * Documentation/Makefile is getting prepared for manpage
-   localization.
+ Will cook in 'next'.
 
- * "git fetch-pack" now can talk the version 2 protocol.
 
- * sha-256 hash has been added and plumbed through the code to allow
-   building Git with the "NewHash".
+* jk/prune-optim (2019-02-14) 4 commits
+  (merged to 'next' on 2019-02-23 at 7d03afc1c2)
+ + t5304: rename "sha1" variables to "oid"
+ + prune: check SEEN flag for reachability
+ + prune: use bitmaps for reachability traversal
+ + prune: lazily perform reachability traversal
 
- * Debugging help for http transport.
+ "git prune" has been taught to take advantage of reachability
+ bitmap when able.
 
- * "git fetch --deepen=<more>" has been corrected to work over v2
-   protocol.
+ Will cook in 'next'.
 
- * The code to walk tree objects has been taught that we may be
-   working with object names that are not computed with SHA-1.
 
- * The in-core repository instances are passed through more codepaths.
+* jk/unused-params (2019-02-14) 10 commits
+  (merged to 'next' on 2019-02-23 at 9b715907a1)
+ + ref-filter: drop unused "sz" parameters
+ + ref-filter: drop unused "obj" parameters
+ + ref-filter: drop unused buf/sz pairs
+ + files-backend: drop refs parameter from split_symref_update()
+ + pack-objects: drop unused parameter from oe_map_new_pack()
+ + merge-recursive: drop several unused parameters
+ + diff: drop complete_rewrite parameter from run_external_diff()
+ + diff: drop unused emit data parameter from sane_truncate_line()
+ + diff: drop unused color reset parameters
+ + diff: drop options parameter from diffcore_fix_diff_index()
 
- * Update the protocol message specification to allow only the limited
-   use of scaled quantities.  This is to ensure potential compatibility
-   issues will not get out of hand.
+ Code clean-up.
 
- * Micro-optimize the code that prepares commit objects to be walked
-   by "git rev-list" when the commit-graph is available.
+ Will cook in 'next'.
 
- * "git fetch" and "git upload-pack" learned to send all exchanges over
-   the sideband channel while talking the v2 protocol.
 
- * The codepath to write out commit-graph has been optimized by
-   following the usual pattern of visiting objects in in-pack order.
+* jt/http-auth-proto-v2-fix (2019-02-22) 5 commits
+  (merged to 'next' on 2019-02-23 at ea87895fa7)
+ + remote-curl: use post_rpc() for protocol v2 also
+ + remote-curl: refactor reading into rpc_state's buf
+ + remote-curl: reduce scope of rpc_state.result
+ + remote-curl: reduce scope of rpc_state.stdin_preamble
+ + remote-curl: reduce scope of rpc_state.argv
 
- * The codepath to show progress meter while writing out commit-graph
-   file has been improved.
+ Unify RPC code for smart http in protocol v0/v1 and v2, which fixes
+ a bug in the latter (lack of authentication retry) and generally
+ improves the code base.
 
- * Cocci rules have been updated to encourage use of strbuf_addbuf().
+ Will cook in 'next'.
 
- * "git rebase --merge" has been reimplemented by reusing the internal
-   machinery used for "git rebase -i".
 
- * More code in "git bisect" has been rewritten in C.
+* en/merge-options-doc (2019-02-21) 1 commit
+  (merged to 'next' on 2019-02-23 at 2eb5263dab)
+ + merge-options.txt: correct wording of --no-commit option
 
- * Instead of going through "git-rebase--am" scriptlet to use the "am"
-   backend, the built-in version of "git rebase" learned to drive the
-   "am" backend directly.
+ Doc update.
 
- * The assumption to work on the single "in-core index" instance has
-   been reduced from the library-ish part of the codebase.
+ Will cook in 'next'.
 
- * The test lint learned to catch non-portable "sed" options.
 
- * "git pack-objects" learned another algorithm to compute the set of
-   objects to send, that trades the resulting packfile off to save
-   traversal cost to favor small pushes.
+* ab/receive-pack-use-after-free-fix (2019-02-20) 1 commit
+  (merged to 'next' on 2019-02-23 at 3f41dfe375)
+ + receive-pack: fix use-after-free bug
 
- * The travis CI scripts have been corrected to build Git with the
-   compiler(s) of our choice.
+ Memfix.
 
- * "git submodule update" learned to abort early when core.worktree
-   for the submodule is not set correctly to prevent spreading damage.
+ Will cook in 'next'.
 
- * Test suite has been adjusted to run on Azure Pipeline.
 
- * Running "Documentation/doc-diff x" from anywhere other than the
-   top-level of the working tree did not show the usage string
-   correctly, which has been fixed.
+* nd/diff-parseopt-2 (2019-02-21) 21 commits
+  (merged to 'next' on 2019-02-23 at 6f11d0af54)
+ + diff-parseopt: convert --ignore-some-changes
+ + diff-parseopt: convert --[no-]minimal
+ + diff-parseopt: convert --relative
+ + diff-parseopt: convert --no-renames|--[no--rename-empty
+ + diff-parseopt: convert --find-copies-harder
+ + diff-parseopt: convert -C|--find-copies
+ + diff-parseopt: convert -D|--irreversible-delete
+ + diff-parseopt: convert -M|--find-renames
+ + diff-parseopt: convert -B|--break-rewrites
+ + diff-parseopt: convert --output-*
+ + diff-parseopt: convert --[no-]compact-summary
+ + diff-parseopt: convert --stat*
+ + diff-parseopt: convert -s|--no-patch
+ + diff-parseopt: convert --name-status
+ + diff-parseopt: convert --name-only
+ + diff-parseopt: convert --patch-with-stat
+ + diff-parseopt: convert --summary
+ + diff-parseopt: convert --check
+ + diff-parseopt: convert --dirstat and friends
+ + diff-parseopt: convert --numstat and --shortstat
+ + diff-parseopt: convert --patch-with-raw
+ (this branch uses nd/diff-parseopt.)
 
- * Use of the sparse tool got easier to customize from the command
-   line to help developers.
+ Second batch to teach the diff machinery to use the parse-options
+ API.
 
- * A new target "coverage-prove" to run the coverage test under
-   "prove" has been added.
+ Will cook in 'next'.
 
- * A flakey "p4" test has been removed.
 
- * The code and tests assume that the system supplied iconv() would
-   always use BOM in its output when asked to encode to UTF-16 (or
-   UTF-32), but apparently some implementations output big-endian
-   without BOM.  A compile-time knob has been added to help such
-   systems (e.g. NonStop) to add BOM to the output to increase
-   portability.
+* jc/format-patch-error-check (2019-02-22) 3 commits
+ - format-patch: --no-clobber refrains from overwriting output files
+ - format-patch: notice failure to open cover letter for writing
+ - builtin/log: downcase the beginning of error messages
 
 
-Fixes since v2.20
------------------
+* nd/completion-more-parameters (2019-02-20) 1 commit
+  (merged to 'next' on 2019-02-23 at 23133710f7)
+ + completion: add more parameter value completion
 
- * Updates for corner cases in merge-recursive.
-   (merge cc4cb0902c en/merge-path-collision later to maint).
+ The command line completion (in contrib/) has been taught to
+ complete more subcommand parameters.
 
- * "git checkout frotz" (without any double-dash) avoids ambiguity by
-   making sure 'frotz' cannot be interpreted as a revision and as a
-   path at the same time.  This safety has been updated to check also
-   a unique remote-tracking branch 'frotz' in a remote, when dwimming
-   to create a local branch 'frotz' out of a remote-tracking branch
-   'frotz' from a remote.
-   (merge be4908f103 nd/checkout-dwim-fix later to maint).
+ Will cook in 'next'.
 
- * Refspecs configured with "git -c var=val clone" did not propagate
-   to the resulting repository, which has been corrected.
-   (merge 7eae4a3ac4 sg/clone-initial-fetch-configuration later to maint).
 
- * A properly configured username/email is required under
-   user.useConfigOnly in order to create commits; now "git stash"
-   (even though it creates commit objects to represent stash entries)
-   command is exempt from the requirement.
-   (merge 3bc2111fc2 sd/stash-wo-user-name later to maint).
+* nd/no-more-check-racy (2019-02-22) 1 commit
+  (merged to 'next' on 2019-02-23 at eda76b8f46)
+ + Delete check-racy.c
 
- * The http-backend CGI process did not correctly clean up the child
-   processes it spawns to run upload-pack etc. when it dies itself,
-   which has been corrected.
-   (merge 02818a98d7 mk/http-backend-kill-children-before-exit later to maint).
+ Unused code removal.
 
- * "git rev-list --exclude-promisor-objects" had to take an object
-   that does not exist locally (and is lazily available) from the
-   command line without barfing, but the code dereferenced NULL.
-   (merge 4cf67869b2 md/list-lazy-objects-fix later to maint).
+ Will cook in 'next'.
 
- * The traversal over tree objects has learned to honor
-   ":(attr:label)" pathspec match, which has been implemented only for
-   enumerating paths on the filesystem.
-   (merge 5a0b97b34c nd/attr-pathspec-in-tree-walk later to maint).
 
- * BSD port updates.
-   (merge 4e3ecbd439 cb/openbsd-allows-reading-directory later to maint).
-   (merge b6bdc2a0f5 cb/t5004-empty-tar-archive-fix later to maint).
-   (merge 82cbc8cde2 cb/test-lint-cp-a later to maint).
+* rd/doc-hook-used-in-sample (2019-02-21) 1 commit
+  (merged to 'next' on 2019-02-23 at e521400a66)
+ + mention use of "hooks.allownonascii" in "man githooks"
 
- * Lines that begin with a certain keyword that come over the wire, as
-   well as lines that consist only of one of these keywords, ought to
-   be painted in color for easier eyeballing, but the latter was
-   broken ever since the feature was introduced in 2.19, which has
-   been corrected.
-   (merge 1f67290450 hn/highlight-sideband-keywords later to maint).
+ Doc update.
 
- * "git log -G<regex>" looked for a hunk in the "git log -p" patch
-   output that contained a string that matches the given pattern.
-   Optimize this code to ignore binary files, which by default will
-   not show any hunk that would match any pattern (unless textconv or
-   the --text option is in effect, that is).
-   (merge e0e7cb8080 tb/log-G-binary later to maint).
+ Will merge to 'master'.
 
- * "git submodule update" ought to use a single job unless asked, but
-   by mistake used multiple jobs, which has been fixed.
-   (merge e3a9d1aca9 sb/submodule-fetchjobs-default-to-one later to maint).
 
- * "git stripspace" should be usable outside a git repository, but
-   under the "-s" or "-c" mode, it didn't.
-   (merge 957da75802 jn/stripspace-wo-repository later to maint).
+* ab/makefile-help-devs-more (2019-02-24) 6 commits
+ - Makefile: allow for combining DEVELOPER=1 and CFLAGS="..."
+ - Makefile: move the setting of *FLAGS closer to "include"
+ - Makefile: Move *_LIBS assignment into its own section
+ - Makefile: add/remove comments at top and tweak whitespace
+ - Makefile: move "strip" assignment down from flags
+ - Makefile: remove an out-of-date comment
 
- * Some of the documentation pages formatted incorrectly with
-   Asciidoctor, which have been fixed.
-   (merge b62eb1d2f4 ma/asciidoctor later to maint).
+ CFLAGS now can be tweked when invoking Make while using
+ DEVELOPER=YesPlease; this did not work well before.
 
- * The core.worktree setting in a submodule repository should not be
-   pointing at a directory when the submodule loses its working tree
-   (e.g. getting deinit'ed), but the code did not properly maintain
-   this invariant.
 
- * With zsh, "git cmd path<TAB>" was completed to "git cmd path name"
-   when the completed path has a special character like SP in it,
-   without any attempt to keep "path name" a single filename.  This
-   has been fixed to complete it to "git cmd path\ name" just like
-   Bash completion does.
+* jt/fetch-cdn-offload (2019-02-24) 8 commits
+ - SQUASH???
+ - upload-pack: send part of packfile response as uri
+ - upload-pack: refactor reading of pack-objects out
+ - Documentation: add Packfile URIs design doc
+ - Documentation: order protocol v2 sections
+ - http-fetch: support fetching packfiles by URL
+ - http: improve documentation of http_pack_request
+ - http: use --stdin and --keep when downloading pack
 
- * The test suite tried to see if it is run under bash, but the check
-   itself failed under some other implementations of shell (notably
-   under NetBSD).  This has been corrected.
-   (merge 54ea72f09c sg/test-bash-version-fix later to maint).
+ WIP for allowing a response to "git fetch" to instruct the bulk of
+ the pack contents to be instead taken from elsewhere (aka CDN).
 
- * "git gc" and "git repack" did not close the open packfiles that
-   they found unneeded before removing them, which didn't work on a
-   platform incapable of removing an open file.  This has been
-   corrected.
-   (merge 5bdece0d70 js/gc-repack-close-before-remove later to maint).
+--------------------------------------------------
+[Cooking]
 
- * The code to drive GIT_EXTERNAL_DIFF command relied on the string
-   returned from getenv() to be non-volatile, which is not true, that
-   has been corrected.
-   (merge 6776a84dae kg/external-diff-save-env later to maint).
+* dl/submodule-set-branch (2019-02-08) 3 commits
+ - submodule: teach set-branch subcommand
+ - submodule--helper: teach config subcommand --unset
+ - git-submodule.txt: "--branch <branch>" option defaults to 'master'
 
- * There were many places the code relied on the string returned from
-   getenv() to be non-volatile, which is not true, that have been
-   corrected.
-   (merge 0da0e9268b jk/save-getenv-result later to maint).
+ "git submodule" learns "set-branch" subcommand that allows the
+ submodule.*.branch settings to be modified.
 
- * The v2 upload-pack protocol implementation failed to honor
-   hidden-ref configuration, which has been corrected.
-   (merge e20b4192a3 jk/proto-v2-hidden-refs-fix later to maint).
+ Need to attach sign-off; other than that it seems OK to be in 'next'.
 
- * "git fetch --recurse-submodules" may not fetch the necessary commit
-   that is bound to the superproject, which is getting corrected.
-   (merge be76c21282 sb/submodule-recursive-fetch-gets-the-tip later to maint).
 
- * "git rebase" internally runs "checkout" to switch between branches,
-   and the command used to call the post-checkout hook, but the
-   reimplementation stopped doing so, which is getting fixed.
+* jc/test-yes-doc (2019-02-11) 1 commit
+  (merged to 'next' on 2019-02-13 at cffac01759)
+ + test: caution on our version of 'yes'
 
- * "git add -e" got confused when the change it wants to let the user
-   edit is smaller than the previous change that was left over in a
-   temporary file.
-   (merge fa6f225e01 js/add-e-clear-patch-before-stating later to maint).
+ Test doc update.
 
- * "git p4" failed to update a shelved change when there were moved
-   files, which has been corrected.
-   (merge 7a10946ab9 ld/git-p4-shelve-update-fix later to maint).
+ Will cook in 'next'.
 
- * The codepath to read from the commit-graph file attempted to read
-   past the end of it when the file's table-of-contents was corrupt.
 
- * The compat/obstack code had casts that -Wcast-function-type
-   compilation option found questionable.
-   (merge 764473d257 sg/obstack-cast-function-type-fix later to maint).
+* nd/split-index-null-base-fix (2019-02-13) 1 commit
+  (merged to 'next' on 2019-02-13 at c404a19b7a)
+ + read-cache.c: fix writing "link" index ext with null base oid
 
- * An obvious typo in an assertion error message has been fixed.
-   (merge 3c27e2e059 cc/test-ref-store-typofix later to maint).
+ Split-index fix.
 
- * In Git for Windows, "git clone \\server\share\path" etc. that uses
-   UNC paths from command line had bad interaction with its shell
-   emulation.
+ Will cook in 'next'.
 
- * "git add --ignore-errors" did not work as advertised and instead
-   worked as an unintended synonym for "git add --renormalize", which
-   has been fixed.
-   (merge e2c2a37545 jk/add-ignore-errors-bit-assignment-fix later to maint).
-
- * On a case-insensitive filesystem, we failed to compare the part of
-   the path that is above the worktree directory in an absolute
-   pathname, which has been corrected.
-
- * Asking "git check-attr" about a macro (e.g. "binary") on a specific
-   path did not work correctly, even though "git check-attr -a" listed
-   such a macro correctly.  This has been corrected.
-   (merge 7b95849be4 jk/attr-macro-fix later to maint).
-
- * "git pack-objects" incorrectly used uninitialized mutex, which has
-   been corrected.
-   (merge edb673cf10 ph/pack-objects-mutex-fix later to maint).
-
- * "git checkout -b <new> [HEAD]" to create a new branch from the
-   current commit and check it out ought to be a no-op in the index
-   and the working tree in normal cases, but there are corner cases
-   that do require updates to the index and the working tree.  Running
-   it immediately after "git clone --no-checkout" is one of these
-   cases that an earlier optimization kicked in incorrectly, which has
-   been fixed.
-   (merge 8424bfd45b bp/checkout-new-branch-optim later to maint).
-
- * "git diff --color-moved --cc --stat -p" did not work well due to
-   funny interaction between a bug in color-moved and the rest, which
-   has been fixed.
-   (merge dac03b5518 jk/diff-cc-stat-fixes later to maint).
-
- * When GIT_SEQUENCE_EDITOR is set, the command was incorrectly
-   started when modes of "git rebase" that implicitly uses the
-   machinery for the interactive rebase are run, which has been
-   corrected.
-   (merge 891d4a0313 pw/no-editor-in-rebase-i-implicit later to maint).
-
- * The commit-graph facility did not work when in-core objects that
-   are promoted from unknown type to commit (e.g. a commit that is
-   accessed via a tag that refers to it) were involved, which has been
-   corrected.
-   (merge 4468d4435c sg/object-as-type-commit-graph-fix later to maint).
-
- * "git fetch" output cleanup.
-   (merge dc40b24df4 nd/fetch-compact-update later to maint).
-
- * "git cat-file --batch" reported a dangling symbolic link by
-   mistake, when it wanted to report that a given name is ambiguous.
-
- * Documentation around core.crlf has been updated.
-   (merge c9446f0504 jk/autocrlf-overrides-eol-doc later to maint).
-
- * The documentation of "git commit-tree" said that the command
-   understands "--gpg-sign" in addition to "-S", but the command line
-   parser did not know about the longhand, which has been corrected.
-
- * "git rebase -x $cmd" did not reject multi-line command, even though
-   the command is incapable of handling such a command.  It now is
-   rejected upfront.
-   (merge c762aada1a pw/rebase-x-sanity-check later to maint).
-
- * Output from "git help" was not correctly aligned, which has been
-   fixed.
-   (merge 6195a76da4 nd/help-align-command-desc later to maint).
-
- * The "git submodule summary" subcommand showed shortened commit
-   object names by mechanically truncating them at 7-hexdigit, which
-   has been improved to let "rev-parse --short" scale the length of
-   the abbreviation with the size of the repository.
-   (merge 0586a438f6 sh/submodule-summary-abbrev-fix later to maint).
-
- * The way the OSX build jobs updates its build environment used the
-   "--quiet" option to "brew update" command, but it wasn't all that
-   quiet to be useful.  The use of the option has been replaced with
-   an explicit redirection to the /dev/null (which incidentally would
-   have worked around a breakage by recent updates to homebrew, which
-   has fixed itself already).
-   (merge a1ccaedd62 sg/travis-osx-brew-breakage-workaround later to maint).
-
- * "git --work-tree=$there --git-dir=$here describe --dirty" did not
-   work correctly as it did not pay attention to the location of the
-   worktree specified by the user by mistake, which has been
-   corrected.
-   (merge c801170b0c ss/describe-dirty-in-the-right-directory later to maint).
-
- * "git fetch" over protocol v2 that needs to make a second connection
-   to backfill tags did not clear a variable that holds shallow
-   repository information correctly, leading to an access of freed
-   piece of memory.
-
- * Some errors from the other side coming over smart HTTP transport
-   were not noticed, which has been corrected.
-
- * Code cleanup, docfix, build fix, etc.
-   (merge 89ba9a79ae hb/t0061-dot-in-path-fix later to maint).
-   (merge d173e799ea sb/diff-color-moved-config-option-fixup later to maint).
-   (merge a8f5a59067 en/directory-renames-nothanks-doc-update later to maint).
-   (merge ec36c42a63 nd/indentation-fix later to maint).
-   (merge f116ee21cd do/gitweb-strict-export-conf-doc later to maint).
-   (merge 112ea42663 fd/gitweb-snapshot-conf-doc-fix later to maint).
-   (merge 1cadad6f65 tb/use-common-win32-pathfuncs-on-cygwin later to maint).
-   (merge 57e9dcaa65 km/rebase-doc-typofix later to maint).
-   (merge b8b4cb27e6 ds/gc-doc-typofix later to maint).
-   (merge 3b3357626e nd/style-opening-brace later to maint).
-   (merge b4583d5595 es/doc-worktree-guessremote-config later to maint).
-   (merge cce99cd8c6 ds/commit-graph-assert-missing-parents later to maint).
-   (merge 0650614982 cy/completion-typofix later to maint).
-   (merge 6881925ef5 rs/sha1-file-close-mapped-file-on-error later to maint).
-   (merge bd8d6f0def en/show-ref-doc-fix later to maint).
-   (merge 1747125e2c cc/partial-clone-doc-typofix later to maint).
-   (merge e01378753d cc/fetch-error-message-fix later to maint).
-   (merge 54e8c11215 jk/remote-insteadof-cleanup later to maint).
-   (merge d609615f48 js/test-git-installed later to maint).
-   (merge ba170517be ja/doc-style-fix later to maint).
-   (merge 86fb1c4e77 km/init-doc-typofix later to maint).
-   (merge 5cfd4a9d10 nd/commit-doc later to maint).
-   (merge 9fce19a431 ab/diff-tree-doc-fix later to maint).
-   (merge 2e285e7803 tz/gpg-test-fix later to maint).
-   (merge 5427de960b kl/pretty-doc-markup-fix later to maint).
-   (merge 3815f64b0d js/mingw-host-cpu later to maint).
-   (merge 5fe81438b5 rj/sequencer-sign-off-header-static later to maint).
-   (merge 18a4f6be6b nd/fileno-may-be-macro later to maint).
-   (merge 99e9ab54ab kd/t0028-octal-del-is-377-not-777 later to maint).
+
+* rj/prune-packed-excess-args (2019-02-11) 1 commit
+  (merged to 'next' on 2019-02-13 at e026a2e7a7)
+ + prune-packed: check for too many arguments
+
+ "git prune-packed" did not notice and complain against excess
+ arguments given from the command line, which now it does.
+
+ Will cook in 'next'.
+
+
+* js/doc-symref-in-proto-v1 (2019-02-21) 1 commit
+  (merged to 'next' on 2019-02-21 at c7ca3bb974)
+ + protocol-capabilities.txt: document symref
+
+ Will cook in 'next'.
+
+
+* dl/complete-submodule-absorbgitdirs (2019-02-06) 1 commit
+  (merged to 'next' on 2019-02-06 at c4e0cd535a)
+ + completion: complete git submodule absorbgitdirs
+
+ Command-line completion (in contrib/) learned to tab-complete the
+ "git submodule absorbgitdirs" subcommand.
+
+ Will cook in 'next'.
+
+
+* jt/test-protocol-version (2019-02-06) 8 commits
+ - t5552: compensate for v2 filtering ref adv.
+ - tests: fix protocol version for overspecifications
+ - t5700: only run with protocol version 1
+ - t5512: compensate for v0 only sending HEAD symrefs
+ - t5503: fix overspecification of trace expectation
+ - tests: always test fetch of unreachable with v0
+ - tests: define GIT_TEST_PROTOCOL_VERSION
+ - Merge branch 'js/protocol-advertise-multi' into jt/test-protocol-version
+ (this branch uses js/protocol-advertise-multi.)
+
+ Help developers by making it easier to run most of the tests under
+ different versions of over-the-wire protocols.
+
+ Blocked by js/protocol-advertise-multi
+
+
+* dm/some-stdio-functions-are-macro-on-freebsd (2019-02-01) 1 commit
+ - http: cast result to FILE *
+
+ Variants of BSD define fileno(fh) as a macro, breaking a program
+ that passes a "void *" to it.
+
+ Expecting a reroll.
+ cf. <49B9198C-53E5-42BD-8834-B1EDEB3332CB@usask.ca>
+
+
+* en/combined-all-paths (2019-02-07) 1 commit
+  (merged to 'next' on 2019-02-08 at 7057f38d6e)
+ + log,diff-tree: add --combined-all-paths option
+
+ Output from "diff --cc" did not show the original paths when the
+ merge involved renames.  A new option adds the paths in the
+ original trees to the output.
+
+ Will cook in 'next'.
+
+
+* ds/commit-graph-format-v2 (2019-01-29) 8 commits
+ - SQUASH : misnamed variables and style fix
+ - commit-graph: test verifying a corrupt v2 header
+ - commit-graph: implement file format version 2
+ - commit-graph: add --version=<n> option
+ - commit-graph: create new version flags
+ - commit-graph: collapse parameters into flags
+ - commit-graph: return with errors during write
+ - Merge branch 'bc/sha-256' into ds/commit-graph-format-v2
+
+ Introduce version 2 of the commit-graph format to correct
+ deficiency in the initial version.
+
+ Needs update before merging to 'next'.
+
+
+* jh/trace2 (2019-02-22) 15 commits
+  (merged to 'next' on 2019-02-22 at 4c84c621fe)
+ + trace2: add for_each macros to clang-format
+ + trace2: t/helper/test-trace2, t0210.sh, t0211.sh, t0212.sh
+ + trace2:data: add subverb for rebase
+ + trace2:data: add subverb to reset command
+ + trace2:data: add subverb to checkout command
+ + trace2:data: pack-objects: add trace2 regions
+ + trace2:data: add trace2 instrumentation to index read/write
+ + trace2:data: add trace2 hook classification
+ + trace2:data: add trace2 transport child classification
+ + trace2:data: add trace2 sub-process classification
+ + trace2:data: add editor/pager child classification
+ + trace2:data: add trace2 regions to wt-status
+ + trace2: collect Windows-specific process information
+ + trace2: create new combined trace facility
+ + trace2: Documentation/technical/api-trace2.txt
+
+ A more structured way to obtain execution trace has been added.
+
+ Will cook in 'next'.
+
+
+* sx/evolve (2019-02-15) 8 commits
+ . evolve: add the git change list command
+ . evolve: implement the git change command
+ . evolve: add support for writing metacommits
+ . evolve: add the change-table structure
+ . evolve: add support for parsing metacommits
+ . ref-filter: add the metas namespace to ref-filter
+ . sha1-array: implement oid_array_readonly_contains
+ . technical doc: add a design doc for the evolve command
+
+ The beginning of "hg evolve" mimicry.
+
+
+* br/blame-ignore (2019-02-13) 6 commits
+ - SQUASH???
+ - blame: add tests for ignoring revisions
+ - blame: add a config option to mark ignored lines
+ - blame: add the ability to ignore commits and their changes
+ - blame: use a helper function in blame_chunk()
+ - Move init_skiplist() outside of fsck
+
+ "git blame" learned to "ignore" commits in the history, whose
+ effects (as well as their presence) get ignored.
+
+ Needs update before merging to 'next'.
+
+
+* nd/diff-parseopt (2019-01-27) 14 commits
+  (merged to 'next' on 2019-02-05 at 7c4b79aa79)
+ + diff.c: convert --raw
+ + diff.c: convert -W|--[no-]function-context
+ + diff.c: convert -U|--unified
+ + diff.c: convert -u|-p|--patch
+ + diff.c: prepare to use parse_options() for parsing
+ + diff.h: avoid bit fields in struct diff_flags
+ + diff.h: keep forward struct declarations sorted
+ + parse-options: allow ll_callback with OPTION_CALLBACK
+ + parse-options: avoid magic return codes
+ + parse-options: stop abusing 'callback' for lowlevel callbacks
+ + parse-options: add OPT_BITOP()
+ + parse-options: disable option abbreviation with PARSE_OPT_KEEP_UNKNOWN
+ + parse-options: add one-shot mode
+ + parse-options.h: remove extern on function prototypes
+ (this branch is used by nd/diff-parseopt-2.)
+
+ The diff machinery, one of the oldest parts of the system, which
+ long predates the parse-options API, uses fairly long and complex
+ handcrafted option parser.  This is being rewritten to use the
+ parse-options API.
+
+ Will cook in 'next'.
+ Looking good.
+
+
+* sc/pack-redundant (2019-02-04) 6 commits
+  (merged to 'next' on 2019-02-08 at ba3f8f0bc0)
+ + pack-redundant: consistent sort method
+ + pack-redundant: rename pack_list.all_objects
+ + pack-redundant: new algorithm to find min packs
+ + pack-redundant: delete redundant code
+ + pack-redundant: delay creation of unique_objects
+ + t5323: test cases for git-pack-redundant
+
+ Update the implementation of pack-redundant for performance in a
+ repository with many packfiles.
+
+ Will cook in 'next'.
+
+
+* nd/config-move-to (2019-01-14) 7 commits
+ - config.h: fix hdr-check warnings
+ - config: add --move-to
+ - config: factor out set_config_source_file()
+ - config: use OPT_FILENAME()
+ - config.c: add repo_config_set_worktree_gently()
+ - worktree.c: add get_worktree_config()
+ - config.c: avoid git_path() in do_git_config_sequence()
+
+ Needs review.
+
+
+* ma/clear-repository-format (2019-01-23) 2 commits
+ - setup: fix memory leaks with `struct repository_format`
+ - setup: free old value before setting `work_tree`
+
+ The setup code has been cleaned up to avoid leaks around the
+ repository_format structure.
+
+ cf. <20190124001450.GR423984@genre.crustytoothpaste.net>
+
+
+* wh/author-committer-ident-config (2019-02-04) 1 commit
+  (merged to 'next' on 2019-02-06 at 6ab8bfa199)
+ + config: allow giving separate author and committer idents
+
+ Four new configuration variables {author,committer}.{name,email}
+ have been introduced to override user.{name,email} in more specific
+ cases.
+
+ Will cook in 'next'.
+
+
+* ds/midx-expire-repack (2019-01-27) 10 commits
+ - midx: add test that 'expire' respects .keep files
+ - multi-pack-index: test expire while adding packs
+ - midx: implement midx_repack()
+ - multi-pack-index: prepare 'repack' subcommand
+ - multi-pack-index: implement 'expire' subcommand
+ - midx: refactor permutation logic and pack sorting
+ - midx: simplify computation of pack name lengths
+ - multi-pack-index: prepare for 'expire' subcommand
+ - Docs: rearrange subcommands for multi-pack-index
+ - repack: refactor pack deletion for future use
+
+ "git multi-pack-index expire/repack" are new subcommands that
+ consult midx file and are used to drop unused pack files and
+ coalesce small pack files that are still in use.
+
+ Comments?
+
+
+* tg/checkout-no-overlay (2019-02-04) 9 commits
+  (merged to 'next' on 2019-02-04 at 9968bcf4fb)
+ + revert "checkout: introduce checkout.overlayMode config"
+  (merged to 'next' on 2019-01-18 at 1e2a79ba5c)
+ + checkout: introduce checkout.overlayMode config
+ + checkout: introduce --{,no-}overlay option
+ + checkout: factor out mark_cache_entry_for_checkout function
+ + checkout: clarify comment
+ + read-cache: add invalidate parameter to remove_marked_cache_entries
+ + entry: support CE_WT_REMOVE flag in checkout_entry
+ + entry: factor out unlink_entry function
+ + move worktree tests to t24*
+
+ "git checkout --no-overlay" can be used to trigger a new mode of
+ checking out paths out of the tree-ish, that allows paths that
+ match the pathspec that are in the current index and working tree
+ and are not in the tree-ish.
+
+ Will hold.
+ Waiting for "restore-files" & "switch-branches" pair.
+ cf. <20190205204208.GC6085@hank.intra.tgummerer.com>
+
+
+* dl/merge-cleanup-scissors-fix (2019-01-27) 4 commits
+  (merged to 'next' on 2019-02-06 at f4fe5d759a)
+ + merge: add scissors line on merge conflict
+ + merge: cleanup messages like commit
+ + t7600: clean up 'merge --squash c3 with c7' test
+ + commit: extract cleanup_mode functions to sequencer
+
+ The list of conflicted paths shown in the editor while concluding a
+ conflicted merge was shown above the scissors line when the
+ clean-up mode is set to "scissors", even though it was commented
+ out just like the list of updated paths and other information to
+ help the user explain the merge better.
+
+ Will cook in 'next'.
+
+
+* aw/pretty-trailers (2019-01-29) 7 commits
+  (merged to 'next' on 2019-02-06 at b7e5437702)
+ + pretty: add support for separator option in %(trailers)
+ + strbuf: separate callback for strbuf_expand:ing literals
+ + pretty: add support for "valueonly" option in %(trailers)
+ + pretty: allow showing specific trailers
+ + pretty: single return path in %(trailers) handling
+ + pretty: allow %(trailers) options with explicit value
+ + doc: group pretty-format.txt placeholders descriptions
+
+ The %(trailers) formatter in "git log --format=..."  now allows to
+ optionally pick trailers selectively by keyword, show only values,
+ etc.
+
+ Will cook in 'next'.
+
+
+* jn/unknown-index-extensions (2018-11-21) 2 commits
+ - index: offer advice for unknown index extensions
+ - index: do not warn about unrecognized extensions
+
+ A bit too alarming warning given when unknown index extensions
+ exist is getting revamped.
+
+ Expecting a reroll.
+
+
+* dl/remote-save-to-push (2018-12-11) 1 commit
+ - remote: add --save-to-push option to git remote set-url
+
+ "git remote set-url" learned a new option that moves existing value
+ of the URL field to pushURL field of the remote before replacing
+ the URL field with a new value.
+
+ I am personally not yet quite convinced if this is worth pursuing.
+
+
+* js/protocol-advertise-multi (2018-12-28) 1 commit
+ - protocol: advertise multiple supported versions
+ (this branch is used by jt/test-protocol-version.)
+
+ The transport layer has been updated so that the protocol version
+ used can be negotiated between the parties, by the initiator
+ listing the protocol versions it is willing to talk, and the other
+ side choosing from one of them.
+
+ Expecting a reroll.
+ cf. <CANq=j3u-zdb_FvNJGPCmygNMScseav63GhVvBX3NcVS4f7TejA@mail.gmail.com>
+
+
+* nb/branch-show-other-worktrees-head (2019-02-01) 3 commits
+ - branch: add an extra verbose output displaying worktree path for refs checked out in a linked worktree
+ - branch: mark and color a branch differently if it is checked out in a linked worktree
+ - ref-filter: add worktreepath atom
+
+ "git branch --list" learned to show branches that are checked out
+ in other worktrees connected to the same repository prefixed with
+ '+', similar to the way the currently checked out branch is shown
+ with '*' in front.
+
+ The top one probably deserves retitling.
+ The second one is of dubious value.
+
+
+* du/branch-show-current (2018-10-26) 1 commit
+  (merged to 'next' on 2019-02-08 at e662ed4aee)
+ + branch: introduce --show-current display option
+
+ "git branch" learned a new subcommand "--show-current".
+
+ Will cook in 'next'.
+
+
+* mk/use-size-t-in-zlib (2018-10-15) 1 commit
+ - zlib.c: use size_t for size
+
+ The wrapper to call into zlib followed our long tradition to use
+ "unsigned long" for sizes of regions in memory, which have been
+ updated to use "size_t".
+
+
+* ag/sequencer-reduce-rewriting-todo (2019-01-29) 16 commits
+ - rebase--interactive: move transform_todo_file() to rebase--interactive.c
+ - sequencer: use edit_todo_list() in complete_action()
+ - rebase-interactive: rewrite edit_todo_list() to handle the initial edit
+ - rebase-interactive: append_todo_help() changes
+ - rebase-interactive: use todo_list_write_to_file() in edit_todo_list()
+ - sequencer: refactor skip_unnecessary_picks() to work on a todo_list
+ - sequencer: change complete_action() to use the refactored functions
+ - sequencer: make sequencer_make_script() write its script to a strbuf
+ - sequencer: refactor rearrange_squash() to work on a todo_list
+ - sequencer: refactor sequencer_add_exec_commands() to work on a todo_list
+ - sequencer: refactor check_todo_list() to work on a todo_list
+ - sequencer: introduce todo_list_write_to_file()
+ - sequencer: refactor transform_todos() to work on a todo_list
+ - sequencer: remove the 'arg' field from todo_item
+ - sequencer: make the todo_list structure public
+ - sequencer: changes in parse_insn_buffer()
+
+ The scripted version of "git rebase -i" wrote and rewrote the todo
+ list many times during a single step of its operation, and the
+ recent C-rewrite made a faithful conversion of the logic to C.  The
+ implementation has been updated to carry necessary information
+ around in-core to avoid rewriting the same file over and over
+ unnecessarily.
+
+ Was still being worked on, but seems to have stalled.
+ cf. <c5e3c1cc-12fa-ddf6-7008-ae47659ddc19@gmail.com>
+ cf. <97f77aca-bd19-f763-349a-de40c4b94161@talktalk.net>
+
+
+* js/add-i-coalesce-after-editing-hunk (2018-08-28) 1 commit
+ - add -p: coalesce hunks before testing applicability
+
+ Applicability check after a patch is edited in a "git add -i/p"
+ session has been improved.
+
+ Will hold.
+ cf. <e5b2900a-0558-d3bf-8ea1-d526b078bbc2@talktalk.net>
+
+
+* ps/stash-in-c (2019-02-04) 29 commits
+ - strbuf_vinsertf: provide the correct buffer size to vsnprintf
+ - stash: fix segmentation fault when files were added with intent
+ - tests: add a special setup where stash.useBuiltin is off
+ - stash: optionally use the scripted version again
+ - stash: add back the original, scripted `git stash`
+ - stash: convert `stash--helper.c` into `stash.c`
+ - stash: replace all `write-tree` child processes with API calls
+ - stash: optimize `get_untracked_files()` and `check_changes()`
+ - stash: convert save to builtin
+ - stash: make push -q quiet
+ - stash: convert push to builtin
+ - stash: convert create to builtin
+ - stash: convert store to builtin
+ - stash: convert show to builtin
+ - stash: convert list to builtin
+ - stash: convert pop to builtin
+ - stash: convert branch to builtin
+ - stash: convert drop and clear to builtin
+ - stash: convert apply to builtin
+ - stash: mention options in `show` synopsis
+ - stash: add tests for `git stash show` config
+ - stash: rename test cases to be more descriptive
+ - t3903: modernize style
+ - stash: improve option parsing test coverage
+ - ident: add the ability to provide a "fallback identity"
+ - strbuf.c: add `strbuf_insertf()` and `strbuf_vinsertf()`
+ - strbuf.c: add `strbuf_join_argv()`
+ - sha1-name.c: add `get_oidf()` which acts like `get_oid()`
+ - Merge branch 'sd/stash-wo-user-name'
+
+ "git stash" rewritten in C.
+
+ Still with known breakages.
+ cf. <20190208113059.GV10587@szeder.dev>
+
+
+* pw/add-p-select (2018-07-26) 4 commits
+ - add -p: optimize line selection for short hunks
+ - add -p: allow line selection to be inverted
+ - add -p: select modified lines correctly
+ - add -p: select individual hunk lines
+
+ "git add -p" interactive interface learned to let users choose
+ individual added/removed lines to be used in the operation, instead
+ of accepting or rejecting a whole hunk.
+
+ Will discard.
+ No further feedbacks on the topic for quite some time.
+
+ cf. <d622a95b-7302-43d4-4ec9-b2cf3388c653@talktalk.net>
+ I found the feature to be hard to explain, and may result in more
+ end-user complaints, but let's see.
