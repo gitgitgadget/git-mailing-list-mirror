@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B90AB20248
+	by dcvr.yhbt.net (Postfix) with ESMTP id D83B8202AA
 	for <e@80x24.org>; Sun, 24 Feb 2019 10:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728262AbfBXKLW (ORCPT <rfc822;e@80x24.org>);
+        id S1728273AbfBXKLX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Feb 2019 05:11:23 -0500
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:41734 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728251AbfBXKLW (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 24 Feb 2019 05:11:22 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:42396 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728096AbfBXKLU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Feb 2019 05:11:20 -0500
-Received: by mail-ed1-f67.google.com with SMTP id j89so5191147edb.9
-        for <git@vger.kernel.org>; Sun, 24 Feb 2019 02:11:19 -0800 (PST)
+Received: by mail-ed1-f45.google.com with SMTP id x7so5198735eds.8
+        for <git@vger.kernel.org>; Sun, 24 Feb 2019 02:11:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hmWe158jp9FE67wVvBYJFEYdrHr9Pj7yRIiHYs5M3Eo=;
-        b=ches+dAWis5TeNyK/O7qtMeRCEDOZVYT9HUVduz0II3I2Y8lZNVeyqVhrvXeehfpPw
-         rvhrFxZJAGTMcsguBYH7M9hrGWUgIK79RGRVAENPsfVHC7DwHBYIyNJ0t8GGwhTArohg
-         4nOhZJc01BC1Y+s+AsY64xycI6ETAsj+AUJcwnUzkWBMA2a0iH5MPv789qmWSK6Izu08
-         WmJd5qOV85uaeXblwjt+iuTnWZT2WEXZNfM0vrdTD0YtxMhH+9zqCGDs09bMn6jetyaG
-         OrDCbYFqzyPWjnjfo671zuhKfgFxLEXAAra0eCWykg4MH75I5rX8y20k0SHWcdaS4g3/
-         OCdA==
+        bh=jwJwlovIi86pVFsbXvj+6QMHOlznabX3ihIVBcOzS2E=;
+        b=dWQCvK4hLK3sle8PB+TfdlR/kMAsKLXdHyCtK0eiEDbe63F8SynnXRSWIxmLV8IupW
+         gfCIIaKVWPqJbo5mc4FCtNvfkGQxMF8Dlt790AfH4t+NQ8t/OV30DwbUg3ggAPbcLvGK
+         /cbSdtAcKsp63HTwop7t6H2/11pERwtBnIW6NKoidmg/QW6C8+uXaLkig7hSy1iKliHh
+         b33JE4jM/0AghSKX1/jETxIOvaWUjxgg9MFnnlmPPDdaPJX99KgJG0VGTLgT+QvREUNG
+         1nYt86YCz9gYDZpOd4FbWGyRrk38pm1VWvRH/dnHp3UsDDelJVlJfWg6g3j7yzTH2Vgc
+         2v5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hmWe158jp9FE67wVvBYJFEYdrHr9Pj7yRIiHYs5M3Eo=;
-        b=dyxFEAL1yqGpVWf4RaST/mNexIpUSBPgm0YYqDoH3v0phWGKisQLzG7Uyf/KjQSwHa
-         ueVjWMct8JJpiSFBC20kHitK9cotNeUCzuQmW3+SLzfAneAcvmlF4qsxld8Mkbsp5P7H
-         oDWJ7pwjCGpG5NUW/c2XT88OTRf0ZU1psK2tiCYs1Pcb3HNFyDFfjB+hr5LG22VozI6/
-         3kn4XirGrMdnYOjTRMS0UvHRYoujDLXhM1sCkvlsnd28VYu5JjuMw1w55tVKzNGEskBN
-         hmNnPslJVbZByGIhL9bOXq9oVdIufE2AxBHS9JaEAWIq87WKa5NOv2WBSHTR9qRjz6O0
-         8Uqw==
-X-Gm-Message-State: AHQUAuYCahp9z+T6JKfF0m8ncnJcxHrfzKpmlwOzs46tH+Bffhl0UR0/
-        Mqji+LmkZk/QyRnSwWuVuq/6yqKl
-X-Google-Smtp-Source: AHgI3IavMYIxodSjMy8Gn2wE9qD7chk6/LLw4McgUQC/vN4qJtKeOyBZugGLhsT5JZsJySc88SR0uw==
-X-Received: by 2002:a17:906:7206:: with SMTP id m6mr9208756ejk.145.1551003078915;
-        Sun, 24 Feb 2019 02:11:18 -0800 (PST)
+        bh=jwJwlovIi86pVFsbXvj+6QMHOlznabX3ihIVBcOzS2E=;
+        b=Gicd0GjRDutK0QcnY7pFADW1ClmlgPwH8iH5TCbwdDj9uom/gRzneeC9KTmaqcaViJ
+         EJ8jdRFlKLpxQJWNl9lSh9EByiliNJqdBj4LWIeeS8g4iCgGouxg2PH9NBUYiILmnTYo
+         6ri8soXCfKMeZ99dIR2l8XeL4I0w+UHHdnPy0HX4t1PhRpj6nxeZAfefDiMZIC8a0RKa
+         lyyoT/NwcTsNui4UZUsafaqGGn/BLp+FVrjMpv7s9fXuSwjzTs6mXcYD63+Zvg0nQRs6
+         R8rMgj9tjRU6jfqQ28Fdwrso1Aodp2A4908SoW7lzGHslCZBdZkuEXCO7WQw9zmPyv6e
+         Aswg==
+X-Gm-Message-State: AHQUAuYPKNhHmEipNkfdOjeFSaBhh1+On5AsXlEqAtvo87D/2NXF1/uQ
+        RcIeFFGfqjjABY2fj3W/7NYTNHbE
+X-Google-Smtp-Source: AHgI3Ia0iFu6pp8Vp3atVmQfSwDYebhDRjMZ5Xw0L3RxV+gARqRI8A9MxlYaz1VpvZUpckaEOFKcIQ==
+X-Received: by 2002:a17:906:35d8:: with SMTP id p24mr9318084ejb.112.1551003080574;
+        Sun, 24 Feb 2019 02:11:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i42sm1821362eda.86.2019.02.24.02.11.18
+        by smtp.gmail.com with ESMTPSA id l24sm1184624eja.57.2019.02.24.02.11.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Feb 2019 02:11:18 -0800 (PST)
-Date:   Sun, 24 Feb 2019 02:11:18 -0800 (PST)
-X-Google-Original-Date: Sun, 24 Feb 2019 10:10:52 GMT
-Message-Id: <b6aecadd82949a120ca880b24aab9331658f3a34.1551003074.git.gitgitgadget@gmail.com>
+        Sun, 24 Feb 2019 02:11:20 -0800 (PST)
+Date:   Sun, 24 Feb 2019 02:11:20 -0800 (PST)
+X-Google-Original-Date: Sun, 24 Feb 2019 10:10:54 GMT
+Message-Id: <1a955345100ed3e953bc7b9f0c6ce66f6b2b4e2a.1551003074.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.117.git.gitgitgadget@gmail.com>
 References: <pull.117.git.gitgitgadget@gmail.com>
 From:   "Pranit Bauva via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 04/26] bisect.c: libify `exit_if_skipped_commits` to
- `error_if_skipped...`
+Subject: [PATCH 06/26] bisect.c: libify `check_merge_bases` and its
+ dependents.
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,86 +78,83 @@ reported.
 Emulate try catch in C by converting `exit(<positive-value>)` to
 `return <negetive-value>`. Follow POSIX conventions to return
 <negative-value> to indicate error.
-Modify `cmd_bisect_helper()` to handle these negative returns.
 
-Turn `exit()` to `return` calls in `exit_if_skipped_commits()` and rename
-the method to `error_if_skipped_commits()`.
+Turn `exit()` to `return` calls in `check_merge_bases()`.
 
-Handle this return in dependant method `bisect_next_all()`.
+In `check_merge_bases()` there is an early success special case,
+so we have introduced special error code `-11` which indicates early
+success. This `-11` is converted back to `0` in `check_good_are_ancestors_of_bad()`.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 ---
- bisect.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ bisect.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index 487675c672..bb926f09d0 100644
+index 1f2f3201a3..1134854fe2 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -659,11 +659,11 @@ static void bisect_common(struct rev_info *revs)
- 		mark_edges_uninteresting(revs, NULL);
+@@ -801,13 +801,16 @@ static void handle_skipped_merge_base(const struct object_id *mb)
+  * "check_merge_bases" checks that merge bases are not "bad" (or "new").
+  *
+  * - If one is "bad" (or "new"), it means the user assumed something wrong
+- * and we must exit with a non 0 error code.
++ * and we must return error with a non 0 error code.
+  * - If one is "good" (or "old"), that's good, we have nothing to do.
+  * - If one is "skipped", we can't know but we should warn.
+  * - If we don't know, we should check it out and ask the user to test.
++ * - If a merge base must be tested, on success return -11 a special condition
++ * for early success, this will be converted back to 0 in cmd_bisect__helper.
+  */
+-static void check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
++static int check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
+ {
++	int res = 0;
+ 	struct commit_list *result;
+ 
+ 	result = get_merge_bases_many(rev[0], rev_nr - 1, rev + 1);
+@@ -822,11 +825,16 @@ static void check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf(_("Bisecting: a merge base must be tested\n"));
+-			exit(-bisect_checkout(mb, no_checkout));
++			res = bisect_checkout(mb, no_checkout);
++			if (!res)
++				/* indicate early success */
++				res = -11;
++			break;
+ 		}
+ 	}
+ 
+ 	free_commit_list(result);
++	return res;
  }
  
--static void exit_if_skipped_commits(struct commit_list *tried,
-+static int error_if_skipped_commits(struct commit_list *tried,
- 				    const struct object_id *bad)
+ static int check_ancestors(int rev_nr, struct commit **rev, const char *prefix)
+@@ -857,7 +865,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
  {
- 	if (!tried)
--		return;
-+		return 0;
+ 	char *filename = git_pathdup("BISECT_ANCESTORS_OK");
+ 	struct stat st;
+-	int fd, rev_nr;
++	int fd, rev_nr, res = 0;
+ 	struct commit **rev;
  
- 	printf("There are only 'skip'ped commits left to test.\n"
- 	       "The first %s commit could be any of:\n", term_bad);
-@@ -674,7 +674,13 @@ static void exit_if_skipped_commits(struct commit_list *tried,
- 	if (bad)
- 		printf("%s\n", oid_to_hex(bad));
- 	printf(_("We cannot bisect more!\n"));
--	exit(2);
-+
-+	/*
-+	 * We don't want to clean the bisection state
-+	 * as we need to get back to where we started
-+	 * by using `git bisect reset`.
-+	 */
-+	return -2;
- }
+ 	if (!current_bad_oid)
+@@ -874,8 +882,10 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
+ 	/* Check if all good revs are ancestor of the bad rev. */
+ 	rev = get_bad_and_good_commits(&rev_nr);
+ 	if (check_ancestors(rev_nr, rev, prefix))
+-		check_merge_bases(rev_nr, rev, no_checkout);
++		res = check_merge_bases(rev_nr, rev, no_checkout);
+ 	free(rev);
++	if(res)
++		exit(res == -11 ? 0 : -res);
  
- static int is_expected_rev(const struct object_id *oid)
-@@ -949,7 +955,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
- {
- 	struct rev_info revs;
- 	struct commit_list *tried;
--	int reaches = 0, all = 0, nr, steps;
-+	int reaches = 0, all = 0, nr, steps, res;
- 	struct object_id *bisect_rev;
- 	char *steps_msg;
- 
-@@ -972,8 +978,9 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 		 * We should exit here only if the "bad"
- 		 * commit is also a "skip" commit.
- 		 */
--		exit_if_skipped_commits(tried, NULL);
--
-+		res = error_if_skipped_commits(tried, NULL);
-+		if (res)
-+			exit(-res);
- 		printf(_("%s was both %s and %s\n"),
- 		       oid_to_hex(current_bad_oid),
- 		       term_good,
-@@ -990,7 +997,9 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 	bisect_rev = &revs.commits->item->object.oid;
- 
- 	if (oideq(bisect_rev, current_bad_oid)) {
--		exit_if_skipped_commits(tried, current_bad_oid);
-+		res = error_if_skipped_commits(tried, current_bad_oid);
-+		if (res)
-+			exit(-res);
- 		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
- 			term_bad);
- 		show_diff_tree(prefix, revs.commits->item);
+ 	/* Create file BISECT_ANCESTORS_OK. */
+ 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
 -- 
 gitgitgadget
 
