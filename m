@@ -2,96 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D88D220248
-	for <e@80x24.org>; Sun, 24 Feb 2019 05:30:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BFC120248
+	for <e@80x24.org>; Sun, 24 Feb 2019 07:16:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726195AbfBXFa3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Feb 2019 00:30:29 -0500
-Received: from mail-wm1-f54.google.com ([209.85.128.54]:52145 "EHLO
-        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725928AbfBXFa3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Feb 2019 00:30:29 -0500
-Received: by mail-wm1-f54.google.com with SMTP id n19so5194956wmi.1
-        for <git@vger.kernel.org>; Sat, 23 Feb 2019 21:30:28 -0800 (PST)
+        id S1726457AbfBXHQy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Feb 2019 02:16:54 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:43362 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725928AbfBXHQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Feb 2019 02:16:54 -0500
+Received: by mail-pl1-f193.google.com with SMTP id m10so3004730plt.10
+        for <git@vger.kernel.org>; Sat, 23 Feb 2019 23:16:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=VUJa48/lFLN2cp71ff8WDAdsIKGOPW/OwX7TdPIFpOI=;
-        b=tYrSh0usaQTYDFN0ymfF208A9dzn43iOIxmHLJMwVQUDK+J2VrQ3QyuTWHmCWOZ21d
-         JeHYJbRBrSESwf3Yf5f8hK80DAzlXDNJEyKBaVlY/yw4WAm55i4QlviAU+/dSWLiupk0
-         lMZmpfB0Gc4T4bcQlMJ3crACgpqWW5N+4tN+/WuK0qp6KytFL55Mb4FiAikUlNxYHlXn
-         bzAAQKGSAQ61aKQIfvaQLU5Zt31heBeQmuZ+PXjZ24IKLPaaCVANfX4BRpqGXenSbauG
-         SKlj0q7tmRIJIYL3nzoaT+1+DtOkJxWdqBTfucj0aF4uR8woxlCvxCzccfuxhbxkwE4s
-         KyfQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZAqmzbIlhPhTzrtvjIUKoSZai5YRXv2g4giZO9XKaBw=;
+        b=TA5iWkLOTlGwFysV2kWLr+upV/46B4Lm2r38IqiiGXUeNAkR+fNwrTJ3+lTmxZL0YO
+         38ewoXXAoJbwKU3DGanm3Faq5zf763l6ysVTr8K9M+2bK/m8+idua2MSx1MWDBghLcj1
+         fTk5HCFycUxrs2YKzzvblwEUpCAk/s3Z5/gko+zuwHAv+nK1b8DgVaWpXTuh7mXcrumV
+         cXfTcwtKnW6GdRvO/J6SWZ8mM9O7Znk3MVO+/HJ2j93lvXMXHvQibRaamyzvSvJgbJt/
+         v3ycAVMz1VjY9qm4SEUImHz9Auhfc2ZTDAgprmZTaZACnT9QSs29H6Eh0lk1VOOnEYPw
+         ifWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=VUJa48/lFLN2cp71ff8WDAdsIKGOPW/OwX7TdPIFpOI=;
-        b=uSfnnezbSELcv1oduFQvn7ZvrMmdRwuee/gD4ZJ9IhMjy7Jo1psF+OHMGaizJtKEjh
-         rcODASQli+FhPGU1vwx87OFpfsyfpx6NX4d3isVOUjROjHc/xD0SCuGPcNRfVNKeud7e
-         TBY3SDh09V3JvTV4igerZ+1+gHgCbyaEsqgg4XODUUmPwtTzOA697XDhfMNqveS/AlJB
-         L0D7Wld8MEyziQP4Vu5EDAgIi3ZGTLPbDOuM47gskPovbXNZPVIfus0wCB3wlqzJm+l9
-         mPsSPK+mLherp+RhbTID/qfsbVugsezNGeIWNla3Za30bdrVZnJ7RtjEcKSUhHzhJHFc
-         28aw==
-X-Gm-Message-State: AHQUAuaFL4Rlb7qO3tNPaacJiYXFZ8vzQpowEYTlELokCTkijHN/m2sP
-        mE4PXbyYnFdmBXt8QmFGZDc=
-X-Google-Smtp-Source: AHgI3IZ/tcCOTLjH7bs9vNDoOhDsgHA+qiZw1ZnCAZinNRxX6jBaJHxUtDt9YoDUeJY13BQ6VbEgVg==
-X-Received: by 2002:a1c:1a08:: with SMTP id a8mr6638263wma.37.1550986227404;
-        Sat, 23 Feb 2019 21:30:27 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l130sm2946095wmf.13.2019.02.23.21.30.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 23 Feb 2019 21:30:26 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: does "git clean" deliberately ignore "core.excludesFile"?
-References: <alpine.LFD.2.21.1902231008530.28936@localhost.localdomain>
-        <xmqqimxao76b.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1902231905180.45@tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.1902231912370.45@tvgsbejvaqbjf.bet>
-        <alpine.LFD.2.21.1902231328560.2222@localhost.localdomain>
-Date:   Sat, 23 Feb 2019 21:30:26 -0800
-In-Reply-To: <alpine.LFD.2.21.1902231328560.2222@localhost.localdomain>
-        (Robert P. J. Day's message of "Sat, 23 Feb 2019 13:32:16 -0500
-        (EST)")
-Message-ID: <xmqq5zt9oirx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZAqmzbIlhPhTzrtvjIUKoSZai5YRXv2g4giZO9XKaBw=;
+        b=n71AEgpkNcAMOisNcgQSK6pl9PRgcOGZZaNyZrc34d32jE8hPlUyoFDIJ9458PRbFy
+         L07mMPvK+vwrra6BLtunrGmtEllSVnqOnPoCK2AgDQZUnBYCQNli6xcwLMwjbizOLdUd
+         BKhTiuUe2oKc4IVwMf1vN3IDclYSk7fu/Jw3saWjRaLiKzZ6fY5ol2HYDbdlYedch/q7
+         Grj/XiyFdOsS+VA58pObvlUhe5yS8RRQRZ1l3OkKWVR5A9bkBt+3fZarToeGi8Y+fckF
+         utrvViWyZDNKhLUgQqS4MXg2ChlWlZJLpaR3tigITYIU0bOsrUKEaiAHJw8zexQTqGcJ
+         G/Cw==
+X-Gm-Message-State: AHQUAua5XQwVHInUb/PU+Baupx2AOJb8Xnsg4RlbUu0gSTWsKud0IXXI
+        PSNvBXRaMDexSYs86PxZJ64=
+X-Google-Smtp-Source: AHgI3IaPf3jSPmZmbYPL+pkZU6/PacLj2F7jimwdkFw1voVKS3Fhkqp9mo4OT2M1yG9mVGBi4wTOxA==
+X-Received: by 2002:a17:902:9a98:: with SMTP id w24mr12495392plp.247.1550992613026;
+        Sat, 23 Feb 2019 23:16:53 -0800 (PST)
+Received: from localhost.localdomain ([124.64.19.102])
+        by smtp.gmail.com with ESMTPSA id o25sm9235334pfk.185.2019.02.23.23.16.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 Feb 2019 23:16:51 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Alexander Shopov <ash@kambanaria.org>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Christopher Diaz Riveros <chrisadr@gentoo.org>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Fabien Villepinte <fabien.villepinte@cdbdx.biz>,
+        Fangyi Zhou <fangyi.zhou@yuriko.moe>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Peter Krefting <peter@softwolves.pp.se>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Sebastian Staudt <koraktor@gmail.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Vasco Almeida <vascomalmeida@sapo.pt>,
+        Zhilei Han <linusboyle@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.21 round 2
+Date:   Sun, 24 Feb 2019 15:16:30 +0800
+Message-Id: <20190224071630.5639-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc1.19.g6993b9cd58
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+Hi Junio,
 
-> On Sat, 23 Feb 2019, Johannes Schindelin wrote:
->
->> Robert, care to come up with an example demonstrating where it does not?
->
->   sorry i wasn't clear, all i was pointing out was that "man
-> git-clean" *explicitly* mentioned two locations related to cleaning:
-> ...
-> without additionally *explicitly* mentioning core.excludesFile.
+Please pull the following l10n updates for Git 2.21.  These updates come
+from nine l10n teams (Bulgarian, Catalan, German, Greek, Spanish, French,
+Italian, Swedish and Simplified Chinese).  Jimmy contributed the essential
+translation for Greek and formed a new l10n team.  Alessandro made the first
+contribution for Italian since 2013 and became the new Italian team leader.
 
-OK, so together with the homework Dscho did for you and what I wrote
-earlier, I think you have enough information to answer the question
-yourself.
+The following changes since commit 2d08f3deb9feb73dc8d21d75bfd367839fc1322c:
 
-That is, the code does *not* ignore, and the doc was trying to be
-(overly) exhaustive but because it predates core.excludesFile, after
-the introduction of that configuration, it no longer is exhaustigve
-and has become stale.
+  Merge branch 'ea/rebase-compat-doc-fix' (2019-02-14 14:28:22 -0800)
 
-Which would leave a small, easy and low-hanging fruit, I guess ;-).
+are available in the Git repository at:
 
-Thanks.
+  git://github.com/git-l10n/git-po tags/l10n-2.21.0-rnd2
+
+for you to fetch changes up to ab8f4f5d73caaf2713346b456de095df690e8cf5:
+
+  l10n: bg.po: Updated Bulgarian translation (4363t) (2019-02-23 23:29:23 +0200)
+
+----------------------------------------------------------------
+l10n-2.21.0-rnd2
+
+----------------------------------------------------------------
+Alessandro Menti (1):
+      l10n: it: update the Italian translation
+
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (4363t)
+
+Christopher Díaz Riveros (1):
+      l10n: es: 2.21.0 round 2
+
+Fabien Villepinte (2):
+      l10n: fr.po Fix some typos
+      l10n: fr.po Fix some typos from round3
+
+Fangyi Zhou (1):
+      l10n: zh_CN: Revision for git v2.21.0 l10n
+
+Jean-Noël Avila (1):
+      l10n: fr.po v2.21.0 rnd 2
+
+Jiang Xin (11):
+      Merge branch 'master' of https://github.com/Softcatala/git-po
+      Merge branch 'master' of github.com:linusboyle/git
+      Merge branch 'master' of git://github.com/git-l10n/git-po
+      l10n: git.pot: v2.21.0 round 1 (214 new, 38 removed)
+      Merge branch 'master' of git://git.kernel.org/pub/scm/git/git
+      l10n: git.pot: v2.21.0 round 2 (3 new, 3 removed)
+      Merge branch 'fr_2.21.0_rnd2' of git://github.com/jnavila/git
+      Merge branch 'master' of https://github.com/Softcatala/git-po
+      l10n: zh_CN: for git v2.21.0 l10n round 1~2
+      Merge branch 'bg-submodule-helper-typo' of github.com:pclouds/git-po
+      Merge branch 'master' of https://github.com/ralfth/git-po-de
+
+Jimmy Angelakos (1):
+      l10n: el: add Greek l10n team and essential translations
+
+Jordi Mas (2):
+      l10n: Update Catalan translation
+      l10n: Fixes to Catalan translation
+
+Nguyễn Thái Ngọc Duy (1):
+      l10n: bg.po: correct typo
+
+Peter Krefting (1):
+      l10n: Update Swedish translation (4363t0f0u)
+
+Ralf Thielow (1):
+      l10n: update German translation
+
+Sebastian Staudt (3):
+      l10n: de.po: consistent translation of 'root commit'
+      l10n: de.po: fix a message for index-pack.c
+      l10n: de.po: fix grammar in message for tag.c
+
+Zhilei Han (1):
+      l10n: zh_CN: fix typo of submodule init message
+
+ po/TEAMS    |     9 +-
+ po/bg.po    |  6799 +++++++++-------
+ po/ca.po    |   199 +-
+ po/de.po    |  7203 +++++++++--------
+ po/el.po    | 21468 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ po/es.po    |  6789 +++++++++-------
+ po/fr.po    |  7376 +++++++++++-------
+ po/git.pot  |  6725 +++++++++-------
+ po/it.po    | 24299 +++++++++++++++++++++++++++++++++++++++++++++++++---------
+ po/sv.po    |  6811 +++++++++-------
+ po/zh_CN.po |  6720 +++++++++-------
+ 11 files changed, 69785 insertions(+), 24613 deletions(-)
+ create mode 100644 po/el.po
+
+--
+Jiang Xin
