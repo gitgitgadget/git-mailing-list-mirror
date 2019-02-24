@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AA15202AA
-	for <e@80x24.org>; Sun, 24 Feb 2019 10:11:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7FA9202AA
+	for <e@80x24.org>; Sun, 24 Feb 2019 10:11:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728347AbfBXKLp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Feb 2019 05:11:45 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:42401 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728307AbfBXKLa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Feb 2019 05:11:30 -0500
-Received: by mail-ed1-f66.google.com with SMTP id j89so5191285edb.9
-        for <git@vger.kernel.org>; Sun, 24 Feb 2019 02:11:29 -0800 (PST)
+        id S1728350AbfBXKLq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Feb 2019 05:11:46 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:39377 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728325AbfBXKLg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Feb 2019 05:11:36 -0500
+Received: by mail-ed1-f68.google.com with SMTP id p27so5216148edc.6
+        for <git@vger.kernel.org>; Sun, 24 Feb 2019 02:11:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=KlJ9cMpqDkWyoV0Jjrl+Y9ejaSD6ZiIhkgFYc47D9Co=;
-        b=FmAa/ntyjpJnHa9wBd8htHWvqb165X7Qhr6TbhyPk2rvl8hRoQR3nn5iwByVj5vbNA
-         SVndSRNKAWy7n0S5WlbK0FbEqXcpq+60CCYRo1SVkaPRQIEr7nlxik/xpM+0CIjekz/B
-         Ee/r/GXwS45dppiAS2nDecKzDNHVlrMovvQnDAjamnseYf30ItAqpfmjoFwdPK3K8dcl
-         QJnpAkFC9Ps33UJvjw/jKcZwoMfEUuX0XCGZWy5e797sC7EQ8n9GdAh0xbOOyI3fhXFi
-         xptnSvd6fAUmwv+NOj4DYRJz8XA2kw8wo1YXDVZBV5Fk0mlr39Qm8Zn+yqhqKybpnaSl
-         Dw7g==
+        bh=sfc7J9SZuKFabS/ta2+LHmqfazZiHP/YuVNwzg0MP00=;
+        b=AsUx1KXo7BbZ5wUuY8YwQm0KmFb2zI7fI5y8suEUYHoy2PBjThhPD2gAAnFiHeMbqN
+         0EUM1hXW45tzsZGOrQ6aTkUtjefSsXZuTLCgZWYBKz+9rVafC6ZL3OK28+nI9r/TgBT6
+         sJCi5wVazqns8nwhjZJe7D/XItDyEfAStxRVMn6uyi14R8XBftf47G6onyF8DiGqeHmq
+         jlM7aFL20BOLzbkB4alZRV0FA1LuKkfkmcQkw6u3nyd12VcKWk3hlYVvNHZ7qcAawXDm
+         FSz6Obmmf+fpuJRIT10sRyi7mpDzkfj7zoB1vIcXjiieGshuIo13zZVzM38tMCLABwPf
+         LhUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KlJ9cMpqDkWyoV0Jjrl+Y9ejaSD6ZiIhkgFYc47D9Co=;
-        b=jE8a8AjRuLIz2AZyYT3pQCJBU0WehQk4yI7N4gNOz758P00ddq+9w8lt0dxXLZyMHr
-         tqqEYw+JLjD4HwE2S944JXsq/4n/iNVOPw6pzbnbD+MoRnVURjSjzG0CLks78jFAzOHw
-         RkxNWnYpC8d3jpY2981kzpSp1f0FPb4skzkdesQkweJqBD3jMI/MLdlLrYChcSx2xhxm
-         DnfRUaQRy5Ib4+CQeavxPxkmOjzOLMoLIyoONoHKJFOYojttND3g6R0dHgdt8U6aMMaR
-         6RlrluLTyiXndCJ+HwsFcccvoBuDuovbcEaWLZW7trPkOCr/Xd4HC0NrhDznyldXAmqS
-         QYog==
-X-Gm-Message-State: AHQUAua3I7IwYgM8EfAEE4MLc8J5T37mfM3fF4yOX6NopkaqgExG9ftX
-        x8UcwwIEvYeSSaMhLrcNm1pewQ1x
-X-Google-Smtp-Source: AHgI3IahJ5JBdw5srMVBqD5hkla6m7r5cx5KDc/QpDDX57QUSg4oQCAure1cZx87B/ioyxmRg+37wQ==
-X-Received: by 2002:a50:a7e6:: with SMTP id i93mr10158363edc.193.1551003088187;
-        Sun, 24 Feb 2019 02:11:28 -0800 (PST)
+        bh=sfc7J9SZuKFabS/ta2+LHmqfazZiHP/YuVNwzg0MP00=;
+        b=Y2qyRfI0l5DSbFPFnDHbhI3QsVPtO1eXYEtTp+ECShkIZ9l7oLFmbr+6EjfhSOok/+
+         rCZQbo5IRLG+HQ99HwBO2Q2V99v5Qp1S1wNUuqOn8RkZHkoUlUMII/SG6pa+8Ze829ms
+         YkG3VUs6qMMHmB23cry83TE06UegQTCgtbOIijh+nAjAQiCAXeKifJ6lgbolazidJLOT
+         w/nf4efG0l6+w5YKmBVheAI6gOAHgcBtlIPea88jkr2IbxgLzqnBKwdgNIeZEpV2rFe9
+         cXaJupo8DaEfakC5echesMWmFokG5mj4nV7y4EkZN8sZfp7hlPmPqPPmYGXZ1jf8WKcp
+         lKLg==
+X-Gm-Message-State: AHQUAuZ3vY4tNU4YOYAVb3+zGqm1+CZqOAAY3GeeTUzh5ZBq9sfN01V1
+        OLCIMIuU+Ub27qfAR5Qykivapsra
+X-Google-Smtp-Source: AHgI3IZNM+sgAkzVSfW1Dms9FNxIzpNNHK6ttQ6GnfA457v9IAv8LrJOwfSOohlem1daxpHpBIT2+w==
+X-Received: by 2002:a50:b4db:: with SMTP id x27mr10362802edd.90.1551003094197;
+        Sun, 24 Feb 2019 02:11:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h22sm202440ejj.43.2019.02.24.02.11.27
+        by smtp.gmail.com with ESMTPSA id z18sm1205419ejp.44.2019.02.24.02.11.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Feb 2019 02:11:27 -0800 (PST)
-Date:   Sun, 24 Feb 2019 02:11:27 -0800 (PST)
-X-Google-Original-Date: Sun, 24 Feb 2019 10:11:04 GMT
-Message-Id: <8e011fa67a0bf64a4ee0aeb0c76a943260316ed4.1551003074.git.gitgitgadget@gmail.com>
+        Sun, 24 Feb 2019 02:11:33 -0800 (PST)
+Date:   Sun, 24 Feb 2019 02:11:33 -0800 (PST)
+X-Google-Original-Date: Sun, 24 Feb 2019 10:11:12 GMT
+Message-Id: <e5a8c2fcd4a7e41725df691dae8b9b96dd1e78b2.1551003074.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.117.git.gitgitgadget@gmail.com>
 References: <pull.117.git.gitgitgadget@gmail.com>
 From:   "Pranit Bauva via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 16/26] bisect--helper: `bisect_state` & `bisect_head` shell
- function in C
+Subject: [PATCH 24/26] bisect--helper: remove the dequote in bisect_start()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,17 +70,11 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-Reimplement the `bisect_state()` shell function in C and also add a
-subcommand `--bisect-state` to `git-bisect--helper` to call it from
-git-bisect.sh .
-
-Using `--bisect-state` subcommand is a temporary measure to port shell
-function to C so as to use the existing test suite. As more functions
-are ported, this subcommand will be retired and will be called by some
-other methods.
-
-`bisect_head()` is called from `bisect_state()`, thus it is not required to
-introduce another subcommand.
+Dequoting the arguments was introduced in 25b48b5c to port the function
+`bisect_next()` but after the `bisect_replay()` porting, the dequoting
+is carried out itself when it passes the arguments to `bisect_start()`
+in a simpler way thus dequoting again isn't required. So remove the
+extra "dequoting" code introduced by the commit 25b48b5c.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
@@ -89,223 +82,92 @@ Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 ---
- builtin/bisect--helper.c | 80 ++++++++++++++++++++++++++++++++++++++++
- git-bisect.sh            | 55 ++-------------------------
- 2 files changed, 84 insertions(+), 51 deletions(-)
+ builtin/bisect--helper.c | 24 +++++-------------------
+ 1 file changed, 5 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 61c3cc517a..49ef0ff6bc 100644
+index 4b4401005d..4eb2580ba8 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -31,6 +31,8 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-next"),
- 	N_("git bisect--helper --bisect-auto-next"),
- 	N_("git bisect--helper --bisect-autostart"),
-+	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
-+	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
- 	NULL
- };
- 
-@@ -818,6 +820,74 @@ static int bisect_autostart(struct bisect_terms *terms)
+@@ -558,11 +558,6 @@ static int bisect_auto_next(struct bisect_terms *terms, const char *prefix)
  	return 0;
  }
  
-+static char *bisect_head(void)
-+{
-+	if (is_empty_or_missing_file(git_path_bisect_head()))
-+		return "HEAD";
-+	else
-+		return "BISECT_HEAD";
-+}
-+
-+static int bisect_state(struct bisect_terms *terms, const char **argv,
-+			int argc)
-+{
-+	const char *state = argv[0];
-+
-+	if (check_and_set_terms(terms, state))
-+		return -1;
-+
-+	if (!argc)
-+		return error(_("Please call `--bisect-state` with at least one argument"));
-+
-+	if (argc == 1 && one_of(state, terms->term_good,
-+	    terms->term_bad, "skip", NULL)) {
-+		const char *bisected_head = xstrdup(bisect_head());
-+		const char *hex[1];
-+		struct object_id oid;
-+
-+		if (get_oid(bisected_head, &oid))
-+			return error(_("Bad rev input: %s"), bisected_head);
-+		if (bisect_write(state, oid_to_hex(&oid), terms, 0))
-+			return -1;
-+
-+		*hex = xstrdup(oid_to_hex(&oid));
-+		check_expected_revs(hex, 1);
-+		return bisect_auto_next(terms, NULL);
-+	}
-+
-+	if ((argc == 2 && !strcmp(state, terms->term_bad)) ||
-+			one_of(state, terms->term_good, "skip", NULL)) {
-+		int i;
-+		struct string_list hex = STRING_LIST_INIT_DUP;
-+
-+		for (i = 1; i < argc; i++) {
-+			struct object_id oid;
-+
-+			if (get_oid(argv[i], &oid)) {
-+				string_list_clear(&hex, 0);
-+				return error(_("Bad rev input: %s"), argv[i]);
-+			}
-+			string_list_append(&hex, oid_to_hex(&oid));
-+		}
-+		for (i = 0; i < hex.nr; i++) {
-+			const char **hex_string = (const char **) &hex.items[i].string;
-+			if (bisect_write(state, *hex_string, terms, 0)) {
-+				string_list_clear(&hex, 0);
-+				return -1;
-+			}
-+			check_expected_revs(hex_string, 1);
-+		}
-+		string_list_clear(&hex, 0);
-+		return bisect_auto_next(terms, NULL);
-+	}
-+
-+	if (!strcmp(state, terms->term_bad))
-+		return error(_("'git bisect %s' can take only one argument."),
-+		      terms->term_bad);
-+
-+	return -1;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
-@@ -832,6 +902,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_NEXT,
- 		BISECT_AUTO_NEXT,
- 		BISECT_AUTOSTART,
-+		BISECT_STATE
- 	} cmdmode = 0;
- 	int no_checkout = 0, res = 0, nolog = 0;
- 	struct option options[] = {
-@@ -857,6 +928,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("verify the next bisection state then checkout the next bisection commit"), BISECT_AUTO_NEXT),
- 		OPT_CMDMODE(0, "bisect-autostart", &cmdmode,
- 			 N_("start the bisection if BISECT_START is empty or missing"), BISECT_AUTOSTART),
-+		OPT_CMDMODE(0, "bisect-state", &cmdmode,
-+			 N_("mark the state of ref (or refs)"), BISECT_STATE),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_BOOL(0, "no-log", &nolog,
-@@ -929,6 +1002,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		set_terms(&terms, "bad", "good");
- 		res = bisect_autostart(&terms);
- 		break;
-+	case BISECT_STATE:
-+		if (argc == 0)
-+			return error(_("--bisect-state requires at least one revision"));
-+		set_terms(&terms, "bad", "good");
-+		get_terms(&terms);
-+		res = bisect_state(&terms, argv, argc);
-+		break;
- 	default:
- 		return error("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 97bb15b38f..4a5afc7a93 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -39,16 +39,6 @@ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
- TERM_BAD=bad
- TERM_GOOD=good
- 
--bisect_head()
+-static inline char *dequote_arg(const char *arg)
 -{
--	if test -f "$GIT_DIR/BISECT_HEAD"
--	then
--		echo BISECT_HEAD
--	else
--		echo HEAD
--	fi
+-	return arg[0] != '\'' ? xstrdup(arg) : sq_dequote(xstrdup(arg));
 -}
 -
- bisect_skip() {
- 	all=''
- 	for arg in "$@"
-@@ -61,43 +51,7 @@ bisect_skip() {
- 		esac
- 		all="$all $revs"
- 	done
--	eval bisect_state 'skip' $all
--}
+ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 			const char **argv, int argc)
+ {
+@@ -583,22 +578,16 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 	 * Check for one bad and then some good revisions
+ 	 */
+ 	for (i = 0; i < argc; i++) {
+-		char *arg = dequote_arg(argv[i]);
+ 
+-		if (!strcmp(arg, "--")) {
++		if (!strcmp(argv[i], "--")) {
+ 			has_double_dash = 1;
+-			free(arg);
+ 			break;
+ 		}
+-		free(arg);
+ 	}
+ 
+ 	for (i = 0; i < argc; i++) {
+-		char *dequoted = dequote_arg(argv[i]);
+-		const char *arg = dequoted;
 -
--bisect_state() {
--	git bisect--helper --bisect-autostart
--	state=$1
--	git bisect--helper --check-and-set-terms $state $TERM_GOOD $TERM_BAD || exit
--	get_terms
--	case "$#,$state" in
--	0,*)
--		die "Please call 'bisect_state' with at least one argument." ;;
--	1,"$TERM_BAD"|1,"$TERM_GOOD"|1,skip)
--		bisected_head=$(bisect_head)
--		rev=$(git rev-parse --verify "$bisected_head") ||
--			die "$(eval_gettext "Bad rev input: \$bisected_head")"
--		git bisect--helper --bisect-write "$state" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit
--		git bisect--helper --check-expected-revs "$rev" ;;
--	2,"$TERM_BAD"|*,"$TERM_GOOD"|*,skip)
--		shift
--		hash_list=''
--		for rev in "$@"
--		do
--			sha=$(git rev-parse --verify "$rev^{commit}") ||
--				die "$(eval_gettext "Bad rev input: \$rev")"
--			hash_list="$hash_list $sha"
--		done
--		for rev in $hash_list
--		do
--			git bisect--helper --bisect-write "$state" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit
--		done
--		git bisect--helper --check-expected-revs $hash_list ;;
--	*,"$TERM_BAD")
--		die "$(eval_gettext "'git bisect \$TERM_BAD' can take only one argument.")" ;;
--	*)
--		usage ;;
--	esac
--	git bisect--helper --bisect-auto-next
-+	eval git bisect--helper --bisect-state 'skip' $all
- }
+-		if (!strcmp(arg, "--")) {
+-			free(dequoted);
++		const char *arg = argv[i];
++		if (!strcmp(argv[i], "--")) {
+ 			break;
+ 		} else if (!strcmp(arg, "--no-checkout")) {
+ 			no_checkout = 1;
+@@ -606,7 +595,7 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 			 !strcmp(arg, "--term-old")) {
+ 			must_write_terms = 1;
+ 			free((void *) terms->term_good);
+-			terms->term_good = dequote_arg(argv[++i]);
++			terms->term_good = xstrdup(argv[++i]);
+ 		} else if (skip_prefix(arg, "--term-good=", &arg) ||
+ 			   skip_prefix(arg, "--term-old=", &arg)) {
+ 			must_write_terms = 1;
+@@ -616,7 +605,7 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 			 !strcmp(arg, "--term-new")) {
+ 			must_write_terms = 1;
+ 			free((void *) terms->term_bad);
+-			terms->term_bad = dequote_arg(argv[++i]);
++			terms->term_bad = xstrdup(argv[++i]);
+ 		} else if (skip_prefix(arg, "--term-bad=", &arg) ||
+ 			   skip_prefix(arg, "--term-new=", &arg)) {
+ 			must_write_terms = 1;
+@@ -625,7 +614,6 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 		} else if (starts_with(arg, "--") &&
+ 			   !one_of(arg, "--term-good", "--term-bad", NULL)) {
+ 			error(_("unrecognized option: '%s'"), arg);
+-			free(dequoted);
+ 			return -1;
+ 		} else {
+ 			char *commit_id = xstrfmt("%s^{commit}", arg);
+@@ -633,14 +621,12 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
+ 				error(_("'%s' does not appear to be a valid "
+ 					"revision"), arg);
+ 				free(commit_id);
+-				free(dequoted);
+ 				return -1;
+ 			}
  
- bisect_visualize() {
-@@ -185,8 +139,7 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
- 			state="$TERM_GOOD"
- 		fi
+ 			string_list_append(&revs, oid_to_hex(&oid));
+ 			free(commit_id);
+ 		}
+-		free(dequoted);
+ 	}
+ 	pathspec_pos = i;
  
--		# We have to use a subshell because "bisect_state" can exit.
--		( bisect_state $state >"$GIT_DIR/BISECT_RUN" )
-+		( git bisect--helper --bisect-state $state >"$GIT_DIR/BISECT_RUN" )
- 		res=$?
- 
- 		cat "$GIT_DIR/BISECT_RUN"
-@@ -201,7 +154,7 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
- 		if [ $res -ne 0 ]
- 		then
- 			eval_gettextln "bisect run failed:
--'bisect_state \$state' exited with error code \$res" >&2
-+'git bisect--helper --bisect-state \$state' exited with error code \$res" >&2
- 			exit $res
- 		fi
- 
-@@ -242,7 +195,7 @@ case "$#" in
- 	start)
- 		git bisect--helper --bisect-start "$@" ;;
- 	bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
--		bisect_state "$cmd" "$@" ;;
-+		git bisect--helper --bisect-state "$cmd" "$@" ;;
- 	skip)
- 		bisect_skip "$@" ;;
- 	next)
 -- 
 gitgitgadget
 
