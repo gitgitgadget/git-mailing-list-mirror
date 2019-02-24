@@ -7,55 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECB4D20248
+	by dcvr.yhbt.net (Postfix) with ESMTP id B90AB20248
 	for <e@80x24.org>; Sun, 24 Feb 2019 10:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728271AbfBXKLX (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Feb 2019 05:11:23 -0500
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:45415 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728120AbfBXKLV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Feb 2019 05:11:21 -0500
-Received: by mail-ed1-f54.google.com with SMTP id d9so5178032edh.12
-        for <git@vger.kernel.org>; Sun, 24 Feb 2019 02:11:20 -0800 (PST)
+        id S1728262AbfBXKLW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Feb 2019 05:11:22 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:42396 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728096AbfBXKLU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Feb 2019 05:11:20 -0500
+Received: by mail-ed1-f67.google.com with SMTP id j89so5191147edb.9
+        for <git@vger.kernel.org>; Sun, 24 Feb 2019 02:11:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=UQ4CCD8hkcBwpkfRYkUR8c1ujID7gYubmdZdKWZ/jiU=;
-        b=Phja/wg3QgjrA3yeJHv1fTjo0qQRsj0yNMLfGtO9MezMvjUw0uYxb1g9B5XObtsybV
-         HRZaTwHFWJdRGdtmPzZoNZG5Cy8idk4xGofzdSKw29psIqrW2r10MVnHGMLlhj4Hnr6h
-         q9nGr12HlWcah1vtYQ5XDEM4Us/Kbwyf+zwFcL4g5s1O23NEzB06dN+s9tr0hrncFOO7
-         qt/LzHmMx86Z8TDxnql3KIYgRtINF15gpYP25Jgf9lnksWNuCwHwy0LGrgT1rfVJjahV
-         lN5Cf0aQRoc0PzXa0zLFuCuHmVE1A+lMvHKa1uK5VBfG0pzsBMqNXAGmSZrw3ad9+gCe
-         dHLw==
+        bh=hmWe158jp9FE67wVvBYJFEYdrHr9Pj7yRIiHYs5M3Eo=;
+        b=ches+dAWis5TeNyK/O7qtMeRCEDOZVYT9HUVduz0II3I2Y8lZNVeyqVhrvXeehfpPw
+         rvhrFxZJAGTMcsguBYH7M9hrGWUgIK79RGRVAENPsfVHC7DwHBYIyNJ0t8GGwhTArohg
+         4nOhZJc01BC1Y+s+AsY64xycI6ETAsj+AUJcwnUzkWBMA2a0iH5MPv789qmWSK6Izu08
+         WmJd5qOV85uaeXblwjt+iuTnWZT2WEXZNfM0vrdTD0YtxMhH+9zqCGDs09bMn6jetyaG
+         OrDCbYFqzyPWjnjfo671zuhKfgFxLEXAAra0eCWykg4MH75I5rX8y20k0SHWcdaS4g3/
+         OCdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UQ4CCD8hkcBwpkfRYkUR8c1ujID7gYubmdZdKWZ/jiU=;
-        b=nIFYgRlbh2etZ7DnHlXc/qYGCWrKC/B3kGGJPYBGMLHuPdSrMjllxH+Hr8gCbe4Ky8
-         I08XZLx9dAPtJLcUNLSSd8G1iClhx7+7cNfKagHVp4r8Rx4Xhj02khKBtAVGzYcGiv5Z
-         VpFs5hn0zWJZvd8rk6Y8p+FqGPnURAe6yrc/1VAvvd/4uC0Hv6dr1nGoeUwfF+MY46ii
-         d7kwWhR4L3Df5JUGwpeuTVeOqLx3h5H8nP2Zi8Uu8VdDJy1CVc2r4goIVZhkoxiRSlKp
-         Yq678NWSDyK0T5couSYZEB0pZee4JbYcTkb86u+CiXwGVnWUZEuphTNXrSNnTzidbr3s
-         UfcA==
-X-Gm-Message-State: AHQUAubrNchhwOQit6DjZQaV1lG6kUXZwvW3J/KDUhm31LOsUkvLwTWN
-        voD6CeQuwuFmLovXOi08ybD4W6fX
-X-Google-Smtp-Source: AHgI3IY67SzmMKayjb/G063qZPdP6FPNnrNmYG9DxqML9JWb2/xnPW1Mb50SaCZp9zqE+Lw6ZMFmYw==
-X-Received: by 2002:a50:b613:: with SMTP id b19mr10183991ede.214.1551003079699;
-        Sun, 24 Feb 2019 02:11:19 -0800 (PST)
+        bh=hmWe158jp9FE67wVvBYJFEYdrHr9Pj7yRIiHYs5M3Eo=;
+        b=dyxFEAL1yqGpVWf4RaST/mNexIpUSBPgm0YYqDoH3v0phWGKisQLzG7Uyf/KjQSwHa
+         ueVjWMct8JJpiSFBC20kHitK9cotNeUCzuQmW3+SLzfAneAcvmlF4qsxld8Mkbsp5P7H
+         oDWJ7pwjCGpG5NUW/c2XT88OTRf0ZU1psK2tiCYs1Pcb3HNFyDFfjB+hr5LG22VozI6/
+         3kn4XirGrMdnYOjTRMS0UvHRYoujDLXhM1sCkvlsnd28VYu5JjuMw1w55tVKzNGEskBN
+         hmNnPslJVbZByGIhL9bOXq9oVdIufE2AxBHS9JaEAWIq87WKa5NOv2WBSHTR9qRjz6O0
+         8Uqw==
+X-Gm-Message-State: AHQUAuYCahp9z+T6JKfF0m8ncnJcxHrfzKpmlwOzs46tH+Bffhl0UR0/
+        Mqji+LmkZk/QyRnSwWuVuq/6yqKl
+X-Google-Smtp-Source: AHgI3IavMYIxodSjMy8Gn2wE9qD7chk6/LLw4McgUQC/vN4qJtKeOyBZugGLhsT5JZsJySc88SR0uw==
+X-Received: by 2002:a17:906:7206:: with SMTP id m6mr9208756ejk.145.1551003078915;
+        Sun, 24 Feb 2019 02:11:18 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n25sm1823443edd.83.2019.02.24.02.11.19
+        by smtp.gmail.com with ESMTPSA id i42sm1821362eda.86.2019.02.24.02.11.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Feb 2019 02:11:19 -0800 (PST)
-Date:   Sun, 24 Feb 2019 02:11:19 -0800 (PST)
-X-Google-Original-Date: Sun, 24 Feb 2019 10:10:53 GMT
-Message-Id: <45c00ddf64982448361c461964e4ad77a328be74.1551003074.git.gitgitgadget@gmail.com>
+        Sun, 24 Feb 2019 02:11:18 -0800 (PST)
+Date:   Sun, 24 Feb 2019 02:11:18 -0800 (PST)
+X-Google-Original-Date: Sun, 24 Feb 2019 10:10:52 GMT
+Message-Id: <b6aecadd82949a120ca880b24aab9331658f3a34.1551003074.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.117.git.gitgitgadget@gmail.com>
 References: <pull.117.git.gitgitgadget@gmail.com>
 From:   "Pranit Bauva via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 05/26] bisect.c: libify `bisect_checkout` and its dependants
+Subject: [PATCH 04/26] bisect.c: libify `exit_if_skipped_commits` to
+ `error_if_skipped...`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,59 +78,86 @@ reported.
 Emulate try catch in C by converting `exit(<positive-value>)` to
 `return <negetive-value>`. Follow POSIX conventions to return
 <negative-value> to indicate error.
+Modify `cmd_bisect_helper()` to handle these negative returns.
 
-Turn `exit()` to `return` calls in `bisect_checkout()`.
+Turn `exit()` to `return` calls in `exit_if_skipped_commits()` and rename
+the method to `error_if_skipped_commits()`.
 
-Handle this return in dependant methods - `check_merge_bases()`.
+Handle this return in dependant method `bisect_next_all()`.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 ---
- bisect.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ bisect.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index bb926f09d0..1f2f3201a3 100644
+index 487675c672..bb926f09d0 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -710,7 +710,7 @@ static int is_expected_rev(const struct object_id *oid)
- static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
- {
- 	char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
--
-+	int res = 0;
- 	memcpy(bisect_rev_hex, oid_to_hex(bisect_rev), GIT_SHA1_HEXSZ + 1);
- 	update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
- 
-@@ -719,14 +719,14 @@ static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
- 		update_ref(NULL, "BISECT_HEAD", bisect_rev, NULL, 0,
- 			   UPDATE_REFS_DIE_ON_ERR);
- 	} else {
--		int res;
- 		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
- 		if (res)
--			exit(res);
-+			return res > 0 ? -res : res;
- 	}
- 
- 	argv_show_branch[1] = bisect_rev_hex;
--	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
-+	res = run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
-+	return res > 0 ? -res : res;
+@@ -659,11 +659,11 @@ static void bisect_common(struct rev_info *revs)
+ 		mark_edges_uninteresting(revs, NULL);
  }
  
- static struct commit *get_commit_reference(const struct object_id *oid)
-@@ -822,7 +822,7 @@ static void check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
- 			handle_skipped_merge_base(mb);
- 		} else {
- 			printf(_("Bisecting: a merge base must be tested\n"));
--			exit(bisect_checkout(mb, no_checkout));
-+			exit(-bisect_checkout(mb, no_checkout));
- 		}
- 	}
+-static void exit_if_skipped_commits(struct commit_list *tried,
++static int error_if_skipped_commits(struct commit_list *tried,
+ 				    const struct object_id *bad)
+ {
+ 	if (!tried)
+-		return;
++		return 0;
  
+ 	printf("There are only 'skip'ped commits left to test.\n"
+ 	       "The first %s commit could be any of:\n", term_bad);
+@@ -674,7 +674,13 @@ static void exit_if_skipped_commits(struct commit_list *tried,
+ 	if (bad)
+ 		printf("%s\n", oid_to_hex(bad));
+ 	printf(_("We cannot bisect more!\n"));
+-	exit(2);
++
++	/*
++	 * We don't want to clean the bisection state
++	 * as we need to get back to where we started
++	 * by using `git bisect reset`.
++	 */
++	return -2;
+ }
+ 
+ static int is_expected_rev(const struct object_id *oid)
+@@ -949,7 +955,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ {
+ 	struct rev_info revs;
+ 	struct commit_list *tried;
+-	int reaches = 0, all = 0, nr, steps;
++	int reaches = 0, all = 0, nr, steps, res;
+ 	struct object_id *bisect_rev;
+ 	char *steps_msg;
+ 
+@@ -972,8 +978,9 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 		 * We should exit here only if the "bad"
+ 		 * commit is also a "skip" commit.
+ 		 */
+-		exit_if_skipped_commits(tried, NULL);
+-
++		res = error_if_skipped_commits(tried, NULL);
++		if (res)
++			exit(-res);
+ 		printf(_("%s was both %s and %s\n"),
+ 		       oid_to_hex(current_bad_oid),
+ 		       term_good,
+@@ -990,7 +997,9 @@ int bisect_next_all(const char *prefix, int no_checkout)
+ 	bisect_rev = &revs.commits->item->object.oid;
+ 
+ 	if (oideq(bisect_rev, current_bad_oid)) {
+-		exit_if_skipped_commits(tried, current_bad_oid);
++		res = error_if_skipped_commits(tried, current_bad_oid);
++		if (res)
++			exit(-res);
+ 		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
+ 			term_bad);
+ 		show_diff_tree(prefix, revs.commits->item);
 -- 
 gitgitgadget
 
