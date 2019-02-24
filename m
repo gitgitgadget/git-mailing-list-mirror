@@ -2,124 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1944320248
-	for <e@80x24.org>; Sun, 24 Feb 2019 14:47:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ED9320248
+	for <e@80x24.org>; Sun, 24 Feb 2019 15:03:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728231AbfBXOrG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Feb 2019 09:47:06 -0500
-Received: from mout.gmx.net ([212.227.17.21]:55209 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725956AbfBXOrG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Feb 2019 09:47:06 -0500
-Received: from [192.168.0.171] ([37.201.195.16]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ld4xA-1hO97X1pOC-00i9tN; Sun, 24
- Feb 2019 15:47:03 +0100
-Date:   Sun, 24 Feb 2019 15:47:08 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [GSoC] Introduction
-In-Reply-To: <CAL7ArXqkVfrnQWYFDYdwMGkZjHCwzyQX4pbKCo=KCzy-zJiRBw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902241537370.45@tvgsbejvaqbjf.bet>
-References: <CAL7ArXqkVfrnQWYFDYdwMGkZjHCwzyQX4pbKCo=KCzy-zJiRBw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1725966AbfBXPDJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Feb 2019 10:03:09 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46908 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725860AbfBXPDI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Feb 2019 10:03:08 -0500
+Received: by mail-wr1-f65.google.com with SMTP id i16so7148105wrs.13
+        for <git@vger.kernel.org>; Sun, 24 Feb 2019 07:03:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=X7iz5YOAVy7QWTDYJxy7M5eLo3qPUItPIApCReJadTk=;
+        b=ZuJdhbEJLXCzRfwbcWX+khPWbW7EuZ/Ufj8xJZaYp/dfudpDZTYiEoKN6f+G7wy6EG
+         6aY4xgSbab77I5mVkbE4pzaO4KU72Zh9uyMZ+l9+nOZrsAXAg6i0v2M5KLRVv4qxzYwQ
+         yT5xOYOs/q0zI01XIQjJLBWfr2jN4a5jV6IjsTxrnFv9/0ZgyoiQAZ2nEaM02I+4Ht5r
+         lNxoH6g1Z2F7k3wLtolEJBc3rtFDJYl1fgu9XiG32ARasrFyx65TX/Pf2mWkOz5VKz2S
+         /t7cmizU/1udqEK1v3el6lmKMrkqvwKOBT98yDhPAa31/UzvBNfvo3rgY8WvSF0rqeIN
+         4znA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=X7iz5YOAVy7QWTDYJxy7M5eLo3qPUItPIApCReJadTk=;
+        b=cTSK40IWBtk9wuXqKU3q4qOa4Ps7FrkJGrkuWBs+ukpx3wq/bHoUmyjFuRiXBxKdgT
+         UQ6V7nuQBWmn0G7dGqd+Ry5p/3aYsDbA9YleatX02OlhIP0ggWtc4F6+9ZKSSA1GWqYa
+         Oj57I6mA+n2Csa692SJuEUEF/wPp+E/KKhN7L71lDUp8PNgWxTuK0qGZJiDKNi13q/es
+         5RW0gMFE9apxoM5Ch6JTTMZytZpLhGHBaVfQvivcgr42QKvc5lTuNcYAFhbn7UgC3jBA
+         E7pml70DeIRkFJ7njfOHFkE+pCUvknQBpTdzQ0K6ttQ2ZXem+4ZlKrS6hWrywgvNOgz6
+         /fag==
+X-Gm-Message-State: AHQUAuaOxbpq+AE/Ellk8Jgf69edT5gTje0zVR3jSuJ8AhGz7afT92aP
+        g49wJfNT7AlA8fbjfxZUG2M=
+X-Google-Smtp-Source: AHgI3IYOeR7DGNIT54pdVpWdQASGX5oH3GG+htGjtGah1N3r7x/zremB/rABx+GqpElYBo2QVurDzQ==
+X-Received: by 2002:adf:fdc3:: with SMTP id i3mr9045580wrs.252.1551020586468;
+        Sun, 24 Feb 2019 07:03:06 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id d1sm2598679wrs.13.2019.02.24.07.03.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 24 Feb 2019 07:03:05 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Christopher Diaz Riveros <chrisadr@gentoo.org>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Fabien Villepinte <fabien.villepinte@cdbdx.biz>,
+        Fangyi Zhou <fangyi.zhou@yuriko.moe>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
+        <pclouds@gmail.com>, Peter Krefting <peter@softwolves.pp.se>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Sebastian Staudt <koraktor@gmail.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBR?= =?utf-8?B?dcOibg==?= 
+        <vnwildman@gmail.com>, Vasco Almeida <vascomalmeida@sapo.pt>,
+        Zhilei Han <linusboyle@gmail.com>
+Subject: Re: [GIT PULL] l10n updates for 2.21 round 2
+References: <20190224071630.5639-1-worldhello.net@gmail.com>
+Date:   Sun, 24 Feb 2019 07:03:05 -0800
+In-Reply-To: <20190224071630.5639-1-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Sun, 24 Feb 2019 15:16:30 +0800")
+Message-ID: <xmqq1s3xns9i.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+JCrIXDkn4KqvPxzlLPS2GSL+wHRHKtxm14vs6RszeK0Tq9IfvG
- FKqZ+JD+Ivn03ptjaK1uqzHEAiF7HeupKGuBMX77LUQ2hWl0NJ8lZkfh8Lb0VseJjdvcylb
- yEaL0fvfVzsHywqlcQwlI2zqX4pCIT0yXZsy5UsvF14ndRYy15mIitz4tVJ2+6vqt/TbLft
- 394ACUKoxr43JE4moGHcg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cYJWFxgDsUA=:Q77MnA0xWoXHpn6NdW5i5x
- aPbFKDP2hOx44pu5oC0sOx6sMmiX3FBiD6UO2quM5fQ9vwuQKrueVmbu6A/Y6sVa5dUWn+FA7
- COVtfmrFC49JOr3+/8tKKMjA9/zZ8TNUFwRuCQoaLRSBn/+bzoe8h1P7yjoe+wzdXjW9Vw1sP
- LakUEH7pfGQhfPWiYi8cm8PhsgoAPsGUKyYsMjT7b/rZ8t4iUZfem06KXaXKOUkcwFQJbO3/h
- wW4ywdjXgDQFPjbYiHBadYNzaBk/UI1ZNjcTh4EK53qgni3dsUu+80XDSBWgKnU6sP8cwhsaG
- ONqdSevfLLjXzUpYmYzvdC23D+EOz+x2+uOTDdwIEbonT5yfFHWNEgDM2YjR/8HLb9IAmEvxz
- O2QxOvxk9+tPfoe6+lCl7qfTiTkzH9D2y4K1slAs+Phr8+mOHlsKC8T+xEEyaCREFtFbK84SW
- 7pXBTVLzHghEPn27gmaMbtbIdcQARG6O6rV3s914kaNDMMagaFPl96RN1utYfGtDXhvSTVP1C
- L2dpv6CEHw9Dg97Kz+PB+OtLkeOz224frS0Y9jga/V4rs5Fr09nDPvqyoWjYTz9+ceGJtPFGh
- CHE87WtlDU9G9ICaboL0X7sIbkJkLM4C0/OwFbSPsfJrRNUNNQO6SapF98AFSnaCMPvNrETrD
- 8znEJZYggB8q7JFArpO6NeHicaFgu7zOJWJFBTOtxVtYEQEg23Sj+on5qHnLixlgeIUqnFgWA
- bTbQVp327ixturqLxwk7V7VaNUbVpqWp8xxFI7awQYItRFFbQGFe0VHd49/0VNWb325cfI/D6
- o9l+Ssp2mWGHS8BGzlqBcSNHTS1BJwwSqNGA9mSlMy1oaTZEGmSP2+2B2GHmuflSa2cddUuNa
- VsfjUETffr3vOFbKaxhZnB+8AXX/7WrnpPN0HjuG6Iwe0FYVgII3J2h2nhjTWZwNdxI7SC2Dn
- y1PjKeYZ3XA==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit,
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-On Sun, 24 Feb 2019, Rohit Ashiwal wrote:
+> Hi Junio,
+>
+> Please pull the following l10n updates for Git 2.21.  These updates come
+> from nine l10n teams (Bulgarian, Catalan, German, Greek, Spanish, French,
+> Italian, Swedish and Simplified Chinese).  Jimmy contributed the essential
+> translation for Greek and formed a new l10n team.  Alessandro made the first
+> contribution for Italian since 2013 and became the new Italian team leader.
+>
+> The following changes since commit 2d08f3deb9feb73dc8d21d75bfd367839fc1322c:
+>
+>   Merge branch 'ea/rebase-compat-doc-fix' (2019-02-14 14:28:22 -0800)
+>
+> are available in the Git repository at:
+>
+>   git://github.com/git-l10n/git-po tags/l10n-2.21.0-rnd2
+>
+> for you to fetch changes up to ab8f4f5d73caaf2713346b456de095df690e8cf5:
+>
+>   l10n: bg.po: Updated Bulgarian translation (4363t) (2019-02-23 23:29:23 +0200)
 
-> Hello
+Thank you and the whole l10n team as always.
 
-Hi there!
-
-> I am Rohit Ashiwal, a computer science and engineering student from
-> IIT Roorkee. I am a git user for 2 years now and want to contribute
-> towards its development.
-
-Great!
-
-> I have read the microproject list available [here](1) and project
-> titled `Use test_path_is_*  functions in test scripts` caught my eye.
-> I want to work on this one if anyone is not working on it (I was not
-> able to find related threads on public-inbox).
-
-Go for it ;-) The microprojects are basically a straight-forward way to
-introduce prospective GSoC students to Git's code contribution process.
-
-In that sense, while it would be better for students not to have
-overlapping microprojects, it is not the end of the world, either.
-
-In your case, it is relatively easy to figure out that no other student
-mentioned this project on the Git mailing list:
-https://public-inbox.org/git/?q=test_path_is_file
-
-> I am somewhat familiar with git's code as I was previously working on
-> git-for-windows and I have solved 1 [issue](2), which is a reason for
-> my concern. Should this count as a microproject? As the webpage
-> instructs us to work only on 1 microproject.
-
-True. You could brush up that pair of patches to teach `git archive` to
-avoid spawning `gzip` when generating `.tar.gz` archives, and submit them
-using the process suggested in https://git-scm.com/docs/SubmittingPatches.
-
-(You might want to make it easier on yourself and use GitGitGadget, which
-takes out the challenge of sending patches in the required format via
-email, see https://gitgitgadget.github.io/ for details.)
-
-On the other hand, it might make more sense to start afresh with the
-test_path_is_* microproject, as I already took custody of your patches and
-planned on submitting them (via GitGitGadget) right after v2.21.0 comes
-out.
-
-> If you disregard that contribution, here is my approach to solving
-> this microproject: search for `test -f` in `t/**` and replace all
-> occurrences with `test_path_is_file` and similarly for other mentioned
-> commands. Is it correct?
-
-This is a good first step, indeed. You may want to be careful about it,
-though, as there *might* be instances where replacing the `test -f` would
-not make sense (such as instances where scripts are written via
-`write_script`, and those scripts would not have access to the
-`test_path_is_file` function).
-
-You probably also want to inspect instances of `test -e` (which
-technically only ask whether a path exists, whether it is a file, a
-directory, or a symbolic link), as it might be possible that some tests
-use that invocation when they really want to ask whether a file exists.
-
-Then, you want to also look for `test -d` for the `test_path_is_dir`
-conversion.
-
-Good luck,
-Johannes
+Will pull.
