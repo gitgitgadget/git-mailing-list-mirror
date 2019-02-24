@@ -7,55 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F30220248
-	for <e@80x24.org>; Sun, 24 Feb 2019 10:11:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E417202AA
+	for <e@80x24.org>; Sun, 24 Feb 2019 10:11:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728333AbfBXKLk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Feb 2019 05:11:40 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:38303 "EHLO
+        id S1728344AbfBXKLn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Feb 2019 05:11:43 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:45004 "EHLO
         mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728322AbfBXKLe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Feb 2019 05:11:34 -0500
-Received: by mail-ed1-f66.google.com with SMTP id h58so5218988edb.5
-        for <git@vger.kernel.org>; Sun, 24 Feb 2019 02:11:33 -0800 (PST)
+        with ESMTP id S1728311AbfBXKLb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Feb 2019 05:11:31 -0500
+Received: by mail-ed1-f66.google.com with SMTP id b20so5190756edw.11
+        for <git@vger.kernel.org>; Sun, 24 Feb 2019 02:11:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lTET2oTpTgc0TvjdCTBHFo5OtJfPzLvrGW1271tCGDo=;
-        b=IWasfszs8bFnsg6gPsqAeXNrmrlA3KP7TjbbX8VWIfa/1+PPPyIe39bYeGPYf6Rj6f
-         amZnWH48dFLGlI3QZbq4oyJy1N78kd50foV9zMYHy4ikx+i+Z76a291+sAvo+V5zsLpK
-         oKucu2aa/FKe0OZX16j3NZaI/Yv9wn2YN5ueVVGaCuBL7YMB2YXJOAGTW5IAfs38jLkl
-         KL5UtWPJndDBXKRkXszZkMtEuYUhNHv16nEE6Y00yA8hDle2JYFJxYPXGzwmjNhWPgKk
-         Whf5E/j8M3EvW5CTkNs49Q/8OTE8bULxLAfGHLuc2KM1tOArwtmqbQ5o39GEzi6buvj4
-         +B6Q==
+        bh=gJVa9u1wfPiIxgZuqSzYZ9lWvlQNuPMM5dU5oM8uMr0=;
+        b=B7N+wb/V0RWvydEPRdmrlprrK/7nJUY6tk/ZGQFEk0oV10RHV5eEFkWmj7WPmbQxyd
+         2qU0pVvgfx0cokcnDAQN5bgQ0EpyL7f5NB55qzk505uMMmd296G2FGFgayc4VrhZZQPu
+         GaRQg87/4UZyBUrgR7FPFR3KpykHN5gNsnACnyKte4e/nSt35sbYOf9bhqlhviKrrSnE
+         GykRWVr+H+1GDcLR4WGWWF2KC0I0VsgrC+vr1evLPrFt4h5dlP2Rz6IRvWFGFys+I8sX
+         IvWaX+IwsaMjutWZBzw2Tn/CraYYT2cjQA9Ni0iIqxijpDnhX7AUpXQ0DoRmHWU2qzYg
+         PsEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lTET2oTpTgc0TvjdCTBHFo5OtJfPzLvrGW1271tCGDo=;
-        b=UW9DfhY5m3n5U1f6Ap90GHW3mUFJYrKfgUwetyx2sR4yt9ejA2P91aKnAurJrbqWks
-         u8kaFWmkGM5O06I0ZtLEFihwepP2yc7SRZeFYpLr5CQVxId7tdNWxLia4yZjqOfwfp4E
-         hXg3jt4FjoF/vd9RFdVI9VRL8yQ9kCegrPs6bDCUcLs7BT8vicFDob3yi0mllTzL54sp
-         dQkL5SuCjGzIhledsmAz6q3JePy2tAtu0rkYGLRP1KXkuPfSJ6k/lh++wxQciEef9pU/
-         nv6ipFAn0as52M26v+OSr2LTNXSdzLLsPE5BRJmMGv24pgxMv1eQPTJlVZfk4BmnkAF0
-         u7FQ==
-X-Gm-Message-State: AHQUAube2ZpF38VwDr74aik6yvk+RSAqkmk5vmcD6WyENamG13aozAI3
-        X0chQBqt5lITFIjZsxOttkhRxpMN
-X-Google-Smtp-Source: AHgI3IboWFPbE/MRXoDk9UNl89jZkh1pH9uPC4YQOZOT727ukVDeBOGKMiufk/q6kYNW71mwLo+wLQ==
-X-Received: by 2002:a50:86b3:: with SMTP id r48mr10361144eda.17.1551003092792;
-        Sun, 24 Feb 2019 02:11:32 -0800 (PST)
+        bh=gJVa9u1wfPiIxgZuqSzYZ9lWvlQNuPMM5dU5oM8uMr0=;
+        b=rrscTbvgLl5SEmc6VWJBVfqMGOrFey3DY1D7GuQuH3GJF3L/vnQsYeyAbdSEvNFady
+         pV9vo+EqmJocttILVydg9yRPxGAw25FJ5ff9Pohdd54IeAQGh+KlxwnltMa2GLVUUVi0
+         hHhQaVVuNH+JYsntsOFpl7e3HklZBjTtFmu7IPOYasVBuXSZhi/bBoEsr9V7XUReYZsa
+         kxETdBdq8b3cw8PkGDm4+3lI+Fj3GSiJU08klUAyHxVf/t7UTvTR9TClWuaR7bnwi7SS
+         r03sTfvw2EriBgs43NGOhs3w3zBpKNFTBW708atvBG2YEUfkZ2rgBnpaBMqbKE+6hVg0
+         pNzg==
+X-Gm-Message-State: AHQUAuYWoADxdBhMDNHt+e1WSdiTT9Vs1kr++7mVpz611l3Zw7NqSjhJ
+        Brrt0uJCwAotqzJB2GzEa1nIZa8n
+X-Google-Smtp-Source: AHgI3IZ5vPmhDatiwFk4xiYs8y70QSO8LtiH9pv3fJDIR9mqSFqCVP6rGSlvieXbA99XSY6EG/sY4A==
+X-Received: by 2002:a50:8b8f:: with SMTP id m15mr568553edm.132.1551003089054;
+        Sun, 24 Feb 2019 02:11:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t12sm1789756edj.61.2019.02.24.02.11.32
+        by smtp.gmail.com with ESMTPSA id m3sm1194778eja.11.2019.02.24.02.11.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Feb 2019 02:11:32 -0800 (PST)
-Date:   Sun, 24 Feb 2019 02:11:32 -0800 (PST)
-X-Google-Original-Date: Sun, 24 Feb 2019 10:11:10 GMT
-Message-Id: <949c50dc7bcbba5a9bb6879678e490c274887b99.1551003074.git.gitgitgadget@gmail.com>
+        Sun, 24 Feb 2019 02:11:28 -0800 (PST)
+Date:   Sun, 24 Feb 2019 02:11:28 -0800 (PST)
+X-Google-Original-Date: Sun, 24 Feb 2019 10:11:05 GMT
+Message-Id: <f1db62c3235e5d91a21b3f7b92c5aece8b65f600.1551003074.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.117.git.gitgitgadget@gmail.com>
 References: <pull.117.git.gitgitgadget@gmail.com>
 From:   "Pranit Bauva via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 22/26] bisect--helper: retire `--bisect-autostart` subcommand
+Subject: [PATCH 17/26] bisect--helper: retire `--check-expected-revs`
+ subcommand
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,9 +71,9 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-The `--bisect-autostart` subcommand is no longer used in the shell
-script and the function `bisect_autostart()` is called from the C
-implementation.
+The `--check-expected-revs` subcommand is no longer used in the shell
+script and the function `check_expected_revs()` is called from the C
+implementation of `bisect_next()`.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
@@ -80,51 +81,40 @@ Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 ---
- builtin/bisect--helper.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ builtin/bisect--helper.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 6cd74049e8..848401094d 100644
+index 49ef0ff6bc..9cc11450f4 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -28,7 +28,6 @@ static const char * const git_bisect_helper_usage[] = {
- 					     "[--no-checkout] [<bad> [<good>...]] [--] [<paths>...]"),
- 	N_("git bisect--helper --bisect-next"),
- 	N_("git bisect--helper --bisect-auto-next"),
--	N_("git bisect--helper --bisect-autostart"),
- 	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
- 	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
- 	N_("git bisect--helper --bisect-replay <filename>"),
-@@ -1020,7 +1019,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_START,
- 		BISECT_NEXT,
- 		BISECT_AUTO_NEXT,
--		BISECT_AUTOSTART,
- 		BISECT_STATE,
- 		BISECT_LOG,
- 		BISECT_REPLAY
-@@ -1041,8 +1039,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("find the next bisection commit"), BISECT_NEXT),
- 		OPT_CMDMODE(0, "bisect-auto-next", &cmdmode,
- 			 N_("verify the next bisection state then checkout the next bisection commit"), BISECT_AUTO_NEXT),
--		OPT_CMDMODE(0, "bisect-autostart", &cmdmode,
--			 N_("start the bisection if BISECT_START is empty or missing"), BISECT_AUTOSTART),
- 		OPT_CMDMODE(0, "bisect-state", &cmdmode,
- 			 N_("mark the state of ref (or refs)"), BISECT_STATE),
- 		OPT_CMDMODE(0, "bisect-log", &cmdmode,
-@@ -1103,12 +1099,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		get_terms(&terms);
- 		res = bisect_auto_next(&terms, prefix);
- 		break;
--	case BISECT_AUTOSTART:
--		if (argc)
--			return error(_("--bisect-autostart requires 0 arguments"));
--		set_terms(&terms, "bad", "good");
--		res = bisect_autostart(&terms);
--		break;
- 	case BISECT_STATE:
- 		if (argc == 0)
- 			return error(_("--bisect-state requires at least one revision"));
+@@ -892,7 +892,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+ 		WRITE_TERMS = 1,
+-		CHECK_EXPECTED_REVS,
+ 		BISECT_RESET,
+ 		BISECT_WRITE,
+ 		CHECK_AND_SET_TERMS,
+@@ -908,8 +907,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "write-terms", &cmdmode,
+ 			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
+-		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
+-			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+ 			 N_("reset the bisection state"), BISECT_RESET),
+ 		OPT_CMDMODE(0, "bisect-write", &cmdmode,
+@@ -950,9 +947,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		if (argc != 2)
+ 			return error(_("--write-terms requires two arguments"));
+ 		return write_terms(argv[0], argv[1]);
+-	case CHECK_EXPECTED_REVS:
+-		check_expected_revs(argv, argc);
+-		return 0;
+ 	case BISECT_RESET:
+ 		if (argc > 1)
+ 			return error(_("--bisect-reset requires either no argument or a commit"));
 -- 
 gitgitgadget
 
