@@ -2,92 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59C1E20248
-	for <e@80x24.org>; Mon, 25 Feb 2019 22:07:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D23D020248
+	for <e@80x24.org>; Mon, 25 Feb 2019 22:08:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727818AbfBYWHu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 17:07:50 -0500
-Received: from mout.gmx.net ([212.227.17.20]:57375 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726971AbfBYWHt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 17:07:49 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNuwp-1gx2YW3rUR-007Sg9; Mon, 25
- Feb 2019 23:07:20 +0100
-Date:   Mon, 25 Feb 2019 23:07:03 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] mingw: drop MakeMaker reference
-In-Reply-To: <20190225200225.GA16965@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1902252304180.41@tvgsbejvaqbjf.bet>
-References: <pull.146.git.gitgitgadget@gmail.com> <061093e2f000829a560e7bcce1dc86cb6babbca5.1551122830.git.gitgitgadget@gmail.com> <20190225200225.GA16965@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727856AbfBYWIp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 17:08:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57410 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726971AbfBYWIp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 17:08:45 -0500
+Received: (qmail 16876 invoked by uid 109); 25 Feb 2019 22:08:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Feb 2019 22:08:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21880 invoked by uid 111); 25 Feb 2019 22:08:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 25 Feb 2019 17:08:57 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Feb 2019 17:08:41 -0500
+Date:   Mon, 25 Feb 2019 17:08:41 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] remote-curl: use post_rpc() for protocol v2 also
+Message-ID: <20190225220841.GA3248@sigill.intra.peff.net>
+References: <cover.1550170980.git.jonathantanmy@google.com>
+ <cover.1550780213.git.jonathantanmy@google.com>
+ <b0ff17d324d46822da9db898d187dcc5fb0467ca.1550780213.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XloGEJZ5g3MyB0KjvOvzWa5WeG7ke8r+3UQ2kNSb151yyBJkCBl
- hqXXAoczFZmW9qi2baYf3NitvIWfp8i/lAqE1hIi57Yf5YgD542XuNQLSr8EMnQuIqytEqK
- qePdV0oKup/LsnObN4Oq1zE9AgGQS+HsVpySUwbFd3jXlXLGxK1/gQIGrpuuTD09q/WbSW5
- 9reAmlN4xqH1R3fwpDwZw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:bs7hbf7uAts=:5w5+xqSQQHC/y4goiRogk9
- y5herzSJSc0jbbPrBDHJS0sjxDNXjSdiZxkFTCJJji2R+YKtqrk6iI3IfTBMA4ICemWTZYESB
- FMHmKBLy/FrIxfiTdCfWG4ERjA77jVB/Lo3527Z/az/o5wzoF3MB2+Mx2v+o0ku9uZ3wNhGo3
- kjdcbOfw+vDmhRUMzBBz109rp07UA9iDNB5s1FBSENiPI6UasDYUHzGjbldON8jfQ/FTMP/Lf
- r1jembQKv2cRUfqsMvdRSUvBLCsBYok2q0t66u5uRoMWbptVd6wJ0Gj+fh9MpcA719Btgxt2e
- jYd40czu3qjKWSfXSGVBokhl9Xz85gVyFuVtFcyRIqbg4er4l6OGQ+5sIDPnkDeqwLW+iBfUe
- bjgxXFTm5DOMVlTHN5Qfr6DAf1vRoQldxalPbdOu3doDFA6AiN5WlQt1ekn+WZC7Iz3ZJ5Reu
- 8vkJti3/G5KhSZ4sr2oliHhBree2i/lSVHmJKmmFzlAsQfTKh3IgmV1OeWtIghF4pKVcd+kto
- yEE/deyHgsZ7OOTTGZN63z34OPqM6DYhIphj/90MRDPiiRr5Ud1TMPTFyaWDc+oxFMkni/FLf
- S4NHMCDsI1T7/I3FXpz76cDCrliPfl6AVN2EkvtEsCGHeKR6cjIvFBL4Z82pQmIdyJAOXyrom
- TaeD8S5TghvFB5Z/aESdpU4yGW7qRQq0pjiH0CkKjXJJ8k8ppUU957Vaj3xWB/5gB1Vx4kuJ+
- D6uu820s+a797U40QFond/RbnL+oZC6xg+t0E7hDUMDwmnJQjzwl05LPUi4tcohxWByoVy8tp
- qrXXOp5faM/4EYndxlL7AOSurlCd7hjiN0u4Z4baVGSxGkrSHZnMxPKp6cidSPTOZkq3enyT1
- RgNg8Ds64+zvyGhGHKCpOERM9Y52GROJ4mUFnPmtl8aYqv3S0dudbEkpAGsNJqyHXOZ7Nkl64
- l6QiUHbYQNw==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b0ff17d324d46822da9db898d187dcc5fb0467ca.1550780213.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+On Thu, Feb 21, 2019 at 12:24:41PM -0800, Jonathan Tan wrote:
 
-On Mon, 25 Feb 2019, Jonathan Nieder wrote:
-
-> Johannes Schindelin via GitGitGadget wrote:
+> When transmitting and receiving POSTs for protocol v0 and v1,
+> remote-curl uses post_rpc() (and associated functions), but when doing
+> the same for protocol v2, it uses a separate set of functions
+> (proxy_rpc() and others). Besides duplication of code, this has caused
+> at least one bug: the auth retry mechanism that was implemented in v0/v1
+> was not implemented in v2.
 > 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > In 20d2a30f8ffe (Makefile: replace perl/Makefile.PL with simple make
-> > rules, 2017-12-10), Git stopped using MakeMaker. Therefore, that
-> > definition in the MINGW-specific section became useless.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  config.mak.uname | 1 -
-> >  1 file changed, 1 deletion(-)
-> 
-> Yay!
-> 
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> To fix this issue and avoid it in the future, make remote-curl also use
+> post_rpc() when handling protocol v2. Because line lengths are written
+> to the HTTP request in protocol v2 (unlike in protocol v0/v1), this
+> necessitates changes in post_rpc() and some of the functions it uses;
+> perform these changes too.
 
-Thanks!
+This patch seems to cause noop fetches from GitHub to report "the remote
+end hung up unexpectedly" at the end of the fetch (I have
+protocol.version=2 set in the examples below):
 
-> Is there a way to automate checking for make variables that are set
-> but never used?
+  [parent is good]
+  $ git checkout 0cdb2a12ad0300b5d0cb5bb6e8999034ae4b9bef^
+  $ make
+  $ bin-wrappers/git fetch https://github.com/git/git
+  From https://github.com/git/git
+   * branch                  HEAD       -> FETCH_HEAD
 
-No, not that I know of...
+  [this patch is bad]
+  $ git checkout 0cdb2a12ad0300b5d0cb5bb6e8999034ae4b9bef
+  $ make
+  $ bin-wrappers/git fetch https://github.com/git/git
+  From https://github.com/git/git
+   * branch                  HEAD       -> FETCH_HEAD
+  fatal: the remote end hung up unexpectedly
 
-The biggest problem is that we only add documentation to the beginning of
-the Makefile by convention, and there is not really any consistent way to
-parse that documentation to figure out what build variables are handled
-currently.
+I haven't dug, so it's possible that GitHub's server-side is doing
+something slightly odd or wrong. But given the nature of the patch, I'd
+suspect we just aren't noticing EOF correctly.
 
-Ciao,
-Dscho
+-Peff
