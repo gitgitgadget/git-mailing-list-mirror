@@ -2,79 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E46A820248
-	for <e@80x24.org>; Mon, 25 Feb 2019 11:36:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A62220248
+	for <e@80x24.org>; Mon, 25 Feb 2019 13:00:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726863AbfBYLgG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 06:36:06 -0500
-Received: from mail-lf1-f48.google.com ([209.85.167.48]:43369 "EHLO
-        mail-lf1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726701AbfBYLgG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 06:36:06 -0500
-Received: by mail-lf1-f48.google.com with SMTP id j1so6572637lfb.10
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 03:36:05 -0800 (PST)
+        id S1726959AbfBYNA5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 08:00:57 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:44343 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726921AbfBYNA5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 08:00:57 -0500
+Received: by mail-ed1-f68.google.com with SMTP id b20so7445773edw.11
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 05:00:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=c13fCtZgGg2wSBnoCUUAwmOxdnQtJGmQaAaHB9vbXdw=;
-        b=s1d3IjpEpX6lJ5k2EobUROZOM7jGY+UkzTCod4ev4YC+hvZX1e2QDPMT3yTJk2mvw4
-         ucynkr/ZXUvc203JdxQ8MZMwzOIuVP+08tVFxo5vRTqGLEg1MOHjXeb6WHRNl0tWp6dd
-         b698q1j49qy8kbNikKMfkWpZ0aq7vhOPnt7hN5w0ZhE9DtM4+nKrJ4bINmeFwrBtsuWl
-         1NxoVdBWVjQYQ2W9inmQW1Oue5PmCpJ12LNPywJnMab5ygsBtzs/lGFGoFKvb7TRUQiy
-         mK9f5egThwfjqmrcfvyWR3kyq5Q0u1J99eOncCU0gGgtkkSkQi8jkig0deWrS0vUs/ta
-         WAnw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Y3Benw9LnYbLzleNz7SITxod6UmqC3I/0a5JROm4rws=;
+        b=RABsZ92zJz3eXYaJiEkUP3L49SSj0sp/9Jp/nxYnvEKanmF7p7cRCidE+Wu53RDa+s
+         2Kw5ls+w9RFtKYm+wKv6NldKlmvKOT+XeK8p42aYnGf07uPUXFdc4xNgA1IQ8/jcPiUt
+         U5yKN+S8WifVF6RHT6GIodPD8O11J6NxiGS2MqgRZtlb1f3IkkBkkNNoplmevW+u4DJ1
+         WukwD47/AYyg/gTp4S4Q+WZ3vDb0xJIkcEMSrpg76ucB/lOTwfpMW1GK824eE/TJ08Et
+         VnOkm3T2Ni8arcifG+lQc8DjTTimmrL0/+IBbbkRAn4PxgwvseYRC8rbQ+wjEX16gHux
+         mVpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c13fCtZgGg2wSBnoCUUAwmOxdnQtJGmQaAaHB9vbXdw=;
-        b=WS1pNuHHXW6GFwVdiXB2rV9eIBqg3SW7oay5AxLl0LN1tIDvnqjiHsUmIilb2DLqpe
-         j+kPYdXHjl77i3Ukz5nNQlPYB7ugeBVltDlygGEv0yKetrZxbr39/oA9Ec4ieDWgBGjY
-         Homhtu6YtmK5fcuQ4KROtLOcFST7QldvS9bYMF4IiPUBnZl6N2PGqGC+p9V+9U9UE2nz
-         3fSZpDCFzxgImnyuPCAmM5WXK+s8P0863DIVsATmnJN7zJJHl5e4IBwBVBpKBHMclj0N
-         Ui+o+LkQdEJipBwk70glQQgOcdqxIuBjaVxtmi+z8hQdaI83lSOQC3/ylAz+Zx2dbUmL
-         DOgA==
-X-Gm-Message-State: AHQUAuYRgML5fvwIQfoVYWPGCSiJQVgnoapvpgBuc0lS9WEr3bZjiYbD
-        13NUnwr5RnYGufzLZoYkDryZOPq9AvbK3WrkFe0=
-X-Google-Smtp-Source: AHgI3IYOyJWvNrovvqlIcyIJIBfoGosDXksOAtF4lmx/iRMz+aRV5gDKoT53gFxCFm0WJvU3ZEJohmB2F+81Aaag0Us=
-X-Received: by 2002:a19:384c:: with SMTP id d12mr9748678lfj.105.1551094563939;
- Mon, 25 Feb 2019 03:36:03 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Y3Benw9LnYbLzleNz7SITxod6UmqC3I/0a5JROm4rws=;
+        b=QF0UBydF9N5kHBoIfsuIsZ6GhqjY82g1ITOtcfXO831dVlkcKk240ZB5yidnRzaGO5
+         YlR1Fg7HRon4MG80DCL4HiGJyWXTVnAT/QFwKkIBtO73xxatgdJQB0qxDAkQZ7qJBzvi
+         DBrsv+w7JKKC63RSFz8k5yf7tGT1WFrdsIBgfln2n2AAleI29DEEVudNKqmr3E2ZL7Ny
+         AONTgLBCpkEVymunQWEETKdzh0hISu098igZceCb5Bc+k0V46T+sGMI7O1FuoXBAInc6
+         2hs43aTrk8Pl//iZbozlrDv8FWinFIJwHyYFxhUOtS1UDJRiC0y7SJBYYXKoNrUVGCNv
+         AgCA==
+X-Gm-Message-State: AHQUAublN1LB5eFuRtu6M6busSwUU5/zcNDBqykRKePOheIQ2gSNYaIT
+        7N9ZZZoDPyiTfeETOiXmH5AqGjZpz1HM4x8SBbktU5o9qUU=
+X-Google-Smtp-Source: AHgI3IbUOllAgkNgY3JF+4ApIFrt27GSpUrHcbTyZ3IB+3r7tOFRUegA4a0anP2sKA1LwbfXyvAudxwNYPCaGtoKFFQ=
+X-Received: by 2002:a50:b0e5:: with SMTP id j92mr13796263edd.188.1551099656019;
+ Mon, 25 Feb 2019 05:00:56 -0800 (PST)
 MIME-Version: 1.0
-References: <CAL7ArXqkVfrnQWYFDYdwMGkZjHCwzyQX4pbKCo=KCzy-zJiRBw@mail.gmail.com>
- <CAP8UFD1U+4ww8rC=TSjjH+Rt77P9w4YWA9s5yspVZ7GgPpx0pw@mail.gmail.com>
-In-Reply-To: <CAP8UFD1U+4ww8rC=TSjjH+Rt77P9w4YWA9s5yspVZ7GgPpx0pw@mail.gmail.com>
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Date:   Mon, 25 Feb 2019 17:05:06 +0530
-Message-ID: <CAL7ArXqrV7qb29i6JvQdeUtLNX9A7WC0-deKMx-_6pQUpaqSJA@mail.gmail.com>
-Subject: Re: [GSoC] Introduction
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Johannes.Schindelin@gmx.de
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 25 Feb 2019 14:00:44 +0100
+Message-ID: <CAP8UFD0mpeGe+ef0kvoet_8nDUtSihr7L6EQgTBP3hijmM9-KQ@mail.gmail.com>
+Subject: Draft of Git Rev News edition 48
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        David Pursehouse <dpursehouse@collab.net>,
+        Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Christian
+Hi everyone!
 
-On Mon, Feb 25, 2019 at 12:20 PM Christian Couder
-<christian.couder@gmail.com> wrote:
+A draft of a new Git Rev News edition is available here:
 
-> In addition to what Dscho (alias Johannes Schindelin) wrote, please
-> just send one patch that replaces `test -d`, `test -d` and similar
-> code in only one t/tXXXX-*.sh file. No need to do more than that.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-48.md
 
-I don't think I quite understood this. Were you asking for replacing
-all `test -X` calls with `test_path_is_*` calls in only one tXXXX-*.sh
-file or `test -d` calls with `test_path_is_dir` in all tXXXX-*.sh? As
-of now, I've changed almost all `test -d` in all relevant tXXXX-*.sh
-files.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-Thanks
-Rohit
+  https://github.com/git/git.github.io/issues/352
+
+You can also reply to this email.
+
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Gabriel and me plan to publish this edition on
+Wednesday February 27th.
+
+Thanks,
+Christian.
