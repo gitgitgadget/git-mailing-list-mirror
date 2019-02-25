@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6694820248
-	for <e@80x24.org>; Mon, 25 Feb 2019 20:03:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 901B820248
+	for <e@80x24.org>; Mon, 25 Feb 2019 20:03:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727228AbfBYUDL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 15:03:11 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:36395 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726740AbfBYUDK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 15:03:10 -0500
-Received: by mail-lj1-f196.google.com with SMTP id v10so8602557lji.3
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 12:03:09 -0800 (PST)
+        id S1727251AbfBYUDN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 15:03:13 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:45854 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726740AbfBYUDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 15:03:13 -0500
+Received: by mail-lf1-f68.google.com with SMTP id h10so7818000lfc.12
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 12:03:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DMhQ99lNvvHlz/VawqsaKcXTGpHmvwJLeps0M5mcryY=;
-        b=UrNw0y99G38DrJZ4Spj94c/yoHJgqUUwcUau92ilsRu56vcB93D1UhR5qLneMMVgSX
-         wFP2ua8n/jXPwR2DKTzc7nExKC2qsKV8ojUG0c846vwtegntFM3OKIA/eEPPNOX32hSx
-         HbOJfgCZ8pVV4Zn9bIhexVoRZKCwleM2V+X6yvfWAUzzZhJ1E74PlY6szfzzFoEzkCAv
-         zQq2Vq75lIBwDHsOYjBtuZuVXiOCmk0HGRttNiOhsLR/JCfhSDyguH1UMsPUPZpzN8h1
-         kz47QaHyX9jGSTLV6oKus+LbxSIqTFbWccDbjT4Pevr/HyiSnzqeJpu553sPiwkJkA44
-         F7PQ==
+        bh=GfgffQqqOTLwvrmsIofFupimNbVLrb2SmoGlEkJUMws=;
+        b=CBNIXcF56wTHJMqh3jVrVFQqaiK+/aIfvmwR3pv+gt5cfIEle0zm3+iMGyRVJsOqMZ
+         GoB1dN3Sg85cl0CVqPcz7KNvtmmx+Y+/LH28h8qLWzcmTBVOzVLCkm4PkAUK1p3KsykF
+         xN6S9B/UtrOhIuy51ihXeYaRgpwJhlkPqbGkQd0UFdTISRGf+NbtLjcPfjBApKDUiQa2
+         EL74f1JvEPbdhlsx7KEgvD1eltRIjsbaADczIfhCw64RIC0K0wjZ+gjYRmitwUPwEoFn
+         uQPiriUWLJqENXWmG/2zzel9V5wZdg+/GXNoktn4zaDBHhJEXfdOAxdDJuBsXbeFQelf
+         icrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DMhQ99lNvvHlz/VawqsaKcXTGpHmvwJLeps0M5mcryY=;
-        b=Cie0CgJWG921JRGnkHYgoncLUom0cZQohi5FuIEU2d9GPng7BsTp4rQ6W6B1YKcc6/
-         HJNLgH65dQAslNFiZNVx+VrUyvb+GEGyZL/HLGq5vh56jU5DFluiZO+Y81DhjUiYKZLO
-         N+/3bu7+in0Fi6OaeejSObrOrDslur6P1j+cG9HieoliH0/wuqK5bhs2jPe3qtG6H62A
-         9pQ/oFkyUf6+q/vulHv8d7UyqoaJ0O2oFQ+IjyVA7nGXg9qG0NPC6c4gMIKLOSC9cl7Z
-         rW46W73PmlQPifvLxYWIgy8IOO1fVB+VETND0eJhM3mag6qKTMoEDftWKWVu190eYD0B
-         lkCA==
-X-Gm-Message-State: AHQUAubfx9mdwQmc51/4JwJTK0VayZ1cuFf8hioewMLXOMazCuuSUW+d
-        kx54rsdirhCB/jnZxU9f4Awbivp+
-X-Google-Smtp-Source: AHgI3IbZKr3I9HvXQKAz90Oor618sgPKwxnNPwS0rx5NnAxaEbbuZpPDdvuYGBFB44Lbjy5PAunwbA==
-X-Received: by 2002:a2e:6801:: with SMTP id c1mr11765524lja.81.1551124988309;
-        Mon, 25 Feb 2019 12:03:08 -0800 (PST)
+        bh=GfgffQqqOTLwvrmsIofFupimNbVLrb2SmoGlEkJUMws=;
+        b=mBxqHLrQDvPdJrPaBEEsjdymlbYwMkGFylMcoDnwY9E2GybRPQZRiw7cTqy1Kk7iIj
+         rmVSEJDPb5ioDGhuUJMKGMwYm7Es0j5JLhPPteMFyVYAhv/bPJakgbmEDpRq/VC48fuS
+         +aecnpJFrPuAuE1S7/BSXsxhNqtR9VzRJoe68VSOMycjtpQuM297G3bcp3hBN1lplGD7
+         UOUXxzaBwt9tFQOINRa+E3Nq2bWZN0Qhmfq8KJqILX2WlciCh5f5QWnlC7spBazbWbFo
+         saD95YnhUJCSBjhfc+twM8hvHQj58khpOdFJg/s8AMdSAlkcRsJRDhCIW6vkGdGY0J1u
+         OpSQ==
+X-Gm-Message-State: AHQUAubHKFNfgkdn/GoWDHSHCWokGcUm0DYu4jR8Hib7/+uOhXDv7M3G
+        Uop8Mb5NpPV9PQO1RbQpbGHNMnKX
+X-Google-Smtp-Source: AHgI3IajiokAvwpsLhsq254ohdc6plXV77gbgBv4pLDefa+PYHQB1SVASxnAHBXVf1x/uM1Iql47zw==
+X-Received: by 2002:a19:4848:: with SMTP id v69mr2475650lfa.35.1551124990469;
+        Mon, 25 Feb 2019 12:03:10 -0800 (PST)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id c22sm2977168lfi.27.2019.02.25.12.03.06
+        by smtp.gmail.com with ESMTPSA id c22sm2977168lfi.27.2019.02.25.12.03.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Feb 2019 12:03:07 -0800 (PST)
+        Mon, 25 Feb 2019 12:03:09 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 1/3] Documentation/Makefile: add missing xsl dependencies for manpages
-Date:   Mon, 25 Feb 2019 21:02:38 +0100
-Message-Id: <e960fec4b492f3edf7bade35862333af5e8704d7.1551123979.git.martin.agren@gmail.com>
+Subject: [PATCH 2/3] Documentation/Makefile: add missing dependency on asciidoctor-extensions
+Date:   Mon, 25 Feb 2019 21:02:39 +0100
+Message-Id: <966fa6a7163fcc48d1df7365461d2ac57b98bc5c.1551123979.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <cover.1551123979.git.martin.agren@gmail.com>
 References: <cover.1551123979.git.martin.agren@gmail.com>
@@ -66,11 +66,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These stylesheets very rarely change, but when they do, it really helps
-if the manpages depend on them. We're casting the net a bit too wide
-here, since we'll only ever use a subset of the stylesheets, but since
-these files change so rarely, that should be ok. It's better than
-missing a dependency.
+asciidoctor-extensions.rb has never changed, but when it does -- such as
+in the next commit --, it helps if the xml-files depend on it. We're
+casting the net a bit too wide here, since we'll be rebuilding even with
+AsciiDoc, which won't look at this file. But since this file changes so
+rarely, that should be ok. It's better than missing a dependency.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
@@ -78,18 +78,18 @@ Signed-off-by: Martin Ågren <martin.agren@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 26a2342bea..0f8054a115 100644
+index 0f8054a115..a9697f5146 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -354,7 +354,7 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf
- manpage-base-url.xsl: manpage-base-url.xsl.in
- 	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
- 
--%.1 %.5 %.7 : %.xml manpage-base-url.xsl
-+%.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
+@@ -358,7 +358,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
  	$(QUIET_XMLTO)$(RM) $@ && \
  	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
  
+-%.xml : %.txt asciidoc.conf
++%.xml : %.txt asciidoc.conf asciidoctor-extensions.rb
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+ 	$(TXT_TO_XML) -d manpage -o $@+ $< && \
+ 	mv $@+ $@
 -- 
 2.21.0
 
