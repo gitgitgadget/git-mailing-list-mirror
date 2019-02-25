@@ -2,94 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A1DD20248
-	for <e@80x24.org>; Mon, 25 Feb 2019 19:27:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51BBA20248
+	for <e@80x24.org>; Mon, 25 Feb 2019 20:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726942AbfBYT1O (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 14:27:14 -0500
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:41688 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726377AbfBYT1O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 14:27:14 -0500
-Received: by mail-ed1-f50.google.com with SMTP id x7so8547023eds.8
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 11:27:13 -0800 (PST)
+        id S1727039AbfBYUC3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 15:02:29 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:42571 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726740AbfBYUC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 15:02:29 -0500
+Received: by mail-pg1-f196.google.com with SMTP id b2so4973619pgl.9
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 12:02:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=M9qT6Q/hQFyKYfljJyv3pQTDxQiupSBENBufzzrWj7Q=;
-        b=StwIE4GZGDe3PAe4Tpm5uWZ9612aWhIjTSp/uu5XLZ0qzHfg76wHXKuuvUC+fPoI0Y
-         SkOnmdAP66LTv6Z3VYHZpHkBGukN886lLIBsAsJKjDe+zdMSi8YHlQxePZoQBP9QzFvV
-         Z156nYVsE5Jl6kaFIAmNsWTDXCZM7TxH5uCbcsCKRe8isl2kLfcIlX7069jSEemyeA5K
-         jQVj2s76zzAnk9dJaLcEFlB8KT67oLFstjo+XOZVMKXI8dABjxTXkkJYoDro1WqY+AYN
-         Ny7i/pR4LAtwdAaWdv/5Wf278WiQjqKrcgjwrKSd8EtIHsyHq0LcHir3HedGrUl0o7XW
-         gp4Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=bf5dA/PodRpYMYU+a2JTwgxCHDbD0bmTUyuYb+VFHOY=;
+        b=KGZng0BJBZIIdvpcfuxn0N1pnpp01+QSMano7u+VCBsB6ijdZxqUVQmlr/ZaWcnjFk
+         aMyYHU4nGNG6d9Ccrd25WpADybplZZa6kO0NIL2AGqfGTGLaiQgyGPrUbwuvBSvsBCop
+         XW4BYBWmVJMWCHX+LSUAND/RAX44XP74nvMwIcIG0Gt+02NIucwuJl7kdyQzHFgN0RFw
+         yt8W5q5o5PZQMYf8l2iVM1BrEFw+BmEFVlkRWfRzfcE2S83J+qC4qFPc5B8U0xkYQ698
+         TOuVOkcEQLPa+A3ayNfSkiadHg+k9NPDV9rjEuSIcCPCZtIJ4XgYv93IbCB0cH4aoU8O
+         Hkjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=M9qT6Q/hQFyKYfljJyv3pQTDxQiupSBENBufzzrWj7Q=;
-        b=nvc96OuXxIOgSschug8NUfzUD+/nbJSYpAsviwaGyND+nskuoNagNRq6nXk6AvmZzu
-         6a/Lwq+50KgpKqULgmXamR1bXLcCh8mHiDuoTLI1gVgJnikBQ2sc+3++MCTx49evv+U/
-         5oc5bH/Vtn6WrhqzMREKjoEYm1TCgYbfYXMrWt1VVOwoL71qwnVjCXvLLsg3R6+2Ek+v
-         YxY3oP8Ax5LdFPcZ//PzRzlnLcByOY2cScG6i+f6r2vt//vb427/IghB36MJPEfXOEAb
-         Gg8ViVbEmmf7Cy9YoaT8g+ERG+evuSuLOh8u7/rqbe13gmd0IrWP1zz1Eq2bIy6TmWfx
-         Elcg==
-X-Gm-Message-State: AHQUAuZKEwjWgz0n1nvy5OaIGpY13drgjrpB7MF/O/kbct0yw1Z7Ge7P
-        Y4cOkTfFx8E0XZzoHfmXitq2mR+y
-X-Google-Smtp-Source: AHgI3IbjVAoJftW74Bh3Aaa3b9U4JVCKZ3AcwK/GivlwtzPqRS7RsWSbDXROsnd1LLo8YTS+CgnA7A==
-X-Received: by 2002:a05:6402:124a:: with SMTP id l10mr16273028edw.62.1551122832405;
-        Mon, 25 Feb 2019 11:27:12 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q3sm1890622eja.40.2019.02.25.11.27.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Feb 2019 11:27:11 -0800 (PST)
-Date:   Mon, 25 Feb 2019 11:27:11 -0800 (PST)
-X-Google-Original-Date: Mon, 25 Feb 2019 19:27:10 GMT
-Message-Id: <061093e2f000829a560e7bcce1dc86cb6babbca5.1551122830.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.146.git.gitgitgadget@gmail.com>
-References: <pull.146.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] mingw: drop MakeMaker reference
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=bf5dA/PodRpYMYU+a2JTwgxCHDbD0bmTUyuYb+VFHOY=;
+        b=sy4bNwaj/ZMN0QbqbxuwrtebBR8n0zE+PnhimXTTHjaKo2ykDviOZLrJq81RRayBuN
+         6qKaljrBkwIIj6/AiUtAvOzShcFW8tRGZGlsZt2Dw3PIpFB2WuI1uJUWKQpQUJRUpEKv
+         ZcDVLoaWZF7BgeZy4hGJwvWMwtIm9T69F9qGGhrAIMrmtXlE8rqvp9sWRFfQ+Ae818oD
+         9qURBLTDdltdCHDrV1uUe7GooqezTrNC8gaw5mvZXgmOfRxr17RtslAWxQeCCtNiR987
+         aUGUfeU5eu7nU3wCIjz3VMk7oHhBzB0B9+Gt8ojLGmq5i79MfHxNw6NKiuTK6+cl6CKM
+         iftQ==
+X-Gm-Message-State: AHQUAuaTmW/C/WzctMPspSqxqRCeTT07WV40DJOsxfQENqdZW5dvdgce
+        tuebMzbB1+capaS8hJxrai7ITL0O
+X-Google-Smtp-Source: AHgI3Ibw8jvu+cUaQ2RbTe1o2Y8Z6rr9t2OnmGHUqnBGWVUkFtyNvI2+s4ud3dMregdvZElen2IyEA==
+X-Received: by 2002:a63:29c9:: with SMTP id p192mr17615253pgp.176.1551124947830;
+        Mon, 25 Feb 2019 12:02:27 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id d16sm12852448pgj.21.2019.02.25.12.02.26
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 25 Feb 2019 12:02:27 -0800 (PST)
+Date:   Mon, 25 Feb 2019 12:02:25 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] mingw: drop MakeMaker reference
+Message-ID: <20190225200225.GA16965@google.com>
+References: <pull.146.git.gitgitgadget@gmail.com>
+ <061093e2f000829a560e7bcce1dc86cb6babbca5.1551122830.git.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <061093e2f000829a560e7bcce1dc86cb6babbca5.1551122830.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Johannes Schindelin via GitGitGadget wrote:
 
-In 20d2a30f8ffe (Makefile: replace perl/Makefile.PL with simple make
-rules, 2017-12-10), Git stopped using MakeMaker. Therefore, that
-definition in the MINGW-specific section became useless.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> In 20d2a30f8ffe (Makefile: replace perl/Makefile.PL with simple make
+> rules, 2017-12-10), Git stopped using MakeMaker. Therefore, that
+> definition in the MINGW-specific section became useless.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  config.mak.uname | 1 -
+>  1 file changed, 1 deletion(-)
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- config.mak.uname | 1 -
- 1 file changed, 1 deletion(-)
+Yay!
 
-diff --git a/config.mak.uname b/config.mak.uname
-index b37fa8424c..b88d8451fe 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -529,7 +529,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_STRTOUMAX = YesPlease
- 	NO_MKDTEMP = YesPlease
- 	NO_SVN_TESTS = YesPlease
--	NO_PERL_MAKEMAKER = YesPlease
- 	RUNTIME_PREFIX = YesPlease
- 	HAVE_WPGMPTR = YesWeDo
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
--- 
-gitgitgadget
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Is there a way to automate checking for make variables that are set
+but never used?
+
+Thanks,
+Jonathan
