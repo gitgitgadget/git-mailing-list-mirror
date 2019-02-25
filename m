@@ -2,127 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 035F220248
-	for <e@80x24.org>; Mon, 25 Feb 2019 23:45:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51A5520248
+	for <e@80x24.org>; Mon, 25 Feb 2019 23:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727444AbfBYXpc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 18:45:32 -0500
-Received: from mail-pg1-f178.google.com ([209.85.215.178]:44658 "EHLO
-        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726575AbfBYXpc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 18:45:32 -0500
-Received: by mail-pg1-f178.google.com with SMTP id j3so5222429pgm.11
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 15:45:31 -0800 (PST)
+        id S1727450AbfBYXtG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 18:49:06 -0500
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:41910 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726575AbfBYXtF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 18:49:05 -0500
+Received: by mail-pg1-f202.google.com with SMTP id d128so8192020pgc.8
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 15:49:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cjifFblatUgbqztjSErI3IbCH+sbcBqQE6t/9wcKTn8=;
-        b=malRHzW4pgPrNH9AkJ97Jnmj4HCdVw7T+2Yo9k4AS2rGrNEsAk1fjk9itQi8bcv3Cz
-         e2+YdDN5Kl0VKn1ELBDD2Z3dmej2nnGpBZ7G9nG36CuAF7NVwTnnL/lIq7Mv/EHcFQmR
-         CRL/xonlLqTqRNbBvNWyicncnq5przwbR0gQ7A4yuGiELNQmZNOBpMMh1UU1466DiPNr
-         jWL3VcN2emk8YrHRqlrF5m93Q8GFJyajRpkWWmE3Wx8tO0qMXTiGCDJeZkKSiArI2/bo
-         9DHEbf5yegungP+C9Mj2vqHlgq72cL6vQBFNnXYALJRETf34IgYfWl3QQovLR76KD5Qv
-         nCxw==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=hIENCxMstlW4WIjVlIonz6RKznfymb/bzbVjy+fquFY=;
+        b=eLGp6MZSFFqAQeoNK1L4Q+V0MGRAa1XFtyxMiNQtGxQ2+QdNxPZ7E+qxpoEwou7lsg
+         4d1B0eifjo74qbVBMlgFwrMCoktLRM7c0SKb9TiGJi+yTMSIl6lR09O1asfxhKNF5dZF
+         NHpuJoZ4BSW1MYnQ7Oj+bzv8ZbO+06Sgo3FjdNxYMYIMK4mtEpLvBDujSToSZzpFoOCr
+         c7NznvyLtDuAP1Z+q8fE1KVSxzxyN0ZifrPt5j7vvWXUjtA2K01QW2grDsNVmm8uTBvS
+         SHITS1oGcWRrvoeDqI7QXzfoKV+TS7Dtbo183P20R73TOGjo6kj+QGyUyIzKb2YMmPvh
+         ymaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cjifFblatUgbqztjSErI3IbCH+sbcBqQE6t/9wcKTn8=;
-        b=gJ56sK4SUxhToFPcr73ffIs8dxuiuby6LpuUWgSAmIBW3axYZ6XsL9e52Xtrkpoj3J
-         CzDkOh9gLitp6GYuWoBtJWbguHSFinMDdG3OEg44aZi6I7V5dVI39FvgXfAW1pY5jJK4
-         qwh88K6o5qDhz8R4SFJPiXhuTB3djUBFuUTuUi1gDiVtvXkjDe8zZOwsMednqCWa0mBg
-         JEUmnTzDPWfuGbqNpObNIZl0xFvJg+28i2nonrpCYK3fm8le0NNp5wAFjtxF7ojkzil2
-         PMqt6MwzTY0TE7520hGOfX4KHjcoJXW4c3AW+CTa+a/MdvXntZHtqBU96kjBMqFl6hKV
-         efTw==
-X-Gm-Message-State: AHQUAubWHciDcnYRDPwMtH8VHRx/bccquqzuQkzIEQTG455J+nlq6mdY
-        byQGMbF1imvbzuMvJ59omYw=
-X-Google-Smtp-Source: AHgI3IbLfjdwvyI5A4wXZfuS8H9FwuGoGECnufsJIRs9z8PqgJA8IYieZ1RE/BZhTTypYsBvVX54jw==
-X-Received: by 2002:a65:43c1:: with SMTP id n1mr21803525pgp.248.1551138330953;
-        Mon, 25 Feb 2019 15:45:30 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id s4sm6489184pfe.16.2019.02.25.15.45.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Feb 2019 15:45:29 -0800 (PST)
-Date:   Mon, 25 Feb 2019 15:45:28 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [WIP 0/7] CDN offloading of fetch response
-Message-ID: <20190225234528.GD16965@google.com>
-References: <cover.1550963965.git.jonathantanmy@google.com>
- <CAP8UFD19521P=-R1XEdRK++HPatt3BJaxWPvpPRo8LHr3eisjA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD19521P=-R1XEdRK++HPatt3BJaxWPvpPRo8LHr3eisjA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=hIENCxMstlW4WIjVlIonz6RKznfymb/bzbVjy+fquFY=;
+        b=NWGvHl8U8bDDFvD6ahRUX0g1Vt2Jk7UsPIXXuUgbO+4rXyYfgAaun8LDr+/oiCixp/
+         CLAEPfLL6RDleNxPVaca5vpK5y+zs84OupU+DoV0CSTRqUPG/avczzwEI8dQmTRry1kM
+         Y+S3kHydOaqgNvDVV881NI7olY3fnIWIqTUsBnD69XG38xHiXyMQieXwlswy9jlFoh/D
+         7bYhvS5DPHEviZqTJ0wngWDwHjscMXdrHG37TTPSWRA5k7akfQj36F7oQvMTCcsvQBSg
+         LFF0x+iVj0JIwq9gg+FBWCsKGFKZemhdNxSKpxkVA/ZOgiMAEuAxWuMVK4AJp/sNcTW1
+         Zswg==
+X-Gm-Message-State: AHQUAuax79XRxXijH7lFdn0Tc/pg4ENunWQtYwZPOPsj1HVxp0Qu159p
+        3baULBN18A2iIGC3jtW5CWWXLuDbpTsjk/xSLNxkRx4S72/gaL2350tRRDPFWWJAGHUKtF07n49
+        /IyJslD47or5f7mu5spfSj+SZ9UpSfeHrqLH7UDMyvfAoPXnJpdYNFicI52hC+fMrE+G2it2gt6
+        jR
+X-Google-Smtp-Source: AHgI3IYS+hMohmaCadmiBeaQ1Eg+mQxJgUtHWo0gIVop90pzgI097stU4d0a5CKZ5DMiOil/nxyifj/pXq1NPtOr4+nz
+X-Received: by 2002:a62:e706:: with SMTP id s6mr7623361pfh.87.1551138544919;
+ Mon, 25 Feb 2019 15:49:04 -0800 (PST)
+Date:   Mon, 25 Feb 2019 15:49:01 -0800
+In-Reply-To: <20190225220841.GA3248@sigill.intra.peff.net>
+Message-Id: <20190225234901.65277-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20190225220841.GA3248@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: [FIXUP] Fixup on tip of jt/http-auth-proto-v2-fix
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Thanks, Peff, for noticing this. It's because the client sometimes sends
+"0000" as a single request (that is, it flushes, and then before it
+sends any data, it flushes again). And post_rpc() assumes that it can
+always read something - which is usually correct, but not in this case;
+we read in stateless_connect() first, and if we read "0000", we need to
+tell post_rpc() to not read at all.
 
-Christian Couder wrote:
-> On Sun, Feb 24, 2019 at 12:39 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+This is a fixup on the tip of jt/http-auth-proto-v2-fix that fixes that.
 
->> There are probably some more design discussions to be had:
->
-> [...]
->
->>  - Client-side whitelist of protocol and hostnames. I've implemented
->>    whitelist of protocol, but not hostnames.
->
-> I would appreciate a more complete answer to my comments in:
->
-> https://public-inbox.org/git/CAP8UFD16fvtu_dg3S_J9BjGpxAYvgp8SXscdh=TJB5jvAbzi4A@mail.gmail.com/
->
-> Especially I'd like to know what should the client do if they find out
-> that for example a repo that contains a lot of large files is
-> configured so that the large files should be fetched from a CDN that
-> the client cannot use? Is the client forced to find or setup another
-> repo configured differently if the client still wants to use CDN
-> offloading?
+As for why the client sends a lone "0000", I'm not sure, but that's
+outside the scope of this patch set, I think.
 
-The example from that message:
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ remote-curl.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
-  For example I think the Great Firewall of China lets people in China
-  use GitHub.com but not Google.com. So if people start configuring
-  their repos on GitHub so that they send packs that contain Google.com
-  CDN URLs (or actually anything that the Firewall blocks), it might
-  create many problems for users in China if they don't have a way to
-  opt out of receiving packs with those kind of URLs.
+diff --git a/remote-curl.c b/remote-curl.c
+index 2394a00650..6c0207f4f9 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -747,7 +747,11 @@ static curl_off_t xcurl_off_t(size_t len)
+ 	return (curl_off_t)size;
+ }
+ 
+-static int post_rpc(struct rpc_state *rpc)
++/*
++ * If flush_received is true, do not attempt to read any more; just use what's
++ * in rpc->buf.
++ */
++static int post_rpc(struct rpc_state *rpc, int flush_received)
+ {
+ 	struct active_request_slot *slot;
+ 	struct curl_slist *headers = http_copy_default_headers();
+@@ -762,17 +766,19 @@ static int post_rpc(struct rpc_state *rpc)
+ 	 * allocated buffer space we can use HTTP/1.0 and avoid the
+ 	 * chunked encoding mess.
+ 	 */
+-	while (1) {
+-		size_t n;
+-		enum packet_read_status status;
+-
+-		if (!rpc_read_from_out(rpc, 0, &n, &status)) {
+-			large_request = 1;
+-			use_gzip = 0;
+-			break;
++	if (!flush_received) {
++		while (1) {
++			size_t n;
++			enum packet_read_status status;
++
++			if (!rpc_read_from_out(rpc, 0, &n, &status)) {
++				large_request = 1;
++				use_gzip = 0;
++				break;
++			}
++			if (status == PACKET_READ_FLUSH)
++				break;
+ 		}
+-		if (status == PACKET_READ_FLUSH)
+-			break;
+ 	}
+ 
+ 	if (large_request) {
+@@ -952,7 +958,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
+ 			break;
+ 		rpc->pos = 0;
+ 		rpc->len = n;
+-		err |= post_rpc(rpc);
++		err |= post_rpc(rpc, 0);
+ 	}
+ 
+ 	close(client.in);
+@@ -1308,7 +1314,7 @@ static int stateless_connect(const char *service_name)
+ 			BUG("The entire rpc->buf should be larger than LARGE_PACKET_MAX");
+ 		if (status == PACKET_READ_EOF)
+ 			break;
+-		if (post_rpc(&rpc))
++		if (post_rpc(&rpc, status == PACKET_READ_FLUSH))
+ 			/* We would have an err here */
+ 			break;
+ 		/* Reset the buffer for next request */
+-- 
+2.19.0.271.gfe8321ec05.dirty
 
-But the same thing can happen with redirects, with embedded assets in
-web pages, and so on.  I think in this situation the user would likely
-(and rightly) blame the host (github.com) for requiring access to a
-separate inaccessible site, and the problem could be resolved with
-them.
-
-The beauty of this is that it's transparent to the client: the fact
-that packfile transfer was offloaded to a CDN is an implementation
-detail, and the server takes full responsibility for it.
-
-This doesn't stop a hosting provider from using e.g. server options to
-allow the client more control over how their response is served, just
-like can be done for other features of how the transfer works (how
-often to send progress updates, whether to prioritize latency or
-throughput, etc).
-
-What the client *can* do is turn off support for packfile URLs in a
-request completely.  This is required for backward compatibility and
-allows working around a host that has configured the feature
-incorrectly.
-
-Thanks for an interesting example,
-Jonathan
