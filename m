@@ -2,69 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BD8420248
-	for <e@80x24.org>; Mon, 25 Feb 2019 20:08:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D395620248
+	for <e@80x24.org>; Mon, 25 Feb 2019 20:19:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727184AbfBYUIR convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 25 Feb 2019 15:08:17 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:44087 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726740AbfBYUIR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 15:08:17 -0500
-Received: by mail-qt1-f193.google.com with SMTP id d2so12073884qti.11
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 12:08:17 -0800 (PST)
+        id S1727334AbfBYUT5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 15:19:57 -0500
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:44028 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727021AbfBYUT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 15:19:57 -0500
+Received: by mail-ed1-f53.google.com with SMTP id m35so8679073ede.10
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 12:19:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
+        bh=trhnJal1ds+eXYhPvLBfVVxlCh65dOK4tRrfuBGPJLo=;
+        b=jE8z99SYCC/JR5eJp82l6XjuLWwb+Owmc2SP0M4I/baKclPCUBZAY9sn2p0efIk5mq
+         SR926OBxHPmi1BuGVehfQhZi/WB6wQdj+ImAYdCPs/LST6IpNhCc8Y8zDBLzDx1v8c9k
+         xFcE7AMle3Y9NJPjSyZ+fcD3FD1n7nKT+D1enbGD229EgbDn7OApYDndTca5+mRDouB0
+         r9hcoMPmWr1lLyQEVJvgXWir9q1wkYFrBmQEED4L7+wIA7eT/X6uuPxfHnd9j2cWrTWV
+         L0M0q6FHalMA568ulDH80Hg3K5FAMcQNTSLvg0lzgqiYqGZ3/54iL8d6xrYaPAb/9QTF
+         f//Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bLdJpJ3Yc3v3gNoZPF/o+K9qIFPldVgJKF9NvZvhOoE=;
-        b=Ri2O2xF1O2qSKAmDUVmtYVmnp3XpE96nj1+Zx5gBMy4n+N246Fk8rN5ShdcH5mFRiD
-         0UtCnQBK8av+ierG1DsSvblQ+7YCqA1+59HkvNpdG3nBf3PBqjzLn1VFhUU+M9H1jBFp
-         8E/tSMH3t5kGN1bSiSnSkyvDMUk2jxn4x61aGZEEQlu+A2b6IR4r/P+gRI8hN1p3ytvP
-         83SBUZHzUpCXcVKZvFTGDgslki4jAp7MHGX9M0iVbc/kWPthgGkwRQyHy/lwdC9/ugH0
-         iniNdiCHjfTBgaMxnxDWCviGgd7ICECGFOBlSy/yL+IXROO0JYR1nt0PEvUyKwpVSf2h
-         t+4w==
-X-Gm-Message-State: AHQUAuanf4FSr+yvzsjoRwViP/hPMo76WOtoBs2b3lUYnS/Dihf3LXO6
-        8hzHOCCztSubLBtgzQztQQW1/sWxOT6kQG4BI90=
-X-Google-Smtp-Source: AHgI3IYrwoqi6fwEt3y/ejkAVWYJn28/oz+54ubi9n9pz1tT9aKeGQuAtATGN+vz5HwuhqKSmfgWcv7WZB1pngikYmQ=
-X-Received: by 2002:a0c:87b1:: with SMTP id 46mr15107322qvj.203.1551125296711;
- Mon, 25 Feb 2019 12:08:16 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
+         :mime-version;
+        bh=trhnJal1ds+eXYhPvLBfVVxlCh65dOK4tRrfuBGPJLo=;
+        b=KANEiFO1WwmX9kPuZ0xdPCYpWvM1Qd1t/z/0O0PhprlCg1UraW5t/S+XrTXLLjYS06
+         xyw5xyeem4i2ww2Kt9kJ/DeCZMikcLjSwt3mnTIMN+DEJF/yuBAaQH5g2EDvWGwKbxAR
+         0GUDxjJT/GT1CKSwgKFg41t6YesxKHqjxkT8Buh0qNmDyq4Fbyl72uEdbZqSWRpHBQqN
+         FbgBUSjGFG61mVJDVpIOEnlwoTVe/ZlgQO2ngtb80Xjqs7VwV3P2xe3kEby+jjQ5vSBK
+         BUhPZOIJNkz7OuBY+OxvaTeAVs2hZxZjXntuUXqgyewYBvN7NNcm+8EN3h0y7wQAYXW0
+         UCUg==
+X-Gm-Message-State: AHQUAubfjsysv4YeVy0Do81WR8C4Fa1eHC0M+2uOJ2DB6mSA6V0I1WI2
+        cavIZveD31afQIBsss/wuDbhEG8B
+X-Google-Smtp-Source: AHgI3IZ+Qob/Wlz3Zz9gEfHVZ847dQ2gIpxvF6SFThyttyJpYPPSnreP9hywMDsY35hFGzJeE4M9Sg==
+X-Received: by 2002:a17:906:5849:: with SMTP id h9mr14166106ejs.118.1551125995078;
+        Mon, 25 Feb 2019 12:19:55 -0800 (PST)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id d15sm2847053edv.20.2019.02.25.12.19.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 25 Feb 2019 12:19:54 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Compile error due to po/fr.po on old gettext in v2.21.0
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+Date:   Mon, 25 Feb 2019 21:19:53 +0100
+Message-ID: <874l8rwrh2.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <cover.1551123979.git.martin.agren@gmail.com> <e960fec4b492f3edf7bade35862333af5e8704d7.1551123979.git.martin.agren@gmail.com>
-In-Reply-To: <e960fec4b492f3edf7bade35862333af5e8704d7.1551123979.git.martin.agren@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 25 Feb 2019 15:08:05 -0500
-Message-ID: <CAPig+cS7BdHhLn+XjjyVa+PC040y-E4iPD=kuDtigenzSHcFKQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] Documentation/Makefile: add missing xsl dependencies
- for manpages
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 25, 2019 at 3:03 PM Martin Ågren <martin.agren@gmail.com> wrote:
-> These stylesheets very rarely change, but when they do, it really helps
-> if the manpages depend on them. We're casting the net a bit too wide
-> here, since we'll only ever use a subset of the stylesheets, but since
-> these files change so rarely, that should be ok. It's better than
-> missing a dependency.
->
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-> ---
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> @@ -354,7 +354,7 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf
-> -%.1 %.5 %.7 : %.xml manpage-base-url.xsl
-> +%.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
+On a NetBSD test box I have with msgfmt 0.14.4 v2.21.0 fails to compile.
 
-The wildcard expression also matches the manpage-base-url.xsl
-mentioned explicitly. Did you intentionally retain the explicit one or
-was that an oversight?
+I didn't spot this in rc2 because b3225a4183 ("l10n: fr.po v2.21.0 rnd
+2", 2019-02-13) along with the rest of i18n updates gets pulled in after
+all the RCs.
+
+The error s:
+
+    $ msgfmt --version; msgfmt -o fr.mo po/fr.po
+    msgfmt (GNU gettext-tools) 0.14.4
+    Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
+    This is free software; see the source for copying conditions.  There is NO
+    warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    Written by Ulrich Drepper.
+    po/fr.po:22482:4: parse error
+    po/fr.po:22482: missing `msgstr' section
+    po/fr.po:22487:4: parse error
+    po/fr.po:22487: missing `msgstr' section
+    po/fr.po:22492:4: parse error
+    po/fr.po:22492: missing `msgstr' section
+    po/fr.po:22497:4: parse error
+    po/fr.po:22497: missing `msgstr' section
+    po/fr.po:22502:4: parse error
+    po/fr.po:22502: missing `msgstr' section
+    po/fr.po:22507:4: parse error
+    po/fr.po:22507: missing `msgstr' section
+    po/fr.po:22512:4: parse error
+    po/fr.po:22512: missing `msgstr' section
+    po/fr.po:22517:4: parse error
+    po/fr.po:22517: missing `msgstr' section
+    po/fr.po:22522:4: parse error
+    po/fr.po:22522: missing `msgstr' section
+    po/fr.po:22527:4: parse error
+    po/fr.po:22527: missing `msgstr' section
+    msgfmt: too many errors, aborting
+
+It's "fixed" by:
+
+    perl -pi -e 's/^#~\|.*\n//' po/fr.po
+
+I.e. this is because of the comments being parsed (fuzzy comments).
+
+The 0.14.4 gettext release was back in 2005, so presumably this is due
+to some GPLv3 allergy of NetBSD's. The OS version itself is 7.1,
+released a couple of years ago.
