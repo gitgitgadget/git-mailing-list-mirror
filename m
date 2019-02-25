@@ -7,169 +7,76 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FA3020248
-	for <e@80x24.org>; Mon, 25 Feb 2019 08:59:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45F2420248
+	for <e@80x24.org>; Mon, 25 Feb 2019 09:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726409AbfBYI7c (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 03:59:32 -0500
-Received: from mail-io1-f66.google.com ([209.85.166.66]:41161 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725863AbfBYI7c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 03:59:32 -0500
-Received: by mail-io1-f66.google.com with SMTP id i5so6863127ioq.8
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 00:59:31 -0800 (PST)
+        id S1726639AbfBYJpu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 04:45:50 -0500
+Received: from mail-io1-f65.google.com ([209.85.166.65]:33465 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726315AbfBYJpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 04:45:50 -0500
+Received: by mail-io1-f65.google.com with SMTP id e186so6997733ioa.0
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 01:45:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uy/Slip6MmKaaYYocgKzQXE1M9g/5cLmbz0gYz7B2hQ=;
-        b=rue0vBQaB6P2OZEh1exyc0wZa1uv0HFsU63nN5Ybt2MvtTXWfIVID7XY3QQnvdWcb7
-         uhxFretStlGh+4EKW1E0kLrwxAqjJxei1B+kQU9po3VQhowV5qJACaeyqhMaeNhQ9SwM
-         MisgP3KhNuMHVTSO7+WwGLe3RKbuM6a3tzg1KADD60hl8yZ9b3H/nnXr3hsuGMJTmgon
-         OwVCm4qW0V9qBGmzdh0XE16cnU0i36/o9Tvd7yQ/9MgizSv7Tm9xTiCdQlrk8sSQvXLj
-         hqAK4mQmcz3U1q0HfLEpRN8vCl3FLYysEW+vX7g1pHIkSvdxq0kKEU+uUW7AFc9cnyOQ
-         XnBA==
+         :cc:content-transfer-encoding;
+        bh=3WXSF6D99rA7l2gDRi7hHEf0rjAX9jfc2HuZjMB/cC4=;
+        b=Rhm7fRNPLDkn58Mis9XrmSp7FiGGkOSw0N9OmWothXEtdUJi/TNE5FKhlFz5jrCkg0
+         UO0PZKoYnbo1jTmmOBppkDpdklSv3IZ9igVSaYJGvTxsV+aasaYTYHedIakD+Wi/fajV
+         Fljbc9i/cvnornry9RJ0Vu4i7pBSq1GRtHeZUWalbsYQE+jFvA+Zl0UjY4KKklW890kS
+         a8P5lBpVeCl8W014FGDXRAN9txi5uySAdMSp3SfXS/MfPdBPGDOvm/Cw1myDIiYg/JkO
+         +9+lmyKhKEGMKOWTQNTcwVvKC1tOMbzX+f4CoVU75pKWm6P9cdTtSFh28xcgLcjAN4c9
+         sU2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uy/Slip6MmKaaYYocgKzQXE1M9g/5cLmbz0gYz7B2hQ=;
-        b=mp/3meldXptne/xymYjzu+l8K8jxdyUty4juGqM1aLJV5aLr/+V4gJi2MmfFno2Ujk
-         nkoyEuLQjLCRDNIzm1kEvnbKm8HrMht73tOP5l+vXCkH54D+Eqr4fiGuGzF/dOY//31l
-         i4M62C9ECPnugqISUGOL9t8qUBw3re6OYb0nUvK5eUtH9FL0BTi6iXLk9noDpGz6sbUy
-         uFwAP6YZlIvMSkEA6V+33q+AJyhVhIdgBO8Csukr1gKUkOjnaHIT5xz2tx9M9rJQMaEJ
-         QHdYNDPkfKDQ48j1o8pFpO63AKHwk8FZyS7U7ZPuwbGgutp8v30bRAokPYJS7UTAQ07A
-         GmXQ==
-X-Gm-Message-State: AHQUAuYAIO/N3sKOE+eP5Q2PqoVC2fi5T0wHfLpPnwNQCfBM02oGzofO
-        y2UkkeL6XyA/ZC75sDixTPFXe7GPz8gi8n/vaH+1Yg==
-X-Google-Smtp-Source: AHgI3IbHnH5O1CuaPSGkk+AYWpeYctHesmqCTr8/E5Id42DcuBSV/LSiycTGjzNiaeJE3PdDs/DaYCtlAkzWmF208nM=
-X-Received: by 2002:a5d:9357:: with SMTP id i23mr7490009ioo.236.1551085170912;
- Mon, 25 Feb 2019 00:59:30 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3WXSF6D99rA7l2gDRi7hHEf0rjAX9jfc2HuZjMB/cC4=;
+        b=gdf9/p0SgkFey+dq2nuNfHsSTLSxZg1PfSQfvFJzbeF24xo5ywUmXfAmb7mDB36MlX
+         BZU6wltKdAYFm/+Cc9WtdirkDG9cupEb+l+rkZuLdtZnijeOLl4ZQTM02BuuXpOwKqXJ
+         JafRcmbDpzoGMNZtfQA6ntIxglzQLdjBgqX+ZcvSju8+qe7FbyStvwcvRXBvxD0XlGsc
+         bSGC9EaXCA8w18As1gwADgP5IaV+EiAjrVwdEXyvHy28bCU1pARaXn3NDIRZH+xHZP+k
+         J2O5oWbecyPwbqX8kD42fSnPLYEDB+ZLWiE5hyJ+7qehZ+4w7emhizpxsWpZ6K7BDGmo
+         AHAA==
+X-Gm-Message-State: AHQUAuYitGCxE7U9yxCIiw8Hs5xFadsfEy2ONI41gZHwC0eMtj+ZkNaP
+        RSOTghJfVhpX6VgsY61f+bDFF4uXOLs9bFzcRsw=
+X-Google-Smtp-Source: AHgI3IbWZ2SC18K0X6rH/XFubfn0Cp41bP22PQ2hmeX/8i2tV1F9bQE5IQdfkZOTFUL1L6hzAMoJ6yVAS7glSWiNc+0=
+X-Received: by 2002:a6b:6b18:: with SMTP id g24mr7817852ioc.282.1551087949290;
+ Mon, 25 Feb 2019 01:45:49 -0800 (PST)
 MIME-Version: 1.0
-References: <87y36rcanq.fsf@rustcorp.com.au> <20190208024800.GA11392@sigill.intra.peff.net>
- <87va1btaic.fsf@rustcorp.com.au>
-In-Reply-To: <87va1btaic.fsf@rustcorp.com.au>
+References: <20190223190309.6728-1-matheus.bernardino@usp.br>
+ <20190223190309.6728-4-matheus.bernardino@usp.br> <87va1a3z8e.fsf@evledraar.gmail.com>
+ <CAP8UFD2LLL+V54k3XmHzmg5t1zanpAvY_=7GqXL43vLPTTmuww@mail.gmail.com> <87tvgt454u.fsf@evledraar.gmail.com>
+In-Reply-To: <87tvgt454u.fsf@evledraar.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 25 Feb 2019 15:59:04 +0700
-Message-ID: <CACsJy8DjHrCSXsOpH-pm5n-KUEm4BhJmhWYxZEWygmTEj1ykLA@mail.gmail.com>
-Subject: Re: `git status -u no` suppresses modified files too.
-To:     Rusty Russell <rusty@rustcorp.com.au>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Joel Stanley <joel@jms.id.au>
+Date:   Mon, 25 Feb 2019 16:45:23 +0700
+Message-ID: <CACsJy8Bw-mXLyT7VaKBjYKLe6uSAQqyLG=_AzjDXykYzSQLkcg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 3/3] clone: use dir-iterator to avoid explicit dir traversal
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        git <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 25, 2019 at 12:37 PM Rusty Russell <rusty@rustcorp.com.au> wrote:
->
-> Jeff King <peff@peff.net> writes:
-> > On Fri, Feb 08, 2019 at 12:18:57PM +1030, Rusty Russell wrote:
-> >
-> >> This broke my "is this clean?" sanity check and very much violates
-> >> the man page description.
-> >
-> > Wow, this one had me scratching my head for a minute. What you're
-> > describing here:
-> >
-> >>         $ git status -u no
-> >>         On branch guilt/repro
-> >
-> > ...seems horribly broken, and the behavior goes back to the beginnings
-> > of "-u". So I wondered how we would not have noticed for so long.
-> >
-> > But what is going on is quite subtle. The "-u" option takes an optional
-> > argument, and so must be used in its "stuck" form. I.e.,
-> >
-> >   git status -uno
->
-> Urgh, manual page even *says* this, and I missed it:
->
->         It is optional: it
->         defaults to all, and if specified, it must be stuck to the option (e.g.  -uno, but not -u
->         no).
->
-> Note that optional arguments are fundamentally broken like this: you
-> should *never* add them to your programs.  If -u suddently wanted an
-> argument, a new option should have been added.
+On Sun, Feb 24, 2019 at 9:45 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> ..
+> Can't the utility function we're moving to just be made to be
+> bug-compatible with what we're doing now with symlinks?
 
-This -uno thing is bugging me too and I've seen a couple more options
-like this. Maybe we can start moving to -u=no or something like that.
-It's still broken if we accept -= as a valid option (I don't think we
-do as of now), but at least it does not look as misleading as -uno,
-which reads -u -n -o by everybody else who has not read all the man
-pages.
-
-> But despite that "well, I wouldn't start from here!" advice, I think
-> your patch seems really helpful.
->
-> Thanks for clue contribution!
-> Rusty.
->
-> > does do what you expect. We cannot allow the separated form here,
-> > because that would conflict with another actual option, like:
-> >
-> >   git status -u --porcelain
-> >
-> > So why does it behave as it does? We accept "no" as its own pathspec
-> > argument, and thus we limit the status to that path. And that's why
-> > there's "nothing to commit"; there's nothing in that pathspec.
-> >
-> > This is a pretty horrible UI trap. Most of the time with pathspecs we
-> > require them to be on the right-hand side of a "--" unless the paths
-> > actually exist in the filesystem. But then, in most of those cases we're
-> > making sure they're not ambiguous between revisions and paths. So maybe
-> > it's overkill here. I dunno. But the patch below certainly makes what's
-> > going on in your case less subtle:
-> >
-> >   $ git status -u no
-> >   fatal: no: no such path in the working tree.
-> >   Use 'git <command> -- <path>...' to specify paths that do not exist locally.
-> >
-> > You do still have to figure out why it wasn't stuck to "-u", though.
-> >
-> > ---
-> > diff --git a/builtin/commit.c b/builtin/commit.c
-> > index 2986553d5f..7177d7d82f 100644
-> > --- a/builtin/commit.c
-> > +++ b/builtin/commit.c
-> > @@ -1300,6 +1300,16 @@ static int git_status_config(const char *k, const char *v, void *cb)
-> >       return git_diff_ui_config(k, v, NULL);
-> >  }
-> >
-> > +static void verify_pathspec(const char *prefix, const char **argv)
-> > +{
-> > +     while (*argv) {
-> > +             const char *arg = *argv++;
-> > +             if (!strcmp(arg, "--"))
-> > +                     return;
-> > +             verify_filename(prefix, arg, 0);
-> > +     }
-> > +}
-> > +
-> >  int cmd_status(int argc, const char **argv, const char *prefix)
-> >  {
-> >       static int no_renames = -1;
-> > @@ -1351,7 +1361,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
-> >       status_init_config(&s, git_status_config);
-> >       argc = parse_options(argc, argv, prefix,
-> >                            builtin_status_options,
-> > -                          builtin_status_usage, 0);
-> > +                          builtin_status_usage, PARSE_OPT_KEEP_DASHDASH);
-> >       finalize_colopts(&s.colopts, -1);
-> >       finalize_deferred_config(&s);
-> >
-> > @@ -1362,6 +1372,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
-> >           s.show_untracked_files == SHOW_NO_UNTRACKED_FILES)
-> >               die(_("Unsupported combination of ignored and untracked-files arguments"));
-> >
-> > +     verify_pathspec(prefix, argv);
-> >       parse_pathspec(&s.pathspec, 0,
-> >                      PATHSPEC_PREFER_FULL,
-> >                      prefix, argv);
-
-
-
--- 
+I haven't really followed closely this thread. But I think the first
+step should be bug-compatible (it really depends if you count the
+current behavior "buggy"). Then add improvements on top if there's
+still time or strong consensus. It's easier to bisect that way at
+least.
+--=20
 Duy
