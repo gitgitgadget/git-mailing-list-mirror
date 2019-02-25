@@ -2,87 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99F1A20248
-	for <e@80x24.org>; Mon, 25 Feb 2019 21:04:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F87520248
+	for <e@80x24.org>; Mon, 25 Feb 2019 21:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727769AbfBYVEi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 16:04:38 -0500
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:33533 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727790AbfBYVEi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 16:04:38 -0500
-Received: by mail-ed1-f49.google.com with SMTP id c55so8846228edb.0
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 13:04:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DRUqX2XO9RLW886MOc/2ZLkWvdC3uNYzCUwcLIo/3+w=;
-        b=YIXA4737G/dIiACqWBt+GXR1s/Do2mgQdYNUfL/NW30UKAnodpgCH6M+7bBLhIvbvU
-         iiGvTcmNYVcbkF/19iPr98/kOc5OKT34Pt5rwMa9ydYRV+OrKE1JZdgN+A1IKMDSDzg9
-         22xp2GQtMRF2d0M8hjoAC+uFXdyssugULBQLCJYgnlFlx/z5CTjFO6IDG3dU7CNOBTyF
-         wx5lEuKQ5/xO7tXY8xQ/UMeiC6jcmHP6OZK6YLmfUfSxIdbmztAJamcehTkMCtEGA1Dt
-         iUPEvDBtJl470e8s5OKPBqxRt+mn86PU5djqECdAjRW//uP0JRSLkO54SPuZsdSnMQQz
-         P72w==
+        id S1727064AbfBYVJa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 16:09:30 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:43457 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726602AbfBYVJa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 16:09:30 -0500
+Received: by mail-qk1-f196.google.com with SMTP id f196so6257866qke.10
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 13:09:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=DRUqX2XO9RLW886MOc/2ZLkWvdC3uNYzCUwcLIo/3+w=;
-        b=H+ODN3kAv8uTv6YFGEPaiRZnpDUVtvTzWUnkqi5KU1ArjAh3dBjjTK9pnX1XxV+RHl
-         pscSF3YmRWNowxA10M4mc1x+OmmfHOzFmOnl+yX2niETGUDqZv4NcORxJnT9fjLB619j
-         dBs23m5rN3UVgALz2WsIc5rWNqzYnMc/6+w/7oZczxoi9hlsBS2hZJYBRKIlfeb3gDA5
-         uZN9brUPSckJTU+RKRKz0mYEyEJ91aPJyAmxEQpMAqKMfSwHBJf4Zls1rS8vviZuNAnT
-         3xNFFJOmyqGmHhSXczedrHxgzDkmoaIFsLAONuQEB7FSS9B5GoOKw7W0e6LWgrpobNbl
-         9T7g==
-X-Gm-Message-State: AHQUAuaJutOvBzb3Bt/9ZGxbedrPY7Ie8ogeymNUYwYu8AtFpG3jr+Li
-        DZxdy6ZANivJ0eflUKqvhUo7mwzLVrNowwJ6H9I=
-X-Google-Smtp-Source: AHgI3IY3mliaJ8FlVbpni4O3+cwlgPsWsZS544EjmFmItYQuk4x+F1HvVkt6bDPjInHxVEpVcQ49HzGrw3xnRWFYe0k=
-X-Received: by 2002:a17:906:4893:: with SMTP id v19mr14154007ejq.196.1551128676143;
- Mon, 25 Feb 2019 13:04:36 -0800 (PST)
+        bh=T2qt9isVerZ04+3gpBRdpMGOX+Oo33jEouKW0gBaJ48=;
+        b=l84Q4nKzOjo9mE554IDg7TgZanvI5lKMrg/TYdGvFQ9Mtk6WRSpBXlZhMePK+By1+N
+         G10kZ4EBlUPTSqrjyMUDX5knWjyEY9fqQ8md/cU7DpM3/KYgra70edj//MvDjDuR/Zwj
+         8IfRheZpgycx4ct+7HB1+YY0E57ks0tRnFDqKyeaCqmgDuheTgX/4MKDd3JrIXtpql7W
+         JTSvSHEC64dwQ+BGnSmrFyxa/Sac3gBjHHMIXS5vJIrE/IgBalXCVNfie7AqdVyAyNaD
+         p4BmBLfKB8tn/nYT4pc67ssb71ygQfu5YJjaS0w0mv9GtXfWc5knBk5AcxIDV+SD6SL8
+         Ma7w==
+X-Gm-Message-State: AHQUAuYvz8aAyiiKt6il778Rc0kiRutJFD4a+ZZVN1SCQMMlenwH7Lo3
+        /wSJ+vFYmbhmlZgUNldLKko0OUaO2+WdWD9pC9c=
+X-Google-Smtp-Source: AHgI3IZZ/ItryC7ulDvv2E5ItLWaouCWciRgh5RijLeFgpEHltkKiamzMiLAqrzuidbZv4MShyELdT/EwOXUeUTIYos=
+X-Received: by 2002:a37:7d86:: with SMTP id y128mr2020312qkc.36.1551128969318;
+ Mon, 25 Feb 2019 13:09:29 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1550963965.git.jonathantanmy@google.com> <aae0f669627d7be45a967c6df464bf1ecdabce6d.1550963965.git.jonathantanmy@google.com>
-In-Reply-To: <aae0f669627d7be45a967c6df464bf1ecdabce6d.1550963965.git.jonathantanmy@google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 25 Feb 2019 22:04:24 +0100
-Message-ID: <CAP8UFD2RBU+f4=pB4CZHPHVO3DKXdGXVen=x3a8GvQHhGBG3aA@mail.gmail.com>
-Subject: Re: [WIP 7/7] upload-pack: send part of packfile response as uri
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <CAL7ArXqkVfrnQWYFDYdwMGkZjHCwzyQX4pbKCo=KCzy-zJiRBw@mail.gmail.com>
+ <CAP8UFD1U+4ww8rC=TSjjH+Rt77P9w4YWA9s5yspVZ7GgPpx0pw@mail.gmail.com>
+ <CAL7ArXqrV7qb29i6JvQdeUtLNX9A7WC0-deKMx-_6pQUpaqSJA@mail.gmail.com> <CAP8UFD1wK+goi1rKGjABcs01VwYw2kEma95n08H1EWVT4vh6ng@mail.gmail.com>
+In-Reply-To: <CAP8UFD1wK+goi1rKGjABcs01VwYw2kEma95n08H1EWVT4vh6ng@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 25 Feb 2019 16:09:18 -0500
+Message-ID: <CAPig+cSZZaCT0G3hysmjn_tNvZmYGp=5cXpZHkdphbWXnONSVQ@mail.gmail.com>
+Subject: Re: [GSoC] Introduction
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 24, 2019 at 12:39 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+On Mon, Feb 25, 2019 at 3:22 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+> On Mon, Feb 25, 2019 at 12:36 PM Rohit Ashiwal
+> <rohit.ashiwal265@gmail.com> wrote:
+> > I don't think I quite understood this. Were you asking for replacing
+> > all `test -X` calls with `test_path_is_*` calls in only one tXXXX-*.sh
+> > file or `test -d` calls with `test_path_is_dir` in all tXXXX-*.sh? As
+> > of now, I've changed almost all `test -d` in all relevant tXXXX-*.sh
+> > files.
 >
-> Teach upload-pack to send part of its packfile response as URIs.
->
-> An administrator may configure a repository with one or more
-> "uploadpack.blobpackfileuri" lines, each line containing an OID and a
-> URI. A client may configure fetch.uriprotocols to be a comma-separated
-> list of protocols that it is willing to use to fetch additional
-> packfiles - this list will be sent to the server.
+> So yes I am asking for replacing all `test -X` calls with
+> `test_path_is_*` calls in only one tXXXX-*.sh file.
 
-So only packfiles will be fetched by the client using those protocols.
+Not stated outright, but an important reason for limiting the scope of
+this change (and, indeed, the scope of any patch series) is to ease
+the burden on people who review your submission. Large patch series
+tend to tax reviewers heavily, even (and often) when repetitive and
+simple, like replacing `test -d` with `test_path_is_dir()`. The
+shorter and more concise a patch series is, the more likely that it
+will receive quality reviews.
 
-> Whenever an object
-> with one of those OIDs would appear in the packfile transmitted by
-> upload-pack, the server may exclude that object, and instead send the
-> URI.
-
-Ok, so each URI sent in the packfile corresponds to exactly one
-object. And when the client fetches one such URI it gets a packfile
-that contains only the corresponding object. Or is there something I
-misunderstood?
-
-> The client will then download the packs referred to by those URIs
-> before performing the connectivity check.
+Another reason for keeping the scope of changes limited is to ease the
+burden of the project maintainer. Patch series which touch a lot of
+areas tend to conflict with in-flight topics from other people, and
+the project maintainer has to juggle and resolve these problems.
+Concise patch series, on the other hand, are less likely to conflict
+with changes elsewhere.
