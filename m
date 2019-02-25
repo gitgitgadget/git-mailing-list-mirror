@@ -2,106 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A771B20248
-	for <e@80x24.org>; Mon, 25 Feb 2019 14:17:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05F3720248
+	for <e@80x24.org>; Mon, 25 Feb 2019 16:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727192AbfBYORs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 09:17:48 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:40308 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726764AbfBYORr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 09:17:47 -0500
-Received: by mail-ed1-f66.google.com with SMTP id 10so7678665eds.7
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 06:17:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=eodLX6FwTr2DuINIopozXOKG59Ml4UInobyxR3vqqKc=;
-        b=q40204fpINqGjRn1RG2lPu3+WKJF0gzWnSrMovt6VAKmJI2vUUYiGt4RJYaeshzJ8n
-         FmdVyhvrj9GE8nGqHYEj6ucqDFc37AIwduLaiBw4obCtcndvrIKj114x5n/Q8oAa+FYb
-         RLzEElNhNAVT16gnHf2FRQMSczqX4SWAfwWPUx+NtolxHF+XCXHVh27JaUT0bNDkSCra
-         MxavxyVLGUIoyUpf0ranEX0fJVI89WOZerYs5ARIdVl3f6xWokF4qKzgxJ/8fSzlXGDU
-         RsG/kansGGxKcjeicSkW1y1bfgHNutM3Nb4AnBir0Upe4VV0hgAe8g5UPVBnc9ZofSfi
-         aneQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eodLX6FwTr2DuINIopozXOKG59Ml4UInobyxR3vqqKc=;
-        b=mbNLIKhy4cns2ZeRti81XrkIcZMGKEYR1FIw9H27jbhWTCGF5hF5mZ+12olCoQEPAt
-         2Kc5lGjg2Giw8Ox2QNWarbEigmJiRpQr7sX9DdNPaOuw2klZtmF0ylGFDZ6i2DYcFR9/
-         EoGlxJURWVzHdlp/9xt/bPK5MitNgRoMW7KQFaDce96c1lXQfwtOO1xDSOEP4ne9l8w3
-         gJm7e3Q3vmZ2NxeptmISyIYyZtwF4YbANXIMgnU7omFB/o7UfezVvAf/gte0M1aebNU8
-         yGpnD6IKBUqpYnA4XZDXMIdfL1FCx7gyLAyyMunHtDTLFLUf+tM8ZcfBhu+gBERpp5Q/
-         p90Q==
-X-Gm-Message-State: AHQUAuZHwuqNwPprg2ykEtOYkaGySRPGtTFBcM/+ZgtlkQB6kHguDGQF
-        P1pi62paWRYM/kHUE9TrtBZt3XHR
-X-Google-Smtp-Source: AHgI3IaU2M0X7pU4EFATkudd/wKJjMzRqjwBCiVBnVH9LnciA2vn+vnv7t/xCrSnWZrjONYwS6qOjQ==
-X-Received: by 2002:a50:b6f4:: with SMTP id f49mr14989605ede.80.1551104265724;
-        Mon, 25 Feb 2019 06:17:45 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d47sm2553368eda.77.2019.02.25.06.17.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Feb 2019 06:17:45 -0800 (PST)
-Date:   Mon, 25 Feb 2019 06:17:45 -0800 (PST)
-X-Google-Original-Date: Mon, 25 Feb 2019 14:17:43 GMT
-Message-Id: <2c3c559da0a5e9b397f4dc80be233c66b8597678.1551104263.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.140.git.gitgitgadget@gmail.com>
-References: <pull.140.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] t5580: verify that alternates can be UNC paths
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727895AbfBYQCF convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 25 Feb 2019 11:02:05 -0500
+Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:41636 "EHLO
+        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727731AbfBYQCE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 11:02:04 -0500
+X-Greylist: delayed 1810 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Feb 2019 11:02:04 EST
+Received: from localhost (localhost [127.0.0.1])
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id 9CA82A02B1
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 16:31:53 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
+Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
+        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id RRql_A_Tm0zS for <git@vger.kernel.org>;
+        Mon, 25 Feb 2019 16:31:53 +0100 (CET)
+Received: from JEMBX2013-01.univ-lyon1.fr (jembx2013-01.univ-lyon1.fr [134.214.201.249])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 2C33DA00F0
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 16:31:53 +0100 (CET)
+Received: from BEMBX2013-02.univ-lyon1.fr (2002:86d6:c9f8::86d6:c9f8) by
+ JEMBX2013-01.univ-lyon1.fr (2002:86d6:c9f9::86d6:c9f9) with Microsoft SMTP
+ Server (TLS) id 15.0.1263.5; Mon, 25 Feb 2019 16:31:52 +0100
+Received: from BEMBX2013-02.univ-lyon1.fr ([fe80::bc7c:3e7e:93a4:9e64]) by
+ BEMBX2013-02.univ-lyon1.fr ([fe80::bc7c:3e7e:93a4:9e64%15]) with mapi id
+ 15.00.1263.000; Mon, 25 Feb 2019 16:31:52 +0100
+From:   CHABANNE PABLO p1602176 <pablo.chabanne@etu.univ-lyon1.fr>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     MOY MATTHIEU <matthieu.moy@univ-lyon1.fr>,
+        BERBEZIER NATHAN p1601409 <nathan.berbezier@etu.univ-lyon1.fr>,
+        BOMPARD CORENTIN p1603631 <corentin.bompard@etu.univ-lyon1.fr>
+Subject: How to test the url of a remote ?
+Thread-Topic: How to test the url of a remote ?
+Thread-Index: AQHUzR8lSjBSKu80rEmfjHldKB8olQ==
+Date:   Mon, 25 Feb 2019 15:31:52 +0000
+Message-ID: <1551108712434.33528@etu.univ-lyon1.fr>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [134.214.126.172]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi,
 
-On Windows, UNC paths are a very convenient way to share data, and
-alternates are all about sharing data.
+we are currently working on adding the set-upstream to pull, and we were wondering on how to test if the url of the remote is a valid one. We believe it's call in the do_fetch() function in fetch.c, but we don't how it works.
 
-We fixed a bug where alternates specifying UNC paths were not handled
-properly, and it is high time that we add a regression test to ensure
-that this bug is not reintroduced.
+Thanks in advance,
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t5580-clone-push-unc.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/t/t5580-clone-push-unc.sh b/t/t5580-clone-push-unc.sh
-index 217adf3a63..b3c8a92450 100755
---- a/t/t5580-clone-push-unc.sh
-+++ b/t/t5580-clone-push-unc.sh
-@@ -62,4 +62,16 @@ test_expect_success MINGW 'remote nick cannot contain backslashes' '
- 	test_i18ngrep ! "unable to access" err
- '
- 
-+test_expect_success 'unc alternates' '
-+	tree="$(git rev-parse HEAD:)" &&
-+	mkdir test-unc-alternate &&
-+	(
-+		cd test-unc-alternate &&
-+		git init &&
-+		test_must_fail git show $tree &&
-+		echo "$UNCPATH/.git/objects" >.git/objects/info/alternates &&
-+		git show $tree
-+	)
-+'
-+
- test_done
--- 
-gitgitgadget
+--
+Corentin Bombard, Nathan Berbezier and Pablo Chabanne.
