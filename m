@@ -2,100 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5589C20248
-	for <e@80x24.org>; Mon, 25 Feb 2019 20:03:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BD8420248
+	for <e@80x24.org>; Mon, 25 Feb 2019 20:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727258AbfBYUDQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 15:03:16 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:37062 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726740AbfBYUDP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 15:03:15 -0500
-Received: by mail-lf1-f67.google.com with SMTP id z196so7154426lff.4
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 12:03:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lm3VpTi4rV0BJJp9W7KdITBxIGnT6raINZ5B1Q+EoOQ=;
-        b=HkVHLGfpSDhrC9W69zeDkZd+hmUAA5qNmv1V4Lu6ushYivoot3ccdCSM5TbM9l1eGH
-         Ui2a2BPK9TmPhf6UxIKsqk0Jer0q0K6R86E0XwqpFCB9jjAJodVsp6XYkuG++TCoB0F0
-         8nHGWVwWN86oLgXgJpRDz1WfF5mCOxXNoHF2t0/BkYbx2n9Q8qIcqMLNhytAiKF7A0Cd
-         0Gwp6koj/PCJ7E2xNPcvEoK65FwgVpzgNj2wFoOAu1LYv9gk77+zG2EMMFBL3qYd0FG4
-         csDtF6094NPsznlWthkgBjGyocTbmE9cvbsRhkU2vGT8eZcO+E5uB0A5zYnGaMMR/ewI
-         xJdQ==
+        id S1727184AbfBYUIR convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 25 Feb 2019 15:08:17 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:44087 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726740AbfBYUIR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 15:08:17 -0500
+Received: by mail-qt1-f193.google.com with SMTP id d2so12073884qti.11
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 12:08:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lm3VpTi4rV0BJJp9W7KdITBxIGnT6raINZ5B1Q+EoOQ=;
-        b=GHT/uhYOsUGpnKtnag/fPQvXllo3eBCol4/5MqXym374te04jLwXapbKl5Yenq1jEm
-         C1Nj1DIgxjtjT2O8xOExdJiU8jyn9T6E5Ttn/6p9wQYCnHlACvXw+hVc+qAIsoF256nY
-         oJGhgQ5s+i/Cy5zoiQFXaQY/nbnpgGokG/durKIIZ3ay8PAx7cTuUujCME8rRk6nzbRl
-         cqW50oUWJG5EnwIdfestDdxmzGB8BeiNFO4Ny975lAOPIj5yg4djV+1vqiJH78oO3yW2
-         zVNWq6TYZyDdNkF3iekEobwEqfoShWgoNmEH8S6IeX7eWonIbMQfeqgWUZr2xxfd/fO1
-         wGAg==
-X-Gm-Message-State: AHQUAuYkv4IR2lxpvLvW9+6ACaHkmVchiIEK62lqaPC+voyMLrHq5gEg
-        6ImeMPL19G0ToSwXyqNz/F8vdtJZ
-X-Google-Smtp-Source: AHgI3Ibh2xuN2zvnrIDAC7TskhMZzwHcbMxyHmTMxKSkAsO2ilR9tG/2bSjZDfNlRBEoLOzwAHYUjQ==
-X-Received: by 2002:ac2:514d:: with SMTP id q13mr11130737lfd.30.1551124993337;
-        Mon, 25 Feb 2019 12:03:13 -0800 (PST)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id c22sm2977168lfi.27.2019.02.25.12.03.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Feb 2019 12:03:12 -0800 (PST)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 3/3] asciidoctor-extensions: fix spurious space after linkgit
-Date:   Mon, 25 Feb 2019 21:02:40 +0100
-Message-Id: <41d9ea21c37a634b2310b5b2f68935bcd612665c.1551123979.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <cover.1551123979.git.martin.agren@gmail.com>
-References: <cover.1551123979.git.martin.agren@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bLdJpJ3Yc3v3gNoZPF/o+K9qIFPldVgJKF9NvZvhOoE=;
+        b=Ri2O2xF1O2qSKAmDUVmtYVmnp3XpE96nj1+Zx5gBMy4n+N246Fk8rN5ShdcH5mFRiD
+         0UtCnQBK8av+ierG1DsSvblQ+7YCqA1+59HkvNpdG3nBf3PBqjzLn1VFhUU+M9H1jBFp
+         8E/tSMH3t5kGN1bSiSnSkyvDMUk2jxn4x61aGZEEQlu+A2b6IR4r/P+gRI8hN1p3ytvP
+         83SBUZHzUpCXcVKZvFTGDgslki4jAp7MHGX9M0iVbc/kWPthgGkwRQyHy/lwdC9/ugH0
+         iniNdiCHjfTBgaMxnxDWCviGgd7ICECGFOBlSy/yL+IXROO0JYR1nt0PEvUyKwpVSf2h
+         t+4w==
+X-Gm-Message-State: AHQUAuanf4FSr+yvzsjoRwViP/hPMo76WOtoBs2b3lUYnS/Dihf3LXO6
+        8hzHOCCztSubLBtgzQztQQW1/sWxOT6kQG4BI90=
+X-Google-Smtp-Source: AHgI3IYrwoqi6fwEt3y/ejkAVWYJn28/oz+54ubi9n9pz1tT9aKeGQuAtATGN+vz5HwuhqKSmfgWcv7WZB1pngikYmQ=
+X-Received: by 2002:a0c:87b1:: with SMTP id 46mr15107322qvj.203.1551125296711;
+ Mon, 25 Feb 2019 12:08:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <cover.1551123979.git.martin.agren@gmail.com> <e960fec4b492f3edf7bade35862333af5e8704d7.1551123979.git.martin.agren@gmail.com>
+In-Reply-To: <e960fec4b492f3edf7bade35862333af5e8704d7.1551123979.git.martin.agren@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 25 Feb 2019 15:08:05 -0500
+Message-ID: <CAPig+cS7BdHhLn+XjjyVa+PC040y-E4iPD=kuDtigenzSHcFKQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] Documentation/Makefile: add missing xsl dependencies
+ for manpages
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we render, e.g., "linkgit:gitglossary[7]." with Asciidoctor, we get
-"gitglossary(7) ." with a space between the linkgit macro expansion and
-the punctuation. We can fix this by dropping the trailing newline after
-we've turned `linkgit:foo[bar]` into `<citerefentry>..</citerefentry>`.
+On Mon, Feb 25, 2019 at 3:03 PM Martin Ågren <martin.agren@gmail.com> wrote:
+> These stylesheets very rarely change, but when they do, it really helps
+> if the manpages depend on them. We're casting the net a bit too wide
+> here, since we'll only ever use a subset of the stylesheets, but since
+> these files change so rarely, that should be ok. It's better than
+> missing a dependency.
+>
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> @@ -354,7 +354,7 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf
+> -%.1 %.5 %.7 : %.xml manpage-base-url.xsl
+> +%.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
 
-The diff produced by `USE_ASCIIDOCTOR=Yes ./doc-diff HEAD^ HEAD` is
-almost 6000 lines large and shows how this fixes "git-foo(x) ,", "(see
-git-bar(y) )" and so on. One might wonder whether this also turns, e.g.,
-"see linkgit:foo[1] for more" into "see foo(1)for more", but no. We get
-"...</citerefentry> for more" in the XML, see, e.g., git-am.xml, so the
-space ends up in git-am.1 just fine.
-
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Documentation/asciidoctor-extensions.rb | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index ec83b4959e..f7a5982f8b 100644
---- a/Documentation/asciidoctor-extensions.rb
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -16,7 +16,7 @@ module Git
-           "<citerefentry>\n" \
-             "<refentrytitle>#{target}</refentrytitle>" \
-             "<manvolnum>#{attrs[1]}</manvolnum>\n" \
--          "</citerefentry>\n"
-+          "</citerefentry>"
-         end
-       end
-     end
--- 
-2.21.0
-
+The wildcard expression also matches the manpage-base-url.xsl
+mentioned explicitly. Did you intentionally retain the explicit one or
+was that an oversight?
