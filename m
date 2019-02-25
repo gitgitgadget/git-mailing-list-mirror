@@ -2,68 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05F3720248
-	for <e@80x24.org>; Mon, 25 Feb 2019 16:02:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA41020248
+	for <e@80x24.org>; Mon, 25 Feb 2019 16:05:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727895AbfBYQCF convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 25 Feb 2019 11:02:05 -0500
-Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:41636 "EHLO
-        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727731AbfBYQCE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 11:02:04 -0500
-X-Greylist: delayed 1810 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Feb 2019 11:02:04 EST
-Received: from localhost (localhost [127.0.0.1])
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id 9CA82A02B1
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 16:31:53 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
-Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
-        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id RRql_A_Tm0zS for <git@vger.kernel.org>;
-        Mon, 25 Feb 2019 16:31:53 +0100 (CET)
-Received: from JEMBX2013-01.univ-lyon1.fr (jembx2013-01.univ-lyon1.fr [134.214.201.249])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 2C33DA00F0
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 16:31:53 +0100 (CET)
-Received: from BEMBX2013-02.univ-lyon1.fr (2002:86d6:c9f8::86d6:c9f8) by
- JEMBX2013-01.univ-lyon1.fr (2002:86d6:c9f9::86d6:c9f9) with Microsoft SMTP
- Server (TLS) id 15.0.1263.5; Mon, 25 Feb 2019 16:31:52 +0100
-Received: from BEMBX2013-02.univ-lyon1.fr ([fe80::bc7c:3e7e:93a4:9e64]) by
- BEMBX2013-02.univ-lyon1.fr ([fe80::bc7c:3e7e:93a4:9e64%15]) with mapi id
- 15.00.1263.000; Mon, 25 Feb 2019 16:31:52 +0100
-From:   CHABANNE PABLO p1602176 <pablo.chabanne@etu.univ-lyon1.fr>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     MOY MATTHIEU <matthieu.moy@univ-lyon1.fr>,
-        BERBEZIER NATHAN p1601409 <nathan.berbezier@etu.univ-lyon1.fr>,
-        BOMPARD CORENTIN p1603631 <corentin.bompard@etu.univ-lyon1.fr>
-Subject: How to test the url of a remote ?
-Thread-Topic: How to test the url of a remote ?
-Thread-Index: AQHUzR8lSjBSKu80rEmfjHldKB8olQ==
-Date:   Mon, 25 Feb 2019 15:31:52 +0000
-Message-ID: <1551108712434.33528@etu.univ-lyon1.fr>
-Accept-Language: fr-FR, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [134.214.126.172]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1727901AbfBYQFm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 11:05:42 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:51683 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727733AbfBYQFm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 11:05:42 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1PG5cNh037927
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 25 Feb 2019 11:05:38 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git v2.21.0
+Date:   Mon, 25 Feb 2019 11:05:31 -0500
+Message-ID: <000801d4cd23$f24e8a90$d6eb9fb0$@nexbridge.com>
 MIME-Version: 1.0
+Content-Type: text/plain;
+        boundary="----=_NextPart_000_0020_01D4CCEC.04FFFB20";
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHPzoQfbsePaA70x5Dm/jFx3eZEKA==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Just some good news. We have two platform variants in NonStop to worry about
+(soon to be three). Our testing is being conducted on the oldest and slowest
+(J-series) so that we catch whatever we can. 2.21.0 one is still testing
+2.21.0 in our Jenkins instance on J-series but is looking consistent with
+rc2 (although we're just entering the scary tests area 5300-5599). The newer
+L-series machines had no trouble at all and passed (other than the usual
+t9001 and t9020 which won't work on platform anyway). Test time was about 9
+hours on our L-series machine compared with 50-ish on the J-series.
 
-we are currently working on adding the set-upstream to pull, and we were wondering on how to test if the url of the remote is a valid one. We believe it's call in the do_fetch() function in fetch.c, but we don't how it works.
+Thanks for the hard work everyone!
 
-Thanks in advance,
-
---
-Corentin Bombard, Nathan Berbezier and Pablo Chabanne.
