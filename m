@@ -2,77 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD0D220248
-	for <e@80x24.org>; Mon, 25 Feb 2019 06:50:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FA0D20248
+	for <e@80x24.org>; Mon, 25 Feb 2019 07:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726786AbfBYGuk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 01:50:40 -0500
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:43459 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726401AbfBYGuk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 01:50:40 -0500
-Received: by mail-ed1-f41.google.com with SMTP id m35so6571422ede.10
-        for <git@vger.kernel.org>; Sun, 24 Feb 2019 22:50:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nvZPSKE0cDU+ly/Mk8tBCUKF6Tr8uC2Kt2Ib3hhhROw=;
-        b=E5uZIPU8B9WeHwiUqkGHQg6cvM0sYgrml2yL5QxWMMnHmBQR3ONuy4jPlGfts7e0oW
-         qOm3Zuo7gw8yyCw7+yu5G778D8+lmy9uPX7nJp7qm2Gka34jFObxrZCJO6OR3S7fX4c+
-         gq99DMjTr+t/UOwdRqiMqAOHwDmdgu63w8OOy0/OLqkKEs3WjqoqcSI0HcWlDZ28wlDF
-         VK2DBMLtF1jBLOLWvhzJSOJBPlqcPtDr0YuKCt0BOvEYVGbS4RR9IU65s6udUiX6h/TE
-         6VNWTGHhx2vT4MNIQkhzG7kcbBopcnckqLuG88W/+m0W3jUgmxWtTe+C6pPF64+c/v1F
-         i1ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nvZPSKE0cDU+ly/Mk8tBCUKF6Tr8uC2Kt2Ib3hhhROw=;
-        b=KrK+GtGPQbL/PZOkMY66TiOdvMgRJmF5PJCaYkA6h0Oie8pRUeMQltQhidSreQe56R
-         BwLucxZ9vZ9bnXi2NjVAmgq1v6eMdlMdmvpjpuOWuskrdmNStBqlzCp7UCkY+1avTOYs
-         bUmh60ZWHFG8z91sq16WEmx+g8GRONy+TM9OlW+JgCtg5NQ0RI6w6Sjb71LW2Knq+GEs
-         tr+Y1orIiUyyNrK//WUursKd+axqJ823lXfVXZgHNSzzlMFWGuUoBFuiG9L7+yJIn1aa
-         zDDpscGu0Xrmx6EYicnbsPc6Usm16j48smmW0PUjJrrbBzVr9lGDdfSCcBnytpuExMXV
-         RdZQ==
-X-Gm-Message-State: AHQUAuaCSsNRL5dY/5NQsWrbgCIaOZ+/Dsp/bCi9o3MyMnKtOwY8gTZX
-        WLOudRR5ZcFAMNfy25OkKUdXLPqhmn23dtsTbBy8hmuZqmA=
-X-Google-Smtp-Source: AHgI3IaTOIeafdWLxgq3AooXjN+BbfPQsnc15jnEOxj1sfGFJwpKJdnkFnru1z7kmKDU6G+IKHSAA2ODl5hohivBibw=
-X-Received: by 2002:a17:906:52d5:: with SMTP id w21mr11836775ejn.172.1551077437874;
- Sun, 24 Feb 2019 22:50:37 -0800 (PST)
+        id S1726123AbfBYHii (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 02:38:38 -0500
+Received: from mail.xcmg-erc.com ([217.7.126.107]:46613 "EHLO
+        mail.xcmg-erc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725986AbfBYHii (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 02:38:38 -0500
+Received: from SRV-ERC-MAIL01.XCMG-ERC.LOCAL (10.10.4.13) by
+ SRV-ERC-MAIL01.XCMG-ERC.LOCAL (10.10.4.13) with Microsoft SMTP Server (TLS)
+ id 15.0.1395.4; Mon, 25 Feb 2019 08:38:51 +0100
+Received: from SRV-ERC-MAIL01.XCMG-ERC.LOCAL ([10.10.4.13]) by
+ SRV-ERC-MAIL01.XCMG-ERC.LOCAL ([10.10.4.13]) with mapi id 15.00.1395.000;
+ Mon, 25 Feb 2019 08:38:51 +0100
+From:   "Celestino, Federico" <Celestino@xcmg-erc.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: .gitignore alleged bug
+Thread-Topic: .gitignore alleged bug
+Thread-Index: AdTKxNqE6kyTDHqgQLG6yVJKIKWOAgAQMmmAAHXbvpA=
+Date:   Mon, 25 Feb 2019 07:38:50 +0000
+Message-ID: <f8697f8e02614842b35931346c2d81e7@SRV-ERC-MAIL01.XCMG-ERC.LOCAL>
+References: <b23df617fddf45389406da2360dceb63@SRV-ERC-MAIL01.XCMG-ERC.LOCAL>
+ <20190223002339.GA601925@genre.crustytoothpaste.net>
+In-Reply-To: <20190223002339.GA601925@genre.crustytoothpaste.net>
+Accept-Language: de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.10.4.150]
+x-esetresult: clean, is OK
+x-esetid: 37303A2986AD6E6C60756A
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAL7ArXqkVfrnQWYFDYdwMGkZjHCwzyQX4pbKCo=KCzy-zJiRBw@mail.gmail.com>
-In-Reply-To: <CAL7ArXqkVfrnQWYFDYdwMGkZjHCwzyQX4pbKCo=KCzy-zJiRBw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 25 Feb 2019 07:50:26 +0100
-Message-ID: <CAP8UFD1U+4ww8rC=TSjjH+Rt77P9w4YWA9s5yspVZ7GgPpx0pw@mail.gmail.com>
-Subject: Re: [GSoC] Introduction
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit,
-
-On Sun, Feb 24, 2019 at 11:08 AM Rohit Ashiwal
-<rohit.ashiwal265@gmail.com> wrote:
-
-> If you disregard that contribution, here is my approach to solving
-> this microproject: search for `test -f` in `t/**` and replace all
-> occurrences with `test_path_is_file` and similarly for other mentioned
-> commands. Is it correct?
-
-In addition to what Dscho (alias Johannes Schindelin) wrote, please
-just send one patch that replaces `test -d`, `test -d` and similar
-code in only one t/tXXXX-*.sh file. No need to do more than that.
-
-Thanks,
-Christian.
+RGVhciBNciBDYXJsc29uLA0KDQpZZXMsIHlvdSBhcmUgcmlnaHQuIFRoYW5rcyBmb3IgdGhlIHN1
+cHBvcnQuDQoNCkZyZXVuZGxpY2hlIEdyw7zDn2UgLyBLaW5kIHJlZ2FyZHMNCmkuQS4gRmVkZXJp
+Y28gQ2VsZXN0aW5vDQpFbnR3aWNrbHVuZ3NpbmdlbmlldXINCg0KDQpGb24gKzQ5IDIxNTEgNzgz
+MCAzMjQNCkZheCArNDkgMjE1MSA3ODMwIDQ5OQ0Kd3d3LnhjbWctZXJjLmNvbQ0KQ2VsZXN0aW5v
+QHhjbWctZXJjLmNvbQ0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClhDTUcgRXVyb3Bl
+YW4gUmVzZWFyY2ggQ2VudGVyIEdtYkgNCkV1cm9wYXJrIEZpY2h0ZW5oYWluIEI0DQo0NzgwNyBL
+cmVmZWxkDQpEZXV0c2NobGFuZA0KQW10c2dlcmljaHQgS3JlZmVsZA0KSGFuZGVsc3JlZ2lzdGVy
+IEhSQiAxNDMwMg0KR2VzY2jDpGZ0c2bDvGhyZXI6IERyLi1JbmcuIE9saXZlci1DYXJsb3MgR8O2
+aGxlciwgRHIuLUluZy4gSHVpIFN1biANCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSANCi0t
+LS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBicmlhbiBtLiBjYXJsc29uIFttYWlsdG86
+c2FuZGFsc0BjcnVzdHl0b290aHBhc3RlLm5ldF0gDQpTZW50OiAyMyBGZWJydWFyeSAyMDE5IDAx
+OjI0DQpUbzogQ2VsZXN0aW5vLCBGZWRlcmljbyA8Q2VsZXN0aW5vQHhjbWctZXJjLmNvbT4NCkNj
+OiBnaXRAdmdlci5rZXJuZWwub3JnDQpTdWJqZWN0OiBSZTogLmdpdGlnbm9yZSBhbGxlZ2VkIGJ1
+Zw0KDQpPbiBGcmksIEZlYiAyMiwgMjAxOSBhdCAwMzozOTo1M1BNICswMDAwLCBDZWxlc3Rpbm8s
+IEZlZGVyaWNvIHdyb3RlOg0KPiBEZWFyIFN1cHBvcnQgVGVhbSwNCj4gDQo+IEkgYW0gZmFjaW5n
+IGEgc2VyaW91cyBpc3N1ZSB3aXRoIC5naXRpZ25vcmUgKHNlZSBhdHRhY2htZW50KS4NCj4gDQo+
+IFRoZSBwcm9ibGVtIGlzIHRoYXQgdGhlIGZvbGRlciBjb250ZW50cyBvZiAwNCAtIFNvZnR3YXJl
+L1NXIENvZGUvU1RNMzIvTGliL0RyaXZlcnMvQ01TSVMvRGV2aWNlLyBhcmUgaWdub3JlZCBiZWNh
+dXNlIG9mIGEgc3VzcGVjdGVkIG1pc2ludGVycHJldGF0aW9uIG9mIC5naXRpZ25vcmUuDQo+IA0K
+PiBIZXJlIGFyZSBzb21lIHJlc3VsdHMgdGhhdCB5b3UgY291bGQgZmluZCB1c2VmdWw6DQo+IA0K
+PiAkIGdpdCBjbGVhbiAtbmRYDQo+IFdvdWxkIHJlbW92ZSAwNCAtIFNvZnR3YXJlL1NXIENvZGUv
+U1RNMzIvTGliL0RyaXZlcnMvQ01TSVMvRGV2aWNlLw0KPiANCj4gJCBnaXQgY2hlY2staWdub3Jl
+IC12ICIwNCAtIFNvZnR3YXJlL1NXIENvZGUvU1RNMzIvTGliL0RyaXZlcnMvQ01TSVMvRGV2aWNl
+LyINCj4gMDQgLSBTb2Z0d2FyZS9TVyBDb2RlL1NUTTMyL0xpYi9Ecml2ZXJzL0NNU0lTLy5naXRp
+Z25vcmU6MjpEZXZpY2UgICAgICAgMDQgLSBTb2Z0d2FyZS9TVyBDb2RlL1NUTTMyL0xpYi9Ecml2
+ZXJzL0NNU0lTL0RldmljZS8NCj4gDQo+IFNpbmNlIGluIHRoZSBwYXRoIHRoZXJlIGlzIG5vICd+
+JyAodGlsZGUpIGNoYXJhY3RlciwgaXQgc2VlbXMgYSBidWcgdG8gbWUuDQoNCkl0IGxvb2tzIGxp
+a2UgeW91IGhhdmUgYSAuZ2l0aWdub3JlIGZpbGUgaW4gdGhlICJDTVNJUyIgZGlyZWN0b3J5IHRo
+YXQgY29udGFpbnMgdGhlIHN0cmluZyAiRGV2aWNlIiwgd2hpY2ggaXMgd2h5IHRoaXMgZGlyZWN0
+b3J5IGlzIGlnbm9yZWQuIElzIHRoYXQgaW5kZWVkIHRoZSBjYXNlPw0KLS0NCmJyaWFuIG0uIGNh
+cmxzb246IEhvdXN0b24sIFRleGFzLCBVUw0KT3BlblBHUDogaHR0cHM6Ly9rZXliYXNlLmlvL2Jr
+MjIwNA0K
