@@ -2,111 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D395620248
-	for <e@80x24.org>; Mon, 25 Feb 2019 20:19:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B59C20248
+	for <e@80x24.org>; Mon, 25 Feb 2019 20:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727334AbfBYUT5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 15:19:57 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:44028 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727021AbfBYUT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 15:19:57 -0500
-Received: by mail-ed1-f53.google.com with SMTP id m35so8679073ede.10
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 12:19:56 -0800 (PST)
+        id S1727185AbfBYUWH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 15:22:07 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:37022 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727021AbfBYUWG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 15:22:06 -0500
+Received: by mail-ed1-f49.google.com with SMTP id m12so8710032edv.4
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 12:22:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
-        bh=trhnJal1ds+eXYhPvLBfVVxlCh65dOK4tRrfuBGPJLo=;
-        b=jE8z99SYCC/JR5eJp82l6XjuLWwb+Owmc2SP0M4I/baKclPCUBZAY9sn2p0efIk5mq
-         SR926OBxHPmi1BuGVehfQhZi/WB6wQdj+ImAYdCPs/LST6IpNhCc8Y8zDBLzDx1v8c9k
-         xFcE7AMle3Y9NJPjSyZ+fcD3FD1n7nKT+D1enbGD229EgbDn7OApYDndTca5+mRDouB0
-         r9hcoMPmWr1lLyQEVJvgXWir9q1wkYFrBmQEED4L7+wIA7eT/X6uuPxfHnd9j2cWrTWV
-         L0M0q6FHalMA568ulDH80Hg3K5FAMcQNTSLvg0lzgqiYqGZ3/54iL8d6xrYaPAb/9QTF
-         f//Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ynEXk0SE+WrngTo/yfdXp8XoAovqYPzTUGOmggoNYTQ=;
+        b=W2QR+pcnK4mS9r3BhEAWjm3DV+4wWTsY8uOXMuuOmefcQe2J1f9YsDwIyKa0FwKZrF
+         nXwVfLB9Gu47GHScH/ZOZZOiRhWJKZ4NXmvDsqb0LRNsiCCsuZcb6ZA2Xfy+ugiakNHF
+         /8SWmqWUMoYQ/traNJuL+pPf3j5mdDVOhYNZhCKVNPpPO/oOaUo6aEHgylk1czfYPR/Z
+         sHtYR6B0jNNDxOLLdZn40l5bVHOSYnWpeI9bIfXy4FGFZJP6dDSpIDZFwmvS+EK9dVkS
+         0/8h4BBgIhEqpb+8BfHsjDILkoLxqqQyPumDQlRSJwnEUYXtXuTM9+XPA/6+rr02rfbz
+         5UgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
-         :mime-version;
-        bh=trhnJal1ds+eXYhPvLBfVVxlCh65dOK4tRrfuBGPJLo=;
-        b=KANEiFO1WwmX9kPuZ0xdPCYpWvM1Qd1t/z/0O0PhprlCg1UraW5t/S+XrTXLLjYS06
-         xyw5xyeem4i2ww2Kt9kJ/DeCZMikcLjSwt3mnTIMN+DEJF/yuBAaQH5g2EDvWGwKbxAR
-         0GUDxjJT/GT1CKSwgKFg41t6YesxKHqjxkT8Buh0qNmDyq4Fbyl72uEdbZqSWRpHBQqN
-         FbgBUSjGFG61mVJDVpIOEnlwoTVe/ZlgQO2ngtb80Xjqs7VwV3P2xe3kEby+jjQ5vSBK
-         BUhPZOIJNkz7OuBY+OxvaTeAVs2hZxZjXntuUXqgyewYBvN7NNcm+8EN3h0y7wQAYXW0
-         UCUg==
-X-Gm-Message-State: AHQUAubfjsysv4YeVy0Do81WR8C4Fa1eHC0M+2uOJ2DB6mSA6V0I1WI2
-        cavIZveD31afQIBsss/wuDbhEG8B
-X-Google-Smtp-Source: AHgI3IZ+Qob/Wlz3Zz9gEfHVZ847dQ2gIpxvF6SFThyttyJpYPPSnreP9hywMDsY35hFGzJeE4M9Sg==
-X-Received: by 2002:a17:906:5849:: with SMTP id h9mr14166106ejs.118.1551125995078;
-        Mon, 25 Feb 2019 12:19:55 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id d15sm2847053edv.20.2019.02.25.12.19.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Feb 2019 12:19:54 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Compile error due to po/fr.po on old gettext in v2.21.0
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-Date:   Mon, 25 Feb 2019 21:19:53 +0100
-Message-ID: <874l8rwrh2.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ynEXk0SE+WrngTo/yfdXp8XoAovqYPzTUGOmggoNYTQ=;
+        b=CT2IAgvrEeRt6WlzrLyWgdrsuB1VBd8cWhGqk6JGtEd2FdJZ7hswQdLmcV3TzQyK3K
+         /mBT+PPGeP1DqrhBcqVTJdtPBaVQSoEJaioGS3uQa/2JmS5tbONjj2HMSYbaM/eEWJ+q
+         /TuQoybx8IGOyz/q+5grkt6VDItmT2lT3VyYFM7CiBoGTo6PJMtvhqheRwAtiKs/Nt4a
+         OsQk0DRLmhmjY+UOubtdAXjaN5O5IHX4V6cyMocURoWb1Hs+09ZF+bR+pnnc433vpsJh
+         jwW2I6x1ATFWJf7FXHYBdDYJkp2DV+ewhHQKdMcI/nMIy9Xp64JSIIUU3bMN+/Sn0aVa
+         fLxw==
+X-Gm-Message-State: AHQUAuZx1s1QhXh3IWqRWFq0U2XWVgXYO4dHRlXHCDiswpi1JnSd/hkb
+        J+fjJJRLClre8fB94kvYP/j7GQIUPULmjKhO4Oo=
+X-Google-Smtp-Source: AHgI3IaaxvorQPqF66wpAp7zusiL7VSg9SlZls6DWKEZvdQopJhDJst/35AaNTUP2wy1Gsm/4RJOzFSPAxobF4S/YmM=
+X-Received: by 2002:a17:906:3d69:: with SMTP id r9mr14389644ejf.92.1551126124691;
+ Mon, 25 Feb 2019 12:22:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAL7ArXqkVfrnQWYFDYdwMGkZjHCwzyQX4pbKCo=KCzy-zJiRBw@mail.gmail.com>
+ <CAP8UFD1U+4ww8rC=TSjjH+Rt77P9w4YWA9s5yspVZ7GgPpx0pw@mail.gmail.com> <CAL7ArXqrV7qb29i6JvQdeUtLNX9A7WC0-deKMx-_6pQUpaqSJA@mail.gmail.com>
+In-Reply-To: <CAL7ArXqrV7qb29i6JvQdeUtLNX9A7WC0-deKMx-_6pQUpaqSJA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 25 Feb 2019 21:21:52 +0100
+Message-ID: <CAP8UFD1wK+goi1rKGjABcs01VwYw2kEma95n08H1EWVT4vh6ng@mail.gmail.com>
+Subject: Re: [GSoC] Introduction
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On a NetBSD test box I have with msgfmt 0.14.4 v2.21.0 fails to compile.
+Hi Rohit,
 
-I didn't spot this in rc2 because b3225a4183 ("l10n: fr.po v2.21.0 rnd
-2", 2019-02-13) along with the rest of i18n updates gets pulled in after
-all the RCs.
+On Mon, Feb 25, 2019 at 12:36 PM Rohit Ashiwal
+<rohit.ashiwal265@gmail.com> wrote:
+>
+> Hey Christian
+>
+> On Mon, Feb 25, 2019 at 12:20 PM Christian Couder
+> <christian.couder@gmail.com> wrote:
+>
+> > In addition to what Dscho (alias Johannes Schindelin) wrote, please
+> > just send one patch that replaces `test -d`, `test -d` and similar
+> > code in only one t/tXXXX-*.sh file. No need to do more than that.
+>
+> I don't think I quite understood this. Were you asking for replacing
+> all `test -X` calls with `test_path_is_*` calls in only one tXXXX-*.sh
+> file or `test -d` calls with `test_path_is_dir` in all tXXXX-*.sh? As
+> of now, I've changed almost all `test -d` in all relevant tXXXX-*.sh
+> files.
 
-The error s:
+First on the micro-project page
+(https://git.github.io/SoC-2019-Microprojects/) there is "Please
+attempt only ONE microproject. We want quality, not quantity!"
 
-    $ msgfmt --version; msgfmt -o fr.mo po/fr.po
-    msgfmt (GNU gettext-tools) 0.14.4
-    Copyright (C) 1995-1998, 2000-2005 Free Software Foundation, Inc.
-    This is free software; see the source for copying conditions.  There is NO
-    warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    Written by Ulrich Drepper.
-    po/fr.po:22482:4: parse error
-    po/fr.po:22482: missing `msgstr' section
-    po/fr.po:22487:4: parse error
-    po/fr.po:22487: missing `msgstr' section
-    po/fr.po:22492:4: parse error
-    po/fr.po:22492: missing `msgstr' section
-    po/fr.po:22497:4: parse error
-    po/fr.po:22497: missing `msgstr' section
-    po/fr.po:22502:4: parse error
-    po/fr.po:22502: missing `msgstr' section
-    po/fr.po:22507:4: parse error
-    po/fr.po:22507: missing `msgstr' section
-    po/fr.po:22512:4: parse error
-    po/fr.po:22512: missing `msgstr' section
-    po/fr.po:22517:4: parse error
-    po/fr.po:22517: missing `msgstr' section
-    po/fr.po:22522:4: parse error
-    po/fr.po:22522: missing `msgstr' section
-    po/fr.po:22527:4: parse error
-    po/fr.po:22527: missing `msgstr' section
-    msgfmt: too many errors, aborting
+And the description of the micro-project you selected is:
 
-It's "fixed" by:
+"Find a test script that verifies the presence/absence of
+files/directories with =E2=80=98test -(e|f|d|=E2=80=A6)=E2=80=99 and replac=
+e them with the
+appropriate test_path_is_file, test_path_is_dir, etc. helper
+functions."
 
-    perl -pi -e 's/^#~\|.*\n//' po/fr.po
+This asks you to change only 1 test script, that is one t/tXXXX-*.sh file o=
+nly.
 
-I.e. this is because of the comments being parsed (fuzzy comments).
+So yes I am asking for replacing all `test -X` calls with
+`test_path_is_*` calls in only one tXXXX-*.sh file.
 
-The 0.14.4 gettext release was back in 2005, so presumably this is due
-to some GPLv3 allergy of NetBSD's. The OS version itself is 7.1,
-released a couple of years ago.
+Thanks,
+Christian.
