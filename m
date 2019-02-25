@@ -6,81 +6,87 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0160420248
-	for <e@80x24.org>; Mon, 25 Feb 2019 17:18:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F63720248
+	for <e@80x24.org>; Mon, 25 Feb 2019 17:32:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728684AbfBYRSY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 12:18:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56958 "HELO cloud.peff.net"
+        id S1728686AbfBYRcv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 12:32:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56986 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728639AbfBYRSY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 12:18:24 -0500
-Received: (qmail 14437 invoked by uid 109); 25 Feb 2019 17:18:24 -0000
+        id S1728595AbfBYRcv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 12:32:51 -0500
+Received: (qmail 14557 invoked by uid 109); 25 Feb 2019 17:32:51 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Feb 2019 17:18:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 25 Feb 2019 17:32:51 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18608 invoked by uid 111); 25 Feb 2019 17:18:33 -0000
+Received: (qmail 18812 invoked by uid 111); 25 Feb 2019 17:33:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 25 Feb 2019 12:18:33 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 25 Feb 2019 12:33:05 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Feb 2019 12:18:17 -0500
-Date:   Mon, 25 Feb 2019 12:18:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Feb 2019 12:32:49 -0500
+Date:   Mon, 25 Feb 2019 12:32:49 -0500
 From:   Jeff King <peff@peff.net>
 To:     Matthew Booth <mbooth@redhat.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [BUG] git log -L ... -s does not suppress diff output
-Message-ID: <20190225171817.GA17524@sigill.intra.peff.net>
+Subject: [PATCH] line-log: suppress diff output with "-s"
+Message-ID: <20190225173248.GB17524@sigill.intra.peff.net>
 References: <CAEkQehdFu5zM4AY3ihN0pn1aCNEomY0WV07pryfAB45JN-tDDA@mail.gmail.com>
+ <20190225171817.GA17524@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAEkQehdFu5zM4AY3ihN0pn1aCNEomY0WV07pryfAB45JN-tDDA@mail.gmail.com>
+In-Reply-To: <20190225171817.GA17524@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 25, 2019 at 05:03:50PM +0000, Matthew Booth wrote:
+On Mon, Feb 25, 2019 at 12:18:17PM -0500, Jeff King wrote:
 
-> Example output:
+> > git log docs suggest it should not do this:
+> > 
+> >        -s, --no-patch
+> >            Suppress diff output. Useful for commands like git show
+> > that show the patch by default, or to cancel
+> >            the effect of --patch.
+> > 
+> > Couldn't find anything in a search of the archives of this mailing
+> > list, although that's obviously far from conclusive. Seems to be
+> > longstanding, as it was mentioned on StackOverflow back in 2015:
 > 
-> =========
-> $ git --version
-> git version 2.20.1
-> 
-> $ git log -L 2957,3107:nova/compute/manager.py -s
-> commit 35ce77835bb271bad3c18eaf22146edac3a42ea0
-> <snip>
-> 
-> diff --git a/nova/compute/manager.py b/nova/compute/manager.py
-> --- a/nova/compute/manager.py
-> +++ b/nova/compute/manager.py
-> @@ -2937,152 +2921,151 @@
->      def rebuild_instance(self, context, instance, orig_image_ref, image_ref,
->                           injected_files, new_pass, orig_sys_metadata,
-> <snip>
-> =========
+> I think the issue is just that "-L" follows a very different code path
+> than the normal diff generator. Perhaps something like this helps?
 
-At first I wondered why you would want to do this, since the point of -L
-is to walk through that diff. But I suppose you might want to see just
-the commits, without the actual patch, and that's what "-s" ought to do.
+Here it is with a test and a commit message (I don't think any doc
+update is necessary; as you noted, the docs already imply this is what
+should happen).
 
-> git log docs suggest it should not do this:
-> 
->        -s, --no-patch
->            Suppress diff output. Useful for commands like git show
-> that show the patch by default, or to cancel
->            the effect of --patch.
-> 
-> Couldn't find anything in a search of the archives of this mailing
-> list, although that's obviously far from conclusive. Seems to be
-> longstanding, as it was mentioned on StackOverflow back in 2015:
+-- >8 --
+Subject: [PATCH] line-log: suppress diff output with "-s"
 
-I think the issue is just that "-L" follows a very different code path
-than the normal diff generator. Perhaps something like this helps?
+When "-L" is in use, we ignore any diff output format that the user
+provides to us, and just always print a patch (with extra context lines
+covering the whole area of interest). It's not entirely clear what we
+should do with all formats (e.g., should "--stat" show just the diffstat
+of the touched lines, or the stat for the whole file?).
+
+But "-s" is pretty clear: the user probably wants to see just the
+commits that touched those lines, without any diff at all. Let's at
+least make that work.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This punts completely on the larger question of what should happen with
+other formats like "--stat", "--raw", etc. They'll continue to be
+ignored entirely and we'll generate the line-log patch. Possibly we
+should detect and complain?
+
+ line-log.c          | 3 ++-
+ t/t4211-line-log.sh | 7 +++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/line-log.c b/line-log.c
-index 63df51a08f..ed46a3a493 100644
+index 24e21731c4..863f5cbe0f 100644
 --- a/line-log.c
 +++ b/line-log.c
 @@ -1106,7 +1106,8 @@ int line_log_print(struct rev_info *rev, struct commit *commit)
@@ -93,5 +99,22 @@ index 63df51a08f..ed46a3a493 100644
  	return 1;
  }
  
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index bd5fe4d148..c9f2036f68 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -115,4 +115,11 @@ test_expect_success 'range_set_union' '
+ 	git log $(for x in $(test_seq 200); do echo -L $((2*x)),+1:c.c; done)
+ '
+ 
++test_expect_success '-s shows only line-log commits' '
++	git log --format="commit %s" -L1,24:b.c >expect.raw &&
++	grep ^commit expect.raw >expect &&
++	git log --format="commit %s" -L1,24:b.c -s >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.21.0.672.g12e864cee7
 
--Peff
