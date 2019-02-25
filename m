@@ -2,93 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A62220248
-	for <e@80x24.org>; Mon, 25 Feb 2019 13:00:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4968B20248
+	for <e@80x24.org>; Mon, 25 Feb 2019 14:17:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726959AbfBYNA5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 08:00:57 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44343 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726921AbfBYNA5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 08:00:57 -0500
-Received: by mail-ed1-f68.google.com with SMTP id b20so7445773edw.11
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 05:00:57 -0800 (PST)
+        id S1726830AbfBYORr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 09:17:47 -0500
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:39873 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726099AbfBYORr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 09:17:47 -0500
+Received: by mail-ed1-f51.google.com with SMTP id p27so7684738edc.6
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 06:17:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=Y3Benw9LnYbLzleNz7SITxod6UmqC3I/0a5JROm4rws=;
-        b=RABsZ92zJz3eXYaJiEkUP3L49SSj0sp/9Jp/nxYnvEKanmF7p7cRCidE+Wu53RDa+s
-         2Kw5ls+w9RFtKYm+wKv6NldKlmvKOT+XeK8p42aYnGf07uPUXFdc4xNgA1IQ8/jcPiUt
-         U5yKN+S8WifVF6RHT6GIodPD8O11J6NxiGS2MqgRZtlb1f3IkkBkkNNoplmevW+u4DJ1
-         WukwD47/AYyg/gTp4S4Q+WZ3vDb0xJIkcEMSrpg76ucB/lOTwfpMW1GK824eE/TJ08Et
-         VnOkm3T2Ni8arcifG+lQc8DjTTimmrL0/+IBbbkRAn4PxgwvseYRC8rbQ+wjEX16gHux
-         mVpQ==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=cIEBjpZqSlx2JfPFrHEth5VwcVQBx3OEnjL9dgJeYg0=;
+        b=RFGPzS1fMS1Tc/foVrE0iagAwlWTVsFzomNbAgPYT2FnyqzOS4r0GsibmHuXW9hJf8
+         V631zSfR3p0JRsHFJXdNZ3pt7YAjhkmQQeqTt34k47MRXAiKuTHRrfXP1KD2AZIrba+p
+         sLLrIdupDC3CInwFZ3JJ7KXJobh97tuE/MXe4V9RRseZ1z+GVitpbCDnO7c3WrKTUvKx
+         sUkiEHjk2ssBlN9r1/79CGSZ9daVb9/1qU/lGDRolSnM4mvxMbvjOYzOcYVxEe5e84nd
+         mlNcptZ6jj1Aw+9bM0a44sTT4Cnutcckp/9/dc3pGEdwNAHEfOON49qQYJ9GyKCqZ+gq
+         WsVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=Y3Benw9LnYbLzleNz7SITxod6UmqC3I/0a5JROm4rws=;
-        b=QF0UBydF9N5kHBoIfsuIsZ6GhqjY82g1ITOtcfXO831dVlkcKk240ZB5yidnRzaGO5
-         YlR1Fg7HRon4MG80DCL4HiGJyWXTVnAT/QFwKkIBtO73xxatgdJQB0qxDAkQZ7qJBzvi
-         DBrsv+w7JKKC63RSFz8k5yf7tGT1WFrdsIBgfln2n2AAleI29DEEVudNKqmr3E2ZL7Ny
-         AONTgLBCpkEVymunQWEETKdzh0hISu098igZceCb5Bc+k0V46T+sGMI7O1FuoXBAInc6
-         2hs43aTrk8Pl//iZbozlrDv8FWinFIJwHyYFxhUOtS1UDJRiC0y7SJBYYXKoNrUVGCNv
-         AgCA==
-X-Gm-Message-State: AHQUAublN1LB5eFuRtu6M6busSwUU5/zcNDBqykRKePOheIQ2gSNYaIT
-        7N9ZZZoDPyiTfeETOiXmH5AqGjZpz1HM4x8SBbktU5o9qUU=
-X-Google-Smtp-Source: AHgI3IbUOllAgkNgY3JF+4ApIFrt27GSpUrHcbTyZ3IB+3r7tOFRUegA4a0anP2sKA1LwbfXyvAudxwNYPCaGtoKFFQ=
-X-Received: by 2002:a50:b0e5:: with SMTP id j92mr13796263edd.188.1551099656019;
- Mon, 25 Feb 2019 05:00:56 -0800 (PST)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cIEBjpZqSlx2JfPFrHEth5VwcVQBx3OEnjL9dgJeYg0=;
+        b=uChLBV2rWY74btkrH/HMT0KhevZrPbBCJC4UOWFRuZWY5LRacQVmCRPFyIUaTVdz/s
+         I5xlEllLC2oaQNj0+qyNClMWDMTOgE0kXlZgM7gzDukBkpqMwjbRIpxUYK3I9Vx8xiwu
+         gI1B5mQ9xqcZNmCY0mw0d0ziZFnZ92CTVNvYhSdduSlNV/0baaEPXXO7/xRF/l57e3mD
+         qV40//aCZPeBXeymEaOCUUAysWciOVgBKA09a1dCBaBlAakKliD33ySY/ZBX2wEHCoiL
+         3vi/anhSj5gWac4mq1mdH6Md9xQB+U5Y7QzWGX+xHuO1onVsGdVXtX+4Vu4/gluJx2jM
+         CGMg==
+X-Gm-Message-State: AHQUAuZsO/15dygIFHTRKw6bLu+0NQ0EaVXt/PTDvdkSCqe4+B6lmpj2
+        llF6W/SaQ3Q5qhV8Y7ifvioO7djc
+X-Google-Smtp-Source: AHgI3IZVbWvGBl4bxTyuHSVyMF5/9UzMBuo3CU7WJ63XEP8TefkiOPpI0P+1yFNTomBHO3M4jBCNBg==
+X-Received: by 2002:a17:906:c2d9:: with SMTP id ch25mr13249120ejb.180.1551104265041;
+        Mon, 25 Feb 2019 06:17:45 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z7sm2750254edl.59.2019.02.25.06.17.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Feb 2019 06:17:44 -0800 (PST)
+Date:   Mon, 25 Feb 2019 06:17:44 -0800 (PST)
+X-Google-Original-Date: Mon, 25 Feb 2019 14:17:42 GMT
+Message-Id: <pull.140.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] t5580: verify that alternates can be UNC paths
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 25 Feb 2019 14:00:44 +0100
-Message-ID: <CAP8UFD0mpeGe+ef0kvoet_8nDUtSihr7L6EQgTBP3hijmM9-KQ@mail.gmail.com>
-Subject: Draft of Git Rev News edition 48
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        David Pursehouse <dpursehouse@collab.net>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+This was fixed in git.git's master some time ago, unfortunately not
+upstreamed from Git for Windows' patch thicket (my fault, or better put: the
+fault of the twenty-four hour days not being longer). We carried a
+regression test on top of the fix, and I can at least contribute that.
 
-A draft of a new Git Rev News edition is available here:
+Johannes Schindelin (1):
+  t5580: verify that alternates can be UNC paths
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-48.md
+ t/t5580-clone-push-unc.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
 
-  https://github.com/git/git.github.io/issues/352
-
-You can also reply to this email.
-
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Gabriel and me plan to publish this edition on
-Wednesday February 27th.
-
-Thanks,
-Christian.
+base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-140%2Fdscho%2Ftest-unc-alternates-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-140/dscho/test-unc-alternates-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/140
+-- 
+gitgitgadget
