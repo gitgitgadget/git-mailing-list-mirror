@@ -2,68 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8D2A20248
-	for <e@80x24.org>; Tue, 26 Feb 2019 21:10:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C8E820248
+	for <e@80x24.org>; Tue, 26 Feb 2019 21:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729093AbfBZVKM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 16:10:12 -0500
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:35562 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727823AbfBZVKM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 16:10:12 -0500
-Received: by mail-ed1-f52.google.com with SMTP id g19so12060157edp.2
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 13:10:11 -0800 (PST)
+        id S1728854AbfBZVpe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 16:45:34 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:33272 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728727AbfBZVpe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 16:45:34 -0500
+Received: by mail-ed1-f65.google.com with SMTP id c55so12149221edb.0
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 13:45:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=cwMa/U75Dz5Ytm5d5p5Ev3gEcVTbPfBhuQOZWxgl6qw=;
-        b=rO0a47GFNGkWdK6a2t/9c4clbuKW74dFh75M+cgNBqW6WjpWTY05jQILRHL1p5HeQh
-         8/rH5QsiZeHVwsPyi5wJkxPTWHa4bF9/Tqj6H5tf/h+chk/zrvGjIO78JfZRxkFg1Tw/
-         J9N4araWGnfIpPRMDrjRJomlGL+L9qA85Hag5EELie95XkSmeCwdy3SxpvBCmO6o4H1B
-         Cf1fQH/eiMos2fkvS/YOgok2x/Pz0qJzcCZaM003GOGFzCcoMYVXKWG5kINYq86nYVLp
-         D5v+hu4iiyYvzuT4WPP7nxlvqFWdCr3dx1UE+DFtpnwoh17Hxyu9rjVGVSRVdGxECfyc
-         wEMA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=5HwS/UfACpzAIiMXHoEUjgRweYN/nmWcO7RjkhvjUEs=;
+        b=gKrl81wfTImYLbFQfZh5p08XF3nlNkG6zMqIzKZLmiQ9EDloBP5NmT+/PYyGLlN3jf
+         9m8k/7l3HbfNGWmmV/VBT9SFD/9XTPJx1XUkpRbkg5NSzoMd7jKKLdYcCiY7wDepomrj
+         M80GrOofzm0KMGf5UBbM5m7HJC+Q8EUPa9oJzffglj/Gj+CzwKBkyC+hBShDWi01R1bq
+         XMygJtmDlKe/X4+oORSLTSZgzVju3n+9TpOp40T0SXKe3V1PtEWX8d5fgZrWymTOmie7
+         fc2KuCkNLpjeZ/8EAR89xMIpnMoHybXhly4R5k/KQKwoBlpxCAHpmxnPBimlL7ueIzZJ
+         +65w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cwMa/U75Dz5Ytm5d5p5Ev3gEcVTbPfBhuQOZWxgl6qw=;
-        b=pXT43opfpRV98JXHl8abiOcoWe4jSTWkiUYxLT10jdjzB3qVLmS+5P84Q1V256wgZE
-         fyOXtnj3ONQz9PrMiKOVc9TuCVPXMNzom9BUOwVAZ8KKlztXz1LVd9Q0XIdKN0CroVLx
-         8t/28OZK1oP2I71fMRnT4OD95qRkhOOu1EshhiGHRd2N2aDkZs4REMfeUs1ROppPDfy7
-         9TGbNFJp+Agdpbub/hUFPnHfRWisPLaKHSiliWlCUccUDoOLzslBc8gPMIVm/hBjjdSL
-         lvpOVMIX2bgWcsYz3gY7v3fULBF/qGrJKpVaL3ZCWtGxFRmi6sY1/r/XWlz2f6kEP4Xt
-         jWWA==
-X-Gm-Message-State: AHQUAuYXlnnihpADX1KwwzfucmAOMMQBiYYUCkjGt7EzDR3nWM8AdQSO
-        GI1NI+tKqRmq2qUvSy1br9w0yJlxpuRY5GcmEBE=
-X-Google-Smtp-Source: AHgI3IZwSy7dEFU0Kpc+oWZQwu9SHgv+dvqP8cfZnoAf97GpeloKRBLVPZJPyuhGQ+rSTD4Zdcf2PSZBRxwAzFW48TE=
-X-Received: by 2002:a50:94ea:: with SMTP id t39mr18501143eda.262.1551215410506;
- Tue, 26 Feb 2019 13:10:10 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=5HwS/UfACpzAIiMXHoEUjgRweYN/nmWcO7RjkhvjUEs=;
+        b=ioCkAgKQGW/gAPV2S2T/wjj/j7g3PnaJZ+KPiEekHkjiZ4RXsbrzWQDv758nd+2uSO
+         GmC567PiWWKAbf1wAuZqNEknF6ox7jsxouObVZrTXE6nKAvCYMMYSe6Jvb2A1t2aWqn8
+         QKbe3pNFa5vtb7TZZnKATaiTB0v98NE6CwEO9wd7xAu3KFi4cFUugb+WLR7+6Eh48t9q
+         Pg9XGBGOoxEjZRMGB1ru45ck3tIihjkehdK1GEIlax3rpUmdxyzP1kar1RGHrjVaLPKe
+         u/ccbWmHMrb7U6MoXLEgt2lzzJV9VJDfUacQBWgs/uTBSaEw8CWGtkmkEonMRgNWgHGJ
+         t/Tw==
+X-Gm-Message-State: AHQUAubFXR0mh1/SJqjE7uMZHW5qxlBAbJWv+strsTZfe2z3kkkyUmAX
+        Bi7HPDPWb5192Bye1W72ZnG7sQh6+C0=
+X-Google-Smtp-Source: AHgI3IbueSXmGC3xAozBAuNFNLSrtBamX9GK7UuYznvD5Pjtp1A5CLA/fkKCc37xoMgxarmwRejdUQ==
+X-Received: by 2002:a05:6402:124a:: with SMTP id l10mr21140763edw.62.1551217532132;
+        Tue, 26 Feb 2019 13:45:32 -0800 (PST)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id v15sm3829361edl.40.2019.02.26.13.45.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Feb 2019 13:45:31 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v13 00/27] Convert "git stash" to C builtin
+References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> <20190225231631.30507-1-t.gummerer@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190225231631.30507-1-t.gummerer@gmail.com>
+Date:   Tue, 26 Feb 2019 22:45:30 +0100
+Message-ID: <87r2buusud.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <0Lfolq-1hNWbf1RUI-00pI54@mail.gmx.com>
-In-Reply-To: <0Lfolq-1hNWbf1RUI-00pI54@mail.gmx.com>
-From:   =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>
-Date:   Tue, 26 Feb 2019 21:09:34 +0000
-Message-ID: <CACUQV58Bh-m5Yati2A0hd+7dwJztc=+JkY5x-YAgABe+JP6xFA@mail.gmail.com>
-Subject: Re: Bug: "orphaned" trees indistinguishable in git log --graph output
-To:     Stefan Tauner <stefan.tauner@gmx.at>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This issue was mentioned previously here in the mailing list.
-Here it is for reference:
-https://public-inbox.org/git/3305f7dc-0044-41fe-8aab-ee800535d6e9@kde.org/
 
-Cheers,
-Rafael Ascens=C3=A3o
+On Tue, Feb 26 2019, Thomas Gummerer wrote:
+
+> As I was advocating for this series to go into 'next' without a large
+> refactor of this series, I'll put my money were my mouth is and try to
+> make the cleanups and fixes required, though without trying to avoid
+> further external process calls, or changing the series around too
+> much.
+>
+> One thing to consider here is that we have a GSoC project planned
+> based on 'git stash'.  If we can't get this to 'next' soon, I'd vote
+> for taking that project out of this years GSoC, and maybe try again
+> next year, if nobody implemented the feature in the meantime.
+
+FWIW I'd like to +1 getting it into "next" so this can be given thorough
+testing in the 2.22
+
+If there's still bugs or other regressions I think it's better sorted
+out without the cognitive load of reviewing it all again.
+
+Worst case we can always add something on top to flip the default of
+stash.useBuiltin.
