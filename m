@@ -2,190 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C149420248
-	for <e@80x24.org>; Tue, 26 Feb 2019 12:50:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 515C720248
+	for <e@80x24.org>; Tue, 26 Feb 2019 13:42:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726938AbfBZMuq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 07:50:46 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:39909 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726084AbfBZMuq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 07:50:46 -0500
-Received: by mail-ed1-f68.google.com with SMTP id p27so10615991edc.6
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 04:50:44 -0800 (PST)
+        id S1726691AbfBZNmI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 08:42:08 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:41543 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725954AbfBZNmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 08:42:07 -0500
+Received: by mail-ed1-f65.google.com with SMTP id x7so10725735eds.8
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 05:42:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=foA15n6YBPFqp4S3YyyJidRot8qcEICYQf2Re0ZpMBU=;
-        b=fyEwGIvD6c6i+k/6cMdXE0hiLQRB1hhMd3PeFESRBw6nRrZuk3Px1hB5idLdm9J4SU
-         seJPvlm5XrRKYgZ4bpKLS3hy6M8hBboFpDgP/FGcTixDEQ1SO2D7c7deArWEcKhin/74
-         gYNxCKagLSjSZ8BH9bvn9f0OXFC/hBnHk58fLK9ucUqoNsTR6O63SKsoM2hqxsbbwy1D
-         9TjfI1D+KJrWsV5tZUpEIg3hLC3jj/nbwIyL2sE+leXOReOSanA4OzEhGVlPizQ5xpRK
-         tT02c1vRWuI2n/BLR8BeNw4hCs1pCUMlief9jQn8bKD1GCRDOYKvo/SIzHG29xauBwb3
-         W6FA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Py1OsqtHSblRvnJYy8r3lZ0O6nzsdrMkmA1/lpUpix8=;
+        b=ElNaJAV15iRa6BAcSW8r3Vjjqeisnqg/scMqdplt+v2vKH5sLM5usqLfJpIcHuA6Dv
+         14lRtJVoyBURjFv+slpOcFYrptNoTngTGy21Fr3+0MTrFyaauM9c+cZqG1RWjW/Wwnsk
+         STVz0V3qYpz9RlOomHO+9U+908EqEvPtq3bdWZionP1Y6m9nzEAVBqbvrlBN6HQIy+NQ
+         +vOQP72KzrfUzHBARe6mzFxlAAQKEY02cwmAJsdFkONmxoCeOQLoMgY3+90NMv3U/Cxu
+         IRWV1M6W0wJFTJ9dRSkTDbKazySNv4SYCWQll+n+g58YgEnM5hU5xiIbv7B3l/5K3c8U
+         EKsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=foA15n6YBPFqp4S3YyyJidRot8qcEICYQf2Re0ZpMBU=;
-        b=X+Jah1M2/Bxo/Vxou0MJYwZ1rknQZeUKwgLbta5/1ruaCdVsQ8sAoSPKO3zwHsY8dX
-         SGFNtjQMG5UPXj9LAFWchTENccI/DJurGN659DZbX4UekpVVtR0uQEUIfT/kOzIpeYJa
-         ZMLdcCdVIB4pu11Ra1oURbMvnREzUa8Vsbjso7IrfbJHjRFnMAAXf3psE9JzlOIjarZN
-         JNN8WVoDlsECMaGFG6DTpdUTRhTiI90tQ0uPrCukvFzFScykOyIEx4Y5PU62sMxKloZG
-         g3weR8fTWqtxYlBg9iseq3eA3UOFA5cCKh16Cp38R+ldIYDc3z/PeoI6tEk3iCDheWWv
-         3XeA==
-X-Gm-Message-State: AHQUAuaeyLgj22RDC9jSWOuLgAsrB8Z0uaI/N3IZxwzp4k6gyMQOQlMo
-        veMzO4LsNR/98gDTqxfXEic=
-X-Google-Smtp-Source: AHgI3IZk4FjKeIPWt/pLeXVKygzbG4ufa883td440/P4R74CZ88zAW4++Z+s5TMbgF27MtGwIsmTag==
-X-Received: by 2002:a17:906:1942:: with SMTP id b2mr11674495eje.5.1551185443640;
-        Tue, 26 Feb 2019 04:50:43 -0800 (PST)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id i48sm1230859ede.62.2019.02.26.04.50.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Feb 2019 04:50:42 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP RFC PATCH v2 5/5] clone: use dir-iterator to avoid explicit dir traversal
-References: <20190226051804.10631-1-matheus.bernardino@usp.br> <20190226051804.10631-6-matheus.bernardino@usp.br> <CACsJy8B1asF3i+G-C1aZRw7QTW7jS+a4VkCbg-17YOTyYHuw5w@mail.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CACsJy8B1asF3i+G-C1aZRw7QTW7jS+a4VkCbg-17YOTyYHuw5w@mail.gmail.com>
-Date:   Tue, 26 Feb 2019 13:50:40 +0100
-Message-ID: <87tvgqvhlr.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Py1OsqtHSblRvnJYy8r3lZ0O6nzsdrMkmA1/lpUpix8=;
+        b=KBsYZCPHvIuKFCL9GcGnTZhjSpMHGIIisZPgoILa/dm11Pzed9oa0mpS0VuUjhCqsa
+         tq4bOweeH2WaTaatp2rPuXTLu+7I8dxHMtjjfFfiUCJ0ZyoVdzE9m5LT0ebQqW2KGWrL
+         0BgrPKCiZ5BO9J6JykMBIR7FN7p5dQruNMmrya5lhi8i72Y1dhBgiQ1gmvQNmT9qgU25
+         GVsGRCu9tH6qebBI6d66kGaCOujG46ZBVmvyuDTd7VVNfNUhqfsCoGo/NyHPMqyDBhOs
+         la9yR3CLmxGMcRDH+UdwqNKZt/hfsIOC++bGNsnWsGxkr/GBzWGpwMul4cpZ+8pveQRt
+         E65A==
+X-Gm-Message-State: AHQUAubYFZv5J5WkbuSNmFhjXv8IlaXQo1avGqTS44AkFfUwodzFmMLt
+        ns721xTJGiSnVjYdxeQaQ5go0P5C
+X-Google-Smtp-Source: AHgI3Ia88X27a5dCO1Pi30oQn9VhRMv+YFZuVWtRfp56ss843qifXhtp5bIlHuKyhTXI8Tr5bsMeKQ==
+X-Received: by 2002:a50:9189:: with SMTP id g9mr19423571eda.32.1551188525824;
+        Tue, 26 Feb 2019 05:42:05 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b10sm3419566edy.80.2019.02.26.05.42.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Feb 2019 05:42:05 -0800 (PST)
+Date:   Tue, 26 Feb 2019 05:42:05 -0800 (PST)
+X-Google-Original-Date: Tue, 26 Feb 2019 13:42:03 GMT
+Message-Id: <pull.152.git.gitgitgadget@gmail.com>
+From:   "Rohit Ashiwal via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] [GSoC][PATCH] tests: replace test -(d|f) with test_path_is_(dir|file)
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Previously we were using test -(d|f) to verify the presencee of a
+directory/file, but we already have helper functions, viz, test_path_is_dir
+and test_path_is_file with same functionality. This patch will replace test
+-(d|f) calls in t3600-rm.sh.
 
-On Tue, Feb 26 2019, Duy Nguyen wrote:
+Rohit Ashiwal (1):
+  tests: replace `test -(d|f)` with test_path_is_(dir|file)
 
-> On Tue, Feb 26, 2019 at 12:18 PM Matheus Tavares
-> <matheus.bernardino@usp.br> wrote:
->>
->> Replace usage of opendir/readdir/closedir API to traverse directories
->> recursively, at copy_or_link_directory function, by the dir-iterator
->> API. This simplifies the code and avoid recursive calls to
->> copy_or_link_directory.
->>
->> This process also makes copy_or_link_directory call die() in case of an
->> error on readdir or stat, inside dir_iterator_advance. Previously it
->> would just print a warning for errors on stat and ignore errors on
->> readdir, which isn't nice because a local git clone would end up
->> successfully even though the .git/objects copy didn't fully succeeded.
->>
->> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
->> ---
->> I can also make the change described in the last paragraph in a separate
->> patch before this one, but I would have to undo it in this patch because
->> dir-iterator already implements it. So, IMHO, it would be just noise
->> and not worthy.
->>
->>  builtin/clone.c | 45 +++++++++++++++++++++++----------------------
->>  1 file changed, 23 insertions(+), 22 deletions(-)
->>
->> diff --git a/builtin/clone.c b/builtin/clone.c
->> index fd580fa98d..b23ba64c94 100644
->> --- a/builtin/clone.c
->> +++ b/builtin/clone.c
->> @@ -23,6 +23,8 @@
->>  #include "transport.h"
->>  #include "strbuf.h"
->>  #include "dir.h"
->> +#include "dir-iterator.h"
->> +#include "iterator.h"
->>  #include "sigchain.h"
->>  #include "branch.h"
->>  #include "remote.h"
->> @@ -411,42 +413,37 @@ static void mkdir_if_missing(const char *pathname, mode_t mode)
->>  }
->>
->>  static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
->> -                                  const char *src_repo, int src_baselen)
->> +                                  const char *src_repo)
->>  {
->> -       struct dirent *de;
->> -       struct stat buf;
->>         int src_len, dest_len;
->> -       DIR *dir;
->> -
->> -       dir = opendir(src->buf);
->> -       if (!dir)
->> -               die_errno(_("failed to open '%s'"), src->buf);
->> +       struct dir_iterator *iter;
->> +       int iter_status;
->> +       struct stat st;
->> +       unsigned flags;
->>
->>         mkdir_if_missing(dest->buf, 0777);
->>
->> +       flags = DIR_ITERATOR_PEDANTIC | DIR_ITERATOR_FOLLOW_SYMLINKS;
->> +       iter = dir_iterator_begin(src->buf, flags);
->> +
->>         strbuf_addch(src, '/');
->>         src_len = src->len;
->>         strbuf_addch(dest, '/');
->>         dest_len = dest->len;
->>
->> -       while ((de = readdir(dir)) != NULL) {
->> +       while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
->>                 strbuf_setlen(src, src_len);
->> -               strbuf_addstr(src, de->d_name);
->> +               strbuf_addstr(src, iter->relative_path);
->>                 strbuf_setlen(dest, dest_len);
->> -               strbuf_addstr(dest, de->d_name);
->> -               if (stat(src->buf, &buf)) {
->> -                       warning (_("failed to stat %s\n"), src->buf);
->> -                       continue;
->> -               }
->> -               if (S_ISDIR(buf.st_mode)) {
->> -                       if (!is_dot_or_dotdot(de->d_name))
->> -                               copy_or_link_directory(src, dest,
->> -                                                      src_repo, src_baselen);
->> +               strbuf_addstr(dest, iter->relative_path);
->> +
->> +               if (S_ISDIR(iter->st.st_mode)) {
->> +                       mkdir_if_missing(dest->buf, 0777);
->
-> I wonder if this mkdir_if_missing is sufficient. What if you have to
-> create multiple directories?
->
-> Let's say the first advance, we hit "a". The the second advance we hit
-> directory "b/b/b/b", we would need to mkdir recursively and something
-> like safe_create_leading_directories() would be a better fit.
->
-> I'm not sure if it can happen though. I haven't re-read dir-iterator
-> code carefully.
+ t/t3600-rm.sh | 96 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 48 insertions(+), 48 deletions(-)
 
-This part isn't a problem. It iterates one level at a time. So given a
-structure like a/b/c/d/e/f/g/h/i/j/k/some-l you'll find that if you
-instrument the loop in clone.c you get:
 
-    dir = a
-    dir = a/b
-    dir = a/b/c
-    dir = a/b/c/d
-    dir = a/b/c/d/e
-    dir = a/b/c/d/e/f
-    dir = a/b/c/d/e/f/g
-    dir = a/b/c/d/e/f/g/h
-    dir = a/b/c/d/e/f/g/h/i
-    dir = a/b/c/d/e/f/g/h/i/j
-    dir = a/b/c/d/e/f/g/h/i/j/k
-    dir = a/b/c/d/e/f/g/h/i/j/k/some-l
-
-So it's like the old implementation in that way. It readdir()'s and
-walks directories one level at a time.
+base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-152%2Fr1walz%2Frefactor-tests-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-152/r1walz/refactor-tests-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/152
+-- 
+gitgitgadget
