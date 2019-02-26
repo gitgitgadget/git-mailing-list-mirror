@@ -2,102 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F264E20248
-	for <e@80x24.org>; Tue, 26 Feb 2019 16:31:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56C6720248
+	for <e@80x24.org>; Tue, 26 Feb 2019 16:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727490AbfBZQbG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 11:31:06 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:33993 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727108AbfBZQbG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 11:31:06 -0500
-Received: by mail-pg1-f196.google.com with SMTP id i130so6465576pgd.1
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 08:31:06 -0800 (PST)
+        id S1727351AbfBZQhm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 11:37:42 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55798 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726624AbfBZQhm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 11:37:42 -0500
+Received: by mail-wm1-f67.google.com with SMTP id q187so3070719wme.5
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 08:37:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SxTWcqybwtU/RMK5i9JbFwM1wANBwQfX/rYOiKSq51o=;
-        b=VZ8RPdyBsKrO5IK8SI904RZExC5E4+q0iD6CvgqN80Pl0fjPsKJmRClrE/qJyRMpdL
-         DO5krUNpLYvA2ZisjrxDPts+A0CzTuv02Xxp/VFrxGQHqCGXfEmWOwZAgEkl/Tywqqvu
-         qBx1kIxV+lBKoYwo3yWc+4zCHRbr04EyTHjXUR3G3Gfh7AU3wUewPR72myineVDafTFl
-         bfeIwgx5Q0fcE8IX/p5XLbHLOcTedesgXsM0KcXJtCIxjArJTDJMu9MOv3isLCqRDnQX
-         6TJgKj9nCtVY4Ol+dVScJlxI8Fy2d9jBBWRuy2x0PLAmmPyO1P7yQ56YFjd/hW+Fn8bn
-         95mg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=u3jI2kqZxEU19+7Yifooh0yDHrA9SgNDqUbfp21ISDg=;
+        b=E64GbkIlnIRM8INO2S1bx/XpfWjBPA5zHc7STX5rBG8BiFMalnh9FJ1v3iZY/1lLe0
+         d1mcEXaszStZm2mD3eC/yOEkBAiYZYxsk/6LUkMnVz9uwCasblj+ddxMJlm7GhHJtzc+
+         2rFdqcZYRwgKdRPLCRwWTJ6Hi39SyeDmrjZoKZR1eUr1uZqGY/eTtVyqngBNQGKmiimq
+         L21JiXD1WYg7kLsRJ76tSBTSs0gwjBmTOO5vJrBdOWW8krsuUHc0Sn82TErk9niyAMR7
+         GKQgwNo5Hi9UoE4Ua24gcCzexwQqTtatemCm3JOk2o9LYLjHGKVJakvl7FfTDj0yMjeL
+         sp/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SxTWcqybwtU/RMK5i9JbFwM1wANBwQfX/rYOiKSq51o=;
-        b=m1rBY9pmNvHg76Y+ljKjO4clu2EgmvcAihU5WeA4gJocewUPhhnc8zj49MNuj5uLHM
-         b/10G3ysuLNU/RYb2JvhMg455s6F7b/orYXelg12RoYlKCWwc442X/FWYh/m5gcGnGos
-         utEivrJnrbMiRGnQm8gpatGXBAH3UjhlhhC1+0EgVeX01tyV20VjdCtkaE5Nw2Qu6k9q
-         FHaiDoYjNgLiRgfbhQ8sKOAH3Z2X3TfdVfLinN0tS1+dEmSVP8LqakCWPKFTqHnsMl/z
-         qYnDU9YL76WdKIw0MXPRcdSvqAmlnFhzWBSCVv2ntd56IuhByuJESutjgJR0XRghcBhB
-         92TQ==
-X-Gm-Message-State: AHQUAuZbJjQfMPgkGVrK+Hj7wXEjZryqCR848Rd6D23dqUNN3gX2o4VP
-        giovWsunRmIXfuXishuiHxDoC7Uq3ONpP/edl5SVTt63
-X-Google-Smtp-Source: AHgI3Iaz6/D8wGlTZsR3crtWWsY/6whEiBGqViz4MxktsEEH9fZLS6t24B82AQ48j3p8jq8c9RPDgvtgfvI0PESv4YE=
-X-Received: by 2002:a63:1616:: with SMTP id w22mr24848828pgl.200.1551198665559;
- Tue, 26 Feb 2019 08:31:05 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.152.git.gitgitgadget@gmail.com> <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
-In-Reply-To: <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 26 Feb 2019 17:30:51 +0100
-Message-ID: <CAN0heSqSp-a0zUKT5EaGLBYnRtESTnu9GKWtGARz2kaOAhc1HQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] tests: replace `test -(d|f)` with test_path_is_(dir|file)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=u3jI2kqZxEU19+7Yifooh0yDHrA9SgNDqUbfp21ISDg=;
+        b=hhdFlpCa6v0L6KhkSocgrnbl75nW7qCon0cfsS16cFN6JkEt5jc3kp53xGN8XmzXlG
+         E+JRmOkdFDSVOZ03QCnFV9NICZ8fc7sQ6mMCCgJzLl3OOpNB+CyYjYJ9iLbey4lbdwNH
+         UxnA0FXnI62qQLOU/co4SPfgf5WbRk3BF2S7q9bcSjZRyyNwD/EI/x0pRyYB4UQpFby5
+         9usA/hyfRr/XEVx1XCfkQ82fidjJekWZq9/2A+4/YSzhv8THnFZF50fuaVR1T8/JCJBX
+         zloIu69Rq3zqwBN3+Jvdk8aSYVMr7AyQbzpgQJkNoSR4Q4ZZwqRy+OslEpD7qePi5i2O
+         R98Q==
+X-Gm-Message-State: AHQUAua2NiUkBvx7LDtU6G5D7fl+Ykygewra/aGfCGHyBP4SVP5hW6hp
+        UC0aQSxsrjYpAjXtLYGDJko=
+X-Google-Smtp-Source: AHgI3IYNwJ/HXT20a5TsaxIiA4MegOd0AuaUtZEYXOcm1SCTmUIPtwBVapq9nmVvqKsefje+vloyTQ==
+X-Received: by 2002:a05:600c:224c:: with SMTP id a12mr3166650wmm.103.1551199060114;
+        Tue, 26 Feb 2019 08:37:40 -0800 (PST)
+Received: from szeder.dev (x4db46559.dyn.telefonica.de. [77.180.101.89])
+        by smtp.gmail.com with ESMTPSA id u17sm28264919wrg.71.2019.02.26.08.37.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Feb 2019 08:37:39 -0800 (PST)
+Date:   Tue, 26 Feb 2019 17:37:37 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 1/1] t3600: use test_path_is_dir and test_path_is_file
+Message-ID: <20190226163737.GB19739@szeder.dev>
+References: <pull.152.git.gitgitgadget@gmail.com>
+ <pull.152.v2.git.gitgitgadget@gmail.com>
+ <fcafc87b382dfef00d8e33e875bcb8b03d5667e4.1551191168.git.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fcafc87b382dfef00d8e33e875bcb8b03d5667e4.1551191168.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 26 Feb 2019 at 14:43, Rohit Ashiwal via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> t3600-rm.sh: Previously we were using `test -(d|f)`
-> to verify the presencee of a directory/file, but we
-> already have helper functions, viz, test_path_is_dir
-> and test_path_is_file with same functionality. This
-> patch will replace `test -(d|f)` calls in t3600-rm.sh.
+Hi and welcome!
 
-I think this makes a lot of sense. If a test breaks, we'll get some
-helpful error message. Thank you for working on this.
+On Tue, Feb 26, 2019 at 06:26:09AM -0800, Rohit Ashiwal via GitGitGadget wrote:
+> Previously we were using `test -(d|f)` to verify
+> the presence of a directory/file, but we already
+> have helper functions, viz, `test_path_is_dir`
+> and `test_path_is_file` with better functionality.
+> This patch will replace `test -(d|f)` calls in t3660.sh
 
-> -       ! test -d submod &&
-> +       ! test_path_is_dir submod &&
+We prefer to use imperative mode when talking about what a patch does,
+as if the author were to give orders to the code base.  So e.g.
+instead of
 
-Now, here I wonder. This (and other changes like this) means that every
-time the test passes, we see "Directory submod doesn't exist.", which is
-perhaps not too irritating. But more importantly, when the test fails,
-we don't get any hint. So a failure is just as silent and "non-helpful"
-as before. I can think of a few approaches:
+  This patch will ...
 
- 1 Teach `test_path_is_dir` and friends to handle "!" in a clever way, and
-   write these as `test_path_is_dir ! foo`. (We already have helpers
-   that do this, see, e.g., `test_i18ngrep`.)
+we would usually write something like this:
 
- 2 Don't be clever, and just introduce `test_path_is_not_dir`.
+  Replace 'test -(d|f)' calls in t3600 with the corresponding helper
+  functions.
 
- 3 Don't bother, because this small change here doesn't make the error
-   case any worse.
+> These helper functions make code more readable
+> and informative to someone new to code, also
+> these functions have better error messages
 
- 4 Don't do this small change here, and leave cases like this for a
-   later change (something like 1 or 2 above).
+> Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+> ---
+>  t/t3600-rm.sh | 96 +++++++++++++++++++++++++--------------------------
+>  1 file changed, 48 insertions(+), 48 deletions(-)
 
-What do you think?
+The patch itself seems to be a straightforward application of
 
-There are a few of these "!". The other changes look good to me.
+  s/test -f/test_path_is_file/
+  s/test -d/test_path_is_dir/
 
-Cheers
-Martin
+so it looks good for the most part, but it has a few issues:
+
+>  test_expect_success 'Recursive with -r -f' '
+>  	git rm -f -r frotz &&
+> -	! test -f frotz/nitfol &&
+> -	! test -d frotz
+> +	! test_path_is_file frotz/nitfol &&
+> +	! test_path_is_dir frotz
+>  '
+
+These should rather use the test_path_is_missing helper function.
+
+However, if the directory 'frotz' is missing, then surely
+'frotz/nitfol' could not possibly exist either, could it?  I'm not
+sure why this test (and a couple of others) checks both, and wonder
+whether the redundant check for the file inside the supposedly
+non-existing directory could be removed.
+
+
+Furthermore, there are a couple of place where the '!' is not in front
+of the whole 'test' command but is given as an argument, e.g.:
+
+  test ! -f file
+
+Please convert those cases as well.
+
