@@ -2,117 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4541B20248
-	for <e@80x24.org>; Tue, 26 Feb 2019 20:56:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0093D20248
+	for <e@80x24.org>; Tue, 26 Feb 2019 21:01:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728895AbfBZU4y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 15:56:54 -0500
-Received: from mail-io1-f66.google.com ([209.85.166.66]:41842 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728766AbfBZU4y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 15:56:54 -0500
-Received: by mail-io1-f66.google.com with SMTP id i5so11662049ioq.8
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 12:56:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JRbXTzbxUdmtD33cgH/QdEKmXxh7NwIzB+q3e8tYFRw=;
-        b=sL0RNwbU4MuGoAYB5KKAsE0Gzbv5UvL4pJUGIK5y9dsryht5OEVPg2hAU61eppNvZS
-         6QX4FJr8pv9PjASsTvHAD4RBXs8qcFbX77fFyqbBVwvTa7Cjm9XDy9YGlJIPQQuknM5D
-         /r8Pv7d8UWHbwW/AVJisSezuxNnn4KGaurvKPECPJsCdRHp0Gn6lkFT2DG5exaIMtbQT
-         RqTBGf8MCL9heCe2aatBeCr0+wDLlQm99EPladwTvLgINkc9TLxEBdtuIjHjJp2lXKBW
-         ZbLDHhtK1hHCM1Z4u25+uZRdP1F7RjNlJET4Iw5/O4hm3T73dIVZgmvhZGDb/UJRzVP8
-         eGHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JRbXTzbxUdmtD33cgH/QdEKmXxh7NwIzB+q3e8tYFRw=;
-        b=eXBmbkFsJsvW1utud6nmhqHcwH/6EIClkDWmDaFC6N0wSZFcDiYZVsZ6MpVLSiSwdW
-         tdxINk2C9f336TRrt9f1EMJvU33Y1h5aBaRvu5hwoFfugn8zHWI9AGa261Pt2v6zCHCb
-         pJOBCQ3Fa1fuVCiTn60d9PFd6dWTvnLZGH1zp9Sv9RdytwFaoyFPVHFmxgJRWpEwQgPT
-         17YKyJLmrkFrbVDK+xE3V0BOTptfJcaDInBtWUsZyCa0d62fnpUC7YNOIfRFuWt/yuCt
-         6C1ax67/O+SNyqebPK6cZ1XO6IoI0/+wwHQXl5UUuufW1l4gYznIquXP50tWiTFpS5ec
-         A3Dg==
-X-Gm-Message-State: APjAAAXyoURh8hi7kwEM7qldBuiMpDwyocNJMh7DcJju5xbFAUCVTYsd
-        a1gvfi8ywtNDGzZnVT2nrJJVk6rmVY7RZiwZIngWoQ==
-X-Google-Smtp-Source: APXvYqzAXQgkI/0rRxRYerGk9qBdNYy/pLHrPqyTpRXQVPNeCBJIvqFAfpaQYNiaAYUNaIMcVsu5ppUsMmvXde5QTwE=
-X-Received: by 2002:a6b:1447:: with SMTP id 68mr22870iou.293.1551214612885;
- Tue, 26 Feb 2019 12:56:52 -0800 (PST)
+        id S1729188AbfBZVBE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 16:01:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59108 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728673AbfBZVBE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 16:01:04 -0500
+Received: (qmail 5954 invoked by uid 109); 26 Feb 2019 21:01:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 26 Feb 2019 21:01:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32502 invoked by uid 111); 26 Feb 2019 21:01:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 26 Feb 2019 16:01:18 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Feb 2019 16:01:01 -0500
+Date:   Tue, 26 Feb 2019 16:01:01 -0500
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Matthieu Moy <git@matthieu-moy.fr>
+Subject: Re: Do test-path_is_{file,dir,exists} make sense anymore with -x?
+Message-ID: <20190226210101.GA27914@sigill.intra.peff.net>
+References: <pull.152.git.gitgitgadget@gmail.com>
+ <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
+ <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com>
+ <87sgwav8cp.fsf@evledraar.gmail.com>
+ <20190226170400.GC19739@szeder.dev>
+ <20190226174316.GD19606@sigill.intra.peff.net>
+ <20190226193912.GD19739@szeder.dev>
 MIME-Version: 1.0
-References: <20190226051804.10631-1-matheus.bernardino@usp.br> <20190226122829.19178-1-avarab@gmail.com>
-In-Reply-To: <20190226122829.19178-1-avarab@gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 26 Feb 2019 17:56:41 -0300
-Message-ID: <CAHd-oW6+Q86F3D8wzVJngRU8CFq5qXPfiV+t_0kuCR1RioSmHQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 0/5] clone: dir iterator refactoring with tests
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190226193912.GD19739@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, =C3=86var
+On Tue, Feb 26, 2019 at 08:39:12PM +0100, SZEDER Gábor wrote:
 
-Thank you for helping me out on this series and, especially, for the tests =
-part.
+> > > I didn't find this to be an issue, but because of functions like
+> > > 'test_seq' and 'test_must_fail' I've thought about suppressing '-x'
+> > > output for test helpers (haven't actually done anything about it,
+> > > though).
+> > 
+> > I'd be curious how you'd do that.
+> 
+> Well, I started replying with "Dunno" and explaining why I don't think
+> that it can be done with 'test_must_fail'... but then got a bit of a
+> lightbulb moment.  Now look at this:
+> [...]
+> +	{ set +x ; } 2>/dev/null 4>/dev/null
 
-Now that we've come to a consensus on what the overall series' "shape"
-should be, can I refine what's still needed and resubmit it, in the
-upcoming days, as a patch set with the test included?
+Ah, this is the magic. Doing:
 
-Best,
-Matheus Tavares
+  set +x 2>/dev/null
 
+will still show it, but doing the redirection in a wrapping block means
+that it is applied before the command inside the block is run. Clever.
 
-On Tue, Feb 26, 2019 at 9:28 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> There's still active review going on for the "v2"[1], in particular
-> Duy's comments coming in as I write this. This doesn't address any of
-> that.
->
-> What it does do is have a better version of my patch to add tests for
-> the current behavior. It now doesn't reply the on SHA1 prereq anymore,
-> and we can test the dotfiles without needing the SYMLINK prereq.
->
-> I also moved it to the front of the series just to document/make sure
-> that we start by asserting testing functionality. I ran a full test
-> suite run for each of these patches and they all pass.
->
-> The only other change is getting rid of an unused "struct stat st"
-> variable which errored out under DEVELOPER=3D1.
->
-> 1. https://public-inbox.org/git/20190226051804.10631-1-matheus.bernardino=
-@usp.br/
->
-> Matheus Tavares (4):
->   dir-iterator: add flags parameter to dir_iterator_begin
->   clone: copy hidden paths at local clone
->   clone: extract function from copy_or_link_directory
->   clone: use dir-iterator to avoid explicit dir traversal
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (1):
->   clone: test for our behavior on odd objects/* content
->
->  builtin/clone.c            |  69 ++++++++++-------
->  dir-iterator.c             |  28 ++++++-
->  dir-iterator.h             |  40 ++++++++--
->  refs/files-backend.c       |   2 +-
->  t/t5604-clone-reference.sh | 151 +++++++++++++++++++++++++++++++++++++
->  5 files changed, 249 insertions(+), 41 deletions(-)
->
-> --
-> 2.21.0.rc2.261.ga7da99ff1b
->
+I think this braces trick could be used in general to fix all of the
+remaining "you can't run this under -x" cases, though it might be ugly.
+It might also be possible to make test_eval_ a bit less subtle with it,
+though I think it is relying on the braces already (which makes me
+wonder if I just totally forgot about its existence today, or if I
+earlier somehow stumbled onto a working recipe because I wanted to run
+multiple redirected commands).
+
+> There are a couple of tricky cases:
+> 
+>   - Some test helper functions call other test helper functions, and
+>     in those cases tracing would be enabled upon returning from the
+>     inner helper function.  This is not an issue with e.g.
+>     'test_might_fail' or 'test_cmp_config', because the inner helper
+>     function is the last command anyway.  However, there is
+>     'test_must_be_empty', 'test_dir_is_empty', 'test_config',
+>     'test_commit', etc. which call the other test helper functions
+>     right at the start or in the middle.
+
+Yeah, this is inherently a global flag that we're playing games with. It
+does seem like it would be easy to get it wrong. I guess the right model
+is considering it like a stack, like:
+
+-- >8 --
+#!/bin/sh
+
+x_counter=0
+pop_x() {
+	ret=$?
+	case "$x_counter" in
+	0)
+		echo >&2 "BUG: too many pops"
+		exit 1
+		;;
+	1)
+		x_counter=0
+		set -x
+		;;
+	*)
+		x_counter=$((x_counter - 1))
+		;;
+	esac
+	{ return $ret; } 2>/dev/null
+}
+
+# you _must_ call this as "{ push_x; } 2>/dev/null" to avoid polluting
+# trace output with the push call
+push_x() {
+	set +x 2>/dev/null
+	x_counter=$((x_counter + 1))
+}
+
+bar() {
+	{ push_x; } 2>/dev/null
+	echo in bar
+	pop_x
+}
+
+foo() {
+	{ push_x; } 2>/dev/null
+	echo in foo, before bar
+	bar
+	echo in foo, after bar
+	false
+	pop_x
+}
+
+set -x
+foo
+echo \$? is $?
+-- 8< --
+
+I wish there was a way to avoid having to do the block-and-redirect in
+the push_x calls in each function, though.
+
+I dunno. I do like the output, but this is rapidly getting complex.
+
+>   - && chains in test helper functions; we must make sure that the
+>     tracing is restored even in case of a failure.
+
+Yeah, there is no "goto out" to help give a common exit point from the
+function. You could probably do it with a wrapper, like:
+
+  foo() {
+	{ push_x; } 2>/dev/null
+	real_foo "$@"
+	pop_x
+  }
+
+and then real_foo() is free to return however it likes. I wonder if you
+could even wrap that up in a helper:
+
+  disable_function_tracing () {
+	# rename foo() to orig_foo(); this works in bash, but I'm not
+	# sure if there's a portable way to do it (and ideally one that
+	# wouldn't involve an extra process).
+	eval "real_$1 () $(declare -f $1 | tail -n +2)"
+
+	# and then install a wrapper which pushes/pops tracing
+	eval "$1 () { { push_x; } 2>/dev/null; real_$1 \"\$@\"; pop_x; }"
+  }
+
+  foo () { .... }
+  disable_function_tracing foo
+
+It would be easier if you could just declare the function body as an
+argument (and then it would be "declare_untraceable_function", where you
+do it all in one step). But then the function body has to be in single
+quotes, which is a pain. I think this is definitely pushing the limits
+of portable shell (and quite possibly the limits of good taste).
+
+-Peff
