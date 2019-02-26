@@ -2,79 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D25EA20248
-	for <e@80x24.org>; Tue, 26 Feb 2019 20:02:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF53A20248
+	for <e@80x24.org>; Tue, 26 Feb 2019 20:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728341AbfBZUCf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 15:02:35 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:41627 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727704AbfBZUCf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 15:02:35 -0500
-Received: by mail-lj1-f196.google.com with SMTP id z25so11895280ljk.8
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 12:02:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=g3bRSDrs+VmaiHGzTuKFgFzUDkZQAx3PfsJSgoB7pDo=;
-        b=D0SokHqvFm+Bv2h2C1XNd1hYy2LjsoZav1B33AdLKgH0/imN+dY59t6z1dDcuG4/q6
-         YvOreQVhny8TZOUE9RHWpYDKPK8nUxAGwes0CZKCZPy+FRGqFhTFZd0Cmxhe3atzAQj4
-         W4/zvidv9dzBGIrcYD4rLGoitpQQDkHJSU6ZecIs93wCzvsOgk7NCg6HXeQ6eYPcL37c
-         Qpe1jLpne9ZK2QcW1zvTvlV/XZyLKZOhx1EmDloIiWsXrDjexeeH2T99EzW0VX+8qPFQ
-         CoKrdi3NRzlEyndtanw45uETIvaMjyqFHzr3YHR+unCA+fUT+iZULv/vVuDuB3EAkX7K
-         sgLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=g3bRSDrs+VmaiHGzTuKFgFzUDkZQAx3PfsJSgoB7pDo=;
-        b=FASpNb1DWDa6UxZpTxOtyqEhRpQXUP1G35l7Uwe3GwFryZRxwid5K4/GBBKEXFEmwE
-         J8cTGInj+9Xz9AKTrzlFnP/MY/fKSxptAZIR6cIrb3f3yzw6ntzd7V4BxDSmrGubtNuD
-         BvYWonjsNyif76YZh5casa9E7s/Tz7/LNXZkyuEHSkXewq8vHoVW33JF8qcMjgVBLNFs
-         fzHj5/vR/0rKp9Z9peQrs1CtEghWXsx3BAx1QiIS8kq6O3qOhTmWBk3WbmrXRwGco2jp
-         c2ORpbGJhXElSkXuD0PO4ZqxGeu8D4x95G4IrVGTJAnzR+COhn/yZCHpQKT5r0qqOLdm
-         FR/A==
-X-Gm-Message-State: AHQUAubrE6Lgd41/0evJjtBtrG7O36zdTq3RThdrwrzO8/HfOk4a8X46
-        YxhOIVlv6olE4oVowuPplKBphrPGtNTqllYryzY=
-X-Google-Smtp-Source: AHgI3Ib7vI5LmSZYqBXutZdeIdysCgnor9FbycxdPJTD3AmyXcE3e4UoLD0DWL4SS2k+pMOAXLFQYTUWYoqPxR7n/5I=
-X-Received: by 2002:a2e:2c11:: with SMTP id s17mr14337955ljs.147.1551211353069;
- Tue, 26 Feb 2019 12:02:33 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.152.git.gitgitgadget@gmail.com> <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
- <CAN0heSqSp-a0zUKT5EaGLBYnRtESTnu9GKWtGARz2kaOAhc1HQ@mail.gmail.com>
- <CAL7ArXoau1ZfBsV9JaUDprwjSijyo6K5d9JyC1mdfc=KEvgJxw@mail.gmail.com> <nycvar.QRO.7.76.6.1902262051080.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1902262051080.41@tvgsbejvaqbjf.bet>
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Date:   Wed, 27 Feb 2019 01:31:34 +0530
-Message-ID: <CAL7ArXq37k2qmjLSB6DROq3K_wd0YaD9a-thNXgVwcxX7BEUMg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] tests: replace `test -(d|f)` with test_path_is_(dir|file)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        id S1728744AbfBZUDH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 15:03:07 -0500
+Received: from mout.gmx.net ([212.227.15.15]:42611 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727704AbfBZUDH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 15:03:07 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTTKZ-1gXbX72T03-00SM0q; Tue, 26
+ Feb 2019 21:03:02 +0100
+Date:   Tue, 26 Feb 2019 21:02:46 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
         Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/1] t3600: use test_path_is_dir and
+ test_path_is_file
+In-Reply-To: <CAL7ArXocrtCBpEoCM6_aSWcKgaVDwBADMZ9WEBzxpwOfHKuHGQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1902262101180.41@tvgsbejvaqbjf.bet>
+References: <pull.152.git.gitgitgadget@gmail.com> <pull.152.v2.git.gitgitgadget@gmail.com> <fcafc87b382dfef00d8e33e875bcb8b03d5667e4.1551191168.git.gitgitgadget@gmail.com> <20190226163737.GB19739@szeder.dev>
+ <CAL7ArXocrtCBpEoCM6_aSWcKgaVDwBADMZ9WEBzxpwOfHKuHGQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-613778193-1551211382=:41"
+X-Provags-ID: V03:K1:TVE2BD9CwgU2uGKlTI54ZLc4X23SFLqUTTDPrXQW7sR+ocXJJhG
+ PkHCkZEhP3znMU8okAujNj1LL5qNw/a0hGukos6U3QE3jyyMWdqU5ldflgR/GYvPxYj1RTZ
+ j6ij0sfmtN1UeqwrkeDMu6eLrgb8yEzDrqq6DuoLr4TkX4bt4NVYaIUO7vs32cGXa0548Hq
+ drPGyO78bt2KTSEdnYdTw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/EbBc2D5mn8=:2SWiUwBVTijPBQKZy08yTd
+ xebMpkp7gT/Pb5HCQ8jJsTbz9SPaw73uI9Y8FXBY/Y3L6kW6cu+OGJuvlD7VyjaDJPwOYzRL8
+ gp78Lye9hhbJTXJaqQkzdtWoMxjMLl7U2B6Lo8rkfAyj/5NwdBSZQG+C/aovyO6ue7jMjBdJm
+ o/FFWs73/Rqj5sPrqUTaRW4poWjECC0jlQKEg/PdQO0mWN+4kP2Wp+N/j3+RqL+NuA9fqEhcX
+ 9S2BUUytMFEyIQleBE7Y2XY/dMq6wSa/cdRJi8sd2PbCsslz+UvOV5RHhI1wyULS9MuHzeOFW
+ L/vpuNi9BTNWL0OMhleZvffN7f/imnqjro0pOqu2A5xMYawQQqoe02ic04kglg5fPHOTnxCC3
+ PwclVewOw4ejdOfU9+NpgwbxA5c0PpvuXtdZya8QcEy8WFjSzkQzYKpdxmjR/ifZXfYZZKDfk
+ EuNY/ntHa0SoYcFR7QYTBc6T/2+zqWV9onev23PNQfPWLO2rCoZZsgZZx+bimGvL0hLelJtwQ
+ Z5NuaD+7Mz/p18N+343fbRu0ZqdpZ6KkCCkIcI3tUY84V5YSavwVBWaTXa+dhj4cpDxuEtNvD
+ AZciUEYt0vj34kMgDCdETe/d8ucrxBMI1WhgYDHvxkchBxDRVtRXxWVsWj1fmAEyo9e2S+/cV
+ aLXsbZTaryVoo0TxKzsjoPMhplP6jz7NI8uxrgzFySrO1+Sc9yuX6td8F1BWAbqp22XVNPAsb
+ ytXAGAwbrCB0oOoHOMcZrKinzWRxMPw4otopaPtn6HYNMiQMm3U2/gSm71JbuYBwXiyw85dVU
+ UOfNeOQ62dkqzyh0fOtsu3z+4f3M+ci08DVkyJqZV4gsok8a6+KCodKiy1bieXdlSvZj6TPGh
+ cGZkk44Xy04VZX3R1IO7az5pY0sXukjNuTAhlo7AAWxQbbimwn0z8c92lUNuMiXHJWmT7gqiu
+ 2A7Lcjsbi7A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey!
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, Feb 27, 2019 at 1:22 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+--8323328-613778193-1551211382=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi Rohit,
+
+On Wed, 27 Feb 2019, Rohit Ashiwal wrote:
+
+> On Tue, Feb 26, 2019 at 10:07 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
 >
-> We already have `test_path_is_missing`. Why not use that instead of `!
-> test -d` or `! test -f`?
->
+> > Furthermore, there are a couple of place where the '!' is not in front
+> > of the whole 'test' command but is given as an argument, e.g.:
+> >
+> >   test ! -f file
+> >
+> > Please convert those cases as well.
+> 
+> I think since I'm modifying `test_path_is_{dir|file}` functions to
+> handle calls like `! test_path_is_dir` well as mentioned in this
+> thread[1]. I think we should replace `! test` calls with `test !`, so
+> that the changes are in agreement with each other. What do you say?
 
-Yes, I think this is better. It will satisfy all the requirements I guess.
+I think what Gábor meant was that both `test ! -f file` and `! test -f
+file` should be converted to `test_path_is_missing file`.
 
-Ciao
-Rohit
+Ciao,
+Johannes
+--8323328-613778193-1551211382=:41--
