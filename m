@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C382120248
-	for <e@80x24.org>; Tue, 26 Feb 2019 00:26:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F215520248
+	for <e@80x24.org>; Tue, 26 Feb 2019 00:26:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729330AbfBZA0u (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 19:26:50 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40782 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729351AbfBZA0u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Feb 2019 19:26:50 -0500
-Received: by mail-wm1-f68.google.com with SMTP id t15so636591wmi.5
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 16:26:49 -0800 (PST)
+        id S1729352AbfBZA0y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 19:26:54 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39021 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728953AbfBZA0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 19:26:51 -0500
+Received: by mail-wr1-f67.google.com with SMTP id l5so11955745wrw.6
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 16:26:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=e5fANClE8AMQfIJDXXjZsBHKE7PLkV25MTsKozomZAg=;
-        b=X/bGZpUdxrYy2bo7/aS68Ka7u55JDIOSoX8ZUtQ1+Q5w173vYCWVQmqLluhy9Z99x6
-         9VQ8xMfLhJROZBPQVJfMRadlImPn2c1+VbxVZV9iGWukc7KALppp745d0fnk9dd0ETor
-         6cWF8d44xTKStV9QJSTho2nnPj9pvtso+PEOC1TQEekliyVrINluD5TiMVH/QOYQoF4f
-         iqBAX5zD+TvQpalUeo+bUyhBIz90ohbmLsjUm1vrnZR/bd9/NPLcEBW0KUg2HXHpf8r4
-         Yj37fQd+7vapj1NLyj/BnI5lTr6HYvZ+ngKfysePdWR887izBEoVcic146aGpXWnooQx
-         5LzA==
+        bh=B0YQwzEt1WN9Hjju18SV/huk2vsIYdBsYKe2jpwGovI=;
+        b=Y2hqQroSrXya+dLqdPlJVsgVqmAJ0jyBEPHY0FJRFZcellIojdFNehus1IiscqU3l1
+         N/ASkbVJhSfKVE9FO7xqR6aczyQ2x94M8IhHLSOGCMb2HvQ09nrLdjNlC21GBgMvE5n+
+         P744rzxxbX/OwrxUXoSRRM+E+1WCyPuZmcSN4u8Hl/idqn515jDagqbRyvXcVi5VmICP
+         P0V71JH4mZi4b+3/vfYRJqtfxS13s5zYipLbJFNwJutDZ8xkFoMwk1w+qaepA2Sns/T2
+         KrgxB9SA+TyDxlRwjzihBvcq5N0Y7ZhhViHZVOl7Ev55UH3yHKxxLmhXtn7J0d3kSuQT
+         iqWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=e5fANClE8AMQfIJDXXjZsBHKE7PLkV25MTsKozomZAg=;
-        b=Q4mxy5cNuJT+CasY1+7Thyg/btvcVW/PpBpi32xOM6tcHcnit/urqYnkS6O8gWzTIw
-         0DpKCdlU/AIRXE5XS0UGPXvQMQF58C4FOP0lynkwYWv4V9Teyttvx8JTMCnNsG7Sy8sW
-         uEFcpt28yQft+9xyY4NojOvZu4IvCSjLc76rtyseq7CpMK+XYoo9FJNbcFCYQVKDwOxl
-         1tKoirs2VikVIL/0qnsXMM2i0AuclqnUTP4YQ7khc8nQ/VtVq7e75aMIJxA7ef2xmouV
-         HsBOTwzZiKA/bNZKAyw3sZPQ/cs8uWbi0rLnH7rJofHzycmP8n30qD+JFncq9xFct8HQ
-         U1Og==
-X-Gm-Message-State: AHQUAuYDVGWKjedvc5niwKWpJskkjhOa+FwOV+wyltZEvOL9z1BaF8zJ
-        SEMxNiDbEmXSX+Oy74g3NUKjomqkbZ4=
-X-Google-Smtp-Source: AHgI3IbpVAxo3SpDzSpD7HKzYVbAX9MOHKPM3m7R4GHZ2td09yrB/eHzzQ53FAQTJfWG0fKAEW6PbQ==
-X-Received: by 2002:a1c:990c:: with SMTP id b12mr825490wme.106.1551140807961;
-        Mon, 25 Feb 2019 16:26:47 -0800 (PST)
+        bh=B0YQwzEt1WN9Hjju18SV/huk2vsIYdBsYKe2jpwGovI=;
+        b=YjDWu0fbxnF8t/hohUhLBtyY7oIXtdbcOMXglIXqRmpMXnIspoDlEj/HVokvWif/iy
+         OuUyLz8Fcd0DN7SjC5Ctyqlr4L4TbkNiAqeb56E1ipTLfi+aoxTj/ASOIDpYfTHAstnV
+         UOXSG6ivySiTCyX3gb4tNbJcRW2u8LCRcefkw82NANoB+q6ccVf0f82j2Zk5zQzdQQFG
+         uBfzNgkkRlnyf0kDQry73yOgIYT5UI4mnVE1u/AaScUS+BUshaST35YPXhpqGecUNXl2
+         B/lPMRKgXgqHQiLLhJw5Jp42+UAMVS7wziQlGH4w63N2zZH1sfM8urYLK4KC+QWz1uho
+         X/pw==
+X-Gm-Message-State: AHQUAuYVXanLhA2u2I6F9y7juAI3XzaBu8uDbLRKQQMkPvUi/VKJhVP0
+        p1gqcbt1fCwPaWGrybqSHfRrLjSJugY=
+X-Google-Smtp-Source: AHgI3IbXBI1XqSa/6mldsyMNiUJ0XvUkWIlxiYl1i3pGEZeRhy7jxVinyaASy5zMJ7HxCDtt1yLSlg==
+X-Received: by 2002:adf:f4c8:: with SMTP id h8mr15455541wrp.6.1551140809315;
+        Mon, 25 Feb 2019 16:26:49 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e6sm11745708wrt.14.2019.02.25.16.26.46
+        by smtp.gmail.com with ESMTPSA id e6sm11745708wrt.14.2019.02.25.16.26.47
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 25 Feb 2019 16:26:47 -0800 (PST)
+        Mon, 25 Feb 2019 16:26:48 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,44 +56,77 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Matheus Tavares <matheus.bernardino@usp.br>,
         Thomas Gummerer <t.gummerer@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [WIP RFC PATCH 2/7] dir-iterator: use stat() instead of lstat()
-Date:   Tue, 26 Feb 2019 01:26:20 +0100
-Message-Id: <20190226002625.13022-3-avarab@gmail.com>
+        Christian Couder <christian.couder@gmail.com>
+Subject: [WIP RFC PATCH 3/7] clone: extract function from copy_or_link_directory
+Date:   Tue, 26 Feb 2019 01:26:21 +0100
+Message-Id: <20190226002625.13022-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc2.261.ga7da99ff1b
 In-Reply-To: <CACsJy8Bw-mXLyT7VaKBjYKLe6uSAQqyLG=_AzjDXykYzSQLkcg@mail.gmail.com>
 References: <CACsJy8Bw-mXLyT7VaKBjYKLe6uSAQqyLG=_AzjDXykYzSQLkcg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is surely a horrible idea, but all tests pass with this (not that
-I trust them much). Doing this for later WIP use in clone.c.
+From: Matheus Tavares <matheus.bernardino@usp.br>
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Extract dir creation code snippet from copy_or_link_directory to its own
+function named mkdir_if_missing. This change will help removing
+copy_or_link_directory's explicit recursion, which will be done in a
+following patch. Also makes code more readable.
+
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- dir-iterator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/clone.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/dir-iterator.c b/dir-iterator.c
-index 070a656555..6a9c0c4d08 100644
---- a/dir-iterator.c
-+++ b/dir-iterator.c
-@@ -149,7 +149,7 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 				continue;
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 50bde99618..862d2ea69c 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -392,6 +392,24 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
+ 	fclose(in);
+ }
  
- 			strbuf_addstr(&iter->base.path, de->d_name);
--			if (lstat(iter->base.path.buf, &iter->base.st) < 0) {
-+			if (stat(iter->base.path.buf, &iter->base.st) < 0) {
- 				if (errno != ENOENT) {
- 					if (iter->pedantic)
- 						goto error_out;
++static void mkdir_if_missing(const char *pathname, mode_t mode)
++{
++	/*
++	 * Create a dir at pathname unless there's already one.
++	 */
++	struct stat st;
++
++	if (mkdir(pathname, mode)) {
++		if (errno != EEXIST)
++			die_errno(_("failed to create directory '%s'"),
++				  pathname);
++		else if (stat(pathname, &st))
++			die_errno(_("failed to stat '%s'"), pathname);
++		else if (!S_ISDIR(st.st_mode))
++			die(_("%s exists and is not a directory"), pathname);
++	}
++}
++
+ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+ 				   const char *src_repo, int src_baselen)
+ {
+@@ -404,14 +422,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+ 	if (!dir)
+ 		die_errno(_("failed to open '%s'"), src->buf);
+ 
+-	if (mkdir(dest->buf, 0777)) {
+-		if (errno != EEXIST)
+-			die_errno(_("failed to create directory '%s'"), dest->buf);
+-		else if (stat(dest->buf, &buf))
+-			die_errno(_("failed to stat '%s'"), dest->buf);
+-		else if (!S_ISDIR(buf.st_mode))
+-			die(_("%s exists and is not a directory"), dest->buf);
+-	}
++	mkdir_if_missing(dest->buf, 0777);
+ 
+ 	strbuf_addch(src, '/');
+ 	src_len = src->len;
 -- 
 2.21.0.rc2.1.g2d5e20a900.dirty
 
