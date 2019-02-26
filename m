@@ -2,90 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE55E20248
-	for <e@80x24.org>; Tue, 26 Feb 2019 10:33:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 258AF20248
+	for <e@80x24.org>; Tue, 26 Feb 2019 10:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727046AbfBZKd6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 05:33:58 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45167 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725908AbfBZKd6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 05:33:58 -0500
-Received: by mail-ed1-f67.google.com with SMTP id f19so876806eds.12
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 02:33:57 -0800 (PST)
+        id S1727462AbfBZK7C (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 05:59:02 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:43374 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725908AbfBZK7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 05:59:01 -0500
+Received: by mail-pg1-f194.google.com with SMTP id l11so6037319pgq.10
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 02:59:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2yG9jFqMlMT5CKbtSmrvdzBvstselqSvk5TPsi1PBxk=;
-        b=fihG8mxC6XJzgyl4QCDRRwudXODeVIYsoOOxlfOy8/ZOowy6B6A0TXrR8aemakDCFU
-         YnnPWnVz53OlUdVkHRaClO56vUp3Q9aUXWTa2eK06utv2AcJBf8zmkUr/MPeI01vCmhR
-         wt983kmK7DhFCWkBxR3degQxPlv6tucnbaReqmzwphsdXK084SZqC96mt1uIeLSNgqDi
-         rBYywGV1f0anSby6KHOYvt5c9EeXDIS5iO8lYrnxP7I4cl0n5FMcIgRLKLyNNPCCldrV
-         sYs875mDO1MNqaWTr8y6RlMF2JJRuJwKDvVxEdsga7XTBIryYrGb9TUxuLPiplBsmqCt
-         mcOw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=IL+dmwGJDfLu2OWk40x7pIaRJffZgRpj80hsHtTNC8g=;
+        b=dySrvpQGzEjLlDFYS4lpFdGK/tuhvdouOeH8AqAbtOGmgqRjNYvwKjVG2ahxD+ZmoW
+         IOBagwNrpu9Dgz48GpRhHLthnj36LZ2qRKMIGcccNLqgL/VUyCFG27sqcAYan2Ipzxnf
+         meMj0dPrSxy1BidPAlQDyr+9+XGGHkje/cp4uLd2CAah2oI9xAcRUlDoOQ1AO9yO2VWF
+         c4ALv5QWZhFW26TVM88Lch5Y4Uf8GbZxQdyJunhro+AZg5yuTvo2XYkTdaZmA0f4OjM+
+         +Ay3wtfO3MzuAEeXVS+XTJSv4q9CNKGhnZcu3wxQNOx9o/SGJ2zv3Ctmysrxv7I5UoRI
+         q/hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2yG9jFqMlMT5CKbtSmrvdzBvstselqSvk5TPsi1PBxk=;
-        b=TBm8hSHLF4y6isgCLMmaeaC/FXieMid3LTKAAD2kiYNuwNdn017nnpFfc5xSQ83tfX
-         V6ssvHwfudQLCG6fNZdil+Z/b0JrOHSXj151rQ/mPl2dqD6HjMWz2GutvpJtYgdhLvu7
-         s7zn37euTBV+Uf3xLsZYT+r0DXO+mRvfhdnsHerxGudjo5rvW+jUVJqqsO3fV9cSeTIk
-         oEHthycUJq+RIE8WkOAp+AaVW8p1KVZewF1ulHFHiCH3PaU2I1jqULayqgDQmaeSdmSw
-         QjRlUoh9OYOv/NcOGS7FDlx74BL3v4euNtcXxs9vLQpX70lKpSSV3iBQ8oY/ENbJ71l8
-         J8SA==
-X-Gm-Message-State: AHQUAua9xF/MCTvSoEyCE559gYnw3DjFoANqr5QgwYrujXHtO5aMFFLa
-        rJJiOFiwV4r9eC1QlKFNJNpQP0AADKRN7Kk9m2Y=
-X-Google-Smtp-Source: AHgI3IZsk31RD4l/YQMU2FnOhdMzUQZOAP78fGknp8p/rqgHq4ZuqJvDvw97JIm6oRXU0tW1L2ZGU7Cp28Chp2DnuRA=
-X-Received: by 2002:a05:6402:185a:: with SMTP id v26mr18253057edy.163.1551177236653;
- Tue, 26 Feb 2019 02:33:56 -0800 (PST)
-MIME-Version: 1.0
-References: <20190223190309.6728-1-matheus.bernardino@usp.br>
- <20190223190309.6728-4-matheus.bernardino@usp.br> <87va1a3z8e.fsf@evledraar.gmail.com>
- <CAP8UFD2LLL+V54k3XmHzmg5t1zanpAvY_=7GqXL43vLPTTmuww@mail.gmail.com> <CAHd-oW4P-aAKH0_kKrOJeprWmvPCUfa++X3pSNYSQisAV-25HA@mail.gmail.com>
-In-Reply-To: <CAHd-oW4P-aAKH0_kKrOJeprWmvPCUfa++X3pSNYSQisAV-25HA@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 26 Feb 2019 11:33:44 +0100
-Message-ID: <CAP8UFD1++Uy=FA-Y6jpH-4DgpqxvPnvQXQ9DxC6QxXKBPkA+5w@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 3/3] clone: use dir-iterator to avoid explicit dir traversal
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=IL+dmwGJDfLu2OWk40x7pIaRJffZgRpj80hsHtTNC8g=;
+        b=Uk1stBGJPIlYFPBs5WpEiGxup0te3Dx6GN4SDGjXmohoxlqSMa6v3AVZKc+DgwfTz6
+         RgwS5Cg5rlHgjEsgHUu5TseChWjMq3N9zofQ4D1Vl35QbLkI6QBNt78Mumn/AZDYZ7Xo
+         k2CqdExXCRq+5ne6vD+8wrbM6TX/BzuW6BG2HnNOiCHfi+kTPfpCYQH2NrLbfIvUOjSs
+         MZPGQTcd6dcHbZVy1/wEWzZQl6SvQf4ARn4prPVkgJtXtf0zHBOQay3hsEZ7Vb3Fs4iS
+         rPxtNUgKewWCc3Wt5lisYf/Z5gGCWtEMt0pvNG/ZrG1UfdP+e6F4RaNY72LNwV7a4Ge+
+         3lhw==
+X-Gm-Message-State: AHQUAua+E9joZEc36XJAY25AOebx8KXWKU/Nm2BeDhpIu4IU6apKvZBA
+        jVRsYR09zNLy19qkUZxcb18=
+X-Google-Smtp-Source: AHgI3IaNAmcid4xr9DnTPUIEvkuE/sTUBP39b5yDHoCoPPQVl2DL4J0d4uFSi55Ii7Qr1eq2yYr2Qw==
+X-Received: by 2002:a65:5bc9:: with SMTP id o9mr23599504pgr.42.1551178741085;
+        Tue, 26 Feb 2019 02:59:01 -0800 (PST)
+Received: from ash ([115.72.21.220])
+        by smtp.gmail.com with ESMTPSA id 11sm18971404pfn.7.2019.02.26.02.58.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Feb 2019 02:58:59 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 26 Feb 2019 17:58:55 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, hi-angel@yandex.ru, sunshine@sunshineco.com,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH v3 0/1] worktree add: sanitize worktree names
+Date:   Tue, 26 Feb 2019 17:58:50 +0700
+Message-Id: <20190226105851.32273-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
+In-Reply-To: <20190221121943.19778-1-pclouds@gmail.com>
+References: <20190221121943.19778-1-pclouds@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matheus,
+v3 is rewritten to use refname_disposition[] to cover all invalid
+chars.
 
-On Mon, Feb 25, 2019 at 3:31 AM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
->
-> I am a little confused about what I should do next. How should I
-> proceed with this series?
+Nguyễn Thái Ngọc Duy (1):
+  worktree add: sanitize worktree names
 
-When there are different opinions about what you should do, I would
-suggest doing only things everyone is ok with, and then resending
-saying in the cover letter that such and such issues still need to be
-decided. Then hopefully either Junio will decide or a consensus will
-eventually appear about what you should do.
+ builtin/worktree.c      | 37 ++++++++++++++++++++++++++++++++++++-
+ refs.c                  |  6 ++++++
+ refs.h                  |  1 +
+ t/t2025-worktree-add.sh |  7 +++++++
+ 4 files changed, 50 insertions(+), 1 deletion(-)
 
-In any case please don't wait until something is decided before
-resending with improvements (or just pinging us if you have already
-made all the improvements that were suggested) as that may not happen.
-If people on the list stop hearing about your patch series, they might
-just forget about it.
+-- 
+2.21.0.rc1.337.gdf7f8d0522
 
-Thanks,
-Christian.
