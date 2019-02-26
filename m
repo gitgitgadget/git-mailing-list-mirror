@@ -2,67 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6890320248
-	for <e@80x24.org>; Tue, 26 Feb 2019 07:04:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC3AB20248
+	for <e@80x24.org>; Tue, 26 Feb 2019 07:08:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726494AbfBZHEN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 02:04:13 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:40210 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726004AbfBZHEM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 02:04:12 -0500
-Received: by mail-pl1-f194.google.com with SMTP id bj4so5756283plb.7
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 23:04:12 -0800 (PST)
+        id S1726987AbfBZHIp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 02:08:45 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35273 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726546AbfBZHIo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 02:08:44 -0500
+Received: by mail-ed1-f65.google.com with SMTP id g19so9826517edp.2
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 23:08:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5UXxsbLJ+d/3XhQ3aEOZqsLCBiiQX3b+9jSGbc8U6RM=;
-        b=TZoBJqRHk6ueB9H9zMaIFh5FrrkinwscYcCmUQL4XaE7o0UM1g2SZwg9xF7SK6tMzt
-         nlNUjGmRc83OnjoCp/kR5EWba38zun1q+0iLvBjjsNGBBfwqHQEHK9XJ5E+dvBoXd5kq
-         7iIKduShs2XF+l9Wr8Jg276S/K4Hl67x2fOVfQL4zc8kXcY4z+U0PlMu1dQJa9dTC5F0
-         DYIGNq6NoeH3laUcJx/m5pogo8O11I3wv07qDxmM+kcOzgP20T0l+hqVPHXFD1Rhjaqc
-         D8MMBMT9pzC8PlgPeDpVthG4lDoMdlMBRCzIL8hXaLvldRHZTwlITr0Uq9EcJI7kzdps
-         I+iQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Y60YCPLs206QPmBy8cm4MIkiShEGUvw1FDDjATZDDr0=;
+        b=urJzCDj/5GKGppqgjr6OfpXkVIEZgchiVrwiiaRVzt/hJ5WGfYIxmusOYW6mgPjGR0
+         k8X7NC0q16n05pEH7yAMX3hZOdJt1/4RFPMHECP5WYs3nre2eblfnVQZemWVfS7KAQkU
+         m4cPKosyPrmjjTYeoZKFZgg6R0NwBaxMJ8NAdqSbcXQKS+0zkVc+KhrxBYs+Z0NjO7SJ
+         PYI91C5IknthpgPAy0LmTnHxrm1JFMzWWEJwjvbL0wgubiEmjqUEKrZCekp2ekdO4Z1g
+         6D3/O6aYmUL9rjlhVidE2XPQ3aUjoYZUi7i1AyaYEYnqJiYdfZGzi9KwPl2vyz0JST9v
+         ATxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5UXxsbLJ+d/3XhQ3aEOZqsLCBiiQX3b+9jSGbc8U6RM=;
-        b=GlyT/QLnMNqwRitzIbiKxksRXFG33b4h9NWxEBOVknASIMtdLmjeecaBnjHBuZvmaL
-         hEvAlZx3O55gKk/qUVF38EW2e9yDbvw5HYUuB0EtORaznoRm5c9L/EcqMBYntV8wbolA
-         SM3wCzpyBpjL5r4NnbUrwwlNF0h9slBkhcOaTfz/5fLM96/D2gH0D9KHboyyxlqupAl+
-         NgfYP6vq00RW+WVhr9Frsi5AL6DJLOiQSFP8Fq1yRm/So54MqgULRFBvopyuP1CZFA+Z
-         gIN9pMZWya4xmcaqrexTJMvzv/SYnfy7l69ievImOp5w3Wlwl4fqu4pq0Kzy3sxHTpLb
-         cMLQ==
-X-Gm-Message-State: AHQUAuaKBCOsomB2tGV34IcaXRFoYR/tj7+Hy8FF90q/Bwy5v9P66Mlx
-        Hf0u/rpwrgoZ6JTOtAyOsFY=
-X-Google-Smtp-Source: AHgI3Ibk4orPhPLfsD7KlHtb97+CqIlYPntRTg47iSAg7xT9HKG41H0ldYMrTEqkY4qAYx+3+DqmMw==
-X-Received: by 2002:a17:902:8f81:: with SMTP id z1mr25217588plo.265.1551164651889;
-        Mon, 25 Feb 2019 23:04:11 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id u14sm8794391pfm.66.2019.02.25.23.04.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Feb 2019 23:04:10 -0800 (PST)
-Date:   Mon, 25 Feb 2019 23:04:08 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [FIXUP] Fixup on tip of jt/http-auth-proto-v2-fix
-Message-ID: <20190226070408.GA117495@google.com>
-References: <20190225220841.GA3248@sigill.intra.peff.net>
- <20190225234901.65277-1-jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Y60YCPLs206QPmBy8cm4MIkiShEGUvw1FDDjATZDDr0=;
+        b=nhn0Z5uaT/qd74D1iWT1N/wYj99zBdfY9CpwHiJaKp6gUqRtPGzuhumQBtv6fDgN+P
+         RV2EjedryVYNk5FXPfZ1Fx/OK0yhPZ2BgbmAhK3CayJts0oct8/0BjxCpsWJ4IoD4hSy
+         +hi917NW6gGo7vI0d6P7VCJYL4C9vJJ3MxBB6eA8TR/oq8L/KkpcNIeKG6xcfJ/f24Er
+         f0NbtmHZ/zITw2WVEVUhNDFP4ov9iPRidYPozS9skkD2dgPu1PXj1qwuvm/1Jdbg6dNV
+         lDwcGM/AhzC6SxCynXAWUZqxDCSCw+zNQXtN8wahK0znxV/W+JBuNzUmHjMaljXKKUXU
+         uwWg==
+X-Gm-Message-State: AHQUAuaYCsWc1RvsZ9zKN+AlvQ9o+T9dJq39LBpHMRAV3d/6OIBTWn89
+        cHT/sl01uv3DZsWvXnM0gk6nphW1qtECaGATmWpMqYmf
+X-Google-Smtp-Source: AHgI3IYlXPhxTxRBZeuYqf52xgIFkHRf4WRrCnu6dyhRUVZcnai0T2yP7kqfhD12jTwN4xOG7WTC34eqC/1Ty4+NzEE=
+X-Received: by 2002:a50:ae8a:: with SMTP id e10mr17989932edd.24.1551164923202;
+ Mon, 25 Feb 2019 23:08:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190225234901.65277-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <cover.1550963965.git.jonathantanmy@google.com>
+ <aae0f669627d7be45a967c6df464bf1ecdabce6d.1550963965.git.jonathantanmy@google.com>
+ <CAP8UFD2RBU+f4=pB4CZHPHVO3DKXdGXVen=x3a8GvQHhGBG3aA@mail.gmail.com> <20190226015329.GE16965@google.com>
+In-Reply-To: <20190226015329.GE16965@google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 26 Feb 2019 08:08:32 +0100
+Message-ID: <CAP8UFD2HvOriZyP6Dtx2Nvy3ZCi1aitk1-Xyk8fMPmZNJ6B4Uw@mail.gmail.com>
+Subject: Re: [WIP 7/7] upload-pack: send part of packfile response as uri
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,31 +67,26 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Jonathan Tan wrote:
-
-> Thanks, Peff, for noticing this. It's because the client sometimes sends
-> "0000" as a single request (that is, it flushes, and then before it
-> sends any data, it flushes again). And post_rpc() assumes that it can
-> always read something - which is usually correct, but not in this case;
-> we read in stateless_connect() first, and if we read "0000", we need to
-> tell post_rpc() to not read at all.
+On Tue, Feb 26, 2019 at 2:53 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
 >
-> This is a fixup on the tip of jt/http-auth-proto-v2-fix that fixes that.
+> Christian Couder wrote:
+> > On Sun, Feb 24, 2019 at 12:39 AM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
-> As for why the client sends a lone "0000", I'm not sure, but that's
-> outside the scope of this patch set, I think.
+> > Ok, so each URI sent in the packfile corresponds to exactly one
+> > object. And when the client fetches one such URI it gets a packfile
+> > that contains only the corresponding object. Or is there something I
+> > misunderstood?
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  remote-curl.c | 32 +++++++++++++++++++-------------
->  1 file changed, 19 insertions(+), 13 deletions(-)
+> I think it's worth separating the protocol and the server
+> implementation:
+>
+> The protocol allows arbitrary packfiles --- they do not have to be
+> single-object packfiles.
+>
+> This patch for a server implementation only uses it to serve
+> single-object packfiles.
 
-Tested-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks for fixing it.
-
-Is there a particular patch this should be squashed into, or does it
-stand alone?  It the latter, mind writing a commit message for it?
+Ok, this explains things much better.
 
 Thanks,
-Jonathan
+Christian.
