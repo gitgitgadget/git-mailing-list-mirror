@@ -2,92 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C8E820248
-	for <e@80x24.org>; Tue, 26 Feb 2019 21:45:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A5A720248
+	for <e@80x24.org>; Tue, 26 Feb 2019 21:53:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728854AbfBZVpe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 16:45:34 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:33272 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728727AbfBZVpe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 16:45:34 -0500
-Received: by mail-ed1-f65.google.com with SMTP id c55so12149221edb.0
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 13:45:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=5HwS/UfACpzAIiMXHoEUjgRweYN/nmWcO7RjkhvjUEs=;
-        b=gKrl81wfTImYLbFQfZh5p08XF3nlNkG6zMqIzKZLmiQ9EDloBP5NmT+/PYyGLlN3jf
-         9m8k/7l3HbfNGWmmV/VBT9SFD/9XTPJx1XUkpRbkg5NSzoMd7jKKLdYcCiY7wDepomrj
-         M80GrOofzm0KMGf5UBbM5m7HJC+Q8EUPa9oJzffglj/Gj+CzwKBkyC+hBShDWi01R1bq
-         XMygJtmDlKe/X4+oORSLTSZgzVju3n+9TpOp40T0SXKe3V1PtEWX8d5fgZrWymTOmie7
-         fc2KuCkNLpjeZ/8EAR89xMIpnMoHybXhly4R5k/KQKwoBlpxCAHpmxnPBimlL7ueIzZJ
-         +65w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=5HwS/UfACpzAIiMXHoEUjgRweYN/nmWcO7RjkhvjUEs=;
-        b=ioCkAgKQGW/gAPV2S2T/wjj/j7g3PnaJZ+KPiEekHkjiZ4RXsbrzWQDv758nd+2uSO
-         GmC567PiWWKAbf1wAuZqNEknF6ox7jsxouObVZrTXE6nKAvCYMMYSe6Jvb2A1t2aWqn8
-         QKbe3pNFa5vtb7TZZnKATaiTB0v98NE6CwEO9wd7xAu3KFi4cFUugb+WLR7+6Eh48t9q
-         Pg9XGBGOoxEjZRMGB1ru45ck3tIihjkehdK1GEIlax3rpUmdxyzP1kar1RGHrjVaLPKe
-         u/ccbWmHMrb7U6MoXLEgt2lzzJV9VJDfUacQBWgs/uTBSaEw8CWGtkmkEonMRgNWgHGJ
-         t/Tw==
-X-Gm-Message-State: AHQUAubFXR0mh1/SJqjE7uMZHW5qxlBAbJWv+strsTZfe2z3kkkyUmAX
-        Bi7HPDPWb5192Bye1W72ZnG7sQh6+C0=
-X-Google-Smtp-Source: AHgI3IbueSXmGC3xAozBAuNFNLSrtBamX9GK7UuYznvD5Pjtp1A5CLA/fkKCc37xoMgxarmwRejdUQ==
-X-Received: by 2002:a05:6402:124a:: with SMTP id l10mr21140763edw.62.1551217532132;
-        Tue, 26 Feb 2019 13:45:32 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id v15sm3829361edl.40.2019.02.26.13.45.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 26 Feb 2019 13:45:31 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v13 00/27] Convert "git stash" to C builtin
-References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> <20190225231631.30507-1-t.gummerer@gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190225231631.30507-1-t.gummerer@gmail.com>
-Date:   Tue, 26 Feb 2019 22:45:30 +0100
-Message-ID: <87r2buusud.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1728945AbfBZVxv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 16:53:51 -0500
+Received: from mga07.intel.com ([134.134.136.100]:4631 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728727AbfBZVxv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 16:53:51 -0500
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 26 Feb 2019 13:53:50 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.58,416,1544515200"; 
+   d="scan'208";a="121030847"
+Received: from jekeller-desk.amr.corp.intel.com ([10.166.244.182])
+  by orsmga008.jf.intel.com with ESMTP; 26 Feb 2019 13:53:50 -0800
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH] describe: bail of --contains --all is used with --exclude or --match
+Date:   Tue, 26 Feb 2019 13:53:48 -0800
+Message-Id: <20190226215348.5119-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.18.0.219.gaf81d287a9da
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jacob Keller <jacob.keller@gmail.com>
 
-On Tue, Feb 26 2019, Thomas Gummerer wrote:
+If you try to use git describe --contains with --all, the exclude and
+match patterns are silently ignored.
 
-> As I was advocating for this series to go into 'next' without a large
-> refactor of this series, I'll put my money were my mouth is and try to
-> make the cleanups and fixes required, though without trying to avoid
-> further external process calls, or changing the series around too
-> much.
->
-> One thing to consider here is that we have a GSoC project planned
-> based on 'git stash'.  If we can't get this to 'next' soon, I'd vote
-> for taking that project out of this years GSoC, and maybe try again
-> next year, if nobody implemented the feature in the meantime.
+This results in unexpected behavior, as you may try to provide patterns
+and expect it to change the result.
 
-FWIW I'd like to +1 getting it into "next" so this can be given thorough
-testing in the 2.22
+Check for this, and have describe die when it encounters this, instead
+of silently ignoring the provided options.
 
-If there's still bugs or other regressions I think it's better sorted
-out without the cognitive load of reviewing it all again.
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
 
-Worst case we can always add something on top to flip the default of
-stash.useBuiltin.
+I just found this while trying to use it, the patterns weren't being applied
+properly.
+
+This is pretty quick/dirty, I haven't had time to write a test, or anything.
+
+ builtin/describe.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 1409cedce2fb..1bf4b6e3d0ae 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -589,6 +589,9 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 				argv_array_pushf(&args, "--refs=refs/tags/%s", item->string);
+ 			for_each_string_list_item(item, &exclude_patterns)
+ 				argv_array_pushf(&args, "--exclude=refs/tags/%s", item->string);
++		} else {
++			if (patterns.nr || exclude_patterns.nr)
++				die(_("--contains with --all does not support --match or --exclude"));
+ 		}
+ 		if (argc)
+ 			argv_array_pushv(&args, argv);
+-- 
+2.18.0.219.gaf81d287a9da
+
