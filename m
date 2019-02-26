@@ -2,117 +2,229 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15B4C20248
-	for <e@80x24.org>; Tue, 26 Feb 2019 03:22:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E70F20248
+	for <e@80x24.org>; Tue, 26 Feb 2019 03:48:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726241AbfBZDWH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 22:22:07 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35042 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726185AbfBZDWH (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 Feb 2019 22:22:07 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:a4e9:9ba4:4fd2:4493])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C156960429;
-        Tue, 26 Feb 2019 03:22:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1551151326;
-        bh=xsB3e0QbkWlER3+g0iJJ5+F+ZOFS/0MOuHndXCRbc9Y=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=rAWzovJZ9FaSnR0wdsGIDDvPyVtV1RcuY/T0/wm/bLden2zd5Zo9yzlnVkoEb0qa/
-         nKE1e8fnIsE4Niku2CTyrgNAPDrgLxGHiHSV2Nd8Yjcmmcb1n2lWNxexZ49mYH+RYq
-         hfWnMf/GR6hGJ5e82JOKGbUa0eHnfbJwj0W1kuf0qUw18fU5vboMZswB0xHgY5pqqH
-         4JCEClf+6z8QJYDVXNzPRXP1LQzmbdvL3EqrROzUlj3N0dFvmb9DJRG4fcFuJBLCQf
-         cnQejaovk8kcGIb5bDfSeneIQP+tGSWHufG0T36KVVdUK1eSoiOFvjDIsF0Zq8QPRv
-         nEOBjboqWJyfNhfx4ksSw6yPPjI/ODUCRtv1FQNzDRpnyYDAuuXSmAHidZH2xruW+Q
-         biSxa/HYFPvMDxZVpuKkx+iamloeLPKs/C/7oiPkYef+OkRhW5qsgpNpkLMEcv8oXG
-         wDRXaUj+k5Z4ElB/6HHgFYvUswGjmW3lkwXPpq/FtfydeKmygFq
-Date:   Tue, 26 Feb 2019 03:22:01 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/3] asciidoctor-extensions: fix spurious space after
- linkgit
-Message-ID: <20190226032201.GD601925@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-References: <cover.1551123979.git.martin.agren@gmail.com>
+        id S1726334AbfBZDs6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 22:48:58 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:37260 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726116AbfBZDs5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Feb 2019 22:48:57 -0500
+Received: by mail-it1-f194.google.com with SMTP id z124so2067876itc.2
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 19:48:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GCry8TecnQYzumQ6bu+BU3XRyXBwXIIzAQIHd2GMe58=;
+        b=qNKIv+GuYB4T70TbbEd3zf6ZQ60dpWZ5LuuYZHH1c4kV9/zf9CGdKbaHyVKsl9PB3z
+         yBSP6N9xf5JykHzLccw1cwMg0Y19JGTzuyir9PAgZUqe/kEKuF58beawzre/8onxJ8DG
+         B8/fqACKein/OEaIIJEDzOpcjBMylbLeTYa/dSNiEMwVLHqZy5D3209n0dmx6Q5fu+s5
+         MFlyPa8hjVC4lkWUvCeL78CaUAnEHI5r0qMOsBJ3lIrxpLtcmGSEanbY1YESHLX7YMkA
+         DG26mvk7TSI854ZT07bAIvOt6xMQ5EsxGg18RgarI0NK8mXUyupTrF2EvuKyPP6CFOM1
+         mwfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GCry8TecnQYzumQ6bu+BU3XRyXBwXIIzAQIHd2GMe58=;
+        b=TzVCuH3Hf/waZjCme555PNNXsl9hkJQe9Jnj+eZaWEgQyUlwORSZDh5WqgQPrewd1t
+         1K3+nHNTzWtyM5FDBZMr0n3fb/8EbyRQZckf3rvuTV4+k47eegOGfY1k1FUIbp6ikdN3
+         B2vFjCtJ1/008mpCxx05WS1KOF5JDExVoFbu0YTbgjNTlJNn4FNqSx94yTbxomuQ1tfH
+         JC1OqPEgaYsT26vgqkFGPd1gpzkuNkw+7eVgSj00Q1nkJxsN23hldkAPcg+ZWGF/g+cp
+         2Eth3HMPjoHABL6YkQieghIxrHrk9T4Z2E2gKzZChHkStcc+R+0ST6+rEaDa7uazlgcO
+         PV9g==
+X-Gm-Message-State: AHQUAubEeycvg+OeRoC82WruUpfe9jpyOPW+/TqNRjn83LvE5Lj12fOw
+        wikcWE4bjdIUUdE3Gqc9LqzmAxnBPbw8H3xH3K5s9w==
+X-Google-Smtp-Source: AHgI3IaO4MJmAHhtg+moOl1fKaOWUkh8fp6zRt+DSDHDMUxQs0dYtbp6hMCzhvj82vwc+iqJ/FSN/LbX2zokRytc870=
+X-Received: by 2002:a24:b8c6:: with SMTP id m189mr1233657ite.72.1551152935946;
+ Mon, 25 Feb 2019 19:48:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="LKTjZJSUETSlgu2t"
-Content-Disposition: inline
-In-Reply-To: <cover.1551123979.git.martin.agren@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <CACsJy8Bw-mXLyT7VaKBjYKLe6uSAQqyLG=_AzjDXykYzSQLkcg@mail.gmail.com>
+ <20190226002625.13022-6-avarab@gmail.com>
+In-Reply-To: <20190226002625.13022-6-avarab@gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 26 Feb 2019 00:48:44 -0300
+Message-ID: <CAHd-oW7HvhkORZogjb0nPioe3KWmXDDACF6Tu-Kmayc7=1z7nA@mail.gmail.com>
+Subject: Re: [WIP RFC PATCH 5/7] clone: use dir-iterator to avoid explicit dir traversal
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Feb 25, 2019 at 9:26 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> From: Matheus Tavares <matheus.bernardino@usp.br>
+>
+> Replace usage of opendir/readdir/closedir API to traverse directories
+> recursively, at copy_or_link_directory function, by the dir-iterator
+> API. This simplifies the code and avoid recursive calls to
+> copy_or_link_directory.
+>
+> [=C3=86var: This should be bug-compatible with the existing "clone"
+> behavior. The whole bit here with "iter->relative_path[0] =3D=3D '.'" is =
+a
+> dirty hack. We don't copy dot-dirs, and then later on just blindly
+> ignore ENOENT errors as we descend into them. That case really wants
+> to be a is_dotdir_or_file_within() test instead]
+>
+> Now, copy_or_link_directory will call die() in case of an error on
+> openddir, readdir or lstat, inside dir_iterator_advance. That means it
+> will abort in case of an error trying to fetch any iteration entry.
+>
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/clone.c | 55 +++++++++++++++++++++++++++++--------------------
+>  1 file changed, 33 insertions(+), 22 deletions(-)
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 862d2ea69c..c32e9022b3 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -23,6 +23,8 @@
+>  #include "transport.h"
+>  #include "strbuf.h"
+>  #include "dir.h"
+> +#include "dir-iterator.h"
+> +#include "iterator.h"
+>  #include "sigchain.h"
+>  #include "branch.h"
+>  #include "remote.h"
+> @@ -411,42 +413,47 @@ static void mkdir_if_missing(const char *pathname, =
+mode_t mode)
+>  }
+>
+>  static void copy_or_link_directory(struct strbuf *src, struct strbuf *de=
+st,
+> -                                  const char *src_repo, int src_baselen)
+> +                                  const char *src_repo)
+>  {
+> -       struct dirent *de;
+> -       struct stat buf;
+>         int src_len, dest_len;
+> -       DIR *dir;
+> -
+> -       dir =3D opendir(src->buf);
+> -       if (!dir)
+> -               die_errno(_("failed to open '%s'"), src->buf);
+> +       struct dir_iterator *iter;
+> +       int iter_status;
+> +       struct stat st;
+>
+>         mkdir_if_missing(dest->buf, 0777);
+>
+> +       iter =3D dir_iterator_begin(src->buf, 1);
+> +
+>         strbuf_addch(src, '/');
+>         src_len =3D src->len;
+>         strbuf_addch(dest, '/');
+>         dest_len =3D dest->len;
+>
+> -       while ((de =3D readdir(dir)) !=3D NULL) {
+> +       while ((iter_status =3D dir_iterator_advance(iter)) =3D=3D ITER_O=
+K) {
+>                 strbuf_setlen(src, src_len);
+> -               strbuf_addstr(src, de->d_name);
+> +               strbuf_addstr(src, iter->relative_path);
+>                 strbuf_setlen(dest, dest_len);
+> -               strbuf_addstr(dest, de->d_name);
+> -               if (stat(src->buf, &buf)) {
+> +               strbuf_addstr(dest, iter->relative_path);
+> +
+> +               /*
+> +                * dir_iterator_advance already calls lstat to populate i=
+ter->st
+> +                * but, unlike stat, lstat does not checks for permission=
+s on
+> +                * the given path.
+> +                */
+> +               if (stat(src->buf, &st)) {
+>                         warning (_("failed to stat %s\n"), src->buf);
+>                         continue;
+>                 }
+> -               if (S_ISDIR(buf.st_mode)) {
+> -                       if (de->d_name[0] !=3D '.')
+> -                               copy_or_link_directory(src, dest,
+> -                                                      src_repo, src_base=
+len);
+> +
+> +               if (S_ISDIR(iter->st.st_mode)) {
+> +                       if (iter->relative_path[0] =3D=3D '.')
 
---LKTjZJSUETSlgu2t
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think it should be iter->basename[0] here, instead, right?
 
-On Mon, Feb 25, 2019 at 09:02:37PM +0100, Martin =C3=85gren wrote:
-> Patch 3/3 gets rid of a spurious space which shows up immediately after
-> Asciidoctor has expanded linkgit:foo[bar] if the macro is followed by
-> punctuation such as a comma, period or closing parenthesis.
->=20
-> Patch 2/3 adds a missing dependency to the makefile, so that the docs
-> will actually be rebuilt with that final patch. Patch 1/3 isn't needed
-> for this series, but could help someone in the future, similar to how
-> already having patch 2/3 would have helped me...
->=20
-> Martin =C3=85gren (3):
->   Documentation/Makefile: add missing xsl dependencies for manpages
->   Documentation/Makefile: add missing dependency on
->     asciidoctor-extensions
->   asciidoctor-extensions: fix spurious space after linkgit
->=20
->  Documentation/Makefile                  | 4 ++--
->  Documentation/asciidoctor-extensions.rb | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
+I also have a more conceptual question here: This additions (or the
+is_dotdir_of_file_within as suggested) are just to make patch
+compatible with the current behaviour, but are going to be removed
+soon after. As this would be kind of a noise, wouldn't it be better to
+have a patch before this, already correcting copy_or_link_directory's
+behaviour on hidden dirs and them this?
 
-Thanks for putting this series together. I would suggest an update to
-the commit message in 1/3 explaining the edge case that Eric Sunshine
-mentioned, but otherwise, I think this looks good.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---LKTjZJSUETSlgu2t
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlx0sNkACgkQv1NdgR9S
-9osjFBAAxEmkepGV10HALLNIM6fmn8yYcIvM6VZLq2z6QdU5w14AdNG/mMTe4pxa
-EqSnIhRXxR2Tw63Agsq0tytgOHsHPIh37GxfUgl99xek8N+ZwC2IGLA7XzzImm2o
-F57RRsKMaEiLUJ7p2itq5pSfg8jvU1jGI7b65ynsA28g4mlSAvVpeHuLqbyRU1Wy
-YtDhRmHsAO7ckoJCgk/Wv4fnefdtNAvCGUviSs8j/jw66oo0EEA4Gnt0OXFIt6Y7
-lZyDNo1IRc1uPU0EM/7KzruoXQRYalm0StGPn0aoSMf4g6dfMl3Ln/rtZtnUSEvs
-Lx6DJSe4NkX14wrb9mjVHkhXS89Jp4L8VM3nRZtvCYNXpRACC4kkl/TS7x6Nl/Ic
-rfDlisztEMPm3FG7BqB/FtKOw0fshl7n2Q493jn8xVy3q8r81jTHVAfOIUMQlMmI
-q/KcFwAcjJlSGuvZptg2nK2mhDNwO+i3sMNAZVbqi569VYUSFaIaXt3/LSlofETY
-qRCWGcPtppTLR3caE/Nqew5YoxHeXGF88HvCHjlFWATaO8r9KLGxKar20KqrN7Cv
-Gvmr+IG03ZSNlpFuLXUisC/ZTvb1JfeN6UgEVFU1KUcI6jGXQjPCkXm5q75mdGRb
-eiMGHKbnXJ3vjp1oNGwTokSxje5m15K7QxRT/8YuLbYsF+ZrDh0=
-=Wavu
------END PGP SIGNATURE-----
-
---LKTjZJSUETSlgu2t--
+> +                               continue;
+> +                       mkdir_if_missing(dest->buf, 0777);
+>                         continue;
+>                 }
+>
+>                 /* Files that cannot be copied bit-for-bit... */
+> -               if (!strcmp(src->buf + src_baselen, "/info/alternates")) =
+{
+> +               if (!strcmp(iter->relative_path, "info/alternates")) {
+>                         copy_alternates(src, dest, src_repo);
+>                         continue;
+>                 }
+> @@ -456,14 +463,18 @@ static void copy_or_link_directory(struct strbuf *s=
+rc, struct strbuf *dest,
+>                 if (!option_no_hardlinks) {
+>                         if (!link(src->buf, dest->buf))
+>                                 continue;
+> -                       if (option_local > 0)
+> -                               die_errno(_("failed to create link '%s'")=
+, dest->buf);
+> +                       if (option_local > 0 && errno !=3D ENOENT)
+> +                               warning_errno(_("failed to create link '%=
+s'"), dest->buf);
+>                         option_no_hardlinks =3D 1;
+>                 }
+> -               if (copy_file_with_time(dest->buf, src->buf, 0666))
+> +               if (copy_file_with_time(dest->buf, src->buf, 0666) && err=
+no !=3D ENOENT)
+>                         die_errno(_("failed to copy file to '%s'"), dest-=
+>buf);
+>         }
+> -       closedir(dir);
+> +
+> +       if (iter_status !=3D ITER_DONE) {
+> +               strbuf_setlen(src, src_len);
+> +               die(_("failed to iterate over '%s'"), src->buf);
+> +       }
+>  }
+>
+>  static void clone_local(const char *src_repo, const char *dest_repo)
+> @@ -481,7 +492,7 @@ static void clone_local(const char *src_repo, const c=
+har *dest_repo)
+>                 get_common_dir(&dest, dest_repo);
+>                 strbuf_addstr(&src, "/objects");
+>                 strbuf_addstr(&dest, "/objects");
+> -               copy_or_link_directory(&src, &dest, src_repo, src.len);
+> +               copy_or_link_directory(&src, &dest, src_repo);
+>                 strbuf_release(&src);
+>                 strbuf_release(&dest);
+>         }
+> --
+> 2.21.0.rc2.1.g2d5e20a900.dirty
+>
