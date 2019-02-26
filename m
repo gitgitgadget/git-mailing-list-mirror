@@ -2,73 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD6FC202BB
-	for <e@80x24.org>; Tue, 26 Feb 2019 06:03:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6890320248
+	for <e@80x24.org>; Tue, 26 Feb 2019 07:04:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726540AbfBZGDd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 01:03:33 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:42437 "EHLO
+        id S1726494AbfBZHEN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 02:04:13 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:40210 "EHLO
         mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726454AbfBZGDd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 01:03:33 -0500
-Received: by mail-pl1-f194.google.com with SMTP id v11so270769plg.9
-        for <git@vger.kernel.org>; Mon, 25 Feb 2019 22:03:33 -0800 (PST)
+        with ESMTP id S1726004AbfBZHEM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 02:04:12 -0500
+Received: by mail-pl1-f194.google.com with SMTP id bj4so5756283plb.7
+        for <git@vger.kernel.org>; Mon, 25 Feb 2019 23:04:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=mvm/kGI6doRUZkh6cKAtS9lYOlgWGM3FTVOxK9virH0=;
-        b=ftpIZRczCWqLQbVoaEJ83BY4JO7wQVfmFjg+F5YEXUq2u6YJuZRJCQY6GzYKD5sR2P
-         PQkR6JFBw5B2YatOobujksWgVBeF+mEPEJyuJIXmGsZ1i1N9Ii8BRFJWJc33nlS9usP6
-         HYfGMTqIyOPVPg6j8I8MkwKIJYKs8MAKSgAXopDgWkIeiCeP3GURR+6QGCox4pYkhkHb
-         47DCZYOj6Ca9oAKjs3KPV097RYw2fRcJJbZfDsWFYq683+mCSwpeSpnbDk2Wjxhvbz4Q
-         JcbWmFZtbt1KIyykdmcA9T1y3/SweXOyBstptMhLOwOjiJENq1eXK1NN2vOMNNXPmzkh
-         lE2g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5UXxsbLJ+d/3XhQ3aEOZqsLCBiiQX3b+9jSGbc8U6RM=;
+        b=TZoBJqRHk6ueB9H9zMaIFh5FrrkinwscYcCmUQL4XaE7o0UM1g2SZwg9xF7SK6tMzt
+         nlNUjGmRc83OnjoCp/kR5EWba38zun1q+0iLvBjjsNGBBfwqHQEHK9XJ5E+dvBoXd5kq
+         7iIKduShs2XF+l9Wr8Jg276S/K4Hl67x2fOVfQL4zc8kXcY4z+U0PlMu1dQJa9dTC5F0
+         DYIGNq6NoeH3laUcJx/m5pogo8O11I3wv07qDxmM+kcOzgP20T0l+hqVPHXFD1Rhjaqc
+         D8MMBMT9pzC8PlgPeDpVthG4lDoMdlMBRCzIL8hXaLvldRHZTwlITr0Uq9EcJI7kzdps
+         I+iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=mvm/kGI6doRUZkh6cKAtS9lYOlgWGM3FTVOxK9virH0=;
-        b=e7q3B++1sFIYZ8BM0fl6Rq8pGYHcdCmRVIBrf2oIKe/WftF6ABPEEBnPPJb0HaMY+F
-         IHNuozzN+Md7tpYjFTwwJOV2yKTN2wdelp9+60FxFnXBQO23anYmskgj/5rfRm+S/CWg
-         75iYIOZmfrtvcor+F31XsSgjLJYIBnWEy5I5QAFA5a9hBTedEVsD+pfOchHyJ4nWuJgB
-         5Tp36NnKBdO1mVeODTXxErbK2PCW9VS9tPhvTXJ4nU1p8PuhlmgBt3jAvWsh4Cw5fz8J
-         OpQQPeog4w6oZ3I+s/7Gad2+VUima48arQAWt2pVBbWKFkeAauMZnpEF114qAJd+lxol
-         S4GQ==
-X-Gm-Message-State: AHQUAuakDzbnTuvN/0C2gRmE1h6UH6XpXKT26LIpIEiEYnp53zTnTqkc
-        efmFSdsTxt/Alb+WH78LHiWxJqqNd0KdOHdZR40=
-X-Google-Smtp-Source: AHgI3IY6mhxZjbnGh0k+QQAjuzylOw+URdUEJEir15N9oqedJ5DY+baVN4+d9OeYrQVITZ3YKcbEvSlzwAhGIJ7MemM=
-X-Received: by 2002:a17:902:6b08:: with SMTP id o8mr24227071plk.105.1551161012813;
- Mon, 25 Feb 2019 22:03:32 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5UXxsbLJ+d/3XhQ3aEOZqsLCBiiQX3b+9jSGbc8U6RM=;
+        b=GlyT/QLnMNqwRitzIbiKxksRXFG33b4h9NWxEBOVknASIMtdLmjeecaBnjHBuZvmaL
+         hEvAlZx3O55gKk/qUVF38EW2e9yDbvw5HYUuB0EtORaznoRm5c9L/EcqMBYntV8wbolA
+         SM3wCzpyBpjL5r4NnbUrwwlNF0h9slBkhcOaTfz/5fLM96/D2gH0D9KHboyyxlqupAl+
+         NgfYP6vq00RW+WVhr9Frsi5AL6DJLOiQSFP8Fq1yRm/So54MqgULRFBvopyuP1CZFA+Z
+         gIN9pMZWya4xmcaqrexTJMvzv/SYnfy7l69ievImOp5w3Wlwl4fqu4pq0Kzy3sxHTpLb
+         cMLQ==
+X-Gm-Message-State: AHQUAuaKBCOsomB2tGV34IcaXRFoYR/tj7+Hy8FF90q/Bwy5v9P66Mlx
+        Hf0u/rpwrgoZ6JTOtAyOsFY=
+X-Google-Smtp-Source: AHgI3Ibk4orPhPLfsD7KlHtb97+CqIlYPntRTg47iSAg7xT9HKG41H0ldYMrTEqkY4qAYx+3+DqmMw==
+X-Received: by 2002:a17:902:8f81:: with SMTP id z1mr25217588plo.265.1551164651889;
+        Mon, 25 Feb 2019 23:04:11 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id u14sm8794391pfm.66.2019.02.25.23.04.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 25 Feb 2019 23:04:10 -0800 (PST)
+Date:   Mon, 25 Feb 2019 23:04:08 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [FIXUP] Fixup on tip of jt/http-auth-proto-v2-fix
+Message-ID: <20190226070408.GA117495@google.com>
+References: <20190225220841.GA3248@sigill.intra.peff.net>
+ <20190225234901.65277-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <cover.1551123979.git.martin.agren@gmail.com> <20190226032201.GD601925@genre.crustytoothpaste.net>
-In-Reply-To: <20190226032201.GD601925@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 26 Feb 2019 07:03:21 +0100
-Message-ID: <CAN0heSqLbn7dRu4eARpyMqhFYpj3Pr5i=EMPnQZK9hUfWmf-KQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] asciidoctor-extensions: fix spurious space after linkgit
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190225234901.65277-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 26 Feb 2019 at 04:22, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Hi,
+
+Jonathan Tan wrote:
+
+> Thanks, Peff, for noticing this. It's because the client sometimes sends
+> "0000" as a single request (that is, it flushes, and then before it
+> sends any data, it flushes again). And post_rpc() assumes that it can
+> always read something - which is usually correct, but not in this case;
+> we read in stateless_connect() first, and if we read "0000", we need to
+> tell post_rpc() to not read at all.
 >
-> Thanks for putting this series together. I would suggest an update to
-> the commit message in 1/3 explaining the edge case that Eric Sunshine
-> mentioned, but otherwise, I think this looks good.
+> This is a fixup on the tip of jt/http-auth-proto-v2-fix that fixes that.
+>
+> As for why the client sends a lone "0000", I'm not sure, but that's
+> outside the scope of this patch set, I think.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  remote-curl.c | 32 +++++++++++++++++++-------------
+>  1 file changed, 19 insertions(+), 13 deletions(-)
 
-Thank you. I'll do that, after waiting for a while for any other
-comments, and to see what conclusion I and Eric can reach on the
-`make distclean` tangent.
+Tested-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Martin
+Thanks for fixing it.
+
+Is there a particular patch this should be squashed into, or does it
+stand alone?  It the latter, mind writing a commit message for it?
+
+Thanks,
+Jonathan
