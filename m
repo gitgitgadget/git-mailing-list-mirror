@@ -2,105 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADA8F20248
-	for <e@80x24.org>; Tue, 26 Feb 2019 22:37:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBD15202AA
+	for <e@80x24.org>; Tue, 26 Feb 2019 22:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729396AbfBZWhf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 17:37:35 -0500
-Received: from mout.gmx.net ([212.227.15.19]:52515 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729030AbfBZWhf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 17:37:35 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2cYX-1hEucl0Jxl-00sODu; Tue, 26
- Feb 2019 23:37:26 +0100
-Date:   Tue, 26 Feb 2019 23:37:10 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v13 00/27] Convert "git stash" to C builtin
-In-Reply-To: <87r2buusud.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902262335270.41@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> <20190225231631.30507-1-t.gummerer@gmail.com> <87r2buusud.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729154AbfBZWiG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 17:38:06 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:45153 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729030AbfBZWiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 17:38:06 -0500
+Received: by mail-lf1-f66.google.com with SMTP id h10so10902034lfc.12
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 14:38:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=0Hvi7MXOproZNw3mv4FUkK4gRhx6jcFxaYrRDl6j9yY=;
+        b=KBwFjVHhdx3lGVZKBJp8zlDwAPuMxHSxD3BZLNurC+Xjd7ph1cMCC4MckO0O8r79RU
+         /qEpm3I+z+1Uo+/HlCRWaUDDjEHc7OY00uIfe0shDxA+7Hb0Mztemj4uzc1EaoawNsKs
+         /V5tutVJ7fr5MdV2LCZ68GKOd3Ssw9SqtDaTCokFnK6UaxhJ1fgHqRb7FF8Pa5pYA2Do
+         xC/imO5Jbx6syjTTwm7f7XfX4uMCeGBr0jAdWqis13iiU8pP2GKlmMEAT+0JAvbMaSjk
+         ZqlmTTLdYc5bdfvumppisbRDbmEdLr3StFHxgcJ96k6868zCFDD55wWeP/zr+qoOySU9
+         q7ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=0Hvi7MXOproZNw3mv4FUkK4gRhx6jcFxaYrRDl6j9yY=;
+        b=OFuD5+5CVd+uQa79h2tvccH5ywvm4O8fxohZ+qpPQWtR78L0EgpabF83pGqKpMNxLC
+         44D7HM0mAYEvyT0GZGzw+73gnj/hiUGcJP4E+MmJXZ6wOtmGLhKpIaMQ5+im+QTFFVx2
+         qlGJ+2IyYB9ghxIyDn/I97MtR3cg666pHptEeS33QvwUKqojma9SjslIJM8hZMNJFvwk
+         uI53lcsHXIlFm0OqMYMD54q1zwTPYVoj1+k7487FwWWFcouPGVIjoQ9y+xCw/QhJ13yN
+         1is3CpWsELkqWWIUA4dg3MNxbgoGoJXqo0mgL6BnzI1guyEFaRnDjfDGRC+ccnIXf7yl
+         T3bw==
+X-Gm-Message-State: AHQUAuacZZGd/GB/4Yk4V1eNzOLY+whJxOGK2inXglkZkj+nPzkxhOd6
+        KN0L9j11Un9x+m+990xEqO48HWVlX5s=
+X-Google-Smtp-Source: AHgI3IbvE2XMnPHQNXC6pCpnql3gtPVNKXLCbalVrE91R5U1RuRzZzcqtfqEVMSuuwPHgjxbvlZjow==
+X-Received: by 2002:ac2:560a:: with SMTP id v10mr14398543lfd.29.1551220683695;
+        Tue, 26 Feb 2019 14:38:03 -0800 (PST)
+Received: from [10.32.1.18] ([46.246.123.2])
+        by smtp.gmail.com with ESMTPSA id e29sm1461334lfj.59.2019.02.26.14.38.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Feb 2019 14:38:02 -0800 (PST)
+Subject: Re: [PATCH] commit-tree: utilize parse-options api
+To:     Brandon <brandon1024.br@gmail.com>, git@vger.kernel.org
+References: <20190226200952.33950-1-brandon1024.br@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <33efa988-ea80-d9b4-f4aa-3876331a1dfb@gmail.com>
+Date:   Tue, 26 Feb 2019 23:38:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1594693050-1551220646=:41"
-X-Provags-ID: V03:K1:+LjcFssomtsW2dtvJHnMYsELFVsjs0/M8OvvZlb1Wxt0g4q8GK5
- JqWU7o1JnAiTBioEiPXneXKJ53L1HwwnkKpEWWTIx7OL0IcM4AXfF+6sg0Pc0c3SP7TcvSO
- m2Nr9wbWW71YjK3EYh2iVXqGZC1fjBg+hjEp4j1IgtNEhhqDCegPKc7q3/QNGEoc3WdZx1d
- b6yX4YaG1wlo1LZwuQXmw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZR7tnyBmmgw=:VV8Xx0PI/ImQm39D+oJ5WC
- +rVDWqPcMj4NAaMtuwI1Ywr7uFdYLutvj8IdiYJ6vbVWU/ua6PZkwxX2Yhi9fsfxOTI+geZYH
- FhJbbARd6QbS7dyv9x+efhnCnXkroMt6mOjWN4xb2wdSOjPXZ8WySkk8CSUQAqhfGeWie/2Sf
- 45AT0KWp0FsoMQwNQ8fJ7TzMAxLLDo63V1LsZGwfrsTpwVfiLdImGrX/gQhij9V724kU6VOsS
- yWBn5ZWXlTffNu5AdS0qjg78UIK6IbmMGCuMHEe3C7mSx7sQOTi9u5QGyt1VETD/DvEzS7OIp
- NNSG9fmt+3Bm6IU29KjcMdY2gTL0dqDlyMFTNZuIzaDux6SkUPRnWcI1TaoKqM/gdRIjiJ91t
- reG+Mla0FtNUdmv8EtV/akJc95qpos09d3F9dsyf8/HC7xhEAlCDqcGGPSifo9NBKWtwz8T1H
- JtpIy8i8gwBGHBc/ekowLruNgmLChvBrU9zjGPxJXNTCRSxCNFZfX4XUPkJjAdW5j7p4Qmvp8
- itFlIBe/2BdYQJ5hZWQD23hncS5hZesC3IFmm128wMH+ri2nrQJvW6rhagFrHACkxHUmZgA3i
- ZPjG+WSMqumCenf0ndECdL2dmV0inLqm/AuMqjGIiVLq8FuN0CFJPyZVaKD4V7TjDfx5N5Bqe
- vPzUC9rzK2beacKU38nOi7S9WOYJrw/dHOYYtr5woQ7S35hw7xcedOo1hV5cUvfTRlF/Tn/qt
- 0al7DY5fRrxUajMu+0/uLQmGbZDQiK9Ins7EhRnxcY1pP7z01eNrJl+0vpJsUhRZljfuWVtda
- pXjSLgsHGkdeS61WCbbKBlMCK0oj7EU3EUDmGLI9723faFqH67eVwiFpM0B4Cm6RoR32n6Wdn
- /iO1rc2WrTfLJgFICJKCyQxZzhSBW8fwLesOhhMb7Q3DgJ4PGnbPCvuIRIcmxyiNbC+7N686e
- QLAhvb4UGIQ==
+In-Reply-To: <20190226200952.33950-1-brandon1024.br@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+A couple of code style issues:
 
---8323328-1594693050-1551220646=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-Hi Ævar,
-
-On Tue, 26 Feb 2019, Ævar Arnfjörð Bjarmason wrote:
-
+On 2/26/19 9:09 PM, Brandon wrote:
+> From: Brandon Richardson <brandon1024.br@gmail.com>
 > 
-> On Tue, Feb 26 2019, Thomas Gummerer wrote:
+> Rather than parse options manually, which is both difficult to
+> read and error prone, parse options supplied to commit-tree
+> using the parse-options api.
 > 
-> > As I was advocating for this series to go into 'next' without a large
-> > refactor of this series, I'll put my money were my mouth is and try to
-> > make the cleanups and fixes required, though without trying to avoid
-> > further external process calls, or changing the series around too
-> > much.
-> >
-> > One thing to consider here is that we have a GSoC project planned
-> > based on 'git stash'.  If we can't get this to 'next' soon, I'd vote
-> > for taking that project out of this years GSoC, and maybe try again
-> > next year, if nobody implemented the feature in the meantime.
-> 
-> FWIW I'd like to +1 getting it into "next" so this can be given thorough
-> testing in the 2.22
+> It was discovered that the --no-gpg-sign option was documented
+> but not implemented in 55ca3f99, and the existing implementation
+> would attempt to translate the option as a tree oid.It was also
 
-Indeed. It is time.
+Missing space after period.
 
-> If there's still bugs or other regressions I think it's better sorted
-> out without the cognitive load of reviewing it all again.
+[snip]
 
-Fully agree!
+> +
+>  int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+>  {
+> -	int i, got_tree = 0;
+> +	static struct strbuf buffer = STRBUF_INIT;
+>  	struct commit_list *parents = NULL;
+>  	struct object_id tree_oid;
+>  	struct object_id commit_oid;
+> -	struct strbuf buffer = STRBUF_INIT;
+> +
+> +    struct option builtin_commit_tree_options[] = {
 
-> Worst case we can always add something on top to flip the default of
-> stash.useBuiltin.
+Style: tab should be used instead of four spaces.
 
-I actually don't think that will be necessary. If my track record with
-fixing all kinds of built-in rebase corner-case bugs leading up to v2.20.0
-is any indication, the built-in stash will be cooking well.
+> +		{ OPTION_CALLBACK, 'p', NULL, &parents, "parent",
+> +		  N_("id of a parent commit object"), PARSE_OPT_NONEG,
 
-Ciao,
-Dscho
---8323328-1594693050-1551220646=:41--
+Comparing to other similar places, a single tab should be used to
+align "N_" instead of two spaces.
+
+> +		  parse_parent_arg_callback },
+> +		{ OPTION_CALLBACK, 'm', NULL, &buffer, N_("message"),
+> +		  N_("commit message"), PARSE_OPT_NONEG,
+> +		  parse_message_arg_callback },
+> +		{ OPTION_CALLBACK, 'F', NULL, &buffer, N_("file"),
+> +		  N_("read commit log message from file"), PARSE_OPT_NONEG,
+> +		  parse_file_arg_callback },
+> +		{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
+> +		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+> +		OPT_END()
+> +    };
+
+[snip]
+
+> -
+> -		if (!strcmp(arg, "--no-gpg-sign")) {
+> -			sign_commit = NULL;
+> -			continue;
+> -		}
+> +	argc = parse_options(argc, argv, prefix, builtin_commit_tree_options,
+> +			builtin_commit_tree_usage, 0);
+
+here "builtin_commit_tree_usage" should be aligned with "argc" in
+previous line.
+
