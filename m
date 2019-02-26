@@ -7,52 +7,51 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7E2720248
-	for <e@80x24.org>; Tue, 26 Feb 2019 03:20:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15B4C20248
+	for <e@80x24.org>; Tue, 26 Feb 2019 03:22:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726233AbfBZDUL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Feb 2019 22:20:11 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35036 "EHLO
+        id S1726241AbfBZDWH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Feb 2019 22:22:07 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:35042 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725954AbfBZDUK (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 Feb 2019 22:20:10 -0500
+        by vger.kernel.org with ESMTP id S1726185AbfBZDWH (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 Feb 2019 22:22:07 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:a4e9:9ba4:4fd2:4493])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DFB7560429;
-        Tue, 26 Feb 2019 03:20:06 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C156960429;
+        Tue, 26 Feb 2019 03:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1551151207;
-        bh=vM9GXni+/zrfm9vaoAex1GDH2RVNwEDCwFJmYbwyR5Q=;
+        s=default; t=1551151326;
+        bh=xsB3e0QbkWlER3+g0iJJ5+F+ZOFS/0MOuHndXCRbc9Y=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=abqg4nlHZvhNx4qujmIP2M/4S6XXE4VJokJOPohsPSWN4X9JzaVW2PB6l4l+MAybS
-         bMdTwOB7j4HN88j3/iAmX1j8oWhSR8Be/yldFXjrlH3UQVItMxql1cuxkBZqf1xSDm
-         6nNpIKgRJkz/UeiZLMBLL8Hum0FQfqM6YBcw8tXrbtOaKtzcc6DnyOyLrDxSxK0nJ4
-         QdzUVSAQ74oz4wOwuqu7FsTx+crBPpopTUBWFkRRmo91vzeIs7T1YL4n2KEU1d3KhC
-         kHhEdxP25szzrH0fWNQGf031vIoZDhC0v86fFNUCo7EgjElwcAL8co0Wcv2rpk/5Pv
-         nIPcdvYYMwaV94OA6U3tSmzfTBpUMsbCrRb1/JWNSwruE42JiMEZyrjZH90ByuDXHl
-         roUXJKvnEMUH24XPgxJsjE34IsQI9MtiSfBm5eyUsAyKG4L88/vx6H8wN2wOAKs4ue
-         IhLfCtju9yyp+PxIk4foG74vfHXIEdtPlvkqJl9WjAigK4ZRrZc
-Date:   Tue, 26 Feb 2019 03:20:00 +0000
+        b=rAWzovJZ9FaSnR0wdsGIDDvPyVtV1RcuY/T0/wm/bLden2zd5Zo9yzlnVkoEb0qa/
+         nKE1e8fnIsE4Niku2CTyrgNAPDrgLxGHiHSV2Nd8Yjcmmcb1n2lWNxexZ49mYH+RYq
+         hfWnMf/GR6hGJ5e82JOKGbUa0eHnfbJwj0W1kuf0qUw18fU5vboMZswB0xHgY5pqqH
+         4JCEClf+6z8QJYDVXNzPRXP1LQzmbdvL3EqrROzUlj3N0dFvmb9DJRG4fcFuJBLCQf
+         cnQejaovk8kcGIb5bDfSeneIQP+tGSWHufG0T36KVVdUK1eSoiOFvjDIsF0Zq8QPRv
+         nEOBjboqWJyfNhfx4ksSw6yPPjI/ODUCRtv1FQNzDRpnyYDAuuXSmAHidZH2xruW+Q
+         biSxa/HYFPvMDxZVpuKkx+iamloeLPKs/C/7oiPkYef+OkRhW5qsgpNpkLMEcv8oXG
+         wDRXaUj+k5Z4ElB/6HHgFYvUswGjmW3lkwXPpq/FtfydeKmygFq
+Date:   Tue, 26 Feb 2019 03:22:01 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] asciidoctor-extensions: fix spurious space after
+Subject: Re: [PATCH 0/3] asciidoctor-extensions: fix spurious space after
  linkgit
-Message-ID: <20190226032000.GC601925@genre.crustytoothpaste.net>
+Message-ID: <20190226032201.GD601925@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
         git@vger.kernel.org
 References: <cover.1551123979.git.martin.agren@gmail.com>
- <41d9ea21c37a634b2310b5b2f68935bcd612665c.1551123979.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MnLPg7ZWsaic7Fhd"
+        protocol="application/pgp-signature"; boundary="LKTjZJSUETSlgu2t"
 Content-Disposition: inline
-In-Reply-To: <41d9ea21c37a634b2310b5b2f68935bcd612665c.1551123979.git.martin.agren@gmail.com>
+In-Reply-To: <cover.1551123979.git.martin.agren@gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.19.0-2-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -63,71 +62,57 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---MnLPg7ZWsaic7Fhd
+--LKTjZJSUETSlgu2t
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 25, 2019 at 09:02:40PM +0100, Martin =C3=85gren wrote:
-> When we render, e.g., "linkgit:gitglossary[7]." with Asciidoctor, we get
-> "gitglossary(7) ." with a space between the linkgit macro expansion and
-> the punctuation. We can fix this by dropping the trailing newline after
-> we've turned `linkgit:foo[bar]` into `<citerefentry>..</citerefentry>`.
+On Mon, Feb 25, 2019 at 09:02:37PM +0100, Martin =C3=85gren wrote:
+> Patch 3/3 gets rid of a spurious space which shows up immediately after
+> Asciidoctor has expanded linkgit:foo[bar] if the macro is followed by
+> punctuation such as a comma, period or closing parenthesis.
 >=20
-> The diff produced by `USE_ASCIIDOCTOR=3DYes ./doc-diff HEAD^ HEAD` is
-> almost 6000 lines large and shows how this fixes "git-foo(x) ,", "(see
-> git-bar(y) )" and so on. One might wonder whether this also turns, e.g.,
-> "see linkgit:foo[1] for more" into "see foo(1)for more", but no. We get
-> "...</citerefentry> for more" in the XML, see, e.g., git-am.xml, so the
-> space ends up in git-am.1 just fine.
+> Patch 2/3 adds a missing dependency to the makefile, so that the docs
+> will actually be rebuilt with that final patch. Patch 1/3 isn't needed
+> for this series, but could help someone in the future, similar to how
+> already having patch 2/3 would have helped me...
 >=20
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
+> Martin =C3=85gren (3):
+>   Documentation/Makefile: add missing xsl dependencies for manpages
+>   Documentation/Makefile: add missing dependency on
+>     asciidoctor-extensions
+>   asciidoctor-extensions: fix spurious space after linkgit
+>=20
+>  Documentation/Makefile                  | 4 ++--
 >  Documentation/asciidoctor-extensions.rb | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asci=
-idoctor-extensions.rb
-> index ec83b4959e..f7a5982f8b 100644
-> --- a/Documentation/asciidoctor-extensions.rb
-> +++ b/Documentation/asciidoctor-extensions.rb
-> @@ -16,7 +16,7 @@ module Git
->            "<citerefentry>\n" \
->              "<refentrytitle>#{target}</refentrytitle>" \
->              "<manvolnum>#{attrs[1]}</manvolnum>\n" \
-> -          "</citerefentry>\n"
-> +          "</citerefentry>"
->          end
->        end
->      end
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 
-Yeah, I think this is clearly correct. I also like that you mentioned
-the concern about potentially not including the space, which might not
-be obvious to someone not intimately familiar with DocBook and the
-stylesheets.
+Thanks for putting this series together. I would suggest an update to
+the commit message in 1/3 explaining the edge case that Eric Sunshine
+mentioned, but otherwise, I think this looks good.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---MnLPg7ZWsaic7Fhd
+--LKTjZJSUETSlgu2t
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.12 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlx0sGAACgkQv1NdgR9S
-9ov3Ew//WsW6cjVWwC4U1lzrFCf0GsBE3Mmb5XveDkU5NPaS1yoHdUTzfUdgUxP4
-mFS8z7ChPfQpcmfj6GQJ0e/t9HICBZMFAFxndJlewoyY+NFNb+B+vths1NIkCpcq
-kX069Qgklyyg0c5dLyoALLT/bfK4zlS6bDd7nV0FyTn3RCa1+x8Kb2+jytzUZgTW
-JxE0SJIzMypA7zpyA4RgZkv9TTSquj8MsIiLudicO7+xiBOsfhT+P/ncZ9lWCai9
-kQpkPMXp2m6Td9KxkSmOH0bNaZvt1XapS/ekPEUdiSf1qWieCNszUtP3LmLzYG2J
-e69+sVkZV/aIlu4QzaxI+mcMUhAVgalvInjdJbHihdRFuRrnS1/v+MwiJcIhXLPo
-zkdPvBcaPJyoYwjHUebixTLXGE452Gexy/3QaZHs7fg+7PW/aTULBZREGV59qe6l
-UhoN/adNIlm7IOI2BSnXNaPqRnDva0OZeASklY31ZO1cr4jvL/cZmnzq6Il9Kj+h
-vLCtyRlRR/2ZSxF0KUg26foezRcJjuNefNjER+zKVmAZq/m3Q6I9ulnaOVg85OUC
-0ZhNgXONg8LHuGLw/8VcY0TdZ9kDhyfLZepuLhwDp79UhJyLZKiTGglVNaNGoYJe
-z6EYtDica7HVCNrtWWmPwEarNUnMwRyW2Azol09AUpKQ5OVQD+M=
-=FtiM
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlx0sNkACgkQv1NdgR9S
+9osjFBAAxEmkepGV10HALLNIM6fmn8yYcIvM6VZLq2z6QdU5w14AdNG/mMTe4pxa
+EqSnIhRXxR2Tw63Agsq0tytgOHsHPIh37GxfUgl99xek8N+ZwC2IGLA7XzzImm2o
+F57RRsKMaEiLUJ7p2itq5pSfg8jvU1jGI7b65ynsA28g4mlSAvVpeHuLqbyRU1Wy
+YtDhRmHsAO7ckoJCgk/Wv4fnefdtNAvCGUviSs8j/jw66oo0EEA4Gnt0OXFIt6Y7
+lZyDNo1IRc1uPU0EM/7KzruoXQRYalm0StGPn0aoSMf4g6dfMl3Ln/rtZtnUSEvs
+Lx6DJSe4NkX14wrb9mjVHkhXS89Jp4L8VM3nRZtvCYNXpRACC4kkl/TS7x6Nl/Ic
+rfDlisztEMPm3FG7BqB/FtKOw0fshl7n2Q493jn8xVy3q8r81jTHVAfOIUMQlMmI
+q/KcFwAcjJlSGuvZptg2nK2mhDNwO+i3sMNAZVbqi569VYUSFaIaXt3/LSlofETY
+qRCWGcPtppTLR3caE/Nqew5YoxHeXGF88HvCHjlFWATaO8r9KLGxKar20KqrN7Cv
+Gvmr+IG03ZSNlpFuLXUisC/ZTvb1JfeN6UgEVFU1KUcI6jGXQjPCkXm5q75mdGRb
+eiMGHKbnXJ3vjp1oNGwTokSxje5m15K7QxRT/8YuLbYsF+ZrDh0=
+=Wavu
 -----END PGP SIGNATURE-----
 
---MnLPg7ZWsaic7Fhd--
+--LKTjZJSUETSlgu2t--
