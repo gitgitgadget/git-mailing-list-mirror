@@ -2,370 +2,245 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12336205D7
-	for <e@80x24.org>; Tue, 26 Feb 2019 16:01:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00F23202AA
+	for <e@80x24.org>; Tue, 26 Feb 2019 16:10:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727252AbfBZQBu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 11:01:50 -0500
-Received: from mout.gmx.net ([212.227.15.15]:55037 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726507AbfBZQBt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 11:01:49 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MZCUG-1gi6lH19PY-00KxQx; Tue, 26
- Feb 2019 17:01:43 +0100
-Date:   Tue, 26 Feb 2019 17:01:27 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Subject: Re: [PATCH 1/1] tests: replace `test -(d|f)` with
- test_path_is_(dir|file)
-In-Reply-To: <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902261657000.41@tvgsbejvaqbjf.bet>
-References: <pull.152.git.gitgitgadget@gmail.com> <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728116AbfBZQKh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 11:10:37 -0500
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:36551 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727883AbfBZQKg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 11:10:36 -0500
+Received: by mail-ed1-f50.google.com with SMTP id g9so11211506eds.3
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 08:10:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=WrvJ5qNpRuDlSY1+zH/pyk7JUrI7qiUYs9PZui96ANU=;
+        b=JdmrqV9JLlGAcLwJccJQqGqLkBfsYtkcB7tV+gvp4bQWEnp29ZfZr+CTa1Ci1ETsn1
+         l8p0tvmwCLJtenKjMIMEAL1rdFUA9oTslIBkbYPqzwik/8vNUhzcvNBB4R1evJNof9uH
+         1YUgeInOaLmNZY0285i1GHG17LNcL1uLYKflyKacSZuArO4vcQbRweKPmOQAf9CjfMtJ
+         kw0KQcUN6cn6ARO4RJyRVvr6C83qZd1cf1Xr9H9NMcFP1y78lQ5aCgI/XZ+Gx3VBQHXy
+         4jR6g7515Hgc7wOJTdJPkLt8e3nQhHWl2VDvbr7807Z1ac+341Acf5P30R44FayDGYpb
+         Ah7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=WrvJ5qNpRuDlSY1+zH/pyk7JUrI7qiUYs9PZui96ANU=;
+        b=A7N+s1aZwTa6INUvly4zJtUV0gaLpLT+fqpGKp2qQUFo846cBAHmH5Esa2Ux4eeZJV
+         qRpTIKJO6K/b68G/3S03eibOJOoKOdMJXfdFoCJoSLPgTkHOdE16CVncE+TyVd5oNV6L
+         Jja0oIEBwiJK5pD/zg5gbwdyFFeOtUYohVN/rOcNz9KjagNTYMJlOCPw/tx30YJF84qP
+         VwSdoihjUjuKumILBdiqKZasxOe7/BKstDv8TNQ3QfB6gU/hB/DdoFmwMeqIM42GH+Em
+         JnU0SRzayEsSTAXyR5iQuuHnFNy9Lz7t34M7/PHIPUKjIanW8W/m7A/NqZUv0PbGIYX8
+         kJoA==
+X-Gm-Message-State: AHQUAuY/LSt986Bpke4O+SNkkycIQa7H0oD35NA3HFWlqqDKWb4I2bPQ
+        9Ms2uWo46kG/CtPMch9mKTAt9OhWpOg=
+X-Google-Smtp-Source: AHgI3IatcyIXa0BQfcSglggRrJcL5B0f9jorAJU21bdGV5apwIAgm9p/1Xqt+Y5mnRYi1qTCAPltRg==
+X-Received: by 2002:a17:906:7b03:: with SMTP id e3mr17519956ejo.21.1551197433946;
+        Tue, 26 Feb 2019 08:10:33 -0800 (PST)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id g13sm623906eda.71.2019.02.26.08.10.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Feb 2019 08:10:32 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>
+Subject: Do test-path_is_{file,dir,exists} make sense anymore with -x?
+References: <pull.152.git.gitgitgadget@gmail.com> <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com> <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com>
+Date:   Tue, 26 Feb 2019 17:10:30 +0100
+Message-ID: <87sgwav8cp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:oTrbIyzi/T4BeRYkHdieTNEG1sRxmVjrz3QZEf+Dh8tmRJ5hvGS
- gqlCaf3IZdcgei4S0Ny8fYPt8kZZ+WSeJn+D5R/ofEstUKkwCzVs+IJwy5QJHK9vWfWqbJN
- eSLDW1rl7RJOzF5lvj2xp1NbxROWkXUST6c/1VG907E+YXvG7T6rmCYLGBdHkBa+uv+igQ8
- t1rh6vxrwAZy7GjYVsQ4w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OcgMGkxY13w=:ZugmCfWpdD54LDl0UXv8PF
- r7ciyh2+YkMwVDHpL0amlMyL6NdxmXqidM1qTYckcybzMBu1l7Wn39jr95loq56cZPoe8rth5
- 4An2bdZ9RkypNNhUq67rzOL2K8k44rM+3cGDzPP6aInFQGjm8mQus8QpgtmLwggz0f276rg5D
- 5MOqF2a8l8YfQL18x2DudfgeMlTKTJfhaMcJiIi/HC0dy9yXlNNaGoeduWXROaJhbGwQ3Fpkb
- HRTGzXne1JwV+Dba5ZVz4Zrd01yjmKtbw02xUo+pWcGgpjNm3LRT6i3n09szGEG4QZUDpXjNT
- dQMsBHtNBuMciQPfqx+bfM4gin4X/4wFHPZ67sypCnmf/jlelhc7d4WBNcvFM8Wp1ST4k8otI
- rG2AcBC1dgGOYuMZpbIj3dnW2Y7V5U0nPC4gH/J3ZU6I00lAGGrtwTIMaCxRlYUzCkkGMSf/L
- xKMoLDfkt7vIGYwrEHnU516D4MWfVadOh1rpV8usX+itF2z9OBmR0P54h90leqt4KjtlVezVS
- Q5UKkEcv6CuKvLLlwvXJ+q5P0rRNMPZ6gQ2vVOsOWCuy6tNV0xxmD8NgBPs7tmvh2xMa6Txtz
- Uzhqmlcya7UsNykblYo4Fmc/WJ0Z49VNXvLPtGJ6UsvJ5uLPHKmwHRT0Ewf5r5N5+Fl0Cj6wV
- A0+3i+HDrE/hj5lmw0Ph69Azxj/Bl9LNVd41yNJwOUOPRwhTe3CNli3xScnl/JzF0/oHlT3+v
- vHLpSSiuI1fd1Mq7CTiJTPB1nqFh29Qz/TbvUyDRPTC7lBbuo1j3fOhLx+loLgh+4ecZhLK4S
- VKgpGuYWFOtveSb7iUpt9DO/9fb03sQTHpvMVAjQx5pIkFKzzS4PKyUodV/riA0rHPd6hBa93
- yMHw0JTWmrE9yn6vdrB9y9MGxSaMfhthvBU4UGNdPyE7t9FluDGIs4hgwGR4kMJw1qN3Y90pR
- LNACsfyx4BQ==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rohit,
 
-the oneline suggests that this fixes all the tests, but it only fixes
-t3600. So maybe use "t3600:" instead of "tests:"?
+On Tue, Feb 26 2019, Duy Nguyen wrote:
 
-On Tue, 26 Feb 2019, Rohit Ashiwal via GitGitGadget wrote:
+> On Tue, Feb 26, 2019 at 8:42 PM Rohit Ashiwal via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+>>
+>> t3600-rm.sh: Previously we were using `test -(d|f)`
+>> to verify the presencee of a directory/file, but we
+>> already have helper functions, viz, test_path_is_dir
+>> and test_path_is_file with same functionality. This
+>
+> It's not just the same (no point replacing then). It's better. When
+> test_path_is_xxx fails, you get an error message. If "test -xxx"
+> fails, you get a failed test with no clue what caused it.
 
-> From: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-> 
-> t3600-rm.sh: Previously we were using `test -(d|f)`
-> to verify the presencee of a directory/file, but we
-> already have helper functions, viz, test_path_is_dir
-> and test_path_is_file with same functionality. This
-> patch will replace `test -(d|f)` calls in t3600-rm.sh.
+I swear I'm not just on a mission to ruin everyone's GSOC projects. This
+patch definitely looks good, and given that we have this / document it
+makes sense.
 
-This answers a bit of the "what?", but little in the way of "how?".
+However. I wonder in general if we've re-visited the utility of these
+wrappers and maybe other similar wrappers after -x was added.
 
-Another thing to mention in the commit message is the "why?"... So far, a
-casual reader will not exactly understand what the benefit might be, and
-might even disagree that it is an improvement because
+Back when this was added in 2caf20c52b ("test-lib: user-friendly
+alternatives to test [-d|-f|-e]", 2010-08-10) we didn't have -x. So we'd
+at best fail like this:
 
-    1. the new code will be slower (as it adds one level of indirection: a
-shell function)
+    $ ./t0001-init.sh  -v -i
+    Initialized empty Git repository in /home/avar/g/git/t/trash directory.t0001-init/.git/
+    expecting success:
+            test -d .git &&
+            test -f doesnotexist &&
+            test -f .git/config
 
-    2. the new code is more verbose (`test -d` is shorter than
-`test_path_is_dir`)
+    not ok 1 - check files
+    #
+    #               test -d .git &&
+    #               test -f doesnotexist &&
+    #               test -f .git/config
+    #
 
+At that point this was a definite improvement:
 
-Obviously, the active Git developers do agree, though, that it is a good
-change (otherwise they would not have suggested it as a GSoC
-microproject), and I think it is because:
+    expecting success:
+            test_path_is_dir .git &&
+            test_path_is_file doesnotexist &&
+            test_path_is_file .git/config
 
-    1. the new code is a lot more obvious to developers who are not fluent
-in Unix shell scripting, and
+    File doesnotexist doesn't exist.
+    not ok 1 - check files
 
-    2. the new code is a lot more informative in case of a breakage.
+But 4 years after this was added in a136f6d8ff ("test-lib.sh: support -x
+option for shell-tracing", 2014-10-10) we got -x, and then with "-i -v -x":
 
-The patch looks fine,
-Johannes
+    expecting success:
+            test_path_is_dir .git &&
+            test_path_is_file doesnotexist &&
+            test_path_is_file .git/config
 
-> 
-> Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-> ---
->  t/t3600-rm.sh | 96 +++++++++++++++++++++++++--------------------------
->  1 file changed, 48 insertions(+), 48 deletions(-)
-> 
-> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-> index 04e5d42bd3..dcaa2ab4d6 100755
-> --- a/t/t3600-rm.sh
-> +++ b/t/t3600-rm.sh
-> @@ -137,8 +137,8 @@ test_expect_success 'Re-add foo and baz' '
->  test_expect_success 'Modify foo -- rm should refuse' '
->  	echo >>foo &&
->  	test_must_fail git rm foo baz &&
-> -	test -f foo &&
-> -	test -f baz &&
-> +	test_path_is_file foo &&
-> +	test_path_is_file baz &&
->  	git ls-files --error-unmatch foo baz
->  '
->  
-> @@ -159,8 +159,8 @@ test_expect_success 'Re-add foo and baz for HEAD tests' '
->  
->  test_expect_success 'foo is different in index from HEAD -- rm should refuse' '
->  	test_must_fail git rm foo baz &&
-> -	test -f foo &&
-> -	test -f baz &&
-> +	test_path_is_file foo &&
-> +	test_path_is_file baz &&
->  	git ls-files --error-unmatch foo baz
->  '
->  
-> @@ -194,21 +194,21 @@ test_expect_success 'Recursive test setup' '
->  
->  test_expect_success 'Recursive without -r fails' '
->  	test_must_fail git rm frotz &&
-> -	test -d frotz &&
-> -	test -f frotz/nitfol
-> +	test_path_is_dir frotz &&
-> +	test_path_is_file frotz/nitfol
->  '
->  
->  test_expect_success 'Recursive with -r but dirty' '
->  	echo qfwfq >>frotz/nitfol &&
->  	test_must_fail git rm -r frotz &&
-> -	test -d frotz &&
-> -	test -f frotz/nitfol
-> +	test_path_is_dir frotz &&
-> +	test_path_is_file frotz/nitfol
->  '
->  
->  test_expect_success 'Recursive with -r -f' '
->  	git rm -f -r frotz &&
-> -	! test -f frotz/nitfol &&
-> -	! test -d frotz
-> +	! test_path_is_file frotz/nitfol &&
-> +	! test_path_is_dir frotz
->  '
->  
->  test_expect_success 'Remove nonexistent file returns nonzero exit status' '
-> @@ -254,7 +254,7 @@ test_expect_success 'rm removes subdirectories recursively' '
->  	echo content >dir/subdir/subsubdir/file &&
->  	git add dir/subdir/subsubdir/file &&
->  	git rm -f dir/subdir/subsubdir/file &&
-> -	! test -d dir
-> +	! test_path_is_dir dir
->  '
->  
->  cat >expect <<EOF
-> @@ -343,8 +343,8 @@ test_expect_success 'rm of a populated submodule with different HEAD fails unles
->  	git submodule update &&
->  	git -C submod checkout HEAD^ &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.modified actual &&
->  	git rm -f submod &&
-> @@ -359,8 +359,8 @@ test_expect_success 'rm --cached leaves work tree of populated submodules and .g
->  	git reset --hard &&
->  	git submodule update &&
->  	git rm --cached submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno >actual &&
->  	test_cmp expect.cached actual &&
->  	git config -f .gitmodules submodule.sub.url &&
-> @@ -371,7 +371,7 @@ test_expect_success 'rm --dry-run does not touch the submodule or .gitmodules' '
->  	git reset --hard &&
->  	git submodule update &&
->  	git rm -n submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_file submod/.git &&
->  	git diff-index --exit-code HEAD
->  '
->  
-> @@ -381,8 +381,8 @@ test_expect_success 'rm does not complain when no .gitmodules file is found' '
->  	git rm .gitmodules &&
->  	git rm submod >actual 2>actual.err &&
->  	test_must_be_empty actual.err &&
-> -	! test -d submod &&
-> -	! test -f submod/.git &&
-> +	! test_path_is_dir submod &&
-> +	! test_path_is_file submod/.git &&
->  	git status -s -uno >actual &&
->  	test_cmp expect.both_deleted actual
->  '
-> @@ -393,14 +393,14 @@ test_expect_success 'rm will error out on a modified .gitmodules file unless sta
->  	git config -f .gitmodules foo.bar true &&
->  	test_must_fail git rm submod >actual 2>actual.err &&
->  	test -s actual.err &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git diff-files --quiet -- submod &&
->  	git add .gitmodules &&
->  	git rm submod >actual 2>actual.err &&
->  	test_must_be_empty actual.err &&
-> -	! test -d submod &&
-> -	! test -f submod/.git &&
-> +	! test_path_is_dir submod &&
-> +	! test_path_is_file submod/.git &&
->  	git status -s -uno >actual &&
->  	test_cmp expect actual
->  '
-> @@ -413,8 +413,8 @@ test_expect_success 'rm issues a warning when section is not found in .gitmodule
->  	echo "warning: Could not find section in .gitmodules where path=submod" >expect.err &&
->  	git rm submod >actual 2>actual.err &&
->  	test_i18ncmp expect.err actual.err &&
-> -	! test -d submod &&
-> -	! test -f submod/.git &&
-> +	! test_path_is_dir submod &&
-> +	! test_path_is_file submod/.git &&
->  	git status -s -uno >actual &&
->  	test_cmp expect actual
->  '
-> @@ -424,8 +424,8 @@ test_expect_success 'rm of a populated submodule with modifications fails unless
->  	git submodule update &&
->  	echo X >submod/empty &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.modified_inside actual &&
->  	git rm -f submod &&
-> @@ -439,8 +439,8 @@ test_expect_success 'rm of a populated submodule with untracked files fails unle
->  	git submodule update &&
->  	echo X >submod/untracked &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.modified_untracked actual &&
->  	git rm -f submod &&
-> @@ -493,8 +493,8 @@ test_expect_success 'rm of a conflicted populated submodule with different HEAD
->  	git -C submod checkout HEAD^ &&
->  	test_must_fail git merge conflict2 &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.conflict actual &&
->  	git rm -f submod &&
-> @@ -512,8 +512,8 @@ test_expect_success 'rm of a conflicted populated submodule with modifications f
->  	echo X >submod/empty &&
->  	test_must_fail git merge conflict2 &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.conflict actual &&
->  	git rm -f submod &&
-> @@ -531,8 +531,8 @@ test_expect_success 'rm of a conflicted populated submodule with untracked files
->  	echo X >submod/untracked &&
->  	test_must_fail git merge conflict2 &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.conflict actual &&
->  	git rm -f submod &&
-> @@ -552,13 +552,13 @@ test_expect_success 'rm of a conflicted populated submodule with a .git director
->  	) &&
->  	test_must_fail git merge conflict2 &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -d submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_dir submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.conflict actual &&
->  	test_must_fail git rm -f submod &&
-> -	test -d submod &&
-> -	test -d submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_dir submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.conflict actual &&
->  	git merge --abort &&
-> @@ -586,8 +586,8 @@ test_expect_success 'rm of a populated submodule with a .git directory migrates
->  		rm -r ../.git/modules/sub
->  	) &&
->  	git rm submod 2>output.err &&
-> -	! test -d submod &&
-> -	! test -d submod/.git &&
-> +	! test_path_is_dir submod &&
-> +	! test_path_is_dir submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test -s actual &&
->  	test_i18ngrep Migrating output.err
-> @@ -624,8 +624,8 @@ test_expect_success 'rm of a populated nested submodule with different nested HE
->  	git submodule update --recursive &&
->  	git -C submod/subsubmod checkout HEAD^ &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.modified_inside actual &&
->  	git rm -f submod &&
-> @@ -639,8 +639,8 @@ test_expect_success 'rm of a populated nested submodule with nested modification
->  	git submodule update --recursive &&
->  	echo X >submod/subsubmod/empty &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.modified_inside actual &&
->  	git rm -f submod &&
-> @@ -654,8 +654,8 @@ test_expect_success 'rm of a populated nested submodule with nested untracked fi
->  	git submodule update --recursive &&
->  	echo X >submod/subsubmod/untracked &&
->  	test_must_fail git rm submod &&
-> -	test -d submod &&
-> -	test -f submod/.git &&
-> +	test_path_is_dir submod &&
-> +	test_path_is_file submod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test_cmp expect.modified_untracked actual &&
->  	git rm -f submod &&
-> @@ -673,8 +673,8 @@ test_expect_success "rm absorbs submodule's nested .git directory" '
->  		GIT_WORK_TREE=. git config --unset core.worktree
->  	) &&
->  	git rm submod 2>output.err &&
-> -	! test -d submod &&
-> -	! test -d submod/subsubmod/.git &&
-> +	! test_path_is_dir submod &&
-> +	! test_path_is_dir submod/subsubmod/.git &&
->  	git status -s -uno --ignore-submodules=none >actual &&
->  	test -s actual &&
->  	test_i18ngrep Migrating output.err
-> -- 
-> gitgitgadget
-> 
+    + test_path_is_dir .git
+    + test -d .git
+    + test_path_is_file doesnotexist
+    + test -f doesnotexist
+    + echo File doesnotexist doesn't exist.
+    File doesnotexist doesn't exist.
+    + false
+    error: last command exited with $?=1
+    not ok 1 - check files
+
+But by just using "test -d/-e": the much shorter:
+
+    + test -d .git
+    + test -f doesnotexist
+    error: last command exited with $?=1
+    not ok 1 - check files
+
+So I wonder if these days we shouldn't do this the other way around and
+get rid of these. Every test_* wrapper we add adds a bit of cognitive
+overload when you have to remember Git's specific shellscript dialect.
+
+And at least to me whenever I have a test failure the first thing I do
+is try with -x (if I wasn't already using it). Under that the wrapper
+output is more verbose and no more helpful. It's immediately clear
+what's going on with:
+
+    + test -f doesnotexist
+    error: last command exited with $?=1
+
+Whereas:
+
+    + test -f doesnotexist
+    + echo File doesnotexist doesn't exist.
+    File doesnotexist doesn't exist.
+    + false
+    error: last command exited with $?=1
+
+Gives me the same thing, but I have to read 5 lines instead of 2 that
+ultimately don't tell me any more (and a bit of "huh, 'false' returned
+1? Of course! Oh! It's faking things up and it's the 'echo' that
+matters...").
+
+Looking over test-lib-functions.sh this patch would do it. I couldn't
+spot any other functions redundant to -x:
+
+    diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+    index 80402a428f..b3a95b4968 100644
+    --- a/t/test-lib-functions.sh
+    +++ b/t/test-lib-functions.sh
+    @@ -555,33 +555,6 @@ test_external_without_stderr () {
+     	fi
+     }
+
+    -# debugging-friendly alternatives to "test [-f|-d|-e]"
+    -# The commands test the existence or non-existence of $1. $2 can be
+    -# given to provide a more precise diagnosis.
+    -test_path_is_file () {
+    -	if ! test -f "$1"
+    -	then
+    -		echo "File $1 doesn't exist. $2"
+    -		false
+    -	fi
+    -}
+    -
+    -test_path_is_dir () {
+    -	if ! test -d "$1"
+    -	then
+    -		echo "Directory $1 doesn't exist. $2"
+    -		false
+    -	fi
+    -}
+    -
+    -test_path_exists () {
+    -	if ! test -e "$1"
+    -	then
+    -		echo "Path $1 doesn't exist. $2"
+    -		false
+    -	fi
+    -}
+    -
+     # Check if the directory exists and is empty as expected, barf otherwise.
+     test_dir_is_empty () {
+     	test_path_is_dir "$1" &&
+    @@ -593,19 +566,6 @@ test_dir_is_empty () {
+     	fi
+     }
+
+    -test_path_is_missing () {
+    -	if test -e "$1"
+    -	then
+    -		echo "Path exists:"
+    -		ls -ld "$1"
+    -		if test $# -ge 1
+    -		then
+    -			echo "$*"
+    -		fi
+    -		false
+    -	fi
+    -}
+    -
+     # test_line_count checks that a file has the number of lines it
+     # ought to. For example:
+     #
+    @@ -849,6 +809,9 @@ verbose () {
+     # otherwise.
+
+     test_must_be_empty () {
+    +	# We don't want to remove this as noted in ec10b018e7 ("tests:
+    +	# use 'test_must_be_empty' instead of '! test -s'",
+    +	# 2018-08-19)
+     	test_path_is_file "$1" &&
+     	if test -s "$1"
+     	then
