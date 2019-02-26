@@ -2,140 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EFC420248
-	for <e@80x24.org>; Tue, 26 Feb 2019 17:26:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0707820248
+	for <e@80x24.org>; Tue, 26 Feb 2019 17:35:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728695AbfBZR0j convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 26 Feb 2019 12:26:39 -0500
-Received: from mout.gmx.net ([212.227.17.22]:38949 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728421AbfBZR0i (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 12:26:38 -0500
-Received: from legacy ([128.130.40.151]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHLNn-1glhx01DGd-00E2WB for
- <git@vger.kernel.org>; Tue, 26 Feb 2019 18:26:37 +0100
-Date:   Tue, 26 Feb 2019 18:26:36 +0100
-From:   Stefan Tauner <stefan.tauner@gmx.at>
-To:     git@vger.kernel.org
-Subject: Bug: "orphaned" trees indistinguishable in git log --graph output
-X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+        id S1728595AbfBZRfp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 12:35:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58684 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726353AbfBZRfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 12:35:45 -0500
+Received: (qmail 973 invoked by uid 109); 26 Feb 2019 17:35:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 26 Feb 2019 17:35:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30694 invoked by uid 111); 26 Feb 2019 17:35:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 26 Feb 2019 12:35:59 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Feb 2019 12:35:43 -0500
+Date:   Tue, 26 Feb 2019 12:35:43 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Matthieu Moy <git@matthieu-moy.fr>
+Subject: Re: Do test-path_is_{file,dir,exists} make sense anymore with -x?
+Message-ID: <20190226173542.GC19606@sigill.intra.peff.net>
+References: <pull.152.git.gitgitgadget@gmail.com>
+ <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
+ <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com>
+ <87sgwav8cp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Message-ID: <0Lfolq-1hNWbf1RUI-00pI54@mail.gmx.com>
-X-Provags-ID: V03:K1:YPCQWUlD1u22PHHwdrlsFjnc+dF3zTmda7vM1pRtDCF/EaPh8Q7
- wEO3OofSEY18XNzlrSUJLmoxxm4YoJ5OkILlrbvZD0NzfyQmqNe/Y0H27X18M0duwTuxCKR
- 9VpLn604DuCy5WKnoyMNJGRiZ1iUno9kCLuu04zd1seHz9XrwToW1Q35qOf6YBDHk4IjbkU
- aR0IMtBNUgavJfby+567A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8Q4LHoSWg4g=:xJ4m+UB/YaZFXPaj9Mgo17
- ijxo9XxcnnA7oBUg/t1P31SC4WBl3tc+Y4Gg8OqhCP6wZHAJuTcHMW1R6N3uEp2T8wWj5YTqo
- VdzcoApG4hy/R8mYtUSkDNNvts14tyUDGbVtm1ZvCUqjYVly/8tAN2p7a9UqgRfrCdxcNH7DT
- NxGNGVBT9VJCjivQEqcpsWHlHwlFYINfB+m74oE2XoXM9H9r9gSZat1CbftaZWpJP7FTJq7PL
- hTbWcbdi6RcoFRQyV0VpLBA3C4syBJ6nCH64pPgZx9JHmmSUfpKjk56sNpNyXQCOMdLjwpD4s
- WKXeuBJJV7t5O81J5y8M7RRuGK6N3fh8T309o5iNckZ/4y7UMsTOF1QF5WDOF7W7adHhQuky6
- +iwYIk1pZrTy8aG3gUfpGqXV08eqUxuOXGXvqiSljAfDU9x/RPbqQ+dZSrihpKZaY6X1E/B9F
- p8+JZELZHcyk1Emvld8BvSk0WuTjsiJLzzeMGclWOqhR6y6lMOoPgz3HrzIli3xbJVfbEeYjj
- TKJIvHNVFxkEyi83UJ32k+UYPzLQJVrOzIhCXvB6jrOP49ugs8UA5e7TZR6wbUV1t3XLVVCHT
- JNVW/GKkgQgy7cKrZjpCQXRAeTl5UQ0sNh6Hf3mJ8LdQqm+PjW0H50+IcgUIIQ9Md31M1Ts6o
- sy1H2zgvEDK89XlwUh4EZWOHNc93Ju+OSv5EIqWDUbShT1GLsjYNhfxvR9l/qF+w8z+9LYpGJ
- 79GbGGQFS+9bjmBW9owwzlL4u0ZHMndoQQCt0hDxXnBnUsFFFE6XPbKQGyZAp8Zm2P6nyJVVN
- w/D5fT0e/L7yruVvpMiARyErdYKL9TqWqQNhCj6nPgxfN7yy9ss5MxvBWxn0uHtk1X8wIH57P
- 0gj8VDbnOhx74OqRw9pnjX0pV3hu31EYPyrvrWVmZ+aZTDwOSvOM9PMy4X2EyfMUd3u9gbpcP
- ETL7oW5pLcw==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87sgwav8cp.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Feb 26, 2019 at 05:10:30PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-I noticed a problem how git log --graph represents orphaned trees, i.e.
-how it renders a forest (and not just a single tree). If a repository
-is comprised of multiple unconnected trees it can easily happen that
-their commits are intertwined in the output of git log --graph so that
-the root of one tree seems to be (re)based on a commit of the other
-tree and there is no indication that they are indeed separate.
+> But 4 years after this was added in a136f6d8ff ("test-lib.sh: support -x
+> option for shell-tracing", 2014-10-10) we got -x, and then with "-i -v -x":
+> 
+>     expecting success:
+>             test_path_is_dir .git &&
+>             test_path_is_file doesnotexist &&
+>             test_path_is_file .git/config
+> 
+>     + test_path_is_dir .git
+>     + test -d .git
+>     + test_path_is_file doesnotexist
+>     + test -f doesnotexist
+>     + echo File doesnotexist doesn't exist.
+>     File doesnotexist doesn't exist.
+>     + false
+>     error: last command exited with $?=1
+>     not ok 1 - check files
+> 
+> But by just using "test -d/-e": the much shorter:
+> 
+>     + test -d .git
+>     + test -f doesnotexist
+>     error: last command exited with $?=1
+>     not ok 1 - check files
+> 
+> So I wonder if these days we shouldn't do this the other way around and
+> get rid of these. Every test_* wrapper we add adds a bit of cognitive
+> overload when you have to remember Git's specific shellscript dialect.
 
-This first example shows the problem in the first indention level:
+I don't have a strong opinion, but I do agree that with "-x" it's nicer
+without the wrappers. I typically re-run with just "-v" on a failure,
+and only turn to "-x" if the verbose output isn't helpful. However, with
+the rise of multi-platform CI jobs which try to collect as much
+information as possible in the initial run, I do find myself looking at
+"-x" more often.
 
-mkdir git-log-decorate-forest1
-cd git-log-decorate-forest1
-git init
-git commit --allow-empty -m"Tree 1 - branch 1 - commit 1"
-git branch tree1_branch1
-git checkout --orphan tree2_branch1
-git commit --allow-empty -m"Tree 2 - branch 1 - commit 1"
-git log --decorate --graph --oneline --all
+As Gábor notes, you can't run every script with "-x". But I find it's
+pretty consistent these days (and totally so if you have a recent bash).
+I dunno. Maybe people on other platforms (who might not have bash) would
+care more.
 
-The log call at the end leads to something like this:
+I had a vague notion that there was some reason (portability?) that we
+preferred to have the wrappers. But as your patch shows, they really are
+just calling "test" and nothing else.
 
-* 73c925a (tree1_branch1, master) Tree 1 - branch 1 - commit 1
-* e22a694 (HEAD -> tree2_branch1) Tree 2 - branch 1 - commit 1
+>      test_must_be_empty () {
+>     +	# We don't want to remove this as noted in ec10b018e7 ("tests:
+>     +	# use 'test_must_be_empty' instead of '! test -s'",
+>     +	# 2018-08-19)
+>      	test_path_is_file "$1" &&
+>      	if test -s "$1"
+>      	then
 
-Note the asterisks in the beginning that usually indicates that the
-commit sits "on top" of the previous one (in contrast to "|" used for
-distinct branches). There is no way to tell from the output that the
-two commits reside on different trees.
+You'd still want it to become "test -f" though, right?
 
-The second example shows that the problem also happens at deeper
-indention levels if multiple branches are involved.
-NB: the sleep is important due to git log's sorting (I did not try to
-understand the details though).
-
-mkdir git-log-decorate-forest2
-cd git-log-decorate-forest2
-git init
-git commit --allow-empty -m"Tree 1 - branch 1 - commit 1"
-git commit --allow-empty -m"Tree 1 - branch 1 - commit 2"
-git branch tree1_branch1
-git checkout --orphan tree2_branch1
-git commit --allow-empty -m"Tree 2 - branch 1 - commit 1"
-git checkout master
-git reset --hard tree1_branch1^
-git commit --allow-empty -m"Tree 1 - branch 2 - commit 2"
-git branch tree1_branch2
-git checkout tree2_branch1 
-sleep 1
-git commit --amend --no-edit --allow-empty
-git checkout master
-git commit --allow-empty -m"Tree 1 - branch 2 - commit 3"
-git log --decorate --graph --oneline --all
-
-The git log output looks something like this:
-* ae86680 (HEAD -> master) Tree 1 - branch 2 - commit 3
-* 844c8c3 (tree1_branch2) Tree 1 - branch 2 - commit 2
-| * 8e6ed1e (tree2_branch1) Tree 2 - branch 1 - commit 1
-| * 3fc176d (tree1_branch1) Tree 1 - branch 1 - commit 2
-|/  
-* 88b8313 Tree 1 - branch 1 - commit 1
-
-Note how 8e6ed1e looks as if it sits on top of 3fc176d? But it doesn't.
-It's an orphaned commit and thus part of a completely separated tree!
-
-In gitk one has to enable the display of all branches but then the two
-trees are distinguishable. gitg works fine (for once) as well.
-The output of git-cola's DAG viewer is even worse than git log's
-output: there (the commit of) the second tree is embedded in the master
-branch between tree1_branch2 and the initial commit of tree 1 (88b8313)!
-
-Here are the (outdated) versions of the tools tested:
-git version 2.11.0
-gitg 3.23.0
-cola version 2.10
-
-If the test cases above no longer work I can try to reproduce the
-problem with git's HEAD if need be. I really hope I have not overlooked
-any related bug reports or even a fix... the issue is a bit hard to
-search for ;)
-
-As a fix I guess it would make sense to have additional indention for
-the distinct trees... just like how branches are indented but of course
-without the |/ split below.
-
--- 
-Kind regards/Mit freundlichen Grüßen, Stefan Tauner
+-Peff
