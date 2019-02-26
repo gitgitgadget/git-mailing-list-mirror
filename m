@@ -7,96 +7,80 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73D4920248
-	for <e@80x24.org>; Tue, 26 Feb 2019 19:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0492202AA
+	for <e@80x24.org>; Tue, 26 Feb 2019 19:59:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728658AbfBZTwY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 14:52:24 -0500
-Received: from mout.gmx.net ([212.227.17.22]:38709 "EHLO mout.gmx.net"
+        id S1728641AbfBZT7L (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 14:59:11 -0500
+Received: from mout.gmx.net ([212.227.17.22]:35607 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728341AbfBZTwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 14:52:23 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8ZtH-1hC6zK2qKx-00wGrg; Tue, 26
- Feb 2019 20:52:17 +0100
-Date:   Tue, 26 Feb 2019 20:52:01 +0100 (STD)
+        id S1728341AbfBZT7L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 14:59:11 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M5IdH-1hDCna0lsF-00zUJ6; Tue, 26
+ Feb 2019 20:59:01 +0100
+Date:   Tue, 26 Feb 2019 20:58:43 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
         Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com
-Subject: Re: [PATCH 1/1] tests: replace `test -(d|f)` with
- test_path_is_(dir|file)
-In-Reply-To: <CAL7ArXoau1ZfBsV9JaUDprwjSijyo6K5d9JyC1mdfc=KEvgJxw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1902262051080.41@tvgsbejvaqbjf.bet>
-References: <pull.152.git.gitgitgadget@gmail.com> <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com> <CAN0heSqSp-a0zUKT5EaGLBYnRtESTnu9GKWtGARz2kaOAhc1HQ@mail.gmail.com>
- <CAL7ArXoau1ZfBsV9JaUDprwjSijyo6K5d9JyC1mdfc=KEvgJxw@mail.gmail.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Matthieu Moy <git@matthieu-moy.fr>
+Subject: Re: Do test-path_is_{file,dir,exists} make sense anymore with -x?
+In-Reply-To: <20190226173542.GC19606@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1902262055260.41@tvgsbejvaqbjf.bet>
+References: <pull.152.git.gitgitgadget@gmail.com> <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com> <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com> <87sgwav8cp.fsf@evledraar.gmail.com>
+ <20190226173542.GC19606@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-628463197-1551210737=:41"
-X-Provags-ID: V03:K1:8aprm0fo0dweCJRLQEddA/cVo8IffZBSbwuZcAQ0NCz3NavW259
- P1XDYIeBtuPvEB9Z6DVvKSvP6NvcWbC0PtwCTGQOru3A43lQ88fHm4/3QBOYNXmzMi4zGpF
- SRhNEkjCZhwXVB4q8DZhIaiG1GCAwRxS2/cNl5yq967dJlhejHMYhkxpdXrRdM3ySsDJPiI
- tPEaAJk5J6PiXrdSO96OQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:X0We07oBkag=:H2oD+9La07g0Mpj9fe5ZFa
- 2HShIJrkCF7SiU3wLR2Uzr9vMTya9YrPKx6e25UQS0JJJ6lpqj1+1VhHYxgUXXtRrrYwjQHzE
- KYgzMvpaYmEh5bceJYSUl4Oxex2Y6rYC+rKfnoIdk1kLL4W4yWa+Mep1lvPQivxNJWsgdZId3
- 0utvgw2AZdeoDxgOKUi3shMyEzBhfe1iX/Cjv/eFyGa/w/N6Y/lKNKX+9WEB1Uoor15SONBBu
- G859RW4HCG0mQRS7iuFyGGvZL35PsH5M4WJFJqB41W2s52ZFvrHyv3zg++YsepYJipCte/CRC
- +Mn3bQEQ0EfkdJDfIHH0+940F8ljFSg+JFWUZikLGUUQrgDF6Hmr63G31nu+damP8IVjJvME6
- uyDWdO5e3kanO/oXozJjZOHI0ke3KylqK2I/6C189EgehVD/jTwqfM0vvoSCqnFxjzUmTf7dz
- EKBtW2VupwZHmWcfDONqiK40Y+GfJn2Nq83bgm6285gh0/2X/d44Mu9u5DpKj8QIFp6bsplYX
- OQcIiPzj3zK3l4+jJyoC2FrSqqw7QvBno0d4Eb7Ja6krVZRs1CCy1+ZdXKyLBnN230Uq0+eYb
- 73x7Yt2CW1QqzopSB3LElKb8++dfBh4Wv6RL4egSug3wCq85xAJtkMAWUsL1p4vxIQNsotZCG
- ZdBzJmeTroRcxjrmc7xsSMD5kyQ8HEmQLWN2CpzQ+o441EKNq0Ya8uC2nKLbRcaf9OiuQIEzB
- 7soGuIy/t3J0UnIErULIXZQGATiPSyyBKpfdf1UyPR1hufrId2FIPns4azbrI+Z3hJvYH9/UU
- 99xxngJ2OmrHuudSpeAYoWcPP9MQJkrtPnol2YH4oDRHF+DgybQveqtYOR3a/QLRU0nTvqW80
- PjPWr5nYfKGr+g04WP/Zr/c8U3ld9FKQjM81ozNeWDx0WFMmMCIzeq7KW4xFG4wOo8y74m/tR
- voYjiBn+W2w==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:CgYzC0U6YDefSno1Q6M0be4GAqOIENnbvB/143r0LC4jaxweGkL
+ DcIH7rEzu7d8A1IVN5m8ORqCVi1tHG3jjxDDmWefNz4LZwX2CNYGnGnWhA4JChxxUgLOmSj
+ vrQrUoEyT/s0hDOQEMwCY0oZHRVZo7dPPf7A6mOfRlI2FnL3fdVxW8544v3yzmimoqs7DlB
+ n9vCC0Sc+IJtKrZolU+Eg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9gu1AQfAUzE=:YHcAvlPadXU55+w0BrNbiV
+ puvxFCfIh9hv3M4PDT2zo2KOAGgQtA7nu6LkWQbYpCm0CrfWw8a7U0fEvG3E36P0htP3qRXDt
+ ZFs3env5kkkowdVhAcjjgr0/OEZrIo7KJ44upPbS7IIr8CVRKRjP2cVSWiMZyEOTBqqpk60ue
+ iH+sWFfUooGjlgOMu1IKbhCNLKZFkSIAa8C8C5xJJsHJ2VD/8yUCYmLHn5Binyq3uTm91XfVH
+ 9NIeLsqRWWCKzfei+dXG2LKprEsbNDzy+RHKYyug7rGp1K2r5SJxzOCegT0ZtFHal/uzRpfs8
+ dcSZ2C2rS8ImgtzFF0dXbGzSxN3ff+ka/qLaQUY0Wcaex0WGxLz1GzRGPJ6CO4+kxLmC7sAXB
+ FUQXdmPqf1j8SWoKh/dDsc57fahNpQKS+bDK4wB5pFWp9MVk01IDrmXMRciRqFuduyHYLdZ9l
+ of7DpDFdcekELRy8SzOLKgTucLze6+N9GF7MLgy6QVFMOcVBHd5bjYIZqHxg22gdxCK6a49iy
+ rf+l2TAfCNAyRImV/bLvHnousabAiP7WU0sHQhUYIVTTUbNtOMKf9vvnIspUNYKr0ARu3SeqP
+ Oo7fyEsvg9lB1l4kFsv0ZlS3brYLoDsjEzBSbImaa0nmtOethVsSxRCQRmVP9aTt7pp3EGtkv
+ CY8CzH0DKIlQjPV3R1AX843f7+oKgdWkEA7SMD4I7uXgr1ahd1cpFtD+ruNx6JfBSW/6lo+As
+ mCIKZh4XxIzcIqUJfQXe3p8tRYoZmlfsNGTyHV/9uOCGtMwhdsB34HSx2DyWVb/j0Yy424YgX
+ stZyTljDRX+g9qQrC0A/PPttEFMQ9zR9TG6SAaQ5t19F4L2CBiMphy/jFQW9khvgX/IPzF1+i
+ mpnrSb/D6EBv7t2wAMfaP3954CDAiUqQgOMNgbK4bevAh+DhQzZN2ciKBVdkLpd/BpMI7CFwt
+ mVXbGK4z1Jw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-628463197-1551210737=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
 Hi,
 
-On Tue, 26 Feb 2019, Rohit Ashiwal wrote:
+On Tue, 26 Feb 2019, Jeff King wrote:
 
-> Hi Martin
-> 
-> On Tue, Feb 26, 2019 at 10:01 PM Martin Ågren <martin.agren@gmail.com> wrote:
-> >
-> > > -       ! test -d submod &&
-> > > +       ! test_path_is_dir submod &&
-> >
-> > Now, here I wonder. This (and other changes like this) means that every
-> > time the test passes, we see "Directory submod doesn't exist.", which is
-> > perhaps not too irritating. But more importantly, when the test fails,
-> > we don't get any hint. So a failure is just as silent and "non-helpful"
-> > as before. I can think of a few approaches:
-> 
-> >
-> >  1 Teach `test_path_is_dir` and friends to handle "!" in a clever way, and
-> >    write these as `test_path_is_dir ! foo`. (We already have helpers
-> >    that do this, see, e.g., `test_i18ngrep`.)
-> >
-> 
-> Yes, I also think that it should be corrected and I think this(1)
-> approach is good as it resonates well with the existing code. I'll
-> start working on it and submit the patch as soon as possible.
+> I had a vague notion that there was some reason (portability?) that we
+> preferred to have the wrappers. But as your patch shows, they really are
+> just calling "test" and nothing else.
 
-We already have `test_path_is_missing`. Why not use that instead of `!
-test -d` or `! test -f`?
+Let's also not forget about the fact that `test -f` is actually not all
+that intuitive an interface. Whereas even somebody without training in
+software development (let alone Unix shell scripting) understands the
+meaning of
+
+	test_path_is_file this-file.txt
+
+And even for a trained eye, the trace of `test -f` is sometimes hard to
+read, as you do *not* see the exit code in the trace, so you have to guess
+from circumstantial evidence whether it failed or succeeded.
 
 Ciao,
-Johannes
---8323328-628463197-1551210737=:41--
+Dscho
