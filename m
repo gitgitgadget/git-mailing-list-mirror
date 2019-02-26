@@ -2,89 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD55220248
-	for <e@80x24.org>; Tue, 26 Feb 2019 18:24:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B48C20248
+	for <e@80x24.org>; Tue, 26 Feb 2019 18:30:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728984AbfBZSYK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 13:24:10 -0500
-Received: from cloud.peff.net ([104.130.231.41]:58832 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728920AbfBZSYK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 13:24:10 -0500
-Received: (qmail 2227 invoked by uid 109); 26 Feb 2019 18:24:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 26 Feb 2019 18:24:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31274 invoked by uid 111); 26 Feb 2019 18:24:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 26 Feb 2019 13:24:24 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Feb 2019 13:24:08 -0500
-Date:   Tue, 26 Feb 2019 13:24:08 -0500
-From:   Jeff King <peff@peff.net>
-To:     Matthieu Moy <Matthieu.Moy@matthieu-moy.fr>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1728974AbfBZSax (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 13:30:53 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:43534 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728814AbfBZSax (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 13:30:53 -0500
+Received: by mail-lf1-f66.google.com with SMTP id j1so10384819lfb.10
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 10:30:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=W6b8fTc8ahL2SmciNJ7/EH+Ahgb1mpgfx8bsl5Zx18M=;
+        b=pUYnVUtRQE2FXo0Pffuf2gNCJM2BpyqqarLe36ndVmMjkwDhZVmjCVyvBKXS1LkX7K
+         tjeMvoECjilmZX7kO36rQooGWphcm407aAhB7nh/VL/8uVhIyCYVL8I3JSFvbumtpR8w
+         0FvuXlgfwYCSRGaXDLwV2FTLks+xLRV2PCAZjB29CQP8WG1uRy2CjmBoEjRrUmFmRVM6
+         StQuN+BaAet5dx2bo5o91EC/cNlnqave+NjfrZW2ayR+ho+kJ6mSQUX/+8rXzMlnok9V
+         5Hz+ZWk3b4T9QL7nQbghcIzbBMy262vsqyUPpyFidi19aWHQWdnvtmOWmtN+NKLru+pH
+         gAOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=W6b8fTc8ahL2SmciNJ7/EH+Ahgb1mpgfx8bsl5Zx18M=;
+        b=ijs/0hUqEkYrDLFJpoeU3ZCrKTI+7cNsFj5oi3vwVzFwwYXYH+lyno4CEw+u//AfZK
+         C0FYj8542CZ/VwqAp4WP0x0qPdYSecblljWyiXC5+eLXGlGe9LUIP/QWgcL1kpP+6hM9
+         ed6+ew871yino0LgOs+JWlTC6zsH+WSjXwqhZDLIegDjVMyDMOBqfl8VoACSp713eWKQ
+         x2V6WpisoRqDodELemiwG/mgUIoX0P/UzskMDLb/OM6I1dv9YAt1Pgc4bzfUhRWx6Bqj
+         z10yhZSEYx/FXAVVTQQz2ax6s1SxFAgudro12Rf6uYze4nypb7KQAvFSXOxXRuuyefm6
+         oIww==
+X-Gm-Message-State: AHQUAuaGYE1Ued/Rrlu2M7Z9G1gmumtesrknCweXVaPgVb3n0S3ACPVx
+        VZO5WY/9O8kDyI5VUWQLDIA/6hYmI7caQGjjapNr/46tE28=
+X-Google-Smtp-Source: AHgI3IarkUpRblLexiBJF5AZrN09sUUm9sXEeW3GB7MphCAvNZsxuLrw9s88Qoss4k6v9VYRcltE7scbMv1Nnfu32Ek=
+X-Received: by 2002:a19:9112:: with SMTP id t18mr10005867lfd.19.1551205850685;
+ Tue, 26 Feb 2019 10:30:50 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.152.git.gitgitgadget@gmail.com> <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
+ <CAN0heSqSp-a0zUKT5EaGLBYnRtESTnu9GKWtGARz2kaOAhc1HQ@mail.gmail.com>
+In-Reply-To: <CAN0heSqSp-a0zUKT5EaGLBYnRtESTnu9GKWtGARz2kaOAhc1HQ@mail.gmail.com>
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Date:   Tue, 26 Feb 2019 23:59:51 +0530
+Message-ID: <CAL7ArXoau1ZfBsV9JaUDprwjSijyo6K5d9JyC1mdfc=KEvgJxw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] tests: replace `test -(d|f)` with test_path_is_(dir|file)
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: Re: Do test-path_is_{file,dir,exists} make sense anymore with -x?
-Message-ID: <20190226182407.GF19606@sigill.intra.peff.net>
-References: <pull.152.git.gitgitgadget@gmail.com>
- <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
- <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com>
- <87sgwav8cp.fsf@evledraar.gmail.com>
- <20190226170400.GC19739@szeder.dev>
- <86va1630g4.fsf@matthieu-moy.fr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <86va1630g4.fsf@matthieu-moy.fr>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        pclouds@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 26, 2019 at 06:48:43PM +0100, Matthieu Moy wrote:
+Hi Martin
 
-> > '-x' tracing doesn't work in all test scripts, unless it is run with a
-> > Bash version already supporting BASH_XTRACEFD, i.e. v4.1 or later.
-> > Notably the default Bash shipped in macOS is somewhere around v3.2.
-> 
-> According to http://www.tldp.org/LDP/abs/html/bashver4.html#AEN21183,
-> bash 4.1 was released on May, 2010. Are you sure macOS is _that_ late?
+On Tue, Feb 26, 2019 at 10:01 PM Martin =C3=85gren <martin.agren@gmail.com>=
+ wrote:
+>
+> > -       ! test -d submod &&
+> > +       ! test_path_is_dir submod &&
+>
+> Now, here I wonder. This (and other changes like this) means that every
+> time the test passes, we see "Directory submod doesn't exist.", which is
+> perhaps not too irritating. But more importantly, when the test fails,
+> we don't get any hint. So a failure is just as silent and "non-helpful"
+> as before. I can think of a few approaches:
 
-It's not "late", it's "never". Bash 4 switched to GPLv3.
+>
+>  1 Teach `test_path_is_dir` and friends to handle "!" in a clever way, an=
+d
+>    write these as `test_path_is_dir ! foo`. (We already have helpers
+>    that do this, see, e.g., `test_i18ngrep`.)
+>
 
-> I also tried with dash, and -x seems to work fine too (I use "works with
-> dash" as a heuristic for "should word on any shell", but it doesn't
-> always work).
+Yes, I also think that it should be corrected and I think this(1)
+approach is good as it resonates well with the existing code. I'll
+start working on it and submit the patch as soon as possible.
 
-Yes, "-x" works everywhere. The problem is scripts which capture the
-stderr of subshells or functions, which then get polluted by "-x"
-output. You can fix that in two ways:
-
-  1. Use bash 4.1+, which works around that with BASH_XTRACEFD.
-
-  2. Don't do that. Gábor fixed most such instances already, except the
-     ones in t1510. That one automatically disables "-x" tracing.
-
-So I don't know what you tried exactly, but you should be able to
-successfully run with "-x" on any script. Including t1510, but you
-just won't get tracing output then.
-
-> If -x doesn't work in some setups, it may be a good reason to wait a bit
-> before trashing test_path_is_*, but if it's clear enough that the vast
-> majority of platforms get -x, then why not trash these wrappers indeed.
-
-I do think it basically works everywhere these days.
-
--Peff
+Thanks
+Rohit
