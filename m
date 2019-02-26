@@ -2,79 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C3EE20248
-	for <e@80x24.org>; Tue, 26 Feb 2019 21:02:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8D2A20248
+	for <e@80x24.org>; Tue, 26 Feb 2019 21:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729049AbfBZVCc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 16:02:32 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59132 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728303AbfBZVCc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 16:02:32 -0500
-Received: (qmail 6030 invoked by uid 109); 26 Feb 2019 21:02:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 26 Feb 2019 21:02:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32542 invoked by uid 111); 26 Feb 2019 21:02:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 26 Feb 2019 16:02:46 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 26 Feb 2019 16:02:30 -0500
-Date:   Tue, 26 Feb 2019 16:02:30 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: Re: Do test-path_is_{file,dir,exists} make sense anymore with -x?
-Message-ID: <20190226210229.GB27914@sigill.intra.peff.net>
-References: <pull.152.git.gitgitgadget@gmail.com>
- <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
- <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com>
- <87sgwav8cp.fsf@evledraar.gmail.com>
- <20190226173542.GC19606@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1902262055260.41@tvgsbejvaqbjf.bet>
+        id S1729093AbfBZVKM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Feb 2019 16:10:12 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:35562 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727823AbfBZVKM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Feb 2019 16:10:12 -0500
+Received: by mail-ed1-f52.google.com with SMTP id g19so12060157edp.2
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 13:10:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cwMa/U75Dz5Ytm5d5p5Ev3gEcVTbPfBhuQOZWxgl6qw=;
+        b=rO0a47GFNGkWdK6a2t/9c4clbuKW74dFh75M+cgNBqW6WjpWTY05jQILRHL1p5HeQh
+         8/rH5QsiZeHVwsPyi5wJkxPTWHa4bF9/Tqj6H5tf/h+chk/zrvGjIO78JfZRxkFg1Tw/
+         J9N4araWGnfIpPRMDrjRJomlGL+L9qA85Hag5EELie95XkSmeCwdy3SxpvBCmO6o4H1B
+         Cf1fQH/eiMos2fkvS/YOgok2x/Pz0qJzcCZaM003GOGFzCcoMYVXKWG5kINYq86nYVLp
+         D5v+hu4iiyYvzuT4WPP7nxlvqFWdCr3dx1UE+DFtpnwoh17Hxyu9rjVGVSRVdGxECfyc
+         wEMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cwMa/U75Dz5Ytm5d5p5Ev3gEcVTbPfBhuQOZWxgl6qw=;
+        b=pXT43opfpRV98JXHl8abiOcoWe4jSTWkiUYxLT10jdjzB3qVLmS+5P84Q1V256wgZE
+         fyOXtnj3ONQz9PrMiKOVc9TuCVPXMNzom9BUOwVAZ8KKlztXz1LVd9Q0XIdKN0CroVLx
+         8t/28OZK1oP2I71fMRnT4OD95qRkhOOu1EshhiGHRd2N2aDkZs4REMfeUs1ROppPDfy7
+         9TGbNFJp+Agdpbub/hUFPnHfRWisPLaKHSiliWlCUccUDoOLzslBc8gPMIVm/hBjjdSL
+         lvpOVMIX2bgWcsYz3gY7v3fULBF/qGrJKpVaL3ZCWtGxFRmi6sY1/r/XWlz2f6kEP4Xt
+         jWWA==
+X-Gm-Message-State: AHQUAuYXlnnihpADX1KwwzfucmAOMMQBiYYUCkjGt7EzDR3nWM8AdQSO
+        GI1NI+tKqRmq2qUvSy1br9w0yJlxpuRY5GcmEBE=
+X-Google-Smtp-Source: AHgI3IZwSy7dEFU0Kpc+oWZQwu9SHgv+dvqP8cfZnoAf97GpeloKRBLVPZJPyuhGQ+rSTD4Zdcf2PSZBRxwAzFW48TE=
+X-Received: by 2002:a50:94ea:: with SMTP id t39mr18501143eda.262.1551215410506;
+ Tue, 26 Feb 2019 13:10:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1902262055260.41@tvgsbejvaqbjf.bet>
+References: <0Lfolq-1hNWbf1RUI-00pI54@mail.gmx.com>
+In-Reply-To: <0Lfolq-1hNWbf1RUI-00pI54@mail.gmx.com>
+From:   =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Date:   Tue, 26 Feb 2019 21:09:34 +0000
+Message-ID: <CACUQV58Bh-m5Yati2A0hd+7dwJztc=+JkY5x-YAgABe+JP6xFA@mail.gmail.com>
+Subject: Re: Bug: "orphaned" trees indistinguishable in git log --graph output
+To:     Stefan Tauner <stefan.tauner@gmx.at>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 26, 2019 at 08:58:43PM +0100, Johannes Schindelin wrote:
+This issue was mentioned previously here in the mailing list.
+Here it is for reference:
+https://public-inbox.org/git/3305f7dc-0044-41fe-8aab-ee800535d6e9@kde.org/
 
-> On Tue, 26 Feb 2019, Jeff King wrote:
-> 
-> > I had a vague notion that there was some reason (portability?) that we
-> > preferred to have the wrappers. But as your patch shows, they really are
-> > just calling "test" and nothing else.
-> 
-> Let's also not forget about the fact that `test -f` is actually not all
-> that intuitive an interface. Whereas even somebody without training in
-> software development (let alone Unix shell scripting) understands the
-> meaning of
-> 
-> 	test_path_is_file this-file.txt
-> 
-> And even for a trained eye, the trace of `test -f` is sometimes hard to
-> read, as you do *not* see the exit code in the trace, so you have to guess
-> from circumstantial evidence whether it failed or succeeded.
-
-True. For old-timers, I think "test -f" is idiomatic, but that is not
-true for everyone. Sometimes wrappers can cut both ways, making things
-harder for people who are used to the idioms. But "test_path_is_file"
-should be pretty readable for everyone, old and new alike, I would
-think.
-
--Peff
+Cheers,
+Rafael Ascens=C3=A3o
