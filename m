@@ -2,195 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2453920248
-	for <e@80x24.org>; Wed, 27 Feb 2019 14:59:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FA0A20248
+	for <e@80x24.org>; Wed, 27 Feb 2019 15:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730757AbfB0O7b (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Feb 2019 09:59:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59906 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730756AbfB0O7a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 09:59:30 -0500
-Received: (qmail 3330 invoked by uid 109); 27 Feb 2019 14:59:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Feb 2019 14:59:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6286 invoked by uid 111); 27 Feb 2019 14:59:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 27 Feb 2019 09:59:45 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 27 Feb 2019 09:59:28 -0500
-Date:   Wed, 27 Feb 2019 09:59:28 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: Re: [PATCH] doc/fsck: discuss mix of --connectivity-only and
- --dangling
-Message-ID: <20190227145928.GA3727@sigill.intra.peff.net>
-References: <20190227145549.GA3255@sigill.intra.peff.net>
+        id S1730483AbfB0PCa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 10:02:30 -0500
+Received: from fallback16.mail.ru ([94.100.177.128]:34268 "EHLO
+        fallback16.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726590AbfB0PC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 10:02:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=3H95XAbEwKHMOn1/8a2mb7I19wV1mWOyv1firHveq5I=;
+        b=DA5t4v+QyyECtFgXPlyun54r0h8o4uQfbLmFKaEP2uDJvvOpRtdHagvc3amdjieLzoP93MMqYamum09iSlPHfUmWYGH1aao6iVA6z4ulgATMlNCJh5nkH2SYUNijmY0TDg27pUQWz9bSD6be/K02qSH2qHHjuq8j392JM5hXJdU=;
+Received: from [10.161.22.24] (port=42126 helo=smtp54.i.mail.ru)
+        by fallback16.i with esmtp (envelope-from <kostix@bswap.ru>)
+        id 1gz0j5-0004Y4-6j
+        for git@vger.kernel.org; Wed, 27 Feb 2019 18:02:27 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=3H95XAbEwKHMOn1/8a2mb7I19wV1mWOyv1firHveq5I=;
+        b=DA5t4v+QyyECtFgXPlyun54r0h8o4uQfbLmFKaEP2uDJvvOpRtdHagvc3amdjieLzoP93MMqYamum09iSlPHfUmWYGH1aao6iVA6z4ulgATMlNCJh5nkH2SYUNijmY0TDg27pUQWz9bSD6be/K02qSH2qHHjuq8j392JM5hXJdU=;
+Received: by smtp54.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1gz0j3-0002Ic-48; Wed, 27 Feb 2019 18:02:25 +0300
+Date:   Wed, 27 Feb 2019 18:02:23 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     Adrian Wright <adrian@wright2.me.uk>
+Cc:     git@vger.kernel.org
+Subject: Re: git case sensitivity issue
+Message-ID: <20190227150223.jfkxp4bvvdcmapnx@tigra>
+References: <CA+LT4LV4WBJtgDOene7i9UQmmkB20L0Zrr=XDzs4j197+uC1jw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190227145549.GA3255@sigill.intra.peff.net>
+In-Reply-To: <CA+LT4LV4WBJtgDOene7i9UQmmkB20L0Zrr=XDzs4j197+uC1jw@mail.gmail.com>
+User-Agent: NeoMutt/20180716
+X-77F55803: 0014004E1F3277295A78504BD2AC29410C907E9E4A83F9FEFD601F1D047DB74A6A9DA87CAE0D12D58EC4EBDECB1953FC
+X-7FA49CB5: 0D63561A33F958A5BBBF985347AE4F72538360832FD2D75F36A2807E4187C3608941B15DA834481FA18204E546F3947CEDCF5861DED71B2F389733CBF5DBD5E9C8A9BA7A39EFB7666BA297DBC24807EA117882F44604297287769387670735209ECD01F8117BC8BEA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C2249668B94F0A65C3A0C3AA81AA40904B5D9CF19DD082D7633A0E7DDDDC251EA7DABD81D268191BDAD3D78DA827A17800CE7542AF255F21831B5CD04E86FAF290E2D40A5AABA2AD3711975ECD9A6C639B01B78DA827A17800CE7A839FE83A78F066FC03837ACF90F27B775ECD9A6C639B01B4E70A05D1297E1BBC6867C52282FAC85D9B7C4F32B44FF57C2F2A386D11C4599BD9CCCA9EDD067B1EDA766A37F9254B7
+X-Mailru-Sender: 3EA917A0E6524472E50B252446CEFEA44341B7E549E56438A4C309EE7AFE5A7F59B8C681F8837A39FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
+X-Mras: OK
+X-77F55803: 669901E4625912A97F9F52485CB584D7271FD7DF62800FDC4390F6D9A191B390A3C28126B2EBEC23135352F4C85BF2EF09B5EA7FC11112D7
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 27, 2019 at 09:55:49AM -0500, Jeff King wrote:
+On Wed, Feb 27, 2019 at 12:38:04PM +0000, Adrian Wright wrote:
 
-> We could make the two cases work identically by taking a separate pass
-> over the unreachable objects, parsing them and marking objects they
-> refer to as USED. That would still avoid parsing any blobs, but we'd pay
-> the cost to access any unreachable commits and trees. Since the point of
-> --connectivity-only is to quickly report whether all reachable objects
-> are present, I'd argue that it's not worth slowing it down to produce
-> a better-analyzed dangling list.
+> I am a  git-for-windows user and have run into issues with casing on
+> Windows OS.
 > 
-> Instead, let's document this somewhat surprising property of
-> connectivity-only. If somebody really wants to the extra analysis, we
-> can add a separate option to enable it.
+> I filed a GitHub issue directly on the git-for-windows repo:
+> 
+> The issue can be found on URL:
+> https://github.com/git-for-windows/git/issues/2066
+> 
+> See the GitHub link above for more details on the bug.
+> 
+> According to the maintainer of git-for-windows this is a bug and the
+> bug is with git not git-for-windows.
+> 
+> Are you aware of this bug and are there any plans to fix it?
 
-I'm actually a little torn on this. We could consider this a bug, and
-the "option" to disable it when you want things to go fast is to say
-"--no-dangling". That leaves no way to say "show me the list of
-unreachable objects, but don't bother spending extra time on dangling
-analysis". But I don't think I've ever really wanted that list of
-unreachable objects anyway (and besides, you could do it pretty easily
-with cat-file, rev-list, and comm).
+Yes.
 
-So I sketched up what it might look like to just fix the bug (but kick
-in only when needed), which is below.
+Please use the <https://public-inbox.org/git/> web interface to search
+through the archives of this list.
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index bb4227bebc..d26fb0a044 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -235,6 +235,48 @@ static int mark_used(struct object *obj, int type, void *data, struct fsck_optio
- 	return 0;
- }
- 
-+static void mark_unreachable_referents(const struct object_id *oid)
-+{
-+	struct fsck_options options = FSCK_OPTIONS_DEFAULT;
-+	struct object *obj = lookup_object(the_repository, oid->hash);
-+
-+	if (!obj || !(obj->flags & HAS_OBJ))
-+		return; /* not part of our original set */
-+	if (obj->flags & REACHABLE)
-+		return; /* reachable objects already traversed */
-+
-+	/*
-+	 * Avoid passing OBJ_NONE to fsck_walk, which will parse the object
-+	 * (and we want to avoid parsing blobs).
-+	 */
-+	if (obj->type == OBJ_NONE) {
-+		enum object_type type = oid_object_info(the_repository,
-+							&obj->oid, NULL);
-+		if (type > 0)
-+			object_as_type(the_repository, obj, type, 0);
-+	}
-+
-+	options.walk = mark_used;
-+	fsck_walk(obj, NULL, &options);
-+}
-+
-+static int mark_loose_unreachable_referents(const struct object_id *oid,
-+					    const char *path,
-+					    void *data)
-+{
-+	mark_unreachable_referents(oid);
-+	return 0;
-+}
-+
-+static int mark_packed_unreachable_referents(const struct object_id *oid,
-+					     struct packed_git *pack,
-+					     uint32_t pos,
-+					     void *data)
-+{
-+	mark_unreachable_referents(oid);
-+	return 0;
-+}
-+
- /*
-  * Check a single reachable object
-  */
-@@ -347,6 +389,26 @@ static void check_connectivity(void)
- 	/* Traverse the pending reachable objects */
- 	traverse_reachable();
- 
-+	/*
-+	 * With --connectivity-only, we won't have actually opened and marked
-+	 * unreachable objects with USED. Do that now to make --dangling, etc
-+	 * accurate.
-+	 */
-+	if (connectivity_only && (show_dangling || write_lost_and_found)) {
-+		/*
-+		 * Even though we already have a "struct object" for each of
-+		 * these in memory, we must not iterate over the internal
-+		 * object hash as we do below. Our loop would potentially
-+		 * resize the hash, making our iteration invalid.
-+		 *
-+		 * Instead, we'll just go back to the source list of objects,
-+		 * and ignore any that weren't present in our earlier
-+		 * traversal.
-+		 */
-+		for_each_loose_object(mark_loose_unreachable_referents, NULL, 0);
-+		for_each_packed_object(mark_packed_unreachable_referents, NULL, 0);
-+	}
-+
- 	/* Look up all the requirements, warn about missing objects.. */
- 	max = get_max_object_index();
- 	if (verbose)
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index c61f972141..49f08d5b9c 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -740,7 +740,7 @@ test_expect_success 'fsck detects truncated loose object' '
- # for each of type, we have one version which is referenced by another object
- # (and so while unreachable, not dangling), and another variant which really is
- # dangling.
--test_expect_success 'fsck notices dangling objects' '
-+test_expect_success 'create dangling-object repository' '
- 	git init dangling &&
- 	(
- 		cd dangling &&
-@@ -751,19 +751,34 @@ test_expect_success 'fsck notices dangling objects' '
- 		commit=$(git commit-tree $tree) &&
- 		dcommit=$(git commit-tree -p $commit $tree) &&
- 
--		cat >expect <<-EOF &&
-+		cat >expect <<-EOF
- 		dangling blob $dblob
- 		dangling commit $dcommit
- 		dangling tree $dtree
- 		EOF
-+	)
-+'
- 
-+test_expect_success 'fsck notices dangling objects' '
-+	(
-+		cd dangling &&
- 		git fsck >actual &&
- 		# the output order is non-deterministic, as it comes from a hash
- 		sort <actual >actual.sorted &&
- 		test_i18ncmp expect actual.sorted
- 	)
- '
- 
-+test_expect_success 'fsck --connectivity-only notices dangling objects' '
-+	(
-+		cd dangling &&
-+		git fsck --connectivity-only >actual &&
-+		# the output order is non-deterministic, as it comes from a hash
-+		sort <actual >actual.sorted &&
-+		test_i18ncmp expect actual.sorted
-+	)
-+'
-+
- test_expect_success 'fsck $name notices bogus $name' '
- 	test_must_fail git fsck bogus &&
- 	test_must_fail git fsck $ZERO_OID
+For a start, try <https://public-inbox.org/git/?q=%22case+sensitive%22>
+
