@@ -2,86 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ADF720248
-	for <e@80x24.org>; Wed, 27 Feb 2019 05:49:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B97320248
+	for <e@80x24.org>; Wed, 27 Feb 2019 08:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbfB0Ft4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Feb 2019 00:49:56 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:41026 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbfB0Ft4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 00:49:56 -0500
-Received: by mail-pg1-f195.google.com with SMTP id m1so7386166pgq.8
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 21:49:55 -0800 (PST)
+        id S1726983AbfB0InP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 03:43:15 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:43308 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726880AbfB0InP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 03:43:15 -0500
+Received: by mail-ed1-f52.google.com with SMTP id m35so13148085ede.10
+        for <git@vger.kernel.org>; Wed, 27 Feb 2019 00:43:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ciXOHfleGNIBjeRs6/JyD2RiGzK6OAe29YfhWpEqTvw=;
-        b=pQkOEEiX9pYF16EVo0d7RRCQmtC3AuOfb1Pvu6AK1zwnBKI7rQ84Ok2veNxv0F+lyO
-         UkVB0FD2Tv/Bzs03XsGddDb5gevfCxmd+ScCbOwKRRfhtqElI6eiDbmPbAIka+WwBEWq
-         fshZhD0nWRVz2qfMjJadPAzhesZLHjuf7sNgvll14b9o8132CyJnxMfc5IobFkD4ZZjH
-         d1LGI3RxR5ip8zKod/c4mWdpx1Av7MrVcJDahE5l6ok+vyWWzdvmLlipv+djC2PJ3Q5J
-         ofR5SnnnW4CsLs4M86x8kt3FR7cuO5XZFj1bB9BhrnlxrVP6Uv1ZlfjkLqwCmK5OKZ8H
-         F48w==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=N04Xb/FgfjCaPjGsez0VHn4zbJf6qZr1oNp0g1aMsUk=;
+        b=HnGTxcsw3+C3qpqyGvdydpKfAQRVGpjcdQw8FP7eQeWmS4Gn8MLu+uKVfU2pOZC8fz
+         cssPeUaQYl4eJ+5xUzDbMTT86U/t31PG3exVWoFUEEWGV4X5wtK5m11bWncFpgau8RS3
+         GZ/f8R/VdtOy+dNo8PAl1AKESlie9avA6cP0QIv72gYaRbV/ORHeNKyxEhsta8rFofxb
+         jlC7+hbq4So7a2UmiDFmnjL9TXoGMBUURbZugIgeF3+Wi8LW4JhkExMt1nuXeoeUAr6n
+         gbTeILBqp+QlvyaYPJAYzPWVzkXzUe+u6kbOqPZ8JXzbUBy18dA9Yhvl3YFrceTtWHwz
+         /qIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ciXOHfleGNIBjeRs6/JyD2RiGzK6OAe29YfhWpEqTvw=;
-        b=nsATb84LpE9ysdcZPWFcyzg2xeGX/Dxo3uiGV+u6rQbo0cesciWK//EzvD64uoO02F
-         lD3bjRgeUsx+exbqgzXv1AAx2Hd3zaLza07wjuvf2X35ovqOg1bXA7JrZidW5ZuAPn2k
-         FLds5vRfIWf3bm4z3tMUPW/RocsaakuR1ZeKvnFW/JZm6W4MDaQVUHhijw9WpEPY0FoL
-         3ZBDHkjQSx+eWie0aan+7x7UgFNyNlffeMacHcTkg1MHNuco9lfvnaIVahxtcDNMWV8F
-         I37+OcCYyoE/Dnuqm+UZv+BwGrHfA/jf3f1LiluuV16/A2P54q9IzzGXHyvf5ekp/B8K
-         oBYw==
-X-Gm-Message-State: AHQUAub4Qq0zCG7eMoASpAnqs7dPDzEy7KqpfXCG11YNWjmTwsE29g6g
-        sRIobM2A5QyGyX6vboaJoM+Y2uCKXjrwT7EAMsg=
-X-Google-Smtp-Source: AHgI3IbXhfvgox6brfwkuc2b5Q70KqpAWVlBufHAcdnUA4O4x+5Mbbz/tF3DOJyQpw+jj8EoPZ+ltP0GD87+Qo21TrM=
-X-Received: by 2002:a63:1616:: with SMTP id w22mr1314978pgl.200.1551246595486;
- Tue, 26 Feb 2019 21:49:55 -0800 (PST)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=N04Xb/FgfjCaPjGsez0VHn4zbJf6qZr1oNp0g1aMsUk=;
+        b=bafnLbhPko3pgKkczx9bmrYPWCf3fjotl/UIwzsjDdTMAB6lXd2Eb60U7ITRf3uscb
+         MvdSeHnT0zMU92fkRFGKWA5M0leS0nDiigOKYjcwGA7L2RpU6C2X5FWZnPCqVxXGeQxV
+         JTNf09Mq3iSIr1RrrJeZIeoDfEfJ9WvvDHI60lblwminaHxZhbDvT+KJoiFfRvocI2do
+         KtN1gOL/caY1y48d12qMwGaoq2dcMCGzYkSeFLHZc7G9EGT8oOv+uIhmZ0+XL7KFsj+9
+         pTqsefImEQZi9lgEqRkeyKJy/Db8erEyCoC9b/90H2dl6HjOdkV9Fn4kSwL5vOhFwE9q
+         eWFg==
+X-Gm-Message-State: AHQUAub+Ph1KL+8I72rERVPpcpBhBv2p2++O5SjUqs41A7iEl/31ZsqA
+        zBXFN/3OmLS0GuieAtrROCnqDSYD
+X-Google-Smtp-Source: AHgI3IabdmA6kzE2WuutainpTajtkZMsQDTgoPD3Yw1lPgslyPh+33wrtCQJdBCOs0YXprMCOI3AZQ==
+X-Received: by 2002:a17:906:678a:: with SMTP id q10mr695634ejp.156.1551256993358;
+        Wed, 27 Feb 2019 00:43:13 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h47sm4096092eda.47.2019.02.27.00.43.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Feb 2019 00:43:12 -0800 (PST)
+Date:   Wed, 27 Feb 2019 00:43:12 -0800 (PST)
+X-Google-Original-Date: Wed, 27 Feb 2019 08:43:11 GMT
+Message-Id: <pull.144.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Drop Windows XP-specific code to support IPv6
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.152.git.gitgitgadget@gmail.com> <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
- <CAN0heSqSp-a0zUKT5EaGLBYnRtESTnu9GKWtGARz2kaOAhc1HQ@mail.gmail.com>
- <CAL7ArXoau1ZfBsV9JaUDprwjSijyo6K5d9JyC1mdfc=KEvgJxw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1902262051080.41@tvgsbejvaqbjf.bet> <CAL7ArXq37k2qmjLSB6DROq3K_wd0YaD9a-thNXgVwcxX7BEUMg@mail.gmail.com>
-In-Reply-To: <CAL7ArXq37k2qmjLSB6DROq3K_wd0YaD9a-thNXgVwcxX7BEUMg@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 27 Feb 2019 06:49:41 +0100
-Message-ID: <CAN0heSpebSEMo_OFrVFRXssVqRwnq8m=_b9E6b1oj1GNiPrqDw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] tests: replace `test -(d|f)` with test_path_is_(dir|file)
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 26 Feb 2019 at 21:02, Rohit Ashiwal <rohit.ashiwal265@gmail.com> wrote:
->
-> Hey!
->
-> On Wed, Feb 27, 2019 at 1:22 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > We already have `test_path_is_missing`. Why not use that instead of `!
-> > test -d` or `! test -f`?
-> >
->
-> Yes, I think this is better. It will satisfy all the requirements I guess.
+We no longer support Windows XP, and can therefore rely on API functions
+that are available since Windows Vista.
 
-Good suggestion, Johannes. That is probably what most (all) of these
-wanted to express.
+Tanushree Tumane (1):
+  mingw: remove obsolete IPv6-related code
 
-Martin
+ compat/mingw.c | 178 +------------------------------------------------
+ compat/mingw.h |   8 ---
+ 2 files changed, 3 insertions(+), 183 deletions(-)
+
+
+base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-144%2Fdscho%2Fremove-ipv6-fallback-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-144/dscho/remove-ipv6-fallback-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/144
+-- 
+gitgitgadget
