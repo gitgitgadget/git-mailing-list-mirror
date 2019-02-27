@@ -2,137 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39DA520248
-	for <e@80x24.org>; Wed, 27 Feb 2019 17:15:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D250E20248
+	for <e@80x24.org>; Wed, 27 Feb 2019 17:30:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729749AbfB0RPB convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 27 Feb 2019 12:15:01 -0500
-Received: from mx2.suse.de ([195.135.220.15]:37694 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726223AbfB0RPB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 12:15:01 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 34082AB87;
-        Wed, 27 Feb 2019 17:14:59 +0000 (UTC)
-Date:   Wed, 27 Feb 2019 18:14:58 +0100
-From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: Need multibyte advice - Shift-JIS
-Message-ID: <20190227181458.4f019d91@kitsune.suse.cz>
-In-Reply-To: <001101d4cebe$7119a080$534ce180$@nexbridge.com>
-References: <001e01d4ce9c$eff07400$cfd15c00$@nexbridge.com>
-        <20190227150836.495f1692@kitsune.suse.cz>
-        <000001d4ceb4$b930df50$2b929df0$@nexbridge.com>
-        <20190227171103.4cbc735a@kitsune.suse.cz>
-        <000a01d4ceb8$3cd19720$b674c560$@nexbridge.com>
-        <20190227172841.3a74fa60@kitsune.suse.cz>
-        <000b01d4ceba$39cfddf0$ad6f99d0$@nexbridge.com>
-        <20190227175135.4392e9d7@kitsune.suse.cz>
-        <001101d4cebe$7119a080$534ce180$@nexbridge.com>
-Organization: SUSE Linux
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
+        id S1727967AbfB0Rak (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 12:30:40 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:39619 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729412AbfB0Rak (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 12:30:40 -0500
+Received: by mail-io1-f68.google.com with SMTP id x3so14197791ior.6
+        for <git@vger.kernel.org>; Wed, 27 Feb 2019 09:30:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+lBw58kiWqRTQyS5cqw8WT5VYp27U6M1WBpEFgDLhnA=;
+        b=rB3CfjcbTlnpQ/Jezb23B1u9gxoh4wN2Du1PZpalFPwjOLaPFK4LRv1qu1HFtBXV52
+         bFhzdB9c3RCx/m3iJrTceH3KkgmRGyokF1J3dHMN/RIOoVdn4fKC4Bb77/k9tInREYyv
+         jBBu02RnPw+nVgdvJmk0l7k6rtuy6bUce0V3ZRv6OGrc8bqXra08nZhFoVcDN2zRV7Px
+         Dq1hvyPVMaFJT6NV6NO2BpygieNzy9KjX1qovutksESJnYQQ+QWFSZo7VVz2QYwifXJG
+         T63aZMqYFttdRd/8Mi6x2n/vWb3IwOEGydvF6Bw+dG5BixzMxw+cAEU5vxRJXbAH+Aq3
+         3dzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+lBw58kiWqRTQyS5cqw8WT5VYp27U6M1WBpEFgDLhnA=;
+        b=rC9igW5vGJEDIKj3wdwdFdqrT/zHtRq9oofzdMTOpoJmgvG/3Cb+SlQgP6moM1tvFT
+         ecnOmdL0HEc4p+V87nB3vpOf+eUgX7o3Bc6+4waLgQfW/bW8DCHzPm3SC54rtBVd4Pqg
+         W4kA0SukXxtqwNxqd9Oj6lxe6IQ34T4vhJhQ+bbKXgDp19RCLmvCrhIA70mDFNn9hxwW
+         7B6uBKnVoyLx6aTNhhtapkaTHA0LD5mpkPAH4g44iTlqn2xADvJXTEdA/clNqvGUCiy1
+         kgSj+cHOiZXHsCdx6HiUyb+CyshmY7xbLv6qOnXyKFJYgVT5FDaOU3tjawXR4OFWwPfy
+         qNLw==
+X-Gm-Message-State: APjAAAUp0f5LamNfUOoAkY9CJkbi2XbMLFyvkNSoWahBluORkKHSQrdh
+        DUYYu2TxcofDyvDSvBIUmB1zd1ilNbvEBYwEWwYua8BRo4E=
+X-Google-Smtp-Source: APXvYqzA73sWZQ/Vt8sYmOdOvRKe8kLXgvrJC/y6CeHZuQ4iRY6usw1Qaha71wvN2D4Iequs057Sp6i5qN4QsSI4/6g=
+X-Received: by 2002:a6b:c30d:: with SMTP id t13mr2977609iof.66.1551288639158;
+ Wed, 27 Feb 2019 09:30:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+References: <20190226051804.10631-1-matheus.bernardino@usp.br>
+ <20190226051804.10631-5-matheus.bernardino@usp.br> <CACsJy8BztC=GNuPU_CuLbPSmhsjrSk8MmkyeK6ahgjEOzY=yOQ@mail.gmail.com>
+In-Reply-To: <CACsJy8BztC=GNuPU_CuLbPSmhsjrSk8MmkyeK6ahgjEOzY=yOQ@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 27 Feb 2019 14:30:27 -0300
+Message-ID: <CAHd-oW5aOf+TE_AeA=VkaZUt7LTeSK_buojsEgb3NYMVVm1B_g@mail.gmail.com>
+Subject: Re: [WIP RFC PATCH v2 4/5] clone: extract function from copy_or_link_directory
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 27 Feb 2019 12:03:58 -0500
-"Randall S. Becker" <rsbecker@nexbridge.com> wrote:
+On Tue, Feb 26, 2019 at 9:18 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Tue, Feb 26, 2019 at 12:18 PM Matheus Tavares
+> <matheus.bernardino@usp.br> wrote:
+> >
+> > Extract dir creation code snippet from copy_or_link_directory to its own
+> > function named mkdir_if_missing. This change will help removing
+> > copy_or_link_directory's explicit recursion, which will be done in a
+> > following patch. Also makes code more readable.
+> >
+> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> > ---
+> >  builtin/clone.c | 27 +++++++++++++++++++--------
+> >  1 file changed, 19 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/builtin/clone.c b/builtin/clone.c
+> > index cae069f03b..fd580fa98d 100644
+> > --- a/builtin/clone.c
+> > +++ b/builtin/clone.c
+> > @@ -392,6 +392,24 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
+> >         fclose(in);
+> >  }
+> >
+> > +static void mkdir_if_missing(const char *pathname, mode_t mode)
+> > +{
+> > +       /*
+> > +        * Create a dir at pathname unless there's already one.
+>
+> This confused me for a second because I thought it described "st"
+> variable. I think we usually put the description of the function on
+> top (before the "void mkdir_if.." line). But with a such a short
+> function and clear name like this, I don't think we need any comments.
+>
 
-> On February 27, 2019 11:52, Michal Suchánek wrote:
-> > To: Randall S. Becker <rsbecker@nexbridge.com>
-> > Cc: git@vger.kernel.org
-> > Subject: Re: Need multibyte advice - Shift-JIS
-> > 
-> > On Wed, 27 Feb 2019 11:33:47 -0500
-> > "Randall S. Becker" <rsbecker@nexbridge.com> wrote:
-> >   
-> > > On February 27, 2019 11:29 Michal Suchánek wrote:  
-> > > > On Wed, 27 Feb 2019 11:19:33 -0500
-> > > > "Randall S. Becker" <rsbecker@nexbridge.com> wrote:
-> > > >  
-> > > > > On February 27, 2019 11:11, Michal Suchánek wrote:  
-> > > > > > On Wed, 27 Feb 2019 10:54:23 -0500 "Randall S. Becker"
-> > > > > > <rsbecker@nexbridge.com> wrote:
-> > > > > >  
-> > > > > > > On February 27, 2019 9:09, Michal Suchánek wrote:  
-> > > > > > > > On Wed, 27 Feb 2019 08:04:08 -0500 "Randall S. Becker"
-> > > > > > > > <rsbecker@nexbridge.com> wrote:
-> > > > > > > >  
-> > > > > > > > > Hi Git Team,
-> > > > > > > > >
-> > > > > > > > > I have to admit being perplexed by this one. I have been
-> > > > > > > > > asked to support the Shift-JIS character set in file
-> > > > > > > > > contents, comments, and logs, for a partner of mine. I
-> > > > > > > > > know there are a few ways to do this, but I'm looking for
-> > > > > > > > > the official non-hacky way  
-> > > > to do this.  
-> > > > > > > > > This is CLI only, and our pager, less, does not support
-> > > > > > > > > multi-byte, so I'm looking  
-> > > > > > > for  
-> > > > > > > > options there also.
-> > > > > > > >
-> > > > > > > > SJIS is about as much multibyte as UTF-8.
-> > > > > > > >
-> > > > > > > > Why do you think less does not support it?
-> > > > > > > >
-> > > > > > > > Last time I looked there was SJIS locale for libc so it is
-> > > > > > > > only matter of generating the correct locales and using
-> > > > > > > > them. Of course, if you are  
-> > > > > > > running  
-> > > > > > > > in UTF-8 SJIS will look like garbage.  
-> > > > > > >
-> > > > > > > Sadly, I did not personally build less on this platform, and
-> > > > > > > the libc used did not include UTF-16, on the platform vendor
-> > > > > > > supplied less. cat works fine, but the usual
-> > > > > > > LESSCHARSET=utf-16 is unsupported, so I am looking for an
-> > > > > > > alternative. THAT is why I think less does not support it.
-> > > > > > > Sorry, I should have made that more  
-> > > > clear.  
-> > > > > > >
-> > > > > > > cat works fine, so if I set GIT_PAGER=cat, I can at least see
-> > > > > > > the diffs cleanly in SJIS, but this partner wants a pager that is usable.
-> > > > > > >  
-> > > > > >
-> > > > > > So you want to use SJIS because UTF-16 is not supported. So what
-> > > > > > is the problem with SJIS (or UTF-8 for that matter)?  
-> > > > >
-> > > > > The partner I am working with is using multi-byte SJIS, which is
-> > > > > also not  
-> > > > supported by this incarnation of less. As a result, UTF-8 does not
-> > > > work either in this situation. The content is definitely multi-byte.
-> > > > I know this was fixed in RedHat's Less in 2016, but did not make this  
-> > platform.  
-> > > > >  
-> > > >
-> > > > Both UTF-8 and SJIS is multibyte and both is supported by less in
-> > > > general. If your particular less cannot support it then it is broken
-> > > > and you should fix it or get it fixed.  
-> > >
-> > > To be more specific, the implementation of less' UTF-8 on this platform will  
-> > present the data as unusable junk as expected. SJIS is multi-byte, but is not
-> > one of the allowed encodings in less. I am not empowered to "get it fixed".
-> > Thanks for your advice.  
-> > >  
-> > 
-> > How is this 'allowed encodings in less' defined?  
-> 
-> When you run less with LESSCHARSET=encoding, if the encoding is not known, you get the error:
-> invalid charset name
-> 
-> Doing the due diligence, I actually read the man page on the platform before asking the question, which listed the following as the only allowed encodings: ascii, iso8859, latin1, latin9, dos, IBM-1047, koi8-r, next, utf-8, windows. The utf-8 variant does not know how to display its multi-byte forms in SJIS, as with other platforms. Does that make sense now?
-> 
+Yes, I also don't like the description being after the function
+declaration, but I did this to follow the pattern from other functions
+on the same file (e.g. copy_alternates).  Anyway, I do agree with you
+that this function don't need a description, so I'm removing it for
+the next version. Thanks!
 
-Does the said man page also mention LESSCHARDEF or LESSOPEN?
+> > +        */
+> > +       struct stat st;
+> > +
+> > +       if (mkdir(pathname, mode)) {
+>
+> Good opportunity to unindent this by doing
+>
+>     if (!mkdir(...
+>          return;
+>
+> but it's up to you.
+>
 
-Michal
+Ok. But being such a small snippet, is the indentation really a code
+smell here? (sorry, I'm still getting used to git's coding guidelines)
+
+> > +               if (errno != EEXIST)
+> > +                       die_errno(_("failed to create directory '%s'"),
+> > +                                 pathname);
+> > +               else if (stat(pathname, &st))
+> > +                       die_errno(_("failed to stat '%s'"), pathname);
+> > +               else if (!S_ISDIR(st.st_mode))
+> > +                       die(_("%s exists and is not a directory"), pathname);
+> > +       }
+> > +}
+> > +
+> >  static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+> >                                    const char *src_repo, int src_baselen)
+> >  {
+> > @@ -404,14 +422,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+> >         if (!dir)
+> >                 die_errno(_("failed to open '%s'"), src->buf);
+> >
+> > -       if (mkdir(dest->buf, 0777)) {
+> > -               if (errno != EEXIST)
+> > -                       die_errno(_("failed to create directory '%s'"), dest->buf);
+> > -               else if (stat(dest->buf, &buf))
+> > -                       die_errno(_("failed to stat '%s'"), dest->buf);
+> > -               else if (!S_ISDIR(buf.st_mode))
+> > -                       die(_("%s exists and is not a directory"), dest->buf);
+> > -       }
+> > +       mkdir_if_missing(dest->buf, 0777);
+> >
+> >         strbuf_addch(src, '/');
+> >         src_len = src->len;
+> > --
+> > 2.20.1
+> >
+>
+>
+> --
+> Duy
