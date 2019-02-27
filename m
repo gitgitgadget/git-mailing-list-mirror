@@ -2,110 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45A4C20248
-	for <e@80x24.org>; Wed, 27 Feb 2019 18:59:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7E8B20248
+	for <e@80x24.org>; Wed, 27 Feb 2019 19:36:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730089AbfB0S7h convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 27 Feb 2019 13:59:37 -0500
-Received: from mx2.suse.de ([195.135.220.15]:52330 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729434AbfB0S7g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 13:59:36 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id E3811B02F;
-        Wed, 27 Feb 2019 18:59:34 +0000 (UTC)
-Date:   Wed, 27 Feb 2019 19:59:34 +0100
-From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     <git@vger.kernel.org>
+        id S1728668AbfB0TgM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 14:36:12 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:4671 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726397AbfB0TgM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 14:36:12 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 448mBc3Qv0z5tlF;
+        Wed, 27 Feb 2019 20:36:08 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 4B5D71DEB;
+        Wed, 27 Feb 2019 20:36:07 +0100 (CET)
 Subject: Re: Need multibyte advice - Shift-JIS
-Message-ID: <20190227195934.60c45e5d@kitsune.suse.cz>
-In-Reply-To: <003301d4cecd$4bced250$e36c76f0$@nexbridge.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        =?UTF-8?B?J01pY2hhbCBTdWNow6FuZWsn?= <msuchanek@suse.de>
+Cc:     git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
 References: <001e01d4ce9c$eff07400$cfd15c00$@nexbridge.com>
-        <20190227150836.495f1692@kitsune.suse.cz>
-        <000001d4ceb4$b930df50$2b929df0$@nexbridge.com>
-        <20190227171103.4cbc735a@kitsune.suse.cz>
-        <000a01d4ceb8$3cd19720$b674c560$@nexbridge.com>
-        <20190227172841.3a74fa60@kitsune.suse.cz>
-        <000b01d4ceba$39cfddf0$ad6f99d0$@nexbridge.com>
-        <20190227175135.4392e9d7@kitsune.suse.cz>
-        <001101d4cebe$7119a080$534ce180$@nexbridge.com>
-        <20190227181458.4f019d91@kitsune.suse.cz>
-        <001b01d4cec3$364149e0$a2c3dda0$@nexbridge.com>
-        <20190227185044.120c0ba7@kitsune.suse.cz>
-        <002501d4cec6$2a5e5a20$7f1b0e60$@nexbridge.com>
-        <20190227191814.054c2f3c@kitsune.suse.cz>
-        <003301d4cecd$4bced250$e36c76f0$@nexbridge.com>
-Organization: SUSE Linux
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
+ <20190227150836.495f1692@kitsune.suse.cz>
+ <000001d4ceb4$b930df50$2b929df0$@nexbridge.com>
+ <20190227171103.4cbc735a@kitsune.suse.cz>
+ <000a01d4ceb8$3cd19720$b674c560$@nexbridge.com>
+ <20190227172841.3a74fa60@kitsune.suse.cz>
+ <000b01d4ceba$39cfddf0$ad6f99d0$@nexbridge.com>
+ <20190227175135.4392e9d7@kitsune.suse.cz>
+ <001101d4cebe$7119a080$534ce180$@nexbridge.com>
+ <20190227181458.4f019d91@kitsune.suse.cz>
+ <001b01d4cec3$364149e0$a2c3dda0$@nexbridge.com>
+ <20190227185044.120c0ba7@kitsune.suse.cz>
+ <002501d4cec6$2a5e5a20$7f1b0e60$@nexbridge.com>
+ <20190227191814.054c2f3c@kitsune.suse.cz>
+ <003301d4cecd$4bced250$e36c76f0$@nexbridge.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <d3b76f4f-29b7-663e-ca3b-c15b1345a133@kdbg.org>
+Date:   Wed, 27 Feb 2019 20:36:06 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <003301d4cecd$4bced250$e36c76f0$@nexbridge.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 27 Feb 2019 13:50:18 -0500
-"Randall S. Becker" <rsbecker@nexbridge.com> wrote:
-
+Am 27.02.19 um 19:50 schrieb Randall S. Becker:
 > On February 27, 2019 13:18, Michal Suchánek wrote:
-> > On Wed, 27 Feb 2019 12:59:15 -0500
-> > "Randall S. Becker" <rsbecker@nexbridge.com> wrote:
-> >   
-> > > On February 27, 2019 12:51, Michal Suchánek wrote:  
-> > > > To: Randall S. Becker <rsbecker@nexbridge.com>
-> > > > Cc: git@vger.kernel.org
-> > > > Subject: Re: Need multibyte advice - Shift-JIS
-> > > >  
-> >   
-> > > I'm sorry if I was not clear about all this. NonStop is not a Linux platform. It  
-> > is POSIX. Not all utilities are available and not all utilities have all capabilities.
-> > lv is not available for the platform. less considers the data binary and displays
-> > what usually is displayed when you try to use it for binary multibyte. You get
-> > @^@- and such. It does not present the data in the correct character set for
-> > the user.  
-> > >
-> > > This was only one part of my original question. I am searching elsewhere  
-> > for support on pagers, because this really is not an appropriate discussion for
-> > the git group to focus on, do let's drop this, please, as not worth continuing.
-> > My original request was more about how to set up the file attributes,
-> > difference engine, and the rest of the git infrastructure. The partner I am
-> > working with is doing this with git hooks, which I am not really happy about.
-> > Let's prune this discussion as not worthy.  
-> > >  
-> > 
-> > Yes, this is totally unclear. Setting git hooks is possible but setting
-> > LESSCHARDEF is not?  
-> It can enter the environment simply through .profile, where we can change GIT_PAGER. We have established that separately.
-> 
-> > Is patching git acceptable or is that out of question too?  
-> I have done a bunch of git patching, where specifically.
-> 
-> > What are your requirements, exactly?  
-> Source code and comments contain SJIS content. The requirement is to be able to move seamlessly in and out of git, and have git show/diff/log display SJIS as well as ASCII content. How that happens is open. The UTF-16 is a red-herring, only as an attempt at getting at SJIS content differently than the limitation imposed by less.
-> 
-> 
+>> What are your requirements, exactly?
+> Source code and comments contain SJIS content. The requirement is to
+> be able to move seamlessly in and out of git, and have git show/diff/log
+> display SJIS as well as ASCII content. How that happens is open. The
+> UTF-16 is a red-herring, only as an attempt at getting at SJIS content
+> differently than the limitation imposed by less.
 
- - less is a very limited pager when it comes to international support.
-   Patches to support Japanese specifically were at a time merged in
-   RedHat but then reverted because they broke other languages. If
-   'cat' pager is good enough except for the paging 'less -r' provides
-   same plus the paging. You can fine-tune what is supposed to be
-   displayed verbatim and what is supposed to be treated specially with
-   LESSCHARDEF but it might not work well for SJIS. You can also set
-   the LESS variable to include -r by default.
+When your file content contains ShiftJIS, you should set an attribute in
+.gitattributes:
 
- - if patching git is not out of question I don't see how adding a a
-   full-featured pager such as lv is. 
+*.sourcecode	encoding=ShiftJIS
 
- - I don't think git itself needs any adjustments to handle SJIS if it
-   can handle UTF-8 already. UTF-16 would be a different story.
+When your git commits messages contain ShiftJIS, you should configure
 
-Michal
+ git config i18n.commitEncoding ShiftJIS
+
+More precisely, this assumes that your editor that composes to commits
+messages writes the .git/COMMIT_MSG in ShiftJIS.
+
+When your terminal or pager is configured that it interprets the byte
+stream that it receives from applications for display as ShiftJIS, then
+you should configure
+
+ git config i18n.logOutputEncoding ShiftJIS
+
+You can set this independently from the other settings. In particular,
+when it is not set, UTF-8 is assumed. That is, if your terminal or pager
+supports UTF-8, you should *NOT* set this configuration (or set it to
+UTF-8).
+
+And, of course, you must have built Git with iconv, which must have
+support for ShiftJIS.
+
+-- Hannes
