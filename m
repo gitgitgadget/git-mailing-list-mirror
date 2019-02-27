@@ -2,83 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD9F020248
-	for <e@80x24.org>; Wed, 27 Feb 2019 19:54:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 003EF20248
+	for <e@80x24.org>; Wed, 27 Feb 2019 22:45:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729136AbfB0TyH convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 27 Feb 2019 14:54:07 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:39057 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726894AbfB0TyH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 14:54:07 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1RJrv55061983
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 27 Feb 2019 14:53:57 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Johannes Sixt'" <j6t@kdbg.org>,
-        "=?UTF-8?Q?'Michal_Such=C3=A1nek'?=" <msuchanek@suse.de>
-Cc:     <git@vger.kernel.org>
-References: <001e01d4ce9c$eff07400$cfd15c00$@nexbridge.com> <20190227150836.495f1692@kitsune.suse.cz> <000001d4ceb4$b930df50$2b929df0$@nexbridge.com> <20190227171103.4cbc735a@kitsune.suse.cz> <000a01d4ceb8$3cd19720$b674c560$@nexbridge.com> <20190227172841.3a74fa60@kitsune.suse.cz> <000b01d4ceba$39cfddf0$ad6f99d0$@nexbridge.com> <20190227175135.4392e9d7@kitsune.suse.cz> <001101d4cebe$7119a080$534ce180$@nexbridge.com> <20190227181458.4f019d91@kitsune.suse.cz> <001b01d4cec3$364149e0$a2c3dda0$@nexbridge.com> <20190227185044.120c0ba7@kitsune.suse.cz> <002501d4cec6$2a5e5a20$7f1b0e60$@nexbridge.com> <20190227191814.054c2f3c@kitsune.suse.cz> <003301d4cecd$4bced250$e36c76f0$@nexbridge.com> <d3b76f4f-29b7-663e-ca3b-c15b1345a133@kdbg.org>
-In-Reply-To: <d3b76f4f-29b7-663e-ca3b-c15b1345a133@kdbg.org>
-Subject: RE: Need multibyte advice - Shift-JIS
-Date:   Wed, 27 Feb 2019 14:53:50 -0500
-Message-ID: <004601d4ced6$2c6692f0$8533b8d0$@nexbridge.com>
+        id S1730105AbfB0Wp6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 17:45:58 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45122 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729412AbfB0Wp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 17:45:58 -0500
+Received: by mail-wr1-f68.google.com with SMTP id w17so19797518wrn.12
+        for <git@vger.kernel.org>; Wed, 27 Feb 2019 14:45:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=TYmbTniAjEaMifZcVG6RzasKAfxL1pTyY5iekl8nC2M=;
+        b=bOAALX8NrXoozDD5OzbnEotrxe41eZz/AfiYezxRjaJKBk8cES4Kw7l4MhGKXXq0qj
+         naAJArscS9httfw29kosbhm10Dy9F6uJTIghKaVETBIn8V/rT79r53h8E6ksq7ub9zqH
+         OJcbwK2c63aEF19wu5+c1kczewz3+qRv1QSVC1gHOGJVEojtYW4MBkOFQ80R4ntLq2wr
+         sWvO2yKvl3YSep9vkql87nYASHf2UciiRc6WXTOe/uEpFKMT5M5ANKw8LHeofopUW1It
+         TT6zsw9oIFEw2INKRaMv24pWYQkHLjFE9dK7pTRDezYGZOfs76Iu5dgVonFrqwDMZoKi
+         XLxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=TYmbTniAjEaMifZcVG6RzasKAfxL1pTyY5iekl8nC2M=;
+        b=Fu87sGrXffesYnt3I05g7+6thoscqwEZxANlZC/0O+j2oMrom1sG5YyE1eK1uvpnu3
+         9tV3Rx3tBd61ehTn0p0C1wLr2oPtplnq0zSq1zlav/QIBZpxRlLu7euTMo9mFu9QKQ8/
+         RvZwhJMDvmIgGLQscRjKSa0g8phgn0w7dGj2NDFvdWDYSP4xY1TKpmR6AebK0OkJKKEu
+         XsdntUP1itTqM0gNIq+ELq9QIsgJPorcaTO200hJ7w76iG5wUXUpYSXA1kHrIGK7U065
+         S2SZH4mDZjhoeQfr6B3ldJ/Tp9n/HOhfjE9wmh1OEjosihK99BUb6U4qETmd22fWOJiW
+         JHpA==
+X-Gm-Message-State: APjAAAXeiY81EZX3XXiHksEkKNjLZTcz0C7j29Kxh+Q5Vvj2inCy/eEp
+        Yr3O4YxaESaiT3WebxlgPZE=
+X-Google-Smtp-Source: APXvYqyEkLTs5ubS7f+Y+izoAin42IoJZeYSZ4mBRIBQIE5QJBzIl6PLt9hxlDLrvhn3w03hjYKaiw==
+X-Received: by 2002:a05:6000:1185:: with SMTP id g5mr3831360wrx.299.1551307556172;
+        Wed, 27 Feb 2019 14:45:56 -0800 (PST)
+Received: from localhost ([95.149.189.205])
+        by smtp.gmail.com with ESMTPSA id i16sm14140876wru.16.2019.02.27.14.45.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 27 Feb 2019 14:45:54 -0800 (PST)
+Date:   Wed, 27 Feb 2019 22:45:53 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [WIP RFC PATCH v2 4/5] clone: extract function from
+ copy_or_link_directory
+Message-ID: <20190227224553.GS6085@hank.intra.tgummerer.com>
+References: <20190226051804.10631-1-matheus.bernardino@usp.br>
+ <20190226051804.10631-5-matheus.bernardino@usp.br>
+ <CACsJy8BztC=GNuPU_CuLbPSmhsjrSk8MmkyeK6ahgjEOzY=yOQ@mail.gmail.com>
+ <CAHd-oW5aOf+TE_AeA=VkaZUt7LTeSK_buojsEgb3NYMVVm1B_g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHTicsscbHaF10FfRV1Fywnm3yWvQI6Vn4cAU1TeogAvaPrzgJNYIqVAiFSY3EB0BWivQJ1IT1oAi/nFNcBwefUwQCu/1jjAZLyU/0BVY4EjQHabncGAoqBMNACITQLDaUeUxzQ
-Content-Language: en-ca
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHd-oW5aOf+TE_AeA=VkaZUt7LTeSK_buojsEgb3NYMVVm1B_g@mail.gmail.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 27, 2019 14:36, Johannes Sixt wrote:
-> Am 27.02.19 um 19:50 schrieb Randall S. Becker:
-> > On February 27, 2019 13:18, Michal Suchánek wrote:
-> >> What are your requirements, exactly?
-> > Source code and comments contain SJIS content. The requirement is to
-> > be able to move seamlessly in and out of git, and have git
-> > show/diff/log display SJIS as well as ASCII content. How that happens
-> > is open. The
-> > UTF-16 is a red-herring, only as an attempt at getting at SJIS content
-> > differently than the limitation imposed by less.
+On 02/27, Matheus Tavares Bernardino wrote:
+> On Tue, Feb 26, 2019 at 9:18 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> >
+> > On Tue, Feb 26, 2019 at 12:18 PM Matheus Tavares
+> > <matheus.bernardino@usp.br> wrote:
+> > > +        */
+> > > +       struct stat st;
+> > > +
+> > > +       if (mkdir(pathname, mode)) {
+> >
+> > Good opportunity to unindent this by doing
+> >
+> >     if (!mkdir(...
+> >          return;
+> >
+> > but it's up to you.
+> >
 > 
-> When your file content contains ShiftJIS, you should set an attribute in
-> .gitattributes:
-> 
-> *.sourcecode	encoding=ShiftJIS
-> 
-> When your git commits messages contain ShiftJIS, you should configure
-> 
->  git config i18n.commitEncoding ShiftJIS
-> 
-> More precisely, this assumes that your editor that composes to commits
-> messages writes the .git/COMMIT_MSG in ShiftJIS.
-> 
-> When your terminal or pager is configured that it interprets the byte stream
-> that it receives from applications for display as ShiftJIS, then you should
-> configure
-> 
->  git config i18n.logOutputEncoding ShiftJIS
-> 
-> You can set this independently from the other settings. In particular, when it
-> is not set, UTF-8 is assumed. That is, if your terminal or pager supports UTF-
-> 8, you should *NOT* set this configuration (or set it to UTF-8).
-> 
-> And, of course, you must have built Git with iconv, which must have support
-> for ShiftJIS.
+> Ok. But being such a small snippet, is the indentation really a code
+> smell here? (sorry, I'm still getting used to git's coding guidelines)
 
-Thanks. I will forward this along and check the iconv build and rev-level we have used in git. Many thanks.
+I don't think the indentation here is too bad here, but I think the
+code is slightly easier to read with less indentation, and it's easier
+to see what's happening in the success case as well without reading
+the whole method.
 
-
+And since this patch is already refactoring code we could do it here.
+I don't think it's a very big deal either way, which is why Duy left
+the decision on whether to use the suggestion or not up to you.
