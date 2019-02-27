@@ -2,103 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB23E20248
-	for <e@80x24.org>; Wed, 27 Feb 2019 03:45:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C977E20248
+	for <e@80x24.org>; Wed, 27 Feb 2019 05:45:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729410AbfB0DpS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Feb 2019 22:45:18 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:46018 "EHLO
+        id S1726069AbfB0Fp4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 00:45:56 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:36570 "EHLO
         mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729310AbfB0DpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Feb 2019 22:45:11 -0500
-Received: by mail-qk1-f196.google.com with SMTP id v139so9023589qkb.12
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 19:45:10 -0800 (PST)
+        with ESMTP id S1725903AbfB0Fp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 00:45:56 -0500
+Received: by mail-qk1-f196.google.com with SMTP id c2so8458172qkb.3
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 21:45:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=CDXXktL5+qIFhvpnsT+Ou94HdMZyLM0FGUJ9ofdoRPg=;
-        b=MCoo/KjKSmqHhj6crz/MQ94RAf1AMkKTM+tKVfjNhQceupSsnMLo4utndllgBd6Vg1
-         PpYmfrPZWqEqPuF7yT+oFyk7I1xovTx4Ps/LfLQQZlvan+kZ61BZsVUAX4RdgtD3NE1M
-         nat+i0xi1W8OcuydeftIAlGe2gHm2C6bPd0gdKq0eP0pVcrxMex4YjruFT8ahKACaON5
-         jP+nqos10dWx6I0K1N7KYyLwB125NQjExDNExXLgc0CEkUKcnXNwOdH7qRfYl/U4hAXr
-         YjZ/t5CTVYopiu/CKZORyAD1zxBsZsDHoniILANJd5i+0VTb4TiujspOFF74sgPm73YB
-         OV4g==
+         :cc;
+        bh=yPhnVPm60Q31SRVASQlkfKqH1lYBlmUGts7owibtsvg=;
+        b=GDJ5r4z5qZaY20ovEE9+rggrF6sCpEYdxIncBDgqko2Nb0jjmXG38cWAmj5AG0rhZr
+         Tx4M72zIsvxV5eEkKlBVoWOFW67B6s3CXnGJt0L41CHqFqK9Rc8uLHOHbfy5eHnrMdgK
+         h1KVceAJC4BQfkHPlqSm9u4KDAFNqIwowCX1taX/2bRC8FuLnO/1HW2+nSdNGOQTA47g
+         dBwt/FGmY3IqfK6hsvJoALs96vxz1OSpEts9LwmE7nGJDlWEUOvZ8ICuqqyBbyxI/YBz
+         UkZybc9Mqc0J4IzOjtr+8djwOIoHr/EpxWGfUA/v8JSaBUmAHWJO7nveIUYF0sLeFMRR
+         S+Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CDXXktL5+qIFhvpnsT+Ou94HdMZyLM0FGUJ9ofdoRPg=;
-        b=C26IZuX+AGEn3BI0DwgsmnNI54OCl/OSdYr4cm0tlPQUlPshJEPBpdn3A1RKX3YxiF
-         W3/iCt3BChgk1+YgyXqQAFczwjAF2A5soNev4uwAf3ArSZew86vHj+W4McY81DG9Fjef
-         X60KV/0ngsArd5J+tFvS+cvGYd0YVZeALishHrA1NmxCLBvT8pG5g38yOLuG1cHm+GGX
-         iZwGJ4SUXnbUKpqO4tBZwE8uJSJstrR2p1KqlBVuT9UyV2HKVHqaL84ooeLQ3n0qsJCQ
-         qlB5d+2QQ+kQsOocenv6Qpxh2NUI69gNo99iQ08R/bWdgV2AJS1nezxxn0BsU7VrOsuK
-         182w==
-X-Gm-Message-State: AHQUAuZwhQheGmWEnhXh7fed6YhV/3bQMHjBeNrWdbe8YyziJkiuuViz
-        Uuz7RRprw+Cvs8EfWFMwwcWiWRUWd5KUepet2SAsJ3KQ
-X-Google-Smtp-Source: AHgI3IZw/EyUvboaoLYSwz3aQTB12RqY6F2fX+iSY2SGbGNNj2KABBieGUTT3ThhS+1CMp34NWc1JJZEPsxpXOC1yLY=
-X-Received: by 2002:a37:7707:: with SMTP id s7mr669297qkc.252.1551239110251;
- Tue, 26 Feb 2019 19:45:10 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=yPhnVPm60Q31SRVASQlkfKqH1lYBlmUGts7owibtsvg=;
+        b=MpulkUd+csF3zQ7261vNSvLseGpA6zrG8eaNqdqEQk4iaBRu+6GE6b3W9h45LXc6E8
+         xiXrb4MLapm0VGSaZ4F9F+0K+NpBOHSqMqzs4Hl3/EnTwe7OG1/Bwf6hHhZN2i254yh/
+         LUOv6pU0Pk9i10FQVHmop4qJqutrAlxqSScc8kuYEf/OeDxK9djmluiT92PoAh2HTqRF
+         vEwsoz5yZQGBc2WWqIPVc4v6aO0P7QQ1q+MpVjMWsqwwcKuRnZCosM4imHL2vVfICGhc
+         Et7TH854uGooSw4wgAL7DzCyw2H6tqdlwY7EU3xCKu2+wnGu2QcytI//sAX4YGLtriFr
+         vUPg==
+X-Gm-Message-State: AHQUAuYkXeqZr+uqiEfxHnDNySdx6kCIdnpfdt+WmNNlL49raG/R/lF6
+        C9547sBy04qGwrD7/Jwfekyn7plEYI8qbnBIFA==
+X-Google-Smtp-Source: APXvYqzysRZu8ZPxdIOFKvAlXjHywLqr1Hb8ztTcLsOluywnqos8J2Zh1GLaiAFr8f1DaySoQ4KbEwWaF66w8mc8Yq4=
+X-Received: by 2002:a37:9cd1:: with SMTP id f200mr939728qke.176.1551246354706;
+ Tue, 26 Feb 2019 21:45:54 -0800 (PST)
 MIME-Version: 1.0
-References: <20190225211453.28300-1-jn.avila@free.fr> <20190226205430.15920-1-jn.avila@free.fr>
-In-Reply-To: <20190226205430.15920-1-jn.avila@free.fr>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Wed, 27 Feb 2019 11:44:59 +0800
-Message-ID: <CANYiYbGWK5NO4iy+jJcL17yQTkmz9=JJT10Yr5QGOwHS_C9G-w@mail.gmail.com>
-Subject: Re: [PATCH v2] l10n: fr.po remove obsolete entries
-To:     =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Tran Ngoc Quan <vnwildman@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
+References: <CA+h-Bnuf6u=hkPBcxhMm06FbfkS+jtrozu+inqqmUY1cNkXrWQ@mail.gmail.com>
+ <87va2zavu1.fsf@igel.home> <CA+h-BnvN7+ETU-vFxAGDvs0gvXUjAAhMkvTPUxoRTt2Gb4b2ow@mail.gmail.com>
+ <CA+P7+xq++4W32JT9WcasXn=Oj9W-U1eteFgpLZn8GVqeO0foog@mail.gmail.com> <nycvar.QRO.7.76.6.1901091501320.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1901091501320.41@tvgsbejvaqbjf.bet>
+From:   Nazri Ramliy <ayiehere@gmail.com>
+Date:   Wed, 27 Feb 2019 13:45:43 +0800
+Message-ID: <CAEY4ZpPQxCVY5dZ_K9NRqF=YB0=s1nnJhnuDzL+ZytJ5uO2N7g@mail.gmail.com>
+Subject: Re: git rebase: retain original head?
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Markus Wiederkehr <markus.wiederkehr@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-No=C3=ABl Avila <jn.avila@free.fr> =E4=BA=8E2019=E5=B9=B42=E6=9C=8827=
-=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=884:56=E5=86=99=E9=81=93=EF=BC=
-=9A
->
-> On NetBSD, the version of msgfmt is still 0.14.4. There's no hope for
-> an upgrade due to some GPLv3 allergy of NetBSD's. This version chokes
-> on heavily decorated commented entries in po files. It's safer to get
-> rid of all these obsolete entries.
->
-> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-> ---
->  po/fr.po | 1500 ------------------------------------------------------
->  1 file changed, 1500 deletions(-)
->
-> diff --git a/po/fr.po b/po/fr.po
-> index 7b15b76374..0e084f5a49 100644
-> --- a/po/fr.po
-> +++ b/po/fr.po
-> @@ -22474,1503 +22474,3 @@ msgstr "%s saut=C3=A9 avec un suffix de sauveg=
-arde '%s'.\n"
->  #, perl-format
->  msgid "Do you really want to send %s? [y|N]: "
->  msgstr "Souhaitez-vous r=C3=A9ellement envoyer %s ?[y|N] : "
-> -
-> -#~ msgid "--reschedule-failed-exec requires an interactive rebase"
-> -#~ msgstr "--reschedule-failed-exec requiert un rebasage interactif"
-> -
-> -#, fuzzy
-> -#~| msgid "git archive [<options>] <tree-ish> [<path>...]"
-> -#~ msgid "git diff --no-index [<options>] <path> <path>"
-> -#~ msgstr "git archive [<options>] <arbre ou apparent=C3=A9> [<chemin>..=
-.]"
+On Wed, Jan 9, 2019 at 10:08 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Having said that, it is an unintended regression in the built-in rebase.
+> Markus, could you come up with a minimal test case, preferably in the form
+> of a patch to t/t3415-rebase-autosquash.sh?
 
-The pull request sent by Tran this morning has the same issue, see:
-https://github.com/git-l10n/git-po/pull/357.
+Something like this, perhaps? ("gmail converts tabs to spaces" caveat
+applies to the diff formatting):
 
-@Jean-No=C3=ABl, you can send pull request to me to the "git-l10n/git-po"
-repo on Github, I will send a pull requst to Junio when he is back
-last week.
+--8<--
+diff --git t/t3400-rebase.sh t/t3400-rebase.sh
+index 3e73f7584c..cb55597a8b 100755
+--- t/t3400-rebase.sh
++++ t/t3400-rebase.sh
+@@ -59,6 +59,13 @@ test_expect_success 'rebase against master' '
+  git rebase master
+ '
+
++test_expect_success 'rebase sets ORIG_HEAD' '
++ echo Add B. > expect &&
++ echo Modify A. >> expect &&
++ git log --oneline --format=%s ORIG_HEAD.. > actual &&
++ test_cmp expect actual
++'
++
+ test_expect_success 'rebase, with <onto> and <upstream> specified as
+:/quuxery' '
+  test_when_finished "git branch -D torebase" &&
+  git checkout -b torebase my-topic-branch^ &&
+-->8--
+
+Bisect shows that the first bad commit is this one:
+
+commit 21853626eac565dd42572d90724b29863f61eb3b
+Author: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Fri Jan 18 07:09:27 2019 -0800
+
+    built-in rebase: call `git am` directly
+
+I verified that by undoing the crux of that commit, and that fixes the
+failing test:
+
+-->8--
+diff --git builtin/rebase.c builtin/rebase.c
+index 7c7bc13e91..848f6740a0 100644
+--- builtin/rebase.c
++++ builtin/rebase.c
+@@ -728,11 +728,6 @@ static int run_specific_rebase(struct rebase_options *opts)
+  goto finished_rebase;
+  }
+
+- if (opts->type == REBASE_AM) {
+- status = run_am(opts);
+- goto finished_rebase;
+- }
+-
+  add_var(&script_snippet, "GIT_DIR", absolute_path(get_git_dir()));
+  add_var(&script_snippet, "state_dir", opts->state_dir);
+
+--8<--
+
+But something seems off by my bisection in that the "bad" commit
+happens about 10 days after this email thread :/
+
+nazri
