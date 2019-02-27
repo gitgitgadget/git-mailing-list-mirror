@@ -2,101 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE683202AA
-	for <e@80x24.org>; Wed, 27 Feb 2019 18:18:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C59B7202AA
+	for <e@80x24.org>; Wed, 27 Feb 2019 18:19:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730103AbfB0SSZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Feb 2019 13:18:25 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:41914 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729577AbfB0SSZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 13:18:25 -0500
-Received: by mail-lj1-f194.google.com with SMTP id z25so14756489ljk.8
-        for <git@vger.kernel.org>; Wed, 27 Feb 2019 10:18:23 -0800 (PST)
+        id S1730208AbfB0STN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 13:19:13 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:46346 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726894AbfB0STN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 13:19:13 -0500
+Received: by mail-pg1-f193.google.com with SMTP id 196so8328101pgf.13
+        for <git@vger.kernel.org>; Wed, 27 Feb 2019 10:19:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lm3VpTi4rV0BJJp9W7KdITBxIGnT6raINZ5B1Q+EoOQ=;
-        b=DHUYpj0FfogYuE9ukPgFKeWNCdfvHx9iP1PpyywmCZy8M8+zWJOf3ZbtXcsn0EAOPR
-         UPkTkb/uZ008Bx1Iy6vDRlmCR6gXqwkrHta1sBcYF5CVgHWq+nQCDYhxC2F3ZZLJKiOw
-         ojAbG+Op1qKpx0e6zRLu0gkAhrSNstoxO1BqPr+Dd63MIHuqhQbOiOuJHC/9FzoOI6mP
-         B3ybzKUghSIi2Ny1mYwrgMLTynipwjHyIVMcY/Yf8tdxOvDDIrGSLAzob1cTJvv77wje
-         xgYgtP4WjUWnhUXN/gAE2iID+BX1jh2B4Jy9avSnfYUclwph4znnENwXA8hFbRXI1jXn
-         Xdig==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1UQognVgUnU5BJDRFh4Jw2q7YxgDdMGd+OIglf3hzIM=;
+        b=ef5wb3iMETDOGSTXET7EAqtJU9dQ70EGA1sC24jqb4fKMjsW38NRdNpy8JD9vtzv4v
+         L4C+G8p1FL7RXccayHsnM4lXkW5Vari0LNQHZbazdLzBYrtMIC0pfdDnDvqRaLal3FBM
+         yscxIEULqs9yzplAlhvicNuH3gdl1PCca/bpJOuZs8bERd2MiLG9V68dNiRlfchUz1vj
+         +Ytk+wM7BucTyzr05JLqx7c+Tpo+gdzBgv7eIZca+/tVEj/KS/I6uTjgyvFXX6vL3VM8
+         iZ3PQolqyhpwcOw8RCtLvoevdRh+g9PXTOYd3l3TDqklt4ZhqCW/MCxtVDXFZKPWzkdW
+         h8vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lm3VpTi4rV0BJJp9W7KdITBxIGnT6raINZ5B1Q+EoOQ=;
-        b=OURg1pEnxSNCK0DXIqPiKRbszeECfed5PhrtmcPOPUf8BR5aqLT/5vuK1MQUds86bx
-         ZPwRk4pzjrly5w8tlo/H8HmVhMrJVkoZHhaKKVlP02oqXGk3tJe449YQkHnFphiHQUlS
-         QHIVX1cpUtllklGMBFOISdeqBFsPXkFNiDNZtZPw4nADCpodSQTngcC2/M/9faY26gav
-         51bL5igLBV04VnqkPBeFMBWYem5v6WBM2gHidXeKnT7AC7doIbuD45CeD01MKAXvOvpc
-         9RgDFPBhMKPVhsDiibDD3GnxfkyGtmn9PWl/4HdFfraE/XLm6y1PxPyw0UPy4bMBztkC
-         dTTw==
-X-Gm-Message-State: APjAAAVR9xaxgG0eWRVKX/th5qAP3L1oxoXm29LEPWM/QIgBAhNYXW3K
-        ia1Smt8OnGwZjdAhPVSxFbSiKTtM
-X-Google-Smtp-Source: APXvYqyBAUCmAmDWsD1B1lHQ6u4W/mKkRDrjCpLtk7rXI1+UjjUl81sQFwPhDls+GU5hfIJaNFE1Ww==
-X-Received: by 2002:a2e:9c8e:: with SMTP id x14mr2327606lji.166.1551291502361;
-        Wed, 27 Feb 2019 10:18:22 -0800 (PST)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id f19sm547297lfk.69.2019.02.27.10.18.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Feb 2019 10:18:21 -0800 (PST)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 3/3] asciidoctor-extensions: fix spurious space after linkgit
-Date:   Wed, 27 Feb 2019 19:17:54 +0100
-Message-Id: <e1021ad4a97a78e7428fcdfbf2af7196a0c8d340.1551290936.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <cover.1551290936.git.martin.agren@gmail.com>
-References: <CAN0heSqLbn7dRu4eARpyMqhFYpj3Pr5i=EMPnQZK9hUfWmf-KQ@mail.gmail.com> <cover.1551290936.git.martin.agren@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1UQognVgUnU5BJDRFh4Jw2q7YxgDdMGd+OIglf3hzIM=;
+        b=GwMToFo6K5FGA7VCpFaOg8VMDkdYdPEOGmu+Y9ilDJsJhpaGznnesT9nJKet87snB2
+         H7xyLAIxjSQO6vU+tk8mIUccSYzmc/8/iXh5wDxAQBnAS6QsfGR9Y7woStG7iTHiUJ5V
+         06IczwC77B54iC4C2H4PS91fyzwqobap0YwHJeaNYnn03c4deKEGuL2pYnIBV3cKj6dv
+         L7UhH2eMrefSbqx2OA7hKPprYJlQijoQF0eIgud8g8EyinJuiByW+b+Tgu3UyZjU03nj
+         sutS9BFLLeeIQQ1thZoMNAewss1VarprGyeLrc5dNiSSzt5U9oqAU6L9qeAeaKZxHD4c
+         24IA==
+X-Gm-Message-State: AHQUAuaMSiuVFZpcE9ve7bJs0be61ePC7XcSC+dmAIKma2uhEL9MgiAc
+        Y4PM51ItWYOsIy55dSxNf1TiYDs4sGfrE0AtqtbbDg==
+X-Google-Smtp-Source: AHgI3IbPUYiR9vsftwejNoU9Sz+Vo8Ig8uhEnrmYodTiPOjfH3wRc93V0cQt9WfZgohW25ksT7JbfBFq+lQsuqpb2ic=
+X-Received: by 2002:a63:1616:: with SMTP id w22mr4190854pgl.200.1551291553006;
+ Wed, 27 Feb 2019 10:19:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <cover.1551123979.git.martin.agren@gmail.com> <e960fec4b492f3edf7bade35862333af5e8704d7.1551123979.git.martin.agren@gmail.com>
+ <CAPig+cS7BdHhLn+XjjyVa+PC040y-E4iPD=kuDtigenzSHcFKQ@mail.gmail.com>
+ <CAN0heSrogSpdSOGj0ibx0Dcjw=0o0u0VSivfjgL7r5f-Jiqs3w@mail.gmail.com>
+ <CAPig+cRTj_jHFrqyYsn=ivuO9uNcWjB=5okX0SCGoeWU=uR8Gw@mail.gmail.com>
+ <CAN0heSoWv9xTYzFS16-fjnZuY_+6vpHSHcLmwWG8DdJEmNcTuA@mail.gmail.com> <CAPig+cQ8d7_=sY5bQ8soeNAnE60o8mdE4utCiJSaJgR7p8UrwA@mail.gmail.com>
+In-Reply-To: <CAPig+cQ8d7_=sY5bQ8soeNAnE60o8mdE4utCiJSaJgR7p8UrwA@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 27 Feb 2019 19:19:00 +0100
+Message-ID: <CAN0heSqADqqk1SaPMeQnQR3c3sabn=vD2NmfH5VinyKXk8ezkw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] Documentation/Makefile: add missing xsl dependencies
+ for manpages
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we render, e.g., "linkgit:gitglossary[7]." with Asciidoctor, we get
-"gitglossary(7) ." with a space between the linkgit macro expansion and
-the punctuation. We can fix this by dropping the trailing newline after
-we've turned `linkgit:foo[bar]` into `<citerefentry>..</citerefentry>`.
+On Tue, 26 Feb 2019 at 13:47, Eric Sunshine <sunshine@sunshineco.com> wrote=
+:
+>
+> On Tue, Feb 26, 2019 at 12:59 AM Martin =C3=85gren <martin.agren@gmail.co=
+m> wrote:
+> > Were you perhaps mislead by one of the similarly-named files?
+>
+> Yes, I was misled by similar names. Sorry for the noise.
 
-The diff produced by `USE_ASCIIDOCTOR=Yes ./doc-diff HEAD^ HEAD` is
-almost 6000 lines large and shows how this fixes "git-foo(x) ,", "(see
-git-bar(y) )" and so on. One might wonder whether this also turns, e.g.,
-"see linkgit:foo[1] for more" into "see foo(1)for more", but no. We get
-"...</citerefentry> for more" in the XML, see, e.g., git-am.xml, so the
-space ends up in git-am.1 just fine.
+Hey, no problem. And thanks for the subtle hint about "misled". ;-)
+I appreciate it.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Documentation/asciidoctor-extensions.rb | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index ec83b4959e..f7a5982f8b 100644
---- a/Documentation/asciidoctor-extensions.rb
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -16,7 +16,7 @@ module Git
-           "<citerefentry>\n" \
-             "<refentrytitle>#{target}</refentrytitle>" \
-             "<manvolnum>#{attrs[1]}</manvolnum>\n" \
--          "</citerefentry>\n"
-+          "</citerefentry>"
-         end
-       end
-     end
--- 
-2.21.0
-
+Martin
