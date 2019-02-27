@@ -7,125 +7,81 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C977E20248
-	for <e@80x24.org>; Wed, 27 Feb 2019 05:45:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8ADF720248
+	for <e@80x24.org>; Wed, 27 Feb 2019 05:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726069AbfB0Fp4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Feb 2019 00:45:56 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:36570 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725903AbfB0Fp4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 00:45:56 -0500
-Received: by mail-qk1-f196.google.com with SMTP id c2so8458172qkb.3
-        for <git@vger.kernel.org>; Tue, 26 Feb 2019 21:45:55 -0800 (PST)
+        id S1726703AbfB0Ft4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 00:49:56 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41026 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbfB0Ft4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 00:49:56 -0500
+Received: by mail-pg1-f195.google.com with SMTP id m1so7386166pgq.8
+        for <git@vger.kernel.org>; Tue, 26 Feb 2019 21:49:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yPhnVPm60Q31SRVASQlkfKqH1lYBlmUGts7owibtsvg=;
-        b=GDJ5r4z5qZaY20ovEE9+rggrF6sCpEYdxIncBDgqko2Nb0jjmXG38cWAmj5AG0rhZr
-         Tx4M72zIsvxV5eEkKlBVoWOFW67B6s3CXnGJt0L41CHqFqK9Rc8uLHOHbfy5eHnrMdgK
-         h1KVceAJC4BQfkHPlqSm9u4KDAFNqIwowCX1taX/2bRC8FuLnO/1HW2+nSdNGOQTA47g
-         dBwt/FGmY3IqfK6hsvJoALs96vxz1OSpEts9LwmE7nGJDlWEUOvZ8ICuqqyBbyxI/YBz
-         UkZybc9Mqc0J4IzOjtr+8djwOIoHr/EpxWGfUA/v8JSaBUmAHWJO7nveIUYF0sLeFMRR
-         S+Ug==
+        bh=ciXOHfleGNIBjeRs6/JyD2RiGzK6OAe29YfhWpEqTvw=;
+        b=pQkOEEiX9pYF16EVo0d7RRCQmtC3AuOfb1Pvu6AK1zwnBKI7rQ84Ok2veNxv0F+lyO
+         UkVB0FD2Tv/Bzs03XsGddDb5gevfCxmd+ScCbOwKRRfhtqElI6eiDbmPbAIka+WwBEWq
+         fshZhD0nWRVz2qfMjJadPAzhesZLHjuf7sNgvll14b9o8132CyJnxMfc5IobFkD4ZZjH
+         d1LGI3RxR5ip8zKod/c4mWdpx1Av7MrVcJDahE5l6ok+vyWWzdvmLlipv+djC2PJ3Q5J
+         ofR5SnnnW4CsLs4M86x8kt3FR7cuO5XZFj1bB9BhrnlxrVP6Uv1ZlfjkLqwCmK5OKZ8H
+         F48w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yPhnVPm60Q31SRVASQlkfKqH1lYBlmUGts7owibtsvg=;
-        b=MpulkUd+csF3zQ7261vNSvLseGpA6zrG8eaNqdqEQk4iaBRu+6GE6b3W9h45LXc6E8
-         xiXrb4MLapm0VGSaZ4F9F+0K+NpBOHSqMqzs4Hl3/EnTwe7OG1/Bwf6hHhZN2i254yh/
-         LUOv6pU0Pk9i10FQVHmop4qJqutrAlxqSScc8kuYEf/OeDxK9djmluiT92PoAh2HTqRF
-         vEwsoz5yZQGBc2WWqIPVc4v6aO0P7QQ1q+MpVjMWsqwwcKuRnZCosM4imHL2vVfICGhc
-         Et7TH854uGooSw4wgAL7DzCyw2H6tqdlwY7EU3xCKu2+wnGu2QcytI//sAX4YGLtriFr
-         vUPg==
-X-Gm-Message-State: AHQUAuYkXeqZr+uqiEfxHnDNySdx6kCIdnpfdt+WmNNlL49raG/R/lF6
-        C9547sBy04qGwrD7/Jwfekyn7plEYI8qbnBIFA==
-X-Google-Smtp-Source: APXvYqzysRZu8ZPxdIOFKvAlXjHywLqr1Hb8ztTcLsOluywnqos8J2Zh1GLaiAFr8f1DaySoQ4KbEwWaF66w8mc8Yq4=
-X-Received: by 2002:a37:9cd1:: with SMTP id f200mr939728qke.176.1551246354706;
- Tue, 26 Feb 2019 21:45:54 -0800 (PST)
+        bh=ciXOHfleGNIBjeRs6/JyD2RiGzK6OAe29YfhWpEqTvw=;
+        b=nsATb84LpE9ysdcZPWFcyzg2xeGX/Dxo3uiGV+u6rQbo0cesciWK//EzvD64uoO02F
+         lD3bjRgeUsx+exbqgzXv1AAx2Hd3zaLza07wjuvf2X35ovqOg1bXA7JrZidW5ZuAPn2k
+         FLds5vRfIWf3bm4z3tMUPW/RocsaakuR1ZeKvnFW/JZm6W4MDaQVUHhijw9WpEPY0FoL
+         3ZBDHkjQSx+eWie0aan+7x7UgFNyNlffeMacHcTkg1MHNuco9lfvnaIVahxtcDNMWV8F
+         I37+OcCYyoE/Dnuqm+UZv+BwGrHfA/jf3f1LiluuV16/A2P54q9IzzGXHyvf5ekp/B8K
+         oBYw==
+X-Gm-Message-State: AHQUAub4Qq0zCG7eMoASpAnqs7dPDzEy7KqpfXCG11YNWjmTwsE29g6g
+        sRIobM2A5QyGyX6vboaJoM+Y2uCKXjrwT7EAMsg=
+X-Google-Smtp-Source: AHgI3IbXhfvgox6brfwkuc2b5Q70KqpAWVlBufHAcdnUA4O4x+5Mbbz/tF3DOJyQpw+jj8EoPZ+ltP0GD87+Qo21TrM=
+X-Received: by 2002:a63:1616:: with SMTP id w22mr1314978pgl.200.1551246595486;
+ Tue, 26 Feb 2019 21:49:55 -0800 (PST)
 MIME-Version: 1.0
-References: <CA+h-Bnuf6u=hkPBcxhMm06FbfkS+jtrozu+inqqmUY1cNkXrWQ@mail.gmail.com>
- <87va2zavu1.fsf@igel.home> <CA+h-BnvN7+ETU-vFxAGDvs0gvXUjAAhMkvTPUxoRTt2Gb4b2ow@mail.gmail.com>
- <CA+P7+xq++4W32JT9WcasXn=Oj9W-U1eteFgpLZn8GVqeO0foog@mail.gmail.com> <nycvar.QRO.7.76.6.1901091501320.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1901091501320.41@tvgsbejvaqbjf.bet>
-From:   Nazri Ramliy <ayiehere@gmail.com>
-Date:   Wed, 27 Feb 2019 13:45:43 +0800
-Message-ID: <CAEY4ZpPQxCVY5dZ_K9NRqF=YB0=s1nnJhnuDzL+ZytJ5uO2N7g@mail.gmail.com>
-Subject: Re: git rebase: retain original head?
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Markus Wiederkehr <markus.wiederkehr@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
+References: <pull.152.git.gitgitgadget@gmail.com> <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
+ <CAN0heSqSp-a0zUKT5EaGLBYnRtESTnu9GKWtGARz2kaOAhc1HQ@mail.gmail.com>
+ <CAL7ArXoau1ZfBsV9JaUDprwjSijyo6K5d9JyC1mdfc=KEvgJxw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1902262051080.41@tvgsbejvaqbjf.bet> <CAL7ArXq37k2qmjLSB6DROq3K_wd0YaD9a-thNXgVwcxX7BEUMg@mail.gmail.com>
+In-Reply-To: <CAL7ArXq37k2qmjLSB6DROq3K_wd0YaD9a-thNXgVwcxX7BEUMg@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 27 Feb 2019 06:49:41 +0100
+Message-ID: <CAN0heSpebSEMo_OFrVFRXssVqRwnq8m=_b9E6b1oj1GNiPrqDw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] tests: replace `test -(d|f)` with test_path_is_(dir|file)
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 9, 2019 at 10:08 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Having said that, it is an unintended regression in the built-in rebase.
-> Markus, could you come up with a minimal test case, preferably in the form
-> of a patch to t/t3415-rebase-autosquash.sh?
+On Tue, 26 Feb 2019 at 21:02, Rohit Ashiwal <rohit.ashiwal265@gmail.com> wrote:
+>
+> Hey!
+>
+> On Wed, Feb 27, 2019 at 1:22 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > We already have `test_path_is_missing`. Why not use that instead of `!
+> > test -d` or `! test -f`?
+> >
+>
+> Yes, I think this is better. It will satisfy all the requirements I guess.
 
-Something like this, perhaps? ("gmail converts tabs to spaces" caveat
-applies to the diff formatting):
+Good suggestion, Johannes. That is probably what most (all) of these
+wanted to express.
 
---8<--
-diff --git t/t3400-rebase.sh t/t3400-rebase.sh
-index 3e73f7584c..cb55597a8b 100755
---- t/t3400-rebase.sh
-+++ t/t3400-rebase.sh
-@@ -59,6 +59,13 @@ test_expect_success 'rebase against master' '
-  git rebase master
- '
-
-+test_expect_success 'rebase sets ORIG_HEAD' '
-+ echo Add B. > expect &&
-+ echo Modify A. >> expect &&
-+ git log --oneline --format=%s ORIG_HEAD.. > actual &&
-+ test_cmp expect actual
-+'
-+
- test_expect_success 'rebase, with <onto> and <upstream> specified as
-:/quuxery' '
-  test_when_finished "git branch -D torebase" &&
-  git checkout -b torebase my-topic-branch^ &&
--->8--
-
-Bisect shows that the first bad commit is this one:
-
-commit 21853626eac565dd42572d90724b29863f61eb3b
-Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date:   Fri Jan 18 07:09:27 2019 -0800
-
-    built-in rebase: call `git am` directly
-
-I verified that by undoing the crux of that commit, and that fixes the
-failing test:
-
--->8--
-diff --git builtin/rebase.c builtin/rebase.c
-index 7c7bc13e91..848f6740a0 100644
---- builtin/rebase.c
-+++ builtin/rebase.c
-@@ -728,11 +728,6 @@ static int run_specific_rebase(struct rebase_options *opts)
-  goto finished_rebase;
-  }
-
-- if (opts->type == REBASE_AM) {
-- status = run_am(opts);
-- goto finished_rebase;
-- }
--
-  add_var(&script_snippet, "GIT_DIR", absolute_path(get_git_dir()));
-  add_var(&script_snippet, "state_dir", opts->state_dir);
-
---8<--
-
-But something seems off by my bisection in that the "bad" commit
-happens about 10 days after this email thread :/
-
-nazri
+Martin
