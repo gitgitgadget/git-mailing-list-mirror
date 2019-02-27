@@ -2,76 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FA0A20248
-	for <e@80x24.org>; Wed, 27 Feb 2019 15:02:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F204020248
+	for <e@80x24.org>; Wed, 27 Feb 2019 15:03:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730483AbfB0PCa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Feb 2019 10:02:30 -0500
-Received: from fallback16.mail.ru ([94.100.177.128]:34268 "EHLO
-        fallback16.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726590AbfB0PC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 10:02:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=3H95XAbEwKHMOn1/8a2mb7I19wV1mWOyv1firHveq5I=;
-        b=DA5t4v+QyyECtFgXPlyun54r0h8o4uQfbLmFKaEP2uDJvvOpRtdHagvc3amdjieLzoP93MMqYamum09iSlPHfUmWYGH1aao6iVA6z4ulgATMlNCJh5nkH2SYUNijmY0TDg27pUQWz9bSD6be/K02qSH2qHHjuq8j392JM5hXJdU=;
-Received: from [10.161.22.24] (port=42126 helo=smtp54.i.mail.ru)
-        by fallback16.i with esmtp (envelope-from <kostix@bswap.ru>)
-        id 1gz0j5-0004Y4-6j
-        for git@vger.kernel.org; Wed, 27 Feb 2019 18:02:27 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=3H95XAbEwKHMOn1/8a2mb7I19wV1mWOyv1firHveq5I=;
-        b=DA5t4v+QyyECtFgXPlyun54r0h8o4uQfbLmFKaEP2uDJvvOpRtdHagvc3amdjieLzoP93MMqYamum09iSlPHfUmWYGH1aao6iVA6z4ulgATMlNCJh5nkH2SYUNijmY0TDg27pUQWz9bSD6be/K02qSH2qHHjuq8j392JM5hXJdU=;
-Received: by smtp54.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1gz0j3-0002Ic-48; Wed, 27 Feb 2019 18:02:25 +0300
-Date:   Wed, 27 Feb 2019 18:02:23 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     Adrian Wright <adrian@wright2.me.uk>
-Cc:     git@vger.kernel.org
-Subject: Re: git case sensitivity issue
-Message-ID: <20190227150223.jfkxp4bvvdcmapnx@tigra>
-References: <CA+LT4LV4WBJtgDOene7i9UQmmkB20L0Zrr=XDzs4j197+uC1jw@mail.gmail.com>
+        id S1730491AbfB0PDo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 10:03:44 -0500
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:33202 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726590AbfB0PDn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 10:03:43 -0500
+Received: by mail-wr1-f41.google.com with SMTP id i12so18379037wrw.0
+        for <git@vger.kernel.org>; Wed, 27 Feb 2019 07:03:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QbVBcNUwgYrN+Oz9f682kpVGyrRhuTTVliW95/QZ4Pk=;
+        b=M5qNvyjhTVVjOeGxIaMavw+h46mJWMf45OI8KoOc1w4m9iWREflNaYLKk/gQReApnA
+         yTJDO63kJrbUwxsMK+HeqslcgDKFZodCO6J0HvaIvLa389b2UVcucEwyVBCMM07K3RUM
+         IrU5rutYUuAYIrgiUHlv/wK9q8570Jg5Jcoew=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QbVBcNUwgYrN+Oz9f682kpVGyrRhuTTVliW95/QZ4Pk=;
+        b=e6qqG8NwACUl2+VAW9eva3sFqQhXx/pt2gV+ikgCEzALa0aEbYKKvqH4mLHzEBeo/A
+         GmNzHFur8nVsk7SnImGJk83In+eM7CzMFrB7dmuvOh4VRHKUxhAQr0RNkAk29Vaogk7W
+         LPYMu5drwLGoD2+cVK1pzDKFopmWpST6Co663OV1bAv6VrHHPYTH5yWk8rQVdTuX5vGb
+         pnE3oelGoGRlsuodfXm3iZNh+RtWYpm2IVafrVTFxC5KxpyhVqvNB+bI5PYB+vyn+Ej4
+         CPMfUOwXZlKtjBJRt9lSbYloRqq2fTkgvgkolSiqboNZlXtcAdY0vJJXXQ7Ru9Hw56v8
+         7fcA==
+X-Gm-Message-State: APjAAAVZF8FmW15HhJGdDeBsUXhwq8Q0h2DNYwSw5e33YNbtUMGORB51
+        KAKQF3nH9tvXBmWx7+nBNEbDzg8dOVhmF2XvXrG/d8G095E=
+X-Google-Smtp-Source: APXvYqz2AxkFDmTdSWPxUuURzIXO6YSJmJLAqDCXL4+ICY3GBmIWcTuvYazx4qyIebpVO//XX6jq9wiQA2FhnK99km8=
+X-Received: by 2002:adf:dd12:: with SMTP id a18mr2607217wrm.4.1551279821152;
+ Wed, 27 Feb 2019 07:03:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+LT4LV4WBJtgDOene7i9UQmmkB20L0Zrr=XDzs4j197+uC1jw@mail.gmail.com>
-User-Agent: NeoMutt/20180716
-X-77F55803: 0014004E1F3277295A78504BD2AC29410C907E9E4A83F9FEFD601F1D047DB74A6A9DA87CAE0D12D58EC4EBDECB1953FC
-X-7FA49CB5: 0D63561A33F958A5BBBF985347AE4F72538360832FD2D75F36A2807E4187C3608941B15DA834481FA18204E546F3947CEDCF5861DED71B2F389733CBF5DBD5E9C8A9BA7A39EFB7666BA297DBC24807EA117882F44604297287769387670735209ECD01F8117BC8BEA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C2249668B94F0A65C3A0C3AA81AA40904B5D9CF19DD082D7633A0E7DDDDC251EA7DABD81D268191BDAD3D78DA827A17800CE7542AF255F21831B5CD04E86FAF290E2D40A5AABA2AD3711975ECD9A6C639B01B78DA827A17800CE7A839FE83A78F066FC03837ACF90F27B775ECD9A6C639B01B4E70A05D1297E1BBC6867C52282FAC85D9B7C4F32B44FF57C2F2A386D11C4599BD9CCCA9EDD067B1EDA766A37F9254B7
-X-Mailru-Sender: 3EA917A0E6524472E50B252446CEFEA44341B7E549E56438A4C309EE7AFE5A7F59B8C681F8837A39FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
-X-Mras: OK
-X-77F55803: 669901E4625912A97F9F52485CB584D7271FD7DF62800FDC4390F6D9A191B390A3C28126B2EBEC23135352F4C85BF2EF09B5EA7FC11112D7
-X-Mras: OK
+References: <20190227094926.GE19739@szeder.dev>
+In-Reply-To: <20190227094926.GE19739@szeder.dev>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Wed, 27 Feb 2019 15:03:30 +0000
+Message-ID: <CAE5ih78MV1qGTHBmCaN5k+VGv8Cy-RnFwOU0yuJBPEyn37C_4w@mail.gmail.com>
+Subject: Re: Occasional git p4 test failures because of stray fast-import processes
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 27, 2019 at 12:38:04PM +0000, Adrian Wright wrote:
+On Wed, 27 Feb 2019 at 09:49, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrot=
+e:
+>
+> Hi Luke,
+>
+> I saw rare failures in test 6 'git p4 sync uninitialized repo' in
+> 't9800-git-p4-basic.sh' on Travis CI, because the 'cleanup_git'
+> function failed to do its job.  The (redacted) trace looks like this:
 
-> I am a  git-for-windows user and have run into issues with casing on
-> Windows OS.
-> 
-> I filed a GitHub issue directly on the git-for-windows repo:
-> 
-> The issue can be found on URL:
-> https://github.com/git-for-windows/git/issues/2066
-> 
-> See the GitHub link above for more details on the bug.
-> 
-> According to the maintainer of git-for-windows this is a bug and the
-> bug is with git not git-for-windows.
-> 
-> Are you aware of this bug and are there any plans to fix it?
+Thanks for the *very* detailed analysis!
 
-Yes.
+I think you are right - git-p4 should wait() for all of its children,
+and that ought to fix this.
 
-Please use the <https://public-inbox.org/git/> web interface to search
-through the archives of this list.
+I think I may have even added the bit of code you mention (about a
+decade ago now).
 
-For a start, try <https://public-inbox.org/git/?q=%22case+sensitive%22>
+I'll have a look and see what can be done.
 
+Thanks!
+Luke
+
+
+
+>
+>   + cleanup_git
+>   + retry_until_success rm -r /home/szeder/src/git/t/trash directory.t980=
+0-git-p4-basic/git
+>   + time_in_seconds
+>   + cd /
+>   + /usr/bin/python -c import time; print(int(time.time()))
+>   + timeout=3D1551233042
+>   + rm -r /home/szeder/src/git/t/trash directory.t9800-git-p4-basic/git
+>   + test_must_fail test -d /home/szeder/src/git/t/trash directory.t9800-g=
+it-p4-basic/git
+>   test_must_fail: command succeeded: test -d /home/szeder/src/git/t/trash=
+ directory.t9800-git-p4-basic/git
+>   + eval_ret=3D1
+>   + :
+>   not ok 6 - git p4 sync uninitialized repo
+>
+> Trying to reproduce this failure with stock Git can be tricky: I've
+> seen
+>
+>   ./t9800-git-p4-basic.sh --stress -r 1,2,6,22
+>
+> fail within the first 10 tries, but it also run overnight without a
+> single failure...  However, the following two-liner patch can reliably
+> trigger this failure:
+>
+> diff --git a/fast-import.c b/fast-import.c
+> index b7ba755c2b..54715018b3 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -3296,6 +3296,7 @@ int cmd_main(int argc, const char **argv)
+>                 rc_free[i].next =3D &rc_free[i + 1];
+>         rc_free[cmd_save - 1].next =3D NULL;
+>
+> +       sleep(1);
+>         start_packfile();
+>         set_die_routine(die_nicely);
+>         set_checkpoint_signal();
+> diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+> index b3be3ba011..2d2ef50bfa 100644
+> --- a/t/lib-git-p4.sh
+> +++ b/t/lib-git-p4.sh
+> @@ -190,6 +190,7 @@ kill_p4d () {
+>
+>  cleanup_git () {
+>         retry_until_success rm -r "$git"
+> +       sleep 2
+>         test_must_fail test -d "$git" &&
+>         retry_until_success mkdir "$git"
+>  }
+>
+>
+> What's going on is this: 'git p4' invokes 'git fast-import' via
+> Python's subprocess.Popen(), and then there are two chain of events
+> racing with each other:
+>
+>   - In the foreground:
+>
+>     - 'git p4' notices that there are no p4 branches and die()s as
+>       expected, but leaves its child fast-import behind
+>     - 'test_i18ngrep' quickly verifies that 'git p4' died with the
+>       expected error message
+>     - the cleanup function removes the "$TRASH_DIRECTORY/git"
+>       directory, and
+>     - checks that the directory is indeed gone.
+>
+>   - Meanwhile in the background:
+>
+>     - 'git fast-import' starts up, kicks off the dashed external
+>       'git-fast-import' process,
+>     - which opens a tmp packfile in "$TRASH_DIRECTORY/git" for writing
+>       (the start_packfile() call in the patch context above), creating
+>       any leading directories if necessary,
+>     - notices that its stdin is closed (because 'git p4' died) and it
+>       has nothing left to do, so
+>     - it cleans up and exits.  Note that this cleanup only removes the
+>       tmp packfile, but leaves any newly created leading directories
+>       behind.
+>
+> While unlikely, it does apparently happen from time to time that the
+> test's cleanup function first removes "$TRASH_DIRECTORY/git", but then
+> 'git fast-import' re-creates it for its packfile before the cleanup
+> function checks the result of the removal.  The two well-placed
+> sleep()s in the patch above force such a problematic scheduling.
+>
+> There are 4 test cases running 'test_must_fail git p4 sync': the above
+> patch triggers a failure in 3 of them, and with a bit of extra modding
+> I could trigger a failure in the fourth one as well.
+>
+> We could work this around by waiting for 'git p4' and all its child
+> processes in the affected tests themselves, using the same shell
+> trickery as in ef09036cf3 (t6500: wait for detached auto gc at the end
+> of the test script, 2017-04-13), but this feels like, well, a
+> workaround.
+>
+> I think the proper solution would be to ensure that 'git p4' kills and
+> waits for all its child processes when die()ing.  Alternatively (or in
+> addition?), it could perform all the necessary sanity-checking (and
+> potential die()ing) before starting the 'git fast-import' process in
+> the first place.
+>
+> I've glanced through all subprocess.Popen() callsites in 'git p4' and
+> found most of them OK, in the sense that they wait for whatever child
+> process they create.  Alas, there was one exception: p4CmdList() can
+> invoke an optional callback function before wait()ing on its 'p4'
+> child, and the streamP4FilesCb() callback function can die() without
+> waiting for the 'p4' process (but it does wait() for 'git
+> fast-import'!).
+>
+> On a related note: this check for the just-removed directory was added
+> in 23aee4199a (git-p4: retry kill/cleanup operations in tests with
+> timeout, 2015-11-19), which mentions flaky cleanup operations.
+> Perhaps this is the same flakiness?!
+>
+> Anyway, as I mentioned elsewhere before, I have no idea why/how 'git
+> p4' works, so I'll leave it up to you how it's best to deal with this
+> issue...
+>
+>
+> G=C3=A1bor
+>
