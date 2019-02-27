@@ -2,225 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72E4E20248
-	for <e@80x24.org>; Wed, 27 Feb 2019 17:40:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07DB220248
+	for <e@80x24.org>; Wed, 27 Feb 2019 17:50:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730085AbfB0Rk3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Feb 2019 12:40:29 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42602 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726223AbfB0Rk2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 12:40:28 -0500
-Received: by mail-io1-f67.google.com with SMTP id p196so14190954iod.9
-        for <git@vger.kernel.org>; Wed, 27 Feb 2019 09:40:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tJlXP4JwZUje/d51zYs7K/4LZgbRW8GQcjxdpRNuM60=;
-        b=LNvewjj3gQi/8jK+SwhG4aQYYsNGts7c4YAyIPz8ft/1mXA5bDBz7Ymfx8Bk7RInVV
-         OxmagxOJ+aMeNUnwBVtY+Oq3H/wvSJ1w7vWQSArEG57XU/R1tOTIMWL0rlmzabK72Lv4
-         UxZYwKBOLqZO9P2X35E+sku2a29VcgBExpbZIQsNY7MLByI6eIIdxDKcneCLnAyprIhw
-         OdZh45h8PaH73lh4Z8g2o2ogC/f5UBNKk52RV2nUU2EUDoZsIjskh8A8gS2wwmKWrkOg
-         n/FZ8PZnhJUxdBnfVkDoQ2Oorud7DirsqnbJ/PcfPIPgQfW3JcVk6T8BiTfXxBUktwh/
-         R2mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tJlXP4JwZUje/d51zYs7K/4LZgbRW8GQcjxdpRNuM60=;
-        b=cEsM/4Y/N9/l0+adypqYYHEUmIzl9X3gPmWe3C0yN3m9EfjvW5+zV5ftNSof5j+czW
-         XiDRwikX8Y33P86solYhK5OZTe14e9lh32k6c5sO4q5Ddl+twdm1jbeBdfwRFWz39Z7Y
-         hZe641EyhpXUVRmVU0qiQL9034WYeSyXTJrHooX7CQe5/iad2xFZzodN2+vyIvCnJAUL
-         AqpO4ZN/GQTUygPfR4iVZJHyALCxFfLtH+9+328JvVr9ApSol/VzuednNSLZHEYrCCM/
-         qhHuhIpRXn+L5wdYRxmaUn1gGdr8C0tlR8hvfFncNM9Rjlmued9ZX8tHbvU1J7VAfues
-         9kEg==
-X-Gm-Message-State: APjAAAVdmYe6+9oqSH5GjsVNXG4L/KzxYGs6MffalJld6C0G7ZV25deW
-        ujPUV4RsDoSJO38AGEEPJGeCX7UecW4W/AyHwJjWtw==
-X-Google-Smtp-Source: APXvYqxKwRHfan7dWoj+aQUeKZ7A1IZPZsclxqWWn9PYt26Az/P0L6mTwXm3AZrWUFGhsWrj5BBsSYOkBM1UucS4JaA=
-X-Received: by 2002:a6b:7941:: with SMTP id j1mr2704640iop.262.1551289227714;
- Wed, 27 Feb 2019 09:40:27 -0800 (PST)
+        id S1726478AbfB0Ruq convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 27 Feb 2019 12:50:46 -0500
+Received: from mx2.suse.de ([195.135.220.15]:43434 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726389AbfB0Ruq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 12:50:46 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id A34D4AEC2;
+        Wed, 27 Feb 2019 17:50:44 +0000 (UTC)
+Date:   Wed, 27 Feb 2019 18:50:44 +0100
+From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: Need multibyte advice - Shift-JIS
+Message-ID: <20190227185044.120c0ba7@kitsune.suse.cz>
+In-Reply-To: <001b01d4cec3$364149e0$a2c3dda0$@nexbridge.com>
+References: <001e01d4ce9c$eff07400$cfd15c00$@nexbridge.com>
+        <20190227150836.495f1692@kitsune.suse.cz>
+        <000001d4ceb4$b930df50$2b929df0$@nexbridge.com>
+        <20190227171103.4cbc735a@kitsune.suse.cz>
+        <000a01d4ceb8$3cd19720$b674c560$@nexbridge.com>
+        <20190227172841.3a74fa60@kitsune.suse.cz>
+        <000b01d4ceba$39cfddf0$ad6f99d0$@nexbridge.com>
+        <20190227175135.4392e9d7@kitsune.suse.cz>
+        <001101d4cebe$7119a080$534ce180$@nexbridge.com>
+        <20190227181458.4f019d91@kitsune.suse.cz>
+        <001b01d4cec3$364149e0$a2c3dda0$@nexbridge.com>
+Organization: SUSE Linux
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
 MIME-Version: 1.0
-References: <20190226051804.10631-1-matheus.bernardino@usp.br>
- <20190226051804.10631-6-matheus.bernardino@usp.br> <CACsJy8B1asF3i+G-C1aZRw7QTW7jS+a4VkCbg-17YOTyYHuw5w@mail.gmail.com>
-In-Reply-To: <CACsJy8B1asF3i+G-C1aZRw7QTW7jS+a4VkCbg-17YOTyYHuw5w@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Wed, 27 Feb 2019 14:40:16 -0300
-Message-ID: <CAHd-oW6WJ5JSRAbcy+5kcEA4V8qKEUc9B=6WQZvdqaHz4XHBTA@mail.gmail.com>
-Subject: Re: [WIP RFC PATCH v2 5/5] clone: use dir-iterator to avoid explicit
- dir traversal
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 26, 2019 at 9:32 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Tue, Feb 26, 2019 at 12:18 PM Matheus Tavares
-> <matheus.bernardino@usp.br> wrote:
-> >
-> > Replace usage of opendir/readdir/closedir API to traverse directories
-> > recursively, at copy_or_link_directory function, by the dir-iterator
-> > API. This simplifies the code and avoid recursive calls to
-> > copy_or_link_directory.
-> >
-> > This process also makes copy_or_link_directory call die() in case of an
-> > error on readdir or stat, inside dir_iterator_advance. Previously it
-> > would just print a warning for errors on stat and ignore errors on
-> > readdir, which isn't nice because a local git clone would end up
-> > successfully even though the .git/objects copy didn't fully succeeded.
-> >
-> > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> > ---
-> > I can also make the change described in the last paragraph in a separate
-> > patch before this one, but I would have to undo it in this patch because
-> > dir-iterator already implements it. So, IMHO, it would be just noise
-> > and not worthy.
-> >
-> >  builtin/clone.c | 45 +++++++++++++++++++++++----------------------
-> >  1 file changed, 23 insertions(+), 22 deletions(-)
-> >
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index fd580fa98d..b23ba64c94 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -23,6 +23,8 @@
-> >  #include "transport.h"
-> >  #include "strbuf.h"
-> >  #include "dir.h"
-> > +#include "dir-iterator.h"
-> > +#include "iterator.h"
-> >  #include "sigchain.h"
-> >  #include "branch.h"
-> >  #include "remote.h"
-> > @@ -411,42 +413,37 @@ static void mkdir_if_missing(const char *pathname, mode_t mode)
-> >  }
-> >
-> >  static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
-> > -                                  const char *src_repo, int src_baselen)
-> > +                                  const char *src_repo)
-> >  {
-> > -       struct dirent *de;
-> > -       struct stat buf;
-> >         int src_len, dest_len;
-> > -       DIR *dir;
-> > -
-> > -       dir = opendir(src->buf);
-> > -       if (!dir)
-> > -               die_errno(_("failed to open '%s'"), src->buf);
-> > +       struct dir_iterator *iter;
-> > +       int iter_status;
-> > +       struct stat st;
-> > +       unsigned flags;
-> >
-> >         mkdir_if_missing(dest->buf, 0777);
-> >
-> > +       flags = DIR_ITERATOR_PEDANTIC | DIR_ITERATOR_FOLLOW_SYMLINKS;
-> > +       iter = dir_iterator_begin(src->buf, flags);
-> > +
-> >         strbuf_addch(src, '/');
-> >         src_len = src->len;
-> >         strbuf_addch(dest, '/');
-> >         dest_len = dest->len;
-> >
-> > -       while ((de = readdir(dir)) != NULL) {
-> > +       while ((iter_status = dir_iterator_advance(iter)) == ITER_OK) {
-> >                 strbuf_setlen(src, src_len);
-> > -               strbuf_addstr(src, de->d_name);
-> > +               strbuf_addstr(src, iter->relative_path);
-> >                 strbuf_setlen(dest, dest_len);
-> > -               strbuf_addstr(dest, de->d_name);
-> > -               if (stat(src->buf, &buf)) {
-> > -                       warning (_("failed to stat %s\n"), src->buf);
-> > -                       continue;
-> > -               }
-> > -               if (S_ISDIR(buf.st_mode)) {
-> > -                       if (!is_dot_or_dotdot(de->d_name))
-> > -                               copy_or_link_directory(src, dest,
-> > -                                                      src_repo, src_baselen);
-> > +               strbuf_addstr(dest, iter->relative_path);
-> > +
-> > +               if (S_ISDIR(iter->st.st_mode)) {
-> > +                       mkdir_if_missing(dest->buf, 0777);
->
-> I wonder if this mkdir_if_missing is sufficient. What if you have to
-> create multiple directories?
->
-> Let's say the first advance, we hit "a". The the second advance we hit
-> directory "b/b/b/b", we would need to mkdir recursively and something
-> like safe_create_leading_directories() would be a better fit.
->
-> I'm not sure if it can happen though. I haven't re-read dir-iterator
-> code carefully.
->
-> >                         continue;
-> >                 }
-> >
-> >                 /* Files that cannot be copied bit-for-bit... */
-> > -               if (!strcmp(src->buf + src_baselen, "/info/alternates")) {
-> > +               if (!strcmp(iter->relative_path, "info/alternates")) {
->
-> While we're here, this should be fspathcmp to be friendlier to
-> case-insensitive filesystems. You probably should fix it in a separate
-> patch though.
->
+On Wed, 27 Feb 2019 12:38:06 -0500
+"Randall S. Becker" <rsbecker@nexbridge.com> wrote:
 
-Nice! I will make this change in a separate patch in the series. Thanks!
+> On February 27, 2019 12:15, Michal Suchánek wrote:
+> > To: Randall S. Becker <rsbecker@nexbridge.com>
+> > Cc: git@vger.kernel.org
+> > Subject: Re: Need multibyte advice - Shift-JIS
+> > 
+> > On Wed, 27 Feb 2019 12:03:58 -0500
+> > "Randall S. Becker" <rsbecker@nexbridge.com> wrote:
+> >   
+> > > On February 27, 2019 11:52, Michal Suchánek wrote:  
+> > > > To: Randall S. Becker <rsbecker@nexbridge.com>
+> > > > Cc: git@vger.kernel.org
+> > > > Subject: Re: Need multibyte advice - Shift-JIS
+> > > >
+> > > > On Wed, 27 Feb 2019 11:33:47 -0500
+> > > > "Randall S. Becker" <rsbecker@nexbridge.com> wrote:
+> > > >  
+> > > > > On February 27, 2019 11:29 Michal Suchánek wrote:  
+> > > > > > On Wed, 27 Feb 2019 11:19:33 -0500 "Randall S. Becker"
+> > > > > > <rsbecker@nexbridge.com> wrote:
+> > > > > >  
+> > > > > > > On February 27, 2019 11:11, Michal Suchánek wrote:  
+> > > > > > > > On Wed, 27 Feb 2019 10:54:23 -0500 "Randall S. Becker"
+> > > > > > > > <rsbecker@nexbridge.com> wrote:
+> > > > > > > >  
+> > > > > > > > > On February 27, 2019 9:09, Michal Suchánek wrote:  
+> > > > > > > > > > On Wed, 27 Feb 2019 08:04:08 -0500 "Randall S. Becker"
+> > > > > > > > > > <rsbecker@nexbridge.com> wrote:
+> > > > > > > > > >  
+> > > > > > > > > > > Hi Git Team,
+> > > > > > > > > > >
+> > > > > > > > > > > I have to admit being perplexed by this one. I have
+> > > > > > > > > > > been asked to support the Shift-JIS character set in
+> > > > > > > > > > > file contents, comments, and logs, for a partner of
+> > > > > > > > > > > mine. I know there are a few ways to do this, but I'm
+> > > > > > > > > > > looking for the official non-hacky way  
+> > > > > > to do this.  
+> > > > > > > > > > > This is CLI only, and our pager, less, does not
+> > > > > > > > > > > support multi-byte, so I'm looking  
+> > > > > > > > > for  
+> > > > > > > > > > options there also.
+> > > > > > > > > >
+> > > > > > > > > > SJIS is about as much multibyte as UTF-8.
+> > > > > > > > > >
+> > > > > > > > > > Why do you think less does not support it?
+> > > > > > > > > >
+> > > > > > > > > > Last time I looked there was SJIS locale for libc so it
+> > > > > > > > > > is only matter of generating the correct locales and
+> > > > > > > > > > using them. Of course, if you are  
+> > > > > > > > > running  
+> > > > > > > > > > in UTF-8 SJIS will look like garbage.  
+> > > > > > > > >
+> > > > > > > > > Sadly, I did not personally build less on this platform,
+> > > > > > > > > and the libc used did not include UTF-16, on the platform
+> > > > > > > > > vendor supplied less. cat works fine, but the usual
+> > > > > > > > > LESSCHARSET=utf-16 is unsupported, so I am looking for an
+> > > > > > > > > alternative. THAT is why I think less does not support it.
+> > > > > > > > > Sorry, I should have made that more  
+> > > > > > clear.  
+> > > > > > > > >
+> > > > > > > > > cat works fine, so if I set GIT_PAGER=cat, I can at least
+> > > > > > > > > see the diffs cleanly in SJIS, but this partner wants a pager that is  
+> > usable.  
+> > > > > > > > >  
+> > > > > > > >
+> > > > > > > > So you want to use SJIS because UTF-16 is not supported. So
+> > > > > > > > what is the problem with SJIS (or UTF-8 for that matter)?  
+> > > > > > >
+> > > > > > > The partner I am working with is using multi-byte SJIS, which
+> > > > > > > is also not  
+> > > > > > supported by this incarnation of less. As a result, UTF-8 does
+> > > > > > not work either in this situation. The content is definitely multi-byte.
+> > > > > > I know this was fixed in RedHat's Less in 2016, but did not make
+> > > > > > this  
+> > > > platform.  
+> > > > > > >  
+> > > > > >
+> > > > > > Both UTF-8 and SJIS is multibyte and both is supported by less
+> > > > > > in general. If your particular less cannot support it then it is
+> > > > > > broken and you should fix it or get it fixed.  
+> > > > >
+> > > > > To be more specific, the implementation of less' UTF-8 on this
+> > > > > platform will  
+> > > > present the data as unusable junk as expected. SJIS is multi-byte,
+> > > > but is not one of the allowed encodings in less. I am not empowered to  
+> > "get it fixed".  
+> > > > Thanks for your advice.  
+> > > > >  
+> > > >
+> > > > How is this 'allowed encodings in less' defined?  
+> > >
+> > > When you run less with LESSCHARSET=encoding, if the encoding is not  
+> > known, you get the error:  
+> > > invalid charset name
+> > >
+> > > Doing the due diligence, I actually read the man page on the platform  
+> > before asking the question, which listed the following as the only allowed
+> > encodings: ascii, iso8859, latin1, latin9, dos, IBM-1047, koi8-r, next, utf-8,
+> > windows. The utf-8 variant does not know how to display its multi-byte
+> > forms in SJIS, as with other platforms. Does that make sense now?  
+> > >  
+> > 
+> > Does the said man page also mention LESSCHARDEF or LESSOPEN?  
+> 
+> Of course it does.
+> 
 
-> >                         copy_alternates(src, dest, src_repo);
-> >                         continue;
-> >                 }
-> > @@ -463,7 +460,11 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
-> >                 if (copy_file_with_time(dest->buf, src->buf, 0666))
-> >                         die_errno(_("failed to copy file to '%s'"), dest->buf);
-> >         }
-> > -       closedir(dir);
-> > +
-> > +       if (iter_status != ITER_DONE) {
-> > +               strbuf_setlen(src, src_len);
-> > +               die(_("failed to iterate over '%s'"), src->buf);
-> > +       }
->
-> I think you need to abort the iterator even when it returns ITER_DONE.
-> At least that's how the first caller in files-backend.c does it.
->
+So what's the problem with displaying SJIS or even UTF-16 in less,
+exactly?
 
-Hm, I don't think so, since dir_iterator_advance() already frees the
-resources before returning ITER_DONE. Also, I may be wrong, but it
-doesn't seem to me, that files-backend.c does it. The function
-files_reflog_iterator_advance() that calls dir_iterator_advance() even
-sets the dir-iterator pointer to NULL as soon as ITER_DONE is
-returned.
+Also if you really don't like less there is lv.
 
-
-> >  }
-> >
-> >  static void clone_local(const char *src_repo, const char *dest_repo)
-> > @@ -481,7 +482,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
-> >                 get_common_dir(&dest, dest_repo);
-> >                 strbuf_addstr(&src, "/objects");
-> >                 strbuf_addstr(&dest, "/objects");
-> > -               copy_or_link_directory(&src, &dest, src_repo, src.len);
-> > +               copy_or_link_directory(&src, &dest, src_repo);
-> >                 strbuf_release(&src);
-> >                 strbuf_release(&dest);
-> >         }
-> > --
-> > 2.20.1
-> >
->
->
-> --
-> Duy
+Michal
