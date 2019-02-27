@@ -2,70 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3511C20248
-	for <e@80x24.org>; Wed, 27 Feb 2019 12:52:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5ACB20248
+	for <e@80x24.org>; Wed, 27 Feb 2019 13:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730247AbfB0Mwg convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 27 Feb 2019 07:52:36 -0500
-Received: from webmail.trimma.se.253.68.83.in-addr.arpa ([83.68.253.31]:5124
-        "EHLO Triton.ad.trimma.se" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1728004AbfB0Mwf (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 27 Feb 2019 07:52:35 -0500
-X-Greylist: delayed 324 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Feb 2019 07:52:34 EST
-Received: from Triton.ad.trimma.se ([fe80::3059:77c9:78ab:1ec0]) by
- Triton.ad.trimma.se ([fe80::3059:77c9:78ab:1ec0%10]) with mapi id
- 14.02.0328.009; Wed, 27 Feb 2019 13:47:08 +0100
-From:   Linus Nilsson <Linus.Nilsson@trimma.se>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [BUG] All files in folder are moved when cherry-picking commit that
- moves fewer files
-Thread-Topic: [BUG] All files in folder are moved when cherry-picking commit
- that moves fewer files
-Thread-Index: AdTOmod0m3uZbLYAQNuBqsmdOY/9ng==
-Date:   Wed, 27 Feb 2019 12:47:07 +0000
-Message-ID: <67C5CE5D6EC13D4DB8FC51E2F9BD262F022B8B3151@Triton.ad.trimma.se>
-Accept-Language: sv-SE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.150.118]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1729650AbfB0NES (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 08:04:18 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:19856 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726223AbfB0NES (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 08:04:18 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x1RD4E7V028920
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Wed, 27 Feb 2019 08:04:14 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+Subject: Need multibyte advice - Shift-JIS
+Date:   Wed, 27 Feb 2019 08:04:08 -0500
+Message-ID: <001e01d4ce9c$eff07400$cfd15c00$@nexbridge.com>
 MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdTOm/wHybivAqdmTICu+qMb+40Pbw==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+Hi Git Team,
 
-I have found what I suspect to be a bug, or at least not desirable behavior in my case. In one branch, I have moved all files in a directory to another directory. The first directory is now empty in this branch (I haven't tested whether this is significant). I cherry-picked the commit to another branch that has additional files in the first directory. All the files in the first directory are now moved to the second directory, and not just the files that were moved in the original commit. It happens in Git for Windows, versions 2.20.1 and 2.21.0.
+I have to admit being perplexed by this one. I have been asked to support
+the Shift-JIS character set in file contents, comments, and logs, for a
+partner of mine. I know there are a few ways to do this, but I'm looking for
+the official non-hacky way to do this. This is CLI only, and our pager,
+less, does not support multi-byte, so I'm looking for options there also.
 
-It can be reproduced using these steps:
+I normally do all of my UTF-16 work from a workstation via ECLIPSE, with
+UTF-8 comments, so never really have encountered this as an issue. Although
+our UTF-16 HTML files look pretty ugly in a diff.
 
-$ git init
-$ mkdir a
-$ echo Hello > a/file1
-$ git add a/file1
-$ git commit -m 'Add file1'
-$ git checkout -b fix
-$ mkdir b
-$ git mv a/file1 b
-$ git commit -m 'Move file1 to b'
-$ git checkout master
-$ echo Bye > a/file2
-$ git add a/file2
-$ git commit -m 'Add file2'
-$ git cherry-pick fix
-[master 5b63afb] Move file1 to b
- Date: Wed Feb 27 13:27:45 2019 +0100
- 2 files changed, 0 insertions(+), 0 deletions(-)
- rename {a => b}/file1 (100%)
- rename {a => b}/file2 (100%)
+The platform (NonStop) does not have a lot of UTF-16 tooling by default
+(less does not support it), so I may have to write stuff, which is no issue.
+We are on 2.21.0 officially as of yesterday.
 
-Regards
-Linus Nilsson
+Kind Regards,
+Randall
+
+-- Brief whoami:
+NonStop developer since approximately 211288444200000000
+UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
+
+
+
+
+
