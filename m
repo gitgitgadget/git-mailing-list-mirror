@@ -2,89 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADB1320248
-	for <e@80x24.org>; Wed, 27 Feb 2019 11:13:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC2AE20248
+	for <e@80x24.org>; Wed, 27 Feb 2019 11:37:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726224AbfB0LNe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Feb 2019 06:13:34 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:52122 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726062AbfB0LNe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 06:13:34 -0500
-Received: by mail-it1-f193.google.com with SMTP id e24so8659210itl.1
-        for <git@vger.kernel.org>; Wed, 27 Feb 2019 03:13:33 -0800 (PST)
+        id S1726128AbfB0LhQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 06:37:16 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53437 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726037AbfB0LhQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 06:37:16 -0500
+Received: by mail-wm1-f65.google.com with SMTP id e74so5445169wmg.3
+        for <git@vger.kernel.org>; Wed, 27 Feb 2019 03:37:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Zsj6pepUmPUayDDDWQUC05FoOqVCF+c4L+6MUFJ2+Bc=;
-        b=tknTAE00xcckL8CcrN5gR+0lFZjxiXnEDxTDrRQMrj3LaI1n9Tbgn+jC+Kqdmm701a
-         MaC+2L305QVJlz7FxQ71rTW6o3FvHJOnpFMQK8oYrrheBCIKD59LY76KuWUES6+tn+Zy
-         7fRSk45VcAzY1xEvgKuS8Uq4CC4+BYy9uql7bVIAWLGTVCF8ArZfnujddGCRLTCQlMCh
-         oBWlim0njrXFJL20pKIUZeTohjzlNtedaAQvStA7uDKULNcs4xLA5JXmSyJuU145Ro0E
-         4uAndkVAot9b5Owzl3i8vUo7vaO9iIxSW7zgJRSr/n3HF0goU6FhOTnGERAL5aNixDgL
-         tp2Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=+deXaZFSGlkasasir4hNvWAMN9e0mmzwHBTLlNtoycM=;
+        b=Jhcztn0iggAR+/6/9aVX7s1rGj/J2AxpmfNu2RhXNVT1SM84P/x1zf4ivFu/4+C740
+         xpd6xuwKgitn9kKLNOJB+uRtqlA9mJOxMc3yCqVFBdkd3QgPJ/QtcvZwx08RVDmSvpQj
+         6WoreiF2IUpa7EIl2q+A/gm4bohc9ha7TRbuyzRiqGurEpYITq2HnXQbhgdx+hjJHTBu
+         2Hw7rst/GSgHTeKorPcdbAw66dF2H3PJCZ6PLuK6yoT0CJJX+EaceXLvFAPzJcRnWcVj
+         16zWQgq4yBQdJls/IABoZYo42ltcbXXnc2oTXLJsT7icTJipO8jgpoSuWNN6ZRRWN1G9
+         4XMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Zsj6pepUmPUayDDDWQUC05FoOqVCF+c4L+6MUFJ2+Bc=;
-        b=uVSXUKu9vsXt8SvzOtc+tCAibRTOd+Xoy17ntmiBlJTRexgyrfsktkl4yjHktGnfMX
-         Or5H9qkoUrmX4T7lzcfHwuF/QPs7VAXZ7+M4gtLTKe0hJuWo993HxgmT2fbwDy1feg0Q
-         96hEIvhtiHeE4YuXNBnt1eF8nAteQBlaGKp/NF9tiz3/AjPHD+yPCylr9szDbv3OI7Jr
-         A1HfF0TXZUSdtUHN1CvcvnKVCjQ1A7d6hdv4fTt4Kq7SUV3yQKGsF11jEmUM53t1+EKt
-         szBZEaf2041IJsk79gb4cvT/lS4XkBlDYAPs0l5wjHGBBg+plmwWemOrxdHssVqL2aE4
-         9MdA==
-X-Gm-Message-State: AHQUAuYX1aRWrr6FZKIcW1tioQ5/HGqjZo1Hs39uI2sJMHJNB2Bya1V6
-        KzrayBs5yJI76lRvpSobyK6kg0fv3DwP57on6TUA9w==
-X-Google-Smtp-Source: APXvYqwgaF0U0bdmiCWgNl1VxHCI+AJnm38DFZ5G1R56HUWHgGIjQCNJ22f5SiJ4hGPyue3b/AI8DVQ4vJfAmTzTQrk=
-X-Received: by 2002:a24:7542:: with SMTP id y63mr1056700itc.70.1551266013493;
- Wed, 27 Feb 2019 03:13:33 -0800 (PST)
-MIME-Version: 1.0
-References: <20190226200952.33950-1-brandon1024.br@gmail.com>
- <33efa988-ea80-d9b4-f4aa-3876331a1dfb@gmail.com> <CAETBDP7AyYKE2gQY-HbP+LBhYwvf1QXt0-JaEQwnVyr=PjrKMw@mail.gmail.com>
-In-Reply-To: <CAETBDP7AyYKE2gQY-HbP+LBhYwvf1QXt0-JaEQwnVyr=PjrKMw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 27 Feb 2019 18:13:07 +0700
-Message-ID: <CACsJy8BhEWRcEKRKpcBiZwewxYYoK0jipMZo9PeWAPCgDt1aNg@mail.gmail.com>
-Subject: Re: [PATCH] commit-tree: utilize parse-options api
-To:     Brandon Richardson <brandon1024.br@gmail.com>
-Cc:     Andrei Rybak <rybak.a.v@gmail.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=+deXaZFSGlkasasir4hNvWAMN9e0mmzwHBTLlNtoycM=;
+        b=UzwfpSKSJ4MHO7l20lgJ/RoEcCn5lzXK9UTB9h/qx0kpi2PIfft5npLZSrbBz8RxNY
+         4Z0V3E+HERgYG/chaVj4C2+2Val8N61676LOOHVJqX4ziaOw9DwQNwRs7g80BDmjFZRF
+         dSomDZU74BH67ZBg6lWQ12FPWd7ioUr3u2hyzDqdk+94uszi+QYBYP+4WZjvDYymO2xX
+         w6azowRkqjiGY4Pmcr6OpQWUEM7P7uW61521S7/qo6jY1c3Bb9l8GIip4EOKFQUDtfBd
+         jhpubdsQzDnY34FX0bJOs2iGyfINItX4+gVGWDQWht8RDAf8oTo19ORhgePf/McyOykD
+         LBSA==
+X-Gm-Message-State: AHQUAuZaSbb580R7xBj+m1Reys2k2iSyN3gYpRm5NmeciH2i7aRrInya
+        zbjGfuH35vmS3ffEdG6Ta3Y=
+X-Google-Smtp-Source: AHgI3IaMDmY90cHCOP8dK7bBl/ZQ4/EXySbeboMK133RRXG/LnTxyIVeAsd1SzjiF2TO26a89RttLQ==
+X-Received: by 2002:a1c:670a:: with SMTP id b10mr2071795wmc.82.1551267434327;
+        Wed, 27 Feb 2019 03:37:14 -0800 (PST)
+Received: from szeder.dev (x4db6969d.dyn.telefonica.de. [77.182.150.157])
+        by smtp.gmail.com with ESMTPSA id q135sm3521061wme.43.2019.02.27.03.37.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Feb 2019 03:37:13 -0800 (PST)
+Date:   Wed, 27 Feb 2019 12:37:11 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Brandon <brandon1024.br@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] commit-tree: utilize parse-options api
+Message-ID: <20190227113711.GF19739@szeder.dev>
+References: <20190226200952.33950-1-brandon1024.br@gmail.com>
+ <CACsJy8Bgz6FiTqnq8pnebuyOr55Bqh67iRhr6J+WvzgxPSBLhw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8Bgz6FiTqnq8pnebuyOr55Bqh67iRhr6J+WvzgxPSBLhw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 27, 2019 at 6:43 AM Brandon Richardson
-<brandon1024.br@gmail.com> wrote:
->
-> Hi Andrei,
->
-> > > would attempt to translate the option as a tree oid.It was also
-> >
-> > Missing space after period.
->
-> Oops, thanks for pointing that out.
->
-> >
-> > > +             { OPTION_CALLBACK, 'p', NULL, &parents, "parent",
-> > > +               N_("id of a parent commit object"), PARSE_OPT_NONEG,
-> >
-> > Comparing to other similar places, a single tab should be used to
-> > align "N_" instead of two spaces.
->
-> I've seen a mix of both conventions scattered around, and wasn't sure which
-> to stick to. I'll switch to that.
+On Wed, Feb 27, 2019 at 06:07:42PM +0700, Duy Nguyen wrote:
+> > It was discovered that the --no-gpg-sign option was documented
+> > but not implemented in 55ca3f99, and the existing implementation
+> 
+> Most people refer to a commit with this format
+> 
+> 55ca3f99ae (commit-tree: add and document --no-gpg-sign - 2013-12-13)
 
-I think we sometimes use spaces for fine alignment (search "tabs and
-spaces" in CodingGuidelines). It's really up to you and Andrei which
-style is preferred ;-)
--- 
-Duy
+No, most often we use
+
+  55ca3f99ae (commit-tree: add and document --no-gpg-sign, 2013-12-13)
+
+i.e. with a comma instead of a dash between subject and short date;
+and without quotes around the subject.
+
+Truly sorry for nitpicking :)
+
+Gábor
+
