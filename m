@@ -2,322 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A430920248
-	for <e@80x24.org>; Wed, 27 Feb 2019 08:43:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ACF520248
+	for <e@80x24.org>; Wed, 27 Feb 2019 09:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728930AbfB0InR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Feb 2019 03:43:17 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:36435 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726931AbfB0InQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Feb 2019 03:43:16 -0500
-Received: by mail-ed1-f45.google.com with SMTP id g9so13187387eds.3
-        for <git@vger.kernel.org>; Wed, 27 Feb 2019 00:43:15 -0800 (PST)
+        id S1728963AbfB0Jtc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Feb 2019 04:49:32 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:38311 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726617AbfB0Jtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Feb 2019 04:49:31 -0500
+Received: by mail-wm1-f67.google.com with SMTP id v26so4917528wmh.3
+        for <git@vger.kernel.org>; Wed, 27 Feb 2019 01:49:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=MwHfyiCC9wZTfTelNMZ6lrFPbL5oNmG+sMVQ+xuG4zw=;
-        b=iXgKffpDcPJbk61OlNojnBLsagfKvAIztkBXxTeEtg/zSyrgPXs2nG+WHtApACd13+
-         /afRhvaHFIpVg3HoPzuDNOYMyfLxQhRbjLBdI63hbMv2qyK1kIFYqk4VGYtggSTXrZZZ
-         LXzqJY+KntXRQc+Vt7OYKUomciutyd32XVVBE0m1kq8+Y4/Fe/YFwNQRn0l/4JZ2GsBF
-         0KPttS9ZyAcUtCoI0wLt8pRDLCY79OPwg94v1zdLmBBMh3G0Tto4ykLHoHHQJ/Z+GGoe
-         zmm1UNlNzZBpuqGOweCVm+7i3s9lDxK32EOU2kax+nMFlgcAMDnZwEC5pG/OLbT33ZqG
-         zpkg==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=pflGP9EE60FUw4DFHGItr6MVF+HJ8XvOl23Q8IDFTrM=;
+        b=L8m06yvdTVkIz105ZRzaacMPgEm3NG/cUIzkZnHLZlXaTUTa4nVtcbujCgRZTR0rAu
+         cymOroIzyupjoqkNRJ8PmBFRP8t0BHw4Ic7/k6krP7u9XrKfEvw9iL0CpUoyDCcraBPn
+         pN7ri1vi5x7QM5cdmIRnbAYnArHRT6VzzndCxhgNoWE9nZIqfdSiXW0E/LYqn2pwJQAs
+         3h5zh+05cV2+1pUCydfKFBmGxBondiy8qEBMxh08xbaHQk1uGjQzmJ9grVRdZkdtDtN9
+         xcVjndcybimiUu9UQ9WqC3LKEI+6lfPenN+pGCFyvF86q16CGCFuU+5PQgXqPu2QrE7C
+         Ck2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MwHfyiCC9wZTfTelNMZ6lrFPbL5oNmG+sMVQ+xuG4zw=;
-        b=gv+IuvBcZGiH1TJWNhcMVeNLOrPnuwCAlikuvToHKA54QDDde/Pj4MOsUM6dRTsGo9
-         XGKDfVEcf8SLUPhndsSBMNB9YQVL8CtLo0JNa60Rfis9uqNUIFl5TE5yBoHO7C5LRSqA
-         4/m/kVoXeZqKjG0CyXF/ptxmqOd3WFedYF+jhAqv3htLwzNlNsIu2RCSMw8UiDObvhdn
-         H9Z64CprVL3Po/L5xjDim0ArHxpoCHV5HasU+uc947wEsOcNUABMH/YFP+X4mddKeXHF
-         bQspvaz/qZhP+5ADyUtklmmcEaONolq6S34o8C4w33PuufzkH2id7KBFlMI3hxJ0LEUA
-         KQdA==
-X-Gm-Message-State: AHQUAuZgxxqmjDb51qeJOJNlhZRRvv/k0PHfwKqn+XJW8sK4qy2aQmSn
-        M9N+O0hnpztFY/fcLfmGHaeKx04T
-X-Google-Smtp-Source: AHgI3IaxxD+zQ+li2/wOWRROV82KGLgLL7Nb759ahze98MmIyFc9EQyh8vgLNsK2ew3wgHAzHWSi6A==
-X-Received: by 2002:a50:8bb0:: with SMTP id m45mr1500edm.198.1551256994202;
-        Wed, 27 Feb 2019 00:43:14 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g20sm2619065ejk.72.2019.02.27.00.43.13
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=pflGP9EE60FUw4DFHGItr6MVF+HJ8XvOl23Q8IDFTrM=;
+        b=m23x4atMMMp1tdIhh36YK2ri0GxkhMzNU8NlUM8lsot9ewLMJwzG6MO7MMbZz92YV7
+         Bg7xBU2s/B9W5P03ZykT9EtEqAU1JgQto29b2hqYlzifi0p36VArExh4crfxajt71za4
+         WVw7cYFqoyOOAdAqoQUMKmpJT5RFCZHZZWmsUczrOluxtlr+kT6f0ZBTfWWYzwFLvDKG
+         /Sw72jdFjTh8TlSVc+g0Ms2kVBHt98isYWRpzmBWRwK8EYx+/kOstktkB5HIuSWUctdn
+         h6+aZKgaKIrKZ6qpZObHLHvPxW3XiIfkErCI6Db1wbn24zwT3gfCKO2l3A3DovhBHyxL
+         eKFg==
+X-Gm-Message-State: AHQUAuYxzDddGCylRUOgYxsiXy3EyVPrB8S8HQTk/viiNGt9+M/1tEzR
+        jun0HgQqTf30HGa5PReKOtVCheGf
+X-Google-Smtp-Source: APXvYqzfalRWlohHWqj8CLgRE5REZtzise7tQ67UAmKkNaAi6zZ4mHCWQEwQuQhALbRiE9WBukMNNw==
+X-Received: by 2002:a1c:f901:: with SMTP id x1mr1214546wmh.51.1551260968658;
+        Wed, 27 Feb 2019 01:49:28 -0800 (PST)
+Received: from szeder.dev (x4db6969d.dyn.telefonica.de. [77.182.150.157])
+        by smtp.gmail.com with ESMTPSA id z15sm28891060wrh.18.2019.02.27.01.49.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Feb 2019 00:43:13 -0800 (PST)
-Date:   Wed, 27 Feb 2019 00:43:13 -0800 (PST)
-X-Google-Original-Date: Wed, 27 Feb 2019 08:43:12 GMT
-Message-Id: <1a5a1447f437c99cfcaac01a506093c3697a52b6.1551256992.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.144.git.gitgitgadget@gmail.com>
-References: <pull.144.git.gitgitgadget@gmail.com>
-From:   "Tanushree Tumane via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] mingw: remove obsolete IPv6-related code
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 27 Feb 2019 01:49:27 -0800 (PST)
+Date:   Wed, 27 Feb 2019 10:49:26 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Occasional git p4 test failures because of stray fast-import
+ processes
+Message-ID: <20190227094926.GE19739@szeder.dev>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tanushree Tumane <tanushreetumane@gmail.com>
+Hi Luke,
 
-To support IPv6, Git provided fall back functions for Windows versions
-that did not support IPv6. However, as Git dropped support for Windows
-XP and prior, those functions are not needed anymore.
+I saw rare failures in test 6 'git p4 sync uninitialized repo' in
+'t9800-git-p4-basic.sh' on Travis CI, because the 'cleanup_git'
+function failed to do its job.  The (redacted) trace looks like this:
 
-Remove those fallbacks by reverting fe3b2b7b827c (Enable support for
-IPv6 on MinGW, 2009-11-24) and using the functions directly (without
-'ipv6_' prefix).
+  + cleanup_git
+  + retry_until_success rm -r /home/szeder/src/git/t/trash directory.t9800-git-p4-basic/git
+  + time_in_seconds
+  + cd /
+  + /usr/bin/python -c import time; print(int(time.time()))
+  + timeout=1551233042
+  + rm -r /home/szeder/src/git/t/trash directory.t9800-git-p4-basic/git
+  + test_must_fail test -d /home/szeder/src/git/t/trash directory.t9800-git-p4-basic/git
+  test_must_fail: command succeeded: test -d /home/szeder/src/git/t/trash directory.t9800-git-p4-basic/git
+  + eval_ret=1
+  + :
+  not ok 6 - git p4 sync uninitialized repo
 
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/mingw.c | 178 +------------------------------------------------
- compat/mingw.h |   8 ---
- 2 files changed, 3 insertions(+), 183 deletions(-)
+Trying to reproduce this failure with stock Git can be tricky: I've
+seen
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 8141f77189..80b6b288a1 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1705,142 +1705,10 @@ int mingw_putenv(const char *namevalue)
- 	return result ? 0 : -1;
+  ./t9800-git-p4-basic.sh --stress -r 1,2,6,22
+
+fail within the first 10 tries, but it also run overnight without a
+single failure...  However, the following two-liner patch can reliably
+trigger this failure:
+
+diff --git a/fast-import.c b/fast-import.c
+index b7ba755c2b..54715018b3 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -3296,6 +3296,7 @@ int cmd_main(int argc, const char **argv)
+ 		rc_free[i].next = &rc_free[i + 1];
+ 	rc_free[cmd_save - 1].next = NULL;
+ 
++	sleep(1);
+ 	start_packfile();
+ 	set_die_routine(die_nicely);
+ 	set_checkpoint_signal();
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index b3be3ba011..2d2ef50bfa 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -190,6 +190,7 @@ kill_p4d () {
+ 
+ cleanup_git () {
+ 	retry_until_success rm -r "$git"
++	sleep 2
+ 	test_must_fail test -d "$git" &&
+ 	retry_until_success mkdir "$git"
  }
- 
--/*
-- * Note, this isn't a complete replacement for getaddrinfo. It assumes
-- * that service contains a numerical port, or that it is null. It
-- * does a simple search using gethostbyname, and returns one IPv4 host
-- * if one was found.
-- */
--static int WSAAPI getaddrinfo_stub(const char *node, const char *service,
--				   const struct addrinfo *hints,
--				   struct addrinfo **res)
--{
--	struct hostent *h = NULL;
--	struct addrinfo *ai;
--	struct sockaddr_in *sin;
--
--	if (node) {
--		h = gethostbyname(node);
--		if (!h)
--			return WSAGetLastError();
--	}
--
--	ai = xmalloc(sizeof(struct addrinfo));
--	*res = ai;
--	ai->ai_flags = 0;
--	ai->ai_family = AF_INET;
--	ai->ai_socktype = hints ? hints->ai_socktype : 0;
--	switch (ai->ai_socktype) {
--	case SOCK_STREAM:
--		ai->ai_protocol = IPPROTO_TCP;
--		break;
--	case SOCK_DGRAM:
--		ai->ai_protocol = IPPROTO_UDP;
--		break;
--	default:
--		ai->ai_protocol = 0;
--		break;
--	}
--	ai->ai_addrlen = sizeof(struct sockaddr_in);
--	if (hints && (hints->ai_flags & AI_CANONNAME))
--		ai->ai_canonname = h ? xstrdup(h->h_name) : NULL;
--	else
--		ai->ai_canonname = NULL;
--
--	sin = xcalloc(1, ai->ai_addrlen);
--	sin->sin_family = AF_INET;
--	/* Note: getaddrinfo is supposed to allow service to be a string,
--	 * which should be looked up using getservbyname. This is
--	 * currently not implemented */
--	if (service)
--		sin->sin_port = htons(atoi(service));
--	if (h)
--		sin->sin_addr = *(struct in_addr *)h->h_addr;
--	else if (hints && (hints->ai_flags & AI_PASSIVE))
--		sin->sin_addr.s_addr = INADDR_ANY;
--	else
--		sin->sin_addr.s_addr = INADDR_LOOPBACK;
--	ai->ai_addr = (struct sockaddr *)sin;
--	ai->ai_next = NULL;
--	return 0;
--}
--
--static void WSAAPI freeaddrinfo_stub(struct addrinfo *res)
--{
--	free(res->ai_canonname);
--	free(res->ai_addr);
--	free(res);
--}
--
--static int WSAAPI getnameinfo_stub(const struct sockaddr *sa, socklen_t salen,
--				   char *host, DWORD hostlen,
--				   char *serv, DWORD servlen, int flags)
--{
--	const struct sockaddr_in *sin = (const struct sockaddr_in *)sa;
--	if (sa->sa_family != AF_INET)
--		return EAI_FAMILY;
--	if (!host && !serv)
--		return EAI_NONAME;
--
--	if (host && hostlen > 0) {
--		struct hostent *ent = NULL;
--		if (!(flags & NI_NUMERICHOST))
--			ent = gethostbyaddr((const char *)&sin->sin_addr,
--					    sizeof(sin->sin_addr), AF_INET);
--
--		if (ent)
--			snprintf(host, hostlen, "%s", ent->h_name);
--		else if (flags & NI_NAMEREQD)
--			return EAI_NONAME;
--		else
--			snprintf(host, hostlen, "%s", inet_ntoa(sin->sin_addr));
--	}
--
--	if (serv && servlen > 0) {
--		struct servent *ent = NULL;
--		if (!(flags & NI_NUMERICSERV))
--			ent = getservbyport(sin->sin_port,
--					    flags & NI_DGRAM ? "udp" : "tcp");
--
--		if (ent)
--			snprintf(serv, servlen, "%s", ent->s_name);
--		else
--			snprintf(serv, servlen, "%d", ntohs(sin->sin_port));
--	}
--
--	return 0;
--}
--
--static HMODULE ipv6_dll = NULL;
--static void (WSAAPI *ipv6_freeaddrinfo)(struct addrinfo *res);
--static int (WSAAPI *ipv6_getaddrinfo)(const char *node, const char *service,
--				      const struct addrinfo *hints,
--				      struct addrinfo **res);
--static int (WSAAPI *ipv6_getnameinfo)(const struct sockaddr *sa, socklen_t salen,
--				      char *host, DWORD hostlen,
--				      char *serv, DWORD servlen, int flags);
--/*
-- * gai_strerror is an inline function in the ws2tcpip.h header, so we
-- * don't need to try to load that one dynamically.
-- */
--
--static void socket_cleanup(void)
--{
--	WSACleanup();
--	if (ipv6_dll)
--		FreeLibrary(ipv6_dll);
--	ipv6_dll = NULL;
--	ipv6_freeaddrinfo = freeaddrinfo_stub;
--	ipv6_getaddrinfo = getaddrinfo_stub;
--	ipv6_getnameinfo = getnameinfo_stub;
--}
--
- static void ensure_socket_initialization(void)
- {
- 	WSADATA wsa;
- 	static int initialized = 0;
--	const char *libraries[] = { "ws2_32.dll", "wship6.dll", NULL };
--	const char **name;
- 
- 	if (initialized)
- 		return;
-@@ -1849,35 +1717,7 @@ static void ensure_socket_initialization(void)
- 		die("unable to initialize winsock subsystem, error %d",
- 			WSAGetLastError());
- 
--	for (name = libraries; *name; name++) {
--		ipv6_dll = LoadLibraryExA(*name, NULL,
--					  LOAD_LIBRARY_SEARCH_SYSTEM32);
--		if (!ipv6_dll)
--			continue;
--
--		ipv6_freeaddrinfo = (void (WSAAPI *)(struct addrinfo *))
--			GetProcAddress(ipv6_dll, "freeaddrinfo");
--		ipv6_getaddrinfo = (int (WSAAPI *)(const char *, const char *,
--						   const struct addrinfo *,
--						   struct addrinfo **))
--			GetProcAddress(ipv6_dll, "getaddrinfo");
--		ipv6_getnameinfo = (int (WSAAPI *)(const struct sockaddr *,
--						   socklen_t, char *, DWORD,
--						   char *, DWORD, int))
--			GetProcAddress(ipv6_dll, "getnameinfo");
--		if (!ipv6_freeaddrinfo || !ipv6_getaddrinfo || !ipv6_getnameinfo) {
--			FreeLibrary(ipv6_dll);
--			ipv6_dll = NULL;
--		} else
--			break;
--	}
--	if (!ipv6_freeaddrinfo || !ipv6_getaddrinfo || !ipv6_getnameinfo) {
--		ipv6_freeaddrinfo = freeaddrinfo_stub;
--		ipv6_getaddrinfo = getaddrinfo_stub;
--		ipv6_getnameinfo = getnameinfo_stub;
--	}
--
--	atexit(socket_cleanup);
-+	atexit((void(*)(void)) WSACleanup);
- 	initialized = 1;
- }
- 
-@@ -1895,24 +1735,12 @@ struct hostent *mingw_gethostbyname(const char *host)
- 	return gethostbyname(host);
- }
- 
--void mingw_freeaddrinfo(struct addrinfo *res)
--{
--	ipv6_freeaddrinfo(res);
--}
--
-+#undef getaddrinfo
- int mingw_getaddrinfo(const char *node, const char *service,
- 		      const struct addrinfo *hints, struct addrinfo **res)
- {
- 	ensure_socket_initialization();
--	return ipv6_getaddrinfo(node, service, hints, res);
--}
--
--int mingw_getnameinfo(const struct sockaddr *sa, socklen_t salen,
--		      char *host, DWORD hostlen, char *serv, DWORD servlen,
--		      int flags)
--{
--	ensure_socket_initialization();
--	return ipv6_getnameinfo(sa, salen, host, hostlen, serv, servlen, flags);
-+	return getaddrinfo(node, service, hints, res);
- }
- 
- int mingw_socket(int domain, int type, int protocol)
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 30d9fb3e36..e883b40c7d 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -296,18 +296,10 @@ int mingw_gethostname(char *host, int namelen);
- struct hostent *mingw_gethostbyname(const char *host);
- #define gethostbyname mingw_gethostbyname
- 
--void mingw_freeaddrinfo(struct addrinfo *res);
--#define freeaddrinfo mingw_freeaddrinfo
--
- int mingw_getaddrinfo(const char *node, const char *service,
- 		      const struct addrinfo *hints, struct addrinfo **res);
- #define getaddrinfo mingw_getaddrinfo
- 
--int mingw_getnameinfo(const struct sockaddr *sa, socklen_t salen,
--		      char *host, DWORD hostlen, char *serv, DWORD servlen,
--		      int flags);
--#define getnameinfo mingw_getnameinfo
--
- int mingw_socket(int domain, int type, int protocol);
- #define socket mingw_socket
- 
--- 
-gitgitgadget
+
+
+What's going on is this: 'git p4' invokes 'git fast-import' via
+Python's subprocess.Popen(), and then there are two chain of events
+racing with each other:
+
+  - In the foreground:
+  
+    - 'git p4' notices that there are no p4 branches and die()s as
+      expected, but leaves its child fast-import behind
+    - 'test_i18ngrep' quickly verifies that 'git p4' died with the
+      expected error message
+    - the cleanup function removes the "$TRASH_DIRECTORY/git"
+      directory, and
+    - checks that the directory is indeed gone.
+
+  - Meanwhile in the background:
+  
+    - 'git fast-import' starts up, kicks off the dashed external
+      'git-fast-import' process,
+    - which opens a tmp packfile in "$TRASH_DIRECTORY/git" for writing
+      (the start_packfile() call in the patch context above), creating
+      any leading directories if necessary,
+    - notices that its stdin is closed (because 'git p4' died) and it
+      has nothing left to do, so
+    - it cleans up and exits.  Note that this cleanup only removes the
+      tmp packfile, but leaves any newly created leading directories
+      behind.
+
+While unlikely, it does apparently happen from time to time that the
+test's cleanup function first removes "$TRASH_DIRECTORY/git", but then
+'git fast-import' re-creates it for its packfile before the cleanup
+function checks the result of the removal.  The two well-placed
+sleep()s in the patch above force such a problematic scheduling.
+
+There are 4 test cases running 'test_must_fail git p4 sync': the above
+patch triggers a failure in 3 of them, and with a bit of extra modding
+I could trigger a failure in the fourth one as well.
+
+We could work this around by waiting for 'git p4' and all its child
+processes in the affected tests themselves, using the same shell
+trickery as in ef09036cf3 (t6500: wait for detached auto gc at the end
+of the test script, 2017-04-13), but this feels like, well, a
+workaround.
+
+I think the proper solution would be to ensure that 'git p4' kills and
+waits for all its child processes when die()ing.  Alternatively (or in
+addition?), it could perform all the necessary sanity-checking (and
+potential die()ing) before starting the 'git fast-import' process in
+the first place.
+
+I've glanced through all subprocess.Popen() callsites in 'git p4' and
+found most of them OK, in the sense that they wait for whatever child
+process they create.  Alas, there was one exception: p4CmdList() can
+invoke an optional callback function before wait()ing on its 'p4'
+child, and the streamP4FilesCb() callback function can die() without
+waiting for the 'p4' process (but it does wait() for 'git
+fast-import'!).
+
+On a related note: this check for the just-removed directory was added
+in 23aee4199a (git-p4: retry kill/cleanup operations in tests with
+timeout, 2015-11-19), which mentions flaky cleanup operations.
+Perhaps this is the same flakiness?!
+
+Anyway, as I mentioned elsewhere before, I have no idea why/how 'git
+p4' works, so I'll leave it up to you how it's best to deal with this
+issue...
+
+
+Gábor
+
