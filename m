@@ -2,83 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_EMPTY_SUBJ,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AC6120248
-	for <e@80x24.org>; Thu, 28 Feb 2019 10:44:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C68220248
+	for <e@80x24.org>; Thu, 28 Feb 2019 11:26:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730410AbfB1Kos (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Feb 2019 05:44:48 -0500
-Received: from mail-lj1-f178.google.com ([209.85.208.178]:35929 "EHLO
-        mail-lj1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726088AbfB1Kos (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Feb 2019 05:44:48 -0500
-Received: by mail-lj1-f178.google.com with SMTP id v10so16705856lji.3
-        for <git@vger.kernel.org>; Thu, 28 Feb 2019 02:44:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=vCsCyU2fZUQGlm7G++8yOyAIFvMsJ5EXWFxzow010Aw=;
-        b=SE2mPsER4sv3+NfZ2HNi7WOECDalwFYZM952KWajPbrGjUfR3ykO+yFxZopaC9SAZE
-         d/HpmUkgXuAwpY23sNPpDSBw4QR13ety/9S0/xPU7z3ZDQT3Pl5A3Cn9cyHQ8Ad9HsUd
-         8NjI+YByd6zlKyCdHj1urQD/r7liPrZBnP76kp7UQSYiFI02h/vE34NEmtdJNgT98kdE
-         2THiRghZJaPUUM41JL0vA3vK0pKj1seh7+jDRaU1RF3a9OcTti2t+uslChZo3gx2COu7
-         8QBOnQma/PNtyl9oEKocNGRPh7NBfrz0URbA9DYLqGQNXDlTQ/xCU2ovAaulDfuC7CcT
-         HrUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=vCsCyU2fZUQGlm7G++8yOyAIFvMsJ5EXWFxzow010Aw=;
-        b=ENsOADcLotKkZOwWaz1QPnAVec4z2zKa8B9W38JwEkG0sYHKTaW5SH4HH7ORZctaUx
-         nXKCD43kMwIq9E37JGlmjvDnaCCm3lGxs1BFVbdL230SIAeAukmwy+GVkBe2TtiaF8Qi
-         53Bg3LyWwyws+LdYitQboywvSjX3+rbWhQcNSybUm23nJJTxwH2ISrcujcQbebZ9l9/9
-         FrxXKL6DpKMPSFfJV2P+eSFlZ+fkgk6NVDJMS9HNhH828w+S4SJTcZJODPwkdunPmmMT
-         C5qE4BFax0HsqX99u5xVXFcvk2RC0v7f1Mmg2WthSDoZuof/9De5WbjeYtfXnGf+1/n5
-         oskQ==
-X-Gm-Message-State: APjAAAX1e06gTJe5BKmKWQU+22JT7jQgms7uhkLKKLQfOmLmXKYFvOPd
-        uyCNQ6+qOygxzzs8WIPdH+qVoJUoNA81RcazD4s=
-X-Google-Smtp-Source: APXvYqyj91cTydjHMah06g8Vo/06FxOMmrA8ytTNrhP3hcFwLeg9hFq9eQQn/wuDvRcqW6etpw+h3tfkbXHwmjPG3mM=
-X-Received: by 2002:a2e:9b99:: with SMTP id z25mr4174657lji.106.1551350686296;
- Thu, 28 Feb 2019 02:44:46 -0800 (PST)
+        id S1731099AbfB1L0K (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Feb 2019 06:26:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60926 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726027AbfB1L0K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Feb 2019 06:26:10 -0500
+Received: (qmail 25766 invoked by uid 109); 28 Feb 2019 11:26:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Feb 2019 11:26:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13190 invoked by uid 111); 28 Feb 2019 11:26:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 28 Feb 2019 06:26:25 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Feb 2019 06:26:08 -0500
+Date:   Thu, 28 Feb 2019 06:26:08 -0500
+From:   Jeff King <peff@peff.net>
+To:     Max Filenko <contact@filenko.ms>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] git-am: all colons in the beginning of a subject are lost
+Message-ID: <20190228112608.GA25552@sigill.intra.peff.net>
+References: <m2wolk6xjw.fsf@filenko.ms>
 MIME-Version: 1.0
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Date:   Thu, 28 Feb 2019 16:13:46 +0530
-Message-ID: <CAL7ArXp0xJx4DLZ7jM78SRFPGE0Ph9itrZpV0LtQYhbART1s5g@mail.gmail.com>
-Subject: 
-To:     CACsJy8DjYUn+45E04gPjXhN0xqqjeyf8XoQsR8PyLefFrO4RGQ@mail.gmail.com
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <m2wolk6xjw.fsf@filenko.ms>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Duy
-Sorry for late reply.
+On Thu, Feb 28, 2019 at 11:02:11AM +0100, Max Filenko wrote:
 
->
-> On the Git mailing list, Duy Nguyen wrote (reply to this):
->
-> I was a bit worried that the "test ! something" could be incorrectly
-> converted because for example, "test ! -d foo" is not always the same
-> as "test_path_is_missing". If "foo" is intended to be a file, then the
-> conversion is wrong.
->
-> But I don't think you made any wrong conversion here. All these
-> negative "test" are preceded by "git rm" so the expectation is always
-> "test ! -e".
->
+>     Subject: [PATCH] :::: four colons prepended
+> [...]
+> There will be no colons in the beginning of a commit message if I apply
+> this patch:
+> 
+>     $ git am 0001-four-colons-prepended.patch
+>     Applying: four colons prepended
 
-Yes, I thought about it earlier and made
-changes thinking this only. Also when I was going through the code
-again, I replaced other conditionals `[ -f ]` with test_path_is_file
-etc.
+I suspect this has to do with the sanitization that happens as part of
+removing "[PATCH]". Note that if you use "-k" (to preserve the subject)
+it doesn't happen, though of course you also get "[PATCH]" then.
 
-Ciao
-Rohit
+If you want to pass the subject lines through verbatim, use "-k" with
+both format-patch and git-am.
+
+> I was able to trace this down to <builtin/am.c>. It seems like there are
+> no colons already in the `state->msg' which to my understanding is being
+> filled by `read_commit_msg()' function. I would really appreciate a hand
+> on debugging it further.
+
+It's probably easier to debug with git-mailinfo, which has the same
+behavior:
+
+  $ git mailinfo msg patch <0001-four-colons-prepended.patch
+  Author: Jeff King
+  Email: peff@peff.net
+  Subject: four colons prepended
+  Date: Thu, 28 Feb 2019 06:12:50 -0500
+
+and is based on the same routines.
+
+The contents are preserved until we end up in mailinfo.c's
+cleanup_subject(). And there leading colons are explicitly removed:
+
+       case ' ': case '\t': case ':':
+               strbuf_remove(subject, at, 1);
+               continue;
+
+That behavior goes all the way back to 2744b2344d (Start of early patch
+applicator tools for git., 2005-04-11), when Git was only 4 days old.
+
+Since it also handles cruft like "Re:", I suspect the goal there was I
+suspect the goal there was to remove cruft like "Re::::" or "Re: :"
+which sometimes happens. I don't know if anybody would complain if we
+were more careful about leaving lone colons that weren't part of a "Re"
+chain.
+
+-Peff
