@@ -2,91 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C68220248
-	for <e@80x24.org>; Thu, 28 Feb 2019 11:26:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0550F20248
+	for <e@80x24.org>; Thu, 28 Feb 2019 15:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731099AbfB1L0K (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Feb 2019 06:26:10 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60926 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726027AbfB1L0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Feb 2019 06:26:10 -0500
-Received: (qmail 25766 invoked by uid 109); 28 Feb 2019 11:26:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 28 Feb 2019 11:26:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13190 invoked by uid 111); 28 Feb 2019 11:26:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 28 Feb 2019 06:26:25 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Feb 2019 06:26:08 -0500
-Date:   Thu, 28 Feb 2019 06:26:08 -0500
-From:   Jeff King <peff@peff.net>
-To:     Max Filenko <contact@filenko.ms>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] git-am: all colons in the beginning of a subject are lost
-Message-ID: <20190228112608.GA25552@sigill.intra.peff.net>
-References: <m2wolk6xjw.fsf@filenko.ms>
+        id S2389115AbfB1P1u (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Feb 2019 10:27:50 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:45823 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730287AbfB1P1t (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Feb 2019 10:27:49 -0500
+Received: by mail-ed1-f66.google.com with SMTP id f19so7930645eds.12
+        for <git@vger.kernel.org>; Thu, 28 Feb 2019 07:27:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=w9D51nzePpOyGIwULQ/4KBCN7t8Dy6bXd4Z3X/qKuvQ=;
+        b=O2zFk3pswYnXlS9IjhTIowQVn22uwW/FFz2xHUubD6AnffjDXeUxEn3awcIYTTEXa0
+         rZBt2D+vXF0QhQFbwelKP8S8GPE3UVnaKsIa2u8gj9QmcNzIewAn7m9brudE5D4ywcik
+         S5uaix+owMqNzk1nq1TVs7pTJsUrOXCFtD7VBitWmsrf2cXBBXSfCkrLxofLy3rjJ6CO
+         /ZYIE48yAmfxvyDumuS11rpY2LN9OuRAuIRKrizN+7fApESAxpGY3vL6rsZZUdR2XS2x
+         BUHkypddlP3PrY1mR/wvU6u5HHYsdoy3+saZ1V5lu6G6PwRwEt9OyW7qdIQHwwkkK7as
+         5fcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=w9D51nzePpOyGIwULQ/4KBCN7t8Dy6bXd4Z3X/qKuvQ=;
+        b=ka6G3iwFMvYlr72U0ooJJOP16hU55Q2zS8LikcIhENlfX59ayCniA4IHCTOrmC5MM3
+         QVJ0au1jZy+AovBXwS6KpWwfZ9VOstwVjPSt+ibXuxChrFdKIcPAc5Fw4ForuMzYyy7J
+         bfytmxyUtHZmikB2FTlQG48esyXCyjhH2YHL19B0lvH0RM3OcLp3HCUlhJCRkNOuLUgo
+         2QR5ebooVjm1Nu1dqUcX9rVc5JuMK4L2bZWXdmy+p/8n9PI4KKC1wvv1OH7fsz5tatDH
+         oOlmxSL7G3qHQtJtMWPeu3Zui/j0eFsFxdIDDs8GSh4vZ6idLJn54cV0yjPWl/j8GOcY
+         +XnA==
+X-Gm-Message-State: APjAAAWjZHzxHlO0NvAihpA1oxhWSWkZXXmIyMCVfkp3GRO0qQNgGsLd
+        TqI2F8DHpZxJS1iTTK4e8tpxt1B+
+X-Google-Smtp-Source: APXvYqxCVEiAV1Wk7Vp08G0r/1bt0f4tydzP97ufd4RJJ25FYcD0sJLh4fZZpAE8XoUe2pbbCRgJ5Q==
+X-Received: by 2002:a50:9012:: with SMTP id b18mr166567eda.30.1551367667503;
+        Thu, 28 Feb 2019 07:27:47 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g20sm3279735ejk.72.2019.02.28.07.27.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Feb 2019 07:27:47 -0800 (PST)
+Date:   Thu, 28 Feb 2019 07:27:47 -0800 (PST)
+X-Google-Original-Date: Thu, 28 Feb 2019 15:27:43 GMT
+Message-Id: <1bc3cbad265926d963655a0112db74e2c655adb4.1551367664.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.153.git.gitgitgadget@gmail.com>
+References: <pull.153.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 3/4] built-in rebase: demonstrate that ORIG_HEAD is not set
+ correctly
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <m2wolk6xjw.fsf@filenko.ms>
+To:     git@vger.kernel.org
+Cc:     Nazri Ramliy <ayiehere@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 28, 2019 at 11:02:11AM +0100, Max Filenko wrote:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
->     Subject: [PATCH] :::: four colons prepended
-> [...]
-> There will be no colons in the beginning of a commit message if I apply
-> this patch:
-> 
->     $ git am 0001-four-colons-prepended.patch
->     Applying: four colons prepended
+The ORIG_HEAD pseudo ref is supposed to refer to the original,
+pre-rebase state after a successful rebase. Let's add a regression test
+to prove that this regressed: With GIT_TEST_REBASE_USE_BUILTIN=false,
+this test case passes, with GIT_TEST_REBASE_USE_BUILTIN=true (or unset),
+it fails.
 
-I suspect this has to do with the sanitization that happens as part of
-removing "[PATCH]". Note that if you use "-k" (to preserve the subject)
-it doesn't happen, though of course you also get "[PATCH]" then.
+Reported by Nazri Ramliy.
 
-If you want to pass the subject lines through verbatim, use "-k" with
-both format-patch and git-am.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t3400-rebase.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-> I was able to trace this down to <builtin/am.c>. It seems like there are
-> no colons already in the `state->msg' which to my understanding is being
-> filled by `read_commit_msg()' function. I would really appreciate a hand
-> on debugging it further.
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 3e73f7584c..7e8d5bb200 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -59,6 +59,14 @@ test_expect_success 'rebase against master' '
+ 	git rebase master
+ '
+ 
++test_expect_failure 'rebase sets ORIG_HEAD to pre-rebase state' '
++	git checkout -b orig-head topic &&
++	pre="$(git rev-parse --verify HEAD)" &&
++	git rebase master &&
++	test_cmp_rev "$pre" ORIG_HEAD &&
++	! test_cmp_rev "$pre" HEAD
++'
++
+ test_expect_success 'rebase, with <onto> and <upstream> specified as :/quuxery' '
+ 	test_when_finished "git branch -D torebase" &&
+ 	git checkout -b torebase my-topic-branch^ &&
+-- 
+gitgitgadget
 
-It's probably easier to debug with git-mailinfo, which has the same
-behavior:
-
-  $ git mailinfo msg patch <0001-four-colons-prepended.patch
-  Author: Jeff King
-  Email: peff@peff.net
-  Subject: four colons prepended
-  Date: Thu, 28 Feb 2019 06:12:50 -0500
-
-and is based on the same routines.
-
-The contents are preserved until we end up in mailinfo.c's
-cleanup_subject(). And there leading colons are explicitly removed:
-
-       case ' ': case '\t': case ':':
-               strbuf_remove(subject, at, 1);
-               continue;
-
-That behavior goes all the way back to 2744b2344d (Start of early patch
-applicator tools for git., 2005-04-11), when Git was only 4 days old.
-
-Since it also handles cruft like "Re:", I suspect the goal there was I
-suspect the goal there was to remove cruft like "Re::::" or "Re: :"
-which sometimes happens. I don't know if anybody would complain if we
-were more careful about leaving lone colons that weren't part of a "Re"
-chain.
-
--Peff
