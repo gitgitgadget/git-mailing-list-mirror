@@ -2,90 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6930320248
-	for <e@80x24.org>; Thu, 28 Feb 2019 19:03:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A48020248
+	for <e@80x24.org>; Thu, 28 Feb 2019 19:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731230AbfB1TDP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Feb 2019 14:03:15 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:44242 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726232AbfB1TDP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Feb 2019 14:03:15 -0500
-Received: by mail-pg1-f196.google.com with SMTP id j3so10138667pgm.11
-        for <git@vger.kernel.org>; Thu, 28 Feb 2019 11:03:14 -0800 (PST)
+        id S1731322AbfB1Tdy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Feb 2019 14:33:54 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:45092 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730829AbfB1Tdy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Feb 2019 14:33:54 -0500
+Received: by mail-ed1-f49.google.com with SMTP id f19so8599308eds.12
+        for <git@vger.kernel.org>; Thu, 28 Feb 2019 11:33:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dL8aGKJZYJBngTcIvQxAei9D+AjG7qyE/ag4tVdMbvg=;
-        b=fiqlKyzhwDEgLjjNj8+R6SYacb5MJvMO9ZdPuKkf5m8Srlew1QJsCXXRE7UsuNtLj7
-         VbbEwokST4ToxpEO4IfM0TdKE8yNkwnktRalEj/EgFKtZU0ANu3C334HJkEpUmLL8c1j
-         vzy04hGt+hF0mPUtoO9hGJFzy99qyp8sVrWuSntFvtsglO7upoM7RvgSjwKT6N1B/R91
-         TaLcLar9qMEtcDBq4a3COfWK6ZKvBZu02DoiermvHuhFc4zW2+VWLqTzDpjciLthqhRL
-         p+VlB8jIb+SF+6UA+Kn8K2RA+q8YvtdU9P9MkptKDNCVTR4M3PP+ntcZoJLilM4/RqVK
-         Phgw==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=KUBAbMui58J+yoADN4+Na5DFq0rjquJHvgy1ClDZ0Ls=;
+        b=ipNwsz7fyLJtdOsf+lPOKzV+RKxO9wMPTb/B25SaeVMomupurcJ+7FEuRYD272EzVu
+         M0mB4OYhArr/E+9tyjT5FjbP5/V/W9KuZXlcTzesbM6EhCPS+j4ULw3oJxIMgd+cgxW0
+         c2lLsmiuM1qQWCSshAGoc/qJqcLVtmhiUzdZB3NoFNAnKwrKLtHH1B/rQKY3dQAKu5j7
+         6oMVQ6+RGngbSc+pOCnf/ABgss0XWloJ3ToBRAZhWJfEeMZ+2Qd2URh9NkzaiSbizlBX
+         gdEZ4xj8WnNgNPhevLTJiTuCEl6Kqj1wH8U0sHLYNMg6phxswgAqqja7mFrdUj/UHOyS
+         G5Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=dL8aGKJZYJBngTcIvQxAei9D+AjG7qyE/ag4tVdMbvg=;
-        b=oA2egj3HL7tDgQs8M/10AkZrD7zlJuamwNGccxr6TH15QFFEFnXz3LTXbtwWQnfnx0
-         sm8/LINOE9NjEV0QRqZrH1eoiiyCIgABxrAc10IpMa6K/OLdCURAHBq4am0vZySRsJH1
-         aotYyRv4oMHBA4gKd7kKshuASHvoHWOUHpwArdKkkLSHz79xN7/7MY5ZNkJZiVm7OY/J
-         gUzpisbI+vIXSX/ocp3zlde59N60ksF79Hb3J+U8hZCTxcPAi+Gl7x3KGnSeeg+rpMVw
-         GiVmEeBskmS9bDrYHOwqch9kkV0xgni/nyCCYMsth2ED9x6LRJkiIxOBIYbZDWBA86x3
-         0v0w==
-X-Gm-Message-State: APjAAAVKgdmkEyDrftTe8Aq5IxZcojofGBIg1FZ2PXJXydelqgYVaRRl
-        rBRhafM1X1A1/zP0NGPFAPTcJaKCh0E=
-X-Google-Smtp-Source: APXvYqxQN2g8GBMydY6tLbv48C4VColo2hiSefjmCRcMLNwSgx2+0tlAlDdH367GE2654UWY/aDCjg==
-X-Received: by 2002:a63:8542:: with SMTP id u63mr625614pgd.323.1551380593679;
-        Thu, 28 Feb 2019 11:03:13 -0800 (PST)
-Received: from ar135.iitr.ernet.in ([103.37.201.80])
-        by smtp.gmail.com with ESMTPSA id 1sm27427894pfi.99.2019.02.28.11.03.10
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KUBAbMui58J+yoADN4+Na5DFq0rjquJHvgy1ClDZ0Ls=;
+        b=pMPyGSffwqcQAU57VOkgj/jIkJYZcD6u+9l3cB56C9Bh4Z0hHsRs7VfxUkyKAMsAAb
+         HtlQzdKN5Fp1LUpfnSdCYJS9ZgoC+oOrnzvIwaXhMt3jCBC0K6E8tubxJB7fNd59Xhug
+         t7/1RJ0lqQ1uHnd6OFj8i9hEOAI0NV2UZt5IYy5wy3KI6RiMyTbekkeZ0DjxglV+x5t+
+         QNrQy2Gjh9qE2TAubR7Kfzke+URN9ClWvmlfaxiUQTIMNTF3FNntbT6/fLffHfm/4udt
+         srsZldqj4cvSm+CUCL3CJxT4t9f7ab3IQ42g8DDFowIT6M9WUqvd7tGZxoq3bw+1Cqf9
+         L54g==
+X-Gm-Message-State: APjAAAWUlaJIHzX3s5UF5Wsl8Ne6frwwKLkOWKtsuXVEpxteN0Mfrfia
+        tM9/qK+6rxX2UA9IYmp4HNYiYtGF
+X-Google-Smtp-Source: APXvYqy1VD4u8CCIuFAN+I4XckcsRKPnG4xVaymyiTxbo3xBj/TB2YN8SdFsjwmscPqXzJmN5e+50g==
+X-Received: by 2002:a50:940a:: with SMTP id p10mr1045254eda.54.1551382432393;
+        Thu, 28 Feb 2019 11:33:52 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p47sm5280190eda.31.2019.02.28.11.33.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Feb 2019 11:03:12 -0800 (PST)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, rohit.ashiwal265@gmail.com,
-        martin.agren@gmail.com, pclouds@gmail.com, peff@peff.com,
-        szeder.dev@gmail.com, git@matthieu-moy.fr,
-        Johannes.Schindelin@gmx.de
-Subject: [GSoC] acknowledging mistakes
-Date:   Fri,  1 Mar 2019 00:32:42 +0530
-Message-Id: <20190228190242.20680-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <f881f01e4f05c1c9ad7e35fea5fd7db2947427a1.1551349607.git.gitgitgadget@gmail.com>
-References: <f881f01e4f05c1c9ad7e35fea5fd7db2947427a1.1551349607.git.gitgitgadget@gmail.com>
-To:     unlisted-recipients:; (no To-header on input)
+        Thu, 28 Feb 2019 11:33:51 -0800 (PST)
+Date:   Thu, 28 Feb 2019 11:33:51 -0800 (PST)
+X-Google-Original-Date: Thu, 28 Feb 2019 19:33:50 GMT
+Message-Id: <pull.154.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Retire the "let Travis trigger a Windows build" hack
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey people
+We have something much better now: a real Azure Pipeline. Not only is it a
+lot faster (due to parallelizing the test suite), it also won't time out
+waiting for the Windows job to start.
 
-I had a discussion with Rafael over the #git irc channel and Thanks to
-him I was able to find these minute mistakes:
+Johannes Schindelin (1):
+  travis: remove the hack to build the Windows job on Azure Pipelines
 
-1. Commit message was less than 50 chars which should be around 72 chars
-   according to coding guide lines. Should I change this to match 72?
+ .travis.yml             |  10 ----
+ ci/run-windows-build.sh | 103 ----------------------------------------
+ 2 files changed, 113 deletions(-)
+ delete mode 100755 ci/run-windows-build.sh
 
-2. My changes had some uneven use of tabs and spaces, which I made
-   considering that pre-existing code had them too. Is there a
-   possibility to change the whole code according to CodingGuidelines?
-   If yes should I only change my code according to guidelines or the
-   whole file?
 
-3. There is no helper function for `test -s` but Rafael suggested we can
-   make use of other helper functions to provide similar functionality,
-   if we can.
-
-Open to suggestions and debate. These will be fixed in next revision
-accordingly.
-
-Thanks
-Rohit
-
+base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-154%2Fdscho%2Fremove-travis-windows-hack-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-154/dscho/remove-travis-windows-hack-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/154
+-- 
+gitgitgadget
