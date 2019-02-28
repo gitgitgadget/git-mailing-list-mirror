@@ -7,91 +7,122 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9414620248
-	for <e@80x24.org>; Thu, 28 Feb 2019 07:13:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0102320248
+	for <e@80x24.org>; Thu, 28 Feb 2019 07:21:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731460AbfB1HN2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Feb 2019 02:13:28 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:39377 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730965AbfB1HN2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Feb 2019 02:13:28 -0500
-Received: by mail-io1-f65.google.com with SMTP id x3so15792882ior.6
-        for <git@vger.kernel.org>; Wed, 27 Feb 2019 23:13:27 -0800 (PST)
+        id S1731246AbfB1HVy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Feb 2019 02:21:54 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:38108 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730961AbfB1HVy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Feb 2019 02:21:54 -0500
+Received: by mail-it1-f196.google.com with SMTP id l66so14230048itg.3
+        for <git@vger.kernel.org>; Wed, 27 Feb 2019 23:21:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=q1FejOl//HnvxUdplaRD5yX5aejtlYOIv9TUlMHVngg=;
-        b=e2OY7ur3ftrdpuFgrcElJ8lQZnSTW7DEFYyh1iqcMd/telrvXHo6vKv8A3MuuZbD/t
-         KquJSGAgzBZ0gTU7bgq3+oUEp92VSpaQ5J4Wp4dxRD6eXWIAt3PTxB6Uc+c4Qufb5n6j
-         QVV0ZcbkgD4bC2zDwPdIN20qvSMwdSNwhky6edpZXv17chVlocYJ+xcWlwOhLCxJbE38
-         rKhG1f5mmQF7KzfBwKA3G/C7iCXiC+DYmCGQ8hd91siLAvdxGWsRWV3aKsTzbPBNh5I1
-         MCwI1o1isjsA9ycZBGYwOYod3eNhGEPiXCB5L8EOa3RxDGOsJvx8PFj8yI8J4ubfqV30
-         Ds4A==
+         :cc:content-transfer-encoding;
+        bh=VRp0gFF0xLRHm/O0XK3U/ztyANWBxlITJZtNaiJYDK4=;
+        b=ksBGQAL2mIT3slKcgIAZirH3BR84S8sHHP4P8c1Nk3J6Pq5TfVxxpm8V5CtrvwJPYj
+         6Jmsg14bvk8NIvH0rw10czSGCAobqPoItJF+2a24YiACrTHYDb7mUM/BIQ3FhBCrL1G2
+         UroNFFzNIptaA86tydA+HztPsXbCU2m9NuuOvyItvfBshkm3+XpH3hgYEcLs1u04gF8B
+         pGxETuRFobskYYSu4PTKUC1SatwDeUWZO0Vd0ZniiaQdxSnRBsDgtrxWKdhu/ojTufQs
+         8wi0qFHRPaVOqYq8KEnNAhfcD9ukay1lVFM+qtCnJQgZ+Ht7KM7JTvMuvEnxJcwMutod
+         uq7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=q1FejOl//HnvxUdplaRD5yX5aejtlYOIv9TUlMHVngg=;
-        b=cD7eGVHMjPk1o7GQAO0LNKbaUr5zpe76FB8OwOul7bwokBL3YH7ze0rUakX2VylpPM
-         YzsjqZH4dWjDeX1F+mNKzSXDcYMUx02rKasgU9VRyvI5CtlLisnLU/UnOOhQqrg6mhYO
-         ZC7ShRu0pSADvfeIBQx0rVtj+hU20JpIv5drhKtYfpUUD0HyFNkDBMyC1U/P4OIaV4Nu
-         9dvs/nz+MQMq5QWoUtxPMD9J3SbJF6iDAic5Z0HOby0GRjGznKeXnCYxCfv/hgs3GLE+
-         1ZMOiTpSMs/deCO1jUilM9aK5Tp63UdcSawxood6YN50+QISQsJkICfV4QGrMhXLvaQ/
-         dCqg==
-X-Gm-Message-State: APjAAAWz9DxlMNjFkvkqkJyP9LgCtm86TLA7aWIOXJvR6/DGsR92ZacD
-        EQxot5rB3ZkA245LRJgScNYD9jlb2aFUO08R+gU=
-X-Google-Smtp-Source: APXvYqxh919LS9dc3BGxy0R5Yeo48sgKWZXrcLe2oGWgTNYWRzg8N51qVPvZENiUj+11rhT1AegTtyQvmXhwT41VKvk=
-X-Received: by 2002:a6b:6b18:: with SMTP id g24mr3787693ioc.282.1551338007586;
- Wed, 27 Feb 2019 23:13:27 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VRp0gFF0xLRHm/O0XK3U/ztyANWBxlITJZtNaiJYDK4=;
+        b=f10aBEiXj+BnRUFYpUwXjo18sz6eNJg145MFeIXKMMMnzwolCFxKjULVp2b7T+gPTD
+         ulHkZzs4iDRn53OIa0ixy5u+Pso1A9NyUuuiL3o1n8Y6IY8BrxRROUBnkhS0CSyhcvYi
+         vBerlkYsd6BOoCu2+KNeV5VKJ/zdFvjHilwI9oLUXT5u4jaJmuqDaHr+nKfxTjr8XVjB
+         8/ltEuM1ONqz+wUOlNyoSfMmEjpQi0kTF+9Nr1hZsZmQgK7PtNrpU76GbqjDJcQBxjX+
+         GFJ6jhx06BAwhyGkSNFXhNmRYoPnsh4+hbbtmxzAowk8ZE2lvFVdNtt5YeTfHBoE/hco
+         dBAw==
+X-Gm-Message-State: APjAAAVic9qQ0DoZjby56NrELed34U8w23kB0fB8AbHH2c2iUQQavxWn
+        wcSfFolbZxZvt46BeUUmleOw7grdRAENx4kklOE=
+X-Google-Smtp-Source: AHgI3Ia5fuv4Bpv+D77ZmsGaeTWTfpIrx+6+ghy11X+RCpr6Wn9Y6zoDGoFwQ1rb9lm+cucpUYnSWoM5PKX3iu++qSU=
+X-Received: by 2002:a24:ccc5:: with SMTP id x188mr2037526itf.123.1551338513488;
+ Wed, 27 Feb 2019 23:21:53 -0800 (PST)
 MIME-Version: 1.0
-References: <20190226051804.10631-1-matheus.bernardino@usp.br>
- <20190226051804.10631-6-matheus.bernardino@usp.br> <CACsJy8B1asF3i+G-C1aZRw7QTW7jS+a4VkCbg-17YOTyYHuw5w@mail.gmail.com>
- <CAHd-oW6WJ5JSRAbcy+5kcEA4V8qKEUc9B=6WQZvdqaHz4XHBTA@mail.gmail.com>
-In-Reply-To: <CAHd-oW6WJ5JSRAbcy+5kcEA4V8qKEUc9B=6WQZvdqaHz4XHBTA@mail.gmail.com>
+References: <20190226200952.33950-1-brandon1024.br@gmail.com>
+ <CACsJy8Bgz6FiTqnq8pnebuyOr55Bqh67iRhr6J+WvzgxPSBLhw@mail.gmail.com>
+ <20190227113711.GF19739@szeder.dev> <CACsJy8AcrRBtEUFtFVDUbDZDodDDMAHxnwsf55zH+TzKCoyVMw@mail.gmail.com>
+ <20190227123650.GG19739@szeder.dev>
+In-Reply-To: <20190227123650.GG19739@szeder.dev>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 28 Feb 2019 14:13:01 +0700
-Message-ID: <CACsJy8BV8CHOnbfDysgdo-md0pXLg05rKpMP5a8TUkUcWw0G8g@mail.gmail.com>
-Subject: Re: [WIP RFC PATCH v2 5/5] clone: use dir-iterator to avoid explicit
- dir traversal
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Thu, 28 Feb 2019 14:21:27 +0700
+Message-ID: <CACsJy8DEqbZMW+vgZJ=FizP2agUmONrQBe9MrhRefc3qFsh0iw@mail.gmail.com>
+Subject: Re: [PATCH] commit-tree: utilize parse-options api
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Brandon <brandon1024.br@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 28, 2019 at 12:40 AM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
-> > > @@ -463,7 +460,11 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
-> > >                 if (copy_file_with_time(dest->buf, src->buf, 0666))
-> > >                         die_errno(_("failed to copy file to '%s'"), dest->buf);
-> > >         }
-> > > -       closedir(dir);
-> > > +
-> > > +       if (iter_status != ITER_DONE) {
-> > > +               strbuf_setlen(src, src_len);
-> > > +               die(_("failed to iterate over '%s'"), src->buf);
-> > > +       }
-> >
-> > I think you need to abort the iterator even when it returns ITER_DONE.
-> > At least that's how the first caller in files-backend.c does it.
-> >
+On Wed, Feb 27, 2019 at 7:36 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
 >
-> Hm, I don't think so, since dir_iterator_advance() already frees the
-> resources before returning ITER_DONE. Also, I may be wrong, but it
-> doesn't seem to me, that files-backend.c does it. The function
-> files_reflog_iterator_advance() that calls dir_iterator_advance() even
-> sets the dir-iterator pointer to NULL as soon as ITER_DONE is
-> returned.
+> On Wed, Feb 27, 2019 at 06:49:53PM +0700, Duy Nguyen wrote:
+> > On Wed, Feb 27, 2019 at 6:37 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com=
+> wrote:
+> > >
+> > > On Wed, Feb 27, 2019 at 06:07:42PM +0700, Duy Nguyen wrote:
+> > > > > It was discovered that the --no-gpg-sign option was documented
+> > > > > but not implemented in 55ca3f99, and the existing implementation
+> > > >
+> > > > Most people refer to a commit with this format
+> > > >
+> > > > 55ca3f99ae (commit-tree: add and document --no-gpg-sign - 2013-12-1=
+3)
+> > >
+> > > No, most often we use
+> > >
+> > >   55ca3f99ae (commit-tree: add and document --no-gpg-sign, 2013-12-13=
+)
+> > >
+> > > i.e. with a comma instead of a dash between subject and short date;
+> > > and without quotes around the subject.
+> > >
+> > > Truly sorry for nitpicking :)
+> >
+> > Naah it's about time I update my ~/.gitconfig to be "conformant" :D I
+> > think we both failed to mention where to find the command for Brandon
+> > though: search commit-reference in SubmittingPatches.
+>
+> Well, yes...  but I didn't mention that on purpose: SubmittingPatches
+> advocates for quotes around the subject, which is still the less often
+> used format of the two, and there is no good reason for those quotes
+> (that 'deadbeef (' before and ', 2019-12-34)' after the subject
+> provide plenty of separation and indicate quite clearly what's going
+> on).
 
-Arghhh.. I read the ref_iterator_abort and thought it was
-dir_iterator_abort! Sorry for the noise, too many iterators.
--- 
+Perhaps a patch to strip those quotes from the command in SubmittingPatches=
+?
+
+> However, looking at the length of the suggested command in
+> SubmittingPatches made me remember that I've been using a couple of
+> patches implementing 'git log --format=3Dreference' for a couple of
+> years now...  I wonder whether it would be worth having something like
+> that in git.git, and thus making it conveniently available for other
+> projects as well.
+
+It does sound nice to have something like this built in. But I'm not
+sure if "git log" would be the right place. For handling single
+revisions (most often the case), git-show or git-rev-parse might be
+the better interface. Even for referencing multiple hashes at the same
+time (e.g. you prepare a text with bare hashes first, then run some
+program to insert the "(..)" part) then name-rev might be a better
+candidate.
+
+A softer route to avoid any of that is simply adding default config
+"pretty.reference", then let the user define their own alias that uses
+--pretty=3Dreference. Or perhaps just put it in EXAMPLES section of
+git-log.
+--=20
 Duy
