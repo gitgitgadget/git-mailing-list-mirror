@@ -2,223 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76F4720248
-	for <e@80x24.org>; Thu, 28 Feb 2019 19:33:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 192B120248
+	for <e@80x24.org>; Thu, 28 Feb 2019 20:36:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731538AbfB1Td4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Feb 2019 14:33:56 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:36357 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730852AbfB1Tdz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Feb 2019 14:33:55 -0500
-Received: by mail-ed1-f46.google.com with SMTP id g9so18007636eds.3
-        for <git@vger.kernel.org>; Thu, 28 Feb 2019 11:33:54 -0800 (PST)
+        id S1731615AbfB1Ug4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Feb 2019 15:36:56 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:37393 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726968AbfB1Ugz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Feb 2019 15:36:55 -0500
+Received: by mail-lf1-f66.google.com with SMTP id z196so15597370lff.4
+        for <git@vger.kernel.org>; Thu, 28 Feb 2019 12:36:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=UdARZiSbGh68UyvLBInBommArPS2hOjFvTFndEogq5o=;
-        b=qZDnZVmvqzlCTN7eJqqs2gY5B8jJzoCpVIGYa3VLn4SoquJ4UgIlUibw40IjiTUhoR
-         PlJ45v0TbU4WxRINs9UIm9RnVy5oNFeI8P9XUu1EiIFFtgqbY18i5/Gf9YsilG0KXU7j
-         zZDoawFcVkzW5Vqo9+bwJhr6yHH1HUXwMEDY5tBT0S5U2BhDzpXWm0kq18Lxm22rAuSM
-         U5jNzsSGGjrnyO8KMmBsprJjxUdO24VsSBznYb9jKm0WIoITw218diO5RkQYLJVi6lyO
-         KhgiW6tuEXA6gGZ3RhrM8jLnnVBfVSE3vtFU6fGzAyO4NG7iHWF1jDVXzNKO3Y6jxPDs
-         /O0g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9BFhpZJygaI89cCqo0enwzxl1PVa8Z9Wsa1Ms03hVKo=;
+        b=SwA57G48FyNruammNEOyTYjjCXoSBOw2Hd+xoP2LCFs/+aZd3vlyfbOPgZoO3/OO99
+         5dvuhDZmJTMrXgsUlQJTpOEGW5Nr5BeQMLHNx7YzW/MXfnFq0oPlHaTRIuNtpsN79AR8
+         biQ/zXFgSy+9QApu5EEGPE+/SwN2pfq1C2nc/o/uw7FN4FilZp24BSlodgglaMj6u03R
+         IGv51GaJIynlug2FkTGq2qyITc4fcFWtjOHdG3eUOawrZm8pGsOoUY3F4CQAp8S3PT8R
+         WLEry2rSuJtlwaR4AWlA4vzSCz5kxNJg3tGaFN5GfbYvsNo95I/Jvw6vNonA2o/kJG4O
+         eM+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UdARZiSbGh68UyvLBInBommArPS2hOjFvTFndEogq5o=;
-        b=PBogti33fxyOfMV+ZpxUXz7lTq/Iq4cUd2qM3GMZsGomgIzlw0zLH6e5X60XfcXtgE
-         dQEKOuLXnB1Dmaf4V/F+WL47Ey03F14utMAPLhNSUkPuJbSJJgSikMS+B84ulg2ik7ig
-         DHaqP2E8YdxKA9Pzx3benrBklnR65q14eFzuY1IrNijSAIFTZUCdaYnjS7xdf8dpFqmH
-         xCLk/KWri/WeifPiUK1lJCFkUCsVrlj+Ngtmq2vpzrseWFekLktn5smcIKTvyRPeQPSd
-         DX1ozaX0ddBX0wI2B+6D1cuKcQqIh0Yr6APsx/XK/pLgf66t3pALVqAxyj9KJM248L0k
-         OiKQ==
-X-Gm-Message-State: APjAAAXeMqngxd1bskldwtsZ3w89wi9f8Q/Ji4q8+t9K1LV/zh7S/LIs
-        1/5/8OQT3NmU8e/3V9jepAGOeyxf
-X-Google-Smtp-Source: APXvYqx1ZTr8yjSj9voRBh+iFO9SEtWOyh2LBucSBnuJT+MuRITg5FpjNwjzBRAnu4lzoDIOia2d9w==
-X-Received: by 2002:aa7:d396:: with SMTP id x22mr1018502edq.182.1551382433148;
-        Thu, 28 Feb 2019 11:33:53 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q25sm3366212ejx.47.2019.02.28.11.33.52
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9BFhpZJygaI89cCqo0enwzxl1PVa8Z9Wsa1Ms03hVKo=;
+        b=k89KtV7EDqR/uZ5aL5umsCOLjcxssxorwGfF0Y93SpwHihAPuEC+7EGAVwsTtqEe/7
+         BFwb/VB/qb8mcjjcvBdjHT9lcMylvyEmnraX1kIA3Tf9Oiu7Kln/VdFyLjbme/PVdCVB
+         0jcB7bePJmPAh54qOduDiNmRdGmL9hK8YYywSAvRY9Tu7yVPYg9Hq7DAKNAGzsu79sjr
+         NPIliIUJzCnxfuYFPggS6RVZJ9PAZ+UzgCZB4jaETHFEXxhCG1a9c+r6eR2SyVXXC2uR
+         TmhVo8apUhj50oH8y82V6YW9puOmYnafgJiYxD1EdiEX8gsEQd/4F+pjUSWLY1zM5Y7g
+         8ljg==
+X-Gm-Message-State: APjAAAW0W+F4QkEH9KuaeJikqAbr3ohnMDMyELVEDHCI5H9rUzCM1iBi
+        OC4dWV+LyfiTnRdAa0IbmN0JyHxi
+X-Google-Smtp-Source: APXvYqy9b7/uYpm1wUKvR8e4T+CguVNU2PPklK2c8wAmrEC0S787KOf2JiIOej032MuGTr+GlgOr/A==
+X-Received: by 2002:a19:5013:: with SMTP id e19mr771072lfb.89.1551386212471;
+        Thu, 28 Feb 2019 12:36:52 -0800 (PST)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id l11sm4282415lja.38.2019.02.28.12.36.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Feb 2019 11:33:52 -0800 (PST)
-Date:   Thu, 28 Feb 2019 11:33:52 -0800 (PST)
-X-Google-Original-Date: Thu, 28 Feb 2019 19:33:51 GMT
-Message-Id: <4c14991d0672617460638b1bb445686da09c4889.1551382431.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.154.git.gitgitgadget@gmail.com>
-References: <pull.154.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] travis: remove the hack to build the Windows job on Azure
- Pipelines
-Fcc:    Sent
+        Thu, 28 Feb 2019 12:36:51 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v4 0/2] setup: fix memory leaks with `struct repository_format`
+Date:   Thu, 28 Feb 2019 21:36:26 +0100
+Message-Id: <cover.1551385992.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190226174655.GE19606@sigill.intra.peff.net>
+References: <20190226174655.GE19606@sigill.intra.peff.net>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+This is a follow-up to v3 [1] from about a month ago. Patch 1 is
+unchanged; patch 2 provides some additional documentation of the
+initialization that is required, plus I've gotten rid of the compound
+literal. Range-diff below.
 
-Since Travis did not support Windows (and now only supports very limited
-Windows jobs, too limited for our use, the test suite would time out
-*all* the time), we added a hack where a Travis job would trigger an
-Azure Pipeline (which back then was still called VSTS Build), wait for
-it to finish (or time out), and download the log (if available).
+Thanks Peff and brian for very helpful comments and discussion.
 
-Needless to say that it was a horrible hack, necessitated by a bad
-situation.
+Martin
+ 
+[1] https://public-inbox.org/git/cover.1548186510.git.martin.agren@gmail.com/
 
-Nowadays, however, we have Azure Pipelines support, and do not need that
-hack anymore. So let's retire it.
+Martin Ågren (2):
+  setup: free old value before setting `work_tree`
+  setup: fix memory leaks with `struct repository_format`
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .travis.yml             |  10 ----
- ci/run-windows-build.sh | 103 ----------------------------------------
- 2 files changed, 113 deletions(-)
- delete mode 100755 ci/run-windows-build.sh
+ cache.h           | 31 ++++++++++++++++++++++++++++---
+ builtin/init-db.c |  3 ++-
+ repository.c      |  3 ++-
+ setup.c           | 40 ++++++++++++++++++++++++++++------------
+ worktree.c        |  4 +++-
+ 5 files changed, 63 insertions(+), 18 deletions(-)
 
-diff --git a/.travis.yml b/.travis.yml
-index 36cbdea7f4..ffb1bc46f2 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -21,16 +21,6 @@ matrix:
-       compiler:
-       addons:
-       before_install:
--    - env: jobname=Windows
--      os: linux
--      compiler:
--      addons:
--      before_install:
--      script:
--        - >
--          test "$TRAVIS_REPO_SLUG" != "git/git" ||
--          ci/run-windows-build.sh $TRAVIS_BRANCH $(git rev-parse HEAD)
--      after_failure:
-     - env: jobname=Linux32
-       os: linux
-       compiler:
-diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
-deleted file mode 100755
-index a73a4eca0a..0000000000
---- a/ci/run-windows-build.sh
-+++ /dev/null
-@@ -1,103 +0,0 @@
--#!/usr/bin/env bash
--#
--# Script to trigger the Git for Windows build and test run.
--# Set the $GFW_CI_TOKEN as environment variable.
--# Pass the branch (only branches on https://github.com/git/git are
--# supported) and a commit hash.
--#
--
--. ${0%/*}/lib.sh
--
--test $# -ne 2 && echo "Unexpected number of parameters" && exit 1
--test -z "$GFW_CI_TOKEN" && echo "GFW_CI_TOKEN not defined" && exit
--
--BRANCH=$1
--COMMIT=$2
--
--gfwci () {
--	local CURL_ERROR_CODE HTTP_CODE
--	CONTENT_FILE=$(mktemp -t "git-windows-ci-XXXXXX")
--	while test -z $HTTP_CODE
--	do
--	HTTP_CODE=$(curl \
--		-H "Authentication: Bearer $GFW_CI_TOKEN" \
--		--silent --retry 5 --write-out '%{HTTP_CODE}' \
--		--output >(sed "$(printf '1s/^\xef\xbb\xbf//')" >$CONTENT_FILE) \
--		"https://git-for-windows-ci.azurewebsites.net/api/TestNow?$1" \
--	)
--	CURL_ERROR_CODE=$?
--		# The GfW CI web app sometimes returns HTTP errors of
--		# "502 bad gateway" or "503 service unavailable".
--		# We also need to check the HTTP content because the GfW web
--		# app seems to pass through (error) results from other Azure
--		# calls with HTTP code 200.
--		# Wait a little and retry if we detect this error. More info:
--		# https://docs.microsoft.com/en-in/azure/app-service-web/app-service-web-troubleshoot-http-502-http-503
--		if test $HTTP_CODE -eq 502 ||
--		   test $HTTP_CODE -eq 503 ||
--		   grep "502 - Web server received an invalid response" $CONTENT_FILE >/dev/null
--		then
--			sleep 10
--			HTTP_CODE=
--		fi
--	done
--	cat $CONTENT_FILE
--	rm $CONTENT_FILE
--	if test $CURL_ERROR_CODE -ne 0
--	then
--		return $CURL_ERROR_CODE
--	fi
--	if test "$HTTP_CODE" -ge 400 && test "$HTTP_CODE" -lt 600
--	then
--		return 127
--	fi
--}
--
--# Trigger build job
--BUILD_ID=$(gfwci "action=trigger&branch=$BRANCH&commit=$COMMIT&skipTests=false")
--if test $? -ne 0
--then
--	echo "Unable to trigger Visual Studio Team Services Build"
--	echo "$BUILD_ID"
--	exit 1
--fi
--
--# Check if the $BUILD_ID contains a number
--case $BUILD_ID in
--''|*[!0-9]*) echo "Unexpected build number: $BUILD_ID" && exit 1
--esac
--
--echo "Visual Studio Team Services Build #${BUILD_ID}"
--
--# Tracing execued commands would produce too much noise in the waiting
--# loop below.
--set +x
--
--# Wait until build job finished
--STATUS=
--RESULT=
--while true
--do
--	LAST_STATUS=$STATUS
--	STATUS=$(gfwci "action=status&buildId=$BUILD_ID")
--	test "$STATUS" = "$LAST_STATUS" || printf "\nStatus: %s " "$STATUS"
--	printf "."
--
--	case "$STATUS" in
--	inProgress|postponed|notStarted) sleep 10               ;; # continue
--		 "completed: succeeded") RESULT="success"; break;; # success
--		    "completed: failed")                   break;; # failure
--	*) echo "Unhandled status: $STATUS";               break;; # unknown
--	esac
--done
--
--# Print log
--echo ""
--echo ""
--set -x
--gfwci "action=log&buildId=$BUILD_ID" | cut -c 30-
--
--# Set exit code for TravisCI
--test "$RESULT" = "success"
--
--save_good_tree
+Range-diff against v3:
+1:  13019979b8 = 1:  13019979b8 setup: free old value before setting `work_tree`
+2:  e0c4a73119 ! 2:  b21704c1e4 setup: fix memory leaks with `struct repository_format`
+    @@ -16,15 +16,16 @@
+         they take from it, rather than stealing the pointers.
+     
+         Call `clear_...()` at the start of `read_...()` instead of just zeroing
+    -    the struct, since we sometimes enter the function multiple times. This
+    -    means that it is important to initialize the struct before calling
+    -    `read_...()`, so document that. Teach `read_...()` to clear the struct
+    -    upon an error, so that it is reset to a safe state, and document this.
+    +    the struct, since we sometimes enter the function multiple times. Thus,
+    +    it is important to initialize the struct before calling `read_...()`, so
+    +    document that. It's also important because we might not even call
+    +    `read_...()` before we call `clear_...()`, see, e.g., builtin/init-db.c.
+     
+    -    About that very last point: In `setup_git_directory_gently()`, we look
+    -    at `repo_fmt.hash_algo` even if `repo_fmt.version` is -1, which we
+    +    Teach `read_...()` to clear the struct on error, so that it is reset to
+    +    a safe state, and document this. (In `setup_git_directory_gently()`, we
+    +    look at `repo_fmt.hash_algo` even if `repo_fmt.version` is -1, which we
+         weren't actually supposed to do per the API. After this commit, that's
+    -    ok.
+    +    ok.)
+     
+         We inherit the existing code's combining "error" and "no version found".
+         Both are signalled through `version == -1` and now both cause us to
+    @@ -34,11 +35,21 @@
+         non-negative version number before using them.
+     
+         Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+      diff --git a/cache.h b/cache.h
+      --- a/cache.h
+      +++ b/cache.h
+    +@@
+    + extern const char *core_partial_clone_filter_default;
+    + extern int repository_format_worktree_config;
+    + 
+    ++/*
+    ++ * You _have_ to initialize a `struct repository_format` using
+    ++ * `= REPOSITORY_FORMAT_INIT` before calling `read_repository_format()`.
+    ++ */
+    + struct repository_format {
+    + 	int version;
+    + 	int precious_objects;
+     @@
+      	struct string_list unknown_extensions;
+      };
+    @@ -146,8 +157,15 @@
+      	}
+      
+      	return 0;
+    -@@
+    + }
+      
+    ++static void init_repository_format(struct repository_format *format)
+    ++{
+    ++	const struct repository_format fresh = REPOSITORY_FORMAT_INIT;
+    ++
+    ++	memcpy(format, &fresh, sizeof(fresh));
+    ++}
+    ++
+      int read_repository_format(struct repository_format *format, const char *path)
+      {
+     -	memset(format, 0, sizeof(*format));
+    @@ -167,7 +185,7 @@
+     +	string_list_clear(&format->unknown_extensions, 0);
+     +	free(format->work_tree);
+     +	free(format->partial_clone);
+    -+	*format = (struct repository_format)REPOSITORY_FORMAT_INIT;
+    ++	init_repository_format(format);
+     +}
+     +
+      int verify_repository_format(const struct repository_format *format,
 -- 
-gitgitgadget
+2.21.0
+
