@@ -2,77 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69C2620248
-	for <e@80x24.org>; Thu, 28 Feb 2019 09:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64FB820248
+	for <e@80x24.org>; Thu, 28 Feb 2019 10:02:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732113AbfB1JN2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Feb 2019 04:13:28 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:46829 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732032AbfB1JN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Feb 2019 04:13:27 -0500
-Received: by mail-pf1-f193.google.com with SMTP id g6so9413940pfh.13
-        for <git@vger.kernel.org>; Thu, 28 Feb 2019 01:13:27 -0800 (PST)
+        id S1732159AbfB1KCZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Feb 2019 05:02:25 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40962 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730215AbfB1KCZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Feb 2019 05:02:25 -0500
+Received: by mail-wr1-f66.google.com with SMTP id n2so21203413wrw.8
+        for <git@vger.kernel.org>; Thu, 28 Feb 2019 02:02:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uqXizTaqAHg3PcQ6c4oUCEfP45IhRDQauBRC//EM7zk=;
-        b=gmdZ6fl7BppsybvNIfIshwX8v52v5TQSWHbOJ2Ny8gsxHxTnhWWKyxHePodfjCHxeD
-         8IDiQLE+VcnvwaHLOWmab+tw5JG7ksY3QhswkgbZhzGnWAAwCGTFXByYvWM0h2vcM7KF
-         cdnImyiO3p24Nj1kK+wJ4YCIJcyLBPnz6VOoT1eCQUGiiafE+khjLTWtU6cTOLg5jE2w
-         fKjp1PenIce+h0XHQBWtZxeUY8tCEBGGolD2rg9LUfcv5HspIEuMHN+zhBkqjcAIs2v2
-         WMEgwYJst771NMu7W7x9KSvO9ttLQUMCjZX86X1vGSG83NGtybRDyMO77pqh/PVW8Pwu
-         b4Tg==
+        d=filenko-ms.20150623.gappssmtp.com; s=20150623;
+        h=from:to:subject:date:message-id:mime-version;
+        bh=TkzvAcJAIHYwydEwGGJuf2bvx6NCEEho+vaxiQUsh8s=;
+        b=Kl2SJC5ZhNS5x2j6HzUMPk5kynvu1uuc/6FupK8sbNyzG6JE+jMcAqpu2t5YaaE5jR
+         X486PHyeENan4K/qgOUddzU+13xAk3UScTekbGjK2mJ+TNO32OpdMpbOxbuBinGPjN51
+         m393wAPMnIiPzVBeh/HU5StOvX+KkbjF5llksiytJEnCbsRfUdARXMnKvZ9Hp/uGUO4g
+         EW2uV3OWvuYUg58Ej+wX0zXlmA3mAno0WuGaohZ/H4nzbKliWHjEhdP2pWyFlZbV0H3W
+         5WT/eUiXD/FysRMt96DAP2BkZfeKJ6cmHO+FSpXqVuItQ70QDOboLGyVNaNikCrx5W7G
+         S0jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uqXizTaqAHg3PcQ6c4oUCEfP45IhRDQauBRC//EM7zk=;
-        b=LkspdLEnDoYpHhbpQZfKF9wcYTp/rkVRTl8WpUdDHVoqqChgh+ogjvanT8gIXOAdZX
-         SDCccbsAXy+neshFIth9ZzzfAm97BMbJnpbkZ3L4WGgHp6otqUDEp1bfojjlUTX+qgbA
-         kVYRfv47UA2jOV205vQ4ihjmHnEAJw+a0X3gLFXrnl1ZrTvu4sBxonJC9U+DQTWWJjri
-         6qMUsabkztFZHSsFlaIgsO81XxVqFoaGAmuneFqqaIgOuN3wEnXa0d6rT+D2ah33ZlTh
-         8I3nKtGO8TgEpj2tgazQLE2VNufBCSjQFYU5iXX/SuE9VpoCrYd9Rcbi9FpNwzR33aYQ
-         yIIg==
-X-Gm-Message-State: AHQUAua3yS0SPKgMaT3XTWEXffo87WWMNzKNXMUDDO2R5xHeOCUYotL/
-        GOLuXDzy4jn81UA/MkEPnGBJcAq5xPoHQEBhsouW5L/c
-X-Google-Smtp-Source: AHgI3IbkjKemuUDV1A5TdawLiU5mE9TabBhFdUaAzefW+dy4cI69JwX2UfWmmg7m7TowsuKZqtJU4D1Sg8yBABWkjJc=
-X-Received: by 2002:aa7:9152:: with SMTP id 18mr6218511pfi.215.1551345207159;
- Thu, 28 Feb 2019 01:13:27 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version;
+        bh=TkzvAcJAIHYwydEwGGJuf2bvx6NCEEho+vaxiQUsh8s=;
+        b=DphDD4IlWIOitp5PWsL5yQMbLHAbEGNYN4BK8qmDvUsSIq7FMhX4Sz1EK1gcz4wdSy
+         AG7dUQmo5EjW7mKmSLhV4ydhAdcICahlQBFxC1UT4DRf+sTxZCEOM9mJHVDFque6t0mt
+         MxIa/VI1M0tCtXjnrLh3uw8XxYEJ4ilHuuEJMY1YEL833HeMutCwgi1BJqdHrhk26FJu
+         frf13wq+2GzpbhJarUInnYipsGQrALoa5COoxIQhbi9LGIXkgoPx88IjTLo6nIwpEH32
+         x6Y7a8WKgl4HItarY1+aeTpIjslAdAe/A3Kpj+QP/KeR8j1LBLRQfyYqMoaqUfCa19k3
+         vv5w==
+X-Gm-Message-State: APjAAAWW2wixeNxkcI8iO8AhWkuVUTGr92GHUyuoUUuur+NP2/YUcrtL
+        YoiUwKRvQj6NBQ/CoAjd7fqq7ocYUJE=
+X-Google-Smtp-Source: APXvYqzC2Zsxv9Uxw44qoeNf0L0X/SjSItorlxzm3ZXmVxSfy6orW+HARRwqKZ3Jpz18g4qeqMLB+Q==
+X-Received: by 2002:adf:a49c:: with SMTP id g28mr5396559wrb.147.1551348140781;
+        Thu, 28 Feb 2019 02:02:20 -0800 (PST)
+Received: from bouncer ([213.61.81.99])
+        by smtp.gmail.com with ESMTPSA id b10sm15241887wru.92.2019.02.28.02.02.18
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 28 Feb 2019 02:02:19 -0800 (PST)
+From:   Max Filenko <contact@filenko.ms>
+To:     git@vger.kernel.org
+Subject: [BUG] git-am: all colons in the beginning of a subject are lost
+Date:   Thu, 28 Feb 2019 11:02:11 +0100
+Message-ID: <m2wolk6xjw.fsf@filenko.ms>
 MIME-Version: 1.0
-References: <20190228024315.1470303-1-kyle@kyleam.com>
-In-Reply-To: <20190228024315.1470303-1-kyle@kyleam.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 28 Feb 2019 10:13:11 +0100
-Message-ID: <CAN0heSo5qsd4t_mgt90ws2hCp3O0qch_9MgXuzj-4FS2gG+bkA@mail.gmail.com>
-Subject: Re: [PATCH] rebase docs: fix "gitlink" typo
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 28 Feb 2019 at 03:44, Kyle Meyer <kyle@kyleam.com> wrote:
+Hi!
 
-> Change it to "linkgit" so that the reference is properly rendered.
+If there are colons in the beginning of a patch subject line `git-am'
+will drop them.
 
->  have `<upstream>` as direct ancestor will keep their original branch point,
-> -i.e. commits that would be excluded by gitlink:git-log[1]'s
-> +i.e. commits that would be excluded by linkgit:git-log[1]'s
->  `--ancestry-path` option will keep their original ancestry by default. If
+Consider the following patch:
 
-Heh, I stumbled on this a few days ago, and have this exact patch in my
-w-i-p series. I found it interesting that both Asciidoctor and AsciiDoc
-trip on this in quite different ways.
+    $ cat 0001-four-colons-prepended.patch
+    From e8213a2d10a61c9dc75521d88d656b8d5330e6bb Mon Sep 17 00:00:00 2001
+    From: Max Filenko <contact@filenko.ms>
+    Date: Tue, 12 Feb 2019 12:21:21 +0100
+    Subject: [PATCH] :::: four colons prepended
+    
+    ---
+     file.txt | 2 +-
+     1 file changed, 1 insertion(+), 1 deletion(-)
+    
+    diff --git a/file.txt b/file.txt
+    index 4dd1ef7..b5da95d 100644
+    --- a/file.txt
+    +++ b/file.txt
+    @@ -1 +1 @@
+    -This is a file.
+    +This is a plain text file.
+    -- 
+    2.17.1
 
-The patch is correct and tested by me, FWIW.
+There will be no colons in the beginning of a commit message if I apply
+this patch:
 
-Martin
+    $ git am 0001-four-colons-prepended.patch
+    Applying: four colons prepended
+
+The four colons already gone in the log message above. There are neither
+no colons in the commit subject line:
+
+    $ git show
+    commit 6341a6a2872f850ecb376c268b1b3bae54a6a74f (HEAD -> master)
+    Author: Max Filenko <contact@filenko.ms>
+    Date:   Tue Feb 12 12:21:21 2019 +0100
+    
+        four colons prepended
+    
+    diff --git a/file.txt b/file.txt
+    index 4dd1ef7..b5da95d 100644
+    --- a/file.txt
+    +++ b/file.txt
+    @@ -1 +1 @@
+    -This is a file.
+    +This is a plain text file.
+
+I was able to reproduce this with git 2.17.1 on Ubuntu 18.04.2 LTS as
+well as with git 2.17.2 (Apple Git-113) on macOS 10.14.3.
+
+I was able to trace this down to <builtin/am.c>. It seems like there are
+no colons already in the `state->msg' which to my understanding is being
+filled by `read_commit_msg()' function. I would really appreciate a hand
+on debugging it further.
+
+I'm re-submitting this bug report because the original one [1] wasn't
+really noticed. Hopefully, it's just because I've missed the proper
+prefix in my email's subject line :)
+
+[1]:
+http://public-inbox.org/git/m2lg2lxmmm.fsf@bouncer.i-did-not-set--mail-host-address--so-tickle-me/
+
+--
+Best,
+Max
