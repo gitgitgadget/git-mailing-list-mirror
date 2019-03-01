@@ -2,94 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4680B20248
-	for <e@80x24.org>; Fri,  1 Mar 2019 20:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B28ED20248
+	for <e@80x24.org>; Fri,  1 Mar 2019 21:36:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725974AbfCAUxz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Mar 2019 15:53:55 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34250 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725905AbfCAUxz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Mar 2019 15:53:55 -0500
-Received: by mail-wr1-f65.google.com with SMTP id f14so27299492wrg.1
-        for <git@vger.kernel.org>; Fri, 01 Mar 2019 12:53:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YmQwrEFOPHsvdl1hfv0WQ4LoKPHAzQVWCmVgSQwzlvA=;
-        b=eMSZaIE5YTmVYxhlwoCO9g0i0qunmF+pjOP877qieCvcmyNlBGvUbDW144OIC94tZr
-         Xgr1lDZP8zCDyqx/U9ReUG/GFp8MDHxikuyQf25SIWxDH6nNQxnk5JPVLd3dwdCF/snI
-         4sbzNmvVjqh4eS2v53C5blX8a7JZwYFVYeiVpEedbDjnwmmv67Z+CmEsY23EdyftBnHx
-         6OJjHmWWTSxm4UGb4IbtPqblAWPdFyVz7fpqhk6jO38YtvIbpc2MPCcNLb3vIrvG9Usm
-         InGD+23bKBi6WKshaDjbcpZsMoupOCCjZBdx4nzAL525ITNrLzI1yZ2EYOJ4TiJvSDp/
-         Ixog==
-X-Gm-Message-State: APjAAAUt51ZsrszTZCFj3MOk09evRnAfETRzY81ms8X8uiJH6OlqGgnI
-        DGj0vpub+YabE7QQf6fBDNT9a5Mwap2ughsrIog=
-X-Google-Smtp-Source: APXvYqy9Mp7hnYpvq7zXfI+8FSI7ATdmL9spcfE3BrJ1XYNUIh3smXxZX9vu9jxIVp2lGBdFTupGXNAVNtnpNZB3afw=
-X-Received: by 2002:adf:c7c6:: with SMTP id y6mr4620414wrg.217.1551473633433;
- Fri, 01 Mar 2019 12:53:53 -0800 (PST)
+        id S1726001AbfCAVgW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Mar 2019 16:36:22 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35008 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725988AbfCAVgW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Mar 2019 16:36:22 -0500
+Received: (qmail 26012 invoked by uid 109); 1 Mar 2019 21:36:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 01 Mar 2019 21:36:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1901 invoked by uid 111); 1 Mar 2019 21:36:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 01 Mar 2019 16:36:37 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Mar 2019 16:36:19 -0500
+Date:   Fri, 1 Mar 2019 16:36:19 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] Makefile: use `git ls-files` to list header files,
+ if possible
+Message-ID: <20190301213619.GA1518@sigill.intra.peff.net>
+References: <pull.130.git.gitgitgadget@gmail.com>
+ <0b5529406b9458d37f3f5cdf38baa2d6a0a70a65.1551470265.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20190301171304.2267-1-brandon1024.br@gmail.com> <20190301190954.GG30847@sigill.intra.peff.net>
-In-Reply-To: <20190301190954.GG30847@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 1 Mar 2019 15:53:43 -0500
-Message-ID: <CAPig+cQoZQCTAzaDiaAdAvSqHBHSoapDoVLjPtpKjCEVSBL57g@mail.gmail.com>
-Subject: Re: [PATCH v2] commit-tree: utilize parse-options api
-To:     Jeff King <peff@peff.net>
-Cc:     Brandon Richardson <brandon1024.br@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0b5529406b9458d37f3f5cdf38baa2d6a0a70a65.1551470265.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 1, 2019 at 2:10 PM Jeff King <peff@peff.net> wrote:
-> On Fri, Mar 01, 2019 at 01:13:04PM -0400, Brandon Richardson wrote:
-> > +     if((!unset) && (!arg)) \
-> > +             BUG("option callback does not expect negation and requires an argument"); \
+On Fri, Mar 01, 2019 at 11:57:46AM -0800, Johannes Schindelin via GitGitGadget wrote:
 
-Peff didn't highlight this, but compare your use of macro arguments
-against his...
+> In d85b0dff72 (Makefile: use `find` to determine static header
+> dependencies, 2014-08-25), we switched from a static list of header
+> files to a dynamically-generated one, asking `find` to enumerate them.
+> 
+> Back in those days, we did not use `$(LIB_H)` by default, and many a
+> `make` implementation seems smart enough not to run that `find` command
+> in that case, so it was deemed okay to run `find` for special targets
+> requiring this macro.
+> 
+> However, as of ebb7baf02f (Makefile: add a hdr-check target,
+> 2018-09-19), $(LIB_H) is part of a global rule and therefore must be
+> expanded. Meaning: this `find` command has to be run upon every
+> `make` invocation. In the presence of many a worktree, this can tax the
+> developers' patience quite a bit.
 
-> +/*
-> + * Similar to the assertions above, but checks that "arg" is always non-NULL.
-> + * I.e., that we expect the NOARG and OPTARG flags _not_ to be set. Since
-> + * negation is the other common cause of a NULL arg, this also implies
-> + * BUG_ON_OPT_NEG(), letting you declare both assertions in a single line.
-> + */
-> +#define BUG_ON_OPT_NOARG(unset, arg) do { \
-> +       BUG_ON_OPT_NEG(unset); \
-> +       if (!(arg)) \
-> +               BUG("option callback require an argument"); \
-> +} while (0)
+I'm confused about this part. We don't run hdr-check by default. Why
+would make need the value of $(LIB_H)? Yet empirically it does run find.
 
-Note, in particular how Peff used !(arg) rather than (!arg) in your
-patch. This distinction is subtle but important enough to warrant
-being called out. The reason that Peff did it this way (the _correct_
-way) is that, as a macro argument, 'arg' may be a complex expression
-rather than a simple boolean. for instance, a caller could conceivably
-invoke the macro as:
+Worse, it seems to actually run it _three times_. Once for the $(HCO)
+target, once for the .PHONY, and once for the hdr-check target. I think
+the .PHONY one is unavoidable (it doesn't know which names we might
+otherwise be building should be marked), but the other two seem like
+bugs in make (or at least pessimisations).
 
-    BUG_ON_OPT_NOARG(unset, foo || bar)
+It makes me wonder if we'd be better off pushing hdr-check into a
+separate script. It doesn't actually use make's dependency tree in any
+meaningful way. And then regular invocations wouldn't even have to pay
+the `ls-files` price.
 
-Let's say that 'foo' and 'bar' are both true. With Peff's version,
-when the macro is expanded, that expression becomes:
+If we are going to keep it in the Makefile, we should probably use a
+":=" rule to avoid running it three times.
 
-    !(true || true)
+> Even in the absence of worktrees or other untracked files and
+> directories, the cost of I/O to generate that list of header files is
+> simply a lot larger than a simple `git ls-files` call.
+> 
+> Therefore, just like in 335339758c (Makefile: ask "ls-files" to list
+> source files if available, 2011-10-18), we now prefer to use `git
+> ls-files` to enumerate the header files to enumerating them via `find`,
+> falling back to the latter if the former failed (which would be the case
+> e.g. in a worktree that was extracted from a source .tar file rather
+> than from a clone of Git's sources).
 
-which evaluates to false as expected and intended. With your version,
-it expands to:
+That seems reasonable (regardless of whether it is in a script or in the
+Makefile). Another option is to use -maxdepth, but that involves
+guessing how deep people might actually put header files.
 
-    (!true || true)
+> This has one notable consequence: we no longer include `command-list.h`
+> in `LIB_H`, as it is a generated file, not a tracked one.
 
-which evaluates to true (since ! has higher precedence than ||), which
-is a very different and very unexpected (and likely wrong) result.
+We should be able to add back $(GENERATED_H) as appropriate. I see you
+did it for the non-computed-dependencies case. Couldn't we do the same
+for $(LOCALIZED_C) and $(CHK_HDRS)?
+
+> Likewise, we no longer include not-yet-tracked header files in `LIB_H`.
+
+I think that's probably OK.
+
+-Peff
