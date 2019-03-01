@@ -2,115 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B46B220248
-	for <e@80x24.org>; Fri,  1 Mar 2019 17:35:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5E1B20248
+	for <e@80x24.org>; Fri,  1 Mar 2019 17:50:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389469AbfCARfC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Mar 2019 12:35:02 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59796 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388333AbfCARfC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Mar 2019 12:35:02 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 73A9843199;
-        Fri,  1 Mar 2019 12:35:00 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=cXpqm0cC00kkQCFegZi04HQYN
-        gg=; b=smunXT8pHMmGL1hGKPDW3X/xMdqGgQ+r2Ps+KbQH7Zy5mil9ucMJIQHX6
-        T4l7fmZkG750TifI5l0qOArkPT0C2ryuLvGeMZLiPoXQtIXAioUOwvpekjFn5/8p
-        LM0rHNr+GrJjaIoxiGgG7fwCySdK27tQ2mYsgO3GiNfKfa2woY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; q=dns; s=sasl; b=uJikgwJSusKCSR4KR24
-        4AHdSdgBRuRYbX8dh1A9LvBi307JVMoPI5+4l0qFtBS7zCRdgXZth0PCMHK2t/76
-        OigXxN2/+IpkZtExsXhEIKO/hFWEBBYgg300ZbrBbwEcIWDn/56BRdtL1mORN0iG
-        5Vj+EJjLQOExkRU7f2623rnw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6C75943198;
-        Fri,  1 Mar 2019 12:35:00 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Received: from morphine.paradise.teonanacatl.net (unknown [47.202.93.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8296443192;
-        Fri,  1 Mar 2019 12:34:55 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/3] completion: fix multiple command removals
-Date:   Fri,  1 Mar 2019 12:34:43 -0500
-Message-Id: <20190301173443.16429-4-tmz@pobox.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190228230506.GA20625@sigill.intra.peff.net>
-References: <20190228230506.GA20625@sigill.intra.peff.net>
+        id S2388346AbfCARui (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Mar 2019 12:50:38 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44445 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726195AbfCARui (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Mar 2019 12:50:38 -0500
+Received: by mail-wr1-f67.google.com with SMTP id w2so26775782wrt.11
+        for <git@vger.kernel.org>; Fri, 01 Mar 2019 09:50:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5hXX6htEg7dIsP8qv3a6XKfIzyhwTdpaCfv/KHOHGF8=;
+        b=VSPwqMmn5Y1J+4pA32t8Fx6wOjXj8UegPDLVsTW2eBW1LNmF4AXaytlYkXQRbDjqR6
+         JGkPzBjd4JdmUvOa2cFuqWgfdmXjHHynMK+t5oAsPhM51F1XHmmBRO1wdCdozVBk+FoW
+         10e18hvgckk4ccc/5LEsUcz7ojn7t3WDXh+etzL14ME0HKe6u9B+7PzhAVvW702LpeXk
+         QZSuT3wYoWaS9/UNNexyiO2D6BYytDqeujYF8QtMYPG5+2Z+6M59rDptvaUUjKvGKIw0
+         v5g9Rg427tmozJak4JGCVC1kOmmXH5iNfv3JR80HuhOM5KhTvCbdp3NMKjLW3RMnXsAn
+         KB9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5hXX6htEg7dIsP8qv3a6XKfIzyhwTdpaCfv/KHOHGF8=;
+        b=klBSzH19zy91ZzMQMzBXC+ont2woxcxn57Ap6M7tCRE0J9fCf8c+EMgqbyjMQITQUC
+         78g4i700jXERjoMez8Fdt6k4Kk/vck3GBB0umifhSZdoP1O2wiTs2+rsgkCEdt96+pfp
+         78LBDOUCkp1FbM8ZJJaRbj7rgQpyta64nlVtxv/4fCNsIWXKdiK35KR/1JCAfSumH2/z
+         fBuoVZvKaLvSCqA8d77U3rOyF5uYqFFpIfy6MWx4hMXiCBvU5HazdXmv9g4rWmGZVn4I
+         rpAshILUU0pW1s7jSy6FfmzpiJh/yEIBapiNchtMVKex4XLDmCifbA1/V8yvJp/LyFkt
+         F7LA==
+X-Gm-Message-State: APjAAAU1ICN3Ccwr0s0aD/x10VLtkcENC0+Vz/NxJ40+KvnMTSF2+9WQ
+        1R03OXuzecRIumWt3bcEqUFCc0IF
+X-Google-Smtp-Source: APXvYqzrQLGx9qhTWblw5hoogBgL6CCNSTioUabj2USNeNJSgBywQM3PJXhfRMbeZ7EWyi5g/zux3A==
+X-Received: by 2002:a5d:53cd:: with SMTP id a13mr4387551wrw.146.1551462636360;
+        Fri, 01 Mar 2019 09:50:36 -0800 (PST)
+Received: from localhost.localdomain (atoulouse-658-1-112-206.w86-199.abo.wanadoo.fr. [86.199.35.206])
+        by smtp.googlemail.com with ESMTPSA id o8sm11672247wma.1.2019.03.01.09.50.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 01 Mar 2019 09:50:35 -0800 (PST)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Alban Gruin <alban.gruin@gmail.com>
+Subject: [RFC PATCH 0/4] name-rev: improve memory usage
+Date:   Fri,  1 Mar 2019 18:50:20 +0100
+Message-Id: <20190301175024.17337-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 54C7B55A-3C48-11E9-9168-EE24A11ADF13-09356542!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+rafasc reported on IRC that on a repository with a lot of branches,
+tags, remotes, and commits, name-rev --stdin could use a massive amount
+of memory (more than 2GB of RAM) to complete.
 
-6532f3740b ("completion: allow to customize the completable
-command list", 2018-05-20) added the completion.commands config
-variable.
+This patch series tries to improve name-rev’s memory usage.
 
-The documentation states multiple commands may be added,
-separated by spaces.  Adding multiple commands to remove fails,
-only removing the last command in the config.
+There is some improvement that could be done, such as reference counting
+the names attributed to commits.  Tell me if it could be worth to pursue
+this way, or if name-rev’s internals would need a more thorough rewrite.
 
-Fix multiple command removals.
+This is based on master (8104ec994e, "Git 2.21").
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Jeff,
+The tip of this series is tagged as "fix-name-rev-leak-rfc-v1" in
+https://github.com/agrn/git.
 
-The commit message could probably be worded better, particularly since it=
-'s
-forged in your name.
+Alban Gruin (4):
+  name-rev: improve name_rev() memory usage
+  commit-list: add a function to check if a commit is in a list
+  name-rev: check if a commit should be named before naming it
+  name-rev: avoid naming from a ref if it’s not a descendant of any
+    commit
 
- help.c                | 4 ++--
- t/t9902-completion.sh | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ builtin/name-rev.c | 124 +++++++++++++++++++++++++++++++++++----------
+ commit.c           |  12 +++++
+ commit.h           |   1 +
+ 3 files changed, 111 insertions(+), 26 deletions(-)
 
-diff --git a/help.c b/help.c
-index 520c9080e8..026f881715 100644
---- a/help.c
-+++ b/help.c
-@@ -393,8 +393,8 @@ void list_cmds_by_config(struct string_list *list)
- 		const char *p =3D strchrnul(cmd_list, ' ');
-=20
- 		strbuf_add(&sb, cmd_list, p - cmd_list);
--		if (*cmd_list =3D=3D '-')
--			string_list_remove(list, cmd_list + 1, 0);
-+		if (sb.buf[0] =3D=3D '-')
-+			string_list_remove(list, sb.buf + 1, 0);
- 		else
- 			string_list_insert(list, sb.buf);
- 		strbuf_release(&sb);
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index dd11bb660d..d7daa1ca92 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1483,7 +1483,7 @@ test_expect_success 'git --help completion' '
- 	test_completion "git --help core" "core-tutorial "
- '
-=20
--test_expect_failure 'completion.commands removes multiple commands' '
-+test_expect_success 'completion.commands removes multiple commands' '
- 	echo cherry-pick >expected &&
- 	test_config_global completion.commands "-cherry -mergetool" &&
- 	git --list-cmds=3Dlist-mainporcelain,list-complete,config |
+-- 
+2.20.1
+
