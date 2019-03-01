@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6078820248
-	for <e@80x24.org>; Fri,  1 Mar 2019 02:51:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 661E320248
+	for <e@80x24.org>; Fri,  1 Mar 2019 02:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729316AbfCACvt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Feb 2019 21:51:49 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37016 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727826AbfCACvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Feb 2019 21:51:49 -0500
-Received: by mail-wr1-f66.google.com with SMTP id w6so20957896wrs.4
-        for <git@vger.kernel.org>; Thu, 28 Feb 2019 18:51:48 -0800 (PST)
+        id S1732389AbfCACwp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Feb 2019 21:52:45 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40014 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727707AbfCACwo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Feb 2019 21:52:44 -0500
+Received: by mail-wr1-f67.google.com with SMTP id q1so24226601wrp.7
+        for <git@vger.kernel.org>; Thu, 28 Feb 2019 18:52:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version;
-        bh=TLiT7mZbq9Ifa3G6xZMbIYKsP496bmRnN4k4ap2nylI=;
-        b=Ig/b/fl1iRlJjDpxki4z4FgPWOv8O6AwMzJzjzT1kG8Vz3JUhvNEqzHIgyYoVEAz9A
-         xRIMpzhTR1UY74TI9MpR9R1PhoaVfX0SVKNvDiH5/cR8SXsztUtr0T9WMfime97UwS/x
-         gPgZ6ZJbdNNEH1yd/alpDk/8/q1SnOfqPGr0cA01ZVvbnxRMBPzibikxoNrdHuVz4EFM
-         iCiFvKFjhluLCWQKQDGo3PZbixhW9RidncRcdGli7xMSxUnDxqvpEINjLvWigIM63UUy
-         GfDjYiMJkdKkSlSrxK03wXN03Xe/LxHIeyXI7efniz1H+LyaeX5XMqCinKcWHiLz0Lhu
-         fsew==
+        bh=nau/ctXYG9S1S+NaT73dkdUWxdCimgW1f82QkCiERzI=;
+        b=CYWo0d5DwXFcS/Dqk2kFLKmlKgqwmmvkNAY1UIQg/t7Gb//q5fjuvcYvLgjXCPTsSl
+         V0hsbpK/iR9WoajlT465GjXpneCYFsXAqLQd/S0iRANCES6xLfZFXd1yvOrWmEqc6UFK
+         yk0cM1FFLWHjKGpsaw/yGh7dwmJbBF9XtfFfmZNeV1aLRE6zGlv2ncfijWgPd4e0u+6e
+         +zQnrDlX25IUXhv3WHC6nD3iVXrHQdmICEgm/QPBV5Kxbms08dBbsk1torcih2wjfKfu
+         80RRbDNJcXJ+FAnvFPXtre1Q2NXvpnKykfA9EWFnCRQtIFqHtUeis7Rs31R3ZzmCJIxW
+         O/9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version;
-        bh=TLiT7mZbq9Ifa3G6xZMbIYKsP496bmRnN4k4ap2nylI=;
-        b=f7sbku2HVWDyZ6fH+Hs13X9gh4W4bEXKZSnaNtGLX827JVEkgXXXqpsem0Wv3/pb7C
-         evt9POFUGOtSAisGoTfE7CWynu+wutK4YyDxt5F/WljWyPcQW9dHWWKBzd6pUPDcH/cB
-         hjCqYQO2kjT/3InaXPCN8z2/sHHpPbqa+Bl3isIuQLKHX6LZtiFzpSAiXYSt+2aH3RKe
-         hIAQaXl0xTIPnWDfd7C9/s2eQgVHuNh5OiJB5mGlBdXtr51RccOp+DtfkguPYhaz8Lrm
-         MmaZNDjsCaOo+Uo21vrUgJdDDZHjRFHzSv5QWu8QrBnyOABMyGAHwozGx2aWmAeclV8n
-         RKTQ==
-X-Gm-Message-State: APjAAAWKF8RKDG5N5TyVqC+sz4I5Af9Jd27g0PWcFJpdnaRron68S7jf
-        Mm8WyDKNHLLwVL7GAPtiPdU=
-X-Google-Smtp-Source: APXvYqzweutgQ8U9aYL8mtlZBwUC7f/Xwdq8BIAYa0BbeHxDlSeXh4zDlCZeVCevA5vOYE21P8mCGQ==
-X-Received: by 2002:a05:6000:1287:: with SMTP id f7mr1702314wrx.203.1551408707093;
-        Thu, 28 Feb 2019 18:51:47 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y20sm18180688wra.51.2019.02.28.18.51.46
+        bh=nau/ctXYG9S1S+NaT73dkdUWxdCimgW1f82QkCiERzI=;
+        b=Dar+B57NeHMZy1fbBdiby3b13YB20PfnZUJmKI45wel+3fIeBuNTWNExwg9tdJnqmG
+         8MzsqZ0pmHTQ8yJiOE5jTDU1EqVLIqfY8Np3R3k0vp3fKdRbr2+4p4nwrnurccuesw/5
+         KxqjJy6PWlCP/vMjjEskcgosiaH3o/oOxm3rmEZuD+9EpjiPHC1OM0IYQ68zb+iGE0RZ
+         3er2wq1IIb6EoteAe9mhsFMzZJeb2Ws3iPei5FjF/qg/SgSrENK/XWoT0WrM15yWwwmI
+         4CeE20352kk11uBXaZqgDcWWFDzmLDeeGbvfTqIvWPDNQXy2UlQVTV8gfSDsjAloJYwx
+         aT+g==
+X-Gm-Message-State: APjAAAXeK9nN3sTUSgAbVW8ZphlhdJNJTD6i7nh3gXLmcZlTA7SBa1eP
+        yUZikx3CzI+dqpO59bhkFIs=
+X-Google-Smtp-Source: APXvYqxImlvpkHx++lSEKqJ3RypKEnJlAZ0VHfhkjQAkaU+YEp2FQvoPyRajMveOdufQpMifDbrHuw==
+X-Received: by 2002:adf:9e0c:: with SMTP id u12mr1600296wre.216.1551408762623;
+        Thu, 28 Feb 2019 18:52:42 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x17sm37212005wrd.95.2019.02.28.18.52.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Feb 2019 18:51:46 -0800 (PST)
+        Thu, 28 Feb 2019 18:52:41 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     unlisted-recipients:; (no To-header on input) git@vger.kernel.org,
-        martin.agren@gmail.com, pclouds@gmail.com, peff@peff.com,
-        szeder.dev@gmail.com, git@matthieu-moy.fr,
-        Johannes.Schindelin@gmx.de
-Illegal-Object: Syntax error in Cc: address found on vger.kernel.org:
-        Cc:     unlisted-recipients:; (no To-header on input)git@vger.kernel.org
-                                                                     ^-missing end of address
-Subject: Re: [GSoC] acknowledging mistakes
-References: <f881f01e4f05c1c9ad7e35fea5fd7db2947427a1.1551349607.git.gitgitgadget@gmail.com>
-        <20190228190242.20680-1-rohit.ashiwal265@gmail.com>
-Date:   Fri, 01 Mar 2019 11:51:46 +0900
-Message-ID: <xmqqef7r9uil.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Linus Nilsson <Linus.Nilsson@trimma.se>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG] All files in folder are moved when cherry-picking commit that moves fewer files
+References: <67C5CE5D6EC13D4DB8FC51E2F9BD262F022B8B3151@Triton.ad.trimma.se>
+        <512993fe-51da-745d-031b-37ea162499fb@gmail.com>
+        <CABPp-BGbrWrS0622yfTRUqRzWzNsZ_v9cAWW6ucXBYXqD26qHA@mail.gmail.com>
+        <20190227164056.GA2062@sigill.intra.peff.net>
+        <CABPp-BGOqQ0P8ywCK_sybPOeASxPnkTq7NXW8678f=345=68-Q@mail.gmail.com>
+Date:   Fri, 01 Mar 2019 11:52:41 +0900
+Message-ID: <xmqq7edj9uh2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,44 +71,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
+As you know that I've always been skeptical to this rename-directory
+business, this probably won't come as a surprise, but I seriously
+think directory renames should be made opt-in, and as a separate
+option, making the option three-way.  I.e.
 
-> 1. Commit message was less than 50 chars which should be around 72 chars
->    according to coding guide lines. Should I change this to match 72?
+ - do we do any renames (yes/no)?
 
-Simple things do not need that many letters to tell ;-)  The
-suggestion of 72 is about the maximum.  
+ - if we do do renames, do we base the decision only on the contents
+   of the thing along, or do we allow neighbouring files affect the
+   decision?
+ 
+That is, in addition to the traditional --renames or -M, we'd have a
+separate bool --allow-directory-renames that is by default off and
+is a no-op if the former is off.
 
-If you are doing something in a single patch that needs a longer
-title, it generally is a sign that you are trying to do too much in
-a single patch and should be splitting the patch into more
-digestable smaller steps.  And the purpose of having a maximum is to
-nudge patch authors to realize that.
+We had to fix a breakage recently for 3-way fallback case, and we
+explained the fix as needed because the case lacks the full
+information, but I think even with the full information at hand, the
+rename-directory heurisitcs is inherently riskier than the content
+based rename detection.
 
-> 2. My changes had some uneven use of tabs and spaces, which I made
->    considering that pre-existing code had them too. Is there a
->    possibility to change the whole code according to CodingGuidelines?
->    If yes should I only change my code according to guidelines or the
->    whole file?
+Suppose you had F1, F2, ... in directory D1, and moved them all to
+D1/D2.  In the meantime, somebody else adds Fn to directory D1.  It
+may be likely that some variant of Fn would want to go to D1/D2, but
+it also is very likely that there should be a difference between
+D1/Fn somebody else had, and the contents of D1/D2/Fn in the merge
+result.  Perhaps D1/F1 in your preimage used to refer to another
+path in the top-level directory as "../top", but the reference would
+have been rewritten to "../../top" when you moved D1/F1 to D1/D2/F1,
+and the person doing the merge should at least check if D1/Fn that
+comes from the other party needs a similar adjustment while merged.
 
-I think you are talking about t3600, which uses an ancient style.
-If this were a real project, then the preferred order would be
-
- - A preliminary patch (or a series of patches) that modernizes
-   existing tests in t3600.  Just style updates and adding or
-   removing nothing else.
-
- - Update test that use "test -f" and friends to use the helpers in
-   t3600.
-
-> 3. There is no helper function for `test -s` but Rafael suggested we can
->    make use of other helper functions to provide similar functionality,
->    if we can.
-
-If we often see if a path is an non-empty file in our tests (not
-limited to t3600), then it may make sense to add a new helper
-test_path_is_non_empty_file in t/test-lib-functions.sh next to where
-test_path_is_file and friends are defined.
+In the above scenario, if there were D1/Fn in _your_ preimage and
+all the other party did was to make in-place modification, the story
+is vastly different.  Most likely you would have made most of, if
+not all, the adjustment necessary for D1/Fn to sit in its new
+location, while the other party kept the relative reference to other
+places intact, so we can say that both parties have say in the
+contents of the auto-merged result.  The "since neighgours moved,
+this must also want to move the same way" heuristics does not give a
+chance to the party that is not aware of the move to prepare the
+contents appropriate for the new location, by definition, so the
+onus is on the person who merges to adjust the contents.
 
 Thanks.
 
