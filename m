@@ -2,164 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A212E20248
-	for <e@80x24.org>; Fri,  1 Mar 2019 18:23:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40C7920248
+	for <e@80x24.org>; Fri,  1 Mar 2019 18:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388466AbfCASXD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Mar 2019 13:23:03 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:56160 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388244AbfCASXC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Mar 2019 13:23:02 -0500
-Received: by mail-wm1-f67.google.com with SMTP id q187so13445798wme.5
-        for <git@vger.kernel.org>; Fri, 01 Mar 2019 10:23:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EQxxIVkp9b2xzhpEqEPbEOtvb/D0s8XAShpcIlhDKUg=;
-        b=S44oE29M5+uHvhhYl6a4LhLaeF9Yc9+ufGx1IDqnOaGlQuBUlTbBAquLan4z36IUp0
-         yMyErZtngkKuGM/7CLHtKQMU931hBLl3ZREO89cI74f1It5yXip+eXmL3xGTK1OxyN5B
-         GciVbrMzldhis/0cN2LfBE/HlZRENmUacNhfYzo1oZQlAhUYNvoTPLsQi3rtOmDVZ9kW
-         H9trMeN8Xw/2GQvV5Nuknf3adBh2ylboomG62+ul+I8djJ6F12zzVfGqw6lt7kbdbH8t
-         OJdA3BzA3IKlt9U7heDwdNkEx5elKs/MOMkbOzuDtqpDUtutWUXyLhQcLDLIhJ3t+/KK
-         xcaQ==
+        id S2388881AbfCASXE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Mar 2019 13:23:04 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53274 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388244AbfCASXE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Mar 2019 13:23:04 -0500
+Received: by mail-wm1-f65.google.com with SMTP id e74so13303598wmg.3
+        for <git@vger.kernel.org>; Fri, 01 Mar 2019 10:23:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=EQxxIVkp9b2xzhpEqEPbEOtvb/D0s8XAShpcIlhDKUg=;
-        b=ViZAj+1VynUP+mRRB8T37BcCIgapNw6Zfr9KiZbqLta78rhEM43t6eXhXmO0s6BypQ
-         3WmCAdSQOwoFSuY8EK9v4g6YXoqlhxqsXnv4PqLHoEyjpEJkoOls/VL66QnoX4/dkivg
-         NymEMSrZ0ewDpsJNzNpFmAttgUzATU4yiKi3fO/+99+Lvv+r0fk0czBj0ssemQlFwRck
-         AZ3BvebfF2ExPjpaGxMFaLuJS1ZTxxwj4E/pAIDL9M6uXvXHts5wnSp1dgBPbyHKwQTV
-         8zFg7YJrQhD/PPXg6C8J0R1N1BAZXAfF4A7uCHn2uwFLbX8JMcZkxf/fCp5Ze+83nNfA
-         kFNQ==
-X-Gm-Message-State: APjAAAVPUm0jztZNboDJFHhN4idySCIL/HApQD2zBSNNP/RgOu7f7YtG
-        Ob/Dp/3BU4zwQgz2zvQokq72vwUf
-X-Google-Smtp-Source: AHgI3IZozcFTNoYR/GAcx8caDN+QyipNQf0JgnEmv6dqSjkIJJ1MtreYsGdWBJgs1Q06jOJocfGSsw==
-X-Received: by 2002:a1c:a885:: with SMTP id r127mr4309998wme.74.1551464579922;
-        Fri, 01 Mar 2019 10:22:59 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-658-1-112-206.w86-199.abo.wanadoo.fr. [86.199.35.206])
-        by smtp.gmail.com with ESMTPSA id n14sm26028216wrx.24.2019.03.01.10.22.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Mar 2019 10:22:59 -0800 (PST)
-Subject: Re: [RFC PATCH 3/4] name-rev: check if a commit should be named
- before naming it
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <20190301175024.17337-1-alban.gruin@gmail.com>
- <20190301175024.17337-4-alban.gruin@gmail.com>
- <CAPig+cQmZOWUZuj2+z+qrrCO-YBMNiEnGic1_FwAcaaj5gA5-w@mail.gmail.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <992c5d7e-524a-3c92-9f0f-bbefbe151de5@gmail.com>
-Date:   Fri, 1 Mar 2019 19:22:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GVRKOdzJKIkuviET4EtuWD5rfNaEDS1QssZUSh4wE1w=;
+        b=MQExQTJBATj9VDog8InxeRolc6aYrI+6R8SVB5zI1aLhftfK/c2KD1dEO8ho5usT3g
+         NE4uwKx/LoxfcYYmKfKfecgkdbxuPN1oHj8z3o49sSQLK99hCNXA3duthOfWh/64pRp6
+         Hcr3J0mZSg4IF6rdd1svn1kezMb72HGzNGk6Lv8Fc9Zkx/8HDlpg8Mi5Z5FFDHQMgW+V
+         jeX9h6dx0KDqitKr3kVR+ui68MYoyWkXa4keB5LaIUXjTYz6koxnEcN5KggKjobe2bOV
+         F0jZIV0TYZjF8ktWC/WJca0nvpI2xuKhx+MNzDnwybpcEaHWhAYv5rHM4JoVie4VJP48
+         Mlhg==
+X-Gm-Message-State: APjAAAWOCLgQoAy+z3QnjXPDpd5zcAKrI1QamM1JjkBa4wCP3RYtg7ei
+        ZklC8W/DRT610RfwTxHXcFhi+dEtu83cp8PLrrs=
+X-Google-Smtp-Source: APXvYqxx9iz9P50en1cYyG+g+TpG3Iajj/zL8rcSmjn5sM4NH9ocxX1FhSt4YCXCOtd4OV6jgyfBYaAfkqrr9KhaTcA=
+X-Received: by 2002:a1c:c010:: with SMTP id q16mr2535378wmf.134.1551464582541;
+ Fri, 01 Mar 2019 10:23:02 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQmZOWUZuj2+z+qrrCO-YBMNiEnGic1_FwAcaaj5gA5-w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+References: <20190228230506.GA20625@sigill.intra.peff.net> <20190301173443.16429-3-tmz@pobox.com>
+In-Reply-To: <20190301173443.16429-3-tmz@pobox.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 1 Mar 2019 13:22:52 -0500
+Message-ID: <CAPig+cTQG+yLGs1Ur2awhLyrpSWj0QyrDpuxCnMNOqc2bBz3pQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] t9902: test multiple removals via completion.commands
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On Fri, Mar 1, 2019 at 12:35 PM Todd Zullinger <tmz@pobox.com> wrote:
+> 6532f3740b ("completion: allow to customize the completable command
+> list", 2018-05-20) added the completion.commands config variable.
+> Multiple commands may be added or removed, separated by a space.
+>
+> Demonstrate the failure of multiple removals.
+>
+> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+> ---
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> @@ -1483,6 +1483,14 @@ test_expect_success 'git --help completion' '
+> +test_expect_failure 'completion.commands removes multiple commands' '
+> +       echo cherry-pick >expected &&
+> +       test_config_global completion.commands "-cherry -mergetool" &&
+> +       git --list-cmds=list-mainporcelain,list-complete,config |
+> +               grep ^cherry >actual &&
+> +       test_cmp expected actual
+> +'
 
-Le 01/03/2019 à 19:05, Eric Sunshine a écrit :
-> On Fri, Mar 1, 2019 at 12:50 PM Alban Gruin <alban.gruin@gmail.com> wrote:
-> -%<-
-> Minor: It would probably be more efficient to check if the count is 0
-> first, and only search the list if not.
-> 
-> By the way, how big is 'commits' likely to get? Will the linear scan
-> done by commit_list_contains() become an issue? Should it be using a
-> hash table instead?
-> 
+We normally avoid placing a Git command upstream of a pipe. Instead,
+the Git command output would be redirected to a file and then the file
+grep'd. However, in this case, you might consider simplifying the test
+like this:
 
-It depends on the amount of commits mentionned in stdin that are
-reachable from the ref in name_ref().  If there is a lot of commit in
-the input, it may effectively become a problem.
-
-I thought of adding a field to the rev_name structure for this purpose.
- I think commit slabs are hash maps under the hood?
-
->> +                       name->tip_name = tip_name;
->> +                       free_alloc = 0;
->> +               } else {
->> +                       name->tip_name = NULL;
->> +               }
-
-Cheers,
-Alban
-
+    test_expect_failure 'completion.commands removes multiple commands' '
+        test_config_global completion.commands "-cherry -mergetool" &&
+        git --list-cmds=list-mainporcelain,list-complete,config >actual &&
+        grep cherry-pick actual
+    '
