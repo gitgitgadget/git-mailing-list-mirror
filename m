@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AE1220248
-	for <e@80x24.org>; Fri,  1 Mar 2019 17:35:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B46B220248
+	for <e@80x24.org>; Fri,  1 Mar 2019 17:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388775AbfCARe7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Mar 2019 12:34:59 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62068 "EHLO
+        id S2389469AbfCARfC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Mar 2019 12:35:02 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59796 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388333AbfCARe6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Mar 2019 12:34:58 -0500
+        with ESMTP id S2388333AbfCARfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Mar 2019 12:35:02 -0500
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8AACD43195;
-        Fri,  1 Mar 2019 12:34:56 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 73A9843199;
+        Fri,  1 Mar 2019 12:35:00 -0500 (EST)
         (envelope-from tmz@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=FVCd3kzDIr78oQASlHX0wgs0+
-        Ro=; b=uG0jpW5hz9OEI/Z0LIg3yIpFC9hDC3bG1rsWYuel5KkAgjbjPeTrvgJpY
-        pLtD6taMNQ037ewGxWfl25tZ6tI0n7tZ3Blmgt336aTuKENxWTSUi8quOr2ceDWG
-        /kG/xKzYAog7spz2kiF+CY0rL4EzlwkjAZaM29xbTYByrZWfcs=
+        :content-transfer-encoding; s=sasl; bh=cXpqm0cC00kkQCFegZi04HQYN
+        gg=; b=smunXT8pHMmGL1hGKPDW3X/xMdqGgQ+r2Ps+KbQH7Zy5mil9ucMJIQHX6
+        T4l7fmZkG750TifI5l0qOArkPT0C2ryuLvGeMZLiPoXQtIXAioUOwvpekjFn5/8p
+        LM0rHNr+GrJjaIoxiGgG7fwCySdK27tQ2mYsgO3GiNfKfa2woY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; q=dns; s=sasl; b=ErZzckNHkemV4rq9ihD
-        2FLjZc7Ve6IVqjc5VbkPQtWJLgqPzrIuaRB3GVK1mNIUCFzfyJgsbvppyvV0x2zJ
-        Ac99BT3sLnffkuHwj6qEqJxs6tvdg+acjJs2RucAcSBgFFjDFS2jV7bxScPu8HWy
-        JeSpl8aF00wWRHxvR0M9V7j4=
+        :content-transfer-encoding; q=dns; s=sasl; b=uJikgwJSusKCSR4KR24
+        4AHdSdgBRuRYbX8dh1A9LvBi307JVMoPI5+4l0qFtBS7zCRdgXZth0PCMHK2t/76
+        OigXxN2/+IpkZtExsXhEIKO/hFWEBBYgg300ZbrBbwEcIWDn/56BRdtL1mORN0iG
+        5Vj+EJjLQOExkRU7f2623rnw=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8271643194;
-        Fri,  1 Mar 2019 12:34:56 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6C75943198;
+        Fri,  1 Mar 2019 12:35:00 -0500 (EST)
         (envelope-from tmz@pobox.com)
 Received: from morphine.paradise.teonanacatl.net (unknown [47.202.93.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2846C4318F;
-        Fri,  1 Mar 2019 12:34:52 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8296443192;
+        Fri,  1 Mar 2019 12:34:55 -0500 (EST)
         (envelope-from tmz@pobox.com)
 From:   Todd Zullinger <tmz@pobox.com>
 To:     Jeff King <peff@peff.net>
@@ -48,47 +48,69 @@ Cc:     git@vger.kernel.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 2/3] t9902: test multiple removals via completion.commands
-Date:   Fri,  1 Mar 2019 12:34:42 -0500
-Message-Id: <20190301173443.16429-3-tmz@pobox.com>
+Subject: [PATCH 3/3] completion: fix multiple command removals
+Date:   Fri,  1 Mar 2019 12:34:43 -0500
+Message-Id: <20190301173443.16429-4-tmz@pobox.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190228230506.GA20625@sigill.intra.peff.net>
 References: <20190228230506.GA20625@sigill.intra.peff.net>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 52C41122-3C48-11E9-8FCD-EE24A11ADF13-09356542!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 54C7B55A-3C48-11E9-9168-EE24A11ADF13-09356542!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-6532f3740b ("completion: allow to customize the completable command
-list", 2018-05-20) added the completion.commands config variable.
-Multiple commands may be added or removed, separated by a space.
+From: Jeff King <peff@peff.net>
 
-Demonstrate the failure of multiple removals.
+6532f3740b ("completion: allow to customize the completable
+command list", 2018-05-20) added the completion.commands config
+variable.
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
+The documentation states multiple commands may be added,
+separated by spaces.  Adding multiple commands to remove fails,
+only removing the last command in the config.
+
+Fix multiple command removals.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t9902-completion.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Jeff,
 
+The commit message could probably be worded better, particularly since it=
+'s
+forged in your name.
+
+ help.c                | 4 ++--
+ t/t9902-completion.sh | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/help.c b/help.c
+index 520c9080e8..026f881715 100644
+--- a/help.c
++++ b/help.c
+@@ -393,8 +393,8 @@ void list_cmds_by_config(struct string_list *list)
+ 		const char *p =3D strchrnul(cmd_list, ' ');
+=20
+ 		strbuf_add(&sb, cmd_list, p - cmd_list);
+-		if (*cmd_list =3D=3D '-')
+-			string_list_remove(list, cmd_list + 1, 0);
++		if (sb.buf[0] =3D=3D '-')
++			string_list_remove(list, sb.buf + 1, 0);
+ 		else
+ 			string_list_insert(list, sb.buf);
+ 		strbuf_release(&sb);
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 3a2c6326d8..dd11bb660d 100755
+index dd11bb660d..d7daa1ca92 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -1483,6 +1483,14 @@ test_expect_success 'git --help completion' '
+@@ -1483,7 +1483,7 @@ test_expect_success 'git --help completion' '
  	test_completion "git --help core" "core-tutorial "
  '
 =20
-+test_expect_failure 'completion.commands removes multiple commands' '
-+	echo cherry-pick >expected &&
-+	test_config_global completion.commands "-cherry -mergetool" &&
-+	git --list-cmds=3Dlist-mainporcelain,list-complete,config |
-+		grep ^cherry >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'setup for integration tests' '
- 	echo content >file1 &&
- 	echo more >file2 &&
+-test_expect_failure 'completion.commands removes multiple commands' '
++test_expect_success 'completion.commands removes multiple commands' '
+ 	echo cherry-pick >expected &&
+ 	test_config_global completion.commands "-cherry -mergetool" &&
+ 	git --list-cmds=3Dlist-mainporcelain,list-complete,config |
