@@ -2,109 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2FD420248
-	for <e@80x24.org>; Fri,  1 Mar 2019 13:14:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82DBB20248
+	for <e@80x24.org>; Fri,  1 Mar 2019 13:20:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733191AbfCANOc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Mar 2019 08:14:32 -0500
-Received: from mail-pg1-f181.google.com ([209.85.215.181]:39880 "EHLO
-        mail-pg1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728347AbfCANOc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Mar 2019 08:14:32 -0500
-Received: by mail-pg1-f181.google.com with SMTP id h8so10930426pgp.6
-        for <git@vger.kernel.org>; Fri, 01 Mar 2019 05:14:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=x2bj9ZfVbnu3yjyEOMSqy5S9E2qDZVGeodjIWvKKM18=;
-        b=UvV+NIy+NAbGTkQ5qdy06fuFaP5lN8LgMaZXk1xG/mh1MwHtW42ontf2A8Z8TMW6zc
-         mU+8dHe5puDkvlYww+QQjcwPAnFjrJuW/y7+KSBI1AM6pN3IHTP6s0Apqqhm5jmWIjrn
-         n5tSbRO/y1ZfNsiN/rDVUbBqZCp7iL8lgRggQ+4VZxiGQgj0shhSz//W2a8kDYHeDstz
-         IkHP7340ln0bl63ZOANFdlPqQ4/PvFDj74RG0nlctwbkkSJalJMyBHQfm9q7cMy2+Jr/
-         DWJ4omlfFD7y9+P1JetkoTX2E+0AZ2gRSWE1jnXRk79KgCKOrR9qwyS/4fnlk/Z13+/j
-         R/Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=x2bj9ZfVbnu3yjyEOMSqy5S9E2qDZVGeodjIWvKKM18=;
-        b=KoPqZJ/auiaaMQYeFFPV7KAfzWlfUqXzETw8Nrr2Eu+s77S0fNpl9ieMaYGAnwhgQy
-         jTIbNOp85PmCs1FSJGYt8qJqj2wBROCQVeZE/bw1lZr9+Mcz2aBtIOGWQQd2Zz6h5Uru
-         G3mS6e60siW8LLYZnLVX/+cu1RcEgO6qTFFdmbw3A9ysxcnhQayOHMXuD1eJb9gGWNNM
-         ZnjiLZJcDhn2/KloXZdY7TwbdqvndtEYH3GBsH32fJC5sgw2pZVZPwykFa92MZlJtcwk
-         JfR90Jy/K9oHCtMTLaXMBz0K9EJwmhL2J2p2ofD/CtkAdXaGmKytlr2MugbufnoSPPQY
-         cBNA==
-X-Gm-Message-State: AHQUAuZCk1RgG1w1OmNAGgjaDJFe33YEcuEjm9dHe5wmCRJ6V1mkZvN4
-        MwzDY7L84U5QMRvo34QZq174om9uBag=
-X-Google-Smtp-Source: AHgI3IZGlNgEEi/gTUx3ulRf+SH97zCPRJVbKaZVIqk6wakgukrys+ifiYKBqeeN92kR2DEOwS5aXw==
-X-Received: by 2002:a62:17d4:: with SMTP id 203mr5423196pfx.244.1551446071811;
-        Fri, 01 Mar 2019 05:14:31 -0800 (PST)
-Received: from ar135.iitr.local ([103.37.201.80])
-        by smtp.gmail.com with ESMTPSA id c13sm19681201pfd.121.2019.03.01.05.14.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Mar 2019 05:14:31 -0800 (PST)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     gitster@pobox.com
-Cc:     Johannes.Schindelin@gmx.de, git@matthieu-moy.fr,
-        git@vger.kernel.org, martin.agren@gmail.com, pclouds@gmail.com,
-        peff@peff.net, szeder.dev@gmail.com,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Subject: Feeling confused a little bit
-Date:   Fri,  1 Mar 2019 18:43:26 +0530
-Message-Id: <20190301131326.7898-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <xmqqef7r9uil.fsf@gitster-ct.c.googlers.com>
-References: <xmqqef7r9uil.fsf@gitster-ct.c.googlers.com>
+        id S1733244AbfCANUF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Mar 2019 08:20:05 -0500
+Received: from mout.gmx.net ([212.227.15.19]:54025 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727951AbfCANUE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Mar 2019 08:20:04 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LaGJa-1hPg1f2j0A-00m2Zg; Fri, 01
+ Mar 2019 14:19:53 +0100
+Date:   Fri, 1 Mar 2019 14:19:37 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Nazri Ramliy <ayiehere@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] built-in rebase: no need to check out `onto` twice
+In-Reply-To: <7b1282bf-4b94-5725-00df-2dc63eaa93f0@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903011415220.41@tvgsbejvaqbjf.bet>
+References: <pull.153.git.gitgitgadget@gmail.com> <2d99429387ba63526efe233bbefe851c5d556fdc.1551367664.git.gitgitgadget@gmail.com> <7b1282bf-4b94-5725-00df-2dc63eaa93f0@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:qLG+GaQCfrIXaqy7MNKJDlxsGRn/DO6xeViphmMXfxZYecngdk8
+ sovd9pywuYAQrBGdtcCh5Ujx69V5VjRktBnjn+4+h+f2pKhatfPxjf5M8Gd7Po3L0478Xh6
+ 7tj4dYsWAiFXphc3iqX4y4dgRDiGMsdzdagE8TdodUDyByRYE+/vqGA5KKvQZMRDmK/GNVE
+ Lt+GcoHjWlngKtnvUyWJQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WD8iaxnmeLU=:kT4RsYEEGH4UeJhAzl3DK7
+ sxNbRpTqxlnLr0P/k8eLVxaWptquqyzUnsU6qUqSb2eQNgzOGwBRasPT5/m5/656nkGzd+l19
+ HMcLPQogh+IVRvaalxKEXdHgDdVqQhoQCQFidf6hesnVSHXoNyJwUSAwKunq+CoUPZ07HePyt
+ QtUc0KP74fYFoAI4hItxWBFOACF0/AnqM/riTCYUgwUXORTnOFREEufG9Z5bH8kA/MqmFRa9i
+ nr5Y15rUakdfjIhwdnnUpRsX0co28+Wc48YPMTW5go/Mt0mIcimbtbigaujo4GXcnGvt+qr45
+ a5GvWrBdSWAdNtLuvQvAkYWXGLvvmXUpy+68o3FclURJ5blpmNU7MGrBSX3X40If4mu6emgw3
+ 6ss3xsQa2gX66hikHc2ArWPelmmxC0mM+0jeEfoznCCOUoJlS6tZZvu/IL1JVYHEBgwy7+ovT
+ RX3/tfWPhf05lQIlIDoaCZWlwI2caWc9HqsQEzKvASr6Diy57Nk0cI+GmEpldG1ZCHQsjDyw0
+ m/YDbTvbtU1IVIYFV/ck1iYe5CukRuwRoeS7vZfENSTLNoEvS7N2DEtvns4kfuBb3NCSfIXO2
+ f7Oyv8ZIQvA3Ei80jvrIPhGfleHn1+hbV0NEKV79bPAPRfhmWCr74Ps/wuZL5iZyuCVnSWnuu
+ 0JJQgvj8apBYfuv1IbhR+HCzyAXLU8p9dmsOnChs7DJGLmR+86o9oK48S/P+2p5qitEs0IPdl
+ ZeRAgB5Zh/jLn+7fXuE+79+I/nPI2Eu529J4rHTYc+xQdkkcwf2EiwS/rnrBshZ8J3Kj82S3P
+ sQ94LDUpDbKDtPAG1GNOsIRh/FFVSjFglA0WPpQ2a9i/0dXwp/mwcqeWeVcIA7f78qi3STM3J
+ qqhejedHTUkc2wQrMJIGDpvopHqHDkf2XeiL+/8/v+4A3q/jLvrJd1uDmKx+5eZLSlMOiGdT+
+ /WQeM53MPUQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey!
+Hi Phillip,
 
-I'm a little confused as you never provide a clear indication to
-where shall I proceed? :-
+On Thu, 28 Feb 2019, Phillip Wood wrote:
 
-On Fri, 01 Mar 2019 11:51:46 +0900 Junio C Hamano <gitster@pobox.com> wrote:
+> On 28/02/2019 15:27, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> > In the case that the rebase boils down to a fast-forward, the built-in
+> > rebase reset the working tree twice: once to start the rebase at `onto`,
+> > then realizing that the original HEAD was an ancestor, `reset_head()`
+> > was called to update the original ref and to point HEAD back to it.
+> > 
+> > That second `reset_head()` call does not need to touch the working tree,
+> > though, as it does not change the actual tip commit. So let's avoid that
+> > unnecessary work.
+> 
+> I'm confused by this I think I must be missing something. If we've checked out
+> onto then why does the working copy not need updating when we fast forward.
+> (also why to we checkout onto before seeing if we can fast-forward but that's
+> not related to this patch series)
 
->
-> Simple things do not need that many letters to tell ;-)  The
-> suggestion of 72 is about the maximum. 
->
+Sorry, I really try to learn how to express things clearly. Still learning
+a lot.
 
-Totally agree on this!
+So what happens is this: we detect the situation where the pre-rebase
+`HEAD` is an ancestor of `onto`. We do this *after* checking out `onto`.
+So we now know that we essentially fast-forwarded to the post-rebase
+state.
 
->
-> I think you are talking about t3600, which uses an ancient style.
-> If this were a real project, then the preferred order would be
->
->  - A preliminary patch (or a series of patches) that modernizes
->    existing tests in t3600.  Just style updates and adding or
->    removing nothing else.
->
->  - Update test that use "test -f" and friends to use the helpers in
->    t3600.
->
+What we still need to do is to update the original ref (unless we were on
+a detached HEAD when the rebase was started).
 
-Yes, this is a microproject after all. But I think I can work on this as
-if it were a real project, should I proceed according to this plan? (I have
-a lot of free time over this weekend)
+The original shell code updates the original ref to the current HEAD, and
+the updates HEAD to point to that symbolic ref instead of being detached.
 
->
-> If we often see if a path is an non-empty file in our tests (not
-> limited to t3600), then it may make sense to add a new helper
-> test_path_is_non_empty_file in t/test-lib-functions.sh next to where
-> test_path_is_file and friends are defined.
->
+In the C code, we abused `reset_head()` to do the same. But `reset_head()`
+does more: it does a two-way merge (in this instance, because
+`RESET_HEAD_HARD` was not part of the flags). Which is unnecessary.
 
-Since my project does not deal with `test-lib-functions.sh`, I think I
-should not edit it anyway, but I'd be more than happy to add a new
-member to `test_path_is_*` family.
+That's all this commit is about.
 
-Thanks
-Rohit
+Ciao,
+Dscho
+
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >   builtin/rebase.c | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > index 08ec4d52c7..813ec284ca 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -1740,8 +1740,8 @@ int cmd_rebase(int argc, const char **argv, const char
+> > *prefix)
+> >     strbuf_addf(&msg, "rebase finished: %s onto %s",
+> >      options.head_name ? options.head_name : "detached HEAD",
+> >      oid_to_hex(&options.onto->object.oid));
+> > -		reset_head(NULL, "Fast-forwarded", options.head_name, 0,
+> > -			   "HEAD", msg.buf);
+> > +		reset_head(NULL, "Fast-forwarded", options.head_name,
+> > +			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf);
+> >     strbuf_release(&msg);
+> >     ret = !!finish_rebase(&options);
+> >     goto cleanup;
+> > 
+> 
