@@ -7,90 +7,153 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5E1B20248
-	for <e@80x24.org>; Fri,  1 Mar 2019 17:50:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 618ED20248
+	for <e@80x24.org>; Fri,  1 Mar 2019 17:50:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388346AbfCARui (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Mar 2019 12:50:38 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44445 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726195AbfCARui (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Mar 2019 12:50:38 -0500
-Received: by mail-wr1-f67.google.com with SMTP id w2so26775782wrt.11
-        for <git@vger.kernel.org>; Fri, 01 Mar 2019 09:50:37 -0800 (PST)
+        id S2389456AbfCARul (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Mar 2019 12:50:41 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:40771 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726195AbfCARul (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Mar 2019 12:50:41 -0500
+Received: by mail-wm1-f65.google.com with SMTP id g20so12245470wmh.5
+        for <git@vger.kernel.org>; Fri, 01 Mar 2019 09:50:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5hXX6htEg7dIsP8qv3a6XKfIzyhwTdpaCfv/KHOHGF8=;
-        b=VSPwqMmn5Y1J+4pA32t8Fx6wOjXj8UegPDLVsTW2eBW1LNmF4AXaytlYkXQRbDjqR6
-         JGkPzBjd4JdmUvOa2cFuqWgfdmXjHHynMK+t5oAsPhM51F1XHmmBRO1wdCdozVBk+FoW
-         10e18hvgckk4ccc/5LEsUcz7ojn7t3WDXh+etzL14ME0HKe6u9B+7PzhAVvW702LpeXk
-         QZSuT3wYoWaS9/UNNexyiO2D6BYytDqeujYF8QtMYPG5+2Z+6M59rDptvaUUjKvGKIw0
-         v5g9Rg427tmozJak4JGCVC1kOmmXH5iNfv3JR80HuhOM5KhTvCbdp3NMKjLW3RMnXsAn
-         KB9g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=gDOHl0/6kUuGmp3187+2GHragFUtmdHA4Tw5glzaRS8=;
+        b=vD0OdiUUJbY4Va8jpXyHv79gvmCBhe1nfGyDVpEPx0N35KbLQf+akHzet+TXnloJcn
+         FgRaDe5yB2iq1s7Dqwu8yjRCCsNwMe0w0eHwyF5Xi+JD0cV0aMpP7lXjTV9hAHzqb9LW
+         +V2gAHgUDM14AHvKFhx4TLPcZ5nNy2jr8OYCz1FC+iXAlG8TNtnHs8xj6SeEiUCqBwRg
+         cB+wcPXN0yEK0r+WIJ92JFzQRNg3xIQzxdtNfjaP43VpQfvW3jhD+HDWV0s7+Hjej0lB
+         lnqX2FV9Hnn6dgP10dYpXmrw570YaX17XMes6OlVQgSclSKEh+sxWPaDG2X/yclkk+J5
+         wW3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5hXX6htEg7dIsP8qv3a6XKfIzyhwTdpaCfv/KHOHGF8=;
-        b=klBSzH19zy91ZzMQMzBXC+ont2woxcxn57Ap6M7tCRE0J9fCf8c+EMgqbyjMQITQUC
-         78g4i700jXERjoMez8Fdt6k4Kk/vck3GBB0umifhSZdoP1O2wiTs2+rsgkCEdt96+pfp
-         78LBDOUCkp1FbM8ZJJaRbj7rgQpyta64nlVtxv/4fCNsIWXKdiK35KR/1JCAfSumH2/z
-         fBuoVZvKaLvSCqA8d77U3rOyF5uYqFFpIfy6MWx4hMXiCBvU5HazdXmv9g4rWmGZVn4I
-         rpAshILUU0pW1s7jSy6FfmzpiJh/yEIBapiNchtMVKex4XLDmCifbA1/V8yvJp/LyFkt
-         F7LA==
-X-Gm-Message-State: APjAAAU1ICN3Ccwr0s0aD/x10VLtkcENC0+Vz/NxJ40+KvnMTSF2+9WQ
-        1R03OXuzecRIumWt3bcEqUFCc0IF
-X-Google-Smtp-Source: APXvYqzrQLGx9qhTWblw5hoogBgL6CCNSTioUabj2USNeNJSgBywQM3PJXhfRMbeZ7EWyi5g/zux3A==
-X-Received: by 2002:a5d:53cd:: with SMTP id a13mr4387551wrw.146.1551462636360;
-        Fri, 01 Mar 2019 09:50:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=gDOHl0/6kUuGmp3187+2GHragFUtmdHA4Tw5glzaRS8=;
+        b=c/nvwEj7oqgJhdD6RQjpmzB8iA0NlWXe7wL5F+8devDTpXVo//P1oHEzYAdBpS61oK
+         /YtWjQPAx3b8xaQszMy22LNsLCZzmtyXNVOMirz/bqD5jIHgcqnWT+Pi8AR40FyGG8Xm
+         VNVUhNfVaf74+tiEZSVm5aHwciAkNXP5uuzdsmT/AaV+qpc4WUVNrqZFMr12a3xqEtjj
+         CWRP5xG27ei5VUuoF2BHLdfHORkOJcjkwalTrmpTjxierZDgmWt10sMtsPj974qT+Ul0
+         cJUjl9MnshoPwlPtZR0Ba+Y4th0OW7ysQqjpn9pPTfK+dIhwyg+z4C2MKlFC9yHg0tdy
+         aPrA==
+X-Gm-Message-State: AHQUAuYHwS/V4fBIkElh9N1hoH67NoN71YOC2uj5yC1USrIVWkIs2C/D
+        5qO/lDJObsseq5ykaDVSn0Cqhrdp
+X-Google-Smtp-Source: AHgI3IZ3FOCHl1Wr0JTN1F5vSTiyfFIEZQhVgx+RYyUqtKL29uWOZ0fm1Co8AkkKn7hl3MeUA4lBjQ==
+X-Received: by 2002:a05:600c:2115:: with SMTP id u21mr4195194wml.70.1551462638820;
+        Fri, 01 Mar 2019 09:50:38 -0800 (PST)
 Received: from localhost.localdomain (atoulouse-658-1-112-206.w86-199.abo.wanadoo.fr. [86.199.35.206])
-        by smtp.googlemail.com with ESMTPSA id o8sm11672247wma.1.2019.03.01.09.50.35
+        by smtp.googlemail.com with ESMTPSA id o8sm11672247wma.1.2019.03.01.09.50.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Mar 2019 09:50:35 -0800 (PST)
+        Fri, 01 Mar 2019 09:50:38 -0800 (PST)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>
-Subject: [RFC PATCH 0/4] name-rev: improve memory usage
-Date:   Fri,  1 Mar 2019 18:50:20 +0100
-Message-Id: <20190301175024.17337-1-alban.gruin@gmail.com>
+Subject: [RFC PATCH 1/4] name-rev: improve name_rev() memory usage
+Date:   Fri,  1 Mar 2019 18:50:21 +0100
+Message-Id: <20190301175024.17337-2-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190301175024.17337-1-alban.gruin@gmail.com>
+References: <20190301175024.17337-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-rafasc reported on IRC that on a repository with a lot of branches,
-tags, remotes, and commits, name-rev --stdin could use a massive amount
-of memory (more than 2GB of RAM) to complete.
+name_rev() is a recursive function.  For each commit, it allocates the
+name of its parents, and call itself.  A parent may not use a name for
+multiple reasons, but in any case, the name will not be released.  On a
+repository with a lot of branches, tags, remotes, and commits, it can
+use more than 2GB of RAM.
 
-This patch series tries to improve name-rev’s memory usage.
+To improve the situation, name_rev() now returns a boolean to its caller
+indicating if it can release the name.  The caller may free the name if
+the commit is too old, or if the new name is not better than the current
+name.
 
-There is some improvement that could be done, such as reference counting
-the names attributed to commits.  Tell me if it could be worth to pursue
-this way, or if name-rev’s internals would need a more thorough rewrite.
+There a condition that will always be false here when name_rev() calls
+itself for the first parent, but it will become useful when name_rev()
+will stop to name commits that are not mentionned in the stdin buffer.
+If the current commit should not be named, its parents may have to be,
+but they may not.  In this case, name_rev() will tell to its caller that
+the current commit and its first parent has not used the name, and that
+it can be released.  However, if the current commit has been named but
+not its parent, or the reverse, the name will not be released.
 
-This is based on master (8104ec994e, "Git 2.21").
+Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+---
+ builtin/name-rev.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-The tip of this series is tagged as "fix-name-rev-leak-rfc-v1" in
-https://github.com/agrn/git.
-
-Alban Gruin (4):
-  name-rev: improve name_rev() memory usage
-  commit-list: add a function to check if a commit is in a list
-  name-rev: check if a commit should be named before naming it
-  name-rev: avoid naming from a ref if it’s not a descendant of any
-    commit
-
- builtin/name-rev.c | 124 +++++++++++++++++++++++++++++++++++----------
- commit.c           |  12 +++++
- commit.h           |   1 +
- 3 files changed, 111 insertions(+), 26 deletions(-)
-
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index f1cb45c227..0719a9388d 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -77,7 +77,7 @@ static int is_better_name(struct rev_name *name,
+ 	return 0;
+ }
+ 
+-static void name_rev(struct commit *commit,
++static int name_rev(struct commit *commit,
+ 		const char *tip_name, timestamp_t taggerdate,
+ 		int generation, int distance, int from_tag,
+ 		int deref)
+@@ -86,11 +86,12 @@ static void name_rev(struct commit *commit,
+ 	struct commit_list *parents;
+ 	int parent_number = 1;
+ 	char *to_free = NULL;
++	int free_alloc = 1;
+ 
+ 	parse_commit(commit);
+ 
+ 	if (commit->date < cutoff)
+-		return;
++		return 1;
+ 
+ 	if (deref) {
+ 		tip_name = to_free = xstrfmt("%s^0", tip_name);
+@@ -111,9 +112,10 @@ static void name_rev(struct commit *commit,
+ 		name->generation = generation;
+ 		name->distance = distance;
+ 		name->from_tag = from_tag;
++		free_alloc = 0;
+ 	} else {
+ 		free(to_free);
+-		return;
++		return 1;
+ 	}
+ 
+ 	for (parents = commit->parents;
+@@ -131,15 +133,18 @@ static void name_rev(struct commit *commit,
+ 				new_name = xstrfmt("%.*s^%d", (int)len, tip_name,
+ 						   parent_number);
+ 
+-			name_rev(parents->item, new_name, taggerdate, 0,
+-				 distance + MERGE_TRAVERSAL_WEIGHT,
+-				 from_tag, 0);
++			if (name_rev(parents->item, new_name, taggerdate, 0,
++				      distance + MERGE_TRAVERSAL_WEIGHT,
++				      from_tag, 0))
++				free(new_name);
+ 		} else {
+-			name_rev(parents->item, tip_name, taggerdate,
+-				 generation + 1, distance + 1,
+-				 from_tag, 0);
++			free_alloc &= name_rev(parents->item, tip_name, taggerdate,
++					       generation + 1, distance + 1,
++					       from_tag, 0);
+ 		}
+ 	}
++
++	return free_alloc;
+ }
+ 
+ static int subpath_matches(const char *path, const char *filter)
 -- 
 2.20.1
 
