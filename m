@@ -2,164 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CAF720248
-	for <e@80x24.org>; Fri,  1 Mar 2019 15:00:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A78A20248
+	for <e@80x24.org>; Fri,  1 Mar 2019 15:02:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388591AbfCAPAV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Mar 2019 10:00:21 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35851 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727492AbfCAPAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Mar 2019 10:00:21 -0500
-Received: by mail-wr1-f68.google.com with SMTP id o17so26227701wrw.3
-        for <git@vger.kernel.org>; Fri, 01 Mar 2019 07:00:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=OvhxzXTPMi1nn52y3mf2PIVg5mTfD2mSw8goKBb9zcc=;
-        b=I1EIJNJjBypOMYOBX/I3uYbcVyLFTy2bUDusOGmnzKfXq1felHhiEERQMyaxtwCEFN
-         6MeLYxD2ZdqhBp9Op3l/d60jNfkJx2hkFWXYXLNHmFlxDm8I49wuU+WKfA83Z4QfgVGz
-         kSumtLRaNrMnTuQg3dsXnGKHFHr37MUaR0VuufCRExOi+ONJBzPeEJn2Jw6pv6WDmdFI
-         S7kKCR+7+jqJQqs8fNfOHCY4ItmtCHekN2/6MHE2YXrWowbBEtppC5d/+DcOdh33aJvg
-         0mtfT4zLUSq6m5B8f1cMQLXu29DMB1hKqZWwIHjbTrQuJaLuZfvdPpPkkVhjPANawe5e
-         XkFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=OvhxzXTPMi1nn52y3mf2PIVg5mTfD2mSw8goKBb9zcc=;
-        b=E0McLtoUWCYWp7KvhNpjYsMEs9mRqJZKT1EBWPpia8jfgsRm20LvPHBbLUZCO7qL9e
-         4Fb3gTXICdxH1TBJuz5T7AfWIWiLWSPHYAS59yEV2lbJS3jJ79Ug9DUN5jqe4p+SekVO
-         8wlZfVNk/D8m0KuJHzzzhKHvKqPLm99lksKHZp864EYQNeQCUCOH9ueCIWJEGHJyJh5a
-         T5zEimGd0OqgtKhHtbliTXrMCRDh+PMiWsN5b/WytAAajqoxW4Q0ijDjb5tS/ZE9oUkP
-         Afe2dwmV/+vkMiRhGgUgH/+P4hkhGcc6BYeNCp1m22Pu3vkJXIWZI7atESXR+YuBG46P
-         6yAg==
-X-Gm-Message-State: APjAAAU0teDqrU3oe+xPWdtTQk9bXCcBS39+4FyQOMEKur0zjbXw1jvU
-        VDdKtEBUvA2u0v/GkPmTbxY=
-X-Google-Smtp-Source: APXvYqx4D4zPPEyuOnH0U18GcnEIgOnJiI5wCWTWvtG25S7vV5jKw66Sr66DgFFnxBft+f6evUtCwg==
-X-Received: by 2002:adf:f103:: with SMTP id r3mr4090842wro.50.1551452419265;
-        Fri, 01 Mar 2019 07:00:19 -0800 (PST)
-Received: from [192.168.2.240] (host-92-28-129-241.as13285.net. [92.28.129.241])
-        by smtp.gmail.com with ESMTPSA id 93sm66154069wrh.15.2019.03.01.07.00.18
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Fri, 01 Mar 2019 07:00:18 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/4] built-in rebase: no need to check out `onto` twice
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nazri Ramliy <ayiehere@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.153.git.gitgitgadget@gmail.com>
- <2d99429387ba63526efe233bbefe851c5d556fdc.1551367664.git.gitgitgadget@gmail.com>
- <7b1282bf-4b94-5725-00df-2dc63eaa93f0@gmail.com>
- <nycvar.QRO.7.76.6.1903011415220.41@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <22878dbe-d9f0-4737-3a49-ece695c2d0c2@gmail.com>
-Date:   Fri, 1 Mar 2019 15:00:17 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.0
+        id S1732668AbfCAPCs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Mar 2019 10:02:48 -0500
+Received: from mout.gmx.net ([212.227.15.15]:40533 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728313AbfCAPCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Mar 2019 10:02:48 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LZynd-1hOvQZ3DVF-00lkX0; Fri, 01
+ Mar 2019 16:02:38 +0100
+Date:   Fri, 1 Mar 2019 16:02:22 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Clemens Buchacher <drizzd@gmx.net>
+Subject: Re: t5570-git-daemon fails with SIGPIPE on OSX
+In-Reply-To: <20190208195459.GA32556@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1903011557430.41@tvgsbejvaqbjf.bet>
+References: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com> <20180814223246.GA2379@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1902080958190.41@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1902081024550.41@tvgsbejvaqbjf.bet>
+ <20190208195459.GA32556@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1903011415220.41@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-1439165248-1551452558=:41"
+X-Provags-ID: V03:K1:DhxrVvgyOWSS20oaLA8K06wLCdpV9s5WPu01x0OiUWlJzmVwStM
+ YB3s6YEHLJWILDhwq2RtmOTOC41V2UT7wxSJAIiaYsWsS9dkAXr99+KDtlX2v0OwR/RAtOH
+ cwSvaiaBxYA/b7SVE6Z9qVnyfbLdAoQ/NMs4BdIecy/mMrOZB1xtqc6/3AlToyoomDwiocW
+ p+poVJL9BtXWOb1hBiWYA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cWe9Mb8EWPM=:A51UTcdbJwSgkSC8rDgoJI
+ 7dsWrKS0599O0L3dEc2QTvituJO2FVyKpGrM9K63gZe/u/plhLk9ZLIrPTPKHH5oeE2PhX6Mq
+ AMyJBe/40byZpqUry1X46pdF9UXYuZsglFEIeAU9Q0sVH5/gkgLKqjtrm5xUkSmx2dzvTN8C2
+ YZswlOYZqdOsYoiHaaHfkzYisCX01iGvPeMw8FkNkrtZBm0B4LEo96g1g0HsjLdbF8qNZR7Bj
+ UBLvD5xKNBfvGMzJEQ3d3Enk8L/8/sq6wkXLom8ta8GDCj9JG68IF6dKA8KBKaznkXDQw890o
+ +rHKUXE+QsTE7cXEWc+F71pNlkXOBII+aNJEW2I80dr2vrsJ+MU83Gndq7vSbRtaOcsvQJr9s
+ /qcEoDNN3xWPPt7S/l3VOMCaJMWCkEdbuDUJPJF1dYWFN65iFBNDknDgDEvxsa0LJLTO7HEP1
+ rwglRlF20p4CxR55pINc8vl1O219nnMRzBJjrmdd8Y+0O6gUKQVmUqYLKPcWdf2oboZ/1lD0I
+ 4Jzl/bJ0dWStufSdS1Xwrtz5WJZ1HAJCIE6+qP2Ie6wQd9Vs0yXesH50cAKu3xkEpcVZ+TH58
+ GcduNR2vnSmZ4UwSAZ7URArstCATTSB5tw2QY2+NWeSJE2EXOaLLs2XLX9RMw8jvjTEPa9xd5
+ oSpCPxVrGHwfQLzPpHoZXOLDCnNGOjorVilDBpNLYd246bx9RVwLcI3Fjx6X3eFj6uUGYms4W
+ ke3C4MsyqiQtUNT2oiYLX4KMynn+G/2Im1/rCFwpF47y9SPzLayUkbKiNreCIuW0S2Dx3RX6G
+ 7qVESSDACXJoZDTEuhQf4M5itx3qEWvMb7YR7Dz2cdLOie9NzwhQTD8dTTtkHEUVIuSGl9PbC
+ 3nAYPiTrDsJzJh9vGDIs2YSk2O62Tr/YhAQcNemJQa1cRsfAUiUaoav9s4KR8PStf7a2Z+ztd
+ GLMy6elWiNg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 01/03/2019 13:19, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> On Thu, 28 Feb 2019, Phillip Wood wrote:
-> 
->> On 28/02/2019 15:27, Johannes Schindelin via GitGitGadget wrote:
->>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>>
->>> In the case that the rebase boils down to a fast-forward, the built-in
->>> rebase reset the working tree twice: once to start the rebase at `onto`,
->>> then realizing that the original HEAD was an ancestor, `reset_head()`
->>> was called to update the original ref and to point HEAD back to it.
->>>
->>> That second `reset_head()` call does not need to touch the working tree,
->>> though, as it does not change the actual tip commit. So let's avoid that
->>> unnecessary work.
->>
->> I'm confused by this I think I must be missing something. If we've checked out
->> onto then why does the working copy not need updating when we fast forward.
->> (also why to we checkout onto before seeing if we can fast-forward but that's
->> not related to this patch series)
-> 
-> Sorry, I really try to learn how to express things clearly. Still learning
-> a lot.
-> 
-> So what happens is this: we detect the situation where the pre-rebase
-> `HEAD` is an ancestor of `onto`. We do this *after* checking out `onto`.
-> So we now know that we essentially fast-forwarded to the post-rebase
-> state.
+--8323328-1439165248-1551452558=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-Ah that makes sense, for some reason I misread the commit message and 
-thought that we were dealing with the case where onto was an ancestor of 
-the original HEAD and we were fast-forwarding from onto back to the 
-original HEAD.
+Hi Peff,
 
-> What we still need to do is to update the original ref (unless we were on
-> a detached HEAD when the rebase was started).
+On Fri, 8 Feb 2019, Jeff King wrote:
+
+> On Fri, Feb 08, 2019 at 10:28:12AM +0100, Johannes Schindelin wrote:
 > 
-> The original shell code updates the original ref to the current HEAD, and
-> the updates HEAD to point to that symbolic ref instead of being detached.
+> > On Fri, 8 Feb 2019, Johannes Schindelin wrote:
+> > 
+> > > I just had a look at the patch you provided below (for some reason, my
+> > > previous search on public-inbox only turned up Gábor's mail to which you
+> > > responded).
+> > > 
+> > > Admittedly, I do not really understand all aspects of it, but it applies,
+> > > still, and I kicked off a stress test here:
+> > > 
+> > > 	https://dev.azure.com/git/git/_build/results?buildId=338
+> > > 
+> > > It seems that your patch fixes that t5570 flakiness on macOS, and more
+> > > importantly, addresses an important issue on macOS.
+> > > 
+> > > Will play a bit more with it and keep you posted.
+> > 
+> > Alas, I was fooled. *Fooled*, I say. Apparently the --stress option makes
+> > the script *succeed* when it fails?
+> > [...]
+> > So I am afraid that your patch does not fix the issue nor does it work
+> > around it.
 > 
-> In the C code, we abused `reset_head()` to do the same. But `reset_head()`
-> does more: it does a two-way merge (in this instance, because
-> `RESET_HEAD_HARD` was not part of the flags). Which is unnecessary.
+> I think that patch does the write_or_die conversion to handle EPIPE, but
+> it would still need to turn off SIGPIPE for the whole process.
 > 
-> That's all this commit is about.
-
-Thanks for explaining, it all makes sense to me now
-
-Best Wishes
-
-Phillip
-
-> Ciao,
-> Dscho
+> So you'd also need to stick a:
 > 
->>
->> Best Wishes
->>
->> Phillip
->>
->>>
->>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>> ---
->>>    builtin/rebase.c | 4 ++--
->>>    1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/builtin/rebase.c b/builtin/rebase.c
->>> index 08ec4d52c7..813ec284ca 100644
->>> --- a/builtin/rebase.c
->>> +++ b/builtin/rebase.c
->>> @@ -1740,8 +1740,8 @@ int cmd_rebase(int argc, const char **argv, const char
->>> *prefix)
->>>      strbuf_addf(&msg, "rebase finished: %s onto %s",
->>>       options.head_name ? options.head_name : "detached HEAD",
->>>       oid_to_hex(&options.onto->object.oid));
->>> -		reset_head(NULL, "Fast-forwarded", options.head_name, 0,
->>> -			   "HEAD", msg.buf);
->>> +		reset_head(NULL, "Fast-forwarded", options.head_name,
->>> +			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf);
->>>      strbuf_release(&msg);
->>>      ret = !!finish_rebase(&options);
->>>      goto cleanup;
->>>
->>
+>   sigchain_push(SIGPIPE, SIG_IGN);
+> 
+> somewhere near the start of cmd_fetch(). (There may be a less
+> coarse-grained place to put it, but at this point I think we're just
+> trying to find out whether this approach even solves the problem).
+
+This fixes it, it seems. I let the job run with `--stress=50` and even
+after half an hour, it did not fail:
+
+attempts ://git.visualstudio.com/git/_build/results?buildId=354
+
+(I had to cancel it, I thought that `--stress=50` would stop trying after
+50 runs, but I was obviously incorrect in that assumption...)
+
+Reverting the patch made it fail within a hundred runs:
+
+https://git.visualstudio.com/git/_build/results?buildId=356
+
+So. Good, we have a diff that works. But you mentioned that you'd like to
+put it somewhere else? I am a bit unfamiliar with the code paths of
+`cmd_fetch()`, so I would be hard pressed to find a better spot. Any hint?
+
+Ciao,
+Dscho
+--8323328-1439165248-1551452558=:41--
