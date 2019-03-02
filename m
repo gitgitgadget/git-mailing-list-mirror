@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ECAF20248
-	for <e@80x24.org>; Sat,  2 Mar 2019 21:19:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9940820248
+	for <e@80x24.org>; Sat,  2 Mar 2019 21:19:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726743AbfCBVTr (ORCPT <rfc822;e@80x24.org>);
+        id S1726736AbfCBVTr (ORCPT <rfc822;e@80x24.org>);
         Sat, 2 Mar 2019 16:19:47 -0500
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:44714 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726538AbfCBVTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Mar 2019 16:19:47 -0500
-Received: by mail-ed1-f42.google.com with SMTP id b20so1177677edw.11
-        for <git@vger.kernel.org>; Sat, 02 Mar 2019 13:19:45 -0800 (PST)
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:39722 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726577AbfCBVTq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Mar 2019 16:19:46 -0500
+Received: by mail-ed1-f44.google.com with SMTP id p27so1183672edc.6
+        for <git@vger.kernel.org>; Sat, 02 Mar 2019 13:19:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=f2Jb7uS+NIpuFdcTGJNVP0ND7bu0lo2dezMo/BIJB+E=;
-        b=KbEE/am6JvR7rq3isBcZJ4ySzMkEoqOh7hYZIRjCyH91Z0nWdF2MZ2RuqEVnSROEgb
-         XGWEN+qFbWinnLmj8MYiG9UPoibXGkZ3QE1PkPR8RjlOS+PJk0nD4YqbjgYO04b96NdW
-         mgIvRxdXmHiOwvUaUHSg2Fu7xUToYmpdlpzWKw360Bs+qWQTazMzRunNrPL/TnkU12E/
-         MfC07ZcEybBZE3Pv5LznFKybw21wbl6gE5XOk8NhldEi+XJMVxKPFhPLvGq1/NeO9zOt
-         p9KKP9e1T7WsEWLZSNNIjJ3nYC6niZ5kgvegRnB/lwe46PPJRtTpMFdfxfGtkYVxwSEa
-         HsSg==
+        bh=ntsLNcW7Qdan+vF2vNzKouwZL6fi0k4ECtHeLvKgyUg=;
+        b=oX1omNWkofi/Sb7gkC5u1Hyg6gBaNuDjbkWRHLuE3DHSeYrVNh83GFay6CRRZgQRid
+         0orXqBMHmasivHZoSZU85a3ttP3lkABPwsrYu/xRsfXlwH8DNvnOg/NstsxlC5+2vFZH
+         gqAlS/Wm+zMsFRw9AvvMUypBit37geoKzggmtpvi4Yo1FLxkkj7PQKB0a+Zyw/1XWyOO
+         f3+1I67BdAmgaz8mei1Opb4jbwoWOX0szsTRMJxSV/9XYGNvKIXwMbJKNW7pxUluAS39
+         44LP5PhGw4WcqMHQgGTqE32c5ovszWNj5NBfI3fmi6z/h2iOQexw4Sv4MKeZuSsJoeOr
+         UKZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=f2Jb7uS+NIpuFdcTGJNVP0ND7bu0lo2dezMo/BIJB+E=;
-        b=DGj8tk8oFr3dFPqRRAwQLofm8SgACJXX7+ASnbDBygIXYlnGzbdlmM1l9qLf05tzSn
-         k4kVDABnBcVqJ1EPLuaxURsUJFMkQSAjVuHv7nGc06Z5tdMZxsqbmWHHFKTIoI9RJqsY
-         c+fuqLKZ2BYXMooyYlYOPzLvh6G6Je/+VwfsMQhWb5YzATOOlwSGD4ederZjaT4SRyjV
-         bEs5IesoQx7JVWjlj5yHwRuWnz9EJbY/mqjqOzNAWGHmH7q86a/NFu+MP1UPFI1srwmH
-         X6i4Zp5RYpWUroLTn4qSJs4qgZoAJM2EpDxTFXM6j0K1NbJCaoYboe2Df6Ts82ED9927
-         BYgA==
-X-Gm-Message-State: APjAAAXcROFoJeEckNGyAlbdgJJma/EtJwq2nTZFJcufBg8sKHMeGQX7
-        IZci/9tvwEp+iScwT1vyMGSfya7k
-X-Google-Smtp-Source: APXvYqxVSlDJaHJoFJmGt/nupOuPXS9o4VvIxR5fzS+K5+bOFcJw8bmyLWzBns+5kKT+NcGsST/Z5w==
-X-Received: by 2002:a17:906:2969:: with SMTP id x9mr7208743ejd.223.1551561584791;
+        bh=ntsLNcW7Qdan+vF2vNzKouwZL6fi0k4ECtHeLvKgyUg=;
+        b=tOPgqgmNiLXxcEuZCcw2QqeCQnvjpCT/t5fhfsglzboPxwt0ChivtN+k+aOcDtu8xi
+         QatE0Se5ajCP5/byRn8YULmLfhakr2S4+0s/70BKTXKcM4dwFwTAjRETQsjU4S6HkMtn
+         zQld5qWtIweBmhQnejNyqHCpKajYcqSyK3A5RGMg6fQ+W3SNH1reE1lcSlX32S9lAirq
+         qK+MG136iZKORQdlhJc6RKkcDxzjTsEBfU3US4R+7Xb3M3Hzr6FL0uSM3kd94G064MuZ
+         Oxq3aOnpgcP+vQ9QNEFOuNpMc/BXg+lfsAcvIcyOuEkVVmhiuElCw3zeAeSzyeM6SSO3
+         p66Q==
+X-Gm-Message-State: APjAAAXCcQp33fRIsru45bkf1LwzRhdPitbxPGYFIMOOszCuCSUYF9Ph
+        KogtOf5cQSTupl5n4WWprnXBYIvC
+X-Google-Smtp-Source: APXvYqzuZEVT59ldG5aLLmuDs3GnWog1r+fyNGkQceS6Z4XAa2n3Gx70BXZh1mJRd8vsyS5DKxNdaw==
+X-Received: by 2002:a50:9714:: with SMTP id c20mr9228543edb.211.1551561584150;
         Sat, 02 Mar 2019 13:19:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z39sm640890edc.96.2019.03.02.13.19.44
+        by smtp.gmail.com with ESMTPSA id x34sm644469edm.70.2019.03.02.13.19.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Mar 2019 13:19:44 -0800 (PST)
-Date:   Sat, 02 Mar 2019 13:19:44 -0800 (PST)
-X-Google-Original-Date: Sat, 02 Mar 2019 21:19:42 GMT
-Message-Id: <281d3f1d19d1c93e8d1e66ae16fe3fb286554c0a.1551561582.git.gitgitgadget@gmail.com>
+        Sat, 02 Mar 2019 13:19:43 -0800 (PST)
+Date:   Sat, 02 Mar 2019 13:19:43 -0800 (PST)
+X-Google-Original-Date: Sat, 02 Mar 2019 21:19:41 GMT
+Message-Id: <16c6508c4b38933945126ffe27445c999aa3e59e.1551561582.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.155.git.gitgitgadget@gmail.com>
 References: <pull.155.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/2] tests: introduce --stress-jobs=<N>
+Subject: [PATCH 1/2] tests: let --stress-limit=<N> imply --stress
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,41 +71,27 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The --stress option currently accepts an argument, but it is confusing
-to at least this user that the argument does not define the maximal
-number of stress iterations, but instead the number of jobs to run in
-parallel per stress iteration.
-
-Let's introduce a separate option for that, whose name makes it more
-obvious what it is about, and let --stress=<N> error out with a helpful
-suggestion about the two options tha could possibly have been meant.
+It does not make much sense that running a test with
+--stress-limit=<N> seemingly ignores that option because it does not
+stress test at all.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-lib.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ t/test-lib.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ab7f27ec6a..6e557982a2 100644
+index 4e7cb52b57..ab7f27ec6a 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -142,10 +142,16 @@ do
- 	--stress)
- 		stress=t ;;
- 	--stress=*)
-+		echo "error: --stress does not accept an argument: '$opt'" >&2
-+		echo "did you mean --stress-jobs=${opt#*=} or --stress-limit=${opt#*=}?" >&2
-+		exit 1
-+		;;
-+	--stress-jobs=*)
+@@ -153,6 +153,7 @@ do
+ 		esac
+ 		;;
+ 	--stress-limit=*)
 +		stress=t;
- 		stress=${opt#--*=}
- 		case "$stress" in
+ 		stress_limit=${opt#--*=}
+ 		case "$stress_limit" in
  		*[!0-9]*|0*|"")
--			echo "error: --stress=<N> requires the number of jobs to run" >&2
-+			echo "error: --stress-jobs=<N> requires the number of jobs to run" >&2
- 			exit 1
- 			;;
- 		*)	# Good.
 -- 
 gitgitgadget
+
