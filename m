@@ -2,167 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8160E20248
-	for <e@80x24.org>; Sat,  2 Mar 2019 21:28:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00D90202AA
+	for <e@80x24.org>; Sat,  2 Mar 2019 22:16:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726763AbfCBV2W (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Mar 2019 16:28:22 -0500
-Received: from mout.gmx.net ([212.227.15.15]:41561 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726592AbfCBV2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Mar 2019 16:28:22 -0500
-Received: from [10.49.202.116] ([95.208.58.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mdafs-1gd0zQ1je0-00PNG0; Sat, 02
- Mar 2019 22:28:20 +0100
-Date:   Sat, 2 Mar 2019 22:28:23 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Alban Gruin <alban.gruin@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 1/4] name-rev: improve name_rev() memory usage
-In-Reply-To: <20190301175024.17337-2-alban.gruin@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903022224480.45@tvgsbejvaqbjf.bet>
-References: <20190301175024.17337-1-alban.gruin@gmail.com> <20190301175024.17337-2-alban.gruin@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726626AbfCBWPg (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Mar 2019 17:15:36 -0500
+Received: from mail.farhan.codes ([155.138.165.43]:58361 "EHLO
+        mail.farhan.codes" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726225AbfCBWPg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Mar 2019 17:15:36 -0500
+X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Mar 2019 17:15:36 EST
+Received: from pc.farhan.codes (pool-96-241-220-104.washdc.fios.verizon.net [96.241.220.104])
+        by mail.farhan.codes (Postfix) with ESMTPSA id 906199CBF
+        for <git@vger.kernel.org>; Sat,  2 Mar 2019 17:08:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=farhan.codes; s=mail;
+        t=1551564515; bh=YiyYk4PY5abbaYNkftC9a/HCdSvTqFJNsU7G8aRA2g4=;
+        h=Date:From:To:Subject;
+        b=eGI9FtE9FdhOIh8SzfoUUVgVPR2laLCc5uMFcXH9RLawIZ8+XqsnJASwX8ipZyUB7
+         Sxt7XJpxDclGmGq0EZQCkkRRQaNA2mECAwOEMFqCaQ+v9a78ul9sZo31XnPogBKPyc
+         LloNYUCbab5Y8zAq4X5COZkmbWcsKWxGf1HUw13c=
+Date:   Sat, 2 Mar 2019 17:08:35 -0500
+From:   Farhan Khan <farhan@farhan.codes>
+To:     git@vger.kernel.org
+Subject: How crc32 value is calculated for deltified objects
+Message-ID: <20190302220835.GA12793@pc.farhan.codes>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QeOIvE9kCgVIXe8fnfnmrD2h/7c0Q5FWm5Zb50PAI5ESfJ7pLtk
- oVASbx77durJfjPyCZBcoZQblS4lUzpaeumC+YH+d1vaSgXix9MqQ/BJhfJ9uQe7ugLvSBq
- TJGqSXs5cKLQjj2UxX+ufiJ0P0jHjgYPMxuOL7nrof7QvCGJmPhLC9L6MxQi8X6/KhQwXAu
- eLGVs8e2Oh+ZF+PVk0GxA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RBTUaVsKjlc=:+eTQD2rPVTpODm81zSyTuk
- ae9XFPVX0JhInAORcFWrSqEdZ75dy05Sb84q4m5E+iKBJR47DPE/zAP5AfeIQlFnCkqyfOmq6
- n9VKU3aB90DVcF8Z118wb/suiVeZvBTeRnVux3feQRpRv4Oglx6VLxOcI9IAW4qwZ8ZbNNn9G
- w9cfe4/HGlqLJmMX/hcWL3zgxGM9lQ+62qDI9nV3ooZNW44mmXeL5DlGJ/UTDRMHAXe3jYh2s
- XLCVPj4EYciv5VQsc420/wrMa1ZjgHKtVVGJD/uGFI5Xhrbz3nhhrL98Mmy2kJnpchGLZz1tl
- d3E2PZXDiLN1zTxdpRHE6UtwkUBax1BKSjpmk/ECaLizHZkYW7kgjWy4+++5vutdoLqguDsKC
- i2TQPmQLmp5NqPX79z/y/W5m2HVuQLPVMSMlHR+SPi671/x46uVBSeYfKfakkeDArISlEyoLm
- hHeVIfaHwLSlQKr5+AG+ZlZskDoK2EHRUDeVgATk4Q8nMYb2VkfZviAPJZknj5f5sPpHXVTMM
- 4RPmMo/WY3GPG8gdomIrcaKrTmXSPcg5lTv5VEMHIEllDIyg0PLgh9rfXd/WbhXyPWuOHsp1T
- FHk7+hp80YoaRZ7X4sqM98A/neLF86W96DsApK+m8NsJzzI6NVtwXwW9fI3qqjawkENmG2oDG
- xE3mfvwsDlDk2VtLIx0YVjONg476DB74dU3S8U5BmrCS4jjwzHixlKTFs2QOVdi8Prd4U2m78
- ZZ4lLHDCXdh/DKCSxBork0Y5u3i+Ecw2CK7K4d4vBQ9ux4Moeu46SRt6y3nKgSiHvzXY4mxSr
- FkNyOlpn8mUbbKmIU3wz4K/nlPLzPbCoB9hkYRAoqmgDbwjM081Wb1N9684OUQqer84VSk6k+
- CiB3VOgZ1dDRC4pK23qA3SPNQBNSeXoc6hwrkTmI2xpbn3fA5KchCksQIgjgrt0yYL8dp+iiT
- +Lrxpfu5qHw==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban,
 
-On Fri, 1 Mar 2019, Alban Gruin wrote:
+--GvXjxJ+pjyke8COw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> name_rev() is a recursive function.  For each commit, it allocates the
-> name of its parents, and call itself.  A parent may not use a name for
-> multiple reasons, but in any case, the name will not be released.  On a
-> repository with a lot of branches, tags, remotes, and commits, it can
-> use more than 2GB of RAM.
-> 
-> To improve the situation, name_rev() now returns a boolean to its caller
-> indicating if it can release the name.  The caller may free the name if
-> the commit is too old, or if the new name is not better than the current
-> name.
-> 
-> There a condition that will always be false here when name_rev() calls
-> itself for the first parent, but it will become useful when name_rev()
-> will stop to name commits that are not mentionned in the stdin buffer.
-> If the current commit should not be named, its parents may have to be,
-> but they may not.  In this case, name_rev() will tell to its caller that
-> the current commit and its first parent has not used the name, and that
-> it can be released.  However, if the current commit has been named but
-> not its parent, or the reverse, the name will not be released.
+Hi all,
 
-Makes sense, and the patch looks mostly good to me, just one suggestion:
+I am trying to figure out how the crc32 value is calculated for deltified
+objects.
 
-> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
-> ---
->  builtin/name-rev.c | 23 ++++++++++++++---------
->  1 file changed, 14 insertions(+), 9 deletions(-)
-> 
-> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index f1cb45c227..0719a9388d 100644
-> --- a/builtin/name-rev.c
-> +++ b/builtin/name-rev.c
-> @@ -77,7 +77,7 @@ static int is_better_name(struct rev_name *name,
->  	return 0;
->  }
->  
-> -static void name_rev(struct commit *commit,
-> +static int name_rev(struct commit *commit,
->  		const char *tip_name, timestamp_t taggerdate,
->  		int generation, int distance, int from_tag,
->  		int deref)
-> @@ -86,11 +86,12 @@ static void name_rev(struct commit *commit,
->  	struct commit_list *parents;
->  	int parent_number = 1;
->  	char *to_free = NULL;
-> +	int free_alloc = 1;
->  
->  	parse_commit(commit);
->  
->  	if (commit->date < cutoff)
-> -		return;
-> +		return 1;
->  
->  	if (deref) {
->  		tip_name = to_free = xstrfmt("%s^0", tip_name);
-> @@ -111,9 +112,10 @@ static void name_rev(struct commit *commit,
->  		name->generation = generation;
->  		name->distance = distance;
->  		name->from_tag = from_tag;
-> +		free_alloc = 0;
->  	} else {
->  		free(to_free);
-> -		return;
-> +		return 1;
->  	}
->  
->  	for (parents = commit->parents;
-> @@ -131,15 +133,18 @@ static void name_rev(struct commit *commit,
->  				new_name = xstrfmt("%.*s^%d", (int)len, tip_name,
->  						   parent_number);
->  
-> -			name_rev(parents->item, new_name, taggerdate, 0,
-> -				 distance + MERGE_TRAVERSAL_WEIGHT,
-> -				 from_tag, 0);
-> +			if (name_rev(parents->item, new_name, taggerdate, 0,
-> +				      distance + MERGE_TRAVERSAL_WEIGHT,
-> +				      from_tag, 0))
-> +				free(new_name);
->  		} else {
-> -			name_rev(parents->item, tip_name, taggerdate,
-> -				 generation + 1, distance + 1,
-> -				 from_tag, 0);
-> +			free_alloc &= name_rev(parents->item, tip_name, taggerdate,
-> +					       generation + 1, distance + 1,
-> +					       from_tag, 0);
+It appears that the crc32 value is updated in the use() function. After
+calculating the header, the unpack_raw_entry() function will call
+unpack_entry_data(). This function inflates the delta object and calls use().
 
-This would be easier to read if it avoided the &=, e.g. by turning it
-into:
+My question is, does it update the crc32 value with the deltas or just the
+undeltified object? And if my question implies I do not understand how this
+process works, can you please explain to me how the crc32 value is constructed?
 
-		} else if (!name_rev(parents->item, tip_name, taggerdate,
-				     generation + 1, distance + 1,
-				     from_tag, 0))
-			free_alloc = 0;
+Thank you.
+---
+Farhan Khan
+PGP Fingerprint: 1312 89CE 663E 1EB2 179C  1C83 C41D 2281 F8DA C0DE
 
-Ciao,
-Dscho
+--GvXjxJ+pjyke8COw
+Content-Type: application/pgp-signature; name="signature.asc"
 
->  		}
->  	}
-> +
-> +	return free_alloc;
->  }
->  
->  static int subpath_matches(const char *path, const char *filter)
-> -- 
-> 2.20.1
-> 
-> 
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAABCgAdFiEEG8zEBbZbSkdr8t3eZNYqKtDTorUFAlx6/tkACgkQZNYqKtDT
+orUCXQv/a+AytY9wLnTusovyIDrYWyCWg03B81lWyMJbybSZz4tJxu0RUs8z1rmQ
+NbIM+aAiXg4IAOr4JtsryGDfs6qfSXhbzRqJoTIwPsmJAeSymZC7vLJ9sL5ubuz0
+atlKqun1r7jgvZslL94QTtToJgy19PrMnKJIXDO1fzFpY0Ii0WbUnPk3K5nc768N
+0dqrh39UaiPJ6YkCxxpX7wE5FdTJh0987c/mV07123EzFh4p1h7mH91Cb+AKYTDY
+LnVQv9EXRrh6/bZ6PdEOYpvtFE13giguUqT3cM3+H2w8CWagjSlxGJUTylXRZArM
+qeVeKsdcXBA5/rg1MrQi2bBJ8g/YSvkMwPsPNFRQIavW9lUp31uTF+og6SQ9CuGT
+AzX3dEXx9f2n7t4Pa4V7bnZKwbQArYuUUeumu+ezzxracbPwFU/jJBMUCfybrxVX
+U74VOmkCkYhACUeFk2fLCnoLYbFL+SdTKQ+wnRX3cndNLVhHe7xbg2SA7WP4jlkD
+VXbHwcuR
+=ztfN
+-----END PGP SIGNATURE-----
+
+--GvXjxJ+pjyke8COw--
