@@ -2,88 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0991A20248
-	for <e@80x24.org>; Sat,  2 Mar 2019 08:51:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7185F20248
+	for <e@80x24.org>; Sat,  2 Mar 2019 12:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726242AbfCBIv5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Mar 2019 03:51:57 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:45482 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725986AbfCBIv4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Mar 2019 03:51:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=6zRRuqQQGKF9AIr1Aifkq1tzkhfvOf7kPQEJ1/JPid8=; b=pbBGwK8lAhFPzdWpQjnxWo6LqZ
-        pgEH204ZcpLvcc4SYI9LMwbCqg7yBtbe8+XtPWpIPyDn8AVP7XR7VQ4IOcbiNJQR/QR+8G9TJ3AYi
-        132B684/D4L5/urBjSUsNgyLxPKhJDXBRZBgBe9syZIW6iXD5FwjvcomCCeU07DHEW2XLMKylHpLR
-        zcEJNmzSadwJMOI/6+QMn0qP1s/HUgXHgHBwVCNGQ2fulKBM3M/fuhpqx8VYYtIjIJjeSLB3xLIxb
-        9j3Tj9GyITs67bDwFKBRcr6DsaUyobAZBF4knQXn2uOfeN/UJrC4qhMmGm0IxzeAuursgE4GgY45b
-        Xf5WoJtQ==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:59080 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1h00N7-004Pfu-Rk
-        for git@vger.kernel.org; Sat, 02 Mar 2019 03:51:55 -0500
-Date:   Sat, 2 Mar 2019 03:51:52 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: [PATCH] docs/git-gc: fix typo "--prune=all" to "--prune=now"
-Message-ID: <alpine.LFD.2.21.1903020350010.1955@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1726441AbfCBMfL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Mar 2019 07:35:11 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35041 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726044AbfCBMfL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Mar 2019 07:35:11 -0500
+Received: by mail-wr1-f67.google.com with SMTP id t18so645704wrx.2
+        for <git@vger.kernel.org>; Sat, 02 Mar 2019 04:35:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7L+lxqggKPPgIEcuTRzpThWiDk4zg1kSrMQy9ruWCqI=;
+        b=tZrh2mFVTzII18pl7FZPTzwEVnCwC3YJfvthSHbaL4bG0snrTP9H29Qy9HZSML9sBu
+         b9XKwGyaPx8mMwT6V/o1ADH0BYG3+L8albPH2612LcmoSokwpIQHOKueChKvhL2mzeA5
+         sMngjZrTDPWk/k+i7vxpBppP7Kd9dcNBs0CAQGyzb06l8nix15XHKK444+U99tm+VUhU
+         G2YkJDkfx2dr+BP6qit5A2bgMrLkLpUaPVEN8CjCqsRl0CEFY1I3iNkAPhz/aK0Koy0C
+         fsQ+OK8yc2HeQsMIGe6bVXEb5RtOoRlzf8tgu+h7a8LXEn4UxaUMT7pN4MMFHqJt4Wb+
+         KaiA==
+X-Gm-Message-State: APjAAAUjo+2L68ac31HhQlaMF9Pu0/fgmODVjasz5Wnk7rNW1r0kB0ay
+        H7whIQ7PH2utwV3Fx5VnDDcfZyrDiwxPR85HjiU=
+X-Google-Smtp-Source: APXvYqwtYUCRbYsA0ZnzXHKoD9+DcmLTl/hkNO6kf4VA3gtSn7n+B9OfwEonLaucY6nzukcU8NqzUPKgzMkvs1BfWbs=
+X-Received: by 2002:adf:f149:: with SMTP id y9mr6398439wro.282.1551530109044;
+ Sat, 02 Mar 2019 04:35:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+References: <b5ca6391fd0273fb7d6b92bc5ada96df93bc5cf2.1551487219.git.me@ttaylorr.com>
+In-Reply-To: <b5ca6391fd0273fb7d6b92bc5ada96df93bc5cf2.1551487219.git.me@ttaylorr.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 2 Mar 2019 07:34:57 -0500
+Message-ID: <CAPig+cQWCSVqXyOmBC9Wn-Ew79H0yGPRJxRiLCMNJjNOUu2yPw@mail.gmail.com>
+Subject: Re: [PATCH] builtin/config.c: don't print a newline with --color
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Mar 1, 2019 at 7:41 PM Taylor Blau <me@ttaylorr.com> wrote:
+> [...]
+> In this case, printing a terminating newline is not desirable. Callers
+> may want to print out such a configuration variable in a sub-shell in
+> order to color something else, in which case they certainly don't want a
+> newline.
 
-Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+It's extra confusing considering that this:
 
----
+    color=$(git config --get --type=color foo.color)
+    echo "${color}hello" >output
 
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index a7442499f6..a7c1b0f60e 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -76,7 +76,7 @@ be performed as well.
- --prune=<date>::
- 	Prune loose objects older than date (default is 2 weeks ago,
- 	overridable by the config variable `gc.pruneExpire`).
--	--prune=all prunes loose objects regardless of their age and
-+	--prune=now prunes loose objects regardless of their age and
- 	increases the risk of corruption if another process is writing to
- 	the repository concurrently; see "NOTES" below. --prune is on by
- 	default.
+works as expected since $(...) swallows the newline, whereas, the case you cite:
 
--- 
+    (
+    git config --get --type=color foo.color &&
+    echo hello
+    ) >output
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
+does not.
 
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Illustrating the problem in the commit message by using example code
+like the above might (or might not) help the reader understand the
+issue more easily. (I had to read the prose description of the problem
+a couple times to properly understand it.) Not necessarily worth a
+re-roll.
+
+> To do what callers expect, only print a newline when the type is not
+> 'color', and print the escape sequence itself for an exact comparison.
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+> diff --git a/builtin/config.c b/builtin/config.c
+> @@ -258,7 +258,8 @@ static int format_config(struct strbuf *buf, const char *key_, const char *value
+> -       strbuf_addch(buf, term);
+> +       if (type != TYPE_COLOR)
+> +               strbuf_addch(buf, term);
+
+The reasoning for this conditional is sufficiently subtle that it
+might deserve an in-code comment (though, perhaps is not worth a
+re-roll).
