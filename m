@@ -2,102 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 353F320248
-	for <e@80x24.org>; Sat,  2 Mar 2019 01:18:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B66720248
+	for <e@80x24.org>; Sat,  2 Mar 2019 02:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727915AbfCBBSV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 1 Mar 2019 20:18:21 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35187 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727891AbfCBBSR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Mar 2019 20:18:17 -0500
-Received: by mail-wr1-f67.google.com with SMTP id t18so27739813wrx.2
-        for <git@vger.kernel.org>; Fri, 01 Mar 2019 17:18:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=MolAGhobP0dUvDJlWj2k5MSxB+xrvy+8XJODMSZDmuI=;
-        b=GYKIshzb+6LeYz2K6mzqY9PYq9eOlwAE+HvPN1bKBG8f0gxYGhWKr6Jkicnr1oBECI
-         bM+A+Cq91ztjQQTdKmnB2J8pA7Ig1KufN8hknoH/ZLVomgJjlO0er21bTcW2gYvb65Rw
-         0wjE3Uq+ZvFizCy4ZsLJxTj/7OpxsCIetwLIPTaw/49knp8MPPupRLVT9vxam+Ut5zAP
-         yPP8WPYkUnNM7DLroF7NQrK0uPIkMY84jBHOKxXmbFYsqc/bGFtYx5NlpqysRhKOs8D/
-         y6jamtOOXlYBExpLu00Z0hiyEVc08HX+AvpGTsYC4w8A0i40WeeBJSjcC5cyZPQ1NRww
-         5e+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=MolAGhobP0dUvDJlWj2k5MSxB+xrvy+8XJODMSZDmuI=;
-        b=HuZ8/wySAru29vPoWWA/efeKSvvbKl9xsZ6a+wg0sTC7DPfCZKPQB+/ZJXqmSjgTF9
-         HEa2R9ueTt8DwbKkRCMeK+JYPhMm4AnFwO37Tbq2UNbbEXxhEOHrfmtvbI4KZihhfqco
-         qp6nSJfj/5EWS0hneOxwGNF6PPCxUksvrKe+Qz8st03aCJuuR2rcDMsGovK5ClXiFPui
-         3sN2OOXHkQ6a5I8xw5UOcTd7vGp/A4oj7hhznVV5M+boMICsegTgejirI825P+IUcxfv
-         KWeHSASYHh6srUw/5errSlJLR3qGeX9tF0BvtlcSxO5N7p4s+gnQ3m2ZcHDbxQRsn6pA
-         +tZA==
-X-Gm-Message-State: APjAAAW5OnhQhKUvvi+9ZarfsOszay8FH1TTFcpS+HO5S3ckh55EW10O
-        wuMq3ZXBw07fUizxCzftn0k=
-X-Google-Smtp-Source: APXvYqy6NBNG9SPUNrnRWVwi8D1Sf7PKU1ht7xwpHOybR2UE5C0rKF75ImC47kjbgKwFyzaVyWtKIA==
-X-Received: by 2002:adf:f985:: with SMTP id f5mr2026231wrr.96.1551489495617;
-        Fri, 01 Mar 2019 17:18:15 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 93sm70342923wrh.15.2019.03.01.17.18.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 01 Mar 2019 17:18:14 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Todd Zullinger <tmz@pobox.com>
+        id S1727727AbfCBCkX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 1 Mar 2019 21:40:23 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53783 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726835AbfCBCkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Mar 2019 21:40:23 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4699B599E5;
+        Fri,  1 Mar 2019 21:40:18 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=2k6Bm6k0WYg8nE0NbcwJCne9XCc=; b=na11mQf
+        N5p6d4Z4cm2tePapS6AquQR1L6boyN4DjioMDfWuO2ds2xQHRjXPx1C5+/AxEiN4
+        RIR9oGqCNQJ7SSx/ndEixIXwwVWmR7NLf2Sp8D1pp/oODLUtvhkNAbLeXzODyL8O
+        EDJkVhkScOvLU3DakRc0oQugpQpFvVNjBfsE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=VfHu/rC/HUK4KrOfLwNAEDwNrkOIGkJT/
+        eqLu0dtn0Cd5wgVVzw8liokGtnAI6K+gxMAGR4/8f0GlmNm55SeAKLBGw2xfsTtG
+        AJamWUDPPH+xiyugAsHvxCxEg1TpKLxmN9+RC/54GWlPhKByT5wWnZy2qbg7pLZc
+        hCo6kCgCdY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3EA18599E4;
+        Fri,  1 Mar 2019 21:40:18 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Received: from zaya.teonanacatl.net (unknown [71.173.194.225])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D4FD2599E3;
+        Fri,  1 Mar 2019 21:40:14 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Date:   Fri, 1 Mar 2019 21:40:12 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
-        <pclouds@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [BUG] completion.commands does not remove multiple commands
+Message-ID: <20190302024011.GF31362@zaya.teonanacatl.net>
 References: <20190228230506.GA20625@sigill.intra.peff.net>
-        <20190301173443.16429-1-tmz@pobox.com>
-        <20190301183017.GB30847@sigill.intra.peff.net>
-        <20190301221551.GD31362@zaya.teonanacatl.net>
-Date:   Sat, 02 Mar 2019 10:18:14 +0900
-Message-ID: <xmqqef7q6pm1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+ <20190301173443.16429-1-tmz@pobox.com>
+ <20190301183017.GB30847@sigill.intra.peff.net>
+ <20190301221551.GD31362@zaya.teonanacatl.net>
+ <xmqqef7q6pm1.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqef7q6pm1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: 82784770-3C94-11E9-934A-D01F9763A999-09356542!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger <tmz@pobox.com> writes:
+Hi,
 
-> Hmm.  The comments in list_cmds_by_config() made me wonder
-> if not using a local repo config was intentional:
->
->         /*
->          * There's no actual repository setup at this point (and even
->          * if there is, we don't really care; only global config
->          * matters). If we accidentally set up a repository, it's ok
->          * too since the caller (git --list-cmds=) should exit shortly
->          * anyway.
->          */
+Junio C Hamano wrote:
+> Todd Zullinger <tmz@pobox.com> writes:
+> 
+>> Hmm.  The comments in list_cmds_by_config() made me wonder
+>> if not using a local repo config was intentional:
+>>
+>>         /*
+>>          * There's no actual repository setup at this point (and even
+>>          * if there is, we don't really care; only global config
+>>          * matters). If we accidentally set up a repository, it's ok
+>>          * too since the caller (git --list-cmds=) should exit shortly
+>>          * anyway.
+>>          */
+> 
+> Doesn't the output from list-cmds-by-config get cached at the
+> completion script layer in $__git_blah variables, and the cached
+> values are not cleared when you chdir around?
 
-Doesn't the output from list-cmds-by-config get cached at the
-completion script layer in $__git_blah variables, and the cached
-values are not cleared when you chdir around?  If you allowed the
-repo-specific configuration to affect its output, the cached values
-need to be reset when you cross repository boundaries.  Otherwise
-you'd see complaints like "I have this in repo A but not in repo B;
-when I start from repo A, it gets completed even after I go to repo
-B.  If I start from repo B, I do not get completion in either of
-them" (the former is because repo-A specific result gets cached, the
-latter is because the cache is populated with the result taken in
-repo-B that doesn't have customization and stays around even when
-you visit repo-B).
+In testing, I didn't find any evidence of caching.  Setting
+commands to be added and removed in the global and local
+configs worked reasonably.
 
-I think it is a sensible design decision to forbid per-repo config
-to relieve us from having to worry about when to invalidate the
-cache and all associated complexities.
+Duy's reply suggests that was considered but not
+implemented.  I there were caching (and if it were tedious
+for the completion code to keep fresh between repos), then
+it would a bad plan to allow per-repo config.
 
+If there was a goal of adding such caching it might also
+make sense to avoid "fixing" the code here to allow per-repo
+config before it's known how that might affect such caching.
+
+It sounds like that's not something Duy is planning on for
+the near term though, so perhaps we're fine to allow local
+repo config here?  As Duy mentioned, maybe some users with
+local aliases want to add them to the completion locally as
+well.
+
+If we choose to avoid local repo config then we can add a
+comment to the documetation like I had in 2/3.  Maybe also
+update the comment in list_cmds_by_config() to note that we
+intentionally don't setup a repo -- or a similar comment in
+list_cmds(), where Jeff's 1/3 was adding
+setup_git_directory_gently().
+
+I don't have a strong opinion either way.  I more or less
+have the minor patches for either direction at this point.
+
+Thanks,
+
+-- 
+Todd
