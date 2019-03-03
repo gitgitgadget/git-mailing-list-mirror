@@ -7,64 +7,61 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 048D720248
-	for <e@80x24.org>; Sun,  3 Mar 2019 01:35:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7601420248
+	for <e@80x24.org>; Sun,  3 Mar 2019 01:38:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727153AbfCCBfR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Mar 2019 20:35:17 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36058 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726035AbfCCBfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Mar 2019 20:35:17 -0500
-Received: by mail-wr1-f66.google.com with SMTP id o17so1727079wrw.3
-        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:35:17 -0800 (PST)
+        id S1726592AbfCCBiD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Mar 2019 20:38:03 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41951 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726035AbfCCBiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Mar 2019 20:38:03 -0500
+Received: by mail-wr1-f65.google.com with SMTP id n2so1719657wrw.8
+        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:38:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ZiM5TZc4TvU9uj5R1h2Np3/F5bDN34PP+FaTXqrRzMU=;
-        b=BJB0n6MiyV7li5v94zXLmgeVTKHUzUHKq/T7UMaO16CkgU/g7q03VBtsOC6pXKG0F5
-         L3V1U8IK0uX5t9wNdgYhTpaMqdtX/vdo9vgTvDmabKO9pp19y0k7aN3U/8ZSUQDPHKJS
-         Hc95TfjYEJu/aV40++tSgW/llgs4Tq0byjTMfzzdoGj6LOcNWJmgQ5NmXfJI/jwarSxS
-         DYLX+k6vUoZ820vK3YHwNZuWp9Z9kZNIA78T2NmXgAgiLhVakbpwkksIfSsy9PfN+EOJ
-         SQYfKRZY3F3ZgZy38AuUBy6pRNxXNsL8hG0NLtnvQ0IOsdYGYCZAt6lctxkxZ5uquc25
-         nJHg==
+        bh=c3xjpxY/acm5QSTl6C0WVONFYy0dgOTLE/bxlWQyW6o=;
+        b=QMRhpih/CoITYhODV87QVJWx7YWLcPBrMapYa11z5Y8nREzZvc85W76PCfYnAZrhgs
+         78DXsrvXjKun0qLCAi4Xwy82cra0LNqsqBtWsb1GpZMYrXQnIekLxk5dhyCJA3mrLHg5
+         kWfbQ+bAu17V8eON75Yxhtk7XyxIm1TJrpdgkREe/SjKE3xgJKocslRm4qXlzdqAJNqe
+         Rrwzn56DlQRJgyQuq97k93ZjhG0xXMcwUssJ6/3o6aEhgLEuDigRShx368NhirdP72GY
+         FZPl15ANyc97L7C1j08c7FH2ypQtXw79LBT2MzPF90afGiLUyoXQzDp51TyRfqQthLA9
+         p0mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZiM5TZc4TvU9uj5R1h2Np3/F5bDN34PP+FaTXqrRzMU=;
-        b=Jjizkpmcfe2FaNg0ZVlMj49wPcAWw/dmN0Ia7y5lkJ8TxPh08O7HV1FMm+JYwu8pt+
-         RzOABoh9sR7xQ+QG3u4uW305Mc2LwLYKMyCHHkrQoOaKrkzWQy26Y32XBsU+YjC/JnDG
-         zClY6KBZk6o4HyKZr97Nzj3lJ3KRJAfmpk4C8Y8d2xXxnnFmQg7gX4gVD7vLSX8kiz/a
-         4uzyMGtGIc4AEcDMe5Cc57MRU7ywScQ2opEcwFXGYBm81mRePGOkodAZj4wcQ2E/+R0U
-         yx8AH8OpPVbYFzOWPa2SVixUNA2ardFnzQaqAsEa6huhUBOvHozes1QP22KsbpDC18G7
-         e1QA==
-X-Gm-Message-State: APjAAAUkw3vXx3lfY0PpTwlY8EhOqgKQiavwksCaHppLUj+akHv/5k/d
-        0XntzTVmOUQ82oGRcolMvlo=
-X-Google-Smtp-Source: APXvYqzBWb32/5BiR48AETQvGxtW+RCUvgZX5hBt5NfLiPpfhPsgL6CRWRa/VDtXauX5lmgZY6jIqA==
-X-Received: by 2002:adf:fc49:: with SMTP id e9mr8657484wrs.2.1551576916292;
-        Sat, 02 Mar 2019 17:35:16 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o12sm8904477wre.0.2019.03.02.17.35.15
+        bh=c3xjpxY/acm5QSTl6C0WVONFYy0dgOTLE/bxlWQyW6o=;
+        b=fuYUAKeKKG+XMqWkVI3ppTxQy+aEsDlP14vvXQgH8C3cHOYv5u+A6bQk8K2CRhmn8O
+         +RcP4EUT4hx2cYHUczFJaJ9rB79RoouA5JrSsEMA2gh4W+l2+IUB+Zc00Cnp0eO2AYwR
+         vHQR0tV0o/dviBSGs3cNKUjS0qvJDgwmK7OkNuigiIG/C+UWcx4E3Vb45vZnysUdzvFG
+         1gazj5Kp8hkjVG50hxR1ITJJJrmicAxagHrJ3/u1+sc3qNFdl8pE6EtqcoRPDC3VtK1i
+         ozeuv8RIuvMq6EYxPxMgiqel40GOiUN8kJV2KjTOTU+Eolmxx63QtM7arwrjvwJr1vhi
+         5r7g==
+X-Gm-Message-State: APjAAAXUJ5H8FMAuULYgRkZ17mvTgHK89Z00B5sfW02Xuqv8LBgNO7YL
+        zf6sW3m32rJoMAuhjADNvVJ5DCQTWmc=
+X-Google-Smtp-Source: APXvYqzEDofsgrRhGjMJopqapoKqYVDQxMA383pC/eyeRrBNafnOGt8zk24FhmPcdZCJL98TB18lLg==
+X-Received: by 2002:adf:a49c:: with SMTP id g28mr154072wrb.147.1551577081183;
+        Sat, 02 Mar 2019 17:38:01 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id e193sm3900005wmg.18.2019.03.02.17.38.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 02 Mar 2019 17:35:15 -0800 (PST)
+        Sat, 02 Mar 2019 17:38:00 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [PATCH 1/4] built-in rebase: no need to check out `onto` twice
-References: <pull.153.git.gitgitgadget@gmail.com>
-        <2d99429387ba63526efe233bbefe851c5d556fdc.1551367664.git.gitgitgadget@gmail.com>
-        <7b1282bf-4b94-5725-00df-2dc63eaa93f0@gmail.com>
-        <nycvar.QRO.7.76.6.1903011415220.41@tvgsbejvaqbjf.bet>
-        <22878dbe-d9f0-4737-3a49-ece695c2d0c2@gmail.com>
-Date:   Sun, 03 Mar 2019 10:35:15 +0900
-In-Reply-To: <22878dbe-d9f0-4737-3a49-ece695c2d0c2@gmail.com> (Phillip Wood's
-        message of "Fri, 1 Mar 2019 15:00:17 +0000")
-Message-ID: <xmqqef7o3fl8.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Manuel Guilamo <manuel.guilamo@publicis.com.do>,
+        git@vger.kernel.org
+Subject: Re: Prevent reset --hard from deleting everything if one doesn't have any commits yet
+References: <15568DDA-F501-48C9-A1C0-97C72C29DA23@publicis.com.do>
+        <d1b34077-1c0e-7a2a-d2c7-da013dd56cd9@kdbg.org>
+        <20190301134759.GA13402@sigill.intra.peff.net>
+Date:   Sun, 03 Mar 2019 10:38:00 +0900
+In-Reply-To: <20190301134759.GA13402@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 1 Mar 2019 08:47:59 -0500")
+Message-ID: <xmqqa7ic3fgn.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,10 +70,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Thanks for explaining, it all makes sense to me now
+> Wouldn't that mean all of the file data is available in the object
+> database? Unfortunately without an index, there's nothing to mark which
+> file was which. But `git fsck --lost-found` should copy out all of the
+> file content into .git/lost-found.
 
-It would be necessary to make sure that it all makes sense to all
-future readers.  Are they patches good enough as-is for that, or do
-they need some updates before I take a look at them to pick up?
+If we had a hierachically stored index that stores subdirectory
+contents as a tree (or some tree-like things), "fsck --lost-found"
+would have been able to recover even pathnames, but with the current
+flat index in a fresh directory without any commit, we'd get bunch
+of blobs without any clue as to where each of them goes.  It would
+be far better than nothing, but leaves room for improvement.
