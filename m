@@ -2,94 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AA7F20248
-	for <e@80x24.org>; Sun,  3 Mar 2019 01:34:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 048D720248
+	for <e@80x24.org>; Sun,  3 Mar 2019 01:35:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727136AbfCCBeH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Mar 2019 20:34:07 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56067 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726035AbfCCBeH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Mar 2019 20:34:07 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26E56135397;
-        Sat,  2 Mar 2019 20:34:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=/oSMiX2OInOvW
-        6CPc1AYtDCKswI=; b=dl7GobO6sMdWL+u3UCqJcnMEoOGJyNpYe7JVQgAZISQCN
-        zMCneeaiU+Gy9IrrLEIq9j/cjkn+u7sI59JYB/W6KhE7HFlCTz5vZLcla+fq5TJ6
-        WkhWlRatOVHogrqHBvEuZvTBZdhXSybWgQ40Y0ElfymjN90tLqf28AwFYAcOeA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=DZ43bbC
-        eUXv6wlh3ksvs3Od2IzzVsJicrx+FYpivyYHPAmovYt99nRbc/05EbalyslPbl/W
-        5sjyHmifIT3n+pDRYWmAdJ4eS3MwSTZEaXT/wNew+Ij9r5KuXuIIUnCHyGYeslGg
-        7yxNjHvTZMZxmbAPERBFgXWqcCDSrprBc0DI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1EDD6135396;
-        Sat,  2 Mar 2019 20:34:03 -0500 (EST)
-Received: from zaya.teonanacatl.net (unknown [71.173.194.225])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 99883135394;
-        Sat,  2 Mar 2019 20:34:02 -0500 (EST)
-Date:   Sat, 2 Mar 2019 20:34:00 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [BUG] completion.commands does not remove multiple commands
-Message-ID: <20190303013400.GA19806@zaya.teonanacatl.net>
-References: <20190228230506.GA20625@sigill.intra.peff.net>
- <20190301173443.16429-1-tmz@pobox.com>
- <20190301183017.GB30847@sigill.intra.peff.net>
- <20190301221551.GD31362@zaya.teonanacatl.net>
- <xmqqef7q6pm1.fsf@gitster-ct.c.googlers.com>
- <20190302024011.GF31362@zaya.teonanacatl.net>
- <20190302040704.GN19739@szeder.dev>
+        id S1727153AbfCCBfR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Mar 2019 20:35:17 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36058 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726035AbfCCBfR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Mar 2019 20:35:17 -0500
+Received: by mail-wr1-f66.google.com with SMTP id o17so1727079wrw.3
+        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:35:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ZiM5TZc4TvU9uj5R1h2Np3/F5bDN34PP+FaTXqrRzMU=;
+        b=BJB0n6MiyV7li5v94zXLmgeVTKHUzUHKq/T7UMaO16CkgU/g7q03VBtsOC6pXKG0F5
+         L3V1U8IK0uX5t9wNdgYhTpaMqdtX/vdo9vgTvDmabKO9pp19y0k7aN3U/8ZSUQDPHKJS
+         Hc95TfjYEJu/aV40++tSgW/llgs4Tq0byjTMfzzdoGj6LOcNWJmgQ5NmXfJI/jwarSxS
+         DYLX+k6vUoZ820vK3YHwNZuWp9Z9kZNIA78T2NmXgAgiLhVakbpwkksIfSsy9PfN+EOJ
+         SQYfKRZY3F3ZgZy38AuUBy6pRNxXNsL8hG0NLtnvQ0IOsdYGYCZAt6lctxkxZ5uquc25
+         nJHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZiM5TZc4TvU9uj5R1h2Np3/F5bDN34PP+FaTXqrRzMU=;
+        b=Jjizkpmcfe2FaNg0ZVlMj49wPcAWw/dmN0Ia7y5lkJ8TxPh08O7HV1FMm+JYwu8pt+
+         RzOABoh9sR7xQ+QG3u4uW305Mc2LwLYKMyCHHkrQoOaKrkzWQy26Y32XBsU+YjC/JnDG
+         zClY6KBZk6o4HyKZr97Nzj3lJ3KRJAfmpk4C8Y8d2xXxnnFmQg7gX4gVD7vLSX8kiz/a
+         4uzyMGtGIc4AEcDMe5Cc57MRU7ywScQ2opEcwFXGYBm81mRePGOkodAZj4wcQ2E/+R0U
+         yx8AH8OpPVbYFzOWPa2SVixUNA2ardFnzQaqAsEa6huhUBOvHozes1QP22KsbpDC18G7
+         e1QA==
+X-Gm-Message-State: APjAAAUkw3vXx3lfY0PpTwlY8EhOqgKQiavwksCaHppLUj+akHv/5k/d
+        0XntzTVmOUQ82oGRcolMvlo=
+X-Google-Smtp-Source: APXvYqzBWb32/5BiR48AETQvGxtW+RCUvgZX5hBt5NfLiPpfhPsgL6CRWRa/VDtXauX5lmgZY6jIqA==
+X-Received: by 2002:adf:fc49:: with SMTP id e9mr8657484wrs.2.1551576916292;
+        Sat, 02 Mar 2019 17:35:16 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id o12sm8904477wre.0.2019.03.02.17.35.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 02 Mar 2019 17:35:15 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Nazri Ramliy <ayiehere@gmail.com>
+Subject: Re: [PATCH 1/4] built-in rebase: no need to check out `onto` twice
+References: <pull.153.git.gitgitgadget@gmail.com>
+        <2d99429387ba63526efe233bbefe851c5d556fdc.1551367664.git.gitgitgadget@gmail.com>
+        <7b1282bf-4b94-5725-00df-2dc63eaa93f0@gmail.com>
+        <nycvar.QRO.7.76.6.1903011415220.41@tvgsbejvaqbjf.bet>
+        <22878dbe-d9f0-4737-3a49-ece695c2d0c2@gmail.com>
+Date:   Sun, 03 Mar 2019 10:35:15 +0900
+In-Reply-To: <22878dbe-d9f0-4737-3a49-ece695c2d0c2@gmail.com> (Phillip Wood's
+        message of "Fri, 1 Mar 2019 15:00:17 +0000")
+Message-ID: <xmqqef7o3fl8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20190302040704.GN19739@szeder.dev>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: 6D08063A-3D54-11E9-A212-DF19F34BB12D-09356542!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=E1bor wrote:
-[... lots of good history ...]
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Thanks for an excellent summary!
+> Thanks for explaining, it all makes sense to me now
 
-> Note, however, that for completeness sake, if we choose to update
-> list_cmds_by_config() to read the repo's config as well, then we
-> should also update the completion script to run $(__git
-> --list-cmds=3D...), note the two leading underscores, so in case of 'gi=
-t
-> -C over/there <TAB>' it would read 'completion.commands' from the right
-> repository.
-
-Thanks for pointing this out. I'll add that to my local
-branch for the "respect local config" case.
-
-At the moment, I think it only matters for calls where
-config is in the --list-cmds list. But since the fix Jeff
-suggested affects all --list-cmds calls, it seems prudent to
-adjust the 3-4 other uses of --list-cmds in the completion
-script.  Let me know if you see a reason not to do that.
-
-Thanks again for such a nice summary,
-
---=20
-Todd
+It would be necessary to make sure that it all makes sense to all
+future readers.  Are they patches good enough as-is for that, or do
+they need some updates before I take a look at them to pick up?
