@@ -2,98 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9599C20248
-	for <e@80x24.org>; Sun,  3 Mar 2019 19:11:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7501E20248
+	for <e@80x24.org>; Sun,  3 Mar 2019 19:20:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726599AbfCCTLw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 14:11:52 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51514 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726541AbfCCTLv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 14:11:51 -0500
-Received: by mail-wm1-f65.google.com with SMTP id n19so2617504wmi.1
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 11:11:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=olTJruIXwQiPce7hOJCVnaKZdxZ4iyqnq7lqWlZCHb0=;
-        b=dY28WVAFxgI//bbdIjy4NxXdbCfvCzEC5m/b7VGBJhBXI7RwptAy2ex/AMJjkaHTp9
-         QYiw9Fhc4AHaZBxn9rNsgJUHR2wRRAiEHFOBz3WqLrrTFOY18tp3vTanexckfnUjLtlJ
-         SVJKPuoBvKI0O6mHysHH0FZtZfZKhLbu9v8W/tGKEx9Qk/HwFJIGttGROpBnJX01DNIS
-         lXbQGU6GBHiIQQwfzSI+6niL/xutOgGk/9nsQ8JPT+zUAppN4dSLsCyojzmA9B2Lq409
-         nx9Vt9AHpxMS6C+rvX8A///HQFM3gQQ2LvHYA3gxa3UcJUqDoSYuVmDCDMS8D3u2x8hW
-         C5MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=olTJruIXwQiPce7hOJCVnaKZdxZ4iyqnq7lqWlZCHb0=;
-        b=nHT0BKAutKWCK0rE7jaMMJq1FrgpRA478ja+6DylYYC0A0lJKagtXkcZwij95rzDEX
-         Bx8/Rs0g7IHRK/g7AvW8FBth7utK4Ib4VNxNJfku1HktRbElZW04pdOeukTB1I45OQ2h
-         CXJfDCu0HNYT3zNgbcmg9mM2HCGnO/3qgKrOJgQ5NNHjh0rX5kWcE5BPqnUA0oSQYBzk
-         3uy7dqViYRC7aR57DU9YZna5Kbiuts1TjTFRNw234vwZCsaW5xAlj7pY0SFwud0e2P4/
-         +Ueg3J7bXmB2Q5+TOYDR0QVgCh2vS1tdBS7bDGxqsvrRqwPGvISqJeYOHn5SJqUyGBpF
-         5D/g==
-X-Gm-Message-State: APjAAAVl43pjp5DAhzH5Tdz31ySEY9NSvIfwyGoGVpYRgLDf+zLqK5O8
-        trgqEMbUjMiOdHFFeSsPrWM=
-X-Google-Smtp-Source: APXvYqy9K48E4F1iyG+NcPRyr3ELbeaFVyuZsPedPG0vcwnW5FfmZkVAQ7CAunaDT8w6LuqNvZdvRQ==
-X-Received: by 2002:a1c:dc8a:: with SMTP id t132mr9876323wmg.48.1551640310114;
-        Sun, 03 Mar 2019 11:11:50 -0800 (PST)
-Received: from [192.168.2.201] (host-92-22-20-26.as13285.net. [92.22.20.26])
-        by smtp.googlemail.com with ESMTPSA id o12sm17074693wre.0.2019.03.03.11.11.48
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Mar 2019 11:11:49 -0800 (PST)
-Subject: Re: [PATCH 1/4] built-in rebase: no need to check out `onto` twice
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nazri Ramliy <ayiehere@gmail.com>
-References: <pull.153.git.gitgitgadget@gmail.com>
- <2d99429387ba63526efe233bbefe851c5d556fdc.1551367664.git.gitgitgadget@gmail.com>
- <7b1282bf-4b94-5725-00df-2dc63eaa93f0@gmail.com>
- <nycvar.QRO.7.76.6.1903011415220.41@tvgsbejvaqbjf.bet>
- <22878dbe-d9f0-4737-3a49-ece695c2d0c2@gmail.com>
- <xmqqef7o3fl8.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <f38ebc4c-f0a6-c57b-1d0e-8208ff638a73@gmail.com>
-Date:   Sun, 3 Mar 2019 19:11:48 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        id S1726607AbfCCTUu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 14:20:50 -0500
+Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:28462
+        "EHLO mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726505AbfCCTUu (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 3 Mar 2019 14:20:50 -0500
+X-IronPort-AV: E=Sophos;i="5.58,437,1544482800"; 
+   d="scan'208";a="297933401"
+Received: from zcs-store5.inria.fr ([128.93.142.32])
+  by mail3-relais-sop.national.inria.fr with ESMTP; 03 Mar 2019 20:20:46 +0100
+Date:   Sun, 3 Mar 2019 20:20:46 +0100 (CET)
+From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
+To:     corentin bompard <corentin.bompard@etu.univ-lyon1.fr>
+Cc:     git <git@vger.kernel.org>,
+        nathan berbezier <nathan.berbezier@etu.univ-lyon1.fr>,
+        pablo chabanne <pablo.chabanne@etu.univ-lyon1.fr>
+Message-ID: <1990905128.10960364.1551640846345.JavaMail.zimbra@inria.fr>
+In-Reply-To: <ddf8692759de4bc28f8d49dfec939805@BPMBX2013-01.univ-lyon1.fr>
+References: <ddf8692759de4bc28f8d49dfec939805@BPMBX2013-01.univ-lyon1.fr>
+Subject: Re: [PATCH v2] doc: format pathnames and URLs as monospace
 MIME-Version: 1.0
-In-Reply-To: <xmqqef7o3fl8.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [91.68.56.209]
+X-Mailer: Zimbra 8.7.11_GA_3706 (ZimbraWebClient - FF65 (Linux)/8.7.11_GA_3706)
+Thread-Topic: format pathnames and URLs as monospace
+Thread-Index: AQHU0d/ZAiGHCVrojk+Hv1N5xbW3hirNOSG/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+"corentin bompard" <corentin.bompard@etu.univ-lyon1.fr> wrote:
 
-On 03/03/2019 01:35, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+> Updating the documentation to use monospace on URLs and pathnames because it
+> makes more sense
+
+We usually write commit message with an imperative tone, eg. "Update
+documentation", not "Updating documentation". Also, the period (.) is
+missing at the end of the sentence and the message is not wrapped at
+72 characters (your text editor probably can do that for you; with
+Emacs it's M-q or M-x auto-fill-mode RET).
+
+But more importantly, "makes more sense" is the question here, not an
+answer. The commit message is precisely here to justify why the code
+after the patch makes more sense than before, and you can't argue "it
+makes more sense because it makes more sense".
+
+Among the arguments:
+
+* It is already an established practice. For example:
+
+  $ git grep "'[^' ]*/[^' ]*'" | wc -l
+  204
+  $ git grep '`[^` ]*/[^` ]*`' | wc -l
+  576
+  
+  There are false on both sides, but after a cursory look at the
+  output of both, I don't think the false positive rate is really
+  higher in the second case.
+
+  At least, this shows that the existing documentation uses inconsistent
+  formatting, and that it would be good to do something about it.
+
+* It may be debatable whether path names need to be typed in
+  monospace (I wouldn't be shocked if they were using the normal
+  font), but having them in italics is really unusual.
+
+In addition to doing the actual change, you probably want to add a
+mention of the rule followed in Documentation/CodingGuideline.
+
+The patch itself looks good, except the error noted by Eric Sunshine
+and:
+
+> --- a/Documentation/git-filter-branch.txt
+> +++ b/Documentation/git-filter-branch.txt
+> @@ -48,7 +48,7 @@ rewriting published history.)
 > 
->> Thanks for explaining, it all makes sense to me now
+> Always verify that the rewritten version is correct: The original refs,
+> if different from the rewritten ones, will be stored in the namespace
+> -'refs/original/'.
+> +`refs/original/`.
 > 
-> It would be necessary to make sure that it all makes sense to all
-> future readers.  Are they patches good enough as-is for that, or do
-> they need some updates before I take a look at them to pick up?
+> Note that since this operation is very I/O expensive, it might
+> be a good idea to redirect the temporary directory off-disk with the
+[...]
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index 023ca95e7..9848d0d84 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -524,7 +524,7 @@ The most notable example is `HEAD`.
+> [[def_remote_tracking_branch]]remote-tracking branch::
+> 	A <<def_ref,ref>> that is used to follow changes from another
+> 	<<def_repository,repository>>. It typically looks like
+> -	'refs/remotes/foo/bar' (indicating that it tracks a branch named
+> +	`refs/remotes/foo/bar` (indicating that it tracks a branch named
+> 	'bar' in a remote named 'foo'), and matches the right-hand-side of
+> 	a configured fetch <<def_refspec,refspec>>. A remote-tracking
+> 	branch should not contain direct modifications or have local
+> @@ -654,7 +654,7 @@ The most notable example is `HEAD`.
+> 	The default <<def_branch,branch>> that is merged into the branch in
+> 	question (or the branch in question is rebased onto). It is configured
+> 	via branch.<name>.remote and branch.<name>.merge. If the upstream branch
+> -	of 'A' is 'origin/B' sometimes we say "'A' is tracking 'origin/B'".
+> +	of 'A' is `origin/B` sometimes we say "'A' is tracking `origin/B`".
 > 
+> [[def_working_tree]]working tree::
+> 	The tree of actual checked out files.  The working tree normally
+[...]
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> index 72daa20e7..92b1d5638 100644
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -23,27 +23,27 @@ characters and to avoid word splitting.
+>   followed by a dash and a number of commits, followed by a dash, a
+>   'g', and an abbreviated object name.
+> 
+> -'<refname>', e.g. 'master', 'heads/master', 'refs/heads/master'::
+> +'<refname>', e.g. 'master', `heads/master`, `refs/heads/master`::
 
-I've just re-read them and I think they're fine as is, though the first
- paragraph of the first commit message might be clearer if "HEAD was an
-ancestor and" was changed to "HEAD was an ancestor of onto and".
+These are refnames, and you said you excluded them from the patch.
 
-Best Wishes
-
-Phillip
-
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
