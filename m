@@ -2,239 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E99D20248
-	for <e@80x24.org>; Sun,  3 Mar 2019 16:05:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABD7B20248
+	for <e@80x24.org>; Sun,  3 Mar 2019 16:12:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726383AbfCCQFF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 11:05:05 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35837 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726377AbfCCQFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 11:05:04 -0500
-Received: by mail-wr1-f65.google.com with SMTP id t18so2855812wrx.2
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 08:05:03 -0800 (PST)
+        id S1726449AbfCCQM5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 11:12:57 -0500
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:33954 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726411AbfCCQM5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 11:12:57 -0500
+Received: by mail-wr1-f52.google.com with SMTP id f14so2864892wrg.1
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 08:12:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=y3JLNTtUQLI3N/PYFsbkiO+3+pyBfW6+sBRJjNUCsgc=;
-        b=cjNIgMyhK58mdFDbIyFS0mTZJ8ikl0l4k3wEYpCkbBENZfF3FlaWOq5TCr/WKWRbGV
-         VJffPf+t2nn0hOMzkv2+7+gPl/hqOGq/PxbjJlu/mem3pp+JMZkAzKtv+ZLujeMu+SA7
-         7AjiujedDoldbZXHJLuwIvOBACrnk2Ssd8CF2ODdnO8XsqkiJZZoNDF8UzjOmQ9KWmq6
-         EfVaE4HJM6wKldNE59VCeES0nMU+fhiTtf83MywZKoJFNVBelwIxBWjr4Tx/NzKt1n+V
-         JjXPdUT/XTUw8AUfIBwQi3L6VhiHgTfsZBV/Xk+pmo4cKeNg3/zEHRl8S9WOrVv0vBCV
-         a59A==
+         :content-disposition:in-reply-to:user-agent;
+        bh=P3nDHymAboMUxxUkgcj+zxLWYKBG2SO7XpylI2uiOn4=;
+        b=ZA6D0+XbVSjmFvWwLv3I1q7Outx6RaQgCDNEPKsFCiF4nVfUjzyuKGqe7OzAyswdAQ
+         L1aYfjyCpZDlOIybiggLSFBOgyCPw0F7dxsSjsMZXyfwZnDp6YGyEhd2xEmT2DReuVnR
+         j8zjhIWAAQNli1ars31VAvIZ28s2U/JuigbpEWIu1I6XkS2k7DnHpiCIlPsVX+QweUVQ
+         As86kwi/5mqtmMDdYDwflDgU8z6mQQzC2gyZTIiFB1i+hOZIjDxwk0N2GKRsiCcS5WhR
+         WRAfmVxv+u+HYB9YYmQUwl04mwVpIJaM6jlDvSQIszltV04Wxt21P3OQSJRL4c4fYm+9
+         c14w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=y3JLNTtUQLI3N/PYFsbkiO+3+pyBfW6+sBRJjNUCsgc=;
-        b=VBXcFXqkWjO0DMnSPn4JB80XDft1+Vtppz49K8+x4LlYXlaygAV8xL2xcnwVBhIFL7
-         oAD4LtVW9qRX3GnFBqvt28BicDhFxLek5cyqIjwnXN72nZM0oa0P58uyNqKSBkJq65VK
-         f2xBxA96geVkqonbBZRKCx0Nc06E4rQ+zpJ9sf3CFh8dvvaREnJFeaiy7Ldsn5sHJmXM
-         NZvEb8RAZGERJ35Em+0wnW0d/0Ofq6E31M6NO0XyItIsJBo/VYA6xb0vYqnarxLnh0/Q
-         P7HLvQcayNENLmmISw688RQJOEVEqglkzspIhbd6QLKePefrILGVw8YeZPOYCDbzaSwC
-         auuw==
-X-Gm-Message-State: APjAAAXIVKDvDgEeGzzmQ7JPU5H9h9ljeSXpweXtaq56Nk2DSQwkIMma
-        EdTwLjpKroFu7dDjhP26ORc=
-X-Google-Smtp-Source: APXvYqyQh1CaSPrgf9c9Iky38fLv6zVOUzobfofpV1BRxI01J33ytE46XkyPjG8DHu17jw43F2tffA==
-X-Received: by 2002:adf:f28f:: with SMTP id k15mr10238422wro.272.1551629102557;
-        Sun, 03 Mar 2019 08:05:02 -0800 (PST)
-Received: from szeder.dev (x4dbe14c7.dyn.telefonica.de. [77.190.20.199])
-        by smtp.gmail.com with ESMTPSA id s5sm15066147wra.77.2019.03.03.08.05.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Mar 2019 08:05:01 -0800 (PST)
-Date:   Sun, 3 Mar 2019 17:04:59 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: Re: Do test-path_is_{file,dir,exists} make sense anymore with -x?
-Message-ID: <20190303160459.GB28939@szeder.dev>
-References: <pull.152.git.gitgitgadget@gmail.com>
- <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
- <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com>
- <87sgwav8cp.fsf@evledraar.gmail.com>
- <20190226170400.GC19739@szeder.dev>
- <20190226174316.GD19606@sigill.intra.peff.net>
- <20190226193912.GD19739@szeder.dev>
- <20190226210101.GA27914@sigill.intra.peff.net>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=P3nDHymAboMUxxUkgcj+zxLWYKBG2SO7XpylI2uiOn4=;
+        b=EO4OVBFBXIxHme0EErXpwea3udQ/oIO2O22QIYREwp7ByLpYNOAGve8mou09rLorwj
+         h8Y/Y+X88M+NWsr3iPlMJlkOrAmaPAqAvIxmO+Pnsd9ZIXQ/wazsBb92KovEF15b3+Tl
+         56o7efqERLEVGmEP4uMm5I27XaXD9e3cFiLgYBDJAqq0oeuq/fr1kubTvtNBYXZ97qCW
+         CAlVevEMwlwJ3tC1wpeAc++Lc3dHN7yvituoNcyDnApR3AF1HOfdGV36xfEglb6X4bJe
+         XWFn5x3T8c22dAOO1DuLSNhJ5zyNKyVYPLa3hvuUSMcy0FSa2UkswMhqS/WYpmc9Soow
+         nVHA==
+X-Gm-Message-State: APjAAAXghSajaqfDgfdYHAjJ0Y9UWH7B3OVc3QE4/A3flmtAHDxNatHw
+        741g1MvuIP13rRSojqfQyPY=
+X-Google-Smtp-Source: APXvYqzNJyklkmEq4+Zd2iUS0psvchaO+sGtXi8FBbdZxFbAIulaplnFUo0yXaiRpkDtsfmXKwK5Ow==
+X-Received: by 2002:a5d:54cc:: with SMTP id x12mr9640685wrv.323.1551629574996;
+        Sun, 03 Mar 2019 08:12:54 -0800 (PST)
+Received: from localhost ([95.149.189.205])
+        by smtp.gmail.com with ESMTPSA id o127sm6463843wmo.20.2019.03.03.08.12.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 03 Mar 2019 08:12:53 -0800 (PST)
+Date:   Sun, 3 Mar 2019 16:12:53 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        git <git@vger.kernel.org>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: Questions on GSoC 2019 Ideas
+Message-ID: <20190303161253.GW6085@hank.intra.tgummerer.com>
+References: <CAHd-oW7onvn4ugEjXzAX_OSVEfCboH3-FnGR00dU8iaoc+b8=Q@mail.gmail.com>
+ <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
+ <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
+ <20190302150900.GU6085@hank.intra.tgummerer.com>
+ <CACsJy8COJg4jGRKFwyi5Fc374To8Z3g3wHx+SD7zQTL5m-TbCg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190226210101.GA27914@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CACsJy8COJg4jGRKFwyi5Fc374To8Z3g3wHx+SD7zQTL5m-TbCg@mail.gmail.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 26, 2019 at 04:01:01PM -0500, Jeff King wrote:
-> On Tue, Feb 26, 2019 at 08:39:12PM +0100, SZEDER Gábor wrote:
+On 03/03, Duy Nguyen wrote:
+> On Sat, Mar 2, 2019 at 10:09 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > I'm not very familiar with what's required here, but reading the above
+> > makes me think it's likely too much for a GSoC project.  I think I'd
+> > be happy with a project that declares removing the global variables as
+> > the main goal, and adding parallelism as a potential bonus.
+> >
+> > I'm a bit wary of a too large proposal here, as we've historically
+> > overestimated what kind of project is achievable over a summer (I've
+> > been there myself, as my GSoC project was also more than I was able to
+> > do in a summer :)).  I'd rather have a project whose goal is rather
+> > small and can be expanded later, than having something that could
+> > potentially take more than 3 months, where the student (or their
+> > mentors) have to finish it after GSoC.
 > 
-> > > > I didn't find this to be an issue, but because of functions like
-> > > > 'test_seq' and 'test_must_fail' I've thought about suppressing '-x'
-> > > > output for test helpers (haven't actually done anything about it,
-> > > > though).
+> This is why I'm not involved in GSoC. I often mis-estimate the size of
+> work (and yes I would still like your tree-based index format in,
+> can't remember why it never made it).
 
-> > There are a couple of tricky cases:
-> > 
-> >   - Some test helper functions call other test helper functions, and
-> >     in those cases tracing would be enabled upon returning from the
-> >     inner helper function.  This is not an issue with e.g.
-> >     'test_might_fail' or 'test_cmp_config', because the inner helper
-> >     function is the last command anyway.  However, there is
-> >     'test_must_be_empty', 'test_dir_is_empty', 'test_config',
-> >     'test_commit', etc. which call the other test helper functions
-> >     right at the start or in the middle.
+So do I, and that's why I'd like to err on the side of having smaller
+projects :)
+
+I think the main reason the tree-based index format never made it is
+that the in-core APIs were not set up to make use of the new index
+format.  I'm also still interested in getting it in, but I haven't
+found the time for looking at making the index code pluggable yet.  It
+would probably take a similar refactoring as with the refs code to get
+this done.
+
+All that said, GSoC was still a great experience for me, and I got to
+learn a ton over the summer.  But I did feel like I let the people
+that invested a lot of time in the project as well down a bit, by not
+being able to finishing the project.  And having the feeling of
+accomplishment of actually finishing a project would definitely have
+been nice to have as well.  So for those reasons I think it would be
+better for students to take on smaller projects.
+
+> So yeah if you find removing global variables (which essentially
+> identifies shared states, a prerequisite for any parallel work)
+> reasonable for GSoC, I'd say go for it.
 > 
-> Yeah, this is inherently a global flag that we're playing games with. It
-> does seem like it would be easy to get it wrong. I guess the right model
-> is considering it like a stack, like:
-> 
-> -- >8 --
-> #!/bin/sh
-> 
-> x_counter=0
-> pop_x() {
-> 	ret=$?
-> 	case "$x_counter" in
-> 	0)
-> 		echo >&2 "BUG: too many pops"
-> 		exit 1
-> 		;;
-> 	1)
-> 		x_counter=0
-> 		set -x
-> 		;;
-> 	*)
-> 		x_counter=$((x_counter - 1))
-> 		;;
-> 	esac
-> 	{ return $ret; } 2>/dev/null
-> }
-> 
-> # you _must_ call this as "{ push_x; } 2>/dev/null" to avoid polluting
-> # trace output with the push call
-> push_x() {
-> 	set +x 2>/dev/null
-> 	x_counter=$((x_counter + 1))
-> }
-> 
-> bar() {
-> 	{ push_x; } 2>/dev/null
-> 	echo in bar
-> 	pop_x
-> }
-> 
-> foo() {
-> 	{ push_x; } 2>/dev/null
-> 	echo in foo, before bar
-> 	bar
-> 	echo in foo, after bar
-> 	false
-> 	pop_x
-> }
-> 
-> set -x
-> foo
-> echo \$? is $?
-> -- 8< --
-> 
-> I wish there was a way to avoid having to do the block-and-redirect in
-> the push_x calls in each function, though.
-> 
-> I dunno. I do like the output, but this is rapidly getting complex.
-> 
-> >   - && chains in test helper functions; we must make sure that the
-> >     tracing is restored even in case of a failure.
-
-Actually, the && chain is not really an issue, because we can simply
-break the && chain at the very end:
-
-  test_func () {
-        { disable_tracing ; } 2>/dev/null 4>&2
-        do this &&
-        do that
-        restore_tracing
-  }
-
-and make restore_tracing exit with $? (like you did above in pop_x()).
-
-> Yeah, there is no "goto out" to help give a common exit point from the
-> function. You could probably do it with a wrapper, like:
-
-Yeah, the wrapper works.
-There are only a few test helper functions with multiple 'return'
-statements, and refactoring them to have a single 'return $ret' at the
-end worked, too.
-
->   foo() {
-> 	{ push_x; } 2>/dev/null
-> 	real_foo "$@"
-> 	pop_x
->   }
-> 
-> and then real_foo() is free to return however it likes. I wonder if you
-> could even wrap that up in a helper:
-> 
->   disable_function_tracing () {
-> 	# rename foo() to orig_foo(); this works in bash, but I'm not
-> 	# sure if there's a portable way to do it (and ideally one that
-> 	# wouldn't involve an extra process).
-> 	eval "real_$1 () $(declare -f $1 | tail -n +2)"
-> 
-> 	# and then install a wrapper which pushes/pops tracing
-> 	eval "$1 () { { push_x; } 2>/dev/null; real_$1 \"\$@\"; pop_x; }"
->   }
-> 
->   foo () { .... }
->   disable_function_tracing foo
-
-We can wrap all functions at once:
-
-  eval "$(declare -f \
-                test_cmp \
-                test_cmp_bin \
-                <....> \
-                write_script |
-        sed -e 's%^\([a-zA-Z0-9_]*\) ()% \
-                \1 () { \
-                        { disable_tracing; } 2>/dev/null 4>/dev/null \
-                        real_\1 \"\$@\" \
-                        restore_tracing \
-                } \
-                real_\1 ()%')"
-
-Yeah, not particularly pretty, but with the s/// command broken up
-into several lines it's not all that terrible either...  And at least
-it doesn't need extra processes for each wrapped function.
-
-We should also be careful and don't switch on tracing when returning
-from test helper functions invoked outside of tests, e.g.
-'test_create_repo' while initializing the trash directory or
-'test_set_port' while sourcing a daemon-specific lib.
-
-Alas, 'declare' is Bash-only, and I don't see any way around that.
-Bummer.
-
-
-On a mostly unrelated note, but I just noticed it while playing around
-with this: 't0000'-basic.sh' runs its internal tests with $SHELL_PATH
-instead of $TEST_SHELL_PATH.  I'm not sure whether that's right or
-wrong.
-
+> Be also aware that this kind of refactoring work could result in lots
+> of patches and it takes time to get them merged, if your GSoC goal is
+> to get merged.
+> -- 
+> Duy
