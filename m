@@ -2,349 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82B7720248
-	for <e@80x24.org>; Sun,  3 Mar 2019 20:02:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B1B820248
+	for <e@80x24.org>; Sun,  3 Mar 2019 20:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726608AbfCCUCp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 15:02:45 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:36614 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726544AbfCCUCo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 15:02:44 -0500
-Received: by mail-io1-f67.google.com with SMTP id r136so2373405iod.3
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 12:02:43 -0800 (PST)
+        id S1726604AbfCCU2L (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 15:28:11 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41497 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726512AbfCCU2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 15:28:11 -0500
+Received: by mail-wr1-f66.google.com with SMTP id n2so3297441wrw.8
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 12:28:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=3eWqwBas66t61TwloVP0oA0tYLgwTGE32iGILKmBhP0=;
-        b=H6bxJflM6KERUwCY+V/00/td//xmstbwrhXkslhRA+Abd5+k/lbtsfVgsTz2d8Etyv
-         HxRz9my5fPo6fMKWEluT7YKP52I4u79Ih8sRLQ5s33tQlQsKFKCyK6EqDJwZCWU7XFny
-         gK8BIdt9D1YKLQkIQnPA44jCF1QIzxerrNGT4AN997g6hAfkPNdP/BpEzP1GowFAmG+G
-         8smpEK5fyfBujduufLlz+XACdbVHKXb+pr2EXlI1oOvXAZyH3kWOxPeEkwm0qIs3jFej
-         rFOQ5vOUW5HS1MKWRcjr2XJRVNDfiVxLtAa1QIwkMGWIj6nItDAnQ+7bx24wvrSBp33W
-         qoWw==
+        bh=Escly71PH9yCd1kA8flOpY/OirZUejM9zqxaN06dy9c=;
+        b=ROqqcKBkUlU05RjD4X4oXUG3rrLih2jUZ5vk6T3Vnsp7nLUufnjHpwG+xnXxyen0e/
+         3OM84cqQDf5mkTBFDQJMPdD7np+0FOIFmKTaq2RMG4cKtKgrTFUIyf5BeOWznoq9HJYD
+         3Q7NMe09rKkJRVsI0OrHarM+gFAgl1v28hYy8kaP617vMXlteUYO+ucjjV64CWEbyxYa
+         EgXkaIm/2pjHIdR+/vSgLyfww/iv9ueIFyjDmuOEjrrEH/YaS1ft5/7xa+7glA7swvEL
+         FHeUuHl6HHDazpy0+tagd41jDS3FviqgeSE3jfoqPJvrmqNtGnfmTISZPB8tyvrhPR/G
+         papg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=3eWqwBas66t61TwloVP0oA0tYLgwTGE32iGILKmBhP0=;
-        b=jRgrJ4M0ST2800F/YXRTFPXis9EEZ8MXebnmv0ZSbMSQvlNyNPkr7VY8Uq3QHjMQNd
-         qiGa8a1YhtdjDP4YeXUdC8jdbzXC+ZtdvCW0SmUKYb8oL0rj+VDqJH9c3Y31TEGK7URs
-         ftK94fzrLFiY1i80AbVvL828a7sEmDI3T+gw5YrstAUc1kWt9bsYmNCxo3Hagr7qA0wO
-         WxLiSw7S4QP5Rv5YtfB5HJRWcYjOfXlnFezAUQBJ2w2AnacxpGumnfGFCgQxRKQPLxMN
-         dRxxKC9AOIzVP87JzVs354r5DImd/0QvvoTDU6kwGfNoTXDZbxIYRGO2ELkhqJtyehNK
-         CCdA==
-X-Gm-Message-State: APjAAAV/gugCk/3ndrhM5o5mKqPnA12PW9g9M8T7FjpZP6Isra1/VSAE
-        /nzqv/YcVmQ4UCdvIgm5HpVOA4EAw0k=
-X-Google-Smtp-Source: APXvYqz9g+0KxsfqnuvyU6xI4YKjdmmibbrgpLgfECKRlJ0hnnsw0pGFneZGdYGScEEhI8NFe3yG7g==
-X-Received: by 2002:a5d:8494:: with SMTP id t20mr8414729iom.232.1551643362753;
-        Sun, 03 Mar 2019 12:02:42 -0800 (PST)
-Received: from localhost.localdomain ([38.64.181.27])
-        by smtp.gmail.com with ESMTPSA id m69sm2152139itm.22.2019.03.03.12.02.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 03 Mar 2019 12:02:42 -0800 (PST)
-From:   Brandon Richardson <brandon1024.br@gmail.com>
-To:     git@vger.kernel.org
-Cc:     rybak.a.v@gmail.com, pclouds@gmail.com, peff@peff.net,
-        sunshine@sunshineco.com,
-        Brandon Richardson <brandon1024.br@gmail.com>
-Subject: [PATCH v3] commit-tree: utilize parse-options api
-Date:   Sun,  3 Mar 2019 15:02:20 -0500
-Message-Id: <20190303200220.30009-1-brandon1024.br@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=Escly71PH9yCd1kA8flOpY/OirZUejM9zqxaN06dy9c=;
+        b=SdhfJz25IMU2sJ9hJ7TxsEIyTNQhjPaJEEx29rPaHhqJUNFsH8nCq5YHvTGqXUsWjv
+         STquFmv7vLWoME1m+rvfr6pI528zmXGHXM2nWupZv36wnsUd5hKyf/dvmvp4Lqg8a/7F
+         Dx5wYV1hkjO267RyPDj6q1rDeXzs/AWmPdK3d3LiCjedI6NlF673EQVU/eOBl6fJDJca
+         CrCMA6QGIdFp5fStcQOlqMzg+hOq3sS0OMMrlKXrb3lmrjtzlgSmK6kZlepJbp38xlbd
+         A+R7mxuxqzQwHSDZDkf6ORtu43VbtY0Daere/AQDL6k/nA0iMLujifylLh6wiY7zXZ5Y
+         uzXA==
+X-Gm-Message-State: APjAAAXvLbzvhRjXJD0ONoxHuxjqLdsHeJnSZsn4Wqs4W3fIQLI4CSaI
+        03OpC1Gu92HkC0auVC9+PmAJ7J7D
+X-Google-Smtp-Source: APXvYqwgieLe+PVKpK27ui+eb8hzMomJBdwgNDMpFiPd2dfmko4T2Gl1oOeg48tRWj/VZbOA+Exyqw==
+X-Received: by 2002:adf:fc49:: with SMTP id e9mr11147325wrs.2.1551644888915;
+        Sun, 03 Mar 2019 12:28:08 -0800 (PST)
+Received: from [192.168.0.104] (atoulouse-658-1-67-51.w92-136.abo.wanadoo.fr. [92.136.29.51])
+        by smtp.gmail.com with ESMTPSA id f6sm4933287wrs.45.2019.03.03.12.28.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 03 Mar 2019 12:28:08 -0800 (PST)
+Subject: =?UTF-8?Q?Re=3a_=5bRFC_PATCH_4/4=5d_name-rev=3a_avoid_naming_from_a?=
+ =?UTF-8?Q?_ref_if_it=e2=80=99s_not_a_descendant_of_any_commit?=
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <20190301175024.17337-1-alban.gruin@gmail.com>
+ <20190301175024.17337-5-alban.gruin@gmail.com>
+ <CAP8UFD1HBbOX7wS664vBT8mxjGUJ4rtWYYJJX9RQqhN20-T8uA@mail.gmail.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <10fa15ee-a6f4-805b-bae3-14ea8c50c048@gmail.com>
+Date:   Sun, 3 Mar 2019 21:27:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
+In-Reply-To: <CAP8UFD1HBbOX7wS664vBT8mxjGUJ4rtWYYJJX9RQqhN20-T8uA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rather than parse options manually, which is both difficult to
-read and error prone, parse options supplied to commit-tree
-using the parse-options api.
+Hi Christian,
 
-It was discovered that the --no-gpg-sign option was documented
-but not implemented in commit 70ddbd7767 (commit-tree: add missing
---gpg-sign flag, 2019-01-19), and the existing implementation
-would attempt to translate the option as a tree oid. It was also
-suggested earlier in commit 55ca3f99ae (commit-tree: add and document
---no-gpg-sign, 2013-12-13) that commit-tree should be migrated to
-utilize the parse-options api, which could help prevent mistakes
-like this in the future. Hence this change.
+Le 03/03/2019 à 20:33, Christian Couder a écrit :
+> On Fri, Mar 1, 2019 at 7:11 PM Alban Gruin <alban.gruin@gmail.com> wrote:
+>>
+>> A ref may not be the descendant of all of the commits mentionned in
+>> stdin.  In this case, we want to avoid naming its parents.
+> 
+> Properly speaking a ref usually just points to a commit. It is not a
+> parent or a descendant of any commit.
+> 
+> Also if the commit, let's call it C, pointed to by a ref isn't a
+> descendant of a commit, let's call it C', mentioned on stdin, then C'
+> isn't a parent of C, though I think we want to avoid naming C' from
+> the ref.
+> 
+> I think it might be clearer with something like:
+> 
+> "The commit, let's call it C, pointed to by a ref may not be a
+> descendant of all the commits mentioned on stdin. In this case we want
+> to avoid naming the commits mentioned on stdin that are not parents of
+> C using the ref."
+> 
+> Or is there something I misunderstood?
+> 
 
-Signed-off-by: Brandon Richardson <brandon1024.br@gmail.com>
----
+It’s almost this.  We do want to name *all* of the commits mentionned in
+stdin, as far as possible.  We also want to lower the amount of memory
+allocation, and one of the possibilities is to avoid traversing the tree
+from a commit pointed to by a ref if none of its parents are mentionned
+in stdin.
 
-Notes:
-    GitHub Pull Request: https://github.com/brandon1024/git/pull/3
-    Travis CI Build: https://travis-ci.com/brandon1024/git/builds/102953064
-
- Documentation/git-commit-tree.txt |   8 +-
- builtin/commit-tree.c             | 159 ++++++++++++++++--------------
- parse-options.h                   |  11 +++
- 3 files changed, 104 insertions(+), 74 deletions(-)
-
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index 002dae625e..f4e20b62a0 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -23,6 +23,9 @@ Creates a new commit object based on the provided tree object and
- emits the new commit object id on stdout. The log message is read
- from the standard input, unless `-m` or `-F` options are given.
- 
-+When mixing `-m` and `-F` options, the commit log message will be
-+composed in the order in which the options are given.
-+
- A commit object may have any number of parents. With exactly one
- parent, it is an ordinary commit. Having more than one parent makes
- the commit a merge between several lines of history. Initial (root)
-@@ -41,7 +44,7 @@ state was.
- OPTIONS
- -------
- <tree>::
--	An existing tree object
-+	An existing tree object.
- 
- -p <parent>::
- 	Each `-p` indicates the id of a parent commit object.
-@@ -52,7 +55,8 @@ OPTIONS
- 
- -F <file>::
- 	Read the commit log message from the given file. Use `-` to read
--	from the standard input.
-+	from the standard input. This can be given more than once and the
-+	content of each file becomes its own paragraph.
- 
- -S[<keyid>]::
- --gpg-sign[=<keyid>]::
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 12cc403bd7..d4a911acf5 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -12,8 +12,14 @@
- #include "builtin.h"
- #include "utf8.h"
- #include "gpg-interface.h"
-+#include "parse-options.h"
-+#include "string-list.h"
- 
--static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-S[<keyid>]] [-m <message>] [-F <file>] <sha1>";
-+static const char * const commit_tree_usage[] = {
-+	N_("git commit-tree [(-p <parent>)...] [-S[<keyid>]] [(-m <message>)...] "
-+		"[(-F <file>)...] <tree>"),
-+	NULL
-+};
- 
- static const char *sign_commit;
- 
-@@ -23,7 +29,7 @@ static void new_parent(struct commit *parent, struct commit_list **parents_p)
- 	struct commit_list *parents;
- 	for (parents = *parents_p; parents; parents = parents->next) {
- 		if (parents->item == parent) {
--			error("duplicate parent %s ignored", oid_to_hex(oid));
-+			error(_("duplicate parent %s ignored"), oid_to_hex(oid));
- 			return;
- 		}
- 		parents_p = &parents->next;
-@@ -39,91 +45,100 @@ static int commit_tree_config(const char *var, const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
- 
-+static int parse_parent_arg_callback(const struct option *opt,
-+		const char *arg, int unset)
-+{
-+	struct object_id oid;
-+	struct commit_list **parents = opt->value;
-+
-+	BUG_ON_OPT_NEG_NOARG(unset, arg);
-+
-+	if (get_oid_commit(arg, &oid))
-+		die(_("not a valid object name %s"), arg);
-+
-+	assert_oid_type(&oid, OBJ_COMMIT);
-+	new_parent(lookup_commit(the_repository, &oid), parents);
-+	return 0;
-+}
-+
-+static int parse_message_arg_callback(const struct option *opt,
-+		const char *arg, int unset)
-+{
-+	struct strbuf *buf = opt->value;
-+
-+	BUG_ON_OPT_NEG_NOARG(unset, arg);
-+
-+	if (buf->len)
-+		strbuf_addch(buf, '\n');
-+	strbuf_addstr(buf, arg);
-+	strbuf_complete_line(buf);
-+
-+	return 0;
-+}
-+
-+static int parse_file_arg_callback(const struct option *opt,
-+		const char *arg, int unset)
-+{
-+	int fd;
-+	struct strbuf *buf = opt->value;
-+
-+	BUG_ON_OPT_NEG_NOARG(unset, arg);
-+
-+	if (buf->len)
-+		strbuf_addch(buf, '\n');
-+	if (!strcmp(arg, "-"))
-+		fd = 0;
-+	else {
-+		fd = open(arg, O_RDONLY);
-+		if (fd < 0)
-+			die_errno(_("git commit-tree: failed to open '%s'"), arg);
-+	}
-+	if (strbuf_read(buf, fd, 0) < 0)
-+		die_errno(_("git commit-tree: failed to read '%s'"), arg);
-+	if (fd && close(fd))
-+		die_errno(_("git commit-tree: failed to close '%s'"), arg);
-+
-+	return 0;
-+}
-+
- int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- {
--	int i, got_tree = 0;
-+	static struct strbuf buffer = STRBUF_INIT;
- 	struct commit_list *parents = NULL;
- 	struct object_id tree_oid;
- 	struct object_id commit_oid;
--	struct strbuf buffer = STRBUF_INIT;
-+
-+	struct option options[] = {
-+		{ OPTION_CALLBACK, 'p', NULL, &parents, N_("parent"),
-+			N_("id of a parent commit object"), PARSE_OPT_NONEG,
-+			parse_parent_arg_callback },
-+		{ OPTION_CALLBACK, 'm', NULL, &buffer, N_("message"),
-+			N_("commit message"), PARSE_OPT_NONEG,
-+			parse_message_arg_callback },
-+		{ OPTION_CALLBACK, 'F', NULL, &buffer, N_("file"),
-+			N_("read commit log message from file"), PARSE_OPT_NONEG,
-+			parse_file_arg_callback },
-+		{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
-+			N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
-+		OPT_END()
-+	};
- 
- 	git_config(commit_tree_config, NULL);
- 
- 	if (argc < 2 || !strcmp(argv[1], "-h"))
--		usage(commit_tree_usage);
--
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
--		if (!strcmp(arg, "-p")) {
--			struct object_id oid;
--			if (argc <= ++i)
--				usage(commit_tree_usage);
--			if (get_oid_commit(argv[i], &oid))
--				die("Not a valid object name %s", argv[i]);
--			assert_oid_type(&oid, OBJ_COMMIT);
--			new_parent(lookup_commit(the_repository, &oid),
--						 &parents);
--			continue;
--		}
-+		usage_with_options(commit_tree_usage, options);
- 
--		if (!strcmp(arg, "--gpg-sign")) {
--		    sign_commit = "";
--		    continue;
--		}
-+	argc = parse_options(argc, argv, prefix, options, commit_tree_usage, 0);
- 
--		if (skip_prefix(arg, "-S", &sign_commit) ||
--			skip_prefix(arg, "--gpg-sign=", &sign_commit))
--			continue;
-+	if (argc != 1)
-+		die(_("must give exactly one tree"));
- 
--		if (!strcmp(arg, "--no-gpg-sign")) {
--			sign_commit = NULL;
--			continue;
--		}
--
--		if (!strcmp(arg, "-m")) {
--			if (argc <= ++i)
--				usage(commit_tree_usage);
--			if (buffer.len)
--				strbuf_addch(&buffer, '\n');
--			strbuf_addstr(&buffer, argv[i]);
--			strbuf_complete_line(&buffer);
--			continue;
--		}
--
--		if (!strcmp(arg, "-F")) {
--			int fd;
--
--			if (argc <= ++i)
--				usage(commit_tree_usage);
--			if (buffer.len)
--				strbuf_addch(&buffer, '\n');
--			if (!strcmp(argv[i], "-"))
--				fd = 0;
--			else {
--				fd = open(argv[i], O_RDONLY);
--				if (fd < 0)
--					die_errno("git commit-tree: failed to open '%s'",
--						  argv[i]);
--			}
--			if (strbuf_read(&buffer, fd, 0) < 0)
--				die_errno("git commit-tree: failed to read '%s'",
--					  argv[i]);
--			if (fd && close(fd))
--				die_errno("git commit-tree: failed to close '%s'",
--					  argv[i]);
--			continue;
--		}
--
--		if (get_oid_tree(arg, &tree_oid))
--			die("Not a valid object name %s", arg);
--		if (got_tree)
--			die("Cannot give more than one trees");
--		got_tree = 1;
--	}
-+	if (get_oid_tree(argv[0], &tree_oid))
-+		die(_("not a valid object name %s"), argv[0]);
- 
- 	if (!buffer.len) {
- 		if (strbuf_read(&buffer, 0, 0) < 0)
--			die_errno("git commit-tree: failed to read");
-+			die_errno(_("git commit-tree: failed to read"));
- 	}
- 
- 	if (commit_tree(buffer.buf, buffer.len, &tree_oid, parents, &commit_oid,
-diff --git a/parse-options.h b/parse-options.h
-index 14fe32428e..3a442eee26 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -202,6 +202,17 @@ const char *optname(const struct option *opt, int flags);
- 		BUG("option callback does not expect an argument"); \
- } while (0)
- 
-+/*
-+ * Similar to the assertions above, but checks that "arg" is always non-NULL.
-+ * This assertion also implies BUG_ON_OPT_NEG(), letting you declare both
-+ * assertions in a single line.
-+ */
-+#define BUG_ON_OPT_NEG_NOARG(unset, arg) do { \
-+	BUG_ON_OPT_NEG(unset); \
-+	if(!(arg)) \
-+		BUG("option callback expects an argument"); \
-+} while(0)
-+
- /*----- incremental advanced APIs -----*/
- 
- enum {
--- 
-2.21.0
+Cheers,
+Alban
 
