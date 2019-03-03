@@ -2,81 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC83520248
-	for <e@80x24.org>; Sun,  3 Mar 2019 13:33:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03F89202AA
+	for <e@80x24.org>; Sun,  3 Mar 2019 14:07:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726249AbfCCNdq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 08:33:46 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51844 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726186AbfCCNdq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 08:33:46 -0500
-Received: by mail-wm1-f67.google.com with SMTP id n19so2150533wmi.1
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 05:33:45 -0800 (PST)
+        id S1726285AbfCCOHn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 09:07:43 -0500
+Received: from mail-pg1-f173.google.com ([209.85.215.173]:41835 "EHLO
+        mail-pg1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726186AbfCCOHn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 09:07:43 -0500
+Received: by mail-pg1-f173.google.com with SMTP id k11so259408pgb.8
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 06:07:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=OdGI3RMgw5oe1KkNn7e95Ogah2I0xw8hCVpcMbBxSh4=;
-        b=JQWbq1NpLsVSAAQD1oJIj59nyM4teZwewlVHdw2aiFW/hKzaJ9dWsmsIglaMklZqip
-         BhwfNDe3HBgAZ67daJvqgSrp9b9aTWGvWiql6KxD1qGiueoOqMvHi7mwEfkQblyf3/pd
-         O9oOuGge/PFFfbzlxINnS5TZbWWblJA2ZjaW9AGBWbyLA7gfpshdCRNhtEQZbTFrCk7M
-         nI0lLrCJRphua+0AT+bQushhq5qFyHpZvEskXQNi+OArVIhwFO9AE4sI3zskL87hrhaN
-         gPyNBlZt93sgyG7oOxKLWsKo2D1/VhCkO4dN8Ol1Hvf1HQ46hbV+Mao3OsSBvWkWQzU0
-         XhSA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=NtURRQ6YsxgJR+VcC7zsKqoO5/eug9Bt2pNF6S7si28=;
+        b=c9MUdyhTyaMx9CylzNkWapuMjhQLlucjInglCk3ZG+MEK/TMAzowUMPOj9wX+ME9wo
+         Xn7cnePxh+TjGcJvMo15L6IEooytzeFgJus6YjLFIAlhAdnIjiz6LNbl3YGgpIu3Nvpu
+         QRGxGBrQBlFcNh2GZCEGmanzHkbP9RhrCcMIUJce//eqnplonZZuMiT27Mh+iynmLkLk
+         bhho8bcGFeiYq5ltZQWOrty2l6txH9ZRplYYQXrqB51PrhKguvd00f+f47cR13+lK9T2
+         Y6vtLia3uwygTH2oxkE/DQjoOO2cPdxF+MLyryJjOxKnbnQIVgU7g1aIePNwKVIBRDLO
+         RgXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=OdGI3RMgw5oe1KkNn7e95Ogah2I0xw8hCVpcMbBxSh4=;
-        b=aS56mWk3QZ45gG2UT2+SY6x6B9o24ibbRswqXZ0n6QFw6+FZTl5rjU1p40HZVlspom
-         UqJ74wPj0uoLULj28+qF9m1QAwP3279uHKB5O1/9Zj02MF6uA4Xo7ibZqRDTW877cPZ+
-         NzQAzAHstl3fdSuBFYIiP7Wf28OK+mGknI/qvIbNms8GZrh2A7WOHy/wH42iIQgA+1uo
-         Et/gde04MSQyt91YhyFW65FuNA2dccihjgvC5ftFXP4gu4gyYJdWoNbG7PX/J7lFFmhM
-         DbdFNco9qV8x+VSVcmwXbr9sPyMi10FPkU6RzvX73MyZltq4mEJMsBxCAtCMYDvdqcxE
-         rHzA==
-X-Gm-Message-State: APjAAAVCD3qrYHSd9Lem26GPpGSh2nGjAA547UdM74q9TPpRRE3gznwC
-        Aqx/gA1oGK02H1HrEg6NQkA=
-X-Google-Smtp-Source: AHgI3IY7sKcrp4dqKR42YzidQWl0oyX1Sh39IMJqblISlxVNvChI2GHJywaGNXHtkxVhI0GQ147qNw==
-X-Received: by 2002:a7b:c0d5:: with SMTP id s21mr9197175wmh.153.1551620024076;
-        Sun, 03 Mar 2019 05:33:44 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x11sm9712937wrt.27.2019.03.03.05.33.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Mar 2019 05:33:43 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=NtURRQ6YsxgJR+VcC7zsKqoO5/eug9Bt2pNF6S7si28=;
+        b=ZiLMvHR+B44ponOwp92mGjgTpTEIxwp3jp+TtIdPv9gjfbMObqNU2can3yaT/x2o00
+         tf1gWyFYadFnvVO+nsYlg/ZyR9eKho3g4H3+FsZZa42l3013p9tiWtKe54Oh78pjFbbW
+         /r0ccWCbJ/z/9WJEBxk/799rutR4bGkXsuLEcs1NE01f+SXVjEryFQnlhnN5pi8/pdbN
+         9Hgqkl3Tn7qHEDc6kVmFxSqqvb9IjPdfXrDRpP2zCm3NLfqi4MeDDwDtVS5jdQFFYLO8
+         UuEoJbQKrvUWzeeDL/ANm+9X0Jk6Mlbw2RbujT4v9yzmd5PUSafXAogpYZ/5AflCgn0R
+         kc8Q==
+X-Gm-Message-State: APjAAAVuRUfrVx0cda6RszUgC/gms+z3xPz8bci3xG427r3zVqQMlF5x
+        gJhAv2fGDuyaRRu1hwyvUdo=
+X-Google-Smtp-Source: APXvYqyav7twsX85q4p8o0KEzaYsYir9dc4bbvOGO2fuJ57Q+0DWuBEIDNARm82pN8vbQK+COvSFww==
+X-Received: by 2002:a63:e447:: with SMTP id i7mr13924847pgk.70.1551622062563;
+        Sun, 03 Mar 2019 06:07:42 -0800 (PST)
+Received: from ar135.iitr.ernet.in ([103.37.201.80])
+        by smtp.gmail.com with ESMTPSA id f65sm5241145pff.21.2019.03.03.06.07.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 03 Mar 2019 06:07:41 -0800 (PST)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     gitster@pobox.com
 Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
-        git@vger.kernel.org, t.gummerer@gmail.com
-Subject: Re: none
-References: <xmqq5zt014du.fsf@gitster-ct.c.googlers.com>
-        <20190303132900.4618-1-rohit.ashiwal265@gmail.com>
-Date:   Sun, 03 Mar 2019 22:33:43 +0900
-In-Reply-To: <20190303132900.4618-1-rohit.ashiwal265@gmail.com> (Rohit
-        Ashiwal's message of "Sun, 3 Mar 2019 18:59:00 +0530")
-Message-ID: <xmqqo96syte0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        git@vger.kernel.org, rohit.ashiwal265@gmail.com,
+        t.gummerer@gmail.com
+Subject: Clearing logic
+Date:   Sun,  3 Mar 2019 19:37:09 +0530
+Message-Id: <20190303140709.5561-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <xmqqo96syte0.fsf@gitster-ct.c.googlers.com>
+References: <xmqqo96syte0.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
+On 2019-03-03 13:33 UTC Junio C Hamano <gitster@pobox.com> wrote:
 
-> Just to be clear of what caused the error:
-> 	1. Path not being file, or
-> 	2. File not being empty
-> I am checking for both.
+> test -s <path> makes sure <path> is file; if it is not a file, then
+> it won't yield true.
 
-test -s <path> makes sure <path> is file; if it is not a file, then
-it won't yield true.
+> On 2019-03-03 13:20 UTC Rohit Ashiwal <rohit.ashiwal265@gmail.com> wrote:
+> > test_path_is_file "$1" &&
+> > 	if ! test -s "$1"
 
-So why do you need to say test_path_is_file yourself, if you are
-asking "test -s"?
+According to the conditional if the path is not a file then we will get
+the error "file does not exist" and then we will shortcircuit without checking
+the second conditional, on the other hand, if path is a file then we will
+again check if it has a size greater than zero, then error will be different
+(if any).
+
+Regards
+Rohit
+
