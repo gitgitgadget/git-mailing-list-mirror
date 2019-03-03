@@ -7,63 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9690220248
-	for <e@80x24.org>; Sun,  3 Mar 2019 01:22:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22A0720248
+	for <e@80x24.org>; Sun,  3 Mar 2019 01:22:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727079AbfCCBWM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Mar 2019 20:22:12 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36588 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726023AbfCCBWM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Mar 2019 20:22:12 -0500
-Received: by mail-wr1-f67.google.com with SMTP id o17so1715694wrw.3
-        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:22:11 -0800 (PST)
+        id S1727099AbfCCBWb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Mar 2019 20:22:31 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46660 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbfCCBWa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Mar 2019 20:22:30 -0500
+Received: by mail-wr1-f68.google.com with SMTP id i16so1688228wrs.13
+        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:22:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version;
-        bh=J409pW7LrrVqC5L36yPUKdGsHGksnehNENTo1dxZp8I=;
-        b=gYRlZUsEaYMVamRgsKB8OKTmjfuCV5Y9Xb+L93oA8ZcPNdd687pXeAQsjjo0Cp0J/L
-         9hpUkKLl1bXCzKLAYQDOvn1nWliqbeua79XPhOmNFkcnAZm211GMJK7ftZDT3p4fQyOS
-         DGtiUCmLCDnB8hMHIj9lOS6W/8icBcJIel712xr3BH8dmwTPVmgTF+cADifNuXJdntgM
-         aswUh0A7XpUc2Iz2aeIOWFpH2u/EyQZjb9207f8YEtN5Lx3iM1BE386zC7J7UCQ75/0J
-         TW4SDW1i2BFzmh3eYshsW8v0INHh1nGkj9HWOZkwKWADsJZ4KNkqsr9Me5yfL8xMXYXr
-         kH0w==
+        bh=gkakzaOatHOQ1XZtOiG1hcGdKBDkZ6wXMkUJjD0G/58=;
+        b=HisqzgqyANG6rg8KKVkPhxoPcc4Xp1WKWilCBiOfTbn6loIF/fWjdcsKXZksLAtBOq
+         2azkj8YfP6sYAkFy5iaYlSpv/KqV+853O5/9hW5bTPNfky25ZEWv+6VpRPt4uauPGwFV
+         79lYVGnjmnTshBmTT20Qq7ncBmhYn8bMeQxLxHSRqf85cK8H51X3ErEw8e9R9cXk65FX
+         fxc1O0saifWRse5JnZC/1qu+JzMc2beVLYczrI4lBESzLB2cu2npsPNlL1WNzX7QVP8D
+         GFfjKHxUQJoIYQvixfA9Yu73C+qH0lE9cbYFxDXma8IWpxwbi1r3zlwFxtO1kEYHX969
+         x5OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version;
-        bh=J409pW7LrrVqC5L36yPUKdGsHGksnehNENTo1dxZp8I=;
-        b=dV1Nve09AnRCTHMcZst6RKePEP5n5yGFfrLpR/xcyLb073VfmwRDYvEh+DinTja9gX
-         aK43WfCVOcwNEnYT8pcKav0X/Vox0QpUW3L7qF6XUSLGEyIeYiQItCf6pftPGrvUbaBO
-         CkzfZ3V9hwP4JDRCit+fckYgXHCBcl0OHFRPh4vOFSV50b4WubcThWA8M6LmPcBdXNyU
-         bGvOQ4QTyVN95LNgKiwVBsGCqpYbPkHlwqiqYt9zMOkBms1RSDNavODiieUcX1UlxrUi
-         x5c4YUgIR/0u9oWGproqk4cB0AlFcnMvvWbfponZJOy4o890/UyKB3Xof0+M8cUkaU1x
-         J5/A==
-X-Gm-Message-State: APjAAAXk3SXk/VAbQxpjnlaz5rKSO6Am5mHdxIaoodg3o5qfQSN17Ftl
-        SBJHMdHkq0yXARgCZCmEHYY=
-X-Google-Smtp-Source: APXvYqxlJAvWZxYKsLtyAR35lUxAthax9dIcd7er1kOm94UvUVns9Y4A+ULiviqc0ES/YpIIEtMBeA==
-X-Received: by 2002:adf:fd07:: with SMTP id e7mr8705082wrr.175.1551576130123;
-        Sat, 02 Mar 2019 17:22:10 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x6sm3476626wmg.0.2019.03.02.17.22.09
+        bh=gkakzaOatHOQ1XZtOiG1hcGdKBDkZ6wXMkUJjD0G/58=;
+        b=kw8MmdNqR9pwMG0zRLR2YiS0pewIXOhCSGCgdJpYIIGWKSBGYxbLZ8AktRaqhu7Ft1
+         KYJSRo4A+8dTtamnK6WeeRC+s99RNRHGXgpMu7bnQ4yvLu5RLVPoLKeqb2o4NG7ZGpLm
+         5bUwJkvun8Ae+RbcGr6BfQcpgNDLOEm4rQcnDTHE0FIlNuViXI8eIAteby0igm05Firz
+         Btr+RgAZTkuqmxkqCFnN1l1C6IGh2yqFxVmA0oFWUgSbhZrbTbOiiV5kxXOZmzWlkKeo
+         Dbmf0iYBfF+0bjV2O8fYLzZDXl94pdMWAkLAv/YreNkU5MXwYsdebgu5EDV3z4y1NrkZ
+         1MQQ==
+X-Gm-Message-State: APjAAAXwWk1dAxXqZF3Q1U35pKhmW7Kg62YvqyIDDHeB78PZ8FqWvn/+
+        FIundhJqcyFqp4z+m6T7lyyodZe+va0=
+X-Google-Smtp-Source: APXvYqxf0kt04adlEOPawrPOgBcMgL6dCTNNSyivPIFXHg0kwvnksgPdDu0I1FlQjtghPBW30M6IFA==
+X-Received: by 2002:adf:face:: with SMTP id a14mr8650585wrs.320.1551576148393;
+        Sat, 02 Mar 2019 17:22:28 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c2sm1833230wrt.93.2019.03.02.17.22.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 02 Mar 2019 17:22:09 -0800 (PST)
+        Sat, 02 Mar 2019 17:22:27 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
-        <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-        hi-angel@yandex.ru, Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v3 1/1] worktree add: sanitize worktree names
-References: <20190221121943.19778-1-pclouds@gmail.com>
-        <20190226105851.32273-1-pclouds@gmail.com>
-        <20190226105851.32273-2-pclouds@gmail.com>
-        <20190227120859.GB10305@sigill.intra.peff.net>
-        <CAPig+cRJZBvwsptPOzx3oPSOnt6+uGLoyOr_JbUnku4kdSwdgA@mail.gmail.com>
-        <20190227160457.GA30817@sigill.intra.peff.net>
-Date:   Sun, 03 Mar 2019 10:22:09 +0900
-Message-ID: <xmqqmumc4uri.fsf@gitster-ct.c.googlers.com>
+Cc:     Rusty Russell <rusty@rustcorp.com.au>, git@vger.kernel.org,
+        Joel Stanley <joel@jms.id.au>
+Subject: Re: `git status -u no` suppresses modified files too.
+References: <87y36rcanq.fsf@rustcorp.com.au>
+        <20190208024800.GA11392@sigill.intra.peff.net>
+Date:   Sun, 03 Mar 2019 10:22:27 +0900
+Message-ID: <xmqqfts44ur0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,14 +68,74 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> I agree that sanitize_refname_format() would be nice, but I'm pretty
-> sure it's going to end up having to duplicate many of the rules from
-> check_refname_format(). Which is ugly if the two ever get out of sync.
+> This is a pretty horrible UI trap. Most of the time with pathspecs we
+> require them to be on the right-hand side of a "--" unless the paths
+> actually exist in the filesystem. But then, in most of those cases we're
+> making sure they're not ambiguous between revisions and paths. So maybe
+> it's overkill here. I dunno. But the patch below certainly makes what's
+> going on in your case less subtle:
 >
-> But if we could write it in a way that keeps the actual policy logic in
-> one factored-out portion, I think it would be worth doing.
+>   $ git status -u no
+>   fatal: no: no such path in the working tree.
+>   Use 'git <command> -- <path>...' to specify paths that do not exist locally.
 
-Yeah, I do too.
+Yeah.  It was a mistake that we gave a short-and-sweet "-u" too
+hastily to a relatively useless form that does not take any argument
+and ended up needing to resort to the optional-arg trick.
 
-In the meantime, let's call v3 sufficient improvement from the
-current state for now and queue it.
+> You do still have to figure out why it wasn't stuck to "-u", though.
+
+Sorry, but I am not sure what you mean by this comment.
+
+Your illustration patch lets you say "no, 'no' is not a pathspec"
+with
+
+	git status -u no --
+
+and "I want the unadorned -u and am asking about stuff in the 'no'
+subdirectory" with
+
+	git status -u -- no
+
+but in the former, it would not make 'no' an arg to '-u' by saying
+"'no' is not a pathspec", would it?
+
+> ---
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 2986553d5f..7177d7d82f 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1300,6 +1300,16 @@ static int git_status_config(const char *k, const char *v, void *cb)
+>  	return git_diff_ui_config(k, v, NULL);
+>  }
+>  
+> +static void verify_pathspec(const char *prefix, const char **argv)
+> +{
+> +	while (*argv) {
+> +		const char *arg = *argv++;
+> +		if (!strcmp(arg, "--"))
+> +			return;
+> +		verify_filename(prefix, arg, 0);
+> +	}
+> +}
+> +
+>  int cmd_status(int argc, const char **argv, const char *prefix)
+>  {
+>  	static int no_renames = -1;
+> @@ -1351,7 +1361,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+>  	status_init_config(&s, git_status_config);
+>  	argc = parse_options(argc, argv, prefix,
+>  			     builtin_status_options,
+> -			     builtin_status_usage, 0);
+> +			     builtin_status_usage, PARSE_OPT_KEEP_DASHDASH);
+>  	finalize_colopts(&s.colopts, -1);
+>  	finalize_deferred_config(&s);
+>  
+> @@ -1362,6 +1372,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+>  	    s.show_untracked_files == SHOW_NO_UNTRACKED_FILES)
+>  		die(_("Unsupported combination of ignored and untracked-files arguments"));
+>  
+> +	verify_pathspec(prefix, argv);
+>  	parse_pathspec(&s.pathspec, 0,
+>  		       PATHSPEC_PREFER_FULL,
+>  		       prefix, argv);
