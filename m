@@ -2,106 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D7F820248
-	for <e@80x24.org>; Sun,  3 Mar 2019 18:33:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9599C20248
+	for <e@80x24.org>; Sun,  3 Mar 2019 19:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726621AbfCCSda (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 13:33:30 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:41270 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726557AbfCCSda (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 13:33:30 -0500
-Received: by mail-ed1-f66.google.com with SMTP id x7so2426365eds.8
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 10:33:29 -0800 (PST)
+        id S1726599AbfCCTLw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 14:11:52 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51514 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726541AbfCCTLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 14:11:51 -0500
+Received: by mail-wm1-f65.google.com with SMTP id n19so2617504wmi.1
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 11:11:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=K8Z0W6ALlbLBzDonkS/btL//Kt7RrJ9GseNs9heI8A8=;
-        b=GQeDfzcdOAIB0m6sTwsXhCyOJcrNuEquP3/1gBx66U+mZCMEB8GxB9t6lEk0H7OAn7
-         X21ii+YFEjNACEUhE8BSVE3y/xyZcLZfdXODbdgRb93O/Q+cpWHyrRLYOd+r1gThEViW
-         1KHvX0PJvJ02O8D0N9Y32MVF56f9qKVpH18+g30jv1DdrCOCm4jwYpsdQlYn0QFeQuub
-         vRHhoYbRgqzIf8rFoDYgHdy98ohdfLr7GZx1cTrW9Psu47a2GeLJS7MkgSGcSx9fIJr1
-         cHHrHJ76lyy9Xn67Pa4LttZ2UOCebt9BiQRjD8lAFI4cSULrTr3oTNqpDm/m/+TO27A1
-         KJiA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=olTJruIXwQiPce7hOJCVnaKZdxZ4iyqnq7lqWlZCHb0=;
+        b=dY28WVAFxgI//bbdIjy4NxXdbCfvCzEC5m/b7VGBJhBXI7RwptAy2ex/AMJjkaHTp9
+         QYiw9Fhc4AHaZBxn9rNsgJUHR2wRRAiEHFOBz3WqLrrTFOY18tp3vTanexckfnUjLtlJ
+         SVJKPuoBvKI0O6mHysHH0FZtZfZKhLbu9v8W/tGKEx9Qk/HwFJIGttGROpBnJX01DNIS
+         lXbQGU6GBHiIQQwfzSI+6niL/xutOgGk/9nsQ8JPT+zUAppN4dSLsCyojzmA9B2Lq409
+         nx9Vt9AHpxMS6C+rvX8A///HQFM3gQQ2LvHYA3gxa3UcJUqDoSYuVmDCDMS8D3u2x8hW
+         C5MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=K8Z0W6ALlbLBzDonkS/btL//Kt7RrJ9GseNs9heI8A8=;
-        b=AS/dc+58IqVCD6jh/JG66XYO3W+gK6+xIhvO7oRpJDZE8d0nkusYHVVxbmP6z3plz/
-         RidN4tMEHS0NvcN1ETOgPuEFknDxrvxAWryG3oSGPOVxODSGVpxGb7Q/3Jdl/zzYD/Om
-         nY9exEly2/YQL+vayA/Y0bzvksQW9LQgyfx8bJ3i75/NXBovnWij1JQgt/37SPLa4h0G
-         dJsj9o9xB0o8dZz5/Tv5+dMooPup97LQz/B1HI9I9auX7poIs7vtO3KwfDH3kRV3L0kY
-         +wW4QbPrCmAXuFOHEh2kHkfdNwOgbqvvFp8K+mk0Wus7koCMfoAN4Wd/ISjRwE6D6vpr
-         8i2Q==
-X-Gm-Message-State: APjAAAU9hbecgsd/gsCbXVGB4BimeaVo+GiKdy+snrFRB+c189F7AZVF
-        LdKhjX9iIWxAmO/mBxE9Di1DQsQYfRxn9Db8z9w=
-X-Google-Smtp-Source: APXvYqxQRnJm0Bf3QCDM7dug28UTTl0c9I3ivY4VbigoMEcjzlK9ErBRaG15w7zViILdqng0ZvyhHWa3h6Pki/aKARM=
-X-Received: by 2002:a50:ae8a:: with SMTP id e10mr12694663edd.24.1551638008417;
- Sun, 03 Mar 2019 10:33:28 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=olTJruIXwQiPce7hOJCVnaKZdxZ4iyqnq7lqWlZCHb0=;
+        b=nHT0BKAutKWCK0rE7jaMMJq1FrgpRA478ja+6DylYYC0A0lJKagtXkcZwij95rzDEX
+         Bx8/Rs0g7IHRK/g7AvW8FBth7utK4Ib4VNxNJfku1HktRbElZW04pdOeukTB1I45OQ2h
+         CXJfDCu0HNYT3zNgbcmg9mM2HCGnO/3qgKrOJgQ5NNHjh0rX5kWcE5BPqnUA0oSQYBzk
+         3uy7dqViYRC7aR57DU9YZna5Kbiuts1TjTFRNw234vwZCsaW5xAlj7pY0SFwud0e2P4/
+         +Ueg3J7bXmB2Q5+TOYDR0QVgCh2vS1tdBS7bDGxqsvrRqwPGvISqJeYOHn5SJqUyGBpF
+         5D/g==
+X-Gm-Message-State: APjAAAVl43pjp5DAhzH5Tdz31ySEY9NSvIfwyGoGVpYRgLDf+zLqK5O8
+        trgqEMbUjMiOdHFFeSsPrWM=
+X-Google-Smtp-Source: APXvYqy9K48E4F1iyG+NcPRyr3ELbeaFVyuZsPedPG0vcwnW5FfmZkVAQ7CAunaDT8w6LuqNvZdvRQ==
+X-Received: by 2002:a1c:dc8a:: with SMTP id t132mr9876323wmg.48.1551640310114;
+        Sun, 03 Mar 2019 11:11:50 -0800 (PST)
+Received: from [192.168.2.201] (host-92-22-20-26.as13285.net. [92.22.20.26])
+        by smtp.googlemail.com with ESMTPSA id o12sm17074693wre.0.2019.03.03.11.11.48
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Sun, 03 Mar 2019 11:11:49 -0800 (PST)
+Subject: Re: [PATCH 1/4] built-in rebase: no need to check out `onto` twice
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Nazri Ramliy <ayiehere@gmail.com>
+References: <pull.153.git.gitgitgadget@gmail.com>
+ <2d99429387ba63526efe233bbefe851c5d556fdc.1551367664.git.gitgitgadget@gmail.com>
+ <7b1282bf-4b94-5725-00df-2dc63eaa93f0@gmail.com>
+ <nycvar.QRO.7.76.6.1903011415220.41@tvgsbejvaqbjf.bet>
+ <22878dbe-d9f0-4737-3a49-ece695c2d0c2@gmail.com>
+ <xmqqef7o3fl8.fsf@gitster-ct.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <f38ebc4c-f0a6-c57b-1d0e-8208ff638a73@gmail.com>
+Date:   Sun, 3 Mar 2019 19:11:48 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-References: <CAEpy5fTnyPjH0sVyjnGHi1qxo+_dpaerxwaD7MmNPbmLx6qyJA@mail.gmail.com>
- <xmqq1s40u8gt.fsf@gitster-ct.c.googlers.com> <20190222061949.GA9875@sigill.intra.peff.net>
-In-Reply-To: <20190222061949.GA9875@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 3 Mar 2019 19:33:17 +0100
-Message-ID: <CAP8UFD1puPt2c+EJRaBZmd_Fi5uJn0e4fthw8cpKoj7k+5Oy4g@mail.gmail.com>
-Subject: Re: [PATCH 0/3] prettier bisect output
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Bartosz Baranowski <bbaranow@redhat.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqef7o3fl8.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 22, 2019 at 7:19 AM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Feb 21, 2019 at 01:39:46PM -0800, Junio C Hamano wrote:
+Hi Junio
 
-> > At the end of the bisection session, bisect.c::show_diff_tree() is
-> > called on that "culprit" commit.  Is it possible that 3a9388ee is a
-> > simple and trivial merge that does not have anything worth reporting
-> > for "git diff-tree"?
->
-> I've run across this many times, too. Since it's been bugging me for a
-> decade, I thought I'd finally try to address it. Here are some patches.
->
-> There was some discussion about a year ago about just using "git show"
-> for this output:
->
->   https://public-inbox.org/git/CAP8UFD3QhTUj+j3vBGrm0sTQ2dSOLS-m2_PwFj6DZS4VZHKRTQ@mail.gmail.com/
->
-> Christian seemed generally OK with tweaking the output, but preferred
-> not to move all the way to running an external "git show".
+On 03/03/2019 01:35, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> Thanks for explaining, it all makes sense to me now
+> 
+> It would be necessary to make sure that it all makes sense to all
+> future readers.  Are they patches good enough as-is for that, or do
+> they need some updates before I take a look at them to pick up?
+> 
 
-Yeah, I am still OK with tweaking the output, though I'd rather not go
-back to using an external process.
+I've just re-read them and I think they're fine as is, though the first
+ paragraph of the first commit message might be clearer if "HEAD was an
+ancestor and" was changed to "HEAD was an ancestor of onto and".
 
-> I'm not sure
-> I completely agree, but it was easy enough to get the results I wanted
-> just by fiddling the current code a bit. ;)
->
->   [1/3]: bisect: use string arguments to feed internal diff-tree
->   [2/3]: bisect: fix internal diff-tree config loading
->   [3/3]: bisect: make diff-tree output prettier
+Best Wishes
 
-I am OK with the above patches.
+Phillip
 
-Thanks,
-Christian.
-
-
->  bisect.c                    | 19 +++++--------------
->  t/t6030-bisect-porcelain.sh |  6 +++---
->  2 files changed, 8 insertions(+), 17 deletions(-)
->
-> -Peff
