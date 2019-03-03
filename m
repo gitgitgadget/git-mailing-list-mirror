@@ -7,58 +7,63 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DAF620248
-	for <e@80x24.org>; Sun,  3 Mar 2019 01:22:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9690220248
+	for <e@80x24.org>; Sun,  3 Mar 2019 01:22:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727060AbfCCBV7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Mar 2019 20:21:59 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38053 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726023AbfCCBV7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Mar 2019 20:21:59 -0500
-Received: by mail-wr1-f68.google.com with SMTP id g12so1707808wrm.5
-        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:21:58 -0800 (PST)
+        id S1727079AbfCCBWM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Mar 2019 20:22:12 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36588 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbfCCBWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Mar 2019 20:22:12 -0500
+Received: by mail-wr1-f67.google.com with SMTP id o17so1715694wrw.3
+        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:22:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version;
-        bh=SlgfUuhUze+MiM8lwVLWHWsZeK7t0lsgknM0JVlrQZc=;
-        b=oDrlWl99kJQYp34p7xXby5Kn2EYLXpwXXNUsnM5eN6k5fn3icZS924vGG2NbBE504C
-         pfilB45jqIO1bb788EGa/yCr9QMD5QtkFHqjFDLwIfuxsOS5qbJ3+xsgsrqpL/ZDX3BL
-         /O+fO1JlsQXLQTNQsHr5tAR/y0qwpjC5WCe3VfOQEhb8Wdq/T1Vav/bw46uUuIE0NdZ5
-         H4VYi282Op1gtG7PH/bNpDez/r6RwnNte8G3eTVSR6zAuBVFt9QJOpGURxqaE8tU9FK/
-         /bidH5p4n+mV39Xef49E2iwBULuW7KW+9QfwMVPLjJAp5DOQkXZvLCTMwAWixSPm7L6K
-         zOtg==
+        bh=J409pW7LrrVqC5L36yPUKdGsHGksnehNENTo1dxZp8I=;
+        b=gYRlZUsEaYMVamRgsKB8OKTmjfuCV5Y9Xb+L93oA8ZcPNdd687pXeAQsjjo0Cp0J/L
+         9hpUkKLl1bXCzKLAYQDOvn1nWliqbeua79XPhOmNFkcnAZm211GMJK7ftZDT3p4fQyOS
+         DGtiUCmLCDnB8hMHIj9lOS6W/8icBcJIel712xr3BH8dmwTPVmgTF+cADifNuXJdntgM
+         aswUh0A7XpUc2Iz2aeIOWFpH2u/EyQZjb9207f8YEtN5Lx3iM1BE386zC7J7UCQ75/0J
+         TW4SDW1i2BFzmh3eYshsW8v0INHh1nGkj9HWOZkwKWADsJZ4KNkqsr9Me5yfL8xMXYXr
+         kH0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version;
-        bh=SlgfUuhUze+MiM8lwVLWHWsZeK7t0lsgknM0JVlrQZc=;
-        b=dPK7fheus7kLnR4EDXnVMa3i5LP6nFf2eahoyPLzHn+727pDt36jFqZkYEutcUpv2P
-         BCn36hQOSa3uZIRGN4mh20zX6tCrTwTdn/Wvzux2z2e80mSt3qrVkeHPlnk7DRjmev5z
-         v87ag0OyzYGPEYaDGr975W3bjW+39C6yjoBa/z5nc5TQeekypViQuWVnzeMrb1O4blRh
-         wNoWijX4yhFKvDX0nd4EjFxpD/BWLZkEU00Ro3LgYGlPAvuHe4wXllmibutwMFbVrC8l
-         FuChJFgmXQ9F/KeLLwN90AAlzUOzQyPwrbSqdhLp1xUX/edG9w+m6V71RHMzHhpmOCcx
-         4mcQ==
-X-Gm-Message-State: APjAAAWG4HnDP4kbyuhxbRWnIUdovGuaieFTgrTMP2udj+lB1Z7l6tpU
-        llzOMgRsYcKYzWo6ODGhg8s=
-X-Google-Smtp-Source: APXvYqxMx03SvBsS4nzOpZmXU+/jkIfzXnr3l8As8ca1PEwcUVcmYBG5l5esM1uKaclgMvOnYEMdNA==
-X-Received: by 2002:adf:dd12:: with SMTP id a18mr7580167wrm.4.1551576117224;
-        Sat, 02 Mar 2019 17:21:57 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a22sm1778098wmj.35.2019.03.02.17.21.56
+        bh=J409pW7LrrVqC5L36yPUKdGsHGksnehNENTo1dxZp8I=;
+        b=dV1Nve09AnRCTHMcZst6RKePEP5n5yGFfrLpR/xcyLb073VfmwRDYvEh+DinTja9gX
+         aK43WfCVOcwNEnYT8pcKav0X/Vox0QpUW3L7qF6XUSLGEyIeYiQItCf6pftPGrvUbaBO
+         CkzfZ3V9hwP4JDRCit+fckYgXHCBcl0OHFRPh4vOFSV50b4WubcThWA8M6LmPcBdXNyU
+         bGvOQ4QTyVN95LNgKiwVBsGCqpYbPkHlwqiqYt9zMOkBms1RSDNavODiieUcX1UlxrUi
+         x5c4YUgIR/0u9oWGproqk4cB0AlFcnMvvWbfponZJOy4o890/UyKB3Xof0+M8cUkaU1x
+         J5/A==
+X-Gm-Message-State: APjAAAXk3SXk/VAbQxpjnlaz5rKSO6Am5mHdxIaoodg3o5qfQSN17Ftl
+        SBJHMdHkq0yXARgCZCmEHYY=
+X-Google-Smtp-Source: APXvYqxlJAvWZxYKsLtyAR35lUxAthax9dIcd7er1kOm94UvUVns9Y4A+ULiviqc0ES/YpIIEtMBeA==
+X-Received: by 2002:adf:fd07:: with SMTP id e7mr8705082wrr.175.1551576130123;
+        Sat, 02 Mar 2019 17:22:10 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x6sm3476626wmg.0.2019.03.02.17.22.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 02 Mar 2019 17:21:56 -0800 (PST)
+        Sat, 02 Mar 2019 17:22:09 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH RFC 0/20] cat-file: start using formatting logic from ref-filter
-References: <CAL21BmnVkKtYWa1cRL1EJAwtchGcVUzhu0136AuV8uXAi5Kuew@mail.gmail.com>
-        <20190228214314.GL12723@sigill.intra.peff.net>
-Date:   Sun, 03 Mar 2019 10:21:56 +0900
-Message-ID: <xmqqtvgk4urv.fsf@gitster-ct.c.googlers.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
+        <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
+        hi-angel@yandex.ru, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v3 1/1] worktree add: sanitize worktree names
+References: <20190221121943.19778-1-pclouds@gmail.com>
+        <20190226105851.32273-1-pclouds@gmail.com>
+        <20190226105851.32273-2-pclouds@gmail.com>
+        <20190227120859.GB10305@sigill.intra.peff.net>
+        <CAPig+cRJZBvwsptPOzx3oPSOnt6+uGLoyOr_JbUnku4kdSwdgA@mail.gmail.com>
+        <20190227160457.GA30817@sigill.intra.peff.net>
+Date:   Sun, 03 Mar 2019 10:22:09 +0900
+Message-ID: <xmqqmumc4uri.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,21 +74,14 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> On Fri, Feb 22, 2019 at 06:50:06PM +0300, Olga Telezhnaya wrote:
+> I agree that sanitize_refname_format() would be nice, but I'm pretty
+> sure it's going to end up having to duplicate many of the rules from
+> check_refname_format(). Which is ugly if the two ever get out of sync.
 >
->> In my opinion, it still has some issues. I mentioned all of them in
->> TODOs in comments. All of them considered to be separate tasks for
->> other patches. Some of them sound easy and could be great tasks for
->> newbies.
->
-> One other thing I forgot to mention: your patches ended up on the list
-> in jumbled order. How do you send them? Usually `send-email` would add 1
-> second to the timestamp of each, so that threading mail readers sort
-> them as you'd expect (even if they arrive out of order due to the
-> vagaries of SMTP servers).
+> But if we could write it in a way that keeps the actual policy logic in
+> one factored-out portion, I think it would be worth doing.
 
-Yes, the 1 second increment has served us so well in the entire life
-of this project, and I am finding a bit irritating that we seem to
-be seeing topics that are shown in jumbled order more often.  I'd love
-to see why and get them fixed at the source eventually.
+Yeah, I do too.
 
+In the meantime, let's call v3 sufficient improvement from the
+current state for now and queue it.
