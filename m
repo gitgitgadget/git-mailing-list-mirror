@@ -7,117 +7,93 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABD7B20248
-	for <e@80x24.org>; Sun,  3 Mar 2019 16:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13526202AA
+	for <e@80x24.org>; Sun,  3 Mar 2019 16:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbfCCQM5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 11:12:57 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:33954 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726411AbfCCQM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 11:12:57 -0500
-Received: by mail-wr1-f52.google.com with SMTP id f14so2864892wrg.1
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 08:12:55 -0800 (PST)
+        id S1726456AbfCCQTu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 11:19:50 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50946 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726440AbfCCQTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 11:19:49 -0500
+Received: by mail-wm1-f65.google.com with SMTP id x7so2372895wmj.0
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 08:19:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=P3nDHymAboMUxxUkgcj+zxLWYKBG2SO7XpylI2uiOn4=;
-        b=ZA6D0+XbVSjmFvWwLv3I1q7Outx6RaQgCDNEPKsFCiF4nVfUjzyuKGqe7OzAyswdAQ
-         L1aYfjyCpZDlOIybiggLSFBOgyCPw0F7dxsSjsMZXyfwZnDp6YGyEhd2xEmT2DReuVnR
-         j8zjhIWAAQNli1ars31VAvIZ28s2U/JuigbpEWIu1I6XkS2k7DnHpiCIlPsVX+QweUVQ
-         As86kwi/5mqtmMDdYDwflDgU8z6mQQzC2gyZTIiFB1i+hOZIjDxwk0N2GKRsiCcS5WhR
-         WRAfmVxv+u+HYB9YYmQUwl04mwVpIJaM6jlDvSQIszltV04Wxt21P3OQSJRL4c4fYm+9
-         c14w==
+        bh=/PVRShG2JgGrEgRJR5wGitd3McX6YAP4K/Q1DKGHTVM=;
+        b=iNaloXcCc6+9YBGx2HMSR8LAHSFJco8jbiWud0wNGqchA10FoZsQZMmOVR8PyfKfMd
+         Gt5Au4kqHTm0iBlPh/iv9Z8P16x8G2aK+N6hoobakJw6LlLsx8PFvFgwdbtUbx9rrmr9
+         /PRf3EX9/XUpVSYTIwZv/O6MtbtYW4tzpHvMjTt52y6YhkH2vnkuQAapYtssAWyMExr0
+         mNDXp12a6MWK2K+5NIV+aC5eksLAtJ/fx0BSIA/ZQAiUhl6cqMZ13G4m6TUw6z4nbf2J
+         Bif7sjrrVuDbktN0W+Egw9Z7iTUbFMSbONm4u5NLfefUbOl36QEWyz3bZDO44JAkJKaj
+         TToQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=P3nDHymAboMUxxUkgcj+zxLWYKBG2SO7XpylI2uiOn4=;
-        b=EO4OVBFBXIxHme0EErXpwea3udQ/oIO2O22QIYREwp7ByLpYNOAGve8mou09rLorwj
-         h8Y/Y+X88M+NWsr3iPlMJlkOrAmaPAqAvIxmO+Pnsd9ZIXQ/wazsBb92KovEF15b3+Tl
-         56o7efqERLEVGmEP4uMm5I27XaXD9e3cFiLgYBDJAqq0oeuq/fr1kubTvtNBYXZ97qCW
-         CAlVevEMwlwJ3tC1wpeAc++Lc3dHN7yvituoNcyDnApR3AF1HOfdGV36xfEglb6X4bJe
-         XWFn5x3T8c22dAOO1DuLSNhJ5zyNKyVYPLa3hvuUSMcy0FSa2UkswMhqS/WYpmc9Soow
-         nVHA==
-X-Gm-Message-State: APjAAAXghSajaqfDgfdYHAjJ0Y9UWH7B3OVc3QE4/A3flmtAHDxNatHw
-        741g1MvuIP13rRSojqfQyPY=
-X-Google-Smtp-Source: APXvYqzNJyklkmEq4+Zd2iUS0psvchaO+sGtXi8FBbdZxFbAIulaplnFUo0yXaiRpkDtsfmXKwK5Ow==
-X-Received: by 2002:a5d:54cc:: with SMTP id x12mr9640685wrv.323.1551629574996;
-        Sun, 03 Mar 2019 08:12:54 -0800 (PST)
+        bh=/PVRShG2JgGrEgRJR5wGitd3McX6YAP4K/Q1DKGHTVM=;
+        b=pd6xBpcLiCJT9NL1wrXUTFDSigYYtrKsnNaycaesa4Uhq8V0VnSrU2cP+BLm8gRSvU
+         AQCxtKIaDTcxxyIha8XgVQuNGYZSaIuUS7Aa0kYz7VHRKN6nruVmiQ7NCvZFhrQJNbUK
+         38JuVSOngprD+b7N9kAF6NQAeK1IBy64s5ChLowSrPSy1TOWHec8+itk32voIZBtF3P1
+         tVkVqYcqk3CoPq9e/W/CEQW0glGw6+QwlqlcsArunn2zHcDQs98ItJGEzpVcHnSzN+IG
+         gZhpqRhjVofE+O/TsPG1cjzWo6AoEMzPbu4z75sE4Ekv6rfLHXRw9XyLir4IQon18e2s
+         05lQ==
+X-Gm-Message-State: AHQUAuYXwcySMinm5btT2B9JAzVd/F813XYlUsk0lxJTW2U3GYHtqlZN
+        Gqm1XfwKsYMpMmlKWk5GnFs=
+X-Google-Smtp-Source: AHgI3Ibqq0LeWqBTMRMKL3cpZxxICsFjZbeVwgTisUzAqHKrYjpR8b64/+s2onjR7s09N42odCRDsg==
+X-Received: by 2002:a1c:a004:: with SMTP id j4mr8379372wme.143.1551629987889;
+        Sun, 03 Mar 2019 08:19:47 -0800 (PST)
 Received: from localhost ([95.149.189.205])
-        by smtp.gmail.com with ESMTPSA id o127sm6463843wmo.20.2019.03.03.08.12.53
+        by smtp.gmail.com with ESMTPSA id n189sm3977619wmb.28.2019.03.03.08.19.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Mar 2019 08:12:53 -0800 (PST)
-Date:   Sun, 3 Mar 2019 16:12:53 +0000
+        Sun, 03 Mar 2019 08:19:46 -0800 (PST)
+Date:   Sun, 3 Mar 2019 16:19:46 +0000
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        git <git@vger.kernel.org>,
-        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
-Subject: Re: Questions on GSoC 2019 Ideas
-Message-ID: <20190303161253.GW6085@hank.intra.tgummerer.com>
-References: <CAHd-oW7onvn4ugEjXzAX_OSVEfCboH3-FnGR00dU8iaoc+b8=Q@mail.gmail.com>
- <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
- <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
- <20190302150900.GU6085@hank.intra.tgummerer.com>
- <CACsJy8COJg4jGRKFwyi5Fc374To8Z3g3wHx+SD7zQTL5m-TbCg@mail.gmail.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     gitster@pobox.com, Johannes.Schindelin@gmx.de,
+        christian.couder@gmail.com, git@vger.kernel.org
+Subject: Re: Clearing logic
+Message-ID: <20190303161946.GX6085@hank.intra.tgummerer.com>
+References: <xmqqo96syte0.fsf@gitster-ct.c.googlers.com>
+ <20190303140709.5561-1-rohit.ashiwal265@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACsJy8COJg4jGRKFwyi5Fc374To8Z3g3wHx+SD7zQTL5m-TbCg@mail.gmail.com>
+In-Reply-To: <20190303140709.5561-1-rohit.ashiwal265@gmail.com>
 User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/03, Duy Nguyen wrote:
-> On Sat, Mar 2, 2019 at 10:09 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > I'm not very familiar with what's required here, but reading the above
-> > makes me think it's likely too much for a GSoC project.  I think I'd
-> > be happy with a project that declares removing the global variables as
-> > the main goal, and adding parallelism as a potential bonus.
-> >
-> > I'm a bit wary of a too large proposal here, as we've historically
-> > overestimated what kind of project is achievable over a summer (I've
-> > been there myself, as my GSoC project was also more than I was able to
-> > do in a summer :)).  I'd rather have a project whose goal is rather
-> > small and can be expanded later, than having something that could
-> > potentially take more than 3 months, where the student (or their
-> > mentors) have to finish it after GSoC.
+On 03/03, Rohit Ashiwal wrote:
+> On 2019-03-03 13:33 UTC Junio C Hamano <gitster@pobox.com> wrote:
 > 
-> This is why I'm not involved in GSoC. I often mis-estimate the size of
-> work (and yes I would still like your tree-based index format in,
-> can't remember why it never made it).
-
-So do I, and that's why I'd like to err on the side of having smaller
-projects :)
-
-I think the main reason the tree-based index format never made it is
-that the in-core APIs were not set up to make use of the new index
-format.  I'm also still interested in getting it in, but I haven't
-found the time for looking at making the index code pluggable yet.  It
-would probably take a similar refactoring as with the refs code to get
-this done.
-
-All that said, GSoC was still a great experience for me, and I got to
-learn a ton over the summer.  But I did feel like I let the people
-that invested a lot of time in the project as well down a bit, by not
-being able to finishing the project.  And having the feeling of
-accomplishment of actually finishing a project would definitely have
-been nice to have as well.  So for those reasons I think it would be
-better for students to take on smaller projects.
-
-> So yeah if you find removing global variables (which essentially
-> identifies shared states, a prerequisite for any parallel work)
-> reasonable for GSoC, I'd say go for it.
+> > test -s <path> makes sure <path> is file; if it is not a file, then
+> > it won't yield true.
 > 
-> Be also aware that this kind of refactoring work could result in lots
-> of patches and it takes time to get them merged, if your GSoC goal is
-> to get merged.
-> -- 
-> Duy
+> > On 2019-03-03 13:20 UTC Rohit Ashiwal <rohit.ashiwal265@gmail.com> wrote:
+> > > test_path_is_file "$1" &&
+> > > 	if ! test -s "$1"
+> 
+> According to the conditional if the path is not a file then we will get
+> the error "file does not exist" and then we will shortcircuit without checking
+> the second conditional, on the other hand, if path is a file then we will
+> again check if it has a size greater than zero, then error will be different
+> (if any).
+
+I do agree that the better error message is probably worth the
+additional 'test_path_is_file' before the 'test -s'.  Although it may
+be better to only make that distinction in the 'if' (and then maybe
+just using 'test -f', which would explain better why we have an
+additional call.
+
+Either way it would be nice to describe that reasoning in the commit
+message, as it's not 100% clear from the code what is going on here,
+which also lead to Junio's question.
+
+> Regards
+> Rohit
+> 
