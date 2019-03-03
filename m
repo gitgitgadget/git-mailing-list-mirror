@@ -7,80 +7,92 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B9F120248
-	for <e@80x24.org>; Sun,  3 Mar 2019 12:29:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9275820248
+	for <e@80x24.org>; Sun,  3 Mar 2019 12:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726136AbfCCM30 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 07:29:26 -0500
-Received: from mail-pl1-f180.google.com ([209.85.214.180]:34933 "EHLO
-        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726063AbfCCM30 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 07:29:26 -0500
-Received: by mail-pl1-f180.google.com with SMTP id p19so1191929plo.2
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 04:29:26 -0800 (PST)
+        id S1726165AbfCCM3a (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 07:29:30 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:38646 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726158AbfCCM3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 07:29:30 -0500
+Received: by mail-pl1-f193.google.com with SMTP id g37so1187928plb.5
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 04:29:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=bsz9OlZBCFRHVQ0ebD5sCZ5egfwAUx3fM/rGy9qWnZI=;
-        b=s7WmHPbmqHyNd/2lBUgI/BIr909klhmftM1isLf4FsRZH3NJKbpNEzaFuo6Ve5Xa7p
-         +9ApsXOrlBUIRDdK2H7TnmtrVnDDhGFFday/5C+Bv9qhClzHjddxRccrG6KoDy339JLl
-         VaKM2rhi+jQRBG3zKlOQAuL/F5zaKzWnUUWDwpzfDY41Uuq83TgEVjfUDcObzKHXrQwN
-         HZ8v84LM96JAyIgQJyNjlVRKeA0e3Pfuj1bSl0btuUuQx6UCLPGmXhOKy6+SJBhXnBF/
-         KIa7Aq6Ojvimn2/aLkxW4LkwPLQy8XHPD7TdH00IyFc1tVjMxPjQNVwXNs6CcI8ow70w
-         wXWQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=l18VxC6qbEEH4Bb5Ukf0WZhoMXprZJz9hmK9Jo3lXJY=;
+        b=fU+u+TZcSGgTfoJW615UCxK5aSo97y/6qacy+pUavejGOe3N23eJx/dDeC4yRUMNBd
+         Y9f8NVxtoimEQhf5iDLsTFW+HTVJyPZrTZppPJlirDod3CC8qM+wAxhYOJIAZicRPBVw
+         uUVO/OHFO6PZvc2JiLyjXUugmFE2IiCDCREEbNw5X1vCgog1kH0KzaYcSAPkurfaee0O
+         nabuK5Xyf1L8MLd1PpoXC1lF9W5eMWniz0CWHlkvAh7DhkNYK2S8pM+N8SVgcc4+7r+C
+         zv6ejpcb7ZE3nIGHtjk/nHCV1BobTtM8h3OQ0a8WbFFHubUtkxqyEvS0d2zYOK9Ygk32
+         GfZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=bsz9OlZBCFRHVQ0ebD5sCZ5egfwAUx3fM/rGy9qWnZI=;
-        b=j0szfGDOMxPMxikbnMwFGH0vvx06A1sM9v1Efhj4RpDHLN53p+MpMAZiICzyUE3eX0
-         0SETFl8RlcnFDRI7tqU3yKtwwIYlMzYC6ixmeVzqzwYJA4G76fFKmMvSkDS6iGtX5tVI
-         OQTZrkyVROtUOL3Vc9oFNx8Spv8g6xWdgybnmGZscJSbftTW1NkozrLQTA7OM6zjvYsM
-         Rthoj3fFX0bUKe+Z4dDWKGiCcsSM+hTzm3HwUR5Q2iFn3A/Lt4BcQGgG5PLZmi++7jD0
-         jcX7kH7fkVehznwYGaXGJe4aLqOu44UIJkKYMZ1fDaTIHN8dV+dIZ/wc7Gm8fRih+gGv
-         W/7A==
-X-Gm-Message-State: APjAAAXRGI02ajUecuHwgmuZ0MHZuBuzc/qpRgvLUsdwkn/9r+bmuw4Y
-        hWFVuLxVFa6GPX4AEswo/BC7K4SCmfU=
-X-Google-Smtp-Source: APXvYqxYibf+fntdHYUs4B4bqHh6MmJCRvCTywUVJX6yA79plPiSIFvEODmr8AnVwYeGDW7xnHGBhQ==
-X-Received: by 2002:a17:902:e192:: with SMTP id cd18mr15299707plb.309.1551616165243;
-        Sun, 03 Mar 2019 04:29:25 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=l18VxC6qbEEH4Bb5Ukf0WZhoMXprZJz9hmK9Jo3lXJY=;
+        b=M3rQheMGWdggPYzswJObuFAuR0gdUag0yrblx3YlgxxCeYAhmgdUdc2w0ogV8df7zU
+         LKWbRMGgmye2RdNHNipCKQ1HIH1OKZYAd8SnTC8hq8U/2C7DniKA3NSMeCUNSPl+N/GO
+         Y7hPkUXe4WhwlyXHmcHfJJ756N76VXLJg41KYNjjOJmbFJuLK0VHD0DU5CR5sALHhYyQ
+         oAPboxLvLU8nKc1tZ1dQZvIzb3wtdDHCWxxfpIlRhx1qVt5pFLdj/xo5tgZiRk97mCsf
+         71Kt+1cYfhoCWkfDvD6HdvEcfpOMsrZgCSk8R6b3eatUGH27dBievFQKChDM3CnF81ot
+         iKwQ==
+X-Gm-Message-State: APjAAAUJHLzMfDlcgMgcyv+OcIty31NkI3+XVYZM4VQZExVCl26eYRqc
+        mkCOKdIcR23eFEhu7b/Lv0ibQI+TIBY=
+X-Google-Smtp-Source: APXvYqw7Zbweh5yuJDK56efSEMGPfqVUIorSIguezfySL5iCu3a5rHEWZUFZqzYHE/CAB7d8ikA3ew==
+X-Received: by 2002:a17:902:ea85:: with SMTP id cv5mr14695274plb.119.1551616169455;
+        Sun, 03 Mar 2019 04:29:29 -0800 (PST)
 Received: from ar135.iitr.ernet.in ([103.37.201.80])
-        by smtp.gmail.com with ESMTPSA id l5sm6861093pfi.97.2019.03.03.04.29.22
+        by smtp.gmail.com with ESMTPSA id l5sm6861093pfi.97.2019.03.03.04.29.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Mar 2019 04:29:24 -0800 (PST)
+        Sun, 03 Mar 2019 04:29:28 -0800 (PST)
 From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com,
         t.gummerer@gmail.com, christian.couder@gmail.com,
         Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Subject: [GSoC][PATCH 0/3] Use helper functions in test script
-Date:   Sun,  3 Mar 2019 17:58:39 +0530
-Message-Id: <20190303122842.30380-1-rohit.ashiwal265@gmail.com>
+Subject: [PATCH 1/3] test functions: Add new function `test_file_not_empty`
+Date:   Sun,  3 Mar 2019 17:58:40 +0530
+Message-Id: <20190303122842.30380-2-rohit.ashiwal265@gmail.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20190303122842.30380-1-rohit.ashiwal265@gmail.com>
+References: <20190303122842.30380-1-rohit.ashiwal265@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch ultimately aims to replace `test -(d|f|e|s)` calls in t3600-rm.sh
-Previously we were using these to verify the presence of diretory/file, but
-we already have helper functions, viz, `test_path_is_dir`, `test_path_is_file`,
-`test_path_is_missing` and `test_file_not_empty` with better functionality
+test-lib-functions: add a helper function that checks for a file and that
+the file is not empty. The helper function will provide better error message
+in case of failure and improve readability
 
-Helper functions are better as they provide better error messages and
-improve readability. They are friendly to someone new to code.
+Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+---
+ t/test-lib-functions.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Note: `test_file_not_empty` is implemented in [PATCH 1/3] of this mail
-
-Rohit Ashiwal (3):
-  test functions: Add new function `test_file_not_empty`
-  t3600: refactor code according to contemporary guidelines
-  t3600: use helper functions from test-lib-functions
-
- t/t3600-rm.sh           | 281 +++++++++++++++++++++-------------------
- t/test-lib-functions.sh |  10 ++
- 2 files changed, 157 insertions(+), 134 deletions(-)
-
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 80402a428f..1302df63b6 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -593,6 +593,16 @@ test_dir_is_empty () {
+ 	fi
+ }
+ 
++# Check if the file exists and has a size greater than zero
++test_file_not_empty () {
++	test_path_is_file "$1" &&
++	if ! test -s "$1"
++	then
++		echo "'$1' is an empty file."
++		false
++	fi
++}
++
+ test_path_is_missing () {
+ 	if test -e "$1"
+ 	then
 -- 
-Thanks
-Rohit
 
