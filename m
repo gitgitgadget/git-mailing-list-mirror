@@ -2,159 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E476820248
-	for <e@80x24.org>; Sun,  3 Mar 2019 00:25:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57D5320248
+	for <e@80x24.org>; Sun,  3 Mar 2019 01:18:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726664AbfCCAZu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Mar 2019 19:25:50 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35112 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726535AbfCCAZt (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 2 Mar 2019 19:25:49 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:a4e9:9ba4:4fd2:4493])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BF7BA60479;
-        Sun,  3 Mar 2019 00:25:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1551572748;
-        bh=Ox8vAB+qRKmZYMX3N7H1NRszBYWdyi7R9RD7b1IIgvY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=n2KmlsMciIIWEHVcmSTn61jes06g+myvvGHPZ1Ixf5jYjQGqbGNJLhz9tIAAMxh9d
-         diHP7Hde1W6flg0bTLwOgcYLrZLTnjy0fhQh5nEU7iesk+U176ecxn7jS/Pl/LXScB
-         cSxIKM9xT7uKm6tW9HyAaZvAH71ODc6H0dXjlH0NoEjlORWG4PazVTae5cSR1LY424
-         JANzCy9TvxmE7N7bKFseYs6E6Ryly4Q5R++Ck8HgDugARjCbzR51IgHWdI/DEDw2dT
-         pLi0C59m/92W1ii/U1k8/wwcmj+EHczWPUHzfp1qeFzCfeUlUQ7/g0k7Uopp9u5L9V
-         eXkQWLESdHG1//xueUCV9B2j8tGgqgZzKnkyeSJBgp24KZGIwKbAaj62YVNKtMp7O5
-         IqPHnno3wTVot3RzhyLuPzRXzXAs39i9azI1qnx2OOW3dLKlVO8o0FaZ2Lj4PmyOrI
-         0ZwednTaUaSZkMMRhwJYfvpZIvRrpBPrwvX7Dhgs8aojPlXMvlY
-Date:   Sun, 3 Mar 2019 00:25:42 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Wendeborn, Jonathan" <Jonathan.Wendeborn@bruker.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: fast-import fails with case sensitive tags due to case
- insensitive lock files
-Message-ID: <20190303002542.GG601925@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Wendeborn, Jonathan" <Jonathan.Wendeborn@bruker.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <ceb9b34681c14d9ab2a33ba909b5ca75@bruexc101.brumgt.local>
+        id S1726613AbfCCBSQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Mar 2019 20:18:16 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40449 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbfCCBSQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Mar 2019 20:18:16 -0500
+Received: by mail-wm1-f68.google.com with SMTP id g20so1452741wmh.5
+        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:18:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=E+2kezAub79t8cZTPEmDPSOE26FJOuX8BB5HkoqnA8k=;
+        b=DYEdRB3R9NRV85Q/YqNjHDe/FPbDDiN19mMw+eoJ1Ef1KsNUowevtgDsLpAjD+c9Eo
+         UZmqkrRFfz3VVnHitCWhQoHRq8hrjjXIkeN7vMGi18FNwQQMWf/otBpCqacGHmIjDEJR
+         HugwIf2rlIFQ4Oo/NosSjc9jC6ydLclsjbq0jWkRkkTwJOyQUO45I+wr4Ha9rvFlsGPU
+         XewW1r64mU0vz/8d1u8E8dVRfBs0rhHfj1VGLoc8tJPXbQlHJ9L+VvPPCK460+nnnak8
+         3gJxSg/iodvPvT7Od9OppQuF7Gutjb6FyEqpAJPHD4rjDGzS5y1L/JepfsY3P+HEEXns
+         Verw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=E+2kezAub79t8cZTPEmDPSOE26FJOuX8BB5HkoqnA8k=;
+        b=INjc+noT+YsNIziB24Zlf/gWeaPeeIyXRNupKS4QEj4W/2xwl3VvLu6UoLoW2+tvhV
+         tZLVVPU9ZgPkef4hMIb5IhQvUf8oFIjC/emYpfkgVwC9GynmBIQ6NtbnPbz0sP9Oh9Zp
+         YFBfrSZ4nMUGh1mmQ8UhlKBeAyaAqTGQhXnCZhR/3ZOSf7CzIptRifbiGWAOqb2Cxz4H
+         26uBuhtJ5FKL3oi05YUlIdsNKMgNeJ2dAFFMzBnKqUffeRNdmCHkId/faqt3fOpK+LgH
+         tJUKdcYHQKsoGiJN15QAHOHetDLzRZxlzPjS+FgcuR5gjcs5FzMkoKRHefSVfx1zB5+I
+         8RCA==
+X-Gm-Message-State: AHQUAuaZhrZFixyuS1FgeK7LhdgVxr50iCcxcAxsrUACizpiz6gO3tJ2
+        7T9qfEwyE/8t4RrHQZs1akXndWND2iY=
+X-Google-Smtp-Source: AHgI3IZIILF6QRF04lKL+5LueI9QYW8FJeqrIbr+0YsITm2SHRlRWMkFQx8B0nVW0Tdvi1AdCyLSyA==
+X-Received: by 2002:a1c:41c5:: with SMTP id o188mr7195947wma.147.1551575893535;
+        Sat, 02 Mar 2019 17:18:13 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v6sm6117561wme.24.2019.03.02.17.18.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 02 Mar 2019 17:18:12 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH] builtin/config.c: don't print a newline with --color
+References: <b5ca6391fd0273fb7d6b92bc5ada96df93bc5cf2.1551487219.git.me@ttaylorr.com>
+Date:   Sun, 03 Mar 2019 10:18:11 +0900
+In-Reply-To: <b5ca6391fd0273fb7d6b92bc5ada96df93bc5cf2.1551487219.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Fri, 1 Mar 2019 16:40:53 -0800")
+Message-ID: <xmqqtvgk69ik.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="eVzOFob/8UvintSX"
-Content-Disposition: inline
-In-Reply-To: <ceb9b34681c14d9ab2a33ba909b5ca75@bruexc101.brumgt.local>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Taylor Blau <me@ttaylorr.com> writes:
 
---eVzOFob/8UvintSX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Invocations of 'git config <name>' print a trailing newline after
+> writing the value assigned to the given configuration variable.
+>
+> This has an unexpected interaction with 63e2a0f8e9 (builtin/config:
+> introduce `color` type specifier, 2018-04-09), which causes a newline to
+> be printed after a color's ANSI escape sequence.
+>
+> In this case, printing a terminating newline is not desirable. Callers
+> may want to print out such a configuration variable in a sub-shell in
+> order to color something else, in which case they certainly don't want a
+> newline.
+>
+> This bug has survived because there was never a test that would have
+> caught it. The old test used 'test_decode_color', which checks that its
+> input begins with a color, but stops parsing once it has parsed a single
+> color successfully. In this case, it was ignoring the trailing '\n'.
 
-On Fri, Mar 01, 2019 at 06:19:48AM +0000, Wendeborn, Jonathan wrote:
-> Hi,
->=20
-> I have a problem with fast-import on an NTFS drive: If I try to import ta=
-gs which are identical apart from their casing a failure due to identical l=
-ock file names occurs.
->=20
-> I am running git for windows 2.15.1.2 x64 on a Windows 10 machine (10.0.1=
-5063):
-> $ git --version --build-options
-> git version 2.15.1.windows.2
-> built from commit: 5d5baf91824ec7750b103c8b7c4827ffac202feb
-> sizeof-long: 4
-> machine: x86_64
->=20
-> MCVE:
->  (echo "commit refs/heads/master" &&=20
->  echo "mark :1" &&
->  echo "committer me <> 0 +0000" &&
->  echo "data 0" &&
->  echo "" &&
->  echo "tag tag_A" &&
->  echo "from :1" &&
->  echo "tagger me <> 0 +0000" &&
->  echo "data 0" &&
->  echo "" &&
->  echo "tag tag_a" &&
->  echo "from :1" &&
->  echo "tagger me <> 0 +0000" &&
->  echo "data 0" &&
->  echo "") | git fast-import
->=20
-> Instead of having 1 commit with two tags ("tag_A" and "tag_a") I get his =
-error message:
-> Unpacking objects: 100% (4/4), done.
-> error: cannot lock ref 'refs/tags/tag_a': Unable to create 'C:/tmp/.git/r=
-efs/tags/tag_a.lock': File exists.
+The output from "git config" plumbing command were designed to help
+people writing shell scripts Porcelain around it, so the expected
+use for them has always been
 
-The reason you're seeing this error is because refs can be stored in the
-file system. In order to update a reference, Git takes a lock on it, and
-as you've seen, Git can't take a lock on the same reference twice.
+	ERR=$(git config --type=color --default=red ui.color.error)
+	... some time later ..
+	echo "${ERR}this is an error message"
 
-It's known that multiple references that differ only in case can't be
-stored in a case-insensitive file system, and there is a design for a
-different system (reftable) which nobody has yet implemented in Git but
-does not have this problem.
+where the first assignment will strip the final LF (i.e. the value
+of the $ERR variable does not have it).
 
-Even if we accepted this situation in fast-import, we'd destroy one of
-your tags, which would be undesirable.
+An interesting aspect of the above is that this is *NOT* limited to
+colors.  Regardless of the type you are reading, be it an int or a
+bool, VAR=$(git config ...) will strip the trailing LF, and existing
+scripts people have do rely on that, i.e. when people write
 
-Sometimes this happens to work because when we pack references, we store
-them in a file instead, which does not suffer from case-sensitivity
-problems.
+	VAR=$(git config ...)
+	echo "var setting is $VAR"
 
-Right now, you have some choices:
+they rely on VAR=$(...) assignment to strip trailing LF and echo to
+add a final LF to the string.
 
-=E2=80=A2 Volunteer to implement reftable.
-=E2=80=A2 Since you're on Windows 10, set your Git repository directory as
-  case-sensitive.
-=E2=80=A2 Use Windows Subsystem for Linux, which is case sensitive and crea=
-tes
-  directories with that flag (even on NTFS), to do your import.
-=E2=80=A2 If you control the fast-export output, adjust the arguments you p=
-ass
-  such that the output does not contain one of the offending tags.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+So if we are going to change anything, the change MUST NOT single
+out "color".  IOW, the title of the patch already tells us that it
+is giving a wrong solution.
 
---eVzOFob/8UvintSX
-Content-Type: application/pgp-signature; name="signature.asc"
+Whether you limit it to color or not, to Porcelain writers who are
+writing in shell, I suspect that the code after the proposed change
+will not be a huge regression.  VAR=$(git config ...) assignment,
+when the output from the command ends without the final LF (i.e. an
+incomplete line), will keep the string intact, so the behaviour of
+these shell scripts would not change.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
+If an existing Porcelain script were written in Perl and uses chop
+to strip the last LF coming out of "git config", however, the
+proposed change WILL BREAK such a script.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlx7HwYACgkQv1NdgR9S
-9ovCzQ/+IJOnFF80u9QbMdf2RShin4tzBXpj1SLs96TDQ6Q4tXgVDJSiy92LZ2CS
-S6Tifta1Z1vok2jedJz4Nr0LPjoXP2Z8N2Nu+evnvTDc4ZK975As6g96Z8dmdb+Y
-L6DlmAZgWae8mwBNfN1twyW9CPiQ2Bt30Tm/3N5STruaBRkrfkTgqq2ppRil2w3w
-A/+h3PRKMOGx8UOTXaxi6GDyv4ZIG5IQhflWCNbHzAdaNcoZggCycSOhADmMdOyf
-YjeZisARsX2EdJ2wYBHo/bkH97qIRsr5TUx3y33j3RGVMAfsHpR7p1xOJ/NQhQ7N
-p72PLpYslrsS8XsoQ/wRaW7Np8TIYmt53/CshWELoYatI4fjU0AkvL85AIXNvb4m
-okfE7U5b4oO9VGU0EXrt6eetVSpdS0h/I20WoP0tMfZ6m4h/CBgOUUVEhruNoKUf
-5n9wIBJlJjtRVzcQwrmHrPn852IhaYNw/pqB1DRcsW3gX1oot5PdsSO9ntRZ8HiV
-Mt8nvTnDujUPzjG8O1VdmLLrEPmbcms+kvw50zywIS5Qtyv2DICRnC4MkYlbJ9C5
-BdseeiB5p6KHQ2qeoqqKS1QKT3TrrdCHVOSEqrQ7ClK+ImdJOLL9N4jbSwvrI1xF
-RxmnYT4GTT7UI3JgiXgNk0egIJwBFjpAlZVrhMkJS3nd84CrUIc=
-=dzFv
------END PGP SIGNATURE-----
+Needless to say, "using chop in Perl is wrong to begin with" misses
+the point from two directions---(1) 'chop in Perl' is a mere
+example---scripts not written in Perl using chop may still rely on
+the existing behaviour that the output always has the final LF, and
+(2) even if we agree that using chop in Perl is a bad idea, such a
+script has happily been working, and suddenly breaking it is a
+regression no matter what.
 
---eVzOFob/8UvintSX--
+So, I am not hugely enthused by this change, even though I am
+somewhat sympathetic to it, as it would help one narrow use case,
+i.e. "interpolation".
+
+	cat <<EOF
+	$(git config ...)Foo Bar$(git config ...)
+	EOF
+
+or
+
+	(
+		git config ...
+		echo Foo Bar
+                git config ...
+	)
+
+would lack LF before Foo automatically, and forcing those who want
+to have LF to add it manually would sound easier than forcing those
+who want to strip LF when they do not want it.
+
+But when you are making a list, getting the final LF for free is a
+feature, so it cuts both ways.
