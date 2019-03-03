@@ -2,140 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C75DB20248
-	for <e@80x24.org>; Sun,  3 Mar 2019 14:45:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DDD220248
+	for <e@80x24.org>; Sun,  3 Mar 2019 14:47:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbfCCOo7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 09:44:59 -0500
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:42459 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726217AbfCCOo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 09:44:58 -0500
-Received: by mail-ed1-f43.google.com with SMTP id j89so2122734edb.9
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 06:44:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/JId50HUn/LvrL2rTAb2NpNI3oTuO9EqUM8/UESUYdg=;
-        b=LNrzEv5KhgReBYTZOdmHTusnAnRhO9nWo0bH24RZAHwXEw6SlJ6LHfsoDxraHFChIW
-         V51Db2KblYvlXSk2mrURa+3/Ctl9Be8GoVA6G/9gY1CpxFBQaCSzCdH+y13877VzLzBF
-         sjHJMG8Y8AjJf1BWXNoVJSs7bZznlMwhkh4yG3ZOc4TepH1PTNEu7b6hnDYiK1+WYsDF
-         UZw28bk6EUdKLMtUY1rJrkKQdUrQoidkjjYd9eH5OknBj2KxXVB9soUbwYPOANAirU83
-         xsxoZ7a0iuxSyHnMx3TRnhgLDy6MueFKlg6LmaFgmfYzxmQdeypz8fHt88pJLPHYdREV
-         EaHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/JId50HUn/LvrL2rTAb2NpNI3oTuO9EqUM8/UESUYdg=;
-        b=PNzzDgZ/vVj7lvIwjJIrNDl2ouhKdL/w8T7z9lugiIBKUi8ubTQyakzlNvDoRbsYSd
-         t1cBI63vcyYNaNerMHXgzH0WPiJCTjYhGsDLu0tIZ8JS8eROA2aZF8fxpi5vYwkJuOmd
-         lZBJw+j4sXHQrqlmLz/9SqQ/q6F29Cx4ZZ9ZqwMjgKzwzYgJV5GWvfH2u911vHcVDQan
-         rSP6Dw1wgZiTwOgFaD67RKYiKTijLA27MSdqRyhhccG4OUIEyApDggMNLj0BqesN9Y3h
-         foAx8S5VdFuQh7s3CKos5cQ/w9/3hhiWjnHyUqNyykPppgBklNXCImSR9r2Qjld6uzr9
-         NmBw==
-X-Gm-Message-State: APjAAAWUzfSgVIVpqkedHlKGf+ul4WkJNayzdpWW0sGHBoi5EGuAl4zQ
-        2drdh6waiyckHi+WTS72RfPp+J0M
-X-Google-Smtp-Source: APXvYqzIiHvd87UBzzbjuzgl44hwgbpB3Bf/5rZCjBeOTzQ/SOMopU6QscGKZoG+IfrlACjXlSzK2w==
-X-Received: by 2002:a50:baab:: with SMTP id x40mr11620945ede.244.1551624296169;
-        Sun, 03 Mar 2019 06:44:56 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 31sm1265250edr.7.2019.03.03.06.44.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Mar 2019 06:44:55 -0800 (PST)
-Date:   Sun, 03 Mar 2019 06:44:55 -0800 (PST)
-X-Google-Original-Date: Sun, 03 Mar 2019 14:44:53 GMT
-Message-Id: <074628c22b2df82280b06db604196f25300e8f87.1551624293.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.155.v2.git.gitgitgadget@gmail.com>
-References: <pull.155.git.gitgitgadget@gmail.com>
-        <pull.155.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 2/2] tests: introduce --stress-jobs=<N>
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726318AbfCCOrK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 09:47:10 -0500
+Received: from mout.gmx.net ([212.227.17.22]:34871 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726217AbfCCOrJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 09:47:09 -0500
+Received: from [10.49.202.116] ([95.208.58.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MTeVY-1gZxHK2heK-00QRHt; Sun, 03
+ Mar 2019 15:47:02 +0100
+Date:   Sun, 3 Mar 2019 15:47:01 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] tests: introduce --stress-jobs=<N>
+In-Reply-To: <20190303141946.GA28939@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1903031544310.45@tvgsbejvaqbjf.bet>
+References: <pull.155.git.gitgitgadget@gmail.com> <281d3f1d19d1c93e8d1e66ae16fe3fb286554c0a.1551561582.git.gitgitgadget@gmail.com> <20190303141946.GA28939@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: multipart/mixed; boundary="8323328-1138886583-1551624423=:45"
+X-Provags-ID: V03:K1:0sYz/MHNr4kxdiYy8U+dyYcPEZJtNYe4lS2FoaT/Rx3aO44OU8p
+ axfdN2ofnuFso8TsSIURm0iO2s/6ldiPzv17HQTgvTp9GbcKnaauFQbgUK2PJgloaKe0NK4
+ EaEcK1IiI+dJpZ4V8YV+jXwxDeRkbi4NRRsuT+N+e23SkJvYl4mAXyGwpXGGJ6nfASsYuNP
+ Ff7b0TJkSj3SXBWD2vttA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HxKuC1bxftU=:/rMo2kDzVuVsqcccMGWQ/3
+ EQR+6uWsfxmtpcBHZR2AzrE45GhTIWYKRjrtCGvj5yWfEDbRnKeQ2vajuJPRZagHD0kU0pyGh
+ 36noS2zQgpJy84hphKYRPYJHMPUx0LwYRf/vKWFXhV1wMM7l4n7NJcdLRzl4J1HP4pSnvO7HC
+ KM02UTEgn+oqY4j3qyGLli3aCsv/xQ///Yh73cb6hpexpXBoEuyCncJ/iTC3OhKeXljkYs91k
+ yP0SrcGUU5yhv865vJFJLxjOdZM39waVGZVXhH67pVFE/JzMuyrhFi6wW7PC254gg2fPuTFUm
+ iyQ0N1PJ9qMX5QIRPm26VSfeiKswqdWaUaciOUKoslLWJ2tP90o4Bce+jnVQS1UvN5G9GU6Sy
+ +X0rOz5eiPP5PwrDj394AF97kA5RGWNfdmBjcIweqSkvk+sY4wuH1Cd5uuNihHdLdQjlECzI7
+ QRoshVFv6fjs2UygQGfklCvTVKGuWuMyQJl6/n/S43tR+Kut4Ob89XIaE8q9FrWvkI6PWdJ3z
+ BlZvTTGfDIr3AJauCTcE+YD7m5enQBG2X6AB08G5cWTUOeozoo8mk/M8wEFkjnFoWY3xscr7Z
+ 3cBDe3Xe1FBsDRUjl7DbIdTykOdv+LHQC1040OFUHH6wsAXBOxBbusyuzvCFex2uRP9aA7BQv
+ 2c06xl0bAPfq84Ijr55mCM0LfX/epjUEP7jk44w9YvECaC0JQtFH3095knZvBIuY+UpARefcO
+ wlyKlG7Dhaq6cGpyPEpPc43EdMbMiBjMaPCWaZK19RaIcaZGUHfNPD5MFlDAhV1nPVAxhxOh1
+ XtbKQimbKxFx+OqanbGKEZMUEVsSVrZDUBAJsq1u2WaDBGLJY5U6rlsic6/dQ5xiGjUoskUGb
+ P92KygZTXmFahiOMJmNi6T5c7SbNjT/MH/D8CuhzdQHRt4nvEFog0Ro2HC9CJg2jZJNVXBDOD
+ A/9EHLv+rxA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The --stress option currently accepts an argument, but it is confusing
-to at least this user that the argument does not define the maximal
-number of stress iterations, but instead the number of jobs to run in
-parallel per stress iteration.
+--8323328-1138886583-1551624423=:45
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-Let's introduce a separate option for that, whose name makes it more
-obvious what it is about, and let --stress=<N> error out with a helpful
-suggestion about the two options tha could possibly have been meant.
+Hi,
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/README      | 6 ++++--
- t/test-lib.sh | 8 +++++++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+On Sun, 3 Mar 2019, SZEDER Gábor wrote:
 
-diff --git a/t/README b/t/README
-index b61bc930c4..a496be56ef 100644
---- a/t/README
-+++ b/t/README
-@@ -187,11 +187,10 @@ appropriately before running "make".
- 	variable to "1" or "0", respectively.
- 
- --stress::
----stress=<N>::
- 	Run the test script repeatedly in multiple parallel jobs until
- 	one of them fails.  Useful for reproducing rare failures in
- 	flaky tests.  The number of parallel jobs is, in order of
--	precedence: <N>, or the value of the GIT_TEST_STRESS_LOAD
-+	precedence: the value of the GIT_TEST_STRESS_LOAD
- 	environment variable, or twice the number of available
- 	processors (as shown by the 'getconf' utility),	or 8.
- 	Implies `--verbose -x --immediate` to get the most information
-@@ -202,6 +201,9 @@ appropriately before running "make".
- 	'.stress-<nr>' suffix, and the trash directory of the failed
- 	test job is renamed to end with a '.stress-failed' suffix.
- 
-+--stress-jobs=<N>::
-+	Override the number of parallel jobs. Implies `--stress`.
-+
- --stress-limit=<N>::
- 	When combined with --stress run the test script repeatedly
- 	this many times in each of the parallel jobs or until one of
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ab7f27ec6a..6e557982a2 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -142,10 +142,16 @@ do
- 	--stress)
- 		stress=t ;;
- 	--stress=*)
-+		echo "error: --stress does not accept an argument: '$opt'" >&2
-+		echo "did you mean --stress-jobs=${opt#*=} or --stress-limit=${opt#*=}?" >&2
-+		exit 1
-+		;;
-+	--stress-jobs=*)
-+		stress=t;
- 		stress=${opt#--*=}
- 		case "$stress" in
- 		*[!0-9]*|0*|"")
--			echo "error: --stress=<N> requires the number of jobs to run" >&2
-+			echo "error: --stress-jobs=<N> requires the number of jobs to run" >&2
- 			exit 1
- 			;;
- 		*)	# Good.
--- 
-gitgitgadget
+> On Sat, Mar 02, 2019 at 01:19:44PM -0800, Johannes Schindelin via GitGitGadget wrote:
+> > The --stress option currently accepts an argument, but it is confusing
+> > to at least this user that the argument does not define the maximal
+> > number of stress iterations, but instead the number of jobs to run in
+> > parallel per stress iteration.
+> 
+> Well, these options' description in 't/README' is quite clear on what
+> they do.  If the lack of updates to 't/README' in these patches is any
+> indication, then you haven't read that :) but doing so might very well
+> have avoided your confusion in the first place.
+
+Yep, hadn't read it, assumed that it was obvious that `--stress=<N>`
+meant: try for at most <N> times to replicate the issue.
+
+Which to me is a good indicator that the UI could be improved...
+
+> According to my Bash history, I used '--stress=<even-more-cpu-cores>'
+> about 20x more often than '--stress-limit=<N>'.  That's not surprising
+> at all, since the main point is to try to trigger rare, hard to
+> reproduce failures, no matter how many repetitions it takes.  And even
+> if there is an upper bound, it is usually not the number of repetitions
+> I know in advance, but rather the time I'm willing to sacrifice on it,
+> e.g. how long I'm on lunch break or doing groceries, or when I need my
+> CPUs for more important things, or simply when I give up, and hit
+> ctrl-C.
+
+I don't doubt that *you* need `--stress-jobs=<N>` more often than
+`--stress-limit=<N>`, but I really think that common users will need the
+latter a lot more often (if they need the former at all).
+
+> And with --stress-jobs=<N> I will have to type more :)
+
+Sorry ;-)
+
+Ciao,
+Dscho
+--8323328-1138886583-1551624423=:45--
