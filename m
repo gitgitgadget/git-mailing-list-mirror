@@ -3,235 +3,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E41F20248
-	for <e@80x24.org>; Sat,  2 Mar 2019 23:48:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E476820248
+	for <e@80x24.org>; Sun,  3 Mar 2019 00:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726826AbfCBXsa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Mar 2019 18:48:30 -0500
-Received: from mail-ua1-f44.google.com ([209.85.222.44]:40979 "EHLO
-        mail-ua1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726681AbfCBXsa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Mar 2019 18:48:30 -0500
-Received: by mail-ua1-f44.google.com with SMTP id j7so1274578uak.8
-        for <git@vger.kernel.org>; Sat, 02 Mar 2019 15:48:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cy8ty2q9kEo1A2xb8wobD7IZHc1DEZKnbrGhA+xKtjw=;
-        b=MRE19HUECY7LvrKlGyng8r7feSoTPTbauNkyq27GjlT2Z/knpMQ9H3ZR1YhvHa78Xb
-         VdJufwSq4GysExRxO8fnuV4SUM0sZLlLQm97QIpQjqcQfFvE73hNaAi9E8OZnAA2T3FQ
-         f6t3HC1zCJSAFHGGNurvgwhUFG2fUUhsue83hAbyDnbFIm6UrraX01tbKaXshzbiBPDB
-         P1PzuWZ+H0OWADklcKtVGtgv2+ujVaNbKDb3NTBCpIdc9HdvTreEyu/NM+6qdq1FT6tj
-         jFHlzPTCEnjDxLiR+Bzir3uxHT0oVi2ZSJR8uxa8O5nQ/C/fC6Qc9Ig3BLL/WxDN7Ivb
-         jS9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cy8ty2q9kEo1A2xb8wobD7IZHc1DEZKnbrGhA+xKtjw=;
-        b=UUkkgP6HaH37s1Tps0woIFz7ywReosFY8s8O2SBxISIaXYqsigLHXZ1ik7B/ZpaNNF
-         FwDsqYnzn4WMX7Kc1JFIQxIvGsZ3ZrR4EhWg3lY+96fDCvnv7wG6s+rjHu9YrdmgRoRo
-         0e1t5xR+y9Eb4SFXLv7KDozkwJKVfsqGbHvbrKt40Ze+UNf7ClHEX1Eq/cg263HddeIl
-         d29wCftXRaiNLvVgnQ0gxdDUakgeRybuqdIAXCssa+OV+lycNZ3JduaF5A0bj6DWsV2K
-         +CGnXlRN0b0y+MWKrp3YLztAIQaLj/1aUrrQ2ivdLlG948O7uiFjep13y0iuOqtC7eRj
-         ubKQ==
-X-Gm-Message-State: APjAAAVw9WE3bScdwsdOE1dNBeU0OyekG4jxTDc+HlOgW0EVco+Bq0t6
-        fbNPU2cfV9RNZwB2pzBkLSfgzcYQ8FNnbYtcCVvNIVtk
-X-Google-Smtp-Source: APXvYqwCaoVmdVAagYu1EpFF6ezrZxnElU8Dar9A0flEcFCjHgCmGS6HU6JSvTd+edAUFFt83uUVA8hnIVDExezEvxQ=
-X-Received: by 2002:ab0:7191:: with SMTP id l17mr6426516uao.28.1551570508882;
- Sat, 02 Mar 2019 15:48:28 -0800 (PST)
-MIME-Version: 1.0
-References: <67C5CE5D6EC13D4DB8FC51E2F9BD262F022B8B3151@Triton.ad.trimma.se>
- <512993fe-51da-745d-031b-37ea162499fb@gmail.com> <CABPp-BGbrWrS0622yfTRUqRzWzNsZ_v9cAWW6ucXBYXqD26qHA@mail.gmail.com>
- <20190227164056.GA2062@sigill.intra.peff.net> <CABPp-BGOqQ0P8ywCK_sybPOeASxPnkTq7NXW8678f=345=68-Q@mail.gmail.com>
- <xmqq7edj9uh2.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7edj9uh2.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 2 Mar 2019 15:48:17 -0800
-Message-ID: <CABPp-BFdbC2Shq8BrP=Ht21ZbjvEZVL_uQC0=3_YwbLJVbBU+g@mail.gmail.com>
-Subject: Re: [BUG] All files in folder are moved when cherry-picking commit
- that moves fewer files
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Linus Nilsson <Linus.Nilsson@trimma.se>,
+        id S1726664AbfCCAZu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Mar 2019 19:25:50 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:35112 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726535AbfCCAZt (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 2 Mar 2019 19:25:49 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:a4e9:9ba4:4fd2:4493])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BF7BA60479;
+        Sun,  3 Mar 2019 00:25:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1551572748;
+        bh=Ox8vAB+qRKmZYMX3N7H1NRszBYWdyi7R9RD7b1IIgvY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=n2KmlsMciIIWEHVcmSTn61jes06g+myvvGHPZ1Ixf5jYjQGqbGNJLhz9tIAAMxh9d
+         diHP7Hde1W6flg0bTLwOgcYLrZLTnjy0fhQh5nEU7iesk+U176ecxn7jS/Pl/LXScB
+         cSxIKM9xT7uKm6tW9HyAaZvAH71ODc6H0dXjlH0NoEjlORWG4PazVTae5cSR1LY424
+         JANzCy9TvxmE7N7bKFseYs6E6Ryly4Q5R++Ck8HgDugARjCbzR51IgHWdI/DEDw2dT
+         pLi0C59m/92W1ii/U1k8/wwcmj+EHczWPUHzfp1qeFzCfeUlUQ7/g0k7Uopp9u5L9V
+         eXkQWLESdHG1//xueUCV9B2j8tGgqgZzKnkyeSJBgp24KZGIwKbAaj62YVNKtMp7O5
+         IqPHnno3wTVot3RzhyLuPzRXzXAs39i9azI1qnx2OOW3dLKlVO8o0FaZ2Lj4PmyOrI
+         0ZwednTaUaSZkMMRhwJYfvpZIvRrpBPrwvX7Dhgs8aojPlXMvlY
+Date:   Sun, 3 Mar 2019 00:25:42 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Wendeborn, Jonathan" <Jonathan.Wendeborn@bruker.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: fast-import fails with case sensitive tags due to case
+ insensitive lock files
+Message-ID: <20190303002542.GG601925@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Wendeborn, Jonathan" <Jonathan.Wendeborn@bruker.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <ceb9b34681c14d9ab2a33ba909b5ca75@bruexc101.brumgt.local>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="eVzOFob/8UvintSX"
+Content-Disposition: inline
+In-Reply-To: <ceb9b34681c14d9ab2a33ba909b5ca75@bruexc101.brumgt.local>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Thu, Feb 28, 2019 at 6:52 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> As you know that I've always been skeptical to this rename-directory
-> business, this probably won't come as a surprise, but I seriously
-> think directory renames should be made opt-in, and as a separate
-> option, making the option three-way.  I.e.
->
->  - do we do any renames (yes/no)?
->
->  - if we do do renames, do we base the decision only on the contents
->    of the thing along, or do we allow neighbouring files affect the
->    decision?
->
-> That is, in addition to the traditional --renames or -M, we'd have a
-> separate bool --allow-directory-renames that is by default off and
-> is a no-op if the former is off.
+--eVzOFob/8UvintSX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We've gone from always-off (ability wasn't implemented), to always on
-(assuming normal rename detection was on), and now we're considering
-making it an option, with you proposing opt-in.  While I think opt-out
-would be a better default, we may want to first consider the range of
-possibilities; if more safety is needed, other choices might be safer
-than either opt-in or opt-out.
+On Fri, Mar 01, 2019 at 06:19:48AM +0000, Wendeborn, Jonathan wrote:
+> Hi,
+>=20
+> I have a problem with fast-import on an NTFS drive: If I try to import ta=
+gs which are identical apart from their casing a failure due to identical l=
+ock file names occurs.
+>=20
+> I am running git for windows 2.15.1.2 x64 on a Windows 10 machine (10.0.1=
+5063):
+> $ git --version --build-options
+> git version 2.15.1.windows.2
+> built from commit: 5d5baf91824ec7750b103c8b7c4827ffac202feb
+> sizeof-long: 4
+> machine: x86_64
+>=20
+> MCVE:
+>  (echo "commit refs/heads/master" &&=20
+>  echo "mark :1" &&
+>  echo "committer me <> 0 +0000" &&
+>  echo "data 0" &&
+>  echo "" &&
+>  echo "tag tag_A" &&
+>  echo "from :1" &&
+>  echo "tagger me <> 0 +0000" &&
+>  echo "data 0" &&
+>  echo "" &&
+>  echo "tag tag_a" &&
+>  echo "from :1" &&
+>  echo "tagger me <> 0 +0000" &&
+>  echo "data 0" &&
+>  echo "") | git fast-import
+>=20
+> Instead of having 1 commit with two tags ("tag_A" and "tag_a") I get his =
+error message:
+> Unpacking objects: 100% (4/4), done.
+> error: cannot lock ref 'refs/tags/tag_a': Unable to create 'C:/tmp/.git/r=
+efs/tags/tag_a.lock': File exists.
 
-This email reminds me a bit of the recent overlay discussion, where
-some of your wording made me think about directory handling, but you
-had smudge filters in mind.  We're occasionally on different
-wavelengths, and I'm worried I might be mis-reading your main point
-and/or that my responses only address part of the issues you have in
-mind.  Let me know if that's the case.
+The reason you're seeing this error is because refs can be stored in the
+file system. In order to update a reference, Git takes a lock on it, and
+as you've seen, Git can't take a lock on the same reference twice.
 
-> We had to fix a breakage recently for 3-way fallback case, and we
-> explained the fix as needed because the case lacks the full
-> information, but I think even with the full information at hand, the
-> rename-directory heurisitcs is inherently riskier than the content
-> based rename detection.
->
-> Suppose you had F1, F2, ... in directory D1, and moved them all to
-> D1/D2.  In the meantime, somebody else adds Fn to directory D1.  It
-> may be likely that some variant of Fn would want to go to D1/D2, but
-> it also is very likely that there should be a difference between
-> D1/Fn somebody else had, and the contents of D1/D2/Fn in the merge
-> result.  Perhaps D1/F1 in your preimage used to refer to another
-> path in the top-level directory as "../top", but the reference would
-> have been rewritten to "../../top" when you moved D1/F1 to D1/D2/F1,
-> and the person doing the merge should at least check if D1/Fn that
-> comes from the other party needs a similar adjustment while merged.
->
-> In the above scenario, if there were D1/Fn in _your_ preimage and
-> all the other party did was to make in-place modification, the story
-> is vastly different.  Most likely you would have made most of, if
-> not all, the adjustment necessary for D1/Fn to sit in its new
-> location, while the other party kept the relative reference to other
-> places intact, so we can say that both parties have say in the
-> contents of the auto-merged result.  The "since neighgours moved,
-> this must also want to move the same way" heuristics does not give a
-> chance to the party that is not aware of the move to prepare the
-> contents appropriate for the new location, by definition, so the
-> onus is on the person who merges to adjust the contents.
+It's known that multiple references that differ only in case can't be
+stored in a case-insensitive file system, and there is a design for a
+different system (reftable) which nobody has yet implemented in Git but
+does not have this problem.
 
-There are a few issues here to unpack.
+Even if we accepted this situation in fast-import, we'd destroy one of
+your tags, which would be undesirable.
 
-First, in regards to your example, the very first "Limitation" imposed
-by the directory rename heuristics was:
-  * If a given directory still exists on both sides of a merge, we do
-not consider it to have been renamed.
-Therefore, your (detailed) example above of "renaming" D1/* to D1/D2/*
-isn't something the directory rename heuristics supports (the presence
-of D1/D2/ implies D1/ still exists and thus could not have been
-renamed; this particular case is explicitly mentioned in t6043 and I
-brought it up a couple times during the review of the directory rename
-patch series with Stefan).  There are too many edge/corner cases that
-become difficult without this rule and it was considered more likely
-to (negatively) surprise users, so even with directory rename
-heuristics on, a new file Fn added to D1/ on the other side of the
-merge will remain in D1/Fn after the merge.  Perhaps this
-clarification helps assuage your worries, or maybe your example was an
-unfortunate one for relaying your real underlying concern.
+Sometimes this happens to work because when we pack references, we store
+them in a file instead, which does not suffer from case-sensitivity
+problems.
 
-Second, you stated that you thought "rename-directory [heuristics are]
-inherently riskier" than not having them on, and then gave a single
-(though involved) example.  This could be read to imply that you
-believe directory rename heuristics are for convenience only, that
-there is no risk involved with not detecting directory renames, and
-thus all that matters is the cost benefit of the convenience of
-detecting renames for users vs. whatever risks there are in
-"detecting" renames that aren't actually wanted by users.  I do not
-know if you intended any of these implications at all, but I do want
-to point out that not detecting directory renames is not merely a
-convenience.  While that convenience was _part_ of the reason spurring
-my work on that capability, it was also pushed due to my having been
-told about bugs caused by not having it.  I don't remember the details
-I was told (and I wasn't even told the full details of the bugs), but
-my understanding and/or guesses years later is:
-  * build systems sometimes build code according to directories and globs
-  * an un-detected directory rename can thus cause new files on one
-side of history to not get built as expected
-  * other files may not have direct references to identifiers in the
-new files, thus no compilation-time or link-time failures occur
-  * the new code could have had a static singleton that registered
-itself with some other logic in the code
-  * the "other logic" rather than having a one-to-one set of handlers
-may have a priority listing of which static singletons to use
-  * therefore, there is no runtime failure from failing to compile the
-code either, just different behavior than expected
-  * a testcase should have caught this type of problem anyway, but
-testcases aren't always added
-  * it was a rarely used, but important case
-  * the developer did *manually* test this pretty carefully...but
-didn't expect a "clean merge" to break things.  :-(
-  * this kind of issue might not be detected before release,
-deployment, or installation and usage at a customer site.
-  * testcases are a best practice for a reason, it was totally our
-fault for missing them, but having multiple LTS releases and large
-code directory refactors between versions increased the odds we'd
-eventually hit failures of this type
+Right now, you have some choices:
 
-Third, at the end of your example, you say that the rename-directory
-heuristics "[puts the onus] on the person who merges to adjust the
-contents", but my example above shows the same is true if directory
-renaming is turned off.  The person doing the merge needs to somehow
-know there may have been a directory rename and possibly move files
-and update references or things may have semantic breaks.  This seems
-no different to me than normal content merges with e.g. new
-invocations of a function added on one side of history and on the
-other side of history new parameters added to the function call
-signature.  Actually, I guess there is one difference: we have a way
-of detecting the (potential) directory rename and notifying the user
-of a possible change -- though we haven't taken advantage of this
-possibility yet (handle_rename_via_dir() silently moves files).
+=E2=80=A2 Volunteer to implement reftable.
+=E2=80=A2 Since you're on Windows 10, set your Git repository directory as
+  case-sensitive.
+=E2=80=A2 Use Windows Subsystem for Linux, which is case sensitive and crea=
+tes
+  directories with that flag (even on NTFS), to do your import.
+=E2=80=A2 If you control the fast-export output, adjust the arguments you p=
+ass
+  such that the output does not contain one of the offending tags.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Perhaps, though, you see directory rename heuristics as somehow
-riskier than semantic merge conflicts of other types, and perhaps we
-should add more options here.  But I think there are other possible
-solutions here which are worthy of consideration before choosing which
-behavior we want.  Thinking just in terms of the default behavior,
-here are eight possibilities:
-  * leave the capability on with no changes (no ability to opt-out,
-other than turning rename detection off entirely)
-  * remove the directory rename detection capability entirely (go back
-to pre- git-2.18 behavior)
-  * opt-out (let users choose pre-git-2.18 behavior, but default to
-silently moving files according to directory rename heuristics)
-  * opt-in (directory rename detection is off by default and users are
-given no notice that paths should perhaps be renamed)
-  * display messages whenever directory rename detection adjusts a path location
-  * display messages whenever directory rename detection could adjust
-a path location, but don't adjust it
-  * whenever directory rename detection adjusts a path location, mark
-the new path as conflicted (i.e. record at either stage 2 or 3 instead
-of 0)
-  * whenever directory rename detection would adjust a path, leave it
-where it was but mark it as conflicted, and print a helpful message
+--eVzOFob/8UvintSX
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Whatever we choose for the default could be tweaked by some new option
-(e.g. make it less noisy or don't mark such paths as conflicted if the
-user has explicitly stated their preference for or against directory
-rename detection).  I'm struggling to see directory rename detection
-as "risky" (though I certainly feel that lack of it is and thus do not
-like the opt-in option), but if others feel there is risk here,
-wouldn't one of the last four options be safer than Peff's suggestion
-of opt-out or your suggestion of opt-in?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
 
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlx7HwYACgkQv1NdgR9S
+9ovCzQ/+IJOnFF80u9QbMdf2RShin4tzBXpj1SLs96TDQ6Q4tXgVDJSiy92LZ2CS
+S6Tifta1Z1vok2jedJz4Nr0LPjoXP2Z8N2Nu+evnvTDc4ZK975As6g96Z8dmdb+Y
+L6DlmAZgWae8mwBNfN1twyW9CPiQ2Bt30Tm/3N5STruaBRkrfkTgqq2ppRil2w3w
+A/+h3PRKMOGx8UOTXaxi6GDyv4ZIG5IQhflWCNbHzAdaNcoZggCycSOhADmMdOyf
+YjeZisARsX2EdJ2wYBHo/bkH97qIRsr5TUx3y33j3RGVMAfsHpR7p1xOJ/NQhQ7N
+p72PLpYslrsS8XsoQ/wRaW7Np8TIYmt53/CshWELoYatI4fjU0AkvL85AIXNvb4m
+okfE7U5b4oO9VGU0EXrt6eetVSpdS0h/I20WoP0tMfZ6m4h/CBgOUUVEhruNoKUf
+5n9wIBJlJjtRVzcQwrmHrPn852IhaYNw/pqB1DRcsW3gX1oot5PdsSO9ntRZ8HiV
+Mt8nvTnDujUPzjG8O1VdmLLrEPmbcms+kvw50zywIS5Qtyv2DICRnC4MkYlbJ9C5
+BdseeiB5p6KHQ2qeoqqKS1QKT3TrrdCHVOSEqrQ7ClK+ImdJOLL9N4jbSwvrI1xF
+RxmnYT4GTT7UI3JgiXgNk0egIJwBFjpAlZVrhMkJS3nd84CrUIc=
+=dzFv
+-----END PGP SIGNATURE-----
 
-Thanks,
-Elijah
+--eVzOFob/8UvintSX--
