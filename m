@@ -2,89 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_EMPTY_SUBJ,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAD8520248
-	for <e@80x24.org>; Sun,  3 Mar 2019 13:29:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7C7220248
+	for <e@80x24.org>; Sun,  3 Mar 2019 13:30:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726230AbfCCN3d (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 08:29:33 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:46625 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726158AbfCCN3d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 08:29:33 -0500
-Received: by mail-pg1-f194.google.com with SMTP id 196so1208125pgf.13
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 05:29:33 -0800 (PST)
+        id S1726285AbfCCNaF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 08:30:05 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:32903 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726158AbfCCNaF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 08:30:05 -0500
+Received: by mail-wm1-f67.google.com with SMTP id c13so2067288wmb.0
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 05:30:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1BTP6Tog/+a7IhnpaLcYGyJVzpB22lRiBjAaEwXl0Uk=;
-        b=HfYqCs9QpGdDvEqwoalcC2ChJzbaoZswq+z1anpouJgKbRGDLcJuYMrjyS5g4n6gz1
-         Uqn6f18Q7UFZYnV+39QLBT4eWtLQKvuvAvl/oNZKw54eZffwDdiq/lroP3ta3fPcbgTh
-         RFpMDRBTp7TokWxeMuJTBomg2VrdmqZDqTpkHZJdesBU6dJk5Ty+5R3rscLTanB17mPD
-         OIYgSEsRKO4XUV5y7KM8N5t3uGEQ4LpavpBryJnBMga8JmQn2Ndw8kvCLi1pNYeS6lcY
-         JacVOedxdI/PdR0UZVq9QBpwrJ26Gw0LZZQKYV/J+irNkNUDAuwUHxhN1mp/EHLIlXXr
-         QAzw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=wEos3mP1zaJXxJw0bG1WqK5mjPHvrHdVR4uwXnHoGqs=;
+        b=q9LjgQilXRniH26ZKSUkYcnwOkMQIFQgbZD2QPnTP1LBDTMW1+u3A150F8nfScDyGD
+         E/7uv5r457K7HgZOdTNUPpiXc/+aZ6Bg7LbREqb8gOEB4+DsyEftf3EU8BUYu4R74cP+
+         xBDT1mTKwCfsVViVHORhfrUbc+pKRpNbJw9YHpIB3zTIU1G6/qShHRt14Uv0YLojxH6U
+         QgexirSy+qVUEP762wMNDEMHZOUqGLFEgeDCmEl0DJwFB3mH56ZQcj9X9fjmko3aXLB1
+         ElVZg0JnPcy3xwkmUpZcTXCZvZkTIHvt9pT/svbSefxTcB7A1qKl2ixWqYb2itpjO5Jb
+         5Kgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=1BTP6Tog/+a7IhnpaLcYGyJVzpB22lRiBjAaEwXl0Uk=;
-        b=c7+kf2HpzaJhCsd0k96Ajnls++LE6OPEjncdstPT3KcGPOVBO0oklSfdQyN4cLuhRM
-         RJXg6GQxKoodp6gfHnDUYTMvCd6ctbtoIbVDekoqs6MAioROoI0owHSGV7wC1lTleB98
-         lOfQRu+Kv74ak0lsIe3XI0CdcS5Tf8rMfoU2lGsEQuVymNwfeVMsL+oiC5Swd/Snw/He
-         pnbGU1tvQlxNfAyJJaKPNWQ47R4CwIgtCMvKYH5V08wkeHk5Zm4sac11jLhV3ix5Q0xh
-         pNJIjHovfvEC3jwucXNPilJallgOlh1wa3nldNINTBSQyy8k3IaHbL+9bsJ7/z7SZYs+
-         vghQ==
-X-Gm-Message-State: APjAAAV8c21ZgOkLTbjNnGxYzBRt8OvKcN16gAopOb6M5abr2pTkoOdw
-        r4HWnz7BUckkpQ4VbaXnJDM=
-X-Google-Smtp-Source: APXvYqwBXOyeZPS3BIl8uxuYN/Un2NQpzsXToS/oO8GJxTAeMq536QmJH+l54BMeCRz/cidTGURvug==
-X-Received: by 2002:a63:b0b:: with SMTP id 11mr14030245pgl.187.1551619772758;
-        Sun, 03 Mar 2019 05:29:32 -0800 (PST)
-Received: from ar135.iitr.ernet.in ([103.37.201.80])
-        by smtp.gmail.com with ESMTPSA id f65sm5137178pff.21.2019.03.03.05.29.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Mar 2019 05:29:32 -0800 (PST)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     gitster@pobox.com
-Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
-        git@vger.kernel.org, rohit.ashiwal265@gmail.com,
-        t.gummerer@gmail.com
-Subject: 
-Date:   Sun,  3 Mar 2019 18:59:00 +0530
-Message-Id: <20190303132900.4618-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <xmqq5zt014du.fsf@gitster-ct.c.googlers.com>
-References: <xmqq5zt014du.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=wEos3mP1zaJXxJw0bG1WqK5mjPHvrHdVR4uwXnHoGqs=;
+        b=G5ZYvhJOXnqSRNd7Gw4/PSKLW2muuY5SfZmuHmZ+FK86Lkykgc1mmfBTMIRJp/tSX8
+         zgSGz17mpAXZeqhTAu50Os4EuCbjsIQ23y5Iw3NScXK3hWya8XAxaVEdQMOyF5mA/bqE
+         1J9qjA6+mNbMBUHw4OUfgtzSpoJj4kZ+qz9vJok2rnezWvPjdk2QoiucZ6zVYuHSYdnZ
+         4j3tJWqy5n3J1j/wuGTia1hf+POC9mDIREBVkHK07JfUT+d/coao7sT1PF03DDa7y0bo
+         8U9+AjRhGcbrV4fy23lSoyjA75BKee8q/Pi+2Uc1amHdx3MSQNOIed+Fgdby9dFMbp8l
+         r+Kg==
+X-Gm-Message-State: AHQUAuZTS06WDUxW12G/UU94mhTgoDTlEpis07N8iaKLAJzGe/dgY/mR
+        WzQ/1252QJUcc6XibBApLeQ=
+X-Google-Smtp-Source: AHgI3IbHEUq63D4MscmPCF62YVj5a12gHdRB8WdDYtYO5namRvskd55qMiuOmb/VTeJysUXc6i+8Vw==
+X-Received: by 2002:a1c:c187:: with SMTP id r129mr8279543wmf.107.1551619803217;
+        Sun, 03 Mar 2019 05:30:03 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id p6sm14663330wre.63.2019.03.03.05.30.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 03 Mar 2019 05:30:02 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        t.gummerer@gmail.com, christian.couder@gmail.com
+Subject: Re: [PATCH 2/3] t3600: refactor code according to contemporary guidelines
+References: <20190303122842.30380-1-rohit.ashiwal265@gmail.com>
+        <20190303122842.30380-3-rohit.ashiwal265@gmail.com>
+Date:   Sun, 03 Mar 2019 22:30:02 +0900
+In-Reply-To: <20190303122842.30380-3-rohit.ashiwal265@gmail.com> (Rohit
+        Ashiwal's message of "Sun, 3 Mar 2019 17:58:41 +0530")
+Message-ID: <xmqqwolgytk5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Junio
+Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
 
-On 2019-03-03 13:20 UTC Junio C Hamano <gitster@pobox.com> wrote:
+> Subject: Re: [PATCH 2/3] t3600: refactor code according to contemporary guidelines
 
-> s/Add/add/.  Strictly speaking, you do not need to say "new", if you
-> are already saying "add", then that's redundant.
+Please do not overuse/abuse the verb "refactor" like this.  What the
+patch does is only reformat---it does not do common "refactoring"
+transformations like factoring out common/duplicated code into
+helper functions, etc.
 
-Oh, my mistake, I will change in coming revisions.
+If we are doing this step, let's make sure all tests use the modern
+style correctly.
 
-> "test -s <path>" is true if <path> resolves to an existing directory
-> entry for a file that has a size greater than zero.  Isn't it
-> redundant and wasteful to have test_path_is_file before it, or is
-> there a situation where "test -s" alone won't give us what we want
-> to check?
+>  # Setup some files to be removed, some with funny characters
+>  test_expect_success \
+> -    'Initialize test directory' \
+> -    "touch -- foo bar baz 'space embedded' -q &&
+> -     git add -- foo bar baz 'space embedded' -q &&
+> -     git commit -m 'add normal files'"
+> +	'Initialize test directory' "
+> +	touch -- foo bar baz 'space embedded' -q &&
+> +	git add -- foo bar baz 'space embedded' -q &&
+> +	git commit -m 'add normal files'
+> +"
 
-Just to be clear of what caused the error:
-	1. Path not being file, or
-	2. File not being empty
-I am checking for both.
+In the modern style, we'd write this like so:
 
-Regards
-Rohit
+	test_expect_success 'initialize test directory' '
+		touch -- foo bar baz "space embedded" -q &&
+		git add -- foo bar baz "space embedded" -q &&
+		git commit -m "add normal files"
+	'
 
+In addition to indenting with HT (not SP), two more points are
+
+ - test title comes on the first line;
+
+ - test body is enclosed in a single quote pair, opened on the first
+   line and closed on the last line.
+
+>  
+> -if test_have_prereq !FUNNYNAMES; then
+> +if test_have_prereq !FUNNYNAMES
+> +then
+
+This is good.
+
+>  	say 'Your filesystem does not allow tabs in filenames.'
+>  fi
+>  
+>  test_expect_success FUNNYNAMES 'add files with funny names' "
+
+This has title on the first line, and opening quote of the body as
+well, which is the modern style.
+
+>  test_expect_success \
+> -    'Pre-check that foo exists and is in index before git rm foo' \
+> -    '[ -f foo ] && git ls-files --error-unmatch foo'
+> +	'Pre-check that foo exists and is in index before git rm foo' \
+> +	'[ -f foo ] && git ls-files --error-unmatch foo'
+
+We prefer "test ..." over "[ ... ]" (Documentation/CodingGuidelines).
+
+Thanks.
