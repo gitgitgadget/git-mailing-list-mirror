@@ -7,98 +7,101 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33C9D20248
-	for <e@80x24.org>; Sun,  3 Mar 2019 18:25:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D7F820248
+	for <e@80x24.org>; Sun,  3 Mar 2019 18:33:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726555AbfCCSZP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 13:25:15 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:33424 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726517AbfCCSZP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 13:25:15 -0500
-Received: by mail-ed1-f67.google.com with SMTP id c55so2434924edb.0
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 10:25:14 -0800 (PST)
+        id S1726621AbfCCSda (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 13:33:30 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:41270 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726557AbfCCSda (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 13:33:30 -0500
+Received: by mail-ed1-f66.google.com with SMTP id x7so2426365eds.8
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 10:33:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=o1AU2syCpEc0bVA7o9Sy/4Z6Yi7h182TRkJS9kkuT2s=;
-        b=TSwIySFMWFNVGj6jljpmlKTZSIsbuXbkzEDAxJm7QGHclI2OfG6P53EwBYQFJq10Up
-         thnKKoWSTlu/kQbLOL+j0QMDbE2rvn8Z5Vi5EwhoKnc0DkJ5aGtp5lgMP4LUncnPNVdo
-         RgVY9ioRzFLGUP2vch70o5L1KDSwWUBL9XXP0uXojOrpflMkUkp3815SYjx+LQwLaP5m
-         y5jzb9acC7arInQZVElHKa1ETXP018NGTiUetj1B3IsBJDYX9Wc2Qw1Rb1knFnSxPZUl
-         bwg/6JGiWcYeu4VHGWfc16fy6V6Y1bWSY2f+OTG0sUgo6v8vccwMM0F9jrRhziPZK7YZ
-         0O2g==
+        bh=K8Z0W6ALlbLBzDonkS/btL//Kt7RrJ9GseNs9heI8A8=;
+        b=GQeDfzcdOAIB0m6sTwsXhCyOJcrNuEquP3/1gBx66U+mZCMEB8GxB9t6lEk0H7OAn7
+         X21ii+YFEjNACEUhE8BSVE3y/xyZcLZfdXODbdgRb93O/Q+cpWHyrRLYOd+r1gThEViW
+         1KHvX0PJvJ02O8D0N9Y32MVF56f9qKVpH18+g30jv1DdrCOCm4jwYpsdQlYn0QFeQuub
+         vRHhoYbRgqzIf8rFoDYgHdy98ohdfLr7GZx1cTrW9Psu47a2GeLJS7MkgSGcSx9fIJr1
+         cHHrHJ76lyy9Xn67Pa4LttZ2UOCebt9BiQRjD8lAFI4cSULrTr3oTNqpDm/m/+TO27A1
+         KJiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=o1AU2syCpEc0bVA7o9Sy/4Z6Yi7h182TRkJS9kkuT2s=;
-        b=JFZV/8hsxe1jVmg+A3j6xv6WtfebJYNwYp5ti+EyZ7MmEgxoCb7Cdgr8AkM7W0yI3G
-         KHApdJLqzIyLmZ8y71fhC1cmX+Pe+OL7KXkiql8uw4QIHxY5gmSfkmsvk81qOpymn+nk
-         5RpJ5CzeWDh03hKnEsKiFFxI9QZ/+R/8ZDuKK74xuKLegw5kcHHF8Epvxg6WZA+4Tfx0
-         i36w8qPcWVTWMJskw+ZaVLSq/bPBHL6Ijh4m7BovqpMcP7qCxhMx2m+NcA9d5uZQ2CGl
-         u9B8+zsS4kBfPAD0m4ahRwvn6ovlKOJ+Wy6BQXkIsU+1SjQdIchfmvqB9/jzgRoVcJjn
-         bnqA==
-X-Gm-Message-State: APjAAAVCJCG0gvi9/LKBCzCJBNs4C5/qFQeUGvRYTnKu8xd5VAqUUIza
-        kmS3GVkayWheuTc69sWGaxG+nt5nYaXiBJ38tP1P8GLy
-X-Google-Smtp-Source: APXvYqwHaQhzvD9sadqWYq6J15ggqqcluVZyF8X4h48cXFh5NaXlR5DKyG/eHP5iXMQ/kSHhJjXBUIlKDsGzlvvbIME=
-X-Received: by 2002:a17:906:c286:: with SMTP id r6mr10161575ejz.7.1551637513663;
- Sun, 03 Mar 2019 10:25:13 -0800 (PST)
+        bh=K8Z0W6ALlbLBzDonkS/btL//Kt7RrJ9GseNs9heI8A8=;
+        b=AS/dc+58IqVCD6jh/JG66XYO3W+gK6+xIhvO7oRpJDZE8d0nkusYHVVxbmP6z3plz/
+         RidN4tMEHS0NvcN1ETOgPuEFknDxrvxAWryG3oSGPOVxODSGVpxGb7Q/3Jdl/zzYD/Om
+         nY9exEly2/YQL+vayA/Y0bzvksQW9LQgyfx8bJ3i75/NXBovnWij1JQgt/37SPLa4h0G
+         dJsj9o9xB0o8dZz5/Tv5+dMooPup97LQz/B1HI9I9auX7poIs7vtO3KwfDH3kRV3L0kY
+         +wW4QbPrCmAXuFOHEh2kHkfdNwOgbqvvFp8K+mk0Wus7koCMfoAN4Wd/ISjRwE6D6vpr
+         8i2Q==
+X-Gm-Message-State: APjAAAU9hbecgsd/gsCbXVGB4BimeaVo+GiKdy+snrFRB+c189F7AZVF
+        LdKhjX9iIWxAmO/mBxE9Di1DQsQYfRxn9Db8z9w=
+X-Google-Smtp-Source: APXvYqxQRnJm0Bf3QCDM7dug28UTTl0c9I3ivY4VbigoMEcjzlK9ErBRaG15w7zViILdqng0ZvyhHWa3h6Pki/aKARM=
+X-Received: by 2002:a50:ae8a:: with SMTP id e10mr12694663edd.24.1551638008417;
+ Sun, 03 Mar 2019 10:33:28 -0800 (PST)
 MIME-Version: 1.0
-References: <20190222061949.GA9875@sigill.intra.peff.net> <20190222062327.GC10248@sigill.intra.peff.net>
- <xmqqsgwfr9vr.fsf@gitster-ct.c.googlers.com> <20190223134452.GE22403@sigill.intra.peff.net>
-In-Reply-To: <20190223134452.GE22403@sigill.intra.peff.net>
+References: <CAEpy5fTnyPjH0sVyjnGHi1qxo+_dpaerxwaD7MmNPbmLx6qyJA@mail.gmail.com>
+ <xmqq1s40u8gt.fsf@gitster-ct.c.googlers.com> <20190222061949.GA9875@sigill.intra.peff.net>
+In-Reply-To: <20190222061949.GA9875@sigill.intra.peff.net>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 3 Mar 2019 19:25:02 +0100
-Message-ID: <CAP8UFD3bBMNq6p+oSaO8up8pWXJpMCWMQZfDn_kH-ZGPhqUpFA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] bisect: make diff-tree output prettier
+Date:   Sun, 3 Mar 2019 19:33:17 +0100
+Message-ID: <CAP8UFD1puPt2c+EJRaBZmd_Fi5uJn0e4fthw8cpKoj7k+5Oy4g@mail.gmail.com>
+Subject: Re: [PATCH 0/3] prettier bisect output
 To:     Jeff King <peff@peff.net>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Bartosz Baranowski <bbaranow@redhat.com>,
-        git <git@vger.kernel.org>, Jon Seymour <jon.seymour@gmail.com>
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 23, 2019 at 2:44 PM Jeff King <peff@peff.net> wrote:
+On Fri, Feb 22, 2019 at 7:19 AM Jeff King <peff@peff.net> wrote:
 >
-> On Fri, Feb 22, 2019 at 09:49:44AM -0800, Junio C Hamano wrote:
->
+> On Thu, Feb 21, 2019 at 01:39:46PM -0800, Junio C Hamano wrote:
 
-> > > If we do care about the change in exit code from bisect, then it
-> > > probably does make sense to go with an external process. Then it can
-> > > happily die on the corruption, while bisect continues with the rest of
-> > > the high-level operation. I'm not sure it really matters much, though.
-> > > Once your repository is corrupted, all bets are off. It's nice that we
-> > > can bisect in such a state at all.
-> >
-> > This is about showing the very final message after finding which one
-> > is the culprit.  Is there any other "clean-up" action we need to do
-> > after showing the message?  I do not care too much about the exit
-> > code from the bisection, but if dying from diff-tree can interfere
-> > with such a clean-up, that would bother me a lot more, and at that
-> > point, given especially that this is not a performance sensitive
-> > thing at all (it is not even invoked log(n) times---just once at the
-> > end), moving to external process may make it a lot simpler and
-> > cleaner.
+> > At the end of the bisection session, bisect.c::show_diff_tree() is
+> > called on that "culprit" commit.  Is it possible that 3a9388ee is a
+> > simple and trivial merge that does not have anything worth reporting
+> > for "git diff-tree"?
 >
-> Thanks, I had a vague feeling along these lines, but you nicely put it
-> into words. As far as I can tell, no, we're not missing any important
-> cleanup in that process; it looks like the only call to show_diff_tree()
-> then calls exit(10) immediately after.
+> I've run across this many times, too. Since it's been bugging me for a
+> decade, I thought I'd finally try to address it. Here are some patches.
 >
-> However, that does change our exit code, which git-bisect.sh then
-> propagates instead of writing the entry into the BISECT_LOG.
+> There was some discussion about a year ago about just using "git show"
+> for this output:
 >
-> I'm still not convinced this is really worth caring about, as it implies
-> a corrupt repo.
+>   https://public-inbox.org/git/CAP8UFD3QhTUj+j3vBGrm0sTQ2dSOLS-m2_PwFj6DZS4VZHKRTQ@mail.gmail.com/
+>
+> Christian seemed generally OK with tweaking the output, but preferred
+> not to move all the way to running an external "git show".
 
-I don't care much about what happens in a corrupt repo, but I am
-adding Jon Seymour in CC who wrote those tests in:
+Yeah, I am still OK with tweaking the output, though I'd rather not go
+back to using an external process.
 
-d3dfeedf2e (bisect: add tests to document expected behaviour in
-presence of broken trees., 2011-08-04)
-b704a8b3fd (bisect: add tests for the --no-checkout option., 2011-08-04)
+> I'm not sure
+> I completely agree, but it was easy enough to get the results I wanted
+> just by fiddling the current code a bit. ;)
+>
+>   [1/3]: bisect: use string arguments to feed internal diff-tree
+>   [2/3]: bisect: fix internal diff-tree config loading
+>   [3/3]: bisect: make diff-tree output prettier
+
+I am OK with the above patches.
+
+Thanks,
+Christian.
+
+
+>  bisect.c                    | 19 +++++--------------
+>  t/t6030-bisect-porcelain.sh |  6 +++---
+>  2 files changed, 8 insertions(+), 17 deletions(-)
+>
+> -Peff
