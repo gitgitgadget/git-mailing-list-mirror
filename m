@@ -7,329 +7,538 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9128520248
-	for <e@80x24.org>; Sun,  3 Mar 2019 10:37:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6123020248
+	for <e@80x24.org>; Sun,  3 Mar 2019 12:00:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726096AbfCCKh4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 05:37:56 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:32889 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725999AbfCCKh4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 05:37:56 -0500
-Received: by mail-ed1-f67.google.com with SMTP id c55so1872781edb.0
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 02:37:54 -0800 (PST)
+        id S1726088AbfCCMAI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 07:00:08 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:39306 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726063AbfCCMAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 07:00:08 -0500
+Received: by mail-ed1-f68.google.com with SMTP id p27so1939018edc.6
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 04:00:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id;
-        bh=vr2hJxP9axuImoeEqVTLVbQGiGSrzM9F1JJ/oNwJgIk=;
-        b=Y03ctp6J9FS7kKKOKA8oGSljNtFJHAMRr0mvD2wK2gkRKWNc1t2lMIvweWdaI0s4YM
-         6MRV9pV/78yom43RorphBIJwiuWe04QyP+b0CnPn/K6q4k9Sl+ZrSBbFDcNTlXSDrGmP
-         bRHJHj5eqgyDSZSGHUth/MTnyS1dOoUfYXEVxnt4Frdqe0sfCEHeCMxGqP7t3pBt7Uw7
-         TVZ94eYIlfmImPxgIHfDd9rszBV+VK8vIK+Jazw7GH7Kwth1r+JgbtOiybartY3Ifako
-         dQDhR6W6hWvYpkakjaz5pM4E2xrp0P9fEF93UAGaEK/ULCyw9vMFRgbINjof1Q88DjPp
-         Clqw==
+        bh=hYkDYlW8MVcMUQdOSiN+Zmcl0zr5Nnw8WryhjPhNcJA=;
+        b=P4ZDOxhGfuzxLV9ideYQbi/2pmhRTMh5xGyPtxMnwkqAlMO0fWN3KEwK5prsewfB/p
+         Ky3SIHvckJud0qf2PSH7sWJ8FfT9rIuoxkSTs2JUAMccl5Er5n5QUCiL9PAfR+iIBu6n
+         +u0yu3QYpRn0i6eLSWJm2Go9sDbRIkLPCw97XhUYcb0dfmPdmGhWOUC6PfIZL4vjBv9X
+         PF+OB05iiCc7umDB7emQZEe5rhHOXdpzdIVRzkOUylTv5lTxIsh9PCO08np5tsMtH5Zl
+         O64eJXkEap9QQypnGpX4hR16BTcdZAtC842iP6yBkaI8G1ZmvNnLCbmuW2GUcvk7VCx5
+         kBhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=vr2hJxP9axuImoeEqVTLVbQGiGSrzM9F1JJ/oNwJgIk=;
-        b=c4Fs+T8XIqnqejBXILC7+TSFB5UaLjZTHPoXqLlptjsFoUdKowKlil2aMGmqqgIPyv
-         Du91xxSiY9A4ZtwjpTZ0gMbUmyOvLI4Ct5LHJR46HTvFDO1jJb+i2Nh23FxEMUa8qMS8
-         dO5VBnZtEIDhqnkvr+ti1MoqulnOHvIDtP5i2kw/qtFxrGqK2STfV6dgGm1GpYHn0q4R
-         ujv+DeHIUfILqA2/eCL6k7CAGl1Pa0Ky/cgAlWFr0SVP9z4PxN+Q0sxLmuX0CpkVfJNe
-         PN+6Uchu4tvTOjZj8TU0DgYFYEfmDjoM6nTiA/sPeMgFhwuQWVaU2/CtO7JkkHRYIdwk
-         SLGg==
-X-Gm-Message-State: APjAAAVfM5CwecZE1aNU2RPH3BTWY6ZLr6KvHNZG6E6xnWiNsl7lKm0B
-        8W2grfGt3efWYvcNzCYORaOXamx5
-X-Google-Smtp-Source: APXvYqyUb+QCNdxATDPfBAiz+bm3lqiYECwH9cUnQyZRQzUsc+tKimRleLIK2ly998qdq+90VtH93Q==
-X-Received: by 2002:a17:906:c286:: with SMTP id r6mr9117878ejz.7.1551609473796;
-        Sun, 03 Mar 2019 02:37:53 -0800 (PST)
+        bh=hYkDYlW8MVcMUQdOSiN+Zmcl0zr5Nnw8WryhjPhNcJA=;
+        b=LDqMojQfQnr8k+4vgM6b//wnNndSGEbLafnrBPZONG2BWvCBhfNbkOBMHZlDwLkIyw
+         HcDpIk90mmYeNSFi+me48XjXe/rbmJpqSfDN0NjEMjqNoHx8ldaoRiNtxXuvuY/J/B32
+         NB9fh+XzJ2fucISZr4fDG2k7v96IB8yfYtvtF4v0cBU/CkGenC0PahotB7WxAt9HIerf
+         R7JkgIYzrjjISWteyd6A7yw7uV3nfP28ZKaM4gb/1wRtJG8xG4KbTXVenLdRi3u4bwDN
+         mAW2OTvCU9h53JACltzE1XTHOPAJMqcjmbi0UZuWqYjGgVHHwEcHNR76yJnX0hVfN5Ld
+         4XfQ==
+X-Gm-Message-State: APjAAAXrK/QxZfD8GdsT8+QlUEw07fNNwxhL7yrHcLupINvrrLSCE899
+        4yf8FGXUEzaHeR+r3KGjnUD7Rj0U
+X-Google-Smtp-Source: APXvYqyTHVYwI1nfapAESf9qGQY3EhTihYjYG5/PYjQU1dsAP3q7XuNq+1Fny+o6+sZkRkXSpnb49w==
+X-Received: by 2002:a17:906:791:: with SMTP id l17mr9226501ejc.1.1551614404842;
+        Sun, 03 Mar 2019 04:00:04 -0800 (PST)
 Received: from poppybee.home ([77.172.207.196])
-        by smtp.gmail.com with ESMTPSA id h8sm1143681edk.21.2019.03.03.02.37.52
+        by smtp.gmail.com with ESMTPSA id l53sm1181503eda.66.2019.03.03.04.00.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Mar 2019 02:37:52 -0800 (PST)
+        Sun, 03 Mar 2019 04:00:04 -0800 (PST)
 From:   Micha Nelissen <nelissen.micha@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Micha Nelissen <nelissen.micha@gmail.com>
-Subject: [PATCH 1/1] Add feature to show log as a tree
-Date:   Sun,  3 Mar 2019 11:37:51 +0100
-Message-Id: <20190303103751.6523-1-nelissen.micha@gmail.com>
+Subject: [PATCH] Make graph drawing more compact
+Date:   Sun,  3 Mar 2019 12:59:57 +0100
+Message-Id: <20190303115957.11871-1-nelissen.micha@gmail.com>
 X-Mailer: git-send-email 2.17.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Modifies the topo-order code to keep track of the first child,
-using a heuristic. The heuristic works by assigning a (depth)
-level to all nodes. The first child is the node of which this
-node is a parent of and has the lowest level. Then it cuts all
-the links that are not the first child, resulting in a tree.
+Before this commit, graphs with merges have an empty line after a
+merge commit to make room for a new branch. But this causes the
+child commits (commits merged with the merge commit) to be separated
+from the merge commit. Especially with the --tree option this
+is confusing, as there is no empty line after a series of child
+commits anymore (because it is a tree after all).
 
-It also uses the level to sort the nodes: trying to keep
-descendent line (of a merge) together as a group.
+Therefore this change modifies the merge point to not need an
+extra line (the POST_MERGE state is removed), using an underscore
+to branch out instead of a '\'.
 
-Add commandline option "--tree" to use this new feature.
+It also optimizes the case where a branch point meets a merge commit.
 
 Signed-off-by: Micha Nelissen <nelissen.micha@gmail.com>
 ---
- commit.c   | 136 +++++++++++++++++++++++++++++++++++++++++++++++------
- commit.h   |   1 +
- revision.c |   4 ++
- 3 files changed, 127 insertions(+), 14 deletions(-)
+ graph.c | 281 +++++++++++++++++---------------------------------------
+ 1 file changed, 85 insertions(+), 196 deletions(-)
 
-diff --git commit.c commit.c
-index a5333c7ac6..340757adc2 100644
---- commit.c
-+++ commit.c
-@@ -662,7 +662,12 @@ struct commit *pop_commit(struct commit_list **stack)
-  */
+diff --git graph.c graph.c
+index f53135485f..f0e30bce62 100644
+--- graph.c
++++ graph.c
+@@ -63,7 +63,6 @@ enum graph_state {
+ 	GRAPH_SKIP,
+ 	GRAPH_PRE_COMMIT,
+ 	GRAPH_COMMIT,
+-	GRAPH_POST_MERGE,
+ 	GRAPH_COLLAPSING
+ };
  
- /* count number of children that have not been emitted */
--define_commit_slab(indegree_slab, int);
-+struct indegree {
-+	unsigned short indegree;
-+	unsigned short level;	  /* first level this commit has been seen at */
-+};
-+define_commit_slab(indegree_slab, struct indegree);
-+define_commit_slab(first_child_slab, struct commit *);
+@@ -153,12 +152,6 @@ struct git_graph {
+ 	 * This tells us what kind of line graph_next_line() should output.
+ 	 */
+ 	enum graph_state state;
+-	/*
+-	 * The output state for the previous line of output.
+-	 * This is primarily used to determine how the first merge line
+-	 * should appear, based on the last line of the previous commit.
+-	 */
+-	enum graph_state prev_state;
+ 	/*
+ 	 * The index of the column that refers to this commit.
+ 	 *
+@@ -167,13 +160,9 @@ struct git_graph {
+ 	 */
+ 	int commit_index;
+ 	/*
+-	 * The commit_index for the previously displayed commit.
+-	 *
+-	 * This is used to determine how the first line of a merge
+-	 * graph output should appear, based on the last line of the
+-	 * previous commit.
++	 * If previous line was a merge commit, then this is its commit index
+ 	 */
+-	int prev_commit_index;
++	int prev_merge_index;
+ 	/*
+ 	 * The maximum number of columns that can be stored in the columns
+ 	 * and new_columns arrays.  This is also half the number of entries
+@@ -282,9 +271,7 @@ struct git_graph *graph_init(struct rev_info *opt)
+ 	graph->num_parents = 0;
+ 	graph->expansion_row = 0;
+ 	graph->state = GRAPH_PADDING;
+-	graph->prev_state = GRAPH_PADDING;
+ 	graph->commit_index = 0;
+-	graph->prev_commit_index = 0;
+ 	graph->num_columns = 0;
+ 	graph->num_new_columns = 0;
+ 	graph->mapping_size = 0;
+@@ -317,7 +304,6 @@ struct git_graph *graph_init(struct rev_info *opt)
  
- define_commit_slab(author_date_slab, timestamp_t);
- 
-@@ -708,6 +713,22 @@ int compare_commits_by_author_date(const void *a_, const void *b_,
- 	return 0;
+ static void graph_update_state(struct git_graph *graph, enum graph_state s)
+ {
+-	graph->prev_state = graph->state;
+ 	graph->state = s;
  }
  
-+static int compare_commits_by_tree_level(const void *a_, const void *b_,
-+					 void *cb_data)
+@@ -602,6 +588,13 @@ static void graph_update_columns(struct git_graph *graph)
+ 	graph_update_width(graph, is_commit_in_columns);
+ }
+ 
++static int need_pre_commit(struct git_graph *graph)
 +{
-+	const struct commit *a = a_, *b = b_;
-+	struct indegree_slab *indegree = cb_data;
-+	unsigned short a_level = indegree_slab_at(indegree, a)->level;
-+	unsigned short b_level = indegree_slab_at(indegree, b)->level;
-+
-+	/* deepest tree level commits first */
-+	if (a_level < b_level)
-+		return 1;
-+	else if (a_level > b_level)
-+		return -1;
-+	return 0;
++	return (graph->num_parents == 2 && graph->prev_merge_index != 0xffff)
++	    || (graph->num_parents >= 3 &&
++		graph->commit_index < (graph->num_columns - 1));
 +}
 +
- int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused)
+ void graph_update(struct git_graph *graph, struct commit *commit)
  {
- 	const struct commit *a = a_, *b = b_;
-@@ -745,6 +766,7 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
- 	struct commit_list *next, *orig = *list;
- 	struct commit_list **pptr;
- 	struct indegree_slab indegree;
-+	struct first_child_slab first_child;
- 	struct prio_queue queue;
- 	struct commit *commit;
- 	struct author_date_slab author_date;
-@@ -760,6 +782,11 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
- 	default: /* REV_SORT_IN_GRAPH_ORDER */
- 		queue.compare = NULL;
- 		break;
-+	case REV_SORT_IN_TREE_ORDER:
-+		init_first_child_slab(&first_child);
-+		queue.compare = compare_commits_by_tree_level;
-+		queue.cb_data = &indegree;
-+		break;
- 	case REV_SORT_BY_COMMIT_DATE:
- 		queue.compare = compare_commits_by_commit_date;
- 		break;
-@@ -773,7 +800,8 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
- 	/* Mark them and clear the indegree */
- 	for (next = orig; next; next = next->next) {
- 		struct commit *commit = next->item;
--		*(indegree_slab_at(&indegree, commit)) = 1;
-+		struct indegree *pi = indegree_slab_at(&indegree, commit);
-+		pi->indegree = 0, pi->level = 0;
- 		/* also record the author dates, if needed */
- 		if (sort_order == REV_SORT_BY_AUTHOR_DATE)
- 			record_author_date(&author_date, commit);
-@@ -782,13 +810,12 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
- 	/* update the indegree */
- 	for (next = orig; next; next = next->next) {
- 		struct commit_list *parents = next->item->parents;
--		while (parents) {
-+		for (; parents; parents = parents->next) {
- 			struct commit *parent = parents->item;
--			int *pi = indegree_slab_at(&indegree, parent);
+ 	struct commit_list *parent;
+@@ -622,13 +615,6 @@ void graph_update(struct git_graph *graph, struct commit *commit)
+ 		graph->num_parents++;
+ 	}
+ 
+-	/*
+-	 * Store the old commit_index in prev_commit_index.
+-	 * graph_update_columns() will update graph->commit_index for this
+-	 * commit.
+-	 */
+-	graph->prev_commit_index = graph->commit_index;
 -
--			if (*pi)
--				(*pi)++;
--			parents = parents->next;
-+			struct indegree *pi = indegree_slab_peek(&indegree, parent);
-+			if (!pi)
-+				continue;
-+			pi->indegree++;
- 		}
- 	}
- 
-@@ -801,9 +828,12 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
- 	 */
- 	for (next = orig; next; next = next->next) {
- 		struct commit *commit = next->item;
-+		struct indegree *pi = indegree_slab_at(&indegree, commit);
- 
--		if (*(indegree_slab_at(&indegree, commit)) == 1)
-+		if (pi->indegree == 0) {
-+			pi->level = 1;
- 			prio_queue_put(&queue, commit);
-+		}
- 	}
+ 	/*
+ 	 * Call graph_update_columns() to update
+ 	 * columns, new_columns, and mapping.
+@@ -639,9 +625,6 @@ void graph_update(struct git_graph *graph, struct commit *commit)
  
  	/*
-@@ -820,31 +850,109 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
- 	*list = NULL;
- 	while ((commit = prio_queue_get(&queue)) != NULL) {
- 		struct commit_list *parents;
-+		unsigned short commit_level, parent_level;
-+		commit_level = parent_level = indegree_slab_at(&indegree, commit)->level;
+ 	 * Update graph->state.
+-	 * Note that we don't call graph_update_state() here, since
+-	 * we don't want to update graph->prev_state.  No line for
+-	 * graph->state was ever printed.
+ 	 *
+ 	 * If the previous commit didn't get to the GRAPH_PADDING state,
+ 	 * it never finished its output.  Goto GRAPH_SKIP, to print out
+@@ -657,8 +640,7 @@ void graph_update(struct git_graph *graph, struct commit *commit)
+ 	 */
+ 	if (graph->state != GRAPH_PADDING)
+ 		graph->state = GRAPH_SKIP;
+-	else if (graph->num_parents >= 3 &&
+-		 graph->commit_index < (graph->num_columns - 1))
++	else if (need_pre_commit(graph))
+ 		graph->state = GRAPH_PRE_COMMIT;
+ 	else
+ 		graph->state = GRAPH_COMMIT;
+@@ -742,8 +724,7 @@ static void graph_output_skip_line(struct git_graph *graph, struct strbuf *sb)
+ 	strbuf_addstr(sb, "...");
+ 	graph_pad_horizontally(graph, sb, 3);
  
--		for (parents = commit->parents; parents ; parents = parents->next) {
-+		for (parents = commit->parents; parents; parents = parents->next) {
- 			struct commit *parent = parents->item;
--			int *pi = indegree_slab_at(&indegree, parent);
-+			struct indegree *pi = indegree_slab_peek(&indegree, parent);
+-	if (graph->num_parents >= 3 &&
+-	    graph->commit_index < (graph->num_columns - 1))
++	if (need_pre_commit(graph))
+ 		graph_update_state(graph, GRAPH_PRE_COMMIT);
+ 	else
+ 		graph_update_state(graph, GRAPH_COMMIT);
+@@ -763,14 +744,16 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 	 *
+ 	 * We need 2 extra rows for every parent over 2.
+ 	 */
+-	assert(graph->num_parents >= 3);
++	assert(graph->num_parents >= 2);
+ 	num_expansion_rows = (graph->num_parents - 2) * 2;
++	if (num_expansion_rows == 0)
++		graph->expansion_row = -1;
  
--			if (!*pi)
-+			if (!pi)
- 				continue;
+ 	/*
+ 	 * graph->expansion_row tracks the current expansion row we are on.
+ 	 * It should be in the range [0, num_expansion_rows - 1]
+ 	 */
+-	assert(0 <= graph->expansion_row &&
++	assert(-1 <= graph->expansion_row &&
+ 	       graph->expansion_row < num_expansion_rows);
  
-+			if (sort_order == REV_SORT_IN_TREE_ORDER) {
-+				struct commit **pfirst_child =
-+					first_child_slab_at(&first_child, parent);
-+				if (*pfirst_child != NULL) {
-+					/* already set a first child, if it is from higher
-+					   level than we are, set ourselves as first */
-+					struct indegree *old_pi =
-+						indegree_slab_at(&indegree, *pfirst_child);
-+					if (old_pi->level >= commit_level)
-+						*pfirst_child = NULL;
-+				}
-+				if (*pfirst_child == NULL)
-+					*pfirst_child = commit;
+ 	/*
+@@ -783,25 +766,9 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 		if (col->commit == graph->commit) {
+ 			seen_this = 1;
+ 			strbuf_write_column(sb, col, '|');
+-			strbuf_addchars(sb, ' ', graph->expansion_row);
+-			chars_written += 1 + graph->expansion_row;
+-		} else if (seen_this && (graph->expansion_row == 0)) {
+-			/*
+-			 * This is the first line of the pre-commit output.
+-			 * If the previous commit was a merge commit and
+-			 * ended in the GRAPH_POST_MERGE state, all branch
+-			 * lines after graph->prev_commit_index were
+-			 * printed as "\" on the previous line.  Continue
+-			 * to print them as "\" on this line.  Otherwise,
+-			 * print the branch lines as "|".
+-			 */
+-			if (graph->prev_state == GRAPH_POST_MERGE &&
+-			    graph->prev_commit_index < i)
+-				strbuf_write_column(sb, col, '\\');
+-			else
+-				strbuf_write_column(sb, col, '|');
+-			chars_written++;
+-		} else if (seen_this && (graph->expansion_row > 0)) {
++			strbuf_addchars(sb, ' ', graph->expansion_row + 1);
++			chars_written += 2 + graph->expansion_row;
++		} else if (seen_this) {
+ 			strbuf_write_column(sb, col, '\\');
+ 			chars_written++;
+ 		} else {
+@@ -887,8 +854,7 @@ static int graph_draw_octopus_merge(struct git_graph *graph,
+ 	int i;
+ 	for (i = 0; i < dashful_parents; i++) {
+ 		strbuf_write_column(sb, &graph->new_columns[i+first_col], '-');
+-		strbuf_write_column(sb, &graph->new_columns[i+first_col],
+-				    i == dashful_parents-1 ? '.' : '-');
++		strbuf_write_column(sb, &graph->new_columns[i+first_col], '-');
+ 	}
+ 	return 2 * dashful_parents;
+ }
+@@ -896,7 +862,8 @@ static int graph_draw_octopus_merge(struct git_graph *graph,
+ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+ {
+ 	int seen_this = 0;
+-	int i, chars_written;
++	int i, j, k, chars_written;
++	char draw_ch;
+ 
+ 	/*
+ 	 * Output the row containing this commit
+@@ -910,6 +877,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+ 	for (i = 0; i <= graph->num_columns; i++) {
+ 		struct column *col = &graph->columns[i];
+ 		struct commit *col_commit;
++		int add_space = 1;
+ 		if (i == graph->num_columns) {
+ 			if (seen_this)
+ 				break;
+@@ -923,138 +891,76 @@ static void graph_output_commit_line(struct git_graph *graph, struct strbuf *sb)
+ 			graph_output_commit_char(graph, sb);
+ 			chars_written++;
+ 
+-			if (graph->num_parents > 2)
++			draw_ch = graph->num_parents == 2 ? '_' : 0;
++			if (graph->num_parents > 2) {
+ 				chars_written += graph_draw_octopus_merge(graph,
+ 									  sb);
+-		} else if (seen_this && (graph->num_parents > 2)) {
+-			strbuf_write_column(sb, col, '\\');
+-			chars_written++;
+-		} else if (seen_this && (graph->num_parents == 2)) {
+-			/*
+-			 * This is a 2-way merge commit.
+-			 * There is no GRAPH_PRE_COMMIT stage for 2-way
+-			 * merges, so this is the first line of output
+-			 * for this commit.  Check to see what the previous
+-			 * line of output was.
+-			 *
+-			 * If it was GRAPH_POST_MERGE, the branch line
+-			 * coming into this commit may have been '\',
+-			 * and not '|' or '/'.  If so, output the branch
+-			 * line as '\' on this line, instead of '|'.  This
+-			 * makes the output look nicer.
+-			 */
+-			if (graph->prev_state == GRAPH_POST_MERGE &&
+-			    graph->prev_commit_index < i)
+-				strbuf_write_column(sb, col, '\\');
+-			else
+-				strbuf_write_column(sb, col, '|');
+-			chars_written++;
+-		} else {
+-			strbuf_write_column(sb, col, '|');
+-			chars_written++;
+-		}
+-		strbuf_addch(sb, ' ');
+-		chars_written++;
+-	}
+-
+-	graph_pad_horizontally(graph, sb, chars_written);
+-
+-	/*
+-	 * Update graph->state
+-	 */
+-	if (graph->num_parents > 1)
+-		graph_update_state(graph, GRAPH_POST_MERGE);
+-	else if (graph_is_mapping_correct(graph))
+-		graph_update_state(graph, GRAPH_PADDING);
+-	else
+-		graph_update_state(graph, GRAPH_COLLAPSING);
+-}
+-
+-static struct column *find_new_column_by_commit(struct git_graph *graph,
+-						struct commit *commit)
+-{
+-	int i;
+-	for (i = 0; i < graph->num_new_columns; i++) {
+-		if (graph->new_columns[i].commit == commit)
+-			return &graph->new_columns[i];
+-	}
+-	return NULL;
+-}
+-
+-static void graph_output_post_merge_line(struct git_graph *graph, struct strbuf *sb)
+-{
+-	int seen_this = 0;
+-	int i, j, chars_written;
+-
+-	/*
+-	 * Output the post-merge row
+-	 */
+-	chars_written = 0;
+-	for (i = 0; i <= graph->num_columns; i++) {
+-		struct column *col = &graph->columns[i];
+-		struct commit *col_commit;
+-		if (i == graph->num_columns) {
+-			if (seen_this)
+-				break;
+-			col_commit = graph->commit;
+-		} else {
+-			col_commit = col->commit;
+-		}
+-
+-		if (col_commit == graph->commit) {
+-			/*
+-			 * Since the current commit is a merge find
+-			 * the columns for the parent commits in
+-			 * new_columns and use those to format the
+-			 * edges.
+-			 */
+-			struct commit_list *parents = NULL;
+-			struct column *par_column;
+-			seen_this = 1;
+-			parents = first_interesting_parent(graph);
+-			assert(parents);
+-			par_column = find_new_column_by_commit(graph, parents->item);
+-			assert(par_column);
+-
+-			strbuf_write_column(sb, par_column, '|');
+-			chars_written++;
+-			for (j = 0; j < graph->num_parents - 1; j++) {
+-				parents = next_interesting_parent(graph, parents);
+-				assert(parents);
+-				par_column = find_new_column_by_commit(graph, parents->item);
+-				assert(par_column);
+-				strbuf_write_column(sb, par_column, '\\');
+-				strbuf_addch(sb, ' ');
++				draw_ch = '.';
+ 			}
+-			chars_written += j * 2;
+-		} else if (seen_this) {
+-			strbuf_write_column(sb, col, '\\');
+-			strbuf_addch(sb, ' ');
+-			chars_written += 2;
++			if (graph->num_parents > 1) {
++				j = i+1, k = i+2;
++				if (i > 0 && graph->mapping[j*2] == i-1)
++					col = &graph->new_columns[i-1];
++				else
++					col = &graph->new_columns[i+graph->num_parents-1];
++				/* 
++				   optimize collapse after merge case:
++				   i j k
++				   | * <hash> some commit 
++				   *. \ <hash> merge branch with another commit
++				   | |/    <--- collapse line
++				   | * <hash> another commit
 +
-+				if (!pi->level || parent_level < pi->level) {
-+					struct commit_list *gparent_list;
-+					struct commit *gparent = parent;
-+					struct indegree *gpi;
-+					/* mark this 'branch' as this level */
-+					pi->level = parent_level;
-+					while ((gparent_list = gparent->parents) != NULL) {
-+						gparent = gparent_list->item;
-+						gpi = indegree_slab_peek(&indegree, gparent);
-+						if (!gpi ||
-+						    (gpi->level && gpi->level < parent_level))
-+							break;
-+						gpi->level = parent_level;
-+					}
++				   this happens if the mapping of the second next
++				   column merges with the next column
++				   remember this by marking seen_this = 2
++				   adjust mapping array because we fixed it here
++
++				   output:
++				   | * <hash> some commit
++				   *.| <hash> merge branch with another commit
++				   | * <hash> another commit
++
++				   this saves a line, plus the merge commit is
++				   not indented anymore relative to what's merged
++				*/
++				if (graph->mapping[j*2] == j && graph->mapping[k*2] == j) {
++					for (; k*2 < graph->mapping_size; k++)
++						graph->mapping[k*2] = k;
++					add_space = 0;
++					seen_this = 2;  /* draw a '|' */
 +				}
-+				if (pi->level >= parent_level)
-+					parent_level = pi->level + 1;
 +			}
-+
- 			/*
- 			 * parents are only enqueued for emission
- 			 * when all their children have been emitted thereby
- 			 * guaranteeing topological order.
- 			 */
--			if (--(*pi) == 1)
-+			if (--pi->indegree == 0)
- 				prio_queue_put(&queue, parent);
++		} else if (seen_this == 1 && (graph->num_parents >= 2)) {
++			draw_ch = '\\';
+ 		} else {
+-			strbuf_write_column(sb, col, '|');
+-			strbuf_addch(sb, ' ');
+-			chars_written += 2;
++			draw_ch = '|';
  		}
- 		/*
- 		 * all children of commit have already been
- 		 * emitted. we can emit it now.
- 		 */
--		*(indegree_slab_at(&indegree, commit)) = 0;
-+		indegree_slab_at(&indegree, commit)->indegree = 0;
- 
- 		pptr = &commit_list_insert(commit, pptr)->next;
++		if (draw_ch)
++			strbuf_write_column(sb, col, draw_ch);
++		if (add_space)
++			strbuf_addch(sb, ' ');
++		chars_written += 1 + add_space;
  	}
  
-+	if (sort_order == REV_SORT_IN_TREE_ORDER) {
-+		struct commit *commit, *next_commit;
-+		/*
-+		 * go through the commit list to cut all the non-first
-+		 * parent-child links, so we get a tree
-+		 */
-+		next = *list;
-+		if (next) {
-+			commit = next->item;
-+			next = next->next;
-+		}
-+		for (next = *list; next; next = next->next, commit = next_commit) {
-+			struct commit_list *parents, **pparents = &commit->parents;
-+			next_commit = next->item;
-+			for (parents = commit->parents; parents; parents = parents->next) {
-+				/* leave link between sequential commits alone because
-+				   the level is not 100% to column mapping. level might
-+				   be higher due to merges of merges from the same
-+				   origin; except if the next commit is on top level
-+				   then for sure it's not the same column */
-+				struct commit *parent = parents->item;
-+				int cut = 1;
-+				if (parent == next_commit) {
-+					struct indegree *pi =
-+						indegree_slab_peek(&indegree, parent);
-+					/* cut as in, allow to cut */
-+					cut = pi && pi->level == 1;
-+				}
-+				if (cut) {
-+					struct commit **pfirst_child =
-+						first_child_slab_at(&first_child, parent);
-+					cut = commit != *pfirst_child;
-+				}
-+				if (cut)
-+					*pparents = parents->next;
-+				else
-+					pparents = &parents->next;
-+			}
-+		}
-+
-+		clear_first_child_slab(&first_child);
-+	}
-+
- 	clear_indegree_slab(&indegree);
- 	clear_prio_queue(&queue);
- 	if (sort_order == REV_SORT_BY_AUTHOR_DATE)
-diff --git commit.h commit.h
-index 42728c2906..25b236cb49 100644
---- commit.h
-+++ commit.h
-@@ -205,6 +205,7 @@ void clear_commit_marks_many(int nr, struct commit **commit, unsigned int mark);
+-	graph_pad_horizontally(graph, sb, chars_written);
+-
+ 	/*
+ 	 * Update graph->state
+ 	 */
+-	if (graph_is_mapping_correct(graph))
++	graph->prev_merge_index = 0xffff;
++	if (graph_is_mapping_correct(graph)) {
+ 		graph_update_state(graph, GRAPH_PADDING);
+-	else
++		if (graph->num_parents > 1)
++			graph->prev_merge_index = graph->commit_index;
++	} else
+ 		graph_update_state(graph, GRAPH_COLLAPSING);
+ }
  
- enum rev_sort_order {
- 	REV_SORT_IN_GRAPH_ORDER = 0,
-+	REV_SORT_IN_TREE_ORDER,
- 	REV_SORT_BY_COMMIT_DATE,
- 	REV_SORT_BY_AUTHOR_DATE
- };
-diff --git revision.c revision.c
-index 162d511d46..09074e2c08 100644
---- revision.c
-+++ revision.c
-@@ -2031,6 +2031,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--topo-order")) {
- 		revs->sort_order = REV_SORT_IN_GRAPH_ORDER;
- 		revs->topo_order = 1;
-+	} else if (!strcmp(arg, "--tree")) {
-+		revs->sort_order = REV_SORT_IN_TREE_ORDER;
-+		goto graph;
- 	} else if (!strcmp(arg, "--simplify-merges")) {
- 		revs->simplify_merges = 1;
- 		revs->topo_order = 1;
-@@ -2227,6 +2230,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->pretty_given = 1;
- 		revs->abbrev_commit = 1;
- 	} else if (!strcmp(arg, "--graph")) {
-+	    graph:
- 		revs->topo_order = 1;
- 		revs->rewrite_parents = 1;
- 		revs->graph = graph_init(revs);
+ static void graph_output_collapsing_line(struct git_graph *graph, struct strbuf *sb)
+ {
+-	int i;
+-	short used_horizontal = 0;
++	int i, j;
+ 	int horizontal_edge = -1;
+ 	int horizontal_edge_target = -1;
++	char draw_ch;
+ 
+ 	/*
+ 	 * Clear out the new_mapping array
+@@ -1097,16 +1003,15 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct strbuf
+ 			 * select this one.
+ 			 */
+ 			if (horizontal_edge == -1) {
+-				int j;
+ 				horizontal_edge = i;
+ 				horizontal_edge_target = target;
+ 				/*
+ 				 * The variable target is the index of the graph
+-				 * column, and therefore target*2+3 is the
++				 * column, and therefore target*2+1 is the
+ 				 * actual screen column of the first horizontal
+ 				 * line.
+ 				 */
+-				for (j = (target * 2)+3; j < (i - 2); j += 2)
++				for (j = (target * 2)+1; j < i; j += 2)
+ 					graph->new_mapping[j] = target;
+ 			}
+ 		} else if (graph->new_mapping[i - 1] == target) {
+@@ -1158,27 +1063,19 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct strbuf
+ 	 */
+ 	for (i = 0; i < graph->mapping_size; i++) {
+ 		int target = graph->new_mapping[i];
+-		if (target < 0)
++		if (target < 0) {
+ 			strbuf_addch(sb, ' ');
+-		else if (target * 2 == i)
+-			strbuf_write_column(sb, &graph->new_columns[target], '|');
+-		else if (target == horizontal_edge_target &&
+-			 i != horizontal_edge - 1) {
+-				/*
+-				 * Set the mappings for all but the
+-				 * first segment to -1 so that they
+-				 * won't continue into the next line.
+-				 */
+-				if (i != (target * 2)+3)
+-					graph->new_mapping[i] = -1;
+-				used_horizontal = 1;
+-			strbuf_write_column(sb, &graph->new_columns[target], '_');
++			continue;
++		}
++		if (target * 2 == i) {
++			draw_ch = '|';
+ 		} else {
+-			if (used_horizontal && i < horizontal_edge)
++			if (i < horizontal_edge)
+ 				graph->new_mapping[i] = -1;
+-			strbuf_write_column(sb, &graph->new_columns[target], '/');
+-
++			draw_ch = target == horizontal_edge_target &&
++				i != horizontal_edge-1 ? '_' : '/';
+ 		}
++		strbuf_write_column(sb, &graph->new_columns[target], draw_ch);
+ 	}
+ 
+ 	graph_pad_horizontally(graph, sb, graph->mapping_size);
+@@ -1212,9 +1109,6 @@ int graph_next_line(struct git_graph *graph, struct strbuf *sb)
+ 	case GRAPH_COMMIT:
+ 		graph_output_commit_line(graph, sb);
+ 		return 1;
+-	case GRAPH_POST_MERGE:
+-		graph_output_post_merge_line(graph, sb);
+-		return 0;
+ 	case GRAPH_COLLAPSING:
+ 		graph_output_collapsing_line(graph, sb);
+ 		return 0;
+@@ -1258,11 +1152,6 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb)
+ 	}
+ 
+ 	graph_pad_horizontally(graph, sb, chars_written);
+-
+-	/*
+-	 * Update graph->prev_state since we have output a padding line
+-	 */
+-	graph->prev_state = GRAPH_PADDING;
+ }
+ 
+ int graph_is_commit_finished(struct git_graph const *graph)
 -- 
 2.17.1
 
