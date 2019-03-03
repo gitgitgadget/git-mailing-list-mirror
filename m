@@ -7,55 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0163420248
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DD6D20248
 	for <e@80x24.org>; Sun,  3 Mar 2019 14:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726286AbfCCOo4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 09:44:56 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35818 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726217AbfCCOo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 09:44:56 -0500
-Received: by mail-ed1-f66.google.com with SMTP id g19so2140872edp.2
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 06:44:55 -0800 (PST)
+        id S1726319AbfCCOo5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 09:44:57 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46615 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726234AbfCCOo5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 09:44:57 -0500
+Received: by mail-ed1-f68.google.com with SMTP id f2so2114451edy.13
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 06:44:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Mqy+E9CZngPc3CqdxqnAwKfJ0IrqINuxHiVej8fn66I=;
-        b=QRUd+4nQljIeQS1ufziLBdntWuRvGhqXJ93hEcoI97F+gYAAzkPezfskPfjLjpG/tz
-         +MYQ3ZooFnf7wWlR9xRxgxbP/huWUG3w6nK8AXHuCdordpC8pFJX6y0yVj3YOHrQOoyH
-         YoH7zHiXxt5+uLlCfevwFb277x7o9V7GEabpmHKypyeEN9xryuUhFmmFa4ajcC2d1PYF
-         NN8KURDrjLrofsUBoM1sFXRotE7SyUWD8fotZA07huN778D4dd4W2ABWjPe8BPorvTs5
-         BfgpjKAm1t5+JHhIBG4pH0F2i7d/KNteezebRNAPov3Z3Eyv6OA03fqdsbiEYDkj6R+l
-         7hJA==
+        bh=w9L1+0eO3mNHWKHJUuYqGgW/CvfCjwg6tb2PsCnRIFU=;
+        b=H3JWMstNZY9CkjB/oyE6ejZ94VJp58Sgu7c/do+nGv990RSqcjHTzEcc8Wiogjx9Si
+         on0J1t8uMfa17p8ZvMOuWb1+XC/e9Azn5Dx16FsgESGNXc9O5Vf/zGCRBMZ7/mri6LQu
+         8sJyUvPzEMOzNCW9L826zXuYLONAzuOxdTE1yvOqAaItKZA4bi7ECsDNzZoEsgxNMBeL
+         XG/HZ8AbKQm5rLYYicUeIZAI6iweIErcyD/mLM2FYQePVxex/6102MHW+/QL1FOrH4cM
+         tjdL4wzLyDPQx42ZylKvw1/eewjlmqJD2m3nc8+U3/2ASjcpfOMTgagZNIKPAcl15FCa
+         RUng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Mqy+E9CZngPc3CqdxqnAwKfJ0IrqINuxHiVej8fn66I=;
-        b=qAFlBz4TTRS8Dd/lmhnAjtnI8SApzfHDPy/eVcnPnPRTDqqxSNjF94L9bwZD7JOoYS
-         ULD4fhhMVzsdrfTo+KK5kapXqrDrRtlOs52KIRn/fw3QnU5AIQs8MFCrZ/SZ44bsJSbt
-         7iArhhGSWhBkU4cWcpzPO8xpSjg5x8mphHbwjdGZJ3+Iv94EWopvYvXn3NXqlLRfYxAt
-         ckRzmFwH9jQtrFib8U4sae1Kz6Aor/7FWfGOzhO1AhLWnFN0usseK7RscaxQB9W875/k
-         R6SH5C5fIIOz7OdpcgeSBNlOdzXwtlxi0kNtUUrMRr0VHXM4BGGnS9gRhEWiPh+JdYKJ
-         n+OQ==
-X-Gm-Message-State: APjAAAWNujN1WcaMJWrX2W4GU1FLVy66UsLYxJaeSB0U1B+d0lqHUcW3
-        QQPZ5kyQySXYVqs+1ATh5ZJBGsY7
-X-Google-Smtp-Source: APXvYqxt2EsWnHmasXBxGRo4vUj7XCThtsN4LGTyYznqWeT+IRXsJtQrnltakjTXnMldw6MF97jGYQ==
-X-Received: by 2002:a50:9964:: with SMTP id l33mr11723085edb.115.1551624294604;
-        Sun, 03 Mar 2019 06:44:54 -0800 (PST)
+        bh=w9L1+0eO3mNHWKHJUuYqGgW/CvfCjwg6tb2PsCnRIFU=;
+        b=j+zMWNsC0oirOVBUqFBJEzTNrz3nrZF0zx4le8p7aZ74ynkROnqiuvL1IITxAQDmIb
+         29F5mlDMIK0bTXOBeW0Kc2EgAMz9H+TfERLGvoEgKqkNvtwb3y4ibW4gnYm+FzohuTVa
+         igQiYoXpgrJxYXHkP7VyNuZRj0NWxhVcCKdRoESOpzUDmauk/OfbSoAjYFAGLk9YYIRP
+         NqgwLMkB5K11O783SaBj0aKIIbN0wchnGdSXaGe4Jnd3wn0xDj8kcvBj/+e/DqwF0RTf
+         wYrOVotS5oCD81K9i8H+C99cH8R+IVQQ1uCYz/OinFtIKfdKSXqpo/NhareC/gEOLXaJ
+         hh0g==
+X-Gm-Message-State: APjAAAWevoUyKgJnn+Wf1pIIuhaVDsFg3V+dHXWv6nfl24kjM9KIW+tp
+        hJ7bYrQ7rEN/mZ5nU/Hn8PoC1sm0
+X-Google-Smtp-Source: APXvYqz0wdbP6FIbTdP8A2V2X1pcVYwDYEt4NNxpsQJSaSz67tIncKDs1tWCO+JfmSAYBBdv8JwC+Q==
+X-Received: by 2002:a17:906:9150:: with SMTP id y16mr9722701ejw.123.1551624295380;
+        Sun, 03 Mar 2019 06:44:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o24sm692218ejx.56.2019.03.03.06.44.53
+        by smtp.gmail.com with ESMTPSA id t25sm1276887eda.69.2019.03.03.06.44.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Sun, 03 Mar 2019 06:44:54 -0800 (PST)
 Date:   Sun, 03 Mar 2019 06:44:54 -0800 (PST)
-X-Google-Original-Date: Sun, 03 Mar 2019 14:44:51 GMT
-Message-Id: <pull.155.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.155.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Sun, 03 Mar 2019 14:44:52 GMT
+Message-Id: <fbe773c22a4ccea3e4eca8c1bd0206941d23f590.1551624293.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.155.v2.git.gitgitgadget@gmail.com>
 References: <pull.155.git.gitgitgadget@gmail.com>
+        <pull.155.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/2] tests: some touchups related to the --stress feature
+Subject: [PATCH v2 1/2] tests: let --stress-limit=<N> imply --stress
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,94 +64,50 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If my mistake using --stress= instead of --stress-limit= is any indication,
-then the current options are very confusing.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This is my attempt at making them less confusing.
+It does not make much sense that running a test with
+--stress-limit=<N> seemingly ignores that option because it does not
+stress test at all.
 
-Changes since v1:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/README      | 2 +-
+ t/test-lib.sh | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
- * Now the patches actually adjust the documentation according to the
-   changes ;-)
-
-Johannes Schindelin (2):
-  tests: let --stress-limit=<N> imply --stress
-  tests: introduce --stress-jobs=<N>
-
- t/README      | 8 +++++---
- t/test-lib.sh | 9 ++++++++-
- 2 files changed, 13 insertions(+), 4 deletions(-)
-
-
-base-commit: 7d661e5ed16dca303d7898f5ab0cc2ffc69e0499
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-155%2Fdscho%2Fstress-test-extra-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-155/dscho/stress-test-extra-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/155
-
-Range-diff vs v1:
-
- 1:  16c6508c4b ! 1:  fbe773c22a tests: let --stress-limit=<N> imply --stress
-     @@ -8,6 +8,19 @@
-      
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-     + diff --git a/t/README b/t/README
-     + --- a/t/README
-     + +++ b/t/README
-     +@@
-     + --stress-limit=<N>::
-     + 	When combined with --stress run the test script repeatedly
-     + 	this many times in each of the parallel jobs or until one of
-     +-	them fails, whichever comes first.
-     ++	them fails, whichever comes first. Implies `--stress`.
-     + 
-     + You can also set the GIT_TEST_INSTALLED environment variable to
-     + the bindir of an existing git installation to test that installation.
-     +
-       diff --git a/t/test-lib.sh b/t/test-lib.sh
-       --- a/t/test-lib.sh
-       +++ b/t/test-lib.sh
- 2:  281d3f1d19 ! 2:  074628c22b tests: introduce --stress-jobs=<N>
-     @@ -13,6 +13,33 @@
-      
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-     + diff --git a/t/README b/t/README
-     + --- a/t/README
-     + +++ b/t/README
-     +@@
-     + 	variable to "1" or "0", respectively.
-     + 
-     + --stress::
-     +---stress=<N>::
-     + 	Run the test script repeatedly in multiple parallel jobs until
-     + 	one of them fails.  Useful for reproducing rare failures in
-     + 	flaky tests.  The number of parallel jobs is, in order of
-     +-	precedence: <N>, or the value of the GIT_TEST_STRESS_LOAD
-     ++	precedence: the value of the GIT_TEST_STRESS_LOAD
-     + 	environment variable, or twice the number of available
-     + 	processors (as shown by the 'getconf' utility),	or 8.
-     + 	Implies `--verbose -x --immediate` to get the most information
-     +@@
-     + 	'.stress-<nr>' suffix, and the trash directory of the failed
-     + 	test job is renamed to end with a '.stress-failed' suffix.
-     + 
-     ++--stress-jobs=<N>::
-     ++	Override the number of parallel jobs. Implies `--stress`.
-     ++
-     + --stress-limit=<N>::
-     + 	When combined with --stress run the test script repeatedly
-     + 	this many times in each of the parallel jobs or until one of
-     +
-       diff --git a/t/test-lib.sh b/t/test-lib.sh
-       --- a/t/test-lib.sh
-       +++ b/t/test-lib.sh
-
+diff --git a/t/README b/t/README
+index 3aed321248..b61bc930c4 100644
+--- a/t/README
++++ b/t/README
+@@ -205,7 +205,7 @@ appropriately before running "make".
+ --stress-limit=<N>::
+ 	When combined with --stress run the test script repeatedly
+ 	this many times in each of the parallel jobs or until one of
+-	them fails, whichever comes first.
++	them fails, whichever comes first. Implies `--stress`.
+ 
+ You can also set the GIT_TEST_INSTALLED environment variable to
+ the bindir of an existing git installation to test that installation.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 4e7cb52b57..ab7f27ec6a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -153,6 +153,7 @@ do
+ 		esac
+ 		;;
+ 	--stress-limit=*)
++		stress=t;
+ 		stress_limit=${opt#--*=}
+ 		case "$stress_limit" in
+ 		*[!0-9]*|0*|"")
 -- 
 gitgitgadget
+
