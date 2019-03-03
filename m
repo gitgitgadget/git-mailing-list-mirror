@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1439420248
-	for <e@80x24.org>; Sun,  3 Mar 2019 01:21:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DAF620248
+	for <e@80x24.org>; Sun,  3 Mar 2019 01:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727043AbfCCBVu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 2 Mar 2019 20:21:50 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45253 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726023AbfCCBVt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Mar 2019 20:21:49 -0500
-Received: by mail-wr1-f67.google.com with SMTP id w17so1692742wrn.12
-        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:21:48 -0800 (PST)
+        id S1727060AbfCCBV7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 2 Mar 2019 20:21:59 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38053 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbfCCBV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Mar 2019 20:21:59 -0500
+Received: by mail-wr1-f68.google.com with SMTP id g12so1707808wrm.5
+        for <git@vger.kernel.org>; Sat, 02 Mar 2019 17:21:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version;
-        bh=eTnclMCq+BHPb6t5dmTt+lz+pIAGnm/S7fr0yAlWNh4=;
-        b=HitbPMx5mn5nIzSrqBrYS2sYxPrtRPI/o9minxGryZaYsGMdmxoANg7W4kq7iKP6GU
-         HHUgiZt2isokecmSDhtb7AdsdDVMPgkHFTr91RXmvGMOmvyJnXDVyImaDPdzi10Qwor7
-         9nCTmZ0FDOtMfsYjtMqOyiyoZCniQ4FFsz4c7fmN4XuFApYymQOPxLvvN8B+KFMmhE2T
-         4nPj0bPEBDsfkAg5S3+6LAwCQMTqDTxCW/GMkicUSib5dsprU2/eqmOePvajDeynHNm9
-         XxTlzBOoIWcqUAuSYDNpAbKGUrUK5u6V2z0lhCRPHOF5NLbe3p9TInsPkpkdASopkZ+b
-         igqA==
+        bh=SlgfUuhUze+MiM8lwVLWHWsZeK7t0lsgknM0JVlrQZc=;
+        b=oDrlWl99kJQYp34p7xXby5Kn2EYLXpwXXNUsnM5eN6k5fn3icZS924vGG2NbBE504C
+         pfilB45jqIO1bb788EGa/yCr9QMD5QtkFHqjFDLwIfuxsOS5qbJ3+xsgsrqpL/ZDX3BL
+         /O+fO1JlsQXLQTNQsHr5tAR/y0qwpjC5WCe3VfOQEhb8Wdq/T1Vav/bw46uUuIE0NdZ5
+         H4VYi282Op1gtG7PH/bNpDez/r6RwnNte8G3eTVSR6zAuBVFt9QJOpGURxqaE8tU9FK/
+         /bidH5p4n+mV39Xef49E2iwBULuW7KW+9QfwMVPLjJAp5DOQkXZvLCTMwAWixSPm7L6K
+         zOtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version;
-        bh=eTnclMCq+BHPb6t5dmTt+lz+pIAGnm/S7fr0yAlWNh4=;
-        b=azOmT6pyCBnSEo1eIhjx8Mr21kGIOpfSDOTIB7pmUyB/l6L4L362WdRXuT/BQD/8dr
-         VRMd5ywV/dnO6y612TcRpVMiy9nLDCWXAXWKgFTfmzCllJveJqPBurUf4BplWnVVLjHT
-         4RksJ8KP+kFs4qbeLkueJm5BRv3Uor4RJN5IGbnxlgZgUfYNh08nGOsEmRSeZ54Bqyj+
-         jowuO66DheEmoy6V+JjialjU+svekobyZevOm/sxIIrxmikGMjPmAou4yQ1fchSnMgXy
-         S8Exap5Y+gLQqnC8lgh6tK22HmKjpFxVYNZ6kPl2lrId+FYogNoqmxkg8iLfjJo7VtF6
-         UQzA==
-X-Gm-Message-State: APjAAAVWKaimIkdg21FPrcjVdUcRCPsR6hLvkD2FTwUIDjpk4H9DPb81
-        J2AHxwo0RXlwczOpKLiecUM=
-X-Google-Smtp-Source: APXvYqzv4dV/AC/3fyT1eswLECLKa3TwNIEN+UWrmv/Ps70xroBy1aGoMuXFob1BmqfoLigy+VlyGw==
-X-Received: by 2002:adf:ee4d:: with SMTP id w13mr8203308wro.16.1551576107886;
-        Sat, 02 Mar 2019 17:21:47 -0800 (PST)
+        bh=SlgfUuhUze+MiM8lwVLWHWsZeK7t0lsgknM0JVlrQZc=;
+        b=dPK7fheus7kLnR4EDXnVMa3i5LP6nFf2eahoyPLzHn+727pDt36jFqZkYEutcUpv2P
+         BCn36hQOSa3uZIRGN4mh20zX6tCrTwTdn/Wvzux2z2e80mSt3qrVkeHPlnk7DRjmev5z
+         v87ag0OyzYGPEYaDGr975W3bjW+39C6yjoBa/z5nc5TQeekypViQuWVnzeMrb1O4blRh
+         wNoWijX4yhFKvDX0nd4EjFxpD/BWLZkEU00Ro3LgYGlPAvuHe4wXllmibutwMFbVrC8l
+         FuChJFgmXQ9F/KeLLwN90AAlzUOzQyPwrbSqdhLp1xUX/edG9w+m6V71RHMzHhpmOCcx
+         4mcQ==
+X-Gm-Message-State: APjAAAWG4HnDP4kbyuhxbRWnIUdovGuaieFTgrTMP2udj+lB1Z7l6tpU
+        llzOMgRsYcKYzWo6ODGhg8s=
+X-Google-Smtp-Source: APXvYqxMx03SvBsS4nzOpZmXU+/jkIfzXnr3l8As8ca1PEwcUVcmYBG5l5esM1uKaclgMvOnYEMdNA==
+X-Received: by 2002:adf:dd12:: with SMTP id a18mr7580167wrm.4.1551576117224;
+        Sat, 02 Mar 2019 17:21:57 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e7sm2146322wrw.35.2019.03.02.17.21.47
+        by smtp.gmail.com with ESMTPSA id a22sm1778098wmj.35.2019.03.02.17.21.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 02 Mar 2019 17:21:47 -0800 (PST)
+        Sat, 02 Mar 2019 17:21:56 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] fixup! upload-pack: refactor reading of pack-objects out
-References: <pull.139.git.gitgitgadget@gmail.com>
-        <5fa4fcad63e18dd9d840217eb8cf3dab8f69bc1b.1551046329.git.gitgitgadget@gmail.com>
-Date:   Sun, 03 Mar 2019 10:21:46 +0900
-Message-ID: <xmqq1s3o69cl.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Olga Telezhnaya <olyatelezhnaya@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH RFC 0/20] cat-file: start using formatting logic from ref-filter
+References: <CAL21BmnVkKtYWa1cRL1EJAwtchGcVUzhu0136AuV8uXAi5Kuew@mail.gmail.com>
+        <20190228214314.GL12723@sigill.intra.peff.net>
+Date:   Sun, 03 Mar 2019 10:21:56 +0900
+Message-ID: <xmqqtvgk4urv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,44 +67,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Jeff King <peff@peff.net> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> On Fri, Feb 22, 2019 at 06:50:06PM +0300, Olga Telezhnaya wrote:
 >
-> This fixes an issue pointed out by clang.
+>> In my opinion, it still has some issues. I mentioned all of them in
+>> TODOs in comments. All of them considered to be separate tasks for
+>> other patches. Some of them sound easy and could be great tasks for
+>> newbies.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  upload-pack.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 2365b707bc..534e8951a2 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -179,7 +179,7 @@ static void create_pack_file(const struct object_array *have_obj,
->  			     const struct string_list *uri_protocols)
->  {
->  	struct child_process pack_objects = CHILD_PROCESS_INIT;
-> -	struct output_state output_state = {0};
-> +	struct output_state output_state = {"\0"};
+> One other thing I forgot to mention: your patches ended up on the list
+> in jumbled order. How do you send them? Usually `send-email` would add 1
+> second to the timestamp of each, so that threading mail readers sort
+> them as you'd expect (even if they arrive out of order due to the
+> vagaries of SMTP servers).
 
-OK, as the structure looks like
-
-	struct output_state {
-		char buffer[8193];
-		int used;
-		...
-
-we obviously cannot initialize buffer[] with a single integer 0 ;-)
-Between "" and "\0" you wondered elsewhere, I have no strong
-preference, but if I were fixing it, I would probably write it as
-
-	struct output_state output_state = { { 0 } };
-
-so that readers do not even have to waste time to wonder between the
-two.
-
-Thanks.
+Yes, the 1 second increment has served us so well in the entire life
+of this project, and I am finding a bit irritating that we seem to
+be seeing topics that are shown in jumbled order more often.  I'd love
+to see why and get them fixed at the source eventually.
 
