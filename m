@@ -7,58 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8247E20248
-	for <e@80x24.org>; Mon,  4 Mar 2019 03:45:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 676C520248
+	for <e@80x24.org>; Mon,  4 Mar 2019 03:45:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725998AbfCDDp3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 22:45:29 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37813 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725938AbfCDDp3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 22:45:29 -0500
-Received: by mail-wr1-f67.google.com with SMTP id w6so3884023wrs.4
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 19:45:28 -0800 (PST)
+        id S1726022AbfCDDpq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 22:45:46 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35526 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725938AbfCDDpq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 22:45:46 -0500
+Received: by mail-wm1-f68.google.com with SMTP id y15so3248594wma.0
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 19:45:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version;
-        bh=X7wPcxRdDtHjG/B9mCCd/sAaw7xoSA7xrU1x/3ijPwg=;
-        b=rxNiTyZDszLF4HVhmCRrA4LdKL71N9OfHGH9ChLTnv27GMkP48exF/Ro6HbncG5ktU
-         HzAHQ6sq8Raua/MXp4XWBa8N8MbBF5faeQpFYAqk8WbS70ZI08es6OZt0NCJmqRNfYXG
-         RqCZIGrRkpq2e4JktlNrM3ODcM3sokZzwmuudrkV3Roh/soK5iTXL100g7OlD91rnwCM
-         sR6sBDPAkFmsoPxBiNBMd73h7+0mQ/v4y7HSEV9F3L9BL8HxkoKH5s2wzZIfR2NsaNI7
-         /Ui11vHdl37CH5revn0dHGUUuFMqH0tqfzssjPjwb7XYIE3V8EMf5z4+nx1nhJZt2zoa
-         OYfg==
+        bh=/P5nyWYXG31pMi60f5fBieQCDrhPk0fDJ5tLghox5Gg=;
+        b=slF5n1+F7awBb/Tza0mdi1EjVUXVETrlAaXFh38/iR6twWzhQFFUdk59x+GCvU/fS1
+         2tiKIRj59RS9TBmiACr5o11vFl1cMvLVWTTABhYBxMwKnYtfpupxXg8GO1mhcpkXl+wL
+         jOCv+73GHYYJvtEawdCXXgIpB7MTC4dVAn/509G5EL2CZw7mlG6ljvix+F0WGSvRwHGF
+         xjT93txYLQrl1eUKSEju7AseRi7fgT+PdXagC1n+Dcwq4yCVVTQMfKwIfY5gqgU69fTE
+         PXZ/B9D7ctcsGhHvh6GKhWW7pOx3QeTGlJJiNFmNVCH/xvk1xQUdSUQmHrWpTDUPZFc6
+         c0iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version;
-        bh=X7wPcxRdDtHjG/B9mCCd/sAaw7xoSA7xrU1x/3ijPwg=;
-        b=DvMNqesqsnVZZo2O8UqKH5luigbEiWfu5rx0gxIzpgCIbI6ySsq3g/Jz1Hr6m6NJoM
-         2kLTi+SwiXf4AcCkd3FCW/l2xclygh4otFuOMzLyPhgR8rLM0mG8+TjGnkVuwngPAXco
-         Ohx/mqwyav1uFopX+OX3n6N45nVl+cwhwnK2dUs9a3jqfJ3HL8EiUFqSEYVnz8h9G80q
-         97CpjVYvRvfosIZ1XtalFdkN+sGtJN3LgvjlvK89bpmS9KS2Cy+nQL+TrE4XDQDGSPfb
-         czXSBeP4BuT03oHaY4SxiEqPM0iyf0gorjsudwdsfj8ZhUyW0CiYpoRdWEYA/JsBNSQO
-         B+tg==
-X-Gm-Message-State: APjAAAX+D0/irKqukZk25LENyStGt5WMvu2AeGuzrxpxKCZVwGVUb0xK
-        CdKwHG1FupsswGvtOpyAVFA=
-X-Google-Smtp-Source: APXvYqwqWf6AjYFmSMUxGP8EcFTVsn+dHSAUospT/jh4ahI6546KVwHto4hjFe4J3uy6koT6eFKnqQ==
-X-Received: by 2002:adf:eb85:: with SMTP id t5mr11240636wrn.168.1551671127232;
-        Sun, 03 Mar 2019 19:45:27 -0800 (PST)
+        bh=/P5nyWYXG31pMi60f5fBieQCDrhPk0fDJ5tLghox5Gg=;
+        b=T/nN/+2VclRHmcEXPfiwpmgZBUYxwLrZLIf3k0pNsEmHLS9+2MNQy/yZ7Vas8zF1QK
+         NyYbVBr7A0RgwOrCnWagbplP3acPsTUalov1cr+MopAm4UYTA3qf7D1+MyMXvQKu+R06
+         DNfzYo/ShjL6VGjEyGOlI4eS4exBtKjRcVl+bkJiaq7shN44a4JaidcWADpYVCdUUIl0
+         xq2CYMydYYY92QYPhZmPLpAhBA7eB//ZwaIHS14aBqOwHEEvhfqBsoCOqoMXDXw2jbbd
+         8NAovUaZkxxNuFOuFzwb/UVlOVeub377gqqW2f4YaBYYE1OM8Auxkpl8DMgzvGLUtXOr
+         etZw==
+X-Gm-Message-State: APjAAAWHhE/Sg4r3a5b0rE28WUzVaLe6j9/u5xHZybDzvqARMla+fpyz
+        8ObFKDUK9EuDu4niFFkuH2I=
+X-Google-Smtp-Source: APXvYqyI6wAkhGIQ42lCMzvB91++ovZxoMQ2j+Fc4sNiQ+tkIfSSrlo/tvybv2YEmwuCvpjQnjx9hw==
+X-Received: by 2002:a1c:730d:: with SMTP id d13mr5146720wmb.37.1551671143184;
+        Sun, 03 Mar 2019 19:45:43 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l129sm3880285wml.42.2019.03.03.19.45.26
+        by smtp.gmail.com with ESMTPSA id t3sm11917941wmc.20.2019.03.03.19.45.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Mar 2019 19:45:26 -0800 (PST)
+        Sun, 03 Mar 2019 19:45:42 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
-        git@vger.kernel.org, t.gummerer@gmail.com
-Subject: Re: [GSoC][PATCH v2 1/3] test functions: add function `test_file_not_empty`
-References: <20190303122842.30380-1-rohit.ashiwal265@gmail.com>
-        <20190303233750.6500-1-rohit.ashiwal265@gmail.com>
-        <20190303233750.6500-2-rohit.ashiwal265@gmail.com>
-Date:   Mon, 04 Mar 2019 12:45:25 +0900
-Message-ID: <xmqqo96rxpyi.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     jrnieder@gmail.com, git@vger.kernel.org, peff@peff.net
+Subject: Re: [FIXUP] Fixup on tip of jt/http-auth-proto-v2-fix
+References: <20190226070408.GA117495@google.com>
+        <20190226181859.65894-1-jonathantanmy@google.com>
+Date:   Mon, 04 Mar 2019 12:45:42 +0900
+Message-ID: <xmqqh8cjxpy1.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,107 +65,111 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> test-lib-functions: add a helper function that checks for a file and that
-> the file is not empty. The helper function will provide better error message
-> in case of failure and improve readability
+>> Thanks for fixing it.
+>> 
+>> Is there a particular patch this should be squashed into, or does it
+>> stand alone?  It the latter, mind writing a commit message for it?
+>
+> Not sure if I'm using "fixup" correctly in the subject, but this is
+> meant to be squashed onto the tip of jt/http-auth-proto-v2-fix -
+> specifically, deb7d2094a ("remote-curl: use post_rpc() for protocol v2
+> also", 2019-02-14).
 
-Avoid making the log message into an enumerated list, when there
-aren't that many things to enumerate to begin with (specifically,
-the "test-lib-functions:" label is unsightly here).   Finish the
-sentence with a full stop.
+Saying "Fixup on tip of" to mean that you are fixing the 5th one in
+a 5-patch series is sufficient to convey what you want between
+humans, but that does not help the machine to help humans reduce
+mistakes.  It would have been even more helpful if you created this
+commit with
 
-	Add a helper function to ensure that a given path is a
-	non-empty file, and give an error message when it is not.
+	git commit --fixup 0cdb2a12ad
 
-	Give separate messages for the case when the path is missing
-	or a non-file, and for the case when the path is a file but
-	is empty.
+which would have produced something like the attached patch,
+and that would have allowed me to do
 
-should be sufficient.
+	git checkout jt/http-auth-proto-v2-fix
+	git am ./+jt-http-auth-proto-v2-fix-fixup
+	git rebase -i --autosquash HEAD~5
 
-I still do not see why the posted code is better than this
+or somesuch.
 
-	if ! test -s "$1"
-	then
-		echo "'$1' is not a non-empty file.'
-	fi
+Thanks, will queue.
+
+-- >8 --
+Subject: [PATCH] fixup! remote-curl: use post_rpc() for protocol v2 also
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ remote-curl.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
+
+diff --git a/remote-curl.c b/remote-curl.c
+index 8c03c78fc6..3c3872cca6 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -758,7 +758,11 @@ static curl_off_t xcurl_off_t(size_t len)
+ 	return (curl_off_t)size;
+ }
  
-which is more to the point.  After all, if we are truly aiming for
-finer-grained diagnosis, there is no good reason to accept a single
-error message "does not exist or not a file" for these two cases,
-but you'd be writing more like
+-static int post_rpc(struct rpc_state *rpc)
++/*
++ * If flush_received is true, do not attempt to read any more; just use what's
++ * in rpc->buf.
++ */
++static int post_rpc(struct rpc_state *rpc, int flush_received)
+ {
+ 	struct active_request_slot *slot;
+ 	struct curl_slist *headers = http_copy_default_headers();
+@@ -773,17 +777,19 @@ static int post_rpc(struct rpc_state *rpc)
+ 	 * allocated buffer space we can use HTTP/1.0 and avoid the
+ 	 * chunked encoding mess.
+ 	 */
+-	while (1) {
+-		size_t n;
+-		enum packet_read_status status;
+-
+-		if (!rpc_read_from_out(rpc, 0, &n, &status)) {
+-			large_request = 1;
+-			use_gzip = 0;
+-			break;
++	if (!flush_received) {
++		while (1) {
++			size_t n;
++			enum packet_read_status status;
++
++			if (!rpc_read_from_out(rpc, 0, &n, &status)) {
++				large_request = 1;
++				use_gzip = 0;
++				break;
++			}
++			if (status == PACKET_READ_FLUSH)
++				break;
+ 		}
+-		if (status == PACKET_READ_FLUSH)
+-			break;
+ 	}
+ 
+ 	if (large_request) {
+@@ -963,7 +969,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads,
+ 			break;
+ 		rpc->pos = 0;
+ 		rpc->len = n;
+-		err |= post_rpc(rpc);
++		err |= post_rpc(rpc, 0);
+ 	}
+ 
+ 	close(client.in);
+@@ -1319,7 +1325,7 @@ static int stateless_connect(const char *service_name)
+ 			BUG("The entire rpc->buf should be larger than LARGE_PACKET_MAX");
+ 		if (status == PACKET_READ_EOF)
+ 			break;
+-		if (post_rpc(&rpc))
++		if (post_rpc(&rpc, status == PACKET_READ_FLUSH))
+ 			/* We would have an err here */
+ 			break;
+ 		/* Reset the buffer for next request */
+-- 
+2.21.0
 
-	if ! test -e "$1"
-	then
-		echo "'$1' does not exist"
-	elif ! test -f "$1"
-	then
-		echo "'$1' is not a file"
-	elif ! test -s "$1"
-	then
-		echo "'$1' is not empty"
-	else
-		: happy
-		return
-	fi
-	false
 
-But I do not see much point in doing so, and I do not see much point
-in the version that makes an extra check only for "test -f", either.
-
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 80402a428f..f9fcd2e013 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -593,6 +593,21 @@ test_dir_is_empty () {
->  	fi
->  }
->  
-> +# Check if the file exists and has a size greater than zero
-> +test_file_not_empty () {
-> +	if ! test -f "$1"
-> +	then
-> +		echo "'$1' does not exist or not a file."
-> +		false
-> +	else
-> +		if ! test -s "$1"
-> +		then
-> +			echo "'$1' is an empty file."
-> +			false
-> +		fi
-> +	fi
-> +}
-
-
-If I were writing this, I'd dedent it by turning this into
-
-	if ! test -f ...
-	then
-		echo ...
-	elif ! test -s ...
-	then
-		echo ...
-	else
-		: happy
-		return
-	fi
-	false
-
-But as I said, I do not see much point in the extra "test -f", so
-more likely this is what I would write, if I were doing this step
-myself:
-
-	if test -s "$1"
-	then
-		: happy
-	else
-		echo "'$1' is not a non-empty file"
-		false
-	fi
-
-> +
->  test_path_is_missing () {
->  	if test -e "$1"
->  	then
