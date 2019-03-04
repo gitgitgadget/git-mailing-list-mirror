@@ -2,141 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA78D20248
-	for <e@80x24.org>; Mon,  4 Mar 2019 14:36:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99EC120248
+	for <e@80x24.org>; Mon,  4 Mar 2019 14:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726911AbfCDOgi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 09:36:38 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41147 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726061AbfCDOgi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 09:36:38 -0500
-Received: by mail-wr1-f66.google.com with SMTP id n2so5796647wrw.8
-        for <git@vger.kernel.org>; Mon, 04 Mar 2019 06:36:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3SWXl/Rvuk6VTq+0IiMwVliNHx+ktzWGRgsrVpjoW8E=;
-        b=Q3Tk7XkZk0V2ejC2LlTF2DPN9IWcAZgDVR2gPhaqS9pqGWL/OnrWkTH6tTq8FkL1Cd
-         ZBrXdN5VoDP3Jz5SGBFHleRvLrijzeH+hrRCBkPeoQL2EFCmkGPr3JXSk927/Kx5Y5vR
-         CvtkDAP1pFd/SxIZfFxLKyHpmELjBLpAKESuWbD8BquQYuGulDAjkVZAEHijGZtFq9v5
-         KDGzIVK+4UD7P3vy66ogInTVd6XIF+SwGWKy4Bh7RIs6HxJtVqc6zJ0h8tnDcj3ovGtq
-         907xiEuM1+l3of8h/s3OgIs3kk+LLamQzUbOnXlULe2lr6LTIvdLx1Ecq5xoz17KQ1pP
-         HP6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3SWXl/Rvuk6VTq+0IiMwVliNHx+ktzWGRgsrVpjoW8E=;
-        b=GRD72+q2z+7D5T7LvVildvSbrDw/bx1XKzbjWRULW2Yugl0QwNhRCu+BD3KCvZr+Hi
-         JJss3AtQ2xkcThl2ZnIK+/rh6uYyTU8qG19F55w7q/BpkNWM7DRCa5keHzMiq7kSJkHO
-         32aQPPqhTRbSUYAH99NeiMWjm54W0WI2JEnOHbUKUtrj9Lcobd92Y51eMjInBErZ1/Cn
-         CbtCeP51hoKHp0kPKO98pTDMWD871wYfOeKBDKNgi51mZx6j3k9m19Mcmnvgh650nrL8
-         wZQALNQN+3028fSjx6elmEodS8Qo43saOTO2u8WN3pfMAlvPDwtbOxeaAsZA5uMV/Ya7
-         tGvg==
-X-Gm-Message-State: APjAAAXX4LJ3S6IHVqGohMVFd7zt3UKLbDrNBLpdxS+H+z4790RpJD5v
-        go1ergIBEEGmYkofCTFFzVI=
-X-Google-Smtp-Source: APXvYqwK0qSyz28B7BzxM4P5W/+Op6+VIDlfgEEvwLMAgr0uKzirKamQ86pUNImQpgaMttDry4N83Q==
-X-Received: by 2002:adf:ce91:: with SMTP id r17mr12316052wrn.80.1551710196494;
-        Mon, 04 Mar 2019 06:36:36 -0800 (PST)
-Received: from szeder.dev (x4db46a68.dyn.telefonica.de. [77.180.106.104])
-        by smtp.gmail.com with ESMTPSA id x74sm6810211wmf.22.2019.03.04.06.36.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Mar 2019 06:36:35 -0800 (PST)
-Date:   Mon, 4 Mar 2019 15:36:33 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Rohit Ashiwal via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: Re: Do test-path_is_{file,dir,exists} make sense anymore with -x?
-Message-ID: <20190304143633.GC28939@szeder.dev>
-References: <pull.152.git.gitgitgadget@gmail.com>
- <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
- <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com>
- <87sgwav8cp.fsf@evledraar.gmail.com>
- <20190226170400.GC19739@szeder.dev>
- <20190226174316.GD19606@sigill.intra.peff.net>
- <20190226193912.GD19739@szeder.dev>
- <20190226210101.GA27914@sigill.intra.peff.net>
+        id S1726173AbfCDO7a (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 09:59:30 -0500
+Received: from mout.gmx.net ([212.227.15.15]:36509 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726080AbfCDO7a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 09:59:30 -0500
+Received: from [10.49.208.72] ([95.208.59.9]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5dMm-1hC0Dw40vg-00xbVq; Mon, 04
+ Mar 2019 15:59:21 +0100
+Date:   Mon, 4 Mar 2019 15:59:20 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] Makefile: remove the 'hdr-check' target
+In-Reply-To: <c1b1c37c-5476-4dc1-9e9b-b0c7363c5ae4@ramsayjones.plus.com>
+Message-ID: <nycvar.QRO.7.76.6.1903041558480.45@tvgsbejvaqbjf.bet>
+References: <c1b1c37c-5476-4dc1-9e9b-b0c7363c5ae4@ramsayjones.plus.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190226210101.GA27914@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HmQ2nV+MvP0hV8oIDT1gdGIgKq78HYFb8SXeyNjwICNuzqKiHLn
+ XEC3MIN1Df+JeMoBXY2sNFmIIZcBjgodp1iBp1EqaapeBNsifbpQ4XFie1iqKSFJ3z2zwIM
+ RagazNO4dSbaU7u2FQauJNAR+oLcHgb6g7VcpU8AE2A44RcxjQZX4iGMMCcs13dAjGTbQs/
+ 0Js1h5ZNtARPNc9bA/AEg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Ixm7B2ygdB4=:92arPkQBQ5U+LsZ1t7uFOy
+ qCT17TeDhgqX8f9Q3VPU/7sqtB/TLfyEEiyJfN6+HrLe9AtCuUcS1cNs4EGlvZuVm9psdoy0T
+ UNkD+GJVSiFjC/UIDiDyU3ZTup2cm5xktZ8OoLRzNOK62VniozWOi8G0VIGXmM3t3yXBeFYd8
+ PTQwrzGT4Mlrr0J9xGigBeF/hWDl4x6dGZgR7k5ds3c4VzjuFCMfGaGSZwdpocfFMt98d4MCc
+ P6OhHgxCyzD8/M1ZH7w0WTEOvNidzwXhQMNp2ryE9oWVLg72nsvN7wGTM+shQEyGx69rPQSBE
+ FASrYnxiiVgBn2l8B7za6L93ShBg5ELOcb2q20ROJ5XNTVKG+V/uQmK21WLkCQ2K0lmh+7C+A
+ hm2uRD6rYwpp2VwJ5mdhExSnro+g3TaSqWiZ20Bk6dKQpP07rT5+IaF5qsPgWFwl/S5m0RsV0
+ Ur9/HTatwi403htSWOWwCdD7OUbyjA4u910Tro0I7pEZ+pijqya2AIG+2vpSITGJhlq6pBwpA
+ sluW1LZK2MnfjwPp4E/BGVy0fkoXmbRohqenD9nlu0/7d++OfhEpWsgFyPfgbV93r2jcKskDp
+ 481clUHSJq8PhX1yG2MHF2ssat/zNhJO6NgyB31LCZDxwbBsxC66XqM+uBIJaHLxfxIpFZLn6
+ Po/QzZPyGGtuVTLVXop7aPSBARoxqPVIzIRlvjoKpFiorM9VNEd6pTO/8ueEUsoJP7avFJgmM
+ 9vS1I4AD0II8UyvLIWODr1BEXZZkhDBRZq+TtIEthaxxd4hiOsw9murgBgI0WY2fGt8PjqEwe
+ AXoOfAHuXXbCseaLBZCtIkCkiT7NxVhmGzBR63M5PqcNy59ZChYB3wlU7OvsHC851uvSP9+6u
+ TnSIljwUHmRMWB03TlRsZbhW+cNl4uJ8cBYDoEy6Q8kM+SfHMlRN1C0yvqSuuWE0oFILzWMX6
+ sLA5M6EL0ig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 26, 2019 at 04:01:01PM -0500, Jeff King wrote:
-> > +	{ set +x ; } 2>/dev/null 4>/dev/null
+Hi Ramsay,
+
+On Sun, 3 Mar 2019, Ramsay Jones wrote:
+
+> The 'hdr-check' target has proved to be costly for some developers and
+> platforms, depending on the configuration, even when not using this
+> target. In part, this is due to the use of $(FIND) in the definition
+> of the $(LIB_H) variable. This effectively reverts commit ebb7baf02f
+> ("Makefile: add a hdr-check target", 2018-09-19).
+
+As I said elsewhere, I think it would make sense to keep this target, and
+to wire it up to our CI builds.
+
+Ciao,
+Dscho
+
 > 
-> Ah, this is the magic. Doing:
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>  Makefile | 12 ------------
+>  1 file changed, 12 deletions(-)
 > 
->   set +x 2>/dev/null
+> diff --git a/Makefile b/Makefile
+> index c5240942f2..dd3e38dc1f 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1852,7 +1852,6 @@ ifndef V
+>  	QUIET_MSGFMT   = @echo '   ' MSGFMT $@;
+>  	QUIET_GCOV     = @echo '   ' GCOV $@;
+>  	QUIET_SP       = @echo '   ' SP $<;
+> -	QUIET_HDR      = @echo '   ' HDR $<;
+>  	QUIET_RC       = @echo '   ' RC $@;
+>  	QUIET_SUBDIR0  = +@subdir=
+>  	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+> @@ -2735,17 +2734,6 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+>  .PHONY: sparse $(SP_OBJ)
+>  sparse: $(SP_OBJ)
+>  
+> -GEN_HDRS := command-list.h unicode-width.h
+> -EXCEPT_HDRS := $(GEN_HDRS) compat% xdiff%
+> -CHK_HDRS = $(filter-out $(EXCEPT_HDRS),$(patsubst ./%,%,$(LIB_H)))
+> -HCO = $(patsubst %.h,%.hco,$(CHK_HDRS))
+> -
+> -$(HCO): %.hco: %.h FORCE
+> -	$(QUIET_HDR)$(CC) -include git-compat-util.h -I. -o /dev/null -c -xc $<
+> -
+> -.PHONY: hdr-check $(HCO)
+> -hdr-check: $(HCO)
+> -
+>  .PHONY: style
+>  style:
+>  	git clang-format --style file --diff --extensions c,h
+> -- 
+> 2.21.0
 > 
-> will still show it, but doing the redirection in a wrapping block means
-> that it is applied before the command inside the block is run. Clever.
-
-Yeah, clever, but unfortunately (and to me suprisingly) unportable:
-
-  $ ksh
-  $ set -x
-  $ echo foo
-  + echo foo
-  foo
-  $ set +x
-  $ 
-
-It doesn't show 'set +x', how convenient! :)
-However:
-
-  $ set -x
-  $ echo foo 2>/dev/null
-  + echo foo
-  + 2> /dev/null
-  foo
-  $ { set +x; } 2>/dev/null
-  + 2> /dev/null
-  $ 
-
-Apparently ksh, ksh93 and mksh show not only the executed commands
-but any redirections as well.  It's already visible when running our
-tests with ksh and '-x':
-
-  $ ksh ./t9999-test.sh -x
-  Initialized empty Git repository in /home/szeder/src/git/t/trash directory.t9999-test/.git/
-  expecting success: 
-          true
-  
-  + true
-  + 2> /dev/null ok 1 - first
-  
-  # passed all 1 test(s)
-  1..1
-
-NetBSD's sh:
-
-  # set -x
-  # echo foo
-  + echo foo
-  foo
-  # echo foo 2>/dev/null
-  + echo foo 2>/dev/null
-  foo
-  # { set +x; } 2>/dev/null
-  + using redirections: 2>/dev/null do
-
-
