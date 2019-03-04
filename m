@@ -2,76 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF16720248
-	for <e@80x24.org>; Mon,  4 Mar 2019 07:56:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B953A20248
+	for <e@80x24.org>; Mon,  4 Mar 2019 08:43:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726022AbfCDH4l (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 02:56:41 -0500
-Received: from mx-relay47-hz2.antispameurope.com ([94.100.136.247]:45504 "EHLO
-        mx-relay47-hz2.antispameurope.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725974AbfCDH4l (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 4 Mar 2019 02:56:41 -0500
-Received: from unknown ([91.229.168.76]) by mx-relay47-hz2.antispameurope.com;
- Mon, 04 Mar 2019 08:56:38 +0100
-Received: from bruexc101.brumgt.local (10.251.3.120) by bruexc101.brumgt.local
- (10.251.3.120) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Mon, 4 Mar
- 2019 08:55:47 +0100
-Received: from bruexc101.brumgt.local ([fe80::8192:a565:2dec:8204]) by
- bruexc101.brumgt.local ([fe80::8192:a565:2dec:8204%19]) with mapi id
- 15.00.1473.003; Mon, 4 Mar 2019 08:55:47 +0100
-From:   "Wendeborn, Jonathan" <Jonathan.Wendeborn@bruker.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: AW: fast-import fails with case sensitive tags due to case
- insensitive lock files
-Thread-Topic: fast-import fails with case sensitive tags due to case
- insensitive lock files
-Thread-Index: AdTPonIg/9QWZqseSg6y1MSsuJUGaABrM6kAAEQUNaA=
-Date:   Mon, 4 Mar 2019 07:55:47 +0000
-Message-ID: <3dbce0f1c80e4e67b114f8c84e2106c8@bruexc101.brumgt.local>
-References: <ceb9b34681c14d9ab2a33ba909b5ca75@bruexc101.brumgt.local>
- <20190303002542.GG601925@genre.crustytoothpaste.net>
-In-Reply-To: <20190303002542.GG601925@genre.crustytoothpaste.net>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.251.3.124]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1726990AbfCDInB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 03:43:01 -0500
+Received: from mail-ot1-f47.google.com ([209.85.210.47]:38558 "EHLO
+        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726908AbfCDInA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 03:43:00 -0500
+Received: by mail-ot1-f47.google.com with SMTP id m1so3564939otf.5
+        for <git@vger.kernel.org>; Mon, 04 Mar 2019 00:43:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yOD/BSX81NXkAqzp5vzbyMoM19mxWY2gLdsboQq1T/k=;
+        b=gw0NBx1YL3YVilB6Inyaa8SOaGOXf4pBslbdsRo48jFcuSRaDrMkZsSAvEvxPdT7su
+         mPb5+qWDRZe2X75/Ak/N9La4zC5OAji14YI9JEgXv9wZBQDTmt448ZE1DC1noYqSh3Li
+         zZA35+SlIIsw3XnjU1BuiC5wKj9MhF2cZLsysCcYkHVrmdVUm6fh1hxzn+BUfTrwwjw3
+         A+Oz+5XMHNwmMsypZfz+NcTWeaACe7PyvctNzj9frsx2jj8/LP4ghXjAPcj1RIMlgMuu
+         ex745OjrW07HwOR/BD6p5+NKGjKW1g7qJtewgppPRMZitIPpIsWZuDkcQG/Tvnbn/zFr
+         xOUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yOD/BSX81NXkAqzp5vzbyMoM19mxWY2gLdsboQq1T/k=;
+        b=KrQe6IbgQfwQZWZ3GjTXqkdtgAIdzKitZrZRO83SmXwpSlxGk/pFUSbUuzEHLdul1/
+         nY5cgAeLfvJbJT40LyMtQhXNentpCkke1P2bM2TLBBhEW31ivQOGRuEL1uAvtjaNSK/z
+         SBzpOcXvSC778PXQbt1IrRbbzNa2baV1rnXPy5HPI6Dr9aqJ9AfsyRh2ElfyRjQZsRhf
+         i+osweBSGPS3slxm+0dzrdXJiJhGUOb8wluZ24Iuvaeta1RdEYepCUzagshcN6pQ7Y3D
+         BTdI8lpCe5v56lf0J4kEtdG9j2OYfNBsF1NIqREUX3H/m26zgJABCp1fxNvKof5OZT5m
+         NWOg==
+X-Gm-Message-State: APjAAAW55Ycmn6zKZO4lYU1RtuyuYS/bWhk/m6d7GnIbdlyZ0gjNqB+O
+        mz8EnxhLbhPh2GH6rY2joh4=
+X-Google-Smtp-Source: APXvYqz6Rv4JfAfBAdQEgS7hO7U9tp4NNEsrAIpjBzzF1hnepdmByyLlqFFrJq/l1OLQS15m43fGmA==
+X-Received: by 2002:a9d:3bb6:: with SMTP id k51mr11012332otc.8.1551688979785;
+        Mon, 04 Mar 2019 00:42:59 -0800 (PST)
+Received: from localhost.localdomain ([205.204.117.23])
+        by smtp.gmail.com with ESMTPSA id t12sm2223577otk.16.2019.03.04.00.42.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 04 Mar 2019 00:42:58 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Tran Ngoc Quan <vnwildman@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [GIT PULL] l10n updates for 2.21.0 round 2.1
+Date:   Mon,  4 Mar 2019 16:42:50 +0800
+Message-Id: <20190304084250.3370-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc1.19.g6993b9cd58
 MIME-Version: 1.0
-X-cloud-security-sender: jonathan.wendeborn@bruker.com
-X-cloud-security-recipient: git@vger.kernel.org
-X-cloud-security-Virusscan: CLEAN
-X-cloud-security-disclaimer: This E-Mail was scanned by E-Mailservice on mx-relay47-hz2.antispameurope.com with 2C9664036C
-X-cloud-security-connect: unknown[91.229.168.76], TLS=1, IP=91.229.168.76
-X-cloud-security: scantime:.5300
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiBSaWdodCBub3csIHlvdSBoYXZlIHNvbWUgY2hvaWNlczogDQo+IOKAoiBWb2x1bnRlZXIgdG8g
-aW1wbGVtZW50IHJlZnRhYmxlLiANCj4g4oCiIFNpbmNlIHlvdSdyZSBvbiBXaW5kb3dzIDEwLCBz
-ZXQgeW91ciBHaXQgcmVwb3NpdG9yeSBkaXJlY3RvcnkgYXMgDQo+IMKgIGNhc2Utc2Vuc2l0aXZl
-LiANCj4g4oCiIFVzZSBXaW5kb3dzIFN1YnN5c3RlbSBmb3IgTGludXgsIHdoaWNoIGlzIGNhc2Ug
-c2Vuc2l0aXZlIGFuZCBjcmVhdGVzIA0KPiDCoCBkaXJlY3RvcmllcyB3aXRoIHRoYXQgZmxhZyAo
-ZXZlbiBvbiBOVEZTKSwgdG8gZG8geW91ciBpbXBvcnQuIA0KPiDigKIgSWYgeW91IGNvbnRyb2wg
-dGhlIGZhc3QtZXhwb3J0IG91dHB1dCwgYWRqdXN0IHRoZSBhcmd1bWVudHMgeW91IHBhc3MgDQo+
-IMKgIHN1Y2ggdGhhdCB0aGUgb3V0cHV0IGRvZXMgbm90IGNvbnRhaW4gb25lIG9mIHRoZSBvZmZl
-bmRpbmcgdGFncy4gDQoNCkhpIEJyaWFuLA0KDQpUaGFuayB5b3UgdmVyeSBtdWNoIGZvciB5b3Vy
-IGFuc3dlciENCg0KVW5mb3J0dW5hdGVseSBJIGFtIHN0dWNrIHdpdGggV2luZG93cyAxMCAxNzAz
-IHdoaWNoIG5laXRoZXIgc3VwcG9ydHMgY2FzZS1zZW5zaXRpdml0eSBub3IgYW55IExpbnV4IHN1
-YnN5c3RlbSBmcm9tIHRoZSBNaWNyb3NvZnQgU3RvcmUgOiggQWxzbywgbXkgZW1wbG95ZXIgdW5m
-b3J0dW5hdGVseSBkb2VzbuKAmXQgYWxsb3cgbWUgdG8gaW52ZXN0IHRoZSB0aW1lIHRvIGltcGxl
-bWVudCByZWZ0YWJsZSwgc28gSSBndWVzcyBJIGdvIHdpdGggbWFudWFsbHkgbGVhdmluZyBvdXQg
-dGhlIG9uZSBjb25mbGljdGluZyBsYWJlbCBJIGZvdW5kIGFuZCB0YWdnaW5nIGl0IG1hbnVhbGx5
-IGFmdGVyd2FyZC4NCg0KT25lIHRoaW5nIEkgc3RpbGwgd291bGQgbGlrZSB0byBlbmNvdXJhZ2Ug
-dG8gaXMgdG8gaW1wcm92ZSB0aGUgZXJyb3IgbWVzc2FnZSB3aGljaCBpcyByZWFsbHkgbWlzbGVh
-ZGluZyBpbiB0aGlzIGNhc2UuDQoNCkJlc3QgcmVnYXJkcyBhbmQgdGhhbmtzIGFnYWluLA0KSm9u
-YXRoYW4NCg==
+Hi Junio,
+
+Please pull the following l10n updates for Git 2.21.0 to the maint branch.
+These updates include l10n of Vietnamese and fixes of l10n of French and
+Catalan.
+
+The following changes since commit 8104ec994ea3849a968b4667d072fedd1e688642:
+
+  Git 2.21 (2019-02-24 07:55:19 -0800)
+
+are available in the Git repository at:
+
+  git://github.com/git-l10n/git-po tags/l10n-2.21.0-rnd2.1
+
+for you to fetch changes up to 3ece05c5f408861e319043fa3f92125a9799db48:
+
+  l10n: Fixes to Catalan translation (2019-03-02 19:12:58 +0100)
+
+----------------------------------------------------------------
+L10n for Git 2.21.0 round 2.1
+
+----------------------------------------------------------------
+Jean-Noël Avila (1):
+      l10n: fr.po remove obsolete entries
+
+Jordi Mas (1):
+      l10n: Fixes to Catalan translation
+
+Trần Ngọc Quân (1):
+      l10n: Updated Vietnamese translation for v2.21 rd2
+
+ po/ca.po |    6 +-
+ po/fr.po | 1500 --------------
+ po/vi.po | 6954 +++++++++++++++++++++++++++++++++++---------------------------
+ 3 files changed, 3979 insertions(+), 4481 deletions(-)
+
+--
+Jiang Xin
