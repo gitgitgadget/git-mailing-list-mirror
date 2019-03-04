@@ -2,104 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAFC520248
-	for <e@80x24.org>; Mon,  4 Mar 2019 21:01:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0640820248
+	for <e@80x24.org>; Mon,  4 Mar 2019 21:17:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726423AbfCDVB5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 16:01:57 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:47610 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726076AbfCDVB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 16:01:57 -0500
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id 0uighp5A5AOoy0uihhlISx; Mon, 04 Mar 2019 21:01:56 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=V15yQ6HSV0GihLtAc4sA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 1/1] Makefile: use `git ls-files` to list header files,
- if possible
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.130.git.gitgitgadget@gmail.com>
- <pull.130.v2.git.gitgitgadget@gmail.com>
- <cb253bd0cf2896cf31516079a89ec2dab21032cf.1551707225.git.gitgitgadget@gmail.com>
- <ae65dbe2-cdcb-175b-af58-ab8482270ab9@ramsayjones.plus.com>
-Message-ID: <99a38032-1182-7777-ccb2-1de97c284a84@ramsayjones.plus.com>
-Date:   Mon, 4 Mar 2019 21:01:54 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        id S1726096AbfCDVRw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 16:17:52 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38390 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726038AbfCDVRv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 16:17:51 -0500
+Received: (qmail 29294 invoked by uid 109); 4 Mar 2019 21:17:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 04 Mar 2019 21:17:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26085 invoked by uid 111); 4 Mar 2019 21:18:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 04 Mar 2019 16:18:08 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Mar 2019 16:17:49 -0500
+Date:   Mon, 4 Mar 2019 16:17:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     matvore@google.com, git@vger.kernel.org
+Subject: Re: [PATCH] rev-list: allow cached objects in existence check
+Message-ID: <20190304211749.GA3020@sigill.intra.peff.net>
+References: <20190304174053.GA27497@sigill.intra.peff.net>
+ <20190304191932.105204-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-In-Reply-To: <ae65dbe2-cdcb-175b-af58-ab8482270ab9@ramsayjones.plus.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNj9M8GNHDXZX0CVl/XrUevXdP/goHWTAbGdSYBcKPTbut9qBejkSGoRO9aEfz2WGaF/20Bloc3Lvu/BTOcNmVV+t7sIO2sgvbSkluxDCqL+ipVJFsfd
- csVk6ZAKst6y7doeCoBaApRb0KfDE22aLeWcxojAnF6tm+QAPHgJrx8T7CfzELLpgLUycwOabOpw7w==
+Content-Disposition: inline
+In-Reply-To: <20190304191932.105204-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Mar 04, 2019 at 11:19:32AM -0800, Jonathan Tan wrote:
 
-
-On 04/03/2019 20:38, Ramsay Jones wrote:
+> >   - some callers of has_sha1_file() might care about durability between
+> >     processes. Because it's baked in, the empty tree is safe for that
+> >     (whatever follow-on process runs, it will also be baked in there).
+> >     But that's not necessarily true for other "cached" objects. I'm not
+> >     really that worried about it because we use it sparingly (the only
+> >     call to pretend_sha1_file() is in git-blame, and if it ever did ask
+> >     "do we have this object", I actually think the right answer would be
+> >     "yes").
+> > 
+> >     But if this is a concern, we could perhaps have two levels of flags:
+> >     SKIP_CACHED and SKIP_INTERNAL.
 > 
-> 
-> On 04/03/2019 13:47, Johannes Schindelin via GitGitGadget wrote:
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> In d85b0dff72 (Makefile: use `find` to determine static header
->> dependencies, 2014-08-25), we switched from a static list of header
->> files to a dynamically-generated one, asking `find` to enumerate them.
->>
->> Back in those days, we did not use `$(LIB_H)` by default, and many a
->> `make` implementation seems smart enough not to run that `find` command
->> in that case, so it was deemed okay to run `find` for special targets
->> requiring this macro.
->>
->> However, as of ebb7baf02f (Makefile: add a hdr-check target,
->> 2018-09-19), $(LIB_H) is part of a global rule and therefore must be
->> expanded. Meaning: this `find` command has to be run upon every
->> `make` invocation. In the presence of many a worktree, this can tax the
->> developers' patience quite a bit.
->>
->> Even in the absence of worktrees or other untracked files and
->> directories, the cost of I/O to generate that list of header files is
->> simply a lot larger than a simple `git ls-files` call.
->>
->> Therefore, just like in 335339758c (Makefile: ask "ls-files" to list
->> source files if available, 2011-10-18), we now prefer to use `git
->> ls-files` to enumerate the header files to enumerating them via `find`,
->> falling back to the latter if the former failed (which would be the case
->> e.g. in a worktree that was extracted from a source .tar file rather
->> than from a clone of Git's sources).
->>
->> This has one notable consequence: we no longer include `command-list.h`
->> in `LIB_H`, as it is a generated file, not a tracked one, but that is
-> 
-> Heh, just to be _unnecessarily_ picky, but this is not always true.
-> The 'command-list.h' header is _sometimes_ not included in the LIB_H
-> variable - it simply depends on whether it has been generated by the
-> time the $(FIND) is called.
-> 
-> Obviously, not worth a re-roll. Otherwise, this LGTM.
+> Or teach git-blame to have its own pretend mechanism, and remove the
+> pretend mechanism from sha1-file.c.
 
-Ahem! Obviously, I didn't read the commit message closely enough!
+I think that would be ideal, but I'm not sure if it's feasible due to
+the layering of the various modules. IOW, the blame code isn't just
+pretending a fake object file for _itself_, it needs to then call into
+the diff code, which must be able to then find that content in order to
+produce a diff.
 
-However, _before_ this change, then 'command-list.h' was sometimes
-not included in $(LIB_H) ...
+But maybe it is not so bad. Our diff_filespec struct does represent
+working-tree files (as it must, since we diff them!). So it may be
+possible to feed it to the diff code at the right spot.
 
-Sorry for the noise!
+I haven't looked closely enough to say for sure whether it's feasible or
+not. But it does imply to me that we should go with this regression fix
+in the near-term and think about building bigger changes separately on
+master.
 
-ATB,
-Ramsay Jones
+> The last time I deeply thought of this was during the partial clone
+> implementation, so I am probably not completely up-to-date, but it seems
+> to me that ideally, for reading, we would remove SKIP_CACHED completely
+> (and always consult the cache), and also remove completely the ability
+> to pretend (blame will have to do it by itself); and for writing, we
+> would write the empty tree whenever we do now (for backwards
+> compatibility with old versions of Git that read what we write). Both
+> the approach in this patch and making has_object_file() respect cached
+> objects are steps in that direction, so I'm OK with both.
+
+Yeah, I think our world-views are in accord. :)
+
+-Peff
