@@ -2,105 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 365BB20248
-	for <e@80x24.org>; Mon,  4 Mar 2019 15:01:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EABF420248
+	for <e@80x24.org>; Mon,  4 Mar 2019 15:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726261AbfCDPBh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 10:01:37 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:36236 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726080AbfCDPBg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 10:01:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=MdrDjMYVJiEk1XAukcjjCQz0SDR2Ik1V6R+4fQBhNrA=; b=s7kwYcgd747qozJFss14QYRIm/
-        EZvcbNrfmBwYeCjDHAupmmmcXodlmVs1zLPPWeezus3unGJY1WQ3kMqk5uAEXTK+QxgTFFHTeit1r
-        M3oMhx/PmYGVowAc3xw0kGTr9Jj79H+bp5Y4cSIhqOu/MzYEqDOvELD1hZ1WjFQifP1qrgaRhUBCQ
-        G98OkdPv9aUWFtkpxpMDHgDtwTbMewII/CsIWjK/9aV58ZSvlf7pvcCw6hrnt958gDXh6IuCyL+Re
-        wh0xM07TZF5Bl7BYJo2V+FUXNTqVa3sf0bY2Th4cWR4a54KhMSePPao86KKUPzWdeAqROrM/7/sP3
-        juOler7w==;
-Received: from cpeac202e043973-cmac202e043970.cpe.net.cable.rogers.com ([174.112.22.87]:50260 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1h0p5x-00D27V-SY
-        for git@vger.kernel.org; Mon, 04 Mar 2019 10:01:35 -0500
-Date:   Mon, 4 Mar 2019 10:01:32 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: worth enhancing "man git-rebase" to show non-HEAD examples?
-Message-ID: <alpine.LFD.2.21.1903040955540.16666@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1726241AbfCDPG2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 10:06:28 -0500
+Received: from mout.gmx.net ([212.227.15.19]:55027 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726080AbfCDPG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 10:06:28 -0500
+Received: from [10.49.208.72] ([95.208.59.9]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDQI1-1gjzFe1hEr-00Gphh; Mon, 04
+ Mar 2019 16:06:19 +0100
+Date:   Mon, 4 Mar 2019 16:06:18 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, hi-angel@yandex.ru, sunshine@sunshineco.com,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v3 1/1] worktree add: sanitize worktree names
+In-Reply-To: <20190226105851.32273-2-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903041603320.45@tvgsbejvaqbjf.bet>
+References: <20190221121943.19778-1-pclouds@gmail.com> <20190226105851.32273-1-pclouds@gmail.com> <20190226105851.32273-2-pclouds@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: multipart/mixed; boundary="8323328-1617370718-1551711980=:45"
+X-Provags-ID: V03:K1:7z5csXvYWGGGRvfbwfTS56qiKd55VNpLd1s16cVF89rdcGt5jVV
+ iyBNEBJNypE4uO5gNXB+mcFjAGjD2CiwYYD/NKq85WMS9kckMS+8SOxotH0FjzlVjn/j/fd
+ A7X8gFxRUDdkZpOP7HAoF2869CsYnkZTnAtTSP6E7zJR0f7c8Klydbub0bVTpWgDaZtC58v
+ T6FFsinmST17bqnSlN6FQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:71nLyxO8gUg=:3MZsICFsuLijRj7le45yim
+ 0r+AZMTIFdUsA7nzwlDyh0nn1Mj2v4fWG0o8AAuR9FblVDpVb1hoULY94vTOCCQIiqNMs+3/Z
+ o62uzDDJ/kCX/T3+mRCbaJ1Gdb9MSxvZJaf+jFG4ZXAxv1WfKAzuON/pJz9daz+qssHErLQn5
+ m/AXJI6ZFDu7VymCpmAuzYFNB434B66tW0Bcl9BB9szxX/z1Hm0zYJV2bAZFJI0PiOUURdYcu
+ nI1h7/zA3Jms7/F+RduYCqY98qMdJ6cukDVL6qefeMUZVIAtz2sw+sM1DIc+b9izLEf+mWDyy
+ k+gn5oPLc0+VOChyHYRzZfxbPaRttFukYkxJ4csu8binVkrOd+U6OuTDegDTIzQlNYM/6BgEk
+ vvyj3fLZqialPXeZhKad/Ub93RjNtWtiJ1QeIrxjNZpPwVHF0bxfJ9NrT1D1V/fcGlP5z5pf0
+ U2N60jOGA3SjySkPq48fwAsgy6rOCypW4/u7ulEdVyzeRENVJDJ4XYWy/35XZ1GiCuGmEjjh1
+ ECRoOMx53YiGz966d+ydb1fGl3KThP1B6nSBTcqRztBNbAAo9VKiguA1/zU2QFSm1FJGjyu1Y
+ 6R1OFB/hdo2P4KTXPUsYIg7fgRTys6B1K30s0nU16Tk/FN+VWHxRgrE0UGtQJHZOgk/j/KdgT
+ Tjvtj9FeOpFeXxFys54aiYLj4CiZxmde+Ppji/6JXFdEnOsMBnr7tax2nO7wpyMNWepdkuBzM
+ 14kpwhSk6fza7sm+GsIY5IFM5MnUAubGs32HXR8/Va7N5fKnKLNTsTH9mDYQNwzGHyA8Kal9Z
+ oepMCGDmuY9EceywvBSOvy6WVd2insEs2qpwJo9EAplYmek9OpTjEkuDkWUiQEIDYTQL2/lUp
+ P79+kjS0RyEkiBAGWjHU3DDrf3qwi+99/+JJrKk0jECbCJQ/5sNCODdh/PkH9OxDWNspPF0Pr
+ 5cREsTOJYJQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-  one of the things i've noticed about the examples in "man
-git-rebase" is that they invariably show rebasing relative to a
-branch point that has not moved. for example, there's this example:
+--8323328-1617370718-1551711980=:45
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-       o---o---o---o---o  master
-            \
-             o---o---o---o---o  next
-                              \
-                               o---o---o  topic
+Hi Duy,
 
-with subsequent sample command:
+On Tue, 26 Feb 2019, Nguyễn Thái Ngọc Duy wrote:
 
-  $ git rebase --onto master next topic
+> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+> index 286bba35d8..ea22207361 100755
+> --- a/t/t2025-worktree-add.sh
+> +++ b/t/t2025-worktree-add.sh
+> @@ -570,4 +570,11 @@ test_expect_success '"add" an existing locked but missing worktree' '
+>  	git worktree add --force --force --detach gnoo
+>  '
+>  
+> +test_expect_success 'sanitize generated worktree name' '
+> +	git worktree add --detach ".  weird*..?.lock.lock." &&
+> +	test -d .git/worktrees/weird-lock-lock &&
+> +	git worktree add --detach .... &&
+> +	test -d .git/worktrees/worktree
+> +'
+> +
+>  test_done
 
-sure, that works, but there seem to be no examples that show that this
-is a valid starting point as well:
+You probably missed that this added test fails on Windows:
 
-       o---o---o---o---o  master
-            \
-             o---o---o---o---o  next
-                      \
-                       o---o---o  topic
+https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3782&view=logs
 
-as in, the examples in that man page could potentially suggest to an
-inexperienced reader that the *only* valid situations are rebasing as
-long as the other branch has not developed any further. (yes, i
-realize that, if you read carefully, it *should* make it clear, but i
-think it would be helpful to at least graphically show that
-happening.)
+The reason is that you use a "funny name" which cannot be represented on
+every filesystem.
 
-  thoughts?
+Please use the FUNNYNAMES prerequisite (or introduce another one, if you
+are uncomfortable with using a test whether tabs are valid in filenames to
+indiciate whether wildcard characters are valid in filenames).
 
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
-
+Ciao,
+Johannes
+--8323328-1617370718-1551711980=:45--
