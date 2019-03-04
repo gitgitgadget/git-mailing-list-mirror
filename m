@@ -2,99 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9993420248
-	for <e@80x24.org>; Mon,  4 Mar 2019 07:53:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97B5B20248
+	for <e@80x24.org>; Mon,  4 Mar 2019 07:54:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726001AbfCDHxB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 02:53:01 -0500
-Received: from mail-io1-f42.google.com ([209.85.166.42]:44517 "EHLO
-        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725974AbfCDHxB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 02:53:01 -0500
-Received: by mail-io1-f42.google.com with SMTP id y13so3257194iop.11
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 23:53:00 -0800 (PST)
+        id S1726214AbfCDHyO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 02:54:14 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:54237 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726014AbfCDHyO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 02:54:14 -0500
+Received: by mail-wm1-f65.google.com with SMTP id e74so3562701wmg.3
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 23:54:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=LpRUFCJepTCAmLIqwGul5xJQ0t9KBK3+L703jzHYwg4=;
-        b=KnBhXE8KRyy4dwqOQeMd4RzxKExIt8J/AOleYsL/2Dg9Wgo/HqkcJxJ5DHVEiyAJX3
-         KAjie6P15pmgf1u4DcXknwcqTpxKfH85PJBRTzkCz0qicO7/XKgYkoPjcLNFmd6FbxzE
-         ml6wDVvNrfU2Md5+2xSVQ+cT2BZQ2CoCHCeIzEAXySjzFNjVcNgtcG+JjNZc1PJdpA/G
-         EMnXlfGt1S4pSz23bmE3EpPUcAyk6WluvwRucvm8lFZittwGa7BNqytlxdJMr0SyL3B7
-         lrHTuywToL890dJ3zidrjG74wk6nklKOnOA2ATfzroguS+3TjZGPyus8vIy4PPYJZx/N
-         WiXw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=dHqW3EClOqLjn5JKh5pRfotuR3V+q1+BTjGI2KhlG28=;
+        b=ITJJlL8U5xCtHeH70ma5KKmPrqz+cZBev26WJd6eKTqmkNvY4eKl8gPLCOILsPZAIL
+         R5DNhWpsKJCIr6Mxm4r/1jeFFU7BTD0gG+Rux8QE5+ex40l0G4UX4RwWEqvdlGaH8OZ9
+         ocC1cqZJxLAMhKfGjyxDDpRbCCBkg0kYudMnUmJOdw9yWveuu8BcTkvBWK/Q9ACP9bnx
+         vfSgntXMWoE7Oivmq/zTVlNUGS0di8Rkp1JZMlBzQgNo/jHK3SRrOSou9jTO1cwJfkTL
+         glqTM2fnOXC1/q0uFDcWK8hkyvC2+oa7nSfFpBSk8UkDWSC64gpyYgIJfUrNPWQji7BV
+         KsDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=LpRUFCJepTCAmLIqwGul5xJQ0t9KBK3+L703jzHYwg4=;
-        b=h52O0PcSMw+edmblHH4H9MqLZJ6BOPe9slOgaqNi2CxTgzR9765wl+jliikdeu6DHP
-         yOry6Q/Qkl3AxCpNQ9d09u4/D2zcEktUDRyBPOm0WYyaGI3h/AjGFdLUYCQ5mBrjM4J9
-         Ao6pEoD86g6vp41xdxeCM+AmZgiKXexi3hyMhs/P0A5j8L80sXu0yCchokWETetSY71c
-         neq2oVsZffl+7LKr8qGVC1DKLipN6WDg1nbptXnfUkIQ/LBg/bDjDJaBHIDFILmBdo8G
-         x8CLm9aGwCPP8nGnHN0oUvbVJszpzHAOfPW/gi2//kIipNvKRvIHbQowU4p6f8n21Zw0
-         7j1g==
-X-Gm-Message-State: APjAAAVTTKz9MB0sroPuNc0nNXo7dz7COKvyL9AY/Mq9+5ejMGqi8DIy
-        8+zmgzhB8/S1fklVOTAZQPeGg7w87dk01mt+vDM=
-X-Google-Smtp-Source: APXvYqxjODvO6ls5rBzsBE73wMMqjo0zXL2Me2WXfKvD9YDeblfJVjQuIXeBfiTxoIeaOYZ0wwlhGdvqpOzDgam8GrE=
-X-Received: by 2002:a5d:9357:: with SMTP id i23mr7573190ioo.236.1551685980342;
- Sun, 03 Mar 2019 23:53:00 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=dHqW3EClOqLjn5JKh5pRfotuR3V+q1+BTjGI2KhlG28=;
+        b=qBe6bTrxTWqrbi/Xg1xk9cgywoKYkn9bicMCtOC2T8pTituPJfyrT3ACxA8uGUfkta
+         HgOGkGdPSKnHf9K/dZl1plDfC1TGEMjbjmeqc+zkFJJPSVR0+BpfDOq/RdEPlxR5fE7D
+         I8J8iuNu4YrDk1TY/fkXkqr+1G7rOUnVA4/tbKYSFj2U5NOMIi2pArlEYV2FPQHBbvaT
+         ppcWAfgyBhTv9lvU8Mj3wzolGIADu2Q6vEtm5/KXlpM07rFZsAtHH4wCqxISJ2hDxbnq
+         qB3ceJLtcskBlgXuhwZxytAc9A9VgEDkTJEZTrV+mxxGjmg7c6BvzvB39d1gnE9S10ev
+         JThg==
+X-Gm-Message-State: APjAAAVrRQ+mj7ItJqt9VVzGq5AdYoZe4VddbqL4KytW5yF9BShSU2GC
+        5p2C4p+oy6Q93lu6Oc+e6r3OpJX8ITU=
+X-Google-Smtp-Source: AHgI3IZ/S+eIjxOTembavwY5mMobwRyWG3FFKwLaDhqTPnaSBr/cDWUO49bV7bRy1VDA4VerTImSDA==
+X-Received: by 2002:a1c:e084:: with SMTP id x126mr10633907wmg.39.1551686052344;
+        Sun, 03 Mar 2019 23:54:12 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v9sm4054434wru.83.2019.03.03.23.54.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 03 Mar 2019 23:54:11 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>
+Cc:     git@vger.kernel.org
+Subject: Re: Git log print commits between a revision range (inclusive)
+References: <62307e7b.399f4.169479a611e.Coremail.wuzhouhui14@mails.ucas.ac.cn>
+Date:   Mon, 04 Mar 2019 16:54:11 +0900
+In-Reply-To: <62307e7b.399f4.169479a611e.Coremail.wuzhouhui14@mails.ucas.ac.cn>
+        (wuzhouhui's message of "Mon, 4 Mar 2019 15:28:13 +0800 (GMT+08:00)")
+Message-ID: <xmqq8sxvvzvg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <636CE77F-B137-47EC-A39B-8D70B8C15A22@gmail.com> <xmqqd0n7w0he.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0n7w0he.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 4 Mar 2019 14:52:34 +0700
-Message-ID: <CACsJy8BfPHAY1ZidstLK7SuviS7bF1ZmMOiZv+6vnh+jfN6Eig@mail.gmail.com>
-Subject: Re: [GSoC] Query regarding microproject
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Umang Parmar <umangjparmar@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 4, 2019 at 2:43 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Umang Parmar <umangjparmar@gmail.com> writes:
->
-> > I am interested in micro project "Add configuration options for
-> > some commonly used command-line=E2=80=9D. So can you point me out to
-> > implementations of some current commands which have configuration
-> > options and also for which command to add config options.
->
-> It is not a homework assignment.
+wuzhouhui <wuzhouhui14@mails.ucas.ac.cn> writes:
 
-True. But the last step could be really intimidating at the beginning.
-I'll give another hint, do
+> I want to know how to display logs between a revision range (both
+> start and end are inclusive). I searched it and only found[1],
+> which doesn't resolve my problem completely, because
+>
+>   git log <older hash>..<newer hash>
+>
+> doesn't contains the log of <older hash>.
 
-git log --oneline -- Documentation/config.txt
+ $ git log maint --not v2.20.0^@
 
-Look for some interesting changes (e.g. "add something") then "git
-show" on that commit, which gives some starting point to focus on.
+gives you commits that are reachable from (i.e. ancestors of) maint,
+excluding those that are reachable from the set of commits denoted
+by v2.20.0^@.
 
-> Studying the current system to
->
->  - learn what commands are available (hint: "man git" and read from there=
-)
->
->  - learn what commands and command line options are commonly used (hint:
->    learn from your own use of the system)
->
->  - pick one of the commands and its options that interests you
->
->  - find out where that particular command is implemented
->
-> are all part of a GSoC microproject.
->
-> Thanks for your interest ;-)
---=20
-Duy
+v2.20.0^@ is how you spell the set of commits that are parents of
+the commit v2.20.0.
+
+If your "range" is simple and "old" is a single-parent commit,
+
+ $ git log <old>~1..<new>
+
+is equivalent, because <old>~1 (i.e. the first parent of commit
+<old>) would be the same as <old>^@ for a single-parent commit, and
+because the short-hand "git log A..B" is the same as the long-hand
+"git log B --not A".
+
+
+
+
+
+
+
