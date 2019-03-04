@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	GAPPY_SUBJECT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53AEC20248
-	for <e@80x24.org>; Mon,  4 Mar 2019 12:08:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B82520248
+	for <e@80x24.org>; Mon,  4 Mar 2019 12:08:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726165AbfCDMIq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 07:08:46 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:44454 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726029AbfCDMIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 07:08:46 -0500
-Received: by mail-pg1-f196.google.com with SMTP id j3so2972408pgm.11
-        for <git@vger.kernel.org>; Mon, 04 Mar 2019 04:08:45 -0800 (PST)
+        id S1726166AbfCDMIu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 07:08:50 -0500
+Received: from mail-pf1-f181.google.com ([209.85.210.181]:38017 "EHLO
+        mail-pf1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbfCDMIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 07:08:49 -0500
+Received: by mail-pf1-f181.google.com with SMTP id n125so2895777pfn.5
+        for <git@vger.kernel.org>; Mon, 04 Mar 2019 04:08:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xXGbtLitvwidcCi1yUnM/5LXK96U1a8hTCVWITKW1cQ=;
-        b=f659qT3KaRCNcEVRhYpw8Ud0V8I9UyHvgQHlHA7lZ7ks+bWwcKc259rKSlCAoYOzDs
-         g7Jo8nKOwlL+0//U37Qt6YSwrqdOKOqO8sAn3iNuPtajuomYGTPU90COzKd+0f4MTg8m
-         mgvFxVmfztqSMR32N03vSRuLiN48K1LCfVeIYxa0LVFLUI/8w6c4YrKfKsqIomqDTbJf
-         0RSaIcWbN2YBRkf1VTC9mGVJkgFsl1N7h4cJv/m0ap6uibDAxYQ4M8VOgZWF+mLYQRjJ
-         g8U1yiF7wjYBa8WdZotpFcHMW9vqSsaPzN0zWiz/C3RxJ/SKEkH4apQTKs5RPgVUFoti
-         gO4w==
+        bh=lt6I5TqadZGLU+QD98VIhH8DYy0G3TdLytOrt+/uC+U=;
+        b=eSl06sBbvNc0NoDm4J09kc4rebF96kGw4w7D9/SzzGhTgbWU/Heowuv4aTeTlmzlRL
+         Nm8BHMgF69ncCot2atEpmTqjg7m7KEHYItAQV41cd6A5tkRrEUgg4oUo6PZrxVvP3tOU
+         XBzLFzXs1ztjgRXIYzWUV3O39ETBdsNxbLDWJaolPAP137T4p0uJw87Dy1u4Yw3gwpZi
+         4Dlv7a8FYBTmOANbwSHprpHviVP9jQ2CL1k4mK0L0WOphlhrLSgiyhiCJJxQzkVpCIH7
+         tG+krX79wDk05029IQn8M2QvQgStxAZFHBRsFa1wZFGI/qllToKOe40OEbWjhvPdCWbq
+         pSzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=xXGbtLitvwidcCi1yUnM/5LXK96U1a8hTCVWITKW1cQ=;
-        b=GPK1X84nhIC5/Tbadnv9+aPLq7oPQmzXcrkTGS6cuESlJyciWtKoG3GeI3T9uxLpsW
-         bKljXj27PlO+vFQ5QnCwu01mw6daOAOvLmy3bJIYVKKyeOzXQr3FH5y3GgeIVH3cWqR7
-         5uKeuDz/UNfpyfguX40ygk+GY9hl+aAIf/3OyS1wSABFrPTt7j7UUOR1WCo/2l1tn0Ek
-         lL+EuRL40WYe4bxNI2gY8NRjtfERsy7ooVCghXhAhk/I7IgHdZ+LdvOt9JCKl6U2ZohK
-         B/PL3T4l86jH6vHAKAm2IitNc8LQPXB4zqUPhGVuZMjVA/LBY4qlaj69JaGhbz/xD2QD
-         qDzA==
-X-Gm-Message-State: APjAAAXAKrUDxWM4LlkBhoUZ8vCFeyD4HJamD6bpzaAQXzgPsf1lEv0f
-        caNTbL8PL5EuFeljBeidpW0=
-X-Google-Smtp-Source: APXvYqyMTxgxwzAfPjGezIOcVnMTSCeS+To3UXRdr+ALupSYProJO8DqPnCdvQIzA0UefdZjAV0l2Q==
-X-Received: by 2002:a65:60d8:: with SMTP id r24mr18153916pgv.6.1551701324771;
-        Mon, 04 Mar 2019 04:08:44 -0800 (PST)
+        bh=lt6I5TqadZGLU+QD98VIhH8DYy0G3TdLytOrt+/uC+U=;
+        b=CznW3C2u4W9G5D/uTCvNo93NI+XZaQjcmwhsqWvd3QbynxwTaLqpZk2cfGcd3hbFkD
+         Ebh/wnSjV8i89oGa8mR+Csw3vfZPgJY202hpBiW57JYSTDHm7Jc77Qn8PpsOcq9/LZO+
+         ofq0Luw26dD1f+6F2kNutZb5HpEBnbG079UYJTsNR4ak2hBK5U/gI+3AFTn0vU5RNSbj
+         CRT1tcymqpZ3g3XanDk5jzGMatFmp+oBpsZ/XHKe80EU98cQRLglVMa279WIGlNwiGle
+         rYJKsR8LxLXGs69eu1b0JebXOpHVjSZxKe2oRcof7zqynyX8yt70mUjWAQN0T+vXdyKu
+         ntmQ==
+X-Gm-Message-State: AHQUAubCrAFU6jZlX284hDLZrKA5th++P0twv05RJ+Tz8Z0aKIv084hs
+        s5ksccb/jAq4XV+gBS7sOPw=
+X-Google-Smtp-Source: AHgI3IbonykvEjLQjumT+CTtpo9xZtc4rtN6xyBZMR/BqX40CjPwYBv8or96ognrYwyVUsqMOI0aSQ==
+X-Received: by 2002:a62:ae04:: with SMTP id q4mr19501489pff.213.1551701328459;
+        Mon, 04 Mar 2019 04:08:48 -0800 (PST)
 Received: from ar135.iitr.ernet.in ([103.37.201.80])
-        by smtp.gmail.com with ESMTPSA id b138sm18791686pfb.48.2019.03.04.04.08.41
+        by smtp.gmail.com with ESMTPSA id b138sm18791686pfb.48.2019.03.04.04.08.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Mar 2019 04:08:43 -0800 (PST)
+        Mon, 04 Mar 2019 04:08:47 -0800 (PST)
 From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 To:     rohit.ashiwal265@gmail.com
 Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, t.gummerer@gmail.com
-Subject: [GSoC][PATCH v3 2/3] t3600: modernize style
-Date:   Mon,  4 Mar 2019 17:38:00 +0530
-Message-Id: <20190304120801.28763-3-rohit.ashiwal265@gmail.com>
+Subject: [GSoC][PATCH v3 3/3] t3600: use helpers to replace test -d/f/e/s <path>
+Date:   Mon,  4 Mar 2019 17:38:01 +0530
+Message-Id: <20190304120801.28763-4-rohit.ashiwal265@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190304120801.28763-1-rohit.ashiwal265@gmail.com>
 References: <20190303122842.30380-1-rohit.ashiwal265@gmail.com>
@@ -64,294 +65,448 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The tests in `t3600-rm.sh` were written  long time ago, and has a lot of
-style violations, including the mixed use of tabs and spaces, not having
-the title  and the  opening quote of the body on  the first line of  the
-tests, and other  shell script  style violations. Update it to match the
-CodingGuidelines.
+Previously  we  were  using  `test -(d|f|e|s)`  to  verify  the  presence of a
+directory/file, but we already have helper functions, viz, `test_path_is_dir`,
+`test_path_is_file`,    `test_path_is_missing`    and    `test_file_not_empty`
+with better functionality.
+
+These helper functions make code more readable and informative to someone new,
+also these functions have better error messages.
 
 Signed-off-by: Rohit Ashiwal <rohit.ashiwal265@gmail.com>
 ---
- t/t3600-rm.sh | 207 ++++++++++++++++++++++++++------------------------
- 1 file changed, 107 insertions(+), 100 deletions(-)
+ t/t3600-rm.sh | 150 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 75 insertions(+), 75 deletions(-)
 
 diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 04e5d42bd3..8b03897a65 100755
+index 8b03897a65..85ae7dc1e4 100755
 --- a/t/t3600-rm.sh
 +++ b/t/t3600-rm.sh
-@@ -8,91 +8,92 @@ test_description='Test of the various options to git rm.'
- . ./test-lib.sh
- 
- # Setup some files to be removed, some with funny characters
--test_expect_success \
--    'Initialize test directory' \
--    "touch -- foo bar baz 'space embedded' -q &&
--     git add -- foo bar baz 'space embedded' -q &&
--     git commit -m 'add normal files'"
-+test_expect_success 'Initialize test directory' '
-+	touch -- foo bar baz "space embedded" -q &&
-+	git add -- foo bar baz "space embedded" -q &&
-+	git commit -m "add normal files"
-+'
- 
--if test_have_prereq !FUNNYNAMES; then
-+if test_have_prereq !FUNNYNAMES
-+then
- 	say 'Your filesystem does not allow tabs in filenames.'
- fi
- 
--test_expect_success FUNNYNAMES 'add files with funny names' "
--     touch -- 'tab	embedded' 'newline
--embedded' &&
--     git add -- 'tab	embedded' 'newline
--embedded' &&
--     git commit -m 'add files with tabs and newlines'
--"
--
--test_expect_success \
--    'Pre-check that foo exists and is in index before git rm foo' \
--    '[ -f foo ] && git ls-files --error-unmatch foo'
--
--test_expect_success \
--    'Test that git rm foo succeeds' \
--    'git rm --cached foo'
--
--test_expect_success \
--    'Test that git rm --cached foo succeeds if the index matches the file' \
--    'echo content >foo &&
--     git add foo &&
--     git rm --cached foo'
--
--test_expect_success \
--    'Test that git rm --cached foo succeeds if the index matches the file' \
--    'echo content >foo &&
--     git add foo &&
--     git commit -m foo &&
--     echo "other content" >foo &&
--     git rm --cached foo'
--
--test_expect_success \
--    'Test that git rm --cached foo fails if the index matches neither the file nor HEAD' '
--     echo content >foo &&
--     git add foo &&
--     git commit -m foo --allow-empty &&
--     echo "other content" >foo &&
--     git add foo &&
--     echo "yet another content" >foo &&
--     test_must_fail git rm --cached foo
--'
--
--test_expect_success \
--    'Test that git rm --cached -f foo works in case where --cached only did not' \
--    'echo content >foo &&
--     git add foo &&
--     git commit -m foo --allow-empty &&
--     echo "other content" >foo &&
--     git add foo &&
--     echo "yet another content" >foo &&
--     git rm --cached -f foo'
--
--test_expect_success \
--    'Post-check that foo exists but is not in index after git rm foo' \
--    '[ -f foo ] && test_must_fail git ls-files --error-unmatch foo'
--
--test_expect_success \
--    'Pre-check that bar exists and is in index before "git rm bar"' \
--    '[ -f bar ] && git ls-files --error-unmatch bar'
--
--test_expect_success \
--    'Test that "git rm bar" succeeds' \
--    'git rm bar'
--
--test_expect_success \
--    'Post-check that bar does not exist and is not in index after "git rm -f bar"' \
--    '! [ -f bar ] && test_must_fail git ls-files --error-unmatch bar'
--
--test_expect_success \
--    'Test that "git rm -- -q" succeeds (remove a file that looks like an option)' \
--    'git rm -- -q'
--
--test_expect_success FUNNYNAMES \
--    "Test that \"git rm -f\" succeeds with embedded space, tab, or newline characters." \
--    "git rm -f 'space embedded' 'tab	embedded' 'newline
--embedded'"
-+test_expect_success FUNNYNAMES 'add files with funny names' '
-+	touch -- "tab	embedded" "newline${LF}embedded" &&
-+	git add -- "tab	embedded" "newline${LF}embedded" &&
-+	git commit -m "add files with tabs and newlines"
-+'
-+
-+test_expect_success 'Pre-check that foo exists and is in index before git rm foo' '
-+	test -f foo &&
-+	git ls-files --error-unmatch foo
-+'
-+
-+test_expect_success 'Test that git rm foo succeeds' '
-+	git rm --cached foo
-+'
-+
-+test_expect_success 'Test that git rm --cached foo succeeds if the index matches the file' '
-+	echo content >foo &&
-+	git add foo &&
-+	git rm --cached foo
-+'
-+
-+test_expect_success 'Test that git rm --cached foo succeeds if the index matches the file' '
-+	echo content >foo &&
-+	git add foo &&
-+	git commit -m foo &&
-+	echo "other content" >foo &&
-+	git rm --cached foo
-+'
-+
-+test_expect_success 'Test that git rm --cached foo fails if the index matches neither the file nor HEAD' '
-+	echo content >foo &&
-+	git add foo &&
-+	git commit -m foo --allow-empty &&
-+	echo "other content" >foo &&
-+	git add foo &&
-+	echo "yet another content" >foo &&
-+	test_must_fail git rm --cached foo
-+'
-+
-+test_expect_success 'Test that git rm --cached -f foo works in case where --cached only did not' '
-+	echo content >foo &&
-+	git add foo &&
-+	git commit -m foo --allow-empty &&
-+	echo "other content" >foo &&
-+	git add foo &&
-+	echo "yet another content" >foo &&
-+	git rm --cached -f foo
-+'
-+
-+test_expect_success 'Post-check that foo exists but is not in index after git rm foo' '
-+	test -f foo &&
-+	test_must_fail git ls-files --error-unmatch foo
-+'
-+
-+test_expect_success 'Pre-check that bar exists and is in index before "git rm bar"' '
-+	test -f bar &&
-+	git ls-files --error-unmatch bar
-+'
-+
-+test_expect_success 'Test that "git rm bar" succeeds' '
-+	git rm bar
-+'
-+
-+test_expect_success 'Post-check that bar does not exist and is not in index after "git rm -f bar"' '
-+	! test -f bar &&
-+	test_must_fail git ls-files --error-unmatch bar
-+'
-+
-+test_expect_success 'Test that "git rm -- -q" succeeds (remove a file that looks like an option)' '
-+	git rm -- -q
-+'
-+
-+test_expect_success FUNNYNAMES 'Test that "git rm -f" succeeds with embedded space, tab, or newline characters.' '
-+	git rm -f "space embedded" "tab	embedded" "newline${LF}embedded"
-+'
- 
- test_expect_success SANITY 'Test that "git rm -f" fails if its rm fails' '
- 	test_when_finished "chmod 775 ." &&
-@@ -100,9 +101,9 @@ test_expect_success SANITY 'Test that "git rm -f" fails if its rm fails' '
- 	test_must_fail git rm -f baz
+@@ -26,7 +26,7 @@ test_expect_success FUNNYNAMES 'add files with funny names' '
  '
  
--test_expect_success \
--    'When the rm in "git rm -f" fails, it should not remove the file from the index' \
--    'git ls-files --error-unmatch baz'
-+test_expect_success 'When the rm in "git rm -f" fails, it should not remove the file from the index' '
-+	git ls-files --error-unmatch baz
-+'
- 
- test_expect_success 'Remove nonexistent file with --ignore-unmatch' '
- 	git rm --ignore-unmatch nonexistent
-@@ -217,23 +218,25 @@ test_expect_success 'Remove nonexistent file returns nonzero exit status' '
- 
- test_expect_success 'Call "rm" from outside the work tree' '
- 	mkdir repo &&
--	(cd repo &&
--	 git init &&
--	 echo something >somefile &&
--	 git add somefile &&
--	 git commit -m "add a file" &&
--	 (cd .. &&
--	  git --git-dir=repo/.git --work-tree=repo rm somefile) &&
--	test_must_fail git ls-files --error-unmatch somefile)
-+	(
-+		cd repo &&
-+		git init &&
-+		echo something >somefile &&
-+		git add somefile &&
-+		git commit -m "add a file" &&
-+		(
-+			cd .. &&
-+			git --git-dir=repo/.git --work-tree=repo rm somefile
-+		) &&
-+		test_must_fail git ls-files --error-unmatch somefile
-+	)
+ test_expect_success 'Pre-check that foo exists and is in index before git rm foo' '
+-	test -f foo &&
++	test_path_is_file foo &&
+ 	git ls-files --error-unmatch foo
  '
  
- test_expect_success 'refresh index before checking if it is up-to-date' '
--
+@@ -69,12 +69,12 @@ test_expect_success 'Test that git rm --cached -f foo works in case where --cach
+ '
+ 
+ test_expect_success 'Post-check that foo exists but is not in index after git rm foo' '
+-	test -f foo &&
++	test_path_is_file foo &&
+ 	test_must_fail git ls-files --error-unmatch foo
+ '
+ 
+ test_expect_success 'Pre-check that bar exists and is in index before "git rm bar"' '
+-	test -f bar &&
++	test_path_is_file bar &&
+ 	git ls-files --error-unmatch bar
+ '
+ 
+@@ -83,7 +83,7 @@ test_expect_success 'Test that "git rm bar" succeeds' '
+ '
+ 
+ test_expect_success 'Post-check that bar does not exist and is not in index after "git rm -f bar"' '
+-	! test -f bar &&
++	test_path_is_missing bar &&
+ 	test_must_fail git ls-files --error-unmatch bar
+ '
+ 
+@@ -138,15 +138,15 @@ test_expect_success 'Re-add foo and baz' '
+ test_expect_success 'Modify foo -- rm should refuse' '
+ 	echo >>foo &&
+ 	test_must_fail git rm foo baz &&
+-	test -f foo &&
+-	test -f baz &&
++	test_path_is_file foo &&
++	test_path_is_file baz &&
+ 	git ls-files --error-unmatch foo baz
+ '
+ 
+ test_expect_success 'Modified foo -- rm -f should work' '
+ 	git rm -f foo baz &&
+-	test ! -f foo &&
+-	test ! -f baz &&
++	test_path_is_missing foo &&
++	test_path_is_missing baz &&
+ 	test_must_fail git ls-files --error-unmatch foo &&
+ 	test_must_fail git ls-files --error-unmatch bar
+ '
+@@ -160,15 +160,15 @@ test_expect_success 'Re-add foo and baz for HEAD tests' '
+ 
+ test_expect_success 'foo is different in index from HEAD -- rm should refuse' '
+ 	test_must_fail git rm foo baz &&
+-	test -f foo &&
+-	test -f baz &&
++	test_path_is_file foo &&
++	test_path_is_file baz &&
+ 	git ls-files --error-unmatch foo baz
+ '
+ 
+ test_expect_success 'but with -f it should work.' '
+ 	git rm -f foo baz &&
+-	test ! -f foo &&
+-	test ! -f baz &&
++	test_path_is_missing foo &&
++	test_path_is_missing baz &&
+ 	test_must_fail git ls-files --error-unmatch foo &&
+ 	test_must_fail git ls-files --error-unmatch baz
+ '
+@@ -195,21 +195,21 @@ test_expect_success 'Recursive test setup' '
+ 
+ test_expect_success 'Recursive without -r fails' '
+ 	test_must_fail git rm frotz &&
+-	test -d frotz &&
+-	test -f frotz/nitfol
++	test_path_is_dir frotz &&
++	test_path_is_file frotz/nitfol
+ '
+ 
+ test_expect_success 'Recursive with -r but dirty' '
+ 	echo qfwfq >>frotz/nitfol &&
+ 	test_must_fail git rm -r frotz &&
+-	test -d frotz &&
+-	test -f frotz/nitfol
++	test_path_is_dir frotz &&
++	test_path_is_file frotz/nitfol
+ '
+ 
+ test_expect_success 'Recursive with -r -f' '
+ 	git rm -f -r frotz &&
+-	! test -f frotz/nitfol &&
+-	! test -d frotz
++	test_path_is_missing frotz/nitfol &&
++	test_path_is_missing frotz
+ '
+ 
+ test_expect_success 'Remove nonexistent file returns nonzero exit status' '
+@@ -236,7 +236,7 @@ test_expect_success 'refresh index before checking if it is up-to-date' '
  	git reset --hard &&
  	test-tool chmtime -86400 frotz/nitfol &&
  	git rm frotz/nitfol &&
- 	test ! -f frotz/nitfol
--
+-	test ! -f frotz/nitfol
++	test_path_is_missing frotz/nitfol
  '
  
  test_expect_success 'choking "git rm" should not let it die with cruft' '
-@@ -242,8 +245,8 @@ test_expect_success 'choking "git rm" should not let it die with cruft' '
- 	i=0 &&
- 	while test $i -lt 12000
- 	do
--	    echo "100644 1234567890123456789012345678901234567890 0	some-file-$i"
--	    i=$(( $i + 1 ))
-+		echo "100644 1234567890123456789012345678901234567890 0	some-file-$i"
-+		i=$(( $i + 1 ))
- 	done | git update-index --index-info &&
- 	git rm -n "some-file-*" | : &&
- 	test_path_is_missing .git/index.lock
-@@ -545,7 +548,8 @@ test_expect_success 'rm of a conflicted populated submodule with a .git director
- 	git checkout conflict1 &&
+@@ -257,7 +257,7 @@ test_expect_success 'rm removes subdirectories recursively' '
+ 	echo content >dir/subdir/subsubdir/file &&
+ 	git add dir/subdir/subsubdir/file &&
+ 	git rm -f dir/subdir/subsubdir/file &&
+-	! test -d dir
++	test_path_is_missing dir
+ '
+ 
+ cat >expect <<EOF
+@@ -295,7 +295,7 @@ test_expect_success 'rm removes empty submodules from work tree' '
+ 	git add .gitmodules &&
+ 	git commit -m "add submodule" &&
+ 	git rm submod &&
+-	test ! -e submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+@@ -317,7 +317,7 @@ test_expect_success 'rm removes work tree of unmodified submodules' '
  	git reset --hard &&
  	git submodule update &&
--	(cd submod &&
-+	(
-+		cd submod &&
- 		rm .git &&
- 		cp -R ../.git/modules/sub .git &&
- 		GIT_WORK_TREE=. git config --unset core.worktree
-@@ -579,7 +583,8 @@ test_expect_success 'rm of a populated submodule with a .git directory migrates
- 	git checkout -f master &&
+ 	git rm submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+@@ -328,7 +328,7 @@ test_expect_success 'rm removes a submodule with a trailing /' '
  	git reset --hard &&
  	git submodule update &&
--	(cd submod &&
-+	(
-+		cd submod &&
- 		rm .git &&
- 		cp -R ../.git/modules/sub .git &&
- 		GIT_WORK_TREE=. git config --unset core.worktree &&
-@@ -600,7 +605,8 @@ EOF
- test_expect_success 'setup subsubmodule' '
+ 	git rm submod/ &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -346,12 +346,12 @@ test_expect_success 'rm of a populated submodule with different HEAD fails unles
+ 	git submodule update &&
+ 	git -C submod checkout HEAD^ &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified actual &&
+ 	git rm -f submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+@@ -362,8 +362,8 @@ test_expect_success 'rm --cached leaves work tree of populated submodules and .g
  	git reset --hard &&
  	git submodule update &&
--	(cd submod &&
-+	(
-+		cd submod &&
- 		git update-index --add --cacheinfo 160000 $(git rev-parse HEAD) subsubmod &&
- 		git config -f .gitmodules submodule.sub.url ../. &&
- 		git config -f .gitmodules submodule.sub.path subsubmod &&
-@@ -667,7 +673,8 @@ test_expect_success 'rm of a populated nested submodule with nested untracked fi
- test_expect_success "rm absorbs submodule's nested .git directory" '
+ 	git rm --cached submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno >actual &&
+ 	test_cmp expect.cached actual &&
+ 	git config -f .gitmodules submodule.sub.url &&
+@@ -374,7 +374,7 @@ test_expect_success 'rm --dry-run does not touch the submodule or .gitmodules' '
  	git reset --hard &&
+ 	git submodule update &&
+ 	git rm -n submod &&
+-	test -f submod/.git &&
++	test_path_is_file submod/.git &&
+ 	git diff-index --exit-code HEAD
+ '
+ 
+@@ -384,8 +384,8 @@ test_expect_success 'rm does not complain when no .gitmodules file is found' '
+ 	git rm .gitmodules &&
+ 	git rm submod >actual 2>actual.err &&
+ 	test_must_be_empty actual.err &&
+-	! test -d submod &&
+-	! test -f submod/.git &&
++	test_path_is_missing submod &&
++	test_path_is_missing submod/.git &&
+ 	git status -s -uno >actual &&
+ 	test_cmp expect.both_deleted actual
+ '
+@@ -395,15 +395,15 @@ test_expect_success 'rm will error out on a modified .gitmodules file unless sta
+ 	git submodule update &&
+ 	git config -f .gitmodules foo.bar true &&
+ 	test_must_fail git rm submod >actual 2>actual.err &&
+-	test -s actual.err &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_file_not_empty actual.err &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git diff-files --quiet -- submod &&
+ 	git add .gitmodules &&
+ 	git rm submod >actual 2>actual.err &&
+ 	test_must_be_empty actual.err &&
+-	! test -d submod &&
+-	! test -f submod/.git &&
++	test_path_is_missing submod &&
++	test_path_is_missing submod/.git &&
+ 	git status -s -uno >actual &&
+ 	test_cmp expect actual
+ '
+@@ -416,8 +416,8 @@ test_expect_success 'rm issues a warning when section is not found in .gitmodule
+ 	echo "warning: Could not find section in .gitmodules where path=submod" >expect.err &&
+ 	git rm submod >actual 2>actual.err &&
+ 	test_i18ncmp expect.err actual.err &&
+-	! test -d submod &&
+-	! test -f submod/.git &&
++	test_path_is_missing submod &&
++	test_path_is_missing submod/.git &&
+ 	git status -s -uno >actual &&
+ 	test_cmp expect actual
+ '
+@@ -427,12 +427,12 @@ test_expect_success 'rm of a populated submodule with modifications fails unless
+ 	git submodule update &&
+ 	echo X >submod/empty &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified_inside actual &&
+ 	git rm -f submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -442,12 +442,12 @@ test_expect_success 'rm of a populated submodule with untracked files fails unle
+ 	git submodule update &&
+ 	echo X >submod/untracked &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified_untracked actual &&
+ 	git rm -f submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -484,7 +484,7 @@ test_expect_success 'rm removes work tree of unmodified conflicted submodule' '
+ 	git submodule update &&
+ 	test_must_fail git merge conflict2 &&
+ 	git rm submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -496,12 +496,12 @@ test_expect_success 'rm of a conflicted populated submodule with different HEAD
+ 	git -C submod checkout HEAD^ &&
+ 	test_must_fail git merge conflict2 &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	git rm -f submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+@@ -515,12 +515,12 @@ test_expect_success 'rm of a conflicted populated submodule with modifications f
+ 	echo X >submod/empty &&
+ 	test_must_fail git merge conflict2 &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	git rm -f submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual &&
+ 	test_must_fail git config -f .gitmodules submodule.sub.url &&
+@@ -534,12 +534,12 @@ test_expect_success 'rm of a conflicted populated submodule with untracked files
+ 	echo X >submod/untracked &&
+ 	test_must_fail git merge conflict2 &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	git rm -f submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -556,13 +556,13 @@ test_expect_success 'rm of a conflicted populated submodule with a .git director
+ 	) &&
+ 	test_must_fail git merge conflict2 &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -d submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_dir submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	test_must_fail git rm -f submod &&
+-	test -d submod &&
+-	test -d submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_dir submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.conflict actual &&
+ 	git merge --abort &&
+@@ -574,7 +574,7 @@ test_expect_success 'rm of a conflicted unpopulated submodule succeeds' '
+ 	git reset --hard &&
+ 	test_must_fail git merge conflict2 &&
+ 	git rm submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -591,10 +591,10 @@ test_expect_success 'rm of a populated submodule with a .git directory migrates
+ 		rm -r ../.git/modules/sub
+ 	) &&
+ 	git rm submod 2>output.err &&
+-	! test -d submod &&
+-	! test -d submod/.git &&
++	test_path_is_missing submod &&
++	test_path_is_missing submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+-	test -s actual &&
++	test_file_not_empty actual &&
+ 	test_i18ngrep Migrating output.err
+ '
+ 
+@@ -620,7 +620,7 @@ test_expect_success 'setup subsubmodule' '
+ 
+ test_expect_success 'rm recursively removes work tree of unmodified submodules' '
+ 	git rm submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -630,12 +630,12 @@ test_expect_success 'rm of a populated nested submodule with different nested HE
  	git submodule update --recursive &&
--	(cd submod/subsubmod &&
-+	(
-+		cd submod/subsubmod &&
- 		rm .git &&
- 		mv ../../.git/modules/sub/modules/sub .git &&
+ 	git -C submod/subsubmod checkout HEAD^ &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified_inside actual &&
+ 	git rm -f submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -645,12 +645,12 @@ test_expect_success 'rm of a populated nested submodule with nested modification
+ 	git submodule update --recursive &&
+ 	echo X >submod/subsubmod/empty &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified_inside actual &&
+ 	git rm -f submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -660,12 +660,12 @@ test_expect_success 'rm of a populated nested submodule with nested untracked fi
+ 	git submodule update --recursive &&
+ 	echo X >submod/subsubmod/untracked &&
+ 	test_must_fail git rm submod &&
+-	test -d submod &&
+-	test -f submod/.git &&
++	test_path_is_dir submod &&
++	test_path_is_file submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect.modified_untracked actual &&
+ 	git rm -f submod &&
+-	test ! -d submod &&
++	test_path_is_missing submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+ 	test_cmp expect actual
+ '
+@@ -680,10 +680,10 @@ test_expect_success "rm absorbs submodule's nested .git directory" '
  		GIT_WORK_TREE=. git config --unset core.worktree
+ 	) &&
+ 	git rm submod 2>output.err &&
+-	! test -d submod &&
+-	! test -d submod/subsubmod/.git &&
++	test_path_is_missing submod &&
++	test_path_is_missing submod/subsubmod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+-	test -s actual &&
++	test_file_not_empty actual &&
+ 	test_i18ngrep Migrating output.err
+ '
+ 
 -- 
 Rohit
