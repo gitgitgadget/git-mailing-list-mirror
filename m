@@ -2,135 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 883A620248
-	for <e@80x24.org>; Mon,  4 Mar 2019 20:38:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A0AB20248
+	for <e@80x24.org>; Mon,  4 Mar 2019 20:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726691AbfCDUip (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 15:38:45 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:44589 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726294AbfCDUio (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 15:38:44 -0500
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id 0uMEhp2t1AOoy0uMFhlHfk; Mon, 04 Mar 2019 20:38:43 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=8T3x2AIIIjoDSbGACvkA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 1/1] Makefile: use `git ls-files` to list header files,
- if possible
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.130.git.gitgitgadget@gmail.com>
- <pull.130.v2.git.gitgitgadget@gmail.com>
- <cb253bd0cf2896cf31516079a89ec2dab21032cf.1551707225.git.gitgitgadget@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <ae65dbe2-cdcb-175b-af58-ab8482270ab9@ramsayjones.plus.com>
-Date:   Mon, 4 Mar 2019 20:38:42 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        id S1726502AbfCDUkK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 15:40:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38354 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726101AbfCDUkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 15:40:10 -0500
+Received: (qmail 28887 invoked by uid 109); 4 Mar 2019 20:40:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 04 Mar 2019 20:40:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25832 invoked by uid 111); 4 Mar 2019 20:40:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 04 Mar 2019 15:40:26 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Mar 2019 15:40:08 -0500
+Date:   Mon, 4 Mar 2019 15:40:08 -0500
+From:   Jeff King <peff@peff.net>
+To:     Fabio Aiuto <polinice83@libero.it>
+Cc:     git@vger.kernel.org
+Subject: Re: Can't build first git commit
+Message-ID: <20190304204007.GA32691@sigill.intra.peff.net>
+References: <1551729517.4092.1.camel@libero.it>
 MIME-Version: 1.0
-In-Reply-To: <cb253bd0cf2896cf31516079a89ec2dab21032cf.1551707225.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfHhG8ZFFECgukNRrSsSdScXyWip6HgxsUHdG421SPYFco+c1JuQVoYekMTe5L/FbdBZqFIidgInO/dxCVUqR1d8FVVLJQH6S9HgxWvESQUfUXmKDI8C5
- /luoEI5FJOEpzJv8eHB9N1KccokXAbtrZzeAnoLNv5rzdJWBy2+Osx4rJmIifUJ8AmpsYKhrGcQYYQ==
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1551729517.4092.1.camel@libero.it>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Mar 04, 2019 at 08:58:37PM +0100, Fabio Aiuto wrote:
 
+> I'm trying to build first commit of git made by Linus. I mean the one
+> named e83c5163316f89bfbde7d9ab23... (I think this is enough).
+> But at building stage i have the following error:
+> 
+> make all 
+> gcc -g -o update-cache update-cache.o read-cache.o -lssl
+> /usr/bin/ld: update-cache.o: undefined reference to symbol
+> 'SHA1_Update@@OPENSSL_1_1_0'
 
-On 04/03/2019 13:47, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> In d85b0dff72 (Makefile: use `find` to determine static header
-> dependencies, 2014-08-25), we switched from a static list of header
-> files to a dynamically-generated one, asking `find` to enumerate them.
-> 
-> Back in those days, we did not use `$(LIB_H)` by default, and many a
-> `make` implementation seems smart enough not to run that `find` command
-> in that case, so it was deemed okay to run `find` for special targets
-> requiring this macro.
-> 
-> However, as of ebb7baf02f (Makefile: add a hdr-check target,
-> 2018-09-19), $(LIB_H) is part of a global rule and therefore must be
-> expanded. Meaning: this `find` command has to be run upon every
-> `make` invocation. In the presence of many a worktree, this can tax the
-> developers' patience quite a bit.
-> 
-> Even in the absence of worktrees or other untracked files and
-> directories, the cost of I/O to generate that list of header files is
-> simply a lot larger than a simple `git ls-files` call.
-> 
-> Therefore, just like in 335339758c (Makefile: ask "ls-files" to list
-> source files if available, 2011-10-18), we now prefer to use `git
-> ls-files` to enumerate the header files to enumerating them via `find`,
-> falling back to the latter if the former failed (which would be the case
-> e.g. in a worktree that was extracted from a source .tar file rather
-> than from a clone of Git's sources).
-> 
-> This has one notable consequence: we no longer include `command-list.h`
-> in `LIB_H`, as it is a generated file, not a tracked one, but that is
+The sha1 routines are in libcrypto. See 3be4b61aa4 (Link with -lcrypto
+instead of -lssl when using openssl libraries., 2005-05-10). I also
+needed -lz. See 9426167765 (Add "-lz" to link line to get in zlib.,
+2005-04-08).
 
-Heh, just to be _unnecessarily_ picky, but this is not always true.
-The 'command-list.h' header is _sometimes_ not included in the LIB_H
-variable - it simply depends on whether it has been generated by the
-time the $(FIND) is called.
+You can patch the Makefile, or just override it like:
 
-Obviously, not worth a re-roll. Otherwise, this LGTM.
+  make LIBS='-lcrypto -lz'
 
-Thanks!
+which builds for me on current Debian unstable. I don't think you can
+actually fetch with that old build, but I used periodically check that
+Git v1.0 can fetch happily from GitHub. I haven't in a while, so let me
+know if you try it and it doesn't work. ;)
 
-ATB,
-Ramsay Jones
-
-> easily worked around. Of the three sites that use `LIB_H`, two
-> (`LOCALIZED_C` and `CHK_HDRS`) already handle generated headers
-> separately. In the third, the computed-dependency fallback, we can just
-> add in a reference to $(GENERATED_H).
-> 
-> Likewise, we no longer include not-yet-tracked header files in `LIB_H`.
-> 
-> Given the speed improvements, these consequences seem a comparably small
-> price to pay.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  Makefile | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index c5240942f2..0c4712cb48 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -841,7 +841,8 @@ VCSSVN_LIB = vcs-svn/lib.a
->  
->  GENERATED_H += command-list.h
->  
-> -LIB_H = $(shell $(FIND) . \
-> +LIB_H := $(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
-> +	$(FIND) . \
->  	-name .git -prune -o \
->  	-name t -prune -o \
->  	-name Documentation -prune -o \
-> @@ -2363,7 +2364,7 @@ else
->  # should _not_ be included here, since they are necessary even when
->  # building an object for the first time.
->  
-> -$(OBJECTS): $(LIB_H)
-> +$(OBJECTS): $(LIB_H) $(GENERATED_H)
->  endif
->  
->  exec-cmd.sp exec-cmd.s exec-cmd.o: GIT-PREFIX
-> 
+-Peff
