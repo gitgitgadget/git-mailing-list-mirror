@@ -7,63 +7,58 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C0B020248
-	for <e@80x24.org>; Mon,  4 Mar 2019 03:22:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8247E20248
+	for <e@80x24.org>; Mon,  4 Mar 2019 03:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726172AbfCDDWn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 3 Mar 2019 22:22:43 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38634 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725938AbfCDDWn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Mar 2019 22:22:43 -0500
-Received: by mail-wm1-f68.google.com with SMTP id a188so3204053wmf.3
-        for <git@vger.kernel.org>; Sun, 03 Mar 2019 19:22:42 -0800 (PST)
+        id S1725998AbfCDDp3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 3 Mar 2019 22:45:29 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37813 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725938AbfCDDp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Mar 2019 22:45:29 -0500
+Received: by mail-wr1-f67.google.com with SMTP id w6so3884023wrs.4
+        for <git@vger.kernel.org>; Sun, 03 Mar 2019 19:45:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=nMXvDJnlWYw9KeFGEDKWMb5YsHvmQtPJgD51j+rWvF4=;
-        b=ADLkWZF5mqU7aFp0ooIb2QFm47qV2XMUCq3wc1FtQehDxCJ5WhxmdlhWzq3lvsLURB
-         8WskcQhBAfessAvCJTeXvHexJFA/lLzcMPEP942MgYSi/VNiCX1kEHB5N8n+6HS1G2Ea
-         o6MmgCNHvGa2DmDmNeDzqEbjP4XDKJ9erKQ1b9GynlhMcGgsS2DLEb3N8rEtj5d0tTSF
-         S+EH1jllLSw9wpw4m6e/ZIkvuctri7H942jX2xja8MlAmkVXEbkuhmAQijjKcPUsSoUF
-         F/y1FYF+upC//O4c6XLv3zVW9H4WOXN50Yr/9IC05/qJNAujUpux1KYR9kHOas8B+N3z
-         LfmQ==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=X7wPcxRdDtHjG/B9mCCd/sAaw7xoSA7xrU1x/3ijPwg=;
+        b=rxNiTyZDszLF4HVhmCRrA4LdKL71N9OfHGH9ChLTnv27GMkP48exF/Ro6HbncG5ktU
+         HzAHQ6sq8Raua/MXp4XWBa8N8MbBF5faeQpFYAqk8WbS70ZI08es6OZt0NCJmqRNfYXG
+         RqCZIGrRkpq2e4JktlNrM3ODcM3sokZzwmuudrkV3Roh/soK5iTXL100g7OlD91rnwCM
+         sR6sBDPAkFmsoPxBiNBMd73h7+0mQ/v4y7HSEV9F3L9BL8HxkoKH5s2wzZIfR2NsaNI7
+         /Ui11vHdl37CH5revn0dHGUUuFMqH0tqfzssjPjwb7XYIE3V8EMf5z4+nx1nhJZt2zoa
+         OYfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=nMXvDJnlWYw9KeFGEDKWMb5YsHvmQtPJgD51j+rWvF4=;
-        b=KR3enoWpq3rrFaJY8cM4OEFv1Sxb9HTND4/62CAVaiDP+Xsxld09QxlQMnz02cB5ZW
-         g6D3jlO/2XHByXDYc8NzJNWPQZF2X+dmX4kvURyn7GCNFCQbxfATksMCaHLt+ahqOeMb
-         XhdfUby9NKviFjrwWjeOf1UHwBHZuy8oNSEXHRY19ayUknwd+Uysah31D2qe56CJmAJu
-         C18Tz0yltkV0novWkCv4hb1N9KM/U/zakaUx38SWBHYOErPDqj9d1iIv7e/FypTTT3sc
-         GoTqDcjzdabwMFYJ5p//nYSGfEE83HsXoCLi337My6XHOJ36oUhZVxDOWlwC20Smrigc
-         Lbjg==
-X-Gm-Message-State: AHQUAua7PXFkyej+TNhnSDiVOJXdqyGJFKbcnkS5azqcUM3dXdcEVmPV
-        i6NqQFoOIEGn/4SqfnmCiRc=
-X-Google-Smtp-Source: AHgI3IZzU6r6IFmY0XerFDVVijIcKrw/2qkWYGL6fnmtOmaEC9xVP4Xx1d+KEIhSxcj81NmGmx0X8Q==
-X-Received: by 2002:a1c:7a1a:: with SMTP id v26mr9410237wmc.129.1551669760932;
-        Sun, 03 Mar 2019 19:22:40 -0800 (PST)
+         :message-id:user-agent:mime-version;
+        bh=X7wPcxRdDtHjG/B9mCCd/sAaw7xoSA7xrU1x/3ijPwg=;
+        b=DvMNqesqsnVZZo2O8UqKH5luigbEiWfu5rx0gxIzpgCIbI6ySsq3g/Jz1Hr6m6NJoM
+         2kLTi+SwiXf4AcCkd3FCW/l2xclygh4otFuOMzLyPhgR8rLM0mG8+TjGnkVuwngPAXco
+         Ohx/mqwyav1uFopX+OX3n6N45nVl+cwhwnK2dUs9a3jqfJ3HL8EiUFqSEYVnz8h9G80q
+         97CpjVYvRvfosIZ1XtalFdkN+sGtJN3LgvjlvK89bpmS9KS2Cy+nQL+TrE4XDQDGSPfb
+         czXSBeP4BuT03oHaY4SxiEqPM0iyf0gorjsudwdsfj8ZhUyW0CiYpoRdWEYA/JsBNSQO
+         B+tg==
+X-Gm-Message-State: APjAAAX+D0/irKqukZk25LENyStGt5WMvu2AeGuzrxpxKCZVwGVUb0xK
+        CdKwHG1FupsswGvtOpyAVFA=
+X-Google-Smtp-Source: APXvYqwqWf6AjYFmSMUxGP8EcFTVsn+dHSAUospT/jh4ahI6546KVwHto4hjFe4J3uy6koT6eFKnqQ==
+X-Received: by 2002:adf:eb85:: with SMTP id t5mr11240636wrn.168.1551671127232;
+        Sun, 03 Mar 2019 19:45:27 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b195sm5326378wmg.36.2019.03.03.19.22.40
+        by smtp.gmail.com with ESMTPSA id l129sm3880285wml.42.2019.03.03.19.45.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Mar 2019 19:22:40 -0800 (PST)
+        Sun, 03 Mar 2019 19:45:26 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/2] tests: introduce --stress-jobs=<N>
-References: <pull.155.git.gitgitgadget@gmail.com>
-        <pull.155.v2.git.gitgitgadget@gmail.com>
-        <074628c22b2df82280b06db604196f25300e8f87.1551624293.git.gitgitgadget@gmail.com>
-        <CAPig+cS1URdnRb0RM0HYQhtmXWn5knx6Ee1Y96Gc9dt_9LmRKA@mail.gmail.com>
-Date:   Mon, 04 Mar 2019 12:22:39 +0900
-In-Reply-To: <CAPig+cS1URdnRb0RM0HYQhtmXWn5knx6Ee1Y96Gc9dt_9LmRKA@mail.gmail.com>
-        (Eric Sunshine's message of "Sun, 3 Mar 2019 10:00:32 -0500")
-Message-ID: <xmqqfts3z5kw.fsf@gitster-ct.c.googlers.com>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
+        git@vger.kernel.org, t.gummerer@gmail.com
+Subject: Re: [GSoC][PATCH v2 1/3] test functions: add function `test_file_not_empty`
+References: <20190303122842.30380-1-rohit.ashiwal265@gmail.com>
+        <20190303233750.6500-1-rohit.ashiwal265@gmail.com>
+        <20190303233750.6500-2-rohit.ashiwal265@gmail.com>
+Date:   Mon, 04 Mar 2019 12:45:25 +0900
+Message-ID: <xmqqo96rxpyi.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,35 +67,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Rohit Ashiwal <rohit.ashiwal265@gmail.com> writes:
 
-> On Sun, Mar 3, 2019 at 9:45 AM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> [...]
->> Let's introduce a separate option for that, whose name makes it more
->> obvious what it is about, and let --stress=<N> error out with a helpful
->> suggestion about the two options tha could possibly have been meant.
->>
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
->> diff --git a/t/README b/t/README
->> @@ -187,11 +187,10 @@ appropriately before running "make".
->>         variable to "1" or "0", respectively.
->>
->>  --stress::
->> ---stress=<N>::
->
-> Shouldn't the "--stress=<N>" line be removed?
+> test-lib-functions: add a helper function that checks for a file and that
+> the file is not empty. The helper function will provide better error message
+> in case of failure and improve readability
 
-Eyes can easily be tricked by the patch format, but the above hunk
-does remove that line ;-)  I had the same reaction when I saw your
-message for the first time (before seeing the patch itself).
+Avoid making the log message into an enumerated list, when there
+aren't that many things to enumerate to begin with (specifically,
+the "test-lib-functions:" label is unsightly here).   Finish the
+sentence with a full stop.
 
->
->>         Run the test script repeatedly in multiple parallel jobs until
->>         one of them fails.  Useful for reproducing rare failures in
->>         flaky tests.  The number of parallel jobs is, in order of
->> -       precedence: <N>, or the value of the GIT_TEST_STRESS_LOAD
->> +       precedence: the value of the GIT_TEST_STRESS_LOAD
->>         environment variable, or twice the number of available
->>         processors (as shown by the 'getconf' utility), or 8.
+	Add a helper function to ensure that a given path is a
+	non-empty file, and give an error message when it is not.
+
+	Give separate messages for the case when the path is missing
+	or a non-file, and for the case when the path is a file but
+	is empty.
+
+should be sufficient.
+
+I still do not see why the posted code is better than this
+
+	if ! test -s "$1"
+	then
+		echo "'$1' is not a non-empty file.'
+	fi
+ 
+which is more to the point.  After all, if we are truly aiming for
+finer-grained diagnosis, there is no good reason to accept a single
+error message "does not exist or not a file" for these two cases,
+but you'd be writing more like
+
+	if ! test -e "$1"
+	then
+		echo "'$1' does not exist"
+	elif ! test -f "$1"
+	then
+		echo "'$1' is not a file"
+	elif ! test -s "$1"
+	then
+		echo "'$1' is not empty"
+	else
+		: happy
+		return
+	fi
+	false
+
+But I do not see much point in doing so, and I do not see much point
+in the version that makes an extra check only for "test -f", either.
+
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 80402a428f..f9fcd2e013 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -593,6 +593,21 @@ test_dir_is_empty () {
+>  	fi
+>  }
+>  
+> +# Check if the file exists and has a size greater than zero
+> +test_file_not_empty () {
+> +	if ! test -f "$1"
+> +	then
+> +		echo "'$1' does not exist or not a file."
+> +		false
+> +	else
+> +		if ! test -s "$1"
+> +		then
+> +			echo "'$1' is an empty file."
+> +			false
+> +		fi
+> +	fi
+> +}
+
+
+If I were writing this, I'd dedent it by turning this into
+
+	if ! test -f ...
+	then
+		echo ...
+	elif ! test -s ...
+	then
+		echo ...
+	else
+		: happy
+		return
+	fi
+	false
+
+But as I said, I do not see much point in the extra "test -f", so
+more likely this is what I would write, if I were doing this step
+myself:
+
+	if test -s "$1"
+	then
+		: happy
+	else
+		echo "'$1' is not a non-empty file"
+		false
+	fi
+
+> +
+>  test_path_is_missing () {
+>  	if test -e "$1"
+>  	then
