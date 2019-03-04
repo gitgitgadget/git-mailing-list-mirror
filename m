@@ -2,67 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B62AE20248
-	for <e@80x24.org>; Mon,  4 Mar 2019 19:44:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83BD520248
+	for <e@80x24.org>; Mon,  4 Mar 2019 19:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726091AbfCDTon (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 14:44:43 -0500
-Received: from mail-pg1-f177.google.com ([209.85.215.177]:40828 "EHLO
-        mail-pg1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726061AbfCDTon (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 14:44:43 -0500
-Received: by mail-pg1-f177.google.com with SMTP id u9so3796002pgo.7
-        for <git@vger.kernel.org>; Mon, 04 Mar 2019 11:44:43 -0800 (PST)
+        id S1726150AbfCDTwY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 14:52:24 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:43300 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbfCDTwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 14:52:23 -0500
+Received: by mail-lj1-f195.google.com with SMTP id z20so5406392ljj.10
+        for <git@vger.kernel.org>; Mon, 04 Mar 2019 11:52:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=ln0DNkj3AbJCDVRKLELuj2WhxuHA++rvY3c36umBl3U=;
-        b=P/B9L38OMBSvzz7fZ9iejKXtqZ2d2Iz3AhqSUNS/Mxtxw1Mkd10ec3w7DytqbrKAzN
-         aIOrbGGtQ4NXBamzbeCuqMz30MrAVce2HWXXBwhWE6HNxFbuTThljbyjdnN3XrTsxDtG
-         Vc4TVMr6bMU11QkTnwCX1d2NqnX/4vuuVfUVHkbpJCXGYO1gemQwr4TLy1hBXXldneCJ
-         bC5+HgoZRJw+EpklhBpWTTeDDdNqb12Tak7VLnsKbRKjMAoE8Q4ZbVzmoRZxfsZXQ17U
-         q5R8QBC0naeoszv/MayM5MiWuUV8FOOs8/2wL6ZZ5pHoAclC6MAxJiafHeVzh7VKb9w6
-         DFWg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=obgvMBOdlKlhB5BqiaKhEcCeNvZ0Gakp/t0oVaaKgP4=;
+        b=e+8jzVg3vXjPcCy6zM/1151A0N2GcMaylaXX/9+0HpO3WD0jjaDNuR0kJbUpZf7SGy
+         0vByNmxBCOjx5yDIv9YWXa29flk2PVPh0sGdbw8Rj5SjGGYwNBauS0C+FMD6wIm3k2Vh
+         tOVRMEmT1fmsKbtl7FOtKgzpih/DxKexvh2LTSqmpNl4psqGU3lcIrSpzHO/afY7Z0gS
+         KN7II5X2234P6Hq0WsrbfA+vQIxHCRfI42O62PJA3C0C6beJSVf70RpPNRo3gxF1Bcvk
+         Glmp00MZGa9uIRvGj7Ye9meF9A71gnFP85wb38B1Kve9drn+0McxdCotcKQBjbMtYFx1
+         4srg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=ln0DNkj3AbJCDVRKLELuj2WhxuHA++rvY3c36umBl3U=;
-        b=AQedPq2GIdtHHGlT316uGSaQvQvP0G+/SbZsxHfoDhLSgRlJ5RAILa9WIJ9z82oJBy
-         NZiusWqsj19AsXqEqY0u0XNqdWpJ/0YBfpX4ckD+TidWyY2lSNxAmcN+2Kn+LvlpQKoo
-         3izEF2tmvMxDtbB1gKK5Q1mb8hhWFZW/wew1y4I05DCpFYlfIjV5CtZoEYo2Hv2zymR4
-         6UNamewtE/aOir9ev62nHuHWpj3vlebbSwye2A7j2jwIZTgvCiETV43N5oRqBRz0L/lb
-         Cup8u+ZJuiqLHm8pWjiOn8zHX5QdIscPGpx7sCrlp0Htq0J7ua2VqU7u2Z3PT3z+XU5o
-         wY9g==
-X-Gm-Message-State: AHQUAuYfcvItMNDqcOfpnRvDHvPxkF2yF+oJ0Gc9VlQcgMDpb8b0yibq
-        +JTDdy10oU1xGb2IpYlguBjF7imf
-X-Google-Smtp-Source: AHgI3IZJkRZFM/UPIharlUu66l7OMtPVpOJ1guqEI6kwWc0ifhygqUxzK021ETDZp0KSbLUd+wJxng==
-X-Received: by 2002:aa7:8390:: with SMTP id u16mr21256079pfm.63.1551728682678;
-        Mon, 04 Mar 2019 11:44:42 -0800 (PST)
-Received: from hack-haven ([27.61.84.48])
-        by smtp.gmail.com with ESMTPSA id m17sm10400157pff.170.2019.03.04.11.44.40
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Mar 2019 11:44:42 -0800 (PST)
-Date:   Tue, 5 Mar 2019 01:14:35 +0530
-From:   Harshavardhan Unnibhavi <hvubfoss@gmail.com>
-To:     git@vger.kernel.org
-Subject: Test mail
-Message-ID: <20190304194435.GA17526@hack-haven>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=obgvMBOdlKlhB5BqiaKhEcCeNvZ0Gakp/t0oVaaKgP4=;
+        b=UUe9xaArDz9/2CTRg82VkY6Gwp+D/T7B/pq3n5zI3eWBi7OyUV/5j7ht7bShpmZpi4
+         45PjYO69wOsqNnWDzb9OKQl5Z/H7ns/edSybw6xti1foptSEccHm03ZLy00FnRRqfUyZ
+         dbtwbYtgwfT46whEAyM7crrSEFeEcGlSuYaLkpL8kAbukmP+z7TMqcm1ywiLiuG+1yq/
+         +IQlZg/QbHQ814AD4LXRYYEyFZXKPm0Ko5MvL9sdQZYkNEKbjMy2pBizHvzqz4EX74Hd
+         HjFxTza1px0xO6hkuYCvRANiHzuDGOg/czBtoMB3nrawnJKvrmY2l/cM6Fd+o3GvJZx5
+         3Y5w==
+X-Gm-Message-State: APjAAAXJGsxiHRL0bJJt/3n7Rcs42KOqYY2Rv0DRIl53nhc0DKtLBND3
+        79dj5sS572RBOYvBTtH0ZU8uvmr5vMKucXQwOlw=
+X-Google-Smtp-Source: APXvYqwdEbNvTWdK915Kveay3GuMnPVNXnbJVWsFogMcnx+mKFON2IJbkr8jMXDdjQ9YuxzJIwHkKo6eJ6ucIGKK784=
+X-Received: by 2002:a2e:9b95:: with SMTP id z21mr11349629lji.155.1551729141551;
+ Mon, 04 Mar 2019 11:52:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <47CA9077-E8C1-4093-8B36-2D5D3DE2D886@gmail.com>
+ <7D21A788-5E38-466F-B3CC-F6A5CBEB2E2E@gmail.com> <D9CFD250-26D4-4D1F-B0CD-01E24E8606D9@gmail.com>
+ <D4829D84-9192-4C7A-8487-0374DAFC324A@gmail.com> <C678086A-93E9-4F0B-AAAA-FBBBC27F2BFC@gmail.com>
+ <CAJ145vUChd7+5QkmJsOK3bzZsudWfzZYp5wHZDzoq8SKSv0g0A@mail.gmail.com> <95defc95-c558-3487-d418-e65f7db5dda5@orcon.net.nz>
+In-Reply-To: <95defc95-c558-3487-d418-e65f7db5dda5@orcon.net.nz>
+From:   Kenneth Cochran <kenneth.cochran101@gmail.com>
+Date:   Mon, 4 Mar 2019 13:52:10 -0600
+Message-ID: <CAJ145vUOYcMvozYtWx2QJOWCSGw__-Cs3w_sxKhwwtHFQt-qHA@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/4] Add alias option to git branch
+To:     Phil Sainty <psainty@orcon.net.nz>
+Cc:     git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test mail
+On Mon, Mar 4, 2019 at 1:34 PM Phil Sainty <psainty@orcon.net.nz> wrote:
+>
+> 5/03/19 5:23 AM, Kenneth Cochran wrote:
+> > Adding Phil for comments
+>
+> Thank you for following this up, Kenneth.  I'll do some testing with
+> your patch sometime soon.
+
+Thanks! Any feedback is appreciated.
+
+>
+> I've realised that the last version of my script that I posted to the
+> mailing list was buggy, and that in wanting to hold off sending another
+> version for a little while in case I found more bugs, I in fact failed
+> to send a fixed version at all.
+>
+> This is probably not relevant to your patches; but just in case,
+> the up to date code for that script is here:
+>
+> https://stackoverflow.com/a/23532744/324105
+
+This stack overflow post was actually what led me to the git mailing
+list in the first place :)
+
+>
+> and the fixes since v1.11 were:
+>
+> * Change incorrect uses of git show-ref, introduced by v1.10 (including
+>   effective regression of v1.08), to use git symbolic-ref instead.
+>
+> * Fix the option handling for '--', and added it to the help text.
+>
+>
+> -Phil
+
+On Mon, Mar 4, 2019 at 1:34 PM Phil Sainty <psainty@orcon.net.nz> wrote:
+>
+> 5/03/19 5:23 AM, Kenneth Cochran wrote:
+> > Adding Phil for comments
+>
+> Thank you for following this up, Kenneth.  I'll do some testing with
+> your patch sometime soon.
+>
+> I've realised that the last version of my script that I posted to the
+> mailing list was buggy, and that in wanting to hold off sending another
+> version for a little while in case I found more bugs, I in fact failed
+> to send a fixed version at all.
+>
+> This is probably not relevant to your patches; but just in case,
+> the up to date code for that script is here:
+>
+> https://stackoverflow.com/a/23532744/324105
+>
+> and the fixes since v1.11 were:
+>
+> * Change incorrect uses of git show-ref, introduced by v1.10 (including
+>   effective regression of v1.08), to use git symbolic-ref instead.
+>
+> * Fix the option handling for '--', and added it to the help text.
+>
+>
+> -Phil
