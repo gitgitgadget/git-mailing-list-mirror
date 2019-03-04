@@ -7,122 +7,66 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83BD520248
-	for <e@80x24.org>; Mon,  4 Mar 2019 19:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F35520248
+	for <e@80x24.org>; Mon,  4 Mar 2019 19:58:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726150AbfCDTwY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 14:52:24 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:43300 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726038AbfCDTwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 14:52:23 -0500
-Received: by mail-lj1-f195.google.com with SMTP id z20so5406392ljj.10
-        for <git@vger.kernel.org>; Mon, 04 Mar 2019 11:52:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=obgvMBOdlKlhB5BqiaKhEcCeNvZ0Gakp/t0oVaaKgP4=;
-        b=e+8jzVg3vXjPcCy6zM/1151A0N2GcMaylaXX/9+0HpO3WD0jjaDNuR0kJbUpZf7SGy
-         0vByNmxBCOjx5yDIv9YWXa29flk2PVPh0sGdbw8Rj5SjGGYwNBauS0C+FMD6wIm3k2Vh
-         tOVRMEmT1fmsKbtl7FOtKgzpih/DxKexvh2LTSqmpNl4psqGU3lcIrSpzHO/afY7Z0gS
-         KN7II5X2234P6Hq0WsrbfA+vQIxHCRfI42O62PJA3C0C6beJSVf70RpPNRo3gxF1Bcvk
-         Glmp00MZGa9uIRvGj7Ye9meF9A71gnFP85wb38B1Kve9drn+0McxdCotcKQBjbMtYFx1
-         4srg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=obgvMBOdlKlhB5BqiaKhEcCeNvZ0Gakp/t0oVaaKgP4=;
-        b=UUe9xaArDz9/2CTRg82VkY6Gwp+D/T7B/pq3n5zI3eWBi7OyUV/5j7ht7bShpmZpi4
-         45PjYO69wOsqNnWDzb9OKQl5Z/H7ns/edSybw6xti1foptSEccHm03ZLy00FnRRqfUyZ
-         dbtwbYtgwfT46whEAyM7crrSEFeEcGlSuYaLkpL8kAbukmP+z7TMqcm1ywiLiuG+1yq/
-         +IQlZg/QbHQ814AD4LXRYYEyFZXKPm0Ko5MvL9sdQZYkNEKbjMy2pBizHvzqz4EX74Hd
-         HjFxTza1px0xO6hkuYCvRANiHzuDGOg/czBtoMB3nrawnJKvrmY2l/cM6Fd+o3GvJZx5
-         3Y5w==
-X-Gm-Message-State: APjAAAXJGsxiHRL0bJJt/3n7Rcs42KOqYY2Rv0DRIl53nhc0DKtLBND3
-        79dj5sS572RBOYvBTtH0ZU8uvmr5vMKucXQwOlw=
-X-Google-Smtp-Source: APXvYqwdEbNvTWdK915Kveay3GuMnPVNXnbJVWsFogMcnx+mKFON2IJbkr8jMXDdjQ9YuxzJIwHkKo6eJ6ucIGKK784=
-X-Received: by 2002:a2e:9b95:: with SMTP id z21mr11349629lji.155.1551729141551;
- Mon, 04 Mar 2019 11:52:21 -0800 (PST)
-MIME-Version: 1.0
-References: <47CA9077-E8C1-4093-8B36-2D5D3DE2D886@gmail.com>
- <7D21A788-5E38-466F-B3CC-F6A5CBEB2E2E@gmail.com> <D9CFD250-26D4-4D1F-B0CD-01E24E8606D9@gmail.com>
- <D4829D84-9192-4C7A-8487-0374DAFC324A@gmail.com> <C678086A-93E9-4F0B-AAAA-FBBBC27F2BFC@gmail.com>
- <CAJ145vUChd7+5QkmJsOK3bzZsudWfzZYp5wHZDzoq8SKSv0g0A@mail.gmail.com> <95defc95-c558-3487-d418-e65f7db5dda5@orcon.net.nz>
-In-Reply-To: <95defc95-c558-3487-d418-e65f7db5dda5@orcon.net.nz>
-From:   Kenneth Cochran <kenneth.cochran101@gmail.com>
-Date:   Mon, 4 Mar 2019 13:52:10 -0600
-Message-ID: <CAJ145vUOYcMvozYtWx2QJOWCSGw__-Cs3w_sxKhwwtHFQt-qHA@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/4] Add alias option to git branch
-To:     Phil Sainty <psainty@orcon.net.nz>
-Cc:     git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
+        id S1726118AbfCDT6k (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 14:58:40 -0500
+Received: from smtp-35.italiaonline.it ([213.209.10.35]:46753 "EHLO libero.it"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726038AbfCDT6k (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 14:58:40 -0500
+Received: from DESKTOP-E4U7JCE ([5.168.24.152])
+        by smtp-35.iol.local with ESMTPA
+        id 0tjShIbqiYe7j0tjShvK4K; Mon, 04 Mar 2019 20:58:38 +0100
+x-libjamoibt: 1601
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
+        t=1551729518; bh=2pppKABAhrt1q8odCDql2TyCzhN/X9UhOMnkbVrt6N0=;
+        h=Subject:From:To:Date;
+        b=ht2SJTO5/OGW4o3E3sYbqFaI1puWW/dBaOhC1NjnLF+jMZzv/iCj86JdgZgL/JG+7
+         MO2noWXKO5yrA1MhR7qUi0g5Pqsaek6evqhEwG3JI88CLH/B412J3hfKYAtqaCwUFq
+         le+xMHmCRIG5mRifh/dekwRpH6T2rWMly9KCYXyvjp6/IRayRtB1PYV9NMenzqL+ZW
+         UwqUwk2x+RRbmgqwKmKQkchTAnzioj9UPOY7C0TgYkAnOrjNuyiq6jxgTD1dbYoYSV
+         8SKYvKSeJVLvZ5IG9jgZas5QAtjh9bsgg9sN8lKT/qKJyMchNZTesKWlJbmhctaOj7
+         yYH/XzrUQMnzA==
+X-CNFS-Analysis: v=2.3 cv=ea/sgIMH c=1 sm=1 tr=0
+ a=6M+yewxsaZYMRRaEAwjDyg==:117 a=6M+yewxsaZYMRRaEAwjDyg==:17
+ a=IkcTkHD0fZMA:10 a=7Jp93jh9yD-LnpO0KwcA:9 a=QEXdDO2ut3YA:10
+ a=pHzHmUro8NiASowvMSCR:22 a=nt3jZW36AmriUCFCBwmW:22
+Message-ID: <1551729517.4092.1.camel@libero.it>
+Subject: Can't build first git commit
+From:   Fabio Aiuto <polinice83@libero.it>
+To:     git@vger.kernel.org
+Date:   Mon, 04 Mar 2019 20:58:37 +0100
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfLME2twW3lq7MkERoRnP/ZfoOUOVFRT8n+tVU96cVoozm9MenTQTQsNqmlXQqW3rvKm6kgIOQlvil1VID3OSY+CvqbOdRMvpaFjM1+BhLEELX+t/9T0Y
+ 8r4jUL9dScLj0pBNK4QW6DuAKDT96mRUcP4G3xHs77SHyoGvf2YrZCM3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 4, 2019 at 1:34 PM Phil Sainty <psainty@orcon.net.nz> wrote:
->
-> 5/03/19 5:23 AM, Kenneth Cochran wrote:
-> > Adding Phil for comments
->
-> Thank you for following this up, Kenneth.  I'll do some testing with
-> your patch sometime soon.
+Hi to all,
 
-Thanks! Any feedback is appreciated.
+I'm trying to build first commit of git made by Linus. I mean the one
+named e83c5163316f89bfbde7d9ab23... (I think this is enough).
+But at building stage i have the following error:
 
->
-> I've realised that the last version of my script that I posted to the
-> mailing list was buggy, and that in wanting to hold off sending another
-> version for a little while in case I found more bugs, I in fact failed
-> to send a fixed version at all.
->
-> This is probably not relevant to your patches; but just in case,
-> the up to date code for that script is here:
->
-> https://stackoverflow.com/a/23532744/324105
+make all 
+gcc -g -o update-cache update-cache.o read-cache.o -lssl
+/usr/bin/ld: update-cache.o: undefined reference to symbol
+'SHA1_Update@@OPENSSL_1_1_0'
+//usr/lib/i386-linux-gnu/libcrypto.so.1.1: error adding symbols: DSO
+missing from command line
+collect2: error: ld returned 1 exit status
+make: *** [update-cache] Errore 1
+Makefile:16: set di istruzioni per l'obiettivo "update-cache" non
+riuscito
 
-This stack overflow post was actually what led me to the git mailing
-list in the first place :)
+I run a debian stretch on my machine. Could anyone help me?
+Thanks in advance.
+Fabio.
 
->
-> and the fixes since v1.11 were:
->
-> * Change incorrect uses of git show-ref, introduced by v1.10 (including
->   effective regression of v1.08), to use git symbolic-ref instead.
->
-> * Fix the option handling for '--', and added it to the help text.
->
->
-> -Phil
-
-On Mon, Mar 4, 2019 at 1:34 PM Phil Sainty <psainty@orcon.net.nz> wrote:
->
-> 5/03/19 5:23 AM, Kenneth Cochran wrote:
-> > Adding Phil for comments
->
-> Thank you for following this up, Kenneth.  I'll do some testing with
-> your patch sometime soon.
->
-> I've realised that the last version of my script that I posted to the
-> mailing list was buggy, and that in wanting to hold off sending another
-> version for a little while in case I found more bugs, I in fact failed
-> to send a fixed version at all.
->
-> This is probably not relevant to your patches; but just in case,
-> the up to date code for that script is here:
->
-> https://stackoverflow.com/a/23532744/324105
->
-> and the fixes since v1.11 were:
->
-> * Change incorrect uses of git show-ref, introduced by v1.10 (including
->   effective regression of v1.08), to use git symbolic-ref instead.
->
-> * Fix the option handling for '--', and added it to the help text.
->
->
-> -Phil
