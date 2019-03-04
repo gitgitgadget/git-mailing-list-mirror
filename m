@@ -2,64 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 362A020248
-	for <e@80x24.org>; Mon,  4 Mar 2019 14:09:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66BF820248
+	for <e@80x24.org>; Mon,  4 Mar 2019 14:16:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726613AbfCDOJy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 09:09:54 -0500
-Received: from [193.29.56.124] ([193.29.56.124]:55312 "EHLO iodev.co.uk"
-        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-        id S1726037AbfCDOJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 09:09:53 -0500
-Date:   Mon, 4 Mar 2019 15:09:47 +0100
-From:   Ismael Luceno <ismael@iodev.co.uk>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH v2] git-gui: Handle Ctrl + BS/Del in the commit msg
-Message-ID: <20190304140947.GA2449@kiki>
-References: <20190216031051.8859-1-ismael@iodev.co.uk>
- <xmqqbm36w7hl.fsf@gitster-ct.c.googlers.com>
- <20190221093059.GA6594@kiki>
- <xmqqa7iouavw.fsf@gitster-ct.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa7iouavw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S1726755AbfCDOQr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 09:16:47 -0500
+Received: from forward102p.mail.yandex.net ([77.88.28.102]:57130 "EHLO
+        forward102p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726063AbfCDOQr (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 4 Mar 2019 09:16:47 -0500
+X-Greylist: delayed 432 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Mar 2019 09:16:46 EST
+Received: from mxback3j.mail.yandex.net (mxback3j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10c])
+        by forward102p.mail.yandex.net (Yandex) with ESMTP id 6814B1D41B7B
+        for <git@vger.kernel.org>; Mon,  4 Mar 2019 17:09:32 +0300 (MSK)
+Received: from smtp2o.mail.yandex.net (smtp2o.mail.yandex.net [2a02:6b8:0:1a2d::26])
+        by mxback3j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id rAp0eKcGuf-9Wd0Vnmn;
+        Mon, 04 Mar 2019 17:09:32 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1551708572;
+        bh=oZiEJ1ZblhqIUsZe1RfkeceUIOogdbysju+JMLdXivI=;
+        h=To:Subject:From:Date:Message-Id;
+        b=ocgF2VidLs98UJZK1+a+OhBuFb9Q93qRzNqZmuQ2Dno1rjC0Kk1eJfHucfPcRdFur
+         Yx5O6X2xz4hhYhb8xJOOOhy7y+yExtWwqhRphGX9/35Wr7qofCRh1dhzd1iKTyKUYV
+         uL9tnmFFIxF1x5bfzhbZjForNzMgQu7HB/aiLyGQ=
+Authentication-Results: mxback3j.mail.yandex.net; dkim=pass header.i=@ya.ru
+Received: by smtp2o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id MB0z5b4URw-9Vmek6Qp;
+        Mon, 04 Mar 2019 17:09:31 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+From:   =?utf-8?B?0J7Qu9C10LMg0KHQsNC80L7QudC70L7Qsg==?= <splarv@ya.ru>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
+Subject: small fix for git-diff man page
+Message-Id: <51ADB663-BF46-454B-A281-03B54F9C3424@ya.ru>
+Date:   Mon, 4 Mar 2019 17:09:31 +0300
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.102.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/Feb/2019 12:47, Junio C Hamano wrote:
-> Ismael Luceno <ismael@iodev.co.uk> writes:
-> 
-> >> ....  I am not sure if going
-> >> back by one character from where the current insertion cursor is and
-> >> further go back to the wordstart would give the beginning of the
-> >> word to the left of the cursor, though.
-> >
-> > ...
-> > Current implementation doesn't behave correctly when there's multiple
-> > spaces:
-> 
-> In short, I wondered if it is correct, and you say it is not correct.
+A small pull request.
 
-It's better than nothing, and the behavior isn't harmful.
+https://github.com/git/git/pull/580
 
-> I would be surprised if git-gui were the only program that
-> implemented an editor-like feature using tcl/tk, and none of the
-> other editor implementations using tcl/tk had such an industry
-> standard "delete previous word".  Perhaps you can see if there
-> is already a correct implementation of the feature this patch can
-> borrow from?
+Git diff can work with a tree in the form git diff tree..tree too, only
+the form git diff commit...commit can't accept a tree instead of a =
+commit.
 
-I couldn't find such implementation yet. I'll come up with an improved
-version if there's nothing else, but in the meanwhile it's worth to have
-this one merged.
+Also added useful example about using a tree with git diff.
+
+But what is strange. I changed only one asciidoc file. But my pull =
+request can not pass an integration checks. =C2=ABGit.git =
+(Documentation)=C2=BB is successfully passed, but =C2=ABgit.git =
+(linux-gcc)=C2=BB, =C2=ABgit.git=C2=BB, =
+=C2=ABcontinuous-integration/travis-ci/pr=C2=BB  and I don=E2=80=99t see =
+reason for it.=
