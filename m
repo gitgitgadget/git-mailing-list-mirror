@@ -6,48 +6,44 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE52B20248
-	for <e@80x24.org>; Mon,  4 Mar 2019 20:31:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 883A620248
+	for <e@80x24.org>; Mon,  4 Mar 2019 20:38:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726721AbfCDUbk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 15:31:40 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:43823 "EHLO
+        id S1726691AbfCDUip (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 15:38:45 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:44589 "EHLO
         avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726712AbfCDUbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 15:31:39 -0500
+        with ESMTP id S1726294AbfCDUio (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 15:38:44 -0500
 Received: from [10.0.2.15] ([146.198.133.33])
         by smtp with ESMTPA
-        id 0uFMhp2HZAOoy0uFNhlHUw; Mon, 04 Mar 2019 20:31:37 +0000
+        id 0uMEhp2t1AOoy0uMFhlHfk; Mon, 04 Mar 2019 20:38:43 +0000
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
  a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=3Luv61TOzu5PQKMIbvUA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=8T3x2AIIIjoDSbGACvkA:9 a=QEXdDO2ut3YA:10
 X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 1/1] Makefile: use `git ls-files` to list header files, if
- possible
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/1] Makefile: use `git ls-files` to list header files,
+ if possible
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <pull.130.git.gitgitgadget@gmail.com>
- <0b5529406b9458d37f3f5cdf38baa2d6a0a70a65.1551470265.git.gitgitgadget@gmail.com>
- <20190301213619.GA1518@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1903022058230.45@tvgsbejvaqbjf.bet>
- <20190303171951.GD23811@sigill.intra.peff.net>
- <8e4b7966-7a3e-a081-bfc1-9e60303b8eab@ramsayjones.plus.com>
- <nycvar.QRO.7.76.6.1903041210410.45@tvgsbejvaqbjf.bet>
+ <pull.130.v2.git.gitgitgadget@gmail.com>
+ <cb253bd0cf2896cf31516079a89ec2dab21032cf.1551707225.git.gitgitgadget@gmail.com>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <b4ea52cb-bbd1-5b55-d3d8-b09285bb2e6f@ramsayjones.plus.com>
-Date:   Mon, 4 Mar 2019 20:31:35 +0000
+Message-ID: <ae65dbe2-cdcb-175b-af58-ab8482270ab9@ramsayjones.plus.com>
+Date:   Mon, 4 Mar 2019 20:38:42 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.5.1
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1903041210410.45@tvgsbejvaqbjf.bet>
+In-Reply-To: <cb253bd0cf2896cf31516079a89ec2dab21032cf.1551707225.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNRHWRkjnEzGRkbfF1upbOox0a4Ab0u50XeRoINf0/CIu1l5IR1WP/2BKYh2LjiUqeZAjMI1P2Q3oHd6txqzbIOwGqzO9C/rIQiWyHSWwvVNRbW2b5+y
- Aqg4Z40/DUgX5vW38lXE4xNdRIG8mrNSUgntuPZmAV4QyRVEu3vl3zav+XXP7rUkOfwHyOeuf1ANOg==
+X-CMAE-Envelope: MS4wfHhG8ZFFECgukNRrSsSdScXyWip6HgxsUHdG421SPYFco+c1JuQVoYekMTe5L/FbdBZqFIidgInO/dxCVUqR1d8FVVLJQH6S9HgxWvESQUfUXmKDI8C5
+ /luoEI5FJOEpzJv8eHB9N1KccokXAbtrZzeAnoLNv5rzdJWBy2+Osx4rJmIifUJ8AmpsYKhrGcQYYQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,146 +51,86 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 04/03/2019 12:38, Johannes Schindelin wrote:
-
->> So, tl;dr: soon, I will be submitting a patch to remove the
->> 'hdr-check' target completely, for now anyway.
+On 04/03/2019 13:47, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> You mentioned later that you might be the only person using that target,
-> and if that were so, I would agree.
-
-It is obviously difficult to judge such a thing, but I suspect
-that the number is very low, if not exactly one. ;-)
-
-> However, I started looking into adding `hdr-check` to the Azure Pipeline
-> we have (which would make a *ton* of sense, if you ask me), along with the
-
-Hmm, I am in two minds about this - I feel duty bound to warn you
-that, if you go ahead with this idea, you will likely create a
-rod for your own back! :-D
-
-If the false positive rate can be kept reasonably low, then this
-would be a good idea. However, some projects are just not a good
-fit for this kind of thing (and Git may be one of them).
-
-> `sparse` thing we talked about.
+> In d85b0dff72 (Makefile: use `find` to determine static header
+> dependencies, 2014-08-25), we switched from a static list of header
+> files to a dynamically-generated one, asking `find` to enumerate them.
 > 
-> So I am a bit opposed to removing that target.
-
-OK, I took the 'nuclear' route because this affects people (to a
-greater or lesser degree) even when they don't know/care about
-this target. If it is just (or mostly) me, then it didn't seem
-worth causing issues for you (or anyone else working on GTW?).
-
->>> By the way, "make hdr-check" already fails for me on master, as I do
->>> not have libgcrypt installed, and it unconditionally checks
->>> sha256/gcrypt.h.
->>
->> Yep, for me too. There is a similar problem if you build with
->> NO_CURL and don't have the 'curl/curl.h' header file, etc ...
+> Back in those days, we did not use `$(LIB_H)` by default, and many a
+> `make` implementation seems smart enough not to run that `find` command
+> in that case, so it was deemed okay to run `find` for special targets
+> requiring this macro.
 > 
-> I think all it needs to do is to pass `$(ALL_CFLAGS)` to gcc (although we
-> might need to add something like `#if defined(SHA256_GCRYPT) ... #endif`
-> guards to `sha256/gcrypt.h` to make it work in Peff's case).
-
-Just adding $(ALL_CFLAGS) to the command-line is not a cure-all,
-unfortunately! :( Also, the 'sha256/gcrypt.h' should be excluded
-from the list of headers to check, conditionally, based on the
-build variable SHA256_GCRYPT. 
-
-> But given that this target really is meant to catch all kinds of errors,
-> I'd be in favor of declaring that target requiring things like libgcrypt's
-> header files to be installed. We can easily make that happen in our CI
-> builds.
-
-That would help, but you may not be able to cover all the platform
-specific build options available. dunno. (I haven't given it enough
-thought).
-
->> The next version was essentially the same patch that started this thread
->> from Johannes (ie. the 'git ls-files' patch), given that the 'tags'
->> targets had found it necessary. However, when I did some 'informal'
->> timing tests (ie 5x 'time make ...' and average), this did not make any
->> noticeable difference for me (_even_ on cygwin!). ;-)
+> However, as of ebb7baf02f (Makefile: add a hdr-check target,
+> 2018-09-19), $(LIB_H) is part of a global rule and therefore must be
+> expanded. Meaning: this `find` command has to be run upon every
+> `make` invocation. In the presence of many a worktree, this can tax the
+> developers' patience quite a bit.
 > 
-> My complaint is not about the speed in a regular clone, but about *my*
-> special clone, where I have some 50+ worktrees (that I really like to keep
-> in the same directory, thankyouverymuch, I ignore them via
-> `.git/info/exclude`, and I really like to have them all tucked away neatly
-> under the `/usr/src/git/` directory) and also some 30+ cloned repositories
-> in `3rdparty/` for random testing (including a bare clone of the Linux
-> kernel, of course also ignored via `.git/info/exclude`).
-
-Oh, wow! I can't imagine ever doing anything like that. However,
-it is a perfectly valid setup and the build system should not
-make it hard for you to work the way you want.
-
-> In that scenario, my version of `find` takes ages, only to finally even
-> throw a segmentation fault (!).
-At least the segfault curtailed your misery! :-D
-
->> So, I already have a 'hdr-check-fixup' branch (I think I have
->> already mentioned it), in which the first commit looks like:
->>
->>   diff --git a/Makefile b/Makefile
->>   index c5240942f2..3401d1b9fb 100644
->>   --- a/Makefile
->>   +++ b/Makefile
->>   @@ -2735,9 +2735,10 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
->>    .PHONY: sparse $(SP_OBJ)
->>    sparse: $(SP_OBJ)
->>    
->>   +HC_HDRS := $(wildcard *.h negotiator/*.h block-sha1/*.h ppc/*.h ewah/*.h \
->>   +       sha1dc/*.h refs/*.h vcs-svn/*.h)
+> Even in the absence of worktrees or other untracked files and
+> directories, the cost of I/O to generate that list of header files is
+> simply a lot larger than a simple `git ls-files` call.
 > 
-> But of course that would also share at least to a lesser extend the
-> shortcomings of a static list.
-
-Yes, but it is no worse than ...
-
-> I still like the `ls-files` method the best.
+> Therefore, just like in 335339758c (Makefile: ask "ls-files" to list
+> source files if available, 2011-10-18), we now prefer to use `git
+> ls-files` to enumerate the header files to enumerating them via `find`,
+> falling back to the latter if the former failed (which would be the case
+> e.g. in a worktree that was extracted from a source .tar file rather
+> than from a clone of Git's sources).
 > 
->>    GEN_HDRS := command-list.h unicode-width.h
->>   -EXCEPT_HDRS := $(GEN_HDRS) compat% xdiff%
->>   -CHK_HDRS = $(filter-out $(EXCEPT_HDRS),$(patsubst ./%,%,$(LIB_H)))
+> This has one notable consequence: we no longer include `command-list.h`
+> in `LIB_H`, as it is a generated file, not a tracked one, but that is
 
-... the original, manually maintained, exception list!
+Heh, just to be _unnecessarily_ picky, but this is not always true.
+The 'command-list.h' header is _sometimes_ not included in the LIB_H
+variable - it simply depends on whether it has been generated by the
+time the $(FIND) is called.
 
-(This patch was written before the 'sha256/' directory existed.
-So the fact that it 'fixes' the GCRYPT error is simply an accident
-of timing! Today, it would be conditionally added to the exception
-list. Yes, I watched that error go from the 'pu' branch down to
-the 'master' branch).
+Obviously, not worth a re-roll. Otherwise, this LGTM.
 
->>   +CHK_HDRS = $(filter-out $(GEN_HDRS),$(HC_HDRS))
->>    HCO = $(patsubst %.h,%.hco,$(CHK_HDRS))
->>    
->>    $(HCO): %.hco: %.h FORCE
->>   
->>
->> ... which drops the use of LIB_H entirely.
->>
->> So, if we really need to solve the problem, allowing for some
->> unrelated headers in your worktree, then we can only use a
->> static list, or a 'git ls-files' approach.
-> 
-> Or we can use `ls-files`, and fall back to your wildcard idea if
-> `ls-files` fails for some reason (typically because `.git/` is missing,
-> e.g. in case of an unpacked source .tar).
-
-Yes, I think an 'git ls-files' approach is the way to go. (I am not
-sure that the 'hdr-check' target would be of any use 'offline' at
-all, but I suppose we could use a generated file in that case).
-
->> Anyway, for now, since I seem to be the only person using this
->> target, I think we should just remove it while I think again.
->> (I can put it in my config.mak, so there will be no loss for me).
-> 
-> As I said above, I would rather keep it, with the `ls-files` and `:=`
-> fixup.
-
-I would be happy with that, if you are. :-D
+Thanks!
 
 ATB,
 Ramsay Jones
 
+> easily worked around. Of the three sites that use `LIB_H`, two
+> (`LOCALIZED_C` and `CHK_HDRS`) already handle generated headers
+> separately. In the third, the computed-dependency fallback, we can just
+> add in a reference to $(GENERATED_H).
+> 
+> Likewise, we no longer include not-yet-tracked header files in `LIB_H`.
+> 
+> Given the speed improvements, these consequences seem a comparably small
+> price to pay.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  Makefile | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index c5240942f2..0c4712cb48 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -841,7 +841,8 @@ VCSSVN_LIB = vcs-svn/lib.a
+>  
+>  GENERATED_H += command-list.h
+>  
+> -LIB_H = $(shell $(FIND) . \
+> +LIB_H := $(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
+> +	$(FIND) . \
+>  	-name .git -prune -o \
+>  	-name t -prune -o \
+>  	-name Documentation -prune -o \
+> @@ -2363,7 +2364,7 @@ else
+>  # should _not_ be included here, since they are necessary even when
+>  # building an object for the first time.
+>  
+> -$(OBJECTS): $(LIB_H)
+> +$(OBJECTS): $(LIB_H) $(GENERATED_H)
+>  endif
+>  
+>  exec-cmd.sp exec-cmd.s exec-cmd.o: GIT-PREFIX
+> 
