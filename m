@@ -7,131 +7,155 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A56B220248
-	for <e@80x24.org>; Mon,  4 Mar 2019 08:46:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30E22202BB
+	for <e@80x24.org>; Mon,  4 Mar 2019 08:54:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726435AbfCDIqz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 03:46:55 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:45532 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726453AbfCDIY6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 03:24:58 -0500
-Received: by mail-ed1-f68.google.com with SMTP id f19so3475819eds.12
-        for <git@vger.kernel.org>; Mon, 04 Mar 2019 00:24:57 -0800 (PST)
+        id S1726076AbfCDIyV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 03:54:21 -0500
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:36184 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726073AbfCDIyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 03:54:21 -0500
+Received: by mail-ed1-f54.google.com with SMTP id g9so3564692eds.3
+        for <git@vger.kernel.org>; Mon, 04 Mar 2019 00:54:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=IFhFpoJ60TpcoxKdX6GwzguUysnfS6QF4R9GruKx078=;
-        b=B5t6y5B7B2Im/cIV0X9k7yTQsr6M8d5lBXr32peN6VuWOMikLwxsUZXHeewNtRcgR0
-         +VPK1J2+6Zzj8GTnYbahRlGszXj3U8ZyjFqT1JdqabAD6wVYO8pcbdgOq7BtuvKhmvb9
-         JwJy+TYfy0I5lmDWzA/SMPsjSZWumm9zPfih97j4x9n2MOS7Z96fBkJrPlPAtk3Z5f5A
-         PARMqB2E8HTrzOeaf6jIOqiHkmf6FgroizAjhWFMfx5Uh8mxS9Ycf54mFOx4R3/bi7uf
-         uIsRIfkET0UY03GECljdl+Vo4C0DY5CXPOJ3vkQT5Gi62LPvA3t4bAFzo/CoPJ9BkkkG
-         KS4g==
+         :cc;
+        bh=1+xeRS4IiLDFkyuIb9Ez9xYy9ByL/MSXatwYo8Fk0og=;
+        b=Kjibnw2kun1WC7/oO/5XdASUIs+NpZsgZJDZCIeng+JBa0D4N7o+/g/wcl/01Xkjv8
+         E41VIaQ/ZfC5X7m1O8q36lfgVchnZ/FPXYiureHX3G+mFrPE7DoFRCEvp0L9zVI2aALw
+         DQltsDGOPNSMdnlLcilHW2rti04fHEL/cgPr0qVkkR/h2hB1+c5/bl9aEXXTF6ANp5u0
+         0AF6LbwUxhFab+YCe1LIvoxRFP9V8Zh3+9w2IOHBk41RfEX+jM11qrJr+hvOADxOy2ly
+         qx7sVoe4uTRnfS1mLCYe+5QZrIpnUG0zWnj9kjbVAaCoRT5lxShNQN69HJwL2AW2nbHh
+         CX1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IFhFpoJ60TpcoxKdX6GwzguUysnfS6QF4R9GruKx078=;
-        b=fclK48MCuEpIlKB/AVtAq6XWZM+1YdBTdYBqmkEL8Whu/Cr2im5kFPSejs0aWN0Znx
-         z07u+tnI7/CaOZmLbD9SATdRm85rpFPchLbjKzYcT7iC37D9So+dF41FUA/wj33qeWE/
-         aF6MWbgKBfVdgeegMsuCvXg045t4f0oKYRWHL2Rxw3dEHLeICkC9viAwWb+r4CoVzKBT
-         R5uHFdpgbRGRxwh171n8oRchYnC7n7+0R4KQSYdyGR+ioBCMiqqtT21ubLpKaYn0B9xd
-         PIndp2IHFUa18/xDvSLw64bQEEpmroLoPWVJyJtXtTvLjublEgIB6a1t0wycQLZn38Jm
-         G01Q==
-X-Gm-Message-State: APjAAAUGk5P8XuTNy92zgwndbHb3+1scYtTgJVZUGPDVzpUZ/D6VROhk
-        te7D2PIhTOyFTFHvxg9b0ydV9Vhcdqs3wy13v7M=
-X-Google-Smtp-Source: APXvYqwJz9FlxUDJpfhqI4h8enRZUGfFs8fTAO3ZuXoZ1+hlEoN3Tfn35V/gqdRDDt998fmsvRTP4LeykovV1lHGm80=
-X-Received: by 2002:a17:906:a402:: with SMTP id l2mr5171020ejz.158.1551687896453;
- Mon, 04 Mar 2019 00:24:56 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=1+xeRS4IiLDFkyuIb9Ez9xYy9ByL/MSXatwYo8Fk0og=;
+        b=iCRGpTLVsM2AAnZvX98QIgNqxz7iX8X5Rm0Jq7WQg7l3ItEbohulOvm0P4LvNYP+Um
+         I+ZgAlZdPXBrhXhKJEMPlp5fKmL4ZZfpPMOqKZNYDUSFWuHKbGy9k7TvHrLFLZiB1Wk7
+         Qddjx4ANl4poE9rlcdkyONHwb4tBQzRIW9ZtzPFw0nCQ/CphglzMvj7ZPJsLLmd7MNvz
+         bigcHsrByRSa56ePFrnb67OP2TNcKzNq50eZ3Zqkpp2Zm/MWjgqJJh3+uyHHdarA68+9
+         xcwJ2gNbTlS2gYIn50oDdkQzIQ61hhlu19WhrV2yG/GV0w/CegYKXzS4St8DyMw1SBRD
+         fBFw==
+X-Gm-Message-State: APjAAAVNvf0KgstDRyRfhuHY7vriUEecIliaibwymXyg4TVHMNspFWEX
+        cyuO1cAYSDAZDmQtezzLgmJc93gEH81Hh9IipR4=
+X-Google-Smtp-Source: APXvYqyQ6gbsgAX4Z43Yp06KN8e5x/Tqw6gQPxgCN1JIiQvQuT55SLZwsU9iJk95I952zABK0naAnula7ANEWMhWLs8=
+X-Received: by 2002:a50:9156:: with SMTP id f22mr14821095eda.131.1551689658730;
+ Mon, 04 Mar 2019 00:54:18 -0800 (PST)
 MIME-Version: 1.0
 References: <cover.1550963965.git.jonathantanmy@google.com>
  <CAP8UFD19521P=-R1XEdRK++HPatt3BJaxWPvpPRo8LHr3eisjA@mail.gmail.com>
  <20190225234528.GD16965@google.com> <CAP8UFD1tKNFO9wU8CbgNnSnQyvHYPsZMk1Bit2y1jxH4vk62qQ@mail.gmail.com>
- <87zhqivrpu.fsf@evledraar.gmail.com>
-In-Reply-To: <87zhqivrpu.fsf@evledraar.gmail.com>
+ <20190228232108.GA163714@google.com>
+In-Reply-To: <20190228232108.GA163714@google.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 4 Mar 2019 09:24:44 +0100
-Message-ID: <CAP8UFD0wFxecHfYRqSm7RKO66swfsACfMQNx=rFgJ-w4EGTuzg@mail.gmail.com>
+Date:   Mon, 4 Mar 2019 09:54:07 +0100
+Message-ID: <CAP8UFD3SWNu=btPxV2vV=neYrofbgKPzz_WLvsJbv6bKjRoCpQ@mail.gmail.com>
 Subject: Re: [WIP 0/7] CDN offloading of fetch response
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 26, 2019 at 10:12 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Tue, Feb 26 2019, Christian Couder wrote:
->
-> > On Tue, Feb 26, 2019 at 12:45 AM Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
+Hi,
 
-> >> But the same thing can happen with redirects, with embedded assets in
-> >> web pages, and so on.
-> >
-> > I don't think it's the same situation, because the CDN offloading is
-> > likely to be used for large objects that some hosting sites like
-> > GitHub, GitLab and BitBucket might not be ok to have them store for
-> > free on their machines. (I think the current limitations are around
-> > 10GB or 20GB, everything included, for each user.)
-> >
+On Fri, Mar 1, 2019 at 12:21 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Sorry for the slow followup.  Thanks for probing into the design ---
+> this should be useful for getting the docs to be clear.
+>
+> Christian Couder wrote:
+>
 > > So it's likely that users will want a way to host on such sites
 > > incomplete repos using CDN offloading to a CDN on another site. And
 > > then if the CDN is not accessible for some reason, things will
 > > completely break when users will clone.
+>
+> I think this would be a broken setup --- we can make it clear in the
+> protocol and server docs that you should only point to a CDN for which
+> you control the contents, to avoid breaking clients.
+
+We can say whatever in the docs, but in real life if it's
+simpler/cheaper for repo admins to use a CDN for example on Google and
+a repo on GitHub, they are likely to do it anyway.
+
+> That doesn't prevent adding additional features in the future e.g. for
+> "server suggested alternates" --- it's just that I consider that a
+> separate feature.
+>
+> Using CDN offloading requires cooperation of the hosting provider.
+> It's a way to optimize how fetches work, not a way to have a partial
+> repository on the server side.
+
+We can say whatever we want about what it is for. Users are likely to
+use it anyway in the way they think it will benefit them the most.
+
+> > On Tue, Feb 26, 2019 at 12:45 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> >> This doesn't stop a hosting provider from using e.g. server options to
+> >> allow the client more control over how their response is served, just
+> >> like can be done for other features of how the transfer works (how
+> >> often to send progress updates, whether to prioritize latency or
+> >> throughput, etc).
 > >
-> > You could say that it's the same issue as when a video is not
-> > available on a web page, but the web browser can still render the page
-> > when a video is not available. So I don't think it's the same kind of
-> > issue.
+> > Could you give a more concrete example of what could be done?
+>
+> What I mean is passing server options using "git fetch --server-option".
+> For example:
+>
+>         git fetch -o priority=BATCH origin master
+>
+> or
+>
+>         git fetch -o avoid-cdn=badcdn.example.com origin master
+>
+> The interpretation of server options is up to the server.
+
+If you often have to tell things like "-o
+avoid-cdn=badcdn.example.com", then how is it better than just
+specifying "-o usecdn=goodcdn.example.com" or even better using the
+remote mechanism to configure a remote for goodcdn.example.com and
+then configuring this remote to be used along the origin remote (which
+is what many promisor remotes is about)?
+
+> >> What the client *can* do is turn off support for packfile URLs in a
+> >> request completely.  This is required for backward compatibility and
+> >> allows working around a host that has configured the feature
+> >> incorrectly.
 > >
-> > And by the way that's a reason why I think it's important to think
-> > about this in relation to promisor/partial clone remotes. Because with
-> > them it's less of a big deal if the CDN is unavailable, temporarily or
-> > not, for some reason.
+> > If the full content of a repo is really large, the size of a full pack
+> > file sent by an initial clone could be really big and many client
+> > machines could not have enough memory to deal with that. And this
+> > suppose that repo hosting providers would be ok to host very large
+> > repos in the first place.
 >
-> I think all of that's correct. E.g. you can imagine a CDN where the CDN
-> serves literally one blob (not a pack), and the server the rest of the
-> trees/commits/blobs.
->
-> But for the purposes of reviewing this I think it's better to say that
-> we're going to have a limited initial introduction of CDN where those
-> more complex cases don't need to be handled.
->
-> That can always be added later, as far as I can tell from the protocol
-> alteration in the RFC nothing's closing the door on that, we could
-> always add another capability / protocol extension.
+> Do we require the packfile to fit in memory?  If so, we should fix
+> that (to use streaming instead).
 
-Yeah, it doesn't close the door on further improvements. The issue
-though is that it doesn't seem to have many benefits over implementing
-things in many promisor remotes. The main benefit seems to be that the
-secondary server locations are automatically configured. But when
-looking at what can happen in the real world, this benefit seems more
-like a drawback to me as it potentially creates a lot of problems.
+Even if we stream the packfile to write it, at one point we have to use it.
 
-A solution, many promisor remotes, where:
+And I could be wrong but I think that mmap doesn't work on Windows, so
+I think we will just try to read the whole thing into memory. Even on
+Linux I don't think it's a good idea to mmap a very large file and
+then use some big parts of it which I think we will have to do when
+checking out the large files from inside the packfile.
 
-- first secondary server URLs are manually specified on the client
-side, and then
-- some kind of negotiation, so that they can be automatically
-selected, is implemented
+Yeah, we can improve that part of Git too. I think though that it
+means yet another thing (and not an easy one) that needs to be
+improved before CDN offloading can work well in the real world.
 
-seems better to me than a solution, CDN offloading, where:
-
-- first the main server decides the secondary server URLs, and then
-- we work around the cases where this creates problems
-
-In the case of CDN offloading it is likely that early client and
-server implementations will create problems for many people as long as
-most of the workarounds aren't implemented. While in the case of many
-promisor remotes there is always the manual solution as long as the
-automated selection doesn't work well enough.
+I think that the Git "development philosophy" since the beginning has
+been more about adding things that work well in the real world first
+even if they are small and a bit manual, and then improving on top of
+those early things, rather than adding a big thing that doesn't quite
+work well in the real world but is automated and then improving on
+that.
