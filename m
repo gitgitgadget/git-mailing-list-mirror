@@ -2,107 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B953A20248
-	for <e@80x24.org>; Mon,  4 Mar 2019 08:43:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A56B220248
+	for <e@80x24.org>; Mon,  4 Mar 2019 08:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726990AbfCDInB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 03:43:01 -0500
-Received: from mail-ot1-f47.google.com ([209.85.210.47]:38558 "EHLO
-        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726908AbfCDInA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 03:43:00 -0500
-Received: by mail-ot1-f47.google.com with SMTP id m1so3564939otf.5
-        for <git@vger.kernel.org>; Mon, 04 Mar 2019 00:43:00 -0800 (PST)
+        id S1726435AbfCDIqz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 03:46:55 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:45532 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726453AbfCDIY6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 03:24:58 -0500
+Received: by mail-ed1-f68.google.com with SMTP id f19so3475819eds.12
+        for <git@vger.kernel.org>; Mon, 04 Mar 2019 00:24:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=yOD/BSX81NXkAqzp5vzbyMoM19mxWY2gLdsboQq1T/k=;
-        b=gw0NBx1YL3YVilB6Inyaa8SOaGOXf4pBslbdsRo48jFcuSRaDrMkZsSAvEvxPdT7su
-         mPb5+qWDRZe2X75/Ak/N9La4zC5OAji14YI9JEgXv9wZBQDTmt448ZE1DC1noYqSh3Li
-         zZA35+SlIIsw3XnjU1BuiC5wKj9MhF2cZLsysCcYkHVrmdVUm6fh1hxzn+BUfTrwwjw3
-         A+Oz+5XMHNwmMsypZfz+NcTWeaACe7PyvctNzj9frsx2jj8/LP4ghXjAPcj1RIMlgMuu
-         ex745OjrW07HwOR/BD6p5+NKGjKW1g7qJtewgppPRMZitIPpIsWZuDkcQG/Tvnbn/zFr
-         xOUg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=IFhFpoJ60TpcoxKdX6GwzguUysnfS6QF4R9GruKx078=;
+        b=B5t6y5B7B2Im/cIV0X9k7yTQsr6M8d5lBXr32peN6VuWOMikLwxsUZXHeewNtRcgR0
+         +VPK1J2+6Zzj8GTnYbahRlGszXj3U8ZyjFqT1JdqabAD6wVYO8pcbdgOq7BtuvKhmvb9
+         JwJy+TYfy0I5lmDWzA/SMPsjSZWumm9zPfih97j4x9n2MOS7Z96fBkJrPlPAtk3Z5f5A
+         PARMqB2E8HTrzOeaf6jIOqiHkmf6FgroizAjhWFMfx5Uh8mxS9Ycf54mFOx4R3/bi7uf
+         uIsRIfkET0UY03GECljdl+Vo4C0DY5CXPOJ3vkQT5Gi62LPvA3t4bAFzo/CoPJ9BkkkG
+         KS4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=yOD/BSX81NXkAqzp5vzbyMoM19mxWY2gLdsboQq1T/k=;
-        b=KrQe6IbgQfwQZWZ3GjTXqkdtgAIdzKitZrZRO83SmXwpSlxGk/pFUSbUuzEHLdul1/
-         nY5cgAeLfvJbJT40LyMtQhXNentpCkke1P2bM2TLBBhEW31ivQOGRuEL1uAvtjaNSK/z
-         SBzpOcXvSC778PXQbt1IrRbbzNa2baV1rnXPy5HPI6Dr9aqJ9AfsyRh2ElfyRjQZsRhf
-         i+osweBSGPS3slxm+0dzrdXJiJhGUOb8wluZ24Iuvaeta1RdEYepCUzagshcN6pQ7Y3D
-         BTdI8lpCe5v56lf0J4kEtdG9j2OYfNBsF1NIqREUX3H/m26zgJABCp1fxNvKof5OZT5m
-         NWOg==
-X-Gm-Message-State: APjAAAW55Ycmn6zKZO4lYU1RtuyuYS/bWhk/m6d7GnIbdlyZ0gjNqB+O
-        mz8EnxhLbhPh2GH6rY2joh4=
-X-Google-Smtp-Source: APXvYqz6Rv4JfAfBAdQEgS7hO7U9tp4NNEsrAIpjBzzF1hnepdmByyLlqFFrJq/l1OLQS15m43fGmA==
-X-Received: by 2002:a9d:3bb6:: with SMTP id k51mr11012332otc.8.1551688979785;
-        Mon, 04 Mar 2019 00:42:59 -0800 (PST)
-Received: from localhost.localdomain ([205.204.117.23])
-        by smtp.gmail.com with ESMTPSA id t12sm2223577otk.16.2019.03.04.00.42.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Mar 2019 00:42:58 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Tran Ngoc Quan <vnwildman@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [GIT PULL] l10n updates for 2.21.0 round 2.1
-Date:   Mon,  4 Mar 2019 16:42:50 +0800
-Message-Id: <20190304084250.3370-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.21.0.rc1.19.g6993b9cd58
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=IFhFpoJ60TpcoxKdX6GwzguUysnfS6QF4R9GruKx078=;
+        b=fclK48MCuEpIlKB/AVtAq6XWZM+1YdBTdYBqmkEL8Whu/Cr2im5kFPSejs0aWN0Znx
+         z07u+tnI7/CaOZmLbD9SATdRm85rpFPchLbjKzYcT7iC37D9So+dF41FUA/wj33qeWE/
+         aF6MWbgKBfVdgeegMsuCvXg045t4f0oKYRWHL2Rxw3dEHLeICkC9viAwWb+r4CoVzKBT
+         R5uHFdpgbRGRxwh171n8oRchYnC7n7+0R4KQSYdyGR+ioBCMiqqtT21ubLpKaYn0B9xd
+         PIndp2IHFUa18/xDvSLw64bQEEpmroLoPWVJyJtXtTvLjublEgIB6a1t0wycQLZn38Jm
+         G01Q==
+X-Gm-Message-State: APjAAAUGk5P8XuTNy92zgwndbHb3+1scYtTgJVZUGPDVzpUZ/D6VROhk
+        te7D2PIhTOyFTFHvxg9b0ydV9Vhcdqs3wy13v7M=
+X-Google-Smtp-Source: APXvYqwJz9FlxUDJpfhqI4h8enRZUGfFs8fTAO3ZuXoZ1+hlEoN3Tfn35V/gqdRDDt998fmsvRTP4LeykovV1lHGm80=
+X-Received: by 2002:a17:906:a402:: with SMTP id l2mr5171020ejz.158.1551687896453;
+ Mon, 04 Mar 2019 00:24:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <cover.1550963965.git.jonathantanmy@google.com>
+ <CAP8UFD19521P=-R1XEdRK++HPatt3BJaxWPvpPRo8LHr3eisjA@mail.gmail.com>
+ <20190225234528.GD16965@google.com> <CAP8UFD1tKNFO9wU8CbgNnSnQyvHYPsZMk1Bit2y1jxH4vk62qQ@mail.gmail.com>
+ <87zhqivrpu.fsf@evledraar.gmail.com>
+In-Reply-To: <87zhqivrpu.fsf@evledraar.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 4 Mar 2019 09:24:44 +0100
+Message-ID: <CAP8UFD0wFxecHfYRqSm7RKO66swfsACfMQNx=rFgJ-w4EGTuzg@mail.gmail.com>
+Subject: Re: [WIP 0/7] CDN offloading of fetch response
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, Feb 26, 2019 at 10:12 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Tue, Feb 26 2019, Christian Couder wrote:
+>
+> > On Tue, Feb 26, 2019 at 12:45 AM Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
 
-Please pull the following l10n updates for Git 2.21.0 to the maint branch.
-These updates include l10n of Vietnamese and fixes of l10n of French and
-Catalan.
+> >> But the same thing can happen with redirects, with embedded assets in
+> >> web pages, and so on.
+> >
+> > I don't think it's the same situation, because the CDN offloading is
+> > likely to be used for large objects that some hosting sites like
+> > GitHub, GitLab and BitBucket might not be ok to have them store for
+> > free on their machines. (I think the current limitations are around
+> > 10GB or 20GB, everything included, for each user.)
+> >
+> > So it's likely that users will want a way to host on such sites
+> > incomplete repos using CDN offloading to a CDN on another site. And
+> > then if the CDN is not accessible for some reason, things will
+> > completely break when users will clone.
+> >
+> > You could say that it's the same issue as when a video is not
+> > available on a web page, but the web browser can still render the page
+> > when a video is not available. So I don't think it's the same kind of
+> > issue.
+> >
+> > And by the way that's a reason why I think it's important to think
+> > about this in relation to promisor/partial clone remotes. Because with
+> > them it's less of a big deal if the CDN is unavailable, temporarily or
+> > not, for some reason.
+>
+> I think all of that's correct. E.g. you can imagine a CDN where the CDN
+> serves literally one blob (not a pack), and the server the rest of the
+> trees/commits/blobs.
+>
+> But for the purposes of reviewing this I think it's better to say that
+> we're going to have a limited initial introduction of CDN where those
+> more complex cases don't need to be handled.
+>
+> That can always be added later, as far as I can tell from the protocol
+> alteration in the RFC nothing's closing the door on that, we could
+> always add another capability / protocol extension.
 
-The following changes since commit 8104ec994ea3849a968b4667d072fedd1e688642:
+Yeah, it doesn't close the door on further improvements. The issue
+though is that it doesn't seem to have many benefits over implementing
+things in many promisor remotes. The main benefit seems to be that the
+secondary server locations are automatically configured. But when
+looking at what can happen in the real world, this benefit seems more
+like a drawback to me as it potentially creates a lot of problems.
 
-  Git 2.21 (2019-02-24 07:55:19 -0800)
+A solution, many promisor remotes, where:
 
-are available in the Git repository at:
+- first secondary server URLs are manually specified on the client
+side, and then
+- some kind of negotiation, so that they can be automatically
+selected, is implemented
 
-  git://github.com/git-l10n/git-po tags/l10n-2.21.0-rnd2.1
+seems better to me than a solution, CDN offloading, where:
 
-for you to fetch changes up to 3ece05c5f408861e319043fa3f92125a9799db48:
+- first the main server decides the secondary server URLs, and then
+- we work around the cases where this creates problems
 
-  l10n: Fixes to Catalan translation (2019-03-02 19:12:58 +0100)
-
-----------------------------------------------------------------
-L10n for Git 2.21.0 round 2.1
-
-----------------------------------------------------------------
-Jean-Noël Avila (1):
-      l10n: fr.po remove obsolete entries
-
-Jordi Mas (1):
-      l10n: Fixes to Catalan translation
-
-Trần Ngọc Quân (1):
-      l10n: Updated Vietnamese translation for v2.21 rd2
-
- po/ca.po |    6 +-
- po/fr.po | 1500 --------------
- po/vi.po | 6954 +++++++++++++++++++++++++++++++++++---------------------------
- 3 files changed, 3979 insertions(+), 4481 deletions(-)
-
---
-Jiang Xin
+In the case of CDN offloading it is likely that early client and
+server implementations will create problems for many people as long as
+most of the workarounds aren't implemented. While in the case of many
+promisor remotes there is always the manual solution as long as the
+automated selection doesn't work well enough.
