@@ -2,96 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C487D20248
-	for <e@80x24.org>; Mon,  4 Mar 2019 20:41:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAFC520248
+	for <e@80x24.org>; Mon,  4 Mar 2019 21:01:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbfCDUlU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 15:41:20 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:57984 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbfCDUlU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 15:41:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=gQ1WfrH8dX5wxT4dQHmV+xM5Nn8Zk7aZ+tERE2o5lq8=; b=T2cyPXR8evVs+ajnDlSYroNNZT
-        SKec4W/7gMMxeZu+1gpJAy3MVoHWZag9GmI+R6RuR7imlK97I4pB9sstbSkpaWWCnyPa5eSoOjZcj
-        lV5NZf6zF8niyJE0GW75/MAt2kZoFMR8lVJJYLzJ5qOiUkA8ZczKCjR3MKWVNBGDj6sil16h3vTAn
-        nuz63QhcPft2pyuPvKoblVcuRjdv2C5ZQdURMpe04NRQP+cOF5lbJasO8FzoJp5Fn6unxH5E0YmjA
-        rx8CY+EL8DA0uL7k0GxBzaoNX71GXlFQl/Hc72bjtZueD74zot6Bj0u2kc2jtRS/6runnWdSlAqg9
-        feEGvtQA==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:40430 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1h0uOj-00E5o6-Gx
-        for git@vger.kernel.org; Mon, 04 Mar 2019 15:41:18 -0500
-Date:   Mon, 4 Mar 2019 15:41:16 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: is "git rebase ... [branch]" equivalent to first "git checkout
- [branch]"?
-Message-ID: <alpine.LFD.2.21.1903041536460.12447@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1726423AbfCDVB5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 16:01:57 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:47610 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726076AbfCDVB5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 16:01:57 -0500
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id 0uighp5A5AOoy0uihhlISx; Mon, 04 Mar 2019 21:01:56 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=V15yQ6HSV0GihLtAc4sA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2 1/1] Makefile: use `git ls-files` to list header files,
+ if possible
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.130.git.gitgitgadget@gmail.com>
+ <pull.130.v2.git.gitgitgadget@gmail.com>
+ <cb253bd0cf2896cf31516079a89ec2dab21032cf.1551707225.git.gitgitgadget@gmail.com>
+ <ae65dbe2-cdcb-175b-af58-ab8482270ab9@ramsayjones.plus.com>
+Message-ID: <99a38032-1182-7777-ccb2-1de97c284a84@ramsayjones.plus.com>
+Date:   Mon, 4 Mar 2019 21:01:54 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <ae65dbe2-cdcb-175b-af58-ab8482270ab9@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfNj9M8GNHDXZX0CVl/XrUevXdP/goHWTAbGdSYBcKPTbut9qBejkSGoRO9aEfz2WGaF/20Bloc3Lvu/BTOcNmVV+t7sIO2sgvbSkluxDCqL+ipVJFsfd
+ csVk6ZAKst6y7doeCoBaApRb0KfDE22aLeWcxojAnF6tm+QAPHgJrx8T7CfzELLpgLUycwOabOpw7w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-  i *think* i know the answer to this based on man page and reading
-the code, but i just want to verify that i'm not missing any subtlety.
 
-  according to "man git-rebase":
+On 04/03/2019 20:38, Ramsay Jones wrote:
+> 
+> 
+> On 04/03/2019 13:47, Johannes Schindelin via GitGitGadget wrote:
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>
+>> In d85b0dff72 (Makefile: use `find` to determine static header
+>> dependencies, 2014-08-25), we switched from a static list of header
+>> files to a dynamically-generated one, asking `find` to enumerate them.
+>>
+>> Back in those days, we did not use `$(LIB_H)` by default, and many a
+>> `make` implementation seems smart enough not to run that `find` command
+>> in that case, so it was deemed okay to run `find` for special targets
+>> requiring this macro.
+>>
+>> However, as of ebb7baf02f (Makefile: add a hdr-check target,
+>> 2018-09-19), $(LIB_H) is part of a global rule and therefore must be
+>> expanded. Meaning: this `find` command has to be run upon every
+>> `make` invocation. In the presence of many a worktree, this can tax the
+>> developers' patience quite a bit.
+>>
+>> Even in the absence of worktrees or other untracked files and
+>> directories, the cost of I/O to generate that list of header files is
+>> simply a lot larger than a simple `git ls-files` call.
+>>
+>> Therefore, just like in 335339758c (Makefile: ask "ls-files" to list
+>> source files if available, 2011-10-18), we now prefer to use `git
+>> ls-files` to enumerate the header files to enumerating them via `find`,
+>> falling back to the latter if the former failed (which would be the case
+>> e.g. in a worktree that was extracted from a source .tar file rather
+>> than from a clone of Git's sources).
+>>
+>> This has one notable consequence: we no longer include `command-list.h`
+>> in `LIB_H`, as it is a generated file, not a tracked one, but that is
+> 
+> Heh, just to be _unnecessarily_ picky, but this is not always true.
+> The 'command-list.h' header is _sometimes_ not included in the LIB_H
+> variable - it simply depends on whether it has been generated by the
+> time the $(FIND) is called.
+> 
+> Obviously, not worth a re-roll. Otherwise, this LGTM.
 
-   git rebase [-i | --interactive] [<options>] [--exec <cmd>]
-       [--onto <newbase>]
-       [<upstream> [<branch>]]
+Ahem! Obviously, I didn't read the commit message closely enough!
 
-and:
+However, _before_ this change, then 'command-list.h' was sometimes
+not included in $(LIB_H) ...
 
-  "If <branch> is specified, git rebase will perform an automatic git
-checkout <branch> before doing anything else. Otherwise it remains on
-the current branch."
+Sorry for the noise!
 
-  is it *absolutely* equivalent to either specify the final "[branch]"
-argument on "git rebase", or to just "git checkout branch" first
-before running the rebase, then leaving off that final argument?
-
-  everything i've seen suggests those two things are identical, but
-i've been fooled before.
-
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
-
+ATB,
+Ramsay Jones
