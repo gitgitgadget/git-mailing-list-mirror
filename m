@@ -2,164 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B91AD20248
-	for <e@80x24.org>; Mon,  4 Mar 2019 09:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD92620248
+	for <e@80x24.org>; Mon,  4 Mar 2019 09:36:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726095AbfCDJN2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 04:13:28 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:33691 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726080AbfCDJN2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 04:13:28 -0500
-Received: by mail-ed1-f65.google.com with SMTP id c55so3623163edb.0
-        for <git@vger.kernel.org>; Mon, 04 Mar 2019 01:13:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=eidFX+ARkgbf3dpsb1kwUPvIlWWnPR2uJ3WNFf7UPOc=;
-        b=tALp0Apguem9miLHMhzXjHHpaXGYOjecG77yxEhhahFs9dUO23KWAt4f66at9N41UY
-         RusVJHFYe6LCaZofycx9HQDMNNILRFFxIXAo0XMQWYIVQlTaboe86vOvcmRLnBzc/533
-         Ii7/UaUzhPTeFlA1L1d1MR4y2MFX0921/tYisJuKFXdR5B7Ngti3gT5p7s0bLIq5N8Cq
-         I8HQ+UxXyn0APenIwUyDDvIpVV9jIoNxGOjuN2x2GLDONDK6LxuIoRqkkFiC+mP8zjEI
-         nRsz1faq+X/7aj2vAL9h0xONExl1x+bJU0yisB0vKjGpYz9ALUM3bDDfnJjH0hG3omns
-         fzCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=eidFX+ARkgbf3dpsb1kwUPvIlWWnPR2uJ3WNFf7UPOc=;
-        b=rQKP504tWJxk1/GYSHhIHY0nX0SdfDguuJzX9kF1SC/a+/0kqeSU0mH9kr67fu62m9
-         trbI3FOFayXaAmhLI8ZhSoD7nI+LxHJTbKefwTMmdNoVUGhjUXW4t9OsIhUeIAeHNGIS
-         xGTgbnsaOF9MGrftsw06mGd9TzyWzwTJTR7PCiLXW4jCMGXhBQbls2fqiFjgwD2i+VVP
-         CinfgFq+gwJ1fnfPAGzH1nZD0etC2TdtTj6+GYTSBGw/hbvKGLdCachF73X9Et4Ni3GU
-         cNtaIWw7UFL3g6Q1u3nPtFt2fgz15RNFZlimdrUeLvQEnjPeDqnvi46jO3Ut16ws+T0H
-         LQ5w==
-X-Gm-Message-State: APjAAAVAMv9IFiC2TO9vf/8TdkfcZSrQNCi4MPTck9vuaqccVP+5Ljtr
-        zRnw8ly8mrkN1cHLHkiasxO5+ADeuZI=
-X-Google-Smtp-Source: APXvYqxyM1TcLY2nMri2PevO1nifxkmwpOApN8pz/EFxjXm8Q2KE1hHrMjcCbrFSqBeVMXUpwMEHzA==
-X-Received: by 2002:a17:906:1653:: with SMTP id n19mr1133110ejd.14.1551690804796;
-        Mon, 04 Mar 2019 01:13:24 -0800 (PST)
-Received: from [10.10.163.202] ([212.61.153.66])
-        by smtp.gmail.com with ESMTPSA id h35sm1918187ede.8.2019.03.04.01.13.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 04 Mar 2019 01:13:24 -0800 (PST)
-Subject: Re: [PATCH 1/1] Add feature to show log as a tree
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1726158AbfCDJgC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 04:36:02 -0500
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:48014 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726066AbfCDJgB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 04:36:01 -0500
+Received: from [IPv6:2a02:ab04:3b9:5e00::3] (2a02-ab04-03b9-5e00-0000-0000-0000-0003.dynamic.v6.chello.sk [IPv6:2a02:ab04:3b9:5e00::3])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: andrewsh)
+        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id DCA89261176;
+        Mon,  4 Mar 2019 09:35:59 +0000 (GMT)
+Subject: Re: [PATCH 1/2] gitk: refresh the colour scheme
+To:     Paul Mackerras <paulus@ozlabs.org>
 Cc:     git@vger.kernel.org
-References: <20190303103751.6523-1-nelissen.micha@gmail.com>
- <xmqqd0n814kg.fsf@gitster-ct.c.googlers.com>
-From:   Micha Nelissen <nelissen.micha@gmail.com>
-Message-ID: <cc77a06e-2fa7-f3b3-dcc4-9bf385d7f384@gmail.com>
-Date:   Mon, 4 Mar 2019 10:13:23 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.2
+References: <20190226110535.29172-1-andrew.shadura@collabora.co.uk>
+ <20190302230228.GA26937@blackberry>
+From:   Andrej Shadura <andrew.shadura@collabora.co.uk>
+Openpgp: preference=signencrypt
+Autocrypt: addr=andrew.shadura@collabora.co.uk; prefer-encrypt=mutual;
+ keydata=
+ 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
+ Ooa/yj03j5gtPgECL7c=
+Organization: Collabora
+Message-ID: <7e696805-4b80-cd26-aaaa-261a05ead964@collabora.co.uk>
+Date:   Mon, 4 Mar 2019 10:35:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0n814kg.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+In-Reply-To: <20190302230228.GA26937@blackberry>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03-03-2019 14:16, Junio C Hamano wrote:
-> I am not sure what you mean by a "tree".  It definitely is not a
-> tree perceived by Git users (which is what represents a directory
-> structure), and abusing the established term is confusing.
+On 03/03/2019 00:02, Paul Mackerras wrote:
+> On Tue, Feb 26, 2019 at 12:05:34PM +0100, Andrej Shadura wrote:
+>> The colours gitk is currently using are from the basic 16 colour
+>> palette, and are a bit too intensive to be comfortable or pleasant
+>> to work with.
+>>
+>> Adjust the main colours (commit nodes, remotes, tags and one branch
+>> colour) to be slightly softer.
+>>
+>> Signed-off-by: Andrej Shadura <andrew.shadura@collabora.co.uk>
+> 
+> Thanks for the patch, but I disagree.  I do like the change you made
+> to the tag colours, but the blue you have for the commit node circles
+> is pretty blah.  That needs a more definite colour.
 
-I called it tree because the output looks like (right half) of a tree. 
-I'm open to alternatives though.
+I see.
 
-> There is no inherent ordering among children of a given commit, so
-> you'd invent some way to define what "the first child" is.  That
-> much can be read from the above, but what is missing is why do you
-> even need to bother.  What benefit do users get by identifying "the
-> first" child and cutting all others off---that is the necessary
-> justification for this change, which is missing from the above
-> explanation.
+1) Would you accept the patch without that change?
+2) What colour would you prefer (except the already existing one)?
 
-Right, in my mind the problem statement is so clear and I didn't write 
-it down. There should have been an introduction paragraph.
+> Also, the "too intensive to be comfortable or pleasant" in the commit
+> message reflect a personal preference, and the way it is put seems to
+> me to be too intensive to be comfortable or pleasant.
 
-Problem I want to solve. The --graph output is useful but often 
-unreadable, due to the many parallel lines. On the other hand, with the 
-default straight line log output all structure is lost. I am trying some 
-middle ground to see merge structure, but keep history readable. I 
-noticed in particular the branch point causes a line to go around or go 
-in between many commits leading to clutter, so I want to remove these. 
-By itself the exact point branched from is rarely important (at least to 
-me). And if it is, then there still is --graph :-).
+Hmm, sorry if that came across not the way I intended. I was trying to
+formulate the thought in a way that would not be emotional or
+subjective, but I guess the end result was exactly opposite.
 
-> "A (depth) level" is poorly explained---in fact, it is not explained
-> what it means at all.  "We designate the first child of each commit
-> by some magic" is all we can read from it.
-
-When processing the commit nodes. Start with depth level 0. Given some 
-current depth level D, assign depth level D, D+1, ... D+N-1 to the N 
-parents of a (merge) commit. Recurse.
-
-In the output, the depth level is more or less the column number the 
-star '*' is in. (Although after merges of merges, there will be gaps in 
-the level numbering.)
-
-> After explaining "some magic" in a more meaningful way, perhaps
-> you'd realize that you'd want to stop saying "first child".  It
-
-OK well, the term "first parent" is already in the man page, right? 
---first-parent. So the first child of a commit is the commit C among all 
-children H, such that when all of H are traced back to a common point S, 
-the trace line from C is the one that ends being the first parent of S.
-
-> ignore all side branches and concentrate only on the trunk of a
-> tree).  And I'd probably call each child that is on the "trunk" line
-> of the most important lineage "primary child" or something like
-> that.
-
-Sort of, but remember this works recursive, there can be merges of 
-merges. Therefore the output is not a single trunk line. In other words, 
-the above commit S doesn't need to be on the trunk (or, '*' completely 
-left in the graph output).
-
-> In any case, if this is to sit next to and be friends with
-> "--topo-order", the option should be named as "--some-order".
-> The option name "--tree" (or "--blob", "--tag", or "--commit" for
-> that matter) is obviously unacceptable if the option is about
-> specifying how the commits in the "git log" output are ordered.
-
-I see it as alternative to the --graph option. I also made it jump 
-there, but maybe gotos are rejected from style point of view. In this 
-case I thought it would be clear to see it as alternative to --graph.
-
-It doesn't do justice in my opinion to call it --graph --micha-order (or 
-whatever ;-)), as it is not only about changing the order of commit 
-display. But again, I'm open to alternatives, I can make a personal 
-alias anyway :-).
-
-> Having said that, if you are omitting commits that are not on the
-> primary lineage of the history, then this is not "--anything-order"
-> option, in which case it may want to sit next to and be friends with
-
-Ah no, it doesn't omit any commits. All commits are displayed.
-
-> Without clear explanation of what the change attempts to achieve in
-> docs and tests, there is no way to review to see if the new code is
-> correct.
-
-How can I add tests for this feature? I'm also open to what kinds of 
-documentation to add, as I find it way easier to explain when you 
-actually run it to see the output it generates, than from abstract 
-paragraph of documentation text (like a manpage has). Some 
-mathematical-type of explanation like above is also not really 
-immediately enlightening, and also not necessary to use it I think.
-
-Thanks for review, Micha
-
-
+-- 
+Cheers,
+  Andrej
