@@ -2,108 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4151020248
-	for <e@80x24.org>; Mon,  4 Mar 2019 11:08:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33C1620248
+	for <e@80x24.org>; Mon,  4 Mar 2019 11:19:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726311AbfCDLIy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 06:08:54 -0500
-Received: from mout.gmx.net ([212.227.15.15]:48911 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726226AbfCDLIx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 06:08:53 -0500
-Received: from [10.49.208.72] ([95.208.59.9]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1Fe4-1hGNZC0Nh2-00tDiV; Mon, 04
- Mar 2019 12:08:42 +0100
-Date:   Mon, 4 Mar 2019 12:08:41 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] Makefile: use `git ls-files` to list header files,
- if possible
-In-Reply-To: <20190303171951.GD23811@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1903041206300.45@tvgsbejvaqbjf.bet>
-References: <pull.130.git.gitgitgadget@gmail.com> <0b5529406b9458d37f3f5cdf38baa2d6a0a70a65.1551470265.git.gitgitgadget@gmail.com> <20190301213619.GA1518@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1903022058230.45@tvgsbejvaqbjf.bet>
- <20190303171951.GD23811@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726407AbfCDLTn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 06:19:43 -0500
+Received: from mail-it1-f193.google.com ([209.85.166.193]:54483 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726360AbfCDLTm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 06:19:42 -0500
+Received: by mail-it1-f193.google.com with SMTP id w18so6707457itj.4
+        for <git@vger.kernel.org>; Mon, 04 Mar 2019 03:19:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y18prikqJXpJbS+v6J+SBKAIDOt0cvoiSS7TyVOraao=;
+        b=tR8sQLWzgQWPyrtGaNFNgLxyNNb0R9zfniH1CGvCXRLHZ3sp8icgoqODO+x1uje86E
+         NEfxP/cQaikyx4PRAmB7XmOLRyE0mBnVQSjYHIbiA12HIe4Q2RWW4CiXG1hHuVsfz7eW
+         Kwd190kOMQOVK9mFc8JZCkvsYFj43LhsLocfE+4cVaf1AH24KDtMtGoNAMlMTv7LH+8B
+         pR7VW4daqUHJjZVPxWWGrh9IpT5AdtvJyxTJxOni4KF4mJsPKC/N3PnhucIUDwveTgA3
+         Pf7/sdOX4oY44VZecHJsUuokiAP2BvS1UnkjL/OVK3AAwz3gLYocV1GKyzSKlgRdg84s
+         nNDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y18prikqJXpJbS+v6J+SBKAIDOt0cvoiSS7TyVOraao=;
+        b=SBT1ZWWK3O7L6HC7VgC2n7LwCfWTz71TdwdlwSC6U8p8y5BYeW9zxd9xAnW3ALbGHI
+         zDt2QJ5A201U5Hau7t1sbU3Fw1Si+jD1UH9g1dONDImmiV1X/gJedOlE/N4JICjmSPfA
+         fU14f2Pe0VR/GoaptAbIIL3FFWUIReW37jj6h8L3jE3ltA/+W8UIMZEl2UZE/v9/qHOz
+         9ipmEyPiuGkzxinCqXGYSgRtwG/4zACqMiD4PODUssQ0+4Z0PJ6Rkkjg6s7xa2btqpF1
+         CCCZoYI4FMKn3uSmkrTeqgYRVqWcliHH6peGmb5fqpvJcFJzXPq50UfLT+l+ydU7uEIC
+         yiqg==
+X-Gm-Message-State: APjAAAVEjGQDc/J4vuCTjTx2g52jeCgAKHZzOtgVldtno6Nks4ya4DXz
+        CqLCEMDwycMGlsOx3dlU05hdvmDK9qLdHbINfPM=
+X-Google-Smtp-Source: AHgI3IYbfJ5e62f1FORWC+381Z9A1oVME+Msi9E9wz5PbmRr8m76Ln39Mp4hFjwchfHCYhkrNQwd1yowMgx/IF25bos=
+X-Received: by 2002:a24:3b0a:: with SMTP id c10mr8780246ita.10.1551698381499;
+ Mon, 04 Mar 2019 03:19:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qbBiI6LaS6rYqOt++J2UldEMnbfL93svekyscFbfTSuXOLXzYTE
- iUdSOMhaK5bLMXBnmwLup9165bX21kEcWl1WrbIccghvvZ1lU9PLt37oXC5/0RxPJKs7e2/
- qzxirIIhkE1VCGqbtueoIm6dwrqIxDOPMT8o/nF7FTVJV/r+NPZrvAY3aiEY6WmLZRNw4sw
- YCPBv89KoP2g7bW7Jlu0w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XnUvYssrfdA=:Dw9kxfjZjcr/vjDC+LWVfM
- racmskg7olr8Y34ArcIycZLSK19coAMJHOdqpwfIh2CNQfyc3efUEsO0h5pLfBX/OcBSETUrQ
- 3iHiUtGQdEuGeUCXmRA9MjcV55zhWCVZfz0VTeCwCNfjTnNUyiWkHJRecLa3pRJP25k1vxmks
- leKcS3wvnY4tIb2Ka4L/iPilui/kT44/gnn1nU7BLHuxMuQV0DeNVrFYrquYT3mJ0DrGzWbNJ
- SoA6iKejBPQSNJ1y2Dye4rwSJGXsFdTWrJ1njBE4DYNsshiO0axLKcSisGLQOMF+0L2y/9AHa
- MCiN1wxif/B2yRSjCeGRD44bpiWFDu9tcoBbPZnZhF7ig/eMNhl7hjm9HKV0mr37DhhyQkVtA
- ouuSg/GahOqcWj6awxXdb3qg/kvVDXRpW5cR+onYNYph+PmAIqyHFHbpkxk9lyyj+gTGKWzLH
- zG1ZqgbIMtH6aMasG6Bi6uUbv2jAwRFiNtNi1eQ+APUpK3LEXS4Rl5X0JojPD3Sr6revyhHyx
- 7i32YkBXSz3+4PY5kmVLqlZOL1RI+TuMuWK8kL23CrHLbKdAng6+YCilAXJsMHrvHyg6RKBYG
- IC+yYlTuWVK1LMTR0aW2HLQ8SBiYuPwI2Glyc6ZR/d/kleI669FHiXJC9irehfbcqu8MVeaYF
- MEmDpZtfsBM36TzRk79Du0eVcrcvZFI17YA1IbWu+IAT6M/B4FhyUFr1r/y2hy5VzREAo38nN
- aC7wZFtY35mKoIgEdXbh0Ejon5gJptQCPThVEiFcn0P8jlTrh9plbASdqWMS4ebEKEllrUPQy
- RTSrADMgzLrVwjkfgagCW0SrX1YxjgjM4M1aaHIH+Um+hAVj/utuWotAiytQbbyYU4JdNAWRT
- hN6K9CVRtF3Z9E3VCAA/qhlI2uAm+oibOF+RXPtl/VJkuKl0042FFcG8a2VCtnOqHbR9CdCW8
- u2l/8JY+uOw==
+References: <20190221121943.19778-1-pclouds@gmail.com> <20190226105851.32273-1-pclouds@gmail.com>
+ <20190226105851.32273-2-pclouds@gmail.com> <20190227120859.GB10305@sigill.intra.peff.net>
+ <CAPig+cRJZBvwsptPOzx3oPSOnt6+uGLoyOr_JbUnku4kdSwdgA@mail.gmail.com> <20190227160457.GA30817@sigill.intra.peff.net>
+In-Reply-To: <20190227160457.GA30817@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 4 Mar 2019 18:19:15 +0700
+Message-ID: <CACsJy8D0o6-ihNcpmfhCfQPNo-t2i=NySp65Y8h2e3md2GvXVw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/1] worktree add: sanitize worktree names
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Konstantin Kharlamov <hi-angel@yandex.ru>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Wed, Feb 27, 2019 at 11:05 PM Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Feb 27, 2019 at 09:23:33AM -0500, Eric Sunshine wrote:
+>
+> > > If we just cared about saying "is this worktree name valid", I'd suggest
+> > > actually constructing a sample refname with the worktree name embedded
+> > > in it and feeding that to check_refname_format(). But because you want
+> > > to actually sanitize, I don't think there's an easy way to reuse it.
+> > >
+> > > So this approach is probably the best we can do, though I do still think
+> > > it's worth renaming that function (and/or putting a big warning comment
+> > > in front of it).
+> >
+> > The above arguments seem to suggest the introduction of a companion to
+> > check_refname_format() for sanitizing, perhaps named
+> > sanitize_refname_format(), in ref.[hc]. The potential difficulty with
+> > that is defining exactly what "sanitize" means. Will it be contextual?
+> > (That is, will git-worktree have differently sanitation needs than
+> > some other facility?) If so, perhaps a 'flags' argument could control
+> > how sanitization is done.
+>
+> I agree that sanitize_refname_format() would be nice, but I'm pretty
+> sure it's going to end up having to duplicate many of the rules from
+> check_refname_format(). Which is ugly if the two ever get out of sync.
+>
+> But if we could write it in a way that keeps the actual policy logic in
+> one factored-out portion, I think it would be worth doing.
 
-On Sun, 3 Mar 2019, Jeff King wrote:
+I think we could make check_refname_format() returns the bad position
+and several different error codes depending on context. Then
+sanitize_.. can just repeatedly call check_refname_format and fix up
+whatever error it reports. Performance goes straight to hell but I
+don't think that's a big deal for git-worktree, and it keeps
+check_refname_format() simple (relatively speaking).
 
-> By the way, "make hdr-check" already fails for me on master, as I do not
-> have libgcrypt installed, and it unconditionally checks sha256/gcrypt.h.
-
-Oh? I thought it'd fail only on Windows, so I have not submitted
-https://github.com/dscho/git/commit/fix-hdr-check yet:
-
--- snipsnap --
-From c13d9985284d4b452db0d95b6949e02c533db634 Mon Sep 17 00:00:00 2001
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Sat, 23 Feb 2019 20:38:40 +0100
-Subject: [PATCH] hdr-check: make it work on Windows
-
-On Windows, we define a specific set of pre-processor macros, among
-other reasons: to avoid including syslog.h (which is not available on
-Windows).
-
-The hdr-check target did not use those definitions, resulting in a
-failure to include said syslog.h.
-
-To fix that, let's let the hdr-check target make use of ALL_CFLAGS,
-which does include the pre-processor macros that would e.g. skip the
-conditional block including syslog.h.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index c5240942f2..b9f00f0ea0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2741,7 +2741,7 @@ CHK_HDRS = $(filter-out $(EXCEPT_HDRS),$(patsubst ./%,%,$(LIB_H)))
- HCO = $(patsubst %.h,%.hco,$(CHK_HDRS))
- 
- $(HCO): %.hco: %.h FORCE
--	$(QUIET_HDR)$(CC) -include git-compat-util.h -I. -o /dev/null -c -xc $<
-+	$(QUIET_HDR)$(CC) $(ALL_CFLAGS) -include git-compat-util.h -I. -o /dev/null -c -xc $<
- 
- .PHONY: hdr-check $(HCO)
- hdr-check: $(HCO)
+The second option is make check_refname_format() call some callback
+instead of returning error. This allows sanitize_ to fix up in one go
+(inside the callback), but check_refname_format could be a lot uglier,
+and verifying all refs (I think pack-refs does this?) could also be
+slowed down.
 -- 
-2.20.1.windows.1.1576.g37ac248661.dirty
-
-
+Duy
