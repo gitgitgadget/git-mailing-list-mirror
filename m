@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8593E20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 12:31:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4025320248
+	for <e@80x24.org>; Tue,  5 Mar 2019 12:31:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728240AbfCEMbW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 07:31:22 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:35170 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728063AbfCEMbW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 07:31:22 -0500
-Received: by mail-pg1-f194.google.com with SMTP id e17so5557783pgd.2
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 04:31:22 -0800 (PST)
+        id S1728241AbfCEMb1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 07:31:27 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:39837 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728063AbfCEMb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 07:31:27 -0500
+Received: by mail-pf1-f193.google.com with SMTP id i20so5591695pfo.6
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 04:31:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=F7WrnDepBAr8/LypsiG9Zw/N/HDP5UJcneiSSMfzDeE=;
-        b=OZCCgGnAd0By++zN955rsdUPgPbbjCHnsey4RqamvjpyAufOOpOYDO136gsYl3ngGW
-         FnSsVijQpyPZc5a57ioI6Mgu41WDYS5sgl4csX0W/BU0lIiFDvXQp2gZxqXzrcAWYULb
-         GtsJZILFNBTkqTOZKA/KEmOlQuYgeThU3kUlIM2DjabKLYfA9W6CQ8T1klhbfmI4yVg0
-         RzMX0X89QnAxEwwjXvc2z0LI8wD8z6eLVNehuc/XZ/utAdEZ0T8/LJulD4I8j/8XiJa6
-         TRcBD9MtJodCFamiTq48Wh5j5j4qQVyi0vvZEc8DhV2Bvr8fJM4XCtSee+cgCSagdq24
-         k5sg==
+        bh=7qPzDw1tId6zHZ/C5HYE4D3qBEIqkAOTAm9iLUqUeLU=;
+        b=If7xb9gNZAjrUSkyJKkjXqJDK1jZp/H24KAV5l4LlmLeHlU8F17ZdFzS/Zl0xfW5RC
+         qgTfaqADkcATrEQrLtkL83AWdPpho0qTndSFlRNWq+fRm923IvkaHIJWxaI0V/petbNg
+         bX9R0QFjmJqRcjgaB/WLd6fJ95XodOV3b7Y1s1q5icBi7WIvcihsIAeDxzfgb94l68eb
+         7P/r7iQ4SoL4YSYEB2qL93qCNGtfoKIvzJKRASkmtDWU+KTgBqEd7hJ6TOsYPCJ4uPTl
+         MnBdh9p5rcsh1ntQhsiGFqv77WxuE3wCvxUJn1VcERJGSERVVaQIldoMYx93m66QhI+9
+         HPvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=F7WrnDepBAr8/LypsiG9Zw/N/HDP5UJcneiSSMfzDeE=;
-        b=Fmk0gShIUrTyj5ezCCITQ5lvy+hLenMRxk+HpAXXjmNgSqRieGnvbnstELeFOb6/0z
-         yvTd28uRNsCeh/RIQSrLwt/DLHsE1c/zYMF/XHtO4y4wAjQbwo7Jxbxq7UjcI/fePqRf
-         X8w7IAjhsfyTEHzz8z4di/THbMmgSxzsPUX6FCnhCsWj71zaPSTvia68e7knwgipcU3d
-         mb5V3j2go3gpzimg1J62y5jD0IGg54Och/j+I3CYknnyz6ZKmi9wq3DVbR5Pe5TYCy/2
-         cD8IeKkxoLugV+MzK1Skg5tgjD4fktBZ0Hw324qQUghHhBNFApGYNdK+copTn3nFK4eu
-         8apQ==
-X-Gm-Message-State: APjAAAVEcUlBwdNtRzZcxhPgArG1YTzouiJUjMOQ29dTiD3SilHwX3Ji
-        TOTuuVHDEYtJpnJphCemHheg/I15
-X-Google-Smtp-Source: APXvYqxOJ2joZrAAcuBPV+hgg9wY7VjL3dZ/yrJy+pxMhtG4Sak0QgR8bNgCFqQUFeJc+UIh9oKF7w==
-X-Received: by 2002:a17:902:2be8:: with SMTP id l95mr1000002plb.270.1551789081589;
-        Tue, 05 Mar 2019 04:31:21 -0800 (PST)
+        bh=7qPzDw1tId6zHZ/C5HYE4D3qBEIqkAOTAm9iLUqUeLU=;
+        b=YWJBW143m7Y4q3W3jmoCKkdAjNgw42YdteBqTUyuPSW3tzY6WHThhDULSfr2JiqxTI
+         QhQA3nL5Z/GL2DsoZIS4TQY5xtzePuyYQ/BtUFaZ/D3lEMV3MwsyvRXBseplHhGwKEla
+         Fz+eVcGd5RQDZMrUp2EUWyqw4jjWP5y7dixNOCHshT7gbgA9Ghz8U70gydZZgi5XWDjb
+         3j629l8IrzEAHP4PNBYP/oF7swP1OuYAQJ7cxYgf7N70IEdA8vdjVKKf4a0U29n9RSCz
+         dZiyzd9Kt+2VndaZ1QbBYkHlLbdj31iijOovfFUYpKbiV6gm64XJ0mvOo4FJA/0+wZVB
+         RArA==
+X-Gm-Message-State: APjAAAVgnanvDtYPr/GsAnCcv2xu0F3MPbpOkdU8/QoEdiSgQNfYIPQB
+        HYmG+4wGPoW+OekW8/KYYWeNSgnL
+X-Google-Smtp-Source: APXvYqzAbzLyvM4CDZPHwA4sQeiLFnbM0iMF95h5ehdBn6lEK2nnssfdp+NVGRvnCh1/KXiMOarQfw==
+X-Received: by 2002:a63:6c43:: with SMTP id h64mr1183193pgc.22.1551789086224;
+        Tue, 05 Mar 2019 04:31:26 -0800 (PST)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id e5sm11826364pfd.73.2019.03.05.04.31.18
+        by smtp.gmail.com with ESMTPSA id o6sm24603063pgo.27.2019.03.05.04.31.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Mar 2019 04:31:21 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 05 Mar 2019 19:31:16 +0700
+        Tue, 05 Mar 2019 04:31:25 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 05 Mar 2019 19:31:21 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 08/20] diff-parseopt: convert -a|--text
-Date:   Tue,  5 Mar 2019 19:30:14 +0700
-Message-Id: <20190305123026.7266-9-pclouds@gmail.com>
+Subject: [PATCH 09/20] diff-parseopt: convert -R
+Date:   Tue,  5 Mar 2019 19:30:15 +0700
+Message-Id: <20190305123026.7266-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
 In-Reply-To: <20190305123026.7266-1-pclouds@gmail.com>
 References: <20190305123026.7266-1-pclouds@gmail.com>
@@ -76,29 +76,29 @@ Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 3a13ba37fd..51d22f63fa 100644
+index 51d22f63fa..689dc11684 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -5214,6 +5214,8 @@ static void prep_parse_options(struct diff_options *options)
- 			       N_("when run from subdir, exclude changes outside and show relative paths"),
- 			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
+@@ -5216,6 +5216,8 @@ static void prep_parse_options(struct diff_options *options)
  			       diff_opt_relative),
-+		OPT_BOOL('a', "text", &options->flags.text,
-+			 N_("treat all files as text")),
+ 		OPT_BOOL('a', "text", &options->flags.text,
+ 			 N_("treat all files as text")),
++		OPT_BOOL('R', NULL, &options->flags.reverse_diff,
++			 N_("swap two inputs, reverse the diff")),
  		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
  		  N_("Output to a specific file"),
  		  PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
-@@ -5246,9 +5248,7 @@ int diff_opt_parse(struct diff_options *options,
+@@ -5248,9 +5250,7 @@ int diff_opt_parse(struct diff_options *options,
  		return ac;
  
  	/* flags options */
--	if (!strcmp(arg, "-a") || !strcmp(arg, "--text"))
--		options->flags.text = 1;
--	else if (!strcmp(arg, "-R"))
-+	if (!strcmp(arg, "-R"))
- 		options->flags.reverse_diff = 1;
- 	else if (!strcmp(arg, "--follow"))
+-	if (!strcmp(arg, "-R"))
+-		options->flags.reverse_diff = 1;
+-	else if (!strcmp(arg, "--follow"))
++	if (!strcmp(arg, "--follow"))
  		options->flags.follow_renames = 1;
+ 	else if (!strcmp(arg, "--no-follow")) {
+ 		options->flags.follow_renames = 0;
 -- 
 2.21.0.rc1.337.gdf7f8d0522
 
