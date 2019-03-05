@@ -2,80 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8598F20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 22:55:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F146720248
+	for <e@80x24.org>; Tue,  5 Mar 2019 23:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728551AbfCEWzm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 17:55:42 -0500
-Received: from mout.gmx.net ([212.227.15.19]:37595 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727047AbfCEWzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 17:55:42 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LiTF6-1hX3Lm34lo-00cdTf; Tue, 05
- Mar 2019 23:55:18 +0100
-Date:   Tue, 5 Mar 2019 23:55:02 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] curl: anonymize URLs in error messages and
- warnings
-In-Reply-To: <20190305051126.GL19800@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1903051709330.41@tvgsbejvaqbjf.bet>
-References: <pull.156.git.gitgitgadget@gmail.com> <ab6f4032cb8cbbe77dbfad4660c30acd7ba688bb.1551713624.git.gitgitgadget@gmail.com> <20190305051126.GL19800@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726617AbfCEXC3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 18:02:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40088 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726217AbfCEXC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 18:02:29 -0500
+Received: (qmail 27777 invoked by uid 109); 5 Mar 2019 23:02:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 23:02:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3587 invoked by uid 111); 5 Mar 2019 23:02:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 05 Mar 2019 18:02:46 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Mar 2019 18:02:27 -0500
+Date:   Tue, 5 Mar 2019 18:02:27 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] Doc: fix misleading asciidoc formating
+Message-ID: <20190305230227.GA22901@sigill.intra.peff.net>
+References: <20190305214423.27820-1-jn.avila@free.fr>
+ <20190305223655.GA27535@sigill.intra.peff.net>
+ <xmqq4l8hszj7.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:n9t+DhWzXVs/A0OMBwtkECXOFCLR/tjvVIR0zTjq/D2rKWbOV1/
- Rv2QW1kOUqBsVhlj9KRvlYzTrsSJqIdZVQ0D1S/eEUqFKQ53E50bhHylvLsjdF4n1vLXcQP
- RNzIrvng3702zOT+dAOAOpulvD0DJ6eMOi/YSVG+KDJI4Dffdt7QjYKYz2TIpW0Dx9AOs0O
- Gx6L8w6RuObcDkfslDvhw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vSccu8pPlwY=:wY5GYdivw82Qq2xtAPdA3Q
- xLTa6TDlaX3Y7K0/KVICmURCoF04qLKH7uv5+/KAqJ5lzm+2eC4DLVPj8BwXWAw8Xa7udsUqC
- QMYAOktBsSxFMyv2NTUkxLGBbo66gBd3R8VoY5C9T1MC9ON+QJsU1ATEP00Gt/RfXwzw10zij
- PuUJPNa7gypOFWeYEbev3JlmONAuRAx6qCA3IZPHdZpQKmpNhDCS7Lp1reO8Yf22QMSN9YzdF
- 4Jt7FIhebwmw3wqmCXjc+IO6sxWKjkQvEzUfajbWdt7Yk8rtDEC6UT5xEidZYsfQLT6XQO4FL
- jOkw1ph4P4Vo80R/ZrmA0A1g+LayhtKE8OQQ5m9lN116DcYqqJODJ0fynX9d1hs5o2fbmd32m
- wkcHLqRCWDuIIF4R410++m3+l/GMJ3ce8ts6MVHpQwp80WbkCHMdjiKadpfDxXgkA/WW4Tk92
- dmyQ/AfP+6yXAC83be9V3czw6aV0ujDNOks7KW1enUIKVM9RfOp+Gf02WyP+G9frD9WIdOnPQ
- rtXHHeLcl75JYqAOoDqs0a3wqd5fBkpwjgGDqzn+HwRum/LiSrboMTLimKP/bQM9aEID8sm91
- m7JfSraefi+lPdz+Y885FiD+svqZqC4bUT7K8qP2/yzVpaCjjnVc8hVVp95XkRFcbkueOKeV8
- UOgtKGLBjXI0W3IvXXQ1ENCqkA4t7IorsIXkm4ZWcRggUKoq1/TmYwDSPaeS4RO7b0fmn4uav
- l9wCXNEu+km48jN0PkHSdQIrpYgMPsqiUo+pxvZRJVA3YASatd0JHIuGH5vidVwTpWg/iwpd9
- o5K49y3q/gykfJTDLE6rRoYu9LdiQ9fenrcDlNA6BiXDjdjhXef99USEpIUYQSyT+IDCM3vE3
- MiuFtyVVISM5IkP0WuwFyd9Mac0RYZ74NFedWbVtPo4sdTQbtvx5nCkA9zUuhH/0/kb68x3IX
- REUtdaCjSuw==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4l8hszj7.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Wed, Mar 06, 2019 at 07:54:20AM +0900, Junio C Hamano wrote:
 
-On Tue, 5 Mar 2019, Jeff King wrote:
-
-> On Mon, Mar 04, 2019 at 07:33:46AM -0800, Johannes Schindelin via GitGitGadget wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> > @@ -442,17 +443,23 @@ static struct discovery *discover_refs(const char *service, int for_push)
-> >  		break;
-> >  	case HTTP_MISSING_TARGET:
-> >  		show_http_message(&type, &charset, &buffer);
-> > -		die("repository '%s' not found", url.buf);
-> > +		die("repository '%s' not found",
-> > +		    transport_anonymize_url(url.buf));
+> > Did you notice this when building locally, or on the asciidoctor-built
+> > pages at git-scm.com?
 > 
-> Sort of orthogonal to your patch, but these could probably stand to be
-> marked for translation (I'm happy for that to come on top later,
-> though).
+> Does git-scm.com even have this file rendered?  I do not think we
+> glob for technical/*.txt in any of our Makefiles; instead we have a
+> list of ready-to-be-consumed TECH_DOCS listed explicitly.
 
-Good idea!
+It is rendered, at https://git-scm.com/docs/directory-rename-detection.
 
-Ciao,
-Dscho
+However, that explains why doc-diff did not find anything; it only looks
+at the results of "make install-man", which does not include any
+technical docs (let alone this one that is not mentioned in
+$(TECH_DOCS).
+
+-Peff
