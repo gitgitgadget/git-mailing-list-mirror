@@ -2,86 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 399CF20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 18:42:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB8F820248
+	for <e@80x24.org>; Tue,  5 Mar 2019 18:54:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726769AbfCESm6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 13:42:58 -0500
-Received: from smtp-33.italiaonline.it ([213.209.10.33]:34625 "EHLO libero.it"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726573AbfCESm6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 13:42:58 -0500
-Received: from DESKTOP-E4U7JCE ([5.168.31.165])
-        by smtp-33.iol.local with ESMTPA
-        id 1F1ihVvgTlgOv1F1ihW0rq; Tue, 05 Mar 2019 19:42:55 +0100
-x-libjamoibt: 1601
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
-        t=1551811375; bh=o7oWYhMfgm0PFtER8lGkQr/eBXICNAzLgdCOpTGdfcQ=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References;
-        b=rGYX7ep9bOB5IGMWu+g7AMTEJOUTVXqM1bFr76PXzLom1Faqh8zaUn55s6HDxGRLu
-         63b82cgSibR5EaKXya7yM6B6C4oMJxWoKbOTm7tpugW/H5ZMQKqFcXM2rerZEqtJSP
-         Y7EEzGgyUG5pOuhNiLxhZEDOO2mw8Le1yVPRTH3XghCthH2FzSvQw+IJEsi/wYCDcA
-         k4PcfbSwXmm+3X8y3pmLq1V3qFdA5NFxHuRlGknpE656U0rmeYb2sLe216nvM24MZt
-         k61V90tVrtCf+2IHrF4Nl6uQxusMJ2MSr8tPGq82Hz1Sgx+tqh3MYxd0J0/Ex4yN/H
-         0+8MhUZJIVwdw==
-X-CNFS-Analysis: v=2.3 cv=MoqDFFSe c=1 sm=1 tr=0
- a=P9yetr8jBxga4aTyYjpHnA==:117 a=P9yetr8jBxga4aTyYjpHnA==:17
- a=IkcTkHD0fZMA:10 a=Uk8YgelpAKDIxx3_VVgA:9 a=QEXdDO2ut3YA:10
-Message-ID: <1551811374.1607.3.camel@libero.it>
-Subject: Re: Can't build first git commit
-From:   Fabio Aiuto <polinice83@libero.it>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Date:   Tue, 05 Mar 2019 19:42:54 +0100
-In-Reply-To: <20190304204007.GA32691@sigill.intra.peff.net>
-References: <1551729517.4092.1.camel@libero.it>
-         <20190304204007.GA32691@sigill.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfJ46M/aT+Td24No/oVzCYe9YkjXOzmv+zVirojn1n7zjDH5K47gAUSGfB5si8gFicnuVsJBlIywCz2FY6BxOp6hwh/2ND6Oeat510OWKbj48JSne+2Xx
- k4Iz/vi7CzdQj/hG0uJqU2TJ1DxnP09cCnkiopCrSn5HxiqYUd0fexOQjfeuAtUeX+2yv8RcisgIdw==
+        id S1726408AbfCESy1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 13:54:27 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:32774 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726182AbfCESy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 13:54:26 -0500
+Received: by mail-pg1-f193.google.com with SMTP id h11so6255434pgl.0
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 10:54:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=wp/oQrfKhi8PoF3sH3AlG3UuCGT4CKPPwhM3rb/MErQ=;
+        b=TU6AXrGBllY0LxKxT5CuHFcmFJI0UT2dGJWp1zi2E3HWWCbUnMqQzObF7cRHcyo9nX
+         OOxbktHhgMuPxYIEB3X4Un3xIpm2MIadkxYc48mXP0vt8Ku2YyR7JYG0bBY/xQQZGFMr
+         x06IacNi7mJkrfkTlz0RIKlX5BHxRGOAG2TGUB2uHfCpH+k3IF6EibJcETaJY1WbkxSb
+         Gl7ABfXytKUye0F0jZZecUwsEErYJNHgx3WYRu4gfonlz9okp3UwdnUMr9H0AhVypHGm
+         8XIiyk1bdNPZMddmze+Z9Wa34V9ixXKjQaYXJlCIG9gvy6y4mC9/y4ImL+V8NaQFnbtE
+         JuVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=wp/oQrfKhi8PoF3sH3AlG3UuCGT4CKPPwhM3rb/MErQ=;
+        b=MjH03TeVcW9pZ5jGwk/KERrrWzmaz8Sy3jDbTlnvfgOk2Sq9HyU4IXvLnLYDdVZ/PR
+         kdKInq4mcESGcJ/LHNWbD7DuBAYj07fYYJQn0FgqWHDJtbp5o2yeCF3K0Zodpi3Fkn3I
+         TJhv5J1t7p6EI9ChnEejWYueBMVSDy2WgbhvDi5dSIij4dc+j3SfV46eElKR0gF9YiTi
+         0Y9cszsVkwANIifcdsAYgnxBFR50ZRKzvBdtPFnrrUJaiNzQxG/upKSzlQLHeI2LmKH5
+         62Gnf8EwKNxRPLmDv1hhyAQvR/zV+erR5QD7Qu/S53ywUAHlVEsaTd/3cvb/ADkj256C
+         tqMg==
+X-Gm-Message-State: APjAAAVvvDSGKGjoIIz/dPh1w7kjOK21FfdN/a/3F0A7ShRkLQTnuAWR
+        /2v7f6shOXjQ6aAK+NsDJindBu5P
+X-Google-Smtp-Source: APXvYqzOekZljCgYGsCgZJ+trrF6nDVFqzvcCB9fR0qpDVxXogasGRwXJbSIWBt6BX8vMNCZ7HTcwQ==
+X-Received: by 2002:a63:cc05:: with SMTP id x5mr2663493pgf.31.1551812065482;
+        Tue, 05 Mar 2019 10:54:25 -0800 (PST)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id z18sm27067311pfl.164.2019.03.05.10.54.24
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Mar 2019 10:54:24 -0800 (PST)
+Date:   Tue, 5 Mar 2019 10:54:23 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] git-reset.txt: clarify documentation
+Message-ID: <20190305185423.GA22260@dev-l>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+git-reset.txt contained a missing "a" and "wrt". Fix the missing "a" for
+correctness and replace "wrt" with "with respect to" so that the
+documentation is not so cryptic.
 
-Thank you Jeff I'll have news within few days!!!
-Il giorno lun, 04/03/2019 alle 15.40 -0500, Jeff King ha scritto:
-> On Mon, Mar 04, 2019 at 08:58:37PM +0100, Fabio Aiuto wrote:
-> 
-> > I'm trying to build first commit of git made by Linus. I mean the
-> > one
-> > named e83c5163316f89bfbde7d9ab23... (I think this is enough).
-> > But at building stage i have the following error:
-> > 
-> > make all 
-> > gcc -g -o update-cache update-cache.o read-cache.o -lssl
-> > /usr/bin/ld: update-cache.o: undefined reference to symbol
-> > 'SHA1_Update@@OPENSSL_1_1_0'
-> 
-> The sha1 routines are in libcrypto. See 3be4b61aa4 (Link with
-> -lcrypto
-> instead of -lssl when using openssl libraries., 2005-05-10). I also
-> needed -lz. See 9426167765 (Add "-lz" to link line to get in zlib.,
-> 2005-04-08).
-> 
-> You can patch the Makefile, or just override it like:
-> 
->   make LIBS='-lcrypto -lz'
-> 
-> which builds for me on current Debian unstable. I don't think you can
-> actually fetch with that old build, but I used periodically check
-> that
-> Git v1.0 can fetch happily from GitHub. I haven't in a while, so let
-> me
-> know if you try it and it doesn't work. ;)
-> 
-> -Peff
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Documentation/git-reset.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 132f8e55f6..dbf4e567a2 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -428,11 +428,11 @@ working index HEAD target         working index HEAD
+ 
+ `reset --merge` is meant to be used when resetting out of a conflicted
+ merge. Any mergy operation guarantees that the working tree file that is
+-involved in the merge does not have local change wrt the index before
+-it starts, and that it writes the result out to the working tree. So if
+-we see some difference between the index and the target and also
+-between the index and the working tree, then it means that we are not
+-resetting out from a state that a mergy operation left after failing
++involved in the merge does not have a local change with respect to the
++index before it starts, and that it writes the result out to the working
++tree. So if we see some difference between the index and the target and
++also between the index and the working tree, then it means that we are
++not resetting out from a state that a mergy operation left after failing
+ with a conflict. That is why we disallow `--merge` option in this case.
+ 
+ `reset --keep` is meant to be used when removing some of the last
+-- 
+2.21.0.260.g8f7229c82f
+
