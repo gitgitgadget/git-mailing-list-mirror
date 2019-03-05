@@ -2,97 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	GAPPY_SUBJECT,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34DE120248
-	for <e@80x24.org>; Tue,  5 Mar 2019 14:05:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E73A20248
+	for <e@80x24.org>; Tue,  5 Mar 2019 14:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728048AbfCEOFF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 09:05:05 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:60570 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726250AbfCEOFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 09:05:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=LeOJrUtcmcriWVY+UeqNuz5k+tyPliCXGU/vH0loTeE=; b=zei+CiV/6Ze2BpAUWFbyncAnX
-        v5WZnhLLx4uoY3X7z189vq+1wYsMeuM8Tv0sTisi6g2Mk4ryeIn3CTTfu1vvfuCou2zr+QxJ2SqW8
-        F6WmqCeA0e9r5UAHbykPJ0zbispvaPqz0CVWY5Gc/o/FFs8YlTO8HenZ8Q91gw59c+1nfLUfqkUWu
-        5x/f/wPNr0c0CKSRmskx/t4O56BB3o7Z+HioPUqRintqXm2W5N3QQk3CyW8hNrMRz+avM0RDlhDao
-        pnsrAKB13UPzjhHbxxi1vjotMpcg7K8PktWUq07j4hxgc6AVyA3axA33u2g/KAK+sH7sSkp6E0ns/
-        +voTbOI1A==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:57942 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1h1Agl-00H7W4-AE; Tue, 05 Mar 2019 09:05:02 -0500
-Date:   Tue, 5 Mar 2019 09:04:56 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] doc/rebase: extend examples to show continuing
- branches
-In-Reply-To: <xmqqr2blto3k.fsf@gitster-ct.c.googlers.com>
-Message-ID: <alpine.LFD.2.21.1903050904350.30374@localhost.localdomain>
-References: <alpine.LFD.2.21.1903050545460.24324@localhost.localdomain> <xmqqr2blto3k.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S1728351AbfCEOWY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 09:22:24 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38286 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728347AbfCEOWY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 09:22:24 -0500
+Received: by mail-pg1-f195.google.com with SMTP id m2so5738023pgl.5
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 06:22:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=HFqtM8POoGJSgumLIYRLnVaiMH2Km46lwRaFyTIFYqs=;
+        b=e/6Lf2IXYbkwHosq4w5KOo3mTOqRn1spJoQ67n65R9cI5RTinuGDXd19DS9nZQ96y8
+         GmV7OH6NcMW332E9XH0PrMQjRbxyVL1j/lJedAaq31kvOjNrPJvgVN8oCTqelXyBoybC
+         u4KJLYTR2nFazoFTGxUS3c24X2CNNTbyponqmroWiu2yTqi9BCKxnA+kS5UnsJGse4y+
+         bt2a4Ksu/zTmfnD1Tse3v25ZCZpupi1v1xLM02ZGzZUwDfPhucs/rtd0AonVkgSqj6Mx
+         1FWomocGfqB1/oZVb96MI9nhSXY8b9Y4re7oYXi068U9KQAFje9mPcMgmE85SDYgLp5/
+         RBRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=HFqtM8POoGJSgumLIYRLnVaiMH2Km46lwRaFyTIFYqs=;
+        b=uTksGz80ikT+FOaUebjPfp3Dyt8IChd4WyFtOUCLakEFZzYzj0BmH0/sR9utDenvXM
+         xMik8TF+oBtogJYxn+qxAGRai03OOPAwtZorUBNw/JgAWCSKX0Lg/eq5Wb2nzFg4SVgl
+         uH4WMTigzNKmjxLLvHr68rfNVrA/0Bc5/1ozt4jmcryo7zIDPNg73pFNcxWMOfVJvVVQ
+         23TzMHw0N9rhoxn3z9qKsphPTmcdpRA363kPcL24P8nTb7lPfQ6g3pBhL6/Sqr10A8Oz
+         Xqs39vzyyEMB/kRgxiOfhLp7QyG0bBNdywJ+cCns678saSRQ2diRUiu7tlLbJnwjaNxp
+         MneQ==
+X-Gm-Message-State: APjAAAVzoZVAuS9fsRh2rvRrhTcpRn9r93b6RimaWmrTEUVAa0vzWi+X
+        6gmg5HWRXJnest36t5xno4k=
+X-Google-Smtp-Source: APXvYqwG6Bj3fqiEL1FkuVroDPcThiA6BQfaBX0DmWWtCCl3y+bEmfpexg1NkyU5YRPzHLxyfruOhQ==
+X-Received: by 2002:aa7:8497:: with SMTP id u23mr2088457pfn.253.1551795743232;
+        Tue, 05 Mar 2019 06:22:23 -0800 (PST)
+Received: from ar135.iitr.ernet.in ([103.37.201.80])
+        by smtp.gmail.com with ESMTPSA id k10sm16499599pgp.91.2019.03.05.06.22.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Mar 2019 06:22:22 -0800 (PST)
+From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+To:     sunshine@sunshineco.com
+Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, rohit.ashiwal265@gmail.com,
+        t.gummerer@gmail.com
+Subject: Re: [GSoC][PATCH v2 3/3] t3600: use helpers to replace test -d/f/e/s <path>
+Date:   Tue,  5 Mar 2019 19:51:49 +0530
+Message-Id: <20190305142149.13671-1-rohit.ashiwal265@gmail.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <CAPig+cR3b=jk4W=9SF4XJQyqAfFHiG8MduypD75RL1=T_qY0Hg@mail.gmail.com>
+References: <CAPig+cR3b=jk4W=9SF4XJQyqAfFHiG8MduypD75RL1=T_qY0Hg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 5 Mar 2019, Junio C Hamano wrote:
+Eric
 
-> "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
->
-> > Currently, all of the examples for "man git-rebase" show rebasing from
-> > a branch that has had no further development, which might mislead
-> > readers into thinking that that is a necessary condition for rebasing,
-> > so tweak the examples to show further development on such a branch to
-> > clarify that.
->
-> We state the status-quo in present tense to start problem
-> description, so "Currently" is a noise word you can and should omit.
->
-> As I already said, at least one example that rebases a branch that
-> was forked from the midpoint of another branch, so the problem
-> description is already false.  If we apply this patch, do we lose
-> all examples that rebase a branch that purely builds on top of the
-> tip of another branch?  That would also mislead readers into
-> thinking that you need to advance the base branch before you can
-> rebase the forked branch ;-).
+I was asking if this patch is good enough to be added to the existing code? Does this patch look good?
 
-  i stand corrected. carry on. :-)
 
-rday
+Regards
+Rohit
 
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
