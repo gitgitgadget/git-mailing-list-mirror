@@ -2,77 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 245F820248
-	for <e@80x24.org>; Tue,  5 Mar 2019 22:54:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8598F20248
+	for <e@80x24.org>; Tue,  5 Mar 2019 22:55:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728696AbfCEWyY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 17:54:24 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41706 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726453AbfCEWyY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 17:54:24 -0500
-Received: by mail-wr1-f68.google.com with SMTP id n2so11265521wrw.8
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 14:54:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=aj0AvRdqrZjrDWpnRX0bpcSvXqnUd9nJ9Czyj5qmmjs=;
-        b=rJtgBwZTTOnlWb33afUBLEQYp5e6ku7bmNU2QDjB7W355+uhDSiEE7USdEvvxV1dgl
-         rkXzNWvpCSFXf2ok+L9gGgIpH9HemCbjNNFRumRUpkPQlxYriPW/1JXw7vui6PiNkaRi
-         5KGbqXUNBtaxmeDcvaIL5VF0Rk9hPHjr0E+Mj6/UNrT53PABhzMHtd4uiO2qlzMzgTTk
-         +OoeQuidFzkLvOV0xHAf6ntsgWqDalynWacQ9ivJ8t7W496PzT3f3rKEuqyxQgnIoB5p
-         rSmNYU1Yn72p2OO2fy2TaNseNCiGUfaxZr8BOou2CoM2XH7qsEuf9h38Od8N2SeR/Flg
-         OSKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=aj0AvRdqrZjrDWpnRX0bpcSvXqnUd9nJ9Czyj5qmmjs=;
-        b=HOhkWqED4YDJUskmhwum77+X05stgQPburn5/8CDaI2FyuUK2YgsdFVS2hZuBCcwIo
-         hfOOix/bzAADujoZmyHRl/ANp2skLki0i9Cc5e+k3JoCducXUP3QxfUwu4/7FjRidjmS
-         FviYX/xVYJYGV0dyOa2Hsu3fKiMNtbgtAnmQao8Gn23KDZ67oibnKsVCdmIw7wlALiZn
-         9obrwRbMZF5rU2fMN2DdWyEChdl2rK+uY4vL7VKFzU+gNMzm6Mh54bh9yHCH8YotRwUj
-         6/SR4o6Mu+Fpgv7ERXxTBAyNiL/BaX00Ra3Qoq7upR30Rp5OrOXULxyGNUpYNJgoOUXW
-         NfXg==
-X-Gm-Message-State: APjAAAXg4XwKJtjwKokXEwK+vx1b50LeGb1KN/rrBXJZKIrl2CN1DDnH
-        JV0R7qnS5zTasS5OHnkjyoQ=
-X-Google-Smtp-Source: APXvYqxyjGpYwVtxjRE7RByd6O/V8zVxqaESRy140qMOyl0hu/mRcJd32k2pbRzyNTu7nRfbWpsKrQ==
-X-Received: by 2002:a5d:4a05:: with SMTP id m5mr829770wrq.46.1551826461735;
-        Tue, 05 Mar 2019 14:54:21 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d16sm9786190wrx.29.2019.03.05.14.54.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Mar 2019 14:54:21 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1728551AbfCEWzm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 17:55:42 -0500
+Received: from mout.gmx.net ([212.227.15.19]:37595 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727047AbfCEWzm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 17:55:42 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LiTF6-1hX3Lm34lo-00cdTf; Tue, 05
+ Mar 2019 23:55:18 +0100
+Date:   Tue, 5 Mar 2019 23:55:02 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Doc: fix misleading asciidoc formating
-References: <20190305214423.27820-1-jn.avila@free.fr>
-        <20190305223655.GA27535@sigill.intra.peff.net>
-Date:   Wed, 06 Mar 2019 07:54:20 +0900
-In-Reply-To: <20190305223655.GA27535@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 5 Mar 2019 17:36:55 -0500")
-Message-ID: <xmqq4l8hszj7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] curl: anonymize URLs in error messages and
+ warnings
+In-Reply-To: <20190305051126.GL19800@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1903051709330.41@tvgsbejvaqbjf.bet>
+References: <pull.156.git.gitgitgadget@gmail.com> <ab6f4032cb8cbbe77dbfad4660c30acd7ba688bb.1551713624.git.gitgitgadget@gmail.com> <20190305051126.GL19800@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:n9t+DhWzXVs/A0OMBwtkECXOFCLR/tjvVIR0zTjq/D2rKWbOV1/
+ Rv2QW1kOUqBsVhlj9KRvlYzTrsSJqIdZVQ0D1S/eEUqFKQ53E50bhHylvLsjdF4n1vLXcQP
+ RNzIrvng3702zOT+dAOAOpulvD0DJ6eMOi/YSVG+KDJI4Dffdt7QjYKYz2TIpW0Dx9AOs0O
+ Gx6L8w6RuObcDkfslDvhw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vSccu8pPlwY=:wY5GYdivw82Qq2xtAPdA3Q
+ xLTa6TDlaX3Y7K0/KVICmURCoF04qLKH7uv5+/KAqJ5lzm+2eC4DLVPj8BwXWAw8Xa7udsUqC
+ QMYAOktBsSxFMyv2NTUkxLGBbo66gBd3R8VoY5C9T1MC9ON+QJsU1ATEP00Gt/RfXwzw10zij
+ PuUJPNa7gypOFWeYEbev3JlmONAuRAx6qCA3IZPHdZpQKmpNhDCS7Lp1reO8Yf22QMSN9YzdF
+ 4Jt7FIhebwmw3wqmCXjc+IO6sxWKjkQvEzUfajbWdt7Yk8rtDEC6UT5xEidZYsfQLT6XQO4FL
+ jOkw1ph4P4Vo80R/ZrmA0A1g+LayhtKE8OQQ5m9lN116DcYqqJODJ0fynX9d1hs5o2fbmd32m
+ wkcHLqRCWDuIIF4R410++m3+l/GMJ3ce8ts6MVHpQwp80WbkCHMdjiKadpfDxXgkA/WW4Tk92
+ dmyQ/AfP+6yXAC83be9V3czw6aV0ujDNOks7KW1enUIKVM9RfOp+Gf02WyP+G9frD9WIdOnPQ
+ rtXHHeLcl75JYqAOoDqs0a3wqd5fBkpwjgGDqzn+HwRum/LiSrboMTLimKP/bQM9aEID8sm91
+ m7JfSraefi+lPdz+Y885FiD+svqZqC4bUT7K8qP2/yzVpaCjjnVc8hVVp95XkRFcbkueOKeV8
+ UOgtKGLBjXI0W3IvXXQ1ENCqkA4t7IorsIXkm4ZWcRggUKoq1/TmYwDSPaeS4RO7b0fmn4uav
+ l9wCXNEu+km48jN0PkHSdQIrpYgMPsqiUo+pxvZRJVA3YASatd0JHIuGH5vidVwTpWg/iwpd9
+ o5K49y3q/gykfJTDLE6rRoYu9LdiQ9fenrcDlNA6BiXDjdjhXef99USEpIUYQSyT+IDCM3vE3
+ MiuFtyVVISM5IkP0WuwFyd9Mac0RYZ74NFedWbVtPo4sdTQbtvx5nCkA9zUuhH/0/kb68x3IX
+ REUtdaCjSuw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi Peff,
 
-> Did you notice this when building locally, or on the asciidoctor-built
-> pages at git-scm.com?
+On Tue, 5 Mar 2019, Jeff King wrote:
 
-Does git-scm.com even have this file rendered?  I do not think we
-glob for technical/*.txt in any of our Makefiles; instead we have a
-list of ready-to-be-consumed TECH_DOCS listed explicitly.
+> On Mon, Mar 04, 2019 at 07:33:46AM -0800, Johannes Schindelin via GitGitGadget wrote:
+> 
+> > @@ -442,17 +443,23 @@ static struct discovery *discover_refs(const char *service, int for_push)
+> >  		break;
+> >  	case HTTP_MISSING_TARGET:
+> >  		show_http_message(&type, &charset, &buffer);
+> > -		die("repository '%s' not found", url.buf);
+> > +		die("repository '%s' not found",
+> > +		    transport_anonymize_url(url.buf));
+> 
+> Sort of orthogonal to your patch, but these could probably stand to be
+> marked for translation (I'm happy for that to come on top later,
+> though).
+
+Good idea!
+
+Ciao,
+Dscho
