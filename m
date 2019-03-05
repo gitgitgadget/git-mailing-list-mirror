@@ -7,87 +7,73 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0C0F20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 23:39:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0584B20248
+	for <e@80x24.org>; Tue,  5 Mar 2019 23:43:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728046AbfCEXjB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 18:39:01 -0500
-Received: from mail-pg1-f180.google.com ([209.85.215.180]:42290 "EHLO
-        mail-pg1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726256AbfCEXjB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 18:39:01 -0500
-Received: by mail-pg1-f180.google.com with SMTP id b2so6752188pgl.9
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 15:39:01 -0800 (PST)
+        id S1728336AbfCEXnA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 18:43:00 -0500
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:40527 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727286AbfCEXnA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 18:43:00 -0500
+Received: by mail-ed1-f48.google.com with SMTP id 10so8753469eds.7
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 15:42:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=p8Cww9I6kKZT6qDWJzeVfQQ9ZincwBm56lWg7K0z09A=;
-        b=lSixBtQ8/aLv4KRODJq/Tooc0vlVXOq7bnr/D6/K7UccWDaOeI4ARLOKyHjFDdnKkl
-         hvYcP5pTZs9aip47bhWQBZg5+/USbhsZRS4QXGnrE/ojMKz3DfNT1Xkql9Mbgv4G3jLu
-         T7oVSv/BfiHTOnkoG8a7Opl1AZ2jwQxSKzV186nlMGSqShc258HjhXiK+eImbBI2wT2i
-         nET0URFQ1LLBE0npLyTOIPc7cAZCyvHXphNC2y25O7jvI/SHkOnWfyBy/U3vG0Q0XyE9
-         NW8/gCh+kbp9sPFbCr/cxdVi9NFqkdpby5+bNOsOd39IB4rhtCK/UnxiU1TQpdSZteXN
-         iuhw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4UubowK0QTbsSWOPiLxA+tGbR0PpQ6KhbFeKXZUoCps=;
+        b=n8M2xS4hP0EaNPCki9lbiE+jywFkkNhj2nkhBPYF5oN7Y9GuEJPNoJGPArRN2C9frB
+         lsSxMdJCOpj6htkh+rnTl0bETWct7zHCDFOsbnsZH/vQg/0DTSqGdT0F8GvEBacfSII2
+         GGE0qyxi2B5mg1FvEdtDKBXefuJ6cuB70LHS1MaJ7dwDlo/PGcPnQ91zuqFQh1nTkfu6
+         uFegbY6gRkxPI0Qlbz8N9OegTlpu0yM1RGDSiqrl/xvGpPPTCoqgwlFoRwS8FXtuZC5n
+         u+MHTqlAdeI2ujPxrNZuOi8f2Q41zUuLikyfdpEJFl/Ejrikz0Z0D6RCOVhRsWMJaWT6
+         FJhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=p8Cww9I6kKZT6qDWJzeVfQQ9ZincwBm56lWg7K0z09A=;
-        b=DFJeXWlgri5G2EXar5pvmXcVKel4/drukBW1carrVybsuq3b4Ohn9wooJg5PgONM2b
-         jBbJydyBuhBjurNU6oLCToqFyC40tw8JvsCv9Y48TCfpy1rUJzl9r4bcnHntoQUWbM2/
-         LkUl4qHBhvB0/8khwS1p9g9/Wj/vY3ecsvPQX3noPh78Q2M63/MzY3gH0kWjh3KrgeVh
-         TKmGwkA5NUsCv85/y6lsgMZaTUkxkn9nlhfXrbyUtFMSDe9pbv5GddsC0lOIwcJD2Myt
-         NAtXQu2K/Zzd6pZfzNmPV/VJNCmF/T/WYfyla5EmusbmK/S6YnMTWMt0iG7+s/fIJpxf
-         iHEg==
-X-Gm-Message-State: APjAAAWkkR6i/8o5BqO0MywvP226iBdNDHjHv6F5Lr9a3BgmZiHwDRhR
-        KBAwYyJjgrhYozWtAvz9Qcs=
-X-Google-Smtp-Source: APXvYqyDbjHXgwupsvObcc/VEmmUq/72EF6Ua0Ea615nTej+kGWINZBGRpLiF6GHPf28S+2aFt76JA==
-X-Received: by 2002:a63:d112:: with SMTP id k18mr3694055pgg.426.1551829140643;
-        Tue, 05 Mar 2019 15:39:00 -0800 (PST)
-Received: from ar135.iitr.ernet.in ([103.37.201.80])
-        by smtp.gmail.com with ESMTPSA id a19sm154452pfo.52.2019.03.05.15.38.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Mar 2019 15:38:59 -0800 (PST)
-From:   Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-To:     sunshine@sunshineco.com
-Cc:     Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, rohit.ashiwal265@gmail.com,
-        t.gummerer@gmail.com
-Subject: Re: 
-Date:   Wed,  6 Mar 2019 05:08:25 +0530
-Message-Id: <20190305233825.5327-1-rohit.ashiwal265@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <CAPig+cT_YT-1=ymAYiTpjgRQEe8906Y6yyBU=XuP_wbw+ixxiQ@mail.gmail.com>
-References: <CAPig+cT_YT-1=ymAYiTpjgRQEe8906Y6yyBU=XuP_wbw+ixxiQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4UubowK0QTbsSWOPiLxA+tGbR0PpQ6KhbFeKXZUoCps=;
+        b=LEtT5xdDYCH51Bp2cB0jFc9Aq1kzdEsMmiPsR9k7nAUDmRHGY4GToSz9tGOemngpiN
+         nyQzxagNaQt71YXrAHFSeq0gbikshbkSgjehnV+33tynA07x7I4nY7u7gE4ax8V+DMRP
+         0+i8DEkwncSny5Tb0sMPH/7WJq9Z+M0uOn+6hy7avcG60Bs47dXg636UdakPNNeV9egs
+         fZElRS6jyLFCiaX2+YmI8iM4ItgXtVFihKlNy7OExuuvF7V+BrPpjqav4jbhLM4CWHXd
+         ZPG+SCjlF6im+jt4C7oB0onAkMVqr/otk6oYuxdSMI4hRR6UGJMvYeb8+7rLRU7vYI4K
+         VjiQ==
+X-Gm-Message-State: APjAAAX2R9kKw697c2xc1nVJnNoxjvviIZNyl7/lUqtubXV++mEaLLff
+        K5/b0Xy1khHi4UFL5YIDu3allZ6eRL4YcXdkuIo=
+X-Google-Smtp-Source: APXvYqxBdN2JDyZukzSr+IlPGpSvUNeqoe9MloWox3NnbzIuMsSF/ALWc3oOXzSKfWchWWZYg6LMvszT92OJRsaau88=
+X-Received: by 2002:a50:94ea:: with SMTP id t39mr21558705eda.262.1551829378904;
+ Tue, 05 Mar 2019 15:42:58 -0800 (PST)
+MIME-Version: 1.0
+References: <62307e7b.399f4.169479a611e.Coremail.wuzhouhui14@mails.ucas.ac.cn> <xmqq8sxvvzvg.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8sxvvzvg.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Date:   Tue, 5 Mar 2019 23:42:22 +0000
+Message-ID: <CACUQV5_VCYdBoi=Vz97KVSWipzf+tbi2wrkY1U2h4i78FxVY-w@mail.gmail.com>
+Subject: Re: Git log print commits between a revision range (inclusive)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Eric
+As Junio mentioned, "A..B" means all commits reachable from B except those
+reachable from A. Understanding this is just a way to say "B --not A" is
+important to know you can take advantage of:
 
-On Tue, 5 Mar 2019 09:57:40 -0500 Eric Sunshine <sunshine@sunshineco.com> wrote:
-> This patch, due to its length and repetitive nature, falls under the
-> category of being tedious to review, which makes it all the more
-> likely that a reviewer will overlook a problem.
+`--boundary`
+    Output excluded boundary commits. Boundary commits are prefixed with -.
 
-Yes, I clearly understand that this patch has become too big to review.
-It will require time to carefully review and reviewers are doing their
-best to maintain the utmost quality of code.
+In other words, git log --boundary <older hash>..<newer hash> should give y=
+ou
+exactly what you asked with the small caveat it marks excluded commits
+differently.
 
-> And, it's not always obvious at a glance that a change is correct. For
-> instance, taking a look at the final patch band:
->
->     - ! test -d submod &&
->     - ! test -d submod/subsubmod/.git &&
->     + test_path_is_missing submod &&
->     + test_path_is_missing submod/subsubmod/.git &&
 
-Duy actually confirms that this transformation is correct in this[1] email.
-(I know that, it was given as an example, but I'll leave the link anyway).
-
-Thanks
-Rohit
-
-[1]: https://public-inbox.org/git/CACsJy8BYeLvB7BSM_Jt4vwfGsEBuhaCZfzGPOHe=B=7cvnRwrg@mail.gmail.com/
-
+Cheers,
+Rafael Ascens=C3=A3o
