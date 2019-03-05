@@ -2,99 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 969EC20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 12:05:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA3F420248
+	for <e@80x24.org>; Tue,  5 Mar 2019 12:08:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727653AbfCEMF1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 07:05:27 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:35200 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbfCEMF1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 07:05:27 -0500
-Received: by mail-io1-f65.google.com with SMTP id x4so6836763ion.2
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 04:05:27 -0800 (PST)
+        id S1728014AbfCEMIq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 07:08:46 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:33502 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726150AbfCEMIp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 07:08:45 -0500
+Received: by mail-pf1-f195.google.com with SMTP id i19so5553682pfd.0
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 04:08:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=g2NJSI95GroSMyP8qIXbhw/GTO6O+7LS5180oej1P/U=;
-        b=K3ov+Grn9ey74TtcqdHSr7JdIuSIJQlZySYOiaTMs35l19g/r9ySh0AXIGkFgB6Zcl
-         7K983xGosgpPLA1io6lC4vpjs5fNiBYdwb9Y2WVxSgo00YXZNxWqG7TGSN/Qg133+Wp+
-         0l3cajx0Tx4OnIQv1EH7S9ypoVD57qhHVZFDzwP9P5rqJt+CM47p+j7Dy1TQPr442jX7
-         F3GTtCyUlcIe8K2Vn/kqEGbc8Ft1KdCxrtqQUrrk7lNfKFB8kgb6cdgOvF4E0kDDVWsa
-         FARj+pT79nsfiEGfoWP4gjdhltFUVozPPi+vw9+YSSi+65jXQp15NvTpmSjPvCK8QcTS
-         MMtA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2b9YFg5yiyQ1XlJSS+DZhHv//2KgsWXzUKxd8nBoOGA=;
+        b=WYpS5et3lSmS6hrvcx+H1kKwP6H86q2Bvt+8GbgEHeFlkJCKdBLJrR/upi5cD353K5
+         fe2NgWExOkAgrevF0EWJvuL1d+PXeF6py7+8ZcNZmBQr32+REQKXw5Ub/QfKK6xeTpn7
+         yLlzYgBQMGMfKRjJyG7C3gVTlQvUQ2TbjCMp5cz+TtByuL8gZY7uDRoawxR8VFENX+cn
+         plTfIsL79c+x0yGpQ1JeOA4q3D/z3ktAwKwlyh5WSLwBChst8nQef3muE9AKj6L1E7jX
+         kBUrHyc6gyi+M5L1zJI7A6G7eepPb5cSZ+ef00PwVqDF+yJYUiPSE+HXYfF8/GMniAO0
+         GDGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=g2NJSI95GroSMyP8qIXbhw/GTO6O+7LS5180oej1P/U=;
-        b=FuvN3gozZtlzxaW8JelvTNngX+Uwj+0Hg5gBu2TYW+E0tTsno84qS/STw1ApJAxf++
-         ILsSlfRjfI4SbV8xOc4sp55HF76TAWaumaX8mw4/1jNQKvBpCZPIZv/a2uKJ21w71YJi
-         +iklfxB09UIbpc/KAkzs4y8hhCWy7aR9ziitqrvb5IfSm4cyxFLmeqW2/+ilAzAUjmx6
-         JOFC8aHWdjq36DE1EYHOJHZhUeB/WtA41MRfb9qtgsg8T4P0dl/1Kti8YYd5yg4ynhan
-         fgGQXsg9uRu4ax8ceYq0Pt7O9Ea2le94E/+GQQrLJccySl7eYJkigFYiz+HQA/FRG9G0
-         vTIQ==
-X-Gm-Message-State: APjAAAXMzHk6WXzGGpirb9Yf/Qo00gaNOQAOv6ogiymyqf0tdPLY4ARr
-        BHZztX2Sx4aXul49PBt1kiTaN0+zsmARquHi9RaKNg==
-X-Google-Smtp-Source: APXvYqwy1CwBHicoqpHTti0I3jEbyrLU0BEtiYU+q4HVbGSMdmAcG8BRT/zJLAps/hyT/3yQk//OWuCwoBNmJAjCvqE=
-X-Received: by 2002:a5d:9357:: with SMTP id i23mr10538250ioo.236.1551787526752;
- Tue, 05 Mar 2019 04:05:26 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2b9YFg5yiyQ1XlJSS+DZhHv//2KgsWXzUKxd8nBoOGA=;
+        b=Q+VqoH/jEKb6/XnMEhA+2HGcpu6UMvMirTlbs6u7zcHNboiECLJcISXWGqDlCxtc7x
+         eeyXsgtyLNLfuG4DEWKUWV44yCBe2GVVi4khXP3ZNWvWR785VhsttfqhyHlaru0a1GEX
+         4zDAFblSYDBUxYSEs3sM3hktSHDxtvAzXpbxtw4LUwwEskOusuHppGJYjxyVLo2ZZljT
+         VMAE6/q64yEhE37Nd1HdGRB33xiFYUrXPaigjSGP0hkPjoACb6dxxfK56cO/W/f86cUR
+         sehAnvhdJZG/UcGZ/cCLQbbdk0h+oE9Jd98tQXEGutQpqs7pU/tcK5Li0iiugSWL6yLO
+         TVYg==
+X-Gm-Message-State: APjAAAXle+DFYZcaa48/ODN6lPFexLLhIFxC8a6pyLOz585y9mnzMwmd
+        wUgYjDKTfAfYgyVp4Fh3Tmy/VNGT
+X-Google-Smtp-Source: APXvYqxBCjtdJjXre5YlRsA+FW/vuPm1CrmpDA2+gDBchILWV8/iVJBBkIREehoycZmskexG80dZmA==
+X-Received: by 2002:a17:902:6f08:: with SMTP id w8mr888909plk.5.1551787725061;
+        Tue, 05 Mar 2019 04:08:45 -0800 (PST)
+Received: from ash ([171.226.148.85])
+        by smtp.gmail.com with ESMTPSA id 1sm22501462pfy.68.2019.03.05.04.08.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Mar 2019 04:08:44 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 05 Mar 2019 19:08:39 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, hi-angel@yandex.ru, peff@peff.net,
+        ramsay@ramsayjones.plus.com, sunshine@sunshineco.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v4 0/2] worktree add: sanitize worktree names
+Date:   Tue,  5 Mar 2019 19:08:32 +0700
+Message-Id: <20190305120834.7284-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
+In-Reply-To: <20190226105851.32273-1-pclouds@gmail.com>
+References: <20190226105851.32273-1-pclouds@gmail.com>
 MIME-Version: 1.0
-References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 5 Mar 2019 19:04:59 +0700
-Message-ID: <CACsJy8DhDe+28z2=3v1dBqco7q2Zj12hdKKT==yWFPui8SBkiw@mail.gmail.com>
-Subject: Re: GSoC 2019: Git's application submitted
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 4, 2019 at 4:17 PM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi everyone,
->
-> There are now ideas, micro-projects and organization application pages
-> for GSoC 2019 on https://git.github.io/
->
-> It would be nice to have a few more project ideas.
+v4 refactors check_refname_component() so that we could do more accurate
+substitution (and leave fewer traps).
 
-Not sure if it's too late now. Anyway this could be something fun to
-do: support C-based tests in our test suite.
+Performance of sanitize_worktree_refname() goes back to horrible
+again. But since it's not really a big deal (no body is going to add
+200 worktrees per second), I don't feel like we should optimize it.
+That may involve removing the for loop in do_check_refname_component()
+and making things uglier.
 
-A while back I noticed some test running very long because it was
-trying a lot of input combination. The actual logic is not much, but
-because of the increasing number of test cases, overhead goes off the
-roof. The last part is probably not true, but Windows port I think is
-hit much harder than what I experience, and I think Dscho did complain
-about it.
+The test is also updated to have FUNNYNAMES prerequisite, which is
+always unset on Windows. This should fix the breakage there.
 
-So what this project does is somehow allow people to write test cases
-in C instead of shell. Imagine replacing t3070-wildmatch.sh with a
-binary program t3070-wildmatch that behaves the same way. This test
-framework needs to support the same basic feature set as test-lib.sh:
-TAP output, test results summary, maybe -i and --valgrind... To
-demonstrate that the test framework works, one of these long test
-files should be rewritten in C. I'm sure there's one that is simple to
-rewrite.
+Nguyễn Thái Ngọc Duy (2):
+  refs.c: refactor check_refname_component()
+  worktree add: sanitize worktree names
 
-I'm pretty sure I had some fun with this idea and made some prototype
-but I couldn't find it. If I do, I'll post the link here.
+ builtin/worktree.c      |   7 ++-
+ refs.c                  | 114 ++++++++++++++++++++++++++++++++++------
+ refs.h                  |   1 +
+ t/t2025-worktree-add.sh |   5 ++
+ 4 files changed, 110 insertions(+), 17 deletions(-)
+
 -- 
-Duy
+2.21.0.rc1.337.gdf7f8d0522
+
