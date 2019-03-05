@@ -2,116 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C439620248
-	for <e@80x24.org>; Tue,  5 Mar 2019 05:57:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82D0720374
+	for <e@80x24.org>; Tue,  5 Mar 2019 06:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726277AbfCEF5f (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 00:57:35 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38054 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725818AbfCEF5f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 00:57:35 -0500
-Received: by mail-wm1-f68.google.com with SMTP id a188so1261017wmf.3
-        for <git@vger.kernel.org>; Mon, 04 Mar 2019 21:57:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=68wlqlqE0JajaGs2lLCFSFLFZhmA4XAooTOhZrEQbfo=;
-        b=qX7DDoQ9Y/ZozxMpKFgWk/30yNd0Hyibk2NJfJZfaVsd2y6yhgi0qeeC9QYChQLBfG
-         iGJdSs9D9TJwh0F3RMDrB4CSlCg3UdCjsYWzqEWkKYLoza+McN0lTyoPck6WtcG+L90N
-         Zdx8NP55vkFu5cFLD4/LxZd6wOfa2sKiEd0fkXpUrVqd/T0x3c6FnviIZ5uqs2ansvMt
-         xBocpAzuUlKt/F15ZTiEVG5I9je15bu0+195zpxaZHp9q4pHW7KNCTxp3qFr4N2FTCx9
-         Q6XkuXQ2q9Xz6LOlnYJ08/0m8FtTVuW5Y6lFdkXqEiT4HGpP1+5pws7gQEV7x92tSZDs
-         kAjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=68wlqlqE0JajaGs2lLCFSFLFZhmA4XAooTOhZrEQbfo=;
-        b=m4NKmpLaAkR2vp+8aMbtM12gfPUa/3OIseI1UP9EJykhLKF4bJevtMat9nHHY9wPPZ
-         r+UZwI4Nc3iB+laa0J9z9CwyDdzP0s50BspPf9aDk6NMkAyHnz3Df0FrMZlSrtJkzWFo
-         H2BauR8e3lk5X7lKrBB6vksQFv7+eGJADEvY4KCdiSgebGCDU61eAPgUdkhxo5BT/W6/
-         Ho9nPQwEI9UfvuDFa8sx+DNq8p3bBZzIg0d0XyENPtx6SL3IK0ZGyupg99td3cyd8uHO
-         o9DXOYCNub8KiwmfI4BI8FtN0drNNqgoXxADpshLKBUKLx0jSxkkW4+Uw9t4R7lmufh9
-         7ycg==
-X-Gm-Message-State: APjAAAV51qN566ZPjc2G5FjF/LBBTS5LIJuv4UFxkfEdt3PwD3BpPiQR
-        yeyJBgPWgYsxFEBsbnQ1x7w=
-X-Google-Smtp-Source: APXvYqxTMIovcizT0mKWeCOsUayLYJgPe+Gl4oGRkUxNokN8/3eQ2mU/AuqalDXODf0Ih7mwbu8n2w==
-X-Received: by 2002:a7b:c0d5:: with SMTP id s21mr1603660wmh.153.1551765453517;
-        Mon, 04 Mar 2019 21:57:33 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 132sm27650532wmd.27.2019.03.04.21.57.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Mar 2019 21:57:32 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH] builtin/config.c: don't print a newline with --color
-References: <b5ca6391fd0273fb7d6b92bc5ada96df93bc5cf2.1551487219.git.me@ttaylorr.com>
-        <xmqqtvgk69ik.fsf@gitster-ct.c.googlers.com>
-        <20190303174214.GF23811@sigill.intra.peff.net>
-        <xmqqlg1vw9f2.fsf@gitster-ct.c.googlers.com>
-        <xmqqh8cjw7ob.fsf@gitster-ct.c.googlers.com>
-        <20190305042050.GE19800@sigill.intra.peff.net>
-Date:   Tue, 05 Mar 2019 14:57:32 +0900
-In-Reply-To: <20190305042050.GE19800@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 4 Mar 2019 23:20:51 -0500")
-Message-ID: <xmqqva0xvp6b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726134AbfCEGZ3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 01:25:29 -0500
+Received: from mx-relay66-hz2.antispameurope.com ([94.100.136.166]:57871 "EHLO
+        mx-relay66-hz2.antispameurope.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725818AbfCEGZ2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 5 Mar 2019 01:25:28 -0500
+Received: from unknown ([91.229.168.76]) by mx-relay66-hz2.antispameurope.com;
+ Tue, 05 Mar 2019 07:25:26 +0100
+Received: from bruexc101.brumgt.local (10.251.3.120) by bruexc104.brumgt.local
+ (10.251.3.119) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 5 Mar
+ 2019 07:25:11 +0100
+Received: from bruexc101.brumgt.local ([fe80::8192:a565:2dec:8204]) by
+ bruexc101.brumgt.local ([fe80::8192:a565:2dec:8204%19]) with mapi id
+ 15.00.1473.003; Tue, 5 Mar 2019 07:25:11 +0100
+From:   "Wendeborn, Jonathan" <Jonathan.Wendeborn@bruker.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+CC:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: AW: AW: fast-import fails with case sensitive tags due to case
+ insensitive lock files
+Thread-Topic: AW: fast-import fails with case sensitive tags due to case
+ insensitive lock files
+Thread-Index: AdTPonIg/9QWZqseSg6y1MSsuJUGaABrM6kAAEQUNaAADcUQgAAhW2vQ
+Date:   Tue, 5 Mar 2019 06:25:11 +0000
+Message-ID: <b8976ee7d99547649cdded5a80ab118d@bruexc101.brumgt.local>
+References: <ceb9b34681c14d9ab2a33ba909b5ca75@bruexc101.brumgt.local>
+ <20190303002542.GG601925@genre.crustytoothpaste.net>
+ <3dbce0f1c80e4e67b114f8c84e2106c8@bruexc101.brumgt.local>
+ <nycvar.QRO.7.76.6.1903041627230.45@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1903041627230.45@tvgsbejvaqbjf.bet>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.251.3.124]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
+X-cloud-security-sender: jonathan.wendeborn@bruker.com
+X-cloud-security-recipient: git@vger.kernel.org
+X-cloud-security-Virusscan: CLEAN
+X-cloud-security-disclaimer: This E-Mail was scanned by E-Mailservice on mx-relay66-hz2.antispameurope.com with EF9CBCA72A1
+X-cloud-security-connect: unknown[91.229.168.76], TLS=1, IP=91.229.168.76
+X-cloud-security: scantime:.1597
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> I do wonder, though, if we're digging ourselves a hole with the
-> inconsistency between different --types that will bite us later. Given
-> that it's not that hard to chomp the output (and as you noted, the shell
-> does it fairly transparently), and given that the caller has to switch
-> between "--get-color" and "--type=color", it's not that hard to handle
-> the output differently if you know to do so.
->
-> Mostly I was just surprised by the new behavior. Perhaps the right
-> solution is not a patch to the code, but to the documentation. Something
-> like:
->
-> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> index 495bb57416..61f3a9cdd7 100644
-> --- a/Documentation/git-config.txt
-> +++ b/Documentation/git-config.txt
-> @@ -252,7 +252,9 @@ Valid `<type>`'s include:
->  	output.  The optional `default` parameter is used instead, if
->  	there is no color configured for `name`.
->  +
-> -`--type=color [--default=<default>]` is preferred over `--get-color`.
-> +`--type=color [--default=<default>]` is preferred over `--get-color`
-> +(but note that `--get-color` will omit the trailing newline printed by
-> +--type=color).
->  
->  -e::
->  --edit::
-
-Yup, that would be a very sensible first step, regardless of what
-the next step is.
-
-After that, choices are
-
- (1) we'd introduce new inconsistency among --type=<type> by
-     matching what --type=color does to what --get-color does, to
-     allow us to revert that documentation update, or
-
- (2) we'd drop LF from all --type=<type>, that makes everything
-     consistent and risk breaking a few existing scripts while doing
-     so, and get yelled at by end users, or
-
- (3) we stop at this documentation update and do nothing else.
-
+SGkgSm9oYW5uZXMsDQoNCj4+IE9uZSB0aGluZyBJIHN0aWxsIHdvdWxkIGxpa2UgdG8gZW5jb3Vy
+YWdlIHRvIGlzIHRvIGltcHJvdmUgdGhlIGVycm9yIA0KPj4gbWVzc2FnZSB3aGljaCBpcyByZWFs
+bHkgbWlzbGVhZGluZyBpbiB0aGlzIGNhc2UuDQoNCj4gV2VsbCwgdGhhdCBpcyBhdCBsZWFzdCBz
+b21ldGhpbmcgeW91IGNvdWxkIGRvLiBBZnRlciBhbGwsIHlvdSB1c2UgYSB2b2x1bnRlZXItZHJp
+dmVuIHByb2plY3QsIHNvIHlvdSBjb3VsZCBhdCBsZWFzdCB2b2x1bnRlZXIgYSBsaXR0bGUgdGlt
+ZSB0byBpbXByb3ZpbmcgaXQgeW91cnNlbGYuDQoNClRoYXQncyB0cnVlIDopDQoNClRoYW5rIHlv
+dSENCkpvbmF0aGFuDQoNCi0tLS0tVXJzcHLDvG5nbGljaGUgTmFjaHJpY2h0LS0tLS0NClZvbjog
+Sm9oYW5uZXMgU2NoaW5kZWxpbiA8Sm9oYW5uZXMuU2NoaW5kZWxpbkBnbXguZGU+IA0KR2VzZW5k
+ZXQ6IE1vbnRhZywgNC4gTcOkcnogMjAxOSAxNjoyOQ0KQW46IFdlbmRlYm9ybiwgSm9uYXRoYW4g
+PEpvbmF0aGFuLldlbmRlYm9ybkBicnVrZXIuY29tPg0KQ2M6IGJyaWFuIG0uIGNhcmxzb24gPHNh
+bmRhbHNAY3J1c3R5dG9vdGhwYXN0ZS5uZXQ+OyBnaXRAdmdlci5rZXJuZWwub3JnDQpCZXRyZWZm
+OiBSZTogQVc6IGZhc3QtaW1wb3J0IGZhaWxzIHdpdGggY2FzZSBzZW5zaXRpdmUgdGFncyBkdWUg
+dG8gY2FzZSBpbnNlbnNpdGl2ZSBsb2NrIGZpbGVzDQoNCkhpIEpvbmF0aGFuLA0KDQpPbiBNb24s
+IDQgTWFyIDIwMTksIFdlbmRlYm9ybiwgSm9uYXRoYW4gd3JvdGU6DQoNCj4gPiBSaWdodCBub3cs
+IHlvdSBoYXZlIHNvbWUgY2hvaWNlczogDQo+ID4g4oCiIFZvbHVudGVlciB0byBpbXBsZW1lbnQg
+cmVmdGFibGUuIA0KPiA+IOKAoiBTaW5jZSB5b3UncmUgb24gV2luZG93cyAxMCwgc2V0IHlvdXIg
+R2l0IHJlcG9zaXRvcnkgZGlyZWN0b3J5IGFzDQo+ID4gwqAgY2FzZS1zZW5zaXRpdmUuIA0KPiA+
+IOKAoiBVc2UgV2luZG93cyBTdWJzeXN0ZW0gZm9yIExpbnV4LCB3aGljaCBpcyBjYXNlIHNlbnNp
+dGl2ZSBhbmQgDQo+ID4gY3JlYXRlcw0KPiA+IMKgIGRpcmVjdG9yaWVzIHdpdGggdGhhdCBmbGFn
+IChldmVuIG9uIE5URlMpLCB0byBkbyB5b3VyIGltcG9ydC4gDQo+ID4g4oCiIElmIHlvdSBjb250
+cm9sIHRoZSBmYXN0LWV4cG9ydCBvdXRwdXQsIGFkanVzdCB0aGUgYXJndW1lbnRzIHlvdSANCj4g
+PiBwYXNzDQo+ID4gwqAgc3VjaCB0aGF0IHRoZSBvdXRwdXQgZG9lcyBub3QgY29udGFpbiBvbmUg
+b2YgdGhlIG9mZmVuZGluZyB0YWdzLiANCj4gDQo+IEhpIEJyaWFuLA0KPiANCj4gVGhhbmsgeW91
+IHZlcnkgbXVjaCBmb3IgeW91ciBhbnN3ZXIhDQo+IA0KPiBVbmZvcnR1bmF0ZWx5IEkgYW0gc3R1
+Y2sgd2l0aCBXaW5kb3dzIDEwIDE3MDMgd2hpY2ggbmVpdGhlciBzdXBwb3J0cyANCj4gY2FzZS1z
+ZW5zaXRpdml0eSBub3IgYW55IExpbnV4IHN1YnN5c3RlbSBmcm9tIHRoZSBNaWNyb3NvZnQgU3Rv
+cmUgOigNCg0KVG9vIGJhZC4NCg0KPiBBbHNvLCBteSBlbXBsb3llciB1bmZvcnR1bmF0ZWx5IGRv
+ZXNu4oCZdCBhbGxvdyBtZSB0byBpbnZlc3QgdGhlIHRpbWUgdG8gDQo+IGltcGxlbWVudCByZWZ0
+YWJsZSwNCg0KRXZlbiB3b3JzZSENCg0KPiBzbyBJIGd1ZXNzIEkgZ28gd2l0aCBtYW51YWxseSBs
+ZWF2aW5nIG91dCB0aGUgb25lIGNvbmZsaWN0aW5nIGxhYmVsIEkgDQo+IGZvdW5kIGFuZCB0YWdn
+aW5nIGl0IG1hbnVhbGx5IGFmdGVyd2FyZC4NCg0KVGhhdCBpcyBhIHZhbGlkIHdvcmthcm91bmQu
+DQoNCj4gT25lIHRoaW5nIEkgc3RpbGwgd291bGQgbGlrZSB0byBlbmNvdXJhZ2UgdG8gaXMgdG8g
+aW1wcm92ZSB0aGUgZXJyb3IgDQo+IG1lc3NhZ2Ugd2hpY2ggaXMgcmVhbGx5IG1pc2xlYWRpbmcg
+aW4gdGhpcyBjYXNlLg0KDQpXZWxsLCB0aGF0IGlzIGF0IGxlYXN0IHNvbWV0aGluZyB5b3UgY291
+bGQgZG8uIEFmdGVyIGFsbCwgeW91IHVzZSBhIHZvbHVudGVlci1kcml2ZW4gcHJvamVjdCwgc28g
+eW91IGNvdWxkIGF0IGxlYXN0IHZvbHVudGVlciBhIGxpdHRsZSB0aW1lIHRvIGltcHJvdmluZyBp
+dCB5b3Vyc2VsZi4NCg0KQ2lhbywNCkpvaGFubmVzDQo=
