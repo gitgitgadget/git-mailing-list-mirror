@@ -7,62 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C033A20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 23:44:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A45C20248
+	for <e@80x24.org>; Tue,  5 Mar 2019 23:45:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728592AbfCEXoY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 18:44:24 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39030 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728370AbfCEXoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 18:44:23 -0500
-Received: by mail-wr1-f68.google.com with SMTP id l5so11347659wrw.6
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 15:44:22 -0800 (PST)
+        id S1728716AbfCEXpT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 18:45:19 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36324 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728707AbfCEXpT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 18:45:19 -0500
+Received: by mail-wm1-f68.google.com with SMTP id j125so4208713wmj.1
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 15:45:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=d31X5nQoSeRwojObUFLagjAK+VOHPBuBboN9ahktgyg=;
-        b=jPGSv3LhbiO+qatD3mwGNI7iKP5WVmSePOlFgO+KLNbDsNXqJjyEp6wJVCg+co3yey
-         sVdK8a7fS2wMS61mj42T1wgOxlEIOtlTag36Pj3T+bnOSUETx+jK2Ld4pDYMDjQOAVGX
-         R2MGeeQzKto5YfuVqNSc2gJxnnALz2X+/s/FWP8NKUE7ea4BqljfLC8Sr7lNnS+v+sXx
-         q+NfgSEbB/irL4WIhNVWDBzRyEjuVZ4xRQ0ccbGVatmYwDSQ4b0QA41rU6N3A01VBGKu
-         EDk2Q0U3ENnOtjNB8ZR/NVRSlR3iVKFSqQNPOHuPZfyzduBH3ehyNeYtG6ab2plNzgKI
-         TZAA==
+        bh=86BZkTi9QcB+9RrXeS5u1EsGI3EQDjbYRtI2qjh6+oo=;
+        b=onLJXCvRvDn3VrulRNDLJeVOSbTu2Z42D1OxB8Er/HBH8duf9qDckJjgZdpPuwyZJM
+         wHwJ+bkYYsRGR9omaIPw7ggvxjD+bomLRi/YKqQR2VTntamKcqkVPbXcN/3YahTBUjtt
+         YLpy4+3xGzlooavlvCdpQGfTguAysAfwcHYnU/TIAlLg+ML1Ce8JgMCzSOdnnyPimK3w
+         Rb6GKdmlX+73uQcqZnIMWfSQp1QuDd9EzBkXXY7hXmD7+UIWsxeuQAhQfdjs4GqzEs2X
+         mE//fm6thTBS9UGZP1OW110acq8N/Azt8APjuMlNaw4sOP08srXt3S+FgR/PcamRB17F
+         qPtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=d31X5nQoSeRwojObUFLagjAK+VOHPBuBboN9ahktgyg=;
-        b=p+zuqfAjiy/Xbq03gKdDnT9ZiAu7HNbRzriMiZqAN3BhG0POC6Fwt31f7u1dLzgzK2
-         BSiekH81+IhDeXZJWrcimOIULGwJ2u5fUfP8mfME3XZtzzosx7M/FWtXN1Tg0gc/VNDk
-         NawBGG/855VHMMKfoerPpgnmvjzhgC9kVln5S3f/LWhALpn/40OAPfJByqyKHH1qjuUF
-         m1fmP0qCkgLb6ewF2joJ2nQO0cXpfCFc1j/T0Ya4O8zHc+grFQTAef2KMTzhDZh5fthA
-         v9DmSH27DocBKmj2/4GBtPGeFVCn8/GT0g2Jq5vfAV20wilcw8lB3xB+1aEh9W/ZpESB
-         Nxnw==
-X-Gm-Message-State: APjAAAVHbIG6kWeIg4PRfVsUodXziTyYYPcauOIcoqaz8lFA6qS2tR9W
-        9bAYk8MORPebt3F2Xlt2/ks=
-X-Google-Smtp-Source: APXvYqz20nzD6l8QQV78pRpwdjvePTJmiZ21WuY5klqD9iw5z3j3jXf+2MP4ov8Kqjv2mjdAQNZg7w==
-X-Received: by 2002:a5d:4887:: with SMTP id g7mr847841wrq.51.1551829461400;
-        Tue, 05 Mar 2019 15:44:21 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d1sm19683227wrs.13.2019.03.05.15.44.20
+        bh=86BZkTi9QcB+9RrXeS5u1EsGI3EQDjbYRtI2qjh6+oo=;
+        b=bjr9r3Gw5A+iQ6WanENopQWxJviu8SWayfMFQRL4TuSLBYwHB6j700F3zp1oOk6P8c
+         a+iUSz7r3YWbHXV3xxmXLWOtM5emw65uMRUTB7ui69iczSgF9I92a7Atk4aFWrRFJZvE
+         6kOHCoc1Cxk68ZUtzvqesk+oL60ZQnTrsIktprAwjGLRPOabHOmlZnR2eyjZKpJ34uEs
+         0eB8IDhKZZdeVeQkSuIWheat8C3QPhEr8R9mRL+N434LXBElZVxfzfHh4S9YujtCmwxs
+         VO3Q/RYm7XHIkaB/ZNVMEjNYUQ2BAPXYr2CczYLyZgZ5tVh5W+yGDd+3rIIdKlzwwrfZ
+         a/KA==
+X-Gm-Message-State: APjAAAXV36bp6SE24oOVyDmR5WDDNlohTVjiK47cxVy6f7vE7fkxlqFn
+        k4MT3BDjKvgIyMT594JfKp1pSxrszzQ=
+X-Google-Smtp-Source: APXvYqzN1sW1ydmNrQZ/VoEycxnmTsUB+fu9CL53a9LCQ0O1y2eF/qvu304/kLTnpIR7aOzoRpWWoA==
+X-Received: by 2002:a1c:a6c9:: with SMTP id p192mr569821wme.58.1551829516917;
+        Tue, 05 Mar 2019 15:45:16 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v2sm226050wme.29.2019.03.05.15.45.16
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Mar 2019 15:44:20 -0800 (PST)
+        Tue, 05 Mar 2019 15:45:16 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Doc: fix misleading asciidoc formating
-References: <20190305214423.27820-1-jn.avila@free.fr>
-        <20190305223655.GA27535@sigill.intra.peff.net>
-        <xmqq4l8hszj7.fsf@gitster-ct.c.googlers.com>
-        <20190305230227.GA22901@sigill.intra.peff.net>
-        <20190305231142.GA359@sigill.intra.peff.net>
-Date:   Wed, 06 Mar 2019 08:44:20 +0900
-In-Reply-To: <20190305231142.GA359@sigill.intra.peff.net> (Jeff King's message
-        of "Tue, 5 Mar 2019 18:11:42 -0500")
-Message-ID: <xmqqy35ssx7v.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] remote-curl: mark all error messages for translation
+References: <pull.157.git.gitgitgadget@gmail.com>
+Date:   Wed, 06 Mar 2019 08:45:15 +0900
+In-Reply-To: <pull.157.git.gitgitgadget@gmail.com> (Johannes Schindelin via
+        GitGitGadget's message of "Tue, 05 Mar 2019 15:20:39 -0800 (PST)")
+Message-ID: <xmqqtvggsx6c.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,16 +66,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> TBH, I still have mixed feelings on rendering these technical docs with
-> asciidoc at all. It seems like few enough people bother to render them
-> that bugs persist for a long time. It kind of seems like make-work
-> getting them to format correctly.
+> As suggested by Jeff King in a nearby thread.
+>
+> Johannes Schindelin (1):
+>   remote-curl: mark all error messages for translation
 
-I thought about resisting when some people started pushing for
-rendering everything under the Sun, but went with the flow as I
-lacked the energy to fight every battle in sight.
+Does this come on top or below the anonymize patch, or it does not
+matter which goes first?
 
-Good to see somebody shares a similar sense of trade-off, better
-late than never ;-).
+>
+>  remote-curl.c | 50 +++++++++++++++++++++++++-------------------------
+>  1 file changed, 25 insertions(+), 25 deletions(-)
+>
+>
+> base-commit: c1284b21f2436de24c9559fcc5f4badb04f47773
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-157%2Fdscho%2Fl10n-remote-curl-diag-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-157/dscho/l10n-remote-curl-diag-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/157
