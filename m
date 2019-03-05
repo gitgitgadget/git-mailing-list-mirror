@@ -2,90 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6818520248
-	for <e@80x24.org>; Tue,  5 Mar 2019 05:11:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D577820248
+	for <e@80x24.org>; Tue,  5 Mar 2019 05:50:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726107AbfCEFL3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 00:11:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38916 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725818AbfCEFL3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 00:11:29 -0500
-Received: (qmail 922 invoked by uid 109); 5 Mar 2019 05:11:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 05:11:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28834 invoked by uid 111); 5 Mar 2019 05:11:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 05 Mar 2019 00:11:45 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Mar 2019 00:11:27 -0500
-Date:   Tue, 5 Mar 2019 00:11:27 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] curl: anonymize URLs in error messages and warnings
-Message-ID: <20190305051126.GL19800@sigill.intra.peff.net>
-References: <pull.156.git.gitgitgadget@gmail.com>
- <ab6f4032cb8cbbe77dbfad4660c30acd7ba688bb.1551713624.git.gitgitgadget@gmail.com>
+        id S1725976AbfCEFuP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 00:50:15 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41172 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725782AbfCEFuP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 00:50:15 -0500
+Received: by mail-wr1-f65.google.com with SMTP id n2so7996714wrw.8
+        for <git@vger.kernel.org>; Mon, 04 Mar 2019 21:50:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=FnfOT2ragySPlMwF8iCHUrzZp56CCZNWaJ58n0cBfGE=;
+        b=ImsneCXOyqmb88AZ3BQ0i3jFsVAKX/gK1NKNtoZaC49HnlQ6vnWaqFe2Mhzysus6ig
+         Ux8oGx1D5VZGJzuiLrbUxPvIm/PtKhOcbWQRx6Dt5mQ8FplWY5HOB+Zn7UBM7kHy4eeB
+         mKuBdZEtF8gx9/7YOUwfHGYW9jbH3eo/xfof2kJY0sOn6UxmZjlt/C9MceETuGmDy1kG
+         jVH5B2Uxart4U5aI75i8/WlLABaF/SQYZP0m6ZLE2aieqBRZQLBOqwynE3s5bC7y8b8a
+         ZsaX9X9M003JvI2w6mMXTPEGpqO0JP98rY6/GgCIjOPQBz/BYEqalmFdnJRd4PTa7IVH
+         VtOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=FnfOT2ragySPlMwF8iCHUrzZp56CCZNWaJ58n0cBfGE=;
+        b=QApuzEYGbtyLtuYGc0rl2aMPenIbwtpWkn4utgXq6xIsNBhJUeX+4IIC6f1XH11DeD
+         ZenXOOsQ50odhYMbiCYbNO5On3L5+SSvd7ySodUylbYuTsxVbovr0uLwzvx+hFI5SWXs
+         jgv1u+CjeSUPwQTRxj2PfbiznZG5slqhY1wz4lqsBbk4aevXWmTMmUqYeMjY9vOB27Mv
+         L0E1Ft+hVpqMzRe2/lzFYyrLT1fFhcSmIQ/ToeJkhOZjCSXsaLOxAMIJyfa/TDNkKlS4
+         l5pmzYzVNSgxbqzOQ9RaXbWTOgYxFzoPTdOwD0anaRd/AYdTr4kzvaQdeI1QU+hjxE/q
+         DdpA==
+X-Gm-Message-State: APjAAAVw6m9EExCkSKHxnKpKxQ51g/uCPMN7iuFO4kGGyLnJxqULkaDA
+        IW3TVDv7jQSiULhIkPDlVaY=
+X-Google-Smtp-Source: APXvYqyWXkbwoC17FwyQFaDmqAYz8lCPr7JVu7TFMvbkAVCpgp0jNY/PCGTp2B6dMsLcVBK/TGy+vw==
+X-Received: by 2002:adf:c7c6:: with SMTP id y6mr14647796wrg.217.1551765013330;
+        Mon, 04 Mar 2019 21:50:13 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id r15sm8312691wrt.37.2019.03.04.21.50.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 04 Mar 2019 21:50:12 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Makefile: use `git ls-files` to list header files, if possible
+References: <pull.130.git.gitgitgadget@gmail.com>
+        <0b5529406b9458d37f3f5cdf38baa2d6a0a70a65.1551470265.git.gitgitgadget@gmail.com>
+        <20190301213619.GA1518@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1903022058230.45@tvgsbejvaqbjf.bet>
+        <20190303171951.GD23811@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1903041206300.45@tvgsbejvaqbjf.bet>
+        <20190304214155.GB3347@sigill.intra.peff.net>
+Date:   Tue, 05 Mar 2019 14:50:11 +0900
+In-Reply-To: <20190304214155.GB3347@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 4 Mar 2019 16:41:55 -0500")
+Message-ID: <xmqqzhq9vpik.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ab6f4032cb8cbbe77dbfad4660c30acd7ba688bb.1551713624.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 04, 2019 at 07:33:46AM -0800, Johannes Schindelin via GitGitGadget wrote:
+Jeff King <peff@peff.net> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> Just like 47abd85ba0 (fetch: Strip usernames from url's before storing
-> them, 2009-04-17) and later 882d49ca5c (push: anonymize URL in status
-> output, 2016-07-13), this change anonymizes URLs (read: strips them of
-> user names and especially passwords) in user-facing error messages and
-> warnings.
+> This makes sense to me, though as you noted elsewhere, it doesn't fix
+> the gcrypt problem, since that file unconditionally wants to look at the
+> system gcrypt.h (and we control at the Makefile level whether we
+> actually look at sha256/gcrypt.h).
 
-Yeah, these all look obviously correct. I suspect most people haven't
-noticed them because it's pretty easy to use a real password helper
-these days instead of shoving it into the URL.
+Hmm, is that because the header check target does not know which *.h
+files we ship are actually used in a particular build?
 
-> @@ -251,7 +252,7 @@ static struct ref *parse_info_refs(struct discovery *heads)
->  		if (data[i] == '\n') {
->  			if (mid - start != 40)
->  				die("%sinfo/refs not valid: is this a git repository?",
-> -				    url.buf);
-> +				    transport_anonymize_url(url.buf));
-
-Looking at the code, I think we'd keep the trailing slash during the
-anonymization. Good.
-
-> @@ -442,17 +443,23 @@ static struct discovery *discover_refs(const char *service, int for_push)
->  		break;
->  	case HTTP_MISSING_TARGET:
->  		show_http_message(&type, &charset, &buffer);
-> -		die("repository '%s' not found", url.buf);
-> +		die("repository '%s' not found",
-> +		    transport_anonymize_url(url.buf));
-
-Sort of orthogonal to your patch, but these could probably stand to be
-marked for translation (I'm happy for that to come on top later,
-though).
-
-> -	if (options.verbosity && !starts_with(refs_url.buf, url.buf))
-> -		warning(_("redirecting to %s"), url.buf);
-> +	if (options.verbosity && !starts_with(refs_url.buf, url.buf)) {
-> +		char *u = transport_anonymize_url(url.buf);
-> +		warning(_("redirecting to %s"), u);
-> +		free(u);
-> +	}
-
-Good attention to detail here.
-
--Peff
+After a normal build, with dynamic dependency checking on, we would
+have sufficient information to figure it out.  Would that help?
