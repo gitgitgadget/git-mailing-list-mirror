@@ -2,88 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF08E20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 15:29:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6507520248
+	for <e@80x24.org>; Tue,  5 Mar 2019 15:42:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728113AbfCEP3O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 10:29:14 -0500
-Received: from mout.gmx.net ([212.227.15.18]:41167 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728017AbfCEP3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 10:29:14 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4nt7-1hBHet1ps5-00yywD; Tue, 05
- Mar 2019 16:29:02 +0100
-Date:   Tue, 5 Mar 2019 16:28:45 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Makefile: use `git ls-files` to list header files,
- if possible
-In-Reply-To: <xmqqzhq9vpik.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903051627050.41@tvgsbejvaqbjf.bet>
-References: <pull.130.git.gitgitgadget@gmail.com> <0b5529406b9458d37f3f5cdf38baa2d6a0a70a65.1551470265.git.gitgitgadget@gmail.com> <20190301213619.GA1518@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1903022058230.45@tvgsbejvaqbjf.bet> <20190303171951.GD23811@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1903041206300.45@tvgsbejvaqbjf.bet> <20190304214155.GB3347@sigill.intra.peff.net> <xmqqzhq9vpik.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728532AbfCEPm6 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 5 Mar 2019 10:42:58 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40887 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728514AbfCEPm6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 10:42:58 -0500
+Received: by mail-wr1-f67.google.com with SMTP id q1so9995327wrp.7
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 07:42:57 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Ai4nqhGngIMoJy8JCX4f1wkdyl/Rk1S+7Xq3CV2bITI=;
+        b=bnIjG4A8nT0SK9qTw4axKAGzC0SNnz5FrTOueGDKmn5gYOY09gqe/e2Q0UdIpHv1Yp
+         oc/bxKv3PJHW77TQKaR68yK4JltmCHd9dpiZcqNtAM4FwnDY3S59EFQdW2bxCLmfLVjh
+         6DYvcI5Hq7Ogz/RaRfMQtapIsNsuks6a6mwayyBs7bW7UImZ3G4mWJTxfXuSToIVjCxm
+         OqUVhbjlJgjw2gXm3/jBY/K7W8tbux1Qjrh0UI+lUcLRUtZ3M7gNListbnwZsVoAyJR+
+         6FIhdjCvcyTXrCHgZrc8J7/jKDxjxwBiRZIfV9cuczyRDs/MA7COuW1QZ4IVmO/4bqeP
+         My7Q==
+X-Gm-Message-State: APjAAAXeiB+EDryb1Y/vB/T/2bjQRGtwufn+TVq/4Dz4Yq3hi6yMu4xl
+        cLR77bu1f8DaBf/UsSbkucZ2qEmy1tdQS5sCa+c=
+X-Google-Smtp-Source: APXvYqzvUDFqmVvTJMYaya2qMoLfI130if12BPkl9I4qdSprbxdVDKNbPMVzVeWrqlKvnHqN/Y9eVScDz9PFdqjkfeQ=
+X-Received: by 2002:adf:c7c6:: with SMTP id y6mr16483541wrg.217.1551800576464;
+ Tue, 05 Mar 2019 07:42:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iUjbmHBx3KNnQ7n/Yqokcsmfc+h5eYAjSfAatGWYxnAwutszN2s
- 5fNulzyBXD2DWp5F6ayFX2OqnQdQwxYHhbDYx3PSBXYTl931adTTbLkiM1805EIQdm6NZka
- k3CQsHVgS/cgVCM91eK6NxxjiPZI1IHZixB/qfLyOq/Cmz4Kdy13h6VhCOS/TDZr3pHmxvr
- ttlI2aqcbK03wnAV1VmZw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NHbi4kiRu2E=:I1GT1y+Y2db2rRuRbyfxFD
- rOuCMN6fEqfrBf/hZI+G3EOHUeO6D0mV9nmU79Zd3i/BjjSZWJRHkuG541ph7JoheU+nNahAv
- MSHLLF/Cb6BDkbgZPxPb5d0FGvDWEJQ93U8YHQtabSFBiNFJlGAcS3+awXlJPvpPFpOe/6ZzA
- 4rZiszuHtcTibJKO8yxme/llcSJIKGDQuua9UDN1V8GV1n4uaE6lDTuWgPIT23JM8dqXY5vev
- rjJJ5enopWkxNPkCXFPT+Y+KAfF9p+COVWuotplPcjzIBx3gi3LsN4XN7nPf02JSeGXTK4kp0
- J+ttZ/n8UAOcW5tbUZf/7+GcX4Bt8jqZeRLQL7kFaYeXbHWiiURZQqF1CXUsSzWqRYvEl9HRU
- yEWpfKQDnV9fgjsQ1SwOAaAPKRJgAi7FbNgBlk0txOGGg3tRDniA2DiscBZspZ6OTSdcSEnN3
- mTFAxLtwnUAl64iExSLGghdv0u42iICY+hRXzbxFrMmG330f36hWKLirMhmYk5IGzwOLVwndG
- mNWWXReFAJSdU42j22O0J6lq4DklU9y7R2Gk7GfQ711RAvYEDeXr4fx3zVF5wk4dpo4zIG10z
- 7iSqBJADxRE8jnSCM61+5S+Pm+Qca6O1EHf3hZoNE2KodVj9FFopNO/buZRydKk3QFcU0eLRC
- RzBVdOGjNZdR90hFd0T2Cjc3idkVLlsKmt6IF96lYM1UIEwnf8/XekDFcx9H332t4mDqavJ83
- w9O0m9VT6rSD9ao2tA+a3SXO01P9qlkWLXQnXoC/RUsRFoYo+cRhobh4PgEgQkjl+rZbT46P2
- 703wcWXpkrYH+KesPlmBZbBwoXGHnV3qR0XZnrVi0ucAe7KJFhnRiAhYt85KL8eIyvaCN8xKM
- j8L37UrtexqkjU2lGzFQw5FQBia4LVeCJyrBNzp5x9h6f+99gas1cTddrSoSSDdt7YDNOcneU
- Bpccz5MWlDQ==
+References: <20190305123026.7266-1-pclouds@gmail.com> <20190305123026.7266-17-pclouds@gmail.com>
+In-Reply-To: <20190305123026.7266-17-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 5 Mar 2019 10:42:46 -0500
+Message-ID: <CAPig+cR-efk5esa9=5j+Fu0eWxAkFnohkSL4eabrP44K_AkdCg@mail.gmail.com>
+Subject: Re: [PATCH 16/20] diff-parseopt: convert --quiet
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Tue, Mar 5, 2019 at 7:32 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+> diff --git a/diff.c b/diff.c
+> @@ -5299,6 +5299,8 @@ static void prep_parse_options(struct diff_options *options)
+> +               OPT_BOOL(0, "quiet", &options->flags.quick,
+> +                        N_("disable all output of the program")),
 
-On Tue, 5 Mar 2019, Junio C Hamano wrote:
+As a reviewer, I was wondering why you didn't use OPT__QUIET() here, but...
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > This makes sense to me, though as you noted elsewhere, it doesn't fix
-> > the gcrypt problem, since that file unconditionally wants to look at the
-> > system gcrypt.h (and we control at the Makefile level whether we
-> > actually look at sha256/gcrypt.h).
-> 
-> Hmm, is that because the header check target does not know which *.h
-> files we ship are actually used in a particular build?
-> 
-> After a normal build, with dynamic dependency checking on, we would
-> have sufficient information to figure it out.  Would that help?
+> @@ -5348,9 +5350,7 @@ int diff_opt_parse(struct diff_options *options,
+> -       } else if (!strcmp(arg, "--quiet"))
+> -               options->flags.quick = 1;
+> -       else if (!strcmp(arg, "--ext-diff"))
 
-Yes, *if* the dynamic dependency checking is in effect (read: if we are
-compiling with GCC).
-
-However, I think that one of the benefits of the current approach is that
-hdr-check finds issues also in headers that are *not* part of the current
-build. Read: once hdr-check is run as part of the CI build, it is harder
-for some random contributor to break hdr-check for somebody else with
-different compile time options.
-
-Ciao,
-Dscho
+I guess the reason is that flags.quick isn't necessarily about
+verbosity/quietness.
