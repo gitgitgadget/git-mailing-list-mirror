@@ -6,225 +6,91 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2956420248
-	for <e@80x24.org>; Tue,  5 Mar 2019 04:47:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F27F202BB
+	for <e@80x24.org>; Tue,  5 Mar 2019 04:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726988AbfCEErm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 23:47:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38842 "HELO cloud.peff.net"
+        id S1727064AbfCEEvm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 23:51:42 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38854 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726522AbfCEErl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 23:47:41 -0500
-Received: (qmail 796 invoked by uid 109); 5 Mar 2019 04:47:41 -0000
+        id S1726590AbfCEEvm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 23:51:42 -0500
+Received: (qmail 816 invoked by uid 109); 5 Mar 2019 04:51:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 04:47:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 04:51:42 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28704 invoked by uid 111); 5 Mar 2019 04:47:57 -0000
+Received: (qmail 28734 invoked by uid 111); 5 Mar 2019 04:51:59 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 04 Mar 2019 23:47:57 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 04 Mar 2019 23:51:59 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Mar 2019 23:47:39 -0500
-Date:   Mon, 4 Mar 2019 23:47:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Mar 2019 23:51:40 -0500
+Date:   Mon, 4 Mar 2019 23:51:40 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH v2 2/2] fsck: always compute USED flags for unreachable
- objects
-Message-ID: <20190305044739.GB32325@sigill.intra.peff.net>
-References: <20190305044530.GG19800@sigill.intra.peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        git <git@vger.kernel.org>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: Questions on GSoC 2019 Ideas
+Message-ID: <20190305045140.GH19800@sigill.intra.peff.net>
+References: <CAHd-oW7onvn4ugEjXzAX_OSVEfCboH3-FnGR00dU8iaoc+b8=Q@mail.gmail.com>
+ <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
+ <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
+ <20190302150900.GU6085@hank.intra.tgummerer.com>
+ <CAP8UFD31YKt7fm+shWdBxsL4fCSO4dU=97YwFsZ9gZBpEWmRPQ@mail.gmail.com>
+ <CACsJy8ATKdcDdbTzCdZFhChKEAWhjuYQJBpGXZ9HAVXK1r2pFw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190305044530.GG19800@sigill.intra.peff.net>
+In-Reply-To: <CACsJy8ATKdcDdbTzCdZFhChKEAWhjuYQJBpGXZ9HAVXK1r2pFw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The --connectivity-only option avoids opening every object, and instead
-just marks reachable objects with a flag and compares this to the set
-of all objects. This strategy is discussed in more detail in 3e3f8bd608
-(fsck: prepare dummy objects for --connectivity-check, 2017-01-17).
+On Sun, Mar 03, 2019 at 05:12:59PM +0700, Duy Nguyen wrote:
 
-This means that we report _every_ unreachable object as dangling.
-Whereas in a full fsck, we'd have actually opened and parsed each of
-those unreachable objects, marking their child objects with the USED
-flag, to mean "this was mentioned by another object". And thus we can
-report only the tip of an unreachable segment of the object graph as
-dangling.
+> On Sun, Mar 3, 2019 at 2:18 PM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> > One thing I am still worried about is if we are sure that adding
+> > parallelism is likely to get us a significant performance improvement
+> > or not. If the performance of this code is bounded by disk or memory
+> > access, then adding parallelism might not bring any benefit. (It could
+> > perhaps decrease performance if memory locality gets worse.) So I'd
+> > like some confirmation either by running some tests or by experienced
+> > Git developers that it is likely to be a win.
+> 
+> This is a good point. My guess is the pack access consists of two
+> parts: deflate zlib, resolve delta objects (which is just another form
+> of compression) and actual I/O. The former is CPU bound and may take
+> advantage of multiple cores. However, the cache we have kinda helps
+> reduce CPU work load already, so perhaps the actual gain is not that
+> much (or maybe we could just improve this cache to be more efficient).
+> I'm adding Jeff, maybe he has done some experiments on parallel pack
+> access, who knows.
 
-You can see this difference with a trivial example:
+Sorry, I don't have anything intelligent to add here. I do know that
+`index-pack` doesn't scale well with more cores. I don't think I've ever
+looked at adding parallel access to the packs themselves. I suspect it
+would be tricky due to a few global variables (the pack windows, the
+delta cache, etc).
 
-  tree=$(git hash-object -t tree -w /dev/null)
-  one=$(echo one | git commit-tree $tree)
-  two=$(echo two | git commit-tree -p $one $tree)
+> The second good thing from parallel pack access is not about utilizing
+> processing power from multiple cores, but about _not_ blocking. I
+> think one example use case here is parallel checkout. While one thread
+> is blocked by pack access code for whatever reason, the others can
+> still continue doing other stuff (e.g. write the checked out file to
+> disk) or even access the pack again to check more things out.
 
-Running `git fsck` will report only $two as dangling, but with
---connectivity-only, both commits (and the tree) are reported. Likewise,
-using --lost-found would write all three objects.
+I'm not sure if it would help much for packs, because they're organized
+to have pretty good cold-cache read-ahead behavior. But who knows until
+we measure it.
 
-We can make --connectivity-only work like the normal case by taking a
-separate pass over the unreachable objects, parsing them and marking
-objects they refer to as USED. That still avoids parsing any blobs,
-though we do pay the cost to access any unreachable commits and trees
-(which may or may not be noticeable, depending on how many you have).
+I do suspect that inflating (and delta reconstruction) done in parallel
+could be a win for git-grep, especially if you have a really simple
+regex that is quick to search.
 
-If neither --dangling nor --lost-found is in effect, then we can skip
-this step entirely, just like we do now. That makes "--connectivity-only
---no-dangling" just as fast as the current "--connectivity-only". I.e.,
-we do the correct thing always, but you can still tweak the options to
-make it faster if you don't care about dangling objects.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-fsck.txt |  4 +++
- builtin/fsck.c             | 62 ++++++++++++++++++++++++++++++++++++++
- t/t1450-fsck.sh            | 19 ++++++++++--
- 3 files changed, 83 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-index b7c7ac0866..e0eae642c1 100644
---- a/Documentation/git-fsck.txt
-+++ b/Documentation/git-fsck.txt
-@@ -69,6 +69,10 @@ index file, all SHA-1 references in `refs` namespace, and all reflogs
- 	exist). This will detect corruption in commits and trees, but
- 	not do any semantic checks (e.g., for format errors). Corruption
- 	in blob objects will not be detected at all.
-++
-+Unreachable tags, commits, and trees will also be accessed to find the
-+tips of dangling segments of history. Use `--no-dangling` if you don't
-+care about this output and want to speed it up further.
- 
- --strict::
- 	Enable more strict checking, namely to catch a file mode
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index bb4227bebc..d26fb0a044 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -235,6 +235,48 @@ static int mark_used(struct object *obj, int type, void *data, struct fsck_optio
- 	return 0;
- }
- 
-+static void mark_unreachable_referents(const struct object_id *oid)
-+{
-+	struct fsck_options options = FSCK_OPTIONS_DEFAULT;
-+	struct object *obj = lookup_object(the_repository, oid->hash);
-+
-+	if (!obj || !(obj->flags & HAS_OBJ))
-+		return; /* not part of our original set */
-+	if (obj->flags & REACHABLE)
-+		return; /* reachable objects already traversed */
-+
-+	/*
-+	 * Avoid passing OBJ_NONE to fsck_walk, which will parse the object
-+	 * (and we want to avoid parsing blobs).
-+	 */
-+	if (obj->type == OBJ_NONE) {
-+		enum object_type type = oid_object_info(the_repository,
-+							&obj->oid, NULL);
-+		if (type > 0)
-+			object_as_type(the_repository, obj, type, 0);
-+	}
-+
-+	options.walk = mark_used;
-+	fsck_walk(obj, NULL, &options);
-+}
-+
-+static int mark_loose_unreachable_referents(const struct object_id *oid,
-+					    const char *path,
-+					    void *data)
-+{
-+	mark_unreachable_referents(oid);
-+	return 0;
-+}
-+
-+static int mark_packed_unreachable_referents(const struct object_id *oid,
-+					     struct packed_git *pack,
-+					     uint32_t pos,
-+					     void *data)
-+{
-+	mark_unreachable_referents(oid);
-+	return 0;
-+}
-+
- /*
-  * Check a single reachable object
-  */
-@@ -347,6 +389,26 @@ static void check_connectivity(void)
- 	/* Traverse the pending reachable objects */
- 	traverse_reachable();
- 
-+	/*
-+	 * With --connectivity-only, we won't have actually opened and marked
-+	 * unreachable objects with USED. Do that now to make --dangling, etc
-+	 * accurate.
-+	 */
-+	if (connectivity_only && (show_dangling || write_lost_and_found)) {
-+		/*
-+		 * Even though we already have a "struct object" for each of
-+		 * these in memory, we must not iterate over the internal
-+		 * object hash as we do below. Our loop would potentially
-+		 * resize the hash, making our iteration invalid.
-+		 *
-+		 * Instead, we'll just go back to the source list of objects,
-+		 * and ignore any that weren't present in our earlier
-+		 * traversal.
-+		 */
-+		for_each_loose_object(mark_loose_unreachable_referents, NULL, 0);
-+		for_each_packed_object(mark_packed_unreachable_referents, NULL, 0);
-+	}
-+
- 	/* Look up all the requirements, warn about missing objects.. */
- 	max = get_max_object_index();
- 	if (verbose)
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index c61f972141..49f08d5b9c 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -740,7 +740,7 @@ test_expect_success 'fsck detects truncated loose object' '
- # for each of type, we have one version which is referenced by another object
- # (and so while unreachable, not dangling), and another variant which really is
- # dangling.
--test_expect_success 'fsck notices dangling objects' '
-+test_expect_success 'create dangling-object repository' '
- 	git init dangling &&
- 	(
- 		cd dangling &&
-@@ -751,19 +751,34 @@ test_expect_success 'fsck notices dangling objects' '
- 		commit=$(git commit-tree $tree) &&
- 		dcommit=$(git commit-tree -p $commit $tree) &&
- 
--		cat >expect <<-EOF &&
-+		cat >expect <<-EOF
- 		dangling blob $dblob
- 		dangling commit $dcommit
- 		dangling tree $dtree
- 		EOF
-+	)
-+'
- 
-+test_expect_success 'fsck notices dangling objects' '
-+	(
-+		cd dangling &&
- 		git fsck >actual &&
- 		# the output order is non-deterministic, as it comes from a hash
- 		sort <actual >actual.sorted &&
- 		test_i18ncmp expect actual.sorted
- 	)
- '
- 
-+test_expect_success 'fsck --connectivity-only notices dangling objects' '
-+	(
-+		cd dangling &&
-+		git fsck --connectivity-only >actual &&
-+		# the output order is non-deterministic, as it comes from a hash
-+		sort <actual >actual.sorted &&
-+		test_i18ncmp expect actual.sorted
-+	)
-+'
-+
- test_expect_success 'fsck $name notices bogus $name' '
- 	test_must_fail git fsck bogus &&
- 	test_must_fail git fsck $ZERO_OID
--- 
-2.21.0.684.gc9dc8b89c9
+-Peff
