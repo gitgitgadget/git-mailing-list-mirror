@@ -2,91 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FC5020248
-	for <e@80x24.org>; Tue,  5 Mar 2019 12:57:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A143820248
+	for <e@80x24.org>; Tue,  5 Mar 2019 13:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727590AbfCEM5q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 07:57:46 -0500
-Received: from mail-it1-f169.google.com ([209.85.166.169]:55379 "EHLO
-        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726301AbfCEM5p (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 07:57:45 -0500
-Received: by mail-it1-f169.google.com with SMTP id z131so3910050itf.5
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 04:57:45 -0800 (PST)
+        id S1728263AbfCENLA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 08:11:00 -0500
+Received: from mail-wm1-f46.google.com ([209.85.128.46]:50498 "EHLO
+        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726301AbfCENLA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 08:11:00 -0500
+Received: by mail-wm1-f46.google.com with SMTP id x7so2522581wmj.0
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 05:10:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2bFEYfeJGX1DVKMx1u7tJT8s42+/eUmywnUz5Kv00tE=;
-        b=amtfh3MWT4p2ofO8+ZuUgaNkxxvz8T4LvWyTawe1agOPJK3GTLt2ThW2jhZhOrxfxX
-         8G7efTGIudDABHpKf8A1GV7EDgmwJKSDER+oJSBTHheNHxHJqgfejpqEUEFmZkQjiLZR
-         KZgT+HuxwSD6TWgx+Txctn9KF1qHOmRe+bwGXK+l0JfD8IkZbXMxVdoU8Gj1iYATb0NK
-         5d51nQB0MtHTo9NpbYMR1dZ6SWuTcATisqvwYRVXDKXwXIizUqC4fMG7LqadaHpeZMOL
-         4T792woY2QTxzshUK5WQP2xXQRjXD8lvuw5ANNUcrzdrC+TwmiTiQGtOMX4YpNvBTgFL
-         HKlA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=yRo03uhRQhMjXvEYjhACpaDJUKoniiGyuhkmFftBBmg=;
+        b=U/Mfk9bU30Wz5VT6qHmc5m31Id4ZpSoBpLocgGyA4Bo/sHpv0LE9o4/fB4ZoZEC67e
+         7vyORxaoAyUsC7HV273sj7+XX5TtYCkWqrgS3/+z3pA2dM8ZkKu8aoCMTTUPx7/3R9w7
+         nPYc9cmIvNsjG+dwS9DR9bCqk2Q2QulmSSZHiwGThKoyeyeVuGgutk/5vJhpFQSMgHtJ
+         /qbceFwxffaycUD8n7j6+IXR8BloInfyWG62J7knffIBRSuSjlu1DFhYr0GVm9vzQJSg
+         OvVIoyeRx2chEMEfvUaFz6IRXQ3tuBY6krYRtNjeFh6n88IPajDr2+qd4+CV5QdOTXqf
+         wjQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2bFEYfeJGX1DVKMx1u7tJT8s42+/eUmywnUz5Kv00tE=;
-        b=tQ7lhu03XKGGGOy5zl4Lo5aXKjR02Hb/sJYIVGLWgw09KgszgvRSjf5GTQcGQ6LcCN
-         nRz5Btj4XILgWusKny2O/T6pljJ4mD7ePGrtyhAXJEhLNhqC/w9/6WJXiasq1SA4VUa6
-         rlMAx24JJm4OFEzphm4FuPNBTEEFlDmB6fZPZNThHDztXwJIj6bQimGjkI/sGP5g84JS
-         FYccf+ALw+YzDXmx+3GTlyiyoSTeyDMHFx50rF/F8JK+vY0MW9bn17G6Ja/Popq4P7gz
-         nNoMSFbZT2Gm4HVPC6f2S+aX+sEMscBgIfvBeNRqn5YMymp4odAgyg/EgYrTD0uc75uo
-         or7Q==
-X-Gm-Message-State: APjAAAVBsJFUg2vjSYQ0lCEzfEq+Pz8RFuWSH3t6C7ZzA+eLuJWBAj9t
-        m3s65Zwj/8vLbMNunRWmTYB5bxX1GMmlS2WOy6U=
-X-Google-Smtp-Source: APXvYqx2KslmGxUu5RqcKL7xNVlXvtdWPwcgTmCYwlzCYAWfpN2YE6cleCoZ9BGgrsnJs1W3g3o8Zn26ISN/aOv2BCc=
-X-Received: by 2002:a24:3b0a:: with SMTP id c10mr2167504ita.10.1551790665143;
- Tue, 05 Mar 2019 04:57:45 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=yRo03uhRQhMjXvEYjhACpaDJUKoniiGyuhkmFftBBmg=;
+        b=kl06rZeIz1jWYMpgQKuJG/yUjP+sw218t2VjaVa9XrybB81Gxz9hdr056QOiGbYQAS
+         3P1kI8zjo1d4sGoiXoFbonkwyzRyfM63UF0E8IyLoBQ2Rfnuld6nlLpbNQIXTF2kpGpB
+         h588EVTPqPpp/lzfPqrw1cL1e94fKCSNdAAniUkQrwZFlSA9bpw2VHnk/nWzJnoWP1ai
+         PEqbSc++KzMhUPcqvOtRdQD7sPEhGmNvauZB3RPDgYEKLSbOssjld+QD8EpeBpNquRLb
+         mICCDqqNMHUXl0cWcw9w/WAdkf0gjXbNxWCF+YIQ5Owg/9AjROffvQJ6Pr0WUgsIi/Vm
+         SFmw==
+X-Gm-Message-State: APjAAAUS7vRCm3mMUA4YbtW7SAPnWdv2xr+CXcJEbC2AFJo49RBDlbcd
+        2JPInyddColtKEKxNuxou6c=
+X-Google-Smtp-Source: APXvYqw+XhCRjWHmLXVqQBIjfPBJhd52XjoMEtU3M4aDqfGWb1/DHlyEKoArFrwphEYfz9i6uRDGYA==
+X-Received: by 2002:a1c:9684:: with SMTP id y126mr2797636wmd.124.1551791457961;
+        Tue, 05 Mar 2019 05:10:57 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e193sm20314807wmg.18.2019.03.05.05.10.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 05 Mar 2019 05:10:57 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: worth enhancing "man git-rebase" to show non-HEAD examples?
+References: <alpine.LFD.2.21.1903040955540.16666@localhost.localdomain>
+Date:   Tue, 05 Mar 2019 22:10:56 +0900
+In-Reply-To: <alpine.LFD.2.21.1903040955540.16666@localhost.localdomain>
+        (Robert P. J. Day's message of "Mon, 4 Mar 2019 10:01:32 -0500 (EST)")
+Message-ID: <xmqqef7lv53z.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAHd-oW7onvn4ugEjXzAX_OSVEfCboH3-FnGR00dU8iaoc+b8=Q@mail.gmail.com>
- <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
- <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
- <20190302150900.GU6085@hank.intra.tgummerer.com> <CAP8UFD31YKt7fm+shWdBxsL4fCSO4dU=97YwFsZ9gZBpEWmRPQ@mail.gmail.com>
- <CACsJy8ATKdcDdbTzCdZFhChKEAWhjuYQJBpGXZ9HAVXK1r2pFw@mail.gmail.com> <20190305045140.GH19800@sigill.intra.peff.net>
-In-Reply-To: <20190305045140.GH19800@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 5 Mar 2019 19:57:18 +0700
-Message-ID: <CACsJy8D-eQUGFsu4_cB9FE6gAo2d68EF_x2ze3YLXKAxYJfhSQ@mail.gmail.com>
-Subject: Re: Questions on GSoC 2019 Ideas
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        git <git@vger.kernel.org>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 5, 2019 at 11:51 AM Jeff King <peff@peff.net> wrote:
-> > processing power from multiple cores, but about _not_ blocking. I
-> > think one example use case here is parallel checkout. While one thread
-> > is blocked by pack access code for whatever reason, the others can
-> > still continue doing other stuff (e.g. write the checked out file to
-> > disk) or even access the pack again to check more things out.
->
-> I'm not sure if it would help much for packs, because they're organized
-> to have pretty good cold-cache read-ahead behavior. But who knows until
-> we measure it.
->
-> I do suspect that inflating (and delta reconstruction) done in parallel
-> could be a win for git-grep, especially if you have a really simple
-> regex that is quick to search.
+"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
 
-Maybe git-blame too. But this is based purely on me watching CPU
-utilization of one command with hot cache. For git-blame though, diff
-code as to be thread safe too but that's another story.
--- 
-Duy
+>   one of the things i've noticed about the examples in "man
+> git-rebase" is that they invariably show rebasing relative to a
+> branch point that has not moved. for example, there's this example:
+>
+>        o---o---o---o---o  master
+>             \
+>              o---o---o---o---o  next
+>                               \
+>                                o---o---o  topic
+>
+> with subsequent sample command:
+>
+>   $ git rebase --onto master next topic
+>
+> sure, that works, but there seem to be no examples that show that this
+> is a valid starting point as well:
+>
+>
+>        o---o---o---o---o  master
+>             \
+>              o---o---o---o---o  next
+>                       \
+>                        o---o---o  topic
+
+You mean that the 'topic' forked from 'next', and it is OK for 'next'
+to acquire further commits since 'topic' forked from it, for you to
+rebase 'topic' on another history?
+
+The very first example in Documentation/git-rebase.txt shows a
+3-commit topic A-B-C, forked from the master branch at E in 4-commit
+D-E-F-G sequence, gets rebased.  Those F and G are in the same place
+as those rightmost two commits you have on 'next' in the above
+picture.
+
+> as in, the examples in that man page could potentially suggest to an
+> inexperienced reader that the *only* valid situations are rebasing as
+> long as the other branch has not developed any further. (yes, i
+> realize that, if you read carefully, it *should* make it clear, but i
+> think it would be helpful to at least graphically show that
+> happening.)
+>
+>   thoughts?
+
+So, we have both pictures, and I do not see there is much to add.
+
+By the way, I sense a mis-perception that led you to say "... has
+not developed any further".  In the topology in your second
+illustration, there is nothing to say that the rightmost two commits
+on the 'next' branch were created _after_ topic has forked from
+'next'.  It is not just possible but also often is sensible to fork
+a topic closer to what it needs to build on top of, limiting its
+dependency as small as possible, so the 'topic' could have been
+forked from the middle of 'next' branch when it was originally
+created.
+
