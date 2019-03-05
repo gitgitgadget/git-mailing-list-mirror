@@ -6,98 +6,81 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CC9020248
-	for <e@80x24.org>; Tue,  5 Mar 2019 04:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2FE820248
+	for <e@80x24.org>; Tue,  5 Mar 2019 04:26:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726986AbfCEEUx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 23:20:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38798 "HELO cloud.peff.net"
+        id S1726920AbfCEE0E (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 23:26:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38806 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726590AbfCEEUx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 23:20:53 -0500
-Received: (qmail 729 invoked by uid 109); 5 Mar 2019 04:20:53 -0000
+        id S1726522AbfCEE0D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 23:26:03 -0500
+Received: (qmail 747 invoked by uid 109); 5 Mar 2019 04:26:04 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 04:20:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 04:26:04 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28568 invoked by uid 111); 5 Mar 2019 04:21:09 -0000
+Received: (qmail 28595 invoked by uid 111); 5 Mar 2019 04:26:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 04 Mar 2019 23:21:09 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 04 Mar 2019 23:26:20 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Mar 2019 23:20:51 -0500
-Date:   Mon, 4 Mar 2019 23:20:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Mar 2019 23:26:01 -0500
+Date:   Mon, 4 Mar 2019 23:26:01 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH] builtin/config.c: don't print a newline with --color
-Message-ID: <20190305042050.GE19800@sigill.intra.peff.net>
-References: <b5ca6391fd0273fb7d6b92bc5ada96df93bc5cf2.1551487219.git.me@ttaylorr.com>
- <xmqqtvgk69ik.fsf@gitster-ct.c.googlers.com>
- <20190303174214.GF23811@sigill.intra.peff.net>
- <xmqqlg1vw9f2.fsf@gitster-ct.c.googlers.com>
- <xmqqh8cjw7ob.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc/fsck: discuss mix of --connectivity-only and
+ --dangling
+Message-ID: <20190305042601.GF19800@sigill.intra.peff.net>
+References: <20190227145549.GA3255@sigill.intra.peff.net>
+ <20190227145928.GA3727@sigill.intra.peff.net>
+ <xmqqlg1z9uko.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqh8cjw7ob.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlg1z9uko.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 04, 2019 at 02:05:40PM +0900, Junio C Hamano wrote:
+On Fri, Mar 01, 2019 at 11:50:31AM +0900, Junio C Hamano wrote:
 
-> >> With respect to backwards compatibility, my thinking on the matter was
-> >> basically:
-> >>
-> >>   1. Since --type=color was supposed to be a drop-in replacement for
-> >>      --get-color, it's a bug that they don't behave the same.
-> >>
-> >>   2. It's a fairly recent feature, so nobody really noticed the bug
-> >>      until recently (and it was in fact me who noticed and got annoyed
-> >>      by it). If it were an ancient behavior, we might think about
-> >>      retaining even bug compatibility, but that's not the case here.
+> > I'm actually a little torn on this. We could consider this a bug, and
+> > the "option" to disable it when you want things to go fast is to say
+> > "--no-dangling". That leaves no way to say "show me the list of
+> > unreachable objects, but don't bother spending extra time on dangling
+> > analysis". But I don't think I've ever really wanted that list of
+> > unreachable objects anyway (and besides, you could do it pretty easily
+> > with cat-file, rev-list, and comm).
 > >
-> > Now I think "we weren't consistent to begin with with --get-color,
-> > and treating --type=color as a special case is justifiable"; and I
-> > agree with the above two points.
+> > So I sketched up what it might look like to just fix the bug (but kick
+> > in only when needed), which is below.
 > 
-> Just to avoid an awkward situation where the ball gets dropped and
-> left on the floor forgotten, the above does not mean I am 100% happy
-> with the patch as posted.  There is no mention of --get-color
-> anywhere, let alone it shows the ANSI sequence without traililng LF,
-> which I would consider to be the most important part of the
-> justification.  It is much stronger than "I expected there won't be
-> any trailing LF from 'git config'", which was the only thing I
-> managed to read in the original and led to my response.
+> As the primariy purose of the --conn-only option being such, perhaps
+> we should have made --no-dangling the default when --conn-only is in
+> effect.
 
-Yeah, I agree it needs to be the main justification in the commit
-message.
+Yes, perhaps. Though after thinking on this for a few days, I actually
+think there is no real reason not to just have --dangling do the right
+thing here (and we're still much faster than a full fsck, and not much
+slower than the current code unless you happen to have a large number
+of unreachable commits and trees).
 
-I do wonder, though, if we're digging ourselves a hole with the
-inconsistency between different --types that will bite us later. Given
-that it's not that hard to chomp the output (and as you noted, the shell
-does it fairly transparently), and given that the caller has to switch
-between "--get-color" and "--type=color", it's not that hard to handle
-the output differently if you know to do so.
+And then if the user says "--no-dangling", we can be even faster (i.e.,
+the same as the current code).
 
-Mostly I was just surprised by the new behavior. Perhaps the right
-solution is not a patch to the code, but to the documentation. Something
-like:
+We could also make "--no-dangling" the default for
+"--connectivity-only", though I do not have a strong feeling either way.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 495bb57416..61f3a9cdd7 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -252,7 +252,9 @@ Valid `<type>`'s include:
- 	output.  The optional `default` parameter is used instead, if
- 	there is no color configured for `name`.
- +
--`--type=color [--default=<default>]` is preferred over `--get-color`.
-+`--type=color [--default=<default>]` is preferred over `--get-color`
-+(but note that `--get-color` will omit the trailing newline printed by
-+--type=color).
- 
- -e::
- --edit::
+> But if --conn-only is made to do the right thing while showing
+> dangling and unreachable properly sifted into their own bins, like
+> this patch does, what's the difference between that and the normal
+> --no-conn-only, other than performance and corrupt blobs left
+> unreported?  Perhaps if we are going that route, it might even make
+> sense to rename --conn-only to --skip-parsing-blobs or something.
+
+In addition to not opening blobs, we won't actually do fsck checks on
+any of the objects. So in git.git, for instance, we do not warn about
+the missing tagger in the v0.99 tag when --connectivity-only is in use.
 
 -Peff
