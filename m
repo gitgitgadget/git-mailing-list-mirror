@@ -2,99 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BDBD20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 12:44:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FC5020248
+	for <e@80x24.org>; Tue,  5 Mar 2019 12:57:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728301AbfCEMoq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 07:44:46 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35326 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728152AbfCEMoq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 07:44:46 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t18so9317235wrx.2
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 04:44:45 -0800 (PST)
+        id S1727590AbfCEM5q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 07:57:46 -0500
+Received: from mail-it1-f169.google.com ([209.85.166.169]:55379 "EHLO
+        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726301AbfCEM5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 07:57:45 -0500
+Received: by mail-it1-f169.google.com with SMTP id z131so3910050itf.5
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 04:57:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=nee8QIvMQcWKWQgFxnmMVUAzNFxoLUE7hbD6LVUlmLw=;
-        b=TJbZQnFTUbQ+P3mzW3E2qtT8me+/TO8OUAjOpZY8AO/5mx+h0/IiWxf8yyxOzAgK9f
-         0w78ZtpupwnD/BE50NoM9UF86qdzLqMvNiCNyLmJjFf596oJWDoae6NpjHpaojFfDebI
-         IR9lQyA2gUX7aw3LYZw0BZU8mKAtvzcKfkVI6Qo3z3TvNn/sX+VRsFzfxdTw8RgeOJVB
-         rAc3Da/DCvSULPAeTSpTIyFdH0elyApfaKK6Yi2Xmq3r2CP45T/Q0ACT3o7u846oB+tr
-         Wu1r1Il2E6iT5KDuKqlbPWaWiz9swGs7BMg+WJq/x75v5zi3zwwcGHD1qOpifgin0Hxp
-         MltA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2bFEYfeJGX1DVKMx1u7tJT8s42+/eUmywnUz5Kv00tE=;
+        b=amtfh3MWT4p2ofO8+ZuUgaNkxxvz8T4LvWyTawe1agOPJK3GTLt2ThW2jhZhOrxfxX
+         8G7efTGIudDABHpKf8A1GV7EDgmwJKSDER+oJSBTHheNHxHJqgfejpqEUEFmZkQjiLZR
+         KZgT+HuxwSD6TWgx+Txctn9KF1qHOmRe+bwGXK+l0JfD8IkZbXMxVdoU8Gj1iYATb0NK
+         5d51nQB0MtHTo9NpbYMR1dZ6SWuTcATisqvwYRVXDKXwXIizUqC4fMG7LqadaHpeZMOL
+         4T792woY2QTxzshUK5WQP2xXQRjXD8lvuw5ANNUcrzdrC+TwmiTiQGtOMX4YpNvBTgFL
+         HKlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=nee8QIvMQcWKWQgFxnmMVUAzNFxoLUE7hbD6LVUlmLw=;
-        b=LQl9r5+j+p1jScOFq7wG+urUwgrNGbNk8Hh8+BmHOgV62YTsKZO9Lrcl0ZBrS9+CwV
-         JgnSjva3bPmIL1WfS8NBOW/YaJhNgiafPL+jgkZPnBlRsgY7CjbacvN4ud9GE7Rho1WG
-         rRKcjJ6GRYhx5uwwDwhTY8kkGZeZvCmFkLA3ArdLNT8TKwFRJEKVxZmalJZcIhJ4LYoF
-         8wtXNebHXDanaf/TTSKf4hSZaRRSS2p4S896k6+E587OuVNkTd91dE8hq6jcc7sXk/5w
-         hHGqc5la1uVXE4Rk+mK9Z0wNAw5XErW66diLwFr7xG5qs5yw21sCsYubgZjW3g7tfZ1s
-         CPFg==
-X-Gm-Message-State: APjAAAViWpoL9zdkXXQ0SvVwpYOl3QOxVxuJIzIKPx8B61L4Cksn8jo4
-        Z0oP/uT2MqVlNoLZhn4+GjA=
-X-Google-Smtp-Source: APXvYqzJXhoy29mRmg8HTSdxxeWP+U74AJmrjIbPAS5y8KXvSr1XcDNDM1fcStY2eg9wMotYkpNRyg==
-X-Received: by 2002:adf:ec10:: with SMTP id x16mr16417848wrn.171.1551789884393;
-        Tue, 05 Mar 2019 04:44:44 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x74sm10545925wmf.22.2019.03.05.04.44.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Mar 2019 04:44:43 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [GSoC][PATCH v3 2/3] t3600: modernize style
-References: <20190303122842.30380-1-rohit.ashiwal265@gmail.com>
-        <20190304120801.28763-1-rohit.ashiwal265@gmail.com>
-        <20190304120801.28763-3-rohit.ashiwal265@gmail.com>
-        <CAPig+cQ=Uoa3G0mvJ6MGfEM=W6bpghS-+Ub32UtmdoC0OAZD7w@mail.gmail.com>
-Date:   Tue, 05 Mar 2019 21:44:43 +0900
-In-Reply-To: <CAPig+cQ=Uoa3G0mvJ6MGfEM=W6bpghS-+Ub32UtmdoC0OAZD7w@mail.gmail.com>
-        (Eric Sunshine's message of "Mon, 4 Mar 2019 19:36:48 -0500")
-Message-ID: <xmqqimwxv6bo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2bFEYfeJGX1DVKMx1u7tJT8s42+/eUmywnUz5Kv00tE=;
+        b=tQ7lhu03XKGGGOy5zl4Lo5aXKjR02Hb/sJYIVGLWgw09KgszgvRSjf5GTQcGQ6LcCN
+         nRz5Btj4XILgWusKny2O/T6pljJ4mD7ePGrtyhAXJEhLNhqC/w9/6WJXiasq1SA4VUa6
+         rlMAx24JJm4OFEzphm4FuPNBTEEFlDmB6fZPZNThHDztXwJIj6bQimGjkI/sGP5g84JS
+         FYccf+ALw+YzDXmx+3GTlyiyoSTeyDMHFx50rF/F8JK+vY0MW9bn17G6Ja/Popq4P7gz
+         nNoMSFbZT2Gm4HVPC6f2S+aX+sEMscBgIfvBeNRqn5YMymp4odAgyg/EgYrTD0uc75uo
+         or7Q==
+X-Gm-Message-State: APjAAAVBsJFUg2vjSYQ0lCEzfEq+Pz8RFuWSH3t6C7ZzA+eLuJWBAj9t
+        m3s65Zwj/8vLbMNunRWmTYB5bxX1GMmlS2WOy6U=
+X-Google-Smtp-Source: APXvYqx2KslmGxUu5RqcKL7xNVlXvtdWPwcgTmCYwlzCYAWfpN2YE6cleCoZ9BGgrsnJs1W3g3o8Zn26ISN/aOv2BCc=
+X-Received: by 2002:a24:3b0a:: with SMTP id c10mr2167504ita.10.1551790665143;
+ Tue, 05 Mar 2019 04:57:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAHd-oW7onvn4ugEjXzAX_OSVEfCboH3-FnGR00dU8iaoc+b8=Q@mail.gmail.com>
+ <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
+ <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
+ <20190302150900.GU6085@hank.intra.tgummerer.com> <CAP8UFD31YKt7fm+shWdBxsL4fCSO4dU=97YwFsZ9gZBpEWmRPQ@mail.gmail.com>
+ <CACsJy8ATKdcDdbTzCdZFhChKEAWhjuYQJBpGXZ9HAVXK1r2pFw@mail.gmail.com> <20190305045140.GH19800@sigill.intra.peff.net>
+In-Reply-To: <20190305045140.GH19800@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 5 Mar 2019 19:57:18 +0700
+Message-ID: <CACsJy8D-eQUGFsu4_cB9FE6gAo2d68EF_x2ze3YLXKAxYJfhSQ@mail.gmail.com>
+Subject: Re: Questions on GSoC 2019 Ideas
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        git <git@vger.kernel.org>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> This test is unusual in that it first cd's into a subdirectory and
-> then cd's back out with "cd ..". And, while the use of subshells is
-> correct to ensure that all 'cd' commands are undone at the end of the
-> test (whether successful or not), the entire construction is
-> unnecessarily confusing. This is not the sort of issue which should be
-> fixed in this style-fix patch, however, it is something which could be
-> cleaned up with a follow-up patch. For instance, the test might be
-> reworked like this:
+On Tue, Mar 5, 2019 at 11:51 AM Jeff King <peff@peff.net> wrote:
+> > processing power from multiple cores, but about _not_ blocking. I
+> > think one example use case here is parallel checkout. While one thread
+> > is blocked by pack access code for whatever reason, the others can
+> > still continue doing other stuff (e.g. write the checked out file to
+> > disk) or even access the pack again to check more things out.
 >
->     git init repo &&
->     (
->         cd repo &&
->         echo something >somefile &&
->         git add somefile &&
->         git commit -m "add a file"
->     ) &&
->     git --git-dir=repo/.git --work-tree=repo rm somefile &&
->     test_must_fail git -C repo ls-files --error-unmatch somefile
+> I'm not sure if it would help much for packs, because they're organized
+> to have pretty good cold-cache read-ahead behavior. But who knows until
+> we measure it.
 >
-> It's up to you whether you actually want to include such a follow-up
-> patch in your series; it's certainly not a requirement.
+> I do suspect that inflating (and delta reconstruction) done in parallel
+> could be a win for git-grep, especially if you have a really simple
+> regex that is quick to search.
 
-I missed that.  As you said, it can be left for further clean-up.
+Maybe git-blame too. But this is based purely on me watching CPU
+utilization of one command with hot cache. For git-blame though, diff
+code as to be thread safe too but that's another story.
+-- 
+Duy
