@@ -2,86 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,GAPPY_SUBJECT,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6104820248
-	for <e@80x24.org>; Tue,  5 Mar 2019 14:03:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E120020248
+	for <e@80x24.org>; Tue,  5 Mar 2019 14:03:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727245AbfCEODq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 09:03:46 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35604 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726250AbfCEODq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 09:03:46 -0500
-Received: by mail-wm1-f65.google.com with SMTP id y15so2689996wma.0
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 06:03:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=aX3q95oQxQ8YGXJsEJwJskdgn/R2HkzMK6CIjMcHbRk=;
-        b=YsOBStECiXUK50G1CaVJQ+c22ZheHNeX2E97++yFHcci19MXunOxibBP3bQYZodJIo
-         jrmr2CTIs5FE+dtfcOPusupnUzB1Gw+YZeo/KJBSIbIXWmjQm+l+uZ+9ymRZ4X6m/K/0
-         B+cmiU7gfj6Yzgxya1Ny6SESNikpWA6wo+v51OTuRkyrser+o7SrFiUDoVQmZc1W2njM
-         qLd66rLC3LNLaUF4Dnsna1bvGPIXETxVJcOGUP8/GRum94ix688NjR8J+iVKNNOuF1uk
-         asQXSz7K8w6tfvSUylxxQJcXlUom9bbqiiPB9z/f+wjr3EkKHy46n78xILDt1cIYCMtS
-         q8/A==
+        id S1727444AbfCEOD6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 09:03:58 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43606 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726250AbfCEOD6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 09:03:58 -0500
+Received: by mail-wr1-f68.google.com with SMTP id d17so9589761wre.10
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 06:03:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=aX3q95oQxQ8YGXJsEJwJskdgn/R2HkzMK6CIjMcHbRk=;
-        b=CP0KK37PFL2hMMM1d4H7+Qxa4phsz8Eyt/77fxePU1a/UdRTIQp6RXcnXq94gAsfKy
-         sv+guZMqhag/xgnkoRH3x38F9jX1ui+dsaYmVwvpDjRkuQrUP29sG1Ydt8AeiqLfSeot
-         TI91xGofarBWSJDGE00Yg4vyAR0pvPTI7QlUSVWChwb6gImG/7drt/sjpZBUnQcgfpz9
-         MsoD/yugvLDdEnB1gjqwK3k6oK9+U9WFFaiGuTU5pdqjNLqWm/V4qR0hSeUmRZh7iboa
-         CDCKmhswQA8qsJU8xlesXefYehCKwPUx9XZQEZqGUNZhkgMu8IHKrZkNhTCn4aN/rBVp
-         QJ1Q==
-X-Gm-Message-State: APjAAAWSXmOOqEABMyPQSQajN6aVY9RwamsHLQ5stLzHtgF+hZ/eGQ6n
-        1J+utd3xelk8zz9ISbRjkpFPZXDzIrg=
-X-Google-Smtp-Source: APXvYqyGDWxBjlUQuQYI0yMjqD4XFxabSJHCSYBiWgf2juMCl2MczRgxmRdlhZg/EJVdXsFw9h4jEA==
-X-Received: by 2002:a1c:4889:: with SMTP id v131mr2817150wma.146.1551794624222;
-        Tue, 05 Mar 2019 06:03:44 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n129sm10651000wmf.21.2019.03.05.06.03.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Mar 2019 06:03:43 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] doc/rebase: extend examples to show continuing branches
-References: <alpine.LFD.2.21.1903050545460.24324@localhost.localdomain>
-Date:   Tue, 05 Mar 2019 23:03:43 +0900
-In-Reply-To: <alpine.LFD.2.21.1903050545460.24324@localhost.localdomain>
-        (Robert P. J. Day's message of "Tue, 5 Mar 2019 05:48:28 -0500 (EST)")
-Message-ID: <xmqqr2blto3k.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9dl5hVX85ZXelej4afDf9hZ6B2gZ1vI8/U1PcHiWYyo=;
+        b=TTPGnED63VdwL75GBoVk7+92QVttqt7pF+LAMYLK5NY/OJm/IfOCwnT8PpjFvbKWtu
+         Ffdv6NypBoi8SwAUJNChw8TbsQu3fNFnNGalYHsUBRPuWAzk3CXinNGr+1RCbjADhBu6
+         ge5eIg1OsNxGNzPBmS9cRsKwue+YYrB/Dmr+ll/rb2SZf5W1YDw0Jcn6JVKtD1f7A/LN
+         PZ7syGzh0zo0+MnT55ObYlBWKlmI0B/d6jIKAFt44wHu7yry+QnxS9zmA5k4p1botBjX
+         5GihA2sv4lUcs2259gSQrGDFTdhxpLtAXZZaLGaZKoIer1BhGb+oIoFRkhey6QBOqSpk
+         Tg0w==
+X-Gm-Message-State: APjAAAWcYowNgdjuNwVRn2gJWm75Kw2/DTyuLvpTZxsJ8BQcQW9GsXUd
+        luwclgpb+PtEPYcJcJqA0MOqvK27yPjR1GOlFbs=
+X-Google-Smtp-Source: APXvYqwzgRAK92VBk/+Mx9y2P1YGd9BvU1smZleceKt+BIHJkPUXzSF0eNaq0L0vX4lHIiFTGZyX1wy/DLcBVJdTqD0=
+X-Received: by 2002:a5d:4149:: with SMTP id c9mr17149446wrq.58.1551794636672;
+ Tue, 05 Mar 2019 06:03:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAPig+cSKOSC+CckNbjr7HahT5jXkp47WuOxbDov_KQi4XNnbQQ@mail.gmail.com>
+ <20190305134259.10962-1-rohit.ashiwal265@gmail.com>
+In-Reply-To: <20190305134259.10962-1-rohit.ashiwal265@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 5 Mar 2019 09:03:45 -0500
+Message-ID: <CAPig+cR3b=jk4W=9SF4XJQyqAfFHiG8MduypD75RL1=T_qY0Hg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v3 3/3] t3600: use helpers to replace test -d/f/e/s <path>
+To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+On Tue, Mar 5, 2019 at 8:43 AM Rohit Ashiwal <rohit.ashiwal265@gmail.com> wrote:
+> On 2019-03-05 0:42 Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > As with the commit message of 2/3, many of the words in this message
+> > are separated by multiple spaced. Please fold out the excess so there
+> > is only a single space between words.
+> >
+> > Also, no need to say "previously" since readers know that the patch is
+> > changing something. Rewrite in imperative mood:
+>
+> Okay, I'll keep that in mind from next time onwards. The spaces were
+> provided to make the commit message look aesthetically pleasing.
+>
+> These changes aside, is there anything you would like to add to the review?
+> or is it good to go for a merge?
 
-> Currently, all of the examples for "man git-rebase" show rebasing from
-> a branch that has had no further development, which might mislead
-> readers into thinking that that is a necessary condition for rebasing,
-> so tweak the examples to show further development on such a branch to
-> clarify that.
-
-We state the status-quo in present tense to start problem
-description, so "Currently" is a noise word you can and should omit.
-
-As I already said, at least one example that rebases a branch that
-was forked from the midpoint of another branch, so the problem
-description is already false.  If we apply this patch, do we lose
-all examples that rebase a branch that purely builds on top of the
-tip of another branch?  That would also mislead readers into
-thinking that you need to advance the base branch before you can
-rebase the forked branch ;-).
-
+I don't understand your question.
