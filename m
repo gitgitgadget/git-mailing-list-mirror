@@ -6,25 +6,25 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A22F20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 04:55:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FA7A20248
+	for <e@80x24.org>; Tue,  5 Mar 2019 04:58:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726824AbfCEEzi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 4 Mar 2019 23:55:38 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38876 "HELO cloud.peff.net"
+        id S1726938AbfCEE6x (ORCPT <rfc822;e@80x24.org>);
+        Mon, 4 Mar 2019 23:58:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38894 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726522AbfCEEzh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Mar 2019 23:55:37 -0500
-Received: (qmail 851 invoked by uid 109); 5 Mar 2019 04:55:38 -0000
+        id S1726522AbfCEE6x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Mar 2019 23:58:53 -0500
+Received: (qmail 872 invoked by uid 109); 5 Mar 2019 04:58:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 04:55:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 04:58:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28759 invoked by uid 111); 5 Mar 2019 04:55:54 -0000
+Received: (qmail 28786 invoked by uid 111); 5 Mar 2019 04:59:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 04 Mar 2019 23:55:54 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 04 Mar 2019 23:59:09 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Mar 2019 23:55:35 -0500
-Date:   Mon, 4 Mar 2019 23:55:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Mar 2019 23:58:51 -0500
+Date:   Mon, 4 Mar 2019 23:58:51 -0500
 From:   Jeff King <peff@peff.net>
 To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
@@ -35,7 +35,7 @@ Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
         Matthieu Moy <git@matthieu-moy.fr>
 Subject: Re: Do test-path_is_{file,dir,exists} make sense anymore with -x?
-Message-ID: <20190305045535.GI19800@sigill.intra.peff.net>
+Message-ID: <20190305045851.GJ19800@sigill.intra.peff.net>
 References: <pull.152.git.gitgitgadget@gmail.com>
  <bf5eb045795579dd5d996e787e246996688cf4bf.1551188524.git.gitgitgadget@gmail.com>
  <CACsJy8DG6+mmA5NT67V46=n1-5H_eh3779eE28YN4kcjb0Cq0A@mail.gmail.com>
@@ -44,71 +44,68 @@ References: <pull.152.git.gitgitgadget@gmail.com>
  <20190226174316.GD19606@sigill.intra.peff.net>
  <20190226193912.GD19739@szeder.dev>
  <20190226210101.GA27914@sigill.intra.peff.net>
- <20190303160459.GB28939@szeder.dev>
+ <20190304143633.GC28939@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190303160459.GB28939@szeder.dev>
+In-Reply-To: <20190304143633.GC28939@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 03, 2019 at 05:04:59PM +0100, SZEDER Gábor wrote:
+On Mon, Mar 04, 2019 at 03:36:33PM +0100, SZEDER Gábor wrote:
 
-> > >   - && chains in test helper functions; we must make sure that the
-> > >     tracing is restored even in case of a failure.
+> On Tue, Feb 26, 2019 at 04:01:01PM -0500, Jeff King wrote:
+> > > +	{ set +x ; } 2>/dev/null 4>/dev/null
+> > 
+> > Ah, this is the magic. Doing:
+> > 
+> >   set +x 2>/dev/null
+> > 
+> > will still show it, but doing the redirection in a wrapping block means
+> > that it is applied before the command inside the block is run. Clever.
 > 
-> Actually, the && chain is not really an issue, because we can simply
-> break the && chain at the very end:
+> Yeah, clever, but unfortunately (and to me suprisingly) unportable:
 > 
->   test_func () {
->         { disable_tracing ; } 2>/dev/null 4>&2
->         do this &&
->         do that
->         restore_tracing
->   }
+>   $ ksh
+>   $ set -x
+>   $ echo foo
+>   + echo foo
+>   foo
+>   $ set +x
+>   $ 
 > 
-> and make restore_tracing exit with $? (like you did above in pop_x()).
-
-Yeah, good point.
-
-> > Yeah, there is no "goto out" to help give a common exit point from the
-> > function. You could probably do it with a wrapper, like:
+> It doesn't show 'set +x', how convenient! :)
+> However:
 > 
-> Yeah, the wrapper works.
-> There are only a few test helper functions with multiple 'return'
-> statements, and refactoring them to have a single 'return $ret' at the
-> end worked, too.
+>   $ set -x
+>   $ echo foo 2>/dev/null
+>   + echo foo
+>   + 2> /dev/null
+>   foo
+>   $ { set +x; } 2>/dev/null
+>   + 2> /dev/null
+>   $ 
 
-Yeah, that might be less sneaky than this wrapper business. Or we could
-just do a few basic wrappers. The non-portable bit in my wrapper
-suggestion was the renaming of the old function. But if we accept just:
+Hmph. Good find. As you note, this is already a problem with "-x". I'm
+not sure if there's an easy way to fix this. We can't wrap it in a
+conditional function easily. I guess we could do something like:
 
-  real_foo() {
-	... do stuff with multiple returns ...
-  }
-  disable_function_tracing real_foo foo
+  if test "$SOMEHOW_WE_DETECT_KSH"
+  then
+	eval "set -x; run_the_test; set +x"
+  else
+	eval "set -x; run_the_test; { set +x; } 2>/dev/null"
+  fi
 
-then that is pretty trivial to do with an eval. It does disallow your
-"wrap all functions at once", but I think that is OK. We might want to
-only do a subset anyway.
-
-> We should also be careful and don't switch on tracing when returning
-> from test helper functions invoked outside of tests, e.g.
-> 'test_create_repo' while initializing the trash directory or
-> 'test_set_port' while sourcing a daemon-specific lib.
-
-Yeah, it would probably make sense in the "push" half to check that we
-are actually tracing at that moment.
-
-> On a mostly unrelated note, but I just noticed it while playing around
-> with this: 't0000'-basic.sh' runs its internal tests with $SHELL_PATH
-> instead of $TEST_SHELL_PATH.  I'm not sure whether that's right or
-> wrong.
-
-I'd say probably wrong, though it likely doesn't matter that much in
-practice.
+but I wonder if just ignoring it is a viable option here. We're talking
+about debugging output from the test suite, after all. As long as the
+test suite still _works_ on those shells, and as long as there are no
+developers on ksh-primary systems who can't bear to use another
+$TEST_SHELL_PATH, it's really not hurting anybody. The worst case is
+somebody reporting a test failure on NetBSD might have a slightly more
+verbose "-x" output.
 
 -Peff
