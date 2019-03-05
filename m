@@ -2,84 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 819CC20248
-	for <e@80x24.org>; Tue,  5 Mar 2019 19:27:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7880C20248
+	for <e@80x24.org>; Tue,  5 Mar 2019 21:29:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726546AbfCET1c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 14:27:32 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39858 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726190AbfCET1c (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 14:27:32 -0500
-Received: (qmail 20636 invoked by uid 109); 5 Mar 2019 19:27:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 19:27:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1991 invoked by uid 111); 5 Mar 2019 19:27:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 05 Mar 2019 14:27:48 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Mar 2019 14:27:30 -0500
-Date:   Tue, 5 Mar 2019 14:27:30 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, matvore@google.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH] rev-list: allow cached objects in existence check
-Message-ID: <20190305192729.GA13409@sigill.intra.peff.net>
-References: <20190304174053.GA27497@sigill.intra.peff.net>
- <20190304191932.105204-1-jonathantanmy@google.com>
- <20190304211749.GA3020@sigill.intra.peff.net>
- <xmqqzhq9tpie.fsf@gitster-ct.c.googlers.com>
+        id S1726535AbfCEV3E (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 16:29:04 -0500
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:38232 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726214AbfCEV3E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 16:29:04 -0500
+Received: by mail-wm1-f52.google.com with SMTP id a188so3929954wmf.3
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 13:29:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=p7fJue+VxJyOad9CkWRQj16oK+OBGJX2ZgJaMTpgGiE=;
+        b=JfxuKK3PlmsqieIBci1+SkCT9K7hby0VDIicwEVK5cdhYJl0O3RYyfL7W3Qx788cIN
+         xArJUDuk+5tlbBHGBENrC5AYDLbsjZzvXxQxn0pZUA6Ha5bopRqjtCbRmvCUxZgaRQFc
+         iFDn08tFmN0+/KS6RAdMF8FQgwffKmWDH1cVF3Fpi8DyVdzPfiUJc4v81MLqXEBv4lbW
+         br9lJLWYaGnm7tgH9EUHfM1NVyfEDjh4PuCUh3YG77G5UwIfVFwB4SO4RKCoyNvfE7UL
+         Gjn3AwfmJUMTIrySNzpPvrG6EqA0VHYHOGiaP7tb4U9dsxw7ot9Uada70EGEB2bIzv0l
+         w4zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=p7fJue+VxJyOad9CkWRQj16oK+OBGJX2ZgJaMTpgGiE=;
+        b=DcR3qJeFKfQ56Uuc6X0IdOHK4IhTj7hBhUx+wNSKQTOH6MgxdHDppAS7lS2RVxjVZK
+         vCkzeQcgbIYY699GP0UNsRyTdgrU+G/yZhuk6peSzHiPU6oFzksuLVyRcjfx6VjsW1LC
+         NZJXNNQeZnyKVQBLdPItNrQ/+jkST9RQ/sIDcLzC1hDuTOFFLuSKXPzAo+D/JBwlR/Ux
+         Zx/Uv3Lp/TkZXLFHFU/6iGgyxdcJfm5i23dg3PdPneIuNN64vxOzhsTqjeh9+LwDeTnD
+         o7LClow4uSVlDQUjCC1r9XxaL8kHGIUsRRZ5Z+kO5u4F80WVZEl7dfYBobtzYnxZVGaj
+         UuOw==
+X-Gm-Message-State: APjAAAWfy2nWmXVY+ZFpHVlEAoVeFz6dTjIHDD2QYNFr+/BQv3tTSJEH
+        PAtd7bkdfkSyhUnZGYcAKgQ=
+X-Google-Smtp-Source: APXvYqzIedXMF4N/x1/9s2K679jzES1qiW7XFC2HcaQlFew8J1rxf9FtS4AO2tZLxrZvs6mqFgC++g==
+X-Received: by 2002:a1c:6684:: with SMTP id a126mr304306wmc.47.1551821342299;
+        Tue, 05 Mar 2019 13:29:02 -0800 (PST)
+Received: from localhost ([2.28.70.135])
+        by smtp.gmail.com with ESMTPSA id a9sm767557wmm.10.2019.03.05.13.29.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 05 Mar 2019 13:29:01 -0800 (PST)
+Date:   Tue, 5 Mar 2019 21:29:00 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Sushma Unnibhavi <sushmaunnibhavi425@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC]:query regarding microproject
+Message-ID: <20190305212900.GY6085@hank.intra.tgummerer.com>
+References: <20190305080521.GB9308@hacker-queen>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqzhq9tpie.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20190305080521.GB9308@hacker-queen>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 05, 2019 at 10:33:13PM +0900, Junio C Hamano wrote:
+Hi,
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> Or teach git-blame to have its own pretend mechanism, and remove the
-> >> pretend mechanism from sha1-file.c.
-> >
-> > I think that would be ideal, but I'm not sure if it's feasible due to
-> > the layering of the various modules.
-> 
-> Sorry, but I do not get why we want command-line specific pretend
-> mechanism.  When one part of the system wants to behave as if object
-> X exists, doesn't that part want other parts of the system to share
-> that same world view to be consistent?
-> 
-> I am mostly reacting to "would be _ideal_"; if it were "if we have
-> per-system ad-hoc pretend mechanism, things like this and that would
-> become easier to implement, even though that is an ugly hack", I may
-> agree when I see examples of things that get easier, though.
+On 03/05, Sushma Unnibhavi wrote:
+> I am planning to do a microproject on using unsigned integral type
+> for collection of bits.If anyone else has not taken it up,I would
+> like to work on it.
 
-The problem is that it's not clear how each of those other parts of the
-system should react to these pretend objects. E.g., they probably should
-_not_ be used in any operation that might write, since we would not want
-to create a permanent object that points to an ephemeral one.
+Welcome to the Git project!
 
-By sticking this in sha1-file.c, it becomes hard to know who will access
-them, or with what expectations. Things work right now because we use
-the feature sparingly (and only from a process that's purely read-only).
-But we're at risk of somebody later misusing it, especially if we spread
-its use to more functions like has_object_file().  If this were local to
-git-blame, then that risk goes away.
+We generally do not assign micro-projects to someone in particular.
+If nobody has taken it yet feel free to work on it.  Reading through
+the page for micro-projects [*1*], there's the following bullet point:
 
-So that's what I meant by "ideal".
+"Select a microproject and check that it has not yet been taken or
+discussed by searching the mailing list. Public Inbox is your
+friend."
 
-I don't think it makes anything easier (in fact, after looking, I think
-it makes things in git-blame much harder, to the point that I am not
-planning to work on it anytime soon).
+Public Inbox is at https://public-inbox.org/git/, and you should
+search through the archive there to see if anyone has started on the
+project yet.
 
--Peff
+*1*: https://git.github.io/SoC-2019-Microprojects/
