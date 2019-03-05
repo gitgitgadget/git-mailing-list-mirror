@@ -7,59 +7,61 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BD5320248
-	for <e@80x24.org>; Tue,  5 Mar 2019 12:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE40D20248
+	for <e@80x24.org>; Tue,  5 Mar 2019 12:30:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728155AbfCEMam (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 07:30:42 -0500
-Received: from mail-pg1-f181.google.com ([209.85.215.181]:47048 "EHLO
-        mail-pg1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728009AbfCEMam (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 07:30:42 -0500
-Received: by mail-pg1-f181.google.com with SMTP id 196so5542670pgf.13
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 04:30:42 -0800 (PST)
+        id S1728183AbfCEMat (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 07:30:49 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:35072 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728172AbfCEMat (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 07:30:49 -0500
+Received: by mail-pf1-f193.google.com with SMTP id j5so5598940pfa.2
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 04:30:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FQX8vk3t7xAq+4JpiDyYxpV4tiit/QCBlqPlkD7RE8E=;
-        b=F3lNBCA/AFhVjlr1kmkM40nR6yC0S5GUkxf+vpRmvLLimAwydPxYw/5G3NVwQvzQyE
-         cR+7MYo2iM+sMMTFFrMUaVeewxIn6WUZ222MhWp6+YDuKKWn+iGoH5oRpK9ooC4Jmnpn
-         LbcxxnRowLiD0txhwFJxDrdsBn+yOl1RVZ1/vL3qu8skShG2YzxgNnJFCGbHK+TEC7Mf
-         n6Mkt9sZ7JNPru/ZOOx8AgylegX7f7LL9GuJNXSkOXBFYeHYPd18gJKWX2cTNFjmE5M8
-         DYH7THzgW4Dks9XX4mHXCR1nfex7SFLtkMpee8GWhVU/6uWP3PU94ivWAPaRsDcrGouh
-         Wp6g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hxERyCsr2cRvd88rOL08MO0R8g9JcvSKzSwYxbV+H5I=;
+        b=egve2aITCWZuO4ZHq1E8ivO8FNa3ESjFQKAX6Baod4aU/9of/KXhn0A7zn5T9/E2k3
+         h9ViRzaTbYuqPmcOZBVK31lboKaiGzI9TAmB3EqwZR0E4u/2IDdCZU+u5g2aIh2PoI9Z
+         1b12CV+Sp2oLz0dz55942hDX+g6qSnzNiTa68cBNTKM0dbt7gyIFyEcHk2euXElNHrN4
+         DHCP6hM1d2gpwMHxC10C0LYcTllfudVSyjXNxzV5xqS2cBVm9mEJxPKMN9vXRxtfVF1W
+         Px31pUJESRhuUPgOam3Pw433oSI5Q4dyI+ViVz+KrOzFtl+XJ85PudJCeFN97ocCzr8V
+         5FSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FQX8vk3t7xAq+4JpiDyYxpV4tiit/QCBlqPlkD7RE8E=;
-        b=WE9Nid8IommIq42jsRk8NKzRC4CDn8vnMZrvdpn1pW3tAXm54OdtFkiyAby21Ag/Rs
-         nmYjc0T8Z0c5qU244rrBjBlEG+WuNLqR6QAZi9N1VTJ3wzGevb3I2yrrVkDKZOaCgZVL
-         Ff/eh4M/mZRZCwZvfD63mehjMnv8WTvK9GOfOXORD5emwSmdoDF6vMiqA7oL/3Hm2DEt
-         XpRmfb+kawg0Q5E/qxGb0p22bumwP6ziPmVCTp7mn7wDRghhJOF68tmoW/12I1D0lfR3
-         0UzRHWdvVa5xo66Fwp1xk76UvE5YsNzKBgw36rdqNvEaXt8Or3qt3jCLfj8NsuXixiv8
-         1zeQ==
-X-Gm-Message-State: APjAAAVj97MLFLiNkLjpCAT67IuSRCZUfV4jZIguKDu5p7awYZ1XL47t
-        /4bZfGl796FkWJ0Kkk6vKdetrQ2A
-X-Google-Smtp-Source: APXvYqxJlSZjKLVRlIHPGqKc3hSnEpxTrAFULC8XqRobqY4ZyuWBFjdmkpZYh0F5ujF01UuWjZ+6rw==
-X-Received: by 2002:a17:902:e789:: with SMTP id cp9mr985505plb.127.1551789041524;
-        Tue, 05 Mar 2019 04:30:41 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hxERyCsr2cRvd88rOL08MO0R8g9JcvSKzSwYxbV+H5I=;
+        b=fcm6dHyFBPXSuQncfh+odmLAKHiiRV/bHKP04BE0Z6UtRTjD3uXqHO5l8/dqfXsktP
+         fQvXPcchK6cY+pcmH1xA/XIZjArDQfo0Sd9dk4TY2t0fTcyYHpl0RQb04pQ0OOuSxrQn
+         udJtDXTV/Yq8PIMydyHQ5lZ5f3tWG4tJgf+bi2l+TNfx0A7yvKptCFp5uqr0Hv8M5jnM
+         4/k2yU1yleqrH5VcX0Gg7lqfO31rQVtCXIcq9ELIxfggFsSD1ur54aY1mth/8YpKyuwF
+         xZyPYIICXIcrEm4wI7FZQF45fnAJkulU8Y7VnDKvI5iEH+Ug7CMQQo6GiUt8jxpojVPI
+         uDfQ==
+X-Gm-Message-State: APjAAAVmYX7A5uQz+cLOlV0oDAO/gBVqZHul1/JONm6RuFqDRUTxpvBO
+        IrK7sJTOOAeThL86B2PvfTEjMh5N
+X-Google-Smtp-Source: APXvYqwiQNMBGstUaylQB/S3qLX9Ih7FF/MvM7j2nh8wP3RbCjEHQppKl4jQdRHmHr4qEzyfviJ3Vw==
+X-Received: by 2002:a62:7602:: with SMTP id r2mr1593193pfc.191.1551789048017;
+        Tue, 05 Mar 2019 04:30:48 -0800 (PST)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id p14sm21177194pgn.34.2019.03.05.04.30.38
+        by smtp.gmail.com with ESMTPSA id z18sm24893716pfl.164.2019.03.05.04.30.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Mar 2019 04:30:40 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 05 Mar 2019 19:30:36 +0700
+        Tue, 05 Mar 2019 04:30:47 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 05 Mar 2019 19:30:41 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 00/20] nd/diff-parseopt part 3
-Date:   Tue,  5 Mar 2019 19:30:06 +0700
-Message-Id: <20190305123026.7266-1-pclouds@gmail.com>
+Subject: [PATCH 01/20] diff-parseopt: convert --[no-]indent-heuristic
+Date:   Tue,  5 Mar 2019 19:30:07 +0700
+Message-Id: <20190305123026.7266-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
+In-Reply-To: <20190305123026.7266-1-pclouds@gmail.com>
+References: <20190305123026.7266-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,38 +70,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The next part of nd/diff-parseopt to continue converting more diff
-options to parseopt. Based on nd/diff-parseopt-2.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ diff.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-Part 4 will hopefully finish the diff.c part and we'll move on to 4-5
-more parts on revision.c.
-
-Nguyễn Thái Ngọc Duy (20):
-  diff-parseopt: convert --[no-]indent-heuristic
-  diff-parseopt: convert --patience
-  diff-parseopt: convert --histogram
-  diff-parseopt: convert --diff-algorithm
-  diff-parseopt: convert --anchored
-  diff-parseopt: convert --binary
-  diff-parseopt: convert --full-index
-  diff-parseopt: convert -a|--text
-  diff-parseopt: convert -R
-  diff-parseopt: convert --[no-]follow
-  diff-parseopt: convert --[no-]color
-  diff-parseopt: convert --word-diff
-  diff-parseopt: convert --word-diff-regex
-  diff-parseopt: convert --color-words
-  diff-parseopt: convert --exit-code
-  diff-parseopt: convert --quiet
-  diff-parseopt: convert --ext-diff
-  diff-parseopt: convert --textconv
-  diff-parseopt: convert --ignore-submodules
-  diff-parseopt: convert --submodule
-
- Documentation/diff-options.txt |   2 +-
- diff.c                         | 342 ++++++++++++++++++++++-----------
- 2 files changed, 229 insertions(+), 115 deletions(-)
-
+diff --git a/diff.c b/diff.c
+index a63ee4a44d..c4cd84f1b3 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5124,6 +5124,9 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_BIT_F(0, "ignore-blank-lines", &options->xdl_opts,
+ 			  N_("ignore changes whose lines are all blank"),
+ 			  XDF_IGNORE_BLANK_LINES, PARSE_OPT_NONEG),
++		OPT_BIT(0, "indent-heuristic", &options->xdl_opts,
++			N_("heuristic to shift diff hunk boundaries for easy reading"),
++			XDF_INDENT_HEURISTIC),
+ 
+ 		OPT_GROUP(N_("Diff other options")),
+ 		OPT_CALLBACK_F(0, "relative", options, N_("<prefix>"),
+@@ -5162,11 +5165,7 @@ int diff_opt_parse(struct diff_options *options,
+ 		return ac;
+ 
+ 	/* xdiff options */
+-	if (!strcmp(arg, "--indent-heuristic"))
+-		DIFF_XDL_SET(options, INDENT_HEURISTIC);
+-	else if (!strcmp(arg, "--no-indent-heuristic"))
+-		DIFF_XDL_CLR(options, INDENT_HEURISTIC);
+-	else if (!strcmp(arg, "--patience")) {
++	if (!strcmp(arg, "--patience")) {
+ 		int i;
+ 		options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
+ 		/*
 -- 
 2.21.0.rc1.337.gdf7f8d0522
 
