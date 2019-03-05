@@ -2,97 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82D0720374
-	for <e@80x24.org>; Tue,  5 Mar 2019 06:25:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2287202BB
+	for <e@80x24.org>; Tue,  5 Mar 2019 06:29:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726134AbfCEGZ3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 01:25:29 -0500
-Received: from mx-relay66-hz2.antispameurope.com ([94.100.136.166]:57871 "EHLO
-        mx-relay66-hz2.antispameurope.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725818AbfCEGZ2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 5 Mar 2019 01:25:28 -0500
-Received: from unknown ([91.229.168.76]) by mx-relay66-hz2.antispameurope.com;
- Tue, 05 Mar 2019 07:25:26 +0100
-Received: from bruexc101.brumgt.local (10.251.3.120) by bruexc104.brumgt.local
- (10.251.3.119) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 5 Mar
- 2019 07:25:11 +0100
-Received: from bruexc101.brumgt.local ([fe80::8192:a565:2dec:8204]) by
- bruexc101.brumgt.local ([fe80::8192:a565:2dec:8204%19]) with mapi id
- 15.00.1473.003; Tue, 5 Mar 2019 07:25:11 +0100
-From:   "Wendeborn, Jonathan" <Jonathan.Wendeborn@bruker.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-CC:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: AW: AW: fast-import fails with case sensitive tags due to case
- insensitive lock files
-Thread-Topic: AW: fast-import fails with case sensitive tags due to case
- insensitive lock files
-Thread-Index: AdTPonIg/9QWZqseSg6y1MSsuJUGaABrM6kAAEQUNaAADcUQgAAhW2vQ
-Date:   Tue, 5 Mar 2019 06:25:11 +0000
-Message-ID: <b8976ee7d99547649cdded5a80ab118d@bruexc101.brumgt.local>
-References: <ceb9b34681c14d9ab2a33ba909b5ca75@bruexc101.brumgt.local>
- <20190303002542.GG601925@genre.crustytoothpaste.net>
- <3dbce0f1c80e4e67b114f8c84e2106c8@bruexc101.brumgt.local>
- <nycvar.QRO.7.76.6.1903041627230.45@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1903041627230.45@tvgsbejvaqbjf.bet>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.251.3.124]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1726259AbfCEG3N (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 01:29:13 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51016 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725818AbfCEG3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 01:29:13 -0500
+Received: by mail-wm1-f67.google.com with SMTP id x7so1356815wmj.0
+        for <git@vger.kernel.org>; Mon, 04 Mar 2019 22:29:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=r5VWp4ylP3GppHyefR/FVHRQ/jMRfmn9jgfelaXEPqk=;
+        b=jLX39EXLEWVSILPwFXioxIVJ26PCHSihOOoeEbgnZ3G1U6WCYZ9lOHzzlT5iBOQ9Ah
+         WVc8VAkhbw9KhxZcPDlAPvDOCa4Pbi/6+m2UcG/W5kwa0HmMl1rKX9/3vrVqkEUN789V
+         iGkGWk85VJw2PHS46RFST07ZqIOH/CDtkeplfaS+qj3Twp7pj9sI5CKH+LPIVt7CeNqu
+         q/k8EP7i1AMHGOemYDtQH8vdOSGMTivRgiwyCTJKnf/uYNkve6lx765BYytBWe3q9McE
+         gkK/4ghzInJXH0T8Aqv1NcA4MIltYeUil8E8Fmhb6OBU6USZgeKU6UD/7Ch777PuXySI
+         7u+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=r5VWp4ylP3GppHyefR/FVHRQ/jMRfmn9jgfelaXEPqk=;
+        b=LuTJfOx83GHL9i67aVZfuieKPgHamlHfULBrT8svfspkCayhf/mIG6Dz+WrrLlTbSL
+         iGJUbjInLhIRcv4HaiHZcw95mweXK/uXegzvHP3cEmhUvLvD+g9JdHcZUz8JId0jVGyi
+         TPcOolWz3ZsiKK8I0MDHSWdzshkSfC8OgO47BMNeGyirmyTZCnUKPBQyMwfTgicw7uEM
+         Zz4goUifeiiucKnd+wGEjN+iyQc4RG0IErujswTwJdZhXcZzTcef6bZjHah14btt9LFV
+         wGD6AqIy1H++SvqCX+aThy51woc91R2tn217LKvmgWlOi2pmVR7cEZAz0bAz0xz8RvEQ
+         XG+Q==
+X-Gm-Message-State: APjAAAXg8wiKGg9E1EVmYDxG1Zr/KlGrJnKQprDt0xBx5Q7sCzFsRYOz
+        b9R3D4PDlyFkZ06m7bpdekxfTlB92a0=
+X-Google-Smtp-Source: APXvYqx7k23tg2euWACxmDQ7TPH2S9lZbDzlaXWOGnT1XZnkUOXBb4+PqBB+p+UUlf8sXubX2KcKGA==
+X-Received: by 2002:a7b:ce88:: with SMTP id q8mr1501198wmj.34.1551767349934;
+        Mon, 04 Mar 2019 22:29:09 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v10sm14168984wrn.26.2019.03.04.22.29.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 04 Mar 2019 22:29:06 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v6 03/21] range-diff: first rudimentary implementation
+References: <pull.1.v5.git.gitgitgadget@gmail.com>
+        <pull.1.v6.git.gitgitgadget@gmail.com>
+        <08b8c3fc45253737ef6ca860e6cbe3ee6211d7a6.1534159977.git.gitgitgadget@gmail.com>
+Date:   Tue, 05 Mar 2019 15:29:06 +0900
+In-Reply-To: <08b8c3fc45253737ef6ca860e6cbe3ee6211d7a6.1534159977.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Mon, 13 Aug 2018
+        04:33:04 -0700 (PDT)")
+Message-ID: <xmqqr2blvnpp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-cloud-security-sender: jonathan.wendeborn@bruker.com
-X-cloud-security-recipient: git@vger.kernel.org
-X-cloud-security-Virusscan: CLEAN
-X-cloud-security-disclaimer: This E-Mail was scanned by E-Mailservice on mx-relay66-hz2.antispameurope.com with EF9CBCA72A1
-X-cloud-security-connect: unknown[91.229.168.76], TLS=1, IP=91.229.168.76
-X-cloud-security: scantime:.1597
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGkgSm9oYW5uZXMsDQoNCj4+IE9uZSB0aGluZyBJIHN0aWxsIHdvdWxkIGxpa2UgdG8gZW5jb3Vy
-YWdlIHRvIGlzIHRvIGltcHJvdmUgdGhlIGVycm9yIA0KPj4gbWVzc2FnZSB3aGljaCBpcyByZWFs
-bHkgbWlzbGVhZGluZyBpbiB0aGlzIGNhc2UuDQoNCj4gV2VsbCwgdGhhdCBpcyBhdCBsZWFzdCBz
-b21ldGhpbmcgeW91IGNvdWxkIGRvLiBBZnRlciBhbGwsIHlvdSB1c2UgYSB2b2x1bnRlZXItZHJp
-dmVuIHByb2plY3QsIHNvIHlvdSBjb3VsZCBhdCBsZWFzdCB2b2x1bnRlZXIgYSBsaXR0bGUgdGlt
-ZSB0byBpbXByb3ZpbmcgaXQgeW91cnNlbGYuDQoNClRoYXQncyB0cnVlIDopDQoNClRoYW5rIHlv
-dSENCkpvbmF0aGFuDQoNCi0tLS0tVXJzcHLDvG5nbGljaGUgTmFjaHJpY2h0LS0tLS0NClZvbjog
-Sm9oYW5uZXMgU2NoaW5kZWxpbiA8Sm9oYW5uZXMuU2NoaW5kZWxpbkBnbXguZGU+IA0KR2VzZW5k
-ZXQ6IE1vbnRhZywgNC4gTcOkcnogMjAxOSAxNjoyOQ0KQW46IFdlbmRlYm9ybiwgSm9uYXRoYW4g
-PEpvbmF0aGFuLldlbmRlYm9ybkBicnVrZXIuY29tPg0KQ2M6IGJyaWFuIG0uIGNhcmxzb24gPHNh
-bmRhbHNAY3J1c3R5dG9vdGhwYXN0ZS5uZXQ+OyBnaXRAdmdlci5rZXJuZWwub3JnDQpCZXRyZWZm
-OiBSZTogQVc6IGZhc3QtaW1wb3J0IGZhaWxzIHdpdGggY2FzZSBzZW5zaXRpdmUgdGFncyBkdWUg
-dG8gY2FzZSBpbnNlbnNpdGl2ZSBsb2NrIGZpbGVzDQoNCkhpIEpvbmF0aGFuLA0KDQpPbiBNb24s
-IDQgTWFyIDIwMTksIFdlbmRlYm9ybiwgSm9uYXRoYW4gd3JvdGU6DQoNCj4gPiBSaWdodCBub3cs
-IHlvdSBoYXZlIHNvbWUgY2hvaWNlczogDQo+ID4g4oCiIFZvbHVudGVlciB0byBpbXBsZW1lbnQg
-cmVmdGFibGUuIA0KPiA+IOKAoiBTaW5jZSB5b3UncmUgb24gV2luZG93cyAxMCwgc2V0IHlvdXIg
-R2l0IHJlcG9zaXRvcnkgZGlyZWN0b3J5IGFzDQo+ID4gwqAgY2FzZS1zZW5zaXRpdmUuIA0KPiA+
-IOKAoiBVc2UgV2luZG93cyBTdWJzeXN0ZW0gZm9yIExpbnV4LCB3aGljaCBpcyBjYXNlIHNlbnNp
-dGl2ZSBhbmQgDQo+ID4gY3JlYXRlcw0KPiA+IMKgIGRpcmVjdG9yaWVzIHdpdGggdGhhdCBmbGFn
-IChldmVuIG9uIE5URlMpLCB0byBkbyB5b3VyIGltcG9ydC4gDQo+ID4g4oCiIElmIHlvdSBjb250
-cm9sIHRoZSBmYXN0LWV4cG9ydCBvdXRwdXQsIGFkanVzdCB0aGUgYXJndW1lbnRzIHlvdSANCj4g
-PiBwYXNzDQo+ID4gwqAgc3VjaCB0aGF0IHRoZSBvdXRwdXQgZG9lcyBub3QgY29udGFpbiBvbmUg
-b2YgdGhlIG9mZmVuZGluZyB0YWdzLiANCj4gDQo+IEhpIEJyaWFuLA0KPiANCj4gVGhhbmsgeW91
-IHZlcnkgbXVjaCBmb3IgeW91ciBhbnN3ZXIhDQo+IA0KPiBVbmZvcnR1bmF0ZWx5IEkgYW0gc3R1
-Y2sgd2l0aCBXaW5kb3dzIDEwIDE3MDMgd2hpY2ggbmVpdGhlciBzdXBwb3J0cyANCj4gY2FzZS1z
-ZW5zaXRpdml0eSBub3IgYW55IExpbnV4IHN1YnN5c3RlbSBmcm9tIHRoZSBNaWNyb3NvZnQgU3Rv
-cmUgOigNCg0KVG9vIGJhZC4NCg0KPiBBbHNvLCBteSBlbXBsb3llciB1bmZvcnR1bmF0ZWx5IGRv
-ZXNu4oCZdCBhbGxvdyBtZSB0byBpbnZlc3QgdGhlIHRpbWUgdG8gDQo+IGltcGxlbWVudCByZWZ0
-YWJsZSwNCg0KRXZlbiB3b3JzZSENCg0KPiBzbyBJIGd1ZXNzIEkgZ28gd2l0aCBtYW51YWxseSBs
-ZWF2aW5nIG91dCB0aGUgb25lIGNvbmZsaWN0aW5nIGxhYmVsIEkgDQo+IGZvdW5kIGFuZCB0YWdn
-aW5nIGl0IG1hbnVhbGx5IGFmdGVyd2FyZC4NCg0KVGhhdCBpcyBhIHZhbGlkIHdvcmthcm91bmQu
-DQoNCj4gT25lIHRoaW5nIEkgc3RpbGwgd291bGQgbGlrZSB0byBlbmNvdXJhZ2UgdG8gaXMgdG8g
-aW1wcm92ZSB0aGUgZXJyb3IgDQo+IG1lc3NhZ2Ugd2hpY2ggaXMgcmVhbGx5IG1pc2xlYWRpbmcg
-aW4gdGhpcyBjYXNlLg0KDQpXZWxsLCB0aGF0IGlzIGF0IGxlYXN0IHNvbWV0aGluZyB5b3UgY291
-bGQgZG8uIEFmdGVyIGFsbCwgeW91IHVzZSBhIHZvbHVudGVlci1kcml2ZW4gcHJvamVjdCwgc28g
-eW91IGNvdWxkIGF0IGxlYXN0IHZvbHVudGVlciBhIGxpdHRsZSB0aW1lIHRvIGltcHJvdmluZyBp
-dCB5b3Vyc2VsZi4NCg0KQ2lhbywNCkpvaGFubmVzDQo=
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> +		else if (!line.buf[0] || starts_with(line.buf, "index "))
+> +			/*
+> +			 * A completely blank (not ' \n', which is context)
+> +			 * line is not valid in a diff.  We skip it
+
+I noticed this while wondering how somebody could teach range-diff
+to honor --notes=amlog while preparing the patches to be compared
+[*1*], but this assumption goes against what POSIX.1 says these
+days.
+
+    It is implementation-defined whether an empty unaffected line is
+    written as an empty line or a line containing a single <space> character.
+
+cf. http://pubs.opengroup.org/onlinepubs/9699919799/utilities/diff.html#tag_20_34_10_07
+
+We need to insert ", as we disable user's diff.suppressBlankEmpty
+settings" before ".  We skip it" (and if we get affected by the
+setting, we need to fix it; it is not ultra-urgent, though).
+
+[Footnote]
+
+*1* ... which I do not have a good answer to, yet.  As discussed
+earlier, the diffopt passed into the show_range_diff() machinery is
+primarily meant for the final output (i.e. how the matching patches
+from the two iterations are compared) and not about how the patches
+to be compared are generated.  Worse, --notes=amlog (and possibly
+other useful options) are parsed by "git log" side of the machinery,
+not "git diff" side that populates diffopt.
