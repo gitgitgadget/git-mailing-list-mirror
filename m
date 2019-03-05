@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8211120248
-	for <e@80x24.org>; Tue,  5 Mar 2019 19:18:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 568F720248
+	for <e@80x24.org>; Tue,  5 Mar 2019 19:18:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726600AbfCETSe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 14:18:34 -0500
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:35217 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726347AbfCETSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 14:18:33 -0500
-Received: by mail-wr1-f54.google.com with SMTP id t18so10747804wrx.2
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 11:18:32 -0800 (PST)
+        id S1726617AbfCETSh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 14:18:37 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:37346 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726604AbfCETSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 14:18:36 -0500
+Received: by mail-wm1-f68.google.com with SMTP id x10so3649546wmg.2
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 11:18:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kwScf/Gx2UUVMMffUOswX4Xxaq0z6DKW9asgk6rhohg=;
-        b=H7VcWw3IqlKw0glE7zefS798C1GeRtXc3pHtefbsnRflblyh4W24OJTs5aA1UxRhlg
-         Jud7q1RrJHR4+iHJMbSNLRBdmCRauH3G1AiizTR+jFcs+FaffpEZNPjEYSEYKzmrQBpf
-         +kki1KiIq0nXStJMkeykRWzqLy2GRMDESbHR2PvsafFEZHpGmPaPkAmS9nsWi7goi8f+
-         9vIPpFeNMXqJ+XCGu5j8kS2MQseSzHmfMtmzg70sCJnUblOzt7v4R+dnX39y8m8Fvey5
-         2WbmiSuZZPamZ1CqnvGndIuN5i2Sf/iyxk2bWg3rv4JpiQj0swk2Nyzl9iLCOI7NrrLg
-         PoXg==
+        bh=Dv1/EaIJCfT4uvR9XcT7NUHEojXBlGR1AIBzU4NtKGI=;
+        b=DUHDiVD3IfsCm6s9kyrch5iyeohilv1ftr+bBcNQkymSVvfZU0f3xZ5zcmei75dH2R
+         orwR8Z3BBnWHm3AOJYW4JqurF2yegLNkTjhSTDZHIduH8R5MLTCfCe5VZrGDZ0Qshm1n
+         a0JskmULcVpKUcqR9QL54VywlAGuq6o4gmfrjethHwlPiPvMa8lPvtLm0RIgeyUyMHAu
+         Rhxwis328vhQTlDosUkS8x94zzmo6ERDJn5ZpMaKN8A6YotaBnoby/jOMbymEbECTcsI
+         t5pGXdKcLp4uyjU9TylrgPpVNUdwFA0AVJrjpeFiKAe6dkPmlxCeRqQO+RYiPaZ7D377
+         n+hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kwScf/Gx2UUVMMffUOswX4Xxaq0z6DKW9asgk6rhohg=;
-        b=grWsCb6Q0OOsnhXFgWfcYX3LsYQhB6w9klakf/IZ9xjJv7Z11IG/FIQ4nWbrnBr4fg
-         heLS9tj5Kg1fn/R1nIbgI6/eRBue6P7qu/U1h3r495aZfAKyQt+kGwgHMhIQESOVNoZ4
-         QHVLe225fNxiAPa8XIR0mbJZ3FCpiimlWa9bZzyr0Brr+lDtyR7vO+/e9PFtpfBj8cY8
-         ODXMeDktat6z5Kto/gYZElWNxPVlKesldFEW1huifQ7CTT/hYzEpPETfqqJiIy3Hnegv
-         HbyYL4Vi506H31JAp9IKZdpJWEFZ/iPxnMklP3E1/f9lN5p8VqOAis+6s/KSTkvKv9DP
-         5WNw==
-X-Gm-Message-State: APjAAAU8GLajfAx6mj45qoppVRgW/Grxdkz0YhAn6fZnHGRabFKlkSAB
-        FU3LH6QplLxg4dCdjbJM+Toohs4P
-X-Google-Smtp-Source: APXvYqxgBZTiMhvKj4PdtUu0xL5ZhdbmcWDPxOgVWmfAUrUrSz8S8RGrM2JsWqDuS9yL2Bl1fmJ3/Q==
-X-Received: by 2002:adf:e949:: with SMTP id m9mr322562wrn.1.1551813511745;
-        Tue, 05 Mar 2019 11:18:31 -0800 (PST)
+        bh=Dv1/EaIJCfT4uvR9XcT7NUHEojXBlGR1AIBzU4NtKGI=;
+        b=Q3hvPucOdlacFGkx2PZLh2AZQCRt6a+NfPrWVMhGFUWqfVJncAGa7t+d3Uod3G0rF5
+         LADgL3VqitYAhMcrRZhIs6bUXC5MCeFyxtMqG2Af8acMP/ORyxZxpBjIeDa8t9DDMxzm
+         2E4wjZOBdUNG0kDrvTV4u4Uzx/iTou6S8qW8Sz1ys/uqvBOaWvbAqhvUoBkuJLW9HgwK
+         KllGB/mbFJfbcX+9EMUuACqVJCCXWv9DtG03IPYjTxEwnVbyWzmnxxgZGroZRaR37jVh
+         bcG4N3yUq+A30QI3VpCDyerdf212kjjQtoEfGceKpAH19MrvGRL41VbvzrHjhelZ/u2O
+         d8Dg==
+X-Gm-Message-State: APjAAAXe1KIwxs1zCIGK9Z97T3DlKgNEVkuTcliPR5zY9afXOsEtoSar
+        LdJ8WSO4FNO4pJ5q7R8aR45fu2cF
+X-Google-Smtp-Source: APXvYqzxDLLZV0H748jT2iPWIbhlbLyIvAyYv9M+m9awaYWkGdFWaUx6Wb/KP8R3NufJXQSxwz/q2w==
+X-Received: by 2002:a1c:7611:: with SMTP id r17mr83146wmc.58.1551813513404;
+        Tue, 05 Mar 2019 11:18:33 -0800 (PST)
 Received: from localhost.localdomain (atoulouse-658-1-67-51.w92-136.abo.wanadoo.fr. [92.136.29.51])
-        by smtp.googlemail.com with ESMTPSA id r6sm10038219wrx.48.2019.03.05.11.18.30
+        by smtp.googlemail.com with ESMTPSA id r6sm10038219wrx.48.2019.03.05.11.18.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Mar 2019 11:18:31 -0800 (PST)
+        Tue, 05 Mar 2019 11:18:32 -0800 (PST)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v8 05/18] sequencer: introduce todo_list_write_to_file()
-Date:   Tue,  5 Mar 2019 20:17:52 +0100
-Message-Id: <20190305191805.13561-6-alban.gruin@gmail.com>
+Subject: [PATCH v8 06/18] sequencer: refactor check_todo_list() to work on a todo_list
+Date:   Tue,  5 Mar 2019 20:17:53 +0100
+Message-Id: <20190305191805.13561-7-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190305191805.13561-1-alban.gruin@gmail.com>
 References: <20190210132648.12821-1-alban.gruin@gmail.com>
@@ -69,171 +69,342 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This introduces a new function to recreate the text of a todo list from
-its commands and write it to a file.  This will be useful as the next
-few commits will change the use of the buffer in struct todo_list so it
-will no longer be a mirror of the file on disk.
+This refactors check_todo_list() to work on a todo_list to avoid
+redundant reads and writes to the disk.  The function is renamed
+todo_list_check().  The parsing of the two todo lists is left to the
+caller.
 
-This functionality already exists in todo_list_transform(), but this
-function was made to replace the buffer of a todo list, which is not
-what we want here.  Thus, the part of todo_list_transform() that
-replaces the buffer is dropped, and the function is renamed
-todo_list_to_strbuf().  It is called by todo_list_write_to_file() to
-fill the buffer to write to the disk.
+As rebase -p still need to check the todo list from the disk, a new
+function is introduced, check_todo_list_from_file().  It reads the file
+from the disk, parses it, pass the todo_list to todo_list_check(), and
+writes it back to the disk.
 
-todo_list_write_to_file() can also take care of appending the help text
-to the buffer before writing it to the disk, or to write only the first
-n items of the list.  This feature will be used by
-skip_unnecessary_picks(), which has to write done commands in a file.
+As get_missing_commit_check_level() and the enum
+missing_commit_check_level are no longer needed inside of sequencer.c,
+they are moved to rebase-interactive.c, and made static again.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
 No changes since v7.
 
- sequencer.c | 61 +++++++++++++++++++++++++++++++++++------------------
- sequencer.h | 11 ++++++----
- 2 files changed, 48 insertions(+), 24 deletions(-)
+ builtin/rebase--interactive.c |   2 +-
+ rebase-interactive.c          |  91 ++++++++++++++++++++++++-
+ rebase-interactive.h          |   2 +
+ sequencer.c                   | 121 +++++++---------------------------
+ sequencer.h                   |   9 +--
+ 5 files changed, 117 insertions(+), 108 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 346706029c..4809b22ce4 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4562,26 +4562,28 @@ int sequencer_add_exec_commands(struct repository *r,
- 	return i;
- }
- 
--void todo_list_transform(struct repository *r, struct todo_list *todo_list,
--			 unsigned flags)
-+static void todo_list_to_strbuf(struct repository *r, struct todo_list *todo_list,
-+				struct strbuf *buf, int num, unsigned flags)
- {
--	struct strbuf buf = STRBUF_INIT;
- 	struct todo_item *item;
--	int i;
-+	int i, max = todo_list->nr;
- 
--	for (item = todo_list->items, i = 0; i < todo_list->nr; i++, item++) {
-+	if (num > 0 && num < max)
-+		max = num;
+diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
+index 0898eb4c59..df19ccaeb9 100644
+--- a/builtin/rebase--interactive.c
++++ b/builtin/rebase--interactive.c
+@@ -256,7 +256,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
+ 		ret = transform_todo_file(the_repository, flags);
+ 		break;
+ 	case CHECK_TODO_LIST:
+-		ret = check_todo_list(the_repository);
++		ret = check_todo_list_from_file(the_repository);
+ 		break;
+ 	case REARRANGE_SQUASH:
+ 		ret = rearrange_squash(the_repository);
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index 842fa07e7e..dfa6dd530f 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -1,8 +1,32 @@
+ #include "cache.h"
+ #include "commit.h"
+-#include "rebase-interactive.h"
+ #include "sequencer.h"
++#include "rebase-interactive.h"
+ #include "strbuf.h"
++#include "commit-slab.h"
++#include "config.h"
 +
-+	for (item = todo_list->items, i = 0; i < max; i++, item++) {
- 		/* if the item is not a command write it and continue */
- 		if (item->command >= TODO_COMMENT) {
--			strbuf_addf(&buf, "%.*s\n", item->arg_len,
-+			strbuf_addf(buf, "%.*s\n", item->arg_len,
- 				    todo_item_get_arg(todo_list, item));
- 			continue;
- 		}
- 
- 		/* add command to the buffer */
- 		if (flags & TODO_LIST_ABBREVIATE_CMDS)
--			strbuf_addch(&buf, command_to_char(item->command));
-+			strbuf_addch(buf, command_to_char(item->command));
- 		else
--			strbuf_addstr(&buf, command_to_string(item->command));
-+			strbuf_addstr(buf, command_to_string(item->command));
- 
- 		/* add commit id */
- 		if (item->commit) {
-@@ -4591,28 +4593,48 @@ void todo_list_transform(struct repository *r, struct todo_list *todo_list,
- 
- 			if (item->command == TODO_MERGE) {
- 				if (item->flags & TODO_EDIT_MERGE_MSG)
--					strbuf_addstr(&buf, " -c");
-+					strbuf_addstr(buf, " -c");
- 				else
--					strbuf_addstr(&buf, " -C");
-+					strbuf_addstr(buf, " -C");
- 			}
- 
--			strbuf_addf(&buf, " %s", oid);
-+			strbuf_addf(buf, " %s", oid);
- 		}
- 
- 		/* add all the rest */
- 		if (!item->arg_len)
--			strbuf_addch(&buf, '\n');
-+			strbuf_addch(buf, '\n');
- 		else
--			strbuf_addf(&buf, " %.*s\n", item->arg_len,
-+			strbuf_addf(buf, " %.*s\n", item->arg_len,
- 				    todo_item_get_arg(todo_list, item));
- 	}
++enum missing_commit_check_level {
++	MISSING_COMMIT_CHECK_IGNORE = 0,
++	MISSING_COMMIT_CHECK_WARN,
++	MISSING_COMMIT_CHECK_ERROR
++};
++
++static enum missing_commit_check_level get_missing_commit_check_level(void)
++{
++	const char *value;
++
++	if (git_config_get_value("rebase.missingcommitscheck", &value) ||
++			!strcasecmp("ignore", value))
++		return MISSING_COMMIT_CHECK_IGNORE;
++	if (!strcasecmp("warn", value))
++		return MISSING_COMMIT_CHECK_WARN;
++	if (!strcasecmp("error", value))
++		return MISSING_COMMIT_CHECK_ERROR;
++	warning(_("unrecognized setting %s for option "
++		  "rebase.missingCommitsCheck. Ignoring."), value);
++	return MISSING_COMMIT_CHECK_IGNORE;
 +}
  
--	strbuf_reset(&todo_list->buf);
--	strbuf_add(&todo_list->buf, buf.buf, buf.len);
-+int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
-+			    const char *file, const char *shortrevisions,
-+			    const char *shortonto, int num, unsigned flags)
+ void append_todo_help(unsigned edit_todo, unsigned keep_empty,
+ 		      struct strbuf *buf)
+@@ -89,3 +113,68 @@ int edit_todo_list(struct repository *r, unsigned flags)
+ 
+ 	return 0;
+ }
++
++define_commit_slab(commit_seen, unsigned char);
++/*
++ * Check if the user dropped some commits by mistake
++ * Behaviour determined by rebase.missingCommitsCheck.
++ * Check if there is an unrecognized command or a
++ * bad SHA-1 in a command.
++ */
++int todo_list_check(struct todo_list *old_todo, struct todo_list *new_todo)
 +{
-+	int edit_todo = !(shortrevisions && shortonto), res;
-+	struct strbuf buf = STRBUF_INIT;
++	enum missing_commit_check_level check_level = get_missing_commit_check_level();
++	struct strbuf missing = STRBUF_INIT;
++	int res = 0, i;
++	struct commit_seen commit_seen;
 +
-+	todo_list_to_strbuf(r, todo_list, &buf, num, flags);
++	init_commit_seen(&commit_seen);
 +
-+	if (flags & TODO_LIST_APPEND_TODO_HELP) {
-+		int command_count = count_commands(todo_list);
-+		if (!edit_todo) {
-+			strbuf_addch(&buf, '\n');
-+			strbuf_commented_addf(&buf, Q_("Rebase %s onto %s (%d command)",
-+						       "Rebase %s onto %s (%d commands)",
-+						       command_count),
-+					      shortrevisions, shortonto, command_count);
-+		}
-+		append_todo_help(edit_todo, flags & TODO_LIST_KEEP_EMPTY, &buf);
++	if (check_level == MISSING_COMMIT_CHECK_IGNORE)
++		goto leave_check;
++
++	/* Mark the commits in git-rebase-todo as seen */
++	for (i = 0; i < new_todo->nr; i++) {
++		struct commit *commit = new_todo->items[i].commit;
++		if (commit)
++			*commit_seen_at(&commit_seen, commit) = 1;
 +	}
 +
-+	res = write_message(buf.buf, buf.len, file, 0);
- 	strbuf_release(&buf);
- 
--	if (todo_list_parse_insn_buffer(r, todo_list->buf.buf, todo_list))
--		BUG("unusable todo list");
++	/* Find commits in git-rebase-todo.backup yet unseen */
++	for (i = old_todo->nr - 1; i >= 0; i--) {
++		struct todo_item *item = old_todo->items + i;
++		struct commit *commit = item->commit;
++		if (commit && !*commit_seen_at(&commit_seen, commit)) {
++			strbuf_addf(&missing, " - %s %.*s\n",
++				    find_unique_abbrev(&commit->object.oid, DEFAULT_ABBREV),
++				    item->arg_len,
++				    todo_item_get_arg(old_todo, item));
++			*commit_seen_at(&commit_seen, commit) = 1;
++		}
++	}
++
++	/* Warn about missing commits */
++	if (!missing.len)
++		goto leave_check;
++
++	if (check_level == MISSING_COMMIT_CHECK_ERROR)
++		res = 1;
++
++	fprintf(stderr,
++		_("Warning: some commits may have been dropped accidentally.\n"
++		"Dropped commits (newer to older):\n"));
++
++	/* Make the list user-friendly and display */
++	fputs(missing.buf, stderr);
++	strbuf_release(&missing);
++
++	fprintf(stderr, _("To avoid this message, use \"drop\" to "
++		"explicitly remove a commit.\n\n"
++		"Use 'git config rebase.missingCommitsCheck' to change "
++		"the level of warnings.\n"
++		"The possible behaviours are: ignore, warn, error.\n\n"));
++
++leave_check:
++	clear_commit_seen(&commit_seen);
 +	return res;
++}
+diff --git a/rebase-interactive.h b/rebase-interactive.h
+index 17b6c9f6d0..187b5032d6 100644
+--- a/rebase-interactive.h
++++ b/rebase-interactive.h
+@@ -3,9 +3,11 @@
+ 
+ struct strbuf;
+ struct repository;
++struct todo_list;
+ 
+ void append_todo_help(unsigned edit_todo, unsigned keep_empty,
+ 		      struct strbuf *buf);
+ int edit_todo_list(struct repository *r, unsigned flags);
++int todo_list_check(struct todo_list *old_todo, struct todo_list *new_todo);
+ 
+ #endif
+diff --git a/sequencer.c b/sequencer.c
+index 4809b22ce4..99e12c751e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4660,112 +4660,37 @@ int transform_todo_file(struct repository *r, unsigned flags)
+ 	return 0;
  }
  
- int transform_todo_file(struct repository *r, unsigned flags)
-@@ -4629,9 +4651,8 @@ int transform_todo_file(struct repository *r, unsigned flags)
- 		return error(_("unusable todo list: '%s'"), todo_file);
+-enum missing_commit_check_level get_missing_commit_check_level(void)
+-{
+-	const char *value;
+-
+-	if (git_config_get_value("rebase.missingcommitscheck", &value) ||
+-			!strcasecmp("ignore", value))
+-		return MISSING_COMMIT_CHECK_IGNORE;
+-	if (!strcasecmp("warn", value))
+-		return MISSING_COMMIT_CHECK_WARN;
+-	if (!strcasecmp("error", value))
+-		return MISSING_COMMIT_CHECK_ERROR;
+-	warning(_("unrecognized setting %s for option "
+-		  "rebase.missingCommitsCheck. Ignoring."), value);
+-	return MISSING_COMMIT_CHECK_IGNORE;
+-}
++static const char edit_todo_list_advice[] =
++N_("You can fix this with 'git rebase --edit-todo' "
++"and then run 'git rebase --continue'.\n"
++"Or you can abort the rebase with 'git rebase"
++" --abort'.\n");
+ 
+-define_commit_slab(commit_seen, unsigned char);
+-/*
+- * Check if the user dropped some commits by mistake
+- * Behaviour determined by rebase.missingCommitsCheck.
+- * Check if there is an unrecognized command or a
+- * bad SHA-1 in a command.
+- */
+-int check_todo_list(struct repository *r)
++int check_todo_list_from_file(struct repository *r)
+ {
+-	enum missing_commit_check_level check_level = get_missing_commit_check_level();
+-	struct strbuf todo_file = STRBUF_INIT;
+-	struct todo_list todo_list = TODO_LIST_INIT;
+-	struct strbuf missing = STRBUF_INIT;
+-	int advise_to_edit_todo = 0, res = 0, i;
+-	struct commit_seen commit_seen;
+-
+-	init_commit_seen(&commit_seen);
++	struct todo_list old_todo = TODO_LIST_INIT, new_todo = TODO_LIST_INIT;
++	int res = 0;
+ 
+-	strbuf_addstr(&todo_file, rebase_path_todo());
+-	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file.buf) < 0) {
++	if (strbuf_read_file_or_whine(&new_todo.buf, rebase_path_todo()) < 0) {
+ 		res = -1;
+-		goto leave_check;
+-	}
+-	advise_to_edit_todo = res =
+-		todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list);
+-
+-	if (res || check_level == MISSING_COMMIT_CHECK_IGNORE)
+-		goto leave_check;
+-
+-	/* Mark the commits in git-rebase-todo as seen */
+-	for (i = 0; i < todo_list.nr; i++) {
+-		struct commit *commit = todo_list.items[i].commit;
+-		if (commit)
+-			*commit_seen_at(&commit_seen, commit) = 1;
++		goto out;
  	}
  
--	todo_list_transform(r, &todo_list, flags);
+-	todo_list_release(&todo_list);
+-	strbuf_addstr(&todo_file, ".backup");
+-	if (strbuf_read_file_or_whine(&todo_list.buf, todo_file.buf) < 0) {
++	if (strbuf_read_file_or_whine(&old_todo.buf, rebase_path_todo_backup()) < 0) {
+ 		res = -1;
+-		goto leave_check;
+-	}
+-	strbuf_release(&todo_file);
+-	res = !!todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list);
 -
--	res = write_message(todo_list.buf.buf, todo_list.buf.len, todo_file, 0);
-+	res = todo_list_write_to_file(r, &todo_list, todo_file,
-+				      NULL, NULL, -1, flags);
+-	/* Find commits in git-rebase-todo.backup yet unseen */
+-	for (i = todo_list.nr - 1; i >= 0; i--) {
+-		struct todo_item *item = todo_list.items + i;
+-		struct commit *commit = item->commit;
+-		if (commit && !*commit_seen_at(&commit_seen, commit)) {
+-			strbuf_addf(&missing, " - %s %.*s\n",
+-				    short_commit_name(commit),
+-				    item->arg_len,
+-				    todo_item_get_arg(&todo_list, item));
+-			*commit_seen_at(&commit_seen, commit) = 1;
+-		}
++		goto out;
+ 	}
+ 
+-	/* Warn about missing commits */
+-	if (!missing.len)
+-		goto leave_check;
+-
+-	if (check_level == MISSING_COMMIT_CHECK_ERROR)
+-		advise_to_edit_todo = res = 1;
+-
+-	fprintf(stderr,
+-		_("Warning: some commits may have been dropped accidentally.\n"
+-		"Dropped commits (newer to older):\n"));
+-
+-	/* Make the list user-friendly and display */
+-	fputs(missing.buf, stderr);
+-	strbuf_release(&missing);
+-
+-	fprintf(stderr, _("To avoid this message, use \"drop\" to "
+-		"explicitly remove a commit.\n\n"
+-		"Use 'git config rebase.missingCommitsCheck' to change "
+-		"the level of warnings.\n"
+-		"The possible behaviours are: ignore, warn, error.\n\n"));
+-
+-leave_check:
+-	clear_commit_seen(&commit_seen);
+-	strbuf_release(&todo_file);
+-	todo_list_release(&todo_list);
+-
+-	if (advise_to_edit_todo)
+-		fprintf(stderr,
+-			_("You can fix this with 'git rebase --edit-todo' "
+-			  "and then run 'git rebase --continue'.\n"
+-			  "Or you can abort the rebase with 'git rebase"
+-			  " --abort'.\n"));
++	res = todo_list_parse_insn_buffer(r, old_todo.buf.buf, &old_todo);
++	if (!res)
++		res = todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo);
++	if (!res)
++		res = todo_list_check(&old_todo, &new_todo);
++	if (res)
++		fprintf(stderr, _(edit_todo_list_advice));
++out:
++	todo_list_release(&old_todo);
++	todo_list_release(&new_todo);
+ 
+ 	return res;
+ }
+@@ -4943,7 +4868,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 
  	todo_list_release(&todo_list);
  
- 	if (res)
+-	if (check_todo_list(r)) {
++	if (check_todo_list_from_file(r)) {
+ 		checkout_onto(opts, onto_name, onto, orig_head);
+ 		return -1;
+ 	}
 diff --git a/sequencer.h b/sequencer.h
-index 2ddb20cbc1..7278f9675b 100644
+index 7278f9675b..217353e9f0 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -121,8 +121,9 @@ struct todo_list {
+@@ -64,12 +64,6 @@ struct replay_opts {
+ };
+ #define REPLAY_OPTS_INIT { .action = -1, .current_fixups = STRBUF_INIT }
  
- int todo_list_parse_insn_buffer(struct repository *r, char *buf,
- 				struct todo_list *todo_list);
--void todo_list_transform(struct repository *r, struct todo_list *todo_list,
--			 unsigned flags);
-+int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
-+			    const char *file, const char *shortrevisions,
-+			    const char *shortonto, int num, unsigned flags);
- void todo_list_release(struct todo_list *todo_list);
- const char *todo_item_get_arg(struct todo_list *todo_list,
- 			      struct todo_item *item);
-@@ -145,8 +146,10 @@ int sequencer_remove_state(struct replay_opts *opts);
-  * commits should be rebased onto the new base, this flag needs to be passed.
-  */
- #define TODO_LIST_REBASE_COUSINS (1U << 4)
--int sequencer_make_script(struct repository *repo, FILE *out,
--			  int argc, const char **argv,
-+#define TODO_LIST_APPEND_TODO_HELP (1U << 5)
-+
-+int sequencer_make_script(struct repository *r, FILE *out, int argc,
-+			  const char **argv,
- 			  unsigned flags);
+-enum missing_commit_check_level {
+-	MISSING_COMMIT_CHECK_IGNORE = 0,
+-	MISSING_COMMIT_CHECK_WARN,
+-	MISSING_COMMIT_CHECK_ERROR
+-};
+-
+ int write_message(const void *buf, size_t len, const char *filename,
+ 		  int append_eol);
+ 
+@@ -154,8 +148,7 @@ int sequencer_make_script(struct repository *r, FILE *out, int argc,
  
  int sequencer_add_exec_commands(struct repository *r, const char *command);
+ int transform_todo_file(struct repository *r, unsigned flags);
+-enum missing_commit_check_level get_missing_commit_check_level(void);
+-int check_todo_list(struct repository *r);
++int check_todo_list_from_file(struct repository *r);
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+ 		    const char *onto, const char *orig_head, const char *cmd,
 -- 
 2.20.1
 
