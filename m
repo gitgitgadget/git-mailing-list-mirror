@@ -2,63 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F146720248
-	for <e@80x24.org>; Tue,  5 Mar 2019 23:02:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8EDD20248
+	for <e@80x24.org>; Tue,  5 Mar 2019 23:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726617AbfCEXC3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 18:02:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40088 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726217AbfCEXC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 18:02:29 -0500
-Received: (qmail 27777 invoked by uid 109); 5 Mar 2019 23:02:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 05 Mar 2019 23:02:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3587 invoked by uid 111); 5 Mar 2019 23:02:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 05 Mar 2019 18:02:46 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Mar 2019 18:02:27 -0500
-Date:   Tue, 5 Mar 2019 18:02:27 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] Doc: fix misleading asciidoc formating
-Message-ID: <20190305230227.GA22901@sigill.intra.peff.net>
-References: <20190305214423.27820-1-jn.avila@free.fr>
- <20190305223655.GA27535@sigill.intra.peff.net>
- <xmqq4l8hszj7.fsf@gitster-ct.c.googlers.com>
+        id S1726798AbfCEXDj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 18:03:39 -0500
+Received: from mail-io1-f42.google.com ([209.85.166.42]:41298 "EHLO
+        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726655AbfCEXDj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 18:03:39 -0500
+Received: by mail-io1-f42.google.com with SMTP id 9so8532432iog.8
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 15:03:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ls0E880fmJ9Ly4MckDfLsiyawmkQ/Ii0A//jJaq1DH0=;
+        b=OohrXSGeLoG9gz4Inv6Dozd5HKEAbUiN+zUsavlpAC83WZfj1fhnHrIXTa8en6DORm
+         9388aayh6q9NKQaL3zBLN71mU+L7pjTnsEeR8foukror1yn7BZSHYBdDVu/dne5aO5QF
+         7FzRokXU6mQtDyJ99HpR4fwWy5jjgcqyzFvXCFC0v7SKgJ9k40S53zZhwWr7SVBX6r92
+         WjMdMp8laIGo92KQ1mjhNoo+Tmu2Mzk7qa5Zw1DqWuidm4mmsF3wKffICNBjFAx/RVit
+         1hfJDm0684ySOYoY1qvyRf1eKV0Dg+qAdRvJUgjYjzZHbH8per/bJWPsuuMuk8SBtOkY
+         x35g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ls0E880fmJ9Ly4MckDfLsiyawmkQ/Ii0A//jJaq1DH0=;
+        b=SZgP/TlPE6k//N1ibTUcECggAoz0EW7irOlWzmLKZJ0WHdfiqs8IxsaiwKxSxw9kLh
+         Xv+jvnXmnYywl99baIa1IkVO7sWrdgW0tlyQ3yVjWlqH6j+MHoNF9uBv1MILik/bzzrA
+         ZzCdcMUtFIRA52RirNB96VOHmvqF6/U/wx3o4R9XqgrgdQ+ebv4Os1RFr2Ko/S+7CEuh
+         j8tswdct+BdahX8EJiNTjzb/F5wpHhwT/84xtITQCTuHj/WghLv4kNi3bLKTUKHXtJaS
+         p6Waf4jTbFdbm27s9wlN5ucdnTXZaK97kdzpevS5+cmlz+QCWSJkCzYNp27dr0N6mrRH
+         CpSA==
+X-Gm-Message-State: APjAAAVz1j4c1yq5PI9GsvJEF7tboDY5ewdkIDaxdma1HnaL2MFsyzW1
+        qiAnDUND/qmyBz7I6dIHAtfcv4FKe4uooy8MK/fOfA==
+X-Google-Smtp-Source: APXvYqyzo5T+8jXObpBuOX03N4nLmxDqss5PkIW15dr4h/0olMzPUjhrtirddA+5MPMoVv9oCmpz0xQC3I4PlhtXVd8=
+X-Received: by 2002:a6b:7941:: with SMTP id j1mr1551447iop.262.1551827018135;
+ Tue, 05 Mar 2019 15:03:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4l8hszj7.fsf@gitster-ct.c.googlers.com>
+References: <CAHd-oW7onvn4ugEjXzAX_OSVEfCboH3-FnGR00dU8iaoc+b8=Q@mail.gmail.com>
+ <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
+ <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
+ <20190302150900.GU6085@hank.intra.tgummerer.com> <CAP8UFD31YKt7fm+shWdBxsL4fCSO4dU=97YwFsZ9gZBpEWmRPQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD31YKt7fm+shWdBxsL4fCSO4dU=97YwFsZ9gZBpEWmRPQ@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 5 Mar 2019 20:03:26 -0300
+Message-ID: <CAHd-oW6rVptPnHn-aoeMTkp0p-TmoQ7fniftpQm9rw+tjukZ_w@mail.gmail.com>
+Subject: Re: Questions on GSoC 2019 Ideas
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 06, 2019 at 07:54:20AM +0900, Junio C Hamano wrote:
+First of all, I must apologize for not replying during these last
+days. I'm traveling and I rarely get a connection here. But I'll be
+back March 11th.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Did you notice this when building locally, or on the asciidoctor-built
-> > pages at git-scm.com?
-> 
-> Does git-scm.com even have this file rendered?  I do not think we
-> glob for technical/*.txt in any of our Makefiles; instead we have a
-> list of ready-to-be-consumed TECH_DOCS listed explicitly.
+On Sun, Mar 3, 2019 at 4:18 AM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Sat, Mar 2, 2019 at 4:09 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >
+> > I'm a bit wary of a too large proposal here, as we've historically
+> > overestimated what kind of project is achievable over a summer (I've
+> > been there myself, as my GSoC project was also more than I was able to
+> > do in a summer :)).  I'd rather have a project whose goal is rather
+> > small and can be expanded later, than having something that could
+> > potentially take more than 3 months, where the student (or their
+> > mentors) have to finish it after GSoC.
+>
 
-It is rendered, at https://git-scm.com/docs/directory-rename-detection.
+I totally understand the concern.
 
-However, that explains why doc-diff did not find anything; it only looks
-at the results of "make install-man", which does not include any
-technical docs (let alone this one that is not mentioned in
-$(TECH_DOCS).
+> Yeah, I agree with your suggestion about a project that declares
+> removing the global variables as the main goal, and adding parallelism
+> as a potential bonus.
+>
 
--Peff
+Talking about a delimited scope for GSoC and a potential bonus after,
+a potential idea comes to my mind: I'm still trying to define the
+subject for my undergraduate thesis (which must be in HPC and/or
+parallelism on CPU/GPU). And the idea of bringing more parallelism to
+git seems to be too big for a GSoC project. So, perhaps, if we manage
+to identify wether parallelism would indeed bring a good performance
+gain to git, I could propose that to my advisor professor as my
+undergraduate thesis and I could work on that during this whole year.
+It is still an idea to be matured, but do you think it would be
+feasible?
