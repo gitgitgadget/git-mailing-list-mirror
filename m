@@ -2,96 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D889620248
-	for <e@80x24.org>; Wed,  6 Mar 2019 19:58:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F2FC20248
+	for <e@80x24.org>; Wed,  6 Mar 2019 20:00:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729247AbfCFT6o (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 14:58:44 -0500
-Received: from smtp-31.italiaonline.it ([213.209.10.31]:56205 "EHLO libero.it"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726525AbfCFT6o (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 14:58:44 -0500
-Received: from DESKTOP-E4U7JCE ([158.148.73.124])
-        by smtp-31.iol.local with ESMTPA
-        id 1cgahvWUnCH4t1cgahoR9E; Wed, 06 Mar 2019 20:58:41 +0100
-x-libjamoibt: 1601
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
-        t=1551902321; bh=IJqmKY2SJsqoYZq5PI6xmrZOfAKHN9vbsZaj2GhWs80=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References;
-        b=op1yTboBMaatgjYgWpHl1jPr5N/VNAW/0KKm5qkBdAlxX7gU/9w+UDZAekvS16PRu
-         0pnuOuXGtCLowm4RJLVWVTM0fkuGBWZVdMp1Wl0QhiJxkxnIHuusw5WHphdbqJ24PQ
-         UqaS5ZhMNfCJx+ObNrQiPUL/qLtydjmiPi3f8AGR5z2ged72HBl1a4EbHO1PVwOkwp
-         01OyD9kufIVtZ9MIja4xM8qJ8PZeaFQO3M70zHZ9z0UP0c/6fK6Y1aUNtlD3sSYv2p
-         OmqlonvqRhKqyyCwuKY6XR1xk1S89owToKvVCVO1qh4oMIWzp+Vua4bCxJIlH/WCRT
-         roSNpuhUFBYww==
-X-CNFS-Analysis: v=2.3 cv=R4HS5uZX c=1 sm=1 tr=0
- a=lD+Fqu6e8C6S12qGMBovIw==:117 a=lD+Fqu6e8C6S12qGMBovIw==:17
- a=IkcTkHD0fZMA:10 a=UlqV6C1OAAAA:20 a=ZeQt5Yt_D7QRJqUf69oA:9
- a=QEXdDO2ut3YA:10 a=CtvLCtAli4LrSFkZZ_cB:22
-Message-ID: <1551902320.1727.1.camel@libero.it>
-Subject: Re: Can't build first git commit
-From:   Fabio Aiuto <polinice83@libero.it>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Date:   Wed, 06 Mar 2019 20:58:40 +0100
-In-Reply-To: <20190305191519.GA12791@sigill.intra.peff.net>
-References: <1551729517.4092.1.camel@libero.it>
-         <20190304204007.GA32691@sigill.intra.peff.net>
-         <20190305191519.GA12791@sigill.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfP7uE6HUsb9RywHpBExPcBJZLRuUZqd6wk10VeSkmfrr30QBLSLdUZAs4VjoV9sk7c9wi5lb9Qi3HI/ZImiJTIgaLiNETvn/SmL/uc3kUK9uuriQ6wx7
- Yz0xzP17ZLd+nkpY58cBaYHzjSwbJvBd0DWogivlGFwAvYi9D0vGlRDX7ZQspl4G0GJPfyUpQ4zl7GzF0ADAWtvJAd3PHcAq3h4=
+        id S1730407AbfCFUAv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 15:00:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41366 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726233AbfCFUAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 15:00:51 -0500
+Received: (qmail 30342 invoked by uid 109); 6 Mar 2019 20:00:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Mar 2019 20:00:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16787 invoked by uid 111); 6 Mar 2019 20:01:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Mar 2019 15:01:08 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2019 15:00:49 -0500
+Date:   Wed, 6 Mar 2019 15:00:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
+        t.gummerer@gmail.com, gitster@pobox.com
+Subject: Re: [BUG] GIT_AUTHOR_NAME was checked before prepare_fallback got
+ called (ps/stash-in-c)
+Message-ID: <20190306200049.GA23315@sigill.intra.peff.net>
+References: <20190306195236.GA22872@dev-l>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190306195236.GA22872@dev-l>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Il giorno mar, 05/03/2019 alle 14.15 -0500, Jeff King ha scritto:
-> On Mon, Mar 04, 2019 at 03:40:07PM -0500, Jeff King wrote:
-> 
-> > You can patch the Makefile, or just override it like:
-> > 
-> >   make LIBS='-lcrypto -lz'
-> > 
-> > which builds for me on current Debian unstable. I don't think you
-> > can
-> > actually fetch with that old build, but I used periodically check
-> > that
-> > Git v1.0 can fetch happily from GitHub. I haven't in a while, so
-> > let me
-> > know if you try it and it doesn't work. ;)
-> 
-> I just tried this, and it does indeed work. I had to build v1.0.0
-> with
-> 
->   make NO_OPENSSL=Nope
-> 
-> I think the issue is that some old code embedded openssl's BIGNUM in
-> a
-> struct, and later versions of openssl stopped publicly defining the
-> types.
-> 
-> I was able to clone git://github.com/git/git with the result, though
-> of
-> course it chokes no the sha1collisiondetection submodule. You can
-> still
-> use "git log", though, and checkout older commits.
-> 
-> -Peff
+On Wed, Mar 06, 2019 at 11:52:36AM -0800, Denton Liu wrote:
 
-Hi Jeff,
-I've just typed make make LIBS='-lcrypto -lz' from the shell inside the
- 
-directory containing the whole first commit and it seems to work. I
-trace all through the code. Yes the fetch command wasn't written at
-that time, right? I didn't understand why should be better to work with
-the git code from github. There's something I misunderstood?
-Thank you Jeff ;-)
+> Hello all,
+> 
+> I've been on "jch" for my daily use and I noticed today that git stash
+> isn't working. I managed to debug it down to "ps/stash-in-c".
+> 
+> To reproduce on git.git, it's simply the following:
+> 
+> 	echo // >>dir.c
+> 	git stash
+> 
+> This gives me the following error:
+> 
+> 	$ git stash
+> 	BUG: ident.c:511: GIT_AUTHOR_NAME was checked before prepare_fallback got called
+> 	Aborted (core dumped)
+> 
+> I haven't read through the branch's code so I'm not too familiar with
+> the changes but please let me know if you need any other information or
+> if there's anything I can help with.
+
+Yeah, it seems like the code from fd5a58477c (ident: add the ability to
+provide a "fallback identity", 2019-02-25) is over-eager:
+
+  static void set_env_if(const char *key, const char *value, int *given, int bit)
+  {
+        if (*given & bit)
+                BUG("%s was checked before prepare_fallback got called", key);
+	...
+  }
+
+  void prepare_fallback_ident(const char *name, const char *email)
+  {
+        set_env_if("GIT_AUTHOR_NAME", name,
+                   &author_ident_explicitly_given, IDENT_NAME_GIVEN);
+	...
+  }
+
+If the ident comes from config, then those bits will be set already,
+even if nobody ever looked at $GIT_AUTHOR_NAME. I think that BUG()
+should actually just be a silent return.
+
+-Peff
