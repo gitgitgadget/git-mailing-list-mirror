@@ -7,49 +7,50 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E98D20248
-	for <e@80x24.org>; Wed,  6 Mar 2019 13:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F61320248
+	for <e@80x24.org>; Wed,  6 Mar 2019 13:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728844AbfCFN04 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 08:26:56 -0500
-Received: from mout.gmx.net ([212.227.17.20]:42393 "EHLO mout.gmx.net"
+        id S1726411AbfCFNlw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 08:41:52 -0500
+Received: from mout.gmx.net ([212.227.17.20]:50659 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727304AbfCFN04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 08:26:56 -0500
+        id S1726241AbfCFNlv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 08:41:51 -0500
 Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mbx62-1giD2F1ntu-00JHue; Wed, 06
- Mar 2019 14:26:49 +0100
-Date:   Wed, 6 Mar 2019 14:26:48 +0100 (STD)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mbfyr-1giTz40wtB-00J0ms; Wed, 06
+ Mar 2019 14:41:47 +0100
+Date:   Wed, 6 Mar 2019 14:41:46 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2019, #01; Wed, 6)
+Subject: ps/stash-in-c, was Re: What's cooking in git.git (Mar 2019, #01;
+ Wed, 6)
 In-Reply-To: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903061426090.41@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1903061441200.41@tvgsbejvaqbjf.bet>
 References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:AGa8Z22gKQlnxLTm8hsFRQCrIrgtvSzKu3qiBB3/vCQT2aTYqAJ
- qJxTjGjG+AgpBzLt6cICRa837HVL9CO39EiJqfJG9h1EI4qGVxhb1MuqUEC4daDbpYoK5AL
- YtF6H13mjjRvLa6hDXTo3dtn+VzPllMnu9IM2wl+18UHWS8Wr6rDU4+YOvcPOU1pri7tclt
- 8PUNmKDQVtj53WnpKmc+A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/UKucvCtt0k=:At2Oy0+LK/JmN4ctwejiRu
- cu/4jBqMn/UBSF79Iv/jEuR7T71X8Q6PgW+6jvhhklJfrWq+5+KPVTdoHofvNR1Z6K9LVCfLo
- 0+Uaqb5mcRIHldDDmRrMmQRK8vlEilqA9sghBSGq5zhZz7WOI69hVSolYGxtnY9bxnD4jtdrb
- WvSFG1ouoPBpBXu20Y+TrCH4uq0IHiAFThMSLSubbhsmIHRVKIXMTh8UA7hNf42A3wUFTPgll
- /v2aNI8jKjD6PshkeaywzZVglWD002N3UcIIUHEZWpZuM5gkZUxZ/qk5usbBqMTCnqfNcr0ww
- 06yZCAFMmQWV4l3hEaAP5wgqHkWB6VhxVuJRP/NdEh6r/iQlTBLJMvc0Ce4hwNj6ST86PMFrJ
- 14cT7Kba6zkn2m8tVy5zDEvihyK2HPSqiXmjD8Tw7JkUiEkmwdHp+0eMIfsa8p3uLr+H8r3Zr
- tj5NW0XdKQtOIMAGthzg/GO92J/DLU9VvRt935aE6VSx/eGw6HKR2cwQq8zEyi0XjPPag0o9+
- ttgEblQp41N5W9n3MerUUANgoxgFB1NF8xg+wukpyidoBGJovQN0VF20TlszrMlJo64MIQYTP
- YcTVuf34+k+NaszCC5VW+tAwsmaa44xFv6nxdURCTztr2FuENxfiB8WUtyq0wY4G0mr4GF9kD
- n4vDvS2W7WSlPgOXr1VEF7hSI625ZPhydZkCGT3209fIcxfWclZxsUNA8YCM6SAV6ngzeyOWy
- eybQa4MaFTpJQeuv1zWhHfykhoYGGnSc6zGQvoZb50/ieyh03mh3wwpX69N5v+NYKUkkOu+fZ
- dI5dCik2RLWri3F2HaPOW52A3B9uQU3cHSEe7PM/GU0wEq1gtdQkNc8ChPoGXfqVHJkPI4cYz
- Cf9cDpQhnPLgwXSPYVqQHxa7ihjc4WzSpTUvmK67C1RCaWzOAlRH4I/we1hYKdJsGPxu1wdyR
- eXNdn8jZMdA==
+X-Provags-ID: V03:K1:5XUF5yTmXETEI8sj7eRF+yj+niA72PyLTll4s/ARn4az4x1SE33
+ wZjgj463wb6EAqA6X2rVnER8kXOGfYHQxxBwNBbbDNwwCaC4TcPxztJREaBRjGiB2W3E+Hx
+ EyrkUVtAN+3XtvEkMpohAdtqHtekh6y1DwAiznSeuxgzmGFF71YKMssRMB+9fQ3fIw74I81
+ HgRUJ1FoXDiBA64lAnlBg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:aoCGkf7faUs=:nXj33ydr9+WqJBA7rSMb8Q
+ QkWOj+Go+8sO2yBGmymuyAeaRtrYjzhgoK+DqjItMIEwITCgAABpe6Jwas/55VK7Gk4gt4Xcu
+ 3N1vngFWyOB9L0hqBWoZEFXI4EqjuEq83VhoI4jFqJne2E4L110KsMprfQgD83PqOfy4U5dsB
+ a29PmkPRuAwmIqT+a0stmTEDQil+hRlyGlH/3hcQ2Zcb3nwQtXduPYSJx/9IZiFeaPOwSkz2k
+ uDHthfxX1O5Fh+j1YshH9R4fmcOAxBgivrc5ligrJuTqtbBqmiyR3PzpZmuCPkxgWdko35Rrx
+ i/1vEq6TTnS+8y/uknCYszR582TUCz0TklztJSxsPq3DYBV58lB6GvX/QYbm+esHPBBorYGnZ
+ G14U68ErZhOolrkrDmjpxnfWcTkyVuJPUmI9pX2a9oujN9rP09kn6bh9S5aHDFFDtvGF2toD5
+ AaGO8A1HEU1D6kZ8/20dvP15A0nwQdoPPYvvKptUEX9I1WwJq/H0YXZTrW3YCbTzRHrTD2mBX
+ n2GdCEFk9fDs5U9b8a+lAgckcCIfNtnYhmDpn8lFH/tzRGl2tZfNw9sVALWNUL5fBx8yMAvCg
+ JuWDuPiSPOp4C9wxvdA/YJ2eodY0NftwqvJfNgGbYTtevkwTiH5KDRRthSMv/f/D0q4FPockc
+ yyfGCDBXr8gd3P8APZ8sDM4qHynh3TT/gXkVlfhMQfUcrsaURIQFcXQhy29IOr11/H01Sqbtn
+ rqZ6nif6pn2PyuJLSxncRv/vNIqzcdytihLe0Nq+biPBfHXNDDUWCJDrFnMKMJrjQ2Tpau7Do
+ vPiw72yo6bL8qEJhInLo69cR7iMGNw6v3o71sIB+Nl0pNhmHb9THwr667EcGlv1jctn+xdF5X
+ tHYl9eEgaF5EzHLEYF+db3iPoW1eBrajbBSaRQthPnaThkyNYlnTyOXuZEjRlwAdk9ZaLJusf
+ 6NF/BBgwEcg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,21 +60,41 @@ Hi Junio,
 
 On Wed, 6 Mar 2019, Junio C Hamano wrote:
 
-> * ab/makefile-help-devs-more (2019-02-24) 6 commits
->  - Makefile: allow for combining DEVELOPER=1 and CFLAGS="..."
->  - Makefile: move the setting of *FLAGS closer to "include"
->  - Makefile: Move *_LIBS assignment into its own section
->  - Makefile: add/remove comments at top and tweak whitespace
->  - Makefile: move "strip" assignment down from flags
->  - Makefile: remove an out-of-date comment
+> * ps/stash-in-c (2019-03-01) 28 commits
+>  - tests: add a special setup where stash.useBuiltin is off
+>  - stash: optionally use the scripted version again
+>  - stash: add back the original, scripted `git stash`
+>  - stash: convert `stash--helper.c` into `stash.c`
+>  - stash: replace all `write-tree` child processes with API calls
+>  - stash: optimize `get_untracked_files()` and `check_changes()`
+>  - stash: convert save to builtin
+>  - stash: make push -q quiet
+>  - stash: convert push to builtin
+>  - stash: convert create to builtin
+>  - stash: convert store to builtin
+>  - stash: convert show to builtin
+>  - stash: convert list to builtin
+>  - stash: convert pop to builtin
+>  - stash: convert branch to builtin
+>  - stash: convert drop and clear to builtin
+>  - stash: convert apply to builtin
+>  - stash: mention options in `show` synopsis
+>  - stash: add tests for `git stash show` config
+>  - stash: rename test cases to be more descriptive
+>  - t3903: add test for --intent-to-add file
+>  - t3903: modernize style
+>  - stash: improve option parsing test coverage
+>  - ident: add the ability to provide a "fallback identity"
+>  - strbuf.c: add `strbuf_insertf()` and `strbuf_vinsertf()`
+>  - strbuf.c: add `strbuf_join_argv()`
+>  - sha1-name.c: add `get_oidf()` which acts like `get_oid()`
+>  - Merge branch 'sd/stash-wo-user-name'
 > 
->  CFLAGS now can be tweked when invoking Make while using
->  DEVELOPER=YesPlease; this did not work well before.
+>  "git stash" rewritten in C.
 > 
 >  Will merge to 'next'.
 
-s/tweked/tweaked/ (again, assuming that you'll reuse this description in
-the next announcement mail).
+Yes, yes, yes!
 
-Ciao,
+Thank you so much!
 Dscho
