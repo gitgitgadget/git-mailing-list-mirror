@@ -2,101 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D778520248
-	for <e@80x24.org>; Wed,  6 Mar 2019 10:05:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEF3920248
+	for <e@80x24.org>; Wed,  6 Mar 2019 10:13:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730039AbfCFKFd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 05:05:33 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49983 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729831AbfCFKFd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 05:05:33 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJjUO-1h0NUo1vD2-001CtE; Wed, 06
- Mar 2019 11:05:26 +0100
-Date:   Wed, 6 Mar 2019 11:05:25 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] remote-curl: mark all error messages for
- translation
-In-Reply-To: <xmqqmum8sx0h.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903061102260.41@tvgsbejvaqbjf.bet>
-References: <pull.157.git.gitgitgadget@gmail.com>        <xmqqtvggsx6c.fsf@gitster-ct.c.googlers.com> <xmqqmum8sx0h.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730163AbfCFKNw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 05:13:52 -0500
+Received: from smtp-3.orcon.net.nz ([60.234.4.44]:38452 "EHLO
+        smtp-3.orcon.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730160AbfCFKNw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 05:13:52 -0500
+Received: from [150.107.172.103] (port=19710 helo=[192.168.20.103])
+        by smtp-3.orcon.net.nz with esmtpa (Exim 4.86_2)
+        (envelope-from <psainty@orcon.net.nz>)
+        id 1h1TYa-0000X6-Fy; Wed, 06 Mar 2019 23:13:48 +1300
+Subject: Re: [RFC PATCH 0/4] Add alias option to git branch
+To:     Kenneth Cochran <kenneth.cochran101@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
+References: <47CA9077-E8C1-4093-8B36-2D5D3DE2D886@gmail.com>
+ <xmqqa7i9v4mv.fsf@gitster-ct.c.googlers.com>
+ <CAJ145vW3HPaP2GeSL65q5C1XhYpiE+7=apU1ia=17eNWPfRj_g@mail.gmail.com>
+From:   Phil Sainty <psainty@orcon.net.nz>
+Message-ID: <b490c79b-37e0-7c6d-8643-3ec2343411ac@orcon.net.nz>
+Date:   Wed, 6 Mar 2019 23:13:48 +1300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TXw+t8+spnjFjsJiqSvKwrTwfAhum/wV1gcgudqIqYvxQES5A26
- 11OHAnl37sSiW3RXqd/rtWhYvTCSejgW3+hTNgLwCOqLPzWihzUFLDLgQtglRWWHpRqWJ+O
- GHX/MeC4YyevQnhJFxgW6tV4HJVQtK7mxeg4wFX3cdmlctTj6cJwyHEoxmECMIiW/VEhSUJ
- A/6jM5zOeZkQucr+yl/eg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8t7deWdab8w=:FqOoTPdMic8EwwGhswN4dX
- k/SwvV3eeYdSOiSPTh9LUuHPeCvhwKh6wnkcUkxn0IuBKJhYVYmb9n+Yg6hfkm0ikScyuSYJH
- wpxDyfB8HxR9xB7l2LBpAPwO9QOxcqAm0scbp6AYOi3U5Qf/twP8fulVavruAciukx9AMmd1P
- UaeMrsdOllSXBRHSzAvmPj6u4uXAaku/padtUeJSm2KJFFYroj719n9tGNoIQO07hrBKmYDbg
- XzbDrmnHi6x9fjkI3lfTOSptKqpR3OpelqAbtMdsQ27FSvSAS44oWacA55w3SYq2u+9gD7oKm
- jN9yYPe17YHQjBZuQZX9oW5ACbx3igWNnJS9JujO+VJmD7O/THo4JKT3G4ithy9cFoutFvV8m
- xh7ZUAcHJqU9MPU205ouiaYlCtDOi+OHIpNSsiXpV0oqBBimit5iBFe6uuYIF77Xn8yCK4Xlc
- 8qspFm0fJAwO+jMsPhW21M6glPynPcmoZvdobqfTq4BzC6rqlaNdv39rdGaTFi2bK5PuaOCxT
- ypaEMdJLe8j9A+GAYq69UwnoH+4tGbFlkQss2w1o6muFnWk/NHSwVmBPmqjg/OUJ3MSoydBV7
- uKklhgXQ7PGWsX2SPCs+OyHR+KolTO7HYycNHSE7fRNM5MEqJo3BCvyzdtHOO0uNM75lWq4kR
- 5nwRw/W0smsYYH+y7BnrsXTuyXv0uHkQ+67SI2MWhpHM47+hER9B1RRN+rU/azKDtH4GEaENo
- tT7dVxyrqQEbI2lJuo1yK8WPu5dMsQaIc3X/0VoFMD/QcelWCip1GXw1c2eXkbQk8C+pJfAzY
- IOTAyaXWWM+EBQVU0OQdkEhs9hftmVm23TRS9Iw+pZzp+MPtNPrdrhpS1mz+3B8VbH+WJcBk6
- gclqVde5GNaPyrqPzkU9GtuWNg7ZP5eIVz/jZyLhACrLcGsJmi/v23dfkE/PKzpSvd8h9N+yb
- 6vLcNHKRX2g==
+In-Reply-To: <CAJ145vW3HPaP2GeSL65q5C1XhYpiE+7=apU1ia=17eNWPfRj_g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-GeoIP: NZ
+X-Spam_score: -2.9
+X-Spam_score_int: -28
+X-Spam_bar: --
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+I can only concur about the genuine usefulness of symbolic refs as
+branch aliases.  I wrote my shell script for this 5 years ago, and
+I've made use of the facility almost every working day since.
 
-On Wed, 6 Mar 2019, Junio C Hamano wrote:
+I jump around branches frequently, and my feature branch names always
+start with an issue/bug number followed by a short description -- which
+is perfect for listings and seeing at a glance what a branch is about,
+and terrible for tab-completion.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> > writes:
-> >
-> >> As suggested by Jeff King in a nearby thread.
-> >>
-> >> Johannes Schindelin (1):
-> >>   remote-curl: mark all error messages for translation
-> >
-> > Does this come on top or below the anonymize patch, or it does not
-> > matter which goes first?
-> 
-> OK, will pile on top of the anonymization thing.
+Those long branch names are useful and informative for the developers
+on the project, but being able to also have a 2-3 letter alias in my
+working copy for the lifetime of a branch -- something which is trivial
+for me to remember and type -- gives me the best of both worlds, and
+I find it to be a tremendous convenience.
 
-Sorry, yes, it is on top of the anonymization thing. I was assuming by
-mistake that GitGitGadget would display in the footer on which branch the
-PR is based, but it only has the commit hash of the "based-on" commit.
+It's really not dissimilar to why so many people find shell aliases
+to be so handy.
 
-BTW I was expecting the merge conflicts you ran into, that's why I kept
-this patch separate from the anonymization thing.
+The nice thing is that all the plumbing is already there and working.
+I've used it happily for 5 years, and other people use it similarly.
+This feature just adds some protective porcelain over it, so that
+people can more easily make use of the existing benefits without any
+of the potential dangers.
 
-Ciao,
-Dscho
 
-> 
-> Thanks.
-> 
-> >
-> >>
-> >>  remote-curl.c | 50 +++++++++++++++++++++++++-------------------------
-> >>  1 file changed, 25 insertions(+), 25 deletions(-)
-> >>
-> >>
-> >> base-commit: c1284b21f2436de24c9559fcc5f4badb04f47773
-> >> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-157%2Fdscho%2Fl10n-remote-curl-diag-v1
-> >> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-157/dscho/l10n-remote-curl-diag-v1
-> >> Pull-Request: https://github.com/gitgitgadget/git/pull/157
-> 
+-Phil
