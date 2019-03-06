@@ -2,74 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3554020248
-	for <e@80x24.org>; Wed,  6 Mar 2019 14:23:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F159E20248
+	for <e@80x24.org>; Wed,  6 Mar 2019 14:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726490AbfCFOXJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 09:23:09 -0500
-Received: from mout.gmx.net ([212.227.15.18]:42171 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726158AbfCFOXI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 09:23:08 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhiTL-1gecqc489b-00MvNL; Wed, 06
- Mar 2019 15:23:02 +0100
-Date:   Wed, 6 Mar 2019 15:23:01 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Woody Woodman <wwoodyy1@gmail.com>
-cc:     gitster@pobox.com, adam@dinwoodie.org, dturner@twitter.com,
-        dturner@twopensource.com, git@vger.kernel.org, newren@gmail.com
-Subject: Re: [PATCH] merge-recursive: ignore_case shouldn't reject intentional
- removals
-In-Reply-To: <E996067C-E91F-4333-B996-D9AD9DD077C3@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903061522150.41@tvgsbejvaqbjf.bet>
-References: <E996067C-E91F-4333-B996-D9AD9DD077C3@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729223AbfCFOot (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 09:44:49 -0500
+Received: from cpanel4.indieserve.net ([199.212.143.9]:44404 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727214AbfCFOos (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 09:44:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=mZgux1IWy5PDcjlIHvMcq5Blc41ZEI3BDlEq9fBJqv0=; b=LyiF2tUbxpyzTLwj95iDLxv1bp
+        HrL24aCxIBvj25xHp6VcO26oBlaQ6KZzgKM3D/ImnNuZ4bs8Lnf27UlZDc7O7WpEtOqJ8hZcJCtoK
+        akzB9VTCWSOuE2zl1n7R0OqRF5yN6y+8THA8burZoy3yRPeCCXKkb1rdnzHDY1HBH4O4U5JIdkrKj
+        lsQ19Sg9N0SfjFtgNR+56njbU1n+4ckNh2kpD3VrIf62mKKp11CovnJgIy89Ngu1UeMXjRmw3WcQs
+        hQMkJ/wG3cHNiWKWGrvEysByLHxBFV2GsveLB+A8O18eUGnNp25FWTzIWp+7lAwxrhS03pkMPCilz
+        6iFQ3EjA==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:50222 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1h1Xmn-003yiX-F7
+        for git@vger.kernel.org; Wed, 06 Mar 2019 09:44:46 -0500
+Date:   Wed, 6 Mar 2019 09:44:44 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: did we ever resolve what "known to Git" should mean?
+Message-ID: <alpine.LFD.2.21.1903060940470.6367@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Wofe1SGScYd6tag/hFRcoKaSxjLTanfD3ZSPyEIDn/u5+5bDL+g
- muARptCrCOdDENE4QKh3Xg4JkqEy2nhGZl1dhsPnYJbTnyB4/6XcQ3aDdGelYvy2rPeU9xS
- 1820QY/64nfuR9623Mp/H1+8rcuAsB9jB+QtVEw4swHNmlYAA/NP/0OSnvtsDwqX2XfNzgn
- ww+CQwgkqsljdkp0p8veQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mDwim+CP5pM=:dyRX8pDYYj6EnuBPCg05o3
- vMcn5UsbBV4vXp5PktSQ0/SVoXaWbd/cQgIMnETHEcjrfjh2DyVLZ6syaAkTFnnkIVgTaOjvb
- a+7u3fou7gWoc2xaVfr6M7JyXF2hjwr6SNdxgvoRuxTfjl4qyQlwae6nJv/km/omb/1tB/Zd3
- bHNdQlvRpswmIQyf3XAUVRbcYXOm0Y4LODKniAppk3daW5kXWhNQqtl8bj6dM4pKVc/pg0wpn
- Rn4S86em8Zl9vxY8NY5dcNsZ3lzgxi2Y5iQytAOl+YncsLqpTtEsCt6cVLvwWqqtpPCPpTmEu
- fX6QMGBKjLpRtjaC3zycJR32tdN6jev9JGmi8Xt9VKi+SKAYCbjKXTA6be7M/LjSOS0P09VYi
- eOiHiTylHuVCYhXFbBSDuN31uVsxZyg5nlC/LEovRUS1AgVxMQBtrLH9NsJP243LT5I5DUfSa
- li4lSO56HRn5RhbmvklB4O0m7nrkjK/SGhyUXXqAYgB2PZY+Bvl/CHDRYdpw/JUPJtS9vRuth
- THpKb6V64gPBk5FW8hZPcocVQjsEuqTgfJsUBOjg5kO+TbtnqOU3cR9j8KwqRFp/7CF/NFekR
- UZIXcIXU0EwLmpzzGX5tRe138XfFyN1Uq2qQqdO2CAdKvqFiYYZByysA0+YNyeCRuauqR0naM
- gPLz1WbXcefSJJtooO/6/iWIvN0FGZEzJQ3KVFZHIyOJzaNVaDlvXrVqyqZwQJSfVoMnfherE
- fJeIs5vEZOuXgljwVeOcn5z+gsxAuMUxC/G0H/i+a31B+7SLk+9Y0FWAe2ycjRtLRuOmJQMXs
- 3zwZ9WXbsjXLnl8tqaS071487Trd+uxcT+VEYE4x6yo60Kiem215uFFXdVqHTzzuW8PzQuWgo
- aOlgOV8fFdUsaGhTJXHO2bPVF+doJ0TRCke9NakfcP3unMG2vq4sYbjnAYYSbNxKgbRKmEb8x
- XcjOSe6Q3QA==
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Woody,
 
-On Mon, 4 Mar 2019, Woody Woodman wrote:
+  going back to a couple threads:
 
-> 
-> 
+https://marc.info/?l=git&m=151048015116473&w=2
+https://marc.info/?l=git&m=152690160605723&w=2
 
-Details, please.
+and i'm going to try to clarify what (if anything) was decided
+regarding the internally inconsistent phrase "known to Git." junio's
+take on this here:
 
-> Sent from my iPhone
+https://marc.info/?l=git&m=152695527902711&w=2
 
-Not sent from my iPhone, as it would really be cumbersome to type an
-informative, useful bug report on a phone, even the best of them.
+was to banish the phrase entirely in favour of some combination of
+"tracked" and/or "added to the index."
 
-Ciao,
-Johannes
+  thoughts?
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
