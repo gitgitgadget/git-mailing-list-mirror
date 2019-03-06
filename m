@@ -2,96 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B773F20248
-	for <e@80x24.org>; Wed,  6 Mar 2019 09:44:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D778520248
+	for <e@80x24.org>; Wed,  6 Mar 2019 10:05:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729702AbfCFJow (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 04:44:52 -0500
-Received: from mail-it1-f180.google.com ([209.85.166.180]:32922 "EHLO
-        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726596AbfCFJov (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 04:44:51 -0500
-Received: by mail-it1-f180.google.com with SMTP id f186so690473ita.0
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 01:44:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HdPPWIvtkAYGatNIKwc/LyVXRDoyi25+7PnazSYANOw=;
-        b=qYOMtCP9KTccwURHrZI4f4FBSM9FPae3B6hu82c14Q4EqOPWs2TCqHIqyJyVq332IF
-         lnjE/WkOmDWmq5fKweAei+T8eIvBS04p8YKu0x1ooowX5mItL70xN4RuDxPmnr4OXZAt
-         0VSHZ7dat/bqP5aL32Lx7ARsSuiYC6r6fWVaEa6XIXYk7NQUwnsqi/WbXTPsatNxfbms
-         EtgaYA9PeLXA0frcjlb4NKndBJvHj6snBbEFwrNUX0NIQ0qEEfaEeUaUDySKfJ5kfM6q
-         DIcaFKVbXt1NdoAYz21+vqJRD2nLq3iwKI8PCra+cpqaCtokqBGommJnOok134LS1hTH
-         Nimg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HdPPWIvtkAYGatNIKwc/LyVXRDoyi25+7PnazSYANOw=;
-        b=AV9FPKu9rU2aJGVi9Qe00SOnTgXi6xqPz3rB0dDskvuX684SaDad/F2NzPVgdx/juT
-         hQHNJMawBQvOvwbBGerfY1MstF4Wxkt9VOg03sjZHkVwCYP50T1adn8YbPqSyuTjtR+3
-         lVuD9dGf0ClGVtYHy/vJxOMe/+OmLmXeqS0PPfD5sm3tfcbqiJ0Wmxz8jA7FNRgRpb96
-         NHkKQ52ykZriQ6Ypm+L1wYeb7SFrlU+GOMD3gO1fLzy3Dx94kKnfZPZMaCgSunsuKhC9
-         I1nydW42qFYv1QYZYhnOnDxQMmNgig1VOdSJMeI7wdFE6mtlcwPEQNYprqqKhnwq0Lh8
-         oZOg==
-X-Gm-Message-State: APjAAAUHnL+VFo7ANWtxnAgm1IDHEwcRq1fIfgxgbcU4BynA3BfGW/+G
-        fp1PvmW4Z0AgdLt8hro2ZkPEKZgJMuop5iKBMJs=
-X-Google-Smtp-Source: APXvYqxoZ0qrDrezgddElW7TP/Iw3fR0bDG3tWp5k1nbN6NQ0uEghf+/FnBO+3Bdd6dy4CCAqxSRPx3rSpgzvbuKS0M=
-X-Received: by 2002:a24:ccc5:: with SMTP id x188mr1487512itf.123.1551865490731;
- Wed, 06 Mar 2019 01:44:50 -0800 (PST)
+        id S1730039AbfCFKFd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 05:05:33 -0500
+Received: from mout.gmx.net ([212.227.17.21]:49983 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729831AbfCFKFd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 05:05:33 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJjUO-1h0NUo1vD2-001CtE; Wed, 06
+ Mar 2019 11:05:26 +0100
+Date:   Wed, 6 Mar 2019 11:05:25 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/1] remote-curl: mark all error messages for
+ translation
+In-Reply-To: <xmqqmum8sx0h.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1903061102260.41@tvgsbejvaqbjf.bet>
+References: <pull.157.git.gitgitgadget@gmail.com>        <xmqqtvggsx6c.fsf@gitster-ct.c.googlers.com> <xmqqmum8sx0h.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 6 Mar 2019 16:44:24 +0700
-Message-ID: <CACsJy8C7F_Ju2F7COUVd9-1FcyQL=mZph7qmkDh9sS-ENb4PEQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2019, #01; Wed, 6)
-To:     Junio C Hamano <gitster@pobox.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TXw+t8+spnjFjsJiqSvKwrTwfAhum/wV1gcgudqIqYvxQES5A26
+ 11OHAnl37sSiW3RXqd/rtWhYvTCSejgW3+hTNgLwCOqLPzWihzUFLDLgQtglRWWHpRqWJ+O
+ GHX/MeC4YyevQnhJFxgW6tV4HJVQtK7mxeg4wFX3cdmlctTj6cJwyHEoxmECMIiW/VEhSUJ
+ A/6jM5zOeZkQucr+yl/eg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:8t7deWdab8w=:FqOoTPdMic8EwwGhswN4dX
+ k/SwvV3eeYdSOiSPTh9LUuHPeCvhwKh6wnkcUkxn0IuBKJhYVYmb9n+Yg6hfkm0ikScyuSYJH
+ wpxDyfB8HxR9xB7l2LBpAPwO9QOxcqAm0scbp6AYOi3U5Qf/twP8fulVavruAciukx9AMmd1P
+ UaeMrsdOllSXBRHSzAvmPj6u4uXAaku/padtUeJSm2KJFFYroj719n9tGNoIQO07hrBKmYDbg
+ XzbDrmnHi6x9fjkI3lfTOSptKqpR3OpelqAbtMdsQ27FSvSAS44oWacA55w3SYq2u+9gD7oKm
+ jN9yYPe17YHQjBZuQZX9oW5ACbx3igWNnJS9JujO+VJmD7O/THo4JKT3G4ithy9cFoutFvV8m
+ xh7ZUAcHJqU9MPU205ouiaYlCtDOi+OHIpNSsiXpV0oqBBimit5iBFe6uuYIF77Xn8yCK4Xlc
+ 8qspFm0fJAwO+jMsPhW21M6glPynPcmoZvdobqfTq4BzC6rqlaNdv39rdGaTFi2bK5PuaOCxT
+ ypaEMdJLe8j9A+GAYq69UwnoH+4tGbFlkQss2w1o6muFnWk/NHSwVmBPmqjg/OUJ3MSoydBV7
+ uKklhgXQ7PGWsX2SPCs+OyHR+KolTO7HYycNHSE7fRNM5MEqJo3BCvyzdtHOO0uNM75lWq4kR
+ 5nwRw/W0smsYYH+y7BnrsXTuyXv0uHkQ+67SI2MWhpHM47+hER9B1RRN+rU/azKDtH4GEaENo
+ tT7dVxyrqQEbI2lJuo1yK8WPu5dMsQaIc3X/0VoFMD/QcelWCip1GXw1c2eXkbQk8C+pJfAzY
+ IOTAyaXWWM+EBQVU0OQdkEhs9hftmVm23TRS9Iw+pZzp+MPtNPrdrhpS1mz+3B8VbH+WJcBk6
+ gclqVde5GNaPyrqPzkU9GtuWNg7ZP5eIVz/jZyLhACrLcGsJmi/v23dfkE/PKzpSvd8h9N+yb
+ 6vLcNHKRX2g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 6, 2019 at 8:34 AM Junio C Hamano <gitster@pobox.com> wrote:
-> * tg/checkout-no-overlay (2019-02-04) 9 commits
->   (merged to 'next' on 2019-02-04 at 9968bcf4fb)
->  + revert "checkout: introduce checkout.overlayMode config"
->   (merged to 'next' on 2019-01-18 at 1e2a79ba5c)
->  + checkout: introduce checkout.overlayMode config
->  + checkout: introduce --{,no-}overlay option
->  + checkout: factor out mark_cache_entry_for_checkout function
->  + checkout: clarify comment
->  + read-cache: add invalidate parameter to remove_marked_cache_entries
->  + entry: support CE_WT_REMOVE flag in checkout_entry
->  + entry: factor out unlink_entry function
->  + move worktree tests to t24*
->
->  "git checkout --no-overlay" can be used to trigger a new mode of
->  checking out paths out of the tree-ish, that allows paths that
->  match the pathspec that are in the current index and working tree
->  and are not in the tree-ish.
->
->  Will hold.
->  Waiting for "restore-files" & "switch-branches" pair.
->  cf. <20190205204208.GC6085@hank.intra.tgummerer.com>
+Hi Junio,
 
-If it's ready for master, I'd love to see it merged. Either that or
-topic is rebased on 'master'. There are separate checkout changes in
-'master' (mine, sadly), and because switch/restore moves lots of code
-around, I need to create a merge of this topic and master as the base,
-or you'll get horrible conflicts.
+On Wed, 6 Mar 2019, Junio C Hamano wrote:
 
-I should send switch/restore again soon. There are still a few
-unaddressed concerns for git-restore since last time. Probably time to
-refresh those discussions.
--- 
-Duy
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> > writes:
+> >
+> >> As suggested by Jeff King in a nearby thread.
+> >>
+> >> Johannes Schindelin (1):
+> >>   remote-curl: mark all error messages for translation
+> >
+> > Does this come on top or below the anonymize patch, or it does not
+> > matter which goes first?
+> 
+> OK, will pile on top of the anonymization thing.
+
+Sorry, yes, it is on top of the anonymization thing. I was assuming by
+mistake that GitGitGadget would display in the footer on which branch the
+PR is based, but it only has the commit hash of the "based-on" commit.
+
+BTW I was expecting the merge conflicts you ran into, that's why I kept
+this patch separate from the anonymization thing.
+
+Ciao,
+Dscho
+
+> 
+> Thanks.
+> 
+> >
+> >>
+> >>  remote-curl.c | 50 +++++++++++++++++++++++++-------------------------
+> >>  1 file changed, 25 insertions(+), 25 deletions(-)
+> >>
+> >>
+> >> base-commit: c1284b21f2436de24c9559fcc5f4badb04f47773
+> >> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-157%2Fdscho%2Fl10n-remote-curl-diag-v1
+> >> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-157/dscho/l10n-remote-curl-diag-v1
+> >> Pull-Request: https://github.com/gitgitgadget/git/pull/157
+> 
