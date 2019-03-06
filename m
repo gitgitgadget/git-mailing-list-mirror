@@ -2,98 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6538120248
-	for <e@80x24.org>; Wed,  6 Mar 2019 05:23:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F226720248
+	for <e@80x24.org>; Wed,  6 Mar 2019 05:28:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728842AbfCFFXQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 00:23:16 -0500
-Received: from mout.web.de ([212.227.17.12]:57199 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725267AbfCFFXQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 00:23:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1551849793;
-        bh=QbK5E5TiWgksammBvj+5WAL+wLdW9jFEk82btMAYUqE=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=kMuDPzXWRUG8K14FLFPehBCilfg+mQeIZabr+ACWK5nuK+L505FpY8nxYnyKbS374
-         5td6gQhk8seh5ChNeuG8o4ZqgFNWrnG95G1eu3Lqik/4gfIrUOA9pejgdL9chvui7I
-         SlmkZRTPHtQlLtgwzx1+pVg3IMM9NVCp0jip5KBs=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost.localdomain ([195.198.252.176]) by smtp.web.de
- (mrweb103 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 0MdLo7-1giuX42aaB-00IWF3; Wed, 06 Mar 2019 06:23:13 +0100
-From:   tboegi@web.de
-To:     git@vger.kernel.org, ybhatambare@gmail.com
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v1 1/1] gitattributes.txt: fix typo
-Date:   Wed,  6 Mar 2019 05:23:10 +0000
-Message-Id: <20190306052310.31546-1-tboegi@web.de>
-X-Mailer: git-send-email 2.19.1.593.gc670b1f876
-In-Reply-To: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
-References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
+        id S1728972AbfCFF2E (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 00:28:04 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35203 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728842AbfCFF2E (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 00:28:04 -0500
+Received: by mail-wr1-f65.google.com with SMTP id t18so11896444wrx.2
+        for <git@vger.kernel.org>; Tue, 05 Mar 2019 21:28:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=uHx66kxYB8yPYjkKOD/U1gYEaTF9D+9CTpFjsFiOSi4=;
+        b=S7rbgESf/vrhcorBE2PTgIap9d6mTTrgK/Zy/a0+nUV7TWEs3yudKxYTx4zkUsGbbv
+         d4L5g4LJOenxZPbaNGta2/OfHNq0+Nt/yThYlr6QatXMYHJokhffYDF754pbo9xLv28k
+         2cJGyFG0rHDUIAVS9+Y14NgOSuQBC1AERwlXcJydtm5cH3R3azE4Bp+9hZSULqraYlKZ
+         DL7pyw26X2ky/S1za0RNzr3VbCYDJF78eoCyeETaxE8TMCuCY1q3+bPFGPi1ORI2cbLe
+         +CAfdDy2nasn1Lv8QnMdci54rg5adJjVTPEQlsNOnP8vbczSxAxmfBgj6RKP7EAB6Lr8
+         wiIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=uHx66kxYB8yPYjkKOD/U1gYEaTF9D+9CTpFjsFiOSi4=;
+        b=RRshcIgHdaKlg6whHlwNj0yocMAclIsNB1UMuhzmniwWJDJk7dqkZQc0zzseX5rnxx
+         u/dU1jPHMSpGPUA1FeSAK7ERUjNM+QIW5Gt2hU4OatI55n6pvsMx02MRrOh5KGNpx5Hz
+         6qHK2m4KPJPkAD0xk5IJLBD0LNIFukba2tnfqPYePZtaTlLf3W6oc/SLkcRAwbxD1EEB
+         K9L3FO2b0Hj/BTHgqdg5orN+3htU+/5vE3Ol8XwNE2Ka6QZfxuid04JpCErP3k8nfI4I
+         s1dZJS+iQXvbnDH4Z1Jd4BLsu2To3w6aS+r+iZRNZkADvAKUmUK/mRoUdgxOldpFloyz
+         pAtg==
+X-Gm-Message-State: APjAAAUZrIT3NE0HywODATvJC567TlA1YBSjq36DkcoOK7spWeaTfluZ
+        lcnDtrB2V0yBmmAYWl0A33w=
+X-Google-Smtp-Source: APXvYqzA5Ig/9G6IVSffahfWd+jObRZzgO5BZ717QWhqa8m59O3GManpxsRPn1qNKpCZpd3QrGtFiQ==
+X-Received: by 2002:a5d:628a:: with SMTP id k10mr1372224wru.108.1551850082067;
+        Tue, 05 Mar 2019 21:28:02 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h137sm2140367wmg.41.2019.03.05.21.28.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 05 Mar 2019 21:28:01 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Makefile: use `git ls-files` to list header files, if possible
+References: <pull.130.git.gitgitgadget@gmail.com>
+        <0b5529406b9458d37f3f5cdf38baa2d6a0a70a65.1551470265.git.gitgitgadget@gmail.com>
+        <20190301213619.GA1518@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1903022058230.45@tvgsbejvaqbjf.bet>
+        <20190303171951.GD23811@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1903041206300.45@tvgsbejvaqbjf.bet>
+        <20190304214155.GB3347@sigill.intra.peff.net>
+        <xmqqzhq9vpik.fsf@gitster-ct.c.googlers.com>
+        <20190305230723.GB22901@sigill.intra.peff.net>
+        <42d125d4-76bf-afc3-8f12-a9fa1296c85c@ramsayjones.plus.com>
+        <20190306044006.GA6664@sigill.intra.peff.net>
+Date:   Wed, 06 Mar 2019 14:28:01 +0900
+In-Reply-To: <20190306044006.GA6664@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 5 Mar 2019 23:40:06 -0500")
+Message-ID: <xmqqd0n4r2qm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:rJy5yIQrW5cM/ELHw0S4h2Vc58fsI7LGcycwi8IO+ikHQz+DzIm
- 7huzQY9xyoHrcGLDmSYSsdr4JcL4OYrvZa0lWyShEqx7ZQjRjutr21zFS35/3qUkxZF1VZf
- 6sFbMD/6ezIfl0tIEQIm6g2DI0f6k1PSUCxuv9kTBZN+F9nJdnM935fggbgqOzAFs2iUJh1
- CqEvk4HaDmzYSqUrrpRZA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OEbUy1PmMFg=:2D4oH9n6gBsUV04xxJr110
- DAwQrrSzHaaqHL1KrrXVJ5suYoyKFGwb8hIo6iVsYOciTRuMmLcNh0NPqJ4JPVDlBg+xazQD5
- MSEbOz5BhVyUglsf/vla1y91pxzeutz3FdlKZnU4eK+38AdHLHXpq3VrI2AMgyRBicOUoMMC2
- JVAR9frROuM6Kq1fUR/Q98enQQKcS19MUNMVyNRa8X8KHqAEnpLkyGcK4z4H3msseeNsRpPsZ
- hSdDjX/aMOyNyOdimGKUiwlQXOWYqvtlkQOzv/CCf1PP1sFGP6x5vrjmkK4q4w8WL4Kny/OJ0
- hV8FEf1OLEbEEbq751w3H1W3+FsUAbKujl/oWyBkxRF2bqD7UZaitATP9aeorKEY5RyEu8bot
- cpYTyowlCuo7D2p/mozJsiRKNjg/TPZTi+Gb7AZpuPpaK5fkPgHGzD84vzwRTtncmtX1TbKhT
- bfKXsSzDuH9A1NyCLaht3ksYm7Z6/7NkvqtGJqebyh02+TrN1xqHFytpIQANbBcEMKUIT0kKH
- LBY3LTKHskrFXGshJXs+Af+idbmu3v8nZ8adiL/igSQU8IV5XmTo+8V6TPa2Io0QHn8Eyxx5K
- bYh82Sa5EoIr5OproAW0BSWwfCROr8Tzs/1wQUQTocsC8Vud3c8LSnqPqqLRD4pQtA+3IQyq3
- RZrpB7FyqLVpDeEx/4iqD2oNd1B1/1Je+7HmlVBQLKBVf188OB1a2F8oI69GpN0edA9QOjk8n
- sNonXpFNBgsQWYhKoespxN5ohsYa/keR87eJqnVATMTaMVnPTC3KzK8sS2Gg3dLTDhbYiNjpx
- 5HhSzwKBW9pBhwwB4vmbV+VXmUK4HGj3DpaGOvWt/UVDLy/LsKru/9vAir0FRdZAD+210nzQe
- 2K+LTVedBMnqmWaHcitV/PXtelMQF5joQxvLN6FlLrPignVMyOXfTpxxNyqrdd
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Yash Bhatambare <ybhatambare@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-`UTF-16-LE-BOM` to `UTF-16LE-BOM`.
+> On Wed, Mar 06, 2019 at 12:23:20AM +0000, Ramsay Jones wrote:
+>
+>> > Yeah, that's what I was hinting at earlier in the thread. Here it is
+>> > sketched out to an actual working patch. The sub-make bits could
+>> > actually be a shell script instead of a Makefile; the only point in
+>> > using make is to use the parent "-j" for parallelism.
+>> 
+>> sigh. :(
+>> 
+>> I wish my patch removing this target had been picked up now!
+>> 
+>> Earlier this evening I spent an hour or so writing an email which
+>> tried to discourage spending any time on this, because of the
+>> potential for this to be a huge time-suck. An unrewarding one at
+>> that! :-D
+>
+> Heh. I am OK with removing it, too.
 
-this closes https://github.com/git-for-windows/git/issues/2095
+FWIW, I am fine with that plan as well.
 
-Signed-off-by: Yash Bhatambare <ybhatambare@gmail.com>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-=2D--
+> My thinking earlier in the thread was that it should go in our bag of
+> linting tools that people should generally run. But actually, it is kind
+> of expensive to run, and it does not actually help anything immediately
+> in practice. I.e., what we really care about is that the C source files
+> compile, and running "make" does that (and especially running it on
+> various platforms). This is just checking for a _potential_ problem if
+> somebody were to include a particular header file at the start of
+> another C file.
+>
+> So it's really about 2 steps removed from stopping an actual problem.
 
-This patch already made it into Git for Windows,
-so I send it upstream "as is".
+Yeah, exactly.
 
-Documentation/gitattributes.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> diff --git a/compat/bswap.h b/compat/bswap.h
+> index 5078ce5ecc..e4e25735ce 100644
+> --- a/compat/bswap.h
+> +++ b/compat/bswap.h
+> @@ -1,3 +1,6 @@
+> +#ifndef COMPAT_BSWAP_H
+> +#define COMPAT_BSWAP_H
+> +
+>  /*
+>   * Let's make sure we always have a sane definition for ntohl()/htonl().
+>   * Some libraries define those as a function call, just to perform byte
+> @@ -210,3 +213,5 @@ static inline void put_be64(void *ptr, uint64_t value)
+>  }
+>  
+>  #endif
+> +
+> +#endif /* COMPAT_BSWAP_H */
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes=
-.txt
-index 9b41f81c06..bdd11a2ddd 100644
-=2D-- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -346,7 +346,7 @@ automatic line ending conversion based on your platfor=
-m.
-
- Use the following attributes if your '*.ps1' files are UTF-16 little
- endian encoded without BOM and you want Git to use Windows line endings
--in the working directory (use `UTF-16-LE-BOM` instead of `UTF-16LE` if
-+in the working directory (use `UTF-16LE-BOM` instead of `UTF-16LE` if
- you want UTF-16 little endian with BOM).
- Please note, it is highly recommended to
- explicitly define the line endings with `eol` if the `working-tree-encodi=
-ng`
-=2D-
-2.19.1.593.gc670b1f876
-
+This probably is worth having as an independent clean-up.
