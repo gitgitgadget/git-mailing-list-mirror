@@ -2,71 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32E3C20248
-	for <e@80x24.org>; Wed,  6 Mar 2019 08:07:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C348F20248
+	for <e@80x24.org>; Wed,  6 Mar 2019 09:14:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727691AbfCFIHR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 03:07:17 -0500
-Received: from smtp2-g21.free.fr ([212.27.42.2]:43211 "EHLO smtp2-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726858AbfCFIHR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 03:07:17 -0500
-Received: from [192.168.3.76] (unknown [146.247.95.34])
-        (Authenticated sender: jn.avila)
-        by smtp2-g21.free.fr (Postfix) with ESMTPSA id C842C20042E;
-        Wed,  6 Mar 2019 09:07:10 +0100 (CET)
-Subject: Re: [PATCH] Doc: fix misleading asciidoc formating
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <20190305214423.27820-1-jn.avila@free.fr>
- <20190305223655.GA27535@sigill.intra.peff.net>
- <xmqq4l8hszj7.fsf@gitster-ct.c.googlers.com>
- <20190305230227.GA22901@sigill.intra.peff.net>
- <20190305231142.GA359@sigill.intra.peff.net>
- <xmqqy35ssx7v.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
-Message-ID: <43445278-ec9f-f3f4-89bf-cf99906fc617@free.fr>
-Date:   Wed, 6 Mar 2019 09:07:11 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1729555AbfCFJOy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 04:14:54 -0500
+Received: from cpanel4.indieserve.net ([199.212.143.9]:43372 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726391AbfCFJOy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 04:14:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=Bv/Ljbrvv6ANKb4SF6kB5I+P/uPhyc0rx6kxB+v6yX4=; b=L1wPvaj97wXslEyDr26xQtwGly
+        f+pXw2G5YzTEVds63PpHx/HGSJdP3CbSvoRNBQq7EOylBtNV7HsMKV5engjsCixuM6T3MKc0m0mzR
+        HEKGIIDyYGaZwXL6yW6t6Z8tbKDc+0mbGmyTwYOhomcY9V7Cdr0FcDFG664zfjKM2EDMxbUlbChmY
+        RvT11wB9TWPZ3RUBNHGs1DLQvYjgpaW6xAjjz3Cfel0achX8tJAxb7z3ROkZtVVqKlhm5LJvZFDF7
+        pXmQ558PBNUuo7XV/Ed5V0MuqcVL7MRxCVyONAdBoiS3fGAjiCV9TgRhGM1KDLvlJVGtmhrPktz7L
+        VsheKpEg==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:43148 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1h1SdS-002zkY-Fc
+        for git@vger.kernel.org; Wed, 06 Mar 2019 04:14:52 -0500
+Date:   Wed, 6 Mar 2019 04:14:44 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH] attr.c: ".gitattribute" -> ".gitattributes" (comments)
+Message-ID: <alpine.LFD.2.21.1903060413140.16835@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy35ssx7v.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-03-06, Junio Hamano, Jeff King wrote:> Jeff King <peff@peff.net>
-writes
-> 
->> TBH, I still have mixed feelings on rendering these technical docs with
->> asciidoc at all. It seems like few enough people bother to render them
->> that bugs persist for a long time. It kind of seems like make-work
->> getting them to format correctly.
-> 
-> I thought about resisting when some people started pushing for
-> rendering everything under the Sun, but went with the flow as I
-> lacked the energy to fight every battle in sight.
-> 
-> Good to see somebody shares a similar sense of trade-off, better
-> late than never ;-).
-> 
 
-TBH, I discovered this while diving into the rendering on manpages for
-the localized version because asciidoctor issued a warning, and pushed
-this patch for "cultural" knowledge (sometimes, automatic linefeed
-triggers unintended behaviors). But, as Peff noted, this may not be a
-good idea to render these documents at all on git-scm.com.
+Correct misspelled ".gitattribute" in comments only, so no functional
+change.
 
-In this case, there's no point in tracking rendering issues outside
-genuine manpages.
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
+---
 
+diff --git a/attr.c b/attr.c
+index fdd110bec5..93dc16b59c 100644
+--- a/attr.c
++++ b/attr.c
+@@ -431,14 +431,14 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+  * Like info/exclude and .gitignore, the attribute information can
+  * come from many places.
+  *
+- * (1) .gitattribute file of the same directory;
+- * (2) .gitattribute file of the parent directory if (1) does not have
++ * (1) .gitattributes file of the same directory;
++ * (2) .gitattributes file of the parent directory if (1) does not have
+  *      any match; this goes recursively upwards, just like .gitignore.
+  * (3) $GIT_DIR/info/attributes, which overrides both of the above.
+  *
+  * In the same file, later entries override the earlier match, so in the
+  * global list, we would have entries from info/attributes the earliest
+- * (reading the file from top to bottom), .gitattribute of the root
++ * (reading the file from top to bottom), .gitattributes of the root
+  * directory (again, reading the file from top to bottom) down to the
+  * current directory, and then scan the list backwards to find the first match.
+  * This is exactly the same as what is_excluded() does in dir.c to deal with
+@@ -899,7 +899,7 @@ static void prepare_attr_stack(const struct index_state *istate,
+ 	 * set of attribute definitions, followed by the contents
+ 	 * of $(prefix)/etc/gitattributes and a file specified by
+ 	 * core.attributesfile.  Then, contents from
+-	 * .gitattribute files from directories closer to the
++	 * .gitattributes files from directories closer to the
+ 	 * root to the ones in deeper directories are pushed
+ 	 * to the stack.  Finally, at the very top of the stack
+ 	 * we always keep the contents of $GIT_DIR/info/attributes.
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
