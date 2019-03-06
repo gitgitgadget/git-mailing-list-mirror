@@ -6,60 +6,59 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5778820248
-	for <e@80x24.org>; Wed,  6 Mar 2019 19:06:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D23520248
+	for <e@80x24.org>; Wed,  6 Mar 2019 19:08:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729614AbfCFTGd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 14:06:33 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41296 "HELO cloud.peff.net"
+        id S1730000AbfCFTIW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 14:08:22 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41312 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727302AbfCFTGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 14:06:33 -0500
-Received: (qmail 26903 invoked by uid 109); 6 Mar 2019 19:06:33 -0000
+        id S1726394AbfCFTIW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 14:08:22 -0500
+Received: (qmail 26984 invoked by uid 109); 6 Mar 2019 19:08:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Mar 2019 19:06:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Mar 2019 19:08:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16205 invoked by uid 111); 6 Mar 2019 19:06:50 -0000
+Received: (qmail 16236 invoked by uid 111); 6 Mar 2019 19:08:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Mar 2019 14:06:50 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Mar 2019 14:08:38 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2019 14:06:31 -0500
-Date:   Wed, 6 Mar 2019 14:06:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2019 14:08:19 -0500
+Date:   Wed, 6 Mar 2019 14:08:19 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Doc: fix misleading asciidoc formating
-Message-ID: <20190306190630.GB18239@sigill.intra.peff.net>
-References: <20190305214423.27820-1-jn.avila@free.fr>
- <20190305223655.GA27535@sigill.intra.peff.net>
- <xmqq4l8hszj7.fsf@gitster-ct.c.googlers.com>
- <20190305230227.GA22901@sigill.intra.peff.net>
- <20190305231142.GA359@sigill.intra.peff.net>
- <xmqqy35ssx7v.fsf@gitster-ct.c.googlers.com>
- <43445278-ec9f-f3f4-89bf-cf99906fc617@free.fr>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
+Subject: Re: GSoC 2019: Git's application submitted
+Message-ID: <20190306190819.GC18239@sigill.intra.peff.net>
+References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
+ <CACsJy8DhDe+28z2=3v1dBqco7q2Zj12hdKKT==yWFPui8SBkiw@mail.gmail.com>
+ <20190306044955.GC6664@sigill.intra.peff.net>
+ <CACsJy8BaCMsXhXSAwu+wmZCTwL5TO8wVDtGd87vRwH=AcOsThA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <43445278-ec9f-f3f4-89bf-cf99906fc617@free.fr>
+In-Reply-To: <CACsJy8BaCMsXhXSAwu+wmZCTwL5TO8wVDtGd87vRwH=AcOsThA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 06, 2019 at 09:07:11AM +0100, Jean-Noël Avila wrote:
+On Wed, Mar 06, 2019 at 04:36:12PM +0700, Duy Nguyen wrote:
 
-> TBH, I discovered this while diving into the rendering on manpages for
-> the localized version because asciidoctor issued a warning, and pushed
-> this patch for "cultural" knowledge (sometimes, automatic linefeed
-> triggers unintended behaviors). But, as Peff noted, this may not be a
-> good idea to render these documents at all on git-scm.com.
+> > It seems like that would even be pretty easy to do, with the exception
+> > of the numbering.
+> 
+> I'd like some niceties from test-lib.sh though. -i should be supported
+> to stop at the first failure. -v would be nice if possible. Skipping
+> tsets also.
 
-Ah, that makes sense. I do think this is an interesting gotcha, and I'm
-glad to have learned about it. So even if we don't apply your patch and
-it serves as an interesting report, I think it was still worth it.
-
-(Though I am also happy to see it applied since you went to the trouble
-to make it).
+Yeah, I'd want all of those, too. I think they're easier, though,
+because it's not too hard to get information _into_ the C program via
+the environment. But still, somebody has to write the code. :)
 
 -Peff
