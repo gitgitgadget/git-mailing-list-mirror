@@ -2,89 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E59820248
-	for <e@80x24.org>; Wed,  6 Mar 2019 19:52:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D889620248
+	for <e@80x24.org>; Wed,  6 Mar 2019 19:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730918AbfCFTwl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 14:52:41 -0500
-Received: from mail-pf1-f180.google.com ([209.85.210.180]:33033 "EHLO
-        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730256AbfCFTwl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 14:52:41 -0500
-Received: by mail-pf1-f180.google.com with SMTP id i19so9456504pfd.0
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 11:52:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=z2giIkcR5yNUAEux2tgME8c+c7hJW7vYqC1UrbevdqE=;
-        b=n75R2orjoHbtftHIUEuSX6lFGbVvHMHlVl7LQBw6aVwuUiYs4Z47Cg0jHFSrOx3PMf
-         FPqz5RdHSwt0tFflayR7EKCiUw+6cL408MjXk9Wzz2U3DMC5x7zjozGK8usUgNithraj
-         yQ9xx64KzQAFUCf/UnJltIR2U+qMVxfTqTzNESZ+K5Leh/E7o2CzzaTLUdo6EK9J+yeX
-         Am25pRjxYEIx4f5+XXawPLscWgRYBlijaVor8w5hUR3MGLjZMzbaiCLZMrj+z2FptiOl
-         Ia63CZsPJM2SeCicGIIyCiwVaRUWqvCNQfKFwPgbemqx2F6vqz/0Ed5JyDT92LVFt4e8
-         wRvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=z2giIkcR5yNUAEux2tgME8c+c7hJW7vYqC1UrbevdqE=;
-        b=qJiz05NvrNyra5IFU+TR6Irl+Ox7mtz3HshYmm2Be2RW1FmLzGbw+V8Euvt4C/h2tU
-         Be+AsdT8vzQeM/1bcvfnfVjTfZu/D0xCToI7kTCMK84MsVOPk38pVcR67u24EXY0lbX8
-         n9LoQspn4W4J5QDLd/WTqczXknn5HAfORSgV7/jUtdwIbMZWYerES53VYq8BKitFJBFp
-         7gDyscAy7ZHLpogYL4UY87NimUHZkgF8nGrD35f4DfaAgZljupbmheetnVJgsycv0eSv
-         xWVW+uB+Uy+UzmO2emU437gfqw1/qz9DAoOMKadg7eFqyGI6LFPx8YNofla5ne3AuRTW
-         47pg==
-X-Gm-Message-State: APjAAAXTfG3q18CEsN1XwKneur+RD7z7TtPoa/eFxKKWFf5JEinKmK+/
-        a9Yvt/sYbVAxHB0n8FaeJyJmashh
-X-Google-Smtp-Source: APXvYqzzGuopYJg693l09HMSYglr0MBXjt+5oVr+jBS8qezwisQ+HVbuscsKis8UtNYa/zqJ5wAp4Q==
-X-Received: by 2002:a63:4962:: with SMTP id y34mr7968510pgk.425.1551901959726;
-        Wed, 06 Mar 2019 11:52:39 -0800 (PST)
-Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id m24sm3384517pgv.1.2019.03.06.11.52.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Mar 2019 11:52:38 -0800 (PST)
-Date:   Wed, 6 Mar 2019 11:52:36 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de, t.gummerer@gmail.com, gitster@pobox.com
-Subject: [BUG] GIT_AUTHOR_NAME was checked before prepare_fallback got called
- (ps/stash-in-c)
-Message-ID: <20190306195236.GA22872@dev-l>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        id S1729247AbfCFT6o (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 14:58:44 -0500
+Received: from smtp-31.italiaonline.it ([213.209.10.31]:56205 "EHLO libero.it"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726525AbfCFT6o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 14:58:44 -0500
+Received: from DESKTOP-E4U7JCE ([158.148.73.124])
+        by smtp-31.iol.local with ESMTPA
+        id 1cgahvWUnCH4t1cgahoR9E; Wed, 06 Mar 2019 20:58:41 +0100
+x-libjamoibt: 1601
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2014;
+        t=1551902321; bh=IJqmKY2SJsqoYZq5PI6xmrZOfAKHN9vbsZaj2GhWs80=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=op1yTboBMaatgjYgWpHl1jPr5N/VNAW/0KKm5qkBdAlxX7gU/9w+UDZAekvS16PRu
+         0pnuOuXGtCLowm4RJLVWVTM0fkuGBWZVdMp1Wl0QhiJxkxnIHuusw5WHphdbqJ24PQ
+         UqaS5ZhMNfCJx+ObNrQiPUL/qLtydjmiPi3f8AGR5z2ged72HBl1a4EbHO1PVwOkwp
+         01OyD9kufIVtZ9MIja4xM8qJ8PZeaFQO3M70zHZ9z0UP0c/6fK6Y1aUNtlD3sSYv2p
+         OmqlonvqRhKqyyCwuKY6XR1xk1S89owToKvVCVO1qh4oMIWzp+Vua4bCxJIlH/WCRT
+         roSNpuhUFBYww==
+X-CNFS-Analysis: v=2.3 cv=R4HS5uZX c=1 sm=1 tr=0
+ a=lD+Fqu6e8C6S12qGMBovIw==:117 a=lD+Fqu6e8C6S12qGMBovIw==:17
+ a=IkcTkHD0fZMA:10 a=UlqV6C1OAAAA:20 a=ZeQt5Yt_D7QRJqUf69oA:9
+ a=QEXdDO2ut3YA:10 a=CtvLCtAli4LrSFkZZ_cB:22
+Message-ID: <1551902320.1727.1.camel@libero.it>
+Subject: Re: Can't build first git commit
+From:   Fabio Aiuto <polinice83@libero.it>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Date:   Wed, 06 Mar 2019 20:58:40 +0100
+In-Reply-To: <20190305191519.GA12791@sigill.intra.peff.net>
+References: <1551729517.4092.1.camel@libero.it>
+         <20190304204007.GA32691@sigill.intra.peff.net>
+         <20190305191519.GA12791@sigill.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1+deb9u1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfP7uE6HUsb9RywHpBExPcBJZLRuUZqd6wk10VeSkmfrr30QBLSLdUZAs4VjoV9sk7c9wi5lb9Qi3HI/ZImiJTIgaLiNETvn/SmL/uc3kUK9uuriQ6wx7
+ Yz0xzP17ZLd+nkpY58cBaYHzjSwbJvBd0DWogivlGFwAvYi9D0vGlRDX7ZQspl4G0GJPfyUpQ4zl7GzF0ADAWtvJAd3PHcAq3h4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+Il giorno mar, 05/03/2019 alle 14.15 -0500, Jeff King ha scritto:
+> On Mon, Mar 04, 2019 at 03:40:07PM -0500, Jeff King wrote:
+> 
+> > You can patch the Makefile, or just override it like:
+> > 
+> >   make LIBS='-lcrypto -lz'
+> > 
+> > which builds for me on current Debian unstable. I don't think you
+> > can
+> > actually fetch with that old build, but I used periodically check
+> > that
+> > Git v1.0 can fetch happily from GitHub. I haven't in a while, so
+> > let me
+> > know if you try it and it doesn't work. ;)
+> 
+> I just tried this, and it does indeed work. I had to build v1.0.0
+> with
+> 
+>   make NO_OPENSSL=Nope
+> 
+> I think the issue is that some old code embedded openssl's BIGNUM in
+> a
+> struct, and later versions of openssl stopped publicly defining the
+> types.
+> 
+> I was able to clone git://github.com/git/git with the result, though
+> of
+> course it chokes no the sha1collisiondetection submodule. You can
+> still
+> use "git log", though, and checkout older commits.
+> 
+> -Peff
 
-I've been on "jch" for my daily use and I noticed today that git stash
-isn't working. I managed to debug it down to "ps/stash-in-c".
-
-To reproduce on git.git, it's simply the following:
-
-	echo // >>dir.c
-	git stash
-
-This gives me the following error:
-
-	$ git stash
-	BUG: ident.c:511: GIT_AUTHOR_NAME was checked before prepare_fallback got called
-	Aborted (core dumped)
-
-I haven't read through the branch's code so I'm not too familiar with
-the changes but please let me know if you need any other information or
-if there's anything I can help with.
-
-Thanks,
-
-Denton
+Hi Jeff,
+I've just typed make make LIBS='-lcrypto -lz' from the shell inside the
+ 
+directory containing the whole first commit and it seems to work. I
+trace all through the code. Yes the fetch command wasn't written at
+that time, right? I didn't understand why should be better to work with
+the git code from github. There's something I misunderstood?
+Thank you Jeff ;-)
