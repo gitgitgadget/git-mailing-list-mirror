@@ -2,81 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC21020248
-	for <e@80x24.org>; Wed,  6 Mar 2019 00:09:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95AA520248
+	for <e@80x24.org>; Wed,  6 Mar 2019 00:11:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728683AbfCFAI7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 5 Mar 2019 19:08:59 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36523 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727318AbfCFAI7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Mar 2019 19:08:59 -0500
-Received: by mail-wm1-f67.google.com with SMTP id j125so4240312wmj.1
-        for <git@vger.kernel.org>; Tue, 05 Mar 2019 16:08:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0qcgx62WWCKsyonWnZSmwoVI30qcasDFuxa0yglboq4=;
-        b=uj+E3GfmN0bdVvIcKfQUK11WwmkMFm2nYeQV1O8ODSCEW96n4+Py28J/WuaQ7WK/q/
-         l0k2bQOfsMoex6R52stTJinbBzhBR1093jW1Wk1YApecxv1Ib1aKB+5u2MSMN9xo47CD
-         VhrqJl7XsdnLGNvk/3V8cRtFTmvUxfwnPf0WcFzpE/OTU5bUMxC70gYQdzrsEmPht/s+
-         gCAI4ALFRye2uj7i9cCy/wqN+qEl+ww5kisAwJya7nuYfvcPASaTG5Nm3GLWnXLEy4ga
-         nmeQVPA1gifoTBOkcumfUnCUqN1Yjde2ORzQq+U1ehBIyyPpLId6KrnYDgQv//4uvFYg
-         Pdkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0qcgx62WWCKsyonWnZSmwoVI30qcasDFuxa0yglboq4=;
-        b=Rccl9QwpqmvPuPvCRvHljdTH/QHoq6y+g8waUVD/U38usHcVr50pZCbZxRP8Zn+Cwv
-         oHdLJI6fx65euhSVYsUHEcli3+sQ9x8OAA7fyxECxTEvuH79Rl+8dEk6u7ayfBC9Tm34
-         T1WSWLUq+J8Ft8e7oFJQfApzO9RSdtmUr5VTkmKDjyGqBrD1gmFMdNORq6mSGVeyL0oq
-         Dail7iFf7BfB0m4YCGVlzzYSPEmfJwRqE8/BfonGHjU26MhyTSvTthc9B23SVkGE76YF
-         rP60wArm0cSfj1opP/b4C5QJ5dk5iIogbcK2iJBYz05ynZQIS6CViC3FL0HwF1+/Nuns
-         K0gQ==
-X-Gm-Message-State: APjAAAXRsYTKaAAA/o0fHiSbHNN3oD9T67JDPOvUALDdWJDj2oT8sf30
-        2dMagBHEbhJ0j+e7AVWLceA=
-X-Google-Smtp-Source: APXvYqwJcz83wsCv7inte9cSAeHhhfm9km5o88dFmNATInPL5c68cY4U8KDrSyEbrriIe46v2URk4A==
-X-Received: by 2002:a1c:a817:: with SMTP id r23mr584429wme.110.1551830937277;
-        Tue, 05 Mar 2019 16:08:57 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p16sm11802695wro.25.2019.03.05.16.08.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 05 Mar 2019 16:08:55 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: is it "git gc --prune=now" or "git gc --prune=all"?
-References: <alpine.LFD.2.21.1903020323110.16672@localhost.localdomain>
-        <20190305050326.GK19800@sigill.intra.peff.net>
-Date:   Wed, 06 Mar 2019 09:08:55 +0900
-In-Reply-To: <20190305050326.GK19800@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 5 Mar 2019 00:03:27 -0500")
-Message-ID: <xmqqef7ksw2w.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728704AbfCFAL0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 5 Mar 2019 19:11:26 -0500
+Received: from avasout01.plus.net ([84.93.230.227]:40133 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727570AbfCFAL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Mar 2019 19:11:26 -0500
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id 1K9ThOgJ5zxF51K9UhyZBs; Wed, 06 Mar 2019 00:11:21 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=UqFNyd4B c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=4OhujA1bs1H5SJ2K9coA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] Makefile: fix 'hdr-check' when GCRYPT not installed
+Message-ID: <afd21027-52a7-7b4f-bf9c-024cc787b57b@ramsayjones.plus.com>
+Date:   Wed, 6 Mar 2019 00:11:13 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfEqrfBPYJoP7kXakSk8BdZ9K+Qq7S1vJH9tb9eFEFBpiA0GlEQiaVUccl6QN8FMeqc6OwisWEm53KpXWZIGyqDSOtC+63IALLZDMDQskiwZMfDL8NCix
+ v0cUdO2siRjN4XLdK4v/3g9uaNxxWGNkOP+VmT9MicGK0pz3k8T6+NFO/wM0lqWWtLQu8R6D5Ly3eQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> ... I do think the documentation
-> should recommend "now". Possibly builtin/gc.c should be smarter about
-> recognizing "all" in the conditional you quoted, too, though I don't
-> know that it's all that important (especially if we tweak the
-> documentation).
+If the GCRYPT_SHA256 build variable is not set, then the 'hdr-check'
+target complains about the missing <gcrypt.h> header file. Add the
+'sha256/gcrypt.h' header file to the exception list, if the build
+variable is not defined. While here, replace the 'xdiff%' filter
+pattern with 'xdiff/%' (and similarly for the compat pattern) since
+the original pattern inadvertently excluded the 'xdiff-interface.h'
+header.
 
-Yup, as the placeholder for the value is labeled as "<date>", "now"
-would be the one we should be encouraging.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-Thanks.
+Hi Junio,
+
+In my local 'hdr-check-fixup' branch, the gcrypt failure is fixed
+almost by default. However, given that we are going the 'git ls-files'
+route, this patch will fix it up.
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ Makefile | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index c5240942f2..fbc84cb541 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2736,7 +2736,10 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+ sparse: $(SP_OBJ)
+ 
+ GEN_HDRS := command-list.h unicode-width.h
+-EXCEPT_HDRS := $(GEN_HDRS) compat% xdiff%
++EXCEPT_HDRS := $(GEN_HDRS) compat/% xdiff/%
++ifndef GCRYPT_SHA256
++	EXCEPT_HDRS += sha256/gcrypt.h
++endif
+ CHK_HDRS = $(filter-out $(EXCEPT_HDRS),$(patsubst ./%,%,$(LIB_H)))
+ HCO = $(patsubst %.h,%.hco,$(CHK_HDRS))
+ 
+-- 
+2.21.0
