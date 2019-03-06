@@ -2,83 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BC9820248
-	for <e@80x24.org>; Wed,  6 Mar 2019 18:10:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 774B220248
+	for <e@80x24.org>; Wed,  6 Mar 2019 19:05:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729391AbfCFSKm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 13:10:42 -0500
-Received: from mail-it1-f202.google.com ([209.85.166.202]:59401 "EHLO
-        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727214AbfCFSKm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 13:10:42 -0500
-Received: by mail-it1-f202.google.com with SMTP id q192so6161016itb.9
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 10:10:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=SwYd4QW5fCRAzHhbAGY1KowaAs9KaDalpgunCu3FpXo=;
-        b=lid21rfB1NKlmB3aWN1hzoF9o5XV7LHHO1j61MK9TP8mqyUmYkAGXNTxTwZT+fi/Wd
-         6WZMzGqamtjgBAXBR+z9jiBatiueXUPfEgCmLmFySzS08eKIktEcFrUQ7sJx4s8AuS3/
-         1PUdp72H1ZEsn+vab2UQXC8zPwMVa/2gUMISQVXxe3tkWmIY06Qg1bEUscaB2kurpDI1
-         +WhZ2zFGdBUCL/Amr469qC86FHKqTp46RwyR57qdwv8a1OrCHuH8vDO7/7XXlqmcDdjG
-         SPLyWlNDjoPWkbFuf+kVZghq8mtan+J+Hl6chO3Dol1ATTT6ITAy+1tiX/HGbq1CJBCM
-         QJeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=SwYd4QW5fCRAzHhbAGY1KowaAs9KaDalpgunCu3FpXo=;
-        b=UKruCFr3+OTLaP7kxa0mmGNZSrj5w3W5onGFVoi2ByCZSrDoheEjnf2/tdUWAlhT5z
-         mxOBMOl4aetG8k3+6eBAswfsyc3sk0sSyvSWjqXw/UH57OwmV2zF7JjPdVfQFjedlLZK
-         0Qhwrz6SXgrnadNZZPUDJt+Ob0JeqPOVig9Ay9PvGaYR2pXvuEkT5zKUnTSoQWRAsVrc
-         ESVy4WWxHU6Li53khCWxTbiRm/4mZOufRL6+JUPCqo35aWQ8uAXoNIbV7rlGGYLS1eE3
-         j1IMFMQQ4KlfC6+OAH5vjEnowg25PYhJoHC9Xh0tL01yFbdSqtIebA4WonLM/9pP9r89
-         xNJg==
-X-Gm-Message-State: APjAAAWOh40FlsPmuLaKpzUvXeVCXQogmWKLBPjFtnktXD1PSFUHkeu/
-        hXo4wbjMscmGxF5/I4M5zS9ndu0kXdtesO5T4ODF
-X-Google-Smtp-Source: APXvYqzUiBxDzRvIC6rfLTrV+3lY3GDXwiO5oqDB/DruCkYL5M3fPgkMT40ANNGEn8fhRvDtuPt5bLA6tczyoz0ILUhR
-X-Received: by 2002:a24:1708:: with SMTP id 8mr6806421ith.0.1551895841497;
- Wed, 06 Mar 2019 10:10:41 -0800 (PST)
-Date:   Wed,  6 Mar 2019 10:10:38 -0800
-In-Reply-To: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20190306181038.140413-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: What's cooking in git.git (Mar 2019, #01; Wed, 6)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1730669AbfCFTFM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 14:05:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41278 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1730655AbfCFTFM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 14:05:12 -0500
+Received: (qmail 26855 invoked by uid 109); 6 Mar 2019 19:05:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Mar 2019 19:05:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16185 invoked by uid 111); 6 Mar 2019 19:05:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Mar 2019 14:05:29 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2019 14:05:10 -0500
+Date:   Wed, 6 Mar 2019 14:05:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: [PATCH] compat/bswap: add include header guards
+Message-ID: <20190306190509.GA18239@sigill.intra.peff.net>
+References: <20190301213619.GA1518@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1903022058230.45@tvgsbejvaqbjf.bet>
+ <20190303171951.GD23811@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1903041206300.45@tvgsbejvaqbjf.bet>
+ <20190304214155.GB3347@sigill.intra.peff.net>
+ <xmqqzhq9vpik.fsf@gitster-ct.c.googlers.com>
+ <20190305230723.GB22901@sigill.intra.peff.net>
+ <42d125d4-76bf-afc3-8f12-a9fa1296c85c@ramsayjones.plus.com>
+ <20190306044006.GA6664@sigill.intra.peff.net>
+ <xmqqd0n4r2qm.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqd0n4r2qm.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * jt/test-protocol-version (2019-02-06) 8 commits
->  - t5552: compensate for v2 filtering ref adv.
->  - tests: fix protocol version for overspecifications
->  - t5700: only run with protocol version 1
->  - t5512: compensate for v0 only sending HEAD symrefs
->  - t5503: fix overspecification of trace expectation
->  - tests: always test fetch of unreachable with v0
->  - tests: define GIT_TEST_PROTOCOL_VERSION
->  - Merge branch 'js/protocol-advertise-multi' into jt/test-protocol-version
->  (this branch uses js/protocol-advertise-multi.)
+On Wed, Mar 06, 2019 at 02:28:01PM +0900, Junio C Hamano wrote:
+
+> > +#ifndef COMPAT_BSWAP_H
+> > +#define COMPAT_BSWAP_H
+> [...]
 > 
->  Help developers by making it easier to run most of the tests under
->  different versions of over-the-wire protocols.
-> 
->  Blocked by js/protocol-advertise-multi
+> This probably is worth having as an independent clean-up.
 
-I sent out a new version, on master, that avoids the block:
+Yeah, let's do that now before we forget.
 
-https://public-inbox.org/git/cover.1551131153.git.jonathantanmy@google.com/
+-- >8 --
+Subject: [PATCH] compat/bswap: add include header guards
 
-It is mostly the same except with one new patch.
+Our compat/bswap.h lacks the usual preprocessor guards against multiple
+inclusion. This usually isn't an issue since it only gets included from
+git-compat-util.h, which has its own guards. But it would produce
+redeclaration errors if any file included it separately.
+
+Our hdr-check target would complain about this, except that it currently
+skips items in compat/ entirely.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ compat/bswap.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/compat/bswap.h b/compat/bswap.h
+index 5078ce5ecc..e4e25735ce 100644
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -1,3 +1,6 @@
++#ifndef COMPAT_BSWAP_H
++#define COMPAT_BSWAP_H
++
+ /*
+  * Let's make sure we always have a sane definition for ntohl()/htonl().
+  * Some libraries define those as a function call, just to perform byte
+@@ -210,3 +213,5 @@ static inline void put_be64(void *ptr, uint64_t value)
+ }
+ 
+ #endif
++
++#endif /* COMPAT_BSWAP_H */
+-- 
+2.21.0.699.ge1748d4d73
+
