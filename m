@@ -2,109 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C348F20248
-	for <e@80x24.org>; Wed,  6 Mar 2019 09:14:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7476820248
+	for <e@80x24.org>; Wed,  6 Mar 2019 09:25:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729555AbfCFJOy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 04:14:54 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:43372 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726391AbfCFJOy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 04:14:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=Bv/Ljbrvv6ANKb4SF6kB5I+P/uPhyc0rx6kxB+v6yX4=; b=L1wPvaj97wXslEyDr26xQtwGly
-        f+pXw2G5YzTEVds63PpHx/HGSJdP3CbSvoRNBQq7EOylBtNV7HsMKV5engjsCixuM6T3MKc0m0mzR
-        HEKGIIDyYGaZwXL6yW6t6Z8tbKDc+0mbGmyTwYOhomcY9V7Cdr0FcDFG664zfjKM2EDMxbUlbChmY
-        RvT11wB9TWPZ3RUBNHGs1DLQvYjgpaW6xAjjz3Cfel0achX8tJAxb7z3ROkZtVVqKlhm5LJvZFDF7
-        pXmQ558PBNUuo7XV/Ed5V0MuqcVL7MRxCVyONAdBoiS3fGAjiCV9TgRhGM1KDLvlJVGtmhrPktz7L
-        VsheKpEg==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:43148 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1h1SdS-002zkY-Fc
-        for git@vger.kernel.org; Wed, 06 Mar 2019 04:14:52 -0500
-Date:   Wed, 6 Mar 2019 04:14:44 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: [PATCH] attr.c: ".gitattribute" -> ".gitattributes" (comments)
-Message-ID: <alpine.LFD.2.21.1903060413140.16835@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1729169AbfCFJZz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 04:25:55 -0500
+Received: from mail-it1-f193.google.com ([209.85.166.193]:40352 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728975AbfCFJZz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 04:25:55 -0500
+Received: by mail-it1-f193.google.com with SMTP id l139so9112448ita.5
+        for <git@vger.kernel.org>; Wed, 06 Mar 2019 01:25:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mx1zl0Bu9j5Q9nUe4tinfMXt0yuMPuDrEN4SHeOGzoY=;
+        b=IamF9nAYwTF97cypsrEFqRG9nGzIBqV2DuFrZZ/gyJrQbk+jZzJzQCjUyG6vVgAokN
+         8pRNdfgx1/nlSy8q+NXB1Ic3MLJyfp4eWvU+fhGm4dvXxiA/4/mg5g7+VF+2QHhyqObQ
+         obpaJEHnU2/Q8cKs3dcf8RsG/xcOyuCvt2qpw0JAZN+bKiVrmCc78LjxDdN8iyvIyMa9
+         g8sVKBBBYEQZmnkM67u9chWDSRoUl/zafIuO0oDKFmNX/sfMq3WGlArlI6Rsu43yw7W/
+         89Iw1KO8ZCeV5VTijxwDi5CK9Cz7xLir940K+yBdco4Glcl5L/ex9puw3672Xr3DJeiG
+         jXYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mx1zl0Bu9j5Q9nUe4tinfMXt0yuMPuDrEN4SHeOGzoY=;
+        b=qv02BwOVdD70q4Ck7f+SxC+9+kGmFN3ZoapLzexZZThtKDq9PB442DxrRgS+jWAiD3
+         Viyx85wmroxa0uaLPz28jYvFc7MpOXNDnpCOGBV6GMPDuJAIT3BpQrW/XCgoriF5ME/L
+         EdFoo083NlValVAfNj42eqkWu1zsIe13KGp9PHFb0iWpSPHqYBprqS7Bofbg1eTV7qiP
+         0UB6753q5flKFoci1IKD5IW0lZWY6vOa2oNH+M2vm5ppTO/rclq1uKAZmpBYyLkTMOcB
+         BJM7hpmEAZZ2khL6iEviKWDs1Do1UgYcPYo/Gts8yTD+jfbZiOrUupLnjlWbWn4dYTQC
+         27lg==
+X-Gm-Message-State: APjAAAV/5/2IS81PFSfq8fteiLwB2ttnYJHfmS91U6/I5hSOs8OOHUf/
+        ALM10bTp26wroC7D0wNtiPpNZ5zn0Pj8SaWf+PJvCA==
+X-Google-Smtp-Source: APXvYqyBEOveq6FxvxvaczXMjhPfyrD4oWTLNifNsoFxqsR/PsNMQ+8qmX3Ne1zdFC1upaEgH3G+vNGvC7vJvqyDCPk=
+X-Received: by 2002:a02:7e87:: with SMTP id g7mr3573628jae.92.1551864354086;
+ Wed, 06 Mar 2019 01:25:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+References: <20190305123026.7266-1-pclouds@gmail.com> <20190305123026.7266-17-pclouds@gmail.com>
+ <CAPig+cR-efk5esa9=5j+Fu0eWxAkFnohkSL4eabrP44K_AkdCg@mail.gmail.com>
+In-Reply-To: <CAPig+cR-efk5esa9=5j+Fu0eWxAkFnohkSL4eabrP44K_AkdCg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 6 Mar 2019 16:25:28 +0700
+Message-ID: <CACsJy8CtewTfFUwJwRK4BzF+kBq1OvmDwgsWEzf8Y8o=_0_nZw@mail.gmail.com>
+Subject: Re: [PATCH 16/20] diff-parseopt: convert --quiet
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Mar 5, 2019 at 10:42 PM Eric Sunshine <sunshine@sunshineco.com> wro=
+te:
+>
+> On Tue, Mar 5, 2019 at 7:32 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> > diff --git a/diff.c b/diff.c
+> > @@ -5299,6 +5299,8 @@ static void prep_parse_options(struct diff_option=
+s *options)
+> > +               OPT_BOOL(0, "quiet", &options->flags.quick,
+> > +                        N_("disable all output of the program")),
+>
+> As a reviewer, I was wondering why you didn't use OPT__QUIET() here, but.=
+..
 
-Correct misspelled ".gitattribute" in comments only, so no functional
-change.
+It probably just didn't occur to me. After doing a couple conversions,
+you kinda get in a routine and forget to question if your choice is
+the right one.
 
-Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
+> > @@ -5348,9 +5350,7 @@ int diff_opt_parse(struct diff_options *options,
+> > -       } else if (!strcmp(arg, "--quiet"))
+> > -               options->flags.quick =3D 1;
+> > -       else if (!strcmp(arg, "--ext-diff"))
+>
+> I guess the reason is that flags.quick isn't necessarily about
+> verbosity/quietness.
 
----
-
-diff --git a/attr.c b/attr.c
-index fdd110bec5..93dc16b59c 100644
---- a/attr.c
-+++ b/attr.c
-@@ -431,14 +431,14 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
-  * Like info/exclude and .gitignore, the attribute information can
-  * come from many places.
-  *
-- * (1) .gitattribute file of the same directory;
-- * (2) .gitattribute file of the parent directory if (1) does not have
-+ * (1) .gitattributes file of the same directory;
-+ * (2) .gitattributes file of the parent directory if (1) does not have
-  *      any match; this goes recursively upwards, just like .gitignore.
-  * (3) $GIT_DIR/info/attributes, which overrides both of the above.
-  *
-  * In the same file, later entries override the earlier match, so in the
-  * global list, we would have entries from info/attributes the earliest
-- * (reading the file from top to bottom), .gitattribute of the root
-+ * (reading the file from top to bottom), .gitattributes of the root
-  * directory (again, reading the file from top to bottom) down to the
-  * current directory, and then scan the list backwards to find the first match.
-  * This is exactly the same as what is_excluded() does in dir.c to deal with
-@@ -899,7 +899,7 @@ static void prepare_attr_stack(const struct index_state *istate,
- 	 * set of attribute definitions, followed by the contents
- 	 * of $(prefix)/etc/gitattributes and a file specified by
- 	 * core.attributesfile.  Then, contents from
--	 * .gitattribute files from directories closer to the
-+	 * .gitattributes files from directories closer to the
- 	 * root to the ones in deeper directories are pushed
- 	 * to the stack.  Finally, at the very top of the stack
- 	 * we always keep the contents of $GIT_DIR/info/attributes.
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Also OPT__QUIET() adds the short option -q. Adding that, even if
+helpful, should be done separately.
+--=20
+Duy
