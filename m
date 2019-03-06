@@ -7,94 +7,57 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F61320248
-	for <e@80x24.org>; Wed,  6 Mar 2019 13:41:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5044E20248
+	for <e@80x24.org>; Wed,  6 Mar 2019 14:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726411AbfCFNlw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 08:41:52 -0500
-Received: from mout.gmx.net ([212.227.17.20]:50659 "EHLO mout.gmx.net"
+        id S1727311AbfCFOOO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 09:14:14 -0500
+Received: from mout.gmx.net ([212.227.17.22]:38331 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726241AbfCFNlv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 08:41:51 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mbfyr-1giTz40wtB-00J0ms; Wed, 06
- Mar 2019 14:41:47 +0100
-Date:   Wed, 6 Mar 2019 14:41:46 +0100 (STD)
+        id S1726520AbfCFOOO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 09:14:14 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MT74k-1gZS4547xW-00S9J3; Wed, 06
+ Mar 2019 15:14:12 +0100
+Date:   Wed, 6 Mar 2019 15:14:11 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <stefanbeller@gmail.com>
 cc:     git@vger.kernel.org
-Subject: ps/stash-in-c, was Re: What's cooking in git.git (Mar 2019, #01;
- Wed, 6)
-In-Reply-To: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903061441200.41@tvgsbejvaqbjf.bet>
-References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
+Subject: "Give me a break"... well, you gave me one
+Message-ID: <nycvar.QRO.7.76.6.1903061512330.41@tvgsbejvaqbjf.bet>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:5XUF5yTmXETEI8sj7eRF+yj+niA72PyLTll4s/ARn4az4x1SE33
- wZjgj463wb6EAqA6X2rVnER8kXOGfYHQxxBwNBbbDNwwCaC4TcPxztJREaBRjGiB2W3E+Hx
- EyrkUVtAN+3XtvEkMpohAdtqHtekh6y1DwAiznSeuxgzmGFF71YKMssRMB+9fQ3fIw74I81
- HgRUJ1FoXDiBA64lAnlBg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:aoCGkf7faUs=:nXj33ydr9+WqJBA7rSMb8Q
- QkWOj+Go+8sO2yBGmymuyAeaRtrYjzhgoK+DqjItMIEwITCgAABpe6Jwas/55VK7Gk4gt4Xcu
- 3N1vngFWyOB9L0hqBWoZEFXI4EqjuEq83VhoI4jFqJne2E4L110KsMprfQgD83PqOfy4U5dsB
- a29PmkPRuAwmIqT+a0stmTEDQil+hRlyGlH/3hcQ2Zcb3nwQtXduPYSJx/9IZiFeaPOwSkz2k
- uDHthfxX1O5Fh+j1YshH9R4fmcOAxBgivrc5ligrJuTqtbBqmiyR3PzpZmuCPkxgWdko35Rrx
- i/1vEq6TTnS+8y/uknCYszR582TUCz0TklztJSxsPq3DYBV58lB6GvX/QYbm+esHPBBorYGnZ
- G14U68ErZhOolrkrDmjpxnfWcTkyVuJPUmI9pX2a9oujN9rP09kn6bh9S5aHDFFDtvGF2toD5
- AaGO8A1HEU1D6kZ8/20dvP15A0nwQdoPPYvvKptUEX9I1WwJq/H0YXZTrW3YCbTzRHrTD2mBX
- n2GdCEFk9fDs5U9b8a+lAgckcCIfNtnYhmDpn8lFH/tzRGl2tZfNw9sVALWNUL5fBx8yMAvCg
- JuWDuPiSPOp4C9wxvdA/YJ2eodY0NftwqvJfNgGbYTtevkwTiH5KDRRthSMv/f/D0q4FPockc
- yyfGCDBXr8gd3P8APZ8sDM4qHynh3TT/gXkVlfhMQfUcrsaURIQFcXQhy29IOr11/H01Sqbtn
- rqZ6nif6pn2PyuJLSxncRv/vNIqzcdytihLe0Nq+biPBfHXNDDUWCJDrFnMKMJrjQ2Tpau7Do
- vPiw72yo6bL8qEJhInLo69cR7iMGNw6v3o71sIB+Nl0pNhmHb9THwr667EcGlv1jctn+xdF5X
- tHYl9eEgaF5EzHLEYF+db3iPoW1eBrajbBSaRQthPnaThkyNYlnTyOXuZEjRlwAdk9ZaLJusf
- 6NF/BBgwEcg==
+X-Provags-ID: V03:K1:HinGIb/Gn3dvf1VzaxX9OJ9Nz4J3xNRnCdNEVNa1uK1VhRxMTFC
+ Ii1WmxnKeDFPlJvkHXCuXaZfjRGPb+Nyhr+AhluV9Do7iRUHHXywSyueGcB3ACLfZcXgSz3
+ CM//PZAtIfHbloLci4Aw1D9vpyVaYsBgQRUYoNLBsQIrSF/ar3k3JRt88OSSqUXzuGaud3W
+ tZ2BhC0JbkKGzUTdKBc+A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:aJnvIYbYC/Q=:W1DD404SrFyclhwOOIotcx
+ EE2wxFZuBPGF37EK5BP/2gPgyAX6i56Ui9MOFoYwyW1xPyvjXw2qaKykETyc/dwJoHfjj4xY2
+ XCMH4NPJyy8us7AybpBs3tcTkdyn1+SakU5WVSLtyQU1u37EkIoXpZkeC+gT3IWbsjUJP7Z30
+ gaHnqo8gGcihFyzpcDao64isIwtU0PvcZACtnuwhk1a1W3MJ88NxJhkDcPmVF7G83q9cvLcGa
+ cyw6shWYGCPyP9fUGSh/5pPt6RrltFH/Hf27sEd9C6rf83p7v7EyrEgZgqTsli4jjBo7teeG5
+ 5UI5AFT0YRzPUf8kLxybuPAR1xsMf+FuCuwPNVkvxrkuj/eUBdPRHJQtukF8uQxZ3QxAOpwC0
+ IgDXBMtY2XJiFez0kushEof5CMHBnpOeVAyi/yJH0bIGDfBgDyVLdKd33+fJiSD32CpLu2PBl
+ w64i6MomAgulWmQh31bWwb0mPJquF4SGXmj2YdNlrXkIZEi+L9pTB2qFD+Q6NK8qEdqrbuHz4
+ c+x6kAlxMXzrkp4PYAB/fhFRnCivL1u8Js3ofpr/HencxV/Tl3mc3VwoqQahOwhB3xQSEQNOs
+ CHDvaPfaKqL7oGO11J/PLl4oDuIxffEoLlHbqCUevIXPrhSc3OrqRjK+ScYZ5BDf7Kqq99tgh
+ M67Ykc23yW659qDvBazDKc0VqXFDxvfDCzmf/X/43Lt7gPSkvmLc7K9D5pObXVLuL7Yykudul
+ KSrRcvvxAIs05T66W8cLxnHEIQ6ucR4IDVIquzNRvs3SMcRSGpbMIpNgUyHelGq2fJbaC1TrW
+ s3vCcyha0bVrjT2XMlepyDUAtOY+M47rcxZMWj3iiIWJFc6fEKMkSfNxY01sUaLY8PSZfiZp3
+ C/zsIMGufovayLQZwnuBbNjv0WjVtDCm+j+yjSEn3G1USXPZ8HzXjIdSyrctyCAht8KFm4eCc
+ Bm238gukyiw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Stefan,
 
-On Wed, 6 Mar 2019, Junio C Hamano wrote:
+just wanted to express my gratitude for your idea to introduce the `break`
+command in `git rebase -i`'s todo list. I use it *all* the time now.
 
-> * ps/stash-in-c (2019-03-01) 28 commits
->  - tests: add a special setup where stash.useBuiltin is off
->  - stash: optionally use the scripted version again
->  - stash: add back the original, scripted `git stash`
->  - stash: convert `stash--helper.c` into `stash.c`
->  - stash: replace all `write-tree` child processes with API calls
->  - stash: optimize `get_untracked_files()` and `check_changes()`
->  - stash: convert save to builtin
->  - stash: make push -q quiet
->  - stash: convert push to builtin
->  - stash: convert create to builtin
->  - stash: convert store to builtin
->  - stash: convert show to builtin
->  - stash: convert list to builtin
->  - stash: convert pop to builtin
->  - stash: convert branch to builtin
->  - stash: convert drop and clear to builtin
->  - stash: convert apply to builtin
->  - stash: mention options in `show` synopsis
->  - stash: add tests for `git stash show` config
->  - stash: rename test cases to be more descriptive
->  - t3903: add test for --intent-to-add file
->  - t3903: modernize style
->  - stash: improve option parsing test coverage
->  - ident: add the ability to provide a "fallback identity"
->  - strbuf.c: add `strbuf_insertf()` and `strbuf_vinsertf()`
->  - strbuf.c: add `strbuf_join_argv()`
->  - sha1-name.c: add `get_oidf()` which acts like `get_oid()`
->  - Merge branch 'sd/stash-wo-user-name'
-> 
->  "git stash" rewritten in C.
-> 
->  Will merge to 'next'.
-
-Yes, yes, yes!
-
-Thank you so much!
+Ciao,
 Dscho
+
