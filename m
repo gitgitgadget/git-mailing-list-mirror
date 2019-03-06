@@ -2,97 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF77620248
-	for <e@80x24.org>; Wed,  6 Mar 2019 22:43:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A57F20248
+	for <e@80x24.org>; Wed,  6 Mar 2019 23:17:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726028AbfCFWm7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 17:42:59 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37380 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725783AbfCFWm7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 17:42:59 -0500
-Received: by mail-wm1-f68.google.com with SMTP id x10so7389023wmg.2
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 14:42:58 -0800 (PST)
+        id S1726111AbfCFXR2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 18:17:28 -0500
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:36073 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725788AbfCFXR1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 18:17:27 -0500
+Received: by mail-wm1-f52.google.com with SMTP id j125so7527576wmj.1
+        for <git@vger.kernel.org>; Wed, 06 Mar 2019 15:17:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=8wwZL2vdUrrYLgp0BnF7n2UcS2tsAoKPw0R6H+mCAVo=;
-        b=PvuYMRCQz5IPWWMSPjPs4x40HJQzxfrZbfB3R6JW/ZRd3zqqhwLPTfDmBacvQXe5xC
-         cvFhiNxfSgzniHqnjVWdP9Yj5yTKjwJAHKafgo/n4DbCrpeWpxWCjDEubv74Jfvz9O0R
-         RxOn1BbQYNdcKgrbEGBhKR7MtP9venvqdfkz+GH3Gizs20SdpzQWxe+ewB8q0bU5rwjW
-         dXFa1dYghJjNcB6UTFsT2YGwk7CFZ/Qsm4Bow1n+LpZOcYZxR+zLjHGrdmtXrfZQ37Od
-         PxbIsLGBtjWxS7LdJyoi6c4CsOrTYu9h5hbuV0a8zZC2OeRv4C3zfLnBzFHi7pCXHpFs
-         zPWQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=GIOkdMwSjbb1JMOXHSFlVhNDRLDB8pKEZcuLCyLrO1Q=;
+        b=DoYyMS8u9bB+gEr4Si7KPdaZ4Yp9Bjt+qdYv1FtMd2U8DQWgbcSTT5yfOLea7tpn0n
+         v7ZwH+qDAsqTgGMbAu4QdSMTiVIoNLHQzLjjFcRIqptQNwA9z511n+PNM/2gxR1S5qyP
+         8YauzkZXkN1wFcwugZgBV2Yu/NFam6tDETksBsCi7hKMtqQi2iYSNdL5cC2VL/fNodjk
+         rKuM7+52UWmdXt2kv2ECbLvFsBQeTsoVsZv+8pM+ATCHdt/A9hrPWYjEC3C0zOh+XXBA
+         c+siFjOKqsPdCNKwcEElnG5QKc+wW3tEdNAYxDoi2dWCpKgXIwrDj9IcbmQYrfxmBHlQ
+         N8lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=8wwZL2vdUrrYLgp0BnF7n2UcS2tsAoKPw0R6H+mCAVo=;
-        b=CbH3Yfduf1kfz1DPhQ/1SvkMQ0M4EJne6CSo+nVe0QTCSI0GQuOAN0uZ+BTnre2GOR
-         gTkdZM8rKTX98Bgd3MGixl2NMJMw46B1xk//Gets5ggH6EadkUQ9hWnMktRjofsJwBOB
-         e7nIG1/u1mnDDAdpkk1GcvK7vbD0wLnnF6wW9Cpriks8v6003/FLv8m9Y+bVlbqIwwxD
-         fOs0B0KQdHSOi898B3V/9RNZoeFad77AblwPQUEsceAR6FPSB3lIC/ePxD9hvZBvgIXv
-         eAuEkYcmRsXZCu3mRvJQ6KZMXowwPZIsNZSoEeuQ0zERP+ZWHvbA62U811DTbH4HqL9n
-         OcKA==
-X-Gm-Message-State: APjAAAXNtQ2nYb9K30ZAdl3quzdIy/7Eajvg1Zi/RIPMNFCvKxmlJ/cY
-        zLIDbVMpcahYaRAX057S8v8=
-X-Google-Smtp-Source: APXvYqza1RBGjcssp6eT+8hj7mX75ToPpvEC3ItSTxYN029W+GMjDkU3t1zLuYKq0pvPMD3RcPiLGA==
-X-Received: by 2002:a1c:2d4:: with SMTP id 203mr3743811wmc.20.1551912177357;
-        Wed, 06 Mar 2019 14:42:57 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 12sm6117187wme.25.2019.03.06.14.42.54
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=GIOkdMwSjbb1JMOXHSFlVhNDRLDB8pKEZcuLCyLrO1Q=;
+        b=NUxzLIs2po9FYhTBJEnVRkzJVaw+cizsSoNqRup0a+oS9XsOGd+FQiCaN1SWzk3aRl
+         dzw9OYxXGPXJVmcYLFYNen1zfUuCTeTGCmtVQTQcNmosQ0mOvacrshV+4RxD6KBDuFe8
+         xLlpsbjgPUdefum9TX2MP/lo2qyaVFu/8A7gVJIFdkP/8DEAiDFyRfeGpAZUNEDIYdz1
+         QogHJcs91r6PJ5vHK00UMMtdjSKEqtbIOLUMlpI3yP4CqMBrXqhF3CJWoPs6aWb1kI1R
+         8CcgkaRWnBqZ/HF2wlgTQOaetxMWWxoLQWYwRtZGLgK+F6U2bgcLOq2spf/Nw/8XympK
+         gXow==
+X-Gm-Message-State: APjAAAWKi3vJvZwKWo/EU6TDVS9/j7QCBYA2fstcVPIjVtoVbty9zR/j
+        FvU+Tf1f55/YO825UBW0wzQ=
+X-Google-Smtp-Source: APXvYqzDutqU5ygxIID5kzbcm4CoxjNGNC3RXMXKlQ4zzdj8IFbOGWAUT0ZWQslBl6Wqv9QBK5mPnw==
+X-Received: by 2002:a7b:c14a:: with SMTP id z10mr3058434wmi.99.1551914245882;
+        Wed, 06 Mar 2019 15:17:25 -0800 (PST)
+Received: from localhost ([95.148.214.107])
+        by smtp.gmail.com with ESMTPSA id q135sm5461896wme.43.2019.03.06.15.17.23
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Mar 2019 14:42:55 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] compat/bswap: add include header guards
-References: <20190301213619.GA1518@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1903022058230.45@tvgsbejvaqbjf.bet>
-        <20190303171951.GD23811@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1903041206300.45@tvgsbejvaqbjf.bet>
-        <20190304214155.GB3347@sigill.intra.peff.net>
-        <xmqqzhq9vpik.fsf@gitster-ct.c.googlers.com>
-        <20190305230723.GB22901@sigill.intra.peff.net>
-        <42d125d4-76bf-afc3-8f12-a9fa1296c85c@ramsayjones.plus.com>
-        <20190306044006.GA6664@sigill.intra.peff.net>
-        <xmqqd0n4r2qm.fsf@gitster-ct.c.googlers.com>
-        <20190306190509.GA18239@sigill.intra.peff.net>
-Date:   Thu, 07 Mar 2019 07:42:54 +0900
-In-Reply-To: <20190306190509.GA18239@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 6 Mar 2019 14:05:10 -0500")
-Message-ID: <xmqq8sxrr5e9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 06 Mar 2019 15:17:24 -0800 (PST)
+Date:   Wed, 6 Mar 2019 23:17:22 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: Questions on GSoC 2019 Ideas
+Message-ID: <20190306231722.GA6085@hank.intra.tgummerer.com>
+References: <CAHd-oW7onvn4ugEjXzAX_OSVEfCboH3-FnGR00dU8iaoc+b8=Q@mail.gmail.com>
+ <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
+ <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
+ <20190302150900.GU6085@hank.intra.tgummerer.com>
+ <CAP8UFD31YKt7fm+shWdBxsL4fCSO4dU=97YwFsZ9gZBpEWmRPQ@mail.gmail.com>
+ <CAHd-oW6rVptPnHn-aoeMTkp0p-TmoQ7fniftpQm9rw+tjukZ_w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHd-oW6rVptPnHn-aoeMTkp0p-TmoQ7fniftpQm9rw+tjukZ_w@mail.gmail.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 03/05, Matheus Tavares Bernardino wrote:
+> First of all, I must apologize for not replying during these last
+> days. I'm traveling and I rarely get a connection here. But I'll be
+> back March 11th.
+> 
+> On Sun, Mar 3, 2019 at 4:18 AM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> >
+> > On Sat, Mar 2, 2019 at 4:09 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > >
+> > > I'm a bit wary of a too large proposal here, as we've historically
+> > > overestimated what kind of project is achievable over a summer (I've
+> > > been there myself, as my GSoC project was also more than I was able to
+> > > do in a summer :)).  I'd rather have a project whose goal is rather
+> > > small and can be expanded later, than having something that could
+> > > potentially take more than 3 months, where the student (or their
+> > > mentors) have to finish it after GSoC.
+> >
+> 
+> I totally understand the concern.
+> 
+> > Yeah, I agree with your suggestion about a project that declares
+> > removing the global variables as the main goal, and adding parallelism
+> > as a potential bonus.
+> >
+> 
+> Talking about a delimited scope for GSoC and a potential bonus after,
+> a potential idea comes to my mind: I'm still trying to define the
+> subject for my undergraduate thesis (which must be in HPC and/or
+> parallelism on CPU/GPU). And the idea of bringing more parallelism to
+> git seems to be too big for a GSoC project. So, perhaps, if we manage
+> to identify wether parallelism would indeed bring a good performance
+> gain to git, I could propose that to my advisor professor as my
+> undergraduate thesis and I could work on that during this whole year.
+> It is still an idea to be matured, but do you think it would be
+> feasible?
 
-> On Wed, Mar 06, 2019 at 02:28:01PM +0900, Junio C Hamano wrote:
->
->> > +#ifndef COMPAT_BSWAP_H
->> > +#define COMPAT_BSWAP_H
->> [...]
->> 
->> This probably is worth having as an independent clean-up.
->
-> Yeah, let's do that now before we forget.
+I think this idea is generally fine, but your project proposal should
+only be about the parts that are going to be included in your GSoC
+project.  Of course we love to see GSoC students that are still
+actively participating in the project after GSoC.  However that should
+not be part of the sponsored program.  Mentors may also be less
+available outside of the program, as mentoring can take quite some
+time commitment.
 
-Thanks
+Another slight concern here is that the mentors may be less familiar
+with this project than others (I for one am not very familiar, and
+Christian mentioned similar concerns), so it may be harder to give you
+good advice.
 
->
-> -- >8 --
-> Subject: [PATCH] compat/bswap: add include header guards
-> ...
+All that said, if you are still excited about this project, think
+about how to address these concerns in your proposal.  And feel free
+to discuss the proposal on the mailing list as well, before actually
+submitting it.
