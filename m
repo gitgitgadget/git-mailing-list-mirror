@@ -6,293 +6,64 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1B820248
-	for <e@80x24.org>; Wed,  6 Mar 2019 21:49:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E81920248
+	for <e@80x24.org>; Wed,  6 Mar 2019 21:54:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726346AbfCFVtR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 16:49:17 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41514 "HELO cloud.peff.net"
+        id S1726159AbfCFVyV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 16:54:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41534 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726127AbfCFVtQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 16:49:16 -0500
-Received: (qmail 924 invoked by uid 109); 6 Mar 2019 21:49:15 -0000
+        id S1725790AbfCFVyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 16:54:21 -0500
+Received: (qmail 1083 invoked by uid 109); 6 Mar 2019 21:54:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Mar 2019 21:49:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 06 Mar 2019 21:54:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17900 invoked by uid 111); 6 Mar 2019 21:49:32 -0000
+Received: (qmail 17925 invoked by uid 111); 6 Mar 2019 21:54:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Mar 2019 16:49:32 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Mar 2019 16:54:38 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2019 16:49:13 -0500
-Date:   Wed, 6 Mar 2019 16:49:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2019 16:54:19 -0500
+Date:   Wed, 6 Mar 2019 16:54:19 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, hi-angel@yandex.ru,
-        ramsay@ramsayjones.plus.com, sunshine@sunshineco.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/2] refs.c: refactor check_refname_component()
-Message-ID: <20190306214912.GA32630@sigill.intra.peff.net>
-References: <20190226105851.32273-1-pclouds@gmail.com>
- <20190305120834.7284-1-pclouds@gmail.com>
- <20190305120834.7284-2-pclouds@gmail.com>
+To:     Santiago Torres <santiago@nyu.edu>
+Cc:     Fabio Aiuto <polinice83@libero.it>, git@vger.kernel.org
+Subject: Re: Can't build first git commit
+Message-ID: <20190306215419.GB32630@sigill.intra.peff.net>
+References: <1551729517.4092.1.camel@libero.it>
+ <20190304204007.GA32691@sigill.intra.peff.net>
+ <20190305191519.GA12791@sigill.intra.peff.net>
+ <1551902320.1727.1.camel@libero.it>
+ <20190306200356.GB23315@sigill.intra.peff.net>
+ <1551903598.1727.3.camel@libero.it>
+ <20190306203910.xr2bwpqb3zrxnm63@LykOS.localdomain>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190305120834.7284-2-pclouds@gmail.com>
+In-Reply-To: <20190306203910.xr2bwpqb3zrxnm63@LykOS.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 05, 2019 at 07:08:33PM +0700, Nguyễn Thái Ngọc Duy wrote:
+On Wed, Mar 06, 2019 at 03:39:11PM -0500, Santiago Torres wrote:
 
-> @@ -71,11 +82,15 @@ static unsigned char refname_disposition[256] = {
->   * - it ends with a "/", or
->   * - it ends with ".lock", or
->   * - it contains a "@{" portion
-> + *
-> + * in which case cp_out points to the beginning of the illegal part.
->   */
-> -static int check_refname_component(const char *refname, int *flags)
-> +static enum refname_check_code do_check_refname_component(
-> +	const char *refname, int *flags, const char **cp_out)
+> I still find it somewhat astounding that it compiles with a modern
+> toolchain after 15+ years. Many projects fail to do so (it's an
+> understandably high bar to have).
 
-Hmm, OK, so we get to know what type of problem, but also the exact
-character where we found it. And then we just keep mutating that char
-until we have something that passes.
+I think the key thing is that Git has very few external dependencies.
+You'll note that I had to turn off OpenSSL support to get it to compile.
+The only other library from back then is libz, which is extremely
+stable.
 
-I can't think of any reason that wouldn't work. As you note, it's
-possibly quadratic, though that might be OK for our purposes.
+Other than, it just depends on a reasonable C compiler and a POSIX libc,
+both of which have been standardized for decades.
 
-I had envisioned just sanitizing each character into an output buffer as
-we did the checks. It does introduce some complexities, though, because
-now the checking function is doing the replacement (so it has to know
-the right sanitizing rule for each case).
+I suspect that today's Git will also compile pretty well in 15 years,
+but you'll probably to say NO_GETTEXT and turn a few other knobs.
+Libcurl might eventually be a problem, though I've been pretty impressed
+with its stability and backwards-compatibility so far (and of course
+it's optional if disabling http support is OK).
 
-The patch below is a rough cut at that, just for discussion.  You can
-ignore the check-ref-format bits; they were just to make poking at it
-easier, though perhaps we'd want something like that in the long run.
-
-I suspect check_refname_component() could be made a bit more readable by
-reordering a few bits. E.g., why do we check for a leading "." at the
-_end_, after having parsed the entire rest of the component for errors?
-
-I dunno. I think I can live with what you've got in your series, but I
-figured I'd share this for the sake of completeness. If you really love
-it, feel free to adapt it.
-
-diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-index bc67d3f0a8..41b5434be2 100644
---- a/builtin/check-ref-format.c
-+++ b/builtin/check-ref-format.c
-@@ -56,6 +56,7 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
- 	int i;
- 	int normalize = 0;
- 	int flags = 0;
-+	int sanitize = 0;
- 	const char *refname;
- 
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
-@@ -73,13 +74,22 @@ int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
- 			flags &= ~REFNAME_ALLOW_ONELEVEL;
- 		else if (!strcmp(argv[i], "--refspec-pattern"))
- 			flags |= REFNAME_REFSPEC_PATTERN;
-+		else if (!strcmp(argv[i], "--sanitize"))
-+			sanitize = 1;
- 		else
- 			usage(builtin_check_ref_format_usage);
- 	}
- 	if (! (i == argc - 1))
- 		usage(builtin_check_ref_format_usage);
- 
- 	refname = argv[i];
-+	if (sanitize) {
-+		struct strbuf out = STRBUF_INIT;
-+		sanitize_refname(refname, &out);
-+		printf("%s\n", out.buf);
-+		strbuf_release(&out);
-+		return 0;
-+	}
- 	if (normalize)
- 		refname = collapse_slashes(refname);
- 	if (check_refname_format(refname, flags))
-diff --git a/refs.c b/refs.c
-index 142888a40a..2a0c0c6338 100644
---- a/refs.c
-+++ b/refs.c
-@@ -72,30 +72,58 @@ static unsigned char refname_disposition[256] = {
-  * - it ends with ".lock", or
-  * - it contains a "@{" portion
-  */
--static int check_refname_component(const char *refname, int *flags)
-+static int check_refname_component(const char *refname, int *flags,
-+				   struct strbuf *sanitized)
- {
- 	const char *cp;
- 	char last = '\0';
-+	size_t component_start;
-+
-+	if (sanitized)
-+		component_start = sanitized->len;
- 
- 	for (cp = refname; ; cp++) {
- 		int ch = *cp & 255;
- 		unsigned char disp = refname_disposition[ch];
-+
-+		if (sanitized && disp != 1)
-+			strbuf_addch(sanitized, ch);
-+
- 		switch (disp) {
- 		case 1:
- 			goto out;
- 		case 2:
--			if (last == '.')
--				return -1; /* Refname contains "..". */
-+			if (last == '.') {
-+				/* Refname contains "..". */
-+				if (sanitized)
-+					sanitized->len--; /* collapse ".." to single "." */
-+				else
-+					return -1;
-+			}
- 			break;
- 		case 3:
--			if (last == '@')
--				return -1; /* Refname contains "@{". */
-+			if (last == '@') {
-+				/* Refname contains "@{". */
-+				if (sanitized)
-+					sanitized->buf[sanitized->len-1] = '-';
-+				else
-+					return -1;
-+			}
- 			break;
- 		case 4:
--			return -1;
-+			/* forbidden char */
-+			if (sanitized)
-+				sanitized->buf[sanitized->len-1] = '-';
-+			else
-+				return -1;
-+			break;
- 		case 5:
--			if (!(*flags & REFNAME_REFSPEC_PATTERN))
--				return -1; /* refspec can't be a pattern */
-+			if (!(*flags & REFNAME_REFSPEC_PATTERN)) {
-+				if (sanitized)
-+					sanitized->buf[sanitized->len-1] = '-';
-+				else
-+					return -1; /* refspec can't be a pattern */
-+			}
- 
- 			/*
- 			 * Unset the pattern flag so that we only accept
-@@ -109,26 +137,48 @@ static int check_refname_component(const char *refname, int *flags)
- out:
- 	if (cp == refname)
- 		return 0; /* Component has zero length. */
--	if (refname[0] == '.')
--		return -1; /* Component starts with '.'. */
-+
-+	if (refname[0] == '.') {
-+		/* Component starts with '.'. */
-+		if (sanitized)
-+			sanitized->buf[component_start] = '-';
-+		else
-+			return -1;
-+	}
- 	if (cp - refname >= LOCK_SUFFIX_LEN &&
--	    !memcmp(cp - LOCK_SUFFIX_LEN, LOCK_SUFFIX, LOCK_SUFFIX_LEN))
--		return -1; /* Refname ends with ".lock". */
-+	    !memcmp(cp - LOCK_SUFFIX_LEN, LOCK_SUFFIX, LOCK_SUFFIX_LEN)) {
-+		/* Refname ends with ".lock". */
-+		if (sanitized)
-+			strbuf_strip_suffix(sanitized, LOCK_SUFFIX);
-+		else
-+			return -1;
-+	}
- 	return cp - refname;
- }
- 
--int check_refname_format(const char *refname, int flags)
-+static int check_or_sanitize_refname(const char *refname, int flags,
-+				     struct strbuf *sanitized)
- {
- 	int component_len, component_count = 0;
- 
--	if (!strcmp(refname, "@"))
-+	if (!strcmp(refname, "@")) {
- 		/* Refname is a single character '@'. */
--		return -1;
-+		if (sanitized)
-+			strbuf_addch(sanitized, '-');
-+		else
-+			return -1;
-+	}
- 
- 	while (1) {
-+		if (sanitized && sanitized->len)
-+			strbuf_complete(sanitized, '/');
-+
- 		/* We are at the start of a path component. */
--		component_len = check_refname_component(refname, &flags);
--		if (component_len <= 0)
-+		component_len = check_refname_component(refname, &flags,
-+							sanitized);
-+		if (sanitized && component_len == 0)
-+			; /* OK, omit empty component */
-+		else if (component_len <= 0)
- 			return -1;
- 
- 		component_count++;
-@@ -138,13 +188,29 @@ int check_refname_format(const char *refname, int flags)
- 		refname += component_len + 1;
- 	}
- 
--	if (refname[component_len - 1] == '.')
--		return -1; /* Refname ends with '.'. */
-+	if (refname[component_len - 1] == '.') {
-+		/* Refname ends with '.'. */
-+		if (sanitized)
-+			; /* omit ending dot */
-+		else
-+			return -1;
-+	}
- 	if (!(flags & REFNAME_ALLOW_ONELEVEL) && component_count < 2)
- 		return -1; /* Refname has only one component. */
- 	return 0;
- }
- 
-+int check_refname_format(const char *refname, int flags)
-+{
-+	return check_or_sanitize_refname(refname, flags, NULL);
-+}
-+
-+void sanitize_refname(const char *refname, struct strbuf *out)
-+{
-+	if (check_or_sanitize_refname(refname, 0, out))
-+		BUG("sanitizing refname check returned error");
-+}
-+
- int refname_is_safe(const char *refname)
- {
- 	const char *rest;
-diff --git a/refs.h b/refs.h
-index 308fa1f03b..b99c309dd9 100644
---- a/refs.h
-+++ b/refs.h
-@@ -460,6 +460,12 @@ int for_each_reflog(each_ref_fn fn, void *cb_data);
-  */
- int check_refname_format(const char *refname, int flags);
- 
-+/*
-+ * Apply the rules from check_refname_format, but mutate the result until it
-+ * is acceptable, and place the result in "out".
-+ */
-+void sanitize_refname(const char *refname, struct strbuf *out);
-+
- const char *prettify_refname(const char *refname);
- 
- char *shorten_unambiguous_ref(const char *refname, int strict);
+-Peff
