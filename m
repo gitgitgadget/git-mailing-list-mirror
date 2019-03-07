@@ -2,85 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B08D20248
-	for <e@80x24.org>; Thu,  7 Mar 2019 10:10:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD6720248
+	for <e@80x24.org>; Thu,  7 Mar 2019 10:21:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726446AbfCGKKd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 05:10:33 -0500
-Received: from mout.gmx.net ([212.227.17.22]:60809 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726140AbfCGKKc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 05:10:32 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1zFf-1gn33T49Rz-00tyQK; Thu, 07
- Mar 2019 11:10:25 +0100
-Date:   Thu, 7 Mar 2019 11:10:24 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Drop last MakeMaker reference
-In-Reply-To: <xmqqfts469h5.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903071109020.41@tvgsbejvaqbjf.bet>
-References: <pull.146.git.gitgitgadget@gmail.com> <xmqqfts469h5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726127AbfCGKVI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 05:21:08 -0500
+Received: from mail-it1-f182.google.com ([209.85.166.182]:34371 "EHLO
+        mail-it1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725795AbfCGKVI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 05:21:08 -0500
+Received: by mail-it1-f182.google.com with SMTP id d125so7567086ith.1
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 02:21:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=X9hFLJ8h85PIEyWsVuCpsA14P82xP1eoszaUULSFSOo=;
+        b=WVy7aHGtGlwkUvav4tqskMF0UBi5sfsrtbTpGjXa/X4Qp+yxqtBWxPmYw5RDEZE+FD
+         swnXYYoV4HuO6R9lPW3vylasdeTjHMF5BsNZX2rKvT0ubcB/LPkgiynyrkGF667AYE8j
+         eXC8icX2ahv9GbiJofVvpne5dSzaqt2vV9IuEIFCJridmSms0uecrVbzL5CkZtrNMINd
+         3lMFQP9lbV9bVixDswunFO4xGt2stNil2cYHD56aP1+mtgdsf0cHECKh9Ge6kexxJWog
+         FPdpbps4fHkdkXqO3FjsQoBrWoPbMqTgJYWPeTaI40PNtAgYlJZgjcoQrDVFjkP0Ivac
+         +rOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=X9hFLJ8h85PIEyWsVuCpsA14P82xP1eoszaUULSFSOo=;
+        b=E3SayYWiGRtmpGedmqYsyC4LKEoOhgdNTxA5Fvs6Q4U8CSdOq/Yk4rKgmawCnqHQrD
+         ULqf+zHdJvfmxiYT6vD3We3+WLUgjdod8QIXOI23buVS5bGa2LvXRoYzr9Po4Ay3aIvS
+         5srzMbK8/aahskm+YeMq0MkkH8wMwFJEmePfVTZXP2bGhsSTTTJzLPKQjchZ8RJlbwKY
+         nRAdedTBoePNm6ThHh6Jpglsd+j9OFrDSnpFz9v7L3dt1O22poHauXet5skyNzJe5TsO
+         EbNeZZ15d1V+f2qC467LIdC9CSrbDbUd7tpAlubZFZJP8HHhssFrw7MnKi0eD8HM0dy/
+         McCg==
+X-Gm-Message-State: APjAAAUBkAaVwhJEB47LeuCRhIZdaPyaXSmtRcRuJBdLTMSODozx6Pzd
+        n8C9Pj93fJRl/hfnRIo81nczNh4tNIGIDexJRV4=
+X-Google-Smtp-Source: APXvYqxwxgA25h/xKKVWfEKyKM4TmsqO4kHCgbhexv87FPhnb+QU+2sL2wjoxWvwuRersetyRfNqkD5i774zLnwNM8s=
+X-Received: by 2002:a24:7542:: with SMTP id y63mr4839876itc.70.1551954067115;
+ Thu, 07 Mar 2019 02:21:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4R6dBgKsUGDerdQH2XTCT/v13zOo30ozFitkM82EQyXhz8IzYQ6
- S/CJm/AtPD7d6kuIAqHuLNkRKNtBevqZ0fEj9krkdigbpz/BR16xfFE/gOFB8NZuGFKHVm+
- BgER1gou91v8h/ebQzjt80jMJNNjMUu3lcn7v5nDKwY681FtjwuIZcrGx0KtJ+4mRHv8doq
- o+qsJL3DPdHrEJXUrJYqA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VJ2JDz01Bmg=:2EYTE/CBjGEL7EklERQHEp
- i//Z55s6hP78KPnKIes7P14YgfGcVvxmyHCNe0APHNQneMmLZ+G2iFLnqF17MeQ2Q30v47hiX
- MVyA6TF6RxqyVUcSESEsnT3oeS1HxUHuOJPTB8gLpTs5IQSQ7D0D2xN+I7jtWrUjKfJDkCtaA
- D3xvQ1uRgSV5RjnTsprYXXFnXLRKr9UrGld3WKv+zZaAd+ddEecLO1vP76HOq5jWA9nJnmXFz
- ObHc4krjuSNMuZ3vgh3DvbvxanYujnk9h/5FJD7Ci4XG2OdkK5wPxggCAwH7eZQ3EkAN6aQKh
- xpim0ykXvydPDmeJ6sJ8Yzsk6x1IGzZ8VEjCGOnLz6q61Hm1cnY22AmS7MlZFY7o0iS8bUtNB
- ovSeq1Sm0NKvtMp0e+sEJSaP2au7sLMdhLgZUhZBQcEh5InyW7cLXg8oXgs2LPxxS9KfyYfGL
- 6AXFX5rIpU773p9T58WkWhMILBo596/Q5Y2rm8P/pmi7wnDXq1CyrhlgKLyIj+T969SRU9w0r
- Q7sKU5CgWNjAfzTSELa0TN9cdXEuz5ARcRFZv/xYEZTkmHH4Pwh91r/Bqak1FAYD3NOGWfi1o
- Va6FNElT+4v5w26kIlA6jDYLIujgvgTlswrdU6dviK0Bb25KJpen7KUipXeIyBVmL9mrSRVhW
- 40VyQq287IdtFwZpyiCLdz6Rh73wQvvYA14ycg1aMgCJ///J9MbY1VAWENLw9YAK8d/+IvIU/
- RdaLKfRBUHQXsJuwZuFuwxEZoiEUY/2PRZsScd5xDdcMh0cCfVbMUkx8L1bkD4FCJhxyqsbub
- XrKiNdQzcxb9cRU6sFoLkcCOc/421ZOTqrXy2n2r5hDOaLrjyDrGjqyij9ZAD4kmXReBBQ7y1
- a+nw0WaFujLsnvZsWdRryJDoh+dXs+uBgXwoLmLmbeO1yGMIFcZ74lqAyRYPgoK3RwgGZ5g8I
- qcJo6Y7ZwUw==
+References: <f6e197f2-886a-5e82-7fc4-c53737dd66cc@gmail.com>
+ <ec707cbb-96e8-f26f-3d69-b69d29b31737@gmail.com> <CACsJy8CrSGQt=_RK8cwc3AW_+gfGLf_M5UKAmjMZrm43Qu3Z8Q@mail.gmail.com>
+In-Reply-To: <CACsJy8CrSGQt=_RK8cwc3AW_+gfGLf_M5UKAmjMZrm43Qu3Z8Q@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 7 Mar 2019 17:20:40 +0700
+Message-ID: <CACsJy8Dt9eky51g_hrakGdMHks2mwCEn9uGFNkPO249H-s0+2A@mail.gmail.com>
+Subject: Re: [BUG] worktree local refs weirdness
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Sun, 3 Mar 2019, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > Back when we stopped using MakeMaker, we forgot one reference...
+On Thu, Mar 7, 2019 at 4:46 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Thu, Mar 7, 2019 at 4:38 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
 > >
-> > Johannes Schindelin (1):
-> >   mingw: drop MakeMaker reference
+> > On 06/03/2019 15:57, Phillip Wood wrote:
+> > > When it is run in a worktree 'git for-each-ref' only seems to show refs
+> > > under refs/rewritten if that directory also exists under $GIT_COMMON_DIR
+> > > even though they are local to the worktree.
+> > >
+> > > Initially I thought this was due to $GIT_COMMON_DIR pointing to a bare
+> > > repo, but that is not the case. However while writing a test case which
+> > > cloned to a bare repo I noticed it was listing a ref for the HEAD of a
+> > > worktree in the repo I had cloned from, not the clone itself.
 > >
-> >  config.mak.uname | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> >
-> > base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-146%2Fdscho%2Fno-perl-makemaker-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-146/dscho/no-perl-makemaker-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/146
-> 
-> Good ;-)
-> Thanks.
+> > Ignore that last paragraph, it's just showing the branch that got
+> > created when the worktree was created. The last part of the script is
+> > redundant, I've updated it below
+>
+> Thanks for the test script. I could reproduce it and I think I see the
+> problem (update-ref creates per-worktree refs even though
+> refs/rewritten should be per-repo). Working on it...
 
-Gentle reminder that this has not made it into `pu` yet...
-
-Thanks,
-Dscho
+My mistake. refs/rewritten is per-worktree, but the ref iteration code
+has a bug. The fix should come soon.
+-- 
+Duy
