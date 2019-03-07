@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE5F420248
-	for <e@80x24.org>; Thu,  7 Mar 2019 00:19:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69AD620248
+	for <e@80x24.org>; Thu,  7 Mar 2019 00:24:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726161AbfCGAT2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 19:19:28 -0500
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:33322 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725790AbfCGAT2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 19:19:28 -0500
-Received: by mail-wm1-f48.google.com with SMTP id c13so5555495wmb.0
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 16:19:26 -0800 (PST)
+        id S1726134AbfCGAYg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 19:24:36 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:38536 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726010AbfCGAYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 19:24:35 -0500
+Received: by mail-wm1-f66.google.com with SMTP id a188so7535287wmf.3
+        for <git@vger.kernel.org>; Wed, 06 Mar 2019 16:24:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=1X9Ag4igZX2T2uF5ZM5UDPI1cCNjjx4uER/PNlcWFu8=;
-        b=Sm+QhoLlzqFX7wUuWuVBh23V4iRsN+JbIBbss5u1aJ/Yin3cm+xFEbpSley0BDvQUk
-         5YTQ14duLg/bS3LW/sYNdGXvkWncfrURRqYuywziql1lWiXQE7iwLUlancEUYYq7LcFx
-         Yqnw8Vk9ZdtoH4YHC8wv1Kq866CjnB0B6ofKF1jvK5vszxBGIpLSl/N7+efYqQlWF/lj
-         CfSbvkBnvVpXCMSlrDSoz/EI0CNatiX73fKG+YBCPk7agBEfjyQ6owfXOmp5yX510y4Q
-         fxbyMNbW9Cljn19xLbB1oBwB0FT3OIP4QqDeADx6XgZlYUrlwORrhdWzhCMdQd7nDlcs
-         7Gdg==
+        bh=QAHa7lxNev21Wm5s5FQSfW2eojoQYHOeFaCHa/VZMls=;
+        b=HTisE2F6j6xB8AsXgOMAQw0ukUjFwH8Y/ZzsQe6ykzewm5wyh089P059bgaD7tVntp
+         NR8yQwX+BgDXJVFjCbASc7MtT9iOvcFJMmI9eIumpjxf8lwzEeODsfFBMmTEdsg+htgn
+         WJyBIdhJTXkr+WCIlnTUNgZLF1+3mLgjk0v7zlKdo4EPj7FOmO9luK5A7E9RTtS56VRt
+         A2sSGezRzSB1GG2tviCn26Y1d7+eKvBJtXFZpyrluQ0a/Z9S6JekW588BGTWuXKAAGM3
+         lqUXjR6ZjL4rFMkayQatPyFmyEmUFX+XxqXdpvMIG7dBtzMYs7yv06nbXByEAdBsHtl2
+         IaVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=1X9Ag4igZX2T2uF5ZM5UDPI1cCNjjx4uER/PNlcWFu8=;
-        b=E0pc7TtCnmpC2oLg/MuUi1MW4N3g/GuTsDkJSoF6xKKw43g9UtDkpzHK3BIszTwC+w
-         3/JDoH5VMgiLzY1JX8rVMpU7NBdwtBvuYZkpzclZEaBGvPw9ZqmgQueIVOf8b2TKbi2c
-         74keRGDNXfKOQjP/ptn6H2xAAatpZe4cexrKuHcWZDbyDt7q5Ge9BXlaNaUw9IzGKZMC
-         0b5205hh23Ppz1GnaBA/bE8HZQpYJBnIOAjTCzZmNhi4+t8hTiVM0qS7z3XH0xducptw
-         ErUGyO1kVbkBao82aImaykVwmdbZFJJE27FVhyAq3Asrm5WSqEE4eLaEYFn4xfF5Y63w
-         SMvw==
-X-Gm-Message-State: APjAAAWirzFXJq2fF0WIQSXwTT/N+BV31kU//7mlgtGrX6e8V/oglh5E
-        vxlpgvUmsm8PoQr/1qUvZmE=
-X-Google-Smtp-Source: APXvYqxKPmzIBHw3Z/Sf1tDAq5Du+Jl1W8cd9FvTfvPswKicRq5oQeDT6afJ+krXhLezXwn4sc4kFQ==
-X-Received: by 2002:a7b:cbd1:: with SMTP id n17mr3807250wmi.21.1551917965834;
-        Wed, 06 Mar 2019 16:19:25 -0800 (PST)
+        bh=QAHa7lxNev21Wm5s5FQSfW2eojoQYHOeFaCHa/VZMls=;
+        b=RBbIhXBC+52/h4AiptCOHJJMFDcWYZpeZ1tjz1zYcaU+F+VYpW/H0YyUlGfgScO+g/
+         7duBzzYJdL3aIqufeePV02eKLApoaNcB7gMjP7QvI8dr31EOBM/Tdj2bPMnMNFlpmKda
+         0W0hXCc5/MbW87/JCxSAK4MEsJUWVbvRQVF2AFvJBtxNLaqBNOVEeX5mSsKtPsep4JMR
+         Fern5poeiqCLRuW3k/fctmG7iWilGrWYyQZfA5LztvxD/TbSMS5eBkjwX1Gg9nCHfRuo
+         P9Uuwx18NoVD9oy4UcVOy3nCxxKBmJuIM9QdXTkqxoNdVWC4qwDc5QR5At5z7RM3yM30
+         8Jdw==
+X-Gm-Message-State: APjAAAWwLx2nSRkEy9DpWUZpBqRnFBE3XTCE280pXUasfvrOnX3SpjfP
+        i8eIMqaAdpJqy6VGCQhcFnjmnyWris4=
+X-Google-Smtp-Source: APXvYqy3w+l4HP5/j+uKK7uR5PxhTWlvihCnNlol0WasDJBRnXuJOqyCPgk4zXzd5Tp/8ClvxY5axA==
+X-Received: by 2002:a1c:a9d0:: with SMTP id s199mr3856615wme.142.1551918273888;
+        Wed, 06 Mar 2019 16:24:33 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p6sm7784429wre.63.2019.03.06.16.19.24
+        by smtp.gmail.com with ESMTPSA id q5sm4063707wrn.43.2019.03.06.16.24.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Mar 2019 16:19:25 -0800 (PST)
+        Wed, 06 Mar 2019 16:24:32 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2019, #01; Wed, 6)
-References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
-        <20190306181038.140413-1-jonathantanmy@google.com>
-Date:   Thu, 07 Mar 2019 09:19:24 +0900
-In-Reply-To: <20190306181038.140413-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 6 Mar 2019 10:10:38 -0800")
-Message-ID: <xmqqzhq7o7sj.fsf@gitster-ct.c.googlers.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, ybhatambare@gmail.com
+Subject: Re: [PATCH v1 1/1] gitattributes.txt: fix typo
+References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
+        <20190306052310.31546-1-tboegi@web.de>
+Date:   Thu, 07 Mar 2019 09:24:32 +0900
+In-Reply-To: <20190306052310.31546-1-tboegi@web.de> (tboegi's message of "Wed,
+        6 Mar 2019 05:23:10 +0000")
+Message-ID: <xmqqva0vo7jz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,28 +67,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+tboegi@web.de writes:
 
->> * jt/test-protocol-version (2019-02-06) 8 commits
->>  - t5552: compensate for v2 filtering ref adv.
->>  - tests: fix protocol version for overspecifications
->>  - t5700: only run with protocol version 1
->>  - t5512: compensate for v0 only sending HEAD symrefs
->>  - t5503: fix overspecification of trace expectation
->>  - tests: always test fetch of unreachable with v0
->>  - tests: define GIT_TEST_PROTOCOL_VERSION
->>  - Merge branch 'js/protocol-advertise-multi' into jt/test-protocol-version
->>  (this branch uses js/protocol-advertise-multi.)
->> 
->>  Help developers by making it easier to run most of the tests under
->>  different versions of over-the-wire protocols.
->> 
->>  Blocked by js/protocol-advertise-multi
->
-> I sent out a new version, on master, that avoids the block:
->
-> https://public-inbox.org/git/cover.1551131153.git.jonathantanmy@google.com/
->
-> It is mostly the same except with one new patch.
+>  Use the following attributes if your '*.ps1' files are UTF-16 little
+>  endian encoded without BOM and you want Git to use Windows line endings
+> -in the working directory (use `UTF-16-LE-BOM` instead of `UTF-16LE` if
+> +in the working directory (use `UTF-16LE-BOM` instead of `UTF-16LE` if
 
-Thanks.
+Thanks for your attention to detail ;-)
