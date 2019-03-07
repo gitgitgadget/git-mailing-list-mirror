@@ -2,88 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD6720248
-	for <e@80x24.org>; Thu,  7 Mar 2019 10:21:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C649720248
+	for <e@80x24.org>; Thu,  7 Mar 2019 11:07:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726127AbfCGKVI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 05:21:08 -0500
-Received: from mail-it1-f182.google.com ([209.85.166.182]:34371 "EHLO
-        mail-it1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725795AbfCGKVI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 05:21:08 -0500
-Received: by mail-it1-f182.google.com with SMTP id d125so7567086ith.1
-        for <git@vger.kernel.org>; Thu, 07 Mar 2019 02:21:07 -0800 (PST)
+        id S1726166AbfCGLHd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 06:07:33 -0500
+Received: from mail-qk1-f173.google.com ([209.85.222.173]:44818 "EHLO
+        mail-qk1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726140AbfCGLHd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 06:07:33 -0500
+Received: by mail-qk1-f173.google.com with SMTP id r21so8713788qkl.11
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 03:07:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=X9hFLJ8h85PIEyWsVuCpsA14P82xP1eoszaUULSFSOo=;
-        b=WVy7aHGtGlwkUvav4tqskMF0UBi5sfsrtbTpGjXa/X4Qp+yxqtBWxPmYw5RDEZE+FD
-         swnXYYoV4HuO6R9lPW3vylasdeTjHMF5BsNZX2rKvT0ubcB/LPkgiynyrkGF667AYE8j
-         eXC8icX2ahv9GbiJofVvpne5dSzaqt2vV9IuEIFCJridmSms0uecrVbzL5CkZtrNMINd
-         3lMFQP9lbV9bVixDswunFO4xGt2stNil2cYHD56aP1+mtgdsf0cHECKh9Ge6kexxJWog
-         FPdpbps4fHkdkXqO3FjsQoBrWoPbMqTgJYWPeTaI40PNtAgYlJZgjcoQrDVFjkP0Ivac
-         +rOw==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=SGYCtMI1mg3LKFIr8g+KZUKAxEp4+iRB+nLrSxuVH+c=;
+        b=G4G6KAMkvMSgQOLC3GksiAi3kFMGxSDH0KZL6tzl5F3MqUeNr/ih5GklMNzCo5cs9+
+         z5Mhxf4zG/i8/yztGsDJ/PVIDNUXFkMi6qGrSyl5zUY1zWoMYy+X5G0huUqTKn6Y5yAF
+         RiaV/qJ+z1mrcWKNj2i5O70kYpU1OCV3SpuHHQBJ8INoiS+zoK5s3x9ugk87eNfKg7PN
+         L5gJg98sGTiuynYyO5DJ1B8RCvVNLORD24njtN/0mymjBU79kg6fKXXRE20Nmp829NzB
+         0BAKa+Oay1EC8ab0d14gA3JOQR2N/gBVFZv3GKScbOvD58Cdz1qVLyu9Cy0MpkrvHHG+
+         PONA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=X9hFLJ8h85PIEyWsVuCpsA14P82xP1eoszaUULSFSOo=;
-        b=E3SayYWiGRtmpGedmqYsyC4LKEoOhgdNTxA5Fvs6Q4U8CSdOq/Yk4rKgmawCnqHQrD
-         ULqf+zHdJvfmxiYT6vD3We3+WLUgjdod8QIXOI23buVS5bGa2LvXRoYzr9Po4Ay3aIvS
-         5srzMbK8/aahskm+YeMq0MkkH8wMwFJEmePfVTZXP2bGhsSTTTJzLPKQjchZ8RJlbwKY
-         nRAdedTBoePNm6ThHh6Jpglsd+j9OFrDSnpFz9v7L3dt1O22poHauXet5skyNzJe5TsO
-         EbNeZZ15d1V+f2qC467LIdC9CSrbDbUd7tpAlubZFZJP8HHhssFrw7MnKi0eD8HM0dy/
-         McCg==
-X-Gm-Message-State: APjAAAUBkAaVwhJEB47LeuCRhIZdaPyaXSmtRcRuJBdLTMSODozx6Pzd
-        n8C9Pj93fJRl/hfnRIo81nczNh4tNIGIDexJRV4=
-X-Google-Smtp-Source: APXvYqxwxgA25h/xKKVWfEKyKM4TmsqO4kHCgbhexv87FPhnb+QU+2sL2wjoxWvwuRersetyRfNqkD5i774zLnwNM8s=
-X-Received: by 2002:a24:7542:: with SMTP id y63mr4839876itc.70.1551954067115;
- Thu, 07 Mar 2019 02:21:07 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=SGYCtMI1mg3LKFIr8g+KZUKAxEp4+iRB+nLrSxuVH+c=;
+        b=JEC8rCUHTleOVZKgMZ5HREfmZ1PSW0CPfAE0N6veYjscoX32w8XCs3VFJyvo9o0MQt
+         mjwWa3O72NE58DaDToLDs9TxKCE82X4njasEdxs8gqoSQyKIJnYRnyWvL41S/IncHV8a
+         sNPl3FlE7QnjKzhsV9lmJmNL3DPQinAfIfqKTJrM+7+zSi/tTWMJLvee9ZSSHVD7yh/y
+         tKo1+13w+NyqRySS3AVcVr7MydVZiJvjoJLx8gU9RW+p532yj33QHcxXKBPF39Xn/lmE
+         eLY718bVnvZ8CS1NEIc82lk0024Cvb0+ueiGWZByqCxQK4/F7e5xQMDxRDKv7jFiccDy
+         YCtQ==
+X-Gm-Message-State: APjAAAWPR/vVq+IuT4c/andq6fjiLU5K1sGphjs6RfIxqVhMfTyri1ip
+        Ki/Ohe6FlbCqvvl14uEG/ChxPw9gJhzHC5lJPk9znP+m
+X-Google-Smtp-Source: APXvYqzT6f1DkobR4wOqs4PwJK08xdZ/H1oo9WUubHyqc6oMZA5mfDI4oxwgU5sxmybsUCQn7QK7ddAmGH5vvHIn+6Q=
+X-Received: by 2002:a37:3087:: with SMTP id w129mr8921197qkw.255.1551956852360;
+ Thu, 07 Mar 2019 03:07:32 -0800 (PST)
 MIME-Version: 1.0
-References: <f6e197f2-886a-5e82-7fc4-c53737dd66cc@gmail.com>
- <ec707cbb-96e8-f26f-3d69-b69d29b31737@gmail.com> <CACsJy8CrSGQt=_RK8cwc3AW_+gfGLf_M5UKAmjMZrm43Qu3Z8Q@mail.gmail.com>
-In-Reply-To: <CACsJy8CrSGQt=_RK8cwc3AW_+gfGLf_M5UKAmjMZrm43Qu3Z8Q@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 7 Mar 2019 17:20:40 +0700
-Message-ID: <CACsJy8Dt9eky51g_hrakGdMHks2mwCEn9uGFNkPO249H-s0+2A@mail.gmail.com>
-Subject: Re: [BUG] worktree local refs weirdness
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Jesper_R=C3=B8nn=2DJensen?= <jesperrr@gmail.com>
+Date:   Thu, 7 Mar 2019 12:07:21 +0100
+Message-ID: <CAL-rKu6AcyHdrCsVikwQxTgKHgtV86+BeHOv_sTSu-jvwME75Q@mail.gmail.com>
+Subject: Error fetching submodule from submodule
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 7, 2019 at 4:46 PM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Thu, Mar 7, 2019 at 4:38 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> >
-> > On 06/03/2019 15:57, Phillip Wood wrote:
-> > > When it is run in a worktree 'git for-each-ref' only seems to show refs
-> > > under refs/rewritten if that directory also exists under $GIT_COMMON_DIR
-> > > even though they are local to the worktree.
-> > >
-> > > Initially I thought this was due to $GIT_COMMON_DIR pointing to a bare
-> > > repo, but that is not the case. However while writing a test case which
-> > > cloned to a bare repo I noticed it was listing a ref for the HEAD of a
-> > > worktree in the repo I had cloned from, not the clone itself.
-> >
-> > Ignore that last paragraph, it's just showing the branch that got
-> > created when the worktree was created. The last part of the script is
-> > redundant, I've updated it below
->
-> Thanks for the test script. I could reproduce it and I think I see the
-> problem (update-ref creates per-worktree refs even though
-> refs/rewritten should be per-repo). Working on it...
+Hi I think I may have found an error in the way git handles a
+submodule's submodule. Read further for the example (extracted from a
+real project).
 
-My mistake. refs/rewritten is per-worktree, but the ref iteration code
-has a bug. The fix should come soon.
--- 
-Duy
+* I have a main repository which has some submodules defined.
+* One of the submodules is a common submodule which is also included
+in one of the other submodules
+* When running `git fetch --recurse-submodules` I get an error.
+
+The error is "Could not access submodule 'common_submodule'"
+
+```
+$ git --version
+git version 2.21.0
+```
+
+I created the following script to show (using Git-extras `git create`
+to simplify):
+
+
+```
+#!/usr/bin/env bash
+
+if [ "$FORCE" =3D 'true' ]; then
+  rm -rf submodule_experiment
+fi
+
+if [ -e submodule_experiment ]; then
+  echo FATAL: folder submodule_experiment must not exist. Remove with FORCE=
+=3Dtrue
+  exit 9
+fi
+
+mkdir submodule_experiment
+pushd submodule_experiment
+
+git setup common_submodule
+pushd common_submodule
+echo 'common file' > common.txt
+git add common.txt
+git commit -m 'a file in the common submodule'
+
+popd
+
+git setup other_submodule
+pushd other_submodule
+git submodule add ../common_submodule
+git commit -m 'added submodule to other_submodule'
+
+popd
+
+git setup main_repos
+pushd main_repos
+git submodule add ../common_submodule
+git commit -m 'added submodule to main_repos'
+
+git submodule add ../other_submodule
+git commit -m 'added other_submodule to main_repos'
+
+
+# This line fails with error code 1 "Could not access submodule
+'common_submodule'"
+git fetch --recurse-submodules
+
+```
+
+Question:
+Is this a bug in Git or am I declaring the common submodule in an incorrect=
+ way?
+
+
+--=20
+
+Jesper R=C3=B8nn-Jensen
+Nine A/S
+Mobile: +45 2989 1822
+Blog http://justaddwater.dk/
+jesperrr@gmail.com (Private e-mail and Google Talk IM)
