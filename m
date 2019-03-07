@@ -2,189 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E025520248
-	for <e@80x24.org>; Thu,  7 Mar 2019 12:29:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0656C20248
+	for <e@80x24.org>; Thu,  7 Mar 2019 12:34:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726224AbfCGM3n (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 07:29:43 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:42214 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbfCGM3m (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 07:29:42 -0500
-Received: by mail-pf1-f195.google.com with SMTP id n74so11311019pfi.9
-        for <git@vger.kernel.org>; Thu, 07 Mar 2019 04:29:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Q4fvcoR2q6r5C+mlI8E6czVscx5pPDLuk8PZC2yJi9g=;
-        b=rQ6ILgwdRxjQMj1jQZr0ldxmWGr0N27ZS3DE2fkqkJds3boz2WFpswnAKCVK8SxTf6
-         ruON3NyCENxjabcB5x60X967ChakxLOpECOmYE0iQ87NvTQWEEJ6Wr4VL7QVoREZqwk9
-         CXepzHBWZhXx+3IhkI9tjDlA0LIEtrKMR26RJn6NAWLFCxBs6CEj/fH01VtEj9asUzZ2
-         TiCKhnWOdgw19eKCvSgBknKlLnevBfeL8t0iizjfa4jP9a+pFBogR08kAWiqHmCwpz7F
-         YGROgMECctQLg6YvSdhnwmBPObHPV3I/Qez4urZbXkPx0bRHpFTFmpg9LGzokQRdiALt
-         Hc5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Q4fvcoR2q6r5C+mlI8E6czVscx5pPDLuk8PZC2yJi9g=;
-        b=Nt8gUWxykFDyXYG2gXrFEu29FyyPYa7BHZ9njdI3VE7nSwJGdu4PlWZQVe1a8Sx6CC
-         BlEPEAmSfCI98DTn7mmVf9erOFHo8jRtbqhCDtlFc35++/KAJltIQvSI7UcmDZSCV591
-         UrFi2qNtbZd3lyuN8zeS24W5MRTROZ9q3kp7R29MABbVWpEtKrQf4BrEzNhk0/mWZH+Y
-         VL7NbVvgjUz0Q9WIcmL21qw41prrV+O21f5VVY6Sc+RnrEE2wF2Phm8JjVkwc6Q03Wrs
-         lJB7XZjD57E4A/lSmPF9PYQgX5sJBsYTdalEKy0MQWsPyI/+Njx5JLlb/JFYCsONNg42
-         lpbg==
-X-Gm-Message-State: APjAAAXmstGsh4xRlyRfcmmFNEl9WrA8GdZq5RaY4e9LdBUkJIWQMgZU
-        desvOEcyTICN2jz9IUrWSGKjlHdh
-X-Google-Smtp-Source: APXvYqzu49NCA5RmGXHbjNjlSvUVxsHEkVCFApBGUNYV9KqGfoH11jwSuJzdGZc5GE7EHyaDk2uLBw==
-X-Received: by 2002:a63:cf01:: with SMTP id j1mr11194788pgg.342.1551961781752;
-        Thu, 07 Mar 2019 04:29:41 -0800 (PST)
-Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id l12sm14369540pgn.83.2019.03.07.04.29.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Mar 2019 04:29:41 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 07 Mar 2019 19:29:35 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     phillip.wood123@gmail.com
-Cc:     git@vger.kernel.org, pclouds@gmail.com, phillip.wood@dunelm.org.uk,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 3/3] Make sure refs/rewritten/ is per-worktree
-Date:   Thu,  7 Mar 2019 19:29:17 +0700
-Message-Id: <20190307122917.12811-4-pclouds@gmail.com>
-X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
-In-Reply-To: <20190307122917.12811-1-pclouds@gmail.com>
-References: <ec707cbb-96e8-f26f-3d69-b69d29b31737@gmail.com>
- <20190307122917.12811-1-pclouds@gmail.com>
+        id S1726172AbfCGMew (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 07:34:52 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:52991 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726127AbfCGMew (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 07:34:52 -0500
+Received: from [192.168.1.12] ([92.29.14.153])
+        by smtp.talktalk.net with SMTP
+        id 1sEbhXqWWWIpc1sEbhutPM; Thu, 07 Mar 2019 12:34:50 +0000
+X-Originating-IP: [92.29.14.153]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=W6NGqiek c=1 sm=1 tr=0 a=BLrICWmQs9+T7cG0JL9/VQ==:117
+ a=BLrICWmQs9+T7cG0JL9/VQ==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
+ a=oihk3FedAAAA:8 a=vTaVaU2ITsp0LmoDlI4A:9 a=QEXdDO2ut3YA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=hb0pxZ2FmNMkpaS32Bpr:22
+Subject: Re: What's cooking in git.git (Mar 2019, #01; Wed, 6)
+To:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8C7F_Ju2F7COUVd9-1FcyQL=mZph7qmkDh9sS-ENb4PEQ@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <f6052ac6-60c4-1e70-b3f4-571885ba9e8d@iee.org>
+Date:   Thu, 7 Mar 2019 12:34:48 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8C7F_Ju2F7COUVd9-1FcyQL=mZph7qmkDh9sS-ENb4PEQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfB4NYiynl8VK4HN5k6fd1c0A01aKQnc2sWa+j4eh7H7i/atssJ66rBtew3FF5JFo27Tb05ToWY6cKz0aCPhe2nzNcblJ8MhguQlHiKZUPuUYkAKuM162
+ OXewwYvfw0L62eU5U1FX+/BOKOM/Je0tSf4aANv8HjqTshfwtkfKtwjKMVS9xgveykzxzgDBs3bh76JTUNyHLR+D2nqsZ3+47Fh6NbEx6QrnrFdMHN/7qMcK
+ 1Ixdsb1F4zz0WkgySui6oQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-a9be29c981 (sequencer: make refs generated by the `label` command
-worktree-local, 2018-04-25) adds refs/rewritten/ as per-worktree
-reference space. Unfortunately (my bad) there are a couple places that
-need update to make sure it's really per-worktree.
+On 06/03/2019 09:44, Duy Nguyen wrote:
+> On Wed, Mar 6, 2019 at 8:34 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> * tg/checkout-no-overlay (2019-02-04) 9 commits
+>>    (merged to 'next' on 2019-02-04 at 9968bcf4fb)
+>>   + revert "checkout: introduce checkout.overlayMode config"
+>>    (merged to 'next' on 2019-01-18 at 1e2a79ba5c)
+>>   + checkout: introduce checkout.overlayMode config
+>>   + checkout: introduce --{,no-}overlay option
+>>   + checkout: factor out mark_cache_entry_for_checkout function
+>>   + checkout: clarify comment
+>>   + read-cache: add invalidate parameter to remove_marked_cache_entries
+>>   + entry: support CE_WT_REMOVE flag in checkout_entry
+>>   + entry: factor out unlink_entry function
+>>   + move worktree tests to t24*
+>>
+>>   "git checkout --no-overlay" can be used to trigger a new mode of
+>>   checking out paths out of the tree-ish, that allows paths that
+>>   match the pathspec that are in the current index and working tree
+>>   and are not in the tree-ish.
+>>
+>>   Will hold.
+>>   Waiting for "restore-files" & "switch-branches" pair.
+>>   cf. <20190205204208.GC6085@hank.intra.tgummerer.com>
+> If it's ready for master, I'd love to see it merged. Either that or
+> topic is rebased on 'master'. There are separate checkout changes in
+> 'master' (mine, sadly), and because switch/restore moves lots of code
+> around, I need to create a merge of this topic and master as the base,
+> or you'll get horrible conflicts.
+>
+> I should send switch/restore again soon. There are still a few
+> unaddressed concerns for git-restore since last time. Probably time to
+> refresh those discussions.
 
- - add_per_worktree_entries_to_dir() is updated to make sure ref listing
-   look at per-worktree refs/rewritten/ instead of per-repo one [1]
+Just catching up on back emails:
 
- - common_list[] is updated so that git_path() returns the correct
-   location. This includes "rev-parse --git-path".
+The one point I noted is that "Overlay" is a new magic term without any 
+explanation within the _documentation_.
 
-This mess is created by me. I started trying to fix it with the
-introduction of refs/worktree, where all refs will be per-worktree
-without special treatments. Unfortunate refs/rewritten came before
-refs/worktree so this is all we can do.
+It would appear worth it to also add something (follow up patch?) to the 
+e.g. git glossary to clarify how overlay differs, or is similar to, the 
+different merge and reset modes.
 
-This also fixes logs/refs/worktree not being per-worktree.
+--
 
-[1] note that ref listing still works sometimes. For example, if you
-    have .git/worktrees/foo/refs/rewritten/bar AND the directory
-    .git/worktrees/refs/rewritten, refs/rewritten/bar will show up.
-    add_per_worktree_entries_to_dir() is only needed when the directory
-    .git/worktrees/refs/rewritten is missing.
-
-Reported-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- path.c                   |  3 +++
- refs/files-backend.c     |  4 ++--
- t/t1415-worktree-refs.sh | 35 +++++++++++++++++++++++++++++++++++
- 3 files changed, 40 insertions(+), 2 deletions(-)
-
-diff --git a/path.c b/path.c
-index 03ab712839..25e97b8c3f 100644
---- a/path.c
-+++ b/path.c
-@@ -115,10 +115,13 @@ static struct common_dir common_list[] = {
- 	{ 1, 1, 0, "logs" },
- 	{ 1, 1, 1, "logs/HEAD" },
- 	{ 0, 1, 1, "logs/refs/bisect" },
-+	{ 0, 1, 1, "logs/refs/rewritten" },
-+	{ 0, 1, 1, "logs/refs/worktree" },
- 	{ 0, 1, 0, "lost-found" },
- 	{ 0, 1, 0, "objects" },
- 	{ 0, 1, 0, "refs" },
- 	{ 0, 1, 1, "refs/bisect" },
-+	{ 0, 1, 1, "refs/rewritten" },
- 	{ 0, 1, 1, "refs/worktree" },
- 	{ 0, 1, 0, "remotes" },
- 	{ 0, 1, 0, "worktrees" },
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 3d0e06edcd..5848f32ef8 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -215,13 +215,13 @@ static void files_ref_path(struct files_ref_store *refs,
- }
- 
- /*
-- * Manually add refs/bisect and refs/worktree, which, being
-+ * Manually add refs/bisect, refs/rewritten and refs/worktree, which, being
-  * per-worktree, might not appear in the directory listing for
-  * refs/ in the main repo.
-  */
- static void add_per_worktree_entries_to_dir(struct ref_dir *dir, const char *dirname)
- {
--	const char *prefixes[] = { "refs/bisect/", "refs/worktree/" };
-+	const char *prefixes[] = { "refs/bisect/", "refs/worktree/", "refs/rewritten/" };
- 	int ip;
- 
- 	if (strcmp(dirname, "refs/"))
-diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
-index b664e51250..bb2c7572a3 100755
---- a/t/t1415-worktree-refs.sh
-+++ b/t/t1415-worktree-refs.sh
-@@ -76,4 +76,39 @@ test_expect_success 'reflog of worktrees/xx/HEAD' '
- 	test_cmp expected actual.wt2
- '
- 
-+test_expect_success 'for-each-ref from main repo' '
-+	mkdir fer1 &&
-+	git -C fer1 init repo &&
-+	test_commit -C fer1/repo initial &&
-+	git -C fer1/repo worktree add ../second &&
-+	git -C fer1/repo update-ref refs/bisect/main HEAD &&
-+	git -C fer1/repo update-ref refs/rewritten/main HEAD &&
-+	git -C fer1/repo update-ref refs/worktree/main HEAD &&
-+	git -C fer1/repo for-each-ref --format="%(refname)" | grep main >actual &&
-+	cat >expected <<-\EOF &&
-+	refs/bisect/main
-+	refs/rewritten/main
-+	refs/worktree/main
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'for-each-ref from linked repo' '
-+	mkdir fer2 &&
-+	git -C fer2 init repo &&
-+	test_commit -C fer2/repo initial &&
-+	git -C fer2/repo worktree add ../second &&
-+	git -C fer2/second update-ref refs/bisect/second HEAD &&
-+	git -C fer2/second update-ref refs/rewritten/second HEAD &&
-+	git -C fer2/second update-ref refs/worktree/second HEAD &&
-+	git -C fer2/second for-each-ref --format="%(refname)" | grep second >actual &&
-+	cat >expected <<-\EOF &&
-+	refs/bisect/second
-+	refs/heads/second
-+	refs/rewritten/second
-+	refs/worktree/second
-+	EOF
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-2.21.0.rc1.337.gdf7f8d0522
+Philip
 
