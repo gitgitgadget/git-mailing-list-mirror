@@ -2,355 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9986020248
-	for <e@80x24.org>; Thu,  7 Mar 2019 15:44:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB57520248
+	for <e@80x24.org>; Thu,  7 Mar 2019 16:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbfCGPoU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 10:44:20 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:36029 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726185AbfCGPoT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 10:44:19 -0500
-Received: by mail-qt1-f194.google.com with SMTP id p25so17586513qtb.3
-        for <git@vger.kernel.org>; Thu, 07 Mar 2019 07:44:18 -0800 (PST)
+        id S1726172AbfCGQZu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 11:25:50 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37609 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726127AbfCGQZu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 11:25:50 -0500
+Received: by mail-wr1-f66.google.com with SMTP id w6so18142642wrs.4
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 08:25:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NYAhDRaLNPVPSYw7ijHE1++ZC3NAQJQWLkbbb3tau08=;
-        b=EVO8VOaOTZ11pk6TcwHRFLc9mYoeBJ4Cha+Uf7mie2oSsnqG3uy4afHl69rNYHTTJU
-         XfMND3Ks6f2shtPamyBy9g6lk+HvpSXNExNhWrHEGVC+dmd7VsToKrtmFsD3KplWlBYo
-         +G2ReYhVvW/TBggEKrsBXWbT/Es9T0rtbcm7KU7ClVTsHU4+ZpdTB+KJ/qtsUFb2CUz8
-         GY4v+XWFla5O9y1sLmmWs7VrdiCdbpCgUb7Am6rhQEXK3LFhVlJ3nTtED2MWDZnMrDO+
-         Le0pOAV3e+SgdpkbA8Yf4VZztyuTeLh7FTuEQwHN3dodB2xGhWvoYEVJU55lbOZjKqAS
-         62YA==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rafaKYcSNan9o41CqiAgrcsc7G/8ziVpdJI0YmU+2CY=;
+        b=XktS9/tU1Bkh51zy61OH3fBXCaA0JT/KCNR+7Y94oXfuVAZ8vXMwKPijH137KnTVdr
+         prhK5hah01UqEtQ4FM/VQ69SL3SC6P65P8jIScBsvodpBZ4BJWpzbi/iNDXHaoJn8i9e
+         VHfnnlvqzPggNm1P5v7nVly+9q+Y1NvTZDEtpQ0Pc/FF4hXJNM7HJZFIL1R31yYMHAez
+         9Fgunid55/Pksvvvn7W0liIS1i7l6ujeESxJI9D3KCzdzSyCJ5MStvkIaz1c1RMAyRPx
+         3yMgMcbnubvNgb/pKfM5+KFmbKgz6sGvxsWUd0rJo3X0RyX+LJGpwGXmy9tKz+rBLWgl
+         uLZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NYAhDRaLNPVPSYw7ijHE1++ZC3NAQJQWLkbbb3tau08=;
-        b=WQIfcYL2vplSOa+U/vP2PiJoKye8+hDi4/YeapO79EqZS0tTsVwRQ0Acr1/6IE+nqw
-         8xstlCmpQ9n65g8GhTIvPk0MVRAhbdTO39uheYypO8h813gPMm7xn6sNj3QQNPXzg7dO
-         K0HDMeHuxb39BXv5LYj3/VEEqfLRVJn5q7+Bw3chwJLWMPJwW+aoF4UkGa/fka2VGHjF
-         ZinwrDVGaSu9zitgEatLRcpm1cAAx6FeuOSP0alrMCo4NtihsM8jAiGPjeRUXmlRVdIL
-         FOciQZUt+60PuXtwbNnlV1Z7wMjzeEdF/g+o/XWVaEIsxNZKe9btYes1BZCDA5XMqtqP
-         k7Ig==
-X-Gm-Message-State: APjAAAXXCAyg815KGLVs4IbLFe/z3TOsgZbZF83+qAaPwApUPI0mFg5g
-        0pQ7FsucvHAF3hErUKMk2ltW7vntW0A=
-X-Google-Smtp-Source: APXvYqwnBuGXkVI4B4cVaTinV3YZbT1LJDr+o6+qKzPxwsVjpJ0mjs440MqfLSxlBu+oMKuBva1Kuw==
-X-Received: by 2002:a0c:b297:: with SMTP id r23mr11191665qve.167.1551973457873;
-        Thu, 07 Mar 2019 07:44:17 -0800 (PST)
-Received: from localhost.localdomain (fctnnbsc38w-142-162-41-118.dhcp-dynamic.fibreop.nb.bellaliant.net. [142.162.41.118])
-        by smtp.gmail.com with ESMTPSA id r44sm3107384qtb.53.2019.03.07.07.44.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 07 Mar 2019 07:44:16 -0800 (PST)
-From:   Brandon Richardson <brandon1024.br@gmail.com>
-To:     git@vger.kernel.org
-Cc:     rybak.a.v@gmail.com, pclouds@gmail.com, peff@peff.net,
-        sunshine@sunshineco.com, gitster@pobox.com,
-        Brandon Richardson <brandon1024.br@gmail.com>
-Subject: [PATCH v5] commit-tree: utilize parse-options api
-Date:   Thu,  7 Mar 2019 11:44:09 -0400
-Message-Id: <20190307154409.14808-1-brandon1024.br@gmail.com>
-X-Mailer: git-send-email 2.21.0
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=rafaKYcSNan9o41CqiAgrcsc7G/8ziVpdJI0YmU+2CY=;
+        b=smpWksK9932YxEOeagXP8DpjedQ+/a9/TGnN97PMSkkryssiFLO9Y/UsIL6beyV9RA
+         b+TVUtYGHg3F4W0fGdZRJVB7o14RpCmYlkHtDIkFcGW94dRsv7z+tIfxZrhqLJ+khpkq
+         Q0XiaT6pvYnDbC13FZaxA7M+YcY7XSVFg2lcqx83VDOX9jlnltUdA6c2Elb363nIlYcH
+         hEqWjZtHdQ/0hbXckOMJhbcigLDjVgtmSTbM5FhpzS4U55UCcxum7h4EegkKc52CMkD2
+         8AEABBIurYt7GBMXMVEaQGJCwQNOl+1ORHxU6+3F5Qf+uYfD94faTCR/bgN16lK/hBLY
+         HaUQ==
+X-Gm-Message-State: APjAAAWnwMZJV8hiqEbFGSbPRGKcLJo8oVmtmjMXksaoteoAneEMkiTr
+        3jaYBzW9kZ2UMkMFNmTZBpPBkvQa+vU=
+X-Google-Smtp-Source: APXvYqxeoh04nw9ysxyO8Rxfk5OESJ50FD9RGLhYe4fy2Zv9PjGC2INeGyJqHWzEZ2AAg89l3NoIug==
+X-Received: by 2002:adf:b651:: with SMTP id i17mr2570279wre.108.1551975948032;
+        Thu, 07 Mar 2019 08:25:48 -0800 (PST)
+Received: from [192.168.2.240] (host-92-22-20-26.as13285.net. [92.22.20.26])
+        by smtp.gmail.com with ESMTPSA id 132sm6948355wmd.30.2019.03.07.08.25.46
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Mar 2019 08:25:47 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/1] rebase: deprecate --preserve-merges
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.158.git.gitgitgadget@gmail.com>
+ <6407430da7f75cb2385d243c9820ac8c2ea7fee3.1551952855.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <3a418266-6506-d2c0-45d3-5f1c6f0375c6@gmail.com>
+Date:   Thu, 7 Mar 2019 16:25:45 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <6407430da7f75cb2385d243c9820ac8c2ea7fee3.1551952855.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rather than parse options manually, which is both difficult to
-read and error prone, parse options supplied to commit-tree
-using the parse-options api.
+Hi Johannes
 
-It was discovered that the --no-gpg-sign option was documented
-but not implemented in commit 70ddbd7767 (commit-tree: add missing
---gpg-sign flag, 2019-01-19), and the existing implementation
-would attempt to translate the option as a tree oid. It was also
-suggested earlier in commit 55ca3f99ae (commit-tree: add and document
---no-gpg-sign, 2013-12-13) that commit-tree should be migrated to
-utilize the parse-options api, which could help prevent mistakes
-like this in the future. Hence this change.
+It's great to see this. Do we need the deprecation warning in both 
+builtin/rebase.c and rebase--preserve-merges.sh? Won't that end up 
+warning twice - maybe that's a good thing but if we go for only one I 
+prefer the wording in rebase--preserve-merges.sh
 
-Also update the documentation to better describe that mixing
-`-m` and `-F` options will correctly compose commit log messages in the
-order in which the options are given.
+Best Wishes
 
-In the process, mark various strings for translation.
+Phillip
 
-Signed-off-by: Brandon Richardson <brandon1024.br@gmail.com>
----
-
-Notes:
-    GitHub Pull Request: https://github.com/brandon1024/git/pull/5
-    Travis CI Build: https://travis-ci.com/brandon1024/git/builds/103551319
-
- Documentation/git-commit-tree.txt |   9 +-
- builtin/commit-tree.c             | 158 ++++++++++++++++--------------
- parse-options.h                   |  11 +++
- 3 files changed, 104 insertions(+), 74 deletions(-)
-
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index 002dae625e..4b90b9c12a 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -23,6 +23,10 @@ Creates a new commit object based on the provided tree object and
- emits the new commit object id on stdout. The log message is read
- from the standard input, unless `-m` or `-F` options are given.
- 
-+The `-m` and `-F` options can be given any number of times, in any
-+order. The commit log message will be composed in the order in which
-+the options are given.
-+
- A commit object may have any number of parents. With exactly one
- parent, it is an ordinary commit. Having more than one parent makes
- the commit a merge between several lines of history. Initial (root)
-@@ -41,7 +45,7 @@ state was.
- OPTIONS
- -------
- <tree>::
--	An existing tree object
-+	An existing tree object.
- 
- -p <parent>::
- 	Each `-p` indicates the id of a parent commit object.
-@@ -52,7 +56,8 @@ OPTIONS
- 
- -F <file>::
- 	Read the commit log message from the given file. Use `-` to read
--	from the standard input.
-+	from the standard input. This can be given more than once and the
-+	content of each file becomes its own paragraph.
- 
- -S[<keyid>]::
- --gpg-sign[=<keyid>]::
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 12cc403bd7..b866d83951 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -12,8 +12,13 @@
- #include "builtin.h"
- #include "utf8.h"
- #include "gpg-interface.h"
-+#include "parse-options.h"
- 
--static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-S[<keyid>]] [-m <message>] [-F <file>] <sha1>";
-+static const char * const commit_tree_usage[] = {
-+	N_("git commit-tree [(-p <parent>)...] [-S[<keyid>]] [(-m <message>)...] "
-+		"[(-F <file>)...] <tree>"),
-+	NULL
-+};
- 
- static const char *sign_commit;
- 
-@@ -23,7 +28,7 @@ static void new_parent(struct commit *parent, struct commit_list **parents_p)
- 	struct commit_list *parents;
- 	for (parents = *parents_p; parents; parents = parents->next) {
- 		if (parents->item == parent) {
--			error("duplicate parent %s ignored", oid_to_hex(oid));
-+			error(_("duplicate parent %s ignored"), oid_to_hex(oid));
- 			return;
- 		}
- 		parents_p = &parents->next;
-@@ -39,91 +44,100 @@ static int commit_tree_config(const char *var, const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
- 
-+static int parse_parent_arg_callback(const struct option *opt,
-+		const char *arg, int unset)
-+{
-+	struct object_id oid;
-+	struct commit_list **parents = opt->value;
-+
-+	BUG_ON_OPT_NEG_NOARG(unset, arg);
-+
-+	if (get_oid_commit(arg, &oid))
-+		die(_("not a valid object name %s"), arg);
-+
-+	assert_oid_type(&oid, OBJ_COMMIT);
-+	new_parent(lookup_commit(the_repository, &oid), parents);
-+	return 0;
-+}
-+
-+static int parse_message_arg_callback(const struct option *opt,
-+		const char *arg, int unset)
-+{
-+	struct strbuf *buf = opt->value;
-+
-+	BUG_ON_OPT_NEG_NOARG(unset, arg);
-+
-+	if (buf->len)
-+		strbuf_addch(buf, '\n');
-+	strbuf_addstr(buf, arg);
-+	strbuf_complete_line(buf);
-+
-+	return 0;
-+}
-+
-+static int parse_file_arg_callback(const struct option *opt,
-+		const char *arg, int unset)
-+{
-+	int fd;
-+	struct strbuf *buf = opt->value;
-+
-+	BUG_ON_OPT_NEG_NOARG(unset, arg);
-+
-+	if (buf->len)
-+		strbuf_addch(buf, '\n');
-+	if (!strcmp(arg, "-"))
-+		fd = 0;
-+	else {
-+		fd = open(arg, O_RDONLY);
-+		if (fd < 0)
-+			die_errno(_("git commit-tree: failed to open '%s'"), arg);
-+	}
-+	if (strbuf_read(buf, fd, 0) < 0)
-+		die_errno(_("git commit-tree: failed to read '%s'"), arg);
-+	if (fd && close(fd))
-+		die_errno(_("git commit-tree: failed to close '%s'"), arg);
-+
-+	return 0;
-+}
-+
- int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- {
--	int i, got_tree = 0;
-+	static struct strbuf buffer = STRBUF_INIT;
- 	struct commit_list *parents = NULL;
- 	struct object_id tree_oid;
- 	struct object_id commit_oid;
--	struct strbuf buffer = STRBUF_INIT;
-+
-+	struct option options[] = {
-+		{ OPTION_CALLBACK, 'p', NULL, &parents, N_("parent"),
-+			N_("id of a parent commit object"), PARSE_OPT_NONEG,
-+			parse_parent_arg_callback },
-+		{ OPTION_CALLBACK, 'm', NULL, &buffer, N_("message"),
-+			N_("commit message"), PARSE_OPT_NONEG,
-+			parse_message_arg_callback },
-+		{ OPTION_CALLBACK, 'F', NULL, &buffer, N_("file"),
-+			N_("read commit log message from file"), PARSE_OPT_NONEG,
-+			parse_file_arg_callback },
-+		{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
-+			N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
-+		OPT_END()
-+	};
- 
- 	git_config(commit_tree_config, NULL);
- 
- 	if (argc < 2 || !strcmp(argv[1], "-h"))
--		usage(commit_tree_usage);
--
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
--		if (!strcmp(arg, "-p")) {
--			struct object_id oid;
--			if (argc <= ++i)
--				usage(commit_tree_usage);
--			if (get_oid_commit(argv[i], &oid))
--				die("Not a valid object name %s", argv[i]);
--			assert_oid_type(&oid, OBJ_COMMIT);
--			new_parent(lookup_commit(the_repository, &oid),
--						 &parents);
--			continue;
--		}
-+		usage_with_options(commit_tree_usage, options);
- 
--		if (!strcmp(arg, "--gpg-sign")) {
--		    sign_commit = "";
--		    continue;
--		}
-+	argc = parse_options(argc, argv, prefix, options, commit_tree_usage, 0);
- 
--		if (skip_prefix(arg, "-S", &sign_commit) ||
--			skip_prefix(arg, "--gpg-sign=", &sign_commit))
--			continue;
-+	if (argc != 1)
-+		die(_("must give exactly one tree"));
- 
--		if (!strcmp(arg, "--no-gpg-sign")) {
--			sign_commit = NULL;
--			continue;
--		}
--
--		if (!strcmp(arg, "-m")) {
--			if (argc <= ++i)
--				usage(commit_tree_usage);
--			if (buffer.len)
--				strbuf_addch(&buffer, '\n');
--			strbuf_addstr(&buffer, argv[i]);
--			strbuf_complete_line(&buffer);
--			continue;
--		}
--
--		if (!strcmp(arg, "-F")) {
--			int fd;
--
--			if (argc <= ++i)
--				usage(commit_tree_usage);
--			if (buffer.len)
--				strbuf_addch(&buffer, '\n');
--			if (!strcmp(argv[i], "-"))
--				fd = 0;
--			else {
--				fd = open(argv[i], O_RDONLY);
--				if (fd < 0)
--					die_errno("git commit-tree: failed to open '%s'",
--						  argv[i]);
--			}
--			if (strbuf_read(&buffer, fd, 0) < 0)
--				die_errno("git commit-tree: failed to read '%s'",
--					  argv[i]);
--			if (fd && close(fd))
--				die_errno("git commit-tree: failed to close '%s'",
--					  argv[i]);
--			continue;
--		}
--
--		if (get_oid_tree(arg, &tree_oid))
--			die("Not a valid object name %s", arg);
--		if (got_tree)
--			die("Cannot give more than one trees");
--		got_tree = 1;
--	}
-+	if (get_oid_tree(argv[0], &tree_oid))
-+		die(_("not a valid object name %s"), argv[0]);
- 
- 	if (!buffer.len) {
- 		if (strbuf_read(&buffer, 0, 0) < 0)
--			die_errno("git commit-tree: failed to read");
-+			die_errno(_("git commit-tree: failed to read"));
- 	}
- 
- 	if (commit_tree(buffer.buf, buffer.len, &tree_oid, parents, &commit_oid,
-diff --git a/parse-options.h b/parse-options.h
-index 14fe32428e..3a442eee26 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -202,6 +202,17 @@ const char *optname(const struct option *opt, int flags);
- 		BUG("option callback does not expect an argument"); \
- } while (0)
- 
-+/*
-+ * Similar to the assertions above, but checks that "arg" is always non-NULL.
-+ * This assertion also implies BUG_ON_OPT_NEG(), letting you declare both
-+ * assertions in a single line.
-+ */
-+#define BUG_ON_OPT_NEG_NOARG(unset, arg) do { \
-+	BUG_ON_OPT_NEG(unset); \
-+	if(!(arg)) \
-+		BUG("option callback expects an argument"); \
-+} while(0)
-+
- /*----- incremental advanced APIs -----*/
- 
- enum {
--- 
-2.21.0
-
+On 07/03/2019 10:00, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> We have something much better now: --rebase-merges (which is a
+> complete re-design --preserve-merges, with a lot of issues fixed such as
+> the inability to reorder commits with --preserve-merges).
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   Documentation/config/branch.txt |  6 +++---
+>   Documentation/config/pull.txt   |  6 +++---
+>   Documentation/git-rebase.txt    | 23 ++++++++++++-----------
+>   builtin/rebase.c                |  8 ++++++--
+>   git-rebase--preserve-merges.sh  |  2 ++
+>   5 files changed, 26 insertions(+), 19 deletions(-)
+> 
+> diff --git a/Documentation/config/branch.txt b/Documentation/config/branch.txt
+> index 019d60ede2..8f4b3faadd 100644
+> --- a/Documentation/config/branch.txt
+> +++ b/Documentation/config/branch.txt
+> @@ -85,9 +85,9 @@ When `merges`, pass the `--rebase-merges` option to 'git rebase'
+>   so that the local merge commits are included in the rebase (see
+>   linkgit:git-rebase[1] for details).
+>   +
+> -When preserve, also pass `--preserve-merges` along to 'git rebase'
+> -so that locally committed merge commits will not be flattened
+> -by running 'git pull'.
+> +When `preserve` (deprecated in favor of `merges`), also pass
+> +`--preserve-merges` along to 'git rebase' so that locally committed merge
+> +commits will not be flattened by running 'git pull'.
+>   +
+>   When the value is `interactive`, the rebase is run in interactive mode.
+>   +
+> diff --git a/Documentation/config/pull.txt b/Documentation/config/pull.txt
+> index bb23a9947d..b87cab31b3 100644
+> --- a/Documentation/config/pull.txt
+> +++ b/Documentation/config/pull.txt
+> @@ -18,9 +18,9 @@ When `merges`, pass the `--rebase-merges` option to 'git rebase'
+>   so that the local merge commits are included in the rebase (see
+>   linkgit:git-rebase[1] for details).
+>   +
+> -When preserve, also pass `--preserve-merges` along to 'git rebase'
+> -so that locally committed merge commits will not be flattened
+> -by running 'git pull'.
+> +When `preserve` (deprecated in favor of `merges`), also pass
+> +`--preserve-merges` along to 'git rebase' so that locally committed merge
+> +commits will not be flattened by running 'git pull'.
+>   +
+>   When the value is `interactive`, the rebase is run in interactive mode.
+>   +
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 5629ba4c5d..89202dbb93 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -415,9 +415,9 @@ i.e. commits that would be excluded by gitlink:git-log[1]'s
+>   the `rebase-cousins` mode is turned on, such commits are instead rebased
+>   onto `<upstream>` (or `<onto>`, if specified).
+>   +
+> -The `--rebase-merges` mode is similar in spirit to `--preserve-merges`, but
+> -in contrast to that option works well in interactive rebases: commits can be
+> -reordered, inserted and dropped at will.
+> +The `--rebase-merges` mode is similar in spirit to the deprecated
+> +`--preserve-merges`, but in contrast to that option works well in interactive
+> +rebases: commits can be reordered, inserted and dropped at will.
+>   +
+>   It is currently only possible to recreate the merge commits using the
+>   `recursive` merge strategy; Different merge strategies can be used only via
+> @@ -427,9 +427,10 @@ See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
+>   
+>   -p::
+>   --preserve-merges::
+> -	Recreate merge commits instead of flattening the history by replaying
+> -	commits a merge commit introduces. Merge conflict resolutions or manual
+> -	amendments to merge commits are not preserved.
+> +	[DEPRECATED: use --rebase-merges instead] Recreate merge commits
+> +	instead of flattening the history by replaying commits a merge commit
+> +	introduces. Merge conflict resolutions or manual amendments to merge
+> +	commits are not preserved.
+>   +
+>   This uses the `--interactive` machinery internally, but combining it
+>   with the `--interactive` option explicitly is generally not a good
+> @@ -1020,11 +1021,11 @@ merge cmake
+>   
+>   BUGS
+>   ----
+> -The todo list presented by `--preserve-merges --interactive` does not
+> -represent the topology of the revision graph.  Editing commits and
+> -rewording their commit messages should work fine, but attempts to
+> -reorder commits tend to produce counterintuitive results. Use
+> -`--rebase-merges` in such scenarios instead.
+> +The todo list presented by the deprecated `--preserve-merges --interactive`
+> +does not represent the topology of the revision graph (use `--rebase-merges`
+> +instead).  Editing commits and rewording their commit messages should work
+> +fine, but attempts to reorder commits tend to produce counterintuitive results.
+> +Use `--rebase-merges` in such scenarios instead.
+>   
+>   For example, an attempt to rearrange
+>   ------------
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 7c7bc13e91..c5f5edf321 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1092,8 +1092,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+>   			parse_opt_interactive },
+>   		OPT_SET_INT('p', "preserve-merges", &options.type,
+> -			    N_("try to recreate merges instead of ignoring "
+> -			       "them"), REBASE_PRESERVE_MERGES),
+> +			    N_("(DEPRECATED) try to recreate merges instead of "
+> +			       "ignoring them"), REBASE_PRESERVE_MERGES),
+>   		OPT_BOOL(0, "rerere-autoupdate",
+>   			 &options.allow_rerere_autoupdate,
+>   			 N_("allow rerere to update index with resolved "
+> @@ -1204,6 +1204,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   		usage_with_options(builtin_rebase_usage,
+>   				   builtin_rebase_options);
+>   
+> +	if (options.type == REBASE_PRESERVE_MERGES)
+> +		warning(_("--preserve-merges is deprecated in favor of "
+> +			  "--rebase-merges"));
+> +
+>   	if (action != NO_ACTION && !in_progress)
+>   		die(_("No rebase in progress?"));
+>   	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
+> diff --git a/git-rebase--preserve-merges.sh b/git-rebase--preserve-merges.sh
+> index afbb65765d..eab2e40dc6 100644
+> --- a/git-rebase--preserve-merges.sh
+> +++ b/git-rebase--preserve-merges.sh
+> @@ -105,6 +105,8 @@ warn () {
+>   	printf '%s\n' "$*" >&2
+>   }
+>   
+> +warn "git rebase --preserve-merges is deprecated. Use --rebase-merges instead."
+> +
+>   # Output the commit message for the specified commit.
+>   commit_message () {
+>   	git cat-file commit "$1" | sed "1,/^$/d"
+> 
