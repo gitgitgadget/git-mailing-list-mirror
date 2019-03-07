@@ -7,71 +7,88 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69AD620248
-	for <e@80x24.org>; Thu,  7 Mar 2019 00:24:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0725D20248
+	for <e@80x24.org>; Thu,  7 Mar 2019 00:29:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726134AbfCGAYg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 19:24:36 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38536 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726010AbfCGAYf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 19:24:35 -0500
-Received: by mail-wm1-f66.google.com with SMTP id a188so7535287wmf.3
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 16:24:34 -0800 (PST)
+        id S1726307AbfCGA3u (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 19:29:50 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50432 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725790AbfCGA3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 19:29:50 -0500
+Received: by mail-wm1-f65.google.com with SMTP id x7so7639911wmj.0
+        for <git@vger.kernel.org>; Wed, 06 Mar 2019 16:29:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=QAHa7lxNev21Wm5s5FQSfW2eojoQYHOeFaCHa/VZMls=;
-        b=HTisE2F6j6xB8AsXgOMAQw0ukUjFwH8Y/ZzsQe6ykzewm5wyh089P059bgaD7tVntp
-         NR8yQwX+BgDXJVFjCbASc7MtT9iOvcFJMmI9eIumpjxf8lwzEeODsfFBMmTEdsg+htgn
-         WJyBIdhJTXkr+WCIlnTUNgZLF1+3mLgjk0v7zlKdo4EPj7FOmO9luK5A7E9RTtS56VRt
-         A2sSGezRzSB1GG2tviCn26Y1d7+eKvBJtXFZpyrluQ0a/Z9S6JekW588BGTWuXKAAGM3
-         lqUXjR6ZjL4rFMkayQatPyFmyEmUFX+XxqXdpvMIG7dBtzMYs7yv06nbXByEAdBsHtl2
-         IaVA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=E4yEwGEztAZ6nV6y8m3Dg9OqJhJFKDHJoWHomcvS+dA=;
+        b=gS4h1iuztlMOlGzSofLZ39QbZsFIelZwvniEczWXH4RGda25rxMZAStZTPiyZ65hVm
+         E73WfhgWyy6mPDFBLqm6rQ/9KqJ5NLHrbS1NiqKoHXsFgF7NnxXt37L4OHO71KgiD2zh
+         pwP2ZuNtmibp0/kpfNStFLQVo4rQFGoClLP6rbCipTsfTcZO5sAJyXDlyt5MxkL/UeRL
+         hVoW9EGlMccv9Hqp43+1EMbyVzITOSnyL3EG5Utif3xZBrTtp1I4uhWDpMo92QyX0YJK
+         qwlOiIDB6ZuWOErGvUSRL+GijSSBZVnOPcdKaqZLoLwd7159HU6RPwpEpPZJjviqEC13
+         txTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=QAHa7lxNev21Wm5s5FQSfW2eojoQYHOeFaCHa/VZMls=;
-        b=RBbIhXBC+52/h4AiptCOHJJMFDcWYZpeZ1tjz1zYcaU+F+VYpW/H0YyUlGfgScO+g/
-         7duBzzYJdL3aIqufeePV02eKLApoaNcB7gMjP7QvI8dr31EOBM/Tdj2bPMnMNFlpmKda
-         0W0hXCc5/MbW87/JCxSAK4MEsJUWVbvRQVF2AFvJBtxNLaqBNOVEeX5mSsKtPsep4JMR
-         Fern5poeiqCLRuW3k/fctmG7iWilGrWYyQZfA5LztvxD/TbSMS5eBkjwX1Gg9nCHfRuo
-         P9Uuwx18NoVD9oy4UcVOy3nCxxKBmJuIM9QdXTkqxoNdVWC4qwDc5QR5At5z7RM3yM30
-         8Jdw==
-X-Gm-Message-State: APjAAAWwLx2nSRkEy9DpWUZpBqRnFBE3XTCE280pXUasfvrOnX3SpjfP
-        i8eIMqaAdpJqy6VGCQhcFnjmnyWris4=
-X-Google-Smtp-Source: APXvYqy3w+l4HP5/j+uKK7uR5PxhTWlvihCnNlol0WasDJBRnXuJOqyCPgk4zXzd5Tp/8ClvxY5axA==
-X-Received: by 2002:a1c:a9d0:: with SMTP id s199mr3856615wme.142.1551918273888;
-        Wed, 06 Mar 2019 16:24:33 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=E4yEwGEztAZ6nV6y8m3Dg9OqJhJFKDHJoWHomcvS+dA=;
+        b=sRtZQCoOnfKi9o2G0tihSlaZdozpPms7JI1YWTQ34BRjhSzbrqK4+w0AWe7EupHBdA
+         2G9tEHj79LLRcdi1WkII64zQBABfbv07MynWFebNBPyHKh5TPKiJWFn2TcgukVomhd3U
+         j7Lv/HFNf88NP+8nKTZqX63HXjr/xASHxAle0n5WM/HB2QzfaOpxerIfGZjCj5fW7kno
+         Dv6x3lTtuQ6/35Qf3AlgJ47gz8s9Ss0kj/Zd1eMIHBqeP/k/FkcWx2loT50lpgLhdgnx
+         kk/ldD4MaGgpuT2Db72Bw9p4DadVr2zQBKA/2X/NzpkRuw3o7i7nPs1Sut2lLjAOqRRe
+         YrQw==
+X-Gm-Message-State: APjAAAVM/u0ZqNlcZdBRZevLkFC+dhAJ2DZpdkSQGbtX3MG0/rFHO4bv
+        42bVmiSKgzjtMeg5mDZGeP4=
+X-Google-Smtp-Source: APXvYqyLBCAOR4OXBkNalF3lxbT2P/+8H2WqXcwufImtedod2YDHicDXd4fKi3MAYqgqPdkDzxScuQ==
+X-Received: by 2002:a1c:a74a:: with SMTP id q71mr4122387wme.45.1551918588257;
+        Wed, 06 Mar 2019 16:29:48 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q5sm4063707wrn.43.2019.03.06.16.24.32
+        by smtp.gmail.com with ESMTPSA id h126sm2430073wmf.2.2019.03.06.16.29.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Mar 2019 16:24:32 -0800 (PST)
+        Wed, 06 Mar 2019 16:29:47 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org, ybhatambare@gmail.com
-Subject: Re: [PATCH v1 1/1] gitattributes.txt: fix typo
-References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
-        <20190306052310.31546-1-tboegi@web.de>
-Date:   Thu, 07 Mar 2019 09:24:32 +0900
-In-Reply-To: <20190306052310.31546-1-tboegi@web.de> (tboegi's message of "Wed,
-        6 Mar 2019 05:23:10 +0000")
-Message-ID: <xmqqva0vo7jz.fsf@gitster-ct.c.googlers.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/5] Documentation: turn middle-of-line tabs into spaces
+References: <cover.1551853194.git.martin.agren@gmail.com>
+        <4348f7b1b661181b90bf25f43c07529fa9757422.1551853194.git.martin.agren@gmail.com>
+Date:   Thu, 07 Mar 2019 09:29:46 +0900
+In-Reply-To: <4348f7b1b661181b90bf25f43c07529fa9757422.1551853194.git.martin.agren@gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 6 Mar 2019 07:30:18
+ +0100")
+Message-ID: <xmqqr2bjo7b9.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
+Martin Ågren <martin.agren@gmail.com> writes:
 
->  Use the following attributes if your '*.ps1' files are UTF-16 little
->  endian encoded without BOM and you want Git to use Windows line endings
-> -in the working directory (use `UTF-16-LE-BOM` instead of `UTF-16LE` if
-> +in the working directory (use `UTF-16LE-BOM` instead of `UTF-16LE` if
+> These tabs happen to appear in columns where they don't stand out too
+> much, so the diff here is non-obvious. Some of these are rendered
+> differently by AsciiDoc and Asciidoctor (although the difference might
+> be invisible!), which is how I found a few of them. The remainder were
+> found using `git grep "[a-zA-Z.,)]$TAB[a-zA-Z]"`.
 
-Thanks for your attention to detail ;-)
+Thanks.  This was a fun-to-read patch.
+
+> diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
+> index b9fd3770a6..0b057cbb10 100644
+> --- a/Documentation/git-ls-remote.txt
+> +++ b/Documentation/git-ls-remote.txt
+> @@ -31,7 +31,7 @@ OPTIONS
+>  	displayed.
+>  
+>  --refs::
+> -	Do not show peeled tags or pseudorefs like HEAD	in the output.
+> +	Do not show peeled tags or pseudorefs like `HEAD` in the output.
+
+The quoting fix here is also good.
