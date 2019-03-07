@@ -7,107 +7,186 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F4AB20248
-	for <e@80x24.org>; Thu,  7 Mar 2019 06:05:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB6E20248
+	for <e@80x24.org>; Thu,  7 Mar 2019 06:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbfCGGFE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 01:05:04 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38301 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726028AbfCGGFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 01:05:04 -0500
-Received: by mail-pg1-f196.google.com with SMTP id m2so10399430pgl.5
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 22:05:03 -0800 (PST)
+        id S1726520AbfCGGoZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 01:44:25 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:34304 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726408AbfCGGoZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 01:44:25 -0500
+Received: by mail-pf1-f196.google.com with SMTP id u9so10683744pfn.1
+        for <git@vger.kernel.org>; Wed, 06 Mar 2019 22:44:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=U8VlA82TK7atpj+Es0OYZ/Z5djYU6BDgIwW/6rdvEoc=;
-        b=UwJ6PBDEPL3Q3aKdGo4tjwQoMFD7xf/2N4pD+NDRGvxUPzLmzjweDztWr+HsiAs2Ns
-         JkXjpGGqnrLX8eRUNZ345i7BlcbFq2eg39fQTeM1PW+cnoSggG7cD8uM/wPRZ5YMa44i
-         YJ6mnR7iEPvW//npBAXMNyF4mfb8s26NjZV/GuE3Wa8ksWKLUeYirV32rS8ansgz47nZ
-         jjtgtyXErmPffiFUFPK8wkMDv2yigrutoyispEksHMA2Ui257yzbkpVXhsc0iNyiLKfb
-         Kv5jeAupKPZdLnB8xppRZjIvctJeXmkKAmF3au9qMlru0Rf0fW7VdT1bSiGkaH3g6g/b
-         MGMg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=iYKfr0i0DgHLlF5KxPm3TGBVX5M9cyv4fgtVaFU7zKo=;
+        b=FspQ8e2yn9HxZkyQFgdEIG4ceWV3/Lw/ycxPoKy/QKXE8LWaOMyPrZYZ/Fd7ZSejlM
+         4cZGiG70dIno5MYAKDXtF+OjzxWUgcpISYhwXECgrbbWGyw9HY4KCNCU4Sqq2c2692UA
+         GoqiMtWuXHu6K5AMWqCBZhHW4r1T3jCdp5ZSSqFmj4uJxn7GWkjX6lQgrGVrQSx3n4S3
+         z0VWnHqnizsMoMKsXPts6VW/59VSeOI0rKgNybUELGM/pFFzNpP4llsi/SbH4wbMDoPF
+         yUGvtv9cTGR1zEOTQNLZggQ0iUgV9ikB/Qe9ad0dSacrlhctP1VlIeo5iAKVXr2Be7OL
+         xzsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=U8VlA82TK7atpj+Es0OYZ/Z5djYU6BDgIwW/6rdvEoc=;
-        b=XLRMuTOzjXFdY5XZl/UQheRw5Zu/iug1hFjDJqgst23PZUctTjbpAr2BZytFyryhQq
-         U7tUJYppecX66nfSlHRFuiGLnu3a+8R+yU4b3iYVX6mCl4BwmIhUpg2DAtcBHBOa+QM8
-         lFzPUrmlY3oa+8fawmPbExOUI4/TafzVDqBL6Y56YizxT6zO3cBwcacNbRa1hV5FH5qB
-         7wL88l5pakwPGQsbbPFDCtGmPD+LvWKheL+0p2QR22bbUmymXfuH6WpCOcNf9c1PwEIz
-         qDiycKToXPxKy8xWVfXJVlaYY2ioRj8Syr+CsTURKrS2yAo5CN4nZ1sN3h7D4PvdsN+/
-         u+QA==
-X-Gm-Message-State: APjAAAVuNFZeQBF0iarFucEzUJTCrlFJw4adeLK9kS8zFS+q6CMdvEQT
-        LpV6kFSH+6rPAgZiRB1nS8I2EeRN
-X-Google-Smtp-Source: APXvYqzNIMj64645jt2wu+xtBP3MbYsQ7btlATUvf/+1hnILgy2HQ4UhfgC07xf0H0TRGGlp5FsRUA==
-X-Received: by 2002:a62:29c6:: with SMTP id p189mr11438704pfp.194.1551938703227;
-        Wed, 06 Mar 2019 22:05:03 -0800 (PST)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=iYKfr0i0DgHLlF5KxPm3TGBVX5M9cyv4fgtVaFU7zKo=;
+        b=hOXISsX1yrTlzJg+t4cZMS9jYz/hjCwB5DZ/tqVNxvV3yE1yCc5pKXC2yDkxLTnUF7
+         WlcuNLBvAxi9skJZISe+17fyyALNY1u8RabHqHOMY4vPbjwLd/mKv/VrISIh5EEn/QvK
+         O3jcjIvHgXgJgC39FGDkyv4GS3p/aCBBV0oLHp8tRcyUMIbDbb1znC7gAAGp+MEzm6sE
+         tFwS2MLSPfU8fVL/650D2Wv8pkZxC64TseamGytKHlhYyBRJRgzlm2r2186ibQhWf8WW
+         wjoaMTcTIl3vCSJeLCOwYB5iJeHBz4ExEDHYnoaGpXUq07/bTsW25QK9l/gzhYqs6wf1
+         2wSg==
+X-Gm-Message-State: APjAAAUZCq1D1zm2+Q4jy9pl8RYn3T6IGGWdP77kMkx+RoXvjx/YeWOI
+        lA3m0hmIwZFAtTOuBiFMbvFxnz3l
+X-Google-Smtp-Source: APXvYqwbXg9zXaH1EY90BajJkGhyKE4PQBu6DlOysikSJDV9deu8LdwCWne93R8zekN8t2Gn4NrBGA==
+X-Received: by 2002:a17:902:4081:: with SMTP id c1mr11284428pld.297.1551941063622;
+        Wed, 06 Mar 2019 22:44:23 -0800 (PST)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id e21sm9618269pfh.45.2019.03.06.22.05.02
+        by smtp.gmail.com with ESMTPSA id v26sm5140552pgn.46.2019.03.06.22.44.22
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Mar 2019 22:05:02 -0800 (PST)
-Date:   Wed, 6 Mar 2019 22:05:01 -0800
+        Wed, 06 Mar 2019 22:44:22 -0800 (PST)
+Date:   Wed, 6 Mar 2019 22:44:21 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/1] git-clean.txt: clarify ignore pattern files
-Message-ID: <2eda83517ebad39e14dca9d86b9dc2e0d32e37ef.1551938421.git.liu.denton@gmail.com>
-References: <cover.1551868745.git.liu.denton@gmail.com>
- <cover.1551938421.git.liu.denton@gmail.com>
+Subject: [PATCH v2 0/3] cherry-pick/revert cleanup scissors fix
+Message-ID: <cover.1551940635.git.liu.denton@gmail.com>
+References: <cover.1551867827.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1551938421.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1551867827.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the git-clean documentation, -x and -e documented .gitignore,
-$GIT_DIR/info/excludes but neglected to mention the file pointed to by
-core.excludesFile.
+As I stated earlier[1], I discovered today that git revert (and thus,
+git cherry-pick as well) do not place the scissors line properly as
+well. This patchset adds a scissors line when conflicts arise in both
+cherry-pick and revert, which fixes the same bug present in git-merge
+earlier.
 
-Remove specific list of files and, instead, reference gitignore(5)
-documentation so that information is consolidated and the git-clean
-documentation is more precise.
+This patchset should apply on top of dl/merge-cleanup-scissors-fix.
 
-Reported-by: Robert P. J. Day <rpjday@crashcourse.ca>
-Helped-by: Martin Ågren <martin.agren@gmail.com>
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/git-clean.txt | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+Changes since v1:
 
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index 03056dad0d..d251ef9dd2 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -55,13 +55,12 @@ OPTIONS
- 
- -e <pattern>::
- --exclude=<pattern>::
--	In addition to those found in .gitignore (per directory) and
--	$GIT_DIR/info/exclude, also consider these patterns to be in the
--	set of the ignore rules in effect.
-+	Use the exclude pattern in addition to those found in
-+	`.gitignore` and similar files (see linkgit:gitignore[5]).
- 
- -x::
--	Don't use the standard ignore rules read from .gitignore (per
--	directory) and $GIT_DIR/info/exclude, but do still use the ignore
-+	Don't use the standard ignore rules read from `.gitignore` and
-+	similar files (see linkgit:gitignore[5]), but do still use the ignore
- 	rules given with `-e` options.  This allows removing all untracked
- 	files, including build products.  This can be used (possibly in
- 	conjunction with 'git reset') to create a pristine
+* Address Phillip's concern of calling get_cleanup_mode with use_editor = 1;
+  only set to 1 if we are calling for revert or cherry-pick, else 0 to maintain
+  original behaviour (for rebasing).
+
+* Do not die if provided an invalid cleanup option, instead just warn and
+  fallback to default option.
+
+[1]: https://public-inbox.org/git/20190306014143.GA2580@dev-l/
+
+
+Denton Liu (3):
+  t3507: cleanup space after redirection operators
+  cherry-pick/revert: add scissors line on merge conflict
+  sequencer.c: don't die on invalid cleanup_arg
+
+ Documentation/git-cherry-pick.txt |   7 ++
+ Documentation/git-revert.txt      |   7 ++
+ builtin/merge.c                   |  13 +---
+ builtin/rebase--helper.c          |   2 +-
+ builtin/revert.c                  |   5 ++
+ sequencer.c                       |  39 +++++-----
+ sequencer.h                       |   3 +-
+ t/t3507-cherry-pick-conflict.sh   | 122 +++++++++++++++++++++++++-----
+ 8 files changed, 149 insertions(+), 49 deletions(-)
+
+Range-diff against v1:
+1:  70a508ca0b ! 1:  8fdc5bfb15 cherry-pick/revert: add scissors line on merge conflict
+    @@ -8,11 +8,11 @@
+     
+         Note that the removal of the if-else tower in git_sequencer_config may
+         appear to be a no-op refactor but it actually isn't. First of all, we
+    -    now accept "default" as a configuration option and also we die on an
+    -    invalid cleanup mode. Most importantly, though, if
+    +    now accept "default". More importantly, though, if
+         commit.cleanup = scissors, the cleanup enum will be set to
+    -    COMMIT_MSG_CLEANUP_SCISSORS instead of COMMIT_MSG_CLEANUP_SPACE. This
+    -    allows us to append scissors to MERGE_MSG in the case of a conflict.
+    +    COMMIT_MSG_CLEANUP_SCISSORS instead of COMMIT_MSG_CLEANUP_SPACE when we
+    +    are reverting or cherry-picking. This allows us to append scissors to
+    +    MERGE_MSG in the case of a conflict.
+     
+         Signed-off-by: Denton Liu <liu.denton@gmail.com>
+     
+    @@ -77,6 +77,22 @@
+      	strbuf_release(&msgbuf);
+      	fclose(fp);
+     
+    + diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+    + --- a/builtin/rebase--helper.c
+    + +++ b/builtin/rebase--helper.c
+    +@@
+    + 		OPT_END()
+    + 	};
+    + 
+    ++	opts.action = REPLAY_INTERACTIVE_REBASE;
+    + 	sequencer_init_config(&opts);
+    + 	git_config_get_bool("rebase.abbreviatecommands", &abbreviate_commands);
+    + 
+    +-	opts.action = REPLAY_INTERACTIVE_REBASE;
+    + 	opts.allow_ff = 1;
+    + 	opts.allow_empty = 1;
+    + 
+    +
+      diff --git a/builtin/revert.c b/builtin/revert.c
+      --- a/builtin/revert.c
+      +++ b/builtin/revert.c
+    @@ -108,6 +124,18 @@
+      diff --git a/sequencer.c b/sequencer.c
+      --- a/sequencer.c
+      +++ b/sequencer.c
+    +@@
+    + static GIT_PATH_FUNC(rebase_path_strategy_opts, "rebase-merge/strategy_opts")
+    + static GIT_PATH_FUNC(rebase_path_allow_rerere_autoupdate, "rebase-merge/allow_rerere_autoupdate")
+    + 
+    ++static inline int is_rebase_i(const struct replay_opts *opts)
+    ++{
+    ++	return opts->action == REPLAY_INTERACTIVE_REBASE;
+    ++}
+    ++
+    + static int git_sequencer_config(const char *k, const char *v, void *cb)
+    + {
+    + 	struct replay_opts *opts = cb;
+     @@
+      		if (status)
+      			return status;
+    @@ -123,10 +151,22 @@
+     -		else
+     -			warning(_("invalid commit message cleanup mode '%s'"),
+     -				  s);
+    -+		opts->default_msg_cleanup = get_cleanup_mode(s, 1);
+    ++		opts->default_msg_cleanup = get_cleanup_mode(s, !is_rebase_i(opts));
+      
+      		free((char *)s);
+      		return status;
+    +@@
+    + 	git_config(git_sequencer_config, opts);
+    + }
+    + 
+    +-static inline int is_rebase_i(const struct replay_opts *opts)
+    +-{
+    +-	return opts->action == REPLAY_INTERACTIVE_REBASE;
+    +-}
+    +-
+    + static const char *get_dir(const struct replay_opts *opts)
+    + {
+    + 	if (is_rebase_i(opts))
+     @@
+      		die(_("Invalid cleanup mode %s"), cleanup_arg);
+      }
+-:  ---------- > 2:  f3af8000ae sequencer.c: don't die on invalid cleanup_arg
 -- 
 2.21.0.368.gbf248417d7
 
