@@ -2,91 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0668E20248
-	for <e@80x24.org>; Thu,  7 Mar 2019 01:53:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64A7920248
+	for <e@80x24.org>; Thu,  7 Mar 2019 02:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726469AbfCGBxX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 20:53:23 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:38529 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726139AbfCGBxX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 20:53:23 -0500
-Received: by mail-lf1-f68.google.com with SMTP id k136so131774lfg.5
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 17:53:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AZfZTU3z5etlTN8EeeL/pa8/UFuVBVSvtUrzIaJ3tAs=;
-        b=lYBqdMNKlLtAcOaCuqNnA1Tcw+4eUFAp/KIoLbot61rcA+ZWFWcj0i13Bo7qwqwl+L
-         u0g1mBqWVUIWwKSQ/wCM1CulYhkiMwCkiOpw7kIylkluqlo/dVhfGwCtvOoEjK6pstdz
-         zN/UMQf+7eQoLjN0W5JLDfbz4yluoSQFTV5hRhCW6tlhsfRaivV+5aUgux6xul+G5vHd
-         m5OgtbCa7jQMXblXazBl0IuGgM9p6Bhnz3yhxpXg8Eso8wB4bDkKwrN07E6XZFnDqxkH
-         k3cbhKKAGt03cwXfIPPH1C+q52Z59Bfd1QN7TLxwJc7lRBuruqrfIqWL0J7MnSl4H2XL
-         t6Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AZfZTU3z5etlTN8EeeL/pa8/UFuVBVSvtUrzIaJ3tAs=;
-        b=qzzmeG1KTv96NHhXwrEiOY8jGbZZfF6k82AJXfNwpbgwNty+rYpyO1q44vN8qy/mIF
-         5ahesDirmohjq/JoIDn7eIDzBCOIAsSB9kIYYFDWjG+jQ4i1RrsnlR42yMRYaw/Uoytw
-         1n2F6/Dh+75GtsyoiuslYti886ZQp7QDb40eOOkUb5VpFERryBSIZRh6Zi4CSGtHQqxT
-         BFxSpQoK+nTulVEOXmTlcYUWMefN9RJjQlOYbaqXUs4mX0inM209Nf3nnn673umI0M7I
-         hnBbD8HiEQw12vj99BYCV02ci96ilCzXu2geOlQ72E00dCQCFOzdL4lHTENTYH3wkyIM
-         6nRw==
-X-Gm-Message-State: APjAAAVnff6PfD4ejnobKY5VBmtGcz+HrPLS0G9iPSEYhtMdtZMAKFtg
-        y2an3LRZ6JdAoXDuHBVTPjjP7872c6Pu1Y+kiFI=
-X-Google-Smtp-Source: APXvYqzbHmTIiLLBcDNHx1XOmhoqOJ3rHCA+IIDU64OmMx/ZJe1bPYYpcsLWoXqB13uKral4ch1GVGbDWvKUH5Jnshs=
-X-Received: by 2002:ac2:4192:: with SMTP id z18mr5405023lfh.39.1551923601131;
- Wed, 06 Mar 2019 17:53:21 -0800 (PST)
-MIME-Version: 1.0
-References: <20190305154951.4407-1-brandon1024.br@gmail.com> <xmqqy35rpp13.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy35rpp13.fsf@gitster-ct.c.googlers.com>
-From:   Brandon Richardson <brandon1024.br@gmail.com>
-Date:   Wed, 6 Mar 2019 21:52:55 -0400
-Message-ID: <CAETBDP4MUN6pV2-xC=qsxnVynHuexOkU-nYbQ1OWeNGwBt3-Ng@mail.gmail.com>
-Subject: Re: [PATCH v4] commit-tree: utilize parse-options api
+        id S1727233AbfCGC5H (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 21:57:07 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41816 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726597AbfCGC5H (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 21:57:07 -0500
+Received: (qmail 9386 invoked by uid 109); 7 Mar 2019 02:57:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Mar 2019 02:57:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19701 invoked by uid 111); 7 Mar 2019 02:57:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 06 Mar 2019 21:57:23 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Mar 2019 21:57:03 -0500
+Date:   Wed, 6 Mar 2019 21:57:03 -0500
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH] builtin/config.c: don't print a newline with --color
+Message-ID: <20190307025703.GA25656@sigill.intra.peff.net>
+References: <b5ca6391fd0273fb7d6b92bc5ada96df93bc5cf2.1551487219.git.me@ttaylorr.com>
+ <xmqqtvgk69ik.fsf@gitster-ct.c.googlers.com>
+ <20190303174214.GF23811@sigill.intra.peff.net>
+ <xmqqlg1vw9f2.fsf@gitster-ct.c.googlers.com>
+ <xmqqh8cjw7ob.fsf@gitster-ct.c.googlers.com>
+ <20190305042050.GE19800@sigill.intra.peff.net>
+ <xmqqbm2no6by.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbm2no6by.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 6, 2019 at 7:21 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > +When mixing `-m` and `-F` options, the commit log message will be
-> > +composed in the order in which the options are given.
->
-> It may be just me, but this new paragraph made me think that we can
-> give at most one -m and one -F option at the same time in any order,
-> and multiple -m or -F options are not supported.  That, obviously,
-> is not the impression we want to give to the readers.
->
-> Even when you are not mixing -m and -F, but using -m more than once,
-> the log message will be composed in the order in which options are
-> given.  So probably the word "mixing" is the primary culprit of
-> making the sentence easier to be misunderstood.
->
->         When using more than one `-m` or `-F` options, ...
->
-> perhaps.
+On Thu, Mar 07, 2019 at 09:50:57AM +0900, Junio C Hamano wrote:
 
-Good call, 'mixing' is not the right word here. Will fix.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Mostly I was just surprised by the new behavior. Perhaps the right
+> > solution is not a patch to the code, but to the documentation. Something
+> > like:
+> 
+> Let me forge your sign-off and commit this to prevent us from
+> forgetting.
+> 
+> Thanks, all.
 
-> The change to this main function looks quite straight-forward.  I am
-> kind of surprised that a very low hanging fruit like this had survived
-> without getting hit by parseopt a lot earlier ;-)
+Thanks for tying this up. One minor nit:
 
-I was surprised too, commit-tree hasn't seen much love over the years.
-There are certainly others that could benefit from parse-options.
+> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> index 1bfe9f56a7..611a32445c 100644
+> --- a/Documentation/git-config.txt
+> +++ b/Documentation/git-config.txt
+> @@ -240,7 +240,9 @@ Valid `<type>`'s include:
+>  	output.  The optional `default` parameter is used instead, if
+>  	there is no color configured for `name`.
+>  +
+> -`--type=color [--default=<default>]` is preferred over `--get-color`.
+> +`--type=color [--default=<default>]` is preferred over `--get-color`
+> +(but note that `--get-color` will omit the trailing newline printed by
+> +--type=color).
+
+That final line probably should have literal quotes, like:
+
+  `--type=color`).
+
+-Peff
