@@ -2,87 +2,394 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52A6B20248
-	for <e@80x24.org>; Wed,  6 Mar 2019 23:56:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCA1F20248
+	for <e@80x24.org>; Thu,  7 Mar 2019 00:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbfCFX4n (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 18:56:43 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:39065 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbfCFX4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 18:56:42 -0500
-Received: by mail-wm1-f45.google.com with SMTP id z84so7549295wmg.4
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 15:56:41 -0800 (PST)
+        id S1726277AbfCGAFC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 19:05:02 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:37231 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726028AbfCGAFC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 19:05:02 -0500
+Received: by mail-pg1-f195.google.com with SMTP id q206so9729324pgq.4
+        for <git@vger.kernel.org>; Wed, 06 Mar 2019 16:05:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=33wSSqXo6zYmyLGA+kZnNEyd3lJlA/ThKcb692TVRzM=;
-        b=Ub873g3Ja8Q0Jd3r+mXv0p63GQf+vMeumB276Ag9iG/KyS0BgcgA8s7kLJTMasLnGx
-         f6daGKheoUElbIPajKGlEIbwBLQI1iXMKcrPQhIu/bvi1WIwu7P6rzcTXZVGwIRtlke5
-         CCi6l4c7QWZy86LxG31l940Nq46sDjNMJgJmuSjBvCWzlwmiT0urnoCJmJL15OcqWCcO
-         VE5ljRBXkf2GQzWytCSUYLYHW5Go2u+f0gHYWmGqYp4vRESgUtpaIC9cPrSzyB5hY9ki
-         B3mBv7w6dBb0XBh3stzzw7ke4iJ1I3GgxJASUnyQ3ihRFbQuUWs0Rm4zX1aWvV0qZZmm
-         Q8TA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=PGjvEbggZpOeGwojAyDJc4GmJ9wrs6SjuqxfUB+5uC8=;
+        b=sJMqxgIz9xpMHs3jIV5SO/i8w7K95rCMnYrNZJywOw5XvKlOo4LAYvhBVnugS4zkfa
+         wINBeY+cjj/gSSaJzMPlImqu9FhS/uiSDVQwMCSha7aWEd64Il+zZGy1bYFxCheK4yWZ
+         6Dutd5j1dc1UbpDLpcR02aOakeRiw+s3cUJfuDH6L2tuV8bvEMXFFWCWw4ARw3aZoOvm
+         lskzSscfyOSfjH0sVu59u/H8C6pboXKMk+WyXMpLpsJBxz4Q5yO3ESUpwtn+9m29F5qQ
+         vWYAqx+KN/k1WcQHlU2TGrWDmP/6MAfPs7bk/yAeA9A5OxM3phSOekB+mfFIo5cCs2rI
+         soqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=33wSSqXo6zYmyLGA+kZnNEyd3lJlA/ThKcb692TVRzM=;
-        b=gH+0Xw/HSo7tXMKYGA/EgQgcrXl/YS1CMC1wjkgk4WwLB/WllQmK8fktdQriZo77wn
-         ISs+R9JivDxWVd97MX5QryrdnTXxUGA6/1nBHAPLfprHF+ZgnkQkdRdQPiZqSifEdIt4
-         y8SSwNe25b2XHzLJzmIRYKFdIjAIdeK2fPjUjWlMNTfTvV5L0HvIntxKtD32kZW+W5SI
-         f2jE5YzIXd4E7YHoy37xTxGJv5Tq+J7A+gssOLgXgsp4An7k+Z4mSO/YGlWVnYK8xLEy
-         P9+baOjmlsZ838j8sjJoGXpFWh2Iie1ijGU4LGGirkRq6t9aEw7XF2zZdooE5OE2Gks8
-         E1LA==
-X-Gm-Message-State: APjAAAV1eCwbdacgSteQj8IK7KCBB2mQtdN4fLkGjI7AQ/nV3FYhMyPX
-        LncVq8/akWzJrO8X2/thH3JCXCF4TkE=
-X-Google-Smtp-Source: APXvYqx9C37jbR9SXCns+neY9DU6E+NI8as+i7fSpEJNoEG0JrG2evlArFrg7/Tcy3vmtmNn93usTg==
-X-Received: by 2002:a7b:c08a:: with SMTP id r10mr3762535wmh.112.1551916600642;
-        Wed, 06 Mar 2019 15:56:40 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v6sm5648297wme.24.2019.03.06.15.56.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Mar 2019 15:56:39 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: ps/stash-in-c, was Re: What's cooking in git.git (Mar 2019, #01; Wed, 6)
-References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1903061441200.41@tvgsbejvaqbjf.bet>
-Date:   Thu, 07 Mar 2019 08:56:39 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1903061441200.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 6 Mar 2019 14:41:46 +0100 (STD)")
-Message-ID: <xmqq4l8fpnew.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PGjvEbggZpOeGwojAyDJc4GmJ9wrs6SjuqxfUB+5uC8=;
+        b=IazW9JJTJgPSGMWVNwewJlHdeHHZIuBfeIt6tPfGVelZZZ/aDwqBkx8nI672CbY87V
+         LdEHAJg7UVClFAYkLdZZP+/7v/VsyVlpptJqi8tXvzdTRxG4aZ/C9YB7dEK28V9eXr+l
+         bE8MmO4608S498fDzoWcBxSmVolHQa+TQ6uZtdlLqRzRrUqCv3MVhM3rX14Bbyy9fhRs
+         I7wfYI2gYYSX7FvvpE/8vrZCXDfOITDPCoB9IfpRE+fJw/KnP97xaOKltmhFDVSZpzv7
+         kacLVWXeeHQwKKOpaYr4Eu7NvyDMqnKnrPveT/GBMY++2Q4FdOxOwtHK9y0KYCKlqeuz
+         jVpQ==
+X-Gm-Message-State: APjAAAVEvcLkRiC4uZegok12AuOuhhRYoswbMIYLFU7hse96GraLjcJ1
+        bpTypRZ//52atMivMDIInWI=
+X-Google-Smtp-Source: APXvYqyx+6Hc9dxxHe6B12Sy2pRaIsRBqypsPnT7F+xxnuCSlGkHTGxUf5XjatGIbNjvnnhtooD9rw==
+X-Received: by 2002:a65:5bc9:: with SMTP id o9mr8674748pgr.42.1551917100073;
+        Wed, 06 Mar 2019 16:05:00 -0800 (PST)
+Received: from dev-l ([149.28.200.39])
+        by smtp.gmail.com with ESMTPSA id 73sm3590168pga.19.2019.03.06.16.04.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Mar 2019 16:04:59 -0800 (PST)
+Date:   Wed, 6 Mar 2019 16:04:57 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 2/2] cherry-pick/revert: add scissors line on merge
+ conflict
+Message-ID: <20190307000457.GA24933@dev-l>
+References: <cover.1551867827.git.liu.denton@gmail.com>
+ <70a508ca0b2d837b311afefcc2b0ffb6cfbd34fb.1551867827.git.liu.denton@gmail.com>
+ <1fa469d7-76ef-36b5-9688-43853fa2b2ee@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1fa469d7-76ef-36b5-9688-43853fa2b2ee@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Phillip,
 
-> Hi Junio,
->
-> On Wed, 6 Mar 2019, Junio C Hamano wrote:
->
->> * ps/stash-in-c (2019-03-01) 28 commits
->> ...
->> 
->>  "git stash" rewritten in C.
->> 
->>  Will merge to 'next'.
->
-> Yes, yes, yes!
->
-> Thank you so much!
+On Wed, Mar 06, 2019 at 04:29:20PM +0000, Phillip Wood wrote:
+> Hi Denton
+> 
+> On 06/03/2019 10:30, Denton Liu wrote:
+> >Fix a bug where the scissors line is placed after the Conflicts:
+> >section, in the case where a merge conflict occurs and
+> >commit.cleanup = scissors.
+> 
+> Was that the case with cherry-pick and revert as well as merge, or were they
+> missing the scissors line entirely as the subject line suggests?
+> 
+> >Note that the removal of the if-else tower in git_sequencer_config may
+> >appear to be a no-op refactor but it actually isn't. First of all, we
+> >now accept "default" as a configuration option and also we die on an
+> >invalid cleanup mode. Most importantly, though, if
+> >commit.cleanup = scissors, the cleanup enum will be set to
+> >COMMIT_MSG_CLEANUP_SCISSORS instead of COMMIT_MSG_CLEANUP_SPACE. This
+> >allows us to append scissors to MERGE_MSG in the case of a conflict.
+> 
+> I've got some comments about this change below
+> 
+> >Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> >---
+> >  Documentation/git-cherry-pick.txt |  7 +++
+> >  Documentation/git-revert.txt      |  7 +++
+> >  builtin/merge.c                   | 13 ++---
+> >  builtin/revert.c                  |  5 ++
+> >  sequencer.c                       | 22 ++++----
+> >  sequencer.h                       |  3 +-
+> >  t/t3507-cherry-pick-conflict.sh   | 88 +++++++++++++++++++++++++++++++
+> >  7 files changed, 121 insertions(+), 24 deletions(-)
+> >
+> >diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+> >index d35d771fc8..5c086d78c8 100644
+> >--- a/Documentation/git-cherry-pick.txt
+> >+++ b/Documentation/git-cherry-pick.txt
+> >@@ -57,6 +57,13 @@ OPTIONS
+> >  	With this option, 'git cherry-pick' will let you edit the commit
+> >  	message prior to committing.
+> >+--cleanup=<mode>::
+> >+	This option determines how the commit message will be cleaned up before
+> >+	being passed on. See linkgit:git-commit[1] for more details. In
+> >+	addition, if the '<mode>' is given a value of `scissors`, scissors will
+> >+	be prepended to MERGE_MSG before being passed on in the case of a
+> >+	conflict.
+> >+
+> >  -x::
+> >  	When recording the commit, append a line that says
+> >  	"(cherry picked from commit ...)" to the original commit
+> >diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+> >index 837707a8fd..1894010e60 100644
+> >--- a/Documentation/git-revert.txt
+> >+++ b/Documentation/git-revert.txt
+> >@@ -66,6 +66,13 @@ more details.
+> >  	With this option, 'git revert' will not start the commit
+> >  	message editor.
+> >+--cleanup=<mode>::
+> >+	This option determines how the commit message will be cleaned up before
+> >+	being passed on. See linkgit:git-commit[1] for more details. In
+> >+	addition, if the '<mode>' is given a value of `scissors`, scissors will
+> >+	be prepended to MERGE_MSG before being passed on in the case of a
+> >+	conflict.
+> >+
+> >  -n::
+> >  --no-commit::
+> >  	Usually the command automatically creates some commits with
+> >diff --git a/builtin/merge.c b/builtin/merge.c
+> >index 92efc3d8fa..d4217ebcf5 100644
+> >--- a/builtin/merge.c
+> >+++ b/builtin/merge.c
+> >@@ -913,17 +913,10 @@ static int suggest_conflicts(void)
+> >  	 * We can't use cleanup_mode because if we're not using the editor,
+> >  	 * get_cleanup_mode will return COMMIT_MSG_CLEANUP_SPACE instead, even
+> >  	 * though the message is meant to be processed later by git-commit.
+> >-	 * Thus, we will get the cleanup mode is returned we _are_ using an
+> >-	 * editor.
+> >+	 * Thus, we will get the cleanup mode which is returned when we _are_ using
+> >+	 * an editor.
+> >  	 */
+> >-	if (get_cleanup_mode(cleanup_arg, 1) == COMMIT_MSG_CLEANUP_SCISSORS) {
+> >-	    fputc('\n', fp);
+> >-	    wt_status_add_cut_line(fp);
+> >-	    /* comments out the newline from append_conflicts_hint */
+> >-	    fputc(comment_line_char, fp);
+> >-	}
+> >-
+> >-	append_conflicts_hint(&msgbuf);
+> >+	append_conflicts_hint(&msgbuf, get_cleanup_mode(cleanup_arg, 1));
+> >  	fputs(msgbuf.buf, fp);
+> >  	strbuf_release(&msgbuf);
+> >  	fclose(fp);
+> >diff --git a/builtin/revert.c b/builtin/revert.c
+> >index 9a66720cfc..fe18036be7 100644
+> >--- a/builtin/revert.c
+> >+++ b/builtin/revert.c
+> >@@ -95,11 +95,13 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+> >  {
+> >  	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
+> >  	const char *me = action_name(opts);
+> >+	const char *cleanup_arg = NULL;
+> >  	int cmd = 0;
+> >  	struct option base_options[] = {
+> >  		OPT_CMDMODE(0, "quit", &cmd, N_("end revert or cherry-pick sequence"), 'q'),
+> >  		OPT_CMDMODE(0, "continue", &cmd, N_("resume revert or cherry-pick sequence"), 'c'),
+> >  		OPT_CMDMODE(0, "abort", &cmd, N_("cancel revert or cherry-pick sequence"), 'a'),
+> >+		OPT_STRING(0, "cleanup", &cleanup_arg, N_("default"), N_("how to strip spaces and #comments from message")),
+> >  		OPT_BOOL('n', "no-commit", &opts->no_commit, N_("don't automatically commit")),
+> >  		OPT_BOOL('e', "edit", &opts->edit, N_("edit the commit message")),
+> >  		OPT_NOOP_NOARG('r', NULL),
+> >@@ -136,6 +138,9 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+> >  	if (opts->keep_redundant_commits)
+> >  		opts->allow_empty = 1;
+> >+	if (cleanup_arg)
+> >+		opts->default_msg_cleanup = get_cleanup_mode(cleanup_arg, 1);
+> >+
+> >  	/* Check for incompatible command line arguments */
+> >  	if (cmd) {
+> >  		char *this_operation;
+> >diff --git a/sequencer.c b/sequencer.c
+> >index 707e72fb39..85ad58555d 100644
+> >--- a/sequencer.c
+> >+++ b/sequencer.c
+> >@@ -165,17 +165,7 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
+> >  		if (status)
+> >  			return status;
+> >-		if (!strcmp(s, "verbatim"))
+> >-			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_NONE;
+> >-		else if (!strcmp(s, "whitespace"))
+> >-			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
+> >-		else if (!strcmp(s, "strip"))
+> >-			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_ALL;
+> >-		else if (!strcmp(s, "scissors"))
+> >-			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
+> >-		else
+> >-			warning(_("invalid commit message cleanup mode '%s'"),
+> >-				  s);
+> >+		opts->default_msg_cleanup = get_cleanup_mode(s, 1);
+> 
+> If we're rebasing then I'm not sure we want to pass 1 here, we won't be
+> using an editor unless the user is rewording a commit message. Also I'm not
+> clear about the implications of changing the cleanup mode for scissors -
+> will whitespace and comments still be cleaned up?
 
-Not "me", but all those who worked on whipping the topic into shape
-;-)
+I believe that rebase -i should be safe with the change but to be sure,
+I'll change the line to read:
+
+	opts->default_msg_cleanup = get_cleanup_mode(s, !is_rebase_i(opts));
+
+(Note to self, this will require a change in rebase--helper.c too.)
+
+> I'm not terribly happy with the idea that this will now die while reading
+> the config file if there's on invalid cleanup option. If you really want to
+> enforce a valid value then it would be better to return an error from
+> get_cleanup_mode().
+
+The reason why I made it die was because I wanted to reuse that function
+as much as possible and it already happened to be implemented that way.
+However, there is prescedent in the code for dieing on invalid
+configuration options, namely in date.c:
+
+	if (mode->type == DATE_STRFTIME) {
+		if (!skip_prefix(p, ":", &p))
+			die("date format missing colon separator: %s", format);
+		mode->strftime_fmt = xstrdup(p);
+	} else if (*p)
+		die("unknown date format %s", format);
+
+That being said, I'm pretty ambivalent between making it a warning and a
+die. If you have any strong opinions on this, I can change it to a
+warning.
+
+Thanks,
+
+Denton
+
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+> >  		free((char *)s);
+> >  		return status;
+> >@@ -516,10 +506,16 @@ enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
+> >  		die(_("Invalid cleanup mode %s"), cleanup_arg);
+> >  }
+> >-void append_conflicts_hint(struct strbuf *msgbuf)
+> >+void append_conflicts_hint(struct strbuf *msgbuf, enum commit_msg_cleanup_mode cleanup_mode)
+> >  {
+> >  	int i;
+> >+	if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS) {
+> >+		strbuf_addch(msgbuf, '\n');
+> >+		wt_status_append_cut_line(msgbuf);
+> >+		strbuf_addch(msgbuf, comment_line_char);
+> >+	}
+> >+
+> >  	strbuf_addch(msgbuf, '\n');
+> >  	strbuf_commented_addf(msgbuf, "Conflicts:\n");
+> >  	for (i = 0; i < active_nr;) {
+> >@@ -586,7 +582,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+> >  			_(action_name(opts)));
+> >  	if (!clean)
+> >-		append_conflicts_hint(msgbuf);
+> >+		append_conflicts_hint(msgbuf, opts->default_msg_cleanup);
+> >  	return !clean;
+> >  }
+> >diff --git a/sequencer.h b/sequencer.h
+> >index 5690e0c27e..aa99503dd7 100644
+> >--- a/sequencer.h
+> >+++ b/sequencer.h
+> >@@ -91,7 +91,8 @@ int rearrange_squash(void);
+> >  extern const char sign_off_header[];
+> >  void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
+> >-void append_conflicts_hint(struct strbuf *msgbuf);
+> >+void append_conflicts_hint(struct strbuf *msgbuf,
+> >+		enum commit_msg_cleanup_mode cleanup_mode);
+> >  enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
+> >  	int use_editor);
+> >diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
+> >index 74ff925526..c94e44dad0 100755
+> >--- a/t/t3507-cherry-pick-conflict.sh
+> >+++ b/t/t3507-cherry-pick-conflict.sh
+> >@@ -189,6 +189,48 @@ test_expect_success 'failed cherry-pick registers participants in index' '
+> >  	test_cmp expected actual
+> >  '
+> >+test_expect_success \
+> >+	'cherry-pick conflict, ensure commit.cleanup = scissors places scissors line properly' '
+> >+	pristine_detach initial &&
+> >+	git config commit.cleanup scissors &&
+> >+	cat <<-EOF >expected &&
+> >+		picked
+> >+
+> >+		# ------------------------ >8 ------------------------
+> >+		# Do not modify or remove the line above.
+> >+		# Everything below it will be ignored.
+> >+		#
+> >+		# Conflicts:
+> >+		#	foo
+> >+		EOF
+> >+
+> >+	test_must_fail git cherry-pick picked &&
+> >+
+> >+	sed "s/[a-f0-9]\{40\}/objid/" .git/MERGE_MSG >actual &&
+> >+	test_i18ncmp expected actual
+> >+'
+> >+
+> >+test_expect_success \
+> >+	'cherry-pick conflict, ensure cleanup=scissors places scissors line properly' '
+> >+	pristine_detach initial &&
+> >+	git config --unset commit.cleanup &&
+> >+	cat <<-EOF >expected &&
+> >+		picked
+> >+
+> >+		# ------------------------ >8 ------------------------
+> >+		# Do not modify or remove the line above.
+> >+		# Everything below it will be ignored.
+> >+		#
+> >+		# Conflicts:
+> >+		#	foo
+> >+		EOF
+> >+
+> >+	test_must_fail git cherry-pick --cleanup=scissors picked &&
+> >+
+> >+	sed "s/[a-f0-9]\{40\}/objid/" .git/MERGE_MSG >actual &&
+> >+	test_i18ncmp expected actual
+> >+'
+> >+
+> >  test_expect_success 'failed cherry-pick describes conflict in work tree' '
+> >  	pristine_detach initial &&
+> >  	cat <<-EOF >expected &&
+> >@@ -335,6 +377,52 @@ test_expect_success 'revert conflict, diff3 -m style' '
+> >  	test_cmp expected actual
+> >  '
+> >+test_expect_success \
+> >+	'revert conflict, ensure commit.cleanup = scissors places scissors line properly' '
+> >+	pristine_detach initial &&
+> >+	git config commit.cleanup scissors &&
+> >+	cat >expected <<-EOF &&
+> >+		Revert "picked"
+> >+
+> >+		This reverts commit objid.
+> >+
+> >+		# ------------------------ >8 ------------------------
+> >+		# Do not modify or remove the line above.
+> >+		# Everything below it will be ignored.
+> >+		#
+> >+		# Conflicts:
+> >+		#	foo
+> >+		EOF
+> >+
+> >+	test_must_fail git revert picked &&
+> >+
+> >+	sed "s/[a-f0-9]\{40\}/objid/" .git/MERGE_MSG >actual &&
+> >+	test_i18ncmp expected actual
+> >+'
+> >+
+> >+test_expect_success \
+> >+	'revert conflict, ensure cleanup=scissors places scissors line properly' '
+> >+	pristine_detach initial &&
+> >+	git config --unset commit.cleanup &&
+> >+	cat >expected <<-EOF &&
+> >+		Revert "picked"
+> >+
+> >+		This reverts commit objid.
+> >+
+> >+		# ------------------------ >8 ------------------------
+> >+		# Do not modify or remove the line above.
+> >+		# Everything below it will be ignored.
+> >+		#
+> >+		# Conflicts:
+> >+		#	foo
+> >+		EOF
+> >+
+> >+	test_must_fail git revert --cleanup=scissors picked &&
+> >+
+> >+	sed "s/[a-f0-9]\{40\}/objid/" .git/MERGE_MSG >actual &&
+> >+	test_i18ncmp expected actual
+> >+'
+> >+
+> >  test_expect_success 'failed cherry-pick does not forget -s' '
+> >  	pristine_detach initial &&
+> >  	test_must_fail git cherry-pick -s picked &&
+> >
