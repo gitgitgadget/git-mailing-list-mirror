@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 231BF20248
-	for <e@80x24.org>; Thu,  7 Mar 2019 19:45:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCCBF20248
+	for <e@80x24.org>; Thu,  7 Mar 2019 19:57:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726297AbfCGTpR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 14:45:17 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43028 "HELO cloud.peff.net"
+        id S1726248AbfCGT47 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 14:56:59 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43056 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726207AbfCGTpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 14:45:17 -0500
-Received: (qmail 6322 invoked by uid 109); 7 Mar 2019 19:45:17 -0000
+        id S1726200AbfCGT47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 14:56:59 -0500
+Received: (qmail 6791 invoked by uid 109); 7 Mar 2019 19:56:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Mar 2019 19:45:17 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Mar 2019 19:56:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27018 invoked by uid 111); 7 Mar 2019 19:45:34 -0000
+Received: (qmail 27170 invoked by uid 111); 7 Mar 2019 19:57:16 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 07 Mar 2019 14:45:34 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 07 Mar 2019 14:57:16 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Mar 2019 14:45:15 -0500
-Date:   Thu, 7 Mar 2019 14:45:15 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Mar 2019 14:56:57 -0500
+Date:   Thu, 7 Mar 2019 14:56:57 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] line-log: suppress diff output with "-s"
-Message-ID: <20190307194514.GA29260@sigill.intra.peff.net>
+Cc:     Joey Hess <id@joeyh.name>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] convert: avoid malloc of original file size
+Message-ID: <20190307195657.GA29776@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
@@ -38,60 +38,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When "-L" is in use, we ignore any diff output format that the user
-provides to us, and just always print a patch (with extra context lines
-covering the whole area of interest). It's not entirely clear what we
-should do with all formats (e.g., should "--stat" show just the diffstat
-of the touched lines, or the stat for the whole file?).
+From: Joey Hess <id@joeyh.name>
 
-But "-s" is pretty clear: the user probably wants to see just the
-commits that touched those lines, without any diff at all. Let's at
-least make that work.
+We write the output of a "clean" filter into a strbuf. Rather than
+growing the strbuf dynamically as we read its output, we make the
+initial allocation as large as the original input file. This is a good
+guess when the filter is just tweaking a few bytes, but it's disastrous
+when the point of the filter is to condense a very large file into a
+short identifier (e.g., the way git-lfs and git-annex do). We may ask to
+allocate many gigabytes, causing the allocation to fail and Git to
+die().
 
+Instead, let's just let strbuf do its usual growth.
+
+When the clean filter does output something around the same size as the
+worktree file, the buffer will need to be reallocated until it fits,
+starting at 8192 and doubling in size. Benchmarking indicates that
+reallocation is not a significant overhead for outputs up to a
+few MB in size.
+
+Signed-off-by: Joey Hess <id@joeyh.name>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This is a repost from the thread at:
+This is a resurrection of the patch from:
 
-  https://public-inbox.org/git/CAEkQehdFu5zM4AY3ihN0pn1aCNEomY0WV07pryfAB45JN-tDDA@mail.gmail.com/
+  https://public-inbox.org/git/20190122220714.GA6176@kitenet.net/
 
- line-log.c          | 6 ++++--
- t/t4211-line-log.sh | 7 +++++++
- 2 files changed, 11 insertions(+), 2 deletions(-)
+It got stalled on discussion of the commit message, which I've rewritten
+here to match the suggestions in the thread.
 
-diff --git a/line-log.c b/line-log.c
-index 24e21731c4..59248e37cc 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1103,10 +1103,12 @@ static int process_all_files(struct line_log_data **range_out,
+As discussed there, I do think this only solves half the problem, as the
+smudge filter has the same issue in reverse. That's more complicated to
+fix, and AFAIK nobody is working on it. But I don't think there's any
+reason not to pick up this part in the meantime.
+
+ convert.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/convert.c b/convert.c
+index 5d0307fc10..94ff837649 100644
+--- a/convert.c
++++ b/convert.c
+@@ -731,7 +731,7 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
+ 	if (start_async(&async))
+ 		return 0;	/* error was already reported */
  
- int line_log_print(struct rev_info *rev, struct commit *commit)
- {
--	struct line_log_data *range = lookup_line_range(rev, commit);
- 
- 	show_log(rev);
--	dump_diff_hacky(rev, range);
-+	if (!(rev->diffopt.output_format & DIFF_FORMAT_NO_OUTPUT)) {
-+		struct line_log_data *range = lookup_line_range(rev, commit);
-+		dump_diff_hacky(rev, range);
-+	}
- 	return 1;
- }
- 
-diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
-index bd5fe4d148..c9f2036f68 100755
---- a/t/t4211-line-log.sh
-+++ b/t/t4211-line-log.sh
-@@ -115,4 +115,11 @@ test_expect_success 'range_set_union' '
- 	git log $(for x in $(test_seq 200); do echo -L $((2*x)),+1:c.c; done)
- '
- 
-+test_expect_success '-s shows only line-log commits' '
-+	git log --format="commit %s" -L1,24:b.c >expect.raw &&
-+	grep ^commit expect.raw >expect &&
-+	git log --format="commit %s" -L1,24:b.c -s >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+-	if (strbuf_read(&nbuf, async.out, len) < 0) {
++	if (strbuf_read(&nbuf, async.out, 0) < 0) {
+ 		err = error(_("read from external filter '%s' failed"), cmd);
+ 	}
+ 	if (close(async.out)) {
 -- 
 2.21.0.787.g929e938557
