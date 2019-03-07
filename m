@@ -2,88 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84AC1202BB
-	for <e@80x24.org>; Thu,  7 Mar 2019 08:45:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C50520248
+	for <e@80x24.org>; Thu,  7 Mar 2019 09:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726102AbfCGIpd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 03:45:33 -0500
-Received: from smtpout25.ngs.ru ([195.19.71.8]:39787 "EHLO smtpout.ngs.ru"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725747AbfCGIpd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 03:45:33 -0500
-X-Greylist: delayed 653 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Mar 2019 03:45:30 EST
-Received: from smtpout.ngs.ru (postfix_iface [172.16.113.66])
-        by mc-spool1.in.ngs.ru (fallback) with ESMTP id 3915E187410
-        for <git@vger.kernel.org>; Thu,  7 Mar 2019 15:34:38 +0700 (+07)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ngs.ru; s=mail1;
-        t=1551947668; bh=R8N0Vd33BVi7pfe38fWeFMDYcY7cDztMqD4x0C+1Q10=;
-        l=595;
-        h=From:Subject:To:Date:Message-ID:MIME-Version:Content-Type:
-         Content-Transfer-Encoding;
-        b=PRDgRUuWEQ4s9UETCfv6ROvZk9tm9xLY0gkRvISDUcDn8Rps/diTXK9/KD9pl1Xk/
-         JMDwfYh5EhHOqHzEFbH5m4wAlsizp/FpQjqcAg1IEU9pXb3gd1YW4N0fM4itFmwomf
-         F3zhD9JX0gyt5OFLRoJiM0dGYy8CjQr61naULjWU=
-Received: from [192.162.88.2] (account __vic@ngs.ru)
-        by mx30.intranet.ru with HTTP id 53867248 for git@vger.kernel.org; Thu, 07 Mar 2019 15:34:27 +0700      
-From:   "Victor" <__vic@ngs.ru>
-Subject: Strange behaviour of git log --follow
-To:     git@vger.kernel.org
-Date:   Thu, 07 Mar 2019 11:34:27 +0300
-Message-ID: <web-53867248@mx30.intranet.ru>
+        id S1726131AbfCGJTJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 04:19:09 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:40261 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbfCGJTI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 04:19:08 -0500
+Received: by mail-pg1-f195.google.com with SMTP id u9so10778408pgo.7
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 01:19:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/PywHpKWj8zRhQqC3duMdjPj466ERRJmbb8tAVyBD7s=;
+        b=gtINhX7bRngMvBfok30LmOQYmM5vAqusgY1tHo+HemYDo0BjwgMNH6da6iQme2n2AS
+         GjzbR3/uNnOTFHBQnvQhv/gvPLx8SxlSiIbUq15aDTnQAKXLJsTzeghxVDJgfk//pDhK
+         7DAt543pxGcJKhZ+6SH3tHrI9/jepbDn07d/sFJHItrma+RdwdiMriZM4dwtM6CBji5m
+         SpwH6KRV6kXhW1DfsjNNGppxcD5vWTOhBbz+TECS8FdLAosA1Q2LZGXP4mrnqrFjmhoW
+         rq0Hd0JfSe2KC09ZHeD2M6gAfI5YRsi4yDsU+GhLGSbKBoh/HhA9+HbHWAcrIl6MBgrN
+         k+7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/PywHpKWj8zRhQqC3duMdjPj466ERRJmbb8tAVyBD7s=;
+        b=dSH/FA+ASMNHz7aOgyoiuqtnmOOCnh0dx32niuoJKp0Ccr3MM4KWhyxlTuWN5BeVo+
+         Sgv/4DhYKTaZJ8Nsc6EPAPRV3xaRlSfM9TUjUaycM55EUTtfuyPUqgfJ/gBPfd8+qnIr
+         +GDqBaOYLRuRx0Su3bG2bMvL7+GZeL7QLPpUtYJJRg66Q3G2Y3Kud1K8uQlUbfxgMEuj
+         pZQBX2zd8Fj+9+POEwCOzafzfMPZstO0xdtdCMZmJX5XvdGBM2nvS2cr0sehrrrAvZ8D
+         Sf3/jEpVIReXbnIabj+Y8/TsZ52bICDrScXMVMdFTeALuHBdT/9IPsNMuJ1BqKMaxcOb
+         dZCg==
+X-Gm-Message-State: APjAAAWMJ1YZu/jRgtBalnp6Cw15B1uCBl7t/a46RVYPeuo6yTRk4SuZ
+        vkbgadcgGVKi5n+lG0QZfQE=
+X-Google-Smtp-Source: APXvYqxxl1nu+JRgTExwp9TdAP4iPSgWYP5jQ2+KMNWLbyD0mZMD7BWlIYRbSi6DyP3MVfAX0UjJBQ==
+X-Received: by 2002:a17:902:9a09:: with SMTP id v9mr11528332plp.225.1551950347535;
+        Thu, 07 Mar 2019 01:19:07 -0800 (PST)
+Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
+        by smtp.gmail.com with ESMTPSA id l72sm5218623pge.39.2019.03.07.01.19.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 07 Mar 2019 01:19:05 -0800 (PST)
+Date:   Thu, 7 Mar 2019 01:19:03 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 2/3] cherry-pick/revert: add scissors line on merge
+ conflict
+Message-ID: <20190307091903.GA7970@archbookpro.localdomain>
+References: <cover.1551867827.git.liu.denton@gmail.com>
+ <cover.1551940635.git.liu.denton@gmail.com>
+ <8fdc5bfb151e4224eba01021c6f0be3e61e1f535.1551940635.git.liu.denton@gmail.com>
+ <xmqqa7i7m886.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="KOI8-R"; format="flowed"
-Content-Transfer-Encoding: 8bit
-X-KLMS-Rule-ID: 1
-X-KLMS-Message-Action: clean
-X-KLMS-AntiSpam-Lua-Profiles: 136597 [Mar 07 2019]
-X-KLMS-AntiSpam-Version: 5.8.6.0
-X-KLMS-AntiSpam-Envelope-From: __vic@ngs.ru
-X-KLMS-AntiSpam-Rate: 0
-X-KLMS-AntiSpam-Status: not_detected
-X-KLMS-AntiSpam-Method: none
-X-KLMS-AntiSpam-Info: LuaCore: 246 246 98f1ad12ad1c8b7e9e8cf47c7fca9f23065dbd7d, {Tracking_text_let_digits}, mx14.intranet.ru:7.1.1;mx30.intranet.ru:7.1.1;github.com:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;192.162.88.2:7.1.2;127.0.0.199:7.1.2;ngs.ru:7.1.1, Auth:dkim=none
-X-KLMS-AntiSpam-Interceptor-Info: scan successful
-X-KLMS-AntiPhishing: not scanned, disabled by settings
-X-KLMS-AntiVirus: Kaspersky Security 8.0 for Linux Mail Server, version 8.0.1.705, not scanned, license restriction
-X-Spamd-Result: default: False [0.00 / 13.00]
- R_SPF_ALLOW(0.00)
- R_DKIM_ALLOW(0.00)
-X-Spamd-Server: localhost
-X-Spamd-Scan-Time: 0.21
-X-Spamd-Queue-ID: DE71718466A
-X-Virus-Scanned: clamav-milter 0.98.6 at mc-filter2
-X-Virus-Status: Clean
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa7i7m886.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello.
+Hi Junio,
 
-$ git log include/__vic/mutex.h
-commit 9429293f8f8fb0819c77cf1f723567f6edc8fb6a
-Merge: 96dd9a2 f484f4e
-Author: __vic <__vic@ngs.ru>
-Date:   2017-12-13 10:41:32 +0300
+On Thu, Mar 07, 2019 at 04:52:57PM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> > diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+> > index d35d771fc8..5c086d78c8 100644
+> > diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+> > index 837707a8fd..1894010e60 100644
+> > --- a/Documentation/git-revert.txt
+> > +++ b/Documentation/git-revert.txt
+> > @@ -66,6 +66,13 @@ more details.
+> >  	With this option, 'git revert' will not start the commit
+> >  	message editor.
+> >  
+> > +--cleanup=<mode>::
+> > +	This option determines how the commit message will be cleaned up before
+> > +	being passed on. See linkgit:git-commit[1] for more details. In
+> > +	addition, if the '<mode>' is given a value of `scissors`, scissors will
+> > +	be prepended to MERGE_MSG before being passed on in the case of a
+> > +	conflict.
+> 
+> These both say "prepended", but shouldn't the code
+> 
+>  - add the merge message proper, with the expectation that it would
+>    be used more or less intact in the final commit message; then
+> 
+>  - add the scissors; then
+> 
+>  - append informative cruft that would be removed, only to help
+>    human users.
+> 
+> in this order?  I'd expect that most people would consider that the
+> primary payload of MERGE_MSG file is the part that would become the
+> commit message, so I would have expected the second step would be
+> described as "appended to".
 
-     Merge branch 'generic' into posix
+I copied this over from 6f06b6aeef (merge: add scissors line on merge
+conflict, 2019-01-22). I guess I'll have to fix it up in git-merge too.
 
-commit f484f4e8aae32041ba56bdce12d1efd8491e94d5
-Merge: 86b848a b9bbbe6
-Author: __vic <__vic@ngs.ru>
-Date:   2017-12-12 17:35:10 +0300
+> 
+> Another thing I notice is that this singles out "scissors" mode;
+> doesn't the code do anything worth describing with other clean-up
+> modes?
 
-     waitable_event, thread, mutex
-$ git log --follow include/__vic/mutex.h
-$
-
-Why --follow makes git produce truncated history for file 
-that wasn't renamed?
-
-My repository is available here 
-https://github.com/2underscores-vic/__vic
+The revert/cherry-pick code doesn't really do anything with the cleanup
+mode. It's only used to determine whether to generate the scissors line
+in the case of a conflict.
