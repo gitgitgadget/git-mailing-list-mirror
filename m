@@ -7,132 +7,87 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 681CF20248
-	for <e@80x24.org>; Thu,  7 Mar 2019 15:29:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3E7520248
+	for <e@80x24.org>; Thu,  7 Mar 2019 15:29:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726651AbfCGP3i (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 10:29:38 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:34664 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbfCGP3g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 10:29:36 -0500
-Received: by mail-ed1-f66.google.com with SMTP id a16so13824829edn.1
-        for <git@vger.kernel.org>; Thu, 07 Mar 2019 07:29:35 -0800 (PST)
+        id S1726640AbfCGP3e (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 10:29:34 -0500
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:34979 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726294AbfCGP3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 10:29:34 -0500
+Received: by mail-ed1-f41.google.com with SMTP id g19so13828446edp.2
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 07:29:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=OtPzacZEjWNwoQSECuh/B3fJGeYirN/gaWA0giiF204=;
-        b=Ovy6sAy8Wg9x9Tdxuuh3OagURcMTKsIIbel5YhO+igoUIXvV/6DupoBrRl85mnsvw3
-         vFJ1UOzrkmQRgPmceyyE9b5kXfLWEePNo4IavGLvnVUdraw6F7okLVYbNNT8aBdxaybc
-         zEOaUqBo3z1pxOD7UjSwrfHr2ssz3GZB7J9kVSivWOrx1jS0oKcAlA+6FW275AyomqHB
-         ROXHv0p7kFqcF4ZOmxJ4+DqPyjBLxobB5+nTSZKgEl0DJY4KQDK/6bYdf6HLt7IkOhKj
-         8W5thKjF5XY+yxQJw8NQlnshoBqzGQAOwjtyTKqt/DeSE1iQ73MUJEDxzX7OJQcMjd70
-         xbzA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=ko7c2mJYq1DUpxj1IWTCgRbewR/Ufn0VYIv2RGwmmPc=;
+        b=e9TVnj4gfGEtUWF2aNdWrPgV5khK/Ty3B7HoAmPLBfPuK9yiDHAxKYpQPhUd8nzpS7
+         OOqDHA0LMkM81TviDgBIEKqu9xONTAOCOS1XV2tJ4DJhY5rJIgciMGjLWTc5raUSqya7
+         4+YKwOdMHEcMnAvpeSIwYVwyG4VxlPCv+j1ppeMg90KAfiZJodfo0dnRT2wLRqP2Rlbr
+         iguzS6kITN0Q6FK6MvYXnXw2lNQjA+/SyRV71yBOat8f+78wcfosA0b9FrJVjY7N5P/4
+         mhPts6v4Z2oHl5YCxLkcGX2ay67m41f0LzIZRXYWEOvYOykezImL49SRI3JlnnIQtC6l
+         Jrjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OtPzacZEjWNwoQSECuh/B3fJGeYirN/gaWA0giiF204=;
-        b=ICVjjGLvhjieOsQeadszkXTTz3YQb3QbuGsCpw2r90Z8KPl0pCYjV9k2aLlgWKVNl5
-         oviS7bHpytvLa3UlSnYtpCv9lNbpYd2POxHF4ww4LPQ1lBUJXXjuBshRcdbZxyceYRJW
-         zwZS7mKpdng25Id78LFlFQ2z1p3ha5gLvM4y1nyyw0742cGPAP+Zk9RXjgYE5c5XH15F
-         xazfXUuV9w/Tkh1HBSkh9fRH08qqx+c+gGL42oQ0fYneYm/UnUuzVorc8/bZhavzZGrn
-         AlXBdUPDbRUdQoV7QknotoLd4AxxJZ1ksG7gCQs+pj/0Yw7NzkiWK+rNH1LENqorgKlr
-         /ywA==
-X-Gm-Message-State: APjAAAXuKmshN3IAoW8B7QzXjDZydboCDHrJaBosr1ZMrcKpV4ys1tf2
-        LJ0Y8ZziWIlJiWnDio1/j5ZcoDOj
-X-Google-Smtp-Source: APXvYqyjdwfAez5Mwk1H0xDb2ulVHFBXLxrLgTgOXA16ZwjDbgb4HhGHsZeLo17pZu7hi6EYgbg67g==
-X-Received: by 2002:a17:906:90da:: with SMTP id v26mr8402893ejw.146.1551972574324;
-        Thu, 07 Mar 2019 07:29:34 -0800 (PST)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ko7c2mJYq1DUpxj1IWTCgRbewR/Ufn0VYIv2RGwmmPc=;
+        b=Hn/Ta2hzkX3fGXSnyhjFQAvxBqNSZI5V2dJzsL/BogqxXrV1HbzCxcnYLlTwJeYSqa
+         y7r3+g6KwVLEQTCxR1RCYikeBugz9l0S3VNy7uIegxg2VfYD5kBeeiIFMFggNCdOqOAn
+         xOLMhI5ncUI1pg4ucITmVTrKcp4YP/U8uEimP0ClCTuLwanU0CKHfDZNIRY55xewGWMN
+         fOU8xtkDbNpWI830MJhHmAQUn0q16yVFhNnnsGQ4j3/jgNzPthayZfdkXWRaRJf9TKuV
+         gou1nADCH5cxIyn5D+tRJQs4fy0FbblpE/0097jUekR8yUig1H2Z+jaGJYQR90SRuAdT
+         /dNg==
+X-Gm-Message-State: APjAAAUwM9OhGZOsPiFrNHua+JoIeqGgqh9WIrjw9rJ5TtebgETtOTnB
+        O0HtMRubxotpMAOHuyAR3mftxaCU
+X-Google-Smtp-Source: APXvYqzD4aoS3C+9PBVYsqa+Vv5WMP+LYmzJI7q0978C9h8djye0Am8bb/l1IIYPle7YYCtR3EM6xg==
+X-Received: by 2002:a50:9235:: with SMTP id i50mr28193765eda.20.1551972572565;
+        Thu, 07 Mar 2019 07:29:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f5sm941151ejf.25.2019.03.07.07.29.33
+        by smtp.gmail.com with ESMTPSA id 31sm1391540edr.7.2019.03.07.07.29.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Mar 2019 07:29:33 -0800 (PST)
-Date:   Thu, 07 Mar 2019 07:29:33 -0800 (PST)
-X-Google-Original-Date: Thu, 07 Mar 2019 15:29:31 GMT
-Message-Id: <7b5cca61dea4f01f9bcdcb6d5d2a913d58a341d3.1551972571.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.159.git.gitgitgadget@gmail.com>
-References: <pull.159.git.gitgitgadget@gmail.com>
+        Thu, 07 Mar 2019 07:29:32 -0800 (PST)
+Date:   Thu, 07 Mar 2019 07:29:32 -0800 (PST)
+X-Google-Original-Date: Thu, 07 Mar 2019 15:29:29 GMT
+Message-Id: <pull.159.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/2] built-in stash: handle :(glob) pathspecs again
+Subject: [PATCH 0/2] stash: handle pathspec magic again
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+It was reported in https://github.com/git-for-windows/git/issues/2037 that 
+git stash -- ':(glob)**/*.testextension is broken. The problem is not even
+the stash operation itself, it happens when the git add part of dropping the
+local changes is spawned: we simply passed the parsed pathspec instead of
+the unparsed one.
 
-When passing a list of pathspecs to, say, `git add`, we need to be
-careful to use the original form, not the parsed form of the pathspecs.
+While verifying the fix, I also realized that the escape hatch was seriously
+broken by my "backport of the -q option": It introduced four bogus eval 
+statements, which really need to be dropped.
 
-This makes a difference e.g. when calling
+Johannes Schindelin (2):
+  legacy stash: fix "rudimentary backport of -q"
+  built-in stash: handle :(glob) pathspecs again
 
-	git stash -- ':(glob)**/*.txt'
-
-where the original form includes the `:(glob)` prefix while the parsed
-form does not.
-
-However, in the built-in `git stash`, we passed the parsed (i.e.
-incorrect) form, and `git add` would fail with the error message:
-
-	fatal: pathspec '**/*.txt' did not match any files
-
-at the stage where `git stash` drops the changes from the worktree, even
-if `refs/stash` has been actually updated successfully.
-
-This fixes https://github.com/git-for-windows/git/issues/2037
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
  builtin/stash.c                    | 5 +++--
+ git-legacy-stash.sh                | 8 ++++----
  t/t3905-stash-include-untracked.sh | 6 ++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ 3 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 1bfa24030c..2f29d037c8 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -830,7 +830,7 @@ static void add_pathspecs(struct argv_array *args,
- 	int i;
- 
- 	for (i = 0; i < ps.nr; i++)
--		argv_array_push(args, ps.items[i].match);
-+		argv_array_push(args, ps.items[i].original);
- }
- 
- /*
-@@ -1466,7 +1466,8 @@ static int push_stash(int argc, const char **argv, const char *prefix)
- 				     git_stash_push_usage,
- 				     0);
- 
--	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL, prefix, argv);
-+	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL | PATHSPEC_PREFIX_ORIGIN,
-+		       prefix, argv);
- 	return do_push_stash(ps, stash_msg, quiet, keep_index, patch_mode,
- 			     include_untracked);
- }
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
-index cc1c8a7bb2..29ca76f2fb 100755
---- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -283,4 +283,10 @@ test_expect_success 'stash -u -- <non-existant> shows no changes when there are
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success 'stash -u with globs' '
-+	>untracked.txt &&
-+	git stash -u -- ":(glob)**/*.txt" &&
-+	test_path_is_missing untracked.txt
-+'
-+
- test_done
+
+base-commit: 7906af0cb84c8e65656347909abd4e22b04d1c1e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-159%2Fdscho%2Fstash-with-globs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-159/dscho/stash-with-globs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/159
 -- 
 gitgitgadget
