@@ -2,205 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2629D20248
-	for <e@80x24.org>; Thu,  7 Mar 2019 14:45:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 069E720248
+	for <e@80x24.org>; Thu,  7 Mar 2019 14:51:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbfCGOpG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 09:45:06 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55631 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726270AbfCGOpG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 09:45:06 -0500
-Received: by mail-wm1-f68.google.com with SMTP id q187so9588155wme.5
-        for <git@vger.kernel.org>; Thu, 07 Mar 2019 06:45:04 -0800 (PST)
+        id S1726294AbfCGOvi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 09:51:38 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:32905 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726186AbfCGOvh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 09:51:37 -0500
+Received: by mail-io1-f66.google.com with SMTP id b6so200926iog.0
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 06:51:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=SEcWGju+todQ766zHMbOU/AyaJDeGmU+qTTd2Poxl8k=;
-        b=QM4Vu23QWQwJ2gOvASWd9YgrOrF+Xu9r5Vmdq1LCRjWtxSkAE9XYkG0LZ0Oy7v9gZf
-         gZETDMVlA69vxfrniFS47ZGs91MDRuaLuT0UbPSspdqvpzOBWuQLmkaQvtXG9ucOVAd/
-         7Ow4iueVGM9LKPQeUMQcvTqGG9PDFROBlS7lg5GZWwB0h2j6xKKCdN3L24FHRENFKS46
-         q9FORdB82vC/zeo9BOLtJTL6eJ1b+Ua0Kd2UwED9St9wIQlCNdhhJ7sqEgOsT51zO6Fu
-         IC3qKmdzJmDmE87O8meNShgz/TLgwmqGDSv/ROUS173GHe06H1X4GnYWEMNW0LhCeyqs
-         Nb8g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=RReVCHRevVc/FhsEGuVHx+6kSnZ69XTrJj2NUGSmaLs=;
+        b=rXDEciMlgNkyQXWd8n19AfqJJMOV8xmxyQ9/VsIWiDhkZD5JsSZBR3EqKW/1SOdsaQ
+         vivPxTYVmmGtxM9CDtA5lNJ7kOSuTaC1C3rSqvFEjtLc44ya+DjRF8b+WURt9MRAANRO
+         89OFkL3uNVaSydfd3gt2hFSJZaxr6LCa+B2f2/BKYAS8SkXDYx7Ie+ddcQfdWRbek0ge
+         Zlbu8Jmeor+/sOZ9R55ti4aaZR61d/8GhK6N8PuANZxjBvZkvM4louwFqBF1Cw3LaBLG
+         4bKMbgrp0l2vWJSzIBJH/AVdDWJKq7Q8oyo7dqnWTzEKGplHN3pu7ZvKDzgGooE47QSg
+         frRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=SEcWGju+todQ766zHMbOU/AyaJDeGmU+qTTd2Poxl8k=;
-        b=qqhbILNG9DrQa+LzgCl8YqGZ/m80dKGIDI1Oq9XX68gB+0Gv2K8UEO53IHe8Wd5cUy
-         voP/eAQlDugczBoH1jqlFCCo/g+PwKl05w8719qO4QqTk++/RtdUyiUk10O3AQCyh+0v
-         CBKa+lpoM4zSBfrsk+nEHFce9z2gueKjK7VGVRvbqYKWbihyeiFmgzI57I7S4nn14I1y
-         pjNNlaUkeUa7Xl0gYUTR36mx8HHhof/aO4/3IIyCJQFDWDJ2fqIGqZm+UhSR3Yt/sQr8
-         5NZvdBGQsGyi/xGU9MPWOExymOEQKYy7RlDTYnvAyJOjOp2pWPMaGAOQdPY1xvecZhiv
-         jeuA==
-X-Gm-Message-State: APjAAAXso0CBpgNqgkSXv1mdB/F2Ibj+mkmHD5UjTvX3lanvz4mO7kFS
-        XcCk8DeQSY6/9233VCq1fgc=
-X-Google-Smtp-Source: APXvYqyO6iIw4z5cThswxVMCW1FYZUR+eM4MGAII4TEqEdNsMOjy8jZ7tjQPF8jl7XFIncf0d41nVg==
-X-Received: by 2002:a1c:1d15:: with SMTP id d21mr5584288wmd.132.1551969903339;
-        Thu, 07 Mar 2019 06:45:03 -0800 (PST)
-Received: from [192.168.2.240] (host-92-22-20-26.as13285.net. [92.22.20.26])
-        by smtp.gmail.com with ESMTPSA id p10sm1696456wrs.5.2019.03.07.06.45.02
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Mar 2019 06:45:02 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RReVCHRevVc/FhsEGuVHx+6kSnZ69XTrJj2NUGSmaLs=;
+        b=XHiytCNb/s+sJYnlt14+tgBilFVXK74/mp/Wyd2a16vAbza7SfAqNglOMOspveabzZ
+         Hvnqadk9qyHMCFrDRwpI7y55/Q0ZjkPkh4LRRCQCKh3nhXfxGzOOBmQojNvmt9Y5mlw7
+         uQZRIefrmlHfMuCkYox3i71Y5zbwMVWyU9ykXWnBd6McA3vyME8Dg4ryrRsNIE0EQiur
+         Q+UoxeYk2ugiiupKEt0PsspRyFyjDA7a5LrSCx5Fd/YaLejzVjQKW97B9uuFlaahutiq
+         Bq24ynURNevrwqPk4MoZ2P+HmXEcUOF1aCChXbbb3ZaXR9iKXpEHb4SBbrN69D8SskiL
+         9+ZQ==
+X-Gm-Message-State: APjAAAWW4HpsaY0YWN0Be14w2Xb2Ly8nRnmdUYTLqg+k+ozuQojg7rKm
+        ai1iC6bjAH0wvMMIfwREFILFTen91+R9HyLMS9o=
+X-Google-Smtp-Source: APXvYqz6hbkI/3M+T6WnV55RId+RvYyvgKWroYbE3vYr3eG5p1qr0RRPezZPULFyrDhtZEjOAFarbSNWcP/1f4iSP84=
+X-Received: by 2002:a5d:9357:: with SMTP id i23mr5609099ioo.236.1551970297025;
+ Thu, 07 Mar 2019 06:51:37 -0800 (PST)
+MIME-Version: 1.0
+References: <ec707cbb-96e8-f26f-3d69-b69d29b31737@gmail.com>
+ <20190307122917.12811-1-pclouds@gmail.com> <20190307122917.12811-4-pclouds@gmail.com>
+ <1e0fe5a0-decb-ccd3-19ee-5fe2e5148fb1@gmail.com>
+In-Reply-To: <1e0fe5a0-decb-ccd3-19ee-5fe2e5148fb1@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 7 Mar 2019 21:51:10 +0700
+Message-ID: <CACsJy8CeBRbdKoHZ0z0f3pqHJpNJDHSCcwxDrM+p9jzYZSBpTQ@mail.gmail.com>
 Subject: Re: [PATCH 3/3] Make sure refs/rewritten/ is per-worktree
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <ec707cbb-96e8-f26f-3d69-b69d29b31737@gmail.com>
- <20190307122917.12811-1-pclouds@gmail.com>
- <20190307122917.12811-4-pclouds@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <1e0fe5a0-decb-ccd3-19ee-5fe2e5148fb1@gmail.com>
-Date:   Thu, 7 Mar 2019 14:45:01 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
-MIME-Version: 1.0
-In-Reply-To: <20190307122917.12811-4-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy
+On Thu, Mar 7, 2019 at 9:45 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> > [1] note that ref listing still works sometimes. For example, if you
+> >      have .git/worktrees/foo/refs/rewritten/bar AND the directory
+> >      .git/worktrees/refs/rewritten,
+>
+> should that be .git/refs/rewritten? (and below)
 
-Thanks for working on this I've had a quick look through and they seem 
-to make sense to me although I've not really looked at the refs code before.
-
-On 07/03/2019 12:29, Nguyễn Thái Ngọc Duy wrote:
-> a9be29c981 (sequencer: make refs generated by the `label` command
-> worktree-local, 2018-04-25) adds refs/rewritten/ as per-worktree
-> reference space. Unfortunately (my bad) there are a couple places that
-> need update to make sure it's really per-worktree.
-> 
->   - add_per_worktree_entries_to_dir() is updated to make sure ref listing
->     look at per-worktree refs/rewritten/ instead of per-repo one [1]
-> 
->   - common_list[] is updated so that git_path() returns the correct
->     location. This includes "rev-parse --git-path".
-> 
-> This mess is created by me. I started trying to fix it with the
-> introduction of refs/worktree, where all refs will be per-worktree
-> without special treatments. Unfortunate refs/rewritten came before
-> refs/worktree so this is all we can do.
-> 
-> This also fixes logs/refs/worktree not being per-worktree.
-> 
-> [1] note that ref listing still works sometimes. For example, if you
->      have .git/worktrees/foo/refs/rewritten/bar AND the directory
->      .git/worktrees/refs/rewritten, 
-
-should that be .git/refs/rewritten? (and below)
-
-Best Wishes
-
-Phillip
-
-refs/rewritten/bar will show up.
->      add_per_worktree_entries_to_dir() is only needed when the directory
->      .git/worktrees/refs/rewritten is missing.
-> 
-> Reported-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->   path.c                   |  3 +++
->   refs/files-backend.c     |  4 ++--
->   t/t1415-worktree-refs.sh | 35 +++++++++++++++++++++++++++++++++++
->   3 files changed, 40 insertions(+), 2 deletions(-)
-> 
-> diff --git a/path.c b/path.c
-> index 03ab712839..25e97b8c3f 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -115,10 +115,13 @@ static struct common_dir common_list[] = {
->   	{ 1, 1, 0, "logs" },
->   	{ 1, 1, 1, "logs/HEAD" },
->   	{ 0, 1, 1, "logs/refs/bisect" },
-> +	{ 0, 1, 1, "logs/refs/rewritten" },
-> +	{ 0, 1, 1, "logs/refs/worktree" },
->   	{ 0, 1, 0, "lost-found" },
->   	{ 0, 1, 0, "objects" },
->   	{ 0, 1, 0, "refs" },
->   	{ 0, 1, 1, "refs/bisect" },
-> +	{ 0, 1, 1, "refs/rewritten" },
->   	{ 0, 1, 1, "refs/worktree" },
->   	{ 0, 1, 0, "remotes" },
->   	{ 0, 1, 0, "worktrees" },
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 3d0e06edcd..5848f32ef8 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -215,13 +215,13 @@ static void files_ref_path(struct files_ref_store *refs,
->   }
->   
->   /*
-> - * Manually add refs/bisect and refs/worktree, which, being
-> + * Manually add refs/bisect, refs/rewritten and refs/worktree, which, being
->    * per-worktree, might not appear in the directory listing for
->    * refs/ in the main repo.
->    */
->   static void add_per_worktree_entries_to_dir(struct ref_dir *dir, const char *dirname)
->   {
-> -	const char *prefixes[] = { "refs/bisect/", "refs/worktree/" };
-> +	const char *prefixes[] = { "refs/bisect/", "refs/worktree/", "refs/rewritten/" };
->   	int ip;
->   
->   	if (strcmp(dirname, "refs/"))
-> diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
-> index b664e51250..bb2c7572a3 100755
-> --- a/t/t1415-worktree-refs.sh
-> +++ b/t/t1415-worktree-refs.sh
-> @@ -76,4 +76,39 @@ test_expect_success 'reflog of worktrees/xx/HEAD' '
->   	test_cmp expected actual.wt2
->   '
->   
-> +test_expect_success 'for-each-ref from main repo' '
-> +	mkdir fer1 &&
-> +	git -C fer1 init repo &&
-> +	test_commit -C fer1/repo initial &&
-> +	git -C fer1/repo worktree add ../second &&
-> +	git -C fer1/repo update-ref refs/bisect/main HEAD &&
-> +	git -C fer1/repo update-ref refs/rewritten/main HEAD &&
-> +	git -C fer1/repo update-ref refs/worktree/main HEAD &&
-> +	git -C fer1/repo for-each-ref --format="%(refname)" | grep main >actual &&
-> +	cat >expected <<-\EOF &&
-> +	refs/bisect/main
-> +	refs/rewritten/main
-> +	refs/worktree/main
-> +	EOF
-> +	test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'for-each-ref from linked repo' '
-> +	mkdir fer2 &&
-> +	git -C fer2 init repo &&
-> +	test_commit -C fer2/repo initial &&
-> +	git -C fer2/repo worktree add ../second &&
-> +	git -C fer2/second update-ref refs/bisect/second HEAD &&
-> +	git -C fer2/second update-ref refs/rewritten/second HEAD &&
-> +	git -C fer2/second update-ref refs/worktree/second HEAD &&
-> +	git -C fer2/second for-each-ref --format="%(refname)" | grep second >actual &&
-> +	cat >expected <<-\EOF &&
-> +	refs/bisect/second
-> +	refs/heads/second
-> +	refs/rewritten/second
-> +	refs/worktree/second
-> +	EOF
-> +	test_cmp expected actual
-> +'
-> +
->   test_done
-> 
+Yes.
+-- 
+Duy
