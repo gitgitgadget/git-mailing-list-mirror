@@ -7,82 +7,134 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 538D220248
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7ABB20248
 	for <e@80x24.org>; Thu,  7 Mar 2019 09:35:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726186AbfCGJfm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 04:35:42 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:44132 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbfCGJfm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 04:35:42 -0500
-Received: by mail-ed1-f65.google.com with SMTP id b20so12827763edw.11
+        id S1726207AbfCGJfn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 04:35:43 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:36543 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726028AbfCGJfn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 04:35:43 -0500
+Received: by mail-ed1-f66.google.com with SMTP id g9so12852036eds.3
         for <git@vger.kernel.org>; Thu, 07 Mar 2019 01:35:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=RwsftGvTcxYF/ckAyodtuzWfsi4wwnr0IOwO7YY0K/0=;
-        b=aRmgyQ/dbTbmMPKEgOEP2EPe/9afWy0YdNexUUTWb4ecVvWQ63+pTOV9cuQMKCSUC/
-         d74Vx1BGTyQIEE6ojKC2IQ5kr7WZ+DocW3jdVHMtiym7PaPJAkycgzcvidKhIpHV8nTy
-         tB5+5lFSon4ogFZ+oduSNAT6GFm/zekpmcDUcxyoPlAq7IDaq9nHfYMOHYX8mhFE02pv
-         qNMctmJeDkPOA8tXYbxd5mOS1+eyUxpvL0IxSc6YuNU9PqRWvsfFvc5tgeun5mNjdRfm
-         IrUrfRKxvjh9bkmFMQXJtY80C/rVa3k8R0Tmei9QGQpq/u97Lmo12J1UAe1j9XON802g
-         opqQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=GdT3j5IgrhNQavwpTNQXEui2sGmb06C817d8Z/wNGMw=;
+        b=DrBi4clvroBMzAKTN5ZcEcLxs6khZfs/WiO+jqMea6dgvSpUwbGFqZCa7sYXB9VRZS
+         UTPDrYa507TcU8LVxVvvNR3/zGwwqElyvAh3aaYsF5LGW1vpF0PNUXPNYH0HoecZknhh
+         1zljrLHzxh9pmPm+IzD8xeGJP9e8KgQEzgnnJ5fNn6WPlWdxhXQDvSDhOPzJZniQ5f9H
+         3sPgQbfckTpYVc+PFnKpeFDINTkFcnITMUdHsUA4pw4zF00VDiYvamt0lTlgETxc6PP3
+         85N4UCY/0fUB0DjD8jyjyw3b6C4WXlo/ds6B6LvHu+UxGcs1sdnAGXU5bb6t++9Z3e+3
+         WoHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=RwsftGvTcxYF/ckAyodtuzWfsi4wwnr0IOwO7YY0K/0=;
-        b=lAjk9wZqCrCOS9JbhYThVzeNjptkKcZtCTCsCjJd27VswuX9cIKZI+BlB03NUrjtTC
-         bAu3tALZm4z7pn5DctAD4tvoO4JNVajy2tfM5CQdph9KXarHAItZ7m3PBgzSii9c9wSS
-         wyJnyVIkfORZrB1eBaXC/W4NHnE5gAti5/wkwMWB7TywpiwjAmnTOaDf1ExdIsVRReow
-         l5hN+wr0GoetLtLaiZCSiAkMeo0i7m4cvJLx6TKSF+LzJ6obR3urjf05OwOsCYxErOE6
-         ikMhup+MWvc4AztDpdlBIdI2KXpJwypmZf66ZpAadIQXWsNv8Shir0EtVgPeAcTVc/CX
-         oTpw==
-X-Gm-Message-State: APjAAAX15Frnnl7pjOH64DN0RHFyPVGMDjfDIsv4KPj/lRsoKf0Z0IyX
-        bJslH5S4kfz+KRHWrdu1Peo/RZk0
-X-Google-Smtp-Source: APXvYqzxB074qfgGUMQDSsnk66qjzXnBIpcYSSFPhOnWm0eFx4fpd9t3kkJ5YWD7Qvxu+VSWPKxPHQ==
-X-Received: by 2002:a17:906:48c:: with SMTP id f12mr7146620eja.244.1551951340476;
-        Thu, 07 Mar 2019 01:35:40 -0800 (PST)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=GdT3j5IgrhNQavwpTNQXEui2sGmb06C817d8Z/wNGMw=;
+        b=ttQuS86hRGt7WsrQ31afLJ4CKdDGgI/EPwe28r9XbzTGurFLDhINy3yowTwWTb85Mx
+         TaV1BZVFoxxbldyMHcByCX4Pk4R1gpNn3NW8T/gPaK1KiyhHFiZD9ANzqiXnv79q4/Z9
+         OAW0Rx5I+6joSWolwGi/VRldQi/teCbORjv4EZ97whBOwSrADGPYGAayqHyep4Oa8EGY
+         WcqdE/At451iHsdCVYHAmMVv3snXkN4fisTQ06cprLRqWQY+HJVByEqglVyXFV7LVQ4p
+         k2CiC0s1HUX6ENI0Almn40KPRt1BWC82I4x2j5/xac+aKqtMUcZmUlcxAQ481elpZJIz
+         RTAg==
+X-Gm-Message-State: APjAAAXCAupCv0lFFUGLo74DNPhWBd2ueeobJ7T/XWmH+EqTedkIUTbL
+        NlDYlg/fhOip/UlMHb63/rakOuDx
+X-Google-Smtp-Source: APXvYqzN726hnK0jx21K4zB9EPDJ/9kgcIAuJaLjWI++1e4WcsAdF/z9p++DYyUZMTRE1lgW1Ry93Q==
+X-Received: by 2002:a50:9fe9:: with SMTP id c96mr28105906edf.0.1551951341149;
+        Thu, 07 Mar 2019 01:35:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j54sm1201196eda.38.2019.03.07.01.35.39
+        by smtp.gmail.com with ESMTPSA id a52sm1166765edc.74.2019.03.07.01.35.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Thu, 07 Mar 2019 01:35:40 -0800 (PST)
 Date:   Thu, 07 Mar 2019 01:35:40 -0800 (PST)
-X-Google-Original-Date: Thu, 07 Mar 2019 09:35:38 GMT
-Message-Id: <pull.131.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Thu, 07 Mar 2019 09:35:39 GMT
+Message-Id: <008e367d26de12debd596e8f16356f70c74d3d7e.1551951339.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.131.git.gitgitgadget@gmail.com>
+References: <pull.131.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Fix git init with core.hidedotfiles
+Subject: [PATCH 1/1] mingw: respect core.hidedotfiles = false in git-init
+ again
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fixes an regression that was not present in Git for Windows's original 
-core.hideDotFiles patch, but in the shape of the core.hideDotFiles patch
-that made it into git.git.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We fixed it in one big hurry in Git for Windows, and I simply forgot to
-upstream this right away.
+This is a brown paper bag. When adding the tests, we actually failed
+to verify that the config variable is heeded in git-init at all. And
+when changing the original patch that marked the .git/ directory as
+hidden after reading the config, it was lost on this developer that
+the new code would use the hide_dotfiles variable before the config
+was read.
 
-Johannes Schindelin (1):
-  mingw: respect core.hidedotfiles = false in git-init again
+The fix is obvious: read the (limited, pre-init) config *before*
+creating the .git/ directory.
 
+This fixes https://github.com/git-for-windows/git/issues/789
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  builtin/init-db.c |  6 ++++++
  t/t0001-init.sh   | 12 ++++++++++++
  2 files changed, 18 insertions(+)
 
-
-base-commit: 39ffebd23b1ef6830bf86043ef0b5c069d9299a9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-131%2Fdscho%2Funhidden-git-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-131/dscho/unhidden-git-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/131
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 93eff7618c..94df241ad5 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -155,6 +155,9 @@ static int git_init_db_config(const char *k, const char *v, void *cb)
+ 	if (!strcmp(k, "init.templatedir"))
+ 		return git_config_pathname(&init_db_template_dir, k, v);
+ 
++	if (starts_with(k, "core."))
++		return platform_core_config(k, v, cb);
++
+ 	return 0;
+ }
+ 
+@@ -361,6 +364,9 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 	}
+ 	startup_info->have_repository = 1;
+ 
++	/* Just look for `init.templatedir` and `core.hidedotfiles` */
++	git_config(git_init_db_config, NULL);
++
+ 	safe_create_dir(git_dir, 0);
+ 
+ 	init_is_bare_repository = is_bare_repository();
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 42a263cada..35ede1b0b0 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -453,6 +453,18 @@ test_expect_success 're-init from a linked worktree' '
+ 	)
+ '
+ 
++test_expect_success MINGW 'core.hidedotfiles = false' '
++	git config --global core.hidedotfiles false &&
++	rm -rf newdir &&
++	(
++		sane_unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
++		mkdir newdir &&
++		cd newdir &&
++		git init
++	) &&
++	! is_hidden newdir/.git
++'
++
+ test_expect_success MINGW 'redirect std handles' '
+ 	GIT_REDIRECT_STDOUT=output.txt git rev-parse --git-dir &&
+ 	test .git = "$(cat output.txt)" &&
 -- 
 gitgitgadget
