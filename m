@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65E8620248
-	for <e@80x24.org>; Thu,  7 Mar 2019 12:29:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E025520248
+	for <e@80x24.org>; Thu,  7 Mar 2019 12:29:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726200AbfCGM3g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 07:29:36 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:36851 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbfCGM3g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 07:29:36 -0500
-Received: by mail-pf1-f196.google.com with SMTP id n22so11319170pfa.3
-        for <git@vger.kernel.org>; Thu, 07 Mar 2019 04:29:35 -0800 (PST)
+        id S1726224AbfCGM3n (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 07:29:43 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:42214 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726207AbfCGM3m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 07:29:42 -0500
+Received: by mail-pf1-f195.google.com with SMTP id n74so11311019pfi.9
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 04:29:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=puRqpV1o7yuxTAlTCMZELyeOKL/ASvEVQ6x4Ef7Qxx0=;
-        b=POknR4I+cFsBqq1c07yhMq3v5hQT0WcKyBNTbYxWFuLrPnVm+xavadpx7j1hw1pVRH
-         jdDZGxZ/qgfaP5NOUzXyvj9EHqPDd2VJS2blugfgS78s6W59NJYvBGJycZCl+aLMmhL4
-         E8O1Aomv7tl4c/OR8A09Igp7OkDWnlhsMLFwl20Ft45IZyzDtQhRwbdxx4iP3K+wYSMe
-         WsLh+gpSp3sJmCExXNU93TfR+AbpP0PziZtYz5KSvN89Xa5eCnlMtqZMH0aNI+BnBLm2
-         Fq7NCMbo7MpoGPF9ssnm/awydGLDkgBAvfXhIRqli/R5SRdYuzM6xo8cPU00iD/DY6l+
-         U8RA==
+        bh=Q4fvcoR2q6r5C+mlI8E6czVscx5pPDLuk8PZC2yJi9g=;
+        b=rQ6ILgwdRxjQMj1jQZr0ldxmWGr0N27ZS3DE2fkqkJds3boz2WFpswnAKCVK8SxTf6
+         ruON3NyCENxjabcB5x60X967ChakxLOpECOmYE0iQ87NvTQWEEJ6Wr4VL7QVoREZqwk9
+         CXepzHBWZhXx+3IhkI9tjDlA0LIEtrKMR26RJn6NAWLFCxBs6CEj/fH01VtEj9asUzZ2
+         TiCKhnWOdgw19eKCvSgBknKlLnevBfeL8t0iizjfa4jP9a+pFBogR08kAWiqHmCwpz7F
+         YGROgMECctQLg6YvSdhnwmBPObHPV3I/Qez4urZbXkPx0bRHpFTFmpg9LGzokQRdiALt
+         Hc5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=puRqpV1o7yuxTAlTCMZELyeOKL/ASvEVQ6x4Ef7Qxx0=;
-        b=StWGk59Nx+ijhrGEODJ/jEuUY7G5rSV1RCiKfIUmUxlAkJIzN8ZBB03/RiGbtK/N86
-         +HD0ETGXCUDfRTtbMhh4EVNfKHy9/kiqfeUKyfIZca1RReF6Rza6mg4CgrPyEzE63xFg
-         lImCpVbOe7a1pLAVV0aoo1siwfHAcw1mskq6oyj5jqT5ERkgHv0xXqSSNSCOjV/SW7gg
-         5FpGixtbZEjl1387PbcUNjT2pwUsP5cM4ctRDhiMVr/z/TCdrrSeMNwGnBfZiM6KFY0x
-         lFr50BKDY0h4YaXVdkDBfI7FtGFoh/y1z0XiBh10p9qXN07PLBNO4PWMc8t0PRFKqWpO
-         b9bQ==
-X-Gm-Message-State: APjAAAWi8avmEgfxuVnf35S/rhrpaP8OcR5XLhRm5zkBdJQvdytnEBSX
-        FbGe84CojkLszAKls2WoY4s=
-X-Google-Smtp-Source: APXvYqxJy9i+6vx0Ph/UQ5oNEc5o5P8qmF+gOXV1rXPrU8QjFuTbbTzjYwCr8UPC+ZD4F9iAC+83Rw==
-X-Received: by 2002:a17:902:8ec1:: with SMTP id x1mr12845781plo.52.1551961775303;
-        Thu, 07 Mar 2019 04:29:35 -0800 (PST)
+        bh=Q4fvcoR2q6r5C+mlI8E6czVscx5pPDLuk8PZC2yJi9g=;
+        b=Nt8gUWxykFDyXYG2gXrFEu29FyyPYa7BHZ9njdI3VE7nSwJGdu4PlWZQVe1a8Sx6CC
+         BlEPEAmSfCI98DTn7mmVf9erOFHo8jRtbqhCDtlFc35++/KAJltIQvSI7UcmDZSCV591
+         UrFi2qNtbZd3lyuN8zeS24W5MRTROZ9q3kp7R29MABbVWpEtKrQf4BrEzNhk0/mWZH+Y
+         VL7NbVvgjUz0Q9WIcmL21qw41prrV+O21f5VVY6Sc+RnrEE2wF2Phm8JjVkwc6Q03Wrs
+         lJB7XZjD57E4A/lSmPF9PYQgX5sJBsYTdalEKy0MQWsPyI/+Njx5JLlb/JFYCsONNg42
+         lpbg==
+X-Gm-Message-State: APjAAAXmstGsh4xRlyRfcmmFNEl9WrA8GdZq5RaY4e9LdBUkJIWQMgZU
+        desvOEcyTICN2jz9IUrWSGKjlHdh
+X-Google-Smtp-Source: APXvYqzu49NCA5RmGXHbjNjlSvUVxsHEkVCFApBGUNYV9KqGfoH11jwSuJzdGZc5GE7EHyaDk2uLBw==
+X-Received: by 2002:a63:cf01:: with SMTP id j1mr11194788pgg.342.1551961781752;
+        Thu, 07 Mar 2019 04:29:41 -0800 (PST)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id q7sm14256018pfa.119.2019.03.07.04.29.32
+        by smtp.gmail.com with ESMTPSA id l12sm14369540pgn.83.2019.03.07.04.29.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Mar 2019 04:29:34 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 07 Mar 2019 19:29:30 +0700
+        Thu, 07 Mar 2019 04:29:41 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 07 Mar 2019 19:29:35 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     phillip.wood123@gmail.com
 Cc:     git@vger.kernel.org, pclouds@gmail.com, phillip.wood@dunelm.org.uk,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/3] files-backend.c: reduce duplication in add_per_worktree_entries_to_dir()
-Date:   Thu,  7 Mar 2019 19:29:16 +0700
-Message-Id: <20190307122917.12811-3-pclouds@gmail.com>
+Subject: [PATCH 3/3] Make sure refs/rewritten/ is per-worktree
+Date:   Thu,  7 Mar 2019 19:29:17 +0700
+Message-Id: <20190307122917.12811-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
 In-Reply-To: <20190307122917.12811-1-pclouds@gmail.com>
 References: <ec707cbb-96e8-f26f-3d69-b69d29b31737@gmail.com>
@@ -71,56 +71,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function is duplicated to handle refs/bisect/ and refs/worktree/
-and a third prefix is coming. Time to clean up.
+a9be29c981 (sequencer: make refs generated by the `label` command
+worktree-local, 2018-04-25) adds refs/rewritten/ as per-worktree
+reference space. Unfortunately (my bad) there are a couple places that
+need update to make sure it's really per-worktree.
 
-This also fixes incorrect "refs/worktrees/" length in this code. The
-correct length is 14 not 11. The test in the next patch will also cover
-this.
+ - add_per_worktree_entries_to_dir() is updated to make sure ref listing
+   look at per-worktree refs/rewritten/ instead of per-repo one [1]
 
+ - common_list[] is updated so that git_path() returns the correct
+   location. This includes "rev-parse --git-path".
+
+This mess is created by me. I started trying to fix it with the
+introduction of refs/worktree, where all refs will be per-worktree
+without special treatments. Unfortunate refs/rewritten came before
+refs/worktree so this is all we can do.
+
+This also fixes logs/refs/worktree not being per-worktree.
+
+[1] note that ref listing still works sometimes. For example, if you
+    have .git/worktrees/foo/refs/rewritten/bar AND the directory
+    .git/worktrees/refs/rewritten, refs/rewritten/bar will show up.
+    add_per_worktree_entries_to_dir() is only needed when the directory
+    .git/worktrees/refs/rewritten is missing.
+
+Reported-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs/files-backend.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ path.c                   |  3 +++
+ refs/files-backend.c     |  4 ++--
+ t/t1415-worktree-refs.sh | 35 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 2 deletions(-)
 
+diff --git a/path.c b/path.c
+index 03ab712839..25e97b8c3f 100644
+--- a/path.c
++++ b/path.c
+@@ -115,10 +115,13 @@ static struct common_dir common_list[] = {
+ 	{ 1, 1, 0, "logs" },
+ 	{ 1, 1, 1, "logs/HEAD" },
+ 	{ 0, 1, 1, "logs/refs/bisect" },
++	{ 0, 1, 1, "logs/refs/rewritten" },
++	{ 0, 1, 1, "logs/refs/worktree" },
+ 	{ 0, 1, 0, "lost-found" },
+ 	{ 0, 1, 0, "objects" },
+ 	{ 0, 1, 0, "refs" },
+ 	{ 0, 1, 1, "refs/bisect" },
++	{ 0, 1, 1, "refs/rewritten" },
+ 	{ 0, 1, 1, "refs/worktree" },
+ 	{ 0, 1, 0, "remotes" },
+ 	{ 0, 1, 0, "worktrees" },
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 26417893c8..3d0e06edcd 100644
+index 3d0e06edcd..5848f32ef8 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -221,22 +221,22 @@ static void files_ref_path(struct files_ref_store *refs,
+@@ -215,13 +215,13 @@ static void files_ref_path(struct files_ref_store *refs,
+ }
+ 
+ /*
+- * Manually add refs/bisect and refs/worktree, which, being
++ * Manually add refs/bisect, refs/rewritten and refs/worktree, which, being
+  * per-worktree, might not appear in the directory listing for
+  * refs/ in the main repo.
   */
  static void add_per_worktree_entries_to_dir(struct ref_dir *dir, const char *dirname)
  {
--	int pos;
-+	const char *prefixes[] = { "refs/bisect/", "refs/worktree/" };
-+	int ip;
+-	const char *prefixes[] = { "refs/bisect/", "refs/worktree/" };
++	const char *prefixes[] = { "refs/bisect/", "refs/worktree/", "refs/rewritten/" };
+ 	int ip;
  
  	if (strcmp(dirname, "refs/"))
- 		return;
+diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
+index b664e51250..bb2c7572a3 100755
+--- a/t/t1415-worktree-refs.sh
++++ b/t/t1415-worktree-refs.sh
+@@ -76,4 +76,39 @@ test_expect_success 'reflog of worktrees/xx/HEAD' '
+ 	test_cmp expected actual.wt2
+ '
  
--	pos = search_ref_dir(dir, "refs/bisect/", 12);
--	if (pos < 0) {
--		struct ref_entry *child_entry =
--			create_dir_entry(dir->cache, "refs/bisect/", 12, 1);
--		add_entry_to_dir(dir, child_entry);
--	}
-+	for (ip = 0; ip < ARRAY_SIZE(prefixes); ip++) {
-+		const char *prefix = prefixes[ip];
-+		int prefix_len = strlen(prefix);
-+		struct ref_entry *child_entry;
-+		int pos;
- 
--	pos = search_ref_dir(dir, "refs/worktree/", 11);
--	if (pos < 0) {
--		struct ref_entry *child_entry =
--			create_dir_entry(dir->cache, "refs/worktree/", 11, 1);
-+		pos = search_ref_dir(dir, prefix, prefix_len);
-+		if (pos >= 0)
-+			continue;
-+		child_entry = create_dir_entry(dir->cache, prefix, prefix_len, 1);
- 		add_entry_to_dir(dir, child_entry);
- 	}
- }
++test_expect_success 'for-each-ref from main repo' '
++	mkdir fer1 &&
++	git -C fer1 init repo &&
++	test_commit -C fer1/repo initial &&
++	git -C fer1/repo worktree add ../second &&
++	git -C fer1/repo update-ref refs/bisect/main HEAD &&
++	git -C fer1/repo update-ref refs/rewritten/main HEAD &&
++	git -C fer1/repo update-ref refs/worktree/main HEAD &&
++	git -C fer1/repo for-each-ref --format="%(refname)" | grep main >actual &&
++	cat >expected <<-\EOF &&
++	refs/bisect/main
++	refs/rewritten/main
++	refs/worktree/main
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'for-each-ref from linked repo' '
++	mkdir fer2 &&
++	git -C fer2 init repo &&
++	test_commit -C fer2/repo initial &&
++	git -C fer2/repo worktree add ../second &&
++	git -C fer2/second update-ref refs/bisect/second HEAD &&
++	git -C fer2/second update-ref refs/rewritten/second HEAD &&
++	git -C fer2/second update-ref refs/worktree/second HEAD &&
++	git -C fer2/second for-each-ref --format="%(refname)" | grep second >actual &&
++	cat >expected <<-\EOF &&
++	refs/bisect/second
++	refs/heads/second
++	refs/rewritten/second
++	refs/worktree/second
++	EOF
++	test_cmp expected actual
++'
++
+ test_done
 -- 
 2.21.0.rc1.337.gdf7f8d0522
 
