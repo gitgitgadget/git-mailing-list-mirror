@@ -2,120 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_05,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5723820248
-	for <e@80x24.org>; Thu,  7 Mar 2019 00:51:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 659A320248
+	for <e@80x24.org>; Thu,  7 Mar 2019 01:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726139AbfCGAvB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 19:51:01 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33095 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726104AbfCGAvB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Mar 2019 19:51:01 -0500
-Received: by mail-wr1-f68.google.com with SMTP id i12so15455071wrw.0
-        for <git@vger.kernel.org>; Wed, 06 Mar 2019 16:51:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XzUvOkfZDVT4zEabbnrDbyI1oMiizbcBSJVjka9Su6k=;
-        b=VrxhXG4JQaJzYD9Pb5iiFsIzmZ0QafMM40Xj2NgBRLHEiuX67lNdqtgdR5VzzGol05
-         fUrEyLn39aTK24krLV/1gdEsqE657O6NiuQCi7r02RVE1r6NVbBTP6EdSIMblZ5MKycA
-         /96GfXftS5j/YYqiqDNRYVWuPmPfg4qlzIkmXGtKQE9fkcbG+WJzvrIFbJNXORviJF3h
-         geUUyj9g+aGqPnUmIygxTqu3k+uHjUSBlWuQkaI2aU1yfYZrlMF3FsRiSkaPBKLP2+r9
-         nWBeftYVZPtohqlWCDdGmj0xwreujXQG+CHHv5g4qCNUCmDtr5t2klw9LLZkYATFVJkg
-         3LXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XzUvOkfZDVT4zEabbnrDbyI1oMiizbcBSJVjka9Su6k=;
-        b=LCNg3imrZiv2PeINuShBTQp6f9EsgsgxFToEojJgPbsAMWOfyy+b45TeN2fzPangR8
-         h7HGb8lOI83BhHYXODizKU2aR53PTQZLn5QPlOBdNeg1X2bydePMSvjMDcBZ0cwvnvfY
-         6gaqryLzVSUE76lQMXfhkrrf+AvEBrR7T1WNSZvj20bA9HWCQjgnkXFR66FZVsdxrEle
-         V7Gs2Gmp7632slLx5kzF5CZOANgadR9VRXSFqn9HYsG6OZPKh31oN1yuPGbB4Qjr8ccK
-         JjaeOD8Mxk6QHWOKgQfaXC9sibBd8BYA5Q92fY637o1LqhShp8YuHONZRztGOHT4hJiH
-         GG2Q==
-X-Gm-Message-State: APjAAAX8oEERwFlArILeJTwgb9mDjOpH8V6Obp+a+trKqGD42Mx0EZlV
-        8PtnpYhgh6hdgwcMvSeGBDA=
-X-Google-Smtp-Source: APXvYqztbwNjtwlso9kqQ5ycijGujFtUfEIAFBzGsiJXYCXJlGyio7Of34TUZO44Pn6RoZXhVANKaw==
-X-Received: by 2002:adf:f9c4:: with SMTP id w4mr5016153wrr.218.1551919859025;
-        Wed, 06 Mar 2019 16:50:59 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id p1sm5163334wrx.50.2019.03.06.16.50.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 06 Mar 2019 16:50:57 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH] builtin/config.c: don't print a newline with --color
-References: <b5ca6391fd0273fb7d6b92bc5ada96df93bc5cf2.1551487219.git.me@ttaylorr.com>
-        <xmqqtvgk69ik.fsf@gitster-ct.c.googlers.com>
-        <20190303174214.GF23811@sigill.intra.peff.net>
-        <xmqqlg1vw9f2.fsf@gitster-ct.c.googlers.com>
-        <xmqqh8cjw7ob.fsf@gitster-ct.c.googlers.com>
-        <20190305042050.GE19800@sigill.intra.peff.net>
-Date:   Thu, 07 Mar 2019 09:50:57 +0900
-In-Reply-To: <20190305042050.GE19800@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 4 Mar 2019 23:20:51 -0500")
-Message-ID: <xmqqbm2no6by.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726264AbfCGBlL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 20:41:11 -0500
+Received: from bmmpo4302.jpx1.mp.cheetahdigital.com ([106.185.101.242]:36412
+        "EHLO bmmpo4302.jpx1.mp.cheetahdigital.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726127AbfCGBlK (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 6 Mar 2019 20:41:10 -0500
+X-Greylist: delayed 601 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Mar 2019 20:41:10 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1551922870;
+        s=mpse.201103; d=rxjp006.dkim.mpse.jp;
+        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=lR99NiaRz6SHdDT35zK7QEchdszxYkzChaYfoPjHh/E=;
+        b=bp65BEELwCqjip4kShYasO8GSUz0WsKiWz6dwiIrf88T6njC1hHF2PnQT82LVKYh
+        aBeenUNBKQYm0kOJpjJO10Pz212n/DGn8YdmsYAR3LJJa/YMoYJBk+mwCIPNHt28HnW
+        CVMCwI0iTgHOfEmjl+UjNlFlAlgkhlruMtSW7Zcc=
+Date:   Thu, 7 Mar 2019 10:30:47 +0900 (JST)
+From:   Eiichi Hasegawa LIFESTYLE EXPO TOKYO Show Management 
+        <lifestyle-eng@lifestyle-expo.jp>
+Reply-To: lifestyle-eng@reedexpo.co.jp
+To:     git@vger.kernel.org
+Message-Id: <1551922247553.2019100086.rxjp006.0.25301.00000000@ad145se.mpse.jp>
+Subject: Special Discount Price available until March 31st, 2019! [LIFESTYLE
+ EXPO TOKYO 2020 January]
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Dear International Sales & Marketing Director
+Zhejiang Wuchuan Industrial Co., Ltd,
 
-> Mostly I was just surprised by the new behavior. Perhaps the right
-> solution is not a patch to the code, but to the documentation. Something
-> like:
+Hello, this is Eiichi Hasegawa from LIFESTYLE EXPO TOKYO Show Management.
+LIFESTYLE EXPO TOKYO is Japan's leading "B-to-B" show for Interior, Lifestyle products, Tableware/Kitchenware and Gifts.
 
-Let me forge your sign-off and commit this to prevent us from
-forgetting.
+***************************************************************************
+  SPECIAL DISCOUNT for LIFESTYLE EXPO TOKYO 2020 January is available!
+       >> Until March 31st, 2019! 
 
-Thanks, all.
+  Book the Best Booth Location with Discount Price!                                            
+  Send us inquiry form NOW to find out more about the show!
+***************************************************************************
 
--- >8 --
-From: Jeff King <peff@peff.net>
-Date: Mon, 4 Mar 2019 23:20:51 -0500
-Subject: [PATCH] config: document --type=color output is a complete line
+Every year, many exhibitors have in-depth business meetings with high quality buyers on site.
 
-Even though the newer "--type=color" option to "git config" is meant
-to be upward compatible with the traditional "--get-color" option,
-unlike the latter, its output is not an incomplete line that lack
-the LF at the end.  That makes it consistent with output of other
-types like "git config --type=bool".
+Moreover, we offer exclusive services for International exhibitors! (FREE of charge)
+1) Email blast to our Importers/Distributors database
+2) Promotion Opportunity via Official Instagram and Facebook
+3) Listing in Online Exhibitor & Product Search
+4) Press Releases featuring International Exhibitors/Products
 
-Document it, as it sometimes surprises unsuspecting users.
+LIFESTYLE EXPO TOKYO 2020 will be a good opportunity for you to expand your business in the Japanese and Asian market!
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-config.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+To receive further information such as the latest booth availability, cost estimation, and so on, please simply reply to this email now.
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 1bfe9f56a7..611a32445c 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -240,7 +240,9 @@ Valid `<type>`'s include:
- 	output.  The optional `default` parameter is used instead, if
- 	there is no color configured for `name`.
- +
--`--type=color [--default=<default>]` is preferred over `--get-color`.
-+`--type=color [--default=<default>]` is preferred over `--get-color`
-+(but note that `--get-color` will omit the trailing newline printed by
-+--type=color).
- 
- -e::
- --edit::
--- 
-2.21.0-4-g36eb1cb9cf
+== REPLY FORM ==============================================
+mailto:lifestyle-eng@reedexpo.co.jp
+Company Name:
+Contact Person:
+Email:
+TEL:
+Products:
 
+Your Request:
+[ ] Cost Information
+[ ] Available Booth Locations
+[ ] Visitors List
+[ ] Other (                          　  )
+============================================================
+
+We look forward to hearing from you.
+
+
+Sincerely,
+
+
+Eiichi Hasegawa (Mr.), Qu Jun (Mr.), Choi Ilyong (Mr.)
+LIFESTYLE EXPO TOKYO Show Management
+Reed Exhibitions Japan Ltd.
+TEL: +81-3-3349-8505
+mailto:lifestyle-eng@reedexpo.co.jp
+
+
+*****************************************************************************************
+LIFESTYLE EXPO TOKYO 2020 [January] 
+
+LIFESTYLE EXPO TOKYO 2020 [January] consists of 7 specialised shows and 3 concurrent shows
+
+- 3rd Variety-Gifts Expo January (GIFTEX TOKYO 2020) 
+- 3rd Baby & Kids Expo Tokyo January 
+- 3rd Fashion Goods & Accessories Expo Tokyo January 
+- 3rd Table & Kitchenware Expo Tokyo January 
+- 3rd Health & Beauty Goods Expo Tokyo January 
+- 3rd Interior Products & Furniture Expo January (INTERIOR TOKYO 2020)
+- 16th INT'L FLOWER & PLANTS EXPO TOKYO (IFEX 2020) 
+
+WEB: https://www.lifestyle-expo-spring.jp/en-gb.html
+
+<Concurrent Shows>
+- 8th Int'l Cosmetics Trade Fair (COSME TOKYO 2020)
+- 10th Int'l Cosmetics Development Expo (COSME Tech 2020)
+- 3rd Beauty & Health Foods Expo January (INNER BEAUTY TOKYO 2020)
+
+Date: January 20 (Mon.) - 22 (Wed.), 2020
+Venue: Makuhari Messe, Japan
+*****************************************************************************************
+
+ID:E36-G1402-0075
+
+
+
+
+
+
+
+
+This message is delivered to you to provide details of exhibitions and conferences organized, co-organized, or managed by Reed Exhibitions Japan Ltd.
+If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
+
+<Update contact information>
+Please click the URL below and follow the directions on the website to update your e-mail and other information.
+https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
+
+<Remove from list>
+Please reply to this mail changing the subject to "REMOVE FROM LIST".
+You will not receive any further information on this exhibition/conference.
