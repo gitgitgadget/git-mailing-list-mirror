@@ -2,84 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB54920248
-	for <e@80x24.org>; Thu,  7 Mar 2019 21:25:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B240320248
+	for <e@80x24.org>; Thu,  7 Mar 2019 21:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726224AbfCGVZ3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 16:25:29 -0500
-Received: from mail-vs1-f41.google.com ([209.85.217.41]:34593 "EHLO
-        mail-vs1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726186AbfCGVZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 16:25:29 -0500
-Received: by mail-vs1-f41.google.com with SMTP id h7so5427149vsl.1
-        for <git@vger.kernel.org>; Thu, 07 Mar 2019 13:25:28 -0800 (PST)
+        id S1726242AbfCGVo5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 16:44:57 -0500
+Received: from mail-pg1-f179.google.com ([209.85.215.179]:39264 "EHLO
+        mail-pg1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726217AbfCGVo5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 16:44:57 -0500
+Received: by mail-pg1-f179.google.com with SMTP id h8so12310385pgp.6
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 13:44:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=9Q3WCMLWEYEe+pMZKdRKhdPsIBLIbg+TMEchmNiSa1M=;
-        b=nj0r8wwnnogAGXq+aZ5kUn8I/Ak/lcNSRELSmsoec8XeKl4zwDTYnE64sgqCcfDB9W
-         cJBz0axG+s5kRQzdYkXDzlfflk5cEM7/apdgEvbrels9Vcvt+DcKarJziOvYedeokSge
-         hFlmLCq+pJcNETjeGWVegE3grV4KhF8MkM1YwPswwlGHAyj9a2ofmsSH9SCHfhuCqvXR
-         K73pbuPTySTWLUXZBEie9nXmdwpR7SFlKHARmCvsyCdbAkiJuGDGsIYdIazD81zsPO2V
-         HB0ZN/6c0b4zRVlAvrikatfqCOX5EcihqKx4aO89rD6dax7/xyxgRWcGAhnVXnfO6OJT
-         BtYw==
+        d=grande.coffee; s=omgwhathaveyoudone;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=yIr5oSYaEIg43jeg8Ows3+qju0WMTCnzpMsvgueUXhg=;
+        b=v5WbWb+rOVuLp1uJdP0seqIepkdta0V87XHkxbcynCEi6/BexMXLN/+qkFAGthrffq
+         YcOaUQe3n9fui30Fn0t58T0U/kBcIyADO53WXpgLzfd6WgUO2C4DizOsYm9tbvsYEk20
+         hisuNUroIl5AZOpOBgWqXWFrMyD24zr1SwUexmQx8utH0p9j72lkHWKGvByK0hQ099oI
+         op7hDxTyCFkptsTAGcwJS0fhWPeSAvTh+omn0y+MRq/o/fS0YqNU4e8S01G6EdYP1meu
+         fK4YaKhzCtazNhkOg42tEd5JT4gfL9tBacFZN/n67xp1euYad9uZYKFXPpbOovUl/1e7
+         MDkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=9Q3WCMLWEYEe+pMZKdRKhdPsIBLIbg+TMEchmNiSa1M=;
-        b=BEyYlZeJ352q+hD5PNKQiI3HomN6ZHdtwPR9u5eeMqI+3do9Z8TZn0utLqtDhepWXF
-         l1WiZ2p83GuLHNqn9IIWP21u16hBSz+YzAmYzAhCLwJ4DGHOh1AAVNsBfo+KTF/oB2D0
-         /qjYbVIj/pmn4DxS16y8wF7nGmmklKPnEWFXV0dtB6NORCVblNHE5T8NiqMHtzphKD5t
-         Io+6FRhzSfM8v9sa/fQ6UdfbnOL3kd/o2M6Us0MpPJK+UF/FETx2WCTJfxFbG9N5qkCw
-         obg9PjDvsi1q8mQI5yzdQgMU7UbPxMo5wEr9d6cAvkGlLx5YIy4vt4nlJ8149fXuetCW
-         Q9+w==
-X-Gm-Message-State: APjAAAWisAEKT2OqFn6Yqvsh1YMn1Y+Pr/knLqstdC+7pnbdtd4UOVN/
-        bWAv1aXtL9Wpk1nrar2RH9UkjpQzE48Pyg270Txp9e1Y
-X-Google-Smtp-Source: APXvYqz+DLTdBCHeNqhRX44BmITSvULpHIT5YZ7Z94gNq15QUh43KxBpnsWwpayHTDYI6V8ITcRQDfD2dqdIrPz1ZlU=
-X-Received: by 2002:a67:d91e:: with SMTP id t30mr8539624vsj.27.1551993928269;
- Thu, 07 Mar 2019 13:25:28 -0800 (PST)
-MIME-Version: 1.0
-References: <CANNTdjSRB+_1Ue6LLxMcAdLmdg5TrihZ4CeZhvnpgwnEP=SQ3A@mail.gmail.com>
-In-Reply-To: <CANNTdjSRB+_1Ue6LLxMcAdLmdg5TrihZ4CeZhvnpgwnEP=SQ3A@mail.gmail.com>
-From:   Adrian Godong <adrian.godong@gmail.com>
-Date:   Thu, 7 Mar 2019 13:24:52 -0800
-Message-ID: <CANNTdjSdTiNcM+UzF+2ZH_2JOyDZM0E6RFCDwsT3Y7F=G7YdOA@mail.gmail.com>
-Subject: Re: git reset error on Windows
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=yIr5oSYaEIg43jeg8Ows3+qju0WMTCnzpMsvgueUXhg=;
+        b=Ew/q/b30Fqt+1GWXRH33yBFhrna8yNt1Dmafq4Qz7T6j65lanLzwS3unZq8u2SfBEi
+         sH0yPv2QebzjMIf4+iDlH40e5qOUrTZvqyenQCsZSqQtbRs7kZVALISEpW/S31n3wY5h
+         j38tzKkQo6aup/LvXv5aPMdB89/UkbdUOTffWqUJ9Fm14osR5GPTfoSk4EmxNqeGnAqz
+         WpIIvQny4+Ww/0Cplsp5Eydjrv3I5yiXtRwxakqngLTFoeAiKS5aqNZdQxKj4/izlgXn
+         +B+1WhXC2lwAHnVRe+c3gQgbF/QHaZAWMs9goTWT9to5pucIkawnTHADCKUy0fx7sWxD
+         6c+A==
+X-Gm-Message-State: APjAAAVJrmshURlQIq9rMSrFUcV0mIxV4PorCOqt3GiH+iC0OqKsdcZH
+        dFqkXeAZj7qnurOew1/6qZOu4JdNEWKgsQ==
+X-Google-Smtp-Source: APXvYqx/IFjXXjCpiml3mRzgwKP+XNalVf1+lBfr7gjbmnrxvwG+l6YwZYi4x53soNHjr48aawoGkQ==
+X-Received: by 2002:a17:902:d896:: with SMTP id b22mr1618464plz.307.1551995095501;
+        Thu, 07 Mar 2019 13:44:55 -0800 (PST)
+Received: from chabuduo ([198.41.129.1])
+        by smtp.gmail.com with ESMTPSA id r28sm11360586pgl.72.2019.03.07.13.44.54
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 07 Mar 2019 13:44:54 -0800 (PST)
+Date:   Thu, 7 Mar 2019 21:44:47 +0000
+From:   Alexander Huynh <alex@grande.coffee>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: [BUG] fetching all remote branches results in failed multiple updates
+Message-ID: <20190307214447.GA4909@chabuduo>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Windows 10, git version 2.21.0.windows.1
+Hello all,
 
-git reset tries to delete folder when last file is removed but failed
-to do so if shell is in the deleted folder.
+When running the latest release of git, I receive an error when attempting to
+fetch all remote branches from a repo:
 
-Repro steps (powershell):
-mkdir test
-cd test
-git init
-mkdir dir
-cd dir
-add-content .\file ""
-git add .
-git commit -m "1"
-git mv .\file .\file2
-git commit -m "2"
-git reset --hard HEAD^
-> Deletion of directory 'dir' failed. Should I try again? (y/n)
+    fatal: multiple updates for ref 'refs/remotes/origin/maint' not allowed
 
-Choosing y will repeat the same prompt. Choosing n will complete the
-operation correctly.
+The specific ref that it fails on changes depending on the repository, but the
+end result is the repo isn't cloned.
 
--- 
-Adrian Godong
-adrian.godong@gmail.com
+The specific configuration that causes this bug is the `remote.origin.fetch`
+option, specifically:
+
+    [remote "origin"]
+    	fetch = +refs/heads/*:refs/remotes/origin/*
+
+These settings are listed as an example in "CONFIGURED REMOTE-TRACKING
+BRANCHES" of git-fetch(1), as well as expanded upon in
+https://stackoverflow.com/a/40739835.
+
+I'm running git version 2.21.0.
+
+Full reproduction steps are below:
+
+    [root@chabuduo ~]# useradd -m git-test -s /bin/bash
+    [root@chabuduo ~]# sudo --preserve-env=SSH_AUTH_SOCK -u git-test -i
+    [git-test@chabuduo ~]$ git --version
+    git version 2.21.0
+    [git-test@chabuduo ~]$ cat > ~/.gitconfig
+    [remote "origin"]
+    	fetch = +refs/heads/*:refs/remotes/origin/*
+    [git-test@chabuduo ~]$ cat ~/.gitconfig
+    [remote "origin"]
+    	fetch = +refs/heads/*:refs/remotes/origin/*
+    [git-test@chabuduo ~]$ git clone git@github.com:git/git.git
+    Cloning into 'git'...
+    Warning: Permanently added the RSA host key for IP address '192.30.255.112' to the list of known hosts.
+    remote: Enumerating objects: 265113, done.
+    remote: Total 265113 (delta 0), reused 0 (delta 0), pack-reused 265113
+    Receiving objects: 100% (265113/265113), 113.20 MiB | 5.49 MiB/s, done.
+    Resolving deltas: 100% (196542/196542), done.
+    fatal: multiple updates for ref 'refs/remotes/origin/maint' not allowed
