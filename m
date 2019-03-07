@@ -2,138 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_05,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 659A320248
-	for <e@80x24.org>; Thu,  7 Mar 2019 01:41:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0668E20248
+	for <e@80x24.org>; Thu,  7 Mar 2019 01:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726264AbfCGBlL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Mar 2019 20:41:11 -0500
-Received: from bmmpo4302.jpx1.mp.cheetahdigital.com ([106.185.101.242]:36412
-        "EHLO bmmpo4302.jpx1.mp.cheetahdigital.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726127AbfCGBlK (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 6 Mar 2019 20:41:10 -0500
-X-Greylist: delayed 601 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Mar 2019 20:41:10 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1551922870;
-        s=mpse.201103; d=rxjp006.dkim.mpse.jp;
-        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=lR99NiaRz6SHdDT35zK7QEchdszxYkzChaYfoPjHh/E=;
-        b=bp65BEELwCqjip4kShYasO8GSUz0WsKiWz6dwiIrf88T6njC1hHF2PnQT82LVKYh
-        aBeenUNBKQYm0kOJpjJO10Pz212n/DGn8YdmsYAR3LJJa/YMoYJBk+mwCIPNHt28HnW
-        CVMCwI0iTgHOfEmjl+UjNlFlAlgkhlruMtSW7Zcc=
-Date:   Thu, 7 Mar 2019 10:30:47 +0900 (JST)
-From:   Eiichi Hasegawa LIFESTYLE EXPO TOKYO Show Management 
-        <lifestyle-eng@lifestyle-expo.jp>
-Reply-To: lifestyle-eng@reedexpo.co.jp
-To:     git@vger.kernel.org
-Message-Id: <1551922247553.2019100086.rxjp006.0.25301.00000000@ad145se.mpse.jp>
-Subject: Special Discount Price available until March 31st, 2019! [LIFESTYLE
- EXPO TOKYO 2020 January]
+        id S1726469AbfCGBxX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Mar 2019 20:53:23 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:38529 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbfCGBxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Mar 2019 20:53:23 -0500
+Received: by mail-lf1-f68.google.com with SMTP id k136so131774lfg.5
+        for <git@vger.kernel.org>; Wed, 06 Mar 2019 17:53:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AZfZTU3z5etlTN8EeeL/pa8/UFuVBVSvtUrzIaJ3tAs=;
+        b=lYBqdMNKlLtAcOaCuqNnA1Tcw+4eUFAp/KIoLbot61rcA+ZWFWcj0i13Bo7qwqwl+L
+         u0g1mBqWVUIWwKSQ/wCM1CulYhkiMwCkiOpw7kIylkluqlo/dVhfGwCtvOoEjK6pstdz
+         zN/UMQf+7eQoLjN0W5JLDfbz4yluoSQFTV5hRhCW6tlhsfRaivV+5aUgux6xul+G5vHd
+         m5OgtbCa7jQMXblXazBl0IuGgM9p6Bhnz3yhxpXg8Eso8wB4bDkKwrN07E6XZFnDqxkH
+         k3cbhKKAGt03cwXfIPPH1C+q52Z59Bfd1QN7TLxwJc7lRBuruqrfIqWL0J7MnSl4H2XL
+         t6Ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AZfZTU3z5etlTN8EeeL/pa8/UFuVBVSvtUrzIaJ3tAs=;
+        b=qzzmeG1KTv96NHhXwrEiOY8jGbZZfF6k82AJXfNwpbgwNty+rYpyO1q44vN8qy/mIF
+         5ahesDirmohjq/JoIDn7eIDzBCOIAsSB9kIYYFDWjG+jQ4i1RrsnlR42yMRYaw/Uoytw
+         1n2F6/Dh+75GtsyoiuslYti886ZQp7QDb40eOOkUb5VpFERryBSIZRh6Zi4CSGtHQqxT
+         BFxSpQoK+nTulVEOXmTlcYUWMefN9RJjQlOYbaqXUs4mX0inM209Nf3nnn673umI0M7I
+         hnBbD8HiEQw12vj99BYCV02ci96ilCzXu2geOlQ72E00dCQCFOzdL4lHTENTYH3wkyIM
+         6nRw==
+X-Gm-Message-State: APjAAAVnff6PfD4ejnobKY5VBmtGcz+HrPLS0G9iPSEYhtMdtZMAKFtg
+        y2an3LRZ6JdAoXDuHBVTPjjP7872c6Pu1Y+kiFI=
+X-Google-Smtp-Source: APXvYqzbHmTIiLLBcDNHx1XOmhoqOJ3rHCA+IIDU64OmMx/ZJe1bPYYpcsLWoXqB13uKral4ch1GVGbDWvKUH5Jnshs=
+X-Received: by 2002:ac2:4192:: with SMTP id z18mr5405023lfh.39.1551923601131;
+ Wed, 06 Mar 2019 17:53:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20190305154951.4407-1-brandon1024.br@gmail.com> <xmqqy35rpp13.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqy35rpp13.fsf@gitster-ct.c.googlers.com>
+From:   Brandon Richardson <brandon1024.br@gmail.com>
+Date:   Wed, 6 Mar 2019 21:52:55 -0400
+Message-ID: <CAETBDP4MUN6pV2-xC=qsxnVynHuexOkU-nYbQ1OWeNGwBt3-Ng@mail.gmail.com>
+Subject: Re: [PATCH v4] commit-tree: utilize parse-options api
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear International Sales & Marketing Director
-Zhejiang Wuchuan Industrial Co., Ltd,
+On Wed, Mar 6, 2019 at 7:21 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > +When mixing `-m` and `-F` options, the commit log message will be
+> > +composed in the order in which the options are given.
+>
+> It may be just me, but this new paragraph made me think that we can
+> give at most one -m and one -F option at the same time in any order,
+> and multiple -m or -F options are not supported.  That, obviously,
+> is not the impression we want to give to the readers.
+>
+> Even when you are not mixing -m and -F, but using -m more than once,
+> the log message will be composed in the order in which options are
+> given.  So probably the word "mixing" is the primary culprit of
+> making the sentence easier to be misunderstood.
+>
+>         When using more than one `-m` or `-F` options, ...
+>
+> perhaps.
 
-Hello, this is Eiichi Hasegawa from LIFESTYLE EXPO TOKYO Show Management.
-LIFESTYLE EXPO TOKYO is Japan's leading "B-to-B" show for Interior, Lifestyle products, Tableware/Kitchenware and Gifts.
+Good call, 'mixing' is not the right word here. Will fix.
 
-***************************************************************************
-  SPECIAL DISCOUNT for LIFESTYLE EXPO TOKYO 2020 January is available!
-       >> Until March 31st, 2019! 
+> The change to this main function looks quite straight-forward.  I am
+> kind of surprised that a very low hanging fruit like this had survived
+> without getting hit by parseopt a lot earlier ;-)
 
-  Book the Best Booth Location with Discount Price!                                            
-  Send us inquiry form NOW to find out more about the show!
-***************************************************************************
-
-Every year, many exhibitors have in-depth business meetings with high quality buyers on site.
-
-Moreover, we offer exclusive services for International exhibitors! (FREE of charge)
-1) Email blast to our Importers/Distributors database
-2) Promotion Opportunity via Official Instagram and Facebook
-3) Listing in Online Exhibitor & Product Search
-4) Press Releases featuring International Exhibitors/Products
-
-LIFESTYLE EXPO TOKYO 2020 will be a good opportunity for you to expand your business in the Japanese and Asian market!
-
-To receive further information such as the latest booth availability, cost estimation, and so on, please simply reply to this email now.
-
-== REPLY FORM ==============================================
-mailto:lifestyle-eng@reedexpo.co.jp
-Company Name:
-Contact Person:
-Email:
-TEL:
-Products:
-
-Your Request:
-[ ] Cost Information
-[ ] Available Booth Locations
-[ ] Visitors List
-[ ] Other (                          　  )
-============================================================
-
-We look forward to hearing from you.
-
-
-Sincerely,
-
-
-Eiichi Hasegawa (Mr.), Qu Jun (Mr.), Choi Ilyong (Mr.)
-LIFESTYLE EXPO TOKYO Show Management
-Reed Exhibitions Japan Ltd.
-TEL: +81-3-3349-8505
-mailto:lifestyle-eng@reedexpo.co.jp
-
-
-*****************************************************************************************
-LIFESTYLE EXPO TOKYO 2020 [January] 
-
-LIFESTYLE EXPO TOKYO 2020 [January] consists of 7 specialised shows and 3 concurrent shows
-
-- 3rd Variety-Gifts Expo January (GIFTEX TOKYO 2020) 
-- 3rd Baby & Kids Expo Tokyo January 
-- 3rd Fashion Goods & Accessories Expo Tokyo January 
-- 3rd Table & Kitchenware Expo Tokyo January 
-- 3rd Health & Beauty Goods Expo Tokyo January 
-- 3rd Interior Products & Furniture Expo January (INTERIOR TOKYO 2020)
-- 16th INT'L FLOWER & PLANTS EXPO TOKYO (IFEX 2020) 
-
-WEB: https://www.lifestyle-expo-spring.jp/en-gb.html
-
-<Concurrent Shows>
-- 8th Int'l Cosmetics Trade Fair (COSME TOKYO 2020)
-- 10th Int'l Cosmetics Development Expo (COSME Tech 2020)
-- 3rd Beauty & Health Foods Expo January (INNER BEAUTY TOKYO 2020)
-
-Date: January 20 (Mon.) - 22 (Wed.), 2020
-Venue: Makuhari Messe, Japan
-*****************************************************************************************
-
-ID:E36-G1402-0075
-
-
-
-
-
-
-
-
-This message is delivered to you to provide details of exhibitions and conferences organized, co-organized, or managed by Reed Exhibitions Japan Ltd.
-If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
-
-<Update contact information>
-Please click the URL below and follow the directions on the website to update your e-mail and other information.
-https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
-
-<Remove from list>
-Please reply to this mail changing the subject to "REMOVE FROM LIST".
-You will not receive any further information on this exhibition/conference.
+I was surprised too, commit-tree hasn't seen much love over the years.
+There are certainly others that could benefit from parse-options.
