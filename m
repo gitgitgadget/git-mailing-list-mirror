@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0237620248
-	for <e@80x24.org>; Fri,  8 Mar 2019 10:17:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BFFF20248
+	for <e@80x24.org>; Fri,  8 Mar 2019 10:17:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726424AbfCHKRZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 05:17:25 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:37427 "EHLO
+        id S1726427AbfCHKR3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 05:17:29 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:36060 "EHLO
         mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726420AbfCHKRY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 05:17:24 -0500
-Received: by mail-pf1-f196.google.com with SMTP id s22so13827291pfh.4
-        for <git@vger.kernel.org>; Fri, 08 Mar 2019 02:17:23 -0800 (PST)
+        with ESMTP id S1726351AbfCHKR3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 05:17:29 -0500
+Received: by mail-pf1-f196.google.com with SMTP id n22so13831544pfa.3
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 02:17:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PjcuevpGQFeHFqWt9eaXrCheV7xUXWfAUuiWgjc2qv0=;
-        b=TW42X7OHNU9Oec5fmLuBxy2ViYqG3q3nruCU7wYIJ5MtV521XZT+xikrjOjWmmnHEu
-         MWXDQn2fg6v5RdMAW+hnkKLUxaKFWkGO8HyXMNkgzPrYjCs/q9lQZK6mE7lUMjY3zkCk
-         Wl/As88f3WsfxIYx3xtFkvRDHmWUAaJS0eHNqMPlnWFhgqsYzlP707GlPt0WBo8MCRyV
-         N3VpwsZtHrW23mvunRWAPLLvcc9H6njng0eZYzH97/Ba0pZsffY9C3vr4HkDI9oLO+vj
-         /zW1KTBp1zQboyAyh/YBPtpN8ioepj0GT1nou04llFj/YwvABTdmGIOaS9CVS6qy/jvt
-         mEWA==
+        bh=xPcyt3ATNNs6Zbx3l64JaMumtK7vxUYyn01vhtDpGds=;
+        b=uvMIDxFvngg6D39US1tGYdPd+64x2qyy6GJLdKkJVHlsNDTXNJAcC3ayYv/oB54R9g
+         +1PfpZBCEar2Bmu8yTOHbqbvVTLTTRi1CkpbFoFwYKTLu3BvyuMpgals4EBjtpT07wTR
+         RSAo9yiefZLCyGYnYOy1sbs0RRuOyQjG0GYVCzu3n33Rn8o1Tok7VKvTWJpPa9wzCD7q
+         NAZN5eIT76jE1MzO+pkxx+Az2rPnq0GH1qVSQR3eYeHRz/LxK6FNlQVLcqsgK7tpyfCR
+         koYY3kI3dleN5EKzVTpB4v0Y2J8YXyQVioIzQAgfvRhMDd8xjcYGKSb7KVyqRXUlEcaa
+         0Opg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PjcuevpGQFeHFqWt9eaXrCheV7xUXWfAUuiWgjc2qv0=;
-        b=BljTVpgXwPZxCoFfax6xKmP6rLL3xMeFOmQjfPPMUzFeHuEZ80bS1ZdxDs8g8bD61j
-         kAFcJj5m/B4svU1bhOIPs9MktcKDudtiWSdvXIMzn5741v0jx4yBkktnn987bPZYMWIT
-         7HYNFxaYQF7UoVmhgoCJgreDgLvS0DqFB5MWdvoSm1WBIkbMEMkrv0JDma4zUEXdeoZP
-         BOWAXhgLiFizWaIUawkYH4mzEY5WPXkS4WheNYdSE8P2nERt2Z14t5RPFrGpmsdw3j6c
-         kAzWQ2n8phBgtMitA3e4YZjCZvEQLs0YxAx/t6SHxC5l+yX/axT9mNnjXMBbRKLqLH1N
-         ri3g==
-X-Gm-Message-State: APjAAAW+SCBWPqO+0JElfqDtpsjIMU673H9QaurRXxpaJNdAinHarsM5
-        ee1t6MqdxGIEnvXAyisRK7ux7xNC
-X-Google-Smtp-Source: APXvYqwCRHu/5nOtqyinLwuyFjbu2dMHyRWSTV1EgCgJQAUYVI1+EHdKNmX2ksxNSG7RK52xel6Lag==
-X-Received: by 2002:a17:902:7b85:: with SMTP id w5mr18192722pll.288.1552040243366;
-        Fri, 08 Mar 2019 02:17:23 -0800 (PST)
+        bh=xPcyt3ATNNs6Zbx3l64JaMumtK7vxUYyn01vhtDpGds=;
+        b=pbrSp5LnMu3xx2AhYG+wzGU2jZsPINFWMyYbC05ogcJz8XI8ASe4VW6NykwCfEvbtI
+         Wd9fffqeyBusvofE6c578eVmlypYyi2m8RNqeigYdC88PzcUP62wu84tSbnGP9XtyQAJ
+         4ZhXdsIeeGAl1/HI9pXIvCTrArT9mPoW0viJs25K4DqJGeGNEMbiXQLAV03LO3YwTzid
+         X6x01PYeSkYn7zxQWN+pRM5PlJng6gs3rYNPrbU/S7Ilzp7Nqy3wAO2nPLWvxkqsmvXM
+         bCx8VguSzbnSW6Qjq8ZTABvi4xAM4fWv6m885it5Wb3XcjSheJ71Vc9u4SfBbbRp9/al
+         u5uQ==
+X-Gm-Message-State: APjAAAUNfv3qXPtQ6nEPjtKym8YtYh6u+z6+J4QNKPxVu/FDWBkI736H
+        cyvFVHsyZiozaamVFzH9JkiZ0uA4
+X-Google-Smtp-Source: APXvYqyKM1fYnOTqauTm+Nr8ramjkbdh2Z+pFpz483qP2xZH7ovyqG2sF2SO3W+rNzbCs885PDmM4Q==
+X-Received: by 2002:aa7:90c7:: with SMTP id k7mr17500827pfk.186.1552040247831;
+        Fri, 08 Mar 2019 02:17:27 -0800 (PST)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id 23sm17591454pft.187.2019.03.08.02.17.20
+        by smtp.gmail.com with ESMTPSA id q86sm24501018pfi.171.2019.03.08.02.17.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Mar 2019 02:17:22 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 08 Mar 2019 17:17:19 +0700
+        Fri, 08 Mar 2019 02:17:27 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 08 Mar 2019 17:17:23 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v1 04/11] restore: disable overlay mode by default
-Date:   Fri,  8 Mar 2019 17:16:48 +0700
-Message-Id: <20190308101655.9767-5-pclouds@gmail.com>
+Subject: [PATCH v1 05/11] checkout: factor out worktree checkout code
+Date:   Fri,  8 Mar 2019 17:16:49 +0700
+Message-Id: <20190308101655.9767-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
 In-Reply-To: <20190308101655.9767-1-pclouds@gmail.com>
 References: <20190308101655.9767-1-pclouds@gmail.com>
@@ -71,91 +71,146 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Overlay mode is considered confusing when the command is about
-restoring files on worktree. Disable it by default. The user can still
-turn it on, or use 'git checkout' which still has overlay mode on by
-default.
-
-While at there make the check in checkout_branch() stricter. Neither
---overlay or --no-overlay should be accepted in branch switching mode.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/checkout.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ builtin/checkout.c | 108 +++++++++++++++++++++++++--------------------
+ 1 file changed, 59 insertions(+), 49 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c52ce13d2a..9e59bf792f 100644
+index 9e59bf792f..5fb85e7b73 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -1196,9 +1196,9 @@ static int checkout_branch(struct checkout_opts *opts,
- 		die(_("'%s' cannot be used with switching branches"),
- 		    "--patch");
+@@ -326,17 +326,73 @@ static void mark_ce_for_checkout_no_overlay(struct cache_entry *ce,
+ 	}
+ }
  
--	if (!opts->overlay_mode)
-+	if (opts->overlay_mode != -1)
- 		die(_("'%s' cannot be used with switching branches"),
--		    "--no-overlay");
-+		    "--[no]-overlay");
++static int checkout_worktree(const struct checkout_opts *opts)
++{
++	struct checkout state = CHECKOUT_INIT;
++	int nr_checkouts = 0, nr_unmerged = 0;
++	int errs = 0;
++	int pos;
++
++	state.force = 1;
++	state.refresh_cache = 1;
++	state.istate = &the_index;
++
++	enable_delayed_checkout(&state);
++	for (pos = 0; pos < active_nr; pos++) {
++		struct cache_entry *ce = active_cache[pos];
++		if (ce->ce_flags & CE_MATCHED) {
++			if (!ce_stage(ce)) {
++				errs |= checkout_entry(ce, &state,
++						       NULL, &nr_checkouts);
++				continue;
++			}
++			if (opts->writeout_stage)
++				errs |= checkout_stage(opts->writeout_stage,
++						       ce, pos,
++						       &state,
++						       &nr_checkouts, opts->overlay_mode);
++			else if (opts->merge)
++				errs |= checkout_merged(pos, &state,
++							&nr_unmerged);
++			pos = skip_same_name(ce, pos) - 1;
++		}
++	}
++	remove_marked_cache_entries(&the_index, 1);
++	remove_scheduled_dirs();
++	errs |= finish_delayed_checkout(&state, &nr_checkouts);
++
++	if (opts->count_checkout_paths) {
++		if (nr_unmerged)
++			fprintf_ln(stderr, Q_("Recreated %d merge conflict",
++					      "Recreated %d merge conflicts",
++					      nr_unmerged),
++				   nr_unmerged);
++		if (opts->source_tree)
++			fprintf_ln(stderr, Q_("Updated %d path from %s",
++					      "Updated %d paths from %s",
++					      nr_checkouts),
++				   nr_checkouts,
++				   find_unique_abbrev(&opts->source_tree->object.oid,
++						      DEFAULT_ABBREV));
++		else if (!nr_unmerged || nr_checkouts)
++			fprintf_ln(stderr, Q_("Updated %d path from the index",
++					      "Updated %d paths from the index",
++					      nr_checkouts),
++				   nr_checkouts);
++	}
++
++	return errs;
++}
++
+ static int checkout_paths(const struct checkout_opts *opts,
+ 			  const char *revision)
+ {
+ 	int pos;
+-	struct checkout state = CHECKOUT_INIT;
+ 	static char *ps_matched;
+ 	struct object_id rev;
+ 	struct commit *head;
+ 	int errs = 0;
+ 	struct lock_file lock_file = LOCK_INIT;
+-	int nr_checkouts = 0, nr_unmerged = 0;
  
- 	if (opts->writeout_stage)
- 		die(_("'%s' cannot be used with switching branches"),
-@@ -1313,7 +1313,6 @@ static struct option *add_checkout_path_options(struct checkout_opts *opts,
- 		OPT_BOOL('p', "patch", &opts->patch_mode, N_("select hunks interactively")),
- 		OPT_BOOL(0, "ignore-skip-worktree-bits", &opts->ignore_skipworktree,
- 			 N_("do not limit pathspecs to sparse entries only")),
--		OPT_BOOL(0, "overlay", &opts->overlay_mode, N_("use overlay mode (default)")),
- 		OPT_END()
- 	};
- 	struct option *newopts = parse_options_concat(prevopts, options);
-@@ -1333,7 +1332,6 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	opts->overwrite_ignore = 1;
- 	opts->prefix = prefix;
- 	opts->show_progress = -1;
--	opts->overlay_mode = -1;
+ 	trace2_cmd_mode(opts->patch_mode ? "patch" : "path");
  
- 	git_config(git_checkout_config, opts);
+@@ -422,53 +478,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 		return 1;
  
-@@ -1505,6 +1503,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create reflog for new branch")),
- 		OPT_BOOL(0, "guess", &opts.dwim_new_local_branch,
- 			 N_("second guess 'git checkout <no-such-branch>' (default)")),
-+		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode (default)")),
- 		OPT_END()
- 	};
- 	int ret;
-@@ -1517,6 +1516,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	opts.accept_pathspec = 1;
- 	opts.implicit_detach = 1;
- 	opts.empty_pathspec_ok = 1;
-+	opts.overlay_mode = -1;
+ 	/* Now we are committed to check them out */
+-	state.force = 1;
+-	state.refresh_cache = 1;
+-	state.istate = &the_index;
+-
+-	enable_delayed_checkout(&state);
+-	for (pos = 0; pos < active_nr; pos++) {
+-		struct cache_entry *ce = active_cache[pos];
+-		if (ce->ce_flags & CE_MATCHED) {
+-			if (!ce_stage(ce)) {
+-				errs |= checkout_entry(ce, &state,
+-						       NULL, &nr_checkouts);
+-				continue;
+-			}
+-			if (opts->writeout_stage)
+-				errs |= checkout_stage(opts->writeout_stage,
+-						       ce, pos,
+-						       &state,
+-						       &nr_checkouts, opts->overlay_mode);
+-			else if (opts->merge)
+-				errs |= checkout_merged(pos, &state,
+-							&nr_unmerged);
+-			pos = skip_same_name(ce, pos) - 1;
+-		}
+-	}
+-	remove_marked_cache_entries(&the_index, 1);
+-	remove_scheduled_dirs();
+-	errs |= finish_delayed_checkout(&state, &nr_checkouts);
+-
+-	if (opts->count_checkout_paths) {
+-		if (nr_unmerged)
+-			fprintf_ln(stderr, Q_("Recreated %d merge conflict",
+-					      "Recreated %d merge conflicts",
+-					      nr_unmerged),
+-				   nr_unmerged);
+-		if (opts->source_tree)
+-			fprintf_ln(stderr, Q_("Updated %d path from %s",
+-					      "Updated %d paths from %s",
+-					      nr_checkouts),
+-				   nr_checkouts,
+-				   find_unique_abbrev(&opts->source_tree->object.oid,
+-						      DEFAULT_ABBREV));
+-		else if (!nr_unmerged || nr_checkouts)
+-			fprintf_ln(stderr, Q_("Updated %d path from the index",
+-					      "Updated %d paths from the index",
+-					      nr_checkouts),
+-				   nr_checkouts);
+-	}
++	errs |= checkout_worktree(opts);
  
- 	options = parse_options_dup(checkout_options);
- 	options = add_common_options(&opts, options);
-@@ -1551,6 +1551,7 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
- 	opts.switch_branch_doing_nothing_is_ok = 0;
- 	opts.only_merge_on_switching_branches = 1;
- 	opts.implicit_detach = 0;
-+	opts.overlay_mode = -1;
- 
- 	options = parse_options_dup(switch_options);
- 	options = add_common_options(&opts, options);
-@@ -1569,6 +1570,7 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
- 	struct option restore_options[] = {
- 		OPT_STRING('s', "source", &opts.from_treeish, "<tree-ish>",
- 			   N_("where the checkout from")),
-+		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode")),
- 		OPT_END()
- 	};
- 	int ret;
-@@ -1577,6 +1579,7 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
- 	opts.accept_ref = 0;
- 	opts.accept_pathspec = 1;
- 	opts.empty_pathspec_ok = 0;
-+	opts.overlay_mode = 0;
- 
- 	options = parse_options_dup(restore_options);
- 	options = add_common_options(&opts, options);
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		die(_("unable to write new index file"));
 -- 
 2.21.0.rc1.337.gdf7f8d0522
 
