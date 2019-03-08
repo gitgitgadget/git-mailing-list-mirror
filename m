@@ -2,126 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFC2820248
-	for <e@80x24.org>; Fri,  8 Mar 2019 16:27:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59E4D20248
+	for <e@80x24.org>; Fri,  8 Mar 2019 16:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726425AbfCHQ14 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 11:27:56 -0500
-Received: from mout.gmx.net ([212.227.15.15]:46797 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726171AbfCHQ14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 11:27:56 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lbujs-1gctlU0RDI-00jHj7; Fri, 08
- Mar 2019 17:27:52 +0100
-Date:   Fri, 8 Mar 2019 17:27:36 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Drop last MakeMaker reference
-In-Reply-To: <xmqq1s3ikurh.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903081718330.41@tvgsbejvaqbjf.bet>
-References: <pull.146.git.gitgitgadget@gmail.com> <xmqqfts469h5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1903071109020.41@tvgsbejvaqbjf.bet> <xmqq1s3ikurh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727116AbfCHQxY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 11:53:24 -0500
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:39384 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727110AbfCHQxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 11:53:23 -0500
+Received: by mail-ua1-f66.google.com with SMTP id s15so11600707uap.6
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 08:53:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=C7bKbDDQTXGHDhclr9mgt5DPYNN9dfo19+SD3+kXQfs=;
+        b=uN5Kk7RLISq7pO9F/pyj+xuWVCBW3ko/NjDxEsp2rEcbvNXkNDv27m40ikjFg6tKxF
+         A3ic4q3DuJ9IOCgERDpwVkHJSIl8NJeCx6UTOEUPiT3L3RkMxNMaNeLBy3Ufp/g0oSpX
+         7FTDIUGIbGOhJd+Ybb4oi3IUh7IINTrGe4gyM6U3tXxI7NPSWoWs6U4nkNkHZH3yYa/D
+         BhWG7MECzatErrFH0joMmb9I7+Zd6eGratXFFEZ8bP5tfHnZcgnMbMMTVxKRipUHkzcC
+         +d+EgnczIgu4PDaikqRflZKLH0iKWHH0C9Lwy43f3yWnYGEnwIk7ByeOGFEp9GEkpfHW
+         apRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=C7bKbDDQTXGHDhclr9mgt5DPYNN9dfo19+SD3+kXQfs=;
+        b=M9okkUN6pSNyXFfpltv3WqlHTNdZsA7HdPA1RUgveUQNOzmQ2Wv0yqjrh0f2+PTUWM
+         4N7skiI2kAVp4fYpXMc8Y+btV1TAWzZE9d7G+yHPDoCzloe9IA4L8upOSEQzj0+i+Ym4
+         RF0ui1/cc+YCkNCt+i8XlWciQQihoCi/hOOl+kLHR2EKFCsas8SmZP2/T+f/l3dlUtMb
+         N+2KkI3iA2/9ixtaL0BBKnaBUeT8roJ7ObJwz3ng8TkJjqN5aNJ5ttWkYNaM/ujq7u1w
+         NZzkE2Harq4wwYVdngUCtK6Iyqqw0s0Zl6Y+jk2MNeXyqQRQ6SiSc/W1nAuNV1H8WRXt
+         wE2Q==
+X-Gm-Message-State: APjAAAVz/w1DH3WRnk7Xt1nDhlignoRNZ5cY48eZdpC+nACkPszo4Cul
+        gU2UWjDP7N69U5sEL5r51Lj/BiiKGgZJvT+FEpMTYQ==
+X-Google-Smtp-Source: APXvYqwYlwGG6TTsdjRB4v6bd6Lddcz3g08M5s0dVWCb7YFKs7+K83vFJjiVlxuOVZ88rdlczsVKCItrcTDvV1vVpCI=
+X-Received: by 2002:ab0:6513:: with SMTP id w19mr10322395uam.19.1552064002448;
+ Fri, 08 Mar 2019 08:53:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BCRMu3y177YJlpHjinJO1mAXSgIoGZlwCVkviA1KSzZq1sGgp/T
- Nd+V06yMh1OR5Nrs7jU6gmWvzpuLyue0dl6CQ8Smtfz1uRviN9GFGZLdZwJmdQ68C1LwAtR
- 81fM/JxB0mRB1ODFM4PHLgGfmsNIpke+E9rS5JK9xzAx82Q/SHo2NdCeCWbGk35VLa8TLvG
- 3HmY5Z1EIIUh8QTaTDozA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:O5zA9vVQ8uM=:LCo+bo4ThPFpFmOsqIRGM3
- GTrDLco6IgEDutCexvQjcDwYW7j0zWWOiHXZ5Ky8o0tqLXkZYf6MGOYbehJ10/mX6dkFA0Vxq
- RC275bxRB/bcCfxd9dtrVsho0wvp4o+iAyPQ90giMjsrmu4bfgaSbRKWY40H07LQzn2GRgZsC
- oJS61o45zF9GV5+/C7RgOutuv14gtAaNC9gEWkNjfgdUupqnOjywVSVdBm1SMtg3UJ+5VXdM+
- 1t/RH1JshwqhVZz+mdSS8m+GSvhopLCtrwaFCYcVCORGhZHz4TLDabc9NOxDN1OPEzEkg2Bzo
- arhmSLtxzf2Ltm/mQAaV9rue3c2YdhpY9JwGV3yPFtbU8/Q74SfOGyNjxwvVr/b2FINPeih3x
- kTUaCylfdDKRMj2XmwdcAKIW7gmBIasGuJdM4gxmNj1DLDHZPgwsyZE+cVBDhJNNWeyckcE36
- XC8oWZH6+ljA6jykvsTg/nlAsNvQ05r5BcTXRNLJ60uaO/KjXYy0nOgtWyCBzYyPkCPCKwrz4
- KlLyteeTR2AgthOa+GhOyYBZOEzdgJE+JWOIVnN9BnPqpUxr2u+CqKjK33Z32YWhldPySIDgp
- 6h7xu/uaRHZCXL8QDSVgf6XoKax1BLSvkpwxUTkuQB98s5ytZX+ItQraKEvttuy88wn5Wk3VR
- b8FKooor3+YfM2uwgurx9cu9BYtXBW5smhQ0jmXdYUbhPVgSvCDcOwoIGul76RrRuGLEA2jGh
- yKFiJZ4LpdhWYk7QcMkwjVxePdhQKDvfG56gtX6HrP9JQ1ErBjUVNNHXYN9VouFe+UYHs1A0h
- njxfa25jFJFQ570zMFqt7yfq58G5ItYqZ+AwVmxnz55RwZLhlM7iKDfsD1GXVuvFD+UE00tYb
- cqpvW2rEuX3fsaNQzrY69JNEzySHssGQNZuwa+yUMD8UH+CF1f7IBAuVuUZZEF+lz+0fuelON
- M5C8Qtm3ZwQ==
+References: <20190220225846.10658-1-newren@gmail.com>
+In-Reply-To: <20190220225846.10658-1-newren@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 8 Mar 2019 08:53:11 -0800
+Message-ID: <CABPp-BHp83H1qhrd-j1yvdWz56AwDJogFjf_3iaEDVjFvGansg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/5] Fix some fast-import parsing issues
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>, David Barr <david.barr@cordelta.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-On Fri, 8 Mar 2019, Junio C Hamano wrote:
+On Wed, Feb 20, 2019 at 2:58 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> I found a few issues with parsing in fast-import (dating back to
+....
+> I've cc'ed the relevant folks, and have a few patches that fix the
+> issue and I think make the parser more robust against future issues in
+> a way that I think is safe enough for backward compatibility, but
+> "backward compatible enough" might concern some folks; if so, please
+> take a look at patches 4 and 5.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Sun, 3 Mar 2019, Junio C Hamano wrote:
-> >
-> >> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> >> writes:
-> >> 
-> >> > Back when we stopped using MakeMaker, we forgot one reference...
-> >> >
-> >> > Johannes Schindelin (1):
-> >> >   mingw: drop MakeMaker reference
-> >> >
-> >> >  config.mak.uname | 1 -
-> >> >  1 file changed, 1 deletion(-)
-> >> >
-> >> >
-> >> > base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
-> >> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-146%2Fdscho%2Fno-perl-makemaker-v1
-> >> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-146/dscho/no-perl-makemaker-v1
-> >> > Pull-Request: https://github.com/gitgitgadget/git/pull/146
-> >> 
-> >> Good ;-)
-> >> Thanks.
-> >
-> > Gentle reminder that this has not made it into `pu` yet...
-> 
-> Thanks.
-> 
-> I'll try to make it a habit not to respond to 0/1 (but instead to
-> 1/1) as it is quite inefficient to get to 1/1 from 0/1 at least for
-> me X-<.
-
-Hehe. I do have something for you there:
-
-https://github.com/git-for-windows/build-extra/blob/master/apply-from-public-inbox.sh
-
--- snip --
-
-> Or perhaps GGG can learn to avoid 0/1 for a single-patch topic ;-)
-
-It is easier, and more consistent, to have a cover letter even then, for
-things like the broader explanation of the context, the changes since the
-previous iteration, and the range-diff (which would make v2, v3, v4, etc
-utterly unreadable from my point of view if they were integrated into the
-single patches, as I used to do with interdiffs).
-
-> Thanks anyway.  Will try to apply directly on top of master.
-
-Thank you!
-
-While we're talking about "directly on top of master"... *after* it got
-some review, I would love to ask for the same favor for
-https://public-inbox.org/git/pull.160.git.gitgitgadget@gmail.com
-
-On the other hand, it is an old bug, I know, and it will break all CI
-builds for branches that are based off of older commits, anyway. I guess
-we'll need some sort of horrible hack in the git-sdk-64-minimal thing, to
-allow for patching this on the CI side, without adding commits to all of
-those branches. :-(
-
-So: I made up my mind, and that MSYS2 runtime v3.x patch does not need to
-be fast-tracked; it would not fix all the CI builds...
-
-Ciao,
-Dscho
+Just thought I'd ping to see if folks have any concerns with this
+slight tweak to backward compatibility; if not, I'll just repost the
+patches removing the RFC label.
