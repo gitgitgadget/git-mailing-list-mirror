@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0AEE20248
-	for <e@80x24.org>; Fri,  8 Mar 2019 09:58:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13C5B20248
+	for <e@80x24.org>; Fri,  8 Mar 2019 09:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726392AbfCHJ6n (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 04:58:43 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45110 "EHLO
+        id S1726420AbfCHJ6t (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 04:58:49 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39317 "EHLO
         mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726286AbfCHJ6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 04:58:43 -0500
-Received: by mail-pf1-f194.google.com with SMTP id v21so13784562pfm.12
-        for <git@vger.kernel.org>; Fri, 08 Mar 2019 01:58:42 -0800 (PST)
+        with ESMTP id S1726286AbfCHJ6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 04:58:48 -0500
+Received: by mail-pf1-f194.google.com with SMTP id i20so13788748pfo.6
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 01:58:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nDTa/3HgzhnPPF2WfCIFYmBb+hpVNaGQFmlWfc1DD9c=;
-        b=tdzpGoW2JpnykhCnWNrbGEldtauCdtaXrqY78qO3N+yxVGfty2Kn43R1/37ikaoBzg
-         grjjirAl6/bmDsQ/E8UCbKGSeFKnoTYi5jdSAT+8YUgXJeAf5zdMpff/f0MVT5ri/MGL
-         qR8rVNLEQpbNUQxJ4I1Plm7XDKpch7Aba1G7xxTXfwNA3XOqm452uKZAWadsyOyiMNjx
-         pMvZSB1cFF2DUNL/IN5Ndoyow1mWxMOFabHnxQal7nk+ln7v27vbYKwU1GIGQLXsuo9f
-         kA6pIgp7X//TrpUVxYr+RINDdNfE6Gl6z4zFw0pISJ76T9ouFAxgAC+3WtBvZgzTWZIN
-         kglQ==
+        bh=l2s0Pro9+dAFqGCAd29YpkLXyQmG7xEHiYxC6qNHHYc=;
+        b=eacx/lFPwsau14aakP31H1JNWqiyIgDfaNgMRLDaX1bnypi+vpizBPH3SHm2d+4qki
+         DPNL1dSv7onJWVQLrZpWS/vO1/BIZHKT2t6Q/a3qVEUmbHF0mYY7Sbs5pQwlCuQ6If0v
+         CGBlV4u6cbgZ8J2uIk2PQ4vUZ8NAHUCzATUDZk7+TwEpiaL89+XJpqjjnkrwAhzW+A4r
+         DEBAlalYAuX8j9jlEVkPniPMROjSgWuVFrvSp97sUfvccHauWtzRXoTMW9+24DkDEbgJ
+         gaXRy+yvkin9wHT2LyeK3AbXSzcDL3yW9yhsQFkguXmsMr4/o6VudaXo1mX3Z4iERC+W
+         ePng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nDTa/3HgzhnPPF2WfCIFYmBb+hpVNaGQFmlWfc1DD9c=;
-        b=XOXK8ogltf+d8XTWJn/BVrXzbs2u6Y0C76V1Cl910sYsgpzLBQhaXb5BPjFdV29kTH
-         qlvnVWfiAQ/hQoHQC30GgNeJD38Ddy1qj2f2EwV9cVzXWqRsrS1zXou9eNAw9q6sBR+y
-         TzDIcEfkruNoSvUuTIGvYNyzVz6y5fao5XA4FlnCaCOaXtib0cEeGqG7fik0JwtvSc/M
-         ky22Y96MyrG+55AOfzu9Opxvk0ZeYp0iOTIJPBpBv6OdlE8gPQA8v2qOUanf0BRexzfN
-         SOOPSS408M81R7ftj0xo3xwJKyDaLcobYeCXSBDybFj1ij90i2+0qYUmL1EjLzBZFt9L
-         leRQ==
-X-Gm-Message-State: APjAAAVc1AyRbP6GTMakqZ0mC3lwH3bOdgRpUQVtUmHLS0KVuJlgZ5IS
-        yg0cUZK8zGiDQ5wHvXh4IDY=
-X-Google-Smtp-Source: APXvYqwtHIRi2vmy5XAX6pxTus/zoOQAeQG9nFMkDvDkyf5a+hZG0WfCEltMVGRUS9Wq0tCjbLTM0A==
-X-Received: by 2002:a17:902:204:: with SMTP id 4mr1152020plc.180.1552039122595;
-        Fri, 08 Mar 2019 01:58:42 -0800 (PST)
+        bh=l2s0Pro9+dAFqGCAd29YpkLXyQmG7xEHiYxC6qNHHYc=;
+        b=p8VVF+qrqN6QSiFOyvZuXwHao4lSBrhD3tcwI48HdTEU3JNJp6KJT5UJJYj/euOMW/
+         GWINhWbv8plIs9lGgBu4pcTjLfzW70r5cJ24W+F/5VpfxUiNQZX38ycl57oxnEfmGwGF
+         fccVWlc/Q5RsOvT3VQw4BGQL7xalLQRuXfhTzC8MdbV1wXy9nHxOeb1Vyb8YwJHnq/Ng
+         17DFkJY0D73wOlddHX7iKoQA+domcJLvDAEid/kl/S68awEoeklojoigE4zMmidtQaM2
+         v+IYm7ymaagjdUBHumATxt7gVTwqY8Fgt80beW8UAsbquzvd1H+UI2GVlfucKfyQEM34
+         TSSw==
+X-Gm-Message-State: APjAAAVQpWuXhrNoiprKUakfdBulpQk132kDc7ff9lF6XmOooKk5Vi64
+        8kEwElPUotaVq3Gb/mMQ20M=
+X-Google-Smtp-Source: APXvYqxRAnlIn7s9uODKWafOkJFyTjnz4WUdH9YWIy5QzO5AyQBKL7ySkQdgQRsLsSvUKPGUgiDhkA==
+X-Received: by 2002:a63:5702:: with SMTP id l2mr16078044pgb.2.1552039127760;
+        Fri, 08 Mar 2019 01:58:47 -0800 (PST)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id b138sm18242330pfb.48.2019.03.08.01.58.39
+        by smtp.gmail.com with ESMTPSA id e14sm23690990pga.61.2019.03.08.01.58.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Mar 2019 01:58:41 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 08 Mar 2019 16:58:37 +0700
+        Fri, 08 Mar 2019 01:58:46 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 08 Mar 2019 16:58:42 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         szeder.dev@gmail.com
-Subject: [PATCH v3 08/21] checkout: move 'confict_style' and 'dwim_..' to checkout_opts
-Date:   Fri,  8 Mar 2019 16:57:39 +0700
-Message-Id: <20190308095752.8574-9-pclouds@gmail.com>
+Subject: [PATCH v3 09/21] checkout: split options[] array in three pieces
+Date:   Fri,  8 Mar 2019 16:57:40 +0700
+Message-Id: <20190308095752.8574-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
 In-Reply-To: <20190308095752.8574-1-pclouds@gmail.com>
 References: <20190208090401.14793-1-pclouds@gmail.com>
@@ -69,89 +69,178 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These local variables are referenced by struct option[]. This struct
-will soon be broken down, moved away and we can't rely on local
-variables anymore. Move these two to struct checkout_opts in
-preparation for that.
+This is a preparation step for introducing new commands that do parts
+of what checkout does. There will be two new commands, one is about
+switching branches, detaching HEAD... one about checking out
+paths. These share the a subset of command line options. The rest of
+command line options are separate.
 ---
- builtin/checkout.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ builtin/checkout.c | 82 +++++++++++++++++++++++++++++++++-------------
+ parse-options-cb.c | 17 ++++++++++
+ parse-options.h    |  1 +
+ 3 files changed, 77 insertions(+), 23 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index baefe3c942..4b43433941 100644
+index 4b43433941..7d23083282 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -47,6 +47,8 @@ struct checkout_opts {
- 	int show_progress;
- 	int count_checkout_paths;
- 	int overlay_mode;
-+	int no_dwim_new_local_branch;
-+
- 	/*
- 	 * If new checkout options are added, skip_merge_working_tree
- 	 * should be updated accordingly.
-@@ -58,6 +60,7 @@ struct checkout_opts {
- 	int new_branch_log;
- 	enum branch_track track;
- 	struct diff_options diff_options;
-+	char *conflict_style;
+@@ -1342,15 +1342,31 @@ static int checkout_branch(struct checkout_opts *opts,
+ 	return switch_branches(opts, new_branch_info);
+ }
  
- 	int branch_exists;
- 	const char *prefix;
-@@ -1344,8 +1347,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	struct checkout_opts real_opts;
- 	struct checkout_opts *opts = &real_opts;
- 	struct branch_info new_branch_info;
--	char *conflict_style = NULL;
--	int dwim_new_local_branch, no_dwim_new_local_branch = 0;
-+	int dwim_new_local_branch;
- 	int dwim_remotes_matched = 0;
+-int cmd_checkout(int argc, const char **argv, const char *prefix)
++static struct option *add_common_options(struct checkout_opts *opts,
++					 struct option *prevopts)
+ {
+-	struct checkout_opts real_opts;
+-	struct checkout_opts *opts = &real_opts;
+-	struct branch_info new_branch_info;
+-	int dwim_new_local_branch;
+-	int dwim_remotes_matched = 0;
  	struct option options[] = {
  		OPT__QUIET(&opts->quiet, N_("suppress progress reporting")),
-@@ -1370,12 +1372,12 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL_F(0, "overwrite-ignore", &opts->overwrite_ignore,
- 			   N_("update ignored files (default)"),
- 			   PARSE_OPT_NOCOMPLETE),
--		OPT_STRING(0, "conflict", &conflict_style, N_("style"),
++		{ OPTION_CALLBACK, 0, "recurse-submodules", NULL,
++			    "checkout", "control recursive updating of submodules",
++			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater },
++		OPT_BOOL(0, "progress", &opts->show_progress, N_("force progress reporting")),
++		OPT__FORCE(&opts->force, N_("force checkout (throw away local modifications)"),
++			   PARSE_OPT_NOCOMPLETE),
++		OPT_BOOL('m', "merge", &opts->merge, N_("perform a 3-way merge with the new branch")),
 +		OPT_STRING(0, "conflict", &opts->conflict_style, N_("style"),
- 			   N_("conflict style (merge or diff3)")),
++			   N_("conflict style (merge or diff3)")),
++		OPT_END()
++	};
++	struct option *newopts = parse_options_concat(prevopts, options);
++	free(prevopts);
++	return newopts;
++}
++
++static struct option *add_switch_branch_options(struct checkout_opts *opts,
++						struct option *prevopts)
++{
++	struct option options[] = {
+ 		OPT_STRING('b', NULL, &opts->new_branch, N_("branch"),
+ 			   N_("create and checkout a new branch")),
+ 		OPT_STRING('B', NULL, &opts->new_branch_force, N_("branch"),
+@@ -1360,34 +1376,49 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		OPT_SET_INT('t', "track",  &opts->track, N_("set upstream info for new branch"),
+ 			BRANCH_TRACK_EXPLICIT),
+ 		OPT_STRING(0, "orphan", &opts->new_orphan_branch, N_("new-branch"), N_("new unparented branch")),
++		OPT_BOOL_F(0, "overwrite-ignore", &opts->overwrite_ignore,
++			   N_("update ignored files (default)"),
++			   PARSE_OPT_NOCOMPLETE),
++		OPT_BOOL(0, "no-guess", &opts->no_dwim_new_local_branch,
++			 N_("second guess 'git checkout <no-such-branch>'")),
++		OPT_BOOL(0, "ignore-other-worktrees", &opts->ignore_other_worktrees,
++			 N_("do not check if another worktree is holding the given ref")),
++		OPT_END()
++	};
++	struct option *newopts = parse_options_concat(prevopts, options);
++	free(prevopts);
++	return newopts;
++}
++
++static struct option *add_checkout_path_options(struct checkout_opts *opts,
++						struct option *prevopts)
++{
++	struct option options[] = {
+ 		OPT_SET_INT_F('2', "ours", &opts->writeout_stage,
+ 			      N_("checkout our version for unmerged files"),
+ 			      2, PARSE_OPT_NONEG),
+ 		OPT_SET_INT_F('3', "theirs", &opts->writeout_stage,
+ 			      N_("checkout their version for unmerged files"),
+ 			      3, PARSE_OPT_NONEG),
+-		OPT__FORCE(&opts->force, N_("force checkout (throw away local modifications)"),
+-			   PARSE_OPT_NOCOMPLETE),
+-		OPT_BOOL('m', "merge", &opts->merge, N_("perform a 3-way merge with the new branch")),
+-		OPT_BOOL_F(0, "overwrite-ignore", &opts->overwrite_ignore,
+-			   N_("update ignored files (default)"),
+-			   PARSE_OPT_NOCOMPLETE),
+-		OPT_STRING(0, "conflict", &opts->conflict_style, N_("style"),
+-			   N_("conflict style (merge or diff3)")),
  		OPT_BOOL('p', "patch", &opts->patch_mode, N_("select hunks interactively")),
  		OPT_BOOL(0, "ignore-skip-worktree-bits", &opts->ignore_skipworktree,
  			 N_("do not limit pathspecs to sparse entries only")),
--		OPT_BOOL(0, "no-guess", &no_dwim_new_local_branch,
-+		OPT_BOOL(0, "no-guess", &opts->no_dwim_new_local_branch,
- 			 N_("do not second guess 'git checkout <no-such-branch>'")),
- 		OPT_BOOL(0, "ignore-other-worktrees", &opts->ignore_other_worktrees,
- 			 N_("do not check if another worktree is holding the given ref")),
-@@ -1393,6 +1395,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	opts->prefix = prefix;
- 	opts->show_progress = -1;
- 	opts->overlay_mode = -1;
-+	opts->no_dwim_new_local_branch = 0;
+-		OPT_BOOL(0, "no-guess", &opts->no_dwim_new_local_branch,
+-			 N_("do not second guess 'git checkout <no-such-branch>'")),
+-		OPT_BOOL(0, "ignore-other-worktrees", &opts->ignore_other_worktrees,
+-			 N_("do not check if another worktree is holding the given ref")),
+-		{ OPTION_CALLBACK, 0, "recurse-submodules", NULL,
+-			    "checkout", "control recursive updating of submodules",
+-			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater },
+-		OPT_BOOL(0, "progress", &opts->show_progress, N_("force progress reporting")),
+ 		OPT_BOOL(0, "overlay", &opts->overlay_mode, N_("use overlay mode (default)")),
+-		OPT_END(),
++		OPT_END()
+ 	};
++	struct option *newopts = parse_options_concat(prevopts, options);
++	free(prevopts);
++	return newopts;
++}
++
++int cmd_checkout(int argc, const char **argv, const char *prefix)
++{
++	struct checkout_opts real_opts;
++	struct checkout_opts *opts = &real_opts;
++	struct branch_info new_branch_info;
++	int dwim_remotes_matched = 0;
++	int dwim_new_local_branch;
++	struct option *options = NULL;
  
- 	git_config(git_checkout_config, opts);
+ 	memset(opts, 0, sizeof(*opts));
+ 	memset(&new_branch_info, 0, sizeof(new_branch_info));
+@@ -1401,6 +1432,11 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
  
-@@ -1401,7 +1404,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	opts->track = BRANCH_TRACK_UNSPECIFIED;
+ 
++	options = parse_options_dup(options);
++	options = add_common_options(opts, options);
++	options = add_switch_branch_options(opts, options);
++	options = add_checkout_path_options(opts, options);
++
  	argc = parse_options(argc, argv, prefix, options, checkout_usage,
  			     PARSE_OPT_KEEP_DASHDASH);
  
--	dwim_new_local_branch = !no_dwim_new_local_branch;
-+	dwim_new_local_branch = !opts->no_dwim_new_local_branch;
- 	if (opts->show_progress < 0) {
- 		if (opts->quiet)
- 			opts->show_progress = 0;
-@@ -1409,9 +1412,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 			opts->show_progress = isatty(2);
- 	}
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 2733393546..caaeed896f 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -122,6 +122,23 @@ int parse_opt_tertiary(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
  
--	if (conflict_style) {
-+	if (opts->conflict_style) {
- 		opts->merge = 1; /* implied */
--		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
-+		git_xmerge_config("merge.conflictstyle", opts->conflict_style, NULL);
- 	}
++struct option *parse_options_dup(const struct option *o)
++{
++	struct option *opts;
++	int nr = 0;
++
++	while (o && o->type != OPTION_END) {
++		nr++;
++		o++;
++	}
++
++	ALLOC_ARRAY(opts, nr + 1);
++	memcpy(opts, o - nr, sizeof(*o) * nr);
++	memset(opts + nr, 0, sizeof(*opts));
++	opts[nr].type = OPTION_END;
++	return opts;
++}
++
+ struct option *parse_options_concat(struct option *a, struct option *b)
+ {
+ 	struct option *ret;
+diff --git a/parse-options.h b/parse-options.h
+index 7d83e2971d..9a90c332a5 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -257,6 +257,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
  
- 	if ((!!opts->new_branch + !!opts->new_branch_force + !!opts->new_orphan_branch) > 1)
+ int parse_options_end(struct parse_opt_ctx_t *ctx);
+ 
++struct option *parse_options_dup(const struct option *a);
+ struct option *parse_options_concat(struct option *a, struct option *b);
+ 
+ /*----- some often used options -----*/
 -- 
 2.21.0.rc1.337.gdf7f8d0522
 
