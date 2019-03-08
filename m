@@ -2,103 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C7F7202BB
-	for <e@80x24.org>; Fri,  8 Mar 2019 00:08:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48A9C20248
+	for <e@80x24.org>; Fri,  8 Mar 2019 00:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbfCHAI0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 19:08:26 -0500
-Received: from mail-pf1-f179.google.com ([209.85.210.179]:37574 "EHLO
-        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726234AbfCHAI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 19:08:26 -0500
-Received: by mail-pf1-f179.google.com with SMTP id s22so12718259pfh.4
-        for <git@vger.kernel.org>; Thu, 07 Mar 2019 16:08:26 -0800 (PST)
+        id S1726375AbfCHAJm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 19:09:42 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37482 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726241AbfCHAJm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 19:09:42 -0500
+Received: by mail-wr1-f65.google.com with SMTP id w6so19483407wrs.4
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 16:09:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=grande.coffee; s=omgwhathaveyoudone;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=xixvbhClKOvhbbFEefkTFqOncLrK4e6eZqH1gea0OoI=;
-        b=J+7xHA4atzp7JesQ2/gTN74OkPQKDl06Ibr/sIjwKa96puWIhMKAmQxbshfZYyW+VV
-         eLRV9hjHAigDwRWoiOzgSUc/Kqxi1/frLRdnFVFx0I472VyHcje+Qt75cG9jRVvi7EN2
-         l4EjTkNHwO/KcIVeD+bcTtkg2C5qicTtvQAil5p0WtApcNlqVJGnkiLuHS7m7PuNWHYk
-         GVG1jgt/oWfeaKWwp6noamkiZaEY/FkgftyW/JQpvgNXunG878m4HPNYPKfqIZseSW/M
-         TyhOYiUn3KY4xl9mwUT4jsJzpPCEPWVp3ybiXsGbaE7ftmXcfjSizwYNEqU6Ngrz3ru8
-         xExg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=heTxN4s3Mqt/heyN409kgPWZb3RkEMcXo9hwL+QRkFs=;
+        b=XVElNHUIYiVDL2mlPFx4+2BnOMJy/7sVSWvlNKI8gBJ05ZlQgOVTkZYkIFa+dfWDj9
+         ut/e5asmKcZXFo+HuZ9QnkV9KTTARYfRawrELDSu5jpn9LH+jOVmYH/y+/5wa9Wr4Ep6
+         1Sg0LHbs0HdyyDQzOPjmZSDRqgWFgurpfq3Ma3C0omXPewp31/AZThRTWup197gg7LE4
+         f1N8kDoKbQhV9gMqYRF4gXtAIB1YDgRAv3Qe7e7Y1xzVHoTrC9wGU0D3V1YZZ6D2gofm
+         PdPxmMdg5BfcwsmejRM+TR7wBlj+QctDFSrffrfLnOXynp2rgSp/Q79N5COoCbdIigsb
+         tx3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=xixvbhClKOvhbbFEefkTFqOncLrK4e6eZqH1gea0OoI=;
-        b=cUJvYCfcJfQ3AhA60R3yFYeGFyC2HwyovvhS2NbHlosW5/rIXbFY3rayZVg7DDHCvD
-         NAihFWt87RkJXYFQlgwmZqO/bln1IWwpSgo9HAoHVlplYEaiTXVkJmjOaicPQQSUepra
-         SbOOO2zU5UVLVb92maFh+XPnmBCgWGDaphPWv+cEskfthmSSLft43RDS2Ku3UTrQQ/sH
-         /Vrh/82m+FtnQwzTE+gNT+JzEbW3NSTyYkMf1wmkyHB1xWeC+c/iAjit2Z1vaFOk+cmQ
-         TqSmeL8Vvs28yowXcEZFPMtI4BX4FTYCiNmSiFENdTMfDsoXBUvOaOKZ5+JmWcOEw4QH
-         43nw==
-X-Gm-Message-State: APjAAAU0MdDYpDjM4cB5g4k/viSAd+MgBrU2392TJePnTJRTpR7s+USc
-        33g1HChjtY7eRZuddfoW9KKmtw==
-X-Google-Smtp-Source: APXvYqwG+mpnp06g6nY+O/s3DwUVdDUf2snP9Jl8EzljYVu6jprbmHWeH2xCeBSAH2UZW5WiSQrhMg==
-X-Received: by 2002:a17:902:bb90:: with SMTP id m16mr16167120pls.49.1552003705284;
-        Thu, 07 Mar 2019 16:08:25 -0800 (PST)
-Received: from chabuduo ([198.41.129.1])
-        by smtp.gmail.com with ESMTPSA id l7sm17601048pfj.162.2019.03.07.16.08.23
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=heTxN4s3Mqt/heyN409kgPWZb3RkEMcXo9hwL+QRkFs=;
+        b=gXF5LxabDhZZDb/nYO/vTHKWchLpcFfgmUffW331QsfA7ZeK5YA2hOaquKwGiLA3kp
+         MdeUyaKq6WSglnnYPUFIgNo5TZuTgWLfu/SlycKjMww1wMb/3TXFEsye1AHTeryHCvMp
+         +BJaDvh3n5ef3y6TrrwkMJ/sdS1QYvHl70sFohB/7hAw1ej45GocrXI3Bi+R8Yg1CVV2
+         qdqeKDYmKcplYRI7cTnVXfkNiba7kpbHN1JmF5gdG4zsyPpojR4A4P5t4BKzYfP8Z9SJ
+         ln7hnzJKOK0b1ZBvluT8nxQrkBNMz3fZR0iqvZrwC2CqkV9LNZIIaRHw/Ma90BBmMU1U
+         J2Rg==
+X-Gm-Message-State: APjAAAW9EvpmiECzr7udcVhbQt4edXazsHP4to4+rqZQ8lc2/rIE2QL+
+        A6m4+AJ9lvLLAwiuPw1b9nwKO4hOJotFTw==
+X-Google-Smtp-Source: APXvYqydKXY6v2W0yay2FJYT8QKTe/Fz3jve0dQvPkOvkLB1TEWplql6PujgDcJi1hp1xZcCKXVYfw==
+X-Received: by 2002:a5d:6b07:: with SMTP id v7mr8507938wrw.314.1552003779872;
+        Thu, 07 Mar 2019 16:09:39 -0800 (PST)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id p68sm7189592wme.45.2019.03.07.16.09.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 07 Mar 2019 16:08:24 -0800 (PST)
-Date:   Fri, 8 Mar 2019 00:08:10 +0000
-From:   Alexander Huynh <alex@grande.coffee>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] fetching all remote branches results in failed multiple
- updates
-Message-ID: <20190308000810.GA8044@chabuduo>
-References: <20190307214447.GA4909@chabuduo>
- <20190307234015.GD28939@szeder.dev>
+        Thu, 07 Mar 2019 16:09:38 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Denton Liu <liu.denton@gmail.com>, phillip.wood@dunelm.org.uk,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 3/4] cherry-pick/revert: add scissors line on merge conflict
+References: <cover.1551940635.git.liu.denton@gmail.com>
+        <cover.1551951770.git.liu.denton@gmail.com>
+        <14672ce10c90c46b15b62c48d2eea6fe8d85ed86.1551951770.git.liu.denton@gmail.com>
+        <b568185b-2411-7c43-b1bb-c22594904fa0@gmail.com>
+        <20190307175628.GA14130@dev-l>
+        <8404ea52-6556-1232-176e-f74f8d9583f8@gmail.com>
+Date:   Fri, 08 Mar 2019 09:09:38 +0900
+In-Reply-To: <8404ea52-6556-1232-176e-f74f8d9583f8@gmail.com> (Phillip Wood's
+        message of "Thu, 7 Mar 2019 18:36:39 +0000")
+Message-ID: <xmqqo96mkz0d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190307234015.GD28939@szeder.dev>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 08, 2019 at 12:40:15AM +0100, SZEDER Gábor wrote:
-> On Thu, Mar 07, 2019 at 09:44:47PM +0000, Alexander Huynh wrote:
-> >     [git-test@chabuduo ~]$ cat > ~/.gitconfig
-> >     [remote "origin"]
-> >     	fetch = +refs/heads/*:refs/remotes/origin/*
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+>>> What are you basing this series on? builtin/rebase--helper.c was removed
+>>> last September in 34b47315d9 ("rebase -i: move rebase--helper modes to
+>>> rebase--interactive", 2018-09-27)
+>> 
+>> I was basing this patch on the tip of dl/merge-cleanup-scissors-fix. I
+>> can rebase or merge my work to something else but I'll wait for
+>> additional directions since I don't know what would be best.
 >
-> Why do you do this?
->
-> First, this is the default refspec configuration that clone will fetch
-> and set up in the clone's config file anyway.  You don't have to set
-> it.
+> See what Junio says, I think it might be simple enough for him to fix
+> that up when he merges it into pu.
 
-My mistake. I was under the assumption that this configuration variable was
-needed for git to fetch all remote refs, and that this behaviour wasn't
-default.
+Perhaps it is a good time to kick dl/merge-cleanup-scissors-fix out
+of the 'next' branch, so that the whole thing can be rebuilt on top
+of a more recent base like v2.21.0, without the need for these
+"oops, that was wrong, so let's patch it up" fixes.
 
-> Anyway, this is a side-effect of 515be83382 (clone: respect additional
-> configured fetch refspecs during initial fetch, 2018-11-14).  Since
-> then the same refspec comes up twice in remote->fetch, once from the
-> configuration and once the explicitly added default refspec.  And
-> since 'git clone' doesn't run a fully-fledged 'git fetch' and has its
-> own simple refs-to-refspec matching logic, it ends up trying to write
-> each ref twice, once for each of the two refspecs, in a single ref
-> transaction.
+> I've just realized that if you're cherry-picking a range of commits and
+> it stops for a conflict resolution then the new option is not saved.
+> You'll need to update populate_opts_cb() and save_opts() in sequencer.c
+> to do that.
 
-Thanks for the clarification! One question: should we update the documentation
-at https://git-scm.com/docs/git-fetch#CRTB to not list this as an example to
-follow?
-
-Thanks again,
-Alex
+Yeah, good point.
