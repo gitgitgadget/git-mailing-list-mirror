@@ -2,97 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAB1520248
-	for <e@80x24.org>; Fri,  8 Mar 2019 17:43:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D63A220248
+	for <e@80x24.org>; Fri,  8 Mar 2019 17:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726782AbfCHRnS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 12:43:18 -0500
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:52719 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726747AbfCHRnS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 12:43:18 -0500
-Received: by mail-pg1-f201.google.com with SMTP id w4so7716297pgl.19
-        for <git@vger.kernel.org>; Fri, 08 Mar 2019 09:43:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=EkadiOLW40XePgyGAIqSKMRqf3qsklSS/yMJgfwaFYY=;
-        b=HlodU8E7HGpHfiIVlq+VeFdYvOrd/SVlmmqnvpNIFCHxAh81RhAcvXv3V1fAedkw9X
-         CPG1aJKTznXxICVGpcPMy0IruzMfQz5RPrmknJ1phimEi4nvzidaQa5+9Fc/lCuasDoz
-         i7dmMN+iLYz+70dQKuChWXFORPyv42t9i0RbwBGqLbzjGpXbDP9XpBLOT2ERkBi/fcL5
-         HYt6vpJ5/P4EqZ9zLQs03jqIovmPyQHtvUfcPtcgfgodsvkx/rinVCiwjE8ocfAKQYsw
-         JUDKJ0yYTDTCW1cIs3u2wBPfYt5nXtdcH3o/Ki0DBzLvWtBD/zvJVfwPo4hl2Z7OObl3
-         Gw3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=EkadiOLW40XePgyGAIqSKMRqf3qsklSS/yMJgfwaFYY=;
-        b=YNDsHEO+Qxod4u68qxjpR8+A6eTUucdUySRh95SR/rAkSfC+bLBFozxa9XNbER/G9B
-         J4pza3jPnF0QaJN0QAxUuKPqIDbxWFqm4PqO75Bg7oJ2QRCAgDW6IkCLPPDHSbJdvh2+
-         g7w0GUfcpbYgZdQ3sGFbS/rws71EuY1rFJyHUgWdnAw56wnEwuWXiLNxVu/QoD6N66Iv
-         1+dVHbh2hGIEu5brh8R0ebg8SZtPLEUP+Kvuq2knLrP5Fz8AKOH5EQmqLIdlTplIhglF
-         5S7Tc3ic5RlpPiWgb0lTBZyY8CpELe534wKeYl+0UeAz+qibFFsPgkBYdj2N1+BVPKME
-         p16g==
-X-Gm-Message-State: APjAAAVqqHXP34nd3pxjXHrbxcBU0xF2Jjywhrc/jX3LcJ5jj4QIEVLF
-        3AsYzcnL5Ei1ECAerT5DXuvCSm1FLe86DwqcjEOy
-X-Google-Smtp-Source: APXvYqx0Q3LQdbw3rWMM64qmpHzN9y5QYabHHduUhWfbxaCLwqSirA2g5USFYCaGXFc+L7C4bPmuIQNtNJU2G+BnP9lr
-X-Received: by 2002:a62:11d0:: with SMTP id 77mr7526582pfr.126.1552066997691;
- Fri, 08 Mar 2019 09:43:17 -0800 (PST)
-Date:   Fri,  8 Mar 2019 09:43:14 -0800
-In-Reply-To: <CAMknYENWOW0mj6Bn9OooqKg-sZi9bZUO461Gv1F00=phNwLFQQ@mail.gmail.com>
-Message-Id: <20190308174314.129611-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CAMknYENWOW0mj6Bn9OooqKg-sZi9bZUO461Gv1F00=phNwLFQQ@mail.gmail.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: New Ft. for Git : Allow resumable cloning of repositories.
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     jkapil.cs@gmail.com
-Cc:     git@vger.kernel.org, t.gummerer@gmail.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726988AbfCHRnx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 12:43:53 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54184 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726747AbfCHRnx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 12:43:53 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 27CBF61F70;
+        Fri,  8 Mar 2019 12:43:49 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=CURT4m94V98BQOK8dbj0K2nrhJc=; b=bvrZHdV
+        YmijtkRRht95u+cyClnGR7Ivq0V5XqEPbEsdd/4+wh2RSsQ03Z31O6lVgA3sqSw1
+        qH0KnP/X5gVQXyQfzgt+jswACLjKNv1QReiotErdmgD/pJscDh9y9ySjg75WZTN0
+        4lPlqq9sg0uutmqRsOuDlXw4DhrIitY0Y62M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=nhc1jGGsYVNNpRb75drk5MkmEAu9KfHpH
+        ftizVV4H0Qg9AqaKQNkxrOcYHqmUf46cSHiuHss6f8KMRu0Q93HO0P5mRcfCDVm7
+        2YtqjvMwWSmdor9xtVytBxgRolhGEoQ8RYypKVAAheFTGH0OOF69Lnya/pwvhxy9
+        h3tIMs0auM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1FC9061F6F;
+        Fri,  8 Mar 2019 12:43:49 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Received: from zaya.teonanacatl.net (unknown [71.173.194.225])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 03A0761F6E;
+        Fri,  8 Mar 2019 12:43:45 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Date:   Fri, 8 Mar 2019 12:43:43 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Jeffrey Walton <noloader@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: One failed self test on Fedora 29
+Message-ID: <20190308174343.GX31362@zaya.teonanacatl.net>
+References: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: B921F174-41C9-11E9-863C-EE24A11ADF13-09356542!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Objective: Allow pause and resume functionality while cloning repositories.
+Hi,
+
+Jeffrey Walton wrote:
+> Fedora 29, x86_64. One failed self test:
 > 
-> Below is a rough idea on how this may be achieved.
-
-This is indeed a nice feature to have, and thanks for details of how
-this would be accomplished.
-
-> 1) Create a repository_name.json file.
-> 2) repository_name.json will be an index file containing list of all
-> the files in the repository with default status being "False".
->    "False" status of a file signifies that this file is not yet fully
-> downloaded.
+> *** t0021-conversion.sh ***
+[...]
+> not ok 13 - disable filter with empty override
+> #
+> #               test_config_global filter.disable.smudge false &&
+> #               test_config_global filter.disable.clean false &&
+> #               test_config filter.disable.smudge false &&
+> #               test_config filter.disable.clean false &&
+> #
+> #               echo "*.disable filter=disable" >.gitattributes &&
+> #
+> #               echo test >test.disable &&
+> #               git -c filter.disable.clean= add test.disable 2>err &&
+> #               test_must_be_empty err &&
+> #               rm -f test.disable &&
+> #               git -c filter.disable.smudge= checkout -- test.disable 2>err &&
+> #               test_must_be_empty err
+> #
+[...]
+> # failed 1 among 26 test(s)
+> 1..26
+> gmake[2]: *** [Makefile:56: t0021-conversion.sh] Error 1
 > 
-> Something like this:
-> 
-> {
->   'file1.ext' : "False",
->   'file2.ext' : "False",
->   'file3.ext' : "False"
-> }
+> Does anyone need a config.log or other test data?
 
-One issue is that when cloning a repository, we do not download many
-files - we only download one dynamically generated packfile containing
-all the objects we want.
+It would probably help to know what commit you're building.
+The verbose test output would also be useful, e.g.:
 
-You might be interested in some work I'm doing to offload part of the
-packfile response to CDNs:
+    cd t && ./t0021-conversion.sh -v -i
 
-https://public-inbox.org/git/cover.1550963965.git.jonathantanmy@google.com/
+If it's not reliably reproducible, the --stress* options
+might help catch a failing run.
 
-This means that when cloning/fetching, multiple files could be
-downloaded, meaning that a scheme like you suggest would be more
-worthwhile. (In fact, I allude to such a scheme in the design document
-in patch 5.)
+FWIW, I just built and ran the tests on a Fedora 29
+container for master, next, and pu a few times (some with
+various --stress options) without any test failures.
+
+I did this with and without a config.mak from the fedora git
+packages.  I've never used the configure script, it seems
+like unnecessary overhead.
+
+    $ git branch -v
+      master 6e0cc67761 Start 2.22 cycle
+      next   541d9dca55 Merge branch 'yb/utf-16le-bom-spellfix' into next
+    * pu     7eadd8ba98 Merge branch 'js/remote-curl-i18n' into pu
+
+-- 
+Todd
