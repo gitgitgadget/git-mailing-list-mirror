@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BFFF20248
-	for <e@80x24.org>; Fri,  8 Mar 2019 10:17:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12C0E20248
+	for <e@80x24.org>; Fri,  8 Mar 2019 10:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726427AbfCHKR3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 05:17:29 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:36060 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726351AbfCHKR3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 05:17:29 -0500
-Received: by mail-pf1-f196.google.com with SMTP id n22so13831544pfa.3
-        for <git@vger.kernel.org>; Fri, 08 Mar 2019 02:17:28 -0800 (PST)
+        id S1726429AbfCHKRe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 05:17:34 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:47007 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726259AbfCHKRd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 05:17:33 -0500
+Received: by mail-pf1-f194.google.com with SMTP id g6so13821359pfh.13
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 02:17:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xPcyt3ATNNs6Zbx3l64JaMumtK7vxUYyn01vhtDpGds=;
-        b=uvMIDxFvngg6D39US1tGYdPd+64x2qyy6GJLdKkJVHlsNDTXNJAcC3ayYv/oB54R9g
-         +1PfpZBCEar2Bmu8yTOHbqbvVTLTTRi1CkpbFoFwYKTLu3BvyuMpgals4EBjtpT07wTR
-         RSAo9yiefZLCyGYnYOy1sbs0RRuOyQjG0GYVCzu3n33Rn8o1Tok7VKvTWJpPa9wzCD7q
-         NAZN5eIT76jE1MzO+pkxx+Az2rPnq0GH1qVSQR3eYeHRz/LxK6FNlQVLcqsgK7tpyfCR
-         koYY3kI3dleN5EKzVTpB4v0Y2J8YXyQVioIzQAgfvRhMDd8xjcYGKSb7KVyqRXUlEcaa
-         0Opg==
+        bh=Qy4ndlhrTDES6gb8uuvtMmu7iBx/V4HWWlc6i0gDvl0=;
+        b=u76K5Tud64MisIUHA62xm/3W0JBhVeuxavzgBQbxO48XqalYK4gmKj8V1pUgO5KWWb
+         qLDfYKPT1ezs24V29Vawd70GlXC5KktLHUWv8oO6fRj4SOOQF9zX2H8fxM8f6K3EgKnl
+         39jl0aBx+gYxoIOsTYOlUFNb035woTN8/lrT1/A7OCT7mHZbHLmLwtNRkToE9Q2IJ0BO
+         pFWQ004HXLE7LXpXXVYOotsY/dDoh/1jzoHM0OlNOo6qCoqczQA8oXDza9vCU0+S7yLe
+         2VT+wpSKsZkfC3qyUEn4ptOXJHPnOipaVti+KW/7psaAJQ1FpvvpsBYQszHYyC/aqvQl
+         O+mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xPcyt3ATNNs6Zbx3l64JaMumtK7vxUYyn01vhtDpGds=;
-        b=pbrSp5LnMu3xx2AhYG+wzGU2jZsPINFWMyYbC05ogcJz8XI8ASe4VW6NykwCfEvbtI
-         Wd9fffqeyBusvofE6c578eVmlypYyi2m8RNqeigYdC88PzcUP62wu84tSbnGP9XtyQAJ
-         4ZhXdsIeeGAl1/HI9pXIvCTrArT9mPoW0viJs25K4DqJGeGNEMbiXQLAV03LO3YwTzid
-         X6x01PYeSkYn7zxQWN+pRM5PlJng6gs3rYNPrbU/S7Ilzp7Nqy3wAO2nPLWvxkqsmvXM
-         bCx8VguSzbnSW6Qjq8ZTABvi4xAM4fWv6m885it5Wb3XcjSheJ71Vc9u4SfBbbRp9/al
-         u5uQ==
-X-Gm-Message-State: APjAAAUNfv3qXPtQ6nEPjtKym8YtYh6u+z6+J4QNKPxVu/FDWBkI736H
-        cyvFVHsyZiozaamVFzH9JkiZ0uA4
-X-Google-Smtp-Source: APXvYqyKM1fYnOTqauTm+Nr8ramjkbdh2Z+pFpz483qP2xZH7ovyqG2sF2SO3W+rNzbCs885PDmM4Q==
-X-Received: by 2002:aa7:90c7:: with SMTP id k7mr17500827pfk.186.1552040247831;
-        Fri, 08 Mar 2019 02:17:27 -0800 (PST)
+        bh=Qy4ndlhrTDES6gb8uuvtMmu7iBx/V4HWWlc6i0gDvl0=;
+        b=QZyNenetCnhM7Ky4mZQqmxuOD2wEBchV/WKG5M0jq/re8sWzhtEWYbxRALtnxLPKNJ
+         6zMWFisqe7wsXLlz3cFjC07U2ElAsNmmuzZFME7YKcDJAU/2alF6aNNyZLlUZksak693
+         5E/VSGEGJc0R3r9B+2QVm/btPJXLbP5B8QCqEaEBP/Veg1zyBk+Y4SBr7dFEMs4q8Lxq
+         3c7feIsQ9UqEi4LkxCijjNESNpn+/3fvdmaddlXD9QeKseHmYxivP3OQoFt705bGNoVd
+         hoTUawBwj6SagQ+oDkbWs4vg5ySP7767fE0tfMI756DFLaPXpjtq39ppLzsnTqTDpkOX
+         eJ0Q==
+X-Gm-Message-State: APjAAAWeRubC4/FBAJhNMEyAK0MPF4SYUq0RrAKJfSyafdjyYBUe1sKc
+        oWXeHZSar+2jwqe9AvAj+wP1bFf8
+X-Google-Smtp-Source: APXvYqyjhn+8PqcbNeaejKPMtjV8zuSsgpY0fxcYlsJzSSQBjgjnfJPBpRtQZm3+pW+NyaCwA6RPNA==
+X-Received: by 2002:a63:6ecb:: with SMTP id j194mr16457934pgc.250.1552040252605;
+        Fri, 08 Mar 2019 02:17:32 -0800 (PST)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id q86sm24501018pfi.171.2019.03.08.02.17.25
+        by smtp.gmail.com with ESMTPSA id m17sm14845728pff.170.2019.03.08.02.17.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Mar 2019 02:17:27 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 08 Mar 2019 17:17:23 +0700
+        Fri, 08 Mar 2019 02:17:32 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 08 Mar 2019 17:17:28 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v1 05/11] checkout: factor out worktree checkout code
-Date:   Fri,  8 Mar 2019 17:16:49 +0700
-Message-Id: <20190308101655.9767-6-pclouds@gmail.com>
+Subject: [PATCH v1 06/11] restore: add --worktree and --index
+Date:   Fri,  8 Mar 2019 17:16:50 +0700
+Message-Id: <20190308101655.9767-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
 In-Reply-To: <20190308101655.9767-1-pclouds@gmail.com>
 References: <20190308101655.9767-1-pclouds@gmail.com>
@@ -71,146 +71,171 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+'git checkout <tree-ish> <pathspec>' updates both index and
+worktree. But updating the index when you want to restore worktree
+files is non-intuitive. The index contains the data ready for the next
+commit, and there's no indication that the user will want to commit
+the restored versions.
+
+'git restore' therefore by default only touches worktree. The user has
+the option to update either the index with
+
+    git restore --source=<tree> --index <path>  (1)
+
+or update both with
+
+    git restore --source=<tree> --index --worktree <path> (2)
+
+PS. Orignally I wanted to make worktree update default and form (1)
+would add index update while also updating the worktree, and the user
+would need to do "--index --no-worktree" to update index only. But it
+looks really confusing that "--index" option alone updates both. So
+now form (2) is used for both, which reads much more obvious.
+
+PPS. Yes form (1) overlaps with "git reset <rev> <path>". I don't know
+if we can ever turn "git reset" back to "_always_ reset HEAD and
+optionally do something else".
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/checkout.c | 108 +++++++++++++++++++++++++--------------------
- 1 file changed, 59 insertions(+), 49 deletions(-)
+ builtin/checkout.c | 74 ++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 68 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 9e59bf792f..5fb85e7b73 100644
+index 5fb85e7b73..07b431be51 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -326,17 +326,73 @@ static void mark_ce_for_checkout_no_overlay(struct cache_entry *ce,
- 	}
- }
+@@ -62,6 +62,8 @@ struct checkout_opts {
+ 	int switch_branch_doing_nothing_is_ok;
+ 	int only_merge_on_switching_branches;
+ 	int empty_pathspec_ok;
++	int checkout_index;
++	int checkout_worktree;
  
-+static int checkout_worktree(const struct checkout_opts *opts)
-+{
-+	struct checkout state = CHECKOUT_INIT;
-+	int nr_checkouts = 0, nr_unmerged = 0;
-+	int errs = 0;
-+	int pos;
-+
-+	state.force = 1;
-+	state.refresh_cache = 1;
-+	state.istate = &the_index;
-+
-+	enable_delayed_checkout(&state);
-+	for (pos = 0; pos < active_nr; pos++) {
-+		struct cache_entry *ce = active_cache[pos];
-+		if (ce->ce_flags & CE_MATCHED) {
-+			if (!ce_stage(ce)) {
-+				errs |= checkout_entry(ce, &state,
-+						       NULL, &nr_checkouts);
-+				continue;
-+			}
-+			if (opts->writeout_stage)
-+				errs |= checkout_stage(opts->writeout_stage,
-+						       ce, pos,
-+						       &state,
-+						       &nr_checkouts, opts->overlay_mode);
-+			else if (opts->merge)
-+				errs |= checkout_merged(pos, &state,
-+							&nr_unmerged);
-+			pos = skip_same_name(ce, pos) - 1;
-+		}
-+	}
-+	remove_marked_cache_entries(&the_index, 1);
-+	remove_scheduled_dirs();
-+	errs |= finish_delayed_checkout(&state, &nr_checkouts);
-+
-+	if (opts->count_checkout_paths) {
-+		if (nr_unmerged)
-+			fprintf_ln(stderr, Q_("Recreated %d merge conflict",
-+					      "Recreated %d merge conflicts",
-+					      nr_unmerged),
-+				   nr_unmerged);
-+		if (opts->source_tree)
-+			fprintf_ln(stderr, Q_("Updated %d path from %s",
-+					      "Updated %d paths from %s",
-+					      nr_checkouts),
-+				   nr_checkouts,
-+				   find_unique_abbrev(&opts->source_tree->object.oid,
-+						      DEFAULT_ABBREV));
-+		else if (!nr_unmerged || nr_checkouts)
-+			fprintf_ln(stderr, Q_("Updated %d path from the index",
-+					      "Updated %d paths from the index",
-+					      nr_checkouts),
-+				   nr_checkouts);
-+	}
-+
-+	return errs;
-+}
-+
- static int checkout_paths(const struct checkout_opts *opts,
- 			  const char *revision)
- {
- 	int pos;
--	struct checkout state = CHECKOUT_INIT;
- 	static char *ps_matched;
- 	struct object_id rev;
+ 	const char *new_branch;
+ 	const char *new_branch_force;
+@@ -393,6 +395,7 @@ static int checkout_paths(const struct checkout_opts *opts,
  	struct commit *head;
  	int errs = 0;
  	struct lock_file lock_file = LOCK_INIT;
--	int nr_checkouts = 0, nr_unmerged = 0;
++	int checkout_index;
  
  	trace2_cmd_mode(opts->patch_mode ? "patch" : "path");
  
-@@ -422,53 +478,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+@@ -418,9 +421,26 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 		die(_("Cannot update paths and switch to branch '%s' at the same time."),
+ 		    opts->new_branch);
+ 
+-	if (opts->patch_mode)
+-		return run_add_interactive(revision, "--patch=checkout",
+-					   &opts->pathspec);
++	if (!opts->checkout_worktree && !opts->checkout_index)
++		die(_("neither '%s' or '%s' is specified"),
++		    "--index", "--worktree");
++
++	if (!opts->source_tree && !opts->checkout_worktree)
++		die(_("'%s' must be used when '%s' is not specified"),
++		    "--worktree", "--source");
++
++	if (opts->patch_mode) {
++		const char *patch_mode;
++
++		if (opts->checkout_index && opts->checkout_worktree)
++			patch_mode = "--patch=checkout";
++		else if (opts->checkout_index && !opts->checkout_worktree)
++			patch_mode = "--patch=reset";
++		else
++			die(_("'%s' with only '%s' is not currently supported"),
++			    "--patch", "--worktree");
++		return run_add_interactive(revision, patch_mode, &opts->pathspec);
++	}
+ 
+ 	repo_hold_locked_index(the_repository, &lock_file, LOCK_DIE_ON_ERROR);
+ 	if (read_cache_preload(&opts->pathspec) < 0)
+@@ -478,10 +498,30 @@ static int checkout_paths(const struct checkout_opts *opts,
  		return 1;
  
  	/* Now we are committed to check them out */
--	state.force = 1;
--	state.refresh_cache = 1;
--	state.istate = &the_index;
--
--	enable_delayed_checkout(&state);
--	for (pos = 0; pos < active_nr; pos++) {
--		struct cache_entry *ce = active_cache[pos];
--		if (ce->ce_flags & CE_MATCHED) {
--			if (!ce_stage(ce)) {
--				errs |= checkout_entry(ce, &state,
--						       NULL, &nr_checkouts);
--				continue;
--			}
--			if (opts->writeout_stage)
--				errs |= checkout_stage(opts->writeout_stage,
--						       ce, pos,
--						       &state,
--						       &nr_checkouts, opts->overlay_mode);
--			else if (opts->merge)
--				errs |= checkout_merged(pos, &state,
--							&nr_unmerged);
--			pos = skip_same_name(ce, pos) - 1;
--		}
--	}
--	remove_marked_cache_entries(&the_index, 1);
--	remove_scheduled_dirs();
--	errs |= finish_delayed_checkout(&state, &nr_checkouts);
--
--	if (opts->count_checkout_paths) {
--		if (nr_unmerged)
--			fprintf_ln(stderr, Q_("Recreated %d merge conflict",
--					      "Recreated %d merge conflicts",
--					      nr_unmerged),
--				   nr_unmerged);
--		if (opts->source_tree)
--			fprintf_ln(stderr, Q_("Updated %d path from %s",
--					      "Updated %d paths from %s",
--					      nr_checkouts),
--				   nr_checkouts,
--				   find_unique_abbrev(&opts->source_tree->object.oid,
--						      DEFAULT_ABBREV));
--		else if (!nr_unmerged || nr_checkouts)
--			fprintf_ln(stderr, Q_("Updated %d path from the index",
--					      "Updated %d paths from the index",
--					      nr_checkouts),
--				   nr_checkouts);
--	}
-+	errs |= checkout_worktree(opts);
+-	errs |= checkout_worktree(opts);
++	if (opts->checkout_worktree)
++		errs |= checkout_worktree(opts);
  
- 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 		die(_("unable to write new index file"));
+-	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+-		die(_("unable to write new index file"));
++	/*
++	 * Allow updating the index when checking out from the index.
++	 * This is to save new stat info.
++	 */
++	if (opts->checkout_worktree && !opts->checkout_index && !opts->source_tree)
++		checkout_index = 1;
++	else
++		checkout_index = opts->checkout_index;
++
++	if (checkout_index) {
++		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
++			die(_("unable to write new index file"));
++	} else {
++		/*
++		 * NEEDSWORK: if --worktree is not specified, we
++		 * should save stat info of checked out files in the
++		 * index to avoid the next (potentially costly)
++		 * refresh. But it's a bit tricker to do...
++		 */
++		rollback_lock_file(&lock_file);
++	}
+ 
+ 	read_ref_full("HEAD", 0, &rev, NULL);
+ 	head = lookup_commit_reference_gently(the_repository, &rev, 1);
+@@ -1373,6 +1413,20 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	if (opts->overlay_mode == 1 && opts->patch_mode)
+ 		die(_("-p and --overlay are mutually exclusive"));
+ 
++	if (opts->checkout_index >= 0 || opts->checkout_worktree >= 0) {
++		if (opts->checkout_index < 0)
++			opts->checkout_index = 0;
++		if (opts->checkout_worktree < 0)
++			opts->checkout_worktree = 0;
++	} else {
++		if (opts->checkout_index < 0)
++			opts->checkout_index = -opts->checkout_index - 1;
++		if (opts->checkout_worktree < 0)
++			opts->checkout_worktree = -opts->checkout_worktree - 1;
++	}
++	if (opts->checkout_index < 0 || opts->checkout_worktree < 0)
++		BUG("these flags should be non-negative by now");
++
+ 	/*
+ 	 * From here on, new_branch will contain the branch to be checked out,
+ 	 * and new_branch_force and new_orphan_branch will tell us which one of
+@@ -1527,6 +1581,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	opts.implicit_detach = 1;
+ 	opts.empty_pathspec_ok = 1;
+ 	opts.overlay_mode = -1;
++	opts.checkout_index = -2;    /* default on */
++	opts.checkout_worktree = -2; /* default on */
+ 
+ 	options = parse_options_dup(checkout_options);
+ 	options = add_common_options(&opts, options);
+@@ -1580,6 +1636,10 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
+ 	struct option restore_options[] = {
+ 		OPT_STRING('s', "source", &opts.from_treeish, "<tree-ish>",
+ 			   N_("where the checkout from")),
++		OPT_BOOL('I', "index", &opts.checkout_index,
++			   N_("restore the index")),
++		OPT_BOOL('W', "worktree", &opts.checkout_worktree,
++			   N_("restore the working tree (default)")),
+ 		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode")),
+ 		OPT_END()
+ 	};
+@@ -1590,6 +1650,8 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
+ 	opts.accept_pathspec = 1;
+ 	opts.empty_pathspec_ok = 0;
+ 	opts.overlay_mode = 0;
++	opts.checkout_index = -1;    /* default off */
++	opts.checkout_worktree = -2; /* default on */
+ 
+ 	options = parse_options_dup(restore_options);
+ 	options = add_common_options(&opts, options);
 -- 
 2.21.0.rc1.337.gdf7f8d0522
 
