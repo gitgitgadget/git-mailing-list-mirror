@@ -7,127 +7,97 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECBE020248
-	for <e@80x24.org>; Fri,  8 Mar 2019 09:20:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00D5820248
+	for <e@80x24.org>; Fri,  8 Mar 2019 09:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726283AbfCHJUk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 04:20:40 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:54017 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726238AbfCHJUk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 04:20:40 -0500
-Received: by mail-it1-f195.google.com with SMTP id v2so19842563ith.3
-        for <git@vger.kernel.org>; Fri, 08 Mar 2019 01:20:39 -0800 (PST)
+        id S1726386AbfCHJ2o (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 04:28:44 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:34543 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726283AbfCHJ2o (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 04:28:44 -0500
+Received: by mail-pg1-f196.google.com with SMTP id i130so13703771pgd.1
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 01:28:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9e3zevfBPlfFxQRRByGKEB13tEWE9r3Y4d2DT7MSnsk=;
-        b=KCFsOpfzU4EZn/uhNE+bBCd5UOKNTsJPiKwAn6nDb5in4BDmQ9SQH0QS4Ie3gGo50g
-         oknag/1n7ZQ6JLtodFmnaH9vdx0DgiA1feVnmk5eQRxqFkJDY5/SsGej1SaXYJW0IbW9
-         NJ53xu/DOxOUJ+XXf8OUtzvHh6GFumTpBTOcMgkmUCmEzkRcYpgWLUAf9KunvO5f4ohj
-         jMy255zVlIraH/3RKk7O0UxomLJX9+WYCNU31XHOnvHQa+TzsvgyMprSOL9KE70pAbSB
-         LSheSUN3OhspLn643r00t9JoYjCbzMz2Eh2hovq0X7gyQSl6OHZKMnNHPYg5mSe+l0Lm
-         Hryg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0xhvAA2XO4BKtzzV3J2LH2iap+rMOe1+cijfFmSwZWQ=;
+        b=UefAj6z9qmU/SelSMHenb+cejkSqOKbA8wg7rU7FCkVfexUNK3+DzljRV4feG7Ju+x
+         DRdy96d5u6d3DlbIToM1ZHm3atACmbSmdfGtW5TxGrpxZHjcRUpvGQ6WWlNoFcqDQJRY
+         1MnIhKRrg5+OIMXs7DtKuSZtODoviG73Epk1Y47m4Z2xS1eSztjkRz27ixrNWM2EpQ6t
+         OTroMOgFws40az7KTg58pBqItqhrjwF90MEeUiKB/EPwFQIHe6Vxk4DwxA11xZFuaurB
+         E24gx0pIDoiRG9AGbsXS+Mkf57MJob2tCj8w+943UQCg3O7BUzMujX5amyU4AAxM7QQZ
+         HsWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9e3zevfBPlfFxQRRByGKEB13tEWE9r3Y4d2DT7MSnsk=;
-        b=pK6KQ2rUaTTHDOfxH6m1BggBDbuPEMdWW31j1R1JmVaxSxv4QVIfsLrITgLnnW+gk1
-         tfkN0A7Mn2ww5WNtiqX5c5sOJLvX3mKMzjWFgoXhMF/yNvvk6bWuia9qWziL8+V3KEkx
-         kqUBMl5xj5D6UvkD4ZNfoaVcbFFIVcZYycKqr+kVI6MxW12Ro0Wh536jPN6D8GqJXzWQ
-         KbhttIyMzRmqEfLypAzM1nkNbdukC1Y8ObB0FtVKCKAU9rTtobWzpCivuajUEKIAUO96
-         uMrkrSWd7EwaGg3Z84K3ycn+XO2nhpnnTsmbhlIXqj8GXe1532t41ArtkUFFOZCzhktd
-         AltQ==
-X-Gm-Message-State: APjAAAXuKu4sP/PucdWLc3Ir41ock4jCYg2mpm7QxtdKQO1WQ3m7bIyL
-        TERO4OVmTV1K4DssreJKQaRA5gcREc1DZiiN1Ps=
-X-Google-Smtp-Source: APXvYqwqJZye7mYele9d+mb0NVLTlXHp25mPPh77ra439Q9DPgp2P0ih0z/vSf+gNGGT+ZmEiN2NGQh5BGGOI7LkvEY=
-X-Received: by 2002:a02:568a:: with SMTP id u10mr10208101jad.130.1552036839351;
- Fri, 08 Mar 2019 01:20:39 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0xhvAA2XO4BKtzzV3J2LH2iap+rMOe1+cijfFmSwZWQ=;
+        b=Xo9o9c2gS1vw5RuxT06I1pmIHwrh0CisjhDv8Ad6u1K9Dq7T/3K7CvSmH8gOHjnbwe
+         l6zjLwa4D2/xR62q9lSUVwbsyQhHyyV8dWQ/OB5U76fGABJ5MqnPZf76WGuC+w6y8TTO
+         F5mNU+TE/9DHlu3fvxGElTwTig4FxMU9bzd/B23DR2ELLxX5f6V2WxDB6yMWz0WLq/Xt
+         U/nxEXd96MW0tsDz92kvJv/byX3e7+rQwg4o0b3lcbsu1NDnQ8Th+i0Mt0uw0Uwex80T
+         Kpjno41yGu218Fns+GuJOIVss6xF/i3GoHZTOQeYYeLkprdl98WL428GF+ti2HZJWK5N
+         c9Fg==
+X-Gm-Message-State: APjAAAX8tt8tKFRpd7txf7vX5C2p0PHRRT6uZ/1yRUKYjpTsdy0IWMRm
+        dH6FDYY8TwVbbwHb5ngyKHg=
+X-Google-Smtp-Source: APXvYqxzne7tHO95nx40pK78qfdjhbS2OtSAn48eiObbv5jx3nYy2hzi/G1z1Qx+KjHBQJpQgtgFow==
+X-Received: by 2002:a63:df09:: with SMTP id u9mr15579465pgg.299.1552037323413;
+        Fri, 08 Mar 2019 01:28:43 -0800 (PST)
+Received: from ash ([171.226.148.85])
+        by smtp.gmail.com with ESMTPSA id 20sm15982938pfs.182.2019.03.08.01.28.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Mar 2019 01:28:42 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 08 Mar 2019 16:28:37 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
+        hi-angel@yandex.ru, peff@peff.net, ramsay@ramsayjones.plus.com,
+        sunshine@sunshineco.com
+Subject: [PATCH v5 0/1] worktree add: sanitize worktree names
+Date:   Fri,  8 Mar 2019 16:28:33 +0700
+Message-Id: <20190308092834.12549-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
+In-Reply-To: <20190305120834.7284-1-pclouds@gmail.com>
+References: <20190305120834.7284-1-pclouds@gmail.com>
 MIME-Version: 1.0
-References: <cover.1550508544.git.msuchanek@suse.de> <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
-In-Reply-To: <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 8 Mar 2019 16:20:13 +0700
-Message-ID: <CACsJy8D_ahM_7mLaAijJsZ0e8BF6PBfr3pPisOnYmRH7U8kmqA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] worktree: fix worktree add race.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Michal Suchanek <msuchanek@suse.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Marketa Calabkova <mcalabkova@suse.cz>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio, it seems 2/2 is stuck in an endless discussion. But 1/2 is good
-regardless, maybe pick it up now and let 2/2 come later whenever it's
-ready?
+v5 is basically Jeff's version from one of the replies in v4, where
+check_refname_component is enhanced to optionally sanitize.
 
-On Wed, Feb 20, 2019 at 11:16 PM Michal Suchanek <msuchanek@suse.de> wrote:
->
-> Git runs a stat loop to find a worktree name that's available and then does
-> mkdir on the found name. Turn it to mkdir loop to avoid another invocation of
-> worktree add finding the same free name and creating the directory first.
->
-> Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-> ---
-> v2:
-> - simplify loop exit condition
-> - exit early if the mkdir fails for reason other than already present
-> worktree
-> - make counter unsigned
-> ---
->  builtin/worktree.c | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 3f9907fcc994..85a604cfe98c 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -268,10 +268,10 @@ static int add_worktree(const char *path, const char *refname,
->         struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
->         struct strbuf sb = STRBUF_INIT;
->         const char *name;
-> -       struct stat st;
->         struct child_process cp = CHILD_PROCESS_INIT;
->         struct argv_array child_env = ARGV_ARRAY_INIT;
-> -       int counter = 0, len, ret;
-> +       unsigned int counter = 0;
-> +       int len, ret;
->         struct strbuf symref = STRBUF_INIT;
->         struct commit *commit = NULL;
->         int is_branch = 0;
-> @@ -295,8 +295,12 @@ static int add_worktree(const char *path, const char *refname,
->         if (safe_create_leading_directories_const(sb_repo.buf))
->                 die_errno(_("could not create leading directories of '%s'"),
->                           sb_repo.buf);
-> -       while (!stat(sb_repo.buf, &st)) {
-> +
-> +       while (mkdir(sb_repo.buf, 0777)) {
->                 counter++;
-> +               if ((errno != EEXIST) || !counter /* overflow */)
-> +                       die_errno(_("could not create directory of '%s'"),
-> +                                 sb_repo.buf);
->                 strbuf_setlen(&sb_repo, len);
->                 strbuf_addf(&sb_repo, "%d", counter);
->         }
-> @@ -306,8 +310,6 @@ static int add_worktree(const char *path, const char *refname,
->         atexit(remove_junk);
->         sigchain_push_common(remove_junk_on_signal);
->
-> -       if (mkdir(sb_repo.buf, 0777))
-> -               die_errno(_("could not create directory of '%s'"), sb_repo.buf);
->         junk_git_dir = xstrdup(sb_repo.buf);
->         is_junk = 1;
->
-> --
-> 2.20.1
->
+I was reluctant to go this way because it makes check_refname_component
+more complex (turns out still manageable) and burns worktree rules in
+it. But there may never be the second sanitization user, we deal with
+it when it comes.
 
+As said, refs.c is pretty much Jeff's except two major changes:
+
+ - handle foo.lock.lock correctly by stripping .lock repeatedly
+
+ - sanitize refname _components_ instead of full refs. I could construct
+   worktrees/<name> and pass to Jeff's sanitize_refname. But then I need
+   to strip worktrees/ after that.
+
+I took credits so that bugs come to me first (then I'll blame him
+anyway while doing some evil laughs)
+
+Nguyễn Thái Ngọc Duy (1):
+  worktree add: sanitize worktree names
+
+ builtin/worktree.c      |  10 +++-
+ refs.c                  | 103 ++++++++++++++++++++++++++++++++--------
+ refs.h                  |   6 +++
+ t/t2400-worktree-add.sh |   5 ++
+ 4 files changed, 104 insertions(+), 20 deletions(-)
 
 -- 
-Duy
+2.21.0.rc1.337.gdf7f8d0522
+
