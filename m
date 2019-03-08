@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5EFD20248
-	for <e@80x24.org>; Fri,  8 Mar 2019 10:17:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA86B20248
+	for <e@80x24.org>; Fri,  8 Mar 2019 10:17:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726469AbfCHKRw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 05:17:52 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36406 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726456AbfCHKRw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 05:17:52 -0500
-Received: by mail-pg1-f195.google.com with SMTP id r124so13807248pgr.3
-        for <git@vger.kernel.org>; Fri, 08 Mar 2019 02:17:52 -0800 (PST)
+        id S1726473AbfCHKR6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 05:17:58 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:47034 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726470AbfCHKR6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 05:17:58 -0500
+Received: by mail-pg1-f193.google.com with SMTP id a22so1183068pgg.13
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 02:17:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wBIj5mKfXxHwKmcmljghJVzH2ZCtQfxyK9TDIuka+/k=;
-        b=gBMWei7LmXvWnWyYEO0ktCAGUrynS9JtbD9SlWl9O7m88chbKZV5SSCrWaBO6MaGf6
-         XRjZUsHG5D6iLoKXHBejwa/fsPuy3usg7FcQR1PxtSVSuzrDvrO2/G24lE6DlfKDYcom
-         +2rzkB+Yb2NsQQ9k4eVjxrrY8t+kUicdWi2MKHuLohHAUHuiiXn0VBeRXruUunpGZL1U
-         s3hrMpu3fV8dJnbiZ8+69dpbrpOrU1MiLYHgO5+GudglwIi82MhXvBdYIioi9fzp6WEk
-         PmBLWKPTFB7Iy6xc3b1cJOn8IiCzHbzogTtvQThvNfChBASwaygK0ZyrjWL15XXiK678
-         5J7w==
+        bh=Jh9StZ8E90ALPgtCSu9H+SkCCUh1IHY5chFYjjz1b30=;
+        b=Fd/neTCtAzV2DZys3h0dgMKj4N45dvRq0x6T7l7MAu/VpMBZ+qvb2XwWilEdi5Qu3Z
+         CfzBXRsWAd3mSCIbUjiqZfGOqaXDsefPUAjhMMH1aS3MQP8HQYz4/4rphNihiUZ9Zacq
+         FVy+P9eZ/ZIjlZhhxevZ0Q797tvVTIo/4hx6lKiGUiWZMH6hs6gEz6QNx+kML9EuZL9V
+         SYzVyFQhV+7z9D/RfdIFwei+xV2hEhWCVKk7qH7tvJMk124Bue5YVg2RuTgT4AAmQjAo
+         DzXD/1qtbaChMMDvbJX0ZdmrI/+K0crGDSblqoFGfAchDiqkcghc4LTd90k2ANyrDSty
+         16Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wBIj5mKfXxHwKmcmljghJVzH2ZCtQfxyK9TDIuka+/k=;
-        b=n++3NEgMjc3sRVtJwv7r0MKs+PnaFbUyBcrJwbP1r5HyC7per5PTdDRhHyPsvuONtu
-         R/odqoDeTUyp0nBMVhTw2I9dwitEN2x96qs6Lak1Ibg2s1V2GURAjYwOnpDdLUNFwRVc
-         VngdK2p/6qlk13prT5vG4zifHqtlKWSnikEOxLJvOZfwnVxeQHcG3V+ubwAQwpTHFB8+
-         VrUPTG4I4WrXEvek6hE5hWp/8hLq04v2Tz+a2YLLjZkEut6tfFkItb9F4ePjWvKpRxZx
-         8qhESau/MqbjNSWOM93iLwmWVcqdl8xI9hPGONPYIEkgltakDwnkvdIQ7qf1lwu86i/b
-         0ugg==
-X-Gm-Message-State: APjAAAV1ESIDw9R94v5qr5DL8zs9wgWXBy39UiDFrbnc7nPtZNJs0Y/e
-        oAlea0eQZH8KgQhklL3Wzw09hNlX
-X-Google-Smtp-Source: APXvYqxqX71YIDSwXsnKHTKyKfVmACCR1b9hEiMT9rN4AUpvC4X0QsesqwoQZxa2r6GW2g1wxFIVtw==
-X-Received: by 2002:a17:902:d88c:: with SMTP id b12mr18190957plz.339.1552040271855;
-        Fri, 08 Mar 2019 02:17:51 -0800 (PST)
+        bh=Jh9StZ8E90ALPgtCSu9H+SkCCUh1IHY5chFYjjz1b30=;
+        b=cXpsXo9ttCNnk13a5xXS6IK89d1tuGzrggrgUfqwMCZNVgPKeI7Llox8KeK9LlbddT
+         u1UrH3nvLzcwMpBcOkwXwVJ9YVWQlnYFjL8a6IaBLx2ss6Aq+KdP//0ckxVFW2iVVuT8
+         wmnVz2ePnMdGvA2URZKCoubiNhLyEWgUF7HqAH7YBdbh8ubaoIqK8iJcF5P4YBC00xyY
+         8frFCG931/1cYh3hFZRUd38c86vWZWKjIotZolHV3FBQbu4Mx64vCHHcrryUnoY7pX0i
+         6w1RcVmaLOU0wKV1RBOmCzSm7M7lSGq2DJhOsiCcpxFmwyA6wkH0oPAcBMl9UvcymBcW
+         07oQ==
+X-Gm-Message-State: APjAAAWQZ/qGJCLv63C+7LyBy1+Gdf9Ga5AaPFe40U8ZofZzKA3C7pCI
+        xK/fpjGyvzs/8HLp2ExUSf8qmGwi
+X-Google-Smtp-Source: APXvYqwQFUrEdOxIYAq1/azeYJKAZmWY9zUbtEGcis6xLfS/YtIfZ8Vc2/rIHP2LNiXNj3TdV9wwcQ==
+X-Received: by 2002:a17:902:8344:: with SMTP id z4mr18075003pln.77.1552040276588;
+        Fri, 08 Mar 2019 02:17:56 -0800 (PST)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id h64sm11330314pfj.40.2019.03.08.02.17.49
+        by smtp.gmail.com with ESMTPSA id m17sm14851606pff.170.2019.03.08.02.17.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Mar 2019 02:17:51 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 08 Mar 2019 17:17:47 +0700
+        Fri, 08 Mar 2019 02:17:55 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 08 Mar 2019 17:17:52 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v1 10/11] completion: support restore
-Date:   Fri,  8 Mar 2019 17:16:54 +0700
-Message-Id: <20190308101655.9767-11-pclouds@gmail.com>
+Subject: [PATCH v1 11/11] doc: promote "git restore"
+Date:   Fri,  8 Mar 2019 17:16:55 +0700
+Message-Id: <20190308101655.9767-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.rc1.337.gdf7f8d0522
 In-Reply-To: <20190308101655.9767-1-pclouds@gmail.com>
 References: <20190308101655.9767-1-pclouds@gmail.com>
@@ -71,41 +71,761 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Completion for restore is straightforward. We could still do better
-though by give the list of just tracked files instead of all present
-ones. But let's leave it for later.
+The new command "git restore" (together with "git switch") are added
+to avoid the confusion of one-command-do-all "git checkout" for new
+users. They are also helpful to avoid ambiguation context.
+
+For these reasons, promote it everywhere possible. This includes
+documentation, suggestions/advice from other commands.
+
+One nice thing about git-restore is the ability to restore
+"everything", so it can be used in "git status" advice instead of both
+"git checkout" and "git reset".  The three commands suggested by "git
+status" are add, rm and restore.
+
+"git checkout" is also removed from "git help" (i.e. it's no longer
+considered a commonly used command)
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ Documentation/git-clean.txt        |  2 +-
+ Documentation/git-commit.txt       |  4 +-
+ Documentation/git-format-patch.txt |  2 +-
+ Documentation/git-reset.txt        |  6 +--
+ Documentation/git-revert.txt       |  4 +-
+ Documentation/gitcli.txt           |  4 +-
+ Documentation/giteveryday.txt      |  4 +-
+ Documentation/gittutorial-2.txt    |  4 +-
+ Documentation/gittutorial.txt      |  2 +-
+ Documentation/user-manual.txt      | 14 +++--
+ builtin/clone.c                    |  2 +-
+ builtin/commit.c                   |  2 +-
+ command-list.txt                   |  2 +-
+ t/t7508-status.sh                  | 82 +++++++++++++++---------------
+ t/t7512-status-help.sh             | 20 ++++----
+ wt-status.c                        | 26 +++++++---
+ 16 files changed, 95 insertions(+), 85 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 7fcf28d437..0b22e68187 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2483,6 +2483,21 @@ _git_reset ()
- 	__git_complete_refs
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index 03056dad0d..8a31ccffea 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -64,7 +64,7 @@ OPTIONS
+ 	directory) and $GIT_DIR/info/exclude, but do still use the ignore
+ 	rules given with `-e` options.  This allows removing all untracked
+ 	files, including build products.  This can be used (possibly in
+-	conjunction with 'git reset') to create a pristine
++	conjunction with 'git restore' or 'git reset') to create a pristine
+ 	working directory to test a clean build.
+ 
+ -X::
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index a85c2c2a4c..e7ac8eb9e8 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -56,7 +56,7 @@ summary of what is included by any of the above for the next
+ commit by giving the same set of parameters (options and paths).
+ 
+ If you make a commit and then find a mistake immediately after
+-that, you can recover from it with 'git reset'.
++that, you can recover from it with 'git restore' or 'git reset'.
+ 
+ 
+ OPTIONS
+@@ -359,7 +359,7 @@ When recording your own work, the contents of modified files in
+ your working tree are temporarily stored to a staging area
+ called the "index" with 'git add'.  A file can be
+ reverted back, only in the index but not in the working tree,
+-to that of the last commit with `git reset HEAD -- <file>`,
++to that of the last commit with `git restore --index <file>`,
+ which effectively reverts 'git add' and prevents the changes to
+ this file from participating in the next commit.  After building
+ the state to be committed incrementally with these commands,
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 0a24a5679e..71c9fe3af3 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -422,7 +422,7 @@ One way to test if your MUA is set up correctly is:
+ 
+     $ git fetch <project> master:test-apply
+     $ git switch test-apply
+-    $ git reset --hard
++    $ git restore --source=HEAD --index --worktree :/
+     $ git am a.patch
+ 
+ If it does not apply correctly, there can be various reasons.
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index cbf901efb4..b70281677f 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -28,9 +28,9 @@ This means that `git reset <paths>` is the opposite of `git add
+ <paths>`.
+ +
+ After running `git reset <paths>` to update the index entry, you can
+-use linkgit:git-checkout[1] to check the contents out of the index to
+-the working tree.
+-Alternatively, using linkgit:git-checkout[1] and specifying a commit, you
++use linkgit:git-restore[1] to check the contents out of the index to
++the working tree. Alternatively, using linkgit:git-restore[1]
++and specifying a commit with `--source`, you
+ can copy the contents of a path out of a commit to the index and to the
+ working tree in one go.
+ 
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index 837707a8fd..c38bc54439 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -26,8 +26,8 @@ effect of some earlier commits (often only a faulty one).  If you want to
+ throw away all uncommitted changes in your working directory, you
+ should see linkgit:git-reset[1], particularly the `--hard` option.  If
+ you want to extract specific files as they were in another commit, you
+-should see linkgit:git-checkout[1], specifically the `git checkout
+-<commit> -- <filename>` syntax.  Take care with these alternatives as
++should see linkgit:git-restore[1], specifically the `--source`
++option  Take care with these alternatives as
+ both will discard uncommitted changes in your working directory.
+ 
+ OPTIONS
+diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+index 592e06d839..e2a9674297 100644
+--- a/Documentation/gitcli.txt
++++ b/Documentation/gitcli.txt
+@@ -47,8 +47,8 @@ disambiguating `--` at appropriate places.
+    things:
+ +
+ --------------------------------
+-$ git checkout -- *.c
+-$ git checkout -- \*.c
++$ git restore *.c
++$ git restore \*.c
+ --------------------------------
+ +
+ The former lets your shell expand the fileglob, and you are asking
+diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.txt
+index ad455f3e39..79517b22f9 100644
+--- a/Documentation/giteveryday.txt
++++ b/Documentation/giteveryday.txt
+@@ -51,7 +51,7 @@ following commands.
+ 
+   * linkgit:git-commit[1] to advance the current branch.
+ 
+-  * linkgit:git-reset[1] and linkgit:git-checkout[1] (with
++  * linkgit:git-reset[1] and linkgit:git-restore[1] (with
+     pathname parameters) to undo changes.
+ 
+   * linkgit:git-merge[1] to merge between local branches.
+@@ -82,7 +82,7 @@ Create a topic branch and develop.::
+ ------------
+ $ git switch -c alsa-audio <1>
+ $ edit/compile/test
+-$ git checkout -- curses/ux_audio_oss.c <2>
++$ git restore curses/ux_audio_oss.c <2>
+ $ git add curses/ux_audio_alsa.c <3>
+ $ edit/compile/test
+ $ git diff HEAD <4>
+diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
+index e0976f6017..e412841488 100644
+--- a/Documentation/gittutorial-2.txt
++++ b/Documentation/gittutorial-2.txt
+@@ -370,13 +370,13 @@ situation:
+ $ git status
+ On branch master
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   closing.txt
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   file.txt
+ 
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index e6ad6b5f8d..6266ca21b4 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -110,7 +110,7 @@ $ git status
+ On branch master
+ Changes to be committed:
+ Your branch is up to date with 'origin/master'.
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   file1
+ 	modified:   file2
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 94799faa2b..02713886f0 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1408,7 +1408,7 @@ If you get stuck and decide to just give up and throw the whole mess
+ away, you can always return to the pre-merge state with
+ 
+ -------------------------------------------------
+-$ git reset --hard HEAD
++$ git merge --abort
+ -------------------------------------------------
+ 
+ Or, if you've already committed the merge that you want to throw away,
+@@ -1446,7 +1446,7 @@ mistake, you can return the entire working tree to the last committed
+ state with
+ 
+ -------------------------------------------------
+-$ git reset --hard HEAD
++$ git restore --index --worktree :/
+ -------------------------------------------------
+ 
+ If you make a commit that you later wish you hadn't, there are two
+@@ -1523,12 +1523,10 @@ Checking out an old version of a file
+ 
+ In the process of undoing a previous bad change, you may find it
+ useful to check out an older version of a particular file using
+-linkgit:git-checkout[1].  We've used `git checkout` before to switch
+-branches, but it has quite different behavior if it is given a path
+-name: the command
++linkgit:git-restore[1]. The command
+ 
+ -------------------------------------------------
+-$ git checkout HEAD^ path/to/file
++$ git restore --source=HEAD^ path/to/file
+ -------------------------------------------------
+ 
+ replaces path/to/file by the contents it had in the commit HEAD^, and
+@@ -3800,8 +3798,8 @@ use linkgit:git-tag[1] for both.
+ The Workflow
+ ------------
+ 
+-High-level operations such as linkgit:git-commit[1],
+-linkgit:git-checkout[1] and linkgit:git-reset[1] work by moving data
++High-level operations such as linkgit:git-commit[1] and
++linkgit:git-restore[1] work by moving data
+ between the working tree, the index, and the object database.  Git
+ provides low-level operations which perform each of these steps
+ individually.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 50bde99618..024eb57996 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -492,7 +492,7 @@ static enum {
+ static const char junk_leave_repo_msg[] =
+ N_("Clone succeeded, but checkout failed.\n"
+    "You can inspect what was checked out with 'git status'\n"
+-   "and retry the checkout with 'git checkout -f HEAD'\n");
++   "and retry with 'git restore --source=HEAD :/'\n");
+ 
+ static void remove_junk(void)
+ {
+diff --git a/builtin/commit.c b/builtin/commit.c
+index f17537474a..c530264e63 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1676,7 +1676,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (commit_index_files())
+ 		die(_("repository has been updated, but unable to write\n"
+ 		      "new_index file. Check that disk is not full and quota is\n"
+-		      "not exceeded, and then \"git reset HEAD\" to recover."));
++		      "not exceeded, and then \"git restore --index :/\" to recover."));
+ 
+ 	if (git_env_bool(GIT_TEST_COMMIT_GRAPH, 0))
+ 		write_commit_graph_reachable(get_object_directory(), 0, 0);
+diff --git a/command-list.txt b/command-list.txt
+index b9eae1c258..cf8dccb439 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -59,7 +59,7 @@ git-cat-file                            plumbinginterrogators
+ git-check-attr                          purehelpers
+ git-check-ignore                        purehelpers
+ git-check-mailmap                       purehelpers
+-git-checkout                            mainporcelain           history
++git-checkout                            mainporcelain
+ git-checkout-index                      plumbingmanipulators
+ git-check-ref-format                    purehelpers
+ git-cherry                              plumbinginterrogators          complete
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index e1f11293e2..d5cf0185b7 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -94,13 +94,13 @@ test_expect_success 'status --column' '
+ #   (use "git pull" to merge the remote branch into yours)
+ #
+ # Changes to be committed:
+-#   (use "git reset HEAD <file>..." to unstage)
++#   (use "git restore --index <file>..." to unstage)
+ #
+ #	new file:   dir2/added
+ #
+ # Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+-#   (use "git checkout -- <file>..." to discard changes in working directory)
++#   (use "git restore <file>..." to discard changes in working directory)
+ #
+ #	modified:   dir1/modified
+ #
+@@ -128,13 +128,13 @@ cat >expect <<\EOF
+ #   (use "git pull" to merge the remote branch into yours)
+ #
+ # Changes to be committed:
+-#   (use "git reset HEAD <file>..." to unstage)
++#   (use "git restore --index <file>..." to unstage)
+ #
+ #	new file:   dir2/added
+ #
+ # Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+-#   (use "git checkout -- <file>..." to discard changes in working directory)
++#   (use "git restore <file>..." to discard changes in working directory)
+ #
+ #	modified:   dir1/modified
+ #
+@@ -278,13 +278,13 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   dir2/added
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -347,13 +347,13 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   dir2/added
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -420,13 +420,13 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   dir2/added
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -484,13 +484,13 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   dir2/added
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -542,13 +542,13 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   dir2/added
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -605,13 +605,13 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   ../dir2/added
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   modified
+ 
+@@ -676,13 +676,13 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	<GREEN>new file:   dir2/added<RESET>
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	<RED>modified:   dir1/modified<RESET>
+ 
+@@ -802,13 +802,13 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   dir2/added
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -852,7 +852,7 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -896,14 +896,14 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   dir2/added
+ 	new file:   sm
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -956,14 +956,14 @@ and have 1 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	new file:   dir2/added
+ 	new file:   sm
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -1019,7 +1019,7 @@ and have 2 and 2 different commits each, respectively.
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -1068,14 +1068,14 @@ and have 2 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD^1 <file>..." to unstage)
++  (use "git restore --source=HEAD^1 --index <file>..." to unstage)
+ 
+ 	new file:   dir2/added
+ 	new file:   sm
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -1123,13 +1123,13 @@ and have 2 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   sm
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -1235,13 +1235,13 @@ and have 2 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   sm
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+   (commit or discard the untracked or modified content in submodules)
+ 
+ 	modified:   dir1/modified
+@@ -1295,13 +1295,13 @@ and have 2 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   sm
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 	modified:   sm (new commits)
+@@ -1379,13 +1379,13 @@ cat > expect << EOF
+ ;   (use "git pull" to merge the remote branch into yours)
+ ;
+ ; Changes to be committed:
+-;   (use "git reset HEAD <file>..." to unstage)
++;   (use "git restore --index <file>..." to unstage)
+ ;
+ ;	modified:   sm
+ ;
+ ; Changes not staged for commit:
+ ;   (use "git add <file>..." to update what will be committed)
+-;   (use "git checkout -- <file>..." to discard changes in working directory)
++;   (use "git restore <file>..." to discard changes in working directory)
+ ;
+ ;	modified:   dir1/modified
+ ;	modified:   sm (new commits)
+@@ -1431,7 +1431,7 @@ and have 2 and 2 different commits each, respectively.
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -1458,13 +1458,13 @@ and have 2 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   sm
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+@@ -1581,13 +1581,13 @@ and have 2 and 2 different commits each, respectively.
+   (use "git pull" to merge the remote branch into yours)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   sm
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   dir1/modified
+ 
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 458608cc1e..6e678456bc 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -85,7 +85,7 @@ You are currently rebasing branch '\''rebase_conflicts'\'' on '\''$ONTO'\''.
+   (use "git rebase --abort" to check out the original branch)
+ 
+ Unmerged paths:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+   (use "git add <file>..." to mark resolution)
+ 
+ 	both modified:   main.txt
+@@ -110,7 +110,7 @@ You are currently rebasing branch '\''rebase_conflicts'\'' on '\''$ONTO'\''.
+   (all conflicts fixed: run "git rebase --continue")
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   main.txt
+ 
+@@ -148,7 +148,7 @@ You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on '\''$ONTO
+   (use "git rebase --abort" to check out the original branch)
+ 
+ Unmerged paths:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+   (use "git add <file>..." to mark resolution)
+ 
+ 	both modified:   main.txt
+@@ -176,7 +176,7 @@ You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on '\''$ONTO
+   (all conflicts fixed: run "git rebase --continue")
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   main.txt
+ 
+@@ -246,7 +246,7 @@ You are currently splitting a commit while rebasing branch '\''split_commit'\''
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   main.txt
+ 
+@@ -354,7 +354,7 @@ You are currently splitting a commit while rebasing branch '\''several_edits'\''
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   main.txt
+ 
+@@ -453,7 +453,7 @@ You are currently splitting a commit while rebasing branch '\''several_edits'\''
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   main.txt
+ 
+@@ -557,7 +557,7 @@ You are currently splitting a commit while rebasing branch '\''several_edits'\''
+ 
+ Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+-  (use "git checkout -- <file>..." to discard changes in working directory)
++  (use "git restore <file>..." to discard changes in working directory)
+ 
+ 	modified:   main.txt
+ 
+@@ -816,7 +816,7 @@ You are currently reverting commit $TO_REVERT.
+   (use "git revert --abort" to cancel the revert operation)
+ 
+ Unmerged paths:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+   (use "git add <file>..." to mark resolution)
+ 
+ 	both modified:   to-revert.txt
+@@ -837,7 +837,7 @@ You are currently reverting commit $TO_REVERT.
+   (use "git revert --abort" to cancel the revert operation)
+ 
+ Changes to be committed:
+-  (use "git reset HEAD <file>..." to unstage)
++  (use "git restore --index <file>..." to unstage)
+ 
+ 	modified:   to-revert.txt
+ 
+diff --git a/wt-status.c b/wt-status.c
+index 445a36204a..3098e77d72 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -178,9 +178,15 @@ static void wt_longstatus_print_unmerged_header(struct wt_status *s)
+ 		return;
+ 	if (s->whence != FROM_COMMIT)
+ 		;
+-	else if (!s->is_initial)
+-		status_printf_ln(s, c, _("  (use \"git reset %s <file>...\" to unstage)"), s->reference);
+-	else
++	else if (!s->is_initial) {
++		if (!strcmp(s->reference, "HEAD"))
++			status_printf_ln(s, c,
++					 _("  (use \"git restore --index <file>...\" to unstage)"));
++		else
++			status_printf_ln(s, c,
++					 _("  (use \"git restore --source=%s --index <file>...\" to unstage)"),
++					 s->reference);
++	} else
+ 		status_printf_ln(s, c, _("  (use \"git rm --cached <file>...\" to unstage)"));
+ 
+ 	if (!both_deleted) {
+@@ -205,9 +211,15 @@ static void wt_longstatus_print_cached_header(struct wt_status *s)
+ 		return;
+ 	if (s->whence != FROM_COMMIT)
+ 		; /* NEEDSWORK: use "git reset --unresolve"??? */
+-	else if (!s->is_initial)
+-		status_printf_ln(s, c, _("  (use \"git reset %s <file>...\" to unstage)"), s->reference);
+-	else
++	else if (!s->is_initial) {
++		if (!strcmp(s->reference, "HEAD"))
++			status_printf_ln(s, c
++					 , _("  (use \"git restore --index <file>...\" to unstage)"));
++		else
++			status_printf_ln(s, c,
++					 _("  (use \"git restore --source=%s --index <file>...\" to unstage)"),
++					 s->reference);
++	} else
+ 		status_printf_ln(s, c, _("  (use \"git rm --cached <file>...\" to unstage)"));
+ 	status_printf_ln(s, c, "%s", "");
  }
- 
-+_git_restore ()
-+{
-+	case "$cur" in
-+	--conflict=*)
-+		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
-+		;;
-+	--source=*)
-+		__git_complete_refs --cur="${cur##--source=}"
-+		;;
-+	--*)
-+		__gitcomp_builtin restore
-+		;;
-+	esac
-+}
-+
- __git_revert_inprogress_options="--continue --quit --abort"
- 
- _git_revert ()
+@@ -225,7 +237,7 @@ static void wt_longstatus_print_dirty_header(struct wt_status *s,
+ 		status_printf_ln(s, c, _("  (use \"git add <file>...\" to update what will be committed)"));
+ 	else
+ 		status_printf_ln(s, c, _("  (use \"git add/rm <file>...\" to update what will be committed)"));
+-	status_printf_ln(s, c, _("  (use \"git checkout -- <file>...\" to discard changes in working directory)"));
++	status_printf_ln(s, c, _("  (use \"git restore <file>...\" to discard changes in working directory)"));
+ 	if (has_dirty_submodules)
+ 		status_printf_ln(s, c, _("  (commit or discard the untracked or modified content in submodules)"));
+ 	status_printf_ln(s, c, "%s", "");
 -- 
 2.21.0.rc1.337.gdf7f8d0522
 
