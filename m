@@ -2,138 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E3E820248
-	for <e@80x24.org>; Thu,  7 Mar 2019 23:40:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6ED420248
+	for <e@80x24.org>; Fri,  8 Mar 2019 00:02:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726250AbfCGXkV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Mar 2019 18:40:21 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33929 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726172AbfCGXkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Mar 2019 18:40:20 -0500
-Received: by mail-wr1-f65.google.com with SMTP id f14so19437523wrg.1
-        for <git@vger.kernel.org>; Thu, 07 Mar 2019 15:40:19 -0800 (PST)
+        id S1726249AbfCHACW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Mar 2019 19:02:22 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55699 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726234AbfCHACW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Mar 2019 19:02:22 -0500
+Received: by mail-wm1-f65.google.com with SMTP id q187so11044076wme.5
+        for <git@vger.kernel.org>; Thu, 07 Mar 2019 16:02:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=g48Z4VCw0JuljOXGs/NlZnMaQpe7AThgEileh958Xq8=;
-        b=b6fORBL2b6pK1b8kKzYJRU6ykg3OR9JOai2Y+lWkU3shrDTE/jWoHWZwJshHpEe2YU
-         2NIqfnapj+jBlJP2dOMNNQfmDmqyJyQkgpwfldVJr53NowPgpe/Uy+V5gFHjdLNDqaOc
-         5USJeEoNurfe8n28kZ5pRzAjEwjBnGK/nvu4QegaXT41iy1J8vR89QU3Gxa0B2JN7R5S
-         Uxu7buLROScfiY7Xwqh8AKW3265L3QiCnZ0wavNUOut/mGvAxTRHWeOxpgZol6Xos+RA
-         rvqyKCKiO+AIyA+vKWA/vpM+yA5kjRwOA2Mf8u8/6FT8vDMsXMrx3Va/9B0O8e81XKDA
-         v0qw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=qJmggDbqDVB0bHIWJuEHfuGLIRXisU9HW770E2CFRXI=;
+        b=lOA4FWxtME59Dmkdx+teY+Swkk56LAaNYdf59u8soJToVEbyg4KNhiWxDuQ5HgJDBW
+         6q+dGemXew4vfJnqKHmh2oQcyN9LFv0YZ5cXXVtondzs/DItzXxzLD7yIXz70tPwytqm
+         a3gWeF7u6xDkOA5GpLK9P5sspZli/57zQZ7mL0BLocFc3RISfpvcb2BZGVqedHNoDcmN
+         06a1474a0Lu8Eq5nhUOIfKKGDJZPerbBbDq9UDHmvBicGSYc51btENHi9+xRzMctkdvK
+         AAkZd0Ev8JeGEvphIht3czO053KApmOV7+TTJPnK8wxvsIf6kkzNFSGGt9op+ha7RmoF
+         MwyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=g48Z4VCw0JuljOXGs/NlZnMaQpe7AThgEileh958Xq8=;
-        b=ieDp1zJ9HWKTjYl8kz/razYzJMpPtuTlZyS1l94UmdzzbGZCuyxGXGYfFYaEFYHAaO
-         cdmsN7091Rx/3MClpG/pFCd94K/6WOYLZK2+oZ4WSSU/unU36rwUHuW98OhoHlSYywum
-         2mYZJrGTTQwz+iTtwHs74p6tgRJcphfJfGTOUt4lqtaJa6I2pHlCn5SP/HUTeCtMJ8zf
-         fgIuthSB5QZJxZK8fUkWBQjaS/yZr7ymH7CvopEtXix0uWqMVe9bl6AiaRGJ2rShXU6b
-         2zEEcqFoE1WQtkrVbifbX8tkj3aY2ddFG4eEJ/ifhYl83rBxRC5GdJVCOnp4AvzC43tg
-         /2yA==
-X-Gm-Message-State: APjAAAW2Cwvokx5pRtzwkfTg+Qqy5vuzZa7sPd2n8059c0o8mHqPEQU0
-        Oh4aBcNn2vm9Aui1fhVSBx/Vg0Tb
-X-Google-Smtp-Source: APXvYqzFXwn8ypcb2hwrSED98OMTX/TGZFC94WB6myCnlwAZhk9WI16RosX+Sigw1LpDRwykMtn4Jg==
-X-Received: by 2002:adf:b784:: with SMTP id s4mr8530243wre.155.1552002018766;
-        Thu, 07 Mar 2019 15:40:18 -0800 (PST)
-Received: from szeder.dev (x4db9392a.dyn.telefonica.de. [77.185.57.42])
-        by smtp.gmail.com with ESMTPSA id h137sm12362331wmg.41.2019.03.07.15.40.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Mar 2019 15:40:17 -0800 (PST)
-Date:   Fri, 8 Mar 2019 00:40:15 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Alexander Huynh <alex@grande.coffee>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] fetching all remote branches results in failed multiple
- updates
-Message-ID: <20190307234015.GD28939@szeder.dev>
-References: <20190307214447.GA4909@chabuduo>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=qJmggDbqDVB0bHIWJuEHfuGLIRXisU9HW770E2CFRXI=;
+        b=dHyfylzBpJhszM+bMBFQfiMjetgGY5nUV/LGRsdDLXKNgFiTex3cJjBVlQIDjaXEpO
+         HYVjCw8CFXAT55IXdbNdhCjTik9bcaHdCHU1rSTu0gzdSlUqrcHpTqyKjuPD+XbUDNRE
+         kVlT/b6TdAf/ByorBU0zDBJNoWkJzL0/iv4rPNzoOgG5XFRv/VdGsdwws4Y8Coss1S3Q
+         0SN7lNASlAzWvtk0ZKDAxoT2qTJ1irSs5x+I5SLSlYqbrv1g66gGjGj38ARYp27+JrzX
+         cISwVMbDc3r7A+qz/o7K19N/v9nPn7qr2F8NNCYPWfzOKW1XcBwWMTBTFvYZH8n2FkwH
+         lHZw==
+X-Gm-Message-State: APjAAAUhASyDP29wglJgJoe57xTtedI7DgxYwde8C63ok1wfEthLvkGk
+        BJyYxdgk9QvrT/H/dB7gweY=
+X-Google-Smtp-Source: APXvYqzXXIjFo9FgIflYKFmAGW2NH6O6ViXzlDieUONHR3nTLaKUqu8GMHUH6me/gZSVCYuvDxHRsw==
+X-Received: by 2002:a1c:751a:: with SMTP id o26mr7306670wmc.10.1552003340391;
+        Thu, 07 Mar 2019 16:02:20 -0800 (PST)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id y66sm9071897wmd.37.2019.03.07.16.02.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 07 Mar 2019 16:02:19 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Mar 2019, #01; Wed, 6)
+References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8C7F_Ju2F7COUVd9-1FcyQL=mZph7qmkDh9sS-ENb4PEQ@mail.gmail.com>
+        <f6052ac6-60c4-1e70-b3f4-571885ba9e8d@iee.org>
+Date:   Fri, 08 Mar 2019 09:02:18 +0900
+In-Reply-To: <f6052ac6-60c4-1e70-b3f4-571885ba9e8d@iee.org> (Philip Oakley's
+        message of "Thu, 7 Mar 2019 12:34:48 +0000")
+Message-ID: <xmqqsgvykzcl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190307214447.GA4909@chabuduo>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 07, 2019 at 09:44:47PM +0000, Alexander Huynh wrote:
-> Hello all,
-> 
-> When running the latest release of git, I receive an error when attempting to
-> fetch all remote branches from a repo:
-> 
->     fatal: multiple updates for ref 'refs/remotes/origin/maint' not allowed
-> 
-> The specific ref that it fails on changes depending on the repository, but the
-> end result is the repo isn't cloned.
-> 
-> The specific configuration that causes this bug is the `remote.origin.fetch`
-> option, specifically:
-> 
->     [remote "origin"]
->     	fetch = +refs/heads/*:refs/remotes/origin/*
-> 
-> These settings are listed as an example in "CONFIGURED REMOTE-TRACKING
-> BRANCHES" of git-fetch(1), as well as expanded upon in
-> https://stackoverflow.com/a/40739835.
-> 
-> I'm running git version 2.21.0.
-> 
-> Full reproduction steps are below:
-> 
->     [root@chabuduo ~]# useradd -m git-test -s /bin/bash
->     [root@chabuduo ~]# sudo --preserve-env=SSH_AUTH_SOCK -u git-test -i
->     [git-test@chabuduo ~]$ git --version
->     git version 2.21.0
->     [git-test@chabuduo ~]$ cat > ~/.gitconfig
->     [remote "origin"]
->     	fetch = +refs/heads/*:refs/remotes/origin/*
+Philip Oakley <philipoakley@iee.org> writes:
 
-Why do you do this?
+>> I should send switch/restore again soon. There are still a few
+>> unaddressed concerns for git-restore since last time. Probably time to
+>> refresh those discussions.
+>
+> Just catching up on back emails:
+>
+> The one point I noted is that "Overlay" is a new magic term without
+> any explanation within the _documentation_.
+>
+> It would appear worth it to also add something (follow up patch?) to
+> the e.g. git glossary to clarify how overlay differs, or is similar
+> to, the different merge and reset modes.
 
-First, this is the default refspec configuration that clone will fetch
-and set up in the clone's config file anyway.  You don't have to set
-it.
-
-Second, setting repository-specific stuff like the default fetch
-refspec in the global configuration is not such a good idea.
-
-So the simplest workaround is:
-
-  rm ~/.gitconfig; git clone git@github.com:git/git.git
-
->     [git-test@chabuduo ~]$ cat ~/.gitconfig
->     [remote "origin"]
->     	fetch = +refs/heads/*:refs/remotes/origin/*
->     [git-test@chabuduo ~]$ git clone git@github.com:git/git.git
->     Cloning into 'git'...
->     Warning: Permanently added the RSA host key for IP address '192.30.255.112' to the list of known hosts.
->     remote: Enumerating objects: 265113, done.
->     remote: Total 265113 (delta 0), reused 0 (delta 0), pack-reused 265113
->     Receiving objects: 100% (265113/265113), 113.20 MiB | 5.49 MiB/s, done.
->     Resolving deltas: 100% (196542/196542), done.
->     fatal: multiple updates for ref 'refs/remotes/origin/maint' not allowed
-
-Anyway, this is a side-effect of 515be83382 (clone: respect additional
-configured fetch refspecs during initial fetch, 2018-11-14).  Since
-then the same refspec comes up twice in remote->fetch, once from the
-configuration and once the explicitly added default refspec.  And
-since 'git clone' doesn't run a fully-fledged 'git fetch' and has its
-own simple refs-to-refspec matching logic, it ends up trying to write
-each ref twice, once for each of the two refspecs, in a single ref
-transaction.
-
-
+Yeah, I recall that.  I was hoping that it would stop mattering when
+we start using switch-branches and restore-paths, but of course it
+would not hurt to clarify the doc in the meantime.
 
