@@ -7,131 +7,127 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48A0720248
-	for <e@80x24.org>; Fri,  8 Mar 2019 08:50:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECBE020248
+	for <e@80x24.org>; Fri,  8 Mar 2019 09:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726305AbfCHIu1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 03:50:27 -0500
-Received: from mail-qt1-f170.google.com ([209.85.160.170]:46207 "EHLO
-        mail-qt1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726286AbfCHIu1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 03:50:27 -0500
-Received: by mail-qt1-f170.google.com with SMTP id z25so20368036qti.13
-        for <git@vger.kernel.org>; Fri, 08 Mar 2019 00:50:26 -0800 (PST)
+        id S1726283AbfCHJUk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 04:20:40 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:54017 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726238AbfCHJUk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 04:20:40 -0500
+Received: by mail-it1-f195.google.com with SMTP id v2so19842563ith.3
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 01:20:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=eBLnMXE9gmQHiuIqMz34ybwdWMopJD7fBub9NOLZnH0=;
-        b=A6ytt1FLofhR+WenWngFbYDXpSiPQcMXK6xLpwml1i0sKupjk2vu/Gzt2FZTk6qfhy
-         LzdXHM/GV+Y++xZZHQXGyyo8mEI71KaeMXWzFRxsEN2bOlIQXxHFoi6P53eqarjhqlEb
-         p+YHiblsHkR5OwfPIEIOdrVY0tsKzjkBcqAeX0GX/NHDfKD8ms9tuffsT0T+h2F++ylJ
-         HtIoQbNbj7Es9sWshEIN96zukO5n2Zro6lLIaRHj78DEIHbMFkwY4bLSDjDZxcEXnl4t
-         YeLoV0tkodqi2F4pu5P7J1o4saC2Y1q3aKc+e/0zbaIIgtIKKfQyBEuo8Eb3YInVxANR
-         +49Q==
+         :cc;
+        bh=9e3zevfBPlfFxQRRByGKEB13tEWE9r3Y4d2DT7MSnsk=;
+        b=KCFsOpfzU4EZn/uhNE+bBCd5UOKNTsJPiKwAn6nDb5in4BDmQ9SQH0QS4Ie3gGo50g
+         oknag/1n7ZQ6JLtodFmnaH9vdx0DgiA1feVnmk5eQRxqFkJDY5/SsGej1SaXYJW0IbW9
+         NJ53xu/DOxOUJ+XXf8OUtzvHh6GFumTpBTOcMgkmUCmEzkRcYpgWLUAf9KunvO5f4ohj
+         jMy255zVlIraH/3RKk7O0UxomLJX9+WYCNU31XHOnvHQa+TzsvgyMprSOL9KE70pAbSB
+         LSheSUN3OhspLn643r00t9JoYjCbzMz2Eh2hovq0X7gyQSl6OHZKMnNHPYg5mSe+l0Lm
+         Hryg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eBLnMXE9gmQHiuIqMz34ybwdWMopJD7fBub9NOLZnH0=;
-        b=mE2z618lLz1l7KM2dNeZjQu5Cx9liPaGAsXygT5MU7EZVm1Zvtp0OmAG3QuQFoa0T0
-         p1i/Z0RY4Y37lJbP7I1eacTciwF9fe2/NlbQN3iD763QtwB8CwmO3wr8g9M2mV5pTKR5
-         rbilaKl1y7q6rAVZmhMtVOsMQR03K3LioCj1nE6hLEhd4tUSxuaeOp/jRyQrmE+sb2+/
-         U9p5Oc02y+g0m2wx1wx1on5pOHLotZv7Ert8rAy1MW9fr/3+ZT38uTeYFESGBm7C34Bk
-         rRtQsvMa06VDCYgfKyiOwNwV/jAVKwc1Qsy3+qoZqjX1fJ2g56b5opeJl+YjilCznu7+
-         xvbQ==
-X-Gm-Message-State: APjAAAUMFDbrdzLiD+BPjmuZkGivyqpYuqlWMKUd3IIF9S562hHpoWgQ
-        F6EnAPeTAOs6Y6+B8mD78xLlFXfQykzNluXR+/NhwlqM
-X-Google-Smtp-Source: APXvYqxknbmWhLJpiWyX3l+dQ+Lj2R1clLuJ9fWIWFZnW0rHVBmDhnPLfZulFqLBYg26shBcXEuAvESImGA/x6u0c/Q=
-X-Received: by 2002:a0c:9387:: with SMTP id f7mr14443481qvf.118.1552035026302;
- Fri, 08 Mar 2019 00:50:26 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=9e3zevfBPlfFxQRRByGKEB13tEWE9r3Y4d2DT7MSnsk=;
+        b=pK6KQ2rUaTTHDOfxH6m1BggBDbuPEMdWW31j1R1JmVaxSxv4QVIfsLrITgLnnW+gk1
+         tfkN0A7Mn2ww5WNtiqX5c5sOJLvX3mKMzjWFgoXhMF/yNvvk6bWuia9qWziL8+V3KEkx
+         kqUBMl5xj5D6UvkD4ZNfoaVcbFFIVcZYycKqr+kVI6MxW12Ro0Wh536jPN6D8GqJXzWQ
+         KbhttIyMzRmqEfLypAzM1nkNbdukC1Y8ObB0FtVKCKAU9rTtobWzpCivuajUEKIAUO96
+         uMrkrSWd7EwaGg3Z84K3ycn+XO2nhpnnTsmbhlIXqj8GXe1532t41ArtkUFFOZCzhktd
+         AltQ==
+X-Gm-Message-State: APjAAAXuKu4sP/PucdWLc3Ir41ock4jCYg2mpm7QxtdKQO1WQ3m7bIyL
+        TERO4OVmTV1K4DssreJKQaRA5gcREc1DZiiN1Ps=
+X-Google-Smtp-Source: APXvYqwqJZye7mYele9d+mb0NVLTlXHp25mPPh77ra439Q9DPgp2P0ih0z/vSf+gNGGT+ZmEiN2NGQh5BGGOI7LkvEY=
+X-Received: by 2002:a02:568a:: with SMTP id u10mr10208101jad.130.1552036839351;
+ Fri, 08 Mar 2019 01:20:39 -0800 (PST)
 MIME-Version: 1.0
-References: <CAL-rKu6AcyHdrCsVikwQxTgKHgtV86+BeHOv_sTSu-jvwME75Q@mail.gmail.com>
- <20190307180831.GA21404@sigill.intra.peff.net>
-In-Reply-To: <20190307180831.GA21404@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Jesper_R=C3=B8nn=2DJensen?= <jesperrr@gmail.com>
-Date:   Fri, 8 Mar 2019 09:50:15 +0100
-Message-ID: <CAL-rKu6knyzyVE7VuTRZEKoS9MOU8ip+Nm+HH7dJAOffb46q2w@mail.gmail.com>
-Subject: Re: Error fetching submodule from submodule
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+References: <cover.1550508544.git.msuchanek@suse.de> <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
+In-Reply-To: <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 8 Mar 2019 16:20:13 +0700
+Message-ID: <CACsJy8D_ahM_7mLaAijJsZ0e8BF6PBfr3pPisOnYmRH7U8kmqA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] worktree: fix worktree add race.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Michal Suchanek <msuchanek@suse.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Marketa Calabkova <mcalabkova@suse.cz>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Jeff
+Junio, it seems 2/2 is stuck in an endless discussion. But 1/2 is good
+regardless, maybe pick it up now and let 2/2 come later whenever it's
+ready?
 
-You are completely right! It works as I expect if I remember the extra
-parameter `--recursive` when doing `git submodule update --init
---recursive`
-
-Thanks a lot for your feedback! This is really useful! I learned a
-useful thing today :)
-
-/Jesper
-
-On Thu, Mar 7, 2019 at 7:08 PM Jeff King <peff@peff.net> wrote:
+On Wed, Feb 20, 2019 at 11:16 PM Michal Suchanek <msuchanek@suse.de> wrote:
 >
-> On Thu, Mar 07, 2019 at 12:07:21PM +0100, Jesper R=C3=B8nn-Jensen wrote:
+> Git runs a stat loop to find a worktree name that's available and then does
+> mkdir on the found name. Turn it to mkdir loop to avoid another invocation of
+> worktree add finding the same free name and creating the directory first.
 >
-> > Hi I think I may have found an error in the way git handles a
-> > submodule's submodule. Read further for the example (extracted from a
-> > real project).
+> Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+> ---
+> v2:
+> - simplify loop exit condition
+> - exit early if the mkdir fails for reason other than already present
+> worktree
+> - make counter unsigned
+> ---
+>  builtin/worktree.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
 >
-> First off, thank you for the example script. It made understanding
-> what's going on so much easier. :)
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index 3f9907fcc994..85a604cfe98c 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -268,10 +268,10 @@ static int add_worktree(const char *path, const char *refname,
+>         struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
+>         struct strbuf sb = STRBUF_INIT;
+>         const char *name;
+> -       struct stat st;
+>         struct child_process cp = CHILD_PROCESS_INIT;
+>         struct argv_array child_env = ARGV_ARRAY_INIT;
+> -       int counter = 0, len, ret;
+> +       unsigned int counter = 0;
+> +       int len, ret;
+>         struct strbuf symref = STRBUF_INIT;
+>         struct commit *commit = NULL;
+>         int is_branch = 0;
+> @@ -295,8 +295,12 @@ static int add_worktree(const char *path, const char *refname,
+>         if (safe_create_leading_directories_const(sb_repo.buf))
+>                 die_errno(_("could not create leading directories of '%s'"),
+>                           sb_repo.buf);
+> -       while (!stat(sb_repo.buf, &st)) {
+> +
+> +       while (mkdir(sb_repo.buf, 0777)) {
+>                 counter++;
+> +               if ((errno != EEXIST) || !counter /* overflow */)
+> +                       die_errno(_("could not create directory of '%s'"),
+> +                                 sb_repo.buf);
+>                 strbuf_setlen(&sb_repo, len);
+>                 strbuf_addf(&sb_repo, "%d", counter);
+>         }
+> @@ -306,8 +310,6 @@ static int add_worktree(const char *path, const char *refname,
+>         atexit(remove_junk);
+>         sigchain_push_common(remove_junk_on_signal);
 >
-> > * I have a main repository which has some submodules defined.
-> > * One of the submodules is a common submodule which is also included
-> > in one of the other submodules
-> > * When running `git fetch --recurse-submodules` I get an error.
+> -       if (mkdir(sb_repo.buf, 0777))
+> -               die_errno(_("could not create directory of '%s'"), sb_repo.buf);
+>         junk_git_dir = xstrdup(sb_repo.buf);
+>         is_junk = 1;
 >
-> I think the presence of common_submodule in the main repo is actually a
-> red herring. if you remove the last two lines of this stanza:
+> --
+> 2.20.1
 >
-> > git setup main_repos
-> > pushd main_repos
-> > git submodule add ../common_submodule
-> > git commit -m 'added submodule to main_repos'
->
-> the outcome is the same.
->
-> > # This line fails with error code 1 "Could not access submodule
-> > 'common_submodule'"
-> > git fetch --recurse-submodules
->
-> It looks like "fetch" is smart enough to initialize a submodule when
-> necessary, but not smart enough to do so recursively. If I replace that
-> line with:
->
->   git submodule update --init --recursive
->
-> then it works as I'd expect. Likewise, cloning the repository with:
->
->   git clone --recurse-submodules main_repos foo
->
-> does what you'd want.
->
-> After that, I think "git fetch --recurse-submodules" does what you want,
-> because the submodule repository is already initialized.
->
-> I'm not sure to what degree git-fetch intended to support initializing
-> submodules. But it certainly seems like a bug that it handles the top
-> layer but does not recurse (i.e., it should either handle all or none).
->
-> Hopefully the commands above at least give you a workaround.
->
-> -Peff
-
 
 
---=20
-
-Jesper R=C3=B8nn-Jensen
-Nine A/S
-Mobile: +45 2989 1822
-Blog http://justaddwater.dk/
-jesperrr@gmail.com (Private e-mail and Google Talk IM)
+-- 
+Duy
