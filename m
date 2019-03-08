@@ -2,80 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D40120248
-	for <e@80x24.org>; Fri,  8 Mar 2019 16:20:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFC2820248
+	for <e@80x24.org>; Fri,  8 Mar 2019 16:27:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726414AbfCHQUe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 11:20:34 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43914 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726294AbfCHQUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 11:20:34 -0500
-Received: (qmail 15680 invoked by uid 109); 8 Mar 2019 16:20:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Mar 2019 16:20:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1718 invoked by uid 111); 8 Mar 2019 16:20:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 08 Mar 2019 11:20:51 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Mar 2019 11:20:32 -0500
-Date:   Fri, 8 Mar 2019 11:20:32 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] line-log: suppress diff output with "-s"
-Message-ID: <20190308162031.GA17326@sigill.intra.peff.net>
-References: <20190307194514.GA29260@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1903081636350.41@tvgsbejvaqbjf.bet>
+        id S1726425AbfCHQ14 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 11:27:56 -0500
+Received: from mout.gmx.net ([212.227.15.15]:46797 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726171AbfCHQ14 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 11:27:56 -0500
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lbujs-1gctlU0RDI-00jHj7; Fri, 08
+ Mar 2019 17:27:52 +0100
+Date:   Fri, 8 Mar 2019 17:27:36 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Drop last MakeMaker reference
+In-Reply-To: <xmqq1s3ikurh.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1903081718330.41@tvgsbejvaqbjf.bet>
+References: <pull.146.git.gitgitgadget@gmail.com> <xmqqfts469h5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1903071109020.41@tvgsbejvaqbjf.bet> <xmqq1s3ikurh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1903081636350.41@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:BCRMu3y177YJlpHjinJO1mAXSgIoGZlwCVkviA1KSzZq1sGgp/T
+ Nd+V06yMh1OR5Nrs7jU6gmWvzpuLyue0dl6CQ8Smtfz1uRviN9GFGZLdZwJmdQ68C1LwAtR
+ 81fM/JxB0mRB1ODFM4PHLgGfmsNIpke+E9rS5JK9xzAx82Q/SHo2NdCeCWbGk35VLa8TLvG
+ 3HmY5Z1EIIUh8QTaTDozA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:O5zA9vVQ8uM=:LCo+bo4ThPFpFmOsqIRGM3
+ GTrDLco6IgEDutCexvQjcDwYW7j0zWWOiHXZ5Ky8o0tqLXkZYf6MGOYbehJ10/mX6dkFA0Vxq
+ RC275bxRB/bcCfxd9dtrVsho0wvp4o+iAyPQ90giMjsrmu4bfgaSbRKWY40H07LQzn2GRgZsC
+ oJS61o45zF9GV5+/C7RgOutuv14gtAaNC9gEWkNjfgdUupqnOjywVSVdBm1SMtg3UJ+5VXdM+
+ 1t/RH1JshwqhVZz+mdSS8m+GSvhopLCtrwaFCYcVCORGhZHz4TLDabc9NOxDN1OPEzEkg2Bzo
+ arhmSLtxzf2Ltm/mQAaV9rue3c2YdhpY9JwGV3yPFtbU8/Q74SfOGyNjxwvVr/b2FINPeih3x
+ kTUaCylfdDKRMj2XmwdcAKIW7gmBIasGuJdM4gxmNj1DLDHZPgwsyZE+cVBDhJNNWeyckcE36
+ XC8oWZH6+ljA6jykvsTg/nlAsNvQ05r5BcTXRNLJ60uaO/KjXYy0nOgtWyCBzYyPkCPCKwrz4
+ KlLyteeTR2AgthOa+GhOyYBZOEzdgJE+JWOIVnN9BnPqpUxr2u+CqKjK33Z32YWhldPySIDgp
+ 6h7xu/uaRHZCXL8QDSVgf6XoKax1BLSvkpwxUTkuQB98s5ytZX+ItQraKEvttuy88wn5Wk3VR
+ b8FKooor3+YfM2uwgurx9cu9BYtXBW5smhQ0jmXdYUbhPVgSvCDcOwoIGul76RrRuGLEA2jGh
+ yKFiJZ4LpdhWYk7QcMkwjVxePdhQKDvfG56gtX6HrP9JQ1ErBjUVNNHXYN9VouFe+UYHs1A0h
+ njxfa25jFJFQ570zMFqt7yfq58G5ItYqZ+AwVmxnz55RwZLhlM7iKDfsD1GXVuvFD+UE00tYb
+ cqpvW2rEuX3fsaNQzrY69JNEzySHssGQNZuwa+yUMD8UH+CF1f7IBAuVuUZZEF+lz+0fuelON
+ M5C8Qtm3ZwQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 08, 2019 at 04:38:44PM +0100, Johannes Schindelin wrote:
+Hi Junio,
 
-> On Thu, 7 Mar 2019, Jeff King wrote:
+On Fri, 8 Mar 2019, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > When "-L" is in use, we ignore any diff output format that the user
-> > provides to us, and just always print a patch (with extra context lines
-> > covering the whole area of interest). It's not entirely clear what we
-> > should do with all formats (e.g., should "--stat" show just the diffstat
-> > of the touched lines, or the stat for the whole file?).
-> > 
-> > But "-s" is pretty clear: the user probably wants to see just the
-> > commits that touched those lines, without any diff at all. Let's at
-> > least make that work.
+> > On Sun, 3 Mar 2019, Junio C Hamano wrote:
+> >
+> >> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> >> writes:
+> >> 
+> >> > Back when we stopped using MakeMaker, we forgot one reference...
+> >> >
+> >> > Johannes Schindelin (1):
+> >> >   mingw: drop MakeMaker reference
+> >> >
+> >> >  config.mak.uname | 1 -
+> >> >  1 file changed, 1 deletion(-)
+> >> >
+> >> >
+> >> > base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
+> >> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-146%2Fdscho%2Fno-perl-makemaker-v1
+> >> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-146/dscho/no-perl-makemaker-v1
+> >> > Pull-Request: https://github.com/gitgitgadget/git/pull/146
+> >> 
+> >> Good ;-)
+> >> Thanks.
+> >
+> > Gentle reminder that this has not made it into `pu` yet...
 > 
-> Agree. The patch looks obviously good.
+> Thanks.
+> 
+> I'll try to make it a habit not to respond to 0/1 (but instead to
+> 1/1) as it is quite inefficient to get to 1/1 from 0/1 at least for
+> me X-<.
 
-Thanks. This leaves the other formats as silently ignored. Do we want to
-do something like this:
+Hehe. I do have something for you there:
 
-diff --git a/revision.c b/revision.c
-index eb8e51bc63..a1b4fe2aa6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2689,6 +2689,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 	if (revs->first_parent_only && revs->bisect)
- 		die(_("--first-parent is incompatible with --bisect"));
- 
-+	if (revs->line_level_traverse &&
-+	    (revs->diffopt.output_format & ~(DIFF_FORMAT_PATCH|DIFF_FORMAT_NO_OUTPUT)))
-+		die(_("-L does not yet support diff formats besides -p and -s"));
-+
- 	if (revs->expand_tabs_in_log < 0)
- 		revs->expand_tabs_in_log = revs->expand_tabs_in_log_default;
- 
+https://github.com/git-for-windows/build-extra/blob/master/apply-from-public-inbox.sh
 
-?
+-- snip --
 
--Peff
+> Or perhaps GGG can learn to avoid 0/1 for a single-patch topic ;-)
+
+It is easier, and more consistent, to have a cover letter even then, for
+things like the broader explanation of the context, the changes since the
+previous iteration, and the range-diff (which would make v2, v3, v4, etc
+utterly unreadable from my point of view if they were integrated into the
+single patches, as I used to do with interdiffs).
+
+> Thanks anyway.  Will try to apply directly on top of master.
+
+Thank you!
+
+While we're talking about "directly on top of master"... *after* it got
+some review, I would love to ask for the same favor for
+https://public-inbox.org/git/pull.160.git.gitgitgadget@gmail.com
+
+On the other hand, it is an old bug, I know, and it will break all CI
+builds for branches that are based off of older commits, anyway. I guess
+we'll need some sort of horrible hack in the git-sdk-64-minimal thing, to
+allow for patching this on the CI side, without adding commits to all of
+those branches. :-(
+
+So: I made up my mind, and that MSYS2 runtime v3.x patch does not need to
+be fast-tracked; it would not fix all the CI builds...
+
+Ciao,
+Dscho
