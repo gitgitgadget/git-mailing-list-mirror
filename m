@@ -2,124 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C33FF20248
-	for <e@80x24.org>; Fri,  8 Mar 2019 15:39:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0AA620248
+	for <e@80x24.org>; Fri,  8 Mar 2019 15:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbfCHPjI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 10:39:08 -0500
-Received: from mout.gmx.net ([212.227.15.18]:40191 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726279AbfCHPjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 10:39:08 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Likl3-1gWVfl1VwD-00cw0m; Fri, 08
- Mar 2019 16:39:00 +0100
-Date:   Fri, 8 Mar 2019 16:38:44 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] line-log: suppress diff output with "-s"
-In-Reply-To: <20190307194514.GA29260@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1903081636350.41@tvgsbejvaqbjf.bet>
-References: <20190307194514.GA29260@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726290AbfCHPkv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 10:40:51 -0500
+Received: from mail-vs1-f52.google.com ([209.85.217.52]:44210 "EHLO
+        mail-vs1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbfCHPku (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 10:40:50 -0500
+Received: by mail-vs1-f52.google.com with SMTP id r201so6892427vsc.11
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 07:40:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bQhGFqDbHrwNbBr4cdkDfaomzqtXH50HRnVYV1b1nx4=;
+        b=pR6zZIX7DUo5Da2cx9uyRQWhNMDnhcN87oGHA28ZlMjff+5YJMxktfbF1bcK5z9+y5
+         OE7ZVXrxmOIkHxUgrvmb3RKcnOISUFlh3UmDArTp7kAUqZCBkM1DBH+ZrIhO1NXrN7Fs
+         FA6sNbxAQh4eLfC4TRyuv8aDj2tyqjWoAhKRqdBp2bK5pvYGr+e3a+KHlFwnUn7XYU0C
+         qAqWGIPVTWLJ84NYCplIHuhrzaYiHjOXxkPJpRkbQ8pFogk64C29qOfw+w9jmxV0WECW
+         a+Nlj/DIV+6rv0O0IfNyGhJeHdp6BVJxdeVzOgk4cT1XqITrvJPbwiFH9y6zb2QH20Y+
+         h1qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bQhGFqDbHrwNbBr4cdkDfaomzqtXH50HRnVYV1b1nx4=;
+        b=Bs5nJ00OvsYByl/bhYfRmJ+LWtVK/V1cJW36qxqApPgtystjRYlnTTZvT0nCpI+F6P
+         ZJoILdb0SSMsegSJUp/kzBSn+Yy2/lVFY4KVJftti5N6lS2/oq16QPmpW9/j8ZuHRmFw
+         McFPYzElcKGFLmNUpBRzPHUlrV83f74k5uLw158+BeVZRIvKlo+AGPo/ibdRJdESsbAG
+         LG68wrlwRnt/EQuFEPsOsKPGta+ItY/EsGdygDUr4ksj7MFijgxlF841ATSSidjbtcOT
+         4+lxDH5PkUuB22FtzDiotM3cIGva/h6qWsh+WbO5TuXntchNvzCyiyJHE1LeEkyRlQ2Q
+         Z9aQ==
+X-Gm-Message-State: APjAAAW0ejFSu4kiiRFzL4G8gGXBwu8mleEiGIUWDN9vPX29nOwpkrAE
+        O4b6nnoyOZe+LRd53y5hhnMftT7HI0BR80hJd5o=
+X-Google-Smtp-Source: APXvYqzZcjZP/Fkm22a9Q2NmhPdFA9fY5EarL3Bj253FUkohU67tgC2fIHc1opKD/D3Caec41hkpByQpGWfu7y5ephk=
+X-Received: by 2002:a67:fa46:: with SMTP id j6mr10242041vsq.117.1552059648938;
+ Fri, 08 Mar 2019 07:40:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:xQ72EtDCyvvE663ORfGehQUquC/tny1Ik6z07hAJHJmFTn0bgoB
- KVigCeNFN3GCpSfm+OJXdrR5QpgDgm5qwjX8byVMS7aUAF1rKpc8e6XtQmRHLQ18MghCKko
- IWG5K6Xev0eBh8MajqXbdJKHPg1DkP4HJlr26q0OhLf5tbfeGeNCzbZbXK7X47UTdB25LTz
- gg184fMXyt6/xWfSxjTmA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Lf1vgisgh2I=:7+TYup7dHHscr+alS9N3kq
- 9LWp9Kv4BsEsclZtp7dIl+nQFWded8ngLBefgTtkzpMoK8V/UhbUePS9qcxea46BkfynTce3P
- eRvYW1WFFIj0ijTjwc86gtfVQVGtiYeLpvvp4HljJw1vPp6Hq5pJ8587pKtZU4ydEoVM4KOIp
- QT4bH+nxtmKuo0IE7VKzAVDvlQdU4jyl29oLzaArJToJJKEGnaG/RrY8q028ovHcl5LhIlKn0
- xA2Gunh8uDWCCQpQMagrWcT9+zlPOmzsj5KrGtY62eyM9GkxHlGfZxMul72xTHTIfCyzsN4As
- PjeJ0YeRHtHOtDK8ic/+4brq1D4jE6C632r/2xYZnfC143ZqcAcE5EpwK0APKA8NAXCDyQ0jx
- 8sxmx2gjFTaWskvLcYiqT2WvYuaxGDzNsZ5WGbBtW9MnrzJegx/h0QyJdd0qP1oqRAIiIi5CV
- ZkoCd3xwBI5DtlEn0SFnpCL5ddEb6tvl4q6CXRZd4pAmPx+kfEzw3cfnHPTqR3qxCs1LXis0I
- IhOqFIx4atlY97xGBTwsNuaS7hkbaEHF+TL0RCk0RKHJcTCW/v9yRG+u8Pe0TKb0VdyLslCi5
- cFFwmMBiR8lxlGVHDkFqa5e+mHRqL5+ZzDPlVNl/tvwyLIekfgPoFZBN6A2WhOxTivOck3uR6
- oGbuvmXbAZ9y9U8Uqcht3evP/puSdspJ+SmEhq2PO9NHws3I27k80hgU5O50eQc9Z9u5vR03y
- K86GEK5LNyPagYSuv3qSAp/dpJf3tnI4B8ygH5kYBq1LmKP1DjsOz71EDe6wtOhr28rcYXCyq
- fHl3quoJNIBZVLb6gC4XFKoUYTvMvmpgbQbI+axJnjRVVJP4anegNxo3W7Ri7sV/Tn7owpAkZ
- HUlTXE1GUFKCP+CJycO4DnhrXqByP4pcQ/AESDBUjWzq51jwQS+cehQOwhyIVdNghjFlFssG6
- GNEMNQ28F1g==
+References: <DB6PR8303MB0069AA4D630BFDF0EC72C47BFD4D0@DB6PR8303MB0069.EURPRD83.prod.outlook.com>
+In-Reply-To: <DB6PR8303MB0069AA4D630BFDF0EC72C47BFD4D0@DB6PR8303MB0069.EURPRD83.prod.outlook.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 8 Mar 2019 07:40:36 -0800
+Message-ID: <CABPp-BF0PcdwpJR3NteCmQw0QhN3E0UAi22FvmjUc6SBr=UB_A@mail.gmail.com>
+Subject: Re: fast-import on existing branches
+To:     Norbert Nemec <Norbert.Nemec@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Norbert,
 
-On Thu, 7 Mar 2019, Jeff King wrote:
+On Fri, Mar 8, 2019 at 2:51 AM Norbert Nemec
+<Norbert.Nemec@microsoft.com> wrote:
+>
+> Hi there,
+>
+> I've struggled for quite some time to sort out documented, intended and a=
+ctual behavior of git fast-import. Unless I'm completely mistaken, it seems=
+ to be a straightforward bug, but if that is the case, I am really surprise=
+d why nobody else has stumbled over it before:
+>
+> I managed to use fast-import for a chain of commits onto a new branch int=
+o an empty repository.
+> I managed to use fast-import to create a new branch starting from an exis=
+ting parent using the 'from' command as documented.
+>
+> What I failed to do is to add commits on top of an existing branch in a n=
+ew fast-import stream. As it seems, the variant of using 'commit' without '=
+from' only works on branches that were created within the same fast-import =
+stream!
+>
+> The different approaches I tried (each with new fast-import stream on exi=
+sting repo with existing branch)
+> * 'commit' without 'from'
+> -> Error: "Not updating <branch> (new tip <hash> does not contain <hash>)
+> And indeed looking into the repo afterwards, a new commit exists without =
+any parent.
+> * 'commit' with 'from' both naming the same branch
+> -> Error: "Can't create a branch from itself"
+> The only workarounds that I could find are to either explicitly looking u=
+p the top commit on the target branch and hand that to fast-import or creat=
+e a temporary branch with a different name.
 
-> When "-L" is in use, we ignore any diff output format that the user
-> provides to us, and just always print a patch (with extra context lines
-> covering the whole area of interest). It's not entirely clear what we
-> should do with all formats (e.g., should "--stat" show just the diffstat
-> of the touched lines, or the stat for the whole file?).
-> 
-> But "-s" is pretty clear: the user probably wants to see just the
-> commits that touched those lines, without any diff at all. Let's at
-> least make that work.
+I would have just used "from <sha1>" where <sha1> is something I look
+up from the current branch I want to update.  But, re-looking at the
+docs, it appears git-fast-import.txt covers this already with a
+possibly easier syntax:
 
-Agree. The patch looks obviously good.
+"""
+The special case of restarting an incremental import from the
+current branch value should be written as:
+----
+        from refs/heads/branch^0
+----
+The `^0` suffix is necessary as fast-import does not permit a branch to
+start from itself, and the branch is created in memory before the
+`from` command is even read from the input.  Adding `^0` will force
+fast-import to resolve the commit through Git's revision parsing library,
+rather than its internal branch table, thereby loading in the
+existing value of the branch.
+"""
 
-Thank you,
-Dscho
+Perhaps try that?
 
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This is a repost from the thread at:
-> 
->   https://public-inbox.org/git/CAEkQehdFu5zM4AY3ihN0pn1aCNEomY0WV07pryfAB45JN-tDDA@mail.gmail.com/
-> 
->  line-log.c          | 6 ++++--
->  t/t4211-line-log.sh | 7 +++++++
->  2 files changed, 11 insertions(+), 2 deletions(-)
-> 
-> diff --git a/line-log.c b/line-log.c
-> index 24e21731c4..59248e37cc 100644
-> --- a/line-log.c
-> +++ b/line-log.c
-> @@ -1103,10 +1103,12 @@ static int process_all_files(struct line_log_data **range_out,
->  
->  int line_log_print(struct rev_info *rev, struct commit *commit)
->  {
-> -	struct line_log_data *range = lookup_line_range(rev, commit);
->  
->  	show_log(rev);
-> -	dump_diff_hacky(rev, range);
-> +	if (!(rev->diffopt.output_format & DIFF_FORMAT_NO_OUTPUT)) {
-> +		struct line_log_data *range = lookup_line_range(rev, commit);
-> +		dump_diff_hacky(rev, range);
-> +	}
->  	return 1;
->  }
->  
-> diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
-> index bd5fe4d148..c9f2036f68 100755
-> --- a/t/t4211-line-log.sh
-> +++ b/t/t4211-line-log.sh
-> @@ -115,4 +115,11 @@ test_expect_success 'range_set_union' '
->  	git log $(for x in $(test_seq 200); do echo -L $((2*x)),+1:c.c; done)
->  '
->  
-> +test_expect_success '-s shows only line-log commits' '
-> +	git log --format="commit %s" -L1,24:b.c >expect.raw &&
-> +	grep ^commit expect.raw >expect &&
-> +	git log --format="commit %s" -L1,24:b.c -s >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
-> -- 
-> 2.21.0.787.g929e938557
-> 
+> Looking through the code of fast-import.c, I can indeed lookup_branch and=
+ new_branch only deal with internal data structures and the only point were=
+ read_ref is called to actually read existing branches from the repo is in =
+update_branch to check whether the parent was set correctly. What is missin=
+g is a call to read_ref in either lookup_branch or new_branch (probably bot=
+h have to be reworked in some way to handle this cleanly). From all I can s=
+ee a fix should be fairly straightforward to implement, but I am really not=
+ sure whether I have the full picture on this.
+>
+> (I found all of this struggling with git-p4.py which appears to contains =
+a complex and not fully correct mechanism to determine the 'initalParent' t=
+hat appears to implement just such a workaround.)
+>
+> I would be grateful for any input on this issue! Greetings,
+> Norbert
+
+Hope that helps,
+Elijah
