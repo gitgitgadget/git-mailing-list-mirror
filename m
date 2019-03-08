@@ -2,107 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.4 required=3.0 tests=BAYES_00,FORGED_MUA_MOZILLA,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41E4D20248
-	for <e@80x24.org>; Fri,  8 Mar 2019 09:31:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED1D220248
+	for <e@80x24.org>; Fri,  8 Mar 2019 09:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbfCHJbF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 04:31:05 -0500
-Received: from mout.gmx.net ([212.227.15.18]:49057 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725308AbfCHJbE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 04:31:04 -0500
-Received: from mail.schuerz.at ([78.47.150.33]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MRGPP-1hVeOm18QB-00UXsy for
- <git@vger.kernel.org>; Fri, 08 Mar 2019 10:31:03 +0100
-Received: from tag-331.vpn ([10.0.100.9])
-        by mail.schuerz.at with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.89)
-        (envelope-from <wertstoffe@nurfuerspam.de>)
-        id 1h2BqI-0003Mu-Ho
-        for git@vger.kernel.org; Fri, 08 Mar 2019 10:31:02 +0100
-To:     git@vger.kernel.org
-From:   =?UTF-8?Q?Jakobus_Sch=c3=bcrz?= <wertstoffe@nurfuerspam.de>
-Subject: ls-remote set timeout
-Date:   Fri, 8 Mar 2019 10:31:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        id S1726305AbfCHJiM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 04:38:12 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37359 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725776AbfCHJiM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 04:38:12 -0500
+Received: by mail-wr1-f68.google.com with SMTP id w6so20601709wrs.4
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 01:38:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=P1+w9dck0KNtViU3mltx7CwuK8crGzLioGr9mCT68w8=;
+        b=DDqPWtpMjq8e2e2fkvlJlN6Rymm0vZZFu8DspmJcKBZs4Zbxn7LAr5P/Ii4Afr9wd8
+         4slOexH0PEB+hldib2Y1cY8z2Ha7edeecv7esWS7CuMOkgrg7SbTMcSSufy2snkczfc0
+         wyYYCiDWj/Lhm4KM0QHcu6xQeFu5K2XrnnDgkI92gMAPPuULvkEiqUt5c3ivrytcyod/
+         GawlkBYwZpsmvOZk+jFHPcpRfY2353yks0obQhw23A5FZaagFYDpPjsgunjjvCVV0xmI
+         cAZfevxcdJZYEscGUM4nH+x0mIu5BiRHy1N2+TrVYgsPEWeiis9AU7nxs03u5aglXYIL
+         34IQ==
+X-Gm-Message-State: APjAAAXC587bGjCXDc+PB31pDc8IJdzWHdskq4vvc4ySIDyUXYfq9WCX
+        zIH+nZ2NY8uByn1Bzh5rPw9nCrRVnOSpaoE3GU8=
+X-Google-Smtp-Source: APXvYqzLgbBIvAgp3bN16k/9Gx5j7uf5QbTy095/HVsselNKKHpLZpRHLe7lp0IqM1maB+gHdQWyOGS0xf6chDiDN2o=
+X-Received: by 2002:adf:9f54:: with SMTP id f20mr10431151wrg.88.1552037890703;
+ Fri, 08 Mar 2019 01:38:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: de-AT
-Message-ID: <0MUoma-1haJEB1Ckm-00Y6Wl@mail.gmx.com>
-X-Provags-ID: V03:K1:9c0rG6y81jNzmy/7jK8B9v1HkTHbutUBh4Ygj+IY3wFrb0mfcPe
- zQ3rPWq/4IEzQB2W9TxYEfhg+vhoj+CkpTdmMIZ4VikbQ/hhHLRzYxFTHNvMwQKvUIUOSvR
- uQ6/LwNTYXO9SbMvx+/elr00yIorfz8A7sx9Sqs3NTq62UxuORtFArwsh/Q2xPQsB3TeDdq
- 00nMKQVAMHQzB29imDIlw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0FYbScgf8fI=:CeGFlu4izaBOsFLDHKFkTw
- aqk25ZGGpK/+LbHSnW9ZgyIGxVCzQDNGubcc+zMAPG+66R1AMIotBBHwz/TpgxWF3C27hw63K
- PhFKUCrnQkIp3z+EeJp7SyH2zyEplTScqOuhzA7N3UAmwkXfel8ptTte0Jw11786oh99KxIog
- 9GteyTCrK7YGUfpcIlAhLsFkw0vtxd++sQQzwFwZ8kAigk/U3VUbxe89txVQ6CEMCh+c8QpJJ
- 3t9B7NK6WCYn/vKkOvhTwYU+aGWmtgLpaYZK8j0YJjn9416vTamXFQUNoWRg36TqQK3muMPnp
- +gM53yN7w0q6JRwTrZWjmjAM/FN9k3Qoq8pQowQCNUKnUz/brvijJ41Bh1XYKHFaU7Oku+rO1
- ewSFcrgMjaLV2yncYWFArTlrUDqiHOtTMIEOkkwJuu3LUK0hbqS63RqpPrqpSpKduEdv3onUa
- WElua6PmUpbKzIFs7rBV7xVdz/FdV6tEx99oiRBVHdWsKFArl6lnW5yxMfCxRCzkP8ojfqgp+
- 5NdLBj4aRFQivXwfcZl3CFugUuOiqIBw4wxYXPTLBdmLlNhOHd//SoBYnE0tZrOgVRCuXeFHf
- fYiwwz4ppTwZGuDL84TZpHeYCxO5Of3ScMiAbXgg8vguBVbm6bnjCU2W5D/NRNISzyJTt4F/n
- 4zuoqWakjplzdO1adld6XpEAQwFyRA3sdhG079yj/DqbSEmDyYsC3SZobwYP4NtH6tVTNpXN/
- clHsCVc62wSQvNEfnxDSTv3mHt6e3xbFHz8yprKes09UydMRMVB1hTNW1bLgYBU3A7fnrv6mX
- rg4m9kzvcQbnlatX6gDjaalsb3pZGeJtwK435raNlKhYDV/V+l6r9TH1+7AXRqmBbGUVP+hYZ
- MfOU0HZVKHTRz0+ttIU4W/pueuIkOLzs6WyrN5CCWs23711D9bn2eyx8U9nVE04zfZr2MDYvF
- N6vTFbeqSOg==
+References: <cover.1550508544.git.msuchanek@suse.de> <e134801d570d0a0c85424eb80b41893f4d8383ca.1550679076.git.msuchanek@suse.de>
+ <CACsJy8D_ahM_7mLaAijJsZ0e8BF6PBfr3pPisOnYmRH7U8kmqA@mail.gmail.com>
+In-Reply-To: <CACsJy8D_ahM_7mLaAijJsZ0e8BF6PBfr3pPisOnYmRH7U8kmqA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 8 Mar 2019 04:37:59 -0500
+Message-ID: <CAPig+cRCUZApx36ZdmWAY2UbvgF6phjVNb5XU7YN=5LryU5trw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] worktree: fix worktree add race.
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Michal Suchanek <msuchanek@suse.de>,
+        Marketa Calabkova <mcalabkova@suse.cz>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi there!
+On Fri, Mar 8, 2019 at 4:20 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> Junio, it seems 2/2 is stuck in an endless discussion. But 1/2 is good
+> regardless, maybe pick it up now and let 2/2 come later whenever it's
+> ready?
 
-Im new to this list - so hello, hope I'm welcome.
-
-
-My problem is: I have a configuration for my bash saved on a private
-git-repo. Every time, i start bash, my .bashrc checks this repo out to
-get all changes (alias, some functions, $PS1 and so on). So i can have
-my working environment on all my servers with personal login.
-
-
-Now I'm working on a new customer, where github.com is not reachable
-(firewall/proxy). Parts of my configuration (some plugins/scripts for
-vim) cannot be updated there, because they are hosted on github.com. :-/
-
-Now i tried to fiddle in a check, if a repo is reachable in my .bashrc.
-And i found out, that git ls-remote is a good choice, because it handles
-redirections from http to https correctly behind this proxy. (direct
-https links to git-repos do even not work in this surrounding... don't
-ask why, please).
-
-I can check, if my private repo (git bare repo with gitweb) is reachable
-(http pull, ssh is also closed!!!) with git ls-remote. But this check
-hangs on github.com in case of a redirection from the proxy to a "this
-is forbidden"-site... . And it hangs forever (1 Minute, 2 Minutes or
-even really forever!)
-
-Is it possible, to include a "--connection-timeout" and/or the
-"--max-time" option for curl, that i can give to my "git ls-remote"
-command? So i can call
-
-git --connection-timeout 3 -m 3 ls-remote <REPOURL>
-
-and the command stops after 3 seconds with an errorcode, which I can
-evaluate?
-
-I tried netcat and curl directly. In this environment only git ls-remote
-will work correctly on reachable repos, but it hangs on blocked... :-/
-
-
-Thank you for your interests
-
-
-Jakob
-
-
+Yep, 1/2 seems a good idea and has not been controversial. It may not
+solve all the race conditions, but it is a good step forward.
