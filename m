@@ -2,90 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360B720248
-	for <e@80x24.org>; Fri,  8 Mar 2019 15:42:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1927A20248
+	for <e@80x24.org>; Fri,  8 Mar 2019 15:43:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726294AbfCHPmb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 10:42:31 -0500
-Received: from mout.gmx.net ([212.227.17.22]:43181 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726249AbfCHPmb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 10:42:31 -0500
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MTfZc-1hSmhh0nNA-00QUiQ; Fri, 08
- Mar 2019 16:42:29 +0100
-Date:   Fri, 8 Mar 2019 16:42:13 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Adrian Godong <adrian.godong@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: git reset error on Windows
-In-Reply-To: <CANNTdjSdTiNcM+UzF+2ZH_2JOyDZM0E6RFCDwsT3Y7F=G7YdOA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903081641120.41@tvgsbejvaqbjf.bet>
-References: <CANNTdjSRB+_1Ue6LLxMcAdLmdg5TrihZ4CeZhvnpgwnEP=SQ3A@mail.gmail.com> <CANNTdjSdTiNcM+UzF+2ZH_2JOyDZM0E6RFCDwsT3Y7F=G7YdOA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726279AbfCHPnt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 10:43:49 -0500
+Received: from mail-oi1-f171.google.com ([209.85.167.171]:44633 "EHLO
+        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726171AbfCHPns (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 10:43:48 -0500
+Received: by mail-oi1-f171.google.com with SMTP id a81so16159769oii.11
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 07:43:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=DvY8bBOlp0poczCq/F4t/w1M/C4lOdrlbIJ86h7ZvB8=;
+        b=s/9y0GnsrxyXYcR4P9qOwNiZj+xvyOOE1jfgLpIVzLvikDqoDlriwXeL9aUMjInzZ/
+         O4bEIly+mHZ3DbzZp9RNvZood7POvEXefau6DcUPeQ5SXI8nwoKCMH0StXnxEpbzk1bt
+         eSmIRlYWzqbV56b1/bdMBeFd/VKdxsA4UY0Eupjb2qox63KnLdeZRBz4bwxeb6NynRKB
+         R/r7jxEyjxJ5lswEogDZA4+YQK/4xNL6RpPhvspMwe7mxirEbIdB5dgZoLFuY0ylF2dd
+         k1Pj8sDJNTziqu7rILoB5sEKF67pVrXTpoYrZad2VjHYX//SG1tkhhtDp2Prz2edmf0G
+         rHwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=DvY8bBOlp0poczCq/F4t/w1M/C4lOdrlbIJ86h7ZvB8=;
+        b=kM0l+YatBJn8Og9n4WldKIocUCL7frnmPmMVXJVkoFN7JnyufC7W5QbabeR7DEbqZM
+         a8zr0Pyg23cM5tbHz2lInKtP1E/ICwUQWuFfMVk16CxjodyrdbLRzGBRjJA1tI0+1wvl
+         xcZIgNARTFpAEaTUHCPbjRO+OhoMAi1EsQsbxM0xSno+/C6dXepbEC76wpItbbUCB9yc
+         3yqWgFjE2Q3rwGc81Or+ayIDnCFXGKtmr8hT05dp42UOe/DuZhY+Ndi5KAXxIO0B+obg
+         tekbTgoFCnqt/xAVK+5HKqaMqB7xm5UcpvmsMh1kvm9MPH9UQ4teykVZ2A7I+BhfYkbm
+         WOoA==
+X-Gm-Message-State: APjAAAX42K5WwBFK5Q45Zx5/cTcf8Hgl2mToNY4MAXOPauhL521xy1gI
+        2kUMq5oB5W43EdzWPJ2VWQiH+1TSxqscyyaJtMceUSZc
+X-Google-Smtp-Source: APXvYqxAxDl65Ka7MOGqRx6Ov/pphmcJcPyijYxuG+ZKoQuEGoB4RdUf98A67jSE88djNqQ+jJ7RqDqLuh+khe21aNw=
+X-Received: by 2002:aca:eb52:: with SMTP id j79mr8117047oih.119.1552059827682;
+ Fri, 08 Mar 2019 07:43:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:MBxu1/HlETuN1C1NbtG/IFhD5M5AJ0PUwrhMZ5b+d4Hg7WoH80x
- OjTcYS2T2NocGIBpUp7165MkgtiHL58fzbaj7+H9vcAXob7XahHWSuW7hF7TP1i0m0s3yR9
- nB+S/HIHhP2cjpbOjTWWpi3GZNxwVfjgER/WeGE/Yzl5F4wPRaxEABGFNOWez3xu/tFHZXB
- enQsD2Ft42bm9a3W2OlJg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5BWJjtRwaTw=:iBjZ6IF9ZvS0bbbhcQyhvd
- wl/ybm0bU/Lz3LdHZHpJX14t8TurjAO2IXj/jg5cEB/6knwuXzGNKWnvpOj0YinMOzCOVG0ca
- VA11R7ki+5EuPdHbEaW9OHGvs2uymdykgNYUogJ4Ww0WjqdR9O3xOgVgCfQBzQnpKel7IN90K
- X8H4A4IrXqEtH3cu6gKJ7A6PsJ6n8m5aJOOi+OmpsMnfCOHxqZpHmsyI9YxaivWkLpWDDVcI3
- wQRVLHYdsl/edJ3Ehc4E1OjiUhueify4vDHM8dnVvrgAiFAI1qqak7zG2g3vKU8WWy+5ntn89
- toR1e+a0r6WBJy6cRBh1O4htgselx/y0yKqD4/STHso0OPrA9CQq1VEZ4/+7eZ2GTCQ1k6ZrU
- 6UtIzVuYXBgbVHAczBV822E+NATdaHkPFoAu+jd4wd3UvLkOTE+pSEokPZu5FCqYwC8ZdTjgV
- lOmCZhplELNaDj7p3fVk5xNsR5tn0QH0TxTVrwalFPArJhylWYVEbjqFTY8TH81n4rOqvGFMD
- 6nGvPEi6yxxkLjBOnOFdY/zE0Dmn9bb6Xtw/Eb5wREcmOMvKGofdaxj3yrG+Qi6qnmG3xGziE
- Z9AHKB+82U0kkSO56IFZqA1MqlWSFd3V0fUT6Hm8VIy5GnqUMvKW5zltZkUHY7Q5L6lV3PW2q
- CnVvM3kh9cADnnjP5ZnJGGYfFuQloIt28XvXaUP8CQgDn0tYcRsrZshJOiKuPTvz9mN2ofLxA
- N6JzLaN3Mo5RvyQOvxwy2b+ZSeJAdBaFIuqIu6uFWqY473eYvgViO9QNk/0qkEVSlSbYS6ylO
- +d+UAtN8ckjwEZPiQKQFrAuJh/huTHY8ItZrui3b5Ls7Dd0gMHU1DK3F6O6byBTd6hxX3oH18
- M7NLvDhg7C7KZGUkHXePjfxjcGJxWV6UA9OyC3n7kMgDJnmwsYBZbZiI4yEbeoHQDXoQl/O9h
- HypDI9mu0Rw==
+From:   Kapil Jain <jkapil.cs@gmail.com>
+Date:   Fri, 8 Mar 2019 21:13:36 +0530
+Message-ID: <CAMknYENWOW0mj6Bn9OooqKg-sZi9bZUO461Gv1F00=phNwLFQQ@mail.gmail.com>
+Subject: New Ft. for Git : Allow resumable cloning of repositories.
+To:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Adrian,
+Objective: Allow pause and resume functionality while cloning repositories.
 
-On Thu, 7 Mar 2019, Adrian Godong wrote:
+Below is a rough idea on how this may be achieved.
 
-> Windows 10, git version 2.21.0.windows.1
-> 
-> git reset tries to delete folder when last file is removed but failed
-> to do so if shell is in the deleted folder.
-> 
-> Repro steps (powershell):
-> mkdir test
-> cd test
-> git init
-> mkdir dir
-> cd dir
-> add-content .\file ""
-> git add .
-> git commit -m "1"
-> git mv .\file .\file2
-> git commit -m "2"
-> git reset --hard HEAD^
-> > Deletion of directory 'dir' failed. Should I try again? (y/n)
-> 
-> Choosing y will repeat the same prompt. Choosing n will complete the
-> operation correctly.
+1) Create a repository_name.json file.
+2) repository_name.json will be an index file containing list of all
+the files in the repository with default status being "False".
+   "False" status of a file signifies that this file is not yet fully
+downloaded.
 
-In contrast to Linux, it is not possible to delete a current working
-directory (unless you delve into horrible hacks like Cygwin does).
+Something like this:
 
-So this is a restriction of the platform on which you are working, and
-there is nothing we can do about it, at least as far as I can think of.
+{
+  'file1.ext' : "False",
+  'file2.ext' : "False",
+  'file3.ext' : "False"
+}
 
-Ciao,
-Johannes
+3) As a file finishes downloading, say 'file1.ext' and 'file2.ext'
+have finished downloading, their status will change to:
+
+Something like this:
+
+{
+  'file1.ext' : "True",
+  'file2.ext' : "True",
+  'file3.ext' : "False"
+}
+
+4) Suppose due to some reason, before 'file3.ext' could finish
+download; cloning is interrupted.
+5) After the interruption the repository_name.json and downloaded
+files are preserved.
+6) Now, when cloning of the same repository begins next time, files
+would be downloaded based on information taken from
+repository_name.json file.
+
+Note 1: Doing this for cloning would be the main objective, further
+this may be extended for fetching, pulling, and pushing too.
+
+Note 2: Since this is gsoc time, please don't take this to be a
+project idea for gsoc, as it was pointed out on irc that this would be
+a time intensive functionality.
+
+I want to work on building this functionality.
+Please discuss thoughts on this, so as to make a technically sound to-do list.
