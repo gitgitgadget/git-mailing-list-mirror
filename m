@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED20F20248
-	for <e@80x24.org>; Fri,  8 Mar 2019 21:55:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 804E420248
+	for <e@80x24.org>; Fri,  8 Mar 2019 21:55:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726381AbfCHVzi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Mar 2019 16:55:38 -0500
-Received: from mail-it1-f201.google.com ([209.85.166.201]:37720 "EHLO
-        mail-it1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbfCHVzi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Mar 2019 16:55:38 -0500
-Received: by mail-it1-f201.google.com with SMTP id q141so13172866itc.2
-        for <git@vger.kernel.org>; Fri, 08 Mar 2019 13:55:38 -0800 (PST)
+        id S1726409AbfCHVzl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Mar 2019 16:55:41 -0500
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:53265 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726267AbfCHVzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Mar 2019 16:55:41 -0500
+Received: by mail-qt1-f201.google.com with SMTP id g42so4022717qtb.20
+        for <git@vger.kernel.org>; Fri, 08 Mar 2019 13:55:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=/T1g0yV2QOlVxhv7pQ6ewK8IHn8UwKGZh5cup4X5Lcs=;
-        b=cbm+k83DCYh2Po3dn1TlzcVKXABOi9jcjQ0BkkxF4bJp+RiyhcPQEqg79W7d9625sb
-         vrXQKbXt3jIRFxz+yFNHtH8v4rR5SHItqEzK0n4wHID8xz0NIrFCX26BUyjP1MatAcsF
-         E40bCUMofLIPAAf1vzGrJiy/6/+8YbYKkZef6ao19AFJnXkQk3m6ED00hZU0QF5rpMOf
-         8SntiU7I+sgW+PMlQ+YdXwJj+cAr1NspJXg1F8nfR8pIUVKVYPBkI45ly6gBHfw0hX8/
-         eQIk1CY95wMUTaAUcf9KclDf5DxWl4rTywJZoxF1lxcHIBV8Rr6wTlJ55QHjgr6JzWoP
-         YrdA==
+        bh=wNUkgnbKPaE8zyDrl2JzNKhkZOQyW5hMytqyZiyiuYc=;
+        b=hnla7YMgzQtkNUeDWzp6o/hyY4Bl3pNlozRYXRh8YLUFyPbxGq8teTG+QhOzQpMl5z
+         E6yGIzlRnUUrbDbrqoTx9TNeHHJ1jMWX/x2i4pV4e6OS+vFHYzjHiG7wpVOrRA6qnBRH
+         Zif/Mz2MDz2KVUteqjZeEGJsA8pYk8akPYJtY7juGc1t8pmtaLWN2D3VLy0vRXdIB4dA
+         Th2bOL+V0rglApkZ59YgA+3QkjRnEa25YWyTB1y2Ow1sd9YbBZ5uovLR50rGyRBCkVlT
+         x299FvCastC/BLImlMYEgWYeGjtrE9PUKZcI9a0c79Zn8J/pQS+518fiKdjcbEsj7D33
+         PpRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=/T1g0yV2QOlVxhv7pQ6ewK8IHn8UwKGZh5cup4X5Lcs=;
-        b=hb6ZSbFc4rMMx7sNYMCZ8/51V1qyrj+cIa8YKUCsl9vscvHMxIUELLjCqw+Q9v2l/i
-         u6/p+2FrvCsmShP0RXEQ+4MhwERMKBgHRhBqvyUF8MiEyk6yP7/vIIFa1SS5E1UtNbJb
-         XLxE/NfZFq3F3aF7JXln57qtr1K+214C3Xg/Xtxt/XYHVdZRtiRh0Tr+nZ4tv0RTtymR
-         96f6ZWTorzCXCQpYCL9nO/4Lzkm9gbGK4hz9vKnUxZNsBxUsZFbdpAXEAydqpnEU1fcu
-         7Tkhv+TC7CYHZQvjFF4vMoUc+O2GuZNPBHSFH/0aGw3gr3NLhGBQxlZA7ayd+28ewWX1
-         sv/w==
-X-Gm-Message-State: APjAAAV+11eszzF85SDH8Lw7t+TkQmR9OvNeiAVy1JHt+bJ/4maZmxtI
-        gsNugAVqZaTmlB37YWaU7DViDpIQnZkDd6rsELAF
-X-Google-Smtp-Source: APXvYqyQLw3965yFutFqxRWrzgflBTfSO56iSGJGz5uCwxW3WsOElARuHWUtUhS4sh0LgTugXKY9SFcOm6y/ZPAjsFMQ
-X-Received: by 2002:a24:6283:: with SMTP id d125mr13502677itc.14.1552082137628;
- Fri, 08 Mar 2019 13:55:37 -0800 (PST)
-Date:   Fri,  8 Mar 2019 13:55:13 -0800
+        bh=wNUkgnbKPaE8zyDrl2JzNKhkZOQyW5hMytqyZiyiuYc=;
+        b=jQwn33I+hMKAriK9/gsApqYkRNRuGzFHBJlcyP++pbhZQyEqr58QKbZaZY0IfRFqq/
+         QDYrB1gWLZBdh9Q69T/YT4FngmxFUV/KPbg4OYfSwP5b5wM5a/kDvwvIRovmDfKh4KRs
+         SQiU8kgSpyWW5U9REwNDH+hr4SWdzU7s2CmJa783+y9BZDlknxNOzcK/MdAS7n2Lrwv2
+         nU1OMlFow0mdYLTplH80BesOMtV8VfjWXOlvPzdrzdu/wuJQVzVZjy2hAnek3jxczBcn
+         HlBRRpB1EC4e7sG7Q4cVLX8hZ8Lvutd3ctAitcAHcPjj3zFBaNhfQ+1irI2dzdMMIATh
+         R+tw==
+X-Gm-Message-State: APjAAAXLPScyfkTpy3kH+enxeds1NqBHGLlnKH27KMg/YJcEBEic8PmE
+        7sJMrKx5UZQNORDyf4jAIYrvezmdVJTitrjdU257
+X-Google-Smtp-Source: APXvYqzaJwp3Vv+X2pCYw+/ElIKS7EV175LL1FQ5DC9+jK/chMH2ccoP1qqHKbbeDZuN2hFN0JcAauqkuvj5TO5uRV3K
+X-Received: by 2002:a0c:b8a3:: with SMTP id y35mr11661953qvf.25.1552082140227;
+ Fri, 08 Mar 2019 13:55:40 -0800 (PST)
+Date:   Fri,  8 Mar 2019 13:55:14 -0800
 In-Reply-To: <cover.1552073690.git.jonathantanmy@google.com>
-Message-Id: <87173d0ad1f1e611b6c2f539ca203be5bb9efb53.1552073690.git.jonathantanmy@google.com>
+Message-Id: <66d31720a045e8be11561fe9a4fd511b57557f02.1552073690.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1550963965.git.jonathantanmy@google.com> <cover.1552073690.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH v2 1/8] http: use --stdin when getting dumb HTTP pack
+Subject: [PATCH v2 2/8] http: improve documentation of http_pack_request
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     avarab@gmail.com, git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
@@ -62,84 +62,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When Git fetches a pack using dumb HTTP, it reuses the server's name for
-the packfile (which incorporates a hash), which is different from the
-behavior of fetch-pack and receive-pack.
-
-A subsequent patch will allow downloading packs over HTTP(S) as part of
-a fetch. These downloads will not necessarily be from a Git repository,
-and thus may not have a hash as part of its name.
-
-Thus, teach http to pass --stdin to index-pack, so that we have no
-reliance on the server's name for the packfile.
+struct http_pack_request and the functions that use it will be modified
+in a subsequent patch. Using it is complicated (to use, call the
+initialization function, then set some but not all fields in the
+returned struct), so add some documentation to help future users.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- http.c | 33 +++++++++++----------------------
- 1 file changed, 11 insertions(+), 22 deletions(-)
+ http.h | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/http.c b/http.c
-index a32ad36ddf..34f82af87c 100644
---- a/http.c
-+++ b/http.c
-@@ -2204,9 +2204,9 @@ int finish_http_pack_request(struct http_pack_request *preq)
- {
+diff --git a/http.h b/http.h
+index 4eb4e808e5..ded1edcca4 100644
+--- a/http.h
++++ b/http.h
+@@ -202,14 +202,31 @@ extern int http_get_info_packs(const char *base_url,
+ 	struct packed_git **packs_head);
+ 
+ struct http_pack_request {
++	/*
++	 * Initialized by new_http_pack_request().
++	 */
+ 	char *url;
+ 	struct packed_git *target;
++	struct active_request_slot *slot;
++
++	/*
++	 * After calling new_http_pack_request(), point lst to the head of the
++	 * pack list that target is in. finish_http_pack_request() will remove
++	 * target from lst and call install_packed_git() on target.
++	 */
  	struct packed_git **lst;
- 	struct packed_git *p = preq->target;
--	char *tmp_idx;
--	size_t len;
- 	struct child_process ip = CHILD_PROCESS_INIT;
-+	int tmpfile_fd;
-+	int ret = 0;
++
++	/*
++	 * State managed by functions in http.c.
++	 */
+ 	FILE *packfile;
+ 	struct strbuf tmpfile;
+-	struct active_request_slot *slot;
+ };
  
- 	close_pack_index(p);
- 
-@@ -2218,35 +2218,24 @@ int finish_http_pack_request(struct http_pack_request *preq)
- 		lst = &((*lst)->next);
- 	*lst = (*lst)->next;
- 
--	if (!strip_suffix(preq->tmpfile.buf, ".pack.temp", &len))
--		BUG("pack tmpfile does not end in .pack.temp?");
--	tmp_idx = xstrfmt("%.*s.idx.temp", (int)len, preq->tmpfile.buf);
-+	tmpfile_fd = xopen(preq->tmpfile.buf, O_RDONLY);
- 
- 	argv_array_push(&ip.args, "index-pack");
--	argv_array_pushl(&ip.args, "-o", tmp_idx, NULL);
--	argv_array_push(&ip.args, preq->tmpfile.buf);
-+	argv_array_push(&ip.args, "--stdin");
- 	ip.git_cmd = 1;
--	ip.no_stdin = 1;
-+	ip.in = tmpfile_fd;
- 	ip.no_stdout = 1;
- 
- 	if (run_command(&ip)) {
--		unlink(preq->tmpfile.buf);
--		unlink(tmp_idx);
--		free(tmp_idx);
--		return -1;
--	}
--
--	unlink(sha1_pack_index_name(p->sha1));
--
--	if (finalize_object_file(preq->tmpfile.buf, sha1_pack_name(p->sha1))
--	 || finalize_object_file(tmp_idx, sha1_pack_index_name(p->sha1))) {
--		free(tmp_idx);
--		return -1;
-+		ret = -1;
-+		goto cleanup;
- 	}
- 
- 	install_packed_git(the_repository, p);
--	free(tmp_idx);
--	return 0;
-+cleanup:
-+	close(tmpfile_fd);
-+	unlink(preq->tmpfile.buf);
-+	return ret;
- }
- 
- struct http_pack_request *new_http_pack_request(
++/*
++ * target must be an element in a pack list obtained from
++ * http_get_info_packs().
++ */
+ extern struct http_pack_request *new_http_pack_request(
+ 	struct packed_git *target, const char *base_url);
+ extern int finish_http_pack_request(struct http_pack_request *preq);
 -- 
 2.19.0.271.gfe8321ec05.dirty
 
