@@ -2,170 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94ECC20248
-	for <e@80x24.org>; Sat,  9 Mar 2019 16:53:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1676420248
+	for <e@80x24.org>; Sat,  9 Mar 2019 17:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726348AbfCIQxt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Mar 2019 11:53:49 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50641 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726286AbfCIQxt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Mar 2019 11:53:49 -0500
-Received: by mail-wm1-f65.google.com with SMTP id x7so564654wmj.0
-        for <git@vger.kernel.org>; Sat, 09 Mar 2019 08:53:48 -0800 (PST)
+        id S1726435AbfCIR1i (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Mar 2019 12:27:38 -0500
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:52275 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726308AbfCIR1h (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Mar 2019 12:27:37 -0500
+Received: by mail-wm1-f52.google.com with SMTP id f65so602104wma.2
+        for <git@vger.kernel.org>; Sat, 09 Mar 2019 09:27:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7xxhJ3JtPeeM+5bAvYh3iT/I4q2TPm8SJ6rhn4pzaMw=;
-        b=PDdmDgllEB5c4l+MWtARzX7U89qIKcOdenkWZat4MnN5PMpeM490UzjE3dG6COXFuo
-         Lw1wDQgHdVtlpctTf0/ObltLvPyK5kpl2ojhhf1UcFSYc10O6VCg8zQy0t5LV5oH1psg
-         +NG9TuRnPmk/yCWds2VZjfkCnvA2i2Qf4L5u66hJItqJQHnprpFYHi5T8p2zLwsBLKW/
-         Lmp9DRjI3tfxMG077dPOn9qxtlzZWEJdH09VDpJrUKvyFQP0wcZcxrqn728np/07LQOW
-         SWQHhChNKN3bun/EKYhwwzRQgm77bT9Dy9szYmXcYgDgnlRlCXA2PJ0Ga6UZ05Q5sbsm
-         1Hgw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dT+BGA+10ydTtdR07BBmbBan0V3BjkKdCHQz9HnRBSM=;
+        b=SIQh77OikOk3zSAqwPNDxYdF5PGzkAuzPpX8iIg9/jIFFCNAXctMmEUXIwAdvlwYT7
+         hjRBOsAIIiHdxvhJmC4zyDHLKrAMkYUFj4Nz82rqNnMqtTYtWjyfK/PXiaRzVlAF4mLD
+         YnDa5KghLB8o9to5MF6LqebtheCk3mTBu9bWPLpk+1UnL5JdP0ZtiD20ecMtrdy8eexy
+         H4Jb+Jz+bcmthXqYMtspa8W9EznBBB75lCWPn8etwvaElARQMuanLPWEwzK607a6YpAI
+         h4BSHzdMBqbw+Q4jvdpIoRLmmlftLNnvsFndik+iZ3jZlcE+JTcXE7VZ69e9ckbCl0zA
+         YRWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7xxhJ3JtPeeM+5bAvYh3iT/I4q2TPm8SJ6rhn4pzaMw=;
-        b=btkusn/PW1H8LMkr0MW11X/sYOI7v1RhEu5VoOnYjQlKUcsTJK86zP3kxjpXljF4ro
-         CwXicvBXHeJDPUfSHtMtGmkiJGMu8UVc50tjLuAwvytV3RS9Fsa8T/BZzYCo1UtuJf5q
-         q3uoYGchTUBT4uXChk5T1H1bbN4VlKbSLdxJ9rr5CtN7L/Z13Lye8tyFU1JnyyTMp1aV
-         NA9DnKMcJKoS6lfUUHs1q+tk0KPztwIAq+O+DbF5Z3sMqv/d6v5t1JyAcs4n328N27/I
-         opUcm8kXhEy4LtJBvH07fYhJZwhgupYMT9yStIqmH3QXcLwq7tm37V2ItbioLWgICWDb
-         EEdg==
-X-Gm-Message-State: APjAAAVn0SZif7jT+rdw1hxEyCbwPPpXn3mLrJinKv2yoQbfdQLunFLb
-        p4M+qvFYI6tONC4RJwpxCpg=
-X-Google-Smtp-Source: APXvYqzFCoOgn9PYLv0a6/+OFFlOENNtxpU220d2imvCEsltul2T/hQV422LXO3ZAJILi3oSukFi9A==
-X-Received: by 2002:a1c:2ec4:: with SMTP id u187mr11809838wmu.29.1552150427171;
-        Sat, 09 Mar 2019 08:53:47 -0800 (PST)
-Received: from [10.33.1.6] ([185.230.127.241])
-        by smtp.gmail.com with ESMTPSA id p6sm3549150wre.63.2019.03.09.08.53.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 09 Mar 2019 08:53:46 -0800 (PST)
-Subject: Re: [PATCH v1 09/11] t: add tests for restore
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-References: <20190308101655.9767-1-pclouds@gmail.com>
- <20190308101655.9767-10-pclouds@gmail.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <053a95ba-3063-b1bd-579c-a0c37f24e51a@gmail.com>
-Date:   Sat, 9 Mar 2019 17:53:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dT+BGA+10ydTtdR07BBmbBan0V3BjkKdCHQz9HnRBSM=;
+        b=lpqC9HSvKrVcM9r7SAzSMXQ/dBdpQwmoZTxXkq1hPwxxQeCgl8kGg5hhtytyHX9dd/
+         f0ftrzMnkYO1Fu2ADW8mSe2GwpyM507X8EhVBJL49AQBFp9J49oq+U5Q/BFL6eUTAWrV
+         YIfZYpS+a3hXmI+J3KlxQ6ggfqO0FoimqPESZCQAZ3kgz9QZOaCqvhfU+PbaKidVhjU4
+         KVuvtckyMmGyP90jLdr5Rirv35fgweprJoewMBlZsfEtmb23S+zcJQ+HWhheOmp3bbSi
+         lCQIZ1GU0k8H43jppyHbAIHi12LxZLCYganOX2gRGb2INMHyj3hyV/K1IV+4PKZQCTJZ
+         +NCw==
+X-Gm-Message-State: APjAAAWXtN0uWQXNkcL3Ez42iUkhf970JPtB2PaMJlsLMRqnGZBskTwo
+        fbOMBpZ4qxZWwOQnATnVrnk=
+X-Google-Smtp-Source: APXvYqxH/ucMkWk/qEXAfM+Z43xhX2m40kmm5uhSxtHuSwrX+9elwbg4+JkLbp39OuwmZlXDAHqGFw==
+X-Received: by 2002:a7b:c017:: with SMTP id c23mr12331868wmb.50.1552152455261;
+        Sat, 09 Mar 2019 09:27:35 -0800 (PST)
+Received: from localhost ([95.148.214.107])
+        by smtp.gmail.com with ESMTPSA id q5sm1472634wrn.43.2019.03.09.09.27.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 09 Mar 2019 09:27:34 -0800 (PST)
+Date:   Sat, 9 Mar 2019 17:27:33 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2019, #01; Wed, 6)
+Message-ID: <20190309172733.GC31533@hank.intra.tgummerer.com>
+References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8C7F_Ju2F7COUVd9-1FcyQL=mZph7qmkDh9sS-ENb4PEQ@mail.gmail.com>
+ <f6052ac6-60c4-1e70-b3f4-571885ba9e8d@iee.org>
+ <CACsJy8D48YiWYkuLW8BbeYvRz=yMmb=XWoMJroPXFAcSV2VjHw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190308101655.9767-10-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8D48YiWYkuLW8BbeYvRz=yMmb=XWoMJroPXFAcSV2VjHw@mail.gmail.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/8/19 11:16 AM, Nguyễn Thái Ngọc Duy wrote:
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  t/lib-patch-mode.sh               |  12 ++++
->  t/t2070-restore.sh (new +x)       |  77 ++++++++++++++++++++++
->  t/t2071-restore-patch.sh (new +x) | 105 ++++++++++++++++++++++++++++++
->  3 files changed, 194 insertions(+)
+On 03/07, Duy Nguyen wrote:
+> On Thu, Mar 7, 2019 at 7:34 PM Philip Oakley <philipoakley@iee.org> wrote:
+> >
+> > On 06/03/2019 09:44, Duy Nguyen wrote:
+> > > On Wed, Mar 6, 2019 at 8:34 AM Junio C Hamano <gitster@pobox.com> wrote:
+> > >> * tg/checkout-no-overlay (2019-02-04) 9 commits
+> > >>    (merged to 'next' on 2019-02-04 at 9968bcf4fb)
+> > >>   + revert "checkout: introduce checkout.overlayMode config"
+> > >>    (merged to 'next' on 2019-01-18 at 1e2a79ba5c)
+> > >>   + checkout: introduce checkout.overlayMode config
+> > >>   + checkout: introduce --{,no-}overlay option
+> > >>   + checkout: factor out mark_cache_entry_for_checkout function
+> > >>   + checkout: clarify comment
+> > >>   + read-cache: add invalidate parameter to remove_marked_cache_entries
+> > >>   + entry: support CE_WT_REMOVE flag in checkout_entry
+> > >>   + entry: factor out unlink_entry function
+> > >>   + move worktree tests to t24*
+> > >>
+> > >>   "git checkout --no-overlay" can be used to trigger a new mode of
+> > >>   checking out paths out of the tree-ish, that allows paths that
+> > >>   match the pathspec that are in the current index and working tree
+> > >>   and are not in the tree-ish.
+> > >>
+> > >>   Will hold.
+> > >>   Waiting for "restore-files" & "switch-branches" pair.
+> > >>   cf. <20190205204208.GC6085@hank.intra.tgummerer.com>
+> > > If it's ready for master, I'd love to see it merged. Either that or
+> > > topic is rebased on 'master'. There are separate checkout changes in
+> > > 'master' (mine, sadly), and because switch/restore moves lots of code
+> > > around, I need to create a merge of this topic and master as the base,
+> > > or you'll get horrible conflicts.
+> > >
+> > > I should send switch/restore again soon. There are still a few
+> > > unaddressed concerns for git-restore since last time. Probably time to
+> > > refresh those discussions.
+> >
+> > Just catching up on back emails:
+> >
+> > The one point I noted is that "Overlay" is a new magic term without any
+> > explanation within the _documentation_.
+> >
+> > It would appear worth it to also add something (follow up patch?) to the
+> > e.g. git glossary to clarify how overlay differs, or is similar to, the
+> > different merge and reset modes.
 > 
-> diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
-> new file mode 100755
-> index 0000000000..df91bf54bc
-> --- /dev/null
-> +++ b/t/t2070-restore.sh
-> @@ -0,0 +1,77 @@
-> +#!/bin/sh
-> +
-> +test_description='restore basic functionality'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup' '
-> +	test_commit first &&
-> +	echo first-and-a-half >>first.t &&
-> +	git add first.t &&
-> +	test_commit second &&
-> +	echo one >one &&
-> +	echo two >two &&
-> +	echo untracked >untracked &&
-> +	echo ignored >ignored &&
-> +	echo /ignored >.gitignore &&
-> +	git add one two .gitignore &&
-> +	git update-ref refs/heads/one master
-> +'
-> +
+> I think Jonathan questions the name "overlay" too. Since this is
+> similar to "cp -R" mode, another suggestion is --copy-mode.
 
-[snip]
+That would leave the negative form as --no-copy-mode, which almost
+sounds like we wouldn't copy anything.  I think that would be more
+confusing that [no ]overlay mode.
 
-> +
-> +test_expect_success 'restore a file, ignoring branch of same name' '
-> +	cat one >expected &&
-> +	echo dirty >>one &&
-> +	git restore one &&
-> +	test_cmp expected one
-> +'
-> +
+I'd be fine in general with changing the name, if there is a consensus
+for a different and better name, but I also think overlay is
+reasonable, so I'd rather leave pushing for a different name to
+someone else that has strong opinions about it.
 
-Branch 'one' has been created by update-ref invocation in the setup, OK.
+Philip, do you think something like this would help?  Not sure if it
+should be called overlay_mode in the glossary, rather than just
+overlay?
 
-> +test_expect_success 'restore a file on worktree from another branch' '
-> +	test_when_finished git reset --hard &&
-> +	git cat-file blob first:./first.t >expected &&
-> +	git restore --source=first first.t &&
-> +	test_cmp expected first.t &&
-> +	git cat-file blob HEAD:./first.t >expected &&
-> +	git show :first.t >actual &&
-> +	test_cmp expected actual
-> +'
+--- >8 ---
+Subject: [PATCH] glossary: add definition for overlay
 
-Test description reads "from another branch". However "first", created by
-test_commit invocation is a tag. Maybe description should read "from another
-ref"? Same applies to other tests which utilize "first".
+Add a definition for what overlay means in the context of git, to
+clarify the recently introduced overlay-mode in git checkout.
 
-> +
-> +test_expect_success 'restore a file in the index from another branch' '
-> +	test_when_finished git reset --hard &&
-> +	git cat-file blob first:./first.t >expected &&
-> +	git restore --source=first --index first.t &&
-> +	git show :first.t >actual &&
-> +	test_cmp expected actual &&
-> +	git cat-file blob HEAD:./first.t >expected &&
-> +	test_cmp expected first.t
-> +'
-> +
-> +test_expect_success 'restore a file in both the index and worktree from another branch' '
-> +	test_when_finished git reset --hard &&
-> +	git cat-file blob first:./first.t >expected &&
-> +	git restore --source=first --index --worktree first.t &&
-> +	git show :first.t >actual &&
-> +	test_cmp expected actual &&
-> +	test_cmp expected first.t
-> +'
-> +
-> +test_expect_success 'restore --index uses HEAD as source' '
-> +	test_when_finished git reset --hard &&
-> +	git cat-file blob :./first.t >expected &&
-> +	echo index-dirty >>first.t &&
-> +	git add first.t &&
-> +	git restore --index first.t &&
-> +	git cat-file blob :./first.t >actual &&
-> +	test_cmp expected actual
-> +'
-> +
-> +test_done
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ Documentation/glossary-content.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index 023ca95e7c..70e6477a9f 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -287,6 +287,11 @@ This commit is referred to as a "merge commit", or sometimes just a
+ 	origin/name-of-upstream-branch, which you can see using
+ 	`git branch -r`.
+ 
++[[def_overlay]]overlay::
++	Only update and add files to the working directory, but don't
++	delete them, similar to how 'cp -R' works.  This is the
++	default in a <<def_checkout,checkout>>.
++
+ [[def_pack]]pack::
+ 	A set of objects which have been compressed into one file (to save space
+ 	or to transmit them efficiently).
+-- 
+2.20.1.495.gaa96b0ce6b
 
---
-Best regards, Andrei R.
