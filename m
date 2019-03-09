@@ -7,143 +7,131 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB05720248
-	for <e@80x24.org>; Sat,  9 Mar 2019 13:12:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5AE20248
+	for <e@80x24.org>; Sat,  9 Mar 2019 14:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726419AbfCINMc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Mar 2019 08:12:32 -0500
-Received: from mail-it1-f170.google.com ([209.85.166.170]:55544 "EHLO
-        mail-it1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726235AbfCINMc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Mar 2019 08:12:32 -0500
-Received: by mail-it1-f170.google.com with SMTP id z131so501332itf.5
-        for <git@vger.kernel.org>; Sat, 09 Mar 2019 05:12:31 -0800 (PST)
+        id S1726498AbfCIOg7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Mar 2019 09:36:59 -0500
+Received: from mail-it1-f178.google.com ([209.85.166.178]:38240 "EHLO
+        mail-it1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726308AbfCIOg7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Mar 2019 09:36:59 -0500
+Received: by mail-it1-f178.google.com with SMTP id l66so701706itg.3
+        for <git@vger.kernel.org>; Sat, 09 Mar 2019 06:36:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc;
-        bh=EJsIKy9WcAR61D97aWNI0JSmSD0CGeSRxwpei4pgGw8=;
-        b=RzJ4P2tptPVc9L8MtFeziNAHeqEUbJ5OM8U36jiMsJX3Orr1r6SdYyz+vbyc3TVj9w
-         pkR1YvVbbonPpCUs8G4GL1LN7fWBIUX1NkVBq/xCF5GeJu0JoMKXzC+GNr7AdILDnAsG
-         0v1H2q5LDziG8rHMKfR8yuzHo1EFOtrTXrMVpLacfCFG6HhVcGoPz74yB291PSQLPEXO
-         qGSYZQQEwK+2eRGnNLEne28buYVQsu5twc6rV9nS8Lt2hoykpxXrJSEMQuf7bhEzbKkF
-         G71dl+jwBdYpdewv4m2Dkgu5u4HmxHzn1Q5dqr23aDh8Hu4S4685eI4WTrC1sdnw9SfY
-         /v2g==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=7AA83X36aTPOcpvxsy4SGxv4jNz6rHWJky3dLnW+cvY=;
+        b=JfUgUHTrhnoePRslGtEZvPBmGQxxo4bSZ5XST9Hx8SUw14J+9nNpg3MHbRONmRsUqi
+         mmeENH0uJI+C3LRx6Di7UYtLFyaJEjesl30DoMLTtsXVhl8/Z0o4z661HmeRJHitgna6
+         q/gz6jqyemuVxevJzbWlKv1icvC7uIazcR3g8g+VdJvbvnuQ69etvna6K/VUU8bHOa/b
+         4W1OwkhjrhV0W6lkeUnuYZcp9eZorVN93I2N91M1jijxay+NHBRkrWDd4CpM59VEJz9n
+         hyWXPPVH0M8eLMiVjSHRsLmg49TvVtQmzavHtMtBr4oUAZuZaoXnyFXYJzTItvpYp0q3
+         /+Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc;
-        bh=EJsIKy9WcAR61D97aWNI0JSmSD0CGeSRxwpei4pgGw8=;
-        b=Gv1PyzNgKlGi8dMEkjC8J97Kf0wlESyzzGsy3qWsfsom6VL8b9XT3MuoNxnFfKffhQ
-         d9c9IH03Xk1Wsu0qwRZbjciE0BpDc55GfDjCTBKxMCDF4Pb2AVYWS/lByFODqhpXwPCT
-         TVwAKzdqx3i+N1MqzsOq774aFsFICZUaZbzyo/RhqDJDfOhcQ0lMhD7oPljSsVowcTtm
-         dVEImwb16OgqIo7EacofhQohNvRgW/R/AsDXqcvN7JvHU6ymF8levnUPwYCn3+UBX0ku
-         4OxGvzJngaT4+tnT9y6LKO+E5aU7IZuuRurtEPXMLauIBtraj6yFeS0gyrniuFbYefua
-         mCgA==
-X-Gm-Message-State: APjAAAUwZjqafBuu6GaHnm/AWO3Sj3jPDVXXak+bV+Yk83pkMgLDDmiw
-        iUQsq96lLIY05BlDmKlalEj0hMygFoWVtUDXAxoqoMz4
-X-Google-Smtp-Source: APXvYqwoxHnHJv0JC+zgRqPfGxkVVTv4u+9eO+4b8mwKie9aWkPTcan5karz1bGYsJsgLeh+XDaNyQQ1sWbd19a0O/s=
-X-Received: by 2002:a24:3a12:: with SMTP id m18mr10251006itm.5.1552137151049;
- Sat, 09 Mar 2019 05:12:31 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=7AA83X36aTPOcpvxsy4SGxv4jNz6rHWJky3dLnW+cvY=;
+        b=hxErECyMFtxPURVZW7UUwRYx58nczCip9P81FTLTFkfTECT1DYgJx5ZDPzzuFz5LNJ
+         SzJzwfkKT0YfIamAzXIuXuxEGnL0wYurEShxCZdqR8yGnNkgPknOxzqmDTaOnZjxS0wl
+         ItBUhsavZLEteaSWqCGLLqgnVHk8l9Q5mIJF0WGa42L1RbzfJJAiimSMcpvIdu7KrvX3
+         /9EQAT8B0L5zTXH9x6B3MmH6I40SNLFLMqDt3Ffx5wJp87t1htdXrnAgCEhRO+cMGetn
+         dUSjL2K9yrjUnKaAIJPprRLmSMAIONr++Vk9w0Z2WoV9RvzZZukqs9FWYQwvxmbjcSOM
+         WVzA==
+X-Gm-Message-State: APjAAAWxfU1fINddGaDgLQRU3RD69oOSqlVstk8RPV/Sew5jOMv1VU5U
+        48/hNtkKXJlBD8LmYNpWTuO7hw2Joh2mpYJNk/S3GWen
+X-Google-Smtp-Source: APXvYqyvv/4ExHX0MSC5iOwt9f+5N5ZQsf+gH+tSpcO/VMbV6A4GPinoUQYvthkrkI7FLh1dBDr5iSrCd77kLvyW+5M=
+X-Received: by 2002:a02:a88b:: with SMTP id l11mr7835591jam.54.1552142218101;
+ Sat, 09 Mar 2019 06:36:58 -0800 (PST)
 MIME-Version: 1.0
-References: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
- <20190308174343.GX31362@zaya.teonanacatl.net> <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
-In-Reply-To: <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
 Reply-To: noloader@gmail.com
 From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Sat, 9 Mar 2019 08:12:05 -0500
-Message-ID: <CAH8yC8kn=EmEm_UPrnpwaofv97S42Se6FC+hWcm0EHCX-4rewQ@mail.gmail.com>
-Subject: Re: One failed self test on Fedora 29
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="0000000000008818c90583a91783"
+Date:   Sat, 9 Mar 2019 09:36:34 -0500
+Message-ID: <CAH8yC8kSakS807d4jc_BtcUJOrcVT4No37AXSz=jePxhw-o9Dg@mail.gmail.com>
+Subject: t0028-working-tree-encoding.sh test #3 data
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---0000000000008818c90583a91783
-Content-Type: text/plain; charset="UTF-8"
+Hi Everyone,
 
-On Sat, Mar 9, 2019 at 7:34 AM Jeffrey Walton <noloader@gmail.com> wrote:
->
-> On Fri, Mar 8, 2019 at 12:43 PM Todd Zullinger <tmz@pobox.com> wrote:
-> >
-> > Jeffrey Walton wrote:
-> > > Fedora 29, x86_64. One failed self test:
-> > >
-> > > *** t0021-conversion.sh ***
-> > [...]
-> > > not ok 13 - disable filter with empty override
-> > > #
-> > > #               test_config_global filter.disable.smudge false &&
-> > > #               test_config_global filter.disable.clean false &&
-> > > #               test_config filter.disable.smudge false &&
-> > > #               test_config filter.disable.clean false &&
-> > > #
-> > > #               echo "*.disable filter=disable" >.gitattributes &&
-> > > #
-> > > #               echo test >test.disable &&
-> > > #               git -c filter.disable.clean= add test.disable 2>err &&
-> > > #               test_must_be_empty err &&
-> > > #               rm -f test.disable &&
-> > > #               git -c filter.disable.smudge= checkout -- test.disable 2>err &&
-> > > #               test_must_be_empty err
-> > > #
-> > [...]
-> > > # failed 1 among 26 test(s)
-> > > 1..26
-> > > gmake[2]: *** [Makefile:56: t0021-conversion.sh] Error 1
-> > >
-> > > Does anyone need a config.log or other test data?
-> >
-> > It would probably help to know what commit you're building.
-> > The verbose test output would also be useful, e.g.:
->
-> I built with CFLAGS += -fsanitize=undefined. It looks like the
-> misaligned accesses generate UBsan findings, which is causing
-> t0021-conversion to fail.
->
-> git-2.21.0$ grep -IR 'runtime error'
-> t/trash directory.t0021-conversion/err:sha1dc/sha1.c:392:2: runtime
-> error: load of misaligned address 0x0000024fc245 for type 'const
-> uint32_t', which requires 4 byte alignment
-> t/trash directory.t0021-conversion/err:sha1dc/sha1.c:397:2: runtime
-> error: load of misaligned address 0x0000024fc245 for type 'const
-> uint32_t', which requires 4 byte alignment
-> t/trash directory.t0021-conversion/err:sha1dc/sha1.c:402:2: runtime
-> error: load of misaligned address 0x0000024fc245 for type 'const
-> uint32_t', which requires 4 byte alignment
+I'm experiencing a failure in t0028-working-tree-encoding.sh. The
+first failure is test #3. The source states "source (test.utf16lebom,
+considered UTF-16LE-BOM)" but it looks like a UTF16-LE BOM followed by
+a UTF32-LE stream.
 
-I think this is the patch for sha1dc/sha1.c . It stops using unaligned
-accesses by default, but still honors SHA1DC_FORCE_UNALIGNED_ACCESS
-for those who want it. Folks who want the undefined behavior have to
-do something special.
+Am I misunderstanding the data presentation?
 
-Jeff
+$ ./t0028-working-tree-encoding.sh -v -i
+...
+ok 2 - ensure UTF-8 is stored in Git
 
---0000000000008818c90583a91783
-Content-Type: application/octet-stream; name="git.patch"
-Content-Disposition: attachment; filename="git.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_jt1id9do0>
-X-Attachment-Id: f_jt1id9do0
+expecting success:
+        test_when_finished "rm -f test.utf16.raw" &&
 
-LS0tIHNoYTFkYy9zaGExLmMKKysrIHNoYTFkYy9zaGExLmMKQEAgLTI2LDE0ICsyNiw2IEBACiAj
-aW5jbHVkZSAic2hhMS5oIgogI2luY2x1ZGUgInViY19jaGVjay5oIgogCi0jaWYgKGRlZmluZWQo
-X19hbWQ2NF9fKSB8fCBkZWZpbmVkKF9fYW1kNjQpIHx8IGRlZmluZWQoX194ODZfNjRfXykgfHwg
-ZGVmaW5lZChfX3g4Nl82NCkgfHwgXAotICAgICBkZWZpbmVkKGkzODYpIHx8IGRlZmluZWQoX19p
-Mzg2KSB8fCBkZWZpbmVkKF9faTM4Nl9fKSB8fCBkZWZpbmVkKF9faTQ4Nl9fKSAgfHwgXAotICAg
-ICBkZWZpbmVkKF9faTU4Nl9fKSB8fCBkZWZpbmVkKF9faTY4Nl9fKSB8fCBkZWZpbmVkKF9NX0lY
-ODYpIHx8IGRlZmluZWQoX19YODZfXykgfHwgXAotICAgICBkZWZpbmVkKF9YODZfKSB8fCBkZWZp
-bmVkKF9fVEhXX0lOVEVMX18pIHx8IGRlZmluZWQoX19JODZfXykgfHwgZGVmaW5lZChfX0lOVEVM
-X18pIHx8IFwKLSAgICAgZGVmaW5lZChfXzM4NikgfHwgZGVmaW5lZChfTV9YNjQpIHx8IGRlZmlu
-ZWQoX01fQU1ENjQpKQotI2RlZmluZSBTSEExRENfT05fSU5URUxfTElLRV9QUk9DRVNTT1IKLSNl
-bmRpZgotCiAvKgogICAgQmVjYXVzZSBMaXR0bGUtRW5kaWFuIGFyY2hpdGVjdHVyZXMgYXJlIG1v
-c3QgY29tbW9uLAogICAgd2Ugb25seSBzZXQgU0hBMURDX0JJR0VORElBTiBpZiBvbmUgb2YgdGhl
-c2UgY29uZGl0aW9ucyBpcyBtZXQuCkBAIC0xMjQsNyArMTE2LDcgQEAKICNlbmRpZgogLypFTkRJ
-QU5ORVNTIFNFTEVDVElPTiovCiAKLSNpZiBkZWZpbmVkKFNIQTFEQ19GT1JDRV9VTkFMSUdORURf
-QUNDRVNTKSB8fCBkZWZpbmVkKFNIQTFEQ19PTl9JTlRFTF9MSUtFX1BST0NFU1NPUikKKyNpZiBk
-ZWZpbmVkKFNIQTFEQ19GT1JDRV9VTkFMSUdORURfQUNDRVNTKQogI2RlZmluZSBTSEExRENfQUxM
-T1dfVU5BTElHTkVEX0FDQ0VTUwogI2VuZGlmIC8qVU5BTElHTk1FTlQgREVURUNUSU9OKi8K
---0000000000008818c90583a91783--
+        rm test.utf16 &&
+        git checkout test.utf16 &&
+        test_cmp_bin test.utf16.raw test.utf16
+
+Updated 1 path from the index
+source (test.utf16lebom, considered UTF-16LE-BOM):
+|  0: ff   |  1: fe   |  2: 68 h |  3:  0   |  4:  0   |  5:  0   |
+6: 61 a |  7:  0
+|  8:  0   |  9:  0   | 10: 6c l | 11:  0   | 12:  0   | 13:  0   |
+14: 6c l | 15:  0
+| 16:  0   | 17:  0   | 18: 6f o | 19:  0   | 20:  0   | 21:  0   |
+22: 20   | 23:  0
+| 24:  0   | 25:  0   | 26: 74 t | 27:  0   | 28:  0   | 29:  0   |
+30: 68 h | 31:  0
+| 32:  0   | 33:  0   | 34: 65 e | 35:  0   | 36:  0   | 37:  0   |
+38: 72 r | 39:  0
+| 40:  0   | 41:  0   | 42: 65 e | 43:  0   | 44:  0   | 45:  0   |
+46: 21 ! | 47:  0
+| 48:  0   | 49:  0   | 50:  a   | 51:  0   | 52:  0   | 53:  0   |
+54: 63 c | 55:  0
+| 56:  0   | 57:  0   | 58: 61 a | 59:  0   | 60:  0   | 61:  0   |
+62: 6e n | 63:  0
+| 64:  0   | 65:  0   | 66: 20   | 67:  0   | 68:  0   | 69:  0   |
+70: 79 y | 71:  0
+| 72:  0   | 73:  0   | 74: 6f o | 75:  0   | 76:  0   | 77:  0   |
+78: 75 u | 79:  0
+| 80:  0   | 81:  0   | 82: 20   | 83:  0   | 84:  0   | 85:  0   |
+86: 72 r | 87:  0
+| 88:  0   | 89:  0   | 90: 65 e | 91:  0   | 92:  0   | 93:  0   |
+94: 61 a | 95:  0
+| 96:  0   | 97:  0   | 98: 64 d | 99:  0   | 100:  0   | 101:  0   |
+102: 20   | 103:  0
+| 104:  0   | 105:  0   | 106: 6d m | 107:  0   | 108:  0   | 109:  0
+ | 110: 65 e | 111:  0
+| 112:  0   | 113:  0   | 114: 3f ? | 115:  0   | 116:  0   | 117:  0
+
+destination (test.utf16lebom, considered UTF-8):
+|  0: 68 h |  1:  0   |  2: 61 a |  3:  0   |  4: 6c l |  5:  0   |
+6: 6c l |  7:  0
+|  8: 6f o |  9:  0   | 10: 20   | 11:  0   | 12: 74 t | 13:  0   |
+14: 68 h | 15:  0
+| 16: 65 e | 17:  0   | 18: 72 r | 19:  0   | 20: 65 e | 21:  0   |
+22: 21 ! | 23:  0
+| 24:  a   | 25:  0   | 26: 63 c | 27:  0   | 28: 61 a | 29:  0   |
+30: 6e n | 31:  0
+| 32: 20   | 33:  0   | 34: 79 y | 35:  0   | 36: 6f o | 37:  0   |
+38: 75 u | 39:  0
+| 40: 20   | 41:  0   | 42: 72 r | 43:  0   | 44: 65 e | 45:  0   |
+46: 61 a | 47:  0
+| 48: 64 d | 49:  0   | 50: 20   | 51:  0   | 52: 6d m | 53:  0   |
+54: 65 e | 55:  0
+| 56: 3f ? | 57:  0
+
+test.utf16.raw test.utf16 differ: char 1, line 1
+not ok 3 - re-encode to UTF-16 on checkout
+#
+#               test_when_finished "rm -f test.utf16.raw" &&
+#
+#               rm test.utf16 &&
+#               git checkout test.utf16 &&
+#               test_cmp_bin test.utf16.raw test.utf16
+#
