@@ -2,159 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
-Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D50FA20248
-	for <e@80x24.org>; Sat,  9 Mar 2019 16:10:07 +0000 (UTC)
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	RDNS_NONE shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+Received: from vger.kernel.org (unknown [209.132.180.67])
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDE7020248
+	for <e@80x24.org>; Sat,  9 Mar 2019 16:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726294AbfCIQKG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Mar 2019 11:10:06 -0500
-Received: from mout.web.de ([212.227.15.4]:57089 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726208AbfCIQKG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Mar 2019 11:10:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1552147804;
-        bh=Qro7aQtMs0q8NKdlPBiSr2a9IGDdiZzXXzlA4P9Ablg=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=hwdhspLlpjz1tPaTM9b4d3AQVRhebl2jWClqmmGxf7bwUnpJE4LTeh/MAhWQb/Z6b
-         hMr8Wf3a0LcZqpwpD/2WvtSJjdkghYZ6NsKUMq4en7o3cPJyv2L945JvBHPp63Bwuu
-         T/A5TFH5Ajnj6SZggeNudlNu5Qz5N/2htqSCkn90=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M5Omd-1grkGJ0c5H-00zUCL; Sat, 09
- Mar 2019 17:10:04 +0100
-Date:   Sat, 9 Mar 2019 16:10:03 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: t0028-working-tree-encoding.sh test #3 data
-Message-ID: <20190309161003.55t4irdwd76asnuf@tb-raspi4>
-References: <CAH8yC8kSakS807d4jc_BtcUJOrcVT4No37AXSz=jePxhw-o9Dg@mail.gmail.com>
+        id S1726308AbfCIQMb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Mar 2019 11:12:31 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35967 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726208AbfCIQMb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Mar 2019 11:12:31 -0500
+Received: by mail-wm1-f68.google.com with SMTP id j125so507588wmj.1
+        for <git@vger.kernel.org>; Sat, 09 Mar 2019 08:12:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZW+nJZUKu/kn9rdzsMf6SUVZ0gHS5SbX8xZHN4zvR8c=;
+        b=uQQWMTwlNd98ZMEk41M4Qg7zeRdUb/OBvVHMAXKV9QvXbOguXbWCR8lVYE0v6UteIU
+         XF3JAyXvFZGriSGhFtYumZKbqz5pximeq882YuiQZB1iNG8KKWfNsOBUUQjmhLThqbUJ
+         yqBY+xrkylBlkHf4YvW7KrYIM5PwqU4gwSFO/UMUOQlXGr193rBZ/M2CRczKNYas+rJs
+         7kADdIYd5j5oVfgvQonqUMZqlrxBJgyrMoh/3ch0l1/Nwbz6SVtWfQTLFTWxGkXB5Ou6
+         Q+efMSOACbQSF7TI0oZj94UvtsrrOrYxzWyI67JtFgJYETBrtkJV4F26x5VZossWrNY/
+         Ud9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ZW+nJZUKu/kn9rdzsMf6SUVZ0gHS5SbX8xZHN4zvR8c=;
+        b=TfY6X40/jGpb1eSqCcqkePZdFLOV+jvEWKGHnzmRxEpQeuhJgjvcy+1Wh8xXhSYK9U
+         vHMsipLkqECMyQMKJ93wIckeGs8La5Yfyk27Cpg+gIe/0bIdM5xeuS4pNRrubZMLm1dq
+         Jhvrt0NsL7aNOpu23Q38c7HEoBhUiZV9BCjuFX+3VWXaRmTkcx1Z0nZCQgVRT9VA5+c6
+         KP69e1Mv9p/EjcBQCYemuMRMGIOLUTYm/j/kuerGzrY9U8uBMZZVlSV48JKjjwtrqKcO
+         bVl9k5LO+9vif/UMfboeHQWWlYsEys1ANqAOhXrLpFBHP0EeIR0ghLBs35l0Q+AN1QQP
+         HkYQ==
+X-Gm-Message-State: APjAAAViTdzsOjqGAwkFfiDpZOZrBQHv7NVaLqN088c+rhnTqtYHIQsu
+        O7OatBuS3P/cy0LLbXeYqn7bj6G3
+X-Google-Smtp-Source: APXvYqy7ExCRLra07aglWVpJGv68GOEfcumataH4pqdBhjD9u5NtyewjxSApfEDX/DlDj/iu9h71Xg==
+X-Received: by 2002:a7b:c214:: with SMTP id x20mr11858028wmi.62.1552147948679;
+        Sat, 09 Mar 2019 08:12:28 -0800 (PST)
+Received: from localhost ([95.148.214.107])
+        by smtp.gmail.com with ESMTPSA id u14sm3017222wrr.42.2019.03.09.08.12.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 09 Mar 2019 08:12:27 -0800 (PST)
+Date:   Sat, 9 Mar 2019 16:12:26 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     sushmaunnibhavi <sushmaunnibhavi425@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC][PATCH 1/2] modified dir-iterator.c
+Message-ID: <20190309161226.GA31533@hank.intra.tgummerer.com>
+References: <20190308140307.GA22661@hacker-queen>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAH8yC8kSakS807d4jc_BtcUJOrcVT4No37AXSz=jePxhw-o9Dg@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:POFFEPOSK40tHzAnO/YLxaeTWMUHTiN8Y1EWnKWHrrJFFsAXDDR
- j3Vai3UFz46G/h8v9oBdTm69KzxmmHdEhpKb1HjObSRD9oPU6UycyFi2Xt8lG3JsGTj9j9/
- 7wbPKT3U7PxNmOLejOOQOd1ztyOVe/YkHSLqO+icnqSMpus2wMrDSCZte5wgcQJRGK0N8kQ
- iavUUgKej6JIqDQ379Zlw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ae5yG4PMx+w=:1n8AqyqtaZi46bMwdAxS5z
- dUw+h+HRjfDQDdQojW6fPtQ0VICq+0TAU3Wz2w18PDkAB+dxfbK07zRw/AH10Pgx9ZFdz4Vde
- rCtjXx+rhfWfMLvjHhoLGdDEHHdGTNxlm5nBHC/YeWC/po6AIWvQMqWh352pa+DLhMJbMQg/d
- i8q0o9IOwKkwEmfM1CoYo7qOxatAW1tVAWzMxyMT41I97mGGrNIoViQEjU9SRjHFZE47jYUFE
- N787Eu6X+7Yg7r8+lFJc14VPGxF5LChI6xrXeW2eLs8/sfY/qcDNK+WEc/VpBDBPPC9k/7CUi
- Qh2WUtbI72fM7z1u76gHsnUb+jyLboSt4QkO2x07E8+qMbjFtqWFOP8J4t0HJDUqc2PjCZRSl
- Vf3jO2o2T0WJDeh3wk5Fso8jhA4ChETZ85PtJMZCYe30PB4y2PBOxKKBOhm/Ysiv90YqBW1GJ
- eOfW0oAoNpwlFeNdQrPse5hCAOUM2JRiLWMhXFQvWUOECXs4dgEHrbeJFFWNXGHZ3ayhfdsO3
- auhY7O7OAh340cnrIMxitnbFV+iSr4LVE7cuB4akN9wBE81FBirIkYS628VBdYfEJmJV5VLFm
- 7ak+F4vky9o0LUhGH4XLbH8yrH2dryHWz36JiIDLG6/tLLm5HIPLceMqkClb6URwZ7mpl8ACS
- P3p3Yv0NGkpcEaMMlkiJ3fOxQqKrSPASMdzF6A7qbId/1vrMYPHeE57kLu+LYFIj+n/O+kk10
- p6sOsJ5z+G8A6RoTHZIi9JX69wB9tlg74CTJ6+xTHLwJYuGsc60L0JVzivomn05vDE/5nffuj
- tvcPBbzlX175nC5ygG3m8I8h+cVSopcEPD7up9kEX7Ngy1AQmViRE0i2CVyKk9GCog6OVc5bb
- 2yhV41ZFyl9OCpuBauoh2PPvnZS3zdQTPJQoLINqq4TfjNHvNP/llsGdJ0mJ8d
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190308140307.GA22661@hacker-queen>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 09, 2019 at 09:36:34AM -0500, Jeffrey Walton wrote:
-> Hi Everyone,
->
-> I'm experiencing a failure in t0028-working-tree-encoding.sh. The
-> first failure is test #3. The source states "source (test.utf16lebom,
-> considered UTF-16LE-BOM)" but it looks like a UTF16-LE BOM followed by
-> a UTF32-LE stream.
->
-> Am I misunderstanding the data presentation?
+Hi,
 
-Thanks for the report.
+thanks for the patch!
 
-I think you understand it right.
+Subject: [GSOC][PATCH 1/2] modified dir-iterator.c
 
-May be you can help us: Which OS are you using ?
+Commit messages should be written in the imperative mood, e.g. "modify
+dir-iterator.c", see also "Documentation/SubmittingPatches.  Also they
+are generally in the format "<area>: <description>".  So the subject
+here could be something like "dir-iterator: replace closedir with
+cast".  Note that the description briefly describes what the patch
+does, in more detail than just "modify".  Every patch modifies
+something, so that word by itself is somewhat meaningless.
 
-And what does
-echo "hallo" | iconv -f UTF-8 -t UTF-16 | xxd
-give ?
+Also you are using 1/2 in the subject, but I can't find a second patch
+on the mailing list.  Did you forget to send that?
 
-We may need some more debugging, may be you can send the whole log file ?
-Even if there is are a lot of ESC-sequences...
+On 03/08, sushmaunnibhavi wrote:
+> ---
+> Some places in git use raw API opendir/readdir/closedir to traverse a directory recursively, which usually involves function recursion. Now that we have struct dir_iterator,we have to convert these to use the dir-iterator to simplify the code.
 
+This is a plain copy from the microprojects page, but doesn't explain
+what this change is about.  The commit message should explain why a
+certain change is made, so reviewers can easily understand why the
+patch would be worth including.
 
+Note that this explaination should also be part of the commit message
+(before the --- marker above), so it is included in the project
+history.  The space after the --- marker can be useful for giving
+additional information to reviewers, that should not be included in
+the projects commit history.
 
->
-> $ ./t0028-working-tree-encoding.sh -v -i
-> ...
-> ok 2 - ensure UTF-8 is stored in Git
->
-> expecting success:
->         test_when_finished "rm -f test.utf16.raw" &&
->
->         rm test.utf16 &&
->         git checkout test.utf16 &&
->         test_cmp_bin test.utf16.raw test.utf16
->
-> Updated 1 path from the index
-> source (test.utf16lebom, considered UTF-16LE-BOM):
-> |  0: ff   |  1: fe   |  2: 68 h |  3:  0   |  4:  0   |  5:  0   |
-> 6: 61 a |  7:  0
-> |  8:  0   |  9:  0   | 10: 6c l | 11:  0   | 12:  0   | 13:  0   |
-> 14: 6c l | 15:  0
-> | 16:  0   | 17:  0   | 18: 6f o | 19:  0   | 20:  0   | 21:  0   |
-> 22: 20   | 23:  0
-> | 24:  0   | 25:  0   | 26: 74 t | 27:  0   | 28:  0   | 29:  0   |
-> 30: 68 h | 31:  0
-> | 32:  0   | 33:  0   | 34: 65 e | 35:  0   | 36:  0   | 37:  0   |
-> 38: 72 r | 39:  0
-> | 40:  0   | 41:  0   | 42: 65 e | 43:  0   | 44:  0   | 45:  0   |
-> 46: 21 ! | 47:  0
-> | 48:  0   | 49:  0   | 50:  a   | 51:  0   | 52:  0   | 53:  0   |
-> 54: 63 c | 55:  0
-> | 56:  0   | 57:  0   | 58: 61 a | 59:  0   | 60:  0   | 61:  0   |
-> 62: 6e n | 63:  0
-> | 64:  0   | 65:  0   | 66: 20   | 67:  0   | 68:  0   | 69:  0   |
-> 70: 79 y | 71:  0
-> | 72:  0   | 73:  0   | 74: 6f o | 75:  0   | 76:  0   | 77:  0   |
-> 78: 75 u | 79:  0
-> | 80:  0   | 81:  0   | 82: 20   | 83:  0   | 84:  0   | 85:  0   |
-> 86: 72 r | 87:  0
-> | 88:  0   | 89:  0   | 90: 65 e | 91:  0   | 92:  0   | 93:  0   |
-> 94: 61 a | 95:  0
-> | 96:  0   | 97:  0   | 98: 64 d | 99:  0   | 100:  0   | 101:  0   |
-> 102: 20   | 103:  0
-> | 104:  0   | 105:  0   | 106: 6d m | 107:  0   | 108:  0   | 109:  0
->  | 110: 65 e | 111:  0
-> | 112:  0   | 113:  0   | 114: 3f ? | 115:  0   | 116:  0   | 117:  0
->
-> destination (test.utf16lebom, considered UTF-8):
-> |  0: 68 h |  1:  0   |  2: 61 a |  3:  0   |  4: 6c l |  5:  0   |
-> 6: 6c l |  7:  0
-> |  8: 6f o |  9:  0   | 10: 20   | 11:  0   | 12: 74 t | 13:  0   |
-> 14: 68 h | 15:  0
-> | 16: 65 e | 17:  0   | 18: 72 r | 19:  0   | 20: 65 e | 21:  0   |
-> 22: 21 ! | 23:  0
-> | 24:  a   | 25:  0   | 26: 63 c | 27:  0   | 28: 61 a | 29:  0   |
-> 30: 6e n | 31:  0
-> | 32: 20   | 33:  0   | 34: 79 y | 35:  0   | 36: 6f o | 37:  0   |
-> 38: 75 u | 39:  0
-> | 40: 20   | 41:  0   | 42: 72 r | 43:  0   | 44: 65 e | 45:  0   |
-> 46: 61 a | 47:  0
-> | 48: 64 d | 49:  0   | 50: 20   | 51:  0   | 52: 6d m | 53:  0   |
-> 54: 65 e | 55:  0
-> | 56: 3f ? | 57:  0
->
-> test.utf16.raw test.utf16 differ: char 1, line 1
-> not ok 3 - re-encode to UTF-16 on checkout
-> #
-> #               test_when_finished "rm -f test.utf16.raw" &&
-> #
-> #               rm test.utf16 &&
-> #               git checkout test.utf16 &&
-> #               test_cmp_bin test.utf16.raw test.utf16
-> #
+> Signed-off-by: Sushma Unnibhavi <sushmaunnibhavi425@gmail.com>
+
+The Signed-off-by: line should be part of the commit message (before
+the ---).  Also it should match the author name used in the commit.
+Right now you are using two different names.  We generally prefer real
+names over nicknames, so the author of the commit should be updated to
+be "Sushma Unnibhavi".
+
+>  dir-iterator.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/dir-iterator.c b/dir-iterator.c
+> index f2dcd82fde..a3b5b8929c 100644
+> --- a/dir-iterator.c
+> +++ b/dir-iterator.c
+> @@ -169,7 +169,7 @@ int dir_iterator_abort(struct dir_iterator *dir_iterator)
+>  		struct dir_iterator_level *level =
+>  			&iter->levels[iter->levels_nr - 1];
+>  
+> -		if (level->dir && closedir(level->dir)) {
+> +		if (level->dir && (struct dir_iterator_int *)(level->dir)) {//changed closedir to (struct dir_iterator_int *)
+
+The 'closedir' call is changed to a cast here, which will always
+evaluate to true as long as level->dir is not a NULL pointer, which we
+already check in the first condition.
+
+After this change we no longer close the directory in
+'dir_iterator_abort', which we should still do.  Also the warning
+message below is now no longer correct, if this would be the change
+that is really desired.
+
+The comment that's added here tells us what has been done in this
+particular commit, but is not very useful in the longer term (someone
+reading this line tomorrow or in a year would not care that this has
+been changed in some previous commit).  The actual change is already
+easily understandable from the diff, so the comment adds no additional
+benefit.  If it would add some benefit to the reader, it would be
+better to describe that in the commit message rather than in a
+comment.
+
+Additionally we don't use C++ style comments in this project, but
+rather prefer C style comments using /* */ to wrap it.
+
+>  			strbuf_setlen(&iter->base.path, level->prefix_len);
+>  			warning("error closing directory %s: %s",
+>  				iter->base.path.buf, strerror(errno));
+> -- 
+> 2.17.1
+> 
