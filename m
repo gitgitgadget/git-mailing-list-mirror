@@ -2,255 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7843B20248
-	for <e@80x24.org>; Sat,  9 Mar 2019 16:45:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94ECC20248
+	for <e@80x24.org>; Sat,  9 Mar 2019 16:53:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726312AbfCIQpN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Mar 2019 11:45:13 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37831 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbfCIQpN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Mar 2019 11:45:13 -0500
-Received: by mail-wm1-f67.google.com with SMTP id x10so540227wmg.2
-        for <git@vger.kernel.org>; Sat, 09 Mar 2019 08:45:11 -0800 (PST)
+        id S1726348AbfCIQxt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Mar 2019 11:53:49 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:50641 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726286AbfCIQxt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Mar 2019 11:53:49 -0500
+Received: by mail-wm1-f65.google.com with SMTP id x7so564654wmj.0
+        for <git@vger.kernel.org>; Sat, 09 Mar 2019 08:53:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=viEvVlVEK3JbTFLOnXGFu3D7PdhSB64lP2qnL5CkX0U=;
-        b=badejTU3jpjyBV+COUzJFGmcFGpV5ey1ZlMsx+1ObKc5YNBtLdyHauhmtR/GHadoaP
-         yw8J2GtROx29IbDacr+qBV7OyE1vEM9SQO/AyjdXnFZMx/jdrl+0YwDSfFvcEPtZcmCC
-         HM7HT+kYIHe/ZHjljKhFUNeKqcEnej3S0uPC1/sIA5HWFdQrT/uvV3VXy8YY/EE3cMD5
-         dLUGnH+GFPIJn6pHi9tiz8otWFGxVgI6CL8HuQEL3zXyO4hqzhttUM/rEr3tnJTBPZxz
-         ND5hcgwkw2MjSTo1S9Joe1vINzLg/GuzZ/KQ4NzOpnJGObzBKnjHW+/s33mGg4/5YE7E
-         2Xzg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7xxhJ3JtPeeM+5bAvYh3iT/I4q2TPm8SJ6rhn4pzaMw=;
+        b=PDdmDgllEB5c4l+MWtARzX7U89qIKcOdenkWZat4MnN5PMpeM490UzjE3dG6COXFuo
+         Lw1wDQgHdVtlpctTf0/ObltLvPyK5kpl2ojhhf1UcFSYc10O6VCg8zQy0t5LV5oH1psg
+         +NG9TuRnPmk/yCWds2VZjfkCnvA2i2Qf4L5u66hJItqJQHnprpFYHi5T8p2zLwsBLKW/
+         Lmp9DRjI3tfxMG077dPOn9qxtlzZWEJdH09VDpJrUKvyFQP0wcZcxrqn728np/07LQOW
+         SWQHhChNKN3bun/EKYhwwzRQgm77bT9Dy9szYmXcYgDgnlRlCXA2PJ0Ga6UZ05Q5sbsm
+         1Hgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=viEvVlVEK3JbTFLOnXGFu3D7PdhSB64lP2qnL5CkX0U=;
-        b=uma7PT1ppneQNC3qBAzuZ3Gj8eElySg32TXUjoizNqZlZxnJqO2QGxRXdNgDGxA0+X
-         0DPHqJBNoDZYtDeeB+u/1yR1MmxrCX0oSX+LvB/XdKqXNQOnYVVaxzn7AHkBvJBzHBT0
-         82JOACimfrgK2DORgrppNn89kue0XfGup01ucgdeIgnZxjMcON5p+VvVeVX0IQrMtBb0
-         GZOLKqIeo0L/afJMD77GUMczaN8OSCZPst0WIHC7eTVVTTD1fjx7pxQvnEVvUVdPOQL/
-         EyWJKb1pAHuCvT1GKyKj7iMiuaFTl6CevKR2Mo2wSd127koH8H4UOoFAxcjlLNw/44nu
-         /f9A==
-X-Gm-Message-State: APjAAAU59SzrMLQybRx+jK+FNkb7Qjc98Vgc75Cnfsg5Ragvhi+RiuCx
-        521YokbCTjRm1LmNpxamTR4=
-X-Google-Smtp-Source: APXvYqx73Ev4C0rJEYOtTlsK73e/Hw7Rgf8bntXo12UiZFrT7Pa9Be8jYe9cwyVCIa6VnBtDlrH8yg==
-X-Received: by 2002:a1c:9684:: with SMTP id y126mr12802781wmd.124.1552149910040;
-        Sat, 09 Mar 2019 08:45:10 -0800 (PST)
-Received: from localhost ([95.148.214.107])
-        by smtp.gmail.com with ESMTPSA id w24sm6221005wmi.40.2019.03.09.08.45.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 09 Mar 2019 08:45:08 -0800 (PST)
-Date:   Sat, 9 Mar 2019 16:45:08 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Jonathan Chang <ttjtftx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH] tests: avoid using pipes
-Message-ID: <20190309164508.GB31533@hank.intra.tgummerer.com>
-References: <20190309154555.33407-1-ttjtftx@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7xxhJ3JtPeeM+5bAvYh3iT/I4q2TPm8SJ6rhn4pzaMw=;
+        b=btkusn/PW1H8LMkr0MW11X/sYOI7v1RhEu5VoOnYjQlKUcsTJK86zP3kxjpXljF4ro
+         CwXicvBXHeJDPUfSHtMtGmkiJGMu8UVc50tjLuAwvytV3RS9Fsa8T/BZzYCo1UtuJf5q
+         q3uoYGchTUBT4uXChk5T1H1bbN4VlKbSLdxJ9rr5CtN7L/Z13Lye8tyFU1JnyyTMp1aV
+         NA9DnKMcJKoS6lfUUHs1q+tk0KPztwIAq+O+DbF5Z3sMqv/d6v5t1JyAcs4n328N27/I
+         opUcm8kXhEy4LtJBvH07fYhJZwhgupYMT9yStIqmH3QXcLwq7tm37V2ItbioLWgICWDb
+         EEdg==
+X-Gm-Message-State: APjAAAVn0SZif7jT+rdw1hxEyCbwPPpXn3mLrJinKv2yoQbfdQLunFLb
+        p4M+qvFYI6tONC4RJwpxCpg=
+X-Google-Smtp-Source: APXvYqzFCoOgn9PYLv0a6/+OFFlOENNtxpU220d2imvCEsltul2T/hQV422LXO3ZAJILi3oSukFi9A==
+X-Received: by 2002:a1c:2ec4:: with SMTP id u187mr11809838wmu.29.1552150427171;
+        Sat, 09 Mar 2019 08:53:47 -0800 (PST)
+Received: from [10.33.1.6] ([185.230.127.241])
+        by smtp.gmail.com with ESMTPSA id p6sm3549150wre.63.2019.03.09.08.53.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 09 Mar 2019 08:53:46 -0800 (PST)
+Subject: Re: [PATCH v1 09/11] t: add tests for restore
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+References: <20190308101655.9767-1-pclouds@gmail.com>
+ <20190308101655.9767-10-pclouds@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <053a95ba-3063-b1bd-579c-a0c37f24e51a@gmail.com>
+Date:   Sat, 9 Mar 2019 17:53:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190309154555.33407-1-ttjtftx@gmail.com>
-User-Agent: Mutt/1.11.2 (2019-01-07)
+In-Reply-To: <20190308101655.9767-10-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-welcome and thanks for the patch!
-
-On 03/09, Jonathan Chang wrote:
-> This is my attempt for this year's GSoC microproject.
-> 
-> I copied the commit message of the commit[1] mentioned in the microproject
-> page[2]. Is this OK?
-> 
-> Here is a summary of what I did:
-> 	- simple substitution as in c6f44e1da5[1]. 
-> 	- besides simple substitution, I moved some git command out of command 
-> 		substitution to improve readability, which was not possible with pipes, 
-> 		while in these cases keeping them inside won't discard git's exit code.
-> 	- use actual1 and actual2 in cases where actual is already in use.
-> 	- use `sort -o actual actual` to avoid using actual1 and actual2.
-> 
-> [1] c6f44e1da5 ("t9813: avoid using pipes", 2017-01-04)
-> [2] https://git.github.io/SoC-2019-Microprojects/
-> 
-> ---------------------->8-------------------
-> The exit code of the upstream in a pipe is ignored thus we should avoid
-> using it. By writing out the output of the git command to a file, we can
-> test the exit codes of both the commands.
-> 
-> Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
+On 3/8/19 11:16 AM, Nguyễn Thái Ngọc Duy wrote:
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
->  t/t0000-basic.sh       | 28 ++++++++++++++--------------
->  t/t0003-attributes.sh  | 13 ++++++++-----
->  t/t0022-crlf-rename.sh |  6 +++---
->  3 files changed, 25 insertions(+), 22 deletions(-)
+>  t/lib-patch-mode.sh               |  12 ++++
+>  t/t2070-restore.sh (new +x)       |  77 ++++++++++++++++++++++
+>  t/t2071-restore-patch.sh (new +x) | 105 ++++++++++++++++++++++++++++++
+>  3 files changed, 194 insertions(+)
 > 
-> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> index b6566003dd..adc9545973 100755
-> --- a/t/t0000-basic.sh
-> +++ b/t/t0000-basic.sh
-> @@ -1118,27 +1118,25 @@ P=$(test_oid root)
->  
->  test_expect_success 'git commit-tree records the correct tree in a commit' '
->  	commit0=$(echo NO | git commit-tree $P) &&
-> -	tree=$(git show --pretty=raw $commit0 |
-> -		 sed -n -e "s/^tree //p" -e "/^author /q") &&
-> +	git show --pretty=raw $commit0 >actual &&
-> +	tree=$(sed -n -e "s/^tree //p" -e "/^author /q" actual) &&
->  	test "z$tree" = "z$P"
->  '
->  
->  test_expect_success 'git commit-tree records the correct parent in a commit' '
->  	commit1=$(echo NO | git commit-tree $P -p $commit0) &&
-> -	parent=$(git show --pretty=raw $commit1 |
-> -		sed -n -e "s/^parent //p" -e "/^author /q") &&
-> +	git show --pretty=raw $commit1 >actual &&
-> +	parent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual) &&
->  	test "z$commit0" = "z$parent"
->  '
->  
->  test_expect_success 'git commit-tree omits duplicated parent in a commit' '
->  	commit2=$(echo NO | git commit-tree $P -p $commit0 -p $commit0) &&
-> -	     parent=$(git show --pretty=raw $commit2 |
+> diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+> new file mode 100755
+> index 0000000000..df91bf54bc
+> --- /dev/null
+> +++ b/t/t2070-restore.sh
+> @@ -0,0 +1,77 @@
+> +#!/bin/sh
+> +
+> +test_description='restore basic functionality'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +	test_commit first &&
+> +	echo first-and-a-half >>first.t &&
+> +	git add first.t &&
+> +	test_commit second &&
+> +	echo one >one &&
+> +	echo two >two &&
+> +	echo untracked >untracked &&
+> +	echo ignored >ignored &&
+> +	echo /ignored >.gitignore &&
+> +	git add one two .gitignore &&
+> +	git update-ref refs/heads/one master
+> +'
+> +
 
-This line is a bit oddly indented.  This is of course not something
-you did, but it did leave me puzzled why the indentation was here
-before and if the conversion is actually correct.  To help reviewers,
-it would be nice to fix the indentation of this line in a preparatory
-patch, and clarify since when this indentation was there and that it
-is not correct.
+[snip]
 
-That is if I'm not missing something, and there is not actually a
-good reason for this to be indented, but judging from the original and
-the conversion in this commit, I don't think there is.
+> +
+> +test_expect_success 'restore a file, ignoring branch of same name' '
+> +	cat one >expected &&
+> +	echo dirty >>one &&
+> +	git restore one &&
+> +	test_cmp expected one
+> +'
+> +
 
-> -		sed -n -e "s/^parent //p" -e "/^author /q" |
-> -		sort -u) &&
-> +	git show --pretty=raw $commit2 >actual &&
-> +	parent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual | sort -u) &&
->  	test "z$commit0" = "z$parent" &&
-> -	numparent=$(git show --pretty=raw $commit2 |
-> -		sed -n -e "s/^parent //p" -e "/^author /q" |
-> -		wc -l) &&
-> +	git show --pretty=raw $commit2 >actual &&
-> +	numparent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual | wc -l) &&
->  	test $numparent = 1
->  '
->  
-> @@ -1147,7 +1145,8 @@ test_expect_success 'update-index D/F conflict' '
->  	mv path2 path0 &&
->  	mv tmp path2 &&
->  	git update-index --add --replace path2 path0/file2 &&
-> -	numpath0=$(git ls-files path0 | wc -l) &&
-> +	git ls-files path0 >actual &&
-> +	numpath0=$(wc -l actual) &&
+Branch 'one' has been created by update-ref invocation in the setup, OK.
 
-This test is actually failing now (and so is the one just below).  The
-reason is that 'wc -l <file>' outputs the number of lines followed by
-the filename, so numpath0 includes that.
+> +test_expect_success 'restore a file on worktree from another branch' '
+> +	test_when_finished git reset --hard &&
+> +	git cat-file blob first:./first.t >expected &&
+> +	git restore --source=first first.t &&
+> +	test_cmp expected first.t &&
+> +	git cat-file blob HEAD:./first.t >expected &&
+> +	git show :first.t >actual &&
+> +	test_cmp expected actual
+> +'
 
-We have a helper function that avoids exactly that,
-'test_line_count'.  See t/README or t/test-lib-functions.sh for more
-information on that function.
+Test description reads "from another branch". However "first", created by
+test_commit invocation is a tag. Maybe description should read "from another
+ref"? Same applies to other tests which utilize "first".
 
-Before submitting a patch series, please also run the test suite, or
-if you are only modifying tests such as in this case, at least the
-tests that are modified.
+> +
+> +test_expect_success 'restore a file in the index from another branch' '
+> +	test_when_finished git reset --hard &&
+> +	git cat-file blob first:./first.t >expected &&
+> +	git restore --source=first --index first.t &&
+> +	git show :first.t >actual &&
+> +	test_cmp expected actual &&
+> +	git cat-file blob HEAD:./first.t >expected &&
+> +	test_cmp expected first.t
+> +'
+> +
+> +test_expect_success 'restore a file in both the index and worktree from another branch' '
+> +	test_when_finished git reset --hard &&
+> +	git cat-file blob first:./first.t >expected &&
+> +	git restore --source=first --index --worktree first.t &&
+> +	git show :first.t >actual &&
+> +	test_cmp expected actual &&
+> +	test_cmp expected first.t
+> +'
+> +
+> +test_expect_success 'restore --index uses HEAD as source' '
+> +	test_when_finished git reset --hard &&
+> +	git cat-file blob :./first.t >expected &&
+> +	echo index-dirty >>first.t &&
+> +	git add first.t &&
+> +	git restore --index first.t &&
+> +	git cat-file blob :./first.t >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_done
 
->  	test $numpath0 = 1
->  '
->  
-> @@ -1162,12 +1161,13 @@ test_expect_success 'very long name in the index handled sanely' '
->  	>path4 &&
->  	git update-index --add path4 &&
->  	(
-> -		git ls-files -s path4 |
-> -		sed -e "s/	.*/	/" |
-> +		git ls-files -s path4 >actual &&
-> +		sed -e "s/	.*/	/" actual |
->  		tr -d "\012" &&
->  		echo "$a"
->  	) | git update-index --index-info &&
-> -	len=$(git ls-files "a*" | wc -c) &&
-> +	git ls-files "a*" >actual &&
-> +	len=$(wc -c actual) &&
->  	test $len = 4098
->  '
->  
-> diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-> index 71e63d8b50..14274f1ced 100755
-> --- a/t/t0003-attributes.sh
-> +++ b/t/t0003-attributes.sh
-> @@ -203,15 +203,18 @@ test_expect_success 'attribute test: read paths from stdin' '
->  test_expect_success 'attribute test: --all option' '
->  	grep -v unspecified <expect-all | sort >specified-all &&
->  	sed -e "s/:.*//" <expect-all | uniq >stdin-all &&
-> -	git check-attr --stdin --all <stdin-all | sort >actual &&
-> +	git check-attr --stdin --all <stdin-all >actual &&
-> +	sort -o actual actual &&
->  	test_cmp specified-all actual
->  '
->  
->  test_expect_success 'attribute test: --cached option' '
-> -	git check-attr --cached --stdin --all <stdin-all | sort >actual &&
-> +	git check-attr --cached --stdin --all <stdin-all >actual &&
-> +	sort -o actual actual &&
->  	test_must_be_empty actual &&
->  	git add .gitattributes a/.gitattributes a/b/.gitattributes &&
-> -	git check-attr --cached --stdin --all <stdin-all | sort >actual &&
-> +	git check-attr --cached --stdin --all <stdin-all >actual &&
-> +	sort -o actual actual &&
->  	test_cmp specified-all actual
->  '
->  
-> @@ -301,8 +304,8 @@ test_expect_success 'bare repository: check that --cached honors index' '
->  	(
->  		cd bare.git &&
->  		GIT_INDEX_FILE=../.git/index \
-> -		git check-attr --cached --stdin --all <../stdin-all |
-> -		sort >actual &&
-> +		git check-attr --cached --stdin --all <../stdin-all >actual &&
-> +		sort -o actual actual &&
->  		test_cmp ../specified-all actual
->  	)
->  '
-> diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
-> index 7af3fbcc7b..b4772b72f7 100755
-> --- a/t/t0022-crlf-rename.sh
-> +++ b/t/t0022-crlf-rename.sh
-> @@ -23,10 +23,10 @@ test_expect_success setup '
->  
->  test_expect_success 'diff -M' '
->  
-> -	git diff-tree -M -r --name-status HEAD^ HEAD |
-> -	sed -e "s/R[0-9]*/RNUM/" >actual &&
-> +	git diff-tree -M -r --name-status HEAD^ HEAD >actual1 &&
-> +	sed -e "s/R[0-9]*/RNUM/" actual1 >actual2 &&
 
-Nit: rather than actual1 and actual2, it might be nice to give the
-files slightly more meaningful names, maybe "output" and "normalized",
-but feel free to try and come up with something better than that.
-
->  	echo "RNUM	sample	elpmas" >expect &&
-> -	test_cmp expect actual
-> +	test_cmp expect actual2
->  
->  '
->  
-> -- 
-> 2.21.0
-> 
+--
+Best regards, Andrei R.
