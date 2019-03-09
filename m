@@ -2,248 +2,302 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60CC020248
-	for <e@80x24.org>; Sat,  9 Mar 2019 18:13:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9123020248
+	for <e@80x24.org>; Sat,  9 Mar 2019 18:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726360AbfCISNv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Mar 2019 13:13:51 -0500
-Received: from mail-vk1-f196.google.com ([209.85.221.196]:39855 "EHLO
-        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726298AbfCISNv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Mar 2019 13:13:51 -0500
-Received: by mail-vk1-f196.google.com with SMTP id i68so169877vke.6
-        for <git@vger.kernel.org>; Sat, 09 Mar 2019 10:13:50 -0800 (PST)
+        id S1726427AbfCIS0P (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Mar 2019 13:26:15 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40149 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726381AbfCIS0P (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Mar 2019 13:26:15 -0500
+Received: by mail-wm1-f68.google.com with SMTP id g20so663029wmh.5
+        for <git@vger.kernel.org>; Sat, 09 Mar 2019 10:26:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dN4EkumAEJkL8wrVcHTs1Ru3GdkOw9+IWKrezlcnED4=;
-        b=ljAvrN0+Nmh4sGuseuQwWrjWJncX8lTKJEbtFk/Vt2/X90TJIugPP4bovP1ktOnAMM
-         jNn8dBdFF56QJPgxbjthTcbX9MlAq3aifXwZUzK7LWErv5tg3fMyvp4BLOl3ZreNJvGM
-         mVeH4IlpH/uinXLQUBGm3bhLZIPbBpYQ4ct7KVhvmivpGyZy3prl3YOZWFrw5vpoznB+
-         SHdxnJgO5cQ6wqDPjC4Eb2EXvSXGSTSXtEiWDjpfJpxYRu4fpkJ4Azk0g630Ouw0IbIu
-         32Lwr8PfxvYomduZy+07RzdBvYKcl+9YT9XbpSKst2zp7vH2QFXSgOQMJsSjHF2I+yfw
-         mMXA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HJJ9aSym9wXfNJJ44WQOG4LVVFYSQw1+LAYbeqhoYIE=;
+        b=C2Thouw54Z9kZYzhQ0/zX8HNJoYsX52C3LyQnpsuejTzZueEn0rJHK1ZacO4PRgmV4
+         ABiKMHtyNyBK/Lo/0lLW8Zi3qGTgAk043ddHc0+TwXQr4vFXxbmaS0nyY/mWGvZgD9xL
+         mhYafkfWcnGd6UdZ5bbt8T6Pt0ySezIzySnBeNH+MCx/e3Gp1Q4Rf+rrEl67HokFB5Nd
+         DoZXVHKEiLnyVrj7KSoKQ47YTqpoXy8an7yeWHmcvZ7WRWWsvD3waJpjUGKXwEUMGRy6
+         odG0eDIW/YIqUYOlpBopr4sr7783rjNv0k0Pt04AH2DY9pYqNiGDn+zQOQBrLcqwfiec
+         rXXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dN4EkumAEJkL8wrVcHTs1Ru3GdkOw9+IWKrezlcnED4=;
-        b=VT/TE69tHQZHkMXccvx5Pe5iUROcWt8ienyQOyrMhXr2E+WEqFTY/1UxituEb8cuP/
-         jqwAKS2atc7i0OgJjav9HdBujLnsKhakjEd2uO/vYqg3CJL3p1Iyxct1c/x/4KhMk2uM
-         9p4sJ7VcbTJdKEz8dUT1TFhOIWT7h6QYWRfcr/01qaA7APbPkCUSfJdTrMhombch8LHy
-         sGvFah5s9nxla8i1H/NPlo0YILV8SfKZVVSFERE9N3A08Syp8m531F/zFcZgXUeLX7dk
-         2WOYLIGY2y4AqjXv9PFFLBeYr9BhTJP3XnXs5pIBOOYedV+MKJuyGC3QobS8yXhLfmD5
-         xvRw==
-X-Gm-Message-State: APjAAAWXHIYp+xluSr1LnZUPMU0YVSFfdwYoWRBhh5A+d+mKBdcBgPdM
-        9t6r4GJLKN1TrNmCEddPKOE2UdOsC8qZ/wuz1hk=
-X-Google-Smtp-Source: APXvYqy9Wvoq/cTiQEVJtHhcT//VEZ60tdZoaJOdFqaoEnKyKT6EZasvtrrb4DH2IKD5G2Ih2SOlrmzwoxxPHcqEhXE=
-X-Received: by 2002:a1f:a0d7:: with SMTP id j206mr12351103vke.37.1552155229396;
- Sat, 09 Mar 2019 10:13:49 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HJJ9aSym9wXfNJJ44WQOG4LVVFYSQw1+LAYbeqhoYIE=;
+        b=UVxOyhziJ99z814ubq5/jX/SeRGvpdu2JinqbZX02knNSEkM2BbCZ3cKEq+t87spuK
+         b7oHo3dgixDzednvlYCWpOc/iGMbAbaKcAt/BcpugBQbea5kJiQwxoX4YO8vkg0BwLIB
+         mMXbiKO8U0TESi80+8mN4Cuv/L2ZwOfSygRVBKAy3OZ3fPJCOWEvTlQgn5//uzTEfVcH
+         sntjO0RBIaE7nFMkHbz3ANbQkEekM3ckzCyakjVMagxzzVQ543FEkXp7ZbpdJPa8AqPf
+         u8Z2UbAEd7hAeEWD8w140C9I1XfnOUD3/YrfW+/AMaPMUAdfKNDQFz+k0jEn8ITKfjhj
+         lcMw==
+X-Gm-Message-State: APjAAAWI+bTtJB/J6bWkMgfMvbAUuHiqe6mO6AJMKe2gtTuleKmO/jF8
+        DuPckm7708sg3n7Hk3QKysg=
+X-Google-Smtp-Source: APXvYqxPji0d6E6UMFD/OJYE/Fnf6SFBUGzX/AUyRzAkPhIBeEpsL3vPIPFKMXZdFqIIN/IECswlJg==
+X-Received: by 2002:a05:600c:210b:: with SMTP id u11mr12611149wml.11.1552155972601;
+        Sat, 09 Mar 2019 10:26:12 -0800 (PST)
+Received: from localhost ([95.148.214.107])
+        by smtp.gmail.com with ESMTPSA id d24sm4561820wrb.47.2019.03.09.10.26.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 09 Mar 2019 10:26:11 -0800 (PST)
+Date:   Sat, 9 Mar 2019 18:26:10 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Matthew Kraai <mkraai@its.jnj.com>
+Subject: Re: [PATCH v13 18/27] stash: convert create to builtin
+Message-ID: <20190309182610.GD31533@hank.intra.tgummerer.com>
+References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet>
+ <20190225231631.30507-1-t.gummerer@gmail.com>
+ <20190225231631.30507-19-t.gummerer@gmail.com>
+ <20190307191836.GB29221@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1903081630040.41@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-3-pclouds@gmail.com>
-In-Reply-To: <20190308101655.9767-3-pclouds@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 9 Mar 2019 10:13:38 -0800
-Message-ID: <CABPp-BHwp_36Pc-xbCC0_t=uO3td1fn0KYjQ9N2esznJpRt3ig@mail.gmail.com>
-Subject: Re: [PATCH v1 02/11] restore: take tree-ish from --source option instead
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1903081630040.41@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 8, 2019 at 2:17 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <p=
-clouds@gmail.com> wrote:
->
-> This is another departure from 'git checkout' syntax, which uses -- to
-> separate ref and pathspec. The observation is restore (or "git
-> checkout ,, <pathspec>") is most often used to restore some files from
-> the index. If this is correct, we can simplify it by taking a way the
-> ref, so that we can write
->
->     git restore some-file
->
-> without worrying about some-file being a ref and whether we need to do
->
->     git restore -- some-file
->
-> for safety. If the source of the restore comes from a tree, it will be
-> in the form of an option with value, e.g.
->
->     git restore --source=3Dthis-tree some-file
->
-> This is of course longer to type than using "--". But hopefully it
-> will not be used as often, and it is clearly easier to understand.
->
-> dwim_new_local_branch is no longer set (or unset) in cmd_restore_files()
-> because it's irrelevant because we don't really care about dwim-ing.
-> With accept_ref being unset, dwim can't happen.
+On 03/08, Johannes Schindelin wrote:
+> Hi Peff,
+> 
+> On Thu, 7 Mar 2019, Jeff King wrote:
+> 
+> > On Mon, Feb 25, 2019 at 11:16:22PM +0000, Thomas Gummerer wrote:
+> > 
+> > > +static void add_pathspecs(struct argv_array *args,
+> > > +			  struct pathspec ps) {
+> > 
+> > Here and elsewhere in the series, I notice that we pass the pathspec
+> > struct by value, which is quite unusual for our codebase (and
+> > potentially confusing, if any of the callers were to mutate the pointers
+> > in the struct).
+> > 
+> > Is there any reason this shouldn't be "const struct pathspec *ps" pretty
+> > much throughout the file?
+> 
+> I am quite certain that this is merely an oversight. It totes slipped
+> by my review, for example.
 
-Nice.  :-)
+Yep, it slipped by me as well.  Here's a patch to fix it:
 
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  builtin/checkout.c | 42 ++++++++++++++++++++++++++++++++++--------
->  1 file changed, 34 insertions(+), 8 deletions(-)
->
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 11dd2ae44c..838343d6aa 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -38,7 +38,7 @@ static const char * const switch_branch_usage[] =3D {
->  };
->
->  static const char * const restore_files_usage[] =3D {
+--- >8 ---
+Subject: [PATCH 1/2] stash: pass pathspec as pointer
 
-restore_files_usage or restore_usage?
+Passing the pathspec by value is potentially confusing, as the copy is
+only a shallow copy, so save the overhead of the copy, and pass the
+pathspec struct as a pointer.
 
-> -       N_("git restore [<options>] [<branch>] -- <file>..."),
-> +       N_("git restore [<options>] [--source=3D<branch>] <file>..."),
->         NULL,
->  };
->
-> @@ -57,6 +57,7 @@ struct checkout_opts {
->         int count_checkout_paths;
->         int overlay_mode;
->         int dwim_new_local_branch;
-> +       int accept_ref;
->         int accept_pathspec;
->         int switch_branch_doing_nothing_is_ok;
->         int only_merge_on_switching_branches;
-> @@ -72,6 +73,7 @@ struct checkout_opts {
->         int branch_exists;
->         const char *prefix;
->         struct pathspec pathspec;
-> +       const char *from_treeish;
->         struct tree *source_tree;
->  };
->
-> @@ -1324,6 +1326,7 @@ static int checkout_main(int argc, const char **arg=
-v, const char *prefix,
->  {
->         struct branch_info new_branch_info;
->         int dwim_remotes_matched =3D 0;
-> +       int parseopt_flags =3D 0;
->
->         memset(&new_branch_info, 0, sizeof(new_branch_info));
->         opts->overwrite_ignore =3D 1;
-> @@ -1335,8 +1338,13 @@ static int checkout_main(int argc, const char **ar=
-gv, const char *prefix,
->
->         opts->track =3D BRANCH_TRACK_UNSPECIFIED;
->
-> -       argc =3D parse_options(argc, argv, prefix, options, usagestr,
-> -                            PARSE_OPT_KEEP_DASHDASH);
-> +       if (!opts->accept_pathspec && !opts->accept_ref)
-> +               BUG("make up your mind, you need to take _something_");
+In addition use copy_pathspec to copy the pathspec into
+rev.prune_data, so the copy is a proper deep copy, and owned by the
+revision API, as that's what the API expects.
 
-hehe.  I secretly hope that someone eventually hits that, preferably
-another git developer making some changes and not an end user, though.
+Reported-by: Jeff King <peff@peff.net>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ builtin/stash.c | 50 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-
-> +       if (opts->accept_pathspec && opts->accept_ref)
-> +               parseopt_flags =3D PARSE_OPT_KEEP_DASHDASH;
-> +
-> +       argc =3D parse_options(argc, argv, prefix, options,
-> +                            usagestr, parseopt_flags);
->
->         if (opts->show_progress < 0) {
->                 if (opts->quiet)
-> @@ -1393,7 +1401,7 @@ static int checkout_main(int argc, const char **arg=
-v, const char *prefix,
->          * including "last branch" syntax and DWIM-ery for names of
->          * remote branches, erroring out for invalid or ambiguous cases.
->          */
-> -       if (argc) {
-> +       if (argc && opts->accept_ref) {
->                 struct object_id rev;
->                 int dwim_ok =3D
->                         !opts->patch_mode &&
-> @@ -1405,6 +1413,18 @@ static int checkout_main(int argc, const char **ar=
-gv, const char *prefix,
->                                              &dwim_remotes_matched);
->                 argv +=3D n;
->                 argc -=3D n;
-> +       } else if (!opts->accept_ref && opts->from_treeish) {
-> +               struct object_id rev;
-> +
-> +               if (get_oid_mb(opts->from_treeish, &rev))
-
-Going on a slight tangent from your series: get_oid_mb really deserves
-a comment somewhere that "mb" is "merge base".  I had to spelunk
-through history to find it...
-
-> +                       die(_("could not resolve %s"), opts->from_treeish=
-);
-> +
-> +               setup_new_branch_info_and_source_tree(&new_branch_info,
-> +                                                     opts, &rev,
-> +                                                     opts->from_treeish)=
-;
-> +
-> +               if (!opts->source_tree)
-> +                       die(_("reference is not a tree: %s"), opts->from_=
-treeish);
->         }
->
->         if (argc) {
-> @@ -1488,6 +1508,7 @@ int cmd_checkout(int argc, const char **argv, const=
- char *prefix)
->         opts.dwim_new_local_branch =3D 1;
->         opts.switch_branch_doing_nothing_is_ok =3D 1;
->         opts.only_merge_on_switching_branches =3D 0;
-> +       opts.accept_ref =3D 1;
->         opts.accept_pathspec =3D 1;
->         opts.implicit_detach =3D 1;
->
-> @@ -1519,6 +1540,7 @@ int cmd_switch(int argc, const char **argv, const c=
-har *prefix)
->
->         memset(&opts, 0, sizeof(opts));
->         opts.dwim_new_local_branch =3D 0;
-> +       opts.accept_ref =3D 1;
->         opts.accept_pathspec =3D 0;
->         opts.switch_branch_doing_nothing_is_ok =3D 0;
->         opts.only_merge_on_switching_branches =3D 1;
-> @@ -1537,15 +1559,19 @@ int cmd_switch(int argc, const char **argv, const=
- char *prefix)
->  int cmd_restore(int argc, const char **argv, const char *prefix)
->  {
->         struct checkout_opts opts;
-> -       struct option *options =3D NULL;
-> +       struct option *options;
-> +       struct option restore_options[] =3D {
-> +               OPT_STRING('s', "source", &opts.from_treeish, "<tree-ish>=
-",
-> +                          N_("where the checkout from")),
-> +               OPT_END()
-> +       };
->         int ret;
->
->         memset(&opts, 0, sizeof(opts));
-> -       opts.dwim_new_local_branch =3D 1;
-> -       opts.switch_branch_doing_nothing_is_ok =3D 0;
-> +       opts.accept_ref =3D 0;
->         opts.accept_pathspec =3D 1;
->
-> -       options =3D parse_options_dup(options);
-> +       options =3D parse_options_dup(restore_options);
->         options =3D add_common_options(&opts, options);
->         options =3D add_checkout_path_options(&opts, options);
->
-> --
-> 2.21.0.rc1.337.gdf7f8d0522
->
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 1bfa24030c..6eb67c75c3 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -826,11 +826,11 @@ static int store_stash(int argc, const char **argv, const char *prefix)
+ }
+ 
+ static void add_pathspecs(struct argv_array *args,
+-			  struct pathspec ps) {
++			  const struct pathspec *ps) {
+ 	int i;
+ 
+-	for (i = 0; i < ps.nr; i++)
+-		argv_array_push(args, ps.items[i].match);
++	for (i = 0; i < ps->nr; i++)
++		argv_array_push(args, ps->items[i].match);
+ }
+ 
+ /*
+@@ -840,7 +840,7 @@ static void add_pathspecs(struct argv_array *args,
+  * = 0 if there are not any untracked files
+  * > 0 if there are untracked files
+  */
+-static int get_untracked_files(struct pathspec ps, int include_untracked,
++static int get_untracked_files(const struct pathspec *ps, int include_untracked,
+ 			       struct strbuf *untracked_files)
+ {
+ 	int i;
+@@ -853,12 +853,12 @@ static int get_untracked_files(struct pathspec ps, int include_untracked,
+ 	if (include_untracked != INCLUDE_ALL_FILES)
+ 		setup_standard_excludes(&dir);
+ 
+-	seen = xcalloc(ps.nr, 1);
++	seen = xcalloc(ps->nr, 1);
+ 
+-	max_len = fill_directory(&dir, the_repository->index, &ps);
++	max_len = fill_directory(&dir, the_repository->index, ps);
+ 	for (i = 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent = dir.entries[i];
+-		if (dir_path_match(&the_index, ent, &ps, max_len, seen)) {
++		if (dir_path_match(&the_index, ent, ps, max_len, seen)) {
+ 			found++;
+ 			strbuf_addstr(untracked_files, ent->name);
+ 			/* NUL-terminate: will be fed to update-index -z */
+@@ -881,7 +881,7 @@ static int get_untracked_files(struct pathspec ps, int include_untracked,
+  * = 0 if there are no changes.
+  * > 0 if there are changes.
+  */
+-static int check_changes_tracked_files(struct pathspec ps)
++static int check_changes_tracked_files(const struct pathspec *ps)
+ {
+ 	int result;
+ 	struct rev_info rev;
+@@ -895,7 +895,7 @@ static int check_changes_tracked_files(struct pathspec ps)
+ 		return -1;
+ 
+ 	init_revisions(&rev, NULL);
+-	rev.prune_data = ps;
++	copy_pathspec(&rev.prune_data, ps);
+ 
+ 	rev.diffopt.flags.quick = 1;
+ 	rev.diffopt.flags.ignore_submodules = 1;
+@@ -920,7 +920,7 @@ static int check_changes_tracked_files(struct pathspec ps)
+  * The function will fill `untracked_files` with the names of untracked files
+  * It will return 1 if there were any changes and 0 if there were not.
+  */
+-static int check_changes(struct pathspec ps, int include_untracked,
++static int check_changes(const struct pathspec *ps, int include_untracked,
+ 			 struct strbuf *untracked_files)
+ {
+ 	int ret = 0;
+@@ -974,7 +974,7 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
+ 	return ret;
+ }
+ 
+-static int stash_patch(struct stash_info *info, struct pathspec ps,
++static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+ 		       struct strbuf *out_patch, int quiet)
+ {
+ 	int ret = 0;
+@@ -1033,7 +1033,7 @@ static int stash_patch(struct stash_info *info, struct pathspec ps,
+ 	return ret;
+ }
+ 
+-static int stash_working_tree(struct stash_info *info, struct pathspec ps)
++static int stash_working_tree(struct stash_info *info, const struct pathspec *ps)
+ {
+ 	int ret = 0;
+ 	struct rev_info rev;
+@@ -1050,7 +1050,7 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+ 	}
+ 	set_alternate_index_output(NULL);
+ 
+-	rev.prune_data = ps;
++	copy_pathspec(&rev.prune_data, ps);
+ 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = add_diff_to_buf;
+ 	rev.diffopt.format_callback_data = &diff_output;
+@@ -1094,7 +1094,7 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+ 	return ret;
+ }
+ 
+-static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
++static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_buf,
+ 			   int include_untracked, int patch_mode,
+ 			   struct stash_info *info, struct strbuf *patch,
+ 			   int quiet)
+@@ -1226,10 +1226,10 @@ static int create_stash(int argc, const char **argv, const char *prefix)
+ 	strbuf_join_argv(&stash_msg_buf, argc - 1, ++argv, ' ');
+ 
+ 	memset(&ps, 0, sizeof(ps));
+-	if (!check_changes_tracked_files(ps))
++	if (!check_changes_tracked_files(&ps))
+ 		return 0;
+ 
+-	ret = do_create_stash(ps, &stash_msg_buf, 0, 0, &info,
++	ret = do_create_stash(&ps, &stash_msg_buf, 0, 0, &info,
+ 			      NULL, 0);
+ 	if (!ret)
+ 		printf_ln("%s", oid_to_hex(&info.w_commit));
+@@ -1238,7 +1238,7 @@ static int create_stash(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
++static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int quiet,
+ 			 int keep_index, int patch_mode, int include_untracked)
+ {
+ 	int ret = 0;
+@@ -1258,15 +1258,15 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
+ 	}
+ 
+ 	read_cache_preload(NULL);
+-	if (!include_untracked && ps.nr) {
++	if (!include_untracked && ps->nr) {
+ 		int i;
+-		char *ps_matched = xcalloc(ps.nr, 1);
++		char *ps_matched = xcalloc(ps->nr, 1);
+ 
+ 		for (i = 0; i < active_nr; i++)
+-			ce_path_match(&the_index, active_cache[i], &ps,
++			ce_path_match(&the_index, active_cache[i], ps,
+ 				      ps_matched);
+ 
+-		if (report_path_error(ps_matched, &ps, NULL)) {
++		if (report_path_error(ps_matched, ps, NULL)) {
+ 			fprintf_ln(stderr, _("Did you forget to 'git add'?"));
+ 			ret = -1;
+ 			free(ps_matched);
+@@ -1313,7 +1313,7 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
+ 			  stash_msg_buf.buf);
+ 
+ 	if (!patch_mode) {
+-		if (include_untracked && !ps.nr) {
++		if (include_untracked && !ps->nr) {
+ 			struct child_process cp = CHILD_PROCESS_INIT;
+ 
+ 			cp.git_cmd = 1;
+@@ -1327,7 +1327,7 @@ static int do_push_stash(struct pathspec ps, const char *stash_msg, int quiet,
+ 			}
+ 		}
+ 		discard_cache();
+-		if (ps.nr) {
++		if (ps->nr) {
+ 			struct child_process cp_add = CHILD_PROCESS_INIT;
+ 			struct child_process cp_diff = CHILD_PROCESS_INIT;
+ 			struct child_process cp_apply = CHILD_PROCESS_INIT;
+@@ -1467,7 +1467,7 @@ static int push_stash(int argc, const char **argv, const char *prefix)
+ 				     0);
+ 
+ 	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL, prefix, argv);
+-	return do_push_stash(ps, stash_msg, quiet, keep_index, patch_mode,
++	return do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
+ 			     include_untracked);
+ }
+ 
+@@ -1504,7 +1504,7 @@ static int save_stash(int argc, const char **argv, const char *prefix)
+ 		stash_msg = strbuf_join_argv(&stash_msg_buf, argc, argv, ' ');
+ 
+ 	memset(&ps, 0, sizeof(ps));
+-	ret = do_push_stash(ps, stash_msg, quiet, keep_index,
++	ret = do_push_stash(&ps, stash_msg, quiet, keep_index,
+ 			    patch_mode, include_untracked);
+ 
+ 	strbuf_release(&stash_msg_buf);
+-- 
+2.21.0.474.g541d9dca55
