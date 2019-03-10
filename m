@@ -2,87 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A88620248
-	for <e@80x24.org>; Sun, 10 Mar 2019 18:10:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1EC520248
+	for <e@80x24.org>; Sun, 10 Mar 2019 18:26:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726824AbfCJSKs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 14:10:48 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:36496 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726763AbfCJSKr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 14:10:47 -0400
-Received: by mail-ed1-f68.google.com with SMTP id e4so2088955edi.3
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 11:10:46 -0700 (PDT)
+        id S1726679AbfCJS0I (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 14:26:08 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43555 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725816AbfCJS0H (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 14:26:07 -0400
+Received: by mail-wr1-f68.google.com with SMTP id d17so2652784wre.10
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 11:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/td1mgA1UyvMII3MDvgv6gLOHNDyfYd9jc8Sj91jdX8=;
-        b=QVPSomUiB9Dtjf3yt7NUbqeBGtgm/hKTTFFYrOv8iVkCKdNxuYEM43Y749clUNrBvO
-         jMozdBnbF1CjnZEPSzjxjrZUAceucEV+Ensv9/aAf3/vWuhWmhy03LGTKb3CRCaPSnhY
-         SKVMWz0J4LkNtXNu/5+n2TmCedmdWkfbRbrtW/P/uNvzgrHlgN7pk1uROhnMcBnfun0w
-         2XFiA8wn2ySyexeBr+7y3Y0kh9Xmqy4NxzkqllizA9wfIS/0ARCm2ds+oD7T4h2OxRRs
-         dHMiM1jLc1h1JR4AkYAfetxqZuVEAl7VcOT2+Xgr4mmCaXoB92kHlB/oY8rh1Hg1O/u8
-         hlmw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EzT2TsFDKiW3MElOgU5GY3IedBSp2n08oVyXWDjWsAg=;
+        b=slLUPrgBH96VbANEarHN5wfGtdQyHyh0zsc98nnDKPEnP4EOaczeBTfcKZXY9ZAMR8
+         phnCTRuL09FSQ5HX8CVoc0auS2QZIMl4UqHPLFGE9m6sZOSkhh6fCQFuGySMy5xjA02K
+         cgodid90N/g/NE2q+XrzL0QuahLeFE5YcG0kwrGULNa+p5rbWAE+dMNWQh+cSetKXkhe
+         228S0RzLHG3GlNP58NO2+6qs+YN0a8bkX7bHTdRVnfPOE5eSXLfCxwzqVfxfDNts18jY
+         yJbIh5tl8UsL4FdztXaQCvt8TrvzSlOTPmQ/l99gvSOgjRI98RW9Zxp1XfA+6FkGPTRI
+         2u9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/td1mgA1UyvMII3MDvgv6gLOHNDyfYd9jc8Sj91jdX8=;
-        b=UkZ0fPIN4lGxLAJjasBklAweoDMxl1CtT1a4j7+DJCLjuhcizXruScv5NfRaRBFGrF
-         Y8GW97BlqbbE1joEOTJoTVCQ/HewK7IDDW7xf6j2gLInCdO7eRWWPqwV9l1RKYf13OFW
-         6x55ihKAFe6oiAx2A+XM6+0+fU6ASlbdevTE9IyCDw7is4CsKd0BF5XU6siODDmUlugx
-         8PqR+tc99Sj8nceowZAE3kaBfx9qdH2gb4EqH5wBaIQUls+4dlF3AKWQde2RdxiniDly
-         YjKUh6WOJd61cuTle/OOHf4BN8xCL3NQPWTnxK4DogCK9OuPulmVgGNju6jLV7YA35RL
-         ZNkw==
-X-Gm-Message-State: APjAAAXIhETPqGFiBjbvIQ9UsLN9e6HF/265pb/oeVLlrOAazRPaHOIE
-        SnFOTIjUUHx+T/A3et+FDUOqpD4x9kuSb8sxxAc=
-X-Google-Smtp-Source: APXvYqxfEX1nTxxk+bXRbt689PzmYZ2Dfejh+1w4VDKT25cnWLs2KT7ACkf2LSEDHXIwVJHbUgjQfbeVDl4xzTAPehE=
-X-Received: by 2002:a50:a535:: with SMTP id y50mr41040107edb.163.1552241445519;
- Sun, 10 Mar 2019 11:10:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190310143126.GA13588@hacker-queen>
-In-Reply-To: <20190310143126.GA13588@hacker-queen>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 10 Mar 2019 19:10:33 +0100
-Message-ID: <CAP8UFD03cjbWE1pKRj93BKxxQnNuAUPCHNxmtM8RqqfJO2nu-Q@mail.gmail.com>
-Subject: Re: [GSOC][PATCH] Fixed an issue which contained extra unnecessary code
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EzT2TsFDKiW3MElOgU5GY3IedBSp2n08oVyXWDjWsAg=;
+        b=tXNuM7OTEbZBG7Mgon+8wRdfyDC9l+R2olJ/eBjOjq1gn1XuW56WE6ezU5cm0dggcJ
+         UAOocnORyu0fBc9JwdRh5dCJw8hQqCXdB/X+JPE1BgDucWSF+uLK4H0M3/4nWZAcZ3X/
+         nFKNJj1oyeA3OTGqoegbevcjRjqu1xQ6wlxJzy5SLDoeBF2+altMIGIGoxcZ2apb6Q7G
+         X9+aeAKpXJFvtN8wvRD+Fj2gfp8MzO+m8jNKd1J0qKvIFoV4IrCjEP8CDF+YorI33eR3
+         MuJf/cdb33LbVQGTK5MYSfvSt88TBmvjmnoiz8nw2WeyfT18EbMBuk/H9ksny8aRcaIu
+         0NRg==
+X-Gm-Message-State: APjAAAVRpPoOif0PBLI5Hnm4r4rzfm+o3EgebNfiLvxD6mnDEm+vS4uV
+        NK6Cm/WZsm/ubnE9lQb+FQvuSyHV
+X-Google-Smtp-Source: APXvYqyZSxlydEO47innrR52CnQadH9icOnMNpATO1qIVAIbaZ0dGIY0jCcM3DCzRraYrBx1jUW6qQ==
+X-Received: by 2002:a5d:5111:: with SMTP id s17mr17451068wrt.183.1552242366278;
+        Sun, 10 Mar 2019 11:26:06 -0700 (PDT)
+Received: from localhost ([95.148.214.107])
+        by smtp.gmail.com with ESMTPSA id q10sm3204092wrr.75.2019.03.10.11.26.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 10 Mar 2019 11:26:05 -0700 (PDT)
+Date:   Sun, 10 Mar 2019 18:26:04 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     sushmaunnibhavi <sushmaunnibhavi425@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC][PATCH] Fixed an issue which contained extra unnecessary
+ code
+Message-ID: <20190310182604.GG31533@hank.intra.tgummerer.com>
+References: <20190310143126.GA13588@hacker-queen>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190310143126.GA13588@hacker-queen>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 10, 2019 at 4:30 PM sushmaunnibhavi
-<sushmaunnibhavi425@gmail.com> wrote:
->
+> Subject: [GSOC][PATCH] Fixed an issue which contained extra unnecessary code
+
+Commit messages (and titles) should always be in the imperative mood.
+The title in particular should be a short description of what the
+patch is doing, and should give meaningful information to people
+reading the output of 'git log --oneline'.  Also we usually prefix the
+title with the area of the code we're touching.
+
+The title above is very generic, and thus not very useful to future
+readers.  Something like
+
+    compat/regex: remove unnecessary if
+
+would give future readers a bit more context.
+
+On 03/10, sushmaunnibhavi wrote:
 > From 5a6c233c6bf0a35aca000b32b9e936a34532900a Mon Sep 17 00:00:00 2001
 > From: sushmaunnibhavi <sushmaunnibhavi@gmail.com>
 > Date: Sun, 10 Mar 2019 19:37:33 +0530
 > Subject: [GSOC][PATCH] Fixed an issue which contained extra unnecessary code
+
+The four lines above don't need to be included here, as they are
+already defined by the email headers.
+
+The one line that may be useful here is "From: sushmaunnibhavi
+<sushmaunnibhavi@gmail.com>".  That should be your full name, and
+match the name in the Signed-off-by line.  Usually people just set
+that up in the "From" header in the email, but if you are unable to
+configure your mailer like that, including a "From: Sushma Unnibhavi
+<sushmaunnibhavi425@gmail.com>" before the rest of the commit message
+also works.
+
 > Signed-off-by: Sushma Unnibhavi <sushmaunnibhavi425@gmail.com>
 > ---
 > Since '\n' and '\0' are char_len==1,it is not necessary to check if the char_len<=1.
+
+This explanation of why this is a good patch should be included in the
+commit message before your Signed-off-by.  If we want to apply this
+change (which I don't think we want for the reasons stated below), I
+think this needs a bit of a deeper analysis in the commit message, to
+convince readers this is the correct thing to do.
+
+Also please wrap commit messages at 72 characters.
+
 >  compat/regex/regexec.c | 5 -----
 >  1 file changed, 5 deletions(-)
-
-It doesn't look like the patch is formatted correctly. I think that
-the explanation line ("Since '\n' and '\0' are...") should be above
-the line that contains your "Signed-off-by: ..." and there should be a
-blank line between those two lines.
-
-Also we ask for an author name in the "From: ..." header that looks
-like "Firstname Lastname". A simple way to do that would be to make it
-match the name in your "Signed-off-by: ...".
-
+> 
 > diff --git a/compat/regex/regexec.c b/compat/regex/regexec.c
+
+This file in compat/ was directly imported from upstream gawk.  We
+generally don't patch this type of imported file, to make updates from
+upstream easier, unless there is an actual fix from upstream that
+needs to be fixed that's not going to be fixed upstream.
+
+As this change at best removes a redundant 'if' (I can't comment on the
+correctness, as I'm not familar with this code), so it is not worth
+changing this file in our codebase.
+
 > index 1b5d89fd5e..df62597531 100644
 > --- a/compat/regex/regexec.c
 > +++ b/compat/regex/regexec.c
@@ -91,43 +133,13 @@ match the name in your "Signed-off-by: ...".
 >    if (node->type == OP_PERIOD)
 >      {
 > -      if (char_len <= 1)
-> -       return 0;
+> -	return 0;
 > -      /* FIXME: I don't think this if is needed, as both '\n'
-> -        and '\0' are char_len == 1.  */
+> -	 and '\0' are char_len == 1.  */
 > -      /* '.' accepts any one character except the following two cases.  */
 >        if ((!(dfa->syntax & RE_DOT_NEWLINE) &&
->            re_string_byte_at (input, str_idx) == '\n') ||
->           ((dfa->syntax & RE_DOT_NOT_NULL) &&
-
-The code looks like:
-
- char_len = re_string_char_size_at (input, str_idx);
- if (node->type == OP_PERIOD)
-    {
-      if (char_len <= 1)
-    return 0;
-      /* FIXME: I don't think this if is needed, as both '\n'
-     and '\0' are char_len == 1.  */
-      /* '.' accepts any one character except the following two cases.  */
-      if ((!(dfa->syntax & RE_DOT_NEWLINE) &&
-       re_string_byte_at (input, str_idx) == '\n') ||
-      ((dfa->syntax & RE_DOT_NOT_NULL) &&
-       re_string_byte_at (input, str_idx) == '\0'))
-    return 0;
-      return char_len;
-    }
-
-If the byte at re_string_byte_at (input, str_idx) is indeed '\n' or
-'\0', then yeah probably char_len == 1 so the current code should
-return 0 just before the code below the FIXME comment is reached. So
-in this case the 2 checks below the FIXME comment are useless because
-they check re_string_byte_at (input, str_idx) == '\n') and
-re_string_byte_at (input, str_idx) == '\0' which cannot happen.
-
-So I would say that the right fix would be to remove those 2 checks,
-not to remove the if (char_len <= 1) check above the FIXME comment.
-
-Also note that I used "probably" when I wrote "then yeah probably
-char_len == 1", because I think it is worth checking what
-re_string_char_size_at() actually does before being too much
-confident...
+>  	   re_string_byte_at (input, str_idx) == '\n') ||
+>  	  ((dfa->syntax & RE_DOT_NOT_NULL) &&
+> -- 
+> 2.17.1
+> 
