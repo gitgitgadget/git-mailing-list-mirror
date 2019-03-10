@@ -7,65 +7,64 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46F4520248
-	for <e@80x24.org>; Sun, 10 Mar 2019 22:45:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F5E420248
+	for <e@80x24.org>; Sun, 10 Mar 2019 23:04:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726926AbfCJWps (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 18:45:48 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:43258 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726715AbfCJWpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 18:45:47 -0400
-Received: by mail-pg1-f195.google.com with SMTP id l11so2507176pgq.10
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 15:45:47 -0700 (PDT)
+        id S1726991AbfCJW5v (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 18:57:51 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:43841 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726505AbfCJW5v (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 18:57:51 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q17so2268548pfh.10
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 15:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:subject:to:from:message-id;
-        bh=JbnNzkqAaufgkkC3IWTTacQKM4qdhy1C1E3C0pdafxU=;
-        b=FMYx8az7tkgUOVhdFAzYTVkuj3SWJateF0Umy5uaxoXnO6IE0KS9+9c1O/YLZtP9qL
-         7+FT6BZVPWjary5dik7kqMQ7v3OGQarUeGxE20LPbYm3147TcS1Dz6Zjc/kWz3H16JQ0
-         YQk6tNBmsLsZEwxavg8N0/MphUWS1mA6a4cUoNrbTkUUHXX4wC6pIxuc8yiOdMbCd6D8
-         064KEl12Ynvxse5Ck3wchcl7GG+DYfb0M/IHg2GhMRstMXVjRf81rf+4Wf5n3Bvqx8f5
-         hKx+MdWrn2dKNrvTEmGleSlsAxVH8esbtL7FPTdkjN1QQ8M7E9DnXefa7ff8tT0HunnL
-         85JQ==
+         :content-transfer-encoding:subject:to:cc:from:message-id;
+        bh=v0iYUTieLEKM/UwCKc0n32n83QYMs8XFV/kOzYpkyM0=;
+        b=jwC7yN/orrEzbSL2qdiFneuqjtIJfJ05wQEn0D4kVpWc2FUAMLRwdpG/ngb+2apZy0
+         skPILpoRVZ1lbUMyoMoOitudqHEYRGtj+tAZHRjmofKv/K6kV8EvtTGItLipB2eQcobc
+         5a7TBXmNK38sRFn9mYF0+G8EuzDVhalBU3HZO1rysLtblVTqZb13bjKXG12NN2LXFB8Y
+         pVjLBSjcmN7hs79IYrmaL48FUlTL2bGiJGkS9uCdtDSARoq5WLkaFNvNLYcOKMDHyudt
+         y01NMg0MV79qxjf1105kpY2rSuOUwI//sTKdqjv0yVKDTdOirVySmnMajX7cnlIt+TTS
+         hM2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:user-agent:in-reply-to:references
-         :mime-version:content-transfer-encoding:subject:to:from:message-id;
-        bh=JbnNzkqAaufgkkC3IWTTacQKM4qdhy1C1E3C0pdafxU=;
-        b=Od/fD7q5oTJP5o6VbemMd7zda4RkbTP7KcojIIdSX0IbbJ41WqZXaA77vZhpIIi6sp
-         Ymuuccr1mbTzqlJNIyswJKDh7vpScsc6G0sXMHQhw3dneZm7149FNspGkxxy+dX0L/u9
-         leG4tMoXf9epfywl9PeNbBZviCTO7YaUfAdtzoFCgRfRJiyxUstq4UfnF/XGcUAF4eFt
-         Tf9aOCjWysT6sSWXJpvDo3D/GefDEBMy8A4GOwOxchUDVoxXZ4tW0y3jpdfnRrWfsMJk
-         KtxWXr1FU/Xil/XOc5xK9AOQvJM6Jo6+NGBn6exoDcL77m9WonWVRTIE+VJ7GK0Hga/Y
-         VT1g==
-X-Gm-Message-State: APjAAAXfxLh9bSzqM1MJeTpeqV8j9KUbho7AUkYihSj7bX7HCvM/TaNT
-        WGDh+Y9HU8oN4eRqa0wQ6M4=
-X-Google-Smtp-Source: APXvYqxUCsvs0dob5+50+GWfpTHoJppwe15nk8NbCdx4kBkzx1DsrS21eh10PYB8ppZTD9k5H+udyg==
-X-Received: by 2002:a62:834c:: with SMTP id h73mr31396243pfe.252.1552257947128;
-        Sun, 10 Mar 2019 15:45:47 -0700 (PDT)
+         :mime-version:content-transfer-encoding:subject:to:cc:from
+         :message-id;
+        bh=v0iYUTieLEKM/UwCKc0n32n83QYMs8XFV/kOzYpkyM0=;
+        b=HjqkvHzSOMWFIYr4i0d+0dYWRS2lg89l50wY0W8wTK1ZMplDt1Vr9wD20dK8ta/3XE
+         9VevNU6/AsrlfwQ0U3gD5tAXwlIYMRl/MhuMnFHrqO05mNH45zMbO0yoGDOAfTl3odo8
+         RLNBWt8o61xL+naJI4XbeBuXTSXngm2B3nJxB95TEEtgL9wsS6/KlquEc9QmfWa7Hq4Q
+         8k4Om85OvAZ8Iu5ya6+kOAZ/zhF3/JYKV4yVcoRyYyL6qPF65RBao1I65LW+hi5qyuHG
+         Cj9KCd3R6e7n91kXsM54+bWjAQuFbqaEPjGPVMSmAfIrkruuwu/Rz+eUX7+hS1GjjPGq
+         NOOQ==
+X-Gm-Message-State: APjAAAXqcUiYmmbihvbQngtlXRoI+q1Kd38U3m/1b70qzZ94vqX1fjGP
+        Ftxgu1xDdwcf6kAWVZ8s55k=
+X-Google-Smtp-Source: APXvYqxC+3eQliHs44jBIeuxReOQ8z58oZHwtDz1vpPhZQ3ErcD6z91kPi0kiZv8atCcKjn/eh2uag==
+X-Received: by 2002:a17:902:43a4:: with SMTP id j33mr937299pld.71.1552258670328;
+        Sun, 10 Mar 2019 15:57:50 -0700 (PDT)
 Received: from ?IPv6:2607:fb90:8066:1583:a2ae:f28b:247d:d87? ([2607:fb90:8066:1583:a2ae:f28b:247d:d87])
-        by smtp.gmail.com with ESMTPSA id b7sm5732124pfi.36.2019.03.10.15.45.45
+        by smtp.gmail.com with ESMTPSA id m64sm9412219pfi.149.2019.03.10.15.57.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 10 Mar 2019 15:45:45 -0700 (PDT)
-Date:   Sun, 10 Mar 2019 15:45:34 -0700
+        Sun, 10 Mar 2019 15:57:49 -0700 (PDT)
+Date:   Sun, 10 Mar 2019 15:57:45 -0700
 User-Agent: K-9 Mail for Android
-In-Reply-To: <CACsJy8BB1GAaBX=YcmNf1fLj5chc5hcvHLTwvzwJgvSWWKNFdQ@mail.gmail.com>
-References: <20190308101655.9767-1-pclouds@gmail.com> <CACsJy8BB1GAaBX=YcmNf1fLj5chc5hcvHLTwvzwJgvSWWKNFdQ@mail.gmail.com>
+In-Reply-To: <20190308095752.8574-11-pclouds@gmail.com>
+References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com> <20190308095752.8574-11-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v1 00/11] And new command "restore"
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, pclouds@gmail.com
+CC:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+        szeder.dev@gmail.com
 From:   Jacob Keller <jacob.keller@gmail.com>
-Message-ID: <6B5DF0A1-DCEB-45C2-B205-E3CF7469B7C6@gmail.com>
+Message-ID: <3A57DE38-A5A7-468B-9509-4244C285896A@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,26 +72,48 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On March 10, 2019 4:19:28 AM PDT, Duy Nguyen <pclouds@gmail=2Ecom> wrote:
->On Fri, Mar 8, 2019 at 5:17 PM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail=2Ecom>
->wrote:
->> - --index has a different meaning in git-apply=2E I don't have a good
->>   suggestion except "yeah we have two different worlds now, the old
->>   and the new one"
+On March 8, 2019 1:57:41 AM PST, "Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y" <pclouds@gmail=2Ecom> wrote:
+>"git checkout" doing too many things is a source of confusion for many
+>users (and it even bites old timers sometimes)=2E To remedy that, the
+>command will be split into two new ones: switch and
+>something-to-checkout-paths=2E The good old "git checkout" command is
+>still here and will be until all (or most of users) are sick of it=2E
 >
->I will rename --index to --staged to avoid this=2E It is already used as
->synonym for --cached in git-diff=2E I will also add --staged as synonym
->to "git rm" so that "git status" can consistently advise "git <verb>
->--staged" where verb is either restore or rm=2E
->
->Since option rename is a lot of work=2E If you think this is not a good
->move, raise it now, even if it's just "I don't like it, no reasons"=2E
+>See the new man page for the final design of switch=2E The actual
+>implementation though is still pretty much the same as "git checkout"
+>and not completely aligned with the man page=2E Following patches will
+>adjust their behavior to match the man page=2E
+>---
+> =2Egitignore                        |   1 +
+> Documentation/config/advice=2Etxt   |  13 +-
+> Documentation/config/branch=2Etxt   |   4 +-
+> Documentation/config/checkout=2Etxt |   9 +-
+> Documentation/config/diff=2Etxt     |   3 +-
+> Documentation/git-checkout=2Etxt    |   4 +
+> Documentation/git-switch=2Etxt      | 259 ++++++
 
-For what it's worth, I think this is a good rename=2E
+>+<new-branch>::
+>+	Name for the new branch=2E
+>+
+>+<start-point>::
+>+	The name of a commit at which to switch to before creating a
+>+	new branch or detach from=2E
+
+The wording here (and a few other places) feels awkward to me=2E I don't r=
+eally have a better wording but maybe:
+
+---
+The name of the commit to switch to when creating a new branch or detachin=
+g HEAD
+---
+
+The original has weird tense when using detach=2E
+
+There were a few other places like this where the wording was "or detach f=
+rom" but where the verb tense was confusing
 
 Thanks,
 Jake
-
 --=20
 Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
