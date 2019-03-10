@@ -2,84 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_LOCAL_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8374220248
-	for <e@80x24.org>; Sun, 10 Mar 2019 07:59:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4ABB20248
+	for <e@80x24.org>; Sun, 10 Mar 2019 08:08:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725851AbfCJH7F convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 10 Mar 2019 03:59:05 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:50497 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbfCJH7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 03:59:05 -0400
-Received: by mail-wm1-f65.google.com with SMTP id x7so1416237wmj.0
-        for <git@vger.kernel.org>; Sat, 09 Mar 2019 23:59:04 -0800 (PST)
+        id S1725846AbfCJIIC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 04:08:02 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:40077 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725813AbfCJIIC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 04:08:02 -0400
+Received: by mail-pg1-f193.google.com with SMTP id u9so1581023pgo.7
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 00:08:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Txbvw3ykeK0tHI3h7wW9bM1dZVlB7b9I81arU3APvWM=;
+        b=ow6bScpasW9MCC1juorxtdpUtrFiX68zHknHjfGkAUE4/J5++q3hRkTTn8lk7v8sJ1
+         X8+/6i9MvZ9LUE0h5l4IXZm7bFSOboOAsTQDjWtaVvLIMAWhe984AI9mree29NSCkqxl
+         4cOxGIBZz8Y0WjI5DCt/WILtX67MMvXLYWrvGu4RJCg+QO3BvWaehw/TQmrdpR25/Ngl
+         gSwKxvi/ygZfNz6y+Fc2opfe7Ob6Z6sab623yVF2kiAm6v3AtvK2er5hRETLnHsDfFag
+         nO1sw6p+rSoCdrPXR+kyJw+oVBWhrvUvQYG7rA2sBmdKQrbxGD51cRo7xvWJKBPHN6vu
+         RnJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=THLGca5rsPmG05hz/z/jr/vjN20bZMb91wnjhBe/prI=;
-        b=U6HrPPWPKGIixKqxpZThDkYCdneViZnMa5a7kV6BdOplgszn2isWLUSadUBDVGWjNj
-         d+iL36mOnGbs32QuywX/oxCpzlUgbfFZ4fu21jjbCfxeEeX8mIk5f6vKKUYUl5uf66r0
-         uJ3Bsp6gpwyRtvoDCxCMJ/fi/Ec3Q5J5KZ3lTO+LDhbijeQZQ+bJVScjUlS1k3eDc10B
-         j64OtoAVd/gICU4Qq3CPAcplcUbcWLpUAEcmm3DeHpfNqngcu5Lg+gAk5q/xJ6nNlbnP
-         hF79PCXVPJ+zxmySWwWBXFbgJdXqRvYXRHS8dlwXUoLxdAIVOcC7r3dXgvpY0mmJ7ZSj
-         uNDQ==
-X-Gm-Message-State: APjAAAW8gAvVRmXGTywzRnWSLlCMJnQsSP7RWy87LGpvsxt/dfdflHSq
-        HkeoE6Cf9JubPVngCh5LNnF7O4jh5fvQLqKGhVQ=
-X-Google-Smtp-Source: APXvYqxXEXyVNGHVaODszE+tD78wNDXZv1jzWCrEECBl4OgJgsIbKrTjP2JoaH+vaba5uVtiRvcKej+iuACAhTy5ghM=
-X-Received: by 2002:a1c:730d:: with SMTP id d13mr13670853wmb.37.1552204743409;
- Sat, 09 Mar 2019 23:59:03 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Txbvw3ykeK0tHI3h7wW9bM1dZVlB7b9I81arU3APvWM=;
+        b=HGmk255CjFGX8ssCG0dR82MvLtPKFhjHoqDAQHmWheIG1VrFKx3EfkgzIZ0Uz2TH66
+         tbnEZG5VzV1tGLKQkZoqgkVRR3jEM6M+VVEgulQlxj/I3AeDzY6DlGcj/Jlule1aR3mB
+         up+AW6nxXcIFC5BUWLUP44aKHOGRYmPQ6gCCHw+7t/ZnCyc4iK+Vo8Gt/hqs8D3BQ6v8
+         vJMqzSJxH6uLbuOxLmy5gENf6GMR6gNeLVXTqwALViq2TOI2J/5uoeMS0pXbgTFcc1/4
+         oGvz+0IH1+UMjDE8l8io9cT33DbuOVfearSvnyBgmak1iuR9IV2/MBF3RY9oUTx82TfD
+         MAcA==
+X-Gm-Message-State: APjAAAXb70H5IVTlQcJ0q6e1Q/qXszg6Neu8Eit86sQkEjJSNo4X9sDj
+        smNEgZMY1BzWk0oEriwut3U=
+X-Google-Smtp-Source: APXvYqyR69g+TzkA5dP0Lt4EeGmeIK1XWzXOXEbmELFdCXAZhxidJVXQtZe5UrLtE9M99o849H/bsA==
+X-Received: by 2002:a63:fd12:: with SMTP id d18mr23903551pgh.88.1552205281213;
+        Sun, 10 Mar 2019 00:08:01 -0800 (PST)
+Received: from localhost.localdomain (cloudream.m3.ntu.edu.tw. [140.112.244.5])
+        by smtp.gmail.com with ESMTPSA id x15sm3381894pfn.74.2019.03.10.00.07.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 10 Mar 2019 00:08:00 -0800 (PST)
+From:   Jonathan Chang <ttjtftx@gmail.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Jonathan Chang <ttjtftx@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: [GSoC][PATCH v2 1/5] t0000-basic: fix an indentation error
+Date:   Sun, 10 Mar 2019 16:07:39 +0800
+Message-Id: <20190310080739.63984-1-ttjtftx@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190309164508.GB31533@hank.intra.tgummerer.com>
+References: <20190309164508.GB31533@hank.intra.tgummerer.com>
 MIME-Version: 1.0
-References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-3-pclouds@gmail.com>
-In-Reply-To: <20190308101655.9767-3-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 10 Mar 2019 03:58:54 -0400
-Message-ID: <CAPig+cTdE+mTtvExHm1Fm1SU=YkHai-d6BW6jJ9SGOWS3eZZPw@mail.gmail.com>
-Subject: Re: [PATCH v1 02/11] restore: take tree-ish from --source option instead
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 8, 2019 at 5:17 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> This is another departure from 'git checkout' syntax, which uses -- to
-> separate ref and pathspec. The observation is restore (or "git
-> checkout ,, <pathspec>") is most often used to restore some files from
+Hi,
 
-What is the ",," thing?
+Thanks for the reviews.
 
-> the index. If this is correct, we can simplify it by taking a way the
+Here are the changes in the second version:
+	- bug fixes
+	- add preparatory patch
+	- seperate different files to different patch
+	- change to use test_line_count in a seperate patch
 
-s/a way/away/
+Also I found that there is no such function as test_char_count, 
+is it worthwile to add such function? Here are some stat:
 
-> ref, so that we can write
->
->     git restore some-file
->
-> without worrying about some-file being a ref and whether we need to do
->
->     git restore -- some-file
->
-> for safety. If the source of the restore comes from a tree, it will be
-> in the form of an option with value, e.g.
->
->     git restore --source=this-tree some-file
->
-> This is of course longer to type than using "--". But hopefully it
-> will not be used as often, and it is clearly easier to understand.
->
-> dwim_new_local_branch is no longer set (or unset) in cmd_restore_files()
-> because it's irrelevant because we don't really care about dwim-ing.
-> With accept_ref being unset, dwim can't happen.
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+`git grep 'test_line_count' | wc -l` = 626
+`git grep 'wc -l' | wc -l` = 294
+`git grep 'wc -c' | wc -l` = 68
+
+-- >8 --
+
+This is a preparatory step prior to removing the pipes after git
+commands, which discards git's exit code and may mask a crash.
+
+Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
+
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index b6566003dd..53821f5817 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -1132,7 +1132,7 @@ test_expect_success 'git commit-tree records the correct parent in a commit' '
+ 
+ test_expect_success 'git commit-tree omits duplicated parent in a commit' '
+ 	commit2=$(echo NO | git commit-tree $P -p $commit0 -p $commit0) &&
+-	     parent=$(git show --pretty=raw $commit2 |
++	parent=$(git show --pretty=raw $commit2 |
+ 		sed -n -e "s/^parent //p" -e "/^author /q" |
+ 		sort -u) &&
+ 	test "z$commit0" = "z$parent" &&
+-- 
+2.21.0
+
