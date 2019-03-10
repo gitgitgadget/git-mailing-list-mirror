@@ -7,87 +7,131 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4BD120248
-	for <e@80x24.org>; Sun, 10 Mar 2019 06:07:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B2F920248
+	for <e@80x24.org>; Sun, 10 Mar 2019 06:19:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725849AbfCJGFs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 01:05:48 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:35622 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725765AbfCJGFs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 01:05:48 -0500
-Received: by mail-ed1-f68.google.com with SMTP id g19so1297642edp.2
-        for <git@vger.kernel.org>; Sat, 09 Mar 2019 22:05:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IdVTlTssOm4A5twJf2kJm0gKg670up9/P5GXqIqLpes=;
-        b=F1Ri1YGzFjicLaVgw4qqV/kmdYzoPEPd45c+UcStJZYpVMFDA45lnUgiNZGasGwP4y
-         PtRMeLYIV9mkOw2hcXf6j6ihdsNSOTNHey1EU37cJp8FoFTnSzhC1uZkcACt6O7VRMIa
-         14qjquJtnmtuwk3wYRvH5iWUNVpAPpH0gSQ3nj87c02x0kY4IU5EcmyyOVEb7/qiRGOv
-         puaxa7hzHcXysXwHj8degAzmEwzaONpltXX9mgA/jXSW38kMcRiKrHliWnRbKu4N8QtJ
-         /qq0EChR4N09zGK/TZ0fDeAp7wDz5pzWOmg1QZEsMFcnZCEbZaM9XGdTNa1hVgPPVUac
-         kvGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IdVTlTssOm4A5twJf2kJm0gKg670up9/P5GXqIqLpes=;
-        b=nm6Esivnq4gkVbcxZqQMKxy3EW3xD8l9cfbRza8OuehvS8ZpCcDGQDHU7y+2OgVcrB
-         EwQgAHusNrHUhfAuIzjJ25+I/id21snB/PkpqSnahUCqS/mjqQqG+QLtBfex/SUffMIv
-         GrhmUWaP7jkt0hFVTjNRW3kIgAU+sgPBaZeyctwDoUzHPFKk/GMOmJqJ0W6YgPB+65Jd
-         hP2p5L56bfcz9a9qyhFa3qeayvb8J5hLfDRf2zE9E+eLXC5EO9jPaWXlPu/u6dmyDpkJ
-         Ugv6ZYlwiIdgLuz94tIcwDRQRlVFeTmPaUrt2Ph9omlrDE2zpm/rMhRfp9p5tPLBWI+h
-         fPww==
-X-Gm-Message-State: APjAAAVgx/xc2Peszj7Q7kHJL6oDjVtStcg8BVvuBoIrcJ/39r1uCGn3
-        8+vjsstYyUFS9ouT0aWxDjg+yZewdsVb7ykQ5P4=
-X-Google-Smtp-Source: APXvYqw/TCc3ZpKoBxT+ch1iETtmYgpwryoHlVzNmUUcXIbCd02DpnAinQk6e8VLX0jMmSJ64rsDQ3xcIUuGROc8TcE=
-X-Received: by 2002:aa7:c554:: with SMTP id s20mr3385592edr.131.1552197946603;
- Sat, 09 Mar 2019 22:05:46 -0800 (PST)
+        id S1725846AbfCJGTS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 01:19:18 -0500
+Received: from mout.web.de ([212.227.15.14]:57979 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725777AbfCJGTS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 01:19:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1552198756;
+        bh=n0P9+owwCAkd0BpgAhtKGxJoRT2mRY5skMeglCz7Ezs=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=kFen7B8M4mJDYiRdOn9rJpse09xP2EXFVGlO5nbRtTmq17uJB3gnjf3J2tly0VUgD
+         /fFi+6sQ3Y8Vij9ufErbpTH5BPLBlemoDra0p3ZvbaBIZcS4rgHAO0k8r6K1PTcoB0
+         RRFdR2BZac/RPTXChwzAMhNyaleoN3wicTJMBxZA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost.localdomain ([195.198.252.176]) by smtp.web.de
+ (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0MGifp-1hGKCD3Jvl-00Daq9; Sun, 10 Mar 2019 07:19:16 +0100
+From:   tboegi@web.de
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH/RFC v1 1/1] convert.c: Escape sequences only for a tty in trace_encoding()
+Date:   Sun, 10 Mar 2019 07:19:14 +0100
+Message-Id: <20190310061914.24554-1-tboegi@web.de>
+X-Mailer: git-send-email 2.21.0.135.g6e0cc67761
 MIME-Version: 1.0
-References: <20190309154555.33407-1-ttjtftx@gmail.com>
-In-Reply-To: <20190309154555.33407-1-ttjtftx@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 10 Mar 2019 07:05:34 +0100
-Message-ID: <CAP8UFD26Zxt1FvwAajV48eBbhPv_q5oSLTekWxApcNpg=xRn3Q@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] tests: avoid using pipes
-To:     Jonathan Chang <ttjtftx@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:OS7+rBFu4q0g2xmyunE5Huw9bpTaWVP9jbLlb3k2gFxD4Yv2EOk
+ J9wYojBxufoMyFv3NLa36AzYGt3ILreKDM4xTL+9m4U7JVxt1eQ+GrBNR6x6YKNWXv4rqar
+ xF46VQiJynYyfOaupyb+ua0B5VMpll6L6sqJOMBmH7v9mrAbDkIi+2JNGn/3nyGDvFFAcXf
+ 8+GpDkshqLm9uVR0TPlfw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:i0uLT8KLX2Q=:X3P519S9tmYhBxZmpPvL/A
+ QyeJrKyKH+avaXTOecbjl4rgge4E8Xzf1ffalFDA/w4NiHeStEdgvzTjFD7O9p5p3Ct+lXFZL
+ mMr++7CnQNLEEY94Udvf2kYttW5F56NhNiyDLLqpAtfZl0WAxPa97+10F1VC9VGpgg7/Acbs0
+ 6MpMOPErTJnBe0YKSdSM/fZvv6wSHM4Mqky1+3Im9BhyY0JUxWUdi3PBMEqh9IAW2K16dVCA1
+ yHv+NvMvxl+IK6YFhD30uE+YtFUvY6wJBU55tUam1rP0NhQO9NE5HA9Gw/djzeXQkVPVbAxmS
+ PdTS+rOwFIs8Kc5sZCWdhOvxSszHIu1NxB8n5wuWIl+Kl3yWZ5cXyx/suPM1P11N1k1JvydoL
+ M7Pdk7zdNBYA/AegWy92KG4a1FMT4UcDA+Z98ZeUVKObvaZyh2k5v3dQyPdKazFaP88kLvIDm
+ VWwpmAM3mBpCoWqQ1BLfcpiFwPF+s2AqBnGs5jLLozHpnd/pJ6bTUJoRbQoUT1YzTISMowQTy
+ U4C9K3UWzpggK35TwPrsWB16q63Usck5puD3Cf7iJqQlZNDwGxHmb10ZELhrWo9weoDler38t
+ 52LU5dYSvXeT8n+qEGm7VJxRYdrqzluNbBjsZUSiSMdh6Ee+SuZSBzDQ0GRFtpROgJgYa6GMS
+ u2hOihMf3dcKd2R07MaZ5Ukc0RteafXjTKYrYGEwbVw7y0S/W+ajY59mpVcuDhxzhnVwMaVTF
+ t7F5NRd9cC6nnG+ecv7ZEYRFuFLpv+LCYhRLG9ZS4a3tCNGPB4vbt0TRCTLFJCKJfBPyDJqHn
+ Yqg4KE3NeLYAR9FTPhYkMDhwUIBMv4cLAwKf7PwgYtcS5GC8EoPJgO33Zo/hQUUr/2P4JfGx7
+ woXsORmA0kxv0nyekJLyFiXTKxNktvgNqb0coab/bVIy9+15OLXiFHqzCt/VK5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 9, 2019 at 4:50 PM Jonathan Chang <ttjtftx@gmail.com> wrote:
->
-> This is my attempt for this year's GSoC microproject.
+From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-Thanks for being interested in this year's GSoC and doing a microproject.
+The content of a buffer can be dumped using trace_encoding()
+before and after the encoding is converted.
+The current function trace_encoding() in convert.c tries to
+make the output easier to read:
+The byte position and the character itself are dimmed, allowing
+the eye to focus on the hex values in the byte stream.
 
-> I copied the commit message of the commit[1] mentioned in the microproject
-> page[2]. Is this OK?
->
-> Here is a summary of what I did:
->         - simple substitution as in c6f44e1da5[1].
+ANSI escape sequences are used to "dim" the display temporally,
+and to restore the normal brightness.
 
-If you take a look at c6f44e1da5 ("t9813: avoid using pipes",
-2017-01-04) you can see the following:
+When stdout is re-directed into a file, those sequences are not
+working as expected (but shown in the editor) which is disturbing.
+rather then helpful.
 
-    - it changes only one test file: t9813-git-p4-preserve-users.sh
-    - its title starts with "t9813: "
+Disable them, if stdout is not a tty.
 
-It would have been nice if you did the same in your patch (that is
-only change one test file and start the patch title with the test file
-number).
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+=2D--
+ I am temped to remove the "dim" functionality all together,
+ or to remove the printout of the values which are now dimmed,
+ what do others think ?
 
-On the microproject page, we say:
+convert.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-"Students: Please attempt only ONE microproject. We want quality, not quantity!"
+diff --git a/convert.c b/convert.c
+index 5d0307fc10..70e58f1413 100644
+=2D-- a/convert.c
++++ b/convert.c
+@@ -42,6 +42,9 @@ struct text_stat {
+ 	unsigned printable, nonprintable;
+ };
 
-And to other students working on a microproject, we also ask them to
-focus on only one test file when they make those kinds of changes.
++static const char *terminal_half_bright;
++static const char *terminal_reset_normal;
++
+ static void gather_stats(const char *buf, unsigned long size, struct text=
+_stat *stats)
+ {
+ 	unsigned long i;
+@@ -330,14 +333,23 @@ static void trace_encoding(const char *context, cons=
+t char *path,
+ 	static struct trace_key coe =3D TRACE_KEY_INIT(WORKING_TREE_ENCODING);
+ 	struct strbuf trace =3D STRBUF_INIT;
+ 	int i;
+-
++	if (!terminal_half_bright || !terminal_reset_normal) {
++		if (isatty(1)) {
++			terminal_half_bright  =3D "\033[2m";
++			terminal_reset_normal =3D "\033[0m";
++		} else {
++			terminal_half_bright =3D "";
++			terminal_reset_normal =3D "";
++		}
++	}
+ 	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding=
+);
+ 	for (i =3D 0; i < len && buf; ++i) {
++		char c =3D buf[i] > 32 && buf[i] < 127 ? buf[i] : ' ';
+ 		strbuf_addf(
+-			&trace, "| \033[2m%2i:\033[0m %2x \033[2m%c\033[0m%c",
+-			i,
++			&trace, "| %s%2i:%s %2x %s%c%s%c",
++			terminal_half_bright, i, terminal_reset_normal,
+ 			(unsigned char) buf[i],
+-			(buf[i] > 32 && buf[i] < 127 ? buf[i] : ' '),
++			terminal_half_bright, c, terminal_reset_normal,
+ 			((i+1) % 8 && (i+1) < len ? ' ' : '\n')
+ 		);
+ 	}
+=2D-
+2.21.0.135.g6e0cc67761
 
-Best,
-Christian.
