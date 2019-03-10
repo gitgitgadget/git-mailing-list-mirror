@@ -2,135 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CBBD20248
-	for <e@80x24.org>; Sun, 10 Mar 2019 17:59:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A88620248
+	for <e@80x24.org>; Sun, 10 Mar 2019 18:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726784AbfCJR73 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 13:59:29 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:32812 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726683AbfCJR73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 13:59:29 -0400
-Received: by mail-wr1-f66.google.com with SMTP id i8so2647714wrm.0
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 10:59:27 -0700 (PDT)
+        id S1726824AbfCJSKs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 14:10:48 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:36496 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726763AbfCJSKr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 14:10:47 -0400
+Received: by mail-ed1-f68.google.com with SMTP id e4so2088955edi.3
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 11:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nut01jsiM8sNTQuPjUE2IPwqRdRbyrlTuE0FsxTAzJE=;
-        b=hIROgo0bahGtro/3GG9h+slHiOTGxGoamV8hYmDsqRNUob2UGwZ2Qa3gvJu5MRGPZs
-         knHDN32G8Est1xe3Z916H7X9iPRcwq4YeweLfEIPyTJN6fyQ5z/ma3TTbl6z+xAlLo+i
-         J82ed2PnLakRuZRbiX6dvhO1gd60IK21acUVwvYwCGJe29fcSOpaouG8i9caG0Xrovve
-         OnmQlHhrQDKEm7oOhaFE7XI89imgGyyIT7htBQSU1DgOguZhhw4e5hsxUc09dYQjGbM2
-         oo5bSzTADCB1c7pNp0swEK6UxNppiSaKFpDPeqCtZTd4h2ayb3eHjJL2vDaWcrk3w5lr
-         EhZQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/td1mgA1UyvMII3MDvgv6gLOHNDyfYd9jc8Sj91jdX8=;
+        b=QVPSomUiB9Dtjf3yt7NUbqeBGtgm/hKTTFFYrOv8iVkCKdNxuYEM43Y749clUNrBvO
+         jMozdBnbF1CjnZEPSzjxjrZUAceucEV+Ensv9/aAf3/vWuhWmhy03LGTKb3CRCaPSnhY
+         SKVMWz0J4LkNtXNu/5+n2TmCedmdWkfbRbrtW/P/uNvzgrHlgN7pk1uROhnMcBnfun0w
+         2XFiA8wn2ySyexeBr+7y3Y0kh9Xmqy4NxzkqllizA9wfIS/0ARCm2ds+oD7T4h2OxRRs
+         dHMiM1jLc1h1JR4AkYAfetxqZuVEAl7VcOT2+Xgr4mmCaXoB92kHlB/oY8rh1Hg1O/u8
+         hlmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nut01jsiM8sNTQuPjUE2IPwqRdRbyrlTuE0FsxTAzJE=;
-        b=ehJw07KtfGoxVdpBh2rxxbCCXQevPV/aKqJZT4WDPqIWl6HmqRo/g11swPA0okTm4r
-         2D19MapjHDmn7yhWv+iDXJmKLSCSrEEV44qvoJrknlYBd5WgFJq3jWjQRdJTWo4x/5ae
-         UqiwxVcRIEP9FfEV0hB3TgLT9cC8CwjNIhvJniURP1ODKAefszxWTxx3PCQoT6Ej6AmO
-         PCE5My44vcPlxHHioZpEBXw5NZi3g5LJ743KuZ18ywjIIPhZG94PDV3EaVJi12fIFN+G
-         vYxFyabtQNR2L6d3/3FhKh1fFig/xVO6zkRHoCyQT1rVweBO56yH5ibfy/ettyVH4CfJ
-         k4HQ==
-X-Gm-Message-State: APjAAAW1zrXtZF2O5vCC1+J+7glVFb0Ihfyll0EewpbnT9/WDxdGd3Fd
-        FTsLcZl51zMiO6QAX5bsNNM=
-X-Google-Smtp-Source: APXvYqwavROrP8OkZH1r77FFQdFLsGf1PZ3Fj8/rWOO9bfycFj06edn0IDaxh7QbJhxOPIx5CIvwpA==
-X-Received: by 2002:adf:a2cc:: with SMTP id t12mr17877465wra.253.1552240767081;
-        Sun, 10 Mar 2019 10:59:27 -0700 (PDT)
-Received: from localhost ([95.148.214.107])
-        by smtp.gmail.com with ESMTPSA id h10sm26267206wmf.2.2019.03.10.10.59.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 10 Mar 2019 10:59:25 -0700 (PDT)
-Date:   Sun, 10 Mar 2019 17:59:24 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Jonathan Chang <ttjtftx@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [GSoC][PATCH v2 1/5] t0000-basic: fix an indentation error
-Message-ID: <20190310175924.GF31533@hank.intra.tgummerer.com>
-References: <20190309164508.GB31533@hank.intra.tgummerer.com>
- <20190310080739.63984-1-ttjtftx@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/td1mgA1UyvMII3MDvgv6gLOHNDyfYd9jc8Sj91jdX8=;
+        b=UkZ0fPIN4lGxLAJjasBklAweoDMxl1CtT1a4j7+DJCLjuhcizXruScv5NfRaRBFGrF
+         Y8GW97BlqbbE1joEOTJoTVCQ/HewK7IDDW7xf6j2gLInCdO7eRWWPqwV9l1RKYf13OFW
+         6x55ihKAFe6oiAx2A+XM6+0+fU6ASlbdevTE9IyCDw7is4CsKd0BF5XU6siODDmUlugx
+         8PqR+tc99Sj8nceowZAE3kaBfx9qdH2gb4EqH5wBaIQUls+4dlF3AKWQde2RdxiniDly
+         YjKUh6WOJd61cuTle/OOHf4BN8xCL3NQPWTnxK4DogCK9OuPulmVgGNju6jLV7YA35RL
+         ZNkw==
+X-Gm-Message-State: APjAAAXIhETPqGFiBjbvIQ9UsLN9e6HF/265pb/oeVLlrOAazRPaHOIE
+        SnFOTIjUUHx+T/A3et+FDUOqpD4x9kuSb8sxxAc=
+X-Google-Smtp-Source: APXvYqxfEX1nTxxk+bXRbt689PzmYZ2Dfejh+1w4VDKT25cnWLs2KT7ACkf2LSEDHXIwVJHbUgjQfbeVDl4xzTAPehE=
+X-Received: by 2002:a50:a535:: with SMTP id y50mr41040107edb.163.1552241445519;
+ Sun, 10 Mar 2019 11:10:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190310080739.63984-1-ttjtftx@gmail.com>
-User-Agent: Mutt/1.11.2 (2019-01-07)
+References: <20190310143126.GA13588@hacker-queen>
+In-Reply-To: <20190310143126.GA13588@hacker-queen>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 10 Mar 2019 19:10:33 +0100
+Message-ID: <CAP8UFD03cjbWE1pKRj93BKxxQnNuAUPCHNxmtM8RqqfJO2nu-Q@mail.gmail.com>
+Subject: Re: [GSOC][PATCH] Fixed an issue which contained extra unnecessary code
+To:     sushmaunnibhavi <sushmaunnibhavi425@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/10, Jonathan Chang wrote:
-> Hi,
-> 
-> Thanks for the reviews.
-> 
-> Here are the changes in the second version:
-> 	- bug fixes
-> 	- add preparatory patch
-> 	- seperate different files to different patch
-> 	- change to use test_line_count in a seperate patch
-> 
-> Also I found that there is no such function as test_char_count, 
-> is it worthwile to add such function? Here are some stat:
-> 
-> `git grep 'test_line_count' | wc -l` = 626
-> `git grep 'wc -l' | wc -l` = 294
-> `git grep 'wc -c' | wc -l` = 68
-
-I do think it would be helpful to introduce that helper, especially if
-it is useful in this patch series.  There seem to be enough other
-places where it can be useful to make it worth adding the helper.
-
-> -- >8 --
-> 
-> This is a preparatory step prior to removing the pipes after git
-> commands, which discards git's exit code and may mask a crash.
-
-The commit message should also describe why we need this preparatory
-step. Maybe something like:
-
-      To reduce the noise in when refactoring this pipeline in a
-      subsequent commit fix the indentation.  This has been wrong
-      since the refactoring done in 1b5b2b641a ("t0000: modernise
-      style", 2012-03-02), but carries no meaning.
-
-> Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
+On Sun, Mar 10, 2019 at 4:30 PM sushmaunnibhavi
+<sushmaunnibhavi425@gmail.com> wrote:
 >
+> From 5a6c233c6bf0a35aca000b32b9e936a34532900a Mon Sep 17 00:00:00 2001
+> From: sushmaunnibhavi <sushmaunnibhavi@gmail.com>
+> Date: Sun, 10 Mar 2019 19:37:33 +0530
+> Subject: [GSOC][PATCH] Fixed an issue which contained extra unnecessary code
+> Signed-off-by: Sushma Unnibhavi <sushmaunnibhavi425@gmail.com>
+> ---
+> Since '\n' and '\0' are char_len==1,it is not necessary to check if the char_len<=1.
+>  compat/regex/regexec.c | 5 -----
+>  1 file changed, 5 deletions(-)
 
-Out of curiosity, how did you create the patch?  'git format-patch'
-would add a '---' line followed by the diffstat, where you would
-usually put the commentary that you put before the scissors line.  It
-seems like 'git am' still handles this fine, which I didn't know, just
-something I noticed because I'm used to the other format.
+It doesn't look like the patch is formatted correctly. I think that
+the explanation line ("Since '\n' and '\0' are...") should be above
+the line that contains your "Signed-off-by: ..." and there should be a
+blank line between those two lines.
 
-Since this patch series is now 5 patches, that commentary should go
-into a cover letter (see the --cover-letter option in format-patch),
-so the reviewers can read that first, and read the patches with that
-in mind, focusing on the patch only, and not additional commentary
-that applies to the whole series when reading the patch.
+Also we ask for an author name in the "From: ..." header that looks
+like "Firstname Lastname". A simple way to do that would be to make it
+match the name in your "Signed-off-by: ...".
 
-> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> index b6566003dd..53821f5817 100755
-> --- a/t/t0000-basic.sh
-> +++ b/t/t0000-basic.sh
-> @@ -1132,7 +1132,7 @@ test_expect_success 'git commit-tree records the correct parent in a commit' '
->  
->  test_expect_success 'git commit-tree omits duplicated parent in a commit' '
->  	commit2=$(echo NO | git commit-tree $P -p $commit0 -p $commit0) &&
-> -	     parent=$(git show --pretty=raw $commit2 |
-> +	parent=$(git show --pretty=raw $commit2 |
->  		sed -n -e "s/^parent //p" -e "/^author /q" |
->  		sort -u) &&
->  	test "z$commit0" = "z$parent" &&
-> -- 
-> 2.21.0
-> 
+> diff --git a/compat/regex/regexec.c b/compat/regex/regexec.c
+> index 1b5d89fd5e..df62597531 100644
+> --- a/compat/regex/regexec.c
+> +++ b/compat/regex/regexec.c
+> @@ -3799,11 +3799,6 @@ check_node_accept_bytes (const re_dfa_t *dfa, int node_idx,
+>    char_len = re_string_char_size_at (input, str_idx);
+>    if (node->type == OP_PERIOD)
+>      {
+> -      if (char_len <= 1)
+> -       return 0;
+> -      /* FIXME: I don't think this if is needed, as both '\n'
+> -        and '\0' are char_len == 1.  */
+> -      /* '.' accepts any one character except the following two cases.  */
+>        if ((!(dfa->syntax & RE_DOT_NEWLINE) &&
+>            re_string_byte_at (input, str_idx) == '\n') ||
+>           ((dfa->syntax & RE_DOT_NOT_NULL) &&
+
+The code looks like:
+
+ char_len = re_string_char_size_at (input, str_idx);
+ if (node->type == OP_PERIOD)
+    {
+      if (char_len <= 1)
+    return 0;
+      /* FIXME: I don't think this if is needed, as both '\n'
+     and '\0' are char_len == 1.  */
+      /* '.' accepts any one character except the following two cases.  */
+      if ((!(dfa->syntax & RE_DOT_NEWLINE) &&
+       re_string_byte_at (input, str_idx) == '\n') ||
+      ((dfa->syntax & RE_DOT_NOT_NULL) &&
+       re_string_byte_at (input, str_idx) == '\0'))
+    return 0;
+      return char_len;
+    }
+
+If the byte at re_string_byte_at (input, str_idx) is indeed '\n' or
+'\0', then yeah probably char_len == 1 so the current code should
+return 0 just before the code below the FIXME comment is reached. So
+in this case the 2 checks below the FIXME comment are useless because
+they check re_string_byte_at (input, str_idx) == '\n') and
+re_string_byte_at (input, str_idx) == '\0' which cannot happen.
+
+So I would say that the right fix would be to remove those 2 checks,
+not to remove the if (char_len <= 1) check above the FIXME comment.
+
+Also note that I used "probably" when I wrote "then yeah probably
+char_len == 1", because I think it is worth checking what
+re_string_char_size_at() actually does before being too much
+confident...
