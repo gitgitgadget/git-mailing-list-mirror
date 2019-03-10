@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ECD220248
-	for <e@80x24.org>; Sun, 10 Mar 2019 08:10:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D0E920248
+	for <e@80x24.org>; Sun, 10 Mar 2019 08:11:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726280AbfCJIKd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 04:10:33 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:42284 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725813AbfCJIKd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 04:10:33 -0400
-Received: by mail-pg1-f193.google.com with SMTP id b2so1581423pgl.9
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 00:10:32 -0800 (PST)
+        id S1726070AbfCJILS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 04:11:18 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:43902 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725798AbfCJILR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 04:11:17 -0400
+Received: by mail-pf1-f193.google.com with SMTP id q17so1367188pfh.10
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 00:11:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=P+eBoSJ9ARcozua0Se4O0zPcu4GM6E4K7QblL9zOcXw=;
-        b=YmRqHjQc57gCHd+YDZlazS/hd+rrEMa5Ov1cMUxqtlv6ElzkCLIJV8MqdlnyIRJ9wJ
-         Dk1MsRomgYZfcYwz0NejXXk1W4emxs3Heg6G0Ubd1rJUSS8wB4HshL5raMIzd0gvStPg
-         voG+IMpYDXYiigPOT/HS3p/d5T96LGn9lo96wSyGu2DDj6d3t2uSGL3WOy1FFj32AYcU
-         +wnWQeeMTj7U48Mb6mr/KR3TDe3zS9ZIKXxHin8IN29SrJuqORdE7tK3zi4cL2C0jcMM
-         hpgxIC6+hnETXav4p55+86uWI+8SebTuhrvtxYzwS+gRWfyL2LsPs9Re4Z7uX9KjaM57
-         ahcQ==
+        bh=1FigyPNfBPBf2qJH1GufmnClZiLmmEbvSLICtIgnTfY=;
+        b=Ob6QsAXn1dt2SZ3vn2LRMMNIbve8e2MDUBAM6fNS0A3IBzBBGD01b4V3PRyrYgBI+J
+         0vc7At8P24tUIQs/F5p+vxDGo1XNtqSeDJtPwLXqp7JStJPZl/ijQ0oYQIUmDCisOt9C
+         bWWEbMQ2talwWn78LHXRKVRBXSOr06hhq3R7BEaNRRo5yUsQDWsVqAZCOIR2QHGfIKFu
+         e0TcYwErioB04SxDKyzoVBRmghs2qmG7f9AqjXN0ocGhPh8anvRNqJYg9A9aRhUG+cuC
+         nd4+fWCTimAE8XfeWCbgrzuCRSJMva3A1DHse4Ruj/ZYYBA0EuZDTzzYKYmrejiS3jxW
+         bnLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=P+eBoSJ9ARcozua0Se4O0zPcu4GM6E4K7QblL9zOcXw=;
-        b=fLiHapRnNlF8uaV6oJ2vbr/w2cfJOUD3aR1ad39kK/GnZwOBw3SQPMDGSxtHBEra+7
-         hhupEYVfsWX0Q/xPquy916vjMeUiOgckkV4rFwDL9ZThbJRXZvBztw5vDn76HzuudtKd
-         qiDKLYVBlD1pfxGQ55WlMu8I/07e+RD+erOLYo0CPG9ApOflTbdS6z23YsqIJSc8Nz6s
-         dxT5jcsOb8Q8+skQVnPSml3qasF/hIULNw6I1t06AdQGQ3WFp2Lnq61LcFfoWgBOMAeW
-         75YTxSjXn+gGUHlIu4PqkyL6LgLQ/OXYHByE5CvSxtWgBbSwvqiLyyHoCxOfTqG2jyTK
-         9HGA==
-X-Gm-Message-State: APjAAAVkx1SWRs56Y6nDKiwzqRoPh56NZsi+CmzsjLUMRv6ny/3F9cN8
-        6xz4AbdhkkV9NlReFVhDUoU=
-X-Google-Smtp-Source: APXvYqzI95awRD0moK+qE20lE34Z7FZ59p+fWOa+sM84WSOCTkRpVWLSwBymCLINigC7pMncwCXpXQ==
-X-Received: by 2002:a65:614a:: with SMTP id o10mr24700066pgv.51.1552205432543;
-        Sun, 10 Mar 2019 00:10:32 -0800 (PST)
+        bh=1FigyPNfBPBf2qJH1GufmnClZiLmmEbvSLICtIgnTfY=;
+        b=uXcuV39k2FhdO7G0sk4XW/aaPYb8yai+uizaNayLzFHIndrLmY6LlCQIiD22JCFFt4
+         O7DGQE9QNVxJJ+UsteIoAdcxmnV4Bg44uresGgaNtQWIXwRQpT67FUK/v2MzaXR/fBkV
+         gOxg58Zn09zOyAVKSSMK7cfpNfllIJpwiKRGtt7E1YJ+BcDsbWxe6v5G4kqKkM1nkChD
+         Sw494+Mo0Cpimh9czkbFkhcCYRs4DCt5EL7ChAvT70UyqX/Pj3KBxPLu8u0ygrFE+mjA
+         YkHDzDZ0efnlVlEprej4eXQkCuXdqGgyjdrniqUH/WWKdMNWsFo9FoY26nbo6GbvnxTk
+         m1vQ==
+X-Gm-Message-State: APjAAAW8gkPklYIFSMGSrkkOl+K2Zcrbobd47XC6KEviAtrmuwrWd55V
+        Ey7EZVGxJ/Ljm3qWasZHbTg=
+X-Google-Smtp-Source: APXvYqwu+4JtI1WcWBWBoQA55K38dJZrRWZ7RE0nCv6geDrb7AMcH8F0IsD180vxsK3FOz77weVDDg==
+X-Received: by 2002:a62:1382:: with SMTP id 2mr26956131pft.157.1552205477129;
+        Sun, 10 Mar 2019 00:11:17 -0800 (PST)
 Received: from localhost.localdomain (cloudream.m3.ntu.edu.tw. [140.112.244.5])
-        by smtp.gmail.com with ESMTPSA id d6sm3737757pfg.47.2019.03.10.00.10.31
+        by smtp.gmail.com with ESMTPSA id i13sm3217786pgq.17.2019.03.10.00.11.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 10 Mar 2019 00:10:32 -0800 (PST)
+        Sun, 10 Mar 2019 00:11:16 -0800 (PST)
 From:   Jonathan Chang <ttjtftx@gmail.com>
 Cc:     Jonathan Chang <ttjtftx@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         git <git@vger.kernel.org>
-Subject: [GSoC][PATCH v2 4/5] t0022-crlf-rename: avoid using pipes
-Date:   Sun, 10 Mar 2019 16:10:23 +0800
-Message-Id: <20190310081023.64186-1-ttjtftx@gmail.com>
+Subject: [GSoC][PATCH v2 5/5] t0000-basic: use test_line_count instead of wc -l
+Date:   Sun, 10 Mar 2019 16:11:06 +0800
+Message-Id: <20190310081106.64239-1-ttjtftx@gmail.com>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190310080931.64134-1-ttjtftx@gmail.com>
-References: <20190310080931.64134-1-ttjtftx@gmail.com>
+In-Reply-To: <20190310081023.64186-1-ttjtftx@gmail.com>
+References: <20190310081023.64186-1-ttjtftx@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 To:     unlisted-recipients:; (no To-header on input)
@@ -69,30 +69,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The exit code of the upstream in a pipe is ignored thus we should avoid
-using it. By writing out the output of the git command to a file, we can
-test the exit codes of both the commands.
-
 Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
 
-diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
-index 7af3fbcc7b..05f443dcce 100755
---- a/t/t0022-crlf-rename.sh
-+++ b/t/t0022-crlf-rename.sh
-@@ -23,10 +23,10 @@ test_expect_success setup '
- 
- test_expect_success 'diff -M' '
- 
--	git diff-tree -M -r --name-status HEAD^ HEAD |
--	sed -e "s/R[0-9]*/RNUM/" >actual &&
-+	git diff-tree -M -r --name-status HEAD^ HEAD >actual &&
-+	sed -e "s/R[0-9]*/RNUM/" actual >output &&
- 	echo "RNUM	sample	elpmas" >expect &&
--	test_cmp expect actual
-+	test_cmp expect output
- 
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 47666b013e..aa25694b45 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -1136,8 +1136,8 @@ test_expect_success 'git commit-tree omits duplicated parent in a commit' '
+ 	parent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual | sort -u) &&
+ 	test "z$commit0" = "z$parent" &&
+ 	git show --pretty=raw $commit2 >actual &&
+-	numparent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual | wc -l) &&
+-	test $numparent = 1
++	sed -n -e "s/^parent //p" -e "/^author /q" actual | wc -l >numparent &&
++	test_line_count = 1 numparent
  '
  
+ test_expect_success 'update-index D/F conflict' '
+@@ -1146,8 +1146,8 @@ test_expect_success 'update-index D/F conflict' '
+ 	mv tmp path2 &&
+ 	git update-index --add --replace path2 path0/file2 &&
+ 	git ls-files path0 >actual &&
+-	numpath0=$(wc -l <actual) &&
+-	test $numpath0 = 1
++	wc -l <actual >numpath0 &&
++	test_line_count = 1 numpath0
+ '
+ 
+ test_expect_success 'very long name in the index handled sanely' '
 -- 
 2.21.0
 
