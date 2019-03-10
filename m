@@ -2,65 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FROM_LOCAL_NOVOWEL,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C69D520248
-	for <e@80x24.org>; Sun, 10 Mar 2019 08:09:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ECD220248
+	for <e@80x24.org>; Sun, 10 Mar 2019 08:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725852AbfCJIJl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 04:09:41 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:41336 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbfCJIJl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 04:09:41 -0400
-Received: by mail-pf1-f194.google.com with SMTP id d25so1370419pfn.8
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 00:09:40 -0800 (PST)
+        id S1726280AbfCJIKd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 04:10:33 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:42284 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725813AbfCJIKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 04:10:33 -0400
+Received: by mail-pg1-f193.google.com with SMTP id b2so1581423pgl.9
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 00:10:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PlrqFritA8++ayU00JnePdrjX0s1qSveLPmobd5KFSQ=;
-        b=bUXmG+X/vS0e4HchqyiQiodJ8iyOCrGkLhAxYSe4UO4IAUrlL6kLLC6u/ZP9MFvRub
-         LuS6Z0jAImrZnh2Syz9rhm8hDVbMrgTT+5QVjfZvMXwZ+8mwruV8D8QL4i+IYQYwp/R5
-         ux7I4KkrDl8IgGMrz1mmBpAXnvM1AmVCpGTeozU0LMhDYbptE9iSN/5bM8tGMkHw/2PC
-         GPeRnbknnpU3TATn096f8dE3BeiNZbHdGQPWUdogAvqfSCwFwUcTF4Zj1mUEXGEGQcMv
-         vdAY6RACbc2La2hXspbuMSR1UiNUA8/DhHULLCP2Ulw7i5tOFXYyJMSC8PVC2a5LvD4D
-         PXvw==
+        bh=P+eBoSJ9ARcozua0Se4O0zPcu4GM6E4K7QblL9zOcXw=;
+        b=YmRqHjQc57gCHd+YDZlazS/hd+rrEMa5Ov1cMUxqtlv6ElzkCLIJV8MqdlnyIRJ9wJ
+         Dk1MsRomgYZfcYwz0NejXXk1W4emxs3Heg6G0Ubd1rJUSS8wB4HshL5raMIzd0gvStPg
+         voG+IMpYDXYiigPOT/HS3p/d5T96LGn9lo96wSyGu2DDj6d3t2uSGL3WOy1FFj32AYcU
+         +wnWQeeMTj7U48Mb6mr/KR3TDe3zS9ZIKXxHin8IN29SrJuqORdE7tK3zi4cL2C0jcMM
+         hpgxIC6+hnETXav4p55+86uWI+8SebTuhrvtxYzwS+gRWfyL2LsPs9Re4Z7uX9KjaM57
+         ahcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PlrqFritA8++ayU00JnePdrjX0s1qSveLPmobd5KFSQ=;
-        b=o8GdhcXVqyl/nVfzX98KJihKyE1Rh5JzUdNVY9AOv/rXAkXNTp0fp6WunDIs5kGXZe
-         V/i2dCCGxjtycCTHQF/e7AfGA17F3UxK9kscCzFppKym5U4qzaZ3Nj7ghRLfuTHq3cm6
-         J+kpAb35wttjWKvy7ZAGxqgVbKpjP0UlfRpsS/2cjW8/jwCguCtvaRcMPqmfVsOPq2Vy
-         LNGvefQ6OXQ7NfzHPvLI+hWO/f/b2qpv17dXJ0BXHDCGNbVgML2ioa+ekeXaYZ74ebKK
-         A7+P3zzbLgoYEJJTV4TpiGoq8ACRIuJSCRNF2Z/Sr2II+2XSx2pC069Fxfyk223Bik86
-         wisA==
-X-Gm-Message-State: APjAAAU17Pse/oduLVAm6QtuWbKuocLmSYGWvZtPaXRB7Hscr9E0WxMw
-        m4KNs3T10TWUsYOOz4YeHLM=
-X-Google-Smtp-Source: APXvYqzY4XyjwJK3tVd3fI+/nOG2OiYNFUZfjAD3nmJPnN8NsTo1ep32jtPFytS0m4BB+P1HxHAMeQ==
-X-Received: by 2002:a17:902:8e8b:: with SMTP id bg11mr27086778plb.328.1552205380613;
-        Sun, 10 Mar 2019 00:09:40 -0800 (PST)
+        bh=P+eBoSJ9ARcozua0Se4O0zPcu4GM6E4K7QblL9zOcXw=;
+        b=fLiHapRnNlF8uaV6oJ2vbr/w2cfJOUD3aR1ad39kK/GnZwOBw3SQPMDGSxtHBEra+7
+         hhupEYVfsWX0Q/xPquy916vjMeUiOgckkV4rFwDL9ZThbJRXZvBztw5vDn76HzuudtKd
+         qiDKLYVBlD1pfxGQ55WlMu8I/07e+RD+erOLYo0CPG9ApOflTbdS6z23YsqIJSc8Nz6s
+         dxT5jcsOb8Q8+skQVnPSml3qasF/hIULNw6I1t06AdQGQ3WFp2Lnq61LcFfoWgBOMAeW
+         75YTxSjXn+gGUHlIu4PqkyL6LgLQ/OXYHByE5CvSxtWgBbSwvqiLyyHoCxOfTqG2jyTK
+         9HGA==
+X-Gm-Message-State: APjAAAVkx1SWRs56Y6nDKiwzqRoPh56NZsi+CmzsjLUMRv6ny/3F9cN8
+        6xz4AbdhkkV9NlReFVhDUoU=
+X-Google-Smtp-Source: APXvYqzI95awRD0moK+qE20lE34Z7FZ59p+fWOa+sM84WSOCTkRpVWLSwBymCLINigC7pMncwCXpXQ==
+X-Received: by 2002:a65:614a:: with SMTP id o10mr24700066pgv.51.1552205432543;
+        Sun, 10 Mar 2019 00:10:32 -0800 (PST)
 Received: from localhost.localdomain (cloudream.m3.ntu.edu.tw. [140.112.244.5])
-        by smtp.gmail.com with ESMTPSA id r28sm3891261pgl.72.2019.03.10.00.09.39
+        by smtp.gmail.com with ESMTPSA id d6sm3737757pfg.47.2019.03.10.00.10.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 10 Mar 2019 00:09:40 -0800 (PST)
+        Sun, 10 Mar 2019 00:10:32 -0800 (PST)
 From:   Jonathan Chang <ttjtftx@gmail.com>
 Cc:     Jonathan Chang <ttjtftx@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         git <git@vger.kernel.org>
-Subject: [GSoC][PATCH v2 3/5] t0003-attributes: avoid using pipes
-Date:   Sun, 10 Mar 2019 16:09:31 +0800
-Message-Id: <20190310080931.64134-1-ttjtftx@gmail.com>
+Subject: [GSoC][PATCH v2 4/5] t0022-crlf-rename: avoid using pipes
+Date:   Sun, 10 Mar 2019 16:10:23 +0800
+Message-Id: <20190310081023.64186-1-ttjtftx@gmail.com>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190310080841.64082-1-ttjtftx@gmail.com>
-References: <20190310080841.64082-1-ttjtftx@gmail.com>
+In-Reply-To: <20190310080931.64134-1-ttjtftx@gmail.com>
+References: <20190310080931.64134-1-ttjtftx@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 To:     unlisted-recipients:; (no To-header on input)
@@ -75,43 +75,24 @@ test the exit codes of both the commands.
 
 Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
 
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 71e63d8b50..14274f1ced 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -203,15 +203,18 @@ test_expect_success 'attribute test: read paths from stdin' '
- test_expect_success 'attribute test: --all option' '
- 	grep -v unspecified <expect-all | sort >specified-all &&
- 	sed -e "s/:.*//" <expect-all | uniq >stdin-all &&
--	git check-attr --stdin --all <stdin-all | sort >actual &&
-+	git check-attr --stdin --all <stdin-all >actual &&
-+	sort -o actual actual &&
- 	test_cmp specified-all actual
+diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
+index 7af3fbcc7b..05f443dcce 100755
+--- a/t/t0022-crlf-rename.sh
++++ b/t/t0022-crlf-rename.sh
+@@ -23,10 +23,10 @@ test_expect_success setup '
+ 
+ test_expect_success 'diff -M' '
+ 
+-	git diff-tree -M -r --name-status HEAD^ HEAD |
+-	sed -e "s/R[0-9]*/RNUM/" >actual &&
++	git diff-tree -M -r --name-status HEAD^ HEAD >actual &&
++	sed -e "s/R[0-9]*/RNUM/" actual >output &&
+ 	echo "RNUM	sample	elpmas" >expect &&
+-	test_cmp expect actual
++	test_cmp expect output
+ 
  '
  
- test_expect_success 'attribute test: --cached option' '
--	git check-attr --cached --stdin --all <stdin-all | sort >actual &&
-+	git check-attr --cached --stdin --all <stdin-all >actual &&
-+	sort -o actual actual &&
- 	test_must_be_empty actual &&
- 	git add .gitattributes a/.gitattributes a/b/.gitattributes &&
--	git check-attr --cached --stdin --all <stdin-all | sort >actual &&
-+	git check-attr --cached --stdin --all <stdin-all >actual &&
-+	sort -o actual actual &&
- 	test_cmp specified-all actual
- '
- 
-@@ -301,8 +304,8 @@ test_expect_success 'bare repository: check that --cached honors index' '
- 	(
- 		cd bare.git &&
- 		GIT_INDEX_FILE=../.git/index \
--		git check-attr --cached --stdin --all <../stdin-all |
--		sort >actual &&
-+		git check-attr --cached --stdin --all <../stdin-all >actual &&
-+		sort -o actual actual &&
- 		test_cmp ../specified-all actual
- 	)
- '
 -- 
 2.21.0
 
