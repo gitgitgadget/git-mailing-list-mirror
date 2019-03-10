@@ -2,176 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C730820248
-	for <e@80x24.org>; Sat,  9 Mar 2019 23:54:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B143E20248
+	for <e@80x24.org>; Sun, 10 Mar 2019 00:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726348AbfCIXyc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Mar 2019 18:54:32 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:28603 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726340AbfCIXyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Mar 2019 18:54:32 -0500
-Received: from [192.168.1.12] ([2.101.244.128])
-        by smtp.talktalk.net with SMTP
-        id 2lnPhCWYddrax2lnPhGPZ7; Sat, 09 Mar 2019 23:54:29 +0000
-X-Originating-IP: [2.101.244.128]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=QfUYQfTv c=1 sm=1 tr=0 a=8nsoD1t2XaTH5iSUU4dp1Q==:117
- a=8nsoD1t2XaTH5iSUU4dp1Q==:17 a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8
- a=azOqWcvn-bPetywNrAMA:9 a=K-nuZqdoseK-GALV:21 a=z5tm1yvYdmKz_z6l:21
- a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22
-Subject: Re: git MUST notify user when files will be deleted or overwritten by
- command
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Kevin Daudt' <me@ikke.info>,
-        'Dimitri Joukoff' <dimitri.joukoff@griffithuni.edu.au>
-Cc:     git@vger.kernel.org
-References: <SYXPR01MB09577F5C4555C9068B606E11DD4E0@SYXPR01MB0957.ausprd01.prod.outlook.com>
- <20190309104812.GA3403@alpha> <000401d4d6c8$f68bb020$e3a31060$@nexbridge.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <dddaf761-29f0-36ce-c0c1-04e59d6c7bc9@iee.org>
-Date:   Sat, 9 Mar 2019 23:54:27 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.3
+        id S1726372AbfCJA45 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Mar 2019 19:56:57 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46866 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726320AbfCJA45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Mar 2019 19:56:57 -0500
+Received: by mail-wr1-f65.google.com with SMTP id i16so1266491wrs.13
+        for <git@vger.kernel.org>; Sat, 09 Mar 2019 16:56:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=tFPCVSHMiXKZ+A/3tGTOjnAFE0BoYIhN+egz1js5JfY=;
+        b=nhOk+X68kcke30KsMF+5itFTTVqpBA47ca3Ep6iRQ7CZWRJSwedo+mRuvFRuKGMnfr
+         eWOFOumQqureAy32ZU4kbCZjDehb6LXOSEtfmUjOIWE+89FlXBoB9nO4AO8TXRT/I+AQ
+         xaqb1SOtu9Tg5HTyf+zbLgASX0tOsxre5WaHJcbIojvrsmfELiN6DC1H52baWuSFX9+P
+         VgSLTBPmwCkj1PyMU7XnWc3ugjLXY5NgJk8xEdaw8+vUFXnZPMbYEFVgoD8Oiac2EHS1
+         BcWADxfj9N+LG2OPFYozLw+mPXsg5Ei188oOhxi/H0w4mqz9R5SX8cNGwX0j+CgWGRey
+         gPsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=tFPCVSHMiXKZ+A/3tGTOjnAFE0BoYIhN+egz1js5JfY=;
+        b=UegWhj0kdjJbLGCYIvPj1WHg+w6rHPuMu6DEKsaE41AonaIkmdSAxq8qjcZTx6BsVM
+         Z4Y1v0OA/eCyWZyszlSyMe3KzbcQNa7m5B3uXOkmwMUZiterpsWgjwEDUqpAN+oSiQ84
+         qB7hJiKRU1QyaFwuBzSQt3/TEfJepIAeGN1DSbxcq77z2cYw4+NKre04EB57Ybw1NsrB
+         BsiM1l+pWntlltPqwwGg/qdFB/xoV9j1avNHw0gbs1BEri1vt+mgRr9dyf32uFCx6khq
+         U3/0nTWrdkh5fX5NZGDairDmDcFOR2KG72Z9CVgLKZIVP+sGaVrtxgMdkDOPD6TPrqhx
+         VpqA==
+X-Gm-Message-State: APjAAAX8NSmqb8ixogYBDWUyICShzH6acykU0QGbu0cYoKJDQRh+0yXp
+        aeYlWGvQ5Me40MiJOS8bf98=
+X-Google-Smtp-Source: APXvYqzkco0DYp0zNfrMkXnhhDVLbqLRTjpU9D5pk6tLx4vviX0rEYRkgZhEPCnLxogsmN1ClbOKxA==
+X-Received: by 2002:adf:a10b:: with SMTP id o11mr14783197wro.91.1552179414914;
+        Sat, 09 Mar 2019 16:56:54 -0800 (PST)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id i10sm2026812wrx.54.2019.03.09.16.56.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 09 Mar 2019 16:56:52 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/2] stash: handle pathspec magic again
+References: <pull.159.git.gitgitgadget@gmail.com>
+        <xmqq5zsukuyj.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1903081709220.41@tvgsbejvaqbjf.bet>
+Date:   Sun, 10 Mar 2019 09:56:51 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1903081709220.41@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 8 Mar 2019 17:12:02 +0100 (STD)")
+Message-ID: <xmqqva0rmtrg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <000401d4d6c8$f68bb020$e3a31060$@nexbridge.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfEoGsbN+HxT51U55gLJ1eRb1Tczvgx8t/pTqVDlpsUJi6u1B7ynVCgh9u6dRQS9I9NeaumdpMLXhSATvl+0dWwjkwA1KVRkHLNuesg9Le9oZhmTeHPnL
- F34FbQjGhFOSxec73K1WOpB+PVlt2CZXPdm5UgqAg2xQfp/V232xVzLUHOw5Q+hWkMbLuu0/+X2I/b+1Ab9Sq1z7CBTM+a2/q8i5b7X90F5PUQFqII3S+9wg
- fkF8empKlnPqMrsgWzS0gvfz8mu7Z2PzztQJWItDLKw=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/03/2019 22:39, Randall S. Becker wrote:
-> On March 9, 2019 5:48, Kevin Daudt wrote:
->> On Sat, Mar 09, 2019 at 10:19:03AM +0000, Dimitri Joukoff wrote:
->>> Hi,
->>>
->>> As a relatively novice user of git, there have been far too many times
->>> that I have lost data, sometimes quite a lot.  So this proposal is
->>> about catering for the less experienced users and averting fits of
->>> anger and frustration.  The only reason my computer still works is
->>> because my sub-conscious mind stops me from smashing it or throwing it
->>> against a wall.  It seems my sub-conscious mind has a pragmatic view
->>> of the world and understands that whilst I may receive instantaneous
->>> satisfaction at the time, in the long term, the pain will be far
->>> worse, and thus prevents me from doing something rash.
->>>
->> Yes, it can be very frustrating to lose things you did not intend to lose,
-> so
->> making sure your tooling limits the chances of that happing is certainly a
->> worthwile goal.
->>
->>> Below is the detail of my proposal: > Whenever a command is issued in
->>> git that will cause git to overwrite or delete *ANY* files whose
->>> current state isn't already recorded in the repository, git should
->>> prompt the user to confirm the operation. This includes untracked
->>> files as well as files that are in the 'not staged'
->>> and 'staged' lists.
->>>
->>> To make the consequences of the command transparent, the confirmation
->>> should include a list of files that will be affected (perhaps in a
->>> similar way to how git status works).  The scope of the files listed
->>> must match the scope of the command to be executed.  No hidden
->>> changes, no side-effects.
->>>
->>> Saying no to the confirmation should abort the command.
->>>
->>> It may be useful to allow confirmation of individual files, but as a
->>> novice user, I can't argue this point objectively, nor reason about
->>> its implications and complexity.
->>>
->>> This feature should be enabled by default whenever a clone or init
->>> operation are performed.
->>>
->>> The user should be able to progressively reduce the range of commands
->>> and amount of confirmation interactions that take place.  The
->>> configuration technique could follow the already established procedure
->>> for other configurable data in git.  So this could be done globally
->>> for the user, or locally within each repository.
->>>
->>>
->>> As a novice user, there may be further useful extensions of this idea,
->>> about which I'm unable to reason.  So I welcome further elaboration of
->>> the idea discussed above.
->> A lot of confirmations only result in people automatically dismissing them
->> (confirmation saturation), missing the goal of what you intend.
->>
->> Instead of asking for confirmation, it's much better to allow people to
-> undo
->> these mistakes. You see the same pattern in gmail for example, where they
->> hardly ask you for any confirmation, but instead show an undo button that
->> allows you to undo the last operation. In my opinion this is a better way
-> to
->> go then to add confirmations everywhere.
->>
->> I know this has come up on the git mailing list more often, but I cannot
-> find a
->> relevant thread at this moment.
-> First, I really do not like the idea of confirmations. This could complicate
-> scripting and would drive much of the work I do with git in Jenkins up a
-> wall. You would need access to stdin for almost anything.
->
-> Second, I think an automatic undo has merit and could further differentiate
-> git from other DVCS and VCS systems. My thought is along the lines of
-> starting with the stash concept for each undo - almost like an auto-stash.
-> Basically, any time you perform a working-directory modifying operation, a
-> stash-like commit is added to the repository at HEAD (possibly ignoring
-> .gitignore or precious files, like --include-untracked but in a config like
-> undo.untracked=on, to avoid needing to remember to do this). I envision it
-> being a stash without modifying the working-directory or changing the
-> repository state other than the "undo" unlike what stash does.
->
-> Considering the performance hit this *will* cause, I would want an option to
-> not do this (say, undo.enable=on/off, off by default unless there was some
-> newbie metric <j/k>, or maybe undo.fearful=high <j/k>), and a limit to the
-> number of undoes (undo.limit=n), and an auto-drop capability so that when
-> you finally commit, you have the option to drop the undoes of the previous
-> parent commit (undo.autoclean=on/off), or limit it to cleaning after more
-> than one commit is done beyond the commit where the undo exists
-> (undo.autoclean=n).
->
-> Deriving an "undo" off of a specific parent commit (HEAD), instead of
-> deriving "undoes" on each other, might be helpful in resolving the question
-> of how to you roll off (get rid of) undoes over time - making it just based
-> on the time of the snapshot and how many you want to keep. The reason I
-> would hang it off of a HEAD commit is that a checkout/switch would preserve
-> the undo stack so that when you returned to a branch, its undo stack would
-> be available, like stash.
->
-> I would also see an impact on gc, potentially, to clean up old undoes beyond
-> a specific date.
->
-> This might need to start as a modification to stash, like --keep-index, but
-> more like taking picture, for example, --snapshot-only. Once you had that,
-> building an undo stack should be straight-forward, and undoing would be
-> virtually the same as a stash apply (might even *be* stash apply if the
-> "undo" and stash were somehow the same thing conceptually). We're probably
-> also talking about a new command and subcommands, very similar to the stash
-> structure but querying either from HEAD or a specified commitish. If I only
-> had the time... ;)
->
-> Just my musings.
->
-> Randall
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-The key word to look for on the discussion list is 'precious'.
+> If you care deeply about the commit history, I hereby offer to you to
+> clean up the built-in stash patches when you say you're ready to advance
+> them to `master`.
 
-Have a look at the various discussions 
-https://public-inbox.org/git/?q=precious
+What's the goal of such a rebase?  To rebuild the topic as a
+sensible sequence of commits that logically builds on top of
+previous steps to ease later bisection and understanding?
 
-There are quite a number of files that are otherwise trashable that one 
-would not want endless confirmations for - it is a tricky task.
+Thanks for an offer out of good intentions,, but let's move on and
+polish the tree shape at the tip of this topic.  The history behind
+it may be messier than other segments of our history, and future
+developers may have harder time learning the intention of the topic
+when making changes on top, but this one was supposed to create a
+bug-to-bug reimplementation of the scripted version.  What matters
+more would be our future changes on top of this code, which improves
+what we used to have as scripted Porcelain.  They will genuinely be
+novel efforts, need to be built in logical order and explainable
+steps to help future developers.  Compared to that, so the history
+of our stumbling along the way to reach today's tip of the topic
+has much lower value.
 
---
+Besides I think it is way too late for the current topic.  We
+established before the topic hit 'next' that reviewers' eyes all
+lost freshness and patience to review another round of this series
+adequately.
 
-Philip
+We at least know that the ordering and organization of the iteration
+we see in 'next' is crappy, because some reviewers did look at them.
+The rewrite will see no reviews, if any, far fewer and shallower
+reviews than the iteration we have; nobody would be able to say with
+confidence that the rewritten series achieves its goal of leaving a
+sensible history.  Doing so just before it hits 'master' makes it a
+sure thing.
 
+Let's just we all admit that we did a poor job when we decided to
+push this topic to 'next' before it was ready, and learn the lesson
+to avoid haste making waste for the future topics.
+
+Thanks.
