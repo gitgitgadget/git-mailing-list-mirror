@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4579C20248
-	for <e@80x24.org>; Sun, 10 Mar 2019 08:08:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C69D520248
+	for <e@80x24.org>; Sun, 10 Mar 2019 08:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725851AbfCJIIx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 04:08:53 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:37435 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725798AbfCJIIx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 04:08:53 -0400
-Received: by mail-pg1-f193.google.com with SMTP id q206so1593708pgq.4
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 00:08:52 -0800 (PST)
+        id S1725852AbfCJIJl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 04:09:41 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:41336 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725815AbfCJIJl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 04:09:41 -0400
+Received: by mail-pf1-f194.google.com with SMTP id d25so1370419pfn.8
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 00:09:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TY9bxYLwHs3kQaqbgkibToZOxdWnO82qbZzaYM+EyRo=;
-        b=nd95K1okLXDy44PK2OKqWXvTD7PMS+d0HTcJs/whE13rOeQNThkBsLfIWdFsoF6z6N
-         RV+Wyfgi+NSPOHU7dYcpR1/9k7M1pBZh4+cq0NIH5hznAbEa8DE+YltnOWyzjJMdghE7
-         RemTYbHtuZNZeqetlQIKQn0RZnHNrcJpLFsSVF4wkS89v/CHKo0a+eZPpNiLF2o2xnD/
-         Q50LF9bR8PwG/0fZ8D0zLdE0HDSsQFR9cXDa9DYPmn6Sx4EGYCpBaC3WCy2GT6FrAVOt
-         TV2ADYef5b81tbI39cSk4iG6us6HMwX83fZ/iR42Jhs/xoXMiFTfkYO1KMd8JApQRSRW
-         fRcA==
+        bh=PlrqFritA8++ayU00JnePdrjX0s1qSveLPmobd5KFSQ=;
+        b=bUXmG+X/vS0e4HchqyiQiodJ8iyOCrGkLhAxYSe4UO4IAUrlL6kLLC6u/ZP9MFvRub
+         LuS6Z0jAImrZnh2Syz9rhm8hDVbMrgTT+5QVjfZvMXwZ+8mwruV8D8QL4i+IYQYwp/R5
+         ux7I4KkrDl8IgGMrz1mmBpAXnvM1AmVCpGTeozU0LMhDYbptE9iSN/5bM8tGMkHw/2PC
+         GPeRnbknnpU3TATn096f8dE3BeiNZbHdGQPWUdogAvqfSCwFwUcTF4Zj1mUEXGEGQcMv
+         vdAY6RACbc2La2hXspbuMSR1UiNUA8/DhHULLCP2Ulw7i5tOFXYyJMSC8PVC2a5LvD4D
+         PXvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TY9bxYLwHs3kQaqbgkibToZOxdWnO82qbZzaYM+EyRo=;
-        b=OVFeo3m+2j2DZRQG0fn6mKkM4Uf6YlBtW577lpl9hWUcP+Zv4Nki+AV2eSooPQUrzo
-         W+Bs0ARc3ME2BTF4pQXWIYrkuDyAwSccUbcxaqedxg5G7rdhksdw732vheJUY1U8pHTE
-         lOVLDdo9oxbg7W2DKce75tXro0iwzQDDUtm/4EPPt6xVSe/BgF65JhBdCNmaWd1qE1uX
-         BfyLlWnd3njpRZPQV1HtVbOl7fzRm51Nmc7pyV6Z2iWvW5fdMnDDYaxLru0msMD/bwA2
-         NSmDEcB4dBOwqIy3+SX5LNsNu1Aw1+unO+f1cEbRghV0dWxaxiCkoPhYW6nmHfyKjz+6
-         WM1A==
-X-Gm-Message-State: APjAAAVbAcRffynRyT/hyOUyJZ85wfYJXrhKSp0L2r4QuGphWGNt8igW
-        NkbSpFLF0RkOObd64gUbr5XtSfsi
-X-Google-Smtp-Source: APXvYqwZm37+IwDvEBbG8EDXwdMq1FpFoj5dSYlgLn/HZBgVvGItYYstE+8+Ojpfo3R4Mu4/AKHFcw==
-X-Received: by 2002:a63:69c2:: with SMTP id e185mr24701203pgc.4.1552205332042;
-        Sun, 10 Mar 2019 00:08:52 -0800 (PST)
+        bh=PlrqFritA8++ayU00JnePdrjX0s1qSveLPmobd5KFSQ=;
+        b=o8GdhcXVqyl/nVfzX98KJihKyE1Rh5JzUdNVY9AOv/rXAkXNTp0fp6WunDIs5kGXZe
+         V/i2dCCGxjtycCTHQF/e7AfGA17F3UxK9kscCzFppKym5U4qzaZ3Nj7ghRLfuTHq3cm6
+         J+kpAb35wttjWKvy7ZAGxqgVbKpjP0UlfRpsS/2cjW8/jwCguCtvaRcMPqmfVsOPq2Vy
+         LNGvefQ6OXQ7NfzHPvLI+hWO/f/b2qpv17dXJ0BXHDCGNbVgML2ioa+ekeXaYZ74ebKK
+         A7+P3zzbLgoYEJJTV4TpiGoq8ACRIuJSCRNF2Z/Sr2II+2XSx2pC069Fxfyk223Bik86
+         wisA==
+X-Gm-Message-State: APjAAAU17Pse/oduLVAm6QtuWbKuocLmSYGWvZtPaXRB7Hscr9E0WxMw
+        m4KNs3T10TWUsYOOz4YeHLM=
+X-Google-Smtp-Source: APXvYqzY4XyjwJK3tVd3fI+/nOG2OiYNFUZfjAD3nmJPnN8NsTo1ep32jtPFytS0m4BB+P1HxHAMeQ==
+X-Received: by 2002:a17:902:8e8b:: with SMTP id bg11mr27086778plb.328.1552205380613;
+        Sun, 10 Mar 2019 00:09:40 -0800 (PST)
 Received: from localhost.localdomain (cloudream.m3.ntu.edu.tw. [140.112.244.5])
-        by smtp.gmail.com with ESMTPSA id v1sm3591328pff.9.2019.03.10.00.08.50
+        by smtp.gmail.com with ESMTPSA id r28sm3891261pgl.72.2019.03.10.00.09.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 10 Mar 2019 00:08:51 -0800 (PST)
+        Sun, 10 Mar 2019 00:09:40 -0800 (PST)
 From:   Jonathan Chang <ttjtftx@gmail.com>
 Cc:     Jonathan Chang <ttjtftx@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         git <git@vger.kernel.org>
-Subject: [GSoC][PATCH v2 2/5] t0000-basic: avoid using pipes
-Date:   Sun, 10 Mar 2019 16:08:41 +0800
-Message-Id: <20190310080841.64082-1-ttjtftx@gmail.com>
+Subject: [GSoC][PATCH v2 3/5] t0003-attributes: avoid using pipes
+Date:   Sun, 10 Mar 2019 16:09:31 +0800
+Message-Id: <20190310080931.64134-1-ttjtftx@gmail.com>
 X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190310080739.63984-1-ttjtftx@gmail.com>
-References: <20190310080739.63984-1-ttjtftx@gmail.com>
+In-Reply-To: <20190310080841.64082-1-ttjtftx@gmail.com>
+References: <20190310080841.64082-1-ttjtftx@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 To:     unlisted-recipients:; (no To-header on input)
@@ -75,73 +75,43 @@ test the exit codes of both the commands.
 
 Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 53821f5817..47666b013e 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -1118,27 +1118,25 @@ P=$(test_oid root)
- 
- test_expect_success 'git commit-tree records the correct tree in a commit' '
- 	commit0=$(echo NO | git commit-tree $P) &&
--	tree=$(git show --pretty=raw $commit0 |
--		 sed -n -e "s/^tree //p" -e "/^author /q") &&
-+	git show --pretty=raw $commit0 >actual &&
-+	tree=$(sed -n -e "s/^tree //p" -e "/^author /q" actual) &&
- 	test "z$tree" = "z$P"
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 71e63d8b50..14274f1ced 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -203,15 +203,18 @@ test_expect_success 'attribute test: read paths from stdin' '
+ test_expect_success 'attribute test: --all option' '
+ 	grep -v unspecified <expect-all | sort >specified-all &&
+ 	sed -e "s/:.*//" <expect-all | uniq >stdin-all &&
+-	git check-attr --stdin --all <stdin-all | sort >actual &&
++	git check-attr --stdin --all <stdin-all >actual &&
++	sort -o actual actual &&
+ 	test_cmp specified-all actual
  '
  
- test_expect_success 'git commit-tree records the correct parent in a commit' '
- 	commit1=$(echo NO | git commit-tree $P -p $commit0) &&
--	parent=$(git show --pretty=raw $commit1 |
--		sed -n -e "s/^parent //p" -e "/^author /q") &&
-+	git show --pretty=raw $commit1 >actual &&
-+	parent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual) &&
- 	test "z$commit0" = "z$parent"
+ test_expect_success 'attribute test: --cached option' '
+-	git check-attr --cached --stdin --all <stdin-all | sort >actual &&
++	git check-attr --cached --stdin --all <stdin-all >actual &&
++	sort -o actual actual &&
+ 	test_must_be_empty actual &&
+ 	git add .gitattributes a/.gitattributes a/b/.gitattributes &&
+-	git check-attr --cached --stdin --all <stdin-all | sort >actual &&
++	git check-attr --cached --stdin --all <stdin-all >actual &&
++	sort -o actual actual &&
+ 	test_cmp specified-all actual
  '
  
- test_expect_success 'git commit-tree omits duplicated parent in a commit' '
- 	commit2=$(echo NO | git commit-tree $P -p $commit0 -p $commit0) &&
--	parent=$(git show --pretty=raw $commit2 |
--		sed -n -e "s/^parent //p" -e "/^author /q" |
--		sort -u) &&
-+	git show --pretty=raw $commit2 >actual &&
-+	parent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual | sort -u) &&
- 	test "z$commit0" = "z$parent" &&
--	numparent=$(git show --pretty=raw $commit2 |
--		sed -n -e "s/^parent //p" -e "/^author /q" |
--		wc -l) &&
-+	git show --pretty=raw $commit2 >actual &&
-+	numparent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual | wc -l) &&
- 	test $numparent = 1
- '
- 
-@@ -1147,7 +1145,8 @@ test_expect_success 'update-index D/F conflict' '
- 	mv path2 path0 &&
- 	mv tmp path2 &&
- 	git update-index --add --replace path2 path0/file2 &&
--	numpath0=$(git ls-files path0 | wc -l) &&
-+	git ls-files path0 >actual &&
-+	numpath0=$(wc -l <actual) &&
- 	test $numpath0 = 1
- '
- 
-@@ -1162,12 +1161,13 @@ test_expect_success 'very long name in the index handled sanely' '
- 	>path4 &&
- 	git update-index --add path4 &&
+@@ -301,8 +304,8 @@ test_expect_success 'bare repository: check that --cached honors index' '
  	(
--		git ls-files -s path4 |
--		sed -e "s/	.*/	/" |
-+		git ls-files -s path4 >actual &&
-+		sed -e "s/	.*/	/" actual |
- 		tr -d "\012" &&
- 		echo "$a"
- 	) | git update-index --index-info &&
--	len=$(git ls-files "a*" | wc -c) &&
-+	git ls-files "a*" >actual &&
-+	len=$(wc -c <actual) &&
- 	test $len = 4098
+ 		cd bare.git &&
+ 		GIT_INDEX_FILE=../.git/index \
+-		git check-attr --cached --stdin --all <../stdin-all |
+-		sort >actual &&
++		git check-attr --cached --stdin --all <../stdin-all >actual &&
++		sort -o actual actual &&
+ 		test_cmp ../specified-all actual
+ 	)
  '
- 
 -- 
 2.21.0
 
