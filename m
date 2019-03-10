@@ -2,118 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCC3F20248
-	for <e@80x24.org>; Sun, 10 Mar 2019 01:17:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4026920248
+	for <e@80x24.org>; Sun, 10 Mar 2019 01:57:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726388AbfCJBJs (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Mar 2019 20:09:48 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:33025 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726344AbfCJBJr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Mar 2019 20:09:47 -0500
-Received: by mail-wm1-f67.google.com with SMTP id c13so11388713wmb.0
-        for <git@vger.kernel.org>; Sat, 09 Mar 2019 17:09:46 -0800 (PST)
+        id S1726491AbfCJB5e (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Mar 2019 20:57:34 -0500
+Received: from mail-it1-f170.google.com ([209.85.166.170]:36142 "EHLO
+        mail-it1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726340AbfCJB5e (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Mar 2019 20:57:34 -0500
+Received: by mail-it1-f170.google.com with SMTP id v83so2128176itf.1
+        for <git@vger.kernel.org>; Sat, 09 Mar 2019 17:57:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HOjsCbWkaxoFdYXKjXJZO/VIAwjjORgtyniizhhuaNA=;
-        b=SrQq686xk+DUlGpNe4M76G1dfPr3jPMTsrzXkdAmwCxmWVPG93+mXgSY0biyCZzllt
-         TSkqaJpuvLBZyE0bOH5m6MVI0avzHhpT2NnWbplFGutQkICM3rlo0T4IhlRlR8ElRi/P
-         0zx0rSi+SKJCKdbWbzZxWwp9d4muivkQOfwkjL7Hbqfd7WJLu/kI+y4X8w8s0jdirWaT
-         +iVuY+hgXXRpPziSYjDkHZXZlyiMgtBcCKk4CzyPQxtGikCQxZ7m00C6E3xn2heOP5sc
-         PdQiCXTOnZmkEOsAGD2S0dHVb6I7odRYRzTAP4b607dpEzRRivFMn7f2rICEXberGi+v
-         0Enw==
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=3Eict7h0jrLYhKRyJo9r4UWOv13Z/dRRssCPmw+mp18=;
+        b=hQ9Xr2qNT6E+8ipXAV45NjsPu+EMnvjhJy7RsGX8vLsKpJnxU+pwC3FWLhIbk3t/lx
+         mHWK0tidd7TZs80wAIFsro5m8CgT1fRCa+u+kzscG9e8g/AtysChYVpR9AsZ1R5Yk2xY
+         YECZwyUF6/0jWxCqb05QhV0Pd5kC23krAYmBJq60LsRot7Jl2NQ0JWhwdWTOax+i68pL
+         rcs5IFIHVJ7RbpWVWP+yO8HCFfP4Y5qQeurO6w2lLYP66Nh+gB3+ms0vODneakTS+PhF
+         awzvBmT7d/WZ4BpM/mknVA+mqkEDhZaXslriA9goEuEVYXXblKA4pko9J8t5AGc1Vdwp
+         y+eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HOjsCbWkaxoFdYXKjXJZO/VIAwjjORgtyniizhhuaNA=;
-        b=cbKMVDCKk3vssUWmhqW7gyQuMeIE1O5Tyh+lLiNi/+pGACQ2NiI6G2li0RLwwmJcpn
-         VIQ7aWcvPKLUX3ZJk504rmQ/QgMX+Go/71BwdLNRDNYA/d7BiOhZ5tlgmNSjOURhRp2A
-         LCpHj9B7OKH2KmKUgzhoTOkKLgvnYovHsxGbb0qMCYww7kpAutUMkJYfCLLkL4QBtrfX
-         WLyyDhm/OOEGyNbHp9qVOZmkSszYsUOxEqZHfrFcXuYJ6mvsL0hFggA2QqavKbsssLia
-         Q1gLquigbTTXCkrL5YnsZVfg6YwrGxaedtmFwMAtFD/4xNjECaLM9ia35jfWUibyt6+z
-         5vuQ==
-X-Gm-Message-State: APjAAAWLoOsJi0uiN+jNxVdQyooveE5JE/WXT1z+8B5WB/B1z0h6Y7pg
-        MOccFV5a3iw5LZ10dRv6n5M=
-X-Google-Smtp-Source: APXvYqw7JCklc8oSIQ1LD4kMbZjwEB96iL9csp/TLS7VvUnsNdBsNaWviBTe5DeeUY0RLxwED/iY4A==
-X-Received: by 2002:a1c:3d84:: with SMTP id k126mr13087440wma.60.1552180185075;
-        Sat, 09 Mar 2019 17:09:45 -0800 (PST)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id b4sm8313702wmj.3.2019.03.09.17.09.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 09 Mar 2019 17:09:44 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] mingw: allow building with an MSYS2 runtime v3.x
-References: <pull.160.git.gitgitgadget@gmail.com>
-        <ba1a87e845919804c86a7859abb85ec50125628f.1552060278.git.gitgitgadget@gmail.com>
-Date:   Sun, 10 Mar 2019 10:09:44 +0900
-In-Reply-To: <ba1a87e845919804c86a7859abb85ec50125628f.1552060278.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Fri, 08 Mar 2019
-        07:51:19 -0800 (PST)")
-Message-ID: <xmqqr2bfmt5z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=3Eict7h0jrLYhKRyJo9r4UWOv13Z/dRRssCPmw+mp18=;
+        b=qGaGysiKNZk8Khfj9N84iENwMXVRQsbumgGBpwOvMrCPcE1LOjNB3zYWrrRui3wa3Q
+         uX0RPkB5ng9M9F9MKCVZYJlfSu6+D0+51JhMwiIdJSqmc+twvXYkT61oR8zuVv14a06T
+         CRSXpy8fWUrQmdh3vefFZpQyLX6CXV4NmnyVLp/gn6fz/SAOREKc2cXrBA6RkuihjhPa
+         ecJ0wmGyL7w1t34rYHuONbCXIWs0pJBn3OILQ/RpNM04O88RTw4jlsxsEvd32P+jxb2U
+         ZN6Lpcjxcbv8xqq2Vt0h3dBxsa4+yUTc0o2l1ELIfg6OrOcxFcA0fLO7At6Op97m2LGe
+         ABlQ==
+X-Gm-Message-State: APjAAAXMm2JEa7eJ1aj3DbUaRSYvMxpZue1D/bHMaGKblL8FZgl/u58N
+        w1CnTmS8GoaBs60ZVVAZa/K5lpmG67Sxa+BVabw=
+X-Google-Smtp-Source: APXvYqwLGKe+Aogq7zKg52b1rZhtN1GyrOA2ytZH8P37jbwsAexS1CMINRrXkLXW7V//OKRDlj45UZfV2MZ9rLkIaqI=
+X-Received: by 2002:a24:3a12:: with SMTP id m18mr11437367itm.5.1552183053193;
+ Sat, 09 Mar 2019 17:57:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAH8yC8kSakS807d4jc_BtcUJOrcVT4No37AXSz=jePxhw-o9Dg@mail.gmail.com>
+ <20190309161003.55t4irdwd76asnuf@tb-raspi4>
+In-Reply-To: <20190309161003.55t4irdwd76asnuf@tb-raspi4>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Sat, 9 Mar 2019 20:57:07 -0500
+Message-ID: <CAH8yC8=01S8m8XCPoHgfX1woAEzHN7HXEn2Ncc1ceOF0SMnFaQ@mail.gmail.com>
+Subject: Re: t0028-working-tree-encoding.sh test #3 data
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> So let's invert that test case to test for *anything else* than a
-> version starting with "1" (for MSys). That should safeguard us for the
-> future, even if Cygwin ends up releasing versionsl like 314.272.65536.
-
-An obvious alternative is to do "2" -> "[23]" *and* update the else
-to an explicit check for "1", *and* add an else that fails the build
-when it sees "4" and other unknown ones.
-
-I do not know how compatible MSYS2 runtime v4.x will be with the
-settings the part inside the ifneq() we see here protects, but you
-probably do, so I think this would be good enough.  The only case
-that makes any difference is when v4.x _mostly_ satisifies but
-slightly differs, affecting the built binary in a subtle way that is
-not discovered right away.  But in such a case, the more cautious
-"fail on '4' that we do not recognize" will not help much, as the
-first reaction after seeing the error would be to copy the settings
-that used to be OK with v2.x and v3.x anyway (which is what is being
-done here---we start with the assumption that the support needed for
-v3.x is largely the same as v2.x).
-
-Will queue directly on top of... 'maint'?  'master'?
-
-Let's say 'maint' and merge that up to 'master'.
-
-Thanks.
-
+On Sat, Mar 9, 2019 at 11:10 AM Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  config.mak.uname | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> On Sat, Mar 09, 2019 at 09:36:34AM -0500, Jeffrey Walton wrote:
+> >
+> > I'm experiencing a failure in t0028-working-tree-encoding.sh. The
+> > first failure is test #3. The source states "source (test.utf16lebom,
+> > considered UTF-16LE-BOM)" but it looks like a UTF16-LE BOM followed by
+> > a UTF32-LE stream.
+> >
+> > Am I misunderstanding the data presentation?
 >
-> diff --git a/config.mak.uname b/config.mak.uname
-> index c8b0e34c31..0207e895a4 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -569,7 +569,7 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
->  	NO_GETTEXT = YesPlease
->  	COMPAT_CLFAGS += -D__USE_MINGW_ACCESS
->  else
-> -	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
-> +	ifneq ($(shell expr "$(uname_R)" : '1\.'),2)
->  		# MSys2
->  		prefix = /usr/
->  		ifeq (MINGW32,$(MSYSTEM))
+> Thanks for the report.
+>
+> I think you understand it right.
+>
+> May be you can help us: Which OS are you using ?
+
+Fedora 29, x86_64 fully patched.
+
+However, I'm building Git and all of its dependencies with additional
+flags for testing. The prefix directory is /var/tmp and the lib
+directory is /var/tmp/lib64.
+
+RPATHS are set for everything being built, but I don't rule out those
+stupid path problems that plague Linux. In the past I have seen grep
+and awk from /bin use special builds of libraries in /var/tmp/lib64. I
+have not figured out how to tell programs in /bin to stop using test
+libraries in /var/tmp/lib64.
+
+> And what does
+> echo "hallo" | iconv -f UTF-8 -t UTF-16 | xxd
+> give ?
+
+$ PATH=3D/var/tmp/bin/:$PATH echo "hallo" | iconv -f UTF-8 -t UTF-16 | xxd
+00000000: fffe 6800 6100 6c00 6c00 6f00 0a00       ..h.a.l.l.o...
+
+And:
+
+$ PATH=3D/var/tmp/bin/:$PATH echo "hallo" | /usr/bin/iconv -f UTF-8 -t
+UTF-16 | xxd
+00000000: fffe 6800 6100 6c00 6c00 6f00 0a00       ..h.a.l.l.o...
+
+> We may need some more debugging, may be you can send the whole log file ?
+> Even if there is are a lot of ESC-sequences...
+
+Yes, absolutely. Which file would you like?
+
+(The only thing I can find is config.log).
+
+Jeff
