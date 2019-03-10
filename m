@@ -2,134 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 901C020248
-	for <e@80x24.org>; Sun, 10 Mar 2019 15:59:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CBBD20248
+	for <e@80x24.org>; Sun, 10 Mar 2019 17:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726631AbfCJP7q (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 11:59:46 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:37005 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726530AbfCJP7q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 11:59:46 -0400
-Received: by mail-ot1-f65.google.com with SMTP id b3so1890365otp.4
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 08:59:45 -0700 (PDT)
+        id S1726784AbfCJR73 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 13:59:29 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:32812 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726683AbfCJR73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 13:59:29 -0400
+Received: by mail-wr1-f66.google.com with SMTP id i8so2647714wrm.0
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 10:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:cc;
-        bh=LhSmPif3TqRVNrxSaHaW2hRC+/vaqau7nV1kK0y+Frc=;
-        b=rw8PrDcj55O7y5/6GAeo6sUGSAx2yS4Fs2wAoLhGPRr3wilqM8wuUAbf4DzI4xtZGI
-         3Ykm7PMczFrdwiR5quXNkzlgxT0xqOGEkFbHySSFrY7QvoTtQjylh7TMMOb1dNyvPyMU
-         WTZQU4QgFumCaPvb+Tdh23RUCrAVGyut34GpYfo6mHMTkWAo4SJzei3Dp+OCDi80NLV6
-         Ob90Ws7RHmiglNAgblTnOd7biOl/vDO37R5fi5KWaC15An3VRndqXsrRcz875fLD2xY4
-         C4wr5w0HcwaIHFbAQNq/ub9WqCoabZmT6VdCQ43BxnHrM+rXuu/IKurqGeoQJS7/tG6r
-         +u1w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nut01jsiM8sNTQuPjUE2IPwqRdRbyrlTuE0FsxTAzJE=;
+        b=hIROgo0bahGtro/3GG9h+slHiOTGxGoamV8hYmDsqRNUob2UGwZ2Qa3gvJu5MRGPZs
+         knHDN32G8Est1xe3Z916H7X9iPRcwq4YeweLfEIPyTJN6fyQ5z/ma3TTbl6z+xAlLo+i
+         J82ed2PnLakRuZRbiX6dvhO1gd60IK21acUVwvYwCGJe29fcSOpaouG8i9caG0Xrovve
+         OnmQlHhrQDKEm7oOhaFE7XI89imgGyyIT7htBQSU1DgOguZhhw4e5hsxUc09dYQjGbM2
+         oo5bSzTADCB1c7pNp0swEK6UxNppiSaKFpDPeqCtZTd4h2ayb3eHjJL2vDaWcrk3w5lr
+         EhZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:cc;
-        bh=LhSmPif3TqRVNrxSaHaW2hRC+/vaqau7nV1kK0y+Frc=;
-        b=gv8osUY+D0NA8j3e2tAaanTYyAZCGmHLPvHUMX+w1hoJDB/w1328u+hby+zt/ff2RF
-         qj5L2Fwgt5dY84gwifD6G7vrzTCXC8EU46S2hQNSu+6EPLXEslZvb3YKRH8YP9mDpyId
-         rkT4diSiqP0hAx0FyD5dlXjGuvTJyv0PU+Lt6VD478Qt1T80o7FXWPfHvFlbso/CkokG
-         60p5rYI24vWWvlpJOBCoDkPQkV71JXoi54nncF7i5cTYEy1YpPUVIkx6zVrddSEDd9F6
-         Wsn+ZSbR8t+WxsohJKxYvZcShmPF5RIeNxY3NwEPWAUCmJDLzYtpc3oujhTdOrsJjsr8
-         575g==
-X-Gm-Message-State: APjAAAWY4P2cspDHGJlDYYr5JEyfboC6+BwGQJ0qKmIjXBfD6UaD1WU/
-        gwY0El0NbePAEv0hfLvvOuzJBJse3IX2gj+oip6GTiR0
-X-Received: by 2002:a9d:630f:: with SMTP id q15mt17307560otk.153.1552233584698;
- Sun, 10 Mar 2019 08:59:44 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nut01jsiM8sNTQuPjUE2IPwqRdRbyrlTuE0FsxTAzJE=;
+        b=ehJw07KtfGoxVdpBh2rxxbCCXQevPV/aKqJZT4WDPqIWl6HmqRo/g11swPA0okTm4r
+         2D19MapjHDmn7yhWv+iDXJmKLSCSrEEV44qvoJrknlYBd5WgFJq3jWjQRdJTWo4x/5ae
+         UqiwxVcRIEP9FfEV0hB3TgLT9cC8CwjNIhvJniURP1ODKAefszxWTxx3PCQoT6Ej6AmO
+         PCE5My44vcPlxHHioZpEBXw5NZi3g5LJ743KuZ18ywjIIPhZG94PDV3EaVJi12fIFN+G
+         vYxFyabtQNR2L6d3/3FhKh1fFig/xVO6zkRHoCyQT1rVweBO56yH5ibfy/ettyVH4CfJ
+         k4HQ==
+X-Gm-Message-State: APjAAAW1zrXtZF2O5vCC1+J+7glVFb0Ihfyll0EewpbnT9/WDxdGd3Fd
+        FTsLcZl51zMiO6QAX5bsNNM=
+X-Google-Smtp-Source: APXvYqwavROrP8OkZH1r77FFQdFLsGf1PZ3Fj8/rWOO9bfycFj06edn0IDaxh7QbJhxOPIx5CIvwpA==
+X-Received: by 2002:adf:a2cc:: with SMTP id t12mr17877465wra.253.1552240767081;
+        Sun, 10 Mar 2019 10:59:27 -0700 (PDT)
+Received: from localhost ([95.148.214.107])
+        by smtp.gmail.com with ESMTPSA id h10sm26267206wmf.2.2019.03.10.10.59.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 10 Mar 2019 10:59:25 -0700 (PDT)
+Date:   Sun, 10 Mar 2019 17:59:24 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Jonathan Chang <ttjtftx@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [GSoC][PATCH v2 1/5] t0000-basic: fix an indentation error
+Message-ID: <20190310175924.GF31533@hank.intra.tgummerer.com>
+References: <20190309164508.GB31533@hank.intra.tgummerer.com>
+ <20190310080739.63984-1-ttjtftx@gmail.com>
 MIME-Version: 1.0
-References: <CAMknYENWOW0mj6Bn9OooqKg-sZi9bZUO461Gv1F00=phNwLFQQ@mail.gmail.com>
- <20190308174314.129611-1-jonathantanmy@google.com>
-In-Reply-To: <20190308174314.129611-1-jonathantanmy@google.com>
-From:   Kapil Jain <jkapil.cs@gmail.com>
-Date:   Sun, 10 Mar 2019 21:29:33 +0530
-Message-ID: <CAMknYEMP73D=LSKKvYKpmTdR3LAxc5UMgT3gxiQDZBghkLFo_g@mail.gmail.com>
-Subject: Re: New Ft. for Git : Allow resumable cloning of repositories.
-Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190310080739.63984-1-ttjtftx@gmail.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 8, 2019 at 11:13 PM Jonathan Tan <jonathantanmy@google.com> wrote:
-> This is indeed a nice feature to have, and thanks for details of how
-> this would be accomplished.
+On 03/10, Jonathan Chang wrote:
+> Hi,
+> 
+> Thanks for the reviews.
+> 
+> Here are the changes in the second version:
+> 	- bug fixes
+> 	- add preparatory patch
+> 	- seperate different files to different patch
+> 	- change to use test_line_count in a seperate patch
+> 
+> Also I found that there is no such function as test_char_count, 
+> is it worthwile to add such function? Here are some stat:
+> 
+> `git grep 'test_line_count' | wc -l` = 626
+> `git grep 'wc -l' | wc -l` = 294
+> `git grep 'wc -c' | wc -l` = 68
+
+I do think it would be helpful to introduce that helper, especially if
+it is useful in this patch series.  There seem to be enough other
+places where it can be useful to make it worth adding the helper.
+
+> -- >8 --
+> 
+> This is a preparatory step prior to removing the pipes after git
+> commands, which discards git's exit code and may mask a crash.
+
+The commit message should also describe why we need this preparatory
+step. Maybe something like:
+
+      To reduce the noise in when refactoring this pipeline in a
+      subsequent commit fix the indentation.  This has been wrong
+      since the refactoring done in 1b5b2b641a ("t0000: modernise
+      style", 2012-03-02), but carries no meaning.
+
+> Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
 >
-> One issue is that when cloning a repository, we do not download many
-> files - we only download one dynamically generated packfile containing
-> all the objects we want.
 
-Since the packfile is dynamically generated specifically for a client
-request, and is destroyed from the server as soon as the connection
-between them closes.
-Is this the reason why we cannot pause it in between like we can do
-with download managers ?
+Out of curiosity, how did you create the patch?  'git format-patch'
+would add a '---' line followed by the diffstat, where you would
+usually put the commentary that you put before the scissors line.  It
+seems like 'git am' still handles this fine, which I didn't know, just
+something I noticed because I'm used to the other format.
 
-I read through the progit ebook 'git internels' chapter and the
-following thought came to me:
+Since this patch series is now 5 patches, that commentary should go
+into a cover letter (see the --cover-letter option in format-patch),
+so the reviewers can read that first, and read the patches with that
+in mind, focusing on the patch only, and not additional commentary
+that applies to the whole series when reading the patch.
 
-Assume a pack file as follows:
----
-$ git verify-pack -v .git/objects/pack/pack-
-978e03944f5c581011e6998cd0e9e30000905586.idx
-b042a60ef7dff760008df33cee372b945b6e884e blob   22054 5799 1463
-033b4468fa6b2a9547a70d88d1bbe8bf3f9ed0d5 blob   9 20 7262 1 \
-  b042a60ef7dff760008df33cee372b945b6e884e
-.git/objects/pack/pack-978e03944f5c581011e6998cd0e9e30000905586.pack: ok
----
-
-Here 033b blob refers b042 blob, and both blobs are different versions
-of the same file.
-
-Before this pack was made, both of these blobs were stored separately
-and thus were taking more space.
-Packfile is made to save space, by only storing latest version and its
-delta with earlier version. Both delta and latest version are stored
-in compressed form right ?
-
-Now, here is another approach to save space without needing to create pack:
-
-Earlier both the blobs had their object files as:
-
-.git/objects/03/3b4468fa6b2a9547a70d88d1bbe8bf3f9ed0d5
-.git/objects/b0/42a60ef7dff760008df33cee372b945b6e884e
-
-Lets say b042 is latest and 033b is its earlier version.
-
-what git does in packfile can be done right here by:
-
-storing latest version in
-.git/objects/b0/42a60ef7dff760008df33cee372b945b6e884e and its delta
-in .git/objects/03/3b4468fa6b2a9547a70d88d1bbe8bf3f9ed0d5, with the
-delta version we can add a header that tells it to check for
-.git/objects/b0/42a60ef7dff760008df33cee372b945b6e884e and apply delta
-on it to get the earlier version.
-
-Doing this, eliminates the big packfile, and all the objects are
-spread into folders. We can now make this resume-able right ?
-
-Please point out what i missed here.
-Is it possible to do the above ? if yes then what was the reason to
-introduce concept of packfile ?
-
-> You might be interested in some work I'm doing to offload part of the
-> packfile response to CDNs:
->
-> https://public-inbox.org/git/cover.1550963965.git.jonathantanmy@google.com/
->
-> This means that when cloning/fetching, multiple files could be
-> downloaded, meaning that a scheme like you suggest would be more
-> worthwhile. (In fact, I allude to such a scheme in the design document
-> in patch 5.)
-
-currently reading through all the discussion on this strategy.
+> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> index b6566003dd..53821f5817 100755
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -1132,7 +1132,7 @@ test_expect_success 'git commit-tree records the correct parent in a commit' '
+>  
+>  test_expect_success 'git commit-tree omits duplicated parent in a commit' '
+>  	commit2=$(echo NO | git commit-tree $P -p $commit0 -p $commit0) &&
+> -	     parent=$(git show --pretty=raw $commit2 |
+> +	parent=$(git show --pretty=raw $commit2 |
+>  		sed -n -e "s/^parent //p" -e "/^author /q" |
+>  		sort -u) &&
+>  	test "z$commit0" = "z$parent" &&
+> -- 
+> 2.21.0
+> 
