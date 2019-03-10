@@ -2,125 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57B1320248
-	for <e@80x24.org>; Sun, 10 Mar 2019 04:06:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4BD120248
+	for <e@80x24.org>; Sun, 10 Mar 2019 06:07:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726385AbfCJD7o convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 9 Mar 2019 22:59:44 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55353 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726364AbfCJD7o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Mar 2019 22:59:44 -0500
-Received: by mail-wm1-f68.google.com with SMTP id q187so1202934wme.5
-        for <git@vger.kernel.org>; Sat, 09 Mar 2019 19:59:42 -0800 (PST)
+        id S1725849AbfCJGFs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 01:05:48 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:35622 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725765AbfCJGFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 01:05:48 -0500
+Received: by mail-ed1-f68.google.com with SMTP id g19so1297642edp.2
+        for <git@vger.kernel.org>; Sat, 09 Mar 2019 22:05:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IdVTlTssOm4A5twJf2kJm0gKg670up9/P5GXqIqLpes=;
+        b=F1Ri1YGzFjicLaVgw4qqV/kmdYzoPEPd45c+UcStJZYpVMFDA45lnUgiNZGasGwP4y
+         PtRMeLYIV9mkOw2hcXf6j6ihdsNSOTNHey1EU37cJp8FoFTnSzhC1uZkcACt6O7VRMIa
+         14qjquJtnmtuwk3wYRvH5iWUNVpAPpH0gSQ3nj87c02x0kY4IU5EcmyyOVEb7/qiRGOv
+         puaxa7hzHcXysXwHj8degAzmEwzaONpltXX9mgA/jXSW38kMcRiKrHliWnRbKu4N8QtJ
+         /qq0EChR4N09zGK/TZ0fDeAp7wDz5pzWOmg1QZEsMFcnZCEbZaM9XGdTNa1hVgPPVUac
+         kvGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ww55lbHfD6gmivWPyxy//IfmqvEJbuORnGt5TLuHbq0=;
-        b=J18wCwvXe4n3k52J6V4R/rVNin17QbCeryxUi95yDN4dPq9LRP1SjuJTItqbGAwvUg
-         ANTNqmLDV38U66incCT1DSP/EM8p7BV1GHAnuCLcoMJvfT07hGqcugUEoOV43EZy3LVl
-         5+H3hWWLdWLo2Y/0pGHiGuzSVwz1Cj3mc/OAAHxr6CsGitMP2qIvX1OsivQtonB8+XGD
-         dX5r/MZxBgLNRHTWANips+Q6B2BVctPYjZh4UGWVWAZL09v6mTYlW+qXE8Hop1MYUjbX
-         vzvfch3eyhn8j9hIa/Gp+dcL1gMKWFIX8E8x328MWdF2HAZR8ThbEqJrngTSK484ZnSj
-         g+jA==
-X-Gm-Message-State: APjAAAVw+6MT1e5O5licG9SfN6egy0AMVh1XtEHJQVOmANR/5CoXy2Mf
-        ImsUhAsT2Tc6onQlfYWnoh0uGH40LJOnmrRNTeQ=
-X-Google-Smtp-Source: APXvYqw1tOH7s4nLY8ymsVi93loHrCIhVBOXlQH7NqTm7WU5SOdop5h0OYe4j6svXkGiGaP/0kvEzYrhtn9m/90hfWM=
-X-Received: by 2002:a1c:730d:: with SMTP id d13mr13257312wmb.37.1552190382174;
- Sat, 09 Mar 2019 19:59:42 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=IdVTlTssOm4A5twJf2kJm0gKg670up9/P5GXqIqLpes=;
+        b=nm6Esivnq4gkVbcxZqQMKxy3EW3xD8l9cfbRza8OuehvS8ZpCcDGQDHU7y+2OgVcrB
+         EwQgAHusNrHUhfAuIzjJ25+I/id21snB/PkpqSnahUCqS/mjqQqG+QLtBfex/SUffMIv
+         GrhmUWaP7jkt0hFVTjNRW3kIgAU+sgPBaZeyctwDoUzHPFKk/GMOmJqJ0W6YgPB+65Jd
+         hP2p5L56bfcz9a9qyhFa3qeayvb8J5hLfDRf2zE9E+eLXC5EO9jPaWXlPu/u6dmyDpkJ
+         Ugv6ZYlwiIdgLuz94tIcwDRQRlVFeTmPaUrt2Ph9omlrDE2zpm/rMhRfp9p5tPLBWI+h
+         fPww==
+X-Gm-Message-State: APjAAAVgx/xc2Peszj7Q7kHJL6oDjVtStcg8BVvuBoIrcJ/39r1uCGn3
+        8+vjsstYyUFS9ouT0aWxDjg+yZewdsVb7ykQ5P4=
+X-Google-Smtp-Source: APXvYqw/TCc3ZpKoBxT+ch1iETtmYgpwryoHlVzNmUUcXIbCd02DpnAinQk6e8VLX0jMmSJ64rsDQ3xcIUuGROc8TcE=
+X-Received: by 2002:aa7:c554:: with SMTP id s20mr3385592edr.131.1552197946603;
+ Sat, 09 Mar 2019 22:05:46 -0800 (PST)
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-20-pclouds@gmail.com>
-In-Reply-To: <20190308095752.8574-20-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 9 Mar 2019 22:59:32 -0500
-Message-ID: <CAPig+cTADoua2G2rqyr_2-dqRPsK0Jzsxtkgvv5Gr-iasDA=VA@mail.gmail.com>
-Subject: Re: [PATCH v3 19/21] t: add tests for switch
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+References: <20190309154555.33407-1-ttjtftx@gmail.com>
+In-Reply-To: <20190309154555.33407-1-ttjtftx@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 10 Mar 2019 07:05:34 +0100
+Message-ID: <CAP8UFD26Zxt1FvwAajV48eBbhPv_q5oSLTekWxApcNpg=xRn3Q@mail.gmail.com>
+Subject: Re: [GSoC][PATCH] tests: avoid using pipes
+To:     Jonathan Chang <ttjtftx@gmail.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 8, 2019 at 4:59 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
-> @@ -0,0 +1,87 @@
-> +test_expect_success 'switch to a commit' '
-> +       test_must_fail git switch master^{commit}
-> +'
+On Sat, Mar 9, 2019 at 4:50 PM Jonathan Chang <ttjtftx@gmail.com> wrote:
+>
+> This is my attempt for this year's GSoC microproject.
 
-The title of this test was a bit misleading for me; I would have found
-it easier to understand what's being tested had it said "switch
-without --detach" or something.
+Thanks for being interested in this year's GSoC and doing a microproject.
 
-> +test_expect_success 'switch and detach' '
-> +       test_when_finished git switch master &&
-> +       git switch --detach master^{commit} &&
-> +       test_must_fail git symbolic-ref HEAD
-> +'
+> I copied the commit message of the commit[1] mentioned in the microproject
+> page[2]. Is this OK?
+>
+> Here is a summary of what I did:
+>         - simple substitution as in c6f44e1da5[1].
 
-In fact, if the two tests were combined, it would have been even
-clearer (for me):
+If you take a look at c6f44e1da5 ("t9813: avoid using pipes",
+2017-01-04) you can see the following:
 
-    test_expect_success 'switch and detach' '
-        test_when_finished git switch master &&
-        test_must_fail git switch master^{commit} &&
-        git switch --detach master^{commit} &&
-        test_must_fail git symbolic-ref HEAD
-    '
+    - it changes only one test file: t9813-git-p4-preserve-users.sh
+    - its title starts with "t9813: "
 
-Not worth a re-roll.
+It would have been nice if you did the same in your patch (that is
+only change one test file and start the patch title with the test file
+number).
 
-> +test_expect_success 'switch and create branch' '
-> +       test_when_finished git switch master &&
-> +       git switch -c temp master^ &&
-> +       test_cmp_rev master^ refs/heads/temp &&
-> +       echo refs/heads/temp >expected-branch &&
-> +       git symbolic-ref HEAD >actual-branch &&
-> +       test_cmp expected-branch actual-branch
-> +'
-> +
-> +test_expect_success 'force create branch from HEAD' '
-> +       test_when_finished git switch master &&
-> +       git switch --detach master &&
-> +       git switch -C temp &&
-> +       test_cmp_rev master refs/heads/temp &&
-> +       echo refs/heads/temp >expected-branch &&
-> +       git symbolic-ref HEAD >actual-branch &&
-> +       test_cmp expected-branch actual-branch
-> +'
+On the microproject page, we say:
 
-Maybe also demonstrate that -C is actually needed here by leading in
-with a failing -c:
+"Students: Please attempt only ONE microproject. We want quality, not quantity!"
 
-    ...
-    git switch --detach master &&
-    test_must_fail git switch -c temp &&
-    git switch -C temp &&
-    ...
+And to other students working on a microproject, we also ask them to
+focus on only one test file when they make those kinds of changes.
 
-Not worth a re-roll.
-
-> +test_expect_success 'guess and create branch ' '
-> +       test_when_finished git switch master &&
-> +       test_must_fail git switch foo &&
-> +       git switch --guess foo &&
-> +       echo refs/heads/foo >expected &&
-> +       git symbolic-ref HEAD >actual &&
-> +       test_cmp expected actual
-> +'
-
-The above suggestions about --detach/-C reflect how you did it in this
-test, in which you first try "git switch foo" without the --guess
-option, expecting it to fail, and then repeat with the option,
-expecting it to succeed.
+Best,
+Christian.
