@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B143E20248
-	for <e@80x24.org>; Sun, 10 Mar 2019 00:56:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCC3F20248
+	for <e@80x24.org>; Sun, 10 Mar 2019 01:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726372AbfCJA45 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Mar 2019 19:56:57 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46866 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbfCJA45 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Mar 2019 19:56:57 -0500
-Received: by mail-wr1-f65.google.com with SMTP id i16so1266491wrs.13
-        for <git@vger.kernel.org>; Sat, 09 Mar 2019 16:56:56 -0800 (PST)
+        id S1726388AbfCJBJs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Mar 2019 20:09:48 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:33025 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726344AbfCJBJr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Mar 2019 20:09:47 -0500
+Received: by mail-wm1-f67.google.com with SMTP id c13so11388713wmb.0
+        for <git@vger.kernel.org>; Sat, 09 Mar 2019 17:09:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=tFPCVSHMiXKZ+A/3tGTOjnAFE0BoYIhN+egz1js5JfY=;
-        b=nhOk+X68kcke30KsMF+5itFTTVqpBA47ca3Ep6iRQ7CZWRJSwedo+mRuvFRuKGMnfr
-         eWOFOumQqureAy32ZU4kbCZjDehb6LXOSEtfmUjOIWE+89FlXBoB9nO4AO8TXRT/I+AQ
-         xaqb1SOtu9Tg5HTyf+zbLgASX0tOsxre5WaHJcbIojvrsmfELiN6DC1H52baWuSFX9+P
-         VgSLTBPmwCkj1PyMU7XnWc3ugjLXY5NgJk8xEdaw8+vUFXnZPMbYEFVgoD8Oiac2EHS1
-         BcWADxfj9N+LG2OPFYozLw+mPXsg5Ei188oOhxi/H0w4mqz9R5SX8cNGwX0j+CgWGRey
-         gPsQ==
+        bh=HOjsCbWkaxoFdYXKjXJZO/VIAwjjORgtyniizhhuaNA=;
+        b=SrQq686xk+DUlGpNe4M76G1dfPr3jPMTsrzXkdAmwCxmWVPG93+mXgSY0biyCZzllt
+         TSkqaJpuvLBZyE0bOH5m6MVI0avzHhpT2NnWbplFGutQkICM3rlo0T4IhlRlR8ElRi/P
+         0zx0rSi+SKJCKdbWbzZxWwp9d4muivkQOfwkjL7Hbqfd7WJLu/kI+y4X8w8s0jdirWaT
+         +iVuY+hgXXRpPziSYjDkHZXZlyiMgtBcCKk4CzyPQxtGikCQxZ7m00C6E3xn2heOP5sc
+         PdQiCXTOnZmkEOsAGD2S0dHVb6I7odRYRzTAP4b607dpEzRRivFMn7f2rICEXberGi+v
+         0Enw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=tFPCVSHMiXKZ+A/3tGTOjnAFE0BoYIhN+egz1js5JfY=;
-        b=UegWhj0kdjJbLGCYIvPj1WHg+w6rHPuMu6DEKsaE41AonaIkmdSAxq8qjcZTx6BsVM
-         Z4Y1v0OA/eCyWZyszlSyMe3KzbcQNa7m5B3uXOkmwMUZiterpsWgjwEDUqpAN+oSiQ84
-         qB7hJiKRU1QyaFwuBzSQt3/TEfJepIAeGN1DSbxcq77z2cYw4+NKre04EB57Ybw1NsrB
-         BsiM1l+pWntlltPqwwGg/qdFB/xoV9j1avNHw0gbs1BEri1vt+mgRr9dyf32uFCx6khq
-         U3/0nTWrdkh5fX5NZGDairDmDcFOR2KG72Z9CVgLKZIVP+sGaVrtxgMdkDOPD6TPrqhx
-         VpqA==
-X-Gm-Message-State: APjAAAX8NSmqb8ixogYBDWUyICShzH6acykU0QGbu0cYoKJDQRh+0yXp
-        aeYlWGvQ5Me40MiJOS8bf98=
-X-Google-Smtp-Source: APXvYqzkco0DYp0zNfrMkXnhhDVLbqLRTjpU9D5pk6tLx4vviX0rEYRkgZhEPCnLxogsmN1ClbOKxA==
-X-Received: by 2002:adf:a10b:: with SMTP id o11mr14783197wro.91.1552179414914;
-        Sat, 09 Mar 2019 16:56:54 -0800 (PST)
+        bh=HOjsCbWkaxoFdYXKjXJZO/VIAwjjORgtyniizhhuaNA=;
+        b=cbKMVDCKk3vssUWmhqW7gyQuMeIE1O5Tyh+lLiNi/+pGACQ2NiI6G2li0RLwwmJcpn
+         VIQ7aWcvPKLUX3ZJk504rmQ/QgMX+Go/71BwdLNRDNYA/d7BiOhZ5tlgmNSjOURhRp2A
+         LCpHj9B7OKH2KmKUgzhoTOkKLgvnYovHsxGbb0qMCYww7kpAutUMkJYfCLLkL4QBtrfX
+         WLyyDhm/OOEGyNbHp9qVOZmkSszYsUOxEqZHfrFcXuYJ6mvsL0hFggA2QqavKbsssLia
+         Q1gLquigbTTXCkrL5YnsZVfg6YwrGxaedtmFwMAtFD/4xNjECaLM9ia35jfWUibyt6+z
+         5vuQ==
+X-Gm-Message-State: APjAAAWLoOsJi0uiN+jNxVdQyooveE5JE/WXT1z+8B5WB/B1z0h6Y7pg
+        MOccFV5a3iw5LZ10dRv6n5M=
+X-Google-Smtp-Source: APXvYqw7JCklc8oSIQ1LD4kMbZjwEB96iL9csp/TLS7VvUnsNdBsNaWviBTe5DeeUY0RLxwED/iY4A==
+X-Received: by 2002:a1c:3d84:: with SMTP id k126mr13087440wma.60.1552180185075;
+        Sat, 09 Mar 2019 17:09:45 -0800 (PST)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id i10sm2026812wrx.54.2019.03.09.16.56.51
+        by smtp.gmail.com with ESMTPSA id b4sm8313702wmj.3.2019.03.09.17.09.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 09 Mar 2019 16:56:52 -0800 (PST)
+        Sat, 09 Mar 2019 17:09:44 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] stash: handle pathspec magic again
-References: <pull.159.git.gitgitgadget@gmail.com>
-        <xmqq5zsukuyj.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1903081709220.41@tvgsbejvaqbjf.bet>
-Date:   Sun, 10 Mar 2019 09:56:51 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1903081709220.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 8 Mar 2019 17:12:02 +0100 (STD)")
-Message-ID: <xmqqva0rmtrg.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] mingw: allow building with an MSYS2 runtime v3.x
+References: <pull.160.git.gitgitgadget@gmail.com>
+        <ba1a87e845919804c86a7859abb85ec50125628f.1552060278.git.gitgitgadget@gmail.com>
+Date:   Sun, 10 Mar 2019 10:09:44 +0900
+In-Reply-To: <ba1a87e845919804c86a7859abb85ec50125628f.1552060278.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Fri, 08 Mar 2019
+        07:51:19 -0800 (PST)")
+Message-ID: <xmqqr2bfmt5z.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,44 +69,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> If you care deeply about the commit history, I hereby offer to you to
-> clean up the built-in stash patches when you say you're ready to advance
-> them to `master`.
+> So let's invert that test case to test for *anything else* than a
+> version starting with "1" (for MSys). That should safeguard us for the
+> future, even if Cygwin ends up releasing versionsl like 314.272.65536.
 
-What's the goal of such a rebase?  To rebuild the topic as a
-sensible sequence of commits that logically builds on top of
-previous steps to ease later bisection and understanding?
+An obvious alternative is to do "2" -> "[23]" *and* update the else
+to an explicit check for "1", *and* add an else that fails the build
+when it sees "4" and other unknown ones.
 
-Thanks for an offer out of good intentions,, but let's move on and
-polish the tree shape at the tip of this topic.  The history behind
-it may be messier than other segments of our history, and future
-developers may have harder time learning the intention of the topic
-when making changes on top, but this one was supposed to create a
-bug-to-bug reimplementation of the scripted version.  What matters
-more would be our future changes on top of this code, which improves
-what we used to have as scripted Porcelain.  They will genuinely be
-novel efforts, need to be built in logical order and explainable
-steps to help future developers.  Compared to that, so the history
-of our stumbling along the way to reach today's tip of the topic
-has much lower value.
+I do not know how compatible MSYS2 runtime v4.x will be with the
+settings the part inside the ifneq() we see here protects, but you
+probably do, so I think this would be good enough.  The only case
+that makes any difference is when v4.x _mostly_ satisifies but
+slightly differs, affecting the built binary in a subtle way that is
+not discovered right away.  But in such a case, the more cautious
+"fail on '4' that we do not recognize" will not help much, as the
+first reaction after seeing the error would be to copy the settings
+that used to be OK with v2.x and v3.x anyway (which is what is being
+done here---we start with the assumption that the support needed for
+v3.x is largely the same as v2.x).
 
-Besides I think it is way too late for the current topic.  We
-established before the topic hit 'next' that reviewers' eyes all
-lost freshness and patience to review another round of this series
-adequately.
+Will queue directly on top of... 'maint'?  'master'?
 
-We at least know that the ordering and organization of the iteration
-we see in 'next' is crappy, because some reviewers did look at them.
-The rewrite will see no reviews, if any, far fewer and shallower
-reviews than the iteration we have; nobody would be able to say with
-confidence that the rewritten series achieves its goal of leaving a
-sensible history.  Doing so just before it hits 'master' makes it a
-sure thing.
-
-Let's just we all admit that we did a poor job when we decided to
-push this topic to 'next' before it was ready, and learn the lesson
-to avoid haste making waste for the future topics.
+Let's say 'maint' and merge that up to 'master'.
 
 Thanks.
+
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  config.mak.uname | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/config.mak.uname b/config.mak.uname
+> index c8b0e34c31..0207e895a4 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -569,7 +569,7 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+>  	NO_GETTEXT = YesPlease
+>  	COMPAT_CLFAGS += -D__USE_MINGW_ACCESS
+>  else
+> -	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
+> +	ifneq ($(shell expr "$(uname_R)" : '1\.'),2)
+>  		# MSys2
+>  		prefix = /usr/
+>  		ifeq (MINGW32,$(MSYSTEM))
