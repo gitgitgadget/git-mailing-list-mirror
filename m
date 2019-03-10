@@ -2,93 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA6D020248
-	for <e@80x24.org>; Sun, 10 Mar 2019 19:32:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73A8720248
+	for <e@80x24.org>; Sun, 10 Mar 2019 20:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726784AbfCJTcQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 15:32:16 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36850 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726766AbfCJTcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 15:32:16 -0400
-Received: by mail-wm1-f68.google.com with SMTP id j125so2295908wmj.1
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 12:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=Iu/OmYomLd/wcQBZPcvNUEWb5q/xp2XcCX9MF0DiXwg=;
-        b=DR8YFZvHqTaOqmOZb2MiHfECf+zKP5VMeuuXesuNHJVs61aMWeP4m7NlYV+OrM4CzT
-         y5i24bnjop3eiLHRLDOo2DL7KXX0yshlqtjaDqECPPw2eFCD22/fEdsZoJYJj/5aQsaE
-         TOdNkM7ZZ5U9iKmc5z/5S/CMtf2HSaSS/K896QQvGlzYB7DW4bXSkzJ40EEnmeaYTehX
-         zxd29VCuDGmDTtFVeolbkuv/BE24ES3GBTVCAn8y8XEYtKHUGwnGfvgyCB6CmUXBFhIa
-         9zidATkVNnx08wkdlFcAez+8yeXrXySju/1R5EHtMIgDyU8G9CTcb+cYofWoPkrA/LRe
-         GoVQ==
+        id S1726977AbfCJUDU convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 10 Mar 2019 16:03:20 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35643 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726814AbfCJUDU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 16:03:20 -0400
+Received: by mail-wr1-f67.google.com with SMTP id t18so2830097wrx.2
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 13:03:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Iu/OmYomLd/wcQBZPcvNUEWb5q/xp2XcCX9MF0DiXwg=;
-        b=BgEwXBNTxyT16en06GfIB4oroKDkMM1Hsf7m/Ql+f9Q+TxFN0giVr/R8nSVWhdd+OK
-         rIchZ2IA8Ev60b+z0d27SFuyZNWmJ5pxsH1bmeHuskwbOsUBCLWSSeMTvvdyoZg3kLkD
-         iGAPuqUsEXsssHvmT+/gzB/qduSOt9z/II19A2a8F8xrRZsbRQeDM7Js1yD/Bz0/WSIa
-         KCMHPpbYJ+LRD/i4Rnhez4MRocDKORKRnSHfvBSTFV5V5V4R5guk0VopqxHryc2aC7fq
-         kSNABA5nJ1TuS4UhmFFxWtQ/c4NTD2MnYj3QIr03Z7HNkOe/HRLFFYALvKPzG4+1xRd2
-         Q+WQ==
-X-Gm-Message-State: APjAAAXuInpSfuAiRBtHpQOK+f/Pzmq3bTA0Qyny/0Mq9eQj6XKC6Bmv
-        7/toHOx23sIXj2KtBk4BQ8E=
-X-Google-Smtp-Source: APXvYqw8lTlfdZAuOUqb5WbSS9G3ucZpLn2Vm7pYwsSyRh8ggsNrToTUnSNPkHHbcrswCX0WBWYq6g==
-X-Received: by 2002:a1c:2d4c:: with SMTP id t73mr15077221wmt.142.1552246334103;
-        Sun, 10 Mar 2019 12:32:14 -0700 (PDT)
-Received: from esm (ipbcc038b1.dynamic.kabel-deutschland.de. [188.192.56.177])
-        by smtp.gmail.com with ESMTPSA id o5sm7207118wrv.70.2019.03.10.12.32.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 10 Mar 2019 12:32:13 -0700 (PDT)
-From:   "Eckhard =?iso-8859-1?Q?Maa=DF?=" <eckhard.s.maass@googlemail.com>
-X-Google-Original-From: Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@gmail.com>
-Date:   Sun, 10 Mar 2019 20:32:11 +0100
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        sbeller@google.com, t.gummerer@gmail.com, sxenos@google.com
-Subject: Re: [PATCH v3 11/14] switch-branch: only allow explicit detached HEAD
-Message-ID: <20190310193211.GA444@esm>
-References: <20181127165211.24763-1-pclouds@gmail.com>
- <20181129215850.7278-1-pclouds@gmail.com>
- <20181129215850.7278-12-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SwdUAHJBA7sDmZzt8wDnv9BGH1RX6XfJB4nldAdlVAY=;
+        b=L+1lj0ax33n91kY/QowoskJM69Bc0S9RNC88JHgdmUspjOQ+2/yw+wUG3TmzPKIYnC
+         Hj0jPEmOcU3n+l1EHr0N9v3v1FSHjerZ3g80d4Sd8O4vDm94Zal/RoB1aUL77jffibI3
+         wh/sr/DemanqG0hYdxAmk4AOtNXJ+zzBglF1JmrQO/osy1L7XqE5WywYJ3skxRU01Svs
+         D5Yzpja1ut2QFX4klUtlMgCUqnw5KdNYOHXtG9CcDvUpCYXfyYW/URdFc1J6oZbCF20Q
+         zn+l1bVtiwB2gycZoVN4Q3UJ0j6LWt+8xdmn4MTCW4Q4Vj4gfCgOF8KRW2fOVEIgc52L
+         yddw==
+X-Gm-Message-State: APjAAAX7G5stzS+cd/a0b9UpL9EDfHdEyn/qtRXJchsE0zhMbt2nIUwu
+        N0ItIm+my0dH0LR0yryTZXc5yCi6xQVqA2CtoHc=
+X-Google-Smtp-Source: APXvYqx6fRDZTkWP1PN0jppM0kd4m/W7JGSltDT1Hgl+IXkUvLS4fLMMIV1tYi3XFViqjBcOEvshv4WX+rjaIBxJqV4=
+X-Received: by 2002:adf:d84c:: with SMTP id k12mr9077832wrl.58.1552248198290;
+ Sun, 10 Mar 2019 13:03:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181129215850.7278-12-pclouds@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-7-pclouds@gmail.com>
+ <CABPp-BFv-a3Uw1g+ebLqTHRbCedsv1akZxxJ7QfeyXtXBdQuOw@mail.gmail.com>
+In-Reply-To: <CABPp-BFv-a3Uw1g+ebLqTHRbCedsv1akZxxJ7QfeyXtXBdQuOw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 10 Mar 2019 16:03:07 -0400
+Message-ID: <CAPig+cQ8YqAJ=3T++FCpew1SAUnwPYzZ3wRwExGu8Ed97ELrnw@mail.gmail.com>
+Subject: Re: [PATCH v1 06/11] restore: add --worktree and --index
+To:     Elijah Newren <newren@gmail.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 29, 2018 at 10:58:46PM +0100, Nguyễn Thái Ngọc Duy wrote:
-> +	if (!opts->implicit_detach &&
-> +	    !opts->new_branch &&
-> +	    !opts->new_branch_force &&
-> +	    new_branch_info->name &&
-> +	    !new_branch_info->path)
-> +		die(_("a branch is expected, got %s"), new_branch_info->name);
+On Sat, Mar 9, 2019 at 1:52 PM Elijah Newren <newren@gmail.com> wrote:
+> On Fri, Mar 8, 2019 at 2:17 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
+> > +       if (!opts->checkout_worktree && !opts->checkout_index)
+> > +               die(_("neither '%s' or '%s' is specified"),
+> > +                   "--index", "--worktree");
+>
+> Is this die() or BUG()?  I thought --worktree was the default.
 
-Wouldn't it be nice to give more context here, for example the symbolic
-reference that the name actually points to? When expereimenting with the
-feature and trying to switch to a tag, it refuses with
-"a branch is expected, got v1.2.0". I personally would prefer something
-more like "a branch is expected, got v1.2.0 that resolved to
-refs/tags/v1.2.0", so I get "oh, yeah, that is actually a tag ...". Does
-this seem worthwhile to dig deeper into? A quick glance left me a bit
-puzzled, I admit.
-
-Greetings,
-Eckhard
+The user might type "git restore --no-worktree --no-index" which would
+trigger this error message, so definitely die(), not a BUG().
