@@ -2,84 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D71E20248
-	for <e@80x24.org>; Sun, 10 Mar 2019 10:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52A3C20248
+	for <e@80x24.org>; Sun, 10 Mar 2019 10:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725853AbfCJKDn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 06:03:43 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33230 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725815AbfCJKDn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 06:03:43 -0400
-Received: by mail-wr1-f68.google.com with SMTP id i8so1903945wrm.0
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 03:03:42 -0700 (PDT)
+        id S1726280AbfCJKJj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 06:09:39 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52668 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725840AbfCJKJi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 06:09:38 -0400
+Received: by mail-wm1-f67.google.com with SMTP id f65so1558230wma.2
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 03:09:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nVc3hqYPAxorr9OBGzUHBb4PC7RCRGZ8mnQAWZ6omoo=;
+        b=ON/JGCrk6/feeShic6yk973CGJ5FK5ocYCQUYUZyypptD1XT8swyexMXavQhUiNIWI
+         UQOfFlxnGWGvvPrsv9E1rZaK/AjtYmxBF5yF9pjoSKUOWST+hsh2ys2g3FU8fxCCHFuL
+         CrFL5GuGaU5wJ0GfsoBsI+AIUOuyJvQcCbNjUtPgSx4IPVXK+nMTisDCieEAO8q/GYeU
+         sxOOK/Le5Q8CRMH561CiXJTyMWSvVZmv+j7HgXe7K10JO1fqlsAq1rqNF90+utUPCsEF
+         05/YVjrhfN1dGHN00XogJB5kdueXbJ0de6wbilfGXeXm+i2j8HDxFVtEDRs2voWy71TP
+         mUgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cj9sndwKB1UMy3pYDTl1R6BBVNnX/Uufk0D8F49Twlc=;
-        b=jfqd1+ZbMgeFI3qXYcz0tTfnlI89oXiW/O3gOsy9stGRUy15ccAZvqroyRY7KE4xvu
-         WihC599+oS8PXmqbdZkYFIUnZccCirqbmpvkwDhMxk8KiJJwaK5MgjqXnll1htNu/7Bo
-         RrFJzceEYudWU6WdeA5obTuDrIes8OZgukWEn0Y0OtfnqgOjCTP9IPLD/0J3zxnBe+Zb
-         lnwWYOTz+8e9Wwyr3HXvMFFCvSNOUSsrZlvldEWIqzg1rFfvlYOx74Ixwb38E5ObIwDE
-         i7/R+mYxaqoaPhWsz+bK/ax+Z0PPDq5L65XPeehFe0ipIrdt5vrYmkoID+GMd0hW/+8L
-         ZKMQ==
-X-Gm-Message-State: APjAAAWKQycCJe3Yj/9VNMhsGYDwHR5tZgE2VXA3r33FNJAjzVnLi2bz
-        cF6+y8mQ3NC36vD3FMtHs9w8QLvNz9XKnZFmEbY=
-X-Google-Smtp-Source: APXvYqzuw+/Inm/Ah2pnPmjfwZnehHfSAwTdhCLT+HarYgsFc4oWslbdAY7HbQNMWCod1Y9TxiFd5W2K8vQdoCGNXVs=
-X-Received: by 2002:adf:c7c6:: with SMTP id y6mr16430679wrg.217.1552212221681;
- Sun, 10 Mar 2019 03:03:41 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nVc3hqYPAxorr9OBGzUHBb4PC7RCRGZ8mnQAWZ6omoo=;
+        b=ozbTNZmk0sYu0ylFG8cQNtve9ye6sG4RDiyDWlQdrE2ykiKh14HY3rjqpwQj8MSgMJ
+         +Nebs8lcXWU7Z2+KD0QhWmYOCqOobNypFu/bHXBLWgrwfngkwayZdVAz+6Sos9ipFoLB
+         NdxjiqEcXubYwukfVPXNsl7N6EEfg0w8pzP6Y4vyIwkSlvprxJGlaQ2cnL+9noIyP9mU
+         T4v1hT5fr6GlfWJa7I1uPwalY3K8gsvvusLB3UVM21tMoQyttvyi3uYwOzq0Gk0QrVH+
+         WfQhVGedV0bkvPNm6BT7IJtlRlFz/IPd0gmXZ8d1oJoHrFRjQOb4/H47N2N0+IjnuUgA
+         8ifQ==
+X-Gm-Message-State: APjAAAWnmUuGZ682qhzTovkS45DTKMcUhJbkQsvyLmQRqDUQkvjAHHYd
+        SrRCGXfmsMupyDhwtO94/GjrnWNenuc=
+X-Google-Smtp-Source: APXvYqyhjTIR/NoRFrYFRkBDbT+xQtgtIvFV2WKMafBKpvqXFkBtYhe8M0pPEPVyWMaIylrYdvMoVQ==
+X-Received: by 2002:a1c:5fc5:: with SMTP id t188mr13709393wmb.86.1552212576838;
+        Sun, 10 Mar 2019 03:09:36 -0700 (PDT)
+Received: from [10.33.1.6] ([185.230.127.241])
+        by smtp.gmail.com with ESMTPSA id d15sm10636226wrw.36.2019.03.10.03.09.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 10 Mar 2019 03:09:36 -0700 (PDT)
+Subject: Re: [PATCH v3 19/21] t: add tests for switch
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
+        szeder.dev@gmail.com
+References: <20190208090401.14793-1-pclouds@gmail.com>
+ <20190308095752.8574-1-pclouds@gmail.com>
+ <20190308095752.8574-20-pclouds@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <e27faf58-16f4-4f53-1afa-7c5cea868b50@gmail.com>
+Date:   Sun, 10 Mar 2019 11:09:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-References: <20190310080931.64134-1-ttjtftx@gmail.com> <20190310081023.64186-1-ttjtftx@gmail.com>
-In-Reply-To: <20190310081023.64186-1-ttjtftx@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 10 Mar 2019 06:03:31 -0400
-Message-ID: <CAPig+cQxVfZ7L=cFfgAWOzL7Equ2HsFR7si=GxBxj3-mSpCUnQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v2 4/5] t0022-crlf-rename: avoid using pipes
-To:     Jonathan Chang <ttjtftx@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20190308095752.8574-20-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 10, 2019 at 4:10 AM Jonathan Chang <ttjtftx@gmail.com> wrote:
-> The exit code of the upstream in a pipe is ignored thus we should avoid
-> using it. By writing out the output of the git command to a file, we can
-> test the exit codes of both the commands.
->
-> Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
+On 3/8/19 10:57 AM, Nguyễn Thái Ngọc Duy wrote:
+> ---
+>  t/t2060-switch.sh | 87 +++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 87 insertions(+)
+>  create mode 100755 t/t2060-switch.sh
+> 
+> diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
+> new file mode 100755
+> index 0000000000..1e1e834c1b
+> --- /dev/null
+> +++ b/t/t2060-switch.sh
+> @@ -0,0 +1,87 @@
+> +#!/bin/sh
+> +
 
-All of the patches in this series are malformed. There should be a
-"---" line right here below your sign-off. The "---" line is
-recognized by git-am/git-apply as separating the commit message from
-the actual diff(s).
+[snip]
 
-> diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
-> @@ -23,10 +23,10 @@ test_expect_success setup '
->  test_expect_success 'diff -M' '
->
-> -       git diff-tree -M -r --name-status HEAD^ HEAD |
-> -       sed -e "s/R[0-9]*/RNUM/" >actual &&
-> +       git diff-tree -M -r --name-status HEAD^ HEAD >actual &&
-> +       sed -e "s/R[0-9]*/RNUM/" actual >output &&
->         echo "RNUM      sample  elpmas" >expect &&
-> -       test_cmp expect actual
-> +       test_cmp expect output
+> +
+> +test_expect_success 'switching ignores file of same branch name' '
+> +	test_when_finished git switch master &&
+> +	: >first-branch &&
+> +	git switch first-branch &&
+> +	echo refs/heads/first-branch >expected &&
+> +	git symbolic-ref HEAD >actual &&
+> +	test_commit expected actual
 
-It is a very well-established custom in Git tests for the files handed
-to test_cmp() to be named "expect" and "actual", so this change is not
-the most desirable. What you can do instead is:
+s/commit/cmp/
 
-    git diff-tree -M -r --name-status HEAD^ HEAD >output &&
-    sed -e "s/R[0-9]*/RNUM/" output >actual &&
+> +'
+> +
+> +test_expect_success 'guess and create branch ' '
+> +	test_when_finished git switch master &&
+> +	test_must_fail git switch foo &&
+> +	git switch --guess foo &&
+> +	echo refs/heads/foo >expected &&
+> +	git symbolic-ref HEAD >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_done
+> 
 
-which allows you to leave the test_cmp() line alone, thus (as a bonus)
-makes the patch less noisy.
