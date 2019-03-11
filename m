@@ -2,94 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E62AF20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 15:54:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6349320248
+	for <e@80x24.org>; Mon, 11 Mar 2019 16:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727520AbfCKPyR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 11:54:17 -0400
-Received: from mail-ot1-f54.google.com ([209.85.210.54]:38854 "EHLO
-        mail-ot1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727387AbfCKPyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 11:54:16 -0400
-Received: by mail-ot1-f54.google.com with SMTP id m1so4375744otf.5
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 08:54:16 -0700 (PDT)
+        id S1727514AbfCKQAe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 12:00:34 -0400
+Received: from mail-it1-f176.google.com ([209.85.166.176]:50839 "EHLO
+        mail-it1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726000AbfCKQAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 12:00:33 -0400
+Received: by mail-it1-f176.google.com with SMTP id m137so8093892ita.0
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 09:00:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1atrsTJNa9XZhl7opvP8ME/IpEURo0z+zC7ecRis+Ww=;
-        b=J6JqXP9rZz5FD73nxRI8UWS2wrEeZDwEwOcT7yqFmGCPxX+xvc3cWE/K2tXXXAj9kc
-         bOfW7EQ+RGIQqXhOto+mEoUyCHjhAw87MehFp59vb14pdxM2paxfm/HMRf+XUVeeGM4A
-         5IwEqzPPz64fgzaDFgH8YbH29KiVE3NKxMjnLFlCMH5dMhBHTJQ/zIhuKxrg4XjX3Azv
-         EgLIQHeBTxEPSoSYhbqhnHyZ55FourkLMh7mTd+fm6wKnqwqZQkmC3T6E4zLapTKcZn1
-         JocvWQSv3DIuNEdFjVWterPi8y17n1rL3hzIefSYt4Bf20DHq+Xw5xSITufXK+gFwk3s
-         Z1Cg==
+         :content-transfer-encoding;
+        bh=dSNuZb1/ljO4yJZ4LXGJdbQjozOL1TLwGNf3UBDfF88=;
+        b=CZMMgKMsIy7hLlLY+mw3+PDYzG+mtPzgJR8eR3FfLx/BJ8TXS67FBCZUCjrnIu5f6j
+         AFGBmbZBYhAzcdcp5JBZwD2inAluDggdJlQSGz3AlaHPZRUyurpyu9cRgb9ozGKz/k1L
+         NvkY5oxz5k9RPaHU2sCQf+nk+ibucvNLpqwn8NCRv2iSZvPOuoZjOZXA2pbOGWLYHCqm
+         srFl6B0nv+P/lkMG0OrGG25/Tc9SohdENBk3zO1/Xj2uIfM2MIFaULkZrhnQIS/IvWE2
+         pgvmtzNq6/9VSpHxc6E/2YuhOPBcwIue4N/sK4GeJWharlZo3HXJ56M5rRDz2JWRJrPY
+         QqDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1atrsTJNa9XZhl7opvP8ME/IpEURo0z+zC7ecRis+Ww=;
-        b=rXDI99XnB/EzZRJX4scBij4AqdwwsawGVnIL9WHqPCw5E41xG56S5RuyjzMEvW0xJ6
-         UZylJn/hpfzDxO5Yi4VRT1soIwok3cobz8LIVQ79Srby0nAs0te+9D7jk9o6KSbbI9b3
-         9Hrsq053fNWuvhaT225AfK8VU9RKFk0yAXrvzmdCk/Eg4QVry2HkZrkzJ0nAzoU9fJ3i
-         0zS5/E31HGb4Ln0VtisthunxRBpdUxEXDaL6ghYg52WKUlQniC2ZY2JLwc2K9rgR9wbL
-         1XG5DbfbvAIiYB0i1Kv4Mokcnk1cnI6nqQ/23vrx0QU9nHXxIHSamdgW6sqqnf9DRMc8
-         kU7A==
-X-Gm-Message-State: APjAAAXqVz+WMKT7kihfHSUptzbYDsSf2HlDpiPw/Z7/KXqdQzscm8nm
-        JiDyIZZpoCx8SzRxX0/vnnvdAcfWj7sxyFFb9yMHUA==
-X-Google-Smtp-Source: APXvYqwtSwrXHldS9w8KLu2KMJHkFTJg9IVqF7qETWNzNJ/uUJek+1axWUVKN9p2xnQuMr2YSJDEaAcdnsiIhdZdwzw=
-X-Received: by 2002:a05:6830:13:: with SMTP id c19mr20059460otp.149.1552319655608;
- Mon, 11 Mar 2019 08:54:15 -0700 (PDT)
+         :message-id:subject:to:content-transfer-encoding;
+        bh=dSNuZb1/ljO4yJZ4LXGJdbQjozOL1TLwGNf3UBDfF88=;
+        b=ozwz5ZjGAADZ9/OD0uJEIaRiAlOUOhe8lJgibRS4IEujX1VSbXrMYp8rO50dLWHPRD
+         HtvoZFozkrRusBRX8B+rsz61AiKVWkIgmsiDUkQcTOzX6j9zt/q/MLOW6Yh/8uFR0gQp
+         KdWh26n9y4AZHyIKq0FwoP2CYfEGE0CQzQKnOSN/tD+c+cabTZtJsEKvlPTI+K706DGm
+         ipzbou618i3OIK4EayUyU41uhnfTiexJ4HB10mRQk2vaUOfi9EnbtBkoZuum5GXXPc4B
+         vSGaRPTdsDgMpmzTv9rA9EFvuZLvflton5he3xtYUJ8GdnFbPLTYEku+YHQc51T7jrgL
+         YJHw==
+X-Gm-Message-State: APjAAAXyk4W5R1Dq9CEQzjIJ4+0gO4ZygbGqJSgIPHc6iDF/fMu3huP0
+        1AqPXb2UpC1PJswIgPnqOWHjRMfhBKTnCNCCEJAAlUBz
+X-Google-Smtp-Source: APXvYqzsWyx21IiSsWbGYDuqElXTcTdpkgZsDwzjoBsm68mUdd3NJ6HPhbYl9jX3PDA8jhwlIkHiAXYIppDO4E/w39I=
+X-Received: by 2002:a24:4202:: with SMTP id i2mr239275itb.85.1552320031615;
+ Mon, 11 Mar 2019 09:00:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190310080931.64134-1-ttjtftx@gmail.com> <20190310081023.64186-1-ttjtftx@gmail.com>
- <CAPig+cQxVfZ7L=cFfgAWOzL7Equ2HsFR7si=GxBxj3-mSpCUnQ@mail.gmail.com> <CAOAu_YJKNjGd3mw7K17ySQJeF4XxC+V00FFEYA7o593riEGN1g@mail.gmail.com>
-In-Reply-To: <CAOAu_YJKNjGd3mw7K17ySQJeF4XxC+V00FFEYA7o593riEGN1g@mail.gmail.com>
-From:   ttjtftx <ttjtftx@gmail.com>
-Date:   Mon, 11 Mar 2019 23:54:04 +0800
-Message-ID: <CAOAu_YJHOQt=6H2q+hMnsmFGsqZyedDO0LpCqNH_8A484iPyWA@mail.gmail.com>
-Subject: Fwd: [GSoC][PATCH v2 4/5] t0022-crlf-rename: avoid using pipes
-To:     git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
+References: <CAN=4vMp1+=hmdRiuC1Y-4w2iKbSuwgAi54ozDzK2dGwn7J=QUQ@mail.gmail.com>
+In-Reply-To: <CAN=4vMp1+=hmdRiuC1Y-4w2iKbSuwgAi54ozDzK2dGwn7J=QUQ@mail.gmail.com>
+From:   Roman Perepelitsa <roman.perepelitsa@gmail.com>
+Date:   Mon, 11 Mar 2019 17:00:20 +0100
+Message-ID: <CAN=4vMpN2UrZvJSedCyP=oh7aXTj5hWg9Yq6tfdTxMd895Rpxg@mail.gmail.com>
+Subject: Re: Refresh index without discard_index + repo_read_index
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry, I forgot to Cc.
+In the end I managed to patch diffing code in libgit2
+(git_diff_tree_to_index and git_diff_index_to_workdir) to make it
+about 4x faster. It's now faster than `git status`, so good enough for
+me.
 
----------- Forwarded message ---------
-From: ttjtftx <ttjtftx@gmail.com>
-Date: Mon, Mar 11, 2019 at 11:43 PM
-Subject: Re: [GSoC][PATCH v2 4/5] t0022-crlf-rename: avoid using pipes
-To: Eric Sunshine <sunshine@sunshineco.com>
+I'm still curious whether it's possible to refresh index in git (not
+libgit2), so please chime if if you know.
 
+Roman.
 
-On Sun, Mar 10, 2019 at 6:03 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-
-> All of the patches in this series are malformed. There should be a
-> "---" line right here below your sign-off. The "---" line is
-> recognized by git-am/git-apply as separating the commit message from
-> the actual diff(s).
-
-I will check it next time.
-
-> It is a very well-established custom in Git tests for the files handed
-> to test_cmp() to be named "expect" and "actual", so this change is not
-> the most desirable. What you can do instead is:
+On Sat, Mar 9, 2019 at 8:59 PM Roman Perepelitsa
+<roman.perepelitsa@gmail.com> wrote:
 >
->     git diff-tree -M -r --name-status HEAD^ HEAD >output &&
->     sed -e "s/R[0-9]*/RNUM/" output >actual &&
+> I=E2=80=99m writing a program that reads stdin in a loop and prints the
+> equivalent of `git status` whenever it reads a character. It always
+> prints its results for the same repository, the same pathspec, etc.
+> The input characters have no effect on the output, only the sate of
+> the repository does.
+> I=E2=80=99m hoping that I can make it produce results faster than a bash
+> script that literally calls `git status` in a loop. I=E2=80=99m thinking =
+that
+> maybe I can keep some caches around so that I don=E2=80=99t have to redo =
+all
+> the work on every iteration that git status does.
 >
-> which allows you to leave the test_cmp() line alone, thus (as a bonus)
-> makes the patch less noisy.
-
-Thanks for the tips! Now I see why "actual" is the most used name for
-output files.
+> What I cannot figure out is how to refresh the index so that it picks
+> up all the changes that might have happened to the repository and
+> workdir since the last iteration. Here=E2=80=99s what I have:
+>
+> ```c
+> #include <stdio.h>
+> #include <string.h>
+>
+> #define USE_THE_INDEX_COMPATIBILITY_MACROS
+> #include "cache.h"
+> #include "wt-status.h"
+> #include "pathspec.h"
+> #include "repository.h"
+>
+> int cmd_multi_status(int argc, const char** argv, const char* prefix) {
+>   struct pathspec pathspec;
+>   memset(&pathspec, 0, sizeof(pathspec));
+>   repo_read_index(the_repository);
+>   while (getchar() !=3D EOF) {
+>     refresh_index(&the_index,
+>                   REFRESH_QUIET | REFRESH_UNMERGED | REFRESH_REALLY,
+>                   &pathspec, NULL, NULL);
+>     int uncommitted =3D has_uncommitted_changes(the_repository, 1);
+>     int unstaged =3D has_unstaged_changes(the_repository, 1);
+>     int untracked =3D has_untracked(the_repository);  // I added this to
+> wt-status.h
+>     printf("%d %d %d\n", uncommitted, unstaged, untracked);
+>   }
+>   return 0;
+> }
+> ```
+>
+> This produces correct results on the first iteration but then it
+> doesn=E2=80=99t pick up all changes. I=E2=80=99ve hacked some code in pre=
+load-index.c
+> and cache.c so that it picks up more changes but I still cannot detect
+> when an unstaged file becomes uncommitted or the other way around.
+>
+> Any pointers would be greatly appreciated.
+>
+> Roman.
+>
+> P.S.
+>
+> I have working code that uses libgit2. Updating the index with
+> `git_index_read(index, 0)` works as expected and is indeed faster than
+> discarding the index and starting from scratch. But it's still slower
+> than `git status` on large repositories, especially with many ignored
+> files.
