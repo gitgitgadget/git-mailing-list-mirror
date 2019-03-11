@@ -2,66 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 951A720248
-	for <e@80x24.org>; Mon, 11 Mar 2019 22:53:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB35820248
+	for <e@80x24.org>; Mon, 11 Mar 2019 23:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbfCKWx4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 18:53:56 -0400
-Received: from kwanyin.sergiodj.net ([158.69.185.54]:56084 "EHLO
-        kwanyin.sergiodj.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726009AbfCKWx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 18:53:56 -0400
-From:   Sergio Durigan Junior <sergiodj@sergiodj.net>
+        id S1726011AbfCKXxZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 19:53:25 -0400
+Received: from mail-io1-f46.google.com ([209.85.166.46]:37428 "EHLO
+        mail-io1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725826AbfCKXxY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 19:53:24 -0400
+Received: by mail-io1-f46.google.com with SMTP id x7so482186ioh.4
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 16:53:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=jX0VQoocihvt8sAeCGNOLuKRqCjLnL9wQJ32wkxQfOU=;
+        b=Rzxu7mXziwPevAvrueOLSot2muOPzZP3TK3zPGLu8Layy3G1VBAWrI/kRuZy0glrij
+         rU7akK2SlLZihlC+yW4oLpXP/bX90YEPsok12ggbi03sfS00qhoLeDjg1xMjBHrXW5j0
+         1+chE5q4Lvmx6C7j0cCVPP7n44mk4BRxVIkD8zvUS2nR5rZGe7ap6bpF1X3KB1rfOntV
+         rQTPGUwR4D6PSAzs6UsIJipTEVIhF3WMyP/Z1p+goFi5/CvXcDiMoe1zyb/uPJK135bS
+         ETrZxwiB2W5hXOy7Fch7ZuMf6VYOvWvZ+oHZd1L8eaND3VD/BN4djlNxExP/cMlt6sub
+         6bRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=jX0VQoocihvt8sAeCGNOLuKRqCjLnL9wQJ32wkxQfOU=;
+        b=EjCx9+bbQwl6mJRfhM0DozMvf4rDHbD96NLjrjap021cc2iXuGC6zG2f2ANJZBAmp+
+         inykv2BVEcbcroTa2CYOY2ebfJzmyAA/zC05DRv+wP/yGibo3GFn+vBZSRXbBJKmeZh3
+         /ynfJksxULSJU4yW7QezwtQO3u8g8i7p1H8lU1oXDfgyuB8jCBd1yPjYtDpuJ674hfGZ
+         UjoDBdAQcjwuu1865TMhc6o26OXWudyZN1MVSkyLwChebRwCiRC0gDgq51092bioxuvZ
+         x8wvNnnlKFAr94edTq+3fn5Hn67OJwdONzVeVZy40JAMPGl6Z8/Yz6lHk1Gve7TfKcpX
+         A2rw==
+X-Gm-Message-State: APjAAAVKy0LAZJ5Ce81/5A09gg8RVkZXl/oYfWOy2t6GVVQ1oW1cAEvO
+        Lk017Wr/j7wYVqCXXkQcLn2IfrdEUlA9Bdmw9Ryoqbef
+X-Google-Smtp-Source: APXvYqzs+zgRNnRhA1DG3NFOKkAyxSAN0fAkHXrIg1gxR269iFxWnZJdp8YOEiibSUvx+jtV7hCmIoUunBWjUYu8CHA=
+X-Received: by 2002:a5d:9806:: with SMTP id a6mr12135755iol.296.1552348404059;
+ Mon, 11 Mar 2019 16:53:24 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAH8yC8nnFYt0raL+twrG_v8XZn_FDJWyM=tH=QL13Z70_bHRiQ@mail.gmail.com>
+ <CAPig+cTCOfDCv=L3EWUqgVZx1VCdqt5ZjmSQMwHLX=R4C4hgTA@mail.gmail.com>
+In-Reply-To: <CAPig+cTCOfDCv=L3EWUqgVZx1VCdqt5ZjmSQMwHLX=R4C4hgTA@mail.gmail.com>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Mon, 11 Mar 2019 19:52:54 -0400
+Message-ID: <CAH8yC8=YrZR=j9R8Ae+O2UzfxB_Hc1Osu68T-M1mczHiEasfJQ@mail.gmail.com>
+Subject: Re: Solaris and sed: Too many commands, last: s/\n//
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>
-Subject: Re: Possible race condition with git-rebase + .git/index.lock
-References: <87k1h55bx0.fsf@sergiodj.net>
-        <CAPig+cS_NLgwr6F2OqMpMZ3GBO-Cyru3G3UBxiT4ULJ_V1Bqvg@mail.gmail.com>
-X-URL:  http://blog.sergiodj.net
-Date:   Mon, 11 Mar 2019 18:53:53 -0400
-In-Reply-To: <CAPig+cS_NLgwr6F2OqMpMZ3GBO-Cyru3G3UBxiT4ULJ_V1Bqvg@mail.gmail.com>
-        (Eric Sunshine's message of "Mon, 11 Mar 2019 18:50:20 -0400")
-Message-ID: <87bm2h58fy.fsf@sergiodj.net>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Monday, March 11 2019, Eric Sunshine wrote:
-
-> On Mon, Mar 11, 2019 at 6:17 PM Sergio Durigan Junior
-> <sergiodj@sergiodj.net> wrote:
->>   # git rebase origin/master
->>   ...
->>   Applying: commitX
->>   Applying: commitY
->>   Applying: commitZ
->>   fatal: Unable to create '/home/xyz/dir1/dir2/.git/index.lock': File exists.
->>
->> The first thing I did was to check whether the index.lock file existed,
->> but it doesn't.
+On Mon, Mar 11, 2019 at 5:15 PM Eric Sunshine <sunshine@sunshineco.com> wro=
+te:
 >
-> What platform is this on? If Windows, I'm wondering if something (such
-> as a virus scanner) is holding the lock file open long enough to
-> prevent Git from actually deleting it (and perhaps Git doesn't notice
-> the failed deletion -- until the next time it tries to take the lock).
+> [cc:+=C3=86var]
+>
+> On Mon, Mar 11, 2019 at 4:32 PM Jeffrey Walton <noloader@gmail.com> wrote=
+:
+> > I enabled self tests for Solaris. Solaris has some anemic utilities so
+> > I put /usr/gnu/bin first on-path.
+>
+> The first question is if you are really running GNU 'sed'? My guess is
+> "no, it's still picking up Solaris's 'sed'".
 
-This is on GNU/Linux (Fedora 28, to be specific).  I haven't had the
-chance to test this on other distros, unfortunately.  And since it seems
-to be a race condition, it's kind of hard to perform tests that trigger
-this.
+Yeah, you're right:
 
-Thanks,
+$ make test V=3D1
+...
 
--- 
-Sergio
-GPG key ID: 237A 54B1 0287 28BF 00EF  31F4 D0EB 7628 65FC 5E36
-Please send encrypted e-mail if possible
-http://sergiodj.net/
+gmake -C t/ all
+gmake[1]: Entering directory `/export/home/jwalton/Build-Scripts/git-2.21.0=
+/t'
+rm -f -r 'test-results'
+SED VERSION: sed: illegal option -- version
+
+I wonder why ... Let me check if I am exporting PATH.
+
+Jeff
