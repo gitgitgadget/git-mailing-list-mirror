@@ -7,189 +7,129 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 983DF20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 19:57:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 464C320248
+	for <e@80x24.org>; Mon, 11 Mar 2019 19:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728394AbfCKT5k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 15:57:40 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:42186 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729142AbfCKT5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 15:57:38 -0400
-Received: by mail-ed1-f67.google.com with SMTP id j89so323775edb.9
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 12:57:37 -0700 (PDT)
+        id S1729153AbfCKT5l (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 15:57:41 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:40420 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729134AbfCKT5h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 15:57:37 -0400
+Received: by mail-ed1-f65.google.com with SMTP id r23so335354edm.7
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 12:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4DJ0Ejxc4eibebzMN0+GbYCUS1mPnr+WLph8m7lNW4Y=;
-        b=iqz0HZJE2Zyi+9cwT3m3F2+gAtXT6t/lXTdVVLDDPV4zU5gM6ZyrvUngBEkzvxhzUj
-         +lIBZvzEQfxIwqOwog4LdyrvBHyHG4Zl2tUKWvlHtraF/Bx6YM6uLbbyns6nag80ieSZ
-         6Hn2J4f+8MTwjqedxUH9SkhEeTN7jY7r4Mnyyyrsftp/MIQg9bSXiaxQk0WEL+z8ZMcK
-         QIwbkWXNvrSEFelT/KSqQhSyi46YewNXfRCYyTGeP2qIw0wii55y0vayvUnvIxjVmNG9
-         /xdN9k17eIRvaeW7gkYVzN9J7I05ZZf9Wu4JYJxRLoGKoNa5FSFGcHtfJsImKhe2xBX6
-         F+bQ==
+        bh=Ql0Wns6C+338Gav1nGv7CEdqKKL5JRSw2Q3/qS/EMyM=;
+        b=tBCl/GouZXSyN8DWf2JxvAYxGhGgL30voggHz4KNIJQzz5GonY62xJ2YBsiq0Cffq5
+         BlCk46T+fjUjVVbvfzM4Sxp7maubAZHbvb8zi3AMSGR+Q7DJhLbIDvSkiFcFLRya4JvN
+         DTfGeMq6XC2nB2nk1W/kGhEgaAKxdzs25zvuih0HHsRSDwk2McI21LLcDQnvzzexGm5t
+         FXKUxEd7zrvSTO/jKvWZpzV8XHX8GhPamrJTNVspc8hqUlGS+Iga5VuQgxsbG6Chbdpj
+         VS1pcszBCDpFZXrs7ofH+1Lvz8PehC5ely/lbLEMNkJrhyDGe4GFqcUqgIghHm3LN33n
+         VVqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4DJ0Ejxc4eibebzMN0+GbYCUS1mPnr+WLph8m7lNW4Y=;
-        b=VgzRoKMdmnboPpaEtTj2tcgfTyb/xnBaKNXLcm5+lLJzDun5ZrT1NwlmrpPwTBPCPu
-         mtvdPKo3uDnfLmTSDcD72S3WynTIna2ULJ+ov6oZSkuPrKl8AWBGz1+QZW2CPtvMJPvH
-         31SKkGLk8IecTV5Abn9Esked5FIX2uqZUHsiYuY473tiokhwD3kzX17cBxp2pYhmMDmQ
-         8+XmJbDfacvGye0ewzg23wdVL5q8EDVGsXevWBSwT6Z6ow7B3gXQITNOz4PCFdPYSaW4
-         O1LVVUI+JsjVErXUB9kSzmP2zQMgs+MupwFvap3LDN4etXmmL1aHPZoQDQhk9yJcU1xr
-         p50g==
-X-Gm-Message-State: APjAAAWuRim5st0vWyYyJMbs44Xp37j82rQSeodbLyrRefH/2QvKhBgy
-        3MnLJxS9DoNBcSsT0ihbrI/8VaAh
-X-Google-Smtp-Source: APXvYqzNhtaNvQrT3JEyhYX8+LK0vPNvy2ywYfKknaez/UqVxMY1lLRtEsVLkVIUc+C7pbCEkuQXZg==
-X-Received: by 2002:a17:906:5583:: with SMTP id y3mr22955881ejp.42.1552334256503;
-        Mon, 11 Mar 2019 12:57:36 -0700 (PDT)
+        bh=Ql0Wns6C+338Gav1nGv7CEdqKKL5JRSw2Q3/qS/EMyM=;
+        b=jD0sUbeGxRTjNOiZFKsOfr8EgzNPqc2x54qD//ctBYjuQqYETy2gscg1/icjhIJQyP
+         vvSk3LDeP/MrmloDoxVuvdVV2AFZBx5UpAdVQCuIQrAbBpLnzNbE8mxklIHPdQnra7so
+         U8SiaE2VXt+2FIvTLrMG1iH8VmGeOKTSMjFimnlw1lQmIjEjmdKvxEMnHWYM0F6183dg
+         lHdnXCEl+I3x3WkpVv8W7j4XpTT+e4t7cccpqIpqWMeKxoySYeJTt9NxoNWjoUL1eQlL
+         ZtC5GFL2pOwVaE5StuYO8Sl28ZKfleIH056w+Dh80ca20nQYg6bng8SupajLeU1z64NR
+         Q0RA==
+X-Gm-Message-State: APjAAAXGL00PkR0dMVD60+0q7YJ1lz+a+KBbQaX66VCj1hYeyx9IXEWl
+        rWlDy5I3KT2dybgZM5u5MguWDnn2
+X-Google-Smtp-Source: APXvYqz7RZmBCQkXjnez62NQDse649jmpww+9E2Ucp82y6LrQpIdI6mqOpBZKplqkcr2tNyKxLNxCw==
+X-Received: by 2002:a50:9484:: with SMTP id s4mr400425eda.82.1552334255764;
+        Mon, 11 Mar 2019 12:57:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s3sm5010529edm.78.2019.03.11.12.57.35
+        by smtp.gmail.com with ESMTPSA id p44sm4888954edc.1.2019.03.11.12.57.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 11 Mar 2019 12:57:35 -0700 (PDT)
 Date:   Mon, 11 Mar 2019 12:57:35 -0700 (PDT)
-X-Google-Original-Date: Mon, 11 Mar 2019 19:57:34 GMT
-Message-Id: <f6990f28c028e04c5d237878d7fbb2160dd7dac9.1552334254.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.158.v2.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Mon, 11 Mar 2019 19:57:33 GMT
+Message-Id: <pull.158.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.158.git.gitgitgadget@gmail.com>
 References: <pull.158.git.gitgitgadget@gmail.com>
-        <pull.158.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] rebase: deprecate --preserve-merges
+Subject: [PATCH v2 0/1] Deprecate git rebase --preserve-merges
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+It had a good run, but its design was irreparably limited. So I came up with
+a redesign:--rebase-merges. It seems to work all right, so now it is time to
+start letting go of the previous design.
 
-We have something much better now: --rebase-merges (which is a
-complete re-design --preserve-merges, with a lot of issues fixed such as
-the inability to reorder commits with --preserve-merges).
+Changes since v1:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+ * The term --rebase-merges is now marked as such in the deprecation notice
+   in git rebase's manual.
+ * The deprecation warning is now printed only in builtin/rebase.c, not
+   repeated in git-rebase--preserve-merges.sh.
+
+Johannes Schindelin (1):
+  rebase: deprecate --preserve-merges
+
  Documentation/config/branch.txt |  6 +++---
  Documentation/config/pull.txt   |  6 +++---
  Documentation/git-rebase.txt    | 23 ++++++++++++-----------
  builtin/rebase.c                |  8 ++++++--
  4 files changed, 24 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/config/branch.txt b/Documentation/config/branch.txt
-index 019d60ede2..8f4b3faadd 100644
---- a/Documentation/config/branch.txt
-+++ b/Documentation/config/branch.txt
-@@ -85,9 +85,9 @@ When `merges`, pass the `--rebase-merges` option to 'git rebase'
- so that the local merge commits are included in the rebase (see
- linkgit:git-rebase[1] for details).
- +
--When preserve, also pass `--preserve-merges` along to 'git rebase'
--so that locally committed merge commits will not be flattened
--by running 'git pull'.
-+When `preserve` (deprecated in favor of `merges`), also pass
-+`--preserve-merges` along to 'git rebase' so that locally committed merge
-+commits will not be flattened by running 'git pull'.
- +
- When the value is `interactive`, the rebase is run in interactive mode.
- +
-diff --git a/Documentation/config/pull.txt b/Documentation/config/pull.txt
-index bb23a9947d..b87cab31b3 100644
---- a/Documentation/config/pull.txt
-+++ b/Documentation/config/pull.txt
-@@ -18,9 +18,9 @@ When `merges`, pass the `--rebase-merges` option to 'git rebase'
- so that the local merge commits are included in the rebase (see
- linkgit:git-rebase[1] for details).
- +
--When preserve, also pass `--preserve-merges` along to 'git rebase'
--so that locally committed merge commits will not be flattened
--by running 'git pull'.
-+When `preserve` (deprecated in favor of `merges`), also pass
-+`--preserve-merges` along to 'git rebase' so that locally committed merge
-+commits will not be flattened by running 'git pull'.
- +
- When the value is `interactive`, the rebase is run in interactive mode.
- +
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 6363d674b7..44e00329e1 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -415,9 +415,9 @@ i.e. commits that would be excluded by linkgit:git-log[1]'s
- the `rebase-cousins` mode is turned on, such commits are instead rebased
- onto `<upstream>` (or `<onto>`, if specified).
- +
--The `--rebase-merges` mode is similar in spirit to `--preserve-merges`, but
--in contrast to that option works well in interactive rebases: commits can be
--reordered, inserted and dropped at will.
-+The `--rebase-merges` mode is similar in spirit to the deprecated
-+`--preserve-merges`, but in contrast to that option works well in interactive
-+rebases: commits can be reordered, inserted and dropped at will.
- +
- It is currently only possible to recreate the merge commits using the
- `recursive` merge strategy; Different merge strategies can be used only via
-@@ -427,9 +427,10 @@ See also REBASING MERGES and INCOMPATIBLE OPTIONS below.
- 
- -p::
- --preserve-merges::
--	Recreate merge commits instead of flattening the history by replaying
--	commits a merge commit introduces. Merge conflict resolutions or manual
--	amendments to merge commits are not preserved.
-+	[DEPRECATED: use `--rebase-merges` instead] Recreate merge commits
-+	instead of flattening the history by replaying commits a merge commit
-+	introduces. Merge conflict resolutions or manual amendments to merge
-+	commits are not preserved.
- +
- This uses the `--interactive` machinery internally, but combining it
- with the `--interactive` option explicitly is generally not a good
-@@ -1020,11 +1021,11 @@ merge cmake
- 
- BUGS
- ----
--The todo list presented by `--preserve-merges --interactive` does not
--represent the topology of the revision graph.  Editing commits and
--rewording their commit messages should work fine, but attempts to
--reorder commits tend to produce counterintuitive results. Use
--`--rebase-merges` in such scenarios instead.
-+The todo list presented by the deprecated `--preserve-merges --interactive`
-+does not represent the topology of the revision graph (use `--rebase-merges`
-+instead).  Editing commits and rewording their commit messages should work
-+fine, but attempts to reorder commits tend to produce counterintuitive results.
-+Use `--rebase-merges` in such scenarios instead.
- 
- For example, an attempt to rearrange
- ------------
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 52114cbf0d..21ac10f739 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1100,8 +1100,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
- 			parse_opt_interactive },
- 		OPT_SET_INT('p', "preserve-merges", &options.type,
--			    N_("try to recreate merges instead of ignoring "
--			       "them"), REBASE_PRESERVE_MERGES),
-+			    N_("(DEPRECATED) try to recreate merges instead of "
-+			       "ignoring them"), REBASE_PRESERVE_MERGES),
- 		OPT_BOOL(0, "rerere-autoupdate",
- 			 &options.allow_rerere_autoupdate,
- 			 N_("allow rerere to update index with resolved "
-@@ -1212,6 +1212,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_rebase_usage,
- 				   builtin_rebase_options);
- 
-+	if (options.type == REBASE_PRESERVE_MERGES)
-+		warning(_("git rebase --preserve-merges is deprecated. "
-+			  "Use --rebase-merges instead."));
-+
- 	if (action != NO_ACTION && !in_progress)
- 		die(_("No rebase in progress?"));
- 	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
+
+base-commit: e902e9bcae2010bc42648c80ab6adc6c5a16a4a5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-158%2Fdscho%2Fdeprecate-rebase-p-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-158/dscho/deprecate-rebase-p-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/158
+
+Range-diff vs v1:
+
+ 1:  6407430da7 ! 1:  f6990f28c0 rebase: deprecate --preserve-merges
+     @@ -65,7 +65,7 @@
+      -	Recreate merge commits instead of flattening the history by replaying
+      -	commits a merge commit introduces. Merge conflict resolutions or manual
+      -	amendments to merge commits are not preserved.
+     -+	[DEPRECATED: use --rebase-merges instead] Recreate merge commits
+     ++	[DEPRECATED: use `--rebase-merges` instead] Recreate merge commits
+      +	instead of flattening the history by replaying commits a merge commit
+      +	introduces. Merge conflict resolutions or manual amendments to merge
+      +	commits are not preserved.
+     @@ -109,22 +109,9 @@
+       				   builtin_rebase_options);
+       
+      +	if (options.type == REBASE_PRESERVE_MERGES)
+     -+		warning(_("--preserve-merges is deprecated in favor of "
+     -+			  "--rebase-merges"));
+     ++		warning(_("git rebase --preserve-merges is deprecated. "
+     ++			  "Use --rebase-merges instead."));
+      +
+       	if (action != NO_ACTION && !in_progress)
+       		die(_("No rebase in progress?"));
+       	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
+     -
+     - diff --git a/git-rebase--preserve-merges.sh b/git-rebase--preserve-merges.sh
+     - --- a/git-rebase--preserve-merges.sh
+     - +++ b/git-rebase--preserve-merges.sh
+     -@@
+     - 	printf '%s\n' "$*" >&2
+     - }
+     - 
+     -+warn "git rebase --preserve-merges is deprecated. Use --rebase-merges instead."
+     -+
+     - # Output the commit message for the specified commit.
+     - commit_message () {
+     - 	git cat-file commit "$1" | sed "1,/^$/d"
+
 -- 
 gitgitgadget
