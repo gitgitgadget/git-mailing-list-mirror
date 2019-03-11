@@ -2,108 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1F4C20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 20:13:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADB3420248
+	for <e@80x24.org>; Mon, 11 Mar 2019 20:24:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728228AbfCKUN2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 16:13:28 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:46855 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728130AbfCKUN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 16:13:27 -0400
-Received: by mail-wr1-f45.google.com with SMTP id i16so226434wrs.13
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 13:13:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fN3nuecnutH0GfTyCWYZq+bRwYIroRl23FMtNADEViU=;
-        b=bTDUaeF+qk8eiSz25DEtcv6Xk+K+PEjipB7VlKFVcM+ZUtTmoI1JQFZ+4FpFiUPsnz
-         05SCbSdt/L6IQ8xCjlztxg65FAbFm56/QIVd3fLEVAAeU7FvuHjKmeG70QzML1g8zMm8
-         B0zZGsMJtsYDDuUoozdfTsPG8hW9qsuD2ExIPrTOPVR6Ff3dDNCcOCmFgv8iyPLsx/0i
-         PIq1mPyIpzdI1RC1bOq9RMZAeQzt95n1en29QirfFfL2JJLfaMtU2PelY03OozeMAcSU
-         2rRA7SrdRDDAQnEIKaiQBt/BxuGHg+5Dmdb1/FHv6UqAosvsuo6yp94GZMwze9jjAHNF
-         MR2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fN3nuecnutH0GfTyCWYZq+bRwYIroRl23FMtNADEViU=;
-        b=UXR7jPO5R4TgcxCCh3RRAcNE0skx5JCDcRckdKhaSvI1LZoIbKUL78yu9S9u3S4l+j
-         t0IaHqyaZc+kKSSCyJmovTT4RhxpT458a3x8iqWB0zL/2J1nLL8xEVFmyTn0Rx+RgJDd
-         2nCGIwokeUDvSiCz5wKs2iUuSJMIgwKhTztJNGNlP5sCbU3VYpF1Jb/GQ8GOVBRq/Wft
-         Vow8H9aWhI6KO7Q5xlPRlmkVt8aOZWWfEKsZkEmMWDA4KvtOiqo1cIoxZwl2KPsiGAe7
-         GTkZLjbHBzxyh79GmDWmTIeUHIw28HAwNc3QGP5x6LFzzEwByTaD351uF801+k6UsAeY
-         1tmA==
-X-Gm-Message-State: APjAAAVWsE90nfmZxeEan9bO2LJIKO6MLLQ2kLMUFA0kokmJKoCEvVbA
-        9DlhNF47aLaLZThSBaCo6tUJb9ZHtdT0G3JrPHBSgw==
-X-Google-Smtp-Source: APXvYqx29JNLR0mkuQYsLwY3ouzn+odyq4DzGlat7XRElKjEQBrBB4+nWiRO1hdicKyxnbFa3nQGGpPeMJxY4TVOwNE=
-X-Received: by 2002:adf:ffc3:: with SMTP id x3mr12430670wrs.111.1552335205674;
- Mon, 11 Mar 2019 13:13:25 -0700 (PDT)
+        id S1728164AbfCKUYn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 16:24:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46342 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727548AbfCKUYn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 16:24:43 -0400
+Received: (qmail 16052 invoked by uid 109); 11 Mar 2019 20:24:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Mar 2019 20:24:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26552 invoked by uid 111); 11 Mar 2019 20:25:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 11 Mar 2019 16:25:02 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Mar 2019 16:24:41 -0400
+Date:   Mon, 11 Mar 2019 16:24:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Drop last MakeMaker reference
+Message-ID: <20190311202441.GB18263@sigill.intra.peff.net>
+References: <pull.146.git.gitgitgadget@gmail.com>
+ <xmqqfts469h5.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1903071109020.41@tvgsbejvaqbjf.bet>
+ <xmqq1s3ikurh.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1903081718330.41@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-References: <CA+dzEBkkbQj0rCjvPfcET2Uvt6fP_v+wQE52ZkAND2Mps08SNQ@mail.gmail.com>
- <10972e0e-7fe1-437f-efe6-cff82a1205e0@kdbg.org> <20190311175519.6lbppv5u44w2u4sj@tb-raspi4>
- <CA+dzEBm7fdrncnd_7tDu-q047qxt3CsHVQna3GRMagJetisQeA@mail.gmail.com> <CAKepmajVk27nHAzbuHitowyo11HvqSNfwfcg3kOp9DXDLe8FOA@mail.gmail.com>
-In-Reply-To: <CAKepmajVk27nHAzbuHitowyo11HvqSNfwfcg3kOp9DXDLe8FOA@mail.gmail.com>
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Mon, 11 Mar 2019 13:13:14 -0700
-Message-ID: <CA+dzEB=oKhd5O7bhWLNvvYM9eyht7SO1LkY5Sy=tEFhCCZzfDQ@mail.gmail.com>
-Subject: Re: `git add <<windows 8.3 path to file inside repo>>` results in
- "fatal: ... is outside repository"
-To:     Jack Adrian Zappa <adrianh.bsc@gmail.com>
-Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1903081718330.41@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 11, 2019 at 12:34 PM Jack Adrian Zappa
-<adrianh.bsc@gmail.com> wrote:
->
-> Hey Anthony,
->
-> Are you sure that you have 8.3 active on the partition you are using?
-> IIRC, It is not on by default anymore.  To see, go to a cmd line and
-> type "dir /x".  If there are any files that exceed the 8.3 format, it
-> will show those files with two names, the 8.3 name and the long name.
->
-> If it is off and you want to turn it on, see
-> https://support.microsoft.com/en-ca/help/121007/how-to-disable-8-3-file-name-creation-on-ntfs-partitions.
-> and https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/ff621566(v=ws.11)
-> for more information.
->
->
-> A
->
+On Fri, Mar 08, 2019 at 05:27:36PM +0100, Johannes Schindelin wrote:
 
-Yes, it appears they are enabled -- see below
+> > Or perhaps GGG can learn to avoid 0/1 for a single-patch topic ;-)
+> 
+> It is easier, and more consistent, to have a cover letter even then, for
+> things like the broader explanation of the context, the changes since the
+> previous iteration, and the range-diff (which would make v2, v3, v4, etc
+> utterly unreadable from my point of view if they were integrated into the
+> single patches, as I used to do with interdiffs).
 
+Just my two cents:
 
-C:\Users\IEUser\AppData\Local\Temp\t\longname-repo>git add
-C:\Users\IEUser\AppData\Local\Temp\t\longna~1\f
-fatal: C:\Users\IEUser\AppData\Local\Temp\t\longna~1\f:
-'C:\Users\IEUser\AppData\Local\Temp\t\longna~1\f' is outside
-repository
+As a reviewer, I generally prefer not to see a separate cover letter for
+a single patch. At least for the first version (I agree it gets unwieldy
+showing a range-diff after the "---" for subsequent versions, unless it
+happens to be pretty short).
 
-C:\Users\IEUser\AppData\Local\Temp\t\longname-repo>git add
-C:\Users\IEUser\AppData\Local\Temp\t\longname-repo\f
+My reasoning is that I've noticed that many of the GGG-sent patches
+often end up duplicating quite a bit of content between the cover letter
+and the commit message of the patch (or worse, putting things only in
+the cover letter that really could go into the commit message). That
+doubles the time I spend reading and understanding the patch's rationale
+(and I'm speaking subjectively here, of course; I didn't measure it).
 
-C:\Users\IEUser\AppData\Local\Temp\t\longname-repo>dir /x ..
- Volume in drive C has no label.
- Volume Serial Number is 3A97-874F
+I don't think it's an _inherent_ problem with a separate cover letter.
+But something about the workflow causes people to write up over-long
+cover letters. Which presumably is the fact that they're presented with
+a PR textbox to write the rationale separately from when they wrote the
+commit message. So they err on the side of repeating themselves, and
+never see the two pieces "together" (like the reader will), which makes
+the redundancy more obvious.
 
- Directory of C:\Users\IEUser\AppData\Local\Temp\t
+I'd say 99% of the time a single-patch doesn't need any cover letter
+material at all. And even a multi-patch series really just needs a tl;dr
+of the problem and a sketch of the solution. In both cases, the commit
+messages should carry the meat.
 
-03/11/2019  01:11 PM    <DIR>                       .
-03/11/2019  01:11 PM    <DIR>                       ..
-03/11/2019  01:11 PM    <DIR>          LONGNA~1     longname-repo
-               0 File(s)              0 bytes
-               3 Dir(s)  20,063,666,176 bytes free
+(That's all specific to our project, of course; I know many projects
+don't care about commit messages at all and expect PR descriptions to be
+the first-class explanations).
+
+-Peff
