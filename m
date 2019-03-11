@@ -7,51 +7,50 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD82420248
-	for <e@80x24.org>; Mon, 11 Mar 2019 16:27:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13A7520248
+	for <e@80x24.org>; Mon, 11 Mar 2019 16:32:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727548AbfCKQ1i (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 12:27:38 -0400
-Received: from mout.gmx.net ([212.227.17.20]:36741 "EHLO mout.gmx.net"
+        id S1727777AbfCKQc6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 12:32:58 -0400
+Received: from mout.gmx.net ([212.227.15.15]:37855 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726625AbfCKQ1i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 12:27:38 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3zG2-1glAQs1g8o-00rWAy; Mon, 11
- Mar 2019 17:27:28 +0100
-Date:   Mon, 11 Mar 2019 17:27:11 +0100 (STD)
+        id S1726675AbfCKQc5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 12:32:57 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MVe87-1hZ7DG2kO7-00YvSZ; Mon, 11
+ Mar 2019 17:32:53 +0100
+Date:   Mon, 11 Mar 2019 17:32:37 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 2/2] built-in stash: handle :(glob) pathspecs again
-In-Reply-To: <xmqqh8c9kgy6.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903111726050.41@tvgsbejvaqbjf.bet>
-References: <pull.159.git.gitgitgadget@gmail.com> <7b5cca61dea4f01f9bcdcb6d5d2a913d58a341d3.1551972571.git.gitgitgadget@gmail.com> <xmqqh8c9kgy6.fsf@gitster-ct.c.googlers.com>
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] mingw: allow building with an MSYS2 runtime v3.x
+In-Reply-To: <xmqqr2bfmt5z.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1903111727510.41@tvgsbejvaqbjf.bet>
+References: <pull.160.git.gitgitgadget@gmail.com> <ba1a87e845919804c86a7859abb85ec50125628f.1552060278.git.gitgitgadget@gmail.com> <xmqqr2bfmt5z.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:SvGmWHeRgOFdErjnQ2NxYCYRxJZn/VMOk5NecFdV2H0cmIDQgd9
- 6lfxtDbnHtqWEIYdnyZ9/EjbWO1gp8yYovDCJszJLpRC2V1KYYqiqR5dqBuQRcj2AyeHsRN
- UYrITCmsdofWZFqVOA6/JyjVTHRfPRxPKJxHKnw6cmY5SN9+7yn7bXp5qG+ajh8fGIkIzwI
- 0OgIKq6R/6Ql7ytgNustQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rkweSR7P/gI=:QkFrQURsOPEXlZRtOKhWmO
- o3SkW2ao2b3EmWOqY444clT3c9Z+7IzDYEerWCUJTzFoLqxsMuYF8t6Qn1oZWnbp8qFQeyaMF
- nXis4/aKIwfbuvsO7kQpuC2trJaA6D6xCI1/q+pLqjEEEugusFOZhvn8ozHpgGwLlkGG6mU3a
- pEKmh1tcl0n2INkfssu+ywS7IgD/tm3bUTS0BmSiA7O2KvVr5Ul0nfE7mCbchR9P5PzyEYJom
- HiLJBNi+ecSwTf8Cq6jSc6VNIFUtfoxGj3K7T9Z8XVd5YgdRI7siktoX24++zMlr2jqmONfYx
- IlLhQySZ+uBIz359Q+BA75uM+F8D7IXKwv8aGQwgbRNTQEZj8PsBAqZ13+0TB1vMrD/fH6bKE
- Z+Qg4qjlusFIxffNVavGlvUZTEIbwtJag30/lWg50WdRsPU6EJd+cRQVUh9jU79ZMZuz4zc49
- I3judZWS2ZH1bv5s8H2noIt29je7aTxsKdVRpIqVTuuVyTVeyBuswtBtu5RE4ROG5jiBpGJC9
- reXxqJv4hkuy6zo1UebCBpos3YbqeXQ8dXf5YkJz6/y7DCTxc3WwtKNEc+IKy3jyG+iqQF7e1
- Bb7QL+T36FWjZVSvuwUAHMWox3Du2LvDyXdS1O6ibV7Zobi+I1jIg/BewPxwpLLd1TX7OprF4
- +v0GREo7GTAmlyof+Byhn03C2M8D7yly0oR2ksJRXU9rGNUvqHvy5iyWpOFTVi5zhO8InWS7o
- Sfz2Vaqamaemx5ZIor7ylBXTWJboDunyWZvS4CWV75V18ci380LFzAU3g4iW75UfFeQeTpTo5
- BpodAPKpgtfan4RfGeD7f1sm60ft5UKjsardYT3iv9qJvhhInazXgJnvY1szTTxkZAn2pOr4b
- hnzLvmxmPdLg8Wa4Rw8+WFy12uVms9QPj+Va9SLe3QjX3mHPT0ivlIy32F5t/L7IzZ4REOcQS
- jxwGsTkBuxw==
+X-Provags-ID: V03:K1:MuXAJVai3rkMkSjdVeJKu5ynYfZ9+nYb7pa4DsoMoyvnhqF+XiY
+ nKMEHsRZrV/bhJNrqhhMG4kYmMuSQ5lqWgkm4iZ7WXsW2qqfquPsxorHyBs6NEgEH3vqusb
+ Dm1W5BACGXwjzORl2grHFuQGxKifeAvsKxj23Cf0r9H1cXsCpXVtO9X09KXRVXfCgl7W6xT
+ EozRQKo6AuoGJKd1vvksg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Ub69rAjoxe8=:6I59ZRBk1XKXKvsJpSpmTP
+ vonMXEEG/ufu8Fg4LHf8E8Xd0G2MjfREAv3Eq82hNWY260ASQYFtiyJdExYIjYfFPJ0y9Oxng
+ 3HMhj1+WYJWqTuPd26RBxrt43EX1Iok/KET4d6I1CHfYIWaxo1TaTm2+v+KOUJhW8Y0Gi/dLf
+ ymVMBxG/5VWdVdzvxRLAKcXwbr6/1SmOMBe33dmFArXu+0D6fihatcKqBRN08jt94V9gKHD9d
+ BNdiYzkkvDCg6VIjRD6B9HzwLkQgfuXm2gTxDXi8aWBLDcv51/l9pzz0bZWkVQinR74m6VxkJ
+ TDO3Q9rtbmqKSHxmsrDbIOdcXdkjvJuEIjFT46Vg91aG8VbHMjPeFaM2tC4Qwu2k14v79PN9Z
+ L9HaiMk3TI2493oxUJx6Glq5uBZTKWs1Eg3q+wlkIS7U/sCHGI35aoepZf/TJLpvhuDXSHIrv
+ ZVHXWPa+yOQoIFHLBcclqfDRRYcMLI3354BAlyfG9PknNsOllZ8hIKN5o9MW5+Znj9B0lMu87
+ OMc5G9sQVOPPh+2aCIn+lQkJR4L+fCexsVnmEZWx4tSDL99+Nje+vqwPOlfjD0Ubt5BoIpWbU
+ LS8TMqrxVZoHf/wgnJ94esDm+8LKsHQgKkF0tCdmc2awIrRNmm+onzATIxB9HjbMUJ9ZXn5QS
+ g7kaAuHi9VkqmKq3bYs1cBpmnAToQYBlyVAMIw1AEApSphnzAwZmvXWVrbPeQxCOzag5GYYfW
+ 6CS9+iiXc4DMqpLYAtLYBLXRjF+Wo1RC/xThE5+dHu7A/Htb0KLFMGM0ZJH8hWbh9SJ5uYgvT
+ r4+D5nXVT5peNXoDbe1Fg0lTe4MClzgvkz03Eg+wG9bOme6q96hse0ryXGN0tXYoWfmLPCZEJ
+ yYANr5OBLLINV/lzTks9lPqEv+T6I4DE0/aQK4f8/ECDBEm+u13eeoUdzn+T66ZXqmwivH/G8
+ EVeTqKUOPnQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,56 +58,87 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-On Mon, 11 Mar 2019, Junio C Hamano wrote:
+On Sun, 10 Mar 2019, Junio C Hamano wrote:
 
 > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 > writes:
 > 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > When passing a list of pathspecs to, say, `git add`, we need to be
-> > careful to use the original form, not the parsed form of the pathspecs.
-> >
-> > This makes a difference e.g. when calling
-> >
-> > 	git stash -- ':(glob)**/*.txt'
-> >
-> > where the original form includes the `:(glob)` prefix while the parsed
-> > form does not.
-> >
-> > However, in the built-in `git stash`, we passed the parsed (i.e.
-> > incorrect) form, and `git add` would fail with the error message:
-> >
-> > 	fatal: pathspec '**/*.txt' did not match any files
-> >
-> > at the stage where `git stash` drops the changes from the worktree, even
-> > if `refs/stash` has been actually updated successfully.
-> >
-> > This fixes https://github.com/git-for-windows/git/issues/2037
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  builtin/stash.c                    | 5 +++--
-> >  t/t3905-stash-include-untracked.sh | 6 ++++++
-> >  2 files changed, 9 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/builtin/stash.c b/builtin/stash.c
-> > index 1bfa24030c..2f29d037c8 100644
-> > --- a/builtin/stash.c
-> > +++ b/builtin/stash.c
-> > @@ -830,7 +830,7 @@ static void add_pathspecs(struct argv_array *args,
-> >  	int i;
-> >  
-> >  	for (i = 0; i < ps.nr; i++)
-> > -		argv_array_push(args, ps.items[i].match);
-> > +		argv_array_push(args, ps.items[i].original);
-> >  }
+> > So let's invert that test case to test for *anything else* than a
+> > version starting with "1" (for MSys). That should safeguard us for the
+> > future, even if Cygwin ends up releasing versionsl like 314.272.65536.
 > 
-> Yup.  I think Thomas and Peff were also looking at the vicinity of
-> this code wrt the pass-by-value-ness of ps parameter.  Their fix
-> need to also come on top of this (or combined together).
+> An obvious alternative is to do "2" -> "[23]" *and* update the else to
+> an explicit check for "1", *and* add an else that fails the build when
+> it sees "4" and other unknown ones.
 
-I agree. How can I help?
+Right.
+
+> I do not know how compatible MSYS2 runtime v4.x will be with the
+> settings the part inside the ifneq() we see here protects, but you
+> probably do, so I think this would be good enough.
+
+I would expect Cygwin v4.x (which will be the basis for MSYS2 runtime
+v4.x) to be as diligent as Cygwin v3.x in maintaining as much backwards
+compatibility as possible.
+
+Read: I trust "2 or higher" to be the answer.
+
+> The only case that makes any difference is when v4.x _mostly_ satisifies
+> but slightly differs, affecting the built binary in a subtle way that is
+> not discovered right away.  But in such a case, the more cautious "fail
+> on '4' that we do not recognize" will not help much, as the first
+> reaction after seeing the error would be to copy the settings that used
+> to be OK with v2.x and v3.x anyway (which is what is being done
+> here---we start with the assumption that the support needed for v3.x is
+> largely the same as v2.x).
+> 
+> Will queue directly on top of... 'maint'?  'master'?
+> 
+> Let's say 'maint' and merge that up to 'master'.
+
+Thank you.
+
+For the record, the really super ugly hack I plan on implementing to make
+Windows builds pass in our Azure Pipeline is to build the
+git-sdk-64-minimal artifact (which contains all of the stuff needed to
+compile Git for Windows, such as `make`, `gcc`, etc) is to "install" a
+different `uname`: as the MINGW binaries live in `/mingw64/bin/` (unlike
+the MSYS binaries, which live in `/usr/bin/`, like `uname.exe`), I can
+write the following script into `/mingw64/bin/uname`:
+
+	#!/bin/sh
+
+	case "$*" in -r) echo 2.bogus;; *) /usr/bin/uname "$*";; esac
+
+This will be the stop-gap solution for branches that are based on commits
+*without* this here patch.
+
+It's ugly alright, but the only hack I could think of that actually will
+work.
 
 Ciao,
 Dscho
+
+> 
+> Thanks.
+> 
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  config.mak.uname | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/config.mak.uname b/config.mak.uname
+> > index c8b0e34c31..0207e895a4 100644
+> > --- a/config.mak.uname
+> > +++ b/config.mak.uname
+> > @@ -569,7 +569,7 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+> >  	NO_GETTEXT = YesPlease
+> >  	COMPAT_CLFAGS += -D__USE_MINGW_ACCESS
+> >  else
+> > -	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
+> > +	ifneq ($(shell expr "$(uname_R)" : '1\.'),2)
+> >  		# MSys2
+> >  		prefix = /usr/
+> >  		ifeq (MINGW32,$(MSYSTEM))
+> 
