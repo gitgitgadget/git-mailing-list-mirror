@@ -2,110 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EFB320248
-	for <e@80x24.org>; Mon, 11 Mar 2019 09:26:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 729D920248
+	for <e@80x24.org>; Mon, 11 Mar 2019 09:27:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727118AbfCKJ0L (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 05:26:11 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55446 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727017AbfCKJ0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 05:26:11 -0400
-Received: by mail-wm1-f67.google.com with SMTP id q187so3606924wme.5
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 02:26:09 -0700 (PDT)
+        id S1727050AbfCKJ1y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 05:27:54 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:38849 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726999AbfCKJ1y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 05:27:54 -0400
+Received: by mail-it1-f195.google.com with SMTP id l66so6157388itg.3
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 02:27:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=utjyoUHjK9rYWafxvafvygkE7i4paZkW+hXf0ZD0Lxw=;
-        b=bA2+cnt3X7cpmDnyf8jD6mn7NLmaD4R7Ptur1d90g2c1n5EkH5iFgI9qbjFdog4SgN
-         jFnxH33He1SjXErn1SWVQBc+n48jGZZ9BpT0awYzOn4i5la9uF9+N8G6FExkiFaiJZyO
-         P+w7sQ+uY3zbEc9uzC25GO/r2j4gc15JB+iXdZ3cSaV574vNBfgrkGsTJ72vWlmRbTa5
-         sT5AwC2bEh3W2E85en1USULaB7cpivKbux5tkAvOtKEx6W40ijp40JRmdkih7x8Zeex4
-         OE9BVuLjWOlX56gNR4Sv+DC2uEUnTffWKn+E/4ugdV5A97Zxdx7gvtSFa6BjzQJpSKQP
-         QQ+g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Slm1DFpBZOAIzv6iQAa6xCH+IhhtSDo4sFhWhnHHnwo=;
+        b=CHbdC47neDgGYDQJjeZe56UQEIk6MG6AMa4evoC8sIS2fyESyDJK4FNUyZ8GqxOI1f
+         1DGK3eN8lLsYmQ2tuqoH2AJ1kyno1dDxjPNVPGyMtKLe/eG7xkLW5WuCw6urH2d6QpOn
+         rEmU0uKWa+YGs6KsOr5vp9RiHHkBPQTJ+szhPopWiIg2t/itGupVDMvCCpANowcNIvu7
+         mwKYIQfSkDQLDk0DU5rGkEZeSTF6ywNqOlWhEe+NnPX4uYI/AS/cfyT0T3rxY/6zezyW
+         Li8vFBoEeW2NXKgSxDNxgM/UB83g8vMrMNi8Aa58vAIfCkF8mHCsNfZAvtGXtoiacGL+
+         gc3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=utjyoUHjK9rYWafxvafvygkE7i4paZkW+hXf0ZD0Lxw=;
-        b=hTbxEM/DdHw+IhIqLyVqbn53KyakyMfMpSxMPIKNDFcU1+Iil2aB6HlLlHSeb2C0ob
-         bqcu0FxsOLujNvP79JOaYyhF3qkFNpJyUzNfstbzY7EbP/+3LwWf51B60RWBWehyN+ps
-         kQusmhc1afrvyU3tXPvHo+LPz3wdc1H4EVDHQdKI7E56YIvALp/I2jMqmY7fLxbRG9dr
-         bicv7ZIsYo9A2xX+TfnZIqEIr/qrMMoMorDVRxWF5NhjmW6z6W1BbJrRO0H5V4f98xgg
-         Sw8YG2ibLDL3KpHVnYUBt0pqIk6f4wIRDa+Vdwl4lhRlfRz5J4Rc7w1wJChOMqSLfXuG
-         LJYA==
-X-Gm-Message-State: APjAAAU5dtplr/+cRXM8K47uVfBmcDPCl+0AL/M5MzgfoU4OrHpB7eVY
-        dB2AZ0x5r71MKfO6z8Q281G3MXkaS4Q=
-X-Google-Smtp-Source: APXvYqyJ6WPofqXDbGzLzJ58NLnqK3X6+ExLu+D8YMY2D6Ffq8eEbucXh+9wXMTURodPQtDq8dFJrA==
-X-Received: by 2002:a1c:b783:: with SMTP id h125mr15701964wmf.119.1552296368571;
-        Mon, 11 Mar 2019 02:26:08 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id i4sm4547665wrw.19.2019.03.11.02.26.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Mar 2019 02:26:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v3 3/3] asciidoctor-extensions: fix spurious space after linkgit
-Date:   Mon, 11 Mar 2019 18:26:05 +0900
-Message-Id: <20190311092605.259322-3-gitster@pobox.com>
-X-Mailer: git-send-email 2.21.0-155-ge902e9bcae
-In-Reply-To: <20190311092605.259322-1-gitster@pobox.com>
-References: <xmqq4l89kbkr.fsf@gitster-ct.c.googlers.com>
- <20190311092605.259322-1-gitster@pobox.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Slm1DFpBZOAIzv6iQAa6xCH+IhhtSDo4sFhWhnHHnwo=;
+        b=cmQ5i7BBL4pUGFIDCaP7yCbPfGwsWvnFubMbVv7OuKD9lEcY53chzccQlNmrcDYRNR
+         7v4Lwdcqrei7RIykgc2SCXibaw7ZHRpXJ5Dc67G4scxLeB2Eu/GCS7Ezi5VOYWJJLP5/
+         0PZpEzgNh7sTLSXY8vRhk+u8QGuG+Bl4qo25u0GsqeDEEwAR9/1oR5WiHfiYeHIN0eaa
+         AYnCdTnWzvESLnj+Octs9RejKQjBMTH4Oq//1lzw6MTr3nFgOgJx+IydaB3as0/lAOgv
+         5/sjLGt1UhhyjOMWYxSJW5nLalnxZuqhsePMI5Zf14mKdkDjGSXsPjk4YV4DKMwtBBzj
+         sOgw==
+X-Gm-Message-State: APjAAAXVaghURVdcE9s9DTKdIj99hxeAuNMYq1evhU9CtjN5MoTakX4k
+        MQiFlrM6psmjaWHw6uRFrfe1IfF6OcvTfB7Qd5A=
+X-Google-Smtp-Source: APXvYqyyaBnV+x7GLstojjBp0ek3wTvDo3JRCPF8lHDZyTMPdOLQHPO70qNv1bfc/92akT/mmUhLjSMPxog/WrBt20M=
+X-Received: by 2002:a24:7542:: with SMTP id y63mr15277978itc.70.1552296473106;
+ Mon, 11 Mar 2019 02:27:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20190305120834.7284-1-pclouds@gmail.com> <20190308092834.12549-1-pclouds@gmail.com>
+ <20190308092834.12549-2-pclouds@gmail.com> <xmqqtvg9kjdb.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtvg9kjdb.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 11 Mar 2019 16:27:26 +0700
+Message-ID: <CACsJy8D2qmu5PpC=--y+_g-dyztzxumo2bKD-ufwd79nm+Pw9g@mail.gmail.com>
+Subject: Re: [PATCH v5 1/1] worktree add: sanitize worktree names
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Konstantin Kharlamov <hi-angel@yandex.ru>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Martin Ågren <martin.agren@gmail.com>
+On Mon, Mar 11, 2019 at 1:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+>                 while (...)
+>                         ; /* try again ... */
+>
+> This "strip all .lock repeatedly" made me stop and think a bit; this
+> will never make the component empty, as the only way for this loop
+> to make it empty is if we have a string that match "^\(.lock)\*$" in
+> it, but the first dot would have already been turned into a dash, so
+> we'll end up with "-lock", which is not empty.
 
-When we render, e.g., "linkgit:gitglossary[7]." with Asciidoctor, we get
-"gitglossary(7) ." with a space between the linkgit macro expansion and
-the punctuation. We can fix this by dropping the trailing newline after
-we've turned `linkgit:foo[bar]` into `<citerefentry>..</citerefentry>`.
+Yep. I added a BUG() check anyway in worktree.c just in case something
+slips through in the future.
 
-The diff produced by `USE_ASCIIDOCTOR=Yes ./doc-diff HEAD^ HEAD` is
-almost 6000 lines large and shows how this fixes "git-foo(x) ,", "(see
-git-bar(y) )" and so on. One might wonder whether this also turns, e.g.,
-"see linkgit:foo[1] for more" into "see foo(1)for more", but no. We get
-"...</citerefentry> for more" in the XML, see, e.g., git-am.xml, so the
-space ends up in git-am.1 just fine. The same is true for the HTML output.
+> > +     }
+> >       return cp - refname;
+> >  }
+>
+> See below for a possible further polishment.
+>
+>  * The first hunk is not about this patch but a long-standing issue
+>    after the comment was given to this function for a single level
+>    (I do not know or care how it happened--perhaps we had a single
+>    function that verifies multiple levels which later was split into
+>    a caller that loops and this function that checks a single level,
+>    and the comment for the multi-level function was left stale).
+>
+>  * check_refname_component() can now try to sanitize; document it.
+>
+>  * The last hunk is from Eric's comment.
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/asciidoctor-extensions.rb | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index ec83b4959e..0089e0cfb8 100644
---- a/Documentation/asciidoctor-extensions.rb
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -11,12 +11,12 @@ module Git
-       def process(parent, target, attrs)
-         if parent.document.basebackend? 'html'
-           prefix = parent.document.attr('git-relative-html-prefix')
--          %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>\n)
-+          %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
-         elsif parent.document.basebackend? 'docbook'
-           "<citerefentry>\n" \
-             "<refentrytitle>#{target}</refentrytitle>" \
-             "<manvolnum>#{attrs[1]}</manvolnum>\n" \
--          "</citerefentry>\n"
-+          "</citerefentry>"
-         end
-       end
-     end
+Thanks.
 -- 
-2.21.0-155-ge902e9bcae
-
+Duy
