@@ -3,152 +3,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18DB520248
-	for <e@80x24.org>; Mon, 11 Mar 2019 20:12:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1F4C20248
+	for <e@80x24.org>; Mon, 11 Mar 2019 20:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729021AbfCKUL6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 16:11:58 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:44511 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729056AbfCKULB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 16:11:01 -0400
-Received: by mail-ed1-f65.google.com with SMTP id b20so342955edw.11
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 13:10:59 -0700 (PDT)
+        id S1728228AbfCKUN2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 16:13:28 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:46855 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728130AbfCKUN1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 16:13:27 -0400
+Received: by mail-wr1-f45.google.com with SMTP id i16so226434wrs.13
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 13:13:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=1r0hMZZiQ8dZb634MbbNdmKGZAO6RYEQoBw4HP1ARpQ=;
-        b=lJZD8yj3KmBa2qiQd7TJFdOdUgrTNODbpi/R8Nd5kDDmHJAl1XBpPocBOrQhNlJscE
-         H+GBGMobcQ2S6cxMJ/ACafB2uuYoDDLvNr2CjhMtg106ALrt2ZCVhImvTxs2IeqQ7Kyl
-         JcrflEGOIYq2VQwOum+0+S5GEHq0sRkAWct1xKF74WgAIgf06aPGb4ryI1reXXFyohNH
-         HWEkRmKWByJrGZcpZxaTJL/sosrXLCiTnFUrVKRnJMHjpsoB9pNcL0/Xd55bWbMUWelH
-         HVplJunrQ+VianhE+lEykIaYFwEd8lJGkq8HElOLOb0FRZemoqUVD4QzFL5qm3yE5OWG
-         F7FQ==
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fN3nuecnutH0GfTyCWYZq+bRwYIroRl23FMtNADEViU=;
+        b=bTDUaeF+qk8eiSz25DEtcv6Xk+K+PEjipB7VlKFVcM+ZUtTmoI1JQFZ+4FpFiUPsnz
+         05SCbSdt/L6IQ8xCjlztxg65FAbFm56/QIVd3fLEVAAeU7FvuHjKmeG70QzML1g8zMm8
+         B0zZGsMJtsYDDuUoozdfTsPG8hW9qsuD2ExIPrTOPVR6Ff3dDNCcOCmFgv8iyPLsx/0i
+         PIq1mPyIpzdI1RC1bOq9RMZAeQzt95n1en29QirfFfL2JJLfaMtU2PelY03OozeMAcSU
+         2rRA7SrdRDDAQnEIKaiQBt/BxuGHg+5Dmdb1/FHv6UqAosvsuo6yp94GZMwze9jjAHNF
+         MR2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1r0hMZZiQ8dZb634MbbNdmKGZAO6RYEQoBw4HP1ARpQ=;
-        b=cNjxfNi8b3/GYSH2nFYI01nH7lSpXn1eH/WQXO9f7zrvmszQGRGF2HyKPbIrlxOM4B
-         SVjJzFZyITg2VdThpiQk0IbIGpCU+jODOkJzvf0ayR2gIJxtczqGvdRQnhg38zhWJsg4
-         mhmnXFpiVsl8g4wQpliggBA8WkFt5YaZtfHp85uigsEpAnfmuPakH67wlK28c9Lo90OD
-         6gToz5kLnc4tlxfCqBzTGXJAAv86MIlhHvIYBHwWHgHKMvxtBwJhorwMxHHG7Q511AuE
-         MuR3l5NWRdxlEI1wY047ua0CDuPsgbv8hDKUehp3r3s4JKMSsh0tOiw8F+VyeZ4eTYhq
-         85Cg==
-X-Gm-Message-State: APjAAAVi9bWKTfkE0A69oBxhooSMsuoh4DsMByF1l+m/3Y3qBxXF62Qh
-        kk2ZIKVBavbTZqkZVAotkUbOOBJ4
-X-Google-Smtp-Source: APXvYqz0KWJ2H4QFBOjpxsApsRE6B7pMMuxkWQSsQuz6qTvrAUDYz6lM3edUsTLInUoOdCIwoiISRA==
-X-Received: by 2002:a50:b574:: with SMTP id z49mr374329edd.283.1552335059085;
-        Mon, 11 Mar 2019 13:10:59 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s6sm4927691eda.90.2019.03.11.13.10.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Mar 2019 13:10:58 -0700 (PDT)
-Date:   Mon, 11 Mar 2019 13:10:58 -0700 (PDT)
-X-Google-Original-Date: Mon, 11 Mar 2019 20:10:57 GMT
-Message-Id: <f187d0d247bf0523b63c265cd01116646597eb28.1552335057.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.131.v2.git.gitgitgadget@gmail.com>
-References: <pull.131.git.gitgitgadget@gmail.com>
-        <pull.131.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] mingw: respect core.hidedotfiles = false in git-init
- again
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fN3nuecnutH0GfTyCWYZq+bRwYIroRl23FMtNADEViU=;
+        b=UXR7jPO5R4TgcxCCh3RRAcNE0skx5JCDcRckdKhaSvI1LZoIbKUL78yu9S9u3S4l+j
+         t0IaHqyaZc+kKSSCyJmovTT4RhxpT458a3x8iqWB0zL/2J1nLL8xEVFmyTn0Rx+RgJDd
+         2nCGIwokeUDvSiCz5wKs2iUuSJMIgwKhTztJNGNlP5sCbU3VYpF1Jb/GQ8GOVBRq/Wft
+         Vow8H9aWhI6KO7Q5xlPRlmkVt8aOZWWfEKsZkEmMWDA4KvtOiqo1cIoxZwl2KPsiGAe7
+         GTkZLjbHBzxyh79GmDWmTIeUHIw28HAwNc3QGP5x6LFzzEwByTaD351uF801+k6UsAeY
+         1tmA==
+X-Gm-Message-State: APjAAAVWsE90nfmZxeEan9bO2LJIKO6MLLQ2kLMUFA0kokmJKoCEvVbA
+        9DlhNF47aLaLZThSBaCo6tUJb9ZHtdT0G3JrPHBSgw==
+X-Google-Smtp-Source: APXvYqx29JNLR0mkuQYsLwY3ouzn+odyq4DzGlat7XRElKjEQBrBB4+nWiRO1hdicKyxnbFa3nQGGpPeMJxY4TVOwNE=
+X-Received: by 2002:adf:ffc3:: with SMTP id x3mr12430670wrs.111.1552335205674;
+ Mon, 11 Mar 2019 13:13:25 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <CA+dzEBkkbQj0rCjvPfcET2Uvt6fP_v+wQE52ZkAND2Mps08SNQ@mail.gmail.com>
+ <10972e0e-7fe1-437f-efe6-cff82a1205e0@kdbg.org> <20190311175519.6lbppv5u44w2u4sj@tb-raspi4>
+ <CA+dzEBm7fdrncnd_7tDu-q047qxt3CsHVQna3GRMagJetisQeA@mail.gmail.com> <CAKepmajVk27nHAzbuHitowyo11HvqSNfwfcg3kOp9DXDLe8FOA@mail.gmail.com>
+In-Reply-To: <CAKepmajVk27nHAzbuHitowyo11HvqSNfwfcg3kOp9DXDLe8FOA@mail.gmail.com>
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Mon, 11 Mar 2019 13:13:14 -0700
+Message-ID: <CA+dzEB=oKhd5O7bhWLNvvYM9eyht7SO1LkY5Sy=tEFhCCZzfDQ@mail.gmail.com>
+Subject: Re: `git add <<windows 8.3 path to file inside repo>>` results in
+ "fatal: ... is outside repository"
+To:     Jack Adrian Zappa <adrianh.bsc@gmail.com>
+Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Mon, Mar 11, 2019 at 12:34 PM Jack Adrian Zappa
+<adrianh.bsc@gmail.com> wrote:
+>
+> Hey Anthony,
+>
+> Are you sure that you have 8.3 active on the partition you are using?
+> IIRC, It is not on by default anymore.  To see, go to a cmd line and
+> type "dir /x".  If there are any files that exceed the 8.3 format, it
+> will show those files with two names, the 8.3 name and the long name.
+>
+> If it is off and you want to turn it on, see
+> https://support.microsoft.com/en-ca/help/121007/how-to-disable-8-3-file-name-creation-on-ntfs-partitions.
+> and https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/ff621566(v=ws.11)
+> for more information.
+>
+>
+> A
+>
 
-This is a brown paper bag. When adding the tests, we actually failed
-to verify that the config variable is heeded in git-init at all. And
-when changing the original patch that marked the .git/ directory as
-hidden after reading the config, it was lost on this developer that
-the new code would use the hide_dotfiles variable before the config
-was read.
+Yes, it appears they are enabled -- see below
 
-The fix is obvious: read the (limited, pre-init) config *before*
-creating the .git/ directory.
 
-Please note that we cannot remove the identical-looking `git_config()`
-call from `create_default_files()`: we create the `.git/` directory
-between those calls. If we removed it, and if the parent directory is
-in a Git worktree, and if that worktree's `.git/config` contained any
-`init.templatedir` setting, we would all of a sudden pick that up.
+C:\Users\IEUser\AppData\Local\Temp\t\longname-repo>git add
+C:\Users\IEUser\AppData\Local\Temp\t\longna~1\f
+fatal: C:\Users\IEUser\AppData\Local\Temp\t\longna~1\f:
+'C:\Users\IEUser\AppData\Local\Temp\t\longna~1\f' is outside
+repository
 
-This fixes https://github.com/git-for-windows/git/issues/789
+C:\Users\IEUser\AppData\Local\Temp\t\longname-repo>git add
+C:\Users\IEUser\AppData\Local\Temp\t\longname-repo\f
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/init-db.c |  7 +++++++
- t/t0001-init.sh   | 11 +++++++++++
- 2 files changed, 18 insertions(+)
+C:\Users\IEUser\AppData\Local\Temp\t\longname-repo>dir /x ..
+ Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 93eff7618c..190754ba39 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -155,6 +155,9 @@ static int git_init_db_config(const char *k, const char *v, void *cb)
- 	if (!strcmp(k, "init.templatedir"))
- 		return git_config_pathname(&init_db_template_dir, k, v);
- 
-+	if (starts_with(k, "core."))
-+		return platform_core_config(k, v, cb);
-+
- 	return 0;
- }
- 
-@@ -185,6 +188,7 @@ static int create_default_files(const char *template_path,
- 	struct strbuf err = STRBUF_INIT;
- 
- 	/* Just look for `init.templatedir` */
-+	init_db_template_dir = NULL; /* re-set in case it was set before */
- 	git_config(git_init_db_config, NULL);
- 
- 	/*
-@@ -361,6 +365,9 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 	}
- 	startup_info->have_repository = 1;
- 
-+	/* Just look for `core.hidedotfiles` */
-+	git_config(git_init_db_config, NULL);
-+
- 	safe_create_dir(git_dir, 0);
- 
- 	init_is_bare_repository = is_bare_repository();
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 5e27604b24..1f462204ea 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -454,6 +454,17 @@ test_expect_success 're-init from a linked worktree' '
- 	)
- '
- 
-+test_expect_success MINGW 'core.hidedotfiles = false' '
-+	git config --global core.hidedotfiles false &&
-+	rm -rf newdir &&
-+	mkdir newdir &&
-+	(
-+		sane_unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
-+		git -C newdir init
-+	) &&
-+	! is_hidden newdir/.git
-+'
-+
- test_expect_success MINGW 'redirect std handles' '
- 	GIT_REDIRECT_STDOUT=output.txt git rev-parse --git-dir &&
- 	test .git = "$(cat output.txt)" &&
--- 
-gitgitgadget
+ Directory of C:\Users\IEUser\AppData\Local\Temp\t
+
+03/11/2019  01:11 PM    <DIR>                       .
+03/11/2019  01:11 PM    <DIR>                       ..
+03/11/2019  01:11 PM    <DIR>          LONGNA~1     longname-repo
+               0 File(s)              0 bytes
+               3 Dir(s)  20,063,666,176 bytes free
