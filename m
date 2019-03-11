@@ -2,227 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 848AA20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 17:54:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9676820248
+	for <e@80x24.org>; Mon, 11 Mar 2019 17:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727652AbfCKRya (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 13:54:30 -0400
-Received: from mail-vk1-f195.google.com ([209.85.221.195]:35460 "EHLO
-        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726675AbfCKRya (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 13:54:30 -0400
-Received: by mail-vk1-f195.google.com with SMTP id o64so927206vkd.2
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 10:54:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GE9dQaXEx93nTQZ2FGbkOvto8x40U/8jnuQNwGL7Vb0=;
-        b=H1FFa5WlNoTpRSyrA4357Ngldko0Wmji/C1Ca8fesZ3yRO68jZQIOWB5M51l8Lc+gf
-         qIkDNn8Fs7JQxd4HHrmwmYfPmlm/iReeebuuZQTAY94Q3Lpv/9ilStJGefI+4JJUcOLt
-         Elju5QlXSrwNQuq4M50+k3vnPnhLji66wUFgAYU83tFxayFkMJ0hwdg9QDbZt30UAOsq
-         cXLV2O8KBXCwRvsACJJj5DNKAxhk6vRuzGdEf3kq0FCAas7uoVJgKXXkx+GpY8TDJ4QK
-         HYFXXdYcZntqxnikPSVI8YZhyFgt3D7mLGaepCvSId0GMGtoU/hKBBKFHs2O2vE+DLRH
-         ZnCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GE9dQaXEx93nTQZ2FGbkOvto8x40U/8jnuQNwGL7Vb0=;
-        b=ryKYUldJlcfCNBrVctjA3/yVovVoTmi3uIUkq55704S2H4j7x3ooGYsSaoIJfg8Ase
-         tq+ac+Z1zAwP2QR/Qrf9exEoFE8rCi0M4sqCrF+DkvDfEyb31qa8JeAYOmPPMp6oVKs6
-         SylQNvCY7Epm6JPe/4kNo8hH6DrLJfwqS2dtXYfnqKw40Ol0gvaynNfuKeP1OEvfZFip
-         R16fLMnYTUzVkfDEjN4JEweAy31a5D9VO9rhj/eYJNVDIchaihsFsuqsyCG2fhHyWTSz
-         LXNu/V5C40o4eTEepLwlaEhJIBx8VBWrq7f2DBt5Xz09ptahLi4RUWODlvF+BYe6NXU7
-         QfYg==
-X-Gm-Message-State: APjAAAU6nRZ2hwFDbR/Tkzb/UJ06THmkhlXp2VeYaD3R0zobawXgIchv
-        QIWFRxADAiNfq8383P6CGQ/JbXNcrJbDKFLLlew=
-X-Google-Smtp-Source: APXvYqzOb7QhPZYb9/oycuxDiRtw+hSl7UkrhI8044vJm1A95xOoV0epP3n7/ehUCfAbktoavPk0MJmiblEEFNidoO4=
-X-Received: by 2002:a1f:2acb:: with SMTP id q194mr16864591vkq.92.1552326868141;
- Mon, 11 Mar 2019 10:54:28 -0700 (PDT)
+        id S1727686AbfCKRz1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 13:55:27 -0400
+Received: from mout.web.de ([212.227.15.4]:33689 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727514AbfCKRz1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 13:55:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1552326920;
+        bh=j6S+CBslGGcmGdKv4gAHRldUeAqBMeD3kKgKAfgL4uk=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=PE7jm2RMLHn8chCo4DhHpifi73eGeNJkF9p1gZrG50OeA45ypq302aiOggeO/r0OK
+         Npkc5osNGMH2PP99tK6hrn3jV04BARntHwAYcJtGvOdBOLDQ9f+9eYQnxpJJwmnH5d
+         ndC9/V6XK0RFHe7qltvcTDkr/zvW8U+/KuYqGZXw=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LbrTY-1gbjuG1ElI-00jMix; Mon, 11
+ Mar 2019 18:55:20 +0100
+Date:   Mon, 11 Mar 2019 17:55:19 +0000
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Anthony Sottile <asottile@umich.edu>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: `git add <<windows 8.3 path to file inside repo>>` results in
+ "fatal: ... is outside repository"
+Message-ID: <20190311175519.6lbppv5u44w2u4sj@tb-raspi4>
+References: <CA+dzEBkkbQj0rCjvPfcET2Uvt6fP_v+wQE52ZkAND2Mps08SNQ@mail.gmail.com>
+ <10972e0e-7fe1-437f-efe6-cff82a1205e0@kdbg.org>
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-11-pclouds@gmail.com>
-In-Reply-To: <20190308095752.8574-11-pclouds@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 11 Mar 2019 10:54:16 -0700
-Message-ID: <CABPp-BEBudobnduipQrSvyQWQ7Hb4WmmoptCQ+FyY8BRPp7_ZA@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <10972e0e-7fe1-437f-efe6-cff82a1205e0@kdbg.org>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:JLZwysBt7JbqOp3Dg8qAxh7ojlqmxIjSKWBeqTIPKkO7e29TF0B
+ 9YI1CScMYjd/+nBASRoXoaMgzC1tdRaMk1WfhhO6hXOXn9Itnw1hG+nbKWNNad3hQq/4s5J
+ F9/yO8os1PKNgdeA5pIII/KaYgxYNNdQsyrEei0D5BxK6ci6n7PAQfv1nVDEZ6iCtksZhJE
+ a9S3VZi6YLTPtAwfvG1Bw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:G8Q95BZ0juo=:otgY+qU32NVItwwBj7QWti
+ GuA++F2cRzr+OKi8whAtwZGlPjuCZjIbLnq1SkFpMtpQhBEbh1mMpncMz07hdNQqwrqpLLaSH
+ tXFfaIHCQEWEdNt0v709QZas1UfHbKhyLY++DrgnXKyYAN3CTcmY+WUBWrkNhSqwvU5aO0fIE
+ j1keb5/rqhbCezSHrPfdSSJ24GpXiCEMd8LuPKq2okorlsuLfJqvov2YNzQ72i+RW5puDnwOs
+ fOyqzFVZslKz9Wh9+cg4kwAexbqH8+yHkAI8zGts4uzlCfG3+I4KSRGJ4OzG8YbpyS2dlw72/
+ ZAO8mbmxKaOp5RMLBcPd2dHljMrnClcCWq7Rs47r5UfO58MhYU1XCPsUjrXj8cUbL1iyhHJU4
+ s8fC8RfWP35OxX6zrDKB/Vn29wCh2e2zADSQAOb7O3hhXIrUCRLja5iif1EVBmH4DAaxBfTe6
+ +6wZERyTYsh020kAuRTNsnVdIh2doWgVS7YIuQzyr3fRFpM90xusFzT/kkG+bB0Cx/W8dkp0r
+ q5KAnQ9/z7VrFvfZTvr2ENyL7n4NXk/e3K2Jh/05r1i4oC8r41hFW+g5lVSfJyow/RjZEU0e0
+ UlIhTAs+LzEU+5pOJJzlBmMrahy/zYhnzCcW2HoNGczcDRDcRLwGD5ExviPf2DrP423iMO/BD
+ V1HRQep0T2ayK17Bv7UniFR9u+eBpXo3eoowai6YorjLNoBH4hbpaCzywv03vewRAF1/gAdzQ
+ aruCDMDisISKkM7Iklk8ZmzMKlXqRB3I2ixco+Xb8p5B7KBL8EyDjr5Y7DaMA9hVzrwhbnTSO
+ o+fKebvsgvUAuxyLI3uU5qcytcpVngmReT/KJ9JDflQC1+wvo1U8sQJfUZMFa4a+MgMGmkMku
+ PzEoSnQBTM4kG8CCQHVU/SHdoqnLrBCLAQqM59slCRPwQdL+W1BGvP1nOqfd5o
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A few other comments that I thought of while responding elsewhere in
-the thread that didn't make sense to include elsewhere...
-
-On Fri, Mar 8, 2019 at 2:00 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <p=
-clouds@gmail.com> wrote:
+On Mon, Mar 11, 2019 at 06:48:11PM +0100, Johannes Sixt wrote:
+> Am 10.03.19 um 23:41 schrieb Anthony Sottile:
+> > git init longname-repo
+> > cd longname-repo
+> > touch f
+> > git add ..\longna~1\f
+> >
+> ...
+> >
+> > C:\Users\Anthony\AppData\Local\Temp\t\pre-commit-hooks\longname-repo>g=
+it
+> > add ..\longna~1\f
+> > fatal: ..\longna~1\f: '..\longna~1\f' is outside repository
 >
-> "git checkout" doing too many things is a source of confusion for many
-> users (and it even bites old timers sometimes). To remedy that, the
-> command will be split into two new ones: switch and
-> something-to-checkout-paths. The good old "git checkout" command is
+> This has nothing to do with long vs. short path names. It would report
+> the same error when you say
+>
+>   git add ..\longname-repo\f
+>
+> -- Hannes
 
-s/something-to-checkout-paths/restore/ ?
+You can probably do another test:
 
-> +-g::
-> +--guess::
-> +       If `<branch>` is not found but there does exist a tracking
-> +       branch in exactly one remote (call it `<remote>`) with a
-> +       matching name, treat as equivalent to
-> ++
-> +------------
-> +$ git switch -c <branch> --track <remote>/<branch>
-> +------------
+ mkdir longname-rexxx
+ git init longname-repo
+ cd longname-repo
+ touch f
+ git add ..\longna~1\f
 
-I'm not sure if it'd be better or worse to simplify this to
-   git switch --track <remote>/<branch>
-Thoughts?
+And now nobody knows for shure if "longna~1"
+is longname-rexxx or longname-repo
 
-> ++
-> +If the branch exists in multiple remotes and one of them is named by
-> +the `checkout.defaultRemote` configuration variable, we'll use that
-> +one for the purposes of disambiguation, even if the `<branch>` isn't
-> +unique across all remotes. Set it to e.g. `checkout.defaultRemote=3Dorig=
-in`
-> +to always checkout remote branches from there if `<branch>` is
-> +ambiguous but exists on the 'origin' remote. See also
-> +`checkout.defaultRemote` in linkgit:git-config[1].
-> +
-> +-q::
-> +--quiet::
-> +       Quiet, suppress feedback messages.
-
---quiet and --progress should be adjacent in the man-page since they
-are touching upon the same concept.  It'd be nice if we had a way to
-group similar items like this besides simply putting them together,
-but we can at least do that.
-
-> +
-> +-f::
-> +--force::
-> +       Proceed even if the index or the working tree differs from
-> +       HEAD. Both the index and working tree are restored to match
-> +       the switching target. This is used to throw away local
-> +       changes.
-
---force (or --discard-changes as mentioned elsewhere in this thread),
--m/--merge, and --conflict are also similar options and should be
-adjacent in the man-page; they all reflect on how to handle switching
-when local changes affect the same paths that different between HEAD
-and the other branch.
-
-> +--progress::
-> +--no-progress::
-> +       Progress status is reported on the standard error stream
-> +       by default when it is attached to a terminal, unless `--quiet`
-> +       is specified. This flag enables progress reporting even if not
-> +       attached to a terminal, regardless of `--quiet`.
-
-This again makes me curious what --quiet actually supresses; in the
-case of branch switching, are there any non-warning informational
-messages other than progress reports that are printed?  If not, the
-extra sentence at the end of the description for --progress can (and
-probably should) be stripped.
-
-> +
-> +-t::
-> +--track::
-> +       When creating a new branch, set up "upstream" configuration.
-> +       `-c` is implied. See "--track" in linkgit:git-branch[1] for
-> +       details.
-> ++
-> +If no `-c` option is given, the name of the new branch will be derived
-> +from the remote-tracking branch, by looking at the local part of the
-> +refspec configured for the corresponding remote, and then stripping
-> +the initial part up to the "*".  This would tell us to use "hack" as
-> +the local branch when branching off of "origin/hack" (or
-> +"remotes/origin/hack", or even "refs/remotes/origin/hack").  If the
-> +given name has no slash, or the above guessing results in an empty
-> +name, the guessing is aborted.  You can explicitly give a name with
-> +`-c` in such a case.
-
-Slightly disappointed that we couldn't remove --track; it has always
-seemed a bit complicated.  But I don't see how to do so, since people
-do want upstream branches to be tracked with their new branches.
-
-> +
-> +--no-track::
-> +       Do not set up "upstream" configuration, even if the
-> +       branch.autoSetupMerge configuration variable is true.
-> +
-> +-m::
-> +--merge::
-> +       If you have local modifications to one or more files that are
-> +       different between the current branch and the branch to which
-> +       you are switching, the command refuses to switch branches in
-> +       order to preserve your modifications in context.  However,
-> +       with this option, a three-way merge between the current
-> +       branch, your working tree contents, and the new branch is
-> +       done, and you will be on the new branch.
-> ++
-> +When a merge conflict happens, the index entries for conflicting
-> +paths are left unmerged, and you need to resolve the conflicts
-> +and mark the resolved paths with `git add` (or `git rm` if the merge
-> +should result in deletion of the path).
-
-Now that Phillip highlighted issues with -m and -f, it's hard not to
-wonder about other corner cases.  For example, what if the user made
-some changes, staged them, then made more changes, then tried to 'git
-checkout -m <other branch>'?  That's no longer a three-way merge, but
-four way.  How does that work?  Does it just rely on merge-recursive's
-(poorly defined) choice of when to bail out and when to permit such
-craziness?
-
-> +--conflict=3D<style>::
-> +       The same as --merge option above, but changes the way the
-> +       conflicting hunks are presented, overriding the
-> +       merge.conflictStyle configuration variable.  Possible values are
-> +       "merge" (default) and "diff3" (in addition to what is shown by
-> +       "merge" style, shows the original contents).
-> +
-> +--orphan <new-branch>::
-> +       Create a new 'orphan' branch, named `<new-branch>`, started from
-> +       `<start-point>` and switch to it. See explanation of the same
-> +       option in linkgit:git-checkout[1] for details.
-
-Sigh...does this mean --orphan will remain broken?  It has always
-driven me crazy that it leaves you with a fully populated rather than
-an empty index.  It seemed broken to me before I figured out the
-special usecase, though it still seemed like the wrong default (an
-empty index wouldn't surprise due to the "orphan" name, but a full one
-does to those without the special usecase in mind).  Oh well, that's a
-much smaller battle than the big picture of getting switch and restore
-in place, and I don't want to derail the bigger picture; anything
-using --orphan is a somewhat special case anyway.
-
-> +You can give the `-m` flag to the command, which would try a three-way
-> +merge:
-> +
-> +------------
-> +$ git switch -m mytopic
-> +Auto-merging frotz
-> +------------
-> +
-> +After this three-way merge, the local modifications are _not_
-> +registered in your index file, so `git diff` would show you what
-> +changes you made since the tip of the new branch.
-
-...even if the local modifications were registered in the index file
-before?  Is this why Phillip's "x" was missing and how it avoided
-doing a four-way merge?  I guess it kinda makes sense, view from this
-angle, but I'm not so sure I like it.  Hmm....
+It may happen that it is longname-rep at this point in time,
+at your machine.
+It may happen that it is a complete different directory on another machine=
+,
+or even on your machine.
+For that reason, to avoid that someone tampers data outside a repo,
+"../" (or ..\ under windows) is not accepted by Git.
