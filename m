@@ -2,134 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 464C320248
-	for <e@80x24.org>; Mon, 11 Mar 2019 19:57:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 432F820248
+	for <e@80x24.org>; Mon, 11 Mar 2019 20:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729153AbfCKT5l (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 15:57:41 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:40420 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729134AbfCKT5h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 15:57:37 -0400
-Received: by mail-ed1-f65.google.com with SMTP id r23so335354edm.7
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 12:57:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Ql0Wns6C+338Gav1nGv7CEdqKKL5JRSw2Q3/qS/EMyM=;
-        b=tBCl/GouZXSyN8DWf2JxvAYxGhGgL30voggHz4KNIJQzz5GonY62xJ2YBsiq0Cffq5
-         BlCk46T+fjUjVVbvfzM4Sxp7maubAZHbvb8zi3AMSGR+Q7DJhLbIDvSkiFcFLRya4JvN
-         DTfGeMq6XC2nB2nk1W/kGhEgaAKxdzs25zvuih0HHsRSDwk2McI21LLcDQnvzzexGm5t
-         FXKUxEd7zrvSTO/jKvWZpzV8XHX8GhPamrJTNVspc8hqUlGS+Iga5VuQgxsbG6Chbdpj
-         VS1pcszBCDpFZXrs7ofH+1Lvz8PehC5ely/lbLEMNkJrhyDGe4GFqcUqgIghHm3LN33n
-         VVqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ql0Wns6C+338Gav1nGv7CEdqKKL5JRSw2Q3/qS/EMyM=;
-        b=jD0sUbeGxRTjNOiZFKsOfr8EgzNPqc2x54qD//ctBYjuQqYETy2gscg1/icjhIJQyP
-         vvSk3LDeP/MrmloDoxVuvdVV2AFZBx5UpAdVQCuIQrAbBpLnzNbE8mxklIHPdQnra7so
-         U8SiaE2VXt+2FIvTLrMG1iH8VmGeOKTSMjFimnlw1lQmIjEjmdKvxEMnHWYM0F6183dg
-         lHdnXCEl+I3x3WkpVv8W7j4XpTT+e4t7cccpqIpqWMeKxoySYeJTt9NxoNWjoUL1eQlL
-         ZtC5GFL2pOwVaE5StuYO8Sl28ZKfleIH056w+Dh80ca20nQYg6bng8SupajLeU1z64NR
-         Q0RA==
-X-Gm-Message-State: APjAAAXGL00PkR0dMVD60+0q7YJ1lz+a+KBbQaX66VCj1hYeyx9IXEWl
-        rWlDy5I3KT2dybgZM5u5MguWDnn2
-X-Google-Smtp-Source: APXvYqz7RZmBCQkXjnez62NQDse649jmpww+9E2Ucp82y6LrQpIdI6mqOpBZKplqkcr2tNyKxLNxCw==
-X-Received: by 2002:a50:9484:: with SMTP id s4mr400425eda.82.1552334255764;
-        Mon, 11 Mar 2019 12:57:35 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p44sm4888954edc.1.2019.03.11.12.57.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Mar 2019 12:57:35 -0700 (PDT)
-Date:   Mon, 11 Mar 2019 12:57:35 -0700 (PDT)
-X-Google-Original-Date: Mon, 11 Mar 2019 19:57:33 GMT
-Message-Id: <pull.158.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.158.git.gitgitgadget@gmail.com>
-References: <pull.158.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/1] Deprecate git rebase --preserve-merges
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728268AbfCKUKd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 16:10:33 -0400
+Received: from mout.gmx.net ([212.227.15.15]:56981 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728755AbfCKT4e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 15:56:34 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2ts6-1gk7ET0J1y-00seJ5; Mon, 11
+ Mar 2019 20:56:27 +0100
+Date:   Mon, 11 Mar 2019 20:56:10 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] mingw: respect core.hidedotfiles = false in git-init
+ again
+In-Reply-To: <xmqqva0ujboi.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1903112037070.41@tvgsbejvaqbjf.bet>
+References: <pull.131.git.gitgitgadget@gmail.com> <008e367d26de12debd596e8f16356f70c74d3d7e.1551951339.git.gitgitgadget@gmail.com> <xmqqva0ujboi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:zgWgxZKf2P1pF0kPEH4tGr3SQ9HbNW3DwJuSvdYpV+fPVGzgVei
+ bB4pGU/TVZt1qPnUh+7yBvQqs602Z60wZa8Pav58jCCytaRvhAS8+JxQpdi/z+62m6mboM1
+ /vpwd09rvpybDOH2KmilK8wejO7JXUGRqBUtFZQHNjwMM+OT8eToT1QOXXpxZLWupLdh8zC
+ UeOUlC55OnWNnSIaGr3dg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:p4Uy7ZqPANA=:xmSmFehRn9hrAUQrylvgsG
+ UPr8Xktv3WAsHwx8ZuBxI+7ljWDYGS/ncJ0ZXvHBPQU3Rs/OnGK/6eTCcMwdO4onefoVBuIt0
+ fgl5dQcTjDJkUdVw4NjSrCjXxMXh1xUlCTUsJlFSQiLlAS9kzqkOD+xkXkobYpyiV0PTwDl6K
+ lgiqJQfqyi0DGeZk3WGgCj78B7DnCppyQW72UcJSoQtdLjkcXmlcNQwpxnfJN9fIB4kkUrNSq
+ cQXwO08iNBnVDmLVhOp5gVGN7tkyydcRId875krPE5oQlqicEk+3AimcRC/rv1VQU4m672Srt
+ fqZMt8lWXvL2k7pb3CI9LJHFB27ykIGK79TB1GPHdkXHwDp2o7jwYNQp/3EKXdQhJSglNXF+z
+ zHt0K13oMDZBIowwcTbtTH5Og4BjUI/qJYX+BAltSyH0FkdOR9y9rnTGPM55TdHu51i1PodAx
+ x8DjKWC+20wTtT42xqrcCrP5E1XnRi86agqkVE/JFxl/r/1bHMkYTO6QSVf2XNPUCvYoVx5nZ
+ 6iK7oH6Dsl0J8BsiNUj40S0IIvXDkVrgK7125JEvCbknT/7BugMsQxWKcLjNhIDRKQjz4/c/D
+ hUib0DbCfU1cgEMom2RratsMhvO5D0cF6jvQ6h7SXT/Pr6U9LZnO7DiQ9RlANpPnk2CPqS+Yp
+ C1Vyv+wFYhUnBTlQRcV7w/lDhqUqeXCbXhPd9XtsUlv7VVNMEMryeit4b7LxDNZ2KJr9AsvoI
+ B2U+mhJW5DWtZ4b/H2vkCXQnCcAJhkOpaa4V25tTc8AfTNK58dQusA0zYqN4r1LGq+2KC7RtK
+ Eu5XvQ1269xHMJDxXBLgpxdjiQd0Hk+0paqgi6zsHkpDzd2So5b0NH9JLYIZ2U7F8KsYgNesS
+ iVU1SVDF3A111iimP5/dggcV76+WGF6DTZT0GBKoJfSs76v3TC7TRQ/6asPDkoLGba1kVHc5o
+ A5bnUuoKwnA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It had a good run, but its design was irreparably limited. So I came up with
-a redesign:--rebase-merges. It seems to work all right, so now it is time to
-start letting go of the previous design.
+Hi Junio,
 
-Changes since v1:
+On Fri, 8 Mar 2019, Junio C Hamano wrote:
 
- * The term --rebase-merges is now marked as such in the deprecation notice
-   in git rebase's manual.
- * The deprecation warning is now printed only in builtin/rebase.c, not
-   repeated in git-rebase--preserve-merges.sh.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> 
+> > diff --git a/builtin/init-db.c b/builtin/init-db.c
+> > index 93eff7618c..94df241ad5 100644
+> > --- a/builtin/init-db.c
+> > +++ b/builtin/init-db.c
+> > @@ -155,6 +155,9 @@ static int git_init_db_config(const char *k, const char *v, void *cb)
+> >  	if (!strcmp(k, "init.templatedir"))
+> >  		return git_config_pathname(&init_db_template_dir, k, v);
+> >  
+> > +	if (starts_with(k, "core."))
+> > +		return platform_core_config(k, v, cb);
+> > +
+> >  	return 0;
+> >  }
+> 
+> OK.  I think this is very much futureproof and a sensible thing to
+> have a "platform_core_config()" call here.  That way, we do not have
+> to say the details of what platform specific thing each platform
+> wants when init_db_config works.
 
-Johannes Schindelin (1):
-  rebase: deprecate --preserve-merges
+I am glad you agree.
 
- Documentation/config/branch.txt |  6 +++---
- Documentation/config/pull.txt   |  6 +++---
- Documentation/git-rebase.txt    | 23 ++++++++++++-----------
- builtin/rebase.c                |  8 ++++++--
- 4 files changed, 24 insertions(+), 19 deletions(-)
+> > @@ -361,6 +364,9 @@ int init_db(const char *git_dir, const char *real_git_dir,
+> >  	}
+> >  	startup_info->have_repository = 1;
+> >  
+> > +	/* Just look for `init.templatedir` and `core.hidedotfiles` */
+> 
+> And from that point of view, replacing `core.hidedotfiles` with
+> something like "platform specific core config" would be more
+> appropriate.
 
+Probably. But it could potentially make some developer (such as myself,
+six months from now) wonder why we don't just remove this call because
+clearly nothing uses this on Linux.
 
-base-commit: e902e9bcae2010bc42648c80ab6adc6c5a16a4a5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-158%2Fdscho%2Fdeprecate-rebase-p-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-158/dscho/deprecate-rebase-p-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/158
+So even if it is not quite future-proof from the point of view where we
+*technically* would have to extend this comment if we ever introduced
+another platform-specific config setting that is relevant to the early
+phase of `git init`, I would like to keep the comment in the current form.
 
-Range-diff vs v1:
+Well, actually *almost* in the current form.
 
- 1:  6407430da7 ! 1:  f6990f28c0 rebase: deprecate --preserve-merges
-     @@ -65,7 +65,7 @@
-      -	Recreate merge commits instead of flattening the history by replaying
-      -	commits a merge commit introduces. Merge conflict resolutions or manual
-      -	amendments to merge commits are not preserved.
-     -+	[DEPRECATED: use --rebase-merges instead] Recreate merge commits
-     ++	[DEPRECATED: use `--rebase-merges` instead] Recreate merge commits
-      +	instead of flattening the history by replaying commits a merge commit
-      +	introduces. Merge conflict resolutions or manual amendments to merge
-      +	commits are not preserved.
-     @@ -109,22 +109,9 @@
-       				   builtin_rebase_options);
-       
-      +	if (options.type == REBASE_PRESERVE_MERGES)
-     -+		warning(_("--preserve-merges is deprecated in favor of "
-     -+			  "--rebase-merges"));
-     ++		warning(_("git rebase --preserve-merges is deprecated. "
-     ++			  "Use --rebase-merges instead."));
-      +
-       	if (action != NO_ACTION && !in_progress)
-       		die(_("No rebase in progress?"));
-       	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
-     -
-     - diff --git a/git-rebase--preserve-merges.sh b/git-rebase--preserve-merges.sh
-     - --- a/git-rebase--preserve-merges.sh
-     - +++ b/git-rebase--preserve-merges.sh
-     -@@
-     - 	printf '%s\n' "$*" >&2
-     - }
-     - 
-     -+warn "git rebase --preserve-merges is deprecated. Use --rebase-merges instead."
-     -+
-     - # Output the commit message for the specified commit.
-     - commit_message () {
-     - 	git cat-file commit "$1" | sed "1,/^$/d"
+I did realize, based on your comment below, that the mention of
+`init.templatedir` here is bogus, wrong even: if `git init` is started in
+a Git worktree, we do not *want* to use the `init.templatedir` setting
+from said worktree.
 
--- 
-gitgitgadget
+And that is the reason why...
+
+> > +	git_config(git_init_db_config, NULL);
+> > +
+> 
+> We use git_init_db_config from create_default_files(), which is a
+> function called several lines after this point; shouldn't that now
+> be removed from create_default_files()?
+
+... we have to call `git_config()` *again* in `create_default_files()`.
+
+> >  	safe_create_dir(git_dir, 0);
+> >  
+> >  	init_is_bare_repository = is_bare_repository();
+> > diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> > index 42a263cada..35ede1b0b0 100755
+> > --- a/t/t0001-init.sh
+> > +++ b/t/t0001-init.sh
+> > @@ -453,6 +453,18 @@ test_expect_success 're-init from a linked worktree' '
+> >  	)
+> >  '
+> >  
+> > +test_expect_success MINGW 'core.hidedotfiles = false' '
+> > +	git config --global core.hidedotfiles false &&
+> > +	rm -rf newdir &&
+> > +	(
+> > +		sane_unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
+> > +		mkdir newdir &&
+> > +		cd newdir &&
+> > +		git init
+> > +	) &&
+> 
+> This is not incorrect per-se, but I think most tests do the mkdir
+> outside subshell, i.e.
+> 
+> 	rm -rf newdir &&
+> 	mkdir newdir &&
+> 	(
+> 		cd newdir &&
+> 		sane_unset ... &&
+> 		...
+> 	) &&
+
+Legit.
+
+Thanks,
+Dscho
+
+> 
+> Other than these, I find nothing questionable in the patch.  Nicely
+> done.
+> 
+> 
+> 
