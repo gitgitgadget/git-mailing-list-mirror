@@ -7,170 +7,112 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77BB920248
-	for <e@80x24.org>; Mon, 11 Mar 2019 13:06:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3C3720248
+	for <e@80x24.org>; Mon, 11 Mar 2019 13:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727167AbfCKNGE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 09:06:04 -0400
-Received: from mout.gmx.net ([212.227.17.22]:38419 "EHLO mout.gmx.net"
+        id S1727564AbfCKNVa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 09:21:30 -0400
+Received: from mout.gmx.net ([212.227.15.18]:54365 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725943AbfCKNGE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 09:06:04 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lpgew-1gX0DT1IxC-00fTG8; Mon, 11
- Mar 2019 14:05:49 +0100
-Date:   Mon, 11 Mar 2019 14:05:32 +0100 (STD)
+        id S1727703AbfCKNTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 09:19:45 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4WRI-1grKpp46G4-00yfXm; Mon, 11
+ Mar 2019 14:19:38 +0100
+Date:   Mon, 11 Mar 2019 14:19:21 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, hi-angel@yandex.ru,
-        peff@peff.net, ramsay@ramsayjones.plus.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v5 1/1] worktree add: sanitize worktree names
-In-Reply-To: <20190308092834.12549-2-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903111401220.41@tvgsbejvaqbjf.bet>
-References: <20190305120834.7284-1-pclouds@gmail.com> <20190308092834.12549-1-pclouds@gmail.com> <20190308092834.12549-2-pclouds@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Elijah Newren <newren@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        vincent.guittot@linaro.org
+Subject: Re: Deprecating git diff ..; dealing with other ranges
+In-Reply-To: <20190311093751.GA31092@archbookpro.localdomain>
+Message-ID: <nycvar.QRO.7.76.6.1903111412280.41@tvgsbejvaqbjf.bet>
+References: <20190311093751.GA31092@archbookpro.localdomain>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1686699052-1552309549=:41"
-X-Provags-ID: V03:K1:gactMQRsN47bTRLSE8fMjvPtE+IxF1UZKMGfVdw7AaukQYtdSUm
- 7YkRkn2MpDeAw7rLxE60ItgH9JTJphorKjDpEUkMmbYr0wnDhMEghfiJAFW+76Eg15GNMJy
- tVX2SXekck+M4HOI19KGb9ik7qQ1RuDC12B5qLMulT8qIM2y/ODJRd9ulqiNQx+VweHG5um
- l5uTJ980AczeZks6Qb49A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XfmOYe4gcbc=:pQ0q7Pkn6bNdk3brXO5ou6
- 7i0qd+rUSrpU7ol7qpOoS6yeYGX4dRdpsojcUSGyVeHEq3C5ilgPTLvEUk3APeXojDZsMIEJG
- 7+Aqm3njR7yI8IoYqxKdysBI87vegzrcOMhFOlY4Da2yX9k/vNCgqcot9dRKFP+14dpWzqett
- ao2LIsFJnIb+cRUW1+HAQ2EmGadp+scnWal84XrqJn1lR6Wan+KZqxeRHfJB94fnxihqPg09k
- LgZZCtVbT+sbAxTDiFBRzv/AWLzfymPT2OkiiZ5oGiMtwSJvWi/7sFGqzpogpQLDFX5imAZR3
- s/wrgQlxOwZTguJheK0oaS2GLmG/e8wIPQ5b5PcUMyPUJA5sAqkuXcMOzwAxqgGOCIQwHSxpS
- p3yyjZHjdffWwOmhOSYKUH0Z11oCLHMZXC2tbOFlS5cTlV+VhTcBF8Xz+E7MhFxbndviHbUAJ
- XQ14Ak7VfVZ2E5M1hnF8D6rhuHFCoIRBF3SNUKkkTZdBHEisBvZlHwwFnYA6RMYv8yVFxrauY
- 3qRJ3BxpcQ4fhE28FLef80f0xIPw0upry0emxvVZs0cpBnX6fUcG0qT9A7J1Cucm2nXTWpP2w
- CdaMTnQZ1vabKqkErxfXzPRdtlaZcoC2ijxo2wRKOheEphNQueaPbNOnwzzo3Mvtvna6Nj1eK
- 3oK6RJVIJSeH60UeEfzOYn39uMATz+LXVsNqJiK6a8hTiVWLvTT5A+TvfoNbOKMrDSA3HlhRU
- etjq2Ny6n50e7DW0WRqiwVx2u08ZXW1v/Shg4n7fy4zm/JOXTRGAryrNkfwopm0r+T2ScDBYX
- SyYCSnMVtHTOs3pVreF7VG71UD350PZ7vy+VQi6sbCHuLvGYbBsNlj2gOLqidqE+Qj2DekOUo
- HS88rSkRwlQM5VP+w2DsNhEShSg5cuULMcZowqHeIOJCW8L19gomp5UvenvsXpyD9aUauNcXj
- KrPMHlRf3TQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:6ptgXidaELTzF8OstrcU8BiBDP1qxxaR/+dQqeHwA+2XOQoVwLx
+ Y+1behGQ5wPi2vWv9lILmIXaIAJIrqMwYiQZ/WvsltnJfsi1oup+Zz/joyrtmWeIvej0yYm
+ GFFo9707F7uibwcnbsVcqugvsv//y3yO0i+Ggq2wHjk9SZtMuoyHGobcQ3+52fzbAUoZSlo
+ AilcvMsjbS5oH1Y2iNDmg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vqfs1wHq5rg=:rmHhrAwh06DGTTWV5T3jhQ
+ sqXToB5Vn8oFaipiIZnrZHxIWqtTQq2EMg9d1YBnn9P0zB2JZfSNDP3gs8urJYok9XXW7faDR
+ lwdU+0SdKVIyps4UzNLt+6piBYTyJxuuT+jiCuYCatdR7Fap7qCNrYb7IxIq/RHh2Q1gRj4Mb
+ ka2g7toeHzqZwsubA13eF6CRw4CUysCZMskGt2MgBoEBXWbpRz5tljWZRmTv8W9/ODm5FwfKM
+ GiBYQjCTRBu2h51DzoIQjPpDcfebH/4qUiQPW6u8DPLgg77hxCHqFGLrcBKlDXJ7TyjNFEajS
+ //YJgXwRU8Yl1pmjJYcIACLP3iqMd/7aHQV1QaonxQ1yBCzwv35wjyFiqRtWXbZpxQ/Bue3tm
+ vnaMXRQRsZ567PI+9ag3Or7v8sNW0RYXaMFByGbbB9Er1OwVVrxy7v9pDakEHBCfGCyCw6ch4
+ 2ALWEJkrI8m0cPKm55C8soqqf/IvcBE3pkF33Z/mSmdIFvbN9ytkNbx2I46KUr8r7oTVgLlc9
+ X7aiLHV4ykDfix/FFW9dvhmFv/p4EZRIA+Anr7dsrEmiiGMNmVFgRb+aiso+kjSGnmx2l4L93
+ O1IR5IOHMm3MmRFlXkeUuacUn9umrSwmTxD4cw75DBxbcQxbqhUEz9Oyq2eJPQaWA50zVlljU
+ UAq6HiXyESqPsjeBqYwdFtXXWmZEXKh65/egbdluyawMpctoR73++QBvYzCE9Hc4MUoDhznmI
+ BlcrOTPlo8FdL4/nyvljyt+1UNcW0lLbuXoz+BWHHUSoSNZoRhId78Z/a48MAlCnMWQou0mG6
+ U7koWrAK3d3RQ9PFlrc0wSFYsvwoZv6sxOlv9xA1FEmFEWhfh9Lr7a9ls+ofo4k1hp4zoliWE
+ oCXiywXUtSAj63PhEXk5VcgN7YBD0FtXLoEdd7wr1wX5vRO42CTpEcaTYmc/86YtX/5eL0e4i
+ q8b96q2Si5A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Denton,
 
---8323328-1686699052-1552309549=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Mon, 11 Mar 2019, Denton Liu wrote:
 
-Hi Duy,
+> I was in the process of deprecating `git diff <commit>..<commit>` as
+> discussed here[1]. However, I ran into a weird case that I'm not sure
+> how to deal with.
+> 
+> In t3430-rebase-merges.sh:382, we have the following test case which
+> invokes git diff:
+> 
+> 	test_expect_success 'with --autosquash and --exec' '
+> 		git checkout -b with-exec H &&
+> 		echo Booh >B.t &&
+> 		test_tick &&
+> 		git commit --fixup B B.t &&
+> 		write_script show.sh <<-\EOF &&
+> 		subject="$(git show -s --format=%s HEAD)"
+> =>		content="$(git diff HEAD^! | tail -n 1)"
+> 		echo "$subject: $content"
+> 		EOF
+> 		test_tick &&
+> 		git rebase -ir --autosquash --exec ./show.sh A >actual &&
+> 		grep "B: +Booh" actual &&
+> 		grep "E: +Booh" actual &&
+> 		grep "G: +G" actual
+> 	'
+> 
+> It gets caught in my attempt to only deprecate ..'s. Technically, it's
+> undocumented behaviour and it only happens to work because git-diff
+> accept ranges but it doesn't operate in an intuitive way.
 
-On Fri, 8 Mar 2019, Nguyễn Thái Ngọc Duy wrote:
+I beg to differ. `git diff <commit>^!` does exactly what I want: it shows
+the diff between the commit's first parent and the commit.
 
-> diff --git a/refs.c b/refs.c
-> index 142888a40a..e9f83018f0 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -72,30 +72,57 @@ static unsigned char refname_disposition[256] = {
->   * - it ends with ".lock", or
->   * - it contains a "@{" portion
->   */
-> -static int check_refname_component(const char *refname, int *flags)
-> +static int check_refname_component(const char *refname, int *flags,
-> +				   struct strbuf *sanitized)
->  {
->  	const char *cp;
->  	char last = '\0';
-> +	size_t component_start;
-
-This variable is uninitialized. It is then...
-
-> +
-> +	if (sanitized)
-> +		component_start = sanitized->len;
-
-... initialized only when `sanitized` is not `NULL`, and subsequently...
-
->  
->  	for (cp = refname; ; cp++) {
->  		int ch = *cp & 255;
->  		unsigned char disp = refname_disposition[ch];
-> +
-> +		if (sanitized && disp != 1)
-> +			strbuf_addch(sanitized, ch);
-> +
->  		switch (disp) {
->  		case 1:
->  			goto out;
->  		case 2:
-> -			if (last == '.')
-> -				return -1; /* Refname contains "..". */
-> +			if (last == '.') { /* Refname contains "..". */
-> +				if (sanitized)
-> +					sanitized->len--; /* collapse ".." to single "." */
-> +				else
-> +					return -1;
-> +			}
->  			break;
->  		case 3:
-> -			if (last == '@')
-> -				return -1; /* Refname contains "@{". */
-> +			if (last == '@') { /* Refname contains "@{". */
-> +				if (sanitized)
-> +					sanitized->buf[sanitized->len-1] = '-';
-> +				else
-> +					return -1;
-> +			}
->  			break;
->  		case 4:
-> -			return -1;
-> +			/* forbidden char */
-> +			if (sanitized)
-> +				sanitized->buf[sanitized->len-1] = '-';
-> +			else
-> +				return -1;
-> +			break;
->  		case 5:
-> -			if (!(*flags & REFNAME_REFSPEC_PATTERN))
-> -				return -1; /* refspec can't be a pattern */
-> +			if (!(*flags & REFNAME_REFSPEC_PATTERN)) {
-> +				/* refspec can't be a pattern */
-> +				if (sanitized)
-> +					sanitized->buf[sanitized->len-1] = '-';
-> +				else
-> +					return -1;
-> +			}
->  
->  			/*
->  			 * Unset the pattern flag so that we only accept
-> @@ -109,26 +136,48 @@ static int check_refname_component(const char *refname, int *flags)
->  out:
->  	if (cp == refname)
->  		return 0; /* Component has zero length. */
-> -	if (refname[0] == '.')
-> -		return -1; /* Component starts with '.'. */
-> +
-> +	if (refname[0] == '.') { /* Component starts with '.'. */
-> +		if (sanitized)
-> +			sanitized->buf[component_start] = '-';
-
-... used a loooooooong time after that, also only if `sanitized` is not
-`NULL`.
-
-Apparently for some GCC versions, this is too cute, and it complains that
-this variable might be used uninitialized:
-https://dev.azure.com/gitgitgadget/git/_build/results?buildId=4352&view=logs
-
-And quite honestly, even for mere humans it is not all *that* clear that
-`sanitized` cannot be changed from `NULL` to non-`NULL` in the code in
-between, *in particular* because the changes extend over two hunks, the
-code between is not shown.
-
-I would strongly advise against trying to be so cute, and just initialize
-the variable already. Over-optimization in such instances makes the code a
-lot harder to reason about.
+And I would not necessarily call this a "range". It is a short-hand. Can't
+you allow short-hands in `git diff`, and disallow only ranges that have an
+explicit `..` in them? You might need to record that somewhere, but I
+think that should be easy enough.
 
 Ciao,
 Johannes
---8323328-1686699052-1552309549=:41--
+
+> 
+> I was just wondering what we should do about this case? Should we
+> deprecate all invocations of `git diff <range>` except for the special
+> case of `git diff <commit>...<commit>`, or should we _only_ deprecate
+> `git diff <commit>..<commit>` and allow all other forms of ranges, even
+> though it was undocumented behaviour?
+> 
+> Thanks,
+> 
+> Denton
+> 
+> [1]: https://public-inbox.org/git/xmqqmumy6mxe.fsf@gitster-ct.c.googlers.com/
+> 
