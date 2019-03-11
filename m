@@ -2,198 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35E3B20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 10:14:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E08A120248
+	for <e@80x24.org>; Mon, 11 Mar 2019 10:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726864AbfCKKOv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 06:14:51 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33123 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726623AbfCKKOu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 06:14:50 -0400
-Received: by mail-wr1-f65.google.com with SMTP id i8so4407553wrm.0
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 03:14:49 -0700 (PDT)
+        id S1726986AbfCKKkv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 06:40:51 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:40455 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725839AbfCKKkv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 06:40:51 -0400
+Received: by mail-io1-f67.google.com with SMTP id p17so3553944iol.7
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 03:40:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WicZgbJszxfXxeNtb4940DpXQ6VdefB4qPwAO8n6QxE=;
-        b=d2R73aszFKAsjnn40MNJkOumm+hNY6uHd0paTzc99winQo9zbqWYcoju98l2UfiqYz
-         rVrrcd1cZWj7/dZZO9lZJcFvdWl7/GK5EOqTMmkUQgwEAD7afhUjDEnxYbgPSMy8wV0u
-         m8BlfRR6VP6cXBFsRvk/o73lZkebnpl+LA562tgmnNGE3XcJZaUI8Ouj/pm1my0gTcYj
-         8GVA7vV1KkKCKPbAKTjN4VIeW7HlAcgQF0Nc80Hdjxm8NpyWwYNR2R1OqhcERtzSi29o
-         Mw4tZy+x88P4OUa59dZMDE2fDi3DFnEbDDuyMGXoUC0QHj30jjmj402s4hPXdYJAu/xO
-         g8OA==
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc;
+        bh=s7PidRNrP0JLUMFCJSQ/njqQ9MIpCUmFmV6cy/5sZyI=;
+        b=kgqpqc7wJBuIItSCDpQ/0LOKsEsIXYOpNm+dbqROT5U9nECKYUNhiiSK7RinQTHiYy
+         +HCf7XjnZO81OWeRTYyxfwIv0DcuIvvB+a4M4c1nlizDa2OPs9ll24o3sRa56AO+g8xw
+         /5gSZFwzq46iXfpebXPVE4Rikzof+kMdNS4MqUdRdVNKq2onxBcrXejVVMDotl6p4B7q
+         NxvU1PetoBVxjlQVtLBY7bXaZzxxJVPuJsoCGJY7rkZ850b1hJ7+LPhjFi3N39zU1dd4
+         WAC8bIbsFkQ6kxtPwJMP1sokObRhgQnW1ZAiWrn9/VwfuTOaI+3ZrQYNXeoZHu4mTJv9
+         LY7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=WicZgbJszxfXxeNtb4940DpXQ6VdefB4qPwAO8n6QxE=;
-        b=JmzDRNiMPMzM34IYr/9Vk5TIZsbXIR1KQDjuu4CARGr6MsBegxaE5nD2lTKc/a39N7
-         Mm17/wUUvoGLmjeQwGf0FNLPea9Ts1Zu311DZbnrsERONEhBC5F0vK+3w53PjGyd6psk
-         FCMqQRwb5Tw4hu3yyD/okLheP7+he7goilW73fwipeShyIaaUYgolo4r28k+AfmkwxxD
-         lkRnDkf2dK264j4AB7YyGXyTYkjKLD2SOIFx6PcKjCbnwicgttFRs0vVEx8VLm6br4E3
-         DvsY8J4JBmCqwbRDx052XZPhTjt6NO81gGnG5uHzt4mEorcUFAW95JH/ivRaij4eh4eu
-         CTNQ==
-X-Gm-Message-State: APjAAAVmnMSUqT6x3kAXHWHoTf/YEBbbmq6e2QeiUkmaB5kjX6sSB0na
-        zHsK2LzxEjsbPyemZBa8zxE=
-X-Google-Smtp-Source: APXvYqw1NL13n9rcAmDr4d8wPtvRMDQfP1k/s5F2Zh2LkpFy2VyyM3BSMZMx7nz5j0YB38LSgwCm8g==
-X-Received: by 2002:a5d:45c8:: with SMTP id b8mr1021723wrs.3.1552299288397;
-        Mon, 11 Mar 2019 03:14:48 -0700 (PDT)
-Received: from [192.168.2.240] (host-92-22-31-213.as13285.net. [92.22.31.213])
-        by smtp.gmail.com with ESMTPSA id e23sm14390755wme.15.2019.03.11.03.14.47
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Mar 2019 03:14:47 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 5/8] merge: cleanup messages like commit
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1548219737.git.liu.denton@gmail.com>
- <cover.1552275703.git.liu.denton@gmail.com>
- <b2b82954e7060a3f5d47f77e4743493ff4256bd6.1552275703.git.liu.denton@gmail.com>
- <CAPig+cS5YsjxuLGNAtfFguQvy2p2bJECSsHksx356+WsO1ct5w@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <2e10d78a-d92c-76c1-abc3-49ad1be55779@gmail.com>
-Date:   Mon, 11 Mar 2019 10:14:46 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc;
+        bh=s7PidRNrP0JLUMFCJSQ/njqQ9MIpCUmFmV6cy/5sZyI=;
+        b=Y6hRm6fyEmmSR2mLFfBSNMSEDYMIQ9VPHiIvKD+NcNnGdifHztYd3ieyxEZ3SRZ3ej
+         TSzc0xODU+o8jmlwBSlLTunRJdgiuIvUVrZGPQoUPQOS4jlB5MAxd7/Pi3oYglwj9AVL
+         yY0npOUEmNVaXruUCqHnIVfSGpv9REDHxNBHaK1HIb8tspmf9ETqkTSgcgUMUl0OHb7L
+         8JaZ1f2O81rHj8p1ciclzU43J2/ctfWc1LF7HF2tRScLECJtwLhiTA/He8RwVo9OUHO8
+         1wzRhBSB95yo0Czav7edCdLcPUsyy34mulokRXrqNcYqQosQh9zdV5NnCRjU9UaeANF+
+         t3aA==
+X-Gm-Message-State: APjAAAVNxcNurf5W3IqtdXfiw2OhG+GMZ1jOl/iFaWWpVZex4TDvRsVv
+        WeNxaGGl+ZQqiVlkZ0hwPakyk8i+7GxbEJPQTFY=
+X-Google-Smtp-Source: APXvYqxTrJKrfW8djLC5E9o3bRS/S8CXsDgH+K9XIAxxNH4AsUyDT4aI9PVqLJDJOLTV1+GkgGysBph3VoLkiIE0ylk=
+X-Received: by 2002:a5d:9806:: with SMTP id a6mr10108481iol.296.1552300850481;
+ Mon, 11 Mar 2019 03:40:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cS5YsjxuLGNAtfFguQvy2p2bJECSsHksx356+WsO1ct5w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+References: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
+ <20190308174343.GX31362@zaya.teonanacatl.net> <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
+ <CAH8yC8kn=EmEm_UPrnpwaofv97S42Se6FC+hWcm0EHCX-4rewQ@mail.gmail.com>
+ <xmqq1s3emapy.fsf@gitster-ct.c.googlers.com> <20190311033755.GB7087@sigill.intra.peff.net>
+In-Reply-To: <20190311033755.GB7087@sigill.intra.peff.net>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Mon, 11 Mar 2019 06:40:21 -0400
+Message-ID: <CAH8yC8=9HOAmDE93aXd300kOJSOa0sA8Qv2cNn2M-EO-gqiktw@mail.gmail.com>
+Subject: Re: disabling sha1dc unaligned access, was Re: One failed self test
+ on Fedora 29
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton/Eric
+On Sun, Mar 10, 2019 at 11:37 PM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Mar 11, 2019 at 11:00:25AM +0900, Junio C Hamano wrote:
+>
+> > Jeffrey Walton <noloader@gmail.com> writes:
+> >
+> > > I think this is the patch for sha1dc/sha1.c . It stops using unaligned
+> > > accesses by default, but still honors SHA1DC_FORCE_UNALIGNED_ACCESS
+> > > for those who want it. Folks who want the undefined behavior have to
+> > > do something special.
+> >
+> > Hmph, I somehow thought that folks who want to stick to the
+> > standard printed on paper penalizing what practicaly works well in
+> > the real world would be the one doing extra things.
+>
+> Unfortunately, I don't think sha1dc currently supports #defines in that
+> direction. The only logic is "if we are on intel, do unaligned loads"
+> and "even if we are not on intel, do it anyway". There is no "even if we
+> are on intel, do not do unaligned loads".
+>
+> I think you'd need something like this:
+>
+> diff --git a/Makefile b/Makefile
+> index 148668368b..705c54dcd8 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1194,6 +1194,7 @@ BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
+>  BASIC_CFLAGS += -fno-omit-frame-pointer
+>  ifneq ($(filter undefined,$(SANITIZERS)),)
+>  BASIC_CFLAGS += -DNO_UNALIGNED_LOADS
+> +BASIC_CFLAGS += -DSHA1DC_DISALLOW_UNALIGNED_ACCESS
+>  endif
+>  ifneq ($(filter leak,$(SANITIZERS)),)
+>  BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
+> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+> index df0630bc6d..0bdf80d778 100644
+> --- a/sha1dc/sha1.c
+> +++ b/sha1dc/sha1.c
+> @@ -124,9 +124,11 @@
+>  #endif
+>  /*ENDIANNESS SELECTION*/
+>
+> +#ifndef SHA1DC_DISALLOW_UNALIGNED_ACCESS
+>  #if defined(SHA1DC_FORCE_UNALIGNED_ACCESS) || defined(SHA1DC_ON_INTEL_LIKE_PROCESSOR)
+>  #define SHA1DC_ALLOW_UNALIGNED_ACCESS
+>  #endif /*UNALIGNMENT DETECTION*/
+> +#endif
+>
+>
+>  #define rotate_right(x,n) (((x)>>(n))|((x)<<(32-(n))))
+>
+> but of course we cannot touch sha1dc/*, because we might actually be
+> using the submodule copy instead. And AFAIK there is no good way to
+> modify the submodule-provided content as part of the build. Why do we
+> even have the submodule again? ;P
+>
+> I guess the same would be true for DC_SHA1_EXTERNAL, too, though.
+>
+> So anyway, I think this needs a patch to the upstream sha1dc project.
 
-On 11/03/2019 05:49, Eric Sunshine wrote:
-> On Sun, Mar 10, 2019 at 11:42 PM Denton Liu <liu.denton@gmail.com> wrote:
->> This change allows git-merge messages to be cleaned up with the
->> commit.cleanup configuration or --cleanup option, just like how
->> git-commit does it.
->>
->> We also give git-pull the passthrough option of --cleanup so that it can
->> also take advantage of this change.
->>
->> Finally, add testing to ensure that messages are properly cleaned up.
->> Note that some newlines that were added to the commit message were
->> removed so that if a file were read via -F, it would be copied
->> faithfully.
->>
->> Signed-off-by: Denton Liu <liu.denton@gmail.com>
->> ---
->> diff --git a/t/t7604-merge-custom-message.sh b/t/t7604-merge-custom-message.sh
->> @@ -47,4 +47,65 @@ test_expect_success 'merge --log appends to custom message' '
->> +test_expect_success 'cleanup commit messages (verbatim option)' '
->> +       git reset --hard c1 &&
->> +       git merge --cleanup=verbatim -F expect c2 &&
->> +       git cat-file -p HEAD |sed -e "1,/^\$/d" >actual &&
-> 
-> An earlier patch in this series "fixed" a test with a Git command
-> upstream of a pipe. Yet, this test adds such an instance.
+https://github.com/cr-marcstevens/sha1collisiondetection/issues/47
 
-Is it worth worrying about? We're not trying to test cat-file here and 
-if it does fail the test will fail as actual will be empty. You could use
-git log --pretty=%B >actual
-which is clearer and saves forking sed.
-
-Best Wishes
-
-Phillip
-
-> (Also, style: add space after '|'.)
-> 
->> +       test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'cleanup commit messages (whitespace option)' '
->> +       git reset --hard c1 &&
->> +       { echo;echo "# text";echo; } >text &&
-> 
-> Style: add space after semicolon or use &&-chaining inside {...}.
-> 
-> Alternately, less ugly:
-> 
->      test_write_lines "" "# text" "" >text &&
-> 
-> (Or even a here-doc, though the leading and trailing blank lines make
-> the here-doc ugly.)
-> 
->> +       echo "# text" >expect &&
->> +       git merge --cleanup=whitespace -F text c2 &&
->> +       git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-> 
-> Git upstream pipe.
-> 
->> +       test_cmp expect actual
->> +
->> +'
-> 
-> Style: drop the blank line before the closing quote.
-> 
->> +test_expect_success 'cleanup merge messages (scissors option)' '
->> +       git reset --hard c1 &&
->> +       cat >text <<EOF &&
-> 
-> This here-doc probably ought to be using '-' and '\', so:
-> 
->      cat >text <<-\EOF &&
-> 
-> and indent the here-doc body.
-> 
->> +# to be kept
->> +
->> +  # ------------------------ >8 ------------------------
->> +# to be kept, too
->> +# ------------------------ >8 ------------------------
->> +to be removed
->> +# ------------------------ >8 ------------------------
->> +to be removed, too
->> +EOF
->> +
->> +       cat >expect <<EOF &&
-> 
-> Ditto: <<-\EOF and indent body.
-> 
->> +# to be kept
->> +
->> +  # ------------------------ >8 ------------------------
->> +# to be kept, too
->> +EOF
->> +       git merge --cleanup=scissors -e -F text c2 &&
->> +       git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-> 
-> Git upstream pipe.
-> 
->> +       test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'cleanup commit messages (strip option)' '
->> +       git reset --hard c1 &&
->> +       { echo;echo "# text";echo sample;echo; } >text &&
-> 
-> test_write_lines "" "# text" sample "" >text &&
-> 
->> +       echo sample >expect &&
->> +       git merge --cleanup=strip -F text c2 &&
->> +       git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-> 
-> Git upstream pipe.
-> 
->> +       test_cmp expect actual
->> +
->> +'
-> 
-> Drop blank line before closing quote.
-> 
+Jeff
