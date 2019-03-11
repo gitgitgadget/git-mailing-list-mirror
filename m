@@ -2,89 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADB3420248
-	for <e@80x24.org>; Mon, 11 Mar 2019 20:24:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EDA120248
+	for <e@80x24.org>; Mon, 11 Mar 2019 20:32:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728164AbfCKUYn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 16:24:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46342 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727548AbfCKUYn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 16:24:43 -0400
-Received: (qmail 16052 invoked by uid 109); 11 Mar 2019 20:24:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Mar 2019 20:24:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26552 invoked by uid 111); 11 Mar 2019 20:25:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 11 Mar 2019 16:25:02 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Mar 2019 16:24:41 -0400
-Date:   Mon, 11 Mar 2019 16:24:41 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Drop last MakeMaker reference
-Message-ID: <20190311202441.GB18263@sigill.intra.peff.net>
-References: <pull.146.git.gitgitgadget@gmail.com>
- <xmqqfts469h5.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1903071109020.41@tvgsbejvaqbjf.bet>
- <xmqq1s3ikurh.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1903081718330.41@tvgsbejvaqbjf.bet>
+        id S1727816AbfCKUc0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 16:32:26 -0400
+Received: from mail-it1-f181.google.com ([209.85.166.181]:55784 "EHLO
+        mail-it1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727147AbfCKUcZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 16:32:25 -0400
+Received: by mail-it1-f181.google.com with SMTP id z131so791068itf.5
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 13:32:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=D3Jpi7n5Wsh5xXF+5P7vmyBfGv8jMNs1+tu1bKHD+vI=;
+        b=kCRc7dvwBh+r/XCed+vcume5DwPUUHPDlpH7fOd/HHK2CsELsZcwoWNrtPmxrhw/Nd
+         +Hs8F50b2IZYUV8arKO2Iw19JPq4gNf7EkRb7BWflyCipP84QPgIASltyoNM9vcAt5uy
+         lb33i16tDWnIkrGkU/AvGUIiK6FR5HV4YWfxwhuP6xE4X8QcInKzJSwo1SR3xrv7Ffch
+         Mnc+XmgV/SSEI4RSlLkmCSPQBTEiDr5HcN8zSNc3t7/hJ/tMULU96niwoXIt4GWsFD93
+         G0s4Hl7msBg6FjS5YNh3iTJoBvlIBw2LclVYlxjwofDG3twT/P/kRZKOuNdXbXO9tsVB
+         DS5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=D3Jpi7n5Wsh5xXF+5P7vmyBfGv8jMNs1+tu1bKHD+vI=;
+        b=hsi1kcN8HEVRi1ODAQu7mjfTLhUmClSEt0/xLNeTuLcXQFn7gIgAM3tzCDUccGs+S7
+         EYtmR9Ibjg7VPIc3ADdlL/juAPbCx5UQ6T30CLNSPduT4gMzEspCH/Rg5WJNh6flk4Ml
+         NA/z/WwMtGwIYYm+j4AUXMlaeJzFJ0DQKXxE5gSo8qm0Pwm53Dbv4eb60O6u+Ld069Jv
+         /LyxwA05oM7ghgv5ClhcLt70Y4r/b2Ch6D/e2LXeyv4nBD/S0KNRWNoMUDEet2V5iwFP
+         kOYwZ2AyBTZNdPhHLgASltHObgOl/3b4EJxzL2fQGyVkRHs8UQ967lBMcqeE0RTIgcKW
+         tZVw==
+X-Gm-Message-State: APjAAAUuk+R3C6D52Yg59UOnCXehQMJFE7pMqu8wp3+bSUxOxdoARrrX
+        TODMxAV+8Dc8jlzpUwoKtG/7Bcf6l2XX+atW1IJMMJoJ
+X-Google-Smtp-Source: APXvYqzw5uTdmN0qk6frEXeVYlkEn995Gp8BsIlzgbwtNMLr1yNyv0EwpU32bWHc+0EPNgwX9f9J4ejeAvanD6OJwdM=
+X-Received: by 2002:a24:3b0a:: with SMTP id c10mr73876ita.10.1552336344526;
+ Mon, 11 Mar 2019 13:32:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1903081718330.41@tvgsbejvaqbjf.bet>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Mon, 11 Mar 2019 16:31:55 -0400
+Message-ID: <CAH8yC8nnFYt0raL+twrG_v8XZn_FDJWyM=tH=QL13Z70_bHRiQ@mail.gmail.com>
+Subject: Solaris and sed: Too many commands, last: s/\n//
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 08, 2019 at 05:27:36PM +0100, Johannes Schindelin wrote:
+Hi Everyone,
 
-> > Or perhaps GGG can learn to avoid 0/1 for a single-patch topic ;-)
-> 
-> It is easier, and more consistent, to have a cover letter even then, for
-> things like the broader explanation of the context, the changes since the
-> previous iteration, and the range-diff (which would make v2, v3, v4, etc
-> utterly unreadable from my point of view if they were integrated into the
-> single patches, as I used to do with interdiffs).
+I enabled self tests for Solaris. Solaris has some anemic utilities so
+I put /usr/gnu/bin first on-path.
 
-Just my two cents:
+make test is resulting in a lot of:
 
-As a reviewer, I generally prefer not to see a separate cover letter for
-a single patch. At least for the first version (I agree it gets unwieldy
-showing a range-diff after the "---" for subsequent versions, unless it
-happens to be pretty short).
+gmake -C templates  SHELL_PATH='/bin/bash' PERL_PATH='/usr/bin/perl'
+gmake[1]: Entering directory
+`/export/home/jwalton/Build-Scripts/git-2.21.0/templates'
+: no custom templates yet
+gmake[1]: Leaving directory
+`/export/home/jwalton/Build-Scripts/git-2.21.0/templates'
+gmake -C t/ all
+gmake[1]: Entering directory `/export/home/jwalton/Build-Scripts/git-2.21.0/t'
+rm -f -r 'test-results'
+sed: Too many commands, last: s/\n//
+--- chainlint/arithmetic-expansion.expect       2019-02-24
+11:31:46.000000000 -0500
++++ chainlinttmp/arithmetic-expansion.actual    2019-03-11
+12:20:16.880610011 -0400
+@@ -1,9 +0,0 @@
+-(
+-       foo &&
+-       bar=$((42 + 1)) &&
+-       baz
+->) &&
+-(
+-?!AMP?!        bar=$((42 + 1))
+-       baz
+->)
+sed: Too many commands, last: s/\n//
+--- chainlint/bash-array.expect 2019-02-24 11:31:46.000000000 -0500
++++ chainlinttmp/bash-array.actual      2019-03-11 12:20:16.902186323 -0400
+@@ -1,10 +0,0 @@
+-(
+-       foo &&
+-       bar=(gumbo stumbo wumbo) &&
+-       baz
+->) &&
+-(
+-       foo &&
+-       bar=${#bar[@]} &&
+-       baz
+->)
+sed: Too many commands, last: s/\n//
 
-My reasoning is that I've noticed that many of the GGG-sent patches
-often end up duplicating quite a bit of content between the cover letter
-and the commit message of the patch (or worse, putting things only in
-the cover letter that really could go into the commit message). That
-doubles the time I spend reading and understanding the patch's rationale
-(and I'm speaking subjectively here, of course; I didn't measure it).
+A more complete output is available at https://pastebin.com/gpZMUVmQ,
+but it is more of the same.
 
-I don't think it's an _inherent_ problem with a separate cover letter.
-But something about the workflow causes people to write up over-long
-cover letters. Which presumably is the fact that they're presented with
-a PR textbox to write the rationale separately from when they wrote the
-commit message. So they err on the side of repeating themselves, and
-never see the two pieces "together" (like the reader will), which makes
-the redundancy more obvious.
+Solaris in a VM sucks. I can provide SSH access to the hardware if
+anyone is interested. It is just an Solaris i86pc on an older Ivy
+Bridge.
 
-I'd say 99% of the time a single-patch doesn't need any cover letter
-material at all. And even a multi-patch series really just needs a tl;dr
-of the problem and a sketch of the solution. In both cases, the commit
-messages should carry the meat.
-
-(That's all specific to our project, of course; I know many projects
-don't care about commit messages at all and expect PR descriptions to be
-the first-class explanations).
-
--Peff
+Jeff
