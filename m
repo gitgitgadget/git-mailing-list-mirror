@@ -7,89 +7,106 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A63520248
-	for <e@80x24.org>; Mon, 11 Mar 2019 09:36:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56CA320248
+	for <e@80x24.org>; Mon, 11 Mar 2019 09:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727282AbfCKJf6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 05:35:58 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:36047 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726969AbfCKJf6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 05:35:58 -0400
-Received: by mail-it1-f194.google.com with SMTP id v83so6205342itf.1
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 02:35:58 -0700 (PDT)
+        id S1727358AbfCKJh5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 05:37:57 -0400
+Received: from mail-pf1-f174.google.com ([209.85.210.174]:32875 "EHLO
+        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727263AbfCKJh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 05:37:56 -0400
+Received: by mail-pf1-f174.google.com with SMTP id i19so3299053pfd.0
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 02:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=m9nvdF08sblVDiGM/ZOp4AvVg2sYOwc+2GN28fyQ9U0=;
-        b=nX3CXwCGVgT3wUVStA+oxlV7FejNvwFslPGPp4R2D+tzE8dD4z2+ygQh4ug4Aw7UZK
-         3n6wygvKsfy8AM7CFrpRN9arele1fbC8ZckZAy3DwgG+PghjX7fDsDtLSAKb0A3ClQ6B
-         X5vnozGp1me6Eee9cBVAPQf9dRHYolo6oNaweJ+QqF60oauuwm/P4rjCznqejsnUSTRq
-         sZT4/L1A2ekrHUhv9RBuW2RrEA6rPi3KXKoKjzsu4uO/c75UD/YIULcC7mz5z53sXNot
-         ybVFFoZaFc6GTQ6u43ewGPyEFZYppsTitTlz/gNzcAOfifQCNPqip3dglFIfQffinO/v
-         9XWA==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=5IyIYMDd56HBMgKuLw9DNSI9DcuglbHYKg32ElvlXTg=;
+        b=bl9BYahVDhKgmWmEJVrr1KKSLCTZxhaT6HIk73dKDun1eOmSDIsFAMWnNVWmwqv1YN
+         2UssNr50o2DNY+vXr++DlvHUg/Xj+9msbdxFWQIryTRi+93VKDzqlhircNHZSlTGNArd
+         pT3mLf3zugNO2lri2Vvbundl4P7y9E+kt+azKsCkaMb77MkxHsFPpzPZjYXj1rsw8g4d
+         /gt5g4jfVcbZNq8EeW1h8jEcuxHfDNov7r1Ph0oJ9z1PQqSV0juKiu5RzdPEyKOJ1pxd
+         hSUQw3jr2jp4d2h6DDQJS2wj+IywHEkeqTiJ+zkbs2PjC6F2Kc4Z4Cm8dPnKW6zJ7jBP
+         DVIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=m9nvdF08sblVDiGM/ZOp4AvVg2sYOwc+2GN28fyQ9U0=;
-        b=E+2Mb5tX2r8BpGREN/nM4vYpv4IDBX89U5jxFDSnUZ+COVx8awp+mhnRA0et2lh8mK
-         VGG+ZmJkFFCB4Vpto5DJ6hkhMhf7/s1YCJipKrh9ff1Zvww6qdJcKe+iWIGCMYCtaQFL
-         CTjwfuks/73z63n6A2D8vJ4CMS8MuH3Ij8eq5bGQr3jkhEYOz167mzyW9Eg1ICzyLz6E
-         CmF0agY0D3IHIrs1ry5RXptlodFqfRiD3EpOgCcMG6R8DXU919wZ3D76HLEfhun70uBN
-         9Y8p4Na/NAF8cNQBM/X6jI2F/ta1BLj4PPXVyvOV8BFHmIJYJMnKId86vo6uK26CzrAQ
-         1fqw==
-X-Gm-Message-State: APjAAAVpDke4OJmsP7IRqtOvbPnRZmBxO3qeXSGYMqbvOSgYB7Ely/3W
-        RriOdoW1x9pEji1ibU5dvsJf4PLe2vClPi62lRs=
-X-Google-Smtp-Source: APXvYqyUK+ggzOLMePuUoNWCX4R/9RzoO79Q4z8x2aLxsh4E4CkxGG1U7N5XD6wlNdGIEG452UNmb/xjDDeovYJWfMg=
-X-Received: by 2002:a24:ccc5:: with SMTP id x188mr15085882itf.123.1552296957626;
- Mon, 11 Mar 2019 02:35:57 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=5IyIYMDd56HBMgKuLw9DNSI9DcuglbHYKg32ElvlXTg=;
+        b=bIus2yrJfxFfJ2vsYeADMG9tF/cICoESgaacYfeaf3adl25YsvrIHh1/diLTh9w8oF
+         cZz4RLQtklEqCXExLtXy9rBpLdAFjkrPH2YtqJI3xieKtB9U6Qym7IQ46sXolmLDY1FZ
+         4w0b8eUG7mQh/aWE7p2r/MUTIKment/xelKMMVVhbAZc+W47/sYNRtEEh8cuXfLqts/K
+         Uhwk16AVey+ANQmdhWBOX7zzmSTLUeJLTjmwcKF0lK+sD5I0ASNuhCDJVULvxN+ZGwCM
+         p3qrGl6aWOq+QtI7uQr7Fb1pkN+vEKjs6Iya5V9b2BBBbSzVeKUQH21nMgAR8wO3ZScF
+         gi0g==
+X-Gm-Message-State: APjAAAW2dre8IgekoqpSkxXvcOCzNNMBvlUlgXxiXkyBOTiX/ZVeMuW6
+        mhFOJroEbSFl/7V8a+UPuJi5LV7s
+X-Google-Smtp-Source: APXvYqyfcf9F/48TQj82wVMXOiFEYrvdwAMN1m41Xor08uOtM2YfEknTkbRY/GT7HTuo3GJ9xIphyQ==
+X-Received: by 2002:a65:410a:: with SMTP id w10mr28573890pgp.206.1552297074723;
+        Mon, 11 Mar 2019 02:37:54 -0700 (PDT)
+Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
+        by smtp.gmail.com with ESMTPSA id f65sm8394772pff.21.2019.03.11.02.37.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 Mar 2019 02:37:53 -0700 (PDT)
+Date:   Mon, 11 Mar 2019 02:37:51 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Elijah Newren <newren@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        vincent.guittot@linaro.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Deprecating git diff ..; dealing with other ranges
+Message-ID: <20190311093751.GA31092@archbookpro.localdomain>
 MIME-Version: 1.0
-References: <20190308095752.8574-5-pclouds@gmail.com> <20190309123518.2193053-1-martin.agren@gmail.com>
-In-Reply-To: <20190309123518.2193053-1-martin.agren@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 11 Mar 2019 16:35:31 +0700
-Message-ID: <CACsJy8DdzbcZzny+v=TESeBxaOsvJcmwY0e54xYvh2m+0zzVXw@mail.gmail.com>
-Subject: Re: [PATCH v3 04/21] git-checkout.txt: fix monospace typeset
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 9, 2019 at 7:35 PM Martin =C3=85gren <martin.agren@gmail.com> w=
-rote:
+Hello all,
 
-> @@ -285,7 +285,7 @@ Note that this option uses the no overlay mode by def=
-ault (see also
-The part not shown here is
+I was in the process of deprecating `git diff <commit>..<commit>` as
+discussed here[1]. However, I ran into a weird case that I'm not sure
+how to deal with.
 
-    Using `--recurse-submodules` will update the content of all initialized
-    submodules according to the commit recorded in the superproject. If
-    local modifications in a submodule would be overwritten the checkout
+In t3430-rebase-merges.sh:382, we have the following test case which
+invokes git diff:
 
-and the --recurse-submodules is rendered incorrectly (not with
-monospace font, and the quotes remain) because...
+	test_expect_success 'with --autosquash and --exec' '
+		git checkout -b with-exec H &&
+		echo Booh >B.t &&
+		test_tick &&
+		git commit --fixup B B.t &&
+		write_script show.sh <<-\EOF &&
+		subject="$(git show -s --format=%s HEAD)"
+=>		content="$(git diff HEAD^! | tail -n 1)"
+		echo "$subject: $content"
+		EOF
+		test_tick &&
+		git rebase -ir --autosquash --exec ./show.sh A >actual &&
+		grep "B: +Booh" actual &&
+		grep "E: +Booh" actual &&
+		grep "G: +G" actual
+	'
 
->         will fail unless `-f` is used. If nothing (or `--no-recurse-submo=
-dules`)
->         is used, the work trees of submodules will not be updated.
->         Just like linkgit:git-submodule[1], this will detach the
-> -       submodules HEAD.
-> +       submodules' `HEAD`.
+It gets caught in my attempt to only deprecate ..'s. Technically, it's
+undocumented behaviour and it only happens to work because git-diff
+accept ranges but it doesn't operate in an intuitive way.
 
-...of this apostrophe, it seems, on both man and html versions. This
-is with asciidoc 8.6.9.
+I was just wondering what we should do about this case? Should we
+deprecate all invocations of `git diff <range>` except for the special
+case of `git diff <commit>...<commit>`, or should we _only_ deprecate
+`git diff <commit>..<commit>` and allow all other forms of ranges, even
+though it was undocumented behaviour?
 
-Martin, could you check if your asciidoc (or asciidoctor) behaves the
-same? If it's not just my buggy asciidoc version, I can turn this to
-"wil detach `HEAD` of the submodule" which should fix the problem.
---=20
-Duy
+Thanks,
+
+Denton
+
+[1]: https://public-inbox.org/git/xmqqmumy6mxe.fsf@gitster-ct.c.googlers.com/
