@@ -7,60 +7,67 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46BF920248
-	for <e@80x24.org>; Mon, 11 Mar 2019 07:28:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA51620248
+	for <e@80x24.org>; Mon, 11 Mar 2019 07:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726820AbfCKH2x (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 03:28:53 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:54707 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726623AbfCKH2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 03:28:53 -0400
-Received: by mail-wm1-f67.google.com with SMTP id f3so3236852wmj.4
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 00:28:51 -0700 (PDT)
+        id S1726779AbfCKHaN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 03:30:13 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35582 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726623AbfCKHaN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 03:30:13 -0400
+Received: by mail-wm1-f66.google.com with SMTP id y15so3164367wma.0
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 00:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=kyTtak6a+fj0Rafem4xmMPoSsJI+SyBAXuExtf0bhQc=;
-        b=NcNRNgpzIQ3csi82wrjA596rl8x7HDbhJdFdlC0MWmFh5cxSa6XtHGk0vhRs5MLNCs
-         rvWs8jvC/bfW3PpEaCqPYHAvqPoweaDhQHoaoJomXaZluV04j16qp+aGjfCvlPEvCj6s
-         wcWhhqjep5T7CagVyu+nHmWWQga/7ATautOIKwSc7fNkTRKM+GBIDY7M7V+XIP4EPPFq
-         QL7gKENftsnEMttBNK3AQuC3ifQ+5snvIoisdLLxSCYaKj7xi34AtSPb8y2eUE6VaHIi
-         QnwvzEBxxpqevnrz2Zhp3ZN9DjjSg3ckmTOPJnq8oJC2EMN8UEBSkgajtk29X2yvg/X5
-         HjNA==
+        bh=Uwk0U5OmgN1GoNcZ866mW7eqgF6QtUepXQTPSG1BIDU=;
+        b=QHnMOBDOV3q0KZ9I1OVYZ+B7D9DCq2S3QPWqWSAJJrhyRKPnM5XoH5pX/dRbIBkQDy
+         94oIrkL9Lx8FhStL9Cv4aH29Clf5JV42alkxiETmuWdEOEs5WXTF0+6PQVJOWF2R2lSO
+         OdxS2203UlrsZtmi24/2bTv195tdkH3BPGLmCaanrQKqfO7wDw/RqypaoLv03gc4r6cq
+         kXziOBrTxn4/ihQ3FO6b+rLI6B3CkZoH2maSi2/9xyCkiMzaCls5Nq2VV2nR29G+THPl
+         B4kMzcM6OUhktLNiQ7KgNHML/4WY8+2/gZ6QYdLo7oEz7JH17gu2cNdaHpyO1+Lyutpc
+         29Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=kyTtak6a+fj0Rafem4xmMPoSsJI+SyBAXuExtf0bhQc=;
-        b=MSUzJgM+mE15bvXzQ+bOIeB7WzPD93U92VrcVljLJQOzwo4J/XV1MJ+GHuL8GWcpAp
-         ePCYbsMuiUvFPGOFELvc77guKSXebwrZUkO1NjcxE0xPhA6el4jN8LNcH4mwWsJsQIxD
-         JbSi1B0RTl6wDyq2EJMQMS3eDrVpwrmVKoXv7GFS8t3+StW7IVHZI/hd9gPwSAET0tM6
-         ag5uMVcuz4Bup3Ds6moQZRdSNRxYFica1MMNsYEPMUtsVR4HEf8O4OrgsqWpWcimmOs5
-         5YUP+dnRVrR2LxYoUKfcCjRbea6WHsG7DHd9kjAc3FovKjjLkdja9jg9oX1fnISdMgZw
-         93pg==
-X-Gm-Message-State: APjAAAXOJj5/SpaCUfaRdY8nx7YrAKoI0gTRq5cA/EVr93nEq8naFG4+
-        3pwn+C5k3w6Uo+KvJoaZytk=
-X-Google-Smtp-Source: APXvYqxBq4mzlosiZTQb/EygdYseueDynrSB5MN8oEacXdT5ZL74cKS43jKIDLofAXuTtuqukepvXA==
-X-Received: by 2002:a1c:1b8a:: with SMTP id b132mr16067536wmb.138.1552289330477;
-        Mon, 11 Mar 2019 00:28:50 -0700 (PDT)
+        bh=Uwk0U5OmgN1GoNcZ866mW7eqgF6QtUepXQTPSG1BIDU=;
+        b=AhgewMrGomlLFHpzB45dSND4cZUA5qhDYuNXxYlFf3qOCbNLDlVu4KhfDc3ldM/H5I
+         cTR48yL1DQjQv26Vny/IKJa4NwBg5CT+uyZNwW5ePkHqohJFW7T0zymkBrP6TGMyWvGy
+         F0RdxYL/k6Pb70foG5xDzkC21d1tUcl5R47lAE/bb6vTUI6OjpP+vBCRTba2j974Wut4
+         HKC93y+ktR1rediHYEh8zk4qVj+l/5xFWXF2EXMZtQHpwHcIJljcw5JE9nimWDr1K+h/
+         SYFKfdzrQl2Rguh1dTflwoZAOBwDgR7/q6Ap9+kKW5oAYdLdP3nWSqQVtHHhaOxlPgUX
+         uohQ==
+X-Gm-Message-State: APjAAAVWW5dMugxHBejUguz7jDHvdeXBs1YjuC/vZnc7oieiiQvVnDhu
+        rH9OLygT7qUwP6iWA7OgL5g=
+X-Google-Smtp-Source: APXvYqxdtOmxqB+9vaJgG5kk/1zvZuIdRY1xh5et05LUUj4bQu1TiJONogqCX3MWa63nd34zjobB7A==
+X-Received: by 2002:a1c:1d56:: with SMTP id d83mr16877301wmd.67.1552289410551;
+        Mon, 11 Mar 2019 00:30:10 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id h10sm7407697wrs.12.2019.03.11.00.28.49
+        by smtp.gmail.com with ESMTPSA id z6sm11925921wml.40.2019.03.11.00.30.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Mar 2019 00:28:49 -0700 (PDT)
+        Mon, 11 Mar 2019 00:30:10 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] built-in stash: handle :(glob) pathspecs again
-References: <pull.159.git.gitgitgadget@gmail.com>
-        <7b5cca61dea4f01f9bcdcb6d5d2a913d58a341d3.1551972571.git.gitgitgadget@gmail.com>
-Date:   Mon, 11 Mar 2019 16:28:49 +0900
-In-Reply-To: <7b5cca61dea4f01f9bcdcb6d5d2a913d58a341d3.1551972571.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Thu, 07 Mar 2019
-        07:29:33 -0800 (PST)")
-Message-ID: <xmqqh8c9kgy6.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Matthew Kraai <mkraai@its.jnj.com>
+Subject: Re: [PATCH v13 18/27] stash: convert create to builtin
+References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet>
+        <20190225231631.30507-1-t.gummerer@gmail.com>
+        <20190225231631.30507-19-t.gummerer@gmail.com>
+        <20190307191836.GB29221@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1903081630040.41@tvgsbejvaqbjf.bet>
+        <20190309182610.GD31533@hank.intra.tgummerer.com>
+        <xmqqimwqmbba.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 11 Mar 2019 16:30:09 +0900
+In-Reply-To: <xmqqimwqmbba.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 11 Mar 2019 10:47:37 +0900")
+Message-ID: <xmqqd0mxkgvy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,49 +76,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
 >
-> When passing a list of pathspecs to, say, `git add`, we need to be
-> careful to use the original form, not the parsed form of the pathspecs.
+>> Subject: [PATCH 1/2] stash: pass pathspec as pointer
+>>
+>> Passing the pathspec by value is potentially confusing, as the copy is
+>> only a shallow copy, so save the overhead of the copy, and pass the
+>> pathspec struct as a pointer.
+>>
+>> In addition use copy_pathspec to copy the pathspec into
+>> rev.prune_data, so the copy is a proper deep copy, and owned by the
+>> revision API, as that's what the API expects.
 >
-> This makes a difference e.g. when calling
->
-> 	git stash -- ':(glob)**/*.txt'
->
-> where the original form includes the `:(glob)` prefix while the parsed
-> form does not.
->
-> However, in the built-in `git stash`, we passed the parsed (i.e.
-> incorrect) form, and `git add` would fail with the error message:
->
-> 	fatal: pathspec '**/*.txt' did not match any files
->
-> at the stage where `git stash` drops the changes from the worktree, even
-> if `refs/stash` has been actually updated successfully.
->
-> This fixes https://github.com/git-for-windows/git/issues/2037
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/stash.c                    | 5 +++--
->  t/t3905-stash-include-untracked.sh | 6 ++++++
->  2 files changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 1bfa24030c..2f29d037c8 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -830,7 +830,7 @@ static void add_pathspecs(struct argv_array *args,
->  	int i;
->  
->  	for (i = 0; i < ps.nr; i++)
-> -		argv_array_push(args, ps.items[i].match);
-> +		argv_array_push(args, ps.items[i].original);
->  }
+> It does make quite a lot of sense, but do we need clear_pathspec()
+> at strategic places after we are done using these copied instances?
 
-Yup.  I think Thomas and Peff were also looking at the vicinity of
-this code wrt the pass-by-value-ness of ps parameter.  Their fix
-need to also come on top of this (or combined together).
+Another thing is that this also needs Dscho's fix to pass down the
+pathspec that was originally given, not the parsed part.
