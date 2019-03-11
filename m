@@ -2,92 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32C8620248
-	for <e@80x24.org>; Mon, 11 Mar 2019 03:02:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4D2C20248
+	for <e@80x24.org>; Mon, 11 Mar 2019 03:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727027AbfCKDCe (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 23:02:34 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44550 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726871AbfCKDCe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 23:02:34 -0400
-Received: by mail-wr1-f67.google.com with SMTP id w2so3340102wrt.11
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 20:02:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=PdyybWCCm8Uad/6ezUgtWYdGa35m3mVCF67IKAXR92U=;
-        b=spvUigbgJ/kUEFeyddz8Mz30IUWupO8rHMPBbOXUZUtPgum7JtAEW7Aw4ix2QniF4V
-         5b9m7qwm28q9+l5Itdh8nl9Qm8+EpZFU1qN2SmKS+/xBVQxE3qVSmulxcodpru+uabRx
-         l02HBwpEybaikUDrwLJ0ooduAu7MirJRxadwIlzMAX1rGHVQ6MmEyGtN9xnwPdFrVXFM
-         1A7M7ri/7sX78tLQlzVKJuh+HoMNkkfkVniPC+lA6tq+6HTjAPcs5K3VCVDFiu/THiCo
-         03fWfLHM3UK1aRpGpQ9xtjESn8SLNc6bt7CWfYwCNdB/SihqNSRIOPiIu+ePONtKSX/c
-         KTyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=PdyybWCCm8Uad/6ezUgtWYdGa35m3mVCF67IKAXR92U=;
-        b=l/VZi6uuTjmvpBY3XjMct12VJpVBtmE2HNefQAgZZakMWg38eAcW4BSqeWXUArTZMY
-         o12Le4lcPFZDwWRtiIhpaD+RfUgMWDKKbpaiCTjo8tKqCytLBwu3cpVuY0Q077gQ0ZRL
-         v9DVDaND80ToxmDCSfFIX1TW5W7/krIo6PVS07uEqr32wyGfPG6oZZm14zFqflkOlvVH
-         pmxgFMF+MsfmBFxk8s0E01qtwDRDLDKAu0wmQaTlgpRLEuURULqKVtTJQM91HVOfWtGV
-         AYWjnl5vfH3tl5P62FR9e5wbaK8Mv2dHngPuM8BnWkH/lcnByx3P6YxW5wjIjVjRDRx/
-         8WGA==
-X-Gm-Message-State: APjAAAWP1iOYjX/icjkMCdoaIA4qOOY17/r8ZTYZL5UyNZ51TErwfoLZ
-        vl1alTJfrFYCUW2ptJNgAsobRQG5p+U=
-X-Google-Smtp-Source: APXvYqxcEFN/NxyBHaQ9x9bjkK0U0gGYt02wwUtHeP7ni7N1oNcr/4gSdhfvZbLqYfriqaNMaYDtOQ==
-X-Received: by 2002:a05:6000:6:: with SMTP id h6mr18009804wrx.134.1552273352907;
-        Sun, 10 Mar 2019 20:02:32 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id b195sm33412934wmg.36.2019.03.10.20.02.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 10 Mar 2019 20:02:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/2] fix spurious space after linkgit, now in *.html
-References: <xmqqmumc3g1h.fsf@gitster-ct.c.googlers.com>
-        <cover.1552230490.git.martin.agren@gmail.com>
-Date:   Mon, 11 Mar 2019 12:02:32 +0900
-In-Reply-To: <cover.1552230490.git.martin.agren@gmail.com> ("Martin
- =?utf-8?Q?=C3=85gren=22's?=
-        message of "Sun, 10 Mar 2019 16:14:22 +0100")
-Message-ID: <xmqqk1h6kt9z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727153AbfCKD30 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 23:29:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45366 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727109AbfCKD30 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 23:29:26 -0400
+Received: (qmail 19227 invoked by uid 109); 11 Mar 2019 03:29:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Mar 2019 03:29:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19717 invoked by uid 111); 11 Mar 2019 03:29:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 10 Mar 2019 23:29:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Mar 2019 23:29:24 -0400
+Date:   Sun, 10 Mar 2019 23:29:24 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jeffrey Walton <noloader@gmail.com>
+Cc:     Todd Zullinger <tmz@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: One failed self test on Fedora 29
+Message-ID: <20190311032923.GA7087@sigill.intra.peff.net>
+References: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
+ <20190308174343.GX31362@zaya.teonanacatl.net>
+ <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
+On Sat, Mar 09, 2019 at 07:34:15AM -0500, Jeffrey Walton wrote:
 
-> Bleh. For some reason [1] I thought the html-files were exempt from this
-> "extra space after linkgit" problem. They're not, as I just noticed. To
-> add insult to injury, my original patch 2 which adds a missing
-> dependency to the xml targets fails to add the exact same dependency for
-> a few other targets. So of the three patches discussed above, at least
-> two were incomplete.
->
-> Since this has hit "next", here are two patches on top to address this.
->
-> Sorry about this.
+> > It would probably help to know what commit you're building.
+> > The verbose test output would also be useful, e.g.:
+> 
+> I built with CFLAGS += -fsanitize=undefined. It looks like the
+> misaligned accesses generate UBsan findings, which is causing
+> t0021-conversion to fail.
 
-Thanks.  
+You probably should use SANITIZE=undefined instead. The Makefile has
+some smarts to tweak build parameters based on your sanitize flag (e.g.,
+defining NO_UNALIGNED_LOADS).
 
-If it makes it easier, we can eject ma/asciidoctor-fixes out of
-'next' when we rebuild 'next'.  I actually am tempted to start
-'next' from empty for this round after merging some obviously
-correct ones that are there to the 'master' branch.
+That said, I do not think sha1dc works with UBsan at this point at all.
+I usually do error-checking builds with:
+
+  make SANITIZE=address,undefined BLK_SHA1=Yes
+
+What puzzles me is not that t0021 failed, but that everything else
+_didn't_. Almost every script fails for me when Git is built with UBSan
+and sha1dc.
+
+It would be nice to make sha1dc respect NO_UNALIGNED_LOADS. But barring
+that, we should probably default to BLK_SHA1 when we see
+SANITIZE=undefined.
+
+-Peff
