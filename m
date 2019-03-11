@@ -2,91 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6484A202BB
-	for <e@80x24.org>; Mon, 11 Mar 2019 18:23:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A95DE20248
+	for <e@80x24.org>; Mon, 11 Mar 2019 18:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727812AbfCKSXb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 14:23:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46124 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726864AbfCKSXb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 14:23:31 -0400
-Received: (qmail 13909 invoked by uid 109); 11 Mar 2019 18:23:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Mar 2019 18:23:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25572 invoked by uid 111); 11 Mar 2019 18:23:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 11 Mar 2019 14:23:49 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Mar 2019 14:23:29 -0400
-Date:   Mon, 11 Mar 2019 14:23:29 -0400
-From:   Jeff King <peff@peff.net>
-To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Jeffrey Walton <noloader@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>, Git List <git@vger.kernel.org>
-Subject: Re: disabling sha1dc unaligned access, was Re: One failed self test
- on Fedora 29
-Message-ID: <20190311182328.GB16865@sigill.intra.peff.net>
-References: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
- <20190308174343.GX31362@zaya.teonanacatl.net>
- <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
- <CAH8yC8kn=EmEm_UPrnpwaofv97S42Se6FC+hWcm0EHCX-4rewQ@mail.gmail.com>
- <xmqq1s3emapy.fsf@gitster-ct.c.googlers.com>
- <20190311033755.GB7087@sigill.intra.peff.net>
- <CACsJy8CdqbOKu7SHMt_Pz1EtRz08HGpwWHUHoZbUiow_pPh=+A@mail.gmail.com>
- <8cf2fa6c-d742-a2a6-cde7-66cef87b04e8@virtuell-zuhause.de>
+        id S1727530AbfCKS2R (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 14:28:17 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:43310 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726942AbfCKS2R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 14:28:17 -0400
+Received: by mail-vs1-f65.google.com with SMTP id u6so511754vso.10
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 11:28:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=z5QXF3nNFtDNNO2vUVdlhNjB3rmz/sdgiaN5EHyDlsc=;
+        b=tOfRBJCqEBSafdQlzASo2lHRE6Bv0wJXwYu6zrIlhw/zRzK2lQLni6JHxDudELuh0d
+         eGB/BgGHjWuSKFi+TWYA4+E/F7LmAaRiJqEuomP2C/cwj3b0aPLo5+yrTHJz/Vqo9uqy
+         CeVbJQMlCXJrOAp3mfKHN5dxdTytCEshAZD6UDkG0b2U1j/ZkJkArW5COOhYPFbKRl8m
+         uG57CiwbotrSv315dNxiCjNhRNDy8uccs6v8eUB5WLZvhHXFPI6v/dUKkigpwam0kHfv
+         Q3lDDWI6oTQ+mbPUsK45xQnkIMG1+HhszSv7JGm2IEvkM/xoIXyCJ00UB8jWFol2UViW
+         zalA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=z5QXF3nNFtDNNO2vUVdlhNjB3rmz/sdgiaN5EHyDlsc=;
+        b=h8PVjUja0r6DMeD6sblO35uRAg//rt+VuC5qQmiRHD077PKN5NltWwW2YgIOEI2/4J
+         I5UZ+zBOdzluRTWyczH70BEArZLGCZ15Hlk+wrTpWTEpFuLK9uLsNUuLCYUSf3JoEsuY
+         YnKJgmDRLclLHB+VNBF3YSDy7uepsYf0uJmhKtUrQNEKJ9+TAqQ1jOEMTnvorHQsZ6aX
+         r9bpfBg9Yw72wl4ssPXI7DljRa6oKhIPQKuCX0/mM/7ZgD1Wc4hnTAmx3TwVbBLILxNt
+         uxhzdg9iAYVDHIPCn1yorV2l1fu3fuA+92MLfx3N8i8vDdCjctTN8k8w+pZNx85yUK7X
+         1lCw==
+X-Gm-Message-State: APjAAAWb/0h8lGHgjrdjApPmInvXF2K6MbH8W4LsncZXf0d4E4HJEz6f
+        2UdfU3snk9Wiyg2Ja2VdkOiYXAUyPvjG+BZoUKE=
+X-Google-Smtp-Source: APXvYqwuEdVwr3Sho41ifXCCtUIhq/Sni3ONIrVK9z8ajeySTEwv+Hws5+4Ml1TFQPtJ01sietmXol5bEaKS+Wusk7g=
+X-Received: by 2002:a67:fa46:: with SMTP id j6mr17922603vsq.117.1552328895786;
+ Mon, 11 Mar 2019 11:28:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8cf2fa6c-d742-a2a6-cde7-66cef87b04e8@virtuell-zuhause.de>
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-11-pclouds@gmail.com>
+ <CABPp-BGbqYUMEK0V_m0i7dpFb38Mm3sS-h0Ut-GSdvsKEZzRQg@mail.gmail.com>
+ <CACsJy8DeGQ=GRnRByNQ18Npe5JEcRXBf2oK3Xg6uv44OCg_EBA@mail.gmail.com> <CACsJy8ASZ2jcrk7jf+5p0yCk9bLy-8SJmQyEjG9TSULhd+GhaQ@mail.gmail.com>
+In-Reply-To: <CACsJy8ASZ2jcrk7jf+5p0yCk9bLy-8SJmQyEjG9TSULhd+GhaQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 11 Mar 2019 11:28:04 -0700
+Message-ID: <CABPp-BEv1taYym_084qVJj3-jkWWS9hKXZ=grrmH7PDUb5ASwA@mail.gmail.com>
+Subject: Re: [PATCH v1 10/11] completion: support restore
+To:     Duy Nguyen <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 11, 2019 at 07:15:12PM +0100, Thomas Braun wrote:
+// CC'ing Thomas since this touches on a thread elsewhere about the glossar=
+y
 
-> Am 11.03.2019 um 12:58 schrieb Duy Nguyen:
-> > On Mon, Mar 11, 2019 at 10:48 AM Jeff King <peff@peff.net> wrote:
-> >> And AFAIK there is no good way to
-> >> modify the submodule-provided content as part of the build. Why do we
-> >> even have the submodule again? ;P
-> > 
-> > Because of dogfooding of course. This is an interesting use case
-> > though. I wonder if people often want to "patch" submodules like this
-> > (and what we could do if that's the case)
-> 
-> I usually do the following:
-> 
-> - Fork the sub-project
-> - Add a branch with my proposed patches
-> - Update the URL and the commit of the submodule in the super-project
-> 
-> This of course requires all users to do
-> 
-> git submodule sync
-> 
-> which is a bit incovenient, but works.
+On Mon, Mar 11, 2019 at 8:40 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Mon, Mar 11, 2019 at 10:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
+> >
+> > On Sun, Mar 10, 2019 at 2:17 AM Elijah Newren <newren@gmail.com> wrote:
+> > >
+> > > On Fri, Mar 8, 2019 at 2:17 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> > > >
+> > > > Completion for restore is straightforward. We could still do better
+> > > > though by give the list of just tracked files instead of all presen=
+t
+> > > > ones. But let's leave it for later.
+> > >
+> > > s/give/giving/
+> > >
+> > > I'm slightly worried that due to using --no-overlay mode by default i=
+n
+> > > restore, having tab-completion include untracked files increases the
+> > > risk of accidentally nuking the wrong file.  restore is a destructive
+> > > command anyway and should thus be used with care, so perhaps this
+> > > isn't a big deal, but I thought I'd mention it.
+> >
+> > This makes me think about my "git restore :/" example, which does not
+> > remove untracked files because its source is the index. But isn't it
+> > inconsistent that we only remove untracked files with --source and
+> > keep them without? Will that just confuse people more? Or did I just
+> > forget to implement no-overlay mode for the index too?
+>
+> Nope you confused me. non-overlay mode never touches untracked files
+> and so neither does git-restore.
+>
+> It does make the description of git-restore about "remove if paths do
+> not exist" incorrect. But frankly I find it hard to explain
+> non-overlay mode with the index being the remove filter. In
+> git-checkout, where we update both index and worktree, this may make
+> sense to use the index as the remove filter. But worktree works on the
+> worktree only by default. I'll need to sleep on this.
 
-The problem to me is not that the steps that a developer has to do, but
-rather that we are dependent on the upstream project to make a simple
-fix (which they may not agree to do, or may take a long time to do).
+So, I guess this means that my addendum to Thomas' glossary entry for
+overlay is wrong; instead of:
 
-Whereas if we import the content into our repo as a subtree, we are free
-to hack it up as we see fit, and then occasionally pull from upstream
-and reconcile the changes. Changing upstream isn't advisable in the
-general case, but I think makes a lot of sense for small changes
-(especially if you have the discipline to actually get the same or
-similar change pushed upstream).
+[[def_overlay]]overlay::
+       Only update and add files to the working directory, but don't
+       delete them, similar to how 'cp -R' works.  This is the default
+       in a <<def_checkout,checkout>>.  In contrast, no-overlay mode
+       will also delete files not present in the source, similar to
+       'rsync --delete'.
 
-In this particular case, though, the sha1dc project is pretty
-responsive, so I don't think it's going to be a big deal. It just seems
-like an anti-pattern in general.
+the definition should be (note the insertion of 'tracked'):
 
--Peff
+[[def_overlay]]overlay::
+       Only update and add files to the working directory, but don't
+       delete them, similar to how 'cp -R' works.  This is the default
+       in a <<def_checkout,checkout>>.  In contrast, no-overlay mode
+       will also delete tracked files not present in the source,
+       similar to 'rsync --delete'.
+
+...and perhaps the reason this makes it hard for you to explain when
+the index is the source is because this definition means there is no
+difference between overlay and non-overlay mode for that specific
+case.
+
+
+Am I on the right page now?
