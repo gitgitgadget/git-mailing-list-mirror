@@ -2,134 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A95DE20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 18:28:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2E3020248
+	for <e@80x24.org>; Mon, 11 Mar 2019 18:41:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727530AbfCKS2R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 14:28:17 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:43310 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726942AbfCKS2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 14:28:17 -0400
-Received: by mail-vs1-f65.google.com with SMTP id u6so511754vso.10
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 11:28:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=z5QXF3nNFtDNNO2vUVdlhNjB3rmz/sdgiaN5EHyDlsc=;
-        b=tOfRBJCqEBSafdQlzASo2lHRE6Bv0wJXwYu6zrIlhw/zRzK2lQLni6JHxDudELuh0d
-         eGB/BgGHjWuSKFi+TWYA4+E/F7LmAaRiJqEuomP2C/cwj3b0aPLo5+yrTHJz/Vqo9uqy
-         CeVbJQMlCXJrOAp3mfKHN5dxdTytCEshAZD6UDkG0b2U1j/ZkJkArW5COOhYPFbKRl8m
-         uG57CiwbotrSv315dNxiCjNhRNDy8uccs6v8eUB5WLZvhHXFPI6v/dUKkigpwam0kHfv
-         Q3lDDWI6oTQ+mbPUsK45xQnkIMG1+HhszSv7JGm2IEvkM/xoIXyCJ00UB8jWFol2UViW
-         zalA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=z5QXF3nNFtDNNO2vUVdlhNjB3rmz/sdgiaN5EHyDlsc=;
-        b=h8PVjUja0r6DMeD6sblO35uRAg//rt+VuC5qQmiRHD077PKN5NltWwW2YgIOEI2/4J
-         I5UZ+zBOdzluRTWyczH70BEArZLGCZ15Hlk+wrTpWTEpFuLK9uLsNUuLCYUSf3JoEsuY
-         YnKJgmDRLclLHB+VNBF3YSDy7uepsYf0uJmhKtUrQNEKJ9+TAqQ1jOEMTnvorHQsZ6aX
-         r9bpfBg9Yw72wl4ssPXI7DljRa6oKhIPQKuCX0/mM/7ZgD1Wc4hnTAmx3TwVbBLILxNt
-         uxhzdg9iAYVDHIPCn1yorV2l1fu3fuA+92MLfx3N8i8vDdCjctTN8k8w+pZNx85yUK7X
-         1lCw==
-X-Gm-Message-State: APjAAAWb/0h8lGHgjrdjApPmInvXF2K6MbH8W4LsncZXf0d4E4HJEz6f
-        2UdfU3snk9Wiyg2Ja2VdkOiYXAUyPvjG+BZoUKE=
-X-Google-Smtp-Source: APXvYqwuEdVwr3Sho41ifXCCtUIhq/Sni3ONIrVK9z8ajeySTEwv+Hws5+4Ml1TFQPtJ01sietmXol5bEaKS+Wusk7g=
-X-Received: by 2002:a67:fa46:: with SMTP id j6mr17922603vsq.117.1552328895786;
- Mon, 11 Mar 2019 11:28:15 -0700 (PDT)
+        id S1727336AbfCKSlH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 14:41:07 -0400
+Received: from mout.gmx.net ([212.227.17.22]:37071 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726942AbfCKSlH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 14:41:07 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MN748-1hA1Yc2jd2-006hS7; Mon, 11
+ Mar 2019 19:41:02 +0100
+Date:   Mon, 11 Mar 2019 19:40:46 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: js/rebase-deprecate-preserve-merges, was Re: What's cooking in
+ git.git (Mar 2019, #03; Mon, 11)
+In-Reply-To: <xmqq8sxlkcba.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1903111939540.41@tvgsbejvaqbjf.bet>
+References: <xmqq8sxlkcba.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-11-pclouds@gmail.com>
- <CABPp-BGbqYUMEK0V_m0i7dpFb38Mm3sS-h0Ut-GSdvsKEZzRQg@mail.gmail.com>
- <CACsJy8DeGQ=GRnRByNQ18Npe5JEcRXBf2oK3Xg6uv44OCg_EBA@mail.gmail.com> <CACsJy8ASZ2jcrk7jf+5p0yCk9bLy-8SJmQyEjG9TSULhd+GhaQ@mail.gmail.com>
-In-Reply-To: <CACsJy8ASZ2jcrk7jf+5p0yCk9bLy-8SJmQyEjG9TSULhd+GhaQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 11 Mar 2019 11:28:04 -0700
-Message-ID: <CABPp-BEv1taYym_084qVJj3-jkWWS9hKXZ=grrmH7PDUb5ASwA@mail.gmail.com>
-Subject: Re: [PATCH v1 10/11] completion: support restore
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:BBpOWPBu5/fkiZBWJmPP+8YW+HwoZKX3Nrfqa6jibhpTJBbnp/E
+ yIaXkQlV2HCHIXulBtjh5Aib2GUvfR0+zRi4AJ9Ny+SAbBbmO6YmtG8gjb3Lp90YyS8sGFG
+ IwikO3db8fDAJkr6ZtwibS8YaitTIKkeFeIKXBFg9NjUcy5A6wCNlK1ii5i5NRMoBUZ1rB3
+ R4chNPJDyE7+w2akFr48w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DYmrRp5530Q=:SlxauAGSvX1IMP2faM+AoJ
+ 69Rc+UBd1DTNCveNJa75msl2rKHD3/2Nnw5FS6e+/vnJXT1a0maFMxFrEVL/JxamqqSUGhFiK
+ ERfa4lkqcFxTMuNt2PFFccQOmjfCMqAucUHQtBbqZ0ifzry3v0aWq9+yDKbv66k7j1s3MXJWL
+ FLMlvx0Pm+l6ZSSfCEtACgg3oo6KR9y+iOvP7ZsjG6ZPgCTTXXr/lnN1yFQx8EQpRn5j7nlvw
+ wFQkhsqjb0BePYMutNDfyMxWdYBauSK5SdRpS7GXlrU6bO1x/6WlgyLZDpfV2/UwFDjxCWo4q
+ /LQCBK0o4O7j3bf9aOB4StZ8g392TMBZkrIF3jVEyYGV1XXshZCkONWRBJWF7fLwLHAtUkbrL
+ 499fUoNMdbfHofGlsRwPQIpMJgZGoDanF6z6RCFciRHceFnPrmkhZuaLNESwlhI8Ogg9k6icu
+ ti6CvJgA15G5yv1N9Kn/f6VqmCGeN4caOXhu6fcq7E4/FVQJsw2vNsZdYwloN5/elqecJej3u
+ piPRuokPz8h3RugqNwqPa9x2wl/foe1maykJaWW84Z0d+zCZOhPclR1cZkS+m7Iucn3tMQFun
+ Z0Dn4K2BnpiHemQeIS2ceqyUWtM7I57VTWedDqkZBnV/4ZT0S5HoE09uc8IvxIE/m1tv3hUPj
+ vNtob018A+9HWwKGmCBpcraoD+ukjLDyLjgH0a+YAMrOjeWnjnBBNOZs4OwrXPrVPOXw1hG9b
+ S5/seEuQ9QJHAmwJ6bN/SAxbTyKPYG5L/S2xfGwnQcywHuiOHurxsfzqI1+nzHN6oyiQriOyH
+ erosUuYPUXCqb2ydckzR4M5ShuvRE4ANuftzXrHjDSS2E1A4JXO4nj0sQHc6csj6w+VS7P0Fc
+ 1Jl5K5U5SV9ofzgK//Bv7JPFUsWGaWTuuGgSmjEcj2e8Q0fF5WD6murmf7dCYREI8a6HTEDMN
+ vnojcCc6wog==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-// CC'ing Thomas since this touches on a thread elsewhere about the glossar=
-y
+Hi Junio,
 
-On Mon, Mar 11, 2019 at 8:40 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Mon, Mar 11, 2019 at 10:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Sun, Mar 10, 2019 at 2:17 AM Elijah Newren <newren@gmail.com> wrote:
-> > >
-> > > On Fri, Mar 8, 2019 at 2:17 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> > > >
-> > > > Completion for restore is straightforward. We could still do better
-> > > > though by give the list of just tracked files instead of all presen=
-t
-> > > > ones. But let's leave it for later.
-> > >
-> > > s/give/giving/
-> > >
-> > > I'm slightly worried that due to using --no-overlay mode by default i=
-n
-> > > restore, having tab-completion include untracked files increases the
-> > > risk of accidentally nuking the wrong file.  restore is a destructive
-> > > command anyway and should thus be used with care, so perhaps this
-> > > isn't a big deal, but I thought I'd mention it.
-> >
-> > This makes me think about my "git restore :/" example, which does not
-> > remove untracked files because its source is the index. But isn't it
-> > inconsistent that we only remove untracked files with --source and
-> > keep them without? Will that just confuse people more? Or did I just
-> > forget to implement no-overlay mode for the index too?
->
-> Nope you confused me. non-overlay mode never touches untracked files
-> and so neither does git-restore.
->
-> It does make the description of git-restore about "remove if paths do
-> not exist" incorrect. But frankly I find it hard to explain
-> non-overlay mode with the index being the remove filter. In
-> git-checkout, where we update both index and worktree, this may make
-> sense to use the index as the remove filter. But worktree works on the
-> worktree only by default. I'll need to sleep on this.
+On Mon, 11 Mar 2019, Junio C Hamano wrote:
 
-So, I guess this means that my addendum to Thomas' glossary entry for
-overlay is wrong; instead of:
+> * js/rebase-deprecate-preserve-merges (2019-03-08) 1 commit
+>  - rebase: deprecate --preserve-merges
+> 
+>  "git rebase --rebase-merges" replaces its old "--preserve-merges"
+>  option; the latter is now marked as deprecated.
+> 
+>  Will merge to 'next'.
 
-[[def_overlay]]overlay::
-       Only update and add files to the working directory, but don't
-       delete them, similar to how 'cp -R' works.  This is the default
-       in a <<def_checkout,checkout>>.  In contrast, no-overlay mode
-       will also delete files not present in the source, similar to
-       'rsync --delete'.
+There were two good suggestions that I still want to address. v2 should be
+hitting the list soon.
 
-the definition should be (note the insertion of 'tracked'):
-
-[[def_overlay]]overlay::
-       Only update and add files to the working directory, but don't
-       delete them, similar to how 'cp -R' works.  This is the default
-       in a <<def_checkout,checkout>>.  In contrast, no-overlay mode
-       will also delete tracked files not present in the source,
-       similar to 'rsync --delete'.
-
-...and perhaps the reason this makes it hard for you to explain when
-the index is the source is because this definition means there is no
-difference between overlay and non-overlay mode for that specific
-case.
-
-
-Am I on the right page now?
+Thanks,
+Dscho
