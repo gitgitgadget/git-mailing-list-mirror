@@ -7,132 +7,72 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4416C20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 11:47:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67D3F20248
+	for <e@80x24.org>; Mon, 11 Mar 2019 11:58:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727130AbfCKLrt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 07:47:49 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:56215 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726914AbfCKLrt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 07:47:49 -0400
-Received: by mail-it1-f194.google.com with SMTP id z131so6702282itf.5
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 04:47:48 -0700 (PDT)
+        id S1726675AbfCKL6p (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 07:58:45 -0400
+Received: from mail-io1-f41.google.com ([209.85.166.41]:47061 "EHLO
+        mail-io1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726592AbfCKL6p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 07:58:45 -0400
+Received: by mail-io1-f41.google.com with SMTP id k21so3727555ior.13
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 04:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ntP4vSdZDazK7V4jPTWwDEcaSiuM7CywRdjZ4r3/8T0=;
-        b=lXpBaKbQAxiZzy4TjFEZX/WDFONUwSNDEG6orCEByZs74BkUZv3iqCc/JfCGNHFEOB
-         dJfAHv/CR1HdkSFLEfNxS9x/PAOsG3WmB2z1mMwSbVTuFU3sXvv7mVqSjuCykctu2roV
-         LP6AO53x3y1HA4EeHtEwAa7RFqKn7rUyC9Ek4YZNjKIIB8ib853dbuFM+XXJm6eL4xUH
-         Frue9HtvMyteBbHBNqdHr5ar1clARhmWYAbouaLokFnsN5wIs2nFC0wpdCVGUMu7qb2Z
-         Xyx9snWAq85UPnP369259oxdiN3CQ89PtlGOqVacS16eRGEu5nFsZ4+yiUfrHQAd/BwK
-         zNkA==
+         :cc;
+        bh=4t1RqxeOpfmt8kiaMEuyzj1EUGopwI+Lmi8xHsFSBSQ=;
+        b=i/z+6hyBbtxQfN2MwyZOzkBK/7653pwRkaj/MQLQVbOwvlReenBvwruwGTCmRxWNU3
+         nhuTMpXh3vmsflhwygokULGGSZLSU5QwQwvpvOGLSJBVPmQXXxUYepu1uOjRWU3Hqv7u
+         3SRu2F1p9ARYLV0tMqAc46WXTTJMWIgH8kRTnnJLnFphZS6yk916pth7dUrILzl8NKw+
+         Qvp2BAzHdxJAK1haLLr9qktXRwpcYjCGpXlyxJHE5Z0VRZ1Gfuiu7ojJ3bVGAqA7mndh
+         NijKh5+Y555KU4EKIDkX1B8WBJVMYyIXvKnqnkquEXd1puYCZOtif4Qq5LNFZuV5c4S8
+         yHKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ntP4vSdZDazK7V4jPTWwDEcaSiuM7CywRdjZ4r3/8T0=;
-        b=OBQKd++QABEJ1pVA5PKLhd9Rg59KnVibjv28kyrLyeBDJnSLQlLwZDdrKB463jYOO3
-         VETXFZI/bVtDN7WyZjFWhYFcO+ik6MsXMWixSOAeBz3zRPLXCpPYRaWK3vyGhtCA2dJj
-         zogkthVnTK4OyqWPMZIodNdQEixAweG1aPEHBgLS6Eb5jTW/IKzzCRkFKT3rObqLPpQa
-         +2ZaHmLf/3OamBP0G9Zn70nm4s6yOhZE6YTCKQmMGYZ9F1XUGFmNjN+Gz/OvxkNR5cbl
-         xoVi5FSQ7XVvyf3jOaBuxmYaxAVBysDgeqnCYtAaPIsxsN671Hhk1j5cuZlaFCzRsDmT
-         PohA==
-X-Gm-Message-State: APjAAAVBTyDR5DI1U3L9nqruLDTTbu7ZtmTMRcVvE86Ls3oFuksrwvdO
-        GGUS10ouBBn1sFxDVN9nylT3MjK/92CydT20EOA=
-X-Google-Smtp-Source: APXvYqyk8pwDsJjSj0MYo+5Nlt60jRPsFgrh1xHtfmsY6a4t/+cKCvBaxLjb678K78hrhuNcROtvJKDl74zLbPFukvc=
-X-Received: by 2002:a24:7542:: with SMTP id y63mr15562667itc.70.1552304868201;
- Mon, 11 Mar 2019 04:47:48 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=4t1RqxeOpfmt8kiaMEuyzj1EUGopwI+Lmi8xHsFSBSQ=;
+        b=lxFyoxt0wbrs8Km6eCTQ4r6voClw1BCVmJe8zRoH8TDiNPJ6T2MrZWRki98exEjC6Y
+         U5R1HgnXYPXjE3XEG4CXZQHBEsCq28OVrxVnICP1gPIK2/k5oaRpZEkWNe798iDcpquO
+         yN5XXDYo+ABl+0gnTApSM7uldNx+KsrW8XV1tHExN0dXuJAvm1NsfGoS6Q6hFMDhdXcL
+         2iTlrUdTxnqARMT9JiRHA5jIaW5pF5UjbR4KCemcGz2pqHGKJS+w0fWUSBVc3B+wQzG8
+         fqDlnarGZ6jY7oj1bGSpgMCopJ2ZOtfVANIypdgbAzqBiVUsSgJ0ur4pxdc4X9nSrHWQ
+         y20w==
+X-Gm-Message-State: APjAAAVqf70REecUxwnh6P2zWtXXTR+MOvzpi56SOXG9C8esPyvCtKPC
+        rGyFdWpVtNoojMh2RHgfc7Ukf+qT2iB655eCpgw=
+X-Google-Smtp-Source: APXvYqyiYxvUPj827fYzeQ/ntodS9N2a5BSnelM2VHGxniTQgKykVAZQ1rOnHgO9QzIzJkNbqgFWdJtnfjvj5EDR96w=
+X-Received: by 2002:a6b:3709:: with SMTP id e9mr7487130ioa.282.1552305524669;
+ Mon, 11 Mar 2019 04:58:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
-In-Reply-To: <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
+References: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
+ <20190308174343.GX31362@zaya.teonanacatl.net> <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
+ <CAH8yC8kn=EmEm_UPrnpwaofv97S42Se6FC+hWcm0EHCX-4rewQ@mail.gmail.com>
+ <xmqq1s3emapy.fsf@gitster-ct.c.googlers.com> <20190311033755.GB7087@sigill.intra.peff.net>
+In-Reply-To: <20190311033755.GB7087@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 11 Mar 2019 18:47:22 +0700
-Message-ID: <CACsJy8DrrEg++wUszU2B1zJ_gvO1WC8MXXa53ZpMnObgqy=AeQ@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Date:   Mon, 11 Mar 2019 18:58:18 +0700
+Message-ID: <CACsJy8CdqbOKu7SHMt_Pz1EtRz08HGpwWHUHoZbUiow_pPh=+A@mail.gmail.com>
+Subject: Re: disabling sha1dc unaligned access, was Re: One failed self test
+ on Fedora 29
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jeffrey Walton <noloader@gmail.com>,
+        Todd Zullinger <tmz@pobox.com>, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 11, 2019 at 6:16 PM Phillip Wood <phillip.wood123@gmail.com> wr=
-ote:
->
->
-> Hi Duy
->
-> On 08/03/2019 09:57, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> > "git checkout" doing too many things is a source of confusion for many
-> > users (and it even bites old timers sometimes). To remedy that, the
-> > command will be split into two new ones: switch and
-> > something-to-checkout-paths.
->
-> I think this is a good idea, thanks for working on it. I wonder if it
-> would be a good idea to have the new command refuse to checkout a new
-> branch if there is a cherry-pick/revert/merge/rebase in progress (with
-> an option to override the check) as switching branches in the middle of
-> one of those is likely to be confusing to users (if I do it it is
-> normally because I've forgotten that I've not run 'git whatever
-> --continue').
+On Mon, Mar 11, 2019 at 10:48 AM Jeff King <peff@peff.net> wrote:
+> And AFAIK there is no good way to
+> modify the submodule-provided content as part of the build. Why do we
+> even have the submodule again? ;P
 
-Interesting. I think this would be a good default if we have an escape
-hatch (which could even come later). I often wander off to some other
-branch and go back. But then half the time I end up forgetting I'm in
-a middle of something and just "git rebase --quit" :P
-
-Of course with git-stash (*) and git-worktree, I guess there's little
-reason to just switch away from a something-in-progress worktree. I'll
-try to implement this in the next round, unless someone objects.
-
-(*) I hope git-stash remembers and restores "something-in-progress"
-status. Dunno. Never used it much.
-
-> > +-C <new-branch>::
-> > +--force-create <new-branch>::
-> > +     Similar to `--create` except that if `<new-branch>` already
-> > +     exists, it will be reset to `<start-point>`. This is a
-> > +     convenient shortcut for:
->
-> If we're renaming the options to be more meaningful then maybe we should
-> consider a different name for this one - it has nothing to do with
-> creating a branch. Maybe --reset or --update?
-
--C can also create a new branch like -c though. --reset or --update
-does not convey that (and --update sounds a bit too safe). Another
-option is --recreate.
-
-> > +-f::
-> > +--force::
-> > +     Proceed even if the index or the working tree differs from
-> > +     HEAD. Both the index and working tree are restored to match
-> > +     the switching target. This is used to throw away local
-> > +     changes.
->
-> I'd always thought that --force meant "throw away my local changes if
-> they conflict with the new branch" not "throw them away regardless"
-> (which is better as it is deterministic). Maybe we can come up with a
-> clearer name here --discard-changes? At the moment --force does not
-> throw away conflicts properly (see the script below in my comments about
-> --merge).
-
-Yeah if you want to redefine --force, now is a very good time.
-Personally I'd rather have separate options than the "one catch all"
---force (or worse, multiple of --force). I'll leave this for the
-community to decide.
-
-Adding Elijah too. He also had some concern about "git restore
---force". Maybe he's interested in this as well.
---=20
+Because of dogfooding of course. This is an interesting use case
+though. I wonder if people often want to "patch" submodules like this
+(and what we could do if that's the case)
+-- 
 Duy
