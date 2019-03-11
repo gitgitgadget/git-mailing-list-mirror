@@ -2,166 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 432F820248
-	for <e@80x24.org>; Mon, 11 Mar 2019 20:10:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A987E20248
+	for <e@80x24.org>; Mon, 11 Mar 2019 20:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728268AbfCKUKd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 16:10:33 -0400
-Received: from mout.gmx.net ([212.227.15.15]:56981 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728755AbfCKT4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 15:56:34 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2ts6-1gk7ET0J1y-00seJ5; Mon, 11
- Mar 2019 20:56:27 +0100
-Date:   Mon, 11 Mar 2019 20:56:10 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] mingw: respect core.hidedotfiles = false in git-init
- again
-In-Reply-To: <xmqqva0ujboi.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903112037070.41@tvgsbejvaqbjf.bet>
-References: <pull.131.git.gitgitgadget@gmail.com> <008e367d26de12debd596e8f16356f70c74d3d7e.1551951339.git.gitgitgadget@gmail.com> <xmqqva0ujboi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728981AbfCKULC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 16:11:02 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:34213 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728952AbfCKULA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 16:11:00 -0400
+Received: by mail-ed1-f66.google.com with SMTP id a16so396049edn.1
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 13:10:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=yjvZW4zjNjpprqqBWQYdbkUICUiCWKFyNMx8crEo1qU=;
+        b=YxLj3K2wgW+Z06mI9bl+g7F1LxXBCzVmhIHglsOs14Qgx5g1/uqHZgvsVgAqYZthSn
+         wzojSx1s8OuacxV4tVXlVnxH8IVBM/42alg6CPyp8y3sPSRBAmu3h4YHYDoT3wdGIQOb
+         co8hj6xGaT0QspRx//yG+FQb2flH+7q4f5I6oxoEOVkAt4phqGhZjFQcI6SUC0aoO8LJ
+         t3wf1iXqrOP6xRPYDybeWOdAktyl9zyCmTllenqgejErlugm00VM8Zt+Yzqa53zjtbMx
+         imaNjQjrTWXMT2FdmIiMiJq4Dn+U6nTW7q+c8FZx76ck29jXeSD9spHc3UsplIikWFof
+         1cSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=yjvZW4zjNjpprqqBWQYdbkUICUiCWKFyNMx8crEo1qU=;
+        b=AQnuB+RUoukZG9ZFEAJF4hHpElrui8PsoGJkNG/pnJ6JG8n8RM4T40MYkta9WKqz6X
+         l4oFeYU6wFjKyCCZjYfH7yrR+otgbpZ99eg1rG1VvJtuhLSB2KZNf6PWYUgWSen8KCyI
+         pdOTwi5sPknYRiOIRSCweKKj6LxtKAHdE8vruC5RNS3KW5LcQbwX8YmZIs11kkQOjR0+
+         597JzX3nPWqv9nyUhFNdL2sAHoiKANzmtwQUwemRRneKTCOQCV2z+4EZsjuwujFH+pUQ
+         T36o0lRitJ1/4M75WcvI6WVNMjMn9i38Z+SOcO/NbF/ESp1xv2ZcdjygI17VyV25nZyO
+         YP/Q==
+X-Gm-Message-State: APjAAAW6AdeOONnoCb9z7pxg3olQ+MPsVr2AT0gKupK1cJr2hY+/VUoB
+        t59kmjiPvmlI1oRqvNRaqWm5miTm
+X-Google-Smtp-Source: APXvYqzBpu1Hhm3F2RWQ5fPzK1JSYd+ghtGXjEwBR41ZMDKaG585jKsHhDUkb2aZS1xa6GbWHdRT/A==
+X-Received: by 2002:a50:9908:: with SMTP id k8mr388933edb.246.1552335058376;
+        Mon, 11 Mar 2019 13:10:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n38sm5050912edn.95.2019.03.11.13.10.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Mar 2019 13:10:57 -0700 (PDT)
+Date:   Mon, 11 Mar 2019 13:10:57 -0700 (PDT)
+X-Google-Original-Date: Mon, 11 Mar 2019 20:10:56 GMT
+Message-Id: <pull.131.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.131.git.gitgitgadget@gmail.com>
+References: <pull.131.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/1] Fix git init with core.hidedotfiles
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zgWgxZKf2P1pF0kPEH4tGr3SQ9HbNW3DwJuSvdYpV+fPVGzgVei
- bB4pGU/TVZt1qPnUh+7yBvQqs602Z60wZa8Pav58jCCytaRvhAS8+JxQpdi/z+62m6mboM1
- /vpwd09rvpybDOH2KmilK8wejO7JXUGRqBUtFZQHNjwMM+OT8eToT1QOXXpxZLWupLdh8zC
- UeOUlC55OnWNnSIaGr3dg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:p4Uy7ZqPANA=:xmSmFehRn9hrAUQrylvgsG
- UPr8Xktv3WAsHwx8ZuBxI+7ljWDYGS/ncJ0ZXvHBPQU3Rs/OnGK/6eTCcMwdO4onefoVBuIt0
- fgl5dQcTjDJkUdVw4NjSrCjXxMXh1xUlCTUsJlFSQiLlAS9kzqkOD+xkXkobYpyiV0PTwDl6K
- lgiqJQfqyi0DGeZk3WGgCj78B7DnCppyQW72UcJSoQtdLjkcXmlcNQwpxnfJN9fIB4kkUrNSq
- cQXwO08iNBnVDmLVhOp5gVGN7tkyydcRId875krPE5oQlqicEk+3AimcRC/rv1VQU4m672Srt
- fqZMt8lWXvL2k7pb3CI9LJHFB27ykIGK79TB1GPHdkXHwDp2o7jwYNQp/3EKXdQhJSglNXF+z
- zHt0K13oMDZBIowwcTbtTH5Og4BjUI/qJYX+BAltSyH0FkdOR9y9rnTGPM55TdHu51i1PodAx
- x8DjKWC+20wTtT42xqrcCrP5E1XnRi86agqkVE/JFxl/r/1bHMkYTO6QSVf2XNPUCvYoVx5nZ
- 6iK7oH6Dsl0J8BsiNUj40S0IIvXDkVrgK7125JEvCbknT/7BugMsQxWKcLjNhIDRKQjz4/c/D
- hUib0DbCfU1cgEMom2RratsMhvO5D0cF6jvQ6h7SXT/Pr6U9LZnO7DiQ9RlANpPnk2CPqS+Yp
- C1Vyv+wFYhUnBTlQRcV7w/lDhqUqeXCbXhPd9XtsUlv7VVNMEMryeit4b7LxDNZ2KJr9AsvoI
- B2U+mhJW5DWtZ4b/H2vkCXQnCcAJhkOpaa4V25tTc8AfTNK58dQusA0zYqN4r1LGq+2KC7RtK
- Eu5XvQ1269xHMJDxXBLgpxdjiQd0Hk+0paqgi6zsHkpDzd2So5b0NH9JLYIZ2U7F8KsYgNesS
- iVU1SVDF3A111iimP5/dggcV76+WGF6DTZT0GBKoJfSs76v3TC7TRQ/6asPDkoLGba1kVHc5o
- A5bnUuoKwnA==
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+This fixes an regression that was not present in Git for Windows's original 
+core.hideDotFiles patch, but in the shape of the core.hideDotFiles patch
+that made it into git.git.
 
-On Fri, 8 Mar 2019, Junio C Hamano wrote:
+We fixed it in one big hurry in Git for Windows, and I simply forgot to
+upstream this right away.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > diff --git a/builtin/init-db.c b/builtin/init-db.c
-> > index 93eff7618c..94df241ad5 100644
-> > --- a/builtin/init-db.c
-> > +++ b/builtin/init-db.c
-> > @@ -155,6 +155,9 @@ static int git_init_db_config(const char *k, const char *v, void *cb)
-> >  	if (!strcmp(k, "init.templatedir"))
-> >  		return git_config_pathname(&init_db_template_dir, k, v);
-> >  
-> > +	if (starts_with(k, "core."))
-> > +		return platform_core_config(k, v, cb);
-> > +
-> >  	return 0;
-> >  }
-> 
-> OK.  I think this is very much futureproof and a sensible thing to
-> have a "platform_core_config()" call here.  That way, we do not have
-> to say the details of what platform specific thing each platform
-> wants when init_db_config works.
+Changes since v1:
 
-I am glad you agree.
+ * Clarified in the code comment that our intention is to pick up 
+   core.hidedotfiles in the first git_config() call.
+ * Explained in the commit message why we cannot remove the 
+   git_config(git_init_db_config, NULL) call from create_default_files(): it
+   would cause a change of behavior with regard to the init.templatedir 
+   setting.
+ * Simplified the test case.
 
-> > @@ -361,6 +364,9 @@ int init_db(const char *git_dir, const char *real_git_dir,
-> >  	}
-> >  	startup_info->have_repository = 1;
-> >  
-> > +	/* Just look for `init.templatedir` and `core.hidedotfiles` */
-> 
-> And from that point of view, replacing `core.hidedotfiles` with
-> something like "platform specific core config" would be more
-> appropriate.
+Johannes Schindelin (1):
+  mingw: respect core.hidedotfiles = false in git-init again
 
-Probably. But it could potentially make some developer (such as myself,
-six months from now) wonder why we don't just remove this call because
-clearly nothing uses this on Linux.
+ builtin/init-db.c |  7 +++++++
+ t/t0001-init.sh   | 11 +++++++++++
+ 2 files changed, 18 insertions(+)
 
-So even if it is not quite future-proof from the point of view where we
-*technically* would have to extend this comment if we ever introduced
-another platform-specific config setting that is relevant to the early
-phase of `git init`, I would like to keep the comment in the current form.
 
-Well, actually *almost* in the current form.
+base-commit: e902e9bcae2010bc42648c80ab6adc6c5a16a4a5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-131%2Fdscho%2Funhidden-git-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-131/dscho/unhidden-git-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/131
 
-I did realize, based on your comment below, that the mention of
-`init.templatedir` here is bogus, wrong even: if `git init` is started in
-a Git worktree, we do not *want* to use the `init.templatedir` setting
-from said worktree.
+Range-diff vs v1:
 
-And that is the reason why...
+ 1:  008e367d26 ! 1:  f187d0d247 mingw: respect core.hidedotfiles = false in git-init again
+     @@ -12,6 +12,12 @@
+          The fix is obvious: read the (limited, pre-init) config *before*
+          creating the .git/ directory.
+      
+     +    Please note that we cannot remove the identical-looking `git_config()`
+     +    call from `create_default_files()`: we create the `.git/` directory
+     +    between those calls. If we removed it, and if the parent directory is
+     +    in a Git worktree, and if that worktree's `.git/config` contained any
+     +    `init.templatedir` setting, we would all of a sudden pick that up.
+     +
+          This fixes https://github.com/git-for-windows/git/issues/789
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+     @@ -29,11 +35,19 @@
+       	return 0;
+       }
+       
+     +@@
+     + 	struct strbuf err = STRBUF_INIT;
+     + 
+     + 	/* Just look for `init.templatedir` */
+     ++	init_db_template_dir = NULL; /* re-set in case it was set before */
+     + 	git_config(git_init_db_config, NULL);
+     + 
+     + 	/*
+      @@
+       	}
+       	startup_info->have_repository = 1;
+       
+     -+	/* Just look for `init.templatedir` and `core.hidedotfiles` */
+     ++	/* Just look for `core.hidedotfiles` */
+      +	git_config(git_init_db_config, NULL);
+      +
+       	safe_create_dir(git_dir, 0);
+     @@ -50,11 +64,10 @@
+      +test_expect_success MINGW 'core.hidedotfiles = false' '
+      +	git config --global core.hidedotfiles false &&
+      +	rm -rf newdir &&
+     ++	mkdir newdir &&
+      +	(
+      +		sane_unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
+     -+		mkdir newdir &&
+     -+		cd newdir &&
+     -+		git init
+     ++		git -C newdir init
+      +	) &&
+      +	! is_hidden newdir/.git
+      +'
 
-> > +	git_config(git_init_db_config, NULL);
-> > +
-> 
-> We use git_init_db_config from create_default_files(), which is a
-> function called several lines after this point; shouldn't that now
-> be removed from create_default_files()?
-
-... we have to call `git_config()` *again* in `create_default_files()`.
-
-> >  	safe_create_dir(git_dir, 0);
-> >  
-> >  	init_is_bare_repository = is_bare_repository();
-> > diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> > index 42a263cada..35ede1b0b0 100755
-> > --- a/t/t0001-init.sh
-> > +++ b/t/t0001-init.sh
-> > @@ -453,6 +453,18 @@ test_expect_success 're-init from a linked worktree' '
-> >  	)
-> >  '
-> >  
-> > +test_expect_success MINGW 'core.hidedotfiles = false' '
-> > +	git config --global core.hidedotfiles false &&
-> > +	rm -rf newdir &&
-> > +	(
-> > +		sane_unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
-> > +		mkdir newdir &&
-> > +		cd newdir &&
-> > +		git init
-> > +	) &&
-> 
-> This is not incorrect per-se, but I think most tests do the mkdir
-> outside subshell, i.e.
-> 
-> 	rm -rf newdir &&
-> 	mkdir newdir &&
-> 	(
-> 		cd newdir &&
-> 		sane_unset ... &&
-> 		...
-> 	) &&
-
-Legit.
-
-Thanks,
-Dscho
-
-> 
-> Other than these, I find nothing questionable in the patch.  Nicely
-> done.
-> 
-> 
-> 
+-- 
+gitgitgadget
