@@ -2,107 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D45F20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 16:10:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFDE020248
+	for <e@80x24.org>; Mon, 11 Mar 2019 16:25:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727062AbfCKQKQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 12:10:16 -0400
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:37196 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726977AbfCKQKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 12:10:16 -0400
-Received: by mail-ot1-f67.google.com with SMTP id b3so4429941otp.4
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 09:10:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CDJwAU81i1xlVocdDsCyasXzjaAPuMalv3r8dJ6SQ1A=;
-        b=Gu3KJtWiTr4KPWqQLPewLi5Lyy397rlgfgN2D/QlI10IxbNKIMy+iD8ewJzFe4y3ko
-         qb4tHaYnnXPqgkKVxMkuVtk7p3WL4dKcTmr3y5dgFw3Wkw6p+PQvzflBpfZndvs3hYmN
-         ZSvobyWbACMb7Q5P/UDX8quLr+z5IUu5a646j5sTK9pU6+lIr3PGvEKzVGEBqXtqQv2s
-         ACwQNJDx2tCtosKvfolr0c8gd/uqkuxweBARt37F2JPN+MclRTF0MDr2eDnvr2KA1mnX
-         MMWh84MO0DJXcy4aI6NEOKtOD6SsRIKKf0z5Sn9pGJK8msEPE4Ldpzlt5PUjmekHLYOY
-         MMxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CDJwAU81i1xlVocdDsCyasXzjaAPuMalv3r8dJ6SQ1A=;
-        b=qf682zPKAjuF1g1qKLr7HhjZBs4vrh4R3k0ipmizXyr4d5PE6iNR5HXMCYtiqY3Kkh
-         VifEHfXT4Yng/jtSbDA7Vj0HBRH0fAEsKiF8Z0v8AXnutow+IEYhJ4STYaf/dfEeiN7I
-         uT0tDwpO1solWV5ykD/PJHV4xXlPpOzsiE6LrHa/DdxPYcxjiIis7MDz+eiOX7prfEO6
-         pRP/RoAvdWVUPPyGTQR0sXTqdUYkZqhFsaTSG6BXYrQiuUa6by4c4ww16GhkogQPPnOv
-         o5A43Vnll0HkI3trU3RFp+461Vkaq+27IrXLRr9bd6KBJA3539pQYd0meNFV4px6Nn0P
-         NO5Q==
-X-Gm-Message-State: APjAAAVLydQbdQLkY6M4OScVuczC1bca7zGi2q59N+aq2e3YmWVLjPCy
-        AeFxylFrS3iPt3jMS0TopRJNlgUSBQ5BH0tXlvc=
-X-Google-Smtp-Source: APXvYqxYLv/paVA9/g1G8TUahBy+j9hdc7QpQANlfjZPqkddH6ue2KgtIBI8L2q8Ii27UrNuFsXUtFRL19rs5DHQ0LY=
-X-Received: by 2002:a9d:7dcb:: with SMTP id k11mr21723015otn.192.1552320615393;
- Mon, 11 Mar 2019 09:10:15 -0700 (PDT)
+        id S1727387AbfCKQZr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 12:25:47 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59337 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726000AbfCKQZr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 12:25:47 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MYwVv-1hY1rR1ZKN-00VjgF; Mon, 11
+ Mar 2019 17:25:42 +0100
+Date:   Mon, 11 Mar 2019 17:25:26 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/2] stash: handle pathspec magic again
+In-Reply-To: <xmqqva0rmtrg.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1903111714430.41@tvgsbejvaqbjf.bet>
+References: <pull.159.git.gitgitgadget@gmail.com> <xmqq5zsukuyj.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1903081709220.41@tvgsbejvaqbjf.bet> <xmqqva0rmtrg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190310081023.64186-1-ttjtftx@gmail.com> <20190310081106.64239-1-ttjtftx@gmail.com>
- <CAPig+cSMZrQFrLXoO5KE1uonUxmnYHikr-e6GAq_n6vx3+sPJA@mail.gmail.com>
-In-Reply-To: <CAPig+cSMZrQFrLXoO5KE1uonUxmnYHikr-e6GAq_n6vx3+sPJA@mail.gmail.com>
-From:   ttjtftx <ttjtftx@gmail.com>
-Date:   Tue, 12 Mar 2019 00:10:04 +0800
-Message-ID: <CAOAu_YKas8ZL+8qwwD-bPhnkdxMWB_JybOmBJW1ea4BVxoMQNg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v2 5/5] t0000-basic: use test_line_count instead of
- wc -l
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:KAShBuVeegx2IbM6UWI1yMoqG3Ci/i4kkVUS+LWWF4vGk1KMchY
+ MUIkkN+BJ/sM2j114HmWyE1/b4ub9mrMzdG2XA767N8sn2C7nh73nn8UXcH7CfFKniIdvi6
+ CiyoNXTls/rbbxgxSudh1VJtsviPblIgqZw7Od0uW3HVw9WCJRqsm9e0VZXKdMRqbwfp6uF
+ o1HgRxRhK3iH372VxddDQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ncY2HerZyxA=:GHdoTnS7/RKLZ5bietUeY6
+ wVJzAtuIS2KXsnMv8yG6sN+AZfytd+FEPD7aqOrI8zC2kDSay12Xct2zNot5OWkgFCN2SZL9Z
+ oQNOjPQwKVk/CpKNcJB0R0onpoY5nvdqm6EIPQn3mELlXTjMlYljAlExR71Xdakiw+hqzyQ+Y
+ 6/Z2YjUBpKuMaZqyaKOmuGUvQ9sqAH+joRzyRJpTjamTaXqHYy1TBwVTKQ10V3R4TCpc19JGu
+ YMlYaK33uFlyHU1TY85AFqbUA6oUPKgqJZKxNam2KXR2Wg14v2n/TL26vSTuhTX3HcHk8KUhF
+ KIPA3eSA7S8iiBRQeAsdYSJ2uDT5NlgX5CNXlezu6ns+KmbxjFAG//hnhtp0fSB/5mnl2Jrj6
+ qQ8k93Q2xKMimJt60rpPLkkgLpaHtxTP9Nwt5X5a7yZZD5oYh534lCbQOwVvRksCM6FOraZ9f
+ XGY+CMMvmnAnpWek0gBAgqrDKpJUZ+8xzl6d35m45usUgxSJLtRZlkwbqkfACsep/lCBxK+1/
+ VsHy9ifuynMJ9SKuH4iiUAaSng8UeGbLQ/mMFVSNfxj+Gml8EJCjDyPGC+zho/QBE5VsCFZ9n
+ wi5qEEV7iVjEQ/xQvWRSJ0JH69TLhXwh0N3xS7K8CiCPcGAc6uMolQc+8XwF+FxOsTbnGE26Q
+ qz9AAhggtytN8YLghFTbyhPo44dPACxxAZlDIF0INLQ6x8yqXT8YtDIiYRlZGrjEp3IGkeZpr
+ 6egzbwzaH2E8dT89nChfyf1LgSnqcJ6bFEsWQh3YlTkAqmJMkzKkTYf4kosuupNI8uSQL1pAD
+ e2zm+PbLNXbTxb7or19XD7upTjMTmlvvV6IcQq3QYx8Vk0salbAe6cZ+GkQNGolYjIwCEJfEC
+ 7jRLAMn4v2jIA0+VHJIKiDqIqugdnQvFQSJZSPPMRCu3VjPnrkFMBxKNmqmFX0GDI8xGXwORn
+ epDsYo+F/Hw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 10, 2019 at 5:51 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Sun, Mar 10, 2019 at 4:11 AM Jonathan Chang <ttjtftx@gmail.com> wrote:
-> > Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
-> >
-> > diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> > @@ -1136,8 +1136,8 @@ test_expect_success 'git commit-tree omits duplicated parent in a commit' '
-> > -       numparent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual | wc -l) &&
-> > -       test $numparent = 1
-> > +       sed -n -e "s/^parent //p" -e "/^author /q" actual | wc -l >numparent &&
-> > +       test_line_count = 1 numparent
->
-> This transformation makes no sense. The output of 'sed' is fed to 'wc
-> -l' whose output is redirected to file "numparent", which means that
-> the output file will end up containing a single line no matter how
-> many "parent" lines are matched in the input. Since test_line_count()
-> checks the number of lines in the named file, the test will succeed
-> unconditionally (which makes for a pretty poor test).
+Hi Junio,
 
-You are right. I will make sure I have thoroughly reviewed my patch before
-submitting next time.
+On Sun, 10 Mar 2019, Junio C Hamano wrote:
 
-> Also, the filename "numparent" doesn't do a good job of representing
-> what the file is expected to contain. A better name might be
-> "parents". So, a more correct transformation would be:
->
->     sed -n -e "s/^parent //p" -e "/^author /q" actual >parents &&
->     test_line_count = 1 parents
->
-> > @@ -1146,8 +1146,8 @@ test_expect_success 'update-index D/F conflict' '
-> > -       numpath0=$(wc -l <actual) &&
-> > -       test $numpath0 = 1
-> > +       wc -l <actual >numpath0 &&
-> > +       test_line_count = 1 numpath0
->
-> Same comment about bogus transformation. The entire sequence should
-> collapse to a single line:
->
->     test_line_count = 1 actual
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > If you care deeply about the commit history, I hereby offer to you to
+> > clean up the built-in stash patches when you say you're ready to advance
+> > them to `master`.
+> 
+> What's the goal of such a rebase?
 
-Thanks for the help.
+To appease you enough that you stop complaining about the current, or
+previous, state of `ps/stash-in-c`.
+
+I am genuinely interested in making this all more pleasant for you, even
+if my efforts to that end show no fruit.
+
+> To rebuild the topic as a sensible sequence of commits that logically
+> builds on top of previous steps to ease later bisection and
+> understanding?
+> 
+> Thanks for an offer out of good intentions,, but let's move on and
+> polish the tree shape at the tip of this topic.
+
+I would be prepared to do that, but I am constantly reminded of the
+unfortunate way we handled `ps/stash-in-c`, where you thought it was way
+too early to move to `next`, and I am convinced that we simply were way
+too late to start cooking in `next`.
+
+So I keep offering to do work so that you would be happier, but none of my
+suggestions seem to work.
+
+> The history behind it may be messier than other segments of our history,
+> and future developers may have harder time learning the intention of the
+> topic when making changes on top, but this one was supposed to create a
+> bug-to-bug reimplementation of the scripted version.
+
+Right. But we moved right past that, and continued enhancing `git stash`,
+(like the `--quiet` thing) and were now stuck with the unfortunate
+situation that we had to do it in both built-in and scripted version.
+
+> What matters more would be our future changes on top of this code, which
+> improves what we used to have as scripted Porcelain.  They will
+> genuinely be novel efforts, need to be built in logical order and
+> explainable steps to help future developers.  Compared to that, so the
+> history of our stumbling along the way to reach today's tip of the topic
+> has much lower value.
+> 
+> Besides I think it is way too late for the current topic.  We
+> established before the topic hit 'next' that reviewers' eyes all
+> lost freshness and patience to review another round of this series
+> adequately.
+> 
+> We at least know that the ordering and organization of the iteration
+> we see in 'next' is crappy, because some reviewers did look at them.
+> The rewrite will see no reviews, if any, far fewer and shallower
+> reviews than the iteration we have; nobody would be able to say with
+> confidence that the rewritten series achieves its goal of leaving a
+> sensible history.  Doing so just before it hits 'master' makes it a
+> sure thing.
+
+Fine. But in that case, I would appreciate not being reminded of the
+messiness. Not unless you let me do something about it. Don't put me
+between a rock and a hard place, please.
+
+> Let's just we all admit that we did a poor job when we decided to
+> push this topic to 'next' before it was ready, and learn the lesson
+> to avoid haste making waste for the future topics.
+
+Quite honestly, I am at a loss what you are suggesting here. The original
+contributor (Paul) got unexpectedly busy with university, so he was not
+able to take care of any updates.
+
+I would have made those updates (I promised, after all), but at some stage
+it felt more logical to explain in add-on topics what breakages were
+introduced by the built-in rewrite and fix them: squashing the fixes in
+would have made it less obvious why certain changes had to be done that
+way (after all, I missed in the original dozens of reviews, pre-submission
+and post-submission, e.g. the ORIG_HEAD problems).
+
+But you did not complain about me adding on top back then, so I do not
+understand why you complain about it now...
+
+I am more than willing to move on, but if we keep repeating how messy the
+current state is and do not even come up with a way how we could handle
+this better in the future, then I do not really feel that we *are* moving
+on after all.
+
+Ciao,
+Dscho
+
+> Thanks.
+> 
