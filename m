@@ -7,66 +7,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF9FA20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 01:47:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0998D20248
+	for <e@80x24.org>; Mon, 11 Mar 2019 01:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727122AbfCKBrk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 21:47:40 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38771 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727117AbfCKBrk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 21:47:40 -0400
-Received: by mail-wm1-f65.google.com with SMTP id a188so2679804wmf.3
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 18:47:39 -0700 (PDT)
+        id S1727131AbfCKBt5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 21:49:57 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45405 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727128AbfCKBt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 21:49:56 -0400
+Received: by mail-wr1-f68.google.com with SMTP id o7so3241350wrp.12
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 18:49:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=b1Pageouu+hnX8q/CRjw07FZMYuR8TRI70hn+uIxgkQ=;
-        b=UlBnZeVEtIGarikftn/6zexX1ZTiR8AbANZ2qwLOg0Aq5YFRwuBVxlSSWAQ7BSEDwp
-         X5WYpuCrWIvuTEE3860DVDSGu5Wnhi4yQtA4U+q2krvQ+6oUOiGOEjcIdwfHh+zoAe4W
-         aQPUFaLv7pRCxSoZ2L3u/koV4aHdtUKWMD70QXmQirP+ktiXMwxyjBE3YMXlNM1m0Jdj
-         hUCcAlNZv4fM+Thot0AaMyPASn4e2FO+JcHUMn43f15BOKBNHgFs/ICd2+/C6XfCPTLD
-         fS1DwKAxZyCiTwz9y7Rr7He4d95noebkH0es9GozYhygzuxKsG0mpge14qxUvottKPK5
-         RhLA==
+        bh=HxrzJhx70wWxfHgLSnWVAbJBBKVyawfPwjd2wdEuETk=;
+        b=i86ljPhvzicDUxJls22MUjOTbJOFTqfDftivZDf8eqkAVHlzP5+BzuLLMOh9Fp3y1s
+         St3V7LTj/kcPOqfvOVJgLMTrrChOiCRYGtwrKSyMaTlqQDd0MWQJyZhZEiPO6x/khjpP
+         b7dDo9mPEe4Tuxh0m+J5wzfZz7fWb/aGMB9wy8a2N24n5MXmKm+MbgYDIsn1S5p2kevr
+         yiWmBK/rQImupQsEHGhrKEP+/Bg81HNXXbfByyZnWAzLA80VsWtceUSnTdpdz306DzvH
+         CRx8dOrDTNgV5p2bQw5KKV8kztTZrhdvgsvRXbdcRgbKv5CTOQqaoIilQGeC48QecCSZ
+         /+UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=b1Pageouu+hnX8q/CRjw07FZMYuR8TRI70hn+uIxgkQ=;
-        b=psxKy0L8pPcbMAiDzPkz9bGYK+eL1QCkaG6L9A5DyFCZYpvcckfDaxqDmP8QzWicYV
-         wcTKBaKIYayXwMlPR57ChXVZDSb9wjdRhRVjVNyus5sZmaLpodX35YgKtTBLXehNQtBA
-         U7eDGK5GaqziHa4nlxRon/T6yMgtIcSwGm8YXR6XTxtbXl42+uYpXesJ/jrklZjcY/d8
-         loIHMP/joQibhPQFi3oQ4q1a556ql7JhBQ9l3zIKkK8zOX5mmeSVdy0OAl29Rfba6Zcc
-         ffdnhMRsfbxMSrTRnCFFav4Vs8bOVWr5EgjR97t+MmiJ+svUSXna4EdmesrXXqM0rr7h
-         gvDw==
-X-Gm-Message-State: APjAAAVoWXFtApYQm85xcDICnfJIp05HTf9WpFfnpX4rbUyde+dGFFuj
-        HzqiiUwHSZZ5su60gy9f+18=
-X-Google-Smtp-Source: APXvYqzqAtT9FNv0IuZRojvVPCCt+aZJW1qcym23ISZDYDV+nH+zhfK3uUaQ1WKNtiCEzfm01QsRhQ==
-X-Received: by 2002:a7b:cbd3:: with SMTP id n19mr14702483wmi.131.1552268858436;
-        Sun, 10 Mar 2019 18:47:38 -0700 (PDT)
+        bh=HxrzJhx70wWxfHgLSnWVAbJBBKVyawfPwjd2wdEuETk=;
+        b=J/C2B8SYv0IIeaIDm+DVUJ4JyrRdN6UK1UPjgAuPHvYR4ULCXZ365iiMBHH43oXdfG
+         v6GJYTHl7TAWVgFO+JTS1DDATXKM4C/dDXSBfRa/BgDZCn/U1lyYYv9RV5TSIxPB6oM3
+         WIpNFFQ6mJJw0c6geyGPotbdULlXj83UmhPd7zYQxgWYIYJS6pbqLmpmqHetvvziEdDA
+         dct9JYLvMn6nyftuj6VohuHi2ekyiH/eOJPvWB+IUPltMTJBBptRgohPgM6c+38PFIWT
+         V6oLMlFaEu0h5TsKG7OeApxVuA5bZb+Z/KPtQII6ooFKeX73O46aw1R6VRwe2YIF1Mvh
+         dRZg==
+X-Gm-Message-State: APjAAAVTAIh42YH7cXU7zDaDtmgMeMXB680/kEiBZBIpxuDqytPAqngk
+        Q+a3FqFvFf1YMN2qLmlHuM8=
+X-Google-Smtp-Source: APXvYqwBiDIvkI8ae9h0diowtr1LzD4rpMhAApex1dFzLT05Mxd6/7ZvldU0oszjECMM+UD7bR5N3w==
+X-Received: by 2002:a05:6000:10ce:: with SMTP id b14mr19526948wrx.221.1552268994717;
+        Sun, 10 Mar 2019 18:49:54 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id u17sm16150396wrg.71.2019.03.10.18.47.37
+        by smtp.gmail.com with ESMTPSA id v1sm5185537wrt.88.2019.03.10.18.49.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 10 Mar 2019 18:47:37 -0700 (PDT)
+        Sun, 10 Mar 2019 18:49:53 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
+To:     Jeff King <peff@peff.net>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Matthew Kraai <mkraai@its.jnj.com>
-Subject: Re: [PATCH v13 18/27] stash: convert create to builtin
-References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet>
-        <20190225231631.30507-1-t.gummerer@gmail.com>
-        <20190225231631.30507-19-t.gummerer@gmail.com>
-        <20190307191836.GB29221@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1903081630040.41@tvgsbejvaqbjf.bet>
-        <20190309182610.GD31533@hank.intra.tgummerer.com>
-Date:   Mon, 11 Mar 2019 10:47:37 +0900
-In-Reply-To: <20190309182610.GD31533@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Sat, 9 Mar 2019 18:26:10 +0000")
-Message-ID: <xmqqimwqmbba.fsf@gitster-ct.c.googlers.com>
+        git@vger.kernel.org
+Subject: Re: [PATCH v2] line-log: suppress diff output with "-s"
+References: <20190307194514.GA29260@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1903081636350.41@tvgsbejvaqbjf.bet>
+        <20190308162031.GA17326@sigill.intra.peff.net>
+Date:   Mon, 11 Mar 2019 10:49:53 +0900
+In-Reply-To: <20190308162031.GA17326@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 8 Mar 2019 11:20:32 -0500")
+Message-ID: <xmqqef7emb7i.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,17 +69,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Subject: [PATCH 1/2] stash: pass pathspec as pointer
+> On Fri, Mar 08, 2019 at 04:38:44PM +0100, Johannes Schindelin wrote:
 >
-> Passing the pathspec by value is potentially confusing, as the copy is
-> only a shallow copy, so save the overhead of the copy, and pass the
-> pathspec struct as a pointer.
+>> On Thu, 7 Mar 2019, Jeff King wrote:
+>> 
+>> > When "-L" is in use, we ignore any diff output format that the user
+>> > provides to us, and just always print a patch (with extra context lines
+>> > covering the whole area of interest). It's not entirely clear what we
+>> > should do with all formats (e.g., should "--stat" show just the diffstat
+>> > of the touched lines, or the stat for the whole file?).
+>> > 
+>> > But "-s" is pretty clear: the user probably wants to see just the
+>> > commits that touched those lines, without any diff at all. Let's at
+>> > least make that work.
+>> 
+>> Agree. The patch looks obviously good.
 >
-> In addition use copy_pathspec to copy the pathspec into
-> rev.prune_data, so the copy is a proper deep copy, and owned by the
-> revision API, as that's what the API expects.
+> Thanks. This leaves the other formats as silently ignored. Do we want to
+> do something like this:
 
-It does make quite a lot of sense, but do we need clear_pathspec()
-at strategic places after we are done using these copied instances?
+It probably would make sense to do this if only to avoid surprises.
+
+>
+> diff --git a/revision.c b/revision.c
+> index eb8e51bc63..a1b4fe2aa6 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -2689,6 +2689,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+>  	if (revs->first_parent_only && revs->bisect)
+>  		die(_("--first-parent is incompatible with --bisect"));
+>  
+> +	if (revs->line_level_traverse &&
+> +	    (revs->diffopt.output_format & ~(DIFF_FORMAT_PATCH|DIFF_FORMAT_NO_OUTPUT)))
+> +		die(_("-L does not yet support diff formats besides -p and -s"));
+> +
+>  	if (revs->expand_tabs_in_log < 0)
+>  		revs->expand_tabs_in_log = revs->expand_tabs_in_log_default;
+>  
+>
+> ?
+>
+> -Peff
