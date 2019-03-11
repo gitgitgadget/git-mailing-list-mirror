@@ -2,138 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCDCD20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 15:34:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 208DC20248
+	for <e@80x24.org>; Mon, 11 Mar 2019 15:40:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726820AbfCKPes (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 11:34:48 -0400
-Received: from mail-vs1-f50.google.com ([209.85.217.50]:45505 "EHLO
-        mail-vs1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726546AbfCKPes (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 11:34:48 -0400
-Received: by mail-vs1-f50.google.com with SMTP id n14so2954529vsp.12
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 08:34:47 -0700 (PDT)
+        id S1727471AbfCKPkZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 11:40:25 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:50553 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727050AbfCKPkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 11:40:24 -0400
+Received: by mail-it1-f195.google.com with SMTP id m137so7980833ita.0
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 08:40:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=x56mkxZt/tjR8JPaSr3AhxFFsUsEiZvsS2Om37+dXVc=;
-        b=Q7FJyr5idNrYRRwX8J+VsJ54DzKmsVhchlHUeT1mc3OxVSe4k07omU6WzvLs/qgb3K
-         aj2ntjWam2N7T2Wgf0lpmuT9oSM/fee8ETuddoi6AT1N18RFGAdxGi03yNH0xZBGWUzc
-         Zf4Lj6cgj9YtUeUNGbL2y9cd65+0H5WDGXLkyyllJywJz1I5MSm4mzH+gI2j94U3PabR
-         XvIHGILHaNTeuVzqQ2GzfL6C7g3aW7HoM5x3cFWjaOD9QFiRTTs9+WeZW/kb4A9cM3/I
-         +Kp5Bcjk4FkU9UCxC1SuTkDRMYgjUXJHIk5fFC23/l/KJv8t/XC0+SZ2u7MVs/z06EFL
-         N3AA==
+         :cc:content-transfer-encoding;
+        bh=Ve2hgFIzQFR985OGH4OTNlwevFSK/opSh8+oq71P8Cw=;
+        b=HBa9VebJbebmsoKL6CP7VhjIm6Pjvy3ZKOIz3rUzpy6Bg2PHlZKHrOvTUrHt7KGVFZ
+         vgbeDm69q6gsDNEbF7EWiyyBPHw3RbbLyXo7TDGGxPp9ua3jwoEJlyfH1yVPZ992nl9e
+         iwL+Kkb9tyEI4B4kwVFeLyNAdssybMA6P4R24pH+tjDbry0NLNDNTB2Q++9mw7hy1jfW
+         N4aagAm7OG6He4gqhUrqudadg+9pq91Xm3g0bRgh6TzuzoejKdCreiMI7WJzal9m9Gg2
+         ABO56WrvlkV93KcQqHemehnSI0566eKyhjU6dN4qTLicFDGZatPkMNLZ0+EiGxBVkmIj
+         vong==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=x56mkxZt/tjR8JPaSr3AhxFFsUsEiZvsS2Om37+dXVc=;
-        b=NuomYT+Ua59AMwU+fB+LljiLEKOUDyrQVfFUqAo40dCQ8MMgxXualqd9lq4QIwWLAq
-         wtIIhY92mWj7trirk9uWaq06bGnPhHamGyXdYUd5GZTmUnwY1pxtFR6z/SEMPj4jHXyN
-         CVbu7fFWyuZZRx1MLl9KCipEtEolSw4BeiHIQ1HwWQMPdMmtBDsfsM1LV0oUgKF84qjQ
-         AFzJg5t8a/HkEhG0xubvqi56RkcJKpUSHPPv815/lHTryaJ/tPi2H0VhGcyFpjqFXVHi
-         AYgYq3dAH+GRZetRQijuwGQl2Ue2v++zcrkhM3oBJ/zixxaEl2An2IUwTaFgO/yyisD5
-         S0Fw==
-X-Gm-Message-State: APjAAAXQRHoiav6jdQVP+TLC5ewEA9VCOKodfVXfqfGueRBCogRajoe2
-        PSG2MLPqSzgyDkorSNSEUxaTEBLJJeBqyz4II9g=
-X-Google-Smtp-Source: APXvYqyuEfC6K2xi6Ni20FnB1ATzWmhKzhBlfRVDYixrf4skd2ip8AUdQPzojTh6n5xDbIgkWzLA4JzhB9N3iNt+XGE=
-X-Received: by 2002:a67:eb97:: with SMTP id e23mr18029427vso.175.1552318486498;
- Mon, 11 Mar 2019 08:34:46 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Ve2hgFIzQFR985OGH4OTNlwevFSK/opSh8+oq71P8Cw=;
+        b=ZaLUGdPSMZp+clcr74X1UPf78Mg4Mn+hb5pT7hC0UYHyuD8Eb8b6veBrjKiT4+zTXD
+         aTJldjVTrunuFAfoJO2E3MatZZHOvr78cG5Iph3eGnBpnV5F1iHPFpkFkJPzVgJpyO3K
+         itDD2NgvKjdHX7IeEE832f58VLlLZyIPFPODV7HjUOrJKxW7m5C7KHQ/xr5Fx9m8A143
+         4v7qiQQY7iW6WQMP8ASAcLGHfvSNNnmuTpQbrDpfqP3ktBAc5//jVsWsmWIafjsPfgF6
+         nT/PWmOFQf3vTBW7jEZjrmdrMAc30rIwZW+mz1n15pyps6heln+ZRK+V+KVvKbbkePyS
+         HqcQ==
+X-Gm-Message-State: APjAAAUao2AVpAjXJZ+mgiWIdIwBTmUQtPYwvi3vJ7EkeJzu0oxl/8ad
+        lMbSUslZ4upIeoL5S2ctpapK25kg71LATvs+L8E=
+X-Google-Smtp-Source: APXvYqxKRRPufcwyPlaPBwGYOwZmZq8/3cs+yS8aPm1zHxbubw/FLsCbVXC8eqLTvQcf39OpWQjCgDFF8MudolL48Ng=
+X-Received: by 2002:a24:ccc5:: with SMTP id x188mr180754itf.123.1552318823861;
+ Mon, 11 Mar 2019 08:40:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190311093751.GA31092@archbookpro.localdomain>
-In-Reply-To: <20190311093751.GA31092@archbookpro.localdomain>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 11 Mar 2019 08:34:34 -0700
-Message-ID: <CABPp-BEfNa88bc6rb7xWxJNOiGdTpc-9+=_1od52kDxOfK3XEA@mail.gmail.com>
-Subject: Re: Deprecating git diff ..; dealing with other ranges
-To:     Denton Liu <liu.denton@gmail.com>
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-11-pclouds@gmail.com>
+ <CABPp-BGbqYUMEK0V_m0i7dpFb38Mm3sS-h0Ut-GSdvsKEZzRQg@mail.gmail.com> <CACsJy8DeGQ=GRnRByNQ18Npe5JEcRXBf2oK3Xg6uv44OCg_EBA@mail.gmail.com>
+In-Reply-To: <CACsJy8DeGQ=GRnRByNQ18Npe5JEcRXBf2oK3Xg6uv44OCg_EBA@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 11 Mar 2019 22:39:57 +0700
+Message-ID: <CACsJy8ASZ2jcrk7jf+5p0yCk9bLy-8SJmQyEjG9TSULhd+GhaQ@mail.gmail.com>
+Subject: Re: [PATCH v1 10/11] completion: support restore
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Mon, Mar 11, 2019 at 2:37 AM Denton Liu <liu.denton@gmail.com> wrote:
+On Mon, Mar 11, 2019 at 10:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> Hello all,
+> On Sun, Mar 10, 2019 at 2:17 AM Elijah Newren <newren@gmail.com> wrote:
+> >
+> > On Fri, Mar 8, 2019 at 2:17 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y <pclouds@gmail.com> wrote:
+> > >
+> > > Completion for restore is straightforward. We could still do better
+> > > though by give the list of just tracked files instead of all present
+> > > ones. But let's leave it for later.
+> >
+> > s/give/giving/
+> >
+> > I'm slightly worried that due to using --no-overlay mode by default in
+> > restore, having tab-completion include untracked files increases the
+> > risk of accidentally nuking the wrong file.  restore is a destructive
+> > command anyway and should thus be used with care, so perhaps this
+> > isn't a big deal, but I thought I'd mention it.
 >
-> I was in the process of deprecating `git diff <commit>..<commit>` as
-> discussed here[1]. However, I ran into a weird case that I'm not sure
-> how to deal with.
->
-> In t3430-rebase-merges.sh:382, we have the following test case which
-> invokes git diff:
->
->         test_expect_success 'with --autosquash and --exec' '
->                 git checkout -b with-exec H &&
->                 echo Booh >B.t &&
->                 test_tick &&
->                 git commit --fixup B B.t &&
->                 write_script show.sh <<-\EOF &&
->                 subject="$(git show -s --format=%s HEAD)"
-> =>              content="$(git diff HEAD^! | tail -n 1)"
->                 echo "$subject: $content"
->                 EOF
->                 test_tick &&
->                 git rebase -ir --autosquash --exec ./show.sh A >actual &&
->                 grep "B: +Booh" actual &&
->                 grep "E: +Booh" actual &&
->                 grep "G: +G" actual
->         '
->
-> It gets caught in my attempt to only deprecate ..'s. Technically, it's
-> undocumented behaviour and it only happens to work because git-diff
-> accept ranges but it doesn't operate in an intuitive way.
->
-> I was just wondering what we should do about this case? Should we
-> deprecate all invocations of `git diff <range>` except for the special
-> case of `git diff <commit>...<commit>`, or should we _only_ deprecate
-> `git diff <commit>..<commit>` and allow all other forms of ranges, even
-> though it was undocumented behaviour?
+> This makes me think about my "git restore :/" example, which does not
+> remove untracked files because its source is the index. But isn't it
+> inconsistent that we only remove untracked files with --source and
+> keep them without? Will that just confuse people more? Or did I just
+> forget to implement no-overlay mode for the index too?
 
-There's a few angles I can think of to view this from:
+Nope you confused me. non-overlay mode never touches untracked files
+and so neither does git-restore.
 
-First, commit^! is somewhat of a degenerate "range"; it includes only
-one commit and for non-merge commits, is equal to both
-commit~1..commit and commit~1...commit.  The fact that those ranges
-are equal means that "git diff commit~1..commit" and "git diff
-commit~1...commit" will also give equal results, i.e. that this is not
-a case where confusion between '..' and '...' will cause any problems
-for the user.  (Admittedly, I'm ignoring usage of ^! with a merge
-commit here; I've never seen anyone use it in such a case.)
-
-Second, ^! is unlikely to cause confusion for users the way '..' vs
-'...' will, because the syntax makes no sense with diff anyway.  It's
-totally magical, and when I came across it being used with diff
-instead of log, I had to test it out to determine what it did.  (I do
-now find it handy and use it occasionally.)  It's fairly difficult to
-explain to beginners -- I tried once and quickly gave up and used
-longer but more straightforward alternatives.  So, IMO, this is only a
-convenience syntax for experts, and a syntax that won't be confused
-with other syntax out there, so there's no need to deprecate it.
-
-Third, we have good reason to deprecate explicit usage of '..' with
-git diff, but even with those reasons some folks probably aren't
-convinced it's worth the effort.  I want to avoid expanding scope, for
-fear of moving some people from the sidelines of "not worth the
-effort" to "this is a bad idea".  So if there are other range syntax
-cases used in the wild (maybe 'git diff merge_commit^@' ?!?), we
-should just leave them be and allow them to continue working.
-
-
-Hope that helps,
-Elijah
+It does make the description of git-restore about "remove if paths do
+not exist" incorrect. But frankly I find it hard to explain
+non-overlay mode with the index being the remove filter. In
+git-checkout, where we update both index and worktree, this may make
+sense to use the index as the remove filter. But worktree works on the
+worktree only by default. I'll need to sleep on this.
+--=20
+Duy
