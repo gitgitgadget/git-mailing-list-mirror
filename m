@@ -2,74 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2E3020248
-	for <e@80x24.org>; Mon, 11 Mar 2019 18:41:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2390120248
+	for <e@80x24.org>; Mon, 11 Mar 2019 19:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727336AbfCKSlH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 14:41:07 -0400
-Received: from mout.gmx.net ([212.227.17.22]:37071 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726942AbfCKSlH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 14:41:07 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MN748-1hA1Yc2jd2-006hS7; Mon, 11
- Mar 2019 19:41:02 +0100
-Date:   Mon, 11 Mar 2019 19:40:46 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: js/rebase-deprecate-preserve-merges, was Re: What's cooking in
- git.git (Mar 2019, #03; Mon, 11)
-In-Reply-To: <xmqq8sxlkcba.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903111939540.41@tvgsbejvaqbjf.bet>
-References: <xmqq8sxlkcba.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728251AbfCKTAl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 15:00:41 -0400
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:38104 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728438AbfCKTAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 15:00:40 -0400
+Received: by mail-vk1-f196.google.com with SMTP id x140so46618vke.5
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 12:00:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=PPkNBd662lPvJNwxf7U04hcqqjfC7EAh0V7/a6I/Pzs=;
+        b=DBzf8mfqcRaM/EXdzhXyuDhUW5+VM6AIbZa7ZzXlUkQq1RRuUA52+DShBNfj4t1vFq
+         1WRqb5EiCg55tgGsCIORW9sW8cFHnQwU73Eiw0D4c3iS08bFvHi1sG+ap2SuOPr677+x
+         i1NuPMppf+HHOx+VR0mNLmb2TYAdTog5BoT1JLLhtvHsgNcilfBdCzXve0cJ0p7OBDgZ
+         DCcrXux4JpyeA5q/LqoemgKXeYEE6hV6r3DgqgdJaRZw6aHOvGY16DV72LA3YoXbAC3r
+         qxdJ8b5flNCnrde56RVGvOgAAeJUtQO08yKUKwRI27DwiDdhGjG3YuLkf8bG8rHiK8qv
+         JIqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=PPkNBd662lPvJNwxf7U04hcqqjfC7EAh0V7/a6I/Pzs=;
+        b=NofZDGQPRECzmtj6yiJYdR5cmP66y0fI3Ao4tQO0IFddEV5Upn1WHjKPN56gibv24s
+         e2EYV8PfC3nS4RYY9oZJwLSDZHxCR9yMJ2YP7lSRcaH0kOj5fwzgUTjSj87jEzKdc7b4
+         oo81yUwzut4u38I4laJZxmzfUzCBrBDBHH760QlspAPXk/IrBnH8Y9DfypAhLY+RCobv
+         dWtRoNV9gHtWC0rJfaJDJeLWOpokrQ0i3tzB7xeyySNuQNHahFsVpQnaSzmjVSeN9YVV
+         f7tol7IyHLcKv6naE1iMK4zPQpYd9/VAiMdn2pcLttR1qNUNYpBpreiFnsdOGSDuvhmS
+         8nmw==
+X-Gm-Message-State: APjAAAVMGJUNuvyskC6j3nSTjIgBhZ7uuyQ+EQsXlx0N77xmp7Z5hZ7I
+        yj4hgY6bNnxTmtfiM7CmzBpciDCylB4ppz2emNs=
+X-Google-Smtp-Source: APXvYqwEkDZV5IzREM2eyqLBdozfw929FKjKow8wGg9QcgSX4cxMwolENFK5m+gQ5TByRaccLMNSRfLb4cXxe4JPmC8=
+X-Received: by 2002:a1f:2acb:: with SMTP id q194mr17056450vkq.92.1552330839856;
+ Mon, 11 Mar 2019 12:00:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BBpOWPBu5/fkiZBWJmPP+8YW+HwoZKX3Nrfqa6jibhpTJBbnp/E
- yIaXkQlV2HCHIXulBtjh5Aib2GUvfR0+zRi4AJ9Ny+SAbBbmO6YmtG8gjb3Lp90YyS8sGFG
- IwikO3db8fDAJkr6ZtwibS8YaitTIKkeFeIKXBFg9NjUcy5A6wCNlK1ii5i5NRMoBUZ1rB3
- R4chNPJDyE7+w2akFr48w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DYmrRp5530Q=:SlxauAGSvX1IMP2faM+AoJ
- 69Rc+UBd1DTNCveNJa75msl2rKHD3/2Nnw5FS6e+/vnJXT1a0maFMxFrEVL/JxamqqSUGhFiK
- ERfa4lkqcFxTMuNt2PFFccQOmjfCMqAucUHQtBbqZ0ifzry3v0aWq9+yDKbv66k7j1s3MXJWL
- FLMlvx0Pm+l6ZSSfCEtACgg3oo6KR9y+iOvP7ZsjG6ZPgCTTXXr/lnN1yFQx8EQpRn5j7nlvw
- wFQkhsqjb0BePYMutNDfyMxWdYBauSK5SdRpS7GXlrU6bO1x/6WlgyLZDpfV2/UwFDjxCWo4q
- /LQCBK0o4O7j3bf9aOB4StZ8g392TMBZkrIF3jVEyYGV1XXshZCkONWRBJWF7fLwLHAtUkbrL
- 499fUoNMdbfHofGlsRwPQIpMJgZGoDanF6z6RCFciRHceFnPrmkhZuaLNESwlhI8Ogg9k6icu
- ti6CvJgA15G5yv1N9Kn/f6VqmCGeN4caOXhu6fcq7E4/FVQJsw2vNsZdYwloN5/elqecJej3u
- piPRuokPz8h3RugqNwqPa9x2wl/foe1maykJaWW84Z0d+zCZOhPclR1cZkS+m7Iucn3tMQFun
- Z0Dn4K2BnpiHemQeIS2ceqyUWtM7I57VTWedDqkZBnV/4ZT0S5HoE09uc8IvxIE/m1tv3hUPj
- vNtob018A+9HWwKGmCBpcraoD+ukjLDyLjgH0a+YAMrOjeWnjnBBNOZs4OwrXPrVPOXw1hG9b
- S5/seEuQ9QJHAmwJ6bN/SAxbTyKPYG5L/S2xfGwnQcywHuiOHurxsfzqI1+nzHN6oyiQriOyH
- erosUuYPUXCqb2ydckzR4M5ShuvRE4ANuftzXrHjDSS2E1A4JXO4nj0sQHc6csj6w+VS7P0Fc
- 1Jl5K5U5SV9ofzgK//Bv7JPFUsWGaWTuuGgSmjEcj2e8Q0fF5WD6murmf7dCYREI8a6HTEDMN
- vnojcCc6wog==
+References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
+ <20190308095752.8574-11-pclouds@gmail.com> <3A57DE38-A5A7-468B-9509-4244C285896A@gmail.com>
+In-Reply-To: <3A57DE38-A5A7-468B-9509-4244C285896A@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 11 Mar 2019 12:00:28 -0700
+Message-ID: <CABPp-BH+RRaC1bw2_4e7C8PicnF=qT+c9TcRv+E1efbx6X=Akw@mail.gmail.com>
+Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Sun, Mar 10, 2019 at 5:29 PM Jacob Keller <jacob.keller@gmail.com> wrote=
+:
+>
+> On March 8, 2019 1:57:41 AM PST, "Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy" <pclouds@gmail.com> wrote:
 
-On Mon, 11 Mar 2019, Junio C Hamano wrote:
+> >+<new-branch>::
+> >+      Name for the new branch.
+> >+
+> >+<start-point>::
+> >+      The name of a commit at which to switch to before creating a
+> >+      new branch or detach from.
+>
+> The wording here (and a few other places) feels awkward to me. I don't re=
+ally have a better wording but maybe:
+>
+> ---
+> The name of the commit to switch to when creating a new branch or detachi=
+ng HEAD
+> ---
 
-> * js/rebase-deprecate-preserve-merges (2019-03-08) 1 commit
->  - rebase: deprecate --preserve-merges
-> 
->  "git rebase --rebase-merges" replaces its old "--preserve-merges"
->  option; the latter is now marked as deprecated.
-> 
->  Will merge to 'next'.
+I also struggle a bit to get better wording in this case.  But maybe
+throwing another idea will inspire someone to synthesize (or rewrite)
+these into something better, so...
 
-There were two good suggestions that I still want to address. v2 should be
-hitting the list soon.
+--
+The starting point for the new branch.  Specifying a <start-point>
+allows you to create a branch based on some other point in history
+than where HEAD currently points.  (Or, in the case of --detach,
+allows you to inspect and detach from some other point.)
+--
 
-Thanks,
-Dscho
+I know it's slightly on the longer side, but it's the best I could think of=
+.
