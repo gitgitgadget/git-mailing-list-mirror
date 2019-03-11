@@ -2,106 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B28E20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 16:45:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A46020248
+	for <e@80x24.org>; Mon, 11 Mar 2019 16:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727459AbfCKQpP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 12:45:15 -0400
-Received: from mail-oi1-f169.google.com ([209.85.167.169]:33882 "EHLO
-        mail-oi1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726675AbfCKQpP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 12:45:15 -0400
-Received: by mail-oi1-f169.google.com with SMTP id g16so4193525oib.1
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 09:45:14 -0700 (PDT)
+        id S1727063AbfCKQpu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 12:45:50 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34826 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726675AbfCKQpt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 12:45:49 -0400
+Received: by mail-wr1-f68.google.com with SMTP id t18so5899541wrx.2
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 09:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=0tHVHoW0IydrXXKPi3bTTTFAOQE7hJBpdu+X6wNv2k4=;
-        b=GrBjagmnCVQcH1TrpQ2O22aN/GF0R93S0toevtngmxpRPjB7iDCQ3oKfspHqkXcsNz
-         3U1WfwSlDNPSL1KIq0DCG0KyE0YkUfooEedXTWFMLMydJ9gwz6Bl88QptXQU2gylRk/6
-         +Cr21NNvfMdvpJzsyXA4cCeSO5WmilnBRVw0ktuCtcf+6TXwm0g/+XfNesFC4ejAePAR
-         dnsL4ZLaZnuJmATgiAp6S2p4Y1sTzJCe3FttSfVoqA9g1L8Y/90TfOztq24JiEqTpSMv
-         lKsh/k8oMfOAEA6dDLkBpZ++hdTf/sACbGmT6aVam0mP5TR5apAE/1aCu0pkuZCqA1CL
-         Jj/Q==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Oc24ke8A1A890AoEC9bBBkGF7f6SawIAXQjk88btQ+Q=;
+        b=JS1/X8zrJsyTX9yBmCYRQd8O0Un7fmuoprcU1qDWp9+4aKYF8rb9mu2WN5i5neSyRm
+         jtcOgtk+kG5i0GG+N1zWtzCMAjyCTsdiWhOUTxJJB1dIHS+OwshyQjsbeHJz1smjdqGY
+         /dZLCtMWFZd7AhmlzVVlulFOHG3waKziGN0BFs0L2v4hxRwtq1bFHj3OWW9ydY91Db5Z
+         peksr6ak3nmysu6y+axkTHedT/gENdgM1JnJi1wDuVKbpis6GSL3HpnBVWG6mZRGLrqk
+         w6ZlMV8qzvpI8GyvvZwrIcFUTaS0JHooLqlPi6PsNAg94QipE6sh1OYw6RXdXR5e7fKK
+         5ERA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=0tHVHoW0IydrXXKPi3bTTTFAOQE7hJBpdu+X6wNv2k4=;
-        b=POZ7rnE/4x/YNmWTcxC66HG9aTY8VNpEGiDOdzq4q2qQf9XxgkbPTBA12doc1vvTh0
-         3KKRdy9Wv9qpmsRAlTKYF/x/afahx0j8Qn3I4guwArOW3QwSuPerFlJCCLGquGxbPKzi
-         J8dBvdEr9Z1Vow8L4g9XWDyc6ayk4U2/rooqqfIfiiEyPii8AdgcRJP/ry0HeI3jSg6M
-         LBrw8nm5DRxuhwssfrnazmt6fUDmRvTrFVDikdndgTx2oqoEMfT/xyVv9Ox0Nj/Yvfgk
-         dVbKi8fZPWWcoWhXuW27uUmyJL82SHD6TI6dhWR1iAYIPPsg4Ap2dqOEp12BjZ0BJtkJ
-         BN9Q==
-X-Gm-Message-State: APjAAAUkcoSnZNnAE9KZCzoJfe+6oS9kg5IQ16ZCkBV0mLXACKU1/wzt
-        DViMK8E7ym6IlzgPy37/lQsM1YV2pR78Oz0QSH8fTkQr
-X-Google-Smtp-Source: APXvYqw71tuPckHxi4+GR3sj5SVFVwaaC41Ey/1AirbIWRjOoZcf9UWH0H68s0ghVbdHjbemKntyphs6+BM9jzocQm0=
-X-Received: by 2002:aca:cf93:: with SMTP id f141mr403139oig.130.1552322713927;
- Mon, 11 Mar 2019 09:45:13 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=Oc24ke8A1A890AoEC9bBBkGF7f6SawIAXQjk88btQ+Q=;
+        b=Z1U14EqajmHocGGEnxptxxFsziM7xaHrIpTngGS/COogwSB6+xDhzIa9L+6o6Q5O6U
+         I4uVUn5RiYIMmbQvK/WMAL3f8AfEDCDDCIPVCahX6MFjjy+m7yIvWxIVR8V3MfWhDKew
+         VB8oczCwQYJFnO/hYlXZDGRTFXH68l7lSbH5fRSXki0OytqhcwFsCyQbdq5k51EvBcyk
+         NdueoxKvCc2rV0NBHPWo69vwNND2l9pHS6IsxJ0WUmXhGwT34tWUFPrPNRzRlgNFzL7H
+         4mqBf7n1mgDkbaQm9ig/UbAWw/GyzXosff+DBj88OQf/YBsESq4gSae/X1+gya/VZUEo
+         qCIg==
+X-Gm-Message-State: APjAAAU3cbOmEYdNOz6Cf8SMWDEadJ9w/Jhbo3Qt3+8ZWNGeZ+HKcBOB
+        fOQfLQ9DD1xpMfhEB6gktw8=
+X-Google-Smtp-Source: APXvYqypK3G1jx9w6e4JrVEVnXQDNgwkxobhzHBM2q/mmWxPiHWjpBl9rDdRFhYz33EzlRBBCwHNcA==
+X-Received: by 2002:adf:fe05:: with SMTP id n5mr7858667wrr.160.1552322747291;
+        Mon, 11 Mar 2019 09:45:47 -0700 (PDT)
+Received: from [192.168.2.240] (host-92-22-27-66.as13285.net. [92.22.27.66])
+        by smtp.gmail.com with ESMTPSA id y5sm17496864wmg.31.2019.03.11.09.45.46
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Mar 2019 09:45:46 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 4/8] sequencer.c: remove duplicate code
+To:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <cover.1548219737.git.liu.denton@gmail.com>
+ <cover.1552275703.git.liu.denton@gmail.com>
+ <6d5ce3ffffe5ef6c23b12538650b2cdf86e4cac9.1552275703.git.liu.denton@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <3b863432-e9b8-051a-a52e-efe4938f62d0@gmail.com>
+Date:   Mon, 11 Mar 2019 16:45:45 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-References: <20190309154555.33407-1-ttjtftx@gmail.com> <CAP8UFD26Zxt1FvwAajV48eBbhPv_q5oSLTekWxApcNpg=xRn3Q@mail.gmail.com>
- <CAOAu_Y+GeHHsxVmqLajtM41H67L83Rxxkp3SqJ-G4GBv=uTDYg@mail.gmail.com>
- <CAP8UFD274-iDkqPm8-WGXbUmcVqjDE7bSg2bwA-17TWJivn0jA@mail.gmail.com> <CAOAu_YL8heWLSznRV8pjLkRZBOEth_7CSmftupx+4+SSx5yztw@mail.gmail.com>
-In-Reply-To: <CAOAu_YL8heWLSznRV8pjLkRZBOEth_7CSmftupx+4+SSx5yztw@mail.gmail.com>
-From:   jonathan chang <ttjtftx@gmail.com>
-Date:   Tue, 12 Mar 2019 00:45:03 +0800
-Message-ID: <CAOAu_YK6G8apWPoFJPCCNizr_O-puHUwtU4CE-0_UgCnTSWkgQ@mail.gmail.com>
-Subject: Fwd: [GSoC][PATCH] tests: avoid using pipes
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <6d5ce3ffffe5ef6c23b12538650b2cdf86e4cac9.1552275703.git.liu.denton@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry, I forgot to Cc, again.
+Hi Denton
 
----------- Forwarded message ---------
-From: ttjtftx <ttjtftx@gmail.com>
-Date: Tue, Mar 12, 2019 at 12:32 AM
-Subject: Re: [GSoC][PATCH] tests: avoid using pipes
-To: Christian Couder <christian.couder@gmail.com>
+One small comment below, this basically looks fine to me
+
+On 11/03/2019 03:42, Denton Liu wrote:
+> Since we implemented get_cleanup_mode, we had some duplicate code in
+> git_sequencer_config which essentially performed the same operations.
+> Refactor git_sequencer_config to take advantage of the logic already in
+> get_cleanup_mode.
+> 
+> Note that we had to introduce a separate argument to get_cleanup_mode
+> indicating whether to die or not on an invalid value. This is because if
+> we are parsing a config, we do not want to die but instead, we only want
+> to warn the user, whereas if we are parsing a command-line option, we
+> would like to actually die.
+> 
+> Finally, this is almost a no-op refactor but not quite. Previously, in
+> the case that an invalid value is presented, default_msg_cleanup would
+> not be set. We change the behaviour so that default_msg_cleanup will now
+> take on the value as if "default" were provided as the cleanup_arg.
+> 
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>   builtin/commit.c |  2 +-
+>   sequencer.c      | 20 +++++++-------------
+>   sequencer.h      |  2 +-
+>   3 files changed, 9 insertions(+), 15 deletions(-)
+> 
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 0df15e4851..81e3bd21ca 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1172,7 +1172,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+>   		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
+>   	if (argc == 0 && (also || (only && !amend && !allow_empty)))
+>   		die(_("No paths with --include/--only does not make sense."));
+> -	cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor);
+> +	cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor, 1);
+>   
+>   	handle_untracked_files_arg(s);
+>   
+> diff --git a/sequencer.c b/sequencer.c
+> index 224c823b43..612621f221 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -172,17 +172,7 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
+>   		if (status)
+>   			return status;
+>   
+> -		if (!strcmp(s, "verbatim"))
+> -			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_NONE;
+> -		else if (!strcmp(s, "whitespace"))
+> -			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
+> -		else if (!strcmp(s, "strip"))
+> -			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_ALL;
+> -		else if (!strcmp(s, "scissors"))
+> -			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
+> -		else
+> -			warning(_("invalid commit message cleanup mode '%s'"),
+> -				  s);
+> +		opts->default_msg_cleanup = get_cleanup_mode(s, 0, 0);
+>   
+>   		free((char *)s);
+>   		return status;
+> @@ -512,7 +502,7 @@ static int fast_forward_to(struct repository *r,
+>   }
+>   
+>   enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
+> -	int use_editor)
+> +	int use_editor, int die_on_error)
+>   {
+>   	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
+>   		return use_editor ? COMMIT_MSG_CLEANUP_ALL :
+> @@ -526,7 +516,11 @@ enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
+>   	else if (!strcmp(cleanup_arg, "scissors"))
+>   		return use_editor ? COMMIT_MSG_CLEANUP_SCISSORS :
+>   				    COMMIT_MSG_CLEANUP_SPACE;
+> -	else
+> +	else if (!die_on_error) {
+> +		warning(_("Invalid cleanup mode %s, falling back to default"), cleanup_arg);
+
+git generally starts error messages with a lower-case letter so I would 
+change the message in the previous patch to match that pattern rather 
+than changing this one.
 
 
-On Sun, Mar 10, 2019 at 11:05 PM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> On Sun, Mar 10, 2019 at 9:28 AM ttjtftx <ttjtftx@gmail.com> wrote:
-> >
-> > On Sun, Mar 10, 2019 at 2:06 PM Christian Couder
-> > <christian.couder@gmail.com> wrote:
-> >
-> > > If you take a look at c6f44e1da5 ("t9813: avoid using pipes",
-> > > 2017-01-04) you can see the following:
-> > >
-> > >     - it changes only one test file: t9813-git-p4-preserve-users.sh
-> > >     - its title starts with "t9813: "
-> > I adapted this format in my second version[1].
-> >
-> > [1]: https://public-inbox.org/git/20190310080739.63984-1-ttjtftx@gmail.com
->
-> It's better because each patch changes only one file, but I also
-> wanted to say that for a microproject you only need to focus on only
-> one file. So I would you suggest you keep only the patches that are
-> about "t0000-basic.sh" and drop the patches about
-> "t0003-attributes.sh" and "t0022-crlf-rename.sh".
+Best Wishes
 
-I will do that as I have made too many mistakes. I decided to do more
-than one file because
-I thought it might be too small even for a microproject and that there
-would be more chances
-for feedback if I include more files, since the same file tend to have
-similar conversions needed.
+Phillip
 
-> It's also a small nit but your patches start with "t0000-basic: " not
-> just "t0000: " though the latter format is more frequent in existing
-> commits than the former.
 
-Got it.
+> +		return use_editor ? COMMIT_MSG_CLEANUP_ALL :
+> +				    COMMIT_MSG_CLEANUP_SPACE;
+> +	} else
+>   		die(_("Invalid cleanup mode %s"), cleanup_arg);
+>   }
+>   
+> diff --git a/sequencer.h b/sequencer.h
+> index eb9bd97ef3..e7908f558e 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -117,7 +117,7 @@ void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag);
+>   
+>   void append_conflicts_hint(struct index_state *istate, struct strbuf *msgbuf);
+>   enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
+> -	int use_editor);
+> +	int use_editor, int die_on_error);
+>   
+>   void cleanup_message(struct strbuf *msgbuf,
+>   	enum commit_msg_cleanup_mode cleanup_mode, int verbose);
+> 
