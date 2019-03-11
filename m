@@ -2,65 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,GAPPY_SUBJECT,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0998D20248
-	for <e@80x24.org>; Mon, 11 Mar 2019 01:49:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61CCC20248
+	for <e@80x24.org>; Mon, 11 Mar 2019 01:54:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727131AbfCKBt5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Mar 2019 21:49:57 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45405 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727128AbfCKBt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Mar 2019 21:49:56 -0400
-Received: by mail-wr1-f68.google.com with SMTP id o7so3241350wrp.12
-        for <git@vger.kernel.org>; Sun, 10 Mar 2019 18:49:55 -0700 (PDT)
+        id S1727138AbfCKByv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Mar 2019 21:54:51 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46359 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727094AbfCKByv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Mar 2019 21:54:51 -0400
+Received: by mail-wr1-f65.google.com with SMTP id i16so3249366wrs.13
+        for <git@vger.kernel.org>; Sun, 10 Mar 2019 18:54:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=HxrzJhx70wWxfHgLSnWVAbJBBKVyawfPwjd2wdEuETk=;
-        b=i86ljPhvzicDUxJls22MUjOTbJOFTqfDftivZDf8eqkAVHlzP5+BzuLLMOh9Fp3y1s
-         St3V7LTj/kcPOqfvOVJgLMTrrChOiCRYGtwrKSyMaTlqQDd0MWQJyZhZEiPO6x/khjpP
-         b7dDo9mPEe4Tuxh0m+J5wzfZz7fWb/aGMB9wy8a2N24n5MXmKm+MbgYDIsn1S5p2kevr
-         yiWmBK/rQImupQsEHGhrKEP+/Bg81HNXXbfByyZnWAzLA80VsWtceUSnTdpdz306DzvH
-         CRx8dOrDTNgV5p2bQw5KKV8kztTZrhdvgsvRXbdcRgbKv5CTOQqaoIilQGeC48QecCSZ
-         /+UQ==
+        bh=x+0bTczwCql6JtW1SEuuONhJ/sHxGX8zsXpYIgahZcA=;
+        b=Be9s3nNj7WaUXyW9ZShCH/Yua2gZ1alb5VFdBBAavTLakLyeGK2o8LFtFazn3fqLl/
+         /c41KlsZxCMkZcE+uozwVs3z73CP98oGLT0hhe9LSPe+ME0jSB2fR8sKbG//m+lwif55
+         OocfVwIwQhdLENkF7IRqy96oveuLeCxf50KXnl8PJZlE46BUybK1B+EgXcDogX4bV4t9
+         1j6LoU3gs3fjSmbZfzxBA8AMxLagq4Kz49i5y8Nup7qNwkNiqfPzr5eHZ0703j8BpctT
+         t9Wj6DiAWWWYIE2rVJ8w/QbIUXx59ifxlHQloKJr91lJTUM0MIwOYFBA+0l3aK0jNIFG
+         vm/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=HxrzJhx70wWxfHgLSnWVAbJBBKVyawfPwjd2wdEuETk=;
-        b=J/C2B8SYv0IIeaIDm+DVUJ4JyrRdN6UK1UPjgAuPHvYR4ULCXZ365iiMBHH43oXdfG
-         v6GJYTHl7TAWVgFO+JTS1DDATXKM4C/dDXSBfRa/BgDZCn/U1lyYYv9RV5TSIxPB6oM3
-         WIpNFFQ6mJJw0c6geyGPotbdULlXj83UmhPd7zYQxgWYIYJS6pbqLmpmqHetvvziEdDA
-         dct9JYLvMn6nyftuj6VohuHi2ekyiH/eOJPvWB+IUPltMTJBBptRgohPgM6c+38PFIWT
-         V6oLMlFaEu0h5TsKG7OeApxVuA5bZb+Z/KPtQII6ooFKeX73O46aw1R6VRwe2YIF1Mvh
-         dRZg==
-X-Gm-Message-State: APjAAAVTAIh42YH7cXU7zDaDtmgMeMXB680/kEiBZBIpxuDqytPAqngk
-        Q+a3FqFvFf1YMN2qLmlHuM8=
-X-Google-Smtp-Source: APXvYqwBiDIvkI8ae9h0diowtr1LzD4rpMhAApex1dFzLT05Mxd6/7ZvldU0oszjECMM+UD7bR5N3w==
-X-Received: by 2002:a05:6000:10ce:: with SMTP id b14mr19526948wrx.221.1552268994717;
-        Sun, 10 Mar 2019 18:49:54 -0700 (PDT)
+        bh=x+0bTczwCql6JtW1SEuuONhJ/sHxGX8zsXpYIgahZcA=;
+        b=T2ZtgUd7Nrf4clKlGZh8EtvhtzD6vl9rrnMrSPnUpvSsmDnM6Ho+AOfxdyGauG9GxH
+         e5HQbhiXNIiwWt3iIqYlG3whUoWEZ8YTwP1C3gX5YxoXxaucZ2NuNoXAoIo/28D71HdT
+         XpQTy3dTk35oblu2Wj9mH349PW6ht/Tj90pHzJkkkgQPkGFnqA46aJn95XUPWxKTOAAe
+         JZgOtoUfUtCkzrXPnOTnNULRpdJwoxlFCIIYQUxbPTEwxGXepl/hCH9s2DoLYxyfoJM0
+         JFXSRaO1vbDqh0CKkTL8DCm9M2v92FGHqvClsdlniCJAFgIVyBi46LR5pH0FODeg5fXj
+         x0aA==
+X-Gm-Message-State: APjAAAXkTAOnvzawnl9trHcsgCtJqkJj5Hnb8sSfMZZjcEdXfvUbtO67
+        pDh1aRz4gNydnD7gjU+4tEo=
+X-Google-Smtp-Source: APXvYqxD4K0V5aaSBxmROBPbdwe7q8AyhaVvSAl6Ar8q5N5RnFhmdASZ15AIef3pcfYplTfx9U3QxA==
+X-Received: by 2002:a5d:4a05:: with SMTP id m5mr19343215wrq.46.1552269289515;
+        Sun, 10 Mar 2019 18:54:49 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id v1sm5185537wrt.88.2019.03.10.18.49.53
+        by smtp.gmail.com with ESMTPSA id v2sm23875024wme.29.2019.03.10.18.54.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 10 Mar 2019 18:49:53 -0700 (PDT)
+        Sun, 10 Mar 2019 18:54:48 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] line-log: suppress diff output with "-s"
-References: <20190307194514.GA29260@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1903081636350.41@tvgsbejvaqbjf.bet>
-        <20190308162031.GA17326@sigill.intra.peff.net>
-Date:   Mon, 11 Mar 2019 10:49:53 +0900
-In-Reply-To: <20190308162031.GA17326@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 8 Mar 2019 11:20:32 -0500")
-Message-ID: <xmqqef7emb7i.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [GSoC][PATCH v2 3/3] t3600: use helpers to replace test -d/f/e/s <path>
+References: <CAPig+cR3b=jk4W=9SF4XJQyqAfFHiG8MduypD75RL1=T_qY0Hg@mail.gmail.com>
+        <20190305142149.13671-1-rohit.ashiwal265@gmail.com>
+        <CAPig+cT_YT-1=ymAYiTpjgRQEe8906Y6yyBU=XuP_wbw+ixxiQ@mail.gmail.com>
+        <xmqq7edancws.fsf@gitster-ct.c.googlers.com>
+        <CAPig+cQFMNFTMfMz5EnMZxnXGLWnKYZ5_=D3eiNsX24hdZSPRw@mail.gmail.com>
+Date:   Mon, 11 Mar 2019 10:54:48 +0900
+In-Reply-To: <CAPig+cQFMNFTMfMz5EnMZxnXGLWnKYZ5_=D3eiNsX24hdZSPRw@mail.gmail.com>
+        (Eric Sunshine's message of "Fri, 8 Mar 2019 04:51:59 -0500")
+Message-ID: <xmqqa7i2mazb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,46 +74,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On Fri, Mar 08, 2019 at 04:38:44PM +0100, Johannes Schindelin wrote:
+> On Fri, Mar 8, 2019 at 12:38 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> An unrelated tangent, but what do you think of this patch?  In the
+>> context of testing "git rm", if foo is a dangling symbolic link,
+>> "git rm foo && test_path_is_missing foo" would need something like
+>> this to work correctly, I would think.
+>>
+>>  test_path_is_missing () {
+>> -       if test -e "$1"
+>> +       if test -e "$1" || test -L "$1"
+>>         then
+>>                 echo "Path exists:"
+>>                 ls -ld "$1"
 >
->> On Thu, 7 Mar 2019, Jeff King wrote:
->> 
->> > When "-L" is in use, we ignore any diff output format that the user
->> > provides to us, and just always print a patch (with extra context lines
->> > covering the whole area of interest). It's not entirely clear what we
->> > should do with all formats (e.g., should "--stat" show just the diffstat
->> > of the touched lines, or the stat for the whole file?).
->> > 
->> > But "-s" is pretty clear: the user probably wants to see just the
->> > commits that touched those lines, without any diff at all. Let's at
->> > least make that work.
->> 
->> Agree. The patch looks obviously good.
+> Makes sense. Won't we also want:
 >
-> Thanks. This leaves the other formats as silently ignored. Do we want to
-> do something like this:
+>     test_path_exists () {
+>     -    if ! test -e "$1"
+>     +   if ! test -e "$1" && ! test -L "$1"
+>        then
+>             echo "Path $1 doesn't exist. $2"
+>
+> or something like that?
 
-It probably would make sense to do this if only to avoid surprises.
+That would make them symmetric, but what I was driving at with "In
+the context of testing git rm" was that I highly suspect that among
+other existing users of test_path_is_missing there are some that
+want to consider a dangling symbolic link as if it is not there (and
+vice versa for test_path_exists), and it may not be a good idea to
+unconditionally declare that, unlike the underlying "test" command
+that dereferences symlinks for most operations, our wrapper does not
+dereference symbolic links, which is what the "what do you think?"
+patch and your addtion do.
 
->
-> diff --git a/revision.c b/revision.c
-> index eb8e51bc63..a1b4fe2aa6 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -2689,6 +2689,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
->  	if (revs->first_parent_only && revs->bisect)
->  		die(_("--first-parent is incompatible with --bisect"));
->  
-> +	if (revs->line_level_traverse &&
-> +	    (revs->diffopt.output_format & ~(DIFF_FORMAT_PATCH|DIFF_FORMAT_NO_OUTPUT)))
-> +		die(_("-L does not yet support diff formats besides -p and -s"));
-> +
->  	if (revs->expand_tabs_in_log < 0)
->  		revs->expand_tabs_in_log = revs->expand_tabs_in_log_default;
->  
->
-> ?
->
-> -Peff
+
