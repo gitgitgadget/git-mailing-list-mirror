@@ -2,143 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_LOCAL_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13A7520248
-	for <e@80x24.org>; Mon, 11 Mar 2019 16:32:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B28E20248
+	for <e@80x24.org>; Mon, 11 Mar 2019 16:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727777AbfCKQc6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 12:32:58 -0400
-Received: from mout.gmx.net ([212.227.15.15]:37855 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726675AbfCKQc5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 12:32:57 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MVe87-1hZ7DG2kO7-00YvSZ; Mon, 11
- Mar 2019 17:32:53 +0100
-Date:   Mon, 11 Mar 2019 17:32:37 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] mingw: allow building with an MSYS2 runtime v3.x
-In-Reply-To: <xmqqr2bfmt5z.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903111727510.41@tvgsbejvaqbjf.bet>
-References: <pull.160.git.gitgitgadget@gmail.com> <ba1a87e845919804c86a7859abb85ec50125628f.1552060278.git.gitgitgadget@gmail.com> <xmqqr2bfmt5z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727459AbfCKQpP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 12:45:15 -0400
+Received: from mail-oi1-f169.google.com ([209.85.167.169]:33882 "EHLO
+        mail-oi1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726675AbfCKQpP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 12:45:15 -0400
+Received: by mail-oi1-f169.google.com with SMTP id g16so4193525oib.1
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 09:45:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=0tHVHoW0IydrXXKPi3bTTTFAOQE7hJBpdu+X6wNv2k4=;
+        b=GrBjagmnCVQcH1TrpQ2O22aN/GF0R93S0toevtngmxpRPjB7iDCQ3oKfspHqkXcsNz
+         3U1WfwSlDNPSL1KIq0DCG0KyE0YkUfooEedXTWFMLMydJ9gwz6Bl88QptXQU2gylRk/6
+         +Cr21NNvfMdvpJzsyXA4cCeSO5WmilnBRVw0ktuCtcf+6TXwm0g/+XfNesFC4ejAePAR
+         dnsL4ZLaZnuJmATgiAp6S2p4Y1sTzJCe3FttSfVoqA9g1L8Y/90TfOztq24JiEqTpSMv
+         lKsh/k8oMfOAEA6dDLkBpZ++hdTf/sACbGmT6aVam0mP5TR5apAE/1aCu0pkuZCqA1CL
+         Jj/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=0tHVHoW0IydrXXKPi3bTTTFAOQE7hJBpdu+X6wNv2k4=;
+        b=POZ7rnE/4x/YNmWTcxC66HG9aTY8VNpEGiDOdzq4q2qQf9XxgkbPTBA12doc1vvTh0
+         3KKRdy9Wv9qpmsRAlTKYF/x/afahx0j8Qn3I4guwArOW3QwSuPerFlJCCLGquGxbPKzi
+         J8dBvdEr9Z1Vow8L4g9XWDyc6ayk4U2/rooqqfIfiiEyPii8AdgcRJP/ry0HeI3jSg6M
+         LBrw8nm5DRxuhwssfrnazmt6fUDmRvTrFVDikdndgTx2oqoEMfT/xyVv9Ox0Nj/Yvfgk
+         dVbKi8fZPWWcoWhXuW27uUmyJL82SHD6TI6dhWR1iAYIPPsg4Ap2dqOEp12BjZ0BJtkJ
+         BN9Q==
+X-Gm-Message-State: APjAAAUkcoSnZNnAE9KZCzoJfe+6oS9kg5IQ16ZCkBV0mLXACKU1/wzt
+        DViMK8E7ym6IlzgPy37/lQsM1YV2pR78Oz0QSH8fTkQr
+X-Google-Smtp-Source: APXvYqw71tuPckHxi4+GR3sj5SVFVwaaC41Ey/1AirbIWRjOoZcf9UWH0H68s0ghVbdHjbemKntyphs6+BM9jzocQm0=
+X-Received: by 2002:aca:cf93:: with SMTP id f141mr403139oig.130.1552322713927;
+ Mon, 11 Mar 2019 09:45:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:MuXAJVai3rkMkSjdVeJKu5ynYfZ9+nYb7pa4DsoMoyvnhqF+XiY
- nKMEHsRZrV/bhJNrqhhMG4kYmMuSQ5lqWgkm4iZ7WXsW2qqfquPsxorHyBs6NEgEH3vqusb
- Dm1W5BACGXwjzORl2grHFuQGxKifeAvsKxj23Cf0r9H1cXsCpXVtO9X09KXRVXfCgl7W6xT
- EozRQKo6AuoGJKd1vvksg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ub69rAjoxe8=:6I59ZRBk1XKXKvsJpSpmTP
- vonMXEEG/ufu8Fg4LHf8E8Xd0G2MjfREAv3Eq82hNWY260ASQYFtiyJdExYIjYfFPJ0y9Oxng
- 3HMhj1+WYJWqTuPd26RBxrt43EX1Iok/KET4d6I1CHfYIWaxo1TaTm2+v+KOUJhW8Y0Gi/dLf
- ymVMBxG/5VWdVdzvxRLAKcXwbr6/1SmOMBe33dmFArXu+0D6fihatcKqBRN08jt94V9gKHD9d
- BNdiYzkkvDCg6VIjRD6B9HzwLkQgfuXm2gTxDXi8aWBLDcv51/l9pzz0bZWkVQinR74m6VxkJ
- TDO3Q9rtbmqKSHxmsrDbIOdcXdkjvJuEIjFT46Vg91aG8VbHMjPeFaM2tC4Qwu2k14v79PN9Z
- L9HaiMk3TI2493oxUJx6Glq5uBZTKWs1Eg3q+wlkIS7U/sCHGI35aoepZf/TJLpvhuDXSHIrv
- ZVHXWPa+yOQoIFHLBcclqfDRRYcMLI3354BAlyfG9PknNsOllZ8hIKN5o9MW5+Znj9B0lMu87
- OMc5G9sQVOPPh+2aCIn+lQkJR4L+fCexsVnmEZWx4tSDL99+Nje+vqwPOlfjD0Ubt5BoIpWbU
- LS8TMqrxVZoHf/wgnJ94esDm+8LKsHQgKkF0tCdmc2awIrRNmm+onzATIxB9HjbMUJ9ZXn5QS
- g7kaAuHi9VkqmKq3bYs1cBpmnAToQYBlyVAMIw1AEApSphnzAwZmvXWVrbPeQxCOzag5GYYfW
- 6CS9+iiXc4DMqpLYAtLYBLXRjF+Wo1RC/xThE5+dHu7A/Htb0KLFMGM0ZJH8hWbh9SJ5uYgvT
- r4+D5nXVT5peNXoDbe1Fg0lTe4MClzgvkz03Eg+wG9bOme6q96hse0ryXGN0tXYoWfmLPCZEJ
- yYANr5OBLLINV/lzTks9lPqEv+T6I4DE0/aQK4f8/ECDBEm+u13eeoUdzn+T66ZXqmwivH/G8
- EVeTqKUOPnQ==
+References: <20190309154555.33407-1-ttjtftx@gmail.com> <CAP8UFD26Zxt1FvwAajV48eBbhPv_q5oSLTekWxApcNpg=xRn3Q@mail.gmail.com>
+ <CAOAu_Y+GeHHsxVmqLajtM41H67L83Rxxkp3SqJ-G4GBv=uTDYg@mail.gmail.com>
+ <CAP8UFD274-iDkqPm8-WGXbUmcVqjDE7bSg2bwA-17TWJivn0jA@mail.gmail.com> <CAOAu_YL8heWLSznRV8pjLkRZBOEth_7CSmftupx+4+SSx5yztw@mail.gmail.com>
+In-Reply-To: <CAOAu_YL8heWLSznRV8pjLkRZBOEth_7CSmftupx+4+SSx5yztw@mail.gmail.com>
+From:   jonathan chang <ttjtftx@gmail.com>
+Date:   Tue, 12 Mar 2019 00:45:03 +0800
+Message-ID: <CAOAu_YK6G8apWPoFJPCCNizr_O-puHUwtU4CE-0_UgCnTSWkgQ@mail.gmail.com>
+Subject: Fwd: [GSoC][PATCH] tests: avoid using pipes
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Sorry, I forgot to Cc, again.
 
-On Sun, 10 Mar 2019, Junio C Hamano wrote:
+---------- Forwarded message ---------
+From: ttjtftx <ttjtftx@gmail.com>
+Date: Tue, Mar 12, 2019 at 12:32 AM
+Subject: Re: [GSoC][PATCH] tests: avoid using pipes
+To: Christian Couder <christian.couder@gmail.com>
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > So let's invert that test case to test for *anything else* than a
-> > version starting with "1" (for MSys). That should safeguard us for the
-> > future, even if Cygwin ends up releasing versionsl like 314.272.65536.
-> 
-> An obvious alternative is to do "2" -> "[23]" *and* update the else to
-> an explicit check for "1", *and* add an else that fails the build when
-> it sees "4" and other unknown ones.
 
-Right.
-
-> I do not know how compatible MSYS2 runtime v4.x will be with the
-> settings the part inside the ifneq() we see here protects, but you
-> probably do, so I think this would be good enough.
-
-I would expect Cygwin v4.x (which will be the basis for MSYS2 runtime
-v4.x) to be as diligent as Cygwin v3.x in maintaining as much backwards
-compatibility as possible.
-
-Read: I trust "2 or higher" to be the answer.
-
-> The only case that makes any difference is when v4.x _mostly_ satisifies
-> but slightly differs, affecting the built binary in a subtle way that is
-> not discovered right away.  But in such a case, the more cautious "fail
-> on '4' that we do not recognize" will not help much, as the first
-> reaction after seeing the error would be to copy the settings that used
-> to be OK with v2.x and v3.x anyway (which is what is being done
-> here---we start with the assumption that the support needed for v3.x is
-> largely the same as v2.x).
-> 
-> Will queue directly on top of... 'maint'?  'master'?
-> 
-> Let's say 'maint' and merge that up to 'master'.
-
-Thank you.
-
-For the record, the really super ugly hack I plan on implementing to make
-Windows builds pass in our Azure Pipeline is to build the
-git-sdk-64-minimal artifact (which contains all of the stuff needed to
-compile Git for Windows, such as `make`, `gcc`, etc) is to "install" a
-different `uname`: as the MINGW binaries live in `/mingw64/bin/` (unlike
-the MSYS binaries, which live in `/usr/bin/`, like `uname.exe`), I can
-write the following script into `/mingw64/bin/uname`:
-
-	#!/bin/sh
-
-	case "$*" in -r) echo 2.bogus;; *) /usr/bin/uname "$*";; esac
-
-This will be the stop-gap solution for branches that are based on commits
-*without* this here patch.
-
-It's ugly alright, but the only hack I could think of that actually will
-work.
-
-Ciao,
-Dscho
-
-> 
-> Thanks.
-> 
+On Sun, Mar 10, 2019 at 11:05 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Sun, Mar 10, 2019 at 9:28 AM ttjtftx <ttjtftx@gmail.com> wrote:
 > >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  config.mak.uname | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > On Sun, Mar 10, 2019 at 2:06 PM Christian Couder
+> > <christian.couder@gmail.com> wrote:
 > >
-> > diff --git a/config.mak.uname b/config.mak.uname
-> > index c8b0e34c31..0207e895a4 100644
-> > --- a/config.mak.uname
-> > +++ b/config.mak.uname
-> > @@ -569,7 +569,7 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
-> >  	NO_GETTEXT = YesPlease
-> >  	COMPAT_CLFAGS += -D__USE_MINGW_ACCESS
-> >  else
-> > -	ifeq ($(shell expr "$(uname_R)" : '2\.'),2)
-> > +	ifneq ($(shell expr "$(uname_R)" : '1\.'),2)
-> >  		# MSys2
-> >  		prefix = /usr/
-> >  		ifeq (MINGW32,$(MSYSTEM))
-> 
+> > > If you take a look at c6f44e1da5 ("t9813: avoid using pipes",
+> > > 2017-01-04) you can see the following:
+> > >
+> > >     - it changes only one test file: t9813-git-p4-preserve-users.sh
+> > >     - its title starts with "t9813: "
+> > I adapted this format in my second version[1].
+> >
+> > [1]: https://public-inbox.org/git/20190310080739.63984-1-ttjtftx@gmail.com
+>
+> It's better because each patch changes only one file, but I also
+> wanted to say that for a microproject you only need to focus on only
+> one file. So I would you suggest you keep only the patches that are
+> about "t0000-basic.sh" and drop the patches about
+> "t0003-attributes.sh" and "t0022-crlf-rename.sh".
+
+I will do that as I have made too many mistakes. I decided to do more
+than one file because
+I thought it might be too small even for a microproject and that there
+would be more chances
+for feedback if I include more files, since the same file tend to have
+similar conversions needed.
+
+> It's also a small nit but your patches start with "t0000-basic: " not
+> just "t0000: " though the latter format is more frequent in existing
+> commits than the former.
+
+Got it.
