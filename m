@@ -2,129 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E08A120248
-	for <e@80x24.org>; Mon, 11 Mar 2019 10:40:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4C5720248
+	for <e@80x24.org>; Mon, 11 Mar 2019 10:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726986AbfCKKkv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 06:40:51 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:40455 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725839AbfCKKkv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 06:40:51 -0400
-Received: by mail-io1-f67.google.com with SMTP id p17so3553944iol.7
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 03:40:50 -0700 (PDT)
+        id S1727216AbfCKKl5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 06:41:57 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38774 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726826AbfCKKl5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 06:41:57 -0400
+Received: by mail-pg1-f193.google.com with SMTP id m2so3716020pgl.5
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 03:41:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc;
-        bh=s7PidRNrP0JLUMFCJSQ/njqQ9MIpCUmFmV6cy/5sZyI=;
-        b=kgqpqc7wJBuIItSCDpQ/0LOKsEsIXYOpNm+dbqROT5U9nECKYUNhiiSK7RinQTHiYy
-         +HCf7XjnZO81OWeRTYyxfwIv0DcuIvvB+a4M4c1nlizDa2OPs9ll24o3sRa56AO+g8xw
-         /5gSZFwzq46iXfpebXPVE4Rikzof+kMdNS4MqUdRdVNKq2onxBcrXejVVMDotl6p4B7q
-         NxvU1PetoBVxjlQVtLBY7bXaZzxxJVPuJsoCGJY7rkZ850b1hJ7+LPhjFi3N39zU1dd4
-         WAC8bIbsFkQ6kxtPwJMP1sokObRhgQnW1ZAiWrn9/VwfuTOaI+3ZrQYNXeoZHu4mTJv9
-         LY7Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9I8WE2UsIbCXtv8zPK7jYPlN8vT3aNVaocUk2CuDUQ0=;
+        b=go6vz3MEILsUkfruhAI7nKQo4W6HLppwIRmDnHudGf2sRNKMxO5HzQqgKFfGFjKIok
+         WAocf3UkbXkskWkoeDaEPcj/Br4bZng0bH//+WYSP5qnrK/F8+CKHL4ggktRw3Kmv/NF
+         xwOa8+ZE8uo0KtYYRde47rjPqb8WExnWaW4Xp1Gw8Q0g5E0mFoQdjSM7gMTNJz7jpg3K
+         ZbHcDwo1W8vSML+o7j2P4ZfoXOBw2/628MkIHTPaDu8z/Kxt3Ck5X5T6hdd0PTeVl6bJ
+         B+PNicWTzFHiWZcscB74zKRlG27y4ZJvIMiihOFjawpEykjQQrme6B3aKHi++sqzpY2p
+         Ag3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc;
-        bh=s7PidRNrP0JLUMFCJSQ/njqQ9MIpCUmFmV6cy/5sZyI=;
-        b=Y6hRm6fyEmmSR2mLFfBSNMSEDYMIQ9VPHiIvKD+NcNnGdifHztYd3ieyxEZ3SRZ3ej
-         TSzc0xODU+o8jmlwBSlLTunRJdgiuIvUVrZGPQoUPQOS4jlB5MAxd7/Pi3oYglwj9AVL
-         yY0npOUEmNVaXruUCqHnIVfSGpv9REDHxNBHaK1HIb8tspmf9ETqkTSgcgUMUl0OHb7L
-         8JaZ1f2O81rHj8p1ciclzU43J2/ctfWc1LF7HF2tRScLECJtwLhiTA/He8RwVo9OUHO8
-         1wzRhBSB95yo0Czav7edCdLcPUsyy34mulokRXrqNcYqQosQh9zdV5NnCRjU9UaeANF+
-         t3aA==
-X-Gm-Message-State: APjAAAVNxcNurf5W3IqtdXfiw2OhG+GMZ1jOl/iFaWWpVZex4TDvRsVv
-        WeNxaGGl+ZQqiVlkZ0hwPakyk8i+7GxbEJPQTFY=
-X-Google-Smtp-Source: APXvYqxTrJKrfW8djLC5E9o3bRS/S8CXsDgH+K9XIAxxNH4AsUyDT4aI9PVqLJDJOLTV1+GkgGysBph3VoLkiIE0ylk=
-X-Received: by 2002:a5d:9806:: with SMTP id a6mr10108481iol.296.1552300850481;
- Mon, 11 Mar 2019 03:40:50 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9I8WE2UsIbCXtv8zPK7jYPlN8vT3aNVaocUk2CuDUQ0=;
+        b=nZ/nZsloQTiVSuP89tCPnUID5U0nlTTzgiCPqj1izjOMhWRTIKUOHJPHbO4kkvXC4N
+         ePwUmOTPqx4sv0Ynw/rSRsMj77TQOxyh41k6kF0NIFvmXL6Um4qpoAfOMQbvADmnrBLt
+         0fgMIsAXZ0VyikrfcvnjGO4GIoswBoVFT0DY+ujw1aKFOXnBvWOJtnUaE9lkofa3XLCZ
+         /Av5+15dwuF58a0Fcu7PQjCu6g9L4MYNWD1I/ixO6OcdRdeV/67Y6nr30aAOXAYVGi+M
+         /sQVpyNL/DRFDCWA6Q9EbFBXVbEMIQEKNxcXMTCb3QrV3keyp/fJbNq/Tq/nDP4Z7gTn
+         FJ0g==
+X-Gm-Message-State: APjAAAXHxR7NKwx9v+uxocvNJMgOlS0G/90/D4d9vosGkiPklTN0Ipzn
+        kVfEL8Zzhu99Bcows/cfab8uCAaJx5pe/kKtdH0=
+X-Google-Smtp-Source: APXvYqxTfZpOkAoXPwjJXlBNkMe0BQ6YCJFQEqRImEW89b9LFo5dLZMwib9SBfbuGdvjk5MH65daQvCT89kN276rV0g=
+X-Received: by 2002:a63:4287:: with SMTP id p129mr11726469pga.84.1552300916572;
+ Mon, 11 Mar 2019 03:41:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
- <20190308174343.GX31362@zaya.teonanacatl.net> <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
- <CAH8yC8kn=EmEm_UPrnpwaofv97S42Se6FC+hWcm0EHCX-4rewQ@mail.gmail.com>
- <xmqq1s3emapy.fsf@gitster-ct.c.googlers.com> <20190311033755.GB7087@sigill.intra.peff.net>
-In-Reply-To: <20190311033755.GB7087@sigill.intra.peff.net>
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 11 Mar 2019 06:40:21 -0400
-Message-ID: <CAH8yC8=9HOAmDE93aXd300kOJSOa0sA8Qv2cNn2M-EO-gqiktw@mail.gmail.com>
-Subject: Re: disabling sha1dc unaligned access, was Re: One failed self test
- on Fedora 29
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
+References: <20190308095752.8574-5-pclouds@gmail.com> <20190309123518.2193053-1-martin.agren@gmail.com>
+ <CACsJy8DdzbcZzny+v=TESeBxaOsvJcmwY0e54xYvh2m+0zzVXw@mail.gmail.com>
+In-Reply-To: <CACsJy8DdzbcZzny+v=TESeBxaOsvJcmwY0e54xYvh2m+0zzVXw@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 11 Mar 2019 11:41:43 +0100
+Message-ID: <CAN0heSo94+noufXERexAqodh3GsTFh=f+W+Hd2_0OL3buNfNKg@mail.gmail.com>
+Subject: Re: [PATCH v3 04/21] git-checkout.txt: fix monospace typeset
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 10, 2019 at 11:37 PM Jeff King <peff@peff.net> wrote:
+On Mon, 11 Mar 2019 at 10:35, Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> On Mon, Mar 11, 2019 at 11:00:25AM +0900, Junio C Hamano wrote:
+> On Sat, Mar 9, 2019 at 7:35 PM Martin =C3=85gren <martin.agren@gmail.com>=
+ wrote:
 >
-> > Jeffrey Walton <noloader@gmail.com> writes:
-> >
-> > > I think this is the patch for sha1dc/sha1.c . It stops using unaligned
-> > > accesses by default, but still honors SHA1DC_FORCE_UNALIGNED_ACCESS
-> > > for those who want it. Folks who want the undefined behavior have to
-> > > do something special.
-> >
-> > Hmph, I somehow thought that folks who want to stick to the
-> > standard printed on paper penalizing what practicaly works well in
-> > the real world would be the one doing extra things.
+> > @@ -285,7 +285,7 @@ Note that this option uses the no overlay mode by d=
+efault (see also
+> The part not shown here is
 >
-> Unfortunately, I don't think sha1dc currently supports #defines in that
-> direction. The only logic is "if we are on intel, do unaligned loads"
-> and "even if we are not on intel, do it anyway". There is no "even if we
-> are on intel, do not do unaligned loads".
+>     Using `--recurse-submodules` will update the content of all initializ=
+ed
+>     submodules according to the commit recorded in the superproject. If
+>     local modifications in a submodule would be overwritten the checkout
 >
-> I think you'd need something like this:
+> and the --recurse-submodules is rendered incorrectly (not with
+> monospace font, and the quotes remain) because...
 >
-> diff --git a/Makefile b/Makefile
-> index 148668368b..705c54dcd8 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1194,6 +1194,7 @@ BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
->  BASIC_CFLAGS += -fno-omit-frame-pointer
->  ifneq ($(filter undefined,$(SANITIZERS)),)
->  BASIC_CFLAGS += -DNO_UNALIGNED_LOADS
-> +BASIC_CFLAGS += -DSHA1DC_DISALLOW_UNALIGNED_ACCESS
->  endif
->  ifneq ($(filter leak,$(SANITIZERS)),)
->  BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
-> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-> index df0630bc6d..0bdf80d778 100644
-> --- a/sha1dc/sha1.c
-> +++ b/sha1dc/sha1.c
-> @@ -124,9 +124,11 @@
->  #endif
->  /*ENDIANNESS SELECTION*/
+> >         will fail unless `-f` is used. If nothing (or `--no-recurse-sub=
+modules`)
+> >         is used, the work trees of submodules will not be updated.
+> >         Just like linkgit:git-submodule[1], this will detach the
+> > -       submodules HEAD.
+> > +       submodules' `HEAD`.
 >
-> +#ifndef SHA1DC_DISALLOW_UNALIGNED_ACCESS
->  #if defined(SHA1DC_FORCE_UNALIGNED_ACCESS) || defined(SHA1DC_ON_INTEL_LIKE_PROCESSOR)
->  #define SHA1DC_ALLOW_UNALIGNED_ACCESS
->  #endif /*UNALIGNMENT DETECTION*/
-> +#endif
->
->
->  #define rotate_right(x,n) (((x)>>(n))|((x)<<(32-(n))))
->
-> but of course we cannot touch sha1dc/*, because we might actually be
-> using the submodule copy instead. And AFAIK there is no good way to
-> modify the submodule-provided content as part of the build. Why do we
-> even have the submodule again? ;P
->
-> I guess the same would be true for DC_SHA1_EXTERNAL, too, though.
->
-> So anyway, I think this needs a patch to the upstream sha1dc project.
+> ...of this apostrophe, it seems, on both man and html versions. This
+> is with asciidoc 8.6.9.
 
-https://github.com/cr-marcstevens/sha1collisiondetection/issues/47
+Oh wow, nicely debugged. Yeah, I see this with 8.6.10, but not with
+Asciidoctor (1.5.5).
 
-Jeff
+> Martin, could you check if your asciidoc (or asciidoctor) behaves the
+> same? If it's not just my buggy asciidoc version, I can turn this to
+> "wil detach `HEAD` of the submodule" which should fix the problem.
+
+Sounds good.
+
+Martin
