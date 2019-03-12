@@ -2,87 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PLING_QUERY,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5C9320248
-	for <e@80x24.org>; Tue, 12 Mar 2019 18:24:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A41F220248
+	for <e@80x24.org>; Tue, 12 Mar 2019 19:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726996AbfCLSYu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 14:24:50 -0400
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:37217 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726426AbfCLSYu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 14:24:50 -0400
-Received: by mail-vs1-f68.google.com with SMTP id y19so2220035vsc.4
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 11:24:49 -0700 (PDT)
+        id S1727053AbfCLTXW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 15:23:22 -0400
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:38351 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726685AbfCLTXW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 15:23:22 -0400
+Received: by mail-ua1-f66.google.com with SMTP id d4so1198086uap.5
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 12:23:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=StkD33izGddnQ8yd5+eEnDC+cvfEzR0cEZ6VR8i6JFc=;
-        b=WiRM2zaTc5f5zB8mj6GkQ2Dwg4MLNbagxKwb9u1GR7mJNBglgoHO5Iv43WgpBJZ/s7
-         AF8I6ZluFZrErrXvV8M3YUYWlx2ZpWRMp7TP5IQYP4ThFwLp2fAOn9gtZbP0kXsgz+YE
-         9LWzEvHjqCl7izS/6W56rO67VHcCDoaRexWnAVAQFw1bGu4A/xoawMOFp/DDqP/mVoDD
-         K3sNT4Z8MvmnIZywpSLFlzLe/pjFYXGDLc3zshVVGcy3kjet0QxYD5qr2D8DsPK6RoZq
-         I/98Cf/9iNr3LoanVJQFKxlGZedTPnbXc9OqJV51jjlRxeEjNYybVqfZwt6jGpuoRbwp
-         4Erg==
+        bh=TINCbcjI2bzAgsTD0F744QzMGZpF5ZeHeAC0Tel949w=;
+        b=oorwZ4TPI9bLpPcmt6Qm46eJbdtT0dcSR2a9WExrGekPjsHFzPIqW0AAaeUdOiQhMx
+         rcz4b0oVCJ31yquGDXlpl9dgyyfFbxVQfPz03A/V4uHteB/DU3PZpri3xLA35D+VcH0E
+         3NDS0KtEygEX18sx7aJ3P5+0VzZk97xEmx8O2fhwMnc7tIf7naF/aS4NS/gUcM+npMTX
+         NR23WIa6EbJn3TL4rs65ej4YUA6XKcjQC5tD2ARLnnA7lLNWo7U0FJRZM7b94QGILwPp
+         tJPG/O0ljUxYJ6ZxI03LeeNFb1/2UO+C773TvJJxowXqaT65jME0aGZ7ETFixltUjDOl
+         NuYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=StkD33izGddnQ8yd5+eEnDC+cvfEzR0cEZ6VR8i6JFc=;
-        b=Dmw0kARDERxDv+4px5lhARFow31ccyJu+o9JcZmSK6cGlA81JzQ1+dL9E7LESYrCiE
-         Mt+6qjEQdY8G5J9EOKutqsP01RTF3TvehGhUCG1W+cg2n+OD57Gb8xFaiLgugr/25/HA
-         jnDCxpbzzyEqDpnnUn2FJNKYHJJ27ajPT2qiYIIP1hJ+5y2DevJXoLE6GZQ5R/9jAogF
-         UKYah0ox1pxGA7XHgJF0P7TbVLfxUEsnIBczUNaDc4CLNhzWWyxlNjLUuYRwFquLJGt7
-         pD3kSjQ0ELMB1Tjj+WgyZU7/dX8uDp3eSVYpn/7fwMKKoCL8wdymE1KOCpI/rF9eUYGI
-         KHOg==
-X-Gm-Message-State: APjAAAWQStX1t4JqIOhZjD16f4nYNcNFpRy/V+doiPN4e6XA8zKAZN4I
-        eG1jv/eTt64GoQMV1d4YdeAZNnnGI2dC4TqYaTlFxQ==
-X-Google-Smtp-Source: APXvYqwCcSZYlzitvRn0HXnRY10HwixAgOq6tz0eiOa/6qUJGnUCagDQ6uiA2jPGI3v6jRvOgM3c9OeuIY0UAamSzhc=
-X-Received: by 2002:a67:fa46:: with SMTP id j6mr21025389vsq.117.1552415089253;
- Tue, 12 Mar 2019 11:24:49 -0700 (PDT)
+        bh=TINCbcjI2bzAgsTD0F744QzMGZpF5ZeHeAC0Tel949w=;
+        b=CbzJ66KlqnlG/ctbMzeLAtsY/pLv+Dwj6UVxjo97aio1viYXjXW4RHluG5jccwPO1U
+         4BRCqwGAsStY8ifotjYBr4cW+OXYBrerq2HPVt3AcRNv0TxKtUCFqnBfjsIe4SRq9PyQ
+         ZV+I4lv3VBzaNKbC47CjeZs/ghNzVJd663PVJ+o1h5nwhLSwAyHPSN5fX0O/1Tq7RX+h
+         RifYHCCB1V/8z6UddNphoCiUUFUpIby5FkA7OGbFJIWpOrXxqBX9Q5BsAgwTQSWB1005
+         hObWpFPyYbcVRkFNzzmnCtMtc8IFNPoFvCUVYV4uSeWnV+UiyKBg9j91GAwMuq+3aXzn
+         dRyw==
+X-Gm-Message-State: APjAAAXj/AVUWGHr4EtnUpX25wuigP31DS3iI+Jga5qJ1kBP0cx2ECpo
+        TYZ9u3msRNTo+atZDnS5LdxUgAVf7MOQ9012SLQ=
+X-Google-Smtp-Source: APXvYqyd9PhtWxH6PtQIGc8ou+sgJ10NLq+zbjr5dHKD86l0FeCJDLPrkATXtfPurf82Rw7Jg8X9VfniTuoMr0t8izE=
+X-Received: by 2002:a9f:3205:: with SMTP id x5mr19800826uad.104.1552418600786;
+ Tue, 12 Mar 2019 12:23:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <alpine.LFD.2.21.1903121317020.16391@localhost.localdomain>
- <20190312181428.GA6993@alpha> <alpine.LFD.2.21.1903121419070.18042@localhost.localdomain>
-In-Reply-To: <alpine.LFD.2.21.1903121419070.18042@localhost.localdomain>
+References: <87k1h55bx0.fsf@sergiodj.net> <CACsJy8ANLkz=3cj1dAuHdUCkrgQzos=90EEG0n901o3QAp3PUQ@mail.gmail.com>
+ <877ed459eh.fsf@sergiodj.net>
+In-Reply-To: <877ed459eh.fsf@sergiodj.net>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 12 Mar 2019 11:24:38 -0700
-Message-ID: <CABPp-BHV9+7+3si8NOA0ouYZ_Zyo5yMqMbSggwoYmRLK-kB_dA@mail.gmail.com>
-Subject: Re: why does "git revert" commit even if i try to bail with ":q!"?
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Kevin Daudt <me@ikke.info>, Git Mailing list <git@vger.kernel.org>
+Date:   Tue, 12 Mar 2019 12:23:09 -0700
+Message-ID: <CABPp-BFnxhiXfvZUZndD-_htMEw0bZzrLRFpAF9u5YV3wi6qnA@mail.gmail.com>
+Subject: Re: Possible race condition with git-rebase + .git/index.lock
+To:     Sergio Durigan Junior <sergiodj@sergiodj.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 12, 2019 at 11:21 AM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+On Tue, Mar 12, 2019 at 9:48 AM Sergio Durigan Junior
+<sergiodj@sergiodj.net> wrote:
+> On Tuesday, March 12 2019, Duy Nguyen wrote:
 >
-> On Tue, 12 Mar 2019, Kevin Daudt wrote:
->
-> ... snip ...
->
-> > The only reason why `:q!` works just for comitting is because there
-> > is no default message, so the final message ends up empty.
+> > On Tue, Mar 12, 2019 at 5:18 AM Sergio Durigan Junior
+> > <sergiodj@sergiodj.net> wrote:
+> >> This works without problems most of the time (well, usually there are
+> >> conflicts and all, but that's a burden I have to carry).  However,
+> >> sometimes I notice that git fails with:
+> >>
+> >>   # git rebase origin/master
+> >>   ...
+> >>   Applying: commitX
+> >>   Applying: commitY
+> >>   Applying: commitZ
+> >>   fatal: Unable to create '/home/xyz/dir1/dir2/.git/index.lock': File exists.
+> >>
+> >> The first thing I did was to check whether the index.lock file existed,
+> >> but it doesn't.
 > >
-> > When you do things like git revert or git commit --amend, there is
-> > already a commit message, which you are then editing. When you quit
-> > without saving, the existing message remains and git uses that.
-> >
-> > vim has a command to let it exit with an error return code: `:cq`.
-> > This makes git something went wrong with editing the message,
-> > causing git to abort the commit.
+> > Is the output this clean? What I'm looking for is signs of automatic
+> > garbage collection kicking in the middle of the rebase. Something like
+> > "Auto packing the repository blah blah for optimum performance".
 >
->   ah, i'm starting to get it. predictably, i think this needs to be
-> mentioned in a man page. :-) thanks muchly for clearing that up.
+> Yeah, this is the exact output.  I also thought about "git gc", but I
+> don't see any output related to it.  Is it possible that it's being
+> executed in the background and not printing anything?
 
-If you do fix up some manpage, note that this affects e.g. commit
---amend too as pointed out by Kevin (and maybe also the 'reword'
-option of git-rebase?) -- anything that starts with .git/COMMIT_MSG
-being non-empty.
+Any chance you have a cronjob or other task execution mechanism that
+is running git commands in various directories (even simple commands
+like 'git status' since it's not read-only contrary to what some
+expect, or 'git fetch' which might trigger a background gc)?
