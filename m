@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABE942032D
-	for <e@80x24.org>; Tue, 12 Mar 2019 13:30:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 480BE20377
+	for <e@80x24.org>; Tue, 12 Mar 2019 13:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726671AbfCLNaU (ORCPT <rfc822;e@80x24.org>);
+        id S1726657AbfCLNaU (ORCPT <rfc822;e@80x24.org>);
         Tue, 12 Mar 2019 09:30:20 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:32862 "EHLO
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:43092 "EHLO
         mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725774AbfCLNaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 09:30:19 -0400
-Received: by mail-ed1-f65.google.com with SMTP id d12so2320124edp.0
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 06:30:17 -0700 (PDT)
+        with ESMTP id S1726280AbfCLNaS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 09:30:18 -0400
+Received: by mail-ed1-f65.google.com with SMTP id m35so2264910ede.10
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 06:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UTtyVVmechrkSs9dBFE04OBtxYGIF4H9ahHN5WolIZE=;
-        b=KbwD06oV4/VZ0i6e00lbACxYFoVkXAnTr//qCN4e4ziU6LKZ0RExD5Ezofav2jX0pE
-         VuNOw44ukM+wX+IBfw90IBUlhfxlqS0Ip3P8dWAKlHgCq0ZPMOecW5Wgk2YXYUD4igVx
-         3jrquHwUWW+rzWhk6AIAb0tXmxehn4uliJL9Ir5f+CkdZaLNFwr86qQYQLKmEGRYPC3/
-         oy+3R4i81hsY23kekJxYBERk6I8N3B87mzS7gTc/xo7sOd1Sa8e7+XwSLUV253Vkyy5S
-         tL6sq2qL0XsUPqyRCXQv8Eux5yHgAxgfyPQ2enI7eH6XBpmeDZxmygoG1L0yshAPE7Z9
-         vVUA==
+        bh=Hw5FkOkjpdxozIvis1yT3kMadFYOiBoUwesRa2Fd4lE=;
+        b=RblRkCXnOrSX/7necRtOgSecCnngBuEE6QeU2lDPAzxXsUeYrUub9eg1AQIhghF+to
+         NTPXBPH+DSNNJxkRbP1BW1dcU5dZUygxTaftZXq0y0Lq7UE93dJXe6vETDOOlXVF2QaI
+         xsj5qdynnTisELzGk9ttxg5AUUmgdFBfQohmbpqwuzMHVIyDG0yuysDSKI6cwBTfIivC
+         Y0yQtEGvmryWM2n9wK63yQqag7JySP3eTWIPnyZEV8bwoaSCwSRasi26bHDG02nEgE1l
+         v9DcuWozhwHTmZlqsr56/bPc7eHhSO/Nct0CafV0UBlFADINK4dFndKn+/OLqTUPnfp8
+         nJSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UTtyVVmechrkSs9dBFE04OBtxYGIF4H9ahHN5WolIZE=;
-        b=adco32IaRVHEScVSKs0OJe4IU3FDFeJ7/WFiitevH0EW7TNDaUvHZemcCtDPaDoycB
-         CCsR7lIlDzMwB3BZw0VPyu8pK++wFxGnh0GsCcMvd+QIUzR9GicTxVHvJpL7gdK3I5Vu
-         kLWENH3iRHNhTPIswKiHRp7Zn9Of11iBhgSkqXA3y/oK4/xG2Im7+ag9umW5QpY35hWf
-         /7cYLa+Ih8l8BsH3f7ICdZPPSm04Yfu32kGqHdn48TO57ItvFFDvwp5kIMqU5J+U29o3
-         VHftwY1HimCcEMWqXnicVhqaeGppvYMj0DUgyFx1AWfOJ6DrDM//A4mhMYqLxVWwgn5h
-         ixLA==
-X-Gm-Message-State: APjAAAX81YKcMfqkW3EOSIiM6vzMVtdeqPh0ktieampSJFIwxcg+nVV5
-        /yrlcyu11oHpRbdMQ0C0AQ4UqeCa
-X-Google-Smtp-Source: APXvYqwU3z76EXwai7orW+D09QNGyk6hVByqeNYWDin3iMxKgiOzVsrCvweDdA2wwF2CJ9N2tuE0ZA==
-X-Received: by 2002:a17:906:1942:: with SMTP id b2mr26132376eje.5.1552397416649;
-        Tue, 12 Mar 2019 06:30:16 -0700 (PDT)
+        bh=Hw5FkOkjpdxozIvis1yT3kMadFYOiBoUwesRa2Fd4lE=;
+        b=aEeOQWNUvayfuN4y53/QlZmByvcSJOUcP4X9bl21EOhSrQAXCAe0BIRtBsYEjvFB6d
+         aeO2tVgZQ87WLPSMX70REs3Hm17jt6g7Ms8agfn8DKzMISCJ0F+6JhRSVvuD98S7AUXt
+         0yeEPGckJjvEUq+7m6MNfUFvcLAC7HkVphB0qpQJh3TvwrhXqznUdQVbZHoFI3eM9pQl
+         0L4pMckepw5r6FjgyVbI/diYRpdEZsYPQwAk58ZO/ORn7dSJERFSs271kT2nZ0eVwii+
+         PCLyEgbrOP156sv0PWeSSLk14WhsSQ5LaDyhuejpX3yGRi+VQlA19ASpXVyY9ewTq3Gj
+         O4XQ==
+X-Gm-Message-State: APjAAAV2TnvVAHW3VfTQUgDccR651kAEs5uhh4nEEmupgs4MR4+7fZUb
+        m0d8eNxefET2IOxEmRZtyTJTzybK
+X-Google-Smtp-Source: APXvYqxlumMJhKRkaDban5GLnDdAGGWz0k1pK+kyryMlAcRxGoE5N3GsFHzs77D/XIRVvgoUOwu9cg==
+X-Received: by 2002:aa7:dd8b:: with SMTP id g11mr3462187edv.75.1552397415641;
+        Tue, 12 Mar 2019 06:30:15 -0700 (PDT)
 Received: from ubuntu-N750HU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id h8sm5875213edk.21.2019.03.12.06.30.15
+        by smtp.gmail.com with ESMTPSA id h8sm5875213edk.21.2019.03.12.06.30.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Tue, 12 Mar 2019 06:30:15 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Beat Bolli <dev+git@drbeat.li>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 03/11] promisor-remote: implement promisor_remote_get_direct()
-Date:   Tue, 12 Mar 2019 14:29:51 +0100
-Message-Id: <20190312132959.11764-4-chriscool@tuxfamily.org>
+Subject: [PATCH v3 02/11] Add initial support for many promisor remotes
+Date:   Tue, 12 Mar 2019 14:29:50 +0100
+Message-Id: <20190312132959.11764-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.21.0.166.gb5e4dbcfd3
 In-Reply-To: <20190312132959.11764-1-chriscool@tuxfamily.org>
 References: <20190312132959.11764-1-chriscool@tuxfamily.org>
@@ -81,58 +81,163 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Christian Couder <christian.couder@gmail.com>
 
-This is implemented for now by calling fetch_objects(). It fetches
-from all the promisor remotes.
+The promisor-remote.{c,h} files will contain functions to
+manage many promisor remotes.
 
+We expect that there will not be a lot of promisor remotes,
+so it is ok to use a simple linked list to manage them.
+
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- promisor-remote.c | 17 +++++++++++++++++
- promisor-remote.h |  1 +
- 2 files changed, 18 insertions(+)
+ Makefile          |   1 +
+ promisor-remote.c | 100 ++++++++++++++++++++++++++++++++++++++++++++++
+ promisor-remote.h |  17 ++++++++
+ 3 files changed, 118 insertions(+)
+ create mode 100644 promisor-remote.c
+ create mode 100644 promisor-remote.h
 
+diff --git a/Makefile b/Makefile
+index 537493822b..4f24ccb3dc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -972,6 +972,7 @@ LIB_OBJS += preload-index.o
+ LIB_OBJS += pretty.o
+ LIB_OBJS += prio-queue.o
+ LIB_OBJS += progress.o
++LIB_OBJS += promisor-remote.o
+ LIB_OBJS += prompt.o
+ LIB_OBJS += protocol.o
+ LIB_OBJS += quote.o
 diff --git a/promisor-remote.c b/promisor-remote.c
-index d2f574651e..f86f9d0b84 100644
---- a/promisor-remote.c
+new file mode 100644
+index 0000000000..d2f574651e
+--- /dev/null
 +++ b/promisor-remote.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "promisor-remote.h"
- #include "config.h"
-+#include "fetch-object.h"
- 
- static struct promisor_remote *promisors;
- static struct promisor_remote **promisors_tail = &promisors;
-@@ -98,3 +99,19 @@ int has_promisor_remote(void)
- {
- 	return !!promisor_remote_find(NULL);
- }
+@@ -0,0 +1,100 @@
++#include "cache.h"
++#include "promisor-remote.h"
++#include "config.h"
 +
-+int promisor_remote_get_direct(const struct object_id *oids, int oid_nr)
++static struct promisor_remote *promisors;
++static struct promisor_remote **promisors_tail = &promisors;
++
++struct promisor_remote *promisor_remote_new(const char *remote_name)
 +{
 +	struct promisor_remote *o;
 +
-+	promisor_remote_init();
++	o = xcalloc(1, sizeof(*o));
++	o->remote_name = xstrdup(remote_name);
 +
-+	for (o = promisors; o; o = o->next) {
-+		if (fetch_objects(o->remote_name, oids, oid_nr) < 0)
-+			continue;
++	*promisors_tail = o;
++	promisors_tail = &o->next;
++
++	return o;
++}
++
++static struct promisor_remote *promisor_remote_look_up(const char *remote_name,
++						       struct promisor_remote **previous)
++{
++	struct promisor_remote *o, *p;
++
++	for (p = NULL, o = promisors; o; p = o, o = o->next)
++		if (o->remote_name && !strcmp(o->remote_name, remote_name)) {
++			if (previous)
++				*previous = p;
++			return o;
++		}
++
++	return NULL;
++}
++
++static void promisor_remote_move_to_tail(struct promisor_remote *o,
++					 struct promisor_remote *previous)
++{
++	if (previous)
++		previous->next = o->next;
++	else
++		promisors = o->next ? o->next : o;
++	o->next = NULL;
++	*promisors_tail = o;
++	promisors_tail = &o->next;
++}
++
++static int promisor_remote_config(const char *var, const char *value, void *data)
++{
++	struct promisor_remote *o;
++	const char *name;
++	int namelen;
++	const char *subkey;
++
++	if (parse_config_key(var, "remote", &name, &namelen, &subkey) < 0)
++		return 0;
++
++	if (!strcmp(subkey, "promisor")) {
++		char *remote_name;
++
++		if (!git_config_bool(var, value))
++			return 0;
++
++		remote_name = xmemdupz(name, namelen);
++
++		if (!promisor_remote_look_up(remote_name, NULL))
++			promisor_remote_new(remote_name);
++
++		free(remote_name);
 +		return 0;
 +	}
 +
-+	return -1;
++	return 0;
 +}
 +
++static void promisor_remote_init(void)
++{
++	static int initialized;
++
++	if (initialized)
++		return;
++	initialized = 1;
++
++	git_config(promisor_remote_config, NULL);
++}
++
++struct promisor_remote *promisor_remote_find(const char *remote_name)
++{
++	promisor_remote_init();
++
++	if (!remote_name)
++		return promisors;
++
++	return promisor_remote_look_up(remote_name, NULL);
++}
++
++int has_promisor_remote(void)
++{
++	return !!promisor_remote_find(NULL);
++}
 diff --git a/promisor-remote.h b/promisor-remote.h
-index bfbf7c0f21..f9f5825417 100644
---- a/promisor-remote.h
+new file mode 100644
+index 0000000000..bfbf7c0f21
+--- /dev/null
 +++ b/promisor-remote.h
-@@ -13,5 +13,6 @@ struct promisor_remote {
- extern struct promisor_remote *promisor_remote_new(const char *remote_name);
- extern struct promisor_remote *promisor_remote_find(const char *remote_name);
- extern int has_promisor_remote(void);
-+extern int promisor_remote_get_direct(const struct object_id *oids, int oid_nr);
- 
- #endif /* PROMISOR_REMOTE_H */
+@@ -0,0 +1,17 @@
++#ifndef PROMISOR_REMOTE_H
++#define PROMISOR_REMOTE_H
++
++/*
++ * Promisor remote linked list
++ * Its information come from remote.XXX config entries.
++ */
++struct promisor_remote {
++	const char *remote_name;
++	struct promisor_remote *next;
++};
++
++extern struct promisor_remote *promisor_remote_new(const char *remote_name);
++extern struct promisor_remote *promisor_remote_find(const char *remote_name);
++extern int has_promisor_remote(void);
++
++#endif /* PROMISOR_REMOTE_H */
 -- 
 2.21.0.166.gb5e4dbcfd3
 
