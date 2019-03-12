@@ -2,82 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2EED20248
-	for <e@80x24.org>; Tue, 12 Mar 2019 10:28:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 784C820248
+	for <e@80x24.org>; Tue, 12 Mar 2019 10:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726193AbfCLK2m (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 06:28:42 -0400
-Received: from mail-it1-f172.google.com ([209.85.166.172]:53350 "EHLO
-        mail-it1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725873AbfCLK2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 06:28:42 -0400
-Received: by mail-it1-f172.google.com with SMTP id x189so3513390itd.3
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 03:28:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BVt91jXZvaP6yDV99ft8X2OLn8eZzgGnXbObU7e9LlA=;
-        b=sUAzG+JAOpdvCFUyrZsNJoe/VosqqQVcU99slMvfsB35Xee6fXI+6ZExg/y6sPGy90
-         gi6qgpmWkYBv/Xj24pNH1qHdVlU9uxpPjHjDOQ5C1satuAO74Y3a3PPoO32lNUTV3Sgk
-         gb++360HEM4jfiAJSLxZSxhLZogToI9mtXc6HB86EiHWFldO11FkyDHWNpYszFFEg3t2
-         BesEK4ON2KULK3fs0qdt1EzPdiYVnOUb360Aoci9lEKBDTXPNBZ4IARHDKEjm3nKY9Ff
-         JS2hTQRxreSoOtruymDYm7BXmvqMENPNzybYwLKlKBSgv318MadQgKwslKQWQ0uFgzVW
-         Gpyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BVt91jXZvaP6yDV99ft8X2OLn8eZzgGnXbObU7e9LlA=;
-        b=HEpvTuIjnwMKxMsvphiBhclgdifOs0IS4Bcl22Vm2/v8Qjly2zXcFZ+BbMtCzcHcIa
-         8I/5AOwq06hIxhox0/GYbT0t7+Jd6U/iYNx2xR1GLR8bENhe2CMKAObB7hyYhLwh9+lM
-         RLZDT8X6EebgHFOwaW9cRLCubZF6olMNQQGU8gVpPD0LShrl5pSe1RkcD3Vjk7Iyx/iT
-         swouaxtjJCHchjrcWMgFlvUuE7f8UI5Dfvtis9YFr5XvnToHjTuZdkqqFH+x1U+Hxi1r
-         ASpAsbtcXvjDTaW3oTvp5xyr2dlXUCFIuaujucLgAEFBZETVD/TE3fp+sB0vRyilTA00
-         4+3g==
-X-Gm-Message-State: APjAAAWdhMZXJfPYx1HkPGZG5UXnMhmdJtbpgb3w5pebjag38o2v+5G7
-        vpD/sl1twYZMjsoxTXR03K588jnHRhSWHi+GrU9vTg==
-X-Google-Smtp-Source: APXvYqwYm5UmBZf5aK8LNdtuewj68Aj+WNezMv5zuBzF+eaJj1QAIYKcWMgqY8NHW7hsY4CvRq/axfjmFRSnzJsif80=
-X-Received: by 2002:a24:3b0a:: with SMTP id c10mr1405144ita.10.1552386521338;
- Tue, 12 Mar 2019 03:28:41 -0700 (PDT)
+        id S1726109AbfCLKt5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 06:49:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47024 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725811AbfCLKt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 06:49:56 -0400
+Received: (qmail 25580 invoked by uid 109); 12 Mar 2019 10:49:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Mar 2019 10:49:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31283 invoked by uid 111); 12 Mar 2019 10:50:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 12 Mar 2019 06:50:15 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Mar 2019 06:49:54 -0400
+Date:   Tue, 12 Mar 2019 06:49:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] repack: enable bitmaps by default on bare repos
+Message-ID: <20190312104954.GA2023@sigill.intra.peff.net>
+References: <20190214043127.GA19019@sigill.intra.peff.net>
+ <20190214043743.GB19183@sigill.intra.peff.net>
+ <20190309024944.zcbwgvn52jsw2a2e@dcvr>
+ <20190310233956.GB3059@sigill.intra.peff.net>
+ <20190312031303.5tutut7zzvxne5dw@dcvr>
 MIME-Version: 1.0
-References: <87k1h55bx0.fsf@sergiodj.net>
-In-Reply-To: <87k1h55bx0.fsf@sergiodj.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 12 Mar 2019 17:28:15 +0700
-Message-ID: <CACsJy8ANLkz=3cj1dAuHdUCkrgQzos=90EEG0n901o3QAp3PUQ@mail.gmail.com>
-Subject: Re: Possible race condition with git-rebase + .git/index.lock
-To:     Sergio Durigan Junior <sergiodj@sergiodj.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190312031303.5tutut7zzvxne5dw@dcvr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 12, 2019 at 5:18 AM Sergio Durigan Junior
-<sergiodj@sergiodj.net> wrote:
-> This works without problems most of the time (well, usually there are
-> conflicts and all, but that's a burden I have to carry).  However,
-> sometimes I notice that git fails with:
->
->   # git rebase origin/master
->   ...
->   Applying: commitX
->   Applying: commitY
->   Applying: commitZ
->   fatal: Unable to create '/home/xyz/dir1/dir2/.git/index.lock': File exists.
->
-> The first thing I did was to check whether the index.lock file existed,
-> but it doesn't.
+On Tue, Mar 12, 2019 at 03:13:03AM +0000, Eric Wong wrote:
 
-Is the output this clean? What I'm looking for is signs of automatic
-garbage collection kicking in the middle of the rebase. Something like
-"Auto packing the repository blah blah for optimum performance".
--- 
-Duy
+> > I do think they're a net win for people hosting git servers. But if
+> > that's the goal, I think at most you'd want to make bitmaps the default
+> > for bare repos. They're really not much help for normal end-user repos
+> > at this point.
+> 
+> Fair enough, hopefully this can make life easier for admins
+> new to hosting git:
+> 
+> ----------8<---------
+> Subject: [PATCH] repack: enable bitmaps by default on bare repos
+> 
+> A typical use case for bare repos is for serving clones and
+> fetches to clients.  Enable bitmaps by default on bare repos to
+> make it easier for admins to host git repos in a performant way.
+
+OK. I still think of bitmaps as something that might need manual care
+and feeding, but I think that may be leftover superstition. I can't
+offhand think of any real downsides to this.
+
+>  static int delta_base_offset = 1;
+>  static int pack_kept_objects = -1;
+> -static int write_bitmaps;
+> +static int write_bitmaps = -1;
+
+So we'll have "-1" be "not decided yet". Makes sense.
+
+> @@ -343,11 +343,15 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>  	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
+>  		die(_("--keep-unreachable and -A are incompatible"));
+>  
+> +	if (!(pack_everything & ALL_INTO_ONE)) {
+> +		if (write_bitmaps > 0)
+> +			die(_(incremental_bitmap_conflict_error));
+> +	} else if (write_bitmaps < 0) {
+> +		write_bitmaps = is_bare_repository();
+> +	}
+
+Might it be easier here to always resolve "-1" into a 0/1? I.e., like:
+
+  if (write_bitmaps < 0)
+	write_bitmaps = (pack_everything & ALL_INTO_ONE) && is_bare_repository();
+
+and then the rest of the logic can stay the same, and does not need to
+be modified to handle "write_bitmaps < 0"?
+
+> +test_expect_success 'bitmaps are created by default in bare repos' '
+> +	git clone --bare .git bare.git &&
+> +	cd bare.git &&
+
+Please don't "cd" outside of a subshell, since it impacts further tests
+that are added.
+
+> +	mkdir old &&
+> +	mv objects/pack/* old &&
+> +	pack=$(ls old/*.pack) &&
+
+Are we sure we have just done $pack here? Our repo came from a
+local-disk clone, which would have just hard-linked whatever was in the
+source repo. So we're subtly relying on the state that other tests have
+left.
+
+I'm not sure what we're trying to accomplish with this unpacking,
+though. Running "git repack -ad" should generate bitmaps whether the
+objects were already in a single pack or not. So I think this test can
+just be:
+
+  git clone --bare . bare.git &&
+  git -C bare.git repack -ad &&
+  bitmap=$(ls objects/pack/*.bitmap)
+  test_path_is_file "$bitmap"
+
+I do agree with Ævar it might also be worth testing that disabling
+bitmaps explicitly still works. And also that repacking _without_ "-a"
+(i.e., an incremental) does not complain about being unable to generate
+bitmaps.
+
+-Peff
