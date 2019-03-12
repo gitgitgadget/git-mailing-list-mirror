@@ -2,164 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C4F820248
-	for <e@80x24.org>; Tue, 12 Mar 2019 03:58:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8B0E20248
+	for <e@80x24.org>; Tue, 12 Mar 2019 05:51:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726657AbfCLD60 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 23:58:26 -0400
-Received: from mail-it1-f180.google.com ([209.85.166.180]:55843 "EHLO
-        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726008AbfCLD6Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 23:58:25 -0400
-Received: by mail-it1-f180.google.com with SMTP id z131so2201004itf.5
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 20:58:25 -0700 (PDT)
+        id S1726984AbfCLFum (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 01:50:42 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40271 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725855AbfCLFul (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 01:50:41 -0400
+Received: by mail-wr1-f67.google.com with SMTP id t5so61877wri.7
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 22:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=s4SkZTv4A5PbnuXBfzNDxGgp4tvyswLsz2d3UDCbGP8=;
-        b=rCHjDBHtuXS0B7/Yg3NV0nEK6euLMN8d3yyBRODBacnSajiXwfbiynyFB0iWpFDl5e
-         eywMyjmcvGmopx9+NNEMun6o54VwpCH2ifwMa4lRD0QIrM6hEVus3NO8nveidpLdZE9F
-         ujGXXwLeAQo86rjmy3dijwpiN4xGXDiKrJiKXnI6hWZvkMRI/5ddUvbTPxRliG3RXHiY
-         bYcuteBnd4kmhds0LS7gL50klXZyzDf2M94O8gToa1LcOwOnlk786Lwvhj21Aq86xVE+
-         /K4PYcpTQa8+wjjE+APJKqSwPrX2Y+4T/dkBE1WP/cc9in0nuUkTmNXqgSVEMcsw0gD3
-         I6/A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=2pvCxK6L2CxWd3OQgKi0sMYKYqhWWLkivJEfqAf/GPI=;
+        b=jNVsfbuG05CRoglT/p57ZAqvMvrALYWPHrfbAThvIV+TMz94/cdNqs+5vDF7ILTWcK
+         qWTyfwxG67DIwSwdi77323LaXW18i0mC977Ir3kA69c5hyYh3gnuYODbHDmuz1jXUoNZ
+         OpavYBh4jpXf5xzUkSIQy++u6WwEpIDY5CXDzUZYelQuhdfxcp58OHpr2vuUmzFExrBr
+         9eprv1tqBSWxFTH2DXWUfg2vUWoVIaKKH4ydaVKfjm71sxD7iHR7C0BlPSkLRNWrDmRc
+         2J7SGE03BxMA6kJxtEP7UPPxIiAlPamYeIFUdobS0WObcGoeKp6CO385kX46mkeJ3mgQ
+         RN0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=s4SkZTv4A5PbnuXBfzNDxGgp4tvyswLsz2d3UDCbGP8=;
-        b=DH24gz+7aOwfmJV3tM+RkTk+Sd/QIAoyhlFVtuUXh7mDQcNNh6zqH6d5mJJWQ58m/h
-         J9aSYDjszgYBNH12HPttnz+h0cPMw+EXNeXXgSMKgxCks/LKY/mGh+ysqY7ZCh/ma9bV
-         Ca7MsTzdRKm2WBTagXhzOZcr72ag+GVPppXy92MooG3Hmdcu8fVRwFRZ2oaG8pVg5rO+
-         xTuDUU60SPSQ9RP9MIR6BTwNXRxwdUPjjcyUFPQM1uWUTGy002rw7UW+cZJ4sgOMNfaE
-         XAR2snyYe7rVslLczZVMH83DkaIZmOGXBfP+DGTtgp5SPCRAOiHWXVv3NS9GxFqt5z/l
-         DlfA==
-X-Gm-Message-State: APjAAAVbcUlcqbbWgfDNAWcPic5eq0tsCZ+29PZS0wjih3xDMWAxnB8z
-        yvSwK9QCN2xAbG+6FvFXG4jwQTCxR5t+gnHx320u6rRI
-X-Google-Smtp-Source: APXvYqwYsgQniaFZ+bUmuW5ouAuD0imp1CLtsbKSZfxH5jGxoDOWyGhePodC0mW1a/gedfSJwxk6aIJy7IWqtMklk2w=
-X-Received: by 2002:a24:7cc4:: with SMTP id a187mr937319itd.171.1552363104760;
- Mon, 11 Mar 2019 20:58:24 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=2pvCxK6L2CxWd3OQgKi0sMYKYqhWWLkivJEfqAf/GPI=;
+        b=PxLM5aiDOpyXImW5UlvuV3/wH1HewZkA6A9cku2KTOs3GVAEdFb2XvOFX/+CSqqtVL
+         9kpBnvFa7peCIiwU+MZmqxNDHFPi4HszZPWnQiWZOvu5O3MAj1LjD8ZAqzMoUCwLPcdx
+         gsgXG4SWZdU0IGHTvlH1rTduRd+Z+o6nlls/n+VGBNPRfhKvRpHlOnpc2edCZUTMHvLZ
+         8KrI37biWxBGd2SHxiKyAxL2meGzlRGwEp+sxMwN75P4D8HmbL8GUGTchO5HsAbDEVMw
+         GISx4+nWeMvYSUrsi9SJVN792EjjVB4Sj4rxKGaI/Lsdg6Aj2AkQXfOU8+LFtj3itDux
+         LgOw==
+X-Gm-Message-State: APjAAAVkZouyR6OSKznwrzWk3IdyN66oHx8FsjafNERL8EtOAoTT8LAi
+        v5JfR85hRFkTFIJQ1mh0nN1T7J845Yk=
+X-Google-Smtp-Source: APXvYqxIag4sy1gT9Qw19cYsBm3JNUUyYjH6mRjFeV7p2EEFhfe4y3pM+fEcVFjVNUNkyoACkFOjKA==
+X-Received: by 2002:adf:e3ca:: with SMTP id k10mr8762936wrm.277.1552369840039;
+        Mon, 11 Mar 2019 22:50:40 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id h137sm1397050wmg.41.2019.03.11.22.50.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 Mar 2019 22:50:38 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v7 5/8] merge: cleanup messages like commit
+References: <cover.1548219737.git.liu.denton@gmail.com>
+        <cover.1552275703.git.liu.denton@gmail.com>
+        <b2b82954e7060a3f5d47f77e4743493ff4256bd6.1552275703.git.liu.denton@gmail.com>
+        <c151ea74-ed9b-f33c-eb14-03243325eaf7@gmail.com>
+Date:   Tue, 12 Mar 2019 14:50:37 +0900
+In-Reply-To: <c151ea74-ed9b-f33c-eb14-03243325eaf7@gmail.com> (Phillip Wood's
+        message of "Mon, 11 Mar 2019 16:58:23 +0000")
+Message-ID: <xmqqsgvsiqtu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAH8yC8nnFYt0raL+twrG_v8XZn_FDJWyM=tH=QL13Z70_bHRiQ@mail.gmail.com>
- <CAPig+cTCOfDCv=L3EWUqgVZx1VCdqt5ZjmSQMwHLX=R4C4hgTA@mail.gmail.com>
- <CAH8yC8=jtBURyr-mFJSe_cd4zNJfJDt672jZ+izo=z75ZBheug@mail.gmail.com>
- <20190311222805.GA6215@flurp.local> <CAH8yC8kHhhWA+ONv17LdLpvy6ubH3CTvJ6=ehP5MQLi_=n1=bQ@mail.gmail.com>
- <CAH8yC8=PKro1_WW=wJQoVHC88cziJPfgkHh6jNKOUxeFn3KVsQ@mail.gmail.com>
- <CAH8yC8kD3XkYP2o6k3ioCcNB_+wwQ=H2=V03z7Han1K8t2aUsg@mail.gmail.com> <20190312024542.GA7411@flurp.local>
-In-Reply-To: <20190312024542.GA7411@flurp.local>
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 11 Mar 2019 23:57:53 -0400
-Message-ID: <CAH8yC8=gsuknMOAYyjVDyZENDiJoRia+MnwhsMhZdcnfuO=cbw@mail.gmail.com>
-Subject: Re: Solaris and sed: Too many commands, last: s/\n//
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 11, 2019 at 10:45 PM Eric Sunshine <sunshine@sunshineco.com> wr=
-ote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+>> -	if (0 < option_edit)
+>> -		strbuf_commented_addf(&msg, _(merge_editor_comment), comment_line_char);
+>> +	if (0 < option_edit) {
+>> +		strbuf_addch(&msg, '\n');
+>> +		if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
+>> +			wt_status_append_cut_line(&msg);
+>> +		else
+>> +			strbuf_commented_addf(&msg, _(comment_line_explanation), comment_line_char);
+>> +
+>> +		strbuf_commented_addf(&msg, "\n");
+>> +		strbuf_commented_addf(&msg, _(merge_editor_comment));
 >
-> On Mon, Mar 11, 2019 at 10:11:41PM -0400, Jeffrey Walton wrote:
-> > On Mon, Mar 11, 2019 at 9:55 PM Jeffrey Walton <noloader@gmail.com> wro=
-te:
-> > > Oh man, you're using GNU make. I thought Git was using that anemic
-> > > Posix Make. See attached.
-> > >
-> > > I think Solaris provides an older gawk. Is this an easier problem:
-> > >
-> > >     awk: chainlint.sed:88: :squash
-> > >     awk: chainlint.sed:88: ^ syntax error
-> > >     awk: chainlint.sed:91:  s/\\\n//
-> > >     awk: chainlint.sed:91:    ^ backslash not last character on line
-> > >     Usage: awk [POSIX or GNU style options] -f progfile [--] file ...
-> > >     Usage: awk [POSIX or GNU style options] [--] 'program' file ...
-> >
-> > My bad , there was a typo... 'awk' got assigned to SED variable.
-> >
-> > This patch works as expected.
-> >
-> > diff --git a/t/Makefile b/t/Makefile
-> > @@ -11,11 +11,25 @@ SHELL_PATH ?=3D $(SHELL)
-> >  TAR ?=3D $(TAR)
-> > +AWK ?=3D $(AWK)
-> > +SED ?=3D $(SED)
-> > +GREP ?=3D $(GREP)
-> >
-> > +# Fix Solaris tools. These are Posix. GNU tools located at /usr/gnu/bi=
-n.
-> > +ifneq ($(wildcard /usr/gnu/bin/grep),)
-> > +  GREP :=3D /usr/gnu/bin/grep
-> > +endif
-> > +ifneq ($(wildcard /usr/gnu/bin/sed),)
-> > +  SED :=3D /usr/gnu/bin/sed
-> > +endif
-> > +ifneq ($(wildcard /usr/gnu/bin/awk),)
-> > +  SED :=3D /usr/gnu/bin/awk
-> > +endif
+> I think this has rearranged the message presented to the user so it
+> now reads
 >
-> I think the last assignment ought to be "AWK :=3D ...".
+> Lines starting with '#' will be ignored.
+> Please enter a commit message to explain why this merge is necessary,
+> especially if it merges an updated upstream into a topic branch.
 >
-> Anyhow, this sort of platform-specific tool customization is typically do=
-ne by config.mak.uname in the top-level Git directory. In fact, there's alr=
-eady a section for SunOS:
+> An empty message aborts the commit.
 >
->     ifeq ($(uname_S),SunOS)
->         ...
->         SANE_TOOL_PATH =3D /usr/xpg6/bin:/usr/xpg4/bin
->         ...
+> To me it read better before, it would be a little more work but I
+> think it would be worth preserving the message (especially as this is
+> the message people will see unless they specify --cleanup=scissors)
+
+That may be subjective, but unless the new message is vastly and
+uncontroversially better (which I do not think it is, with your
+objection), I agree that we should avoid churning the message.
+
+>> @@ -168,6 +169,9 @@ static struct option pull_options[] = {
+>>   	OPT_PASSTHRU(0, "edit", &opt_edit, NULL,
+>>   		N_("edit message before committing"),
+>>   		PARSE_OPT_NOARG),
+>> +	OPT_PASSTHRU(0, "cleanup", &opt_cleanup, NULL,
+>> +		N_("how to strip spaces and #comments from message"),
+>> +		PARSE_OPT_NOARG),
 >
-> Prepending /usr/gnu/bin to SANE_TOOL_PATH might be a good idea as a first=
- step toward fixing the problem you're seeing on Solaris, however, as =C4=
-=86var mentioned in [1], SANE_TOOL_PATH isn't presently consulted when runn=
-ing tests. But, as he suggested, fixing the tests to respect SANE_TOOL_PATH=
- might be a good solution overall.
->
-> So, rather than making platform-specific customizations to t/Makefile, an=
- arguably better solution would be to update config.mak.uname to add /usr/g=
-nu/bin to SANE_TOOL_PATH and then update the test system to respect that va=
-lue (thus, these GREP, SED, AWK specializations can be avoided).
+> cleanup needs to take an argument so PARSE_OPT_NOARG does not look
+> right. Also I think it would be bettor from the user's point of view
+> if the value of the argument was checked by pull before it does any
+> work rather otherwise if they pass in invalid value pull mostly runs
+> and then merge errors out at the end.
 
-I may have been blowing away SANE_BUILD_PATH.
-
-My build script calls:
-
-   SANE_BUILD_PATH=3D"<my updated tool path> \
-   PKG_CONFIG_PATH=3D"..." \
-   ... \
-./configure \
-    --prefix=3D<my new tool location> \
-    --libdir=3D"..." \
-    ...
-
-I set SANE_BUILD_PATH in the environment because I want Git to use the
-new tools being built for testing.
-
-Or, if Git is blowing away my SANE_BUILD_PATH , then that might
-explain the encoding failures. The updated tools, like new iConv and
-Unistring, are not on PATH. The updated tools are located at
-/var/sanitize/bin, and are passed through SANE_BUILD_PATH .
-
-This might also explain the intermittent crashes I see. Old tools from
-/usr/bin are used, but new libraries from /var/sanitize/lib are used
-because of LD_LIBRARY_PATH. Gotta love those fucking path problems
-that have plagued Linux for the last 30 years. The idiot who figured
-it was a good idea to compile and link against one library, and then
-load the wrong library at runtime, should get a platinum Darwin award.
-
-It may be better to set SANE_TOOL_PATH something like:
-
-    SANE_TOOL_PATH =3D "$SANE_TOOL_PATH:/usr/xpg6/bin:/usr/xpg4/bin"
-
-Jeff
+Both good points.
