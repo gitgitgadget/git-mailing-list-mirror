@@ -2,110 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PLING_QUERY,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB06620248
-	for <e@80x24.org>; Tue, 12 Mar 2019 17:22:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CCB320248
+	for <e@80x24.org>; Tue, 12 Mar 2019 17:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729324AbfCLRW6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 13:22:58 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:45112 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728966AbfCLRW4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 13:22:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=IjxUT/ht9YWrf51/vZZEGDL/8EANxHGbXwM/H5+HJgA=; b=lgD/gEbBBa870DQ2fcvRSpNd/T
-        N45iKkV6fmbVP912ses6u7drQ7l0t5u7+ti3h6O3rAsYf/5RagAi1mVvDI8AF5ArjBCd5tS7teBHt
-        EgWJU1SSZZrca4FokKxHuKSBf+J+I5rWRkFRDVqiP2+XzP/rMCAs1o6qTSAdgPp7/4s4XJ1MKL54S
-        nVmTBESPYMAhJ70WxCWOzFETmI0sn9P/4XmV3lbMuNB7mGFtiicSqAQd/OWQ9fYycbD9Ej/RO0mt+
-        Zh7zNUH/O8/l3Xvri9Nmm+I8IL6jagnNaREcXyGQ9eV0cLRELuvZbszz0He+WAH7Ng+xFokjU7/Nw
-        P8sX4bCQ==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:56626 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1h3l77-00BPhU-0Z
-        for git@vger.kernel.org; Tue, 12 Mar 2019 13:22:54 -0400
-Date:   Tue, 12 Mar 2019 13:22:51 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: why does "git revert" commit even if i try to bail with ":q!"?
-Message-ID: <alpine.LFD.2.21.1903121317020.16391@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1728755AbfCLRYS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 13:24:18 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:49177 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729807AbfCLRYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 13:24:12 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 44JhfJ6tb2z1r93G;
+        Tue, 12 Mar 2019 18:24:08 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 44JhfJ63nwz1qrvg;
+        Tue, 12 Mar 2019 18:24:08 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id KDtkXb9z2JOn; Tue, 12 Mar 2019 18:24:07 +0100 (CET)
+X-Auth-Info: 9l7ZXhmuoxTCZW1qVvn28ENjMzcH+GG33w1/846oUzcaDZQRbIQcMnQ+m3RlTfP9
+Received: from igel.home (ppp-46-244-168-24.dynamic.mnet-online.de [46.244.168.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Tue, 12 Mar 2019 18:24:07 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+        id 323CD2C1EE9; Tue, 12 Mar 2019 18:24:07 +0100 (CET)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.org>,
+        Elijah Newren <newren@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        vincent.guittot@linaro.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Deprecating git diff ..; dealing with other ranges
+References: <20190311093751.GA31092@archbookpro.localdomain>
+        <xmqqmum0h88n.fsf@gitster-ct.c.googlers.com>
+X-Yow:  This is my WILLIAM BENDIX memorial CORNER where I worship William
+ Bendix like a GOD!!
+Date:   Tue, 12 Mar 2019 18:24:07 +0100
+In-Reply-To: <xmqqmum0h88n.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 12 Mar 2019 16:17:28 +0900")
+Message-ID: <87va0orop4.fsf@igel.home>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.92 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=0.1
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mär 12 2019, Junio C Hamano <gitster@pobox.com> wrote:
 
-  never noticed this before ... when i do a regular "git commit" and
-enter my "vi" edit session and change my mind, i can bail with ":q!",
-regardless of what i've set up as a commit message, and i'll see:
+> I however think it may be worth making sure that our docs do not
+> encourage "diff A..B" and teach "diff A B" when comparing two
+> endpoints.  That can be done without changing anything in the code.
 
-  Aborting commit due to empty commit message.
+The nice thing about "diff A..B" is that you can c&p the output from the
+fetch run without the need to edit it.
 
-however, i was just playing with "git revert" and, after i ran:
-
-  $ git revert <commit SHA>
-
-i was dumped into another vi edit session:
-
-Revert "HTTP->HTTPS"
-
-This reverts commit 2965b41fd84a1a76f56984ecdf6c123d1992730f.
-
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-#
-# On branch master
-# Your branch is up to date with 'rpjday/master'.
-#
-# Changes to be committed:
-#       modified:   book/01-introduction/sections/installing.asc
-#
-
-  again, simulating that i changed my mind, i just typed ":q!", but
-the revert went ahead, anyway. i tried again, this time completely
-deleting all the lines from the commit msg (as the template
-suggested), but the revert *still* completed after typing ":q!".
-
-  it was only after deleting all the lines and using ":wq" that the
-revert was cancelled:
-
-  Aborting commit due to empty commit message.
-
-that seems ... inconsistent. am i misunderstanding something?
-
-rday
+Andreas.
 
 -- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
