@@ -2,101 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3A0720248
-	for <e@80x24.org>; Tue, 12 Mar 2019 14:38:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFF0020248
+	for <e@80x24.org>; Tue, 12 Mar 2019 15:37:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726733AbfCLOiJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 10:38:09 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38988 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725895AbfCLOiJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 10:38:09 -0400
-Received: by mail-wr1-f66.google.com with SMTP id p8so2979004wrq.6
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 07:38:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:subject:to:cc:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=ivAnS04KBwaUVzlsXvc1KBrAw4/5S2rY11aCi18YJmg=;
-        b=tNZkW3sGNsgpWvARqgX8IQO4U1COV0UbI2fYlwXsB4rtlpPjfW1RPoZauPiVaBaBqb
-         KSBsoWRvTVAS38AI1y6PkekZhAxMK6jwrJNcVtCWBN0a+wH+kIS9SIRUR5oq/07C+U+g
-         2r5lkwgeo/Kv+YYHyEWUqFZ9OWyIhPbAz3Tah/3EtB0zvkA7i7HX4ZpOORdIA7f7YI0L
-         yX13Go014tRJNLzRwNg6AUKXZ4Z1malGhCwtI6cIkNSsS6f9rTtJpViz3TEskgvs8IpT
-         CBuD3g86QX9o9QunzBD72STVpke/ZuSSW1S2pRYdXbCNufpaGxQrWRTvxjKhyD0zcEuB
-         BTNA==
+        id S1726757AbfCLPhG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 11:37:06 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46022 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726749AbfCLPhD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 11:37:03 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h99so2203500wrh.12
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 08:37:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=ivAnS04KBwaUVzlsXvc1KBrAw4/5S2rY11aCi18YJmg=;
-        b=jiU0lEChJYHdB55WZxdBxhLYlYl3cIiTOaaJZp975hMpRgKBZTAOv0udvbvh2dsvyS
-         FG1iYtRz4YT/FkPHsrhE7z7icjsY4z3ZfX0kzBk2Pzm9OjELcTFaunMyfyZQHVOXzm4o
-         8/0p/ZcpPZ7cGJXWKAdBVY+F0YLaFzBOpJW0lTo5PIaSAGMoWnIVXTIN8dQZDyo7flu6
-         0Hi3iKKDPEGwy8uzTEj86H71RRku+VCOLJGoc0ek7QWJQnlSB9CW3EGvcZ6kYdB3QAtE
-         3fzvzV3/McGjuAtYwN+AM7VmW1HiDg5wJmhli3KCwr05n4Ipi4pVH2yc2inHtD57lLYa
-         1ndw==
-X-Gm-Message-State: APjAAAWJnEdy3Tm/RrrvcbAXHLlG5oNLDpglBRCBoC5GDQpwnh3+XBX5
-        jEj2huTKro/mC9Ba6tg4Bnk=
-X-Google-Smtp-Source: APXvYqwejdfYt+8SE10HSRn1CycwzvijfyEfhUtWkz5m6rTy2uW7MF35UHXmfMPgUkuPB53JltY02g==
-X-Received: by 2002:a5d:4e87:: with SMTP id e7mr9194947wru.175.1552401487107;
-        Tue, 12 Mar 2019 07:38:07 -0700 (PDT)
-Received: from [192.168.221.164] ([185.79.217.61])
-        by smtp.gmail.com with ESMTPSA id x6sm5442463wmg.0.2019.03.12.07.38.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Mar 2019 07:38:06 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Subject: [PATCH] t4150: remove unused variable
-To:     git@vger.kernel.org
-Cc:     phillip.wood@dunelm.org.uk, s-beyer@gmx.net,
-        Paul Tan <pyokagan@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Message-ID: <36ad743f-8429-a6ff-7fad-15e5dba01483@gmail.com>
-Date:   Tue, 12 Mar 2019 15:38:04 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.3
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z9ByxbsXPUKpn+vCgvcnf0t6zluuhDm+qk/JgBrGFT8=;
+        b=jxI44qlV+tHCc94Dft7tI/DqlT5gez3XRTl6dM8XGsfPJnpNpgHoclC5KkrUhYeTg0
+         A6VHta0jfNyXwhBn6Jh7MmQgXHKfYNx+7vWLVAQVejOoSI30t8GFYdM8P3hnKkxCv0BS
+         s2kvHXVx3Q65bxFF31WJ36/es9SGnMsRi3HMjJwwRF0kWIAFlwlsNLEuRA2sKzF5xLzr
+         EolcAI594jpiCmyFAfVqntOPbdE8elklwbK7vomBRp4tP7TEH2hsSkXa8EzZHGRQKSwy
+         sakdrg0IfRqD/0LdLmjp5jh0ENfayHHB+T6L/g/rEHYAk0w/n5qncFn0PONMnd1YCaOn
+         3y9A==
+X-Gm-Message-State: APjAAAU1pWaUlEHwRdNCKhn9Qzdof7RT3i19sOCa4x9wufZTUgCqkTAP
+        leOvzNJBMN5FWXrA4fEkvMvLjkYiShBSFHuk6hAePw==
+X-Google-Smtp-Source: APXvYqwG61M6NkfFxLGb+gcog00yLDQsc5Xm8KFkJ5NyiDyBBo9yOco4ucIGWnY1NoZ9cLGEOPo220x7xdQZ4lJiD2w=
+X-Received: by 2002:adf:c7c6:: with SMTP id y6mr23923128wrg.217.1552405021189;
+ Tue, 12 Mar 2019 08:37:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
+ <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
+ <CACsJy8DrrEg++wUszU2B1zJ_gvO1WC8MXXa53ZpMnObgqy=AeQ@mail.gmail.com>
+ <CABPp-BFStPOtA_OGrS3HCe_XqWN1roBnzss3nefcHdQg=9eYLQ@mail.gmail.com>
+ <d78392c3-7282-43ab-b88c-aa13fb5f937a@gmail.com> <CACsJy8DxOeKEAygiEa644pcQw-zTsnLyrtPL4sKWmPFEdNWpcQ@mail.gmail.com>
+In-Reply-To: <CACsJy8DxOeKEAygiEa644pcQw-zTsnLyrtPL4sKWmPFEdNWpcQ@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 12 Mar 2019 11:36:50 -0400
+Message-ID: <CAPig+cRN_cKhu2UQSiJHOK-bgk+g7897_2Acb_kgNK7w6_fS5g@mail.gmail.com>
+Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In commit 735285b403 ("am: fix signoff when other trailers are present",
-2017-08-08) tests using variable $signoff were rewritten and it is no
-longer used, so just remove it from the test setup.
+On Tue, Mar 12, 2019 at 8:19 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Mar 12, 2019 at 3:51 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> > I tend to agree with this but that's probably because I don't really use
+> > checkout -B. I'm not sure if it's widely used or not. I do find checkout
+> > -b convenient though.
+>
+> Yeah I think both -b and -B are about convenience.
+>
+> But I would not mind dropping -C for now, if people think it's not
+> that useful. We can bring it back in incremental updates if we realize
+> we miss it so much. I'll keep it unless somebody says something.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
- t/t4150-am.sh | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+It's not much of a datapoint, but I do use "git checkout -B" (and
+therefore would use "git switch -C") periodically (in addition to
+-b/-c, which I use all the time). And, convenience is important,
+especially considering that "git switch" is already more painful in
+some ways than "git checkout", due to having to trigger and spell out
+certain things explicitly (such as detaching).
 
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 55b577d919..3f7f750cc8 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -77,14 +77,12 @@ test_expect_success 'setup: messages' '
- 
- 	printf "Subject: " >subject-prefix &&
- 
--	cat - subject-prefix msg-without-scissors-line >msg-with-scissors-line <<-\EOF &&
-+	cat - subject-prefix msg-without-scissors-line >msg-with-scissors-line <<-\EOF
- 	This line should not be included in the commit message with --scissors enabled.
- 
- 	 - - >8 - - remove everything above this line - - >8 - -
- 
- 	EOF
--
--	signoff="Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
- '
- 
- test_expect_success setup '
--- 
-2.20.1
+> PS. The same probably goes for --orphan too. Wait and see if people
+> complain, then we know how they actually use it.
 
+Again, not much of a datapoint, but I do use --orphan periodically.
+The idea of "fixing" the behavior so that --orphan starts with a clean
+slate is certainly appealing (since it matches how I've used orphan
+branches in each case).
