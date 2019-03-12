@@ -2,112 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB11D20248
-	for <e@80x24.org>; Tue, 12 Mar 2019 22:15:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CF6420248
+	for <e@80x24.org>; Tue, 12 Mar 2019 22:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726280AbfCLWP3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 18:15:29 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:49109 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725957AbfCLWP2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 18:15:28 -0400
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id 3pgEhGj0zcPek3pgFh1ktU; Tue, 12 Mar 2019 22:15:27 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=R84t5+ZX c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8
- a=EBOSESyhAAAA:8 a=nSW2fyJCgFrdw3EUlbgA:9 a=QEXdDO2ut3YA:10
- a=q92HNjYiIAC_jH7JDaYf:22 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [RFC/PATCH] packfile: use extra variable to clarify code in
- use_pack()
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <e561b83f-cf1c-eef8-7651-8519ce105491@ramsayjones.plus.com>
- <b4106d4b-5f9e-4577-c8ed-641df33d4fb5@ramsayjones.plus.com>
- <20190312202605.GA24350@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <1fbd29f2-3385-58d8-e69d-d7df80e214db@ramsayjones.plus.com>
-Date:   Tue, 12 Mar 2019 22:15:25 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        id S1726534AbfCLWgO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 18:36:14 -0400
+Received: from mout.gmx.net ([212.227.15.18]:45135 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726384AbfCLWgN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 18:36:13 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8m7Q-1hBVW903wK-00CAAB; Tue, 12
+ Mar 2019 23:36:01 +0100
+Date:   Tue, 12 Mar 2019 23:35:44 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Matthew Kraai <mkraai@its.jnj.com>
+Subject: Re: [PATCH v2] stash: pass pathspec as pointer
+In-Reply-To: <20190311221624.GC16414@hank.intra.tgummerer.com>
+Message-ID: <nycvar.QRO.7.76.6.1903122323460.41@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> <20190225231631.30507-1-t.gummerer@gmail.com> <20190225231631.30507-19-t.gummerer@gmail.com> <20190307191836.GB29221@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1903081630040.41@tvgsbejvaqbjf.bet>
+ <20190309182610.GD31533@hank.intra.tgummerer.com> <xmqqimwqmbba.fsf@gitster-ct.c.googlers.com> <xmqqd0mxkgvy.fsf@gitster-ct.c.googlers.com> <20190311214244.GB16414@hank.intra.tgummerer.com> <20190311221624.GC16414@hank.intra.tgummerer.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20190312202605.GA24350@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfG/2Mzl8QWfKCKF6hivsgecz7OgYV9jmun+qNlQYlWRMjoCGCcVmXyALBhy5nm26SFx3maVHxpBAxFvwe7Egb18G9fis3rnyXlV+8sdnwRLKDCGTJzZZ
- A88V6QJrsWSOXUWDX87cfEVqV/h8q9lP1+qzim11JxNPw99JTbeaMyeumtUAPUc0qbI79EokBgtjFQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:pJZ2VS5SLM4YMcrZaoqTXbpNe3DKPQ1+YkSXIAX2WzrVheJGmjH
+ n1brfonrY8wwO9dZKI+Hk3MYjlykZoxebvN98/BA4q0VvEZxlCRyv6XAA6+bWICnryOsJYT
+ RFsSzgHXD27L3Ml52O391qQVlOsRcPCI5iGlKsmNlTO+UjXNwrgLAxHPVNpxGJEu+AEarqV
+ P387QvvCYvWIqPMQZT3mw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:i9m0pOXAE/8=:DfGUHxlA0AYmWc5RouK0L5
+ sLGNNwNETrxYgTC/YuAw7eU51PW4lcMhyZGrPp2011BE5gnmT+Kz9gmJSbpFoEY/aoYUcHoye
+ 9nDaiDiJnRFT4OJJ7oMgwYXbxDz2Eg6+xfAUWDXHWdiIcJO+Wm9IFRkKgjXTH2y8owBRxR0Y8
+ okAm3WLgY7L67/AGFn6qo+rUmtpAdlfRApS6frRs1YsJNESrh6rYFUZerTHzREGV2zMr36k/I
+ X7Sc/+xvs6g1lF+dVrLqCz2TuIPkRqWvVFL0UQFChr2aJs+VgkzngNVFI68rTp/A3ucAg6Kbv
+ l4yVRD4iv4+UOQg0wy+tMn9LIOXD1FVplcoc4eU77OzJgMVY6qU4NLNS/TxIIsS6z/tgsbukE
+ VK8FyrR10ctw9St+/vS7HiKGn9VhO5Nl36YFMgMhktIAuOG1KPMIrkji9N+zyFooKsBoU552U
+ TTnReXaRXqUIlhrE2WZBFzG1P7VA0gM1IF0ielfPJYyol3+LgOsOScmnQRjNw9C4oxE1giyBQ
+ Ch6BE2RXT4wFe+oFFHAtJNF1DxXM5kIdGyyiLgcVCiQrFhnScVAB+eLFkPPzfhLemPVMgaSBT
+ TP5WoJrOlJsJzrm6CRtRAAO5TK2zigftoP9hrz7fu9Y9QC75yWtQM7JnEgB71yiErbSJjAz4/
+ +StEZdbDqBYGsv7X3VRUTAVmtawB4lDx5e9/vJxCXV5gEF32AwaoFkxp1ucKc4pzmxqcag5bA
+ kk4o7j6rvZZr97nIkaENc8G0bKN30R16zx0sQCiuT7nNuJVrTQf/rP617YYg0kiL+5nYURFdd
+ 6V1fId1mcPKLsbgzDru0TMq6KKZBOqq9yqSD6ugklyzrwf65b+NSFfWTDglUNA+jpWe9MFHXz
+ +/rVv8VmH3tgADM5wVkYs8Y9LC+F24wDQRdKlJntZZV/DvUUlmjfKre1o1n05cBlwKhAIxmwn
+ eDTqbdl25ew==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Thomas,
+
+On Mon, 11 Mar 2019, Thomas Gummerer wrote:
+
+> Passing the pathspec by value is potentially confusing, as the copy is
+> only a shallow copy, so save the overhead of the copy, and pass the
+> pathspec struct as a pointer.
+
+Not only confusing, but also wasteful ;-)
+
+> In addition use copy_pathspec to copy the pathspec into
+> rev.prune_data, so the copy is a proper deep copy, and owned by the
+> revision API, as that's what the API expects.
+
+Good.
+
+> [...]
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 2f29d037c8..e0528d4cc8 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -826,11 +826,11 @@ static int store_stash(int argc, const char **argv, const char *prefix)
+>  }
+>  
+>  static void add_pathspecs(struct argv_array *args,
+> -			  struct pathspec ps) {
+> +			  const struct pathspec *ps) {
+
+I see that you added the `const` keyword. While it does not hurt, I would
+probably not have bothered...
+
+> [...]
+> @@ -1042,6 +1049,7 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+>  	struct index_state istate = { NULL };
+>  
+>  	init_revisions(&rev, NULL);
+> +	copy_pathspec(&rev.prune_data, ps);
+
+This moved here... because...
+
+>  
+>  	set_alternate_index_output(stash_index_path.buf);
+>  	if (reset_tree(&info->i_tree, 0, 0)) {
+
+... this `if` block could jump to...
 
 
-On 12/03/2019 20:26, Jeff King wrote:
-> On Tue, Mar 12, 2019 at 05:39:13PM +0000, Ramsay Jones wrote:
-> 
->> On 12/03/2019 16:55, Ramsay Jones wrote:
->>> From: Jeff King <peff@peff.net>
->>>
->>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> 
-> Could definitely use a commit message. I think it's something like:
-> 
->   We use the "offset" variable for two purposes. It's the offset into
->   the packfile that the caller provides us (which is rightly an off_t,
->   since we might have a packfile much larger than memory). But later we
->   also use it as the offset within a given mmap'd window, and that
->   window cannot be larger than a size_t.
-> 
->   For the second use, the fact that we have an off_t leads to some
->   confusion when we assign it to the "left" variable, is a size_t. It is
->   in fact correct (because our earlier "offset -= win->offset" means we
->   must be within the pack window), but using a separate variable of the
->   right type makes that much more obvious.
-> 
-> You'll note that I snuck in the assumption that "left" is a size_t,
-> which as you noted is not quite valid yet. :)
+> @@ -1050,7 +1058,6 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+>  	}
+>  	set_alternate_index_output(NULL);
+>  
+> -	rev.prune_data = ps;
+>  	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+>  	rev.diffopt.format_callback = add_diff_to_buf;
+>  	rev.diffopt.format_callback_data = &diff_output;
+> @@ -1089,12 +1096,13 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
 
-Looks good to me! :-D
+... this point (the `done:` label is *just* one line further up, and this
+is a static diff, so we cannot just increase the context when we need to
+see more, unlike, say, GitHub PRs) and...
 
->> Heh, of course I should have tried applying on top of today's
->> codebase before sending it out! :(
->>
->> Having just done so, it quickly showed that this patch assumes
->> that the 'left' parameter to use_pack() has been changed from
->> an 'unsigned long *' to an 'size_t *' as part of the series
->> that was being discussed in the above link.
-> 
-> Yep. Until then,  I do not think there is much point (and in fact I'd
-> suspect this code behaves incorrectly on Windows, where "unsigned long"
-> is too short; hopefully they clamp pack windows to 4GB by default
-> there, which would work around it).
-> 
-> But I would be very happy if you wanted to resurrect the "left" patch
-> and then do this on top. :)
+>  	discard_index(&istate);
+>  	UNLEAK(rev);
+>  	object_array_clear(&rev.pending);
+> +	clear_pathspec(&rev.prune_data);
 
-It actually applies on top of the 'pu' branch, because the 'left'
-patch is commit 5efde212fc ("zlib.c: use size_t for size", 2018-10-18).
+... we add this call here.
 
-If you recall, this was going to be just the first step in a series
-of patches to replace 'unsigned long' as the type used for various
-'size' or 'length' variables.
+However, we would not have needed to move the initialization of
+`rev.prune_data`, I don't think, because `init_revision()` zeros the
+entire struct, including `prune_data`, which would have made
+`clear_pathspec()` safe to call, too.
 
-So, if I add the above commit message, it could apply on top of the
-current 'mk/use-size-t-in-zlib' branch.
+Both of my comments need no action, and the rest of the patch looks good
+to me.
 
-I may not get to that tonight (busy with something else), but I can
-hopefully do that tomorrow.
-
-ATB,
-Ramsay Jones
-
+Thank you for going through this!
+Dscho
