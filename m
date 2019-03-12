@@ -2,111 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,PLING_QUERY,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9CDA20248
-	for <e@80x24.org>; Tue, 12 Mar 2019 17:54:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E32D20248
+	for <e@80x24.org>; Tue, 12 Mar 2019 17:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728528AbfCLRyJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 13:54:09 -0400
-Received: from mail-it1-f178.google.com ([209.85.166.178]:55573 "EHLO
-        mail-it1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728267AbfCLRyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 13:54:06 -0400
-Received: by mail-it1-f178.google.com with SMTP id z131so5850547itf.5
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 10:54:06 -0700 (PDT)
+        id S1728136AbfCLRNx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 13:13:53 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35323 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727140AbfCLRNw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 13:13:52 -0400
+Received: by mail-wr1-f66.google.com with SMTP id t18so3588092wrx.2
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 10:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bt8Unwxk6WJ2RCVbue/6hcC1xrWXjQXl8UHeMRD6KZo=;
-        b=tOT3/BT08fTHBZCJyZwCPVnyQpOBohnsKT3mImvjTY5ocnIT17GrUb512Iy4pnsG4F
-         QSPZIL97rBmQagRhU4shE/t2WWHTUyHMctTXxJ2Myi2ikIJ9mTFbTw/ZzlQVq+6iZrPv
-         /XTK3HEcyf6AUE9OBtDlroFEhbjb+gHmsnqDqSZM5hHhmuGicz4M1kU1YhnGiAmlQszD
-         MJuWmQg7UwhjZReVOURUKEikd7nrWJ7uESdBYVIczweRg61sJ4UT0MQlGMH+/D7y4+Zm
-         PV9y0M0MS/Pe5lYN3MazU9Pgsa37kL8EJ5FQSfXCJFbpsx1Xwuaxk7lUoDwaVw/v1QTu
-         SsNQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=G2s9MOQZy3nMl/g2LVn72PxvP+l4nFjd+VtIyEF+Qes=;
+        b=aaw9x25WXlRty2xSpkM6InnVrRM4wAwUrywWv9Nzt9IfWRP7Pp4yTS8quaLJ3nKDNt
+         cvHRpErwZDFZYfWxWxq0gNS152pAcUtYIxHCvmEQx/EmZlOxyugSFAKAyvCBvFOD5Ch+
+         mbx8dxQIkcXfGc1JGmMYNy/xdJ0VVEJH+cZQCrhKRyqrwA95BCKy4X4enya2/0V1uoPE
+         7Myl4UFzIPrn5nrVxm8KwMz1l72Am+UVNbuJOxPNkVGrOETOQe3Yt77+YRQyEegCSVl8
+         azXzIoF3MTfsRHyoUeFDRwpMrlOCuWXQKZWdLN2OArHSrUn20yJNHeC4rC5i8b0EhN/f
+         9zTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bt8Unwxk6WJ2RCVbue/6hcC1xrWXjQXl8UHeMRD6KZo=;
-        b=cYob3n+2VqaWBKlSg/M/OQCgxKhV8Yr3nbI9QYCCrqM89KVPc3bKmChFAcxtv8Kgzh
-         QVkzZ+2Yuwpy4MB3A37kfW28ibCnXPry6Q4+KVyxd42EFr1jatocu93HMxNT9V5pH7L2
-         fpyPtt8NdUPPHwFqmYtU0WY40YcN9LjcqzlHBkpejR9uo+RlNAlmrZfBI2m3mR3TgW70
-         4BYkQGB/+lvToWCuJnzEd+4evbJZhyJefQ+q/8F6XV1Bj4DsyaF/3Fa4Ek1FfGi08Kqq
-         mgr+4d325mrVpD3ekgKD4MkhKbkJuAa9bvJ1CWpz5Kk20SjCbh+tTUKIJTu2PZRfCg0e
-         7ESg==
-X-Gm-Message-State: APjAAAV2cBSDVXQCUJYwsLq5jZcqDXrReBD2TQ2dk2gLrM60+O1Ri61S
-        cwt8WZk7Sz6+IKrORvMz8lNy0e7Q5HhsHhVdQwGt9EBT
-X-Google-Smtp-Source: APXvYqz+NJiZx21kpLbCzazlKlgXanL/ZTWMl5V54C5UBbZ3iRHkPDb59nYUj5SB8OTf0dJU4Y4Nq7LSiPJjOpXyX+w=
-X-Received: by 2002:a02:5545:: with SMTP id e66mr20423296jab.99.1552413245636;
- Tue, 12 Mar 2019 10:54:05 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=G2s9MOQZy3nMl/g2LVn72PxvP+l4nFjd+VtIyEF+Qes=;
+        b=q/j4pP10+sjp6WA3uPGx5NLPR7VbHkz5QP5pl+3dblXOUfDk/Gjugi+wjSPssOIIjq
+         uws7yvrLWgqwtHvaLD3VVaG23eWfkdQ9rgImsltMymd/uM3lei32Ps8BTrcXH1wXLx10
+         rtFI+QO5bwSXvCDHKZHVtVIQ5h7IUHrOiqrD8S/Rh1LalMvX9gkmawLVApTzDkakL8ct
+         b9YxDlI1FdlOgTHpAJGZmSYdh9bpMip7lmprE/N92DIJWlmQYjWAxCYYnxWIGKW9XfJk
+         7VRRh3+KNtMf3DBrf6q8tpuBjFYzQe+5/L/rdnJnjR8SLpBTptmCnLGDjWw8PFbinllK
+         AF6A==
+X-Gm-Message-State: APjAAAVZDowGMmvkTGuUCPx1hvPoUMzhJnD+8hCwUKXEogQgYqs79kBG
+        olq7TwyBVQhIQYU7tkGOZ+E=
+X-Google-Smtp-Source: APXvYqwKP2+lCKykJELKIvSgx4hgVafZZznTDkOs3lxQnsgg8EbsSYDek1agqNvgxZu7ioWTwXjvHA==
+X-Received: by 2002:a05:6000:1110:: with SMTP id z16mr25036451wrw.28.1552410830407;
+        Tue, 12 Mar 2019 10:13:50 -0700 (PDT)
+Received: from [192.168.221.164] ([185.79.217.61])
+        by smtp.gmail.com with ESMTPSA id b195sm5738553wmg.36.2019.03.12.10.13.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Mar 2019 10:13:49 -0700 (PDT)
+Subject: Re: [PATCH 2/2 v3] doc: format pathnames and URLs as monospace.
+To:     Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Git List <git@vger.kernel.org>,
+        nathan.berbezier@etu.univ-lyon1.fr,
+        pablo.chabanne@etu.univ-lyon1.fr
+References: <20190306130446.2193-1-corentin.bompard@etu.univ-lyon1.fr>
+ <20190306130446.2193-2-corentin.bompard@etu.univ-lyon1.fr>
+ <86va0o9qsp.fsf@matthieu-moy.fr>
+ <CAPig+cQEYDay9kTUpBepw6kN_PgpG4dRXeNf82Kty+E7piXeWg@mail.gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <8a8944a6-9559-74be-afee-e6af262412ab@gmail.com>
+Date:   Tue, 12 Mar 2019 18:13:48 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.3
 MIME-Version: 1.0
-References: <alpine.LFD.2.21.1903121317020.16391@localhost.localdomain>
-In-Reply-To: <alpine.LFD.2.21.1903121317020.16391@localhost.localdomain>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 12 Mar 2019 10:53:54 -0700
-Message-ID: <CAGyf7-F2wCB7D_JGzd7USaTV0YfmOuFG2Z6GkWVM-JqWKaagQA@mail.gmail.com>
-Subject: Re: why does "git revert" commit even if i try to bail with ":q!"?
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAPig+cQEYDay9kTUpBepw6kN_PgpG4dRXeNf82Kty+E7piXeWg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 12, 2019 at 10:23 AM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+On 2019-03-12 16:48, Eric Sunshine wrote:
+> Thanks. A few comments:
 >
->   never noticed this before ... when i do a regular "git commit" and
-> enter my "vi" edit session and change my mind, i can bail with ":q!",
-> regardless of what i've set up as a commit message, and i'll see:
+> In patch 1/2:
 >
->   Aborting commit due to empty commit message.
+> * drop the full stop from the first line of the commit message
 >
-> however, i was just playing with "git revert" and, after i ran:
+> * s/futur/future/ in the commit message
 >
->   $ git revert <commit SHA>
+> * s/There are false/& positives/ in the commit message
 >
->   again, simulating that i changed my mind, i just typed ":q!", but
-> the revert went ahead, anyway. i tried again, this time completely
-> deleting all the lines from the commit msg (as the template
-> suggested), but the revert *still* completed after typing ":q!".
->
->   it was only after deleting all the lines and using ":wq" that the
-> revert was cancelled:
->
->   Aborting commit due to empty commit message.
->
-> that seems ... inconsistent. am i misunderstanding something?
+> * s/both, It/both, it/
 
-When you're doing a fresh commit, the .git/COMMIT_MSG is "empty". It
-has whitespace and comments, but no _usable_ lines. So when you :q!,
-the commit is aborted because nothing Git can use as a commit message
-was saved to the file and so it's still "empty".
+Also,
 
-When you use git revert, though, it writes a valid, usable message to
-the file ("Revert <subject>\n\nThis reverts commit <sha>"). When you
-:q!, that's still in the file. Since the file isn't empty, the commit
-moves ahead.
-
-Git doesn't actually _know_ you quit vi with :q!. All it knows is the
-editor process completed with 0 exit code, and the message file isn't
-"empty". If :q! made vi exit non-zero then you'd see that the commit
-(or revert) got canceled because the editor failed (I don't know the
-exact message off the top of my head).
-
-An easy way to confirm this behavior would be to run your "git
-revert", and, in the editor, delete all the contents, then :w and :q!.
-You'll see that the revert is aborted due to an empty message. Or you
-could do a normal "git commit", type a message, then :w and :q!.
-You'll see that the commit still runs. So the difference between the
-two is that one starts with no usable commit message, and the other
-one does.
-
-Hope this helps,
-Bryan
+* s/inconsistant/inconsistent/ in the first paragraph of the commit message.
