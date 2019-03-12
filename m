@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE32120248
-	for <e@80x24.org>; Tue, 12 Mar 2019 07:17:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE41A20248
+	for <e@80x24.org>; Tue, 12 Mar 2019 07:22:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727497AbfCLHRc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 03:17:32 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:50337 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727000AbfCLHRc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 03:17:32 -0400
-Received: by mail-wm1-f66.google.com with SMTP id x7so1444555wmj.0
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 00:17:31 -0700 (PDT)
+        id S1726617AbfCLHWL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 03:22:11 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:56043 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726209AbfCLHWL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 03:22:11 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 4so1412891wmf.5
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 00:22:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Ja94JDH0cqF1pP3PJUHn9v5umLZT6VZPaCaz7C1A++8=;
-        b=ccgyVZgdlzzPvjyyVoypKyaqTv/RDmGULOuHUHXs8So/VheURAiAl5rDQfKnse7Wjc
-         +MozC9pJpScq2CpPU1JbLKW8QkecRB8/dj/s6hJUci1JSXRvGpg+96yDPVtXCCpbWOI+
-         ZFyjvkpmMtziXR2nMgBx9YGyoj+W97Qoh6uJE48wEnpCUG4Ta5Y+oqPNmH9QeLb37C7E
-         DnmVzd2Kg14+qLQgUlt8HVEk/WEX2lnzPjAw7UzBnytPdgkRe4JsRAkkY5/S3f+l9b/p
-         FhHLX1jJDnFakv5P1/40wFFVHeFzEZ2isXZPRcciBVfv4MgdzpHhuOhR+HTLgZgkiAvy
-         qhmA==
+        bh=7k/YoXxODv9bruEhDZk3xh1f8FNtxIMSF0ZDqRsMP8o=;
+        b=Tp2WVU7RdawwvPgLJkfIIj/vZkZA5VSBbRlw0a7S9Kqkf7vXqp8k6kysFX9OVEzJzs
+         IUH/a02LMQ7A+FJNFAR/t/xtSfyqHDo2Y3iM1AD0k6bc1JTtxJGLCN4x6Alhayp5LZl9
+         pAtz8qFRQfD2keyuUjWKCM6tjkHjmY1AYXGa6eRgvFoCnDrQj+dzkilCsG9jkIq5NE8I
+         jrFQJcfRThASFXU/e6xuMMEKraKfkq3fF+GLMs6wIl9X7WBqcq8dcATARWVZ0CfkxBDn
+         0yMCtiIdVpgrpHRhMwqUS8QELyoPcwG8AoNjsIJNJXxMuXKevRBwDv/zSw8GrMcrWUEB
+         mBPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=Ja94JDH0cqF1pP3PJUHn9v5umLZT6VZPaCaz7C1A++8=;
-        b=pPHwtynORQNHx0JX/HSZ46F0bWKJhgtyQk4ETgDNPgOPCqHmWbfDCx5wES6iQPoZKo
-         wgv/BINk3HcNwC5sOcsUoOL2wcI383Og7VGtHr5xNvhNWXnWPam3xH9XQt+fdY9eFNiI
-         r3vxuaVJbD9PenoM19vsisxRXRY/181eqLtt2O5v34tA2q3qKR47JzQzz8oYf6nkiJX/
-         Pa5WVySDOkajWDHbUW6BdPtZyJZ6DzanhZ2P9i9kEFMOLQ+WopF/5JRkIhsVY62CViNj
-         pQgdnMw24kxlnLaqd6o9/JuugxdhqrAafhsIsTupF5ddeUZY1yC/kd0mx3p7LbifwGzw
-         pp+A==
-X-Gm-Message-State: APjAAAUA7hdhys1drsKV+qSstRrldnEnaNskYZ3O+wyzz765jqbTzrE8
-        bidWA+Y4uMGrZBwHfFHu4i4=
-X-Google-Smtp-Source: APXvYqz3rIfYUQvUKiCeddf2L35S6xqp2iXEyMzQqRmgCzBfmGZXTUnc5HnReZRozEGgGbAh4Paezg==
-X-Received: by 2002:a7b:c344:: with SMTP id l4mr1206122wmj.121.1552375050022;
-        Tue, 12 Mar 2019 00:17:30 -0700 (PDT)
+        bh=7k/YoXxODv9bruEhDZk3xh1f8FNtxIMSF0ZDqRsMP8o=;
+        b=I0JkhX2PMQu1neHmmBVnUCv1/P80DfCHQHC5FOvlju8sY2Z8mAk+V2eYen8MUk/Skv
+         vo7+C5xwCfCVKf7/pvXT1NFBTLw8lNnbatcE4+bKKUpwt0lCEhEq86O8Ykk2KaGlkqFx
+         hRpNeLFLq0VUlavvVTks67SVWMXpTnANj4fk7Kl3Vm1p4wwEFbpakt12iPmcqk5fy892
+         sqkLfi6+Y0JYp7XOGqVfXsaW9Gaipzkv2I3iCd5eIMMqJ4EX/AwwXSNT7TltA6+dTvza
+         OFOvEaLJt9ZPtNQlMNZbVE/8YaZZ0HwlIV0XDMV+uWWmraGaK4/K/t/+dn4i81veiPqE
+         C3aA==
+X-Gm-Message-State: APjAAAUZgvOChPD11VhNmF2PNcPiD0HJ33ee1OPtBbxXoPUFtB6YsEXs
+        NsjVuD/EpyH2+Hzt5rDhaK4=
+X-Google-Smtp-Source: APXvYqxGUDmoLW5+gYjEWkwTvqOHp6tFoj7aqy6A2c7ly/gOyZuwqFNdFRbt9ZncjHP+hGB/d0Du2Q==
+X-Received: by 2002:a1c:3c02:: with SMTP id j2mr1332785wma.72.1552375329240;
+        Tue, 12 Mar 2019 00:22:09 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id l5sm1794732wmi.24.2019.03.12.00.17.28
+        by smtp.gmail.com with ESMTPSA id c202sm1054668wme.38.2019.03.12.00.22.08
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Mar 2019 00:17:29 -0700 (PDT)
+        Tue, 12 Mar 2019 00:22:08 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -59,10 +59,10 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Deprecating git diff ..; dealing with other ranges
 References: <20190311093751.GA31092@archbookpro.localdomain>
-Date:   Tue, 12 Mar 2019 16:17:28 +0900
+Date:   Tue, 12 Mar 2019 16:22:08 +0900
 In-Reply-To: <20190311093751.GA31092@archbookpro.localdomain> (Denton Liu's
         message of "Mon, 11 Mar 2019 02:37:51 -0700")
-Message-ID: <xmqqmum0h88n.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqqef7ch80v.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,15 +73,16 @@ X-Mailing-List: git@vger.kernel.org
 
 Denton Liu <liu.denton@gmail.com> writes:
 
-> I was in the process of deprecating `git diff <commit>..<commit>` as
-> discussed here[1].
->
-> [1]: https://public-inbox.org/git/xmqqmumy6mxe.fsf@gitster-ct.c.googlers.com/
+> =>		content="$(git diff HEAD^! | tail -n 1)"
+> ...
+> It gets caught in my attempt to only deprecate ..'s. Technically, it's
+> undocumented behaviour and it only happens to work because git-diff
+> accept ranges but it doesn't operate in an intuitive way.
 
-I didn't (and don't) advocate such a deprecation, FWIW, in that
-message.  I simply do not think it is worth the cost.
+It reuses the same notation as that is used for ranges, but makes
+the notation mean something entirely different from ranges, because
+"diff" is about two endpoints.
 
-I however think it may be worth making sure that our docs do not
-encourage "diff A..B" and teach "diff A B" when comparing two
-endpoints.  That can be done without changing anything in the code.
-
+And "git diff ^A B" (or "git diff B ^A") works like "git diff A B".
+So does "git diff A^!", for a single-parent commit A, work like "git
+diff A^ A".
