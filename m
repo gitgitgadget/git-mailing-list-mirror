@@ -7,62 +7,70 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D15520248
-	for <e@80x24.org>; Tue, 12 Mar 2019 06:45:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F62520248
+	for <e@80x24.org>; Tue, 12 Mar 2019 06:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727159AbfCLGpr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 02:45:47 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44571 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725848AbfCLGpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 02:45:47 -0400
-Received: by mail-wr1-f66.google.com with SMTP id w2so1327194wrt.11
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 23:45:45 -0700 (PDT)
+        id S1727224AbfCLGue (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 02:50:34 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55601 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726218AbfCLGue (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 02:50:34 -0400
+Received: by mail-wm1-f66.google.com with SMTP id 4so1341851wmf.5
+        for <git@vger.kernel.org>; Mon, 11 Mar 2019 23:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=IN432n5xVwU03rnMWbZ7XMx+Oxsg8Y3PZHIp73mBurQ=;
-        b=KlOXDwAlDETupvazcCSo+vqNn2/9+Hun2xgmWRJwm6TKNrNwfaweR8UtijuCJF4wy8
-         yRfXreb0KSTv+pYzXKkFzMgEQYKiPuOXR6xywX13sEm1AtA5yMAG+3Sop/q6+SHyjuoQ
-         LoZXrEWIvvhEE5NFZF5TQdlmzjd2mWApZvFlskQDeonUgxG3N7T9RUiWK5i7jFxJDG61
-         OnOrdt7HSD2s30pTfvTvAtN5EtLtZjlL8hk54WrwA5GAwef+IAFtz/q3swsNH6xI0e4k
-         Ej4Q7MiL+UrIMxZSMOIIQxX79DJLkMXf3OvKjI3rfB2FWUNfFxycJ1JNqnFrKmuvPvqD
-         wi+w==
+        bh=VwTZquv6Cnyw8xKxQEh3pr4w/kzfypkK6F8L+5z4pFk=;
+        b=cpoBUDwOMUWKOXnLxvbe4dANpvYun9ghwTVNoFhV94KNNK44mWKKKdJF4aow2rvm14
+         CC1aWh7iYvjrLtpibCZrQ5ypr71RqZsbMWKwNSpGy7YwBxT0tesYGTBwo11Q/JO8a0dm
+         MSQ0n/xGsSLfCsJ54W4NavZS6vi3/n3FdjKSuDe0gRkd8UiYAQ8JUNViwVxy80TjUv/X
+         XssTHLoCRh2yiA4DoPh0+aH2y4ugRJhs9bBR/oyH/a93WdHOgD8bD2cEo/WRJP6A1eJk
+         XmrOzeDry4TRR138AEbCHRGYrPQr8ce1VVwJC6uz0MrJr34W1orDQJGJySXyS+VtYqap
+         qH+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=IN432n5xVwU03rnMWbZ7XMx+Oxsg8Y3PZHIp73mBurQ=;
-        b=PV+aNJEGt5NPLquy8bk2nsy8doycPtgyrQtWBVqvU1CUbLWVKY7EpozurafGGW3aPT
-         AuCMspPl0SYUXWCx5zEjTA4YUsxVaJ1yil7myAAguzaN0ACoxvaSO4ZWPE0G0xWDr174
-         mINkf48d1wHLJA6Zjtn3XUra37QDFcqMOdckyU/mYdTTMR0NMGaKwCqi1IBhasnW1wfn
-         Dt6AUtdyhrkpMvaPdbIfJCT8pVN8B/4Z/60MEbYkLgO1wESOktARq8wk9J2SOHuaFPNm
-         vBJurSKt8wOhHTjtNsV6H/kKR3PTebLL5Tw8V0XqQXK/1rzy+syer1m4Ppi519EertNp
-         2TfQ==
-X-Gm-Message-State: APjAAAUi0M2TnwKNE7tt90dRfppYMNhZHeEDwgeGWPhacaG0CeKRfzqY
-        ctwBVXDPn/DBt6a1mwSVneg=
-X-Google-Smtp-Source: APXvYqzVY323T8O572NBO02Ouzz5PBoUaJtIFY+xw+0XNmjW/KBs0W6EC4H3lVc9/4lEkTOd3DgevQ==
-X-Received: by 2002:adf:f04f:: with SMTP id t15mr6617591wro.232.1552373144948;
-        Mon, 11 Mar 2019 23:45:44 -0700 (PDT)
+        bh=VwTZquv6Cnyw8xKxQEh3pr4w/kzfypkK6F8L+5z4pFk=;
+        b=jaftWdDz+b9Vn8e1j0j7gCRRU5d5kFSrdnrBtywzoU/VKnrE+eHA6qc84qfmSmDzEh
+         UdqH2Y6TfQNn5e30+AHZ1CvXqP1D4uYDrLXEV+BgNokEl2pl3BRZDpgCP9keojHmUwYz
+         GeqDbC6qjc6cNXQqcBeLGeS8Fklju5hNgFPownmIuRDnyuNCbx84kz6Uhdo62c2EIAN6
+         1PuMwk4sVdS4syiUngysy+19yBmSeDN0VMzXSdQGzwES9hIx61n+ErENv2N3NPSGvlo4
+         8EjrrZjFAK7FJiZgFblpHUUeLxW8uIQI/uQUBFq2ZjAXqYOacC+TSi3LMwB8RxaHn4/T
+         okOQ==
+X-Gm-Message-State: APjAAAWLuvgSesn6PBrATrJ6TmFudGlwyZ231MO4rxQbBqfEqui4xdI2
+        Ws287y+ODzUiUEYHeFYPr+c=
+X-Google-Smtp-Source: APXvYqwj9SXB6u/NvGAbxymVidXuNBgc5Nbs7F1FMq03fUFv0Ll/OdkJjrE3QDrhls1VqQnsetUQ7g==
+X-Received: by 2002:a1c:7610:: with SMTP id r16mr951626wmc.139.1552373432080;
+        Mon, 11 Mar 2019 23:50:32 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id x10sm5140663wrs.56.2019.03.11.23.45.43
+        by smtp.gmail.com with ESMTPSA id w10sm14857929wrn.32.2019.03.11.23.50.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 11 Mar 2019 23:45:44 -0700 (PDT)
+        Mon, 11 Mar 2019 23:50:31 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, hi-angel@yandex.ru, peff@peff.net,
-        ramsay@ramsayjones.plus.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v5 1/1] worktree add: sanitize worktree names
-References: <20190305120834.7284-1-pclouds@gmail.com>
-        <20190308092834.12549-1-pclouds@gmail.com>
-        <20190308092834.12549-2-pclouds@gmail.com>
-        <nycvar.QRO.7.76.6.1903111401220.41@tvgsbejvaqbjf.bet>
-Date:   Tue, 12 Mar 2019 15:45:43 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1903111401220.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 11 Mar 2019 14:05:32 +0100 (STD)")
-Message-ID: <xmqqzhq0h9pk.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Matthew Kraai <mkraai@its.jnj.com>
+Subject: Re: [PATCH v2] stash: pass pathspec as pointer
+References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet>
+        <20190225231631.30507-1-t.gummerer@gmail.com>
+        <20190225231631.30507-19-t.gummerer@gmail.com>
+        <20190307191836.GB29221@sigill.intra.peff.net>
+        <nycvar.QRO.7.76.6.1903081630040.41@tvgsbejvaqbjf.bet>
+        <20190309182610.GD31533@hank.intra.tgummerer.com>
+        <xmqqimwqmbba.fsf@gitster-ct.c.googlers.com>
+        <xmqqd0mxkgvy.fsf@gitster-ct.c.googlers.com>
+        <20190311214244.GB16414@hank.intra.tgummerer.com>
+        <20190311221624.GC16414@hank.intra.tgummerer.com>
+Date:   Tue, 12 Mar 2019 15:50:31 +0900
+In-Reply-To: <20190311221624.GC16414@hank.intra.tgummerer.com> (Thomas
+        Gummerer's message of "Mon, 11 Mar 2019 22:16:32 +0000")
+Message-ID: <xmqqsgvsh9hk.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,61 +79,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
->> +static int check_refname_component(const char *refname, int *flags,
->> +				   struct strbuf *sanitized)
->>  {
->>  	const char *cp;
->>  	char last = '\0';
->> +	size_t component_start;
+>> Good catch on both acconts.  I'll send a new patch soon, adding the
+>> clear_pathspec() calls and rebasing it on top of Dscho's fix.
 >
-> This variable is uninitialized. It is then...
+> Here it is.  Thanks for the review of the first round Junio!
 >
->> +
->> +	if (sanitized)
->> +		component_start = sanitized->len;
->
-> ... initialized only when `sanitized` is not `NULL`, and subsequently...
-> ...
->> +	if (refname[0] == '.') { /* Component starts with '.'. */
->> +		if (sanitized)
->> +			sanitized->buf[component_start] = '-';
-> ...
-> ... used a loooooooong time after that, also only if `sanitized` is not
-> `NULL`.
->
-> Apparently for some GCC versions, this is too cute, and it complains that
+> This is on top of Dscho's series at
+> <pull.159.git.gitgitgadget@gmail.com> applied to ps/stash-in-c.
 
-It does require humans (well, at least it did to this one) to be
-careful when reading the code to know that component_start is valid
-when it is used.
+That's called js/stash-in-c-pathspec-fix; as this patch is also
+about pathspec, I guess it is a good idea to just keep them in a
+single topic, so I'll apply it there.
 
-There unfortunately is no good "default" value to initialize the
-variable to.  When checking a later component in a series of
-components, it would be looking at non-zero position, so even
-initializing it to 0 in this function is *not* a more sensible
-fallback default value than any other random garbage value (which
-would squelch the compiler, but it would mislead the humans
-nevertheless).
-
-And that (i.e. the lack of any sensible default value when sanitized
-is NULL) is the reason why the variable is left uninitialized by the
-patch, I think.  I do not think the code is trying to be cute at
-all.
-
-I wonder if we make the caller pass a pointer to
-
-	struct {
-		struct strbuf result;
-		size_t component_start;
-	} sanitized;
-
-	sanitized.component_start = sanitized.result.len
-	check_refname_component(refname, flags, &sanitized);
-
-and get rid of the assignment to component_start done by the callee,
-it would appease compilers and makes the code easier to vet.  It does
-introduce one more ad-hoc type, which is a certain downside.
-
-I dunno.
