@@ -7,62 +7,117 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0170020248
-	for <e@80x24.org>; Tue, 12 Mar 2019 11:24:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 844C5202BB
+	for <e@80x24.org>; Tue, 12 Mar 2019 11:55:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726418AbfCLLYN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 07:24:13 -0400
-Received: from mail-pf1-f177.google.com ([209.85.210.177]:38660 "EHLO
-        mail-pf1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725792AbfCLLYN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 07:24:13 -0400
-Received: by mail-pf1-f177.google.com with SMTP id n125so1598311pfn.5
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 04:24:12 -0700 (PDT)
+        id S1726496AbfCLLzG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 07:55:06 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:33805 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725874AbfCLLzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 07:55:06 -0400
+Received: by mail-it1-f196.google.com with SMTP id d125so2260251ith.1
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 04:55:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:date:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=ZAjbmyfT8Rh5n7gIdscV3sU8paS5DctD9IJpNc1x4ig=;
-        b=qmSxgMWtpGYslB6t3GkqziFIGEOkq94zGTMH+lO/Qlfr51V87XnPL2TFt/D+7FfmKG
-         rxw7vcv5iND5uOJzqMDK6YYgheOYZ1Qw12/3NihnY4Jre/DnN7B9P7qIu1aNrLdpvqo6
-         hFY4o9qaZw9HqGASAg5s1c870O0P4XryIlm9kRaoDP0Lan5nc165HePWgFSRvhgjcsaf
-         nOMk3CUoodwtI/v96un02zz67LsOHOy5+1GWsybzxMCsHa3lKQphVe2DKWOoo2DmQxAi
-         PwpOJ9YlFYK8ZAar2ebw46BPlQ7Agg51wgML+gcCP4dw1BHC8bVbqzo8a1OuvFq3QC2d
-         CpbQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jaqc6f0+E2BfAGtFkBE0HWLUL+rspNcZKL7aI7c1+d0=;
+        b=Dvp9snfM0gjp0wHbpl1XOsyMLz0DTQXHeS21ufvba8PdMDUqOpRg5UjtSHq16P2FWN
+         bDJoyt/G+gn++DFDlgpZpomOEEZWruMuqGfgAucmY874EZGHvZKMRd4whFD6v9JsoFxI
+         R8OYtsTiCfh0RgiJ+6SsDPB4zwCMW822qj8kR/5dCzOLr4MZmV9xpoRQMnQzA/FUOOKX
+         VMrtAWL1HrhZ7QTd1hQwWemrU7nTFDE7LGFDNZjUB5xeHj9b9YT0QiKVjKVOlWHNPumx
+         VOveefAE0rhQVxtALaXz7I3l7oVbbOomRd9HqOW9XMgeIRQ5FnJBXD7d98eDka39Rxfj
+         eq1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=ZAjbmyfT8Rh5n7gIdscV3sU8paS5DctD9IJpNc1x4ig=;
-        b=lhFYajovGx9f9dzvrZLNhZqyl/Kx3R3s39+qalSH+56PF5Q6b6ZtLdGVO4OSbMe3tw
-         SksZf0FspGt344Fqo/4m5D5K8UCyGepuG7ZJWca+JRJ1MQtfCr+BnzAw7Wi1mOj28GAX
-         YfX4tgTyqWNv/C+2NBepttfTZBs1RaVP5Zfv3XFFt7/BT0y+UTmBzUaifKLbhHq18nkO
-         wVUpCJbgxuVfg0p6RlvvIJSsUqBx1FZEX2uMLkx2Th07oOLEjSSw2+InZcr7NKRZTttf
-         2+Lt2OPL7nS+frosgFuVGXTYZ2tzPoiETHE98CIO6QlB/84E1L54HvO826+vJ969TX8F
-         cFig==
-X-Gm-Message-State: APjAAAUaCoEy/L725x4jPg8ULgIBAfYzwOH89rRLvcy7D38KidaMuXgO
-        FiAE/eX2QAK+aqLav85mHYjPdBBb
-X-Google-Smtp-Source: APXvYqwDvaemPZAhhfjby0pgiIiFoqy16MPc/TuvyypTEd4BqdgWsRrqqTk+nultLEoMSw3LBQ7xTA==
-X-Received: by 2002:a63:d502:: with SMTP id c2mr13027512pgg.290.1552389852247;
-        Tue, 12 Mar 2019 04:24:12 -0700 (PDT)
-Received: from hacker-queen ([157.49.152.138])
-        by smtp.gmail.com with ESMTPSA id k3sm20921617pfc.59.2019.03.12.04.24.09
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Mar 2019 04:24:11 -0700 (PDT)
-From:   Sushma Unnibhavi <sushmaunnibhavi425@gmail.com>
-X-Google-Original-From: Sushma Unnibhavi <sushmaunnibhavi@gmail.com>
-Date:   Tue, 12 Mar 2019 16:54:04 +0530
-To:     git@vger.kernel.org
-Subject: [GSOC]regarding project selection
-Message-ID: <20190312112404.GA5031@hacker-queen>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jaqc6f0+E2BfAGtFkBE0HWLUL+rspNcZKL7aI7c1+d0=;
+        b=Atbc9q8rENZ7YjIoZUElUIoLIb1SmT1FHArc8KbDuJYbs9wr2ZUeJ54LXnDlUzwKKX
+         rdQko88fEjOBU3c+ktvNWV5rZKNPsB5fmm0dqKSEdhald+TOVnVAtUPJn+yKEP0ibbiT
+         B/YZBM/mZLcy9+aANDNnSAeaup2o7cdADwvnE1wAWq1EjI+0O7s1lB5iNKlNibk9T898
+         xPrIbqMYoyNQY80YJ7kbajqTDtwUFFlKotocGa+0STU0NIbpkeLOMeoxT49F53uxCKeA
+         iMuW2fvtAACh/pKfJNw7SeMMl86eLz83qGbDSrng1n/nJX23nlKTtzLfOp5qHFMUBKgI
+         Lv7w==
+X-Gm-Message-State: APjAAAV7nIVLlIpibJlxMSWKa/61z5LSvn1zRBslGrc2NUEcBxeHf9P+
+        hkbi2UREgD0s6GkYJLH2Zi3TgqVGQGyN1QvPyP+Wng==
+X-Google-Smtp-Source: APXvYqxZUYg9OdbdJc4wXA7nYBBiO83of5zirKlU2nrmGY+22dW94tAVeW+Z5VSaZtOe0A/1O30bVyU6EAW7b5VBcXM=
+X-Received: by 2002:a24:ccc5:: with SMTP id x188mr1753520itf.123.1552391705199;
+ Tue, 12 Mar 2019 04:55:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
+ <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
+ <CACsJy8DrrEg++wUszU2B1zJ_gvO1WC8MXXa53ZpMnObgqy=AeQ@mail.gmail.com> <f63a7ae7-0a08-02f2-23e6-4389d8fda729@gmail.com>
+In-Reply-To: <f63a7ae7-0a08-02f2-23e6-4389d8fda729@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 12 Mar 2019 18:54:38 +0700
+Message-ID: <CACsJy8CXX+Gk2SFGSULQ2TEzzXRdUr3vCxHxxsBOzhKCLE4YVQ@mail.gmail.com>
+Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am interested to do a project on improving git log --oneline.I can program in C language,I have learnt how to send patches and I am also comfortable with using git.I wanted to know what are the prerequisites for doing the project.Can I get some help regarding this matter.
+On Tue, Mar 12, 2019 at 12:03 AM Phillip Wood <phillip.wood123@gmail.com> w=
+rote:
+>
+> Hi Duy
+>
+> On 11/03/2019 11:47, Duy Nguyen wrote:
+> > On Mon, Mar 11, 2019 at 6:16 PM Phillip Wood <phillip.wood123@gmail.com=
+> wrote:
+> >>
+> >>
+> >> Hi Duy
+> >>
+> >> On 08/03/2019 09:57, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> >>> "git checkout" doing too many things is a source of confusion for man=
+y
+> >>> users (and it even bites old timers sometimes). To remedy that, the
+> >>> command will be split into two new ones: switch and
+> >>> something-to-checkout-paths.
+> >>
+> >> I think this is a good idea, thanks for working on it. I wonder if it
+> >> would be a good idea to have the new command refuse to checkout a new
+> >> branch if there is a cherry-pick/revert/merge/rebase in progress (with
+> >> an option to override the check) as switching branches in the middle o=
+f
+> >> one of those is likely to be confusing to users (if I do it it is
+> >> normally because I've forgotten that I've not run 'git whatever
+> >> --continue').
+> >
+> > Interesting. I think this would be a good default if we have an escape
+> > hatch (which could even come later). I often wander off to some other
+> > branch and go back. But then half the time I end up forgetting I'm in
+> > a middle of something and just "git rebase --quit" :P
+> >
+> > Of course with git-stash (*) and git-worktree, I guess there's little
+> > reason to just switch away from a something-in-progress worktree. I'll
+> > try to implement this in the next round, unless someone objects.
+> >
+> > (*) I hope git-stash remembers and restores "something-in-progress"
+> > status. Dunno. Never used it much.
+>
+> I don't think it does. For rebase it's non trivial as it needs to
+> remember the refs under refs/rewritten and stop gc from collecting any
+> of them or the original head (in theory the todo list can contain
+> commits that the user has added from other branches as well so they'd
+> also need to be protected from gc). For cherry-pick there are gc issues
+> as well.
+
+gc issues should be fixed anyway because gc could start any time (even
+manually by the user). And teaching pack-objects and friends to not
+delete original head and the todo list does not look so hard.
+#leftovers stuff?
+--=20
+Duy
