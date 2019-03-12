@@ -2,100 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1343520248
-	for <e@80x24.org>; Tue, 12 Mar 2019 21:01:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47AA320248
+	for <e@80x24.org>; Tue, 12 Mar 2019 21:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726656AbfCLVBm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 17:01:42 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:35436 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726512AbfCLVBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 17:01:41 -0400
-Received: by mail-ed1-f43.google.com with SMTP id g19so3565254edp.2
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 14:01:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=AJ0fJpJQaFHjetlBucfLpfmVD0ThlxF6Zrvd22E3gpE=;
-        b=nkbEW4IDDoKHWV/2fEGh94qoq66J8wld2SiELyhB/6LBk83Pwbpyo/lyrb8VApMucv
-         DgV2pKlfb+KuVTyLnFIPKcBq7s3KedMaovTtLwWVo5uFiJ55TXYp28tGrHeo7ipNcIqq
-         vdhI6a01gZOfAAlFWHH4ZzIaAcF/YIRDrN/eP/2rLNh4im+PkgcD1KmIXEI0cm5ol45z
-         Ae9pKO73Pjga8OPC0HIY8F3kmCpE2DM4g1RV/dzPmwjz6SyA2l8HYme70ptJuyf9pwb+
-         2E+PXWjgtLN6Ei7bdMRfiWioY9ACFYb69J3BXc+WMtv9ERZ26dx4xzaF5t+hCgcssZxI
-         4TBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=AJ0fJpJQaFHjetlBucfLpfmVD0ThlxF6Zrvd22E3gpE=;
-        b=iWOn1nZ+FlI9dYm7KSU99P4u4UlIaiApmrbVEX41jnLhGlSFOKx905HZ12KqJTTcOu
-         DexQ2pnw7YwThHCgZ84ZkZ4XgV6QqMYLX0UjSQ0nM111ak2UX6ZbZTWkVmUV5ZDYHbZr
-         Rh612Q72LD9b++HWGjYtoy5qbHb5zQBJDog04tVIMfhNYEj/T4to8dkqJ3odVojO8znq
-         1oegdOHHrp3OY9MxuKTmjlm4pElWJV9d1Rdmuz8wO2ZOTZndnoyfWEaHjIn2/jWR8I4L
-         5IVtBtCPV4qsFyGigt0Buep+j9eA2VWSHD+bv2Fx5QLe7ejxsydBP0lj0yxV94ud18jz
-         c+UQ==
-X-Gm-Message-State: APjAAAVwEVBUSVmNcRZQ1sj4/NbU2yAGjt2pYedKDQlYGgunO1DMn8Wo
-        AeLa0swFT3Sbm/1/37Wygsk=
-X-Google-Smtp-Source: APXvYqz60ATqSe6YEPEWtc8aYHJTOSnWJtWWCaWrAohvjgkp5pltEuC3t8STxjcit0pKkWGLzmWY4g==
-X-Received: by 2002:a17:906:6991:: with SMTP id i17mr4223980ejr.96.1552424499878;
-        Tue, 12 Mar 2019 14:01:39 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id b24sm5898695ede.93.2019.03.12.14.01.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Mar 2019 14:01:39 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Philip Oakley <philipoakley@iee.org>,
-        Elijah Newren <newren@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        vincent.guittot@linaro.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Deprecating git diff ..; dealing with other ranges
-References: <20190311093751.GA31092@archbookpro.localdomain> <xmqqmum0h88n.fsf@gitster-ct.c.googlers.com> <87va0orop4.fsf@igel.home>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <87va0orop4.fsf@igel.home>
-Date:   Tue, 12 Mar 2019 22:01:38 +0100
-Message-ID: <87wol3bydp.fsf@evledraar.gmail.com>
+        id S1726378AbfCLVG3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 17:06:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47784 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726141AbfCLVG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 17:06:28 -0400
+Received: (qmail 2834 invoked by uid 109); 12 Mar 2019 21:06:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Mar 2019 21:06:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3761 invoked by uid 111); 12 Mar 2019 21:06:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 12 Mar 2019 17:06:48 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Mar 2019 17:06:27 -0400
+Date:   Tue, 12 Mar 2019 17:06:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeffrey Walton <noloader@gmail.com>,
+        Todd Zullinger <tmz@pobox.com>, Git List <git@vger.kernel.org>
+Subject: [PATCH] Makefile: fix unaligned loads in sha1dc with UBSan
+Message-ID: <20190312210626.GA5157@sigill.intra.peff.net>
+References: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
+ <20190308174343.GX31362@zaya.teonanacatl.net>
+ <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
+ <CAH8yC8kn=EmEm_UPrnpwaofv97S42Se6FC+hWcm0EHCX-4rewQ@mail.gmail.com>
+ <xmqq1s3emapy.fsf@gitster-ct.c.googlers.com>
+ <20190311033755.GB7087@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20190311033755.GB7087@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Mar 10, 2019 at 11:37:55PM -0400, Jeff King wrote:
 
-On Tue, Mar 12 2019, Andreas Schwab wrote:
+> Unfortunately, I don't think sha1dc currently supports #defines in that
+> direction. The only logic is "if we are on intel, do unaligned loads"
+> and "even if we are not on intel, do it anyway". There is no "even if we
+> are on intel, do not do unaligned loads".
+> 
+> I think you'd need something like this:
+> [...]
 
-> On M=C3=A4r 12 2019, Junio C Hamano <gitster@pobox.com> wrote:
->
->> I however think it may be worth making sure that our docs do not
->> encourage "diff A..B" and teach "diff A B" when comparing two
->> endpoints.  That can be done without changing anything in the code.
->
-> The nice thing about "diff A..B" is that you can c&p the output from the
-> fetch run without the need to edit it.
+The sha1dc folks gave us a very nice and quick turnaround on this.
+Thanks to them, and to Jeffrey for opening an issue there.
 
-Not to shoot down this effort, just to add another similar thing I do
-regularly for ff-branches:
+Here's a commit which updates Git to use the new feature. I've tested it
+with both the in-tree and submodule builds like:
 
- 1. Copy/paste A..B fetch output
- 2. git log A..B
- 3. ^log^diff
+  make DC_SHA1_SUBMODULE=Yes SANITIZE=undefined && (cd t && ./t0001-*)
+  make DC_SHA1_SUBMODULE=    SANITIZE=undefined && (cd t && ./t0001-*)
 
-I.e. I just need to tell my terminal to re-run the same "log" command
-with "diff" instead of "log".
+both of which fail without this patch and succeed without it.
 
-Of course as covered in the linked thread it doesn't work for some
-(non-ff) cases, and I'll sometimes end up cursing it and swapping around
-".." for "..." with log/diff.
+-- >8 --
+Subject: [PATCH] Makefile: fix unaligned loads in sha1dc with UBSan
+
+The sha1dc library uses unaligned loads on platforms that support them.
+This is normally what you'd want for performance, but it does cause
+UBSan to complain when we compile with SANITIZE=undefined. Just like we
+set -DNO_UNALIGNED_LOADS for our own code in that case, we should set
+-DSHA1DC_FORCE_ALIGNED_ACCESS.
+
+Of course that does nothing without pulling in the patches from sha1dc
+to respect that define. So let's do that, too, updating both the
+submodule link and our in-tree copy (from the same commit).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Makefile               | 1 +
+ sha1collisiondetection | 2 +-
+ sha1dc/sha1.c          | 5 +++--
+ 3 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 537493822b..593c2c729a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1195,6 +1195,7 @@ BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
+ BASIC_CFLAGS += -fno-omit-frame-pointer
+ ifneq ($(filter undefined,$(SANITIZERS)),)
+ BASIC_CFLAGS += -DNO_UNALIGNED_LOADS
++BASIC_CFLAGS += -DSHA1DC_FORCE_ALIGNED_ACCESS
+ endif
+ ifneq ($(filter leak,$(SANITIZERS)),)
+ BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
+diff --git a/sha1collisiondetection b/sha1collisiondetection
+index 232357eb2e..16033998da 160000
+--- a/sha1collisiondetection
++++ b/sha1collisiondetection
+@@ -1 +1 @@
+-Subproject commit 232357eb2ea0397388254a4b188333a227bf5b10
++Subproject commit 16033998da4b273aebd92c84b1e1b12e4aaf7009
+diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+index df0630bc6d..5931cf25d5 100644
+--- a/sha1dc/sha1.c
++++ b/sha1dc/sha1.c
+@@ -124,10 +124,11 @@
+ #endif
+ /*ENDIANNESS SELECTION*/
+ 
++#ifndef SHA1DC_FORCE_ALIGNED_ACCESS
+ #if defined(SHA1DC_FORCE_UNALIGNED_ACCESS) || defined(SHA1DC_ON_INTEL_LIKE_PROCESSOR)
+ #define SHA1DC_ALLOW_UNALIGNED_ACCESS
+-#endif /*UNALIGNMENT DETECTION*/
+-
++#endif /*UNALIGNED ACCESS DETECTION*/
++#endif /*FORCE ALIGNED ACCESS*/
+ 
+ #define rotate_right(x,n) (((x)>>(n))|((x)<<(32-(n))))
+ #define rotate_left(x,n)  (((x)<<(n))|((x)>>(32-(n))))
+-- 
+2.21.0.539.gcf54785f87
+
