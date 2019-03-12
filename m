@@ -2,97 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51FF720248
-	for <e@80x24.org>; Tue, 12 Mar 2019 19:58:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AC0220248
+	for <e@80x24.org>; Tue, 12 Mar 2019 20:26:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726452AbfCLT6K (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 15:58:10 -0400
-Received: from kwanyin.sergiodj.net ([158.69.185.54]:47944 "EHLO
-        kwanyin.sergiodj.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726329AbfCLT6K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 15:58:10 -0400
-From:   Sergio Durigan Junior <sergiodj@sergiodj.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Possible race condition with git-rebase + .git/index.lock
-References: <87k1h55bx0.fsf@sergiodj.net>
-        <CACsJy8ANLkz=3cj1dAuHdUCkrgQzos=90EEG0n901o3QAp3PUQ@mail.gmail.com>
-        <877ed459eh.fsf@sergiodj.net>
-        <CABPp-BFnxhiXfvZUZndD-_htMEw0bZzrLRFpAF9u5YV3wi6qnA@mail.gmail.com>
-        <8736nr6g94.fsf@sergiodj.net>
-        <CABPp-BH2k2yz-MrEvN2dX1jLVJydxOBv-bu-H5M_SXO_aLK8hw@mail.gmail.com>
-X-URL:  http://blog.sergiodj.net
-Date:   Tue, 12 Mar 2019 15:58:08 -0400
-In-Reply-To: <CABPp-BH2k2yz-MrEvN2dX1jLVJydxOBv-bu-H5M_SXO_aLK8hw@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 12 Mar 2019 12:39:04 -0700")
-Message-ID: <87y35j50hb.fsf@sergiodj.net>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1727141AbfCLU0I (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 16:26:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47700 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726534AbfCLU0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 16:26:08 -0400
+Received: (qmail 2354 invoked by uid 109); 12 Mar 2019 20:26:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Mar 2019 20:26:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3400 invoked by uid 111); 12 Mar 2019 20:26:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 12 Mar 2019 16:26:27 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Mar 2019 16:26:06 -0400
+Date:   Tue, 12 Mar 2019 16:26:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [RFC/PATCH] packfile: use extra variable to clarify code in
+ use_pack()
+Message-ID: <20190312202605.GA24350@sigill.intra.peff.net>
+References: <e561b83f-cf1c-eef8-7651-8519ce105491@ramsayjones.plus.com>
+ <b4106d4b-5f9e-4577-c8ed-641df33d4fb5@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b4106d4b-5f9e-4577-c8ed-641df33d4fb5@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday, March 12 2019, Elijah Newren wrote:
+On Tue, Mar 12, 2019 at 05:39:13PM +0000, Ramsay Jones wrote:
 
-> On Tue, Mar 12, 2019 at 12:32 PM Sergio Durigan Junior
-> <sergiodj@sergiodj.net> wrote:
->>
->> On Tuesday, March 12 2019, Elijah Newren wrote:
->>
->> > On Tue, Mar 12, 2019 at 9:48 AM Sergio Durigan Junior
->> > <sergiodj@sergiodj.net> wrote:
->> >> On Tuesday, March 12 2019, Duy Nguyen wrote:
->> >>
->> >> > On Tue, Mar 12, 2019 at 5:18 AM Sergio Durigan Junior
->> >> > <sergiodj@sergiodj.net> wrote:
->> >> >> This works without problems most of the time (well, usually there are
->> >> >> conflicts and all, but that's a burden I have to carry).  However,
->> >> >> sometimes I notice that git fails with:
->> >> >>
->> >> >>   # git rebase origin/master
->> >> >>   ...
->> >> >>   Applying: commitX
->> >> >>   Applying: commitY
->> >> >>   Applying: commitZ
->> >> >>   fatal: Unable to create '/home/xyz/dir1/dir2/.git/index.lock': File exists.
->> >> >>
->> >> >> The first thing I did was to check whether the index.lock file existed,
->> >> >> but it doesn't.
->> >> >
->> >> > Is the output this clean? What I'm looking for is signs of automatic
->> >> > garbage collection kicking in the middle of the rebase. Something like
->> >> > "Auto packing the repository blah blah for optimum performance".
->> >>
->> >> Yeah, this is the exact output.  I also thought about "git gc", but I
->> >> don't see any output related to it.  Is it possible that it's being
->> >> executed in the background and not printing anything?
->> >
->> > Any chance you have a cronjob or other task execution mechanism that
->> > is running git commands in various directories (even simple commands
->> > like 'git status' since it's not read-only contrary to what some
->> > expect, or 'git fetch' which might trigger a background gc)?
->>
->> Nope, nothing like this.  AFAIK, nothing is touching that repository at
->> the same time that I am.  Besides, even if I wait some minutes before
->> trying again, the bug manifests again.
->
-> Well, even though you didn't see the output Duy was looking for, if
-> you set gc.auto to 0 and gc.autoPackLimit to 0 (and maybe
-> gc.autoDetach to false just for good measure), does the problem still
-> occur?
+> On 12/03/2019 16:55, Ramsay Jones wrote:
+> > From: Jeff King <peff@peff.net>
+> > 
+> > Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 
-Thanks, I was indeed going to try this.  I'll test when I have time, and
-will let you know.
+Could definitely use a commit message. I think it's something like:
 
--- 
-Sergio
-GPG key ID: 237A 54B1 0287 28BF 00EF  31F4 D0EB 7628 65FC 5E36
-Please send encrypted e-mail if possible
-http://sergiodj.net/
+  We use the "offset" variable for two purposes. It's the offset into
+  the packfile that the caller provides us (which is rightly an off_t,
+  since we might have a packfile much larger than memory). But later we
+  also use it as the offset within a given mmap'd window, and that
+  window cannot be larger than a size_t.
+
+  For the second use, the fact that we have an off_t leads to some
+  confusion when we assign it to the "left" variable, is a size_t. It is
+  in fact correct (because our earlier "offset -= win->offset" means we
+  must be within the pack window), but using a separate variable of the
+  right type makes that much more obvious.
+
+You'll note that I snuck in the assumption that "left" is a size_t,
+which as you noted is not quite valid yet. :)
+
+> Heh, of course I should have tried applying on top of today's
+> codebase before sending it out! :(
+> 
+> Having just done so, it quickly showed that this patch assumes
+> that the 'left' parameter to use_pack() has been changed from
+> an 'unsigned long *' to an 'size_t *' as part of the series
+> that was being discussed in the above link.
+
+Yep. Until then,  I do not think there is much point (and in fact I'd
+suspect this code behaves incorrectly on Windows, where "unsigned long"
+is too short; hopefully they clamp pack windows to 4GB by default
+there, which would work around it).
+
+But I would be very happy if you wanted to resurrect the "left" patch
+and then do this on top. :)
+
+-Peff
