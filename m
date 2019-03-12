@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C8982032D
-	for <e@80x24.org>; Tue, 12 Mar 2019 13:30:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63D5D20379
+	for <e@80x24.org>; Tue, 12 Mar 2019 13:30:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726754AbfCLNab (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 09:30:31 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:34989 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725774AbfCLNa3 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726758AbfCLNac (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 09:30:32 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46380 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726284AbfCLNa3 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 12 Mar 2019 09:30:29 -0400
-Received: by mail-ed1-f65.google.com with SMTP id g19so2311744edp.2
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 06:30:27 -0700 (PDT)
+Received: by mail-ed1-f68.google.com with SMTP id n17so2255824edt.13
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 06:30:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Z8inGzJVVs3vWJ2vLGz2G3C7Zs7OmL5oh2wy/bfdAG8=;
-        b=l0bhlv/9KEDWwXfO1UdoghsWejmhL2xRMBLceVbDl6O9T3eYrzEXL3em2HbvT9GqpG
-         uNr+Y3R+cQdKEcXWaHl3KKrBfeIjxeC3N7Gj+F2zf7KtyCZ21y5sEyWJDxDIfLFQVzS9
-         isC/Wdi+CcFwfrwg2gEoAPVUNFh4A5CGKbJRncUrwdaAFrrrkIF5kivqWRvrC0uCduwW
-         6kPktRAl2v2wT2H7pJRzdhpT9VxJiY6Z53YLJficT8XAoAzsV7dBGkBuunkhRW3fC5Yf
-         TODg3rZzC2O/UKav8fsBpzWKoGpM1T+EuaRjn8er+nNeemLmqs6RxU71f6yVH5qAShtT
-         HSjQ==
+        bh=ZlFfQvdTesOwcJ+FpZBsUDW33v8Ne5TN7SitZEfxQgw=;
+        b=sQNLhifI8nnsxZC7S2yXlzM9B3CIuT9zyoZKW3v8VcGoAv6k5o+L0V3OCu6QF0Oq5a
+         YIixbvxKP9fSVVH+r/SfrbGf+iVE8PyF/zZEz4iPkOzgZF1hgZEU5bOvXs5YlbDY+3l5
+         IvTpijslk2X+SX5Pqzhf9VLurzNfWTH3qvt39f3UBcrINxN+77bSiHlWWwP+1UFTCKgs
+         590Bs7bIbS1qEDA0CbMKJmTIJNx1F8ejM5P+nlUKHDOhLG2NUFHuvDy8rH5ZUSpN9ISD
+         da0gl5XDqC/9X7n1FtM+aBvaumOCB8wFa0ple6kRXKWMvdHv3hk5GSQlT2WyUPDnQulu
+         TIrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Z8inGzJVVs3vWJ2vLGz2G3C7Zs7OmL5oh2wy/bfdAG8=;
-        b=kYLoyJWu/Fo6L/PZyAENxG2V7XA1mmKLgLB1fqYY3EoThU6/5D7hUJEmlZSbI8J40w
-         s+Is0q6OEQUEwR/eZ+wpl5c6D/yuS8M9nsucxOuKA8MkYV5o+66D0/4otTQZxEvZxuxT
-         BLcH0SoYyK6+CGe4aOg1OPxsyLu2wMvKzUP3Kxm4/N2Usk7S7O8Hbmze9l/hQsXdEz/F
-         8DCh3VxWoOo4mBM5MhR6J/HNtNJn7/BrqXizuhnuq1VcXthvpCuUQLC8DAH6b1pvbI4y
-         H0ca8UI6/SssaG0m9W8rEn0ubKvXRSOqXJmXBclBT2oVKvwwxw1pf1g+BJkVfc7eZQXf
-         ptgw==
-X-Gm-Message-State: APjAAAU1byayreVwGoQgHdBhZLRPZavZ/Kvke8zF02mbUne1H8MOMdLh
-        NoktgufB9cCNJHXDKLNezLjOGc9+
-X-Google-Smtp-Source: APXvYqzb20Qcngab1LQRrvjecTVjLKPf6noX+GmHFhDWtxYEnjDZwFzSzqkrec/bZNg97vGIQz4BKA==
-X-Received: by 2002:a50:b527:: with SMTP id y36mr3529958edd.83.1552397426174;
-        Tue, 12 Mar 2019 06:30:26 -0700 (PDT)
+        bh=ZlFfQvdTesOwcJ+FpZBsUDW33v8Ne5TN7SitZEfxQgw=;
+        b=X8DjlCw93esUPRv0kMFpWBps1y3fNDs70S0qF/uD/fADf11MWyreH3zXOcJfSbo2Ah
+         9Ez3uZbX4ZUPaMJzKTKnkuZ+JUNuM+QFtoeQ6cm9GQDkRdjw8s3lmsfyF+isH1b+KRUd
+         SpRD2uSS6JWe56zsR5NUNGACAEZRLcd7QuMsb0mSYBVtTImVgfsdQHIljBW6ncqTbHnM
+         oZ2iLk9RAm97oLlnvqFab4qZafUkVL6kaFMVbT2AOjycoDRpHe/plJPcFopXT2CxHFtY
+         9+U5WmdJHUzoHJU+4Tol6HpKMaOcotvHdyalO7fMGQ+1eRZV4MkZWV/Az/f+IGyjT1NG
+         tdpg==
+X-Gm-Message-State: APjAAAWpOr4tPAqPHvIRNI0uzbFLcUg1lsyw5WSJdISCW1ADNUBMsTBj
+        m7pcqZkBwq+OBQPZFu+lt+alWfV8
+X-Google-Smtp-Source: APXvYqy45ZL/hwDmIbtzUdF2rCzL+jXuMapKws/oQlYbKYyA9u/XNJcDA68CBGaOgEsdf/ghoKQOEg==
+X-Received: by 2002:a17:906:49c7:: with SMTP id w7mr26071396ejv.226.1552397427900;
+        Tue, 12 Mar 2019 06:30:27 -0700 (PDT)
 Received: from ubuntu-N750HU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id h8sm5875213edk.21.2019.03.12.06.30.25
+        by smtp.gmail.com with ESMTPSA id h8sm5875213edk.21.2019.03.12.06.30.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Mar 2019 06:30:25 -0700 (PDT)
+        Tue, 12 Mar 2019 06:30:26 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v3 10/11] partial-clone: add multiple remotes in the doc
-Date:   Tue, 12 Mar 2019 14:29:58 +0100
-Message-Id: <20190312132959.11764-11-chriscool@tuxfamily.org>
+Subject: [PATCH v3 11/11] remote: add promisor and partial clone config to the doc
+Date:   Tue, 12 Mar 2019 14:29:59 +0100
+Message-Id: <20190312132959.11764-12-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.21.0.166.gb5e4dbcfd3
 In-Reply-To: <20190312132959.11764-1-chriscool@tuxfamily.org>
 References: <20190312132959.11764-1-chriscool@tuxfamily.org>
@@ -78,151 +78,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While at it, let's remove a reference to ODB effort as the ODB
-effort has been replaced by directly enhancing partial clone
-and promisor remote features.
-
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/technical/partial-clone.txt | 83 ++++++++++++++++-------
- 1 file changed, 58 insertions(+), 25 deletions(-)
+ Documentation/config/remote.txt | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
-index 896c7b3878..58adcc5ce1 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -100,18 +100,18 @@ or commits that reference missing trees.
- Handling Missing Objects
- ------------------------
- 
--- An object may be missing due to a partial clone or fetch, or missing due
--  to repository corruption.  To differentiate these cases, the local
--  repository specially indicates such filtered packfiles obtained from the
--  promisor remote as "promisor packfiles".
-+- An object may be missing due to a partial clone or fetch, or missing
-+  due to repository corruption.  To differentiate these cases, the
-+  local repository specially indicates such filtered packfiles
-+  obtained from promisor remotes as "promisor packfiles".
+diff --git a/Documentation/config/remote.txt b/Documentation/config/remote.txt
+index 6c4cad83a2..a8e6437a90 100644
+--- a/Documentation/config/remote.txt
++++ b/Documentation/config/remote.txt
+@@ -76,3 +76,11 @@ remote.<name>.pruneTags::
  +
- These promisor packfiles consist of a "<name>.promisor" file with
- arbitrary contents (like the "<name>.keep" files), in addition to
- their "<name>.pack" and "<name>.idx" files.
- 
- - The local repository considers a "promisor object" to be an object that
--  it knows (to the best of its ability) that the promisor remote has promised
--  that it has, either because the local repository has that object in one of
-+  it knows (to the best of its ability) that promisor remotes have promised
-+  that they have, either because the local repository has that object in one of
-   its promisor packfiles, or because another promisor object refers to it.
- +
- When Git encounters a missing object, Git can see if it is a promisor object
-@@ -123,7 +123,7 @@ expensive-to-modify list of missing objects.[a]
- - Since almost all Git code currently expects any referenced object to be
-   present locally and because we do not want to force every command to do
-   a dry-run first, a fallback mechanism is added to allow Git to attempt
--  to dynamically fetch missing objects from the promisor remote.
-+  to dynamically fetch missing objects from promisor remotes.
- +
- When the normal object lookup fails to find an object, Git invokes
- fetch-object to try to get the object from the server and then retry
-@@ -157,8 +157,7 @@ and prefetch those objects in bulk.
- +
- We are not happy with this global variable and would like to remove it,
- but that requires significant refactoring of the object code to pass an
--additional flag.  We hope that concurrent efforts to add an ODB API can
--encompass this.
-+additional flag.
- 
- 
- Fetching Missing Objects
-@@ -182,21 +181,53 @@ has been updated to not use any object flags when the corresponding argument
-   though they are not necessary.
- 
- 
-+Using many promisor remotes
-+---------------------------
+ See also `remote.<name>.prune` and the PRUNING section of
+ linkgit:git-fetch[1].
 +
-+Many promisor remotes can be configured and used.
++remote.<name>.promisor::
++	When set to true, this remote will be used to fetch promisor
++	objects.
 +
-+This allows for example a user to have multiple geographically-close
-+cache servers for fetching missing blobs while continuing to do
-+filtered `git-fetch` commands from the central server.
-+
-+When fetching objects, promisor remotes are tried one after the other
-+until all the objects have been fetched.
-+
-+Remotes that are considered "promisor" remotes are those specified by
-+the following configuration variables:
-+
-+- `extensions.partialClone = <name>`
-+
-+- `remote.<name>.promisor = true`
-+
-+- `remote.<name>.partialCloneFilter = ...`
-+
-+Only one promisor remote can be configured using the
-+`extensions.partialClone` config variable. This promisor remote will
-+be the last one tried when fetching objects.
-+
-+The other promisor remotes will be tried in the order they appear in
-+the config file.
-+
- Current Limitations
- -------------------
- 
--- The remote used for a partial clone (or the first partial fetch
--  following a regular clone) is marked as the "promisor remote".
-+- It is not possible to specify the order in which the promisor
-+  remotes are tried in other ways than the order in which they appear
-+  in the config file.
- +
--We are currently limited to a single promisor remote and only that
--remote may be used for subsequent partial fetches.
-+It is also not possible to specify an order to be used when fetching
-+from one remote and a different order when fetching from another
-+remote.
-+
-+- It is not possible to push only specific objects to a promisor
-+  remote.
- +
--We accept this limitation because we believe initial users of this
--feature will be using it on repositories with a strong single central
--server.
-+It is not possible to push at the same time to multiple promisor
-+remote in a specific order.
- 
--- Dynamic object fetching will only ask the promisor remote for missing
--  objects.  We assume that the promisor remote has a complete view of the
-+- Dynamic object fetching will only ask promisor remotes for missing
-+  objects.  We assume that promisor remotes have a complete view of the
-   repository and can satisfy all such requests.
- 
- - Repack essentially treats promisor and non-promisor packfiles as 2
-@@ -218,15 +249,17 @@ server.
- Future Work
- -----------
- 
--- Allow more than one promisor remote and define a strategy for fetching
--  missing objects from specific promisor remotes or of iterating over the
--  set of promisor remotes until a missing object is found.
-+- Improve the way to specify the order in which promisor remotes are
-+  tried.
- +
--A user might want to have multiple geographically-close cache servers
--for fetching missing blobs while continuing to do filtered `git-fetch`
--commands from the central server, for example.
-+For example this could allow to specify explicitly something like:
-+"When fetching from this remote, I want to use these promisor remotes
-+in this order, though, when pushing or fetching to that remote, I want
-+to use those promisor remotes in that order."
-+
-+- Allow pushing to promisor remotes.
- +
--Or the user might want to work in a triangular work flow with multiple
-+The user might want to work in a triangular work flow with multiple
- promisor remotes that each have an incomplete view of the repository.
- 
- - Allow repack to work on promisor packfiles (while keeping them distinct
++remote.<name>.partialclonefilter::
++	The filter that will be applied when fetching from this
++	promisor remote.
 -- 
 2.21.0.166.gb5e4dbcfd3
 
