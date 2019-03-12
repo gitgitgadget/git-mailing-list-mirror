@@ -2,121 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_HK_NAME_DR shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7733C20248
-	for <e@80x24.org>; Tue, 12 Mar 2019 14:20:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3A0720248
+	for <e@80x24.org>; Tue, 12 Mar 2019 14:38:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726649AbfCLOUG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 10:20:06 -0400
-Received: from ppsw-31.csi.cam.ac.uk ([131.111.8.131]:44742 "EHLO
-        ppsw-31.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725894AbfCLOUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 10:20:05 -0400
-X-Greylist: delayed 1009 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Mar 2019 10:20:05 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=cam.ac.uk;
-         s=20180806.ppsw; h=Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date
-        :Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=mkKkKf39fk4QeVkBB6SPzq2We1TsICIztbqd6lS0TNs=; b=RXEnNwKl7XSc0EdfMLzKu7odjQ
-        8mPwWJLoyz7zm8WhhCZrEcUxpk+8gWWNtFRdSpO1/2XM+ChGKVSUdbFn25UHqkm1lorR3+/3nxIR4
-        YUYh+7zclD/R68lcbsFvFGWfwbPaVbzwih9FUf39eqWOG6aslSAVDE4dV9lpUD1Opbc8=;
-X-Cam-AntiVirus: not scanned (internal relaying)
-X-Cam-ScannerInfo: http://help.uis.cam.ac.uk/email-scanner-virus
-Received: from webmail-1b.csi.cam.ac.uk ([131.111.9.33]:54876)
-        by ppsw-31.csi.cam.ac.uk (ppsw.cam.ac.uk [131.111.8.137]:25)
-        with esmtp id 1h3hzw-000Zbs-Jb (Exim 4.91)
-        (return-path <nwf20@cam.ac.uk>); Tue, 12 Mar 2019 14:03:16 +0000
-Received: from [127.0.0.1] (helo=webmail-2.hermes.cam.ac.uk)
-        by webmail-1b.csi.cam.ac.uk with esmtp id 1h3hzw-00065y-2J (Exim 4.91)
-        (return-path <nwf20@cam.ac.uk>); Tue, 12 Mar 2019 14:03:16 +0000
-Received: from dhcp-10-248-124-118.eduroam.wireless.private.cam.ac.uk
- ([10.248.124.118])
- by webmail-2.hermes.cam.ac.uk
- with HTTP (HTTP/1.1 POST); Tue, 12 Mar 2019 14:03:16 +0000
+        id S1726733AbfCLOiJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 10:38:09 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38988 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725895AbfCLOiJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 10:38:09 -0400
+Received: by mail-wr1-f66.google.com with SMTP id p8so2979004wrq.6
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 07:38:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:subject:to:cc:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=ivAnS04KBwaUVzlsXvc1KBrAw4/5S2rY11aCi18YJmg=;
+        b=tNZkW3sGNsgpWvARqgX8IQO4U1COV0UbI2fYlwXsB4rtlpPjfW1RPoZauPiVaBaBqb
+         KSBsoWRvTVAS38AI1y6PkekZhAxMK6jwrJNcVtCWBN0a+wH+kIS9SIRUR5oq/07C+U+g
+         2r5lkwgeo/Kv+YYHyEWUqFZ9OWyIhPbAz3Tah/3EtB0zvkA7i7HX4ZpOORdIA7f7YI0L
+         yX13Go014tRJNLzRwNg6AUKXZ4Z1malGhCwtI6cIkNSsS6f9rTtJpViz3TEskgvs8IpT
+         CBuD3g86QX9o9QunzBD72STVpke/ZuSSW1S2pRYdXbCNufpaGxQrWRTvxjKhyD0zcEuB
+         BTNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:subject:to:cc:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=ivAnS04KBwaUVzlsXvc1KBrAw4/5S2rY11aCi18YJmg=;
+        b=jiU0lEChJYHdB55WZxdBxhLYlYl3cIiTOaaJZp975hMpRgKBZTAOv0udvbvh2dsvyS
+         FG1iYtRz4YT/FkPHsrhE7z7icjsY4z3ZfX0kzBk2Pzm9OjELcTFaunMyfyZQHVOXzm4o
+         8/0p/ZcpPZ7cGJXWKAdBVY+F0YLaFzBOpJW0lTo5PIaSAGMoWnIVXTIN8dQZDyo7flu6
+         0Hi3iKKDPEGwy8uzTEj86H71RRku+VCOLJGoc0ek7QWJQnlSB9CW3EGvcZ6kYdB3QAtE
+         3fzvzV3/McGjuAtYwN+AM7VmW1HiDg5wJmhli3KCwr05n4Ipi4pVH2yc2inHtD57lLYa
+         1ndw==
+X-Gm-Message-State: APjAAAWJnEdy3Tm/RrrvcbAXHLlG5oNLDpglBRCBoC5GDQpwnh3+XBX5
+        jEj2huTKro/mC9Ba6tg4Bnk=
+X-Google-Smtp-Source: APXvYqwejdfYt+8SE10HSRn1CycwzvijfyEfhUtWkz5m6rTy2uW7MF35UHXmfMPgUkuPB53JltY02g==
+X-Received: by 2002:a5d:4e87:: with SMTP id e7mr9194947wru.175.1552401487107;
+        Tue, 12 Mar 2019 07:38:07 -0700 (PDT)
+Received: from [192.168.221.164] ([185.79.217.61])
+        by smtp.gmail.com with ESMTPSA id x6sm5442463wmg.0.2019.03.12.07.38.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Mar 2019 07:38:06 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Subject: [PATCH] t4150: remove unused variable
+To:     git@vger.kernel.org
+Cc:     phillip.wood@dunelm.org.uk, s-beyer@gmx.net,
+        Paul Tan <pyokagan@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <36ad743f-8429-a6ff-7fad-15e5dba01483@gmail.com>
+Date:   Tue, 12 Mar 2019 15:38:04 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Authenticated-User: nwf20
-Date:   Tue, 12 Mar 2019 14:03:16 +0000
-From:   "Dr N.W. Filardo" <nwf20@cam.ac.uk>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/4] repack: add --sparse and pass to pack-objects
-In-Reply-To: <f26c68df-8895-2a2d-0175-5fa3581ab45a@gmail.com>
-References: <20190312131858.26115-1-nwf20@cl.cam.ac.uk>
- <20190312131858.26115-4-nwf20@cl.cam.ac.uk>
- <f26c68df-8895-2a2d-0175-5fa3581ab45a@gmail.com>
-Message-ID: <ad762ef2fbe9f268068b9a406070591b@cam.ac.uk>
-X-Sender: nwf20@cam.ac.uk
-User-Agent: Roundcube Webmail/1.0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-03-12 13:47, Derrick Stolee wrote:
-> On 3/12/2019 9:18 AM, Nathaniel Filardo wrote:
->> The sparse connectivity algorithm saves a whole lot of time when there
->> are UNINTERESTING trees around.
-> 
-> Interesting! Do you have some performance numbers to include with
-> this statement?
+In commit 735285b403 ("am: fix signoff when other trailers are present",
+2017-08-08) tests using variable $signoff were rewritten and it is no
+longer used, so just remove it from the test setup.
 
-Not UNINTERESTING? ;)
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
+ t/t4150-am.sh | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Not directly, no, but the performance numbers reported for the next 
-patch in
-the series hinge on using sparse reachability.  It seemed like a good 
-idea to
-expose this knob through repack even if one isn't going to use the
---assume-pack-keep-transitive flag introduced in the next patch.
-
->> @@ -48,6 +49,10 @@ static int repack_config(const char *var, const 
->> char *value, void *cb)
->>  		use_delta_islands = git_config_bool(var, value);
->>  		return 0;
->>  	}
->> +	if (!strcmp(var, "pack.usesparse")) {
->> +		sparse = git_config_bool(var, value);
->> +		return 0;
->> +	}
-> 
-> This part is not handled inside of `pack-objects`. Since you are not
-> sending '--no-sparse' when the variable 'sparse' is zero, the config
-> setting will automatically be picked up by the pack-objects builtin.
-
-OK, I will drop this hunk.
-
-> Now, a question of whether you _should_ allow the '--no-sparse' option
-> in the 'repack' command, and send it along to the inner command (when
-> it is present) is another question.
-
-I'm inclined to say yes, but am open to suggestions. :)
-
->> @@ -366,6 +374,8 @@ int cmd_repack(int argc, const char **argv, const 
->> char *prefix)
->>  	argv_array_push(&cmd.args, "--all");
->>  	argv_array_push(&cmd.args, "--reflog");
->>  	argv_array_push(&cmd.args, "--indexed-objects");
->> +	if (sparse)
->> +		argv_array_push(&cmd.args, "--sparse");
->>  	if (repository_format_partial_clone)
->>  		argv_array_push(&cmd.args, "--exclude-promisor-objects");
->>  	if (write_bitmaps)
->> 
-> 
-> How about a test with this new option? You can probably just add to
-> t5322-pack-objects-sparse.sh.
-
-Can do.
-
-Cheers,
---nwf;
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 55b577d919..3f7f750cc8 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -77,14 +77,12 @@ test_expect_success 'setup: messages' '
+ 
+ 	printf "Subject: " >subject-prefix &&
+ 
+-	cat - subject-prefix msg-without-scissors-line >msg-with-scissors-line <<-\EOF &&
++	cat - subject-prefix msg-without-scissors-line >msg-with-scissors-line <<-\EOF
+ 	This line should not be included in the commit message with --scissors enabled.
+ 
+ 	 - - >8 - - remove everything above this line - - >8 - -
+ 
+ 	EOF
+-
+-	signoff="Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
+ '
+ 
+ test_expect_success setup '
+-- 
+2.20.1
 
