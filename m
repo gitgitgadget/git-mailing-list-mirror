@@ -7,80 +7,77 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 532F520248
-	for <e@80x24.org>; Tue, 12 Mar 2019 10:11:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2EED20248
+	for <e@80x24.org>; Tue, 12 Mar 2019 10:28:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726325AbfCLKLw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 06:11:52 -0400
-Received: from mail-io1-f43.google.com ([209.85.166.43]:34308 "EHLO
-        mail-io1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725873AbfCLKLw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 06:11:52 -0400
-Received: by mail-io1-f43.google.com with SMTP id n11so1605290ioh.1
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 03:11:51 -0700 (PDT)
+        id S1726193AbfCLK2m (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 06:28:42 -0400
+Received: from mail-it1-f172.google.com ([209.85.166.172]:53350 "EHLO
+        mail-it1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725873AbfCLK2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 06:28:42 -0400
+Received: by mail-it1-f172.google.com with SMTP id x189so3513390itd.3
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 03:28:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=gViPfLlwQLcS8oOyXIMuMc97cGmWGgWTizO11pUJY2M=;
-        b=PPd0ihRf0lJqgfTMgaA1eQyy2IoN+AA+5YQvgIRjR88sTtgPhrcIF7ZcZNKksiTXFD
-         xug3uSV+wmr8nELPJSvmPf74PBEntVqEzUboQ/NY+1H+ZHLp0835n0aSsWZt5mIcffSs
-         vH6dlgKaksXN4sEhtr5jG8VusmVooeG4GXOGFh75xkA8bq6a8P5zoKvHTI4p0pBP5Icn
-         p8I/0PfPgeCrVRdAvncVgdHSHC+moXAvbWc0kqD3w4P7MSNguf0d9MVN7slqnnnzpLwm
-         2YxMmBvyQv9J4Bjvrh1oWV+hE+/WbNY4HR96rmCSyAeSmyZpGZUSYAoYzyf40qX/mdbR
-         Xf5A==
+        bh=BVt91jXZvaP6yDV99ft8X2OLn8eZzgGnXbObU7e9LlA=;
+        b=sUAzG+JAOpdvCFUyrZsNJoe/VosqqQVcU99slMvfsB35Xee6fXI+6ZExg/y6sPGy90
+         gi6qgpmWkYBv/Xj24pNH1qHdVlU9uxpPjHjDOQ5C1satuAO74Y3a3PPoO32lNUTV3Sgk
+         gb++360HEM4jfiAJSLxZSxhLZogToI9mtXc6HB86EiHWFldO11FkyDHWNpYszFFEg3t2
+         BesEK4ON2KULK3fs0qdt1EzPdiYVnOUb360Aoci9lEKBDTXPNBZ4IARHDKEjm3nKY9Ff
+         JS2hTQRxreSoOtruymDYm7BXmvqMENPNzybYwLKlKBSgv318MadQgKwslKQWQ0uFgzVW
+         Gpyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=gViPfLlwQLcS8oOyXIMuMc97cGmWGgWTizO11pUJY2M=;
-        b=e1uhwvlQB2iNlE8HxG0ph6PMFLP4fjHWQHqNWZrXseKhuRgWbf16sF0WavFcLLTJHN
-         FzP/HV+8yXMu6WyYfF0ODdBB3P+uGAZHkjYo6gdneW0QK2rRpbNhFnZO+ACKcYGKnFbp
-         lF5vSmvKOBKeukFZG8NG710/AGtYTnhWGkmO4XjOK7dQJEiQAO9B/or9F2daWMrDR6wI
-         N/gwbbuw0vvvM4i+DP3Nkt12ZyTWoXQ4Ykf1HM+ywdTVAm1vd8CkD5ZKEHRVkLjIXL9g
-         SdYHaWn/De0SOtcd6EewteIuigdzP8vDynFShZwskrEC89RGhXHCHa5eqcZIgol+CGqa
-         wI5Q==
-X-Gm-Message-State: APjAAAXw1nyeJRnPKN+kfmylV1V7Y7vqYyq4GuDkdci9degSnzq06wuq
-        YqUhyRBQl7KRCBIJEBK7UbdYKVgoobU7+t35ttxCGw==
-X-Google-Smtp-Source: APXvYqyhPuqvaf9WWZoZ2y3XeTCVy96HweUf1Q9/uttkDsdVcM2ZTY7Wyh/HjhKUKqpMCHwIKG1PObxNW77zLju/NAM=
-X-Received: by 2002:a5d:9357:: with SMTP id i23mr16502082ioo.236.1552385511230;
- Tue, 12 Mar 2019 03:11:51 -0700 (PDT)
+        bh=BVt91jXZvaP6yDV99ft8X2OLn8eZzgGnXbObU7e9LlA=;
+        b=HEpvTuIjnwMKxMsvphiBhclgdifOs0IS4Bcl22Vm2/v8Qjly2zXcFZ+BbMtCzcHcIa
+         8I/5AOwq06hIxhox0/GYbT0t7+Jd6U/iYNx2xR1GLR8bENhe2CMKAObB7hyYhLwh9+lM
+         RLZDT8X6EebgHFOwaW9cRLCubZF6olMNQQGU8gVpPD0LShrl5pSe1RkcD3Vjk7Iyx/iT
+         swouaxtjJCHchjrcWMgFlvUuE7f8UI5Dfvtis9YFr5XvnToHjTuZdkqqFH+x1U+Hxi1r
+         ASpAsbtcXvjDTaW3oTvp5xyr2dlXUCFIuaujucLgAEFBZETVD/TE3fp+sB0vRyilTA00
+         4+3g==
+X-Gm-Message-State: APjAAAWdhMZXJfPYx1HkPGZG5UXnMhmdJtbpgb3w5pebjag38o2v+5G7
+        vpD/sl1twYZMjsoxTXR03K588jnHRhSWHi+GrU9vTg==
+X-Google-Smtp-Source: APXvYqwYm5UmBZf5aK8LNdtuewj68Aj+WNezMv5zuBzF+eaJj1QAIYKcWMgqY8NHW7hsY4CvRq/axfjmFRSnzJsif80=
+X-Received: by 2002:a24:3b0a:: with SMTP id c10mr1405144ita.10.1552386521338;
+ Tue, 12 Mar 2019 03:28:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
- <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
- <20190302150900.GU6085@hank.intra.tgummerer.com> <CAP8UFD31YKt7fm+shWdBxsL4fCSO4dU=97YwFsZ9gZBpEWmRPQ@mail.gmail.com>
- <CACsJy8ATKdcDdbTzCdZFhChKEAWhjuYQJBpGXZ9HAVXK1r2pFw@mail.gmail.com>
- <20190305045140.GH19800@sigill.intra.peff.net> <CACsJy8D-eQUGFsu4_cB9FE6gAo2d68EF_x2ze3YLXKAxYJfhSQ@mail.gmail.com>
- <CAHd-oW4LsyZOgHYgKaACX8AtzbA8pBpFUPWSF3GF6XxA_HKfjA@mail.gmail.com>
- <CACsJy8Bit46VatYZNB-ZsMBL043_GYDLqZ3fAZ8HzXZ9Kv1Z0g@mail.gmail.com>
- <CAHd-oW4e6CtcaKXbowqZM-pDAEGJxupHwBvFk2veaaYswt0hmQ@mail.gmail.com> <20190312100237.GA20471@ash>
-In-Reply-To: <20190312100237.GA20471@ash>
+References: <87k1h55bx0.fsf@sergiodj.net>
+In-Reply-To: <87k1h55bx0.fsf@sergiodj.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 12 Mar 2019 17:11:24 +0700
-Message-ID: <CACsJy8C=1dj-1T=5dt92LK5_Ario_YL2hkQWpi2dkhXyYY=_Hw@mail.gmail.com>
-Subject: Re: Questions on GSoC 2019 Ideas
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        git <git@vger.kernel.org>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
+Date:   Tue, 12 Mar 2019 17:28:15 +0700
+Message-ID: <CACsJy8ANLkz=3cj1dAuHdUCkrgQzos=90EEG0n901o3QAp3PUQ@mail.gmail.com>
+Subject: Re: Possible race condition with git-rebase + .git/index.lock
+To:     Sergio Durigan Junior <sergiodj@sergiodj.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 12, 2019 at 5:02 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> We have to analyze case by case. It may turn out that there are many
+On Tue, Mar 12, 2019 at 5:18 AM Sergio Durigan Junior
+<sergiodj@sergiodj.net> wrote:
+> This works without problems most of the time (well, usually there are
+> conflicts and all, but that's a burden I have to carry).  However,
+> sometimes I notice that git fails with:
+>
+>   # git rebase origin/master
+>   ...
+>   Applying: commitX
+>   Applying: commitY
+>   Applying: commitZ
+>   fatal: Unable to create '/home/xyz/dir1/dir2/.git/index.lock': File exists.
+>
+> The first thing I did was to check whether the index.lock file existed,
+> but it doesn't.
 
-s/are/aren't/
-
-> opportunity to utilize multi threads. I think checkout is definitely a
-> good candidate. For "git diff" and "git log" maybe you can try "perf"
-> to see how much workload is locked in pack access (mostly inflation,
-> because it's easier to spot from the profile report)
+Is the output this clean? What I'm looking for is signs of automatic
+garbage collection kicking in the middle of the rebase. Something like
+"Auto packing the repository blah blah for optimum performance".
 -- 
 Duy
