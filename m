@@ -2,64 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F2FF20248
-	for <e@80x24.org>; Tue, 12 Mar 2019 02:58:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB3AF202BB
+	for <e@80x24.org>; Tue, 12 Mar 2019 03:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726760AbfCLC6q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Mar 2019 22:58:46 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40051 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726534AbfCLC6q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Mar 2019 22:58:46 -0400
-Received: by mail-wm1-f66.google.com with SMTP id g20so997593wmh.5
-        for <git@vger.kernel.org>; Mon, 11 Mar 2019 19:58:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lpq2T1m9kaO7RPafDVAJ40iaw+ABg7NsA1otzWkVXEA=;
-        b=flJOXTmgFjquB3KQ14XKGIWDBvySaTmWISqZ0ZPBxmTWMGoYLJ8nayqLOgEuVmQ+w0
-         vMRs7dlrOeyWoDiI+pKSAih94pNsZYONavtJLoPRYeo83GrdlJoPbOuuWXYlLl1vTx8H
-         DxFiY5gCCm3EaGNMzKwBoudm+V6u+fRCettVAltS55yo6p9skK27fG//lb0ojZsvwe0w
-         RTKrnpw3h14RnlWiGglYc7dNVY1DP+Hz4mpHETF1V7vkgvL2fc2oodUilaxB5W3slG/m
-         KPHxXb+Ksm+s3htZAV2PiapxToHkOofvk23KllAPfXyULOqOORdrf9ar8iWzib9wD3uc
-         jjVg==
-X-Gm-Message-State: APjAAAUQAV9HRLsX71h1uImn3qJzU+G6gUfo5MDTrkzXJg0TPkykON9D
-        IzJcSwZZdunUMhAJyI3EEFV1XrRdM1redVHwNXQwgdNu
-X-Google-Smtp-Source: APXvYqy2XOFl2LqBXs0iM+lN9b67kD93kVhEadB/UUdIcVvwbhZLC5O6oQdcaqOblujolWPqBOnOx9oedxvzjx/i0O4=
-X-Received: by 2002:a1c:f503:: with SMTP id t3mr76417wmh.71.1552359524044;
- Mon, 11 Mar 2019 19:58:44 -0700 (PDT)
+        id S1726797AbfCLDNE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Mar 2019 23:13:04 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:38872 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726788AbfCLDND (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Mar 2019 23:13:03 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 4EDE220248;
+        Tue, 12 Mar 2019 03:13:03 +0000 (UTC)
+Date:   Tue, 12 Mar 2019 03:13:03 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: [PATCH] repack: enable bitmaps by default on bare repos
+Message-ID: <20190312031303.5tutut7zzvxne5dw@dcvr>
+References: <20190214043127.GA19019@sigill.intra.peff.net>
+ <20190214043743.GB19183@sigill.intra.peff.net>
+ <20190309024944.zcbwgvn52jsw2a2e@dcvr>
+ <20190310233956.GB3059@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <d5d47b6b-25d9-a649-e13d-76e98e07ed51@ramsayjones.plus.com>
-In-Reply-To: <d5d47b6b-25d9-a649-e13d-76e98e07ed51@ramsayjones.plus.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 11 Mar 2019 22:58:32 -0400
-Message-ID: <CAPig+cTqdeVXyYZarGOb+AiLOERO0HpK+ykYgrAddyFzPG0+Mg@mail.gmail.com>
-Subject: Re: [PATCH] sequencer: mark a file-local symbol as static
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190310233956.GB3059@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 11, 2019 at 10:53 PM Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
-> If you need to re-roll your 'dl/merge-cleanup-scissors-fix' branch,
-> could you please squash this into the relevant patch (commit 9bcdf520cb
-> ("sequencer.c: define get_config_from_cleanup", 2019-03-10)).
->
->  /* note that we assume that cleanup_config_mapping[0] contains the default settings */
-> -struct cleanup_config_mapping cleanup_config_mappings[] = {
-> +static struct cleanup_config_mapping cleanup_config_mappings[] = {
+Jeff King <peff@peff.net> wrote:
+> On Sat, Mar 09, 2019 at 02:49:44AM +0000, Eric Wong wrote:
+> > It would make life easier for people new to hosting git servers
+> > (and hopefully reduce centralization :)
+> 
+> I do think they're a net win for people hosting git servers. But if
+> that's the goal, I think at most you'd want to make bitmaps the default
+> for bare repos. They're really not much help for normal end-user repos
+> at this point.
 
-This was also suggested during review[1].
+Fair enough, hopefully this can make life easier for admins
+new to hosting git:
 
-[1]: http://public-inbox.org/git/CAPig+cQGvmi-237s1Leb1NpOMA0683PkCG4HBCKn_+x5YDHnCQ@mail.gmail.com/
+----------8<---------
+Subject: [PATCH] repack: enable bitmaps by default on bare repos
+
+A typical use case for bare repos is for serving clones and
+fetches to clients.  Enable bitmaps by default on bare repos to
+make it easier for admins to host git repos in a performant way.
+
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ builtin/repack.c  | 16 ++++++++++------
+ t/t7700-repack.sh | 14 +++++++++++++-
+ 2 files changed, 23 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 67f8978043..5d4758b515 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -14,7 +14,7 @@
+ 
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+-static int write_bitmaps;
++static int write_bitmaps = -1;
+ static int use_delta_islands;
+ static char *packdir, *packtmp;
+ 
+@@ -343,11 +343,15 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
+ 		die(_("--keep-unreachable and -A are incompatible"));
+ 
++	if (!(pack_everything & ALL_INTO_ONE)) {
++		if (write_bitmaps > 0)
++			die(_(incremental_bitmap_conflict_error));
++	} else if (write_bitmaps < 0) {
++		write_bitmaps = is_bare_repository();
++	}
++
+ 	if (pack_kept_objects < 0)
+-		pack_kept_objects = write_bitmaps;
+-
+-	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE))
+-		die(_(incremental_bitmap_conflict_error));
++		pack_kept_objects = write_bitmaps > 0;
+ 
+ 	packdir = mkpathdup("%s/pack", get_object_directory());
+ 	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, (int)getpid());
+@@ -368,7 +372,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	argv_array_push(&cmd.args, "--indexed-objects");
+ 	if (repository_format_partial_clone)
+ 		argv_array_push(&cmd.args, "--exclude-promisor-objects");
+-	if (write_bitmaps)
++	if (write_bitmaps > 0)
+ 		argv_array_push(&cmd.args, "--write-bitmap-index");
+ 	if (use_delta_islands)
+ 		argv_array_push(&cmd.args, "--delta-islands");
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 6162e2a8e6..3e0b5c40e4 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -221,5 +221,17 @@ test_expect_success 'repack --keep-pack' '
+ 	)
+ '
+ 
++test_expect_success 'bitmaps are created by default in bare repos' '
++	git clone --bare .git bare.git &&
++	cd bare.git &&
++	mkdir old &&
++	mv objects/pack/* old &&
++	pack=$(ls old/*.pack) &&
++	test_path_is_file "$pack" &&
++	git unpack-objects -q <"$pack" &&
++	git repack -ad &&
++	bitmap=$(ls objects/pack/*.bitmap) &&
++	test_path_is_file "$bitmap"
++'
++
+ test_done
+-
