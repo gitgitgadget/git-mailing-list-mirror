@@ -2,77 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PLING_QUERY,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,PLING_QUERY,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A35720248
-	for <e@80x24.org>; Tue, 12 Mar 2019 18:20:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC75220248
+	for <e@80x24.org>; Tue, 12 Mar 2019 18:20:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726916AbfCLSUh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 14:20:37 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:34999 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726908AbfCLSUh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 14:20:37 -0400
-Received: by mail-wr1-f67.google.com with SMTP id t18so3811000wrx.2
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 11:20:36 -0700 (PDT)
+        id S1726946AbfCLSUs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 14:20:48 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:45348 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726409AbfCLSUs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 14:20:48 -0400
+Received: by mail-io1-f65.google.com with SMTP id x9so2922229iog.12
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 11:20:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=PH+yy3DezjtuZQy8XKQ/8HUz0JxK5PPF9UBtdH3fQPU=;
-        b=TVbzhUoCh4n8LcHBkrsqAHtxJRCUyvSH4nSGGSymU+zwnFvW8dkrG09j7ibC87Ltw+
-         D/phnYWLd9Pxcz0lSUyayNqnKZcm6pRmeZVehQuMyuiJgwdb4qM+lf4LGkKEHoBQHpQ/
-         pLcQtOT7AxbiPE5AbC1qB3S5o+PtPMTni2BrRv1FyhvA7VnmHdZ9Zfmp+KVrNcDJa4jO
-         IwGJw+H8J6TXCtLcv53bAO2P2CBvknDJBaR/E/hKqxfKKQC9iTZw94TDqrYJAiQU+Rh+
-         e96PwGVSann8IqkW6yK4+rsSUlc2lFiVej3Ox7XwxRAVyUQWtPOSSo1fsTrmCCaBIhyL
-         Z7Tg==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WLducxQgdL5qWttFH2vRF69gJmiVGR+asvYDtlIvvMk=;
+        b=AusTUpe5xMrgZsxIuOIX5rK+6lL1g1O6HQmgFSMRQYqB/50HBAURCVGvfJTX03vYWq
+         2u16e95GXtncVNeysVMIXBBSFZioy5G8Xl/glEMI6ajxjhULv6CcqJRjs6GzEW8JVw4s
+         jX7/lsx9ib+lpsrzJXkxssyoCGsS+RLdctgj2xgNf1BazeECS/WVi+u6iZORs+NeUft7
+         YV+KtD/PjZbDJu0M2l5YBR87TkqqtfszQaEqT8/qt0KXODp+3BwLuvGgYwCj9mppk3iN
+         uW74o4lz7F25PcGGTd40t3VhUYhgDcvNJMRdcmJ7xE6EkL/ZCdh+PgNFUxkW/9ovk/pH
+         QdlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PH+yy3DezjtuZQy8XKQ/8HUz0JxK5PPF9UBtdH3fQPU=;
-        b=j45YGLJ7IBfSlddzSFdaorcjEHkI1rfjbxw60rJ9ks44Ah9ZJ9NloEBNOEvIpYRI5u
-         tVs721h/V+gSCUNYZFarofRIJWPZMmMGDwd/0S7wt2Ja67mWx2usB39XMSfcAlksg5Wv
-         +BIya+wOM9nWsvB1m2t/344g+DfoPoryXItLXlTe56O3KsTTo1SKs0o5ywrKn5OJz7rd
-         f4CmcGCMwUs6DcTA+vRd3vH8SvAc/IReKhm78OXQXHRgbLuggPPCo4xPd+pSd/K6KYag
-         nH9ii1VeSXZGj7NDVlJsXVJGRfRmIqJdx2ymlP1HAfX8UpnbMtrUExtmmwoSTkQ04FVR
-         piSw==
-X-Gm-Message-State: APjAAAXrQQmQQkLabXY6lnN8vVQ1x0eWU93hdWR5M+xDF0RD0EycqA1q
-        /1caiUqLF500XT+JxSGeOBAlC1ma
-X-Google-Smtp-Source: APXvYqxtYgN0B6BA19PF9iv2fLo1BCU749bDpNmPItb42MnjHMl7NbV4qgj64lTj9HWahzmnVFjjUw==
-X-Received: by 2002:adf:f60d:: with SMTP id t13mr24560977wrp.225.1552414835383;
-        Tue, 12 Mar 2019 11:20:35 -0700 (PDT)
-Received: from szeder.dev (x4db53905.dyn.telefonica.de. [77.181.57.5])
-        by smtp.gmail.com with ESMTPSA id a74sm5436966wma.22.2019.03.12.11.20.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Mar 2019 11:20:34 -0700 (PDT)
-Date:   Tue, 12 Mar 2019 19:20:31 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Bryan Turner <bturner@atlassian.com>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: why does "git revert" commit even if i try to bail with ":q!"?
-Message-ID: <20190312182031.GE28939@szeder.dev>
-References: <alpine.LFD.2.21.1903121317020.16391@localhost.localdomain>
- <CAGyf7-F2wCB7D_JGzd7USaTV0YfmOuFG2Z6GkWVM-JqWKaagQA@mail.gmail.com>
- <alpine.LFD.2.21.1903121411500.17683@localhost.localdomain>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WLducxQgdL5qWttFH2vRF69gJmiVGR+asvYDtlIvvMk=;
+        b=q109vHnusmj7tPZrs4Lr6CvGkOr5AN1CO3wRoT6xS5Rlpr9REwhl2s9LaytRzVRtu6
+         yR11eCEq1J6LTyaTQYs/fg0Xt6uCg0yLOEKdMQoV9zLQS8WNLIAVyRkZe7BFPeOCzvfM
+         vmBDfG7MS4fsTL5ULDaykHroMH+bNlPpsTlN5EoX82yS8htB+CWFuE2xbF67Qw0NTHo4
+         VDAbQ9rcpIah5HH6ht3XY9OpNiq5IxwXO217dpotTtHllUHtyhU0+BsdNdn5M7xiIe3x
+         LOrAV6UhRkPA42yCjvrco737P5fgNtPo5zMN5XdgAINTeAABKn5MsbY9htdPH4YdOgSo
+         OmMQ==
+X-Gm-Message-State: APjAAAW7hxbaPA35o9uTqp8TrDtjzeqdY4ZGqzEnVgK+FcdU9G4JgUV9
+        CNH9o2r8t7HGF6qEl85/s8UhHtJZOiAdZOnXkkhr9Q==
+X-Google-Smtp-Source: APXvYqyOxl+PXpu5reGUg74ai3rn7pUvqOgFFj/ltVpI5tBssBM7G0fYU3qpDdo8BrymeSstfL1+/v3arhi+uODjgE0=
+X-Received: by 2002:a5e:d917:: with SMTP id n23mr19776653iop.182.1552414847453;
+ Tue, 12 Mar 2019 11:20:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <alpine.LFD.2.21.1903121317020.16391@localhost.localdomain>
+ <CAGyf7-F2wCB7D_JGzd7USaTV0YfmOuFG2Z6GkWVM-JqWKaagQA@mail.gmail.com> <alpine.LFD.2.21.1903121411500.17683@localhost.localdomain>
 In-Reply-To: <alpine.LFD.2.21.1903121411500.17683@localhost.localdomain>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Tue, 12 Mar 2019 11:20:36 -0700
+Message-ID: <CAGyf7-Fb3XGwLtt3XBYK2SX0gZt1cDrA=47LJaBJvbfYWan9LQ@mail.gmail.com>
+Subject: Re: why does "git revert" commit even if i try to bail with ":q!"?
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 12, 2019 at 02:14:37PM -0400, Robert P. J. Day wrote:
+On Tue, Mar 12, 2019 at 11:14 AM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+>
 > On Tue, 12 Mar 2019, Bryan Turner wrote:
-> 
+>
 > > On Tue, Mar 12, 2019 at 10:23 AM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
 > > >
 > > >   never noticed this before ... when i do a regular "git commit" and
@@ -96,33 +88,24 @@ On Tue, Mar 12, 2019 at 02:14:37PM -0400, Robert P. J. Day wrote:
 > > >   Aborting commit due to empty commit message.
 > > >
 > > > that seems ... inconsistent. am i misunderstanding something?
-> 
+>
 > ... snip ...
-> 
+>
 > > When you use git revert, though, it writes a valid, usable message
 > > to the file ("Revert <subject>\n\nThis reverts commit <sha>"). When
 > > you :q!, that's still in the file. Since the file isn't empty, the
 > > commit moves ahead.
-> 
+>
 >   again, this is also not true. as i think i mentioned in my earlier
 > note, if you get dropped into the revert edit session, even if you
-> delete all the usable commit message lines, if you type ":q!",
-
-If you type ':q!', then all your edits are thrown away, leaving
-'.git/COMMIT_EDITMSG' intact.
-
-> the
+> delete all the usable commit message lines, if you type ":q!", the
 > revert commit still succeeds and, in fact, with all of the
 > revert-supplied usable lines that you just finished removing.
-> 
-> rday
-> 
-> -- 
-> 
-> ========================================================================
-> Robert P. J. Day                                 Ottawa, Ontario, CANADA
->                   http://crashcourse.ca/dokuwiki
-> 
-> Twitter:                                       http://twitter.com/rpjday
-> LinkedIn:                               http://ca.linkedin.com/in/rpjday
-> ========================================================================
+
+Again, unless you :w and _write_ deleting the lines, the file that Git
+sees still has the default message it generated. So, delete all the
+lines, then :w to write that change, and then, as a separate
+operation, do :q!. It won't commit the revert.
+
+Hope this helps,
+Bryan
