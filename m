@@ -6,121 +6,73 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 784C820248
-	for <e@80x24.org>; Tue, 12 Mar 2019 10:50:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3627020248
+	for <e@80x24.org>; Tue, 12 Mar 2019 10:52:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726109AbfCLKt5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 06:49:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47024 "HELO cloud.peff.net"
+        id S1726284AbfCLKwC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 06:52:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47032 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725811AbfCLKt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 06:49:56 -0400
-Received: (qmail 25580 invoked by uid 109); 12 Mar 2019 10:49:56 -0000
+        id S1725894AbfCLKwB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 06:52:01 -0400
+Received: (qmail 25639 invoked by uid 109); 12 Mar 2019 10:52:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Mar 2019 10:49:56 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Mar 2019 10:52:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31283 invoked by uid 111); 12 Mar 2019 10:50:15 -0000
+Received: (qmail 31456 invoked by uid 111); 12 Mar 2019 10:52:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 12 Mar 2019 06:50:15 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 12 Mar 2019 06:52:20 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Mar 2019 06:49:54 -0400
-Date:   Tue, 12 Mar 2019 06:49:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Mar 2019 06:51:59 -0400
+Date:   Tue, 12 Mar 2019 06:51:59 -0400
 From:   Jeff King <peff@peff.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] repack: enable bitmaps by default on bare repos
-Message-ID: <20190312104954.GA2023@sigill.intra.peff.net>
-References: <20190214043127.GA19019@sigill.intra.peff.net>
- <20190214043743.GB19183@sigill.intra.peff.net>
- <20190309024944.zcbwgvn52jsw2a2e@dcvr>
- <20190310233956.GB3059@sigill.intra.peff.net>
- <20190312031303.5tutut7zzvxne5dw@dcvr>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Jeffrey Walton <noloader@gmail.com>,
+        Todd Zullinger <tmz@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: disabling sha1dc unaligned access, was Re: One failed self test
+ on Fedora 29
+Message-ID: <20190312105159.GB2023@sigill.intra.peff.net>
+References: <CAH8yC8k_Zyi89uxTWTrjN65UAAc1L+jLho+P7O7UyvE-LvZuzA@mail.gmail.com>
+ <20190308174343.GX31362@zaya.teonanacatl.net>
+ <CAH8yC8mg3vjPoof5SDemQ_YiL+7e1ak535U2nFnPbaWJ8xSWOA@mail.gmail.com>
+ <CAH8yC8kn=EmEm_UPrnpwaofv97S42Se6FC+hWcm0EHCX-4rewQ@mail.gmail.com>
+ <xmqq1s3emapy.fsf@gitster-ct.c.googlers.com>
+ <20190311033755.GB7087@sigill.intra.peff.net>
+ <CACsJy8CdqbOKu7SHMt_Pz1EtRz08HGpwWHUHoZbUiow_pPh=+A@mail.gmail.com>
+ <8cf2fa6c-d742-a2a6-cde7-66cef87b04e8@virtuell-zuhause.de>
+ <20190311182328.GB16865@sigill.intra.peff.net>
+ <xmqqa7i0h7r6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190312031303.5tutut7zzvxne5dw@dcvr>
+In-Reply-To: <xmqqa7i0h7r6.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 12, 2019 at 03:13:03AM +0000, Eric Wong wrote:
+On Tue, Mar 12, 2019 at 04:27:57PM +0900, Junio C Hamano wrote:
 
-> > I do think they're a net win for people hosting git servers. But if
-> > that's the goal, I think at most you'd want to make bitmaps the default
-> > for bare repos. They're really not much help for normal end-user repos
-> > at this point.
+> Jeff King <peff@peff.net> writes:
 > 
-> Fair enough, hopefully this can make life easier for admins
-> new to hosting git:
+> > The problem to me is not that the steps that a developer has to do, but
+> > rather that we are dependent on the upstream project to make a simple
+> > fix (which they may not agree to do, or may take a long time to do).
 > 
-> ----------8<---------
-> Subject: [PATCH] repack: enable bitmaps by default on bare repos
-> 
-> A typical use case for bare repos is for serving clones and
-> fetches to clients.  Enable bitmaps by default on bare repos to
-> make it easier for admins to host git repos in a performant way.
+> Yeah.  In practice, I think the recommended way to work for a
+> depending project like us is to keep a fork in a separate repository
+> we control of the submodule project, and allow our fork to be
+> slightly ahead of the upstream while feeding our change to them.
 
-OK. I still think of bitmaps as something that might need manual care
-and feeding, but I think that may be leftover superstition. I can't
-offhand think of any real downsides to this.
+Reading Thomas's email again, that might actually have been what he was
+recommending. If so, sorry for the confusion. And I agree that's a valid
+solution.
 
->  static int delta_base_offset = 1;
->  static int pack_kept_objects = -1;
-> -static int write_bitmaps;
-> +static int write_bitmaps = -1;
-
-So we'll have "-1" be "not decided yet". Makes sense.
-
-> @@ -343,11 +343,15 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
->  		die(_("--keep-unreachable and -A are incompatible"));
->  
-> +	if (!(pack_everything & ALL_INTO_ONE)) {
-> +		if (write_bitmaps > 0)
-> +			die(_(incremental_bitmap_conflict_error));
-> +	} else if (write_bitmaps < 0) {
-> +		write_bitmaps = is_bare_repository();
-> +	}
-
-Might it be easier here to always resolve "-1" into a 0/1? I.e., like:
-
-  if (write_bitmaps < 0)
-	write_bitmaps = (pack_everything & ALL_INTO_ONE) && is_bare_repository();
-
-and then the rest of the logic can stay the same, and does not need to
-be modified to handle "write_bitmaps < 0"?
-
-> +test_expect_success 'bitmaps are created by default in bare repos' '
-> +	git clone --bare .git bare.git &&
-> +	cd bare.git &&
-
-Please don't "cd" outside of a subshell, since it impacts further tests
-that are added.
-
-> +	mkdir old &&
-> +	mv objects/pack/* old &&
-> +	pack=$(ls old/*.pack) &&
-
-Are we sure we have just done $pack here? Our repo came from a
-local-disk clone, which would have just hard-linked whatever was in the
-source repo. So we're subtly relying on the state that other tests have
-left.
-
-I'm not sure what we're trying to accomplish with this unpacking,
-though. Running "git repack -ad" should generate bitmaps whether the
-objects were already in a single pack or not. So I think this test can
-just be:
-
-  git clone --bare . bare.git &&
-  git -C bare.git repack -ad &&
-  bitmap=$(ls objects/pack/*.bitmap)
-  test_path_is_file "$bitmap"
-
-I do agree with Ævar it might also be worth testing that disabling
-bitmaps explicitly still works. And also that repacking _without_ "-a"
-(i.e., an incremental) does not complain about being unable to generate
-bitmaps.
+That said, I do wonder at some point if there's a huge value in using a
+submodule at that point. I think there is if the dependent project is
+large (and if it's optional, and some people might not need it). But in
+this case, it is not a big deal to just carry the sha1dc code in-tree.
 
 -Peff
