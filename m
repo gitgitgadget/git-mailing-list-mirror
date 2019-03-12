@@ -2,151 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBAF820248
-	for <e@80x24.org>; Tue, 12 Mar 2019 09:18:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A652F20248
+	for <e@80x24.org>; Tue, 12 Mar 2019 10:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725917AbfCLJSt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 05:18:49 -0400
-Received: from mail-eopbgr60097.outbound.protection.outlook.com ([40.107.6.97]:20256
-        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725887AbfCLJSt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 05:18:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sT6wIBxvAMEjsSApNYKNxBjazTYIUaIi5ROChgJ6QP8=;
- b=Q2ZzJFo/c5kBJPOEJWI8uGHdWPNBuoHBD8fuor6OZvrcop41dNcnsYCyQzWBmHs2GgZHpY3bGo0T01jGAqDTzlRKSLYoji0lD4T37E8I+Wwr+bxAAsNF0FknK6J32zpD7MF69QyVeZucvFUbsSp5DSbPSwdd+sV+zMkc6lutRng=
-Received: from VI1PR8303MB0080.EURPRD83.prod.outlook.com (129.75.141.87) by
- VI1PR8303MB0094.EURPRD83.prod.outlook.com (129.75.141.89) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1709.2; Tue, 12 Mar 2019 09:18:43 +0000
-Received: from VI1PR8303MB0080.EURPRD83.prod.outlook.com
- ([fe80::dcda:e76b:b47b:d5dc]) by VI1PR8303MB0080.EURPRD83.prod.outlook.com
- ([fe80::dcda:e76b:b47b:d5dc%7]) with mapi id 15.20.1730.000; Tue, 12 Mar 2019
- 09:18:43 +0000
-From:   Norbert Nemec <Norbert.Nemec@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: fast-import on existing branches
-Thread-Topic: fast-import on existing branches
-Thread-Index: AdTVnL4X4Jxw2/2tSNKV4QAkAn17vAAKIfkAAAMbPeAAnFnlAAAa355w
-Date:   Tue, 12 Mar 2019 09:18:42 +0000
-Message-ID: <VI1PR8303MB008034B99238403D0BCEBBACFD490@VI1PR8303MB0080.EURPRD83.prod.outlook.com>
-References: <DB6PR8303MB0069AA4D630BFDF0EC72C47BFD4D0@DB6PR8303MB0069.EURPRD83.prod.outlook.com>
- <CABPp-BF0PcdwpJR3NteCmQw0QhN3E0UAi22FvmjUc6SBr=UB_A@mail.gmail.com>
- <DB6PR8303MB006927B6267629467F783F58FD4D0@DB6PR8303MB0069.EURPRD83.prod.outlook.com>
- <CABPp-BGs4E48bBQ0e94jxhoXv6t9nzwoNEEnb37tUBpTsi_mCw@mail.gmail.com>
-In-Reply-To: <CABPp-BGs4E48bBQ0e94jxhoXv6t9nzwoNEEnb37tUBpTsi_mCw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=nonemec@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-03-12T09:18:40.7151600Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=e2a840df-9979-4c0a-87d1-6f34e4caa901;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
-x-originating-ip: [2a01:110:8012:1012:3bd:2fb3:9f64:f5bd]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: e4a94bb5-8d69-403b-a887-08d6a6cbb8e8
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600127)(711020)(4605104)(4618075)(2017052603328)(7193020);SRVR:VI1PR8303MB0094;
-x-ms-traffictypediagnostic: VI1PR8303MB0094:
-x-microsoft-antispam-prvs: <VI1PR8303MB0094604C34D9571FA76659ACFD490@VI1PR8303MB0094.EURPRD83.prod.outlook.com>
-x-forefront-prvs: 09749A275C
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(136003)(366004)(376002)(346002)(396003)(189003)(199004)(52314003)(13464003)(81166006)(25786009)(2501003)(11346002)(6116002)(86362001)(2351001)(8936002)(3480700005)(229853002)(106356001)(8676002)(76176011)(10090500001)(53936002)(186003)(81156014)(305945005)(71200400001)(5660300002)(316002)(68736007)(52536013)(7696005)(6506007)(6346003)(14454004)(1730700003)(105586002)(7736002)(55016002)(5640700003)(8990500004)(93886005)(6436002)(6246003)(14444005)(9686003)(86612001)(71190400001)(446003)(22452003)(53546011)(478600001)(6916009)(99286004)(72206003)(476003)(46003)(102836004)(97736004)(2906002)(256004)(486006)(10290500003)(33656002)(74316002);DIR:OUT;SFP:1102;SCL:1;SRVR:VI1PR8303MB0094;H:VI1PR8303MB0080.EURPRD83.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Norbert.Nemec@microsoft.com; 
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: bMZzP5V1FnoMzdElGOa+IktzFjwi2QHHzCOKIHgXoRMOvNPW5Zfbrb7i4T5EFuG8i7QZufgWwjI1xwzHXzNc+DWE0QyBfJBdYzk/9gCQHkGc5ktdJTrkBoXKEIvsKTNz97S4NCWzsGQTKBRq/cY2+fMnuEDx5Z1dIjtFp6hMMiedsm1Kuvm/IgILXAfADo+nq4bkfH3kxIbrpQwtpxfBl4ij82JBT41xWpPA3gAFHg4ZQQvQd/dWO7r58zaPkH3t/2Fa1HeXdkH39zT2wXINltLz+687fGAGKnowSFAGmvs4prcqwXLy4HwoocTlkgz6kLypeC4LelLG/cjc4vv5cl5iDHB/s/g52WXgktPuZWHcgBGBoKMTKbqKvGLqIEChX27Nz6GwITYHESLVvpZIIFcFpR/vdSX1bw9LEHVIYys=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1725917AbfCLKCr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 06:02:47 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:39423 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725882AbfCLKCr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 06:02:47 -0400
+Received: by mail-pg1-f193.google.com with SMTP id h8so1428353pgp.6
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 03:02:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RXO3Pt2N9Xd4YIKbKaIyYkBasLO+KjhRSyR3GVk1AnA=;
+        b=Yt0hwTSFRLnC3Q2eOm5RPh4hrBGphd1We8hPkWpr/odJmhNytDi9Fb4ATgUvolc1Xb
+         JD7am7eVoq91ilUHW0GGu4/2MaNx346q/nCrdzFn7JRxFRtuQUrzjIfqcVVxFBR6pSnR
+         UWGxplRfY22Dkl7Vr/aHYHp2WnNLZfYnvMFhrbMO/hAbNb1sOjRBFwlfKboH3DHHNbPf
+         ULVsgx1GJANUNkXvvHEjZx/3QPtuAiSLzJdZcni4S/TASYFW79dcQLIIY3yrJS5wnuU7
+         0p25xPAwALY0E1zTY5gW/gL2OT29BSOsH7adjaGw+CqjIoNJi7TNOh34ayDlnKQKrUUl
+         I37A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RXO3Pt2N9Xd4YIKbKaIyYkBasLO+KjhRSyR3GVk1AnA=;
+        b=Jb6BfblP+5oNSz8OahFrbFphYB6pwkVFIN4+NhgSWncl4rdyN9PsGDrsuCH+g4FZW2
+         hRUNhZqSVf3yMCBwXRXB6J3fwBmyneNnulRPwmv5g4SXA85nFz2oEMczAKjpBiTfhWOX
+         icJ/jRVW7np3ZNenyyayBOr4ha4SZCkrbZteBh/gaK13dYsObUhhcgJyqO6SxunyRumk
+         V12MblUS9CDRy4eMmurNyRxaMgNSz5lYi+i/fWNnGJaR8usIrEH85QFYO+hG8X3lfcKr
+         kSu7au38SpOI1JKoiWL0UaA79ylXXpaARC80YixL1xmGxel5IXMFiHla9LB8RWFGg58p
+         1FLQ==
+X-Gm-Message-State: APjAAAVcN5diOZzRopGxL2SdVDMEwskxGK5Qt9Y6ygu7GCBOOPgp3pHu
+        PEszADupWuGTYXjSERkcpmU=
+X-Google-Smtp-Source: APXvYqzG7kZTBnko25QQnUtIAcjHppD/izKCTps+2pagL4LjsCGhQObgZ0q0yoP4ntvaXQgicTEhhQ==
+X-Received: by 2002:a17:902:a40d:: with SMTP id p13mr37754596plq.144.1552384965929;
+        Tue, 12 Mar 2019 03:02:45 -0700 (PDT)
+Received: from ash ([171.226.148.85])
+        by smtp.gmail.com with ESMTPSA id v5sm12591518pfn.81.2019.03.12.03.02.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Mar 2019 03:02:43 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Tue, 12 Mar 2019 17:02:37 +0700
+Date:   Tue, 12 Mar 2019 17:02:37 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        git <git@vger.kernel.org>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: Questions on GSoC 2019 Ideas
+Message-ID: <20190312100237.GA20471@ash>
+References: <CAP8UFD0jF5k31tBhj=bQMGOJKN8-F-Rx7RXF1SHZ22LEgSo9_Q@mail.gmail.com>
+ <CACsJy8AL7DMbV7hhNeb1beucxQnZBHfgv4xo9dK5T+WCK7Q6yw@mail.gmail.com>
+ <20190302150900.GU6085@hank.intra.tgummerer.com>
+ <CAP8UFD31YKt7fm+shWdBxsL4fCSO4dU=97YwFsZ9gZBpEWmRPQ@mail.gmail.com>
+ <CACsJy8ATKdcDdbTzCdZFhChKEAWhjuYQJBpGXZ9HAVXK1r2pFw@mail.gmail.com>
+ <20190305045140.GH19800@sigill.intra.peff.net>
+ <CACsJy8D-eQUGFsu4_cB9FE6gAo2d68EF_x2ze3YLXKAxYJfhSQ@mail.gmail.com>
+ <CAHd-oW4LsyZOgHYgKaACX8AtzbA8pBpFUPWSF3GF6XxA_HKfjA@mail.gmail.com>
+ <CACsJy8Bit46VatYZNB-ZsMBL043_GYDLqZ3fAZ8HzXZ9Kv1Z0g@mail.gmail.com>
+ <CAHd-oW4e6CtcaKXbowqZM-pDAEGJxupHwBvFk2veaaYswt0hmQ@mail.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4a94bb5-8d69-403b-a887-08d6a6cbb8e8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Mar 2019 09:18:42.6647
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR8303MB0094
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHd-oW4e6CtcaKXbowqZM-pDAEGJxupHwBvFk2veaaYswt0hmQ@mail.gmail.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGkgRWxpamFoLA0KDQp0aGFua3MgZm9yIGV4cGxhaW5pbmcgdGhlIG1vdGl2YXRpb24gYmVoaW5k
-IHRoZSBjdXJyZW50IHNvbHV0aW9uIQ0KDQpJIHN0aWxsIGJlbGlldmUgdGhlIHNpdHVhdGlvbiBj
-b3VsZCBiZSBpbXByb3ZlZCB3aXRob3V0IGJyZWFraW5nIGNvbXBhdGliaWxpdHk6DQoqIGluIHRo
-ZSBkb2N1bWVudGF0aW9uIHRoZSBwYXJhZ3JhcGggYWJvdXQgIk9taXR0aW5nIHRoZSBmcm9tIGNv
-bW1hbmQiIHNob3VsZCBjaGFuZ2UgImV4aXN0aW5nIGJyYW5jaGVzIiBpbnRvIHNvbWV0aGluZyBs
-aWtlICJleGlzdGluZyBicmFuY2hlcyB3aXRoaW4gdGhlIGNhY2hlIG9mIHRoZSBjdXJyZW50IGZh
-c3QtaW1wb3J0IHN0cmVhbSIuIFRoZSBjdXJyZW50IHBocmFzaW5nIGlzIHNpbXBseSB3cm9uZy4N
-CiogdGhlIGRvY3VtZW50YXRpb24gb2YgdGhlICJmcm9tIGJyYW5jaF4wIiB2YXJpYW50IGN1cnJl
-bnRseSBsb29rcyBsaWtlIGEgc29sdXRpb24gZm9yIGEgcmFyZSBzaXR1YXRpb24gdGhhdCBpcyBl
-YXNpbHkgb3Zlcmxvb2tlZC4gTWF5YmUgaXQgY291bGQgYmUgaW50ZWdyYXRlZCB3aXRoIHRoZSBw
-YXJhZ3JhcGggYWJvdXQgIk9taXR0aW5nIiBzaW5jZSBpdCBpcyB2ZXJ5IGNsb3NlbHkgcmVsYXRl
-ZC4NCiogaW4gdXBkYXRlX2JyYW5jaCB0aGUgd2FybmluZyBjb3VsZCBoaW50IGF0IHRoZSBwb3Nz
-aWJsZSBzb2x1dGlvbiAoZXhwbGljaXRseSBzdXBwbHkgYSBmcm9tIHBhcmVudF9icmFuY2heMCBh
-cmd1bWVudCkNCiogSSdtIHN0aWxsIG5vdCBzdXJlIHdoeSBpdCB3b3VsZCBodXJ0IHRvIGNoYW5n
-ZSBmYXRhbCBlcnJvciBpbiBwYXJzZV9mcm9tIGFib3V0IGNyZWF0aW5nIGEgYnJhbmNoIGZyb20g
-aXRzZWxmIHRvIHNpbXBseSBmYWxsIGJhY2sgdG8gdGhlIF4wIGJlaGF2aW9yPw0KDQpBIG11Y2gg
-YmV0dGVyIHNvbHV0aW9uIGluIG15IHZpZXcgd291bGQgYmUgdG8gYWltIGZvciByZWFsIHN0YXRl
-bGVzc25lc3MgYW5kIG1ha2UgdGhlIGNhY2hpbmcgb2YgYnJhbmNoIHBvaW50ZXJzIGNvbXBsZXRl
-bHkgdHJhbnNwYXJlbnQuIEZvciBhbGwgSSBjYW4gc2VlLCBmYXN0LWltcG9ydCBuZWFybHkgZm9s
-bG93cyB0aGlzIHBhcmFkaWdtIGJ1dCB2aW9sYXRlcyBpdCBpbiB0aGlzIHN1YnRsZSBwb2ludC4g
-T25jZSB3YXkgdG8gYWNoaWV2ZSB0aGlzIHdvdWxkIGJlIHRvIG9mZmVyIGFuIGV4cGxpY2l0IHdh
-eSB0byBzdGF0ZSB0aGF0IGEgY29tbWl0IHNob3VsZCBoYXZlIG5vIHBhcmVudCBhbmQgZGVwcmVj
-YXRlIHRoZSB2YXJpYW50IHdpdGhvdXQgImZyb20iIGFyZ3VtZW50LCBpc3N1aW5nIGEgd2Fybmlu
-Zy4gVGhlIGdyZWF0IHByYWN0aWNhbCBhZHZhbnRhZ2Ugb2YgdGhhdCB3b3VsZCBiZSB0aGF0IGlu
-dGVycnVwdGluZyBhbmQgY29udGludWluZyB0aGUgZmFzdC1pbXBvcnQgc3RyZWFtIHdvdWxkIGJl
-IGd1YXJhbnRlZWQgdG8gZGVsaXZlciB0aGUgc2FtZSByZXN1bHQuIEZhciBtb3JlIGltcG9ydGFu
-dCBpcyB0aGUgY29uY2VwdHVhbCBzaW1wbGljaXR5OiBBIGRldmVsb3BlciBjb3VsZCBjb21wbGV0
-ZWx5IGZvcmdldCBhYm91dCBjYWNoaW5nIHdoZW4gaXQgY29tZXMgdG8gY29ycmVjdG5lc3MgYW5k
-IG9ubHkgdGhpbmsgb2YgaXQgd2hlbiBpdCBjb21lcyB0byBwZXJmb3JtYW5jZSBvcHRpbWl6YXRp
-b24uDQoNCkFueXdheTogdGhlc2UgYXJlIGFsbCBpbXByb3ZlbWVudHMgZm9yIGZ1dHVyZSBkZXZl
-bG9wZXJzLiBQZXJzb25hbGx5LCBJIGFtIHNhdGlzZmllZCB3aXRoIGV2ZXJ5dGhpbmcgSSBoYXZl
-Lg0KDQpHcmVldGluZ3MsDQpOb3JiZXJ0DQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0N
-CkZyb206IEVsaWphaCBOZXdyZW4gPG5ld3JlbkBnbWFpbC5jb20+IA0KU2VudDogTW9uZGF5LCBN
-YXJjaCAxMSwgMjAxOSA4OjQ2IFBNDQpUbzogTm9yYmVydCBOZW1lYyA8Tm9yYmVydC5OZW1lY0Bt
-aWNyb3NvZnQuY29tPg0KQ2M6IGdpdEB2Z2VyLmtlcm5lbC5vcmcNClN1YmplY3Q6IFJlOiBmYXN0
-LWltcG9ydCBvbiBleGlzdGluZyBicmFuY2hlcw0KDQpIaSBOb3JiZXJ0LA0KDQpPbiBGcmksIE1h
-ciA4LCAyMDE5IGF0IDk6MzggQU0gTm9yYmVydCBOZW1lYyA8Tm9yYmVydC5OZW1lY0BtaWNyb3Nv
-ZnQuY29tPiB3cm90ZToNCj4NCj4gVGhhbmtzLCBFbGlqYWgsIEkgaGFkIGluZGVlZCBtaXNzZWQg
-dGhhdCBibG9jayBhYm91dCB0aGUgXjAgaGFuZGxpbmcuDQo+DQo+IEkgc3RpbGwgZG9uJ3QgZ2V0
-IHdoeSB0aGlzIGF3a3dhcmQgd29ya2Fyb3VuZCBpcyByZXF1aXJlZC4gV2h5IGlzbid0IHRoYXQg
-bG9va3VwIGRvbmUgYnkgZGVmYXVsdD8gUGVyZm9ybWFuY2UgY2FuJ3QgYmUgdGhlIHJlYXNvbiwg
-c2luY2UgdGhlIHNhbWUgbG9va3VwIGlzIGRvbmUgbGF0ZXJvbiBhbnl3YXksIGp1c3QgYXMgY29y
-cmVjdG5lc3MgY2hlY2suIFRoZSB3YXkgSSByZWFkIHRoZSBkb2N1bWVudGF0aW9uLCBwcm92aWRp
-bmcgbm8gImZyb20iIHNob3VsZCBjb250aW51ZSBjb21taXR0aW5nIHRvIGEgYnJhbmNoIGluIGFu
-eSBjYXNlLiBJIHdvdWxkIG5ldmVyIGhhdmUgc2VlbiB0aGUgY29udGludWF0aW9uIG9mIGFuIGlu
-Y3JlbWVudGFsIGltcG9ydCBhICJzcGVjaWFsIGNhc2UiLiBUaGVyZSBpcyBhIG51bWJlciBvZiB0
-b29scyBhcm91bmQgdGhhdCBzeW5jIGEgZ2l0IHJlcG8gZnJvbSBzb21lIG90aGVyIHNvdXJjZSBh
-bmQgd291bGQgcmVndWxhcmx5IG5lZWQgdG8gY29udGludWUgYW4gZXhpc3RpbmcgYnJhbmNoLg0K
-Pg0KPiBHcmVldGluZ3MsDQo+IE5vcmJlcnQNCg0KSWYgdGhpcyAiYXdrd2FyZCB3b3JrYXJvdW5k
-IiwgYXMgeW91IHB1dCBpdCwgd2VyZSByZW1vdmVkIGl0IHdvdWxkIG1ha2UgaXQgaW1wb3NzaWJs
-ZSB0byBjcmVhdGUgYSBjb21taXQgd2l0aCBubyBwYXJlbnQgd2l0aG91dCB1c2luZyBhIGRpZmZl
-cmVudCBicmFuY2ggbmFtZS4gIEkgcmVhbGx5IGxpa2UgYmVpbmcgYWJsZSB0byBleHBvcnQsIG1v
-ZGlmeSwgYW5kIHJlLWltcG9ydCBoaXN0b3J5LCB1c2luZyBzb21ldGhpbmcgb2YgdGhlIGZvcm06
-DQoNCiAgIGdpdCBmYXN0LWV4cG9ydCAtLWFsbCB8IDxlZGl0IHRoZSBzdHJlYW0gc29tZWhvdz4g
-fCBnaXQgZmFzdC1pbXBvcnQgLS1mb3JjZQ0KDQp3aGljaCB3b3VsZCBubyBsb25nZXIgd29yayBp
-ZiBmYXN0LWltcG9ydCBhdXRvbWF0aWNhbGx5IGFzc3VtZWQgYSBwYXJlbnQgZm9yIGV2ZXJ5IGZy
-b20tbGVzcyBjb21taXQgaW4gdGhlIGlucHV0IGJhc2VkIG9uIHRoZSByZWZlcmVuY2UgbmFtZS4g
-IFBlcnNvbmFsbHksIEknbSBtb3JlIG9uIHRoZSBzaWRlIG9mIG5vdCB1bmRlcnN0YW5kaW5nIHdo
-eSAiZnJvbSIgaXNuJ3QgcmVxdWlyZWQgd2hlbmV2ZXIgeW91IHdhbnQgeW91ciBjb21taXQgdG8g
-aGF2ZSBhIHBhcmVudDsgdXNlcnMgY2FuIHNwZWNpZnkgZWl0aGVyIGEgc2hhIG9yIGEgbWFyay1p
-ZCBlYXNpbHkgZW5vdWdoOyBJIGRvbid0IHNlZSB3aGF0IGl0IHNhdmVzIHRvIGFsbG93IG9taXR0
-aW5nIGl0LCBhbmQgaXQgaW5ldml0YWJseSBsZWFkcyB0byBvdGhlciBjb25mdXNpb24gbGlrZSB5
-b3Vycy4gIEJ1dCBJJ20gd2VsbCBvdmVyIGEgZGVjYWRlIHRvbyBsYXRlIHRvIGFkdm9jYXRlIGZv
-ciB0aGF0Lg0KDQoNCkhvcGUgdGhhdCBoZWxwcywNCkVsaWphaA0K
+On Mon, Mar 11, 2019 at 09:18:47PM -0300, Matheus Tavares Bernardino wrote:
+> I've been thinking on how I could implement a test to estimate the
+> lock contention but had no success until now. I wanted to try
+> mutrace[2] but couldn't install it; I tried valgrind's drd but it
+> didn't seem to report a contention time estimation; And I tried
+> measuring the time of "pthread_mutex_lock(&grep_mutex)" but I don't
+> know how much significative this value is, since we can't directly
+> compare it (the time of many threads at lock) with the overall
+> execution time. Do you have an idea on how we could measure the lock
+> contention here?
+
+(I'm supposed to be doing something else, but this is more fun :D)
+
+Yeah lock contention is probably hard to measure. But at least we can
+measure how much time is blocked by mutex. Something like this [1]
+gives me
+
+    $ time ~/w/git/temp/git grep --threads=8 abc HEAD >/dev/null
+    warning: let's have some fun
+    block_time = 20ms
+    block_count = 10725
+    
+    real    0m0,379s
+    user    0m0,425s
+    sys     0m0,073s
+
+From this I know "git grep" took 379ms and at least 20ms (probably
+including measurement overhead) is wasted on pthread_mutex_lock(). It
+does not look that significant, I admit.
+
+> Another thing that is occurring to me right now is whether git-grep,
+> as it is implemented today, would really benefit from thread-safe pack
+> access. I may have to study the code more, but it seems to me that
+> just the producer thread uses pack access.
+
+That producer I think is just handing out assignments to worker
+threads. The real work is still done by worker threads.
+
+The entry point to pack access in this code is protected by
+grep_read_lock(). I believe the multithread one is in this deep call
+chain (I found it out by gdb)
+
+[main thread] grep_oid() -> add_work() ->
+[worker thread] grep_source() -> grep_source_1() ->
+grep_source_is_binary() -> grep_source_load() ->
+grep_source_load_oid() -> read_object_file()
+
+Note that there's another source of pack access, the
+lock_and_read_oid_file() in grep_tree(). This is where we unpack tree
+objects and traverse to get blob SHA-1.
+
+This code is currently on the main thread (maybe this is what you
+found?) so it does not really benefit from multi thread. We could
+still add some sort of lookahead queue to inflate tree objects in
+advance in parallel, but I don't know how much gain that will be.
+
+One thing I didn't notice is we currently force no threads in the case
+we need pack access, e.g. "git grep <regex> <commit>" or "git grep
+--cached <regex>". So if you need to experiment, you need to hack it
+and remove that restriction. That's the "let's have some fun" code in
+[1].
+
+So, assuming this is CPU bottleneck, let's have a look at how CPU is used.
+
+    perf record git grep --threads=1 abc HEAD >/dev/null
+    perf report
+
+shows me the top CPU consumers are
+
+  51,16%  git      libz.so.1.2.11      [.] inflate_fast
+  19,55%  git      git                 [.] bmexec
+
+You need to do some guessing here. But I believe the top call is from
+inflating objects (either from packs or from loose objects). The
+second one is from regular expression engine.
+
+Since the regex here is very short (I deliberately try Jeff's case
+where object access dominates), the CPU is mostly used up for object
+inflation. That suggests that if we could spread it out across cores,
+the gain could be quite good. There aren't many dependencies in grep
+tasks so if we spread the workload on 8 cores, execution time should
+be reduced by 7 or 8 times.
+
+For fun, I hacked up a horrible, horrible "thread safe" version [2]
+that probably broke 99% of git and made helgrind extremely unhappy, so
+these numbers are at best guidelines, but..
+
+    $ time ./git grep --threads=1 abc HEAD >/dev/null
+    
+    real    0m0,253s
+    user    0m0,225s
+    sys     0m0,029s
+    
+    $ time ./git grep --threads=8 abc HEAD >/dev/null
+    warning: let's have some fun!
+    
+    real    0m0,157s
+    user    0m0,312s
+    sys     0m0,089s
+
+You can see the "real" rows show quite good time reduction. Not 8
+times reduction, mind you, but that's where serious people dig in and
+really speed it up ;-)
+
+[1] https://gitlab.com/snippets/1834609
+[2] https://gitlab.com/snippets/1834613
+
+> So, although it would be out of scope for GSoC, checkout, diff and log
+> (and maybe others) could all benefit from a thread-safe/parallel pack
+> access, right? If so, it is very motivating the impact this project
+> could, in theory, have :)
+
+We have to analyze case by case. It may turn out that there are many
+opportunity to utilize multi threads. I think checkout is definitely a
+good candidate. For "git diff" and "git log" maybe you can try "perf"
+to see how much workload is locked in pack access (mostly inflation,
+because it's easier to spot from the profile report)
+--
+Duy
