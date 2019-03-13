@@ -7,156 +7,86 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83BC620248
-	for <e@80x24.org>; Wed, 13 Mar 2019 19:20:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2015F20248
+	for <e@80x24.org>; Wed, 13 Mar 2019 19:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728825AbfCMTUS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 15:20:18 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:36607 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728989AbfCMTUR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 15:20:17 -0400
-Received: by mail-ed1-f66.google.com with SMTP id e4so2557911edi.3
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 12:20:15 -0700 (PDT)
+        id S1728810AbfCMTUQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 15:20:16 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42204 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728776AbfCMTUP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 15:20:15 -0400
+Received: by mail-ed1-f65.google.com with SMTP id j89so2537426edb.9
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 12:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=jLod+ebWUcNfhxNyeoLvCoxtXNPZqb9mjKeAhPzKQAY=;
-        b=bMqw333PFFpXaUOT9aKdZmZaadb4W5hapZotJZi3LkeOY2e8fCKEfPuN447hsp2iHw
-         YPtMMH6BQBIrHJYgaRUcoYYDy9YCj3m+1/yegN2ihDcjVOa4Qf1BelRVEDfoRkLCm7lg
-         Sc0dTifLl4A70Gj2ltLH5aF12Ty3n/a4wzFdala4oHRO8G2q323xVo4cqqyUhOj+Mjyf
-         g6TbgM5aqm5SF4OqeQ+GraqcnVeuI0w0rPG9PNxt2c6M8VCnmOt9+5Bk3CvvZBdA6Sxi
-         FpepQbQjS2ZxkG95E23h0FOcrG4/Oghef3LMOHJQqX0V7LlYvYyMgCtdObadUutHMZpl
-         cJGg==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=MaIklqBJBYv0HUUzzz0BeOfHQlibCw5QGAnSYCWE3ek=;
+        b=ht00P1pfQtL884mYpIoJUoedBi4Jg+nXHXbaymAo7qnkXEOi6wFVeUze5aCH+Yf9mN
+         n5zKPm4/hNL3n2iQ9eLi4NlGUBmFw6Tj5DT/LqduKG3i1Ihgw3a1j+T8hL4UW7FOTFR7
+         VMTOxCfssrQMds+LXtWposkNErbJAeTRxH8+6y6jKRjM+fTJEBzg1Pn+T7MFsqHd0sZf
+         SumuAsH62PFiRX3DqZlzS9/ucUpb/+/8WKQ/Mu1TVMU03anZehSxTZ6uUyrJy1gsEosH
+         ez91Xur3WhS2CVpcXhhUTK6eh1n0eziKhFLI7xQRTRv8yPrVv5iydY5PnQpilP7SJ0IA
+         AOPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jLod+ebWUcNfhxNyeoLvCoxtXNPZqb9mjKeAhPzKQAY=;
-        b=ngPCUQHSeEl2KQBbjJOfNG8w/6blJvHYXTrFudRX8i2//b/x7f7+8BMINIjVdf2la7
-         GXEFubODL41/XBqbMDya2Ciok1kGAhCvHpgshNmWMFfQ2ZUV+nI/0D5JgAc2WBy4M4p2
-         M+MmeU5NxXfUAZXy8baSGX9K7i81NsLAyLN674H5SoOuA17OZn9aAJ7GwDaCvJFlnN1y
-         gnEsWHMFADhLKbC8ZUHJsqmqTI1ektVA9NKPi3BuHhSNywMdoeSSB7Ik8FGHEoveDVtn
-         j/KuqhO1WyLUF9h7tFGKbN83ZmzMIzEBGcfVCuhI61FGW29+xfwaZb4dWlwXNlTmGQkj
-         Iguw==
-X-Gm-Message-State: APjAAAWHUkom0z06nAcJi4AfV1+HaHBwAjtenTNozfTPyH8cXkYwpE1c
-        U/zppc0vT6bxSkPZedEhmp9nvWTX
-X-Google-Smtp-Source: APXvYqzPqzMIVRvYu0HvvlkfgfsTGD+bfKO+oVKGVf2wIeJtzpQPeQ3vE2+c5hnZa3BEAJccEsx+zQ==
-X-Received: by 2002:a50:d55a:: with SMTP id f26mr8887193edj.292.1552504815209;
-        Wed, 13 Mar 2019 12:20:15 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MaIklqBJBYv0HUUzzz0BeOfHQlibCw5QGAnSYCWE3ek=;
+        b=qJqoADGCThsB0LLxxDsgV5rScpZ7RcaA+k8TvAa9DgGJAYk+jf86xfqEY1EduKf8VY
+         VphkuDF8KeixiOSwHECkAuDP/Aj9b4eCtu3aE08gQH99RbH6LK5tR0evANaQq4rHLXVL
+         aZdzZUhRrOomdT+mOup4gWYAiVCyypKjeUf7j5E4sSt5qzZoiXO9AhRrDlgmq+FiG/q7
+         QCYvwakdjzCr3Z2aWZ+ZGkc1Bg0Yd0J9xu4EfquyaW5QqErnZ0S2eeVnQCMXQ5qxEqOB
+         moPIybAErGuOeRBubnLSvxTBX4qAsRuXuXsOWdqAhIpBM15X2QRT5soau/4auEEvUWYk
+         kscQ==
+X-Gm-Message-State: APjAAAV1knP9siGVpdjDd8a9GdQWMp7ek5t/GQJfFkL9T/+9t+o1J3TY
+        vStGgdgWYsODzgoW3DBQZefjTfKR
+X-Google-Smtp-Source: APXvYqzX/GySDRpcTJwCVOhXDTfei4Z8JhyAxbvKSqzv9CsrOI999+0eCtGQpZe/TwqrBNn6IV82xw==
+X-Received: by 2002:a17:906:7206:: with SMTP id m6mr30616930ejk.145.1552504813692;
+        Wed, 13 Mar 2019 12:20:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k9sm810385edr.60.2019.03.13.12.20.14
+        by smtp.gmail.com with ESMTPSA id i20sm625150ejv.26.2019.03.13.12.20.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Mar 2019 12:20:14 -0700 (PDT)
-Date:   Wed, 13 Mar 2019 12:20:14 -0700 (PDT)
-X-Google-Original-Date: Wed, 13 Mar 2019 19:20:12 GMT
-Message-Id: <9f6eb60eeeccf920af83652899c5bc2d40e2092f.1552504812.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.163.git.gitgitgadget@gmail.com>
-References: <pull.163.git.gitgitgadget@gmail.com>
+        Wed, 13 Mar 2019 12:20:13 -0700 (PDT)
+Date:   Wed, 13 Mar 2019 12:20:13 -0700 (PDT)
+X-Google-Original-Date: Wed, 13 Mar 2019 19:20:10 GMT
+Message-Id: <pull.163.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/2] difftool: allow running outside Git worktrees with
- --no-index
+Subject: [PATCH 0/2] Allow difftool to be run outside of Git worktrees
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+It was reported in https://github.com/git-for-windows/git/issues/2123 that 
+git difftool --no-index fails to work outside worktrees, even if it should
+work.
 
-As far as this developer can tell, the conversion from a Perl script to
-a built-in caused the regression in the difftool that it no longer runs
-outside of a Git worktree (with `--no-index`, of course).
+I fear this is a regression I introduced over two years ago (!) when I
+converted the Perl script to C.
 
-It is a bit embarrassing that it took over two years after retiring the
-Perl version to discover this regression, but at least we now know, and
-can do something, about it.
+At least now that I know about the bug, I can fix it.
 
-This fixes https://github.com/git-for-windows/git/issues/2123
+Johannes Schindelin (2):
+  difftool: remove obsolete (and misleading) comment
+  difftool: allow running outside Git worktrees with --no-index
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/difftool.c  | 20 +++++++++++++++++---
+ builtin/difftool.c  | 21 +++++++++++++++++----
  git.c               |  2 +-
  t/t7800-difftool.sh | 10 ++++++++++
- 3 files changed, 28 insertions(+), 4 deletions(-)
+ 3 files changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 31eece0c8d..d08ef31f04 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -690,7 +690,7 @@ static int run_file_diff(int prompt, const char *prefix,
- int cmd_difftool(int argc, const char **argv, const char *prefix)
- {
- 	int use_gui_tool = 0, dir_diff = 0, prompt = -1, symlinks = 0,
--	    tool_help = 0;
-+	    tool_help = 0, i, no_index = 0;
- 	static char *difftool_cmd = NULL, *extcmd = NULL;
- 	struct option builtin_difftool_options[] = {
- 		OPT_BOOL('g', "gui", &use_gui_tool,
-@@ -727,8 +727,22 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 	if (tool_help)
- 		return print_tool_help();
- 
--	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
--	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
-+	for (i = 0; i < argc; i++)
-+		if (!strcmp(argv[i], "--"))
-+			break;
-+		else if (!strcmp(argv[i], "--no-index")) {
-+			no_index = 1;
-+			break;
-+		}
-+
-+	if (!no_index && !startup_info->have_repository)
-+		die(_("difftool requires worktree or --no-index"));
-+
-+	if (!no_index){
-+		setup_work_tree();
-+		setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
-+		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
-+	}
- 
- 	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
- 		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
-diff --git a/git.c b/git.c
-index 2014aab6b8..46365ed86a 100644
---- a/git.c
-+++ b/git.c
-@@ -491,7 +491,7 @@ static struct cmd_struct commands[] = {
- 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "diff-index", cmd_diff_index, RUN_SETUP | NO_PARSEOPT },
- 	{ "diff-tree", cmd_diff_tree, RUN_SETUP | NO_PARSEOPT },
--	{ "difftool", cmd_difftool, RUN_SETUP | NEED_WORK_TREE },
-+	{ "difftool", cmd_difftool, RUN_SETUP_GENTLY },
- 	{ "fast-export", cmd_fast_export, RUN_SETUP },
- 	{ "fetch", cmd_fetch, RUN_SETUP },
- 	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP | NO_PARSEOPT },
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index bb9a7f4ff9..4907627656 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -705,4 +705,14 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'outside worktree' '
-+	mkdir outside &&
-+	echo 1 >outside/1 &&
-+	echo 2 >outside/2 &&
-+	test_expect_code 1 env GIT_CEILING_DIRECTORIES="$(pwd)" git \
-+		-c diff.tool=echo -c difftool.echo.cmd="echo \$LOCAL \$REMOTE" \
-+		-C outside difftool --no-prompt --no-index 1 2 >out &&
-+	test "1 2" = "$(cat out)"
-+'
-+
- test_done
+
+base-commit: e902e9bcae2010bc42648c80ab6adc6c5a16a4a5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-163%2Fdscho%2Fdifftool-no-index-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-163/dscho/difftool-no-index-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/163
 -- 
 gitgitgadget
