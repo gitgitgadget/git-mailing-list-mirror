@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 801F120248
-	for <e@80x24.org>; Wed, 13 Mar 2019 04:31:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8F95202BB
+	for <e@80x24.org>; Wed, 13 Mar 2019 04:34:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725893AbfCMEb0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 00:31:26 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38253 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725876AbfCMEbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 00:31:25 -0400
-Received: by mail-wr1-f65.google.com with SMTP id g12so381279wrm.5
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 21:31:24 -0700 (PDT)
+        id S1726043AbfCMEef (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 00:34:35 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53392 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725876AbfCMEef (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 00:34:35 -0400
+Received: by mail-wm1-f65.google.com with SMTP id e74so409623wmg.3
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 21:34:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=sZOFVtdRWcHgKhT5vIc5qkhp1uEVUcTPIOUyb0okEDc=;
-        b=pH24zUoqhQKkwk3/oemwI1qR31uTHm0S+OW1Tv+JxfEcrD1dAEauIDe1fGXWNOw/GQ
-         WueV6+8YwEh4MnySxYqUONq0IJydk1vVxnqaXgMIYx5wyiknP5TttZcE5lNNqydikYhZ
-         egttRX0Fd1X8kO1E12sXe/JIgnEGQ7R65/k7xuqWrINw6lUMWav3+yHB/P7k1zyOy6K+
-         MhU405cPW5lc6fkHzTd8rwwDWaFySzTQhsoi4Tx+OTQfyvHV+2h6gI7bqYL3juAR9z21
-         7hFLxYjTlogh+XnPyW8wrI5AMzVRKdWH1UdthpWP6W5oaLPYS/syu483Er7F1xxNFnvu
-         itZw==
+        bh=GSSGg1aw/3kuRa49iMl/mVTQjfaCV29z/h9ZUVvyR1A=;
+        b=JGEfHIyu+VqDLI8hrgnPogWNGMakGKm7y5+KhzCZ/suCBmHVn/hC1h9OmWybGIPkov
+         SwauSY/nOO67rbjaa739HmxduTOviFUJvXmKkxgejQ6o4lDh/atbjrREjifOqcleabac
+         bCF1v4sDCXjBaZCcqlFZ9hmVB9oueoLjYACFt/DXsw/zUVyc7t8Yb6u/y0e5ZayVIrd/
+         auSfMamuDQFa/P7HCYcPperhehEbV9RgsuBTKNpplgLCtgqb+Y979uBWvBTO9eyGpnx6
+         B+3LhT+Kb+X8pyNIS/DPrNYFz/mCzDzswSiT6vvmoaLo1wiohstxiOSZeNjrUuEZpBEJ
+         D7og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=sZOFVtdRWcHgKhT5vIc5qkhp1uEVUcTPIOUyb0okEDc=;
-        b=M6F0YGv+NTJsbhvpqs5GQv7ulTzV+lT+gkT9Mbhzj5tBO4LLcfeFUReQykmCe6z9ko
-         OHLbKEwnEEAH7yG01/ssfXL/ipeNcQfzYfeqXc3iKrs08tW+f88mgpecMgMD6DoicD3N
-         +k9qYCN9Wox6S5E4Ij7uWqcNI/zDnQSmKeoGYee+WQT9lQXBq3a+cV1b7LCRrnSCDVlu
-         c8pSwmATWTI0NP14Wml0/A6Cig6ADlPtkX5JQCtaVGtW8u7+qBm1gcT9N574FpFIf3Rz
-         qVwl0mzEB6Cxi+CxrMwOt+Ru3xW/T3VFGnWekEEGyOxH3itkXubjXnnIFvy+CLT0vZ3G
-         K+ew==
-X-Gm-Message-State: APjAAAXDyNTXHSYxbZ+QYiqRQ3Cn02BtqpeBwvLfZ3ZeOBeYHRSgS9NR
-        TqNRDy/WuTgm9SlSjS7FsS4=
-X-Google-Smtp-Source: APXvYqz0bKq+2GClk8PipGC0Z3sVFzq1MyOmphIwdf/7/l8u/j2r428wmmIXk4jaE++zX8kwHy1AIA==
-X-Received: by 2002:a5d:4587:: with SMTP id p7mr16204975wrq.211.1552451483644;
-        Tue, 12 Mar 2019 21:31:23 -0700 (PDT)
+        bh=GSSGg1aw/3kuRa49iMl/mVTQjfaCV29z/h9ZUVvyR1A=;
+        b=hS5ZyjOspkVoqeL30ufIM6YtYqzlx2EqGeHC7e3AnoERldn8WQyK2mzOJXjOVPAAsy
+         I02s/xorZbydCXmEo+/l5HyZYFT+Nonx0ZaBsNU2/Y0tCJBqdZqInLYODoV7YiQ7vk/C
+         KirSraETMytG5jYo48p0Pgcr0nPd5tPiiekKSAFA4lPPfovM/pz3Ktxki1oJLy62w8XE
+         OK/k0YhDRN9hwbXay6U0TKCs+e4W2Q4kEADVCyIjo6ndbPvsW/YLpbWzI63/QCleQFlF
+         0AJNYcKEEfkoRvnRQEwlXWBv4K1lhhpC43UQpJBy52/vlS3cUsNfUSTaANQDGwzTa14M
+         tRgA==
+X-Gm-Message-State: APjAAAVVGeQhuS3ysNB+Wwuc20AHZPN/pBvxr2G1zOTBlpeLCkAyX8hP
+        LZSNFBLuD5p5CdYjJsiCzHU=
+X-Google-Smtp-Source: APXvYqy4RVNmhUpIy061Smpv/GGI4mxttzqYVz2Mz7bUs8mIFr8nsxvSEEMZckWQxat36bhA8Z9/Lg==
+X-Received: by 2002:a1c:2283:: with SMTP id i125mr676567wmi.24.1552451673301;
+        Tue, 12 Mar 2019 21:34:33 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id g2sm6029020wrh.7.2019.03.12.21.31.22
+        by smtp.gmail.com with ESMTPSA id u17sm34264371wrg.71.2019.03.12.21.34.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Mar 2019 21:31:23 -0700 (PDT)
+        Tue, 12 Mar 2019 21:34:32 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -64,13 +64,14 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Beat Bolli <dev+git@drbeat.li>
-Subject: Re: [PATCH v3 05/11] promisor-remote: use repository_format_partial_clone
+Subject: Re: [PATCH v3 02/11] Add initial support for many promisor remotes
 References: <20190312132959.11764-1-chriscool@tuxfamily.org>
-        <20190312132959.11764-6-chriscool@tuxfamily.org>
-Date:   Wed, 13 Mar 2019 13:31:22 +0900
-In-Reply-To: <20190312132959.11764-6-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Tue, 12 Mar 2019 14:29:53 +0100")
-Message-ID: <xmqqftrre6p1.fsf@gitster-ct.c.googlers.com>
+        <20190312132959.11764-3-chriscool@tuxfamily.org>
+        <xmqqtvg7e7pn.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 13 Mar 2019 13:34:32 +0900
+In-Reply-To: <xmqqtvg7e7pn.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 13 Mar 2019 13:09:24 +0900")
+Message-ID: <xmqqbm2fe6jr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -79,42 +80,9 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> A remote specified using the extensions.partialClone config
-> option should be considered a promisor remote too.
->
-> This remote should be at the end of the promisor remote list,
-> so that it is used only if objects have not been found in other
-> remotes.
+> What is the rule for these promisor names?
 
-That's a declaration, not a rationale, and does not answer "Why
-should the origin be only used as the last resort?".
-
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  promisor-remote.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/promisor-remote.c b/promisor-remote.c
-> index ea74f6d8a8..dcf6ef6521 100644
-> --- a/promisor-remote.c
-> +++ b/promisor-remote.c
-> @@ -83,6 +83,17 @@ static void promisor_remote_do_init(int force)
->  	initialized = 1;
->  
->  	git_config(promisor_remote_config, NULL);
-> +
-> +	if (repository_format_partial_clone) {
-> +		struct promisor_remote *o, *previous;
-> +
-> +		o = promisor_remote_look_up(repository_format_partial_clone,
-> +					    &previous);
-> +		if (o)
-> +			promisor_remote_move_to_tail(o, previous);
-> +		else
-> +			promisor_remote_new(repository_format_partial_clone);
-> +	}
->  }
->  
->  static inline void promisor_remote_init(void)
+Disregard this part (and only this part).  The values are not names,
+but just "is this thing a promisor" boolean.
