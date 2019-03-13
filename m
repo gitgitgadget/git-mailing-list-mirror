@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 207B820248
-	for <e@80x24.org>; Wed, 13 Mar 2019 12:24:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C34420248
+	for <e@80x24.org>; Wed, 13 Mar 2019 12:24:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726539AbfCMMYz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 08:24:55 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:33545 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726419AbfCMMYy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 08:24:54 -0400
-Received: by mail-wm1-f66.google.com with SMTP id c13so4334639wmb.0
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 05:24:52 -0700 (PDT)
+        id S1726562AbfCMMY5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 08:24:57 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33548 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726435AbfCMMY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 08:24:56 -0400
+Received: by mail-wm1-f68.google.com with SMTP id c13so4334702wmb.0
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 05:24:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1dk2xZU6GkAB79sUnMSGa83mNpZWTpyUiIYfRLyPrfs=;
-        b=tH6kJO7V3GGBAdFUK4WrpN1UthCsGWF3gtcltGg6jMWe854Uqbe/E4DHbKBWONTjmA
-         CBYCidZDKvaFnjWnjVN+AQKe6QyaAOSAqeXuTE4kwNR7lh84YIDFh9qKXZMJ1bW2KMaO
-         C9ZjQwEqRnm0czVnASprIhKBSnlkXLk8srCzX/APKlJMIVUYJToVgqrcuP/5vWAJ0x0i
-         nFBO5TdR2WGKLh1cBwQR5TnzuxbD+iYKTSKrUMU5uZlK0ENikRfdocLb+rVQaDki4NQR
-         NutwPf5qewVAl0O/E3KCMNjlIMzw3sRGk46AeE7s6Md+ZcNC0xXTMES7uUBAN/KR3z1D
-         IfbA==
+        bh=TcEjlYKPOZTOVATiI17XRSdKYXhU5r0SoVx/FV5ZTg0=;
+        b=NSkXCQZnZNaqP/yNgipJKCf87bSXpCALBWcnMzNZG/aHd7mEj4xbA9S8jlU6i7S+ch
+         YHzKnp25LpzqEa+Y0YF8iUDysLmf0w+aHxzSOzkAMXCGwJoh2KAg9yqBYu9wKWTMjX02
+         FXb874kKOT1FI+3AGxYoWmoxczoq69djl7bTBs2rdasx4siWNR1RU4py0IMzkYmHLHFC
+         LxDUNpdBmjmvC0pPnbAXg39RCQv+Fc7cZjXj7jZGaICCR+cc8ZdxfQ+0Z7Xid2L2X8lk
+         iW1Wq1PA6GAQW0iYm/TEB0qQM0CJaFxm5c3TaWYoOlT7DUaTQsSaI8VpMDnyhjPzNEEL
+         AEhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1dk2xZU6GkAB79sUnMSGa83mNpZWTpyUiIYfRLyPrfs=;
-        b=rMqaNFkX4wlytEXWJWsKxoZyiQwtjcqesVV/MSokpxQe34u+sj52rU29zdA6mA0xyM
-         b2gqSlLQSe82NbOnLTeeRCZ6VUcoIm2IjINAln/ok9ToNl/Cw4atggtaxBGc3vJaAKGe
-         OHFVI5zm69JqJZ8nVhmZgp9kxrrzsH9zBhDxpm31/Ou3bC5L6sl2Uu1gjMUzyhwFVPE1
-         zpgtsgOktQep5U5qF88IoK/gOmI4QWJTLGcngGRcpScXPqdzaPgFFH1OSog2uQEegXiS
-         ECDk3EXRdTH1yTD6va50DrMOerkBYIYozRyGg1n4XPA6A4EErlFdmpiG0ZVRPVgCiY+C
-         R4NA==
-X-Gm-Message-State: APjAAAXIKgxRrqwS4KKq5GVGbhtMuEl3rhcelamIA/SbaACnwNyxcSYu
-        HO8nADem24mDhFYhYeZZT6x4rkKh
-X-Google-Smtp-Source: APXvYqzpSQlfDRUz0/+CZVfvCZzFcabHBt7EVFyC46YaoT/Pp7QhT0LTa8tNM/G+kmKitfodjf55Zg==
-X-Received: by 2002:a05:600c:224f:: with SMTP id a15mr1239688wmm.2.1552479891852;
-        Wed, 13 Mar 2019 05:24:51 -0700 (PDT)
+        bh=TcEjlYKPOZTOVATiI17XRSdKYXhU5r0SoVx/FV5ZTg0=;
+        b=b74DwWODSI5z32ymTiqHpBiVmZFIEqlMZQjatjqFX4/aryL9LdS1M5M7rfx1X8Tazf
+         YaomlgRFjfgm6Cm59JlvxQoWPkZG+t1lXKXrTbGRYolouA6IMVlW5Sf3WU4uePIovqvj
+         pceZs/UxYhdRgJAR0OKGJKTGuS7owCUQN69VRpjjWMTjtrNCxH61RqUr76XebyBaUQO1
+         yYbYsMzf/2uq1jhv6Jy3/tQfmitngV6beyydaCFovd+wERcrwdJBs0s5rYcJ5KawqjyE
+         15ueiHj+6gh1nSv2aVZ9qIB0YUg72GtCV+7IZNnlZda2r6SWsiSqV8057wBPGP6/xy/s
+         Gv6Q==
+X-Gm-Message-State: APjAAAUn+mnhswzRPKg7UfeMr0U1fZLPM7LkCWrQ1dpzQeskenpXOVxh
+        XGc7kBFHPwozWeUSGboUshwhdSxk
+X-Google-Smtp-Source: APXvYqyZCZHLkjPxnCIIgQjJySbI5eJqEZ1aeVxrPfpRFlA01DztIBnKQUjTn+Nu6uhOq1Wp1Qn9cw==
+X-Received: by 2002:a1c:cb82:: with SMTP id b124mr2001800wmg.11.1552479894034;
+        Wed, 13 Mar 2019 05:24:54 -0700 (PDT)
 Received: from localhost.localdomain (x4d0c2b66.dyn.telefonica.de. [77.12.43.102])
-        by smtp.gmail.com with ESMTPSA id t2sm8348287wra.9.2019.03.13.05.24.50
+        by smtp.gmail.com with ESMTPSA id t2sm8348287wra.9.2019.03.13.05.24.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Mar 2019 05:24:51 -0700 (PDT)
+        Wed, 13 Mar 2019 05:24:53 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -56,9 +56,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Luke Diamand <luke@diamand.org>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 09/11] git p4 test: simplify timeout handling
-Date:   Wed, 13 Mar 2019 13:24:17 +0100
-Message-Id: <20190313122419.2210-10-szeder.dev@gmail.com>
+Subject: [PATCH 11/11] t9811-git-p4-label-import: fix pipeline negation
+Date:   Wed, 13 Mar 2019 13:24:19 +0100
+Message-Id: <20190313122419.2210-12-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.21.0.499.g4d310c7a8e.dirty
 In-Reply-To: <20190313122419.2210-1-szeder.dev@gmail.com>
 References: <20190313122419.2210-1-szeder.dev@gmail.com>
@@ -70,77 +70,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'lib-git-p4.sh' uses timeouts in a watchdog process to kill a
-potentially stuck 'p4d' process and for certain cleanup operation
-between tests.  It does so by first computing when the timeout should
-expire, and then repeatedly asking for the current time in seconds
-until it exceeds the expiration time, and for portability reasons it
-uses a one-liner Python script to ask for the current time.
+In 't9811-git-p4-label-import.sh' the test 'tag that cannot be
+exported' runs
 
-Replace these timeouts with downcounters, which, though not
-necessarily shorter, are much simpler, at least in the sense that they
-don't execute the Python interpreter every second.
+  !(p4 labels | grep GIT_TAG_ON_A_BRANCH)
 
-After this change the helper function with that Python one-liner has
-no callers left, remove it.
+to check that the given string is not printed by 'p4 labels'.  This is
+problematic, because according to POSIX [1]:
+
+  "If the pipeline begins with the reserved word ! and command1 is a
+  subshell command, the application shall ensure that the ( operator
+  at the beginning of command1 is separated from the ! by one or more
+  <blank> characters. The behavior of the reserved word ! immediately
+  followed by the ( operator is unspecified."
+
+While most common shells still interpret this '!' as "negate the exit
+code of the last command in the pipeline", 'mksh/lksh' don't and
+interpret it as a negative file name pattern instead.  As a result
+they attempt to run a command made up of the pathnames in the current
+directory (it contains a single directory called 'main'), which, of
+course, fails the test.
+
+We could fix it simply by adding a space between the '!' and '(', but
+instead let's fix it by removing the unnecessary subshell.
+
+[1] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_02
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/lib-git-p4.sh | 19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ t/t9811-git-p4-label-import.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-index b5cb5075c2..c18f85082f 100644
---- a/t/lib-git-p4.sh
-+++ b/t/lib-git-p4.sh
-@@ -44,15 +44,6 @@ native_path () {
- 	echo "$path"
- }
- 
--# On Solaris the 'date +%s' function is not supported and therefore we
--# need this replacement.
--# Attention: This function is not safe again against time offset updates
--# at runtime (e.g. via NTP). The 'clock_gettime(CLOCK_MONOTONIC)'
--# function could fix that but it is not in Python until 3.3.
--time_in_seconds () {
--	(cd / && "$PYTHON_PATH" -c 'import time; print(int(time.time()))')
--}
--
- test_set_port P4DPORT
- 
- P4PORT=localhost:$P4DPORT
-@@ -105,15 +96,16 @@ start_p4d () {
- 	# will be caught with the "kill -0" check below.
- 	i=${P4D_START_PATIENCE:-300}
- 
--	timeout=$(($(time_in_seconds) + $P4D_TIMEOUT))
-+	nr_tries_left=$P4D_TIMEOUT
- 	while true
- 	do
--		if test $(time_in_seconds) -gt $timeout
-+		if test $nr_tries_left -eq 0
- 		then
- 			kill -9 $p4d_pid
- 			exit 1
- 		fi
- 		sleep 1
-+		nr_tries_left=$(($nr_tries_left - 1))
- 	done &
- 	watchdog_pid=$!
- 
-@@ -167,10 +159,11 @@ p4_add_job () {
- }
- 
- retry_until_success () {
--	timeout=$(($(time_in_seconds) + $RETRY_TIMEOUT))
--	until "$@" 2>/dev/null || test $(time_in_seconds) -gt $timeout
-+	nr_tries_left=$RETRY_TIMEOUT
-+	until "$@" 2>/dev/null || test $nr_tries_left -eq 0
- 	do
- 		sleep 1
-+		nr_tries_left=$(($nr_tries_left - 1))
- 	done
- }
+diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
+index b70e81c3cd..c1446f26ab 100755
+--- a/t/t9811-git-p4-label-import.sh
++++ b/t/t9811-git-p4-label-import.sh
+@@ -191,7 +191,7 @@ test_expect_success 'tag that cannot be exported' '
+ 	(
+ 		cd "$cli" &&
+ 		p4 sync ... &&
+-		!(p4 labels | grep GIT_TAG_ON_A_BRANCH)
++		! p4 labels | grep GIT_TAG_ON_A_BRANCH
+ 	)
+ '
  
 -- 
 2.21.0.499.g4d310c7a8e.dirty
