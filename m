@@ -7,66 +7,60 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5093720248
-	for <e@80x24.org>; Wed, 13 Mar 2019 02:16:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F32020248
+	for <e@80x24.org>; Wed, 13 Mar 2019 02:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726626AbfCMCQ6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 22:16:58 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:40311 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726422AbfCMCQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 22:16:57 -0400
-Received: by mail-wm1-f67.google.com with SMTP id g20so243678wmh.5
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 19:16:56 -0700 (PDT)
+        id S1726451AbfCMCS3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 22:18:29 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35848 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726418AbfCMCS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 22:18:29 -0400
+Received: by mail-wm1-f66.google.com with SMTP id e16so258309wme.1
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 19:18:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=wU1fHrKmuQedlNGqOQL46N8cAGh1lhIRuDbKW/37//w=;
-        b=qYOX6oIUFvgs5bv0sZKj0FcupAHvxdM4JNiea+J2UY0iXWXQbnhNc7h6Uc70NY2KUU
-         u8zz8si9iaAuS9BvMrtZ0wQcArlYlpdj2inkMsveReD+iRza7sHuWN2jEh8PHG5y7HEW
-         8lUnPZwQ2xMoc13Z5KVgD84cUjx8HzM8w92PmPeFFqxYULT5GHpcVEeCPl1o4CB3TWdX
-         VAUzHWq9Phg0MFZ6ZQ1TrYEfkx+y31XfoPIqbATrGj6q+/ws6SlTk1AS8OAnfkhEzTgw
-         q+I4yRmV1mTNYoGyAY0et1wR6nw8PNvptdppHqCF4nluZQBQrqwGDlKshyyWNQMRyfm6
-         zbIQ==
+        bh=ChKcj8iAqblXiQA6TY3WDOXeerD0Y6YX0Q9qNAI/wDM=;
+        b=CTKjftUqk7NfbRNRqT73l689Olr3cV1ZPonFerFCj0KUkgJtaeFffW5kvWr9VHn0N0
+         AWmuGR5/tlZCGYt+VPrM0BLsI5Fq/gIa8r0PZsUsp87UYPQ8ClfxAj8v81Qf7SiJ5DRC
+         yBu1CS95mp0BeJbH4znXZSZJQhhJTPoTG/hm5wYcu17NJRZ9OUAJYwa6gGW5uLQ8vgbg
+         wJf7SRXQFxAvyimOviErTk5CihbgxT4lWLLjMgD5Cx5ACNoSVowSXW8HT7j6od7WjhxR
+         Yw8XoFJUzhor+7Cns/EjPUKRQy43zAcQLZK5qVoX0vh3+1fsgjiCR1akZvAvudYnfi40
+         /xZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=wU1fHrKmuQedlNGqOQL46N8cAGh1lhIRuDbKW/37//w=;
-        b=af8yozkjtkZi79LMJH1kIr/HYoygPU3FdQ0VqcpKq/VHaraS6fAD5DMgNcOhXf66wT
-         zBumBBURLTQXxk5DSg4VMbSIidA4QOS92nuzm0nW2qKdwN2DwwoSTl9uAt3gSrfPT7L/
-         RCVUox+8trIOROL5XYtkI9OsIc/8KlrSy/AC4DEkvfzuFWsGcat49FLFfI45+R6uwcSU
-         VNyD/uQW/BjhQTqlo1quJ02kBSTMeTzSlkMWLUDg0sZmIx1xKMK6f5PAKMFoG9V4JIVP
-         IkT/WnQPSmjL3vLK4zGGD5HXEQM3XO2NKD3Rs16XZBkWgayehSUk+UU1A5PH5FpzejCF
-         SDhw==
-X-Gm-Message-State: APjAAAWjAK4RlIrEFhI7OJXqTZ1hR5SChl1v6+VOVcrY87EOxqzfVsAp
-        dTCwAP8Pa715X+w6DW2kqRE=
-X-Google-Smtp-Source: APXvYqyjrF01QgwnWiHv0+RncK0aRlsnczA2m0NzqB/nFPUfQmdW25/9zKbqEskrK6Zwkmp8DSW8Xw==
-X-Received: by 2002:a7b:c14a:: with SMTP id z10mr378519wmi.99.1552443415993;
-        Tue, 12 Mar 2019 19:16:55 -0700 (PDT)
+        bh=ChKcj8iAqblXiQA6TY3WDOXeerD0Y6YX0Q9qNAI/wDM=;
+        b=tXGm6/HPtD9NkLhEaFyhq01R8vvC8dd7B1AZDHpOMrFw3NKWcbOcon9tSvIpudUQF2
+         fPhkbWBPzfkpyXOHQJibNzxK5p+Mwn+crjZwlssCSoJYIGnOWh64reojB7uuTomP344/
+         aXNWEdTHjzYySuAYJrT/Q6BB2Igujg+Lxgs80ysJ+eLmYRZxn6bVHFzzI8y4EXHfuJdh
+         3IbUxES3NZFy4Kz5b43pTLO1bZhJ7ff/wotO7M0UdtzueDAHVmApcr5WkUjVoMG2xDt9
+         wB2SpBttWrvG2BhFkwBAkuZHsP12U9gemnE/dMRzfjq/1ZSRpMTr7pQnvjXn0lhq9AX6
+         ij3Q==
+X-Gm-Message-State: APjAAAW7wjdG0ZFNZNBjt+ps7eo/5Ybf4ytI4eiq7lQQBsO8kV3iv+Vt
+        uUO54pI3G2F50JEN9dzJIQPNnfqu/xc=
+X-Google-Smtp-Source: APXvYqw85+qc8GRTsabrYfocbPLUvOwpu0j0CEF+lhVl29Tet8/C21lNaHw8cRPVhivdvLCX6AehNg==
+X-Received: by 2002:a1c:449:: with SMTP id 70mr453999wme.118.1552443506229;
+        Tue, 12 Mar 2019 19:18:26 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id o5sm18225348wrv.70.2019.03.12.19.16.55
+        by smtp.gmail.com with ESMTPSA id y140sm1135850wmd.18.2019.03.12.19.18.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Mar 2019 19:16:55 -0700 (PDT)
+        Tue, 12 Mar 2019 19:18:25 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Git List <git@vger.kernel.org>,
-        nathan.berbezier@etu.univ-lyon1.fr,
-        pablo.chabanne@etu.univ-lyon1.fr
-Subject: Re: [PATCH 2/2 v3] doc: format pathnames and URLs as monospace.
-References: <20190306130446.2193-1-corentin.bompard@etu.univ-lyon1.fr>
-        <20190306130446.2193-2-corentin.bompard@etu.univ-lyon1.fr>
-        <86va0o9qsp.fsf@matthieu-moy.fr>
-        <CAPig+cQEYDay9kTUpBepw6kN_PgpG4dRXeNf82Kty+E7piXeWg@mail.gmail.com>
-        <8a8944a6-9559-74be-afee-e6af262412ab@gmail.com>
-Date:   Wed, 13 Mar 2019 11:16:55 +0900
-In-Reply-To: <8a8944a6-9559-74be-afee-e6af262412ab@gmail.com> (Andrei Rybak's
-        message of "Tue, 12 Mar 2019 18:13:48 +0100")
-Message-ID: <xmqq5zsnfrhk.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [RFC/PATCH] point pull requesters to Git Git Gadget
+References: <20190312213246.GA6252@sigill.intra.peff.net>
+        <xmqqef7bfrxv.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 13 Mar 2019 11:18:25 +0900
+In-Reply-To: <xmqqef7bfrxv.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 13 Mar 2019 11:07:08 +0900")
+Message-ID: <xmqq1s3bfrf2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,55 +69,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andrei Rybak <rybak.a.v@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 2019-03-12 16:48, Eric Sunshine wrote:
->> Thanks. A few comments:
->>
->> In patch 1/2:
->>
->> * drop the full stop from the first line of the commit message
->>
->> * s/futur/future/ in the commit message
->>
->> * s/There are false/& positives/ in the commit message
->>
->> * s/both, It/both, it/
+> Jeff King <peff@peff.net> writes:
 >
-> Also,
+>> -Nevertheless, you can use [submitGit](http://submitgit.herokuapp.com/) to
+>> +Nevertheless, you can use [Git Git Gadget](https://gitgitgadget.github.io/) to
 >
-> * s/inconsistant/inconsistent/ in the first paragraph of the commit message.
+> The pointed-at page calls the tool a single word with three capital
+> Gs without SP in it.  We should match it here and in the other
+> document.
 
-Here is what I have locally, with the above input, relative to what
-Matthieu reviewed.
+For now, here is what I have locally.  Again, thanks all.
 
-Thanks, all.
+-- >8 --
+From: Jeff King <peff@peff.net>
+Date: Tue, 12 Mar 2019 17:32:46 -0400
+Subject: [PATCH] point pull requesters to GitGitGadget
 
-1:  ed3eba5cc5 ! 1:  0dbd305fe7 doc/CodingGuidelines: URLs and paths as monospace.
-    @@ -1,11 +1,11 @@
-     Author: Corentin BOMPARD <corentin.bompard@etu.univ-lyon1.fr>
-     
-    -    doc/CodingGuidelines: URLs and paths as monospace.
-    +    doc/CodingGuidelines: URLs and paths as monospace
-     
-         The current documentation uses both quotes (italics) and backquotes
-    -    (monospace) to render URLs and pathnames, which is inconsistant.
-    +    (monospace) to render URLs and pathnames, which is inconsistent.
-         Document a best practice in CodingGuidelines to help reduce
-    -    inconsistencies in the futur.
-    +    inconsistencies in the future.
-     
-         We set the best practice to using backquotes, since:
-     
-    @@ -17,8 +17,8 @@
-           $ git grep '`[^`]/*[^`]`' | wc -l
-           690
-     
-    -      There are false on both sides, but after a cursory look at the
-    -      output of both, It doesn't seem the false positive rate is really
-    +      There are false positives on both sides, but after a cursory look at
-    +      the output of both, it doesn't seem the false positive rate is really
-           higher in the second case.
-     
-           At least, this shows that the existing documentation uses
-2:  38ffa25f88 = 2:  68ed71b53c doc: format pathnames and URLs as monospace.
+In the contributing guide and PR template seen by people who open pull
+requests on GitHub, we mention the submitGit tool, which gives an
+alternative to figuring out the mailing list. These days we also have
+the similar GitGitGadget tool, and we should make it clear that this
+is also an option.
+
+We could continue to mention _both_ tools, but it's probably better to
+pick one in order to avoid overwhelming the user with choice. After all,
+one of the purposes here is to reduce friction for first-time or
+infrequent contributors. And there are a few reasons to prefer GGG:
+
+  1. submitGit seems to still have a few rough edges. E.g., it doesn't
+     munge timestamps to help threaded mail readers handled out-of-order
+     delivery.
+
+  2. Subjectively, GGG seems to be more commonly used on the list these
+     days, especially by list regulars.
+
+  3. GGG seems to be under more active development (likely related to
+     point 2).
+
+So let's actually swap out submitGit for GGG. While we're there, let's
+put another link to the GGG page in the PR template, because that's
+where users who are learning about it for the first time will want to go
+to read more.
+
+Signed-off-by: Jeff King <peff@peff.net>
+Acked-by: Roberto Tyley <roberto.tyley@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ .github/CONTRIBUTING.md          | 2 +-
+ .github/PULL_REQUEST_TEMPLATE.md | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/.github/CONTRIBUTING.md b/.github/CONTRIBUTING.md
+index 64e605a02b..e7b4e2f3c2 100644
+--- a/.github/CONTRIBUTING.md
++++ b/.github/CONTRIBUTING.md
+@@ -5,7 +5,7 @@ Git community does not use github.com for their contributions. Instead, we use
+ a mailing list (git@vger.kernel.org) for code submissions, code
+ reviews, and bug reports.
+ 
+-Nevertheless, you can use [submitGit](http://submitgit.herokuapp.com/) to
++Nevertheless, you can use [GitGitGadget](https://gitgitgadget.github.io/) to
+ conveniently send your Pull Requests commits to our mailing list.
+ 
+ Please read ["A note from the maintainer"](https://git.kernel.org/pub/scm/git/git.git/plain/MaintNotes?h=todo)
+diff --git a/.github/PULL_REQUEST_TEMPLATE.md b/.github/PULL_REQUEST_TEMPLATE.md
+index adba13e5ba..952c7c3a2a 100644
+--- a/.github/PULL_REQUEST_TEMPLATE.md
++++ b/.github/PULL_REQUEST_TEMPLATE.md
+@@ -1,7 +1,7 @@
+ Thanks for taking the time to contribute to Git! Please be advised that the
+ Git community does not use github.com for their contributions. Instead, we use
+ a mailing list (git@vger.kernel.org) for code submissions, code reviews, and
+-bug reports. Nevertheless, you can use submitGit to conveniently send your Pull
+-Requests commits to our mailing list.
++bug reports. Nevertheless, you can use GitGitGadget (https://gitgitgadget.github.io/)
++to conveniently send your Pull Requests commits to our mailing list.
+ 
+ Please read the "guidelines for contributing" linked above!
+-- 
+2.21.0-155-ge902e9bcae
+
