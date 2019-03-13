@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D476120248
-	for <e@80x24.org>; Wed, 13 Mar 2019 12:24:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A840F20248
+	for <e@80x24.org>; Wed, 13 Mar 2019 12:24:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726396AbfCMMYr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 08:24:47 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35027 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725868AbfCMMYq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 08:24:46 -0400
-Received: by mail-wr1-f65.google.com with SMTP id t18so1779922wrx.2
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 05:24:44 -0700 (PDT)
+        id S1726444AbfCMMYw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 08:24:52 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:40361 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726419AbfCMMYs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 08:24:48 -0400
+Received: by mail-wm1-f65.google.com with SMTP id g20so1631733wmh.5
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 05:24:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mN1kCxbgqQogjd9IfmawffGmAZe7+Vpw47mgnA8JA/8=;
-        b=SMFtmo2hn5XWp4K6E4y0nayBXT6+qzMKhzq5eeQEWArdPBfIUH8RegolN/g1B97I27
-         EKpC1vjuJv6unGyGGP6GQ9F15OS97zx4DMlfVHCX1SMMAPcVmuluV0dX9x0AGS01YC7d
-         DNABhpIG4lAZdQ37OH/1cPS8V2+ooCnSiKTx1bRwEpQn6EgYdUMcbp4K5MKa7lqIFBEh
-         Xo0o1gjct+fQfmFjLcm4NbWoxI/cHewf5EPkg4SdeKCqcudzGem4mhXNdymTwfuEwm4T
-         26l2o+EbxRRzH18RCK6oCpYAmo+RhnbEy6x0ssPJPFQoEwkbxHFnt33qgWvWJR2KYDUz
-         a7Uw==
+        bh=SANSLHa1gjJDwBRFom9quG2SznkPJBj0TV2pMNxH/gE=;
+        b=gdsHhgeGgMq8qqCuidhksHwajW+oeGWjlwXDnm8jKQBSAH+ezdOA+VZHjxugmsgAfw
+         2yG7co6kpp5JHQrcDtYpoOuKXBeJfZyGQkX7CdabUrcPPJMaisrIuJWoPaGhz4W4uInd
+         EGJKmp8+mDm10iKKHSpic083fWiEOjUhGSo/fG++VpF+xQf8ZofhgPx2e3ClZm4I5QdE
+         A87y9TnkgwGyHy53pTO9R/EmO0eCi7yxAloqYn4hXBvSJkvJui7CfL7OMY7nyXKuN6Kp
+         IIr0TuDN8pR2JYqsMKQNM6uUyTl3u6TMyaOqjA9RGTI6kGHiC2p7c9l5h2sYBiYAxmrM
+         RIwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mN1kCxbgqQogjd9IfmawffGmAZe7+Vpw47mgnA8JA/8=;
-        b=sK0duM2W7nuj2QtcbtAPIjIiJRxrio7GxYb5m+0p9rDAmNKpgvV8I2J9zdE8RAM6Sn
-         WPslwNoUiDZuV8YjRqo/NT5j1gPb0kqxoWgBorggu5A2265m3C7+G05/rnZBx/o9tOmk
-         p5nCCM7edqXk72G8gRS4bQv9SiyvOMwrHjFA1KOeCh0r+hJsQeE27tbYZMuOWV7VdqMj
-         VO0j0xAJylwnAkELbdl5Y2syL3J9UnV674cTfWchZJAJnvvaydAjqG+eda/XU+D/7iLN
-         ZfxyJYuvBVQiTM1HkHzpRB6B53TllOV4Cg2VdHKnuwbAnSui5SD0VjaC1kUu4z7H280E
-         jPAA==
-X-Gm-Message-State: APjAAAX1yvLkVZoo/rokcISRLjes8LGLdV2XN7bkzqBgYXabPsI07dG9
-        1+G/tNoMYNurxUQRMlC9ikh/E/zo
-X-Google-Smtp-Source: APXvYqwXnEAAlvpI66JRL5kWVmWGcB+iubJhq+Q4RXF89ml5WIIzNqgMD7JeWFdqE1ILWo732XwWnA==
-X-Received: by 2002:a5d:6948:: with SMTP id r8mr4660943wrw.255.1552479883109;
-        Wed, 13 Mar 2019 05:24:43 -0700 (PDT)
+        bh=SANSLHa1gjJDwBRFom9quG2SznkPJBj0TV2pMNxH/gE=;
+        b=X5P6jpT9a9k8JL5V1O38dMXNoDuaSETKfDmJzXEEGXRVY+Shzs+6uPOI61RBHdIybH
+         arZtZn5Y+sChxajDrusuvhM+oUc5flCUT1kgkYGi8jmL022hdgxxYcLgmn5OwJlZtT7i
+         dpoDDWivdhYVs/oQOqnF5vMQqzOBSkop0gJcOwNfqqJWME+O1yH9X5YasiV9KEmEAwVn
+         I96NqGX5LoH5xlCmpVx9d/VfUYaLfaF2J6H+vD+0vBRPb/wBF+F4j7hClp680hnjQl+9
+         LnvN0gKM2yRiGnrx0VS5YiC66ZRHncgOs5NwZlqn0TTV4y8zeHUGD02X89TymEHDPXA6
+         wp7A==
+X-Gm-Message-State: APjAAAWN8LZB+9cpugzTY4aSuO88dMIZsovuBRS4ILjtvE2JGGJ9kc5u
+        cxFZdIZj67W667eSqFrE+WR4QsLa
+X-Google-Smtp-Source: APXvYqzg5b2FCERATXElknBEzZxJg22l3tvd1IO8SUcZSIpQ2z27fyUGuJtXloyth+nMHCNWf6kS3A==
+X-Received: by 2002:a1c:7c10:: with SMTP id x16mr2006513wmc.100.1552479886515;
+        Wed, 13 Mar 2019 05:24:46 -0700 (PDT)
 Received: from localhost.localdomain (x4d0c2b66.dyn.telefonica.de. [77.12.43.102])
-        by smtp.gmail.com with ESMTPSA id t2sm8348287wra.9.2019.03.13.05.24.41
+        by smtp.gmail.com with ESMTPSA id t2sm8348287wra.9.2019.03.13.05.24.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Mar 2019 05:24:42 -0700 (PDT)
+        Wed, 13 Mar 2019 05:24:45 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Luke Diamand <luke@diamand.org>,
         Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 03/11] test-lib: introduce 'test_atexit'
-Date:   Wed, 13 Mar 2019 13:24:11 +0100
-Message-Id: <20190313122419.2210-4-szeder.dev@gmail.com>
+Subject: [PATCH 05/11] tests: use 'test_atexit' to stop httpd
+Date:   Wed, 13 Mar 2019 13:24:13 +0100
+Message-Id: <20190313122419.2210-6-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.21.0.499.g4d310c7a8e.dirty
 In-Reply-To: <20190313122419.2210-1-szeder.dev@gmail.com>
 References: <20190313122419.2210-1-szeder.dev@gmail.com>
@@ -71,203 +70,342 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Use 'test_atexit' to run cleanup commands to stop httpd at the end of
+the test script or upon interrupt or failure, as it is shorter,
+simpler, and more robust than registering such cleanup commands in the
+trap on EXIT in the test scripts.
 
-When running Apache, 'git daemon', or p4d, we want to kill them at the
-end of the test script, otherwise a leftover daemon process will keep
-its port open indefinitely, and thus will interfere with subsequent
-executions of the same test script.
-
-So far, we stop these daemon processes "manually", i.e.:
-
-  - by registering functions or commands in the trap on EXIT to stop
-    the daemon while preserving the last seen exit code before the
-    trap (to deal with a failure when run with '--immediate' or with
-    interrupts by ctrl-C),
-
-  - and by invoking these functions/commands last thing before
-    'test_done' (and sometimes restoring the test framework's default
-    trap on EXIT, to prevent the daemons from being killed twice).
-
-On one hand, we do this inconsistently, e.g. 'git p4' tests invoke
-different functions in the trap on EXIT and in the last test before
-'test_done', and they neither restore the test framework's default trap
-on EXIT nor preserve the last seen exit code.  On the other hand, this
-is error prone, because, as shown in a previous patch in this series,
-any output from the cleanup commands in the trap on EXIT can prevent a
-proper cleanup when a test script run with '--verbose-log' and certain
-shells, notably 'dash', is interrupted.
-
-Let's introduce 'test_atexit', which is loosely modeled after
-'test_when_finished', but has a broader scope: rather than running the
-commands after the current test case, run them when the test script
-finishes, and also run them when the test is interrupted, or exits
-early in case of a failure while the '--immediate' option is in
-effect.
-
-When running the cleanup commands at the end of a successful test,
-then they will be run in 'test_done' before it removes the trash
-directory, i.e. the cleanup commands will still be able to access any
-pidfiles or socket files in there.  When running the cleanup commands
-after an interrupt or failure with '--immediate', then they will be
-run in the trap on EXIT.  In both cases they will be run in
-'test_eval_', i.e. both standard error and output of all cleanup
-commands will go where they should according to the '-v' or
-'--verbose-log' options, and thus won't cause any troubles when
-interrupting a test script run with '--verbose-log'.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/README                | 20 ++++++++++++++++++++
- t/t0000-basic.sh        | 18 ++++++++++++++++++
- t/test-lib-functions.sh | 28 ++++++++++++++++++++++++++++
- t/test-lib.sh           | 23 +++++++++++++++++++++++
- 4 files changed, 89 insertions(+)
+ t/lib-git-svn.sh                              | 5 -----
+ t/lib-httpd.sh                                | 6 +-----
+ t/t0410-partial-clone.sh                      | 2 --
+ t/t5500-fetch-pack.sh                         | 3 ---
+ t/t5510-fetch.sh                              | 2 --
+ t/t5537-fetch-shallow.sh                      | 2 --
+ t/t5539-fetch-http-shallow.sh                 | 1 -
+ t/t5540-http-push-webdav.sh                   | 2 --
+ t/t5541-http-push-smart.sh                    | 1 -
+ t/t5542-push-http-shallow.sh                  | 1 -
+ t/t5545-push-options.sh                       | 2 --
+ t/t5550-http-fetch-dumb.sh                    | 1 -
+ t/t5551-http-fetch-smart.sh                   | 1 -
+ t/t5561-http-backend.sh                       | 1 -
+ t/t5581-http-curl-verbose.sh                  | 2 --
+ t/t5601-clone.sh                              | 2 --
+ t/t5616-partial-clone.sh                      | 2 --
+ t/t5700-protocol-v1.sh                        | 2 --
+ t/t5702-protocol-v2.sh                        | 2 --
+ t/t5703-upload-pack-ref-in-want.sh            | 2 --
+ t/t5812-proto-disable-http.sh                 | 1 -
+ t/t9115-git-svn-dcommit-funky-renames.sh      | 2 --
+ t/t9118-git-svn-funky-branch-names.sh         | 2 --
+ t/t9120-git-svn-clone-with-percent-escapes.sh | 2 --
+ t/t9142-git-svn-shallow-clone.sh              | 2 --
+ 25 files changed, 1 insertion(+), 50 deletions(-)
 
-diff --git a/t/README b/t/README
-index 886bbec5bc..af510d236a 100644
---- a/t/README
-+++ b/t/README
-@@ -862,6 +862,26 @@ library for your script to use.
- 		...
+diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
+index f3b478c307..c1271d6863 100644
+--- a/t/lib-git-svn.sh
++++ b/t/lib-git-svn.sh
+@@ -76,11 +76,6 @@ maybe_start_httpd () {
+ 		LIB_HTTPD_SVN="$loc"
+ 		start_httpd
+ 		;;
+-	*)
+-		stop_httpd () {
+-			: noop
+-		}
+-		;;
+ 	esac
+ }
+ 
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 0dfb48c2f6..b3cc62bd36 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -14,7 +14,6 @@
+ #
+ #	test_expect_success ...
+ #
+-#	stop_httpd
+ #	test_done
+ #
+ # Can be configured using the following variables.
+@@ -176,7 +175,7 @@ prepare_httpd() {
+ start_httpd() {
+ 	prepare_httpd >&3 2>&4
+ 
+-	trap 'code=$?; stop_httpd; (exit $code); die' EXIT
++	test_atexit stop_httpd
+ 
+ 	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
+ 		-f "$TEST_PATH/apache.conf" $HTTPD_PARA \
+@@ -184,15 +183,12 @@ start_httpd() {
+ 		>&3 2>&4
+ 	if test $? -ne 0
+ 	then
+-		trap 'die' EXIT
+ 		cat "$HTTPD_ROOT_PATH"/error.log >&4 2>/dev/null
+ 		test_skip_or_die $GIT_TEST_HTTPD "web server setup failed"
+ 	fi
+ }
+ 
+ stop_httpd() {
+-	trap 'die' EXIT
+-
+ 	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
+ 		-f "$TEST_PATH/apache.conf" $HTTPD_PARA -k stop
+ }
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index bce02788e6..5bd892f2f7 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -518,6 +518,4 @@ test_expect_success 'fetching of missing objects from an HTTP server' '
+ 	git verify-pack --verbose "$IDX" | grep "$HASH"
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 49c540b1e1..32426fa5d1 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -918,7 +918,4 @@ test_expect_success 'fetch with --filter=blob:limit=0 and HTTP' '
+ 	fetch_filter_blob_limit_zero "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
+ '
+ 
+-stop_httpd
+-
+-
+ test_done
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 3b7b30568c..e98d90dd9b 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -978,6 +978,4 @@ test_expect_success '--negotiation-tip limits "have" lines sent with HTTP protoc
+ 	check_negotiation_tip
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index 6caf628efa..66f0b64d39 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -255,6 +255,4 @@ test_expect_success 'shallow fetches check connectivity before writing shallow f
+ 	git -C client fsck
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5539-fetch-http-shallow.sh b/t/t5539-fetch-http-shallow.sh
+index 5fbf67c446..98f028f203 100755
+--- a/t/t5539-fetch-http-shallow.sh
++++ b/t/t5539-fetch-http-shallow.sh
+@@ -146,5 +146,4 @@ test_expect_success 'fetching deepen' '
+ 	)
+ '
+ 
+-stop_httpd
+ test_done
+diff --git a/t/t5540-http-push-webdav.sh b/t/t5540-http-push-webdav.sh
+index 88ff5a49e4..a094fd5e71 100755
+--- a/t/t5540-http-push-webdav.sh
++++ b/t/t5540-http-push-webdav.sh
+@@ -176,6 +176,4 @@ test_expect_failure 'push to password-protected repository (no user in URL)' '
+ 	test_cmp expect actual
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index 5475afc052..bdf40f445e 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -373,5 +373,4 @@ test_expect_success 'colorize errors/hints' '
+ 	test_i18ngrep ! "^hint: " decoded
+ '
+ 
+-stop_httpd
+ test_done
+diff --git a/t/t5542-push-http-shallow.sh b/t/t5542-push-http-shallow.sh
+index 5165833157..ddc1db722d 100755
+--- a/t/t5542-push-http-shallow.sh
++++ b/t/t5542-push-http-shallow.sh
+@@ -90,5 +90,4 @@ EOF
+ 	)
+ '
+ 
+-stop_httpd
+ test_done
+diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
+index b47a95871c..6d1d59c9b1 100755
+--- a/t/t5545-push-options.sh
++++ b/t/t5545-push-options.sh
+@@ -278,6 +278,4 @@ test_expect_success 'push options keep quoted characters intact (http)' '
+ 	test_cmp expect "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git/hooks/pre-receive.push_options
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 6d7d88ccc9..57f6f8c628 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -408,5 +408,4 @@ test_expect_success 'print HTTP error when any intermediate redirect throws erro
+ 	test_i18ngrep "unable to access.*/redir-to/502" stderr
+ '
+ 
+-stop_httpd
+ test_done
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index ba83e567e5..9faf6349cf 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -434,5 +434,4 @@ test_expect_success 'server-side error detected' '
+ 	grep "server-side error" actual
+ '
+ 
+-stop_httpd
+ test_done
+diff --git a/t/t5561-http-backend.sh b/t/t5561-http-backend.sh
+index 1c49054595..6eb0294978 100755
+--- a/t/t5561-http-backend.sh
++++ b/t/t5561-http-backend.sh
+@@ -132,5 +132,4 @@ test_expect_success 'server request log matches test results' '
+ 	check_access_log exp
+ '
+ 
+-stop_httpd
+ test_done
+diff --git a/t/t5581-http-curl-verbose.sh b/t/t5581-http-curl-verbose.sh
+index cd9283eeec..5129b0724f 100755
+--- a/t/t5581-http-curl-verbose.sh
++++ b/t/t5581-http-curl-verbose.sh
+@@ -23,6 +23,4 @@ test_expect_success 'failure in git-upload-pack is shown' '
+ 	grep "< HTTP/1.1 500 Intentional Breakage" curl_log
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index d6948cbdab..b04d668684 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -733,6 +733,4 @@ test_expect_success 'partial clone using HTTP' '
+ 	partial_clone "$HTTPD_DOCUMENT_ROOT_PATH/server" "$HTTPD_URL/smart/server"
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 9643acb161..9a8f9886b3 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -331,6 +331,4 @@ test_expect_success 'when partial cloning, tolerate server not sending target of
+ 	! test -e "$HTTPD_ROOT_PATH/one-time-sed"
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
+index ba86a44eb1..b0e4752232 100755
+--- a/t/t5700-protocol-v1.sh
++++ b/t/t5700-protocol-v1.sh
+@@ -289,6 +289,4 @@ test_expect_success 'push with http:// using protocol v1' '
+ 	grep "git< version 1" log
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index db4ae09f2f..35424bb8af 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -656,6 +656,4 @@ test_expect_success 'when server does not send "ready", expect FLUSH' '
+ 	test_i18ngrep "expected no other sections to be sent after no .ready." err
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index f87b2f6df3..b6a995e857 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -257,8 +257,6 @@ test_expect_success 'server loses a ref - ref in want' '
+ 	test_i18ngrep "fatal: remote error: unknown ref refs/heads/raster" err
+ '
+ 
+-stop_httpd
+-
+ REPO="$(pwd)/repo"
+ LOCAL_PRISTINE="$(pwd)/local_pristine"
+ 
+diff --git a/t/t5812-proto-disable-http.sh b/t/t5812-proto-disable-http.sh
+index 872788ac8c..af8772fada 100755
+--- a/t/t5812-proto-disable-http.sh
++++ b/t/t5812-proto-disable-http.sh
+@@ -34,5 +34,4 @@ test_expect_success 'http can be limited to from-user' '
+ 		clone "$HTTPD_URL/smart-redir-perm/repo.git" redir.git
+ '
+ 
+-stop_httpd
+ test_done
+diff --git a/t/t9115-git-svn-dcommit-funky-renames.sh b/t/t9115-git-svn-dcommit-funky-renames.sh
+index 64bb495834..9b44a44bc1 100755
+--- a/t/t9115-git-svn-dcommit-funky-renames.sh
++++ b/t/t9115-git-svn-dcommit-funky-renames.sh
+@@ -120,6 +120,4 @@ test_expect_success !MINGW,!UTF8_NFD_TO_NFC 'svn.pathnameencoding=cp932 rename o
+ 	git svn dcommit
+ '
+ 
+-stop_httpd
+-
+ test_done
+diff --git a/t/t9118-git-svn-funky-branch-names.sh b/t/t9118-git-svn-funky-branch-names.sh
+index 41a026637f..a159ff96b7 100755
+--- a/t/t9118-git-svn-funky-branch-names.sh
++++ b/t/t9118-git-svn-funky-branch-names.sh
+@@ -87,6 +87,4 @@ test_expect_success 'test dcommit to trailing_dotlock branch' '
+ 	)
  	'
  
-+ - test_atexit <script>
-+
-+   Prepend <script> to a list of commands to run unconditionally to
-+   clean up before the test script exits, e.g. to stop a daemon:
-+
-+	test_expect_success 'test git daemon' '
-+		git daemon &
-+		daemon_pid=$! &&
-+		test_atexit 'kill $daemon_pid' &&
-+		hello world
-+	'
-+
-+   The commands will be executed before the trash directory is removed,
-+   i.e. the atexit commands will still be able to access any pidfiles or
-+   socket files.
-+
-+   Note that these commands will be run even when a test script run
-+   with '--immediate' fails.  Be careful with your atexit commands to
-+   minimize any changes to the failed state.
-+
-  - test_write_lines <lines>
- 
-    Write <lines> on standard output, one line per argument.
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index b6566003dd..c03054c538 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -825,6 +825,24 @@ test_expect_success 'tests clean up even on failures' "
- 	EOF
- "
- 
-+test_expect_success 'test_atexit is run' "
-+	test_must_fail run_sub_test_lib_test \
-+		atexit-cleanup 'Run atexit commands' -i <<-\\EOF &&
-+	test_expect_success 'tests clean up even after a failure' '
-+		> ../../clean-atexit &&
-+		test_atexit rm ../../clean-atexit &&
-+		> ../../also-clean-atexit &&
-+		test_atexit rm ../../also-clean-atexit &&
-+		> ../../dont-clean-atexit &&
-+		(exit 1)
-+	'
-+	test_done
-+	EOF
-+	test_path_is_file dont-clean-atexit &&
-+	test_path_is_missing clean-atexit &&
-+	test_path_is_missing also-clean-atexit
-+"
-+
- test_expect_success 'test_oid setup' '
- 	test_oid_init
+-stop_httpd
+-
+ test_done
+diff --git a/t/t9120-git-svn-clone-with-percent-escapes.sh b/t/t9120-git-svn-clone-with-percent-escapes.sh
+index b28a1741e3..40b714df31 100755
+--- a/t/t9120-git-svn-clone-with-percent-escapes.sh
++++ b/t/t9120-git-svn-clone-with-percent-escapes.sh
+@@ -74,6 +74,4 @@ test_expect_success 'test clone -s with unescaped space' '
+ 	)
  '
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 80402a428f..6a50dba390 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -934,6 +934,34 @@ test_when_finished () {
- 		} && (exit \"\$eval_ret\"); eval_ret=\$?; $test_cleanup"
- }
  
-+# This function can be used to schedule some commands to be run
-+# unconditionally at the end of the test script, e.g. to stop a daemon:
-+#
-+#	test_expect_success 'test git daemon' '
-+#		git daemon &
-+#		daemon_pid=$! &&
-+#		test_atexit 'kill $daemon_pid' &&
-+#		hello world
-+#	'
-+#
-+# The commands will be executed before the trash directory is removed,
-+# i.e. the atexit commands will still be able to access any pidfiles or
-+# socket files.
-+#
-+# Note that these commands will be run even when a test script run
-+# with '--immediate' fails.  Be careful with your atexit commands to
-+# minimize any changes to the failed state.
-+
-+test_atexit () {
-+	# We cannot detect when we are in a subshell in general, but by
-+	# doing so on Bash is better than nothing (the test will
-+	# silently pass on other shells).
-+	test "${BASH_SUBSHELL-0}" = 0 ||
-+	error "bug in test script: test_atexit does nothing in a subshell"
-+	test_atexit_cleanup="{ $*
-+		} && (exit \"\$eval_ret\"); eval_ret=\$?; $test_atexit_cleanup"
-+}
-+
- # Most tests can use the created repository, but some may need to create more.
- # Usage: test_create_repo <directory>
- test_create_repo () {
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index db3875d1e4..b35881696f 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -620,6 +620,10 @@ test_external_has_tap=0
+-stop_httpd
+-
+ test_done
+diff --git a/t/t9142-git-svn-shallow-clone.sh b/t/t9142-git-svn-shallow-clone.sh
+index 9ee23be640..a30730502d 100755
+--- a/t/t9142-git-svn-shallow-clone.sh
++++ b/t/t9142-git-svn-shallow-clone.sh
+@@ -26,6 +26,4 @@ test_expect_success 'clone trunk with "-r HEAD"' '
+ 	( cd g && git rev-parse --symbolic --verify HEAD )
+ '
  
- die () {
- 	code=$?
-+	# This is responsible for running the atexit commands even when a
-+	# test script run with '--immediate' fails, or when the user hits
-+	# ctrl-C, i.e. when 'test_done' is not invoked at all.
-+	test_atexit_handler || code=$?
- 	if test -n "$GIT_EXIT_OK"
- 	then
- 		exit $code
-@@ -1045,9 +1049,28 @@ write_junit_xml_testcase () {
- 	junit_have_testcase=t
- }
- 
-+test_atexit_cleanup=:
-+test_atexit_handler () {
-+	# In a succeeding test script 'test_atexit_handler' is invoked
-+	# twice: first from 'test_done', then from 'die' in the trap on
-+	# EXIT.
-+	# This condition and resetting 'test_atexit_cleanup' below makes
-+	# sure that the registered cleanup commands are run only once.
-+	test : != "$test_atexit_cleanup" || return 0
-+
-+	setup_malloc_check
-+	test_eval_ "$test_atexit_cleanup"
-+	test_atexit_cleanup=:
-+	teardown_malloc_check
-+}
-+
- test_done () {
- 	GIT_EXIT_OK=t
- 
-+	# Run the atexit commands _before_ the trash directory is
-+	# removed, so the commands can access pidfiles and socket files.
-+	test_atexit_handler
-+
- 	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
- 	then
- 		test -n "$junit_have_testcase" || {
+-stop_httpd
+-
+ test_done
 -- 
 2.21.0.499.g4d310c7a8e.dirty
 
