@@ -2,96 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BC7720248
-	for <e@80x24.org>; Wed, 13 Mar 2019 01:49:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45FF720305
+	for <e@80x24.org>; Wed, 13 Mar 2019 01:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726411AbfCMBtZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 21:49:25 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:37681 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726365AbfCMBtY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 21:49:24 -0400
-Received: by mail-wm1-f65.google.com with SMTP id x10so219943wmg.2
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 18:49:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=RDoBip+xOJyZKULECRXUCXdzqzFwbJyFtbNqbf7yFUs=;
-        b=CjH6dmDHNAO4TYHN3CoSiFAidu6RohBoTMmxBTSn0mNJ86dWtTZIQ8Oe3lZ/OQJch4
-         JrDBPpzgUeTmnmY0kCn+HGQoRMmn/2FQnNiF4A4vDQaEAWKSW0ipTz5N2XjufxSGTKrR
-         2vMqrsJatgmBB1ZBZbo3NlU4Tk/ep2WVvrSMxiaIFOpMm0x4sCNu5/qZiNdQBn+jXn+7
-         MdD0NfDaRP8oOO8PUWj84AVLPXywF/sOruFT+Wd5CRfFpb9sLNEbD3uG+yL/MZa1rNgi
-         bpsnFzB+uu7yzRr3HJU48ESMsa6hzKQ97sIB34tblnms8DkVl2MWIILJKrklpEDuXboR
-         9Q5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=RDoBip+xOJyZKULECRXUCXdzqzFwbJyFtbNqbf7yFUs=;
-        b=G045pjC4h5Yxb3Fp7odMpFpP2GHfZVrse/CsjDRYXpuesGtl6kg95Gg48pE7Bsz9uk
-         kkw+ZuJYh/xNu34j6BhoHhPZb8z8N2/cDiZBYYWcRT+skopUwbwxQSfsvxVV4gzZWv8e
-         eUTnFQZJDLvACROewr8hR5OL5vB0vg0fNSmkJkiiEBMz+0N6dbxtKcD07jagR52BQQrQ
-         RlJ880MR0Itotercw0J6NLgN/d7dtBvFBduAZWoSlXK7Usfjc2xyC9F0jngN/ayZjAJ5
-         VUsJ0Uy8pHotjDjM5RcFCkQhtc97gYeikuiifxKv4nB0hhPwZ9HX4NY6EqRxVa4dpeeJ
-         YbBA==
-X-Gm-Message-State: APjAAAVQwWyfqtT/7y0nQNkCMbWYUEa28gY5FB28BjXBzqaRX23FKlmg
-        8MMTXMq8tCLwmkEuy19xUR8=
-X-Google-Smtp-Source: APXvYqxE+PaWod1qywi3W7tW4Klyf6J+A/mCFS878Rpw1aHTZ+YETYJTsMoVp8lL43soSxF1hnSfCg==
-X-Received: by 2002:a1c:7c0c:: with SMTP id x12mr381430wmc.38.1552441763202;
-        Tue, 12 Mar 2019 18:49:23 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id z1sm7543615wrw.28.2019.03.12.18.49.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Mar 2019 18:49:22 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1726468AbfCMBvf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 21:51:35 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:60952 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726422AbfCMBvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 21:51:35 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 1DA36202BB;
+        Wed, 13 Mar 2019 01:51:34 +0000 (UTC)
+Date:   Wed, 13 Mar 2019 01:51:33 +0000
+From:   Eric Wong <e@80x24.org>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Roberto Tyley <roberto.tyley@gmail.com>
-Subject: Re: [RFC/PATCH] point pull requesters to Git Git Gadget
-References: <20190312213246.GA6252@sigill.intra.peff.net>
-Date:   Wed, 13 Mar 2019 10:49:22 +0900
-In-Reply-To: <20190312213246.GA6252@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 12 Mar 2019 17:32:46 -0400")
-Message-ID: <xmqqsgvrfsrh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] repack: enable bitmaps by default on bare repos
+Message-ID: <20190313015133.n7f7lyujnlwfytre@dcvr>
+References: <20190214043127.GA19019@sigill.intra.peff.net>
+ <20190214043743.GB19183@sigill.intra.peff.net>
+ <20190309024944.zcbwgvn52jsw2a2e@dcvr>
+ <20190310233956.GB3059@sigill.intra.peff.net>
+ <20190312031303.5tutut7zzvxne5dw@dcvr>
+ <20190312104954.GA2023@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190312104954.GA2023@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jeff King <peff@peff.net> wrote:
+> OK. I still think of bitmaps as something that might need manual care
+> and feeding, but I think that may be leftover superstition. I can't
+> offhand think of any real downsides to this.
 
-> infrequent contributors. And there are a few reasons to prefer GGG:
->
->   1. submitGit seems to still have a few rough edges. E.g., it doesn't
->      munge timestamps to help threaded mail readers handled out-of-order
->      delivery.
+It's a _relatively_ new feature to long-time users like us, so
+maybe the "new == immature" mindset sets in[*].  I skimmed some
+mail archives but couldn't find any reason not to...
 
-Hmph, I had an impression that the recent "why aren't these sorted"
-topics were via GGG, not submitGit, though.
+But I did find Ævar's forgotten gitperformance doc and thread
+where the topic was brought up:
 
+  https://public-inbox.org/git/20170403211644.26814-1-avarab@gmail.com/
 
->   2. Subjectively, GGG seems to be more commonly used on the list these
->      days, especially by list regulars.
->
->   3. GGG seems to be under more active development (likely related to
->      point 2).
->
-> So let's actually swap out submitGit for GGG. While we're there, let's
-> put another link to the GGG page in the PR template, because that's
-> where users who are learning about it for the first time will want to go
-> to read more.
+> On Tue, Mar 12, 2019 at 03:13:03AM +0000, Eric Wong wrote:
+> > @@ -343,11 +343,15 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+> >  	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
+> >  		die(_("--keep-unreachable and -A are incompatible"));
+> >  
+> > +	if (!(pack_everything & ALL_INTO_ONE)) {
+> > +		if (write_bitmaps > 0)
+> > +			die(_(incremental_bitmap_conflict_error));
+> > +	} else if (write_bitmaps < 0) {
+> > +		write_bitmaps = is_bare_repository();
+> > +	}
+> 
+> Might it be easier here to always resolve "-1" into a 0/1? I.e., like:
+> 
+>   if (write_bitmaps < 0)
+> 	write_bitmaps = (pack_everything & ALL_INTO_ONE) && is_bare_repository();
+> 
+> and then the rest of the logic can stay the same, and does not need to
+> be modified to handle "write_bitmaps < 0"?
 
-Yeah, I see Roberto agrees with the direction, and I do too.
+Good point, changed in v2.
 
-Thanks, Roberto for submitGit that served us well, Dscho for GGG
-that will serve us better, and Peff for updating this ;-)
+> > +test_expect_success 'bitmaps are created by default in bare repos' '
+> > +	git clone --bare .git bare.git &&
+> > +	cd bare.git &&
+> 
+> Please don't "cd" outside of a subshell, since it impacts further tests
+> that are added.
+
+Oops, I got it into my head that each test was already run in a
+separate subshell :x  Fixed.
+
+> > +	mkdir old &&
+> > +	mv objects/pack/* old &&
+> > +	pack=$(ls old/*.pack) &&
+> 
+> Are we sure we have just done $pack here? Our repo came from a
+> local-disk clone, which would have just hard-linked whatever was in the
+> source repo. So we're subtly relying on the state that other tests have
+> left.
+> 
+> I'm not sure what we're trying to accomplish with this unpacking,
+> though. Running "git repack -ad" should generate bitmaps whether the
+> objects were already in a single pack or not. So I think this test can
+> just be:
+
+Right, I forgot "repack -a" didn't need loose objects to operate :x
+
+> I do agree with Ævar it might also be worth testing that disabling
+> bitmaps explicitly still works. And also that repacking _without_ "-a"
+> (i.e., an incremental) does not complain about being unable to generate
+> bitmaps.
+
+Yup, now with additional tests for repack.writeBitmaps=false,
+repack (w/o "-a") and a config/repack.txt update
+
+------------8<---------
+Subject: [PATCH] repack: enable bitmaps by default on bare repos
+
+A typical use case for bare repos is for serving clones and
+fetches to clients.  Enable bitmaps by default on bare repos to
+make it easier for admins to host git repos in a performant way.
+
+Signed-off-by: Eric Wong <e@80x24.org>
+Helped-by: Jeff King <peff@peff.net>
+---
+ Documentation/config/repack.txt |  2 +-
+ builtin/repack.c                |  5 ++++-
+ t/t7700-repack.sh               | 19 ++++++++++++++++++-
+ 3 files changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config/repack.txt b/Documentation/config/repack.txt
+index a5c37813fd..9c413e177e 100644
+--- a/Documentation/config/repack.txt
++++ b/Documentation/config/repack.txt
+@@ -24,4 +24,4 @@ repack.writeBitmaps::
+ 	packs created for clones and fetches, at the cost of some disk
+ 	space and extra time spent on the initial repack.  This has
+ 	no effect if multiple packfiles are created.
+-	Defaults to false.
++	Defaults to true on bare repos, false otherwise.
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 67f8978043..caca113927 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -14,7 +14,7 @@
+ 
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+-static int write_bitmaps;
++static int write_bitmaps = -1;
+ static int use_delta_islands;
+ static char *packdir, *packtmp;
+ 
+@@ -343,6 +343,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
+ 		die(_("--keep-unreachable and -A are incompatible"));
+ 
++	if (write_bitmaps < 0)
++		write_bitmaps = (pack_everything & ALL_INTO_ONE) &&
++				 is_bare_repository();
+ 	if (pack_kept_objects < 0)
+ 		pack_kept_objects = write_bitmaps;
+ 
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 6162e2a8e6..6458286dcf 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -221,5 +221,22 @@ test_expect_success 'repack --keep-pack' '
+ 	)
+ '
+ 
+-test_done
++test_expect_success 'bitmaps are created by default in bare repos' '
++	git clone --bare .git bare.git &&
++	git -C bare.git repack -ad &&
++	bitmap=$(ls bare.git/objects/pack/*.bitmap) &&
++	test_path_is_file "$bitmap"
++'
++
++test_expect_success 'incremental repack does not complain' '
++	git -C bare.git repack -q 2>repack.err &&
++	! test -s repack.err
++'
+ 
++test_expect_success 'bitmaps can be disabled on bare repos' '
++	git -c repack.writeBitmaps=false -C bare.git repack -ad &&
++	bitmap=$(ls bare.git/objects/pack/*.bitmap 2>/dev/null || :) &&
++	test -z "$bitmap"
++'
++
++test_done
+-- 
+EW
