@@ -2,123 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05EA620248
-	for <e@80x24.org>; Wed, 13 Mar 2019 22:15:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB41B20248
+	for <e@80x24.org>; Wed, 13 Mar 2019 22:17:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727012AbfCMWPG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 18:15:06 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49485 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726420AbfCMWPG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 18:15:06 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MV5hN-1hXkgx4AtZ-00YUzj; Wed, 13
- Mar 2019 23:14:51 +0100
-Date:   Wed, 13 Mar 2019 23:14:50 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Matthew Kraai <mkraai@its.jnj.com>
-Subject: Re: [PATCH v2] stash: pass pathspec as pointer
-In-Reply-To: <20190312234046.GF16414@hank.intra.tgummerer.com>
-Message-ID: <nycvar.QRO.7.76.6.1903132311200.41@tvgsbejvaqbjf.bet>
-References: <20190225231631.30507-1-t.gummerer@gmail.com> <20190225231631.30507-19-t.gummerer@gmail.com> <20190307191836.GB29221@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1903081630040.41@tvgsbejvaqbjf.bet> <20190309182610.GD31533@hank.intra.tgummerer.com>
- <xmqqimwqmbba.fsf@gitster-ct.c.googlers.com> <xmqqd0mxkgvy.fsf@gitster-ct.c.googlers.com> <20190311214244.GB16414@hank.intra.tgummerer.com> <20190311221624.GC16414@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1903122323460.41@tvgsbejvaqbjf.bet>
- <20190312234046.GF16414@hank.intra.tgummerer.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726618AbfCMWRt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 18:17:49 -0400
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:56302 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726420AbfCMWRt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 18:17:49 -0400
+Received: by mail-wm1-f45.google.com with SMTP id 4so860550wmf.5
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 15:17:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=krD8qImhgfUHJ4tewuCTzrd1/1N4sxw3UsnRVpm56ns=;
+        b=pvceuYm3C5/+inVm/PeuKoLwX3j5NjttHrzyMe7mUXDQ1EBnhCeP2j3K8BL3IKqRSC
+         GhtY83x8p6BqcsJoi07NOCWW8qUzPYwjqATTBRW/AJJwx+xsKC4OPeUTmdR2z8V8U5fH
+         0IQOmHWxLX0XtmP3W3zrKz68kRp7B8n0/poc5TW+RiAGlLwGTVCPNsx1nd5qi8VvvUIu
+         AwzAJL23SZGRCDYFyXf6jkha1Ahta04MXVwh2nZPnXVxeYyMfQTYbd3lkSSg80c51P0b
+         1Pbxo4W9lxM4C2/CTaHR0uL/l+GfTy47HCHjfNSQx0irtGjcTGgkudRpqi/oI35gwdWR
+         RqJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=krD8qImhgfUHJ4tewuCTzrd1/1N4sxw3UsnRVpm56ns=;
+        b=tYI7L91wCQ7PQyF+Pn3lHLfNo5V28DdAaOO3euHFvjs874lNf0koyOPXPggT7vRiMe
+         T5AxP/UK39QuyA6RKZqHFptdAcQCJuXjsWClIJo5vzLykWUrwZmN3N/sR5Gm3EMu7j20
+         cwCXaqEuCOtiw45hoXaqHWYofhK+FWHac1qgfkW3wUbTnrBTCZvFNReI8kc9hC7GpUQj
+         QAPOsdcI96Dn4h3g2Q6IFaonvcKuivKtRJq1HPfu5mep8f5oL83L83ALFlNDicjAT+di
+         FNRmCfQ/HRB/aQpC4SIVjgw0YcGZfqi7bDGXm0gg1qQa4ogeqWKQvGpfeGVmnFDjPXzn
+         gtcw==
+X-Gm-Message-State: APjAAAVusNoLW8ly7rj4nU1skdP1or2bF4dQnotI3SgW7HdsnKEp8P8m
+        jzUc6FnI9+VzxznmY3KA0VI=
+X-Google-Smtp-Source: APXvYqzPCiZt8W9/coLqFa9vH1Tn2Rd6HaJkXNDBW52ieMLkQMeW9aoeouC4U5pTFZdFmz6hJiiwsQ==
+X-Received: by 2002:a1c:4d17:: with SMTP id o23mr256554wmh.53.1552515467085;
+        Wed, 13 Mar 2019 15:17:47 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id a8sm11839556wrt.79.2019.03.13.15.17.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Mar 2019 15:17:46 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [RFC/PATCH] point pull requesters to Git Git Gadget
+References: <20190312213246.GA6252@sigill.intra.peff.net>
+        <xmqqsgvrfsrh.fsf@gitster-ct.c.googlers.com>
+        <20190313193909.GB3400@sigill.intra.peff.net>
+Date:   Thu, 14 Mar 2019 07:17:45 +0900
+In-Reply-To: <20190313193909.GB3400@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 13 Mar 2019 15:39:09 -0400")
+Message-ID: <xmqq36nqe7w6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7oNNVE11QX6pZFqdPITt1R9BQ78b6WLFqigE0pY6P+WWuY92fHc
- XcEACo3dNLhIdTHEfpeIyw6HVm0PEB8w0jYsPTlCC47ndpmUUfwxfn/3AjpbLi6DTlpDl4Y
- jPJ0MmpNIfz5eoz8sEfwj7+7vl/er2hbdjCEk8aNPExO2WpUoyHHYnF5EXvosUGHL6Vp6cV
- ArD7fzriw/YLQlPKshKQQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cbnwcGND3pU=:cWt62eZ8giViX49ixdfE/3
- zKCdzmt9PHZYjSK2nLJhs4Vx2t+US5L39BF0y6QxprvsV+Yw0hOiAyw7eiLYl9inrzgE8HaIq
- xJgb2ZmlRC74CEvA9L1FuAHphU278LXk+4ZaQVRyGgocOtQDUA4LOfmv1c3tcYve+7hxKhUXO
- pVcuYuE0L/5mbus/uIBZE7XRCApseqxdM9gcHN+I4MSOdL5gQPJopAOOgL5GUMpiN/WrTnFfM
- cM1g85Ak1FCIh4px/5nOY8Ye4tzxKPv2rKhFp+pTehrIpWQp71EyL5VPn+aZvEFpYchn2yyp8
- KEI2qQpxuwWeeV3b6gNpH7aB+4vIeD3s3rUjR32BwHEyxH7fHjBdivElyVAlQOgBzgjLtZOPM
- Yjdedt09/9tvxYtFf+7UmJ1/gsDu78aUHqyQAGqnslBJtl+wnD9JoKKbfrtDI4CN7xKFEsNm/
- yfdLLG8efKS/D3EgSsS4QYRTpPpsRV/ZOsq/H4s4ronnJdHjjjLizSqQrBiyvS5r17cdHGIi1
- F9PwwI0Cx66mgro4SrbAlZurJK8ocUfx7ADJMZMBSEj/QdkfspJrAbkuC+EHuowY3JQm878ej
- BtU/qc4aFNdRal5vRKEL4ZuXxrWgEh4Il49DzBahT7OWhOoYKEEPu+KxqOv/9mYFIdeQ0e3Kg
- gnKVaxUIiIfb+QkBPBfTTaFhkwGMFjKvxvk6jf4j9Mqk/ki5kJE5LsRFuKTqJMasDtRhN4D77
- bu8qxrJxeqwDZp2XHUjODDM4nhWE0hl0s9Ffz/eLgP/5PM4eh0CSH+MKlru1vKehiNz7yodti
- cGpgKVEvRViVDeFczcVWLc9ZwxmujnnMZaYxRHWYsIEJND5OK+bG3Sd53kvi4P+hjTJsiy5f1
- pUgVtqNDcgvy+wBmLCoT3eT9T6KCJ7PDcB5BVCpnKBQ/Ad742iY+0UQo5odW1Twa5vgaXVI0J
- R+heny3YIUQ==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+Jeff King <peff@peff.net> writes:
 
-On Tue, 12 Mar 2019, Thomas Gummerer wrote:
+> On Wed, Mar 13, 2019 at 10:49:22AM +0900, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > infrequent contributors. And there are a few reasons to prefer GGG:
+>> >
+>> >   1. submitGit seems to still have a few rough edges. E.g., it doesn't
+>> >      munge timestamps to help threaded mail readers handled out-of-order
+>> >      delivery.
+>> 
+>> Hmph, I had an impression that the recent "why aren't these sorted"
+>> topics were via GGG, not submitGit, though.
+>
+> We did have one case a few months ago, but I think it was since fixed.
+>
+> Whereas it cannot be fixed for submitGit without major re-architecting,
+> because the mails go out through Amazon SES, which writes its own
+> timestamp.
+>
+> I could be wrong about GGG being fixed though. I haven't noticed the
+> problem lately, but we definitely had a submitGit-related one a few
+> weeks ago.
 
-> On 03/12, Johannes Schindelin wrote:
-> 
-> > On Mon, 11 Mar 2019, Thomas Gummerer wrote:
-> > > [...]
-> > > @@ -1042,6 +1049,7 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
-> > >  	struct index_state istate = { NULL };
-> > >  
-> > >  	init_revisions(&rev, NULL);
-> > > +	copy_pathspec(&rev.prune_data, ps);
-> > 
-> > This moved here... because...
-> > 
-> > >  
-> > >  	set_alternate_index_output(stash_index_path.buf);
-> > >  	if (reset_tree(&info->i_tree, 0, 0)) {
-> > 
-> > ... this `if` block could jump to...
-> > 
-> > 
-> > > @@ -1050,7 +1058,6 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
-> > >  	}
-> > >  	set_alternate_index_output(NULL);
-> > >  
-> > > -	rev.prune_data = ps;
-> > >  	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-> > >  	rev.diffopt.format_callback = add_diff_to_buf;
-> > >  	rev.diffopt.format_callback_data = &diff_output;
-> > > @@ -1089,12 +1096,13 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
-> > 
-> > ... this point (the `done:` label is *just* one line further up, and this
-> > is a static diff, so we cannot just increase the context when we need to
-> > see more, unlike, say, GitHub PRs) and...
-> > 
-> > >  	discard_index(&istate);
-> > >  	UNLEAK(rev);
-> > >  	object_array_clear(&rev.pending);
-> > > +	clear_pathspec(&rev.prune_data);
-> > 
-> > ... we add this call here.
-> > 
-> > However, we would not have needed to move the initialization of
-> > `rev.prune_data`, I don't think, because `init_revision()` zeros the
-> > entire struct, including `prune_data`, which would have made
-> > `clear_pathspec()` safe to call, too.
-> 
-> 'clear_pathspec()' doesn't actually check whether the parameter passed
-> to it is NULL or not before dereferencing it.
+Yeah, I was confused; <xmqqtvgk4urv.fsf@gitster-ct.c.googlers.com>
+was about submitGit, but somehow I thought the sender switched to,
+and the out-of-order thread was sent via, GGG.  My mistake.
 
-In this case, it does not need to check for NULL, as `&rev.prune_data`
-will always be non-NULL: `rev`'s `prune_data` field is of type `struct
-patchspec`, i.e. *not* a pointer (in which case the type would be `struct
-pathspec *`). See for yourself:
 
-	https://github.com/git/git/blob/v2.21.0/revision.h#L91
-
-Ciao,
-Dscho
