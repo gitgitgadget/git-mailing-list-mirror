@@ -7,88 +7,77 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA6E520248
-	for <e@80x24.org>; Wed, 13 Mar 2019 22:58:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8807820248
+	for <e@80x24.org>; Wed, 13 Mar 2019 23:13:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727056AbfCMW6L (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 18:58:11 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36076 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbfCMW6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 18:58:11 -0400
-Received: by mail-wr1-f67.google.com with SMTP id g18so3808349wru.3
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 15:58:10 -0700 (PDT)
+        id S1726582AbfCMXN2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 19:13:28 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38389 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726078AbfCMXN1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 19:13:27 -0400
+Received: by mail-wm1-f68.google.com with SMTP id a188so894365wmf.3
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 16:13:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=41SdW84Vq42VXnQRXhteJZT0vOil+i++cmBqe/eOaBw=;
-        b=V8vqrFZGH+xhGdwpfxi4HkZyIrqTwEwNTy6H0DzIoaWCd/8j2h4Gj81kIxGE2MoHm7
-         KIo22sXoeBc7S2GUKrASb8rGLjZuLNT5uF3OTgRlbRjaIq46qvXEQTTg5lf8X+weHfEt
-         /ihNoKAOXjQwgjd/Wbzkm042RwJ6p91AVfNU13puePSwTYadJnz0Qr8oepMz4TS4AD3Q
-         IRI2eqnH9UlanEOB8p4xtkB0DkxRswp98zhd49QcEOD5s/JR8LaEQqSq1mhogDSy8z2H
-         MtvCxRswJAKj/kFhWbWgqj0a2Ts5SO/KX3qrIO2cNE25TcPABCiZJ9Uf8CNIi3OQEUuL
-         K24A==
+         :user-agent:mime-version;
+        bh=NcfN3LjK+MLXszjl5HpbqUsQKlHzHbPj8zQFe4HAVEI=;
+        b=OcsyjfreOt65wm926LrpdEwqfGmOWmX/j1DnlNeiRZHDZ4lz8XRJZ67YCiJKiIhPAY
+         26dSBs3AZESnNBmE3FMHn927mt/8Szsr8xo0lChDZypy5W6ipspUqAFGx0qJdUuh8os8
+         nFE4lUjxxaUyPniuoVZEGPt3wehDGj620brOCOv6dgAGej51IdBHMeYSEreB37vmxhpg
+         D2B5FhzSJV3Wp8lnew4f/IrmInI+j227fPvmGxIexEKnl+UCvaaD4kS+/SjBdZ71qh7j
+         7wzxnA50X8MOB7isFm62nBcGgAacGjH1sBroS6bpFBD4mMIkOL4q0+JJMHYSlC1CmzFj
+         +E9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=41SdW84Vq42VXnQRXhteJZT0vOil+i++cmBqe/eOaBw=;
-        b=KTS+LeDA/0OcekHljkMDeYsymk1eUGExEf0MhSW2jJ8Hlz2LIhidUt2aU5QIMxqbqz
-         xuTJlYVhe/XCjT5gvF6oUCFu/QOg7orOzrVwmwrJioQjqhvKo5ZX0eYvaifc0zEu2dWR
-         XC2AoabpQ3BDQ6nWVGGSAC9ii+pl2ltK7gl94TOZIXkkbn4PkDR7by1N9Cw7pBgyYvY9
-         FhpQJhXV8abvzMMq2sOlbq4AzxCmof0yeTmcEC0whonK83fcywefEvSH3UKAeMq4hnZM
-         n2d4gNVAJwYS/0u6n1qe6AKmk6OF90nZb8Pr7sS2rT2n9GigHd11qxMlFS0et51ThP5C
-         9heA==
-X-Gm-Message-State: APjAAAUzv6E9MQts6X4zr1OvyAYKH6DJruici2aTZNAXqgXdkZ2BTsXV
-        O44Df5EYwdE9GXX5bdtLkIU=
-X-Google-Smtp-Source: APXvYqyRE2yWhku3LFZV0pLLA2cUp9fW9cKpSUrq5ktMTrJa1kAAegKFU5oSJXbauuycukEgUZeSzw==
-X-Received: by 2002:adf:dfca:: with SMTP id q10mr30058587wrn.45.1552517889160;
-        Wed, 13 Mar 2019 15:58:09 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NcfN3LjK+MLXszjl5HpbqUsQKlHzHbPj8zQFe4HAVEI=;
+        b=k5mCSU1mgT73J8+L6YKbc5mMrbgbO6iovsRDqccVdpzsnBldgsKQ5YKyM6z5tFvaHp
+         M4r5cLtxohBJXaDERQadj8GJtscCe0xePpPKN+7noga+T/nnz+vJas6KEWX8Tv+zuDXP
+         26uUVZouOlBbCYFVQB3OvubePMohC31FH4AdnyCzC7KXD5e7eM20qLcDWIQ7Sg57Gzwt
+         tYV6i1bLnMsVaLWaeerrH2l7/Qo6FrrtDyut207UBB6jK9bDUnqt7H8YUfh8G/yiMK+q
+         eMqgdZGBry2PZ7BWD7aJBNg1/tF9xnx7ugiKdMCGHUY9v4oDzGOH1y5Fd6wtsf64pMIZ
+         r+Yw==
+X-Gm-Message-State: APjAAAWLnHqmngXxiziLbajeW6XiR38RcStegQIBYH26zAp8v4iYOblE
+        /yJ6HuAOKDqDS/0cpYmLIMI=
+X-Google-Smtp-Source: APXvYqzgAVzK4U2o/R62anN6eTsVsIaaBB0W9q/nyYMNevfq96A4hxaX3ssuSPt1qoxBQ3WAlutClw==
+X-Received: by 2002:a1c:8088:: with SMTP id b130mr350286wmd.96.1552518805589;
+        Wed, 13 Mar 2019 16:13:25 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id 132sm626763wmd.27.2019.03.13.15.58.08
+        by smtp.gmail.com with ESMTPSA id u17sm39842045wrg.71.2019.03.13.16.13.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Mar 2019 15:58:08 -0700 (PDT)
+        Wed, 13 Mar 2019 16:13:24 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v1 00/11] And new command "restore"
-References: <20190308101655.9767-1-pclouds@gmail.com>
-        <CACsJy8BB1GAaBX=YcmNf1fLj5chc5hcvHLTwvzwJgvSWWKNFdQ@mail.gmail.com>
-Date:   Thu, 14 Mar 2019 07:58:08 +0900
-In-Reply-To: <CACsJy8BB1GAaBX=YcmNf1fLj5chc5hcvHLTwvzwJgvSWWKNFdQ@mail.gmail.com>
-        (Duy Nguyen's message of "Sun, 10 Mar 2019 18:19:28 +0700")
-Message-ID: <xmqqr2bacrgf.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] submodule: explain first attempt failure clearly
+References: <20190312174522.89306-1-jonathantanmy@google.com>
+        <20190313175738.252961-1-jonathantanmy@google.com>
+Date:   Thu, 14 Mar 2019 08:13:23 +0900
+In-Reply-To: <20190313175738.252961-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Wed, 13 Mar 2019 10:57:38 -0700")
+Message-ID: <xmqqmulycqr0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> On Fri, Mar 8, 2019 at 5:17 PM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
->> - --index has a different meaning in git-apply. I don't have a good
->>   suggestion except "yeah we have two different worlds now, the old
->>   and the new one"
->
-> I will rename --index to --staged to avoid this. It is already used as
-> synonym for --cached in git-diff. I will also add --staged as synonym
-> to "git rm" so that "git status" can consistently advise "git <verb>
-> --staged" where verb is either restore or rm.
+> It is additional to what fetch prints. To make it clearer, I have
+> removed all mentions of "additional" from the commit message. But right
+> now I'm not sure if that whole section is important (since what happens
+> can be deduced quite easily by reading the fewer than 10 lines of code).
 
-Does "restore --index" (now "--staged") work the same way as
-"--cached" aka "--staged" in git-diff?  "--cached" is about
-affecting only what is in the index (as opposed to "--index"
-affecting both the index and the working tree).
+Hmph, perhaps.  It was lot easier to follow, at least to me, though ;-)
 
-If it does, then calling it "--cached" aka "--staged" does make more
-sense than calling it "--index", I would think.  Otherwise, such a
-rename does not buy us much.
+> If you mean a recommendation to the repository administrator, I guess we
+> can recommend that their HEAD points to something, even if it's just a
+> single orphan commit with a .txt file explaining what's going on.
+
+Yeah, that might make sense, too.
