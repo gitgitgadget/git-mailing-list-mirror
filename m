@@ -2,357 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54BCF20248
-	for <e@80x24.org>; Wed, 13 Mar 2019 03:17:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC442202BB
+	for <e@80x24.org>; Wed, 13 Mar 2019 04:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726542AbfCMDRy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 23:17:54 -0400
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:40819 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726451AbfCMDRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 23:17:53 -0400
-Received: by mail-qt1-f194.google.com with SMTP id f11so332923qti.7
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 20:17:52 -0700 (PDT)
+        id S1726184AbfCMEJa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 00:09:30 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:34785 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725884AbfCMEJa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 00:09:30 -0400
+Received: by mail-wr1-f66.google.com with SMTP id f14so364744wrg.1
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 21:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=SKRMg1TIiVgjaHsaAjyKRv7AnFrdH+hmNXyMxrXRFb8=;
-        b=u0BcD2bstzam10ksI9nkhtxd2ifCX1fNrFZreWaG+Bz8NCIhE9j8qizYKIZsZK80to
-         KpeP6HgWfJX4RJtOcwsQhvVjY+p2HjPhYF5atM7kUPj3DOy8SCLPvITFwGtHaTv4ExNp
-         varZR4tSh3SMZavV19PxHeMXVlHYicwoBhF0sljezNCKPzERRNDS0Mu7hwUhoxelRkJn
-         qne5AvDKaFqZTRmH0JG/ceLZ5wQlorLtLYgbcYHkU43i6Rs/HaOHwU4XHZyxjt0DhOMl
-         XjKmgJ22VS9D106ujUhfXttQFdkEUEBAye6AmkFNDpj1+Fn2GtRBeno02F1nqnQ6AS58
-         t+0Q==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=NcDPqfZtbq73kMu+Fgn83K/YJVSFG0NqW0Tc1/jI3hg=;
+        b=MsG0IS3xnLrQ4FnltGPjtkiq3lbba2I8iaeJTNFSjpm9aCxIPr3tO4wHysZdUV+4Vl
+         yGB+OEInMUdZF82cuOMQPnrXKVz6tLK3czzXn0nkkWy/r6Z9oSfgVzouNc0clDHSPRRz
+         BFBfW53JuKolkzW0ygw2w0U8MwdELp4UWR0eluMAn28YbAcD+amGgqUg3KcRQXkTG0HS
+         HMCU90kdpUVj+GUdN3CLAqIC/bhgn90O8AaqObNVeK5uaI2J60pKz8Xetx7EmB7vqEAN
+         qT4nhhRbmWh3T0shEClxAQPAKGvukC68TIIQtGKKsiXIy3zPGgb8WKR1q/Zq/dSuSb4A
+         H2zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=SKRMg1TIiVgjaHsaAjyKRv7AnFrdH+hmNXyMxrXRFb8=;
-        b=WWU8oCX8w6U0PAgvqmR3EVUKP0RbvUZ6t8lhthkje21hNWnSfn4NCVNLItfkXOaZaJ
-         zTw3x5b5XmlqkBUVPUyBdPx3yuhiy/RhLkNojT2pl/WwjdYAZG746jdLN2EsNfpBESTQ
-         Qw7nB0ZhFKEte8S/vqs99uaEKWNZ+ZpHsH4pS7DXaNqbBlvRkuD4CVhHeFFcYK73dCJS
-         5eyvlH6/dCZVzfvD8ApXc6M7U7cz8gRaYkGTwEQLIayXasB7afIfZ94pvSnezjIB50Rl
-         3SuFmr3GqicHfxSUq9eMIiGcA7ip5Kx0132TEzjfTC6IAuDLDE3pMw2aSEhl4Kcq8S5Z
-         U2Og==
-X-Gm-Message-State: APjAAAUsOjtZRVHalt8firrpq5JBr8Xetw8wk38WXTX3HGyXytqRWMFz
-        bYyMC2xvab4mpIpP1YbA5gaQwA==
-X-Google-Smtp-Source: APXvYqyGHzdhN2qB9nHELgRZSo2tJR08X4sujokjc5vqgT14bIe5081EV22XTbu9Ri0QNaO9saeYBQ==
-X-Received: by 2002:ac8:2ed4:: with SMTP id i20mr4384013qta.52.1552447071804;
-        Tue, 12 Mar 2019 20:17:51 -0700 (PDT)
-Received: from ?IPv6:2804:14c:81:942d::1? ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id e85sm257211qkj.58.2019.03.12.20.17.49
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Mar 2019 20:17:51 -0700 (PDT)
-Subject: Re: [RFC PATCH v3 1/5] clone: test for our behavior on odd objects/*
- content
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-References: <20190226051804.10631-1-matheus.bernardino@usp.br>
- <20190226122829.19178-2-avarab@gmail.com>
- <CAHd-oW71N94vBvN4wYQVzXyUZjvVs3Ca9tM3VUEuqB66YNGDtA@mail.gmail.com>
- <87o96uvh4x.fsf@evledraar.gmail.com>
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-Message-ID: <2e2b8ac6-86e8-1820-89fa-2b04a9ce8151@usp.br>
-Date:   Wed, 13 Mar 2019 00:17:47 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NcDPqfZtbq73kMu+Fgn83K/YJVSFG0NqW0Tc1/jI3hg=;
+        b=G3srAJhwhoALdMXgfpMQ+WmP7k3JWpIjTa6QmCfE7Ey2lv5mwDsRPFeCjYsam9ZDN5
+         ZrmheKgVB0sx/zu/DOvmWz3EyCYzdIPAlq23LUDXUKoDieewcXOLfYH1GtNw72dm6qmM
+         gOJspRntpZ6Zhg0lmW7bHUXDOxWbLh5hECywyFNveSvOu0wYtnKutjmooRHpKA1/jFeY
+         HNvkejxWevWLD2uV3b/MUbPbAiEyTigwa8Zk8LIC8FGIF3rxoX+GsKPpRV2AsbPMUegr
+         BTx7TBe74QJxX00mLovJvwJdKK+iqOR65236Vn+bZuPQnzTDk/eP8IeaMl6ZpVYWPX37
+         lPOA==
+X-Gm-Message-State: APjAAAWCglGIZrs0Rnh+VV/sxPT5c+31HcMpAWfNsffgB9n9AgB/1tCU
+        qP7ojTxJc9bTYFZGVB43PlIK7EZhUZs=
+X-Google-Smtp-Source: APXvYqwWWuBeHhPFruLKybO5wp3acSTP0/EPOiZDNxeNt+K+AeSS/cJOMLicvtpJx9j9xTAAfY/brg==
+X-Received: by 2002:adf:e38b:: with SMTP id e11mr10273333wrm.113.1552450167661;
+        Tue, 12 Mar 2019 21:09:27 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id o12sm32875532wre.0.2019.03.12.21.09.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 12 Mar 2019 21:09:25 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH v3 02/11] Add initial support for many promisor remotes
+References: <20190312132959.11764-1-chriscool@tuxfamily.org>
+        <20190312132959.11764-3-chriscool@tuxfamily.org>
+Date:   Wed, 13 Mar 2019 13:09:24 +0900
+In-Reply-To: <20190312132959.11764-3-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Tue, 12 Mar 2019 14:29:50 +0100")
+Message-ID: <xmqqtvg7e7pn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87o96uvh4x.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Ævar
+Christian Couder <christian.couder@gmail.com> writes:
 
-First of all, I must apologize for my very late reply. I just got back 
-from a trip and only now have been able to look again at this series.
+> +struct promisor_remote *promisor_remote_new(const char *remote_name)
+> +{
 
-On Fri, Mar 1, 2019 at 10:49 AM Ævar Arnfjörð Bjarmason 
-<avarab@gmail.com> wrote:
- >
- >
- > On Thu, Feb 28 2019, Matheus Tavares Bernardino wrote:
- >
- > > Hi, Ævar
- > >
- > > I'm finishing the required changes in this series to send a v4, but
- > > when submitting to travis ci, I got some errors on the
- > > t5604-clone-reference test:
- > > https://travis-ci.org/MatheusBernardino/git/builds/500007587
- >
- > I don't have access to an OSX box, but could reproduce the failure on
- > NetBSD.
- >
- > It's because there link() when faced with a symlink behaves
- > differently. On GNU/Linux link()-ing a symlink will produce another
- > symlink like it, on NetBSD (and presumably OSX) doing that will produce
- > a hardlink to the file the existing symlink points to.
+Shouldn't this be static?  The config callback that calls this
+function is inside this file.
 
-Hm, interesting. I installed NetBSD here and played with it a little: It 
-seems that the inconsistency comes from the fact that link() follows 
-symlinks on NetBSD but not on Linux. i.e., if you have a file "C" 
-link()-ed to a file "B" which, in turn, is a symlink to a file "A", 
-running "ls -li A B C" we can see that:
-- On linux, C points to B's inode
-- On NetBSD, C points to A's inode
+> +	struct promisor_remote *o;
+> +
+> +	o = xcalloc(1, sizeof(*o));
+> +	o->remote_name = xstrdup(remote_name);
 
- > I've pushed out a version of mine here which you might want to pull in:
- > https://github.com/git/git/compare/master...avar:clone-dir-iterator-3
- >
- > I.e. this whole thing is silly, but just preserving the notion that
- > we're not going to introduce behavior changes as we're refactoring.
- >
- > So it adds a commit right after the tests I added to detect this case,
- > and use symlink() or link() as appropriate instead of link().
+A comment on this later...
 
-I think this still modifies [a little] the current behaviour, since 
-symlink() will make dest->buf point to a new inode (which will be a 
-symlink just as src->buf, but on a different inode) while the current 
-behaviour, on Linux, is to have dest->buf being a hardlink to src->buf 
-(same inode). I don't know if this sentence got too confuse, but what I 
-meant is that symlink() will make a symlink at dest->buf while link(), 
-on linux, will make a hardlink to the given symlink.
+> +static struct promisor_remote *promisor_remote_look_up(const char *remote_name,
+> +						       struct promisor_remote **previous)
 
- > There's then a commit at the end you might want to squash in that
- > reproduces this behavior on top of your iterator refactoring.
- >
- > Of course the DIR_ITERATOR_FOLLOW_SYMLINKS flag at this point is rather
- > silly. We're telling it to stat(), and then end up needing both stat()
- > and lstat() data.
- >
- > I'm starting to think that this interface which previously only had one
- > caller, but now has two exists at the wrong abstraction level. I.e. it
- > itself needs to call lstat(). Seems sensible to always do that and leave
- > it to the caller to call stat() if they need, as I believe Duy pointed
- > out.
+In our codebase, this operation is far more often called "lookup",
+one word, according to "git grep -e look_up \*.h".
 
-I see what you mean, but if the caller needs to call stat() itself, in 
-the occurrence of a symlink to a directory, it would have to start a new 
-directory iteration upon the symlinked dir and its subdirectories (if it 
-wants to follow symlinks). This approach could became a little messy, 
-IMHO. And just by calling stat() at dir-iterator we already get the 
-symlinked directories iterated "for free", without having to modify 
-anything else in the code. So I still think it is a good idea to have 
-the DIR_ITERATOR_FOLLOW_SYMLINKS flag at dir-iterator, making it call 
-stat() instead of lstat().
+> +{
+> +	struct promisor_remote *o, *p;
+> +
+> +	for (p = NULL, o = promisors; o; p = o, o = o->next)
+> +		if (o->remote_name && !strcmp(o->remote_name, remote_name)) {
+> +			if (previous)
+> +				*previous = p;
 
- > Also noticed that dir-iterator.h still has a comment to the effect
- > that it'll call "lstat()", even though we now have a "stat() or
- > lstat()?" flag.
+I think the "previous" thing is for the callers to learn what
+pointer points at the found entry, allowing e.g. an element to be
+inserted just before the found element.  If so, would it make more
+sense to use the more familiar pattern to use
 
-Thanks for noticing it, I will fix it in v4.
+	*previous = &promisors;
 
- > > On Tue, Feb 26, 2019 at 9:28 AM Ævar Arnfjörð Bjarmason
- > > <avarab@gmail.com> wrote:
- > >>
- > >> Add tests for what happens when we locally clone .git/objects
- > >> directories where some of the loose objects or packs are symlinked, or
- > >> when when there's unknown files there.
- > >>
- > >> I'm bending over backwards here to avoid a SHA1 dependency. See [1]
- > >> for an earlier and simpler version that hardcoded a SHA-1s.
- > >>
- > >> This behavior has been the same for a *long* time, but hasn't been
- > >> tested for.
- > >>
- > >> There's a good post-hoc argument to be made for copying over unknown
- > >> things, e.g. I'd like a git version that doesn't know about the
- > >> commit-graph to copy it under "clone --local" so a newer git version
- > >> can make use of it.
- > >>
- > >> But the behavior showed where with symlinks seems pretty
- > >> random. E.g. if "pack" is a symlink we end up with two copies of the
- > >> contents, and only transfer some symlinks as-is.
- > >>
- > >> In follow-up commits we'll look at changing some of this behavior, but
- > >> for now let's just assert it as-is so we'll notice what we'll change
- > >> later.
- > >>
- > >> 1. 
-https://public-inbox.org/git/20190226002625.13022-5-avarab@gmail.com/
- > >>
- > >> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
- > >> ---
- > >>  t/t5604-clone-reference.sh | 142 
-+++++++++++++++++++++++++++++++++++++
- > >>  1 file changed, 142 insertions(+)
- > >>
- > >> diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
- > >> index 4320082b1b..cb0dc22d14 100755
- > >> --- a/t/t5604-clone-reference.sh
- > >> +++ b/t/t5604-clone-reference.sh
- > >> @@ -221,4 +221,146 @@ test_expect_success 'clone, dissociate from 
-alternates' '
- > >>         ( cd C && git fsck )
- > >>  '
- > >>
- > >> +test_expect_success 'setup repo with garbage in objects/*' '
- > >> +       git init S &&
- > >> +       (
- > >> +               cd S &&
- > >> +               test_commit A &&
- > >> +
- > >> +               cd .git/objects &&
- > >> +               >.some-hidden-file &&
- > >> +               >some-file &&
- > >> +               mkdir .some-hidden-dir &&
- > >> +               >.some-hidden-dir/some-file &&
- > >> +               >.some-hidden-dir/.some-dot-file &&
- > >> +               mkdir some-dir &&
- > >> +               >some-dir/some-file &&
- > >> +               >some-dir/.some-dot-file
- > >> +       )
- > >> +'
- > >> +
- > >> +test_expect_success 'clone a repo with garbage in objects/*' '
- > >> +       for option in --local --no-hardlinks --shared --dissociate
- > >> +       do
- > >> +               git clone $option S S$option || return 1 &&
- > >> +               git -C S$option fsck || return 1
- > >> +       done &&
- > >> +       find S-* -name "*some*" | sort >actual &&
- > >> +       cat >expected <<-EOF &&
- > >> +       S--dissociate/.git/objects/.some-hidden-file
- > >> +       S--dissociate/.git/objects/some-dir
- > >> +       S--dissociate/.git/objects/some-dir/.some-dot-file
- > >> +       S--dissociate/.git/objects/some-dir/some-file
- > >> +       S--dissociate/.git/objects/some-file
- > >> +       S--local/.git/objects/.some-hidden-file
- > >> +       S--local/.git/objects/some-dir
- > >> +       S--local/.git/objects/some-dir/.some-dot-file
- > >> +       S--local/.git/objects/some-dir/some-file
- > >> +       S--local/.git/objects/some-file
- > >> +       S--no-hardlinks/.git/objects/.some-hidden-file
- > >> +       S--no-hardlinks/.git/objects/some-dir
- > >> +       S--no-hardlinks/.git/objects/some-dir/.some-dot-file
- > >> +       S--no-hardlinks/.git/objects/some-dir/some-file
- > >> +       S--no-hardlinks/.git/objects/some-file
- > >> +       EOF
- > >> +       test_cmp expected actual
- > >> +'
- > >> +
- > >> +test_expect_success SYMLINKS 'setup repo with manually symlinked 
-objects/*' '
- > >> +       git init T &&
- > >> +       (
- > >> +               cd T &&
- > >> +               test_commit A &&
- > >> +               git gc &&
- > >> +               (
- > >> +                       cd .git/objects &&
- > >> +                       mv pack packs &&
- > >> +                       ln -s packs pack
- > >> +               ) &&
- > >> +               test_commit B &&
- > >> +               (
- > >> +                       cd .git/objects &&
- > >> +                       find ?? -type d >loose-dirs &&
- > >> +                       last_loose=$(tail -n 1 loose-dirs) &&
- > >> +                       mv $last_loose a-loose-dir &&
- > >> +                       ln -s a-loose-dir $last_loose &&
- > >> +                       first_loose=$(head -n 1 loose-dirs) &&
- > >> +                       (
- > >> +                               cd $first_loose &&
- > >> +                               obj=$(ls *) &&
- > >> +                               mv $obj ../an-object &&
- > >> +                               ln -s ../an-object $obj
- > >> +                       ) &&
- > >> +                       find . -type f | sort 
- >../../../T.objects-files.raw &&
- > >> +                       find . -type l | sort 
- >../../../T.objects-links.raw
- > >> +               )
- > >> +       ) &&
- > >> +       git -C T fsck &&
- > >> +       git -C T rev-list --all --objects >T.objects
- > >> +'
- > >> +
- > >> +
- > >> +test_expect_success SYMLINKS 'clone repo with symlinked objects/*' '
- > >> +       for option in --local --no-hardlinks --shared --dissociate
- > >> +       do
- > >> +               git clone $option T T$option || return 1 &&
- > >> +               git -C T$option fsck || return 1 &&
- > >> +               git -C T$option rev-list --all --objects 
- >T$option.objects &&
- > >> +               test_cmp T.objects T$option.objects &&
- > >> +               (
- > >> +                       cd T$option/.git/objects &&
- > >> +                       find . -type f | sort 
- >../../../T$option.objects-files.raw &&
- > >> +                       find . -type l | sort 
- >../../../T$option.objects-links.raw
- > >> +               )
- > >> +       done &&
- > >> +
- > >> +       for raw in $(ls T*.raw)
- > >> +       do
- > >> +               sed -e "s!/..\$!/X!; s!/../!/Y/!; 
-s![0-9a-f]\{38,\}!Z!" <$raw >$raw.de-sha || return 1
- > >> +       done &&
- > >> +
- > >> +       cat >expected-files <<-EOF &&
- > >> +       ./Y/Z
- > >> +       ./a-loose-dir/Z
- > >> +       ./an-object
- > >> +       ./Y/Z
- > >> +       ./info/packs
- > >> +       ./loose-dirs
- > >> +       ./pack/pack-Z.idx
- > >> +       ./pack/pack-Z.pack
- > >> +       ./packs/pack-Z.idx
- > >> +       ./packs/pack-Z.pack
- > >> +       EOF
- > >> +       cat >expected-links <<-EOF &&
- > >> +       ./Y/Z
- > >> +       EOF
- > >> +       for option in --local --dissociate
- > >> +       do
- > >> +               test_cmp expected-files 
-T$option.objects-files.raw.de-sha || return 1 &&
- > >> +               test_cmp expected-links 
-T$option.objects-links.raw.de-sha || return 1
- > >> +       done &&
- > >> +
- > >> +       cat >expected-files <<-EOF &&
- > >> +       ./Y/Z
- > >> +       ./Y/Z
- > >> +       ./a-loose-dir/Z
- > >> +       ./an-object
- > >> +       ./Y/Z
- > >> +       ./info/packs
- > >> +       ./loose-dirs
- > >> +       ./pack/pack-Z.idx
- > >> +       ./pack/pack-Z.pack
- > >> +       ./packs/pack-Z.idx
- > >> +       ./packs/pack-Z.pack
- > >> +       EOF
- > >> +       test_cmp expected-files 
-T--no-hardlinks.objects-files.raw.de-sha &&
- > >> +       test_must_be_empty T--no-hardlinks.objects-links.raw.de-sha &&
- > >> +
- > >> +       cat >expected-files <<-EOF &&
- > >> +       ./info/alternates
- > >> +       EOF
- > >> +       test_cmp expected-files T--shared.objects-files.raw &&
- > >> +       test_must_be_empty T--shared.objects-links.raw
- > >> +'
- > >> +
- > >>  test_done
- > >> --
- > >> 2.21.0.rc2.261.ga7da99ff1b
- > >>
+here?  That would remove the need to switch on NULL-ness of previous
+in the caller.
+
+> diff --git a/promisor-remote.h b/promisor-remote.h
+> new file mode 100644
+> index 0000000000..bfbf7c0f21
+> --- /dev/null
+> +++ b/promisor-remote.h
+> @@ -0,0 +1,17 @@
+> +#ifndef PROMISOR_REMOTE_H
+> +#define PROMISOR_REMOTE_H
+> +
+> +/*
+> + * Promisor remote linked list
+> + * Its information come from remote.XXX config entries.
+> + */
+> +struct promisor_remote {
+> +	const char *remote_name;
+> +	struct promisor_remote *next;
+> +};
+
+Would it make the management of storage easier to make it
+
+	struct promisor_remote {
+		struct promisor_remote *next;
+		const char name[FLEX_ARRAY];
+	};
+
+that will allow allocation with
+
+	struct promisor_remote *r;
+	FLEX_ALLOC_STR(r, name, remote_name);
+
+Or if the remote_name field must be a pointer, perhaps use
+FLEXPTR_ALLOC_STR().
+
+What is the rule for these promisor names?  If these entries were on
+the configuration file, then:
+
+	[remote "origin"]
+		url = ...
+		promisor = frotz
+		promisor = nitfol
+
+	[remote "mirror"}
+		url = ...
+		promisor = frotz
+		promisor = Frotz
+		promisor = nit fol
+
+would the two "frotz" for the two remotes refer to the same thing,
+or are "promisor" values scoped to each remote?
+
+Can the name of promisor be any string?  If they end up getting used
+as part of a path on the filesystem, we'd need to worry about case
+sensitivity and UTF-8 normalization issues as well.
+
+In a large enough project where multi-promisor makes sense, what is
+the expected number of promisors a repository would define?  10s?
+1000s?  Would a linked list still make sense when deployed in the
+real world, or would we be forced to move to something like hashmap
+later?
+
+You do not have to have the answers to all these questions, and even
+the ones with concrete answers, you do not necessarily have to act
+on them right now (e.g. you may anticipate the eventual need to move
+to hashmap, but prototyping with linked list is perfectly fine;
+being aware of the possibility alone would force us to be careful to
+make sure that the implementation detail does not leak through too
+much and confined within _lookup(), _find(), etc. functions, and
+that awareness is good enough at this point).
+
+Thanks.
