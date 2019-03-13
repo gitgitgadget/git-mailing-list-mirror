@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C2F020248
-	for <e@80x24.org>; Wed, 13 Mar 2019 22:27:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04B2A20248
+	for <e@80x24.org>; Wed, 13 Mar 2019 22:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726846AbfCMW1N (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 18:27:13 -0400
-Received: from mout.gmx.net ([212.227.15.15]:34999 "EHLO mout.gmx.net"
+        id S1726638AbfCMWlJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 18:41:09 -0400
+Received: from mout.gmx.net ([212.227.17.20]:33361 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725883AbfCMW1N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 18:27:13 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhRI2-1hQpYT14gU-00ManR; Wed, 13
- Mar 2019 23:27:03 +0100
-Date:   Wed, 13 Mar 2019 23:27:02 +0100 (STD)
+        id S1725883AbfCMWlJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 18:41:09 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MP0LT-1h9zJA260F-006SBw; Wed, 13
+ Mar 2019 23:40:55 +0100
+Date:   Wed, 13 Mar 2019 23:40:54 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
@@ -29,87 +29,120 @@ cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?=
         git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/4] rebase -i: demonstrate obscure loose object cache
  bug
-In-Reply-To: <20190313163516.GA26045@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1903132322420.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <20190313165320.GA717@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1903132327500.41@tvgsbejvaqbjf.bet>
 References: <pull.161.git.gitgitgadget@gmail.com> <b3fcd377652103584b6f307c6ee209980b44529f.1552472189.git.gitgitgadget@gmail.com> <87k1h2bvpb.fsf@evledraar.gmail.com> <20190313163516.GA26045@sigill.intra.peff.net>
+ <20190313165320.GA717@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-224454956-1552516023=:41"
-X-Provags-ID: V03:K1:M9X2pkNxkJaN2aElZ4+cYtlyKxxyViobEnzFuayMb8sHyjbRw/5
- CksjeHXmtWg45KNS2H/Ixs22Jjw0vaLDCIgQKyVI+eQNvppZfhdOg0zNQaHQDq70beECd+K
- R6wfHydjjTpS5Ey7kwLeL0IPgoSTuZrkFrgRV3/o9r65paJAbU2DtNiVUfBaHCnUPYHcfOs
- US+/xXBRdAOv4lTnW0JIA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nctFELDh1NM=:Amt91tx/MFDDscRGiyQ7+v
- Xyg8PS3/1MW2bOxtyq2xwEjn/hlPXhbbYACTpLyRYvfsldQd0IWDwZW7cBfJjJWa9qlKWe7ep
- GK9bNmt3ccTHQefos791nsMpsaj4jw+GZAKN7vnUDdw5NW/2gUf0bybx2iH16QESNUAF9FRoE
- LLdsno+FZ1pQboeOVzlkgrhg7vm069z1R7W+0CGO0XXnMQFrIBlb+aZqYU8M94uaHWdJq+iyv
- /d64MdyHszI+w/j6ev7u3G9MySIhMcNe+43X/aOvT/0YqZAttMu9WRg1Nc2Q+rBFdRrW8zXzt
- j7CB95A3IY1x26AA/fFL546D5oyceKBquyXTPgF+AzvuXiDoazbMitsBjmWwYiPb41Q2CYlyz
- iB7aGBfPmyETJzdxSKs/+5s7pnrbMuoTunXZQXovcFJyP35vbp3tBdArVCcx7l5xNYsSZCXbu
- sAued0fAjH5NEVj7JPfVTgJNZAEoDfjK9qFhp0MsJQ0O41MTSWp+rSKWcffHmkVv+wOIeqVaX
- erSj2L7b/Zmg/nsRM/bUfDyGceug80/qaO5iJpEPbKidxGOSMterifuLLXK7JZeue0btNy/rQ
- dcWQUR/kgvcrr7R3tPk+v3Wwh1S4PGfKO6OkSxmB5GFjUxrOC7EYcBZzzmu/Fk4xy6GzkN+w6
- W42kDl8sGExpPFaFSXmMZ9XgdaxgBcuVKpgFZub7bgcB+ebTup1VJjMBxkxCb5qiFEl/N8NhN
- ianrpF7ibLr70hbzMUb1eklPMUQndvNRRRWAXVXd/5y8xY4BW/0WbDD97bwPpoj7FuoUq70wY
- mQf2j056uQiZA/iavzHBjJiaDIGVyE0iVcvUUy84tB3gRqlV+ECMIDCUZ28Y+HWYCx+jy+Y+1
- D6jSVSPL6OWUxgkTX0j8tB+r/Sn5IsOr1Hj9w2F4GEG/jZC7YAUDu8D4owzhBFeOmB6YjcY5y
- Ufk/XWBP1lg==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:G10dYputNiIHsnRtkGi0DuiwKiUstTOESPzmSn1GDXrdg3e/TmA
+ m2q2FtPH0pjXVAGK3bPIh0BX2142s6jN9iTAbWH6qCMov77SLiEUQan56DkMAsXNphtCzXZ
+ 9twkMZTDdsW99eauxJ5qKbumFj4ld3vbXfXJxkWKh1NAUScpStomaryi+kc1bhx6z54Dp8y
+ nOavSHO8tIMhrTI46EL0Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KPyeXGweEVU=:pXO1iwL392tPkPN02mpFdD
+ +w32SwesYaGnCjr/stIjpe3Mq5tZdl1CVZnu3DqPEv+Ha1h55+s9Umh7dWX8gvsRGvSIl/fh/
+ tTIFwD2rrf26hbL0RhC32cNStRoCiuPd/vlRE5ypr+BYcvYJkMCwMkXuEqFGXSxDvYYSSTY3d
+ ti2FAMln3kZmHxW/nxL4X+LgtCKEiLPeYdTZAAXkYuPS2vRr6uDRq1EXo7zYQBmxsUfPgrjKK
+ 1sZc7RUEvHe5CUlmibTAsfo80w3DFJr62DKFLx0EDBJSVok1a1lLRtRi+yt4n4M4GGwCMZuvp
+ 4Bhi0yCzsqIU+QLXFMFI2rKD8t5i8HuPdujsFzSJ7tDOSN4nY6JS5SCXBdLRIBn6VY4qKlKJL
+ cazTzcUpOcTlz41CKbgVoDznU0kioWapYIK5OhWR78J131nB74qwrslTFR0eYjbsUAq9TlwOl
+ TLGAB93hNdnLsmrOwK7N2gKhbmLZAJxwwmAu7VM1gbRlLcto74Fm3ccKRP8SoxEGPIXBLCmwb
+ DDJsk4Y2CyqdL+6HNtl2SVtFe0rvtynFz0JJG4439oMRnDIWxr6aia0vI8pqy/BwtOax8evTY
+ 2DjcUOvl4rwP9DZDr+XajxFINrKuClrfiu+/jl1GA5/1UbX6VCH0p5CadRLRpQBJCP1sMhMfQ
+ 0sWGBD7S4TQaSz7l+9/nDmIrZvDg438g+e6qbCHhUlivroRcjSTcGByrvBhkr3VQbzW7+EZzg
+ yA7yyH5sxe72rMqze4WZrxk2/AKbo+S9DBwN2lASeiPr8XaugwWsMuAIoh6Mo97ymstWtQEJf
+ molf0e94ldClUyb69XamNQ0ygn2+hBlpddFFv7tby2qr79kxykC5VO0EH0Nx2gEazx2xqx8ay
+ AHt8qQprLIVxcdaKYUMPrV3c8hKKnv2yK/ZeBU1TahQ/e3X0nqq78unDngACM14QmOc1ewm5Q
+ jovaBWdilKA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-224454956-1552516023=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-Hi Ævar & Peff,
+Hi Peff,
 
 On Wed, 13 Mar 2019, Jeff King wrote:
 
-> On Wed, Mar 13, 2019 at 05:11:44PM +0100, Ævar Arnfjörð Bjarmason wrote:
 > 
-> > > And this is where the loose object cache interferes with this
-> > > feature: if *some* loose object was read whose hash shares the same
-> > > first two digits with a commit that was not yet created when that
-> > > loose object was created, then we fail to find that new commit by
-> > > its short name in `get_oid()`, and the interactive rebase fails with
-> > > an obscure error message like:
-> > >
-> > > 	error: invalid line 1: pick 6568fef
-> > > 	error: please fix this using 'git rebase --edit-todo'.
+> By the way, while reading the test more carefully, I did notice two
+> funny things:
 > 
-> Are we 100% sure this part is necessary? From my understanding of the
-> problem, even without any ambiguity get_oid() could fail due to just
-> plain not finding the object in question.
-
-Indeed. It could be a typo, for example. Which is why that error message
-is so helpful.
-
-> > As a further improvement, is there a good reason for why we wouldn't
-> > pass something down to the oid machinery to say "we're only interested
-> > in commits". I have a WIP series somewhere to generalize that more, but
-> > e.g.  here locally:
+> > +test_expect_failure SHA1 'loose object cache vs re-reading todo list' '
+> > +	GIT_REBASE_TODO=.git/rebase-merge/git-rebase-todo &&
+> > +	export GIT_REBASE_TODO &&
+> > +	write_script append-todo.sh <<-\EOS &&
+> > +	# For values 5 and 6, this yields SHA-1s with the same first two digits
+> > +	echo "pick $(git rev-parse --short \
+> > +		$(printf "%s\\n" \
+> > +			"tree $EMPTY_TREE" \
+> > +			"author A U Thor <author@example.org> $1 +0000" \
+> > +			"committer A U Thor <author@example.org> $1 +0000" \
+> > +			"" \
+> > +			"$1" |
+> > +		  git hash-object -t commit -w --stdin))" >>$GIT_REBASE_TODO
 > 
-> We have get_oid_commit() and get_oid_committish() already. Should rebase
-> just be using those? (I think we probably want "commit()", because we do
-> not expect a "pick" line to have a tag, for example.
+> Here we redirect the output into $GIT_REBASE_TODO, not stdout.
 
-I did think about this while developing this patch series, and decided
-against conflating concerns.
+Indeed, because we want to append a `pick` command to the todo list.
 
-And I was totally right to do so! Because I do have an internal ticket
-that talks about allowing `reset v2.20.1`, which is a tag, not a commit.
+> > +	shift
+> > +	test -z "$*" ||
+> > +	echo "exec $0 $*" >>$GIT_REBASE_TODO
+> 
+> And here we do the same thing. That second redirection is unnecessary.
 
-Granted, it is easy to work around: just use `reset v2.20.1^0`, but it is
-quite annoying that we do not allow this at the moment: even if we do
-allow `get_oid()` to resolve the tag, we don't peel it to the commit.
+It is actually not unnecessary, but to the contrary quite necessary to
+achieve the intended effect: with this command, we append an `exec` line
+to the todo list that is guaranteed to be executed after the `pick`
+command that we added earlier.
 
-#leftoverbits
+> I also find it interesting that it iterates over its arguments by
+> recursive processes. Wouldn't:
+> 
+>   for i in "$@"; do
+> 	echo "pick ..." >>$GIT_REBASE_TODO
+>   done
+> 
+> be a bit more efficient (as well as more obvious?).
+
+It would be more efficient, but it would also fail to test for the
+regression.
+
+Remember: it is absolutely crucial for the regression test that the parent
+process' loose object cache already has been initialized *before* the new
+commit is created and then picked. Otherwise the cache would contain that
+commit object already. The whole point of the regression test is that the
+cache does *not* contain that object.
+
+The only way we can guarantee that order in this test is if the first
+commit is created and picked *before* we `exec` to create the second
+commit and then append the `pick` line for that one.
+
+Now, I could have tried to play some fake editor games because it is not
+strictly necessary to create the first commit via an `exec` line. Instead,
+I could have generated it before the rebase, and then initialized the todo
+list with the `pick` of the first commit and then an `exec` of the script
+that creates the second commit and then appends a `pick` line for that.
+
+But the reality is that this would have resulted in more code! And not
+even easier-to-read code at that! (I know, because one of my unsent
+iterations did exactly that.)
+
+So instead, I opted for using the `-x` option to modify the initial todo
+list to begin with (it consists of a single `noop`, obviously). This will
+add that `exec` line that calls the script that creates the first commit
+and appends the `pick` line.
+
+It *also* adds an `exec` line to guarantee that the second commit is
+created, and a `pick` line for it is appended to the todo list, *after*
+the sequencer initalized the loose object cache by virtue of picking the
+first commit.
+
+So yes, it is crucial that the `append-todo.sh` script is `exec`ed
+*twice*. Otherwise the first `pick` would initialize the loose object
+cache *after* the second commit was created, which Just Works, even
+without this here patch series.
 
 Ciao,
 Dscho
---8323328-224454956-1552516023=:41--
