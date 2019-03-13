@@ -7,48 +7,51 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 343DD20248
-	for <e@80x24.org>; Wed, 13 Mar 2019 23:33:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D633820248
+	for <e@80x24.org>; Wed, 13 Mar 2019 23:33:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726787AbfCMXdd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 19:33:33 -0400
-Received: from mail-oi1-f201.google.com ([209.85.167.201]:42633 "EHLO
-        mail-oi1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726629AbfCMXdd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 19:33:33 -0400
-Received: by mail-oi1-f201.google.com with SMTP id q82so1568365oia.9
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 16:33:33 -0700 (PDT)
+        id S1726850AbfCMXdg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 19:33:36 -0400
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:35814 "EHLO
+        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726629AbfCMXdg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 19:33:36 -0400
+Received: by mail-qt1-f201.google.com with SMTP id x12so3650092qtk.2
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 16:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to;
-        bh=U5H5sIhEM80LfJVe7mWZ5GJKb5ZxbxCrrXdbXb4NRH8=;
-        b=rTb0erJamVZsT4eFBYLT6IMC5kndlrGrgn9t7BplaksJ+yzzzXkxjg7J0ryR8SQgnD
-         kSBuHXOrG6CfJV+221zt+Gl5vxjognYUWjU15QwroWb2R5yyPT6XppABocplrp0+p7TX
-         aA0S5qjCd8UDjQz1jniS2LFPpT9defa8z8W7L7Aj1Q+gy2RLrd3huISw7qo+EolyswCQ
-         2wHKgUQ3wWC2JRRyMZkta0gtcp6CMzybwqMjityXBxavgNA+K3WapSbxXG8gI3SDl3zR
-         gJWh85IoK+PLleMeFLIPfHy4yJnoERt9H4406aVsaNZJYWKkQcVLdQdoqFz3GLj6BN84
-         JpxQ==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
+        bh=12Z/m5YDUM84tdGRvR47JgmciR7HxImmWbdrccXxMs4=;
+        b=MwZjerySUvo50lo1IEaQ8V4YtEVwqrJsV6aL+k4LJ2oo8sWqfotd0n0Jqk1MHdLBYG
+         vMeh3aVkPsAuakgyawuJjUKWCYxUobajTTChXLN15+TLyrBlSYowoY0zYBLbt7NMUbsS
+         7BIsBch3iw00WyNgI9TpMxA0klydZQ/apjGecxkciRHb3FAlLE9yBYUkCYlI0mDpyEkW
+         8oukZq1mtISonVsDwsItR7yqUrq+/CLVZ4lfmOxpKTtFYX8HSxvSpXWgDHOhALm1CYIW
+         AcXoD6bqYprz92ORNj7GfuBKAaCm1UA4E9bjAVi4K0qLHo21CjGqka5kD0ECMRgyTa7a
+         ivEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
-        bh=U5H5sIhEM80LfJVe7mWZ5GJKb5ZxbxCrrXdbXb4NRH8=;
-        b=sOkk9eboJy8k9Dhjwx0jbBAkBj1nSbG4Eeur7vMPcT4Um8f6LRXg+glp5VZgQD8yiu
-         lsVI3n8vzEaQxKxdlf0vIdStOowj2MGzMxSTFqfvQH2V9+Ld3vDikTpyYThBpXAYyOoW
-         Vla0G0KfRxJNKsps+TOO+zt87MZetTq2deM4BvW3CvKtoPPN3m13O8zcIMeaBnsjuqtT
-         hOiPL796l4sDIqszuw0oEl0U/UXw5hAGEKPdbd/FxdbnsGWbe5kgxojqdl66wXG/dKyA
-         EGo4h/P/gPp1nvdeLKF6Ww9MnDlTMt/rQHSBPmKrWMUEltBf6B26iNI2AjOaI0Jpj0Lj
-         FOcQ==
-X-Gm-Message-State: APjAAAU5ck8il+nyg9hLN/I9kqoWBPJiq9nvADmZaoZr/moOd4AWYn9n
-        jwek4Ov+dMIksbwJpzYh65El62AP/9lwedVJ7PHLg9HPGdpeb/trCRlA9seMy3Eb7jx/vyfFobZ
-        cbhaL57EAP49qmp+mf/JCneBOUPe33eWFLbB3afXP6Qg7cMoUHRSqCUcznAQ95m8=
-X-Google-Smtp-Source: APXvYqx7MsA1lLCYfSmB6QXDLxYRt8CUagFZ2UFKKig0OePrdd7ujpoXZgTsUJGhIBSIv1X1YX6a+mqku1100Q==
-X-Received: by 2002:a9d:6c58:: with SMTP id g24mr25415674otq.10.1552520012796;
- Wed, 13 Mar 2019 16:33:32 -0700 (PDT)
-Date:   Wed, 13 Mar 2019 16:33:27 -0700
-Message-Id: <cover.1552519463.git.steadmon@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to;
+        bh=12Z/m5YDUM84tdGRvR47JgmciR7HxImmWbdrccXxMs4=;
+        b=pCvhiK3hjzKeuVUggNUuGvQrsQGVbl8jFS4atnqSY8RkkJxB1OuBZLgOPoLkMcC5l6
+         2O9mrlUGhLaa60RySXRK59PbEoygu4dHMvLZ+56Xb9itXLYFZXyjGa1OA46S1/1p8knZ
+         NFsp5gtCYrIe0Qz+D2fd9iWiIk2kpGVaa8s0ngYVkC4hLKVtXjgf6WJzgzrJBful0ZOv
+         xOiYyPHbm1A6GIPzHpagx2EzSyB9Rzg9p7jTkFro3qc5Yj69uLP5pkllxtDUYFixMbpO
+         CE1R6gJ7lGha8qDWEx7FHn4Iq9RJ390a8m3b2ivG1doLes0kW1ItERvVuQmIUAILQ3vx
+         Dkxw==
+X-Gm-Message-State: APjAAAUUDZ3pZV6ZFQlE9dC77/OjhfG350U34rvYc47x31Q5sHOzaDnD
+        YAenqEsrMrZXu8GUIaGmHRPkJXqPRmUV6NKDJtH/tGs9qAbF2n/0folqhvddD9LO5cR2SX+vXH6
+        6j7LspRvMwK9aJn2fSL8liIvhEoYbpNbgDrB6XKV8mQn8f0iidGYGRihJgJckbks=
+X-Google-Smtp-Source: APXvYqyPgEILhjkoSX0c5BLKCDqmKTR3cBDbDLHLUekKzws3oAd32O55SV879dLsH7pt4EnjwZmgNY5i/xJ3LA==
+X-Received: by 2002:a05:620a:c:: with SMTP id j12mr19890486qki.29.1552520015434;
+ Wed, 13 Mar 2019 16:33:35 -0700 (PDT)
+Date:   Wed, 13 Mar 2019 16:33:28 -0700
+In-Reply-To: <cover.1552519463.git.steadmon@google.com>
+Message-Id: <e6b01ad4bfe48cbf09c120756d0e7cac198ea6f0.1552519463.git.steadmon@google.com>
 Mime-Version: 1.0
+References: <cover.1552519463.git.steadmon@google.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928-goog
-Subject: [PATCH 0/2] Randomize / timestamp trace2 targets
+Subject: [PATCH 1/2] date: make get_time() public
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org, git@jeffhostetler.com
 Content-Type: text/plain; charset="UTF-8"
@@ -57,23 +60,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Persistently enabling trace2 output is difficult because it requires
-specifying a full filename. This series teaches tr2_dst_get_trace_fd()
-to randomize filenames when a directory or filename prefix are given as
-targets in the GIT_TR2_* envvars. It also allows expansion of a
-timestamp template string into the current UTC timestamp.
+get_time() is the standard way to get the current time while also
+respecting frozen timestamps for tests. Expose this for use in other
+files.
 
-Josh Steadmon (2):
-  date: make get_time() public
-  trace2: randomize/timestamp trace2 targets
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ cache.h | 1 +
+ date.c  | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
- Documentation/technical/api-trace2.txt | 10 +++
- cache.h                                |  1 +
- date.c                                 |  2 +-
- t/t0210-trace2-normal.sh               | 93 ++++++++++++++++++++++++++
- trace2/tr2_dst.c                       | 86 +++++++++++++++++++++++-
- 5 files changed, 189 insertions(+), 3 deletions(-)
-
+diff --git a/cache.h b/cache.h
+index abd518a9a2..0a2c436d0a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1489,6 +1489,7 @@ struct date_mode {
+ #define DATE_MODE(t) date_mode_from_type(DATE_##t)
+ struct date_mode *date_mode_from_type(enum date_mode_type type);
+ 
++void get_time(struct timeval *now);
+ const char *show_date(timestamp_t time, int timezone, const struct date_mode *mode);
+ void show_date_relative(timestamp_t time, const struct timeval *now,
+ 			struct strbuf *timebuf);
+diff --git a/date.c b/date.c
+index 8126146c50..33576d2deb 100644
+--- a/date.c
++++ b/date.c
+@@ -115,7 +115,7 @@ static int local_tzoffset(timestamp_t time)
+ 	return local_time_tzoffset((time_t)time, &tm);
+ }
+ 
+-static void get_time(struct timeval *now)
++void get_time(struct timeval *now)
+ {
+ 	const char *x;
+ 
 -- 
 2.21.0.360.g471c308f928-goog
 
