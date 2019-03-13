@@ -2,82 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8807820248
-	for <e@80x24.org>; Wed, 13 Mar 2019 23:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 960B320248
+	for <e@80x24.org>; Wed, 13 Mar 2019 23:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726582AbfCMXN2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 19:13:28 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38389 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726078AbfCMXN1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 19:13:27 -0400
-Received: by mail-wm1-f68.google.com with SMTP id a188so894365wmf.3
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 16:13:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=NcfN3LjK+MLXszjl5HpbqUsQKlHzHbPj8zQFe4HAVEI=;
-        b=OcsyjfreOt65wm926LrpdEwqfGmOWmX/j1DnlNeiRZHDZ4lz8XRJZ67YCiJKiIhPAY
-         26dSBs3AZESnNBmE3FMHn927mt/8Szsr8xo0lChDZypy5W6ipspUqAFGx0qJdUuh8os8
-         nFE4lUjxxaUyPniuoVZEGPt3wehDGj620brOCOv6dgAGej51IdBHMeYSEreB37vmxhpg
-         D2B5FhzSJV3Wp8lnew4f/IrmInI+j227fPvmGxIexEKnl+UCvaaD4kS+/SjBdZ71qh7j
-         7wzxnA50X8MOB7isFm62nBcGgAacGjH1sBroS6bpFBD4mMIkOL4q0+JJMHYSlC1CmzFj
-         +E9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=NcfN3LjK+MLXszjl5HpbqUsQKlHzHbPj8zQFe4HAVEI=;
-        b=k5mCSU1mgT73J8+L6YKbc5mMrbgbO6iovsRDqccVdpzsnBldgsKQ5YKyM6z5tFvaHp
-         M4r5cLtxohBJXaDERQadj8GJtscCe0xePpPKN+7noga+T/nnz+vJas6KEWX8Tv+zuDXP
-         26uUVZouOlBbCYFVQB3OvubePMohC31FH4AdnyCzC7KXD5e7eM20qLcDWIQ7Sg57Gzwt
-         tYV6i1bLnMsVaLWaeerrH2l7/Qo6FrrtDyut207UBB6jK9bDUnqt7H8YUfh8G/yiMK+q
-         eMqgdZGBry2PZ7BWD7aJBNg1/tF9xnx7ugiKdMCGHUY9v4oDzGOH1y5Fd6wtsf64pMIZ
-         r+Yw==
-X-Gm-Message-State: APjAAAWLnHqmngXxiziLbajeW6XiR38RcStegQIBYH26zAp8v4iYOblE
-        /yJ6HuAOKDqDS/0cpYmLIMI=
-X-Google-Smtp-Source: APXvYqzgAVzK4U2o/R62anN6eTsVsIaaBB0W9q/nyYMNevfq96A4hxaX3ssuSPt1qoxBQ3WAlutClw==
-X-Received: by 2002:a1c:8088:: with SMTP id b130mr350286wmd.96.1552518805589;
-        Wed, 13 Mar 2019 16:13:25 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id u17sm39842045wrg.71.2019.03.13.16.13.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Mar 2019 16:13:24 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] submodule: explain first attempt failure clearly
-References: <20190312174522.89306-1-jonathantanmy@google.com>
-        <20190313175738.252961-1-jonathantanmy@google.com>
-Date:   Thu, 14 Mar 2019 08:13:23 +0900
-In-Reply-To: <20190313175738.252961-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 13 Mar 2019 10:57:38 -0700")
-Message-ID: <xmqqmulycqr0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726328AbfCMX2G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 19:28:06 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:34834 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbfCMX2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 19:28:06 -0400
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id 4DI4hNt0BbKva4DI5h74BP; Wed, 13 Mar 2019 23:28:05 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=cdb8UELM c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8
+ a=EBOSESyhAAAA:8 a=u8HcVdbOHOBWDEO9eBYA:9 a=QEXdDO2ut3YA:10
+ a=q92HNjYiIAC_jH7JDaYf:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] packfile: use extra variable to clarify code in
+ use_pack()
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
+References: <a026ce9f-b825-7fc2-2ad5-c0b00bc508b4@ramsayjones.plus.com>
+Message-ID: <027273d3-be3c-ca38-e13f-9387c14221fb@ramsayjones.plus.com>
+Date:   Wed, 13 Mar 2019 23:28:02 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <a026ce9f-b825-7fc2-2ad5-c0b00bc508b4@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfDI4nlvU8f4RL4BpWAOFTD8ANGUHA8p9o7dhpeQ1s2EUO0vt/L4YDL0+YtQ2jJZwrUB333VDhyAFdX+izYy1KFZoB5VlB54xFGa37eL8WiGCjQ2G8crA
+ Ao8RnlLM8X7C2WWw6pdKUFg7Blj2UvkXkL9cE+VmPtpgwGf/mfZNCuNX/IDpBjgze2uVXFhjV2/I/w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
 
-> It is additional to what fetch prints. To make it clearer, I have
-> removed all mentions of "additional" from the commit message. But right
-> now I'm not sure if that whole section is important (since what happens
-> can be deduced quite easily by reading the fewer than 10 lines of code).
 
-Hmph, perhaps.  It was lot easier to follow, at least to me, though ;-)
+On 13/03/2019 21:49, Ramsay Jones wrote:
+> From: Jeff King <peff@peff.net>
+> 
+> We use the "offset" variable for two purposes. It's the offset into
+> the packfile that the caller provides us (which is rightly an off_t,
+> since we might have a packfile much larger than memory). But later we
+> also use it as the offset within a given mmap'd window, and that
+> window cannot be larger than a size_t.
+> 
+> For the second use, the fact that we have an off_t leads to some
+> confusion when we assign it to the "left" variable, which is a size_t.
+> It is in fact correct (because our earlier "offset -= win->offset" means
+> we must be within the pack window), but using a separate variable of the
+> right type makes that much more obvious.
+> 
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+> 
+> Hi Junio,
+> 
+> As promised, I am forwarding a 'saved' patch from Jeff, which was
+> a by-product of a long-ago discussion regarding commit 5efde212fc
+> ("zlib.c: use size_t for size", 2018-10-14).
+> 
+> I have tested this patch on 'pu' (@6fd68134c8) and directly on top
+> of commit 5efde212fc. (see branch 'mk/use-size-t-in-zlib').
+> 
+> However, whilst I have been waiting for the tests to finish, I have
+> been looking at the code and concluded that this does not _have_ to
+> be applied on top of commit 5efde212fc. (I haven't done it, but just
+> tweak the context line to read 'unsigned long *left)' rather than
+> 'size_t *left)' and this should apply cleanly to 'master'. Also, it
+> would have _exactly_ the same effect as the current code! ;-) ).
 
-> If you mean a recommendation to the repository administrator, I guess we
-> can recommend that their HEAD points to something, even if it's just a
-> single orphan commit with a .txt file explaining what's going on.
+I have now done:
 
-Yeah, that might make sense, too.
+  $ diff 0001-packfile-use-extra-variable-to-clarify-code-in-use_p.patch ttt.patch
+  28c28
+  <  		size_t *left)
+  ---
+  >  		unsigned long *left)
+  $ 
+
+... this and it applies cleanly to 'master', builds and passes tests.
+
+Just FYI. ;-)
+
+ATB,
+Ramsay Jones
+
