@@ -2,94 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	TVD_APPROVED shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63B3D20248
-	for <e@80x24.org>; Wed, 13 Mar 2019 19:20:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A898A20248
+	for <e@80x24.org>; Wed, 13 Mar 2019 19:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728660AbfCMTUb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 15:20:31 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:44864 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728848AbfCMTUQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 15:20:16 -0400
-Received: by mail-ed1-f49.google.com with SMTP id b20so2526177edw.11
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 12:20:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=i+cWzBxcspPIbLQatGZXn0iceHlZ+TVbiKM0EY+YiwU=;
-        b=u0KNvRQb/aQaQgnVzkZZsD44Ijh4rfYaz9DtXj90m6VYMPqZT8GfazaunOElJrj9ha
-         Za1pTDltzMHaNrNuUX+ajV4aqkkYKPko8m0newgB+1ZJAmLj8DBzvBnACSn1JN29BW75
-         xmdEv+PyfhwavfqJo9htYr0dwaoeSNAouiHyCNOjtJFGfKNHIon+a0c605+JRg1fSzSs
-         sllRfnRXUfoViV/9IW4LHYvtk9BhY22LQMjUeoipHfnkPMjzB431QjsiD2i4EOG6rrQO
-         VLSjNnf8/uUtUCV+GGXjJgLX+lgjTdfJCaJ72e4AvGZetY8AtxPDwT98t7YGC9kpE4iA
-         J0ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=i+cWzBxcspPIbLQatGZXn0iceHlZ+TVbiKM0EY+YiwU=;
-        b=P4l7dbivzlTz3ohhncs9DNFJVx43Hg7ygZKfHHGkOBPJpA96Sg4G3Nww+XB7TtHe4a
-         j0BeCZD2NoDm0qsEic6Oo6/Ri2exzVlCNjrVkeD4MtPtJS+6UizDFyY+zeuIFs6GjK/H
-         a4fksIFCkdZODSF5zILif0EXPCwbYCrpPQNGYjV5qCxRlcRVQmL1OOJhz1/EptiRQkMH
-         xjnLwza/rjYVOeL2qQX8KgYrSAoXuLvu4z0cHewFwGefIFgci+JCvPu2Tnkr7a67BqWh
-         maWKaE8fIgH7NlM8Ks7w2B3M9B72E10SCLHLuZMszixvl84DX9aKDR/o547geAsTCIsM
-         TjXA==
-X-Gm-Message-State: APjAAAUTnyRGyYOlUwLXx6c1aI2khl+YXsUCVE8790Dxx/n8isSVmqQ9
-        lIfR1XFkg6hoT/CfwUXOKVtUETWi
-X-Google-Smtp-Source: APXvYqwXguihRe4d/bblJPzxMy0QxsmmmfNiA7ke6ZvSx0UQajHgY5hzbhZGCisCit+nXxb2Vq5Q8g==
-X-Received: by 2002:a17:906:7045:: with SMTP id r5mr7293789ejj.147.1552504814495;
-        Wed, 13 Mar 2019 12:20:14 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h1sm807822edr.78.2019.03.13.12.20.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Mar 2019 12:20:14 -0700 (PDT)
-Date:   Wed, 13 Mar 2019 12:20:14 -0700 (PDT)
-X-Google-Original-Date: Wed, 13 Mar 2019 19:20:11 GMT
-Message-Id: <2ad91f19c5b8c7e043e5944a1c075ad23612b59d.1552504812.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.163.git.gitgitgadget@gmail.com>
-References: <pull.163.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/2] difftool: remove obsolete (and misleading) comment
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        id S1727003AbfCMTfy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 15:35:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49406 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726938AbfCMTfy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 15:35:54 -0400
+Received: (qmail 20990 invoked by uid 109); 13 Mar 2019 19:35:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Mar 2019 19:35:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15076 invoked by uid 111); 13 Mar 2019 19:34:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 13 Mar 2019 15:34:58 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Mar 2019 15:34:37 -0400
+Date:   Wed, 13 Mar 2019 15:34:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     Roberto Tyley <roberto.tyley@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] point pull requesters to Git Git Gadget
+Message-ID: <20190313193436.GA3400@sigill.intra.peff.net>
+References: <20190312213246.GA6252@sigill.intra.peff.net>
+ <CAFY1edYQcWzYJXF6f_TRk4=bEMVnFXTAp=5u=TJ4XZ3UUd4EmA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFY1edYQcWzYJXF6f_TRk4=bEMVnFXTAp=5u=TJ4XZ3UUd4EmA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Mar 12, 2019 at 11:08:00PM +0000, Roberto Tyley wrote:
 
-We will always spawn something from `git difftool`, so we will always
-have to set `GIT_DIR` and `GIT_WORK_TREE`.
+> On Tue, 12 Mar 2019 at 21:34, Jeff King <peff@peff.net> wrote:
+> ...
+> > We could continue to mention _both_ tools, but it's probably better to
+> > pick one in order to avoid overwhelming the user with choice. After all,
+> > one of the purposes here is to reduce friction for first-time or
+> > infrequent contributors. And there are a few reasons to prefer GGG:
+> 
+> That's fair enough - I haven't committed to submitGit for 2 years
+> (it's continued to work without incident for most of that time I
+> think!).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/difftool.c | 1 -
- 1 file changed, 1 deletion(-)
+Yeah, it has been working fine as far as I know. I was a little curious
+about how often (and about my impression that GGG was replacing it), so
+I did some quick mining of the list archive. Here are numbers of
+messages each month (from the last ~100k messages) mentioning Amazon SES
+(presumably submitGit) or GitGitGadget in the message-id. I omitted
+months with no entries for either, so there are some gaps:
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index a3ea60ea71..31eece0c8d 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -727,7 +727,6 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 	if (tool_help)
- 		return print_tool_help();
- 
--	/* NEEDSWORK: once we no longer spawn anything, remove this */
- 	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
- 	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
- 
--- 
-gitgitgadget
+  ses ggg year-mo
+  --- --- -------
+    7   0 2015-07
+    2   0 2015-08
+    3   0 2015-09
+    1   0 2015-11
+    2   0 2016-01
+    3   0 2016-02
+   34   0 2016-03
+   27   0 2016-04
+    2   0 2016-05
+    6   0 2016-06
+   26   0 2016-07
+   54   0 2016-08
+    3   0 2016-09
+   29   0 2016-10
+    3   0 2016-12
+    4   0 2017-01
+    7   0 2017-03
+    5   0 2017-04
+    3   0 2017-05
+   23   0 2017-06
+    9   0 2017-07
+   14   0 2017-09
+    6   0 2017-10
+    8   0 2017-11
+    8   0 2017-12
+   38   0 2018-01
+   86   0 2018-02
+   49   0 2018-03
+    9   0 2018-04
+    1   0 2018-05
+    3   4 2018-06
+    0  86 2018-07
+   13 105 2018-08
+    0  65 2018-09
+   14 149 2018-10
+    7 131 2018-11
+    1  46 2018-12
+   14  96 2019-01
+   16 149 2019-02
+    0  44 2019-03
 
+That measures pure patches, so they tend to cluster as there are often
+several patches in a series. Poking manually at the ses hits, submitGit
+seems to have been often used by GSoC and Outreachy applicants and
+interns.
+
+I don't know if any of this really supports or refutes my earlier commit
+message, but I just thought it was kind of neat to see the numbers, so I
+thought I'd share.
+
+> >   2. Subjectively, GGG seems to be more commonly used on the list these
+> >      days, especially by list regulars.
+> 
+> That's probably true too, though my interest with submitGit was more
+> driven by helping early/first-time contributors than regulars. Though
+> I'm sure GGG works well, in an ideal world it would be interesting to
+> get a perspective from a cohort of those kind of users about what kind
+> of flow works best for them - although, as I haven't been following
+> development, maybe this has already been done?
+
+I think the flow is quite similar, and GGG is definitely geared at
+helping infrequent contributors, too. Dscho might have more thoughts on
+this.
+
+The biggest friction is marking a user as allowed to send. I think in
+submitGit you have to "OK" the submitGit app sending on your behalf.  In
+GGG, somebody who already has been OK'd has to OK you with a comment in
+the PR (after which you're approved for future PRs, too). It's possible
+the approval could slow things down, but I think as long as users of the
+tool are fairly prompt about approving non-spam PRs, it wouldn't be a
+big deal.
+
+> > I feel a little bad sending this, because I really value the work that
+> > Roberto has done on submitGit. So just dropping it feels a bit
+> > dismissive.
+> 
+> Oh, you're very kind, that's ok! Very glad submitGit could help for a
+> while, sounds like it was a good proof that GitHub could become part
+> of the contribution process.
+
+Yes, I think it definitely was.
+
+-Peff
