@@ -2,108 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.2 required=3.0 tests=AWL,BAYES_50,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA8AA20248
-	for <e@80x24.org>; Wed, 13 Mar 2019 07:11:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 746AB20248
+	for <e@80x24.org>; Wed, 13 Mar 2019 08:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727018AbfCMHLZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 03:11:25 -0400
-Received: from bmmpo4101.jpx1.mp.cheetahdigital.com ([106.185.101.209]:46846
-        "EHLO bmmpo4101.jpx1.mp.cheetahdigital.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726968AbfCMHLZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 Mar 2019 03:11:25 -0400
-X-Greylist: delayed 603 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Mar 2019 03:11:25 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1552461085;
-        s=spex.201608; d=spex.jp;
-        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=h4Cb8CdlcHuRZzZzTExmS/janxPO6L0KYwEKXFDBm+s=;
-        b=gdIcvXOmGE239iCVSVoMuzpfRVuGWFNaGhvFpKsvQaVK/yNlDDRaZu79y8EZP8FG
-        z9FZ0xHbfKCurCnt3oSb8eW007BWYO3MX9WPMVkopR+i9Y6MXqdmbb9k5L5S+aSBWlo
-        JyN+OdI/wJsmCH53HQotSZGjbaKJEayQNb+SX0tI=
-Date:   Wed, 13 Mar 2019 16:01:21 +0900 (JST)
-From:   Qu Jun MARKETING & SALES PROMOTION EXPO Show
-         Management <spex-en@spex.jp>
-Reply-To: spworld@reedexpo.co.jp
-To:     git@vger.kernel.org
-Message-Id: <1552460481252.2019100098.rxjp006.0.15067.00000000@ad145se.mpse.jp>
-Subject: =?utf-8?B?5omT5YWl5pel5pys55qE5L+D6ZSA56S85ZOB5ZKM5qCH6K+G5biC5Zy6?=
- =?utf-8?B?LS0tLU1BUktFVElORyA=?=
- =?utf-8?B?JiBTQUxFUyBQUk9NT1RJT04gRVhQTyBbSnVuZV0=?=
+        id S1727118AbfCMIP1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 04:15:27 -0400
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:40903 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726694AbfCMIP0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 04:15:26 -0400
+Received: by mail-ot1-f65.google.com with SMTP id x8so925246otg.7
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 01:15:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=p5PMt6kqdwmeLU/6q3QmOcdOLBWY/L6VvryzLkGGDyg=;
+        b=FNsAC8SGp2ecfz8e1ewObW9xZLpPkI7Y1PPlzd5YkfW9eNYSXTdmg/h13dsUVywGV3
+         gDa3mSqXbbHnwjc9d7CJ5oj/4iVn4XACWxHAncYyFEVK9sUWqlY52Ok7FsMiYWU46eto
+         rzWmKtALfYce43Bk2UpwmsSWijTBNbYNYPXuHrHWtSDhCRBbib5IvMSwk9s5GO7hbtTv
+         oiYy/QlS3vsYxMCAlXubRBapTLTAaJuEY5OJ5qRKfskNM6dN2Zh31Wr0zDldzEBFgbwg
+         swVyz7dt/5GgYz7F6/3gkiG3HT/xQpH1Qswug68qVIkkughKnE6VG53zfEAos7+ClpU+
+         ZaLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=p5PMt6kqdwmeLU/6q3QmOcdOLBWY/L6VvryzLkGGDyg=;
+        b=NoHEFuLBeNwgYXvVaGJSE7lMpcqmRMSDI8geggC1klMmn507OyLCAy8J33jFPnOICx
+         JyQexIdurGyN5nuSXJE/2RRTTjO3CkwLsACz+JihbwQDy7FoVcFLeNGq6H6SSsSZll2P
+         6SURwnJGBMMOdN2SVluoTC3Q0uJLFAbeoysHqPFXP2qFnKXopMTHyAcysFSPyGxK//s3
+         1Z5AKUxFGUpREiEyoV/+IXBydzRjPiHMH9KrifzI911S71jmii6w0BqpzjQoqLmJvS6R
+         pPSmkjEt1Y8lRWZD/aHDa+bsM1LW5UvjfFpVVUNQ6CUPTJNs2PDGzjs3EvywLANu001g
+         mZEw==
+X-Gm-Message-State: APjAAAWTD7JOpNvyFp3+NAziz85sw3VQvJTBDaVAs95+3N6TvwxsXB0S
+        jbkKYI8kaU+avX3UfUP8faAxyj2n7WisknhkybXF2ZJt
+X-Google-Smtp-Source: APXvYqxKPc0et4kfwExXMzRUzaSTdrV9USLIJilp67su1p5I7rMCSvEn0kfHAG83jKmIbPQnO4D8e0tB6Vh4axuiQB8=
+X-Received: by 2002:a05:6830:1091:: with SMTP id y17mr25418549oto.296.1552464925854;
+ Wed, 13 Mar 2019 01:15:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+From:   Moritz Winter <moritz.a.winter@gmail.com>
+Date:   Wed, 13 Mar 2019 09:15:14 +0100
+Message-ID: <CAPrSTy83qh+BtQ=ur-+6p5VXbhMpy0iD2tOAiUP10c5hWwV-tg@mail.gmail.com>
+Subject: Could not access submodule when pulling recursively with git 2.21
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-尊敬的 市场经理
-Zhejiang Wuchuan Industrial Co., Ltd,
+Hi,
 
-您好！
-这里是日本国际促销礼品&营销展MARKETING & SALES PROMOTION EXPO展会主办方。
+I've recently upgraded to git from 2.20.1 to 2.21 and now my projects
+with submodules show a access error when pulling recursively.
 
-日本国际促销礼品&营销展是日本最大的针对促销及营销的专业BtoB展会。
-展品范围包括：促销礼品、包装、印刷、广告牌、标识、销售/在库管理、客户情报管理、互联网广告等。
+I have a couple of projects on gitlab.com that use two or more
+submodules. The .gitmodules file is slightly changed for gitlab.com
+compatibility. The paths are relative as described in:
 
-来场观众除了知名的商社/广告代理店，更有各大公司的市场部负责人。
-在本展贵司可以直接接触到最终客户，跳过多层中间商进一步提高贵司的产品竞争力。
+https://docs.gitlab.com/ee/ci/git_submodules.html
 
-如果贵司有兴趣了解更多关于展会的信息如
-·展位价格
-·可选展位
-·参展商名单
-           
-          等
+Before updating git I could pull the submodules recursively within the
+main repository. Now I get a "Could not access submodule 'foo'" error.
 
-请您简单填写以下表格或回复本邮件。
+Example:
 
--------------------------------------
-mailto:spworld@reedexpo.co.jp
-公司名:
-联系人:
-Email:
-电话:
--------------------------------------
+$ git -v
+git version 2.20.1
 
-期待您的回复
+$ git pull --recurse-submodules=true
+Fetching submodule 'foo'
+Fetching submodule 'bar'
+Already up to date.
 
-敬祝商祺,
+$ git -v
+git version 2.21.0
 
-Qu Jun (Mr.)
-MARKETING & SALES PROMOTION EXPO Show Management
-Reed Exhibitions Japan Ltd.
-TEL: +81-3-3349-8505
-mailto:spworld@reedexpo.co.jp
+$ git pull --recurse-submodules=true
+Fetching submodule 'foo'
+Fetching submodule 'bar'
+Could not access submodule 'foo'
+Could not access submodule 'bar'
 
-----------------------
-MARKETING & SALES PROMOTION EXPO [6月展]
-日期: 2019年6月19日（周三）-6月21日（周五）
-地点: 日本东京有明国际展览中心
-WEB: https://www.sp-world.jp/en-gb.html
-----------------------
+This only happens in projects with two or more submodules. A project
+with one submodule does work as expected. Additionally I have a
+password protected ssh key if this is relevant.
 
+$ uname -a
+Linux box 4.19.28-1-MANJARO #1 SMP PREEMPT Sun Mar 10 08:32:42 UTC
+2019 x86_64 GNU/Linux
 
+Is this a regression in git or is there a error on my end/gitlab.com?
+My workaround currently is to downgrade to git v 2.20.
 
+I've already filed a bug with gitlab.com:
 
-ID:E36-G1402-0075
+https://gitlab.com/gitlab-org/gitlab-ce/issues/58891
 
+Thanks & best regards
 
-
-
-
-
-This message is delivered to you to provide details of exhibitions and conferences organized, co-organized, or managed by Reed Exhibitions Japan Ltd.
-If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
-
-<Update contact information>
-Please click the URL below and follow the directions on the website to update your e-mail and other information.
-https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
-
-<Remove from list>
-Please reply to this mail changing the subject to "REMOVE FROM LIST".
-You will not receive any further information on this exhibition/conference.
+Moritz
