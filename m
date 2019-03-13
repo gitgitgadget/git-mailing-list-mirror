@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C34420248
-	for <e@80x24.org>; Wed, 13 Mar 2019 12:24:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C678B20248
+	for <e@80x24.org>; Wed, 13 Mar 2019 12:25:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726562AbfCMMY5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 08:24:57 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:33548 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726435AbfCMMY4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 08:24:56 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c13so4334702wmb.0
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 05:24:54 -0700 (PDT)
+        id S1726510AbfCMMYy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 08:24:54 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35041 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725836AbfCMMYw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 08:24:52 -0400
+Received: by mail-wr1-f68.google.com with SMTP id t18so1780365wrx.2
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 05:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TcEjlYKPOZTOVATiI17XRSdKYXhU5r0SoVx/FV5ZTg0=;
-        b=NSkXCQZnZNaqP/yNgipJKCf87bSXpCALBWcnMzNZG/aHd7mEj4xbA9S8jlU6i7S+ch
-         YHzKnp25LpzqEa+Y0YF8iUDysLmf0w+aHxzSOzkAMXCGwJoh2KAg9yqBYu9wKWTMjX02
-         FXb874kKOT1FI+3AGxYoWmoxczoq69djl7bTBs2rdasx4siWNR1RU4py0IMzkYmHLHFC
-         LxDUNpdBmjmvC0pPnbAXg39RCQv+Fc7cZjXj7jZGaICCR+cc8ZdxfQ+0Z7Xid2L2X8lk
-         iW1Wq1PA6GAQW0iYm/TEB0qQM0CJaFxm5c3TaWYoOlT7DUaTQsSaI8VpMDnyhjPzNEEL
-         AEhg==
+        bh=enjYaU1zpsXUNt4e8onIwdPIJfgd/af7DIrD0b2/eHk=;
+        b=MdsJsBbmKhY7NfZCt6K5YaGf5xvBeW4/UftEq6iBNPXq9fA6F5lnl5nB18DcTc+Tlc
+         YzXTCHpxXQKdbnTFNo3aSDyrilFSUKxj1CH/OvH5wj39kyAo6R7uR/2tY3wG9JLujIpz
+         9aQLF2NyUdRMkpf2L/cQWVPtTN7lgrufbMI+gYloWvaVBbX1iXazM6Be4DEPWV5WDCFT
+         X4LQPA/mz9P1T0NJDFbcJkGTpPYHn69zYnDV7OkwWumYBvv+1qR14DBN0p5tpFkEa7pZ
+         7wrDZi+CeQjP5sAZM4zA1IFknP29AG4XtuDB79HO3Ua3ooaVQzem6cHuGVj0tkzRBSNt
+         OGBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TcEjlYKPOZTOVATiI17XRSdKYXhU5r0SoVx/FV5ZTg0=;
-        b=b74DwWODSI5z32ymTiqHpBiVmZFIEqlMZQjatjqFX4/aryL9LdS1M5M7rfx1X8Tazf
-         YaomlgRFjfgm6Cm59JlvxQoWPkZG+t1lXKXrTbGRYolouA6IMVlW5Sf3WU4uePIovqvj
-         pceZs/UxYhdRgJAR0OKGJKTGuS7owCUQN69VRpjjWMTjtrNCxH61RqUr76XebyBaUQO1
-         yYbYsMzf/2uq1jhv6Jy3/tQfmitngV6beyydaCFovd+wERcrwdJBs0s5rYcJ5KawqjyE
-         15ueiHj+6gh1nSv2aVZ9qIB0YUg72GtCV+7IZNnlZda2r6SWsiSqV8057wBPGP6/xy/s
-         Gv6Q==
-X-Gm-Message-State: APjAAAUn+mnhswzRPKg7UfeMr0U1fZLPM7LkCWrQ1dpzQeskenpXOVxh
-        XGc7kBFHPwozWeUSGboUshwhdSxk
-X-Google-Smtp-Source: APXvYqyZCZHLkjPxnCIIgQjJySbI5eJqEZ1aeVxrPfpRFlA01DztIBnKQUjTn+Nu6uhOq1Wp1Qn9cw==
-X-Received: by 2002:a1c:cb82:: with SMTP id b124mr2001800wmg.11.1552479894034;
-        Wed, 13 Mar 2019 05:24:54 -0700 (PDT)
+        bh=enjYaU1zpsXUNt4e8onIwdPIJfgd/af7DIrD0b2/eHk=;
+        b=uMD1e3tRHBStOnlZ01Vzac3VPSBixPXr7yhFNcdPoCTjoEtgHKr9NlMc1GACqQJNGe
+         dYf/t4XHFDhgwf3zpgAqiODjd7AObMi2VelCPtbmOo209DM6Gs3oYBP9lCsBG78LrZoE
+         ms6dXLcPDVEsebo7LvfGbSsPvcWgi98ES/iITry3wORz3u5YwaQOU3H4LEWhHR06DtHx
+         M3fEgfZmtPfQnkijYEo1LlSKfZl3nC9wVUhqbcr00q27QuB1m3HDVy4xm22eTC4+FR5a
+         OZIj7zbKFNaiNQeutIyw/XCCOX8HlWsfxQlEKRdyX6njnLLHzR8phE7Jap+HLGc9EF6v
+         Llow==
+X-Gm-Message-State: APjAAAUkkpC2PMpKMQ7mSELeT95WrcaMrGns285CitjuBvmea+DiUjVW
+        I5NI5kyg1dCNvWJkOrL+kzkT7I9M
+X-Google-Smtp-Source: APXvYqxVgwS6O4PQYML3e8A6fyrb8KNywVRTFUHgR9faAAuZ8QoUiAuv4Dz1C2MOD+tI5F1WhVRlEA==
+X-Received: by 2002:a5d:5410:: with SMTP id g16mr26719049wrv.214.1552479890633;
+        Wed, 13 Mar 2019 05:24:50 -0700 (PDT)
 Received: from localhost.localdomain (x4d0c2b66.dyn.telefonica.de. [77.12.43.102])
-        by smtp.gmail.com with ESMTPSA id t2sm8348287wra.9.2019.03.13.05.24.53
+        by smtp.gmail.com with ESMTPSA id t2sm8348287wra.9.2019.03.13.05.24.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Mar 2019 05:24:53 -0700 (PDT)
+        Wed, 13 Mar 2019 05:24:50 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -56,9 +56,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Luke Diamand <luke@diamand.org>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 11/11] t9811-git-p4-label-import: fix pipeline negation
-Date:   Wed, 13 Mar 2019 13:24:19 +0100
-Message-Id: <20190313122419.2210-12-szeder.dev@gmail.com>
+Subject: [PATCH 08/11] git p4 test: clean up the p4d cleanup functions
+Date:   Wed, 13 Mar 2019 13:24:16 +0100
+Message-Id: <20190313122419.2210-9-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.21.0.499.g4d310c7a8e.dirty
 In-Reply-To: <20190313122419.2210-1-szeder.dev@gmail.com>
 References: <20190313122419.2210-1-szeder.dev@gmail.com>
@@ -70,48 +70,165 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 't9811-git-p4-label-import.sh' the test 'tag that cannot be
-exported' runs
+Confusingly, the 'git p4' tests used two cleanup functions:
 
-  !(p4 labels | grep GIT_TAG_ON_A_BRANCH)
+  - 'kill_p4d' was run in the last test before 'test_done', and it not
+    only killed 'p4d', but it killed the watchdog process, and cleaned
+    up after 'p4d' as well by removing all directories used by the P4
+    daemon and client.
 
-to check that the given string is not printed by 'p4 labels'.  This is
-problematic, because according to POSIX [1]:
+    This cleanup is not necessary right before 'test_done', because
+    the whole trash directory is about to get removed anyway, but it
+    is necessary in 't9801-git-p4-branch.sh', which uses 'kill_p4d' to
+    stop 'p4d' before re-starting it in the middle of the test script.
 
-  "If the pipeline begins with the reserved word ! and command1 is a
-  subshell command, the application shall ensure that the ( operator
-  at the beginning of command1 is separated from the ! by one or more
-  <blank> characters. The behavior of the reserved word ! immediately
-  followed by the ( operator is unspecified."
+  - 'cleanup' was run in the trap on EXIT, and it killed 'p4d', but,
+    it didn't kill the watchdog process, and, contrarily to its name,
+    didn't perform any cleanup whatsoever.
 
-While most common shells still interpret this '!' as "negate the exit
-code of the last command in the pipeline", 'mksh/lksh' don't and
-interpret it as a negative file name pattern instead.  As a result
-they attempt to run a command made up of the pathnames in the current
-directory (it contains a single directory called 'main'), which, of
-course, fails the test.
+Make it clearer what's going on by renaming and simplifying the
+cleanup functions, so in the end we'll have:
 
-We could fix it simply by adding a space between the '!' and '(', but
-instead let's fix it by removing the unnecessary subshell.
+  - 'stop_p4d_and_watchdog' replaces 'cleanup' as it will try to live
+    up to its name and stop both the 'p4d' and the watchdog processes,
+    and as the sole function registered with 'test_atexit' it will be
+    responsible for no leaving any stray processes behind after 'git p4'
+    tests were finished or interrupted.
 
-[1] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_02
+  - 'stop_and_cleanup_p4d' replaces 'kill_p4d' as it will stop 'p4d'
+    (and the watchdog) and remove all directories used by the P4
+    daemon and cliean, so it can be used mid-script to stop and then
+    re-start 'p4d'.
+
+Note that while 'cleanup' sent a single SIGKILL to 'p4d', 'kill_p4d'
+was quite brutal, as it first sent SIGTERM to the daemon repeatedly,
+either until its pid disappeared or until a given timeout was up, and
+then it sent SIGKILL repeatedly, for good measure.  This is overkill
+(pardon the pun): a single SIGKILL should be able to take down any
+process in a sensible state, and if a process were to somehow end up
+stuck in the dreaded uninterruptible sleep state then even repeated
+SIGKILLs won't bring immediate help.  So ditch all the repeated
+SIGTERM/SIGKILL parts, and use a single SIGKILL to stop 'p4d', and
+make sure that there are no races between asynchron signal delivery
+and subsequent restart of 'p4d' by waiting for it to die.
+
+With this change the 'retry_until_fail' helper has no callers left,
+remove it.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t9811-git-p4-label-import.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/lib-git-p4.sh          | 36 ++++++++++--------------------------
+ t/t9801-git-p4-branch.sh |  4 ++--
+ 2 files changed, 12 insertions(+), 28 deletions(-)
 
-diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
-index b70e81c3cd..c1446f26ab 100755
---- a/t/t9811-git-p4-label-import.sh
-+++ b/t/t9811-git-p4-label-import.sh
-@@ -191,7 +191,7 @@ test_expect_success 'tag that cannot be exported' '
- 	(
- 		cd "$cli" &&
- 		p4 sync ... &&
--		!(p4 labels | grep GIT_TAG_ON_A_BRANCH)
-+		! p4 labels | grep GIT_TAG_ON_A_BRANCH
- 	)
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index 958e33b77e..b5cb5075c2 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -67,12 +67,8 @@ cli="$TRASH_DIRECTORY/cli"
+ git="$TRASH_DIRECTORY/git"
+ pidfile="$TRASH_DIRECTORY/p4d.pid"
+ 
+-# Sometimes "prove" seems to hang on exit because p4d is still running
+-cleanup () {
+-	if test -f "$pidfile"
+-	then
+-		kill -9 $(cat "$pidfile") 2>/dev/null && exit 255
+-	fi
++stop_p4d_and_watchdog () {
++	kill -9 $p4d_pid $watchdog_pid
+ }
+ 
+ # git p4 submit generates a temp file, which will
+@@ -87,7 +83,7 @@ start_p4d () {
+ 	# Don't register and then run the same atexit handlers several times.
+ 	if test -z "$registered_stop_p4d_atexit_handler"
+ 	then
+-		test_atexit 'kill_p4d; cleanup'
++		test_atexit 'stop_p4d_and_watchdog'
+ 		registered_stop_p4d_atexit_handler=AlreadyDone
+ 	fi
+ 
+@@ -100,6 +96,7 @@ start_p4d () {
+ 			echo $! >"$pidfile"
+ 		}
+ 	) &&
++	p4d_pid=$(cat "$pidfile")
+ 
+ 	# This gives p4d a long time to start up, as it can be
+ 	# quite slow depending on the machine.  Set this environment
+@@ -107,14 +104,13 @@ start_p4d () {
+ 	# an automated test setup.  If the p4d process dies, that
+ 	# will be caught with the "kill -0" check below.
+ 	i=${P4D_START_PATIENCE:-300}
+-	pid=$(cat "$pidfile")
+ 
+ 	timeout=$(($(time_in_seconds) + $P4D_TIMEOUT))
+ 	while true
+ 	do
+ 		if test $(time_in_seconds) -gt $timeout
+ 		then
+-			kill -9 $pid
++			kill -9 $p4d_pid
+ 			exit 1
+ 		fi
+ 		sleep 1
+@@ -131,7 +127,7 @@ start_p4d () {
+ 			break
+ 		fi
+ 		# fail if p4d died
+-		kill -0 $pid 2>/dev/null || break
++		kill -0 $p4d_pid 2>/dev/null || break
+ 		echo waiting for p4d to start
+ 		sleep 1
+ 		i=$(( $i - 1 ))
+@@ -178,22 +174,10 @@ retry_until_success () {
+ 	done
+ }
+ 
+-retry_until_fail () {
+-	timeout=$(($(time_in_seconds) + $RETRY_TIMEOUT))
+-	until ! "$@" 2>/dev/null || test $(time_in_seconds) -gt $timeout
+-	do
+-		sleep 1
+-	done
+-}
+-
+-kill_p4d () {
+-	pid=$(cat "$pidfile")
+-	retry_until_fail kill $pid
+-	retry_until_fail kill -9 $pid
+-	# complain if it would not die
+-	test_must_fail kill $pid >/dev/null 2>&1 &&
+-	rm -rf "$db" "$cli" "$pidfile" &&
+-	retry_until_fail kill -9 $watchdog_pid
++stop_and_cleanup_p4d () {
++	kill -9 $p4d_pid $watchdog_pid
++	wait $p4d_pid
++	rm -rf "$db" "$cli" "$pidfile"
+ }
+ 
+ cleanup_git () {
+diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
+index 50013132c8..38d6b9043b 100755
+--- a/t/t9801-git-p4-branch.sh
++++ b/t/t9801-git-p4-branch.sh
+@@ -151,7 +151,7 @@ test_expect_success 'import depot, branch detection, branchList branch definitio
+ '
+ 
+ test_expect_success 'restart p4d' '
+-	kill_p4d &&
++	stop_and_cleanup_p4d &&
+ 	start_p4d
+ '
+ 
+@@ -505,7 +505,7 @@ test_expect_success 'use-client-spec detect-branches skips files in branches' '
+ '
+ 
+ test_expect_success 'restart p4d' '
+-	kill_p4d &&
++	stop_and_cleanup_p4d &&
+ 	start_p4d
  '
  
 -- 
