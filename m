@@ -7,80 +7,86 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB74020248
-	for <e@80x24.org>; Wed, 13 Mar 2019 01:13:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6223920248
+	for <e@80x24.org>; Wed, 13 Mar 2019 01:21:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726384AbfCMBNm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Mar 2019 21:13:42 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:34301 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725917AbfCMBNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Mar 2019 21:13:41 -0400
-Received: by mail-io1-f66.google.com with SMTP id n11so368686ioh.1
-        for <git@vger.kernel.org>; Tue, 12 Mar 2019 18:13:41 -0700 (PDT)
+        id S1726400AbfCMBVC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Mar 2019 21:21:02 -0400
+Received: from mail-it1-f180.google.com ([209.85.166.180]:51409 "EHLO
+        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726372AbfCMBVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Mar 2019 21:21:01 -0400
+Received: by mail-it1-f180.google.com with SMTP id e24so334833itl.1
+        for <git@vger.kernel.org>; Tue, 12 Mar 2019 18:21:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pHJEZBuBLCLPk/CvQr4EmB9wzRhDIVds6fBeoJ9rsk0=;
-        b=j2Y+9M+mUfxDJTR0jOAxNoiu5QfHwBA1gHaXZSppuPlDiF3GaEcQLm9VxC6cXmshDg
-         K394jeCKl1fvSGpDG4B2O2bYIIIKUZWQS1v7NE7TnnkFaOYtbK7Bo4TIGyWiGOeYxOjN
-         asjAHWEUQubOkfEC9Y42DXbBaVF+b4DztbpKhHI7oJnqm5iPSp2PJmr3lKHaZ4Daur3s
-         0GGg+EQlvrsI02PB0PTaeTukWd0/ZrJId8qoq8d1uzdMCFiLQi5+jULsNgCu39ulUGF3
-         LLiijSH/P62cO7LVNTF6uNeG7Trv3M88RlcYjF8H3ccNQx5H6NwsScHlgRL78zUfisC2
-         xwgA==
+         :cc:content-transfer-encoding;
+        bh=/XlgATQ2b0SxUgr1p/jd7ITTf/fdbqVwJ9nIJS31ARQ=;
+        b=TK4HRbcQMbIwcyhgQJtmauELayP+dhTxN2Z4LvpVkT/pRMx8IvSls1N2co47DPptck
+         xToDHKa2m7CR32uT2AHccGuByn+8BYgVSDg0UXGCAZx3arOW5qcC3xc5HsNekLIAbQ8Y
+         i2/bBGGjI61GhxUEUrp/xRAwuyU3VsjSsyqr3n6LHAiwxheeFigevbSj/jgjrJK+VHZf
+         xPsiEsWKERxGrdiGYFWxcRdgid+z6OA5gvoqj4rHSK6QX9tGtkOXpO+ZUBIVE52iZaj6
+         ahRvLsWpd72d3OhURVRAd98+Oce9NX5+6sWrG60PAifmwMdGq3Q0GrrJsEKTUX4oWBec
+         jvPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pHJEZBuBLCLPk/CvQr4EmB9wzRhDIVds6fBeoJ9rsk0=;
-        b=i6f+B82wVUK5Z0vpOZmGNpnsv5HPmyc4MIJJuwhpOVYsXENXHpcH+heZqvq6jL48xf
-         dFVjwXgPxxg+Xpu3iLvSLUD1P7eeJsAy45ZOqRfSyC0qrkXUl4hLZmXu+2P935L4+zEn
-         YKsjChTXqYvywXIy64oyJjgzyW03T4uMb36JES6e073Bdv2DJ0byLQFow+Iwz7dsIVGZ
-         ifqUASRau517w7mCXahAQ6snPlK4/RYqoUzfWZeJWy8IdwtGUL3EJ7wcuaSUTzmRqFWW
-         KYvOWoCI/KMWKYl4ztJ/m9sNVeopzNyXRUjrpTmstiYXaFO5cXwv/jeb0byxnZcEXEyj
-         SFVg==
-X-Gm-Message-State: APjAAAV0HPOpQ1qhclzgJdnU2H6QFw7xwaAnXk7U0dF54rl/0STU/hse
-        6nrhu43ul+v7TmLw/KCkShOPYLYejdU/5q9f8GM=
-X-Google-Smtp-Source: APXvYqyZ4ephgvRn8hQ8uwlS4ptlSVpkWVHa3Bu2vwRgNmfwbEs1fD0dtd17H5KqsbpVTT9m9ElmaMmrqhcmgLTaNM4=
-X-Received: by 2002:a5e:d616:: with SMTP id w22mr6848575iom.118.1552439620816;
- Tue, 12 Mar 2019 18:13:40 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/XlgATQ2b0SxUgr1p/jd7ITTf/fdbqVwJ9nIJS31ARQ=;
+        b=s/oiDpHcHRKgOL0qNeN8bAssBcr9yz5QAW6QaxUAmgPUoC0NV21Cixb0S6WHXE1aik
+         LtYjD2YLAgNTWDudDZUtu3HMe7a9waiCl0gTOwQSV0Ts3rt3Nr97IdGZSMYpm1CNNKh2
+         yHA9xpxDqeb8R3sy3bnq6Vb8pbvdwmMSOmKmHMefJkqX5rQbiCZayzzwuNaJCVX2QIVR
+         pNSuvuPsVGXyfXAXmettIpN/TTmqnP4NHWk0OpZK4YLRGdw5gncJIo6b408Umm8WttQe
+         gXMKHqwz6YuO7FmhlttJ4iHwpeGK26QT77b/dobv8PmakVKW4MYr7vfGBTdw7QR+VonM
+         akCA==
+X-Gm-Message-State: APjAAAXA4gjFyToY2qBfXmU93xtHzG1Z62Uan35XebwEEqqf5CUSPCk0
+        GccvKGqDUEJw/5UFdjqIkq0MDJsASlW3WJYAzDk=
+X-Google-Smtp-Source: APXvYqxpTTowUnT0fJ30hsvGPpNjCOJl2DZkR5DAj/7/Bd4dpEbyWsSxbdSKBpKFsNNcfH/UNrCBjlTTLxhVwKWoMoE=
+X-Received: by 2002:a02:1c49:: with SMTP id c70mr4528431jac.92.1552440060719;
+ Tue, 12 Mar 2019 18:21:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com> <CACsJy8C7F_Ju2F7COUVd9-1FcyQL=mZph7qmkDh9sS-ENb4PEQ@mail.gmail.com>
- <f6052ac6-60c4-1e70-b3f4-571885ba9e8d@iee.org> <CACsJy8D48YiWYkuLW8BbeYvRz=yMmb=XWoMJroPXFAcSV2VjHw@mail.gmail.com>
- <20190309172733.GC31533@hank.intra.tgummerer.com> <20190312233040.GE16414@hank.intra.tgummerer.com>
-In-Reply-To: <20190312233040.GE16414@hank.intra.tgummerer.com>
+References: <20190311093751.GA31092@archbookpro.localdomain>
+ <xmqqmum0h88n.fsf@gitster-ct.c.googlers.com> <87va0orop4.fsf@igel.home>
+In-Reply-To: <87va0orop4.fsf@igel.home>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 13 Mar 2019 08:13:14 +0700
-Message-ID: <CACsJy8B4gEwuyVV_T+vYdMNjs-01rxCk5G9yxbJOSkKWHGgnSg@mail.gmail.com>
-Subject: Re: [PATCH v2] glossary: add definition for overlay
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Junio C Hamano <gitster@pobox.com>,
+Date:   Wed, 13 Mar 2019 08:20:34 +0700
+Message-ID: <CACsJy8DaTE3fbLZCbwW6XY4Z_2OjczOZROYiWsMPQrni_ybhZg@mail.gmail.com>
+Subject: Re: Deprecating git diff ..; dealing with other ranges
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Philip Oakley <philipoakley@iee.org>,
+        Elijah Newren <newren@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        vincent.guittot@linaro.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 13, 2019 at 6:30 AM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+On Wed, Mar 13, 2019 at 12:26 AM Andreas Schwab <schwab@linux-m68k.org> wro=
+te:
 >
-> Add a definition for what overlay means in the context of git, to
-> clarify the recently introduced overlay-mode in git checkout.
+> On M=C3=A4r 12 2019, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
+> > I however think it may be worth making sure that our docs do not
+> > encourage "diff A..B" and teach "diff A B" when comparing two
+> > endpoints.  That can be done without changing anything in the code.
 >
-> v2 addresses Elijah's comments (thanks!), using the wording he
-> suggested in [*1*], which I agree is slightly better, as no-overlay
-> mode doesn't touch untracked files.
+> The nice thing about "diff A..B" is that you can c&p the output from the
+> fetch run without the need to edit it.
 
-It could overwrite untracked files (e.g. the file is present in the
-source, but not tracked) but never delete them. But I think it's the
-little detail that we could skip.
--- 
+I do this copy&paste too though I think in this case we could improve
+something to not copy&paste in the first place.
+
+A..B from fetch is the same as branch@{1}..branch. If we have some
+shortcut similar to ^! but for reflog, that would be perfect (the
+branch part does not require much typing with tab completion).
+--=20
 Duy
