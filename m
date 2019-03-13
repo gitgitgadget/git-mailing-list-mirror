@@ -2,107 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 746AB20248
-	for <e@80x24.org>; Wed, 13 Mar 2019 08:15:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBE4D20248
+	for <e@80x24.org>; Wed, 13 Mar 2019 09:14:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727118AbfCMIP1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 04:15:27 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:40903 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726694AbfCMIP0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 04:15:26 -0400
-Received: by mail-ot1-f65.google.com with SMTP id x8so925246otg.7
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 01:15:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=p5PMt6kqdwmeLU/6q3QmOcdOLBWY/L6VvryzLkGGDyg=;
-        b=FNsAC8SGp2ecfz8e1ewObW9xZLpPkI7Y1PPlzd5YkfW9eNYSXTdmg/h13dsUVywGV3
-         gDa3mSqXbbHnwjc9d7CJ5oj/4iVn4XACWxHAncYyFEVK9sUWqlY52Ok7FsMiYWU46eto
-         rzWmKtALfYce43Bk2UpwmsSWijTBNbYNYPXuHrHWtSDhCRBbib5IvMSwk9s5GO7hbtTv
-         oiYy/QlS3vsYxMCAlXubRBapTLTAaJuEY5OJ5qRKfskNM6dN2Zh31Wr0zDldzEBFgbwg
-         swVyz7dt/5GgYz7F6/3gkiG3HT/xQpH1Qswug68qVIkkughKnE6VG53zfEAos7+ClpU+
-         ZaLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=p5PMt6kqdwmeLU/6q3QmOcdOLBWY/L6VvryzLkGGDyg=;
-        b=NoHEFuLBeNwgYXvVaGJSE7lMpcqmRMSDI8geggC1klMmn507OyLCAy8J33jFPnOICx
-         JyQexIdurGyN5nuSXJE/2RRTTjO3CkwLsACz+JihbwQDy7FoVcFLeNGq6H6SSsSZll2P
-         6SURwnJGBMMOdN2SVluoTC3Q0uJLFAbeoysHqPFXP2qFnKXopMTHyAcysFSPyGxK//s3
-         1Z5AKUxFGUpREiEyoV/+IXBydzRjPiHMH9KrifzI911S71jmii6w0BqpzjQoqLmJvS6R
-         pPSmkjEt1Y8lRWZD/aHDa+bsM1LW5UvjfFpVVUNQ6CUPTJNs2PDGzjs3EvywLANu001g
-         mZEw==
-X-Gm-Message-State: APjAAAWTD7JOpNvyFp3+NAziz85sw3VQvJTBDaVAs95+3N6TvwxsXB0S
-        jbkKYI8kaU+avX3UfUP8faAxyj2n7WisknhkybXF2ZJt
-X-Google-Smtp-Source: APXvYqxKPc0et4kfwExXMzRUzaSTdrV9USLIJilp67su1p5I7rMCSvEn0kfHAG83jKmIbPQnO4D8e0tB6Vh4axuiQB8=
-X-Received: by 2002:a05:6830:1091:: with SMTP id y17mr25418549oto.296.1552464925854;
- Wed, 13 Mar 2019 01:15:25 -0700 (PDT)
+        id S1726916AbfCMJOB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 05:14:01 -0400
+Received: from mout.gmx.net ([212.227.15.19]:35077 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726130AbfCMJOB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 05:14:01 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MCLx3-1hD6e23MzR-0097RF; Wed, 13
+ Mar 2019 10:13:55 +0100
+Date:   Wed, 13 Mar 2019 10:13:39 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v1 09/11] t: add tests for restore
+In-Reply-To: <20190308101655.9767-10-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903131005180.41@tvgsbejvaqbjf.bet>
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-10-pclouds@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   Moritz Winter <moritz.a.winter@gmail.com>
-Date:   Wed, 13 Mar 2019 09:15:14 +0100
-Message-ID: <CAPrSTy83qh+BtQ=ur-+6p5VXbhMpy0iD2tOAiUP10c5hWwV-tg@mail.gmail.com>
-Subject: Could not access submodule when pulling recursively with git 2.21
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323328-543548457-1552468435=:41"
+X-Provags-ID: V03:K1:t7AIC8wAuBadX/g7zUTzQuIZgxIdXiNQXhOFy9vg82EPhdK7yBG
+ L7e1rFhhZP1K9mx6d6ni5dJbiJ8uIUOMbFCR6FlIe/AeuO+R/KbUMlQHtJ2XrgD1Tb4Nvfc
+ y1JqgLi6K1Nf/ijpiLmE5jh3FRDlKomPU63Rr1lNyPJ4kmJrCyTbRycADfl95hXhpV+doR3
+ BOtG+4iZi/awNB1oSm1YA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:E9zgQlFihE4=:UzONURseWVt5UYvcAcZe2R
+ z5ePD3hk2H5MF4oL5Wd94jOMFa3p0gB5C/dFGJmz8EX2Oevr5DnDtrQDU0fDJwKIHIGIAScMY
+ LMEELAzD77jrdMU3S29u8uWcrMBdjP/JuPPoDGpPqNjyRuw6IUmgVU+IK0Q/eriDibMwe+KWe
+ Q8t8NQLAjYX2A2ByLvtWHoFLG29wb+KjQ43B5zG/bAu8ibCco98w7IZd92qiGz/vk+rhBNLOS
+ Qi5RDznMzDxl6bFMXxH9WkMflMPfU8k0tbRLb0h5T0tf4MhGFWuWmW7WxkaKwjYAWC5Zstb5M
+ 7T4t5MLKUTWmZiGlQ9cSm4u+Yo3Z+5LEziwvRW5NuJRBGkc/CwpI2E6J+JW1iIWbvELSOyREf
+ iJW5HwasgJSuTsJ26AtuKK7PrwhC3LEShvs17I4oVg32Sjcorqgl80L//qRTgwhQ9RHg3fjT9
+ C5Sgjie1Ry0EIb7wddQraL5M2GZjNUZuXEtVhWLT6hyOpMeC0qEGLjGLwcSnJse6wzBIMdwoG
+ gpf2ouFwtRD9eIFKcYGBe30XL0QT+UmWgU6V/QnmE9WkjECGqqzQLT4pwjEi9yLa6MhX6SGgu
+ yaDrphWox0scoTyD7/6Sv9qHH+lkmLdAjwNK22gZCF+BjA2PKlKjIeQrcDRL7w2Z5W5fLu5mI
+ A98dRw8EK5aZdRNJ7GJ3ywcvTYXqoPOZr3660TBrteEKp61uFZ+8eoqITq6SZAodCviU6pnHk
+ C1Z73PxoSP9XLdXEXdWXcYP0aDeLU809tjLRU2oj9Edx4E14zgyNJgHX9zWXvzJe5/9GcZPBW
+ Nx4bYBFyValbRmo1+98um3OEDwIA25MmxKn4CU9eYhevj5y8KiDJfRTDVLNjqVxv+nt600gH/
+ Pqp5BoNAJMjWT4QnTWIv/v+sS8dJtal9sDMUxGmVXriZP8SxnL2CmQ/y0gKUDR0NFgturZvmM
+ hZjVqyW3KjA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I've recently upgraded to git from 2.20.1 to 2.21 and now my projects
-with submodules show a access error when pulling recursively.
+--8323328-543548457-1552468435=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-I have a couple of projects on gitlab.com that use two or more
-submodules. The .gitmodules file is slightly changed for gitlab.com
-compatibility. The paths are relative as described in:
+Hi Duy,
 
-https://docs.gitlab.com/ee/ci/git_submodules.html
+On Fri, 8 Mar 2019, Nguyễn Thái Ngọc Duy wrote:
 
-Before updating git I could pull the submodules recursively within the
-main repository. Now I get a "Could not access submodule 'foo'" error.
+> diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+> new file mode 100755
+> index 0000000000..df91bf54bc
+> --- /dev/null
+> +++ b/t/t2070-restore.sh
+> @@ -0,0 +1,77 @@
+> +#!/bin/sh
+> +
+> +test_description='restore basic functionality'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +	test_commit first &&
+> +	echo first-and-a-half >>first.t &&
+> +	git add first.t &&
+> +	test_commit second &&
+> +	echo one >one &&
+> +	echo two >two &&
+> +	echo untracked >untracked &&
+> +	echo ignored >ignored &&
+> +	echo /ignored >.gitignore &&
+> +	git add one two .gitignore &&
+> +	git update-ref refs/heads/one master
+> +'
+> +
+> +test_expect_success 'restore without pathspec is not ok' '
+> +	test_must_fail git restore &&
+> +	test_must_fail git restore --source=first
+> +'
+> +
+> +test_expect_success 'restore -p without pathspec is fine' '
+> +	echo q >cmd &&
+> +	git restore -p <cmd
+> +'
 
-Example:
+This breaks with NO_PERL builds. See e.g.
 
-$ git -v
-git version 2.20.1
+https://dev.azure.com/gitgitgadget/git/_build/results?buildId=4581
+https://dev.azure.com/gitgitgadget/git/_build/results?buildId=4584
+https://dev.azure.com/git/git/_build/results?buildId=386
 
-$ git pull --recurse-submodules=true
-Fetching submodule 'foo'
-Fetching submodule 'bar'
-Already up to date.
+You need this squashed in:
 
-$ git -v
-git version 2.21.0
+diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+index df91bf54bc06..f4766544c5de 100755
+--- a/t/t2070-restore.sh
++++ b/t/t2070-restore.sh
+@@ -23,7 +23,7 @@ test_expect_success 'restore without pathspec is not ok'
+'
+ 	test_must_fail git restore --source=first
+ '
+ 
+-test_expect_success 'restore -p without pathspec is fine' '
++test_expect_success PERL 'restore -p without pathspec is fine' '
+ 	echo q >cmd &&
+ 	git restore -p <cmd
+ '
 
-$ git pull --recurse-submodules=true
-Fetching submodule 'foo'
-Fetching submodule 'bar'
-Could not access submodule 'foo'
-Could not access submodule 'bar'
 
-This only happens in projects with two or more submodules. A project
-with one submodule does work as expected. Additionally I have a
-password protected ssh key if this is relevant.
+Junio, could you please add that as SQUASH??? on top of
+nd/switch-and-restore to unbreak the CI builds?
 
-$ uname -a
-Linux box 4.19.28-1-MANJARO #1 SMP PREEMPT Sun Mar 10 08:32:42 UTC
-2019 x86_64 GNU/Linux
+Duy, have you thought about making use of the CI builds? You could catch
+those bugs before they hit the Git mailing list...
 
-Is this a regression in git or is there a error on my end/gitlab.com?
-My workaround currently is to downgrade to git v 2.20.
-
-I've already filed a bug with gitlab.com:
-
-https://gitlab.com/gitlab-org/gitlab-ce/issues/58891
-
-Thanks & best regards
-
-Moritz
+Thanks,
+Dscho
+--8323328-543548457-1552468435=:41--
