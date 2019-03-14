@@ -2,138 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14303202BB
-	for <e@80x24.org>; Thu, 14 Mar 2019 03:28:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6884A20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 03:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726571AbfCND2k (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 23:28:40 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35705 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726512AbfCND2j (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 23:28:39 -0400
-Received: by mail-wm1-f68.google.com with SMTP id y15so1269079wma.0
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 20:28:37 -0700 (PDT)
+        id S1726628AbfCND3h (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 23:29:37 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:54127 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726423AbfCND3h (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 23:29:37 -0400
+Received: by mail-it1-f193.google.com with SMTP id x189so2408133itd.3
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 20:29:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=degiJAYQIG3/qtmR38UxadedxmQ5aiEIFCzfL7V+OMM=;
-        b=IpegcXAOGhGvmt4iylKJapqxxB6u3uDgUobblIX1ICS2gabtdMBr7OIeqA8MgEMVCL
-         +N6ZZ/lkLtdJZgsrmfiQb0CZXDpWsjzf7D4IdpZSkrp9I+s3w5kdJvisMWYloR0h92UD
-         vOFZmt79vOvr2Y0ZRAAjxr5055pifYr7SgHv+12eO2bmfHRv0AE7UU8wVltd6e4QQjr9
-         GYMe1ans0Erajg5TTM6EmWzSLyRGJ4Tki7uxgcNiTRXCOuEG0YZRMZXqnbNltvY0MXB6
-         lKfES9AZrN1iRxSE43Yuus5xZtgakrABHIYGsaX2GL1OZeJ8K8bEMcvN831wwxdouo3h
-         gihw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lfqgEH/j1qZ+hlC8qHhrd3SYh6fxjvs4i1sf7oxiL84=;
+        b=pwsRK6mWjkwRygVwR4rK75Y2OkDvppvi/h1WEmM/wN3j4mqQzIGIHkPVV5YGV2TRIY
+         Y8n2ADZJTnI8ig5SrkwP5jZy15TQB+2yh+yu9Fz3l0S8qgm4v9amIlypB508OH91pmN/
+         W2oyKmTtE7IOJ0a3zN55f91jicIzMHk67PD02pcBMzBDjIucNejT5mmTYqaG0zuNIAbf
+         C7DD4EUGW2BcKRRtbmxoqdFIlCkrBySUoUYKo0lrVs6e+2F9cNQaJv2eNgRVCItkLXJs
+         2/jrHMzLJNq4ffpJYSbO4i3HxVPQ1stLoibK+JZT6dC1CIfZRKmTCAY4cLyw/l8scXWf
+         4kUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=degiJAYQIG3/qtmR38UxadedxmQ5aiEIFCzfL7V+OMM=;
-        b=muPK/9o+c66HzFYqcHoQyMp8eaOd4nE/o+ePeKc3bC3cCFCBSZ4DQtVQgD1O1dU2Sm
-         EGxCk/ijA+5X67DDBSmOH9Fi++oh2OP9I7sJYvcOEEUAGO5/0uK8FHM9DQ2Ry9SFRKhy
-         uwJB+BWyem7qm1WBwFkFVSoxAggtDW/qGA778otFeoaSK7umFLMvKr7x6MtaiBYJkxS2
-         S8Zw4RXSxzKWJGpHu/RvfSsI6E3fpBFl1ACMD5Kqi0XEUOvBitXnZHF+csTyETsGnntD
-         h3Vp1GMvYMURXLM6MZevhnOTtUK9yuStuWIjZmXcaa9YUfyueO2cgGLcKX/u5aFwqUNd
-         NpaA==
-X-Gm-Message-State: APjAAAURQfS5oqoZHdpHAev1Qy+GF35+EWI2GMB33iLJx1OK0xUCiRyN
-        oAjRkuKnxf8vA5eM1qfZQBk=
-X-Google-Smtp-Source: APXvYqxT2DkrHkx+0He3oGb4uivZ2qNIHfPU/u2wLjb7N6Mq4gdYj7YSkYtfq1ZOarKQt6LksFdb/w==
-X-Received: by 2002:a1c:eb17:: with SMTP id j23mr807209wmh.86.1552534116422;
-        Wed, 13 Mar 2019 20:28:36 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id t2sm13548806wra.9.2019.03.13.20.28.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Mar 2019 20:28:35 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Luke Diamand <luke@diamand.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 05/11] tests: use 'test_atexit' to stop httpd
-References: <20190313122419.2210-1-szeder.dev@gmail.com>
-        <20190313122419.2210-6-szeder.dev@gmail.com>
-Date:   Thu, 14 Mar 2019 12:28:35 +0900
-In-Reply-To: <20190313122419.2210-6-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Wed, 13 Mar 2019 13:24:13 +0100")
-Message-ID: <xmqqd0mub0d8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lfqgEH/j1qZ+hlC8qHhrd3SYh6fxjvs4i1sf7oxiL84=;
+        b=tUiDP+GNvPEAPo7PGzm88naXq3tJSH11KqcSuM4TqhGRwdP5EV5JCNwRkv618jciAY
+         WEcVx4u2WhyFtigbKgNSu1LeGrKUDPPIdee7fGIQ4+eBsOCGIPlDJ0hjQA7HzzfLORQO
+         g1i99gwhvodxvYTyPV0HZbyb7Vv+4qYzi1+RUWdhgV2DfCJBmEXLB7IwFBFLp/qpQNyh
+         XdAI6GikMoZnjxLPGY53aOZrdHyQPBDP2bG5RvulC7mFIHH0WfQrZDnCLrA9hfhAOuoP
+         tpN+Gj1uuynZEvl4sBrir9mu7DdaECgX3M1R4rWhvdOKT+NOQl3yeNPz0+Fp3QlBpqrW
+         Kk5A==
+X-Gm-Message-State: APjAAAU18uFafawAT4FlarRgMjXklKKjUjwxUs3P2rpLwdS8UCyMcOWw
+        HdLcs0k3cB9ODFs/EiVKO5/Qucuz9d+G0cNtDKE=
+X-Google-Smtp-Source: APXvYqyK4QV0LzQVY3CACL+vRIF3zgFeTfDpv+tSKIEFmrNJESqysiGIYYFzxkfcyX1tdHNLoOuRkWc7qyDIGcGGP6s=
+X-Received: by 2002:a24:7542:: with SMTP id y63mr835744itc.70.1552534175826;
+ Wed, 13 Mar 2019 20:29:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
+ <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
+In-Reply-To: <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 14 Mar 2019 10:29:09 +0700
+Message-ID: <CACsJy8CuNQR7javX7KTC7txivH1OkejCbVJdHGD+XJ-0ftT3ag@mail.gmail.com>
+Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+On Mon, Mar 11, 2019 at 6:16 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> > +-m::
+> > +--merge::
+> > +     If you have local modifications to one or more files that are
+> > +     different between the current branch and the branch to which
+> > +     you are switching, the command refuses to switch branches in
+> > +     order to preserve your modifications in context.  However,
+> > +     with this option, a three-way merge between the current
+> > +     branch, your working tree contents, and the new branch is
+> > +     done, and you will be on the new branch.
+>
+> I was wondering what people felt about making this the default for the
+> new command. If I'm carrying changes over to the new branch then I want
+> them to be merged in, it's annoying to have them carried over most of
+> the time but then sometimes have the checkout fail without specifying
+> --merge.
 
->  t/lib-git-svn.sh                              | 5 -----
->  t/lib-httpd.sh                                | 6 +-----
->  t/t0410-partial-clone.sh                      | 2 --
->  t/t5500-fetch-pack.sh                         | 3 ---
->  t/t5510-fetch.sh                              | 2 --
->  t/t5537-fetch-shallow.sh                      | 2 --
->  t/t5539-fetch-http-shallow.sh                 | 1 -
->  t/t5540-http-push-webdav.sh                   | 2 --
->  t/t5541-http-push-smart.sh                    | 1 -
->  t/t5542-push-http-shallow.sh                  | 1 -
->  t/t5545-push-options.sh                       | 2 --
->  t/t5550-http-fetch-dumb.sh                    | 1 -
->  t/t5551-http-fetch-smart.sh                   | 1 -
->  t/t5561-http-backend.sh                       | 1 -
->  t/t5581-http-curl-verbose.sh                  | 2 --
->  t/t5601-clone.sh                              | 2 --
->  t/t5616-partial-clone.sh                      | 2 --
->  t/t5700-protocol-v1.sh                        | 2 --
->  t/t5702-protocol-v2.sh                        | 2 --
->  t/t5703-upload-pack-ref-in-want.sh            | 2 --
->  t/t5812-proto-disable-http.sh                 | 1 -
->  t/t9115-git-svn-dcommit-funky-renames.sh      | 2 --
->  t/t9118-git-svn-funky-branch-names.sh         | 2 --
->  t/t9120-git-svn-clone-with-percent-escapes.sh | 2 --
->  t/t9142-git-svn-shallow-clone.sh              | 2 --
+If my worktree has local changes and I accidentally switch to a
+different branch, I could switch back without losing any local changes
+and the tree I have is exactly what I had before the switch. Is this
+still true if -m is made default?
 
-I see most of these changes are removal of stop_httpd because it is
-done as part of start_httpd() to arrange it to be called at exit.
-
-But ...
-
-> @@ -176,7 +175,7 @@ prepare_httpd() {
->  start_httpd() {
->  	prepare_httpd >&3 2>&4
->  
-> -	trap 'code=$?; stop_httpd; (exit $code); die' EXIT
-> +	test_atexit stop_httpd
->  
->  	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
->  		-f "$TEST_PATH/apache.conf" $HTTPD_PARA \
-> @@ -184,15 +183,12 @@ start_httpd() {
->  		>&3 2>&4
->  	if test $? -ne 0
->  	then
-> -		trap 'die' EXIT
->  		cat "$HTTPD_ROOT_PATH"/error.log >&4 2>/dev/null
->  		test_skip_or_die $GIT_TEST_HTTPD "web server setup failed"
->  	fi
->  }
->  
->  stop_httpd() {
-> -	trap 'die' EXIT
-> -
->  	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
->  		-f "$TEST_PATH/apache.conf" $HTTPD_PARA -k stop
->  }
-
-... I see we lost many "trap 'die' EXIT" in the orignal.  Is that
-something we want to lose as part of this commit?  It does not make
-sense, at least to me, to add a "test_atexit die" and I am mostly
-wondering what these traps were trying to do in the original.
-
+I think sometimes a 3-way merge creates marker conflicts in file, and
+this does not look easy to reverse when switching back. If it's true
+and we can detect it, we can still abort this case (i.e. requiring -m
+to continue) while allowing succesful 3-way merges by default. But are
+successful 3-way merges reversible?
+-- 
+Duy
