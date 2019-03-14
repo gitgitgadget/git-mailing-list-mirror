@@ -2,129 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE80820248
-	for <e@80x24.org>; Thu, 14 Mar 2019 05:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2537E2032D
+	for <e@80x24.org>; Thu, 14 Mar 2019 06:07:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbfCNF7d (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 01:59:33 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:34977 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbfCNF7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 01:59:33 -0400
-Received: by mail-vs1-f65.google.com with SMTP id e1so1537844vsp.2
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 22:59:32 -0700 (PDT)
+        id S1726856AbfCNGHr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 02:07:47 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37064 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726792AbfCNGHq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 02:07:46 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y15so4463521wro.4
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 23:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vVkinNw6ipZmUxPLyVbO7IgGh+jCWHH+m1k/CUi7rh8=;
-        b=pHfxJdouVCSOlw6HONqvS5XpnH1P0uIA8VZOrdqUOucbh4O1LBFxubsplIpXIUirv7
-         BPD2wmqIH9gREVRnR2ZraA7TaGnxUAxyLFzMUOPpi237ewINrUrNY4CkhUPL/CzSiec3
-         dz5IlUX5qBpJTYlmmv1FwaKA0w3I2j9InyI9Z4ODteg4c6Kj/niACV6vINAnGfdRzUNA
-         FF4+4zGKW5C/5KdyfCgprMFgerCECLMr4BMooJrm4U+n5EfHLQ6Vd5U6M3UL1HnQUBiI
-         01+0qDe+8aBgfKrMHtISgu7ca2esmUO1fH4SFqVnMN0ITFY92civQa4T2WkGAHqWFDOE
-         p8KA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=5ggkt2n/Q8hFENdjzvslZVZVg+punIhFW89GMuj1YaE=;
+        b=glZjAaxu0gZIoyzIXDqAuGW45s/y/kgq4RFHlfjANVGtyQvAbjEvvVVGi2hwkNGW0F
+         vZUg1KFqk9l4oUDrz/N9LJ5aR1p070tPLlXE7ZgmYiWxHwPg3kxmmgWMdIrO5cLhF5f+
+         fq7U9q7ZTI4Ptt2Xrn8P0Ls/LdCfxtAsRvAQGqX15EOlAVSobKn1kRaq+sgdPmsGN3SF
+         2GkhIs2wcm0UadC+vIjNPm1FKSyz8pcACKbCvKRNpx5oSGnIpAhsrFZFpP4481DOx5mz
+         00C9NObbd/QQHswnnth1u1VyUqpVvPTnoDQFSZaNj3iOAXght29aHedx0APzcs+0GZqZ
+         o9Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vVkinNw6ipZmUxPLyVbO7IgGh+jCWHH+m1k/CUi7rh8=;
-        b=W0FDcCML4f393kdq7bEeaB36v3QhJTvZLZ3j75zyIRwb+DS1EC64FwId12r0B6X3k0
-         HAM6QTMdLeAWg5Mtncx8z8XNBlKt1DNq1PRQO3m3CFdmh87ivj910nCFamN9S23lnC9f
-         pmjESqJoBR5BDoywXIEr3yxjQmCQNImrkUFFGBs+wTcCOAQlzojJBlnDorW4ofLQhX5M
-         B/bgPF/qHcHzPNSuE1kjduxGjuqVDLrielZzf9w4yLFdztsCE+zE7OeBkXvK9RrZg42V
-         DUGLwinPST0M+YRQR3Ytiy0RiZnMsuzv7cPUDC+vLNK25oC4/iWIZZpfdVJi3TlA7/NU
-         XFFw==
-X-Gm-Message-State: APjAAAVIxP7jFozqjvU7Y37r6ik8sylA/E8/Pub4aV50K1xbYqu+wRqe
-        riE+TqsT/FhQDzqEzUaRayhmaP3QH51rJAH1UxI=
-X-Google-Smtp-Source: APXvYqynJ+BaZUFirqOUPLYvSVQHcUxTuRVdEqYiVI12vGt0YCQHlOPjXbYHvEA43wz7Ct4/aUpjDwXk7G/Zi+QNJAA=
-X-Received: by 2002:a67:f8cc:: with SMTP id c12mr2321435vsp.136.1552543171753;
- Wed, 13 Mar 2019 22:59:31 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=5ggkt2n/Q8hFENdjzvslZVZVg+punIhFW89GMuj1YaE=;
+        b=esNdxQ2xzsrHXVxiJv9dS9COfHOcqZ7JQIIsFqhh5xd1L1tTC49o5VuNi7vlHXx7eP
+         hl1qKNG0yvvPSsrGNBjpONOU106jbH1+6po1E3rM7lP5skPBrt9xcbGMZ4bQXXXhSz/V
+         s3b5c2BDEckzRXsdq0FBUDEshnLp3FhUaBgkd/6VzTbrKfFOEwIGnh7p758mDqbsaqD+
+         rGZOSpqwOzyL5ObYbrbBgbSFpypTZiq9uhCCT8pQjm5tSQQzIc1NxefBQESAhENOkpqS
+         IimtDUWJGuz1WIOqeOL3tj325iPcT6H/fam2NV2ymFtfqtwzoGc/ibET1V2aClnn4TUZ
+         f0VA==
+X-Gm-Message-State: APjAAAUgz3v2CFDgSehEiDB9cpQOOUfK13G6NXJBzjpe+VYYRRPF48pS
+        W/zJIX0whsjrf1sz+xVpyrPvtb2XkmE=
+X-Google-Smtp-Source: APXvYqxHUb/sevlpo0Lq49dJ4UTXo7JUBGrJ7IrOq+/n2FQtSTnwa+BSwpwBaiVstaG2wH8wl7aiUQ==
+X-Received: by 2002:a5d:464e:: with SMTP id j14mr12698324wrs.109.1552543664631;
+        Wed, 13 Mar 2019 23:07:44 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id a204sm724666wmf.12.2019.03.13.23.07.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Mar 2019 23:07:44 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        git@jeffhostetler.com
+Subject: Re: [PATCH 2/2] trace2: randomize/timestamp trace2 targets
+References: <cover.1552519463.git.steadmon@google.com>
+        <17ec237ba7498251a3ff64eec259d6f61c8f5ccc.1552519463.git.steadmon@google.com>
+        <20190314001600.GC31968@sigill.intra.peff.net>
+Date:   Thu, 14 Mar 2019 15:07:43 +0900
+In-Reply-To: <20190314001600.GC31968@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 13 Mar 2019 20:16:01 -0400")
+Message-ID: <xmqqwol27zv4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
- <CACsJy8CuNQR7javX7KTC7txivH1OkejCbVJdHGD+XJ-0ftT3ag@mail.gmail.com>
-In-Reply-To: <CACsJy8CuNQR7javX7KTC7txivH1OkejCbVJdHGD+XJ-0ftT3ag@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 13 Mar 2019 22:59:20 -0700
-Message-ID: <CABPp-BHB3c0XqS57Do8=YFtbVyBEe26kbJtgDxWAaWAMzsgdoA@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 13, 2019 at 8:29 PM Duy Nguyen <pclouds@gmail.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> This definitely seems useful. Could we drop the final "%" and make it
+> either a single-character "%t" or "%(iso8601)" to match our other
+> formatting strings? There's no _technical_ reason to do that, but it
+> just seems like there's not much point in being unnecessarily
+> inconsistent.
+
+I do agree that %TOKEN% is not among the patterns we've used before,
+and I fully anticipated that it would attract paintbrushes when the
+proposal hits the public list ;-)
+
+A big question is what we want to be consisten with, though.  From
+the readability point-of-view, for-each-ref language %(token) is
+easier to read and extend.  A secondary question is that there
+likely are things other than the timestamp of the time process
+started that may want to be interpolated, so we may want to pick
+some useful vocabulary upfront.  If we can declare interpolation
+will be done ONLY for timestamps, as Ævar suggests, taking strftime
+pattern directly from the caller may be sufficiently simple to
+explain and useful, but I am not sure "only for timestamps" is a
+limitation we would want to adopt this early in the design process.
+
+> Doing this automatically for directories feels kind of magical. I'd have
+> expected it to be just another placeholder. And in fact, I'd think using
+> the process id as a placeholder would be pretty common. Between
+> timestamp and pid, that's generally unique (though I'm not opposed to
+> the random placeholder if somebody really wants to be thorough).
 >
-> On Mon, Mar 11, 2019 at 6:16 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> > > +-m::
-> > > +--merge::
-> > > +     If you have local modifications to one or more files that are
-> > > +     different between the current branch and the branch to which
-> > > +     you are switching, the command refuses to switch branches in
-> > > +     order to preserve your modifications in context.  However,
-> > > +     with this option, a three-way merge between the current
-> > > +     branch, your working tree contents, and the new branch is
-> > > +     done, and you will be on the new branch.
-> >
-> > I was wondering what people felt about making this the default for the
-> > new command. If I'm carrying changes over to the new branch then I want
-> > them to be merged in, it's annoying to have them carried over most of
-> > the time but then sometimes have the checkout fail without specifying
-> > --merge.
->
-> If my worktree has local changes and I accidentally switch to a
-> different branch, I could switch back without losing any local changes
-> and the tree I have is exactly what I had before the switch. Is this
-> still true if -m is made default?
->
-> I think sometimes a 3-way merge creates marker conflicts in file, and
-> this does not look easy to reverse when switching back. If it's true
-> and we can detect it, we can still abort this case (i.e. requiring -m
+> That leaves the door open for being able to append to or overwrite
+> existing trace files later, if we want to make that a possibility.
 
-You cannot yet do this with merge_recursive; it writes conflicts to
-the worktree as it goes and doesn't tell you whether the merge was
-successful or had conflicts until its done.  So this would be very
-dangerous.  We'd first need a way to do an in-memory merge that
-doesn't touch the working tree or index and which gives you the
-opportunity to check whether that worked before proceeding to write
-out any updates.  That is work I plan to do (for other reasons), but
-not in progress currently.
-
-> to continue) while allowing succesful 3-way merges by default. But are
-> successful 3-way merges reversible?
-
-Hmm, interesting.  So, switching from branch A to B, you start with
-local changes on top of A that could represent a virtual commit C.
-So, you three-way merge C & B using A as the base.  It's clean, so we
-have a new endpoint, call it D.  Switching back to A with the --merge
-flag would mean a three-way merge of D & A using B as the base.
-
-But it might be easier if I re-labelled all of these with different
-terms. Let's say we squash all changes from A to B into a single
-commit on top of A that we call commit B.  Check out C (a commit
-representing your local changes on top of A), and cherry-pick B; that
-will three-way merge C & B using A as the base.  It's clean, so we
-have a new commit, call it D.  Now we tell git to revert B, which will
-do a three-way merge of D (current HEAD) & A (parent of B), using B as
-the base.  So, essentially, your question about reversibility boils
-down to: if you can cleanly cherry-pick a commit to your current
-branch, can you then immediately revert that same commit on top to
-return to where you were before?
-
-(Off the cuff, I _think_ the answer to that is yes due to the
-assumption that the cherry-pick was without conflicts, but I'm not
-immediately sure.)
+Thanks.
