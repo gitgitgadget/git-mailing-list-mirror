@@ -2,79 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21D0320248
-	for <e@80x24.org>; Thu, 14 Mar 2019 19:55:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D261520248
+	for <e@80x24.org>; Thu, 14 Mar 2019 20:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727660AbfCNTzn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 15:55:43 -0400
-Received: from mout.gmx.net ([212.227.15.15]:53043 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726890AbfCNTzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 15:55:43 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEoGY-1hEvle2Ao6-00FzfV; Thu, 14
- Mar 2019 20:55:32 +0100
-Date:   Thu, 14 Mar 2019 20:55:16 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1727513AbfCNUbd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 16:31:33 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38635 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727246AbfCNUbd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 16:31:33 -0400
+Received: by mail-ed1-f66.google.com with SMTP id e10so1877067edy.5
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 13:31:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=OUR/x116/h+8QDzm6bQ0YcVEpA2zeWNgeWS1uOkSLTc=;
+        b=EgSXmp1xrqdr3wfKNmRcOxJG3+5xejtqWbrM/RJQqjBm7LMTDQt76Z5+L8O1bXyKUr
+         L2VUwGx/lWHaEAFZQoqUIhdHV0qqsYzB3K1iX0mItxuzJmEQ9Lp92Z2q7gDIZrF+WjM4
+         2ckOT76d1yIvBJ9VLNyJwWT5Wb81joBiPHfQMyogPyrGMvug/sRJYiqYr56PeuPI3ziN
+         oB9Jredvdrlb+aWXi3m5cmnP1dOyI5tO4gjx7i72kPKY0U9w+/GXWimAlSuY19zYQ1VI
+         JBoAQzubHAdtssa94B8h3TKjxncM3W/7GklaJsssRM/2FTuk7MaIOB5dtae0fDKIyUj+
+         w0Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=OUR/x116/h+8QDzm6bQ0YcVEpA2zeWNgeWS1uOkSLTc=;
+        b=qlIfOq4LeBojOvrLMUZ0Xhzoj+l8lSJ4RJ1oXhOCCV77udknKWR/vhPLmpmYX8lWt/
+         mVSrsS0flvJDX7B0MXBFe9MXRpHFxe34XLsPavHQQhDk7RblxN/o5p2BY9y9tmRCv9he
+         qBOhPuycb+waE8SkLSUjL3g1gVh3R3sr6z1YYG6HLwsyIPIbUKQ6mDTpUNTxTqBEgZQp
+         oe/GvL6jfQXHmk2zUv8lFLhSN22JH+1mfkjqwFDi0aaEF3AxiXI40nT1JwOZTaMj/eG5
+         bQc3vMroX2ZeGDq2qtXf3BqpLnc1OFFAXAd3K3fOW8Q3v+CektJWbNag1+13p9O6hBn6
+         9Z/g==
+X-Gm-Message-State: APjAAAXmuFj95WxXoZp0bXyVsvf8CQQ0GdH4EB2lvyJAZNKPec8T4lVN
+        7lNF5lmQK0cUTi6fS2r2RsE=
+X-Google-Smtp-Source: APXvYqwKZBmM2eVHrwPq2d8x9QcWk3UCEIjXq/xArF9NJ5SgpV3cHekAdbb2uG6+L4Vk3mFm5mtVEQ==
+X-Received: by 2002:a17:906:6d50:: with SMTP id a16mr34782553ejt.170.1552595491258;
+        Thu, 14 Mar 2019 13:31:31 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id b8sm38315edt.34.2019.03.14.13.31.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 14 Mar 2019 13:31:30 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 4/4] get_oid(): when an object was not found, try
- harder
-In-Reply-To: <20190314185758.GB26250@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1903142054490.41@tvgsbejvaqbjf.bet>
-References: <pull.161.git.gitgitgadget@gmail.com> <994446236d05d9d014e12a5102bcf9be222e3b57.1552472189.git.gitgitgadget@gmail.com> <xmqqa7hyckfm.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1903141410360.41@tvgsbejvaqbjf.bet>
- <20190314185758.GB26250@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: straw poll: git merge conference location
+References: <20190313205539.GA30425@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190313205539.GA30425@sigill.intra.peff.net>
+Date:   Thu, 14 Mar 2019 21:31:29 +0100
+Message-ID: <87bm2db3ku.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:i7a7bp8eWhPNnfI3arWA36YTyDh2XI1rx4ZyVNp92TjtCiFfFio
- YY9DG2aUzoCgOPEe7n0/Kp4DbE5H3DbVQrbTblLLng/joAdtsP1clCdU0uVhoxNEBG7/wDV
- t7Gb12wtnyMB7YVyNmmD5fB5tY+blsy5HMhVs2E1xarpYuoF+ZIaS3ubsUVkDTp0GuH/HPt
- zBJ9qx7HQtFysKe7JRd0Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:c3afOGRPMbo=:hjlGV+l62R0Xgh5LYCBfr7
- fNPCZWL15/NxakoSURbgzzjKPTeERhGysHHu8fAD+7yTe8xyW44IGf7Dqnzf92aoCRL7e8yMP
- 0PqG+Z1VHOBdbPtKYru13Gr+U5vXpKf6r73TySFHamqY4O+UvxFXQ8PQSzYoPBD+8a1WjrhNp
- INMwc23nbI4eAHoY+TLj69XMzFknCAGbe5KwmRbMDcnb22xVy+9FC/LRu7AzEkbOr5k8HmlKk
- 4s4SRTuSGZIMMyqcO7/11GZzjG1MFHhPQGh4luokjb0PHYYSmwSMsWkDuVHn0VXoqrzg5mM+8
- 7+bNFxYxAkHTHsyDnmniYkSM3bv82//b+83WGOpvqmf9xU7wskZ+a0pZZDWffPfBq74rrKC2o
- Ybtdx45ezN5FrFdfmjvv6oD4sHdMfIeK8WkKyHci8nHTtiNo4/c31reZw8KDP6gxF4XM0EGZm
- +ly4WaAW3K5LehhPr0ynjs3PmqSQhpEDUhZwW12+F2ME5BdCp1OH0z/J1ne5Qt0opoU64+R5y
- lAbZvpUbJYr8i1lFKzX06azsPvrxnjKbiMJCPuv8z80L4fzh6tb8odv0nUtwxac8hejJjwC02
- qDFOok8fN5SDd1CukvjajJ6U+Jw09u2OYw7tX/+u4nc3Ozmpr3fotH3RNphUsu5Aucuw09QMk
- W7ged/wsAGh5xR9I65cr/AmHV1NhONOeu5k5d+ZcpZHOeINSu68hA+QNReJgW0Vsi71QBbNn5
- lB1qYl4HnEBUpZvLltRs0UZf18DnLFwJzbTO2b76ULY+utW1/smEs/zVAAKyFz98MNidhVjv5
- L/EJCCY3RuD6sPdhwP5CdAB455dZVR8BYHy6KhoTDpZB4UVjniaInt8s/wFYzmff8yZBjjlZm
- EdCqqt1UAHHMMSpk8ESMJh+LC0kEGPzmM4YEex4/r5/yxT1GmCENhR0Iber6mjbsBVtcOL4wU
- 7PLseyOWrdg==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
 
-On Thu, 14 Mar 2019, Jeff King wrote:
+On Wed, Mar 13 2019, Jeff King wrote:
 
-> On Thu, Mar 14, 2019 at 02:17:18PM +0100, Johannes Schindelin wrote:
-> 
-> > >  2. is there a way to cleanly avoid the three-line duplicate?
-> > [...]
-> > Peff tried with a function, but I think that this would actually be a
-> > really appropriate occasion for a well-placed `goto`:
-> 
-> I worried that a goto would be too confusing/ugly. But I am OK with it
-> if you are.
+> I took an informal poll at the last contributor summit in Brussels, but
+> that obviously has some bias. So I'll ask here: do you have a location
+> preference for a Git Merge conference (and associated contributor
+> summit) next March?
+>
+> We're looking at doing it in North America, but there are two specific
+> questions:
+>
+>   - is there preference between East Coast vs West Coast?
+>
+>   - preferences between Canada and US?
+>
+> There's no commitment, but please only share your opinion if it might
+> actually impact your decision (i.e., if you might actually attend the
+> contribu summit). Feel free to email me off-list if you don't want to
+> start a flamewar about countries or coasts. :)
+>
+> There's also been discussion about doing something (possibly in North
+> America) in the summer or fall of this year, but as far as I know there
+> hasn't been any planning so far.
 
-I hope that after reading the patch, you will agree with me that it is not
-too confusing/ugly... ;-)
+This is going off-topic, but I'd be curious if splitting it up from Git
+Merge in general is an option. Presumably the hypothetical event this
+summer could be an experiment for that.
 
-Ciao,
-Dscho
+Personally I'd prefer to have a 2 day contributor summit stretching into
+some hackathon to a 2nd day of talks for which I think most of us are
+not the target audience. But maybe that's just me.
+
+Once it's not a gigantic event requiring a gigantic conference venue
+there's a lot more options for locations.
+
+We'd just need something close to an international airport with
+acceptable accommodation space for max 30-40 people. This'll also help
+people who need to fly into NA stay under their respective travel
+budgets, hotels in NYC or SF are going to cost a lot more than in some
+small town outside a big airport. Something with more nature than
+concrete would be nice.
+
+But really, is Git Merge going to change its location on our whims? I
+didn't realize we were that important :)
+
+Maybe we can compromise on this whole ongoing NA v.s. Europe debate and
+meet in Iceland :)
+
+In Brussels I suggested in jest that we hold it in Junio's back
+yard. The part that I'm serious about is that to the extent I have a
+location preference it's that we warp it towards core contributors who
+haven't been coming to these things, but otherwise would if the location
+was different (no idea if that's the case in Junio's case...).
