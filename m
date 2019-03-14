@@ -2,132 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBF0720248
-	for <e@80x24.org>; Thu, 14 Mar 2019 15:19:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F65620248
+	for <e@80x24.org>; Thu, 14 Mar 2019 15:21:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726612AbfCNPTm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 11:19:42 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45633 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726539AbfCNPTm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 11:19:42 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h99so6267300wrh.12
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 08:19:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=24WaLeeTDTfFQ7fvO68Sgen7qR+8k6HhkU499ef2MS8=;
-        b=KwD8MXKaMGhi9kblOgUgrWb4O7K6CN4dKh79lm9WyTDmvKa241vSUWrufZV57VZgkN
-         /SQvhCLqBH1vtZLD4PY87snIrh/4KSbnQPPhO9/Xy4+s9CdaYhoSm2ksSluW16Wh/hnz
-         urdQOsOrcwXOUbj0Kr+GbshG+kBEPugMTguDWlGQwSCWki/ARQAYzNv59WQ2NeQYwo/h
-         2hOy8Q1jIVmxAYmUOksyrbyrfkU7CSTYYfaEVz4Y4M1EEHX0zPPnRwrXf5Rms+cBUYDM
-         kJ5BXqCJdk5EmsgtMuAKo58zvkmtDHc9BJnfVSL0G+4Ud1WFJhcXgnRDTn8/Ce5OGGvK
-         EF4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=24WaLeeTDTfFQ7fvO68Sgen7qR+8k6HhkU499ef2MS8=;
-        b=MfDi850doPIwymMcYUrjLrxdJcRMaLK8IyfEzSKcICpf3yzkXxsZtHVjOnd8QAa/7W
-         H45fLHI1nKMym9q6jU5kLDDTrT3ya8caxef+iQG2z8q4s3KKKHWBCRCO/cY11HiUo+i0
-         x698Jxa781pk/cbYK4WqYZ0RyeQuFgxW8DfdkNWjDBHua1Yc9FuL7P0QI5IEF2g3U2cP
-         8kvXbJ+RJP+1YVoa70AZ1DwEEQCRJhYU2kNXKqPyrJoie2SSP5eOFGB7eIpsjBqHnHyn
-         XiZVk7lkXd3luOj8dkxehJq4uUzsmbPRAJRFIAhCdcrgw05t8IOjPLzQDRmBlUXkdvca
-         z0IQ==
-X-Gm-Message-State: APjAAAWSriO/MPpmCBMg7+Jo2TmjFvQ1f7Yqu5sOt3mPbNYsRdUYsiHv
-        DJy+p2gNmPjCM/TE68X7qdU=
-X-Google-Smtp-Source: APXvYqx2a/Z/XglXxAqkVWPaS8ZTjRp3pGNcYUs8ba9dedd8nT2pr5gwPf/dQPJXYfFrcTYOKrSg5w==
-X-Received: by 2002:adf:f343:: with SMTP id e3mr30394258wrp.205.1552576780366;
-        Thu, 14 Mar 2019 08:19:40 -0700 (PDT)
-Received: from szeder.dev (x4d0c0ea6.dyn.telefonica.de. [77.12.14.166])
-        by smtp.gmail.com with ESMTPSA id z10sm2325718wml.39.2019.03.14.08.19.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Mar 2019 08:19:39 -0700 (PDT)
-Date:   Thu, 14 Mar 2019 16:19:37 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Luke Diamand <luke@diamand.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 05/11] tests: use 'test_atexit' to stop httpd
-Message-ID: <20190314151937.GG28939@szeder.dev>
-References: <20190313122419.2210-1-szeder.dev@gmail.com>
- <20190313122419.2210-6-szeder.dev@gmail.com>
- <xmqqd0mub0d8.fsf@gitster-ct.c.googlers.com>
+        id S1726655AbfCNPVK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 11:21:10 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51685 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726360AbfCNPVJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 11:21:09 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEXHd-1hFgRS0Fvl-00FiXR; Thu, 14
+ Mar 2019 16:21:03 +0100
+Date:   Thu, 14 Mar 2019 16:20:46 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Joel Teichroeb <joel@teichroeb.net>
+Subject: Re: regression in new built-in stash + fsmonitor (was Re: [PATCH
+ v13 11/27] stash: convert apply to builtin)
+In-Reply-To: <87ftrpbnkg.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903141600020.41@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> <20190225231631.30507-1-t.gummerer@gmail.com> <20190225231631.30507-12-t.gummerer@gmail.com> <87ftrpbnkg.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqd0mub0d8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: multipart/mixed; boundary="8323328-547523389-1552576863=:41"
+X-Provags-ID: V03:K1:SrDz3YfFhNfRM7qcy/tMSit8TLbh/Lruaz9s0CzZVLAL/URBuf2
+ kQWz1OrJ35Wb8Oy+g/2SFBcDEZKaSDuKNY0393xQ5m2SzxApXNRncABwYXBfsfTuvEdlCh6
+ 5TGmaCfYVNlszvnTBiG8sa2gQ6CGk/5cwgfbSkndlD6ul4LeljWH613rgFF6H+RXt6plOEw
+ Z1AO3NKOpQQnU/KUqW9cg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0sh+8+/quKE=:4WtRSh/x3+wJ4FFDcXyDm0
+ YR6rT8QC4FA1GH+O5QQniDsiTbTQDR1hEn6JQ5Ze2dMD/qc8nNk41bhBcI0OKjmSwSSkMqwC5
+ eqz2XaN+uaRuW53oz18mRKVXN4j9uHEg4479POBpSltqeuUdc/NHAiEEGZkJ/Pk0aXYzxvcLI
+ zkMyz/roph9nO3UoH6k8hz/7ToOeOlgs0lya7irvIlxKPfgo249ubZmZMdJ84wxnvqRX+vBbf
+ WhCUoATSF1W7mCCyqAiLszcq82oH7UwSlXAthg//PexpOQ6/Y5XgyEPieZ4Pgt+o7K6QhpKgY
+ sc84a/KzKWxyreyawTgn+Ltijf84+kRj4lz0NRag4a8sPiZ98ABKzEj6eLQK3dFyEW7ZhWDDQ
+ gQL7qPP9AUc4e7f74NShEMd/ngOqqokqCA+MH0X/zUtyF2eCg3THuiQ0OftXL951DgKdt4JH4
+ zEpF8EWpUsy4dHGGRm9UCLk2TstBgkEenhKpAyErDEC8DcoYgVvcwyuJ4OG7TWlCAqhr9dawj
+ ptek2d6dZXqw9B1ILofbqSEuIZVMUtZH9kjbS58Za4fvN0lI8WNiXCEkXPpIZq+ZU8PkBNZ25
+ HlPflhIJ+MnIbtGrPxjOQykhkyIV5p2J7+om3VUF3XOnkU920PsjvUlOZbbxUt1nZG4bJ+H+Y
+ wt9VtFdnyUWEslPxM6o6O5lLw7XpD0kO/adFxWfePOLUewBBlXJlxq5vA6yEdpuN/TCpVxEyO
+ 92VHcDnw5jsoFwFHCFggtfXy8N8XlV2f6XoHc5VngZOzFGynT6iM5C4xI1944Ftnc5dt7tywJ
+ +MIBeCvxBD6k/MFfrQWJmpwJabXh3rXDAwHcNsB8HI8WvcvO7dSRL7SKbxNFQqcmj5XpXebDh
+ N2GJBCPbt4fXp+CIEbAGpGnXbz+dXbGTS8aZLiSm0VywCdIP8SrUpKyakJ8ztYh6t6042uyYi
+ v7tOvEjHbXg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 12:28:35PM +0900, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> I see most of these changes are removal of stop_httpd because it is
-> done as part of start_httpd() to arrange it to be called at exit.
+--8323328-547523389-1552576863=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi Ævar,
+
+On Thu, 14 Mar 2019, Ævar Arnfjörð Bjarmason wrote:
+
+> On Tue, Feb 26 2019, Thomas Gummerer wrote:
 > 
-> But ...
+> > From: Joel Teichroeb <joel@teichroeb.net>
+> >
+> > Add a builtin helper for performing stash commands. Converting
+> > all at once proved hard to review, so starting with just apply
+> > lets conversion get started without the other commands being
+> > finished.
+> >
+> > The helper is being implemented as a drop in replacement for
+> > stash so that when it is complete it can simply be renamed and
+> > the shell script deleted.
+> >
+> > Delete the contents of the apply_stash shell function and replace
+> > it with a call to stash--helper apply until pop is also
+> > converted.
 > 
-> > @@ -176,7 +175,7 @@ prepare_httpd() {
-> >  start_httpd() {
-> >  	prepare_httpd >&3 2>&4
-> >  
-> > -	trap 'code=$?; stop_httpd; (exit $code); die' EXIT
-> > +	test_atexit stop_httpd
-> >  
-> >  	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
-> >  		-f "$TEST_PATH/apache.conf" $HTTPD_PARA \
-> > @@ -184,15 +183,12 @@ start_httpd() {
-> >  		>&3 2>&4
-> >  	if test $? -ne 0
-> >  	then
-> > -		trap 'die' EXIT
-> >  		cat "$HTTPD_ROOT_PATH"/error.log >&4 2>/dev/null
-> >  		test_skip_or_die $GIT_TEST_HTTPD "web server setup failed"
-> >  	fi
-> >  }
-> >  
-> >  stop_httpd() {
-> > -	trap 'die' EXIT
-> > -
-> >  	"$LIB_HTTPD_PATH" -d "$HTTPD_ROOT_PATH" \
-> >  		-f "$TEST_PATH/apache.conf" $HTTPD_PARA -k stop
-> >  }
+> This
 > 
-> ... I see we lost many "trap 'die' EXIT" in the orignal.  Is that
-> something we want to lose as part of this commit?  It does not make
-> sense, at least to me, to add a "test_atexit die" and I am mostly
-> wondering what these traps were trying to do in the original.
+>     GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all ./t3420-rebase-autostash.sh
+> 
+> Now fails, which bisects to 8a0fc8d19d ("stash: convert apply to
+> builtin", 2019-02-25).
+> 
+> Tested on both a CentOS 6 & modern Debian testing machine:
+> 
+>     + git rebase -i --autostash HEAD^
+>     Created autostash: 5cd734b
+>     HEAD is now at 0c4d2f1 third commit
+>     hint: Waiting for your editor to close the file...
+>     error: There was a problem with the editor '"$FAKE_EDITOR"'.
+>     Applied autostash.
+>     + exit_code=1
+>     + test 1 -eq 0
+>     + test_match_signal 13 1
+>     + test 1 = 141
+>     + test 1 = 269
+>     + return 1
+>     + test 1 -gt 129
+>     + test 1 -eq 127
+>     + test 1 -eq 126
+>     + return 0
+>     + rm -f abort-editor.sh
+>     + echo conflicting-content
+>     + test_cmp expected file0
+>     + diff -u expected file0
+>     --- expected    2019-03-14 13:19:08.212215263 +0000
+>     +++ file0       2019-03-14 13:19:08.196215250 +0000
+>     @@ -1 +1 @@
+>     -conflicting-content
+>     +uncommitted-content
+>     error: last command exited with $?=1
+>     not ok 36 - autostash is saved on editor failure with conflict
+> 
+> Are you able to reproduce this? And if so I suggest running the test
+> suite with some of the other GIT_TEST_* modes documented in
+> t/README. Maybe it'll turn up something else...
 
-It restored our test framework's default EXIT trap, because without it
-'stop_httpd' would have been invoked after 'test_done' as well.  While
-invoking it twice is probably not that big of a deal (though arguably
-not the cleanest solution), invoking it after 'test_done' is
-definitely bad, because at that point the trash directory and thus
-$HTTPD_ROOT_PATH has already been removed, resulting in an ugly error:
+Yep, totally can reproduce it :-(
 
-  $ ./t5561-http-backend.sh
-  <....>
-  ok 14 - server request log matches test results
-  # passed all 14 test(s)
-  1..14
-  apache2: Syntax error on line 11 of /home/szeder/src/git/t/lib-httpd/apache.conf: Cannot load modules/mod_alias.so into server: /home/szeder/src/git/t/trash directory.t5561-http-backend/httpd/modules/mod_alias.so: cannot open shared object file: No such file or directory
-
-'test_atexit' doesn't overwrite the test frameowork's default EXIT
-trap, so we don't have to restore anything.
-
+I'll try to investigate a bit,
+Dscho
+--8323328-547523389-1552576863=:41--
