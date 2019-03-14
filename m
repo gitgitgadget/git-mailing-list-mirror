@@ -2,95 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAFAD20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 03:49:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B11F20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 03:49:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726797AbfCNDti (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 23:49:38 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:51283 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726656AbfCNDti (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 23:49:38 -0400
-Received: by mail-it1-f195.google.com with SMTP id e24so2472504itl.1
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 20:49:38 -0700 (PDT)
+        id S1726897AbfCNDtp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 23:49:45 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33918 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726656AbfCNDto (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 23:49:44 -0400
+Received: by mail-wr1-f65.google.com with SMTP id k1so3720349wre.1
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 20:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GaQUxDQe9B2V3WN7Eg1lP2vp0EYB7IBA2vk/8UTO3eo=;
-        b=FOftg789f0EuTZpRsv/wI/J3pjEaRoA3H7evBz+teIa/jwsF9g2v40bMX/d78pAM2x
-         q7rk6SFxHqkcMwFSdw/HDeAt03Jb40E4hJ0kvoEMtyd8h9v1o5p8VIupgihz8SH8R/Es
-         RaAK6U2iW5WQ1MZ24S0nIRE68Pp0lxP9weV4REs8AIJTUPMbFsSelfrE1glJXbO4cjQw
-         zkOBNigPmZc8JbctXopi4FOHKpKdlj5q8+eAyfEolz6sZuHtlJsbCwxzv2OpJ6gapgQ/
-         m0C8eN3XlN2z1quiQgiYWO1M8aNpnEYp2og+gen6IjB+q8UXVd8bdRfA+Rmr29uNsy+l
-         5Azw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=NTGPD5Gl65EdA5fnH97klGm8pFaxISsk/bflj7Qs+i4=;
+        b=jYlcv7ThlqC/1ac9zTUl2mIQXEI+zXJUnuLV2rT00wChOP4nQqOP5I6+pzSmTVZ9W9
+         plFQrl/bTqdi/027+dl5iMrJseWSVCz8gyLvAInxiHJQOPfooMtjKwlkM95haGHT+9FW
+         zl3JOc8CWygVDj2zjyYwJYP8mBABUSdk+x6VAOfzfuExbZa0BEFNKcIrakvnLrSov6oy
+         1evzAYWQtdHtr4mZV6Sth+NnGTLsAh4V1/B3Sz0lFRaMtqesqCNuvXhOzanwtqEIx4AV
+         Q1/GFlBR/iO1X0rz8YI8V8nU+fMUkxqUzAK7uI8YuCFC2ImUYN0JQNE8h20vm9JY0YuV
+         SRNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GaQUxDQe9B2V3WN7Eg1lP2vp0EYB7IBA2vk/8UTO3eo=;
-        b=IF5hh8CIqiGRsoHpLxH4jcqUR2OS+LB7SvhiINTFE2Nd7Zx6k+1vCgQTjg6Mcbizc5
-         nT3+uCiZryfTpYRISWLvv0sV1DGJkdeTATp2q2G1cHULi10PMU3Rlwr4N6NAQpbPmdLi
-         UaL44BHRnSBShuAtW8Z1u9cimAahlIdG/u+xOnggPfwgAXshvXk4lxN1SdXxRPz4gEeP
-         eIBbw88hj6EdVw1nbTzSoanf2ZgRFSB9l542nQwL/SUbm/Al98zOnOIjnEXvGV8Esqif
-         /WnkAhpw+utpNoJEEGBu+GMIY1R5ybA1tsSxWqKMjXfJgXe7+uMBgRuSG7hKrGybpeqR
-         hGIA==
-X-Gm-Message-State: APjAAAX2Di/hiZj3R3Q9Cu/g5BCYDL4irGb8TUPlYNvOfRygw78mdPVU
-        7qNsyIcvJmlXiatKwJMCLhPOmaoiR/LAGn/l1Mo=
-X-Google-Smtp-Source: APXvYqzrDSM5fCL3twdqpf6dinI06eg7YvTuID7bhD2Cbq3y8S7DNFUeBnborvZGnbI4i42YVICIFL/GgOtnPJ7Qd0U=
-X-Received: by 2002:a02:1c49:: with SMTP id c70mr7816997jac.92.1552535377520;
- Wed, 13 Mar 2019 20:49:37 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NTGPD5Gl65EdA5fnH97klGm8pFaxISsk/bflj7Qs+i4=;
+        b=fKnIqSRoOBR/yLcxPSh+Vt1/YLAwl/PLJxm1KRpQP06wiowzUmIBOxvmj3qHfhrmF9
+         LIcK/nXfQsfzOn3eD1555eP/w4+pmclEIZ1FBuPZFurzPySuHTLsBKDLi/kMes+M/WGC
+         HLNOH6hpOP+tgnnmrUInIhKdeebEHhgmjTB4gM3LjdTSLehJA+CloBwGFgh4QeCUURio
+         DPNenYb51qX1cEriMAGpw+ar/J2mbKPTPYIY9mTQMGHkpXcS5bn9YSk7XKuk8FxwnvrA
+         FkUYdZlflHgBa1qnipJxcODByuvVperVPOwmJp4hSYbxZUCyF3i8fzh3uHCmtoyPJOSw
+         85Og==
+X-Gm-Message-State: APjAAAU7f/h/RgYMt7yw8IgswgaRN1+ldf30kjkHBtdHzpWx1thMhSGu
+        dMTTSiv2cgLGtDG21mN/Tbw=
+X-Google-Smtp-Source: APXvYqwMK4tTBVfQq/nksOzKWShckWRFeXFy9mx4vUHB2o1wDEmolDXYOZH/jVkYmW1iFXXDkXS/8w==
+X-Received: by 2002:a5d:428d:: with SMTP id k13mr20527787wrq.147.1552535382871;
+        Wed, 13 Mar 2019 20:49:42 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id b18sm14039030wro.80.2019.03.13.20.49.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Mar 2019 20:49:42 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] get_oid(): when an object was not found, try harder
+References: <pull.161.git.gitgitgadget@gmail.com>
+        <994446236d05d9d014e12a5102bcf9be222e3b57.1552472189.git.gitgitgadget@gmail.com>
+        <xmqqa7hyckfm.fsf@gitster-ct.c.googlers.com>
+        <20190314022245.GA1414@sigill.intra.peff.net>
+Date:   Thu, 14 Mar 2019 12:49:41 +0900
+In-Reply-To: <20190314022245.GA1414@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 13 Mar 2019 22:22:46 -0400")
+Message-ID: <xmqq8sxiaze2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190308101655.9767-1-pclouds@gmail.com> <CACsJy8BB1GAaBX=YcmNf1fLj5chc5hcvHLTwvzwJgvSWWKNFdQ@mail.gmail.com>
- <xmqqr2bacrgf.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqr2bacrgf.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 14 Mar 2019 10:49:11 +0700
-Message-ID: <CACsJy8D+bbDR4Oavf_aTk=rN2JDOQ5nhP5ZgCmML66xkMf8fYw@mail.gmail.com>
-Subject: Re: [PATCH v1 00/11] And new command "restore"
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 5:58 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Duy Nguyen <pclouds@gmail.com> writes:
->
-> > On Fri, Mar 8, 2019 at 5:17 PM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
-> >> - --index has a different meaning in git-apply. I don't have a good
-> >>   suggestion except "yeah we have two different worlds now, the old
-> >>   and the new one"
-> >
-> > I will rename --index to --staged to avoid this. It is already used as
-> > synonym for --cached in git-diff. I will also add --staged as synonym
-> > to "git rm" so that "git status" can consistently advise "git <verb>
-> > --staged" where verb is either restore or rm.
->
-> Does "restore --index" (now "--staged") work the same way as
-> "--cached" aka "--staged" in git-diff?  "--cached" is about
-> affecting only what is in the index (as opposed to "--index"
-> affecting both the index and the working tree).
+Jeff King <peff@peff.net> writes:
 
-Yes. To affect both you would need --staged --worktree (or -WS for
-short because I don't think anybody is going to type that many
-characters)
+>>  1. is reprepare_packed_git() a bit too heavy-weight, if the only
+>>     thing we are addressing is the loose-object cache going stale?
+>
+> It's not the only thing we are addressing. :)
+>
+> Try this:
 
-> If it does, then calling it "--cached" aka "--staged" does make more
-> sense than calling it "--index", I would think.  Otherwise, such a
-> rename does not buy us much.
---=20
-Duy
+Yes, I knew about repacking.  I was alluding to the overly heavy
+reference to loose-object-cache in the log message ;-).
+
+>>  2. is there a way to cleanly avoid the three-line duplicate?
+>
+> Yeah, as you noted, I think the boilerplate is worse than the
+> duplication. The most readable alternative to me is a separate function,
+> like:
+> ...
+> But what I find particularly ugly is not just that it's more lines, but
+> that the assumptions and outputs of do_get_short_oid() aren't
+> particularly clear.
+
+Yeah, exactly.
