@@ -2,88 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8214820248
-	for <e@80x24.org>; Thu, 14 Mar 2019 06:10:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2BE820248
+	for <e@80x24.org>; Thu, 14 Mar 2019 06:42:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727106AbfCNGKf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 02:10:35 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:43736 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726539AbfCNGKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 02:10:34 -0400
-Received: by mail-qk1-f196.google.com with SMTP id s26so2645126qkm.10
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 23:10:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AwgAJ9LAJx9pTZR6yPF43shyJTgznY5wmen000ZFC5E=;
-        b=eUwhpSSe71n4PigI4U7xjOyHaM83XTy6f13u+IbmuTYopMMqsrdsTAkW6IIrIPYKNB
-         ef1TOCu58s3zkpdPdXOQHWyxPEMMoSNXF2GeUVwkaeZm6AYpcoZ2cPA+D9/2z3QQlImH
-         DaO5F9PZGPZafnNynkWd6P+DXjFk/TLKtHrcp7Sy10y/S4hkJW9hVcrW8ysWgqYUO6St
-         vxkYqp5CaczbIScBW+87tEAoPCKO8bnXqkq7UCYQHsBZbjAg8uKryTnJMteGd6UxoY0s
-         6R6z2bKi+77zVRPo45wN5kx3O4CH/tclvHxl+cfwrJSekhXJoOn/J8QyPxFLUqge8XaL
-         vrRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AwgAJ9LAJx9pTZR6yPF43shyJTgznY5wmen000ZFC5E=;
-        b=m3XrFvRwdO+K0uFm3vtJTEGLnkMkhRi2s33hPiAb6hsH9LVzErIA6IEG/+W5OdhKrn
-         8ZY7wAue0fEuwdUZZcONh9SQNAyukOI2D6cc5lFXsB2TjDmjXV1RIGmLXGJ65+b31A29
-         GyEZslq4OGBab2A9AFv4A8NOq1y6jkCzBRmaQtMiGql1woS5ebHSpLf7R3wLMqQsuRq0
-         MXiAqJOYbFJ6vozxVg+FqAMTO2PXKjJGw985z8rEsg22awijHeg0eu5/0apBl6Jpb+m5
-         cPwu5P/3tTI2zmehhihdTp2wI6aaZzIGaFWiEzU19kKkFGhmGek2sFBi/XhI6YHB06yJ
-         AEpw==
-X-Gm-Message-State: APjAAAXs7Y7/s0TAmg/CndIVtqTdouNujIzv6u2mF4einlVBjQ2o5JFh
-        EZpQy5zQQvhM0EJAYGGQOOE/o0K1eB1MK0llgmA=
-X-Google-Smtp-Source: APXvYqw4SnUPgukVPLgQQgi3ytZf61tFqCRtNhJiPrFkny4yC2i6fnu1s28B66+jwBz/rk4SdhuG+IL7mM9jkiPq8PA=
-X-Received: by 2002:a37:c50f:: with SMTP id p15mr15523292qki.278.1552543833832;
- Wed, 13 Mar 2019 23:10:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20190219083123.27686-1-nbelakovski@gmail.com> <20190221123646.GA12185@sigill.intra.peff.net>
-In-Reply-To: <20190221123646.GA12185@sigill.intra.peff.net>
-From:   Nickolai Belakovski <nbelakovski@gmail.com>
-Date:   Wed, 13 Mar 2019 23:10:06 -0700
-Message-ID: <CAC05385woS0XUsDHRBHrZkjzFU9q9+JOJ3BvE8pRh48794-iBA@mail.gmail.com>
-Subject: Re: [PATCH v8 0/3]
+        id S1726698AbfCNGkX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 02:40:23 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:24220 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726530AbfCNGkW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 02:40:22 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 44KfGX50YQz5tlC;
+        Thu, 14 Mar 2019 07:40:20 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 97A451D17;
+        Thu, 14 Mar 2019 07:40:19 +0100 (CET)
+Subject: Re: [PATCH 1/4] rebase -i: demonstrate obscure loose object cache bug
 To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.161.git.gitgitgadget@gmail.com>
+ <b3fcd377652103584b6f307c6ee209980b44529f.1552472189.git.gitgitgadget@gmail.com>
+ <87k1h2bvpb.fsf@evledraar.gmail.com>
+ <20190313163516.GA26045@sigill.intra.peff.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <0f7870b7-f92a-ad63-7854-300c202cb4a8@kdbg.org>
+Date:   Thu, 14 Mar 2019 07:40:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
+MIME-Version: 1.0
+In-Reply-To: <20190313163516.GA26045@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->
-> Patch 1 looks good to me. Given that we're on v8 and most of the other
-> comments are for patches 2 and 3, I think we might consider graduating
-> it separately if the other two are not ready soon. It's independently
-> useful, IMHO.
+Am 13.03.19 um 17:35 schrieb Jeff King:
+> On Wed, Mar 13, 2019 at 05:11:44PM +0100, Ævar Arnfjörð Bjarmason wrote:
+>> As a further improvement, is there a good reason for why we wouldn't
+>> pass something down to the oid machinery to say "we're only interested
+>> in commits". I have a WIP series somewhere to generalize that more, but
+>> e.g.  here locally:
+> 
+> We have get_oid_commit() and get_oid_committish() already. Should rebase
+> just be using those? (I think we probably want "commit()", because we do
+> not expect a "pick" line to have a tag, for example.
 
-Patch 2 was my main motivation, so it would be nice to get it in
-together with 1 :)
-Patch 3, like I said in the thread on that one I don't have strong
-feeling about it. It was an attempt to provide a connection between
-the new cyan output and its intent, as opposed to having the user
-guess, but I think anyone who's using a worktree will figure it out
-sooner or later, and anyone not using a worktree will be unaffected.
+'pick' needs all the power of revision expressions. Not all too
+infrequently I do insert a pick line with a rev expression argument.
+Assuming that the resolved object is a commit is too strict.
 
-I'm willing to keep going with comments on patch 2. I can't imagine it
-would take many more revisions as it's much more straightforward than
-patch 1, it's basically just modifying one line of branch.c. If we
-decide to drop patch 3 fine with me.
-
-I'll send in v9 with the latest changes for both 2 and 3 sometime
-tomorrow unless I hear otherwise.
-
-Thanks for the feedback.
+-- Hannes
