@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17EBC20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 21:47:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8324020248
+	for <e@80x24.org>; Thu, 14 Mar 2019 21:47:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727258AbfCNVrx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 17:47:53 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37342 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726731AbfCNVrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 17:47:52 -0400
-Received: by mail-wr1-f68.google.com with SMTP id y15so7491811wro.4
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 14:47:51 -0700 (PDT)
+        id S1727360AbfCNVr4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 17:47:56 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:54062 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726731AbfCNVr4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 17:47:56 -0400
+Received: by mail-wm1-f47.google.com with SMTP id e74so4573396wmg.3
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 14:47:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lNau3thIbWx2JIjUIapDDhw9YoMwgNem0onGANgWusg=;
-        b=PewHLSIK+QJMpZ5w7YUOmD/OpEpVlBdzCpWOL6dLLEFRgKEKrLfM4UGlN7y8R+mBTB
-         wAWattZS8syE9dzsMenxy42+UD/+8dEYEkrsr0uetjuUXBAYs0RuFMv6C0j04jF9BGpf
-         7fyUhAHEWwIxtGbDxjS60nYmqo6s3pKyn6v2Suiv27vlGi0ftay2YrnOLAAzOUlMbCVK
-         kqlWfgIOWhW3K1MG7o8qSd6OzPa9zSSfqbfml8HdC9GsWxiZYXA3QvYTk3tizzoPwFFu
-         swVZzw+Xz0++4IYAaCZmvSIQKG4b/Z4QTu8SQdB5waH0CEkX1C0fy81ptkHjbwAVxNK7
-         RWXg==
+        bh=TryJBwAkwQxDm1aGGzWLrQtjnpTYQFOtNncA80STXMk=;
+        b=EXTtRbE1zkQMHHTAqi+ZVr9Dd515NrdffFcwvILVkgISYKJI55rE5yAmpvFyhTxF4c
+         aR9gt1wdOd1xBW9kUI3mF0BBLf6Fu0fkhImMyedQDrVKxo6b94isPtlHEsE4fs/P2cby
+         kZkfukAJ0bbhdqspAoE+mN1tSJYO+YKEKsGTVTRR8yILYrSubUT70KPQKfItOUbbuDwb
+         3JJQYcINJ6gGp8hwMzQGxnyI217iUC6xSJsNxPbnz3wp/CZBfG3cXFVCsFh3qCkWj0ts
+         Ox73sss0qBU1aA0NrI8ddcCCY34wafF33gKA+OVa3Q5udBc2Ucydc8//ohutcLdZic7d
+         VmPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lNau3thIbWx2JIjUIapDDhw9YoMwgNem0onGANgWusg=;
-        b=DjysDZdaconAAztTU7e8B2DD0HzbW/Oerrdw/96jnKL9vnuRQaGYd1YaBc+U27u552
-         1/bvwuxfAjwlBEH0BH5QehSa/tU1l/lYJovL4ZfcmqghHAuQ7kz5XyOYLH3zGK8db5jM
-         i8cB3161TAOONMAdMzg1lfkYD/2LLhJomgvHNdTIKetm1WZwbNPdqmD++2hWOqWpfrFi
-         f7Q6/K8UdKfoH7UyJsUfpmHcvBsdS0hE44fwZpnOuEiVJewcVxPChtelpHMhMlJ2PoR1
-         pALBZnNkSDIKUMtASqL3SQB0n7ZWw0Sm5emUqLgxCK2iT3/tQ+0De8Rn/MQ7c5fGnrA7
-         i3hA==
-X-Gm-Message-State: APjAAAUnlqkacs80WywRAqduQqd8whmVwtDGmxGJqjLQvbnDRbcuGsyY
-        74shcSxRW+sy9eFgGuLHh36LnYRg6vw=
-X-Google-Smtp-Source: APXvYqx8qdcx/3ZgHHlmNFI609QiJvocZ5V25DAvTlVXQSmFHEQQMjGA16E+qAci1TI1Fs/EVGEUZQ==
-X-Received: by 2002:a5d:6209:: with SMTP id y9mr79613wru.140.1552600069943;
-        Thu, 14 Mar 2019 14:47:49 -0700 (PDT)
+        bh=TryJBwAkwQxDm1aGGzWLrQtjnpTYQFOtNncA80STXMk=;
+        b=m7vsNKPLbod+Jyh2pNaniecBsgzrjAdhW7mzicNVxkqdGOU1C9mrbKOHAJI4hU5PO0
+         eFDRSfrI+N27KVGPTYl0nM/Hn1TjqFYiPy4l3dLH9mShh33Sk+aCBX8PmgtiKziiaDdv
+         yg0Jtp3W1DgqlhMnQIKsYjNt1aWsP5VeP+Ug7iubn1kxKdJp6gLUFIsYuX4sVl+owmAq
+         8QmbhBu00rbebDYAM+/2wWd7ner70PQpv/WCQbkSgAiOLPa6lzESWwVAfqViZ0gGRbTm
+         uM0RD57gu+0jo1Ryc6DnrnDv3Ox/Cgfq9oNe8FQ84XNMrdKf1sfbxlDyTt5Be6omLd7p
+         9hkQ==
+X-Gm-Message-State: APjAAAXf3aKh9mDMnu7louMWJ1VfN8tfx4n5mRpPfvqqfhzlE6vbBXxs
+        7B50HPp/zomRQEbvLG9n1+7bXUoQJco=
+X-Google-Smtp-Source: APXvYqyYjDz8/WorNw029JqTBtTiRNZL2EPkJI79ih2gt+S6+6dbvoyi+OGWpCvznsWDLPvg5CdWPg==
+X-Received: by 2002:a1c:f011:: with SMTP id a17mr345435wmb.89.1552600073726;
+        Thu, 14 Mar 2019 14:47:53 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h137sm194348wmg.41.2019.03.14.14.47.48
+        by smtp.gmail.com with ESMTPSA id h137sm194348wmg.41.2019.03.14.14.47.52
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 14 Mar 2019 14:47:49 -0700 (PDT)
+        Thu, 14 Mar 2019 14:47:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/8] commit-graph: segfault & other fixes for broken graphs
-Date:   Thu, 14 Mar 2019 22:47:32 +0100
-Message-Id: <20190314214740.23360-1-avarab@gmail.com>
+Subject: [PATCH v2 1/8] commit-graph tests: split up corrupt_graph_and_verify()
+Date:   Thu, 14 Mar 2019 22:47:33 +0100
+Message-Id: <20190314214740.23360-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190221223753.20070-1-avarab@gmail.com>
 References: <20190221223753.20070-1-avarab@gmail.com>
@@ -72,150 +72,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-See the v1 cover letter for details:
-https://public-inbox.org/git/20190221223753.20070-1-avarab@gmail.com/
+Split up the corrupt_graph_and_verify() function added in
+d9b9f8a6fd ("commit-graph: verify catches corrupt signature",
+2018-06-27) into its logical components of setting up the test itself,
+doing the corruption in a particular way with "dd", and then finally
+testing that stderr is what we expect.
 
-I'd forgotten this after 2.21 was released.
+This allows for re-using everything except the now slimmer
+corrupt_graph_and_verify() to corrupt the graph in a way that doesn't
+involve inserting a given byte sequence at a given position,
+e.g. truncating it entirely to a custom value.
 
-This addresses all the comments on v1 and rebases it. A range-diff is
-below. I also improved 7/8's commit message a bit.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t5318-commit-graph.sh | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-I fixed a test to avoid the pattern a0a630192d
-(t/check-non-portable-shell: detect "FOO=bar shell_func", 2018-07-13)
-tests for. The new pattern is more obvious.
-
-As an aside I don't get how that doesn't work as intended from the
-commit message of that commit & its series.
-
-    $ cat /tmp/x.sh 
-    sayit() { echo "saying '$SAY'"; };
-    SAY=hi sayit; sayit;
-    $ sh /tmp/x.sh
-    saying 'hi'
-    saying ''
-
-I get the same thing on bash, dash, NetBSD ksh, Solaris's shell &
-AIX's. I.e. it's explicitly not assigning $SAY for the duration of the
-shell as this would do:
-
-    $ cat /tmp/y.sh 
-    sayit() { echo "saying '$SAY'"; };
-    SAY=hi; sayit; sayit;
-    $ sh /tmp/y.sh
-    saying 'hi'
-    saying 'hi'
-
-Which is the impression I get from the commit message.
-
-Ævar Arnfjörð Bjarmason (8):
-  commit-graph tests: split up corrupt_graph_and_verify()
-  commit-graph tests: test a graph that's too small
-  commit-graph: fix segfault on e.g. "git status"
-  commit-graph: don't early exit(1) on e.g. "git status"
-  commit-graph: don't pass filename to load_commit_graph_one_fd_st()
-  commit-graph verify: detect inability to read the graph
-  commit-graph write: don't die if the existing graph is corrupt
-  commit-graph: improve & i18n error messages
-
- builtin/commit-graph.c  |  23 +++++--
- commit-graph.c          | 132 +++++++++++++++++++++++++++-------------
- commit-graph.h          |   4 ++
- commit.h                |   6 ++
- t/t5318-commit-graph.sh |  42 +++++++++++--
- 5 files changed, 154 insertions(+), 53 deletions(-)
-
-Range-diff:
-1:  9d318d5106 ! 1:  2f8ba0adf8 commit-graph tests: split up corrupt_graph_and_verify()
-    @@ -49,7 +49,7 @@
-     -	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
-     -	cp $objdir/info/commit-graph commit-graph-backup &&
-      	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
-    - 	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" count=0 &&
-    + 	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" if=/dev/null &&
-      	generate_zero_bytes $(($orig_size - $zero_pos)) >>"$objdir/info/commit-graph" &&
-     -	test_must_fail git commit-graph verify 2>test_err &&
-     -	grep -v "^+" test_err >err &&
-2:  73849add5e = 2:  800b17edde commit-graph tests: test a graph that's too small
-3:  6bfce758e1 = 3:  7083ab81c7 commit-graph: fix segfault on e.g. "git status"
-4:  ac07ff415e = 4:  d00564ae89 commit-graph: don't early exit(1) on e.g. "git status"
-5:  b2dd394cc7 = 5:  25ee185bf7 commit-graph: don't pass filename to load_commit_graph_one_fd_st()
-6:  9987149e5c ! 6:  7619b46987 commit-graph verify: detect inability to read the graph
-    @@ -37,16 +37,10 @@
-      
-      }
-      
-    -+test_expect_success 'detect permission problem' '
-    ++test_expect_success POSIXPERM,SANITY 'detect permission problem' '
-     +	corrupt_graph_setup &&
-     +	chmod 000 $objdir/info/commit-graph &&
-    -+
-    -+	# Skip as root, or in other cases (odd fs or OS) where a
-    -+	# "chmod 000 file" does not yield EACCES on e.g. "cat file"
-    -+	if ! test -r $objdir/info/commit-graph
-    -+	then
-    -+		corrupt_graph_verify "Could not open"
-    -+	fi
-    ++	corrupt_graph_verify "Could not open"
-     +'
-     +
-      test_expect_success 'detect too small' '
-7:  0e35b12a1a ! 7:  17ee4fc050 commit-graph write: don't die if the existing graph is corrupt
-    @@ -18,6 +18,10 @@
-         use_commit_graph=1 as seen in 177722b344 ("commit: integrate commit
-         graph with commit parsing", 2018-04-10).
-     
-    +    Not using the old graph at all slows down the writing of the new graph
-    +    by some small amount, but is a sensible way to prevent an error in the
-    +    existing commit-graph from spreading.
-    +
-         Just fixing the current issue would be likely to result in code that's
-         inadvertently broken in the future. New code might use the
-         commit-graph at a distance. To detect such cases introduce a
-    @@ -36,7 +40,12 @@
-         corruption.
-     
-         This might need to be re-visited if we learn to write the commit-graph
-    -    incrementally.
-    +    incrementally, but probably not. Hopefully we'll just start by finding
-    +    out what commits we have in total, then read the old graph(s) to see
-    +    what they cover, and finally write a new graph file with everything
-    +    that's missing. In that case the new graph writing code just needs to
-    +    continue to use e.g. a parse_commit() that doesn't consult the
-    +    existing commit-graphs.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    @@ -119,7 +128,7 @@
-      	grep -v "^+" test_err >err &&
-      	test_i18ngrep "$grepstr" err &&
-     -	git status --short
-    -+	if test -z "$NO_WRITE_TEST_BACKUP"
-    ++	if test "$2" != "no-copy"
-     +	then
-     +		cp $objdir/info/commit-graph commit-graph-pre-write-test
-     +	fi &&
-    @@ -130,14 +139,14 @@
-      
-      # usage: corrupt_graph_and_verify <position> <data> <string> [<zero_pos>]
-     @@
-    - 	# "chmod 000 file" does not yield EACCES on e.g. "cat file"
-    - 	if ! test -r $objdir/info/commit-graph
-    - 	then
-    --		corrupt_graph_verify "Could not open"
-    -+		NO_WRITE_TEST_BACKUP=1 corrupt_graph_verify "Could not open"
-    - 	fi
-    + test_expect_success POSIXPERM,SANITY 'detect permission problem' '
-    + 	corrupt_graph_setup &&
-    + 	chmod 000 $objdir/info/commit-graph &&
-    +-	corrupt_graph_verify "Could not open"
-    ++	corrupt_graph_verify "Could not open" "no-copy"
-      '
-      
-    + test_expect_success 'detect too small' '
-     @@
-      	git fsck &&
-      	corrupt_graph_and_verify $GRAPH_BYTE_FOOTER "\00" \
-8:  a74d0f0f6f = 8:  29ab2895b7 commit-graph: improve & i18n error messages
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 561796f280..56a616831e 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -366,6 +366,19 @@ GRAPH_OCTOPUS_DATA_OFFSET=$(($GRAPH_COMMIT_DATA_OFFSET + \
+ GRAPH_BYTE_OCTOPUS=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4))
+ GRAPH_BYTE_FOOTER=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4 * $NUM_OCTOPUS_EDGES))
+ 
++corrupt_graph_setup() {
++	cd "$TRASH_DIRECTORY/full" &&
++	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
++	cp $objdir/info/commit-graph commit-graph-backup
++}
++
++corrupt_graph_verify() {
++	grepstr=$1
++	test_must_fail git commit-graph verify 2>test_err &&
++	grep -v "^+" test_err >err &&
++	test_i18ngrep "$grepstr" err
++}
++
+ # usage: corrupt_graph_and_verify <position> <data> <string> [<zero_pos>]
+ # Manipulates the commit-graph file at the position
+ # by inserting the data, optionally zeroing the file
+@@ -376,17 +389,14 @@ corrupt_graph_and_verify() {
+ 	pos=$1
+ 	data="${2:-\0}"
+ 	grepstr=$3
+-	cd "$TRASH_DIRECTORY/full" &&
++	corrupt_graph_setup &&
+ 	orig_size=$(wc -c < $objdir/info/commit-graph) &&
+ 	zero_pos=${4:-${orig_size}} &&
+-	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+-	cp $objdir/info/commit-graph commit-graph-backup &&
+ 	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
+ 	dd of="$objdir/info/commit-graph" bs=1 seek="$zero_pos" if=/dev/null &&
+ 	generate_zero_bytes $(($orig_size - $zero_pos)) >>"$objdir/info/commit-graph" &&
+-	test_must_fail git commit-graph verify 2>test_err &&
+-	grep -v "^+" test_err >err &&
+-	test_i18ngrep "$grepstr" err
++	corrupt_graph_verify "$grepstr"
++
+ }
+ 
+ test_expect_success 'detect bad signature' '
 -- 
 2.21.0.360.g471c308f928
 
