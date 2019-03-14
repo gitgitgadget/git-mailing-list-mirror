@@ -2,87 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80DF520248
-	for <e@80x24.org>; Thu, 14 Mar 2019 18:26:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A1C920248
+	for <e@80x24.org>; Thu, 14 Mar 2019 18:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727820AbfCNS0c (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 14:26:32 -0400
-Received: from mail-qk1-f177.google.com ([209.85.222.177]:42100 "EHLO
-        mail-qk1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727279AbfCNS0c (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 14:26:32 -0400
-Received: by mail-qk1-f177.google.com with SMTP id b74so3940507qkg.9
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 11:26:31 -0700 (PDT)
+        id S1727598AbfCNS2Z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 14:28:25 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:36530 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726531AbfCNS2Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 14:28:24 -0400
+Received: by mail-ed1-f41.google.com with SMTP id e4so5507404edi.3
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 11:28:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+75RkP0LlebOiwBrUEFxsOLgoNSeZG37mr/ZTKqcVSU=;
-        b=SXMTKebdYK0a/HjpVd6fSpOBn49heZbAH+cq02+7e+MjXkrhVLxl8b3HWMA6h9fmHs
-         7cu9ux0sy3Mgl7qJoNlEkFMo4RhGcsKdKf0HUhv9SeQ7VYQ8Afnja1uXrRZgiNEvpsJ9
-         TjG+fbcBobMqaxWEsPYAE+VY9ssoIo7mFEIzA=
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=NRHNxiigx+14rtlUP9TZwKVDDEzAd+9xb9CUX+BZuBI=;
+        b=T19q7mli9APzaKkvgHdGlz5dfrSnT8zaDkXrpCXxJ/rR+g0JJ7r+O0r0kL0+kOI23/
+         b2cI7YeQttc+FC/R5/jYgKGxuSBACYTUB+6eE7KXBxLTPvr+d3mjZ5qmr+kIj7TkF+od
+         GJNVGoVR4ljfFu5Y4vk+3m2G3+sBpU3gEJzgV8EuQLIQhn++CmXhpaIXqufwbCdeplpv
+         QPu6vgeaAgHQYM4PCkv6lr9D8nEO4nXHl0OovftBVt0D2vo27xsa0dGm3jBUQjpELJ+K
+         jtWfbYOOz1yWCVkL4Gt2oAoZ9vvLWM+ht9SpL4Vh6h3bwdgKuv5oodXkVlp+WaglR4K8
+         VnZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+75RkP0LlebOiwBrUEFxsOLgoNSeZG37mr/ZTKqcVSU=;
-        b=sjvl1Q1yw2YecyBxtBFI7RMLSp8Ebrn12xtFdWfzH4awDjnAH0KLzjtDExdSyFh7CA
-         grJkMTh6gnOvtRIWgQrZdWW2DNO+kdCkKvjIzm9aIu4ufgMYACzsV58HUzydjMKDpRfC
-         KSS0X/swp+NeX+bYqKn/vATBq550kkKJg5aCQ8ST0IHqwMhymxt6HXIttt2EDOa5/R0F
-         ccamLNLCPMm3MgMlYbgP3xFJ55rnYHjd8Fb7//m/7GlQ/QbDdIH/8E4kicW291hYLtiA
-         7+5v9N627L8GlHCT/FDdavB6/MRBQs4TP36Q3j6wu89R6ySa7u70Mv+cX4Jjnp4naRw8
-         NOUA==
-X-Gm-Message-State: APjAAAWIlvwSlGXbIeKp94+SE7nEOaAq6w19wJ5m6B5RJj5iQ0LBhwme
-        8k+w1lWExsWmvMChh48ZitBXUe86As9DeEGcsrRGbpanrds=
-X-Google-Smtp-Source: APXvYqyMjgGzS/2e/unpxObUo3795JMMWF4QnpcQh7KkjmpEF1gAh9Zc4f5tIHyNZ49HwHUXExArYrrl6Qd7qwaYAp4=
-X-Received: by 2002:ae9:ec13:: with SMTP id h19mr27683651qkg.345.1552587991102;
- Thu, 14 Mar 2019 11:26:31 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=NRHNxiigx+14rtlUP9TZwKVDDEzAd+9xb9CUX+BZuBI=;
+        b=AqfXtX0wSOukH64/SpzjarUaHRWZx4qF/pF2g/a0qpnqWhVq3ZoscCMLJVyxnsuuBZ
+         W6hrWwxrup0R36kEkl+QSJ4xJ2NIYMTqCuJudJGsh7PhxQQY3RNj9+sduRflKXTqcgTe
+         iflISBUiKwxDMHD7E1qR797UcCO+InYKteXA9c/ybt91y4jDlSv4fb5J0c5qItZWKGmI
+         erZQymRjiqAbDGEOijoQR18zN+KLWv2q6ZD7rV6D7VItZXsjFusOeXhq69PemTSNM2yD
+         PQl3/ALno4JvYdZCxNX+IEPOA7OE0IIe9BdGOZkjLYSa2QZcmP8xIZYNoZetMJtvA2DQ
+         zc8Q==
+X-Gm-Message-State: APjAAAXxhG4yCl0g2ENUYnZbrhlieZ0864eZNgdyMyJt/kVAhWAT/PXv
+        +HeCbwyyfSvLgswKZ2AqjXEAk6nZ253LHwSqaGrdJg==
+X-Google-Smtp-Source: APXvYqxduiR9kVjSphqXiHMDcWBbw0+JiYNWLnOGFRBy3VNOK1B4BCBDWQA68gS2AVirFoHu0z5R9wSXzUwKmEgnYNk=
+X-Received: by 2002:a17:906:1dd0:: with SMTP id v16mr7320202ejh.204.1552588102891;
+ Thu, 14 Mar 2019 11:28:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190313205539.GA30425@sigill.intra.peff.net>
-In-Reply-To: <20190313205539.GA30425@sigill.intra.peff.net>
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date:   Thu, 14 Mar 2019 14:26:19 -0400
-Message-ID: <CAMwyc-S4B6NzOJmGLhmfF4t-i0qD=+eKROg+4gewLxAjcgfcGw@mail.gmail.com>
-Subject: Re: straw poll: git merge conference location
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 2002:a50:91e3:0:0:0:0:0 with HTTP; Thu, 14 Mar 2019 11:28:22
+ -0700 (PDT)
+From:   Daniel Dromboski <dandromb@gmail.com>
+Date:   Thu, 14 Mar 2019 14:28:22 -0400
+Message-ID: <CAGGzCPF_0ZGWn1-GCLLb=1XKcW936U_4CxiNRHPCV1kw5ZeOBw@mail.gmail.com>
+Subject: git apply --check should give some indication that a patch applies cleanly
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 13 Mar 2019 at 16:56, Jeff King <peff@peff.net> wrote:
->   - preferences between Canada and US?
+Hi folks,
 
-If you're looking at Canada, East coast is generally more affordable
-than West Coast in terms of venues and accommodation. The three main
-tech hubs in the East are Toronto, Montreal and Halifax.
+The main purpose of `git apply --check` is to see if a patch can apply.
 
-Toronto pros: nice city, lots of tech presence, direct travel from
-most international airports
-Toronto cons: only marginally less expensive than Vancouver
+It's not intuitive to a user, just from the command name, that "no
+output" means your patch can apply cleanly.
 
-Montreal pros: nice city, lots of tech presence, quite affordable for
-venues and accommodations
-Montreal cons: many international travel destinations require stopovers
+Furthermore, `git apply --check --verbose` only says that it is
+checking the patch, ending with "..." which usually means "more info
+to come"... But it doesn't print anything else. An example command and
+output:
 
-Halifax pros: very nice city next to the ocean, a vibrant (if small)
-tech presence, very affordable
-Halifax cons: most international travel requires stopovers, inclement
-weather if unlucky
+```
+$ git apply --check --verbose [my-patch.patch]
+Checking patch [path/to/file.ext]...
+```
 
-Honourable mentions: Quebec City (if you want to be in North America,
-but feel like you're still in Europe :), Ottawa (if you like museums
-and large historical government buildings)
+I'd like if there were some way for the command to confirm outright
+that the patch applies, to save users the confusion.
 
-Best,
---=20
-Konstantin Ryabitsev
-Montr=C3=A9al, Qu=C3=A9bec
+Thanks.
