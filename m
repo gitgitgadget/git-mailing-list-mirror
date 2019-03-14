@@ -2,134 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D48B20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 05:55:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 103BD20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 05:58:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726753AbfCNFze (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 01:55:34 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40565 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725928AbfCNFze (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 01:55:34 -0400
-Received: by mail-wr1-f65.google.com with SMTP id t5so4435608wri.7
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 22:55:32 -0700 (PDT)
+        id S1726610AbfCNF6e (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 01:58:34 -0400
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:34342 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725928AbfCNF6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 01:58:34 -0400
+Received: by mail-qk1-f196.google.com with SMTP id n6so2644226qkf.1
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 22:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=F0rKfHh3wyXjlaLP5eBn+57hKJInwluNMY/Utv0nhho=;
-        b=sIFv5SDYkWLL65K4J8gJ0u/IEsS791NIR6cCa8lwj96WKQz9T5H4yobzT2tjBcnLAP
-         w7Qtk4uaa65zwFYTNLft/2x9wHtlHUraHaJ7DcU4FO2HZ21mE6kh6KeQ2IiG/1z+Vrkj
-         /YA2VC5kXZ/vo4rNK8MjP4axGOKDUkY8Y8++h1NfyowqQ6LaHVN85uDq/k5M1cSra85f
-         1gDwbR3njvvaw52wbCyQ46NiXRrdtIUTiRpmm1s0YOgDmFPyvOwWGdmCHDaa9odxgH76
-         UKdoA70MeQZAAmeOyNPFDvP8IFbaLZQcSYyajBlCZLPx4RuAUzbI5u5QO+VmS7UuynPN
-         OCpA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ELHD4gichrauGbzX64400Jn7//kJazWe4kp6q7L8tG4=;
+        b=rpcijVclzc/7kUzm39qS6Dcz15VZ2tkosZv7sQAD7LzW/kjaeGvMBgzF+eaVgCMX3k
+         YULwdkEUGa1xmUZQ/TG8MBFuUySsqFOz9+y0Jw5raNzn9PkZFQh/0c1kUAdeD6f1PJfs
+         ynbKKzbpBdCwxcIsbQi5eHZnYYUJZVwMsATZ1iifPSRBbBKa9tsnQG9M6/owkDfpg5OP
+         vARw2YTkQ26EdNFSMyOjoioBGPGh2vgiUwz/pq4CVwT4VJc7cD75HG1IqioVcsR8r6lk
+         olQBTdBn9vQhhGfILFamAc/eoaqPdt2ZCOar1GFIfmRnRYZE2pykb8vU4G/XdTT+A6ga
+         EfiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=F0rKfHh3wyXjlaLP5eBn+57hKJInwluNMY/Utv0nhho=;
-        b=SgDoNDqTK5TABlZp08aMH9aU0nUGeykgHeXMQQYPHXM9UsL7buvpUZ/2RhxWybSCq0
-         z+9f1toWnrQeCWHtioRFsvZeY5QYqOoxsa6BDUuL9k4iatWbzXi5d6PifsIt1LTTf2Xh
-         rZHX5g7yUzFhSApnHglTXO9t8DTeidT5p3rXWe/lSjJJ2cHhacMkFcHqPYCueCLyEmNo
-         eO+0SzbWRqD2uafIow2XKzQPH3KbeefYRM3fo0jXNBfeiyxTjuXV5kDoso2fz3ee2P1/
-         2Z0Xq5oCRcrekQS04daqTPMjIl2PYqlRr1KYwgA0n88puTObrIhfyYsXBaQQSAUydgTd
-         El2g==
-X-Gm-Message-State: APjAAAVX0XjApfUnDXoJ5MzLQOX6mEghpRZBWnywjkGcWaEtb+geA+8S
-        Xt995jfvUAhZtTyi86OmMFo=
-X-Google-Smtp-Source: APXvYqy+7+RZjR3P8C/9q2Prye+AZQ6SDvQpAjxq2tKdopkYmqFoJZZYm+8+0iZzBx5x8rYBG6EYdQ==
-X-Received: by 2002:a5d:538a:: with SMTP id d10mr30034037wrv.121.1552542931049;
-        Wed, 13 Mar 2019 22:55:31 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id p5sm1699796wme.14.2019.03.13.22.55.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Mar 2019 22:55:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v1 09/11] t: add tests for restore
-References: <20190308101655.9767-1-pclouds@gmail.com>
-        <20190308101655.9767-10-pclouds@gmail.com>
-        <xmqq5zsm9ffv.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 14 Mar 2019 14:55:30 +0900
-In-Reply-To: <xmqq5zsm9ffv.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 14 Mar 2019 14:45:56 +0900")
-Message-ID: <xmqq1s3a9ezx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ELHD4gichrauGbzX64400Jn7//kJazWe4kp6q7L8tG4=;
+        b=qsK2/Rq3S7r25xhKkmEnkkgTHQXyK22DZRH97tx3C8OR76ApTl6ywAY0F5t8kV8L8x
+         3pmBfYxuRaOd/TCRrBdolBIPmMDgOyJcb5IhqA14x6uGUaD5gAnnkYyYUGPLRz4T1l/Q
+         gY1Rr9uovec2BdRPkhSf20nwkU8weeqvT8vJ9yqZi/l/6DhS4QnynDN5NlMBZqqgq1/d
+         uiI/F/Gm3Sr7kkTiurKW3i3Qo+mAomoy0LHPX2PlgRAvp7qsN2zjy0ZurvArKjwqss/T
+         9J8bu2n7SP9Uo1PyBtoW91jI44tKuV0/iQsgJLoYeoaTWlgqqbfHSTtvd0Tpcy920xgW
+         8/1w==
+X-Gm-Message-State: APjAAAVr6/GmG/0WQjKp+7pI4tWUexPNyqydvB0aN5uvIz+siBY+xlZo
+        vICxfegk0DoT/Ep2yETjqA9t46mcNe8AQPCkV9g=
+X-Google-Smtp-Source: APXvYqwmpRzPlJ9J35qLOE811p+FdKSPfdIwEhk5YPPfIBCkuiVSSkAfIlyJXx2T9HTMBzzQ/VX44/XioA0qzIcb5jM=
+X-Received: by 2002:a37:654e:: with SMTP id z75mr13110636qkb.314.1552543112979;
+ Wed, 13 Mar 2019 22:58:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20190219083123.27686-4-nbelakovski@gmail.com> <20190221125952.GB13403@sigill.intra.peff.net>
+In-Reply-To: <20190221125952.GB13403@sigill.intra.peff.net>
+From:   Nickolai Belakovski <nbelakovski@gmail.com>
+Date:   Wed, 13 Mar 2019 22:58:06 -0700
+Message-ID: <CAC05385Q0EQWX8B5PfR2m6N7o573NTF+a0HyXS+zqYAAdgTVOw@mail.gmail.com>
+Subject: Re: [PATCH v8 3/3] branch: add worktree info on verbose output
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->> +test_expect_success 'restore -p without pathspec is fine' '
->> +	echo q >cmd &&
->> +	git restore -p <cmd
->> +'
+On Thu, Feb 21, 2019 at 4:59 AM Jeff King <peff@peff.net> wrote:
 >
-> This stands out as a sore thumb, being an invocation with '-p' while
-> all the other tests for the '-p' feature are in t2071.
-
-I'll have this inserted immediately after 09/11 in the meantime.
-
-I wonder if there is a clean way to make everything in 2071 with
-PERL prereq.  I generally do not like the pattern used by some tests
-that manually check the prererq and have test_done early, though.
-
-Thanks.
-
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Date: Thu, 14 Mar 2019 14:48:47 +0900
-Subject: [PATCH] SQUASH??? move -p test to 2071 from 2070
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t2070-restore.sh       | 5 -----
- t/t2071-restore-patch.sh | 5 +++++
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
-index df91bf54bc..3dc7032839 100755
---- a/t/t2070-restore.sh
-+++ b/t/t2070-restore.sh
-@@ -23,11 +23,6 @@ test_expect_success 'restore without pathspec is not ok' '
- 	test_must_fail git restore --source=first
- '
- 
--test_expect_success 'restore -p without pathspec is fine' '
--	echo q >cmd &&
--	git restore -p <cmd
--'
--
- test_expect_success 'restore a file, ignoring branch of same name' '
- 	cat one >expected &&
- 	echo dirty >>one &&
-diff --git a/t/t2071-restore-patch.sh b/t/t2071-restore-patch.sh
-index 46ebcb2413..98b2476e7c 100755
---- a/t/t2071-restore-patch.sh
-+++ b/t/t2071-restore-patch.sh
-@@ -16,6 +16,11 @@ test_expect_success PERL 'setup' '
- 	save_head
- '
- 
-+test_expect_success PERL 'restore -p without pathspec is fine' '
-+	echo q >cmd &&
-+	git restore -p <cmd
-+'
-+
- # note: bar sorts before dir/foo, so the first 'n' is always to skip 'bar'
- 
- test_expect_success PERL 'saying "n" does nothing' '
--- 
-2.21.0-155-ge902e9bcae
-
-
+> On Tue, Feb 19, 2019 at 05:31:23PM +0900, nbelakovski@gmail.com wrote:
+>
+> > From: Nickolai Belakovski <nbelakovski@gmail.com>
+> >
+> > To display worktree path for refs checked out in a linked worktree
+>
+> This would be a good place to describe why this is useful. :)
+>
+> I do not have an opinion myself. Patch 2 makes a lot of sense to me, but
+> I don't know if people would like this one or not. I don't use "-v"
+> myself, though, so what do I know. :)
+I threw this one in because I thought it wouldn't be clear to the
+average user why some
+branches are in cyan. By putting the worktree path in cyan on the next
+level of output
+I thought this would help the user make the connection, but actually I
+don't have strong
+feelings about this one.
+>
+> > diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> > index f2e5a07d64..326a45f648 100644
+> > --- a/Documentation/git-branch.txt
+> > +++ b/Documentation/git-branch.txt
+> > @@ -168,8 +168,10 @@ This option is only applicable in non-verbose mode.
+> >       When in list mode,
+> >       show sha1 and commit subject line for each head, along with
+> >       relationship to upstream branch (if any). If given twice, print
+> > -     the name of the upstream branch, as well (see also `git remote
+> > -     show <remote>`).
+> > +     the path of the linked worktree, if applicable (not applicable
+> > +     for current worktree since user's path will already be in current
+> > +     worktree) and the name of the upstream branch, as well (see also
+> > +     `git remote show <remote>`).
+>
+> That parenthetical feels a bit awkward. Maybe:
+>
+>   ...print the path of the linked worktree (if any) and the name of the
+>   upstream branch, as well (see also `git remote show <remote>`). Note
+>   that the current worktree's HEAD will not have its path printed (it
+>   will always be your current directory).
+Sure I can make that change
+>
+> > diff --git a/builtin/branch.c b/builtin/branch.c
+> > index c2a86362bb..0b8ba9e4c5 100644
+> > --- a/builtin/branch.c
+> > +++ b/builtin/branch.c
+> > @@ -367,9 +367,13 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+> >               strbuf_addf(&local, " %s ", obname.buf);
+> >
+> >               if (filter->verbose > 1)
+> > +             {
+> > +                     strbuf_addf(&local, "%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)(%s%%(worktreepath)%s) %%(end)%%(end)",
+> > +                                 branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
+> >                       strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
+> >                                   "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
+> >                                   branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
+> > +             }
+>
+> Another unreadable long line (both the one you're adding, and the existing
+> one!). I don't know if it's worth trying to clean these up, but if we
+> do, it might be worth hitting the existing ones, too.
+>
+> I'm OK if that comes as a patch on top later on, though.
+Agreed, but there's enough lines like this that it'll just look
+inconsistent if only one were broken up.
+>
+>
+> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+> index 012ddde7f2..8065279be6 100755
+> --- a/t/t3203-branch-output.sh
+> +++ b/t/t3203-branch-output.sh
+> @@ -284,22 +284,20 @@ test_expect_success '--color overrides auto-color' '
+>         test_cmp expect.color actual
+>  '
+>
+> -# This test case has some special code to strip the first 30 characters or so
+> -# of the output so that we do not have to put commit hashes into the expect
+>  test_expect_success 'verbose output lists worktree path' '
+> +       one=$(git rev-parse --short HEAD) &&
+> +       two=$(git rev-parse --short master) &&
+>         cat >expect <<-EOF &&
+> -       one
+> -       one
+> -       two
+> -       one
+> -       two
+> -       ($(pwd)/worktree_dir) two
+> -       two
+> -       two
+> +       * (HEAD detached from fromtag) $one one
+> +         ambiguous                    $one one
+> +         branch-one                   $two two
+> +         branch-two                   $one one
+> +         master                       $two two
+> +       + master_worktree              $two ($(pwd)/worktree_dir) two
+> +         ref-to-branch                $two two
+> +         ref-to-remote                $two two
+>         EOF
+> -       git branch -vv >tmp &&
+> -       SUBSTRLENGTH=$(head -1 tmp | awk "{print index(\$0, \"one\")}") &&
+> -       awk -v substrlength="$SUBSTRLENGTH" "{print substr(\$0,substrlength,length(\$0))}" <tmp >actual &&
+> +       git branch -vv >actual &&
+>         test_cmp expect actual
+>  '
+>
+>
+> I don't like how it depends on the space alignment of the branches, but
+> I do like that you can clearly see which branch is being annotated.
+Thanks for the suggestion. While I'm kinda proud of my awk thing, I
+think yours is a lot easier to read. Will add.
+>
+> -Peff
