@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1765B20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 12:34:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65BB820248
+	for <e@80x24.org>; Thu, 14 Mar 2019 12:34:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727303AbfCNMe4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 08:34:56 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:50553 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726688AbfCNMez (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 08:34:55 -0400
-Received: by mail-wm1-f68.google.com with SMTP id x7so2803618wmj.0
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 05:34:54 -0700 (PDT)
+        id S1727406AbfCNMe6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 08:34:58 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43102 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726688AbfCNMe5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 08:34:57 -0400
+Received: by mail-wr1-f66.google.com with SMTP id d17so5651461wre.10
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 05:34:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=29pkbaKIcEZV76rA9luir7yhyIu1NXmLODyRRnt9pU0=;
-        b=LWFqaRMnChJFKBQovbBjPLHZDZdKjgsvwcIouomX7f9SuQacF7QNpHHasickK0KOuk
-         FThkiHpS36K/mE7kBfSWlD0TwkrJBXzx5lK1WWbdX/pp6UK99dKCoYr26+PNr96XEqvq
-         aeEPoNnYSe+NECRQSh2x31+Qjh5IGhufQLjYI4ksRQac/A2o/rKZO/HgpMo7x+Zr8+jd
-         NyWmZFCfefSvpPc7DiQqTYWGGzkW0ZMv7UQkw0EhJrlsUTF0PHP2zrAtR9RV9a0sfmpq
-         ug48CEF95UxeZh/98TicwGX599FlafsRIXHXY6JZy8Rbqxe23tVXFjsCVM8cdonTAPj9
-         +8yw==
+        bh=fwbWbcDVUm2nj+O0KFnV919PrtAZOMQJBD9zE7ycffE=;
+        b=mLgjZQFi//feZiJnmlplylm+aSENi5BHGNp9Zxt5B0pB6OJ5UL+REquOZqFzycBAd4
+         j/sbt5sBd0D7XyDbvrjSyTDDVyr7YeQ4FxjT65xq2gW2bAQ6wwKS+jnCGNEHzeU3e5/K
+         CzRdob1+PBvuqcQt/1/qUv1EqkLBD9BvOPLcExONXlP35okSa3zRXfU+ULVACb2kkf0o
+         rdN53a685Li3U47MMvOAG8rOUcRsmkr+8ZvLOjqn3wjmpmUmGygZ2qVNR/5M/z3GUqei
+         xNmfbTLK0xXTwT+wb9pXRNrSds1NAgtLn+R8YfODW2ZKYQDb+w1u7WaFPx8nZgFZxe2A
+         OPRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=29pkbaKIcEZV76rA9luir7yhyIu1NXmLODyRRnt9pU0=;
-        b=OjlS+nrMCYlhZRwtwtWIzOeGb6Ne8QxHtELZOnWWd9pZyU5+n9SyZKAsViCpjbui8W
-         clXhQduiaBw9xFZYV9b2/wODm/vyE2mumpQF5C9uyjnO48CNnltjIjrX3FhZ/aZbgKYC
-         QwwgD8e+Ras4ArT0tzk1iiKNfy/+DO9rs7ofrco2EBOZGe1HQ8cqsEmMzpyE4Otdyjn1
-         ZJg2ilctvUKFJ04vyUk4jEpkIqRPrSDz4BHRTTGGGgMkhnVfibzs0nkDy10cjvVoaqdz
-         4cFpPQnEfuFf8WYPhJgSAjAa7XrqCa5J5f1p94H1bRn/Sux1ixnHIWnpwGXifi5YPPz6
-         JjmQ==
-X-Gm-Message-State: APjAAAW4K+EeZ0Srr8NabldIgITWPjeeldZ8HHYQImVR100tnlzrE3hb
-        GBdWIWMOLxM8EOdXXE6dQXAea6yi+uA=
-X-Google-Smtp-Source: APXvYqzmWta0wiJnMCynBX9YrnNkoJIAqpY+SyPwGPqNEN6q0vx7SY10ICd36Ok2DvVusLIwcuH3+Q==
-X-Received: by 2002:a1c:7a1a:: with SMTP id v26mr2296097wmc.129.1552566892890;
-        Thu, 14 Mar 2019 05:34:52 -0700 (PDT)
+        bh=fwbWbcDVUm2nj+O0KFnV919PrtAZOMQJBD9zE7ycffE=;
+        b=L8bWpWvxGKjh9+wQAh+BqS3HYGc1sJu/7MjD6PfchFmNI+1G1kvvqCJDcpuYsQAvGp
+         yYfO6kKroy8uNJxZLI5gYObhS6v0Loo2TuewPNRmBM0ALXmvvePTbTYEHV8S16SotAbm
+         UVhndSYz0ySrrSuqEmsoEWMS/ANvDAsUZrahfZe6YMuYP8DaM+9YNRUT51Wg+/me4BR5
+         4EaCYJ2QkULGe/hRjK0Qsw9EC6udRDGrVLloqMii3wlcth4uXcgUN/lVtI2sqfXBMShF
+         t5q8Op/T7TxS+qsI15lAvD/TMAXaU6/ZQSGtOnR5cH3tUGNAQnYAu3fQM+FHdtEsQYSQ
+         CD7w==
+X-Gm-Message-State: APjAAAVAWEXm/DDU3qI8vdo4Was5UaKKVdzF885NA0mXBa90Sf/l4XNC
+        cD3JhgQsihTYIYEkMvrrbIkbVEC5uso=
+X-Google-Smtp-Source: APXvYqxmTbCZQzWTJYwhYX+kaJiyhCmEnY3tIKmfHCckqJgVgOtAI6NdYHoJ7szQvjTkpal1f62UrQ==
+X-Received: by 2002:a05:6000:128f:: with SMTP id f15mr30102471wrx.74.1552566894800;
+        Thu, 14 Mar 2019 05:34:54 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p6sm42374095wre.63.2019.03.14.05.34.50
+        by smtp.gmail.com with ESMTPSA id p6sm42374095wre.63.2019.03.14.05.34.53
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 14 Mar 2019 05:34:51 -0700 (PDT)
+        Thu, 14 Mar 2019 05:34:53 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/7] gc: remove redundant check for gc_auto_threshold
-Date:   Thu, 14 Mar 2019 13:34:33 +0100
-Message-Id: <20190314123439.4347-2-avarab@gmail.com>
+Subject: [PATCH v2 2/7] gc: convert to using the_hash_algo
+Date:   Thu, 14 Mar 2019 13:34:34 +0100
+Message-Id: <20190314123439.4347-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190313235439.30439-1-avarab@gmail.com>
 References: <20190313235439.30439-1-avarab@gmail.com>
@@ -74,41 +74,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Checking gc_auto_threshold in too_many_loose_objects() was added in
-17815501a8 ("git-gc --auto: run "repack -A -d -l" as necessary.",
-2007-09-17) when need_to_gc() itself was also reliant on
-gc_auto_pack_limit before its early return:
+There's been a lot of changing of the hardcoded "40" values to
+the_hash_algo->hexsz, but we've so far missed this one where we
+hardcoded 38 for the loose object file length.
 
-    gc_auto_threshold <= 0 && gc_auto_pack_limit <= 0
+This is because a SHA-1 like abcde[...] gets turned into
+objects/ab/cde[...]. There's no reason to suppose the same won't be
+the case for SHA-256, and reading between the lines in
+hash-function-transition.txt the format is planned to be the same.
 
-When that check was simplified to just checking "gc_auto_threshold <=
-0" in b14d255ba8 ("builtin-gc.c: allow disabling all auto-gc'ing by
-assigning 0 to gc.auto", 2008-03-19) this unreachable code should have
-been removed. We only call too_many_loose_objects() from within
-need_to_gc() itself, which will return if this condition holds, and in
-cmd_gc() which will return before ever getting to "auto_gc &&
-too_many_loose_objects()" if "auto_gc && !need_to_gc()" is true
-earlier in the function.
+In the future we may want to further modify this code for the hash
+function transition. There's a potential pathological case here where
+we'll only consider the loose objects for the currently active hash,
+but objects for that hash will share a directory storage with the
+other hash.
+
+Thus we could theoretically have 1k SHA-1 loose objects, and say 1
+million SHA-256 objects, and not notice because we're currently using
+SHA-1.
+
+So assuming that "gc" eventually learns to pack up both SHA-1 and
+SHA-256 objects regardless of what the current the_hash_alg is perhaps
+this check should be changed to consider all files in objects/17/
+matching [0-9a-f] 38 or 62 characters in length (i.e. both SHA-1 and
+SHA-256).
+
+But none of that is something we need to worry about now, and
+supporting both 38 and 62 characters depending on "the_hash_algo"
+removes another case of SHA-1 hardcoding.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/gc.c | 3 ---
- 1 file changed, 3 deletions(-)
+ builtin/gc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 020f725acc..8c2312681c 100644
+index 8c2312681c..733bd7bdf4 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -157,9 +157,6 @@ static int too_many_loose_objects(void)
+@@ -156,6 +156,7 @@ static int too_many_loose_objects(void)
+ 	int auto_threshold;
  	int num_loose = 0;
  	int needed = 0;
++	const unsigned hexsz_loose = the_hash_algo->hexsz - 2;
  
--	if (gc_auto_threshold <= 0)
--		return 0;
--
  	dir = opendir(git_path("objects/17"));
  	if (!dir)
- 		return 0;
+@@ -163,8 +164,8 @@ static int too_many_loose_objects(void)
+ 
+ 	auto_threshold = DIV_ROUND_UP(gc_auto_threshold, 256);
+ 	while ((ent = readdir(dir)) != NULL) {
+-		if (strspn(ent->d_name, "0123456789abcdef") != 38 ||
+-		    ent->d_name[38] != '\0')
++		if (strspn(ent->d_name, "0123456789abcdef") != hexsz_loose ||
++		    ent->d_name[hexsz_loose] != '\0')
+ 			continue;
+ 		if (++num_loose > auto_threshold) {
+ 			needed = 1;
 -- 
 2.21.0.360.g471c308f928
 
