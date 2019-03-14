@@ -2,94 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0532E20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 16:41:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AD4320248
+	for <e@80x24.org>; Thu, 14 Mar 2019 17:00:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726579AbfCNQlY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 12:41:24 -0400
-Received: from mout.gmx.net ([212.227.15.18]:33259 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725992AbfCNQlY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 12:41:24 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M39zL-1gnd9f1YLn-00swAb; Thu, 14
- Mar 2019 17:41:16 +0100
-Date:   Thu, 14 Mar 2019 17:41:00 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+        id S1726789AbfCNRAf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 13:00:35 -0400
+Received: from mail-yw1-f52.google.com ([209.85.161.52]:43918 "EHLO
+        mail-yw1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726316AbfCNRAf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 13:00:35 -0400
+Received: by mail-yw1-f52.google.com with SMTP id j66so4976537ywc.10
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 10:00:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=Jnu2HVjW+EDlWPj38rol4kljf3FSzyxdBRLCqCDfJmo=;
+        b=mlkEQD2YIAIHuoVWLG6PqFDf1Kr2+fJQm8igHF9nwSqM/XKxdNB3DY1F/YphXsu5mP
+         PsXWG11Tol3WhXu0Yku6Si2rcI4RxKer6SgmnxAuV3MYu5oAb9k0Wp6x9PX9QekaXIX+
+         KsaK0AV38O/RUScBk47p99J5azdCwS/ztxGz/3Okd9Yx6XFctj9YirhDpnThNgXqwysY
+         IUOYSn6ICcyK2aQm/C1orjHGT3I4glAsm+3HwGr5j6wxNUogdgjigzbSkAOXKRLjpdPH
+         KVAB1DXrJsFzqWbyxudVXDqSuVDvE6V7a2lFjSoIlDGaUxcbJnv+6w+54lpC1salD+xu
+         Ztuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Jnu2HVjW+EDlWPj38rol4kljf3FSzyxdBRLCqCDfJmo=;
+        b=AG7xbuxWbcTFtQsmAUr6pVHCVjWX+mfbCBdCpyKqhpBPrvpkI52YSdbwrre/tkEO6Y
+         +fP+lSCuPHSBFTJIHLjFYDpPVw9qG/03rv7fjaswQCIK1tmCs5258lZrAYSqyzEQTWFd
+         nBsYDjEF4dUIxdr3vkyk4SdT0CjSRUAs1YPHo7Tfw+PZU9NNHK7duOtL+F5yQ3FnE1Ss
+         KIBYyIJmJ4Dnom6mlA1UvkwmtL8pvvcWRF8AYwhQbSdF4NPFT0Qj6ZLTFrYFk/LOM7eN
+         403Sd7ndH5NkcLvKnlDvgaM8JyBAW7NEBOK0eRNsDtLdQ3iHBPk1N70tQmZNEyyWvb6a
+         to5w==
+X-Gm-Message-State: APjAAAVFarTFjU9hMUPIfDuByQC65keZsLDWt1NQ3AOO9tbb4ERsglZO
+        0Hei+PVfbw3QA27LavnDOtniidGq
+X-Google-Smtp-Source: APXvYqxJ6z3mjTB9f5OGbQEdKsjffNjQzsXdMtJZgoL4fTeCU5T8KGaaDQu0sZMI5RFtkj+XZSVpew==
+X-Received: by 2002:a81:7a0b:: with SMTP id v11mr16513295ywc.127.1552582834138;
+        Thu, 14 Mar 2019 10:00:34 -0700 (PDT)
+Received: from [192.168.1.13] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id 206sm5024047yws.95.2019.03.14.10.00.33
+        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+        Thu, 14 Mar 2019 10:00:33 -0700 (PDT)
 Subject: Re: straw poll: git merge conference location
-In-Reply-To: <CABPp-BEj3oxdhcFf-jQJbkCTOhjT2E-yMJhCpdTAbeb4xVTVAQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903141740170.41@tvgsbejvaqbjf.bet>
-References: <20190313205539.GA30425@sigill.intra.peff.net> <CABPp-BEj3oxdhcFf-jQJbkCTOhjT2E-yMJhCpdTAbeb4xVTVAQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20190313205539.GA30425@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <c0912b7f-6a83-c211-e50d-158322e3f300@gmail.com>
+Date:   Thu, 14 Mar 2019 13:00:31 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
+ Thunderbird/66.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HK6wf4vjkkz+VttYHv7qQAO4XfKT8q+l2lcmtvTxj6M1ECg9Se8
- uPDrAOWhlKgRRPCEW14FJDjpHaIDvkEG1cA9hhZ92uJ7Y9PwBA3pIESsTeqQyYyBiMy0eNe
- z/VlZgr2AtBqLTw1nFU7EB3Y3hss/96FBhszAgufNbkBsu2IsCDcJZ5DVlUmFFCJzb1jf8U
- ufwfoR9gZBSjJdY9Ys45w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:u0wx58W/Efs=:snVF/3or7g4bzpb48RO8z4
- y4K9VvavzOXxR7EylPSk1C7l/nN/IqNdLLsnIuMVNSbycTSMFK+VGGudXeAXsm8u1Unoj1tFr
- hpmaD5lrgljkCXk2F6chv9YGtilWKOz6B5FQxG9NTFfMorW0UlgXR4By//m0uoEInstFe+29u
- N7QU/L9mc71ygCUsAhJqSZtu++HJ29P90J6BAjizy/ROqiM3U+jqVbQplStR03QyaZ8x4XhZ9
- 0rZWoMIGVL7uLpfiQWoXOW/j1Yju1drpmy9taRWhXOxVZ0xPNtw6dI/z3kssFzlfECk0Kw47R
- n1J+y+1ii8LSlht2bfjM0rHSm/1BbKecVX/thooqQAE/XXxqYDIgE3bXMZxFi0iuk3VdEJghQ
- RBXxHgN7+1DJXUyn3uNnZp3HJ6ip5QVHTuWqpcmZ+vjjc930y3L+5cFbFhBXxIwZqwJu++CzU
- PE1R97Nw8TTzJkFCM8jU7kQIIhWZ2I6VkHXtx7CI4tPfT2tNC5zt+n4en18rD6z/GA5tQ0J1K
- KKhL7UjbZ/sbwuHjFmWwm3BOCn49Pbu/g2Inmu2pm0DqVoJ6LWhVbZ9UCI9Yx34j/o14jDXx+
- 0BMSQCcT/+jIDcH7wTzGTcA9huJdxQ69OogXX5QszpZD4w4XcQdztnaK5Nd9X+l2bnHUOCoyR
- nldEgA2N9OjmIHdQIP72jpwH6TwwQY8o5hVB3Gbt2ZJ1THcY2294DIxG2kvmdMN3HhFTPcsNq
- Sba7fNI9Ij9H3ycAa21OAZXuUNDIyls4P3rkArsDhmyJQt72wlA5Y5p6T5OlCGkSW02joWcW+
- sHJrr+IYl+PB5a8phLGt4PTUIWEgK1eaboz5xA2x82sQh77tkUqi8cgzhq5jXc/bMjLZzcEPE
- YDjxbjTERNhFJpjU7ZrrRZWSJJxXlGIiy52lHoeLFKK7aCZET988pLl/EANwCMuUlH4TV0pNL
- qq+DVAcDWcg==
+In-Reply-To: <20190313205539.GA30425@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Thu, 14 Mar 2019, Elijah Newren wrote:
-
-> On Wed, Mar 13, 2019 at 1:58 PM Jeff King <peff@peff.net> wrote:
-> >
-> > I took an informal poll at the last contributor summit in Brussels, but
-> > that obviously has some bias. So I'll ask here: do you have a location
-> > preference for a Git Merge conference (and associated contributor
-> > summit) next March?
-> >
-> > We're looking at doing it in North America, but there are two specific
-> > questions:
-> >
-> >   - is there preference between East Coast vs West Coast?
-> >
-> >   - preferences between Canada and US?
-> >
-> > There's no commitment, but please only share your opinion if it might
-> > actually impact your decision (i.e., if you might actually attend the
-> > contribu summit). Feel free to email me off-list if you don't want to
-> > start a flamewar about countries or coasts. :)
+On 3/13/2019 4:55 PM, Jeff King wrote:
+> We're looking at doing it in North America, but there are two specific
+> questions:
 > 
-> You are probably not surprised to hear me vote in favor of North
-> America, but I'd like to point out that unless some responses didn't
-> reach my inbox, it looks like 100% of respondents so far are in favor
-> of doing it on this side of the pond.  ;-)
-> 
-> I'm fine with East or West coast, US or Canada.  Very minor preference
-> for west coast, but whatever works for the most people is best.  I'll
-> even try to go to Europe again if that's what works for most people,
-> but I might not make it if it's there.
+>   - is there preference between East Coast vs West Coast?
 
-I'll probably try to attend remote-only if it is outside Europe, which is
-not a big deal for me.
+I have no preference here.
 
-Ciao,
-Dscho
+>   - preferences between Canada and US?
+
+There should be serious consideration for Canada only because visa issues
+may prevent some participants from traveling into the US. I know that
+some academic conferences have moved from US to Canada (even after already
+being scheduled for a US location) due to recent changes and general
+volitility in visa policies. Perhaps I'm making a big deal about something
+that doesn't affect any contributors that would join us, so I hope that
+anyone concerned about this can speak up (or contact Peff privately).
+
+Thanks,
+-Stolee
