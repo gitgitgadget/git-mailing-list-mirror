@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B11F20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 03:49:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD98A20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 04:08:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726897AbfCNDtp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 23:49:45 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33918 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726656AbfCNDto (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 23:49:44 -0400
-Received: by mail-wr1-f65.google.com with SMTP id k1so3720349wre.1
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 20:49:43 -0700 (PDT)
+        id S1726168AbfCNEFG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 00:05:06 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:52029 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725956AbfCNEFG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 00:05:06 -0400
+Received: by mail-wm1-f66.google.com with SMTP id n19so1388318wmi.1
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 21:05:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=NTGPD5Gl65EdA5fnH97klGm8pFaxISsk/bflj7Qs+i4=;
-        b=jYlcv7ThlqC/1ac9zTUl2mIQXEI+zXJUnuLV2rT00wChOP4nQqOP5I6+pzSmTVZ9W9
-         plFQrl/bTqdi/027+dl5iMrJseWSVCz8gyLvAInxiHJQOPfooMtjKwlkM95haGHT+9FW
-         zl3JOc8CWygVDj2zjyYwJYP8mBABUSdk+x6VAOfzfuExbZa0BEFNKcIrakvnLrSov6oy
-         1evzAYWQtdHtr4mZV6Sth+NnGTLsAh4V1/B3Sz0lFRaMtqesqCNuvXhOzanwtqEIx4AV
-         Q1/GFlBR/iO1X0rz8YI8V8nU+fMUkxqUzAK7uI8YuCFC2ImUYN0JQNE8h20vm9JY0YuV
-         SRNA==
+        bh=pCUxAwlt6YueqD5Mi1m2hOv3V2o6fXBlK7Nr/7GTHHk=;
+        b=bRDLPp3j0avJIulUrt+j/M5p8co5/W1JsaD9WNWGMBIsAz8yAbw2/q2zY9vcqIq3bD
+         J6dzo/5X6J/7xG9bFgjB/E3eXU6Orx4eAtapaZgmWxhplc/QZHVpIfbRangVvaoJjWCY
+         RpAe3SZrRZDLnhJRdQoxgolfy3Apw0JBzVUzIgAKhZDuOCPBJipgMpHDDhE5GW1Ng4EP
+         Jyt8GAvxUXmha8V1d+FvKJDNrkvdqrdpJvJ7xjArk1aYniQB2JzbuDBBg9nU2LYXRio/
+         BCCKCIuMAjZ2eChbGiiIR1Xq5+brVEQOZVL5FbtzH5x84eYR8yG/rI5NpJP8B8+pVAl5
+         xicA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=NTGPD5Gl65EdA5fnH97klGm8pFaxISsk/bflj7Qs+i4=;
-        b=fKnIqSRoOBR/yLcxPSh+Vt1/YLAwl/PLJxm1KRpQP06wiowzUmIBOxvmj3qHfhrmF9
-         LIcK/nXfQsfzOn3eD1555eP/w4+pmclEIZ1FBuPZFurzPySuHTLsBKDLi/kMes+M/WGC
-         HLNOH6hpOP+tgnnmrUInIhKdeebEHhgmjTB4gM3LjdTSLehJA+CloBwGFgh4QeCUURio
-         DPNenYb51qX1cEriMAGpw+ar/J2mbKPTPYIY9mTQMGHkpXcS5bn9YSk7XKuk8FxwnvrA
-         FkUYdZlflHgBa1qnipJxcODByuvVperVPOwmJp4hSYbxZUCyF3i8fzh3uHCmtoyPJOSw
-         85Og==
-X-Gm-Message-State: APjAAAU7f/h/RgYMt7yw8IgswgaRN1+ldf30kjkHBtdHzpWx1thMhSGu
-        dMTTSiv2cgLGtDG21mN/Tbw=
-X-Google-Smtp-Source: APXvYqwMK4tTBVfQq/nksOzKWShckWRFeXFy9mx4vUHB2o1wDEmolDXYOZH/jVkYmW1iFXXDkXS/8w==
-X-Received: by 2002:a5d:428d:: with SMTP id k13mr20527787wrq.147.1552535382871;
-        Wed, 13 Mar 2019 20:49:42 -0700 (PDT)
+        bh=pCUxAwlt6YueqD5Mi1m2hOv3V2o6fXBlK7Nr/7GTHHk=;
+        b=fLrOOSgz6Dgj5lqltcuV2uUd4wvTB5XMd/QuY5AimVz910DEQbPdOpel4zoFjUkact
+         x9K8ITgXd1zkR38oZdrqCJ+t4Aq1vjdUzOeporI5Dh0oVcq1oAk39jqjYjzL+JUT6ikK
+         jjbe8CxLdrClu16Ig/83KTRGIbFadz2FHl7+X7S43UJIxIvGzrEYbtjOdvaupRT5DrOx
+         Rg5K6WERAdlNvr4nIAhjV6XIPLWAe2q7KHovAmIgCUNjbO4rv4b4DPNZsw+Dk/+9eOmc
+         WLXRMvl+ABAY7+op7JSOOzrIJ8j2ZvrVvPEq/VUrBHi1DDLzaB9c7qE0F5AaYsGqt+Z0
+         SXpA==
+X-Gm-Message-State: APjAAAWVu219DDZIu0pYPoJKjCpnvVVxsqiJP9FzZlew8yiPJMQftLT4
+        3cddGvDyBCXe/UyR41roF8I=
+X-Google-Smtp-Source: APXvYqycqA/wsL1UxvnoNZKSLUV4k9WSHZw1vKP1JSA+0rPoyzZ/wH9E0J5vCpA+MzIwT77eITEaSw==
+X-Received: by 2002:a7b:cd03:: with SMTP id f3mr891909wmj.130.1552536304596;
+        Wed, 13 Mar 2019 21:05:04 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id b18sm14039030wro.80.2019.03.13.20.49.42
+        by smtp.gmail.com with ESMTPSA id c10sm16367420wrr.1.2019.03.13.21.05.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Mar 2019 20:49:42 -0700 (PDT)
+        Wed, 13 Mar 2019 21:05:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
@@ -59,10 +59,11 @@ References: <pull.161.git.gitgitgadget@gmail.com>
         <994446236d05d9d014e12a5102bcf9be222e3b57.1552472189.git.gitgitgadget@gmail.com>
         <xmqqa7hyckfm.fsf@gitster-ct.c.googlers.com>
         <20190314022245.GA1414@sigill.intra.peff.net>
-Date:   Thu, 14 Mar 2019 12:49:41 +0900
-In-Reply-To: <20190314022245.GA1414@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 13 Mar 2019 22:22:46 -0400")
-Message-ID: <xmqq8sxiaze2.fsf@gitster-ct.c.googlers.com>
+        <20190314024023.GA3889@sigill.intra.peff.net>
+Date:   Thu, 14 Mar 2019 13:05:03 +0900
+In-Reply-To: <20190314024023.GA3889@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 13 Mar 2019 22:40:23 -0400")
+Message-ID: <xmqqzhpy9k40.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,24 +74,29 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
->>  1. is reprepare_packed_git() a bit too heavy-weight, if the only
->>     thing we are addressing is the loose-object cache going stale?
->
-> It's not the only thing we are addressing. :)
->
-> Try this:
+> I'm not sure it's really worth addressing (just because I don't think
+> there's a good way to do it that isn't expensive).
 
-Yes, I knew about repacking.  I was alluding to the overly heavy
-reference to loose-object-cache in the log message ;-).
+I do not think so, either.  Not at this layer, anyway.
 
->>  2. is there a way to cleanly avoid the three-line duplicate?
->
-> Yeah, as you noted, I think the boilerplate is worse than the
-> duplication. The most readable alternative to me is a separate function,
-> like:
-> ...
-> But what I find particularly ugly is not just that it's more lines, but
-> that the assumptions and outputs of do_get_short_oid() aren't
-> particularly clear.
+If a "-x" command newly created an object whose prefix makes it
+ambiguous against an existing object, we would not notice, unless we
+refresh the loose object cache, that we now have two objects that
+share the prefix.  And we will find an object (the older one) with
+the prefix in the stale cache without hitting "oh we do not find it,
+let's retry" codepath.  So to solve both sides of the coin, we'd
+need invalidation either way, which obviously defeats the whole
+caching concept, doesn't it?
 
-Yeah, exactly.
+But when we know we are running things like interactive rebase with
+"-x" that (1) creates new objects while we are waiting for that
+process to finish and (2) not performance critical, the loop that
+drives these steps can flush any cache after seeing an external
+process to return control to us.  Such an approach would still not
+solve the issue a totally unrelated "repack" process creates by
+mucking with the object database behind our back, but at least the
+damage to the code is much better isolated ;-)
+
+
+
+
