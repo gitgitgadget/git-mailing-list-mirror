@@ -2,212 +2,262 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68B3320248
-	for <e@80x24.org>; Thu, 14 Mar 2019 12:17:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF98520248
+	for <e@80x24.org>; Thu, 14 Mar 2019 12:34:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726967AbfCNMRM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 08:17:12 -0400
-Received: from mout.gmx.net ([212.227.15.18]:43309 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726918AbfCNMRL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 08:17:11 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmrUq-1gYfVC0pWG-00h31h; Thu, 14
- Mar 2019 13:17:02 +0100
-Date:   Thu, 14 Mar 2019 13:16:45 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] difftool: allow running outside Git worktrees with
- --no-index
-In-Reply-To: <20190313204644.GA5397@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1903141305550.41@tvgsbejvaqbjf.bet>
-References: <pull.163.git.gitgitgadget@gmail.com> <9f6eb60eeeccf920af83652899c5bc2d40e2092f.1552504812.git.gitgitgadget@gmail.com> <20190313204644.GA5397@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727271AbfCNMex (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 08:34:53 -0400
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:50267 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726688AbfCNMex (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 08:34:53 -0400
+Received: by mail-wm1-f50.google.com with SMTP id x7so2803452wmj.0
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 05:34:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fBK+ZLV0wiptmyzD/orWumd9r6PAohsunW2mNjKHg6c=;
+        b=Orisbsek63qWV0IHYGjbYBhYWzGaR3o5JXWlazFn6+TtOSzIYnk0VXkQbo51zFeG4I
+         kuJL/E3j9N8lQDDWDEyAaOVf7Y0NShUztUHrWDAOSyZr1z9OUdLsGBUBPA5umgTYmHhC
+         KZnfZ70enL0UsybKuxFOh2MpYv9RNb5ezixNrQ2dySmMFY7DGLpHONHnkdvF2IA1MZyH
+         NcNRH8LjXRVZQNZ6W2AlHF5shInk5fEp9Jclug5glAwU+3fWkYEfQC04hwpIzgw33zsG
+         iGIzFQEcKJFL7MZF3iG98xwTFJGn/wvcSk+/4qTi6zLDwbplQpUer3bsEgCkXmwop/gp
+         jKkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fBK+ZLV0wiptmyzD/orWumd9r6PAohsunW2mNjKHg6c=;
+        b=iE0otLTcdyA0ggy8MTwtueJzc3KlBreSB8XK2Em2r8OmW++a67UfXemnH0dYvtyVl7
+         1+l53W+aVx6uNLCSEklLW00qEXL8lhOsOFEkgJZAQlpoZnIhzqqXQzXjWKXk0v7sg9k6
+         61MD/B4tEu0OKndhxqxexxi8eAGUa/FBQWLBVIEAP24W6+uozO1alKIyM1qpHOKMGv6d
+         Nf1fspoMVIW6Uph0jtL+n36ZNjGjZB2jS7rTdhPXYP018LDOjz9zeKxtXlHeSQwbUtoz
+         dnp511dCosdr/iIhO0aN297koaAvHq3gNu6+vYKjYA1uqwMdUj/TSpLynCaY1Ucso0Ft
+         juag==
+X-Gm-Message-State: APjAAAW8vHOUuzY5AmldlnCfBwCQuOgVu9IoNWqa2JKs+JEo/PUQiSsn
+        wYLv1B6cpQ5YNPYfvU35uyuDaEhSnCc=
+X-Google-Smtp-Source: APXvYqwlX6eu5p4NaiMWZUlRVS2CR20XfSN7TQqN8AStf0CAjGlHUFBPhNNEIBbGu+xp6ZkOXCQucg==
+X-Received: by 2002:a7b:c115:: with SMTP id w21mr2498201wmi.104.1552566889423;
+        Thu, 14 Mar 2019 05:34:49 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id p6sm42374095wre.63.2019.03.14.05.34.48
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Thu, 14 Mar 2019 05:34:48 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/7] gc: minor code cleanup + contention fixes
+Date:   Thu, 14 Mar 2019 13:34:32 +0100
+Message-Id: <20190314123439.4347-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.360.g471c308f928
+In-Reply-To: <20190313235439.30439-1-avarab@gmail.com>
+References: <20190313235439.30439-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:3iWaTdroDPgMZJXBqyohqqRuQ4BjEkvuoho4R/HHd5ZCNyMQGzD
- Xpb2D0IsgS+vkPVu0I311Oplxii1XZr06sm8N0+OEBFGiW03iCIOCfS9Qm8MFpg/ilBkblh
- KkN+X7qL2+65Fg3VhfMGPcX2Z1ucpfsmESR3YaZgvU2qP5cGjDJynmUObZBhmEOe8cehyEO
- XDyRf8ibIvHkAr62HpIpg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mVKmLd5xnyM=:OulvCbnM3kdpn1blPyPuEn
- 0dKdqm+bgSPohXqIfSmfeTpxBsmt90ihXJx3F+Nzv88YIiGsYrWGnBq6A4Oe3+qepQDal/EV/
- Ba93cT30vMH6yUQDIRdWc9IqEWiIzW85CW+pvDUjIkHp3QaHWjivE0xyGXx3kEn3IyWYAPr+/
- iRp0T3H2mZD9TMu9wMWjomdZD7zrvOrAqBJnRifcmQ/Zwnz5l8KHfcPcuRfR63KM41z/6mIKY
- 2VeF8BGNCCO9MxZBHX3jKohsB9QvjNZXPp7nYn2f4xsZa156cCXt5OVXJkjKIZtGUlad/2wOh
- zBhOi685ZWIIGJucnDsUDSQcjZnhHWRlrrd4I2qdIeRiLMGu5msAIN3u/7ca1L6lupFJKCag0
- egP/MsDWvH4TWr92/4wyX4klHPFY8XmpaB5Oz8z0Jp/DQIoiq0FxZ0l2IZe2mwIKNmVH5IMlJ
- +pIBkl+0eNyA8Lz/D8PHxzFDQ52oUTvmtX577+sDRPGvSLFb3BsddD7NylRp1g1JEIgXtIznj
- J4jN2Dj4ehxusIZnQegYP8YRuAWyk9nQh/AulIVpCi8VSnb783ljqW5s2mrwPTNQJ1L1tN6AA
- NBUP04bOlqHO7yadw1ZjFepxX1bnQOiog+rxBwNrR9LKR4HuFYg9XR/AskMx5WfmKSy/8LSNx
- cjuFeGw0hAtZCAJU9JdyNyRd0zLQw5rH7Bh1QwGfqGgtFMoHZHRk2yZVaAfAd6x/MBobookpW
- Ua6I8dupsXpNAHVdA8/Sf0h1h2VwxZ1LkcuypsMqo5MjFNvxcwSPmcImsk2g3IpE5U+Z6V/2F
- dRMSfDl8wrQENgbkfQdnFlm48Y+Kj+VlL3WiuyjKZwo70CJE07HHaO5SHllUoSjqSwglS4U5h
- 2umObKfleJIRFWD6wD9HuUi2pPS2ySFLTKupVl/9TxmsYxeRdEC5f+aQdeRpdNRluvixeTipU
- kdrM5K8jcBw==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Addresse Peff's comments to v1. For a couple of patches I've faked up
+his SOB where I copy/pasted a comment or code from a v1 comment
+verbatim. Will see if he acks that.
 
-On Wed, 13 Mar 2019, Jeff King wrote:
+The main change is a better commit message in the last patch (now
+7/7), and 2x new "reflog" patches to make it early exit in addition to
+"gc" when there's nothing to do.
 
-> On Wed, Mar 13, 2019 at 12:20:14PM -0700, Johannes Schindelin via
-> GitGitGadget wrote:
-> 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > 
-> > As far as this developer can tell, the conversion from a Perl script to
-> > a built-in caused the regression in the difftool that it no longer runs
-> > outside of a Git worktree (with `--no-index`, of course).
-> > 
-> > It is a bit embarrassing that it took over two years after retiring the
-> > Perl version to discover this regression, but at least we now know, and
-> > can do something, about it.
-> 
-> If a bug falls in the forest, does it make a sound?
+There was the "why do it at all in gc" feedback on 6/7 in v1. I've
+adjusted the commit message there to justify it, but we'll see what
+Peff things about it this time around...
 
-I am glad you asked! Last time I checked, yes, it made a sound. It was a
-really curious rattling sound. But I did not want to bother the bug again,
-so I left it alone.
+Ævar Arnfjörð Bjarmason (7):
+  gc: remove redundant check for gc_auto_threshold
+  gc: convert to using the_hash_algo
+  gc: refactor a "call me once" pattern
+  reflog tests: make use of "test_config" idiom
+  reflog: exit early if there's no work to do
+  gc: don't run "reflog expire" when keeping reflogs
+  reflog expire: don't assert the OID when locking refs
 
-> I get the impression that `--no-index` is not used all that much, given
-> how long bugs seem to hang around in it (and doubly so when intersected
-> with the difftool).
+ builtin/gc.c         | 37 +++++++++++++++++++++++++++++--------
+ builtin/reflog.c     |  7 +++++++
+ refs/files-backend.c |  2 +-
+ t/t1410-reflog.sh    | 17 ++++++++---------
+ t/t6500-gc.sh        | 19 +++++++++++++++++++
+ 5 files changed, 64 insertions(+), 18 deletions(-)
 
-Or maybe `--no-index` is used in pretty canonical ways. I, for one, used
-to be a really heavy user of `--no-index` before `range-diff`, and it was
-almost always with two files, sometimes with `--color-words`, sometimes
-with `--patience`, sometimes both, but never anything crazy like using
-Bash's `<(<command>)` syntax.
+Range-diff:
+1:  1635c7fb22 ! 1:  e18433f9c6 gc: convert to using the_hash_algo
+    @@ -11,16 +11,26 @@
+         the case for SHA-256, and reading between the lines in
+         hash-function-transition.txt the format is planned to be the same.
+     
+    -    However, we may want to modify this code for the hash function
+    -    transition. There's a potential pathological case here where we'll
+    -    only consider the loose objects for the currently active hash, but
+    -    objects for that hash will share a directory storage with the other
+    -    hash.
+    +    In the future we may want to further modify this code for the hash
+    +    function transition. There's a potential pathological case here where
+    +    we'll only consider the loose objects for the currently active hash,
+    +    but objects for that hash will share a directory storage with the
+    +    other hash.
+     
+         Thus we could theoretically have 1k SHA-1 loose objects, and say 1
+         million SHA-256 objects, and not notice because we're currently using
+         SHA-1.
+     
+    +    So assuming that "gc" eventually learns to pack up both SHA-1 and
+    +    SHA-256 objects regardless of what the current the_hash_alg is perhaps
+    +    this check should be changed to consider all files in objects/17/
+    +    matching [0-9a-f] 38 or 62 characters in length (i.e. both SHA-1 and
+    +    SHA-256).
+    +
+    +    But none of that is something we need to worry about now, and
+    +    supporting both 38 and 62 characters depending on "the_hash_algo"
+    +    removes another case of SHA-1 hardcoding.
+    +
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      diff --git a/builtin/gc.c b/builtin/gc.c
+    @@ -30,8 +40,7 @@
+      	int auto_threshold;
+      	int num_loose = 0;
+      	int needed = 0;
+    -+	const unsigned hexsz = the_hash_algo->hexsz;
+    -+	const unsigned hexsz_loose = hexsz - 2;
+    ++	const unsigned hexsz_loose = the_hash_algo->hexsz - 2;
+      
+      	dir = opendir(git_path("objects/17"));
+      	if (!dir)
+2:  ced972826d ! 2:  54e4bce91c gc: refactor a "call me once" pattern
+    @@ -10,6 +10,7 @@
+         "prune_reflogs" variables, so let's not leave the reader wondering if
+         they're being zero'd out for later use somewhere else.
+     
+    +    Signed-off-by: Jeff King <peff@peff.net>
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      diff --git a/builtin/gc.c b/builtin/gc.c
+    @@ -19,6 +20,11 @@
+      
+      static void gc_before_repack(void)
+      {
+    ++	/*
+    ++	 * We may be called twice, as both the pre- and
+    ++	 * post-daemonized phases will call us, but running these
+    ++	 * commands more than once is pointless and wasteful.
+    ++	 */
+     +	static int done = 0;
+     +	if (done++)
+     +		return;
+-:  ---------- > 3:  82f87db134 reflog tests: make use of "test_config" idiom
+-:  ---------- > 4:  c79608dbbb reflog: exit early if there's no work to do
+3:  599772f2bd ! 5:  c47dedab58 gc: don't run "reflog expire" when keeping reflogs
+    @@ -5,10 +5,18 @@
+         Don't redundantly run "git reflog expire --all" when gc.reflogExpire
+         and gc.reflogExpireUnreachable are set to "never".
+     
+    -    I'm being careful to not repeat the issue fixed in
+    -    8ab5aa4bd8 ("parseopt: handle malformed --expire arguments more
+    -    nicely", 2018-04-21). We'll die early if the config variables are set
+    -    to invalid values.
+    +    An earlier change taught "git reflog expire" itself to exit early
+    +    under this scenario, so in some sense this isn't strictly
+    +    necessary. Reasons to also do it here:
+    +
+    +     1) Similar to 8ab5aa4bd8 ("parseopt: handle malformed --expire
+    +        arguments more nicely", 2018-04-21). We'll die early if the config
+    +        variables are set to invalid values. We run "pack-refs" before
+    +        "reflog expire", which can take a while, only to then die on an
+    +        invalid gc.reflogExpire{Unreachable,} configuration.
+    +
+    +     2) Not invoking the command at all means it won't show up in trace
+    +        output, which makes what's going on more obvious.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+4:  c127265828 ! 6:  55dd203a04 reflog expire: don't assert the OID when locking refs
+    @@ -2,35 +2,39 @@
+     
+         reflog expire: don't assert the OID when locking refs
+     
+    -    The locking protocol for reflogs involves getting a *.lock file on the
+    -    loose ref[1] (even if the actual ref is packed). This isn't needed to
+    -    expire the reflog, and needlessly results promotes reference update
+    -    contention to hard errors in e.g. "gc".
+    -
+         During reflog expiry, the cmd_reflog_expire() function first iterates
+    -    over all known references, and then one-by-one acquires the lock for
+    -    each one to expire its reflog. By the time it gets around to
+    -    re-visiting the references some of the OIDs may have changed.
+    +    over all reflogs in logs/*, and then one-by-one acquires the lock for
+    +    each one to expire its reflog by getting a *.lock file on the
+    +    corresponding loose ref[1] (even if the actual ref is packed).
+    +
+    +    This lock is needed, but what isn't needed is locking the loose ref as
+    +    a function of the OID we found from that first iteration. By the time
+    +    we get around to re-visiting the reference some of the OIDs may have
+    +    changed.
+     
+    -    This has been the case ever since "reflog expire" was initially
+    -    implemented in 4264dc15e1 ("git reflog expire", 2006-12-19). As seen
+    -    in that simpler initial version of the code (and the same is the case
+    -    before this change) we subsequently use the OID to inform the expiry,
+    -    but never needed to use it to lock the reference associated with the
+    -    reflog.
+    +    Thus the verify_lock() function called by the lock_ref_oid_basic()
+    +    function being changed here would fail with e.g. "ref '%s' is at %s
+    +    but expected %s" if the repository was being updated concurrent to the
+    +    "reflog expire".
+     
+    -    Thus the verify_lock() function would fail with e.g. "ref '%s' is at
+    -    %s but expected %s" if the repository was being updated concurrent to
+    -    the "reflog expire".
+    +    By not passing the OID to it we'll try to lock the reference
+    +    regardless of it last known OID. Locking as a function of the OID
+    +    would make "reflog expire" exit with a non-zero exit status under such
+    +    contention, which in turn meant that a "gc" command (which expires
+    +    reflogs before forking to the background) would encounter a hard
+    +    error.
+     
+    -    This made "reflog expire" exit with a non-zero exit status, which in
+    -    turn meant that a "gc" command (which expires reflogs before forking
+    -    to the background) would encounter a hard error in such a scenario.
+    +    This behavior of considering the OID when locking has been here ever
+    +    since "reflog expire" was initially implemented in 4264dc15e1 ("git
+    +    reflog expire", 2006-12-19). As seen in that simpler initial version
+    +    of the code we subsequently use the OID to inform the expiry (and
+    +    still do), but never needed to use it to lock the reference associated
+    +    with the reflog.
+     
+    -    If we instead lock the reference without considering what OID we last
+    -    saw it at, we won't encounter user-visible contention to the extent
+    -    that core.filesRefLockTimeout mitigates it. See 4ff0f01cb7 ("refs:
+    -    retry acquiring reference locks for 100ms", 2017-08-21).
+    +    By locking the reference without considering what OID we last saw it
+    +    at, we won't encounter user-visible contention to the extent that
+    +    core.filesRefLockTimeout mitigates it. See 4ff0f01cb7 ("refs: retry
+    +    acquiring reference locks for 100ms", 2017-08-21).
+     
+         Unfortunately this sort of probabilistic contention is hard to turn
+         into a test. I've tested this by running the following three subshells
+-- 
+2.21.0.360.g471c308f928
 
-In other words, my take is that the ways in which `--no-index` is used are
-probably not very different from one another, and the bugs lurk in
-really rarely exercised code paths.
-
-> > -	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
-> > -	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
-> > +	for (i = 0; i < argc; i++)
-> > +		if (!strcmp(argv[i], "--"))
-> > +			break;
-> > +		else if (!strcmp(argv[i], "--no-index")) {
-> > +			no_index = 1;
-> > +			break;
-> > +		}
-> 
-> Instead of this ad-hoc parsing, can we just add an OPT_BOOL("no-index")
-> to the parse-options array? We'll have already run parse_options() at
-> this point.
-> 
-> We'd just have to remember to add it back to the argv of diff
-> sub-commands we run.
-
-It was that "add it back" that I was not keen to implement.
-
-But you gave me an idea: why not teach parse_options() to optionally keep
-individual parsed arguments in `argv`?
-
-And I was half-way finished with implementing that idea when I discovered
-`OPT_ARGUMENT()`. This seemed to be *almost* what I needed: it puts the
-argument immediately back into `argv`. However, it did not record that
-fact, so I would not know whether it was part of the command-line or not.
-
-So I was already done with implementing `OPT_ARGUMENT_SEEN()`, based on
-`OPT_ARGUMENT()`, and testing it with my difftool patch, when it occurred
-to me to look what existing users of `OPT_ARGUMENT()` do. Guess what:
-there are none, apart from that test helper used in t0040 to verify that
-`parse_options()` works as intended. And there were none other. In the
-entire commit history.
-
-In the end, I changed `OPT_ARGUMENT()`, and I find the end result rather
-pleasing.
-
-> > +	if (!no_index && !startup_info->have_repository)
-> > +		die(_("difftool requires worktree or --no-index"));
-> > +
-> > +	if (!no_index){
-> > +		setup_work_tree();
-> > +		setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
-> > +		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
-> > +	}
-> 
-> This part makes sense.
-> 
-> There may be other subtle dependencies on having a repo from
-> sub-functions we run, but I didn't see any from a quick scan. And
-> anyway, if there is such a code path, it is no worse off than before
-> your patch (and in fact much better, because it would hopefully yield a
-> BUG() that would tell us what we need to fix).
-
-Indeed.
-
-> > +test_expect_success 'outside worktree' '
-> > +	mkdir outside &&
-> > +	echo 1 >outside/1 &&
-> > +	echo 2 >outside/2 &&
-> > +	test_expect_code 1 env GIT_CEILING_DIRECTORIES="$(pwd)" git \
-> > +		-c diff.tool=echo -c difftool.echo.cmd="echo \$LOCAL \$REMOTE" \
-> > +		-C outside difftool --no-prompt --no-index 1 2 >out &&
-> 
-> We have a helper for running outside a repo. Because you have to set up
-> the "outside" space, it unfortunately doesn't shorten things as much as
-> it does in some other spots:
-> 
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index 4907627656..255a787614 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -706,12 +706,12 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
->  '
->  
->  test_expect_success 'outside worktree' '
-> -	mkdir outside &&
-> -	echo 1 >outside/1 &&
-> -	echo 2 >outside/2 &&
-> -	test_expect_code 1 env GIT_CEILING_DIRECTORIES="$(pwd)" git \
-> +	mkdir non-repo &&
-> +	echo 1 >non-repo/1 &&
-> +	echo 2 >non-repo/2 &&
-> +	test_expect_code 1 nongit git \
->  		-c diff.tool=echo -c difftool.echo.cmd="echo \$LOCAL \$REMOTE" \
-> -		-C outside difftool --no-prompt --no-index 1 2 >out &&
-> +		difftool --no-prompt --no-index 1 2 >out &&
->  	test "1 2" = "$(cat out)"
->  '
->  
-> 
-> but it might be worth using anyway, just for consistency.
-
-I totally agree. Thanks for pointing me to `nongit`; I was unaware of it.
-
-And I was able to shorten it a bit, because the files `1` and `2` do not
-need to live in that `non-repo` directory.
-
-Again, a rather pleasing change.
-
-> > +	test "1 2" = "$(cat out)"
-> 
-> A minor nit, but I think:
-> 
->   echo "1 2" >expect &&
->   test_cmp expect actual
-> 
-> produces nicer output on failure, and costs the same number of
-> processes (it is an extra file write, but I think the main driver of
-> performance in the test suite is just processes).
-
-You are totally right! After all, a regression test does not need to make
-anything easy when it passes. It needs to make it easy to act when it
-fails.
-
-Thank you so much for your helpful suggestions!
-Dscho
