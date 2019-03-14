@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19F6F20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 01:14:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7275D20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 01:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfCNBO1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Mar 2019 21:14:27 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37107 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726412AbfCNBO0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Mar 2019 21:14:26 -0400
-Received: by mail-wr1-f65.google.com with SMTP id y15so4026257wro.4
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 18:14:25 -0700 (PDT)
+        id S1726530AbfCNB3x (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Mar 2019 21:29:53 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34176 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726477AbfCNB3x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Mar 2019 21:29:53 -0400
+Received: by mail-wr1-f68.google.com with SMTP id k1so3521105wre.1
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 18:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=C0RkP3MmmTOVCwS2++GjxhbHcFu1Jz5LvJIkGZLCCMk=;
-        b=MNVPz0cakCePU/6WzaMg4i9TXJypul+VTfnBz52tgYKoQR7GLlIZ+4lHOF8cO99XwH
-         gl9dDTODefDSQ5g7R6QcFsVufIXXhXI2ezioNqBfyDJP1AclYw62QGIMbqO9iwAvnZde
-         twCILsVfWfKOnPggFzVsBHXidTrjaipvNxOrqpCkx0+yO4bn/5oYY9AfUtDPYsKCWitY
-         zkuQIzT5MztcAyh/km+RgXDAq9p9X7a24WTp5B1vXXqTqBykX7rlKNVS9zoM4pOosf3A
-         fkqR/nK/gzo92LcX6a5sEOW3rqmoDOWAv2vXzNb4ouRpkdKJTipN5owmKaoTbuX/Ls9q
-         Px2g==
+        bh=pF8uTv+o2h8d/ghw48uH8HlCAVSHqcfV/xpxm06tMS0=;
+        b=hXavIddXGr2NrSxrZc5vbgXkVYRn34pWJjm/dGAa09l+MpxVVLS8Wcg7/ZTveJeNHL
+         5RgpVDzLFIU+SQzW2a3LUqwaY5O+/o1gK0z4J6AM+VPPpAD/PdR0m73fxUzzIqmix24o
+         izYneLDU3VieHEQtxD7C8zjQGbmO53WxCMAt939SYsQCaEK9Sng+SmckvptKjuLaPZnH
+         /AO6rCyxD11pTSU4y7fGKAIxDbH2EAjH4vTFsLC3EKU8zM4I5WC8v0hOlGBjX2F5/+jR
+         8/lnBVLz9HNFEyyQz2jOvoapXy17Q5ARmTLzZailEsHKp12fMkbgwatAcuQdU8trTnXI
+         ZgFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=C0RkP3MmmTOVCwS2++GjxhbHcFu1Jz5LvJIkGZLCCMk=;
-        b=AuJ/bG6DK/7QWHzzQ9nkpoRJ2JOfvmht0HibiaP5/s2nSdAYyCagkij2JZvlfCgLbm
-         EoBDU8qR0euwoVrGBgyWZzi34QOHk1q2YG8dJ/Nh9z1ay77Z/9mzn7MIOQYnTko/sF5T
-         0SLJM2TfixPlf7ggf6tOaESr79DiGfBvqyt+9kY4o/ag5NU4bD1TntP+Srb23lz/vfxF
-         F02Jyjjc/CgGAjqMGXbSxctpHbUwqODSCmm/U/rYqFxYBw8y8QM/PIJdVJcyTVCyk2fF
-         1hSgQNyJdaoi+sPIfzVLkxKDIDJA9REijbgRSfYdTLXlXZn8Ay3hMut/8N5iTBWz0VK5
-         RCfw==
-X-Gm-Message-State: APjAAAVfy9YDtyvZ+oFMK8UWFif3iDae0goy7zY02dDWiyEjDWxhTN4p
-        95/s/tVgz7BMQdj7z7jJdyE2c3Du95A=
-X-Google-Smtp-Source: APXvYqwXlMMZiy7N/oKzQy4DLJqWFCfLYiAyLbv9MG/Sspm0RthSeOGaY0PjaFQ8nJLY89L6M8hNfg==
-X-Received: by 2002:a5d:4608:: with SMTP id t8mr31198458wrq.186.1552526064742;
-        Wed, 13 Mar 2019 18:14:24 -0700 (PDT)
+        bh=pF8uTv+o2h8d/ghw48uH8HlCAVSHqcfV/xpxm06tMS0=;
+        b=gNfXirnJnTCqNV2iIM43s0MM0VgHA3Zyh7C8i2iNXS5w+stw3bEx+JGX71HCHM45GX
+         gDbPvogW+bT7sRalnuJmPdMOO02faHHcdPbmDLViGbJ4jeTHHv/L2Ff0i61GqpGOfBPj
+         Pi4TngttJtUdIWrLfSy4scY3GhGH5RMVxdcMxJ8RZD5DdfaO/UZEwKosIej2THN2CxS5
+         UPLvcIhqKX3QtmpkpqJRfPepHzNLjbudUC1KdXxQNUbrPpQeTyCV7xfsy49lVAmfh3vN
+         2w6uMlnEDvxKwR798bf8ITIvgUD2utTvkdep2tWLXjSyYIf0uPX69jBe8RXxOuktOLod
+         l5dg==
+X-Gm-Message-State: APjAAAXsXE8IykAfAC9/JnjMSyLNM8KscMPnctIxeuQXPQ7oquT6TfFc
+        RoUoDc9jD62R/P01R39X55c=
+X-Google-Smtp-Source: APXvYqx+Z+sk9NI1ePQmlg47F9v72GRQKISzz7yZSUJJHpbXeuJ9gONCMmwQgu3XW5ynNeZMUCht0g==
+X-Received: by 2002:adf:efca:: with SMTP id i10mr29560261wrp.265.1552526990902;
+        Wed, 13 Mar 2019 18:29:50 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id o8sm884570wma.1.2019.03.13.18.14.24
+        by smtp.gmail.com with ESMTPSA id z12sm403211wmf.31.2019.03.13.18.29.49
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Mar 2019 18:14:24 -0700 (PDT)
+        Wed, 13 Mar 2019 18:29:50 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] sequencer: improve error message when an OID could not be parsed
+Subject: Re: [PATCH 4/4] get_oid(): when an object was not found, try harder
 References: <pull.161.git.gitgitgadget@gmail.com>
-        <d8c4a3dde5bed492bcdb6399fd8a73ebf4798320.1552472189.git.gitgitgadget@gmail.com>
-Date:   Thu, 14 Mar 2019 10:14:23 +0900
-In-Reply-To: <d8c4a3dde5bed492bcdb6399fd8a73ebf4798320.1552472189.git.gitgitgadget@gmail.com>
+        <994446236d05d9d014e12a5102bcf9be222e3b57.1552472189.git.gitgitgadget@gmail.com>
+Date:   Thu, 14 Mar 2019 10:29:49 +0900
+In-Reply-To: <994446236d05d9d014e12a5102bcf9be222e3b57.1552472189.git.gitgitgadget@gmail.com>
         (Johannes Schindelin via GitGitGadget's message of "Wed, 13 Mar 2019
-        03:16:32 -0700 (PDT)")
-Message-ID: <xmqqef7acl5c.fsf@gitster-ct.c.googlers.com>
+        03:16:34 -0700 (PDT)")
+Message-ID: <xmqqa7hyckfm.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,32 +72,37 @@ X-Mailing-List: git@vger.kernel.org
 "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> The interactive rebase simply complains about an "invalid line" when the
-> object hash of, say, a `pick` line could not be parsed.
->
-> Let's tell the user what happened in a little more detail.
-
-Makes sense.
-
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  sequencer.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 95dda23eee..f91062718d 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2137,7 +2137,8 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
->  	item->arg_len = (int)(eol - item->arg);
+> @@ -442,6 +442,18 @@ static enum get_oid_result get_short_oid(const char *name, int len,
+>  	find_short_packed_object(&ds);
+>  	status = finish_object_disambiguation(&ds, oid);
 >  
->  	if (status < 0)
-> -		return -1;
-> +		return error(_("could not parse '%.*s'"),
-> +			     (int)(end_of_object_name - bol), bol);
->  
->  	item->commit = lookup_commit_reference(r, &commit_oid);
->  	return !item->commit;
+> +	/*
+> +	 * If we didn't find it, do the usual reprepare() slow-path,
+> +	 * since the object may have recently been added to the repository
+> +	 * or migrated from loose to packed.
+> +	 */
+> +	if (status == MISSING_OBJECT) {
+> +		reprepare_packed_git(the_repository);
+> +		find_short_object_filename(&ds);
+> +		find_short_packed_object(&ds);
+> +		status = finish_object_disambiguation(&ds, oid);
+> +	}
+> +
+
+This looks obviously correct, but two things that made me wonder
+briefly were:
+
+ 1. is reprepare_packed_git() a bit too heavy-weight, if the only
+    thing we are addressing is the loose-object cache going stale?
+
+ 2. is there a way to cleanly avoid the three-line duplicate?
+
+My tentative answers are (1) even if it is, but get_short_oid() is
+already heavy-weight enough; it won't be worth restructuring the
+code to make it possible to clear only the loose-object cache, and
+(2) a loop that runs twice when the first result is MISSING_OBJECT
+and otherwise leaves after once would need an extra variable, its
+iniialization, check and increment, which is more than what we might
+save with such a restructuring, so it won't be worth pursuing.
+
+But others may have better ideas, as always ;-)
