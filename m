@@ -2,89 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AD4320248
-	for <e@80x24.org>; Thu, 14 Mar 2019 17:00:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A726220248
+	for <e@80x24.org>; Thu, 14 Mar 2019 17:20:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726789AbfCNRAf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 13:00:35 -0400
-Received: from mail-yw1-f52.google.com ([209.85.161.52]:43918 "EHLO
-        mail-yw1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726316AbfCNRAf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 13:00:35 -0400
-Received: by mail-yw1-f52.google.com with SMTP id j66so4976537ywc.10
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 10:00:35 -0700 (PDT)
+        id S1726936AbfCNRUl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 13:20:41 -0400
+Received: from mail-pf1-f178.google.com ([209.85.210.178]:33568 "EHLO
+        mail-pf1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbfCNRUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 13:20:41 -0400
+Received: by mail-pf1-f178.google.com with SMTP id i19so4309858pfd.0
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 10:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=Jnu2HVjW+EDlWPj38rol4kljf3FSzyxdBRLCqCDfJmo=;
-        b=mlkEQD2YIAIHuoVWLG6PqFDf1Kr2+fJQm8igHF9nwSqM/XKxdNB3DY1F/YphXsu5mP
-         PsXWG11Tol3WhXu0Yku6Si2rcI4RxKer6SgmnxAuV3MYu5oAb9k0Wp6x9PX9QekaXIX+
-         KsaK0AV38O/RUScBk47p99J5azdCwS/ztxGz/3Okd9Yx6XFctj9YirhDpnThNgXqwysY
-         IUOYSn6ICcyK2aQm/C1orjHGT3I4glAsm+3HwGr5j6wxNUogdgjigzbSkAOXKRLjpdPH
-         KVAB1DXrJsFzqWbyxudVXDqSuVDvE6V7a2lFjSoIlDGaUxcbJnv+6w+54lpC1salD+xu
-         Ztuw==
+        d=grande.coffee; s=omgwhathaveyoudone;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BNukpwzTf6wPI0fe19jPmQQagNGeCgGTCjn717c+crs=;
+        b=KmYukHRii6Vsu40oC8vXl1X/JBvpWGBGwpklJjnwAIs9jpQAq93B2Do4gW+B1hzbzj
+         ObPqYy6mwRmPswNE1uP/BGWJD+KiN29Tcg/jkthJ5k/0YuVqIVYHX1Pk66B2y03rXXt1
+         /lkW4siIWtiGAQlJg5C6L8SOSxipCHhK63fwhPvVaPpYVfdPS+zdOxGzT0ipcuXtMDh1
+         PwMj9YqReYbcv4u3KnAxTMwZFRKe9lIs1jFtYHyIolSmyhEBZKfMbjAwRfLrHjgECy2b
+         41TByYQ8fcW2d1c6dzo+SpPQ1ycEV3jJTPspC2mqjCS/Xz1p3aS14vyYfyKsgpGgAmUv
+         R6fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Jnu2HVjW+EDlWPj38rol4kljf3FSzyxdBRLCqCDfJmo=;
-        b=AG7xbuxWbcTFtQsmAUr6pVHCVjWX+mfbCBdCpyKqhpBPrvpkI52YSdbwrre/tkEO6Y
-         +fP+lSCuPHSBFTJIHLjFYDpPVw9qG/03rv7fjaswQCIK1tmCs5258lZrAYSqyzEQTWFd
-         nBsYDjEF4dUIxdr3vkyk4SdT0CjSRUAs1YPHo7Tfw+PZU9NNHK7duOtL+F5yQ3FnE1Ss
-         KIBYyIJmJ4Dnom6mlA1UvkwmtL8pvvcWRF8AYwhQbSdF4NPFT0Qj6ZLTFrYFk/LOM7eN
-         403Sd7ndH5NkcLvKnlDvgaM8JyBAW7NEBOK0eRNsDtLdQ3iHBPk1N70tQmZNEyyWvb6a
-         to5w==
-X-Gm-Message-State: APjAAAVFarTFjU9hMUPIfDuByQC65keZsLDWt1NQ3AOO9tbb4ERsglZO
-        0Hei+PVfbw3QA27LavnDOtniidGq
-X-Google-Smtp-Source: APXvYqxJ6z3mjTB9f5OGbQEdKsjffNjQzsXdMtJZgoL4fTeCU5T8KGaaDQu0sZMI5RFtkj+XZSVpew==
-X-Received: by 2002:a81:7a0b:: with SMTP id v11mr16513295ywc.127.1552582834138;
-        Thu, 14 Mar 2019 10:00:34 -0700 (PDT)
-Received: from [192.168.1.13] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id 206sm5024047yws.95.2019.03.14.10.00.33
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Mar 2019 10:00:33 -0700 (PDT)
-Subject: Re: straw poll: git merge conference location
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20190313205539.GA30425@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c0912b7f-6a83-c211-e50d-158322e3f300@gmail.com>
-Date:   Thu, 14 Mar 2019 13:00:31 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
- Thunderbird/66.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BNukpwzTf6wPI0fe19jPmQQagNGeCgGTCjn717c+crs=;
+        b=Fcti8sFZrPIwo/tk7R3Kmm0sJBdxvJkWukOvBnLiXYK0UKWjEuvnQZK1sUh+JthyIr
+         FDIU04Z0JBC4M/L4KhJVDaqh/vTEihfbW2LAJcdIosOxvD/EZOadALmiIDqLp+iGuFkA
+         pvTZWinmNNeGDbNXWFIUTsZOJorFbijr3LPR8tSq0SZWTE2gwuvx5C1AcGRaQFhKu4mP
+         JYN2KQGn73NnSOXWFCVjOa3xwZ6YrixXeocMYWFgDkTMWodeX6uRUwiYuuP8ZRXN/6W3
+         IOdZ52qbJNg1nN1qVTQtU+z32FSH+LycN+obqdZx1TSyu7BrigSMjwU9GOk3+DZxkK0z
+         z52g==
+X-Gm-Message-State: APjAAAXCBnI/aYkdEXPKQZ3Df5DK7g9dripU3rX44n5g6WPJpAFLHYlh
+        qhmmPinDpAgNe4WE0Lyg6jNkCPjgWTbd9A==
+X-Google-Smtp-Source: APXvYqxi6EIUMS5fcAltXcvC1O26IrPYsW/7XHCH6nkLiXhvGWtOftu8f+XSG3183ez1zKAaKuDwew==
+X-Received: by 2002:a63:c307:: with SMTP id c7mr46492320pgd.386.1552584040499;
+        Thu, 14 Mar 2019 10:20:40 -0700 (PDT)
+Received: from chabuduo ([198.41.129.7])
+        by smtp.gmail.com with ESMTPSA id h75sm40651873pfd.150.2019.03.14.10.20.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 14 Mar 2019 10:20:39 -0700 (PDT)
+Date:   Thu, 14 Mar 2019 17:20:32 +0000
+From:   Alexander Huynh <alex@grande.coffee>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [BUG] fetching all remote branches results in failed multiple
+ updates
+Message-ID: <20190314172032.GA10461@chabuduo>
+References: <20190307214447.GA4909@chabuduo>
+ <20190307234015.GD28939@szeder.dev>
+ <20190308000810.GA8044@chabuduo>
+ <xmqqef7ikw9f.fsf@gitster-ct.c.googlers.com>
+ <20190313234524.GA3053@chabuduo>
 MIME-Version: 1.0
-In-Reply-To: <20190313205539.GA30425@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190313234524.GA3053@chabuduo>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/13/2019 4:55 PM, Jeff King wrote:
-> We're looking at doing it in North America, but there are two specific
-> questions:
-> 
->   - is there preference between East Coast vs West Coast?
+Hi all,
 
-I have no preference here.
+Sorry to bother one last time. After a bit more digging, I found that the
+problem was with my workflow.
 
->   - preferences between Canada and US?
+Shallow clones set `remote.origin.fetch` to one branch, so what I was doing in
+the past was overriding the respository-specific `remote.origin.fetch` with my
+global config.
 
-There should be serious consideration for Canada only because visa issues
-may prevent some participants from traveling into the US. I know that
-some academic conferences have moved from US to Canada (even after already
-being scheduled for a US location) due to recent changes and general
-volitility in visa policies. Perhaps I'm making a big deal about something
-that doesn't affect any contributors that would join us, so I hope that
-anyone concerned about this can speak up (or contact Peff privately).
+I've now changed my workflow to perform a shallow clone at first, `cd` into
+the repository, and locally set `remote.origin.fetch` to
+`+refs/heads/*:refs/remotes/origin/*`.
 
-Thanks,
--Stolee
+Thanks again,
+Alex
