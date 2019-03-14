@@ -2,85 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83C5920248
-	for <e@80x24.org>; Thu, 14 Mar 2019 04:51:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2989220248
+	for <e@80x24.org>; Thu, 14 Mar 2019 04:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726206AbfCNEvj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 00:51:39 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33884 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725897AbfCNEvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 00:51:39 -0400
-Received: by mail-wr1-f66.google.com with SMTP id k1so3811243wre.1
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 21:51:38 -0700 (PDT)
+        id S1726303AbfCNE5o (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 00:57:44 -0400
+Received: from mail-it1-f195.google.com ([209.85.166.195]:37982 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725911AbfCNE5o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 00:57:44 -0400
+Received: by mail-it1-f195.google.com with SMTP id k193so2563377ita.3
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 21:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=4c2bjXabx5+28PkzElqu4Hpp0z25erpqqMC2pSofa0I=;
-        b=WC3ze8EPx+qeRd4zTaMG6DRiSndri1hmInH9S0hmb8RjC483aZcURY1ONCi5BlA9oV
-         OXw22gaCFaO5NJVfsS0dTHu2MbLHI+owqeE+XtgV73I593cgV6/GaeOxo+G0GHr/ClFp
-         WdcSi6j4gXb6XVQq/zeYtxopYvDe+L75GuMKL1RcndELtlXhfraqZaMeJag8GqVSm9bO
-         cOBVtd/3qvmMkSZutUTHsAkwzVIScMoYcoWHLSBg3zjQneBzR5cwD7Nw/DjS4S2xcnuV
-         b1mHpEvKaDSxhRKkzgtnIbccVaeijJ6FldueSkEvHujoZiH8a40VP3Ufrevbr12AubPh
-         iQ/Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KfGb0DTIfW1xHkEsTslbaY1QAGPOzQ6VEH4wMvE6UHQ=;
+        b=QyOtn1s6utpHeNHNRD+5AakatdOeLeJ2NEnDrRrdQAbnd3MPG2Iz86YGbJ/bamxY6Y
+         VSR+DJ98zQqQbXC7lVGdM28JWOaur1hJwu2jjWZoGVSm0Wn1Y52PBlWF/sW6G9WAX9qa
+         W6OA7iK8RXgryn6nwb2l9rxd2+mUZ/gd1ui95aCKyKCjZfUNgbCWm4H9+XqKlWA3hQRq
+         ATZmr0G64giEs2hEtTu7Rnt/C/Tllf2KRBjfTPWPlZgWU65J745sfLAjYaoCkc93FWIA
+         /73+hVn1XdjpOjLekMuQYkJyhzFl0Uysw3s2BhPikKv6Ci9axHXzUNRuZeeEI8Ntvwpu
+         zdjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=4c2bjXabx5+28PkzElqu4Hpp0z25erpqqMC2pSofa0I=;
-        b=mX7ZfNSEf/aCQebQwRVVubNP28AVzUYB7jgc6B0MpXXllFWqgXVTkmZI7SJbYq/irt
-         BUdKkKHN1CFT7kdHHzQqUdrDbUMJX+5sjCuCTcLyoRze/rXuMotYC9hTzxclT0juoUuu
-         +qHdHZq76ztGRdTBwdXimB5F7BaMpzwHdpAKo4GlZss5RI+I773RKkJRgtCPuFLu8xUt
-         S+jQn9y2W8vZlLuPnQdqS5gax1BVqRSfMrBYfKKAQ+2FnWL1ATS4Q7SCgOIF6tq29/KE
-         d0G0g8kzUkskWIVvU31jg1XLNb++/IJvq/LgXnM4/x8VyFcePuxqwmL6kN0CkXZf7Isq
-         BBVg==
-X-Gm-Message-State: APjAAAXH1M0Qm1s0TTxq7f/AfejIj4sJ+nDuRxXAe3fq5cI8FRTbIkSX
-        pmAO6RWnfdrMPpx+kg9iDdyVZdsKr4s=
-X-Google-Smtp-Source: APXvYqzlhw7MP4pdjc/3e6S0Vwai9ZUhy3EmimUM7rimAajr8rTdsn8dReR6eC2XiTW4XpUlJya0Pg==
-X-Received: by 2002:adf:9d92:: with SMTP id p18mr25141138wre.119.1552539097124;
-        Wed, 13 Mar 2019 21:51:37 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id z9sm15244721wrv.59.2019.03.13.21.51.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Mar 2019 21:51:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/5] gc: don't run "reflog expire" when keeping reflogs
-References: <87imwmbv7l.fsf@evledraar.gmail.com>
-        <20190313235439.30439-5-avarab@gmail.com>
-        <20190314004006.GI31968@sigill.intra.peff.net>
-Date:   Thu, 14 Mar 2019 13:51:35 +0900
-In-Reply-To: <20190314004006.GI31968@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 13 Mar 2019 20:40:06 -0400")
-Message-ID: <xmqqmuly9hyg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KfGb0DTIfW1xHkEsTslbaY1QAGPOzQ6VEH4wMvE6UHQ=;
+        b=bv0ZT3UveSKdy2Bqi+/n2ZQLfegpMSZf8pjEj8SZaX4BHEnHbGjgPokfgsy7intfoQ
+         U3TmQTEtp20rCx/mwi56J56T3LEaPn2TBATwPxxKaeSEHCPCz0LxwW4ex1DPKwIEfC1y
+         Pkb8DgON6B8KBtndm49HF6kvvgj779syaXN6nx6JGb8qEL5IVeILbKVwd/d0fHqrMzqG
+         KhSJmxRHKZ154/wNF5quw8Hum3kps/OgKqxzhkp+mD23eO7aaA1BN5BrCXqD+NIun3rP
+         SJX2P1TG9XtnSlan/5qWqxKXH13tqdGgGwL+T8SQ6AlIlSKnxiSAFWCvhczQJhpVC19x
+         Eadw==
+X-Gm-Message-State: APjAAAXtPbKP33cHPIipxV8Kp5x4XYk+dlj4c2uTkxS4R2DkXo3DiXEl
+        FhrcyY9/GWzav8TELpaXartkNYi65m9isyZbdLfxPQ==
+X-Google-Smtp-Source: APXvYqwl2DcMf4osRcD1EMab9MnWd2dmxdnHZdIIN40Ps3XTU2mE6MDZnfCq035/NtKkkM9ZYsx9NyWgtniGGJoAAvA=
+X-Received: by 2002:a24:3b0a:: with SMTP id c10mr831929ita.10.1552539463325;
+ Wed, 13 Mar 2019 21:57:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190308101655.9767-1-pclouds@gmail.com> <20190308101655.9767-10-pclouds@gmail.com>
+ <nycvar.QRO.7.76.6.1903131005180.41@tvgsbejvaqbjf.bet> <CACsJy8Ce3Sn7sWDOqGPeOk7JiXg+3KSaox4PFZxfh90B6E81_Q@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1903132316220.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1903132316220.41@tvgsbejvaqbjf.bet>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 14 Mar 2019 11:57:17 +0700
+Message-ID: <CACsJy8CbGBFr0jknuWrkrS19OJhpPaUDwHa8-+j1Ak=DQkmpdw@mail.gmail.com>
+Subject: Re: [PATCH v1 09/11] t: add tests for restore
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Mar 14, 2019 at 5:17 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Duy,
+>
+> On Wed, 13 Mar 2019, Duy Nguyen wrote:
+>
+> > On Wed, Mar 13, 2019 at 4:13 PM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > > Duy, have you thought about making use of the CI builds? You could catch
+> > > those bugs before they hit the Git mailing list...
+> >
+> > Using Azure? No.
+>
+> This hostility is totally unnecessary. Especially since we still have
+> Travis builds that you could also use to catch your bugs early, so that I
+> would not have to catch them.
 
-> Seeing "--stale-fix" again reminded me: that may be the "oops, we can
-> spend tons of CPU walking history" bit that I mentioned in the other
-> part of the thread. But I don't think git-gc would ever run with that
-> option.
-
-The option was a purely transitional measure to recover from a bad
-reflog state that could have been left by earlier versions of
-"prune" and "repack" that did not pay attention to the reflog.
-Perhaps we should plan to deprecate and remove it by now?
+Thanks. I'll check back on github in a couple years. Adding CI to
+gitlab is on my todo list but it's very low.
+-- 
+Duy
