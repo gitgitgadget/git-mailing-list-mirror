@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55B8520248
-	for <e@80x24.org>; Thu, 14 Mar 2019 12:35:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ECDE20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 12:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727418AbfCNMfC (ORCPT <rfc822;e@80x24.org>);
+        id S1727452AbfCNMfD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 08:35:03 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:50567 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727267AbfCNMfC (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 14 Mar 2019 08:35:02 -0400
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:46216 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726797AbfCNMfB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 08:35:01 -0400
-Received: by mail-wr1-f46.google.com with SMTP id 33so5664127wrb.13
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 05:34:59 -0700 (PDT)
+Received: by mail-wm1-f66.google.com with SMTP id x7so2804105wmj.0
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 05:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BfnimDtqv5SD6Iwu+dBH75qyhMYDPZ+Aoknb+G+x564=;
-        b=VXUTVl0KbEj4fdbGVQY5HEY6SHOQ/x8Zn2F1wuow6H86aV9PPaFpbA6+q7U8iIFjah
-         e8YvdZZBqaQPsHgs12K8m7rIKZT4E02s67SLhz70lqcpZ+EhHvyghPko+DsbKUBczbMm
-         LvV6/u2W9W/5NfLdmwp7yBqwking/62ZNd0VBvrZ5WmQW6l0QmTsoLh7Mnc2UBoketUF
-         OENIoTE5vOPNhF15XlWsaXdFARH2g2Aigb3GDwV1xdjVCDj3A5ZEyqt8gT/GRTbAyeEN
-         48p0W5aXOiqJdgGtdf/ljPTEX9UvJX1p2gvicM64uSHLE7m+gU1l/VF89+puLPWii7cK
-         vBDA==
+        bh=g5NrsLsVGVoc8FeFrZjYyWQIpmPIbiuwhdb5AhRsdiI=;
+        b=BcDTnbuG1GjoR1R8iuksSOdx1rPtiBgO0bPVoSUIgPxIhiikuz83vnkUGOKRYUzQru
+         ohe79vXi3cHg2mspLPq6dX4mHUCIgP52cX0ltyW10JZMc7SjQnuIV/2KrAx9ahTuM19T
+         t+6PDa5v6ZKUSmIJ8yH4zF8HuTiEYn7dNThfu4fsK53jzi0hioCyJlzI2LMG7MwynBaG
+         7gEm1LwpITJ6MjreWFw3PKXaxbUMSHv/aSLRYW+HQMF8H0p8QzCgR3nQA731a+otNWgu
+         x84Ix6zvjz44I8aJwY0hLLnTPJ0t/1KaGY8CYaC0Fmd1svGMKVcmrQwG3bT83FmzAxRE
+         Mb5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BfnimDtqv5SD6Iwu+dBH75qyhMYDPZ+Aoknb+G+x564=;
-        b=TGhkpFmEy6INswqlL0oJnb0PhFt9yb1yYCFlyVXBt/4CGR3t3nLFyCEAtgNkCeAKgP
-         gj4cxFYfnUiLZkiSZSseRKfcuVFHbKc/2Z0JQu+61Jdl2XyujDRifqh2LyjGGypkGQ0K
-         7kdYpggYmRNXOY7kUg1fUmbfZjjelBHFoyL2Ykmiz9z2rJWqN9Q7eV+ibeGCz6t04AR1
-         pLOUCvuxkKntvzrcZw/QRA5jbRV7AVJmJv99ty8QsL5uxEKef/hPEbJHpEiUxEKezSN+
-         /oXMWNwxW1ct494HJ3ca5v2xs+oZdSfdGailuK1czIzjlvO8n1p9cifYnUuQFbWHoz3l
-         vENQ==
-X-Gm-Message-State: APjAAAUEgc+HnnoG6DaFd+//XEMMaQiUIfq4rwbxo5qoMDchYiO+hHJ7
-        ZLalTSxxX/6AauqWfJErxh+pZC7dH70=
-X-Google-Smtp-Source: APXvYqzjTVpDmeaFLR0/SoyvxmXOC78r2jVAr0ooCtFkHwrLfXxYv9a3ZCd1/SO2uv9Kwq64SO6Haw==
-X-Received: by 2002:adf:fa8c:: with SMTP id h12mr1234312wrr.75.1552566898149;
-        Thu, 14 Mar 2019 05:34:58 -0700 (PDT)
+        bh=g5NrsLsVGVoc8FeFrZjYyWQIpmPIbiuwhdb5AhRsdiI=;
+        b=aEtkn8xRze2pq34w1Z0DiAnOtv4JqIkPRF6BenBzC41Z90+to6w8gtDLmfJVLMnWdB
+         rVWYQPGgeZddRS6W7TzczzKHSYYVfWrdwK4n4Gev+sJVihhvasV9B1Dv1SElLQ2VseH3
+         k6prB98u+Lk1I2oczSDRnhvO0BU3WswXguLbXQxU5t2xwbwM4lxv9IEMa6tstm5jXC0i
+         nqt5XSsltAs1L40gVcL+8Ku/yu+kmzclWG0iB9Mb3/DD8gJh+UOHn+PBaEdc+67tVWsN
+         WumRIgZwdmStsM1bO47zDMNxokRlZjfXQwBhSztH2TmcIfJf4fgu1oF/cdkj/sXmqDYW
+         tmgw==
+X-Gm-Message-State: APjAAAWHvbyPMeyqjvSj88BWOdT/8RMJJWEKAIIRr91+km48da+TEQy7
+        zRLyPFztCO5mL177EaE50Vr2bsNMClM=
+X-Google-Smtp-Source: APXvYqws0yNN5vPZQB8f+Sq2h/rCPCOtSo6OTNaRVxmONBkFHC2HcDuVKcY+XiOgDxSi+yv6d6eLzw==
+X-Received: by 2002:a7b:cd03:: with SMTP id f3mr2399051wmj.130.1552566899972;
+        Thu, 14 Mar 2019 05:34:59 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p6sm42374095wre.63.2019.03.14.05.34.57
+        by smtp.gmail.com with ESMTPSA id p6sm42374095wre.63.2019.03.14.05.34.58
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 14 Mar 2019 05:34:57 -0700 (PDT)
+        Thu, 14 Mar 2019 05:34:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 4/7] reflog tests: make use of "test_config" idiom
-Date:   Thu, 14 Mar 2019 13:34:36 +0100
-Message-Id: <20190314123439.4347-5-avarab@gmail.com>
+Subject: [PATCH v2 5/7] reflog: exit early if there's no work to do
+Date:   Thu, 14 Mar 2019 13:34:37 +0100
+Message-Id: <20190314123439.4347-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190313235439.30439-1-avarab@gmail.com>
 References: <20190313235439.30439-1-avarab@gmail.com>
@@ -74,48 +74,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a couple of tests that weren't using the helper to use it. This
-makes the trailing "--unset" unnecessary.
+When gc.reflogExpire and gc.reflogExpireUnreachable are set to "never"
+and --stale-fix isn't in effect (covered by the first part of the "if"
+statement being modified here) we can exit early without pointlessly
+looping over all the reflogs.
 
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1410-reflog.sh | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ builtin/reflog.c  | 7 +++++++
+ t/t1410-reflog.sh | 4 +++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 4d3430900d..d95c77ca0e 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -606,6 +606,13 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		mark_reachable_objects(&cb.cmd.revs, 0, 0, NULL);
+ 		if (flags & EXPIRE_REFLOGS_VERBOSE)
+ 			putchar('\n');
++	} else if (!cb.cmd.expire_total && !cb.cmd.expire_unreachable) {
++		/*
++		 * If we're not expiring anything and not dropping
++		 * stale entries, there's no point in even opening the
++		 * reflogs, since we're guaranteed to do nothing.
++		 */
++		return 0;
+ 	}
+ 
+ 	if (do_all) {
 diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index ae8a448e34..42f5ac9ed9 100755
+index 42f5ac9ed9..b98827f082 100755
 --- a/t/t1410-reflog.sh
 +++ b/t/t1410-reflog.sh
-@@ -232,24 +232,21 @@ test_expect_success '--expire=never' '
- '
+@@ -235,7 +235,9 @@ test_expect_success 'gc.reflogexpire=never' '
+ 	test_config gc.reflogexpire never &&
+ 	test_config gc.reflogexpireunreachable never &&
  
- test_expect_success 'gc.reflogexpire=never' '
-+	test_config gc.reflogexpire never &&
-+	test_config gc.reflogexpireunreachable never &&
- 
--	git config gc.reflogexpire never &&
--	git config gc.reflogexpireunreachable never &&
- 	git reflog expire --verbose --all &&
+-	git reflog expire --verbose --all &&
++	git reflog expire --verbose --all >output &&
++	test_line_count = 0 output &&
++
  	git reflog refs/heads/master >output &&
  	test_line_count = 4 output
  '
- 
- test_expect_success 'gc.reflogexpire=false' '
-+	test_config gc.reflogexpire false &&
-+	test_config gc.reflogexpireunreachable false &&
- 
--	git config gc.reflogexpire false &&
--	git config gc.reflogexpireunreachable false &&
- 	git reflog expire --verbose --all &&
- 	git reflog refs/heads/master >output &&
--	test_line_count = 4 output &&
--
--	git config --unset gc.reflogexpire &&
--	git config --unset gc.reflogexpireunreachable
-+	test_line_count = 4 output
- 
- '
- 
 -- 
 2.21.0.360.g471c308f928
 
