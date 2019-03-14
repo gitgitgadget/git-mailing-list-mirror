@@ -2,212 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF71A20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 15:33:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5828820248
+	for <e@80x24.org>; Thu, 14 Mar 2019 15:40:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbfCNPdK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 11:33:10 -0400
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:44357 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726691AbfCNPdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 11:33:10 -0400
-Received: by mail-ed1-f54.google.com with SMTP id x10so1834886edh.11
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 08:33:08 -0700 (PDT)
+        id S1726316AbfCNPkb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 11:40:31 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:39537 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726109AbfCNPkb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 11:40:31 -0400
+Received: by mail-ed1-f65.google.com with SMTP id p27so5021234edc.6
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 08:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=zZcQyR58VQs57sPifUW9jvAxb1E97+NOUxPZYOUmuC8=;
-        b=GkCwj2S5j7eZV7qHv1AzwBngnhRi3Pn5PGHIatVSRUAfAEOfK4f/MJ07A83D4pjzHI
-         q3fjFDJgWYtZO33Gyc2Qkz2gr3KhGvFIvxRhHTLYEYCIdcqTIvqGgQgJYKb5ZfZbTCZk
-         af/9f+PMRBBMyTFvkSjCzQC5JjeMnxjeONx2R2hdO2g2rMh6Gf0/sx3E/IZCM7oU3DGM
-         /LwxiSHt1ZbYdnUi9Cc6loSbL4CL882mrQx6zfrp4eCRm5L3TLhj68R7NuUbiQbrxOzw
-         DROGDjJoH7PmgG9jr4tF6OUd7wqDaSsaSxk9CEDfngxhCWTHODFy0IgcBLlqp357NGJ8
-         YNVA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=PUWvqBroaXBiE0z5Q7bTVlkwyAk5k7j5tIxnUF2uFX8=;
+        b=aAYJkYPdZDrux5KrCejv7pT0m3UkMjNoYup4uDtWQ8SB1+vrcMIejHdNSRIt9fxyPn
+         NRMNoCf++Q+ketH6jdr5uqE/x3CogT1uqrNiF72HgIMbjXIxkTF4OvzMWSmdw9G+yA5Y
+         hPwrz2K+cu1PQmzm6CbK111HkvPmU69GkROpWce3Ckwdeow1Qa41LauzedCG6LgFe6El
+         E0Tyb5VYpzW2lRrpeW/A38g8oQG5zKyStMLD758xF1mnBYbX3sHNjWXxhmO6t0uAstLB
+         OaRp4/NikeJN6thxJ5MidR8uFifok/oD8gxQeLfy00XK5WFRJWPZYauh7TNu75uqcrj3
+         FK2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zZcQyR58VQs57sPifUW9jvAxb1E97+NOUxPZYOUmuC8=;
-        b=AZ6eVTHiwDn4XJ1LeTi97aTio+qO+mlDfLEQkMZbhTVhqvL1ntx5UjGY14Uf7V2X6r
-         OEqyof4U1TId2MeUcfVHDJPq5hTX2Mq44YZFl/u0x7BzQhVhoJHSj5DXPa3gbXW8/Bd8
-         K3HVwMLvjNn4MSVLERgVICbEaFN+f2WXhILvZRChAj+US46eW4ux7kOtZolxRXfTcOvv
-         mIKA8YqcrE0Fe1SskW+4LA5pXWU6hByaMlJSz6BXIe2rQlQOXpcELpo/KHrT+2qmwS2x
-         UBPzBq9tU7NTVPVeLTAQykylcrs9d9uaXDsKDp6VypuHxBLffqSt4VRCfvUvnTKAmyZ+
-         0uTg==
-X-Gm-Message-State: APjAAAV6jI+cmFUJ/xPexTTUK96+Ijx/dhgCr3JY6UM1eA/JuL9NObC3
-        7KfWMsshb4KrdXXue5X6/sIdqvAq
-X-Google-Smtp-Source: APXvYqz+qeuE/gTpeGRCnNoLNZx+D+x77y2Eo8cokurWrdOz2/ykL92IQvZCRigbLpnYTgtZqvEhog==
-X-Received: by 2002:aa7:c616:: with SMTP id h22mr5577194edq.39.1552577587590;
-        Thu, 14 Mar 2019 08:33:07 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s2sm1151753eja.70.2019.03.14.08.33.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Mar 2019 08:33:07 -0700 (PDT)
-Date:   Thu, 14 Mar 2019 08:33:07 -0700 (PDT)
-X-Google-Original-Date: Thu, 14 Mar 2019 15:33:02 GMT
-Message-Id: <pull.161.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.161.git.gitgitgadget@gmail.com>
-References: <pull.161.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/4] get_short_oid: cope with a possibly stale loose object cache
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=PUWvqBroaXBiE0z5Q7bTVlkwyAk5k7j5tIxnUF2uFX8=;
+        b=q9diHlVk0/+NEo1dsNF8qSWglYbL0IPU05gjw613pTB4QZYXYq1XGfA3C2hgkI9mUq
+         SiIGEWHNR7bztIvQR7fqbaTwdbLsx2oJT6A7mi4K1h2PQB9cij2lo8g8N9a0dyU0EVro
+         Jxl+ys1PNAteWHUwVtNbPpZPT009xhhHqh/3+RdrL1DBKfa94h70yMZQLrBgbj/qJQm2
+         TiMK5KllHVv3UA8Q1zCzYIFfp6oIfIM/YblvUMPF7Myeo2taEG8J9aHZvTsmzfuDQaro
+         DwjJPvOZyk/Eavxay2Lfh638TDyI3BIQ1OjWBr6aiiLrkLgtNTYfR2CGZWfSB3jut4VF
+         p/aQ==
+X-Gm-Message-State: APjAAAXrliPWELZYbG/PVZRWGxuNhvwWCSHa6uIecZhr/zRnIpiPjU0p
+        Wc6PcWJivjTENmyK8SWFl5g=
+X-Google-Smtp-Source: APXvYqwg9SFiRXe3lsZbUJuZU+1xJ2j6cDn8duJa8tUYVVxsL+CjDt9weM9w4ByzIN6fJQuqRUD/bQ==
+X-Received: by 2002:a17:906:485:: with SMTP id f5mr33531961eja.85.1552578028958;
+        Thu, 14 Mar 2019 08:40:28 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id x3sm1559501ede.25.2019.03.14.08.40.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 14 Mar 2019 08:40:28 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Joel Teichroeb <joel@teichroeb.net>
+Subject: Re: regression in new built-in stash + fsmonitor (was Re: [PATCH v13 11/27] stash: convert apply to builtin)
+References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> <20190225231631.30507-1-t.gummerer@gmail.com> <20190225231631.30507-12-t.gummerer@gmail.com> <87ftrpbnkg.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1903141600020.41@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <nycvar.QRO.7.76.6.1903141600020.41@tvgsbejvaqbjf.bet>
+Date:   Thu, 14 Mar 2019 16:40:27 +0100
+Message-ID: <87d0mtbh1w.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Being rather a power user of the interactive rebase, I discovered recently
-that one of my scripts ran into an odd problem where an interactive rebase
-appended new commands to the todo list, and the interactive rebase failed to
-validate the (short) OIDs. But when I tried to fix things via git rebase
---edit-todo, the interactive rebase had no longer any problem to validate
-them.
 
-Turns out that I generated the objects during the interactive rebase (yes, I
-implemented a 2-phase rebase
-[https://github.com/git-for-windows/build-extra/blob/master/ever-green.sh]),
-and that their hashes happened to share the first two hex digits with some
-loose object that had already been read in the same interactive rebase run,
-causing a now-stale loose object cache to be initialized for that 
-.git/objects/?? subdirectory.
+On Thu, Mar 14 2019, Johannes Schindelin wrote:
 
-It was quite the, let's say, adventure, to track that one down.
+> Hi =C3=86var,
+>
+> On Thu, 14 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> On Tue, Feb 26 2019, Thomas Gummerer wrote:
+>>
+>> > From: Joel Teichroeb <joel@teichroeb.net>
+>> >
+>> > Add a builtin helper for performing stash commands. Converting
+>> > all at once proved hard to review, so starting with just apply
+>> > lets conversion get started without the other commands being
+>> > finished.
+>> >
+>> > The helper is being implemented as a drop in replacement for
+>> > stash so that when it is complete it can simply be renamed and
+>> > the shell script deleted.
+>> >
+>> > Delete the contents of the apply_stash shell function and replace
+>> > it with a call to stash--helper apply until pop is also
+>> > converted.
+>>
+>> This
+>>
+>>     GIT_TEST_FSMONITOR=3D$PWD/t7519/fsmonitor-all ./t3420-rebase-autosta=
+sh.sh
+>>
+>> Now fails, which bisects to 8a0fc8d19d ("stash: convert apply to
+>> builtin", 2019-02-25).
+>>
+>> Tested on both a CentOS 6 & modern Debian testing machine:
+>>
+>>     + git rebase -i --autostash HEAD^
+>>     Created autostash: 5cd734b
+>>     HEAD is now at 0c4d2f1 third commit
+>>     hint: Waiting for your editor to close the file...
+>>     error: There was a problem with the editor '"$FAKE_EDITOR"'.
+>>     Applied autostash.
+>>     + exit_code=3D1
+>>     + test 1 -eq 0
+>>     + test_match_signal 13 1
+>>     + test 1 =3D 141
+>>     + test 1 =3D 269
+>>     + return 1
+>>     + test 1 -gt 129
+>>     + test 1 -eq 127
+>>     + test 1 -eq 126
+>>     + return 0
+>>     + rm -f abort-editor.sh
+>>     + echo conflicting-content
+>>     + test_cmp expected file0
+>>     + diff -u expected file0
+>>     --- expected    2019-03-14 13:19:08.212215263 +0000
+>>     +++ file0       2019-03-14 13:19:08.196215250 +0000
+>>     @@ -1 +1 @@
+>>     -conflicting-content
+>>     +uncommitted-content
+>>     error: last command exited with $?=3D1
+>>     not ok 36 - autostash is saved on editor failure with conflict
+>>
+>> Are you able to reproduce this? And if so I suggest running the test
+>> suite with some of the other GIT_TEST_* modes documented in
+>> t/README. Maybe it'll turn up something else...
+>
+> Yep, totally can reproduce it :-(
 
-Over at the companion PR for Git for Windows
-[https://github.com/git-for-windows/git/pull/2121], I discussed this with
-Peff (who introduced the loose object cache), and he pointed out that my
-original solution was a bit too specific for the interactive rebase. He
-suggested the current method of re-reading upon a missing object instead,
-and explained patiently that this does not affect the code path for which
-the loose object cache was introduced originally: to help with performance
-issues on NFS when Git tries to find the same missing objects over and over
-again.
+In the meantime I did a build with "next" (so stash-in-C) using the
+standard test mode and these:
 
-The regression test still reflects what I need this fix for, and I would
-rather keep it as-is (even if the fix is not about the interactive rebase
-per se), as it really tests for the functionality that I really need to
-continue to work. Since I (and other contributors touching the rebase code)
-frequently run only the t34* subset of the test suite while developing git
-rebase patches, I also want to keep the test case there, rather than putting
-it in with other SHA1-specific disambiguation test cases in 
-t1512-rev-parse-disambiguation.sh.
+    (cd t && GIT_TEST_GETTEXT_POISON=3Dtrue /usr/bin/prove $BKNG_GIT_HARNES=
+S_OPTIONS t[0-9]*.sh)
+    (cd t && GIT_TEST_FSMONITOR=3D$PWD/t7519/fsmonitor-all GIT_SKIP_TESTS=
+=3D"t3404.8 t3420.36" /usr/bin/prove $BKNG_GIT_HARNESS_OPTIONS t[0-9]*.sh)
+    (cd t && GIT_TEST_SPLIT_INDEX=3Dtrue /usr/bin/prove $BKNG_GIT_HARNESS_O=
+PTIONS t[0-9]*.sh)
+    (cd t && GIT_TEST_FULL_IN_PACK_ARRAY=3Dtrue GIT_TEST_OE_SIZE=3D10 /usr/=
+bin/prove $BKNG_GIT_HARNESS_OPTIONS t[0-9]*.sh)
+    (cd t && GIT_TEST_COMMIT_GRAPH=3Dtrue /usr/bin/prove $BKNG_GIT_HARNESS_=
+OPTIONS t[0-9]*.sh)
+    (cd t && GIT_TEST_MULTI_PACK_INDEX=3Dtrue /usr/bin/prove $BKNG_GIT_HARN=
+ESS_OPTIONS t[0-9]*.sh)
+    (cd t && GIT_TEST_STASH_USE_BUILTIN=3Dfalse /usr/bin/prove $BKNG_GIT_HA=
+RNESS_OPTIONS t[0-9]*.sh)
+    (cd t && GIT_TEST_CHECK_COLLISIONS=3Dfalse /usr/bin/prove $BKNG_GIT_HAR=
+NESS_OPTIONS t[0-9]*.sh)
 
-My only concern was that this might cause some performance regressions that
-neither Peff nor I could think of, where get_oid() may run repeatedly into
-missing objects by design, and where we should not blow away and recreate
-the loose object cache all the time. But Peff dispelled my fears, pointing
-out that get_oid() is already rather expensive and therefore avoided in hot
-loops.
-
-Changes since v1:
-
- * The added test case now properly quotes $GIT_REBASE_TODO (even if it does
-   not contain spaces, it is simply safer to quote variable expansions in
-   Bash always [https://mywiki.wooledge.org/Quotes].
- * The three lines to try again to disambiguate are no longer repeated.
-   Instead, we use a Beautiful Goto.
- * The commit message of 2/2 does not stress lean on the loose object cache
-   so much, but also talks about packs a bit more.
-
-Johannes Schindelin (4):
-  rebase -i: demonstrate obscure loose object cache bug
-  sequencer: improve error message when an OID could not be parsed
-  sequencer: move stale comment into correct location
-  get_oid(): when an object was not found, try harder
-
- sequencer.c                 |  5 +++--
- sha1-name.c                 | 13 ++++++++++++-
- t/t3429-rebase-edit-todo.sh | 22 ++++++++++++++++++++++
- 3 files changed, 37 insertions(+), 3 deletions(-)
-
-
-base-commit: e902e9bcae2010bc42648c80ab6adc6c5a16a4a5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-161%2Fdscho%2Frereading-todo-list-and-loose-object-cache-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-161/dscho/rereading-todo-list-and-loose-object-cache-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/161
-
-Range-diff vs v1:
-
- 1:  b3fcd37765 ! 1:  63ddb1dd04 rebase -i: demonstrate obscure loose object cache bug
-     @@ -60,11 +60,11 @@
-      +			"committer A U Thor <author@example.org> $1 +0000" \
-      +			"" \
-      +			"$1" |
-     -+		  git hash-object -t commit -w --stdin))" >>$GIT_REBASE_TODO
-     ++		  git hash-object -t commit -w --stdin))" >>"$GIT_REBASE_TODO"
-      +
-      +	shift
-      +	test -z "$*" ||
-     -+	echo "exec $0 $*" >>$GIT_REBASE_TODO
-     ++	echo "exec $0 $*" >>"$GIT_REBASE_TODO"
-      +	EOS
-      +
-      +	git rebase HEAD -x "./append-todo.sh 5 6"
- 2:  d8c4a3dde5 = 2:  f0cbfacf9a sequencer: improve error message when an OID could not be parsed
- 3:  d749c63170 = 3:  b55e14cd63 sequencer: move stale comment into correct location
- 4:  994446236d ! 4:  41fc6eb9ba get_oid(): when an object was not found, try harder
-     @@ -3,8 +3,9 @@
-          get_oid(): when an object was not found, try harder
-      
-          It is quite possible that the loose object cache gets stale when new
-     -    objects are written. In that case, get_oid() would potentially say that
-     -    it cannot find a given object, even if it should find it.
-     +    objects are written. Or that a new pack was installed. In those cases,
-     +    get_oid() would potentially say that it cannot find a given object, even
-     +    if it should find it.
-      
-          Let's blow away the loose object cache as well as the read packs and try
-          again in that case.
-     @@ -27,19 +28,31 @@
-       --- a/sha1-name.c
-       +++ b/sha1-name.c
-      @@
-     + 					 struct object_id *oid,
-     + 					 unsigned flags)
-     + {
-     +-	int status;
-     ++	int status, attempts = 0;
-     + 	struct disambiguate_state ds;
-     + 	int quietly = !!(flags & GET_OID_QUIETLY);
-     + 
-     +@@
-     + 	else
-     + 		ds.fn = default_disambiguate_hint;
-     + 
-     ++try_again:
-     + 	find_short_object_filename(&ds);
-       	find_short_packed_object(&ds);
-       	status = finish_object_disambiguation(&ds, oid);
-       
-      +	/*
-     -+	 * If we didn't find it, do the usual reprepare() slow-path,
-     -+	 * since the object may have recently been added to the repository
-     -+	 * or migrated from loose to packed.
-     ++	 * If we did not find it, do the usual reprepare() slow-path, since the
-     ++	 * object may have recently been added to the repository or migrated
-     ++	 * from loose to packed.
-      +	 */
-     -+	if (status == MISSING_OBJECT) {
-     ++	if (status == MISSING_OBJECT && !attempts++) {
-      +		reprepare_packed_git(the_repository);
-     -+		find_short_object_filename(&ds);
-     -+		find_short_packed_object(&ds);
-     -+		status = finish_object_disambiguation(&ds, oid);
-     ++		goto try_again;
-      +	}
-      +
-       	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
-
--- 
-gitgitgadget
+Only this specific test failed.
