@@ -2,147 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C67820248
-	for <e@80x24.org>; Thu, 14 Mar 2019 13:17:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77AEF20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 13:19:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726817AbfCNNRq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 09:17:46 -0400
-Received: from mout.gmx.net ([212.227.15.18]:41201 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726419AbfCNNRq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 09:17:46 -0400
-Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LdHqj-1geTL51DYv-00iVbz; Thu, 14
- Mar 2019 14:17:34 +0100
-Date:   Thu, 14 Mar 2019 14:17:18 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] get_oid(): when an object was not found, try
- harder
-In-Reply-To: <xmqqa7hyckfm.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903141410360.41@tvgsbejvaqbjf.bet>
-References: <pull.161.git.gitgitgadget@gmail.com> <994446236d05d9d014e12a5102bcf9be222e3b57.1552472189.git.gitgitgadget@gmail.com> <xmqqa7hyckfm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727381AbfCNNTs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 09:19:48 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:39261 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726728AbfCNNTr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 09:19:47 -0400
+Received: by mail-ed1-f65.google.com with SMTP id p27so4589179edc.6
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 06:19:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=cuNA+q4aeZgKMj0Gd84+QfYwlpjDX//eTUNfNUE9DIg=;
+        b=rbBEGEdC2Eqqy1qSsi1JdD8Y+ZUX7N5wXy3hC0iuexvGJHZ0Ge4ht+eXHovV4O1aIk
+         ILwW3sKjpFPpe2CLcYJY4SqV1ZLLKt/bm9rCM5+5+/mOL138QndwRZv7s/qQhNZEB3H0
+         4QATcWOyi+VfFE2lLVSNmiVQPq8mK9pK4o0SlRPzkdkuPR5wqrlkmht2nhKX7l+O/jbB
+         BNk4Rjo5Gbu4K1XixlG8e0zGqfVGBEpHjhf8MByNgpvRvObTSZEv/VlxYubyGtVrWxCp
+         O5KPWleRlzz8EqrZJPSQgzcLOJsrBs8RNf+CnZ69G/hjJC/3acevH55nvA35eC7xicHH
+         Cgqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=cuNA+q4aeZgKMj0Gd84+QfYwlpjDX//eTUNfNUE9DIg=;
+        b=kHDZaIHEa8t9e1wZGlHx7PelyhRpF+DqnWRzfwmeb8SCKV0wlfkFl72OL06AOvWDlM
+         l/8eFQ4DzUNTC0MU/e/4xO92m4lEWNVE5vgeFbav3KyLidgD8Pl2wedXPYsgfGolgZyj
+         kFANbnY+frzOLbVd9t5e7aEcYd934CzCerA2y2msc0CkLMnhwDHt0QxHu6fasmOpEc4x
+         JOSbVXJ2sgN1hj/mo1Ua+qRlkVseOAaXtrkGRaIDk6kJUXv1p2HI0/S7u3hcekbaZ/yl
+         7KPlJA83s658I6L3O3HtfILwyJHCc75/aqJph2rW/ciPCluucj912Jrbz/6jedm6+3nn
+         eMKw==
+X-Gm-Message-State: APjAAAXiS+R/upLAEiEsFPFFzmUvln+O1q+6lhRhM6eRxcb8cr6QAz2u
+        jonv7YiYc5ZAYqY2xkDSGpBfMAalzok=
+X-Google-Smtp-Source: APXvYqy3BONDzG3lgdhKBqhytfsDBaLQ9ujPAuuFf8RwRBM4irFi7xwM8gQLRIQKN2ls2wREgYZDmA==
+X-Received: by 2002:a17:906:194e:: with SMTP id b14mr1404226eje.6.1552569585665;
+        Thu, 14 Mar 2019 06:19:45 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id d11sm1089988eja.23.2019.03.14.06.19.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 14 Mar 2019 06:19:44 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Joel Teichroeb <joel@teichroeb.net>
+Subject: regression in new built-in stash + fsmonitor (was Re: [PATCH v13 11/27] stash: convert apply to builtin)
+References: <nycvar.QRO.7.76.6.1902191127420.41@tvgsbejvaqbjf.bet> <20190225231631.30507-1-t.gummerer@gmail.com> <20190225231631.30507-12-t.gummerer@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190225231631.30507-12-t.gummerer@gmail.com>
+Date:   Thu, 14 Mar 2019 14:19:43 +0100
+Message-ID: <87ftrpbnkg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Xm1Ci7Mg3bfyCarwXvif8pNCUgkMPiDEXD/WjQG/zly39R63QTd
- u/wZAflOLrAVJT2oWiuO06eDmneku20mc/Lqj+dNOyHdC505E30t/dRWonktEzgNYQ82Mb3
- B+z4FnQQX91QdEhUfYJh0BKntNpiguvkJvPMgh8+Ao/mMupcpBOUWNbKK9gjqTu29eSE8Xb
- cuFVYU9PC2Rbfr8x3iOfg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5E7cF24JQDk=:TPIQdKInEQrZoMQ7AHfoUV
- 9Zn0WxEVQS/6YfXFfKLS9n1vSBfoSbz1n+79EFUSYfK1sRowVPwtK2U0tw5HLk+et4KH27kyo
- Pf31+FNp8TbuRqnZR6l/mldevItF5wrZTewuoRQ3juEQJWCPcxD7+vB2Aian/9ks1FcSTFTy2
- v8b/SCUo7JS4nNJomJZTSwY9IipfZxthnpmgFxvoIIkcXd5JjSgPTGb3OdSRWgwarxjo5gDTd
- GdLA8X14c5xS1u5D+hHvaBo44TPiw6bhmORDGoKUTXZ0oGiVqiXgl36mm7HGTZGmItX7a4S4O
- 5lI6bJvHhOj9ZghPLj/g60pPfFNuWBDMxCXFUGvyxb8nO1j47gVFGG8IfUhUyYFyRAy033i7s
- L7qpDaRQOdh0rKMcfsTC5XitlJgc83EnUK2RIHJ67eGqM32uWuAxaCZozl9Gt1h0zXIFqfxOA
- oXFUD4FAR1+QMV6p0y3w0MH9pdeKq404QIDkXaw+gurll2NxVUnPvcz4DUAupleDCkCxoFOnV
- o35tvJ40vGZBXlnEf0mcrm2yG5/8GxZixH8uyUB5dPM5t2lZcQqIpNJi7SQpr3TsNOfskaA+l
- xERFIgXuG90O46E1+6Q4dqsSL2yehidgr8x2ayWQqasTc0tiyioHinoPl2F1AGZf24wFF0LBX
- GAI6uzBQVEx8OcmBJeeOVdo/EZF0X+R1VyrVLXavOWIB19GEsa+cMxzF/TK+aBzXQO2mdQOZc
- E9A7sx/vdMVFVW4Qf2ooVM6LIENQhHZIaZej2uu/SzXKHvLCaiHB7S8IAjNAHvlrCm2nvAFch
- joeAwLfRVCMEGBS3LdUS5hXpDMcPXh2T63RFxy+heG5IW0/+r2IF2De8u5nu+izCfrijyMpyq
- +DmlsVN8PKt/pW5P41fOfWrj9tiy82UvJwjeGWODwVUcR/HUpeF//Y8yGIzptWJkGMaW4bhCc
- IHv2oDgHmuA==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Peff,
 
-On Thu, 14 Mar 2019, Junio C Hamano wrote:
+On Tue, Feb 26 2019, Thomas Gummerer wrote:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > @@ -442,6 +442,18 @@ static enum get_oid_result get_short_oid(const char *name, int len,
-> >  	find_short_packed_object(&ds);
-> >  	status = finish_object_disambiguation(&ds, oid);
-> >  
-> > +	/*
-> > +	 * If we didn't find it, do the usual reprepare() slow-path,
-> > +	 * since the object may have recently been added to the repository
-> > +	 * or migrated from loose to packed.
-> > +	 */
-> > +	if (status == MISSING_OBJECT) {
-> > +		reprepare_packed_git(the_repository);
-> > +		find_short_object_filename(&ds);
-> > +		find_short_packed_object(&ds);
-> > +		status = finish_object_disambiguation(&ds, oid);
-> > +	}
-> > +
-> 
-> This looks obviously correct, but two things that made me wonder
-> briefly were:
-> 
->  1. is reprepare_packed_git() a bit too heavy-weight, if the only
->     thing we are addressing is the loose-object cache going stale?
-> 
->  2. is there a way to cleanly avoid the three-line duplicate?
-> 
-> My tentative answers are (1) even if it is, but get_short_oid() is
-> already heavy-weight enough; it won't be worth restructuring the
-> code to make it possible to clear only the loose-object cache, and
-> (2) a loop that runs twice when the first result is MISSING_OBJECT
-> and otherwise leaves after once would need an extra variable, its
-> iniialization, check and increment, which is more than what we might
-> save with such a restructuring, so it won't be worth pursuing.
-> 
-> But others may have better ideas, as always ;-)
+> From: Joel Teichroeb <joel@teichroeb.net>
+>
+> Add a builtin helper for performing stash commands. Converting
+> all at once proved hard to review, so starting with just apply
+> lets conversion get started without the other commands being
+> finished.
+>
+> The helper is being implemented as a drop in replacement for
+> stash so that when it is complete it can simply be renamed and
+> the shell script deleted.
+>
+> Delete the contents of the apply_stash shell function and replace
+> it with a call to stash--helper apply until pop is also
+> converted.
 
-Peff tried with a function, but I think that this would actually be a
-really appropriate occasion for a well-placed `goto`:
+This
 
--- snip --
-diff --git a/sha1-name.c b/sha1-name.c
-index 6dda2c16df10..36a66026964a 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -415,7 +415,7 @@ static enum get_oid_result get_short_oid(const char *name, int len,
- 					 struct object_id *oid,
- 					 unsigned flags)
- {
--	int status;
-+	int status, attempts = 0;
- 	struct disambiguate_state ds;
- 	int quietly = !!(flags & GET_OID_QUIETLY);
- 
-@@ -438,10 +438,21 @@ static enum get_oid_result get_short_oid(const char *name, int len,
- 	else
- 		ds.fn = default_disambiguate_hint;
- 
-+try_again:
- 	find_short_object_filename(&ds);
- 	find_short_packed_object(&ds);
- 	status = finish_object_disambiguation(&ds, oid);
- 
-+	/*
-+	 * If we did not find it, do the usual reprepare() slow-path, since the
-+	 * object may have recently been added to the repository or migrated
-+	 * from loose to packed.
-+	 */
-+	if (status == MISSING_OBJECT && !attempts++) {
-+		reprepare_packed_git(the_repository);
-+		goto try_again;
-+	}
-+
- 	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
- 		struct oid_array collect = OID_ARRAY_INIT;
- 
--- snap --
+    GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all ./t3420-rebase-autostash.sh
 
-Granted, it's 11 lines inserted and one changed as opposed to 12 lines
-inserted, but it does make the code DRYer (and therefore slightly safer to
-modify in the future). I pushed this to the GitGitGadget PR.
+Now fails, which bisects to 8a0fc8d19d ("stash: convert apply to
+builtin", 2019-02-25).
 
-Thanks,
-Dscho
+Tested on both a CentOS 6 & modern Debian testing machine:
+
+    + git rebase -i --autostash HEAD^
+    Created autostash: 5cd734b
+    HEAD is now at 0c4d2f1 third commit
+    hint: Waiting for your editor to close the file...
+    error: There was a problem with the editor '"$FAKE_EDITOR"'.
+    Applied autostash.
+    + exit_code=1
+    + test 1 -eq 0
+    + test_match_signal 13 1
+    + test 1 = 141
+    + test 1 = 269
+    + return 1
+    + test 1 -gt 129
+    + test 1 -eq 127
+    + test 1 -eq 126
+    + return 0
+    + rm -f abort-editor.sh
+    + echo conflicting-content
+    + test_cmp expected file0
+    + diff -u expected file0
+    --- expected    2019-03-14 13:19:08.212215263 +0000
+    +++ file0       2019-03-14 13:19:08.196215250 +0000
+    @@ -1 +1 @@
+    -conflicting-content
+    +uncommitted-content
+    error: last command exited with $?=1
+    not ok 36 - autostash is saved on editor failure with conflict
+
+Are you able to reproduce this? And if so I suggest running the test
+suite with some of the other GIT_TEST_* modes documented in
+t/README. Maybe it'll turn up something else...
