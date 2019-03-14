@@ -2,179 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 103BD20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 05:58:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE80820248
+	for <e@80x24.org>; Thu, 14 Mar 2019 05:59:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726610AbfCNF6e (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 01:58:34 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:34342 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725928AbfCNF6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 01:58:34 -0400
-Received: by mail-qk1-f196.google.com with SMTP id n6so2644226qkf.1
-        for <git@vger.kernel.org>; Wed, 13 Mar 2019 22:58:33 -0700 (PDT)
+        id S1726486AbfCNF7d (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 01:59:33 -0400
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:34977 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726130AbfCNF7d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 01:59:33 -0400
+Received: by mail-vs1-f65.google.com with SMTP id e1so1537844vsp.2
+        for <git@vger.kernel.org>; Wed, 13 Mar 2019 22:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ELHD4gichrauGbzX64400Jn7//kJazWe4kp6q7L8tG4=;
-        b=rpcijVclzc/7kUzm39qS6Dcz15VZ2tkosZv7sQAD7LzW/kjaeGvMBgzF+eaVgCMX3k
-         YULwdkEUGa1xmUZQ/TG8MBFuUySsqFOz9+y0Jw5raNzn9PkZFQh/0c1kUAdeD6f1PJfs
-         ynbKKzbpBdCwxcIsbQi5eHZnYYUJZVwMsATZ1iifPSRBbBKa9tsnQG9M6/owkDfpg5OP
-         vARw2YTkQ26EdNFSMyOjoioBGPGh2vgiUwz/pq4CVwT4VJc7cD75HG1IqioVcsR8r6lk
-         olQBTdBn9vQhhGfILFamAc/eoaqPdt2ZCOar1GFIfmRnRYZE2pykb8vU4G/XdTT+A6ga
-         EfiA==
+        bh=vVkinNw6ipZmUxPLyVbO7IgGh+jCWHH+m1k/CUi7rh8=;
+        b=pHfxJdouVCSOlw6HONqvS5XpnH1P0uIA8VZOrdqUOucbh4O1LBFxubsplIpXIUirv7
+         BPD2wmqIH9gREVRnR2ZraA7TaGnxUAxyLFzMUOPpi237ewINrUrNY4CkhUPL/CzSiec3
+         dz5IlUX5qBpJTYlmmv1FwaKA0w3I2j9InyI9Z4ODteg4c6Kj/niACV6vINAnGfdRzUNA
+         FF4+4zGKW5C/5KdyfCgprMFgerCECLMr4BMooJrm4U+n5EfHLQ6Vd5U6M3UL1HnQUBiI
+         01+0qDe+8aBgfKrMHtISgu7ca2esmUO1fH4SFqVnMN0ITFY92civQa4T2WkGAHqWFDOE
+         p8KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ELHD4gichrauGbzX64400Jn7//kJazWe4kp6q7L8tG4=;
-        b=qsK2/Rq3S7r25xhKkmEnkkgTHQXyK22DZRH97tx3C8OR76ApTl6ywAY0F5t8kV8L8x
-         3pmBfYxuRaOd/TCRrBdolBIPmMDgOyJcb5IhqA14x6uGUaD5gAnnkYyYUGPLRz4T1l/Q
-         gY1Rr9uovec2BdRPkhSf20nwkU8weeqvT8vJ9yqZi/l/6DhS4QnynDN5NlMBZqqgq1/d
-         uiI/F/Gm3Sr7kkTiurKW3i3Qo+mAomoy0LHPX2PlgRAvp7qsN2zjy0ZurvArKjwqss/T
-         9J8bu2n7SP9Uo1PyBtoW91jI44tKuV0/iQsgJLoYeoaTWlgqqbfHSTtvd0Tpcy920xgW
-         8/1w==
-X-Gm-Message-State: APjAAAVr6/GmG/0WQjKp+7pI4tWUexPNyqydvB0aN5uvIz+siBY+xlZo
-        vICxfegk0DoT/Ep2yETjqA9t46mcNe8AQPCkV9g=
-X-Google-Smtp-Source: APXvYqwmpRzPlJ9J35qLOE811p+FdKSPfdIwEhk5YPPfIBCkuiVSSkAfIlyJXx2T9HTMBzzQ/VX44/XioA0qzIcb5jM=
-X-Received: by 2002:a37:654e:: with SMTP id z75mr13110636qkb.314.1552543112979;
- Wed, 13 Mar 2019 22:58:32 -0700 (PDT)
+        bh=vVkinNw6ipZmUxPLyVbO7IgGh+jCWHH+m1k/CUi7rh8=;
+        b=W0FDcCML4f393kdq7bEeaB36v3QhJTvZLZ3j75zyIRwb+DS1EC64FwId12r0B6X3k0
+         HAM6QTMdLeAWg5Mtncx8z8XNBlKt1DNq1PRQO3m3CFdmh87ivj910nCFamN9S23lnC9f
+         pmjESqJoBR5BDoywXIEr3yxjQmCQNImrkUFFGBs+wTcCOAQlzojJBlnDorW4ofLQhX5M
+         B/bgPF/qHcHzPNSuE1kjduxGjuqVDLrielZzf9w4yLFdztsCE+zE7OeBkXvK9RrZg42V
+         DUGLwinPST0M+YRQR3Ytiy0RiZnMsuzv7cPUDC+vLNK25oC4/iWIZZpfdVJi3TlA7/NU
+         XFFw==
+X-Gm-Message-State: APjAAAVIxP7jFozqjvU7Y37r6ik8sylA/E8/Pub4aV50K1xbYqu+wRqe
+        riE+TqsT/FhQDzqEzUaRayhmaP3QH51rJAH1UxI=
+X-Google-Smtp-Source: APXvYqynJ+BaZUFirqOUPLYvSVQHcUxTuRVdEqYiVI12vGt0YCQHlOPjXbYHvEA43wz7Ct4/aUpjDwXk7G/Zi+QNJAA=
+X-Received: by 2002:a67:f8cc:: with SMTP id c12mr2321435vsp.136.1552543171753;
+ Wed, 13 Mar 2019 22:59:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20190219083123.27686-4-nbelakovski@gmail.com> <20190221125952.GB13403@sigill.intra.peff.net>
-In-Reply-To: <20190221125952.GB13403@sigill.intra.peff.net>
-From:   Nickolai Belakovski <nbelakovski@gmail.com>
-Date:   Wed, 13 Mar 2019 22:58:06 -0700
-Message-ID: <CAC05385Q0EQWX8B5PfR2m6N7o573NTF+a0HyXS+zqYAAdgTVOw@mail.gmail.com>
-Subject: Re: [PATCH v8 3/3] branch: add worktree info on verbose output
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
+ <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
+ <CACsJy8CuNQR7javX7KTC7txivH1OkejCbVJdHGD+XJ-0ftT3ag@mail.gmail.com>
+In-Reply-To: <CACsJy8CuNQR7javX7KTC7txivH1OkejCbVJdHGD+XJ-0ftT3ag@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 13 Mar 2019 22:59:20 -0700
+Message-ID: <CABPp-BHB3c0XqS57Do8=YFtbVyBEe26kbJtgDxWAaWAMzsgdoA@mail.gmail.com>
+Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 21, 2019 at 4:59 AM Jeff King <peff@peff.net> wrote:
+On Wed, Mar 13, 2019 at 8:29 PM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> On Tue, Feb 19, 2019 at 05:31:23PM +0900, nbelakovski@gmail.com wrote:
->
-> > From: Nickolai Belakovski <nbelakovski@gmail.com>
+> On Mon, Mar 11, 2019 at 6:16 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> > > +-m::
+> > > +--merge::
+> > > +     If you have local modifications to one or more files that are
+> > > +     different between the current branch and the branch to which
+> > > +     you are switching, the command refuses to switch branches in
+> > > +     order to preserve your modifications in context.  However,
+> > > +     with this option, a three-way merge between the current
+> > > +     branch, your working tree contents, and the new branch is
+> > > +     done, and you will be on the new branch.
 > >
-> > To display worktree path for refs checked out in a linked worktree
+> > I was wondering what people felt about making this the default for the
+> > new command. If I'm carrying changes over to the new branch then I want
+> > them to be merged in, it's annoying to have them carried over most of
+> > the time but then sometimes have the checkout fail without specifying
+> > --merge.
 >
-> This would be a good place to describe why this is useful. :)
+> If my worktree has local changes and I accidentally switch to a
+> different branch, I could switch back without losing any local changes
+> and the tree I have is exactly what I had before the switch. Is this
+> still true if -m is made default?
 >
-> I do not have an opinion myself. Patch 2 makes a lot of sense to me, but
-> I don't know if people would like this one or not. I don't use "-v"
-> myself, though, so what do I know. :)
-I threw this one in because I thought it wouldn't be clear to the
-average user why some
-branches are in cyan. By putting the worktree path in cyan on the next
-level of output
-I thought this would help the user make the connection, but actually I
-don't have strong
-feelings about this one.
->
-> > diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> > index f2e5a07d64..326a45f648 100644
-> > --- a/Documentation/git-branch.txt
-> > +++ b/Documentation/git-branch.txt
-> > @@ -168,8 +168,10 @@ This option is only applicable in non-verbose mode.
-> >       When in list mode,
-> >       show sha1 and commit subject line for each head, along with
-> >       relationship to upstream branch (if any). If given twice, print
-> > -     the name of the upstream branch, as well (see also `git remote
-> > -     show <remote>`).
-> > +     the path of the linked worktree, if applicable (not applicable
-> > +     for current worktree since user's path will already be in current
-> > +     worktree) and the name of the upstream branch, as well (see also
-> > +     `git remote show <remote>`).
->
-> That parenthetical feels a bit awkward. Maybe:
->
->   ...print the path of the linked worktree (if any) and the name of the
->   upstream branch, as well (see also `git remote show <remote>`). Note
->   that the current worktree's HEAD will not have its path printed (it
->   will always be your current directory).
-Sure I can make that change
->
-> > diff --git a/builtin/branch.c b/builtin/branch.c
-> > index c2a86362bb..0b8ba9e4c5 100644
-> > --- a/builtin/branch.c
-> > +++ b/builtin/branch.c
-> > @@ -367,9 +367,13 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
-> >               strbuf_addf(&local, " %s ", obname.buf);
-> >
-> >               if (filter->verbose > 1)
-> > +             {
-> > +                     strbuf_addf(&local, "%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)(%s%%(worktreepath)%s) %%(end)%%(end)",
-> > +                                 branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
-> >                       strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
-> >                                   "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
-> >                                   branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
-> > +             }
->
-> Another unreadable long line (both the one you're adding, and the existing
-> one!). I don't know if it's worth trying to clean these up, but if we
-> do, it might be worth hitting the existing ones, too.
->
-> I'm OK if that comes as a patch on top later on, though.
-Agreed, but there's enough lines like this that it'll just look
-inconsistent if only one were broken up.
->
->
-> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-> index 012ddde7f2..8065279be6 100755
-> --- a/t/t3203-branch-output.sh
-> +++ b/t/t3203-branch-output.sh
-> @@ -284,22 +284,20 @@ test_expect_success '--color overrides auto-color' '
->         test_cmp expect.color actual
->  '
->
-> -# This test case has some special code to strip the first 30 characters or so
-> -# of the output so that we do not have to put commit hashes into the expect
->  test_expect_success 'verbose output lists worktree path' '
-> +       one=$(git rev-parse --short HEAD) &&
-> +       two=$(git rev-parse --short master) &&
->         cat >expect <<-EOF &&
-> -       one
-> -       one
-> -       two
-> -       one
-> -       two
-> -       ($(pwd)/worktree_dir) two
-> -       two
-> -       two
-> +       * (HEAD detached from fromtag) $one one
-> +         ambiguous                    $one one
-> +         branch-one                   $two two
-> +         branch-two                   $one one
-> +         master                       $two two
-> +       + master_worktree              $two ($(pwd)/worktree_dir) two
-> +         ref-to-branch                $two two
-> +         ref-to-remote                $two two
->         EOF
-> -       git branch -vv >tmp &&
-> -       SUBSTRLENGTH=$(head -1 tmp | awk "{print index(\$0, \"one\")}") &&
-> -       awk -v substrlength="$SUBSTRLENGTH" "{print substr(\$0,substrlength,length(\$0))}" <tmp >actual &&
-> +       git branch -vv >actual &&
->         test_cmp expect actual
->  '
->
->
-> I don't like how it depends on the space alignment of the branches, but
-> I do like that you can clearly see which branch is being annotated.
-Thanks for the suggestion. While I'm kinda proud of my awk thing, I
-think yours is a lot easier to read. Will add.
->
-> -Peff
+> I think sometimes a 3-way merge creates marker conflicts in file, and
+> this does not look easy to reverse when switching back. If it's true
+> and we can detect it, we can still abort this case (i.e. requiring -m
+
+You cannot yet do this with merge_recursive; it writes conflicts to
+the worktree as it goes and doesn't tell you whether the merge was
+successful or had conflicts until its done.  So this would be very
+dangerous.  We'd first need a way to do an in-memory merge that
+doesn't touch the working tree or index and which gives you the
+opportunity to check whether that worked before proceeding to write
+out any updates.  That is work I plan to do (for other reasons), but
+not in progress currently.
+
+> to continue) while allowing succesful 3-way merges by default. But are
+> successful 3-way merges reversible?
+
+Hmm, interesting.  So, switching from branch A to B, you start with
+local changes on top of A that could represent a virtual commit C.
+So, you three-way merge C & B using A as the base.  It's clean, so we
+have a new endpoint, call it D.  Switching back to A with the --merge
+flag would mean a three-way merge of D & A using B as the base.
+
+But it might be easier if I re-labelled all of these with different
+terms. Let's say we squash all changes from A to B into a single
+commit on top of A that we call commit B.  Check out C (a commit
+representing your local changes on top of A), and cherry-pick B; that
+will three-way merge C & B using A as the base.  It's clean, so we
+have a new commit, call it D.  Now we tell git to revert B, which will
+do a three-way merge of D (current HEAD) & A (parent of B), using B as
+the base.  So, essentially, your question about reversibility boils
+down to: if you can cleanly cherry-pick a commit to your current
+branch, can you then immediately revert that same commit on top to
+return to where you were before?
+
+(Off the cuff, I _think_ the answer to that is yes due to the
+assumption that the cherry-pick was without conflicts, but I'm not
+immediately sure.)
