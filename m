@@ -2,162 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4FF1202BB
-	for <e@80x24.org>; Thu, 14 Mar 2019 11:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23A0F20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 11:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727286AbfCNLZI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 07:25:08 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:40652 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbfCNLZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 07:25:07 -0400
-Received: by mail-ed1-f68.google.com with SMTP id r23so4267114edm.7
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 04:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=qxBbwpZtFh52JXVvfU/nmTSvIHgnFZm+hFSiGVY2MSs=;
-        b=XJVe+3izz5UV95ezkft0/2qczcfAfeIl/wmtc56tZqBu+81qMEMsxRlNCVLfJRINGh
-         +TasJfr6bdwFqR6u2PXZWbPuHzy04RMY0ohZnbtObKGQ0vyZbuxmgm656a1wCHM9GXq9
-         sRKXjCiTM8C7aO9nO1sqkKbjYy+0W+UL1A327gGsH05lo3KDLBWkXRomRIIwuz0fVvPV
-         XJYv+U1gW/H/o5M5iFWKOWCN1mi87pKfuXoGGeroGoPSxay2CGdhMWg/Z8tTpLBpBJh7
-         mWyiwAc1HykCvaQp3Tn5cFAO8b4ilY0OgsCpNbjmCWiQkNyZe2sANUduTWHambgx86dv
-         Vwog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qxBbwpZtFh52JXVvfU/nmTSvIHgnFZm+hFSiGVY2MSs=;
-        b=egnlfVsRZ5BeI3+mUUU6n8sDwLt++iYuRSkGiqUZNN4qAV9l3pRZ6upWC9xkljBJdL
-         bQOh2xb/LfqT4S88A0Tf2D/tDrkwfCGAKI54aNcPQqKUC1yXo8jCQGwXhORKWYzModaE
-         6lryb5I+uj0DfJR6h/xeBFv1t9tv008NzbeiEu8WGjMAn1Q24RH2da6DP32EjjnYMJqS
-         mE3PQ1NL8X8oOzpLUA1h1CNAyjrIgQvLLT6oOhgzMJQhT4wccfa2nVSQEAN6ZBt2akd+
-         X73q+fvXvosqxLOZljMgiw2fo5hReoo9DNglBGlEGxxpQHAiqKZqy/7rXx0s5FUg1XNe
-         V26w==
-X-Gm-Message-State: APjAAAXnQpig7HgIP1fge34mNeKaqKdz7RYNNxWTgVgKZudIV1zObfI2
-        MfxZUMKM1jVBqtjnQBpSsDxoW9vz
-X-Google-Smtp-Source: APXvYqzdDJN8Fk6SFZnXX5h5byNHY6ZolCKLHEx2VjCa4uZF5VZ66h3ScuJcVgIPqdNGe8CVT0wTzg==
-X-Received: by 2002:a17:906:4c82:: with SMTP id q2mr455472eju.215.1552562705643;
-        Thu, 14 Mar 2019 04:25:05 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d17sm1024672ejm.35.2019.03.14.04.25.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Mar 2019 04:25:04 -0700 (PDT)
-Date:   Thu, 14 Mar 2019 04:25:04 -0700 (PDT)
-X-Google-Original-Date: Thu, 14 Mar 2019 11:25:01 GMT
-Message-Id: <8cca9f800c2ce269a2ae644e4c15dc4115d3b0e2.1552562701.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.163.v2.git.gitgitgadget@gmail.com>
-References: <pull.163.git.gitgitgadget@gmail.com>
-        <pull.163.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 3/3] difftool: allow running outside Git worktrees with
- --no-index
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727099AbfCNLbu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 07:31:50 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50835 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726513AbfCNLbt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 07:31:49 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MK0Np-1h5m1v34rt-001Ofj; Thu, 14
+ Mar 2019 12:31:38 +0100
+Date:   Thu, 14 Mar 2019 12:31:21 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [RFC/PATCH] point pull requesters to Git Git Gadget
+In-Reply-To: <20190313201854.GA5530@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1903141228510.41@tvgsbejvaqbjf.bet>
+References: <20190312213246.GA6252@sigill.intra.peff.net> <xmqqsgvrfsrh.fsf@gitster-ct.c.googlers.com> <20190313193909.GB3400@sigill.intra.peff.net> <20190313201854.GA5530@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:gUE82s3jDQ7V2AK46dqBqKJ6rA80KPbfIB9LKlF9HZR//75r3Xj
+ w5Y1avwwroRM4YnlkycAAB7Su2/Uubd90x+864c4UolTu7Hqlm5yUxxh0S6F5J20RBciTZY
+ M1t+1HNwgDYjno/IrDmPRRQLeAfi/cpvCMYZy49QiKmye7/SClzFG4HbHPu8KMRCCpQbuwg
+ OjwEZ7rGte9JuK5ANT2oQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wKh9PCavbxw=:UtYJcp/0XDlnWVBmofAX+S
+ ndoxJZdkNiSiQhW3fMoK1BY2lZx6nXoAIt+pWR9uKj2EBe8WzhYAiOivNvp2GBq7WgRf/hAbj
+ FdlfkcjSJL+yi6xFpwvvP2//kjuToyEyxeDfyTs20yFzdoqA2TW+wAXBft+cmPkJII0jXomQu
+ Dp1D1qj5BdzmioecyyGuTxR533QJXiQSTXJvZzVynCmO6KPIrHsaZA5myikX9JMwSzHF987Ul
+ 0NlJVu5HoVmSfY9uJ1RHtNQCDrQ2lQ5UyQtNMRwh1BgweN1QBC1ZI+QKGpCY++x9yx/EMIwF1
+ Nrf6ActpYHMC5i3mcd/MA9R7+EfrlgMLJjgBucva83GsyPVskuOdXvfgHrWJnJjBqDAd7cOZM
+ mAeJ0w7FGSzMQV7tGvAW7WC/OiPTk2JQPDUdVmdkEIpwBiJ4HM0npDvDDOivzMdtA9k5o8zRQ
+ 3e+wz40JJBtQAx2v+lQjhz/OFIVhlTL9bLG3PuSDJN0lPgB767zXCHtyfMKwFfqCnBNwHgCP0
+ EbaigSrHyrSWK7/gh40FmXZ8dyDi8Ad4+AItbVhd9P4xYlR01KeK8r0FpYj/5ztEnAOBuQV5o
+ EbQkLx3Omf5MrepRnqv89/gpy/RAYvLwy3ZgcHjtEPSN6B1f81VqY0uG87IkK2ffjr6D7g/4O
+ uGzZLxTT6XzQtc6P0lzvU75YZaVjdoM9WU1VzhGUJTe6env2mLBp10MMDoSnqZ9MZUzMx+1+m
+ 8kuV2qGghgQFCWPnRXg44EC3Vn+9TcajeRJDk/Hk3jvZF8G8lzwB5S8i+E12/tm7ezEvkjWqw
+ XQqHxeer/rFBJFHNi0e2f7wy6K678ou9ZK0s4OJyOY0YCBqZi4SzFC1Lk3sVtHQNX/0TTLKT9
+ kkZwZLgVsMerHSBXhBDkeNDggcqHg/Ala9Q06O8oCF/u65M1LRJblx76L6okCtOu/RvZZJN1z
+ 78CvNKXAlMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Peff,
 
-As far as this developer can tell, the conversion from a Perl script to
-a built-in caused the regression in the difftool that it no longer runs
-outside of a Git worktree (with `--no-index`, of course).
+On Wed, 13 Mar 2019, Jeff King wrote:
 
-It is a bit embarrassing that it took over two years after retiring the
-Perl version to discover this regression, but at least we now know, and
-can do something, about it.
+> On Wed, Mar 13, 2019 at 03:39:09PM -0400, Jeff King wrote:
+> 
+> > On Wed, Mar 13, 2019 at 10:49:22AM +0900, Junio C Hamano wrote:
+> > 
+> > > Jeff King <peff@peff.net> writes:
+> > > 
+> > > > infrequent contributors. And there are a few reasons to prefer GGG:
+> > > >
+> > > >   1. submitGit seems to still have a few rough edges. E.g., it doesn't
+> > > >      munge timestamps to help threaded mail readers handled out-of-order
+> > > >      delivery.
+> > > 
+> > > Hmph, I had an impression that the recent "why aren't these sorted"
+> > > topics were via GGG, not submitGit, though.
+> > 
+> > We did have one case a few months ago, but I think it was since fixed.
+> > Whereas it cannot be fixed for submitGit without major re-architecting,
+> > because the mails go out through Amazon SES, which writes its own
+> > timestamp.
+> > 
+> > I could be wrong about GGG being fixed though. I haven't noticed the
+> > problem lately, but we definitely had a submitGit-related one a few
+> > weeks ago.
+> 
+> Hmm. I guess it is still an issue in GGG. This thread has identical
+> timestamps on patches 1 and 2 (and my server received them out of order
+> by 2 seconds, so mutt orders them wrong):
+> 
+>   https://public-inbox.org/git/pull.163.git.gitgitgadget@gmail.com/
+> 
+> I do still think GGG has a more feasible path forward on this particular
+> bug, though.
 
-This fixes https://github.com/git-for-windows/git/issues/2123
+Indeed. And it is a bug^Wfeature of GMail, I guess, that it knows better
+and ignores the Date: header of the mbox fed to it.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/difftool.c  | 13 ++++++++++---
- git.c               |  2 +-
- t/t7800-difftool.sh | 10 ++++++++++
- 3 files changed, 21 insertions(+), 4 deletions(-)
+The only workaround I can think of is to introduce ugly one-second-sleeps.
+I will do that if it proves necessary, but I do have a problem right now
+because my only GitGitGadget reviewer (Stolee) is kinda busy with other
+things for the time being.
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 31eece0c8d..4fff1e83f9 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -690,7 +690,7 @@ static int run_file_diff(int prompt, const char *prefix,
- int cmd_difftool(int argc, const char **argv, const char *prefix)
- {
- 	int use_gui_tool = 0, dir_diff = 0, prompt = -1, symlinks = 0,
--	    tool_help = 0;
-+	    tool_help = 0, no_index = 0;
- 	static char *difftool_cmd = NULL, *extcmd = NULL;
- 	struct option builtin_difftool_options[] = {
- 		OPT_BOOL('g', "gui", &use_gui_tool,
-@@ -714,6 +714,7 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 			    "tool returns a non - zero exit code")),
- 		OPT_STRING('x', "extcmd", &extcmd, N_("command"),
- 			   N_("specify a custom command for viewing diffs")),
-+		OPT_ARGUMENT("no-index", &no_index, N_("passed to `diff`")),
- 		OPT_END()
- 	};
- 
-@@ -727,8 +728,14 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 	if (tool_help)
- 		return print_tool_help();
- 
--	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
--	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
-+	if (!no_index && !startup_info->have_repository)
-+		die(_("difftool requires worktree or --no-index"));
-+
-+	if (!no_index){
-+		setup_work_tree();
-+		setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
-+		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
-+	}
- 
- 	if (use_gui_tool && diff_gui_tool && *diff_gui_tool)
- 		setenv("GIT_DIFF_TOOL", diff_gui_tool, 1);
-diff --git a/git.c b/git.c
-index 2014aab6b8..46365ed86a 100644
---- a/git.c
-+++ b/git.c
-@@ -491,7 +491,7 @@ static struct cmd_struct commands[] = {
- 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "diff-index", cmd_diff_index, RUN_SETUP | NO_PARSEOPT },
- 	{ "diff-tree", cmd_diff_tree, RUN_SETUP | NO_PARSEOPT },
--	{ "difftool", cmd_difftool, RUN_SETUP | NEED_WORK_TREE },
-+	{ "difftool", cmd_difftool, RUN_SETUP_GENTLY },
- 	{ "fast-export", cmd_fast_export, RUN_SETUP },
- 	{ "fetch", cmd_fetch, RUN_SETUP },
- 	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP | NO_PARSEOPT },
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index bb9a7f4ff9..480dd0633f 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -705,4 +705,14 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'outside worktree' '
-+	echo 1 >1 &&
-+	echo 2 >2 &&
-+	test_expect_code 1 nongit git \
-+		-c diff.tool=echo -c difftool.echo.cmd="echo \$LOCAL \$REMOTE" \
-+		difftool --no-prompt --no-index ../1 ../2 >actual &&
-+	echo "../1 ../2" >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-gitgitgadget
+Ciao,
+Dscho
