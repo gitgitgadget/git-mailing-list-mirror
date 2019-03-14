@@ -2,83 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D330F20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 14:31:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0BF620248
+	for <e@80x24.org>; Thu, 14 Mar 2019 14:34:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727465AbfCNObX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 10:31:23 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:54450 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727093AbfCNObX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 10:31:23 -0400
-Received: by mail-it1-f196.google.com with SMTP id w18so4963666itj.4
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 07:31:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ouXMyYgb0AbUXKCYpE4gZNSagIsCy4OFDlIgrWAIyxo=;
-        b=RpWlhGREEUpaWTmr1Vy8L5NmQzrEldLZbesx6rSr2hSdWhqXT8Z0/IdWuHFvnicjPq
-         87sW5muZqFBUpe9Mq/YIKVSLD7q1sGKeDq57D/vt3Zqei4iUa2Fqbuxse6APo6SfjKWr
-         LSyZXG03QUHci2jLXmAj+fqWr0op+0ecOivDeHVs0y6bFTi47pr6EigqBk82EovVXQVY
-         yOou963mvZ/QyW9pWSkYnmwTyNCoeRfnpvRBS2Gig3HexxOPNMnNz8vqUvDp0AwrOYm6
-         va/GI3U8yUC0FrEbZ+EM/gCaHoQmbhUABaEFPzpSHne8qk/s/G2GtI1MM/rqC4zaYUQd
-         h1+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ouXMyYgb0AbUXKCYpE4gZNSagIsCy4OFDlIgrWAIyxo=;
-        b=VXPRjHGHVdMOGXQkkdNy5ZfG1oyRgoKV6jRgGlFloZrkb6Djnv8mj52tmEJu8uCNlo
-         51y+adFyi+aGsu/a5+nNhiH+YM/B1A6GM7ZPoG98c8nlKC6S09Zh63tMkpKi5Tf5ZOdc
-         Os8VJQ6hFErwg0J+YFJagcDIiP6Tmdb6qThAGVbNemLtlRwW5GAaztI4eNrckNwEJ2IO
-         FlxW6T5PdTvTGM2lN+2cTHSlLT8dsEWL0iUhzc7TpmVAWRvkU79ibKD2XCCgvbBDdXfs
-         KWIyb0i/cC46MB8Yun2dQnZ8w7Vn0EeSlTvbLcA5ESpLSAj2SDcgGMYg1L1pq7MSn/mo
-         SeBQ==
-X-Gm-Message-State: APjAAAVgy2VaJubWcI2XmxJcRBGFe2QWoc8wXVqlN7rcUE2PiEClcL1O
-        YVYuqZ54M+b2OMJ2N5TZ49T7CqdJZlLpiK79yvY=
-X-Google-Smtp-Source: APXvYqwqswMjq6onHWJnZlUAuSCbFyusPCnVtKQAdwYTJSTVZK7lZCUgcz/kRGYNb/n5aJMDcQbysL4YybasiRh1jmw=
-X-Received: by 2002:a24:7542:: with SMTP id y63mr2214012itc.70.1552573879399;
- Thu, 14 Mar 2019 07:31:19 -0700 (PDT)
+        id S1726712AbfCNOen (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 10:34:43 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53931 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726539AbfCNOen (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 10:34:43 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgZ7h-1gjw3H1qC5-00o05i; Thu, 14
+ Mar 2019 15:34:38 +0100
+Date:   Thu, 14 Mar 2019 15:34:22 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Josh Steadmon <steadmon@google.com>
+cc:     git@vger.kernel.org, git@jeffhostetler.com
+Subject: Re: [PATCH 0/2] Randomize / timestamp trace2 targets
+In-Reply-To: <cover.1552519463.git.steadmon@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1903141531160.41@tvgsbejvaqbjf.bet>
+References: <cover.1552519463.git.steadmon@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190313182615.7351-1-phillip.wood123@gmail.com>
- <20190313182615.7351-3-phillip.wood123@gmail.com> <nycvar.QRO.7.76.6.1903132344350.41@tvgsbejvaqbjf.bet>
- <xmqqimwm9hh5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1903141432000.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1903141432000.41@tvgsbejvaqbjf.bet>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 14 Mar 2019 21:30:53 +0700
-Message-ID: <CACsJy8DCZLNNa9zFj04kPx=f1S_5VJqqP_qTK6QYJ0fFmusymg@mail.gmail.com>
-Subject: Re: separating regression test patches from fixes, was Re: [PATCH
- 3/3] cherry-pick --continue: remember options
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wogHjiYGHmgxd3pOM6KWYWsVdSaRvNSKjYBQcVC1i+W6xkRE3Yz
+ WtArqovJQdlnQ+DWypD7f65oA45D6gZy9+H6vLZ8FC2NghvJbpaoKoitqw6QL5hsxk6n3VV
+ QGKVi1Co3JCLFZpdk1TKRa+Y9khoaUfrMCxV/SFZkGbZMu/pfH2T1lU7a1Ugbkc6LU9efxA
+ AK/HRIKkhw15qsPU1O0gw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:91JMQp3Ik4A=:m5eJ8IeoRGQDnO4H3oN25L
+ 05M/oGAuPrVD3p/bjdsUnghE6uG3GqU8yVXZ/CuD0khLBvLJJZiZdDqTLewWkBLWQV1HYm6/a
+ WDkZ6sVnFZ/rqLFuLUaiXlZyMPzB6JgzU3ieUOcNBs3nH3uGORfY4fgtsqD8KEozkxLW/ec/K
+ y//PGL4FEp0T0ZD7PW248UlYy8AFIjlpmiWMMJlmID8GbUfweNZ3LBuP2TR80KVmH+6NLrnAp
+ INBcCui4HzIe4RwC4r2WLYqIY1MoL1TGVvmF/8HS74qTePu/5+R5adyW0+hD5aN4rzUxoV1Ob
+ qb7AewTEjDTDhcIx7ZBPCEzz0YcjIwenq32qf5p6HW1WxZc7jedHhIY2sw8J6Yx0C9vgkOqr+
+ RK/YRSL4FZbl3i7jnkER0y5eELkaJFyCfs5Tm1Vp4BcRHUQE781Oa4NqXT1VoTNeXhZ5Bt6e/
+ DXc9365+REVJqqgiAmkCcjJ+ZDwQwICe/B2nKRaY1+Ncstg9dM0Qf79dAS8DhSMhykk0N90jR
+ n14Rc0YyatO7kZoDyf6bEOBqEP5GNDTTFnsgWrShFER54Z/YI9nqCwR+IHyh4SfKD1K3c4aVz
+ HYsYTH9rKU5HTpmc1tudFfY+XTuHnbZcvHk285zFvK5FM1sPQvskUBDylhVnnPmsMSRE8iEsc
+ kFz70wzTKf9wX9ybsT6Ya/Y2lClg1wu+BTq1zZ/kXcwk+em/v6dn4bvZvwxOeZMmDcWVl2LXL
+ bYioe+SQKmVHjmF4GgpGEWLrA+ox172zSRpKszDSna1/XUKXHFBjLoBA+OeTa9jL0nH5V2T1K
+ NCm/p+TdDwH+NSpEqB5rwxJCA33mDXR1wPnARul6tUU3YKduMP3OdApnGoF9ft1supy/uQIvL
+ kvqjVaaE4jzP8edEK1Dmvn/weX+i3PezY2yCTal9bx6BUD8L5FNtj83i/sXhkKzfz2kbMk5pO
+ U6kWocvxUtg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 9:10 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> In any case, before we get better tooling to work around these issues, I
-> still think it makes a ton of sense to encourage proper separation of
-> concerns: to keep patches that introduce regression tests demonstrating a
-> breakage separate from patches that fix the breakage. It would certainly
-> help me (e.g. when staring at a range diff).
+Hi Josh,
 
-Then perhaps improve the tools now because these separate patches
-enter 'master' and stay in the history forever. One of the problems I
-have with separating tests from the actual code change is the
-description of the problem often stays on the test commit, which I
-can't see in git-log if I'm searching for the code change. And no
-sometimes I can't just look at the parent commit if I filter code by
-path (and with --full-diff)
--- 
-Duy
+On Wed, 13 Mar 2019, Josh Steadmon wrote:
+
+> Persistently enabling trace2 output is difficult because it requires
+> specifying a full filename. This series teaches tr2_dst_get_trace_fd()
+> to randomize filenames when a directory or filename prefix are given as
+> targets in the GIT_TR2_* envvars. It also allows expansion of a
+> timestamp template string into the current UTC timestamp.
+
+Given the problem you try to solve, would it not make more sense to use
+`getnanotime()` than some randomized file name or an ISO date format?
+
+Ciao,
+Johannes
