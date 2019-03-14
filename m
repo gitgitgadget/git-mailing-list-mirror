@@ -7,50 +7,51 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7AF520248
-	for <e@80x24.org>; Thu, 14 Mar 2019 12:05:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68B3320248
+	for <e@80x24.org>; Thu, 14 Mar 2019 12:17:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727173AbfCNMFP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 08:05:15 -0400
-Received: from mout.gmx.net ([212.227.15.15]:47231 "EHLO mout.gmx.net"
+        id S1726967AbfCNMRM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 08:17:12 -0400
+Received: from mout.gmx.net ([212.227.15.18]:43309 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726688AbfCNMFP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 08:05:15 -0400
+        id S1726918AbfCNMRL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 08:17:11 -0400
 Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MO77c-1h9vPj05fI-005WkM; Thu, 14
- Mar 2019 13:05:07 +0100
-Date:   Thu, 14 Mar 2019 13:04:51 +0100 (STD)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LmrUq-1gYfVC0pWG-00h31h; Thu, 14
+ Mar 2019 13:17:02 +0100
+Date:   Thu, 14 Mar 2019 13:16:45 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Roberto Tyley <roberto.tyley@gmail.com>
-Subject: GitGitGadget on github.com/git/git?, was Re: [RFC/PATCH] point pull
- requesters to Git Git Gadget
-In-Reply-To: <20190312213246.GA6252@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1903141235390.41@tvgsbejvaqbjf.bet>
-References: <20190312213246.GA6252@sigill.intra.peff.net>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] difftool: allow running outside Git worktrees with
+ --no-index
+In-Reply-To: <20190313204644.GA5397@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1903141305550.41@tvgsbejvaqbjf.bet>
+References: <pull.163.git.gitgitgadget@gmail.com> <9f6eb60eeeccf920af83652899c5bc2d40e2092f.1552504812.git.gitgitgadget@gmail.com> <20190313204644.GA5397@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:6I7V2mRNFNec5LFn8SWjAfe67bjx2fCGXaJBij6XwLj8JAqOOrR
- YoEtEETp5j6yTuvpUAzKveX7lIp1sAul+Z2yLN5s73B90ydk9T4gc5gD1B8F84y84JHZxoX
- Wy6vGdKA/GICj10MqGKVtykak0W4IlBe4KnZYQ9gisZkM1G1nLP09FA67G0QR9SZCPyArn6
- cAEfxZ4m3bv4mrEX6SRvA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ku1SEJNzK6U=:p7qb6j4k9Yl6b3xEdnABlD
- R9qBc88ktD+KeqEq0dJqsvuUjdfZOQconhWnz21UMIHBvkZBi2cRjZh/jpJAPJWAQn5udyybg
- 7PMvkT9W9j181Yi1vq7TpQkP2xvVGVpC7oMAteD59GHpvVlKMKS+4Uvp2qAoLWpx3EjpIxk94
- HPO7i1fD/pKQuIrjeb2nqb678A5fhjbke1WmfCilbtqi8axGLOfzT6gNF7s3Bn/2iOA5jxv4T
- SXfQaxd4gL9TXtLSJmLzDG1/d+QVuYHgN74HBqzMwhXiHtQYX+Bg2sc+ApAQ0UpqHdlwZ+SmA
- aaX/FDSgZkaWq8ZQzMCj/+HgcATPDJWqyDkaN8cSd1dcZ/3GHGudmIvh0cv582h7lQLzr4UBY
- Y0SgdANU7joJZKBvyS8XMPqidI3t2PIHGumhc1XdKE5tJr/9+s9NbMYclCt9d6d1wDb9/RAGC
- lN6ExNIB2bfQzsU5D/07v0LCdci+RVN6gyZGyeePF1/0S9wNiX3cvqp7N4S+X96LKRpXu0QAR
- 8pjRoPziVPwBs2HSbIfuHb1isaCKvfLSSlW1fl2GOfVtY39QplM1DHHdXLzlcj3goOcr0hdfF
- /tPfOtGsGe+zi0UZFDvDV1sFzwejo/S+Tx8miadb1nqQl882VcIwEW5s99cSz3zknF4spSld5
- 5oh2UAEm+BeQuTqalqHK4iUB1ghRgMQM+gVH1eklVYGLarFGn9ht8RRQm/wcXHr0W37h/3/0X
- 2UVXjbEH8K7Dp5fe0T2z0WqmYxmVMt+DyTn5tHzOY8lzJ4d/6Iie20tAQEMd/82Y0DlRwDo7X
- tXBXRDaWchEcgjaG2UJDL2QHyLvIOnIbbeNvJeK1DNHDxP5z3wQCSnDHK+afugENJLLo++7FP
- n3gBehaifrXSsg2ppJ3FxUEzNTO13VxNL0BYolou6p4lrO50r6cCXvOvA00Fin6nYbD/am+Cm
- DfMnYWZnygQ==
+X-Provags-ID: V03:K1:3iWaTdroDPgMZJXBqyohqqRuQ4BjEkvuoho4R/HHd5ZCNyMQGzD
+ Xpb2D0IsgS+vkPVu0I311Oplxii1XZr06sm8N0+OEBFGiW03iCIOCfS9Qm8MFpg/ilBkblh
+ KkN+X7qL2+65Fg3VhfMGPcX2Z1ucpfsmESR3YaZgvU2qP5cGjDJynmUObZBhmEOe8cehyEO
+ XDyRf8ibIvHkAr62HpIpg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mVKmLd5xnyM=:OulvCbnM3kdpn1blPyPuEn
+ 0dKdqm+bgSPohXqIfSmfeTpxBsmt90ihXJx3F+Nzv88YIiGsYrWGnBq6A4Oe3+qepQDal/EV/
+ Ba93cT30vMH6yUQDIRdWc9IqEWiIzW85CW+pvDUjIkHp3QaHWjivE0xyGXx3kEn3IyWYAPr+/
+ iRp0T3H2mZD9TMu9wMWjomdZD7zrvOrAqBJnRifcmQ/Zwnz5l8KHfcPcuRfR63KM41z/6mIKY
+ 2VeF8BGNCCO9MxZBHX3jKohsB9QvjNZXPp7nYn2f4xsZa156cCXt5OVXJkjKIZtGUlad/2wOh
+ zBhOi685ZWIIGJucnDsUDSQcjZnhHWRlrrd4I2qdIeRiLMGu5msAIN3u/7ca1L6lupFJKCag0
+ egP/MsDWvH4TWr92/4wyX4klHPFY8XmpaB5Oz8z0Jp/DQIoiq0FxZ0l2IZe2mwIKNmVH5IMlJ
+ +pIBkl+0eNyA8Lz/D8PHxzFDQ52oUTvmtX577+sDRPGvSLFb3BsddD7NylRp1g1JEIgXtIznj
+ J4jN2Dj4ehxusIZnQegYP8YRuAWyk9nQh/AulIVpCi8VSnb783ljqW5s2mrwPTNQJ1L1tN6AA
+ NBUP04bOlqHO7yadw1ZjFepxX1bnQOiog+rxBwNrR9LKR4HuFYg9XR/AskMx5WfmKSy/8LSNx
+ cjuFeGw0hAtZCAJU9JdyNyRd0zLQw5rH7Bh1QwGfqGgtFMoHZHRk2yZVaAfAd6x/MBobookpW
+ Ua6I8dupsXpNAHVdA8/Sf0h1h2VwxZ1LkcuypsMqo5MjFNvxcwSPmcImsk2g3IpE5U+Z6V/2F
+ dRMSfDl8wrQENgbkfQdnFlm48Y+Kj+VlL3WiuyjKZwo70CJE07HHaO5SHllUoSjqSwglS4U5h
+ 2umObKfleJIRFWD6wD9HuUi2pPS2ySFLTKupVl/9TxmsYxeRdEC5f+aQdeRpdNRluvixeTipU
+ kdrM5K8jcBw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,76 +59,155 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Peff,
 
-On Tue, 12 Mar 2019, Jeff King wrote:
+On Wed, 13 Mar 2019, Jeff King wrote:
 
-> One thing that I think submitGit can do that GGG cannot (yet), is just
-> take PRs straight on git/git. If we're going to start recommending it,
-> then I think we'd probably want to configure that, since it's one less
-> confusing step for first-timers, who right now might have to go re-make
-> their PR on gitgitgadget/git.
+> On Wed, Mar 13, 2019 at 12:20:14PM -0700, Johannes Schindelin via
+> GitGitGadget wrote:
+> 
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> > As far as this developer can tell, the conversion from a Perl script to
+> > a built-in caused the regression in the difftool that it no longer runs
+> > outside of a Git worktree (with `--no-index`, of course).
+> > 
+> > It is a bit embarrassing that it took over two years after retiring the
+> > Perl version to discover this regression, but at least we now know, and
+> > can do something, about it.
+> 
+> If a bug falls in the forest, does it make a sound?
 
-I just realized that I had not responded to that yet. It is not *quite*
-that easy, unfortunately.
+I am glad you asked! Last time I checked, yes, it made a sound. It was a
+really curious rattling sound. But I did not want to bother the bug again,
+so I left it alone.
 
-I did design GitGitGadget to have a state. For example, to avoid spamming
-the Git mailing list with bogus patch series, GitGitGadget maintains a
-list of GitHub user names for users allowed to send patch series. (I saw
-my share of bogus PRs in the Git for Windows fork, and had no desire to
-facilitate similar patch series on the list.) This information, together
-with information about the Message IDs to monitor, and about the PRs that
-are still open, are maintained in a JSON-formatted object that is stored
-in `refs/notes/gitgitgadget`.
+> I get the impression that `--no-index` is not used all that much, given
+> how long bugs seem to hang around in it (and doubly so when intersected
+> with the difftool).
 
-I also designed GitGitGadget to tag iterations it sent, and to push those
-tags to the public repository. I personally find it pretty frustrating
-just *how hard* it is to go from a given mail in the mailing list archive
-to a fully working local branch, even if that was exactly what the
-original contributor had to begin with. With these tags (of the form
-pr-103/slavicaDj/add-i-v5), that's not a problem.
+Or maybe `--no-index` is used in pretty canonical ways. I, for one, used
+to be a really heavy user of `--no-index` before `range-diff`, and it was
+almost always with two files, sometimes with `--color-words`, sometimes
+with `--patience`, sometimes both, but never anything crazy like using
+Bash's `<(<command>)` syntax.
 
-Now, I was rather certain that Junio would *not* want that Git note in
-https://github.com/git/git, let alone all those tags.
+In other words, my take is that the ways in which `--no-index` is used are
+probably not very different from one another, and the bugs lurk in
+really rarely exercised code paths.
 
-Yet for ease of implementation, GitGitGadget uses the very same fork where
-the GitGitGadget PRs live to push those refs.
+> > -	setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
+> > -	setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
+> > +	for (i = 0; i < argc; i++)
+> > +		if (!strcmp(argv[i], "--"))
+> > +			break;
+> > +		else if (!strcmp(argv[i], "--no-index")) {
+> > +			no_index = 1;
+> > +			break;
+> > +		}
+> 
+> Instead of this ad-hoc parsing, can we just add an OPT_BOOL("no-index")
+> to the parse-options array? We'll have already run parse_options() at
+> this point.
+> 
+> We'd just have to remember to add it back to the argv of diff
+> sub-commands we run.
 
-I could imagine that we keep pushing those refs to gitgitgadget/git, but
-now also allow for PRs on git/git to use GitGitGadget (we would have to
-install the GitHub App there, too, and I would have to change the code to
-allow that, and we would have to use a slightly different format for the
-tags generated from git/git PRs to avoid clashes with the gitgitgadget/git
-PRs, all of which is totally doable).
+It was that "add it back" that I was not keen to implement.
 
-If this is truly something we ("we" as in "engaged Git developers") want,
-I can set aside some time to work on that. I had originally planned on
-exactly that, i.e. supporting PRs on git/git, but I got rather strong
-indications that GitGitGadget is hated by some (Duy, for example, was very
-vocal about refusing to even look at any of the GitGitGadget-sent patch
-series, let alone using the tool himself). While I think that this hate is
-undeserved, I cannot change other people's feelings, nor would I try, all
-I can do is to try not to make the situation worse.
+But you gave me an idea: why not teach parse_options() to optionally keep
+individual parsed arguments in `argv`?
 
-In short: before I spend serious time on extending GitGitGadget to handle
-git/git PRs, I want to be sure that I won't get backlash for that.
+And I was half-way finished with implementing that idea when I discovered
+`OPT_ARGUMENT()`. This seemed to be *almost* what I needed: it puts the
+argument immediately back into `argv`. However, it did not record that
+fact, so I would not know whether it was part of the command-line or not.
 
-Ciao,
+So I was already done with implementing `OPT_ARGUMENT_SEEN()`, based on
+`OPT_ARGUMENT()`, and testing it with my difftool patch, when it occurred
+to me to look what existing users of `OPT_ARGUMENT()` do. Guess what:
+there are none, apart from that test helper used in t0040 to verify that
+`parse_options()` works as intended. And there were none other. In the
+entire commit history.
+
+In the end, I changed `OPT_ARGUMENT()`, and I find the end result rather
+pleasing.
+
+> > +	if (!no_index && !startup_info->have_repository)
+> > +		die(_("difftool requires worktree or --no-index"));
+> > +
+> > +	if (!no_index){
+> > +		setup_work_tree();
+> > +		setenv(GIT_DIR_ENVIRONMENT, absolute_path(get_git_dir()), 1);
+> > +		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(get_git_work_tree()), 1);
+> > +	}
+> 
+> This part makes sense.
+> 
+> There may be other subtle dependencies on having a repo from
+> sub-functions we run, but I didn't see any from a quick scan. And
+> anyway, if there is such a code path, it is no worse off than before
+> your patch (and in fact much better, because it would hopefully yield a
+> BUG() that would tell us what we need to fix).
+
+Indeed.
+
+> > +test_expect_success 'outside worktree' '
+> > +	mkdir outside &&
+> > +	echo 1 >outside/1 &&
+> > +	echo 2 >outside/2 &&
+> > +	test_expect_code 1 env GIT_CEILING_DIRECTORIES="$(pwd)" git \
+> > +		-c diff.tool=echo -c difftool.echo.cmd="echo \$LOCAL \$REMOTE" \
+> > +		-C outside difftool --no-prompt --no-index 1 2 >out &&
+> 
+> We have a helper for running outside a repo. Because you have to set up
+> the "outside" space, it unfortunately doesn't shorten things as much as
+> it does in some other spots:
+> 
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index 4907627656..255a787614 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -706,12 +706,12 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+>  '
+>  
+>  test_expect_success 'outside worktree' '
+> -	mkdir outside &&
+> -	echo 1 >outside/1 &&
+> -	echo 2 >outside/2 &&
+> -	test_expect_code 1 env GIT_CEILING_DIRECTORIES="$(pwd)" git \
+> +	mkdir non-repo &&
+> +	echo 1 >non-repo/1 &&
+> +	echo 2 >non-repo/2 &&
+> +	test_expect_code 1 nongit git \
+>  		-c diff.tool=echo -c difftool.echo.cmd="echo \$LOCAL \$REMOTE" \
+> -		-C outside difftool --no-prompt --no-index 1 2 >out &&
+> +		difftool --no-prompt --no-index 1 2 >out &&
+>  	test "1 2" = "$(cat out)"
+>  '
+>  
+> 
+> but it might be worth using anyway, just for consistency.
+
+I totally agree. Thanks for pointing me to `nongit`; I was unaware of it.
+
+And I was able to shorten it a bit, because the files `1` and `2` do not
+need to live in that `non-repo` directory.
+
+Again, a rather pleasing change.
+
+> > +	test "1 2" = "$(cat out)"
+> 
+> A minor nit, but I think:
+> 
+>   echo "1 2" >expect &&
+>   test_cmp expect actual
+> 
+> produces nicer output on failure, and costs the same number of
+> processes (it is an extra file write, but I think the main driver of
+> performance in the test suite is just processes).
+
+You are totally right! After all, a regression test does not need to make
+anything easy when it passes. It needs to make it easy to act when it
+fails.
+
+Thank you so much for your helpful suggestions!
 Dscho
-
-P.S.: Fun fact: I came up with the name while discussing the idea of the
-"UI" (using PR comments to send commands and get answers) with Stolee,
-pretty much precisely a year ago, and when I tried to find a label for
-what this thing that I have in mind is all about, it was "kind of a gadget
-that works on git.git".
-
-So yeah, I had https://github.com/git/git PRs in mind when I started, and
-I only started the gitgitgadget/git fork in order to prove that it works,
-and that it has benefits.
-
-If it was not for my wonderfully supportive team, I would probably have
-abandoned it after encountering so many pushbacks (`amlog` being actively
-made useless for me, the unexpectedly negative reactions to GitGitGadget,
-all the work being left to me, etc). But my outstanding teammates really
-made a difference, and can now reap the benefits of having a system that
-only requires a GitHub account to contribute to Git. As well as occasional
-contributors, I might want to add, whose contributions we would have lost
-if it was not for GitGitGadget.
