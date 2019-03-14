@@ -2,146 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A238C20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 19:27:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21D0320248
+	for <e@80x24.org>; Thu, 14 Mar 2019 19:55:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727253AbfCNT10 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 15:27:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51466 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726848AbfCNT10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 15:27:26 -0400
-Received: (qmail 32116 invoked by uid 109); 14 Mar 2019 19:27:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 14 Mar 2019 19:27:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25709 invoked by uid 111); 14 Mar 2019 19:26:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Mar 2019 15:26:30 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Mar 2019 15:26:09 -0400
-Date:   Thu, 14 Mar 2019 15:26:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/5] gc: don't run "reflog expire" when keeping reflogs
-Message-ID: <20190314192608.GC26250@sigill.intra.peff.net>
-References: <87imwmbv7l.fsf@evledraar.gmail.com>
- <20190313235439.30439-5-avarab@gmail.com>
- <20190314004006.GI31968@sigill.intra.peff.net>
- <xmqqmuly9hyg.fsf@gitster-ct.c.googlers.com>
+        id S1727660AbfCNTzn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 15:55:43 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53043 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726890AbfCNTzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 15:55:43 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEoGY-1hEvle2Ao6-00FzfV; Thu, 14
+ Mar 2019 20:55:32 +0100
+Date:   Thu, 14 Mar 2019 20:55:16 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 4/4] get_oid(): when an object was not found, try
+ harder
+In-Reply-To: <20190314185758.GB26250@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1903142054490.41@tvgsbejvaqbjf.bet>
+References: <pull.161.git.gitgitgadget@gmail.com> <994446236d05d9d014e12a5102bcf9be222e3b57.1552472189.git.gitgitgadget@gmail.com> <xmqqa7hyckfm.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1903141410360.41@tvgsbejvaqbjf.bet>
+ <20190314185758.GB26250@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmuly9hyg.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:i7a7bp8eWhPNnfI3arWA36YTyDh2XI1rx4ZyVNp92TjtCiFfFio
+ YY9DG2aUzoCgOPEe7n0/Kp4DbE5H3DbVQrbTblLLng/joAdtsP1clCdU0uVhoxNEBG7/wDV
+ t7Gb12wtnyMB7YVyNmmD5fB5tY+blsy5HMhVs2E1xarpYuoF+ZIaS3ubsUVkDTp0GuH/HPt
+ zBJ9qx7HQtFysKe7JRd0Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:c3afOGRPMbo=:hjlGV+l62R0Xgh5LYCBfr7
+ fNPCZWL15/NxakoSURbgzzjKPTeERhGysHHu8fAD+7yTe8xyW44IGf7Dqnzf92aoCRL7e8yMP
+ 0PqG+Z1VHOBdbPtKYru13Gr+U5vXpKf6r73TySFHamqY4O+UvxFXQ8PQSzYoPBD+8a1WjrhNp
+ INMwc23nbI4eAHoY+TLj69XMzFknCAGbe5KwmRbMDcnb22xVy+9FC/LRu7AzEkbOr5k8HmlKk
+ 4s4SRTuSGZIMMyqcO7/11GZzjG1MFHhPQGh4luokjb0PHYYSmwSMsWkDuVHn0VXoqrzg5mM+8
+ 7+bNFxYxAkHTHsyDnmniYkSM3bv82//b+83WGOpvqmf9xU7wskZ+a0pZZDWffPfBq74rrKC2o
+ Ybtdx45ezN5FrFdfmjvv6oD4sHdMfIeK8WkKyHci8nHTtiNo4/c31reZw8KDP6gxF4XM0EGZm
+ +ly4WaAW3K5LehhPr0ynjs3PmqSQhpEDUhZwW12+F2ME5BdCp1OH0z/J1ne5Qt0opoU64+R5y
+ lAbZvpUbJYr8i1lFKzX06azsPvrxnjKbiMJCPuv8z80L4fzh6tb8odv0nUtwxac8hejJjwC02
+ qDFOok8fN5SDd1CukvjajJ6U+Jw09u2OYw7tX/+u4nc3Ozmpr3fotH3RNphUsu5Aucuw09QMk
+ W7ged/wsAGh5xR9I65cr/AmHV1NhONOeu5k5d+ZcpZHOeINSu68hA+QNReJgW0Vsi71QBbNn5
+ lB1qYl4HnEBUpZvLltRs0UZf18DnLFwJzbTO2b76ULY+utW1/smEs/zVAAKyFz98MNidhVjv5
+ L/EJCCY3RuD6sPdhwP5CdAB455dZVR8BYHy6KhoTDpZB4UVjniaInt8s/wFYzmff8yZBjjlZm
+ EdCqqt1UAHHMMSpk8ESMJh+LC0kEGPzmM4YEex4/r5/yxT1GmCENhR0Iber6mjbsBVtcOL4wU
+ 7PLseyOWrdg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 01:51:35PM +0900, Junio C Hamano wrote:
+Hi Peff,
 
-> Jeff King <peff@peff.net> writes:
+On Thu, 14 Mar 2019, Jeff King wrote:
+
+> On Thu, Mar 14, 2019 at 02:17:18PM +0100, Johannes Schindelin wrote:
 > 
-> > Seeing "--stale-fix" again reminded me: that may be the "oops, we can
-> > spend tons of CPU walking history" bit that I mentioned in the other
-> > part of the thread. But I don't think git-gc would ever run with that
-> > option.
+> > >  2. is there a way to cleanly avoid the three-line duplicate?
+> > [...]
+> > Peff tried with a function, but I think that this would actually be a
+> > really appropriate occasion for a well-placed `goto`:
 > 
-> The option was a purely transitional measure to recover from a bad
-> reflog state that could have been left by earlier versions of
-> "prune" and "repack" that did not pay attention to the reflog.
-> Perhaps we should plan to deprecate and remove it by now?
+> I worried that a goto would be too confusing/ugly. But I am OK with it
+> if you are.
 
-True, though I have definitely used it over the years to clear out
-broken reflog entries from corrupted repositories. In most cases we
-should be able to do that much more simply these days, though. Since we
-try to keep whole segments of history reachable from an otherwise
-unreachable object, you should in general be able to just prune entries
-for which we are missing the actual object mentioned in the log.
+I hope that after reading the patch, you will agree with me that it is not
+too confusing/ugly... ;-)
 
-Of course when you are talking about corruption, all rules go out the
-window. So it's possible you'd still need --stale-fix to cover really
-broken cases.
-
-I think these days I'd more often just delete the whole reflog in such a
-case (once upon a time GitHub tried to use never-expiring reflogs as a
-sort of audit trail, but it had all sorts of complications; these days
-we log to a separate file).
-
-So I wouldn't be terribly sad to see --stale-fix go away.
-
-All that said, I do think --expire-unreachable still has to traverse to
-find out what's reachable. And I think it does it under lock. If I
-instrument the tempfile code like the patch below and run:
-
-  GIT_TRACE_TEMPFILE=1 git reflog expire --expire-unreachable=now HEAD
-
-on a copy of my git.git repo, I get:
-
-  15:22:12.163725 tempfile.c:127          activating tempfile '/home/peff/compile/foo/.git/HEAD.lock'
-  15:22:12.163769 tempfile.c:127          activating tempfile '/home/peff/compile/foo/.git/logs/HEAD.lock'
-  15:22:13.053404 tempfile.c:312          renaming tempfile '/home/peff/compile/foo/.git/logs/HEAD.lock' to '/home/peff/compile/foo/.git/logs/HEAD'
-  15:22:13.053416 tempfile.c:327          deleting tempfile '/home/peff/compile/foo/.git/HEAD.lock'
-
-We hold HEAD.lock for almost an entire second.
-
-(Actually, it just occurred to me that "strace -tt git ... 2>&1 | grep
-HEAD.lock" would produce basically the same results, no patch needed).
-
--Peff
-
----
-diff --git a/tempfile.c b/tempfile.c
-index d43ad8c191..f7e999d3ca 100644
---- a/tempfile.c
-+++ b/tempfile.c
-@@ -53,6 +53,9 @@
- #include "cache.h"
- #include "tempfile.h"
- #include "sigchain.h"
-+#include "trace.h"
-+
-+static struct trace_key trace_tempfile = TRACE_KEY_INIT(TEMPFILE);
- 
- static VOLATILE_LIST_HEAD(tempfile_list);
- 
-@@ -119,6 +122,9 @@ static void activate_tempfile(struct tempfile *tempfile)
- 	volatile_list_add(&tempfile->list, &tempfile_list);
- 	tempfile->owner = getpid();
- 	tempfile->active = 1;
-+
-+	trace_printf_key(&trace_tempfile, "activating tempfile '%s'",
-+			 tempfile->filename.buf);
- }
- 
- static void deactivate_tempfile(struct tempfile *tempfile)
-@@ -302,6 +308,9 @@ int rename_tempfile(struct tempfile **tempfile_p, const char *path)
- 		return -1;
- 	}
- 
-+	trace_printf_key(&trace_tempfile, "renaming tempfile '%s' to '%s'",
-+			 tempfile->filename.buf, path);
-+
- 	deactivate_tempfile(tempfile);
- 	*tempfile_p = NULL;
- 	return 0;
-@@ -314,6 +323,9 @@ void delete_tempfile(struct tempfile **tempfile_p)
- 	if (!is_tempfile_active(tempfile))
- 		return;
- 
-+	trace_printf_key(&trace_tempfile, "deleting tempfile '%s'",
-+			 tempfile->filename.buf);
-+
- 	close_tempfile_gently(tempfile);
- 	unlink_or_warn(tempfile->filename.buf);
- 	deactivate_tempfile(tempfile);
+Ciao,
+Dscho
