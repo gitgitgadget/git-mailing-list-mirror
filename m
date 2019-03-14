@@ -2,130 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95B8920248
-	for <e@80x24.org>; Thu, 14 Mar 2019 14:47:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE71420248
+	for <e@80x24.org>; Thu, 14 Mar 2019 14:50:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726809AbfCNOrE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 10:47:04 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:38505 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726643AbfCNOrE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 10:47:04 -0400
-Received: by mail-vs1-f65.google.com with SMTP id h132so3404845vsd.5
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 07:47:03 -0700 (PDT)
+        id S1726776AbfCNOub (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 10:50:31 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55782 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726643AbfCNOub (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 10:50:31 -0400
+Received: by mail-wm1-f65.google.com with SMTP id 4so3286848wmf.5
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 07:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KVaP+lYB4vATcVvh6gWRJBGFc/e+2uUXVW4p3rX9kAA=;
-        b=himpJbQPlIy0VqXpMmy4n2NhOds0zNNhJjqpoyxn0I+ZD3G4mJ3PSif2zlWdeWzlID
-         m3XlV2qB5ugB6TSP0P6jl/fNReI6ZxviTsQ6RJx6DVpqeGzaoKs4ghSoJmT6Fch6Winr
-         6o30Ohd/tk8z5zCFoLfrjEVGyahmx+y9rM6wYgf/Q755IsVa14m/uS5iac8PxbY0royM
-         11Xw6GbqMx9A+ASexxhCcQs7UDRl3l+SW0MP3WEja/xrPPYe3+LgtvVCYqXDMR/xFVAk
-         T6/063ZrLBMbuzbgNZ7ZUp/s4LRDQ1iB0CtNzXUOZgxEVsQQr9pORiqSRY/lwTr5+Zqp
-         qweQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=g011RL0jIc8A8xWqNVOX+ArbPiKQbEb9SH/c/4tGLdo=;
+        b=KaXO4tLgxBjrheE5j3r7AuJaqAPGQmrP8f68OnTUXYxwZ1aTmaLl/5TcyA1eAKt4HZ
+         YVQwoqCOTvvSeXiVv3lPj24huAfQ1dhk1sTv9OjjEWtFD23WycJSdIOclUuql9KT9Gai
+         CknbnPLa7GXSkKRsP2OGsJOm7EsCC3Mj7Z6pNeR3XCNDFjkddtQdx/Q1g5gxiXJNZjz1
+         Nn7qfZcdZkktoEiuA8Bd6IbWV5anXjDEmQnb7/vrQOmi/NjTQKyptzTDoP49yyU65+hX
+         etur3fynUr1FjcJmvG1v02N0leKgwP/SYee0FiCdpeV3y47o7oyvaYaNgnMLvdZbO3dc
+         JhGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KVaP+lYB4vATcVvh6gWRJBGFc/e+2uUXVW4p3rX9kAA=;
-        b=Fjv4FuHUvX/4vAvpIardosBmtuPtRap9vu8FbhVymBvFoAdmR5abOWR9thI9//Fr79
-         nvp/YTVyaViCPBlmJOvsLrHOJyrZHrDUb2RZ7ulycYfRCzUTeAqSUkNijgMe7s/TPaw1
-         /Ol9CRwl2ML2VtioYpYCKQURbOOOPNR3stkgz5XfWPkF0muRgEFeMu4fGMGJ6m0/lHPg
-         bPnuOYoiNW7gG69HXwiqT8irMi3fUSmfJOxMwEaYaCeV0+S5PPQPR73YeKAGkJvLpdoP
-         XiXvg3/4+nObqHyz1FGhtS6TkaAGLIqhY1PFG1mLkFuP7CFBNLpMqZuPK12A4jd4x7jA
-         eBZA==
-X-Gm-Message-State: APjAAAUQQtyf6+5JX62WmJPVoqqafgWMFfURAzveS4vXG/MhIAEzsYiu
-        8gmnzq8rchdIK3CB27/kamBIig1ZPPGkwMDOkV0=
-X-Google-Smtp-Source: APXvYqyL5ZIswzbwGhb69KEqOhXsnU/U7y7ROzKbd+dvqKHmRHUzj9kS1chKHEpVfM+ZCdA8xaBeF5w4hc0yLo1MgYo=
-X-Received: by 2002:a67:eb97:: with SMTP id e23mr27524112vso.175.1552574822638;
- Thu, 14 Mar 2019 07:47:02 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=g011RL0jIc8A8xWqNVOX+ArbPiKQbEb9SH/c/4tGLdo=;
+        b=qiT00ikgAxTJzb1bopk2HxFpz7aMMh8d5zBqHsxtIOehD+BVzkXmQo6+7iE4m6hxpg
+         xc5gq4umBiPOjc+LDzuz34X870F/zqhLFs7P9HeJoD05Zh+dLhBvPXvryJqCw6PxNJ10
+         rG3ywyHj2UaWVcz6ZIxG5Cppyx3NoG83U0lIlZRGQ72WdTvawvKqUFpTMqIrvQZDXVOx
+         qqpp9qZqpRoJc/3fVLnGcAxmPQQwg5dnmGgKx1izjSov34j7XXUuGLSbJJvGok11AMuW
+         gPEo9J/YVBTyVPe6RZocHGrgaepZWuzJBpVQkpIwgWF7gAbf2vIH3oye0SO5cUxOGBEY
+         eWNQ==
+X-Gm-Message-State: APjAAAU+eJtAsFhNOwWA+UTKtz+cLvFFczTrY1HRe2j3a+ROVHeuwLSg
+        lNJ0KBScDyYw11ck/oyeL4Q=
+X-Google-Smtp-Source: APXvYqw/MeGscJcExjHwVzay9QI3SRwXRTQngdZVkXtuk/vbi0Ka5I2YJ8mYctuQki2TrN1j+tRINA==
+X-Received: by 2002:a1c:f20e:: with SMTP id s14mr2932545wmc.69.1552575029522;
+        Thu, 14 Mar 2019 07:50:29 -0700 (PDT)
+Received: from szeder.dev (x4d0c0ea6.dyn.telefonica.de. [77.12.14.166])
+        by smtp.gmail.com with ESMTPSA id u14sm18450802wrr.42.2019.03.14.07.50.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 14 Mar 2019 07:50:28 -0700 (PDT)
+Date:   Thu, 14 Mar 2019 15:50:26 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Luke Diamand <luke@diamand.org>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH 01/11] test-lib: fix interrupt handling with 'dash' and
+ '--verbose-log -x'
+Message-ID: <20190314145026.GF28939@szeder.dev>
+References: <20190313122419.2210-1-szeder.dev@gmail.com>
+ <20190313122419.2210-2-szeder.dev@gmail.com>
+ <xmqq1s3aci66.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20190308095752.8574-1-pclouds@gmail.com> <20190308095752.8574-11-pclouds@gmail.com>
- <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com> <CACsJy8DrrEg++wUszU2B1zJ_gvO1WC8MXXa53ZpMnObgqy=AeQ@mail.gmail.com>
- <CABPp-BFStPOtA_OGrS3HCe_XqWN1roBnzss3nefcHdQg=9eYLQ@mail.gmail.com>
- <d78392c3-7282-43ab-b88c-aa13fb5f937a@gmail.com> <CACsJy8DxOeKEAygiEa644pcQw-zTsnLyrtPL4sKWmPFEdNWpcQ@mail.gmail.com>
- <CAPig+cRN_cKhu2UQSiJHOK-bgk+g7897_2Acb_kgNK7w6_fS5g@mail.gmail.com>
- <CABPp-BHpoa+tNW=7+6TOmoQTvbap3iavqApEGny4E-rwv1gZVQ@mail.gmail.com>
- <CAPig+cSe-v-GU=UG_PyUjf9itz_Ddqq4-Ni4h=2TtbLDXr5WJA@mail.gmail.com> <20190314091753.GA9852@ash>
-In-Reply-To: <20190314091753.GA9852@ash>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 14 Mar 2019 07:46:51 -0700
-Message-ID: <CABPp-BF3_p3+fmQcWYEu2z3J4FfPmDmiMyFiBRXyz8TxKLL7jA@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq1s3aci66.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 2:18 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Tue, Mar 12, 2019 at 01:28:35PM -0400, Eric Sunshine wrote:
-> > > > Again, not much of a datapoint, but I do use --orphan periodically.
-> > > > The idea of "fixing" the behavior so that --orphan starts with a clean
-> > > > slate is certainly appealing (since it matches how I've used orphan
-> > > > branches in each case).
-> > >
-> > > The only three people who have commented on --orphan in this thread
-> > > all apparently feel the same way: the current behavior is wrong.
-> > > Maybe we can switch it to start with an empty index after all?
-> >
-> > Starting empty may match intuition better. (More importantly, perhaps,
-> > it's harder to come up with a use-case for --orphan which doesn't
-> > involve starting with a clean slate.)
->
-> OK so the new --orphan description would be like this, right?
->
-> --8<--
-> --orphan <new-branch>::
->         Create a new 'orphan' branch, named `<new-branch>`. If
->         `<start-point>` is specified, the working tree is adjusted to
->         match it. The index remains empty (i.e. no file is tracked).
-> -->8--
->
-> I was wondering if instead of the empty index, we mark on files from
-> <start-point> as intent-to-add. That way "git commit -a" achieves the
-> same as before, but you could still carefully craft the new index and
-> "git commit". Dunno. Not going to implement it unless somebody says
-> something, since I rarely (if ever?) use --orphan.
+On Thu, Mar 14, 2019 at 11:18:41AM +0900, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > Putting these together, when a test script run with 'dash' and
+> > '--verbose-log -x' is interrupted, then 'dash' tries to write the
+> > trace output from the EXIT trap to the script's original standard
+> > error, but it very likely can't, because the 'tee' downstream of the
+> > pipe is interrupted as well.  This causes the shell running the test
+> > script to die because of SIGPIPE, without running any of the commands
+> > in the EXIT trap.
+> 
+> So... the clean-up actions do not get a chance to run because the
+> shell that is going to execute would be killed by SIGPIPE because
+> tee that is reading from it goes away?
 
-I don't see why <start-point> even makes sense to use with --orphan;
-you should error if both are given, IMO.  The point of --orphan is to
-create some entirely new history.  So, I'd expect "git switch --orphan
-<new-branch>" to:
-  * not create refs/heads/<new-branch>
-  * set HEAD to refs/heads/<new-branch>
-  * empty all tracked files from the working tree.
-  * empty the index
+Yes.
 
-Alternatively, you could allow <start-point> to be passed with
---orphan, adjusting the above steps so that both the index and the
-working tree are switched to match <start-point>, but ONLY if
-<start-point> defaults to the empty tree when --orphan is passed.
+> While I like the patch very much, I also wonder if it is possible to
+> tell tee to not to die upon seeing INT, TERM, etc.
 
-> I may need someone to come up with a convincing commit message
-> too. All I've got is "I've been told this is a good thing to do" :)
+'tee -i' ignores only INT, but not TERM and HUP.
 
-How about:
+What could work is something like:
 
-"""
-Switching and creating branches always involves knowing the
-<start-point> to begin the new branch from.  Sometimes, people want to
-create a new branch that does not have any commits yet; --orphan is a
-flag to allow that.  --orphan overrides the default of HEAD for
-<start-point> instead causing us to start from an empty history.  The
-use of --orphan is incompatible with specifying a <start-point>.
-"""
+  <re-executing the test script> | (
+        # Ignore common interrupt signals to prevent 'tee' from dying
+        # while the upstream test process still produces output.
+        trap '' INT TERM HUP
+        tee logfile
+  )
+
+but I'm not sure what should happen with a process ignoring HUP when
+it still produces output to the terminal after that terminal has been
+closed, i.e. this 'tee' process.  FWIW, In my quick test such a
+process continued happily without receiving SIGPIPE or other
+unpleasantness.
+
+>  When the shell
+> upstream of tee exits (after performing clean-up actions), tee that
+> is reading from it will exit, too, and will not be left behind (I do
+> not mean to say it that is a better alternative solution---I am just
+> trying to see if I read the problem correctly from the description
+> given above).
+> 
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index 8665b0a9b6..db3875d1e4 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -631,7 +631,10 @@ die () {
+> >  
+> >  GIT_EXIT_OK=
+> >  trap 'die' EXIT
+> > -trap 'exit $?' INT TERM HUP
+> > +# Disable '-x' tracing, because with some shells, notably dash, it
+> > +# prevents running the cleanup commands when a test script run with
+> > +# '--verbose-log -x' is interrupted.
+> > +trap '{ code=$?; set +x; } 2>/dev/null; exit $code' INT TERM HUP
+> >  
+> >  # The user-facing functions are loaded from a separate file so that
+> >  # test_perf subshells can have them too
+> 
+> Thanks.
