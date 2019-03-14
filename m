@@ -7,85 +7,78 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0A6B20248
-	for <e@80x24.org>; Thu, 14 Mar 2019 14:13:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D330F20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 14:31:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727613AbfCNONb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 10:13:31 -0400
-Received: from mail-it1-f196.google.com ([209.85.166.196]:34451 "EHLO
+        id S1727465AbfCNObX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 10:31:23 -0400
+Received: from mail-it1-f196.google.com ([209.85.166.196]:54450 "EHLO
         mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726996AbfCNONb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 10:13:31 -0400
-Received: by mail-it1-f196.google.com with SMTP id l4so1016459ite.1
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 07:13:31 -0700 (PDT)
+        with ESMTP id S1727093AbfCNObX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 10:31:23 -0400
+Received: by mail-it1-f196.google.com with SMTP id w18so4963666itj.4
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 07:31:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=p4zZ+nm/2itcOojdvmrmTiX8r67KojaI656wjtjAoU4=;
-        b=PtJRhK6/oLZ+jf48b4xNFqdgYN1C0WKmTGAj7Ga+dy7gHhnSILdna46ktFz2WJb+Ew
-         CsEyRBXVpzSmHckN/HnpRWFw588awX6a8EoGyzyu1JfissOaWARguFkgZr4mgSj+fs1u
-         MbyKPMKbsWIHvNDkyhoK/LOeDVLnSBsUWlykXbBUdWOa11n7rq7WtO/LEpmGJ/w1q2ZD
-         Hdqj1eZYHgfK8FuyjRxweC10ATGWfF3QFX5EqXT9ZuDTujtk22UWMtsTEPbVO5LtiywB
-         HxJoCVFS0ZbpKh02ShsrL9X574RuxBkOCSKBXlWHvDez5L4aGT2OP1tJOS7h4lG5OLme
-         D3XQ==
+        bh=ouXMyYgb0AbUXKCYpE4gZNSagIsCy4OFDlIgrWAIyxo=;
+        b=RpWlhGREEUpaWTmr1Vy8L5NmQzrEldLZbesx6rSr2hSdWhqXT8Z0/IdWuHFvnicjPq
+         87sW5muZqFBUpe9Mq/YIKVSLD7q1sGKeDq57D/vt3Zqei4iUa2Fqbuxse6APo6SfjKWr
+         LSyZXG03QUHci2jLXmAj+fqWr0op+0ecOivDeHVs0y6bFTi47pr6EigqBk82EovVXQVY
+         yOou963mvZ/QyW9pWSkYnmwTyNCoeRfnpvRBS2Gig3HexxOPNMnNz8vqUvDp0AwrOYm6
+         va/GI3U8yUC0FrEbZ+EM/gCaHoQmbhUABaEFPzpSHne8qk/s/G2GtI1MM/rqC4zaYUQd
+         h1+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=p4zZ+nm/2itcOojdvmrmTiX8r67KojaI656wjtjAoU4=;
-        b=qkLUYnUUJ7sjNiYwuWl6ihABa/eBY5CWuSAOMrE5zrAoDEcIIhrD6LUfi2QcSLAfs8
-         vPD5pAOgXq6MhGnGk8VFlmmCzTZuQmysLQhDOQ6m0DD38t4u+mwtMCNbCO0GzQ8bTkpD
-         cArr9Ehd68rc7MhFNiEF3gdls9zxXoUfKjwJhUL2qqjGqlEokn+SVET+S0LeHOej9Txj
-         kIQGqTmbZzMnv5xvdA7O8yKkfzdw5wC8DFptW3pkYm+FyM0CLAcSmdXDouFV/ZOeB2E+
-         9I7U6eTJaEeKfxCbVcyoZj026Q9tIVBiy1ddQnOTTkrt5MSxRaOGIrRmPauS4jZhqC8Q
-         UAWQ==
-X-Gm-Message-State: APjAAAV3O7ONpFxD6JhzGm3pv4+sTkz5dh8dKCsdvjMVSPoE4xitBTa8
-        jaVTob16eqajraful86ykyIhae+gHHlmofdmJPQ=
-X-Google-Smtp-Source: APXvYqxrLcec5NitjNJdt8M0tyECje1sZm5eNZetHm3ETFxLOYixgoBIPWQu+m2Ht74fgct4jb+EoncRQjalQyBm56Y=
-X-Received: by 2002:a24:ccc5:: with SMTP id x188mr2101786itf.123.1552572810637;
- Thu, 14 Mar 2019 07:13:30 -0700 (PDT)
+        bh=ouXMyYgb0AbUXKCYpE4gZNSagIsCy4OFDlIgrWAIyxo=;
+        b=VXPRjHGHVdMOGXQkkdNy5ZfG1oyRgoKV6jRgGlFloZrkb6Djnv8mj52tmEJu8uCNlo
+         51y+adFyi+aGsu/a5+nNhiH+YM/B1A6GM7ZPoG98c8nlKC6S09Zh63tMkpKi5Tf5ZOdc
+         Os8VJQ6hFErwg0J+YFJagcDIiP6Tmdb6qThAGVbNemLtlRwW5GAaztI4eNrckNwEJ2IO
+         FlxW6T5PdTvTGM2lN+2cTHSlLT8dsEWL0iUhzc7TpmVAWRvkU79ibKD2XCCgvbBDdXfs
+         KWIyb0i/cC46MB8Yun2dQnZ8w7Vn0EeSlTvbLcA5ESpLSAj2SDcgGMYg1L1pq7MSn/mo
+         SeBQ==
+X-Gm-Message-State: APjAAAVgy2VaJubWcI2XmxJcRBGFe2QWoc8wXVqlN7rcUE2PiEClcL1O
+        YVYuqZ54M+b2OMJ2N5TZ49T7CqdJZlLpiK79yvY=
+X-Google-Smtp-Source: APXvYqwqswMjq6onHWJnZlUAuSCbFyusPCnVtKQAdwYTJSTVZK7lZCUgcz/kRGYNb/n5aJMDcQbysL4YybasiRh1jmw=
+X-Received: by 2002:a24:7542:: with SMTP id y63mr2214012itc.70.1552573879399;
+ Thu, 14 Mar 2019 07:31:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-11-pclouds@gmail.com> <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
-In-Reply-To: <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com>
+References: <20190313182615.7351-1-phillip.wood123@gmail.com>
+ <20190313182615.7351-3-phillip.wood123@gmail.com> <nycvar.QRO.7.76.6.1903132344350.41@tvgsbejvaqbjf.bet>
+ <xmqqimwm9hh5.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1903141432000.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1903141432000.41@tvgsbejvaqbjf.bet>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 14 Mar 2019 21:13:04 +0700
-Message-ID: <CACsJy8BATpbAG8hDs6n2sfDCgY_XTJtU0MRxT+2FpHETqr+bCg@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 14 Mar 2019 21:30:53 +0700
+Message-ID: <CACsJy8DCZLNNa9zFj04kPx=f1S_5VJqqP_qTK6QYJ0fFmusymg@mail.gmail.com>
+Subject: Re: separating regression test patches from fixes, was Re: [PATCH
+ 3/3] cherry-pick --continue: remember options
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 11, 2019 at 6:16 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> > +-f::
-> > +--force::
-> > +     Proceed even if the index or the working tree differs from
-> > +     HEAD. Both the index and working tree are restored to match
-> > +     the switching target. This is used to throw away local
-> > +     changes.
->
-> I'd always thought that --force meant "throw away my local changes if
-> they conflict with the new branch" not "throw them away regardless"
-> (which is better as it is deterministic). Maybe we can come up with a
-> clearer name here --discard-changes? At the moment --force does not
-> throw away conflicts properly (see the script below in my comments about
-> --merge).
+On Thu, Mar 14, 2019 at 9:10 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> In any case, before we get better tooling to work around these issues, I
+> still think it makes a ton of sense to encourage proper separation of
+> concerns: to keep patches that introduce regression tests demonstrating a
+> breakage separate from patches that fix the breakage. It would certainly
+> help me (e.g. when staring at a range diff).
 
-First victim of --discard-changes (or maybe I misread your comment),
-it's too much to type even with completion and I'm so used to the
-short and sweet "switch -[d]f".
-
-Unless people object, I'm going to keep --force as an alias for
---discard-changes. -f could be extended later to cover more
---ignore-stuff when it makes sense.
+Then perhaps improve the tools now because these separate patches
+enter 'master' and stay in the history forever. One of the problems I
+have with separating tests from the actual code change is the
+description of the problem often stays on the test commit, which I
+can't see in git-log if I'm searching for the code change. And no
+sometimes I can't just look at the parent commit if I filter code by
+path (and with --full-diff)
 -- 
 Duy
