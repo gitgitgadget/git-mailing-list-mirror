@@ -2,139 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE71420248
-	for <e@80x24.org>; Thu, 14 Mar 2019 14:50:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5E9F20248
+	for <e@80x24.org>; Thu, 14 Mar 2019 14:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726776AbfCNOub (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 10:50:31 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55782 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726643AbfCNOub (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 10:50:31 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 4so3286848wmf.5
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 07:50:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=g011RL0jIc8A8xWqNVOX+ArbPiKQbEb9SH/c/4tGLdo=;
-        b=KaXO4tLgxBjrheE5j3r7AuJaqAPGQmrP8f68OnTUXYxwZ1aTmaLl/5TcyA1eAKt4HZ
-         YVQwoqCOTvvSeXiVv3lPj24huAfQ1dhk1sTv9OjjEWtFD23WycJSdIOclUuql9KT9Gai
-         CknbnPLa7GXSkKRsP2OGsJOm7EsCC3Mj7Z6pNeR3XCNDFjkddtQdx/Q1g5gxiXJNZjz1
-         Nn7qfZcdZkktoEiuA8Bd6IbWV5anXjDEmQnb7/vrQOmi/NjTQKyptzTDoP49yyU65+hX
-         etur3fynUr1FjcJmvG1v02N0leKgwP/SYee0FiCdpeV3y47o7oyvaYaNgnMLvdZbO3dc
-         JhGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=g011RL0jIc8A8xWqNVOX+ArbPiKQbEb9SH/c/4tGLdo=;
-        b=qiT00ikgAxTJzb1bopk2HxFpz7aMMh8d5zBqHsxtIOehD+BVzkXmQo6+7iE4m6hxpg
-         xc5gq4umBiPOjc+LDzuz34X870F/zqhLFs7P9HeJoD05Zh+dLhBvPXvryJqCw6PxNJ10
-         rG3ywyHj2UaWVcz6ZIxG5Cppyx3NoG83U0lIlZRGQ72WdTvawvKqUFpTMqIrvQZDXVOx
-         qqpp9qZqpRoJc/3fVLnGcAxmPQQwg5dnmGgKx1izjSov34j7XXUuGLSbJJvGok11AMuW
-         gPEo9J/YVBTyVPe6RZocHGrgaepZWuzJBpVQkpIwgWF7gAbf2vIH3oye0SO5cUxOGBEY
-         eWNQ==
-X-Gm-Message-State: APjAAAU+eJtAsFhNOwWA+UTKtz+cLvFFczTrY1HRe2j3a+ROVHeuwLSg
-        lNJ0KBScDyYw11ck/oyeL4Q=
-X-Google-Smtp-Source: APXvYqw/MeGscJcExjHwVzay9QI3SRwXRTQngdZVkXtuk/vbi0Ka5I2YJ8mYctuQki2TrN1j+tRINA==
-X-Received: by 2002:a1c:f20e:: with SMTP id s14mr2932545wmc.69.1552575029522;
-        Thu, 14 Mar 2019 07:50:29 -0700 (PDT)
-Received: from szeder.dev (x4d0c0ea6.dyn.telefonica.de. [77.12.14.166])
-        by smtp.gmail.com with ESMTPSA id u14sm18450802wrr.42.2019.03.14.07.50.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Mar 2019 07:50:28 -0700 (PDT)
-Date:   Thu, 14 Mar 2019 15:50:26 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Luke Diamand <luke@diamand.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 01/11] test-lib: fix interrupt handling with 'dash' and
- '--verbose-log -x'
-Message-ID: <20190314145026.GF28939@szeder.dev>
-References: <20190313122419.2210-1-szeder.dev@gmail.com>
- <20190313122419.2210-2-szeder.dev@gmail.com>
- <xmqq1s3aci66.fsf@gitster-ct.c.googlers.com>
+        id S1726653AbfCNO7M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 10:59:12 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50893 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726360AbfCNO7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 10:59:12 -0400
+Received: from [192.168.0.129] ([37.201.195.16]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MI9n0-1h2mra0hDy-003z5x; Thu, 14
+ Mar 2019 15:59:00 +0100
+Date:   Thu, 14 Mar 2019 15:58:43 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2] rebase: remove the rebase.useBuiltin setting
+In-Reply-To: <20190314132444.25881-1-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903141544110.41@tvgsbejvaqbjf.bet>
+References: <20190213142209.8226-1-avarab@gmail.com> <20190314132444.25881-1-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq1s3aci66.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: multipart/mixed; boundary="8323328-1960277247-1552575540=:41"
+X-Provags-ID: V03:K1:i2CpgTdwh1PoU7YkqKo0H4TKOoHENh9regBE2SihbMpofKixpZ9
+ WwPCKMkgRTUcqhKEe3orvgX8JBsyP3WQsHJo2Fi0poxjmfju4GVFVtiEeqS/g+cGlWmUYk8
+ NrMRVXwpwGdaflCloi2keZAE2II9kQzeAq6M89+p6IVACvIivP9O3npSCrP8mlgr6P6Y8jF
+ Xo4ii0hgzOC27cSkI6D7A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nwIF/va868Q=:3ZYLsGnXU9084Zx1UjSbtU
+ dBlFfAHwDAlb2kY4xtbWIJkLXJiEeG5hBEYedVR6+IvxSDuDxs3YR7RhgKPRRrmnF4JHdy60b
+ YbwC3fg6Pvoe+TH5Hii/SYwd043wwN0PfMCYAriBaSquXL/FFmZz3Gy7Xojspc+nDCF6pi+SO
+ 3uhCxl1GgOAD9dy3c+Aly8pRqM0TrGV/GnF+NkxJ0KLw7T7hYN6eYjyirOia7vPEJPktDos2g
+ DD4oyZkrRrncMwpTB2JekjTMQzF2qR/sy/AooGHU9FA5uU+o9LgTpuHtJfN4Tk1IqP62D6kpB
+ Yv/KsmsJ20noNzoOJIlUqPiJRAHzEku/YuysHrP+xgF823hNhRkY2J7m3hP1Dn2wgouPmGV11
+ 34oxQNA/61Rm3WMqbsc8GwlzlfhGJAMQeINZn2RDzejvPrgXqMs47fW37uYZmg0jIJugFuRdk
+ I42RgnztK/4r0AcIiEHSwgt0ArFlTgiSjF+USalYry9Q0FtKO2Ftikt9dXgqdWZ5mT+f6g/z4
+ 4nE1iBu7q7RbI1nDaR6MUbcDUhvwOea4VgEcEzfCT4Ay42izHU1Ye3PL6pk8te8FzEtqEWZhl
+ Be/4hYNNuSOC6UEv44xsHlX0hdMMPMNUzuJLuZjfGsU0nLWtlxNOd8rcIZ2FnHvs/qIp0tYHp
+ /H1rua9FpDwmd6WLjO54u5c5ogTr8j22Zgdz4g4A0rCDKexZgiuOzayHzaIUWtbjCVKYFYbM/
+ W/4vDwhfZKZL88jThUVoVDkNrjkFZStpACmEKEdOAAQPQ5OmGm/ogV7Bp4Pe1pjkYdGLnp6Dv
+ aM8irB1K0vX4odmT6Rl2EmQoOOUif795lqigLRzvBOwD+aZJW1C3UW4H4U5XNb/FXyyWcWhSh
+ UuZps/vbRPE7CEjEHsWAb9rJWOYSnom13hn9Sv8qk/vaP808yyrQX7H8QKqeRuvTUk4OsbgTx
+ Al66jUoxS8w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 11:18:41AM +0900, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1960277247-1552575540=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi Ævar,
+
+On Thu, 14 Mar 2019, Ævar Arnfjörð Bjarmason wrote:
+
+> Remove the rebase.useBuiltin setting, which was added as an escape
+> hatch to disable the builtin version of rebase first released with Git
+> 2.20.
 > 
-> > Putting these together, when a test script run with 'dash' and
-> > '--verbose-log -x' is interrupted, then 'dash' tries to write the
-> > trace output from the EXIT trap to the script's original standard
-> > error, but it very likely can't, because the 'tee' downstream of the
-> > pipe is interrupted as well.  This causes the shell running the test
-> > script to die because of SIGPIPE, without running any of the commands
-> > in the EXIT trap.
+> See [1] for the initial implementation of rebase.useBuiltin, and [2]
+> and [3] for the documentation and corresponding
+> GIT_TEST_REBASE_USE_BUILTIN option.
 > 
-> So... the clean-up actions do not get a chance to run because the
-> shell that is going to execute would be killed by SIGPIPE because
-> tee that is reading from it goes away?
+> Carrying the legacy version is a maintenance burden as seen in
+> 7e097e27d3 ("legacy-rebase: backport -C<n> and --whitespace=<option>
+> checks", 2018-11-20) and 9aea5e9286 ("rebase: fix regression in
+> rebase.useBuiltin=false test mode", 2019-02-13). Since the built-in
+> version has been shown to be stable enough let's remove the legacy
+> version.
 
-Yes.
+I agree with that reasoning. Elsewhere, a wish cropped up for the `git
+stash` command to optionally ignore unmatched globs, and if we go about to
+implement this, we will have to implement it in the scripted and the
+built-in version. If we can at least avoid that for the `rebase` command,
+I think it would make things a bit easier over here.
 
-> While I like the patch very much, I also wonder if it is possible to
-> tell tee to not to die upon seeing INT, TERM, etc.
+> diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
+> index 331d250e04..c747452983 100644
+> --- a/Documentation/config/rebase.txt
+> +++ b/Documentation/config/rebase.txt
+> @@ -1,16 +1,9 @@
+>  rebase.useBuiltin::
+> -	Set to `false` to use the legacy shellscript implementation of
+> -	linkgit:git-rebase[1]. Is `true` by default, which means use
+> -	the built-in rewrite of it in C.
+> -+
+> -The C rewrite is first included with Git version 2.20. This option
+> -serves an an escape hatch to re-enable the legacy version in case any
+> -bugs are found in the rewrite. This option and the shellscript version
+> -of linkgit:git-rebase[1] will be removed in some future release.
+> -+
+> -If you find some reason to set this option to `false` other than
+> -one-off testing you should report the behavior difference as a bug in
+> -git.
+> +	Unused configuration variable. Used between Git version 2.20
+> +	and 2.21 as an escape hatch to enable the legacy shellscript
+> +	implementation of rebase. Now the built-in rewrite of it in C
+> +	is always used. Setting this will emit a warning, to alert any
+> +	remaining users that setting this now does nothing.
 
-'tee -i' ignores only INT, but not TERM and HUP.
+Do we really need to document this? Why not just remove the entire entry
+wholesale; the warning if `rebase.useBuiltin=false` is set will be
+informative enough.
 
-What could work is something like:
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 52114cbf0d..829897a8fe 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1143,21 +1143,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	};
+>  	int i;
+>  
+> -	/*
+> -	 * NEEDSWORK: Once the builtin rebase has been tested enough
+> -	 * and git-legacy-rebase.sh is retired to contrib/, this preamble
+> -	 * can be removed.
+> -	 */
+> -
+> -	if (!use_builtin_rebase()) {
+> -		const char *path = mkpath("%s/git-legacy-rebase",
+> -					  git_exec_path());
+> -
+> -		if (sane_execvp(path, (char **)argv) < 0)
+> -			die_errno(_("could not exec %s"), path);
+> -		else
+> -			BUG("sane_execvp() returned???");
+> -	}
+> +	if (!use_builtin_rebase())
+> +		warning(_("The rebase.useBuiltin support has been removed!"));
 
-  <re-executing the test script> | (
-        # Ignore common interrupt signals to prevent 'tee' from dying
-        # while the upstream test process still produces output.
-        trap '' INT TERM HUP
-        tee logfile
-  )
+A couple of thoughts about this:
 
-but I'm not sure what should happen with a process ignoring HUP when
-it still produces output to the terminal after that terminal has been
-closed, i.e. this 'tee' process.  FWIW, In my quick test such a
-process continued happily without receiving SIGPIPE or other
-unpleasantness.
+- `use_builtin_rebase()` spawns a `git config`. This is a pretty expensive
+  operation on Windows (even if it might not matter in the big scheme of
+  things, as the couple of milliseconds are probably a mere drop on a hot
+  stone compared to the I/O incurred by the recursive merge), and it was
+  only done in that way to allow for spawning the legacy rebase without
+  having touched any global state (such as setting `GIT_*` environment
+  variables when a Git directory was discovered).
 
->  When the shell
-> upstream of tee exits (after performing clean-up actions), tee that
-> is reading from it will exit, too, and will not be left behind (I do
-> not mean to say it that is a better alternative solution---I am just
-> trying to see if I read the problem correctly from the description
-> given above).
+  Couldn't we rather move this warning into `rebase_config()`?
+
+- The warning should start with a lower-case letter (why don't we have any
+  automated linter for this? This is a totally automatable thing that
+  could run as part of `make` when `DEVELOPER` is set, maybe just on the
+  `git diff HEAD --` part, and maybe even generating a patch that can be
+  applied; No human should *ever* need to spend time on such issues).
+
+- That warning should probably talk more specifically about the scripted
+  version having been removed, not only the option (which was actually not
+  removed, otherwise the user would not see that warning ;-)).
+
+> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+> index 3e73f7584c..0a88eed1db 100755
+> --- a/t/t3400-rebase.sh
+> +++ b/t/t3400-rebase.sh
+> @@ -311,4 +311,10 @@ test_expect_success 'rebase--merge.sh and --show-current-patch' '
+>  	)
+>  '
+>  
+> +test_expect_success 'rebase -c rebase.useBuiltin=false warning' '
+> +	test_must_fail env GIT_TEST_REBASE_USE_BUILTIN= \
+
+Good attention to detail! I would have forgotten to unset that environment
+variable.
+
+> +		git -c rebase.useBuiltin=false rebase 2>err &&
+> +	test_i18ngrep "rebase.useBuiltin support has been removed" err
+> +'
+> +
+>  test_done
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index b60b11f9f2..1723e1a858 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -149,12 +149,10 @@ test_expect_success 'rebase -i with the exec command checks tree cleanness' '
+>  
+>  test_expect_success 'rebase -x with empty command fails' '
+>  	test_when_finished "git rebase --abort ||:" &&
+> -	test_must_fail env GIT_TEST_REBASE_USE_BUILTIN=true \
+> -		git rebase -x "" @ 2>actual &&
+> +	test_must_fail env git rebase -x "" @ 2>actual &&
+>  	test_write_lines "error: empty exec command" >expected &&
+>  	test_i18ncmp expected actual &&
+> -	test_must_fail env GIT_TEST_REBASE_USE_BUILTIN=true \
+> -		git rebase -x " " @ 2>actual &&
+> +	test_must_fail env git rebase -x " " @ 2>actual &&
+>  	test_i18ncmp expected actual
+>  '
+>  
+> @@ -162,8 +160,7 @@ LF='
+>  '
+>  test_expect_success 'rebase -x with newline in command fails' '
+>  	test_when_finished "git rebase --abort ||:" &&
+> -	test_must_fail env GIT_TEST_REBASE_USE_BUILTIN=true \
+> -		git rebase -x "a${LF}b" @ 2>actual &&
+> +	test_must_fail env git rebase -x "a${LF}b" @ 2>actual &&
+
+Not a terribly big deal, but I would have structured the patch (series) by
+leaving this change to t3404 as a 2/2, as it is not technically necessary
+to include those changes in 1/2 (if your goal is, as mine usually is, to
+"go from working state to working state" between commits).
+
+Thank you for keeping on the track with this,
+Dscho
+
+>  	test_write_lines "error: exec commands cannot contain newlines" \
+>  			 >expected &&
+>  	test_i18ncmp expected actual
+> -- 
+> 2.21.0.360.g471c308f928
 > 
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > index 8665b0a9b6..db3875d1e4 100644
-> > --- a/t/test-lib.sh
-> > +++ b/t/test-lib.sh
-> > @@ -631,7 +631,10 @@ die () {
-> >  
-> >  GIT_EXIT_OK=
-> >  trap 'die' EXIT
-> > -trap 'exit $?' INT TERM HUP
-> > +# Disable '-x' tracing, because with some shells, notably dash, it
-> > +# prevents running the cleanup commands when a test script run with
-> > +# '--verbose-log -x' is interrupted.
-> > +trap '{ code=$?; set +x; } 2>/dev/null; exit $code' INT TERM HUP
-> >  
-> >  # The user-facing functions are loaded from a separate file so that
-> >  # test_perf subshells can have them too
 > 
-> Thanks.
+--8323328-1960277247-1552575540=:41--
