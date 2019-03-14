@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 865D8202BB
-	for <e@80x24.org>; Thu, 14 Mar 2019 21:48:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5CF020248
+	for <e@80x24.org>; Thu, 14 Mar 2019 21:48:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727446AbfCNVr7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 17:47:59 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37348 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727309AbfCNVr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 17:47:58 -0400
-Received: by mail-wr1-f68.google.com with SMTP id y15so7492021wro.4
-        for <git@vger.kernel.org>; Thu, 14 Mar 2019 14:47:57 -0700 (PDT)
+        id S1727607AbfCNVsB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 17:48:01 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37108 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727309AbfCNVsB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 17:48:01 -0400
+Received: by mail-wm1-f67.google.com with SMTP id x10so4175457wmg.2
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 14:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ADw/39BKW2DmILzPBg+2hLrVPJ2sS57KqRuTNYmYq60=;
-        b=D0XOUXdl1Q1BfPtTTn+J6Y3CoJMf+LKAvwpGqNQe3CIMfyc/zRiaayT8CxfC2d7o63
-         qi029R/Y6K1tF2x05Yf96tNL9pTeeuKUghkkR7uinFJPYM0vXWDilHTt2iyoPCMANrZw
-         /rFz5BtCycYbINr5Jmx6M9aRW4tA8WKARBnlxlmkIXzKZb+1HY1Iz6N2o072ih0Y+BWD
-         Qy+HByipNezhI5XJchxXORcieC7QsnKsyR9IGtc7jEzTLIQTATi5sE+fWueYznXsQEQJ
-         /2EaCtacPCXBaLh2otGTg1lyPxdy6+aS9lfHjckZ3E/EDAWcCY39XcVTQa55Spy08t68
-         Hueg==
+        bh=jEOZPpNa7heO1E7SS9u5IQ8e8RpiwVKTgwPoVN6GV8c=;
+        b=gbs3bU/oi+UnkRGoT6UPxVUpWnv5sWemsM4731FAav0Lm8mPqpGv2yfW7AMho3Vsu+
+         LG7J4/3KuwseC+g0QeFwUjZK0Sm/Kesu6TbYS7hlLyGc+FYMeE9yHT7wTz40InEv4ztE
+         pCzJDZAtPcDnQxf2+H0XoGIABd4R+eCp5f26zJletXvFlWXo9NavoGGgohC116IESQtw
+         xFIm9obfAS0XesYtFHvTh9diycVO87g5W4kVw9CW/KfpS1bdBrwUf6ZtTzBPr1y3Z0es
+         11JrYftgiQipALTdhzb75+RaMbFtBDokTGK8NVy7TsJDf6Kfv/GLLmmBd8wkDZecsuy6
+         Ewbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ADw/39BKW2DmILzPBg+2hLrVPJ2sS57KqRuTNYmYq60=;
-        b=Bl9FqKacmwYW7pi+gBak7sqOQbbaXrmETbixmXF6vMKgjiUyD3vYIVOMRij4u3HrtR
-         FNzDJMVNoUaPJ/9vjyXfdwQlLsVYlbgEJT1IE5B4dEcbIq8t2YITmfTkhMEBt1tC2SRv
-         h7SkNj1wrwquX2ho2I/jxieNAQDOhaX/C0keeCuvVjiE4OgKtZ/bSRld/E5byYOtW+ZG
-         m6uU74GS8qRN1GDC90mb8jd30UkYGJbF7Q4TCVd6BFJpxY80G47inSorDFfrfTaQMD1+
-         RRgFK7pcWEhbrZSKGP0r4GSdxmU6+rvpsZNKcgI12Hd7xij7KZW+vyxwX6ZTRR5XYYHW
-         b7EQ==
-X-Gm-Message-State: APjAAAXByL/g2BJ+tZFvvpWz5hBSLOGc/wAUFJu7keaEQaWUFPjE/ZAF
-        loIIHh9wWbBwsVsRnRDzQnBSK6l0G3E=
-X-Google-Smtp-Source: APXvYqyE/aWUcjZ1r8j/fcY2ReZczW+p0ZwTw1dQuYI3YQSyAqr+pKLnI46b+JlgepOL1G4mhKJi6Q==
-X-Received: by 2002:adf:fe83:: with SMTP id l3mr46285wrr.229.1552600076314;
-        Thu, 14 Mar 2019 14:47:56 -0700 (PDT)
+        bh=jEOZPpNa7heO1E7SS9u5IQ8e8RpiwVKTgwPoVN6GV8c=;
+        b=kOmHgWAG5Tv9oC2Y/NbQoi0riejslKywWqEx9upm8BOoVL2n6Cn9X+6dFJ9KE6Hh+H
+         d+sUC3rOj9BDcv78yyoopY2FwYGcWxx66vrhn3vxjnboScjkfP9z3mJYJsxeboMO7X1G
+         dU3TO0TFl2xlmc8Q7skrBZ3EA1LcWAYLtvX1SHcQMeLwX+dVi03bhJFKyDUp/5vI1Beq
+         Z+6FSbnOlJazuX0mhmKdWk/oFsKW80zHaVchIZaBdoelowLTuc4yWexhkb3VwAGnbCU+
+         9btdZ8oeOokilaZRL1rODkarectXSQoHr+cJfA6NXHeNVo8alLdaoOd1qzvn7vPIboUQ
+         qygA==
+X-Gm-Message-State: APjAAAXYockBVvRrFJpGhD2VvEeOKs7G181uCZtxUM4tyhHi26TZBoTl
+        fCggi8NICACu3y+tzA+bC1fwmLV2xJ0=
+X-Google-Smtp-Source: APXvYqwX66EQGC68ystHYMb1F+Wu/KLNzrbio7vw7MDJ+e7mza/VXLDwahRj947P5rSBgNn+cQkblQ==
+X-Received: by 2002:a1c:7a1a:: with SMTP id v26mr340334wmc.129.1552600078618;
+        Thu, 14 Mar 2019 14:47:58 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h137sm194348wmg.41.2019.03.14.14.47.54
+        by smtp.gmail.com with ESMTPSA id h137sm194348wmg.41.2019.03.14.14.47.57
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Thu, 14 Mar 2019 14:47:55 -0700 (PDT)
+        Thu, 14 Mar 2019 14:47:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/8] commit-graph: fix segfault on e.g. "git status"
-Date:   Thu, 14 Mar 2019 22:47:35 +0100
-Message-Id: <20190314214740.23360-4-avarab@gmail.com>
+Subject: [PATCH v2 5/8] commit-graph: don't pass filename to load_commit_graph_one_fd_st()
+Date:   Thu, 14 Mar 2019 22:47:37 +0100
+Message-Id: <20190314214740.23360-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190221223753.20070-1-avarab@gmail.com>
 References: <20190221223753.20070-1-avarab@gmail.com>
@@ -72,157 +72,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When core.commitGraph=true is set, various common commands now consult
-the commit graph. Because the commit-graph code is very trusting of
-its input data, it's possibly to construct a graph that'll cause an
-immediate segfault on e.g. "status" (and e.g. "log", "blame", ...). In
-some other cases where git immediately exits with a cryptic error
-about the graph being broken.
+An earlier change implemented load_commit_graph_one_fd_st() in a way
+that was bug-compatible with earlier code in terms of the "graph file
+%s is too small" error message printing out the path to the
+commit-graph (".git/objects/info/commit-graph").
 
-The root cause of this is that while the "commit-graph verify"
-sub-command exhaustively verifies the graph, other users of the graph
-simply trust the graph, and will e.g. deference data found at certain
-offsets as pointers, causing segfaults.
+But change that, because:
 
-This change does the bare minimum to ensure that we don't segfault in
-the common fill_commit_in_graph() codepath called by
-e.g. setup_revisions(), to do this instrument the "commit-graph
-verify" tests to always check if "status" would subsequently
-segfault. This fixes the following tests which would previously
-segfault:
+ * A function that takes an already-open file descriptor also needing
+   the filename isn't very intuitive.
 
-    not ok 50 - detect low chunk count
-    not ok 51 - detect missing OID fanout chunk
-    not ok 52 - detect missing OID lookup chunk
-    not ok 53 - detect missing commit data chunk
-
-Those happened because with the commit-graph enabled setup_revisions()
-would eventually call fill_commit_in_graph(), where e.g.
-g->chunk_commit_data is used early as an offset (and will be
-0x0). With this change we get far enough to detect that the graph is
-broken, and show an error instead. E.g.:
-
-    $ git status; echo $?
-    error: commit-graph is missing the Commit Data chunk
-    1
-
-That also sucks, we should *warn* and not hard-fail "status" just
-because the commit-graph is corrupt, but fixing is left to a follow-up
-change.
-
-A side-effect of changing the reporting from graph_report() to error()
-is that we now have an "error: " prefix for these even for
-"commit-graph verify". Pseudo-diff before/after:
-
-    $ git commit-graph verify
-    -commit-graph is missing the Commit Data chunk
-    +error: commit-graph is missing the Commit Data chunk
-
-Changing that is OK. Various errors it emits now early on are prefixed
-with "error: ", moving these over and changing the output doesn't
-break anything.
+ * The vast majority of errors we might emit when loading the graph
+   come from parse_commit_graph(), which doesn't report the
+   filename. Let's not do that either in this case for consistency.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- commit-graph.c          | 43 ++++++++++++++++++++++++++++++++---------
- commit-graph.h          |  1 +
- t/t5318-commit-graph.sh |  3 ++-
- 3 files changed, 37 insertions(+), 10 deletions(-)
+ builtin/commit-graph.c | 4 ++--
+ commit-graph.c         | 7 +++----
+ commit-graph.h         | 3 +--
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 32bcc63427..8196fdbe9c 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -64,7 +64,7 @@ static int graph_verify(int argc, const char **argv)
+ 	open_ok = open_commit_graph(graph_name, &fd, &st);
+ 	if (!open_ok)
+ 		return 0;
+-	graph = load_commit_graph_one_fd_st(graph_name, fd, &st);
++	graph = load_commit_graph_one_fd_st(fd, &st);
+ 	FREE_AND_NULL(graph_name);
+ 
+ 	if (!graph)
+@@ -102,7 +102,7 @@ static int graph_read(int argc, const char **argv)
+ 	if (!open_ok)
+ 		die_errno(_("Could not open commit-graph '%s'"), graph_name);
+ 
+-	graph = load_commit_graph_one_fd_st(graph_name, fd, &st);
++	graph = load_commit_graph_one_fd_st(fd, &st);
+ 	if (!graph)
+ 		return 1;
+ 
 diff --git a/commit-graph.c b/commit-graph.c
-index 47e9be0a3a..980fbf47ea 100644
+index b1ba7a09cc..d945e8f3e0 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -233,6 +233,9 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 		last_chunk_offset = chunk_offset;
- 	}
- 
-+	if (verify_commit_graph_lite(graph))
-+		return NULL;
-+
- 	return graph;
+@@ -92,8 +92,7 @@ int open_commit_graph(const char *graph_file, int *fd, struct stat *st)
+ 	return 1;
  }
  
-@@ -1075,6 +1078,36 @@ static void graph_report(const char *fmt, ...)
- #define GENERATION_ZERO_EXISTS 1
- #define GENERATION_NUMBER_EXISTS 2
- 
-+int verify_commit_graph_lite(struct commit_graph *g)
-+{
-+	/*
-+	 * Basic validation shared between parse_commit_graph()
-+	 * which'll be called every time the graph is used, and the
-+	 * much more expensive verify_commit_graph() used by
-+	 * "commit-graph verify".
-+	 *
-+	 * There should only be very basic checks here to ensure that
-+	 * we don't e.g. segfault in fill_commit_in_graph(), but
-+	 * because this is a very hot codepath nothing that e.g. loops
-+	 * over g->num_commits, or runs a checksum on the commit-graph
-+	 * itself.
-+	 */
-+	if (!g->chunk_oid_fanout) {
-+		error("commit-graph is missing the OID Fanout chunk");
-+		return 1;
-+	}
-+	if (!g->chunk_oid_lookup) {
-+		error("commit-graph is missing the OID Lookup chunk");
-+		return 1;
-+	}
-+	if (!g->chunk_commit_data) {
-+		error("commit-graph is missing the Commit Data chunk");
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- int verify_commit_graph(struct repository *r, struct commit_graph *g)
+-struct commit_graph *load_commit_graph_one_fd_st(const char *graph_file,
+-						 int fd, struct stat *st)
++struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st)
  {
- 	uint32_t i, cur_fanout_pos = 0;
-@@ -1089,15 +1122,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
- 		return 1;
+ 	void *graph_map;
+ 	size_t graph_size;
+@@ -103,7 +102,7 @@ struct commit_graph *load_commit_graph_one_fd_st(const char *graph_file,
+ 
+ 	if (graph_size < GRAPH_MIN_SIZE) {
+ 		close(fd);
+-		error(_("graph file %s is too small"), graph_file);
++		error(_("commit-graph file is too small"));
+ 		return 0;
  	}
+ 	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
+@@ -127,7 +126,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 	if (!open_ok)
+ 		return NULL;
  
--	verify_commit_graph_error = 0;
--
--	if (!g->chunk_oid_fanout)
--		graph_report("commit-graph is missing the OID Fanout chunk");
--	if (!g->chunk_oid_lookup)
--		graph_report("commit-graph is missing the OID Lookup chunk");
--	if (!g->chunk_commit_data)
--		graph_report("commit-graph is missing the Commit Data chunk");
--
-+	verify_commit_graph_error = verify_commit_graph_lite(g);
- 	if (verify_commit_graph_error)
- 		return verify_commit_graph_error;
+-	return load_commit_graph_one_fd_st(graph_file, fd, &st);
++	return load_commit_graph_one_fd_st(fd, &st);
+ }
  
+ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
 diff --git a/commit-graph.h b/commit-graph.h
-index 096d8bac34..275f97d006 100644
+index e4f17071e2..36d8109901 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -70,6 +70,7 @@ void write_commit_graph(const char *obj_dir,
- 			struct string_list *commit_hex,
- 			int append, int report_progress);
+@@ -54,8 +54,7 @@ struct commit_graph {
+ };
  
-+int verify_commit_graph_lite(struct commit_graph *g);
- int verify_commit_graph(struct repository *r, struct commit_graph *g);
+ struct commit_graph *load_commit_graph_one(const char *graph_file);
+-struct commit_graph *load_commit_graph_one_fd_st(const char *graph_file,
+-						 int fd, struct stat *st);
++struct commit_graph *load_commit_graph_one_fd_st(int fd, struct stat *st);
  
- void close_commit_graph(struct repository *);
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index ce3459a6f5..ad3a695f76 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -376,7 +376,8 @@ corrupt_graph_verify() {
- 	grepstr=$1
- 	test_must_fail git commit-graph verify 2>test_err &&
- 	grep -v "^+" test_err >err &&
--	test_i18ngrep "$grepstr" err
-+	test_i18ngrep "$grepstr" err &&
-+	test_might_fail git status --short
- }
- 
- # usage: corrupt_graph_and_verify <position> <data> <string> [<zero_pos>]
+ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+ 					size_t graph_size);
 -- 
 2.21.0.360.g471c308f928
 
