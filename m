@@ -2,94 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3D2620248
-	for <e@80x24.org>; Fri, 15 Mar 2019 12:56:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94BB820248
+	for <e@80x24.org>; Fri, 15 Mar 2019 13:19:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729051AbfCOM4L (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 08:56:11 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:40966 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726875AbfCOM4L (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 08:56:11 -0400
-Received: by mail-ed1-f47.google.com with SMTP id a25so290259edc.8
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 05:56:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=VGIZPq6aTiaE7488tTix/PK5dSz6j99pjw//JJ8QR7E=;
-        b=q0mziPGAh1gqylcUcdr9PmT46mnErjuj2nktZI69scqSQmJvr1qFq3JD0P3gbREmw8
-         u+reB4gTX/PglG+TlWUVbBrxUFHfouq71smGNzWeN1faWl8uF64ViskOGdxUt2Rj+6jl
-         uVrIGfJhKFCa/wqeBy2W5yfED1WvR6ARj40bUCNMh1aaXR4ZPQM0PA+EgOtKIfH5oIQQ
-         MUSMHDKgubnaGav5S1PD6LwPntTrVeS8FYAv0A/6khGOO8c71l+OBy3uFUhyGkprqScF
-         F1zuq8qB+4MmnOp+fdvD8opovr0E0F1Oqn89p2P2RyktHfQdC87mse9INWi4fGwhLDFe
-         zioA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=VGIZPq6aTiaE7488tTix/PK5dSz6j99pjw//JJ8QR7E=;
-        b=eG2cptUMh6CkgnQozKnJsZwNQ7xvdde4tmYrcxCfHj9BlEnaBhJ0vV0ITB20bTOUTQ
-         2Rhxcrm++p8L9WYR/hWn9E9HZqkWFvCuHmMcn6MNE0wPeer1B2/zkrzGUVd4mqkfWVN9
-         ltq4EeQ6NjcgEsOU1FjnKD/D/3xswFiLLpykLD/YfpQjtsbxh38EBY+4NZ1eeTzIaCDQ
-         iHZsysHnTMGF70ezB09DkBhMExxGlYWeTbhleEV0WY5npu/mR08Mi+bmw/bEoRs0oeCD
-         USlbld4C1crevX7rQbk4xDXx9L6NodOwiB5kc6oQDhY/ZAuxEMrZuODRlLU9rCkSPrCn
-         HVuw==
-X-Gm-Message-State: APjAAAVniHUeMzSD55c+48KZSDDd7BaSvqvM1zTU9eB70PfkZN3PqiJM
-        IB6YjnZeuYIOzQ1zBYOf5qc7H5SzL1E=
-X-Google-Smtp-Source: APXvYqyRg+FfV96eKt1jIH/7Lx30Y2pRx+3nOZWjDOiYR9cCZxZXSCvTkodmBfwLPBtz17/8abEDjg==
-X-Received: by 2002:a50:ec03:: with SMTP id g3mr2678586edr.263.1552654568936;
-        Fri, 15 Mar 2019 05:56:08 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id t10sm618150eds.3.2019.03.15.05.56.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Mar 2019 05:56:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Kapil Jain <jkapil.cs@gmail.com>
-Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [GSoC] Microproject: Add more builtin patterns for userdiff
-References: <CAMknYEMgJ88zWsebxBqsLq8LUwYzg0vN3RpsWVpbqvncrd5dGQ@mail.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CAMknYEMgJ88zWsebxBqsLq8LUwYzg0vN3RpsWVpbqvncrd5dGQ@mail.gmail.com>
-Date:   Fri, 15 Mar 2019 13:56:07 +0100
-Message-ID: <8736nob8k8.fsf@evledraar.gmail.com>
+        id S1726896AbfCONTa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 09:19:30 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:39062 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726468AbfCONTa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 09:19:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=eyR63mrVUlJUmwolelGupCWCmTWCE3M0b1SA1fUiftA=; b=waOQdxTvYd/EYIVBnLcqCnVtk
+        qXZQmIRM7F69mpRIzs7Wy7Z+fP9u2ugb2LByjHQj0BsyjhGJ6OT/QFQN8WgiWTKKt/RIfsRICTxLH
+        xv9zpM8cGI6mfRJ9nFbveiN0Rk25caAG5w32McWUVVeFntbLbB+X1VT/JZiie8q0DPZqxxTQ5zW8B
+        lhdRMdgJqvgE1S985Y0/DwAO7QCf6e/NnkkYRd9isGgQAKXaXHga3MQXnLXEaMZC5arDjgEIfWL2B
+        XMWfJUKk0xiCP2dg6e1H2k0zwWeyvBqERZ7mmHChlOQL0OcwtAZ1cF+3uRBjgLS7bU2MeeixoCAca
+        zy5T2/6YQ==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:34358 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1h4mkA-006oWC-WC; Fri, 15 Mar 2019 09:19:28 -0400
+Date:   Fri, 15 Mar 2019 09:19:26 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: "git clone --shallow-exclude ...", fatal: the remote end hung
+ up unexpectedly
+In-Reply-To: <CACsJy8DVRJ4DG6PEkFuzytOQJ7RX6GMaHd4BRQTR9N7Y9V6fqQ@mail.gmail.com>
+Message-ID: <alpine.LFD.2.21.1903150917360.27423@localhost.localdomain>
+References: <alpine.LFD.2.21.1903150809070.26709@localhost.localdomain> <CACsJy8DVRJ4DG6PEkFuzytOQJ7RX6GMaHd4BRQTR9N7Y9V6fqQ@mail.gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 15 Mar 2019, Duy Nguyen wrote:
 
-On Fri, Mar 15 2019, Kapil Jain wrote:
-
-> Hi,
+> On Fri, Mar 15, 2019 at 7:17 PM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+> >
+> >
+> >   probably doing something idiotic but i'm enumerating variations of
+> > shallow cloning, and tried the following:
+> >
+> > $ git clone --shallow-exclude=master https://github.com/django/django.git
+> > Cloning into 'django'...
+> > fatal: the remote end hung up unexpectedly
+> > $
+> >
+> >   it is entirely reproducible, and some googling suggests that this
+> > represents an error at the *other* end, which in some weird way does
+> > not support that clone option. that seems strange ... should this
+> > option work? am i using it incorrectly?
+> >
+> >   wait, hang on ... i just picked one of django's topic branches at
+> > random, and this did succeed:
 >
-> for the microproject: creating diff function support for different languages.
-> i wrote one for shell script, have tested it outside of git and it works fine.
+> Yeah i think when you request shallow clone, by default it only gets
+> one branch (see --single-branch, often 'master'). So when you
+> specify --shallow-exclude you essentially say 'give me master branch
+> but exclude everything from master'.
 >
-> query regarding accommodating the pattern in:
-> 1) userdiff.c, it uses - #define PATTERNS(name, pattern, word_regex),
-> for defining patterns to locate functions.
-> what is the use of pattern and word_regex parameters ? i am guessing
-> that pattern parameter is the actual pattern to spot functions in a
-> file,
+> I should probably make it print a friendlier message than simply
+> terminateing like that (it's still a guess, I haven't tried it out)
 
-Yes, except "functions". More like "logical start of
-stuff". E.g. "package" statements for Perl etc.
+  this is the first time i've played with this feature, so i'm still
+working my way through the man page, trying to figure out the various
+valid combinations for shallow cloning.
 
-So whatever makes the most sense to put in the "@" context line for diff
-to give the user an idea of what "function" this is changing, in the
-loosest possible sense of "function".
+  i notice that the SYNOPSIS for "man git-clone" does not contain all
+of the supported options (eg., --shallow-exclude is missing, among
+others). is that deliberate?
 
-> and word_regex is used to get function name. is that correct ?
-> please let me know.
+rday
+-- 
 
-No, it's whatever counts as a "token" in the language for the purpose of
-"diff --word-diff". So it needs to match e.g. operators as one unit.
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
