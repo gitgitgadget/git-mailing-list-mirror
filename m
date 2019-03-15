@@ -2,84 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AED0320248
-	for <e@80x24.org>; Fri, 15 Mar 2019 19:01:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6238320248
+	for <e@80x24.org>; Fri, 15 Mar 2019 19:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726493AbfCOTBI convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 15 Mar 2019 15:01:08 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53670 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbfCOTBI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 15:01:08 -0400
-Received: by mail-wm1-f66.google.com with SMTP id e74so7499844wmg.3
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 12:01:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=aggbAv4UWF1KZh2jtm7RZLKnNPwKpPnZK8i6XVEZmSU=;
-        b=ShpgALAIR5ScGzjybxE7hmGPnaslG2QQaEuxJa0Xsz3TbD/GUOa0ylH9fa8vMBQ1Id
-         wRTzxNaLsyuSYGKNiHuG/81HDcND6WWa9c4EfWjyqHc3ahmpgc8g4x9TA3z4cRQ3ysJC
-         l0eMPX5NbjvJnU/WbCbhBOOlisd6bwgSAe+jJqGSRno5x5cIBbvFv14By9njDVAlbXS1
-         Cfg5ppQA+dmHL6wokJiQs//TLlVadzlKjs+oxwB5wReM+EaGlg6jRP6fhQSwAV/LEnVN
-         +l5D31sZFR4VDXo8vjFkpGifo36sD0XD6Cq+Au8/30xXsiEGkLlzygCruYzac77DA09Z
-         RXsQ==
-X-Gm-Message-State: APjAAAVYZit12Mf0u+fiiWal2KYq68qbQDslMVrqnOZPOUviYDHwTgru
-        gWgptB5joPoGcLeMlKXsLw/GHJ10YPiKRZ4T0cI=
-X-Google-Smtp-Source: APXvYqwdu6L9ufqa16vK6nkOtoTA1c0bGq4iWKN2PB2x3qeztAxh4c1Jew2VHf4SiyS7d0zwqLCD5MbC9GJqX0G0U88=
-X-Received: by 2002:a1c:c010:: with SMTP id q16mr3255749wmf.134.1552676467028;
- Fri, 15 Mar 2019 12:01:07 -0700 (PDT)
+        id S1726638AbfCOTSN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 15:18:13 -0400
+Received: from siwi.pair.com ([209.68.5.199]:59655 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726431AbfCOTSM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 15:18:12 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 0A9CD3F4010;
+        Fri, 15 Mar 2019 15:18:12 -0400 (EDT)
+Received: from [IPv6:2001:4898:6808:13e:d487:82da:e467:b584] (unknown [IPv6:2001:4898:8010:2:bdbb:82da:e467:b584])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id C17D23F4022;
+        Fri, 15 Mar 2019 15:18:11 -0400 (EDT)
+Subject: Re: [PATCH 0/2] Randomize / timestamp trace2 targets
+To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+References: <cover.1552519463.git.steadmon@google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Message-ID: <366839dd-7470-bda0-d84e-4169842c7852@jeffhostetler.com>
+Date:   Fri, 15 Mar 2019 15:18:11 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.2
 MIME-Version: 1.0
-References: <87y35g9l18.fsf@evledraar.gmail.com>
-In-Reply-To: <87y35g9l18.fsf@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 15 Mar 2019 15:00:56 -0400
-Message-ID: <CAPig+cRMiEcXVRYrgp+B3tcDreh41-a5_k0zABe+HNce0G=Cyw@mail.gmail.com>
-Subject: Re: [WIP PATCH/RFC] Use a higher range-diff --creation-factor for format-patch
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing list <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <cover.1552519463.git.steadmon@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 15, 2019 at 12:09 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> @@ -261,6 +261,10 @@ material (this may change in the future).
-> +Defaults to 90, whereas the linkgit:git-range-diff[1] default is
-> +60. It's assumed that you're submitting a new patch series & that we
-> +should try harder than normal to find similarities.
 
-My understanding was that the primary use-case of git-range-diff
-itself (which existed before the --range-diff option was added to
-git-format-patch) was to generate a "range diff" for a cover letter of
-a re-rolled series. So, I'm confused about why this tweaks the default
-value of one command but not the other.
 
-> diff --git a/range-diff.h b/range-diff.h
-> @@ -4,6 +4,7 @@
->  #define RANGE_DIFF_CREATION_FACTOR_DEFAULT 60
-> +#define RANGE_DIFF_CREATION_FACTOR_FORMAT_PATCH_DEFAULT 90
+On 3/13/2019 7:33 PM, Josh Steadmon wrote:
+> Persistently enabling trace2 output is difficult because it requires
+> specifying a full filename. This series teaches tr2_dst_get_trace_fd()
+> to randomize filenames when a directory or filename prefix are given as
+> targets in the GIT_TR2_* envvars. It also allows expansion of a
+> timestamp template string into the current UTC timestamp.
 
-The point of introducing RANGE_DIFF_CREATION_FACTOR_DEFAULT in the
-first place was to ensure that the default creation-factor didn't get
-out-of-sync between git-range-diff and git-format-patch., Thus,
-introducing this sort of inconsistency between the two would likely
-lead to confusion on the part of users. After all, --range-diff was
-added to git-format-patch merely as a convenience over having to run
-git-range-diff separately and copy/pasting its output into a cover
-letter generated by git-format-patch. If the two programs default to
-different values, then that "convenience equality" breaks down.
 
-So, I'm fairly negative on this change. However, that doesn't mean I
-would oppose tweaking the value shared between the two programs (and
-also the default used by GitGitGadget, if it specifies it manually),
-though I defer to Dscho in that regard.
+Does the use of envvar cause issues?  Or is it just the fixed absolute
+pathname?  When I started this, I was trying to keep the GIT_TRACE
+model.
+
+As was briefly discussed in [1] I was thinking of adding a way to
+have a personal and/or system setting, but not a git config variable,
+that would let you setup tracing without relying on environment
+variables.
+
+It's something that I've been wanting to do, it just got buried by
+$DAYJOB stuff.  I can try to bump it up if there's interest.
+
+Thanks
+Jeff
+
+[1] 
+https://public-inbox.org/git/pull.108.v4.git.gitgitgadget@gmail.com/T/#mcce3b088aabc42e9867f8a9e09dd7dea5f9a773a
