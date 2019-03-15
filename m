@@ -2,110 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD4CF20248
-	for <e@80x24.org>; Fri, 15 Mar 2019 12:28:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B24620248
+	for <e@80x24.org>; Fri, 15 Mar 2019 12:48:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728953AbfCOM2p (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 08:28:45 -0400
-Received: from mail-io1-f42.google.com ([209.85.166.42]:34164 "EHLO
-        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728940AbfCOM2p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 08:28:45 -0400
-Received: by mail-io1-f42.google.com with SMTP id n11so8190734ioh.1
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 05:28:45 -0700 (PDT)
+        id S1728258AbfCOMsZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 08:48:25 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35614 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727492AbfCOMsY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 08:48:24 -0400
+Received: by mail-ed1-f66.google.com with SMTP id d6so6934788eds.2
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 05:48:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=AX0AnztH2O/Y87YPdmYZjt+N8wKFB35vs6SbLyAJ9fk=;
-        b=iGZlJ7rhmP0eJp2CSCTzZnSaunN4BVcVmbSptxornJbc5X8cZkJ75u5OeXWzX8fD0S
-         yCPEkhAI6hVfd9yQjgRp/v66eisvdXAj4LzotsZFyCheBVY0WU17e+VXtb1dQr1AFeVR
-         2nfNO9IAYTJJleGn/CPFb1jHgfREgZNl63MfceCXtFoUkG+POp2AMbm4kh1DjrabWUmK
-         CWmoB6i7xEoYcriODfFsX+Q/CBVoHfRwvVtqLGavwwusCfe4e3iezbIABtsUN7C3lDho
-         t/7mV/25UZ8Ug7D6jmAhAKc8QyUm0b6bNxNP7y1XXE7jUdVQLN0eEhQVzPHnKT3wPxuC
-         390Q==
+        bh=ZeY8M1trfd/JQsXXBLsLNVPrfk2XAAM4VS6FV9t60zE=;
+        b=lKBDnZu8YFy9c2lnYQSYUO3s5/qrOsG0PvhVRXyv9J5Yt958VY7IOSWlmBQ01J5ZTE
+         0R3+ZkuAUH0yFgfbxKK2i/2yOaWXC/uiSf14EIKQ/3UoPDgHhRrH4J1vievj9pkoEKFP
+         FcNVQy3XkAjNdWanWxRqodq1rHRisf7ZZNJ0SatVYA9PQgXsr8csevFJcvh+fOv4Rd/+
+         Gby7b25Syn+NOYcZEjnAJQ2GNC2KCf9x/epHr2k8VylX975nQTfktkQli50T9u+UZZIW
+         D2l0HhQoy4tA/hrr7gLKcLw4lActDdgrfrsJSVDngkmlf8HOKNQ6w59VgrC7tu6IFMsN
+         mVHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=AX0AnztH2O/Y87YPdmYZjt+N8wKFB35vs6SbLyAJ9fk=;
-        b=Kja9T5PjXJPLdmRWvXaKOPGtwjtAbeFeXHP7uEIv07ORW8MwHdcIZvibuOY6cY4lA4
-         grdsikPw7LsJLYI3gMbY8uUaZff+beTHsSDZJorpbJ6oXrHMZsVaywiz145Bq8sbAWs6
-         PO74uPxDGOw5AtHfJQlcKQzGTWXtU33vKhPou1FJeGRoXE/8egxpLqNhEQ8+zbD2pRR9
-         L8ePFlzT0LVCvx59i1k5/yiNeMHrwoNZXengdoNl0rtitMDYUBfEFgB6HUdDkFi179uC
-         P+ATgdoE4L0OtsH1m9+fPjd0fooajLuypbmDZ3QRg9ZiPgvkgawXrnAxpVp8yzP4nTsr
-         Lj2A==
-X-Gm-Message-State: APjAAAUW8ruOiTsduyNDVGg8eU/dvRoe9xvnL5nJS44EOzoYhX2j1cY5
-        zb22fhUA1HZSJJT4/cLP5dMzSjIQ8DDuGLcJ3hOn3g==
-X-Google-Smtp-Source: APXvYqypWER/q1x7WQV+Vz4wXH9uHsbRJH6kfKtxHQHMtqZ0+0G2twAkZHKivfOhESqHQg96HoDPJ9p5Abb43gG2+JU=
-X-Received: by 2002:a6b:3709:: with SMTP id e9mr1751442ioa.282.1552652924536;
- Fri, 15 Mar 2019 05:28:44 -0700 (PDT)
+        bh=ZeY8M1trfd/JQsXXBLsLNVPrfk2XAAM4VS6FV9t60zE=;
+        b=im9n3aGfNZ7iSyPHEjRKeiMpdSBjldOiHkFL6B8fqvmRyUYZeCkavieIspAZ9A9Fpe
+         2bdvfEdHQnuMb9OnLnTlSBEWlmdmwJG4mFUEJF4FDTZOl6bvsY+goXXrgPPz5a0B7pMn
+         180wuINaHfol2IALuzCQgHBwH/stEUeCJdxdTCxxOJjz6yxbcTe7ryzuC+syh/3SrhaF
+         q06TeqE3ip1FA+JgegG5nj6kd+EQRQJMwwRdEsHYTQ0GHBSHHRvE6naJXtjnFqU8yw2t
+         0NpD+NpoFOIvDwGoKzHolUSURCK3PVYZ6pVqyEQGrJuflkTuCCb9fMKOHGak7B25Z7KM
+         mCRw==
+X-Gm-Message-State: APjAAAWvlhiaZfC7P+y2Uj9TDg0VLBz3j7g6n8VAYleME1f+5MZaKnTV
+        TTBgWOmJYT9X6xmkbs47LCBkDKsfp2xVA5V4blk=
+X-Google-Smtp-Source: APXvYqzev9Ag/9DvJQyGpv6RiuSCbOIdPoDydHHPJStn57vjFtOjLBT9hFArPiwbWPE6vRg4tUGOrdyu0MRII8KtZHg=
+X-Received: by 2002:a17:906:69c8:: with SMTP id g8mr2157035ejs.75.1552654102629;
+ Fri, 15 Mar 2019 05:48:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <alpine.LFD.2.21.1903150809070.26709@localhost.localdomain>
-In-Reply-To: <alpine.LFD.2.21.1903150809070.26709@localhost.localdomain>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 15 Mar 2019 19:28:18 +0700
-Message-ID: <CACsJy8DVRJ4DG6PEkFuzytOQJ7RX6GMaHd4BRQTR9N7Y9V6fqQ@mail.gmail.com>
-Subject: Re: "git clone --shallow-exclude ...", fatal: the remote end hung up unexpectedly
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
+References: <20190309164508.GB31533@hank.intra.tgummerer.com>
+ <20190310080739.63984-1-ttjtftx@gmail.com> <20190310175924.GF31533@hank.intra.tgummerer.com>
+ <CAOAu_YLTft7xmx4xvoM5Qqe0CHjqWrH+DUysHq0zfSEU8vodkg@mail.gmail.com>
+In-Reply-To: <CAOAu_YLTft7xmx4xvoM5Qqe0CHjqWrH+DUysHq0zfSEU8vodkg@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 15 Mar 2019 13:48:08 +0100
+Message-ID: <CAP8UFD09QZd=6HyB5Om1PfV=67+CvfyQkcpLU0tukT48QccD0Q@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v2 1/5] t0000-basic: fix an indentation error
+To:     jonathan chang <ttjtftx@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 15, 2019 at 7:17 PM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
->
->
->   probably doing something idiotic but i'm enumerating variations of
-> shallow cloning, and tried the following:
->
-> $ git clone --shallow-exclude=master https://github.com/django/django.git
-> Cloning into 'django'...
-> fatal: the remote end hung up unexpectedly
-> $
->
->   it is entirely reproducible, and some googling suggests that this
-> represents an error at the *other* end, which in some weird way does
-> not support that clone option. that seems strange ... should this
-> option work? am i using it incorrectly?
->
->   wait, hang on ... i just picked one of django's topic branches at
-> random, and this did succeed:
+Hi,
 
-Yeah i think when you request shallow clone, by default it only gets
-one branch (see --single-branch, often 'master'). So when you specify
---shallow-exclude you essentially say 'give me master branch but
-exclude everything from master'.
-
-I should probably make it print a friendlier message than simply
-terminateing like that (it's still a guess, I haven't tried it out)
-
-> $ git clone --shallow-exclude=stable/2.0.x https://github.com/django/django.git
-> Cloning into 'django'...
-> remote: Enumerating objects: 33112, done.
-> remote: Counting objects: 100% (33112/33112), done.
-> ... etc etc ...
-> $
+On Fri, Mar 15, 2019 at 2:55 AM jonathan chang <ttjtftx@gmail.com> wrote:
 >
-> but all this gave me was the master branch. i clearly don't understand
-> what this option is supposed to do.
+> On Mon, Mar 11, 2019 at 1:59 AM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >
+> > On 03/10, Jonathan Chang wrote:
 
-You're saying 'give me master branch, exclude everything that is
-reachable from stable/2.0.x'. If there's nothing in common between
-master and this branch, you get full 'master' branch. Otherwise you
-get a shallow 'master' branch.
+> > > Also I found that there is no such function as test_char_count,
+> > > is it worthwile to add such function? Here are some stat:
+> > >
+> > > `git grep 'test_line_count' | wc -l` = 626
+> > > `git grep 'wc -l' | wc -l` = 294
+> > > `git grep 'wc -c' | wc -l` = 68
+> >
+> > I do think it would be helpful to introduce that helper, especially if
+> > it is useful in this patch series.  There seem to be enough other
+> > places where it can be useful to make it worth adding the helper.
 
-This option is meant to give you another way to cut the history.
-Instead of saying 'give me X latest commits' with --shallow, you could
-say 'give me commits since this cut point' and the cut point is often
-a tag, on the same branch. Using an unrelated bracnh or tag could give
-some surprising result.
--- 
-Duy
+Yeah, it would be useful for Git, but it's not necessary of course for
+your microproject, which is already more than big enough.
+
+> > > This is a preparatory step prior to removing the pipes after git
+> > > commands, which discards git's exit code and may mask a crash.
+> >
+> > The commit message should also describe why we need this preparatory
+> > step. Maybe something like:
+> >
+> >       To reduce the noise in when refactoring this pipeline in a
+> >       subsequent commit fix the indentation.
+
+Or perhaps:
+
+      Fix indentation of a line containing a pipeline to reduce the
+noise when refactoring the pipeline in a subsequent commit.
+
+> This has been wrong
+> >       since the refactoring done in 1b5b2b641a ("t0000: modernise
+> >       style", 2012-03-02), but carries no meaning.
+> >
+> > > Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
+
+> > Since this patch series is now 5 patches, that commentary should go
+> > into a cover letter (see the --cover-letter option in format-patch),
+> > so the reviewers can read that first, and read the patches with that
+> > in mind, focusing on the patch only, and not additional commentary
+> > that applies to the whole series when reading the patch.
+>
+> I wasn't aware of this option. I tried to produce the format in others
+> cover letter using 'git diff' and options like '--stat', '--summary', with no
+> success. I consulted Documentation/SubmittingPatches, where I got the
+> idea of cover letter, but it doesn't mention the option '--cover-letter' and
+> the idea of cover letter is even confused with '--notes'[1].
+
+The issue is that there are different things that can be considered
+"cover letter". I agree that it's not very clear in
+Documentation/SubmittingPatches.
+
+There is the following which is related to --cover-letter:
+
+"Multiple related patches should be grouped into their own e-mail
+thread to help readers find all parts of the series.  To that end,
+send them as replies to either an additional "cover letter" message
+(see below), the first patch, or the respective preceding patch."
+
+but it doesn't mention --cover-letter and it contains "(see below)"
+though I don't see what that refers to.
+
+> I just reread some of the GSoC related mails in the mailing list and
+> found one[2] that introduced the usage of 'cover-letter', '--range-diff' and
+> '--interdiff'. As a newbie, I personally think it would be helpful to include
+> theses options along with others mentioned in SubmittingPatches.
+
+I agree that there is room for improvement in SubmittingPatches.
+
+Thanks,
+Christian.
