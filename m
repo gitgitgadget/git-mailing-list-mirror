@@ -2,67 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4289C20248
-	for <e@80x24.org>; Fri, 15 Mar 2019 11:22:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D5C620248
+	for <e@80x24.org>; Fri, 15 Mar 2019 12:14:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727594AbfCOLWS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 07:22:18 -0400
-Received: from mail-pg1-f174.google.com ([209.85.215.174]:37045 "EHLO
-        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726503AbfCOLWR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 07:22:17 -0400
-Received: by mail-pg1-f174.google.com with SMTP id q206so6262578pgq.4
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 04:22:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:subject:message-id:from:to:mime-version
-         :content-transfer-encoding;
-        bh=1nJgFz1Ngw2M2DYE05UhMN5IlThqsUJd9BsvdVQk4FQ=;
-        b=vMm/GHotTTbxbFL/ac2WtmMs4Bsl3VvVXKbeJ4q3P68HfJIF4upXdtuaz5xcBniQ6H
-         PQvKF8As8ybG5XOBP4V5QH8Ah2XXmoNSWvX4D/wksK4IlJ2Q6J8oKwNs1kn1P2X5mpd5
-         3+y6iW9mZlYvbRk1aHHCpLn2jXx47ynLdnPYX08+Q3zY4DCvhZUZppxT7l4ZjLmOmO/m
-         wbxwguV4mg8Gu891XleINLvTRuna7K71xruh2gt7NYbHCtMISEBZmFMj8T7/2rVcIcAx
-         R+OEf72jyv/s0oI86ky7wZznva4c0qeTjqI3QNaI5otqiMwbW/eyVSZrmo9zaqQzsz2v
-         9BVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:subject:message-id:from:to:mime-version
-         :content-transfer-encoding;
-        bh=1nJgFz1Ngw2M2DYE05UhMN5IlThqsUJd9BsvdVQk4FQ=;
-        b=KSqEuGjP9ea7wBh+NmhseJ16rZq+1FBAch6NeuZDG1rHcoqVHcH2PeBsBEvIjyNsVU
-         UUUaIZfgNWWexqhCO7T4vLMRex3MImgXIBcnXN6+GVzCj29aJ+CYdK5S9dWAqJ+Hzo5y
-         5ckaxHw+UDUIP0Ou4Se7lbWAy1E2Zs5hlDIlyFfe60pU6VWrE1ltNNj+NX63qmBVW/dW
-         itqM5oNlFBYzer0Bb9S5NG57qGC8N322T0fc1NSqZujGulMJra630YK6/s+3mdjEgC5/
-         a8LDf+tw83YjeXPoZXl3GoeMyk4oeBfl31PmLDkG53W+g3yV5DX6jhfHCmbcOvov9nNH
-         3WaA==
-X-Gm-Message-State: APjAAAVJcvf0Y/Dm1VFoZJ7K/9DjuZQ7uO0tFWe2CcVJZwDFjasW/Ua2
-        zQrm1s2Kd+jmvbbToh97kjq2QjEk
-X-Google-Smtp-Source: APXvYqzWAsI3veVHS08u3UFrqF3lK69GkVa+gfqwCuIKx1+hBgcN1Q5/BTftcg8mcaBNjc4ktEd2Tg==
-X-Received: by 2002:a17:902:204:: with SMTP id 4mr3766525plc.180.1552648936941;
-        Fri, 15 Mar 2019 04:22:16 -0700 (PDT)
-Received: from [192.168.1.101] ([27.76.23.159])
-        by smtp.gmail.com with ESMTPSA id b138sm3747733pfb.48.2019.03.15.04.22.15
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Mar 2019 04:22:16 -0700 (PDT)
-Date:   Fri, 15 Mar 2019 18:22:12 +0700
-Subject: Ok
-X-Priority: 3
-Message-ID: <-ec03f2-1kq1rmyhaeoc-m9xehy23bjjv-5z9hqwrg2923z1dy45-jvkeuffeupmn-8w16gkqipdnm-s421ucb8e90s-hlne1o8a0pwct3zq3h-5n5qg2r7a4uri1xdbd-rxuujroa6pay-2i6pgm-kgdizo.1552648932398@email.android.com>
-From:   Tuan Nguyenthanh <cautoncp83vn@gmail.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
+        id S1728957AbfCOMOW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 08:14:22 -0400
+Received: from cpanel4.indieserve.net ([199.212.143.9]:49878 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728715AbfCOMOW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 08:14:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=WmBalHmM8n5Ue9qgUJGdYRd/PVC8W/pltvV1PBF2VUc=; b=BV7yIz1qXUU9cmjTEHt5WSc62V
+        jMees5TmlUX0FSd65/a/fbGzxlPiyPfDjwA1mUtb1do4Y4PXpyvLVppqVF4fNRMD8TWUdK5Fek8Il
+        mecEhkUl7Is24yYRSmppyIGMZz45bUjj2qwsbrhL+UEEjwGf8ofo7YG+lohPTPEUAs+OOUDutPCXb
+        8RjlPSK1TuFQM51QsC5sGeRb8/XjbhCcE6nVwBM6ak3+42zu70kD1czactEQVueWU//eXQjHjkwvT
+        CZpseH/HDEftXkCO8VCgWhqVT7QKWBw1pA/rnyGF7nZNs72sEER/pm57s0vHoaxZWVujHgzL3TsCx
+        oBQdJHsA==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:60852 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1h4lj9-006ZOw-KE
+        for git@vger.kernel.org; Fri, 15 Mar 2019 08:14:20 -0400
+Date:   Fri, 15 Mar 2019 08:14:18 -0400 (EDT)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: "git clone --shallow-exclude ...", fatal: the remote end hung up
+ unexpectedly
+Message-ID: <alpine.LFD.2.21.1903150809070.26709@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-CgrEkMaw4bujYyBn4butaSB04burIHRoaeG6v3QgYuG7iyBkaSDEkeG7mW5nIEh1YXdlaQ==
 
+  probably doing something idiotic but i'm enumerating variations of
+shallow cloning, and tried the following:
+
+$ git clone --shallow-exclude=master https://github.com/django/django.git
+Cloning into 'django'...
+fatal: the remote end hung up unexpectedly
+$
+
+  it is entirely reproducible, and some googling suggests that this
+represents an error at the *other* end, which in some weird way does
+not support that clone option. that seems strange ... should this
+option work? am i using it incorrectly?
+
+  wait, hang on ... i just picked one of django's topic branches at
+random, and this did succeed:
+
+$ git clone --shallow-exclude=stable/2.0.x https://github.com/django/django.git
+Cloning into 'django'...
+remote: Enumerating objects: 33112, done.
+remote: Counting objects: 100% (33112/33112), done.
+... etc etc ...
+$
+
+but all this gave me was the master branch. i clearly don't understand
+what this option is supposed to do.
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
