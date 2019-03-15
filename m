@@ -2,113 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E06E120248
-	for <e@80x24.org>; Fri, 15 Mar 2019 10:42:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3F6520248
+	for <e@80x24.org>; Fri, 15 Mar 2019 11:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728772AbfCOKmY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 06:42:24 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35811 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727740AbfCOKmX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 06:42:23 -0400
-Received: by mail-ed1-f66.google.com with SMTP id d6so6615731eds.2
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 03:42:22 -0700 (PDT)
+        id S1727405AbfCOLK7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 07:10:59 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:37436 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726714AbfCOLK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 07:10:58 -0400
+Received: by mail-it1-f194.google.com with SMTP id z124so10166817itc.2
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 04:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=STxFv/sdyhq34QgISiPV/3wfDRn0VmRylkSrSawEdu0=;
-        b=QwyxMx02ACQXwYHtK91Lufd/HLu0epk/WRFfK9vg696iBUc53k1M9dyigxDp8Bat++
-         H1dvmsEgqm4Wuxb8cHDrtMqhNagP3al6R/Jm6C0RzjmnPu5uN4n5nV7Gun8XxUImHUI5
-         3gXkGTRR9DIzF8C82GJXKp0rfXuS4LaHsl/VnBQO1AWerdsMfgSXbT4QPVNJCqQkVkH7
-         /UlqB6voU8p7bvtr3YrrjpipYU9b3oy6r+SPn8QkKWky9XdygWtZSUsBLF4BrQZu+eSc
-         2MjDST85B//3epXjuOQk9nrl2mLLPueVAWF/dBsNP7kN05qWDGpjFyEc0B741ICb1z5m
-         nVzQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mWuZozd20xeTSZ7IgtVLNO0xfC0ztohGtAvVN77TEbY=;
+        b=MnInT/ANKATI9270nHX3hKfY4kx62jA7q4wGCDXyGX2cW2kCFHFAxH1WhP1O+jUXkS
+         BNdehMBlr7pCMd4EK/TJJCj9P44GhuvS3UW6IZG99xEy1rhlARd3W4ur6FkSZyKCpkmZ
+         QKOcBTfcuEgG+w6IG5FGVxlKJ6T3uW1DVZuTiFb4NTf96oWsOkw9W3n9+jvfomNV7Xn/
+         hqtR4KDs8sNIOq/00KTVbbJ06CMAfjgIUo6WK3t/MKHBmS5mz7eW0ZM5t9EibqBly7OY
+         rXXAdOleO3Tg+vOIQlKoKuRt5QzuY0jWNKGcE7179lnkGYOwo0qSdaRaZ12CacF0+k5U
+         qujQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=STxFv/sdyhq34QgISiPV/3wfDRn0VmRylkSrSawEdu0=;
-        b=EgzY1FnMaHuUAoG+aOIHScOpQxbaUX+TCGRHF+fKo0NrWZUKjry0yrw1nvCm4Z125Y
-         eDozIp6jGi5CgI0rnHipipt7MCQjbpPT/o+JkL51HgoDUq8CBnTnhz/JjlcfPK/80WYG
-         gwo7W5BBngXnyRY8SZT2Beg8QLhXl20ABP83hAbI1ljODcOtWYoUQphlqqCgEFS/g9dC
-         APrZamOJsik57v6Qh7gB5r4Z6/0gBJoo3Ex7lcrjd/RqCWGWPJQo9B6OW4qR1EwsdfGm
-         xE4dwm6pjsSBrbplz6+LP3jBRd2GRBjkg5Ngh26EvweK+fKvaqm4jQ4GWR9B8OWDWKVs
-         iluA==
-X-Gm-Message-State: APjAAAWU1ODKDAbR/xR/iNn7MIOEpro3QbTbnOwczJAr/BqclFIKxQlM
-        cAKZ6B7QoNMXy3jk4M839TXbQdIY3zk=
-X-Google-Smtp-Source: APXvYqwMJXKgU4FSoit4duye+lxdI700tAy+7zraHNlbBjZvp/5QnGiM8gNEUPLv4wGq6e34Mb6C/g==
-X-Received: by 2002:a17:906:2552:: with SMTP id j18mr1804635ejb.179.1552646541560;
-        Fri, 15 Mar 2019 03:42:21 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id w6sm526750eds.0.2019.03.15.03.42.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Mar 2019 03:42:20 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mWuZozd20xeTSZ7IgtVLNO0xfC0ztohGtAvVN77TEbY=;
+        b=QWeXzMC+B6ZtryuQG/R+c/Ownq7OLUFq6o0ebJnPURoOsB+MmzCYdnKHefe3KFGBzw
+         qnAfqAB/EXvw++MeIxs5Cy4JnlrZZBfk5LaKfBxDG08JJ9oOKZ6cS61b+0pDcIP3Ysy2
+         FYWEMTSFdKFF3Q+Gix0FfmdQ79MmP9erU9GHrXBmpJsO+/jIMYwMQG9cgftqSjhTCKvH
+         qC15LOe5x+taSu2XgsfEkghxssjgcS5nPdvfK4JVAGcoSA/voBZKh0xaUGWgnB6WahKw
+         a9PsjovQXH//S7/6Qjihf4oKTaPqqRLH67pkE2Or9FVYtJHgcptkaJCtUeh6YIpY+dVF
+         Z0Tg==
+X-Gm-Message-State: APjAAAV6WjH6GYZmKpI4Cb4HUhDYLALhBcgKS+rSD22B2UKQrQMIWJcw
+        PzTtjFQJ/Q+3SYiSeIklg+NEL66hhv1IaVEVy7I=
+X-Google-Smtp-Source: APXvYqzgPp1x84LeGEGSi1J6QWWWqCmEreqsZzBYaduLkgzG8SaqJIOiOg2PPWXtOLyQJtLJMevGPiSrUsvaCFbZpz8=
+X-Received: by 2002:a24:7542:: with SMTP id y63mr1628566itc.70.1552648257368;
+ Fri, 15 Mar 2019 04:10:57 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190313235439.30439-1-avarab@gmail.com> <20190314123439.4347-8-avarab@gmail.com>
+In-Reply-To: <20190314123439.4347-8-avarab@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 15 Mar 2019 18:10:31 +0700
+Message-ID: <CACsJy8B_rOBB5SvqnQs9hkui+3txGVPcz+H62hWE7oPGb789bg@mail.gmail.com>
+Subject: Re: [PATCH v2 7/7] reflog expire: don't assert the OID when locking refs
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <stefanbeller@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 2/7] gc: convert to using the_hash_algo
-References: <20190313235439.30439-1-avarab@gmail.com> <20190314123439.4347-3-avarab@gmail.com> <CACsJy8CikZt_WF79V6y2JRtR0jAosTPPmDBXN8uMRTjm4FAV-A@mail.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CACsJy8CikZt_WF79V6y2JRtR0jAosTPPmDBXN8uMRTjm4FAV-A@mail.gmail.com>
-Date:   Fri, 15 Mar 2019 11:42:20 +0100
-Message-ID: <874l84ber7.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Mar 15 2019, Duy Nguyen wrote:
-
-> On Thu, Mar 14, 2019 at 7:34 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> There's been a lot of changing of the hardcoded "40" values to
->> the_hash_algo->hexsz, but we've so far missed this one where we
->> hardcoded 38 for the loose object file length.
+On Thu, Mar 14, 2019 at 7:35 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Wow. Good catch.
+> During reflog expiry, the cmd_reflog_expire() function first iterates
+> over all reflogs in logs/*, and then one-by-one acquires the lock for
+> each one to expire its reflog by getting a *.lock file on the
+> corresponding loose ref[1] (even if the actual ref is packed).
 >
->> diff --git a/builtin/gc.c b/builtin/gc.c
->> index 8c2312681c..733bd7bdf4 100644
->> --- a/builtin/gc.c
->> +++ b/builtin/gc.c
->> @@ -156,6 +156,7 @@ static int too_many_loose_objects(void)
->>         int auto_threshold;
->>         int num_loose =3D 0;
->>         int needed =3D 0;
->> +       const unsigned hexsz_loose =3D the_hash_algo->hexsz - 2;
+> This lock is needed, but what isn't needed is locking the loose ref as
+> a function of the OID we found from that first iteration. By the time
+> we get around to re-visiting the reference some of the OIDs may have
+> changed.
 >
-> Since you're removing hard coded numbers. Another option is a
-> combination of strlen(basename()) and
-> loose_object_path(the_repository, , null_oid). They should also give
-> the same 38. Then if loose object format is updated to use 3+ chars
-> for the directory part, this code will not need update anymore.
+> Thus the verify_lock() function called by the lock_ref_oid_basic()
+> function being changed here would fail with e.g. "ref '%s' is at %s
+> but expected %s" if the repository was being updated concurrent to the
+> "reflog expire".
 >
-> The downside of course is a lot more code. Or you can just introduce a
-> new function to return this "hexsz - 2", keep that function close to
-> fill_loose_path() with a comment there that the two functions should
-> be aligned.
+> By not passing the OID to it we'll try to lock the reference
+> regardless of it last known OID. Locking as a function of the OID
+> would make "reflog expire" exit with a non-zero exit status under such
+> contention, which in turn meant that a "gc" command (which expires
+> reflogs before forking to the background) would encounter a hard
+> error.
 
-I think it's better to just keep hardcoding "2". We're very unlikely to
-ever change objects/?? in favor of e.g. objects/???, and if we were that
-would be a huge "hash function transition" of its own.
+Passing NULL oid has another side(?) effect, which I don't know if it
+matters at all. Before, the mustexist flag in lock_ref_oid_basic() is
+true. Now it's false. This affects refs_resolve_ref_unsafe() calls in
+there. But that's where I'm stuck.
 
->>
->>         dir =3D opendir(git_path("objects/17"));
->>         if (!dir)
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index ef053f716c..4d4d226601 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -3037,7 +3037,7 @@ static int files_reflog_expire(struct ref_store *re=
+f_store,
+>          * reference itself, plus we might need to update the
+>          * reference if --updateref was specified:
+>          */
+> -       lock =3D lock_ref_oid_basic(refs, refname, oid,
+> +       lock =3D lock_ref_oid_basic(refs, refname, NULL /* NOT oid! */,
+
+Maybe mention this not oid in the comment block above. Or just drop
+it. Reading this comment without the commit message does not really
+help answer "why not oid?". Or perhaps /* don't verify oid */
+
+>                                   NULL, NULL, REF_NO_DEREF,
+>                                   &type, &err);
+>         if (!lock) {
+> --
+--=20
+Duy
