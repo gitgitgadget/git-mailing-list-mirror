@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6173B20248
-	for <e@80x24.org>; Fri, 15 Mar 2019 15:12:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23A8D20248
+	for <e@80x24.org>; Fri, 15 Mar 2019 15:44:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729157AbfCOPMb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 11:12:31 -0400
-Received: from mout.gmx.net ([212.227.15.18]:36569 "EHLO mout.gmx.net"
+        id S1729369AbfCOPo2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 11:44:28 -0400
+Received: from mout.gmx.net ([212.227.15.19]:45287 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726097AbfCOPMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 11:12:31 -0400
-Received: from [192.168.0.129] ([37.201.192.41]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LreCz-1guTrm1KNJ-013PcM; Fri, 15
- Mar 2019 16:12:23 +0100
-Date:   Fri, 15 Mar 2019 16:12:06 +0100 (STD)
+        id S1726792AbfCOPo1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 11:44:27 -0400
+Received: from [192.168.0.129] ([37.201.192.41]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LsTDk-1gtdt62pXk-011x18; Fri, 15
+ Mar 2019 16:44:20 +0100
+Date:   Fri, 15 Mar 2019 16:44:04 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: straw poll: git merge conference location
-In-Reply-To: <20190315033814.GF28943@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1903151609320.41@tvgsbejvaqbjf.bet>
-References: <20190313205539.GA30425@sigill.intra.peff.net> <87bm2db3ku.fsf@evledraar.gmail.com> <20190315033814.GF28943@sigill.intra.peff.net>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3] rebase: remove the rebase.useBuiltin setting
+In-Reply-To: <20190315134548.24479-1-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903151643300.41@tvgsbejvaqbjf.bet>
+References: <87ef79bho5.fsf@evledraar.gmail.com> <20190315134548.24479-1-avarab@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1735692716-1552662743=:41"
-X-Provags-ID: V03:K1:HbdJvLCeeMjqWErmP37mtcHOt6lfUtJYa96asT/v1iId3Yj6roB
- Z8fb3xK23/GzLzd2khigEsOonVx5sMfNCAGQSRFOY1fBuBLHcNC4bx++NZAmcvtCxKko6Sg
- lpjGMT0NbtmLFrve2j4WajlxucEjClv4sTRk8lBaWuTa4enip78qLSxJxYBwAZ9dnCwfkZC
- tcjVcnXBBcgMNlr6hk8Wg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:J/IZSVjnDE4=:ZVgvxis4FiNujgYm7PBWlB
- FJwP8tvRi2dsDOzgwugsNlvf2G6g2eMO5lHY4AzWXLXzaM9U7wCFYLpjOtIhzxfVvurEsK6Eg
- NOrD/mQcAMn9Wsv9552L+pTegWfCUzjx1FhgL7V7cNeCK+C5F8y+a4toa+dQMaAmO2K5tIl5o
- 9Xknf0vsIeb/dWyqXkjzf831eQhtbX/9mqfXCSYBzjpUupRwep/aBAI2uTsGtKYxR1SKSXOVJ
- /GuXy8HlM7Y/dUwF+XpBBGAcUC83Z/+mUcbDz/W+egwiFUPvbaKrm8JzQoxakdqoF9xuVkKba
- VrAQaFXtYnyyiACLPEj/kgKeaPkDicQKg3ioCokAzxydBTR6EZ7RyHarq/O1dWJap2Daz/saL
- kjjuQGLduP7KIuVKYbMAlK9Bl8vHQe7C/wewIDrhcC0v9xuyquYtQ3by2nXFzNc0dTluJomDO
- SOZOlJyMYy8joThrKLmiKwp43mCcXbnGVAW4AQDbJyY8EFNM3dYcy5AEZGkap07PuutTyZyyp
- bCX6qLJp3OwNrvMab3XX+g38WiK+dKyEoyuQDgxS0yA3lrYMR4qKPhVU1k5T8D0AvioiAfwpd
- pW1DpE2dUOvP9N3wg1gBTSzZINVRwvZrwEXOphv6lmK0UNDLeop1ZqHTOLyEsaEzuk33PJS8c
- qPU9i0HY0JcRe+fq1xCRyl1jaSnz7/lHlP7TXVeaLZ6D/Y3/dMFroBpl/OBEp1OpR0I0xaiW2
- 6sahjP1qFnWTKpq55zmDnUdcNjL9rgv5zHVbIoReK0cOPVzmB0HBil3mChWhOjg9U7Qdsifud
- mkI6MeafsaH7OJIB7mm0jWBFJJy4zDn4UfwI6eDuECdLpXq9uuSXScWLmQks1o53+l6VWyVuv
- HwcNW3AmgALBvUfd6XJndMgsGAFI1RXmxgRjP17R4gLppU2AQIvDE6o3Tb0ozAkU/lSn6FIxR
- SfJT4QlCWzC2WZ5ClGQFdB5o5Xk3lwS0=
+Content-Type: multipart/mixed; boundary="8323328-722291273-1552664660=:41"
+X-Provags-ID: V03:K1:BR3mv6jKpO+PsafYllfYROphHbZVEUqV0rTXurX0mf+Vu8WDXFj
+ BabZ6wYzWzhUpZF0jBepNqTEvGnp8/Ivp9hIg9qycQxEU9EAsQI7hmxtkVNT3+lpfP5JrxW
+ j/ava9ibakfwUIGlmymuUiizeibyd/CGtK+6PhLA42f0pa1YM2aj2Aei6fTxZyDdmoMCt8/
+ LEHO3BSzwNh+y3KAOLBhg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2SC6Z356jP8=:CTEvU4SRTn9aIQFihaSQay
+ ycA0fJFDAZGTJ1YQJl0YbawNepUhlPfeG69g/A9Zzf92WQrT+miDZvPd1/CcweHv9QJOjNPx+
+ M313F2EcwIhXchqDuFk98Td9xUooVc44+Fw+AuDLtkKMK7a1phTbBN/X6eboC2WkGbc0Qqk6o
+ iFHY8A6dXDydO/ESuQ5IXQGUaP/xYYRMAqdoInNL3wGlIFFQwd6ZGGpyMgbfugT+N9qCtDggc
+ DbSpdTpRKtzAPVME8PrWqgf3HfVhLptkGWY7NUdhVNI2+8bA5K8HxcD4jsLdJieixTFLFFOQ/
+ QOIVN+p+OixVHm9GCFIDsrmC5GLEH1sD/xoKGSdVbZ4Z4TTYJC9tBqC17in9xF47+qyLdWeRy
+ Kv7E0R1hdCYkJnJg30VIlFHEBliJqEW6Q2z2F/D8vVkkFU9bqxgQCA/+6cJr33VK56hS9UhIm
+ nQ1cOc5DvQNV8HOEQH15HQixHhfHRyWK9LC+gSfN/Siu0S6sUdb9Br7fpxBjGl3Y/ARF9o4r4
+ +ufYu8k6YN/fnfCdlIxJhMGWuGzE0CL8PQfGQGzHupnOlnhjS2j0W4MlQ0glqvfcsV+DrEaHJ
+ 4w+DjLrMrzugFeMh0hSx/HwI/lmEj4kX1tpXcqzY0DX2Tu0leAGDTxgh9Ci3/P9LUEr6MUbE0
+ w/qt4V/Vgu1Lpc4DbT/dtsNDExrkaUWJURzvVUAhE3IxaCe13Vqunczesk+/jL4I0jqexPbZ3
+ WdYIK7dbGRi6qHNqWakE8EXAuDidYO2LjRwpw2watCP57xmZsJcsWiJGMTZHOCwK4alK/N1HL
+ EvHkfaGRKiMQspLX/h+uwIp/jEzAkiMkQKefNzvMZWGvnVDlRxJFBnjO8mQAgxOPo12UdN3ah
+ f+eWlODURW6vWD9mi//kEHeNznurtjzFAssP93YMd4L7CdVvbAoTRRxasTMXEI1TRAjqRk9Lh
+ 8kc9fGWspVS8XioOWjENN2RS7adu8lC8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,36 +60,58 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1735692716-1552662743=:41
+--8323328-722291273-1552664660=:41
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
 
-Hi Ævar & Peff (and most importantly, Junio!),
+Hi Ævar,
 
-On Thu, 14 Mar 2019, Jeff King wrote:
+On Fri, 15 Mar 2019, Ævar Arnfjörð Bjarmason wrote:
 
-> > Maybe we can compromise on this whole ongoing NA v.s. Europe debate
-> > and meet in Iceland :)
+> Remove the rebase.useBuiltin setting, which was added as an escape
+> hatch to disable the builtin version of rebase first released with Git
+> 2.20.
 > 
-> Iceland Air is always trying to sell me that "Reykjavik stopover"...
+> See [1] for the initial implementation of rebase.useBuiltin, and [2]
+> and [3] for the documentation and corresponding
+> GIT_TEST_REBASE_USE_BUILTIN option.
+> 
+> Carrying the legacy version is a maintenance burden as seen in
+> 7e097e27d3 ("legacy-rebase: backport -C<n> and --whitespace=<option>
+> checks", 2018-11-20) and 9aea5e9286 ("rebase: fix regression in
+> rebase.useBuiltin=false test mode", 2019-02-13). Since the built-in
+> version has been shown to be stable enough let's remove the legacy
+> version.
+> 
+> As noted in [3] having use_builtin_rebase() shell out to get its
+> config doesn't make any sense anymore, that was done for the purposes
+> of spawning the legacy rebase without having modified any global
+> state. Let's instead handle this case in rebase_config().
+> 
+> There's still a bunch of references to git-legacy-rebase in po/*.po,
+> but those will be dealt with in time by the i18n effort.
+> 
+> Even though this configuration variable only existed for one release
+> let's not entirely delete the entry from the docs, but note its
+> absence. Individual versions of git tend to be around for a while due
+> to distro packaging timelines, so e.g. if we're "lucky" a given
+> version like 2.21 might be installed on say OSX for half a decade.
+> 
+> That'll mean some people probably setting this in config, and then
+> when they later wonder if it's needed they can Google search the
+> config option name or check it in git-config. It also allows us to
+> refer to the docs from the warning for details.
+> 
+> 1. 55071ea248 ("rebase: start implementing it as a builtin",
+>    2018-08-07)
+> 2. d8d0a546f0 ("rebase doc: document rebase.useBuiltin", 2018-11-14)
+> 3. 62c23938fa ("tests: add a special setup where rebase.useBuiltin is
+>    off", 2018-11-14)
+> 3. https://public-inbox.org/git/nycvar.QRO.7.76.6.1903141544110.41@tvgsbejvaqbjf.bet/
+> ---
 
-Iceland!
-
-I could be talked into that. What's to hate about the incredible nature on
-Iceland?
-
-Seriously again...
-
-> It's possible that one of my ulterior motives was trying to get Junio
-> to speak up. :)
-
-Junio, what would it take for you to participate in a Git Contributors'
-Summit again? In 2015, you did, and it was really a pleasure for me (and I
-hope it was not too terrible for you?).
-
-I still hear your voice whenever I read your emails, and it would be
-awesome to have that experience in person again.
+With the obviously intended SOB line: ACK!
 
 Ciao,
 Dscho
---8323328-1735692716-1552662743=:41--
+--8323328-722291273-1552664660=:41--
