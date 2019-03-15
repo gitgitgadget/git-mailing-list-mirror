@@ -8,58 +8,57 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65AB020248
-	for <e@80x24.org>; Fri, 15 Mar 2019 19:21:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 298DE20248
+	for <e@80x24.org>; Fri, 15 Mar 2019 19:26:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726798AbfCOTVU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 15:21:20 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:38749 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726527AbfCOTVU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 15:21:20 -0400
-Received: by mail-ed1-f65.google.com with SMTP id e10so4624712edy.5
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 12:21:19 -0700 (PDT)
+        id S1726431AbfCOT0r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 15:26:47 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:43852 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725922AbfCOT0q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 15:26:46 -0400
+Received: by mail-ed1-f66.google.com with SMTP id m35so8532285ede.10
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 12:26:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=LNlpK6fqNt3IMrHX+nQLEJKEabVGoS+D/iDXKshxKJc=;
-        b=CdYhpM0GH7KNUGyh5pie8VEk9CtXN+eT1zrWlkVgGl2GfryfpQvNFXns4N/uAgtFWq
-         Qtvsts3rD4m93dRZBX8XkL2VOkV5rXTlst0nc8ASYI28as4/Y2bjZ4RrDd+MRqCAf9RB
-         IBY0DUuV/BpzZcQRK5Nsl7PKlucGHY1VaY1A8ukbxyiAqXb/5Y63hLhmK2jt7+GmWtwf
-         S9xzY4EC4n313VXKecImuRuIu+FN/HB6hyIE9VMUCL6NfOvVIwXKxhilPeJO63S6/9fF
-         d0YrneDAlEzhRZdoqoEpWM0qP6Oeb/0H94tiMiSSaJdTJ8nSzEYCO7ct8oTZYgxibJCZ
-         t2Mg==
+        bh=6a2KjZ5J3YAo+atmML9BJ/vjCjZSijge5Sb3UQjICKg=;
+        b=sk7DAY/wGW5HcA28wivwfw6vcDCrx6k4VD88SUyQZX3NQLpCT8dDA6Xpcwl0KedubB
+         w4xQXVcUvovgm8LfNXBlT2ESzK2X0z1AjtsQEsCDusSK0CUdzX2i+fHUdsI02hwmP8Y6
+         U/bMJGS3OqaCuP7UXNJ4xmHj0X/INvvquRm3j4IRPpI/ePMed2pv3NpjOyIB2W2fhpkq
+         C83szhP07r6HDDSzlqXma9moujKuTkU5rm2PoDhnx3IW/REwtj+D0p1x/gcLOR7rmspw
+         5PLMD6b4ZzD7hRGNV+6T03ZWc4cHuaWd5pV7VCDb5bOa4XXDgpi9usg8FXnPWK6smD/D
+         CYWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=LNlpK6fqNt3IMrHX+nQLEJKEabVGoS+D/iDXKshxKJc=;
-        b=NH3PDv/40L4qVOXDhTI8mB30E3PHHPFM8hiUg3zOOd8gRRiacqY+Kjr264Va65GbjZ
-         GpwIc7TxAKJ8PkStkH/wo9fnFtpVnwZ/2/hsiw+CoFQqq3wlXFyI8k+Vff0Ix+8oSecM
-         g99qcVLhJfq3Lsb8oqCca4bmOPQ8pHQYYBxibdLl2uz8fGQQeSDTLiJ5cFRQphZkMSjF
-         Qk9S2IMWOV67pRm3kdhrLgKYXPXP9KrY5M/uRm1pkXstqABDqUf3hzCEa4dbaOmaxefZ
-         2u8Ic5BaLi+SQrsEoscd2eSt6gmRkSl6pzQmrfUafc2Ca0VsQR81QXxBWN+eot1QtEn0
-         2gcw==
-X-Gm-Message-State: APjAAAXBpNCJwYSq1rXiy5rYvDnLQv8587LiNika10/h+rqb93+Www/C
-        v9vFx8Kjnz5qok4rxqWWtlI=
-X-Google-Smtp-Source: APXvYqyaif0zYwpF1115TZPpnvhVJX/ZKPv93zLS3wlnBlPF9KrerRHNfvBk0lADahk7wvNYiCfxvg==
-X-Received: by 2002:a50:a8a4:: with SMTP id k33mr3849344edc.261.1552677678627;
-        Fri, 15 Mar 2019 12:21:18 -0700 (PDT)
+        bh=6a2KjZ5J3YAo+atmML9BJ/vjCjZSijge5Sb3UQjICKg=;
+        b=Q4Gn0OBoEB5bMhHmEivLCFWnKFgWNKxUiCQcEiChuXXMCpQmaC3hVbCD7EqRXNqvUq
+         R8X1jk/yCsYA+NJRAn6QOdq3w8hnqBuRxqyMr4VhZrknWksvt3Z2wX7T8v9X8oWq0bqB
+         tRIOBKCOb5W1BXb/e8boWDmh5nI1/xhq+VZ66LUsnyxpk9VpmfDWf6QTdsDba3f22Y1w
+         XhP+FvwJAdsKefOHNc2EIqQLQmPdSiIx2oEwI4dTrHL8O5PrjCpoVgv9Qi8mwVU80nkw
+         TZPRFQVZxlOXiveD5HOqu0rF5VGjxCc6kcOHPn6Vphq/HgnAS9pkPZVhum+Wv0ZRxTFI
+         O2dw==
+X-Gm-Message-State: APjAAAUiubj4cmekePJNZgeV2LD97NRh+GdawKUIJGgynG2mCJzxibVE
+        46f0yznmJmg8bw4IShzboYw=
+X-Google-Smtp-Source: APXvYqw5fxIcMpsNwGJPcqGo8iCjYe64Z7Wzp3KvjVm5vPGQLG4pVCxvKvaA1x3rcqHRlaWart4/jw==
+X-Received: by 2002:a50:eb0c:: with SMTP id y12mr3675005edp.237.1552678004904;
+        Fri, 15 Mar 2019 12:26:44 -0700 (PDT)
 Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id u47sm887354edm.37.2019.03.15.12.21.17
+        by smtp.gmail.com with ESMTPSA id m4sm261995ejl.49.2019.03.15.12.26.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 15 Mar 2019 12:21:17 -0700 (PDT)
+        Fri, 15 Mar 2019 12:26:43 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing list <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [WIP PATCH/RFC] Use a higher range-diff --creation-factor for format-patch
-References: <87y35g9l18.fsf@evledraar.gmail.com> <CAPig+cRMiEcXVRYrgp+B3tcDreh41-a5_k0zABe+HNce0G=Cyw@mail.gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] trace2: randomize/timestamp trace2 targets
+References: <cover.1552519463.git.steadmon@google.com> <17ec237ba7498251a3ff64eec259d6f61c8f5ccc.1552519463.git.steadmon@google.com> <87h8c6baif.fsf@evledraar.gmail.com> <1431dc76-1b1c-c581-6355-b796591e99a8@jeffhostetler.com>
 User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CAPig+cRMiEcXVRYrgp+B3tcDreh41-a5_k0zABe+HNce0G=Cyw@mail.gmail.com>
-Date:   Fri, 15 Mar 2019 20:21:17 +0100
-Message-ID: <87tvg49c5u.fsf@evledraar.gmail.com>
+In-reply-to: <1431dc76-1b1c-c581-6355-b796591e99a8@jeffhostetler.com>
+Date:   Fri, 15 Mar 2019 20:26:42 +0100
+Message-ID: <87sgvo9bwt.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -69,50 +68,80 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Mar 15 2019, Eric Sunshine wrote:
+On Fri, Mar 15 2019, Jeff Hostetler wrote:
 
-> On Fri, Mar 15, 2019 at 12:09 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-form=
-at-patch.txt
->> @@ -261,6 +261,10 @@ material (this may change in the future).
->> +Defaults to 90, whereas the linkgit:git-range-diff[1] default is
->> +60. It's assumed that you're submitting a new patch series & that we
->> +should try harder than normal to find similarities.
+> On 3/13/2019 7:49 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>> On Thu, Mar 14 2019, Josh Steadmon wrote:
+>>
+>>> When the value of a trace2 environment variable contains instances of
+>>> the string "%ISO8601%", expand them into the current UTC timestamp in
+>>> ISO 8601 format.
+>>
+>> Any reason not to just support feeding the path to strbuf_addftime(), to
+>> e.g. support a daily/hourly log?
+>>
+>>> When the value of a trace2 environment variable is an absolute path
+>>> referring to an existing directory, write output to randomly-named
+>>> files under the given directory. If the value is an absolute path
+>>> referring to a non-existent file and ends with a dash, use the value as
+>>> a prefix for randomly named files.
+>>>
+>>> The random filenames will consist of the value of the environment
+>>> variable (after potential timestamp expansion), followed by a 6
+>>> character random string such as would be produced by mkstemp(3).
+>>>
+>>> This makes it more convenient to collect traces for every git
+>>> invocation by unconditionally setting the relevant trace2 envvar to a
+>>> constant directory name.
+>>
+>> Hrm, api-trace2.txt already specifies that the "sid" is going to be
+>> unique, couldn't we just have some mode where we use that?
+>>
+>> But then of course when we have nested processes will contain slashes,
+>> so we'd either run into deep nesting or need to munge the slashes, in
+>> which case we might bump against a file length limit (although I haven't
+>> seen process trees deeper than 3-4).
 >
-> My understanding was that the primary use-case of git-range-diff
-> itself (which existed before the --range-diff option was added to
-> git-format-patch) was to generate a "range diff" for a cover letter of
-> a re-rolled series. So, I'm confused about why this tweaks the default
-> value of one command but not the other.
+> Using the "sid" would be a good place to start.  Just take the final
+> component in the string (after the last slash or the whole sid if there
+> are no slashes).  That will give you a filename with microseconds since
+> epoch of the command's start time and the PID.
 >
->> diff --git a/range-diff.h b/range-diff.h
->> @@ -4,6 +4,7 @@
->>  #define RANGE_DIFF_CREATION_FACTOR_DEFAULT 60
->> +#define RANGE_DIFF_CREATION_FACTOR_FORMAT_PATCH_DEFAULT 90
+> That should be unique, should not require random strings, and not go
+> deep in the filesystem.  And it will let you correlate files between
+> child and parent commands, if you need to.
 >
-> The point of introducing RANGE_DIFF_CREATION_FACTOR_DEFAULT in the
-> first place was to ensure that the default creation-factor didn't get
-> out-of-sync between git-range-diff and git-format-patch., Thus,
-> introducing this sort of inconsistency between the two would likely
-> lead to confusion on the part of users. After all, --range-diff was
-> added to git-format-patch merely as a convenience over having to run
-> git-range-diff separately and copy/pasting its output into a cover
-> letter generated by git-format-patch. If the two programs default to
-> different values, then that "convenience equality" breaks down.
+> So maybe if GIT_TR2_* is set to a directory, we append the final portion
+> of the "sid" and create a file inside that directory.
 >
-> So, I'm fairly negative on this change. However, that doesn't mean I
-> would oppose tweaking the value shared between the two programs (and
-> also the default used by GitGitGadget, if it specifies it manually),
-> though I defer to Dscho in that regard.
+>>
+>> Just to pry about the use-case since I'm doing similar collecting, why
+>> are you finding this easier to process?
+>>
+>> With the current O_APPEND semantics you're (unless I've missed
+>> something) guaranteed to get a single process tree in nested order,
+>> whereas with this they'll all end up in separate files and you'll need
+>> to slurp them up, sort the whole thing and stitch it together yourself
+>> without the benefit of stream-parsing it where you can cheat a bit
+>> knowing that e.g. a "reflog expire" entry is always coming after the
+>> corresponding "gc" that invoked it.
+>>
+>
+> Yes, with O_APPEND, you should get a series of events as they happen
+> on the system all properly interleaved.  And see concurrent activity.
+> This file should let you grep to see individual processes if you want
+> to.
+>
+> Routing each command to a different file is fine if you want, but
+> that opens you up to having to manage and delete them.
+>
+> Whether to have 1 file (with occasional rotation) or 1 file-per-command
+> depends, I guess, on how you want to process them.
+>
+> I'm routing the Trace2 data to a named-pipe/socket and have a daemon
+> collecting and filtering, so I have a single pathname for output and
+> yet get the per-file stream handling that I think Josh is looking for.
 
-I think that was the intention initially, but at least I'm now using
-range-diff as a general comparison tool of different non-ff-branches,
-e.g. the force-pushes to "pu".
-
-I'd expect the tool in general to be used like that, whereas with
-format-patch it's safe to say we're dealing with a re-roll of the same
-thing.
-
-Hence the hypothesis that for format-patch we can be more aggressive
-about finding similarities.
+Is the collecting code something you can share & general enough that it
+might be useful for others?
