@@ -2,76 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3AA820248
-	for <e@80x24.org>; Fri, 15 Mar 2019 18:59:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AED0320248
+	for <e@80x24.org>; Fri, 15 Mar 2019 19:01:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726835AbfCOS71 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 14:59:27 -0400
-Received: from mail-ot1-f43.google.com ([209.85.210.43]:34117 "EHLO
-        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725922AbfCOS70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 14:59:26 -0400
-Received: by mail-ot1-f43.google.com with SMTP id r19so9308648otn.1
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 11:59:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=+Wxsebj3LK50fkDxZiHDtKcdQIykygRQesJninUBcIo=;
-        b=G2+xvkIKo6QC4M9bdHMxOwX8N/9Tihpp49Gj/5NTKR5w93egUKIa6+SpiX9qV2dZsu
-         zxoQYO7sdzSGAJPF0a7pMUbEaxZ+zovfSHwxXpd7GXSVGnuFM1gkZyZQF7YRcUxQYmcF
-         9IFRpBRxNdKO7vs6qlm3ROPHS6Y3qpVl9EtcqJaDoy/8ogHfdLhh2ZewjptkZEmOZOIO
-         ba6IIK6bc8F8ogUlDbeH+cZw3KL4/qB5X8gjnYVV00h897AY5R+Tjolf2Fy1xj6bfIYw
-         trA3dUmgp8vioP81wkwR+eg4e9W5SPCz1t9F9R+o9AHWLHTWLm+qijapLCbjUoCsqEK8
-         f1cQ==
+        id S1726493AbfCOTBI convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 15 Mar 2019 15:01:08 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:53670 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbfCOTBI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 15:01:08 -0400
+Received: by mail-wm1-f66.google.com with SMTP id e74so7499844wmg.3
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 12:01:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+Wxsebj3LK50fkDxZiHDtKcdQIykygRQesJninUBcIo=;
-        b=PnkNCIPXB46XOadSHsn5ZRuswqpSIzOmWObffmRONTlLTQiRKNRgLM4t8LgpCFUxBh
-         lgNO8Vc2sgGPzpYZnbMqKPBuHY/dM5On9t39JVjb9cov4KQVxncwXbMBXd/iFYss9ZV/
-         RLJQ0GwxBha1L5kpkRaAAZX4AzexKg42KP5xTd2vEfane4i9RDVtjmRtXAbkLSc3GyJJ
-         Z6v2NB50mSq70iv0/aCJl5zTctoMUlacPYx2CtS5o67nDk27U6xlJsLVVaGmiboH/8uU
-         eiHH/WXHMETKBAtgwCH4qbx2c/rmXEqqJ3l4yGTyKQ4RDVAL3uwaEievFk/6gjWgREkp
-         FAGQ==
-X-Gm-Message-State: APjAAAUyY0A8HEdgk6oRAcMA/bB9DcOTfZyBrbKYGYllJsdA00bhN3Z8
-        65zfeRMsacrG0/T7RemvNL8a8I8ZbS4Z1GixmzAk1g==
-X-Google-Smtp-Source: APXvYqzzq4edNm5U9HMeVzxaC7ImWlDVEGgb3yxaTiXof+tJ0RVGBjxrw7VSIw+nfW6hfDA1XzPbuziTc+eIVAoZwRs=
-X-Received: by 2002:a9d:4914:: with SMTP id e20mr568112otf.18.1552676365445;
- Fri, 15 Mar 2019 11:59:25 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aggbAv4UWF1KZh2jtm7RZLKnNPwKpPnZK8i6XVEZmSU=;
+        b=ShpgALAIR5ScGzjybxE7hmGPnaslG2QQaEuxJa0Xsz3TbD/GUOa0ylH9fa8vMBQ1Id
+         wRTzxNaLsyuSYGKNiHuG/81HDcND6WWa9c4EfWjyqHc3ahmpgc8g4x9TA3z4cRQ3ysJC
+         l0eMPX5NbjvJnU/WbCbhBOOlisd6bwgSAe+jJqGSRno5x5cIBbvFv14By9njDVAlbXS1
+         Cfg5ppQA+dmHL6wokJiQs//TLlVadzlKjs+oxwB5wReM+EaGlg6jRP6fhQSwAV/LEnVN
+         +l5D31sZFR4VDXo8vjFkpGifo36sD0XD6Cq+Au8/30xXsiEGkLlzygCruYzac77DA09Z
+         RXsQ==
+X-Gm-Message-State: APjAAAVYZit12Mf0u+fiiWal2KYq68qbQDslMVrqnOZPOUviYDHwTgru
+        gWgptB5joPoGcLeMlKXsLw/GHJ10YPiKRZ4T0cI=
+X-Google-Smtp-Source: APXvYqwdu6L9ufqa16vK6nkOtoTA1c0bGq4iWKN2PB2x3qeztAxh4c1Jew2VHf4SiyS7d0zwqLCD5MbC9GJqX0G0U88=
+X-Received: by 2002:a1c:c010:: with SMTP id q16mr3255749wmf.134.1552676467028;
+ Fri, 15 Mar 2019 12:01:07 -0700 (PDT)
 MIME-Version: 1.0
-From:   John Passaro <john.a.passaro@gmail.com>
-Date:   Fri, 15 Mar 2019 14:58:48 -0400
-Message-ID: <CAJdN7KiS+6y0a3sj0yuGuJ+URJe0SBJJTRg2ZpA2upN2rwZXCA@mail.gmail.com>
-Subject: Shorthand for "$(git merge-base A B)"
-To:     git@vger.kernel.org
+References: <87y35g9l18.fsf@evledraar.gmail.com>
+In-Reply-To: <87y35g9l18.fsf@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 15 Mar 2019 15:00:56 -0400
+Message-ID: <CAPig+cRMiEcXVRYrgp+B3tcDreh41-a5_k0zABe+HNce0G=Cyw@mail.gmail.com>
+Subject: Re: [WIP PATCH/RFC] Use a higher range-diff --creation-factor for format-patch
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing list <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I find myself fairly frequently doing something like "git log $(git
-merge-base A B)..C". As far as I can tell, there is no shorthand for
-the $() part of this, but it seems like something that could be pretty
-naturally added, or documented better if there is some esoteric
-combination of the existing shorthands that would support it.
+On Fri, Mar 15, 2019 at 12:09 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> @@ -261,6 +261,10 @@ material (this may change in the future).
+> +Defaults to 90, whereas the linkgit:git-range-diff[1] default is
+> +60. It's assumed that you're submitting a new patch series & that we
+> +should try harder than normal to find similarities.
 
-Is there any way to support a shorthand for $(git merge-base A B)? I
-hoped a joiner in the spirit of A..B could be used:
+My understanding was that the primary use-case of git-range-diff
+itself (which existed before the --range-diff option was added to
+git-format-patch) was to generate a "range diff" for a cover letter of
+a re-rolled series. So, I'm confused about why this tweaks the default
+value of one command but not the other.
 
-A::B
-A*B
-A%B
-If not, maybe A@{mb:B} or something along those lines?
+> diff --git a/range-diff.h b/range-diff.h
+> @@ -4,6 +4,7 @@
+>  #define RANGE_DIFF_CREATION_FACTOR_DEFAULT 60
+> +#define RANGE_DIFF_CREATION_FACTOR_FORMAT_PATCH_DEFAULT 90
 
-I can imagine this would be a non-trivial amount of work, just
-wondering if there is interest, or if anybody has thoughts on the
-notation?
+The point of introducing RANGE_DIFF_CREATION_FACTOR_DEFAULT in the
+first place was to ensure that the default creation-factor didn't get
+out-of-sync between git-range-diff and git-format-patch., Thus,
+introducing this sort of inconsistency between the two would likely
+lead to confusion on the part of users. After all, --range-diff was
+added to git-format-patch merely as a convenience over having to run
+git-range-diff separately and copy/pasting its output into a cover
+letter generated by git-format-patch. If the two programs default to
+different values, then that "convenience equality" breaks down.
 
-Thanks,
-John
+So, I'm fairly negative on this change. However, that doesn't mean I
+would oppose tweaking the value shared between the two programs (and
+also the default used by GitGitGadget, if it specifies it manually),
+though I defer to Dscho in that regard.
