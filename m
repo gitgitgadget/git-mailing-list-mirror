@@ -2,99 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EEFA20248
-	for <e@80x24.org>; Fri, 15 Mar 2019 08:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 841F520248
+	for <e@80x24.org>; Fri, 15 Mar 2019 09:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726643AbfCOITV convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 15 Mar 2019 04:19:21 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34102 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726584AbfCOITV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 04:19:21 -0400
-Received: by mail-wr1-f68.google.com with SMTP id k1so8074335wre.1
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 01:19:19 -0700 (PDT)
+        id S1728624AbfCOJJh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 05:09:37 -0400
+Received: from mail-oi1-f171.google.com ([209.85.167.171]:35820 "EHLO
+        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728081AbfCOJJh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 05:09:37 -0400
+Received: by mail-oi1-f171.google.com with SMTP id j132so3708798oib.2
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 02:09:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=2Cf7F0rAVv8Yoa5Vd5lioo/o4XHofMNqEoCGffBi8bQ=;
+        b=lDn3xMF8RNmRNY2UEZtRCxPJUVYnSOijyFOjYMle93V5V/hOChUpeq4+rxKKYdw6jY
+         OR76jlCrxGWt1JbbX6MTYfcjR/9L2LfgmI8WiCgKLsmnBGY05Nrwyieo9veDrXKFlAhG
+         0ecCvqMsCpGMgkfEFoOKsoBFoKwFC4B2UstD6vomaDywEDbxsbQAxC+D4UNrZQVUwLGn
+         xPZCB6jQz4F/JmO6g0MBt65o7BCGfMKLUt/QxIn+HWwDIQgEI8pQklIaWl6sDLtuMioz
+         yo9l/Zi4sA89bFfOupHMkrp9K+oe5wa+udXl+flltlnvyN9L4OkFJk/f6NNJbP3ej5XL
+         kT2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Z2O6vVne1XhVQlfUx8e0lucvkAf4+ezPfx4aebokD+8=;
-        b=bfz2qtO/m5nj3It80UVsnvQ36rkDbQivXGa5B4KSf5oYC6newrU1Y226F9MgjjRbAP
-         TtGl8zL3lLpLkp3kOyIBsFVbyVpSzPxCaMnXiaqOkoqtdK7VPua/JhqiQHt3uyusToCD
-         mDPAO9Xq3MYMQOfxFvzz1ZkB/N/WPc8B1m215xhW6dmXmwx2HvnNOsFFw7CM6sGAP6Av
-         dUP2C9fTNvcpoQ7HEEKYxr1vc6dN0SgO/UsGcpZyVrgo6LQtcbBy5jMPE0cw1VqXCiYk
-         VcuzpxB/nPOJynqoQu3m5EKqqmhVxlS5eqRj0hqgg1fxozCxLzcTuFe8O6aTBrESr45F
-         IJ/w==
-X-Gm-Message-State: APjAAAXEXG1NBQKI+6+piVlv9wX8mUsmoj76+7qd8uTY7DLeOsqP3zjD
-        IsDxM8ILvdo1oMLTR/+f/SGdSfr6AU795g4fwS4=
-X-Google-Smtp-Source: APXvYqzSMcVBBEIzPixNyAGa5kDl3OQY9/0aHNoZRxgrf1ASvOcmqjM+wpUP8Y19ZadCx6TBc24nLxm7KjJh3CgS3iI=
-X-Received: by 2002:adf:9f54:: with SMTP id f20mr1488797wrg.88.1552637959231;
- Fri, 15 Mar 2019 01:19:19 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=2Cf7F0rAVv8Yoa5Vd5lioo/o4XHofMNqEoCGffBi8bQ=;
+        b=GcOCTjTV6QxBQfxb8vkywy8m8iKbot+u/sV26ZaJh6NodbpnhkaR9ehujLX6E5OrzH
+         k6Ztags1Zgb2crImWQwl+dIo5T8M5TT2Rh9pByiLLWkGTJ9FOKqW+A+QQmfXWzvH8gAE
+         UHPwTBnh+TuT4tMeveMGXdtjtDcTvDx+BloDStOfJ/j2IrZuZrOGC+DK+l6oEkHNg9JK
+         qDvlQ5b8l7bNLWzbg/v2ckvMT50Nn5Axlj2sv3KdxpcaK+/w2SGmvDLGEGVzec6N7t1L
+         LXlLf+ZU9yYPP5ecuyTv1a2Xefv7S8f4mfDpQI3W5WtBOYwWvHNnjk3TT6LeAe/e1n5x
+         TPdA==
+X-Gm-Message-State: APjAAAWI2N0YWYPEn8Khdmxq4qaap0M5/XVHXFmdeJDuNSd/CmRrMxpS
+        y/rKGLenTOUY78695JjcPhGyG6fUKX6d5Arn4e9rEnXo
+X-Google-Smtp-Source: APXvYqySC71N1vNV0poRpvswXQuTVXAyxRudW/gPQXWwdMRqagH9xaZKJrUTdTULNpGHNuO3YZPnozwmr3EuP0nQHw8=
+X-Received: by 2002:aca:3081:: with SMTP id w123mr913709oiw.141.1552640976229;
+ Fri, 15 Mar 2019 02:09:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-18-pclouds@gmail.com> <20190313183604.GA27503@esm>
-In-Reply-To: <20190313183604.GA27503@esm>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 15 Mar 2019 04:19:07 -0400
-Message-ID: <CAPig+cQPMZhd-JSxD4Z6pL19qB1bFNu+EvPDh0vADpcaJ0tbqw@mail.gmail.com>
-Subject: Re: [PATCH v3 17/21] switch: no implicit dwim, use --guess to dwim
-To:     =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+From:   Kapil Jain <jkapil.cs@gmail.com>
+Date:   Fri, 15 Mar 2019 14:39:25 +0530
+Message-ID: <CAMknYEMgJ88zWsebxBqsLq8LUwYzg0vN3RpsWVpbqvncrd5dGQ@mail.gmail.com>
+Subject: [GSoC] Microproject: Add more builtin patterns for userdiff
+To:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 13, 2019 at 2:36 PM Eckhard Maaß
-<eckhard.s.maass@googlemail.com> wrote:
-> On Fri, Mar 08, 2019 at 04:57:48PM +0700, Nguyễn Thái Ngọc Duy wrote:
-> > Similar to automatic detach, this behavior could be confusing because
-> > it can sometimes create a new branch without a user asking it to,
-> > especially when the user is still not aware about this feature.
-> >
-> > In the future, perhaps we could have a config key to disable these
-> > safety nets and let 'switch' do automatic detach or dwim
-> > again. But that will be opt-in after the user knows what is what. For
-> > now give a short option if you want to use it often.
->
-> As I am late to the patch series (sorry!), has there been already any
-> discussion on that? In my experience, people get confused with detached
-> HEAD state quite often, whereas the automatic creation of a local branch
-> is no problem.
+Hi,
 
-This statement does a good job of articulating my (unspoken) response
-to this patch. Whereas a detached HEAD might be scary and confusing to
-newcomers, and difficult for them to recover from, automatic creation
-of a DWIM'd local branch doesn't seem so problematic (if at all).
+for the microproject: creating diff function support for different languages.
+i wrote one for shell script, have tested it outside of git and it works fine.
 
-With git-checkout, it's very easy to accidentally get into a detached
-HEAD state, so it makes some sense to protect newcomers, by default,
-from that accident in git-switch. However, auto-creation of a new
-local branch is not, for a couple reasons, nearly so weighty a matter.
-First, in many cases it may be less likely to happen since it requires
-presence of a corresponding remote tracking branch. Second, it's
-intuitively easy to recover from it: when git-switch reports that it
-created a new branch, though perhaps surprising, the user would
-naturally know to look for a command to "delete a branch".
-
-And, unlike a detached HEAD, which newcomers may mistakenly believe
-lead to irretrievable loss of work, an unexpected branch creation
-carries no such penalty, perceived or real.
-
-> So if it is deemed to be too confusing to dwim in this
-> case, could we add a hint suggesting the command? Something like:
-> "No suitable branch <foo> found, however there is a remote tracking
-> branch <origin/foo> that you can siwtch and create with `git switch
-> --guess foo`" (or maybe the one without guess)?
-
-That could be helpful if git-switch continues to make --no-guess the
-default, but making --guess the default (as it is in git-checkout)
-would likely be even better (for the reasons enumerated above).
+query regarding accommodating the pattern in:
+1) userdiff.c, it uses - #define PATTERNS(name, pattern, word_regex),
+for defining patterns to locate functions.
+what is the use of pattern and word_regex parameters ? i am guessing
+that pattern parameter is the actual pattern to spot functions in a
+file,
+and word_regex is used to get function name. is that correct ?
+please let me know.
