@@ -2,103 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A73120248
-	for <e@80x24.org>; Fri, 15 Mar 2019 03:39:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33C7820248
+	for <e@80x24.org>; Fri, 15 Mar 2019 04:47:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727154AbfCODjC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 23:39:02 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51900 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726708AbfCODjB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 23:39:01 -0400
-Received: (qmail 14755 invoked by uid 109); 15 Mar 2019 03:39:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Mar 2019 03:39:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28708 invoked by uid 111); 15 Mar 2019 03:38:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Mar 2019 23:38:36 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Mar 2019 23:38:14 -0400
-Date:   Thu, 14 Mar 2019 23:38:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: straw poll: git merge conference location
-Message-ID: <20190315033814.GF28943@sigill.intra.peff.net>
-References: <20190313205539.GA30425@sigill.intra.peff.net>
- <87bm2db3ku.fsf@evledraar.gmail.com>
+        id S1727096AbfCOErT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 00:47:19 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:33354 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726376AbfCOErT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 00:47:19 -0400
+Received: by mail-wm1-f47.google.com with SMTP id c13so8284057wmb.0
+        for <git@vger.kernel.org>; Thu, 14 Mar 2019 21:47:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UuzWnax0cAkTY5jhkObsr3j3m1L/m07rUWTc7Ctciio=;
+        b=tQN3Iou2s8nBnbhSQYpuRYv1z1s1/SMO8sKbbvHCVKuuHZlHLrZDRP6BODqtD7z0dZ
+         8G0wna4ry44gnIxH/ijMssZvozoKrOuqQf3+WLHelWFeuWO5GFvAMsTUnMW35fffjZQH
+         KzfDcDzk2VNxsQq6QJ+ImffKMgT5Y6us1TD/QBb7qTiiMZV8RkGvs36IWwU3G+xBjzG3
+         8c9NKkF7SxqitEaOQfqB9Cd8dy2hysY5+jKp9T9rV4V5H63IA+nOqOBKIt1BwLX4gMRt
+         slc6nHwtvgp0hN/5MQFUTcqFRg15Crn+NVpVfv/sRmX0y6FJmaviuD/FTONObHFHyuhd
+         MzpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=UuzWnax0cAkTY5jhkObsr3j3m1L/m07rUWTc7Ctciio=;
+        b=eZtzf/ZYcCygl6ZKzPYuKOmBw56SpfXFN3SEU/CGPdwKSMeIklP0R6o1vGamDRtVD5
+         2E3QBI4wPKmrUdAYDmnYrF00Go3UAKHpvbYbl07r+vbAVwLgmj8j/44O1KDrXmRFlEN5
+         wgprxELtUNBpBtVa8PzItEMAXa2ppI93at+MF96+XLxXMScx9jz9A/dWD0JE7KeRCGYk
+         3yLSdKOHvHqOelOt1mQpTmUlm4wrUkJDn75gQ2w4DBKoUGn3IKKfPSIi9bWjQbTL21DI
+         RY4JP/qiWb0+rhkZePmxqBM7gDwZIlvFr1CBQ43ZEbcthR3NytMF9IF0hp3dnsgou2hd
+         /0HA==
+X-Gm-Message-State: APjAAAWvbb8ydmVvaiK5mQsg4vwz7m+n9jgPjNMLAOhpf2zi7yahAjFi
+        2ufEHA0PJ+iM8HZYJEjyB3I=
+X-Google-Smtp-Source: APXvYqzJooR7F36DMLan+rBb3bNB5Uy9i8j2Q8or9QH+bEsUHI2lOwlobRabM3Fn6g5EAKqRnbVgpQ==
+X-Received: by 2002:a7b:c5c3:: with SMTP id n3mr686571wmk.82.1552625237047;
+        Thu, 14 Mar 2019 21:47:17 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id z14sm1000375wrh.29.2019.03.14.21.47.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 14 Mar 2019 21:47:15 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Git List Mailing <git@vger.kernel.org>
+Subject: Re: "Problems" with git format-patch --thread email header ordering
+References: <CAHk-=whP1stFZNAaJiMi5eZ9rj0MRt20Y_yHVczZPH+O01d+sA@mail.gmail.com>
+Date:   Fri, 15 Mar 2019 13:47:15 +0900
+In-Reply-To: <CAHk-=whP1stFZNAaJiMi5eZ9rj0MRt20Y_yHVczZPH+O01d+sA@mail.gmail.com>
+        (Linus Torvalds's message of "Thu, 14 Mar 2019 16:44:51 -0700")
+Message-ID: <xmqqk1h09224.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87bm2db3ku.fsf@evledraar.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 09:31:29PM +0100, Ævar Arnfjörð Bjarmason wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> > There's also been discussion about doing something (possibly in North
-> > America) in the summer or fall of this year, but as far as I know there
-> > hasn't been any planning so far.
-> 
-> This is going off-topic, but I'd be curious if splitting it up from Git
-> Merge in general is an option. Presumably the hypothetical event this
-> summer could be an experiment for that.
+> While it's true that header ordering isn't specified, there's a common
+> "canonical" order that the headers are listed in. To quote rfc822:
+> ...
+>             body must occur AFTER  the  headers.   It  is  recommended
+>             that,  if  present,  headers be sent in the order "Return-
+>             Path", "Received", "Date",  "From",  "Subject",  "Sender",
+>             "To", "cc", etc.
+>
+> But git format-patch does create the email headers out in a different
+> order than the one recommended.  When you do "git format-patch
+> --thread" to create the emails, the header ordering looks roughly like
+> this:
+>
+>   Message-Id: <cover.1552606170.git.torvalds@linux-foundation.org>
+>   From: Linus Torvalds <torvalds@linux-foundation.org>
+>   Date: Thu, 14 Mar 2019 16:29:30 -0700
+>   Subject: [PATCH 0/6] *** SUBJECT HERE ***
+>   MIME-Version: 1.0
+>   Content-Type: text/plain; charset=UTF-8
+>   Content-Transfer-Encoding: 8bit
+> ...
+> And yes, if somebody from Google on this list wants to bring this up
+> with the gmail team, I wish you the best of luck. Let me know how it
+> goes.
 
-Yeah, it could be, if somebody wants to organize it. There was some
-discussion on the list, I think, and a little bit in Brussels this year,
-but I don't know of any concrete plans so far.
+I obviously won't do the last one myself, but if the issue is only
+to swap from and date, then this may be sufficient, perhaps?
 
-I had some vague discussion with GitHub events folks about it, and I
-think Terry from Google showed some interest in possibly hosting.  I
-think anything like that would probably be in the Bay Area, since it
-would be easy for either entity to provide meeting space they already
-own.
+I suspect that there would be fallouts in t/ directory before we can
+call this a fix.
 
-And that sort of gets to the crux of why it's attached to Git Merge. We
-are piggy-backing on all of the work that goes into handling the venue,
-etc, for that conference. I think it's really not much work on top of
-the conference, but doing it standalone in a random city would actually
-involve somebody doing some logistics legwork.
+ pretty.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-That said, I don't know that we need much. A big-ish conference room in
-a hotel would be enough (though we were pushing 40 people this time!).
-We don't really need a registration system, since we're small enough
-that everybody knows everyone (or will know them by the end of the day).
-
-> We'd just need something close to an international airport with
-> acceptable accommodation space for max 30-40 people. This'll also help
-> people who need to fly into NA stay under their respective travel
-> budgets, hotels in NYC or SF are going to cost a lot more than in some
-> small town outside a big airport. Something with more nature than
-> concrete would be nice.
-
-It's very scenic in my part of Virginia in the fall. :)
-
-> But really, is Git Merge going to change its location on our whims? I
-> didn't realize we were that important :)
-
-Well, no. But it's one of many inputs to the process.
-
-> Maybe we can compromise on this whole ongoing NA v.s. Europe debate and
-> meet in Iceland :)
-
-Iceland Air is always trying to sell me that "Reykjavik stopover"...
-
-> In Brussels I suggested in jest that we hold it in Junio's back
-> yard. The part that I'm serious about is that to the extent I have a
-> location preference it's that we warp it towards core contributors who
-> haven't been coming to these things, but otherwise would if the location
-> was different (no idea if that's the case in Junio's case...).
-
-It's possible that one of my ulterior motives was trying to get Junio
-to speak up. :)
-
--Peff
+diff --git a/pretty.c b/pretty.c
+index f496f0f128..40c7236fbc 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -452,6 +452,14 @@ void pp_user_info(struct pretty_print_context *pp,
+ 		map_user(pp->mailmap, &mailbuf, &maillen, &namebuf, &namelen);
+ 
+ 	if (cmit_fmt_is_mail(pp->fmt)) {
++
++		/* 
++		 * Date: before From:
++		 * cf. <CAHk-=whP1stFZNAaJiMi5eZ9rj0MRt20Y_yHVczZPH+O01d+sA@mail.gmail.com>
++		 */
++		strbuf_addf(sb, "Date: %s\n",
++			    show_ident_date(&ident, DATE_MODE(RFC2822)));
++
+ 		if (pp->from_ident && ident_cmp(pp->from_ident, &ident)) {
+ 			struct strbuf buf = STRBUF_INIT;
+ 
+@@ -502,8 +510,7 @@ void pp_user_info(struct pretty_print_context *pp,
+ 		break;
+ 	case CMIT_FMT_EMAIL:
+ 	case CMIT_FMT_MBOXRD:
+-		strbuf_addf(sb, "Date: %s\n",
+-			    show_ident_date(&ident, DATE_MODE(RFC2822)));
++		/* has been done much earlier */
+ 		break;
+ 	case CMIT_FMT_FULLER:
+ 		strbuf_addf(sb, "%sDate: %s\n", what,
