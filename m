@@ -2,103 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC151202BB
-	for <e@80x24.org>; Fri, 15 Mar 2019 15:51:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9595C20248
+	for <e@80x24.org>; Fri, 15 Mar 2019 15:51:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727866AbfCOPvo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 11:51:44 -0400
-Received: from mout.gmx.net ([212.227.15.19]:33195 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726792AbfCOPvo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 11:51:44 -0400
-Received: from [192.168.0.129] ([37.201.192.41]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5cMq-1gpEBJ2dcO-00xZVZ; Fri, 15
- Mar 2019 16:51:33 +0100
-Date:   Fri, 15 Mar 2019 16:51:17 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
+        id S1729404AbfCOPvx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 11:51:53 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:40713 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726792AbfCOPvx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 11:51:53 -0400
+Received: by mail-ed1-f65.google.com with SMTP id r23so8011217edm.7
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 08:51:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=/ScG5mE8RuQQXn2hvhaf7X+HLstUDLP2L8JQsA8MyME=;
+        b=TRRcOeh+VVp35bgMGka641ahWJ91Rre2uX2tmRW8VzEyGI67NeQwne7D9op9zjQpgE
+         eHCHv9u37ROrsk7Z17BFO/EXUzSpWg3ew8NDV7Xm9y2gW0VH66yLUpNUflpYfnDHSTqJ
+         vNpDGECcuKplmhL5l3SYgbTpLz4IUFN11wdSySJwNILmhdSZr9pa8fOnqwaHe9Kro93r
+         S53wXlW09vDnNBUktGzFy21spUHZULt0SBSA2yO3fR0ElVHizBKTsSiOyCSIRuRiwcmL
+         3TIb25wCady2QdWnaZ02A04lnMyNTn3m6Q/gnTVGpouHN2lNTtD37ibyxKpzDew202yE
+         L0qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=/ScG5mE8RuQQXn2hvhaf7X+HLstUDLP2L8JQsA8MyME=;
+        b=s+BdVEZjlHF7Tu8D16lT4OehaIb70G5lqK5qmGqGQFzwU/8rzncC52Onn7yNJi+oQ8
+         AU6CY4cgXekzETaigqStE9ZR1LCwb3dDCsTnHvCZ+c8rMWbvFx+26+Qj7G1cx32dRXVQ
+         A6tbbHqDftexrCLMjzQx58kc/KZ1T882ZZP/rAZqTPWGhbAB3har/9P3DWtO1hqF0e5b
+         tjIM74qhr08aPJLc9NZpU7oHIONjJkvt0TOCA0UiodUzsYQlWdti2NzTNclMz7nzUSco
+         b651KyHnd8jjrQQtyTWMHMVyVnT0w8Tqgph883ZUQQs7uZcwFuMxM1uAIWUp2xQX3w6c
+         t9qw==
+X-Gm-Message-State: APjAAAUhExMj5E8aZt3THOuqAbCMAN8p+51v55Cj49fVmHfQyiN3/y44
+        RqurY/EarkJDC1/kdoCOgM3OwuD1iF4=
+X-Google-Smtp-Source: APXvYqz2RTrO3Ckug1xrnQJ3oksOZoiyVqirTQ+Y4pdXrDOcxllSNbPYTq/lK+rMVEl1QIo2xb2E8g==
+X-Received: by 2002:a17:906:5e0d:: with SMTP id n13mr2648467eju.139.1552665111543;
+        Fri, 15 Mar 2019 08:51:51 -0700 (PDT)
+Received: from evledraar ([5.57.21.49])
+        by smtp.gmail.com with ESMTPSA id x18sm732229edd.4.2019.03.15.08.51.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 15 Mar 2019 08:51:50 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <stefanbeller@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 6/7] gc: don't run "reflog expire" when keeping
- reflogs
-In-Reply-To: <877ed0bfl9.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1903151650500.41@tvgsbejvaqbjf.bet>
-References: <20190313235439.30439-1-avarab@gmail.com> <20190314123439.4347-7-avarab@gmail.com> <CACsJy8B=76dMKhvdzOyyOMK5o-s8t+77ZE-hBmezhxLdv7E9dQ@mail.gmail.com> <877ed0bfl9.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Subject: Re: [PATCH v2 5/7] reflog: exit early if there's no work to do
+References: <20190313235439.30439-1-avarab@gmail.com> <20190314123439.4347-6-avarab@gmail.com> <CACsJy8C-zyh6Vea1hqciDHhKk+UvS5qFb1F2SfU15yWniy53Hw@mail.gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <CACsJy8C-zyh6Vea1hqciDHhKk+UvS5qFb1F2SfU15yWniy53Hw@mail.gmail.com>
+Date:   Fri, 15 Mar 2019 16:51:50 +0100
+Message-ID: <871s38b0fd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2753841-1552665093=:41"
-X-Provags-ID: V03:K1:31LjIgzpsdmxxoSHWPdTBKc8v8lxWN/2cYuWCKn69al8Ze0tCZl
- U3ehGhcO0HsASzu5NV/AC6B6q++qNUdBoW2Xq302/RfTmZlZ3UGimKeS/fQXTfDKFCYvMho
- Ew5St5wyGnrX6tGrwYK983E/aPFvRa5RojBWJ0bPvTB1y2yuHFOrYWR/V9Qts/g+JxSznra
- 7y34mLB9xnRb7TpUomvgg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vInrKIu31Dw=:+Hu4pfcPeCVtAGB80mdXDZ
- apJmGOc4jYD6ZSoEfkf/peh1daJYpO6zJzvFnXRqTmD9e4GcJZArE2e9UACRCIdcLQnBcmjpr
- DmVCcBtqPZE8QyJ+bWCi8P3kHlLUjJhmJKhfxnYzj5V5YjtqctFD64qE6Ao+vB+Acz4aSM6oJ
- KmbquOvu8vYyL8urD6S7194UsiitdNYH9Jeyc4seD8hqzVLeAzWASWH+gHkzhLzzoy+4sCXkj
- OsBABt/dGLXXb9Y8hEPvfzRUsCtx6BeKSqPy1KzdJtnioJbcYqX6iTSZ7Oduz/NhNw/kOex4b
- vlxD9FZt3PaKwfpP+cGjDwhcZjn/x0d3rPoS1ieJmg+LEBdWsi9NzZIl/qk5LKDU57yazpwnf
- y1cFghYCLq45k40XI3Uoo0tVM1N+vKhc9skyenF03mbSmPpYgy428D4FOpgBnmdvbL7w+Y56t
- VEKj/otg7PS20acft4qV8KhcJaX+NicyUEOGdD3aDdBFTqNfTygs75HUSFfomFoO8jU80pyge
- o8N6Q4OX/KpuMmKFPvh87HlQ53l1WauMwCQyxd8Ni3/T8Bsl6Lu5gipoIeLgkYk4zYQPmdO6+
- 9WgXO5aJK1BlH6tAckcGwh2Z8WKUibaTZgRkYa5E4Er/H/YL7/iOwMHdXIc2WhzLOqADeRyFd
- Bi1ZIbi+DAMCem6X2DOgnUFJV4vhjmr/17i6szjnGy0TWKaRHJnj11mgtGsm2uyg+kQq6Rgy2
- p4Qx63gJQ/5R6EBJm9fYueO3Lp0w3vWGCRzy6loNrY7JP4hSAwHrh3muy3uk5K1ljEACTv5yh
- q8nGv5kJevJIDR4XYgi3UNeG/RQyQPJi7hUU990uKMkRAiX2vqJG8UIwZiXa6oqPeLlm2igMK
- TItZdtjnmVI/th55DsleCJQo84kv4m6O77Kp/Jarr3Y2cty/z8NN9L38b5T7bFhkoABwVM/b4
- y578LFpBQT3my3qBD4dKccMTKouNZHL4=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-2753841-1552665093=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Fri, Mar 15 2019, Duy Nguyen wrote:
 
-Hi Ævar,
+> On Thu, Mar 14, 2019 at 7:35 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>> When gc.reflogExpire and gc.reflogExpireUnreachable are set to "never"
+>> and --stale-fix isn't in effect (covered by the first part of the "if"
+>> statement being modified here) we can exit early without pointlessly
+>> looping over all the reflogs.
+>>
+>> Signed-off-by: Jeff King <peff@peff.net>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  builtin/reflog.c  | 7 +++++++
+>>  t/t1410-reflog.sh | 4 +++-
+>>  2 files changed, 10 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/reflog.c b/builtin/reflog.c
+>> index 4d3430900d..d95c77ca0e 100644
+>> --- a/builtin/reflog.c
+>> +++ b/builtin/reflog.c
+>> @@ -606,6 +606,13 @@ static int cmd_reflog_expire(int argc, const char *=
+*argv, const char *prefix)
+>>                 mark_reachable_objects(&cb.cmd.revs, 0, 0, NULL);
+>>                 if (flags & EXPIRE_REFLOGS_VERBOSE)
+>>                         putchar('\n');
+>> +       } else if (!cb.cmd.expire_total && !cb.cmd.expire_unreachable) {
+>> +               /*
+>> +                * If we're not expiring anything and not dropping
+>> +                * stale entries, there's no point in even opening the
+>> +                * reflogs, since we're guaranteed to do nothing.
+>> +                */
+>
+> I'm checking should_expire_reflog_ent(). With both of these being
+> zero, we skip most of the "return 1;" except the last one
+> cb->cmd.recno, added in 552cecc214 (Teach "git reflog" a subcommand to
+> delete single entries, 2007-10-17). Will this shortcut affect that use
+> case (I haven't spent time understanding that commit yet, gotta run
+> soon)?
 
-On Fri, 15 Mar 2019, Ævar Arnfjörð Bjarmason wrote:
+There was a bug related to this. Fixed in v3.
 
-> 
-> On Fri, Mar 15 2019, Duy Nguyen wrote:
-> 
-> > On Thu, Mar 14, 2019 at 7:35 PM Ævar Arnfjörð Bjarmason
-> > <avarab@gmail.com> wrote:
-> >> @@ -127,6 +140,10 @@ static void gc_config(void)
-> >>                         pack_refs = git_config_bool("gc.packrefs", value);
-> >>         }
-> >>
-> >> +       if (gc_config_is_timestamp_never("gc.reflogexpire") &&
-> >> +           gc_config_is_timestamp_never("gc.reflogexpireunreachable"))
-> >
-> > Nit. configset api normalizes the key internally, so we can safely
-> > write gc.reflogExpireUnreachable here, which is a bit easier to read.
-> 
-> I didn't know that, do we want to do that?
-> 
-> I'd think that as a matter of coding style always sticking to lower case
-> in the C code made more sense, because e.g. you might #define a config
-> key, and then use it both in git_config_*() as well as via strcmp() in
-> some callback. Mixing the two would lead to confusion and possible bugs
-> as we'd refactor the former of those patterns to the latter.
-
-It also saves on developer and reviewer time to stick to lower case.
-
-Ciao,
-Dscho
---8323328-2753841-1552665093=:41--
+>
+>> +               return 0;
+>>         }
