@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31C1420248
-	for <e@80x24.org>; Fri, 15 Mar 2019 16:00:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05C0C20248
+	for <e@80x24.org>; Fri, 15 Mar 2019 16:00:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729439AbfCOQAT (ORCPT <rfc822;e@80x24.org>);
+        id S1729433AbfCOQAT (ORCPT <rfc822;e@80x24.org>);
         Fri, 15 Mar 2019 12:00:19 -0400
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:39266 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727451AbfCOQAS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 12:00:18 -0400
-Received: by mail-wr1-f46.google.com with SMTP id p8so10135226wrq.6
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 09:00:17 -0700 (PDT)
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:37023 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729406AbfCOQAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 12:00:17 -0400
+Received: by mail-wm1-f41.google.com with SMTP id x10so6541914wmg.2
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 09:00:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IFjkF2LYNPVVbotv74/vDyvYfDtYa/Y3+GF/BTRGOVw=;
-        b=KGZHEnJP6P1JAXdHtI1M/zPQSpx6aaN/sVHiPkuKJSXOG/LUCzfsu9wS47+BDmdcSg
-         7503t4QvHb5QFmr+PyVLTI/WloYuG78CcPaDyvzY8rvhddRI/j0E4gSMHt4C/kj3CCcm
-         ZMFrK7LSUPeM0AbyiC5n9OTCxsPZB4bwNlUrpBI8zROMtIYGD5XQl77oA0HuPQFU7HkO
-         CE+LnAge5m9N2mchnwG+QJ5xyqcE/px5iDQnTo9QOwRAel0Jmot2dIevvp2eSE9D/96d
-         0oB0J85U4PycGOJiesXEdIA9JSS81THARstXAtRElzQiX0JCtN9a9Qut4vPwg0H0go/r
-         L5ZA==
+        bh=UVDmBL8A1keR5cUjodPXRbcLV0Y5DAksOI6dDmLUqkI=;
+        b=bdQm1RXqbiMPHpz8BhN6d1Bcn48gAo39r4Bkq0u7Q++VEpT6kXoKeuRxlg99cdMEjO
+         HgGgsCvWw10qq0atgF2kNer3WewNV7UhnCRUQWI15SLtkSfQySQamm4X2PkfTv4aP6A4
+         2MFUaHSQiRDDqjR8aH7yXgSia5x3QUVm4Oamr0ejTB8UvL5C8EwFvaqQaLRZawVfCLiQ
+         IFBQ76IDKyywzFA+EwqM2cZf5GjdKBaYY2xfMhRzm1w+kbmBAAitpH/worM9uN4fcxCF
+         6bfO1QgkH/awmjWIyrQ6O23a+cbsKfuJminVRLDNvvChgXzuEsQ/6M8c/6LAKBQfAXfe
+         VoHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IFjkF2LYNPVVbotv74/vDyvYfDtYa/Y3+GF/BTRGOVw=;
-        b=OpjWZJWULHniENhMTriQC3ufsqIZXOOtXt5Rh6NUu3QvzFknXbwW1Fx2y3HMAVAnFy
-         KntUq8r3Uh+UNMq3cO/MBehz1WI/ANI0+UjPuEDSXHMlC14hnvbn7yQa6UosWgYvrKyD
-         tq0MlB6T0HoGRVB1EqmFQjHVareK09aqbASnlEZ1S/dMzhAg44GMeB80SPVbw6/6799s
-         PzyCFDzkm5zDtJKf694buWx7uorRulAMKpoQppNU9dUlOydRP8pmdqHr3I+RIXGR9NRl
-         4cUM2wTnEJWTJospTfLUjmH5r0gFY5KpxrrbeEvQuXjtv+BYncvKcb0RY+qOARkfSVm2
-         5gCQ==
-X-Gm-Message-State: APjAAAXTtTgdlVbDhEyPSXjavM+b6DQtS5pPx5YGOzgADFUNSykwtP5k
-        JkmTi4h+qci5sA8cVYVribuamSJZA70=
-X-Google-Smtp-Source: APXvYqx1gt2vfNCVcIJP8C2UfyLMZFST3qd21xcbq9dr2utFudJfbHfFAaniqb+z16xBdkfYQf/jig==
-X-Received: by 2002:a5d:538a:: with SMTP id d10mr2940606wrv.121.1552665616433;
-        Fri, 15 Mar 2019 09:00:16 -0700 (PDT)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a18sm467766wmm.14.2019.03.15.09.00.15
-        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        bh=UVDmBL8A1keR5cUjodPXRbcLV0Y5DAksOI6dDmLUqkI=;
+        b=ffL/U+bWy4NuhbLkpfvjoNvs1CvCHCEBCT060MJBGGWMlA8Bl6nRHx9OcQ9gn0ZeE/
+         3rCFlt5qTkHWsM4iFojNQL3LtBcFQ5+zjA72wbLVCH9kauxUtW0QM9xQ1zSoo+8g+Kz4
+         AoYbD5qXxA/q58dCd+27RB/HN67DxLPQ/Ey4wR7mUZY+VJhACzXvlLo4jJl7k0zr0gS2
+         mw6pZ76iHBZFYVxVK2hy6RnsYb8qZdMH117mrSsX4jyfG1C0PRhO8j2J4CJ1sDQvwKFe
+         3IfLmkUXoyoavROOk57Hbc93oCQ+jxk6cHJU1aFhPNhhXToWAuwTTmSjGP/FaeqiSRYe
+         U8YA==
+X-Gm-Message-State: APjAAAWLxuO+MllhtceTh7Rt8Nvb9qhOF2gv9eEO6Zx81y7x0NvGgw8M
+        gu9qG23niQJdV6uFY9ZnlXOYgUw0+QA=
+X-Google-Smtp-Source: APXvYqwWOrvWVIVsDw/IDNpbqSVPNWkCFit0WFQVI31H7TXnL2grn2eQvX4mbYgx77YW16YlDnA/Dw==
+X-Received: by 2002:a1c:2dc9:: with SMTP id t192mr2555025wmt.119.1552665615015;
         Fri, 15 Mar 2019 09:00:15 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id a18sm467766wmm.14.2019.03.15.09.00.13
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Fri, 15 Mar 2019 09:00:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 4/8] reflog tests: make use of "test_config" idiom
-Date:   Fri, 15 Mar 2019 16:59:55 +0100
-Message-Id: <20190315155959.12390-5-avarab@gmail.com>
+Subject: [PATCH v3 3/8] gc: refactor a "call me once" pattern
+Date:   Fri, 15 Mar 2019 16:59:54 +0100
+Message-Id: <20190315155959.12390-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190314123439.4347-1-avarab@gmail.com>
 References: <20190314123439.4347-1-avarab@gmail.com>
@@ -74,48 +74,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a couple of tests that weren't using the helper to use it. This
-makes the trailing "--unset" unnecessary.
+Change an idiom we're using to ensure that gc_before_repack() only
+does work once (see 62aad1849f ("gc --auto: do not lock refs in the
+background", 2014-05-25)) to be more obvious.
 
+Nothing except this function cares about the "pack_refs" and
+"prune_reflogs" variables, so let's not leave the reader wondering if
+they're being zero'd out for later use somewhere else.
+
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1410-reflog.sh | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ builtin/gc.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index ae8a448e343..42f5ac9ed95 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -232,24 +232,21 @@ test_expect_success '--expire=never' '
- '
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 733bd7bdf46..ae716a00d4a 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -489,14 +489,20 @@ static int report_last_gc_error(void)
  
- test_expect_success 'gc.reflogexpire=never' '
-+	test_config gc.reflogexpire never &&
-+	test_config gc.reflogexpireunreachable never &&
+ static void gc_before_repack(void)
+ {
++	/*
++	 * We may be called twice, as both the pre- and
++	 * post-daemonized phases will call us, but running these
++	 * commands more than once is pointless and wasteful.
++	 */
++	static int done = 0;
++	if (done++)
++		return;
++
+ 	if (pack_refs && run_command_v_opt(pack_refs_cmd.argv, RUN_GIT_CMD))
+ 		die(FAILED_RUN, pack_refs_cmd.argv[0]);
  
--	git config gc.reflogexpire never &&
--	git config gc.reflogexpireunreachable never &&
- 	git reflog expire --verbose --all &&
- 	git reflog refs/heads/master >output &&
- 	test_line_count = 4 output
- '
- 
- test_expect_success 'gc.reflogexpire=false' '
-+	test_config gc.reflogexpire false &&
-+	test_config gc.reflogexpireunreachable false &&
- 
--	git config gc.reflogexpire false &&
--	git config gc.reflogexpireunreachable false &&
- 	git reflog expire --verbose --all &&
- 	git reflog refs/heads/master >output &&
--	test_line_count = 4 output &&
+ 	if (prune_reflogs && run_command_v_opt(reflog.argv, RUN_GIT_CMD))
+ 		die(FAILED_RUN, reflog.argv[0]);
 -
--	git config --unset gc.reflogexpire &&
--	git config --unset gc.reflogexpireunreachable
-+	test_line_count = 4 output
+-	pack_refs = 0;
+-	prune_reflogs = 0;
+ }
  
- '
- 
+ int cmd_gc(int argc, const char **argv, const char *prefix)
 -- 
 2.21.0.360.g471c308f928
 
