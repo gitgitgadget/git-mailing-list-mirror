@@ -2,76 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0C7B20248
-	for <e@80x24.org>; Fri, 15 Mar 2019 18:43:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3AA820248
+	for <e@80x24.org>; Fri, 15 Mar 2019 18:59:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726556AbfCOSnK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 14:43:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52880 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725956AbfCOSnK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 14:43:10 -0400
-Received: (qmail 1495 invoked by uid 109); 15 Mar 2019 18:43:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Mar 2019 18:43:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2476 invoked by uid 111); 15 Mar 2019 18:43:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 15 Mar 2019 14:43:30 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Mar 2019 14:43:08 -0400
-Date:   Fri, 15 Mar 2019 14:43:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Roberto Tyley <roberto.tyley@gmail.com>
-Subject: Re: [RFC/PATCH] point pull requesters to Git Git Gadget
-Message-ID: <20190315184308.GC4941@sigill.intra.peff.net>
-References: <20190312213246.GA6252@sigill.intra.peff.net>
- <xmqqsgvrfsrh.fsf@gitster-ct.c.googlers.com>
- <20190313193909.GB3400@sigill.intra.peff.net>
- <20190313201854.GA5530@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1903141228510.41@tvgsbejvaqbjf.bet>
- <20190315031948.GD28943@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1903151427460.41@tvgsbejvaqbjf.bet>
+        id S1726835AbfCOS71 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 14:59:27 -0400
+Received: from mail-ot1-f43.google.com ([209.85.210.43]:34117 "EHLO
+        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725922AbfCOS70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 14:59:26 -0400
+Received: by mail-ot1-f43.google.com with SMTP id r19so9308648otn.1
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 11:59:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=+Wxsebj3LK50fkDxZiHDtKcdQIykygRQesJninUBcIo=;
+        b=G2+xvkIKo6QC4M9bdHMxOwX8N/9Tihpp49Gj/5NTKR5w93egUKIa6+SpiX9qV2dZsu
+         zxoQYO7sdzSGAJPF0a7pMUbEaxZ+zovfSHwxXpd7GXSVGnuFM1gkZyZQF7YRcUxQYmcF
+         9IFRpBRxNdKO7vs6qlm3ROPHS6Y3qpVl9EtcqJaDoy/8ogHfdLhh2ZewjptkZEmOZOIO
+         ba6IIK6bc8F8ogUlDbeH+cZw3KL4/qB5X8gjnYVV00h897AY5R+Tjolf2Fy1xj6bfIYw
+         trA3dUmgp8vioP81wkwR+eg4e9W5SPCz1t9F9R+o9AHWLHTWLm+qijapLCbjUoCsqEK8
+         f1cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=+Wxsebj3LK50fkDxZiHDtKcdQIykygRQesJninUBcIo=;
+        b=PnkNCIPXB46XOadSHsn5ZRuswqpSIzOmWObffmRONTlLTQiRKNRgLM4t8LgpCFUxBh
+         lgNO8Vc2sgGPzpYZnbMqKPBuHY/dM5On9t39JVjb9cov4KQVxncwXbMBXd/iFYss9ZV/
+         RLJQ0GwxBha1L5kpkRaAAZX4AzexKg42KP5xTd2vEfane4i9RDVtjmRtXAbkLSc3GyJJ
+         Z6v2NB50mSq70iv0/aCJl5zTctoMUlacPYx2CtS5o67nDk27U6xlJsLVVaGmiboH/8uU
+         eiHH/WXHMETKBAtgwCH4qbx2c/rmXEqqJ3l4yGTyKQ4RDVAL3uwaEievFk/6gjWgREkp
+         FAGQ==
+X-Gm-Message-State: APjAAAUyY0A8HEdgk6oRAcMA/bB9DcOTfZyBrbKYGYllJsdA00bhN3Z8
+        65zfeRMsacrG0/T7RemvNL8a8I8ZbS4Z1GixmzAk1g==
+X-Google-Smtp-Source: APXvYqzzq4edNm5U9HMeVzxaC7ImWlDVEGgb3yxaTiXof+tJ0RVGBjxrw7VSIw+nfW6hfDA1XzPbuziTc+eIVAoZwRs=
+X-Received: by 2002:a9d:4914:: with SMTP id e20mr568112otf.18.1552676365445;
+ Fri, 15 Mar 2019 11:59:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1903151427460.41@tvgsbejvaqbjf.bet>
+From:   John Passaro <john.a.passaro@gmail.com>
+Date:   Fri, 15 Mar 2019 14:58:48 -0400
+Message-ID: <CAJdN7KiS+6y0a3sj0yuGuJ+URJe0SBJJTRg2ZpA2upN2rwZXCA@mail.gmail.com>
+Subject: Shorthand for "$(git merge-base A B)"
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 15, 2019 at 02:42:42PM +0100, Johannes Schindelin wrote:
+I find myself fairly frequently doing something like "git log $(git
+merge-base A B)..C". As far as I can tell, there is no shorthand for
+the $() part of this, but it seems like something that could be pretty
+naturally added, or documented better if there is some esoteric
+combination of the existing shorthands that would support it.
 
-> Another thing that I always dreamed of having: GitGitGadget could
-> automatically warn about commit messages that are incomplete, that
-> disagree with our preferred format, that contain typos or offensive
-> language.
-> 
-> Likewise, I had this idea that once we had some robust Clang format
-> definition, GitGitGadget could verify that the patches conform to what we
-> want, and automatically generate fixed branches if not.
-> 
-> Basically, all the automation I can get, to relieve humans from tasks that
-> machines can do.
-> 
-> Children can have dreams, can't they ;-)
+Is there any way to support a shorthand for $(git merge-base A B)? I
+hoped a joiner in the spirit of A..B could be used:
 
-I like all of those dreams. :)
+A::B
+A*B
+A%B
+If not, maybe A@{mb:B} or something along those lines?
 
-I think the "checks" could all just be another form of CI. I think there
-may be some tricks with automatic rewriting, but it might be possible to
-do it in the form of GitHub "suggestions", which a human could then
-click "OK" to a bunch of them. I guess it would be overwhelming if you
-really diverged style-wise and the diff is large.
+I can imagine this would be a non-trivial amount of work, just
+wondering if there is interest, or if anybody has thoughts on the
+notation?
 
-I don't think GitHub has any support for changing commit messages,
-though, short of your tool force-pushing.
-
--Peff
+Thanks,
+John
