@@ -6,75 +6,93 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC79520248
-	for <e@80x24.org>; Fri, 15 Mar 2019 03:09:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9FDE20248
+	for <e@80x24.org>; Fri, 15 Mar 2019 03:17:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727627AbfCODJ3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Mar 2019 23:09:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51842 "HELO cloud.peff.net"
+        id S1727022AbfCODRH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Mar 2019 23:17:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51856 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726719AbfCODJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Mar 2019 23:09:29 -0400
-Received: (qmail 14397 invoked by uid 109); 15 Mar 2019 03:09:29 -0000
+        id S1725991AbfCODRH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Mar 2019 23:17:07 -0400
+Received: (qmail 14494 invoked by uid 109); 15 Mar 2019 03:17:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Mar 2019 03:09:29 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Mar 2019 03:17:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28574 invoked by uid 111); 15 Mar 2019 03:08:33 -0000
+Received: (qmail 28619 invoked by uid 111); 15 Mar 2019 03:16:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Mar 2019 23:08:33 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 14 Mar 2019 23:16:15 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Mar 2019 23:08:12 -0400
-Date:   Thu, 14 Mar 2019 23:08:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Mar 2019 23:15:53 -0400
+Date:   Thu, 14 Mar 2019 23:15:53 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] difftool: allow running outside Git worktrees with
- --no-index
-Message-ID: <20190315030811.GA28943@sigill.intra.peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/3] parse-options: make OPT_ARGUMENT()  more useful
+Message-ID: <20190315031553.GB28943@sigill.intra.peff.net>
 References: <pull.163.git.gitgitgadget@gmail.com>
- <9f6eb60eeeccf920af83652899c5bc2d40e2092f.1552504812.git.gitgitgadget@gmail.com>
- <20190313204644.GA5397@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1903141305550.41@tvgsbejvaqbjf.bet>
+ <pull.163.v2.git.gitgitgadget@gmail.com>
+ <10775638ad8f2ef9b64b8dbaf71b80d8546e81d8.1552562701.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1903141305550.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <10775638ad8f2ef9b64b8dbaf71b80d8546e81d8.1552562701.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 01:16:45PM +0100, Johannes Schindelin wrote:
+On Thu, Mar 14, 2019 at 04:25:04AM -0700, Johannes Schindelin via GitGitGadget wrote:
 
-> In other words, my take is that the ways in which `--no-index` is used are
-> probably not very different from one another, and the bugs lurk in
-> really rarely exercised code paths.
+> diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
+> index 2b036d7838..2e2e7c10c6 100644
+> --- a/Documentation/technical/api-parse-options.txt
+> +++ b/Documentation/technical/api-parse-options.txt
+> @@ -198,8 +198,10 @@ There are some macros to easily define options:
+>  	The filename will be prefixed by passing the filename along with
+>  	the prefix argument of `parse_options()` to `prefix_filename()`.
+>  
+> -`OPT_ARGUMENT(long, description)`::
+> +`OPT_ARGUMENT(long, &int_var, description)`::
+>  	Introduce a long-option argument that will be kept in `argv[]`.
+> +	If this option was seen, `int_var` will be set to one (except
+> +	if a `NULL` pointer was passed).
 
-Yeah, that's more likely (and consistent with the bugs I remember fixing
-in the last few years).
+So this effectively makes it into a "bool" that we keep. I think that's
+fine. It always uses NOARG, so it is not like we would ever need to see
+"we got --foo, and this is the argument it had".
 
-> > We'd just have to remember to add it back to the argv of diff
-> > sub-commands we run.
-> 
-> It was that "add it back" that I was not keen to implement.
+I did wonder if it was possible for "--no-foo" to trigger this (leaving
+the caller who looks at the int unsure if they saw "--foo" or
+"--no-foo"), but it seems that the parse-options code checks for
+OPTION_ARGUMENT before it ever looks at negation.
 
-Yes, I saw that we pass on the argv we get back from parse_options()
-literally to the sub-functions. I was thinking you'd do some trickery
-with an argv_array. But I like your approach of using OPT_ARGUMENT()
-much better.
+Curiously, it also checks it before doing the usual prefix-matching
+magic. So you could otherwise say "--no-inde", but OPT_ARGUMENT() will
+not allow it. I think that's probably sane and not worth thinking
+further about, but it is an interesting quirk that a user could possibly
+run into.
 
-> So I was already done with implementing `OPT_ARGUMENT_SEEN()`, based on
-> `OPT_ARGUMENT()`, and testing it with my difftool patch, when it occurred
-> to me to look what existing users of `OPT_ARGUMENT()` do. Guess what:
-> there are none, apart from that test helper used in t0040 to verify that
-> `parse_options()` works as intended. And there were none other. In the
-> entire commit history.
+> diff --git a/parse-options.c b/parse-options.c
+> index cec74522e5..1d57802da0 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -286,6 +286,8 @@ static enum parse_opt_result parse_long_opt(
+>  					     optname(options, flags));
+>  			if (*rest)
+>  				continue;
+> +			if (options->value)
+> +				*(int *)options->value = options->defval;
 
-Heh. That is not the first time I have hit that with the parse-options
-code.
+Cute. You could actually assign any defval you like, though of course
+the convenient OPT_ARGUMENT() macro just always uses 1.
 
-I see you posted the new patches, so I'll try to give a careful read in
-that part of the thread.
+I wondered if you might need another cast for defval itself, but it's an
+intptr_t (so it's the types that use it as a string that need to cast to
+"const char *").
+
+This looks very clean overall, and I agree it's much nicer than the
+alternatives for your use case.
 
 -Peff
