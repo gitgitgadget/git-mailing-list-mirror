@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 889A620248
-	for <e@80x24.org>; Fri, 15 Mar 2019 09:29:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFAA620248
+	for <e@80x24.org>; Fri, 15 Mar 2019 09:51:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728636AbfCOJ3p (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 05:29:45 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:36132 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726886AbfCOJ3p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 05:29:45 -0400
-Received: by mail-io1-f66.google.com with SMTP id f6so7658509iop.3
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 02:29:44 -0700 (PDT)
+        id S1728720AbfCOJvd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 05:51:33 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:44678 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728657AbfCOJvc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 05:51:32 -0400
+Received: by mail-io1-f65.google.com with SMTP id u12so7669141iop.11
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 02:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=uRo7NULV4bnhSwv02TvOmGb+NrTyERgVjLpwiA5lveE=;
-        b=Al5TGYu9Frptg/4detyu+deLTo1nRk2ysqSyVEPoG3JtYXBAkyXNWdKh92PY6r4xIB
-         4Q3deygKK2Uf7hcy8UK/jCe5f0A17YLc/hK+Li1jaBAhlF8x1CoPZA6gpm1XyrGcRmTP
-         oJHR+rurbdTNF9VK+30IC1mo/KFVzhbYJokwG5zP0fTW3Tln2vLNl2DQZGYjJlHywEUy
-         sDMS+PS4jbqMsd78EnWyvTp8/8ABw5ghsg0dLS/4g+nh+C7ZwHWG6OIhLwAecAPXsltF
-         li7GOyfCZlzwe87/EnB5yf0Pf93PzTrfIrQUbIqSD+scH/bi22aXqAXHO2G1HMQ0Ii5w
-         ZQ2w==
+        bh=yO/+BIOwOT+zCrvJ2/zrLOLRJd/XYKG6tN1CMp3Fqc4=;
+        b=IC8h863MmPbIru9pyohToYQNA54qzkDQRihwxA9Ctcr01zJIvUobALwOrs0fo+U8eQ
+         Z2YGEUfD9L/66uCsV/ChWb0R6cqbjZMZTCJGDflXpDhCpCnBcC3VvTNXXdYpQpX7WWw+
+         2NIKs2tT5BWwm448ydK4qAHXSnODRYNYkC5gii9yjdiUs2N1ko7XkVH6XtP/vNdjbFgr
+         MxNKQKErbY80LO4CSGURsq4IQoU/hBpsBxFVv1LGRBWXYHBRw1By2dqyJV+9BKP1Bqw/
+         G8yOyoQgav5MQa6Um/HKTEb67RCar0lgfe0fbkr2OM37nXNIF11gK3523GEMA/gMmsQm
+         KsLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uRo7NULV4bnhSwv02TvOmGb+NrTyERgVjLpwiA5lveE=;
-        b=bxvPhfC0FfsZDheRYnqrKGbX6vZs6tLF0qMd13yT36AW8asaNm6LccTz0kStvwWY4v
-         205jyFavdQvOxZFY5XGB9i4X2wT5okOq5vmrEGKa6EZdrpQgYXqD3Gx5vWPj5Px7jf5Z
-         CE8q3nzOVNPVERU4r8B42gIgjQMaS6zJktnZuWqFHkA9v47bjTronxGo0UITX9VwV1Jp
-         hlZgMrC+iV1lScYNMGBx1ABpPXhMWqZcUsRJ4Ia6ZDONwD198H2ESJkN0QIvx/tYm4QO
-         klS6K5eQfMO0Ngh35UQDMQJGYddcP4mQSD+eiHa7h+B2XXDEljZbWXdqFx+BqPhZBlu5
-         mA1w==
-X-Gm-Message-State: APjAAAWl162YnmzNZnuVoOSFvAmkmcl9fRGWmnMRUUGITyZwhBqreDU/
-        yaQM1EF08aHWePZIbDgqHlMJjq42MJpKvzMwME4=
-X-Google-Smtp-Source: APXvYqw07uYG66wF6q2cMWas5/UVIYQVOtt/LUbE1eDkzK1bTB4C0YJGm9lmcA5NtXfnn3zUTXQkObERNN6r+ykTs8k=
-X-Received: by 2002:a6b:3709:: with SMTP id e9mr1332009ioa.282.1552642184229;
- Fri, 15 Mar 2019 02:29:44 -0700 (PDT)
+        bh=yO/+BIOwOT+zCrvJ2/zrLOLRJd/XYKG6tN1CMp3Fqc4=;
+        b=JAjcJtysS8ZU9pqhypGAU38+u9fC+fM22pIhCQ5tAQh7aEo8i64x+a2SbXJj9R0CHr
+         uO/710dHY9/0w9tw9ZCGFSnIfFx09cJtCO1XF1H/NLnP9I1E6PczJOXMTJREXCL/m/0P
+         9GERyVLY1y+X5zD5SGzsUSygOYmrLb08nuZDMgNnVPuZjTd08D4D0kz8s/YMEqkMT9QK
+         kKV4bhnbqZ9o3LbWcVQAVdcWIvEEV4+6d9/8wK2J9KGkxAuRxslokkst3iho7z9/Ufou
+         V4s/j6SWwNUnKDcaKZQJNTWSyPO57M1QTffjBfMdkID/oczQAUChSp365vazpOZZyk0/
+         FwNA==
+X-Gm-Message-State: APjAAAXvBLv3p4J+YmxbjPYgeG/7SW/zilu+lPVSpoM7i+dTaM6X7MEH
+        oQOwcby+mR+BBjviDBrqVlGkjGN6s7gjd3gf5Mo=
+X-Google-Smtp-Source: APXvYqyocTgLvKHSd/JctcHlYcDc00EobNNiw+XTXImbhESNvySc3hEyWfwC0G+vMMlMtHHlMEngNIxE5OMOSQasCt8=
+X-Received: by 2002:a5d:9446:: with SMTP id x6mr1349532ior.236.1552643491930;
+ Fri, 15 Mar 2019 02:51:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-18-pclouds@gmail.com> <20190313183604.GA27503@esm> <CAPig+cQPMZhd-JSxD4Z6pL19qB1bFNu+EvPDh0vADpcaJ0tbqw@mail.gmail.com>
-In-Reply-To: <CAPig+cQPMZhd-JSxD4Z6pL19qB1bFNu+EvPDh0vADpcaJ0tbqw@mail.gmail.com>
+References: <20190313235439.30439-1-avarab@gmail.com> <20190314123439.4347-3-avarab@gmail.com>
+In-Reply-To: <20190314123439.4347-3-avarab@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 15 Mar 2019 16:29:18 +0700
-Message-ID: <CACsJy8CG1-6Fp72451fwVRVHuYchLqU0uda=AJbK_aXvhW4YmQ@mail.gmail.com>
-Subject: Re: [PATCH v3 17/21] switch: no implicit dwim, use --guess to dwim
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
-        Git List <git@vger.kernel.org>,
+Date:   Fri, 15 Mar 2019 16:51:06 +0700
+Message-ID: <CACsJy8CikZt_WF79V6y2JRtR0jAosTPPmDBXN8uMRTjm4FAV-A@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] gc: convert to using the_hash_algo
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -65,57 +66,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 15, 2019 at 3:19 PM Eric Sunshine <sunshine@sunshineco.com> wro=
-te:
+On Thu, Mar 14, 2019 at 7:34 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> On Wed, Mar 13, 2019 at 2:36 PM Eckhard Maa=C3=9F
-> <eckhard.s.maass@googlemail.com> wrote:
-> > On Fri, Mar 08, 2019 at 04:57:48PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy wrote:
-> > > Similar to automatic detach, this behavior could be confusing because
-> > > it can sometimes create a new branch without a user asking it to,
-> > > especially when the user is still not aware about this feature.
-> > >
-> > > In the future, perhaps we could have a config key to disable these
-> > > safety nets and let 'switch' do automatic detach or dwim
-> > > again. But that will be opt-in after the user knows what is what. For
-> > > now give a short option if you want to use it often.
-> >
-> > As I am late to the patch series (sorry!), has there been already any
-> > discussion on that? In my experience, people get confused with detached
-> > HEAD state quite often, whereas the automatic creation of a local branc=
-h
-> > is no problem.
->
-> This statement does a good job of articulating my (unspoken) response
-> to this patch. Whereas a detached HEAD might be scary and confusing to
-> newcomers, and difficult for them to recover from, automatic creation
-> of a DWIM'd local branch doesn't seem so problematic (if at all).
->
-> With git-checkout, it's very easy to accidentally get into a detached
-> HEAD state, so it makes some sense to protect newcomers, by default,
-> from that accident in git-switch. However, auto-creation of a new
-> local branch is not, for a couple reasons, nearly so weighty a matter.
-> First, in many cases it may be less likely to happen since it requires
-> presence of a corresponding remote tracking branch. Second, it's
-> intuitively easy to recover from it: when git-switch reports that it
-> created a new branch, though perhaps surprising, the user would
-> naturally know to look for a command to "delete a branch".
->
-> And, unlike a detached HEAD, which newcomers may mistakenly believe
-> lead to irretrievable loss of work, an unexpected branch creation
-> carries no such penalty, perceived or real.
+> There's been a lot of changing of the hardcoded "40" values to
+> the_hash_algo->hexsz, but we've so far missed this one where we
+> hardcoded 38 for the loose object file length.
 
-I can't remember the last time it was discussed, but part of the
-reasons I chose to default --no-guess is because completion will be a
-lot less noisy.
+Wow. Good catch.
 
-But that's a very personal preference. I will switch to --guess as
-default no problem (unless someone jumps in and screams NOOO of
-course).
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 8c2312681c..733bd7bdf4 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -156,6 +156,7 @@ static int too_many_loose_objects(void)
+>         int auto_threshold;
+>         int num_loose =3D 0;
+>         int needed =3D 0;
+> +       const unsigned hexsz_loose =3D the_hash_algo->hexsz - 2;
 
-Please don't hold back when you find something not quite right. At
-least now I can fix it. Either that or by the time it's released, the
-Internet will blame me for adding yet another confusing git command :P
+Since you're removing hard coded numbers. Another option is a
+combination of strlen(basename()) and
+loose_object_path(the_repository, , null_oid). They should also give
+the same 38. Then if loose object format is updated to use 3+ chars
+for the directory part, this code will not need update anymore.
+
+The downside of course is a lot more code. Or you can just introduce a
+new function to return this "hexsz - 2", keep that function close to
+fill_loose_path() with a comment there that the two functions should
+be aligned.
+
+>
+>         dir =3D opendir(git_path("objects/17"));
+>         if (!dir)
 --=20
 Duy
