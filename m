@@ -2,79 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CAD420248
-	for <e@80x24.org>; Sat, 16 Mar 2019 01:51:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3940320248
+	for <e@80x24.org>; Sat, 16 Mar 2019 03:43:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726691AbfCPBvU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 21:51:20 -0400
-Received: from mail-wm1-f43.google.com ([209.85.128.43]:39551 "EHLO
-        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726487AbfCPBvU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 21:51:20 -0400
-Received: by mail-wm1-f43.google.com with SMTP id t124so7657528wma.4
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 18:51:19 -0700 (PDT)
+        id S1726494AbfCPDnf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 23:43:35 -0400
+Received: from mail-io1-f42.google.com ([209.85.166.42]:36819 "EHLO
+        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725907AbfCPDnf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 23:43:35 -0400
+Received: by mail-io1-f42.google.com with SMTP id f6so10008187iop.3
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 20:43:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8s1KYp4uI5J5FmtvnFTnBuvZHwnHWriDcc7XAAAyV88=;
-        b=PMTHHR91q5gLZUSRhfxVvmAolDV8dcevBo9MHjN75Bn14TjNMK9f/qmaD+JcVbfEGj
-         b0qZ/+jYWXLrKdP/s5eM6jmt6iXi1FHXFj1rlUowmn8FMdkGap0HMN/w9n9TZtKAElM7
-         2ZAHREqEwUw2Wh6lkv10Rm6njARkWp2JD8XiWw0hOCsL3SWAqCly8Zezdchj+X0ZfYSM
-         xFcmaBYfPcjMK9YzU7/32xOvmaOC1HDWMa7rrHf9ktu0Ut0t/r64akVNXES6hzpC0mUX
-         Gh4fRnzmLEmwBooY1DlDsAIP7bixPxInomNn5ZClFtcIqm/xflkWh8uQ/zpjTehR1Qny
-         dn7g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Jfu0zvSqEkPuIdLMIwDAkOacSI92VCgH5enBpUEi/Zg=;
+        b=hj4XtFxgDPiLL3lpgU/QXcRmbl1BEfLPVaRJoNr4VpaTaE7Ce1hBOXxWSwb873qNjh
+         Uk2b14OMCtPUBCQQR+2atsqWTgfKTYo80WAJepN1chN6rjoOAq6kIleJa6LSUYpOUCOq
+         2+6/xJI6oVCU7ng/vAb2lWyewDnH6QcGlbGJgeio8MxoYO4KgA0Vxnim/3XOZBb/yu9H
+         PEGMXu82MY+sGFz7BQLqdaL04o9t8BWApju2Rk497zjeu/LT0O+XGhV4nfcglxC5h3hW
+         DQgxUwMss2Uz622+lD5XqrpMgThTkvpOCwMNkD/nbHwzkq6OQ/q9MNnQcEgv739CP14A
+         VhVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8s1KYp4uI5J5FmtvnFTnBuvZHwnHWriDcc7XAAAyV88=;
-        b=bZdJ79CMsASEgsSS3ISj7TmxCdun1de6NU8P6ilOi1fT5DrHlluvkGXipwEyqR5xJC
-         vpsJ9HIrus1I/FUJDl8rJj3siPIC6pzww/9tzruu7myWneifpDcGCs5WEIARzoOsyRVm
-         Yy7s2HSY/xkEDxdFIE0qkG/Ln3iVHqpMaPbPmGK0A1O3Wv/JIdbGvQlCjOzIAj95GJK9
-         MfFWaf0PmxOp67LBDvZnX9m/MA/ShuQ1AssmNjYXgEtu0a1eVdFgnpi9HCGpjN0pFVaU
-         1jsPY8QWCmhaNI/L2WjeypSk0foJ1AR2c6GiEN6nEWQIpRrcZ1H6D64wbpEVgXl80mSX
-         FsgQ==
-X-Gm-Message-State: APjAAAWWn7Ex2ktGCebaJQF+7x5IlbEhvsJuHQ4o1x8iU00QO9F6lGNy
-        IA2ftwE0WgIBg1jBswch5NveMLm3
-X-Google-Smtp-Source: APXvYqzzH+VXd+yct/45BuKcHUlec95d6hBJIfBWhLAKEXEGMxXw9DX3Y5XSHCiMorG5u3vaurjFZQ==
-X-Received: by 2002:a1c:cecd:: with SMTP id e196mr4033832wmg.31.1552701078815;
-        Fri, 15 Mar 2019 18:51:18 -0700 (PDT)
-Received: from szeder.dev (x4db40a84.dyn.telefonica.de. [77.180.10.132])
-        by smtp.gmail.com with ESMTPSA id h137sm7055043wmg.41.2019.03.15.18.51.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Mar 2019 18:51:17 -0700 (PDT)
-Date:   Sat, 16 Mar 2019 02:51:15 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Dimitri Joukoff <dimitri.joukoff@griffithuni.edu.au>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: protect .git folder/files from grep/sed commands
-Message-ID: <20190316015115.GB24175@szeder.dev>
-References: <SYXPR01MB09574FEB4E6D6476B4F1D155DD450@SYXPR01MB0957.ausprd01.prod.outlook.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Jfu0zvSqEkPuIdLMIwDAkOacSI92VCgH5enBpUEi/Zg=;
+        b=EN0MdKvE3jvlfCOUX1FuH1f8J8RtOGbmK0r4AbjIdGd6UiW/cTn3M1j0zHmYxStlnl
+         oZBRo0x8Jy9Y3HGy49Qc0bLj3o1yRd4Ycq/Y3M9skw8S1eC/UjeG4xsJMwdMLPsJ7Db9
+         WXvDi3HgObtzs4i4qf+pj9r90S8EOc+dfFSC84Ev9OglH/FFDEHh/hYqpr5C1bhWWxcd
+         L9HIEG2fALZYpsjGxdzI8wd3qYXuXemcJYDk0M2jMJNDNDSHxa7lKqFJ3JA5K5XdL84g
+         n8n5lxE+I4O5jxVMQlaoo5HTNqUoSiS8kQnxCPTPvj9d75sYevwiNkTEb3crpcCtBT0T
+         hm0g==
+X-Gm-Message-State: APjAAAUTBNtfFwnFR/r3iiIThqdTUIcm0dVbbpyZ2Hm5pviqs9zpEqxx
+        OVFoFZ3+nejpl+rJh+mUabjb3T2kF9JVsVRqu219NA==
+X-Google-Smtp-Source: APXvYqyRagTNnGhm/sUrwpd/JaR1BI0EXdqRvevH5V746OHKVwZIqi/OUvqprzRTSgCNjXUnBshywO6ZRE1aUL3AqDw=
+X-Received: by 2002:a5d:9446:: with SMTP id x6mr3761018ior.236.1552707813950;
+ Fri, 15 Mar 2019 20:43:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <SYXPR01MB09574FEB4E6D6476B4F1D155DD450@SYXPR01MB0957.ausprd01.prod.outlook.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <alpine.LFD.2.21.1903150809070.26709@localhost.localdomain>
+ <CACsJy8DVRJ4DG6PEkFuzytOQJ7RX6GMaHd4BRQTR9N7Y9V6fqQ@mail.gmail.com>
+ <alpine.LFD.2.21.1903150917360.27423@localhost.localdomain>
+ <CACsJy8CspqxDhOZFF7ac_63TQXvsHjTBicEPtZaUSOmaQnzs4A@mail.gmail.com> <alpine.LFD.2.21.1903151027580.29322@localhost.localdomain>
+In-Reply-To: <alpine.LFD.2.21.1903151027580.29322@localhost.localdomain>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 16 Mar 2019 10:43:07 +0700
+Message-ID: <CACsJy8AxBr1AUwsPb6FZkJ5Pn9AfooW04Gz4fsdjF6VcP87g3w@mail.gmail.com>
+Subject: Re: "git clone --shallow-exclude ...", fatal: the remote end hung up unexpectedly
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 16, 2019 at 01:37:39AM +0000, Dimitri Joukoff wrote:
-> When performing global changes in a project/tree using a command like:
-> 
-> grep -r "search" | xargs -I {} sed -i '' s/search/replace/g
-> 
-> there exists the possibility that this command will alter data in .git
-> folder.  Using GNU grep, it is possible to use --exclude '/.*"' to avoid
-> the .git folder, but this flag is not available on BSD grep (i.e. MacOS).
+On Fri, Mar 15, 2019 at 9:31 PM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+>   also, i think "man git-clone" could really use a set of examples for
+> shallow cloning. i'd offer to write it but i'm still figuring it out.
 
-Try 'git grep "search" | ...'
+Cool. I'll give you a quick introduction to help with those examples :D
 
+Side note: there's also narrow/lazy clone (or something with the
+promisor) but I still haven't caught up with that. So none of that
+here, but I think we should eventually have some examples/description.
+
+A shallow clone is basically a repository with commit history cut
+short. If you have a commit though, you have full content. It's not
+cut by paths or anything.
+
+"git clone --depth=X" the the normal way to do this. You get a
+repository where all branches and tags have maximum X commits deep.
+But since the main purpose of shallow clone is redude download,
+--single-branch is made default when --depth is present, so you get
+the default branch instead of all the branches (you would need
+--no-single-branch for that). You could see these cut points with "git
+log --decorate". I think they are marked "crafted" or something.
+
+Once you have made a shallow clone, you could do everything like
+usual. Local operations of course can only reach as far as the cut
+points. Pull and push to a full clone are possible (it's even possible
+to do so to another shallow clone).
+
+When you "git fetch", the cut points remain the same, so you get more
+recent commits and the history depth increases. If you do "git fetch
+--depth=X" then the cut points are adjusted so that you only have
+maximum X commits deep for all select branches, the same way a shallow
+clone is made initially. "git fetch --unshallow" can be used to turn a
+shallow clone into a complete one. And I'm pretty sure you could turn
+a complete one to shallow with "git fetch --depth".
+
+While --depth works fine most of the time, sometimes you want a
+different way to define these shallow/cut points. --shallow-since and
+--shallow-exclude are added as the result. --shallow-since cut the
+history by a specific date (for all select branches).
+--shallow-exclude cuts the history by a ref (often a tag). As I
+mentioned before, it's mostly used to say "I want a shallow clone from
+(but not including) v2.9.0".
+
+And I think that's pretty much it. There's --update-shallow option but
+I can't remember when that's needed. Shallow clones may also prevent
+you from using some optional features. Pack bitmap is one of those and
+I think probably commit graph too. It's not technical limitation, just
+lack of time/effort to support them in shallow clones.
+-- 
+Duy
