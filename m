@@ -2,78 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6F22202BB
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD4CC20248
 	for <e@80x24.org>; Sat, 16 Mar 2019 01:38:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726549AbfCPBho (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 21:37:44 -0400
-Received: from au-smtp-delivery-112.mimecast.com ([180.189.28.112]:29258 "EHLO
-        au-smtp-delivery-112.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726204AbfCPBho (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 15 Mar 2019 21:37:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=griffithuni.edu.au; s=mimecast20181013; t=1552700261; h=from:from:sender:reply-to:subject:subject:date:date: message-id:message-id:to:to:cc:mime-version:mime-version: content-type:content-type: content-transfer-encoding:content-transfer-encoding:in-reply-to: references; bh=0h7esoAi44Tu01ZVE8o24NJ8/S3RDpX+e/FIjG5omho=; b=WVevcsgbuGE7AUqeqozzN48yUDch5jPUqQ6LWZRbjjNu6vkJ9X9SzoUN0yUR6q8YKZ2qE3afALUlCR6T1d5NdikLeJEjgKjAbIFZY32SOyQUOGc8dk++ilNhoCNHlA4yrhdFQVLJkGrwzfG4TZhGFwh+XneMWaSmbysJGehlLNs=
-Received: from AUS01-ME1-obe.outbound.protection.outlook.com
- (mail-me1aus01lp2058.outbound.protection.outlook.com [104.47.116.58])
- (Using TLS) by relay.mimecast.com with ESMTP id
- au-mta-19-Atmrfa4TNACZWtUO_74eGw-1; Sat, 16 Mar 2019 12:37:40 +1100
-Received: from SYXPR01MB0957.ausprd01.prod.outlook.com (10.169.178.15) by
- SYXPR01MB0830.ausprd01.prod.outlook.com (10.169.177.17) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1709.14; Sat, 16 Mar 2019 01:37:39 +0000
-Received: from SYXPR01MB0957.ausprd01.prod.outlook.com
- ([fe80::30f5:512e:dcf1:8e67]) by SYXPR01MB0957.ausprd01.prod.outlook.com
- ([fe80::30f5:512e:dcf1:8e67%5]) with mapi id 15.20.1686.021; Sat, 16 Mar 2019
- 01:37:39 +0000
-From:   Dimitri Joukoff <dimitri.joukoff@griffithuni.edu.au>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: protect .git folder/files from grep/sed commands
-Thread-Topic: protect .git folder/files from grep/sed commands
-Thread-Index: AQHU25jWfU9yUeneB0aW4S1ZOjW1Mg==
-Date:   Sat, 16 Mar 2019 01:37:39 +0000
-Message-ID: <SYXPR01MB09574FEB4E6D6476B4F1D155DD450@SYXPR01MB0957.ausprd01.prod.outlook.com>
-Accept-Language: en-AU, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [1.132.104.227]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 69865c60-7260-4120-7a0d-08d6a9aff9bd
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600127)(711020)(4605104)(2017052603328)(7153060)(7193020);SRVR:SYXPR01MB0830;
-x-ms-traffictypediagnostic: SYXPR01MB0830:
-x-microsoft-antispam-prvs: <SYXPR01MB083043A4D8BA71CEFF622EA7DD450@SYXPR01MB0830.ausprd01.prod.outlook.com>
-x-forefront-prvs: 09781D4C35
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(366004)(136003)(396003)(346002)(39850400004)(199004)(189003)(97736004)(8676002)(1730700003)(6916009)(7736002)(66066001)(6506007)(86362001)(305945005)(81166006)(74316002)(476003)(14454004)(81156014)(102836004)(14444005)(52536014)(33656002)(2906002)(256004)(44832011)(88552002)(486006)(2351001)(5640700003)(105586002)(106356001)(71200400001)(55016002)(53936002)(6436002)(7696005)(74482002)(25786009)(99286004)(2501003)(478600001)(316002)(786003)(6116002)(71190400001)(4744005)(26005)(186003)(9686003)(68736007)(8936002)(5660300002)(3846002)(142923001);DIR:OUT;SFP:1102;SCL:1;SRVR:SYXPR01MB0830;H:SYXPR01MB0957.ausprd01.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: x45YurbTe5bB1YN+Z7LRkBtK7v+VQ9fkQl8bFzxXAZ+wr2mCpqvwLbpWBQT7+xN5Tkuz7BPg4WKp7yCZjUBCAQM4dKrql0U/GT/nC1XkfgNRTW1Ak4wS+alNT5oD6H0moxk2qHKJdGvAqOeQfYPE89pwWWBBlPqo09j2pOn8PzYav3Tm4lTYYI24dGMCA58FSsyufQVzZgl+jOOTCsBugxXVEzeQN6Jw1jKlhWFLxBODUl3JZdZ9DeCjqZD1iCRkGBDgXzyIwPjaEaHfHyydfaJPCgaSRT1WAuFftBmjN5zJfhozqapIQOg+m7MxDlvrfogpnuZD7IZbhD7mUdWBd9TOOCK+snDxEYG0ZhRouU0L0QOvqn4PXkkSgOExeRhT3a+sdHcsV1EYaEN9xqekKr/f+iRGL+mwRPsuJSMyipk=
-MIME-Version: 1.0
-X-OriginatorOrg: griffithuni.edu.au
-X-MS-Exchange-CrossTenant-Network-Message-Id: 69865c60-7260-4120-7a0d-08d6a9aff9bd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Mar 2019 01:37:39.3518
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5a7cc8ab-a4dc-4f9b-bf60-66714049ad62
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SYXPR01MB0830
-X-MC-Unique: Atmrfa4TNACZWtUO_74eGw-1
-X-Mimecast-Spam-Score: 0
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
+        id S1726638AbfCPBiW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Mar 2019 21:38:22 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:45245 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726204AbfCPBiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Mar 2019 21:38:22 -0400
+Received: by mail-pf1-f195.google.com with SMTP id v21so7484785pfm.12
+        for <git@vger.kernel.org>; Fri, 15 Mar 2019 18:38:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/7YvxgFhDSzn1x+hSaB/8rj42ttI4fTm9Cm8Pjkxukw=;
+        b=HCiDIo5qCCfDvAGFyoClTml7FFQlyBAOPi9kGEogLgGrAZ3rt5E0z1VEPIsnIVC/EO
+         RwWxfnIWmHe7m9FFDb9h2pSmtoytg0U2P4XlgfglV05qIqDZ5Pkragh4D9J/8kFAy5Db
+         KxqWOjOB3kgQV+BjkpeH6ltT5vwC6yzVJiDVNnCR3F9uQbUL7+XshpV8gwLOVEyQfW2R
+         AgOEDjOtFqx567O/1iuf1MUoNe4GofI6Q99miS0JZJ7Z//PAOGj+QUlsxAGISWwomGK5
+         08/YNc8klBZwGeG2p62GNGEwK0GTuC6q1aXQ3dZ7z6m58/bJBA2zn2OJSBpQW4PXq7D4
+         c87A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/7YvxgFhDSzn1x+hSaB/8rj42ttI4fTm9Cm8Pjkxukw=;
+        b=oWor63xZtCruWA+Inwr2kXYgCylvAPUGPHXzD/p8WXb8o0atMtaBNpgRyWk0kVnf8T
+         A2vJ41XXrr1+pMf/Mbc/pD25HFOxQ7iBWKzX8QUSUZqe97Bd/9gnqVnrd/qmDWpJe9Pt
+         Bcl/k427Xruc7YNjff75y0NXdeNNM9atc5844/VA2Vzf9rmDsPzRQAGAzrQ1ZDOb19pB
+         o3/AHc1VcThWE+dfv1g1bzA1EnNWZQs1Ldkda7dZ4RkbHmvA6J2IZrjmpEWkgl4kBcZJ
+         9qTehc3q+LE1mYvewfcL0VOdpl57jQqwhqgdJ2+qiQ4GdpbTXtFTWLG3jm5D7YaO+2+l
+         GrFQ==
+X-Gm-Message-State: APjAAAVtHH6C6/a4r8O4C2xblLo/LxIQ+jUjaVC5e5rqIq9TzoUjNuKD
+        +hXfenMzwIj+T6dH2XLlgi9UaAet
+X-Google-Smtp-Source: APXvYqz+zwJqeMM+GoeGH8QZmCNIgOu9xlMIy1koFR2TugZr9r6L0ZVfI91Rw6iG73QwcrGbai31Tg==
+X-Received: by 2002:a65:6154:: with SMTP id o20mr6298335pgv.205.1552700301514;
+        Fri, 15 Mar 2019 18:38:21 -0700 (PDT)
+Received: from localhost.localdomain (173-8-128-22-SFBA.hfc.comcastbusiness.net. [173.8.128.22])
+        by smtp.gmail.com with ESMTPSA id b138sm5817623pfb.48.2019.03.15.18.38.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 15 Mar 2019 18:38:20 -0700 (PDT)
+From:   nbelakovski@gmail.com
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, gitster@pobox.com, rafa.almas@gmail.com,
+        avarab@gmail.com, Nickolai Belakovski <nbelakovski@gmail.com>
+Subject: [PATCH v9 0/3]
+Date:   Fri, 15 Mar 2019 18:38:04 -0700
+Message-Id: <20190316013807.38756-1-nbelakovski@gmail.com>
+X-Mailer: git-send-email 2.14.2
+In-Reply-To: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When performing global changes in a project/tree using a command like:=0A=
-=0Agrep -r "search" | xargs -I {} sed -i '' s/search/replace/g=0A=0Athere e=
-xists the possibility that this command will alter data in .git=0Afolder.  =
-Using GNU grep, it is possible to use --exclude '/.*"' to avoid=0Athe .git =
-folder, but this flag is not available on BSD grep (i.e. MacOS).=0A=0AMaybe=
- git and the .git folder within a repository should be configured=0Ato use =
-a separate user account, and then the .git folder would have its=0Apermissi=
-ons set to 600?=0A=0A
+From: Nickolai Belakovski <nbelakovski@gmail.com>
+
+Cleanup on 2/3 and 3/3
+
+To reiterate from elsewhere in the thread, I'd really like to get 1/3 and 2/3 in together.
+For 3/3 I'm basically indifferent. I see some value in it, but I also think it clutters up
+the verbose output, so I could understand if there's a lack of interest in it.
+
+Also, I changed my strategy for how I updated tests that were impacted by these changes.
+Instead of updating the impacted tests with the new expected output, I went back and made various
+tests more self-contained. This seemed like a more sensible strategy from the standpoint
+of decoupling tests and limiting scope of tests.
+
+Travis-CI results: https://travis-ci.org/nbelakovski/git/builds/506853143
+
+Nickolai Belakovski (3):
+  ref-filter: add worktreepath atom
+  branch: update output to include worktree info
+  branch: add worktree info on verbose output
+
+ Documentation/git-branch.txt       | 12 ++++--
+ Documentation/git-for-each-ref.txt |  5 +++
+ builtin/branch.c                   | 16 ++++++--
+ ref-filter.c                       | 78 ++++++++++++++++++++++++++++++++++++++
+ t/t3200-branch.sh                  | 16 +++++---
+ t/t3203-branch-output.sh           | 43 ++++++++++++++++++++-
+ t/t6302-for-each-ref-filter.sh     | 13 +++++++
+ 7 files changed, 168 insertions(+), 15 deletions(-)
+
+-- 
+2.14.2
 
