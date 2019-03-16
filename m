@@ -2,91 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B526620248
-	for <e@80x24.org>; Sat, 16 Mar 2019 03:59:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C93920248
+	for <e@80x24.org>; Sat, 16 Mar 2019 09:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726504AbfCPD7j (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Mar 2019 23:59:39 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:40406 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725907AbfCPD7j (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Mar 2019 23:59:39 -0400
-Received: by mail-io1-f66.google.com with SMTP id p17so9982695iol.7
-        for <git@vger.kernel.org>; Fri, 15 Mar 2019 20:59:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=crKVcqbww6b4ssmLDsSwEkMkiI0S0m1Nc3pPGhMnpkU=;
-        b=Le/9u0wcImHNF3QKrIYuFt1UD7EPfwCwpsXlnohZLAkLXXsj02CBFVb6E6CaBcjUnN
-         PLvSPo5XPULcKpnNTwvxULr0BJQNvsHOpQtyZ3oXgW5QP9ebsfHBvFBux+VoIOXcLQcl
-         J6EhpDHATBhWRyznlXAeOIqM2z2BmgHOhXmblrI0NEbihMBHqWS7OyDzVpvh5YSuc/yu
-         Yfu+d0QLi4o2HDxCawToVvVx5yCU3485Bb2qhajWTIjD/XmjCjQ7VdyH0A3roV+cl1Oc
-         oyc3O+j8lWnfuVEMMOGR1dTynKhBov+iyU2rDIp5ZySIsKO1j9/Ae5r5uaxqA7stIMPi
-         ikKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=crKVcqbww6b4ssmLDsSwEkMkiI0S0m1Nc3pPGhMnpkU=;
-        b=gyjwbT7dKlHJV3iTVNNwsVOArWk4opU+rdrD75P9HpYy+/Z5Vw+2ue4hphKPbKCGmm
-         XSZ12msuKV3PWAq76fzXa7zf1c0Azup3DKh+UjpuVYlrMOUZ8FrR4Gyw6JUBn4FcqJRG
-         Mjys08iv4qZk5SmMZUu+BB3CIWW2ShFm1vzDlrTXF6ACi0OpW6j2uszCiE5nxdpnbwGL
-         RipCvn8uWK2IhYbDAL7Q7nqkVhelri1Mt7lY6+K2VG/RCcuWEBhEEN/wUX9ZM2GeqtLL
-         ILhIYxDim8upqQy/CbKTzbydKvE8R+IjDj75xJYoFWUyMPqImq48Ol61m7p7eGx7CNE+
-         dptw==
-X-Gm-Message-State: APjAAAWU92gXP7pWh4Uedmznd8/wXZC7Wa1fDfQx6QOuuMFQ7ZdlO7l7
-        Bwsa+WjfFy57XHsFNebu/cj/W2V5WHLcSJHvLrM=
-X-Google-Smtp-Source: APXvYqyVGs8dTyx1gsd74l0bZ676cNeg6v5gSI/Gc6lUKZnzyWSewA/SSqTfjvn6xF45tT5SYzIj0B0uys9GZHcO0tc=
-X-Received: by 2002:a5d:9446:: with SMTP id x6mr3781596ior.236.1552708778330;
- Fri, 15 Mar 2019 20:59:38 -0700 (PDT)
+        id S1726151AbfCPJ3w (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Mar 2019 05:29:52 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:43052 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726084AbfCPJ3w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Mar 2019 05:29:52 -0400
+X-Greylist: delayed 1960 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Mar 2019 05:29:51 EDT
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.91)
+        (envelope-from <glandium@glandium.org>)
+        id 1h557r-00015e-CC; Sat, 16 Mar 2019 17:57:07 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Subject: [PATCH] fix pack protocol example client/server communication
+Date:   Sat, 16 Mar 2019 17:57:07 +0900
+Message-Id: <20190316085707.4151-1-mh@glandium.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-References: <20190208090401.14793-1-pclouds@gmail.com> <20190308095752.8574-1-pclouds@gmail.com>
- <20190308095752.8574-18-pclouds@gmail.com> <20190313183604.GA27503@esm>
-In-Reply-To: <20190313183604.GA27503@esm>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 16 Mar 2019 10:59:12 +0700
-Message-ID: <CACsJy8Ddc+pYJRqX7ELEdryomNnG48i0Oncr1L0SjV0A7b6n8A@mail.gmail.com>
-Subject: Re: [PATCH v3 17/21] switch: no implicit dwim, use --guess to dwim
-To:     =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 1:36 AM Eckhard Maa=C3=9F
-<eckhard.s.maass@googlemail.com> wrote:
-> And while at it - what should happen, if:
->
-> - there is a tag named example
-> - no local branch example
-> - a branch at origin/example
->
-> ... and we switch then? Right now it just gives "cannot find branch",
-> should there be more information? Should it even create a branch
-> example? With switch, switching a branch is unambiguous, even though
-> there is a tag with that name. If I really want to --guess - should I be
-> given more information?
+The pkt-line formatted lines contained the wrong pkt-len.
 
-There's checkout.defaultRemote that changes this behavior and it
-affects git-switch as well.
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+ Documentation/technical/pack-protocol.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-I like the idea of giving more information than just the terse (and
-technically correct) "cannot find branch". But I may have to delay
-implementing this a bit. There's a been a lot of updates in git-switch
-(which is great, don't get me wrong, I appreciate the feedback). I
-need to get v4 out for review soon then maybe handle the rest in v5
-(and finally take a real hard look at git-restore comments).
---=20
-Duy
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+index 7a2375a55d..c73e72de0e 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -657,14 +657,14 @@ can be rejected.
+ An example client/server communication might look like this:
+ 
+ ----
+-   S: 007c74730d410fcb6603ace96f1dc55ea6196122532d refs/heads/local\0report-status delete-refs ofs-delta\n
++   S: 006274730d410fcb6603ace96f1dc55ea6196122532d refs/heads/local\0report-status delete-refs ofs-delta\n
+    S: 003e7d1665144a3a975c05f1f43902ddaf084e784dbe refs/heads/debug\n
+    S: 003f74730d410fcb6603ace96f1dc55ea6196122532d refs/heads/master\n
+-   S: 003f74730d410fcb6603ace96f1dc55ea6196122532d refs/heads/team\n
++   S: 003d74730d410fcb6603ace96f1dc55ea6196122532d refs/heads/team\n
+    S: 0000
+ 
+-   C: 003e7d1665144a3a975c05f1f43902ddaf084e784dbe 74730d410fcb6603ace96f1dc55ea6196122532d refs/heads/debug\n
+-   C: 003e74730d410fcb6603ace96f1dc55ea6196122532d 5a3f6be755bbb7deae50065988cbfa1ffa9ab68a refs/heads/master\n
++   C: 00677d1665144a3a975c05f1f43902ddaf084e784dbe 74730d410fcb6603ace96f1dc55ea6196122532d refs/heads/debug\n
++   C: 006874730d410fcb6603ace96f1dc55ea6196122532d 5a3f6be755bbb7deae50065988cbfa1ffa9ab68a refs/heads/master\n
+    C: 0000
+    C: [PACKDATA]
+ 
+-- 
+2.21.0
+
