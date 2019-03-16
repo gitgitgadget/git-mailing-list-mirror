@@ -2,147 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9400E20248
-	for <e@80x24.org>; Sat, 16 Mar 2019 10:44:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95E3E20248
+	for <e@80x24.org>; Sat, 16 Mar 2019 10:47:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726720AbfCPKoR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Mar 2019 06:44:17 -0400
-Received: from mx-ext.e-mehlbox.eu ([81.7.14.185]:56381 "EHLO e-mehlbox.eu"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726571AbfCPKoQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Mar 2019 06:44:16 -0400
-Received: from [IPv6:2003:f8:5bc3:e001:4d49:c132:2c58:2203] (p200300F85BC3E0014D49C1322C582203.dip0.t-ipconnect.de [IPv6:2003:f8:5bc3:e001:4d49:c132:2c58:2203])
-        (Authenticated sender: alexander.blesius)
-        by e-mehlbox.eu (Postfix) with ESMTPSA id D433A133AE82
-        for <git@vger.kernel.org>; Sat, 16 Mar 2019 11:34:40 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=blesius.eu; s=mail;
-        t=1552732480; bh=nWRNrMEq9yJIVTdqzI+kvQV+4nU7JIMacMGGbYb2BUE=;
-        h=From:Subject:To:Date;
-        b=G67dFT6v72jIrT888lm91k7hezS6RXtnavZlHSf6UuqNBnUFpYcv3zQ9sJhV3jb28
-         Lh4IdtTC4ffyDcBPBEuSwT2+dyDVHWOhyvSZQ6vilRcP9M4vydTM0GPLcNha+MycT/
-         vibmST4Ub8aZdIGTrpGj5D+DeyJ97yw17E9pay2w=
-From:   Alexander Blesius <alexander+git@blesius.eu>
-Subject: [PATCH] doc: fix typos in man pages
-To:     git@vger.kernel.org
-Openpgp: preference=signencrypt
-Autocrypt: addr=alexander+git@blesius.eu; prefer-encrypt=mutual; keydata=
- mQENBFO5X3UBCADDxy2dppA+7A+KEXWx3rS44pdKC6nYx6m3XEWxfs45CKbSq0J88Zupmqrw
- M0MWK/KbzeBQ0N2IjHp8DaflY7pI3uDOoDqKZ5GiAeXIpaeBDD6z3am5/abQRG5oY8Zy2O+3
- OyA78R9LnbMRXvb2+mOfPZYGA14zkhAlGUj8u7Hm3n2IkVJMlKjpYnj1GZcgc+01nnnUT3fn
- 0lhGkcxzOiiGkMWaZ5Nyh5sYEDGhFquySGFihmbbxkNsqXD8MffqQc2N7rrxl2GOnAlTlNG4
- XwLscJC8XgF5x+ChrQyrgcdhoXsd8E/PXawkwWVPWr1eNP3BXjBlczT+9qnziM7A+ZqzABEB
- AAG0P0FsZXhhbmRlciBCbGVzaXVzIChwcml2YXRlIG1haWwgYWRkcmVzcykgPGFsZXhhbmRl
- ckBibGVzaXVzLmV1PokBWQQTAQIAQwIbIwcLCQgHAwIBBhUIAgkKCwQWAgMBAh4BAheAAhkB
- FiEEeKbtWWINxpqa7GJ7r0HG3q8DMW4FAlmpF0IFCQ9VuU0ACgkQr0HG3q8DMW6Ztwf7BDK2
- V6Nv+qoSC3rqPV9Mzu0JXZJ9QSJzf+B+DZLFP0iHmPhcKUidYs2ZibqsMVB7+jKLsmEtqJJl
- EjLZ+aSoQXGDsdnntV/4QvtSoCuqUeBQO8gm2OlPk/uBUdwKLup48LaebpqN/pd/EDKcE67K
- +u8F197Hg0pARUJ5iJEDn0ciDw/u7ycNruPNndCiNVg/28w+5sVOlC7g6C19CAMQo1dwc4D8
- ARTXteNePPAiNbnmJaXFLNxSWVAbyJe98noqBlEsVzhy0YlEIpAhlMFn3E/+dwhurBXTpKdW
- o8cXiMvb0I85W0s9+yjYtnqVJlNYSLuPIkAqU7hUnjla0LIrrLkBDQRTuV91AQgA5kINGMjs
- ZMaFKgxrabujJsCUY1mL7CCf2JOfAB0MuPBVi5O6mK5lrIMD+vFhJll2+rHGvUApB4CMt4OV
- hiqzUjuO6pmIoBl/QzFic8/I/KG3tuCciz3HrDwYiGSpe684THqELb4JFYCi2rzEOJm462g7
- VI507hqaG3JBfjZFIsg7atwKGseaJpHwY2zW5wpbpE6xH9+8X6Q3DTeUru9SlD/Pu6crE/We
- 5tEgzneMaewLNnEoL2tSsLv6lr7ZB6zaAM9VyW59W30VxlIXoeQl3lUM/XQG/8wnKCTqKlGA
- DxieeVds0G5SqoLuGoq0oPiruPXm+meZSFMNu2mBqIA0QQARAQABiQE8BBgBAgAmAhsMFiEE
- eKbtWWINxpqa7GJ7r0HG3q8DMW4FAlmpF0cFCQ9VuVIACgkQr0HG3q8DMW52mwf+PoUtEap+
- DTv+/T1ZIwSabpuz28NsZj/O1kJBv8PJ7xLC5jKzpU5cIFIv2AG0bqZzFsgDRZBfB8SW0QgY
- 8lqHovxSF8V5RgnzhJNMYmPKWGsvWHrWiafh+YXrT5NBSQmpZD61yYEF64CUIXe9pbFPSdex
- Aye81qKTWjekoVa35VsDmXq8zskXTHZE9NKngL5mTzSSwFzivrWHy6IhMHZhpEXsU3bfaDpu
- GCpHlNKZZIsN64CiE3js4BsyGd42mA5DFA0NJ0PugWmPV3e1WhU9yBcYyR2IMqOujBofIVKr
- AI4eVDrld6ki2Dh1g+AnACyCG4XEXqhaKWa5/lg/E4X+0Q==
-Message-ID: <6e00f5fc-13a3-a9b9-d964-f787ae194a73@blesius.eu>
-Date:   Sat, 16 Mar 2019 11:34:39 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.3
+        id S1726753AbfCPKrV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Mar 2019 06:47:21 -0400
+Received: from mout.web.de ([212.227.15.4]:58703 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726571AbfCPKrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Mar 2019 06:47:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1552733237;
+        bh=5eBYpKCXIdu41Slv+n/vPqVgyBM3vM289573AK951vs=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=oz5wFOxwOPlq+FtbJncE5QrSsO7Fh9d7CMYDasNQRHEME3ZUoV9nm/kuKiMly8Bcr
+         FbP9sPc5WkTdKZSTAe2fsK+MqMqshk0/oovaDBdUmJLbnXOW27VQqqGzES7/e+HBM/
+         4fQlzrjq0fcKPiMUaNrlQz2q89lmliwJnckvEb28=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost.localdomain ([195.198.252.176]) by smtp.web.de
+ (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0LsyBm-1guV2d12vS-012X9L; Sat, 16 Mar 2019 11:47:17 +0100
+From:   tboegi@web.de
+To:     git@vger.kernel.org, jeffhost@microsoft.com
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v1 1/1] trace2: NULL is not allowed for va_list
+Date:   Sat, 16 Mar 2019 11:47:15 +0100
+Message-Id: <20190316104715.27138-1-tboegi@web.de>
+X-Mailer: git-send-email 2.21.0.135.g6e0cc67761
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="Pe2WcxZdUgmEflfqfWwl6zSRcGITyNixj"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:BIjz/vLrxfoH4CJvDlFfCPr73Y3LTLqb8PiNa5hrQtTa2vttYYQ
+ F/kVdiYUz1E+IyyCzUG7vcQFji5Km+EsW+aXeYC4UKWjT5pnu3xBbmzqgGwg4fWIPaiDfev
+ Cv5CthKS+FXKVr0o/VrpaiP98mZq4Z9WNcFsx5winONE5bUuvna46Kltm0TJqQ0UdchIZxx
+ EPCi+F/cW1EvtvHcY0+WA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Mw7yieCDbrg=:B3GO2FgfaEpaTSILZ7bpZI
+ ZK66NesjfKaMOkJ0R7ZfGj52FbpFDJCDGzwwtEBe6yvg8CxGvEmzFwqDzQZi40g3NBDVdyksh
+ +Yn+H0kAljORxVJEr8YiEMZ/qOOTygiNYk3gazkkjKxFAx6Fjj2FMavpUTAnzSaz2hXcHIMus
+ xZerNYx8Xyv9OcCEQQiVopdHtFO2cI42wJYiVbsOpaLDmLyEklOEuxBTPt+0v9D5JTf0H/daW
+ EviPYAT9prYZAC58Cy79/+pSxAQ7Dp0Sk2gj8WAK432zp0Ryy+MftQgK/S6+vMc2jXaMv0bdI
+ kxfEa30+i0GfaNBkmXbHbXj+2f1Eo6WMhihgQJyB/669gVilWJq3x2W2fHbGAJpjlo/1hmw10
+ M5m9HxbYJaxi8cTx6FPR/B1G2FpGVx/qiyJ0ZVWItjUGYf1gUYI4lv1PW32QbnmRF/oZ5j3YE
+ SjfRZQ0AIl7aK1/zATXkqcTvsu4NrFrO+myGXodlYtcM8I9y0zDbCj4PS/48vMgPGWeXM1VaO
+ BgZ/8r38oODgn5ffxPPOUsSFoM0tvegHHsB7VcYN8e0yv1aEXB7tR2xcfowQrjaEvUKsGLLAp
+ VPRsgs7JqhJ1kKVWFr7fo8m6g/R/+xsiTebVHGh8RbcBiRmPr6BLjehf96gUP8M4i5RhEZmZG
+ 1619J7b3RYQGXfhaj85xk9f9lb7kuKWwXHuv+g/WReQRKON/+qgJPxXtvpUfq2nwleuhYe8jt
+ ofUn4diRFRZaqDOYV15he+nePV35NbMD0q2NID1wqIKNHW5iGLwFdTSqe6zAkgVlPFl78KH03
+ lOcUYaioe9ij6GC2sg1nj+InlO9CnYbC7htNNzNzYnXifT7yC9xjJR4hxnAaMrdFJ/gS5uU8d
+ NmN+1RCPGzaLhDvxMm4VUe03C9ay+nTDBP9Tzhh2Uuqnx+OZiB+G8Wf+NVLuPD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---Pe2WcxZdUgmEflfqfWwl6zSRcGITyNixj
-Content-Type: multipart/mixed; boundary="F0LkJP3q9rAfda2tHR3dlJJjEWahhw1vJ";
- protected-headers="v1"
-From: Alexander Blesius <alexander+git@blesius.eu>
-To: git@vger.kernel.org
-Message-ID: <6e00f5fc-13a3-a9b9-d964-f787ae194a73@blesius.eu>
-Subject: [PATCH] doc: fix typos in man pages
+From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
---F0LkJP3q9rAfda2tHR3dlJJjEWahhw1vJ
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
-Content-Transfer-Encoding: quoted-printable
+Some compilers don't allow NULL to be passed for a va_list.
+Use va_list instead.
 
-Signed-off-by: Alexander Blesius <alexander+git@blesius.eu>
----
- Documentation/git-worktree.txt  | 4 ++--
- Documentation/gitattributes.txt | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+=2D--
+ trace2.c                | 15 +++++++++++----
+ trace2.h                |  4 ++--
+ trace2/tr2_tgt_event.c  |  2 +-
+ trace2/tr2_tgt_normal.c |  2 +-
+ trace2/tr2_tgt_perf.c   |  2 +-
+ 5 files changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.=
-txt
-index cb86318f3e..fa5ec7a5dc 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -213,8 +213,8 @@ refs of one working tree from another.
-  In general, all pseudo refs are per working tree and all refs starting
- with "refs/" are shared. Pseudo refs are ones like HEAD which are
--directly under GIT_DIR instead of inside GIT_DIR/refs. There are one
--exception to this: refs inside refs/bisect and refs/worktree is not
-+directly under GIT_DIR instead of inside GIT_DIR/refs. There is one
-+exception to this: refs inside refs/bisect and refs/worktree are not
- shared.
-  Refs that are per working tree can still be accessed from another
-diff --git a/Documentation/gitattributes.txt
-b/Documentation/gitattributes.txt
-index 9b41f81c06..908d9a3009 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -314,8 +314,8 @@ stored as UTF-8 internally. A client without
-`working-tree-encoding`
- support will checkout `foo.ps1` as UTF-8 encoded file. This will
- typically cause trouble for the users of this file.
- +
--If a Git client, that does not support the `working-tree-encoding`
--attribute, adds a new file `bar.ps1`, then `bar.ps1` will be
-+If a Git client that does not support the `working-tree-encoding`
-+attribute adds a new file `bar.ps1`, then `bar.ps1` will be
- stored "as-is" internally (in this example probably as UTF-16).
- A client with `working-tree-encoding` support will interpret the
- internal contents as UTF-8 and try to convert it to UTF-16 on checkout.
---=20
-2.21.0
+diff --git a/trace2.c b/trace2.c
+index ccccd4ef09..8bbad56887 100644
+=2D-- a/trace2.c
++++ b/trace2.c
+@@ -548,10 +548,14 @@ void trace2_region_enter_printf_va_fl(const char *fi=
+le, int line,
+ }
 
+ void trace2_region_enter_fl(const char *file, int line, const char *categ=
+ory,
+-			    const char *label, const struct repository *repo)
++			    const char *label, const struct repository *repo, ...)
+ {
++	va_list ap;
++	va_start(ap, repo);
+ 	trace2_region_enter_printf_va_fl(file, line, category, label, repo,
+-					 NULL, NULL);
++					 NULL, ap);
++	va_end(ap);
++
+ }
 
+ void trace2_region_enter_printf_fl(const char *file, int line,
+@@ -621,10 +625,13 @@ void trace2_region_leave_printf_va_fl(const char *fi=
+le, int line,
+ }
 
+ void trace2_region_leave_fl(const char *file, int line, const char *categ=
+ory,
+-			    const char *label, const struct repository *repo)
++			    const char *label, const struct repository *repo, ...)
+ {
++	va_list ap;
++	va_start(ap, repo);
+ 	trace2_region_leave_printf_va_fl(file, line, category, label, repo,
+-					 NULL, NULL);
++					 NULL, ap);
++	va_end(ap);
+ }
 
+ void trace2_region_leave_printf_fl(const char *file, int line,
+diff --git a/trace2.h b/trace2.h
+index ae5020d0e6..b330a54a89 100644
+=2D-- a/trace2.h
++++ b/trace2.h
+@@ -238,7 +238,7 @@ void trace2_def_repo_fl(const char *file, int line, st=
+ruct repository *repo);
+  * on this thread.
+  */
+ void trace2_region_enter_fl(const char *file, int line, const char *categ=
+ory,
+-			    const char *label, const struct repository *repo);
++			    const char *label, const struct repository *repo, ...);
 
---F0LkJP3q9rAfda2tHR3dlJJjEWahhw1vJ--
+ #define trace2_region_enter(category, label, repo) \
+ 	trace2_region_enter_fl(__FILE__, __LINE__, (category), (label), (repo))
+@@ -278,7 +278,7 @@ void trace2_region_enter_printf(const char *category, =
+const char *label,
+  * in this nesting level.
+  */
+ void trace2_region_leave_fl(const char *file, int line, const char *categ=
+ory,
+-			    const char *label, const struct repository *repo);
++			    const char *label, const struct repository *repo, ...);
 
---Pe2WcxZdUgmEflfqfWwl6zSRcGITyNixj
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+ #define trace2_region_leave(category, label, repo) \
+ 	trace2_region_leave_fl(__FILE__, __LINE__, (category), (label), (repo))
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index 107cb5317d..1cf4f62441 100644
+=2D-- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -190,7 +190,7 @@ static void fn_atexit(uint64_t us_elapsed_absolute, in=
+t code)
+ static void maybe_add_string_va(struct json_writer *jw, const char *field=
+_name,
+ 				const char *fmt, va_list ap)
+ {
+-	if (fmt && *fmt && ap) {
++	if (fmt && *fmt) {
+ 		va_list copy_ap;
+ 		struct strbuf buf =3D STRBUF_INIT;
 
------BEGIN PGP SIGNATURE-----
+diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+index 547183d5b6..1a07d70abd 100644
+=2D-- a/trace2/tr2_tgt_normal.c
++++ b/trace2/tr2_tgt_normal.c
+@@ -126,7 +126,7 @@ static void fn_atexit(uint64_t us_elapsed_absolute, in=
+t code)
+ static void maybe_append_string_va(struct strbuf *buf, const char *fmt,
+ 				   va_list ap)
+ {
+-	if (fmt && *fmt && ap) {
++	if (fmt && *fmt) {
+ 		va_list copy_ap;
 
-iQEzBAEBCAAdFiEEeKbtWWINxpqa7GJ7r0HG3q8DMW4FAlyM0UAACgkQr0HG3q8D
-MW7u4gf9GMd3IAs/v+uicqKNjV0m7UqoZT5Z2phdC3nImuID3VS8R7xz2E818kGB
-Z6nGFeYyCL0ftj3VqoFKHIuZpK8RTqaAD59DV7jqRZUb86SObarGBbQ6bXMIdJ9n
-MylvEvZcD75k0RiO/19L3NltCsngQVU/RIGXSadMUk4mY/FcQ9djsmCbyXJCNCxq
-wCWAoO3ajHNefg4qed479sVTePUbFprbVNlf3xagXBj/q2Dqgm1KqKVa5c5+jsU8
-znyXQt7/vjm72zWEOGCKBLO1R5AtRO64jw6YXfV1akVSSQ3eX63oVZsRaOoB5nQq
-NNhdsFxD/yuYXr2pwakFP7fo7PVeIQ==
-=/Ym3
------END PGP SIGNATURE-----
+ 		va_copy(copy_ap, ap);
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index f0746fcf86..2a866d701b 100644
+=2D-- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -211,7 +211,7 @@ static void fn_atexit(uint64_t us_elapsed_absolute, in=
+t code)
+ static void maybe_append_string_va(struct strbuf *buf, const char *fmt,
+ 				   va_list ap)
+ {
+-	if (fmt && *fmt && ap) {
++	if (fmt && *fmt) {
+ 		va_list copy_ap;
 
---Pe2WcxZdUgmEflfqfWwl6zSRcGITyNixj--
+ 		va_copy(copy_ap, ap);
+=2D-
+2.21.0.135.g6e0cc67761
+
