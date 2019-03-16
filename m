@@ -2,98 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9FAC20248
-	for <e@80x24.org>; Sat, 16 Mar 2019 22:09:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D3E020248
+	for <e@80x24.org>; Sat, 16 Mar 2019 22:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbfCPWJS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Mar 2019 18:09:18 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:55980 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726349AbfCPWJR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Mar 2019 18:09:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=GcI3FtkEHPPAzm+WIuuSmQiSf7GFB76iqwsvRoG6Vm0=; b=OEQ05us6Wtl9j8nm3Fu8YtMp2
-        5OaKhcj/ZddQ22ZSWbe6JXgXxymfPNwxp/c47vOL9nuh4LaDUS7OayDNEBElW5Yfr9q9jZTPVAMJv
-        u2MmpkuZ4P7tF+txFYdqE+6Ssd924CX6zlP9xOUCpBazPyR/+vtjkYJckQjr7U3/WSzm8wlCp1THa
-        pZegk64www8tejqrJfvWhvhwaxRFdsCwlQfNXf6H3ave2/mbaAeBsSFhopGDblk76i4679UQtFhRB
-        Fnz0Y8E/2PR6Zi1dZmDfHmR5U+LXhcfVPAMcWbqu5Jx0bcL95XmWlOXA0+K23KKv8RUPNY6wmD8bQ
-        2URJjCDMw==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:59850 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1h5HUQ-00CgAd-R0; Sat, 16 Mar 2019 18:09:15 -0400
-Date:   Sat, 16 Mar 2019 18:09:13 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: "man gitattributes" doesn't explain comma-separated attribute
- values
-In-Reply-To: <408d82f6-e935-487a-6d0c-9ec4be5e8b6e@kdbg.org>
-Message-ID: <alpine.LFD.2.21.1903161807480.19900@localhost.localdomain>
-References: <alpine.LFD.2.21.1903160816410.10724@localhost.localdomain> <408d82f6-e935-487a-6d0c-9ec4be5e8b6e@kdbg.org>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1726661AbfCPWMl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Mar 2019 18:12:41 -0400
+Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:56460 "EHLO
+        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726562AbfCPWMl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Mar 2019 18:12:41 -0400
+Received: from glandium by mitsuha.glandium.org with local (Exim 4.91)
+        (envelope-from <mh@glandium.org>)
+        id 1h5HXc-0003df-9V; Sun, 17 Mar 2019 07:12:32 +0900
+Date:   Sun, 17 Mar 2019 07:12:32 +0900
+From:   Mike Hommey <mh@glandium.org>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Richard Hipp <drh@sqlite.org>,
+        Git List Mailing <git@vger.kernel.org>
+Subject: Re: git-fast-import yields huge packfile
+Message-ID: <20190316221232.m6mphdnwy6mys4j2@glandium.org>
+References: <CALwJ=MzrqPUNw=jc0NRtaJaJG+ErXNb577JNSN66GiGY4UFtRw@mail.gmail.com>
+ <CAADWXX81agAg1B9+FM5c4JsWzANKochNTcv2ShsRzAsZpHAVWw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAADWXX81agAg1B9+FM5c4JsWzANKochNTcv2ShsRzAsZpHAVWw@mail.gmail.com>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 16 Mar 2019, Johannes Sixt wrote:
-
-> Am 16.03.19 um 13:22 schrieb Robert P. J. Day:
-> >   as a working example, i looked at the top-level .gitattributes file
-> > in the git source code itself, which opens with:
+On Sat, Mar 16, 2019 at 02:04:33PM -0700, Linus Torvalds wrote:
+> On Sat, Mar 16, 2019 at 1:31 PM Richard Hipp <drh@sqlite.org> wrote:
 > >
-> >   * whitespace=!indent,trail,space
-> >   *.[ch] whitespace=indent,trail,space diff=cpp
-> >   *.sh whitespace=indent,trail,space eol=lf
-> >   ... snip ...
-> >
-> > first observation is that i see nothing in the man page that explains
-> > the notion of a comma-separated list of attribute values.
->
-> This comma-separated list is not a property of attributes in
-> general, but a property of the whitespace attribute in particular.
-> See core.whitespace in git-config(1) and "Checking whitespace
-> errors" in gitattributes(5).
+> > Maybe I'm doing something wrong with the fast-import stream that is
+> > defeating Git's attempts at delta compression....
+> 
+> fast-import doesn't do fancy delta compression becayse that would
+> defeat the "fast" part of fast-import.
 
-  ah, i was digging through the code trying to figure out where the
-whole CSV thing was explained -- it's massively helpful to understand
-that that property is specific to whitespace. that does not appear to
-be clarified anywhere.
+fast-import however does try to do delta compression of blobs against the
+last blob that was imported, so if you put your blobs in an order where
+they can be delta-ed, you can win without a git repack.
 
-rday
+For one-shot conversions, you can just rely on git repack.
 
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Mike
