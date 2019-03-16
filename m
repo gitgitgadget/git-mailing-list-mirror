@@ -2,100 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51A1020248
-	for <e@80x24.org>; Sat, 16 Mar 2019 15:31:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC39420248
+	for <e@80x24.org>; Sat, 16 Mar 2019 15:40:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726926AbfCPPbe (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Mar 2019 11:31:34 -0400
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:36344 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726735AbfCPPbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Mar 2019 11:31:34 -0400
-Received: by mail-ed1-f45.google.com with SMTP id e4so10072683edi.3
-        for <git@vger.kernel.org>; Sat, 16 Mar 2019 08:31:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=tpQ1khv18Tc3NDTYgMO12CcD0go2pd3B0l1wwEjAfbA=;
-        b=mzjOEQtS6Yfcv7Uw74jsz1xG0F+mA5D4oaR/su+5K7LjfdFQaaHYrQipSU80zzWjdy
-         sXwgO3uJA0giIXv2noronSwEzfDKTRaCWYHJuhIzDqLaMRO9kb5MTipnbyxXpquL6Clz
-         0RORjq9Y7d5R4+3AmYNePcbRTl1ckFQQLATuYPxdU9HFTUQjZZbSEqrOflyCYKQBmez+
-         Je4AGtZh9VSQ2fvDzCg11EuRL7w3yIujfqdnMCpuwvOkR+rMMI/EVF4UOhDtMRXVnlZU
-         Fc/rqRFWEOEWzaq8JrwDeTaU4wsrXAhRoREIHHkVfrNMV0+/ZCus0WDj/7AhrkbSxD9P
-         lDhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tpQ1khv18Tc3NDTYgMO12CcD0go2pd3B0l1wwEjAfbA=;
-        b=j7cCiEuBMDzsRgOyG8i+bo/BVZg8ifZQ0ersKSrSoIJKsAvIixI7w6745BiSMgnX6j
-         nk3Y77jDMZ24Mjys9V6rt6gPg55KV8c3Xf/RthTNNsA3getbKZu8uUHIIrpOO+ACPkrA
-         ATYhpAcoAsM+KJuMZ1V68g1TbsmcAojieaJ4BH18cUrFdVcfFfWAepf5AXBE6Gxrj1Q5
-         PQSa0nDcutri+xZbl4FBpnGsrZrPf0HWOZLdUU96k2oh6C/iSu5RVojclzpRRYDGkg8Q
-         nPWvmHDQFWXno3r5F+lK6fAl/7ktpQKxwYI71hW4DFAmaSdSh7MEgEMqgkHmv3r4yXOE
-         F86A==
-X-Gm-Message-State: APjAAAUtiIqi6qMMVFC+h8M0CWFUTJanLg4sWVfaaJOwsuGNskTMw5+t
-        f9tmTcASC9x7y0MWNM+E2umIvtbBkhrzpa3q3wE=
-X-Google-Smtp-Source: APXvYqz2agM1YJ2A3HKFaszKTmja/HuPeqDiM6/oBl4+BPo5SCgWIF7J6rC7Ko2fOD6xB3mw67Bb6OYl6WJ91YR8X2E=
-X-Received: by 2002:a17:906:48d8:: with SMTP id d24mr5585209ejt.172.1552750292528;
- Sat, 16 Mar 2019 08:31:32 -0700 (PDT)
+        id S1727172AbfCPPkS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Mar 2019 11:40:18 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57639 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726512AbfCPPkQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Mar 2019 11:40:16 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 83B1A460DC;
+        Sat, 16 Mar 2019 11:40:14 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=bSqrhKP5G9Ad32luBI89W98ivPI=; b=YfnFpM
+        ZfYXm+2klFB9ud9x0o8G6MFvDIVroL50bYVkCsQPNJmTcYrTD5sD3wdNiiSCK1+V
+        /vFONN5atepIYohYlHYJVEXjswvvcIKHpplkFsfJNZDHGpRutkIXG5MyfsLbTwHU
+        QhQEvU7iMgn8LcPLNMbwxGI++FlU0Tg7p6f9Y=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7D750460DA;
+        Sat, 16 Mar 2019 11:40:14 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=T85YV029zOo9sPyhEPqF4TuuILD+c4rO2BFTC8nC66U=; b=TuYoxG8pgbBr17dauHT0sncDPrRy7JCPV0Rs/9sxpuwgc2BeTMfMruvCl0o0fatvDD5Ts0w0H5DFLwoap+643OI8nt7DeL7Wpgn2yCfea9Q6Z3MZVey3SI9wmR42RyjuVRQ6czAydUlnjXCqE8HtMJiyiUl0V92zvNRiqDQUu60=
+Received: from localhost (unknown [76.118.43.98])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BDD40460D9;
+        Sat, 16 Mar 2019 11:40:10 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     git@vger.kernel.org
+Cc:     debian@onerussian.com
+Subject: Re: [PATCH 1/4] submodule: refuse to add repository with no commits
+In-Reply-To: <20190314150219.2040-2-kyle@kyleam.com>
+References: <20190314150219.2040-1-kyle@kyleam.com> <20190314150219.2040-2-kyle@kyleam.com>
+Date:   Sat, 16 Mar 2019 11:40:09 -0400
+Message-ID: <87lg1eq146.fsf@kyleam.com>
 MIME-Version: 1.0
-References: <20181109104202.GA8717@sigill.intra.peff.net> <2139295744.18413.1550666884748@ox.hosteurope.de>
- <87ef82628j.fsf@evledraar.gmail.com> <20190221045904.GA29732@sigill.intra.peff.net>
- <20190221082218.GA3335@sigill.intra.peff.net>
-In-Reply-To: <20190221082218.GA3335@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 16 Mar 2019 16:31:21 +0100
-Message-ID: <CAP8UFD2+J2KMWXu1FSfBRifEXd85Lg-W6Pmix2bUcyrMsfGThg@mail.gmail.com>
-Subject: Re: Git Merge Conference Recordings [was: Re: [ANNOUNCE] Git Merge
- Contributor's Summit Jan 31, 2019, Brussels]
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C885E1AA-4801-11E9-B4F3-D01F9763A999-24757444!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 21, 2019 at 9:24 AM Jeff King <peff@peff.net> wrote:
->
-> On Wed, Feb 20, 2019 at 11:59:04PM -0500, Jeff King wrote:
->
-> > On Wed, Feb 20, 2019 at 02:03:40PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
-> >
-> > > > I wanted to point a colleague of mine to one of the talks.
-> > > > Unfortunately I could not find the recordings of the talks anywhere=
-.
-> > > >
-> > > > Are these available?
-> > >
-> > > I have no insider knowledge, but can tell you that in past years it's
-> > > taken GitHub a bit to process these and put them on YouTube[1].
-> > >
-> > > E.g. last year's conference was in early March, and the videos trickl=
-ed
-> > > in in late-March to early April, the year before that it was in Febru=
-ary
-> > > and the videos were published in May of that year.
-> > >
-> > > Historically the 3-4 month delay has been more of the norm than 1-2.
-> >
-> > I think they're shooting to have them out sometime in March, but I've
-> > asked if they have a more specific ETA.
->
-> The word I got today was that they're trying to have them up before the
-> end of the month.
+Kyle Meyer <kyle@kyleam.com> writes:
 
-It looks like the videos are available now:
+[...]
 
-https://www.youtube.com/playlist?list=3DPL0lo9MOBetEFqBue4vNcTEnkBjgIQU1Q3
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 514ede2596..6c74656027 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -234,10 +234,18 @@ cmd_add()
+>  	if test -z "$force" &&
+>  		! git add --dry-run --ignore-missing --no-warn-embedded-repo "$sm_path" > /dev/null 2>&1
+>  	then
+> -		eval_gettextln "The following path is ignored by one of your .gitignore files:
+> +		if test -d "$sm_path" &&
+> +			test -z $(git -C "$sm_path" rev-parse --show-cdup 2>/dev/null) &&
+> +			! git -C "$sm_path" rev-parse --verify -q HEAD >/dev/null
+> +		then
+> +			die "$(eval_gettext "'\$sm_path' does not have any commits")"
+> +		else
+> +			eval_gettextln "\
+> +The following path is ignored by one of your .gitignore files:
+>  \$sm_path
+>  Use -f if you really want to add it." >&2
+> -		exit 1
+> +			exit 1
+> +		fi
+
+I didn't think through this check, which would have been obvious had I
+ran the added test without the rest of the patches in this series.  It
+assumes that the 'git add --dry-run' call fails, but that failure
+depends on the last patch of this series.  So I'd need to move this
+patch to the end or find a new place for this "no commits" check.
