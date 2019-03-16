@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BED620248
-	for <e@80x24.org>; Sat, 16 Mar 2019 20:05:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D749E20248
+	for <e@80x24.org>; Sat, 16 Mar 2019 20:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726765AbfCPUFS (ORCPT <rfc822;e@80x24.org>);
+        id S1726647AbfCPUFS (ORCPT <rfc822;e@80x24.org>);
         Sat, 16 Mar 2019 16:05:18 -0400
-Received: from mta1.cl.cam.ac.uk ([128.232.0.57]:59023 "EHLO mta1.cl.cam.ac.uk"
+Received: from mta1.cl.cam.ac.uk ([128.232.0.57]:57515 "EHLO mta1.cl.cam.ac.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726466AbfCPUFR (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726376AbfCPUFR (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 16 Mar 2019 16:05:17 -0400
 Received: from methi.cl.cam.ac.uk ([2001:630:212:238:fa32:e4ff:fe88:56f3])
         by mta1.cl.cam.ac.uk with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.90_1)
         (envelope-from <nwf20@cl.cam.ac.uk>)
-        id 1h5FYQ-00055o-9S; Sat, 16 Mar 2019 20:05:14 +0000
+        id 1h5FYQ-00055p-AK; Sat, 16 Mar 2019 20:05:14 +0000
 Received: from nwf20 by methi.cl.cam.ac.uk with local (Exim 4.90_1)
         (envelope-from <nwf20@cl.cam.ac.uk>)
-        id 1h5FYa-0003io-2i; Sat, 16 Mar 2019 20:05:24 +0000
+        id 1h5FYa-0003ir-3b; Sat, 16 Mar 2019 20:05:24 +0000
 From:   Nathaniel Filardo <nwf20@cl.cam.ac.uk>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Nathaniel Filardo <nwf20@cl.cam.ac.uk>
-Subject: [PATCHv2 2/5] revision walk: optionally use sparse reachability
-Date:   Sat, 16 Mar 2019 20:05:17 +0000
-Message-Id: <20190316200520.14260-3-nwf20@cl.cam.ac.uk>
+Subject: [PATCHv2 3/5] repack: add --sparse and pass to pack-objects
+Date:   Sat, 16 Mar 2019 20:05:18 +0000
+Message-Id: <20190316200520.14260-4-nwf20@cl.cam.ac.uk>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190316200520.14260-1-nwf20@cl.cam.ac.uk>
 References: <20190316200520.14260-1-nwf20@cl.cam.ac.uk>
@@ -38,146 +38,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add another bit flag to the struct rev_info.
-
-The only caller that uses this after this patch is builtin/pack-objects.
-Without this, sparsity seems to do little good therein, as
-prepare_revision_walk will densely propagate UNINTERESTING flags from
-trees to tree contents, before mark_edges_uninteresting has a chance to
-be faster by being sparse.
-
-While here, drop the "sparse" parameter to mark_edges_uninteresting,
-introduced in 4f6d26b167 ("list-objects: consume sparse tree walk",
-2019-01-16) which can now use the flag in struct rev_info.  No
-functional change intended.
-
-Signed-off-by: Nathaniel Filardo <nwf20@cl.cam.ac.uk>
+The sparse connectivity algorithm saves a whole lot of time when there
+are UNINTERESTING trees around.
 ---
- bisect.c               | 2 +-
- builtin/pack-objects.c | 3 ++-
- builtin/rev-list.c     | 2 +-
- http-push.c            | 2 +-
- list-objects.c         | 5 ++---
- list-objects.h         | 3 +--
- revision.c             | 3 ++-
- revision.h             | 1 +
- 8 files changed, 11 insertions(+), 10 deletions(-)
+ Documentation/git-repack.txt   | 4 ++++
+ builtin/repack.c               | 5 +++++
+ t/t5322-pack-objects-sparse.sh | 6 ++++++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/bisect.c b/bisect.c
-index 3af955c4bc..6bf521138a 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -658,7 +658,7 @@ static void bisect_common(struct rev_info *revs)
- 	if (prepare_revision_walk(revs))
- 		die("revision walk setup failed");
- 	if (revs->tree_objects)
--		mark_edges_uninteresting(revs, NULL, 0);
-+		mark_edges_uninteresting(revs, NULL);
- }
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index aa0cc8bd44..836d81457a 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -165,6 +165,10 @@ depth is 4095.
+ 	Pass the `--delta-islands` option to `git-pack-objects`, see
+ 	linkgit:git-pack-objects[1].
  
- static void exit_if_skipped_commits(struct commit_list *tried,
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index a154fc29f6..fb9937edf9 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3134,9 +3134,10 @@ static void get_object_list(int ac, const char **av)
- 	if (use_delta_islands)
- 		load_delta_islands(the_repository);
++--sparse::
++	Pass the `--sparse` option to `git-pack-objects`; see
++	linkgit:git-pack-objects[1].
++
+ Configuration
+ -------------
  
-+	revs.sparse_tree_walk = !!sparse;
- 	if (prepare_revision_walk(&revs))
- 		die(_("revision walk setup failed"));
--	mark_edges_uninteresting(&revs, show_edge, sparse);
-+	mark_edges_uninteresting(&revs, show_edge);
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 67f8978043..8e7641482b 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -288,6 +288,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	int no_update_server_info = 0;
+ 	int midx_cleared = 0;
+ 	struct pack_objects_args po_args = {NULL};
++	int sparse = 0;
  
- 	if (!fn_show_object)
- 		fn_show_object = show_object;
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 5b5b6dbb1c..14ef659c12 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -546,7 +546,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
- 	if (revs.tree_objects)
--		mark_edges_uninteresting(&revs, show_edge, 0);
-+		mark_edges_uninteresting(&revs, show_edge);
+ 	struct option builtin_repack_options[] = {
+ 		OPT_BIT('a', NULL, &pack_everything,
+@@ -326,6 +327,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				N_("maximum size of each packfile")),
+ 		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
+ 				N_("repack objects in packs marked with .keep")),
++		OPT_BOOL(0, "sparse", &sparse,
++			 N_("use the sparse reachability algorithm")),
+ 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
+ 				N_("do not repack this pack")),
+ 		OPT_END()
+@@ -366,6 +369,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	argv_array_push(&cmd.args, "--all");
+ 	argv_array_push(&cmd.args, "--reflog");
+ 	argv_array_push(&cmd.args, "--indexed-objects");
++	if (sparse)
++		argv_array_push(&cmd.args, "--sparse");
+ 	if (repository_format_partial_clone)
+ 		argv_array_push(&cmd.args, "--exclude-promisor-objects");
+ 	if (write_bitmaps)
+diff --git a/t/t5322-pack-objects-sparse.sh b/t/t5322-pack-objects-sparse.sh
+index 7124b5581a..66e133dcfe 100755
+--- a/t/t5322-pack-objects-sparse.sh
++++ b/t/t5322-pack-objects-sparse.sh
+@@ -133,4 +133,10 @@ test_expect_success 'pack.useSparse overridden' '
+ 	test_cmp required_objects.txt sparse_objects.txt
+ '
  
- 	if (bisect_list) {
- 		int reaches, all;
-diff --git a/http-push.c b/http-push.c
-index b22c7caea0..39b6f5bafb 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1933,7 +1933,7 @@ int cmd_main(int argc, const char **argv)
- 		pushing = 0;
- 		if (prepare_revision_walk(&revs))
- 			die("revision walk setup failed");
--		mark_edges_uninteresting(&revs, NULL, 0);
-+		mark_edges_uninteresting(&revs, NULL);
- 		objects_to_send = get_delta(&revs, ref_lock);
- 		finish_all_active_slots();
- 
-diff --git a/list-objects.c b/list-objects.c
-index dc77361e11..7ea108fba8 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -254,13 +254,12 @@ static void add_edge_parents(struct commit *commit,
- }
- 
- void mark_edges_uninteresting(struct rev_info *revs,
--			      show_edge_fn show_edge,
--			      int sparse)
-+			      show_edge_fn show_edge)
- {
- 	struct commit_list *list;
- 	int i;
- 
--	if (sparse) {
-+	if (revs->sparse_tree_walk) {
- 		struct oidset set;
- 		oidset_init(&set, 16);
- 
-diff --git a/list-objects.h b/list-objects.h
-index a952680e46..9388d96785 100644
---- a/list-objects.h
-+++ b/list-objects.h
-@@ -11,8 +11,7 @@ void traverse_commit_list(struct rev_info *, show_commit_fn, show_object_fn, voi
- 
- typedef void (*show_edge_fn)(struct commit *);
- void mark_edges_uninteresting(struct rev_info *revs,
--			      show_edge_fn show_edge,
--			      int sparse);
-+			      show_edge_fn show_edge);
- 
- struct oidset;
- struct list_objects_filter_options;
-diff --git a/revision.c b/revision.c
-index eb8e51bc63..1f43f6f2da 100644
---- a/revision.c
-+++ b/revision.c
-@@ -456,7 +456,8 @@ static struct commit *handle_commit(struct rev_info *revs,
- 		if (!revs->tree_objects)
- 			return NULL;
- 		if (flags & UNINTERESTING) {
--			mark_tree_contents_uninteresting(revs->repo, tree);
-+			if (!revs->sparse_tree_walk)
-+				mark_tree_contents_uninteresting(revs->repo, tree);
- 			return NULL;
- 		}
- 		add_pending_object_with_path(revs, object, name, mode, path);
-diff --git a/revision.h b/revision.h
-index 4134dc6029..a7154566b3 100644
---- a/revision.h
-+++ b/revision.h
-@@ -145,6 +145,7 @@ struct rev_info {
- 			first_parent_only:1,
- 			line_level_traverse:1,
- 			tree_blobs_in_commit_order:1,
-+			sparse_tree_walk:1,
- 
- 			/*
- 			 * Blobs are shown without regard for their existence.
++# repack --sparse invokes pack-objects --sparse
++test_expect_success 'repack --sparse and fsck' '
++	git repack -a --sparse &&
++	git fsck
++'
++
+ test_done
 -- 
 2.17.1
 
