@@ -2,87 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EBB020248
-	for <e@80x24.org>; Sat, 16 Mar 2019 20:31:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BA5B20248
+	for <e@80x24.org>; Sat, 16 Mar 2019 21:04:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbfCPUbG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Mar 2019 16:31:06 -0400
-Received: from mail-io1-f45.google.com ([209.85.166.45]:41377 "EHLO
+        id S1726842AbfCPVEp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Mar 2019 17:04:45 -0400
+Received: from mail-io1-f45.google.com ([209.85.166.45]:39637 "EHLO
         mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726571AbfCPUbF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Mar 2019 16:31:05 -0400
-Received: by mail-io1-f45.google.com with SMTP id v10so11171035iom.8
-        for <git@vger.kernel.org>; Sat, 16 Mar 2019 13:31:05 -0700 (PDT)
+        with ESMTP id S1726548AbfCPVEp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Mar 2019 17:04:45 -0400
+Received: by mail-io1-f45.google.com with SMTP id e13so975843ioq.6
+        for <git@vger.kernel.org>; Sat, 16 Mar 2019 14:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=K+AwtP2ce0tnG7c5wmNdYeElWaBNJeA4EWMU/zMkXvA=;
-        b=q3GQkm+Iiyl3HvCBM6V+sVtTGIlqQGTXcor0WwPjekZ3OqNrawuVGfo4lYvMb2GPsr
-         GqkB9fz/Kj/eRRmtXFSaliZ1sQLbwAbIxnykbDlVmdut68W6kd6noJXK0z5LyjG5HNu9
-         n5MpW0dF+5bFl/MOmv9fR3GzDB9jVu8j88Nwq6mgjEuB8KAunCTHJ6GqSQjDAgicChEb
-         WuAEXw0BOicsB1Am5J5uWmB7Ttt0MYZVLmVkxoJZMtASGftXQXy+i2+ROiaNfKVNwiER
-         M+G2zwnUPgmAsQRQIT0sngkHiWjpGASl7I9HKoPdLIZITkkxcCfPYRUVPSymAfaZZxxa
-         whpg==
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tbU3O0KkpdqRSK0BvnLNhZE6A2DwHDkQ4B/seasDQrM=;
+        b=hba16/0EUBVWpT2ADxB3sdTxztxaG2gmzSl5c/H+hS+QLMGhzG0QOhpHfEewvAAcc+
+         PmW4bw+tTxifv+GyvJtbISNGdvarE+pRn4rbnfhisLXBV7uruErhKcEqWtx7IPVamrIj
+         spPXrYvsujbMrUe3Kq+E+jbjVk8uyWqQ75pLA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=K+AwtP2ce0tnG7c5wmNdYeElWaBNJeA4EWMU/zMkXvA=;
-        b=cefPB9gjf9O3wZQQmco+x9JjzbtddZ1PmlTrPWU4OAlvlGP33xL7oOUs75KvT/ovb9
-         362kqX/WLfAFsyEZJLaTRhFykuU7nLYDTBGKw8c/bDelIaYEMQf2s3vXtYAyZdFQ9d40
-         YFvvoZu7IEMtO22j6PKfrBWrZ1FOT0fdNqMDEWt5aQUbA+RsjJQ3maFYKM539kyJoMhX
-         sDarBDLZgRPb75eDRHTSHuChA1FWayVq3+Prmjx/dCAkKk/bIcf3y2NdTJA9xkCh+il3
-         JRLvTH1+2o6YC3I4zIH1pulI86x2OABDAnRIJgNZH31m9LHy+mUA4x8fM8Lgkz3mPVam
-         hT3w==
-X-Gm-Message-State: APjAAAXbkSdA8fuvTR9Wv2wf2oiGUy5OwWl9YQR9YW1bOCFCu3lwHFk8
-        hDCJ2F7T4hYUEp+DJTkZ+5nyzKGAJwMH8O42YhxJ
-X-Google-Smtp-Source: APXvYqw8ZYz6bJtWDDIaCJjMbjay/iNhxqxPgsO4pWGU6Q5UKxZyhwRKfDnVHdkIyWHHIdBRAenOs1EpEIaRmrnVg08=
-X-Received: by 2002:a5e:8403:: with SMTP id h3mr6452604ioj.159.1552768264733;
- Sat, 16 Mar 2019 13:31:04 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tbU3O0KkpdqRSK0BvnLNhZE6A2DwHDkQ4B/seasDQrM=;
+        b=JytI4jA6siCCnX1e9oOI7p8n9l0Q1as6ndje5FQxXpuO32Li8j7C92ukTPxiwJlS2a
+         o0Fvq19ULUIIVDHOuYQNGpzDTorOMOSkKzA55REJub0HOCG+Oc/rt5p2tFUKMnJ78Ogw
+         jS5xmoO3Fc+5wS1obwsZ/GzM70JX2+J7297NsmvPgJpkZQvaCOr0XTFYWz/GJEaR0Y0L
+         mRv0OPm4oWbnJdAKmH6wk6gaxiDYukRLeoqCnD9wWxPl+Qo47YS4uold6vAvWXU1vdXq
+         y/h1HfApfZ8REBioLNIMthiJHEoeccL0MLFILuJW/PobUq9N6YXP44vW/8+KTsJVSOvq
+         aigg==
+X-Gm-Message-State: APjAAAVyjiB7zcQrnMhQmz6wBxkyXhxm5yPO/0OkfGrJqbsXciLZly2q
+        S4e8wowdLfO2LsSdKvPzTAdtTo2OMF4+wbLsgzZ5yoQvAfc=
+X-Google-Smtp-Source: APXvYqykpFbMjEpiBJO6n9yMWxMh3rrnaRYkbki1/aUHEpkwkC+xG8W1FogQigkHvPpzZgC8B2dPSetrfevdZ4aIGp8=
+X-Received: by 2002:a5e:a804:: with SMTP id c4mr6625423ioa.15.1552770284494;
+ Sat, 16 Mar 2019 14:04:44 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a02:661c:0:0:0:0:0 with HTTP; Sat, 16 Mar 2019 13:31:04
- -0700 (PDT)
-From:   Richard Hipp <drh@sqlite.org>
-Date:   Sat, 16 Mar 2019 16:31:04 -0400
-X-Google-Sender-Auth: yBaNQ9BDdo0ydjq85cYD-_HOkd8
-Message-ID: <CALwJ=MzrqPUNw=jc0NRtaJaJG+ErXNb577JNSN66GiGY4UFtRw@mail.gmail.com>
-Subject: git-fast-import yields huge packfile
-To:     git@vger.kernel.org
+References: <CALwJ=MzrqPUNw=jc0NRtaJaJG+ErXNb577JNSN66GiGY4UFtRw@mail.gmail.com>
+In-Reply-To: <CALwJ=MzrqPUNw=jc0NRtaJaJG+ErXNb577JNSN66GiGY4UFtRw@mail.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Sat, 16 Mar 2019 14:04:33 -0700
+Message-ID: <CAADWXX81agAg1B9+FM5c4JsWzANKochNTcv2ShsRzAsZpHAVWw@mail.gmail.com>
+Subject: Re: git-fast-import yields huge packfile
+To:     Richard Hipp <drh@sqlite.org>
+Cc:     Git List Mailing <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm trying to transform a repository from another VCS into a Git
-repository using "git fast-import".  It appears to work, but the
-resulting Git repository is huge relative to the original - 18 times
-larger. Most of the space seems to be taken up by a single large
-packfile.  That packfile is about 967 MB which is about 1/4th the
-total uncompressed size of all 41785 distinct Blobs in the original
-repository.  The source VCS is able to compress this down to 52 MB by
-comparison.
+On Sat, Mar 16, 2019 at 1:31 PM Richard Hipp <drh@sqlite.org> wrote:
+>
+> Maybe I'm doing something wrong with the fast-import stream that is
+> defeating Git's attempts at delta compression....
 
-Maybe I'm doing something wrong with the fast-import stream that is
-defeating Git's attempts at delta compression....
+fast-import doesn't do fancy delta compression becayse that would
+defeat the "fast" part of fast-import.
 
-Are there any utility programs available for analyzing packfiles so
-that I try to figure out where the inefficiencies are cropping up, so
-that I can try to address them?
+Just do a git repack after the import to do the proper repacking. I
+get a 41Mb packfile when I try that on your repo.
 
-Anybody have any suggestions on what I should be looking for?
+So a simple
 
-If anyone would care to see this oversized packfile and perhaps offer
-suggestions on how I can make it more space-efficient, it can be
-cloned from https://github.com/drhsqlite/fossil-mirror.git - at least
-for now - surely I will delete that repo and regenerate it once I
-figure out this problem.
+   git repack -adf
 
--- 
-D. Richard Hipp
-drh@sqlite.org
+should fix things up for you (the "-f" to make sure it doesn't try to
+re-use things from the silly bad pack). Alternatively, use "git gc
+--aggressive", which will do that forced repack too.
+
+                  Linus
