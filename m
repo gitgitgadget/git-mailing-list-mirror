@@ -2,68 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 737BB20248
-	for <e@80x24.org>; Sat, 16 Mar 2019 21:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B523F20248
+	for <e@80x24.org>; Sat, 16 Mar 2019 21:58:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727205AbfCPV5c (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Mar 2019 17:57:32 -0400
-Received: from mail-yw1-f43.google.com ([209.85.161.43]:44311 "EHLO
-        mail-yw1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727189AbfCPV5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Mar 2019 17:57:31 -0400
-Received: by mail-yw1-f43.google.com with SMTP id c4so10083242ywa.11
-        for <git@vger.kernel.org>; Sat, 16 Mar 2019 14:57:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=content-transfer-encoding:from:mime-version:date:subject:message-id
-         :to;
-        bh=ln3Z83jUUB0rH7pwIJi52UM4/+QhVbLWekZXDDUf1V8=;
-        b=krsbkVOum76/wJeFAYXhaK2mhH7VW1/xU2PO3zswHy6UMPwqWgKoVwUMlmO2Kam0Zh
-         UPm1TjeGcOxZqCUxFXsAZ7se9yN9VaB2nVC7k0khmj4zKheuHE3fwa2UjPE+wvN5+fWz
-         0/nLXp8oUgMwzLOuGhPEwY7/U6fIS5CfB/Gq+X1muFWcxvct6JDqbiZWSq5QasXEyEUX
-         poRDgL4+1XFLxyTp0haW61ClFnx8mvUfWWguHU8i2S74gyZs3QvlEeIqgaU+jy8Z+bKh
-         0bSHkRQ4s6EADf0yGHuZBCtu1t5KoBJ7AdrhlKqTATYp4GEvDeT3WW7wgIBVlwEOPV9F
-         yKQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
-         :subject:message-id:to;
-        bh=ln3Z83jUUB0rH7pwIJi52UM4/+QhVbLWekZXDDUf1V8=;
-        b=dADeY+Zv7MCZY6JDJ/Woru6WW8moc1TyeTfA7//CJqPXqRKfHmSyhvrtJAmfA2VNsz
-         0J5xcM4STeLzCKTgf1FVyCWagjES0zGsnsAuYAaSIcqk/k+iqrbzUoZXr5lvOfXuCX1l
-         I5Bb/Dn5LuTiPn0MYUeZVtEvQS14sOuBtWFk/CS3B3Q9Mj7bYkQfhKxB3cGsUxmkkCKr
-         2dQ+vxcwJLB+Dc+iajjfERInnPpBUdRUEMzwD0EZD6QX1+/MvzjixX7XWE1zYyLktNX2
-         Kw6W/8KsKr0AMAHaBpB5Kg64fLHipYe9Wo62Q1lIaCByVSX89K5o/x7VTILwBezg2/ie
-         W/TA==
-X-Gm-Message-State: APjAAAXBww9VjY9T+E+iJZcBohVKF/fvB5ZmGmh25lBbWBtAlKXggPpE
-        ZP3ToLqYYMWNCEg8/XDo9RXzWZYEKcc=
-X-Google-Smtp-Source: APXvYqyBCcsAYWDEp5/7t86dKXRUX6qg4c7e3DsFYwTK/QcmMeTk0UvrsLoX6+GgiM8scnstJ5CsVg==
-X-Received: by 2002:a81:234b:: with SMTP id j72mr5949527ywj.279.1552773450700;
-        Sat, 16 Mar 2019 14:57:30 -0700 (PDT)
-Received: from ?IPv6:2605:380:32:495:43f1:a1::c82? ([2605:380:32:495:43f1:a1:0:c82])
-        by smtp.gmail.com with ESMTPSA id h131sm2308995ywa.81.2019.03.16.14.57.29
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 16 Mar 2019 14:57:30 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
+        id S1727189AbfCPV6J (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Mar 2019 17:58:09 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:30940 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726493AbfCPV6J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Mar 2019 17:58:09 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 44MGXb28PPz5tlB;
+        Sat, 16 Mar 2019 22:58:07 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id A8ED520D1;
+        Sat, 16 Mar 2019 22:58:06 +0100 (CET)
+Subject: Re: "man gitattributes" doesn't explain comma-separated attribute
+ values
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+References: <alpine.LFD.2.21.1903160816410.10724@localhost.localdomain>
+Cc:     Git Mailing list <git@vger.kernel.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <408d82f6-e935-487a-6d0c-9ec4be5e8b6e@kdbg.org>
+Date:   Sat, 16 Mar 2019 22:58:06 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
+MIME-Version: 1.0
+In-Reply-To: <alpine.LFD.2.21.1903160816410.10724@localhost.localdomain>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-From:   Linda Brinsfield <lindabrinsfield26@gmail.com>
-Mime-Version: 1.0 (1.0)
-Date:   Sat, 16 Mar 2019 14:57:28 -0700
-Subject: I am working on my Excel workbooks and I need your help because I know nothing about Excell. PLEASE PLEASE
-Message-Id: <22946499-2681-411A-8C39-95056D88B8CF@gmail.com>
-To:     git@vger.kernel.org
-X-Mailer: iPhone Mail (16D57)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 16.03.19 um 13:22 schrieb Robert P. J. Day:
+>   as a working example, i looked at the top-level .gitattributes file
+> in the git source code itself, which opens with:
+> 
+>   * whitespace=!indent,trail,space
+>   *.[ch] whitespace=indent,trail,space diff=cpp
+>   *.sh whitespace=indent,trail,space eol=lf
+>   ... snip ...
+> 
+> first observation is that i see nothing in the man page that explains
+> the notion of a comma-separated list of attribute values.
 
+This comma-separated list is not a property of attributes in general,
+but a property of the whitespace attribute in particular. See
+core.whitespace in git-config(1) and "Checking whitespace errors" in
+gitattributes(5).
 
-Sent from my iPhone this is my new phone and number
+-- Hannes
