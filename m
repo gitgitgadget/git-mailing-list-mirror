@@ -8,66 +8,59 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1777420248
-	for <e@80x24.org>; Sun, 17 Mar 2019 14:12:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8253A20248
+	for <e@80x24.org>; Sun, 17 Mar 2019 14:22:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727063AbfCQOMI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 10:12:08 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:41911 "EHLO
+        id S1726885AbfCQOWw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 10:22:52 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:40464 "EHLO
         mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726855AbfCQOMH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 10:12:07 -0400
-Received: by mail-ed1-f68.google.com with SMTP id a25so4118953edc.8
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 07:12:06 -0700 (PDT)
+        with ESMTP id S1726802AbfCQOWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 10:22:52 -0400
+Received: by mail-ed1-f68.google.com with SMTP id h22so624355edw.7
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 07:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=XW1lK54hNIcQCCkHobR0kBEkhTq79laOKyfThfdXOz8=;
-        b=YPVbpv4T/HVg115JZ55SlvAUSRcQ4y2VLBdcCVe77co16QBhHYrqQeCGa5lHRu0GdV
-         Ed117OvO+EiT7cNYk3hAsScbU9OwqMFCQ+Fs8qPgHBN0w3t4sixKngJk6Cz4nlOyrSuH
-         m89pNJiJKEHPqctL08mG9FVeMmEtm/ZeZ2S8Dn18OuzRFPEkMGq2fyrykV7SBA/P1u6Y
-         j6wRWmrw9/en3SFrxkOsXQNTKjbMqkjxgTFg1lJTc3eSJQP90naU9zHa4AAGyW+XOYwh
-         lehdP373cqc792Q1/5gQjfoiCmnf4WZdWfhAQiEu52FdebD1eoZd7RMNiDP08+6cQHUA
-         2CMQ==
+        bh=RkXYG+oKojuqRfAJhXBp6g8ki71qAZSE8h1AnmC1+lU=;
+        b=CcvledofOco6JTttL7v2K7A20quVErG/WtZo6IXPB97wWRr/cIp2ccvH3nLuHzNgAe
+         bCz02xOA7R8p00Kc7OGDCrnPSTHO8hBKR8DwXYFnTELvzNBFRbfuWpEkrhEr+hGZpf3C
+         X8bZZ86r6y7Scxf0ksenLcxe7P5rRtH+ESN5BufDBOtOFkaXY8XM9RLgKY7Kbwi8xBh8
+         WKMVeT606MTeg8pPz00J1cV9uYkX04UxNPgObQNJI6niGSeGaB+tnAuapbyccxUElamL
+         N5TonDkldeIGz3LjIBaxvTEuvkYOTH792H88WlimEd7H0a8Jm5OVlJ9fjFaEp/OEd1UU
+         3HcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=XW1lK54hNIcQCCkHobR0kBEkhTq79laOKyfThfdXOz8=;
-        b=Jk6c/TsjAA4OHtU5Eebcxqjv+jmzbp80q2LgRuUgv7jKkabuQJ2+xMa4Y8GvT6mJ5U
-         i+AD0B0uR5o2S+TbhkB1J8VOz3np/WgtKqoqTR8kV9ypzQO93MqhyN/SbUCmsDfmmRnH
-         hj7kbyHJLnxTHT6ukBPvSNtTy8NrURmEqES+V4zy9F+iH5pCUrvIXtkl49JXNDg72n5m
-         zfXRahWdtQWoila5o+You0JrC/4fLiD419dd+5emZnH9RkLS/cZjheCnQRRoJK1Vkz39
-         P8pZHoCIG8laLwgqeQzoYij0j6HtROvnsIXfw5vSgm+/JIOUSZ1sF5F6j650Dl+sJ7He
-         w4nw==
-X-Gm-Message-State: APjAAAU9ocGiS9juap7TxIgzbIUtqAeDOrHe44qTNUx3EDg2qUjJGgM9
-        g2u3IVdRjDTRZPlu7t69eIZRg1LA
-X-Google-Smtp-Source: APXvYqwuHjENHDOhtuqMtFi/bz81UlFGlPaKTUmjhRAU9vhe2pia3OUxMKO9zXYme4V2n7ji1FQOKQ==
-X-Received: by 2002:a05:6402:617:: with SMTP id n23mr9446615edv.187.1552831925319;
-        Sun, 17 Mar 2019 07:12:05 -0700 (PDT)
+        bh=RkXYG+oKojuqRfAJhXBp6g8ki71qAZSE8h1AnmC1+lU=;
+        b=fQeykpsGkSuL7TFF94d6Kbnx9Xgo+LBbo9tt+2qVrda8ttoiiYJYSxxE2Bz+orHJeW
+         24GTKnYwK+iBfaTXkdbuol3KiUr/IN1AO/D3x4aCqF8BAqfuKBI8sTuraAS9y0XtyYsj
+         Wnum/yS671chEt4C/1Qhayo/B20htGM+jiyR2iXT6twz0w3N6LWsLMjkwwTMHhFz0Wtm
+         8flivH8m8Bc6K/kb1hf8sZ3TCNvOpc/GiCLLyVVg17cCj12Gu0jZOoEPqH6GvNKHeyjN
+         HAH9Np2OSrdPAet0UsVQSqYkzkhFU/xyrEtkSvQ1Mv5vZYeYSDZFQCr20kShOkNIvWdU
+         5vFg==
+X-Gm-Message-State: APjAAAXjDrOthuebirwHGOuHZSc8SIpmPC/QbrX+24fS4xihEn8OD+f/
+        WsEa7x3dK5hgBgkxpVjRMqM=
+X-Google-Smtp-Source: APXvYqzQqzksYxGkD4QIpqiMPRklGB3ap3e3uV5HqCj2YZ8WdJaiLne4WBiQL3whw20AQHiLGLKVXQ==
+X-Received: by 2002:a50:e703:: with SMTP id a3mr9508449edn.205.1552832569767;
+        Sun, 17 Mar 2019 07:22:49 -0700 (PDT)
 Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id a51sm2594703edd.57.2019.03.17.07.12.04
+        by smtp.gmail.com with ESMTPSA id x45sm2605473edb.42.2019.03.17.07.22.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 17 Mar 2019 07:12:04 -0700 (PDT)
+        Sun, 17 Mar 2019 07:22:48 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Subject: Re: [PATCH] git-diff.txt: prefer not using <commit>..<commit>
-References: <bc7c3f9d769b2d5a108ff4cdc3c7277e112fdb56.1552820745.git.liu.denton@gmail.com> <87multaaac.fsf@evledraar.gmail.com> <CACsJy8C3P93896fP8BStmYd1WMNukYV6u8gB0zgC3rKLqxgzyQ@mail.gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 00/15] Trace2 tracing facility
+References: <pull.108.v5.git.gitgitgadget@gmail.com> <pull.108.v6.git.gitgitgadget@gmail.com> <87a7iyk0r8.fsf@evledraar.gmail.com> <0aff8302-371e-cb5e-fe5e-f08e45456559@jeffhostetler.com>
 User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CACsJy8C3P93896fP8BStmYd1WMNukYV6u8gB0zgC3rKLqxgzyQ@mail.gmail.com>
-Date:   Sun, 17 Mar 2019 15:12:04 +0100
-Message-ID: <87lg1da8uj.fsf@evledraar.gmail.com>
+In-reply-to: <0aff8302-371e-cb5e-fe5e-f08e45456559@jeffhostetler.com>
+Date:   Sun, 17 Mar 2019 15:22:49 +0100
+Message-ID: <87k1gxa8cm.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -77,88 +70,90 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Mar 17 2019, Duy Nguyen wrote:
+On Fri, Feb 15 2019, Jeff Hostetler wrote:
 
-> On Sun, Mar 17, 2019 at 8:41 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
+> On 2/14/2019 7:33 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >>
+>> On Wed, Feb 06 2019, Jeff Hostetler via GitGitGadget wrote:
 >>
->> On Sun, Mar 17 2019, Denton Liu wrote:
+>>> V6 addresses: [] The remaining hdr-check warning in trace2/tr2_tls.h
+>>>
+>>> There are no other outstanding comments that I'm aware of.
 >>
->> > The documentation used to consider
->> >
->> >       git diff <commit> <commit>
->> >
->> > and
->> >
->> >       git diff <commit>..<commit>
->> >
->> > to be equal counterparts. However, rev-list-ish commands also use the
->> > <commit>..<commit> notation, but in a logically conflicting manner whi=
-ch
->> > was confusing for some users (including me!).
->> >
->> > Deprecating the notation entirely is not really an option because it
->> > would be an arduous process without much end-value. In addition, there
->> > are some valid use-cases that we don't want to break.
->> >
->> > Document the preference of the first form so that future confusion can
->> > be minimised.
->> >
->> > Signed-off-by: Denton Liu <liu.denton@gmail.com>
->> > ---
->> >
->> > Thanks all on your feedback on the discussion thread[1]! I opted for
->> > just the documentation-only route so we don't break any valid use-case=
-s.
->> >
->> > [1]: https://public-inbox.org/git/20190311093751.GA31092@archbookpro.l=
-ocaldomain/
->> >
->> >  Documentation/git-diff.txt | 6 +++++-
->> >  1 file changed, 5 insertions(+), 1 deletion(-)
->> >
->> > diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
->> > index 72179d993c..10c7a2220c 100644
->> > --- a/Documentation/git-diff.txt
->> > +++ b/Documentation/git-diff.txt
->> > @@ -63,7 +63,11 @@ two blob objects, or changes between two files on d=
-isk.
->> >
->> >  'git diff' [<options>] <commit>..<commit> [--] [<path>...]::
->> >
->> > -     This is synonymous to the previous form.  If <commit> on
->> > +     This is synonymous to the previous form.  However,
->> > +     users should prefer the previous form over this form
->> > +     as this form may be more confusing due to the same
->> > +     notation having a logically conflicting meaning in
->> > +     linkgit:git-rev-list[1]-ish commands.  If <commit> on
->> >       one side is omitted, it will have the same effect as
->> >       using HEAD instead.
+>> Not a comment on this, just a follow-up question. I started looking into
+>> whether this could be driven by config instead of getenv(). A lot easier
+>> to set up in some cases than injecting env variables, especialy if the
+>> log target supported a strftime() string, is any of that something
+>> you've looked into already (so I don't do dupe work...).
 >>
->> I think we're better off just consistently recommending "A..B" instead
->> of "A B" and "fixing" any occurrence of the latter to the
->> former. I.e. not taking this patch & going in the other direction.
+>> There's the chicken & egg problem with wanting to do traces way before
+>> we get to reading config, so I expect that such a facility would need to
+>> work by always trace record at the beginning until we get far enough to
+>> write the config, and then either stop and throw away the buffer, or
+>> write out the existing trace to the configured target, and continue.
 >>
->> As noted in the thread you linked we'll always need ".." when one side
->> is "HEAD" implicitly, and that's a really common case.
 >
-> You could just type " @" instead of "..". And that one is easier to expla=
-in.
+> Yes, I beat my head against the config settings for quite a while
+> before settling on using an env var.
+>
+> I wanted to get the:
+> () full process elapsed time,
+> () the full original argv,
+> () all of the command dispatch, run-dashed, and alias expansion,
+> () and for my atexit() to run last.
+> So I hooked into main() before the config is loaded.
+>
+> In most commands, the config is processed about the same time as
+> parse_options() is called.  And we have to insert code in
+> git_default_config() to load my settings.  This happens after all
+> of the .git dir discovery, "-c" and "-C" processing, alias expansion,
+> command dispatch and etc.  And the argv received in the cmd_*()
+> function has been modified.  So we lose some information.  (I tried
+> this for a while and didn't like the results.)
+>
+> I also tried using read_early_config() various places, but there
+> were problems here too.  Too early and the "-c" settings weren't
+> parsed yet.  And there was an issue about when .git dir was discovered,
+> so local config settings weren't ready yet.
+>
+> I also recall having a problem when doing an early iteration with
+> side effects (or rather the early iteration caused something to be
+> set that caused the real iteration (in cmd_*()) to short-cut), but
+> I don't remember the details.
+>
+> So we have a custom installer that also sets the environment variable
+> after git is installed and haven't had any problems.
+>
+>
+> I hesitate to say we should always start allocating a bunch of data
+> and spinning up the TLS data and etc. before we know if tracing is
+> wanted.  Just seems expensive for most users.
+>
+>
+> I could see having a "~/.git_tr2_config" or something similar in
+> some place like "/etc" that only contained the Trace2 settings.
+> It would be safe to read very early inside main() and we would not
+> consider it to be part of the real config.  For example, "git config"
+> would not know about it.  Then you could enforce a system-wide
+> setting without any of the env var issues.
 
-Sure, and if we're going to change our docs to consistently use @ at
-either side of such ranges instead of the empty string for "HEAD" I
-think that's worth discussing if the goal is to get rid of ".." for
-"diff".
+I haven't written a patch for this, but it seems to me that we could
+just start reading /etc/gitconfig via some custom config callback code
+early as e.g. 58b284a2e91 ("worktree: add per-worktree config files",
+2018-10-21) does for the worktree config.
 
-I'm commenting on the in-between state being more confusing to users,
-which is as far as this patch gets us.
+It would ignore everything except trace.* or wherever namespace we'll
+put this in, and "-c" etc. wouldn't work. We could just document that as
+a limitation for now which could be fixed later.
 
->> So as confusing as the whole ".." v.s. "..." is in diff v.s. log I think
->> we're worse off with "A B", since we'll *still* need to document the
->> likes of "A.." and how that differs from log "A.." or "A...".
->>
->> So sometimes using the whitespace form for two revs and then the ".."
->> when we just have one side makes things more confusing, not less. The
->> reader will be left having to juggle more complexity in their head, not
->> less.
+It wouldn't make things worse, and would mean you could easily set
+logging system-wide without needing to inject environment variables in
+lots of custom (and sometimes hard-to-do) places, which I expect is the
+most common use-case, and is the one I have.
+
+> WRT the strftime() question, we could either add syntax to the
+> env var value (or the tr2 config setting) to have some tokens
+> for that.  I just stuck with absolute pathnames since I started
+> by copying what was done for GIT_TRACE.
+>
+> Jeff
