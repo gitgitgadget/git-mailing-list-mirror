@@ -7,105 +7,125 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C2B020248
-	for <e@80x24.org>; Sun, 17 Mar 2019 18:16:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 572B220248
+	for <e@80x24.org>; Sun, 17 Mar 2019 18:16:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727236AbfCQSQj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 14:16:39 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62707 "EHLO
+        id S1727241AbfCQSQn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 14:16:43 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64173 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727111AbfCQSQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 14:16:39 -0400
+        with ESMTP id S1725914AbfCQSQn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 14:16:43 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6F36C6117B;
-        Sun, 17 Mar 2019 14:16:37 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0C15E6117E;
+        Sun, 17 Mar 2019 14:16:41 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=ASB1GIPocT3yhzbI8mvz7V74w
-        Og=; b=aARdGs3/z8eHf5BlnyQ2LPk7uLtbr0RlInvHNq7EJ/R8nDLBwqYlOHgoN
-        /qtzlMhJSkUuANt9oHFofotV3y7pb7GlTEdOL2X48NMINy7l40gYETky/yoj5jLN
-        lAKPR+zliKtkPiZbSxs4KQPx7IivfF/8iDJEGhlrvRYsGgQPtg=
+        :content-type:content-transfer-encoding; s=sasl; bh=Kn9416gq4Y08
+        kXKQoYqGoNeeWdI=; b=URkfy4aPF3GQAo1kWRvTD7nJJu0DAg6Wkks9s1by3StF
+        uLD93vkxdNO37EXXYjf4nwiq/4KFN7dzIXqtOXuyDXVPmIq6xS3RZl9z8HYkW2Do
+        /cEbFmPNyouZ2MXvzwO/Zzo1DBu/JtZ7bNtgSZP2Xdkd1M0XVxU5MWu43yc56s0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; q=dns; s=sasl; b=b1HA4xz1W89oVBCaReX
-        D4Zh2JYYL55Ml39evZ1+pdVFM860D8qUqrEy5HNTXWrVxvqPLLgvRBBIEBwOePF/
-        7zJyt6KNpq+pkuse2hrjGTFCPNowhUpdhh3TQwfPRHYCJogxhJyY17wAiMexvw0h
-        m3KtaQq3/VE1k9nbxOJqPekE=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=iqtgGR
+        9BomQC5kY7XOzbkRLtUpM1Qh31SqxKR4I975eel69ub3bNrgBGWSFsTRX1l6ZSSi
+        l3SbTxc2J8s+rkjaVw+GM9CXJyazq7aHOStYQCbbkoPlO4AEinHzvgrwnwROvUsv
+        DkSExiF676Q39RwhcQeURBmSqSXn9JKL+wElI=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 669D86117A;
-        Sun, 17 Mar 2019 14:16:37 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 046606117D;
+        Sun, 17 Mar 2019 14:16:41 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 Received: from morphine.paradise.teonanacatl.net (unknown [47.202.93.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D8D7C61174;
-        Sun, 17 Mar 2019 14:16:32 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 67B1661179;
+        Sun, 17 Mar 2019 14:16:36 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 From:   Todd Zullinger <tmz@pobox.com>
 To:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 3/4] completion: fix multiple command removals
-Date:   Sun, 17 Mar 2019 14:16:19 -0400
-Message-Id: <20190317181620.26727-4-tmz@pobox.com>
+Subject: [PATCH v2 4/4] completion: use __git when calling --list-cmds
+Date:   Sun, 17 Mar 2019 14:16:20 -0400
+Message-Id: <20190317181620.26727-5-tmz@pobox.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <CACsJy8BuR=syjT1gjTxXXKKaevzpbdRGp+je+rsX6jV96F3sbA@mail.gmail.com>
 References: <CACsJy8BuR=syjT1gjTxXXKKaevzpbdRGp+je+rsX6jV96F3sbA@mail.gmail.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: CC08AC38-48E0-11E9-8335-EE24A11ADF13-09356542!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+X-Pobox-Relay-ID: CE23A90A-48E0-11E9-B462-EE24A11ADF13-09356542!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Since e51bdea6d3 ("git: read local config in --list-cmds", 2019-03-01),
+the completion.commands variable respects repo-level configuration.  Use
+__git which ensures that the proper repo config is consulted if the
+command line contains 'git -C /some/other/repo'.
 
-Commit 6532f3740b ("completion: allow to customize the completable
-command list", 2018-05-20) tried to allow multiple space-separated
-entries in completion.commands. To do this, it copies each parsed token
-into a strbuf so that the result is NUL-terminated.
-
-However, for tokens starting with "-", it accidentally passes the
-original non-terminated string, meaning that only the final one worked.
-Switch to using the strbuf.
-
-Reported-by: Todd Zullinger <tmz@pobox.com>
-Signed-off-by: Jeff King <peff@peff.net>
+Suggested-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
 ---
- help.c                | 4 ++--
- t/t9902-completion.sh | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/help.c b/help.c
-index 520c9080e8..026f881715 100644
---- a/help.c
-+++ b/help.c
-@@ -393,8 +393,8 @@ void list_cmds_by_config(struct string_list *list)
- 		const char *p =3D strchrnul(cmd_list, ' ');
+Junio, I referenc the commit id for "git: read local config in
+--list-cmds" which is earlier in this series, so the id will, of
+course, differ when you apply it.  Let me know if you'd prefer
+this commit to be dropped and resent once the others in the
+series are applied or if it's easy for you to adjust when it's
+queued.
+
+Also, as I wrote in an earlier reply, at the moment, I think
+using __git only matters for calls where config is in the
+--list-cmds list.  But since Jeff's fix affects all --list-cmds
+calls, it seems prudent to adjust the 3 other uses of --list-cmds
+in the completion script.
+
+ contrib/completion/git-completion.bash | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
+git-completion.bash
+index 499e56f83d..e505f04ff7 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1010,7 +1010,7 @@ __git_all_commands=3D
+ __git_compute_all_commands ()
+ {
+ 	test -n "$__git_all_commands" ||
+-	__git_all_commands=3D$(git --list-cmds=3Dmain,others,alias,nohelpers)
++	__git_all_commands=3D$(__git --list-cmds=3Dmain,others,alias,nohelpers)
+ }
 =20
- 		strbuf_add(&sb, cmd_list, p - cmd_list);
--		if (*cmd_list =3D=3D '-')
--			string_list_remove(list, cmd_list + 1, 0);
-+		if (sb.buf[0] =3D=3D '-')
-+			string_list_remove(list, sb.buf + 1, 0);
- 		else
- 			string_list_insert(list, sb.buf);
- 		strbuf_release(&sb);
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 3f5b420bf8..050fac4fff 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1483,7 +1483,7 @@ test_expect_success 'git --help completion' '
- 	test_completion "git --help core" "core-tutorial "
- '
+ # Lists all set config variables starting with the given section prefix,
+@@ -1620,9 +1620,9 @@ _git_help ()
+ 	esac
+ 	if test -n "$GIT_TESTING_ALL_COMMAND_LIST"
+ 	then
+-		__gitcomp "$GIT_TESTING_ALL_COMMAND_LIST $(git --list-cmds=3Dalias,lis=
+t-guide) gitk"
++		__gitcomp "$GIT_TESTING_ALL_COMMAND_LIST $(__git --list-cmds=3Dalias,l=
+ist-guide) gitk"
+ 	else
+-		__gitcomp "$(git --list-cmds=3Dmain,nohelpers,alias,list-guide) gitk"
++		__gitcomp "$(__git --list-cmds=3Dmain,nohelpers,alias,list-guide) gitk=
+"
+ 	fi
+ }
 =20
--test_expect_failure 'completion.commands removes multiple commands' '
-+test_expect_success 'completion.commands removes multiple commands' '
- 	test_config completion.commands "-cherry -mergetool" &&
- 	git --list-cmds=3Dlist-mainporcelain,list-complete,config >out &&
- 	! grep -E "^(cherry|mergetool)$" out
+@@ -2888,7 +2888,7 @@ __git_main ()
+ 			then
+ 				__gitcomp "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
+ 			else
+-				__gitcomp "$(git --list-cmds=3Dlist-mainporcelain,others,nohelpers,a=
+lias,list-complete,config)"
++				__gitcomp "$(__git --list-cmds=3Dlist-mainporcelain,others,nohelpers=
+,alias,list-complete,config)"
+ 			fi
+ 			;;
+ 		esac
