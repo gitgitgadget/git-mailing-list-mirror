@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CBAD20248
-	for <e@80x24.org>; Sun, 17 Mar 2019 12:52:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4614420248
+	for <e@80x24.org>; Sun, 17 Mar 2019 12:52:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727335AbfCQMwB (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 08:52:01 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:41174 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726204AbfCQMwB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 08:52:01 -0400
-Received: by mail-pg1-f196.google.com with SMTP id k11so9492893pgb.8
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 05:52:00 -0700 (PDT)
+        id S1727339AbfCQMwH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 08:52:07 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:39751 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726204AbfCQMwG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 08:52:06 -0400
+Received: by mail-pg1-f194.google.com with SMTP id h8so9502471pgp.6
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 05:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rTv1lAnUM4dZ7BGgNNiEZzjUzWLUvViqr8DVMI2hwWk=;
-        b=OZQ/uCO/u5nPTgvSKR9pqnTeG7hH2BKET+w4eD4SoawIjlBMvZWILmQeIQumQwD6Qk
-         zqsoubhbCtLmJazAeE7H+VBEh+prYYKp9UApdjK8j9j1v2YEJE/gGe81voYinEGstk9m
-         71Nq0nUsjn6dNHCch62lun2+rlnAD4Wxx90X9ahS0umtSoufJ97ivZf+RGmhsOxumb2/
-         OHMTforcwhEzkfyXkJEj9rfXrqIWYmRr34BxtCYawYcyBBRnqZS4Cgx5nvRAu7StCBwj
-         c0BHPYqbiz0g4qaDnjXKmpRcc3hio2N7MwjYGFdaxINayR+vwZvDBsw5YpPtlgb6njl6
-         jlYA==
+        bh=s9zzyC4bUuDWsMj21SIT1PpDwknwIOMyd+a0pgKlEsc=;
+        b=di2eiLs30KzgPd/tn2aJ0Cj6gqGn81ODB0e3nWJMTlxWeV0MF7SGeB4RvC8ifh7gQP
+         LAbuFeBlSEDh50oLADcZUXvrDmFxXlRP67HIt7C2yM3nZb0fTo/UjtUJZp1LDHVqlfv/
+         3XcBr5AYpan51VTDEeD4qdj06soLoPwOPpv/DGDBF/ZofVuIpnVRWxDgeL9mQqKmqb1b
+         dAs4nMHFnXEZ5GhlWpxfD2zw+8ysFJreFJZrM+D2t6t1c0NfogO2o5F5RjGXrVC/SL+y
+         wdQx3RVke+0UP+qQIR1raRi8qS81/Efyu9e1tkl9tbE6Td+ZxS1b7KP3jTt3zjw6X8M5
+         XBXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rTv1lAnUM4dZ7BGgNNiEZzjUzWLUvViqr8DVMI2hwWk=;
-        b=f4gNfNc2vhW50UjOsVDIcRi6KDFrnuAx5Nj7F47+5IM2xTzrvsyUX/t1ljZCWWN3y6
-         baTrzbVuUm1y3ASs1F6sZLJLdPzNvTP/Pf839B73G9e+se17thjWWNRkZYCG0LpEKhVV
-         vuWCfOQXzTtMXibiinK903zdPx4Mf15bu8UrltX7Q3/lCu+GyjeUNsVKOZrtT7W8DS2d
-         REA9RuPzQoU1KNDXo/YtP6vGULB2LY+0CV5lNmKs/PPH4RIyXD9/lBlUJL33OqQLTCIE
-         oCRy/MpmyM15Reen0vFkHJ1g2YtRe1QoL0dbcjExOJd+msKCMhq3qvzQa5Cv7QuAJhv+
-         Xx0w==
-X-Gm-Message-State: APjAAAWl2qfQWXlkbO9Z8BKiH9N+XoSRoVgFuLv0X92ysQYhybF/nFWB
-        WQ78uzzj2j7R/m91GDZY4ds=
-X-Google-Smtp-Source: APXvYqwM45Abpp5R5l+UiP+e2cRvL+yyYe26B/SpacLhyQeOjTDe3RVCm9331b+Kzg8Zi3+8XroVkQ==
-X-Received: by 2002:a63:c042:: with SMTP id z2mr12859924pgi.307.1552827120205;
-        Sun, 17 Mar 2019 05:52:00 -0700 (PDT)
+        bh=s9zzyC4bUuDWsMj21SIT1PpDwknwIOMyd+a0pgKlEsc=;
+        b=L5qTCnYkhg3bTjLzRj3OWK+7qQplWa7b4OviYkmexeEQAi79jDyntlboDiG+jZrMdg
+         aG4E7zh3U0LdkU742HTm+ahRB5sv97g0Lo49jEUa4PvLbq9M6r9Yr5CAhwZymC0VR3tT
+         pcKARk9FRCL1iFuSoBy4SQmsGpQqxl/+AWPhbzEGgBL8SGhoumuKz6aP5wCPtGbZInCU
+         J0vREAEUkdrHQK02UAI8pXR8gtu5Oq5qaP2Dt5K1KtINXczsgh9AvuHfyk1VkSw/hKtQ
+         NZ8xnieY2qZ7RtNPZV7cz++TPMUDnZLQlVZrAFMtAD/ym4YCA4PL19IVIcOX1qSB/Che
+         e1Yg==
+X-Gm-Message-State: APjAAAXekZB+cvi3t4FaR5O6NpLa07TGgpUU6ofl9SPAu40adjDRdBnM
+        GYzmgDhUZa9ju3PGx8LUmeY=
+X-Google-Smtp-Source: APXvYqxwniGE3ATqMPu5cb7ofJGgzKp+DcKK5UBPFNb9OuoVZyM9b0HELOyJecFrTzZ+B/R3Afs24g==
+X-Received: by 2002:a63:545f:: with SMTP id e31mr12557131pgm.409.1552827126054;
+        Sun, 17 Mar 2019 05:52:06 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id b138sm12551740pfb.48.2019.03.17.05.51.56
+        by smtp.gmail.com with ESMTPSA id i21sm983790pfa.14.2019.03.17.05.52.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Mar 2019 05:51:59 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 17 Mar 2019 19:51:54 +0700
+        Sun, 17 Mar 2019 05:52:05 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 17 Mar 2019 19:52:00 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
@@ -59,9 +59,9 @@ Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         jacob.keller@gmail.com, phillip.wood123@gmail.com,
         rybak.a.v@gmail.com
-Subject: [PATCH v4 23/26] switch: --orphan defaults to empty tree as HEAD
-Date:   Sun, 17 Mar 2019 19:49:23 +0700
-Message-Id: <20190317124926.17137-24-pclouds@gmail.com>
+Subject: [PATCH v4 24/26] t: add tests for switch
+Date:   Sun, 17 Mar 2019 19:49:24 +0700
+Message-Id: <20190317124926.17137-25-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190317124926.17137-1-pclouds@gmail.com>
 References: <20190308095752.8574-1-pclouds@gmail.com>
@@ -74,144 +74,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Switching and creating branches always involves knowing the
-<start-point> to begin the new branch from. Sometimes, people want to
-create a new branch that does not have any commits yet; --orphan is a
-flag to allow that.
-
-If <start-point> is not specified, instead of leaving index/worktree
-unchanged, default to "empty tree" starting point, allowing a clean
-start.
-
-A note on the implementation. An alternative is just create a dummy
-commit in-core with empty tree and switch to it. But there's a chance
-the commit's SHA-1 may end up somewhere permanent like reflog. It's best
-to make sure "commit" pointer is NULL to avoid it.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/checkout.c | 33 +++++++++++++++++++++++++--------
- 1 file changed, 25 insertions(+), 8 deletions(-)
+ t/t2060-switch.sh (new +x) | 97 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 21a585eaa9..f0d6207236 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -58,6 +58,7 @@ struct checkout_opts {
- 	int switch_branch_doing_nothing_is_ok;
- 	int only_merge_on_switching_branches;
- 	int can_switch_when_in_progress;
-+	int orphan_default_empty_tree;
- 
- 	const char *new_branch;
- 	const char *new_branch_force;
-@@ -568,15 +569,19 @@ static int merge_working_tree(const struct checkout_opts *opts,
- {
- 	int ret;
- 	struct lock_file lock_file = LOCK_INIT;
-+	struct tree *new_tree;
- 
- 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
- 	if (read_cache_preload(NULL) < 0)
- 		return error(_("index file corrupt"));
- 
- 	resolve_undo_clear();
-+	if (opts->orphan_default_empty_tree && !new_branch_info->commit)
-+		new_tree = parse_tree_indirect(the_hash_algo->empty_tree);
-+	else
-+		new_tree = get_commit_tree(new_branch_info->commit);
- 	if (opts->discard_changes) {
--		ret = reset_tree(get_commit_tree(new_branch_info->commit),
--				 opts, 1, writeout_error);
-+		ret = reset_tree(new_tree, opts, 1, writeout_error);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -614,7 +619,8 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 					   &old_branch_info->commit->object.oid :
- 					   the_hash_algo->empty_tree);
- 		init_tree_desc(&trees[0], tree->buffer, tree->size);
--		tree = parse_tree_indirect(&new_branch_info->commit->object.oid);
-+		parse_tree(new_tree);
-+		tree = new_tree;
- 		init_tree_desc(&trees[1], tree->buffer, tree->size);
- 
- 		ret = unpack_trees(2, trees, &topts);
-@@ -663,7 +669,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			o.verbosity = 0;
- 			work = write_tree_from_memory(&o);
- 
--			ret = reset_tree(get_commit_tree(new_branch_info->commit),
-+			ret = reset_tree(new_tree,
- 					 opts, 1,
- 					 writeout_error);
- 			if (ret)
-@@ -672,13 +678,13 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			o.branch1 = new_branch_info->name;
- 			o.branch2 = "local";
- 			ret = merge_trees(&o,
--					  get_commit_tree(new_branch_info->commit),
-+					  new_tree,
- 					  work,
- 					  get_commit_tree(old_branch_info->commit),
- 					  &result);
- 			if (ret < 0)
- 				exit(128);
--			ret = reset_tree(get_commit_tree(new_branch_info->commit),
-+			ret = reset_tree(new_tree,
- 					 opts, 0,
- 					 writeout_error);
- 			strbuf_release(&o.obuf);
-@@ -696,7 +702,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 		die(_("unable to write new index file"));
- 
--	if (!opts->discard_changes && !opts->quiet)
-+	if (!opts->discard_changes && !opts->quiet && new_branch_info->commit)
- 		show_local_changes(&new_branch_info->commit->object, &opts->diff_options);
- 
- 	return 0;
-@@ -897,7 +903,10 @@ static void orphaned_commit_warning(struct commit *old_commit, struct commit *ne
- 	add_pending_object(&revs, object, oid_to_hex(&object->oid));
- 
- 	for_each_ref(add_pending_uninteresting_ref, &revs);
--	add_pending_oid(&revs, "HEAD", &new_commit->object.oid, UNINTERESTING);
-+	if (new_commit)
-+		add_pending_oid(&revs, "HEAD",
-+				&new_commit->object.oid,
-+				UNINTERESTING);
- 
- 	if (prepare_revision_walk(&revs))
- 		die(_("internal error in revision walk"));
-@@ -941,6 +950,12 @@ static int switch_branches(const struct checkout_opts *opts,
- 
- 		if (opts->only_merge_on_switching_branches)
- 			do_merge = 0;
+diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
+new file mode 100755
+index 0000000000..62ec1bb924
+--- /dev/null
++++ b/t/t2060-switch.sh
+@@ -0,0 +1,97 @@
++#!/bin/sh
 +
-+		if (opts->new_orphan_branch && opts->orphan_default_empty_tree) {
-+			new_branch_info->commit = NULL;
-+			new_branch_info->name = "(empty)";
-+			do_merge = 1;
-+		}
- 	}
- 
- 	if (do_merge) {
-@@ -1537,6 +1552,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	opts.accept_pathspec = 1;
- 	opts.implicit_detach = 1;
- 	opts.can_switch_when_in_progress = 1;
-+	opts.orphan_default_empty_tree = 0;
- 
- 	options = parse_options_dup(checkout_options);
- 	options = add_common_options(&opts, options);
-@@ -1575,6 +1591,7 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
- 	opts.only_merge_on_switching_branches = 1;
- 	opts.implicit_detach = 0;
- 	opts.can_switch_when_in_progress = 0;
-+	opts.orphan_default_empty_tree = 1;
- 
- 	options = parse_options_dup(switch_options);
- 	options = add_common_options(&opts, options);
++test_description='switch basic functionality'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit first &&
++	git branch first-branch &&
++	test_commit second &&
++	test_commit third &&
++	git remote add origin nohost:/nopath &&
++	git update-ref refs/remotes/origin/foo first-branch
++'
++
++test_expect_success 'switch branch no arguments' '
++	test_must_fail git switch
++'
++
++test_expect_success 'switch branch' '
++	git switch first-branch &&
++	test_path_is_missing second.t
++'
++
++test_expect_success 'switch and detach' '
++	test_when_finished git switch master &&
++	test_must_fail git switch master^{commit} &&
++	git switch --detach master^{commit} &&
++	test_must_fail git symbolic-ref HEAD
++'
++
++test_expect_success 'switch and detach current branch' '
++	test_when_finished git switch master &&
++	git switch master &&
++	git switch --detach &&
++	test_must_fail git symbolic-ref HEAD
++'
++
++test_expect_success 'switch and create branch' '
++	test_when_finished git switch master &&
++	git switch -c temp master^ &&
++	test_cmp_rev master^ refs/heads/temp &&
++	echo refs/heads/temp >expected-branch &&
++	git symbolic-ref HEAD >actual-branch &&
++	test_cmp expected-branch actual-branch
++'
++
++test_expect_success 'force create branch from HEAD' '
++	test_when_finished git switch master &&
++	git switch --detach master &&
++	test_must_fail git switch -c temp &&
++	git switch -C temp &&
++	test_cmp_rev master refs/heads/temp &&
++	echo refs/heads/temp >expected-branch &&
++	git symbolic-ref HEAD >actual-branch &&
++	test_cmp expected-branch actual-branch
++'
++
++test_expect_success 'new orphan branch from empty' '
++	test_when_finished git switch master &&
++	git switch --orphan new-orphan &&
++	test_commit orphan &&
++	git cat-file commit refs/heads/new-orphan >commit &&
++	! grep ^parent commit &&
++	git ls-files >tracked-files &&
++	echo orphan.t >expected &&
++	test_cmp expected tracked-files
++'
++
++test_expect_success 'switching ignores file of same branch name' '
++	test_when_finished git switch master &&
++	: >first-branch &&
++	git switch first-branch &&
++	echo refs/heads/first-branch >expected &&
++	git symbolic-ref HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'guess and create branch ' '
++	test_when_finished git switch master &&
++	test_must_fail git switch --no-guess foo &&
++	git switch foo &&
++	echo refs/heads/foo >expected &&
++	git symbolic-ref HEAD >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'switching when something is in progress' '
++	test_when_finished rm -f .git/MERGE_HEAD &&
++	# fake a merge-in-progress
++	cp .git/HEAD .git/MERGE_HEAD &&
++	test_must_fail git switch -d @^ &&
++	git switch --ignore-in-progress -d @^ &&
++	git switch -
++'
++
++test_done
 -- 
 2.21.0.548.gd3c7d92dc2
 
