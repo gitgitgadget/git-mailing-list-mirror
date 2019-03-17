@@ -2,91 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2F4E20248
-	for <e@80x24.org>; Sun, 17 Mar 2019 19:28:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC46C20248
+	for <e@80x24.org>; Sun, 17 Mar 2019 19:44:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726936AbfCQT2B (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 15:28:01 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42862 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726446AbfCQT2B (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 15:28:01 -0400
-Received: by mail-ed1-f65.google.com with SMTP id j89so11711504edb.9
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 12:28:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zxfWHoVVeFareWxRXo88gnPKLExMPjeoDZmJiCnlC/U=;
-        b=Yc2oEpnCfXobaz1KWGm9FtgYrwjKquuM52zdY7XBLggL+sV3zXej8uJQn5cP2C7Vzs
-         Jk9Hwz28nAwNAkLkbCw13crkp2JOfHubQ4GbA4pkoCJJqZPFmvWkvYxYcWysG2QE/3Sg
-         LKAvr5xEPnu8m/JqMF/nvCWM6xAJ4Uvi5ruI4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zxfWHoVVeFareWxRXo88gnPKLExMPjeoDZmJiCnlC/U=;
-        b=aCW/SJx/EqWBloAJdjqMRJoRNLrfoiVFVh/8Eg/6/DH5wU15qNRTq2W3nF0UCpYAQx
-         5vVKbUx58FXslFOJpOts7NUIBmY4j1Zz+QN2dnb7CKROsN8Zb9e72PNgsqLGjK6L8aTh
-         iR24S39kFvT0k5+wDkv8DLWwEtAuOp7IunOGZrEfFJgcIz9MM5lziP/uyXNzqWoKIoLa
-         xbJMdDwVDCXjVWZEOpIgB63BFpmJ1ET5SnpH8Wdfr2VqOjEIbkP7obS8rLuJi73igLWn
-         JdFktWCswKRxv/wYYvuqb2jH+7dyrHukrFw0vjJtzi+pbnIcuHBqGwvbPV1S3j/YHmVm
-         oEDw==
-X-Gm-Message-State: APjAAAUL6nhOc6oUDsbXzge80YlEoMQdffALnWwgth9IhZFKAd4xBlSb
-        6hDP8RunpP3cJDRO58RLzCFYLA==
-X-Google-Smtp-Source: APXvYqzpu69D5DV1ds3RynxcxurAw9Hsl58WWnD9P/Tc+zTBlltWY5hQa38tB47D8FJx1B4s11g/xw==
-X-Received: by 2002:a50:aa83:: with SMTP id q3mr10278938edc.63.1552850879612;
-        Sun, 17 Mar 2019 12:27:59 -0700 (PDT)
-Received: from [192.168.1.149] (ip-5-186-117-200.cgn.fibianet.dk. [5.186.117.200])
-        by smtp.gmail.com with ESMTPSA id p2sm2752518edr.48.2019.03.17.12.27.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Mar 2019 12:27:58 -0700 (PDT)
-Subject: Re: [PATCH] send-email: don't cc *-by lines with '-' prefix
-To:     Baruch Siach <baruch@tkos.co.il>, git@vger.kernel.org
-Cc:     Joe Perches <joe@perches.com>
-References: <eec56beab016182fb78fbd367fcfa97f2ca6a5ff.1552764410.git.baruch@tkos.co.il>
-From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Message-ID: <bc20070b-437a-9875-efd0-b4cad1413233@rasmusvillemoes.dk>
-Date:   Sun, 17 Mar 2019 20:27:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
+        id S1727383AbfCQTol (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 15:44:41 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64263 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727102AbfCQTol (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 15:44:41 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD6251446D1;
+        Sun, 17 Mar 2019 15:44:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=ObXJtee1wSCnl
+        OZ65VOgJg+JGbU=; b=yErcJg0OxNcEiYNX9ZDbPhJPUT0ZGOs2JK8AgNaJJKwav
+        GBxTLbWWjWTfZ5ykR0Rz91aheE/rQgEpq/m5OVH9Pzx60Nq5eTPdYmgaWvk2Qv7X
+        W3d9zYDWoWT0j9lRTyJGsXb6DZDP05q/8ZRtd3L5vt07diLsRfB43E8/8dEXMk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=J4+BNTh
+        N8pEawUgq+NUqh/EB9cBRX5UNhMq66C65Z9ycOLZkuN9DrHRHwwWo+AKs8/ZBR/Z
+        lXTgwnnfO86n9PhV/xX203vFQt27TgkyECbmOZ47bYc23RUha9dvA8UhVH3GAxVq
+        Uk/axzpSPRR4Q9BzlMugcXgicTlBYZhx1W70=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D59811446D0;
+        Sun, 17 Mar 2019 15:44:33 -0400 (EDT)
+Received: from pobox.com (unknown [71.173.194.225])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 58B8C1446CF;
+        Sun, 17 Mar 2019 15:44:33 -0400 (EDT)
+Date:   Sun, 17 Mar 2019 15:44:31 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
+Message-ID: <20190317194431.GY31362@pobox.com>
+References: <20190317144747.2418514-1-martin.agren@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <eec56beab016182fb78fbd367fcfa97f2ca6a5ff.1552764410.git.baruch@tkos.co.il>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20190317144747.2418514-1-martin.agren@gmail.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
+X-Pobox-Relay-ID: 168C0A78-48ED-11E9-A8D4-DF19F34BB12D-09356542!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/03/2019 20.26, Baruch Siach wrote:
-> Since commit ef0cc1df90f6b ("send-email: also pick up cc addresses from
-> -by trailers") in git version 2.20, git send-email adds to cc list
-> addresses from all *-by lines. As a side effect a line with
-> '-Signed-off-by' is now also added to cc. This makes send-email pick
-> lines from patches that remove patch files from the git repo. This is
-> common in the Buildroot project that often removes (and adds) patch
-> files that have 'Signed-off-by' in their patch description part.
+Hi Martin,
 
-Yocto/OpenEmbedded and other projects do the same
+Martin =C5gren wrote:
+> When we build with AsciiDoc, asciidoc.conf ensures that each xml-file w=
+e
+> generate contains some meta-information which `xmlto` can act on, based
+> on the following template:
+>=20
+>   <refmeta>
+>   <refentrytitle>{mantitle}</refentrytitle>
+>   <manvolnum>{manvolnum}</manvolnum>
+>   <refmiscinfo class=3D"source">Git</refmiscinfo>
+>   <refmiscinfo class=3D"version">{git_version}</refmiscinfo>
+>   <refmiscinfo class=3D"manual">Git Manual</refmiscinfo>
+>   </refmeta>
+>=20
+> When we build with Asciidoctor, it does not honor this configuration fi=
+le
+> and we end up with only this (for a hypothetical git-foo.xml):
+>=20
+>   <refmeta>
+>   <refentrytitle>git-foo</refentrytitle>
+>   <manvolnum>1</manvolnum>
+>   </refmeta>
+>=20
+> That is, we miss out on the `<refmiscinfo/>` tags. As a result, the
+> header of each man page doesn't say "Git Manual", but "git-foo(1)"
+> instead. Worse, the footers don't give the Git version number and
+> instead provide the fairly ugly "[FIXME: source]".
+>=20
+> That Asciidoctor ignores asciidoc.conf is nothing new. This is why we
+> implement the `linkgit:` macro in asciidoc.conf *and* in
+> asciidoctor-extensions.rb. Follow suit and provide these tags in
+> asciidoctor-extensions.rb, using a "postprocessor" extension.
 
-> Consider only *-by lines that start with [a-z] (case insensitive) to
-> avoid unrelated addresses in cc.
+Nice!  I looked at this a long time ago and didn't figure
+out how to use a postprocessor extension.  From my notes, I
+found discussions about using ruby's tilt for templating and
+it all seemed way too convoluted.
 
-While I agree with Joe in principle that we really should not look
-inside the diff part, all lines there start with [ +-], so we wouldn't
-normally pick up anything from that due to the anchoring. Except for the
-misc-by regexp that added hyphens to grab Reported-and-tested-by and
-similar. So this is by far the simplest fix that doesn't hurt the common
-use cases the misc-by handling was added to support, so
+Your method looks quite simple and elegant.
 
-Acked-by: Rasmus Villemoes <rv@rasmusvillemoes.dk>
+> We may consider a few alternatives:
+>=20
+>   * Provide the `mansource` attribute to Asciidoctor. This attribute
+>     looks promising until one realizes that it can only be given inside
+>     the source file (the .txt file in our case), *not* on the command
+>     line using `-a mansource=3Dfoobar`. I toyed with the idea of inject=
+ing
+>     this attribute while feeding Asciidoctor the input on stdin, but it
+>     didn't feel like it was worth the complexity in the Makefile.
 
-Rasmus
+I played with this direction before.  Using Asciidoctor we
+can convert directly from .txt to man without docbook
+and xmlto.  That does have some other issues which need to
+be worked out though.  Here's what I had as a start:
+
+-- 8< --
+Subject: [PATCH] WIP: doc: improve asciidoctor manpage generation
+
+Avoid 'FIXME: Source' by setting mansource.  Skip xmlto step and render
+manpages directly with asciidoctor.
+
+TODO:
+    - apply to all man pages
+    - fix links to html docs, like user-manual.html in git.1 (currently
+      it is listed in brackets inline rather than as a footnote)
+
+Reference:
+https://lore.kernel.org/lkml/20180424150456.17353-1-tiwai@suse.de/
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+ Documentation/Makefile                  | 8 ++++++++
+ Documentation/asciidoctor-extensions.rb | 2 ++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index a9697f5146..494f8c9464 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -197,6 +197,7 @@ ASCIIDOC_DOCBOOK =3D docbook45
+ ASCIIDOC_EXTRA +=3D -acompat-mode -atabsize=3D8
+ ASCIIDOC_EXTRA +=3D -I. -rasciidoctor-extensions
+ ASCIIDOC_EXTRA +=3D -alitdd=3D'&\#x2d;&\#x2d;'
++ASCIIDOC_EXTRA +=3D -a mansource=3D"Git $(GIT_VERSION)" -a manmanual=3D"=
+Git Manual"
+ DBLATEX_COMMON =3D
+ endif
+=20
+@@ -354,9 +355,16 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf
+ manpage-base-url.xsl: manpage-base-url.xsl.in
+ 	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
+=20
++ifndef USE_ASCIIDOCTOR
+ %.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
+ 	$(QUIET_XMLTO)$(RM) $@ && \
+ 	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
++else
++%.1 %.5 %.7 : %.txt
++	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
++	$(ASCIIDOC_COMMON) -b manpage -d manpage -o $@+ $< && \
++	mv $@+ $@
++endif
+=20
+ %.xml : %.txt asciidoc.conf asciidoctor-extensions.rb
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asci=
+idoctor-extensions.rb
+index f7a5982f8b..ebb078807a 100644
+--- a/Documentation/asciidoctor-extensions.rb
++++ b/Documentation/asciidoctor-extensions.rb
+@@ -12,6 +12,8 @@ module Git
+         if parent.document.basebackend? 'html'
+           prefix =3D parent.document.attr('git-relative-html-prefix')
+           %(<a href=3D"#{prefix}#{target}.html">#{target}(#{attrs[1]})</=
+a>\n)
++        elsif parent.document.basebackend? 'manpage'
++          "#{target}(#{attrs[1]})"
+         elsif parent.document.basebackend? 'docbook'
+           "<citerefentry>\n" \
+             "<refentrytitle>#{target}</refentrytitle>" \
+-- 8< --
+
+That was based on ma/asciidoctor-extensions, but it may be
+missing other recent improvements you've made to the make
+targets.  It's been a month or so since I worked on it.
+
+I munged up doc-diff to set MANDWIDTH=3D1000 and set one
+branch to default to asciidoctor to compare.  (Your other
+recent series looks like it'll make doing asciidoc and
+asciidoctor comparisons easier.)
+
+There were a number of differences that I didn't work
+through though.  Most importantly was the change in the
+links noted in the commit message.
+
+Thanks for working on asciidoctor.  I've been trying to poke
+it off and on to help ensure the docs can be built if
+asciidoc ever gets dropped from Fedora.
+
+--=20
+Todd
