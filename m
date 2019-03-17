@@ -2,82 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E41BE20248
-	for <e@80x24.org>; Sun, 17 Mar 2019 13:24:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C75FE20248
+	for <e@80x24.org>; Sun, 17 Mar 2019 13:41:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726850AbfCQNYn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 09:24:43 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:37597 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726563AbfCQNYn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 09:24:43 -0400
-Received: by mail-it1-f194.google.com with SMTP id z124so17433582itc.2
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 06:24:42 -0700 (PDT)
+        id S1727106AbfCQNlC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 09:41:02 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:39181 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726563AbfCQNlC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 09:41:02 -0400
+Received: by mail-ed1-f66.google.com with SMTP id p27so11304809edc.6
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 06:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=h2Jz8UjJqV6zyKQk0TYqJxUh1CI/gEJpBak9tiEtacE=;
-        b=sMy3Y3iLVbSuiC6QpHQGplj4QD4YM+zMcFbAvRRDp55kTDh1ligTrfWJ1JHN0J7ifX
-         UHBmxweAPqr2xJQOqJ59IuV9eJ0i8WnrsBW+Pt4AO0cmyOhrRI68lTKv0Lz3PqUJjuYk
-         euwrawFt5+a35yxQ2KdnwvnewMQYQwIohH61GrqRE5/kKrNpCQjcv7fXTsFRf4/B40vR
-         /wtrR0v6FidxkiVpaTp+vCs2V3ZxdadGaz97LVDGwr/UTrH1t9vpf9t6BXrsLEVYeBBA
-         6DJOEp4Io3Nu3yRdeIaY7dECSvFNMc9mDyOYij1j+DTAJCM8ZmnEx90x58hzGxnx9yaz
-         w/aQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=rWPlcB72Jj1xG+l2gk79oFrFOTCr1W9dkmAKFTJ6S2E=;
+        b=b7DsHNlfQZmPkQcePTw0pxDbDG3Hgg/O+4ppb3erlOJJB/49Xt1+nKzbLnuR0p9ZP/
+         lv37RjuvZ0nxQWPH91KGJ+PMDBpNTxs3GCijIoZ3832DMOLX5XnyT1G/Z9xX/PA9bYPu
+         8G+ZCP48K1KtJCMdc3vCUDVdrA9ZAlBgG72jRoJaszzK0DnEUuqCUvRdVBoPjeJ3nmAL
+         7GGsDgE7PsycQaxQQNlo140qGyVOYl8ItmQdBc7EAJccJm+shv90PWqSR/S399MkUqUx
+         xvxDlrhkW7OYAWWSP0XVY4tWDEUGDXZqMO7TQn8tJ9Po9fC0VDFiNoxeCvEOR0WkSI3/
+         aGLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=h2Jz8UjJqV6zyKQk0TYqJxUh1CI/gEJpBak9tiEtacE=;
-        b=AEpfvzjvtilWXORNdgMg+SKS23/a4RT68MnubqVSXYscPwRqhi4ZXvQ1kHys24breo
-         QJExTt40WaKzX8/X94296NbEwg+59YN+vsISr2kW09vYR2GCu+6sMuX7puMKhlfC98Bh
-         PsGw2JOeNX201fB1Up8iJ5mal+AS31azYaocZlRESMnV4wBP31pxXP+s2Hj9iku5gC0g
-         /uipH4g8j9NhYtU/jP5MNeoDJ6MDEi8CWs6bnTbNLbgjWgp/+TYs18VskwmY5qPfEtqb
-         YALZxBGcEFrQL2Jt6rtBP2Iv8BlfAqZlqdJmCUq1gSt6vgE40NdZFYuY/iyGp+PlY4u9
-         u9Sg==
-X-Gm-Message-State: APjAAAXxyfASlRbCpK9YnXIE6j5WshPKrjeFN6X0VIK+guH0Irvggzi3
-        PYgLNT3tdQcUonVGu3YNQRUBETi3cgaJCk9Q1gE=
-X-Google-Smtp-Source: APXvYqzrgbBdwcxXjUNqrdPMN+eVHmdBsMMoyY3FggoN0MTtIKX5QXj75M1NiNbUDgxxgyRYhjc5tBx+Bj8rtKuRatQ=
-X-Received: by 2002:a24:ccc5:: with SMTP id x188mr7748452itf.123.1552829082346;
- Sun, 17 Mar 2019 06:24:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <bc7c3f9d769b2d5a108ff4cdc3c7277e112fdb56.1552820745.git.liu.denton@gmail.com>
-In-Reply-To: <bc7c3f9d769b2d5a108ff4cdc3c7277e112fdb56.1552820745.git.liu.denton@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 17 Mar 2019 20:24:16 +0700
-Message-ID: <CACsJy8DU02_kOqAHhU5EgMHKmkNSGdvt+7XzSHoZDB+b9sDRqg@mail.gmail.com>
-Subject: Re: [PATCH] git-diff.txt: prefer not using <commit>..<commit>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=rWPlcB72Jj1xG+l2gk79oFrFOTCr1W9dkmAKFTJ6S2E=;
+        b=rhcjVYoBSnB1tSN15i+SH6DO160FIXDpCcp2FSuXaQ1y/idhWg/cS3nkI88VK4w6qn
+         Lmzgd7AqmtG9TphKn/We/lhRXcyueLsHIRtLEyhxjckdR3dtNUDnJhlHBb/LGjt52PEI
+         LRp7m+92HP9IHMO21A1ZuEPQUeok3icz7Taie7f756QZnRBL2/pAfiX6546ZRUOdfe3R
+         F+KnOIOTUHZALNmIbi58iQ8E6a/wuyYcWrQYBzp1SLsN3skUSPArj2x5z8KyYbDJ1hoJ
+         DaYkxFlRDuAbWax8eveo+LMVhNXGa5T955pbugZCZfshYTq/vmWj4TN0AvG/wVD9z3z0
+         cCiA==
+X-Gm-Message-State: APjAAAXAlW8SBsLub06LMXyL1LBtjCuTicFET8uY2pWrMiJnn9AIkJkv
+        1XmkO5evXGQPtvyP9N6aaP4e1u2T
+X-Google-Smtp-Source: APXvYqwe5Hsc18O22XOgzRVncqtup6jThqQw/B8OKczjNguAYwUk8AHWG92k31j1oKBoqmMO77DCjg==
+X-Received: by 2002:a17:906:5946:: with SMTP id g6mr8332087ejr.58.1552830060131;
+        Sun, 17 Mar 2019 06:41:00 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id b46sm2531965edd.18.2019.03.17.06.40.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 17 Mar 2019 06:40:59 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Andreas Schwab <schwab@linux-m68k.org>,
+        Duy Nguyen <pclouds@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        vincent.guittot@linaro.org, Viresh Kumar <viresh.kumar@linaro.org>
+Subject: Re: [PATCH] git-diff.txt: prefer not using <commit>..<commit>
+References: <bc7c3f9d769b2d5a108ff4cdc3c7277e112fdb56.1552820745.git.liu.denton@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <bc7c3f9d769b2d5a108ff4cdc3c7277e112fdb56.1552820745.git.liu.denton@gmail.com>
+Date:   Sun, 17 Mar 2019 14:40:59 +0100
+Message-ID: <87multaaac.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 17, 2019 at 6:09 PM Denton Liu <liu.denton@gmail.com> wrote:
->
+
+On Sun, Mar 17 2019, Denton Liu wrote:
+
 > The documentation used to consider
 >
->         git diff <commit> <commit>
+> 	git diff <commit> <commit>
 >
 > and
 >
->         git diff <commit>..<commit>
+> 	git diff <commit>..<commit>
 >
 > to be equal counterparts. However, rev-list-ish commands also use the
 > <commit>..<commit> notation, but in a logically conflicting manner which
@@ -109,24 +115,27 @@ On Sun, Mar 17, 2019 at 6:09 PM Denton Liu <liu.denton@gmail.com> wrote:
 >
 >  'git diff' [<options>] <commit>..<commit> [--] [<path>...]::
 >
-> -       This is synonymous to the previous form.  If <commit> on
-> +       This is synonymous to the previous form.  However,
-> +       users should prefer the previous form over this form
-> +       as this form may be more confusing due to the same
-> +       notation having a logically conflicting meaning in
-> +       linkgit:git-rev-list[1]-ish commands.  If <commit> on
->         one side is omitted, it will have the same effect as
->         using HEAD instead.
+> -	This is synonymous to the previous form.  If <commit> on
+> +	This is synonymous to the previous form.  However,
+> +	users should prefer the previous form over this form
+> +	as this form may be more confusing due to the same
+> +	notation having a logically conflicting meaning in
+> +	linkgit:git-rev-list[1]-ish commands.  If <commit> on
+>  	one side is omitted, it will have the same effect as
+>  	using HEAD instead.
 
-This is fine as-is. But another option to reduce even more exposure of
-these forms (both <commit>..[<commit>] and <commit>...[<commit>]) is
-to delete these forms in "DESCRIPTION" section and add maybe "EXOTIC
-SYNTAX" (or something) section after "OPTIONS" for just them.
+I think we're better off just consistently recommending "A..B" instead
+of "A B" and "fixing" any occurrence of the latter to the
+former. I.e. not taking this patch & going in the other direction.
 
-> --
-> 2.21.0.512.g57bf1b23e1
->
+As noted in the thread you linked we'll always need ".." when one side
+is "HEAD" implicitly, and that's a really common case.
 
+So as confusing as the whole ".." v.s. "..." is in diff v.s. log I think
+we're worse off with "A B", since we'll *still* need to document the
+likes of "A.." and how that differs from log "A.." or "A...".
 
--- 
-Duy
+So sometimes using the whitespace form for two revs and then the ".."
+when we just have one side makes things more confusing, not less. The
+reader will be left having to juggle more complexity in their head, not
+less.
