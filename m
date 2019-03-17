@@ -2,158 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8253A20248
-	for <e@80x24.org>; Sun, 17 Mar 2019 14:22:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 935FE20248
+	for <e@80x24.org>; Sun, 17 Mar 2019 14:48:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726885AbfCQOWw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 10:22:52 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:40464 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726802AbfCQOWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 10:22:52 -0400
-Received: by mail-ed1-f68.google.com with SMTP id h22so624355edw.7
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 07:22:50 -0700 (PDT)
+        id S1727358AbfCQOsd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 10:48:33 -0400
+Received: from mail-lj1-f169.google.com ([209.85.208.169]:44710 "EHLO
+        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727073AbfCQOsd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 10:48:33 -0400
+Received: by mail-lj1-f169.google.com with SMTP id n18so9816655ljg.11
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 07:48:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=RkXYG+oKojuqRfAJhXBp6g8ki71qAZSE8h1AnmC1+lU=;
-        b=CcvledofOco6JTttL7v2K7A20quVErG/WtZo6IXPB97wWRr/cIp2ccvH3nLuHzNgAe
-         bCz02xOA7R8p00Kc7OGDCrnPSTHO8hBKR8DwXYFnTELvzNBFRbfuWpEkrhEr+hGZpf3C
-         X8bZZ86r6y7Scxf0ksenLcxe7P5rRtH+ESN5BufDBOtOFkaXY8XM9RLgKY7Kbwi8xBh8
-         WKMVeT606MTeg8pPz00J1cV9uYkX04UxNPgObQNJI6niGSeGaB+tnAuapbyccxUElamL
-         N5TonDkldeIGz3LjIBaxvTEuvkYOTH792H88WlimEd7H0a8Jm5OVlJ9fjFaEp/OEd1UU
-         3HcQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NgksJhoSSa6y/Tq736UclA51dTxHGOigr8DPc9uKMvY=;
+        b=U6/TzkbXFLlUz5g1+kp3R8UeC8Fi/fvLhrnRcI3rAgjXwCDwvlTBHv9SuslXmP9O1E
+         ejdA49CpXTdDaiHzzIV2hDWXrsuO5rJ98T52MpNZge1tEkjjDt32wdSpvkvUxZnwU6EI
+         2qPTr4Gd1xS4zZTyUFQTny50NVGLfUNAF9OtHRy7OzpJL+AeC4ljYrbj/SS/G+4UH7pO
+         3bIypw+E97bYz522+j1JZOPiGsJ8ieBmw9RDSuAArIJYVwyaY+ljeEkYF6mKcG6HO+t9
+         5JmQNeuqN+BH7ogZTr++iVQ46QEeZ6zlA+JWOReCtUFUrkIb7Z1oKOzXAy7Wf+KvVArB
+         dJog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=RkXYG+oKojuqRfAJhXBp6g8ki71qAZSE8h1AnmC1+lU=;
-        b=fQeykpsGkSuL7TFF94d6Kbnx9Xgo+LBbo9tt+2qVrda8ttoiiYJYSxxE2Bz+orHJeW
-         24GTKnYwK+iBfaTXkdbuol3KiUr/IN1AO/D3x4aCqF8BAqfuKBI8sTuraAS9y0XtyYsj
-         Wnum/yS671chEt4C/1Qhayo/B20htGM+jiyR2iXT6twz0w3N6LWsLMjkwwTMHhFz0Wtm
-         8flivH8m8Bc6K/kb1hf8sZ3TCNvOpc/GiCLLyVVg17cCj12Gu0jZOoEPqH6GvNKHeyjN
-         HAH9Np2OSrdPAet0UsVQSqYkzkhFU/xyrEtkSvQ1Mv5vZYeYSDZFQCr20kShOkNIvWdU
-         5vFg==
-X-Gm-Message-State: APjAAAXjDrOthuebirwHGOuHZSc8SIpmPC/QbrX+24fS4xihEn8OD+f/
-        WsEa7x3dK5hgBgkxpVjRMqM=
-X-Google-Smtp-Source: APXvYqzQqzksYxGkD4QIpqiMPRklGB3ap3e3uV5HqCj2YZ8WdJaiLne4WBiQL3whw20AQHiLGLKVXQ==
-X-Received: by 2002:a50:e703:: with SMTP id a3mr9508449edn.205.1552832569767;
-        Sun, 17 Mar 2019 07:22:49 -0700 (PDT)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id x45sm2605473edb.42.2019.03.17.07.22.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 17 Mar 2019 07:22:48 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jeffhost@microsoft.com,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 00/15] Trace2 tracing facility
-References: <pull.108.v5.git.gitgitgadget@gmail.com> <pull.108.v6.git.gitgitgadget@gmail.com> <87a7iyk0r8.fsf@evledraar.gmail.com> <0aff8302-371e-cb5e-fe5e-f08e45456559@jeffhostetler.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <0aff8302-371e-cb5e-fe5e-f08e45456559@jeffhostetler.com>
-Date:   Sun, 17 Mar 2019 15:22:49 +0100
-Message-ID: <87k1gxa8cm.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NgksJhoSSa6y/Tq736UclA51dTxHGOigr8DPc9uKMvY=;
+        b=gruciG83cAOkE7BEG+l+Npql8Rq1G13jrQS39Jr3Qh0gosXDshfSFj2dgUBtWWzdpu
+         hO2PV2bakWRB06pJ1CpYycYGcWeBVSDcE0L2oVUA//iejO0m8UJeQAlMPr95s6hdx4Bf
+         arAuPT3khXNARJ/v8zyk3J6Rg7RQGETaUQlA6yBF2XN9LykGMAf4lj7rhLTC8qfO+kNp
+         Uf+ogsvlCnj0An2f6PhDHw46JT5TwrNY7IOk7pI4dWoYHv3pkpxEBmkQIjmL4PHv030k
+         Muf4OYdMmlYY4NHkRHgZ5OpWlCvWF9VOuPOPl9z9tpKmC1CzkUtqmifx5GC/7u+6gInf
+         pzAA==
+X-Gm-Message-State: APjAAAX9bsjTOEskZJT7m7ZVIDkzFgRJ4o4hTykd8MGk3FDEcaTEi0H2
+        JgpG0f/xxu1JgvAT5Bsy1OX773/H
+X-Google-Smtp-Source: APXvYqxLo5Bb9M03RVqWVii7B2DPfxwkOAKBbP9PtIRfQYpn6g/Sgqo52sDkKbF0AylrF6ZtL3tXLQ==
+X-Received: by 2002:a2e:500d:: with SMTP id e13mr4868169ljb.169.1552834109599;
+        Sun, 17 Mar 2019 07:48:29 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id d26sm1571068ljc.15.2019.03.17.07.48.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 17 Mar 2019 07:48:27 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
+Date:   Sun, 17 Mar 2019 15:47:47 +0100
+Message-Id: <20190317144747.2418514-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When we build with AsciiDoc, asciidoc.conf ensures that each xml-file we
+generate contains some meta-information which `xmlto` can act on, based
+on the following template:
 
-On Fri, Feb 15 2019, Jeff Hostetler wrote:
+  <refmeta>
+  <refentrytitle>{mantitle}</refentrytitle>
+  <manvolnum>{manvolnum}</manvolnum>
+  <refmiscinfo class="source">Git</refmiscinfo>
+  <refmiscinfo class="version">{git_version}</refmiscinfo>
+  <refmiscinfo class="manual">Git Manual</refmiscinfo>
+  </refmeta>
 
-> On 2/14/2019 7:33 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->> On Wed, Feb 06 2019, Jeff Hostetler via GitGitGadget wrote:
->>
->>> V6 addresses: [] The remaining hdr-check warning in trace2/tr2_tls.h
->>>
->>> There are no other outstanding comments that I'm aware of.
->>
->> Not a comment on this, just a follow-up question. I started looking into
->> whether this could be driven by config instead of getenv(). A lot easier
->> to set up in some cases than injecting env variables, especialy if the
->> log target supported a strftime() string, is any of that something
->> you've looked into already (so I don't do dupe work...).
->>
->> There's the chicken & egg problem with wanting to do traces way before
->> we get to reading config, so I expect that such a facility would need to
->> work by always trace record at the beginning until we get far enough to
->> write the config, and then either stop and throw away the buffer, or
->> write out the existing trace to the configured target, and continue.
->>
->
-> Yes, I beat my head against the config settings for quite a while
-> before settling on using an env var.
->
-> I wanted to get the:
-> () full process elapsed time,
-> () the full original argv,
-> () all of the command dispatch, run-dashed, and alias expansion,
-> () and for my atexit() to run last.
-> So I hooked into main() before the config is loaded.
->
-> In most commands, the config is processed about the same time as
-> parse_options() is called.  And we have to insert code in
-> git_default_config() to load my settings.  This happens after all
-> of the .git dir discovery, "-c" and "-C" processing, alias expansion,
-> command dispatch and etc.  And the argv received in the cmd_*()
-> function has been modified.  So we lose some information.  (I tried
-> this for a while and didn't like the results.)
->
-> I also tried using read_early_config() various places, but there
-> were problems here too.  Too early and the "-c" settings weren't
-> parsed yet.  And there was an issue about when .git dir was discovered,
-> so local config settings weren't ready yet.
->
-> I also recall having a problem when doing an early iteration with
-> side effects (or rather the early iteration caused something to be
-> set that caused the real iteration (in cmd_*()) to short-cut), but
-> I don't remember the details.
->
-> So we have a custom installer that also sets the environment variable
-> after git is installed and haven't had any problems.
->
->
-> I hesitate to say we should always start allocating a bunch of data
-> and spinning up the TLS data and etc. before we know if tracing is
-> wanted.  Just seems expensive for most users.
->
->
-> I could see having a "~/.git_tr2_config" or something similar in
-> some place like "/etc" that only contained the Trace2 settings.
-> It would be safe to read very early inside main() and we would not
-> consider it to be part of the real config.  For example, "git config"
-> would not know about it.  Then you could enforce a system-wide
-> setting without any of the env var issues.
+When we build with Asciidoctor, it does not honor this configuration file
+and we end up with only this (for a hypothetical git-foo.xml):
 
-I haven't written a patch for this, but it seems to me that we could
-just start reading /etc/gitconfig via some custom config callback code
-early as e.g. 58b284a2e91 ("worktree: add per-worktree config files",
-2018-10-21) does for the worktree config.
+  <refmeta>
+  <refentrytitle>git-foo</refentrytitle>
+  <manvolnum>1</manvolnum>
+  </refmeta>
 
-It would ignore everything except trace.* or wherever namespace we'll
-put this in, and "-c" etc. wouldn't work. We could just document that as
-a limitation for now which could be fixed later.
+That is, we miss out on the `<refmiscinfo/>` tags. As a result, the
+header of each man page doesn't say "Git Manual", but "git-foo(1)"
+instead. Worse, the footers don't give the Git version number and
+instead provide the fairly ugly "[FIXME: source]".
 
-It wouldn't make things worse, and would mean you could easily set
-logging system-wide without needing to inject environment variables in
-lots of custom (and sometimes hard-to-do) places, which I expect is the
-most common use-case, and is the one I have.
+That Asciidoctor ignores asciidoc.conf is nothing new. This is why we
+implement the `linkgit:` macro in asciidoc.conf *and* in
+asciidoctor-extensions.rb. Follow suit and provide these tags in
+asciidoctor-extensions.rb, using a "postprocessor" extension.
 
-> WRT the strftime() question, we could either add syntax to the
-> env var value (or the tr2 config setting) to have some tokens
-> for that.  I just stuck with absolute pathnames since I started
-> by copying what was done for GIT_TRACE.
->
-> Jeff
+We may consider a few alternatives:
+
+  * Provide the `mansource` attribute to Asciidoctor. This attribute
+    looks promising until one realizes that it can only be given inside
+    the source file (the .txt file in our case), *not* on the command
+    line using `-a mansource=foobar`. I toyed with the idea of injecting
+    this attribute while feeding Asciidoctor the input on stdin, but it
+    didn't feel like it was worth the complexity in the Makefile.
+
+  * Similar to that last idea, we could inject these lines into the
+    xml-files from the Makefile, e.g., using `sed`. This reduces
+    repetition, but seems fairly brittle. It feels wrong to impose
+    another step and another risk on the Asciidoc-processing only to
+    benefit the Asciidoctor-one.
+
+  * Considering the above abandoned ideas, it seems better to put any
+    complexity inside asciidoctor-extensions.rb. It is after all
+    supposed to be the "equivalent" of asciidoc.conf. I considered
+    providing a "tree processor" extension and use it to set, e.g.,
+    `mansource` mentioned above.
+
+Let's instead try to stay as close as possible to what asciidoc.conf
+does. We'll make it fairly obvious that we aim to inject the exact same
+three lines of `<refmiscinfo/>` that asciidoc.conf provides. The only
+somewhat tricky part is that we inject them *post*-processing so we need
+to do the variable expansion ourselves.
+
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Cc Todd and Peff who had a brief exchange [1] a while ago. Apparently
+ Todd saw this "[FIXME: source]" on Fedora but Peff did not on Debian.
+ I'm on Ubuntu 18.04 and used to see this also on 16.04. I'm not sure
+ what might make Debian so special here.
+
+ [1] https://public-inbox.org/git/20180627164443.GK20217@zaya.teonanacatl.net/
+
+ I've based this on ma/asciidoctor-fixes, not because it's needed for
+ the patch itself, but because it provides a15ef383e7
+ ("Documentation/Makefile: add missing dependency on
+ asciidoctor-extensions", 2019-02-27), which ensures that the
+ documentation will be rebuilt. I'm hoping this was the right call.
+
+ Documentation/asciidoctor-extensions.rb | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
+index 0089e0cfb8..059279dee1 100644
+--- a/Documentation/asciidoctor-extensions.rb
++++ b/Documentation/asciidoctor-extensions.rb
+@@ -20,9 +20,25 @@ module Git
+         end
+       end
+     end
++
++    class DocumentPostProcessor < Asciidoctor::Extensions::Postprocessor
++      def process document, output
++        if document.basebackend? 'docbook'
++          git_version = document.attributes['git_version']
++          replacement = "" \
++            "<refmiscinfo class=\"source\">Git</refmiscinfo>\n" \
++            "<refmiscinfo class=\"version\">#{git_version}</refmiscinfo>\n" \
++            "<refmiscinfo class=\"manual\">Git Manual</refmiscinfo>\n" \
++            "<\/refmeta>"
++          output = output.sub(/<\/refmeta>/, replacement)
++        end
++        output
++      end
++    end
+   end
+ end
+ 
+ Asciidoctor::Extensions.register do
+   inline_macro Git::Documentation::LinkGitProcessor, :linkgit
++  postprocessor Git::Documentation::DocumentPostProcessor
+ end
+-- 
+2.21.0
+
