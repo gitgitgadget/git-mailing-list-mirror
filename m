@@ -2,111 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DD5920248
-	for <e@80x24.org>; Sun, 17 Mar 2019 12:58:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53F1A20248
+	for <e@80x24.org>; Sun, 17 Mar 2019 13:05:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726911AbfCQM6a (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 08:58:30 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:54037 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726204AbfCQM63 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 08:58:29 -0400
-Received: by mail-it1-f195.google.com with SMTP id k74so6324783ita.3
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 05:58:28 -0700 (PDT)
+        id S1727226AbfCQNFs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 09:05:48 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43327 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726563AbfCQNFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 09:05:48 -0400
+Received: by mail-wr1-f66.google.com with SMTP id d17so14078855wre.10
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 06:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=WjdKG9hkgGPWiQL7rQp0isar/pLvrkegNrQTD3uByUk=;
-        b=ZzeLW4nmbLdH69XgaSMR79KClLCl1AwzMMgY3AfEnIcxctBqDn72tBRvKXSs5kCDus
-         TR+aNbQC9FBIq0D0LUPmWSzhvig8kmD9Ru3+cQyJuu9cKrhD92NYN4tuC7pziVcRIHSg
-         zIlNCrMHkwYSGqVGTBdDyytCkyQB4cC2WfvlkWPm7Fkm7SI5LEmqAUPK4HIazreBojY3
-         YQ3CQ/mSzI4jnW20lUzyZVJZ7HtmujrsbjKBo8J/IJQS/qbYWrEcaDkYf20Bmjtk79D3
-         6whLf5TckCEv9NixumNihAAH3XdQs75gEEO1mFwzVutFx5WDAIkEfuN0mL2ueskCrYXQ
-         qrhw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2M2FxHfdy1SVZ75Spb5CEbbw7wAE5gq+daBHOVYVGiE=;
+        b=cprOIbj4DTLksJhSIrX97FGMaxNqyMz7Gr8uTGn9xO4s4mZ6E7AFmcxJKSpwI/09g8
+         8Ng2ILNwz0dsfdq2hwHcT8+b9+Yc9UP6uOvd6OAeZpw7ZAozQsmoAovnk16Zq0Irttkb
+         d/qRDzW/DQLoddyCXfmkwe3JpVTAJyWqi5pkRSZjMcFs6bOZiKyuMgiveni4LrRUXqC9
+         7YOrT3vBahKDlZDWnbzr4tAoG0s3KuDql4B85j4qIgtzgLmHYssaAeaTxO1RJDfOj1RH
+         uK/08V1h1ZX3Q0Av7uyA/1j8a8KgfJBzta2TKekObkLe/uz/Bbfxu03TJ51DjsIpmsUt
+         jeAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=WjdKG9hkgGPWiQL7rQp0isar/pLvrkegNrQTD3uByUk=;
-        b=UdgApgVqN+pNyMYKRnVKamcwfixXv9bq4CqxLy3NsBS+363VZ+77elrzrtvvXVRUql
-         2z2N2Yhddc1TDNZHIlVqtVCB3RiFIitldWr95uJEPSwKHodjZ5fge/iHsg8vtjdpWck6
-         wtuPcJQ5rMt7k6dbhDw9euA0M26Iztu0jwtCkL9OCpy4wHno9z6z40SzWaja0idgGwOR
-         OSu2DmHgRLecor0P3XQIYlJWq6UM4VS5QVyihaWGT0PMH8CA3sjvTyvGivqqpr0QV+YS
-         Tu+aX4nUf9bHk7pP/2o52Mmoq9oNOYMlJCFzBF5GjeTgCRfgmIC8pZST0IIwLdbDbxi/
-         aPmg==
-X-Gm-Message-State: APjAAAVTMWEVDe3PPHNpV8V4ZBORa2zklGiSXrLXDo61WyMS1oAQWqJ7
-        J3VDTlSKiBltjNZzcZ44jHkxZD0lZ2cU2gUQVj8=
-X-Google-Smtp-Source: APXvYqz8/B5CXfy9VB8tbh9cmj2DkGYe48UY9ecwAMiW3ejf+86ncNz4m38G+GlKMjH2fBnzatUB7+aJ7IENh7bVW+Y=
-X-Received: by 2002:a24:ccc5:: with SMTP id x188mr7678729itf.123.1552827508647;
- Sun, 17 Mar 2019 05:58:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190308095752.8574-1-pclouds@gmail.com> <20190317124926.17137-1-pclouds@gmail.com>
-In-Reply-To: <20190317124926.17137-1-pclouds@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 17 Mar 2019 19:58:02 +0700
-Message-ID: <CACsJy8BevFGXt-RL_1G263ntXYee69N055TY8_GQL1unvJNPnw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/26] Add new command 'switch'
-To:     Duy Nguyen <pclouds@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2M2FxHfdy1SVZ75Spb5CEbbw7wAE5gq+daBHOVYVGiE=;
+        b=MOsUlao1EUiUok4xNdCw6Ufj+ITS7UrcHOeMJ1qvMyT+8UNXLGcc+5FYnKHq5eusiH
+         zJ/6s8NOgMJ2V+9Xw10KelaOCR0cFVVDKskn0E0dld6ieUq/RO5V1sfrPGhi8LtECtm9
+         1Fbj62anrQ2qC3b2LlX2Kn4FZWjTIayPwoaHxDD8pjIrtj++FMw2js4/pmdLaMvW1dGb
+         XGOTnPZCulW9Y8e/LUgwK+gNVLcsctl6gsAamppMyiHhu0lEfdQE8E3Ygsk6kFWjqyMz
+         y6/154nJsId0XhzXC4AQciK/6ooi0ZV8uCwdwwbNctIb4rjl4IP3HYS+NpZFOdhcOwPt
+         aaIQ==
+X-Gm-Message-State: APjAAAUOwY6mCircB5xAiBHj6xYj6AWSsNJC5zkU9pMoK9iJM+qvlVmr
+        5UQRpYJ0xv50VqnpfITvmfPe0E83
+X-Google-Smtp-Source: APXvYqzUNFTwlVJ/LHt0jgnzYpOTR0j7eLiRQVGOwOcORetzIN5OGQEiQCVucgoXelYrqyZWhHitqQ==
+X-Received: by 2002:adf:e90b:: with SMTP id f11mr8875108wrm.36.1552827946438;
+        Sun, 17 Mar 2019 06:05:46 -0700 (PDT)
+Received: from szeder.dev (x4dbe9ef8.dyn.telefonica.de. [77.190.158.248])
+        by smtp.gmail.com with ESMTPSA id u134sm3493767wmf.22.2019.03.17.06.05.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 17 Mar 2019 06:05:45 -0700 (PDT)
+Date:   Sun, 17 Mar 2019 14:05:39 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v8 00/11] Fix scissors bug during conflict
+Message-ID: <20190317130539.GA23160@szeder.dev>
+References: <cover.1552275703.git.liu.denton@gmail.com>
+ <cover.1552817044.git.liu.denton@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1552817044.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 17, 2019 at 7:49 PM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
->
-> Thanks for all the comments from v3 (and before), I didn't expect
-> feedback from so many people. v4 fixes most of them, but still leaves
-> a couple for v5.
->
-> - -C remains because people seem to need it
->
-> - --recreate vs --force-create: there was no strong preference for
->   either, so I stick with --force-create
->
-> - --guess (dwim mode) is now made default
->
-> - --orphan by default switches to an empty tree instead of current HEAD
->   (this is Elijah's alternative approach). This allows you to start
->   fresh, but you can still keep "HEAD" content or even switch to another
->   tree.
->
-> - advice.detachedHead text is updated to suggest a way out (currently it
->   only suggests a way forward with 'checkout -b')
->
-> - --force has a new alias --discard-changes
->
-> - the error message when we expect a branch is improved to help point
->   out why the given argument is not a branch
->
-> - more docs update and reorganization, and other silly bugs I made in
->   v3
+On Sun, Mar 17, 2019 at 03:15:50AM -0700, Denton Liu wrote:
+> Sorry for taking so long to do a reroll, I've been pretty busy this week
+> and I've only been able to find the time now.
 
-I did forget one thing:
+No problem, and thank you for sticking with it!
 
-- 'git switch' refuses to switch in the middle of
-rebase/bisect/cherry-pick/... session. Add --ignore-in-progress to
-override this
 
-Now that I mention this, --ignore-in-progress should probably be part
-of --force too. Hmm...
---=20
-Duy
+> diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
+> index ca4a740da0..f035e4a507 100755
+> --- a/t/t7502-commit-porcelain.sh
+> +++ b/t/t7502-commit-porcelain.sh
+> @@ -16,7 +16,9 @@ commit_msg_is () {
+>  # Arguments: [<prefix] [<commit message>] [<commit options>]
+>  check_summary_oneline() {
+>  	test_tick &&
+> -	git commit ${3+"$3"} -m "$2" | head -1 > act &&
+> +	git commit ${3+"$3"} -m "$2" >act &&
+> +	head -1 <act >tmp &&
+> +	mv tmp act &&
+
+Here you could swap the order of when you write to 'act' and 'tmp',
+and thus make the 'mv' unnecessary, like this:
+
+  git commit [...] >tmp &&
+  head -1 act >tmp &&
+  [...rest of the test...]
+
+Note also that 'head' (or 'sed' in later tests) can open its input
+file on its own, there's no need to redirect its standard input.
+
+This is a recurring pattern in patches 1, 4, 8, and 9.
+
+> @@ -142,8 +144,8 @@ test_expect_success 'sign off' '
+>  	>positive &&
+>  	git add positive &&
+>  	git commit -s -m "thank you" &&
+> -	actual=$(git cat-file commit HEAD | sed -ne "s/Signed-off-by: //p") &&
+> -	expected=$(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/") &&
+> +	actual=$(git cat-file commit HEAD >tmp && sed -ne "s/Signed-off-by: //p" <tmp && rm tmp) &&
+> +	expected=$(git var GIT_COMMITTER_IDENT >tmp && sed -e "s/>.*/>/" <tmp && rm tmp) &&
+>  	test "z$actual" = "z$expected"
+
+May I ask you to go one step further in restructuring this and the
+following tests? :)  Instead of using 'test' to compare the contents
+of the $actual and $expected variables, use 'test_cmp' to compare the
+'actual' and 'expected' files, something like:
+
+  git cat-file commit HEAD >tmp &&
+  sed -ne "s/Signed-off-by: //p" tmp >actual &&
+  git var GIT_COMMITTER_IDENT >tmp &&
+  sed -e "s/>.*/>/" >expected &&
+  test_cmp expected actual
+
+
+ 
