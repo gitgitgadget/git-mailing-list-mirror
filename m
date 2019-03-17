@@ -2,128 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53F1A20248
-	for <e@80x24.org>; Sun, 17 Mar 2019 13:05:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60C3320248
+	for <e@80x24.org>; Sun, 17 Mar 2019 13:13:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727226AbfCQNFs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 09:05:48 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43327 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726563AbfCQNFs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 09:05:48 -0400
-Received: by mail-wr1-f66.google.com with SMTP id d17so14078855wre.10
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 06:05:47 -0700 (PDT)
+        id S1726782AbfCQNNS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 09:13:18 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:52640 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726204AbfCQNNS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 09:13:18 -0400
+Received: by mail-it1-f194.google.com with SMTP id g17so16606459ita.2
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 06:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2M2FxHfdy1SVZ75Spb5CEbbw7wAE5gq+daBHOVYVGiE=;
-        b=cprOIbj4DTLksJhSIrX97FGMaxNqyMz7Gr8uTGn9xO4s4mZ6E7AFmcxJKSpwI/09g8
-         8Ng2ILNwz0dsfdq2hwHcT8+b9+Yc9UP6uOvd6OAeZpw7ZAozQsmoAovnk16Zq0Irttkb
-         d/qRDzW/DQLoddyCXfmkwe3JpVTAJyWqi5pkRSZjMcFs6bOZiKyuMgiveni4LrRUXqC9
-         7YOrT3vBahKDlZDWnbzr4tAoG0s3KuDql4B85j4qIgtzgLmHYssaAeaTxO1RJDfOj1RH
-         uK/08V1h1ZX3Q0Av7uyA/1j8a8KgfJBzta2TKekObkLe/uz/Bbfxu03TJ51DjsIpmsUt
-         jeAQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dMW5xh65NJDDnnOyvEp6tKmNFCnw5KBXzGT3yWxM3co=;
+        b=GUp6TpZf69S1Lc6ktldNWCzfQN4BcqzJOLLI99LA8LhFS42Z7cCVP5rxYByLa+VKbT
+         o/WYbS6eOA4q5/vpqW+Ap9hepxUGJ6iFXaOspbbau5X1OMIJbYOVWYXxPIg83iIXAinP
+         A0I0lt6Na3W8dOeOYc7OMvjnz0p8OE1i8mrIdxA3wk6yYKkLpDnGM17NaZgk93nHv9e3
+         2/HYP8mMPmkAqiyWxJKKIuMeMQjRLdiYLVYTOdOwcc1nEQJ0EKc48sF5UmmAVAujtwY4
+         Vf8zQhVflxxzxsPJe76t2EU6CAIdaMzUVjD/+xUInxyH0r43g9PlAs1mhLa/fElGuMQO
+         LIuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2M2FxHfdy1SVZ75Spb5CEbbw7wAE5gq+daBHOVYVGiE=;
-        b=MOsUlao1EUiUok4xNdCw6Ufj+ITS7UrcHOeMJ1qvMyT+8UNXLGcc+5FYnKHq5eusiH
-         zJ/6s8NOgMJ2V+9Xw10KelaOCR0cFVVDKskn0E0dld6ieUq/RO5V1sfrPGhi8LtECtm9
-         1Fbj62anrQ2qC3b2LlX2Kn4FZWjTIayPwoaHxDD8pjIrtj++FMw2js4/pmdLaMvW1dGb
-         XGOTnPZCulW9Y8e/LUgwK+gNVLcsctl6gsAamppMyiHhu0lEfdQE8E3Ygsk6kFWjqyMz
-         y6/154nJsId0XhzXC4AQciK/6ooi0ZV8uCwdwwbNctIb4rjl4IP3HYS+NpZFOdhcOwPt
-         aaIQ==
-X-Gm-Message-State: APjAAAUOwY6mCircB5xAiBHj6xYj6AWSsNJC5zkU9pMoK9iJM+qvlVmr
-        5UQRpYJ0xv50VqnpfITvmfPe0E83
-X-Google-Smtp-Source: APXvYqzUNFTwlVJ/LHt0jgnzYpOTR0j7eLiRQVGOwOcORetzIN5OGQEiQCVucgoXelYrqyZWhHitqQ==
-X-Received: by 2002:adf:e90b:: with SMTP id f11mr8875108wrm.36.1552827946438;
-        Sun, 17 Mar 2019 06:05:46 -0700 (PDT)
-Received: from szeder.dev (x4dbe9ef8.dyn.telefonica.de. [77.190.158.248])
-        by smtp.gmail.com with ESMTPSA id u134sm3493767wmf.22.2019.03.17.06.05.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Mar 2019 06:05:45 -0700 (PDT)
-Date:   Sun, 17 Mar 2019 14:05:39 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v8 00/11] Fix scissors bug during conflict
-Message-ID: <20190317130539.GA23160@szeder.dev>
-References: <cover.1552275703.git.liu.denton@gmail.com>
- <cover.1552817044.git.liu.denton@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dMW5xh65NJDDnnOyvEp6tKmNFCnw5KBXzGT3yWxM3co=;
+        b=rZqo2OSgbIEVZgc4n9QVyZBG6vX3api4Wjl7rYug5idfv7eG/hJ0TC4/EuxXSsljy4
+         mj1nKOMdCWkCAg0w1q7cfBbpLkzCE4Ev+9T75k6JIxBdzj0WO7hZ76gLpY2ZnUMqqdva
+         /AsF332Aus3WYse/xXelTk2YWBmbhM6o7vJotSYxH+FEtmncOP0nEdmb7PZLlEPitQMI
+         iK4V5Z1fIghdvTlNEA3+ba391fmuS7QKwToUQPOM+lm0lDgBWzH0q+DOA/xA5HIV04Ux
+         7ObPmXi8Avy6Zyuv4x/sYC0dVPgnesYUoPcWH5e0HVLkrDqpw88dCLrmz+HqVziXkeJD
+         c+FQ==
+X-Gm-Message-State: APjAAAWKXwKSli2liZNtd/Itsl4kwdgnudpBvMrph5uA4DNS8eF5zVDu
+        5PZEt9ZrwkcNyt120ZSx+W+ZMFMHaI7arQxNTYc=
+X-Google-Smtp-Source: APXvYqz5OlpeEt57wOhQeilQHspsHWYFvqmPFCuc3StzYRkHnYQWC9BFAZ+VJHRVenX0JsOjg44fTmGTIERysEjQjKY=
+X-Received: by 2002:a24:ccc5:: with SMTP id x188mr7720936itf.123.1552828397425;
+ Sun, 17 Mar 2019 06:13:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1552817044.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20190228230506.GA20625@sigill.intra.peff.net> <20190301173443.16429-2-tmz@pobox.com>
+In-Reply-To: <20190301173443.16429-2-tmz@pobox.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 17 Mar 2019 20:12:51 +0700
+Message-ID: <CACsJy8BuR=syjT1gjTxXXKKaevzpbdRGp+je+rsX6jV96F3sbA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] doc: note config file restrictions for completion.commands
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 17, 2019 at 03:15:50AM -0700, Denton Liu wrote:
-> Sorry for taking so long to do a reroll, I've been pretty busy this week
-> and I've only been able to find the time now.
+Poking this thread before it goes completely dead...
 
-No problem, and thank you for sticking with it!
+On Sat, Mar 2, 2019 at 12:34 AM Todd Zullinger <tmz@pobox.com> wrote:
+>
+> The completion.commands config var must be set in either the system-wide
+> or global config file.  The completion script does not read a local
+> repository config.
 
+After the last discussion, I think the consensus was it's ok to allow
+per-repo config so we can just drop this and update the code to read
+from any config file, right?
 
-> diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-> index ca4a740da0..f035e4a507 100755
-> --- a/t/t7502-commit-porcelain.sh
-> +++ b/t/t7502-commit-porcelain.sh
-> @@ -16,7 +16,9 @@ commit_msg_is () {
->  # Arguments: [<prefix] [<commit message>] [<commit options>]
->  check_summary_oneline() {
->  	test_tick &&
-> -	git commit ${3+"$3"} -m "$2" | head -1 > act &&
-> +	git commit ${3+"$3"} -m "$2" >act &&
-> +	head -1 <act >tmp &&
-> +	mv tmp act &&
-
-Here you could swap the order of when you write to 'act' and 'tmp',
-and thus make the 'mv' unnecessary, like this:
-
-  git commit [...] >tmp &&
-  head -1 act >tmp &&
-  [...rest of the test...]
-
-Note also that 'head' (or 'sed' in later tests) can open its input
-file on its own, there's no need to redirect its standard input.
-
-This is a recurring pattern in patches 1, 4, 8, and 9.
-
-> @@ -142,8 +144,8 @@ test_expect_success 'sign off' '
->  	>positive &&
->  	git add positive &&
->  	git commit -s -m "thank you" &&
-> -	actual=$(git cat-file commit HEAD | sed -ne "s/Signed-off-by: //p") &&
-> -	expected=$(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/") &&
-> +	actual=$(git cat-file commit HEAD >tmp && sed -ne "s/Signed-off-by: //p" <tmp && rm tmp) &&
-> +	expected=$(git var GIT_COMMITTER_IDENT >tmp && sed -e "s/>.*/>/" <tmp && rm tmp) &&
->  	test "z$actual" = "z$expected"
-
-May I ask you to go one step further in restructuring this and the
-following tests? :)  Instead of using 'test' to compare the contents
-of the $actual and $expected variables, use 'test_cmp' to compare the
-'actual' and 'expected' files, something like:
-
-  git cat-file commit HEAD >tmp &&
-  sed -ne "s/Signed-off-by: //p" tmp >actual &&
-  git var GIT_COMMITTER_IDENT >tmp &&
-  sed -e "s/>.*/>/" >expected &&
-  test_cmp expected actual
+>
+> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+> ---
+>  Documentation/config/completion.txt | 3 ++-
+>  Documentation/git.txt               | 3 ++-
+>  2 files changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/config/completion.txt b/Documentation/config/completion.txt
+> index 4d99bf33c9..4859d18e86 100644
+> --- a/Documentation/config/completion.txt
+> +++ b/Documentation/config/completion.txt
+> @@ -4,4 +4,5 @@ completion.commands::
+>         porcelain commands and a few select others are completed. You
+>         can add more commands, separated by space, in this
+>         variable. Prefixing the command with '-' will remove it from
+> -       the existing list.
+> +       the existing list.  The variable must be set in either the
+> +       system-wide or global config.
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 00156d64aa..638f4d6cc9 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -172,7 +172,8 @@ foo.bar= ...`) sets `foo.bar` to the empty string which `git config
+>         others (all other commands in `$PATH` that have git- prefix),
+>         list-<category> (see categories in command-list.txt),
+>         nohelpers (exclude helper commands), alias and config
+> -       (retrieve command list from config variable completion.commands)
+> +       (retrieve command list from config variable completion.commands,
+> +       set in the global or system-wide config file)
+>
+>  GIT COMMANDS
+>  ------------
 
 
- 
+
+-- 
+Duy
