@@ -2,174 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_LOCAL_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 935FE20248
-	for <e@80x24.org>; Sun, 17 Mar 2019 14:48:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2623D20248
+	for <e@80x24.org>; Sun, 17 Mar 2019 15:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727358AbfCQOsd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 10:48:33 -0400
-Received: from mail-lj1-f169.google.com ([209.85.208.169]:44710 "EHLO
-        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727073AbfCQOsd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 10:48:33 -0400
-Received: by mail-lj1-f169.google.com with SMTP id n18so9816655ljg.11
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 07:48:31 -0700 (PDT)
+        id S1727359AbfCQPYS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 11:24:18 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:41503 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726885AbfCQPYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 11:24:18 -0400
+Received: by mail-pf1-f193.google.com with SMTP id d25so9524302pfn.8
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 08:24:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=NgksJhoSSa6y/Tq736UclA51dTxHGOigr8DPc9uKMvY=;
-        b=U6/TzkbXFLlUz5g1+kp3R8UeC8Fi/fvLhrnRcI3rAgjXwCDwvlTBHv9SuslXmP9O1E
-         ejdA49CpXTdDaiHzzIV2hDWXrsuO5rJ98T52MpNZge1tEkjjDt32wdSpvkvUxZnwU6EI
-         2qPTr4Gd1xS4zZTyUFQTny50NVGLfUNAF9OtHRy7OzpJL+AeC4ljYrbj/SS/G+4UH7pO
-         3bIypw+E97bYz522+j1JZOPiGsJ8ieBmw9RDSuAArIJYVwyaY+ljeEkYF6mKcG6HO+t9
-         5JmQNeuqN+BH7ogZTr++iVQ46QEeZ6zlA+JWOReCtUFUrkIb7Z1oKOzXAy7Wf+KvVArB
-         dJog==
+        bh=N/9YxkcgV9//NBtm6RCq/LRCSCubZ8XFr8cm9lESRPg=;
+        b=LL9lc5UaCKOPYOKm3Hl3staPwGE45nk3RZR3HVteVLCHmyw5j9h11lq3V9MyWAET/J
+         9jCikCJsVOD8gCTyWwNy5oXPui4l7G3bSCAedrSwH6lDKdgAO8r0f7/xc88HyWivlwXq
+         puG8mz80hSJa8HfPlipi9AkQAmAipRXoZ1M3wxlsyMBEIxxpGNxnWp0hRYjgz6zprMA9
+         zFcSv2OQXXdtKLv5Hd5dxW12/1OCMO3qBF60YCm2Z59zFfhFG/4pvaGlOB4oLw+DGpsO
+         VVSJhAAr7C4gjnJY1bssGwqG/TLCEiQDZ1v6CjiYuw/R48S9GGM5B34RTDjxaZkU2kit
+         sW4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=NgksJhoSSa6y/Tq736UclA51dTxHGOigr8DPc9uKMvY=;
-        b=gruciG83cAOkE7BEG+l+Npql8Rq1G13jrQS39Jr3Qh0gosXDshfSFj2dgUBtWWzdpu
-         hO2PV2bakWRB06pJ1CpYycYGcWeBVSDcE0L2oVUA//iejO0m8UJeQAlMPr95s6hdx4Bf
-         arAuPT3khXNARJ/v8zyk3J6Rg7RQGETaUQlA6yBF2XN9LykGMAf4lj7rhLTC8qfO+kNp
-         Uf+ogsvlCnj0An2f6PhDHw46JT5TwrNY7IOk7pI4dWoYHv3pkpxEBmkQIjmL4PHv030k
-         Muf4OYdMmlYY4NHkRHgZ5OpWlCvWF9VOuPOPl9z9tpKmC1CzkUtqmifx5GC/7u+6gInf
-         pzAA==
-X-Gm-Message-State: APjAAAX9bsjTOEskZJT7m7ZVIDkzFgRJ4o4hTykd8MGk3FDEcaTEi0H2
-        JgpG0f/xxu1JgvAT5Bsy1OX773/H
-X-Google-Smtp-Source: APXvYqxLo5Bb9M03RVqWVii7B2DPfxwkOAKBbP9PtIRfQYpn6g/Sgqo52sDkKbF0AylrF6ZtL3tXLQ==
-X-Received: by 2002:a2e:500d:: with SMTP id e13mr4868169ljb.169.1552834109599;
-        Sun, 17 Mar 2019 07:48:29 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id d26sm1571068ljc.15.2019.03.17.07.48.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Mar 2019 07:48:27 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
-Date:   Sun, 17 Mar 2019 15:47:47 +0100
-Message-Id: <20190317144747.2418514-1-martin.agren@gmail.com>
+        bh=N/9YxkcgV9//NBtm6RCq/LRCSCubZ8XFr8cm9lESRPg=;
+        b=cJE7yAQ58N2zoeKDV1tZiGNvOFe+iAIr+DtR8rFqF/YPL692dKaPFU414BQw3b9esG
+         lkoyRb6FHnZH8HJ0GTfrXp5g0xvfzgIuo+9SC6Wd6tBpJhZDBKKpge5JE5nWRN8dpZrl
+         Y7ebGzl35ciPKKYqA2rVwF5RCwa3XmTjY79jrjD9cEPyk1EPr52Aj4aqrpECIHs6wfh0
+         5ll7ofOt9/nN2pQ+kVhZ20laT5agmcn7QZTFQf/j6fM+e1d4TI0g+wBaCMOJWB867AYt
+         vIADTLWwGvP6XOb74D0cfccQXDME+/5HTh5jI+iEsqOQql9skx2Lu2QG4m40GN/7Hrzl
+         kdOA==
+X-Gm-Message-State: APjAAAVmgcy2gsMjcckMnVW7MzqOfFU1wLW/uVeeW+RpW5vI6DGzxJ2A
+        +cWkzPF8JjvRd9goPwffx8pEbalJ
+X-Google-Smtp-Source: APXvYqxH76/cnzDgX8kF9nvu05b5L/m4Jevqtu3QzkyQ1x+f8CeRdG31WqpAjF5BF+oWhqXl3mmFIg==
+X-Received: by 2002:a65:6210:: with SMTP id d16mr13366920pgv.189.1552836257302;
+        Sun, 17 Mar 2019 08:24:17 -0700 (PDT)
+Received: from localhost.localdomain (cloudream.m3.ntu.edu.tw. [140.112.244.5])
+        by smtp.gmail.com with ESMTPSA id z15sm10357978pgc.25.2019.03.17.08.24.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 17 Mar 2019 08:24:16 -0700 (PDT)
+From:   Jonathan Chang <ttjtftx@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jonathan Chang <ttjtftx@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [GSoC][PATCH v3 0/3] Avoid using pipes
+Date:   Sun, 17 Mar 2019 23:23:35 +0800
+Message-Id: <cover.1552835153.git.ttjtftx@gmail.com>
 X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we build with AsciiDoc, asciidoc.conf ensures that each xml-file we
-generate contains some meta-information which `xmlto` can act on, based
-on the following template:
+Hi,
 
-  <refmeta>
-  <refentrytitle>{mantitle}</refentrytitle>
-  <manvolnum>{manvolnum}</manvolnum>
-  <refmiscinfo class="source">Git</refmiscinfo>
-  <refmiscinfo class="version">{git_version}</refmiscinfo>
-  <refmiscinfo class="manual">Git Manual</refmiscinfo>
-  </refmeta>
+This is my SoC 2019 Microproject: "Avoid pipes in git related commands
+in test scripts".
 
-When we build with Asciidoctor, it does not honor this configuration file
-and we end up with only this (for a hypothetical git-foo.xml):
+Changes since v2:
+	- drop changes to other 2 files as suggested by Christian Couder[1]
+	- rename commit message from "t0000-basic:" to "t0000:"[1]
+	- use better commit message suggested by Thomas Gummerer[2]
+		and Christian Couder[3]
+	- fix the incorrect transformation pointed out by Eric Sunshine[4]
+	- rename commit message to "fix indentation" as seen in:
+		25e3d28efd ("submodule.c: fix indentation", 2018-11-28)
+		d4cddd66d7 ("worktree.c: fix indentation", 2016-01-18)
 
-  <refmeta>
-  <refentrytitle>git-foo</refentrytitle>
-  <manvolnum>1</manvolnum>
-  </refmeta>
+[v1]: https://public-inbox.org/git/20190309154555.33407-1-ttjtftx@gmail.com/
+[v2]: https://public-inbox.org/git/20190310080739.63984-1-ttjtftx@gmail.com/
 
-That is, we miss out on the `<refmiscinfo/>` tags. As a result, the
-header of each man page doesn't say "Git Manual", but "git-foo(1)"
-instead. Worse, the footers don't give the Git version number and
-instead provide the fairly ugly "[FIXME: source]".
+[1]: https://public-inbox.org/git/CAP8UFD274-iDkqPm8-WGXbUmcVqjDE7bSg2bwA-17TWJivn0jA@mail.gmail.com/
+[2]: https://public-inbox.org/git/20190310175924.GF31533@hank.intra.tgummerer.com/
+[3]: https://public-inbox.org/git/CAP8UFD09QZd=6HyB5Om1PfV=67+CvfyQkcpLU0tukT48QccD0Q@mail.gmail.com/
+[4]: https://public-inbox.org/git/CAPig+cSMZrQFrLXoO5KE1uonUxmnYHikr-e6GAq_n6vx3+sPJA@mail.gmail.com/
 
-That Asciidoctor ignores asciidoc.conf is nothing new. This is why we
-implement the `linkgit:` macro in asciidoc.conf *and* in
-asciidoctor-extensions.rb. Follow suit and provide these tags in
-asciidoctor-extensions.rb, using a "postprocessor" extension.
+Jonathan Chang (3):
+  t0000: fix indentation
+  t0000: avoid using pipes
+  t0000: use test_line_count instead of wc -l
 
-We may consider a few alternatives:
+ t/t0000-basic.sh | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-  * Provide the `mansource` attribute to Asciidoctor. This attribute
-    looks promising until one realizes that it can only be given inside
-    the source file (the .txt file in our case), *not* on the command
-    line using `-a mansource=foobar`. I toyed with the idea of injecting
-    this attribute while feeding Asciidoctor the input on stdin, but it
-    didn't feel like it was worth the complexity in the Makefile.
-
-  * Similar to that last idea, we could inject these lines into the
-    xml-files from the Makefile, e.g., using `sed`. This reduces
-    repetition, but seems fairly brittle. It feels wrong to impose
-    another step and another risk on the Asciidoc-processing only to
-    benefit the Asciidoctor-one.
-
-  * Considering the above abandoned ideas, it seems better to put any
-    complexity inside asciidoctor-extensions.rb. It is after all
-    supposed to be the "equivalent" of asciidoc.conf. I considered
-    providing a "tree processor" extension and use it to set, e.g.,
-    `mansource` mentioned above.
-
-Let's instead try to stay as close as possible to what asciidoc.conf
-does. We'll make it fairly obvious that we aim to inject the exact same
-three lines of `<refmiscinfo/>` that asciidoc.conf provides. The only
-somewhat tricky part is that we inject them *post*-processing so we need
-to do the variable expansion ourselves.
-
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Cc Todd and Peff who had a brief exchange [1] a while ago. Apparently
- Todd saw this "[FIXME: source]" on Fedora but Peff did not on Debian.
- I'm on Ubuntu 18.04 and used to see this also on 16.04. I'm not sure
- what might make Debian so special here.
-
- [1] https://public-inbox.org/git/20180627164443.GK20217@zaya.teonanacatl.net/
-
- I've based this on ma/asciidoctor-fixes, not because it's needed for
- the patch itself, but because it provides a15ef383e7
- ("Documentation/Makefile: add missing dependency on
- asciidoctor-extensions", 2019-02-27), which ensures that the
- documentation will be rebuilt. I'm hoping this was the right call.
-
- Documentation/asciidoctor-extensions.rb | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index 0089e0cfb8..059279dee1 100644
---- a/Documentation/asciidoctor-extensions.rb
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -20,9 +20,25 @@ module Git
-         end
-       end
-     end
-+
-+    class DocumentPostProcessor < Asciidoctor::Extensions::Postprocessor
-+      def process document, output
-+        if document.basebackend? 'docbook'
-+          git_version = document.attributes['git_version']
-+          replacement = "" \
-+            "<refmiscinfo class=\"source\">Git</refmiscinfo>\n" \
-+            "<refmiscinfo class=\"version\">#{git_version}</refmiscinfo>\n" \
-+            "<refmiscinfo class=\"manual\">Git Manual</refmiscinfo>\n" \
-+            "<\/refmeta>"
-+          output = output.sub(/<\/refmeta>/, replacement)
-+        end
-+        output
-+      end
-+    end
-   end
- end
- 
- Asciidoctor::Extensions.register do
-   inline_macro Git::Documentation::LinkGitProcessor, :linkgit
-+  postprocessor Git::Documentation::DocumentPostProcessor
- end
+Range-diff against v2:
+1:  dd3e868436 ! 1:  c3c231d117 t0000-basic: fix an indentation error
+    @@ -1,9 +1,11 @@
+     Author: Jonathan Chang <ttjtftx@gmail.com>
+     
+    -    t0000-basic: fix an indentation error
+    +    t0000: fix indentation
+     
+    -    This is a preparatory step prior to removing the pipes after git
+    -    commands, which discards git's exit code and may mask a crash.
+    +    Fix indentation of a line containing a pipeline to reduce the
+    +    noise when refactoring the pipeline in a subsequent commit.
+    +    This has been wrong since the refactoring done in 1b5b2b641a
+    +    ("t0000: modernise style", 2012-03-02), but carries no meaning.
+     
+         Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
+     
+2:  5bc591e557 ! 2:  5a3c6e24eb t0000-basic: avoid using pipes
+    @@ -1,6 +1,6 @@
+     Author: Jonathan Chang <ttjtftx@gmail.com>
+     
+    -    t0000-basic: avoid using pipes
+    +    t0000: avoid using pipes
+     
+         The exit code of the upstream in a pipe is ignored thus we should avoid
+         using it. By writing out the output of the git command to a file, we can
+3:  be6a218d83 < -:  ---------- t0003-attributes: avoid using pipes
+4:  35564c86a1 < -:  ---------- t0022-crlf-rename: avoid using pipes
+5:  17acadea53 ! 3:  bc3dee82a9 t0000-basic: use test_line_count instead of wc -l
+    @@ -1,6 +1,6 @@
+     Author: Jonathan Chang <ttjtftx@gmail.com>
+     
+    -    t0000-basic: use test_line_count instead of wc -l
+    +    t0000: use test_line_count instead of wc -l
+     
+         Signed-off-by: Jonathan Chang <ttjtftx@gmail.com>
+     
+    @@ -13,8 +13,8 @@
+      	git show --pretty=raw $commit2 >actual &&
+     -	numparent=$(sed -n -e "s/^parent //p" -e "/^author /q" actual | wc -l) &&
+     -	test $numparent = 1
+    -+	sed -n -e "s/^parent //p" -e "/^author /q" actual | wc -l >numparent &&
+    -+	test_line_count = 1 numparent
+    ++	sed -n -e "s/^parent //p" -e "/^author /q" actual >parents &&
+    ++	test_line_count = 1 parents
+      '
+      
+      test_expect_success 'update-index D/F conflict' '
+    @@ -24,8 +24,7 @@
+      	git ls-files path0 >actual &&
+     -	numpath0=$(wc -l <actual) &&
+     -	test $numpath0 = 1
+    -+	wc -l <actual >numpath0 &&
+    -+	test_line_count = 1 numpath0
+    ++	test_line_count = 1 actual
+      '
+      
+      test_expect_success 'very long name in the index handled sanely' '
 -- 
 2.21.0
 
