@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0618E20248
-	for <e@80x24.org>; Sun, 17 Mar 2019 18:37:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C331B20248
+	for <e@80x24.org>; Sun, 17 Mar 2019 18:37:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbfCQSg7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 14:36:59 -0400
-Received: from mail-lf1-f53.google.com ([209.85.167.53]:37120 "EHLO
-        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726333AbfCQSg7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 14:36:59 -0400
-Received: by mail-lf1-f53.google.com with SMTP id u2so10069207lfd.4
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 11:36:58 -0700 (PDT)
+        id S1727173AbfCQShD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 14:37:03 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:32850 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726333AbfCQShD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 14:37:03 -0400
+Received: by mail-lj1-f193.google.com with SMTP id z7so12073247lji.0
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 11:37:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/VHZ6okNGVPzedtErZrbF5RtEXmBVcbXIZYqJXNlcGE=;
-        b=Ef+qxrAp3k3hJkdRNLj4RteGevLYLW232qMMSr5R4U0PpfWOHPT6oMe3wJqZJoyorZ
-         wp65LKVsWxOS9t/PgPWk0MpcNsiU/gy8NQDbUn9KHJpugr3+3sokXlBm+hVK7dajXGpv
-         8q7Z+Ea9U5SwHjY2zrySs3y2d8YXrmcHPsfs7+0GrU3ZrZCoCyEzIwPWTvjcNgEyZTr0
-         tPDK0dvhpZonQWQ/8zVf5A8Pm+UNGQjlQslbWDDQRMPNLH1ewxHhikt+pSs3fCEMzWpy
-         h4fn+duk2H9Tyzl/RG3waJODsRBv6lKqsEF0FmQidQIpVzeqNLUBXtIiuGcI/MdG1jZ+
-         Z3kQ==
+        bh=44u+RIEyIMcUDg105N+zULv77JrXUZRISakECMhX3bs=;
+        b=OGpH1WNzPjTcm5E5ncl9BNXSuY5LMkOpedhm3Nb7onrYGMlJ7JmgdqNO2pi2xaJXuc
+         GwzgdovaWq3+jNl0E9XYVRuAeMGzdjZvljEBZs01UiHsIFCDb2sHWXj6CGvRPvm2FUit
+         HAOgms9oTcZWNQLyW41AZna7x0udrKN8NdYtmL8op/aQ4RILir87xwY8o4Oun69OEvLx
+         QZYLtMzN/miSGgg/BKu8Pj3KefY0t0HEAgMmELjLmhW2kaH5yaLB4ogbESYgx8zQKmC9
+         W5vi6AnWcRdgHqvKbR5oOq5hUPfbDeDAe1SAVLwdOJM7EJ169CjKBDNp0vXHupAexg23
+         nf1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/VHZ6okNGVPzedtErZrbF5RtEXmBVcbXIZYqJXNlcGE=;
-        b=tc3tpJbqE39TPq9rSg+wU9JHixB6Lj0NX+KOMUXXDpfRxyb7BlMYGMfCMvwEKvchRF
-         602y+efqvQhg0MvJ0PSaUrknl5Bk81vLvdrtSa2ZZEWnE6L0sHv/rnFafvo0eq8qo2Tt
-         MkVnnl4skNmfJxgcmpgYDeDCX4LSL59k09/I8WQARD8Qg2jjhA0gXQWrnKVjGR/YedOF
-         BpESbXLbWsWo/PhjyBJR4miUGW1dycHhB2JTET7/6bqx2I3jN+DKQwCJy5B/OCtasMFq
-         03LaiIySVGkK8iGcBFB6LdmlrYug9Lz0xg72zRJ6eE+2uYwbGSwiOsoFBXUFh/fEog/H
-         vtMg==
-X-Gm-Message-State: APjAAAXoK/sDgUJN0rp4cIdKFQP71gAeoaBLyEFBoU/LH5IbuQ0mWWQ/
-        GLcnk9mBJZg3wqbf/MvZzNAXIqgc
-X-Google-Smtp-Source: APXvYqzBKuOEHPMw3o8Cj6KTO1bodQzuJ4c7onaxWaOeGzdwp75Ry+OgfOFDk0WZ19gelc+UPhVVmA==
-X-Received: by 2002:a19:6e0b:: with SMTP id j11mr7432606lfc.124.1552847817191;
-        Sun, 17 Mar 2019 11:36:57 -0700 (PDT)
+        bh=44u+RIEyIMcUDg105N+zULv77JrXUZRISakECMhX3bs=;
+        b=M8TKNbjUXCC6cP5Wa2aOmVZ6ZLxeE1M+qRZ0TpNsLiOjLMiXDcPF6aeAmYSitHsVZY
+         w2MMqoapwNub6Mta9ax2l2pKbsK5nr/5GWN2U7NNyKVRrppjfqDTwjvQ4+wSn+wxvyvR
+         IdRJrRY6dkeq2xNQFutupffslpOzXCYkANZHvwLx9q+39XwPITrXw6XVHZsdaCUlQHl2
+         7N9g4d61zry/Gj3t9AxBqtmg6QVq9yHKjaXL1bNRYQ0vWWTZ7mzZyqlMuyxspcYSnPk0
+         310pJXYTUa94Lz9LKbSfnsdWRZYW/XwT3hMMjZkq5PPmyOrj89t20epkaz+PwO/d7bA7
+         Xuig==
+X-Gm-Message-State: APjAAAX+8tbJgx48A0aaWDnrO03MthYFacEuSYDR6PLh9RjtxpUS2gtC
+        /U5CysPAruB9lmyDHzasTaJfoNjo
+X-Google-Smtp-Source: APXvYqzb72O+eSkbq0n5CHnwtb7UF0cuPBHJUmEgWQbtRd/2Vd66/nxyMJLA+y2TdHhQ3cwBQWr7Ow==
+X-Received: by 2002:a2e:b001:: with SMTP id y1mr8144726ljk.130.1552847820559;
+        Sun, 17 Mar 2019 11:37:00 -0700 (PDT)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id e2sm1589484lfc.75.2019.03.17.11.36.55
+        by smtp.gmail.com with ESMTPSA id e2sm1589484lfc.75.2019.03.17.11.36.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Mar 2019 11:36:56 -0700 (PDT)
+        Sun, 17 Mar 2019 11:36:59 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH 2/4] doc-diff: let `render_tree()` take an explicit directory name
-Date:   Sun, 17 Mar 2019 19:36:01 +0100
-Message-Id: <249372bed148417dcc77423f53e7f5f7d7a67757.1552838239.git.martin.agren@gmail.com>
+Subject: [PATCH 3/4] doc-diff: support diffing from/to AsciiDoc(tor)
+Date:   Sun, 17 Mar 2019 19:36:02 +0100
+Message-Id: <e6c9f88e575e13a564d47a19050b65154dede7c6.1552838239.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <cover.1552838239.git.martin.agren@gmail.com>
 References: <cover.1552838239.git.martin.agren@gmail.com>
@@ -66,82 +66,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In `render_tree()`, `$1` is documented to be the commit-ish/oid and we
-use it as that with `git checkout`, but we mostly use it to form the
-name of various directories. To separate these concerns, and because we
-are about to construct the directory names a bit differently, take two
-distinct arguments instead.
+Provide `--from-asciidoctor` and `--to-asciidoctor` to select that the
+"from" resp. "to" commit should be built with Asciidoctor, and provide
+an `--asciidoctor` shortcut for giving both. Similarly, provide
+--{from-,to-,}asciidoc for explicitly selecting AsciiDoc.
+
+Implement this using the USE_ASCIIDOCTOR flag. Let's not enforce a
+default here, but instead just let the Makefile fall back on whatever is
+in config.mak, so that `./doc-diff foo bar` without any of of these new
+options behaves exactly like it did before this commit.
+
+Encode the choice into the directory names of our "installed" and
+"rendered" files, so that we can run `./doc-diff --from-asciidoc
+--to-asciidoctor HEAD HEAD` without our two runs stomping on each other.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/doc-diff | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ Documentation/doc-diff | 53 +++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 45 insertions(+), 8 deletions(-)
 
 diff --git a/Documentation/doc-diff b/Documentation/doc-diff
-index 32c83dd26f..3e975d3c5d 100755
+index 3e975d3c5d..36fc2307a7 100755
 --- a/Documentation/doc-diff
 +++ b/Documentation/doc-diff
-@@ -79,6 +79,9 @@ then
+@@ -12,9 +12,15 @@ OPTIONS_SPEC="\
+ doc-diff [options] <from> <to> [-- <diff-options>]
+ doc-diff (-c|--clean)
+ --
+-j=n	parallel argument to pass to make
+-f	force rebuild; do not rely on cached results
+-c,clean	cleanup temporary working files
++j=n			parallel argument to pass to make
++f			force rebuild; do not rely on cached results
++c,clean			cleanup temporary working files
++from-asciidoc		use asciidoc with the 'from'-commit
++from-asciidoctor	use asciidoctor with the 'from'-commit
++asciidoc		use asciidoc with both commits
++to-asciidoc		use asciidoc with the 'to'-commit
++to-asciidoctor		use asciidoctor with the 'to'-commit
++asciidoctor		use asciidoctor with both commits
+ "
+ SUBDIRECTORY_OK=1
+ . "$(git --exec-path)/git-sh-setup"
+@@ -22,6 +28,8 @@ SUBDIRECTORY_OK=1
+ parallel=
+ force=
+ clean=
++from_program=
++to_program=
+ while test $# -gt 0
+ do
+ 	case "$1" in
+@@ -31,6 +39,20 @@ do
+ 		clean=t ;;
+ 	-f)
+ 		force=t ;;
++	--from-asciidoctor)
++		from_program=-asciidoctor ;;
++	--to-asciidoctor)
++		to_program=-asciidoctor ;;
++	--asciidoctor)
++		from_program=-asciidoctor
++		to_program=-asciidoctor ;;
++	--from-asciidoc)
++		from_program=-asciidoc ;;
++	--to-asciidoc)
++		to_program=-asciidoc ;;
++	--asciidoc)
++		from_program=-asciidoc
++		to_program=-asciidoc ;;
+ 	--)
+ 		shift; break ;;
+ 	*)
+@@ -79,8 +101,21 @@ then
  	ln -s "$dots/config.mak" "$tmp/worktree/config.mak"
  fi
  
-+from_dir=$from_oid &&
-+to_dir=$to_oid &&
+-from_dir=$from_oid &&
+-to_dir=$to_oid &&
++construct_makemanflags () {
++	if test "$1" = "-asciidoc"
++	then
++		echo USE_ASCIIDOCTOR=
++	elif test "$1" = "-asciidoctor"
++	then
++		echo USE_ASCIIDOCTOR=YesPlease
++	fi
++}
 +
++from_makemanflags=$(construct_makemanflags "$from_program") &&
++to_makemanflags=$(construct_makemanflags "$to_program") &&
++
++from_dir=$from_oid$from_program &&
++to_dir=$to_oid$to_program &&
+ 
  # generate_render_makefile <srcdir> <dstdir>
  generate_render_makefile () {
- 	find "$1" -type f |
-@@ -94,7 +97,7 @@ generate_render_makefile () {
+@@ -97,7 +132,7 @@ generate_render_makefile () {
  	done
  }
  
--# render_tree <committish_oid>
-+# render_tree <committish_oid> <directory_name>
+-# render_tree <committish_oid> <directory_name>
++# render_tree <committish_oid> <directory_name> <makemanflags>
  render_tree () {
  	# Skip install-man entirely if we already have an installed directory.
  	# We can't rely on make here, since "install-man" unconditionally
-@@ -102,28 +105,31 @@ render_tree () {
- 	# we then can't rely on during the render step). We use "mv" to make
- 	# sure we don't get confused by a previous run that failed partway
+@@ -107,10 +142,12 @@ render_tree () {
  	# through.
--	if ! test -d "$tmp/installed/$1"
-+	oid=$1 &&
-+	dname=$2 &&
-+	if ! test -d "$tmp/installed/$dname"
+ 	oid=$1 &&
+ 	dname=$2 &&
++	makemanflags=$3 &&
+ 	if ! test -d "$tmp/installed/$dname"
  	then
--		git -C "$tmp/worktree" checkout --detach "$1" &&
-+		git -C "$tmp/worktree" checkout --detach "$oid" &&
+ 		git -C "$tmp/worktree" checkout --detach "$oid" &&
  		make -j$parallel -C "$tmp/worktree" \
++			$makemanflags \
  			GIT_VERSION=omitted \
  			SOURCE_DATE_EPOCH=0 \
--			DESTDIR="$tmp/installed/$1+" \
-+			DESTDIR="$tmp/installed/$dname+" \
- 			install-man &&
--		mv "$tmp/installed/$1+" "$tmp/installed/$1"
-+		mv "$tmp/installed/$dname+" "$tmp/installed/$dname"
- 	fi &&
- 
- 	# As with "installed" above, we skip the render if it's already been
- 	# done.  So using make here is primarily just about running in
- 	# parallel.
--	if ! test -d "$tmp/rendered/$1"
-+	if ! test -d "$tmp/rendered/$dname"
- 	then
--		generate_render_makefile "$tmp/installed/$1" "$tmp/rendered/$1+" |
-+		generate_render_makefile "$tmp/installed/$dname" \
-+			"$tmp/rendered/$dname+" |
- 		make -j$parallel -f - &&
--		mv "$tmp/rendered/$1+" "$tmp/rendered/$1"
-+		mv "$tmp/rendered/$dname+" "$tmp/rendered/$dname"
+ 			DESTDIR="$tmp/installed/$dname+" \
+@@ -130,6 +167,6 @@ render_tree () {
  	fi
  }
  
--render_tree $from_oid &&
--render_tree $to_oid &&
--git -C $tmp/rendered diff --no-index "$@" $from_oid $to_oid
-+render_tree $from_oid $from_dir &&
-+render_tree $to_oid $to_dir &&
-+git -C $tmp/rendered diff --no-index "$@" $from_dir $to_dir
+-render_tree $from_oid $from_dir &&
+-render_tree $to_oid $to_dir &&
++render_tree $from_oid $from_dir $from_makemanflags &&
++render_tree $to_oid $to_dir $to_makemanflags &&
+ git -C $tmp/rendered diff --no-index "$@" $from_dir $to_dir
 -- 
 2.21.0
 
