@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F38ED20248
-	for <e@80x24.org>; Sun, 17 Mar 2019 12:50:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 187CE20248
+	for <e@80x24.org>; Sun, 17 Mar 2019 12:50:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727225AbfCQMuQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 08:50:16 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:42201 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726204AbfCQMuQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 08:50:16 -0400
-Received: by mail-pg1-f195.google.com with SMTP id b2so9479675pgl.9
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 05:50:16 -0700 (PDT)
+        id S1727228AbfCQMuW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 08:50:22 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:40710 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726204AbfCQMuW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 08:50:22 -0400
+Received: by mail-pg1-f194.google.com with SMTP id u9so9495465pgo.7
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 05:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vjIObuSZOxKCUx8V5DyNqYBCV96tjOpWVPk4Q5/6254=;
-        b=ZpiONCoiSLSiTIybemf8LE5B/H/X5sGLnPnS2HTwcxPm+o7R7xpKFIOraDkRhh5UFS
-         U+3kkRyKBxrPyFLlJTi71cQfZhXf2Jv3enD8T0iP9xPxhRVELB+DC2Uk82cMyd4iIzuU
-         aV+sMuXvHsFC0t/CFHkoOgYn0KUn1cjajwKuVwJst8hWreJmusbdyOBPgdy0aeUG5QPK
-         cE75Vw7+oEs2DAumvdKUNgKcjY8wgfcIp5UsjvhNK30x+sDbSYKAr6XFLMC4i5yH/WQE
-         9g7wxJvJWfInFmkx/Q3OlDA+RXgZh72X2Dw34L8O+f66AED66XQpgjPf6d0gNHw4WWc0
-         9eUA==
+        bh=LRw4e9Z49Srn4PA5kic4hUSUB7KP+A4aAL1T9mkWKWE=;
+        b=HsDdYaRkShGggjA1lIPOnnu2jf9L6v3d8aPQeJbTMUPwH4mf41HxGU1yG+YdZJf4iN
+         SeFHAk0F102nyIHjsKBRtRpO5WoIH2sDNSPz8Trvii0QPLx3UmKC98Rn3nWtoj5Ps+I5
+         UYAbYWzkiNKMQWWcFFUiPoBUu2yJ1EucBqYMXjuPIPOzJ/f5wlPG16zarHFp6os7rUBs
+         5Kq0CF7Vu7LcXe7qxL03aD7x2ysVySR9P04LXDfSPtvAa31DURgYGF3h8z17JNIgP3WL
+         yI6Gj5xnVzrvkI4LpJmlBQbjN6IKhcfvKDe0ydNoBCrTdY8TsX89z1La+7yHXjARRwv1
+         abxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vjIObuSZOxKCUx8V5DyNqYBCV96tjOpWVPk4Q5/6254=;
-        b=Yhis5xaO/pQDWeb+dhL1Ib6hkVFxbKQA0v24rBWjH/NAnXGy5bD0Ls449HylWmXcDr
-         f31YnxSydjYLO44CVvMTmawbN8HcgxnK4mI3sBWgOAYcByxdHSwMO7wfSRGom4fNZ1qP
-         vcijKQ1onqhslN7FqBqefQ9FivYUhS78I0N6brY10mGlzBrJ5TPNivBIOeNUOlDxPN3K
-         jycK+J7Gt6QLLGbpxY4ADhsBiX8YHu13+yvEraNkmBmyWDI3nbKZxG60JBQHKu4T5dPX
-         aYHSM1RNbr4uklJ7yi6oOy3J2fqH4tzRBcc2nOqbFailmp3APMBnk6VkXAID2i+hb6aL
-         P7Cg==
-X-Gm-Message-State: APjAAAU8K0aA1ImsGfBU7Oe+vOy0EBP4UHfpE0250Z0YQaidoPac/BIe
-        H/dWDNAfgpxmVz/VczrHPaE=
-X-Google-Smtp-Source: APXvYqy0SXlcdAVr7moMkP1i32fmsAk0ZBAQHqa4fb0pbI5h28JPPB6Sfv4LGZAMXqbEU7DcjxCieQ==
-X-Received: by 2002:a65:4981:: with SMTP id r1mr12940534pgs.62.1552827015890;
-        Sun, 17 Mar 2019 05:50:15 -0700 (PDT)
+        bh=LRw4e9Z49Srn4PA5kic4hUSUB7KP+A4aAL1T9mkWKWE=;
+        b=AjqqKlg/FmYtKE5ZnAdH32b72aFFtcRMuOm+bN8STM2u8vZvH/XEreRts6rGzzjME8
+         yjmGzZF/O1VyP8sbks7qTj++Az/Opu8R3kJmIz+PM/TbfkGEkG0qDMq1Kcd2LXoWe+FF
+         lvbS3X8JEr5agdBTeHwWxAR8U9mpl0KpHtFqFR5sRwr8r5keF6ZVWk//+By9EhakHRLX
+         SoJCEBvcxqzUW72HAiDV3X5w8BcKzMegiQOtSkBkqP4RvT1cLj88gdUWC96x4Gj/nbRi
+         Z0eIjMjAq9kPMsaMwecXgiG+lCaKpJRaEEYVazSpGBhWyzupDipg68vBCGkUvn8H+7UM
+         w0Vw==
+X-Gm-Message-State: APjAAAXB/QWuk7uYuXEb0lf122BVH8Ums3VlkrMOmpk8xTexmKTfNXt2
+        Huw5vAH3I4Iqv8M5IS2rnTIcNzxn
+X-Google-Smtp-Source: APXvYqyqP4e3TyhJUktVkv9xSJZ4LnTVZftmI+i5kCxGMXISdn7FpOeHl44RgvnnWiicVNxM3JA3MQ==
+X-Received: by 2002:a63:e113:: with SMTP id z19mr432414pgh.87.1552827021744;
+        Sun, 17 Mar 2019 05:50:21 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id i16sm4581809pgk.51.2019.03.17.05.50.11
+        by smtp.gmail.com with ESMTPSA id b8sm9642093pgq.33.2019.03.17.05.50.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Mar 2019 05:50:15 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 17 Mar 2019 19:50:10 +0700
+        Sun, 17 Mar 2019 05:50:21 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 17 Mar 2019 19:50:16 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
@@ -59,9 +59,9 @@ Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         jacob.keller@gmail.com, phillip.wood123@gmail.com,
         rybak.a.v@gmail.com
-Subject: [PATCH v4 06/26] checkout: advice how to get out of detached HEAD mode
-Date:   Sun, 17 Mar 2019 19:49:06 +0700
-Message-Id: <20190317124926.17137-7-pclouds@gmail.com>
+Subject: [PATCH v4 07/26] checkout: keep most #include sorted
+Date:   Sun, 17 Mar 2019 19:49:07 +0700
+Message-Id: <20190317124926.17137-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190317124926.17137-1-pclouds@gmail.com>
 References: <20190308095752.8574-1-pclouds@gmail.com>
@@ -74,82 +74,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Detached HEAD mode is considered dangerous and confusing for newcomers
-and we print a big block of warning how to move forward. But we should
-also suggest the user the way to get out of it if they get into detached
-HEAD by mistake.
-
-While at there, I also suggest how to turn the advice off. This is
-another thing I find annoying with advices and should be dealt with in a
-more generic way. But that may require some refactoring in advice.c
-first.
+The include list becomes very long and frankly a bit unorganized. With
+the exception of builtin.h, cache.h or git-compat-util.h which have to
+come first, keep the rest sorted.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- advice.c                   | 17 +++++++++++++----
- t/t2020-checkout-detach.sh | 12 ++++++++++++
- 2 files changed, 25 insertions(+), 4 deletions(-)
+ builtin/checkout.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/advice.c b/advice.c
-index 567209aa79..b224825637 100644
---- a/advice.c
-+++ b/advice.c
-@@ -191,13 +191,22 @@ void NORETURN die_conclude_merge(void)
- void detach_advice(const char *new_name)
- {
- 	const char *fmt =
--	_("Note: checking out '%s'.\n\n"
-+	_("Note: checking out '%s'.\n"
-+	"\n"
- 	"You are in 'detached HEAD' state. You can look around, make experimental\n"
- 	"changes and commit them, and you can discard any commits you make in this\n"
--	"state without impacting any branches by performing another checkout.\n\n"
-+	"state without impacting any branches by performing another checkout.\n"
-+	"\n"
- 	"If you want to create a new branch to retain commits you create, you may\n"
--	"do so (now or later) by using -b with the checkout command again. Example:\n\n"
--	"  git checkout -b <new-branch-name>\n\n");
-+	"do so (now or later) by using -b with the checkout command again. Example:\n"
-+	"\n"
-+	"  git checkout -b <new-branch-name>\n"
-+	"\n"
-+	"Or undo this checkout with:\n"
-+	"\n"
-+	"  git checkout -\n"
-+	"\n"
-+	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 0e6037b296..f7801db2fb 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1,30 +1,30 @@
+ #define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "builtin.h"
+-#include "config.h"
++#include "advice.h"
++#include "blob.h"
++#include "branch.h"
++#include "cache-tree.h"
+ #include "checkout.h"
++#include "commit.h"
++#include "config.h"
++#include "diff.h"
++#include "dir.h"
++#include "ll-merge.h"
+ #include "lockfile.h"
++#include "merge-recursive.h"
++#include "object-store.h"
+ #include "parse-options.h"
+ #include "refs.h"
+-#include "object-store.h"
+-#include "commit.h"
++#include "remote.h"
++#include "resolve-undo.h"
++#include "revision.h"
++#include "run-command.h"
++#include "submodule.h"
++#include "submodule-config.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+-#include "cache-tree.h"
+ #include "unpack-trees.h"
+-#include "dir.h"
+-#include "run-command.h"
+-#include "merge-recursive.h"
+-#include "branch.h"
+-#include "diff.h"
+-#include "revision.h"
+-#include "remote.h"
+-#include "blob.h"
+ #include "xdiff-interface.h"
+-#include "ll-merge.h"
+-#include "resolve-undo.h"
+-#include "submodule-config.h"
+-#include "submodule.h"
+-#include "advice.h"
  
- 	fprintf(stderr, fmt, new_name);
- }
-diff --git a/t/t2020-checkout-detach.sh b/t/t2020-checkout-detach.sh
-index 1fa670625c..743c7248a2 100755
---- a/t/t2020-checkout-detach.sh
-+++ b/t/t2020-checkout-detach.sh
-@@ -206,6 +206,12 @@ test_expect_success 'describe_detached_head prints no SHA-1 ellipsis when not as
- 
- 	  git checkout -b <new-branch-name>
- 
-+	Or undo this checkout with:
-+
-+	  git checkout -
-+
-+	Turn off this advice by setting config variable advice.detachedHead to false
-+
- 	HEAD is now at \$commit three
- 	EOF
- 
-@@ -282,6 +288,12 @@ test_expect_success 'describe_detached_head does print SHA-1 ellipsis when asked
- 
- 	  git checkout -b <new-branch-name>
- 
-+	Or undo this checkout with:
-+
-+	  git checkout -
-+
-+	Turn off this advice by setting config variable advice.detachedHead to false
-+
- 	HEAD is now at \$commit... three
- 	EOF
+ static int checkout_optimize_new_branch;
  
 -- 
 2.21.0.548.gd3c7d92dc2
