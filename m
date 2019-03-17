@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C331B20248
-	for <e@80x24.org>; Sun, 17 Mar 2019 18:37:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 287CD20248
+	for <e@80x24.org>; Sun, 17 Mar 2019 18:37:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727173AbfCQShD (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Mar 2019 14:37:03 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:32850 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726333AbfCQShD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Mar 2019 14:37:03 -0400
-Received: by mail-lj1-f193.google.com with SMTP id z7so12073247lji.0
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 11:37:01 -0700 (PDT)
+        id S1727276AbfCQShG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Mar 2019 14:37:06 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:36328 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726333AbfCQShG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Mar 2019 14:37:06 -0400
+Received: by mail-lf1-f68.google.com with SMTP id d18so10146419lfn.3
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 11:37:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=44u+RIEyIMcUDg105N+zULv77JrXUZRISakECMhX3bs=;
-        b=OGpH1WNzPjTcm5E5ncl9BNXSuY5LMkOpedhm3Nb7onrYGMlJ7JmgdqNO2pi2xaJXuc
-         GwzgdovaWq3+jNl0E9XYVRuAeMGzdjZvljEBZs01UiHsIFCDb2sHWXj6CGvRPvm2FUit
-         HAOgms9oTcZWNQLyW41AZna7x0udrKN8NdYtmL8op/aQ4RILir87xwY8o4Oun69OEvLx
-         QZYLtMzN/miSGgg/BKu8Pj3KefY0t0HEAgMmELjLmhW2kaH5yaLB4ogbESYgx8zQKmC9
-         W5vi6AnWcRdgHqvKbR5oOq5hUPfbDeDAe1SAVLwdOJM7EJ169CjKBDNp0vXHupAexg23
-         nf1Q==
+        bh=K7c5YDSgyoawrfmqf/oFmLzUxQUdk/OeK/sp494Ht4c=;
+        b=nm50bhIb5PMMJz/PWjSiwkSXp9iNVlO6I8TKZDWyoaR9FGosg2b7oWbweaO2RDbwT8
+         Q0LgnZ1RoLyXIOIDjM4O88vQCvIHW36742Kl5T8x2jkKcxtfpE3GlFrabAeoqz/Ud2q7
+         J3p5124whc30Ro8oiCUjXbHauOAupwxcyZgrmJiCCjtlS84h2LcQmhVnNkzpTtMHA8lJ
+         k9LBqbZwCcjYOQu+wzyn8Xv72LpBow25Qx+eEkX5aberZa1UrhpMb6ObHLi76DXl24La
+         0XSi8Sosl3XgJHMviLfFiwOOyHRJ96Jv2Y1F8s7uUtbwTATVGfzwHtZ7ZVi7WQrxKHl5
+         p1HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=44u+RIEyIMcUDg105N+zULv77JrXUZRISakECMhX3bs=;
-        b=M8TKNbjUXCC6cP5Wa2aOmVZ6ZLxeE1M+qRZ0TpNsLiOjLMiXDcPF6aeAmYSitHsVZY
-         w2MMqoapwNub6Mta9ax2l2pKbsK5nr/5GWN2U7NNyKVRrppjfqDTwjvQ4+wSn+wxvyvR
-         IdRJrRY6dkeq2xNQFutupffslpOzXCYkANZHvwLx9q+39XwPITrXw6XVHZsdaCUlQHl2
-         7N9g4d61zry/Gj3t9AxBqtmg6QVq9yHKjaXL1bNRYQ0vWWTZ7mzZyqlMuyxspcYSnPk0
-         310pJXYTUa94Lz9LKbSfnsdWRZYW/XwT3hMMjZkq5PPmyOrj89t20epkaz+PwO/d7bA7
-         Xuig==
-X-Gm-Message-State: APjAAAX+8tbJgx48A0aaWDnrO03MthYFacEuSYDR6PLh9RjtxpUS2gtC
-        /U5CysPAruB9lmyDHzasTaJfoNjo
-X-Google-Smtp-Source: APXvYqzb72O+eSkbq0n5CHnwtb7UF0cuPBHJUmEgWQbtRd/2Vd66/nxyMJLA+y2TdHhQ3cwBQWr7Ow==
-X-Received: by 2002:a2e:b001:: with SMTP id y1mr8144726ljk.130.1552847820559;
-        Sun, 17 Mar 2019 11:37:00 -0700 (PDT)
+        bh=K7c5YDSgyoawrfmqf/oFmLzUxQUdk/OeK/sp494Ht4c=;
+        b=D5kMFQR/s/Q904O0qnsxIKFbzF3CxRls5a6SyI1fX7u+08R6+w6LaGuAO2jG7CG/qp
+         zYnLtOsxUr4Xsq6onU/Heu8hHtVVapM8tD4oGaisk3YOBW6fq6lXsUS0iI5E4/5oM8lA
+         Hvzgp3AvaM8cTd7+N6s2IQEQWr2zWIj9sPHBt2hC0KEmCA1miqf9bm1p1GEPTlljyUrr
+         /KxPLE/cYnH4DMEr70DHa4GgBIKrEYFmUGTwEBfUTQnyW9SRO3kEsY7SoxPCQL4rKs+7
+         mNcXME92N32/TUrB8XaTuBEKxrZ4o/XKdaiRwWh4816ymTKpWoRh2JygckME2mRP3Lxw
+         on7w==
+X-Gm-Message-State: APjAAAWQIyVNM/fOIzZbjitqQ5gnSKivdOf103eijQMmGYDkpKwtrr4l
+        Fd0qjys4N+VrSLrzFznGfje0BCPP
+X-Google-Smtp-Source: APXvYqzOrGONPm1VHbU3Qqd/lvh7AxCu8a2DgG8Tz47uSgaBTmtglUiFppDngb35CbzjhEqT8U4G6w==
+X-Received: by 2002:ac2:5921:: with SMTP id v1mr7824933lfi.135.1552847824025;
+        Sun, 17 Mar 2019 11:37:04 -0700 (PDT)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id e2sm1589484lfc.75.2019.03.17.11.36.58
+        by smtp.gmail.com with ESMTPSA id e2sm1589484lfc.75.2019.03.17.11.37.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Mar 2019 11:36:59 -0700 (PDT)
+        Sun, 17 Mar 2019 11:37:03 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH 3/4] doc-diff: support diffing from/to AsciiDoc(tor)
-Date:   Sun, 17 Mar 2019 19:36:02 +0100
-Message-Id: <e6c9f88e575e13a564d47a19050b65154dede7c6.1552838239.git.martin.agren@gmail.com>
+Subject: [PATCH 4/4] doc-diff: add `--cut-header-footer`
+Date:   Sun, 17 Mar 2019 19:36:03 +0100
+Message-Id: <7ce7aa6f2f1ea40442c17c15fe8d7744b29d8650.1552838239.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <cover.1552838239.git.martin.agren@gmail.com>
 References: <cover.1552838239.git.martin.agren@gmail.com>
@@ -66,133 +66,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Provide `--from-asciidoctor` and `--to-asciidoctor` to select that the
-"from" resp. "to" commit should be built with Asciidoctor, and provide
-an `--asciidoctor` shortcut for giving both. Similarly, provide
---{from-,to-,}asciidoc for explicitly selecting AsciiDoc.
+AsciiDoc and Asciidoctor do not agree on what to write in the header and
+footer of each man-page, i.e., the very first and the very last line of
+*.[157]. Those differences can certainly be interesting in their own
+right, but they clutter the output of `./doc-diff --from-asciidoc
+--to-asciidoctor HEAD HEAD` quite a bit since the diff contains some
+10-15 lines of noise per file diffed.
 
-Implement this using the USE_ASCIIDOCTOR flag. Let's not enforce a
-default here, but instead just let the Makefile fall back on whatever is
-in config.mak, so that `./doc-diff foo bar` without any of of these new
-options behaves exactly like it did before this commit.
+Teach doc-diff to cut away the first two and last two lines, i.e., the
+header/footer and the empty line immediately following/preceding it.
+Because Asciidoctor uses an extra empty line compared to AsciiDoc,
+remove one more line at each end of the file, but only if it's empty.
 
-Encode the choice into the directory names of our "installed" and
-"rendered" files, so that we can run `./doc-diff --from-asciidoc
---to-asciidoctor HEAD HEAD` without our two runs stomping on each other.
+An alternative approach might be to pass down `--no-header-footer`,
+which both AsciiDoc and Asciidoctor understand, but it has some
+drawbacks. First of all, the result doesn't build -- `xmlto` stumbles on
+the resulting xml since it has multiple root elements. Second, it cuts
+too much -- dropping the header loses the synopsis, which would be
+interesting to diff.
+
+Like in the previous commit, encode this option into the directory name
+of the "installed" and "rendered" files. Otherwise, we wouldn't be able
+to trust that what we use out of that cache actually corresponds to the
+options given for this run. (We could optimize this caching a little
+since this flag doesn't affect the contents of "installed" at all, but
+let's punt on that.)
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/doc-diff | 53 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 45 insertions(+), 8 deletions(-)
+ Documentation/doc-diff | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/doc-diff b/Documentation/doc-diff
-index 3e975d3c5d..36fc2307a7 100755
+index 36fc2307a7..3355be4798 100755
 --- a/Documentation/doc-diff
 +++ b/Documentation/doc-diff
-@@ -12,9 +12,15 @@ OPTIONS_SPEC="\
- doc-diff [options] <from> <to> [-- <diff-options>]
- doc-diff (-c|--clean)
- --
--j=n	parallel argument to pass to make
--f	force rebuild; do not rely on cached results
--c,clean	cleanup temporary working files
-+j=n			parallel argument to pass to make
-+f			force rebuild; do not rely on cached results
-+c,clean			cleanup temporary working files
-+from-asciidoc		use asciidoc with the 'from'-commit
-+from-asciidoctor	use asciidoctor with the 'from'-commit
-+asciidoc		use asciidoc with both commits
-+to-asciidoc		use asciidoc with the 'to'-commit
-+to-asciidoctor		use asciidoctor with the 'to'-commit
-+asciidoctor		use asciidoctor with both commits
+@@ -21,6 +21,7 @@ asciidoc		use asciidoc with both commits
+ to-asciidoc		use asciidoc with the 'to'-commit
+ to-asciidoctor		use asciidoctor with the 'to'-commit
+ asciidoctor		use asciidoctor with both commits
++cut-header-footer	cut away header and footer
  "
  SUBDIRECTORY_OK=1
  . "$(git --exec-path)/git-sh-setup"
-@@ -22,6 +28,8 @@ SUBDIRECTORY_OK=1
- parallel=
- force=
+@@ -30,6 +31,7 @@ force=
  clean=
-+from_program=
-+to_program=
+ from_program=
+ to_program=
++cut_header_footer=
  while test $# -gt 0
  do
  	case "$1" in
-@@ -31,6 +39,20 @@ do
- 		clean=t ;;
- 	-f)
- 		force=t ;;
-+	--from-asciidoctor)
-+		from_program=-asciidoctor ;;
-+	--to-asciidoctor)
-+		to_program=-asciidoctor ;;
-+	--asciidoctor)
-+		from_program=-asciidoctor
-+		to_program=-asciidoctor ;;
-+	--from-asciidoc)
-+		from_program=-asciidoc ;;
-+	--to-asciidoc)
-+		to_program=-asciidoc ;;
-+	--asciidoc)
-+		from_program=-asciidoc
-+		to_program=-asciidoc ;;
+@@ -53,6 +55,8 @@ do
+ 	--asciidoc)
+ 		from_program=-asciidoc
+ 		to_program=-asciidoc ;;
++	--cut-header-footer)
++		cut_header_footer=-cut-header-footer ;;
  	--)
  		shift; break ;;
  	*)
-@@ -79,8 +101,21 @@ then
- 	ln -s "$dots/config.mak" "$tmp/worktree/config.mak"
- fi
+@@ -114,8 +118,8 @@ construct_makemanflags () {
+ from_makemanflags=$(construct_makemanflags "$from_program") &&
+ to_makemanflags=$(construct_makemanflags "$to_program") &&
  
--from_dir=$from_oid &&
--to_dir=$to_oid &&
-+construct_makemanflags () {
-+	if test "$1" = "-asciidoc"
-+	then
-+		echo USE_ASCIIDOCTOR=
-+	elif test "$1" = "-asciidoctor"
-+	then
-+		echo USE_ASCIIDOCTOR=YesPlease
-+	fi
-+}
-+
-+from_makemanflags=$(construct_makemanflags "$from_program") &&
-+to_makemanflags=$(construct_makemanflags "$to_program") &&
-+
-+from_dir=$from_oid$from_program &&
-+to_dir=$to_oid$to_program &&
+-from_dir=$from_oid$from_program &&
+-to_dir=$to_oid$to_program &&
++from_dir=$from_oid$from_program$cut_header_footer &&
++to_dir=$to_oid$to_program$cut_header_footer &&
  
  # generate_render_makefile <srcdir> <dstdir>
  generate_render_makefile () {
-@@ -97,7 +132,7 @@ generate_render_makefile () {
- 	done
- }
- 
--# render_tree <committish_oid> <directory_name>
-+# render_tree <committish_oid> <directory_name> <makemanflags>
- render_tree () {
- 	# Skip install-man entirely if we already have an installed directory.
- 	# We can't rely on make here, since "install-man" unconditionally
-@@ -107,10 +142,12 @@ render_tree () {
- 	# through.
- 	oid=$1 &&
- 	dname=$2 &&
-+	makemanflags=$3 &&
- 	if ! test -d "$tmp/installed/$dname"
- 	then
- 		git -C "$tmp/worktree" checkout --detach "$oid" &&
- 		make -j$parallel -C "$tmp/worktree" \
-+			$makemanflags \
- 			GIT_VERSION=omitted \
- 			SOURCE_DATE_EPOCH=0 \
- 			DESTDIR="$tmp/installed/$dname+" \
-@@ -130,6 +167,6 @@ render_tree () {
+@@ -164,6 +168,17 @@ render_tree () {
+ 			"$tmp/rendered/$dname+" |
+ 		make -j$parallel -f - &&
+ 		mv "$tmp/rendered/$dname+" "$tmp/rendered/$dname"
++
++		if test "$cut_header_footer" = "-cut-header-footer"
++		then
++			for f in $(find "$tmp/rendered/$dname" -type f)
++			do
++				tail -n +3 "$f" | head -n -2 |
++				sed -e '1{/^$/d}' -e '${/^$/d}' >"$f+" &&
++				mv "$f+" "$f" ||
++				return 1
++			done
++		fi
  	fi
  }
  
--render_tree $from_oid $from_dir &&
--render_tree $to_oid $to_dir &&
-+render_tree $from_oid $from_dir $from_makemanflags &&
-+render_tree $to_oid $to_dir $to_makemanflags &&
- git -C $tmp/rendered diff --no-index "$@" $from_dir $to_dir
 -- 
 2.21.0
 
