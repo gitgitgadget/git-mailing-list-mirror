@@ -2,94 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A13E20248
-	for <e@80x24.org>; Mon, 18 Mar 2019 15:55:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B0D420248
+	for <e@80x24.org>; Mon, 18 Mar 2019 16:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727818AbfCRPzH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 11:55:07 -0400
-Received: from mout.web.de ([212.227.15.14]:51775 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727194AbfCRPzH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 11:55:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1552924500;
-        bh=xZ2HSZn7yHxzk6KeFvzBYqiiojJd8SxYcIdAGqDn1xY=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=Dby3zKxYG/oSZrtxKZGr6r1/Fx7MN0xiibT3ebCbXqHxIlJB9xgKXeornAdgKZ+7n
-         CsEcOA7QE8ND/xUurrMdSH/tHGeM38iYFf/UtDUjopygKTWGuvatmWRWbw/GlXXChC
-         jw6lnubVUxa0bQDOeN6R8pU5IZd21r8Cy1q44tBw=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M40na-1gngzm0hTG-00rU8W; Mon, 18
- Mar 2019 16:55:00 +0100
-Date:   Mon, 18 Mar 2019 15:54:59 +0000
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com
-Subject: Re: [PATCH v1 1/1] trace2: NULL is not allowed for va_list
-Message-ID: <20190318155459.nrog5r5y3ci3bz3x@tb-raspi4>
-References: <20190316104715.27138-1-tboegi@web.de>
- <30c8b265-d6bf-3265-b2ae-029aa60d63e5@jeffhostetler.com>
+        id S1727586AbfCRQPP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 12:15:15 -0400
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:37027 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726914AbfCRQPP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 12:15:15 -0400
+Received: by mail-wr1-f44.google.com with SMTP id y15so17735886wro.4
+        for <git@vger.kernel.org>; Mon, 18 Mar 2019 09:15:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3P8Xr/VLYTHn8FykZdQac6ELSvXm0w6jZCs867vSKVU=;
+        b=TNHFjKHrl/Ltb4g1Y6OKMF1LtMmBNfwdF4NAazrZq4hSk2TIrErxdJiuTGdwjg3THp
+         wEqQkS1keOGshcPwRTWSQ94x2IKzjyajSEuOZ/roK9+DeL3cttwdh/30Y2/FA8++LM1h
+         FGuAYC9TqiYuUw5dSel+jidERMBQKuE10iegLXPZo8C+3mtUDsavZJpAyDt2+FUgIJjd
+         bDN3xqDW5nRWass4glKW/xSyPO+z0fQkHfRspOaEWlxSGJLrtFpN40Es0ibHVwUpoSIV
+         fKuzCdNwp4YyymSx7F+LOUuIB0Dc+lKbsk/5KiOLN6o/zwHVYOcPaoGRZz++nNNM6dRG
+         Brcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3P8Xr/VLYTHn8FykZdQac6ELSvXm0w6jZCs867vSKVU=;
+        b=BheQ7ioGHlxPIsWxHSZk+CuyZkPsjMX1KfDl54z95grzKDz1ETZKcYBSuaBkLXkmHY
+         QLksDrAqaJzgd06M38F8eQnwdAPfP3qy0f0iiGYNrXFPZA06eTCzCW24lYs+O8BjKwaF
+         7chAhbGHsnAWyhWCu8qz0/bHcjK/4IdaUfjJmDFr5TRzpmfMX6tuq07TessRB4oQo9VH
+         STjokQE9GqcRqRDvUDJ8LuePh5LMJsmqUinhKHhcWpareQfmm95QP4U5K0xw3bwAC8rV
+         SZKrjenAs8jtPRHJft56v8PqxTuwD5Zrwc3tZ328Z7QsxWWvUrqWqlRgAltgqXtChYPY
+         eeVA==
+X-Gm-Message-State: APjAAAWhHiseZ/HTWrrE7Ll5BCExqymiBFTOv+sVoQzEkpPJ7xM3q/Kf
+        6zQjK158fpNhjBr5Ej/9e6/SDKFGRmg=
+X-Google-Smtp-Source: APXvYqyAOmlShEKb6xXzM2g7gZjiJub6jHfbAdsSenUGBXf5+C8pkKyue3uI/tIhgIkidmwj5BqoaQ==
+X-Received: by 2002:a5d:6b46:: with SMTP id x6mr12016551wrw.94.1552925713188;
+        Mon, 18 Mar 2019 09:15:13 -0700 (PDT)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id z9sm3269728wmf.12.2019.03.18.09.15.11
+        (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+        Mon, 18 Mar 2019 09:15:12 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/4] gc docs: modernize and fix the documentation
+Date:   Mon, 18 Mar 2019 17:14:58 +0100
+Message-Id: <20190318161502.7979-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.21.0.360.g471c308f928
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <30c8b265-d6bf-3265-b2ae-029aa60d63e5@jeffhostetler.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:sP96DYpIrvjxhfhkaynDPluSfliteeI707EW3iBTGyOP4ghFGbg
- dw+CUV+v+q8f+LVsj8rlbhqCwZbFp7jY2bEIGtVIZ1rEpDcLwtIGGwkNEYmO665N7gKNWkn
- 2biNk8IrfhVs9CPYTmQJYqtlTb6Q2FW80U7ujpDqsDbZ36mWX53Nn9+Y0JhyECEV0u4qKof
- TBv/rgpNVp0IMmvci+bxA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JIsrF0Rw2oc=:Fr5epadlY5SIcEV/N79jVe
- NGXQ0oJogUqTnlUSLhqvleCU5UNt2OLqn8nhnNpZ4s+/aG6OoxvwrL6nnXrCJnLsyhfhLt1VH
- +Dp1LlY+KFQlBvWN6vsGl8MS+zOd9Vz20cRNUEZT7RPnlt416QSSQDGXNr0/DHgdYlL+S5F1X
- 5ddzf3TUqEKuLqr70o7BbnQTd/Ujf4gjnZnWIQTMakfdlfVw8pv659WixVdukwqDJ7+zuR088
- x4oW61X2Mz1Wv9RHf1KkFOtyurbfEvP1UP0zZBaUMe1ChuN+zL5jkkFg/8VCV75WMJQaXhL19
- /Ig1ejfqJopR+7wPyqVTrmkpc/AC9WIFtAc0F/YrYVTGlzIoLJQNpDAGy1louRDtiGIBopEyT
- I52y6ZwGcPS/DrFwTHpyNaVmDtT9yePlH13te7kTNNS545EnZwdB5lOZAMbPfzvB6AZmhLCdL
- i85d0AEaN08RrySJu2+nT95+7qIRL6yo6mr3Y6wuUGJyqKqMZbwT7RqnHQgnG0VXXrgv2gh7u
- nwUqkdAE4Yma0o1eCvFX6M7Y26VKVJ6a8oFFiYRfk3tU9oUG5GMsZhf25YvSZ3glhw6cmKTGG
- pBT+9jhBCqHh1CgRg1TNGej+29OHyNcpNCRdO7Mhvz6oWffgrCojkMu8bwhZkY/KveueDHwpR
- CpGjr4GU/W15UWMY7tKx0EYDXKTvVF7wfW+IK6/YxPgh39AfCVOVRxm1igPWmB/1GR5XlsStm
- c4uCSljNaQ+h54j5i+B+61CLRKt6r3QtFulGxJ8sixFvjjRwOd8LTNyL31QxDvdYDxWe0FWHy
- 0jMODiQVnW/FjfUEn2NK3RjcfYOfhYlpOlWXEdnXg/pG12qGg1XvUoYAH4iHbkBUkNnvrgrk0
- RdP5tBCFEfTXkqCXQSOFvE8CToJ0X1d75YpaAPGNQnFVkaCDMYvhIRnw5UITTG
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 18, 2019 at 08:35:26AM -0400, Jeff Hostetler wrote:
->
->
-> On 3/16/2019 6:47 AM, tboegi@web.de wrote:
-> > From: Torsten B=C3=B6gershausen <tboegi@web.de>
-> >
-> > Some compilers don't allow NULL to be passed for a va_list.
-> > Use va_list instead.
-> >
-> > Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
->
-> Thanks for the fixup.
->
-> For future reference, can you elaborate on which compiler
-> and/or platform has the problem ?
->
-> Jeff
+I've been annoyed by the "gc" docs for a while. This fixes most of the
+issues I've noticed, and also removes the duplication between the "gc"
+variables in git-config(1) and in git-gc(1), which was made possible
+by Duy's Documentation/config/* series.
 
-It is on a Raspberry PI:
-gcc (Raspbian 6.3.0-18+rpi1+deb9u1) 6.3.0 20170516
+This should make the "gc" docs more awesome, and due to removing the
+de-duplication results in a net deletion of lines. Yay.
 
-trace2/tr2_tgt_event.c:193:18: error: invalid operands to binary && (have =
-=E2=80=98int=E2=80=99 and =E2=80=98va_list {aka __va_list}=E2=80=99)
-  if (fmt && *fmt && ap) {
-        ~~~~~~~~~~~ ^~
+The only thing I was on the fence about was removing the 'gc
+"refs/remotes/*' config example, but I think the remaining docs
+explain it well enough. It can be added back if someone insists...
 
-(And I couldn't find any hints that va_list and pointers can be mixed,
- and no hints that they can't either)
+Now, I was originally going to have 5 patches in this series by
+modernizing the "NOTES" section, but that didn't make it in.
+
+This series is unrelated (and does not conflict with) my in-flight gc
+contention series
+(https://public-inbox.org/git/20190315155959.12390-1-avarab@gmail.com/),
+but the "git-gc" docs should be updated to discuss the
+core.filesRefLockTimeout option and how it impacts contention, see 8/8
+in that series for context. I.e. "you may have contention, but
+core.filesRefLockTimeout can mitigate blah blah".
+
+I was going to do that, but then thought that we should also mention
+that on the server-side we mitigate most/all of the contention via the
+quarantine, see "QUARANTINE ENVIRONMENT" in
+git-receive-pack(1). I.e. we:
+
+ 1. Get the temp pack
+ 2. OK it (fsck, hooks etc.)
+ 3. Move *complete* previously temp packs over
+ 4. Update the refs
+
+I.e. we are immune from the "concurrently with another process" race,
+but of course something concurrently updating the "server" repo
+without a quarantine environment may be subject to that race.
+
+The only problem is that the last couple of paragraphs may be
+wrong. That's just my understanding from a brief reading of
+722ff7f876c ("receive-pack: quarantine objects until pre-receive
+accepts", 2016-10-03) so I didn't want to include that in this
+series. Peff (or others), any comments?
+
+Ævar Arnfjörð Bjarmason (4):
+  gc docs: modernize the advice for manually running "gc"
+  gc docs: include the "gc.*" section from "config" in "gc"
+  gc docs: de-duplicate "OPTIONS" and "CONFIGURATION"
+  gc docs: downplay the usefulness of --aggressive
+
+ Documentation/config/gc.txt |  39 ++++++++++--
+ Documentation/git-gc.txt    | 120 +++++++++---------------------------
+ 2 files changed, 65 insertions(+), 94 deletions(-)
+
+-- 
+2.21.0.360.g471c308f928
 
