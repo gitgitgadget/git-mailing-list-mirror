@@ -2,118 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EA9E20248
-	for <e@80x24.org>; Mon, 18 Mar 2019 09:41:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02D2E20248
+	for <e@80x24.org>; Mon, 18 Mar 2019 10:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387596AbfCRJlk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 05:41:40 -0400
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42927 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387510AbfCRJlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 05:41:40 -0400
-Received: by mail-io1-f67.google.com with SMTP id c4so13837925ioh.9
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 02:41:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Y8FK759+HvVX4XJsLG+wxjK80dgzJHC6o6kfTp/l/YU=;
-        b=LA+s6HVAG6dnCsadvb634vmaJ66+M1ci7ci8iLd5qDAb5S2A6X1wO9pg1BSrdekn2y
-         xLccyoLpRSLvij5zD307lsRFQ2alF8gJ3sSaJbvfsiqy/5sx6gfvFyq6hMSPbVy5sdCP
-         TPJSeCcsX+B9JPTi5wWFq1yV1mUQdB6voC76yXkhM8CPkob3aZsN0/DWkoeQn05y6hTz
-         VlzYeWV1MW0DknmCJFjZL7gcGimI1ki+S1mJN8jGZZFZMqWnShSeWGL9BqQnehZEuevM
-         82BV326h31PiU1r2MNauTVl7mZD80IgkbTiJxOGCLCCfkJtuR1oPzuYG7j6W9YD4/MZq
-         NkZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Y8FK759+HvVX4XJsLG+wxjK80dgzJHC6o6kfTp/l/YU=;
-        b=FN0xNuWlaHwY47NYG4LgLfgy9iKHo7eY1+jRhi8mQ3BnpjDb2vlIASPgHKDkdipQ7z
-         QwGsMcXYLntDlaGp8RhSwh8Bh2vq0VuPIyeCN7hyRyJHsbdZO4q0r5TfIdiJYG1KADAQ
-         flK/e8cwcd/wNBgSf6llRDAUlGAzSouqx65QxmGVQHPohWox3zSe/wUI0ujGsVt9C+PQ
-         FW7Uix3JzZJ2QTkSCW61EfJ8eImb77dVO15oIYDgnIaYDnxrgRG30PBqUNcImVswY2MG
-         ctFQGaBjkelKx8JuFusyyE5uhmexLplZvUBGLHVuNRv9toz47IY24RYTdj6XT10u2hUJ
-         u/DA==
-X-Gm-Message-State: APjAAAUBrTM3WpRu7ZUg7M6H+wg9PGxNgYDzE1TeIzyF1cMKDxF59NGR
-        tq1Xb4TNUHH9WoOrzhid/TZC75aJWYI8sWUEUNw=
-X-Google-Smtp-Source: APXvYqwNBtkSSQ5UxkHcE4STtVhVmyvhRLWMh2IUrJO9bv99FqamlvDUEXT3b+g0j8yKWf9RUx12pUEdxwtuOCr5KrM=
-X-Received: by 2002:a5d:9446:: with SMTP id x6mr9040447ior.236.1552902099474;
- Mon, 18 Mar 2019 02:41:39 -0700 (PDT)
+        id S1727210AbfCRKKT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 06:10:19 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:57761 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727130AbfCRKKT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 06:10:19 -0400
+Received: from [192.168.1.12] ([2.101.244.128])
+        by smtp.talktalk.net with SMTP
+        id 5pDlhAhUhnuQZ5pDlhViy2; Mon, 18 Mar 2019 10:10:17 +0000
+X-Originating-IP: [2.101.244.128]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=echDgIMH c=1 sm=1 tr=0 a=8nsoD1t2XaTH5iSUU4dp1Q==:117
+ a=8nsoD1t2XaTH5iSUU4dp1Q==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=nhVhcl4fmmMikjbPP08A:9 a=QEXdDO2ut3YA:10
+Subject: Re: "man gitattributes" doesn't explain comma-separated attribute
+ values
+To:     Johannes Sixt <j6t@kdbg.org>,
+        "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+References: <alpine.LFD.2.21.1903160816410.10724@localhost.localdomain>
+ <408d82f6-e935-487a-6d0c-9ec4be5e8b6e@kdbg.org>
+ <alpine.LFD.2.21.1903161807480.19900@localhost.localdomain>
+ <6aeca231-c024-1063-0f8c-03276c83161c@kdbg.org>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <21e31142-ace2-71e1-8a36-1940c35eb24d@iee.org>
+Date:   Mon, 18 Mar 2019 10:10:16 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.3
 MIME-Version: 1.0
-References: <CACsJy8BuR=syjT1gjTxXXKKaevzpbdRGp+je+rsX6jV96F3sbA@mail.gmail.com>
- <20190317181620.26727-2-tmz@pobox.com>
-In-Reply-To: <20190317181620.26727-2-tmz@pobox.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 18 Mar 2019 16:41:13 +0700
-Message-ID: <CACsJy8DiQwmAKMruOAO4roPbiRTvt5TESBTd682hTwkZjcoj2Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] git: read local config in --list-cmds
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <6aeca231-c024-1063-0f8c-03276c83161c@kdbg.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfLR2hAYx7KLnpPkfZgpkatWKmlERPSMcSHcVrxqKkkhyys8i25AZUT/eODxFQ+nQYBgnSD5Wrx5G49jswNfi4jX+F9Xy9gbeThs1CTO7bcnCfTANsRNT
+ TM5t4QsBymxcjLEpQ2Ryh+MfacrhRRlP2DkS2IEq2KvA/QVjKlFBAI/OFXbpqbaRZgxr+XusoMJCGem+mcCNmmBKJ96qnXBmTd5eiNjNu4kosgASsqzDJxZf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 18, 2019 at 1:16 AM Todd Zullinger <tmz@pobox.com> wrote:
->
-> From: Jeff King <peff@peff.net>
->
-> Normally code that is checking config before we've decided to do
-> setup_git_directory() would use read_early_config(), which uses
-> discover_git_directory() to tentatively see if we're in a repo,
-> and if so to add it to the config sequence.
->
-> But list_cmds() uses the caching configset mechanism which
-> rightly does not use read_early_config(), because it has no
-> idea if it's being called early.
->
-> Call setup_git_directory_gently() so we can pick up repo-level
-> config (like completion.commands).
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  git.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/git.c b/git.c
-> index 2dd588674f..10e49d79f6 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -62,6 +62,13 @@ static int list_cmds(const char *spec)
->  {
->         struct string_list list = STRING_LIST_INIT_DUP;
->         int i;
-> +       int nongit;
-> +
-> +       /*
-> +       * Set up the repository so we can pick up any repo-level config (like
-> +       * completion.commands).
-> +       */
-> +       setup_git_directory_gently(&nongit);
+On 17/03/2019 08:18, Johannes Sixt wrote:
+> Am 16.03.19 um 23:09 schrieb Robert P. J. Day:
+>> On Sat, 16 Mar 2019, Johannes Sixt wrote:
+>>
+>>> Am 16.03.19 um 13:22 schrieb Robert P. J. Day:
+>>>>    as a working example, i looked at the top-level .gitattributes file
+>>>> in the git source code itself, which opens with:
+>>>>
+>>>>    * whitespace=!indent,trail,space
+>>>>    *.[ch] whitespace=indent,trail,space diff=cpp
+>>>>    *.sh whitespace=indent,trail,space eol=lf
+>>>>    ... snip ...
+>>>>
+>>>> first observation is that i see nothing in the man page that explains
+>>>> the notion of a comma-separated list of attribute values.
+>>> This comma-separated list is not a property of attributes in
+>>> general, but a property of the whitespace attribute in particular.
+>>> See core.whitespace in git-config(1) and "Checking whitespace
+>>> errors" in gitattributes(5).
+>>    ah, i was digging through the code trying to figure out where the
+>> whole CSV thing was explained -- it's massively helpful to understand
+>> that that property is specific to whitespace. that does not appear to
+>> be clarified anywhere.
+> But it is. The very first paragraph of gitattributes(5) states that
+> attributes are whitespace separated. From this, conclude that the
+> comma-separated list must pertain to the whitespace attribute.
 
-This gave me a pause because we could try to find .git more than
-necessary (e.g. when --list-cmds is requested without "config"). But I
-don't think that happens often enough to be worried about.
+I can't say that I follow that 'by omission'  argument. It is one of 
+those argument types that sounds good in retrospect but is very hard for 
+the unknowing reader to guess, especially as commas are widely taught as 
+being one of the ubiquitous separators.
 
-It also subtly changes list_aliases() code flow, because the
-read_early_config() call inside will use the already-discovered gitdir
- here instead of trying to rediscover. So, everything is still fine.
+There is a similar issue with '/' in refs regarding the subtle 
+distinctions between embedded characters that have a common convenience 
+meaning vs the idea that they are all just a single whitespace separated 
+string.
 
-You probably want to drop the comment block about repository setup
-inside list_cmds_by_config() too.
+Given that, Robert may be able to suggest a short addendum that 
+clarifies that the comma is processed elsewhere (IIUC).
 
+>   Now
+> follow the documentation of that, and you end up at core.whitespace in
+> git-config(1). There you have it as the very first phrase.
 >
->         while (*spec) {
->                 const char *sep = strchrnul(spec, ',');
+> -- Hannes
+
 -- 
-Duy
+
+Philip
+
