@@ -6,76 +6,71 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91E3B20248
-	for <e@80x24.org>; Mon, 18 Mar 2019 21:04:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6271C20248
+	for <e@80x24.org>; Mon, 18 Mar 2019 21:12:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726995AbfCRVE1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 17:04:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55448 "HELO cloud.peff.net"
+        id S1727654AbfCRVMS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 17:12:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55470 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726832AbfCRVE1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 17:04:27 -0400
-Received: (qmail 9843 invoked by uid 109); 18 Mar 2019 21:04:27 -0000
+        id S1727132AbfCRVMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 17:12:17 -0400
+Received: (qmail 10111 invoked by uid 109); 18 Mar 2019 21:12:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 18 Mar 2019 21:04:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 18 Mar 2019 21:12:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23683 invoked by uid 111); 18 Mar 2019 21:04:47 -0000
+Received: (qmail 23759 invoked by uid 111); 18 Mar 2019 21:12:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 18 Mar 2019 17:04:47 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 18 Mar 2019 17:12:38 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Mar 2019 17:04:24 -0400
-Date:   Mon, 18 Mar 2019 17:04:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Mar 2019 17:12:15 -0400
+Date:   Mon, 18 Mar 2019 17:12:15 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/3] parse-options: make OPT_ARGUMENT()  more useful
-Message-ID: <20190318210424.GA29661@sigill.intra.peff.net>
-References: <pull.163.git.gitgitgadget@gmail.com>
- <pull.163.v2.git.gitgitgadget@gmail.com>
- <10775638ad8f2ef9b64b8dbaf71b80d8546e81d8.1552562701.git.gitgitgadget@gmail.com>
- <20190315031553.GB28943@sigill.intra.peff.net>
- <xmqq7ecw7vbb.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [RFC/PATCH] point pull requesters to Git Git Gadget
+Message-ID: <20190318211215.GB29661@sigill.intra.peff.net>
+References: <20190312213246.GA6252@sigill.intra.peff.net>
+ <xmqqsgvrfsrh.fsf@gitster-ct.c.googlers.com>
+ <20190313193909.GB3400@sigill.intra.peff.net>
+ <20190313201854.GA5530@sigill.intra.peff.net>
+ <xmqqzhps6ghl.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq7ecw7vbb.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqzhps6ghl.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 18, 2019 at 11:47:20AM +0900, Junio C Hamano wrote:
+On Mon, Mar 18, 2019 at 11:52:54AM +0900, Junio C Hamano wrote:
 
 > Jeff King <peff@peff.net> writes:
 > 
-> >> +`OPT_ARGUMENT(long, &int_var, description)`::
-> >>  	Introduce a long-option argument that will be kept in `argv[]`.
-> >> +	If this option was seen, `int_var` will be set to one (except
-> >> +	if a `NULL` pointer was passed).
+> > Hmm. I guess it is still an issue in GGG. This thread has identical
+> > timestamps on patches 1 and 2 (and my server received them out of order
+> > by 2 seconds, so mutt orders them wrong):
 > >
-> > So this effectively makes it into a "bool" that we keep. I think that's
-> > fine. It always uses NOARG, so it is not like we would ever need to see
-> > "we got --foo, and this is the argument it had".
+> >   https://public-inbox.org/git/pull.163.git.gitgitgadget@gmail.com/
 > >
-> > I did wonder if it was possible for "--no-foo" to trigger this (leaving
-> > the caller who looks at the int unsure if they saw "--foo" or
-> > "--no-foo"), but it seems that the parse-options code checks for
-> > OPTION_ARGUMENT before it ever looks at negation.
+> > I do still think GGG has a more feasible path forward on this particular
+> > bug, though.
 > 
-> When a caller that needs to tell --no-foo and lack of any foo
-> related option arises, we should be able to update the function
-> further so that the caller can initialize the variable to -1
-> (unspecified) and make sure that 0 is left upon seeing --no-foo
-> so it's not a show stopper, I guess.
+> If the MSA is rewriting the timestamp (but why?  Is the original
+> date "Wed, 13 Mar 2019 19:20:12 GMT" malformed or perhaps in the
+> future or something?), then there isn't much the sending program
+> can---'git send-email' would suffer from the same symptom.
 
-The way it is written, I think the intent is that you would do:
+I think this statement from me is mid-way through my discovery of the
+actual issue. Yes, if the mail server is rewriting, the best we can do
+is put in an artificial sleep.
 
-  OPT_ARGUMENT("foo", &saw_foo, ...),
-  OPT_ARGUMENT("no-foo", &saw_no_foo, ...),
-
-I'm happy to punt on it until it ever comes up (which I suspect may be
-never).
+It looks like GitGitGadget just uses normal SMTP to submit the messages.
+I wonder if normal people using gmail as their SMTP server for
+send-email also suffer from this. I've not ever noticed it, but I
+don't know how common that setup is.
 
 -Peff
