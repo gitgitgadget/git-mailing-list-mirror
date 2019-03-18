@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB88C20248
-	for <e@80x24.org>; Mon, 18 Mar 2019 16:15:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B10220248
+	for <e@80x24.org>; Mon, 18 Mar 2019 16:15:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727703AbfCRQPX (ORCPT <rfc822;e@80x24.org>);
+        id S1727710AbfCRQPZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 12:15:25 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37299 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727597AbfCRQPX (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 18 Mar 2019 12:15:23 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54029 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726914AbfCRQPW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 12:15:22 -0400
-Received: by mail-wm1-f65.google.com with SMTP id e74so13606398wmg.3
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 09:15:21 -0700 (PDT)
+Received: by mail-wr1-f66.google.com with SMTP id y15so17736482wro.4
+        for <git@vger.kernel.org>; Mon, 18 Mar 2019 09:15:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6J0bm9qt+NMJmfG62ylVW6hUjWAnBLYsD9/T5zi/N34=;
-        b=kXkd2y71Vv01oa7RhC8cpZJYpEGfehbLInH/CEfZbdaiarhrK5h6cJBMzZi+7n0F7L
-         +1fYU5QvvZCDX/dz6ZBId5Nla6hbOWR5P0IkJjNMyLYhe7hVvggSurZ+4a74dLrOWPV5
-         xaK78G1oSw1ZF5qdimmvBl2B0LziLlGCCsRvET/d7xD8Nac1nDD9DXf9+dSc+w041Vbu
-         1h4NFhT1ADZdGKyKgqL334Qoc7RHnXFWm/7S65WD7X/d493a5sG3iVImLAYswDycK47c
-         4GqqQziY5reVaRrSHC38hIRiTtyq+a+/SL5OzJoVuHIcByGy4f455jGN50UmSHjT8jUZ
-         1nUA==
+        bh=r668F2eV0Qyvi+UucT5Ntky+AJIT9xy8S3FcPTen4RE=;
+        b=DQg/fi2eqq2llYNoZA7d3Yp9CDDp4zTRZmXe/7Vw3mNvgSi7PIjEA39jIWul5jbE/b
+         +2bg2cC6aAUE8+/J6YBdLJLNTYC1U6ag2SRR+CEDwGivWq2KYri247gVB/Kn1bsyoCe0
+         XMEZFosuXcCuGxriSg7O5+Ixf0MsslrLXATP1ByJfQt7O9MU215KOwndPZvZdan1Nmqf
+         fQ+QZi/8+A+BPOg9Wge72xrEVKQJzxu/i8KCNd3XZ6kxoz6rNosQfpfrFrcsrKcNw4Zq
+         QDLO1/5llNraBilTaQcva9cJtmoL4lXYLYz9QeQeuFsdpv8Xww8EEfXC7BpYEKNv2vZJ
+         pnhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6J0bm9qt+NMJmfG62ylVW6hUjWAnBLYsD9/T5zi/N34=;
-        b=uhv9fxYIn8UgOP5yIS51whlalnuD517ne9EB85Q2kj7zZvKVypduPw9RGa95ciYKFT
-         Er68gefDaIzKFxR8i4qUAZDdc1LFn7fGEDpvW+NRtS2knrO1FHesevW6y6d14m+AHpQO
-         TZZf5DU+F8mxeeXDqrtfzwREa3P3OHlpSpVspR/ddrerNC+ZAd6+wyzR97vwtuYBWE6y
-         NWyS2UZlR//CFL7J/1Wjx3QsbFjDkj79xbAcPBcebYP8ztGejcVRp1brdCcgZkmS8vVF
-         2v8jvAQuzQMcX+ufMBordcQqE0IrT/9nOHH6c35GQzlTkOfrGXaV/akUnJl29JMKHrIT
-         wBdg==
-X-Gm-Message-State: APjAAAVp+BLYcRCGdEenf3yAlRDoGLmUDVwt1062qFhRxkvhvlWIUAES
-        AxoIdXSPPPo0ZGwM40e6rQsWDJBoQjg=
-X-Google-Smtp-Source: APXvYqz5uxFN2cyrolYqcBeWRu8UyDmOqQPiNPBxtb5n6Sppj77gBg+4/J8oUqONeE5W6d+KoSjRgQ==
-X-Received: by 2002:a7b:c404:: with SMTP id k4mr12324185wmi.117.1552925720184;
-        Mon, 18 Mar 2019 09:15:20 -0700 (PDT)
+        bh=r668F2eV0Qyvi+UucT5Ntky+AJIT9xy8S3FcPTen4RE=;
+        b=kfyPFVLjn80rRmUwG9LiISCGZtgyWXwY/im03W7911kP0nKH+1Kfigl5d6vmeLzRXy
+         owbYuHnLql80N40RB9Q7LNikMpjb85YFyUpBcVGXSRrBLDz7zKwV5Q6Tqf7QvBZm+7g9
+         8aA0Hv9jnyHypMn/TEf+Y/TIac9AOxt9k3Lo7b0TCE1K7B3nWK0s/3R23PLiQaCY1/fF
+         1khzhsyZ3pmgrYcahxnMg2zI7jRmFfpAJsJz10+RkrYm/8hLF8lJ735QFKzE5mTOWOMG
+         NdB9cHTJ5Q/IdSVvawfYF+h0xiNV9dqn7L4zzoVDeJRtL+AmHM+doKTp5oFj1Zf2BXoK
+         +Daw==
+X-Gm-Message-State: APjAAAVDrRO3qDxpVSsQMrMbgM5h7OEQ0xF7DIGoHIFqhS21YXQjaDpK
+        dAU8RK/QJ2Hn3+3Q3jPzNOR5LzXWBmU=
+X-Google-Smtp-Source: APXvYqycTX0u8ZGPFxwIvYEEVi95oKpyaGPfnrUhJu69j3pdXLnHTgvIwAE/FBLoq4RLHhh2p/xedw==
+X-Received: by 2002:adf:d848:: with SMTP id k8mr3344184wrl.185.1552925721397;
+        Mon, 18 Mar 2019 09:15:21 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z9sm3269728wmf.12.2019.03.18.09.15.18
+        by smtp.gmail.com with ESMTPSA id z9sm3269728wmf.12.2019.03.18.09.15.20
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Mon, 18 Mar 2019 09:15:19 -0700 (PDT)
+        Mon, 18 Mar 2019 09:15:20 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Matt McCutchen <matt@mattmccutchen.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/4] gc docs: de-duplicate "OPTIONS" and "CONFIGURATION"
-Date:   Mon, 18 Mar 2019 17:15:01 +0100
-Message-Id: <20190318161502.7979-4-avarab@gmail.com>
+Subject: [PATCH 4/4] gc docs: downplay the usefulness of --aggressive
+Date:   Mon, 18 Mar 2019 17:15:02 +0100
+Message-Id: <20190318161502.7979-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190318161502.7979-1-avarab@gmail.com>
 References: <20190318161502.7979-1-avarab@gmail.com>
@@ -75,117 +75,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In an earlier commit I started including the "gc.*" documentation from
-git-config(1) in the git-gc(1) documentation. That still left us in a
-state where the "--auto" option and "gc.auto" were redundantly
-discussing the same thing.
+The existing "gc --aggressive" docs come just short of recommending to
+users that they run it regularly. In reality it's a waste of CPU for
+most users, and may even make things actively worse. I've personally
+talked to many users who've taken these docs as an advice to use this
+option, and have.
 
-Fix that by briefly discussing how the option itself works for
-"--auto", and for the rest referring to the configuration
-documentation.
+Let's change this documentation to better reflect reality, i.e. for
+most users using --aggressive is a waste of time, and may even be
+actively making things worse.
 
-This revealed existing blind spots in the configuration documentation,
-move over the documentation and reword as appropriate.
+Let's also clarify the "The effects [...] are persistent" to clearly
+note that that's true to the extent that subsequent gc's aren't going
+to re-roll existing packs generated with --aggressive into a new set
+of packs.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/gc.txt | 27 +++++++++++++++++++++++----
- Documentation/git-gc.txt    | 25 ++++---------------------
- 2 files changed, 27 insertions(+), 25 deletions(-)
+ Documentation/git-gc.txt | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-index a834a801cd6..605e14bc80b 100644
---- a/Documentation/config/gc.txt
-+++ b/Documentation/config/gc.txt
-@@ -19,13 +19,27 @@ gc.auto::
- 	objects in the repository, `git gc --auto` will pack them.
- 	Some Porcelain commands use this command to perform a
- 	light-weight garbage collection from time to time.  The
--	default value is 6700.  Setting this to 0 disables it.
-+	default value is 6700.
-++
-+Setting this to 0 disables not only automatic packing based on the
-+number of loose objects, but any other heuristic `git gc --auto` will
-+otherwise use to determine if there's work to do, such as
-+`gc.autoPackLimit`.
-++
-+The repacking of loose objects will be performed with `git repack -d
-+-l`.
- 
- gc.autoPackLimit::
-+
- 	When there are more than this many packs that are not
- 	marked with `*.keep` file in the repository, `git gc
- 	--auto` consolidates them into one larger pack.  The
--	default	value is 50.  Setting this to 0 disables it.
-+	default value is 50.  Setting this (or `gc.auto`) to 0
-+	disables it. Packs will be consolidated using the `-A` option
-+	of `git repack`.
-++
-+See the `gc.bigPackThreshold` configuration variable below. When in
-+use it'll effect how the auto pack limit works.
- 
- gc.autoDetach::
- 	Make `git gc --auto` return immediately and run in background
-@@ -35,13 +49,18 @@ gc.bigPackThreshold::
- 	If non-zero, all packs larger than this limit are kept when
- 	`git gc` is run. This is very similar to `--keep-base-pack`
- 	except that all packs that meet the threshold are kept, not
--	just the base pack. Defaults to zero. Common unit suffixes of
--	'k', 'm', or 'g' are supported.
-+	just the base pack. Defaults to zero or a memory heuristic.
-+	Common unit suffixes of 'k', 'm', or 'g' are supported.
- +
- Note that if the number of kept packs is more than gc.autoPackLimit,
- this configuration variable is ignored, all packs except the base pack
- will be repacked. After this the number of packs should go below
- gc.autoPackLimit and gc.bigPackThreshold should be respected again.
-++
-+If the amount of memory is estimated not enough for `git repack` to
-+run smoothly and `gc.bigPackThreshold` is not set, the largest pack
-+will also be excluded (which is the equivalent of running `git gc`
-+with `--keep-base-pack`).
- 
- gc.writeCommitGraph::
- 	If true, then gc will rewrite the commit-graph file when
 diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 9edf4e465b4..154c7c5e652 100644
+index 154c7c5e652..d0eaba98db5 100644
 --- a/Documentation/git-gc.txt
 +++ b/Documentation/git-gc.txt
-@@ -49,29 +49,12 @@ OPTIONS
+@@ -41,10 +41,20 @@ OPTIONS
+ --aggressive::
+ 	Usually 'git gc' runs very quickly while providing good disk
+ 	space utilization and performance.  This option will cause
+-	'git gc' to more aggressively optimize the repository at the expense
+-	of taking much more time.  The effects of this optimization are
+-	persistent, so this option only needs to be used occasionally; every
+-	few hundred changesets or so.
++	'git gc' to more aggressively optimize the repository to save storage space
++	at the expense of taking much more time.
+++
++Using this option may optimize for disk space at the expense of
++runtime performance. See the `--depth` and `--window` documentation in
++linkgit:git-repack[1]. It is not recommended that this option be used
++to improve performance for a given repository without running tailored
++performance benchmarks on it. It may make things better, or worse. Not
++using this at all is the right trade-off for most users and their
++repositories.
+++
++The effects of this option are persistent to the extent that
++`gc.autoPackLimit` and friends don't cause a consolidation of existing
++pack(s) generated with this option.
+ 
  --auto::
  	With this option, 'git gc' checks whether any housekeeping is
- 	required; if not, it exits without performing any work.
--	Some git commands run `git gc --auto` after performing
--	operations that could create many loose objects. Housekeeping
--	is required if there are too many loose objects or too many
--	packs in the repository.
- +
--If the number of loose objects exceeds the value of the `gc.auto`
--configuration variable, then all loose objects are combined into a
--single pack using `git repack -d -l`.  Setting the value of `gc.auto`
--to 0 disables automatic packing of loose objects.
-+See the `gc.auto' option in the "CONFIGURATION" below for how this
-+heuristic works.
- +
--If the number of packs exceeds the value of `gc.autoPackLimit`,
--then existing packs (except those marked with a `.keep` file
--or over `gc.bigPackThreshold` limit)
--are consolidated into a single pack by using the `-A` option of
--'git repack'.
--If the amount of memory is estimated not enough for `git repack` to
--run smoothly and `gc.bigPackThreshold` is not set, the largest
--pack will also be excluded (this is the equivalent of running `git gc`
--with `--keep-base-pack`).
--Setting `gc.autoPackLimit` to 0 disables automatic consolidation of
--packs.
--+
--If houskeeping is required due to many loose objects or packs, all
-+Once housekeeping is triggered by exceeding the limits of
-+configurations options such as `gc.auto` and `gc.autoPackLimit`, all
- other housekeeping tasks (e.g. rerere, working trees, reflog...) will
- be performed as well.
- 
 -- 
 2.21.0.360.g471c308f928
 
