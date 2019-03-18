@@ -2,97 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0112E20248
-	for <e@80x24.org>; Mon, 18 Mar 2019 16:37:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5EFD20248
+	for <e@80x24.org>; Mon, 18 Mar 2019 16:48:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726889AbfCRQhn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 12:37:43 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:38875 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726714AbfCRQhn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 12:37:43 -0400
-Received: by mail-ed1-f67.google.com with SMTP id e10so10195790edy.5
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 09:37:42 -0700 (PDT)
+        id S1727446AbfCRQsv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 12:48:51 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:38904 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726719AbfCRQsu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 12:48:50 -0400
+Received: by mail-ua1-f68.google.com with SMTP id d4so5513877uap.5
+        for <git@vger.kernel.org>; Mon, 18 Mar 2019 09:48:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VL75488tZHUJVf4+riSjFhv+Yy9kWkLVXyccuTb/J4w=;
-        b=Cpw6KSVWbdlNYZ5J/Vm8BIvLk3jCkvt9rUiShAJmpn0mExi6geVDIGD2bavhZ+06+g
-         OAX8MTZ1ELGunVwRZS6PgXF2t93RpcboP+PP4buBF+PHuhC3nMV2q91/fxITtEArKJlZ
-         x23YnlEMHdgF4wO6404TFAnNJ9LGgMZTEvLEG9GOqPPbWWHs0a/nlVRb2AKBsZDHoiWt
-         0hQcLtjZgvbXfQYyOj8IWG/9YPCc8dao/lGqpj15muIi9yndD7kwfMFAd1NPnAV7Z2NJ
-         blW3m+rsxatCRJf3l8bJ9mEIVGPow+16aa2WIPWaNk9Zt7fb0Y0EJWfPFzXSFdVW8l9K
-         KnZw==
+         :cc:content-transfer-encoding;
+        bh=XDjiHnqOzFaedcws1CFQZPvJGKE5JlHIufzXZiuHlcc=;
+        b=PrsI4s4ksPJ7qQ1t7kAnc2b/d6xipgnWj5poPg4x3UCNYiB1T20cKCt6/g5GIU4Mmg
+         8TqYUwTz4bPWEYrq5IpoegK9cTg3ZnG3ZVKwBnM/TEBxltPllnJmTkK3udePFmbJPqOe
+         V1FjM68flfTm7dap1Trd70F5Jn/eKA+aJjN0Md8MLQMdqy+2ZnkrRGyiNSbq7fUlS+0J
+         jB1J2hQRiXt6KpiII1SyeB0FId8MLXKgLeKwHYvi/Pn6VaOioRoBwTaLHk7spN5H28yw
+         skl80iW2H6FkG1BbA687XDqwUk4TLmoe3JxSgpmKKdm4FGM4O5HD7y+k0nLYAyMcaWB2
+         LlkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VL75488tZHUJVf4+riSjFhv+Yy9kWkLVXyccuTb/J4w=;
-        b=dWBZd+Rq1A9pC3oMNyz+Tn/YJbNhX1XjB6O47HquZg9UBsNDJFUxqtWthPBYWfIBc0
-         ab/tbqpBTyeAQ6ZUSyPRFB4mwKTiz9i+e3ckPwyqm9BNjrY1u8RO95qkP++RzXFNmhFA
-         yt6nKgkt9YXFFnBxMzV8LWoYw+ojpldzXSm+WFJjpxeBdg+Tj+FOG9hIZj9Sc1Fw+r6H
-         Eux7OPz5LrkPSYM95b5wna/J+qZmAQiiMDrF1Ti82wcI15XYnEQ8jv4WA0m+RpbaDpsk
-         yT3mIYz+SelXeOgr0N/Pi/Zg7HLjmhULIxf/Qqv84NzZ6u2cK8Rg/C6HNLD0ZAyV/wj4
-         4L/A==
-X-Gm-Message-State: APjAAAXFHFYt6Q75nWtEd2Jjh8wtiYAOxYzPxOnAUU+/Y5PaK1+DTQPw
-        /9Qqv49dIOx/6TpOlJX5VOm4wjjM08b3IxxbcIo=
-X-Google-Smtp-Source: APXvYqyMuP0289tkouSgvOSPpM/nEzvlwzo37tMvdntQX/rzItbRBGBv3gI22qWQhSTVtSCpaQckGAe33vXuDHlszhY=
-X-Received: by 2002:a50:eac4:: with SMTP id u4mr13860385edp.238.1552927061690;
- Mon, 18 Mar 2019 09:37:41 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=XDjiHnqOzFaedcws1CFQZPvJGKE5JlHIufzXZiuHlcc=;
+        b=JviXwRYQS+J0GaKvEx1Jogb99UkWwZNQ1zTbhXl9J3Yi0zujf7gU38qPOmzUGiv/I0
+         ETYGZ6CYOPOEO0cHHwnmPFKIUuWrSDPuwG7IHbFZJHp6/2SPGxjc4H0VpyXjpBU9z3qe
+         U5hslZt26jruuHQP52S7yPKq+4iRUQg7o/0WfjWiA0MJ97gifyBdI8oiFLrYKUUXpDAr
+         935Oc/HgcuMulbMO8LoXY6q34POJGaOyU9B9N9pXEozKucyU0Hop27ehoHUGef70xeBx
+         VB+AUD4HClmjDGNjwUhsJPR6dwjBBA+0U1hBaiuUQ5m5aBO+tRLd6ojA53RWhy7FWLAN
+         F+FA==
+X-Gm-Message-State: APjAAAWvZkskd77lQLg+k4gbdhPp+8qsKYdNOjnPD/yHZF4T5Ci11YaT
+        fTksre4tifwIXYfN3PEsXIGW+qWGnd9k1ptrXu4=
+X-Google-Smtp-Source: APXvYqyL9hMrXRMzz76vwadkXA72kHDXo5NibdioZTG3i584WLMdY1ahjorsuAbUTS6PfGtZ2PqK0+keSUmGcUgjGho=
+X-Received: by 2002:ab0:2712:: with SMTP id s18mr6329588uao.114.1552927729250;
+ Mon, 18 Mar 2019 09:48:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
- <CACsJy8DtoMMSu5Vm4+ZkeUqCOo7stM4HObLkiSc-nQQV4G=GvA@mail.gmail.com>
-In-Reply-To: <CACsJy8DtoMMSu5Vm4+ZkeUqCOo7stM4HObLkiSc-nQQV4G=GvA@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 18 Mar 2019 17:37:28 +0100
-Message-ID: <CAP8UFD2uBqq9M7SB4KPzM2Am9G6dLOUjBs4sx3U69hK-bzonrQ@mail.gmail.com>
-Subject: Re: GSoC 2019: Git's application submitted
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
+References: <20190308095752.8574-1-pclouds@gmail.com> <20190317124926.17137-1-pclouds@gmail.com>
+ <20190317124926.17137-13-pclouds@gmail.com>
+In-Reply-To: <20190317124926.17137-13-pclouds@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 18 Mar 2019 09:48:36 -0700
+Message-ID: <CABPp-BE+9cmd-gR=ZRR2v1gpjduoQ0hQCL+57nmaiG45RZTB9g@mail.gmail.com>
+Subject: Re: [PATCH v4 12/26] checkout: split part of it to new command 'switch'
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
+        =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 18, 2019 at 1:52 PM Duy Nguyen <pclouds@gmail.com> wrote:
+On Sun, Mar 17, 2019 at 5:50 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
 >
-> On Mon, Feb 4, 2019 at 4:17 PM Christian Couder
-> <christian.couder@gmail.com> wrote:
-
-> > Anyway feel free to comment and suggest improvements on those pages,
-> > especially the micro-projects and ideas one. Pull requests on
-> > https://github.com/git/git.github.io/ are very much appreciated.
+> "git checkout" doing too many things is a source of confusion for many
+> users (and it even bites old timers sometimes). To remedy that, the
+> command will be split into two new ones: switch and restore. The good
+> old "git checkout" command is still here and will be until all (or most
+> of users) are sick of it.
 >
-> I'm not opening a pull request because I'm not sure if it's worthy of
-> GSoC (probably 2020, not 2019) but anyway the get_config_* discussion
-> elsewhere reminds me of this.
+> See the new man page for the final design of switch. The actual
+> implementation though is still pretty much the same as "git checkout"
+> and not completely aligned with the man page. Following patches will
+> adjust their behavior to match the man page.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
 
-I think it would be nice to have a section with potential ideas along
-with a big warning saying that the ideas there aren't  developed
-enough as is and need much more work/thinking to be considered proper
-ideas, but we are still putting them there to not forget about them
-and in case someone would be interested to develop/research them
-further.
+Looking really good.  Just some minor comments...
 
-> Currently we have two ways of parsing config files, by a callback that
-> gives you everything and you do whatever you want, and with configset
-> where you can just call "get me this config", "get me that one". The
-> idea is moving most callback-based sites to get_config_ one.
-> Preferably in a declarative style, like 'struct option[]'.
+> +git-switch(1)
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +
+> +NAME
+> +----
+> +git-switch - Switch branches
+> +
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +'git switch' [<options>] [--guess] <branch>
 
-Thanks, I like this idea! Maybe it could be even considered for
-microprojects, as I think it could be done in many small steps. It
-would perhaps need to point to en existing commit doing already that
-to make it clearer and easier though.
+Should this now use [--no-guess] since --guess is the default?
+
+> +'git switch' [<options>] --detach [<start-point>]
+> +'git switch' [<options>] (-c|-C|--orphan) <new-branch> [<start-point>]
+> +
+> +DESCRIPTION
+> +-----------
+> +Switch to a specified branch. The working tree and the index are
+> +updated to match the branch. All new commits will be added to the tip
+> +of this branch.
+> +
+> +Optionally a new branch could be created with either `-c`, `-C`,
+> +automatically from a remote branch of same name (see `--guess`), or
+> +detach the working tree from any branch with `--detach`, along with
+> +switching.
+> +
+> +Switching branches does not require a clean index and working tree
+> +(i.e. no differences compared to `HEAD`). The operation is aborted
+> +however if the switch leads to loss of local changes, unless told
+> +otherwise.
+
+Maybe s/otherwise./otherwise with --discard-changes or --merge./, just
+for a little extra clarity?
+
+> +-f::
+> +--force::
+> +       An alias for `--discard-changes`.
+> +
+> +--discard-changes::
+> +       Proceed even if the index or the working tree differs from
+> +       `HEAD`. Both the index and working tree are restored to match
+> +       the switching target. This is used to throw away local
+> +       changes.
+
+It looks like elsewhere you and Junio discussed making --force also
+imply --ignore-in-progress.  That option should be moved close to
+--force, so that similar options are adjacent, but it also brings up a
+question for me:
+
+Is --force an alias for both `--discard-changes` and
+`--ignore-in-progress`, or is `--discard-changes` really just another
+name for `--force` (i.e. does it too imply `--ignore-in-progress`)?
+I'd be tempted to say the former, but I'm curious on others' thoughts.
+
+> +--orphan <new-branch>::
+> +       Create a new 'orphan' branch, named `<new-branch>`. If
+> +       `<start-point>` is specified, the index and working tree are
+> +       adjusted to match it. Otherwise both are adjusted to contain no
+> +       tracked files.
+
+Thanks.  I'm still slightly hesitant about whether <start-point>
+should be allowed with --orphan; it seems equivalent to me to letting
+people have a flag for switching to existing branch A while forcing
+the index and working tree to match branch B (defaulting B to HEAD
+from before the switch).  Having <start-point> and --orphan together
+is just a special case of this idea, and thus allowing those together
+seems like it'll cause the more general request to be filed at some
+point, and we will already have the precedent of supporting it
+somewhere.  This usecase seems to be somewhat esoteric and infrequent,
+and could be easily obtained by combining other commands.  I'm worried
+that trying to explain this usecase may make the documentation for the
+common everyday commands even more complex, and these manpages are
+already kind of long.  However, as I said above, that's just a slight
+hesitation and maybe I'm just excessively worried about the length of
+our manpages for the most common commands.  This new description of
+--orphan at least gets the default behavior right.
+
+
+Great work so far; thanks for working on this.
+
+Elijah
