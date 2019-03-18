@@ -7,183 +7,115 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3884B20248
-	for <e@80x24.org>; Mon, 18 Mar 2019 06:18:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 162AF202BB
+	for <e@80x24.org>; Mon, 18 Mar 2019 06:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727188AbfCRGSp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 02:18:45 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35468 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726576AbfCRGSo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 02:18:44 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w1so9650499wrp.2
-        for <git@vger.kernel.org>; Sun, 17 Mar 2019 23:18:42 -0700 (PDT)
+        id S1727736AbfCRG2r (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 02:28:47 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40710 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726467AbfCRG2r (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 02:28:47 -0400
+Received: by mail-wr1-f67.google.com with SMTP id t5so15628473wri.7
+        for <git@vger.kernel.org>; Sun, 17 Mar 2019 23:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ytnxEWYNOLz11zQtFFd9jjr+9XRxDpV/mD/xiMdC0o4=;
-        b=otkh/OzDifitk4bA7prYz6MwpO1hytZn5+UkYWyAfSptshjnqYkVfEq0fgAhKCfTea
-         E/kuvMmP3idE7MViFoj5YNkYY7pJ4f4xaYDuH9XSUAZaDWpHDRXYOLn/AK24lrl+kGqA
-         ibrftcveQ6kUcbtGc5MJ48c3j3uoaubIuLWHC7Ldotxrps4UPhtsCO9YWyuTLT+AU9yf
-         p4Xg51fPwAamWCZiK3WUDet2wOALl5R0/H55AmAsTW2bGZsI0EnE7iNDagddKIR4pCsU
-         /2tMIlADrM4ETPNN4sCs4gHTralDoxSd5eknfsZXPy3HP1mEtK3yINwc9hnsOcNqoAuH
-         E7fQ==
+         :user-agent:mime-version;
+        bh=fSqyMRT0+W1+3vybvgRRmFkpZS+tJO1CLYtiu5tbehQ=;
+        b=jphSTYmyqm1+4+viJ3kEIpT0tfgE3IT8045Tt6XdZ5b7tg6jwdRkb5eM3Vqp3FvCuz
+         +3yAps+sTZHZppsc0i0K3vn9T9vxNELvdnT/RNPeuvJVjOyCIQVb3jLkQuoWGVHznSJP
+         D7ayWxQPgRQQPQhO81TLP6dJtPeUBrw1BKggHkRWlJIoQ1w3wJ0JjUcMYe2X4AMwcCpe
+         T1wxO2FNOrjWXjTlsS1eCgxnJX8tKtALkUKqCYuQ054XN9lBoMvzEbep1glJrGJZ2zZO
+         kZsY1Fw60rOnheIzK699IAqm/BWmp9z7o14XR2qwNtPzBCKLkkN9sB/KhaMODbtCFoUR
+         uSSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ytnxEWYNOLz11zQtFFd9jjr+9XRxDpV/mD/xiMdC0o4=;
-        b=F076vxyp5/Q6fQHAOc4GI5e/bud3/1KeQ6zp6vQ4szTZYA+lwvd0h/vpZ3N0fn8Bdn
-         8PpI//F56D3LVjzIY2FBq5jrdAf4PMvzt7e5f7NCxs9fFcWrBQU35n0KFixaHwwpWkww
-         bgz3wCMTpMCLN1h16piEUEzi7MGF5ivXKqfcGjtWnNAgqqudzFgmkKB3J64qPjKYe3tr
-         c4so8AWpthSPguEA56t4kgdOnyCGeH8RiDZor1FDZg26ysSi7jTu2/TU55m4j7UVNMyj
-         29JcJuDybwYqbBdDDdJ2HwGTbu9EN5zU5sBMkawAhbs+G0MgRGN31NtEOsgjo5UMilG0
-         qJUg==
-X-Gm-Message-State: APjAAAU3850gVKkylDHWUyin0zweDyDg0ZRhtQeP7B42PzGDN7qVswMu
-        HwPW83y9ARZtk3ndPJRGhYY=
-X-Google-Smtp-Source: APXvYqxFcwi7nq5aBza0r7pe6KgQJkQNd8dTwUGu1pNr8eccFh4S4aRNAuBAbiKDHX6IDOcU2eJrUw==
-X-Received: by 2002:a05:6000:4e:: with SMTP id k14mr11125157wrx.52.1552889921978;
-        Sun, 17 Mar 2019 23:18:41 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=fSqyMRT0+W1+3vybvgRRmFkpZS+tJO1CLYtiu5tbehQ=;
+        b=dwAJsj+vNEMFLto8UGhox0lYaJqTsbONNCszX/rQ8/+7BQlEQSvbYpggSU/XAACqsg
+         binC3XoLrJgv3MvkhFtVh1rAlik0LsVv7ZrIGufx56n9HIPZbFcx+RQguGNk6fUmNbLA
+         Mv48Zc/A2YHhXm+zh1XZ4Hyk5iDtRfjsDVB4xl7Y/gfOLC/NxQgfc3lyFoho0SuQN0oP
+         yM/Ifnp/OAxhvooxIuWKGd2+OErtQYhu0U6oXsbLH/VTB0riU5wdsKGgTk+j55pIupD1
+         dpY44IkoYqbA0P/31Lxzo42ekQ8AOvt2C+8Syxzmf1TtWjoDLCctmTX6OXvsySy7SdHp
+         ByQw==
+X-Gm-Message-State: APjAAAXqaMnSJDLD4fDHST/H1QwSFwrnNY8qLKHanghtFIIbBhqUFPxn
+        8wmuyx3DlLjvKWakHgypzeQ=
+X-Google-Smtp-Source: APXvYqxaA1rU3jZWUoKucCUaX51qiquIEyHIw1Mcxo8JK/Zi6FgXS4EtwAsfrTQ4At4dhw3mUiSo3Q==
+X-Received: by 2002:adf:f5c7:: with SMTP id k7mr5583215wrp.197.1552890525473;
+        Sun, 17 Mar 2019 23:28:45 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id l3sm5067223wrr.25.2019.03.17.23.18.41
+        by smtp.gmail.com with ESMTPSA id p6sm12553250wre.63.2019.03.17.23.28.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 17 Mar 2019 23:18:41 -0700 (PDT)
+        Sun, 17 Mar 2019 23:28:44 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com
-Subject: Re: [PATCH v1 1/1] trace2: NULL is not allowed for va_list
-References: <20190316104715.27138-1-tboegi@web.de>
-Date:   Mon, 18 Mar 2019 15:18:41 +0900
-In-Reply-To: <20190316104715.27138-1-tboegi@web.de> (tboegi's message of "Sat,
-        16 Mar 2019 11:47:15 +0100")
-Message-ID: <xmqqlg1c3dtq.fsf@gitster-ct.c.googlers.com>
+To:     Joe Perches <joe@perches.com>
+Cc:     Rasmus Villemoes <rv@rasmusvillemoes.dk>,
+        Baruch Siach <baruch@tkos.co.il>, git@vger.kernel.org
+Subject: Re: [PATCH] send-email: don't cc *-by lines with '-' prefix
+References: <eec56beab016182fb78fbd367fcfa97f2ca6a5ff.1552764410.git.baruch@tkos.co.il>
+        <bc20070b-437a-9875-efd0-b4cad1413233@rasmusvillemoes.dk>
+        <604795fe60991f22273cbb652eeeedc17985bc65.camel@perches.com>
+Date:   Mon, 18 Mar 2019 15:28:44 +0900
+In-Reply-To: <604795fe60991f22273cbb652eeeedc17985bc65.camel@perches.com> (Joe
+        Perches's message of "Sun, 17 Mar 2019 18:56:08 -0700")
+Message-ID: <xmqqh8c03dcz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
+Joe Perches <joe@perches.com> writes:
 
-> From: Torsten Bögershausen <tboegi@web.de>
->
-> Some compilers don't allow NULL to be passed for a va_list.
-> Use va_list instead.
+> My preference would be for correctness.
+> I presume something like this isn't too onerous.
 
-Wow (I seem to be keep saying this today).
+I am guessing that /^---/ is to stop at the three-dash line *OR*
+after the initial handful of lines of the first diff header (as the
+last resort) and that is why it is not looking for /^---$/.
 
->
-> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+If that is the case, I think it makes a lot of sense.  It is a
+general improvement not tied to the case that triggered this thread.
+
+Independently, I think it makes sense to do something like
+
+	/^([a-z][a-z-]*-by|Cc): (.*)/i
+
+to tighten the match to exclude a non-trailer; that would have been
+sufficient for the original case that triggered this thread.
+
+
+
 > ---
->  trace2.c                | 15 +++++++++++----
->  trace2.h                |  4 ++--
->  trace2/tr2_tgt_event.c  |  2 +-
->  trace2/tr2_tgt_normal.c |  2 +-
->  trace2/tr2_tgt_perf.c   |  2 +-
->  5 files changed, 16 insertions(+), 9 deletions(-)
+>  git-send-email.perl | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
-> diff --git a/trace2.c b/trace2.c
-> index ccccd4ef09..8bbad56887 100644
-> --- a/trace2.c
-> +++ b/trace2.c
-> @@ -548,10 +548,14 @@ void trace2_region_enter_printf_va_fl(const char *file, int line,
->  }
->
->  void trace2_region_enter_fl(const char *file, int line, const char *category,
-> -			    const char *label, const struct repository *repo)
-> +			    const char *label, const struct repository *repo, ...)
->  {
-> +	va_list ap;
-> +	va_start(ap, repo);
->  	trace2_region_enter_printf_va_fl(file, line, category, label, repo,
-> -					 NULL, NULL);
-> +					 NULL, ap);
-> +	va_end(ap);
-> +
->  }
->
->  void trace2_region_enter_printf_fl(const char *file, int line,
-> @@ -621,10 +625,13 @@ void trace2_region_leave_printf_va_fl(const char *file, int line,
->  }
->
->  void trace2_region_leave_fl(const char *file, int line, const char *category,
-> -			    const char *label, const struct repository *repo)
-> +			    const char *label, const struct repository *repo, ...)
->  {
-> +	va_list ap;
-> +	va_start(ap, repo);
->  	trace2_region_leave_printf_va_fl(file, line, category, label, repo,
-> -					 NULL, NULL);
-> +					 NULL, ap);
-> +	va_end(ap);
->  }
->
->  void trace2_region_leave_printf_fl(const char *file, int line,
-> diff --git a/trace2.h b/trace2.h
-> index ae5020d0e6..b330a54a89 100644
-> --- a/trace2.h
-> +++ b/trace2.h
-> @@ -238,7 +238,7 @@ void trace2_def_repo_fl(const char *file, int line, struct repository *repo);
->   * on this thread.
->   */
->  void trace2_region_enter_fl(const char *file, int line, const char *category,
-> -			    const char *label, const struct repository *repo);
-> +			    const char *label, const struct repository *repo, ...);
->
->  #define trace2_region_enter(category, label, repo) \
->  	trace2_region_enter_fl(__FILE__, __LINE__, (category), (label), (repo))
-> @@ -278,7 +278,7 @@ void trace2_region_enter_printf(const char *category, const char *label,
->   * in this nesting level.
->   */
->  void trace2_region_leave_fl(const char *file, int line, const char *category,
-> -			    const char *label, const struct repository *repo);
-> +			    const char *label, const struct repository *repo, ...);
->
->  #define trace2_region_leave(category, label, repo) \
->  	trace2_region_leave_fl(__FILE__, __LINE__, (category), (label), (repo))
-> diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-> index 107cb5317d..1cf4f62441 100644
-> --- a/trace2/tr2_tgt_event.c
-> +++ b/trace2/tr2_tgt_event.c
-> @@ -190,7 +190,7 @@ static void fn_atexit(uint64_t us_elapsed_absolute, int code)
->  static void maybe_add_string_va(struct json_writer *jw, const char *field_name,
->  				const char *fmt, va_list ap)
->  {
-> -	if (fmt && *fmt && ap) {
-> +	if (fmt && *fmt) {
->  		va_list copy_ap;
->  		struct strbuf buf = STRBUF_INIT;
->
-> diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-> index 547183d5b6..1a07d70abd 100644
-> --- a/trace2/tr2_tgt_normal.c
-> +++ b/trace2/tr2_tgt_normal.c
-> @@ -126,7 +126,7 @@ static void fn_atexit(uint64_t us_elapsed_absolute, int code)
->  static void maybe_append_string_va(struct strbuf *buf, const char *fmt,
->  				   va_list ap)
->  {
-> -	if (fmt && *fmt && ap) {
-> +	if (fmt && *fmt) {
->  		va_list copy_ap;
->
->  		va_copy(copy_ap, ap);
-> diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-> index f0746fcf86..2a866d701b 100644
-> --- a/trace2/tr2_tgt_perf.c
-> +++ b/trace2/tr2_tgt_perf.c
-> @@ -211,7 +211,7 @@ static void fn_atexit(uint64_t us_elapsed_absolute, int code)
->  static void maybe_append_string_va(struct strbuf *buf, const char *fmt,
->  				   va_list ap)
->  {
-> -	if (fmt && *fmt && ap) {
-> +	if (fmt && *fmt) {
->  		va_list copy_ap;
->
->  		va_copy(copy_ap, ap);
-> --
-> 2.21.0.135.g6e0cc67761
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 8200d58cdc..83b0429576 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1697,9 +1697,10 @@ sub process_file {
+>  		}
+>  	}
+>  	# Now parse the message body
+> +	my $in_patch = 0;
+>  	while(<$fh>) {
+>  		$message .=  $_;
+> -		if (/^([a-z-]*-by|Cc): (.*)/i) {
+> +		if (!$in_patch && /^([a-z-]*-by|Cc): (.*)/i) {
+>  			chomp;
+>  			my ($what, $c) = ($1, $2);
+>  			# strip garbage for the address we'll use:
+> @@ -1725,6 +1726,8 @@ sub process_file {
+>  			push @cc, $c;
+>  			printf(__("(body) Adding cc: %s from line '%s'\n"),
+>  				$c, $_) unless $quiet;
+> +		} elsif (/^---/) {
+> +			$in_patch = 1;
+>  		}
+>  	}
+>  	close $fh;
