@@ -2,120 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2602020248
-	for <e@80x24.org>; Mon, 18 Mar 2019 08:03:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31BBB20248
+	for <e@80x24.org>; Mon, 18 Mar 2019 08:07:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726678AbfCRIDL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 04:03:11 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:37771 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726397AbfCRIDK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 04:03:10 -0400
-Received: by mail-pf1-f194.google.com with SMTP id 8so7318856pfr.4
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 01:03:10 -0700 (PDT)
+        id S1726678AbfCRIHJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 04:07:09 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37763 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726454AbfCRIHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 04:07:08 -0400
+Received: by mail-wm1-f67.google.com with SMTP id v14so3130212wmf.2
+        for <git@vger.kernel.org>; Mon, 18 Mar 2019 01:07:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=6ZJSXW21rtchA1lM3d6gyR6rXVlZ0EZhieLTkmo1VWM=;
-        b=Om0wjUPkoJOZjM4BLxJ63LKKE+MOrZ+/jAvcFQwK8O0PedUNKfhtD6BKttV9PeIqjv
-         AmFuX+BppH8UP9bXo8qld6JT9LKH9P//LYhZjZ+PEgZ7rQhOg3fMi9vkbrfPw300rlCg
-         4xv137ALjlrDDrBGGJsEQ0BkfJawKu3TOeldo11n5sPHFO7QdbVwhIA558mBWMjDh2pX
-         xa4FEPwumMa5UPODwOeg+2cCoYSe0hcPNU9Y6SO2B2RC+j1FYqUeZjGjvfzvqd9VE1nl
-         AMIHMyYtdsIUD05jETc6zZ/JAyjiTkeefnSE0cB7MBqDy9gM+Zs4wz+3jr8c+iAApAtL
-         EM5w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=cJlG3cM3w5bw/8TDQlNm69v0E8PelMSsQtudbq08VgI=;
+        b=ZWCmHX9Bu0gzVjFy6f7z0M9XzR/T5x7/z7Zg/xFrBoaA7iusycIXR+dsW9/zL3UXVn
+         zYFFuONFGQUMmWH6V6ogEzjRDwuz94TuUJcuxDosCHTDo3d/kSEjXjLOsMMQRgOxLXps
+         M9zqGCjAYE75dtJE4XMjJaUOZNnIXxshfAdHsytV3OyrN/aHty7GBuy33gskhv1Uctav
+         Syy2+N/kMFWKwW215Xs3b0skHOVCkjgwuk6qJGt+5b8ifMgT1kZhwBWQqylzMHPScmPd
+         b1tFQDYGoa+psyFtpD2KZCjjSRS+4OaLLO1qSMPwPLM/IcvMc+t8Ty4CTzNRxy9Lb/EA
+         I5zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=6ZJSXW21rtchA1lM3d6gyR6rXVlZ0EZhieLTkmo1VWM=;
-        b=GdHZPGk5Am2YzZ1rF8dkuZDLF0I6blo9Qg4qK4Rm230JCHVXmol6VLBYw/bYwlobxD
-         tsoquATdylIwZM4tpmx+VUIyy1BQ/V2Kn+lVKp8LKfJ/DwozBJIPEuO3bvja7+z6PAii
-         bWQGhcs8z5Wc6IkAO40rXMNUlEZtWBySK3Em+CsWQ2785l55wkvaYADAbgVI3LUaFEM8
-         lX9elBG9Cfh1PVKfV4EwUr4WuBMfzwX2euqY9udioPAj4NlPCoe8yT3P4PNYH4uDQSbK
-         QsKr81s8+phYQAUAvxkcLTMJCLY2RaFQKYszmhmm49oTMACn7ymzD9Z4iEzT9Is82tcm
-         MDDg==
-X-Gm-Message-State: APjAAAW7kwFXqmxlmzafJhGK58GDgXaG2VaS1rBgEgA/aCy4Q6ZFD+H9
-        7aer3m5hNhg6QYpJ31hjsyU=
-X-Google-Smtp-Source: APXvYqzUMTAa41EpdnHW5BPtdl+7KYk8W/7+Cyzms8kdFvDb6lpKfXxwCp0jBsgxyTA7PWTa43FaCQ==
-X-Received: by 2002:a17:902:aa87:: with SMTP id d7mr17943182plr.146.1552896189986;
-        Mon, 18 Mar 2019 01:03:09 -0700 (PDT)
-Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id x62sm18068372pfx.117.2019.03.18.01.03.07
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=cJlG3cM3w5bw/8TDQlNm69v0E8PelMSsQtudbq08VgI=;
+        b=Rj8bvS+fgi1kaJ+SAFUWkW/renWe4SNIUUjA7L1e1JV8Ber0mT6Oxg2baRJZT90h0W
+         GM6zRN0qPlcDyi3yTGrlbPv/252WJJUskbzeaXTgFJVXcu2uJUc8dj1JE1R3iJFG+XYg
+         9LEgeiuxRFfeYn8sKSyfgjr+bE39w+3VDVTS+AHtCtkzrnpYk9IsBKT/Ekq4uNCf7LZQ
+         BQ08u5P9ycuOXUbjva4H3Gxxn/aQ6yS1n16DjzQO4RqhCe99+9gfg+TMF39SOr9+n04/
+         9Pe0hdC11+D3OSQ67ng4d31Ce9+bmSoW9bdxg2p6IlRRySkcAPdxAbaCl2eGdKjLv3Pv
+         II8w==
+X-Gm-Message-State: APjAAAVW6sNf6R2MieZA2u4TiF7kWfAGlRpIdv1dD+jy2jrqhttLmvsL
+        Ak3GDYmtAVbA+AKWMVP4JHs=
+X-Google-Smtp-Source: APXvYqw1tUvuHO91TbPxbyz42ZN6JccmfHZvIJHCH2wjTcW7uwFBOMTqw3W2qcO0LJKZOFTzu4w5Lg==
+X-Received: by 2002:a1c:64c1:: with SMTP id y184mr10117175wmb.0.1552896426714;
+        Mon, 18 Mar 2019 01:07:06 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id v12sm6536326wml.29.2019.03.18.01.07.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 Mar 2019 01:03:08 -0700 (PDT)
-Date:   Mon, 18 Mar 2019 01:03:06 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
+        Mon, 18 Mar 2019 01:07:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v8 00/11] Fix scissors bug during conflict
-Message-ID: <20190318080306.GA28784@archbookpro.localdomain>
-References: <cover.1552275703.git.liu.denton@gmail.com>
- <cover.1552817044.git.liu.denton@gmail.com>
- <20190317130539.GA23160@szeder.dev>
- <xmqqa7hs3d0z.fsf@gitster-ct.c.googlers.com>
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: separating regression test patches from fixes, was Re: [PATCH 3/3] cherry-pick --continue: remember options
+References: <20190313182615.7351-1-phillip.wood123@gmail.com>
+        <20190313182615.7351-3-phillip.wood123@gmail.com>
+        <nycvar.QRO.7.76.6.1903132344350.41@tvgsbejvaqbjf.bet>
+        <xmqqimwm9hh5.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1903141432000.41@tvgsbejvaqbjf.bet>
+        <CACsJy8DCZLNNa9zFj04kPx=f1S_5VJqqP_qTK6QYJ0fFmusymg@mail.gmail.com>
+Date:   Mon, 18 Mar 2019 17:07:05 +0900
+In-Reply-To: <CACsJy8DCZLNNa9zFj04kPx=f1S_5VJqqP_qTK6QYJ0fFmusymg@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 14 Mar 2019 21:30:53 +0700")
+Message-ID: <xmqqtvg0zjva.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqa7hs3d0z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-On Mon, Mar 18, 2019 at 03:35:56PM +0900, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> >> +	git commit ${3+"$3"} -m "$2" >act &&
-> >> +	head -1 <act >tmp &&
-> >> +	mv tmp act &&
-> >
-> > Here you could swap the order of when you write to 'act' and 'tmp',
-> > and thus make the 'mv' unnecessary, like this:
-> >
-> >   git commit [...] >tmp &&
-> >   head -1 act >tmp &&
-> >   [...rest of the test...]
-> >
-> > Note also that 'head' (or 'sed' in later tests) can open its input
-> > file on its own, there's no need to redirect its standard input.
-> 
-> Yup, that is better with a slight fix
-> 
-> 	git testing-output-from-this-command ... >tmp &&
-> 	head -n 1 tmp >actual &&
-> 
-> to actually read from the output kept in the temporary file.
-> 
-> Especially I think bare -<num> is a BSDism that has been
-> removed from POSIX some time ago.
+> .... One of the problems I
+> have with separating tests from the actual code change is the
+> description of the problem often stays on the test commit, which I
+> can't see in git-log if I'm searching for the code change.
 
-You mentioned in an earlier email that,
+In the message you are reponding to, Dscho made it sound as if I am
+reviewing only from my MUA, but most of my reviews are done after
+the patches are tentatively applied (it is a separate issue if the
+result is found worth keeping and merged to 'pu'), so our workflows
+are not so different.  It is not like "must have them separate" is
+the need shared among those who prefer to review in-tree.  I do not
+want a logically single patch split into two.
 
-> The intermediary file may want a name better than 'tmp', if it is to
-> be left behind, but this will do for now.
-
-so I wrote it in a way temporary files wouldn't be produced, similar to
-how 'set up mod-256 conflict scenario' in t7600 does it.
-
-Would it be better to leave the temporary files behind like how v7 of
-the patches did it or should keep the mv?
-
-Thanks,
-
-Denton
+And I find your "find the other half" of a pair of patch that is
+artificially split into two a real problem for me, too.  If you
+split a single patch into two, depending on which half you find
+first, finding the other half is either trivial (as you can just
+follow the parent pointer to $THAT_THING^) or hard (you'd need to
+have something that binds everything together, like 'pu', and grep
+for "git log ..pu" trying to find what its most relevant child is).
