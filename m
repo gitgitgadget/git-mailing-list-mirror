@@ -2,100 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3493020248
-	for <e@80x24.org>; Mon, 18 Mar 2019 15:40:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA42620248
+	for <e@80x24.org>; Mon, 18 Mar 2019 15:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727488AbfCRPk5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 11:40:57 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:44458 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727017AbfCRPk5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 11:40:57 -0400
-Received: by mail-vs1-f65.google.com with SMTP id b8so9730306vsq.11
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 08:40:56 -0700 (PDT)
+        id S1727906AbfCRPxf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 11:53:35 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42584 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727768AbfCRPxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 11:53:34 -0400
+Received: by mail-ed1-f65.google.com with SMTP id j89so13953650edb.9
+        for <git@vger.kernel.org>; Mon, 18 Mar 2019 08:53:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ae57Xom0BqPstoNnallqvQWtTVmBQf5L0BiZsaphI8E=;
-        b=DqaihTfHkNxw1CJ/hHeh7qFG6y9DO95mY763N13NdC+qLRFqDPvV2fQrXwwIfpkG5Z
-         P9BlTl+/5TBmxbGIQvmq4+DzCAbrJDlbyVit19/VsV4tE1ecl64YOuuPoKk0qDVEVDPa
-         NKW27nHV0R3alB3AEoOP8E7F1yuAgsJ0vK01fnxs51rbzNSGi/IJLm2ynsP2JNA+f8Io
-         ydm7hL5b94D9803g4LNs+JHiVCeCZklKyp1qPApmtpSdHCkuBvm01e7mXgjFDm8cR6+C
-         DoyVoZ877/3lqaq9Z3v2/F/xkYtnSWgj4oYR34Ufls+W/zwGcS4ypIwv5t1PxRGjbcr2
-         /khg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=SncnPP1jZUksniiz/twxK59fkjM+viBUCqU8Lt7JJo4=;
+        b=HEroxjskBxp9sNXjgHJzcHMTpuH3cL3oFY1UeoFSGwkZv3LyY8L3PeYmT1pFpb/Fkc
+         3y06fgMHFP9VN+oFAinVuh2dJ4jQOL+INWwoJ3X7KnyfpG6FaF5lXEa2JG1pW/QKW8SM
+         4v/6n4PjnfrCAHbcJAMv8pHOucrnkgVOef/93PYoN+t/+ZJobhzd99LCzTYGw1GZbeHg
+         EeF8i50dp9+M9+b3nOVmK04sltJfhTBoVWh7y41N8zFiKMSBNzY8J6Sql/rZZkG9rivJ
+         N0Jc6p4SC4uOHTEwUUD6l8Bu8AiD5Qvx8FYSg/rK+AETred1BdhMTuuQeQLv4Sv2xfbT
+         nDSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ae57Xom0BqPstoNnallqvQWtTVmBQf5L0BiZsaphI8E=;
-        b=Dg+U4AEeavY/qt/BpWEDjgsQm34MPkAPXp90qcgYSmyy+CCEJE/ELStkqDcIALVPnO
-         Yf2d8OTBfk1+4Y+8nFmr6jD2gEDhOrhH98VhpGhTvkHZBUxljJ5/4rOvs3hKZNALRgOh
-         6aB2WA1NcPO6n8VMpWkJUadA0XxQckPbFkdpnt+V54XwUJCUgLLkTN9ZXaGLt2mgDO7E
-         vW8kRNGczfygKNhyyZcil7pLPBS4sA98AZWTlR8xaMAuzjr0jvz640AfL7p4jWWa1Mgl
-         feTk3vlziZ8aUYP4M7YW9xWPMYbhmNDWoPQnkaes6qLeMR0jonIzEXfrszIanqHFawdf
-         FzJA==
-X-Gm-Message-State: APjAAAUHkzit357ZtHyRozFq3Pet1UP/2fiuBt05HVj+2RSw+xDMPtti
-        TeBRkibWg/pHUTi5ZSea4MbJ3FDwMe4AJconbok=
-X-Google-Smtp-Source: APXvYqxUYi/2TxPTZYIGr3Sd8DqOgxRv+syyfdj0yj5ywRcVj/jarSWDsYMi/120PHiFeykvvBsOhRgn0qzPFBByhsY=
-X-Received: by 2002:a67:f8cc:: with SMTP id c12mr9192674vsp.136.1552923655612;
- Mon, 18 Mar 2019 08:40:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190317060023.3651-1-pclouds@gmail.com> <20190318113822.6195-1-pclouds@gmail.com>
-In-Reply-To: <20190318113822.6195-1-pclouds@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 18 Mar 2019 08:40:43 -0700
-Message-ID: <CABPp-BFDy4ppUqmC_J_hx4kFWaC+otBZ=mbuaJK13Wxzcz_urQ@mail.gmail.com>
-Subject: Re: [PATCH v2] unpack-trees: fix oneway_merge accidentally carry over
- stage index
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=SncnPP1jZUksniiz/twxK59fkjM+viBUCqU8Lt7JJo4=;
+        b=AuMMntg1Qer4QUnrPPqHYYkyidXn90fJRPm6QeLiIyRL0sjEuOsoATNV+Op/Qdj7So
+         FPeGdhZmzt6jwW2Rx+5t56v4EbVwvl+elnCXQRv2H8v7DUZN3N2T6x3SWgS5Hd2L33cP
+         fJC5xnoaLd4Ym3jNWpnJexJzH2iYYGiNql17TojRol0OCRGNWmlBECD4amaIkC4i5fjM
+         0BHNWtXMTEgObjUAF+CSYo3g8R7i5Ny9v+Nwthy+Y6SuR6CFdMeBisX4VzvnwSllz5EW
+         JmDjI1HEfIc0nbIHlsVfbqq+d5l8ErB7Bt12oFs4ZmtbpHiVEtFIWjMRHVwGvLnoofnO
+         DkCQ==
+X-Gm-Message-State: APjAAAVzm8hInqCWjTX02C/7gvLAH14PijVMNql4DIGOkpJ6geXygyAU
+        yOti53LULL1Ezg48ZG1ZfHM=
+X-Google-Smtp-Source: APXvYqw+wXqxUWTFvzCrQSg4sYxcEHzMICLYcr0QY+Xn+hdAk7OG1NGuC5JmFVqEkC6+J1oUj6WxXQ==
+X-Received: by 2002:a17:906:1dd7:: with SMTP id v23mr11208354ejh.164.1552924412108;
+        Mon, 18 Mar 2019 08:53:32 -0700 (PDT)
+Received: from evledraar ([5.57.21.49])
+        by smtp.gmail.com with ESMTPSA id z3sm3285905edh.74.2019.03.18.08.53.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 18 Mar 2019 08:53:30 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 2/3] midx: verify: group objects by packfile to speed up object verification
+References: <pull.166.git.gitgitgadget@gmail.com> <86f6b0325821a9e1742a28895f9c9b712a1fdec4.1552919394.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <86f6b0325821a9e1742a28895f9c9b712a1fdec4.1552919394.git.gitgitgadget@gmail.com>
+Date:   Mon, 18 Mar 2019 16:53:30 +0100
+Message-ID: <87pnqodvr9.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 18, 2019 at 4:38 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
->
-> Phillip found out that 'git checkout -f <branch>' does not restore
-> conflict/unmerged files correctly. All tracked files should be taken
-> from <branch> and all non-zero stages removed. Most of this is true,
-> except that the final file could be in stage one instead of zero.
->
-> "checkout -f" (among other commands) does this with one-way merge, which
-> is supposed to take stat info from the index and everything else from
-> the given tree. The add_entry(.., old, ...) call in oneway_merge()
-> though will keep stage index from the index.
->
-> This is normally not a problem if the entry from the index is
-> normal (stage #0). But if there is a conflict, stage #0 does not exist
-> and we'll get stage #1 entry as "old" variable, which gets recorded in
-> the final index. Fix it by clearing stage mask.
->
-> This bug probably comes from b5b425074e (git-read-tree: make one-way
-> merge also honor the "update" flag, 2005-06-07). Before this commit, we
-> may create the final ("dst") index entry from the one in index, but we
-> do clear CE_STAGEMASK.
->
-> I briefly checked two- and three-way merge functions. I think we don't
-> have the same problem in those.
->
-> Reported-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
 
-This is awesome; thanks for tracking it down and fixing.
+On Mon, Mar 18 2019, Jeff Hostetler via GitGitGadget wrote:
+
+> +static int compare_pair_pos_vs_id(const void *_a, const void *_b)
+> +{
+> +	struct pair_pos_vs_id *a = (struct pair_pos_vs_id *)_a;
+> +	struct pair_pos_vs_id *b = (struct pair_pos_vs_id *)_b;
+> +
+> +	if (a->pack_int_id < b->pack_int_id)
+> +		return -1;
+> +	if (a->pack_int_id > b->pack_int_id)
+> +		return 1;
+> +
+> +	return 0;
+> +}
+
+Not a suggestion for a change, just a note that this sent me down the
+rabbit hole of looking at the different idioms we use for QSORT() in
+different places. Some use this form, some a ternary nest, and some the
+succinct subtraction idiom of e.g. (in this case):
+
+    return b->pack_int_id - a->pack_int_id;
+
+> +
+>  int verify_midx_file(const char *object_dir)
+>  {
+> -	uint32_t i;
+> +	struct pair_pos_vs_id *pairs = NULL;
+> +	uint32_t i, k;
+>  	struct progress *progress;
+>  	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
+>  	verify_midx_error = 0;
+> @@ -997,15 +1017,36 @@ int verify_midx_file(const char *object_dir)
+>  	}
+>
+>  	progress = start_progress(_("Verifying object offsets"), m->num_objects);
+> +
+> +	/*
+> +	 * Create an array mapping each object to its packfile id.  Sort it
+> +	 * to group the objects by packfile.  Use this permutation to visit
+> +	 * each of the objects and only require 1 packfile to be open at a
+> +	 * time.
+> +	 */
+> +	ALLOC_ARRAY(pairs, m->num_objects);
+>  	for (i = 0; i < m->num_objects; i++) {
+> +		pairs[i].pos = i;
+> +		pairs[i].pack_int_id = nth_midxed_pack_int_id(m, i);
+> +	}
+> +	QSORT(pairs, m->num_objects, compare_pair_pos_vs_id);
+> +
+> +	for (k = 0; k < m->num_objects; k++) {
+> [...]
+
+I have not tested this (or midx in general), but isn't this new QSORT()
+introducing the same sort of progress stalling that I fixed for
+commit-graph in 890226ccb57 ("commit-graph write: add itermediate
+progress", 2019-01-19)? I.e. something you can work around with a
+"display_progress(progress, 0)" before the QSORT().
