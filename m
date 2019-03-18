@@ -7,111 +7,96 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B44020248
-	for <e@80x24.org>; Mon, 18 Mar 2019 12:52:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E68D920248
+	for <e@80x24.org>; Mon, 18 Mar 2019 14:29:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726753AbfCRMwC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 08:52:02 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:50590 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726449AbfCRMwB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 08:52:01 -0400
-Received: by mail-it1-f195.google.com with SMTP id m137so4658828ita.0
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 05:52:01 -0700 (PDT)
+        id S1727717AbfCRO36 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 10:29:58 -0400
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:36998 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727183AbfCRO36 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 10:29:58 -0400
+Received: by mail-ed1-f42.google.com with SMTP id m12so13707292edv.4
+        for <git@vger.kernel.org>; Mon, 18 Mar 2019 07:29:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mnNNSKDD7wXEP2N/8mJzmGqnH7vlcamELc0CNmcicso=;
-        b=sUjmqifuL7IjOIpOVT2UD7neUTcpT5OGOj4xkdN1uBJRQz/BM4uD7xFCcjA+0mKtgy
-         YPUIlXZO6eJCwTR7xXptXnIVyvJ6qSfM0amv0U0BJKwtMGqRBDNO/mY+hE6CRq7mEoon
-         z4+IARBnfCHyXTIQsQvpMTSmRskYOXMl5UrIRCM5jh9Nw/9rw/TJNKrwU25OKBzuU5fv
-         P9sGwYGdjyT7HFqXcUqrqM2CmCWxph92uARAJGkqu2yonWrUdfOZzVakACy2vVEUXwyt
-         b8C+vST8VJLQjuj/0KJu+ZepIvuk3rm8AwTqtCYrPJm0DvszbLnURI9oxjh8oAeThgzv
-         iIow==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=swSXMRARQVV9vDTuxYFfDbJZX/AWWJ2/1xlfJTz5ilA=;
+        b=pmeDkIrGHABVsVG9Jx9yQYfb4xYI0yY8/jRzxBLCD57mfBNbYZxszhU74cXzbeidpc
+         nZ4bL0VhSnWXtG74IyTlZEoZo2UhJjuEadfPyHAbcL6eFOhIDmJwwF7+N8EnknwLnLWX
+         MvEfdv2kaY9mE4K1NOq+/i3Y3zQCMGCXCC8TYFGsNswjF9BX6HdLqaXUNe3WofpWa1mN
+         Wsm3XodAIUZDf1ANSwUJKqmvsqzqgjQduH/AkZHMxqtE9OfwdFY0QRmiKZ7IOxbODHl1
+         9zOzenKgJeHmds/pqLfD4XBL5q1FhNoF5DZGUKTG+X7iCPZS/D607UuAw0PtklCM5ZPv
+         pCJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mnNNSKDD7wXEP2N/8mJzmGqnH7vlcamELc0CNmcicso=;
-        b=FN1Tk2zZI28RVBzGoSD+1aIxCy9IRUpE6FYHBfO8BPv+3CDRT5bo5ZizTS7FlClz9y
-         NSomDYk6aYrqKLSkWzilxDXkzqvMhxHU5lUHAV9NSUJBwht/qvBlo0pjxZpMxktoozeZ
-         3hCYiJJZVwCY8lnIZX2GWYFkXWQmCPiGU83WBI8r0dE10rk6KxdahiKb1gidrPhxyv54
-         ZvL8H6UnGxDnThe7RNSjVce01fA4F3USZU+5a/kuaaMKcSmlBiulDELuGNZqnbIeY98O
-         9W04CypwWi9ek5c2skRh9PRpq+JVAqYShPg3xezAOLmLBF0gQRAmKeUmn46BUtdmt3dp
-         rFSQ==
-X-Gm-Message-State: APjAAAVE8bwpJ4BzKZDB49xG1NQM3IzNZBO89qXVf68UDkrS5syNIkqb
-        DQUBO094cozVcYS5Rc2jpgQTMBn1KXPx0g6TEI8=
-X-Google-Smtp-Source: APXvYqwCAR4C30UZBX7q9HEHlS5VD/Et32lEdyu6rcHDtfAzX70ebiydjA2rxPJaae13BF0ekKtR/ScxjfaAtBM7Cbc=
-X-Received: by 2002:a24:7542:: with SMTP id y63mr10409849itc.70.1552913520793;
- Mon, 18 Mar 2019 05:52:00 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=swSXMRARQVV9vDTuxYFfDbJZX/AWWJ2/1xlfJTz5ilA=;
+        b=t9fLfqi5I1CGA+CMU1KWQZQM3RpBUksZJWBWLXvDMUsJBx1hKXDxgRsPBMqN2KEUSg
+         K2HKET15gONP9gCsizvlOkISSBCmzxhu+NofGwDWPJ0ZEbiWgUyCI/G/Dgw9YSviTB9A
+         aRBl8gK/IXeP7WholvgJ/1wViY8ZfaoSWYr6xTnfGdZdURqXKgU2STRNshI6qjBIJj0L
+         9es/ZgXx4hXLB4xOJrIepfSKjdyHb2mUVnAtPdRR1ujIl9whCRda1nB88MN+W37Fup36
+         jJiyhB97WllA+OulJ5TZWCXVmn4Wk4STQPRe17dMrdMQf+HEtuSDU9+WGYURD7H5eFRM
+         sePg==
+X-Gm-Message-State: APjAAAUlhsqpdG6eailHKEhv2wYMaqtNXiCVHg5TmoWINqhHn0Kyi45f
+        NemmK/9mjygt5nCauqz8jJG6eptF
+X-Google-Smtp-Source: APXvYqzndII+gIF4mbKGB3nxHTznsTnkmans7gFyWr1K4x8WcAp+lWrhJ8dW1oLRGaUf7PyOZyJCJA==
+X-Received: by 2002:a50:b1bc:: with SMTP id m57mr4417611edd.116.1552919396665;
+        Mon, 18 Mar 2019 07:29:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w24sm3464100edb.72.2019.03.18.07.29.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Mar 2019 07:29:55 -0700 (PDT)
+Date:   Mon, 18 Mar 2019 07:29:55 -0700 (PDT)
+X-Google-Original-Date: Mon, 18 Mar 2019 14:29:51 GMT
+Message-Id: <pull.166.git.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/3] multi-pack-index: fix verify on large repos
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD2kt=Rv4pC67q0s+CKjgmBON_KkK09igfwe-0709Di2RQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 18 Mar 2019 19:51:34 +0700
-Message-ID: <CACsJy8DtoMMSu5Vm4+ZkeUqCOo7stM4HObLkiSc-nQQV4G=GvA@mail.gmail.com>
-Subject: Re: GSoC 2019: Git's application submitted
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Matthieu Moy <Matthieu.Moy@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     dstolee@microsoft.com, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 4, 2019 at 4:17 PM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi everyone,
->
-> There are now ideas, micro-projects and organization application pages
-> for GSoC 2019 on https://git.github.io/
->
-> It would be nice to have a few more project ideas.
-> https://git.github.io/SoC-2019-Ideas/ currently lists only 2 possible
-> projects:
->
-> - Unify ref-filter formats with other --pretty formats (which is new)
-> - git log --oneline improvements
->
-> as I didn't feel that the others were still relevant, though I might be wrong.
->
-> As Olga and Thomas told me at the Git Merge that they could be ok to
-> co-mentor with me, they are listed as possible mentors for both of
-> these projects.
->
-> Anyway feel free to comment and suggest improvements on those pages,
-> especially the micro-projects and ideas one. Pull requests on
-> https://github.com/git/git.github.io/ are very much appreciated.
+Teach "multi-pack-index verify" to handle cases where the number of
+packfiles exceeds the open file handle limit.
 
-I'm not opening a pull request because I'm not sure if it's worthy of
-GSoC (probably 2020, not 2019) but anyway the get_config_* discussion
-elsewhere reminds me of this.
+The first commit fixes a problem that prevented the LRU-style
+close_one_pack() mechanism from working which caused midx verify to run out
+of file descriptors.
 
-Currently we have two ways of parsing config files, by a callback that
-gives you everything and you do whatever you want, and with configset
-where you can just call "get me this config", "get me that one". The
-idea is moving most callback-based sites to get_config_ one.
-Preferably in a declarative style, like 'struct option[]'.
+The second commit teaches midx verify to sort the set of objects to verify
+by packfile rather than verifying them in OID order. This eliminates the
+need to have more than one packfile/idx open at the same time.
 
-This should reduce some amount of code because all the "if (!strcmp..)
-var = git_confg..." is handled by a common code. It's easier to read
-too. And it may open up an opportunity to suggest misspelled config
-name (a bit far fetched) and list relevant configs of any command,
-perhaps with a short description of each config variable too. The
-configset way should be a bit faster too, but I don't think we care
-about performance at all here.
+With the second commit, runtime on 3600 packfiles went from 12 minutes to 25
+seconds.
 
-To handle three-level config like remote.*.url, we can still do it the
-declarative way by declaring the pattern "remote.*" instead of a fixed
-variable name which we can't know in advance. There will still be a
-callback to handle remote.* vars correctly, but the callback should be
-much smaller and easier to manage, I hope.
+Thanks, Jeff
+
+Jeff Hostetler (3):
+  midx: verify: add midx packfiles to the packed_git list
+  midx: verify: group objects by packfile to speed up object
+    verification
+  trace2:data: add trace2 data to midx
+
+ builtin/multi-pack-index.c |  3 ++
+ midx.c                     | 60 ++++++++++++++++++++++++++++++++++----
+ packfile.c                 |  2 +-
+ packfile.h                 |  2 ++
+ 4 files changed, 61 insertions(+), 6 deletions(-)
+
+
+base-commit: e902e9bcae2010bc42648c80ab6adc6c5a16a4a5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-166%2Fjeffhostetler%2Fupstream-midx-verify-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-166/jeffhostetler/upstream-midx-verify-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/166
 -- 
-Duy
+gitgitgadget
