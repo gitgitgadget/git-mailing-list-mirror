@@ -7,63 +7,61 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5EFD20248
-	for <e@80x24.org>; Mon, 18 Mar 2019 16:48:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 296F820248
+	for <e@80x24.org>; Mon, 18 Mar 2019 17:07:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727446AbfCRQsv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 12:48:51 -0400
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:38904 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726719AbfCRQsu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 12:48:50 -0400
-Received: by mail-ua1-f68.google.com with SMTP id d4so5513877uap.5
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 09:48:49 -0700 (PDT)
+        id S1726812AbfCRRHX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 13:07:23 -0400
+Received: from mail-vs1-f53.google.com ([209.85.217.53]:35673 "EHLO
+        mail-vs1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726788AbfCRRHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 13:07:22 -0400
+Received: by mail-vs1-f53.google.com with SMTP id e1so8940237vsp.2
+        for <git@vger.kernel.org>; Mon, 18 Mar 2019 10:07:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=XDjiHnqOzFaedcws1CFQZPvJGKE5JlHIufzXZiuHlcc=;
-        b=PrsI4s4ksPJ7qQ1t7kAnc2b/d6xipgnWj5poPg4x3UCNYiB1T20cKCt6/g5GIU4Mmg
-         8TqYUwTz4bPWEYrq5IpoegK9cTg3ZnG3ZVKwBnM/TEBxltPllnJmTkK3udePFmbJPqOe
-         V1FjM68flfTm7dap1Trd70F5Jn/eKA+aJjN0Md8MLQMdqy+2ZnkrRGyiNSbq7fUlS+0J
-         jB1J2hQRiXt6KpiII1SyeB0FId8MLXKgLeKwHYvi/Pn6VaOioRoBwTaLHk7spN5H28yw
-         skl80iW2H6FkG1BbA687XDqwUk4TLmoe3JxSgpmKKdm4FGM4O5HD7y+k0nLYAyMcaWB2
-         LlkQ==
+        bh=Ny83X+LGUA5y7kL5BrWtCvZ0I62uwFzR+c7KUEVuUrk=;
+        b=d+UI+nPIB5bll6MECzufg+OlluV02nz6Hbt4LLRe4+p0A9cCFeR/OH72so7aBvOHE+
+         TXA8wW5Vu4LKSRACo4gbvAFocojx8FG5zst7qDRa1mHaA4nFgzVKLMcXUVuQYpjoC/gW
+         Add6pPgCJfg0IF6yYQykoVJHe8YwbagokoH0BClJgkCzMxK5NZ7KKdlo+VvzBSlAaxIj
+         4fucqsA6x7WlDN8V7e5cb4x7vB+2Ho4IUe6Zo7wQXsXGLmg3vveqbk8UUbnsAuqM9YLi
+         c7QP8sGb/o1EhX9zCPHaNXJEiL+0IMjLXWcEnEVQikpyp1v0ux/txAiWFvoh6pRaBuYj
+         TZbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=XDjiHnqOzFaedcws1CFQZPvJGKE5JlHIufzXZiuHlcc=;
-        b=JviXwRYQS+J0GaKvEx1Jogb99UkWwZNQ1zTbhXl9J3Yi0zujf7gU38qPOmzUGiv/I0
-         ETYGZ6CYOPOEO0cHHwnmPFKIUuWrSDPuwG7IHbFZJHp6/2SPGxjc4H0VpyXjpBU9z3qe
-         U5hslZt26jruuHQP52S7yPKq+4iRUQg7o/0WfjWiA0MJ97gifyBdI8oiFLrYKUUXpDAr
-         935Oc/HgcuMulbMO8LoXY6q34POJGaOyU9B9N9pXEozKucyU0Hop27ehoHUGef70xeBx
-         VB+AUD4HClmjDGNjwUhsJPR6dwjBBA+0U1hBaiuUQ5m5aBO+tRLd6ojA53RWhy7FWLAN
-         F+FA==
-X-Gm-Message-State: APjAAAWvZkskd77lQLg+k4gbdhPp+8qsKYdNOjnPD/yHZF4T5Ci11YaT
-        fTksre4tifwIXYfN3PEsXIGW+qWGnd9k1ptrXu4=
-X-Google-Smtp-Source: APXvYqyL9hMrXRMzz76vwadkXA72kHDXo5NibdioZTG3i584WLMdY1ahjorsuAbUTS6PfGtZ2PqK0+keSUmGcUgjGho=
-X-Received: by 2002:ab0:2712:: with SMTP id s18mr6329588uao.114.1552927729250;
- Mon, 18 Mar 2019 09:48:49 -0700 (PDT)
+        bh=Ny83X+LGUA5y7kL5BrWtCvZ0I62uwFzR+c7KUEVuUrk=;
+        b=mbUZhf/6JhW14kSkAVEI5ENmNhQbkHXTXXJZ8OSojwtXucWSWXVON0HqRXC12rx9ow
+         R9FIBNUxjD2OqpxltZ00cWo33yiqlXgZB9jULsobES5F/8jn7LVPjP3j5lsVCGzxu72Q
+         Z9Cf2cwffqnpa8Q/ZwFjWOWC5c1gMCdcQVPOoe+Ut23JYeC2teQnHrwAJSKg64Ln/npG
+         CRJVZntbdra4w0bNX4hv+Gs/ZqOpbrNMAbUEfy2XULjCWNWNPiMcq8pzvUIosYDG45JX
+         68L12tnGWdxgn3USekCTqIf80NzkLBQDHU1/joMDeQEDe2C/3wY/AFKWMj6UNbbgD2ub
+         YY2A==
+X-Gm-Message-State: APjAAAU7WYAUonvXsrtq2znc2P5h5OmfXMOTh4YDI4EvxEIP1bIti3B3
+        Vctba8/Z6Db3/nA5eiKHjobcwppVI3dMVkAdVVg=
+X-Google-Smtp-Source: APXvYqwD3oQwIGvrKrzRMwlxyb+To/fUrkHME07qMD6LhGChPtTJQ3iuX6++rW52Tx7GntoAjcXc9CXyvphUo4R7Lng=
+X-Received: by 2002:a67:eb97:: with SMTP id e23mr9969819vso.175.1552928840780;
+ Mon, 18 Mar 2019 10:07:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190308095752.8574-1-pclouds@gmail.com> <20190317124926.17137-1-pclouds@gmail.com>
- <20190317124926.17137-13-pclouds@gmail.com>
-In-Reply-To: <20190317124926.17137-13-pclouds@gmail.com>
+References: <20190311093751.GA31092@archbookpro.localdomain>
+ <xmqqmum0h88n.fsf@gitster-ct.c.googlers.com> <87va0orop4.fsf@igel.home> <87wol3bydp.fsf@evledraar.gmail.com>
+In-Reply-To: <87wol3bydp.fsf@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 18 Mar 2019 09:48:36 -0700
-Message-ID: <CABPp-BE+9cmd-gR=ZRR2v1gpjduoQ0hQCL+57nmaiG45RZTB9g@mail.gmail.com>
-Subject: Re: [PATCH v4 12/26] checkout: split part of it to new command 'switch'
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+Date:   Mon, 18 Mar 2019 10:07:08 -0700
+Message-ID: <CABPp-BHMi=RTWAVjuORdTWY3ijp4EKhy2QAH0=WrviCiotJtyw@mail.gmail.com>
+Subject: Re: Deprecating git diff ..; dealing with other ranges
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Andreas Schwab <schwab@linux-m68k.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -71,106 +69,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 17, 2019 at 5:50 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
+On Tue, Mar 12, 2019 at 2:01 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Tue, Mar 12 2019, Andreas Schwab wrote:
+> > On M=C3=A4r 12 2019, Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> >> I however think it may be worth making sure that our docs do not
+> >> encourage "diff A..B" and teach "diff A B" when comparing two
+> >> endpoints.  That can be done without changing anything in the code.
+> >
+> > The nice thing about "diff A..B" is that you can c&p the output from th=
+e
+> > fetch run without the need to edit it.
 >
-> "git checkout" doing too many things is a source of confusion for many
-> users (and it even bites old timers sometimes). To remedy that, the
-> command will be split into two new ones: switch and restore. The good
-> old "git checkout" command is still here and will be until all (or most
-> of users) are sick of it.
+> Not to shoot down this effort, just to add another similar thing I do
+> regularly for ff-branches:
 >
-> See the new man page for the final design of switch. The actual
-> implementation though is still pretty much the same as "git checkout"
-> and not completely aligned with the man page. Following patches will
-> adjust their behavior to match the man page.
+>  1. Copy/paste A..B fetch output
+>  2. git log A..B
+>  3. ^log^diff
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
+> I.e. I just need to tell my terminal to re-run the same "log" command
+> with "diff" instead of "log".
+>
+> Of course as covered in the linked thread it doesn't work for some
+> (non-ff) cases, and I'll sometimes end up cursing it and swapping around
+> ".." for "..." with log/diff.
 
-Looking really good.  Just some minor comments...
+Doesn't this somewhat imply that although you use diff A..B here for
+convenience, that it's actually wrong since what you really want is
+A...B?  Or said another way, the end goal of deprecating "diff "A..B"
+then later reinstating "diff A..B" to mean the same thing as "diff
+A...B" would actually be better even for your usecase?
 
-> +git-switch(1)
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +
-> +NAME
-> +----
-> +git-switch - Switch branches
-> +
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git switch' [<options>] [--guess] <branch>
-
-Should this now use [--no-guess] since --guess is the default?
-
-> +'git switch' [<options>] --detach [<start-point>]
-> +'git switch' [<options>] (-c|-C|--orphan) <new-branch> [<start-point>]
-> +
-> +DESCRIPTION
-> +-----------
-> +Switch to a specified branch. The working tree and the index are
-> +updated to match the branch. All new commits will be added to the tip
-> +of this branch.
-> +
-> +Optionally a new branch could be created with either `-c`, `-C`,
-> +automatically from a remote branch of same name (see `--guess`), or
-> +detach the working tree from any branch with `--detach`, along with
-> +switching.
-> +
-> +Switching branches does not require a clean index and working tree
-> +(i.e. no differences compared to `HEAD`). The operation is aborted
-> +however if the switch leads to loss of local changes, unless told
-> +otherwise.
-
-Maybe s/otherwise./otherwise with --discard-changes or --merge./, just
-for a little extra clarity?
-
-> +-f::
-> +--force::
-> +       An alias for `--discard-changes`.
-> +
-> +--discard-changes::
-> +       Proceed even if the index or the working tree differs from
-> +       `HEAD`. Both the index and working tree are restored to match
-> +       the switching target. This is used to throw away local
-> +       changes.
-
-It looks like elsewhere you and Junio discussed making --force also
-imply --ignore-in-progress.  That option should be moved close to
---force, so that similar options are adjacent, but it also brings up a
-question for me:
-
-Is --force an alias for both `--discard-changes` and
-`--ignore-in-progress`, or is `--discard-changes` really just another
-name for `--force` (i.e. does it too imply `--ignore-in-progress`)?
-I'd be tempted to say the former, but I'm curious on others' thoughts.
-
-> +--orphan <new-branch>::
-> +       Create a new 'orphan' branch, named `<new-branch>`. If
-> +       `<start-point>` is specified, the index and working tree are
-> +       adjusted to match it. Otherwise both are adjusted to contain no
-> +       tracked files.
-
-Thanks.  I'm still slightly hesitant about whether <start-point>
-should be allowed with --orphan; it seems equivalent to me to letting
-people have a flag for switching to existing branch A while forcing
-the index and working tree to match branch B (defaulting B to HEAD
-from before the switch).  Having <start-point> and --orphan together
-is just a special case of this idea, and thus allowing those together
-seems like it'll cause the more general request to be filed at some
-point, and we will already have the precedent of supporting it
-somewhere.  This usecase seems to be somewhat esoteric and infrequent,
-and could be easily obtained by combining other commands.  I'm worried
-that trying to explain this usecase may make the documentation for the
-common everyday commands even more complex, and these manpages are
-already kind of long.  However, as I said above, that's just a slight
-hesitation and maybe I'm just excessively worried about the length of
-our manpages for the most common commands.  This new description of
---orphan at least gets the default behavior right.
-
-
-Great work so far; thanks for working on this.
-
-Elijah
+Of course, switching to the removal period may just be too painful for
+too many folks since there are obviously people that use it, but I
+just want to see if I'm understanding correctly here.
