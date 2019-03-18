@@ -2,120 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28EB020248
-	for <e@80x24.org>; Mon, 18 Mar 2019 12:06:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA36220248
+	for <e@80x24.org>; Mon, 18 Mar 2019 12:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727471AbfCRMGx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 08:06:53 -0400
-Received: from mail-it1-f195.google.com ([209.85.166.195]:52865 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726504AbfCRMGx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 08:06:53 -0400
-Received: by mail-it1-f195.google.com with SMTP id g17so20029482ita.2
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 05:06:52 -0700 (PDT)
+        id S1726813AbfCRMK6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 08:10:58 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43538 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726730AbfCRMK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 08:10:58 -0400
+Received: by mail-wr1-f66.google.com with SMTP id d17so16743387wre.10
+        for <git@vger.kernel.org>; Mon, 18 Mar 2019 05:10:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sug6OcjVGDRspv2PMJctftSAYLPdTuIZ5OCNipAVlwc=;
-        b=KmhMgdBCwIilTiAm0J0aHzyUMxbzFg1mg2Zf0bOV05bUoVE1Rvj9PoEw1IggQl9UAO
-         nDZq1gzMN1uQKXm8MQBz4+7ljjqdw5soPW3/ad/8CDeDwO2GBCiKU9uekX0XkKnr7nbq
-         DsGHi2h954AJBlDXhMI+mu2tOmOquzd/HOiGcoo5FQuBAN7MStKZNYLwl9VcMfqC3q36
-         po0QjHdBKZsvu8pg3Mcz1sCqbpst3i5YExF+Gwhk6Tg87/ononIfYHCpHuJz47YbTMAq
-         ZdA3Fkk/ciF5ueF+xRblg3BiGL5bkuP+NUc0IjN+UZSQBNDvwVxMH8hFQMgg8fF4R/nu
-         8zIw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=s2UpB/l9QdEJnSU3u8Vk1Ey4X5bJQIogCEPg5YSlk5M=;
+        b=S3ItYseWh2d+8K98U6veGEWBgtsCtlxBQm/BrqEWsjZ6iR+O0elQImOFe31izI707F
+         T+wn364vGfFbOQqhx/Eicj+lfCjPUZP1sov0PjJES3QWahrKJ2CPIjfAkKHhPVeO26Xj
+         3i+gGW4UipEAOyBhAK4KWUPJLCNy5Kk0CrrAjR/3LvzphSZzG82amZ4mEE6UyyDPGzmp
+         sSGBKrmlgAZCkBX/q+8MOpFncoyj8ka0gUEL5FXo0VchRKRt3RdAn539iWvpgIdEhVtO
+         JSqT5YMldiQa/FF5Fdcq+31D5SMnAJ5Ojw5JRBDxMy+xfp2/Lpp0l18Bc58/CV6bCTHh
+         yX/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sug6OcjVGDRspv2PMJctftSAYLPdTuIZ5OCNipAVlwc=;
-        b=J+2En1HkZpkPBjy1GLd91ertespb7ws5gjLOmnEzyYcdzxq1+eAdzM6IeBFfCZCF3M
-         FEmC8Yaq5XUJww7Lt/YQGTPK8x6ScnYHmeA1wzZXLPDgmgxl+tN68QLMOXHweYjzFb9w
-         CRVU6h8SDSH8GQ0k2RU4TvYEHIr52vQLeiJgHPi5tflcTrdJmuZD04GWnbgZWL6akW9K
-         XnoUeP4MBdrkCWlhmId3R3ffWBoKleiudrXyrhK0OXVjPILj7m+h1s/51wGfXVZsOpeb
-         4GPofLhrb8sHYbYkYd5kVGj0y5cW8d6D2JMVAU9SuhNt05AxJqpkbXvRNkQYuf8niHd2
-         SYHQ==
-X-Gm-Message-State: APjAAAVpvt+/7ILouAdKOihV8clKKAbOEyfaGoRAg8pZbFGVv7od2/Q0
-        HNlIrq1y24JkLHhhxJnTdEFZ87yIiSKg7EerIq4=
-X-Google-Smtp-Source: APXvYqxfko7nJaqpTKyc5ta6SaP6qXmgP+0jRhXSASd2IsnVLvY81dE8G5BA+FJym2xmXHzkUi+IJhDvzpZXGVLOJzc=
-X-Received: by 2002:a24:3b0a:: with SMTP id c10mr8973121ita.10.1552910811675;
- Mon, 18 Mar 2019 05:06:51 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=s2UpB/l9QdEJnSU3u8Vk1Ey4X5bJQIogCEPg5YSlk5M=;
+        b=h1N8zzqeHztQDEVD7FwaAHRkwvOJklDNXBoX3T+Bpt3oQO4LSvUk5ZxppRIpPtnEkG
+         s/XmdbDZKjw9h/ez15eIqq+MI6NaRDPK3zvNlW0W19RjDBpQNnEDwl11b6h+lLB7gNWy
+         /UXtieC5/XD9z6ZMj/TaA6rzyaPNha5yGpk+FLWYnegt/Dczy2gGoRPqC3VEbr6Joqzs
+         vHyp+qDaoWFitwLa4OyDoEUerCORRlRNEbZJM9PxzIXEpO3leipIrWpqKC1IKiI9t/cV
+         AtKCGrEl2jusOx+vnoNzO4opR2XyRt5GERYErJDkGOOpgwadDHoAdumb/Dv81sgfTPNN
+         X4JQ==
+X-Gm-Message-State: APjAAAVgEaK8S5NKlESQeWY6NwguwizZWwy7RS3zeoXVHlk2e6VeUKw2
+        ALz8FfzI392jqPSI1VX5cQI3uLBw
+X-Google-Smtp-Source: APXvYqxSoHHN32bXnJNjN4X8/LcvDDVaMSYYA+yCdxG9X17K6udYz6PHS8nkicZp6OsKpz5Sf9afHg==
+X-Received: by 2002:adf:e40b:: with SMTP id g11mr1771049wrm.207.1552911056775;
+        Mon, 18 Mar 2019 05:10:56 -0700 (PDT)
+Received: from szeder.dev (x4db403cb.dyn.telefonica.de. [77.180.3.203])
+        by smtp.gmail.com with ESMTPSA id g8sm6091948wro.77.2019.03.18.05.10.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Mar 2019 05:10:56 -0700 (PDT)
+Date:   Mon, 18 Mar 2019 13:10:54 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     nbelakovski@gmail.com
+Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com,
+        rafa.almas@gmail.com, avarab@gmail.com
+Subject: Re: [PATCH v9 3/3] branch: add worktree info on verbose output
+Message-ID: <20190318121054.GC24175@szeder.dev>
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20190316013807.38756-1-nbelakovski@gmail.com>
+ <20190316013807.38756-4-nbelakovski@gmail.com>
 MIME-Version: 1.0
-References: <20190308095752.8574-1-pclouds@gmail.com> <20190308095752.8574-11-pclouds@gmail.com>
- <7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com> <CACsJy8DrrEg++wUszU2B1zJ_gvO1WC8MXXa53ZpMnObgqy=AeQ@mail.gmail.com>
- <CABPp-BFStPOtA_OGrS3HCe_XqWN1roBnzss3nefcHdQg=9eYLQ@mail.gmail.com>
- <d78392c3-7282-43ab-b88c-aa13fb5f937a@gmail.com> <CACsJy8DxOeKEAygiEa644pcQw-zTsnLyrtPL4sKWmPFEdNWpcQ@mail.gmail.com>
- <CAPig+cRN_cKhu2UQSiJHOK-bgk+g7897_2Acb_kgNK7w6_fS5g@mail.gmail.com>
- <CABPp-BHpoa+tNW=7+6TOmoQTvbap3iavqApEGny4E-rwv1gZVQ@mail.gmail.com>
- <CAPig+cSe-v-GU=UG_PyUjf9itz_Ddqq4-Ni4h=2TtbLDXr5WJA@mail.gmail.com>
- <20190314091753.GA9852@ash> <CABPp-BF3_p3+fmQcWYEu2z3J4FfPmDmiMyFiBRXyz8TxKLL7jA@mail.gmail.com>
- <xmqqr2b56ir6.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqr2b56ir6.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 18 Mar 2019 19:06:25 +0700
-Message-ID: <CACsJy8Dfy4csm5xpGwz6EZXqN+uMFmf4woEPTZ2WjbeDTa-9Sw@mail.gmail.com>
-Subject: Re: [PATCH v3 10/21] checkout: split part of it to new command 'switch'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190316013807.38756-4-nbelakovski@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 18, 2019 at 9:03 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > I don't see why <start-point> even makes sense to use with --orphan;
-> > you should error if both are given, IMO.  The point of --orphan is to
-> > create some entirely new history.  So, I'd expect "git switch --orphan
-> > <new-branch>" to:
-> >   * not create refs/heads/<new-branch>
-> >   * set HEAD to refs/heads/<new-branch>
-> >   * empty all tracked files from the working tree.
-> >   * empty the index
-> >
-> > Alternatively, you could allow <start-point> to be passed with
-> > --orphan, adjusting the above steps so that both the index and the
-> > working tree are switched to match <start-point>, but ONLY if
-> > <start-point> defaults to the empty tree when --orphan is passed.
->
-> Do you mean that it's like <start-point> is not really a start-point
-> but is an initial tree, i.e.
->
->         switch --orphan --initial-tree=<tree-ish> <new-branch>
->
-> is a mere short-hand for
->
->         switch --orhpan <new-branch> &&
->         restore --from-tree=<tree-ish> .
->
-> I think that does make sense, but at the same time, I think a major
-> reason why people say "checkout does too many things depending on
-> the arguments and conext to be easily explained" is exactly due to
-> its many "if you give X, it is like writing this longer command
-> sequence" short hands, so...
+On Fri, Mar 15, 2019 at 06:38:07PM -0700, nbelakovski@gmail.com wrote:
+> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+> index ceb74e0826..e5dc23e225 100755
+> --- a/t/t3203-branch-output.sh
+> +++ b/t/t3203-branch-output.sh
+> @@ -328,4 +328,23 @@ test_expect_success '--color overrides auto-color' '
+>  	test_cmp expect.color actual
+>  '
+>  
+> +test_expect_success 'verbose output lists worktree path' '
+> +	one=$(git rev-parse --short HEAD) &&
+> +	two=$(git rev-parse --short master) &&
+> +	cat >expect <<-EOF &&
+> +	* (HEAD detached from fromtag) $one one
 
-Yeah <start-point> is optional and probably only useful for people who
-do a lot of --orphan. I did think if there's any other command that
-could be a better host for this orphan branch creation. No such luck.
+This 'HEAD detached from ..." message is translated ...
 
-PS. There's one small difference between 'switch --orphan <new-branch>
-<tree-ish>' and your switch/restore combination: the latter refuses if
-you have any local changes because it has to remove all tracked files
-first, while the former only refuses when the local changes are
-outside <tree-ish>. If path A will be tracked by <tree-ish>, then
-whatever changes in there may stay.
--- 
-Duy
+> +	  ambiguous                    $one one
+> +	  branch-one                   $two two
+> +	+ branch-two                   $one ($(pwd)/worktree_dir) one
+> +	  master                       $two two
+> +	  ref-to-branch                $two two
+> +	  ref-to-remote                $two two
+> +	EOF
+> +	git worktree add worktree_dir branch-two &&
+> +	git branch -vv >actual &&
+> +	rm -r worktree_dir &&
+> +	git worktree prune &&
+> +	test_cmp expect actual
+
+... therefore here you should use 'test_i18ncmp', as otherwise the
+GETTEXT_POISON test run fails.
+
+> +'
+> +
+>  test_done
+> -- 
+> 2.14.2
+> 
