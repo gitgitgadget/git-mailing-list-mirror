@@ -2,119 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 527B120248
-	for <e@80x24.org>; Mon, 18 Mar 2019 21:48:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C32620248
+	for <e@80x24.org>; Mon, 18 Mar 2019 21:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727132AbfCRVsq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 17:48:46 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38162 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726973AbfCRVsp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 17:48:45 -0400
-Received: by mail-wr1-f68.google.com with SMTP id g12so18790810wrm.5
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 14:48:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ezhBMMa7C9HyOqS9TkMjdBpCnFlkOWxTO3hz7E1ohPg=;
-        b=GpJKynmRnbaj9FQZZzdvidSqfZ2MSEVGNk8eKCLkIsO6ScIKKJFeAeiD8GWPzAI1OZ
-         yAoQcS+Yssu2IQck1ga5ySVmqdPPFpfNLNkvaL9X55uMiQmm7WYg/L2s4panVmrUAvGS
-         dqPChRyzjAOXpzj1ow6DdKFbnp7czDgvW8Mle0wNU8nIXjwWHrQO1DaNaRTPOrWS845x
-         SiLye2jjY5bhTKPSSyhbPI+7DlzojUr4jamEdZfUgeWUNgymrHcw5wLQr91Q+udvSg0X
-         w1nqP3VQP0fkqOLyGpSuLFZgtujvB94ndsgVvzF1VKJy6kMILCf8o10cp2Mn0lZ/8pL6
-         6MvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ezhBMMa7C9HyOqS9TkMjdBpCnFlkOWxTO3hz7E1ohPg=;
-        b=t6iQ1r8lphlYEiII00gUUBbFAa7DjS7bZqB4L+wYT/Fg4kVstECP+g5dPAuK8g/VLN
-         pFEIkNwLHhfRGgzpJd1jMeibwj4/E9XRNdQQfgzEQ+8iJMDbZvZVi002hwyC3pqGx2y2
-         99UOZamik0VLwNfJT1puUqXgBV72bcoqZOdhQojh3Psoukkwk3MyOhDxpTd8/v7W2hGE
-         QD97KKgS0wBUmmX/YZ/9I3R23cJ3dDvlKrXi0kXlbfkTK2oHkz0t/Rt7BDiVamzBFT4G
-         OhFP0kEaTvcrkgcuKur3vAQQhelDbzXi77eiLEnHxGsdQAErUKP2eMPU+srbhmm8tnic
-         zDYg==
-X-Gm-Message-State: APjAAAVsS/s+9ciHv5qRr0ytMQ7fURfihCL9KYjKcsmROJC7xO1mTEMv
-        zCS5jkckY8C8sLtRe+xonQI=
-X-Google-Smtp-Source: APXvYqxQkFoNGoapn0bfma19eQ5LvgzrSEhPjV4FQljaryoekHjn4im9EU3OLKqhme/k7WzhBhoDyw==
-X-Received: by 2002:a5d:6b4c:: with SMTP id x12mr14060199wrw.14.1552945724230;
-        Mon, 18 Mar 2019 14:48:44 -0700 (PDT)
-Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id a14sm9822421wrx.96.2019.03.18.14.48.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 Mar 2019 14:48:42 -0700 (PDT)
-Date:   Mon, 18 Mar 2019 21:48:42 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Roberto Tyley <roberto.tyley@gmail.com>
-Subject: Re: [RFC/PATCH] point pull requesters to Git Git Gadget
-Message-ID: <20190318214842.GA32487@hank.intra.tgummerer.com>
-References: <20190312213246.GA6252@sigill.intra.peff.net>
- <xmqqsgvrfsrh.fsf@gitster-ct.c.googlers.com>
- <20190313193909.GB3400@sigill.intra.peff.net>
- <20190313201854.GA5530@sigill.intra.peff.net>
- <xmqqzhps6ghl.fsf@gitster-ct.c.googlers.com>
- <20190318211215.GB29661@sigill.intra.peff.net>
+        id S1727235AbfCRVtI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Mar 2019 17:49:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55584 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726983AbfCRVtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Mar 2019 17:49:08 -0400
+Received: (qmail 11393 invoked by uid 109); 18 Mar 2019 21:49:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 18 Mar 2019 21:49:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24026 invoked by uid 111); 18 Mar 2019 21:49:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 18 Mar 2019 17:49:28 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Mar 2019 17:49:05 -0400
+Date:   Mon, 18 Mar 2019 17:49:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH 3/4] gc docs: de-duplicate "OPTIONS" and "CONFIGURATION"
+Message-ID: <20190318214905.GG29661@sigill.intra.peff.net>
+References: <20190318161502.7979-1-avarab@gmail.com>
+ <20190318161502.7979-4-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190318211215.GB29661@sigill.intra.peff.net>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190318161502.7979-4-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/18, Jeff King wrote:
-> On Mon, Mar 18, 2019 at 11:52:54AM +0900, Junio C Hamano wrote:
+On Mon, Mar 18, 2019 at 05:15:01PM +0100, Ævar Arnfjörð Bjarmason wrote:
+
+> In an earlier commit I started including the "gc.*" documentation from
+> git-config(1) in the git-gc(1) documentation. That still left us in a
+> state where the "--auto" option and "gc.auto" were redundantly
+> discussing the same thing.
 > 
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > Hmm. I guess it is still an issue in GGG. This thread has identical
-> > > timestamps on patches 1 and 2 (and my server received them out of order
-> > > by 2 seconds, so mutt orders them wrong):
-> > >
-> > >   https://public-inbox.org/git/pull.163.git.gitgitgadget@gmail.com/
-> > >
-> > > I do still think GGG has a more feasible path forward on this particular
-> > > bug, though.
-> > 
-> > If the MSA is rewriting the timestamp (but why?  Is the original
-> > date "Wed, 13 Mar 2019 19:20:12 GMT" malformed or perhaps in the
-> > future or something?), then there isn't much the sending program
-> > can---'git send-email' would suffer from the same symptom.
+> Fix that by briefly discussing how the option itself works for
+> "--auto", and for the rest referring to the configuration
+> documentation.
 > 
-> I think this statement from me is mid-way through my discovery of the
-> actual issue. Yes, if the mail server is rewriting, the best we can do
-> is put in an artificial sleep.
-> 
-> It looks like GitGitGadget just uses normal SMTP to submit the messages.
-> I wonder if normal people using gmail as their SMTP server for
-> send-email also suffer from this. I've not ever noticed it, but I
-> don't know how common that setup is.
+> This revealed existing blind spots in the configuration documentation,
+> move over the documentation and reword as appropriate.
 
-I am using gmail as my SMTP server with 'git send-email', and it
-doesn't look like gmail is rewriting anything there, see [*1*] for
-example.  The date header looks like this:
+Nice improvement. A few comments:
 
-    Date: Mon, 25 Feb 2019 23:16:04 +0000
+> diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
+> index a834a801cd6..605e14bc80b 100644
+> --- a/Documentation/config/gc.txt
+> +++ b/Documentation/config/gc.txt
+> @@ -19,13 +19,27 @@ gc.auto::
+>  	objects in the repository, `git gc --auto` will pack them.
+>  	Some Porcelain commands use this command to perform a
+>  	light-weight garbage collection from time to time.  The
+> -	default value is 6700.  Setting this to 0 disables it.
+> +	default value is 6700.
+> ++
+> +Setting this to 0 disables not only automatic packing based on the
+> +number of loose objects, but any other heuristic `git gc --auto` will
+> +otherwise use to determine if there's work to do, such as
+> +`gc.autoPackLimit`.
+> ++
+> +The repacking of loose objects will be performed with `git repack -d
+> +-l`.
 
-Note the +0000 there, compared to the GMT that GitGitGadget uses.
-Looking at RFC2822, that's the new version of specifying the timezone,
-while GMT is only defined in the obsolete time and date section.  I
-guess gmail might just not like that anymore and rewrite it.
+I know this last sentence came from the existing documentation, but I
+wonder if we should be more vague here. We'd pack with "repack -dl" when
+we have just loose objects, and "repack -Adl" when we have too many
+packs. Or "repack -adl" if we're pruning now, and "--unpack-unreachable"
+otherwise.
 
-So fixing this might not be that hard, and might not involve sleeping
-while sending the patch series at all.  Changing how the date is
-calculated in [*2*] might be all that's needed.
+I think the point of git-gc is that you don't have to care about that
+stuff. It works magically, and if you are implementing your own custom
+gc scheme, then you are probably better off reading the output of
+GIT_TRACE or looking at the source, rather than this documentation.
 
-*1*: https://public-inbox.org/git/20190225231631.30507-1-t.gummerer@gmail.com/raw
-*2*: https://github.com/gitgitgadget/gitgitgadget/blob/c37d58cc1581b479892a1f7d29bd16e261676c7d/lib/patch-series.ts#L427
+>  gc.autoPackLimit::
+> +
+>  	When there are more than this many packs that are not
+
+What's this newline for? I'm not completely opposed if that's the style
+we want, but it seems odd that just this one has a blank between the
+variable name and the text.
+
+>  	marked with `*.keep` file in the repository, `git gc
+>  	--auto` consolidates them into one larger pack.  The
+> -	default	value is 50.  Setting this to 0 disables it.
+> +	default value is 50.  Setting this (or `gc.auto`) to 0
+> +	disables it. Packs will be consolidated using the `-A` option
+> +	of `git repack`.
+
+If we do revise the "-d -l" bit for the loose limit, we'd probably want
+to adjust this to match.
+
+> @@ -35,13 +49,18 @@ gc.bigPackThreshold::
+>  	If non-zero, all packs larger than this limit are kept when
+>  	`git gc` is run. This is very similar to `--keep-base-pack`
+>  	except that all packs that meet the threshold are kept, not
+> -	just the base pack. Defaults to zero. Common unit suffixes of
+> -	'k', 'm', or 'g' are supported.
+> +	just the base pack. Defaults to zero or a memory heuristic.
+> +	Common unit suffixes of 'k', 'm', or 'g' are supported.
+
+I'm not sure how to read this "or". What's the difference between "0" or
+the memory heuristic, and when is one used? Or is that what the "if the
+number of kept packs is more than..." below is trying to say?
+
+If so, I wonder if it would be simpler to say "defaults to a memory
+heuristic", but with a note for "but under these conditions it is not
+used".
+
+Or am I totally misunderstanding how it actually works (which seems
+likely to me)?
+
+> +If the amount of memory is estimated not enough for `git repack` to
+> +run smoothly and `gc.bigPackThreshold` is not set, the largest pack
+> +will also be excluded (which is the equivalent of running `git gc`
+> +with `--keep-base-pack`).
+
+I had trouble parsing this first line. Maybe:
+
+  If the amount of memory estimated for `git repack` to run smoothly is
+  not available and ...
+
+I guess a lot of this is just being copied from elsewhere, but it's
+probably worth cleaning it up while we're here.
+
+> --- a/Documentation/git-gc.txt
+> +++ b/Documentation/git-gc.txt
+> [...]
+> +See the `gc.auto' option in the "CONFIGURATION" below for how this
+> +heuristic works.
+
+s/CONFIGURATION/& section/?
+
+> +Once housekeeping is triggered by exceeding the limits of
+> +configurations options such as `gc.auto` and `gc.autoPackLimit`, all
+
+s/configurations/configuration/
+
+-Peff
