@@ -6,85 +6,86 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF44220248
-	for <e@80x24.org>; Tue, 19 Mar 2019 06:39:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5613120248
+	for <e@80x24.org>; Tue, 19 Mar 2019 06:47:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726303AbfCSGjH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 02:39:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56080 "HELO cloud.peff.net"
+        id S1726020AbfCSGrO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 02:47:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56094 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726020AbfCSGjG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 02:39:06 -0400
-Received: (qmail 7943 invoked by uid 109); 19 Mar 2019 06:39:06 -0000
+        id S1725862AbfCSGrO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 02:47:14 -0400
+Received: (qmail 8477 invoked by uid 109); 19 Mar 2019 06:47:13 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Mar 2019 06:39:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Mar 2019 06:47:13 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27166 invoked by uid 111); 19 Mar 2019 06:39:28 -0000
+Received: (qmail 27209 invoked by uid 111); 19 Mar 2019 06:47:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 19 Mar 2019 02:39:28 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 19 Mar 2019 02:47:35 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Mar 2019 02:39:05 -0400
-Date:   Tue, 19 Mar 2019 02:39:05 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Mar 2019 02:47:12 -0400
+Date:   Tue, 19 Mar 2019 02:47:12 -0400
 From:   Jeff King <peff@peff.net>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: how can i "gc" or "prune" objects related to a deleted remote?
-Message-ID: <20190319063904.GC31801@sigill.intra.peff.net>
-References: <alpine.LFD.2.21.1903081029510.25426@localhost.localdomain>
+To:     Mikko Rantalainen <mikko.rantalainen@peda.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Improve support for 'git config gc.reflogExpire never'
+Message-ID: <20190319064711.GD31801@sigill.intra.peff.net>
+References: <39a0796a-7220-1e81-e7fe-3bf7329ed7de@peda.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1903081029510.25426@localhost.localdomain>
+In-Reply-To: <39a0796a-7220-1e81-e7fe-3bf7329ed7de@peda.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 08, 2019 at 10:36:44AM -0500, Robert P. J. Day wrote:
+On Fri, Mar 08, 2019 at 10:27:11AM +0200, Mikko Rantalainen wrote:
 
->   as an example, i cloned the linux kernel source tree, then added
-> the linux-next repo as a remote -- the end result was two pack files
-> (the smaller one i'm assuming being for linux-next):
+> If I configure bare repo with
 > 
-> $ ls -l .git/objects/pack
-> total 2723632
-> -r--r--r--. 1 rpjday rpjday    1215376 Mar  8 09:44 pack-08cc266c0914e924961a1c8412fdf8746d327d7e.idx
-> -r--r--r--. 1 rpjday rpjday   38402840 Mar  8 09:44 pack-08cc266c0914e924961a1c8412fdf8746d327d7e.pack
-> -r--r--r--. 1 rpjday rpjday  204032716 Mar  8 09:42 pack-1036510bb74967c91093fc0cd8982683a66dbf5f.idx
-> -r--r--r--. 1 rpjday rpjday 2545333327 Mar  8 09:42 pack-1036510bb74967c91093fc0cd8982683a66dbf5f.pac
-> $
+> git config gc.pruneExpire never
+> git config gc.reflogExpire never
 > 
->   after playing with a couple branches from the new remote, i deleted
-> the remote, then also did things like clear the reflog, delete any
-> local tracking branches related to the deleted remote, and so on, but
-> i can't seem to prune the objects that should no longer be reachable
-> now that i deleted that remote.
+> then git will never garbage collect any commit ever stored in the repo.
+> This is what I want.
+> 
+> However, all commits referenced only via reflog are kept as loose
+> objects and will not be included in packs. In long run this will cause
+> 
+> warning: There are too many unreachable loose objects; run 'git prune'
+> to remove them.
+> 
+> and the performance of the repository will slowly decrease.
 
-After arriving at a similar state, I did:
+That's not what's supposed to happen. A normal git-gc (or directly
+running the "git repack" it spawns) should consider objects in reflogs
+reachable, and pack them as it would an object reachable from a ref.
+This has been the case since 63049292e0 (Teach git-repack to preserve
+objects referred to by reflog entries., 2006-12-18).
 
-  git remote rm linux-next
-  git tag -d next-20190319
-  git gc --prune=now
+Just to double check: are you sure you have reflogs? They're not enabled
+by default in bare repos.
 
-My guess is you forgot the tag? There's not a general solution there,
-because the tags all get intermingled. Git has no idea which ones came
-from which remote. However, if you have the commit id of an object you
-expect to be going away, you can use:
+Another thing that may surprise you is that deleting a branch will
+delete its reflog (and then the objects are unreachable, and may be
+exploded loose).
 
-  git for-each-ref --contains=$that_commit
+> If I have understood correctly, git should notice that reflog will keep
+> referenced commits forever and include all those commits in packs
+> instead of keeping those as loose forever.
 
-to see what's still pointing to it (even indirectly).
+Yes, that's what's supposed to happen. If you have a recipe for
+reproducing a case where it doesn't, I'd be curious to see it.
 
-Expiring the HEAD reflog is another frequently-forgotten thing, but in
-my case I had never actually checked out any branches. You should be
-able to do "git reflog expire --expire-unreachable=now --all" for that.
+> A more generic behavior might be to always compress all loose commits in
+> (one?) special pack so the performance would stay good even if
+> gc.reflogExpire is very long instead of "never".
 
->   what am i overlooking? is it because those objects are in a separate
-> pack file? do i need to repack first? what is hanging onto those
-> objects in that second pack file such that they can't be garbage
-> collected?
-
-The two packs shouldn't matter. The gc process works by repacking what's
-reachable, not including what's not, and then deleting the old packs.
+You can do "git repack -adk", which will keep all packed objects packed,
+and will suck up loose objects into the pack (and delete their loose
+counterparts). I don't think there's a convenient way to convince git-gc
+to do this when it runs "git repack", though. I think it would be a
+reasonable feature for it to have.
 
 -Peff
