@@ -7,99 +7,98 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AE1C20248
-	for <e@80x24.org>; Tue, 19 Mar 2019 03:56:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 992AF20248
+	for <e@80x24.org>; Tue, 19 Mar 2019 04:08:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727000AbfCSD4B (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Mar 2019 23:56:01 -0400
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:35316 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726884AbfCSD4A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Mar 2019 23:56:00 -0400
-Received: by mail-wm1-f41.google.com with SMTP id f8so281795wmh.0
-        for <git@vger.kernel.org>; Mon, 18 Mar 2019 20:55:59 -0700 (PDT)
+        id S1725966AbfCSEIy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 00:08:54 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38270 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725931AbfCSEIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 00:08:53 -0400
+Received: by mail-wr1-f67.google.com with SMTP id g12so19384773wrm.5
+        for <git@vger.kernel.org>; Mon, 18 Mar 2019 21:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Bl1y6PYOkjOOgEUp5Y2XNuGg95n5ZxtL8OlcMAzdiXA=;
-        b=gMuvpIxMliTZp8PF18vGiqkIWGx3kquO5C8+0VcXkA27QLWqmqjMm3wWjhEks9n6vU
-         Dmg7I2Qw25rEnxXPfrhvbuJRwDB4UNKSV2WgEiDZRigsLTIr4OeV3AE2y2YYkb4nCPHQ
-         4tma9S1s7HFZsEgoOT34JIxUDWZ35IyJcoZ8KPAQF9Oj53SU7XvB7FTh6dz5cKCKavdW
-         bFkw/cVDQNlejpF7Nna3HhrszPbT0kPKxdNKvqVWZ1qk7T3Ex/cGlP+isgiMmKMXkDz5
-         5sPmVHsbyMew/yebwCfhVcAb9TkEujD7FxUmmc03xgdG6JT/a2aXA9Ug9oBxF71YGyAu
-         6QHw==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=qsaDhqu4yDAxOGsqfjT40K/gwuAwGpCj6ZhfMsj0XS8=;
+        b=banBPOYxkxyCifc6GgMM0hgV0jVb+E7T2N/KPr3awHJ8zshzxzD3/7en/+7tyMToCB
+         73QuG1liQs8asLtIuF7XllKR0PUtEKwCcDW/Uh+af77SAGROk0QPSwzYx0LBqlGys66e
+         EbrUoZO2mcUFr0BfkCcBGS02LltmEKDt5+Kt9hND8tuWlcOvqXi5v3VYnBx+CoIclZJf
+         Wu0XIhFNJf2B/V6wRXCW/7UPFhdvMFbNuYHxgSXumspreeTKKJ4FO+Z7wtBNlEMtdqLD
+         AzQeBE0NfposaGlQ7yZAHVtcg90wpoBd4yT3mPBNsvpfrHpeVNtfJVnx1QNdRw3C3/fR
+         wKpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Bl1y6PYOkjOOgEUp5Y2XNuGg95n5ZxtL8OlcMAzdiXA=;
-        b=IvT3LlwjYZWoFxCBfkxPC+byPxteWDby09vQmSDQ3W8JTKpE39YSQTOWDsbVW95dUI
-         Aw12DC3F/NHYbn5x0PH0BV6WFHPP568yGQ1ErdNpyFFhIe1kl0K0Q+38eHWIbHytOsEj
-         RPeLOz7ZcRIbongR+QVZMSJloW9ulscbCO2Pr4msXRYotvX2oLZd6y4h/WbyDaUB0SNa
-         N17w4IVY4cjLLwMXQPnefXpzKMlkPkf+7pu54X9sEWVHKxScG3MEhWWxVwQeTgrDJleB
-         Q5gEe1k4YGMwKUAC6b3gx5kX4P3dOyETHOla4mOZvmOhIxcznHVNPU+loLwePEfPdogq
-         x0zg==
-X-Gm-Message-State: APjAAAXGsFYzxtkhLaGkgkD6NwQrgljESTKZJ7kgdA256y6Nrc5ZvZeQ
-        m2mq0uU96e3keIOtn6lYF/Q=
-X-Google-Smtp-Source: APXvYqwMMNiWaaYl0DpqVJOGnqEtGDYW3uursCpVWTBxvQ5Fq6KjV733m3VfAEZXE5ExHg/jT5gKsQ==
-X-Received: by 2002:a1c:751a:: with SMTP id o26mr1655082wmc.10.1552967757883;
-        Mon, 18 Mar 2019 20:55:57 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=qsaDhqu4yDAxOGsqfjT40K/gwuAwGpCj6ZhfMsj0XS8=;
+        b=DtbFUX7j9WUMFiXmRbTX0Z1VHJC5rYBVvhtO3seIUm8ucgVCaGgXOgii39XVuC/ox0
+         M2J9xXjGHRDlITFrwzg+QWfioCZ1mLemCJJW+T23PNF8tvqpbIF1r+irMpz0o/YyZQS1
+         SiJP36ljj4clNpHE0N5TMtOfuqkgIpxLayrWFp583SeitHKjjqNXOdBJJ0/ZDYNFmoQx
+         X7XOUtqR/3/BPVm4QgUlJXlGxLSDM6k+kKdwENGeRzKisWK6KfKdr+9Xr5fmdLduIlQt
+         YBjP8ER3g7wg5D88SYnvCBrj7Se22oBkqiSOTyo92Pbse8bmYR96+YnhDD4RX7IMCgSv
+         1bvg==
+X-Gm-Message-State: APjAAAWGbBPsEUBgOwaRJDWDxvB0N2ilBbwPWIPdAwZ/PJty8zmapQvJ
+        VjxL0tIMx4eD1S7P3cGEQSU=
+X-Google-Smtp-Source: APXvYqxcblt+jAf3L4VEm1SCSIJa4Tz4Ql0s5mgvE4YOG7rpA3yofO7BC0P4p8Q7mJKoLd9uZkDwwA==
+X-Received: by 2002:adf:ea82:: with SMTP id s2mr8529437wrm.302.1552968531775;
+        Mon, 18 Mar 2019 21:08:51 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id r15sm8676053wrt.37.2019.03.18.20.55.55
+        by smtp.gmail.com with ESMTPSA id m24sm646165wmi.46.2019.03.18.21.08.50
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 18 Mar 2019 20:55:55 -0700 (PDT)
+        Mon, 18 Mar 2019 21:08:50 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
-References: <20190317144747.2418514-1-martin.agren@gmail.com>
-        <20190319024645.GA6173@sigill.intra.peff.net>
-        <20190319025945.GB6173@sigill.intra.peff.net>
-Date:   Tue, 19 Mar 2019 12:55:54 +0900
-In-Reply-To: <20190319025945.GB6173@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 18 Mar 2019 22:59:46 -0400")
-Message-ID: <xmqqr2b3y0tx.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, dstolee@microsoft.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 2/3] midx: verify: group objects by packfile to speed up object verification
+References: <pull.166.git.gitgitgadget@gmail.com>
+        <86f6b0325821a9e1742a28895f9c9b712a1fdec4.1552919394.git.gitgitgadget@gmail.com>
+        <87pnqodvr9.fsf@evledraar.gmail.com>
+        <9c4da72d-6066-8d05-f181-a93c3926705f@jeffhostetler.com>
+        <87lg1bet9d.fsf@evledraar.gmail.com>
+Date:   Tue, 19 Mar 2019 13:08:50 +0900
+In-Reply-To: <87lg1bet9d.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 18 Mar 2019 23:02:06 +0100")
+Message-ID: <xmqqmulry08d.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> So in my mind, the endgame is that we eventually drop asciidoc in favor
-> of asciidoctor. The repo at:
+>>>> +	if (a->pack_int_id < b->pack_int_id)
+>>>> +		return -1;
+>>>> +	if (a->pack_int_id > b->pack_int_id)
+>>>> +		return 1;
+>>>> +
+>>>> +	return 0;
+>>>> +}
+>>> ...
+>>> succinct subtraction idiom of e.g. (in this case):
+>>>
+>>>      return b->pack_int_id - a->pack_int_id;
+>> ...
+>> On 43+M objects, your version is a hair faster, so I might
+>> as well take it instead.
 >
->   https://github.com/asciidoc/asciidoc
->
-> says:
->
->   NOTE: This implementation is written in Python 2, which EOLs in Jan
->   2020. AsciiDoc development is being continued under @asciidoctor.
+> Cool!
 
-;-)
+Yup, following a well-known short idiom lets readers' eyes coast
+over without forcing them to make sure the two if statements have
+comparison going in the right direction and return the constant with
+the right sign, etc.  Even if the idiomatic version weren't faster,
+it is worth using it.
 
-> I'm not sure when is the right time to switch. If we can get the output
-> at parity, I don't think asciidoctor is too onerous to install (and we
-> don't have to worry about ancient platforms, as they can use
-> pre-formatted manpages).
-
-One minor thing that bothers me abit is the continuity of the
-pre-formatted pages when I switch to asciidoctor to update them.
-
-I do not mind having to see a huge diff in the "git log -p" output
-run in pre-formatted manpages and htmldocs repositories at the
-boundary due to e.g. the differences how lines are broken or folded
-between the formatters, but by the time we have to transition, the
-efforts by you, Martin and friends to allow us compare the formatted
-docs would have made the real differences to empty (or at least
-negligible).  Knock knock...
-
-
-
+Thanks.
