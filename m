@@ -7,56 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EB5F20248
-	for <e@80x24.org>; Tue, 19 Mar 2019 19:03:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0FBF20248
+	for <e@80x24.org>; Tue, 19 Mar 2019 19:04:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727194AbfCSTD6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 15:03:58 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51476 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726939AbfCSTD5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 15:03:57 -0400
-Received: by mail-wm1-f65.google.com with SMTP id n19so18010672wmi.1
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 12:03:56 -0700 (PDT)
+        id S1727276AbfCSTD7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 15:03:59 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36263 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726939AbfCSTD7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 15:03:59 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y13so77855wrd.3
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 12:03:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:reply-to:mime-version
-         :content-transfer-encoding;
-        bh=haLSd780giagGzsLG9bJ42YJvPBIrmfMkmNcQzcU0Jw=;
-        b=tTzezcYsPa6f7X3UFfTtOe3GVKbhhINp34hiupA8JdvGj4FDhG9n3JqTBp5Atyw87d
-         6Ld2JpEMJ/F8p2TDwgEkSlKzS6xGa0kTfV3RdJJngKIWr1piSWRUpRVy3O3r+XgLjfAD
-         tp2niXq9f9c9o91UCEPbeQbESUt3K15LJWa2+JvC6aXSndyqNuWXsxvaOcCF2YzpVjyt
-         jJ48jsZAGRTuEmYdGIQCrcKZFnl5MvIv2AQcvTfBbbX7RJBE7Rta71xyjG6fiC6iycDj
-         WK7lJOlwz+oZ6Ne3ez7ffQy4Uiy+dlnzGc3Q9VrX5pW375GeI144dTjv/dQskRwBPOYR
-         I5XA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
+         :mime-version:content-transfer-encoding;
+        bh=HkPIJ3yLvj5KCd8MPgI6UYz23Hx72UDZ9ZecGFrVWUg=;
+        b=onH4Jb8VKx36p9t8dvnmHIhsWv+dFkI2ypDO3t65G8KEBT3Wa7VRxxSoDlw/m3Cg7M
+         7Me0YXheIktBlXvIT5bBtJ2kM4jLuCPl9a6EAe9F+GO8W2gHt5O5l/HOQ3bY40RdntsK
+         So+5ZOnbxlO/GEldrrID3Aolfp4P0zqwJqvr7Mw2Y2dA9jPiuFhBHPMU9LPZAVgZdjl4
+         I++1VXd5XCyjCO5W0Q/uDe8omM4e3n0yhkmvvArK3aDDrVPU1WnWONVoq3icvmG7K2Kx
+         kSnVmkr1JqRfA2qiSQxt2DBqpsG6bv+lviNe4sWVXT4ceScNOq9elGL2gjRt1UrHfEN/
+         KFSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :mime-version:content-transfer-encoding;
-        bh=haLSd780giagGzsLG9bJ42YJvPBIrmfMkmNcQzcU0Jw=;
-        b=KJN9tGTqY10wAgacMr82h1+HyaIigMqLnfsiz/JcdpHEUluPHwpMnM2gNEUStYCo/r
-         IIjg/1+m2vJMDWJkAdsyJet3EDNc4FXGQcsiq6OVsHU3GoxoRi8dO+dGkMq58Zlbvxlk
-         1t0n2zz923KaOs91CXrpNS+mP8VsMjGDi0zuW1BwrzfLYuj9N6VZfMOSi5jnmgz2yqo2
-         6docoRMVar6FmUsC04yv+4iIKqFPN4b7G5c84gmH/UlF4qgzuH020+CrB0MNoQ9dOfVp
-         eKxMPjZVeDP+uDG6/H2mrt7s2Wl/Iyg2b3gsFSIa6gB57E4c5/r+xNe0TIuo32GvUAun
-         1QDg==
-X-Gm-Message-State: APjAAAUJa+P+vbuy99lZfN7RoDmDn0UStgJRJ1RZqWwJTNX8JgFzztkB
-        4SAf6yQWUsM2i39S+my9r/7umf+pskc=
-X-Google-Smtp-Source: APXvYqxVEeYdEx2za6j+h5xcqnnTkx9EgPxjCcglexTHPf15Q7EtErjJTYecgvtSaH4YxnNMEyDX3g==
-X-Received: by 2002:a7b:cd82:: with SMTP id y2mr4665061wmj.121.1553022235471;
-        Tue, 19 Mar 2019 12:03:55 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:reply-to:mime-version:content-transfer-encoding;
+        bh=HkPIJ3yLvj5KCd8MPgI6UYz23Hx72UDZ9ZecGFrVWUg=;
+        b=dqWxqSn8O5L2Cdj2Qce8FbeRH5XmegFUEqCmweUL5za14B4LHGCcf+RADJ42vnCeFE
+         LITPlwVK87HLr730AuFnkc2HrVH397fc3zpTxj0c0PUdu7YYEnxSP3tpGCFEgv9uFMtS
+         /lewHe6Yupoojxf9Htv/HJWvUfc26udzoRI5HmRyMEOrrLahW4Qbwlq3s0M+M/Ol05jn
+         dayyVm3W3YE81pCv667kBaEXWia+ir2Q/Md65n7oclbOF14qw6+3/YBJSXrYE5X9u/CM
+         kbtLT/s3stZirVCU4gZyI48F1EpBcVhMjGf6rJDYxGvxvCh8KdpT9VravtyveWpSdNmd
+         oRDg==
+X-Gm-Message-State: APjAAAUbo6vVnTBFs1wyvPyPoCwjIhMobcwCrOgo00aBcTOshelLEWF2
+        /yWTlAAcXv0t+wOpWAtmEKgaRlNddhI=
+X-Google-Smtp-Source: APXvYqzliyWQezC6zfrF0eREnnbBuQGaYTtDmseWe7uybbnrEKfUgzKwxaivzE5VLQkW1PP2fBclGg==
+X-Received: by 2002:a5d:468d:: with SMTP id u13mr18172772wrq.132.1553022237344;
+        Tue, 19 Mar 2019 12:03:57 -0700 (PDT)
 Received: from lindisfarne.localdomain (host-89-242-184-133.as13285.net. [89.242.184.133])
-        by smtp.gmail.com with ESMTPSA id s187sm6253853wms.7.2019.03.19.12.03.54
+        by smtp.gmail.com with ESMTPSA id s187sm6253853wms.7.2019.03.19.12.03.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Mar 2019 12:03:54 -0700 (PDT)
+        Tue, 19 Mar 2019 12:03:56 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [RFC PATCH 00/11] rebase -i run without forking rebase--interactive
-Date:   Tue, 19 Mar 2019 19:03:06 +0000
-Message-Id: <20190319190317.6632-1-phillip.wood123@gmail.com>
+Subject: [RFC PATCH 02/11] rebase: rename write_basic_state()
+Date:   Tue, 19 Mar 2019 19:03:08 +0000
+Message-Id: <20190319190317.6632-3-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190319190317.6632-1-phillip.wood123@gmail.com>
+References: <20190319190317.6632-1-phillip.wood123@gmail.com>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,45 +69,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When the builtin rebase starts an interactive rebase it parses the
-options and then repackages them and forks `rebase--interactive`. This
-series refactors rebase--interactive so that interactive rebases can
-be started by the builtin rebase without forking. My motivation was to
-make it easier to debug the sequencer but this should help future
-maintainability.
+This clashes with a function in sequencer.c
 
-This series involves some code movement so viewing the diffs with
---color-moved is recommended.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ builtin/rebase.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-These patches are based on a merge of master [e902e9bcae ("The second
-batch", 2019-03-11)] and ag/sequencer-reduce-rewriting-todo ed35d18841
-("rebase--interactive: move transform_todo_file()", 2019-03-05). They
-can be fetched from the tag rebase-i-no-fork/rfc at
-https://github.com/phillipwood/git.git
-
-Phillip Wood (11):
-  sequencer: always discard index after checkout
-  rebase: rename write_basic_state()
-  rebase: use OPT_RERERE_AUTOUPDATE()
-  rebase -i: combine rebase--interactive.c with rebase.c
-  rebase -i: remove duplication
-  rebase -i: use struct commit when parsing options
-  rebase -i: use struct object_id for squash_onto
-  rebase -i: use struct rebase_options to parse args
-  rebase -i: use struct rebase_options in do_interactive_rebase()
-  rebase: use a common action enum
-  rebase -i: run without forking rebase--interactive
-
- Makefile                      |   1 -
- builtin/rebase--interactive.c | 377 --------------------
- builtin/rebase.c              | 625 ++++++++++++++++++++++++++--------
- parse-options-cb.c            |  34 ++
- parse-options.h               |   4 +
- sequencer.c                   |  42 ++-
- sequencer.h                   |   7 +-
- 7 files changed, 556 insertions(+), 534 deletions(-)
- delete mode 100644 builtin/rebase--interactive.c
-
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 52114cbf0d..b634879c5b 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -245,7 +245,7 @@ static int read_basic_state(struct rebase_options *opts)
+ 	return 0;
+ }
+ 
+-static int write_basic_state(struct rebase_options *opts)
++static int rebase_write_basic_state(struct rebase_options *opts)
+ {
+ 	write_file(state_dir_path("head-name", opts), "%s",
+ 		   opts->head_name ? opts->head_name : "detached HEAD");
+@@ -640,7 +640,7 @@ static int run_am(struct rebase_options *opts)
+ 	}
+ 
+ 	if (is_directory(opts->state_dir))
+-		write_basic_state(opts);
++		rebase_write_basic_state(opts);
+ 
+ 	return status;
+ }
 -- 
 2.21.0
 
