@@ -6,71 +6,85 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43CE9202BB
-	for <e@80x24.org>; Tue, 19 Mar 2019 06:27:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF44220248
+	for <e@80x24.org>; Tue, 19 Mar 2019 06:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726457AbfCSG1r (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 02:27:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56052 "HELO cloud.peff.net"
+        id S1726303AbfCSGjH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 02:39:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56080 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726020AbfCSG1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 02:27:47 -0400
-Received: (qmail 7206 invoked by uid 109); 19 Mar 2019 06:27:46 -0000
+        id S1726020AbfCSGjG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 02:39:06 -0400
+Received: (qmail 7943 invoked by uid 109); 19 Mar 2019 06:39:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Mar 2019 06:27:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Mar 2019 06:39:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27100 invoked by uid 111); 19 Mar 2019 06:28:08 -0000
+Received: (qmail 27166 invoked by uid 111); 19 Mar 2019 06:39:28 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 19 Mar 2019 02:28:08 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 19 Mar 2019 02:39:28 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Mar 2019 02:27:45 -0400
-Date:   Tue, 19 Mar 2019 02:27:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Mar 2019 02:39:05 -0400
+Date:   Tue, 19 Mar 2019 02:39:05 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 0/7] gc: minor code cleanup + contention fixes
-Message-ID: <20190319062745.GB31801@sigill.intra.peff.net>
-References: <20190313235439.30439-1-avarab@gmail.com>
- <20190314123439.4347-1-avarab@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: how can i "gc" or "prune" objects related to a deleted remote?
+Message-ID: <20190319063904.GC31801@sigill.intra.peff.net>
+References: <alpine.LFD.2.21.1903081029510.25426@localhost.localdomain>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190314123439.4347-1-avarab@gmail.com>
+In-Reply-To: <alpine.LFD.2.21.1903081029510.25426@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 14, 2019 at 01:34:32PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Fri, Mar 08, 2019 at 10:36:44AM -0500, Robert P. J. Day wrote:
 
-> Addresse Peff's comments to v1. For a couple of patches I've faked up
-> his SOB where I copy/pasted a comment or code from a v1 comment
-> verbatim. Will see if he acks that.
-
-Yep, for the record, those are fine (actually, I guess one of them got
-axed in v3).
-
-> The main change is a better commit message in the last patch (now
-> 7/7), and 2x new "reflog" patches to make it early exit in addition to
-> "gc" when there's nothing to do.
+>   as an example, i cloned the linux kernel source tree, then added
+> the linux-next repo as a remote -- the end result was two pack files
+> (the smaller one i'm assuming being for linux-next):
 > 
-> There was the "why do it at all in gc" feedback on 6/7 in v1. I've
-> adjusted the commit message there to justify it, but we'll see what
-> Peff things about it this time around...
+> $ ls -l .git/objects/pack
+> total 2723632
+> -r--r--r--. 1 rpjday rpjday    1215376 Mar  8 09:44 pack-08cc266c0914e924961a1c8412fdf8746d327d7e.idx
+> -r--r--r--. 1 rpjday rpjday   38402840 Mar  8 09:44 pack-08cc266c0914e924961a1c8412fdf8746d327d7e.pack
+> -r--r--r--. 1 rpjday rpjday  204032716 Mar  8 09:42 pack-1036510bb74967c91093fc0cd8982683a66dbf5f.idx
+> -r--r--r--. 1 rpjday rpjday 2545333327 Mar  8 09:42 pack-1036510bb74967c91093fc0cd8982683a66dbf5f.pac
+> $
+> 
+>   after playing with a couple branches from the new remote, i deleted
+> the remote, then also did things like clear the reflog, delete any
+> local tracking branches related to the deleted remote, and so on, but
+> i can't seem to prune the objects that should no longer be reachable
+> now that i deleted that remote.
 
-Even after reading your v3 reasoning, I still think it would probably be
-OK for git-reflog to treat the "never" case as a noop. But frankly it's
-not worth even spending any more brain cycles on. I can't imagine why
-somebody would bother to run "reflog expire" without any expiration,
-outside of git-gc.
+After arriving at a similar state, I did:
 
-The improved commit messages all made sense to me (including the NULL
-oid bits in the final one), with the exception of one nit I pointed out
-in one of the v3 messages.
+  git remote rm linux-next
+  git tag -d next-20190319
+  git gc --prune=now
+
+My guess is you forgot the tag? There's not a general solution there,
+because the tags all get intermingled. Git has no idea which ones came
+from which remote. However, if you have the commit id of an object you
+expect to be going away, you can use:
+
+  git for-each-ref --contains=$that_commit
+
+to see what's still pointing to it (even indirectly).
+
+Expiring the HEAD reflog is another frequently-forgotten thing, but in
+my case I had never actually checked out any branches. You should be
+able to do "git reflog expire --expire-unreachable=now --all" for that.
+
+>   what am i overlooking? is it because those objects are in a separate
+> pack file? do i need to repack first? what is hanging onto those
+> objects in that second pack file such that they can't be garbage
+> collected?
+
+The two packs shouldn't matter. The gc process works by repacking what's
+reachable, not including what's not, and then deleting the old packs.
 
 -Peff
