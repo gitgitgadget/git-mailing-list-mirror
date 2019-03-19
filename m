@@ -2,95 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B611B20248
-	for <e@80x24.org>; Tue, 19 Mar 2019 19:05:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9BC0202BB
+	for <e@80x24.org>; Tue, 19 Mar 2019 19:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727099AbfCSTFI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 15:05:08 -0400
-Received: from mail-pg1-f174.google.com ([209.85.215.174]:39613 "EHLO
-        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726944AbfCSTFI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 15:05:08 -0400
-Received: by mail-pg1-f174.google.com with SMTP id h8so14492066pgp.6
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 12:05:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=Mh7xovj3Ejr/v2zFNTvokgB9LhmMh18X5heiKOG+mOA=;
-        b=UHSicA76uc+0FVdb47Z8kNraJty4yUv/7AJLK2/FIGHEssI3IKErL5OvO6RbEP4Owg
-         6laDEWrvzrPNmawFIHVCPjSlRbEb1x5xwBj2+aASxQYuP9sU2ns0YFrpgL/SzKCiYDXs
-         5DVmkuE7bUVLeY6192Fx7r8ctDIkjL5psqJp2kBOQ9w0zWVzuk8Odav6u5pPabe/DbJv
-         zZJgn058/NjFy+ru1VBbqqkMsPZ9bx9MRnQFPlvMJ8EeIyNjyd46Ar1kKR1aCf1E0hGY
-         d1eubTofoDkhy3QlMKXeiTbeWixFvXzZ3JWW7IMS0gCL6WcEylHPvqx57fMzqFqIqkVr
-         /RiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Mh7xovj3Ejr/v2zFNTvokgB9LhmMh18X5heiKOG+mOA=;
-        b=UHNdUara7VP+0JY4GodDFi2HLaE3lGOJNqizg7Q6buKC3dyHCESOmlHi/4BAcy5Z0h
-         rRq8t62qwBs4W3pG0JQlmbym6sXmKNB1Yh2WVoLllymKkBOncP9u7v8jggFpjevnar08
-         T72I0ryNLRVs77fTcbgH7Rs0cveryp8zadj6InfTdfTeiYLFhCx87FNcztfazgb7hMGh
-         OUvrOonIvTi+cs1accwIhbSanBaWJJstHGKrrY6n25rbQYj4La4EjWIdQQM1ymjKc7do
-         JBsR7nQl6ybBLm6KSdZcdsxBMwjS5zDcZgbMrGs24Zy/Ws+EziflCSSw4My6cNlM4/UU
-         +GCQ==
-X-Gm-Message-State: APjAAAUg6YUwYheoD42WaHrvBnt9q5IuTG7w27m1BwyF+pDbiagUVtxr
-        DgR+taXUKufUzASfd7Dzb6vLwubHpaI=
-X-Google-Smtp-Source: APXvYqyHq3VMrx1vIVIto+Ly6rlkY132VaRtf0tA90ksH/s9dlRfZ6qvJy5wcT0m7f4ERNEAFzq75w==
-X-Received: by 2002:a17:902:15a8:: with SMTP id m37mr3816938pla.178.1553022307144;
-        Tue, 19 Mar 2019 12:05:07 -0700 (PDT)
-Received: from dev-l ([149.28.200.39])
-        by smtp.gmail.com with ESMTPSA id k83sm24422631pfj.178.2019.03.19.12.05.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Mar 2019 12:05:05 -0700 (PDT)
-Date:   Tue, 19 Mar 2019 12:05:03 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Joel Teichroeb <joel@teichroeb.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthew Kraai <mkraai@its.jnj.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [REGRESSION ps/stash-in-c] git stash show -v
-Message-ID: <20190319190503.GA10066@dev-l>
+        id S1726939AbfCSTxg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 15:53:36 -0400
+Received: from siwi.pair.com ([209.68.5.199]:27180 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726627AbfCSTxg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 15:53:36 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 477E13F4021;
+        Tue, 19 Mar 2019 15:53:35 -0400 (EDT)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 10D433F401E;
+        Tue, 19 Mar 2019 15:53:35 -0400 (EDT)
+Subject: Re: [PATCH v2 3/4] midx: verify: add midx packfiles to the packed_git
+ list
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     avarab@gmail.com, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.166.git.gitgitgadget@gmail.com>
+ <pull.166.v2.git.gitgitgadget@gmail.com>
+ <ced7f1cb3486885aef018d91fae37958282a351e.1553006268.git.gitgitgadget@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <e09812cf-5c9a-4829-9b6e-0cf8c4fb79c7@jeffhostetler.com>
+Date:   Tue, 19 Mar 2019 15:53:34 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
+ Thunderbird/66.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <ced7f1cb3486885aef018d91fae37958282a351e.1553006268.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
 
-I've been using jch's branch and I discovered a regression in
-ps/stash-in-c.
 
-Here's a test-case on git.git:
+On 3/19/2019 10:37 AM, Jeff Hostetler via GitGitGadget wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+> 
+> Fix "git multi-pack-index verify" to handle repos with thousands
+> of packfiles.
+> 
+> Midx verify adds the individual "packed_git" structures to the
+> multi_pack_index.packs array, but it does not add them to the
+> "repository.objects.packed_git" list.  During the verification
+> code, each packfile is opened and scanned.  And "pack_open_fds"
+> is incremented.  If "pack_open_fds" equals the "pack_max_fds"
+> open_packed_git_1() calls close_one_pack() to LRU-style close
+> an already open packfile.  But because the packfiles were never
+> added to the "packed_git" list, close_one_pack() does nothing.
+> If there are very many packfiles, Git runs out of file descriptors
+> and fails.
+> 
+> Note that this was observed on Windows when build with GCC and
+> in a repository with more than (2048-25) packfiles.
+> 
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>   midx.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/midx.c b/midx.c
+> index 24141a7c62..b2f33bcd90 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -975,6 +975,9 @@ int verify_midx_file(const char *object_dir)
+>   	for (i = 0; i < m->num_packs; i++) {
+>   		if (prepare_midx_pack(m, i))
+>   			midx_report("failed to load pack in position %d", i);
+> +
+> +		if (m->packs[i])
+> +			install_packed_git(the_repository, m->packs[i]);
+>   	}
+>   
+>   	for (i = 0; i < 255; i++) {
+> 
 
-	echo '/**/' >>abspath.c
-	git stash
-	git stash show -v
-	# I am expecting the diff to show up here
+I'd like to drop this commit from this series.
 
-I am expecting the diff to show up but in reality, I get no output.
-However, if I compile the latest master, the diff does show up.
+I talked with Stolee offline about this.  It does
+address the problem in this one instance, but it leads
+us to think about other places where there may be a
+similar problem.
 
-Note that I can get the patch to show up using "git stash show -p" so
-it's not really a showstopper. However, my understanding is that this
-was supposed to be a one-to-one (bug included!) port.
-
-Please let me know if we're keeping this behaviour so I can retrain my
-fingers.
+Also, the sort by packfile in the next commit in this
+series means we'll only have 1 packfile open at a time
+and so this commit isn't needed in this particular case.
 
 Thanks,
+Jeff
 
-Denton
