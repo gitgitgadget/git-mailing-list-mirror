@@ -2,180 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D58ED20248
-	for <e@80x24.org>; Tue, 19 Mar 2019 11:24:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A177620248
+	for <e@80x24.org>; Tue, 19 Mar 2019 11:29:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726743AbfCSLY6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 07:24:58 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53854 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726573AbfCSLY6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 07:24:58 -0400
-Received: by mail-wm1-f66.google.com with SMTP id e74so16185983wmg.3
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 04:24:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=j2xePvKOGmlQ0n3Zi1fEN5HJ3lOE1ak0NrMj+R4xkAY=;
-        b=HCJf/RKL5YeFnH28HV+QNIoJ2SQaJtLDw9xCNNkbBvZnKJMpg+smZ9aow1dTiz7h1F
-         IdBIA7DwWtzR11l8frD04IK3t6Xx0tHeqWbib0TEf1vMybgQubP0q6M6uK19NZNGuFyZ
-         yaEyaRsse2z+5ei1VL6D1ee3rzJGCTyEQMtdqfKEKnkZzSVbxX1d3E7XfqWpiugo15W9
-         3469gqXF5QHpNHunrAuthRgB1j89/xzrZeUQuAlLvt9I4TVEPTAPXoTbUm6+H+ObNfdT
-         7ZdDO9SyOt/sIRHgmhjKM5au4+qGpK1vCe3HFFgKm2e2ExRVT1HNU139dmMwZ+8Y0keO
-         5e4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=j2xePvKOGmlQ0n3Zi1fEN5HJ3lOE1ak0NrMj+R4xkAY=;
-        b=hXF+b7gM5JPAsXyIboHVbW8L22fh3oVP7OA+tQhgxf4VXPDfmUbVRYNYvTKi99sZdx
-         UcymCq3VnfWw/czX/ux3qS3RYhqsCNV8Co+HMgv4H+sRP6Twv7aU3Uh3WMJgUF/zZRGV
-         JBz6UNCRlBWCqaZYFwtmkylHmnknM+xGc/K1Bptj5N2R1ARxcVrvcAClrl1cpC3u279Z
-         G2A0uQpiuxiFgKPZEx8QmdASqE2ByvCk7SYaD6a16JJFFNo8zXMAMIqvbZExSiJEzIK+
-         xJzaWg0ETE140GeoVjM6McRolhuVpW/JEqDWdB8gmBjPpxU+BMEiDlL+PmgAQ9bSIyrk
-         8dNw==
-X-Gm-Message-State: APjAAAUZwS9AyLKh8h7WC6oLSdePHolasoPCy34ciXW0V/9+RiRNYDMq
-        MG8JUKa823rHvshPvlom7TIrBaVlaq4=
-X-Google-Smtp-Source: APXvYqz7jcbWcHXJCPX9BCR+cOkMnTPLYdusMw4dU4pWf9WNGgf6QcrUPJ1PT+d7FbFKD+976LtTtA==
-X-Received: by 2002:a1c:4105:: with SMTP id o5mr1771244wma.35.1552994696033;
-        Tue, 19 Mar 2019 04:24:56 -0700 (PDT)
-Received: from [192.168.2.240] (host-89-242-184-133.as13285.net. [89.242.184.133])
-        by smtp.gmail.com with ESMTPSA id y7sm2707965wmi.34.2019.03.19.04.24.54
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Mar 2019 04:24:55 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] checkout.txt: note about losing staged changes with
- --merge
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
-        phillip.wood@dunelm.org.uk, sunshine@sunshineco.com,
-        szeder.dev@gmail.com
-References: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
- <20190319093910.20229-1-pclouds@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <f9e3bd68-935c-3bca-6d06-66f51ba15451@gmail.com>
-Date:   Tue, 19 Mar 2019 11:24:53 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.3
+        id S1726712AbfCSL3S (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 07:29:18 -0400
+Received: from mail.javad.com ([54.86.164.124]:54630 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726244AbfCSL3S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 07:29:18 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 786113E9E8;
+        Tue, 19 Mar 2019 11:29:16 +0000 (UTC)
+Authentication-Results: mail.javad.com;
+        dkim=pass (1024-bit key; unprotected) header.d=javad.com header.i=@javad.com header.b=U1jcmwrv;
+        dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1552994956;
+        bh=IvQzC8g7hBItJ4Dv4Xdrd14K2UKyccDFRBNr/gS9XjM=; l=2944;
+        h=Received:From:To:Subject;
+        b=U1jcmwrv9H40sqTq1NrcJcOjRSlYcvMoseWEouGrzzQcSCKIPUk+aNyapXoNrrfLR
+         vypiL2Obqaggn7Pre7MN0BJFKaTch1uFr6oI8OYYG7OyxDa61W2fpVsWZbgl+7qRpE
+         2J9aNPwl82QIIiKlbS4p1UDimP3v0ZQypBpiO/9I=
+Authentication-Results: ip-172-31-2-110;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1h6Cvi-0008SD-LL; Tue, 19 Mar 2019 14:29:14 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] cherry-pick: do not error on non-merge commits when '-m 1' is specified
+References: <87efh0pdln.fsf@javad.com>
+        <xmqqsh5gt9sm.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 19 Mar 2019 14:29:14 +0300
+In-Reply-To: <xmqqsh5gt9sm.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 21 Jun 2018 08:54:17 -0700")
+Message-ID: <8736nj2jcl.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190319093910.20229-1-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy
+Hi Junio,
 
-On 19/03/2019 09:39, Nguyễn Thái Ngọc Duy wrote:
-> If you have staged changes in path A and perform 'checkout
-> --merge' (which could result in conflicts in a totally unrelated path
-> B), changes in A will be gone. Which is unexpected. We are supposed
-> to keep all changes, or kick and scream otherwise.
-> 
-> This is the result of how --merge is implemented, from the very first
-> day in 1be0659efc (checkout: merge local modifications while switching
-> branches., 2006-01-12):
-> 
-> 1. a merge is done, unmerged entries are collected
-> 2. a hard switch to a new branch is done, then unmerged entries added
->     back
-> 
-> There is no trivial fix for this. Going with 3-way merge one file at a
-> time loses rename detection. Going with 3-way merge by trees requires
-> teaching the algorithm to pick up staged changes. And even if we detect
-> staged changes with --merge and abort for safety, an option to continue
-> --merge is very weird. Such an option would keep worktree changes, but
-> drop staged changes.
-> 
-> Because the problem has been with us since the introduction of --merge
-> and everybody has been pretty happy (except Phillip, who found this
-> problem), I'll just take a note here to acknowledge it and wait for
-> merge wizards to come in and work their magic. There may be a way
-> forward [1].
-> 
-> [1] CABPp-BFoL_U=bzON4SEMaQSKU2TKwnOgNqjt5MUaOejTKGUJxw@mail.gmail.com
-> 
-> Reported-by: Phillip Wood <phillip.wood123@gmail.com>
+[It's been a while since this discussion, and recently I've got some
+thoughts and questions about "first-parent" issues in general, below.]
 
-I try to use phillip.wood@dunelm.org.uk for git stuff as it shouldn't 
-change in the future.
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->   This is my "fix" for Phillip's second problem. I chose to reply here
->   because this is where an actual fix was discussed. The test script to
->   demonstate it is here
-> 
->   https://public-inbox.org/git/7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com/
-> 
->   Documentation/git-checkout.txt | 2 ++
->   builtin/checkout.c             | 9 +++++++++
->   2 files changed, 11 insertions(+)
-> 
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> index f179b43732..877e5f503a 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -242,6 +242,8 @@ should result in deletion of the path).
->   +
->   When checking out paths from the index, this option lets you recreate
->   the conflicted merge in the specified paths.
-> ++
-> +When switching branches with `--merge`, staged changes may be lost.
->   
->   --conflict=<style>::
->   	The same as --merge option above, but changes the way the
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 0e6037b296..f95e7975f7 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -726,6 +726,8 @@ static int merge_working_tree(const struct checkout_opts *opts,
->   			struct tree *result;
->   			struct tree *work;
->   			struct merge_options o;
-> +			struct strbuf sb = STRBUF_INIT;
-> +
->   			if (!opts->merge)
->   				return 1;
->   
-> @@ -736,6 +738,13 @@ static int merge_working_tree(const struct checkout_opts *opts,
->   			if (!old_branch_info->commit)
->   				return 1;
->   
-> +			if (repo_index_has_changes(the_repository,
-> +						   get_commit_tree(old_branch_info->commit),
-> +						   &sb))
-> +				warning(_("staged changes in the following files may be lost: %s"),
-> +					sb.buf);
-> +			strbuf_release(&sb);
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> When cherry-picking multiple commits, it's impossible to have both
+>> merge- and non-merge commits on the same command-line. Not specifying
+>> '-m 1' results in cherry-pick refusing to handle merge commits, while
+>> specifying '-m 1' fails on non-merge commits.
+>
+> Allowing "-m1" even when picking a single parent commit, because
+> the 1-st parent is defined for such a commit, makes sense, espeially
+> when running a cherry-pick on a range, exactly for the above reason.
+> It is slightly less so when cherry-picking a single commit, but not
+> by a large margin.
+>
+> I think the original reasoning for requiring "-m $n" not present,
+> especially because cherry-pick was originally for replaying only a
+> single commit, was because it would lead somebody to propose that
+> the command should behave as if -m1 is always given (and when trying
+> to cherry-pick a merge relative to its second parent, give -m2 to
+> override it), which in turn encourage the 'first-parent is special'
+> world-view from the tool-side.  IOW, "The worldview to treat the
+> first-parent chain specially is correct, because Git has many
+> features to work with that worldview conveniently" was something we
+> wanted to avoid; rather "Such and such workflows benefit from
+> treating the first-parent chain specially, so let's add features to
+> do so" was we wanted to do, and of course, back then cherry-pick
+> that allows mixture of merges and single-parent commits to be
+> picked, which would have made the need to do something like this
+> patch does felt greater, did not exist.
+>
+> Now, it appears, at least to me, that the world pretty much accepted
+> that the first-parent worldview is often very convenient and worth
+> supporting by the tool, so the next logical step might be to set
+> opts->mainline to 1 by default (and allow an explicit "-m $n" from
+> the command line to override it).  But that should happen after this
+> patch lands---it is logically a separate step, I would think.
 
-Thanks for doing this, I think having some sort of warning is a good 
-idea, I wonder if this could be quite noisy though. I guess it depends 
-on how many staged changes people have that don't match the new index. 
-If we diff against the new tree and only print names that are in both 
-lists does that give a definitive list of what will be lost? If it does 
-then if there are a lot of files affected then it will still be noisy 
-(using columns may help) but at least it will not contain false 
-positives. It is more work though, maybe we should just say "staged 
-changes may be lost" and leave it at that.
+I think that "first-parent is special" is the way to go indeed for
+porcelain, as it does make many thing easier and more convenient[*].
 
-Best Wishes
+Is there a road-map already outlined in that direction, I wonder?
 
-Phillip
+OTOH, for plumbing, it's rather keeping the original pure-DAG
+"symmetrical merges" approach that seems to be the right thing to do.
 
-> +
->   			/* Do more real merge */
->   
->   			/*
-> 
+[*] One example that immediately comes to mind is "git log -p" for a
+merge commit. I doesn't currently (as of v2.10) show the first-parent
+diff, for whatever reason. "git log -p -m --first-parent" is needed to
+get the answer to most "obvious" question: what (merge) commit did to my
+mainline? "git show" has its own issues.
+
+-- Sergey
