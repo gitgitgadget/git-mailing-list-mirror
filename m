@@ -2,127 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2B1920248
-	for <e@80x24.org>; Tue, 19 Mar 2019 16:43:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55FC420248
+	for <e@80x24.org>; Tue, 19 Mar 2019 17:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727336AbfCSQnI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 12:43:08 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54398 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbfCSQnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 12:43:08 -0400
-Received: by mail-wm1-f66.google.com with SMTP id f3so17751706wmj.4
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 09:43:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8PG93EVjaFD57i+bT/7PoUMCX216p9KFTee+1LPzuMc=;
-        b=TwxKx1m4mzmPjLxdHrvxOxg0Zi58szELXmzfrb5C32ZYiojXmA0+3dN7hUvRZ0FHGK
-         8i3p6bsWRGgTVThYcSDgZXipc9zITgdRZfdO09MZkQLYwLQkw/EC0lHHbx3ABxABPzvN
-         5+CbOpVa0VXTrVRM+JXPAzt1MLaj2OYPn3AfGcgYPvNZdSOg00SUpd6KDG2/PnKZ1tYb
-         18znPQrcYlvhMA3vs4ABM4Lb0Ew9ObvMqBz9zh2REATllBkL2RhGewbJwtTv/KrnOWNy
-         6BGXZlbtaomySRMzF/9wQNaQjjG3nxkOyqHm4onHaOWnZ0OkIGnvgVFtCQlOtbifvBcP
-         m44g==
-X-Gm-Message-State: APjAAAVMDPUUx+81T3NnMCb1wsO+US89fhVb6fBf+OoaL/3O2M2uwzmH
-        Mik/jwJ2rpUua1jHbT9woW22evAu5yzkoKJAaTI=
-X-Google-Smtp-Source: APXvYqwnXi+w5gDm07O8TrjqOvhzpX5zchooR4L+LEl5wZVRetRU0kP8vxuCl/vIXUD4dV5yuJTcGDfvzkINLyLzcIU=
-X-Received: by 2002:a1c:e185:: with SMTP id y127mr3170819wmg.76.1553013785198;
- Tue, 19 Mar 2019 09:43:05 -0700 (PDT)
+        id S1727069AbfCSRNz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 13:13:55 -0400
+Received: from mout.web.de ([217.72.192.78]:54147 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726612AbfCSRNy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 13:13:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1553015629;
+        bh=gwqBxoTsMLy7PFQwN0eRMwYAOcWCvN7nXzs401HBV+A=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=M38Ffo6bZ3s+0aiVeTmvcMDWvLgqIl+IvZCu1ywu4D+4aDP5g6tkiq56/eDH4Igem
+         3KNRgRI8ZxXiN/gHd9wKrNnNzNFmEZnwf9d5pHSl17zagop5K/wkVYcCp8+m/chFcK
+         CyxMOHra6J1S9dvmH6yjTHZ/e653cvPEYtfm0vrc=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost.localdomain ([195.198.252.176]) by smtp.web.de
+ (mrweb101 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0LlWKh-1gYbus10AZ-00bLUg; Tue, 19 Mar 2019 18:13:49 +0100
+From:   tboegi@web.de
+To:     git@vger.kernel.org, jeffhost@microsoft.com, mwelinder@gmail.com
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2 1/1] trace2: NULL is not allowed for va_list
+Date:   Tue, 19 Mar 2019 17:13:46 +0000
+Message-Id: <20190319171347.7677-1-tboegi@web.de>
+X-Mailer: git-send-email 2.19.1.593.gc670b1f876
+In-Reply-To: <20190316104616.27085-1-tboegi@web.de>
+References: <20190316104616.27085-1-tboegi@web.de>
 MIME-Version: 1.0
-References: <pull.166.git.gitgitgadget@gmail.com> <pull.166.v2.git.gitgitgadget@gmail.com>
- <e1da1f84a85165703e3b6be4a240bd36d62b4b01.1553006268.git.gitgitgadget@gmail.com>
-In-Reply-To: <e1da1f84a85165703e3b6be4a240bd36d62b4b01.1553006268.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 19 Mar 2019 12:42:54 -0400
-Message-ID: <CAPig+cTC0AmJyU7D=f9VAGOOwJpk+aMe95MDqiiCqMdU5-kk+A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] progress: add sparse mode to force 100% complete message
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YT+YGZtjTdVRQGXl6GSpi0j9gf5Rr3enCI7fjSLS9r3+HaLD+wC
+ qwXqVQEcY8N7ReUV+dDnQEjoksBBbZy9DdfZElSgMFaQIfczGSpe9QVGNSAmz0RVuEDicFc
+ 3SspsiwtlzJLnV5XpET8e1/lvjWorJ067igYjxVYyNm+AdWFiNPIpoUVAkVxP/49hyJsm2k
+ Hg8UP8O4/vYnSUcBjQSVw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:oXCMxvCbXk4=:TxwE9Ts5FToFraVMooyQB2
+ Cn/Q1qRHYyhYLCUstZ3oJtEmYb1lpxx22H0HnR3NLqrmk3g3YqWBtacBzXkDtXeXwHN4+ntuG
+ KFvQACUOBu28783Dh/ac+KyjzgIX80Y9WhiQkmzIu9/XHPsdD8Oj52oj7tpQ1N3Bl1j2CnX6n
+ ACpaQ0Bm1vB+2dWgmLB/zsHAwxQpmaEZ/CwC5t1/qFr12vrxQHQPYTZNtJrGvNWRFG6HZabI4
+ v9Ma8h0E8RvZWel4vFKUL1dTs+g3+cmY6sD2Z8P/bBijUKbAAmvvfBDnHxcOfEGMzX/eI4JYt
+ N+SbMDkboe23cbOANVOYvuNnjRayXUZMPyzhd4qgd4ryGZazEb7SD/pQsUUhaJ2NPNLOstFzu
+ Qn1r6DpeDF2VH0xFWNJXyqfvAckpINWOySAWyDHyOUbe3QwRgskLXNkXmZMjHnY7VmdwUhxq2
+ +lNEGxIEMTehGEczCdpl2gLh6Hf1+rU3ioWPcg+XQFmFY5BRPywHEbl0+cpyv2AiY6jbhKNQS
+ /uAQBTiBo1o7hsjyDRTuFt1QYWwlijPDDPePfvM656dD8hJc2gyynX6nPYPniA6OhZMNqhWSG
+ Sn8MsDrl+R5GO+L2Crtd8KZbmb4ZxFY6d4PelhGGGm1kAcgrJb6Hx6CaZhWTQr3NP7M5lHqLQ
+ MIXJ0B//MjxSCoeakkvpfx6u4+6LrFVeNhRKtbecqUz53fBNgHt/HTniS0Cnybfhk3kPVrUhX
+ 6tAUsce7bCAYCCfz4aMTMdIAQt7WTlRn76vjUzbkHUq7PtwcBNIcf8v1NyEzfMbOmBSQIVztX
+ xbVjuG8KS6SwTuOMAyoZ/z5DuIA9Jerh/S33Ay5+4b32/vFg9X6hu16dXtE9wEVcsskwba2el
+ qRFBPaX+puzghaIaR6zyrKIzCdDY3/5o5d8Gq0GAn1tOdia1UuitigoY8k4usa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 19, 2019 at 10:37 AM Jeff Hostetler via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Add new start_sparse_progress() and start_delayed_sparse_progress()
-> constructors and "sparse" flag to struct progress.
->
-> Teach stop_progress() to force a 100% complete progress message before
-> printing the final "done" message when "sparse" is set.
->
-> Calling display_progress() for every item in a large set can
-> be expensive.  If callers try to filter this for performance
-> reasons, such as emitting every k-th item, progress would
-> not reach 100% unless they made a final call to display_progress()
-> with the item count before calling stop_progress().
->
-> Now this is automatic when "sparse" is set.
->
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
-> diff --git a/progress.c b/progress.c
-> +/*
-> + * Here "sparse" means that the caller might use some sampling criteria to
-> + * decide when to call display_progress() rather than calling it for every
-> + * integer value in[0 .. total).  In particular, the caller might not call
-> + * display_progress() for the last value in the range.
-> + *
-> + * When "sparse" is set, stop_progress() will automatically force the done
-> + * message to show 100%.
-> + */
-> +static void finish_if_sparse(struct progress **p_progress)
-> +{
-> +       struct progress *progress = *p_progress;
-> +
-> +       if (progress &&
-> +           progress->sparse &&
-> +           progress->last_value != progress->total)
-> +               display_progress(progress, progress->total);
->  }
+From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-There's no reason for this function to take a 'struct progress **'
-rather than the simpler 'struct progress *', and doing so just
-confuses the reader.
+Some compilers don't allow NULL to be passed for a va_list,
+and e.g. "gcc (Raspbian 6.3.0-18+rpi1+deb9u1) 6.3.0 20170516"
+errors out like this:
+ trace2/tr2_tgt_event.c:193:18:
+   error: invalid operands to binary &&
+   (have =E2=80=98int=E2=80=99 and =E2=80=98va_list {aka __va_list}=E2=80=
+=99)
+    if (fmt && *fmt && ap) {
+                       ^^
+I couldn't find any hints that va_list and pointers can be mixed,
+and no hints that they can't either. Morten Welinder comments:
 
->  void stop_progress(struct progress **p_progress)
->  {
-> +       finish_if_sparse(p_progress);
-> +
->         stop_progress_msg(p_progress, _("done"));
->  }
+"C99, Section 7.15, simply says that va_list "is an object type suitable f=
+or
+holding information needed by the macros va_start, va_end, and
+va_copy". So clearly not guaranteed to be mixable with pointers...
 
-Rather than adding a new "sparse" mode, I wonder if this entire
-concept can be boiled down to a single new function:
+The portable solution is to use "va_list" everywhere in the callchain.
+As a consequence, both trace2_region_enter_fl() and trace2_region_leave_fl=
+()
+now take a variable argument list.
 
-    void finish_progress(struct progress **p_progress, const char *msg)
-    {
-        struct progress *progress = *p_progress;
-        if (progress && progress->last_value != progress->total)
-            display_progress(progress, progress->total);
-        if (msg)
-            stop_progress_msg(p_progress, msg);
-        else
-            stop_progress(p_progress);
-    }
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+=2D--
+ trace2.c                | 15 +++++++++++----
+ trace2.h                |  4 ++--
+ trace2/tr2_tgt_event.c  |  2 +-
+ trace2/tr2_tgt_normal.c |  2 +-
+ trace2/tr2_tgt_perf.c   |  2 +-
+ 5 files changed, 16 insertions(+), 9 deletions(-)
 
-without having to make any other changes to the implementation or add
-a new field to the structure. It would mean, though, that the caller
-would have to remember to invoke finish_progress() rather than
-stop_progress(). Which leads one to wonder why this functionality is
-needed at all since it's easy enough for a caller to make the one
-extra call to simulate this:
+diff --git a/trace2.c b/trace2.c
+index ccccd4ef09..8bbad56887 100644
+=2D-- a/trace2.c
++++ b/trace2.c
+@@ -548,10 +548,14 @@ void trace2_region_enter_printf_va_fl(const char *fi=
+le, int line,
+ }
 
-    /* client code */
-    if (progress)
-        display_progress(progress, progress->total);
-    stop_progress(&progress);
+ void trace2_region_enter_fl(const char *file, int line, const char *categ=
+ory,
+-			    const char *label, const struct repository *repo)
++			    const char *label, const struct repository *repo, ...)
+ {
++	va_list ap;
++	va_start(ap, repo);
+ 	trace2_region_enter_printf_va_fl(file, line, category, label, repo,
+-					 NULL, NULL);
++					 NULL, ap);
++	va_end(ap);
++
+ }
+
+ void trace2_region_enter_printf_fl(const char *file, int line,
+@@ -621,10 +625,13 @@ void trace2_region_leave_printf_va_fl(const char *fi=
+le, int line,
+ }
+
+ void trace2_region_leave_fl(const char *file, int line, const char *categ=
+ory,
+-			    const char *label, const struct repository *repo)
++			    const char *label, const struct repository *repo, ...)
+ {
++	va_list ap;
++	va_start(ap, repo);
+ 	trace2_region_leave_printf_va_fl(file, line, category, label, repo,
+-					 NULL, NULL);
++					 NULL, ap);
++	va_end(ap);
+ }
+
+ void trace2_region_leave_printf_fl(const char *file, int line,
+diff --git a/trace2.h b/trace2.h
+index ae5020d0e6..b330a54a89 100644
+=2D-- a/trace2.h
++++ b/trace2.h
+@@ -238,7 +238,7 @@ void trace2_def_repo_fl(const char *file, int line, st=
+ruct repository *repo);
+  * on this thread.
+  */
+ void trace2_region_enter_fl(const char *file, int line, const char *categ=
+ory,
+-			    const char *label, const struct repository *repo);
++			    const char *label, const struct repository *repo, ...);
+
+ #define trace2_region_enter(category, label, repo) \
+ 	trace2_region_enter_fl(__FILE__, __LINE__, (category), (label), (repo))
+@@ -278,7 +278,7 @@ void trace2_region_enter_printf(const char *category, =
+const char *label,
+  * in this nesting level.
+  */
+ void trace2_region_leave_fl(const char *file, int line, const char *categ=
+ory,
+-			    const char *label, const struct repository *repo);
++			    const char *label, const struct repository *repo, ...);
+
+ #define trace2_region_leave(category, label, repo) \
+ 	trace2_region_leave_fl(__FILE__, __LINE__, (category), (label), (repo))
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index 107cb5317d..1cf4f62441 100644
+=2D-- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -190,7 +190,7 @@ static void fn_atexit(uint64_t us_elapsed_absolute, in=
+t code)
+ static void maybe_add_string_va(struct json_writer *jw, const char *field=
+_name,
+ 				const char *fmt, va_list ap)
+ {
+-	if (fmt && *fmt && ap) {
++	if (fmt && *fmt) {
+ 		va_list copy_ap;
+ 		struct strbuf buf =3D STRBUF_INIT;
+
+diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+index 547183d5b6..1a07d70abd 100644
+=2D-- a/trace2/tr2_tgt_normal.c
++++ b/trace2/tr2_tgt_normal.c
+@@ -126,7 +126,7 @@ static void fn_atexit(uint64_t us_elapsed_absolute, in=
+t code)
+ static void maybe_append_string_va(struct strbuf *buf, const char *fmt,
+ 				   va_list ap)
+ {
+-	if (fmt && *fmt && ap) {
++	if (fmt && *fmt) {
+ 		va_list copy_ap;
+
+ 		va_copy(copy_ap, ap);
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index f0746fcf86..2a866d701b 100644
+=2D-- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -211,7 +211,7 @@ static void fn_atexit(uint64_t us_elapsed_absolute, in=
+t code)
+ static void maybe_append_string_va(struct strbuf *buf, const char *fmt,
+ 				   va_list ap)
+ {
+-	if (fmt && *fmt && ap) {
++	if (fmt && *fmt) {
+ 		va_list copy_ap;
+
+ 		va_copy(copy_ap, ap);
+=2D-
+2.21.0.135.g6e0cc67761
+
