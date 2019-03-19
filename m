@@ -2,90 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45C7A20248
-	for <e@80x24.org>; Tue, 19 Mar 2019 23:15:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 888CA20248
+	for <e@80x24.org>; Tue, 19 Mar 2019 23:18:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726823AbfCSXPG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 19:15:06 -0400
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:46758 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726686AbfCSXPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 19:15:05 -0400
-Received: by mail-ot1-f46.google.com with SMTP id c18so379597otl.13
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 16:15:05 -0700 (PDT)
+        id S1727437AbfCSXSf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 19:18:35 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39188 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726801AbfCSXSb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 19:18:31 -0400
+Received: by mail-wm1-f68.google.com with SMTP id t124so18150320wma.4
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 16:18:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=W85cQ7/ov1+Di9wfS92F/C3JhL4sY9NSMnWV4MY8rVg=;
-        b=I3TOcBGw069z8YvLBn1JF0BJbGsAd+SUlwYBbO4Bc2a0B52pUFy8viG4GVlMuG87nj
-         6gTYfLYgYF1AH4sCCC4HxxlbCeA2zgh1BjKzamQlS/o4t3Pv4WYExvJPRoFmzWVeOgvy
-         hMrlGOVf5K1FmwJ3tlpeSRElBhHKTTU7Z+CD4=
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jL+aE75tbgp2mS0xNX0zhH5pwCJ+hbPMQpFb0tXuDa4=;
+        b=J2Zamhb471XGI/GWjkI12zjS3oQ9t6Ou/SEXhYd3p18tvndfwpRq2dARDFcyKNfOvV
+         Ub2P7b3JqLM+eY271/QdTPJnzzIFWhoC4sg17ZrURNIodQJ62S1Wrm9uLgLrdG3Hm6/X
+         a6+ph/HbEMU6IN5Gziag4QFdcvf3Lq5Xq/hE3hryV0cS/GK18m6PCVtGRfqNRJ53VVZz
+         X1/OGK0lkcsq5JUtmKnITLST5WHFlaopD+9IjmTtdT08p46oHwF340H+x6iwfJoDB05T
+         ZhV1mjtCMqYvtlTPQE/aIGm/gWr9edqykLVHppYVgKhLtUSW+f9zPPUOEJt9iRdPTp+a
+         T/Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=W85cQ7/ov1+Di9wfS92F/C3JhL4sY9NSMnWV4MY8rVg=;
-        b=GbH//FDm8ULq/Y+eXfkGXvJNnhFrBINIJtaPFOsOs086XthYkrBfs6b2o2778oA1bm
-         Olw+IYmsaQuXv5zpzng/gQwJ2QboA2goELK+VKjcDkPJDjC2FPw74Fmum1LOPPXxK8NN
-         ZOdbTtesGOGv9TzGi/rMGbPcCYxFu9xiFy7vt9AuUevJO/FGQC/UmzVGq17Yb61MzOo0
-         Y/Lk4ONvUMo8vy5CYdUore10ZDjHb21QjSFddJD8KExXQlyZQ0X4xi77Y9lATj8vux5E
-         Gi0MVrx5uhDdX9b3NrR+7JWrrJ2aG6grBXtX70/exWFMwbJnxU4IQvATOxHMPoi0xG2b
-         6e9A==
-X-Gm-Message-State: APjAAAUQ9PiD2AqqWuKRbY8GjN2Hht3W3a5ofgu/a50wLYuQPr/AIVsE
-        BNj1cm7b0xbbRwrTYxISD+4Xy1TOH8A=
-X-Google-Smtp-Source: APXvYqwi1whDCjq5knLpL/NnVdfOUHiUkmRd8BPz4vFJ+U2EIsgJHZNb8EKV2f4dLFSDIDjwEHwYFA==
-X-Received: by 2002:a9d:64d2:: with SMTP id n18mr3536170otl.183.1553037304654;
-        Tue, 19 Mar 2019 16:15:04 -0700 (PDT)
-Received: from localhost (172-126-240-27.lightspeed.irvnca.sbcglobal.net. [172.126.240.27])
-        by smtp.gmail.com with ESMTPSA id h68sm169451otb.1.2019.03.19.16.15.03
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jL+aE75tbgp2mS0xNX0zhH5pwCJ+hbPMQpFb0tXuDa4=;
+        b=TZkgaus8o9QdbXgKAxksQRLYwPWWjyyLx5mnMID25XeB5Fl/LOpCR9DevRsUtEvG8I
+         O5K2MzKBTnbql96bWSZd1vd72yEwbiGdgPeohpIbMLxEEK58ix0fZw88GeiSrpd7p5Hi
+         ypPGhws4roxtiLOu66GvB7iSxUobwNU3HDqmtxn2WoHLwbj/iI96nIbg5Nawdu74Z2cz
+         0ywagAEbJX5Mt2ilqqPfLPjb6YgcI6NiGcut5KRmuHopxaupuwsSXunA4CsbzEOxHwW7
+         CW4EcFu+Q/JJqzdF0is/t49aPwoc9HF96rj1MMcqchlhopp3nyUrO+Svx+09TF2j/ORI
+         K9+Q==
+X-Gm-Message-State: APjAAAVoNtHiEDtndEyoIIk0TEwQHYMDrVzB5FEU0vVEJLJMvsUHCkaH
+        wjPe42BwXkLmdOkP0ismXFw=
+X-Google-Smtp-Source: APXvYqxkDzRX8npWUlj08e9nevbNAnZq6aZsopgalywQmqT2T5QIKXjqSTYFo8GQSDTC9GNzpI/D0g==
+X-Received: by 2002:a7b:c111:: with SMTP id w17mr5833089wmi.6.1553037509475;
+        Tue, 19 Mar 2019 16:18:29 -0700 (PDT)
+Received: from localhost ([31.127.45.89])
+        by smtp.gmail.com with ESMTPSA id r4sm167153wrw.79.2019.03.19.16.18.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Mar 2019 16:15:03 -0700 (PDT)
-Date:   Tue, 19 Mar 2019 16:15:01 -0700
-From:   Dave Huseby <dhuseby@linuxfoundation.org>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH 1/1] t/lib-gpg.sh: fix GPG keyring import options
-Message-ID: <20190319231501.2dh4j3asns3e7gqz@localhost>
+        Tue, 19 Mar 2019 16:18:27 -0700 (PDT)
+Date:   Tue, 19 Mar 2019 23:18:26 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Joel Teichroeb <joel@teichroeb.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matthew Kraai <mkraai@its.jnj.com>
+Subject: Re: [REGRESSION ps/stash-in-c] git stash show -v
+Message-ID: <20190319231826.GB32487@hank.intra.tgummerer.com>
+References: <20190319190503.GA10066@dev-l>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <20190319190503.GA10066@dev-l>
+User-Agent: Mutt/1.11.3 (2019-02-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix the way GPG keyrings are imported during testing to prevent GPG from 
-prompting for approval to change the default config. This appears to have no
-adverse affects on GPG users with "normal" configurations but fixes the
-always-interactive prompting I see with my multi-keyring setup.
+On 03/19, Denton Liu wrote:
+> Hi all,
+> 
+> I've been using jch's branch and I discovered a regression in
+> ps/stash-in-c.
+> 
+> Here's a test-case on git.git:
+> 
+> 	echo '/**/' >>abspath.c
+> 	git stash
+> 	git stash show -v
+> 	# I am expecting the diff to show up here
+> 
+> I am expecting the diff to show up but in reality, I get no output.
+> However, if I compile the latest master, the diff does show up.
+> 
+> Note that I can get the patch to show up using "git stash show -p" so
+> it's not really a showstopper. However, my understanding is that this
+> was supposed to be a one-to-one (bug included!) port.
 
-Signed-off-by: Dave Huseby <dhuseby@linuxfoundation.org>
+Yes, I think this is indeed a regression, even if it worked more or
+less accidentally.  '-v' would just be passed through to 'git diff'
+which wouldn't do anything with it.  It would show the patch because
+that's the default behaviour of 'git diff'.
+
+From a quick search I couldn't find where 'git diff' actually parses
+the '-v' argument, but I wonder if we should actually disallow it, in
+case we want to use it for something else in the future?  It's not
+documented anywhere in the docs either.
+
+Anyway a patch to fix this is below, as we should have some
+deprecation plan if we wanted to get rid of the '-v', and not just
+silently change the behaviour.
+
+--- >8 ---
+Subject: [PATCH] stash: setup default diff output format if necessary
+
+In the scripted 'git stash show' when no arguments are passed, we just
+pass '--stat' to 'git diff'.  When any argument is passed to 'stash
+show', we no longer pass '--stat' to 'git diff', and pass whatever
+flags are passed directly through to 'git diff'.
+
+By default 'git diff' shows the patch output.  So when we a user uses
+'git stash show -v', they would be shown the diff, because that's the
+default behaviour of 'git diff', but not actually directly triggered
+by passing the '-v'.
+
+In the C version of 'git stash show', we try to emulate that
+behaviour using the internal diff API.  However we forgot to set up
+the default output format, in case it wasn't set by any of the flags
+that were passed through.  So 'git stash show -v' in the builtin
+version of stash would be completely silent, while it would show the
+diff before.
+
+Fix this by setting up the default output format for 'git diff'.
+
+Reported-by: Denton Liu <liu.denton@gmail.com>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- t/lib-gpg.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/stash.c  |  4 ++++
+ t/t3903-stash.sh | 18 ++++++++++++++++++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index 8d28652b72..4f3675f410 100755
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -32,8 +32,8 @@ then
- 		GNUPGHOME="$(pwd)/gpghome" &&
- 		export GNUPGHOME &&
- 		(gpgconf --kill gpg-agent >/dev/null 2>&1 || : ) &&
--		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import \
--			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
-+		gpg --import-options merge-only --homedir "${GNUPGHOME}" 2>/dev/null \
-+      --import "$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
- 		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import-ownertrust \
- 			"$TEST_DIRECTORY"/lib-gpg/ownertrust &&
- 		gpg --homedir "${GNUPGHOME}" </dev/null >/dev/null 2>&1 \
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 51df092633..012662ce68 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -761,6 +761,10 @@ static int show_stash(int argc, const char **argv, const char *prefix)
+ 		free_stash_info(&info);
+ 		usage_with_options(git_stash_show_usage, options);
+ 	}
++	if (!rev.diffopt.output_format) {
++		rev.diffopt.output_format = DIFF_FORMAT_PATCH;
++		diff_setup_done(&rev.diffopt);
++	}
+ 
+ 	rev.diffopt.flags.recursive = 1;
+ 	setup_diff_pager(&rev.diffopt);
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 97cc71fbaf..e0a50ab267 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -612,6 +612,24 @@ test_expect_success 'stash show -p - no stashes on stack, stash-like argument' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'stash show -v shows diff' '
++	git reset --hard &&
++	echo foo >>file &&
++	STASH_ID=$(git stash create) &&
++	git reset --hard &&
++	cat >expected <<-EOF &&
++	diff --git a/file b/file
++	index 7601807..71b52c4 100644
++	--- a/file
++	+++ b/file
++	@@ -1 +1,2 @@
++	 baz
++	+foo
++	EOF
++	git stash show -v ${STASH_ID} >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'drop: fail early if specified stash is not a stash ref' '
+ 	git stash clear &&
+ 	test_when_finished "git reset --hard HEAD && git stash clear" &&
 -- 
-2.11.0
+2.21.0.157.g0e94f7aa73.dirty
 
