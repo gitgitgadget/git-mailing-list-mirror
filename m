@@ -2,78 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43CAE20248
-	for <e@80x24.org>; Tue, 19 Mar 2019 07:06:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B1D320248
+	for <e@80x24.org>; Tue, 19 Mar 2019 07:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726753AbfCSHGc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 03:06:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56124 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725996AbfCSHGc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 03:06:32 -0400
-Received: (qmail 9709 invoked by uid 109); 19 Mar 2019 07:06:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Mar 2019 07:06:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27398 invoked by uid 111); 19 Mar 2019 07:06:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 19 Mar 2019 03:06:53 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Mar 2019 03:06:30 -0400
-Date:   Tue, 19 Mar 2019 03:06:30 -0400
-From:   Jeff King <peff@peff.net>
-To:     Dimitri Joukoff <dimitri.joukoff@griffithuni.edu.au>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git server side "pre-receive" hook to create new repositories
-Message-ID: <20190319070629.GE31801@sigill.intra.peff.net>
-References: <SYXPR01MB095712C6765970605923A2FDDD4E0@SYXPR01MB0957.ausprd01.prod.outlook.com>
+        id S1727140AbfCSHLG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 03:11:06 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:37042 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725996AbfCSHLF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 03:11:05 -0400
+Received: by mail-pg1-f193.google.com with SMTP id q206so13242895pgq.4
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 00:11:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=oKNW+NoTOuXbkQDwaYDIGyrIKbV5KqmBngJsdX+gRIY=;
+        b=kvWOgGR+llgc/PJ8Nt8jz3w1BjV572hgHlHjg0bmhLHGl1+Gyfm20jYxBcJFajSs47
+         72uER11FwJvBXQpWUn6Zu77O2uLec0nmMigOU0uvdWNRBeDHv/+9HuaSJdCboLrHnq1R
+         geolsnNCu4X615JA44aVW1g0c6I37eWUOSLhQ4b4pw+SNsZR/9l455Vtxv2Levx08HNq
+         ZswHWPnnLZkcJqAbH4sbymlHj4k4pulxltapbDB3W3lyeYsVA9lZkiaqVjHf3THHqko8
+         5sJTO8ghft9vMbZcDyCMhTsMSjtNL7gX1pNQVvK/8P1ZKkzO+M8Z7H/HRtDV8A34/2MI
+         LGXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=oKNW+NoTOuXbkQDwaYDIGyrIKbV5KqmBngJsdX+gRIY=;
+        b=ZeoEzJ+r+OIdenkMjVM9QcXh1hKCStceZgrLr9/qdtqXN6iqNNOcGUvoz8EAvPR49l
+         dAtjYrrkyI46V4UnsuqBY5FO8B2APhedEiPU2bnUW8SyTn3EExHVCu7OASNfXspCCNqG
+         65yb+WkYlpgWUlxoIPxbxdeYkRdiTQU+bYvfUSUI8vVotiLuUvKi7OS/TWRo+crRAc5d
+         0+K7nGHEN+lLif8oU2t4GQZvtPOdiJlnH8gN84ksRr1fo18u5+rS+leHyKOlT+lzCewe
+         MbaDyqvAUDHuhbGtZZQ18mOZXqhJc6PU4dvnCIGqx1XBw9wV312VX9UDsC2oBW6DFIsg
+         CpnA==
+X-Gm-Message-State: APjAAAWkKnqnIKsG3KCsWCEaAwzhQSFMYPBoPcf9R3Tzzx7H7K/c3sS1
+        0Tla2n1edciDl2S138pUUeInZ6SR389d6/+D6v0/0rOPKIM=
+X-Google-Smtp-Source: APXvYqw9yih0CUiqoCvGBdHM/+ArXn1tMFytGy63phj6tISGAGPSdL3gUyTsO2DCK4X3R46wy2VQsFh77hRGXo1u9gM=
+X-Received: by 2002:a63:4287:: with SMTP id p129mr20597164pga.84.1552979464649;
+ Tue, 19 Mar 2019 00:11:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <SYXPR01MB095712C6765970605923A2FDDD4E0@SYXPR01MB0957.ausprd01.prod.outlook.com>
+References: <20190317144747.2418514-1-martin.agren@gmail.com> <20190319024645.GA6173@sigill.intra.peff.net>
+In-Reply-To: <20190319024645.GA6173@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 19 Mar 2019 08:10:52 +0100
+Message-ID: <CAN0heSoS_M-nYCTaL0jKBot8PWv1k-nscD9tgf3pgAz-Ddn-7g@mail.gmail.com>
+Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Todd Zullinger <tmz@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 09, 2019 at 10:46:09AM +0000, Dimitri Joukoff wrote:
+On Tue, 19 Mar 2019 at 03:46, Jeff King <peff@peff.net> wrote:
+>
+> On Sun, Mar 17, 2019 at 03:47:47PM +0100, Martin =C3=85gren wrote:
+>
+> >  Cc Todd and Peff who had a brief exchange [1] a while ago. Apparently
+> >  Todd saw this "[FIXME: source]" on Fedora but Peff did not on Debian.
+> >  I'm on Ubuntu 18.04 and used to see this also on 16.04. I'm not sure
+> >  what might make Debian so special here.
+>
+> I think it was just that my version of asciidoctor had
+>
+>   https://github.com/asciidoctor/asciidoctor/pull/2636
+>
+> and Todd's did not. However, mine still does not do the _right_ thing,
+> because we didn't pass the right attributes in to asciidoctor. It just
+> didn't print an ugly "FIXME". Looking at the XML, I have:
+>
+>   <refentrytitle>git-add</refentrytitle>
+>   <manvolnum>1</manvolnum>
+>   <refmiscinfo class=3D"source">&#160;</refmiscinfo>
+>   <refmiscinfo class=3D"manual">&#160;</refmiscinfo>
+>   </refmeta>
+>
+> So it's just an nbsp instead of the real content, and the "version"
+> field is missing entirely.
 
-> Thus, this feature request is asking that the 'pre-receive' hook
-> triggers when someone tries to push to a repository regardless of
-> whether the repository exists.  This would allow automatic creation of
-> new repositories and smooth the work-flow described above.  If the
-> semantics of the existing 'pre-receive' hook are such that it would not
-> be suitable for such a purpose, then an alternative way of providing the
-> call-back ability would be implemented.
+Huh, yeah, that's a big improvement already.
 
-The pre-receive hook is a bit too late for this. It runs after the
-server has told the client what it has in the repo, the client decides
-what to push, and the server has received the pack. So receive-pack
-would have to know about this and fake having an empty repository. And
-then figure out where to store the incoming packfile, since we have no
-repo.
+> > That Asciidoctor ignores asciidoc.conf is nothing new. This is why we
+> > implement the `linkgit:` macro in asciidoc.conf *and* in
+> > asciidoctor-extensions.rb. Follow suit and provide these tags in
+> > asciidoctor-extensions.rb, using a "postprocessor" extension.
+>
+> Yeah, that seems sensible overall. Some thoughts on your approach:
+>
+> >   * Provide the `mansource` attribute to Asciidoctor. This attribute
+> >     looks promising until one realizes that it can only be given inside
+> >     the source file (the .txt file in our case), *not* on the command
+> >     line using `-a mansource=3Dfoobar`. I toyed with the idea of inject=
+ing
+> >     this attribute while feeding Asciidoctor the input on stdin, but it
+> >     didn't feel like it was worth the complexity in the Makefile.
+>
+> It does seem like "mansource" is the way asciidoctor expects us to do
+> this. Why doesn't it work from the command line? Is it a bug in
+> asciidoctor, or is there something more subtle going on?
+>
+> I think even if it is a bug and gets fixed, though, it still wouldn't
+> have the version field (though that seems like something we could
+> contribute to asciidoctor).
 
-So I think it would have to be another hook that runs before the rest of
-receive-pack. I.e., a system-level config option that says "if you are
-asked to accept a push for a repo and it doesn't exist, run this instead
-and then run as usual".
+The bug is in my docs-reading, see below.
 
-It does feel a little error-prone, though, if the client does not
-positively say "I want you to create this if it doesn't exist".
-Otherwise if I do "git push server:my-misspelled-repo.git", the result
-is going to be rather confusing. And retro-fitting that into the
-receive-pack protocol is going to be tricky.
+> >   * Considering the above abandoned ideas, it seems better to put any
+> >     complexity inside asciidoctor-extensions.rb. It is after all
+> >     supposed to be the "equivalent" of asciidoc.conf. I considered
+> >     providing a "tree processor" extension and use it to set, e.g.,
+> >     `mansource` mentioned above.
+>
+> This seems like the least bad option, at least for now. Your code does
+> do a generic regex substitution. The promise of XML is that we're
+> supposed to be able to do structured, robust transformations of the
+> document. But my experience has been that the tooling is sufficiently
+> difficult to work with that you just end up writing a regex.
+>
+> So I'm curious if you tried to use an actual XML parser (or god forbid,
+> XSLT) to do the transformation. But if you spent more than 5 minutes on
+> it and got disgusted, I wouldn't ask you to look deeper than that. :)
 
-It would be much easier to have a separate endpoint for the client to
-say "please make this repo if it doesn't exist". And then just run that
-before doing the push.
+Well, I didn't spend 5 minutes on it, but my experience told me
+something like that would happen. ;-)
 
-For an unrestricted client connecting over ssh, we already have that:
-you can just run "ssh $host git init /path/to/repo". There isn't a
-similar thing that can be done over HTTP, though.
+Now I realize that I'm wrong in my "it doesn't work from the command
+line". Somehow, I read the following in the user manual: "Many
+attributes can only be defined in the document header (or via the API or
+CLI)." And *repeatedly* read is as "(not via the API or CLI)", somehow
+always expecting a "not" to follow an "only". Oh well.
 
--Peff
+But of course, I did try it out before reaching for the docs, like
+anyone would. The true reason it doesn't work for me is probably this
+header from the listing that contains "mansource": "Manpage attributes
+(relevant only when using the manpage doctype and/or converter)".
+
+> I doubt we'd see any other refmeta tags (and any non-tag content would
+> be quoted).
+>
+> > Let's instead try to stay as close as possible to what asciidoc.conf
+> > does. We'll make it fairly obvious that we aim to inject the exact same
+> > three lines of `<refmiscinfo/>` that asciidoc.conf provides. The only
+> > somewhat tricky part is that we inject them *post*-processing so we nee=
+d
+> > to do the variable expansion ourselves.
+>
+> One thing that asciidoctor buys us that asciidoc does not is that we
+> might eventually move to directly generating the manpages, without the
+> XML / Docbook step in between. And if we do, then all of this XML
+> hackery is going to have to get replaced with something else. I guess we
+> can cross that bridge when we come to it.
+
+Todd has made a promising start in another part of this thread. There
+seems to be a few wrinkles that need some care, but hopefully nothing
+impossible (famous last words).
+
+> The patch itself looks sane. Would we ever need to XML-quote the
+> contents of git_version? I guess the asciidoc.conf version doesn't
+> bother.
+
+Good point. Hadn't thought of it. You're right that the asciidoc.conf
+version has the same problem and a version string like "<>" goes
+unescaped into the xml.
+
+> Technically the user running "make" could put whatever they want
+> into it, but I think this is a case of "if it hurts, don't do it", and
+> we can ignore it.
+
+:-)
+
+Martin
