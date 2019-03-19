@@ -2,68 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB61C20248
-	for <e@80x24.org>; Tue, 19 Mar 2019 16:04:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2B1920248
+	for <e@80x24.org>; Tue, 19 Mar 2019 16:43:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726876AbfCSQEB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 12:04:01 -0400
-Received: from mail-it1-f178.google.com ([209.85.166.178]:51373 "EHLO
-        mail-it1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726612AbfCSQEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 12:04:01 -0400
-Received: by mail-it1-f178.google.com with SMTP id e24so26830399itl.1
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 09:04:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=7OH9EszeEO45PmqLAE1waTijsMdaK60Xb8VdLsyoDkM=;
-        b=nFJ8+em147AplR+CsbdpJmKs2EfW6mMQhAbOrYaqe+NUyzEhWRg6zv0SSVS58V8ovQ
-         /lFbCvBQbD/DfGolbX3oagKocLOhUiKghIHBIxB0Zic6zVaeRQopt4Y79wAA8gXVF2Ik
-         B9qq1CVTfdV3lLaGzNJEugBNcuN3o6iIy4uSZVhTImnFO61IwWsTPr+rKPfr//dFftLT
-         XHkc3mLEqCloWrcL7z0RSyXUUlZSw01SJm+1LZFlaV3woifKSBJDZ/lC19sk/DhRAMt0
-         K0NBslQX24IzqLh19gQnwGVLTVADR+QYYe4bgDFzRuKr7aahd242SL8e/3Y9dDbf2iCZ
-         4rRg==
+        id S1727336AbfCSQnI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 12:43:08 -0400
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:54398 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727064AbfCSQnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 12:43:08 -0400
+Received: by mail-wm1-f66.google.com with SMTP id f3so17751706wmj.4
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 09:43:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=7OH9EszeEO45PmqLAE1waTijsMdaK60Xb8VdLsyoDkM=;
-        b=roVdzAXqt57fDnNYffigqUkSPeh+/s+szO8Z7Q+qOxlFtFFMExnlz3Opin1Dvzjqgr
-         OjZiUJYsftADpIKVJqwkEIyyCc6pN6LWbdMNOQZ7oQQzUhfVGIsSIE5fBvfDScDu0Zqe
-         amts94L4aFq3FOZf8/sxRoAypq1Os9Z7EFIzNyE9agbUmuV3EdFbrB6f9ndmSLNtmrX0
-         gTsOyRv386ofQ6EJZ4RxPnAspM5FjHzbpoK6YcQObZX315B8uog/9fzQgvC02Hb7ILWs
-         cqh1gOpuqQkOQMuPJCHRDeN6Mop+sw0DPGgSEVfnKuca3tQMzVIygAGPg00LEyfkIaka
-         lIOA==
-X-Gm-Message-State: APjAAAW0eAdqX2px6f/LxJ8YLJY5eegjYRsres2Bv9uekXCPSiyWWyQF
-        1DLM18frz4ShwMGyDCwLNV3ZUaRnP/GFhNEZ5e/DiWdS
-X-Google-Smtp-Source: APXvYqzQ2qBUqF8ZaT6JSKyCCJKiDVGfZgyV+cfye5HXPSg5WW1mGOUILoFQc944Y5BLBnlb/z8qdoJ6l9bmSIbThbs=
-X-Received: by 2002:a24:ac6e:: with SMTP id m46mr1949910iti.49.1553011440464;
- Tue, 19 Mar 2019 09:04:00 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8PG93EVjaFD57i+bT/7PoUMCX216p9KFTee+1LPzuMc=;
+        b=TwxKx1m4mzmPjLxdHrvxOxg0Zi58szELXmzfrb5C32ZYiojXmA0+3dN7hUvRZ0FHGK
+         8i3p6bsWRGgTVThYcSDgZXipc9zITgdRZfdO09MZkQLYwLQkw/EC0lHHbx3ABxABPzvN
+         5+CbOpVa0VXTrVRM+JXPAzt1MLaj2OYPn3AfGcgYPvNZdSOg00SUpd6KDG2/PnKZ1tYb
+         18znPQrcYlvhMA3vs4ABM4Lb0Ew9ObvMqBz9zh2REATllBkL2RhGewbJwtTv/KrnOWNy
+         6BGXZlbtaomySRMzF/9wQNaQjjG3nxkOyqHm4onHaOWnZ0OkIGnvgVFtCQlOtbifvBcP
+         m44g==
+X-Gm-Message-State: APjAAAVMDPUUx+81T3NnMCb1wsO+US89fhVb6fBf+OoaL/3O2M2uwzmH
+        Mik/jwJ2rpUua1jHbT9woW22evAu5yzkoKJAaTI=
+X-Google-Smtp-Source: APXvYqwnXi+w5gDm07O8TrjqOvhzpX5zchooR4L+LEl5wZVRetRU0kP8vxuCl/vIXUD4dV5yuJTcGDfvzkINLyLzcIU=
+X-Received: by 2002:a1c:e185:: with SMTP id y127mr3170819wmg.76.1553013785198;
+ Tue, 19 Mar 2019 09:43:05 -0700 (PDT)
 MIME-Version: 1.0
-From:   balaji marisetti <balajimarisetti@gmail.com>
-Date:   Tue, 19 Mar 2019 21:33:34 +0530
-Message-ID: <CAKcrOwe2ARK4J6YuiXUiVXic=q568VC8JtgWMNs6WEd4hhZs3A@mail.gmail.com>
-Subject: git command history
-To:     git@vger.kernel.org
+References: <pull.166.git.gitgitgadget@gmail.com> <pull.166.v2.git.gitgitgadget@gmail.com>
+ <e1da1f84a85165703e3b6be4a240bd36d62b4b01.1553006268.git.gitgitgadget@gmail.com>
+In-Reply-To: <e1da1f84a85165703e3b6be4a240bd36d62b4b01.1553006268.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 19 Mar 2019 12:42:54 -0400
+Message-ID: <CAPig+cTC0AmJyU7D=f9VAGOOwJpk+aMe95MDqiiCqMdU5-kk+A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] progress: add sparse mode to force 100% complete message
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi All,
+On Tue, Mar 19, 2019 at 10:37 AM Jeff Hostetler via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Add new start_sparse_progress() and start_delayed_sparse_progress()
+> constructors and "sparse" flag to struct progress.
+>
+> Teach stop_progress() to force a 100% complete progress message before
+> printing the final "done" message when "sparse" is set.
+>
+> Calling display_progress() for every item in a large set can
+> be expensive.  If callers try to filter this for performance
+> reasons, such as emitting every k-th item, progress would
+> not reach 100% unless they made a final call to display_progress()
+> with the item count before calling stop_progress().
+>
+> Now this is automatic when "sparse" is set.
+>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+> diff --git a/progress.c b/progress.c
+> +/*
+> + * Here "sparse" means that the caller might use some sampling criteria to
+> + * decide when to call display_progress() rather than calling it for every
+> + * integer value in[0 .. total).  In particular, the caller might not call
+> + * display_progress() for the last value in the range.
+> + *
+> + * When "sparse" is set, stop_progress() will automatically force the done
+> + * message to show 100%.
+> + */
+> +static void finish_if_sparse(struct progress **p_progress)
+> +{
+> +       struct progress *progress = *p_progress;
+> +
+> +       if (progress &&
+> +           progress->sparse &&
+> +           progress->last_value != progress->total)
+> +               display_progress(progress, progress->total);
+>  }
 
-Can anyone please tell me if there is way to see the command history
-of a local git repo? If there isn't a way, why hasn't the
-command-history feature been implemented?
+There's no reason for this function to take a 'struct progress **'
+rather than the simpler 'struct progress *', and doing so just
+confuses the reader.
 
+>  void stop_progress(struct progress **p_progress)
+>  {
+> +       finish_if_sparse(p_progress);
+> +
+>         stop_progress_msg(p_progress, _("done"));
+>  }
 
-Thanks,
-Balaji M
+Rather than adding a new "sparse" mode, I wonder if this entire
+concept can be boiled down to a single new function:
 
--- 
-:-)balaji
+    void finish_progress(struct progress **p_progress, const char *msg)
+    {
+        struct progress *progress = *p_progress;
+        if (progress && progress->last_value != progress->total)
+            display_progress(progress, progress->total);
+        if (msg)
+            stop_progress_msg(p_progress, msg);
+        else
+            stop_progress(p_progress);
+    }
+
+without having to make any other changes to the implementation or add
+a new field to the structure. It would mean, though, that the caller
+would have to remember to invoke finish_progress() rather than
+stop_progress(). Which leads one to wonder why this functionality is
+needed at all since it's easy enough for a caller to make the one
+extra call to simulate this:
+
+    /* client code */
+    if (progress)
+        display_progress(progress, progress->total);
+    stop_progress(&progress);
