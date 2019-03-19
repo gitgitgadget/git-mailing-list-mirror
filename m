@@ -2,97 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C92C120248
-	for <e@80x24.org>; Tue, 19 Mar 2019 18:47:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2EB5F20248
+	for <e@80x24.org>; Tue, 19 Mar 2019 19:03:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727143AbfCSSrH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 14:47:07 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35481 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726906AbfCSSrH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 14:47:07 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w1so32569wrp.2
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 11:47:06 -0700 (PDT)
+        id S1727194AbfCSTD6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 15:03:58 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51476 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726939AbfCSTD5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 15:03:57 -0400
+Received: by mail-wm1-f65.google.com with SMTP id n19so18010672wmi.1
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 12:03:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:reply-to:mime-version
+         :content-transfer-encoding;
+        bh=haLSd780giagGzsLG9bJ42YJvPBIrmfMkmNcQzcU0Jw=;
+        b=tTzezcYsPa6f7X3UFfTtOe3GVKbhhINp34hiupA8JdvGj4FDhG9n3JqTBp5Atyw87d
+         6Ld2JpEMJ/F8p2TDwgEkSlKzS6xGa0kTfV3RdJJngKIWr1piSWRUpRVy3O3r+XgLjfAD
+         tp2niXq9f9c9o91UCEPbeQbESUt3K15LJWa2+JvC6aXSndyqNuWXsxvaOcCF2YzpVjyt
+         jJ48jsZAGRTuEmYdGIQCrcKZFnl5MvIv2AQcvTfBbbX7RJBE7Rta71xyjG6fiC6iycDj
+         WK7lJOlwz+oZ6Ne3ez7ffQy4Uiy+dlnzGc3Q9VrX5pW375GeI144dTjv/dQskRwBPOYR
+         I5XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wh6Vyhmt2tzQw+ENfc56KjKm9+3J66dPM9BKiMwoqdc=;
-        b=cxzOdICvmDEuk4GuzKU5D/xTRjVBKzvpiVdvNIQsTaxeHqBAhPxLeZK7MlSdl3xHNL
-         tJsvY7llqXDroajL6GC0Xejguz/g2oJAjcJ0LfOj7MmoCUKZiXHiNhdBImJ8PH/LQNX5
-         DzjVy/bwR7LktbFkWKEiU+M3pQaNFFd0flvWkX/GgHDTnHJeHxpCGKtjSeM3Hakft+Ui
-         NmEv/cd77TI8Bolu1Zi+EeAwhJpMHAmmtqOYYGeEwLj36Ux4A2LkYS/omCFSv/K2h7nx
-         /HyS1IL7jX0K8MYv2CtFNUb8iTJxakcTVKFM3tgX2BNeE0Mk9STGxcitPKVfpXD79Bro
-         AShw==
-X-Gm-Message-State: APjAAAV1PGgqMcgVSPSxVnHGM0iH6UusNp/ma+oA/EGub92ck7tXKO9d
-        gBL7kMbXi+ZN4NgeBLV7TDSUQ1KNcKq48R2TN0k=
-X-Google-Smtp-Source: APXvYqyXgyI+rrXc2710qp0V7JGAZzeo1MA3BDWLG/PC8P4PBnfwgspiuP2K4jLv5L0J/FKBmRvAoL37ojHHskqi1c4=
-X-Received: by 2002:a5d:62c4:: with SMTP id o4mr12942034wrv.282.1553021225911;
- Tue, 19 Mar 2019 11:47:05 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :mime-version:content-transfer-encoding;
+        bh=haLSd780giagGzsLG9bJ42YJvPBIrmfMkmNcQzcU0Jw=;
+        b=KJN9tGTqY10wAgacMr82h1+HyaIigMqLnfsiz/JcdpHEUluPHwpMnM2gNEUStYCo/r
+         IIjg/1+m2vJMDWJkAdsyJet3EDNc4FXGQcsiq6OVsHU3GoxoRi8dO+dGkMq58Zlbvxlk
+         1t0n2zz923KaOs91CXrpNS+mP8VsMjGDi0zuW1BwrzfLYuj9N6VZfMOSi5jnmgz2yqo2
+         6docoRMVar6FmUsC04yv+4iIKqFPN4b7G5c84gmH/UlF4qgzuH020+CrB0MNoQ9dOfVp
+         eKxMPjZVeDP+uDG6/H2mrt7s2Wl/Iyg2b3gsFSIa6gB57E4c5/r+xNe0TIuo32GvUAun
+         1QDg==
+X-Gm-Message-State: APjAAAUJa+P+vbuy99lZfN7RoDmDn0UStgJRJ1RZqWwJTNX8JgFzztkB
+        4SAf6yQWUsM2i39S+my9r/7umf+pskc=
+X-Google-Smtp-Source: APXvYqxVEeYdEx2za6j+h5xcqnnTkx9EgPxjCcglexTHPf15Q7EtErjJTYecgvtSaH4YxnNMEyDX3g==
+X-Received: by 2002:a7b:cd82:: with SMTP id y2mr4665061wmj.121.1553022235471;
+        Tue, 19 Mar 2019 12:03:55 -0700 (PDT)
+Received: from lindisfarne.localdomain (host-89-242-184-133.as13285.net. [89.242.184.133])
+        by smtp.gmail.com with ESMTPSA id s187sm6253853wms.7.2019.03.19.12.03.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Mar 2019 12:03:54 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [RFC PATCH 00/11] rebase -i run without forking rebase--interactive
+Date:   Tue, 19 Mar 2019 19:03:06 +0000
+Message-Id: <20190319190317.6632-1-phillip.wood123@gmail.com>
+X-Mailer: git-send-email 2.21.0
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-References: <pull.166.git.gitgitgadget@gmail.com> <pull.166.v2.git.gitgitgadget@gmail.com>
- <e1da1f84a85165703e3b6be4a240bd36d62b4b01.1553006268.git.gitgitgadget@gmail.com>
- <CAPig+cTC0AmJyU7D=f9VAGOOwJpk+aMe95MDqiiCqMdU5-kk+A@mail.gmail.com> <fbb2ce21-18ce-3d1e-e6f6-907c8b9693d9@jeffhostetler.com>
-In-Reply-To: <fbb2ce21-18ce-3d1e-e6f6-907c8b9693d9@jeffhostetler.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 19 Mar 2019 14:46:54 -0400
-Message-ID: <CAPig+cQhs-YDv2LySbAJkXOWGEAQohkPipj1WLz-BZqrWFyo1Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] progress: add sparse mode to force 100% complete message
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 19, 2019 at 2:33 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
-> On 3/19/2019 12:42 PM, Eric Sunshine wrote:
-> > Rather than adding a new "sparse" mode, I wonder if this entire
-> > concept can be boiled down to a single new function:
-> >
-> >      void finish_progress(struct progress **p_progress, const char *msg)
-> >      {
-> >          [...]
-> >      }
-> >
-> > without having to make any other changes to the implementation or add
-> > a new field to the structure.
->
-> The existing model has start_progress() and start_delayed_progress().
-> I was following that model and added the new option at the start.
-> I'm not planning on adding any additional flags, but if we had some
-> we'd want them available on the startup next to this one.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Perhaps it makes sense to just take a 'flags' argument instead of
-'sparse' so we don't have to worry about this going forward. In other
-words:
+When the builtin rebase starts an interactive rebase it parses the
+options and then repackages them and forks `rebase--interactive`. This
+series refactors rebase--interactive so that interactive rebases can
+be started by the builtin rebase without forking. My motivation was to
+make it easier to debug the sequencer but this should help future
+maintainability.
 
-    #define PROGRESS_DELAYED (1 << 0)
-    #define PROGRESS_SPARSE (1 << 1)
+This series involves some code movement so viewing the diffs with
+--color-moved is recommended.
 
-    struct progress *start_progress_x(const char *title, uint64_t total,
-        unsigned flags);
+These patches are based on a merge of master [e902e9bcae ("The second
+batch", 2019-03-11)] and ag/sequencer-reduce-rewriting-todo ed35d18841
+("rebase--interactive: move transform_todo_file()", 2019-03-05). They
+can be fetched from the tag rebase-i-no-fork/rfc at
+https://github.com/phillipwood/git.git
 
-which covers "delayed" start and "sparse". ("_x" is a placeholder
-since I can't think of a good name).
+Phillip Wood (11):
+  sequencer: always discard index after checkout
+  rebase: rename write_basic_state()
+  rebase: use OPT_RERERE_AUTOUPDATE()
+  rebase -i: combine rebase--interactive.c with rebase.c
+  rebase -i: remove duplication
+  rebase -i: use struct commit when parsing options
+  rebase -i: use struct object_id for squash_onto
+  rebase -i: use struct rebase_options to parse args
+  rebase -i: use struct rebase_options in do_interactive_rebase()
+  rebase: use a common action enum
+  rebase -i: run without forking rebase--interactive
 
-> >                                It would mean, though, that the caller
-> > would have to remember to invoke finish_progress() rather than
-> > stop_progress().
->
-> Right, I was trying to isolate the change to the setup, so that loop
-> bottoms and any in-loop return points don't all have to worry about
-> whether to call stop_ or finish_.
+ Makefile                      |   1 -
+ builtin/rebase--interactive.c | 377 --------------------
+ builtin/rebase.c              | 625 ++++++++++++++++++++++++++--------
+ parse-options-cb.c            |  34 ++
+ parse-options.h               |   4 +
+ sequencer.c                   |  42 ++-
+ sequencer.h                   |   7 +-
+ 7 files changed, 556 insertions(+), 534 deletions(-)
+ delete mode 100644 builtin/rebase--interactive.c
 
-Yes, I understand the benefit.
+-- 
+2.21.0
 
-Anyhow, my comments are akin to bikeshedding, thus not necessarily actionable.
