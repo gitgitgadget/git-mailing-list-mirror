@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3524B20248
-	for <e@80x24.org>; Tue, 19 Mar 2019 14:37:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE42720248
+	for <e@80x24.org>; Tue, 19 Mar 2019 14:37:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727472AbfCSOhz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 10:37:55 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35080 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726857AbfCSOhw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 10:37:52 -0400
-Received: by mail-ed1-f66.google.com with SMTP id d6so16233792eds.2
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 07:37:51 -0700 (PDT)
+        id S1727520AbfCSOh5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 10:37:57 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45052 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726661AbfCSOhy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 10:37:54 -0400
+Received: by mail-ed1-f65.google.com with SMTP id x10so13634835edh.11
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 07:37:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Oc+oPAD9EOSiyCJy01gBQoIGBxChDK9qFVLy2jiEVkU=;
-        b=vVqR+EsiCKtaMOVofgDSmUhLdL9vdeKmghG9YkDvz/rXiAU8U6jPX2MAWqla250vj1
-         qrcGK9mubfJOHzoKI5HbcyMuz6JOlFaVm+5mCTUGLiwQWcMudiUyGpGpkdU3EQcUgWW6
-         RsmMhI/3uxKWOBHgOpPEKgsU2hdpWNOAIq3NOPcdU/pRsDwbDxsJqchi7mkOQqDpxrXT
-         +3rqXEsFveIUu7YRFeYw2mMe9xsSaBKkk4/P8BRcAkO9HQ90XbxBLUUjxQfwUbAZc4rn
-         jkAfT5XVxXrnxgxbSNNWob8o/A+qnR85iGyzeUH3wdZ2Pqbzx35uO6AHZ6sW6R56kiln
-         jCOw==
+        bh=9j39bMPzZ9V1DUKEFavsP/daXBC7Cbu6n23MChQDYXc=;
+        b=bLTBmygeH3UNkkEWUNHX39AkpZsc0YUOn0UvDIyIRzBbfEC1Tylx929ZfuaiCMte3d
+         Pom+UIWW6qudt42MmiE+R/pz6MMZT4qNgNKkpbnsyPB1QJ1JK6rkszr3M0CLO2rftWMK
+         mP7Nk1GRZs/feTBmY6Wta64y/S2971bat1XiLyFFKDWpbCpa4IS6GjkMhEnbuDcZ8mGN
+         t0bjlrw1zmmT1gwTOQYspUPWffykOmvcwdXf2B0eiuorvpCQKKD11EHTfGFTFV9Nb0mz
+         7XSs1N0taZTciRJcukgdn+4IVTHTIcIZlro89/gXPI8LLhgoGnNYdUlliwouV3sJSz8x
+         K+yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Oc+oPAD9EOSiyCJy01gBQoIGBxChDK9qFVLy2jiEVkU=;
-        b=bZksdHDbWQcWVH9jif92levKcE1z+NaF84evTTjP/ldF+MiOInYwarra0voGQzW/5t
-         hc/H9OSa/g/xtX7OhB7Z4DnJO9uFUYTEg2umii8gvcscfE+DxLwYC+HJ3/d85Ekrn2nu
-         2p4YmwvDGdWV4zpsy8BHgdOEFA4g0qpegSUur8glbE700LVYpzw7KcvjK4W5sOLRwddz
-         4q2vKIt67StqCs5Zvxv5bAjtNVpE8cq5j1rAg3od2MButkA3KEV82TYlMlmXnvbUOvaH
-         S6eEVJdW3uFj8wMth7ybrSsoIJG9QV+/uwbJ8obYsQguc2hStud3lxhzcNeLn6BNky48
-         yubQ==
-X-Gm-Message-State: APjAAAWfr1cplGspwhZK49ebpnZeBo91YA45IgBvzrX4zAf+GCveDYRY
-        PeXbHau3mmm6YQ/BcFFXBQ52+bxx
-X-Google-Smtp-Source: APXvYqyDZuCOeV0+PvK1xiOCG223d4FEzjpegrnkmvRhbRplKFz2dDnOiJw4rLlofbDSIi6MzkwLvA==
-X-Received: by 2002:a17:906:2594:: with SMTP id m20mr13858292ejb.91.1553006271176;
-        Tue, 19 Mar 2019 07:37:51 -0700 (PDT)
+        bh=9j39bMPzZ9V1DUKEFavsP/daXBC7Cbu6n23MChQDYXc=;
+        b=CJx073H4aEHQPlJ/Qa9j+WZoIouMaOY9VyiFxyYWrq6/EizQLPOaZvHNjwL3sm+1Gi
+         TUJOmT/tHYIIlr3I2SwT4ZSD9iEcXVtXLE0ZealuCQEYeLQiEUHD02pOVsc/ELzxfs6v
+         onTDMEwplv0MWun2UMdYHNVsK7Yd0aJwrKhbIitD7V3TnZA3HMuTkglitJoK84jQNvL7
+         OVqgl8/IkDFLwpkFsA1Audu7klv+owv9s3qk9tqhaeu6wq251Ug9s7oPqQ2kCC27C2bo
+         6b2LRdvH5Un9gt3zLDnAdQW6AphEksgIxl+i79fwMUQCSTI9EP4HXrzsuEPIldYbhtvS
+         HzRw==
+X-Gm-Message-State: APjAAAWZBXcCUIAHkwh1J3o88hurttN9ktHopldxiqLlOGP2A/om20YD
+        UUwhoUNQw2EmZAef5IhSbjgO4pGI
+X-Google-Smtp-Source: APXvYqx1PiXwlP33Hl9Qu0x5PH+tyeRPs7DUhdZr1zyHEugcXJrffkXao2tU0JgOTpHM6FP4VZeG5Q==
+X-Received: by 2002:a50:8854:: with SMTP id c20mr12212735edc.167.1553006272669;
+        Tue, 19 Mar 2019 07:37:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o42sm4434966edc.49.2019.03.19.07.37.50
+        by smtp.gmail.com with ESMTPSA id g2sm2223702edi.76.2019.03.19.07.37.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Mar 2019 07:37:50 -0700 (PDT)
-Date:   Tue, 19 Mar 2019 07:37:50 -0700 (PDT)
-X-Google-Original-Date: Tue, 19 Mar 2019 14:37:45 GMT
-Message-Id: <11c88845e7c68990415e3f5d42227ce83a9f8d67.1553006268.git.gitgitgadget@gmail.com>
+        Tue, 19 Mar 2019 07:37:52 -0700 (PDT)
+Date:   Tue, 19 Mar 2019 07:37:52 -0700 (PDT)
+X-Google-Original-Date: Tue, 19 Mar 2019 14:37:47 GMT
+Message-Id: <e2dd99911f6054cc7a60d9d3a7187b487f594a65.1553006268.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.166.v2.git.gitgitgadget@gmail.com>
 References: <pull.166.git.gitgitgadget@gmail.com>
         <pull.166.v2.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 2/4] trace2:data: add trace2 data to midx
+Subject: [PATCH v2 4/4] midx: verify: group objects by packfile to speed up
+ object verification
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,58 +72,184 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Log multi-pack-index command mode.
-Log number of objects and packfiles in the midx.
+Teach `multi-pack-index verify` to sort the set of objects by
+packfile so that only one packfile needs to be open at a time.
+
+This is a performance improvement.  Previously, objects were
+verified in OID order.  This essentially requires all packfiles
+to be open at the same time.  If the number of packfiles exceeds
+the open file limit, packfiles would be LRU-closed and re-opened
+many times.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/multi-pack-index.c | 3 +++
- midx.c                     | 4 ++++
- 2 files changed, 7 insertions(+)
+ midx.c     | 77 +++++++++++++++++++++++++++++++++++++++++++++++++-----
+ packfile.c |  2 +-
+ packfile.h |  2 ++
+ 3 files changed, 74 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index fca70f8e4f..ae6e476ad5 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -3,6 +3,7 @@
- #include "config.h"
- #include "parse-options.h"
- #include "midx.h"
-+#include "trace2.h"
- 
- static char const * const builtin_multi_pack_index_usage[] = {
- 	N_("git multi-pack-index [--object-dir=<dir>] (write|verify)"),
-@@ -40,6 +41,8 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 		return 1;
- 	}
- 
-+	trace2_cmd_mode(argv[0]);
-+
- 	if (!strcmp(argv[0], "write"))
- 		return write_midx_file(opts.object_dir);
- 	if (!strcmp(argv[0], "verify"))
 diff --git a/midx.c b/midx.c
-index 8a505fd423..24141a7c62 100644
+index b2f33bcd90..a37c09f2a5 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -8,6 +8,7 @@
- #include "sha1-lookup.h"
- #include "midx.h"
- #include "progress.h"
-+#include "trace2.h"
+@@ -962,9 +962,36 @@ static void midx_report(const char *fmt, ...)
+ 	va_end(ap);
+ }
  
- #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
- #define MIDX_VERSION 1
-@@ -164,6 +165,9 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local
- 			      m->pack_names[i]);
++struct pair_pos_vs_id
++{
++	uint32_t pos;
++	uint32_t pack_int_id;
++};
++
++static int compare_pair_pos_vs_id(const void *_a, const void *_b)
++{
++	struct pair_pos_vs_id *a = (struct pair_pos_vs_id *)_a;
++	struct pair_pos_vs_id *b = (struct pair_pos_vs_id *)_b;
++
++	return b->pack_int_id - a->pack_int_id;
++}
++
++/*
++ * Limit calls to display_progress() for performance reasons.
++ * The interval here was arbitrarily chosen.
++ */
++#define SPARSE_PROGRESS_INTERVAL (1 << 12)
++#define midx_display_sparse_progress(progress, n) \
++	do { \
++		uint64_t _n = (n); \
++		if ((_n & (SPARSE_PROGRESS_INTERVAL - 1)) == 0)	\
++			display_progress(progress, _n); \
++	} while (0)
++
+ int verify_midx_file(const char *object_dir)
+ {
+-	uint32_t i;
++	struct pair_pos_vs_id *pairs = NULL;
++	uint32_t i, k;
+ 	struct progress *progress;
+ 	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
+ 	verify_midx_error = 0;
+@@ -972,13 +999,18 @@ int verify_midx_file(const char *object_dir)
+ 	if (!m)
+ 		return 0;
+ 
++	progress = start_progress(_("Looking for referenced packfiles"),
++				  m->num_packs);
+ 	for (i = 0; i < m->num_packs; i++) {
+ 		if (prepare_midx_pack(m, i))
+ 			midx_report("failed to load pack in position %d", i);
+ 
+ 		if (m->packs[i])
+ 			install_packed_git(the_repository, m->packs[i]);
++
++		display_progress(progress, i + 1);
+ 	}
++	stop_progress(&progress);
+ 
+ 	for (i = 0; i < 255; i++) {
+ 		uint32_t oid_fanout1 = ntohl(m->chunk_oid_fanout[i]);
+@@ -989,6 +1021,8 @@ int verify_midx_file(const char *object_dir)
+ 				    i, oid_fanout1, oid_fanout2, i + 1);
  	}
  
-+	trace2_data_intmax("midx", the_repository, "load/num_packs", m->num_packs);
-+	trace2_data_intmax("midx", the_repository, "load/num_objects", m->num_objects);
-+
- 	return m;
++	progress = start_sparse_progress(_("Verifying OID order in MIDX"),
++					 m->num_objects - 1);
+ 	for (i = 0; i < m->num_objects - 1; i++) {
+ 		struct object_id oid1, oid2;
  
- cleanup_fail:
+@@ -998,18 +1032,47 @@ int verify_midx_file(const char *object_dir)
+ 		if (oidcmp(&oid1, &oid2) >= 0)
+ 			midx_report(_("oid lookup out of order: oid[%d] = %s >= %s = oid[%d]"),
+ 				    i, oid_to_hex(&oid1), oid_to_hex(&oid2), i + 1);
++
++		midx_display_sparse_progress(progress, i + 1);
+ 	}
++	stop_progress(&progress);
+ 
+-	progress = start_progress(_("Verifying object offsets"), m->num_objects);
++	/*
++	 * Create an array mapping each object to its packfile id.  Sort it
++	 * to group the objects by packfile.  Use this permutation to visit
++	 * each of the objects and only require 1 packfile to be open at a
++	 * time.
++	 */
++	ALLOC_ARRAY(pairs, m->num_objects);
+ 	for (i = 0; i < m->num_objects; i++) {
++		pairs[i].pos = i;
++		pairs[i].pack_int_id = nth_midxed_pack_int_id(m, i);
++	}
++
++	progress = start_sparse_progress(
++		_("Sorting objects by packfile"), m->num_objects);
++	display_progress(progress, 0); /* TODO: Measure QSORT() progress */
++	QSORT(pairs, m->num_objects, compare_pair_pos_vs_id);
++	stop_progress(&progress);
++
++	progress = start_sparse_progress(_("Verifying object offsets"),
++					 m->num_objects);
++	for (k = 0; k < m->num_objects; k++) {
+ 		struct object_id oid;
+ 		struct pack_entry e;
+ 		off_t m_offset, p_offset;
+ 
+-		nth_midxed_object_oid(&oid, m, i);
++		if (k > 0 && pairs[k-1].pack_int_id != pairs[k].pack_int_id &&
++		    m->packs[pairs[k-1].pack_int_id])
++		{
++			close_pack_fd(m->packs[pairs[k-1].pack_int_id]);
++			close_pack_index(m->packs[pairs[k-1].pack_int_id]);
++		}
++
++		nth_midxed_object_oid(&oid, m, pairs[k].pos);
+ 		if (!fill_midx_entry(&oid, &e, m)) {
+ 			midx_report(_("failed to load pack entry for oid[%d] = %s"),
+-				    i, oid_to_hex(&oid));
++				    pairs[k].pos, oid_to_hex(&oid));
+ 			continue;
+ 		}
+ 
+@@ -1024,11 +1087,13 @@ int verify_midx_file(const char *object_dir)
+ 
+ 		if (m_offset != p_offset)
+ 			midx_report(_("incorrect object offset for oid[%d] = %s: %"PRIx64" != %"PRIx64),
+-				    i, oid_to_hex(&oid), m_offset, p_offset);
++				    pairs[k].pos, oid_to_hex(&oid), m_offset, p_offset);
+ 
+-		display_progress(progress, i + 1);
++		midx_display_sparse_progress(progress, k + 1);
+ 	}
+ 	stop_progress(&progress);
+ 
++	free(pairs);
++
+ 	return verify_midx_error;
+ }
+diff --git a/packfile.c b/packfile.c
+index 16bcb75262..d2bcb2f860 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -309,7 +309,7 @@ void close_pack_windows(struct packed_git *p)
+ 	}
+ }
+ 
+-static int close_pack_fd(struct packed_git *p)
++int close_pack_fd(struct packed_git *p)
+ {
+ 	if (p->pack_fd < 0)
+ 		return 0;
+diff --git a/packfile.h b/packfile.h
+index d70c6d9afb..b1c18504eb 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -76,6 +76,8 @@ extern int open_pack_index(struct packed_git *);
+  */
+ extern void close_pack_index(struct packed_git *);
+ 
++int close_pack_fd(struct packed_git *p);
++
+ extern uint32_t get_pack_fanout(struct packed_git *p, uint32_t value);
+ 
+ extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
 -- 
 gitgitgadget
-
