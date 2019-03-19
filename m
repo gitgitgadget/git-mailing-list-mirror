@@ -2,124 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 493E220248
-	for <e@80x24.org>; Tue, 19 Mar 2019 09:36:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0205320248
+	for <e@80x24.org>; Tue, 19 Mar 2019 09:39:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727208AbfCSJf7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 05:35:59 -0400
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:33288 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbfCSJf6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 05:35:58 -0400
-Received: by mail-ed1-f42.google.com with SMTP id q3so9333038edg.0
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 02:35:57 -0700 (PDT)
+        id S1727389AbfCSJjp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 05:39:45 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33691 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725290AbfCSJjp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 05:39:45 -0400
+Received: by mail-pg1-f194.google.com with SMTP id i7so10250536pgq.0
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 02:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=F3D80MK1o1hhHgfuclGBzkrq888gvJHCH9Wl5o53gNo=;
-        b=Kd4K/2LbSqkzqRSeYiI7ru4icoMCOxtWPbo6OyLHxL8d6YJ1JclSWhJny3/dAYE8TP
-         O0+88ykO2032P+5IPBBVQYj4bsTL4NTRR2iVVuXOxg6wvsQV9q4yWgDIcP/i7WwwSrF7
-         vk0nmuCYA9WpN7EU5lAFYUrlHFQd8/HtytwuPnXNZG3v/uy92i/qb1sSopU7JTcaUiTR
-         poerryoAGx8esddJBrpaDeRI66WMVwXgo1tI6UpfrDjz64pylY9Dv2pOYJR1lmhIq+de
-         AqyJHADmKD/BIHaJfCiFdxjQ1yVBr54vWkfqZvnP6jJfPQzxHwdU84yreNS3P1slsvcB
-         v64w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3HhrA/KKllbkEDsz1qJK25qtSS0M+e61/zavz+0dWJQ=;
+        b=hUzhACiWn9fuinR+0ru3V5djxDcrf9EtU5w6x/YYfGVDq7GYaCt9PJPIOlffEmgNks
+         7gLFcAavzUwuIwEzP7HnuWxauDj/PZyHCdD/S8RAeaqqYGzmvD5F3WmJfi/+4K32Cqg/
+         zFczw29Ahfwaelx04AMDOZMQCE37fGutg4hJJ0uwlIyu2IcxxChxypuE7y1jdVy6VfUY
+         aOvrcLAXSJXvAH9CGI+iJd7mWJzoi1Pac/r3QfngXg4PclS7tBGh1YV+Z1QSoX4VoP6y
+         EsG5T1u/jatv/1mx4uQOVPrNbC66hXG/In7usU9/Sg5TJN9axWEQlR3netijdt6mdpgN
+         xcnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=F3D80MK1o1hhHgfuclGBzkrq888gvJHCH9Wl5o53gNo=;
-        b=UTCzu+jTyJuOait1g8ZGY+QsKM0mtwU5rMpFhFual5vzRp2if7o+Q1crEk5u41WvrK
-         n8QFLD34C0cvZPU+S9dSQS1vZoXAcR3CCtzO3FZQl5hrus95GAYSjh8HPpaCSlBez3xW
-         uDVnoKXm41CfCKZnkEiBZqkGQOJQSDvaC4o67QjGbKrrNjW+egbaKC+bSjeS3MWH+3e5
-         f7lalSj5eRgm1tYOMpVOK2vup8Vi/R+lxiZ86TXhpB7SO1teJvbrW3TJsAeWMRniU205
-         J8OvDx7tti5AWEpzsVDp5vIzpPcsbJrWXRhDOKxaubQe9MfXkQfoUrGEKXhXzYa8Wdoj
-         7Hag==
-X-Gm-Message-State: APjAAAVf4jGVTFR8+TVpn1TXPYoG4TXYB4f6P+FPGkxPu2/4rlJT5Ygw
-        deGtsQWJMdjZivEb1KeqtI3/Z9AUeHk=
-X-Google-Smtp-Source: APXvYqwcmb3FA2/aWZCb4YRBR8fOh7oduZDyK8U8wtq/MPMPB9bXEH1PxzPzqPYxnepLNmZMXUTJWA==
-X-Received: by 2002:a50:a390:: with SMTP id s16mr9899945edb.69.1552988157008;
-        Tue, 19 Mar 2019 02:35:57 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id f1sm98680edv.53.2019.03.19.02.35.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Mar 2019 02:35:55 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: how can i "gc" or "prune" objects related to a deleted remote?
-References: <alpine.LFD.2.21.1903081029510.25426@localhost.localdomain> <20190319063904.GC31801@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190319063904.GC31801@sigill.intra.peff.net>
-Date:   Tue, 19 Mar 2019 10:35:54 +0100
-Message-ID: <878sxbdx51.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3HhrA/KKllbkEDsz1qJK25qtSS0M+e61/zavz+0dWJQ=;
+        b=qmvOo6CPxzbG+fvRL4Hv0v1+P5iuaddxS7tl1NpQZNVlFbJP04BpkUINVC03m2PSDU
+         YPIWW7SU3Ba38OLct4qS/xHRf8+Z9OyrHk2I6g4ZHo409VVrsqZQIVUmxkyX3hNkmwmS
+         S6Ao+6eZ0loCmIcLM3LJJf5RD2ipvnmr8odEIgJ3SN8XFEzs4kOYXhr/TMseY99Qgusc
+         9scWqkvaIWyn2lUJphDkSX/ke9HgS74ejr9Py41cLEHJY01y7Qvu0Mp1A2/Re9J9d8en
+         uYuGXvRtucDHLhIzeRHwvGWhTE/XyQs+maaIrJTx8fvfPCqqT+ZEj4aEqismCcLceDLl
+         Wf/Q==
+X-Gm-Message-State: APjAAAWfjtwWNXVAIqcfDgq/U9aoeY7tEZ9S9Aa5+cfDER6IL967LI4m
+        yqmYwF65m0k6iyPz+MLnIlw=
+X-Google-Smtp-Source: APXvYqxPa+TTHqmjthdlNzks7TXPoIIz4dUCVcCfljp9Zox2d0UhAgaHnjMDdVuUn9UNJ48kn9UrmQ==
+X-Received: by 2002:a63:b52:: with SMTP id a18mr955259pgl.393.1552988384649;
+        Tue, 19 Mar 2019 02:39:44 -0700 (PDT)
+Received: from ash ([171.226.148.85])
+        by smtp.gmail.com with ESMTPSA id v15sm22851755pfa.75.2019.03.19.02.39.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Mar 2019 02:39:43 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Tue, 19 Mar 2019 16:39:36 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     phillip.wood123@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
+        pclouds@gmail.com, phillip.wood@dunelm.org.uk,
+        sunshine@sunshineco.com, szeder.dev@gmail.com
+Subject: [PATCH] checkout.txt: note about losing staged changes with --merge
+Date:   Tue, 19 Mar 2019 16:39:10 +0700
+Message-Id: <20190319093910.20229-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
+In-Reply-To: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
+References: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+If you have staged changes in path A and perform 'checkout
+--merge' (which could result in conflicts in a totally unrelated path
+B), changes in A will be gone. Which is unexpected. We are supposed
+to keep all changes, or kick and scream otherwise.
 
-On Tue, Mar 19 2019, Jeff King wrote:
+This is the result of how --merge is implemented, from the very first
+day in 1be0659efc (checkout: merge local modifications while switching
+branches., 2006-01-12):
 
-> On Fri, Mar 08, 2019 at 10:36:44AM -0500, Robert P. J. Day wrote:
->
->>   as an example, i cloned the linux kernel source tree, then added
->> the linux-next repo as a remote -- the end result was two pack files
->> (the smaller one i'm assuming being for linux-next):
->>
->> $ ls -l .git/objects/pack
->> total 2723632
->> -r--r--r--. 1 rpjday rpjday    1215376 Mar  8 09:44 pack-08cc266c0914e924961a1c8412fdf8746d327d7e.idx
->> -r--r--r--. 1 rpjday rpjday   38402840 Mar  8 09:44 pack-08cc266c0914e924961a1c8412fdf8746d327d7e.pack
->> -r--r--r--. 1 rpjday rpjday  204032716 Mar  8 09:42 pack-1036510bb74967c91093fc0cd8982683a66dbf5f.idx
->> -r--r--r--. 1 rpjday rpjday 2545333327 Mar  8 09:42 pack-1036510bb74967c91093fc0cd8982683a66dbf5f.pac
->> $
->>
->>   after playing with a couple branches from the new remote, i deleted
->> the remote, then also did things like clear the reflog, delete any
->> local tracking branches related to the deleted remote, and so on, but
->> i can't seem to prune the objects that should no longer be reachable
->> now that i deleted that remote.
->
-> After arriving at a similar state, I did:
->
->   git remote rm linux-next
->   git tag -d next-20190319
->   git gc --prune=now
->
-> My guess is you forgot the tag? There's not a general solution there,
-> because the tags all get intermingled. Git has no idea which ones came
-> from which remote. However, if you have the commit id of an object you
-> expect to be going away, you can use:
->
->   git for-each-ref --contains=$that_commit
+1. a merge is done, unmerged entries are collected
+2. a hard switch to a new branch is done, then unmerged entries added
+   back
 
-Not a general solution, but if you know you have one remote left, and
-you don't have unpushed locally created tags, you can do a:
+There is no trivial fix for this. Going with 3-way merge one file at a
+time loses rename detection. Going with 3-way merge by trees requires
+teaching the algorithm to pick up staged changes. And even if we detect
+staged changes with --merge and abort for safety, an option to continue
+--merge is very weird. Such an option would keep worktree changes, but
+drop staged changes.
 
-    git fetch origin --prune --prune-tags
+Because the problem has been with us since the introduction of --merge
+and everybody has been pretty happy (except Phillip, who found this
+problem), I'll just take a note here to acknowledge it and wait for
+merge wizards to come in and work their magic. There may be a way
+forward [1].
 
-> to see what's still pointing to it (even indirectly).
->
-> Expiring the HEAD reflog is another frequently-forgotten thing, but in
-> my case I had never actually checked out any branches. You should be
-> able to do "git reflog expire --expire-unreachable=now --all" for that.
->
->>   what am i overlooking? is it because those objects are in a separate
->> pack file? do i need to repack first? what is hanging onto those
->> objects in that second pack file such that they can't be garbage
->> collected?
->
-> The two packs shouldn't matter. The gc process works by repacking what's
-> reachable, not including what's not, and then deleting the old packs.
->
-> -Peff
+[1] CABPp-BFoL_U=bzON4SEMaQSKU2TKwnOgNqjt5MUaOejTKGUJxw@mail.gmail.com
+
+Reported-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ This is my "fix" for Phillip's second problem. I chose to reply here
+ because this is where an actual fix was discussed. The test script to
+ demonstate it is here
+
+ https://public-inbox.org/git/7d3742d6-73e4-2750-6ecb-9edf761d96dd@gmail.com/
+
+ Documentation/git-checkout.txt | 2 ++
+ builtin/checkout.c             | 9 +++++++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index f179b43732..877e5f503a 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -242,6 +242,8 @@ should result in deletion of the path).
+ +
+ When checking out paths from the index, this option lets you recreate
+ the conflicted merge in the specified paths.
+++
++When switching branches with `--merge`, staged changes may be lost.
+ 
+ --conflict=<style>::
+ 	The same as --merge option above, but changes the way the
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 0e6037b296..f95e7975f7 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -726,6 +726,8 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			struct tree *result;
+ 			struct tree *work;
+ 			struct merge_options o;
++			struct strbuf sb = STRBUF_INIT;
++
+ 			if (!opts->merge)
+ 				return 1;
+ 
+@@ -736,6 +738,13 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			if (!old_branch_info->commit)
+ 				return 1;
+ 
++			if (repo_index_has_changes(the_repository,
++						   get_commit_tree(old_branch_info->commit),
++						   &sb))
++				warning(_("staged changes in the following files may be lost: %s"),
++					sb.buf);
++			strbuf_release(&sb);
++
+ 			/* Do more real merge */
+ 
+ 			/*
+-- 
+2.21.0.548.gd3c7d92dc2
+
