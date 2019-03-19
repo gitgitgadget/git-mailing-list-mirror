@@ -2,122 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F17A20248
-	for <e@80x24.org>; Tue, 19 Mar 2019 07:02:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43CAE20248
+	for <e@80x24.org>; Tue, 19 Mar 2019 07:06:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725996AbfCSHC2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 03:02:28 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:40283 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbfCSHC2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 03:02:28 -0400
-Received: by mail-pf1-f196.google.com with SMTP id c207so4069045pfc.7
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 00:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=p2Yf/e/P37OF7gUU/g/pNc7a6CIDDvtKnTXbxhCM1lA=;
-        b=OFRVtmytPsEPZkVcsgk3jdxwTkVuR1UIiMvo/yTcVfkyH4ieh65s4jj1ySln50fMQX
-         Ik6CNFHU0QtYEuQfHyXcgyhBERQWgWnUxqk1bQzQwZscY6dRfBn8C63iYR49bHI4SlHe
-         DF/rMhusnYTcvl8cWevSZlNvsYWs17sXRmDPHiB8UaB4Ku4MdX3IN20Jn8LO8Zv3ZyrY
-         QONPyfJXWLRI2Kp4RcX5eatNp60iZ5uNj/Ip9hrtS1OcltGGiGIuV3vaKgbQgnJ5Hl7q
-         qLN+NUAn1dr402SQ6I0gY3MPU3Qx0DVTDq4965AZvak4LyZ0k8w4kWgdTdmtotE6JWzB
-         VwQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=p2Yf/e/P37OF7gUU/g/pNc7a6CIDDvtKnTXbxhCM1lA=;
-        b=mZ6qwHG3L264WlLsOvGreJuHywuEJZaQacnGFIJxuDbDEYig7ZZfNYYyITDfQISPfM
-         TQuImhKeMZo+VMm95rneNl9oOpQZTCvTa5dD2lnBtCJ7lSguJK4y99kAYzdOcm5uUO+0
-         uAphPFt9qB5rTvNl/7RSO/Hz0SHD0AEckkK96ehac/eAAtZWVnNSlNivsyhLFoM+nOYW
-         fGcdhvYJjynGHz/h0qNsMstNF+H+jcuziBoKxGjUPFRAhUdoVSQ53jURk42h9aLLOhBT
-         AtRIc2GHiKkyPe+bIS/8oFjQRWtfn8a5DMRUHYunaW3djb60mvWp5qn7yM0w06N8jEbH
-         fMyw==
-X-Gm-Message-State: APjAAAV9aTQ4Ti0t0aoXsysNHO+eiQpJsu7QbLVbztZDTzrZVu3IGHWe
-        8NE2Qdjm8C8GWZX3aM4koM5ahHZzxHDujoSCJhBMN9iv
-X-Google-Smtp-Source: APXvYqw8FDKwG6KrmkO2U37a3eCxhFZmqDw7XC7Yp+iUUE6OlUmXBiRqjz4sfZD+2iN5jqIaGa4oJ3HpgvGXyf4TjEA=
-X-Received: by 2002:a17:902:5a8c:: with SMTP id r12mr486311pli.130.1552978947933;
- Tue, 19 Mar 2019 00:02:27 -0700 (PDT)
+        id S1726753AbfCSHGc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 03:06:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56124 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725996AbfCSHGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 03:06:32 -0400
+Received: (qmail 9709 invoked by uid 109); 19 Mar 2019 07:06:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Mar 2019 07:06:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27398 invoked by uid 111); 19 Mar 2019 07:06:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 19 Mar 2019 03:06:53 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Mar 2019 03:06:30 -0400
+Date:   Tue, 19 Mar 2019 03:06:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Dimitri Joukoff <dimitri.joukoff@griffithuni.edu.au>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git server side "pre-receive" hook to create new repositories
+Message-ID: <20190319070629.GE31801@sigill.intra.peff.net>
+References: <SYXPR01MB095712C6765970605923A2FDDD4E0@SYXPR01MB0957.ausprd01.prod.outlook.com>
 MIME-Version: 1.0
-References: <20190317144747.2418514-1-martin.agren@gmail.com> <20190317194431.GY31362@pobox.com>
-In-Reply-To: <20190317194431.GY31362@pobox.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 19 Mar 2019 08:02:14 +0100
-Message-ID: <CAN0heSrajiswzpm+au_5nmZMZG9406iZa-CK9p5CaHLTuxm8nw@mail.gmail.com>
-Subject: Re: [PATCH] asciidoctor-extensions: provide `<refmiscinfo/>`
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <SYXPR01MB095712C6765970605923A2FDDD4E0@SYXPR01MB0957.ausprd01.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 17 Mar 2019 at 20:44, Todd Zullinger <tmz@pobox.com> wrote:
-> Martin =C3=85gren wrote:
-> >   * Provide the `mansource` attribute to Asciidoctor. This attribute
-> >     looks promising until one realizes that it can only be given inside
-> >     the source file (the .txt file in our case), *not* on the command
-> >     line using `-a mansource=3Dfoobar`. I toyed with the idea of inject=
-ing
-> >     this attribute while feeding Asciidoctor the input on stdin, but it
-> >     didn't feel like it was worth the complexity in the Makefile.
->
-> I played with this direction before.  Using Asciidoctor we
-> can convert directly from .txt to man without docbook
-> and xmlto.  That does have some other issues which need to
-> be worked out though.  Here's what I had as a start:
+On Sat, Mar 09, 2019 at 10:46:09AM +0000, Dimitri Joukoff wrote:
 
-> +ASCIIDOC_EXTRA +=3D -a mansource=3D"Git $(GIT_VERSION)" -a manmanual=3D"=
-Git Manual"
+> Thus, this feature request is asking that the 'pre-receive' hook
+> triggers when someone tries to push to a repository regardless of
+> whether the repository exists.  This would allow automatic creation of
+> new repositories and smooth the work-flow described above.  If the
+> semantics of the existing 'pre-receive' hook are such that it would not
+> be suitable for such a purpose, then an alternative way of providing the
+> call-back ability would be implemented.
 
-So to be honest, I still don't understand how this works, but it does,
-great. I really need to improve my documentation-reading skills.
+The pre-receive hook is a bit too late for this. It runs after the
+server has told the client what it has in the repo, the client decides
+what to push, and the server has received the pack. So receive-pack
+would have to know about this and fake having an empty repository. And
+then figure out where to store the incoming packfile, since we have no
+repo.
 
-> I munged up doc-diff to set MANDWIDTH=3D1000 and set one
-> branch to default to asciidoctor to compare.  (Your other
-> recent series looks like it'll make doing asciidoc and
-> asciidoctor comparisons easier.)
->
-> There were a number of differences that I didn't work
-> through though.  Most importantly was the change in the
-> links noted in the commit message.
+So I think it would have to be another hook that runs before the rest of
+receive-pack. I.e., a system-level config option that says "if you are
+asked to accept a push for a repo and it doesn't exist, run this instead
+and then run as usual".
 
-I had some more time to look at this. Thanks for getting started on this
-switch. A few things I noticed:
+It does feel a little error-prone, though, if the client does not
+positively say "I want you to create this if it doesn't exist".
+Otherwise if I do "git push server:my-misspelled-repo.git", the result
+is going to be rather confusing. And retro-fitting that into the
+receive-pack protocol is going to be tricky.
 
-{litdd} now renders as &#x2d;&#x2d. We should find some other way to
-produce '--'. This should then be a simple change, as we're already
-providing this attribute inside an `ifdef USE_ASCIIDOCTOR`.
+It would be much easier to have a separate endpoint for the client to
+say "please make this repo if it doesn't exist". And then just run that
+before doing the push.
 
-"+" becomes "&#43;". I didn't immediately find where we do that.
+For an unrestricted client connecting over ssh, we already have that:
+you can just run "ssh $host git init /path/to/repo". There isn't a
+similar thing that can be done over HTTP, though.
 
-Backticks should result in monospace.
-
-`./doc-diff HEAD^ HEAD` shows how several "git-\nfoo" become
-"\ngit-foo", i.e., linkgit expansions are now treated as non-breaking.
-That's arguably good, but it brings some noise to the diff. Maybe one
-should try and see if it's possible to break that to have a nicer
-diff, then remove that breakage in a follow-up commit. Or, if it's
-possible to make "git-foo" non-breaking before the switch. Hmm, was this
-why you increased MANWIDTH?
-
-A double-space between sentences turns into a single space -- at least
-in constructions such as "... to foobar. `git-foo` does ...". Not a
-problem perhaps, but noise in the diff.
-
-And I'm sure there's more lurking in that huge diff. Whether any of that
-is significant or not is another matter. ;-)
-
-
-Martin
+-Peff
