@@ -8,95 +8,100 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3788920248
-	for <e@80x24.org>; Tue, 19 Mar 2019 09:28:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C74720248
+	for <e@80x24.org>; Tue, 19 Mar 2019 09:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726244AbfCSJ22 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 05:28:28 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46584 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725905AbfCSJ21 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 05:28:27 -0400
-Received: by mail-ed1-f67.google.com with SMTP id d1so404079edd.13
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 02:28:26 -0700 (PDT)
+        id S1725978AbfCSJaV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 05:30:21 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:39498 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725290AbfCSJaV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 05:30:21 -0400
+Received: by mail-ed1-f49.google.com with SMTP id p27so15947480edc.6
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 02:30:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=hN3rAIa9gx96EIdgoOfhHnSXwg96PrNUbsEVElZ64DQ=;
-        b=aex4BCz7EETZZ2XoKzylbu2Sde/BJ5Yvgc+sm/C7GIqWjmwR0sKIJzo5OE803Sq7JS
-         9ht2dk3wdiclYE+ckmj4f1TDuO5k0BMn9ZxqRshnyJXfdzkWrye4awsWrkzUNvLHmfbe
-         Bx8WGDeK0gPAlmLWyGyZrIsdXL4wWlOIHCCULvrvLQ6SJgy5NmEXeJeHGn+9bB5SLu+h
-         kVhLHcKi2Itn8H0nUwNiBNtOvrym0an6TlpZq7DpC/n8EgdX4uP28RaFoMDYE8t7VcMO
-         F3fx+5D/o8VM41lr9Hz2UiwFpsYt2ocExh1iaEeHTTyLtEofze/DJgiI7+qWpyCw/7qs
-         WktQ==
+         :message-id:mime-version;
+        bh=/8cf63QLEIMIzNudnR7/kSAVW7Q12nTInGmOkTzoZPQ=;
+        b=XkwqnzbutLLp1gQzMFm0sj00zcJpPPD0cTbTEesDzijZeGWqaw5uphiNN4OF5imcGW
+         BvHPox+7cGYRFYjPhOskQUKkG6Fxk2gStCO2LuA/rs2Lx/nEFnz6mnMNnLU+7psq6lmw
+         swc5N3VIBjtr3t1CQNXKHnLH5sx11bwphOAlaIlRRZ6T7H57hHJdwkZSakapxWAU2yQa
+         iR8DvgkUpQZZYqupGQ2x5Uq/n04t2yEYUX0ieAnlxevXelOuPctQ+0b5iRQIg+/n4Vin
+         QKQacNTo9t3DU29Yx03NZLCPvY/ogrv4N6AT3EApBsLnKypmi50HcnYaxxEUeNfb+CU9
+         0gXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=hN3rAIa9gx96EIdgoOfhHnSXwg96PrNUbsEVElZ64DQ=;
-        b=MeiCl3Y+d8OShCon922Q1cUKKy4Vgr6JIxHOdy7j+G3cu1l/BBWvjBFGe14Rhxk1s4
-         abIxTS1ecjpTkw8QqNVWKC2TN/xZmAWVACeoBEJkWSK14Zol7Cn1vHRs2xPkU3TeDkwS
-         Fc6mwJucIJQzRAbZfa3qBG7iDZXb6urXCfwEUm0+Oa9PPDNEzmj3YttfZLbb/wS2FYKQ
-         30+I4VbWlaM2t4Adxe/44oOBF2Daoao1HuQdYvV/8RpCWN7/HCWOVEo3W8m5EbqUa0xR
-         MTobsGPvOL6pj43RJA5JRGM8P2/CW7viJuCukUCFUR7kgE8A4A0he0I8Qgp1YOEcZzrJ
-         l8WA==
-X-Gm-Message-State: APjAAAVNw8dSpnEDgjA+4gFbSUTp/dm2LuTcG4/2yqV8HOHiBbxkI8Q0
-        H7KAlDSRaUQ0ftKKv0SUUDKVKjtxvCY=
-X-Google-Smtp-Source: APXvYqzH8ZmII1MS2cpNLolzfAmRvw/YNHjkHKW/WS4fXNoY13AH6cKUvsPqo3W8d66wXNQClXzwHA==
-X-Received: by 2002:a17:906:fd5:: with SMTP id c21mr13684565ejk.86.1552987705944;
-        Tue, 19 Mar 2019 02:28:25 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version;
+        bh=/8cf63QLEIMIzNudnR7/kSAVW7Q12nTInGmOkTzoZPQ=;
+        b=gP3Urd+sNaa5uvaFZ4UtYEdJHAXBzWgFR9phfa2t5hrv8ce6pAxwfjuJhgKv92kSF7
+         Q/68lNj9gIfXHlZr7FqUnpgrFobZfjStHpjqoDA+q5uoyVWYhNsm1da+dYNGZju03EYp
+         kbFnBDjYgftFWHkjoxdKh/B2n4U4rXDdoxMPUu8h1ODHUkzYJtaNZUSxZJ6nIdYZ0w+O
+         gZrIy7Cd3cKbuhdIis07/syrB01yD4yNQEOvkFFbnQshggbRHeVBoY2QrZCbQkBOfk0x
+         I8N8ZZV0hOT0JeTKNdWFOhs+Kyrcebexjn5cKeceP/Fz1vRS65vG95Dwi2Lt8luKQaIf
+         /1vQ==
+X-Gm-Message-State: APjAAAXEJN4PaPfuV+soyG9uTHIIiwVdb977xR3eFKBCovxpfQyhw2mB
+        j5O2WSuysjxwOifZ1l49D2uAFZUUaBY=
+X-Google-Smtp-Source: APXvYqxV1N/exi9I2Vu2T7ZrRnag6QyL7pNYX9wW0BzAEFZsNlPHZvQXHMe/mnm9CguGvSTvSuXohQ==
+X-Received: by 2002:a50:86e8:: with SMTP id 37mr10134743edu.192.1552987819354;
+        Tue, 19 Mar 2019 02:30:19 -0700 (PDT)
 Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id q12sm4311509edd.12.2019.03.19.02.28.25
+        by smtp.gmail.com with ESMTPSA id x45sm4218262edb.42.2019.03.19.02.30.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Mar 2019 02:28:25 -0700 (PDT)
+        Tue, 19 Mar 2019 02:30:17 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Matt McCutchen <matt@mattmccutchen.net>
-Subject: Re: [PATCH 4/4] gc docs: downplay the usefulness of --aggressive
-References: <20190318161502.7979-1-avarab@gmail.com> <20190318161502.7979-5-avarab@gmail.com> <5cf21eee-a46f-2657-7bf3-e4963cf1c56b@kdbg.org>
+To:     Mikko Rantalainen <mikko.rantalainen@peda.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Improve support for 'git config gc.reflogExpire never'
+References: <39a0796a-7220-1e81-e7fe-3bf7329ed7de@peda.net>
 User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <5cf21eee-a46f-2657-7bf3-e4963cf1c56b@kdbg.org>
-Date:   Tue, 19 Mar 2019 10:28:24 +0100
-Message-ID: <87bm27dxhj.fsf@evledraar.gmail.com>
+In-reply-to: <39a0796a-7220-1e81-e7fe-3bf7329ed7de@peda.net>
+Date:   Tue, 19 Mar 2019 10:30:17 +0100
+Message-ID: <87a7hrdxee.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Mar 19 2019, Johannes Sixt wrote:
+On Fri, Mar 08 2019, Mikko Rantalainen wrote:
 
-> Am 18.03.19 um 17:15 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> +Using this option may optimize for disk space at the expense of
->> +runtime performance. See the `--depth` and `--window` documentation in
->> +linkgit:git-repack[1]. It is not recommended that this option be used
->> +to improve performance for a given repository without running tailored
->> +performance benchmarks on it. It may make things better, or worse. Not
->> +using this at all is the right trade-off for most users and their
->> +repositories.
->> ++
->> +The effects of this option are persistent to the extent that
->> +`gc.autoPackLimit` and friends don't cause a consolidation of existing
->> +pack(s) generated with this option.
+> If I configure bare repo with
 >
-> The first paragraph talks about potential downsides. And I think that
-> the second paragraph attempts to tell me how I can back out if I'm hit
-> by those downsides. But I have not the slightest idea how to read this
-> sentence and know what I have to do.
+> git config gc.pruneExpire never
+> git config gc.reflogExpire never
+>
+> then git will never garbage collect any commit ever stored in the repo.
+> This is what I want.
+>
+> However, all commits referenced only via reflog are kept as loose
+> objects and will not be included in packs. In long run this will cause
+>
+> warning: There are too many unreachable loose objects; run 'git prune'
+> to remove them.
+>
+> and the performance of the repository will slowly decrease.
+>
+>
+> If I have understood correctly, git should notice that reflog will keep
+> referenced commits forever and include all those commits in packs
+> instead of keeping those as loose forever.
+>
+> A more generic behavior might be to always compress all loose commits in
+> (one?) special pack so the performance would stay good even if
+> gc.reflogExpire is very long instead of "never".
+>
+>
+> Discussion about this case:
+> https://stackoverflow.com/questions/28092485/how-to-prevent-garbage-collection-in-git
+> https://stackoverflow.com/questions/55043693/is-it-possible-to-get-git-gc-to-pack-reflog-objects
 
-That's an existing issue, but I'm fine with improving the docs even
-more, will add that :)
+Just to add to Jeff's E-Mail, the case he's describing is something I
+wrote a stand-alone test case for here:
+https://public-inbox.org/git/87fu6bmr0j.fsf@evledraar.gmail.com/
 
-You need to repack non-aggressively with the -f option. Right now
-there's nothing that exposes that from "gc", except setting the
-"aggressive" settings to the same as the default window/depth.
+Try to run it, it's probably the same behavior you're seeing, and it has
+nothing per-se to do with reflogs.
