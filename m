@@ -2,94 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F88620248
-	for <e@80x24.org>; Wed, 20 Mar 2019 01:22:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B18620248
+	for <e@80x24.org>; Wed, 20 Mar 2019 01:50:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726907AbfCTBWu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 21:22:50 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:37484 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726823AbfCTBWt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 21:22:49 -0400
-Received: by mail-it1-f194.google.com with SMTP id z124so30133125itc.2
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 18:22:49 -0700 (PDT)
+        id S1727148AbfCTBuZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 21:50:25 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45718 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726884AbfCTBuY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 21:50:24 -0400
+Received: by mail-wr1-f67.google.com with SMTP id s15so891279wra.12
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 18:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fa88VD5PstZ+9oX0ejh73gFcEHHLQh/2cqtOHNCcRgs=;
-        b=duGHRFMBD7iQW42XC+hsb77P596ls2LfLM5bGub5kEzdSugNDSCBfvbGWLp+/1g202
-         o93hwL7HslrWGIH8EGXpijV+2fhM3UPUBNBMQDsxd1X4oo/jnabtGC10GPxaT9qMjXau
-         fhLMk0JkntLWblspkkjhyh8rjyErH6DELplNnVvnPELtM2vZI8xmoHspOXB7mrX4Zoku
-         klhd5RmPVkg4FfRHMOAJSj6YhrqA4FWNTC6F0EbE+UzXRyFoFi1NOvT4WogNNF7fbFlA
-         vr5Xzg75CumBEyhmm+3jeO9dTc7ek4fDY1anZXtqqa51J15yhmxsGhfKmmxzKEf6LR2+
-         dOsQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=2HAdZ29MYxfd/Y23VHYN3qi5NriwvcjeyS1HuFgrt/Q=;
+        b=IL12P7vOdYN8qwcWVjFqlLlnOXanGOvUrMQPpwyPUXW6HCbZQGi/w4pGmADspxK1m2
+         oyYhLjVwACCyf0aRijXV2FfjbZyvEvL9NxVsPiVM/6o3jDVroJIzH1zI0988hPM98qR2
+         gIXe8SLDQv8fcrtFWTQT7BAOfLetIzc/kDgVyzN2XJUCEHdQSiNmz1W3pFw/v21MfXXS
+         UieU3bhU3AXxJ2IpWZ7JUiQdvsdwOTqHwNTI4pa0VWjmL80GAG1Er0W4tUbeW4gsDV3h
+         LqVeI5oKCOT+3z0hUA2RqQMbscvtSk75YN7tqx6ory5KRh9KyNnUBpd9bI5R0IJ4YFuv
+         Alig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fa88VD5PstZ+9oX0ejh73gFcEHHLQh/2cqtOHNCcRgs=;
-        b=Moiz1zmZfERZgZyVxyuewG+bNF8XBXjiPsTTtBzQpIxCh55F0Z1UPC9FrI0sxdg2lE
-         pYJgI2rZDwRPmj5NSH5o949ceWM4go2XbPsNCJyAXTziuhsoVwNVyyQLm5Ff56yCovLE
-         3Z7N0287fNYlnwyuKE3AOF9u2TzS7FU4sL0q394zTJCe/vI8qoBuIPLFbS+mPcCnVgyf
-         hjuEFwoXbFiUKtZTPZIjbAHrdNWlhHxxOmdsTlIzrCu2+rFFooM8+3b4szvVPQqCOWh7
-         fkjnQVO3qMNKzkA1Q072J0q7NkX3KA2d9zqc1QSPi18VG0bGzhfWxdwZ7kVyj3uqXQ6r
-         nibA==
-X-Gm-Message-State: APjAAAU1a9MXyX69GH8NPWQd6dhuLIe6CDcbt79xRwwHlY+IsohBz8Cq
-        z7lcFS9oZGF9qY+tiBQHJtEIIPAOb3e4r7+phxMtXw==
-X-Google-Smtp-Source: APXvYqz32YBdwWfOffkJjiXhc5+MRF6Z1lgy4kmALvyGvsG7UNhRvNCDWOCXV8B+wrG079NBlI1IqHpCY7kjm+pW9nc=
-X-Received: by 2002:a24:ccc5:: with SMTP id x188mr3309518itf.123.1553044968969;
- Tue, 19 Mar 2019 18:22:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
- <20190319093910.20229-1-pclouds@gmail.com> <xmqqimwexujm.fsf@gitster-ct.c.googlers.com>
- <CACsJy8BLxWea0ZrHkSU6+nE7dr5YvFNVH1tLhaqPRadi+2Hhwg@mail.gmail.com> <xmqqk1guwdeu.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqk1guwdeu.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 20 Mar 2019 08:22:22 +0700
-Message-ID: <CACsJy8AUH4nOkt6H=yu=eRktK4me9kEkjqsC3zyNZDwUKXqCPg@mail.gmail.com>
-Subject: Re: [PATCH] checkout.txt: note about losing staged changes with --merge
-To:     Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=2HAdZ29MYxfd/Y23VHYN3qi5NriwvcjeyS1HuFgrt/Q=;
+        b=PROw0MlUDeL/FFCuXxQKj2Eu1b91azqqzycwaC+/G1NvMjRqkI7eVjg7c8tq7JCGq8
+         8EkEHKa8Kr5+kfGIUZcXLWhWR055rmwMB5Kf2QE15m6rOiPp1unKxBk4yWa/t+ifUJnA
+         YW511aqXr2tUnRpMwezIu6Z89nhNWnrpStNLnEBtJmVbXK/XUxC60XgTI1E413qNpZvh
+         7QD7ruQLa/yxd6r+aPSt7WeDpFI9Yh7W1/osSZU6e1nTsrgwDJhKFtN69y0M/nUUmIqw
+         PbAe2WP2fwhwIPLSyuPiZ+100tLB0dUzjCcRI8QahfwQGBsjw1b8n8q7OvsLKeVtPk7g
+         90YQ==
+X-Gm-Message-State: APjAAAX25GjPh3fLCMihX8nbEyc3ouR150jWh7LA0SpGxkf5Uke9UqI0
+        jvlVCZih4yq3m05GKYZvy3g=
+X-Google-Smtp-Source: APXvYqy8H728xodVd9D1zzubazy8oFuHQpLzj6d8DR6DgWEDOZEImw5tTI5znkrZoju+MsNM6hIdbA==
+X-Received: by 2002:adf:f54b:: with SMTP id j11mr20676330wrp.39.1553046622891;
+        Tue, 19 Mar 2019 18:50:22 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id w8sm719547wmc.0.2019.03.19.18.50.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 19 Mar 2019 18:50:22 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Phillip Wood <phillip.wood123@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Elijah Newren <newren@gmail.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] checkout.txt: note about losing staged changes with --merge
+References: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
+        <20190319093910.20229-1-pclouds@gmail.com>
+        <xmqqimwexujm.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8BLxWea0ZrHkSU6+nE7dr5YvFNVH1tLhaqPRadi+2Hhwg@mail.gmail.com>
+        <xmqqk1guwdeu.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8AUH4nOkt6H=yu=eRktK4me9kEkjqsC3zyNZDwUKXqCPg@mail.gmail.com>
+Date:   Wed, 20 Mar 2019 10:50:21 +0900
+In-Reply-To: <CACsJy8AUH4nOkt6H=yu=eRktK4me9kEkjqsC3zyNZDwUKXqCPg@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 20 Mar 2019 08:22:22 +0700")
+Message-ID: <xmqqftriwbz6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 20, 2019 at 8:19 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Duy Nguyen <pclouds@gmail.com> writes:
->
-> >> I think "checkout -m <otherbranch>" with a dirty index should refuse
-> >> to run; there is nothing to "continue" after such a failure, so I am
-> >> not sure what you mean by "an option to continue" (iow, I do not see
-> >> a need for such an option, and if that option makes the whole notion
-> >> strange, we can just decide not to have it, can't we?).
-> >
-> > We have --force to continue even when we have local changes, which
-> > will be overwritten. I was thinking a similar option which gives us
-> > permission to destroy staged changes.
->
-> Ah, then that is not "checkout --continue", but "checkout --force
-> -m"?  That sounds sensible, and should behave as if "checkout -f
-> HEAD && checkout -m <otherbranch>" was done, with respect to local
-> changes, I would think.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Kinda. But "--force --merge" makes no sense. --force discards all
-local changes by definition, which means you can't have conflicts and
-will not need --merge. I think this is the reason why we die() out
-when both are specified. So we need something like
---discard-staged-changes-only...
--- 
-Duy
+> Kinda. But "--force --merge" makes no sense. --force discards all
+> local changes by definition, which means you can't have conflicts and
+> will not need --merge. I think this is the reason why we die() out
+> when both are specified. So we need something like
+> --discard-staged-changes-only...
+
+At that point, I would have to say that we do not need anything.
+The use case is already covered with "git reset && git checkout -m",
+isn't it?
+
+Thanks.
+
