@@ -2,204 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF06A20248
-	for <e@80x24.org>; Wed, 20 Mar 2019 20:22:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E95520248
+	for <e@80x24.org>; Wed, 20 Mar 2019 20:26:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726987AbfCTUWS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 16:22:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58090 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725988AbfCTUWS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 16:22:18 -0400
-Received: (qmail 11457 invoked by uid 109); 20 Mar 2019 20:22:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Mar 2019 20:22:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3611 invoked by uid 111); 20 Mar 2019 20:22:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 20 Mar 2019 16:22:39 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Mar 2019 16:22:15 -0400
-Date:   Wed, 20 Mar 2019 16:22:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 13/13] parse_opt_ref_sorting: always use with NONEG flag
-Message-ID: <20190320202215.GA17382@sigill.intra.peff.net>
-References: <20190320081258.GA5621@sigill.intra.peff.net>
- <20190320081650.GM10403@sigill.intra.peff.net>
- <CAN0heSrubOaXRbg=NBi0rCuzthUcOEU3HmUKGg+=t+N0CCJcbA@mail.gmail.com>
+        id S1727561AbfCTU0q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 16:26:46 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38823 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726366AbfCTU0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 16:26:45 -0400
+Received: by mail-pg1-f195.google.com with SMTP id v1so2607375pgi.5
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 13:26:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9y6BXqsNpMdCgT0h+eH8bqf4gXmy54MRSEETuThz1DU=;
+        b=jz1paS2GZOTm5MN9Pgp+DxoIKGrcfPeABv3yy4z3VOQgjg0nzwuzXpdpI3rb4sZnXZ
+         r+ELv43fETQ9RQTfDuQ3Kz5GRzBKdz6e4gBETlM1oWtUwHcgTvHpcQGzr+R3V3kJp/lt
+         r1nREmLfkI2oytR6dY2siJAE2XnkXbp7lb3RPIkK8OB4RLVNRPVkGpVCVW9zyJlL8kQS
+         wfQV2fi/qD4jGQKByAj6VB9+lM2HAKnDPWVJ0rrhGkAkxRJn+uf9RwsMzFTBHRaEayVK
+         bA56DF8FFXoDoiJVcFFVTSqDTXq7a5EaeEOkBHbui4kkfu2u4UqRoi/FdH24qcL6p7mL
+         6wtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9y6BXqsNpMdCgT0h+eH8bqf4gXmy54MRSEETuThz1DU=;
+        b=J7F9xekPs+P6wXDDdz3a4MOX1S2OZ8FYC52lbQ7bYykK3AFX4Xui9WSm7u8ty6d0mk
+         E2/Zip2Jg43inzv0t4n6uP6/86LcbCHyqdMmMPKyigQ1ZrZyaWTxNO5hEGAmwGg2WfUN
+         itNs1CY4brcyYlPCZIcDwDGzP0/JDFGyivd+L47eMuaqnZuSBj27aysVqaxdKkbPzjIC
+         FHHB63wFkhDl2XE5/CQihVmWNApYOKF1f9RTvaGu1Fa8kd/roDLtcBcc0nK8PL15W6FG
+         9zWHsSnRtsJYFLEXsjjHEwtuqf8hKAbMiTHtUY73cezKAJaZtJqBlwBaTQSqfYP04x4K
+         j5DA==
+X-Gm-Message-State: APjAAAUA8T/NpBibUiG4Zy8zEk6dCRpZupNjx5dchitFhe3/hRM9VN8r
+        Ei+qK5NnqgAmfo5ouQfvRLpvOTV+0LB8aDZRMqb+Yg==
+X-Google-Smtp-Source: APXvYqwGViDP7j8BTVM2lCfK8aPoinyaKSOuKBEDmmhTEC5pDKsF4UN47zVWebipRJL8+g8vQnMRG6JxRWrU8t5nGko=
+X-Received: by 2002:aa7:914f:: with SMTP id 15mr9530477pfi.49.1553113605307;
+ Wed, 20 Mar 2019 13:26:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSrubOaXRbg=NBi0rCuzthUcOEU3HmUKGg+=t+N0CCJcbA@mail.gmail.com>
+References: <20190320114703.18659-1-pclouds@gmail.com> <20190320114703.18659-8-pclouds@gmail.com>
+In-Reply-To: <20190320114703.18659-8-pclouds@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 20 Mar 2019 21:26:33 +0100
+Message-ID: <CAN0heSoyOqMeJeBJ7HWRzOW3WABCSGfqV8CoEVMM37h+T10g5w@mail.gmail.com>
+Subject: Re: [PATCH 07/20] diff-parseopt: convert -O
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 20, 2019 at 01:22:22PM +0100, Martin Ågren wrote:
+On Wed, 20 Mar 2019 at 12:48, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pc=
+louds@gmail.com> wrote:
+> +               OPT_FILENAME('O', NULL, &options->orderfile,
+> +                            N_("override diff.orderFile configuration va=
+riable")),
 
-> > +#define OPT_REF_SORT(var) \
-> > +       OPT_CALLBACK_F(0, "sort", (var), \
-> > +                      N_("key"), N_("field name to sort"), \
-> > +                      PARSE_OPT_NONEG, parse_opt_ref_sorting)
-> 
-> This one is not identical though. ;-) You drop the "on". I trust you to
-> know which of these is (more) correct, but I was a bit surprised to see
-> "on" disappear without any mention. Mistake, or intended?
+This doesn't really tell me *why* I would want to provide -O. Or put
+another way, there are lots of --foo-bar for overriding some baz.fooBar
+config item, but they're not described like this. The primary purpose of
+--foo-bar, at least to me, would be to solve some actual problem, like
+"fooing the bar", whatever that means.
 
-Mistake. I retyped when I should have cut-and-pasted.
+Gleaning at the manpage, an alternative would be "control the order in
+which files appear in the output", but maybe you avoided that
+deliberately? "provide an orderfile"?
 
-Amusingly, I even carefully checked that the original four were all
-identical, but didn't think to check against my new one. Revised patch
-below.
 
-> Other than that surprise ending, the whole series was a nice read.
-
-I'm the M. Night Shyamalan of Git development.
-
-Thanks for reading. :)
-
--- >8 --
-Subject: [PATCH] parse_opt_ref_sorting: always use with NONEG flag
-
-The "--sort" parameter of for-each-ref, etc, does not handle negation,
-and instead returns an error to the parse-options code. But neither
-piece of code prints anything for the user, which may leave them
-confused:
-
-  $ git for-each-ref --no-sort
-  $ echo $?
-  129
-
-As the comment in the callback function notes, this probably should
-clear the list, which would make it consistent with other list-like
-options (i.e., anything that uses OPT_STRING_LIST currently).
-Unfortunately that's a bit tricky due to the way the ref-filter code
-works. But in the meantime, let's at least make the error a little less
-confusing:
-
-  - switch to using PARSE_OPT_NONEG in the option definition, which will
-    cause the options code to produce a useful message
-
-  - since this was cut-and-pasted to four different spots, let's define
-    a single OPT_REF_SORT() macro that we can use everywhere
-
-  - the callback can use BUG_ON_OPT_NEG() to make sure the correct flags
-    are used (incidentally, this also satisfies -Wunused-parameters,
-    since we're now looking at "unset")
-
-  - expand the comment into a NEEDSWORK to make it clear that the
-    direction is right, but the details need to be worked out
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/branch.c       | 3 +--
- builtin/for-each-ref.c | 3 +--
- builtin/ls-remote.c    | 3 +--
- builtin/tag.c          | 3 +--
- ref-filter.c           | 9 +++++++--
- ref-filter.h           | 5 +++++
- 6 files changed, 16 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 4c83055730..d4359b33ac 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -644,8 +644,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		OPT_MERGED(&filter, N_("print only branches that are merged")),
- 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
- 		OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
--		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
--			     N_("field name to sort on"), &parse_opt_ref_sorting),
-+		OPT_REF_SORT(sorting_tail),
- 		{
- 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
- 			N_("print only branches of the object"), 0, parse_opt_object_name
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index e931be9ce4..465153e853 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -37,8 +37,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 		OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
- 		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
- 		OPT__COLOR(&format.use_color, N_("respect format colors")),
--		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
--			    N_("field name to sort on"), &parse_opt_ref_sorting),
-+		OPT_REF_SORT(sorting_tail),
- 		OPT_CALLBACK(0, "points-at", &filter.points_at,
- 			     N_("object"), N_("print only refs which points at the given object"),
- 			     parse_opt_object_name),
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index 1d7f1f5ce2..6ef519514b 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -67,8 +67,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
- 		OPT_BOOL(0, "get-url", &get_url,
- 			 N_("take url.<base>.insteadOf into account")),
--		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
--			     N_("field name to sort on"), &parse_opt_ref_sorting),
-+		OPT_REF_SORT(sorting_tail),
- 		OPT_SET_INT_F(0, "exit-code", &status,
- 			      N_("exit with exit code 2 if no matching refs are found"),
- 			      2, PARSE_OPT_NOCOMPLETE),
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 02f6bd1279..ad97595fbf 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -412,8 +412,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_WITHOUT(&filter.no_commit, N_("print only tags that don't contain the commit")),
- 		OPT_MERGED(&filter, N_("print only tags that are merged")),
- 		OPT_NO_MERGED(&filter, N_("print only tags that are not merged")),
--		OPT_CALLBACK(0 , "sort", sorting_tail, N_("key"),
--			     N_("field name to sort on"), &parse_opt_ref_sorting),
-+		OPT_REF_SORT(sorting_tail),
- 		{
- 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
- 			N_("print only tags of the object"), PARSE_OPT_LASTARG_DEFAULT,
-diff --git a/ref-filter.c b/ref-filter.c
-index 3aca105307..8d11a94cbd 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2337,8 +2337,13 @@ void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *arg)
- 
- int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
- {
--	if (!arg) /* should --no-sort void the list ? */
--		return -1;
-+	/*
-+	 * NEEDSWORK: We should probably clear the list in this case, but we've
-+	 * already munged the global used_atoms list, which would need to be
-+	 * undone.
-+	 */
-+	BUG_ON_OPT_NEG(unset);
-+
- 	parse_ref_sorting(opt->value, arg);
- 	return 0;
- }
-diff --git a/ref-filter.h b/ref-filter.h
-index 85c8ebc3b9..f1dcff4c6e 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -96,6 +96,11 @@ struct ref_format {
- #define OPT_MERGED(f, h) _OPT_MERGED_NO_MERGED("merged", f, h)
- #define OPT_NO_MERGED(f, h) _OPT_MERGED_NO_MERGED("no-merged", f, h)
- 
-+#define OPT_REF_SORT(var) \
-+	OPT_CALLBACK_F(0, "sort", (var), \
-+		       N_("key"), N_("field name to sort on"), \
-+		       PARSE_OPT_NONEG, parse_opt_ref_sorting)
-+
- /*
-  * API for filtering a set of refs. Based on the type of refs the user
-  * has requested, we iterate through those refs and apply filters
--- 
-2.21.0.701.g4401309e11
-
+Martin
