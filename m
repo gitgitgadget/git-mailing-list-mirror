@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52B9D202BB
-	for <e@80x24.org>; Wed, 20 Mar 2019 18:03:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64475202BB
+	for <e@80x24.org>; Wed, 20 Mar 2019 18:03:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727196AbfCTSDl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 14:03:41 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56581 "EHLO
+        id S1727241AbfCTSDm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 14:03:42 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61318 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726438AbfCTSDk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 14:03:40 -0400
+        with ESMTP id S1727103AbfCTSDl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 14:03:41 -0400
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E061355F15;
-        Wed, 20 Mar 2019 14:03:35 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61F3455F19;
+        Wed, 20 Mar 2019 14:03:39 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=eiy6s/d2BZEt
-        pqyXtGGX4/jZ0xA=; b=Bm2489qyXPXr3e/f7OGCofLT1H4dFF/BMJfKPMjT8QTF
-        9PHPp5LeXqHmh6UgGnKZ2XkvzAuO141nAayw40pvVBPHcqA5K9tNQhWIIbUdN0mp
-        9dR6Ak3JbQyGTaV2ExEvbRSpZxOGOnGjK9uKz0bi8kMKltslScluvFG+UbZiuOU=
+        :content-transfer-encoding; s=sasl; bh=e+ERwF9EYJ9pyQhKrJl7PR4qr
+        nI=; b=GWz5yOsAxfT3i/QC0KYRTU5JDurZ4R8nNchI5znZ3Puorm8WstOJ5WbqI
+        ONjIgRqmzHONfk1p5+kbeBmhWZgJL8B5hy6C0E9iZXAt2V2viCWxbsR9HEXQlLOI
+        K/CBiavaSH0MtpvaTVj8JzH/OKgbe+tn4ksEgMPc9LSEwFnaHk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uWZ3+Y
-        aP3PeooJmezqPJtUKeVru3uIrOMVG6ZsyaKmfZcEpKQK3eYT9z/bhFK8+yUvbCTj
-        RppTAuB7fih7HxS0h1eFUdxYGxwkHFrRM6X+AfrOEg9VqgOe/wHQZeNsGk0awDqU
-        LNCR+Vseiz6Px5O3QqSnQTL4tXysAFb/if2VY=
+        :content-transfer-encoding; q=dns; s=sasl; b=JPeJbqdhFTs2SfTUTcm
+        NiyiJfZJcyms6dUgQyavozLD68KcpxCPbBCY8lVATPOk4QmnpzlyJCBBGX+fruIm
+        /GG9NwzEg2Ym7gpOxWXXR47J1Dj3Bp6yWQV4pY56m/Id/tJev3IKhH3ocqLxU6IJ
+        dbTemQxX/OxwjS3l/jEEwERA=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C488F55F14;
-        Wed, 20 Mar 2019 14:03:35 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A3D755F17;
+        Wed, 20 Mar 2019 14:03:39 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 Received: from morphine.paradise.teonanacatl.net (unknown [47.202.93.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2F43555F11;
-        Wed, 20 Mar 2019 14:03:32 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C41EF55F13;
+        Wed, 20 Mar 2019 14:03:34 -0400 (EDT)
         (envelope-from tmz@pobox.com)
 From:   Todd Zullinger <tmz@pobox.com>
 To:     Duy Nguyen <pclouds@gmail.com>
@@ -48,77 +48,73 @@ Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 0/4] completion.commands: fix multiple command removals
-Date:   Wed, 20 Mar 2019 14:03:25 -0400
-Message-Id: <20190320180329.22280-1-tmz@pobox.com>
+Subject: [PATCH v3 1/4] git: read local config in --list-cmds
+Date:   Wed, 20 Mar 2019 14:03:26 -0400
+Message-Id: <20190320180329.22280-2-tmz@pobox.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <CACsJy8DiQwmAKMruOAO4roPbiRTvt5TESBTd682hTwkZjcoj2Q@mail.gmail.com>
 References: <CACsJy8DiQwmAKMruOAO4roPbiRTvt5TESBTd682hTwkZjcoj2Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Pobox-Relay-ID: 7959C326-4B3A-11E9-AF17-EE24A11ADF13-09356542!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 7B7F8B18-4B3A-11E9-A628-EE24A11ADF13-09356542!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Jeff King <peff@peff.net>
 
-Duy Nguyen wrote:
-> You probably want to drop the comment block about repository setup
-> inside list_cmds_by_config() too.
+Normally code that is checking config before we've decided to do
+setup_git_directory() would use read_early_config(), which uses
+discover_git_directory() to tentatively see if we're in a repo,
+and if so to add it to the config sequence.
 
-You're right, of course.  Thanks Duy. :)
+But list_cmds() uses the caching configset mechanism which
+rightly does not use read_early_config(), because it has no
+idea if it's being called early.
 
-That's the only change since v2.
+Call setup_git_directory_gently() so we can pick up repo-level
+config (like completion.commands).
 
-Other than a follow-up to update the commit reference in 4/4
-after 1/4 is in the final form on pu, I think this might be good.
-If it's easier, we can skip 4/4 and I'll resend it after the
-others are on pu.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ git.c  | 7 +++++++
+ help.c | 7 -------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-Jeff King (2):
-  git: read local config in --list-cmds
-  completion: fix multiple command removals
-
-Todd Zullinger (2):
-  t9902: test multiple removals via completion.commands
-  completion: use __git when calling --list-cmds
-
- contrib/completion/git-completion.bash |  8 ++++----
- git.c                                  |  7 +++++++
- help.c                                 | 11 ++---------
- t/t9902-completion.sh                  |  6 ++++++
- 4 files changed, 19 insertions(+), 13 deletions(-)
-
-Range-diff against v2:
-1:  e51bdea6d3 ! 1:  6e9872b0e3 git: read local config in --list-cmds
-    @@ -33,3 +33,21 @@
-     =20
-      	while (*spec) {
-      		const char *sep =3D strchrnul(spec, ',');
-    +
-    + diff --git a/help.c b/help.c
-    + --- a/help.c
-    + +++ b/help.c
-    +@@
-    + {
-    + 	const char *cmd_list;
-    +=20
-    +-	/*
-    +-	 * There's no actual repository setup at this point (and even
-    +-	 * if there is, we don't really care; only global config
-    +-	 * matters). If we accidentally set up a repository, it's ok
-    +-	 * too since the caller (git --list-cmds=3D) should exit shortly
-    +-	 * anyway.
-    +-	 */
-    + 	if (git_config_get_string_const("completion.commands", &cmd_list))
-    + 		return;
-    +=20
-2:  2f5e9da9de =3D 2:  6873ae3868 t9902: test multiple removals via compl=
-etion.commands
-3:  7548dcc23f =3D 3:  f66bbc0b55 completion: fix multiple command remova=
-ls
-4:  26bef0b2af =3D 4:  197b176483 completion: use __git when calling --li=
-st-cmds
+diff --git a/git.c b/git.c
+index 2dd588674f..10e49d79f6 100644
+--- a/git.c
++++ b/git.c
+@@ -62,6 +62,13 @@ static int list_cmds(const char *spec)
+ {
+ 	struct string_list list =3D STRING_LIST_INIT_DUP;
+ 	int i;
++	int nongit;
++
++	/*
++	* Set up the repository so we can pick up any repo-level config (like
++	* completion.commands).
++	*/
++	setup_git_directory_gently(&nongit);
+=20
+ 	while (*spec) {
+ 		const char *sep =3D strchrnul(spec, ',');
+diff --git a/help.c b/help.c
+index 520c9080e8..fac7e421d0 100644
+--- a/help.c
++++ b/help.c
+@@ -375,13 +375,6 @@ void list_cmds_by_config(struct string_list *list)
+ {
+ 	const char *cmd_list;
+=20
+-	/*
+-	 * There's no actual repository setup at this point (and even
+-	 * if there is, we don't really care; only global config
+-	 * matters). If we accidentally set up a repository, it's ok
+-	 * too since the caller (git --list-cmds=3D) should exit shortly
+-	 * anyway.
+-	 */
+ 	if (git_config_get_string_const("completion.commands", &cmd_list))
+ 		return;
+=20
