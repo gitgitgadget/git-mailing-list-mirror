@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3525020248
-	for <e@80x24.org>; Wed, 20 Mar 2019 11:47:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91C9920248
+	for <e@80x24.org>; Wed, 20 Mar 2019 11:47:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728025AbfCTLrY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 07:47:24 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:34402 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727673AbfCTLrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 07:47:23 -0400
-Received: by mail-pg1-f193.google.com with SMTP id v12so1644798pgq.1
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 04:47:23 -0700 (PDT)
+        id S1728029AbfCTLr2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 07:47:28 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:44494 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727673AbfCTLr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 07:47:28 -0400
+Received: by mail-pg1-f195.google.com with SMTP id i2so1611224pgj.11
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 04:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Sh6kI7svlAYMZ/6jUd3R1fDDCJIXeZ0ov/IzRrpHk6U=;
-        b=MXyu65FZcdDxxGxnsuQZINvp68GHXJAVqXegbU2lwMrK3A7o/QqejQBQA+gxn12T2v
-         DpXvgE2H9tokryHYEf79wE1BdmMa/VL4ZkrYPgRUDBmmDBH7SCjbb7RvXw++xO6YlaJD
-         1jb7T2yAXCSIQeTMdAod4o5vyhJpxk0T31REnZZI80tRna+5z5V8fpqvNDLVTsJjZ1DC
-         B6GBcjAnikaU9+wktlBTyCn8Yx671X71KQzzPgDJwATpE3FHArfv0iB6/qqd+k7bqnsP
-         RAALoo+OEZPvGQnsLkc0jbIRuhBu0r7ktqKLoeT8Dmf8OqRhvu5p09ORYTw9PhbdDMV6
-         c3vg==
+        bh=eyeB0ppx8aJQ1JlABpv9PqME2hGRTV5LppLxCax4nFI=;
+        b=bwx/5Ov5sCEf+lOZdi1k7+c54GctwcSGhhKtjnaTGCdbWjFzwcBPOp6VaBcFSf9XsY
+         INrSmX5/losTjBXpIrPiJ1aZqodf2SmSOWceUrukxUhUc749FblscB6hIwHEgatZLh5I
+         q5GyfBEudx+n7wbR57auFeVMdf7osSJp9Mz+c4gVBz4dLq02Rvy5JeFWeFHFZPfITMQf
+         SdpzDpwp4OgSgrBEts1HUG4cbDL8YKOuuSm6x4+FmjB8aub66rKqlUNugNO3154wvCLN
+         OXwTFK5+GGtJcUFQ9rIYYtDiX4sjvWPzGSns69ngb41Eh57TNcO8xYPorX/cgulS0HNN
+         +ovg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Sh6kI7svlAYMZ/6jUd3R1fDDCJIXeZ0ov/IzRrpHk6U=;
-        b=sKpeknR3TJkA8W4I/O5Tl4qdIGiGP18W8hFqsUU7gB+akMrlsB8EO3dT9W33jPLHDV
-         qQ3dti38kyjwl1O7Rn6PTrIdC9W3v6Uyx2AhcDq+UIcR4DdvxsROPZDvUyeWkxBhqLEL
-         7gzmrVbLHjyD9S3b2ZdvIFN1OmFdvpLgGwI0UKusIYHrmkH4EgkkWZlbVVrpJE3Lf1yR
-         kDPaI1UWlja+9BrtiI/QhI3GsOwNlKTIEH/ajEoabKtnwT8XC7iTruDXvtKTfA5wuXKq
-         t8CzuSQbgXf40p0DgJFDM0tfw1zItIZR/yONhA1ex3PJd5TPISL+Rdp8oeJglbBclbML
-         EShQ==
-X-Gm-Message-State: APjAAAVeOQjHpJ45NEqj3MUG20mCSoOuajc6zHXXRJ2pIO/o1Zyehe2j
-        E+9qBkqMJWVcf8WN7XoebQQxn4cd
-X-Google-Smtp-Source: APXvYqwQD2+rbBUezJpp8J3Na2XpYcgWN1GB6rGHF92aSBHIODBfQ8GCUZ1X94vnHBaxwO1Cq8fGVQ==
-X-Received: by 2002:a17:902:442:: with SMTP id 60mr23947002ple.107.1553082443211;
-        Wed, 20 Mar 2019 04:47:23 -0700 (PDT)
+        bh=eyeB0ppx8aJQ1JlABpv9PqME2hGRTV5LppLxCax4nFI=;
+        b=YZW0Ica9Pj4EjN7d4Y9LitHWWvbXi+DdziIkc+2M6yzNEaySJ5mEEafn8Koj2OlikK
+         fbRQHNT6B6auqnFVCdENXsLyCVqmCFuOZT8d1lU+EPQSCXqfuEa5j5BnjdrGO9SfHvKV
+         swhuqecLiEtDsJYkR8CXx5YgH2SnBCdc+80j1QF8DcSF49SWRDs7NdB69vQ59p9SP2IZ
+         DS7nY+cgcinYMzgQCLLIG/iUWyIH4NgkpX8Xi/DcvgcL++ECgKYRjxdilw5HN4VSrOsq
+         yob1eiT0a3rb8T+PBzYMacrkv++e8SFD2egnOTlVTcVl5Qgl4hWVBQbNMDOupGC02S5p
+         KxAA==
+X-Gm-Message-State: APjAAAXPEaHZhuku6NSqhRc5DB80lO9yLBRWOCmCo8sTDWYBuQslk/HY
+        mRnmYcT9km5LWz0SyAJdtco5xIiI
+X-Google-Smtp-Source: APXvYqz3U8A2I+j71gFAkgXW4AsB7Hi5eioGZbX/ykmHrg71E/PZFOpKO3hLu0Ep4ocVKsmpZ0F/XA==
+X-Received: by 2002:aa7:8a87:: with SMTP id a7mr7469839pfc.252.1553082447777;
+        Wed, 20 Mar 2019 04:47:27 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id p86sm3636227pfa.104.2019.03.20.04.47.20
+        by smtp.gmail.com with ESMTPSA id q86sm6321043pfi.171.2019.03.20.04.47.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Mar 2019 04:47:22 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 20 Mar 2019 18:47:19 +0700
+        Wed, 20 Mar 2019 04:47:27 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 20 Mar 2019 18:47:23 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 02/20] diff-parseopt: convert --ita-[in]visible-in-index
-Date:   Wed, 20 Mar 2019 18:46:45 +0700
-Message-Id: <20190320114703.18659-3-pclouds@gmail.com>
+Subject: [PATCH 03/20] diff-parseopt: convert -z
+Date:   Wed, 20 Mar 2019 18:46:46 +0700
+Message-Id: <20190320114703.18659-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190320114703.18659-1-pclouds@gmail.com>
 References: <20190320114703.18659-1-pclouds@gmail.com>
@@ -71,38 +71,32 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ diff.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 8fdcdcc8ff..3eace63172 100644
+index 3eace63172..f290dfe6be 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -5352,6 +5352,12 @@ static void prep_parse_options(struct diff_options *options)
- 			       N_("specify how differences in submodules are shown"),
- 			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
- 			       diff_opt_submodule),
-+		OPT_SET_INT_F(0, "ita-invisible-in-index", &options->ita_invisible_in_index,
-+			      N_("hide 'git add -N' entries from the index"),
-+			      1, PARSE_OPT_NONEG),
-+		OPT_SET_INT_F(0, "ita-visible-in-index", &options->ita_invisible_in_index,
-+			      N_("treat 'git add -N' entries as real in the index"),
-+			      0, PARSE_OPT_NONEG),
- 		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
- 		  N_("Output to a specific file"),
- 		  PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
-@@ -5401,10 +5407,7 @@ int diff_opt_parse(struct diff_options *options,
- 		if (cm & COLOR_MOVED_WS_ERROR)
- 			return -1;
- 		options->color_moved_ws_handling = cm;
--	} else if (!strcmp(arg, "--ita-invisible-in-index"))
--		options->ita_invisible_in_index = 1;
--	else if (!strcmp(arg, "--ita-visible-in-index"))
--		options->ita_invisible_in_index = 0;
-+	}
+@@ -5238,6 +5238,9 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_CALLBACK_F(0, "ws-error-highlight", options, N_("<kind>"),
+ 			       N_("highlight whitespaces errors in the context, old or new lines in the diff"),
+ 			       PARSE_OPT_NONEG, diff_opt_ws_error_highlight),
++		OPT_SET_INT('z', NULL, &options->line_termination,
++			    N_("do not munge pathnames and use NULs as output field terminators in --raw or --numstat"),
++			    0),
+ 		OPT_CALLBACK_F(0, "output-indicator-new",
+ 			       &options->output_indicators[OUTPUT_INDICATOR_NEW],
+ 			       N_("<char>"),
+@@ -5410,8 +5413,6 @@ int diff_opt_parse(struct diff_options *options,
+ 	}
  
  	/* misc options */
- 	else if (!strcmp(arg, "-z"))
+-	else if (!strcmp(arg, "-z"))
+-		options->line_termination = 0;
+ 	else if ((argcount = short_opt('l', av, &optarg))) {
+ 		options->rename_limit = strtoul(optarg, NULL, 10);
+ 		return argcount;
 -- 
 2.21.0.548.gd3c7d92dc2
 
