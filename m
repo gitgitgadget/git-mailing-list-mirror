@@ -2,81 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2E9B20248
-	for <e@80x24.org>; Wed, 20 Mar 2019 10:27:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1B4420248
+	for <e@80x24.org>; Wed, 20 Mar 2019 10:29:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727763AbfCTK13 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 06:27:29 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:50966 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726023AbfCTK13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 06:27:29 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
-        (envelope-from <mh@glandium.org>)
-        id 1h6YJx-0005Zd-7b
-        for git@vger.kernel.org; Wed, 20 Mar 2019 19:19:41 +0900
-Date:   Wed, 20 Mar 2019 19:19:41 +0900
-From:   Mike Hommey <mh@glandium.org>
+        id S1726802AbfCTK3O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 06:29:14 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:37855 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726023AbfCTK3O (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 06:29:14 -0400
+Received: by mail-pg1-f194.google.com with SMTP id q206so1500344pgq.4
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 03:29:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oTVBuXdvVKYBBykIgrHvs6bjfncjniRujXYZfONtSiI=;
+        b=jOxg60c2qI/DxrY+cYj0SEXXv9bqEpIn19WuAT9nTc+QPR7rLHHM1lf2zRPkUfxWcw
+         1nLenDIi1+mvACo6Mm705otwE6Z7cVlseTpHNfHEx7S0tcwqD1tyypcIBWmMFpJNRGLW
+         3T36EiNAXAFI7obngxRdmXFIXMvHZGj8E2F1FuMWYFmk6rUbosODkyR+imP4400neD2n
+         CmH0vS8I4HPfC/udKIai8uhel5v+6W7wVMk6wfsqlL2rctkL7lwTftJTJJ6hWsBCbZ9H
+         uqVY1GP2XyR71y6R4M5iQBgEY9KqEA2XIm4qIs4BFBnb0Ux/ok8BQeUY9MAEiHJX9rNO
+         mjHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oTVBuXdvVKYBBykIgrHvs6bjfncjniRujXYZfONtSiI=;
+        b=c+bJb2dd3PqP2obSioL2p3x1c6keXWUvVLR0iCjzORVdsXgds46VT8qNuSPSzirz5q
+         rdCUGyrs9rQ/KMLJdviSFxGHbqjCOcwp78NLm1hWX31QhRX+EzLynswcLmbWu+JlDD+G
+         vyn455A3xJWVbyS7vxAR7UHWoZflTo4rlUIw7QBWfC7i3vTjaLV/4rM7eNqJfct0WFI9
+         aJKDb/056dpibb4fLtFmV//zm9ltnu/XN1Xom8eZHyJO+zkniNaSg7QQD1qcsgWNFiAe
+         wcT3HU34sC0HM2ZVtiiOWZMLuxFGKpNuA02pOi8J/nMlA1vnbn9ELieecisOh7IfymOs
+         q3Ow==
+X-Gm-Message-State: APjAAAUgCXXVdYdwfrVsqI+WF71J0gFY71tEj+sS+++fBH3O+MBhyHAW
+        BWuQMqReoSHRMXRPE/pSxwJ3ld6f
+X-Google-Smtp-Source: APXvYqwhOaF2YYdhHD9UskUeC8hBkdJDZ36xpRzOnWmer+Tx2PmKc+JMPo+l7tJMTPPWF8EoB6BTVA==
+X-Received: by 2002:a63:e80d:: with SMTP id s13mr6636745pgh.379.1553077753851;
+        Wed, 20 Mar 2019 03:29:13 -0700 (PDT)
+Received: from ash ([171.226.148.85])
+        by smtp.gmail.com with ESMTPSA id f2sm6109420pgn.43.2019.03.20.03.29.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Mar 2019 03:29:13 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 20 Mar 2019 17:29:08 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
 To:     git@vger.kernel.org
-Subject: How to properly find git config in a libgit.a-using executable?
-Message-ID: <20190320101941.2xjsjx3zfnnp33a2@glandium.org>
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] commit: improve error message in "-a <paths>" case
+Date:   Wed, 20 Mar 2019 17:29:06 +0700
+Message-Id: <20190320102906.12917-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20180716
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+I did something stupid today and got
 
-In git-cinnabar (the remote-helper that can talk to mercurial servers),
-I'm using a fast-import-derived helper to do a lot of the heavy lifting,
-because $REASONS. Anyways, while built (mostly) with the git build system,
-using libgit.a, etc. the helper doesn't live in the GIT_EXEC_PATH. That
-leads me to a very subtle problem: it doesn't necessarily find the
-system config that git uses.
+    $ git commit -a --fixup= @^
+    fatal: Paths with -a does not make sense.
 
-Because the system confit that git uses depends on how git was built,
-the result might not be the right thing. For one, a Linux distro git
-will likely have been built with prefix=/usr, which makes the system
-config be /etc/gitconfig, but someone building their own git will have
-a system config in etc/gitconfig relative to their git.
+which didn't make any sense (at least for the first few seconds).
 
-The latter is more of nitpicking, because practically speaking, it
-doesn't matter much. Which is why I've been building with prefix=/usr
-(at least for the helper binaries that I ship pre-built ; locally built
-helpers actually don't get this treatment ; but that's also not much of
-a practical problem because it seems Linux distros don't ship a
-/etc/gitconfig anyways (at least Debian doesn't)).
+Include the first path(spec) in the error message to help spot the
+problem quicker. Now it shows
 
-Anyways, the real problem comes on Windows, because git-for-windows does
-come with a system config that does make important tweaks, like setting
-http.sslcainfo to a path that actually exists. And without reading that
-system config, the helper doesn't find the cainfo file and fails to
-connect to HTTPS mercurial servers.
+    fatal: paths '@^ ...' with -a does not make sense
 
-Now, my question here is, what would you suggest I do to make my helper
-find the right config?
+which should ring some bell because @^ should clearly not be considered
+a path.
 
-I thought of a few options (it's worth noting the helper is invoked in a
-way that makes $GIT_EXEC_PATH set, which can help a little):
-- spawn `$GIT_EXEC_PATH/git-config -l -z`, parse its output, and set the
-  internal config from that. That's the barbarian option.
-- build the helper with RUNTIME_PREFIX, and modify the RUNTIME_PREFIX
-  code to use $GIT_EXEC_PATH if it's set, rather than the path the
-  executable is in. That actually sounds reasonable enough that I'd send
-  a patch for git itself. But that doesn't quite address the nitpick case
-  where ETC_GITCONFIG could be either `/etc/gitconfig` or
-  `etc/gitconfig` depending how git was compiled, and there's no way to
-  know which is the right one.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/commit.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-WDYT?
+diff --git a/builtin/commit.c b/builtin/commit.c
+index f17537474a..7f9aa032b6 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1194,7 +1194,8 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	handle_untracked_files_arg(s);
+ 
+ 	if (all && argc > 0)
+-		die(_("Paths with -a does not make sense."));
++		die(_("paths '%s ...' with -a does not make sense"),
++		    argv[0]);
+ 
+ 	if (status_format != STATUS_FORMAT_NONE)
+ 		dry_run = 1;
+-- 
+2.21.0.548.gd3c7d92dc2
 
-Mike
