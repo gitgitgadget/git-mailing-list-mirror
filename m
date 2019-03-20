@@ -2,96 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0711F20248
-	for <e@80x24.org>; Wed, 20 Mar 2019 22:56:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49CE320248
+	for <e@80x24.org>; Wed, 20 Mar 2019 23:00:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727569AbfCTW4n (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 18:56:43 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:50180 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727382AbfCTW4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 18:56:42 -0400
-Received: by mail-wm1-f66.google.com with SMTP id z11so902856wmi.0
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 15:56:41 -0700 (PDT)
+        id S1727560AbfCTXAZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 19:00:25 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45386 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727382AbfCTXAY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 19:00:24 -0400
+Received: by mail-ed1-f65.google.com with SMTP id m16so3419739edd.12
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 16:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fKmuYOCtZzr/e9kok2H37/XVK3Vj3EGZkNCEQO0ltrQ=;
-        b=O0jpSeS6YAV+UlLssgQLFm3pA0JZD8beZEvmHD6sy6PeIfQj8KVpgQqO4D81Z+3r8C
-         FQNDMYK408s83sOxqgeNUqXf9fMLaAve9gqNNFSTRWjz4nzqYSptyyuDOEX8H+pextlc
-         H8wmRvzsjFFsE94tbo/nwjFFxpKqkF6XMq1cGoS5u80VhMCxvH20b608kmn3pCpt1UWz
-         rgM/aXa/Fg/hiJOOg4en0PfZPRceDLMWGBwOJoHWyiR/lvFoUJ7y+1qbMwDRMJwUJWss
-         Hjmlff7iRWYuqCiu3YZKqlaufqcD9z5qJvV+7vnd4NzQzzL1BTa1KeAv27gOHYCA3TV8
-         grzA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=LnC9IgBpVdZnM2MbGhuPaDSxUYtze0C4J7iDlANrzC0=;
+        b=drxVcPPhzOStDlKmMR5qLdRzjZ9p1XV7PfrIGC2QcUqjBqjE/k5BF+OzoePCXkboNA
+         cGjAbXvkqINtvcxB7dlSPi0fo7ysBIzPq5wMwNt5fCs1yImbaa2CMsbwh4IzrIfx2kwN
+         d0UFNfndSudQjozMwetCw9XxnJ93wsJNV5Nq/VW3uB+JLByftO+HoEiWa+Fac2E5Nk7U
+         fIUYiO0X3V76xk6/Jxgs8ZnRKQUuRlhWQyLI4C/EgQO2jsnDuXCU9CqMXi2kUzL8Oh2v
+         K5BOw+AbgAEwYrwh7P+WLtjCNk1cWJUzpGNPKZCtV9wtMCTpd+O7J6j/5xCEb45WckjJ
+         HWRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fKmuYOCtZzr/e9kok2H37/XVK3Vj3EGZkNCEQO0ltrQ=;
-        b=H97lDOrafXRfxZ1XujEV00gX0GRVUihUs8VGF0rzkqT3tKdAAsE+UFTLbH+D1Iepog
-         kCrJYqqptVghnSPz3k1CG+LuFZ+bPIFm/LdMKuZGAqYgMUU0XYFRaWWJduJJxxSzZ4Vn
-         puZj8Yj3dp6D5I7LPmPmwiIYCUgKNL8TaAtrgHNLD38y2euG0jnzt9r/1A2Q+krJaQBC
-         vO4ivoW12iGWHdeHZIFYg4i1s48ExIFh7pW6vX7L070wYnVFr+17YC1xzPsoJ7hfPGn1
-         EICe1013O1Rcen4+FyrRPg46FYBaI8abyOR8vPPfPYBnn6QA8D7sucBXL5jUj4jvv64e
-         CnxA==
-X-Gm-Message-State: APjAAAVFv4wSDB4I7hqfaAJEW65nGuPQ9iYHhxYHv5XeIllD9K7P+iOQ
-        PMn16aHaJKYpgQc8J1/BG/DGyAnu
-X-Google-Smtp-Source: APXvYqzivN2v6aBgsKyghxqtw7am3nsywhB+mLLoVvaGmkAuR7aqMYG3l659ri886XWdcYlsczB2fw==
-X-Received: by 2002:a1c:9ad1:: with SMTP id c200mr445076wme.140.1553122601069;
-        Wed, 20 Mar 2019 15:56:41 -0700 (PDT)
-Received: from localhost ([31.127.45.89])
-        by smtp.gmail.com with ESMTPSA id 84sm522612wme.43.2019.03.20.15.56.39
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=LnC9IgBpVdZnM2MbGhuPaDSxUYtze0C4J7iDlANrzC0=;
+        b=uI4D63yE+aKhxuLsgqiSMNzx/HQfMSTlXwNb2Jmn7qR287XEiTB9DASzFj0MUw9tSE
+         MMzmEr2GZguM8au7oyo7gt4SPiEbeeKtGgzogABNx0hKhvWGhr05XQ30r4QAJwKUv+kL
+         0QSQQAFJWK5XO3g/+rcGl8EjnCKZKNRdVDL+psN+eMJwuLHnTfnVMFDLRnNbBcbdFzt3
+         eYHTAEd+wV9XrTTg+ig6abmoaEXfhKib61vfg2e5rTTW6PPp4lAQ8/6U96i+yId2AlhD
+         AZ0gxXar+VxKR24msm7y5vbYYklnWSuBGXYqQ9wBr3JIE3Ryvsp/QsTt7DCzv8kBJoJK
+         7IRw==
+X-Gm-Message-State: APjAAAXUWcaWhWnr3hWuPfLJ4okhL3IvPk+J6FswfLulKVJ2TluMMhBS
+        Eb+cah/vhmF9dZ1/WIvIcNVZ+Exj
+X-Google-Smtp-Source: APXvYqzjDdjRymwz9gZBSuBDnpzChyTM8CBtX5BlT1tNHcDPc+agIJgCFdKZIYJzeJytBclYR031fQ==
+X-Received: by 2002:a17:906:af6d:: with SMTP id os13mr370468ejb.222.1553122822713;
+        Wed, 20 Mar 2019 16:00:22 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id i1sm1045382edi.15.2019.03.20.16.00.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Mar 2019 15:56:39 -0700 (PDT)
-Date:   Wed, 20 Mar 2019 22:56:38 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, sunshine@sunshineco.com
-Subject: Re: What's cooking in git.git (Mar 2019, #04; Wed, 20)
-Message-ID: <20190320225638.GF32487@hank.intra.tgummerer.com>
-References: <xmqqa7hqw844.fsf@gitster-ct.c.googlers.com>
- <20190320220509.7180-1-rohit.ashiwal265@gmail.com>
+        Wed, 20 Mar 2019 16:00:21 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 10/20] diff-parseopt: convert --[no-]abbrev
+References: <20190320114703.18659-1-pclouds@gmail.com> <20190320114703.18659-11-pclouds@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190320114703.18659-11-pclouds@gmail.com>
+Date:   Thu, 21 Mar 2019 00:00:21 +0100
+Message-ID: <87zhppcfsq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190320220509.7180-1-rohit.ashiwal265@gmail.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/21, Rohit Ashiwal wrote:
-> Hey Junio!
-> 
-> On Wed, 20 Mar 2019 12:13:47 +0900 Junio C Hamano <gitster@pobox.com> wrote:
-> > * ra/t3600-test-path-funcs (2019-03-08) 3 commits
-> >  - t3600: use helpers to replace test -d/f/e/s <path>
-> >  - t3600: modernize style
-> >  - test functions: add function `test_file_not_empty`
-> >
-> >  A GSoC micro.
-> >
-> >  Will merge to 'next'.
-> >  cf. <20190304120801.28763-1-rohit.ashiwal265@gmail.com> (v3)
-> 
-> If we are going to merge these in next revision, I say there are some
-> minor changes that Eric suggested, basically there were some extra spaces
-> in commit messages and a small change in commit message of [PATCH v3 3/3].
-> There will *not* be any change in code. Should I attend to them or we are
-> merging anyway?
 
-Junio sometimes applies these fixes himself, if he deems it easier to
-apply them directly than to wait for another iteration, and if he has
-time to do so.  If you have a look at the ra/t3600-test-path-funcs
-branch in gitster/git, e.g. on GitHub [*1*], you can see that Eric's
-suggestions for the commit message in 3/3 have already been applied,
-so there's nothing more you need to do here at this point.
+On Wed, Mar 20 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-*1*: https://github.com/gitster/git/tree/ra/t3600-test-path-funcs
+> [...]And the '40' change is self explanatory.
+
+Let me make an attempt at being dense anyway...
+
+> -		else if (v > 40)
+> -			v =3D 40;
+> +		else if (v > the_hash_algo->hexsz)
+> +			v =3D the_hash_algo->hexsz;
+>  	}
+
+This is obviously not a regression, it's a hardcoded 40 *now*. So we
+should take this patch.
+
+But in general, I wonder how this is going to work once we get a few
+steps further into the SHA-256 migration. I.e. here we're still parsing
+the command-line, and the_hash_algo might be initialized early to SHA-1.
+
+So if I set --abbrev=3D45 it'll be trimmed to --abbrev=3D40 by this code.
+
+But then shortly afterwards we pass my SHA-256 object down to some
+machinery, and will then want to abbreviate it.
+
+Isn't that part of the code something we're going to want to support
+looking up objects in either hash, even if we initially started out with
+SHA-1 in the_hash_algo? So we'll be over-abbreviating a SHA-256 object.
+
+Leaving aside the sillyness of wanting to abbreviate *anything* to 45
+characters, I wonder how those sorts of chicken & egg hash scenarios
+will go involving the_hash_algo.
