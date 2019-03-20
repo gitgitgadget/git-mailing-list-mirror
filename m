@@ -7,83 +7,99 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DBA320248
-	for <e@80x24.org>; Wed, 20 Mar 2019 09:44:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4B4A20248
+	for <e@80x24.org>; Wed, 20 Mar 2019 09:51:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726875AbfCTJob (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 05:44:31 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:46754 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725996AbfCTJob (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 05:44:31 -0400
-Received: by mail-io1-f65.google.com with SMTP id b9so1319733iot.13
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 02:44:31 -0700 (PDT)
+        id S1727271AbfCTJvU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 05:51:20 -0400
+Received: from mail-it1-f194.google.com ([209.85.166.194]:51650 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727086AbfCTJvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 05:51:20 -0400
+Received: by mail-it1-f194.google.com with SMTP id e24so30565698itl.1
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 02:51:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8dmUM/felQQohDarMYqqlhrYHKeO18ZEBUWlDL19tNQ=;
-        b=qIQrnf9erqH1s+Y3sDlnwaugIZ4hlRUhmanJzEOhqVEoUrW1x+orxOD8fFLU9WgVNb
-         Na3ErlSMFW50ggXs9F+WmcbJNzOog+95O4oLysqPIrQaW1Mi/3RLfkQEYa/ofjDoRzZf
-         3/QmfrFoE8GDkSCjS9YJ+aSGXAzjBjXhd8DMKBlfHD65bN7obC0DOFLjFshIh580lyd5
-         GgvyPk+G1coOAKUrRrWnlb0w0OnQh5whqmZ8PlsolWu4s79QycILI0BFqBs+5eKK8pJl
-         lt59QqER86DdBrNepp7IYUoc5RHc1/pn9zZWMTBGndUW4NyELbXEyM2gWwa8r7SCwA/K
-         gzNw==
+         :cc:content-transfer-encoding;
+        bh=rhwi+TqpSolGHMwC5JedT30iOs8vq0jiGaVBELRdw04=;
+        b=bowPXWM0B6PpsqqWX3HZRdovK35wLRY7QMLDlhIENuYT9pA66HBJ/YSipgJuvi45ac
+         mWPLH/Pt+1UgfndxKNohoKmyk8COjTcE1MR5kw0SfoOZ47kr81+LBJRZulH4F39ZFFEN
+         r3CFZaC8w0s8AFcsUHcGqpm51Mz/1F4QzonzOiR2BfByoqoqYgEMjzQOU9CDD74jMaCB
+         tkSEwsCyO1+MR03U9AAldNQ9hLGDdxvApI9BuOBPTI9J3RrvbowQ4DcWqaiodqDSXmgB
+         ZZCoOUFUOEcDfMDNgmuoLkG6amtSB/iVJJ0m/21IGE4pc5r9UKp+wqvZ3y/J/hXKwkZP
+         s9FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8dmUM/felQQohDarMYqqlhrYHKeO18ZEBUWlDL19tNQ=;
-        b=IQGkrcF8a3zCuHAEd/VkBGU7XGbfgOcw/EVkIhJjXMxg7Yw7FQRpX5hWg1srk3cb7x
-         F5mdoGbwt/tYAzCNcUwR7rWGdD0Vew7EcXapOOYog2W1jK3GssRw2xKp+3axzvxu+KKf
-         pu1D9KntHn5rvaTyGiLHtzhpXQ3dUignBqScMNuMnAdpXO2IzuJhRVIziaBNOP3vfHOf
-         QvVXywQgBjkGewisBF0CDkcrx7f0kJED7rUryKBtBAFOyK+IFhYLBJpOrdfP2vcrj7Fx
-         uIBT2bQ25MdFW3fKsc3r6bgg8c5lGWSAKKQOW28pdxAak4k2/rHEex+ZDCVsOXPl3u+s
-         BQsg==
-X-Gm-Message-State: APjAAAVm99sN7uXFkiX8q2BTFOTz/5gaj4OCdpweLPLjaOCZPGhgSldr
-        lPJGaGo2ICpAYmaJX8wG/nMaapAVVvoK48EvFe4=
-X-Google-Smtp-Source: APXvYqyBho8WzdmFf6naQ8r677to2LT43HtkQKmWM/edZjOGAS77fq91EwjvLVgFnMx7E7p8SC2Ec1k5tNYUHbhgwg4=
-X-Received: by 2002:a6b:3709:: with SMTP id e9mr3870127ioa.282.1553075071106;
- Wed, 20 Mar 2019 02:44:31 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=rhwi+TqpSolGHMwC5JedT30iOs8vq0jiGaVBELRdw04=;
+        b=BjJ3eLxZtk/c8eg1UX4V0KMoiHWWkEDxVpLo+m6TEqSOlCKH3p7cEDvSVLKjAcd+7r
+         3fAVbpGhukQFYyoQ6v3nkFIcB0OUVijELL4OdgaYL4+fp8PElykhyJC+xKaO2FeY46bz
+         8hAcX28aJyqPKF8WTNuXKmB9gom2zVNrFkrir366UAn+W6g5R4N3V/Vk8rHrkgMTMNVc
+         5f9+DwvN1ry8S8KWig+VtJWR0mPsvu7mT1pzi2wilMFBFdmmOyESV9UMV5/Bs/SUdbAp
+         iSd3vlsRl5n4iOOpBSEWecHc6HuGNeUWtQcKwCrkq5Qdwgr4yM2GVPrpNi/N3jp1Gt3j
+         w1tg==
+X-Gm-Message-State: APjAAAU5kfC1MMakPJHLF/LRtpXMti44w2eMQTHmgFd9zI48cQBlXer0
+        uFNv8XrHqkXMJ/8AQJYuguepilBa2gNz2SAdH2g=
+X-Google-Smtp-Source: APXvYqwN1QLaxI6Q6pYvzSDMbbnkby8Z1OXGtW8oFfW40Y4Y+yniLAaC+ec0fdg1MdAzIRKP+O6AyHtN5DYMB4Y7vnw=
+X-Received: by 2002:a24:3b0a:: with SMTP id c10mr4631858ita.10.1553075478969;
+ Wed, 20 Mar 2019 02:51:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <CALm+SVJR5BCHi_r7B279gKDukD4mYDQuv=K5guje73YDVmOxug@mail.gmail.com>
-In-Reply-To: <CALm+SVJR5BCHi_r7B279gKDukD4mYDQuv=K5guje73YDVmOxug@mail.gmail.com>
+References: <20190317060023.3651-1-pclouds@gmail.com> <20190318113822.6195-1-pclouds@gmail.com>
+ <228d681e-4cfd-7e2e-8bb9-1624cc244a9f@gmail.com> <xmqq5zsextqq.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq5zsextqq.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 20 Mar 2019 16:44:05 +0700
-Message-ID: <CACsJy8Av87XHBX0EKS3W-yZ0yKxfa47d9NaAeUGmh5icGiTGYw@mail.gmail.com>
-Subject: Re: [RFC PATCH] cherry-pick: set default `--mainline` parent to 1
-To:     "C.J. Jameson" <cjcjameson@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 20 Mar 2019 16:50:53 +0700
+Message-ID: <CACsJy8ANaKRz04it93Xpodz1wZfUjsbZXbMfrUSLvtfWbZGQWw@mail.gmail.com>
+Subject: Re: [PATCH v2] unpack-trees: fix oneway_merge accidentally carry over
+ stage index
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 20, 2019 at 10:57 AM C.J. Jameson <cjcjameson@gmail.com> wrote:
-> --m parent-number::
-> ---mainline parent-number::
-> +-m [parent-number]::
+On Wed, Mar 20, 2019 at 7:41 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> > Thanks for doing this, one minor comment - I try to use
+> > phillip.wood@dunelm.org.uk for git as it wont change if I change my
+> > email provider.
+>
+> You mean something like this?
 
-Careful with this. Optional argument with a short option means the
-"stuck" form which is known to cause confusion [1].
+I think he meant fixing the Reported-by: line. But since there's at
+least another commit in 'next' with the 123@gmail address, it's
+probably best to update .mailmap too (and maybe still fix the
+Reported-by: in this patch).
 
-Try "git revert -mX HEAD" and "git revert -m X HEAD". The first one
-reports invalid number (good). The second assumes "X" not to be an
-argument of "-m" and leave it for the caller (revert in this case) to
-handle, which could do unexpected things.
+>  .mailmap | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/.mailmap b/.mailmap
+> index 82cd0569d5..6e137576ec 100644
+> --- a/.mailmap
+> +++ b/.mailmap
+> @@ -212,6 +212,7 @@ Phil Hord <hordp@cisco.com> <phil.hord@gmail.com>
+>  Philip J=C3=A4genstedt <philip@foolip.org> <philip.jagenstedt@gmail.com>
+>  Philipp A. Hartmann <pah@qo.cx> <ph@sorgh.de>
+>  Philippe Bruhat <book@cpan.org>
+> +Phillip Wood <phillip.wood@dunelm.org.uk> <phillip.wood123@gmail.com>
+>  Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
+>  Ramsay Jones <ramsay@ramsayjones.plus.com> <ramsay@ramsay1.demon.co.uk>
+>  Randall S. Becker <randall.becker@nexbridge.ca> <rsbecker@nexbridge.com>
 
-Personally I'm not excited to have more stuck forms like this.
-
-[1] https://public-inbox.org/git/20190208024800.GA11392@sigill.intra.peff.net/
 
 
-> +--mainline [parent-number]::
->   Usually you cannot cherry-pick a merge because you do not know which
->   side of the merge should be considered the mainline.  This
->   option specifies the parent number (starting from 1) of
->   the mainline and allows cherry-pick to replay the change
-> - relative to the specified parent.
-> + relative to the specified parent. The default parent-number is 1.
---
+--=20
 Duy
