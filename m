@@ -7,101 +7,91 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9898B20248
-	for <e@80x24.org>; Wed, 20 Mar 2019 00:39:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 132C920248
+	for <e@80x24.org>; Wed, 20 Mar 2019 00:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726835AbfCTAjC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 20:39:02 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:54644 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725958AbfCTAjC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 20:39:02 -0400
-Received: by mail-wm1-f67.google.com with SMTP id f3so18902469wmj.4
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 17:39:00 -0700 (PDT)
+        id S1726875AbfCTAlU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 20:41:20 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36475 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725958AbfCTAlU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 20:41:20 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y13so839749wrd.3
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 17:41:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3aqrulYg4098fwKzJtYQZkUja29bUAyyc47daiNZsno=;
-        b=sY8ul4n8TNySjejlbfSVlWNHOLHkiNppBVnXMOlV6YM+U/Ashvwi5cHiuK9X9FaTHb
-         vyYAdLf4cAV92XJiDUVXbwFvWKPBIucioubczZUHHrbaNPKhzoW7eY5F3GYJ7eVGr2q9
-         2IqIyLpTMLllK+pJEWCKpD5p+x9uZY97t0ZUteplFfk/EUgqbQzHdRRTHDQEKXPLVNhP
-         umEve053NbNMLzCTiSJlR+OSh/5z7Guaqp3VCtXjYcib5Vrpp/w6+1qomFQWtirxlr21
-         7VX/9AalHR5oaXFDHBsR/OPIyhIWfOmYdlIfDt3l6jVqGOuR6+ZvxFVT8F/2cw+RUW/Y
-         fixQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Rojx8XvUmKQQCXKWCFwjG57V8R2DOCA+O6D7zvsp2NQ=;
+        b=Vg3lBg1cs7GspJN6P+rXC2QnXyG2fkuNOrn128XAe7A+JUc+0eXI7yr3VLZfPS94ZN
+         jf+X7+FUfBxwR+1xhgVXfGcA6y4hIqzLqbbhHyP5+6CN0zzFPehlwhGVv2CLhy9tOLuG
+         Ja3u4k6jI29WDfUy+I2rDVgbqQgB+71ZY5kAl8ZLeI2YaWd+UW/p+vlV1+mOWc7X18f3
+         m72sLTPK3XxahjraRiK83EcS5dWnfMvr7Cykk0Mba9Ev4XRPuvOeaK2Pqt8lgmtFPu9v
+         uZo7FpcexRxAFxVRSd8h4uyp/EItJDxTKJKQM/A0T0qIpnm90HNagodr0Ji9Adf9kumY
+         4crQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=3aqrulYg4098fwKzJtYQZkUja29bUAyyc47daiNZsno=;
-        b=Yj+zDGjMt38E5ZHymPz2Us7qsbb00fzQpEts6BM5hbB1/96NwlEkSQXAzqb+Ytr+VS
-         L8hjHZ0QYaPFLJzqOqQ1zx7ABc+Wp31OJWKxcXUz8U8bRubo3tr+SEJr6TB1OIS6mLdw
-         E+XZ1Nz1sBWGt/sknxToMKdWuWLc9mUAfRDYHxqkLObql8XKfhOsPithHNMHyCmSrj4P
-         +9f3ix6Oacm36jUYjyo3TboAusLJvMquOXGl5DPaNY6Fv037d2/nDJS49EXCxEX9TLkS
-         iQTR0xWiDmjuku66vsBntosrmT1tWL9vkEoMqKoej9XosDeucUzkJWhuuhH7q3NeQQjR
-         gc+g==
-X-Gm-Message-State: APjAAAUCVvOeDfQ13heHpd7Sl4n2giMz+9Xqh/19yNO/vbFqmi+XsD6k
-        BYIqdDr4U5liQjLUEtfg2Nw=
-X-Google-Smtp-Source: APXvYqySpI428g7o6G99qflw3R88zdz+Y68wLBnIk9xnlT+Yz50oD7R6++5YGS5TWGhxMSiq6zcNCg==
-X-Received: by 2002:a05:600c:21d3:: with SMTP id x19mr5774048wmj.2.1553042339604;
-        Tue, 19 Mar 2019 17:38:59 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=Rojx8XvUmKQQCXKWCFwjG57V8R2DOCA+O6D7zvsp2NQ=;
+        b=eX4vMFTMsGWZgShiltLF5K5IRQa+bsBvQ8Ky2d3Cl0AoMYAKr5+bXwXGQsaP7658XR
+         auBwQCizNRklJ40wqX5+wrai71ADqMjiOE/lUEsTA1hFfdbdgpMaKy7T1lPhXCOm4/Ox
+         ElX1HoF9Da7qMKBRtnnRQnwjdYonaMqpjFqj4yFCRlSH+4VHMzrtR4ofvvBAqv8aAo1/
+         uUZqrCKKvO7nRIUXuo3+vrkE6l84rrcBPsiM83qv23LSCwrESx4iKQn+39hagi0LedNn
+         p9X4/xIS9LJ8oCXfoxKzZsmibjUEqKCs5MGgVH7RoByib7kGbFaxnjGqVc3u4AbgeYu/
+         PUsw==
+X-Gm-Message-State: APjAAAWdz2kAiRWSbUGflaugX69IHcl7K2oaaMJ107eot1a7T0QVTRgi
+        K6yuV7rSLEBou72Toq7lUpc=
+X-Google-Smtp-Source: APXvYqy1WCcjBY6T9Kukoq1sk1Shlvr5Hdq+S1IW2qKEdww7ofLEDodV5uVSNuPp36mqXEwd5Fw9JA==
+X-Received: by 2002:adf:e9c1:: with SMTP id l1mr9120582wrn.270.1553042478647;
+        Tue, 19 Mar 2019 17:41:18 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id g1sm474306wmc.25.2019.03.19.17.38.57
+        by smtp.gmail.com with ESMTPSA id v6sm922850wme.24.2019.03.19.17.41.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Mar 2019 17:38:58 -0700 (PDT)
+        Tue, 19 Mar 2019 17:41:17 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] cherry-pick: do not error on non-merge commits when '-m 1' is specified
-References: <87efh0pdln.fsf@javad.com>
-        <xmqqsh5gt9sm.fsf@gitster-ct.c.googlers.com>
-        <8736nj2jcl.fsf@javad.com>
-Date:   Wed, 20 Mar 2019 09:38:57 +0900
-In-Reply-To: <8736nj2jcl.fsf@javad.com> (Sergey Organov's message of "Tue, 19
-        Mar 2019 14:29:14 +0300")
-Message-ID: <xmqqbm26xtum.fsf@gitster-ct.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, martin.agren@gmail.com, newren@gmail.com,
+        sunshine@sunshineco.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v2] unpack-trees: fix oneway_merge accidentally carry over stage index
+References: <20190317060023.3651-1-pclouds@gmail.com>
+        <20190318113822.6195-1-pclouds@gmail.com>
+        <228d681e-4cfd-7e2e-8bb9-1624cc244a9f@gmail.com>
+Date:   Wed, 20 Mar 2019 09:41:17 +0900
+In-Reply-To: <228d681e-4cfd-7e2e-8bb9-1624cc244a9f@gmail.com> (Phillip Wood's
+        message of "Tue, 19 Mar 2019 14:06:44 +0000")
+Message-ID: <xmqq5zsextqq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> I think that "first-parent is special" is the way to go indeed for
-> porcelain, as it does make many thing easier and more convenient[*].
+> Thanks for doing this, one minor comment - I try to use
+> phillip.wood@dunelm.org.uk for git as it wont change if I change my
+> email provider.
 
-Perhaps.  However ...
+You mean something like this?
 
-> [*] One example that immediately comes to mind is "git log -p" for a
-> merge commit. I doesn't currently (as of v2.10) show the first-parent
-> diff, for whatever reason. "git log -p -m --first-parent" is needed to
-> get the answer to most "obvious" question: what (merge) commit did to my
-> mainline? "git show" has its own issues.
+ .mailmap | 1 +
+ 1 file changed, 1 insertion(+)
 
-... this is very much deliberate and will remain so.
-
-A single ball of wax "diff M^ M" for a merge commit is not always
-what you would want, especially while viewing "git log -p" (without
-"--first-parent").  The reason why the user does not explicitly say
-"--first-parent" is because the user wants to even see the details
-of individual steps of what happened on side branches.
-
-Incidentally, in such an "I am interested in what happened in each
-individual step" mode, the primary change that a merge by itself
-does is better shown with "diff --cc M^ M", not "diff -p M^ M".
-That is why "show" defaults to "--cc".
-
-"git log -p --first-parent" that requires "-m" to show the single
-ball of wax diff for a merge is a separate matter.  When the user
-explicitly says "log --first-parent", it is a clear indication that
-the user does not want to see individual steps of how side branches
-built what each merge brings into the mainline.  From that point of
-view, ever sice I introduced "--first-parent" traversal, I've been
-wondering what the true downside would be if we turned "-m" on
-automatically when these two options are used without "-m".
-
-But it has not disturbed me deeply enough to bother looking into it
-further.
+diff --git a/.mailmap b/.mailmap
+index 82cd0569d5..6e137576ec 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -212,6 +212,7 @@ Phil Hord <hordp@cisco.com> <phil.hord@gmail.com>
+ Philip Jägenstedt <philip@foolip.org> <philip.jagenstedt@gmail.com>
+ Philipp A. Hartmann <pah@qo.cx> <ph@sorgh.de>
+ Philippe Bruhat <book@cpan.org>
++Phillip Wood <phillip.wood@dunelm.org.uk> <phillip.wood123@gmail.com>
+ Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
+ Ramsay Jones <ramsay@ramsayjones.plus.com> <ramsay@ramsay1.demon.co.uk>
+ Randall S. Becker <randall.becker@nexbridge.ca> <rsbecker@nexbridge.com>
