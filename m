@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B19920248
-	for <e@80x24.org>; Wed, 20 Mar 2019 11:48:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62F5A20248
+	for <e@80x24.org>; Wed, 20 Mar 2019 11:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728063AbfCTLsP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 07:48:15 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:33481 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728001AbfCTLsO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 07:48:14 -0400
-Received: by mail-pf1-f195.google.com with SMTP id i19so1780885pfd.0
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 04:48:14 -0700 (PDT)
+        id S1728066AbfCTLsT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 07:48:19 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:46118 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728001AbfCTLsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 07:48:19 -0400
+Received: by mail-pg1-f193.google.com with SMTP id a22so1601223pgg.13
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 04:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rZPnPdvuhrNvtya1bPytGdmJkP/s5w0ac7YcgyJxi3Q=;
-        b=F6v6XzUik9K9lfXVjgM8T+/sjlIDPPyjpSXmDFSDQPRdMeQBBNOajDd64wzlM9GVtJ
-         5RUcEdUPa9zbnLG2Nu1S9HUZHwBHXMK01JT9FLRlo3zuwRi2eAkqeMTxBr1sOgMmLc9x
-         42as++IEwlwFEG7ehe6H8efkBYwDYrVH9SoS7bw7cizLegEY4vAXz3zzZyXcIyYD5M0s
-         qfYm23HKNMiUArZYprnB+J/27DDinK617q4dYyQjq64Qy16h8FB+RCBmmqaKFj7RUz8D
-         SmwWgADVEHDFwBfkMSvEJa8Ye0hS/UIfJ2ViYWlTFc760oL033lYidoy1Og5xJAA/w0f
-         4MSQ==
+        bh=hl1MYv/C99BXMxMuwnnnjgPAR5zH8sVRZuOmRuaQ0Bs=;
+        b=QUqc5PGyQm2apFs37kJboFSl/gLo0ffxU3btkyjUTGct+PV29wQcZmPfM6YD+RCrGS
+         np/5m7w6ptxsR66b2MB7hdELNEkVjOJ6jHCQELXY5g3Cc7DKHL5IaW7Q1ysfhhHxaY4J
+         P+ufB/kgFW5d0geStaRQe8bgfIcC1w9hDsh3OUzS4IEyLLHxdwwtmewRbJnwg2pxHreK
+         PnMpSE9Kn7J/BSjlntkMYC2pLEXVjYwoGIcer7VeBh19z2J+UWf+VMhzsQr/cq8Y+qYP
+         5bQxQioSmhTFAVBNfBMILcuqRtZJzgyluc9C6V2/BvqGQD1WgF8cI7pnE7Qo7qKsvYjO
+         X46g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rZPnPdvuhrNvtya1bPytGdmJkP/s5w0ac7YcgyJxi3Q=;
-        b=Ahqea8rdGAJv9CGjOjNmOxzX1vlmT8tH5Y/CXBguhGv8XiJUmIW6Gv6J2nJi13Nyry
-         hxRuC+svf03VLPqyly3hLq/3mwIm8eOtD8tfpZNKZEgxRRnqmwTN9LcH9EZ7MJqd8KvX
-         lqjXjomuKQx4v5rzDvuooZXCMVXcNi3BpuOcXuz7yM3oI6Joraau+uLw7cpSaVH0sK+v
-         WA2jw7XjFqFqlxsHJWOcWkdBLd8Gii2dDxImdbcWYa/08B4BDoAovCUtWyhI+y67AHuB
-         UVBC5TzoZBw6+LNSHhiZpsUB67fWlQjJVYgpwLuK0QxujM3b4vZ59kD2Q2IsUNDbJGKb
-         DaVg==
-X-Gm-Message-State: APjAAAWc3fh3niVMLID62bKEHkZgCkfetBrnlF86kEzZ/55fOlr2rlkm
-        7cbVFlraisFLTk/xOxL+wiUBfMK1
-X-Google-Smtp-Source: APXvYqwnnBbXuEn0mBbhXXUxMWUEYbSxfLa3S3qaKBI0BXG6vM9VTIXI1fykj4cBAPeyDwKIUB9h2w==
-X-Received: by 2002:a17:902:d24:: with SMTP id 33mr23325517plu.246.1553082493735;
-        Wed, 20 Mar 2019 04:48:13 -0700 (PDT)
+        bh=hl1MYv/C99BXMxMuwnnnjgPAR5zH8sVRZuOmRuaQ0Bs=;
+        b=QNdiAOCpANoLgJVgqUpZuZ7JFW5dk51aeHnvGOGD5hWAPHIwwYtUU70mg8TlHM9Tkh
+         4u4rsLK/cAegpLDmPauxq44nBd5P5dZQrYXOs22pD015n8ZhFxJ4mNH/HOGURhzgnObn
+         nXWMYGKxsBs5WLr/8bEg7t9sVUiYcPh0XmNlzT4vLwknWyRDHE0ioB2S8Blk64vLJEpY
+         O3bEOkTYrIjeePIPAqjPc2uPQKpPbSXw8LR9VqQH4jumuFOopVy/ExIqhFCeTJmlQGrZ
+         oQ29XXIEtw+ZhpsUU/J1kzb2MkCJ0+ENFnvSjvOdPeY1XCqXGB6OCMYJSyEpCNlM8W5w
+         2LDQ==
+X-Gm-Message-State: APjAAAXzs8J7veNfIjTbDzNFVd76EVL5lKtGFNp+QAFaZqfuNZwAatp6
+        iEaLpQ/kAWcSTq/TosBg4IHrVIBo
+X-Google-Smtp-Source: APXvYqyA8Y0SI9I2Fq3jcflYQzZlv+axLm3QoSIdDzaeYWPMhc1uUQRVe3W+QsZO86jWsi+o1ftZZQ==
+X-Received: by 2002:a65:614f:: with SMTP id o15mr355869pgv.383.1553082498228;
+        Wed, 20 Mar 2019 04:48:18 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id a7sm2337909pfc.45.2019.03.20.04.48.11
+        by smtp.gmail.com with ESMTPSA id d3sm2398423pfc.125.2019.03.20.04.48.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Mar 2019 04:48:13 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 20 Mar 2019 18:48:09 +0700
+        Wed, 20 Mar 2019 04:48:17 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 20 Mar 2019 18:48:14 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 13/20] diff-parseopt: convert --no-prefix
-Date:   Wed, 20 Mar 2019 18:46:56 +0700
-Message-Id: <20190320114703.18659-14-pclouds@gmail.com>
+Subject: [PATCH 14/20] diff-parseopt: convert --inter-hunk-context
+Date:   Wed, 20 Mar 2019 18:46:57 +0700
+Message-Id: <20190320114703.18659-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190320114703.18659-1-pclouds@gmail.com>
 References: <20190320114703.18659-1-pclouds@gmail.com>
@@ -71,51 +71,106 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ diff.c          | 50 +++----------------------------------------------
+ parse-options.h |  3 ++-
+ 2 files changed, 5 insertions(+), 48 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 4ab5b3c06a..045fdbb882 100644
+index 045fdbb882..e2f515a7da 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -5022,6 +5022,18 @@ static int diff_opt_line_prefix(const struct option *opt,
- 	return 0;
+@@ -4573,50 +4573,6 @@ void diff_setup_done(struct diff_options *options)
+ 	FREE_AND_NULL(options->parseopts);
  }
  
-+static int diff_opt_no_prefix(const struct option *opt,
-+			      const char *optarg, int unset)
-+{
-+	struct diff_options *options = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(optarg);
-+	options->a_prefix = "";
-+	options->b_prefix = "";
-+	return 0;
-+}
-+
- static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *ctx,
- 					     const struct option *opt,
- 					     const char *arg, int unset)
-@@ -5276,6 +5288,9 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_CALLBACK_F(0, "line-prefix", options, N_("<prefix>"),
- 			       N_("prepend an additional prefix to every line of output"),
- 			       PARSE_OPT_NONEG, diff_opt_line_prefix),
-+		OPT_CALLBACK_F(0, "no-prefix", options, NULL,
-+			       N_("no not show any source or destination prefix"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_no_prefix),
+-static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *val)
+-{
+-	char c, *eq;
+-	int len;
+-
+-	if (*arg != '-')
+-		return 0;
+-	c = *++arg;
+-	if (!c)
+-		return 0;
+-	if (c == arg_short) {
+-		c = *++arg;
+-		if (!c)
+-			return 1;
+-		if (val && isdigit(c)) {
+-			char *end;
+-			int n = strtoul(arg, &end, 10);
+-			if (*end)
+-				return 0;
+-			*val = n;
+-			return 1;
+-		}
+-		return 0;
+-	}
+-	if (c != '-')
+-		return 0;
+-	arg++;
+-	eq = strchrnul(arg, '=');
+-	len = eq - arg;
+-	if (!len || strncmp(arg, arg_long, len))
+-		return 0;
+-	if (*eq) {
+-		int n;
+-		char *end;
+-		if (!isdigit(*++eq))
+-			return 0;
+-		n = strtoul(eq, &end, 10);
+-		if (*end)
+-			return 0;
+-		*val = n;
+-	}
+-	return 1;
+-}
+-
+ int parse_long_opt(const char *opt, const char **argv,
+ 		   const char **optarg)
+ {
+@@ -5291,6 +5247,9 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_CALLBACK_F(0, "no-prefix", options, NULL,
+ 			       N_("no not show any source or destination prefix"),
+ 			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_no_prefix),
++		OPT_INTEGER_F(0, "inter-hunk-context", &options->interhunkcontext,
++			      N_("show context between diff hunks up to the specified number of lines"),
++			      PARSE_OPT_NONEG),
  		OPT_CALLBACK_F(0, "output-indicator-new",
  			       &options->output_indicators[OUTPUT_INDICATOR_NEW],
  			       N_("<char>"),
-@@ -5468,8 +5483,6 @@ int diff_opt_parse(struct diff_options *options,
+@@ -5483,9 +5442,6 @@ int diff_opt_parse(struct diff_options *options,
  	}
  
  	/* misc options */
--	else if (!strcmp(arg, "--no-prefix"))
--		options->a_prefix = options->b_prefix = "";
- 	else if (opt_arg(arg, '\0', "inter-hunk-context",
- 			 &options->interhunkcontext))
- 		;
+-	else if (opt_arg(arg, '\0', "inter-hunk-context",
+-			 &options->interhunkcontext))
+-		;
+ 	else
+ 		return 0;
+ 	return 1;
+diff --git a/parse-options.h b/parse-options.h
+index c95cbe26f0..cca64d04cb 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -137,6 +137,7 @@ struct option {
+ #define OPT_CALLBACK_F(s, l, v, a, h, f, cb)			\
+ 	{ OPTION_CALLBACK, (s), (l), (v), (a), (h), (f), (cb) }
+ #define OPT_STRING_F(s, l, v, a, h, f)   { OPTION_STRING,  (s), (l), (v), (a), (h), (f) }
++#define OPT_INTEGER_F(s, l, v, h, f)     { OPTION_INTEGER, (s), (l), (v), N_("n"), (h), (f) }
+ 
+ #define OPT_END()                   { OPTION_END }
+ #define OPT_ARGUMENT(l, h)          { OPTION_ARGUMENT, 0, (l), NULL, NULL, \
+@@ -155,7 +156,7 @@ struct option {
+ 				      (h), PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1}
+ #define OPT_CMDMODE(s, l, v, h, i)  { OPTION_CMDMODE, (s), (l), (v), NULL, \
+ 				      (h), PARSE_OPT_NOARG|PARSE_OPT_NONEG, NULL, (i) }
+-#define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v), N_("n"), (h) }
++#define OPT_INTEGER(s, l, v, h)     OPT_INTEGER_F(s, l, v, h, 0)
+ #define OPT_MAGNITUDE(s, l, v, h)   { OPTION_MAGNITUDE, (s), (l), (v), \
+ 				      N_("n"), (h), PARSE_OPT_NONEG }
+ #define OPT_STRING(s, l, v, a, h)   OPT_STRING_F(s, l, v, a, h, 0)
 -- 
 2.21.0.548.gd3c7d92dc2
 
