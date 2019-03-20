@@ -2,81 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECEF020248
-	for <e@80x24.org>; Wed, 20 Mar 2019 13:58:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDA7620248
+	for <e@80x24.org>; Wed, 20 Mar 2019 14:21:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727437AbfCTN6W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 09:58:22 -0400
-Received: from mail-io1-f66.google.com ([209.85.166.66]:36722 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbfCTN6V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 09:58:21 -0400
-Received: by mail-io1-f66.google.com with SMTP id f6so2058911iop.3
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 06:58:21 -0700 (PDT)
+        id S1727248AbfCTOVE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 10:21:04 -0400
+Received: from mx0a-00256a01.pphosted.com ([148.163.150.240]:54802 "EHLO
+        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1727144AbfCTOVC (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 20 Mar 2019 10:21:02 -0400
+Received: from pps.filterd (m0142701.ppops.net [127.0.0.1])
+        by mx0b-00256a01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id x2KEBBRr063612
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 10:21:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=20180315; bh=mJTPYZ1ZovFWSUTSCWbWeKlPDGyX3sxOk5jV2al6Fzk=;
+ b=XNlEDtON1lKGdsUU9P0LRbX/4YITaniRorsH5hhwqwLAXkMxCcub3UTuharuYFoG7GkV
+ 7P6aZtDG9jsKpcl03jnnU1amyly7FnJC55Eu+VvrKDzOBX2GPIlLCVwGdScUJeKouehh
+ jBocXtbUlAVyWG3KrYlbaeM4+q+y33fB2na6lekIvb3HTL+b9/k97juOsqz+T8V161Jz
+ O/m2qEIdGkCueXBfAOqNLiGvnlqq8lii9eGb2+KrVIi+1U0Qg5V9xU4XKUkt88orknLv
+ 0MXjft7H5ydnWhWMDznHjEtcrWK+yvWEtH4tHZObKiUW95V/CyRleR3PZGkm78LIB3xO mw== 
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com [209.85.210.71])
+        by mx0b-00256a01.pphosted.com with ESMTP id 2rb7jna5f4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 10:21:00 -0400
+Received: by mail-ot1-f71.google.com with SMTP id e12so1271159otl.9
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 07:21:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sFUh/gPWls+3/tZwItFszDr3bUswGyEf80A26SQXbl8=;
-        b=Ea8yt7r+OiNQtn9Ek/VyQN2Py7MhGbnszKmRXTFZER3vNFy8dosE5GsljJTyLh+8hn
-         ebVTZ6GgdhwlDK9qxUXubLI5iuILjq0lngJqeNuy6qeNDPo1u3ODLL8lMgTfL6bsk4Mx
-         Uhe6IkPf1U/4B8lHlheHp3370tBZh1YR5ZFg4mZ1lNABEDoGU32v6798lZ9s2mRo8QHh
-         gX1lCYiQ/dTKQO9/AWJl7Jp5h35iYUwoh/kMwqDC8Nlq1+jA2ZAK22xs8E5y/spJAlbj
-         AHC2Q1IJLHZLTsxhiM0YcTnlAwDeSM4FBNqZeH3zHrcYoKR1b2gPEDomUrStE5eaaruY
-         TWJw==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=mJTPYZ1ZovFWSUTSCWbWeKlPDGyX3sxOk5jV2al6Fzk=;
+        b=wRhxe+MMZgAOJxnyCuqvBTpWIBb3PnrI0oPn5NN1tosqfUZkcYqLcRMFRqHuWtogP5
+         qnAZbGNGUS+ZPAxV2MrDEIQDjzhXJKADDW++QoGKTnKcIQi8UtF6L3lm+iEU18E/R8Yq
+         yzeZesiqC2kSvUCOHSRIYmriITYFEoBhVAnEe0yRhseDzbDQ4m8mAbFP6aLulcaSVKg2
+         ZNeIjml9oH43/LuHk7qp5iD2fiUUIDW7zDE4LTfItIMMTYwQEas4ASDNjVqNtC8eOnff
+         ZPREmcRTcwAq7YiA+R0MCDJgSe991dYgb5v7PjIIemXpb1LE4z+uu81bQWDdfqLzN3uY
+         Wehg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sFUh/gPWls+3/tZwItFszDr3bUswGyEf80A26SQXbl8=;
-        b=hhMBD4yBEoUvjpQUStl1vyfuCtoWIKDqTwhhNpGv1M/S5S2IuLS2oJ9w8L6UCHzDsZ
-         L+myHCzG5CnSe8z669wmvGIdC3oRUeubGyoKlhiibYwbb5grL6Mr+0zt2kV/X4AmobrX
-         KQz9wN+EYWxF6v4gz1L1Xo3ip92pgXfNtPs6SoghrSUMF5LpUwFJXGfAkTwVydQFVdQR
-         dc+MsFv1q2AjHVZIDnjyZPgmRRu7GjJFWeMcghxy/AYmFzt2DTboyvvnckNH04RMV9cu
-         3Rj3lOPNce7AP8RxR/jh52qPKfTD+9/geXKHulo5a22H6a897foCUxEpTpLBnPiXj/u/
-         Qnbw==
-X-Gm-Message-State: APjAAAX1gi9nA0jnCT2dyUChj/6VusCGHAKiN/JV+4+k6lGvBIX2OdbG
-        Y3VJ92zFGANUKXEODhUhV0ufovEJ4XQDBUhH/uE=
-X-Google-Smtp-Source: APXvYqy7IYUX6HBeZx9mVFzJghotbZ22ChMqrXhd0yFKT9vJW3n8dFvlNCOdfXPxSop8PTwuxwMipwkT4Pvek2G2ilM=
-X-Received: by 2002:a5d:9446:: with SMTP id x6mr15762203ior.236.1553090301090;
- Wed, 20 Mar 2019 06:58:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mJTPYZ1ZovFWSUTSCWbWeKlPDGyX3sxOk5jV2al6Fzk=;
+        b=uYc0beJKigiyc+5WgZP/vGuYGk6ZPRV1Go/n/sleNJs/pcmGD/VlGaNwMue1o3w7zN
+         8+JB60Pvms7kAqNSG9wEMsbHHp27cZGQoATaNDamZuHneQecr6Kj7zKAsX4BXt5KmkEp
+         VvWM44DnB26oMcwKF06svQ+9rjRT/wGpkOf9CzgNpGy228xeSSOJhz6HvjIT7G+KOJdG
+         1KLPYz7DxyRLTaDiJdZ3VPIRQlKBW/JdVKxZ/JBHRgdvL/ZS0TX7YEbHnufXS+btC59S
+         9R5Hw3InK6MLa97JffMVxMZRuoxvbbvVWXlBaGQFXhIoMf3lYwD3vOkgmcCH5QLKRfOd
+         vGtQ==
+X-Gm-Message-State: APjAAAXV2+6V5gQp/v0LOFQJyk5SMpo0jcQ8Xd2dnItRcrh+s1ogiEIR
+        P1Qs3tjr9GEEXjf3XTK977jliAPl3KOoR8hJRoM91DZzLgzELiKUlV6ott3SNuI2ZEtYoXvjRI2
+        QIkRju0tu7gI=
+X-Received: by 2002:aca:b444:: with SMTP id d65mr5079429oif.169.1553091659698;
+        Wed, 20 Mar 2019 07:20:59 -0700 (PDT)
+X-Google-Smtp-Source: APXvYqwxAovLRzP73Vfbb1FBbxRwjb+4MQLauPfJwErXoAZZpgdxE7iSwfzBtPaZkp7tTP7WOkLJxQ==
+X-Received: by 2002:aca:b444:: with SMTP id d65mr5079398oif.169.1553091659142;
+        Wed, 20 Mar 2019 07:20:59 -0700 (PDT)
+Received: from LykOS.localdomain (216-165-95-128.natpool.nyu.edu. [216.165.95.128])
+        by smtp.gmail.com with ESMTPSA id x30sm928840ote.11.2019.03.20.07.20.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 20 Mar 2019 07:20:58 -0700 (PDT)
+Date:   Wed, 20 Mar 2019 10:20:57 -0400
+From:   Santiago Torres Arias <santiago@nyu.edu>
+To:     Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Cc:     git@vger.kernel.org
+Subject: Re: git tag -v should verify that the tag signer intended the same
+ tag name as the user is verifying
+Message-ID: <20190320142055.zlh5iby5pxs3fy3r@LykOS.localdomain>
+References: <875zsdu41d.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-References: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
- <20190319093910.20229-1-pclouds@gmail.com> <xmqqimwexujm.fsf@gitster-ct.c.googlers.com>
- <CACsJy8BLxWea0ZrHkSU6+nE7dr5YvFNVH1tLhaqPRadi+2Hhwg@mail.gmail.com>
- <xmqqk1guwdeu.fsf@gitster-ct.c.googlers.com> <CACsJy8AUH4nOkt6H=yu=eRktK4me9kEkjqsC3zyNZDwUKXqCPg@mail.gmail.com>
- <xmqqftriwbz6.fsf@gitster-ct.c.googlers.com> <CABPp-BFB0jafua0CGEsr66EzQvHncLYvws8rt+LdkQ_LXcEq5A@mail.gmail.com>
-In-Reply-To: <CABPp-BFB0jafua0CGEsr66EzQvHncLYvws8rt+LdkQ_LXcEq5A@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 20 Mar 2019 20:57:54 +0700
-Message-ID: <CACsJy8BdPgPgaWW=3_y5peLdqo24-ozC=s90WW2DN9OsYe9v_w@mail.gmail.com>
-Subject: Re: [PATCH] checkout.txt: note about losing staged changes with --merge
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="hetd2ugq5xcpd2fl"
+Content-Disposition: inline
+In-Reply-To: <875zsdu41d.fsf@fifthhorseman.net>
+X-Orig-IP: 209.85.210.71
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1903200110
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 20, 2019 at 8:53 PM Elijah Newren <newren@gmail.com> wrote:
-> So, I think we do need something (eventually at least).  Would you
-> prefer we dropped this patch from Duy and instead made 'checkout -m'
-> abort when the index is dirty?
 
-I have no problem with this. Still scratching my head wondering if
-t7201-co.sh has a slightly incorrect setup, or aborting is actually
-wrong. You're probably a better person to understand that test case
-;-)
--- 
-Duy
+--hetd2ugq5xcpd2fl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+This has been known for a whlie now[1]. The consensus back then was that
+this information was up to higher-level integrators to verify using
+means like e.g., --format.
+
+This is implemented in for example pacman/devtools here[2]. We published
+a paper with a more thorough security model here[3], and there's some
+stalled work into implementing this using push certificates...
+
+Thanks,
+-Santiago.
+
+[1] https://public-inbox.org/git/xmqqk2hzldx8.fsf@gitster.mtv.corp.google.c=
+om/
+[2] https://lists.archlinux.org/pipermail/pacman-dev/2017-September/022123.=
+html
+[3] https://www.usenix.org/conference/usenixsecurity16/technical-sessions/p=
+resentation/torres-arias
+
+On Wed, Mar 20, 2019 at 08:24:46AM -0400, Daniel Kahn Gillmor wrote:
+> Hi git folks--
+>=20
+> I understand that git tags can be easily renamed.  for example:
+>=20
+>     git tag push origin refs/tags/v0.0.3:refs/tags/v2.3.4
+>=20
+> However, for tags signed with any recent version of git, the tag name is
+> also included in the signed material:
+>=20
+>     0 dkg@test:~$ git tag -v v0.0.3
+>     object 8ae6a246bef5b5eb0684e9fc1c933a4f8441dadd
+>     type commit
+>     tag v0.0.3
+>     tagger Daniel Kahn Gillmor <dkg@fifthhorseman.net> 1528706225 +0200
+>=20
+>     this is my tag message
+>     gpg: Signature made Mon 11 Jun 2018 04:37:05 AM EDT
+>     gpg:                using Ed25519 key C90E6D36200A1B922A1509E77618196=
+529AE5FF8
+>     gpg: Good signature from "Daniel Kahn Gillmor <dkg@fifthhorseman.net>=
+" [ultimate]
+>     Primary key fingerprint: C4BC 2DDB 38CC E964 85EB  E9C2 F206 9117 903=
+8 E5C6
+>     0 dkg@test:~$
+>=20
+> But git tag doesn't verify that the internal name is the same as the
+> external name (note that it still returns an exit code of zero):
+>=20
+>     0 dkg@test:~$ git tag -v v2.3.4
+>     object 8ae6a246bef5b5eb0684e9fc1c933a4f8441dadd
+>     type commit
+>     tag v0.0.3
+>     tagger Daniel Kahn Gillmor <dkg@fifthhorseman.net> 1528706225 +0200
+>=20
+>     this is my tag message
+>     gpg: Signature made Mon 11 Jun 2018 04:37:05 AM EDT
+>     gpg:                using Ed25519 key C90E6D36200A1B922A1509E77618196=
+529AE5FF8
+>     gpg: Good signature from "Daniel Kahn Gillmor <dkg@fifthhorseman.net>=
+" [ultimate]
+>     Primary key fingerprint: C4BC 2DDB 38CC E964 85EB  E9C2 F206 9117 903=
+8 E5C6
+>     0 dkg@test:~$
+>=20
+> This seems troublesome, as I expect there are many scripts that rely on
+> the tag name and the return code of "git tag -v" to assert that this is
+> a correct tag.  Anyone in control of the above repository could pass off
+> an old tag (or indeed, a tag from an entirely different project that
+> happens to be signed by the same author) as whatever version they wanted
+> to, and convince automated scripts that work with new versions to
+> "upgrade".
+>=20
+> I think "git tag -v" should be more strict about what it needs to "pass"
+> a verification.
+>=20
+> At a minimum, if the internal tag name (the line matching "^tag " before
+> the first blank line) doesn't match the tag name being verified, "git
+> tag -v" should report a warning to stderr and return a non-zero error
+> code.
+>=20
+> What do you think?
+>=20
+> i'm not subscribed to git@vger.kernel.org, so please keep me in Cc on
+> this thread, thanks!
+>=20
+>     --dkg
+
+
+
+--hetd2ugq5xcpd2fl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAlySTEcACgkQRo8SLOgW
+IpVFJQ/9GhiWch4w0hXEmnwGrFYsHdj1/fvwffroO6QrlhDsLFzdac7HwFIjdJYn
+eOA3xZkYx6hQiG5adbmbRZ4I/wuYIFc1sDSnNZzf01xXJbT3cYStIQme5cI6bgYm
+Tw1ySkpH0glafsE0a3EdYCwEh2M4jMA9J69dGabcqEFiJmvs40Q2NSS6Mf9Io7JQ
+5s0FHM1GDTGjE/8pKvtcJC+sK60+GO9pEL3EgvD0kGzWl1M66wlNs/jluaUR+FOC
+z2ZV4SJ0uvN7FRo8ev6nTj9bMn1jS2zy0ilu2M7KH8JeP8WlxjPvkEQ0/6QjP/LR
+SO4Atfdt7BnTxQ2aYO5EqODfZ1wPTmqhCNG0Z7HnkfkV7eONyFC4omY4bzyXLCVh
+Pn6JAylI8MRf3A1nYD39/q+mMaDk9hGAtL67GWDt1fduE03IN7kjFzp+1g/Z9GmC
+t6ZkAFH0b+FzvZIEQ/gu8NkL/jn96EbgMRQ4hJyJECLJC4/8yDO8REeDlHJE4OVr
+Fs1IsJWiKF/Bh96on/7yEbZs7zgyWJwZhX0T1BWDFXZ1BMpySIHxDYaYwyVRNB+p
+2i1r28LGOxtbiRL2HdkJ+aj20XIfCjqn/DVkqnHDsQorc6VVB38OXo9DrbF1wakJ
+SdZD7B6uzcbgWtL180P/F0j1lcM7GFWqDcEiXt+6F61DX1O5tmk=
+=//dP
+-----END PGP SIGNATURE-----
+
+--hetd2ugq5xcpd2fl--
