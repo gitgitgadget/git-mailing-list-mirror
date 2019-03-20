@@ -2,76 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DE1F20248
-	for <e@80x24.org>; Wed, 20 Mar 2019 11:28:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E03B020248
+	for <e@80x24.org>; Wed, 20 Mar 2019 11:47:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727912AbfCTL2K (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 07:28:10 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:44340 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726782AbfCTL2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 07:28:09 -0400
-Received: by mail-ed1-f67.google.com with SMTP id x10so1615190edh.11
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 04:28:08 -0700 (PDT)
+        id S1728017AbfCTLrO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 07:47:14 -0400
+Received: from mail-pg1-f172.google.com ([209.85.215.172]:46294 "EHLO
+        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727673AbfCTLrO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 07:47:14 -0400
+Received: by mail-pg1-f172.google.com with SMTP id a22so1599438pgg.13
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 04:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=IK2B29k6BhpUqqHzckfy+XDU31Vn1DarGa5SLZCAdpI=;
-        b=soPRsAnpY4jTCUXv9VKf2kpSLJLIhglsuaYoHOYeUezerj0+Y9Z+KVsiQO7xYGmwiQ
-         kOpv0qQW/KUa/l5Pvr6NbjpDbj3gB7OQ11bkaHenwb7yNm8nPTFr1aX2NPOK4juCbZMe
-         S4sjVq+bizQSLPYcifFZqloAz+G+b/Q0FNvCTix2qodJ8kwrCXh7wW4wQUs6A9i8T05A
-         Y0OvdmXgjMnfPZ0XzZv5J+FCHSUIJbxXh8hKnph79iak68ozLBEYVbWKKzwMgirlXh/c
-         +bo8Y0v+Z2yoKpnVI7prBFTWBS4UxsB+6L2WnyunBhxQlN6LPmTTBMyx9ugQA09fajCz
-         IN2g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e8r92dYaJlX+W7lUN/bwMm2J6SBaPpEkQSDlSm0TQx0=;
+        b=jmffFXVsrUXOq8HS8iidGUmeq8rjksQm9JoGXbXViZ8UoJgl8BlRUDW6P1xhkFjpqI
+         7eb1SHGHOiId5MPSXDTynt6GyZQv40jEQuvvK2v505NC9XulcYcEIKtNBjb/UPrJUy7c
+         6fotM9sjHWTxcGnYG1p2R7iLrAVKaItfRQXq7c5POMfSvmrJwBwDyU0l1o8WtbaJQI2N
+         ohvpjZcbC+C93s7eBcmU5dhE7jDa7EOv0ngU8D/yW3L/u1BsL3affrt1n2HLPd0+8jz3
+         BC9OthJQEVU+XsRSBYycpLWVnclx5uWy1hBNdAJ4Qgx0/+l6LVsEQzaX77LSgidGLm/P
+         FTFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=IK2B29k6BhpUqqHzckfy+XDU31Vn1DarGa5SLZCAdpI=;
-        b=EJ71KWY5VD1Dq9vGb0Yb4t9NN9G4BzBkEk4ANwpB7Vh78uhcYbQTk0pYiFmu5fqqt1
-         nt4Kv7ovEhK3Em4Og3rSCsF2ZYv/0nWGrT1pcutkemvOAKv8ESes3oNYxq1uvINdAjVw
-         c+EjevdNx7/i/E7yZm+kADYxMcpg4iE6PjzV66iYpFj1zbPJ1oW0kidSH6l2DCZEWzWU
-         tc0rrY2E1cObRkLnrnLA1CLE6kkC9hiM0uAvUe/VF1HiEbBroLwA5+1a6h4Aci72wjXj
-         X/xUAUtWVDc7N6DBpBDDAXHm6PWebc8AK4/4iCh7esCEtlNOBbJxtD2bIf2lxU7A2tjS
-         C6VA==
-X-Gm-Message-State: APjAAAWxQD6bylOGFH89A3TePc+0Z0cOji7lSXS4gdxY47WLhfax9K1q
-        ky+Hu5ntlnJUNdTFbESOA0CKhMQpKKca7rbYKIa/HLXmj7Y=
-X-Google-Smtp-Source: APXvYqyB9PGxpyHi0KTgAhmaFHyda9BrMa+wSC/jD48bS84qCnqLOJBoIVLhk95iMsosEnDtjxtXbYVUzgEeMBtfWNU=
-X-Received: by 2002:a50:91ac:: with SMTP id g41mr14196835eda.188.1553081287670;
- Wed, 20 Mar 2019 04:28:07 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e8r92dYaJlX+W7lUN/bwMm2J6SBaPpEkQSDlSm0TQx0=;
+        b=Gq3cwYxuJcWWJeL1ZG2hE65pjQewNw8w2B18Br8HCDjifa3Z5/x6PYNHPNTP5DnXoi
+         LDz/9gCT75Kx1GLlpakZcN250+Nk0sRaYykctX6qhWal6vD+DRp90wLvQ2YU7hyWUQag
+         vq9vAZvRAYSE5O+LM5SC6Aa802X91EDV8tIQ7yAtU47hpcPQVOFfnfQjpSWvfti9/ORS
+         ZkjBY4FeTPxAHgNP6kbqszSW34VgH0kndBrq/KSfB1PIIYo/uSXTMHlaoIrZnf7oz1HG
+         FuNBwLd/msgQzJ6j0ZcDrL6UXG9w6HkLUomWOLbBcT/LQMTlqrGZGD7CzAHltXmtc/IJ
+         Pnaw==
+X-Gm-Message-State: APjAAAVDanZ7XUvJ3unkuOG3lLsO5uAHJccC2qqmjcdemZbIPJC1iYkt
+        ksCZWDHrOL+QJi3lfV1XCnAt10Iy
+X-Google-Smtp-Source: APXvYqyZJkIH1E/U73a5lmi1mgDh449JvBf8UQ19D+Xdbki5//K5Xep2VaJflpUkJk4kASzMTPf/CA==
+X-Received: by 2002:a63:f905:: with SMTP id h5mr6729171pgi.223.1553082433169;
+        Wed, 20 Mar 2019 04:47:13 -0700 (PDT)
+Received: from ash ([171.226.148.85])
+        by smtp.gmail.com with ESMTPSA id k22sm2725406pfi.90.2019.03.20.04.47.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Mar 2019 04:47:12 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 20 Mar 2019 18:47:07 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 00/20] nd/diff-parseopt the last part
+Date:   Wed, 20 Mar 2019 18:46:43 +0700
+Message-Id: <20190320114703.18659-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 20 Mar 2019 12:27:56 +0100
-Message-ID: <CAP8UFD3MkskV+oKr9ORiz6UV5cfkDuENQ_vvi8ciwHzbzbHQdw@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 49
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Luca Milanesio <luca.milanesio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Gotta keep pumping until everything is out! This is the last part to
+finish converting diff.c to use parse_options().
 
-The 49th edition of Git Rev News is now published:
+The two commands 'range-diff' and 'diff --no-index' are also updated
+to do parse_options() directly, which is the end game (i.e. the end of
+diff_opt_parse(), but that can't happen until revision.c is
+converted).
 
-  https://git.github.io/rev_news/2019/03/20/edition-49/
+The next step could be collect complaints about how noisy 'git
+range-diff -h' and 'git diff --no-index -h' is and start trimming
+unused options. revision.c conversion will happen in parallel.
 
-Thanks a lot to the contributor: Luca Milanesio!
+Nguyễn Thái Ngọc Duy (20):
+  diff-parseopt: convert --ws-error-highlight
+  diff-parseopt: convert --ita-[in]visible-in-index
+  diff-parseopt: convert -z
+  diff-parseopt: convert -l
+  diff-parseopt: convert -S|-G
+  diff-parseopt: convert --pickaxe-all|--pickaxe-regex
+  diff-parseopt: convert -O
+  diff-parseopt: convert --find-object
+  diff-parseopt: convert --diff-filter
+  diff-parseopt: convert --[no-]abbrev
+  diff-parseopt: convert --[src|dst]-prefix
+  diff-parseopt: convert --line-prefix
+  diff-parseopt: convert --no-prefix
+  diff-parseopt: convert --inter-hunk-context
+  diff-parseopt: convert --[no-]color-moved
+  diff-parseopt: convert --color-moved-ws
+  diff.c: allow --no-color-moved-ws
+  range-diff: use parse_options() instead of diff_opt_parse()
+  diff --no-index: use parse_options() instead of diff_opt_parse()
+  am: avoid diff_opt_parse()
 
-Enjoy,
-Christian, Jakub, Markus and Gabriel.
+ builtin/am.c             |   4 +-
+ builtin/diff.c           |  21 +--
+ builtin/range-diff.c     |  26 +--
+ diff-no-index.c          |  49 +++---
+ diff.c                   | 337 +++++++++++++++++++--------------------
+ diff.h                   |   5 +-
+ parse-options-cb.c       |   4 +-
+ parse-options.h          |   6 +-
+ t/t4053-diff-no-index.sh |   3 +-
+ 9 files changed, 219 insertions(+), 236 deletions(-)
+
+-- 
+2.21.0.548.gd3c7d92dc2
+
