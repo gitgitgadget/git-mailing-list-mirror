@@ -7,68 +7,71 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFC8920248
-	for <e@80x24.org>; Wed, 20 Mar 2019 11:23:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DE1F20248
+	for <e@80x24.org>; Wed, 20 Mar 2019 11:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727858AbfCTLXl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 07:23:41 -0400
-Received: from mail-pg1-f171.google.com ([209.85.215.171]:39387 "EHLO
-        mail-pg1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727154AbfCTLXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 07:23:41 -0400
-Received: by mail-pg1-f171.google.com with SMTP id h8so1587908pgp.6
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 04:23:41 -0700 (PDT)
+        id S1727912AbfCTL2K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 07:28:10 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:44340 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726782AbfCTL2J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 07:28:09 -0400
+Received: by mail-ed1-f67.google.com with SMTP id x10so1615190edh.11
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 04:28:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SRvItQjRWE5lDccomcb6EICtr90J96WN3uV6qk3PPp4=;
-        b=ojFb4kBKJlvJhVL2QeVmgOrQNCuZQnmWMMqwQl1l1dxUgPNSBW9LBipC8lgFMayA8j
-         Hc0X7theb57XftCnuJk0+xvXYxkE+9QJGZ0ybjZkvkP1uUEXpDclpVnTwvnWJjgadYqc
-         e/etoXH6UOYN5dFALIPF/5jUFckgXlG4qnhZ+rJolnIRnhz0xrSPMJ2gyce0z0iUVqkR
-         zT1NZj2epo/vZn/ZFS2ftYojQgJjeLwBMeiUhRUzNFt6448AwB5liGrOd9bIWbzGPSlc
-         YiAS9S0rx/1I2AeMM+MQYe3gOcF9VYdla4dceZAIQaEUS2R0PbY0eOj0MET6M5gdAz78
-         9etg==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=IK2B29k6BhpUqqHzckfy+XDU31Vn1DarGa5SLZCAdpI=;
+        b=soPRsAnpY4jTCUXv9VKf2kpSLJLIhglsuaYoHOYeUezerj0+Y9Z+KVsiQO7xYGmwiQ
+         kOpv0qQW/KUa/l5Pvr6NbjpDbj3gB7OQ11bkaHenwb7yNm8nPTFr1aX2NPOK4juCbZMe
+         S4sjVq+bizQSLPYcifFZqloAz+G+b/Q0FNvCTix2qodJ8kwrCXh7wW4wQUs6A9i8T05A
+         Y0OvdmXgjMnfPZ0XzZv5J+FCHSUIJbxXh8hKnph79iak68ozLBEYVbWKKzwMgirlXh/c
+         +bo8Y0v+Z2yoKpnVI7prBFTWBS4UxsB+6L2WnyunBhxQlN6LPmTTBMyx9ugQA09fajCz
+         IN2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SRvItQjRWE5lDccomcb6EICtr90J96WN3uV6qk3PPp4=;
-        b=F4aFU8nobRlmZNc40iDyCP6KT7eUqMpsAnSKcLmWnXgePXWkXATC9ve8RFl+E6W53C
-         ceF0PIlh7a1B2hHcveOMhR9THULfthIb+2PBuo9gQQo/L+akNTItG4i4neaAWfTTsIUh
-         PIq6tZhihMi/XPcvBUEoFI8KrvZ0L7aqRDADuURYDvrELOIQMUaqRuA/ZxJmEvW8MgVm
-         8A86HJN1nHwGLaTU1vRJL4nVCLeBZV45jobnP+3bCCi2ILeB8fcC0p1fECcO5p7pUd1L
-         jGbQSxiXxAGNdMZAGOQR45kGxdMcZoLAMIGtpBXUaVFXM6j5B/WVmDozCRzTEvnQYPA9
-         lnrg==
-X-Gm-Message-State: APjAAAULdUADPdHd3taCUI8afbAnWo1DHtBJwRwcFX0NdgSIy4KCvEgW
-        n9v21o72Y0JcE4wTCfD2eFgCuOIi0fQkyWmd8cUks0LX
-X-Google-Smtp-Source: APXvYqx35bRfw/yRNhc7ENva+deJBz9IbEnakJ4Wq1l7oWY0I3+DlT5f6Dvexxuq7mkZcb1B2Aw+eo/K8Q8uV7BcKVM=
-X-Received: by 2002:a63:f310:: with SMTP id l16mr6786688pgh.72.1553081020835;
- Wed, 20 Mar 2019 04:23:40 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=IK2B29k6BhpUqqHzckfy+XDU31Vn1DarGa5SLZCAdpI=;
+        b=EJ71KWY5VD1Dq9vGb0Yb4t9NN9G4BzBkEk4ANwpB7Vh78uhcYbQTk0pYiFmu5fqqt1
+         nt4Kv7ovEhK3Em4Og3rSCsF2ZYv/0nWGrT1pcutkemvOAKv8ESes3oNYxq1uvINdAjVw
+         c+EjevdNx7/i/E7yZm+kADYxMcpg4iE6PjzV66iYpFj1zbPJ1oW0kidSH6l2DCZEWzWU
+         tc0rrY2E1cObRkLnrnLA1CLE6kkC9hiM0uAvUe/VF1HiEbBroLwA5+1a6h4Aci72wjXj
+         X/xUAUtWVDc7N6DBpBDDAXHm6PWebc8AK4/4iCh7esCEtlNOBbJxtD2bIf2lxU7A2tjS
+         C6VA==
+X-Gm-Message-State: APjAAAWxQD6bylOGFH89A3TePc+0Z0cOji7lSXS4gdxY47WLhfax9K1q
+        ky+Hu5ntlnJUNdTFbESOA0CKhMQpKKca7rbYKIa/HLXmj7Y=
+X-Google-Smtp-Source: APXvYqyB9PGxpyHi0KTgAhmaFHyda9BrMa+wSC/jD48bS84qCnqLOJBoIVLhk95iMsosEnDtjxtXbYVUzgEeMBtfWNU=
+X-Received: by 2002:a50:91ac:: with SMTP id g41mr14196835eda.188.1553081287670;
+ Wed, 20 Mar 2019 04:28:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqa7hqw844.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqa7hqw844.fsf@gitster-ct.c.googlers.com>
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-Date:   Wed, 20 Mar 2019 11:23:29 +0000
-Message-ID: <CALgYhfPci+m+zG2-83URSkSXCCH-DqGCBguizY9o7YYUaXKDhw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2019, #04; Wed, 20)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 20 Mar 2019 12:27:56 +0100
+Message-ID: <CAP8UFD3MkskV+oKr9ORiz6UV5cfkDuENQ_vvi8ciwHzbzbHQdw@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 49
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Luca Milanesio <luca.milanesio@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 20, 2019 at 3:13 AM Junio C Hamano <gitster@pobox.com> wrote:
-> * tg/stash-in-c-show-default-to-p-fix (2019-03-20) 1 commit
->  - stash: setup default diff output format if necessary
->  (this branch uses ps/stash-in-c; is tangled with js/stash-in-c-pathspec-fix and tb/stash-in-c-unused-param-fix.)
->
->  A regression fix.
->
->  Will merge to 'next'.
+Hi everyone,
 
-Please hold off on merging this to 'next'.  I'm planning on
-sending a v2 based on your and Peff's comments, hopefully
-tonight.
+The 49th edition of Git Rev News is now published:
+
+  https://git.github.io/rev_news/2019/03/20/edition-49/
+
+Thanks a lot to the contributor: Luca Milanesio!
+
+Enjoy,
+Christian, Jakub, Markus and Gabriel.
