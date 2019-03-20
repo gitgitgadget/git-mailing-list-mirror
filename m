@@ -2,110 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAB6F20248
-	for <e@80x24.org>; Wed, 20 Mar 2019 00:41:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D98220248
+	for <e@80x24.org>; Wed, 20 Mar 2019 00:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727084AbfCTAlX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Mar 2019 20:41:23 -0400
-Received: from mail-it1-f194.google.com ([209.85.166.194]:53506 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725958AbfCTAlW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Mar 2019 20:41:22 -0400
-Received: by mail-it1-f194.google.com with SMTP id w85so4851727itc.3
-        for <git@vger.kernel.org>; Tue, 19 Mar 2019 17:41:21 -0700 (PDT)
+        id S1727124AbfCTArj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Mar 2019 20:47:39 -0400
+Received: from mail-wr1-f42.google.com ([209.85.221.42]:37927 "EHLO
+        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727079AbfCTArj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Mar 2019 20:47:39 -0400
+Received: by mail-wr1-f42.google.com with SMTP id g12so837277wrm.5
+        for <git@vger.kernel.org>; Tue, 19 Mar 2019 17:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dH/qGYKSpQtY2dA5/AT4FC2fPiN7oHm/0R5v0udeFeM=;
-        b=je0YuKf34UIq39K03YLz8B+Kyl0XmdyrKs0s+DjS+kvJG3wmaGSJwkFD1xYlO/wzFg
-         75g6rgQCWaJcUwQv5RT/y3dgxAS497AgYFAH5nPJFUjHhQeQxvYxjM1z6z0NEVOUSYRt
-         wzXwUIqzSmC2oClQga4h80h2ON2TYf0yA50hWUS3EqOWzacZr0YvABGmbvay5p4KUDUm
-         w8nubThjvQtIFBnDAr65kXLo2Zr2MCoEjaJFiieEPJd1NwsO+k24xSw/8bEcrl5+LfzB
-         7c9JMUrHQ3xwITG8LNsaS0V/ojiY5fZ26AomCirapn01Hc7vHbdH9KnNqBMtPiyAHHSC
-         Y8iw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=lJysWRcfaua6SCqJY+PTMm0zThvEM2SkBfvTGuYKaUI=;
+        b=DREZb9VcZisaCHAKZCHuLVwa0Cq6z7sggmlB5YZZfm/ZU5nwstU2hgxNFL+wiEyKTq
+         R+hv2eqiZVrMI0UB7t13x5eYIx5ua4BxgVW3DISZyr4nulv/ky0e3IaWs3TrmMK4wgMl
+         PfhmwRGGUzQs1TroZLPS6l7nR9JHAdRmHDI3hBdLRdDBSVW9yPbpf2uR8/oRMClaExL2
+         oY03AUHvoVESSe260ujxMbIXUglcfWrbcElhf7mcGz4HLrtZXdNGZskPPzzMtW7p2Ljb
+         yFz9Mpo7QlHa5tynalGmiidUBBHQ4azrPaXQJ3T6KqFeo55Okatb+ElU/txXQ8yMV2hX
+         /hDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dH/qGYKSpQtY2dA5/AT4FC2fPiN7oHm/0R5v0udeFeM=;
-        b=d3dETvmREb68+at4qW8rN4CPPt01lt9Dd4rHaEVrJ4maGtVKyTVss/vlUOcumDwMe/
-         iML/3pDirPRI2mCfSwggvA3CjhS5TgO0xJZuIXHTMnqwxxZdVw7yTJkBUY55h/ppCexF
-         lSGD7C15VdorSpODobS8XVyly+GQnSg1MutRgNC45HJc00PMpiqWFbdbltwPw2btgYcl
-         W6CFKFo2PGckCOhbBmY9DURowyS1DEm2v/dgs9ZT1wcsNvkyFs3v85quYuGv+D+dBTgm
-         FIdd8oa8RfH6Nl3afT8UhmL7RuyNCdd0ztUv+mi8aoD9yFeSGHz7+dTvNGK+jlZFeyGV
-         s7Pw==
-X-Gm-Message-State: APjAAAWCSEeBVLIOnBnbZrWLQZC16np9cFmojF2Xf1JArwb6cyNGWAcb
-        JSG7XZ4dmG3kY54q8scBvJR6hBVbZ7WpOhdUwvo=
-X-Google-Smtp-Source: APXvYqy/k3tESCqHHsRCVBJvA8ma1s82nESbmndjMx/B3rrMUGlpRn9kCpT+2Sazy7lPQt26jlZJWzbdoojbVzeqv2U=
-X-Received: by 2002:a24:3b0a:: with SMTP id c10mr3793454ita.10.1553042481333;
- Tue, 19 Mar 2019 17:41:21 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=lJysWRcfaua6SCqJY+PTMm0zThvEM2SkBfvTGuYKaUI=;
+        b=HxJ9Fxb011Mx/Uh/nYKJIKrsF/si68lcGMOF7dwiwCFpOsNUAIcm5x9BgpSyL2EoWG
+         8xFo0rO00fnGcQvk6xgEr1XR0Eb2SuR3px62kxn0qO3wirsEV+6Z3k1xQeHHSGyBefkT
+         XCh/JXf5LdA6Fm28wsIP/ZyU3TIIeL3s4El5TfPnRWCLs9hqzQxDd4ASNOONCTlvAwjj
+         O+5bhiWUZjjh5IDr3gxHYi4By0ozkcxhVAd4XEb0pNOb0jwVAA4jkDT9tRz2ySwSpDRh
+         ztCTNz05h+8a1qnlTFikJXdI53/mxENl7zkqxm82PfDbKHQpkLlCPfSX6dvFsvqI2d25
+         VrBg==
+X-Gm-Message-State: APjAAAXV+A9foDl9kYWbvy0UmURUJ8pzm+fMpGuToic5elsl2Qi2lhOJ
+        m4DitXFtXZ3AOao2tKcxtScvirA1SSQ=
+X-Google-Smtp-Source: APXvYqx81kyiXAIcPkWHTpdhppO1Dl6t06V6V23N2pmlbTe6QXTtytKanC4vUdVmpwhDn6w9yiW4tg==
+X-Received: by 2002:a5d:63c4:: with SMTP id c4mr8848766wrw.307.1553042857481;
+        Tue, 19 Mar 2019 17:47:37 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id g3sm442626wmk.32.2019.03.19.17.47.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 19 Mar 2019 17:47:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     balaji marisetti <balajimarisetti@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git command history
+References: <CAKcrOwe2ARK4J6YuiXUiVXic=q568VC8JtgWMNs6WEd4hhZs3A@mail.gmail.com>
+Date:   Wed, 20 Mar 2019 09:47:35 +0900
+In-Reply-To: <CAKcrOwe2ARK4J6YuiXUiVXic=q568VC8JtgWMNs6WEd4hhZs3A@mail.gmail.com>
+        (balaji marisetti's message of "Tue, 19 Mar 2019 21:33:34 +0530")
+Message-ID: <xmqq1s32xtg8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
- <20190319093910.20229-1-pclouds@gmail.com> <xmqqimwexujm.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimwexujm.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 20 Mar 2019 07:40:54 +0700
-Message-ID: <CACsJy8BLxWea0ZrHkSU6+nE7dr5YvFNVH1tLhaqPRadi+2Hhwg@mail.gmail.com>
-Subject: Re: [PATCH] checkout.txt: note about losing staged changes with --merge
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 20, 2019 at 7:24 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
-> > If you have staged changes in path A and perform 'checkout
-> > --merge' (which could result in conflicts in a totally unrelated path
-> > B), changes in A will be gone. Which is unexpected. We are supposed
-> > to keep all changes, or kick and scream otherwise.
-> >
-> > This is the result of how --merge is implemented, from the very first
-> > day in 1be0659efc (checkout: merge local modifications while switching
-> > branches., 2006-01-12):
-> >
-> > 1. a merge is done, unmerged entries are collected
-> > 2. a hard switch to a new branch is done, then unmerged entries added
-> >    back
-> >
-> > There is no trivial fix for this. Going with 3-way merge one file at a
-> > time loses rename detection. Going with 3-way merge by trees requires
-> > teaching the algorithm to pick up staged changes. And even if we detect
-> > staged changes with --merge and abort for safety, an option to continue
-> > --merge is very weird. Such an option would keep worktree changes, but
-> > drop staged changes.
->
-> I think "checkout -m <otherbranch>" with a dirty index should refuse
-> to run; there is nothing to "continue" after such a failure, so I am
-> not sure what you mean by "an option to continue" (iow, I do not see
-> a need for such an option, and if that option makes the whole notion
-> strange, we can just decide not to have it, can't we?).
+balaji marisetti <balajimarisetti@gmail.com> writes:
 
-We have --force to continue even when we have local changes, which
-will be overwritten. I was thinking a similar option which gives us
-permission to destroy staged changes.
+> Can anyone please tell me if there is way to see the command history
+> of a local git repo? If there isn't a way, why hasn't the
+> command-history feature been implemented?
 
-Refusing to run fails the test suite though (I tried that even before
-this patch), in t7201.10, "switch to another branch while carrying a
-deletion", because of this line
+Another question may be why anybody would want to have such a per
+repository command history, want Git to spend cycles and disk I/O to
+store it, and want developers to spend braincycles to think about
+it.
 
-    git rm two
-
---=20
-Duy
+Depending on where you come from (i.e. if the interest in such a
+history is coming from corporate management and/or big brother side
+that wants to learn what its users are doing), I think JeffH's
+trace2 effort that allows "telemetry" to be collected may be a
+better match than a command history (e.g. "history | grep git").
+Without knowing (not that I am all that interested in) what the
+motivation of wanting such a thing, it is rather hard to guess,
+though ;-).
