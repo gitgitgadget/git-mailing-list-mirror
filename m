@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D8AD20248
-	for <e@80x24.org>; Wed, 20 Mar 2019 13:53:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECEF020248
+	for <e@80x24.org>; Wed, 20 Mar 2019 13:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728056AbfCTNxO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 09:53:14 -0400
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:38700 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbfCTNxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 09:53:14 -0400
-Received: by mail-vs1-f65.google.com with SMTP id h132so1510692vsd.5
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 06:53:13 -0700 (PDT)
+        id S1727437AbfCTN6W (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 09:58:22 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:36722 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726506AbfCTN6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 09:58:21 -0400
+Received: by mail-io1-f66.google.com with SMTP id f6so2058911iop.3
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 06:58:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=bVNKyfmU2zRgAZ2Opj5Gny60xy9Yd/9QuH5k+fiOZno=;
-        b=EAAvK9GQjzvzUexcABVb3k/tvORQhxPBOI+Bm5C6HYgadR5CBvXKL6RKeXFfL65vBw
-         ie2wBaKJs4XaFdbd54zHlyjsSnP724+CfVnARpGJTxCY+y6C+gZhDSw1rTlR6d1szIfA
-         0RPSKQ/5Nh4gb0iLS/JKJ56GICbUFRWzoVu5dzKG0ePqUEJOj/5ar1jzHzSpqCnpT6o/
-         vjfih4psntk3TNQ0EWqUlfhocnAdZi/SYL2H1+4RKb61dQmsGeX7xFpkQtjLRqiEY9Lq
-         lTFxZGRqeTQGUr5Jo2GgImpyHBwGxppHUryrDgr4vXTAOPbYK3DoNW3bc+DmGK8IT6wr
-         0ePw==
+        bh=sFUh/gPWls+3/tZwItFszDr3bUswGyEf80A26SQXbl8=;
+        b=Ea8yt7r+OiNQtn9Ek/VyQN2Py7MhGbnszKmRXTFZER3vNFy8dosE5GsljJTyLh+8hn
+         ebVTZ6GgdhwlDK9qxUXubLI5iuILjq0lngJqeNuy6qeNDPo1u3ODLL8lMgTfL6bsk4Mx
+         Uhe6IkPf1U/4B8lHlheHp3370tBZh1YR5ZFg4mZ1lNABEDoGU32v6798lZ9s2mRo8QHh
+         gX1lCYiQ/dTKQO9/AWJl7Jp5h35iYUwoh/kMwqDC8Nlq1+jA2ZAK22xs8E5y/spJAlbj
+         AHC2Q1IJLHZLTsxhiM0YcTnlAwDeSM4FBNqZeH3zHrcYoKR1b2gPEDomUrStE5eaaruY
+         TWJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=bVNKyfmU2zRgAZ2Opj5Gny60xy9Yd/9QuH5k+fiOZno=;
-        b=A/Ba6BBze/Dx1HCBrFexJwy2LQ+MCzAfcuG5qgmee9lDowyo4sT9veum3IilZWgNPU
-         +VFfI73bRsTVJVztE1qPQE4MdBCWsw1NlUe3xo7L19WkaU3qQNYvSI7uDa6rtWDOhCrr
-         c34cmKUvOS+UA7DtuGbrBUpphU57TQtg68nYyPk3Pv6Cwwh946OYIPEaoExjHtkQjhRn
-         YUIuopERa9SkbvSUdTRpNw95ILhVD6oV0OWoOAQ8WO+FPjhDH/Z1xVCQ0wuKWJH7kXGh
-         gLYdhSmAa4gCqpxITGjI40p/VwWu1MxltP5D0/VvaNOTKHPwXjYnn7EArlTfNlO++hyg
-         UiDg==
-X-Gm-Message-State: APjAAAU5DlrVHhdM94NAJ3ziWh3d1XcYcVomAbI4BbfYv5t0mlW/BwgX
-        Tp4b61TEOXOkg+MnID6wYtvtCP1RZ7NYQhLWmas=
-X-Google-Smtp-Source: APXvYqxRuFVPmtL9/tdGFZEqPguCjznzDxvKNcySSe4HAZKSGcfnmdJAzEYd4DH9Alsax1oTo5tLEeNyg5Mk/xtgT9c=
-X-Received: by 2002:a67:ad0a:: with SMTP id t10mr2919086vsl.117.1553089992926;
- Wed, 20 Mar 2019 06:53:12 -0700 (PDT)
+        bh=sFUh/gPWls+3/tZwItFszDr3bUswGyEf80A26SQXbl8=;
+        b=hhMBD4yBEoUvjpQUStl1vyfuCtoWIKDqTwhhNpGv1M/S5S2IuLS2oJ9w8L6UCHzDsZ
+         L+myHCzG5CnSe8z669wmvGIdC3oRUeubGyoKlhiibYwbb5grL6Mr+0zt2kV/X4AmobrX
+         KQz9wN+EYWxF6v4gz1L1Xo3ip92pgXfNtPs6SoghrSUMF5LpUwFJXGfAkTwVydQFVdQR
+         dc+MsFv1q2AjHVZIDnjyZPgmRRu7GjJFWeMcghxy/AYmFzt2DTboyvvnckNH04RMV9cu
+         3Rj3lOPNce7AP8RxR/jh52qPKfTD+9/geXKHulo5a22H6a897foCUxEpTpLBnPiXj/u/
+         Qnbw==
+X-Gm-Message-State: APjAAAX1gi9nA0jnCT2dyUChj/6VusCGHAKiN/JV+4+k6lGvBIX2OdbG
+        Y3VJ92zFGANUKXEODhUhV0ufovEJ4XQDBUhH/uE=
+X-Google-Smtp-Source: APXvYqy7IYUX6HBeZx9mVFzJghotbZ22ChMqrXhd0yFKT9vJW3n8dFvlNCOdfXPxSop8PTwuxwMipwkT4Pvek2G2ilM=
+X-Received: by 2002:a5d:9446:: with SMTP id x6mr15762203ior.236.1553090301090;
+ Wed, 20 Mar 2019 06:58:21 -0700 (PDT)
 MIME-Version: 1.0
 References: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
  <20190319093910.20229-1-pclouds@gmail.com> <xmqqimwexujm.fsf@gitster-ct.c.googlers.com>
  <CACsJy8BLxWea0ZrHkSU6+nE7dr5YvFNVH1tLhaqPRadi+2Hhwg@mail.gmail.com>
  <xmqqk1guwdeu.fsf@gitster-ct.c.googlers.com> <CACsJy8AUH4nOkt6H=yu=eRktK4me9kEkjqsC3zyNZDwUKXqCPg@mail.gmail.com>
- <xmqqftriwbz6.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqftriwbz6.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Mar 2019 07:53:01 -0600
-Message-ID: <CABPp-BFB0jafua0CGEsr66EzQvHncLYvws8rt+LdkQ_LXcEq5A@mail.gmail.com>
+ <xmqqftriwbz6.fsf@gitster-ct.c.googlers.com> <CABPp-BFB0jafua0CGEsr66EzQvHncLYvws8rt+LdkQ_LXcEq5A@mail.gmail.com>
+In-Reply-To: <CABPp-BFB0jafua0CGEsr66EzQvHncLYvws8rt+LdkQ_LXcEq5A@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 20 Mar 2019 20:57:54 +0700
+Message-ID: <CACsJy8BdPgPgaWW=3_y5peLdqo24-ozC=s90WW2DN9OsYe9v_w@mail.gmail.com>
 Subject: Re: [PATCH] checkout.txt: note about losing staged changes with --merge
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
@@ -69,36 +69,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 19, 2019 at 7:50 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Duy Nguyen <pclouds@gmail.com> writes:
->
-> > Kinda. But "--force --merge" makes no sense. --force discards all
-> > local changes by definition, which means you can't have conflicts and
-> > will not need --merge. I think this is the reason why we die() out
-> > when both are specified. So we need something like
-> > --discard-staged-changes-only...
->
-> At that point, I would have to say that we do not need anything.
-> The use case is already covered with "git reset && git checkout -m",
-> isn't it?
+On Wed, Mar 20, 2019 at 8:53 PM Elijah Newren <newren@gmail.com> wrote:
+> So, I think we do need something (eventually at least).  Would you
+> prefer we dropped this patch from Duy and instead made 'checkout -m'
+> abort when the index is dirty?
 
-I guess the problem is just that 'git checkout -m' has not refused to
-run with either a dirty index or a dirty working tree, and if both are
-dirty (making us require more of a four-way merge), then our three-way
-merge has to have some kind of casualty in the implementation for at
-least some case.  The current casualty as highlighted by Philip is
-that newly staged files before the 'checkout -m' become untracked and
-any carefully staged pieces before that command are lost amongst the
-unstaged changes again even if there weren't any conflicts.
-
-One solution is to just accept and document or warn about this
-shortcoming for now as Duy did in his patch.  Another is to do as you
-mentioned earlier in this thread when you stated 'I think "checkout -m
-<otherbranch>" with a dirty index should refuse to run'.  Duy linked
-to a third option that I outlined in his commit message, though it'd
-require a bit more capability from merge-recursive than we have today.
-
-So, I think we do need something (eventually at least).  Would you
-prefer we dropped this patch from Duy and instead made 'checkout -m'
-abort when the index is dirty?
+I have no problem with this. Still scratching my head wondering if
+t7201-co.sh has a slightly incorrect setup, or aborting is actually
+wrong. You're probably a better person to understand that test case
+;-)
+-- 
+Duy
