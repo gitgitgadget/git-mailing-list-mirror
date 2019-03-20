@@ -6,29 +6,30 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9237E20248
-	for <e@80x24.org>; Wed, 20 Mar 2019 08:14:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA33D20248
+	for <e@80x24.org>; Wed, 20 Mar 2019 08:14:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727751AbfCTIOD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 04:14:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57410 "HELO cloud.peff.net"
+        id S1727745AbfCTIOJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 04:14:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57416 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727528AbfCTIOD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 04:14:03 -0400
-Received: (qmail 19601 invoked by uid 109); 20 Mar 2019 08:14:02 -0000
+        id S1725942AbfCTIOJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 04:14:09 -0400
+Received: (qmail 19609 invoked by uid 109); 20 Mar 2019 08:14:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Mar 2019 08:14:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 20 Mar 2019 08:14:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6283 invoked by uid 111); 20 Mar 2019 08:14:24 -0000
+Received: (qmail 6299 invoked by uid 111); 20 Mar 2019 08:14:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 20 Mar 2019 04:14:24 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 20 Mar 2019 04:14:30 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Mar 2019 04:14:01 -0400
-Date:   Wed, 20 Mar 2019 04:14:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Mar 2019 04:14:07 -0400
+Date:   Wed, 20 Mar 2019 04:14:07 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 03/13] log: drop unused "len" from show_tagger()
-Message-ID: <20190320081400.GC10403@sigill.intra.peff.net>
+Subject: [PATCH 04/13] update-index: drop unused prefix_length parameter from
+ do_reupdate()
+Message-ID: <20190320081407.GD10403@sigill.intra.peff.net>
 References: <20190320081258.GA5621@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,47 +40,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We pass the length of the found "tagger" line to show_tagger(), but it
-does not use it; instead, it passes the string to pp_user_info(), which
-reads until newline or NUL. This is OK for our purposes because we
-always read the object contents into a buffer with an extra NUL (and
-indeed, our sole caller already relies on this by using starts_with).
-
-Let's drop the ignored parameter. And while we're touching the caller,
-let's use skip_prefix() to avoid a magic number.
+The prefix is always a NUL-terminated string, and we just end up passing
+it along to parse_pathspec() anyway (which does not even take a length).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/log.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/update-index.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 6595471ddf..35314d12ec 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -490,7 +490,7 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- 	return cmd_log_walk(&rev);
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 1b6c42f748..ff5cfd1194 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -724,7 +724,7 @@ static int do_unresolve(int ac, const char **av,
  }
  
--static void show_tagger(char *buf, int len, struct rev_info *rev)
-+static void show_tagger(const char *buf, struct rev_info *rev)
+ static int do_reupdate(int ac, const char **av,
+-		       const char *prefix, int prefix_length)
++		       const char *prefix)
  {
- 	struct strbuf out = STRBUF_INIT;
- 	struct pretty_print_context pp = {0};
-@@ -546,11 +546,11 @@ static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
- 	assert(type == OBJ_TAG);
- 	while (offset < size && buf[offset] != '\n') {
- 		int new_offset = offset + 1;
-+		const char *ident;
- 		while (new_offset < size && buf[new_offset++] != '\n')
- 			; /* do nothing */
--		if (starts_with(buf + offset, "tagger "))
--			show_tagger(buf + offset + 7,
--				    new_offset - offset - 7, rev);
-+		if (skip_prefix(buf + offset, "tagger ", &ident))
-+			show_tagger(ident, rev);
- 		offset = new_offset;
- 	}
+ 	/* Read HEAD and run update-index on paths that are
+ 	 * merged and already different between index and HEAD.
+@@ -940,8 +940,7 @@ static enum parse_opt_result reupdate_callback(
+ 
+ 	/* consume remaining arguments. */
+ 	setup_work_tree();
+-	*has_errors = do_reupdate(ctx->argc, ctx->argv,
+-				prefix, prefix ? strlen(prefix) : 0);
++	*has_errors = do_reupdate(ctx->argc, ctx->argv, prefix);
+ 	if (*has_errors)
+ 		active_cache_changed = 0;
  
 -- 
 2.21.0.701.g4401309e11
