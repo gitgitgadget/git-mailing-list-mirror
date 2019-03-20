@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E95520248
-	for <e@80x24.org>; Wed, 20 Mar 2019 20:26:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88D5220248
+	for <e@80x24.org>; Wed, 20 Mar 2019 20:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727561AbfCTU0q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 16:26:46 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38823 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726366AbfCTU0p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 16:26:45 -0400
-Received: by mail-pg1-f195.google.com with SMTP id v1so2607375pgi.5
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 13:26:45 -0700 (PDT)
+        id S1726492AbfCTUbI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 16:31:08 -0400
+Received: from mail-pf1-f179.google.com ([209.85.210.179]:34050 "EHLO
+        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726239AbfCTUbI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 16:31:08 -0400
+Received: by mail-pf1-f179.google.com with SMTP id v64so2756501pfb.1
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 13:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=9y6BXqsNpMdCgT0h+eH8bqf4gXmy54MRSEETuThz1DU=;
-        b=jz1paS2GZOTm5MN9Pgp+DxoIKGrcfPeABv3yy4z3VOQgjg0nzwuzXpdpI3rb4sZnXZ
-         r+ELv43fETQ9RQTfDuQ3Kz5GRzBKdz6e4gBETlM1oWtUwHcgTvHpcQGzr+R3V3kJp/lt
-         r1nREmLfkI2oytR6dY2siJAE2XnkXbp7lb3RPIkK8OB4RLVNRPVkGpVCVW9zyJlL8kQS
-         wfQV2fi/qD4jGQKByAj6VB9+lM2HAKnDPWVJ0rrhGkAkxRJn+uf9RwsMzFTBHRaEayVK
-         bA56DF8FFXoDoiJVcFFVTSqDTXq7a5EaeEOkBHbui4kkfu2u4UqRoi/FdH24qcL6p7mL
-         6wtg==
+        bh=4xuseoPq4KKvjLAraV2j1+mxKUWAbIvG8FCATPoCTlw=;
+        b=FzrCepnFXbZ0WzlB4733yMUow7ywo3x4LIzOSR5DklCD7IHs12KXnPU3blpBv/Ov70
+         oPAHWlFnF0sLkdBgU/c+yjYYRrPzY+ZAHFglNW3mDNHByBQmwNCvzm87KpSjQLyBBF4M
+         UNp/zVk9FOY+myIzUYlO3U4O7wpEhT4jG+hmqZG9xCubXgWCoq3xRy3wo5cG/rlydJzW
+         1u+SkPe6hjIASylHsgtJfs5zbGC3XM7EmrAo80X6ihtD3m0AaDh+mdBBsiyqut8q7tI+
+         FDz0hzyiHKiBI0J+70UFskDn5AcXgotM+Wo7sZcdzi1TvgXapKxFgvGabHgBQuds1+1U
+         dEog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9y6BXqsNpMdCgT0h+eH8bqf4gXmy54MRSEETuThz1DU=;
-        b=J7F9xekPs+P6wXDDdz3a4MOX1S2OZ8FYC52lbQ7bYykK3AFX4Xui9WSm7u8ty6d0mk
-         E2/Zip2Jg43inzv0t4n6uP6/86LcbCHyqdMmMPKyigQ1ZrZyaWTxNO5hEGAmwGg2WfUN
-         itNs1CY4brcyYlPCZIcDwDGzP0/JDFGyivd+L47eMuaqnZuSBj27aysVqaxdKkbPzjIC
-         FHHB63wFkhDl2XE5/CQihVmWNApYOKF1f9RTvaGu1Fa8kd/roDLtcBcc0nK8PL15W6FG
-         9zWHsSnRtsJYFLEXsjjHEwtuqf8hKAbMiTHtUY73cezKAJaZtJqBlwBaTQSqfYP04x4K
-         j5DA==
-X-Gm-Message-State: APjAAAUA8T/NpBibUiG4Zy8zEk6dCRpZupNjx5dchitFhe3/hRM9VN8r
-        Ei+qK5NnqgAmfo5ouQfvRLpvOTV+0LB8aDZRMqb+Yg==
-X-Google-Smtp-Source: APXvYqwGViDP7j8BTVM2lCfK8aPoinyaKSOuKBEDmmhTEC5pDKsF4UN47zVWebipRJL8+g8vQnMRG6JxRWrU8t5nGko=
-X-Received: by 2002:aa7:914f:: with SMTP id 15mr9530477pfi.49.1553113605307;
- Wed, 20 Mar 2019 13:26:45 -0700 (PDT)
+        bh=4xuseoPq4KKvjLAraV2j1+mxKUWAbIvG8FCATPoCTlw=;
+        b=GkTmwrjYQMZoL/JhdxB8DeD2k9UjnTMjHPTyzvObI9poEiLVgaSICcf7KJiXO+z5qD
+         d4QVk1FRThsKgxoPAWtvt6fmBV3FE/P01BJVpQd1J6v4sh+5go8fH4jYu9BhMLApY51t
+         HNswE0oHdRcdUJ+7blMoG92WQLmTw/deooMLPVWNS+b3oj86rs+TbkyQJwHYkSj59X/9
+         ZwZbqRZX6dXq5xBftR2sDG09nHPuBcW16YFsZtjeKOAcRg5KozyKWHg1inn+oL0bikFY
+         mCCiN/eLe1ec7D4S7hTCdQ58lElxf47iEhUF7BNXk1pQq3OJEbNZV4xMBf5XihCu/BEw
+         iSYw==
+X-Gm-Message-State: APjAAAXKUQ1xHZSk4urx5e+Vb+Jq75agYlb7r0JAzqv3u05Gwlpo5PvA
+        msyWMW3CDQlrezWgad89KgLiax+2kp7IR6IhePSzSQ==
+X-Google-Smtp-Source: APXvYqzKKJ3C/nwegit4sNdb3oa/zIXMO9jDtLzgoiQKlrcP7Y3I1nau+8ArxqveEWDHtjsX0wXLIuEWqm9LuVctBn4=
+X-Received: by 2002:a17:902:9001:: with SMTP id a1mr9872658plp.96.1553113867577;
+ Wed, 20 Mar 2019 13:31:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190320114703.18659-1-pclouds@gmail.com> <20190320114703.18659-8-pclouds@gmail.com>
-In-Reply-To: <20190320114703.18659-8-pclouds@gmail.com>
+References: <20190320114703.18659-1-pclouds@gmail.com> <20190320114703.18659-14-pclouds@gmail.com>
+In-Reply-To: <20190320114703.18659-14-pclouds@gmail.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 20 Mar 2019 21:26:33 +0100
-Message-ID: <CAN0heSoyOqMeJeBJ7HWRzOW3WABCSGfqV8CoEVMM37h+T10g5w@mail.gmail.com>
-Subject: Re: [PATCH 07/20] diff-parseopt: convert -O
+Date:   Wed, 20 Mar 2019 21:30:54 +0100
+Message-ID: <CAN0heSonEy5z_2ebwQfr35Y-y4n8j-WX2=LdT6Lu3zi7YMhJBg@mail.gmail.com>
+Subject: Re: [PATCH 13/20] diff-parseopt: convert --no-prefix
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
@@ -62,21 +62,12 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 20 Mar 2019 at 12:48, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pc=
+On Wed, 20 Mar 2019 at 12:50, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pc=
 louds@gmail.com> wrote:
-> +               OPT_FILENAME('O', NULL, &options->orderfile,
-> +                            N_("override diff.orderFile configuration va=
-riable")),
+> +               OPT_CALLBACK_F(0, "no-prefix", options, NULL,
+> +                              N_("no not show any source or destination =
+prefix"),
+> +                              PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_op=
+t_no_prefix),
 
-This doesn't really tell me *why* I would want to provide -O. Or put
-another way, there are lots of --foo-bar for overriding some baz.fooBar
-config item, but they're not described like this. The primary purpose of
---foo-bar, at least to me, would be to solve some actual problem, like
-"fooing the bar", whatever that means.
-
-Gleaning at the manpage, an alternative would be "control the order in
-which files appear in the output", but maybe you avoided that
-deliberately? "provide an orderfile"?
-
-
-Martin
+s/no not/do not/
