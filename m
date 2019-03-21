@@ -2,73 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8601D20248
-	for <e@80x24.org>; Thu, 21 Mar 2019 08:31:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B401820248
+	for <e@80x24.org>; Thu, 21 Mar 2019 08:50:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727992AbfCUIba (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 04:31:30 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35854 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727921AbfCUIba (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 04:31:30 -0400
-Received: by mail-wm1-f68.google.com with SMTP id h18so1748408wml.1
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 01:31:29 -0700 (PDT)
+        id S1728262AbfCUIuR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 04:50:17 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37963 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727922AbfCUIuQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 04:50:16 -0400
+Received: by mail-ed1-f67.google.com with SMTP id q14so4315544edr.5
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 01:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=p2CFt3NmrejWc8HAnBbJN8Mjv4UeItVUoUZQSObOnQQ=;
-        b=ut/S8iv6ys4AB37HYkFxCkpJCSxMKaiicZUkX71n7XDf22/FZLciO4TT1mbDd5Hh5m
-         YBQnpmBDt6Km0vsos4lFk6nNArHItLIZ9oXKNfW2NI9ob+OWHeP9AGzG+QYVuzwin428
-         IJuzjQtflrM6S6gGp3QM+ZZIf4SIQjaDhWnduqJ3sZN2vWXSvUmt+z0/q824BOrbc/kj
-         blrgEVUFbt1uYYLyiFzjcX3+gWrurw9PBJcU7khOqUiprVZ6OYAazgb4oE//V1tZNlDS
-         M+++wQcqc78uahdD+ZXyyaCCHdEbHcbqp2KcH9YwQLKTZSP7q3YkJubbtWRV+umHsNNb
-         mB9w==
+        bh=JUe7fe3F/BeuS27Xb9uUuVEAYtli8UOkQ4zZZ8J4V38=;
+        b=JD6JScI1E1Q2KxGTFeLJu3hRzsEdiQo53CM5SS21CpR4dcD2p08p93atZhjELMR2Ig
+         v15+DliUSPZeGG/WSbxHjpzN0/X6oWi982w47rP2TPWqs8PkZZRFf9PAQzKnUuQ3fSTu
+         X7QVq3YtPlAQ7shOmKbXYKes2YiPwPvmJLaIbGG1/L+1+i0hE/OOV0i5gsOHLIC1e0Lx
+         DPtGdm8GtOfW1Rz07h7ie4JdnojB39R+m0KYOdK8cGtZuRitTfrxd1eP6ELH55udfaGa
+         BnY1ZEy8EIwP+fXCxNLmAqHtre7OCKrHGswyqioUlQJUoE51XUHqgf8xbbn8IUf/5ENu
+         Si0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
-         :user-agent:date:message-id:mime-version;
-        bh=p2CFt3NmrejWc8HAnBbJN8Mjv4UeItVUoUZQSObOnQQ=;
-        b=ipYy5Sy0LRZViVrlk/7TEVomZf0+ts1iJaD7oInn0b04KqVNmqYPoOQMsnqISOgZJa
-         M6eKeNqbfK+fblDiBzvL6UeKdDmA4Tkp+eN8hBxC1YSqEuv+ISnIYGoIVruqoN4dgzpb
-         CrqtlWsYfLYHj4hlP6GLWGigCSdsUP4RzBCXGocsCkPuUVRi6BMes9exBhIw/XYVto3P
-         NxKj89GIGboyapc4MSZNsrf3qXlrdw/dLvx6V3Cfpp/ixGLmDwY2KGb/i7Lxow4kKqOb
-         g64ms7KQsf36DC3BLGGhbJneycaMEEhRSEdzfFYRfwYVzycyTga/YQoz0N3kn6NJLFR3
-         haQg==
-X-Gm-Message-State: APjAAAUDMlt6kFTfURQyiIXn3pF/d3nF1tfeDQ1aWF2V8pjuNJkW5u7J
-        VY5t787EZu0xzcuRzl9sQ/0=
-X-Google-Smtp-Source: APXvYqxho4m6FlMh+8gRyZLsUvr5XvnW3cWYniQsQy1IJP4qv+qpg/BAmLMlOf0IhbHyY2Lxnre/FA==
-X-Received: by 2002:a1c:5fd7:: with SMTP id t206mr1569155wmb.73.1553157088356;
-        Thu, 21 Mar 2019 01:31:28 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id 26sm5611242wmg.42.2019.03.21.01.31.27
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=JUe7fe3F/BeuS27Xb9uUuVEAYtli8UOkQ4zZZ8J4V38=;
+        b=qlnTsLx1ijFTe8HWlMFPgMKG+hjqiwm1ZpsXt7paFx+590R7gTSUdA8YDsR3reF2Lo
+         M5lGGLT+7it2GC40Ca9oF9OrbqpawEvTYO07V27+0DJEKBD9TxZoUW/YFToMS0MH4l0J
+         Zpq9iYG9I60IqK2SQRYP4qjwIHUUgtsV03irSFgXVRQfwJomQLQgsiIPYDCzTLCaYDEa
+         /9mr2o0SpYAJQn69xUXr7SNUsdlchMN3gULjazLBzWinMCvrJcBf3p20HSgSYzz110SC
+         LBE8cpUXuL3LoNNb1vJ7a8C1PVwT3EIDWNwEAyJV+MCWt1VaZdBgHi6a6I0NZsQEIptw
+         cb2Q==
+X-Gm-Message-State: APjAAAVJYpZN7rug5Agzylj5qYjBpew1y8asDpqMh29oIYtI0VOTITwo
+        IeYi7WktId/EEyZpdXXxdLbDo+Z9
+X-Google-Smtp-Source: APXvYqw9grytgHI8KuVwIXPS0Dhbf3SiidFZEJHVJ9dqarjEpO2+aUgFF4k6B6b6bn0Y+afXehdrKQ==
+X-Received: by 2002:a17:906:2f09:: with SMTP id v9mr1626506eji.105.1553158214851;
+        Thu, 21 Mar 2019 01:50:14 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id g4sm894921ejd.74.2019.03.21.01.50.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Mar 2019 01:31:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        "C.J. Jameson" <cjcjameson@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] cherry-pick: set default `--mainline` parent to 1
-In-Reply-To: <878sx8lpqw.fsf@javad.com> (Sergey Organov's message of "Thu, 21
-        Mar 2019 09:12:55 +0300")
-References: <CALm+SVJR5BCHi_r7B279gKDukD4mYDQuv=K5guje73YDVmOxug@mail.gmail.com>
-        <xmqq1s32w3vu.fsf@gitster-ct.c.googlers.com>
-        <871s31vjo7.fsf@javad.com>
-        <CABPp-BEe56GFM_2g7EyXmSrULFwRAvSPBomQ66jEQmCs=HhWpg@mail.gmail.com>
-        <xmqqd0mlt1h1.fsf@gitster-ct.c.googlers.com>
-        <xmqq4l7wuddk.fsf@gitster-ct.c.googlers.com>
-        <87pnqklr8a.fsf@javad.com>
-        <xmqqlg18srrp.fsf@gitster-ct.c.googlers.com>
-        <878sx8lpqw.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-Date:   Thu, 21 Mar 2019 17:31:27 +0900
-Message-ID: <xmqqbm24sk68.fsf@gitster-ct.c.googlers.com>
+        Thu, 21 Mar 2019 01:50:14 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/13] more unused parameter cleanups
+References: <20190320081258.GA5621@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190320081258.GA5621@sigill.intra.peff.net>
+Date:   Thu, 21 Mar 2019 09:50:13 +0100
+Message-ID: <87woksd322.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -76,26 +66,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
 
->> The same effect can be had by just reverting "let's allow -m1 for
->> single-parent commit", can't it?  That is a far simpler solution, I
->> would say.
+On Wed, Mar 20 2019, Jeff King wrote:
+
+> Here's another round of -Wunused-parameter cleanups. Previous rounds
+> were at [1] and [2]. As before, these are mostly just removals, so it's
+> easy to see there's no behavior change (there are a couple of cleanups
+> that ride along, though, so watch for those).
 >
-> Those one didn't introduce the issue currently at hand, as we still
-> don't allow merges by default, so why do we need to rewind it?
+> There are two minor conflicts when merging with pu:
+>
+>   - jt/fetch-cdn-offload tweaked the "pack_lockfile" parameter to
+>     fetch_pack(). A few other parameters are dropped in this series.
+>     The textual resolution is pretty straightforward.
+>
+>   - ps/stash-in-c (et al) added a new call to report_path_error() in
+>     builtin/stash.c, which here loses its redundant "prefix" parameter.
+>     There's no textual conflict, but the new call needs to drop its
+>     final NULL parameter in order to compile.
 
-With it reverted, "[alias] cp = cherry-pick -m1" can be used to
-train the user to blindly pick a range that has a merge without
-thinking, which is what I meant by "ship has already sailed".
+LGTM from skimming it, FWIW this is now what we need to compile cleanly
+with -Wextra:
 
-With it reverted, a range pick of a straight single strand of pearls
-would still work just fine.  And the user is forced to think and
-chop a range with a merge into a set of subranges each of which is a
-single strand of pearls, plus picking individual merges (if picking
-these merges is really what the user wants, that is).  As ensuring
-the users to think is the whole point of excercise, the original
-system before we allowed "-m1" for single parent commit was after
-all giving us the right balance, I guess, without having to add yet
-another new option.
+    make DEVELOPER=1 DEVOPTS="extra-all" CFLAGS="-Wno-unused-parameter -Wno-missing-field-initializers -Wno-sign-compare -Wno-empty-body" all
 
+For some such as -Wempty-body we'd really need to contort ourselves to
+get it passing anywhere near cleanly (all of those have existing "/*
+this is intentional! */" comments).
+
+I wonder if for the rest of these it's worth re-picking up this old
+suggestions of yours about #pragma:
+https://public-inbox.org/git/20170126143252.ne533mcv3n2ksbai@sigill.intra.peff.net/
+
+I.e. for us to define our own macro for these cases & use it.
+
+https://gcc.gnu.org/onlinedocs/gcc/Diagnostic-Pragmas.html
+https://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas
+
+I was looking into this for SunCC the other day, it has various new
+warnings that are useful that neither gcc nor clang (or anything else
+I've tried) has, but also has some stupidities due to faulty code
+analysis, luckily those can be disabled:
+
+https://docs.oracle.com/cd/E19205-01/819-5265/bjaby/index.html
+
+This would allow me to compile there with -Werror.
+
+It would mean quite some macro verbosity in some existing code, maybe
+it's not worth it...
