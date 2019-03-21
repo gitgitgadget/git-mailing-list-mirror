@@ -2,63 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 864DF20248
-	for <e@80x24.org>; Thu, 21 Mar 2019 11:43:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7AAC202BB
+	for <e@80x24.org>; Thu, 21 Mar 2019 11:59:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728078AbfCULnS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 07:43:18 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:42507 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727891AbfCULnS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 07:43:18 -0400
-Received: by mail-ed1-f67.google.com with SMTP id j89so4679708edb.9
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 04:43:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=M/YZUlpM9pXjU5vA99QYpo5wg1kQtjsHaVGJVGLVKOk=;
-        b=sixuzAVPH0G2UT5rcJKs/hXpeuPWD2DKiDvN4FXL8mkkQAbsF7N4cfq7ZVjuy7JJCo
-         CmIc+UAW1jO1JyR5O5nbuc2DCI3pKHM+V84vwvNpINX8KXbJ2uQuIZ6c/mfe1WLy9NwI
-         ITUpifX6eWHH4ZBhy7VPQBFEYOTW26UjAwI2bRqClGTDUWOSAIAxOTNtldk8DLkyh/mf
-         oLU06DFV/AykQOnxOWAqGMTTAvC6APy9oGHUaIWrD4pSfL4tRaqT2+sMNDfGBAgKK3F5
-         hp1oDabVGYw6nBRQx1shYXsMCFjzE0kGOjJwtX42MTd6fYtRPHltCNvDafzENRn2eTcy
-         zvLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=M/YZUlpM9pXjU5vA99QYpo5wg1kQtjsHaVGJVGLVKOk=;
-        b=ebjxZt+3gJ/CBQfSRlYstgyBxsUVXLifeC6FVUJrf110oMGXg0zn6TpsySRIUhdJJo
-         cFLfT5xTZa9D9Q/ZMnxpdzkLKGhzspXZhpmdkx7udbaOVuaCOjwQdVffvsjcLPB2/VUM
-         SAaixZlFYL7v00NJc+6A04RLJIZ5fBj1TQ2q4UG10tM17IRqinUVXOSgdroKYz6eZP5k
-         YfUog7iSQzusHF3ozc0oQKenrpRqNenW0UzoVcWcYY0mHpn//F/6ii2Mg8MUFl7EepOZ
-         lpMmOOFJfalgPSIpsxSTyqEfqoljmLLVrkt+uXAjOalupBQxr4LDGo1I6SBVrR/e/8UN
-         G8Uw==
-X-Gm-Message-State: APjAAAXlnoVh4HOseG1KYnEqonpmShN4yR0pDdXbQMdgLQQxdWzEhu4b
-        ekr6aUsPQ2KNiL7+PuAmDoo9BhRH
-X-Google-Smtp-Source: APXvYqz7pCXXnjI4TxfAK5S3rcmppCqQ2201DdW37pcPcwqz0LFFWrW1ywF7d9W3g2eI7P5/4mCl6g==
-X-Received: by 2002:a50:a8a4:: with SMTP id k33mr2191160edc.261.1553168595965;
-        Thu, 21 Mar 2019 04:43:15 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id n5sm1616128edd.33.2019.03.21.04.43.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Mar 2019 04:43:15 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        id S1727829AbfCUL7i (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 07:59:38 -0400
+Received: from mail.javad.com ([54.86.164.124]:57943 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725985AbfCUL7i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 07:59:38 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id C688A3F3C0;
+        Thu, 21 Mar 2019 11:59:36 +0000 (UTC)
+Authentication-Results: mail.javad.com;
+        dkim=pass (1024-bit key; unprotected) header.d=javad.com header.i=@javad.com header.b=qaQL3/w6;
+        dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1553169577;
+        bh=6JQgo4+j3q6vV36n3csRJiEUdx8vp5C08WlyNevV17k=; l=2876;
+        h=Received:From:To:Subject;
+        b=qaQL3/w6ozY/jluu6wCf8gM8WAgl1yxUFZ7nkqaUS+qv6lAsePPcJosq9dBZfX2mM
+         vG+BzoUnP2HBhW9bxfrmiHKsfWobIliKQARddGvnQaoKGXYNPTZjk5hgigVsW8JgyY
+         4Cn5PdFZE3OpUIVLDPivp9y28Xq0Croz628kKfjA=
+Authentication-Results: ip-172-31-2-110;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1h6wMB-0004R6-7Y; Thu, 21 Mar 2019 14:59:35 +0300
+From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Daniel Kahn Gillmor <dkg@fifthhorseman.net>, git@vger.kernel.org
-Subject: Re: git tag -v should verify that the tag signer intended the same tag name as the user is verifying
-References: <875zsdu41d.fsf@fifthhorseman.net> <xmqq5zsduinf.fsf@gitster-ct.c.googlers.com> <xmqq1s31ui5s.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <xmqq1s31ui5s.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 21 Mar 2019 12:43:13 +0100
-Message-ID: <87r2b0cv1q.fsf@evledraar.gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        "C.J. Jameson" <cjcjameson@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] cherry-pick: set default `--mainline` parent to 1
+References: <CALm+SVJR5BCHi_r7B279gKDukD4mYDQuv=K5guje73YDVmOxug@mail.gmail.com>
+        <xmqq1s32w3vu.fsf@gitster-ct.c.googlers.com>
+        <871s31vjo7.fsf@javad.com>
+        <CABPp-BEe56GFM_2g7EyXmSrULFwRAvSPBomQ66jEQmCs=HhWpg@mail.gmail.com>
+        <xmqqd0mlt1h1.fsf@gitster-ct.c.googlers.com>
+        <xmqq4l7wuddk.fsf@gitster-ct.c.googlers.com>
+        <87pnqklr8a.fsf@javad.com>
+        <xmqqlg18srrp.fsf@gitster-ct.c.googlers.com>
+        <878sx8lpqw.fsf@javad.com>
+        <xmqqbm24sk68.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 21 Mar 2019 14:59:35 +0300
+In-Reply-To: <xmqqbm24sk68.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 21 Mar 2019 17:31:27 +0900")
+Message-ID: <87k1gsh1zs.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -66,42 +64,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Thu, Mar 21 2019, Junio C Hamano wrote:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+> Sergey Organov <sorganov@gmail.com> writes:
 >
->>  * "git tag -v $(git rev-parse v1.0.0)" should work, but the command
+>>> The same effect can be had by just reverting "let's allow -m1 for
+>>> single-parent commit", can't it?  That is a far simpler solution, I
+>>> would say.
+>>
+>> Those one didn't introduce the issue currently at hand, as we still
+>> don't allow merges by default, so why do we need to rewind it?
 >
-> Sorry, forget about this part of my message.  I completely forgot the
-> discussion we had a few years ago:
->
-> https://public-inbox.org/git/CAPc5daV9ZvHqFtdzr565vp6Mv7O66ySr-p5Vi8o6bd6=GyVELg@mail.gmail.com/
->
-> In short, "git tag -v TAGNAME" does not take an arbitrary object
-> name, TAGNAME does not go through the usual ref dwimming rules
-> (i.e. checking for .git/%s, .git/tag/%s, .git/heads/%s, ... to find
-> one) but only looks at refs/tags/TAGNAME alone.  So we always have
-> the refname it came from when inspecting tag contents that tells
-> what tagname the tag has.
->
-> The other point still stands; there are legitimate reasons people
-> would want to have a tag with v1.0.0 tagname in somewhere that is
-> not refs/tags/v1.0.0 and an extra validation must need to make sure
-> it won't error out, even though warning is probably acceptable.
+> With it reverted, "[alias] cp = cherry-pick -m1" can be used to train
+> the user to blindly pick a range that has a merge without thinking,
+> which is what I meant by "ship has already sailed".
 
-One such example, which I don't know is actually used, but we might be
-careful to break is:
+Did you mean "With it *not* reverted" here? Because with it reverted,
+"cherry-pick -m1" will rather loudly fail on the first non-merge commit
+in the range. Such alias would be useless without that patch.
 
- * Someone (e.g. Junio) is producing signed tags of a project like
-   git.git
+Those who don't like such alias are still free not to define or use it.
 
- * Someone else has a git repo where only upstream (signed by Junio)
-   releases are allowed, but they decide *which* release.
+> With it reverted, a range pick of a straight single strand of pearls
+> would still work just fine.  And the user is forced to think and
+> chop a range with a merge into a set of subranges each of which is a
+> single strand of pearls, plus picking individual merges (if picking
+> these merges is really what the user wants, that is).
 
- * Some system auto-deploys whatever the latest sorted tag in that repo
-   is, after verifying that Junio tagged them.
+Unfortunately, this gets us back to the exact problem with practical
+use-case the patch was provoked by. There was a large number of commits
+to be picked, and the set has been carefully built by "git rev-list" (as
+"git cherry-pick" built-in features were not enough: yet another issue).
+Some of these commits were merges, and handling all this manually (and
+repeatedly) would be a real pain. It was easier to locally patch "git
+cherry-pick -m1" to achieve the goal. Then I thought that it could help
+others in the future, and then took time to provide the patch. It'd be
+a real pity to get back to where I started.
 
-Thus e.g. v2.21.0 might be pushed as refs/tags/2018-03-21, and if it
-doesn't work out a new refs/tags/2018-03-22 might be tagged tomorrow
-using the v2.20.0 tag.
+BTW, the above also shows that the issue with "-m 1" existed even before
+"git cherry-pick" started to accept ranges, as I was not using these
+ranges anyway.
+
+Overall, I mean that I still need a way to tell "git cherry-pick" that I
+do know what I'm doing, so that it stops complaining on a non-issue.
+Thus if the patch is reverted, a new option should be added just for
+this goal, -- back to where we are now, but an option already added.
+
+> As ensuring the users to think is the whole point of excercise,
+
+Yeah, provided they do have a suitable way out. Without that patch,
+there was none.
+
+> the original system before we allowed "-m1" for single parent commit
+> was after all giving us the right balance, I guess, without having to
+> add yet another new option.
+
+No, unfortunately it didn't, and to me the patch in question still seems
+to be in the right direction, legitimate, and useful.
+
+Moreover, I still can't see how it's harmful. Just don't use '-m 1' if
+you don't want merges.
+
+-- Sergey
