@@ -2,312 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72A0620248
-	for <e@80x24.org>; Thu, 21 Mar 2019 14:43:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6418620248
+	for <e@80x24.org>; Thu, 21 Mar 2019 14:48:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728085AbfCUOng (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 10:43:36 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39984 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726787AbfCUOnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 10:43:35 -0400
-Received: by mail-wr1-f68.google.com with SMTP id t5so6881895wri.7
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 07:43:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Ead4vZSvXJ7+R0adFe0MuCcmXiVcOfHjd7jAXNrJeIc=;
-        b=hYqOsrqeK7oZx3dhHz0CztiW/LuKIQmjK9rciKXWP9Iphwr3xbz8bfas+8dn9L3ugT
-         kH5j6W8BbOden1xjMCC3fJ8rlEltpGQ/nsMm+ulGDMWQcxkqzw0RliUSUDXnFNnEFCdu
-         PYontSnRsSMY80Tav5hLuJYS7Pdhdj6fbXWAeS0fwas/lO1Z4eh+T0wHl9UbPXDvZF+o
-         z76X6afs+cUwO0U9BPzBpgcqfe0TweOCSq5elznY2BwtVekvztPaqF1xRZFKwjwnxPuA
-         vAaTQQei9EHsDpORvslRqt/l/F8Keb6RaVcigoVcaYwA2jlQ9fhesbfXzHeyGB5sGRip
-         m09g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=Ead4vZSvXJ7+R0adFe0MuCcmXiVcOfHjd7jAXNrJeIc=;
-        b=b55IZSk9aiBqYiBDf8rTH/GefO+dJoSHwqWy1nEQWKQ5ItHXPnRCHnizpx54b5oFNB
-         1+QJbYMBY3hZUaJ+qETAhRrb09NCYlyMrNGMM2ODyOYW0bj3wIq8toKlbZMzP5CC+4jQ
-         4enFaFWU2ssLErAQVVBGHxMeayp7ZTNY1whbelLtr7lNpH8dKaOp6/zKvlGHG86U8KEN
-         SXijuhJ22MdBQJ9LC4RtUV/ALz19AoL094/7Luf5nPZwFrlFIZ10ZxYxz5IT44zZneBf
-         6dC3YWwa9nKwfViuzH+JwfDgPsTVGqIAIFJ+sP+P0tSKk7FXFMXBfKdVB5bvhrv9FJ7d
-         uNrg==
-X-Gm-Message-State: APjAAAX7syyO0WRiwKJ+IL/NwOp7R7ZV777PU/l1bSgO43PJAEm5AYs4
-        QCpZFcey+MnkzJUrapEOi6E=
-X-Google-Smtp-Source: APXvYqx0xDlDZ8IvCg9jbcRWmao8frdPdJeGoigF42mEJLkChzm769tn+clPZldAF4f2VrD7n5Lllg==
-X-Received: by 2002:adf:f1c7:: with SMTP id z7mr3014565wro.274.1553179413261;
-        Thu, 21 Mar 2019 07:43:33 -0700 (PDT)
-Received: from [192.168.2.240] (host-89-242-184-133.as13285.net. [89.242.184.133])
-        by smtp.gmail.com with ESMTPSA id o10sm4861597wrx.82.2019.03.21.07.43.32
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Mar 2019 07:43:32 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 10/11] rebase: use a common action enum
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190319190317.6632-1-phillip.wood123@gmail.com>
- <20190319190317.6632-11-phillip.wood123@gmail.com>
- <875zseehoj.fsf@evledraar.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <dbc948f4-164d-6d1d-d7c8-b9d1136cd4c2@gmail.com>
-Date:   Thu, 21 Mar 2019 14:43:31 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+        id S1727922AbfCUOs3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 10:48:29 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:54066 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726551AbfCUOs3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 10:48:29 -0400
+Received: from [192.168.1.12] ([2.101.244.128])
+        by smtp.talktalk.net with SMTP
+        id 6yzahBorhp7QX6yzahvkcW; Thu, 21 Mar 2019 14:48:27 +0000
+X-Originating-IP: [2.101.244.128]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=drql9Go4 c=1 sm=1 tr=0 a=8nsoD1t2XaTH5iSUU4dp1Q==:117
+ a=8nsoD1t2XaTH5iSUU4dp1Q==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8 a=vZxbLtyPAAAA:8
+ a=d4kOJ1WucjTr_wY9FwYA:9 a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+ a=YIznc7gRMHvxYRuyG5Sm:22
+Subject: Re: [PATCH v3] glossary: add definition for overlay
+To:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8C7F_Ju2F7COUVd9-1FcyQL=mZph7qmkDh9sS-ENb4PEQ@mail.gmail.com>
+ <f6052ac6-60c4-1e70-b3f4-571885ba9e8d@iee.org>
+ <CACsJy8D48YiWYkuLW8BbeYvRz=yMmb=XWoMJroPXFAcSV2VjHw@mail.gmail.com>
+ <20190309172733.GC31533@hank.intra.tgummerer.com>
+ <20190312233040.GE16414@hank.intra.tgummerer.com>
+ <20190317201956.GB1216@hank.intra.tgummerer.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <3d2ad13b-b5de-7e8f-9647-983e964c6303@iee.org>
+Date:   Thu, 21 Mar 2019 14:48:28 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.5.3
 MIME-Version: 1.0
-In-Reply-To: <875zseehoj.fsf@evledraar.gmail.com>
+In-Reply-To: <20190317201956.GB1216@hank.intra.tgummerer.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
 Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfEf46Qp3T3UYveg+VL+29ehQ+wj5+4GAif8b2lnE8u63SkPjIUDR1GKNjmNFVPd91lB2D9bO5gbGFqKhBCjLefjrYOn3yuziHk7rIpUN8eY6XTjB97PI
+ N4bYzbj+hAn95GXIrkOT+aTsbF6zuuFIZ5cnMozV/DXcOzeZst3oK1BIhPmuyCIhzHMmFMoOSmkUJ+XcmtLUVX9dYDNUv7GlnVqUHd07oqM38LNE27BFPpq+
+ xSn+7gXAw7AR8UZ7aawZ9sclA4jioxus1MKOI9DlmcFJYivhPrWTmAzv4Wi5h6hSnKpAhqwIikm/pRQ1VRiJbw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi, sorry for the late response..
 
+On 17/03/2019 20:19, Thomas Gummerer wrote:
+> Add a definition for what overlay means in the context of git, to
+> clarify the recently introduced overlay-mode in git checkout.
+>
+> Helped-by: Elijah Newren <newren@gmail.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>
+> v3 incorporates Junios suggestions from [*1*], and clarifies that this
+> only applies to checking out from the index or a tree-ish, and
+> clarifies that the files are updated like in the destination directory
+> of 'cp -R'.  I thought of making the same clarification for 'rsync
+> --delete' as well, however I think with it being explicitly specified
+> for 'cp -R', readers should be able to deduce that we are talking
+> about the destination directory there as well.
+As a historically Windows user, we should ensure that the meaning is 
+clear to all without the otherwise helpful *nix command examples.
+>
+> *1*: <xmqq5zsnh7my.fsf@gitster-ct.c.googlers.com>
+>
+>   Documentation/glossary-content.txt | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+>
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index 023ca95e7c..0f29075551 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -287,6 +287,15 @@ This commit is referred to as a "merge commit", or sometimes just a
+>   	origin/name-of-upstream-branch, which you can see using
+>   	`git branch -r`.
+>   
+> +[[def_overlay]]overlay::
+> +	Only update and add files to the working directory, but don't
+> +	delete them, similar to how 'cp -R' would update the contents
+perhaps  s/them/any files/
+> +	in the destination directory.  This is the default mode in a
+> +	<<def_checkout,checkout>> when checking out files from the
+> +	<<def_index,index>> or a <<def_tree-ish,tree-ish>>.  In
+> +	contrast, no-overlay mode also deletes tracked files not
 
-On 19/03/2019 20:24, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Mar 19 2019, Phillip Wood wrote:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> cmd_rebase() and cmd_rebase__interactive() used different enums to hold
->> the current action. Change to using a common enum so the values are the
->> same when we change `rebase -i` to avoid forking `rebase--interactive`.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>
->> Notes:
->>      I'm not sure what to do with action_names, I moved it to keep it near
->>      the definition of the enum. The extra commands in the enum are not
->>      traced so they don't need to be in action_names but it looks odd to
->>      leave them out. Also I don't understand why action_names in NULL
->>      terminated or the names are marked for translation as it is used in
->>      	trace2_cmd_mode(action_names[action]);
->>      so we don't use the NULL termination or translate the names (I'd be
->>      surprised if we did for tracing)
-> 
-> Making them for translation is a bug in the recent b3a5d5a80c
-> ("trace2:data: add subverb for rebase", 2019-02-22) and just looks like
-> copy/paste cargo-culting from somewhere else, and likewise with the
-> trailing NULL which doesn't make sense in this case.
+understanding the past/future distinction is tricky here. Maybe 'deletes 
+previously tracked files that are no longer present in the new source'.
 
-Thanks for clarifying that, I'll add a preparatory patch at the 
-beginning of the series to fix those issues
+It's tricky talking about deleting things that are not there.
 
-Best Wishes
+> +	present in the source, similar to 'rsync --delete'.
+> +
+>   [[def_pack]]pack::
+>   	A set of objects which have been compressed into one file (to save space
+>   	or to transmit them efficiently).
 
-Phillip
+--
 
->>   builtin/rebase.c | 93 +++++++++++++++++++++++++-----------------------
->>   1 file changed, 49 insertions(+), 44 deletions(-)
->>
->> diff --git a/builtin/rebase.c b/builtin/rebase.c
->> index 21ccb6495e..26d25a5242 100644
->> --- a/builtin/rebase.c
->> +++ b/builtin/rebase.c
->> @@ -119,6 +119,30 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
->>   	return replay;
->>   }
->>
->> +enum action {
->> +	ACTION_NONE = 0,
->> +	ACTION_CONTINUE,
->> +	ACTION_SKIP,
->> +	ACTION_ABORT,
->> +	ACTION_QUIT,
->> +	ACTION_EDIT_TODO,
->> +	ACTION_SHOW_CURRENT_PATCH,
->> +	ACTION_SHORTEN_OIDS,
->> +	ACTION_EXPAND_OIDS,
->> +	ACTION_CHECK_TODO_LIST,
->> +	ACTION_REARRANGE_SQUASH,
->> +	ACTION_ADD_EXEC
->> +};
->> +
->> +static const char *action_names[] = { N_("undefined"),
->> +				      N_("continue"),
->> +				      N_("skip"),
->> +				      N_("abort"),
->> +				      N_("quit"),
->> +				      N_("edit_todo"),
->> +				      N_("show_current_patch"),
->> +				      NULL };
->> +
->>   static int add_exec_commands(struct string_list *commands)
->>   {
->>   	const char *todo_file = rebase_path_todo();
->> @@ -347,10 +371,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
->>   	unsigned flags = 0;
->>   	int abbreviate_commands = 0, ret = 0;
->>   	struct object_id squash_onto = null_oid;
->> -	enum {
->> -		NONE = 0, CONTINUE, SKIP, EDIT_TODO, SHOW_CURRENT_PATCH,
->> -		SHORTEN_OIDS, EXPAND_OIDS, CHECK_TODO_LIST, REARRANGE_SQUASH, ADD_EXEC
->> -	} command = 0;
->> +	enum action command = ACTION_NONE;
->>   	struct option options[] = {
->>   		OPT_NEGBIT(0, "ff", &opts.flags, N_("allow fast-forward"),
->>   			   REBASE_FORCE),
->> @@ -367,22 +388,22 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
->>   			N_("display a diffstat of what changed upstream"),
->>   			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
->>   		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
->> -			    CONTINUE),
->> -		OPT_CMDMODE(0, "skip", &command, N_("skip commit"), SKIP),
->> +			    ACTION_CONTINUE),
->> +		OPT_CMDMODE(0, "skip", &command, N_("skip commit"), ACTION_SKIP),
->>   		OPT_CMDMODE(0, "edit-todo", &command, N_("edit the todo list"),
->> -			    EDIT_TODO),
->> +			    ACTION_EDIT_TODO),
->>   		OPT_CMDMODE(0, "show-current-patch", &command, N_("show the current patch"),
->> -			    SHOW_CURRENT_PATCH),
->> +			    ACTION_SHOW_CURRENT_PATCH),
->>   		OPT_CMDMODE(0, "shorten-ids", &command,
->> -			N_("shorten commit ids in the todo list"), SHORTEN_OIDS),
->> +			N_("shorten commit ids in the todo list"), ACTION_SHORTEN_OIDS),
->>   		OPT_CMDMODE(0, "expand-ids", &command,
->> -			N_("expand commit ids in the todo list"), EXPAND_OIDS),
->> +			N_("expand commit ids in the todo list"), ACTION_EXPAND_OIDS),
->>   		OPT_CMDMODE(0, "check-todo-list", &command,
->> -			N_("check the todo list"), CHECK_TODO_LIST),
->> +			N_("check the todo list"), ACTION_CHECK_TODO_LIST),
->>   		OPT_CMDMODE(0, "rearrange-squash", &command,
->> -			N_("rearrange fixup/squash lines"), REARRANGE_SQUASH),
->> +			N_("rearrange fixup/squash lines"), ACTION_REARRANGE_SQUASH),
->>   		OPT_CMDMODE(0, "add-exec-commands", &command,
->> -			N_("insert exec commands in todo list"), ADD_EXEC),
->> +			N_("insert exec commands in todo list"), ACTION_ADD_EXEC),
->>   		{ OPTION_CALLBACK, 0, "onto", &opts.onto, N_("onto"), N_("onto"),
->>   		  PARSE_OPT_NONEG, parse_opt_commit, 0 },
->>   		{ OPTION_CALLBACK, 0, "restrict-revision", &opts.restrict_revision,
->> @@ -428,36 +449,36 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
->>   	flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
->>   	flags |= opts.rebase_merges ? TODO_LIST_REBASE_MERGES : 0;
->>   	flags |= opts.rebase_cousins > 0 ? TODO_LIST_REBASE_COUSINS : 0;
->> -	flags |= command == SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
->> +	flags |= command == ACTION_SHORTEN_OIDS ? TODO_LIST_SHORTEN_IDS : 0;
->>
->>   	if (opts.rebase_cousins >= 0 && !opts.rebase_merges)
->>   		warning(_("--[no-]rebase-cousins has no effect without "
->>   			  "--rebase-merges"));
->>
->>   	switch (command) {
->> -	case NONE: {
->> +	case ACTION_NONE: {
->>   		if (!opts.onto && !opts.upstream)
->>   			die(_("a base commit must be provided with --upstream or --onto"));
->>
->>   		ret = do_interactive_rebase(&opts, flags);
->>   		break;
->>   	}
->> -	case SKIP: {
->> +	case ACTION_SKIP: {
->>   		struct string_list merge_rr = STRING_LIST_INIT_DUP;
->>
->>   		rerere_clear(the_repository, &merge_rr);
->>   	}
->>   		/* fallthrough */
->> -	case CONTINUE: {
->> +	case ACTION_CONTINUE: {
->>   		struct replay_opts replay_opts = get_replay_opts(&opts);
->>
->>   		ret = sequencer_continue(the_repository, &replay_opts);
->>   		break;
->>   	}
->> -	case EDIT_TODO:
->> +	case ACTION_EDIT_TODO:
->>   		ret = edit_todo_file(flags);
->>   		break;
->> -	case SHOW_CURRENT_PATCH: {
->> +	case ACTION_SHOW_CURRENT_PATCH: {
->>   		struct child_process cmd = CHILD_PROCESS_INIT;
->>
->>   		cmd.git_cmd = 1;
->> @@ -466,17 +487,17 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
->>
->>   		break;
->>   	}
->> -	case SHORTEN_OIDS:
->> -	case EXPAND_OIDS:
->> +	case ACTION_SHORTEN_OIDS:
->> +	case ACTION_EXPAND_OIDS:
->>   		ret = transform_todo_file(flags);
->>   		break;
->> -	case CHECK_TODO_LIST:
->> +	case ACTION_CHECK_TODO_LIST:
->>   		ret = check_todo_list_from_file(the_repository);
->>   		break;
->> -	case REARRANGE_SQUASH:
->> +	case ACTION_REARRANGE_SQUASH:
->>   		ret = rearrange_squash_in_todo_file();
->>   		break;
->> -	case ADD_EXEC: {
->> +	case ACTION_ADD_EXEC: {
->>   		struct string_list commands = STRING_LIST_INIT_DUP;
->>
->>   		split_exec_commands(opts.cmd, &commands);
->> @@ -1417,23 +1438,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->>   	struct strbuf revisions = STRBUF_INIT;
->>   	struct strbuf buf = STRBUF_INIT;
->>   	struct object_id merge_base;
->> -	enum {
->> -		NO_ACTION,
->> -		ACTION_CONTINUE,
->> -		ACTION_SKIP,
->> -		ACTION_ABORT,
->> -		ACTION_QUIT,
->> -		ACTION_EDIT_TODO,
->> -		ACTION_SHOW_CURRENT_PATCH,
->> -	} action = NO_ACTION;
->> -	static const char *action_names[] = { N_("undefined"),
->> -					      N_("continue"),
->> -					      N_("skip"),
->> -					      N_("abort"),
->> -					      N_("quit"),
->> -					      N_("edit_todo"),
->> -					      N_("show_current_patch"),
->> -					      NULL };
->> +	enum action action = ACTION_NONE;
->>   	const char *gpg_sign = NULL;
->>   	struct string_list exec = STRING_LIST_INIT_NODUP;
->>   	const char *rebase_merges = NULL;
->> @@ -1600,7 +1605,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->>   			     builtin_rebase_options,
->>   			     builtin_rebase_usage, 0);
->>
->> -	if (action != NO_ACTION && total_argc != 2) {
->> +	if (action != ACTION_NONE && total_argc != 2) {
->>   		usage_with_options(builtin_rebase_usage,
->>   				   builtin_rebase_options);
->>   	}
->> @@ -1609,7 +1614,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->>   		usage_with_options(builtin_rebase_usage,
->>   				   builtin_rebase_options);
->>
->> -	if (action != NO_ACTION && !in_progress)
->> +	if (action != ACTION_NONE && !in_progress)
->>   		die(_("No rebase in progress?"));
->>   	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, "rebase", 0);
->>
->> @@ -1709,7 +1714,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->>   		options.action = "show-current-patch";
->>   		options.dont_finish_rebase = 1;
->>   		goto run_rebase;
->> -	case NO_ACTION:
->> +	case ACTION_NONE:
->>   		break;
->>   	default:
->>   		BUG("action: %d", action);
+Philip
+
