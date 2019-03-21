@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01C9420248
-	for <e@80x24.org>; Thu, 21 Mar 2019 06:53:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5992E20248
+	for <e@80x24.org>; Thu, 21 Mar 2019 06:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727890AbfCUGxz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 02:53:55 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38384 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727811AbfCUGxz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 02:53:55 -0400
-Received: by mail-pg1-f196.google.com with SMTP id v1so3576077pgi.5
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 23:53:54 -0700 (PDT)
+        id S1727893AbfCUGx6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 02:53:58 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34704 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727891AbfCUGx6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 02:53:58 -0400
+Received: by mail-pg1-f195.google.com with SMTP id v12so3596492pgq.1
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 23:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=K83xnFPAcB1VIULC86KP35ikutyNj0u9e1zEXL9YwpU=;
-        b=dI6BMzhZPqUwRwa8aU3Xy7GlO6hZFX7rLI8qa+DS0cEo5RFKUidDofZwlxWz16ur6W
-         7dTbcofYdkjlgJUl1NGiHcYQqn8JMb4ozhNtr3k+w9/wR6meqRCBcEujSqe3+G0P+oHK
-         2CzlGFr5PvucHyM7TDUUtjIzmYDMmnapJPPbJrWMDXrn7d6Itpvx1Z6bP4rnGqI1xy/v
-         u+J63n1mK4yYOTA9kSqvRRjfNxRONvO3bFC5vToBzr1tbUxJR5QYlVWB4XEa232u9xFq
-         ETdE4BxkZcLJZCpLEImoIYrt+RGHrwjRITcAz2aeF3A0+fY+R+D/LfpIlH63owTMzu0L
-         tjKg==
+        bh=R0f6isHrpFXom1zlVM9c1JtgkdivNl3Iqxc6mzDKoHc=;
+        b=hYGccKd0Ltgpd0Cyv1eUskCzthskDOnWyGdROFrcBt5prByxTh9z2sc8gNV6Dr2tO4
+         V12LVEy9B0KSnGG6PevbjievrtclB+eHcQU5xns8LL0l5x2AjAHwye9wtC/2vhcP1fzu
+         +PGV5BFlsg/GNjt2LZCTpXEnwNP4XIVLs3yTRkhLlyrcKby52/yw0KN6mml17UGRkCxC
+         BKB5xsG5LzMWRfyT2FcsJn+3Xia4EBBszzlP8IEjRxNEbLcdKzMc2Hmq58KpxADk4AhS
+         3T8e2Li6+uU0hjHxW9DxXgdTa8LPRJLBPTZQ5XfxxHcX3h6RerEtlzUAQjSnm+59KP1m
+         8OVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=K83xnFPAcB1VIULC86KP35ikutyNj0u9e1zEXL9YwpU=;
-        b=n00PdRqLGYBdT31DhKoGek1p4rjFBKk+klinsdmGzklMums/vDfx6Vkdr/t2E4T90U
-         ZqoxYjb5wofV61PG5Hu/MMtYhTWFyz6tf+c+HWG4jTIAKxaeLtbrsVDoC9OtHxzM+mbf
-         5kXZNKrh0NsvWVS3qg7BErHfKNzBNPc9T2FD9shsEZQGl+xkU22UgQUWcb2GOOyJJuqj
-         yx/q1ZrloBDYjOAzHwF1E27fsRPYiZsCQ7GNmBqiRGX8zWp90kSTi5fVbKrnGA2Zw26t
-         J67RTaFxcdAdJpT5/E5aGPAWkU+o1N58AOANNB2KBTYD1UNUvWF4jxhH+NvO57kdMxmj
-         KqUw==
-X-Gm-Message-State: APjAAAXBBVYjM4/ylJLhY5TCUz3NstQQYF87fLYX86452XQkKH+pW2py
-        rcNhL3l2lDUSsLeFMeXd69IedGP0ZIc=
-X-Google-Smtp-Source: APXvYqwiw8TE7QqFRxXTf06wjx/nX6hoKWotmThtTTZuwH0JxLDCt5zmcX96DRadM9ByfGhJLTmGnA==
-X-Received: by 2002:a17:902:7786:: with SMTP id o6mr1977749pll.206.1553151234119;
-        Wed, 20 Mar 2019 23:53:54 -0700 (PDT)
+        bh=R0f6isHrpFXom1zlVM9c1JtgkdivNl3Iqxc6mzDKoHc=;
+        b=cFMsdnI6NDZxk42uZBXQANpSZipUgmEcpL+oVhh3fyMqRhumtCAXDpEUNKAWCCJLmG
+         AlwozRFwPfTP9qqX6rdenzG1c/jd9mSbomXEStAB+3AMJAI/rbIhwvPL+8NCQX6cnEtk
+         cayaz176xm2p/2Y4JLRlZMoPgS0u4BekM/O1+7Bur9rKQB+ypECJsd15UadFh5mViVcX
+         YmuxcwCniLw/MyWGg2pvB/spYo/ZXcD2H4dxmeCfnWEQxyXA6tnSIpFvu4HjGWthcAt7
+         wf673MfT0VTlAK4N3kSOK5GcGiteg2gFhqp7tcnY0DyJ9stuol1xMWW6+oVKn0BGdlRe
+         3vfw==
+X-Gm-Message-State: APjAAAVocxXevO9EpnHMgl20zfXv6/tj+fTS+Nfp3ybEbF/7l3ikx2Dw
+        sekmx5WAdTHFQKEbf6ycGLvACk84c1I=
+X-Google-Smtp-Source: APXvYqxsbIoguTvTPwYbs7F+jq5p5Z9toLc2AHhYBe2sP5R9wkiCpySa4tBXuMAP70+N4CzEVgZD4w==
+X-Received: by 2002:a17:902:6b8c:: with SMTP id p12mr2020393plk.282.1553151236833;
+        Wed, 20 Mar 2019 23:53:56 -0700 (PDT)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id k17sm4808647pfk.166.2019.03.20.23.53.52
+        by smtp.gmail.com with ESMTPSA id h11sm4351069pgq.57.2019.03.20.23.53.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Mar 2019 23:53:53 -0700 (PDT)
-Date:   Wed, 20 Mar 2019 23:53:51 -0700
+        Wed, 20 Mar 2019 23:53:56 -0700 (PDT)
+Date:   Wed, 20 Mar 2019 23:53:54 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Denton Liu <liu.denton@gmail.com>,
@@ -58,8 +58,8 @@ Cc:     Denton Liu <liu.denton@gmail.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v9 06/11] parse-options.h: extract common --cleanup option
-Message-ID: <2c966ae31840cff8f58e64d203fdddbf9ad57f87.1553150827.git.liu.denton@gmail.com>
+Subject: [PATCH v9 07/11] sequencer.c: remove duplicate code
+Message-ID: <492ba73797ac66cc48da2b44cdae2152b41aa481.1553150827.git.liu.denton@gmail.com>
 References: <cover.1552817044.git.liu.denton@gmail.com>
  <cover.1553150827.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -72,55 +72,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The --cleanup option is commonly used. Extract it so that its definition
-is not repeated.
+Since we implemented get_cleanup_mode, we had some duplicate code in
+git_sequencer_config which essentially performed the same operations.
+Refactor git_sequencer_config to take advantage of the logic already in
+get_cleanup_mode.
+
+Note that we had to introduce a separate argument to get_cleanup_mode
+indicating whether to die or not on an invalid value. This is because if
+we are parsing a config, we do not want to die but instead, we only want
+to warn the user, whereas if we are parsing a command-line option, we
+would like to actually die.
+
+Finally, this is almost a no-op refactor but not quite. Previously, in
+the case that an invalid value is presented, default_msg_cleanup would
+not be set. We change the behaviour so that default_msg_cleanup will now
+take on the value as if "default" were provided as the cleanup_arg.
+Also, we lowercase some user-facing strings.
 
 Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- builtin/commit.c | 2 +-
- builtin/tag.c    | 3 +--
- parse-options.h  | 1 +
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ builtin/commit.c |  2 +-
+ sequencer.c      | 22 ++++++++--------------
+ sequencer.h      |  2 +-
+ 3 files changed, 10 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 0df15e4851..8277da8474 100644
+index 8277da8474..ba1e6027ba 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -1473,7 +1473,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('s', "signoff", &signoff, N_("add Signed-off-by:")),
- 		OPT_FILENAME('t', "template", &template_file, N_("use specified template file")),
- 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
--		OPT_STRING(0, "cleanup", &cleanup_arg, N_("default"), N_("how to strip spaces and #comments from message")),
-+		OPT_CLEANUP(&cleanup_arg),
- 		OPT_BOOL(0, "status", &include_status, N_("include status in commit message template")),
- 		{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
- 		  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 02f6bd1279..a3870fbdba 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -397,8 +397,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
- 		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of tag message")),
- 		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
--		OPT_STRING(0, "cleanup", &cleanup_arg, N_("mode"),
--			N_("how to strip spaces and #comments from message")),
-+		OPT_CLEANUP(&cleanup_arg),
- 		OPT_STRING('u', "local-user", &keyid, N_("key-id"),
- 					N_("use another key to sign the tag")),
- 		OPT__FORCE(&force, N_("replace the tag if exists"), 0),
-diff --git a/parse-options.h b/parse-options.h
-index 7d83e2971d..85faaee390 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -303,5 +303,6 @@ int parse_opt_passthru_argv(const struct option *, const char *, int);
- #define OPT_NO_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("no-contains", v, h, PARSE_OPT_NONEG)
- #define OPT_WITH(v, h) _OPT_CONTAINS_OR_WITH("with", v, h, PARSE_OPT_HIDDEN | PARSE_OPT_NONEG)
- #define OPT_WITHOUT(v, h) _OPT_CONTAINS_OR_WITH("without", v, h, PARSE_OPT_HIDDEN | PARSE_OPT_NONEG)
-+#define OPT_CLEANUP(v) OPT_STRING(0, "cleanup", v, N_("mode"), N_("how to strip spaces and #comments from message"))
+@@ -1172,7 +1172,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
+ 	if (argc == 0 && (also || (only && !amend && !allow_empty)))
+ 		die(_("No paths with --include/--only does not make sense."));
+-	cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor);
++	cleanup_mode = get_cleanup_mode(cleanup_arg, use_editor, 1);
  
- #endif
+ 	handle_untracked_files_arg(s);
+ 
+diff --git a/sequencer.c b/sequencer.c
+index 224c823b43..2cbfb848dd 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -172,17 +172,7 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
+ 		if (status)
+ 			return status;
+ 
+-		if (!strcmp(s, "verbatim"))
+-			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_NONE;
+-		else if (!strcmp(s, "whitespace"))
+-			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
+-		else if (!strcmp(s, "strip"))
+-			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_ALL;
+-		else if (!strcmp(s, "scissors"))
+-			opts->default_msg_cleanup = COMMIT_MSG_CLEANUP_SPACE;
+-		else
+-			warning(_("invalid commit message cleanup mode '%s'"),
+-				  s);
++		opts->default_msg_cleanup = get_cleanup_mode(s, 0, 0);
+ 
+ 		free((char *)s);
+ 		return status;
+@@ -512,7 +502,7 @@ static int fast_forward_to(struct repository *r,
+ }
+ 
+ enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
+-	int use_editor)
++	int use_editor, int die_on_error)
+ {
+ 	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
+ 		return use_editor ? COMMIT_MSG_CLEANUP_ALL :
+@@ -526,8 +516,12 @@ enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
+ 	else if (!strcmp(cleanup_arg, "scissors"))
+ 		return use_editor ? COMMIT_MSG_CLEANUP_SCISSORS :
+ 				    COMMIT_MSG_CLEANUP_SPACE;
+-	else
+-		die(_("Invalid cleanup mode %s"), cleanup_arg);
++	else if (!die_on_error) {
++		warning(_("invalid cleanup mode %s, falling back to default"), cleanup_arg);
++		return use_editor ? COMMIT_MSG_CLEANUP_ALL :
++				    COMMIT_MSG_CLEANUP_SPACE;
++	} else
++		die(_("invalid cleanup mode %s"), cleanup_arg);
+ }
+ 
+ void append_conflicts_hint(struct index_state *istate,
+diff --git a/sequencer.h b/sequencer.h
+index eb9bd97ef3..e7908f558e 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -117,7 +117,7 @@ void append_signoff(struct strbuf *msgbuf, size_t ignore_footer, unsigned flag);
+ 
+ void append_conflicts_hint(struct index_state *istate, struct strbuf *msgbuf);
+ enum commit_msg_cleanup_mode get_cleanup_mode(const char *cleanup_arg,
+-	int use_editor);
++	int use_editor, int die_on_error);
+ 
+ void cleanup_message(struct strbuf *msgbuf,
+ 	enum commit_msg_cleanup_mode cleanup_mode, int verbose);
 -- 
 2.21.0.512.g57bf1b23e1
 
