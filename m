@@ -2,114 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8DAB20248
-	for <e@80x24.org>; Thu, 21 Mar 2019 00:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5B0720248
+	for <e@80x24.org>; Thu, 21 Mar 2019 00:38:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727681AbfCUAfx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 20:35:53 -0400
-Received: from mail-it1-f193.google.com ([209.85.166.193]:52417 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726169AbfCUAfx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 20:35:53 -0400
-Received: by mail-it1-f193.google.com with SMTP id g17so1871571ita.2
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 17:35:52 -0700 (PDT)
+        id S1727478AbfCUAiJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 20:38:09 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33379 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726487AbfCUAiJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 20:38:09 -0400
+Received: by mail-wr1-f67.google.com with SMTP id q1so4780382wrp.0
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 17:38:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EPaR8eQVjOdztGq/81zkVGaWqEPQIyHfILZ9bS0Ydaw=;
-        b=mAAFU1+Vn88/En2LIxkT0yZ96yqvtfsza2y9UrY5DsA9bxQKmOFJ/Ye0ALsTkpca9s
-         bZKJk9wuyr7pA7QVVt/HWMRBXD5QCFS4GjMfHn4ftpr82xRMqcZLKtEVt6RzCcOLjY4y
-         Z4yPwFX/GyFgaQMcI3vopnEuOrFu61oNontYXNnCLOnyucgmnOiWiJ8mS2KF6rRsKvvf
-         U/tIIo03cp1syqEjV78McMrguN4NYLM+CGnsI21ZN4jEBYKijrc8iE1Tah59uK0k0yqz
-         YHCgNp57VQz4QclWq53RXI8kYswAVTC2YOWly9cG+CBRnjm14NnIB7CsIg+AFAe/8Xug
-         eJfA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=k1r3wk4zv2ugINsrHAcKHhhiisOiDZsQoHkqJAHscjI=;
+        b=iKCKHsD93kRs4nBi/8g+kxtG2geCbmlrIBWufdl73gYYsDyh4oEzhV4IFZ0sydvx9l
+         LLf7rI2QOoNV1WNg4S3v0ZQDQwAYcaBm1Iu2cNjaHRK3yp/138rf2DJhj+6zEbX9xMrd
+         Z7YFJHmiiQ2PC5zZHe9sfzVM+RiR8sfpp2ygkF8QRnRU3/+8uniTcm1QWZvWMqvPiPI3
+         BcN+FIPY74cd1Nqqgw7oFtGQpBHn15gi7AGaBsooL7rG9lHZXkW7eQMVIGMkIn6mCjcP
+         wh417eRDNwsXtdSFq9w1E2lfrvy7lZdPVIjAPY35Ycwjslc69mBMIhNts1XkwHhw7xG7
+         NB0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EPaR8eQVjOdztGq/81zkVGaWqEPQIyHfILZ9bS0Ydaw=;
-        b=kddelLOGhN5UoKaY7EvqewWR01ZpcW7u1T6xeGVwHGBZFnNpbYWi35Yj8Sct0Vry5W
-         N6WF+M9FaGoBJ21mKS4jYk20Zp1ScHCnw/PjxupcQQ2vbTE6lmScVKz9x3TdrNEhDjdL
-         Xy3AsAlfPGWIY6OiJvkwGEck18PAHdEKUagrutFHkC0Bg9rh7V58Wrllh8FkkgyePTDU
-         0DPFkiw/Au2TtlWl/knYKOpPe/KshLUfu//FtOri2TGDTGH/Bn+gsDAGwUbTBV3Z7qcl
-         /WkOkEVE8IXwovAdII8AYMxnYIFvEhpHPqghc5fB1Fb1ZXVEkBxFgjhFCyflqwvqhwNv
-         D7AQ==
-X-Gm-Message-State: APjAAAV2BiudGHKCsBL2TFXVjJuR7JTlANQUIvcIVnYJiOfSXZ1PB1oi
-        gbfNPi+TWVCyMTs9eiEGSoVRvbL9oAg63CIa3Bo=
-X-Google-Smtp-Source: APXvYqyKCAWQnjEO1llYg6vYVpsgCa5ltiqilCB4kngM+ojd+ynoO6nx4qfEr+sLmPt6R6iyrsqNi3ePre9y6DcC/bc=
-X-Received: by 2002:a24:3b0a:: with SMTP id c10mr750548ita.10.1553128551873;
- Wed, 20 Mar 2019 17:35:51 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=k1r3wk4zv2ugINsrHAcKHhhiisOiDZsQoHkqJAHscjI=;
+        b=Hjt1fc7JjG+TdAvubgB7QkhKoxVzSX+x6EqGWrUHsGsrqpgIGw56kojIKkQbTFh7Da
+         3IW5wdS+x1XiUA6V7TvbHGV1i6GF/cuPhsVQRvPudN2OZOGxWP9SeJDUgv9Y8W52S+OI
+         rEIb2nR1gBk1/IH+3ik3qo+5+yi52Tff8z7siZpiDN+zZNlhEmqUVzr/7r5Qddok20ld
+         0hN8ScCbKV0V2VtAn2+dspRQlvsAn+cfT0pnVFkYRmxmuWAa6xgE8vvH1UM1rx5nQd2E
+         TJ/J0uieYorVjzSyObzs/npTWQFp585oZgViweYNTbICo97sYhCLF3yxsA7T2JHRHy8a
+         zncQ==
+X-Gm-Message-State: APjAAAVeky1wpIUSvKvJKGljgfzm56rOx2+qo0a13rP9O4esJp1Vlw6P
+        y8EzEU1V0fuoPFxFlL8XQ0dofcDS6vM=
+X-Google-Smtp-Source: APXvYqy8G+H0EKuQvtXZ5+YlxIsoao3vmqHuPZZ/d1KqwsQHi9dGdKNvlUCYW9RoT7pAPdzyL4a7BA==
+X-Received: by 2002:adf:f1c7:: with SMTP id z7mr602968wro.274.1553128687296;
+        Wed, 20 Mar 2019 17:38:07 -0700 (PDT)
+Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
+        by smtp.gmail.com with ESMTPSA id w18sm5971050wru.24.2019.03.20.17.38.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 20 Mar 2019 17:38:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] checkout.txt: note about losing staged changes with --merge
+References: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
+        <20190319093910.20229-1-pclouds@gmail.com>
+        <xmqqimwexujm.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8BLxWea0ZrHkSU6+nE7dr5YvFNVH1tLhaqPRadi+2Hhwg@mail.gmail.com>
+        <xmqqk1guwdeu.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8AUH4nOkt6H=yu=eRktK4me9kEkjqsC3zyNZDwUKXqCPg@mail.gmail.com>
+        <xmqqftriwbz6.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BFB0jafua0CGEsr66EzQvHncLYvws8rt+LdkQ_LXcEq5A@mail.gmail.com>
+Date:   Thu, 21 Mar 2019 09:38:06 +0900
+In-Reply-To: <CABPp-BFB0jafua0CGEsr66EzQvHncLYvws8rt+LdkQ_LXcEq5A@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 20 Mar 2019 07:53:01 -0600")
+Message-ID: <xmqqimwduknl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190320114703.18659-1-pclouds@gmail.com> <20190320114703.18659-11-pclouds@gmail.com>
- <87zhppcfsq.fsf@evledraar.gmail.com>
-In-Reply-To: <87zhppcfsq.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 21 Mar 2019 07:35:25 +0700
-Message-ID: <CACsJy8CuTX5Yh_80cLuQViNRF8fH_PcMSv0w_OYAt2EB_WfrQw@mail.gmail.com>
-Subject: Re: [PATCH 10/20] diff-parseopt: convert --[no-]abbrev
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 21, 2019 at 6:00 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Wed, Mar 20 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->
-> > [...]And the '40' change is self explanatory.
->
-> Let me make an attempt at being dense anyway...
->
-> > -             else if (v > 40)
-> > -                     v =3D 40;
-> > +             else if (v > the_hash_algo->hexsz)
-> > +                     v =3D the_hash_algo->hexsz;
-> >       }
->
-> This is obviously not a regression, it's a hardcoded 40 *now*. So we
-> should take this patch.
->
-> But in general, I wonder how this is going to work once we get a few
-> steps further into the SHA-256 migration. I.e. here we're still parsing
-> the command-line, and the_hash_algo might be initialized early to SHA-1.
+Elijah Newren <newren@gmail.com> writes:
 
-That would be wrong. the_hash_algo must be properly initialized by the
-time any command parsing is done (except maybe "git <options> <cmd>").
-While parse_options() most of the time is just a dumb "set this
-variable, set that variable", it often can have callbacks to do more
-complicated stuff and we can't just go with "pre-initialized to SHA-1"
-assumption. That's as bad as "assume $CWD is worktree" until worktree
-is discovered.
+> On Tue, Mar 19, 2019 at 7:50 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Duy Nguyen <pclouds@gmail.com> writes:
+>>
+>> > Kinda. But "--force --merge" makes no sense. --force discards all
+>> > local changes by definition, which means you can't have conflicts and
+>> > will not need --merge. I think this is the reason why we die() out
+>> > when both are specified. So we need something like
+>> > --discard-staged-changes-only...
+>>
+>> At that point, I would have to say that we do not need anything.
+>> The use case is already covered with "git reset && git checkout -m",
+>> isn't it?
+>
+> I guess the problem is just that 'git checkout -m' has not refused to
+> run with either a dirty index or a dirty working tree, and if both are
+> dirty (making us require more of a four-way merge), then our three-way
+> merge has to ...
 
-There is a corner case though. If some command takes hash algo as an
-option (e.g. git hash-object should work without a repo) then yes we
-might have a problem since the_hash_algo might not be initialized yet,
-depending on option order.
+I didn't actually mean "nothing to do here" relative to the current
+code; instead, I meant "nothing more than just stop when the index
+has updates" (which is hard to read from the above quoted part, as
+"Kinda." is a response in a discussion started with my "checkout -m
+should probably refuse to do anything when the index is dirty").
 
-> So if I set --abbrev=3D45 it'll be trimmed to --abbrev=3D40 by this code.
->
-> But then shortly afterwards we pass my SHA-256 object down to some
-> machinery, and will then want to abbreviate it.
->
-> Isn't that part of the code something we're going to want to support
-> looking up objects in either hash, even if we initially started out with
-> SHA-1 in the_hash_algo? So we'll be over-abbreviating a SHA-256 object.
->
-> Leaving aside the sillyness of wanting to abbreviate *anything* to 45
-> characters, I wonder how those sorts of chicken & egg hash scenarios
-> will go involving the_hash_algo.
---=20
-Duy
+> So, I think we do need something (eventually at least).  Would you
+> prefer we dropped this patch from Duy and instead made 'checkout -m'
+> abort when the index is dirty?
+
+Let's go with the doc update first, as the patch has already
+written.  I think in the longer term, just aborting when the index
+is dirty would be a vast improvement over the status quo + a doc
+update and is a good place to stop.
+
+Thanks.
