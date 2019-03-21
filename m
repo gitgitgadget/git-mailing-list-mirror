@@ -2,93 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7C4420248
-	for <e@80x24.org>; Thu, 21 Mar 2019 16:08:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FCE520248
+	for <e@80x24.org>; Thu, 21 Mar 2019 16:12:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727857AbfCUQIA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 12:08:00 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:58081 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725985AbfCUQIA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 12:08:00 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Mar 2019 12:07:58 EDT
-Received: from [192.168.1.12] ([2.101.244.128])
-        by smtp.talktalk.net with SMTP
-        id 706fhBwY0p7QX706fhvmtI; Thu, 21 Mar 2019 15:59:49 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1553183989;
-        bh=iVp7bq+NM+6eI1VBJ17R6FlzOvhjmoaO7bsxIFh0EmU=;
-        h=Subject:To:References:From:Date:In-Reply-To;
-        b=U4yyCtEfXZ7Ud51daJ4oVwBlfdMLkSfDeA/LD+Z8j84QP/WnfneDKbSBxRb7B1WwR
-         3QXWonJTkqM1azZupJMws1su8nowW67GCdhAa3DN19YAIyh29SI1bqeHV/cCJtQc0X
-         h955juyEPlVxUh/V+LEIT/PXtc/W9x6193JIXKRY=
-X-Originating-IP: [2.101.244.128]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=drql9Go4 c=1 sm=1 tr=0 a=8nsoD1t2XaTH5iSUU4dp1Q==:117
- a=8nsoD1t2XaTH5iSUU4dp1Q==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=h2ry5_m7eihK1DSqmPoA:9 a=QEXdDO2ut3YA:10
-Subject: Re: [New to the mailing list] Searching for help
-To:     MARIE Alexandre <alexandre.marie@synchrotron-soleil.fr>,
+        id S1728020AbfCUQMG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 12:12:06 -0400
+Received: from smtp.synchrotron-soleil.fr ([195.221.0.33]:42054 "EHLO
+        brouette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727829AbfCUQMG (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Mar 2019 12:12:06 -0400
+Received: from localhost (unknown [127.0.0.1])
+        by brouette.synchrotron-soleil.fr (Postfix) with ESMTP id 841B870007C;
+        Thu, 21 Mar 2019 16:12:00 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 brouette.synchrotron-soleil.fr 841B870007C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=synchrotron-soleil.fr; s=email; t=1553184720;
+        bh=OVyDangQKPxSb4uwDDw5KjEtH6kafML97ogC4HaHrRA=;
+        h=From:To:Subject:Date:References:In-Reply-To:From;
+        b=aEVT4hh5AgHrvj1oZ1NhgVbzbBn+0a0T3lq5eY30C11VOjkeKW0ebs1X83G0Fw4gj
+         52h4jpZ90km/2nF4SKdWVkC/2aKnE+NL5+7IgaixJ99XdIwzjO/s81mB9+6M/etg7P
+         TifMHfyyk++HlIwqAiY8FRnT8oooZxNAawllCph4=
+X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
+Received: from brouette.synchrotron-soleil.fr ([127.0.0.1])
+        by localhost (brouette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 7Nik_RBatu12; Thu, 21 Mar 2019 17:11:59 +0100 (CET)
+Received: from SUN-DAG4.synchrotron-soleil.fr (sun-dag4 [195.221.0.186])
+        by brouette.synchrotron-soleil.fr (Postfix) with ESMTP id 7B4A57000D6;
+        Thu, 21 Mar 2019 17:11:59 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.11.0 brouette.synchrotron-soleil.fr 7B4A57000D6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=synchrotron-soleil.fr; s=email; t=1553184719;
+        bh=OVyDangQKPxSb4uwDDw5KjEtH6kafML97ogC4HaHrRA=;
+        h=From:To:Subject:Date:References:In-Reply-To:From;
+        b=CR/mb2g+8yF23J+U7X0bbYdknZ/IDkb7U6VROe8EkevIhQn0/lp8bEYO48iynLlLW
+         JQu1LNoZGh6Atl5mIBfVqLO8lqLU588l3aayQD8BL2VrmQIB1O/NdHx8V3DKDNjybJ
+         EEac86rQ/+TRRnOr7zEDOeuuxEcfpyYAO2NFMpgY=
+Received: from SUN-DAG3.synchrotron-soleil.fr ([fe80::d9b:188b:4893:f07f]) by
+ SUN-DAG4.synchrotron-soleil.fr ([fe80::1b5:8a84:6569:cfff%16]) with mapi id
+ 14.03.0123.003; Thu, 21 Mar 2019 17:11:59 +0100
+From:   MARIE Alexandre <alexandre.marie@synchrotron-soleil.fr>
+To:     Philip Oakley <philipoakley@talktalk.net>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-References: <7EF15309FAA2EA4FAB1643CB55D93ED8DBD411@SUN-DAG3.synchrotron-soleil.fr>
-From:   Philip Oakley <philipoakley@talktalk.net>
-Message-ID: <11e78b8b-77f5-af1c-c362-1ca7aa8585dc@talktalk.net>
-Date:   Thu, 21 Mar 2019 15:59:51 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.3
+Subject: RE:[New to the mailing list] Searching for help
+Thread-Topic: [New to the mailing list] Searching for help
+Thread-Index: AdTf7/GYSonLEW8gQrO+p9va43HfTwABspuAAAJMRp0=
+Date:   Thu, 21 Mar 2019 16:11:58 +0000
+Message-ID: <7EF15309FAA2EA4FAB1643CB55D93ED8DBD439@SUN-DAG3.synchrotron-soleil.fr>
+References: <7EF15309FAA2EA4FAB1643CB55D93ED8DBD411@SUN-DAG3.synchrotron-soleil.fr>,<11e78b8b-77f5-af1c-c362-1ca7aa8585dc@talktalk.net>
+In-Reply-To: <11e78b8b-77f5-af1c-c362-1ca7aa8585dc@talktalk.net>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [195.221.0.171]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-In-Reply-To: <7EF15309FAA2EA4FAB1643CB55D93ED8DBD411@SUN-DAG3.synchrotron-soleil.fr>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfDI/55ao3LXFA8bfh+/ERarfhET3GcLWNJBL/SOckT0p9qs+1Xp3i76bnPfutIxxYKZX/checpuehDhQaZIP4wgOQXwOZEoDTWJMcMrABOtea/HmQ3PT
- oR176Dj2U6FbkDHgdiN2gzFcT/7h1MGxRcrKbENxB0o8uHQ9/tir7GzIodojUWvDQtxGXBTKIzkGQyJvuGvs/4MkRJ93aipOq31ZiIgSRAuNVJOYKRMp3Ej8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex
+Hello Philip
 
-On 21/03/2019 14:11, MARIE Alexandre wrote:
-> Hello,
->
-> I am searching for help as I made two mistakes, I think.
-> First I fetched origin in a 'branch' called temp that is in a 'detached head' state.
-> But I can't delete temp by checking out master.
-> I don't know how to get rid of this temp detached head.
->
-> Second, the detached head causes one issue :
->
-> It splits my commits in two, I mean that all the new commits I do are on top of temp detached head but they are not linked.
-> I can't get through these two issues with google, I don't know why.
->
-> Cheers,
->
-> Alex
+> This list is for the development of Git. There is a googlegroups list
+> for git users. However..
 
-This list is for the development of Git. There is a googlegroups list 
-for git users. However..
+Sorry, my mistake, I found this mailing list here[0] where it is written th=
+at this is one for asking questions, having comments or reporting bugs.
 
-A detached head simply means that you are looking at a specific commit 
-((hash number)), rather than the 'latest commit on the branch'.
+> A detached head simply means that you are looking at a specific commit
+> ((hash number)), rather than the 'latest commit on the branch'.
 
-You did not say which OS you were on, or if you prefer the command line, 
-or a visual  gui to see the current arrangement of your commits - the 
-'gitk' viewer is useful for the latter.
+I think that I kind of understand what is a detached head now,=20
+but my problem is when I run:=20
+gitk --all
+I still can see the detached head, whether I am on the 'detached head state=
+' or not.
 
-If you have already made some commits on the 'detached head' then use 
-the 'git branch' command, or 'git checkout -b' to create a branch name 
-for your new commits (check the manual). Having named the new commits, 
-you can get back to link the bits together. You can use 'cherry-pick' to 
-pick of individual commits from that new branch onto the new 
-destination, or use rebase if there is a series.
+>  You did not say which OS you were on, or if you prefer the command line,
+> or a visual  gui to see the current arrangement of your commits - the
+> 'gitk' viewer is useful for the latter.
+
+Sorry about that, I am on Debian.
+
+> If you have already made some commits on the 'detached head' then use
+> the 'git branch' command, or 'git checkout -b' to create a branch name
+> for your new commits (check the manual). Having named the new commits,
+> you can get back to link the bits together. You can use 'cherry-pick' to
+> pick of individual commits from that new branch onto the new
+> destination, or use rebase if there is a series.
+
+The fact is that I fetched a whole rep into a detached head state named tem=
+p, but this is not a git branch.
+So I am stuck trying to delete this whole rep.
+My history is splitted by two by the rep in detached head state.
+
+Thanks for your response.
+
+Alex
 
 
-Philip
+[0] https://git-scm.com/community
+
 
