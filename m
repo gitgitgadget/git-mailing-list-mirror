@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D919F20248
-	for <e@80x24.org>; Thu, 21 Mar 2019 22:33:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2834920248
+	for <e@80x24.org>; Thu, 21 Mar 2019 22:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727194AbfCUWda (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 18:33:30 -0400
+        id S1727207AbfCUWdd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 18:33:33 -0400
 Received: from mail-eopbgr720118.outbound.protection.outlook.com ([40.107.72.118]:2850
         "EHLO NAM05-CO1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726840AbfCUWda (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 18:33:30 -0400
+        id S1726460AbfCUWdc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 18:33:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fApAHcZQMtYa/QSLAHsE4NtFBjm4hfFqSIphn1aIuO0=;
- b=mAZQivqGFUFXUtzxT+yMM+L/39Y+jBpcxhPWFE68oHhEqcAluzT8egHimxFD0qoGBj+PBZONAdSPqLOlMhVZa/Er1QpqmJEe54XUHU9sbX5Xih0+G4abKG3k2t0/dPetjQdHW+WeG/37t/g0CSYlUAZvtXrrSWYyOcnWbWp0uk4=
+ bh=RlH2x1R8E9eZa6pzO88bQsHk1eo441ZLR7kYd5RqXTc=;
+ b=cQZ5nOdOHFE06Xg+KBwOpOy4I6Iyb40bA2GX9XYnSqfurccpKchUMN9C1EP3+1l9Uh9uHV68rCdEeZ4LS2TN4S7iywtZd3jjgIKInXAlHDfiMV120jVJtSdGf+5eDLGKBO3tP/uW42nS//LPZCwMZ15UUAGlVuo4Y4jmqbW8CIQ=
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
  DM6PR08MB4251.namprd08.prod.outlook.com (20.176.82.12) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1730.15; Thu, 21 Mar 2019 22:32:45 +0000
+ 15.20.1730.15; Thu, 21 Mar 2019 22:32:57 +0000
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::75e5:faf9:290a:a244]) by DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::75e5:faf9:290a:a244%3]) with mapi id 15.20.1709.015; Thu, 21 Mar 2019
- 22:32:45 +0000
+ 22:32:57 +0000
 From:   "Mazo, Andrey" <amazo@checkvideo.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
@@ -44,13 +44,12 @@ CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
         "szeder.dev@gmail.com" <szeder.dev@gmail.com>,
         "ahippo@yandex.com" <ahippo@yandex.com>,
         "gitster@pobox.com" <gitster@pobox.com>
-Subject: [PATCH v2 1/7] git-p4: detect/prevent infinite loop in
- gitCommitByP4Change()
-Thread-Topic: [PATCH v2 1/7] git-p4: detect/prevent infinite loop in
- gitCommitByP4Change()
-Thread-Index: AQHU4DYBurNperuERU6FwqqqyjyYfA==
-Date:   Thu, 21 Mar 2019 22:32:45 +0000
-Message-ID: <3ac39171d441b84a20d5e918a9995e8d8de627c5.1553207234.git.amazo@checkvideo.com>
+Subject: [PATCH v2 3/7] git-p4: don't groom exclude path list on every commit
+Thread-Topic: [PATCH v2 3/7] git-p4: don't groom exclude path list on every
+ commit
+Thread-Index: AQHU4DYI1vGn3yFeRk27bGYJZI+79A==
+Date:   Thu, 21 Mar 2019 22:32:57 +0000
+Message-ID: <44fed954dc4ee7d98ce518c0665cc71a0751dd3b.1553207234.git.amazo@checkvideo.com>
 References: <cover.1553207234.git.amazo@checkvideo.com>
 In-Reply-To: <cover.1553207234.git.amazo@checkvideo.com>
 Accept-Language: en-US
@@ -65,22 +64,22 @@ x-ms-exchange-messagesentrepresentingtype: 1
 x-mailer: git-send-email 2.19.2
 x-originating-ip: [70.163.25.109]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c8420298-d124-4a2f-317b-08d6ae4d23a5
+x-ms-office365-filtering-correlation-id: 72c1c5da-f34d-4dd0-4cfe-08d6ae4d2ab1
 x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600127)(711020)(4605104)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB4251;
 x-ms-traffictypediagnostic: DM6PR08MB4251:
-x-microsoft-antispam-prvs: <DM6PR08MB425196FC53FA101B480F8E37DA420@DM6PR08MB4251.namprd08.prod.outlook.com>
+x-microsoft-antispam-prvs: <DM6PR08MB42517B364148AD9BD6DBA0CEDA420@DM6PR08MB4251.namprd08.prod.outlook.com>
 x-forefront-prvs: 0983EAD6B2
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6029001)(396003)(346002)(136003)(39860400002)(376002)(366004)(199004)(189003)(3846002)(6116002)(26005)(7736002)(2616005)(6916009)(71200400001)(7416002)(4326008)(118296001)(6486002)(102836004)(11346002)(71190400001)(2351001)(1730700003)(81166006)(52116002)(5660300002)(105586002)(8936002)(316002)(66066001)(50226002)(81156014)(2906002)(106356001)(99286004)(14454004)(54906003)(36756003)(76176011)(8676002)(6506007)(386003)(446003)(486006)(14444005)(53936002)(6436002)(5640700003)(186003)(478600001)(476003)(86362001)(6512007)(68736007)(2501003)(256004)(25786009)(305945005)(97736004);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4251;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(376002)(346002)(39860400002)(136003)(396003)(189003)(199004)(14444005)(6436002)(5640700003)(53936002)(36756003)(76176011)(386003)(486006)(446003)(6506007)(8676002)(68736007)(2501003)(97736004)(305945005)(256004)(25786009)(186003)(478600001)(476003)(86362001)(6512007)(71200400001)(4326008)(7416002)(6916009)(2616005)(11346002)(6486002)(102836004)(118296001)(3846002)(6116002)(26005)(7736002)(66066001)(50226002)(316002)(99286004)(14454004)(54906003)(2906002)(106356001)(81156014)(5660300002)(52116002)(71190400001)(1730700003)(81166006)(2351001)(8936002)(105586002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4251;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: checkvideo.com does not designate
  permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: gT9blEmpKTpVNfIw1okIe5Yz8T+X3n2T5i/IuDy5AD5JdZTfZdqlit21REQLo22+ELiK7OmRIMk+pkU5sC0S4xjLcdH/Kg1eart2M3c/q1R9AALsdBUj9jFQ6Ku8RD9ENUb26UOBd00naJYVVn6S0H2PpRjmtjnYNLxnhs3x8uBzblmgMbCE7Q5nKENg4WN9aTkymUak0+KFlxO/J1u2RfozmbEhxZd1Pm1A2S1QuzLOPQItNdtu3il4iUzct0HNmef7+jQmmVMb+pRGgv0Y13ce/uSxnFvnRRRkcFiGoLz04bV/EIKCWwM4oYT4LBemEqtvT3oNL7SXqdTkzyZsSS9o8QJ1IDbcRFzuEYHIIueGSl4YnO6AF3huDn+Qts3yRcTrRKDIgWKc4NidNjlS9/t8SJ1RcwUv426s3KYq7sc=
+x-microsoft-antispam-message-info: ZjeSYiCMk52cOxiSdvUt4e9IHbGxq+j5ZOYhXWxedZL0CRkC0Ib6vLwOAEa20XaWZjZSC0lQSSLuwLH6Q8G7+fevcRPLz2Aho3HoB0Vs4n3Hyv2PIyAQfPKG/nF71DZENoZoG4407ViRs/XxFw/h7WJOHg2qrB5xyyv7P5gdbDjJ4AjRDBZZ3UF3JuNIh7hXHGWUsUQRdlR+tVBSOzSfQjtNggxDaqMVarqTniui4ef1sGMda4FRUv8+6zz/GyBDxSfl4titUreySIzulsuHiJCvQKT1M+F8uXPra25h8WajXl/Ql5X/JS3S3COk8XZvRpab5HzeV+ngZ/tXVWUyLA96z+GtaK18t9TKr4/81x67uLAwFGtL/IGA6iQYhgPU/b1JTJep1FmFz7t+U0cTah6tx4wdIsZH9DxFRsdTJYU=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: checkvideo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c8420298-d124-4a2f-317b-08d6ae4d23a5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2019 22:32:45.5939
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72c1c5da-f34d-4dd0-4cfe-08d6ae4d2ab1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2019 22:32:57.5764
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
@@ -91,114 +90,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Under certain circumstances, gitCommitByP4Change() can enter an infinite
-loop resulting in `git p4 sync` hanging forever.
+Currently, `cloneExclude` array is being groomed (by removing trailing "...=
+")
+on every changeset.
+(since `extractFilesFromCommit()` is called on every imported changeset)
 
-The problem is that
-`git rev-list --bisect <latest> ^<earliest>` can return `<latest>`,
-which would result in reinspecting <latest> and potentially an infinite loo=
-p.
-
-This can happen when importing just a subset of P4 repository
-and/or with explicit "--changesfile" option.
-
-A real-life example:
-"""
-    looking in ref refs/remotes/p4/mybranch for change 26894 using bisect..=
-.
-    Reading pipe: git rev-parse refs/remotes/p4/mybranch
-    trying: earliest  latest 4daff81c520a82678e1ef347f2b5e97258101ae1
-    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
-01ae1
-    Reading pipe: git cat-file commit 147f5d3292af2e1cc4a56a7b96db845144c68=
-486
-    current change 25339
-    trying: earliest ^147f5d3292af2e1cc4a56a7b96db845144c68486 latest 4daff=
-81c520a82678e1ef347f2b5e97258101ae1
-    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
-01ae1 ^147f5d3292af2e1cc4a56a7b96db845144c68486
-    Reading pipe: git cat-file commit 51db83df9d588010d0bd995641c85aa0408a5=
-bb9
-    current change 25420
-    trying: earliest ^51db83df9d588010d0bd995641c85aa0408a5bb9 latest 4daff=
-81c520a82678e1ef347f2b5e97258101ae1
-    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
-01ae1 ^51db83df9d588010d0bd995641c85aa0408a5bb9
-    Reading pipe: git cat-file commit e8f83909ceb570f5a7e48c2853f3c5d8207ce=
-a52
-    current change 25448
-    trying: earliest ^e8f83909ceb570f5a7e48c2853f3c5d8207cea52 latest 4daff=
-81c520a82678e1ef347f2b5e97258101ae1
-    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
-01ae1 ^e8f83909ceb570f5a7e48c2853f3c5d8207cea52
-    Reading pipe: git cat-file commit 09a48eb7acd594dce52e06681be9c366e1844=
-d66
-    current change 25521
-    trying: earliest ^09a48eb7acd594dce52e06681be9c366e1844d66 latest 4daff=
-81c520a82678e1ef347f2b5e97258101ae1
-    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
-01ae1 ^09a48eb7acd594dce52e06681be9c366e1844d66
-    Reading pipe: git cat-file commit 4daff81c520a82678e1ef347f2b5e97258101=
-ae1
-    current change 26907
-    trying: earliest ^09a48eb7acd594dce52e06681be9c366e1844d66 latest 4daff=
-81c520a82678e1ef347f2b5e97258101ae1
-    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
-01ae1 ^09a48eb7acd594dce52e06681be9c366e1844d66
-    Reading pipe: git cat-file commit 4daff81c520a82678e1ef347f2b5e97258101=
-ae1
-    current change 26907
-    trying: earliest ^09a48eb7acd594dce52e06681be9c366e1844d66 latest 4daff=
-81c520a82678e1ef347f2b5e97258101ae1
-    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
-01ae1 ^09a48eb7acd594dce52e06681be9c366e1844d66
-    Reading pipe: git cat-file commit 4daff81c520a82678e1ef347f2b5e97258101=
-ae1
-    current change 26907
-    ...
-"""
-
-The fix is two-fold:
- * detect an infinite loop and die right away
-   instead of looping forever;
- * make sure, `git rev-list --bisect` can't return "latestCommit" again
-   by excluding it from the rev-list range explicitly.
+As a micro-optimization, do it once while parsing arguments.
+Also, prepend "/" and remove trailing "..." at the same time.
 
 Signed-off-by: Andrey Mazo <amazo@checkvideo.com>
 ---
-
-Notes:
-    I don't have a simple test-case for this yet,
-    and I was able to perform a few complex initial `git p4 sync` runs
-    without hitting this problem.
-   =20
-    I suspect, I had somehow messed up with branch definitions
-    and --changesfile option at some point.
-
- git-p4.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ git-p4.py | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 5b79920f46..c0a3068b6f 100755
+index 91c610f960..a9f53e5b88 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -3323,11 +3323,13 @@ def gitCommitByP4Change(self, ref, change):
-                 return next
+@@ -1314,11 +1314,11 @@ class Command:
+     def __init__(self):
+         self.usage =3D "usage: %prog [options]"
+         self.needsGit =3D True
+         self.verbose =3D False
 =20
-             if currentChange < change:
-                 earliestCommit =3D "^%s" % next
-             else:
--                latestCommit =3D "%s" % next
-+                if next =3D=3D latestCommit:
-+                    die("Infinite loop while looking in ref %s for change =
-%s. Check your branch mappings" % (ref, change))
-+                latestCommit =3D "%s^@" % next
+-    # This is required for the "append" cloneExclude action
++    # This is required for the "append" update_shelve action
+     def ensure_value(self, attr, value):
+         if not hasattr(self, attr) or getattr(self, attr) is None:
+             setattr(self, attr, value)
+         return getattr(self, attr)
 =20
+@@ -2528,10 +2528,15 @@ def map_in_client(self, depot_path):
+             return self.client_spec_path_cache[depot_path]
+=20
+         die( "Error: %s is not found in client spec path" % depot_path )
          return ""
 =20
-     def importNewBranch(self, branch, maxChange):
-         # make fast-import flush all changes to disk and update the refs u=
-sing the checkpoint
++def cloneExcludeCallback(option, opt_str, value, parser):
++    # prepend "/" because the first "/" was consumed as part of the option=
+ itself.
++    # ("-//depot/A/..." becomes "/depot/A/..." after option parsing)
++    parser.values.cloneExclude +=3D ["/" + re.sub(r"\.\.\.$", "", value)]
++
+ class P4Sync(Command, P4UserMap):
+=20
+     def __init__(self):
+         Command.__init__(self)
+         P4UserMap.__init__(self)
+@@ -2551,11 +2556,11 @@ def __init__(self):
+                 optparse.make_option("--keep-path", dest=3D"keepRepoPath",=
+ action=3D'store_true',
+                                      help=3D"Keep entire BRANCH/DIR/SUBDIR=
+ prefix during import"),
+                 optparse.make_option("--use-client-spec", dest=3D"useClien=
+tSpec", action=3D'store_true',
+                                      help=3D"Only sync files that are incl=
+uded in the Perforce Client Spec"),
+                 optparse.make_option("-/", dest=3D"cloneExclude",
+-                                     action=3D"append", type=3D"string",
++                                     action=3D"callback", callback=3Dclone=
+ExcludeCallback, type=3D"string",
+                                      help=3D"exclude depot path"),
+         ]
+         self.description =3D """Imports from Perforce into a git repositor=
+y.\n
+     example:
+     //depot/my/project/ -- to import the current head
+@@ -2617,12 +2622,10 @@ def checkpoint(self):
+         out =3D self.gitOutput.readline()
+         if self.verbose:
+             print("checkpoint finished: " + out)
+=20
+     def extractFilesFromCommit(self, commit, shelved=3DFalse, shelved_cl =
+=3D 0):
+-        self.cloneExclude =3D [re.sub(r"\.\.\.$", "", path)
+-                             for path in self.cloneExclude]
+         files =3D []
+         fnum =3D 0
+         while "depotFile%s" % fnum in commit:
+             path =3D  commit["depotFile%s" % fnum]
+=20
+@@ -3888,11 +3891,10 @@ def run(self, args):
+=20
+         if not self.cloneDestination and len(depotPaths) > 1:
+             self.cloneDestination =3D depotPaths[-1]
+             depotPaths =3D depotPaths[:-1]
+=20
+-        self.cloneExclude =3D ["/"+p for p in self.cloneExclude]
+         for p in depotPaths:
+             if not p.startswith("//"):
+                 sys.stderr.write('Depot paths must start with "//": %s\n' =
+% p)
+                 return False
+=20
 --=20
 2.19.2
 
