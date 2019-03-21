@@ -2,123 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 571C220248
-	for <e@80x24.org>; Thu, 21 Mar 2019 21:03:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13E2A20248
+	for <e@80x24.org>; Thu, 21 Mar 2019 21:09:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727066AbfCUVDy convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 21 Mar 2019 17:03:54 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:55072 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726370AbfCUVDw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 17:03:52 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x2LL3mpT070457
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 21 Mar 2019 17:03:49 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Fabio Aiuto'" <polinice83@libero.it>, <git@vger.kernel.org>
-References: <1553195171.1436.1.camel@libero.it>         <002901d4e01a$88bdd220$9a397660$@nexbridge.com> <1553196739.1436.3.camel@libero.it>
-In-Reply-To: <1553196739.1436.3.camel@libero.it>
-Subject: RE: Semantic errors
-Date:   Thu, 21 Mar 2019 17:03:40 -0400
-Message-ID: <000501d4e029$93624940$ba26dbc0$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIEdXnYK9I+sdb3lPFNGef240rKTAJETcuKAWAyt0SlmkGWcA==
-Content-Language: en-ca
+        id S1726915AbfCUVJ5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 17:09:57 -0400
+Received: from mail-ot1-f73.google.com ([209.85.210.73]:45762 "EHLO
+        mail-ot1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726093AbfCUVJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 17:09:56 -0400
+Received: by mail-ot1-f73.google.com with SMTP id i5so106836otl.12
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 14:09:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
+        bh=aTTtOjMEvxQYspYILqGX5kgvmTIR+7Ywb5ak59Nwr+o=;
+        b=J7h9+dpM8Elrew/wgVCDmO1gpox8s2eU/zAAg04I848+D6HsiGpI/MfLn+oLQZmVwK
+         UJYg5OT5ECz9EMIOTNsRp3pZkTNMdk9G62B34PQwtzdOSoYwPSx2EEY+fIDAV3d+6eqd
+         OeTkmB2TSpKwHC2j/Tobhl36zj9wwiwdczsqd3S7LwKmIBSaYs+3tYk5Ax7cUj3C79kU
+         U+iTqQc1utZxPIjLmBL/uN5k8HguajDLbsWNeACQjsSIzT5PaM6o7Vjo+IDnwBVUuUyF
+         raApCwlhQbHFVce4s/d2dPx9rSctqWdq/OER04RIJsHvQBCbG/THxWGrxHhBjhxrjMqI
+         yhaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to;
+        bh=aTTtOjMEvxQYspYILqGX5kgvmTIR+7Ywb5ak59Nwr+o=;
+        b=eF/VvFRQ65tz+lPyiGeg+Sth3BJacsbWp+XBgna1HhiAwAI/aLG44n5RX5d5uq0MIP
+         WBorU3wVPw60m+LyDcTVLUpLNBLaMNYmWg0ti3F0Cfw4w5jWoSuqmVc9MwlCHYxWeM70
+         NtMfvLv8LZG37BkBKSRxPedtpFKVD7SBnrsjH+pzWy5Zu6Jw0bmMczQFeIB+v/CLLSsM
+         16bZq6sIAmFUikKnqkoP3U5dmjyqMbdMsPxa5SmUq0X+T9yAjUiyOa7xx2KvE2uOsAAB
+         qKW7eUXONg1n2kv+w/0LHPOAZnBClLKfutPEGwXN+bF0o0Cip4SYnzTY4AgqNp/0QWMj
+         h9SQ==
+X-Gm-Message-State: APjAAAWQoq0pQZYv3zDh2jQjCrS0DAugna1M4du3tdAuEYkEEMUd17Xk
+        61HOmHnduFn03cDPNNX7NnnmogFfxR1/xzg69IEJ5LHleJohcP/pYdJnQWx8HxjuRjTtAI/6UYY
+        mldRxWZu7vznMsxdhkcNiLm7otKHc5wq2mfpOIY5a2btxfQ6vOUuHSxBj7hMxaGI=
+X-Google-Smtp-Source: APXvYqwAraFMTLabW0lXGcrHu/RWqOHQZJCluQ9BFmX+SdA324vb2ned9mI/IcJFYcP5QZrpx5awD0IlOp8Ubw==
+X-Received: by 2002:aca:c3d8:: with SMTP id t207mr996739oif.117.1553202594577;
+ Thu, 21 Mar 2019 14:09:54 -0700 (PDT)
+Date:   Thu, 21 Mar 2019 14:09:50 -0700
+In-Reply-To: <cover.1552519463.git.steadmon@google.com>
+Message-Id: <cover.1553202340.git.steadmon@google.com>
+Mime-Version: 1.0
+References: <cover.1552519463.git.steadmon@google.com>
+X-Mailer: git-send-email 2.21.0.225.g810b269d1ac-goog
+Subject: [PATCH v3 0/1] Write trace2 output to directories
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Of On March 21, 2019 15:32, Fabio Aiuto wrote:
-> Il giorno gio, 21/03/2019 alle 15.16 -0400, Randall S. Becker ha
-> scritto:
-> > On March 21, 2019 15:06, Fabio Aiuto wrote:
-> > > I'm browsins git code with Eclipse. I'm on a local branch called
-> > > "studio" based on master (last public commit e902e9b by Junio C
-> > > Hamano on Monday March 11 2019). I've built everything by changing:
-> > > CFLAGS = -g -Wall (removing -O2 to have smooth trace in debugging).
-> > > But the environment detects the following semantic errors (I made no
-> > > edits!!!):
-> > > Description	Resource	Path	Location	Type
-> > > Symbol 'GIT_HTML_PATH' could not be resolved	git.c	/g
-> > > it
-> > > line 154	Semantic Error
-> > > Symbol 'GIT_MAN_PATH' could not be resolved	git.c	/gi
-> > > t
-> > > line 158	Semantic Error
-> > > Symbol 'GIT_INFO_PATH' could not be resolved	git.c	/g
-> > > it
-> > > line 162	Semantic Error
-> > > Symbol 'active_cache' could not be resolved	commit.c
-> > > /git
-> > > /builtin	line 899	Semantic Error
-> > > Field 'ce_intent_to_add(active_cache[i])' could not be resolved
-> > > commit.c	/git/builtin	line 899	Semantic Error
-> > > Symbol 'active_nr' could not be resolved	commit.c	/gi
-> > > t/bu
-> > > iltin	line 889	Semantic Error
-> > > Symbol 'active_nr' could not be resolved	commit.c	/gi
-> > > t/bu
-> > > iltin	line 898	Semantic Error
-> > > Field 'oid' could not be resolved	commit.c	/git/built
-> > > in
-> > > line 1654	Semantic Error
-> > > Symbol 'active_nr' could not be resolved	commit.c	/gi
-> > > t/bu
-> > > iltin	line 901	Semantic Error
-> > > Symbol 'active_cache_tree' could not be resolved	commit.c
-> > > /git/builtin	line 1654	Semantic Error
-> > > Symbol 'active_cache_changed' could not be resolved	commit.c
-> > > /git/builtin	line 418	Semantic Error
-> > > Symbol 'active_cache_tree' could not be resolved	commit.c
-> > > /git/builtin	line 419	Semantic Error
-> > > Symbol 'active_nr' could not be resolved	commit.c	/gi
-> > > t/bu
-> > > iltin	line 254	Semantic Error
-> > > Symbol 'active_cache' could not be resolved	commit.c
-> > > /git
-> > > /builtin	line 255	Semantic Error
-> > >
-> > > I can debug without problems, but what if I should trece through one
-> > > of those errors?
-> > > How can I fix them?
-> >
-> > This situation occurs in many projects in ECLIPSE, not only git. The
-> > errors are likely coming from one of the error parsers that you have
-> > enabled in your workspace. Look in the Project Properties or Workspace
-> > Preferences under C/C++ Build/Settings in the Error Parsers tab for
-> > your build configuration. You may have to turn off some of those.
-> > There is also the C/C++ General/Code Analysis Preferences setting
-> > where you might have to turn off the problematic errors. I have found
-> > that this is a common situation for code that is imported into ECLIPSE
-> > from other platforms, where the GNU error and analysis tools are
-> > overly aggressive by default.
-> >
-> > Good luck.
-> > Randall
-> >
-> > -- Brief whoami:
-> >  NonStop developer since approximately 211288444200000000
-> >  UNIX developer since approximately 421664400
-> > -- In my real life, I talk too much.
-> >
-> >
-> >
-> Thank you I tried to disable all of them, but they all remain. For example the
-> variable 'active_nr' is actually never declared. That's so strange. Hope to
-> solve this all soon. I'm freezed...
+Persistently enabling trace2 output is difficult because it requires
+specifying a full filename. This series teaches tr2_dst_get_trace_fd()
+to create files underneath a given directory provided as the target of
+the GIT_TR2_* envvars.
 
-It is very likely in ECLIPSE either in workstation or project settings relating to error parsers (turn everything off). It still may be an error parser issue. One key thing... do not use -Wall. There are also settings about what to do in some error conditions configured in ECLIPSE. -Wall could be probably triggering a response from one of the error parsers. But the Semantic Error type is not normally from the compiler; rather, it is from ECLIPSE CDT pre-scanning the code. Anyway, check out other -W settings to disable all warnings as a start. If you are building in Cygwin or Mingw, you probably can ignore the ECLIPSE errors, especially if git actually built. If you are trying to mix a managed build and a non-managed build in the same project, you are going to be out of luck.
+Changes since V2:
+* No longer appends a suffix to filenames on the first creation attempt.
+* Renamed function & constant now that randomization is no longer used.
+* Simplified strbuf usage.
+
+Changes since V1:
+* No longer supports timestamp templates.
+* No longer supports filename prefixes.
+* Always creates filenames based on the final component of the trace2
+  SID.
+
+Josh Steadmon (1):
+  trace2: write to directory targets
+
+ Documentation/technical/api-trace2.txt |  5 ++
+ t/t0210-trace2-normal.sh               | 15 ++++++
+ trace2/tr2_dst.c                       | 63 +++++++++++++++++++++++++-
+ 3 files changed, 81 insertions(+), 2 deletions(-)
+
+Range-diff against v2:
+1:  59d8c6511b ! 1:  ce5258610f trace2: write to directory targets
+    @@ -23,8 +23,8 @@
+      
+     +	If the target already exists and is a directory, the traces will be
+     +	written to files (one per process) underneath the given directory. They
+    -+	will be named according to the last component of the SID followed by a
+    -+	counter to avoid potential collisions.
+    ++	will be named according to the last component of the SID (optionally
+    ++	followed by a counter to avoid filename collisions).
+     +
+      `af_unix:[<socket_type>:]<absolute-pathname>`::
+      
+    @@ -37,7 +37,7 @@
+      	test_cmp expect actual
+      '
+      
+    -+test_expect_success 'randomized filename' '
+    ++test_expect_success 'automatic filename' '
+     +	test_when_finished "rm -r traces actual expect" &&
+     +	mkdir traces &&
+     +	GIT_TR2="$(pwd)/traces" test-tool trace2 001return 0 &&
+    @@ -71,9 +71,9 @@
+      #define TR2_ENVVAR_DST_DEBUG "GIT_TR2_DST_DEBUG"
+      
+     +/*
+    -+ * How many attempts we will make at creating a random trace output path.
+    ++ * How many attempts we will make at creating an automatically-named trace file.
+     + */
+    -+#define MAX_RANDOM_ATTEMPTS 10
+    ++#define MAX_AUTO_ATTEMPTS 10
+     +
+      static int tr2_dst_want_warning(void)
+      {
+    @@ -82,45 +82,47 @@
+      	dst->need_close = 0;
+      }
+      
+    -+static int tr2_dst_try_random_path(struct tr2_dst *dst, const char *tgt_prefix)
+    ++static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
+     +{
+     +	int fd;
+     +	const char *last_slash, *sid = tr2_sid_get();
+    -+	struct strbuf base_path = STRBUF_INIT, final_path = STRBUF_INIT;
+    ++	struct strbuf path = STRBUF_INIT;
+    ++	size_t base_path_len;
+     +	unsigned attempt_count;
+     +
+     +	last_slash = strrchr(sid, '/');
+     +	if (last_slash)
+     +		sid = last_slash + 1;
+     +
+    -+	strbuf_addstr(&base_path, tgt_prefix);
+    -+	if (!is_dir_sep(base_path.buf[base_path.len - 1]))
+    -+		strbuf_addch(&base_path, '/');
+    -+	strbuf_addstr(&base_path, sid);
+    ++	strbuf_addstr(&path, tgt_prefix);
+    ++	if (!is_dir_sep(path.buf[path.len - 1]))
+    ++		strbuf_addch(&path, '/');
+    ++	strbuf_addstr(&path, sid);
+    ++	base_path_len = path.len;
+     +
+    -+	for (attempt_count = 0; attempt_count < MAX_RANDOM_ATTEMPTS; attempt_count++) {
+    -+		strbuf_reset(&final_path);
+    -+		strbuf_addbuf(&final_path, &base_path);
+    -+		strbuf_addf(&final_path, ".%d", attempt_count);
+    ++	for (attempt_count = 0; attempt_count < MAX_AUTO_ATTEMPTS; attempt_count++) {
+    ++		if (attempt_count > 0) {
+    ++			strbuf_setlen(&path, base_path_len);
+    ++			strbuf_addf(&path, ".%d", attempt_count);
+    ++		}
+     +
+    -+		fd = open(final_path.buf, O_WRONLY | O_CREAT | O_EXCL, 0666);
+    ++		fd = open(path.buf, O_WRONLY | O_CREAT | O_EXCL, 0666);
+     +		if (fd != -1)
+     +			break;
+     +	}
+     +
+     +	if (fd == -1) {
+     +		if (tr2_dst_want_warning())
+    -+			warning("trace2: could not open '%s' for '%s' tracing: %s",
+    -+				base_path.buf, dst->env_var_name, strerror(errno));
+    ++			warning("trace2: could not open '%.*s' for '%s' tracing: %s",
+    ++				(int) base_path_len, path.buf,
+    ++				dst->env_var_name, strerror(errno));
+     +
+     +		tr2_dst_trace_disable(dst);
+    -+		strbuf_release(&base_path);
+    -+		strbuf_release(&final_path);
+    ++		strbuf_release(&path);
+     +		return 0;
+     +	}
+     +
+    -+	strbuf_release(&base_path);
+    -+	strbuf_release(&final_path);
+    ++	strbuf_release(&path);
+     +
+     +	dst->fd = fd;
+     +	dst->need_close = 1;
+    @@ -140,7 +142,7 @@
+     -		return tr2_dst_try_path(dst, tgt_value);
+     +	if (is_absolute_path(tgt_value)) {
+     +		if (is_directory(tgt_value))
+    -+			return tr2_dst_try_random_path(dst, tgt_value);
+    ++			return tr2_dst_try_auto_path(dst, tgt_value);
+     +		else
+     +			return tr2_dst_try_path(dst, tgt_value);
+     +	}
+-- 
+2.21.0.225.g810b269d1ac-goog
 
