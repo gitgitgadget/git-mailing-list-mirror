@@ -2,101 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FA7120248
-	for <e@80x24.org>; Thu, 21 Mar 2019 09:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30C2A20248
+	for <e@80x24.org>; Thu, 21 Mar 2019 09:44:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728157AbfCUJmg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 05:42:36 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:36033 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727946AbfCUJmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 05:42:36 -0400
-Received: by mail-io1-f68.google.com with SMTP id f6so4694117iop.3
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 02:42:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JAJho/1lAqZsCXSCrspjG/559xtl+lmldvSxsZk0fjY=;
-        b=kaLJuAD7WktrjmqPCGKHPmw9q3/Lh+ddq2U6G7K+CoREB4KsQzjZWYgKeWIfLcNRnt
-         /Ckn92OF/ykiMp0tet+7mZD+VlPyq06BO4WiBUbocJIuiaroZDgAkDp68QdR1ix+d9xx
-         Fwf/+FeiX0U/GiKPaLCNpnomu2xMFD1b7C/sOPIeCOEdRzKnKUso5I/HB4smuGzH/kNA
-         Zh9RR4ak+ipWlfbo4Y3mO41Y6a3hmwV59d37KqRoV6D2n+N0jfcA7hcJXRXgHn6Ft2tq
-         78GJQMzO2kwH4BiQxBB5VwdWJr9aP0VVHDTeNcHQhMhveiH1i0VqzLCG8I8OUL8QtqBa
-         Lphw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JAJho/1lAqZsCXSCrspjG/559xtl+lmldvSxsZk0fjY=;
-        b=nP8gPEAxU3N68zqVL4lem5k8JQ/5gcieq8KLzr5CCsGeONQRLLhJg62XfaGXmPpQyw
-         EruShoy/QzoDqunEgRxEFLTDYXYFJNFgZZ1y6xnaf2b4Vh3tXvrom1RZAeGmbfAiPU0i
-         xvAzG6wnDlF+A5oxNWq9JrRsadjrkTlE543+bScDyA0oijxLw6XsajdcVBzt2xXaU0jN
-         aG8ayPv3TRWo3SgTcolv8HZPake2jmFSyx6ph5t1QmbDLhwT0jYEZhRXWNzeCxpvFgYe
-         IQfsjlr3YuWHKerKwkbDhZ6IWHztTmaaVpXmUyHK3MOvDX+SKmMxNykr5BYoxunII0Ce
-         Hl0g==
-X-Gm-Message-State: APjAAAU6fhpusGbpf/sESlcYllpdcBVyrWB4COk2RUUgsuJrwmIByUTZ
-        wHpLUnOEmemg8Mnl7XVMoEshDhRhc8fsLomsTvEYokyc
-X-Google-Smtp-Source: APXvYqyY/ZwXok3TAh0zsEZ2j4Dv9LKfN0Y4BTNiECM9sSxYLhj9QAfIxnmIr5n4s3rUMtasvO3eeUX0jX9lnEZKBxY=
-X-Received: by 2002:a5e:d616:: with SMTP id w22mr1990237iom.118.1553161355426;
- Thu, 21 Mar 2019 02:42:35 -0700 (PDT)
+        id S1728203AbfCUJoQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 05:44:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58794 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727829AbfCUJoQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 05:44:16 -0400
+Received: (qmail 10769 invoked by uid 109); 21 Mar 2019 09:44:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Mar 2019 09:44:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8485 invoked by uid 111); 21 Mar 2019 09:44:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Mar 2019 05:44:38 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Mar 2019 05:44:14 -0400
+Date:   Thu, 21 Mar 2019 05:44:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/13] more unused parameter cleanups
+Message-ID: <20190321094414.GA2894@sigill.intra.peff.net>
+References: <20190320081258.GA5621@sigill.intra.peff.net>
+ <87woksd322.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20190320102906.12917-1-pclouds@gmail.com> <xmqqh8bwsrnj.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqh8bwsrnj.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 21 Mar 2019 16:42:09 +0700
-Message-ID: <CACsJy8CbpQs6_vH9P2T_BY8F3RHv0Y1M8NL-q0HNj7xOz4Wcjg@mail.gmail.com>
-Subject: Re: [PATCH] commit: improve error message in "-a <paths>" case
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87woksd322.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 21, 2019 at 12:49 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
-> > I did something stupid today and got
-> >
-> >     $ git commit -a --fixup=3D @^
-> >     fatal: Paths with -a does not make sense.
-> >
-> > which didn't make any sense (at least for the first few seconds).
-> >
-> > Include the first path(spec) in the error message to help spot the
-> > problem quicker. Now it shows
-> >
-> >     fatal: paths '@^ ...' with -a does not make sense
-> >
-> > which should ring some bell because @^ should clearly not be considered
-> > a path.
->
-> Makes sort of sense.  Would it break to blindly use argv[0] if the
-> user had an explicit double-dash "--" disambiguator?
+On Thu, Mar 21, 2019 at 09:50:13AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-Good point. I didn't think of this.
+> LGTM from skimming it, FWIW this is now what we need to compile cleanly
+> with -Wextra:
+> 
+>     make DEVELOPER=1 DEVOPTS="extra-all" CFLAGS="-Wno-unused-parameter -Wno-missing-field-initializers -Wno-sign-compare -Wno-empty-body" all
+> 
+> For some such as -Wempty-body we'd really need to contort ourselves to
+> get it passing anywhere near cleanly (all of those have existing "/*
+> this is intentional! */" comments).
 
-$ ./git commit -a --fixup=3D @^ -- foo
-fatal: paths '@^ ...' with -a does not make sense
+I think we could probably define a NOOP_BODY macro or function and use
+that instead. But it may not be worth the trouble. I'd have to see how
+painful that would be, and whether it might find any cases that actually
+look like real bugs.
 
-so on the bright side the error message still reports the right thing.
+For -Wunused-parameter I am working towards being able to actually
+enable that everywhere. It is not _too_ bad to annotate the instances
+which must be there, and my digging with it has uncovered several real
+bugs. Right now I'm in the "drop useless parameters" phase, which I
+expect will take one or two more rounds.
 
-But parseopt I think does something wrong because @^ should not be
-considered a path at all. There should be some other error message
-about unrecognized option "@^". I checked argv, argv[0] is "@^",
-argv[1] is "foo" and "--" stripped.
+Then I'll start on the "annotate unused ones we must keep" series, which
+culminates in actually flipping on the switch with DEVELOPER (or rather,
+stopping flipping it off).
 
-This I think is a separate bug. Will look into it when I have more
-time (and tagging #leftovers in case people look for something fun and
-small to do)
---=20
-Duy
+You can see my progress on the jk/unused-4-mark branch of
+https://github.com/peff/git (I think the contents are good, but the
+commit messages and organization need some cleanup).
+
+> I wonder if for the rest of these it's worth re-picking up this old
+> suggestions of yours about #pragma:
+> https://public-inbox.org/git/20170126143252.ne533mcv3n2ksbai@sigill.intra.peff.net/
+> 
+> I.e. for us to define our own macro for these cases & use it.
+
+The push/pop ones may be of use (which both clang and gcc seem to
+support), since that would let us localize the effects. I think in many
+cases there's usually a more readable solution, though (e.g., you'd want
+to annotate specific parameters as unused with single word, not a 3-line
+push-diag/declare-param/pop-diag mess).
+
+-Peff
