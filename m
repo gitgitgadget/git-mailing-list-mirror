@@ -2,108 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AC6F202BB
-	for <e@80x24.org>; Thu, 21 Mar 2019 14:35:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2DCC20248
+	for <e@80x24.org>; Thu, 21 Mar 2019 14:36:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728297AbfCUOfQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 10:35:16 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35430 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728016AbfCUOfP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 10:35:15 -0400
-Received: by mail-wm1-f66.google.com with SMTP id y197so2992041wmd.0
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 07:35:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=upNQvsF9e0M1+vtEXkaSe16d0u+ElbCFNoYN9Ee3H1k=;
-        b=sGkR5yPnwhRbPbl/bUif6GQHoymcpV0qklCKKYwMwZW4x1puC3/rezFYcBMHjoR0XN
-         DzpZtpO21QdtOWXFlnRwtnNxOigqVgQd4EkQWIAxBkgUDwiM+mBuZaJMSXCWfOACMMe6
-         a8MeOQQpukDPYMU69Vpe6Ex2/cHLWrDC8ahzOzNkjHJbjvw8zTUvVkCPhEsb976IG0rZ
-         UYs/DNa2UfCOkvf4psd9ka54e7M3N0MuhxIVzkrF6qZDwiRDDQYAS0tGPVq3v06U7Qp2
-         XCJgIyuAIJ4vBd/grvSZSNCsL2CHZs+6MHvK3NrE1Qvc+YQ1JubvtdUuARLjri9p9W3B
-         aFog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=upNQvsF9e0M1+vtEXkaSe16d0u+ElbCFNoYN9Ee3H1k=;
-        b=ubWZ5FkxJ40aXKs8wGSWqpEZ5sQG8648vj/OMztiJ+A6m9YGssQFokwQmjvpAWTTJK
-         t/cQE7xFeqVI+C6zWoIHk82wQyI3/KPWNHrJJ/6BxvIsVgtsUjAAo3XT0WYyHv94mmzm
-         wfPl+pZir4M3oXCzdp4MnhuOI4giNn2qPXCAqLNwUr2HHb1mdw5Lz2JlhqPjpshISjbj
-         XOS0008U8Q44WGW0Lrwev9mcFSvXDOXbVxjhj5Oe7VUnKoCwF7Z7Lrm5Dm1L00Usnsoi
-         qhl7HHlLMvTgEy41tuLXuQB86zGw/VJoqb3dlKcvTktHfT7laigEsx8xiGxSqdHftgBO
-         m32g==
-X-Gm-Message-State: APjAAAUTTG/d31aoi45kvUuRemTF3bRZ8rgkByv658pT6AKibRS5NTjj
-        aSNLqxAm7Cg4yfD0SIHhVMo=
-X-Google-Smtp-Source: APXvYqwP2HnmEZNhxw6BoU73D7jKs4mPc/tjFtAxjO2clP9mAYjGRl9hi+FK4ffPH7ujy5rDGtrgRw==
-X-Received: by 2002:a1c:3543:: with SMTP id c64mr2873120wma.75.1553178914245;
-        Thu, 21 Mar 2019 07:35:14 -0700 (PDT)
-Received: from [192.168.2.240] (host-89-242-184-133.as13285.net. [89.242.184.133])
-        by smtp.gmail.com with ESMTPSA id a204sm6819479wmf.12.2019.03.21.07.35.13
-        (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Mar 2019 07:35:13 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 01/11] sequencer: always discard index after checkout
-To:     Duy Nguyen <pclouds@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190319190317.6632-1-phillip.wood123@gmail.com>
- <20190319190317.6632-2-phillip.wood123@gmail.com>
- <CACsJy8CRN1NUD1DdKXkOoaYqCU_RJU56ph=eBAGSS-EXMAcmww@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <8c663552-b792-b885-ea59-abe3137efe26@gmail.com>
-Date:   Thu, 21 Mar 2019 14:35:12 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.3
+        id S1728023AbfCUOgf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 10:36:35 -0400
+Received: from mout.gmx.net ([212.227.15.18]:35497 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727823AbfCUOgf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 10:36:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1553178988;
+        bh=keStAwKuNrdfRe4Qtje0pZvduEEVja935Al4ClebLPM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZnZ9OcoT9DXychPK5GHZeAcvrsHX/pR4dR/S8AFLmP/3BP2US+DYer2faC60Vgt4v
+         uLfWfKK5SIgMd4xwIC6eGvcD7t+8Hz8etJXYAyED7cwDMdZoZ//ayjU0EX6bwMMWwn
+         QhCd3nqhuqAsJyFOb9OglhP1lKrMmRGHIMukhKJY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXq3L-1hTJHA3i7j-00Wr5C; Thu, 21
+ Mar 2019 15:36:28 +0100
+Date:   Thu, 21 Mar 2019 15:36:11 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Ben Peart <benpeart@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Fix fsmonitor after discard_index()
+In-Reply-To: <87ef74a1dv.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1903211532140.41@tvgsbejvaqbjf.bet>
+References: <pull.165.git.gitgitgadget@gmail.com> <87ef74a1dv.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8CRN1NUD1DdKXkOoaYqCU_RJU56ph=eBAGSS-EXMAcmww@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-994732517-1553178987=:41"
+X-Provags-ID: V03:K1:0YRMBH3sl/iMETIfMfUlj/TSUcctAw9t7v+8yuxwCJ+C1MYW6p9
+ y9dvggPazLImu6hb58kIdxGlJafnbdJvsYsVaxw6efEHDj8VWiwJnbSRL6REOdd6Gpk/PI2
+ Fl93s7QwxUGeLATf2EX8pxVgzh93xBB7E+ACf6fpHlnCPRPnnTwx3n2qaoNlRnWvdtCT2PZ
+ 22AKfcB/oMvKlzBEiv8WA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KTsE2pMecsw=:jQ4WJlnVaHt3LtamU07vHx
+ tdpXt4FeKtT6rghuIMwunSjJsP9wvjXXIaNNCl5JFIDop0wWD06N392jWWHb3Og+hHsE8jExa
+ AWo/zKwoyxh5hz+KNG6lu9OZIL5H+D2WoE15goammUQseworEIGo4MOG51VkxqzkoOvM4WJBS
+ Gbgkxt7tgyQ03zdIPuNKrlASyW6HqPmFRFMD2HYBEL2aIVuxxTtIEZojJCm8R2sJlMTPI6WSS
+ UNVL7AdRsBWqc0kNqV5oA6VHZapoWT7B66XGUD2gx1O0biFwYOVdhVBCuild3A/KW7Va38EDC
+ s3TVCV0ef1ViKhzCOPjAFz3K1FNHRofvCi9uWfpzo9TB7xDtkj2Z6BrlvXj/fpBGLpGn3dgJQ
+ WNJaGU2Jk9IbMAOaQR2KjfPZx2kthZUdPkopGJiRGQagl4GOo1uMT109lDVFKgDX2klFQBvfJ
+ sqquhMlIECfLp817iuR2UBMI2NFaZQtUTNEkoVHpqf8C3brfVDWbO7q8N8wSo+5ACkHkbnF4r
+ gFO7AjThI+4FZGTNkciSZ/ONjdvdEW6bqeWyOVo0PJP8CCNearBr/x06OtPTEhcBy4O0+VkhL
+ t/ARyad2HOkdTJKjXYYDDMRf3PGK9FDd/lVqoJgHtcFySil3KqT5VQrYgXx3119NMbb+6UnTN
+ M9wxQ+J+0x6h/HbqqXUQ/EICvuwE3l/zXnQtVI/6tx8SPsJdkCVS6gxjYMkGXBLuEc1t55xud
+ kFVRvvtd+02QApRLypv5x+SjmEtKpTJViPeMkioOx66rIUSMNgyGCTMWfIBTlm8tl2iSC3jxB
+ 6NlUwdjHyU7LV5dXOm4edPEi1CqFzuy+eHABkPPRfJs1VAgJ8jMmM+0vAun23MhAN8Rl8jILG
+ PHQouCNN3rBnNTDGCtTU0UCVP9JBeE5W7A+CokW3dC8lVk1NqMbdqRVfG5weUPySbqRCR4fie
+ +tZ0g5aBn1Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/03/2019 01:50, Duy Nguyen wrote:
-> On Wed, Mar 20, 2019 at 2:04 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>      It would perhaps be better to pass around the_index rather than
->>      the_repository
-> 
-> Not by a large margin. For sequencer.c most operations require more
-> than just the index and passing 'struct repository *' around has been
-> the norm. And as soon as you need to load the index back (not sure if
-> you should do it here btw, after discard_index, since we have the
-> index loaded before) you need 'struct repository' not 'struct
-> index_state'.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks, I think I'll leave it as it is then. After we checkout the new 
-base we reload the index in the loop that picks the commits. For 'rebase 
-<upstream> <branch>' after we checkout <branch> we create the todo-list 
-which involves a revision walk and then checkout the new base. I'm not 
-entirely sure if it needs reloading before we create the todo list but I 
-think it probably not as I don't think rebase--interactive.c loads the 
-index (which would explain why this only becomes an issue when we stop 
-forking rebase--interactive from rebase because then rebase.c has loaded 
-the index to check there are no uncommitted changes)
+--8323328-994732517-1553178987=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Best Wishes
+Hi =C3=86var,
 
-Phillip
+On Mon, 18 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
+> On Sat, Mar 16 2019, Johannes Schindelin via GitGitGadget wrote:
+>
+> > It was reported by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > [https://public-inbox.org/git/nycvar.QRO.7.76.6.1903142058130.41@tvgsb=
+ejvaqbjf.bet/T/#mb8718fe52e4721dacd3b143a09187ff9090ef4e3]
+> > that there were problems with the fsmonitor feature in conjunction wit=
+h the
+> > newly built-in git stash/git rebase.
+> >
+> > The culprit really is that the fsmonitor flag that says whether it was
+> > queried already was not re-set after discard_index() was called by mis=
+take.
+> >
+> > This fixes that, and apparently also other long-standing fsmonitor iss=
+ues.
+>
+> I've added this to my internal build & now the test suite passes in the
+> fsmonitor mode without any test skipping.
 
+Awesome.
 
-> 
->>   builtin/rebase--interactive.c |  2 +-
->>   sequencer.c                   | 27 +++++++++++++++++----------
->>   sequencer.h                   |  3 ++-
->>   3 files changed, 20 insertions(+), 12 deletions(-)
+> > (Note that there is still a flakiness around t7519
+> > [https://github.com/git-for-windows/git/pull/2127#pullrequestreview-21=
+5010574]
+> > where it tries to make sure that the fsmonitor hook can prevent unnece=
+ssary
+> > lstat() calls, but that seems to be unrelated to this here bug.)
+>
+> FWIW Since February 1st, 2018 I've run my builds on CentOS [67] through
+> an GIT_FSMONITOR_TEST=3D$PWD/t7519/fsmonitor-all test and have never
+> encountered this flakyness, and I built pretty much on every "next"
+> push-out.
+>
+> The fix sounds good, just one data point on the rarity of the race in
+> practice. I hadn't noticed this being flaky.
+
+That makes me think that my bug fix may bring this racy problem to the
+light of day. After all, now we will query the fsmonitor a lot more times
+than before, and in quicker succession (because there are no slow shell
+commands running in between fsmonitor calls, i.e. the test suite).
+
+I guess I will see more of that now, and maybe eventually the pain in my
+notification mails will be high enough that I'll allocate time to
+investigate.
+
+Thank you for your feedback, though!
+Dscho
+
+--8323328-994732517-1553178987=:41--
