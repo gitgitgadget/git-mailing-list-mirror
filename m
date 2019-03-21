@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 497E920248
-	for <e@80x24.org>; Thu, 21 Mar 2019 22:33:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C8D720248
+	for <e@80x24.org>; Thu, 21 Mar 2019 22:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727248AbfCUWdl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 18:33:41 -0400
+        id S1727257AbfCUWdn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 18:33:43 -0400
 Received: from mail-eopbgr720118.outbound.protection.outlook.com ([40.107.72.118]:2850
         "EHLO NAM05-CO1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726840AbfCUWdl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 18:33:41 -0400
+        id S1727245AbfCUWdm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 18:33:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CG6mGwI5K7t/lJrjTYG8/zk2pt4H62bpYTVKoEhwMto=;
- b=JPbaOxBvk1knM9kQktLnhDT/x7LpI72LB6HAqLkEBaQNtf4F888hGUVnW9J0Cy0B81P8m+TcxuTzFlX1hfefa15FFNEDc8B0yAjGmi1YcLo2ZkFv8rMyS0u/WrAxpzXQimEkdT3Sg9zMVCYvl6CJO5Er5aAzZhwFlKgVISJsqpM=
+ bh=qafieZikvoznm5Z6VSOif/gKBU3KaMTwQzo7HdAT8Ks=;
+ b=oyqn7Y957KWdII3VxlicdA1SPwMSEQL3OqS9Z2xKmdRqzCbOUF/6k5QO4f32b0IEtCCWEJorXowPh7sWU8yniY935GuChhVsPdBZ3j2Pkb2R8a/DJVWzrpXp6lRmqhsBBQxfl9N5Iiu771VpVmSPRX+YYhGOE2qBgWBfGpSNk60=
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
  DM6PR08MB4251.namprd08.prod.outlook.com (20.176.82.12) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1730.15; Thu, 21 Mar 2019 22:33:10 +0000
+ 15.20.1730.15; Thu, 21 Mar 2019 22:33:11 +0000
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::75e5:faf9:290a:a244]) by DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::75e5:faf9:290a:a244%3]) with mapi id 15.20.1709.015; Thu, 21 Mar 2019
- 22:33:10 +0000
+ 22:33:11 +0000
 From:   "Mazo, Andrey" <amazo@checkvideo.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
@@ -44,13 +44,12 @@ CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
         "szeder.dev@gmail.com" <szeder.dev@gmail.com>,
         "ahippo@yandex.com" <ahippo@yandex.com>,
         "gitster@pobox.com" <gitster@pobox.com>
-Subject: [PATCH v2 6/7] git-p4: add failing test for "git-p4: respect excluded
- paths when detecting branches"
-Thread-Topic: [PATCH v2 6/7] git-p4: add failing test for "git-p4: respect
- excluded paths when detecting branches"
-Thread-Index: AQHU4DYM86QPjCA0O0qhWIoiyPAfuQ==
-Date:   Thu, 21 Mar 2019 22:33:05 +0000
-Message-ID: <6170d45951d71171ea3ad502a3b2a5c5c55c12f8.1553207234.git.amazo@checkvideo.com>
+Subject: [PATCH v2 7/7] git-p4: respect excluded paths when detecting branches
+Thread-Topic: [PATCH v2 7/7] git-p4: respect excluded paths when detecting
+ branches
+Thread-Index: AQHU4DYOWQvMGicNzEKZgMjiTfLXGA==
+Date:   Thu, 21 Mar 2019 22:33:07 +0000
+Message-ID: <758d8e84868edc4b53c382a74655048d69d187de.1553207234.git.amazo@checkvideo.com>
 References: <cover.1553207234.git.amazo@checkvideo.com>
 In-Reply-To: <cover.1553207234.git.amazo@checkvideo.com>
 Accept-Language: en-US
@@ -65,23 +64,22 @@ x-ms-exchange-messagesentrepresentingtype: 1
 x-mailer: git-send-email 2.19.2
 x-originating-ip: [70.163.25.109]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 1e65a0e1-8196-4bd2-a0eb-08d6ae4d2f4f
+x-ms-office365-filtering-correlation-id: e6853f18-cb22-4383-28bc-08d6ae4d3083
 x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600127)(711020)(4605104)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB4251;
 x-ms-traffictypediagnostic: DM6PR08MB4251:
-x-ms-exchange-purlcount: 1
-x-microsoft-antispam-prvs: <DM6PR08MB4251C232991A618E061DEDFBDA420@DM6PR08MB4251.namprd08.prod.outlook.com>
+x-microsoft-antispam-prvs: <DM6PR08MB425121FA04E5DB168DBAC1E0DA420@DM6PR08MB4251.namprd08.prod.outlook.com>
 x-forefront-prvs: 0983EAD6B2
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(376002)(346002)(39860400002)(136003)(396003)(189003)(199004)(14444005)(6666004)(6436002)(5640700003)(53936002)(53376002)(36756003)(76176011)(386003)(486006)(446003)(6506007)(6306002)(8676002)(68736007)(2501003)(97736004)(305945005)(256004)(25786009)(186003)(478600001)(476003)(86362001)(6512007)(966005)(71200400001)(4326008)(7416002)(6916009)(2616005)(11346002)(6486002)(102836004)(118296001)(3846002)(6116002)(26005)(7736002)(66066001)(50226002)(316002)(99286004)(14454004)(54906003)(2906002)(106356001)(81156014)(5660300002)(52116002)(71190400001)(1730700003)(81166006)(2351001)(8936002)(105586002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4251;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(376002)(346002)(39860400002)(136003)(396003)(189003)(199004)(14444005)(6666004)(6436002)(5640700003)(53936002)(36756003)(76176011)(386003)(486006)(446003)(6506007)(8676002)(68736007)(2501003)(97736004)(305945005)(256004)(25786009)(186003)(478600001)(476003)(86362001)(6512007)(71200400001)(4326008)(7416002)(6916009)(2616005)(11346002)(6486002)(102836004)(118296001)(3846002)(6116002)(26005)(7736002)(66066001)(50226002)(316002)(99286004)(14454004)(54906003)(2906002)(106356001)(81156014)(5660300002)(52116002)(71190400001)(1730700003)(81166006)(2351001)(8936002)(105586002);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4251;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: checkvideo.com does not designate
  permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: +dukweoKO5nwfDu9GwitahAGLPUXigez3gc/rSoUKxZjoHz+chjLbnqgpUlHCv8Mx2TUwxEzd3P/0NghUbvYHvoPGwsgHXn9EMwjaOELLACVu1tFHUC+Nfggii4qi2spASmGaSvbwp6FWT7qheNrNztZQSB1iHuw1WuatekGjPYnNzQT9uqDIeV4Fln5TyHFWZWkYTxlPN5OyA5aOIl44zNL9/11IkHIq6FqZvJK8gcZX/AvlwH6lyEkQgcOAZ/pFiHsMcALeuGahW4w+xycTFGcTjzdQ0fOvRD+U2/vQd5fBSwdrfWZXTTviQE98TkcmaFSS7n2XVG/RD22infQ79QBrb4/R95SEIg6Zt01jH3fwfqM/VaVZyxLS1Puz8MY4cSpIJzSJ67WFDd5/T1ANPgKYPQx7BLsca3nwYeAPMg=
+x-microsoft-antispam-message-info: 82jwscr6OVVdrBEF26cEGTW8+8tQS1JuPMTzk28fPSN9oDxG5oC6D0JpPA19zbPGjkCayloQjc8D0BHLjw1QTc4uye4ErTTeKvxfoPh+IQKfLE8stvtOBsZUAwro27CQwexnGHLRqBPp8yjxZkRcnkHNuhXgKPENHosULNz+M6Enb/MoW/TzqjzgJ4iwd8WKEP7yz23FMT4IYjkg6Y6bAuQ87GbKSYT6Su2xdqlIFD4Fz/nczklvp0kpRh12WaBdlxNz7XzyonGFs/y081/S6Vl3F4Cjm361H8kH/vkw7ZiywGBEQhTFEG/zOo8Zel4BgaeLJOnqcFVQpcyvg5q4LyMM6/fU29y/hdefI4yw1HmKKlz/oD1xXDWSbFUYSQvi1Fpt/prsIofGm1VAAYRxpsuUmHpVx4d5VKGB12goPeo=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: checkvideo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1e65a0e1-8196-4bd2-a0eb-08d6ae4d2f4f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2019 22:33:05.1278
+X-MS-Exchange-CrossTenant-Network-Message-Id: e6853f18-cb22-4383-28bc-08d6ae4d3083
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2019 22:33:07.1562
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
@@ -92,85 +90,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In preparation for a fix, add a failing test case to test that
-git-p4 doesn't exclude files despite being told to
-when handling multiple branches.
+Currently, excluded paths are only handled in the following cases:
+ * no branch detection;
+ * branch detection with using clientspec.
 
-I.e., it should exclude //depot/branch2/file2 when run with -//depot/branch=
-2/file2,
-but doesn't do this right now.
+However, excluded paths are not respected in case of
+branch detection without using clientspec.
 
-The test is based on 'git p4 clone complex branches' test with the followin=
-g changes:
- * account for file3 moved from branch3 to branch4 in test 'git p4 submit t=
-o two branches in a single changelist';
- * account for branch6 created in test 'git p4 clone file subset branch';
- * file2 is expected to be missing from all branches due to explicit exclud=
-e.
+Fix this by consulting the list of excluded paths
+when splitting files across branches.
 
 Signed-off-by: Andrey Mazo <amazo@checkvideo.com>
 ---
- t/t9801-git-p4-branch.sh | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ git-p4.py                | 3 +--
+ t/t9801-git-p4-branch.sh | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
+diff --git a/git-p4.py b/git-p4.py
+index 162877aa82..148ea6f1b0 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -2708,12 +2708,11 @@ def splitFilesIntoBranches(self, commit):
+=20
+         branches =3D {}
+         fnum =3D 0
+         while "depotFile%s" % fnum in commit:
+             path =3D  commit["depotFile%s" % fnum]
+-            found =3D [p for p in self.depotPaths
+-                     if p4PathStartsWith(path, p)]
++            found =3D self.isPathWanted(path)
+             if not found:
+                 fnum =3D fnum + 1
+                 continue
+=20
+             file =3D {}
 diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-index 6a86d6996b..4729f470b2 100755
+index 4729f470b2..62a3929d8e 100755
 --- a/t/t9801-git-p4-branch.sh
 +++ b/t/t9801-git-p4-branch.sh
-@@ -409,10 +409,50 @@ test_expect_failure 'git p4 clone file subset branch'=
+@@ -410,11 +410,11 @@ test_expect_failure 'git p4 clone file subset branch'=
  '
- 		test_path_is_missing file2 &&
  		test_path_is_missing file3
  	)
  '
 =20
-+# Check that excluded files are omitted during import
-+test_expect_failure 'git p4 clone complex branches with excluded files' '
-+	test_when_finished cleanup_git &&
-+	test_create_repo "$git" &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.branchList branch1:branch2 &&
-+		git config --add git-p4.branchList branch1:branch3 &&
-+		git config --add git-p4.branchList branch1:branch4 &&
-+		git config --add git-p4.branchList branch1:branch5 &&
-+		git config --add git-p4.branchList branch1:branch6 &&
-+		git p4 clone --dest=3D. --detect-branches -//depot/branch1/file2 -//depo=
-t/branch2/file2 -//depot/branch3/file2 -//depot/branch4/file2 -//depot/bran=
-ch5/file2 -//depot/branch6/file2 //depot@all &&
-+		git log --all --graph --decorate --stat &&
-+		git reset --hard p4/depot/branch1 &&
-+		test_path_is_file file1 &&
-+		test_path_is_missing file2 &&
-+		test_path_is_file file3 &&
-+		git reset --hard p4/depot/branch2 &&
-+		test_path_is_file file1 &&
-+		test_path_is_missing file2 &&
-+		test_path_is_missing file3 &&
-+		git reset --hard p4/depot/branch3 &&
-+		test_path_is_file file1 &&
-+		test_path_is_missing file2 &&
-+		test_path_is_missing file3 &&
-+		git reset --hard p4/depot/branch4 &&
-+		test_path_is_file file1 &&
-+		test_path_is_missing file2 &&
-+		test_path_is_file file3 &&
-+		git reset --hard p4/depot/branch5 &&
-+		test_path_is_file file1 &&
-+		test_path_is_missing file2 &&
-+		test_path_is_file file3 &&
-+		git reset --hard p4/depot/branch6 &&
-+		test_path_is_file file1 &&
-+		test_path_is_missing file2 &&
-+		test_path_is_missing file3
-+	)
-+'
-+
- # From a report in http://stackoverflow.com/questions/11893688
- # where --use-client-spec caused branch prefixes not to be removed;
- # every file in git appeared into a subdirectory of the branch name.
- test_expect_success 'use-client-spec detect-branches setup' '
- 	rm -rf "$cli" &&
+ # Check that excluded files are omitted during import
+-test_expect_failure 'git p4 clone complex branches with excluded files' '
++test_expect_success 'git p4 clone complex branches with excluded files' '
+ 	test_when_finished cleanup_git &&
+ 	test_create_repo "$git" &&
+ 	(
+ 		cd "$git" &&
+ 		git config git-p4.branchList branch1:branch2 &&
 --=20
 2.19.2
 
