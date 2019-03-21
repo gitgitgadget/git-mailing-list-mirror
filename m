@@ -2,116 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6418620248
-	for <e@80x24.org>; Thu, 21 Mar 2019 14:48:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3438320248
+	for <e@80x24.org>; Thu, 21 Mar 2019 14:48:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727922AbfCUOs3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 10:48:29 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:54066 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726551AbfCUOs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 10:48:29 -0400
-Received: from [192.168.1.12] ([2.101.244.128])
-        by smtp.talktalk.net with SMTP
-        id 6yzahBorhp7QX6yzahvkcW; Thu, 21 Mar 2019 14:48:27 +0000
-X-Originating-IP: [2.101.244.128]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=drql9Go4 c=1 sm=1 tr=0 a=8nsoD1t2XaTH5iSUU4dp1Q==:117
- a=8nsoD1t2XaTH5iSUU4dp1Q==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8 a=vZxbLtyPAAAA:8
- a=d4kOJ1WucjTr_wY9FwYA:9 a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
- a=YIznc7gRMHvxYRuyG5Sm:22
-Subject: Re: [PATCH v3] glossary: add definition for overlay
-To:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <xmqqa7i8ss4l.fsf@gitster-ct.c.googlers.com>
- <CACsJy8C7F_Ju2F7COUVd9-1FcyQL=mZph7qmkDh9sS-ENb4PEQ@mail.gmail.com>
- <f6052ac6-60c4-1e70-b3f4-571885ba9e8d@iee.org>
- <CACsJy8D48YiWYkuLW8BbeYvRz=yMmb=XWoMJroPXFAcSV2VjHw@mail.gmail.com>
- <20190309172733.GC31533@hank.intra.tgummerer.com>
- <20190312233040.GE16414@hank.intra.tgummerer.com>
- <20190317201956.GB1216@hank.intra.tgummerer.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <3d2ad13b-b5de-7e8f-9647-983e964c6303@iee.org>
-Date:   Thu, 21 Mar 2019 14:48:28 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.3
+        id S1728160AbfCUOsx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 10:48:53 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37857 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726551AbfCUOsw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 10:48:52 -0400
+Received: by mail-ed1-f67.google.com with SMTP id v21so5241029edq.4
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 07:48:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WofBzvSeGPtLpJzl1N/R5Tj/odPwDns1xs8/sTRcGwM=;
+        b=fEMgCWU6viC15cH2yXYIm28PtMXrj0p9aw7/oYfyTHI67VJve4KBHyNOV7r7tqSpRx
+         KrAIb8OWa/gCpCmCnTbt/ghD33Yt0gm9OEzlYskpdSGaXTi/JERUrpPSlPDhbWDIHaf+
+         m9xkYNXZPsPSZC3NkA8PRdM2WrNbakfiZtHI3K9rR90/T77GafsnUWbjLbhlzOppZDwC
+         cv87BYwscO6gug/RWbrAutcYmz7qE8yCwIDQ1fCKLWznCBHaTPRu9UCOGWX6LL/KoNcr
+         /ufw3Fr5b+AXBQY23CoQzVgQT8WN88lIwEsbU5lMXuremgLzYrTnh4o3+kmThLl3rwIY
+         mhbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=WofBzvSeGPtLpJzl1N/R5Tj/odPwDns1xs8/sTRcGwM=;
+        b=I09jDwenCYU+Z1xZokYOPLkOKe01wtNqsZCLlYBGgwQVQZ9EEF8lljXgFkkjh+w0bQ
+         PAgeD+r1aA4R5uVchYpuazlRShc3Ec52QNDWsIJqa4cK70Wk/qe/daBjD6uOLOeoyVNN
+         uPgzjHQnpHSEEevcegrWz1/zw/UUAnHps2Fy3TxUDC1uGMEUKh7hkvFbqduKo23vcx6Q
+         gJradF/yLZ3yalvATO1fDNDMziG2vDsjMeCIPpHXLCM1sGPeSn0GT9smreWzy7GMlbNt
+         S2LgB4BOgQJrEMlsv+CYjx+5JhVt0xC2CxyQjwf0g+HNQPYmkaLm3AEwQr0a8MajonkR
+         WW5Q==
+X-Gm-Message-State: APjAAAX0Yoc7rTou/Qor3DZ+b0VrtSFaRiOa4cNhWq+FXihzjWcxNo/Z
+        YGPnIH/eKzHw4daVN8RZD/k=
+X-Google-Smtp-Source: APXvYqxmJLRaJJ9zt0HW1F7cpJdVo0OwT1QPm2RapSWiX8JvXL8FylUh2uy7Z9/P0DLCffOMsagAAA==
+X-Received: by 2002:a50:baab:: with SMTP id x40mr2697112ede.244.1553179730796;
+        Thu, 21 Mar 2019 07:48:50 -0700 (PDT)
+Received: from evledraar ([5.57.21.49])
+        by smtp.gmail.com with ESMTPSA id a51sm1648050edd.57.2019.03.21.07.48.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 21 Mar 2019 07:48:50 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 00/15] Trace2 tracing facility
+References: <pull.108.v5.git.gitgitgadget@gmail.com> <pull.108.v6.git.gitgitgadget@gmail.com> <87a7iyk0r8.fsf@evledraar.gmail.com> <0aff8302-371e-cb5e-fe5e-f08e45456559@jeffhostetler.com> <87k1gxa8cm.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1903211528090.41@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <nycvar.QRO.7.76.6.1903211528090.41@tvgsbejvaqbjf.bet>
+Date:   Thu, 21 Mar 2019 15:48:28 +0100
+Message-ID: <87mulocmgz.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190317201956.GB1216@hank.intra.tgummerer.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfEf46Qp3T3UYveg+VL+29ehQ+wj5+4GAif8b2lnE8u63SkPjIUDR1GKNjmNFVPd91lB2D9bO5gbGFqKhBCjLefjrYOn3yuziHk7rIpUN8eY6XTjB97PI
- N4bYzbj+hAn95GXIrkOT+aTsbF6zuuFIZ5cnMozV/DXcOzeZst3oK1BIhPmuyCIhzHMmFMoOSmkUJ+XcmtLUVX9dYDNUv7GlnVqUHd07oqM38LNE27BFPpq+
- xSn+7gXAw7AR8UZ7aawZ9sclA4jioxus1MKOI9DlmcFJYivhPrWTmAzv4Wi5h6hSnKpAhqwIikm/pRQ1VRiJbw==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, sorry for the late response..
 
-On 17/03/2019 20:19, Thomas Gummerer wrote:
-> Add a definition for what overlay means in the context of git, to
-> clarify the recently introduced overlay-mode in git checkout.
+On Thu, Mar 21 2019, Johannes Schindelin wrote:
+
+> Hi =C3=86var,
 >
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
+> On Sun, 17 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
-> v3 incorporates Junios suggestions from [*1*], and clarifies that this
-> only applies to checking out from the index or a tree-ish, and
-> clarifies that the files are updated like in the destination directory
-> of 'cp -R'.  I thought of making the same clarification for 'rsync
-> --delete' as well, however I think with it being explicitly specified
-> for 'cp -R', readers should be able to deduce that we are talking
-> about the destination directory there as well.
-As a historically Windows user, we should ensure that the meaning is 
-clear to all without the otherwise helpful *nix command examples.
+>>
+>> On Fri, Feb 15 2019, Jeff Hostetler wrote:
+>>
+>> > On 2/14/2019 7:33 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> >>
+>> >> On Wed, Feb 06 2019, Jeff Hostetler via GitGitGadget wrote:
+>> >>
+>> >>> V6 addresses: [] The remaining hdr-check warning in trace2/tr2_tls.h
+>> >>>
+>> >>> There are no other outstanding comments that I'm aware of.
+>> >>
+>> >> Not a comment on this, just a follow-up question. I started looking i=
+nto
+>> >> whether this could be driven by config instead of getenv(). A lot eas=
+ier
+>> >> to set up in some cases than injecting env variables, especialy if the
+>> >> log target supported a strftime() string, is any of that something
+>> >> you've looked into already (so I don't do dupe work...).
+>> >>
+>> >> There's the chicken & egg problem with wanting to do traces way before
+>> >> we get to reading config, so I expect that such a facility would need=
+ to
+>> >> work by always trace record at the beginning until we get far enough =
+to
+>> >> write the config, and then either stop and throw away the buffer, or
+>> >> write out the existing trace to the configured target, and continue.
+>> >>
+>> >
+>> > Yes, I beat my head against the config settings for quite a while
+>> > before settling on using an env var.
+>> >
+>> > I wanted to get the:
+>> > () full process elapsed time,
+>> > () the full original argv,
+>> > () all of the command dispatch, run-dashed, and alias expansion,
+>> > () and for my atexit() to run last.
+>> > So I hooked into main() before the config is loaded.
+>> >
+>> > In most commands, the config is processed about the same time as
+>> > parse_options() is called.  And we have to insert code in
+>> > git_default_config() to load my settings.  This happens after all
+>> > of the .git dir discovery, "-c" and "-C" processing, alias expansion,
+>> > command dispatch and etc.  And the argv received in the cmd_*()
+>> > function has been modified.  So we lose some information.  (I tried
+>> > this for a while and didn't like the results.)
+>> >
+>> > I also tried using read_early_config() various places, but there
+>> > were problems here too.  Too early and the "-c" settings weren't
+>> > parsed yet.  And there was an issue about when .git dir was discovered,
+>> > so local config settings weren't ready yet.
+>> >
+>> > I also recall having a problem when doing an early iteration with
+>> > side effects (or rather the early iteration caused something to be
+>> > set that caused the real iteration (in cmd_*()) to short-cut), but
+>> > I don't remember the details.
+>> >
+>> > So we have a custom installer that also sets the environment variable
+>> > after git is installed and haven't had any problems.
+>> >
+>> >
+>> > I hesitate to say we should always start allocating a bunch of data
+>> > and spinning up the TLS data and etc. before we know if tracing is
+>> > wanted.  Just seems expensive for most users.
+>> >
+>> >
+>> > I could see having a "~/.git_tr2_config" or something similar in
+>> > some place like "/etc" that only contained the Trace2 settings.
+>> > It would be safe to read very early inside main() and we would not
+>> > consider it to be part of the real config.  For example, "git config"
+>> > would not know about it.  Then you could enforce a system-wide
+>> > setting without any of the env var issues.
+>>
+>> I haven't written a patch for this, but it seems to me that we could
+>> just start reading /etc/gitconfig via some custom config callback code
+>> early as e.g. 58b284a2e91 ("worktree: add per-worktree config files",
+>> 2018-10-21) does for the worktree config.
 >
-> *1*: <xmqq5zsnh7my.fsf@gitster-ct.c.googlers.com>
+> Oy. Oy, oy, oy.
 >
->   Documentation/glossary-content.txt | 9 +++++++++
->   1 file changed, 9 insertions(+)
+> Maybe use `read_early_config()` instead? That would be *a lot* cleaner.
+> You could maybe use a9bcf6586d1a (alias: use the early config machinery to
+> expand aliases, 2017-06-14) as an inspiration.
+
+Thanks. I was thinking *only* to do /etc/gitconfig and not the whole
+.git/config -> ~/.gitconfig etc. sequence just in terms of saving
+critical time (this is the performance trace path, after all...).
+
+But on a second reading I see that read_early_config() can do that if
+you set config_source->file, opts->respect_includes etc. I.e. it just
+(depending on options) resolves to git_config_from_file() which
+58b284a2e91 used directly.
+
+>> It would ignore everything except trace.* or wherever namespace we'll
+>> put this in, and "-c" etc. wouldn't work. We could just document that as
+>> a limitation for now which could be fixed later.
+>>
+>> It wouldn't make things worse, and would mean you could easily set
+>> logging system-wide without needing to inject environment variables in
+>> lots of custom (and sometimes hard-to-do) places, which I expect is the
+>> most common use-case, and is the one I have.
 >
-> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-> index 023ca95e7c..0f29075551 100644
-> --- a/Documentation/glossary-content.txt
-> +++ b/Documentation/glossary-content.txt
-> @@ -287,6 +287,15 @@ This commit is referred to as a "merge commit", or sometimes just a
->   	origin/name-of-upstream-branch, which you can see using
->   	`git branch -r`.
->   
-> +[[def_overlay]]overlay::
-> +	Only update and add files to the working directory, but don't
-> +	delete them, similar to how 'cp -R' would update the contents
-perhaps  s/them/any files/
-> +	in the destination directory.  This is the default mode in a
-> +	<<def_checkout,checkout>> when checking out files from the
-> +	<<def_index,index>> or a <<def_tree-ish,tree-ish>>.  In
-> +	contrast, no-overlay mode also deletes tracked files not
-
-understanding the past/future distinction is tricky here. Maybe 'deletes 
-previously tracked files that are no longer present in the new source'.
-
-It's tricky talking about deleting things that are not there.
-
-> +	present in the source, similar to 'rsync --delete'.
-> +
->   [[def_pack]]pack::
->   	A set of objects which have been compressed into one file (to save space
->   	or to transmit them efficiently).
-
---
-
-Philip
-
+> Yes, I agree, those are good goals to address.
+>
+> Ciao,
+> Dscho
+>
+>> > WRT the strftime() question, we could either add syntax to the
+>> > env var value (or the tr2 config setting) to have some tokens
+>> > for that.  I just stuck with absolute pathnames since I started
+>> > by copying what was done for GIT_TRACE.
+>> >
+>> > Jeff
+>>
