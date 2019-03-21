@@ -2,177 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7871720248
-	for <e@80x24.org>; Thu, 21 Mar 2019 21:14:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BC0120248
+	for <e@80x24.org>; Thu, 21 Mar 2019 21:16:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727207AbfCUVOn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 17:14:43 -0400
-Received: from mail-gateway-shared15.cyon.net ([194.126.200.68]:45008 "EHLO
-        mail-gateway-shared15.cyon.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727194AbfCUVOm (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Mar 2019 17:14:42 -0400
-X-Greylist: delayed 485 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Mar 2019 17:14:41 EDT
-Received: from s019.cyon.net ([149.126.4.28])
-        by mail-gateway-shared15.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim)
-        (envelope-from <bb@drbeat.li>)
-        id 1h74tT-0001cX-8z
-        for git@vger.kernel.org; Thu, 21 Mar 2019 22:06:34 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
-         s=default; h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:
-        Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
-        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=/HH2M1qWFzeQV8JKv6XD3E0G3TjsGC6p9UjTirqMR08=; b=VV+ecNKNqHowucq1+Z4CWdinMo
-        khyN20Gm7Kp3rl9tFrgfjgWQtJeYM/9xFcA4PpbQcW4tN5t1r82Jy9+y06NxLT1eC4ljk88HAi+Gm
-        +br09EBRAJgGtRigjNHPaGVECWXD5BCGs//9+O/iKYx4xT1KwaLrnSHZpaJsOSGICjJKHj6sZwYaI
-        yCHT4Cqv9cQ1WRjkEhsJN5dVNeJZfrXVB69hX/tPJb6bXxqi8d6rYwLPnyEVQ/mtKYeVmz1L86bQk
-        u7lhq0ieiazTYdTg3lp2BezW2mif2VlgY0COHnPu3kYVjiyAA5cViENV6/AQDU6kU4YJa+IFcsVxV
-        m0y8jS4Q==;
-Received: from [10.20.10.232] (port=28122 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.91)
-        (envelope-from <bb@drbeat.li>)
-        id 1h74tR-004NpL-9V; Thu, 21 Mar 2019 22:06:30 +0100
-Received: by drbeat.li (Postfix, from userid 1000)
-        id 5475A1FDB9; Thu, 21 Mar 2019 22:06:28 +0100 (CET)
-From:   Beat Bolli <dev+git@drbeat.li>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH] unicode: update the width tables to Unicode 12
-Date:   Thu, 21 Mar 2019 22:06:17 +0100
-Message-Id: <20190321210617.25015-1-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.20.1.415.g653613c723
+        id S1727274AbfCUVQy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 17:16:54 -0400
+Received: from siwi.pair.com ([209.68.5.199]:20201 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726247AbfCUVQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 17:16:54 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 5479F3F408A;
+        Thu, 21 Mar 2019 17:16:53 -0400 (EDT)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 33DE63F4088;
+        Thu, 21 Mar 2019 17:16:52 -0400 (EDT)
+Subject: Re: [PATCH v3 0/1] Write trace2 output to directories
+To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        gitster@pobox.com
+References: <cover.1552519463.git.steadmon@google.com>
+ <cover.1553202340.git.steadmon@google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <fc057cb5-c1c9-5466-1d45-c7d1e89a9894@jeffhostetler.com>
+Date:   Thu, 21 Mar 2019 17:16:52 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
+ Thunderbird/66.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-OutGoing-Spam-Status: No, score=-0.3
+In-Reply-To: <cover.1553202340.git.steadmon@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that Unicode 12 has been announced[0], update the character
-width tables to the new version.
 
-[0] http://blog.unicode.org/2019/03/announcing-unicode-standard-version-120.html
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
- unicode-width.h | 38 +++++++++++++++++++++++++-------------
- 1 file changed, 25 insertions(+), 13 deletions(-)
+On 3/21/2019 5:09 PM, Josh Steadmon wrote:
+> Persistently enabling trace2 output is difficult because it requires
+> specifying a full filename. This series teaches tr2_dst_get_trace_fd()
+> to create files underneath a given directory provided as the target of
+> the GIT_TR2_* envvars.
+> 
+> Changes since V2:
+> * No longer appends a suffix to filenames on the first creation attempt.
+> * Renamed function & constant now that randomization is no longer used.
+> * Simplified strbuf usage.
+> 
+> Changes since V1:
+> * No longer supports timestamp templates.
+> * No longer supports filename prefixes.
+> * Always creates filenames based on the final component of the trace2
+>    SID.
+> 
+> Josh Steadmon (1):
+>    trace2: write to directory targets
+> 
+>   Documentation/technical/api-trace2.txt |  5 ++
+>   t/t0210-trace2-normal.sh               | 15 ++++++
+>   trace2/tr2_dst.c                       | 63 +++++++++++++++++++++++++-
+>   3 files changed, 81 insertions(+), 2 deletions(-)
+> 
+> Range-diff against v2:
+> 1:  59d8c6511b ! 1:  ce5258610f trace2: write to directory targets
+>      @@ -23,8 +23,8 @@
+>        
+>       +	If the target already exists and is a directory, the traces will be
+>       +	written to files (one per process) underneath the given directory. They
+>      -+	will be named according to the last component of the SID followed by a
+>      -+	counter to avoid potential collisions.
+>      ++	will be named according to the last component of the SID (optionally
+>      ++	followed by a counter to avoid filename collisions).
+>       +
+>        `af_unix:[<socket_type>:]<absolute-pathname>`::
+>        
+>      @@ -37,7 +37,7 @@
+>        	test_cmp expect actual
+>        '
+>        
+>      -+test_expect_success 'randomized filename' '
+>      ++test_expect_success 'automatic filename' '
+>       +	test_when_finished "rm -r traces actual expect" &&
+>       +	mkdir traces &&
+>       +	GIT_TR2="$(pwd)/traces" test-tool trace2 001return 0 &&
+>      @@ -71,9 +71,9 @@
+>        #define TR2_ENVVAR_DST_DEBUG "GIT_TR2_DST_DEBUG"
+>        
+>       +/*
+>      -+ * How many attempts we will make at creating a random trace output path.
+>      ++ * How many attempts we will make at creating an automatically-named trace file.
+>       + */
+>      -+#define MAX_RANDOM_ATTEMPTS 10
+>      ++#define MAX_AUTO_ATTEMPTS 10
+>       +
+>        static int tr2_dst_want_warning(void)
+>        {
+>      @@ -82,45 +82,47 @@
+>        	dst->need_close = 0;
+>        }
+>        
+>      -+static int tr2_dst_try_random_path(struct tr2_dst *dst, const char *tgt_prefix)
+>      ++static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
+>       +{
+>       +	int fd;
+>       +	const char *last_slash, *sid = tr2_sid_get();
+>      -+	struct strbuf base_path = STRBUF_INIT, final_path = STRBUF_INIT;
+>      ++	struct strbuf path = STRBUF_INIT;
+>      ++	size_t base_path_len;
+>       +	unsigned attempt_count;
+>       +
+>       +	last_slash = strrchr(sid, '/');
+>       +	if (last_slash)
+>       +		sid = last_slash + 1;
+>       +
+>      -+	strbuf_addstr(&base_path, tgt_prefix);
+>      -+	if (!is_dir_sep(base_path.buf[base_path.len - 1]))
+>      -+		strbuf_addch(&base_path, '/');
+>      -+	strbuf_addstr(&base_path, sid);
+>      ++	strbuf_addstr(&path, tgt_prefix);
+>      ++	if (!is_dir_sep(path.buf[path.len - 1]))
+>      ++		strbuf_addch(&path, '/');
+>      ++	strbuf_addstr(&path, sid);
+>      ++	base_path_len = path.len;
+>       +
+>      -+	for (attempt_count = 0; attempt_count < MAX_RANDOM_ATTEMPTS; attempt_count++) {
+>      -+		strbuf_reset(&final_path);
+>      -+		strbuf_addbuf(&final_path, &base_path);
+>      -+		strbuf_addf(&final_path, ".%d", attempt_count);
+>      ++	for (attempt_count = 0; attempt_count < MAX_AUTO_ATTEMPTS; attempt_count++) {
+>      ++		if (attempt_count > 0) {
+>      ++			strbuf_setlen(&path, base_path_len);
+>      ++			strbuf_addf(&path, ".%d", attempt_count);
+>      ++		}
+>       +
+>      -+		fd = open(final_path.buf, O_WRONLY | O_CREAT | O_EXCL, 0666);
+>      ++		fd = open(path.buf, O_WRONLY | O_CREAT | O_EXCL, 0666);
+>       +		if (fd != -1)
+>       +			break;
+>       +	}
+>       +
+>       +	if (fd == -1) {
+>       +		if (tr2_dst_want_warning())
+>      -+			warning("trace2: could not open '%s' for '%s' tracing: %s",
+>      -+				base_path.buf, dst->env_var_name, strerror(errno));
+>      ++			warning("trace2: could not open '%.*s' for '%s' tracing: %s",
+>      ++				(int) base_path_len, path.buf,
+>      ++				dst->env_var_name, strerror(errno));
+>       +
+>       +		tr2_dst_trace_disable(dst);
+>      -+		strbuf_release(&base_path);
+>      -+		strbuf_release(&final_path);
+>      ++		strbuf_release(&path);
+>       +		return 0;
+>       +	}
+>       +
+>      -+	strbuf_release(&base_path);
+>      -+	strbuf_release(&final_path);
+>      ++	strbuf_release(&path);
+>       +
+>       +	dst->fd = fd;
+>       +	dst->need_close = 1;
+>      @@ -140,7 +142,7 @@
+>       -		return tr2_dst_try_path(dst, tgt_value);
+>       +	if (is_absolute_path(tgt_value)) {
+>       +		if (is_directory(tgt_value))
+>      -+			return tr2_dst_try_random_path(dst, tgt_value);
+>      ++			return tr2_dst_try_auto_path(dst, tgt_value);
+>       +		else
+>       +			return tr2_dst_try_path(dst, tgt_value);
+>       +	}
+> 
 
-diff --git a/unicode-width.h b/unicode-width.h
-index 7c643760f8..93a48f3bf8 100644
---- a/unicode-width.h
-+++ b/unicode-width.h
-@@ -89,8 +89,7 @@ static const struct interval zero_width[] = {
- { 0x0E34, 0x0E3A },
- { 0x0E47, 0x0E4E },
- { 0x0EB1, 0x0EB1 },
--{ 0x0EB4, 0x0EB9 },
--{ 0x0EBB, 0x0EBC },
-+{ 0x0EB4, 0x0EBC },
- { 0x0EC8, 0x0ECD },
- { 0x0F18, 0x0F19 },
- { 0x0F35, 0x0F35 },
-@@ -191,7 +190,7 @@ static const struct interval zero_width[] = {
- { 0xA980, 0xA982 },
- { 0xA9B3, 0xA9B3 },
- { 0xA9B6, 0xA9B9 },
--{ 0xA9BC, 0xA9BC },
-+{ 0xA9BC, 0xA9BD },
- { 0xA9E5, 0xA9E5 },
- { 0xAA29, 0xAA2E },
- { 0xAA31, 0xAA32 },
-@@ -274,6 +273,9 @@ static const struct interval zero_width[] = {
- { 0x11727, 0x1172B },
- { 0x1182F, 0x11837 },
- { 0x11839, 0x1183A },
-+{ 0x119D4, 0x119D7 },
-+{ 0x119DA, 0x119DB },
-+{ 0x119E0, 0x119E0 },
- { 0x11A01, 0x11A0A },
- { 0x11A33, 0x11A38 },
- { 0x11A3B, 0x11A3E },
-@@ -298,8 +300,10 @@ static const struct interval zero_width[] = {
- { 0x11D95, 0x11D95 },
- { 0x11D97, 0x11D97 },
- { 0x11EF3, 0x11EF4 },
-+{ 0x13430, 0x13438 },
- { 0x16AF0, 0x16AF4 },
- { 0x16B30, 0x16B36 },
-+{ 0x16F4F, 0x16F4F },
- { 0x16F8F, 0x16F92 },
- { 0x1BC9D, 0x1BC9E },
- { 0x1BCA0, 0x1BCA3 },
-@@ -319,6 +323,8 @@ static const struct interval zero_width[] = {
- { 0x1E01B, 0x1E021 },
- { 0x1E023, 0x1E024 },
- { 0x1E026, 0x1E02A },
-+{ 0x1E130, 0x1E136 },
-+{ 0x1E2EC, 0x1E2EF },
- { 0x1E8D0, 0x1E8D6 },
- { 0x1E944, 0x1E94A },
- { 0xE0001, 0xE0001 },
-@@ -387,10 +393,12 @@ static const struct interval double_width[] = {
- { 0xFE68, 0xFE6B },
- { 0xFF01, 0xFF60 },
- { 0xFFE0, 0xFFE6 },
--{ 0x16FE0, 0x16FE1 },
--{ 0x17000, 0x187F1 },
-+{ 0x16FE0, 0x16FE3 },
-+{ 0x17000, 0x187F7 },
- { 0x18800, 0x18AF2 },
- { 0x1B000, 0x1B11E },
-+{ 0x1B150, 0x1B152 },
-+{ 0x1B164, 0x1B167 },
- { 0x1B170, 0x1B2FB },
- { 0x1F004, 0x1F004 },
- { 0x1F0CF, 0x1F0CF },
-@@ -422,16 +430,20 @@ static const struct interval double_width[] = {
- { 0x1F680, 0x1F6C5 },
- { 0x1F6CC, 0x1F6CC },
- { 0x1F6D0, 0x1F6D2 },
-+{ 0x1F6D5, 0x1F6D5 },
- { 0x1F6EB, 0x1F6EC },
--{ 0x1F6F4, 0x1F6F9 },
--{ 0x1F910, 0x1F93E },
--{ 0x1F940, 0x1F970 },
-+{ 0x1F6F4, 0x1F6FA },
-+{ 0x1F7E0, 0x1F7EB },
-+{ 0x1F90D, 0x1F971 },
- { 0x1F973, 0x1F976 },
--{ 0x1F97A, 0x1F97A },
--{ 0x1F97C, 0x1F9A2 },
--{ 0x1F9B0, 0x1F9B9 },
--{ 0x1F9C0, 0x1F9C2 },
--{ 0x1F9D0, 0x1F9FF },
-+{ 0x1F97A, 0x1F9A2 },
-+{ 0x1F9A5, 0x1F9AA },
-+{ 0x1F9AE, 0x1F9CA },
-+{ 0x1F9CD, 0x1F9FF },
-+{ 0x1FA70, 0x1FA73 },
-+{ 0x1FA78, 0x1FA7A },
-+{ 0x1FA80, 0x1FA82 },
-+{ 0x1FA90, 0x1FA95 },
- { 0x20000, 0x2FFFD },
- { 0x30000, 0x3FFFD }
- };
--- 
-2.20.1.415.g653613c723
-
+Looks good.  Thanks.
+Jeff
