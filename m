@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AB5120248
-	for <e@80x24.org>; Thu, 21 Mar 2019 19:36:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C26320248
+	for <e@80x24.org>; Thu, 21 Mar 2019 19:36:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728553AbfCUTgP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 15:36:15 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:34729 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727958AbfCUTgP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 15:36:15 -0400
-Received: by mail-ed1-f65.google.com with SMTP id a16so6026211edn.1
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 12:36:13 -0700 (PDT)
+        id S1728635AbfCUTgU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 15:36:20 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41206 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728138AbfCUTgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 15:36:18 -0400
+Received: by mail-ed1-f67.google.com with SMTP id a25so6016814edc.8
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 12:36:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=dMAOd/T+ToPGGUmA0Er7hLd5R4YI5lTMR3RGutX3LQY=;
-        b=RPIW8byz5tHbA7fZaUMM0Lf7FUQNr5veZniLApGolfwJNy+j/zJ7mR0U6qQx7jUTF/
-         4+C/E+NHpYhwMTcFj/wGCS37oc8ckc0B9fvE6Ihl4NiznUA8r4j/eexdF75OkH+iuTfW
-         RuLoXmYlQjgOKzDvRxdrKf6GnOeXR7q7CqptO5Ni2egldLNVE4LVBqHxyfy37YQum8e0
-         xl9UYDfB+G0pMHH8v08pGc9KsEjs5QXE8KPyiWzEH73qYnIiBojKLKmXDbwRVAVvfGqs
-         nubaSmB7EARbiFGhck1PzrDy8gjvanUUjajVPqWwSbhukA6MVukZgGy4sVmd8tnKkEIO
-         F6ug==
+        bh=gcReCIaPKjlbP2JxG3ikL9kTAApG+3mpQX7Y6HSDMGE=;
+        b=hD8pQVL/yVWX/hss8ANgCyB4c67NAFIE7ZiQh9XzDSaBZaGBEa0mMRhyB7sO6CpIkD
+         KW/HKJ2Yr6M/SXYuzePynOUhSzllGI1JEX0MOS2f1nDu1/TGGFzIY57CCiLTCqOn+SzP
+         OlgnjCINQMWkNGftTAmqDCZ0FZcjB0CuVRT42q8pGL4CLDckYuXYJcXWban0JWIoxpuW
+         SIS91eM/Xw/DLkFLVErIoV/xEc9nRip27bRu7K1ipXtXyFUpnXeGilRlw/fOaVq0qaRh
+         /aBu0CO7t8v0APOHlW8TYzRgv177G1VFxuPIyd9IymkibayksRJfCz/Gw38nxlssfPW3
+         yCxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dMAOd/T+ToPGGUmA0Er7hLd5R4YI5lTMR3RGutX3LQY=;
-        b=tInrhtTvzYBaXjcY9PlYYzZ1CrDD/oaFo03/eyBvX/SeNbQ3vwRZivXCkWy3ynW/XI
-         1wYkQ0MoHMqIkTYcRMBDCDWWH5fuyLW81cEMbTfMm69FqVppR5AZ+qLUFXqkC5eIi9d8
-         n7QLpFPTYR5bGr2B2LklODPyiq5UuYY6BaLgVs6hjzMwTv77BOHTFU7aUneNjHVzfobZ
-         oj802+YicfhE5QzQPlDyDSiLEEgLdPKZfivEORJNU1D83ZbocGNlGAnQVmVKbFUDOiiU
-         TFD5ANDWIC/aZXmM7341Qfwh4dUbjZpuXKV4BPpXglLopMTgOPYHIgTta5W0aIKJAguT
-         HbnQ==
-X-Gm-Message-State: APjAAAVxtSuauGYH5MjKufAKOt6TXlky62NAjUuk0m6ltxXvjzaViN7e
-        0TG0mjfBUTXeWunc0nqsHobGxvKI
-X-Google-Smtp-Source: APXvYqxkPivlY6GbLs01cFYX2nq6hIYt0LDFl4d/LvkL0tgP5PQdhx7PpNvWwdk5r70er2L2//dRRw==
-X-Received: by 2002:a50:b2c2:: with SMTP id p60mr3501530edd.183.1553196972859;
-        Thu, 21 Mar 2019 12:36:12 -0700 (PDT)
+        bh=gcReCIaPKjlbP2JxG3ikL9kTAApG+3mpQX7Y6HSDMGE=;
+        b=QJmYxMEb1+3FS4dOIseum5Lk38RlLIDjp82SmPSkODKI/D065CIlkoDfSQqVbPuXk6
+         euPFT2H0yxKfsjc9sdzmalF9MWNy35YqgbRMgaULLHqZX8JUSh1Ra13KM33vsn/LXO4C
+         20sB3ZZSwTWIYUtPjaOd0DC5JrU/5Fq/2BNt2eRXml/uxKz/4YLEUUxSUkLTiRbu6h3g
+         g/DR4cgG6a+QQqDjUUdpiS5GSGm5e3Ncq1LrMpgJfV69KyAhhJR5A48Khfi4Lw9YcvpO
+         ljf7+BZccs/yw3tJkOhVGqqEoRIyXDcjOZv5P5TAfsdKMrCF/jMm3RS/xpfyzSBG+bs9
+         TFeQ==
+X-Gm-Message-State: APjAAAVZnQjvrXljN4wcA8CpWfrjO1HHN1UnCmlcOzW9qbFXFdQywAnU
+        FRqyuuTY4H7dgTUfpoyNWQuWUShK
+X-Google-Smtp-Source: APXvYqzDTF3cVVQmG998qRkT8Cw7gI6GKDrQZvF884VgR67vEoxD5pULO/mxbOIYijDESWiuBa7Vwg==
+X-Received: by 2002:a50:b149:: with SMTP id l9mr3557759edd.254.1553196975630;
+        Thu, 21 Mar 2019 12:36:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v54sm1943448edm.7.2019.03.21.12.36.11
+        by smtp.gmail.com with ESMTPSA id bq13sm1145402ejb.2.2019.03.21.12.36.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Mar 2019 12:36:11 -0700 (PDT)
-Date:   Thu, 21 Mar 2019 12:36:11 -0700 (PDT)
-X-Google-Original-Date: Thu, 21 Mar 2019 19:36:07 GMT
-Message-Id: <5595e019c82b0aa67c2c738dbb9b9ec8287ec363.1553196970.git.gitgitgadget@gmail.com>
+        Thu, 21 Mar 2019 12:36:15 -0700 (PDT)
+Date:   Thu, 21 Mar 2019 12:36:15 -0700 (PDT)
+X-Google-Original-Date: Thu, 21 Mar 2019 19:36:10 GMT
+Message-Id: <7e98ea005aa62ca36af7da34dc6c21a1f77b351e.1553196970.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.166.v3.git.gitgitgadget@gmail.com>
 References: <pull.166.v2.git.gitgitgadget@gmail.com>
         <pull.166.v3.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 1/4] progress: add sparse mode to force 100% complete
- message
+Subject: [PATCH v3 4/4] midx: during verify group objects by packfile to speed
+ verification
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,119 +72,140 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add new start_sparse_progress() and start_delayed_sparse_progress()
-constructors and "sparse" flag to struct progress.
+Teach `multi-pack-index verify` to sort the set of object by
+packfile so that only one packfile needs to be open at a time.
 
-Teach stop_progress() to force a 100% complete progress message before
-printing the final "done" message when "sparse" is set.
-
-Calling display_progress() for every item in a large set can
-be expensive.  If callers try to filter this for performance
-reasons, such as emitting every k-th item, progress would
-not reach 100% unless they made a final call to display_progress()
-with the item count before calling stop_progress().
-
-Now this is automatic when "sparse" is set.
+This is a performance improvement.  Previously, objects were
+verified in OID order.  This essentially requires all packfiles
+to be open at the same time.  If the number of packfiles exceeds
+the open file limit, packfiles would be LRU-closed and re-opened
+many times.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- progress.c | 38 +++++++++++++++++++++++++++++++++++---
- progress.h |  3 +++
- 2 files changed, 38 insertions(+), 3 deletions(-)
+ midx.c     | 49 ++++++++++++++++++++++++++++++++++++++++++++++---
+ packfile.c |  2 +-
+ packfile.h |  2 ++
+ 3 files changed, 49 insertions(+), 4 deletions(-)
 
-diff --git a/progress.c b/progress.c
-index 5a99c9fbf0..212d00e524 100644
---- a/progress.c
-+++ b/progress.c
-@@ -34,6 +34,7 @@ struct progress {
- 	uint64_t total;
- 	unsigned last_percent;
- 	unsigned delay;
-+	unsigned sparse;
- 	struct throughput *throughput;
- 	uint64_t start_ns;
- };
-@@ -194,7 +195,7 @@ int display_progress(struct progress *progress, uint64_t n)
+diff --git a/midx.c b/midx.c
+index e3919387d9..f1cd868f8c 100644
+--- a/midx.c
++++ b/midx.c
+@@ -962,6 +962,20 @@ static void midx_report(const char *fmt, ...)
+ 	va_end(ap);
  }
  
- static struct progress *start_progress_delay(const char *title, uint64_t total,
--					     unsigned delay)
-+					     unsigned delay, unsigned sparse)
- {
- 	struct progress *progress = malloc(sizeof(*progress));
- 	if (!progress) {
-@@ -208,6 +209,7 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
- 	progress->last_value = -1;
- 	progress->last_percent = -1;
- 	progress->delay = delay;
-+	progress->sparse = sparse;
- 	progress->throughput = NULL;
- 	progress->start_ns = getnanotime();
- 	set_progress_signal();
-@@ -216,16 +218,46 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
- 
- struct progress *start_delayed_progress(const char *title, uint64_t total)
- {
--	return start_progress_delay(title, total, 2);
-+	return start_progress_delay(title, total, 2, 0);
- }
- 
- struct progress *start_progress(const char *title, uint64_t total)
- {
--	return start_progress_delay(title, total, 0);
-+	return start_progress_delay(title, total, 0, 0);
++struct pair_pos_vs_id
++{
++	uint32_t pos;
++	uint32_t pack_int_id;
++};
++
++static int compare_pair_pos_vs_id(const void *_a, const void *_b)
++{
++	struct pair_pos_vs_id *a = (struct pair_pos_vs_id *)_a;
++	struct pair_pos_vs_id *b = (struct pair_pos_vs_id *)_b;
++
++	return b->pack_int_id - a->pack_int_id;
 +}
 +
-+/*
-+ * Here "sparse" means that the caller might use some sampling criteria to
-+ * decide when to call display_progress() rather than calling it for every
-+ * integer value in[0 .. total).  In particular, the caller might not call
-+ * display_progress() for the last value in the range.
-+ *
-+ * When "sparse" is set, stop_progress() will automatically force the done
-+ * message to show 100%.
-+ */
-+struct progress *start_sparse_progress(const char *title, uint64_t total)
-+{
-+	return start_progress_delay(title, total, 0, 1);
-+}
-+
-+struct progress *start_delayed_sparse_progress(const char *title,
-+					       uint64_t total)
-+{
-+	return start_progress_delay(title, total, 2, 1);
-+}
-+
-+static void finish_if_sparse(struct progress *progress)
-+{
-+	if (progress &&
-+	    progress->sparse &&
-+	    progress->last_value != progress->total)
-+		display_progress(progress, progress->total);
- }
+ /*
+  * Limit calls to display_progress() for performance reasons.
+  * The interval here was arbitrarily chosen.
+@@ -976,6 +990,7 @@ static void midx_report(const char *fmt, ...)
  
- void stop_progress(struct progress **p_progress)
+ int verify_midx_file(const char *object_dir)
  {
-+	finish_if_sparse(*p_progress);
++	struct pair_pos_vs_id *pairs = NULL;
+ 	uint32_t i;
+ 	struct progress *progress;
+ 	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
+@@ -1019,16 +1034,42 @@ int verify_midx_file(const char *object_dir)
+ 	}
+ 	stop_progress(&progress);
+ 
++	/*
++	 * Create an array mapping each object to its packfile id.  Sort it
++	 * to group the objects by packfile.  Use this permutation to visit
++	 * each of the objects and only require 1 packfile to be open at a
++	 * time.
++	 */
++	ALLOC_ARRAY(pairs, m->num_objects);
++	for (i = 0; i < m->num_objects; i++) {
++		pairs[i].pos = i;
++		pairs[i].pack_int_id = nth_midxed_pack_int_id(m, i);
++	}
 +
- 	stop_progress_msg(p_progress, _("done"));
++	progress = start_sparse_progress(_("Sorting objects by packfile"),
++					 m->num_objects);
++	display_progress(progress, 0); /* TODO: Measure QSORT() progress */
++	QSORT(pairs, m->num_objects, compare_pair_pos_vs_id);
++	stop_progress(&progress);
++
+ 	progress = start_sparse_progress(_("Verifying object offsets"), m->num_objects);
+ 	for (i = 0; i < m->num_objects; i++) {
+ 		struct object_id oid;
+ 		struct pack_entry e;
+ 		off_t m_offset, p_offset;
+ 
+-		nth_midxed_object_oid(&oid, m, i);
++		if (i > 0 && pairs[i-1].pack_int_id != pairs[i].pack_int_id &&
++		    m->packs[pairs[i-1].pack_int_id])
++		{
++			close_pack_fd(m->packs[pairs[i-1].pack_int_id]);
++			close_pack_index(m->packs[pairs[i-1].pack_int_id]);
++		}
++
++		nth_midxed_object_oid(&oid, m, pairs[i].pos);
++
+ 		if (!fill_midx_entry(&oid, &e, m)) {
+ 			midx_report(_("failed to load pack entry for oid[%d] = %s"),
+-				    i, oid_to_hex(&oid));
++				    pairs[i].pos, oid_to_hex(&oid));
+ 			continue;
+ 		}
+ 
+@@ -1043,11 +1084,13 @@ int verify_midx_file(const char *object_dir)
+ 
+ 		if (m_offset != p_offset)
+ 			midx_report(_("incorrect object offset for oid[%d] = %s: %"PRIx64" != %"PRIx64),
+-				    i, oid_to_hex(&oid), m_offset, p_offset);
++				    pairs[i].pos, oid_to_hex(&oid), m_offset, p_offset);
+ 
+ 		midx_display_sparse_progress(progress, i + 1);
+ 	}
+ 	stop_progress(&progress);
+ 
++	free(pairs);
++
+ 	return verify_midx_error;
+ }
+diff --git a/packfile.c b/packfile.c
+index 16bcb75262..d2bcb2f860 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -309,7 +309,7 @@ void close_pack_windows(struct packed_git *p)
+ 	}
  }
  
-diff --git a/progress.h b/progress.h
-index 70a4d4a0d6..7b725acc8d 100644
---- a/progress.h
-+++ b/progress.h
-@@ -6,7 +6,10 @@ struct progress;
- void display_throughput(struct progress *progress, uint64_t total);
- int display_progress(struct progress *progress, uint64_t n);
- struct progress *start_progress(const char *title, uint64_t total);
-+struct progress *start_sparse_progress(const char *title, uint64_t total);
- struct progress *start_delayed_progress(const char *title, uint64_t total);
-+struct progress *start_delayed_sparse_progress(const char *title,
-+					       uint64_t total);
- void stop_progress(struct progress **progress);
- void stop_progress_msg(struct progress **progress, const char *msg);
+-static int close_pack_fd(struct packed_git *p)
++int close_pack_fd(struct packed_git *p)
+ {
+ 	if (p->pack_fd < 0)
+ 		return 0;
+diff --git a/packfile.h b/packfile.h
+index d70c6d9afb..b1c18504eb 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -76,6 +76,8 @@ extern int open_pack_index(struct packed_git *);
+  */
+ extern void close_pack_index(struct packed_git *);
  
++int close_pack_fd(struct packed_git *p);
++
+ extern uint32_t get_pack_fanout(struct packed_git *p, uint32_t value);
+ 
+ extern unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
 -- 
 gitgitgadget
-
