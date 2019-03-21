@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3333020248
-	for <e@80x24.org>; Thu, 21 Mar 2019 01:21:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 428A120248
+	for <e@80x24.org>; Thu, 21 Mar 2019 01:32:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727674AbfCUBV3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Mar 2019 21:21:29 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33413 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727507AbfCUBV3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Mar 2019 21:21:29 -0400
-Received: by mail-wr1-f66.google.com with SMTP id q1so4848971wrp.0
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 18:21:28 -0700 (PDT)
+        id S1727732AbfCUBcD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Mar 2019 21:32:03 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51484 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726753AbfCUBcC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Mar 2019 21:32:02 -0400
+Received: by mail-wm1-f67.google.com with SMTP id 4so586801wmf.1
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 18:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=RAaCzXpNeZ6IzroxeC41sdkJMdXfKzf/yFLSFcwhm5M=;
-        b=jx9aBqQHqqzwVs5kB5dTZM0BTijQAnKVrSCQTK7OaFuuVQbFJMI6M79XekAwNYhiuA
-         xW1hggK2f4w+CZb/Ff0dnljFE46kHK26yHY5+oLLyM9c2prfmpJ4qyFpmoUXgVU6Fuqf
-         +LonBSptZr46s33jVloP3mv+Fimfich7GLmPsmfHta3ST3FSoHKPGI4Q0JrSZja5YBFh
-         xCUepNnmsMdtSYslBbELPihwisqd4oU49zp05k05UDutd0iB02xkpcvHr3U/k/12zrz0
-         l3xkJ4sMSQMm20ofTr2UxWh6hKprrhhkK39Gx9YTqBKSKTzw3N5cgC2BR1TbiTTEi986
-         nGnA==
+        bh=8ECjNWwW2yITEq1r/r3bhHLhGHOt3LFlWsS3gYe2GfA=;
+        b=kQSXP6U8vy3vUuEVGv8KN7i3KpbpJKHPrpbuayOzLm2VScseyCZK+TGmbR9VTCL/yX
+         8mjmjhIhJaqs4ngoCYmAtT9EKw4XLUKD7pyKflLSZ13HgzXDeEYc99/o/SP7mSF1ZwPg
+         V+svKhgUKBP8O+HiB74K3CQ9fA3vCOtkwUWzYNmHp5TlbIX9zA9ddIifAfgaP8u3wUOz
+         AKCZfRFOxdjbuxVUPP4d9AfrMKebL92XNiQq6l94sSD59NUCiX55+AhjqclQY1Kj8ABD
+         Hbo2DO2WXofKKZha2Izp7KUhEqah6lvYELPsyzIscnOReHa9DfENvErH9jhgwipi51B1
+         Zqkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=RAaCzXpNeZ6IzroxeC41sdkJMdXfKzf/yFLSFcwhm5M=;
-        b=j+H7nAlfIW7sKi31CxPdJbA2bfJ8jGWYbvhaG0XpUIZa8e3dwQ8K++onTZMtccQljf
-         hIWMgkidoGpptNC3fc65S5JZWRxBcPxGJEr57BfIEHD5Uf5csKw+MsndWUm/+WslRQJ2
-         skEuJhbQlSDT2d8Ziui+dVS8fHp87X2OWNsSvm/nHczoBgHA7rd73oFKAWL+WXVhY8lA
-         eMfq/3PHgBdglg292jasJm4tfb83zje9WYJVXyS8ZmtCVAe8sHUlOZ1mMIG5Fd3TL8tb
-         uF9CKyei6gkAlTZSDmVOf0YjXZudP5xPISl6+dVLq16aLyqXceZhYQylmTv6UILAJQXM
-         cMlw==
-X-Gm-Message-State: APjAAAWyYP0rh+RB1SsqzO+Dktj0uXkw+IIFMVmgXlIeda+BAkVye9Xi
-        af+U8R26wcrFRx/pQ7+Lhpb1GYlhwKw=
-X-Google-Smtp-Source: APXvYqzot/mK4QFAp8+Sc7VZcpXnSxBVA43gYLpJWzKQH/wfZKuScnLpQTZZr67Ohrxa6lio2ZV0Mg==
-X-Received: by 2002:adf:afd0:: with SMTP id y16mr615949wrd.328.1553131287701;
-        Wed, 20 Mar 2019 18:21:27 -0700 (PDT)
+        bh=8ECjNWwW2yITEq1r/r3bhHLhGHOt3LFlWsS3gYe2GfA=;
+        b=bFkxpj77Xg1tagSUySqvLUtD2yLOXP/vqpZds225NdfhKoifI3/RDCTBmp3xSX9HJ9
+         qC/fsm4RCTyp8+/pn2gNDg66nx82Ld0VnZLZAEx7FLkWRzSFd+WqiSa/voj7nCPo2+lO
+         2vWRw7R8ytbQnZbBVk42Meg9TJDPBB31VhGud7hLWg0YPHJTmkGIp5UlbipAaIg5DBBD
+         6gBpukbyiuMdA8BnOH1c5btXZJPfEgatgSDypi5miOqZlt0RvHOZ1frvBcIdk1g+c50b
+         2lHn2T3pVc+bV7Vo1XzSWpi2wC3klxX9D3ifl5fI5tZZz6iexrwNHO6W+hi7ql0zLRjF
+         Z+nQ==
+X-Gm-Message-State: APjAAAVs5ZxHGmSSOuwF/R82j5POnL7gTidLkbMPok/LIMdnOhYIjKwn
+        AY/IHL/2pV4x+1Afi6SshEY=
+X-Google-Smtp-Source: APXvYqykA2paIi5gui6RaS71WbgWGglLNtywVkv9eMEEw+2nlWrWaakiIJAv5u1rrhtL3oNBZlwphg==
+X-Received: by 2002:a1c:7dcc:: with SMTP id y195mr647271wmc.13.1553131920810;
+        Wed, 20 Mar 2019 18:32:00 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id 11sm4987567wmg.27.2019.03.20.18.21.24
+        by smtp.gmail.com with ESMTPSA id l26sm2756647wmj.41.2019.03.20.18.31.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Mar 2019 18:21:25 -0700 (PDT)
+        Wed, 20 Mar 2019 18:32:00 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 Cc:     git@vger.kernel.org
 Subject: Re: git tag -v should verify that the tag signer intended the same tag name as the user is verifying
 References: <875zsdu41d.fsf@fifthhorseman.net>
-Date:   Thu, 21 Mar 2019 10:21:24 +0900
-In-Reply-To: <875zsdu41d.fsf@fifthhorseman.net> (Daniel Kahn Gillmor's message
-        of "Wed, 20 Mar 2019 08:24:46 -0400")
-Message-ID: <xmqq5zsduinf.fsf@gitster-ct.c.googlers.com>
+        <xmqq5zsduinf.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 21 Mar 2019 10:31:59 +0900
+In-Reply-To: <xmqq5zsduinf.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 21 Mar 2019 10:21:24 +0900")
+Message-ID: <xmqq1s31ui5s.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,65 +67,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniel Kahn Gillmor <dkg@fifthhorseman.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I understand that git tags can be easily renamed.  for example:
->
->     git tag push origin refs/tags/v0.0.3:refs/tags/v2.3.4
->
-> However, for tags signed with any recent version of git, the tag name is
-> also included in the signed material:
-> ...
-> But git tag doesn't verify that the internal name is the same as the
-> external name (note that it still returns an exit code of zero):
+>  * "git tag -v $(git rev-parse v1.0.0)" should work, but the command
 
-That is all very much deliberate.  A few additional things you may
-want to consider while assessing the proposal in your message are:
+Sorry, forget about this part of my message.  I completely forgot the
+discussion we had a few years ago:
 
- * "git tag -v $(git rev-parse v1.0.0)" should work, but the command
-   would not even see which ref the 40-hex object name it is
-   verifying came from.  As "tag --verify" is about verifying the
-   crypto signature over the data in the tag object, the lack of the
-   information (and verification) is perfectly fine when "tag -v"
-   does not begin with a refname but works from an object name. 
+https://public-inbox.org/git/CAPc5daV9ZvHqFtdzr565vp6Mv7O66ySr-p5Vi8o6bd6=GyVELg@mail.gmail.com/
 
-   I.e. your proposal to additionally check the refname of a signed
-   tag must be made optional, something like "only when a refname is
-   given, teach 'tag -v' to additionally check that the refname
-   matches the tagname".
+In short, "git tag -v TAGNAME" does not take an arbitrary object
+name, TAGNAME does not go through the usual ref dwimming rules
+(i.e. checking for .git/%s, .git/tag/%s, .git/heads/%s, ... to find
+one) but only looks at refs/tags/TAGNAME alone.  So we always have
+the refname it came from when inspecting tag contents that tells
+what tagname the tag has.
 
- * There are movements to push tags you obtain from upstream to a
-   somewhere not directly underneath refs/tags/.  Instead of your
-   artificial "confuse users by calling 2.3.4 what in reality is a
-   mere 0.0.3" example, what would more likely to happen in the real
-   world is "we see v2.3.4 at the upstream repository; copy it at
-   refs/tags/origin/v2.3.4 in our repository".  If you literally
-   followed your proposal, your users will be hit with "You told me
-   to verify origin/v2.3.4 but the data in the tag itself claims
-   that it is v2.3.4 without 'origin/' prefix--this is an error".
-
-   Perhaps checking only the tail-match is good enough?  It is when
-   you consider only this example, but that is merely one example
-   and is far from exhaustive.  Your proposal needs to be fine tuned
-   after thinking these details through.
-
- * "git describe" knows that the path under refs/tags/ and the
-   tagname could be different, so after you rename v2.20.0 to
-   g2.20.0, you would see something like this:
-
-   $ git checkout --detach v2.20.0
-   $ git update-ref refs/tags/g2.20.0 refs/tags/v2.20.0
-   $ git update-ref -d refs/tags/v2.20.0
-   $ git describe
-   warning: tag 'v2.20.0' is really 'g2.20.0' here
-   v2.20.0
-
-   in today's Git already.  Porting this warning logic (which is a
-   dumb one that reports any non-exact match) to "tag -v" might be
-   sufficient, as long as you do not make it an error.
-
-We may want to teach "git fsck" to notice discrepancy between the
-tagname and the refname, but the same care needs to be taken to
-allow sensible renaming as the second point above.
-
-Thanks.
+The other point still stands; there are legitimate reasons people
+would want to have a tag with v1.0.0 tagname in somewhere that is
+not refs/tags/v1.0.0 and an extra validation must need to make sure
+it won't error out, even though warning is probably acceptable.
