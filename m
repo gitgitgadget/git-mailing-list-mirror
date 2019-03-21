@@ -2,69 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B136420248
-	for <e@80x24.org>; Thu, 21 Mar 2019 05:19:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58E2B20248
+	for <e@80x24.org>; Thu, 21 Mar 2019 05:40:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726050AbfCUFTY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 01:19:24 -0400
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:36307 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbfCUFTY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 01:19:24 -0400
-Received: by mail-wm1-f52.google.com with SMTP id h18so1363450wml.1
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 22:19:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=bRbVJgxDQt4xNPcGH2twm0mu5gjq9Ak9LrUCOXk111o=;
-        b=VVY0+nqFWAD/Zj1Osn7uKZb9gC4CcMsqzoi6hOgDYHxgGEUBTkYW3BPIbux1cFuSOk
-         Bqx2yUiWILHWC/cZIcIxi79S6uoRh2R6Y17Ajmg5VvS0E34Dp9LwEWPBj7NjKQPvEiPB
-         6LpWKErowX1omDC2+e5KaotCSfWL/zF4U6gZXR3ul8I3z77ZqxskgVAtFN2+c3ET2uM9
-         HQSeGsRK/L+NDGxLTkhd394yIgDGRraSqeprZ88teqF4ldfwU6XXqjEtWO4Lyzl/PQJl
-         mwvXsYYuj7mjo2IICozpfs5vXSiErCvpGexOAoRFSl/1icbkxaiUd2t7hmrrxeTzQL/2
-         c7Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=bRbVJgxDQt4xNPcGH2twm0mu5gjq9Ak9LrUCOXk111o=;
-        b=j1ij/NP7oh9NaFMvaHC6CbObrXvVVp4lCsg5FmvlTT7JMbESv9yCHcDtT7KqjcniC0
-         sWqf0jw6Q9dW0xfPk6mwgWp5ee88GETEzDiiIRx+MZq0p+ku63FBg/fSMw0BNH6lqNht
-         i/OF1UJXJDiL4YL7gtqIxGraGptDuzzAXmlYL7rHCeyXl2RG4tjtBpKrH9PFXAtlXTT4
-         rmogZNe6AHbzxyYOoRovN6lGGhfuSiFT2hxVr/56pz0DbYmIRaIAwJ6oDpVojzoAx1+E
-         UYhN4q5x8LTKCFZJJgKjIzn9hB8ZVBWCS1ogJCKsqEQ7Nxhv7Y0p10S/Fg2IV6ZlWWWg
-         Eibw==
-X-Gm-Message-State: APjAAAXdHi03qKGcsdyGDrANab8UvwJetW/4lFD7QsYXwWO91eZLvBWi
-        1AGId2eDmrlNkU+VOpBCDX0=
-X-Google-Smtp-Source: APXvYqzBoCmnspzR0HxzgscIs2NqYXwU8H/tEOZR9FkKA38NZZtUHzGVcTocso5F5JayWxws6UchaQ==
-X-Received: by 2002:a1c:2543:: with SMTP id l64mr1145378wml.116.1553145562505;
-        Wed, 20 Mar 2019 22:19:22 -0700 (PDT)
-Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id f7sm3009945wru.3.2019.03.20.22.19.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Mar 2019 22:19:21 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2019, #04; Wed, 20)
-References: <xmqqa7hqw844.fsf@gitster-ct.c.googlers.com>
-        <871s31dv6o.fsf@evledraar.gmail.com>
-        <xmqqef71uk8t.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 21 Mar 2019 14:19:21 +0900
-In-Reply-To: <xmqqef71uk8t.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 21 Mar 2019 09:46:58 +0900")
-Message-ID: <xmqqpnqkst2e.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1725993AbfCUFk4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 01:40:56 -0400
+Received: from mail.javad.com ([54.86.164.124]:42159 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725800AbfCUFk4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 01:40:56 -0400
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id B2EFC40E7C;
+        Thu, 21 Mar 2019 05:40:54 +0000 (UTC)
+Authentication-Results: mail.javad.com;
+        dkim=pass (1024-bit key; unprotected) header.d=javad.com header.i=@javad.com header.b=awzuUKnS;
+        dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1553146855;
+        bh=nA5q5bwmsjuwiPnfSZreJ9d74TrJ4D7zM0NAYmJP+/E=; l=1748;
+        h=Received:From:To:Subject;
+        b=awzuUKnSy7XvLx57wx7klGB2WXRy6/A/hsjLKkIwWz2ADf3kgP0ocoMOE1bR/H3VM
+         BdxPbw09ZBuPUaPGTtMdrNrfPtCI60HgGSI/rVmja2I1uTXJf0uR9jNLPZ0uEtSV8S
+         xTjj2cNjyvH67krJyj8oUFCaB4ol1RXZaf9ZPNXw=
+Authentication-Results: ip-172-31-2-110;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1h6qRh-0003Me-8V; Thu, 21 Mar 2019 08:40:53 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        "C.J. Jameson" <cjcjameson@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] cherry-pick: set default `--mainline` parent to 1
+References: <CALm+SVJR5BCHi_r7B279gKDukD4mYDQuv=K5guje73YDVmOxug@mail.gmail.com>
+        <xmqq1s32w3vu.fsf@gitster-ct.c.googlers.com>
+        <871s31vjo7.fsf@javad.com>
+        <CABPp-BEe56GFM_2g7EyXmSrULFwRAvSPBomQ66jEQmCs=HhWpg@mail.gmail.com>
+        <xmqqd0mlt1h1.fsf@gitster-ct.c.googlers.com>
+        <xmqq4l7wuddk.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 21 Mar 2019 08:40:53 +0300
+In-Reply-To: <xmqq4l7wuddk.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 21 Mar 2019 12:15:19 +0900")
+Message-ID: <87pnqklr8a.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,25 +62,40 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> On Wed, Mar 20 2019, Junio C Hamano wrote:
+>> Elijah Newren <newren@gmail.com> writes:
 >>
->>> Here are the topics that have been cooking.  Commits prefixed with
->>> '-' are only in 'pu' (proposed updates) while commits prefixed with
->>> '+' are in 'next'.  The ones marked with '.' do not appear in any of
->>> the integration branches, but I am still holding onto them.
+>>> This worries me that it'll lead to bad surprises.  Perhaps some folks
+>>> cherry-pick merges around intentionally, but I would want that to be a
+>>> rare occurrence at most.
 >>
->> I have re-rolls & re-submissions of some of my stuff as a WIP, but one
->> thing that's fallen between the cracks & should be ready for queuing is
->> my commit-graph segfault bugfix series:
->>
->> https://public-inbox.org/git/20190314214740.23360-1-avarab@gmail.com/
+>> We can just reject this RFC patch and we'd be in a slightly safer
+>> place.  You still need to tell us with "-m 1" on the command line
+>> that you are picking a range with merges in it.  But then I am sure
+>> that clueless people blindly would alias "pick = cherry-pick -m1" and
+>> use "git pick" and blindly pick ranges here and there, so I am not
+>> sure such a slightly-more safety buys us very much.
 >
-> Thanks.  I quickly looked at the difference between the updated one
-> and the old one; will take a deeper look later.
+> To put it a bit differently, I share with you that picking merges
+> should be deliberate and it is safer to make sure allowing it only
+> when the told us that s/he knows the commit being picked is a merge,
 
-It does not seem to play well in 'pu', unfortunately.  In my local
-tests, 'pu' without this topic passes, but what I pushed out to
-public has this topic on top and t5318 does not pass for me.
+Something like "--[no-]ban-merges" then [*], having "--ban-merges" as
+default?
 
+> but when we started allowing "-m 1" for non-merge commits in the
+> current world where cherry-pick can work on a range, the ship has
+> already sailed.
+
+Except that it could be a different ship, provided we've got
+"--ban-merges". Having "-m 1" as default stops to be an issue, and
+explicit "-m 1" could then imply --no-ban-merges, that could be in turn
+overwritten by explicit "--ban-merges", if necessary.
+
+[*] "--[no]-merges" won't do, as one would expect merges to be silently
+dropped from a range of cherry-picks, similar to what "git log" or "git
+rev-list" does. BTW, is it a good idea for cherry-pick to start to use
+"git rev-list" and support all the options available there?
+
+-- Sergey
