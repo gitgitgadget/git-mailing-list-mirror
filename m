@@ -2,236 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4204920248
-	for <e@80x24.org>; Thu, 21 Mar 2019 21:13:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7871720248
+	for <e@80x24.org>; Thu, 21 Mar 2019 21:14:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727047AbfCUVNV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 17:13:21 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42831 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726589AbfCUVNU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 17:13:20 -0400
-Received: by mail-wr1-f67.google.com with SMTP id g3so107158wrx.9
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 14:13:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=AtfkmRjCqFxAnIff/gA/rWT2HG9QGdeFzx/afS5T5Fw=;
-        b=rH5ZbrlkKAAkeBCvGwj155ODCEmosn2gh+LyL1+y3pB2Q7NRMwXujOa10DC2ZAesYg
-         zAw+lLqm7FMIyD8xynqUk4TP+jDjJD1obaYtwBlKM3fDg+lulOMeFjLTpwX73M72Hdkd
-         TbIDseP2OIymHpsnk8q4X9CkR/sNU6a0Gu7xshBViSl80TJO39Xr/GkzyQ6nu4T+V5Gz
-         m9UaS8dW+t6BBYz4sdZ0WzgV6Frg9Wtacdd7eBJ6IF7ufbueHBnQCRsOAvMfdOni5Rjo
-         l4CXsa+lxFhJJWtxA9E4f/AjAzkV/2yzMj7gMru2DG9duNchweWbmftJmCjE+yo/AlNK
-         ZN1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=AtfkmRjCqFxAnIff/gA/rWT2HG9QGdeFzx/afS5T5Fw=;
-        b=jhBmRUEWRH1K4PkvPB3rtSz/PH60sbomAEH37cP2eKm6+RlKZ3ZFycTBoDXwLbcgEd
-         JuLxb0hPw6TMBxjgJ1p3J6i/TgxiRECbzAxsHF0T2opmIf+mxHTAhfJmRBibxsHOgBWI
-         cpvuul9hv7UH9OsbSPLJWqx+9hRAjtsyMYguRG2bpVjnuWiCyR+H5v0ljIWmNPPmgeJP
-         n7mhRBNDUyrtmHOHW/pseQmhdm0cSfPX4sy/kGysZAco8e75LPbMvIoeVGQkVhf5ub2m
-         2oiOeS9+zp/x/kITGdpOiv/PvwMpSR2Daw7b9+STjRoXpVRHnrNduGocgMwfUicGsrOx
-         aIsA==
-X-Gm-Message-State: APjAAAVpiQ8OR+6o5+gmhs/1kkRrDLCu3WDG7X33iTStzrq7V4XOhvcD
-        Yj6iFBAUuqDNDkHheTptimTedCjx
-X-Google-Smtp-Source: APXvYqxhtrBTySBeWzqvNO3Fo8efiQH8C5C2fqTFE8r1oyZrPeSffhAXbKj9eKt0QmyutyXSeuRx2g==
-X-Received: by 2002:adf:ea43:: with SMTP id j3mr3795308wrn.210.1553202798071;
-        Thu, 21 Mar 2019 14:13:18 -0700 (PDT)
-Received: from [192.168.0.104] (atoulouse-658-1-58-102.w92-136.abo.wanadoo.fr. [92.136.153.102])
-        by smtp.gmail.com with ESMTPSA id a9sm7161315wmb.30.2019.03.21.14.13.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Mar 2019 14:13:17 -0700 (PDT)
-Subject: Re: [RFC PATCH 08/11] rebase -i: use struct rebase_options to parse
- args
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20190319190317.6632-1-phillip.wood123@gmail.com>
- <20190319190317.6632-9-phillip.wood123@gmail.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <7ba0dc1a-b6dd-4ef6-81ee-495e32fc67cf@gmail.com>
-Date:   Thu, 21 Mar 2019 22:13:11 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1727207AbfCUVOn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 17:14:43 -0400
+Received: from mail-gateway-shared15.cyon.net ([194.126.200.68]:45008 "EHLO
+        mail-gateway-shared15.cyon.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727194AbfCUVOm (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Mar 2019 17:14:42 -0400
+X-Greylist: delayed 485 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 Mar 2019 17:14:41 EDT
+Received: from s019.cyon.net ([149.126.4.28])
+        by mail-gateway-shared15.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim)
+        (envelope-from <bb@drbeat.li>)
+        id 1h74tT-0001cX-8z
+        for git@vger.kernel.org; Thu, 21 Mar 2019 22:06:34 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:
+        Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=/HH2M1qWFzeQV8JKv6XD3E0G3TjsGC6p9UjTirqMR08=; b=VV+ecNKNqHowucq1+Z4CWdinMo
+        khyN20Gm7Kp3rl9tFrgfjgWQtJeYM/9xFcA4PpbQcW4tN5t1r82Jy9+y06NxLT1eC4ljk88HAi+Gm
+        +br09EBRAJgGtRigjNHPaGVECWXD5BCGs//9+O/iKYx4xT1KwaLrnSHZpaJsOSGICjJKHj6sZwYaI
+        yCHT4Cqv9cQ1WRjkEhsJN5dVNeJZfrXVB69hX/tPJb6bXxqi8d6rYwLPnyEVQ/mtKYeVmz1L86bQk
+        u7lhq0ieiazTYdTg3lp2BezW2mif2VlgY0COHnPu3kYVjiyAA5cViENV6/AQDU6kU4YJa+IFcsVxV
+        m0y8jS4Q==;
+Received: from [10.20.10.232] (port=28122 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.91)
+        (envelope-from <bb@drbeat.li>)
+        id 1h74tR-004NpL-9V; Thu, 21 Mar 2019 22:06:30 +0100
+Received: by drbeat.li (Postfix, from userid 1000)
+        id 5475A1FDB9; Thu, 21 Mar 2019 22:06:28 +0100 (CET)
+From:   Beat Bolli <dev+git@drbeat.li>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH] unicode: update the width tables to Unicode 12
+Date:   Thu, 21 Mar 2019 22:06:17 +0100
+Message-Id: <20190321210617.25015-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.20.1.415.g653613c723
 MIME-Version: 1.0
-In-Reply-To: <20190319190317.6632-9-phillip.wood123@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-OutGoing-Spam-Status: No, score=-0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Now that Unicode 12 has been announced[0], update the character
+width tables to the new version.
 
-It’s nice to see your work on this on the list.
+[0] http://blog.unicode.org/2019/03/announcing-unicode-standard-version-120.html
 
-Le 19/03/2019 à 20:03, Phillip Wood a écrit :
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> In order to run `rebase -i` without forking `rebase--interactive` it
-> will be convenient to use the same structure when parsing the options in
-> cmd_rebase() and cmd_rebase__interactive().
-> 
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  builtin/rebase.c | 203 ++++++++++++++++++++++++++---------------------
->  1 file changed, 112 insertions(+), 91 deletions(-)
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index c93f2aa629..33a2495032 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -50,6 +50,73 @@ enum rebase_type {
->  	REBASE_PRESERVE_MERGES
->  };
->  
-> +struct rebase_options {
-> +	enum rebase_type type;
-> +	const char *state_dir;
-> +	struct commit *upstream;
-> +	const char *upstream_name;
-> +	const char *upstream_arg;
-> +	char *head_name;
-> +	struct object_id orig_head;
-> +	struct commit *onto;
-> +	const char *onto_name;
-> +	const char *revisions;
-> +	const char *switch_to;
-> +	int root;
-> +	struct object_id *squash_onto;
-> +	struct commit *restrict_revision;
-> +	int dont_finish_rebase;
-> +	enum {
-> +		REBASE_NO_QUIET = 1<<0,
-> +		REBASE_VERBOSE = 1<<1,
-> +		REBASE_DIFFSTAT = 1<<2,
-> +		REBASE_FORCE = 1<<3,
-> +		REBASE_INTERACTIVE_EXPLICIT = 1<<4,
-> +	} flags;
-> +	struct argv_array git_am_opts;
-> +	const char *action;
-> +	int signoff;
-> +	int allow_rerere_autoupdate;
-> +	int keep_empty;
-> +	int autosquash;
-> +	char *gpg_sign_opt;
-> +	int autostash;
-> +	char *cmd;
-> +	int allow_empty_message;
-> +	int rebase_merges, rebase_cousins;
-> +	char *strategy, *strategy_opts;
-> +	struct strbuf git_format_patch_opt;
-> +	int reschedule_failed_exec;
-> +};
-> +
-> +#define REBASE_OPTIONS_INIT {			  	\
-> +		.type = REBASE_UNSPECIFIED,	  	\
-> +		.flags = REBASE_NO_QUIET, 		\
-> +		.git_am_opts = ARGV_ARRAY_INIT,		\
-> +		.git_format_patch_opt = STRBUF_INIT	\
-> +	}
-> +
-> +static struct replay_opts get_replay_opts(const struct rebase_options *opts)
-> +{
-> +	struct replay_opts replay = REPLAY_OPTS_INIT;
-> +
-> +	sequencer_init_config(&replay);
-> +
-> +	replay.action = REPLAY_INTERACTIVE_REBASE;
-> +	replay.signoff = opts->signoff;
-> +	replay.allow_ff = !(opts->flags & REBASE_FORCE);
-> +	if (opts->allow_rerere_autoupdate)
-> +		replay.allow_rerere_auto = opts->allow_rerere_autoupdate;
-> +	replay.allow_empty = 1;
-> +	replay.allow_empty_message = opts->allow_empty_message;
-> +	replay.verbose = opts->flags & REBASE_VERBOSE;
-> +	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
-> +	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
-> +	replay.strategy = opts->strategy;
-> +
-> +	return replay;
-> +}
-> +
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ unicode-width.h | 38 +++++++++++++++++++++++++-------------
+ 1 file changed, 25 insertions(+), 13 deletions(-)
 
-I wonder if `struct rebase_options` and `struct replay_options` could be
-merged, or at least have `replay_options` used in `rebase_options`,
-instead of converting one to the other.  I think it would make things
-simpler and cleaner, but I don’t know how hard it would be, or if my
-assumption is correct.
-
-Cheers,
-Alban
+diff --git a/unicode-width.h b/unicode-width.h
+index 7c643760f8..93a48f3bf8 100644
+--- a/unicode-width.h
++++ b/unicode-width.h
+@@ -89,8 +89,7 @@ static const struct interval zero_width[] = {
+ { 0x0E34, 0x0E3A },
+ { 0x0E47, 0x0E4E },
+ { 0x0EB1, 0x0EB1 },
+-{ 0x0EB4, 0x0EB9 },
+-{ 0x0EBB, 0x0EBC },
++{ 0x0EB4, 0x0EBC },
+ { 0x0EC8, 0x0ECD },
+ { 0x0F18, 0x0F19 },
+ { 0x0F35, 0x0F35 },
+@@ -191,7 +190,7 @@ static const struct interval zero_width[] = {
+ { 0xA980, 0xA982 },
+ { 0xA9B3, 0xA9B3 },
+ { 0xA9B6, 0xA9B9 },
+-{ 0xA9BC, 0xA9BC },
++{ 0xA9BC, 0xA9BD },
+ { 0xA9E5, 0xA9E5 },
+ { 0xAA29, 0xAA2E },
+ { 0xAA31, 0xAA32 },
+@@ -274,6 +273,9 @@ static const struct interval zero_width[] = {
+ { 0x11727, 0x1172B },
+ { 0x1182F, 0x11837 },
+ { 0x11839, 0x1183A },
++{ 0x119D4, 0x119D7 },
++{ 0x119DA, 0x119DB },
++{ 0x119E0, 0x119E0 },
+ { 0x11A01, 0x11A0A },
+ { 0x11A33, 0x11A38 },
+ { 0x11A3B, 0x11A3E },
+@@ -298,8 +300,10 @@ static const struct interval zero_width[] = {
+ { 0x11D95, 0x11D95 },
+ { 0x11D97, 0x11D97 },
+ { 0x11EF3, 0x11EF4 },
++{ 0x13430, 0x13438 },
+ { 0x16AF0, 0x16AF4 },
+ { 0x16B30, 0x16B36 },
++{ 0x16F4F, 0x16F4F },
+ { 0x16F8F, 0x16F92 },
+ { 0x1BC9D, 0x1BC9E },
+ { 0x1BCA0, 0x1BCA3 },
+@@ -319,6 +323,8 @@ static const struct interval zero_width[] = {
+ { 0x1E01B, 0x1E021 },
+ { 0x1E023, 0x1E024 },
+ { 0x1E026, 0x1E02A },
++{ 0x1E130, 0x1E136 },
++{ 0x1E2EC, 0x1E2EF },
+ { 0x1E8D0, 0x1E8D6 },
+ { 0x1E944, 0x1E94A },
+ { 0xE0001, 0xE0001 },
+@@ -387,10 +393,12 @@ static const struct interval double_width[] = {
+ { 0xFE68, 0xFE6B },
+ { 0xFF01, 0xFF60 },
+ { 0xFFE0, 0xFFE6 },
+-{ 0x16FE0, 0x16FE1 },
+-{ 0x17000, 0x187F1 },
++{ 0x16FE0, 0x16FE3 },
++{ 0x17000, 0x187F7 },
+ { 0x18800, 0x18AF2 },
+ { 0x1B000, 0x1B11E },
++{ 0x1B150, 0x1B152 },
++{ 0x1B164, 0x1B167 },
+ { 0x1B170, 0x1B2FB },
+ { 0x1F004, 0x1F004 },
+ { 0x1F0CF, 0x1F0CF },
+@@ -422,16 +430,20 @@ static const struct interval double_width[] = {
+ { 0x1F680, 0x1F6C5 },
+ { 0x1F6CC, 0x1F6CC },
+ { 0x1F6D0, 0x1F6D2 },
++{ 0x1F6D5, 0x1F6D5 },
+ { 0x1F6EB, 0x1F6EC },
+-{ 0x1F6F4, 0x1F6F9 },
+-{ 0x1F910, 0x1F93E },
+-{ 0x1F940, 0x1F970 },
++{ 0x1F6F4, 0x1F6FA },
++{ 0x1F7E0, 0x1F7EB },
++{ 0x1F90D, 0x1F971 },
+ { 0x1F973, 0x1F976 },
+-{ 0x1F97A, 0x1F97A },
+-{ 0x1F97C, 0x1F9A2 },
+-{ 0x1F9B0, 0x1F9B9 },
+-{ 0x1F9C0, 0x1F9C2 },
+-{ 0x1F9D0, 0x1F9FF },
++{ 0x1F97A, 0x1F9A2 },
++{ 0x1F9A5, 0x1F9AA },
++{ 0x1F9AE, 0x1F9CA },
++{ 0x1F9CD, 0x1F9FF },
++{ 0x1FA70, 0x1FA73 },
++{ 0x1FA78, 0x1FA7A },
++{ 0x1FA80, 0x1FA82 },
++{ 0x1FA90, 0x1FA95 },
+ { 0x20000, 0x2FFFD },
+ { 0x30000, 0x3FFFD }
+ };
+-- 
+2.20.1.415.g653613c723
 
