@@ -2,92 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 928F220248
-	for <e@80x24.org>; Thu, 21 Mar 2019 13:46:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9279620248
+	for <e@80x24.org>; Thu, 21 Mar 2019 13:57:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728351AbfCUNqO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 09:46:14 -0400
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:43605 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727829AbfCUNqO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 09:46:14 -0400
-Received: by mail-ua1-f66.google.com with SMTP id g1so1910598uae.10
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 06:46:13 -0700 (PDT)
+        id S1728279AbfCUN5f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 09:57:35 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:37594 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728113AbfCUN5f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 09:57:35 -0400
+Received: by mail-ed1-f68.google.com with SMTP id v21so5085777edq.4
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 06:57:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SkKsE1kFn8u6mIAqpUBbeQcdXIAKiQqjhWVlDUwjaw8=;
-        b=XRlmTm8aJKLTVk8dnBFgsqLPD1PH9JBUJYINZrZ8XBVCtiOjE0mqtGc4uCIaQ6zusC
-         ZyRt2pjD5VqRjazS0zSr8w8gq1WFkufhMj2wnXjOq48Zux4snTkstyHw1xHECzifASvw
-         yQWy1VDepA/8d4QKObU3X/lGDIH0R9uEFFTJwD7HQjfr7JUFg1ymABUE0jGddCVu5fsH
-         pgzZFD4/YWq7VVn8+3mml90QUnWUGsyTXS1WZ6CvukFQudnDT963NOn754VCTL9N1o+G
-         KBElL6z9leHv+zR+fvD6pErfWZswWecr+QgMDyt2m2vJvr/3DNBs1cvD75OfpKo2lsIG
-         v8rQ==
+        h=date:message-id:in-reply-to:references:from:subject:mime-version
+         :content-transfer-encoding:fcc:content-transfer-encoding:to:cc;
+        bh=IVDgFyT7+l17dVAPJwotAC7pd/ukwjpmcW4Z/q0T2F0=;
+        b=fGBmhnVGkOwi5+YEzVfEgczd0WDUwISXS9PSEq/aaRxIgW4rwln763PLbmFe9jk/1d
+         O6FlFjE8x87BRMrUQGy/RzPAZao7a1oP5GI2HTFJD77nP0C8MqShQO1/HBRh/ZiEmFm/
+         j1SCxAfVyz236996Cr03488lK4BrZv7/BlQuxwZ+CdrZEtnCcTN/zx+MTUyFAMWe1lOQ
+         Q0gIPTFCkhv+niOv5UKd0K2wjQHfaBWDZfCkFCXkIOeWZgeeZX62r5pr90yjmg7oXHkk
+         WZhscKSuphSdlRPvEIzetUVeXqHSVBWECdol+YEA5WceYSCcJddSjtHi8Q1BJ16JBJJ3
+         K2uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SkKsE1kFn8u6mIAqpUBbeQcdXIAKiQqjhWVlDUwjaw8=;
-        b=s0Oi2UOGse9DB4hPeBNfsAWBTCDaMWqByrXKy7LQfy4ZlcnJKmGVpr4gONw3GIMJNr
-         AqcI1YMKl6Y1kidXFBpzTjF9+yRiVreDPE7tfjwZOnohMKCvitWbESeUxhf1KLMg0y2X
-         bPn19Z1yKep5+/oIXUNu++9HCOE9n2sT9Fdl69AXgTR9WWjoo+9nh/+/Kj7/OmGFLXVI
-         e0W0HSwXntkwStfkw/xaZ60KGIuz+k5BuI8+ox8Zj9a/bBHMAVqmnEua5seCbBsr4CrW
-         IUZgVFACNNRZNJOtR7FlzBIngdDZir+Hu19SZnDtD+LijvoWwhUO1rvTMtbjRuR6oLnQ
-         treA==
-X-Gm-Message-State: APjAAAWtFJBGmj3q9F60BCMZMOjvbX5PSveXu5toj1TpVxqHK002uxFJ
-        1pLEtcV6VpQ/QFc1MWDXdSvdn9RwKdSLlspZKSo=
-X-Google-Smtp-Source: APXvYqwawv8g//2mOcxBgKPcVcOh74AZw7B5W23+DbV7CYwWY+gBMQwHL6JyR6egWrd4z8zlaGLvi8h2u3diTH1Dnxg=
-X-Received: by 2002:ab0:7817:: with SMTP id x23mr1705159uaq.35.1553175972719;
- Thu, 21 Mar 2019 06:46:12 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:mime-version:content-transfer-encoding:fcc
+         :content-transfer-encoding:to:cc;
+        bh=IVDgFyT7+l17dVAPJwotAC7pd/ukwjpmcW4Z/q0T2F0=;
+        b=iVVihlTspeuOHe76GiBn7pXmV1f+n+IucFRY10Z8raTeansobWEhdHhX1AlOgnR4cF
+         kY3OwikN4Wf4rMoREeAO7SxiA61OoDL/gItMp4S7dz2fRJzipIrHpGRVouWR7GSbDNRv
+         wcICX2gJLs1k04CfEenLqTufVA6NIwjbVI4UK9kaC2LiKwkKi9q+57JgMiPocD98BBIf
+         nqKcxEuqiSja1qPz5PDet2yERGuSAIsrrFbMid8UIgj96z1PIWF1pmuobS6wbdvSG0Eo
+         2hGNiPrBdziMaB1KxwhH9DPb2P7PgiYbgaTTZhB2EvfArZoLfdAQ3ZlNYLnkpiSjkfag
+         AveA==
+X-Gm-Message-State: APjAAAWDGErXZVLsqwQOgcnn8yGWnhu2X01kbDF27kd4FVqLxAgeRq7W
+        6XBZLb6tg17K19QRC31/KOk1Zap+
+X-Google-Smtp-Source: APXvYqw+UDOuRqtVZIeu6TdOQRaaiaMWLs1LK9cAmCVVTSzOSQ7QHYlHf8Lh1LNQK56J4g3pW/cLIg==
+X-Received: by 2002:a50:b36d:: with SMTP id r42mr2671684edd.199.1553176653190;
+        Thu, 21 Mar 2019 06:57:33 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f8sm744999edq.38.2019.03.21.06.57.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Mar 2019 06:57:32 -0700 (PDT)
+Date:   Thu, 21 Mar 2019 06:57:32 -0700 (PDT)
+X-Google-Original-Date: Thu, 21 Mar 2019 13:57:29 GMT
+Message-Id: <pull.165.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.165.git.gitgitgadget@gmail.com>
+References: <pull.165.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/2] Fix fsmonitor after discard_index()
 MIME-Version: 1.0
-References: <78628256-79dc-3036-c57b-a96797ceb120@gmail.com>
- <20190319093910.20229-1-pclouds@gmail.com> <xmqqimwexujm.fsf@gitster-ct.c.googlers.com>
- <CACsJy8BLxWea0ZrHkSU6+nE7dr5YvFNVH1tLhaqPRadi+2Hhwg@mail.gmail.com>
- <xmqqk1guwdeu.fsf@gitster-ct.c.googlers.com> <CACsJy8AUH4nOkt6H=yu=eRktK4me9kEkjqsC3zyNZDwUKXqCPg@mail.gmail.com>
- <xmqqftriwbz6.fsf@gitster-ct.c.googlers.com> <CABPp-BFB0jafua0CGEsr66EzQvHncLYvws8rt+LdkQ_LXcEq5A@mail.gmail.com>
- <CACsJy8BdPgPgaWW=3_y5peLdqo24-ozC=s90WW2DN9OsYe9v_w@mail.gmail.com>
-In-Reply-To: <CACsJy8BdPgPgaWW=3_y5peLdqo24-ozC=s90WW2DN9OsYe9v_w@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 21 Mar 2019 06:46:01 -0700
-Message-ID: <CABPp-BHsQqi1umpsr1LREzwea15zqn4pp4WjKsTx3APf-4rT5Q@mail.gmail.com>
-Subject: Re: [PATCH] checkout.txt: note about losing staged changes with --merge
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To:     git@vger.kernel.org
+Cc:     Ben Peart <benpeart@microsoft.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 20, 2019 at 7:58 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Wed, Mar 20, 2019 at 8:53 PM Elijah Newren <newren@gmail.com> wrote:
-> > So, I think we do need something (eventually at least).  Would you
-> > prefer we dropped this patch from Duy and instead made 'checkout -m'
-> > abort when the index is dirty?
->
-> I have no problem with this. Still scratching my head wondering if
-> t7201-co.sh has a slightly incorrect setup, or aborting is actually
-> wrong. You're probably a better person to understand that test case
-> ;-)
+It was reported by Ævar Arnfjörð Bjarmason
+[https://public-inbox.org/git/nycvar.QRO.7.76.6.1903142058130.41@tvgsbejvaqbjf.bet/T/#mb8718fe52e4721dacd3b143a09187ff9090ef4e3] 
+that there were problems with the fsmonitor feature in conjunction with the
+newly built-in git stash/git rebase.
 
-It doesn't surprise me at all that some testcases would fail with this
-change; it's a change of behavior from the previous implementation.
-However, taking a look at that testcase, it looks like it's not a
-simple change to make it do something similar because there's at least
-one other bug that we need to fix first.  I'll dig in...though I
-really want to get my
-directory-rename-detection-defaults-to-reporting-conflict series
-updated and sent out first.  Since Junio seems to be okay with just
-taking your doc update for now, hopefully that's not a problem.  :-)
+The culprit really is that the fsmonitor flag that says whether it was
+queried already was not re-set after discard_index() was called by mistake.
+
+This fixes that, and apparently also other long-standing fsmonitor issues.
+
+(Note that there is still a flakiness around t7519
+[https://github.com/git-for-windows/git/pull/2127#pullrequestreview-215010574] 
+where it tries to make sure that the fsmonitor hook can prevent unnecessary
+lstat() calls, but that seems to be unrelated to this here bug.)
+
+Changes since v1:
+
+ * Removed unnecessary test_when_finished "test_config ..." line, pointed
+   out by Hannes Sixt.
+
+Johannes Schindelin (2):
+  fsmonitor: demonstrate that it is not refreshed after discard_index()
+  fsmonitor: force a refresh after the index was discarded
+
+ cache.h                     |  3 ++-
+ fsmonitor.c                 |  5 ++---
+ read-cache.c                |  1 +
+ t/helper/test-read-cache.c  | 24 +++++++++++++++++++++++-
+ t/t7519-status-fsmonitor.sh |  8 ++++++++
+ 5 files changed, 36 insertions(+), 5 deletions(-)
+
+
+base-commit: 041f5ea1cf987a4068ef5f39ba0a09be85952064
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-165%2Fdscho%2Ffix-fsmonitor-after-discard-index-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-165/dscho/fix-fsmonitor-after-discard-index-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/165
+
+Range-diff vs v1:
+
+ 1:  f451752656 ! 1:  51a7edf22a fsmonitor: demonstrate that it is not refreshed after discard_index()
+     @@ -79,8 +79,6 @@
+       '
+       
+      +test_expect_failure 'discard_index() also discards fsmonitor info' '
+     -+	test_when_finished \
+     -+		"git config core.monitor .git/hooks/fsmonitor-test" &&
+      +	test_config core.fsmonitor "$TEST_DIRECTORY/t7519/fsmonitor-all" &&
+      +	test_might_fail git update-index --refresh &&
+      +	test-tool read-cache --print-and-refresh=tracked 2 >actual &&
+ 2:  1d62623776 ! 2:  79fdd0d586 fsmonitor: force a refresh after the index was discarded
+     @@ -70,6 +70,6 @@
+       
+      -test_expect_failure 'discard_index() also discards fsmonitor info' '
+      +test_expect_success 'discard_index() also discards fsmonitor info' '
+     - 	test_when_finished \
+     - 		"git config core.monitor .git/hooks/fsmonitor-test" &&
+       	test_config core.fsmonitor "$TEST_DIRECTORY/t7519/fsmonitor-all" &&
+     + 	test_might_fail git update-index --refresh &&
+     + 	test-tool read-cache --print-and-refresh=tracked 2 >actual &&
+
+-- 
+gitgitgadget
