@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8014620248
-	for <e@80x24.org>; Thu, 21 Mar 2019 06:53:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 577DA20248
+	for <e@80x24.org>; Thu, 21 Mar 2019 06:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727867AbfCUGxp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 02:53:45 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:46753 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727823AbfCUGxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 02:53:44 -0400
-Received: by mail-pf1-f196.google.com with SMTP id 9so3439326pfj.13
-        for <git@vger.kernel.org>; Wed, 20 Mar 2019 23:53:43 -0700 (PDT)
+        id S1727874AbfCUGxr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 02:53:47 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:43548 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727823AbfCUGxq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 02:53:46 -0400
+Received: by mail-pg1-f194.google.com with SMTP id l11so3557748pgq.10
+        for <git@vger.kernel.org>; Wed, 20 Mar 2019 23:53:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=zONT9wgeUtMRr2psstEvePElRUfzKGh9VjRi7CUmC5c=;
-        b=r9FNyMlp1EaqOGF+SLgcL442+qQVzv86lui4hv4nQaRc1GXuDe4fbH/aAuCsK8eIqf
-         zBTpxOlmGKHetz60dKKKSRJ034zP4QHcrG8hDYCYruygoAwvboDYWNSjdmyMs/uNU5Kt
-         JplfXjqmIhHn8ToZClnIt77ikBuQNpp+VPW1ZQZUJpepkxPYnjFXl868k+iwocf6aVsn
-         iH0yYsvXlK3wxHxk7ugOcHwcMOqCaHAZXyDDkxjkoks5quzut7zuSDn2Q+KZSKyPkd2/
-         pOJi673VML+YEnZGBF+3QiBs5n0Z9iIvFgx+dg+HtAH3puq7JkUaClHGXTP8uABXAtvs
-         rqvg==
+        bh=mhhn8/9vG8AfLbuSjBMwFQP0SA6lkwEbsU0fRDZnILY=;
+        b=jMUyuQ44i6BaL8w3+Mw7yjMIX5TdMKtAVevw58um07U7mDru1UHGENWgdgQ1fvwNeh
+         RY2V0/LBS3pBwtS0qhiheVbSOPc9U4DsgInhrE+FzMksUcEKZ88SD6VyMeJIwRI2nuwI
+         MXLp5G0CCTQomsydLcVeRScFbIivkDjXftH2PRs6HWNaTjAEo48c+D587mpeaLDdR47A
+         bGbpFAwfGvSUTwhOvrYbOnKNtWzU9LytoYXai1nyRJvwInmj+wYX6brcU1163o9su6Jy
+         CHJJDu5sg4PSTyysF+IE6My//LPZ8neCx6395efGdxcRXIqEmyy/fMIXoMGL8XTBC3yY
+         /oiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=zONT9wgeUtMRr2psstEvePElRUfzKGh9VjRi7CUmC5c=;
-        b=nkjeQR/BVwfkXMnNUHXv5jGb++MlF1fwgvlUMsfc3/wIoPdAjrGUv4t7XpHlPXaBbU
-         8s0eXYYiotSPqq2wD56007e+Mt5pIjqu8Agbee0he9EcMcOH3YsSpRGt1tYzXqF2/7vZ
-         jK6cPvpF90YI7HLuHY37h56T72QRFMHQTZSvTI/7fPQHhEoBHJkYpwAUTnGxZYcgaEhl
-         dxLoQ7x3/phybNJH05WpLtYka8BBw1NVVh7iehrKgU9aPk6VTb811rG4HsvGScE+ts3A
-         YU+npZtfceiFROTsz7sYwxbmoBeRmHq+nD+SgNULkY1Np7ROtMGvn/jvKHZsu9lRcwyD
-         BFUQ==
-X-Gm-Message-State: APjAAAW1amYsKZ8BNyjK4WfAGrsHjPRnOb7VXhoO9Rqi+MYVLSv49mRQ
-        T0h9BKZ5j8kC72xnMPuXOp2CmJ8OXns=
-X-Google-Smtp-Source: APXvYqwDrv2cMhIaZ8ZRNwYrr+sGLTZMJBdIiUCkuJi4mbeI/vEmVg9ADmrtmsJcDe4HrUFXUGlKEA==
-X-Received: by 2002:a62:be08:: with SMTP id l8mr1850354pff.162.1553151223134;
-        Wed, 20 Mar 2019 23:53:43 -0700 (PDT)
+        bh=mhhn8/9vG8AfLbuSjBMwFQP0SA6lkwEbsU0fRDZnILY=;
+        b=O5rCMv/+NY9Yw32WWYp6XDbccybdJg1LExeFsJ6F88n1ceiw5lr13l2sk4QtFun1ve
+         gSVfRCRAIDO6Q0dIdZU2HZ0ktDkoRx7pkSQJz2bdEt3u1OHLGkSZtFZirBGq9xjbMYkB
+         5IAJN0d1EDiN8a+m+OcdXA54V9gJrGiAFfvFpf9cdfBqYFsFe9eu8JXDxtL2YT/tEY4f
+         rj0lb1jPbXoRqcc5wgGhdRxeN9S0uDeyIM11HwVfoTM2iA37S3JokJ9fACIW3CoBIIk0
+         EuC/y7U2P9UjMlT5esEgd2pkdWurvNZSH07CKEeOwMNN5OPT3GueHfnnSAAYfmiHdya+
+         sngA==
+X-Gm-Message-State: APjAAAUD3Wpj3chHX6apUHBulq6bNYoopNfKxFCsbG+ZNOU8poV9wWCT
+        YoLgjQ090nNELwpJFOSqWND/6dkCWZ4=
+X-Google-Smtp-Source: APXvYqweNyhL3oBjYINpIX+3uKLD1zT/idPesGNrePdN0S3JyDp6g23APV5oVWz11gxr6RzUE7NRmg==
+X-Received: by 2002:a63:db07:: with SMTP id e7mr1788059pgg.231.1553151225849;
+        Wed, 20 Mar 2019 23:53:45 -0700 (PDT)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id a13sm4277847pgw.91.2019.03.20.23.53.42
+        by smtp.gmail.com with ESMTPSA id 123sm1870943pff.182.2019.03.20.23.53.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Mar 2019 23:53:42 -0700 (PDT)
-Date:   Wed, 20 Mar 2019 23:53:40 -0700
+        Wed, 20 Mar 2019 23:53:45 -0700 (PDT)
+Date:   Wed, 20 Mar 2019 23:53:43 -0700
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Denton Liu <liu.denton@gmail.com>,
@@ -60,8 +60,8 @@ Cc:     Denton Liu <liu.denton@gmail.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v9 02/11] t3507: clean up style
-Message-ID: <7d8d39b93002d1416eaf730f3e8262360c925c42.1553150827.git.liu.denton@gmail.com>
+Subject: [PATCH v9 03/11] t7604: clean up style
+Message-ID: <61d1c7c907500662a8918e8175b2b96282406fef.1553150827.git.liu.denton@gmail.com>
 References: <cover.1552817044.git.liu.denton@gmail.com>
  <cover.1553150827.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -75,190 +75,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove space after redirection operators for style. Also, remove a git
-command which was upstream of a pipe. Finally, let grep and sed open
-their own input instead of letting the shell redirect the input.
+Before, we had some Git commands which were upstream of the pipe. This
+meant that if it produced an error, it would've gone unnoticed. Refactor
+to place Git commands on their own.
 
+Also, while we're at it, remove spaces after redirection operators.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t3507-cherry-pick-conflict.sh | 42 ++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ t/t7604-merge-custom-message.sh | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index 0db166152a..777fb23d18 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -88,7 +88,7 @@ test_expect_success 'cherry-pick --no-commit does not set CHERRY_PICK_HEAD' '
+diff --git a/t/t7604-merge-custom-message.sh b/t/t7604-merge-custom-message.sh
+index 89619cf446..aba1279132 100755
+--- a/t/t7604-merge-custom-message.sh
++++ b/t/t7604-merge-custom-message.sh
+@@ -16,16 +16,16 @@ create_merge_msgs() {
+ }
  
- test_expect_success 'cherry-pick w/dirty tree does not set CHERRY_PICK_HEAD' '
- 	pristine_detach initial &&
--	echo foo > foo &&
-+	echo foo >foo &&
- 	test_must_fail git cherry-pick base &&
- 	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
- '
-@@ -96,7 +96,7 @@ test_expect_success 'cherry-pick w/dirty tree does not set CHERRY_PICK_HEAD' '
- test_expect_success \
- 	'cherry-pick --strategy=resolve w/dirty tree does not set CHERRY_PICK_HEAD' '
- 	pristine_detach initial &&
--	echo foo > foo &&
-+	echo foo >foo &&
- 	test_must_fail git cherry-pick --strategy=resolve base &&
- 	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD
- '
-@@ -175,23 +175,23 @@ test_expect_success 'failed cherry-pick registers participants in index' '
- 		git ls-files --stage foo &&
- 		git checkout picked -- foo &&
- 		git ls-files --stage foo
--	} > stages &&
-+	} >stages &&
- 	sed "
- 		1 s/ 0	/ 1	/
- 		2 s/ 0	/ 2	/
- 		3 s/ 0	/ 3	/
--	" < stages > expected &&
-+	" stages >expected &&
- 	git read-tree -u --reset HEAD &&
- 
- 	test_must_fail git cherry-pick picked &&
--	git ls-files --stage --unmerged > actual &&
-+	git ls-files --stage --unmerged >actual &&
- 
- 	test_cmp expected actual
+ test_expect_success 'setup' '
+-	echo c0 > c0.c &&
++	echo c0 >c0.c &&
+ 	git add c0.c &&
+ 	git commit -m c0 &&
+ 	git tag c0 &&
+-	echo c1 > c1.c &&
++	echo c1 >c1.c &&
+ 	git add c1.c &&
+ 	git commit -m c1 &&
+ 	git tag c1 &&
+ 	git reset --hard c0 &&
+-	echo c2 > c2.c &&
++	echo c2 >c2.c &&
+ 	git add c2.c &&
+ 	git commit -m c2 &&
+ 	git tag c2 &&
+@@ -36,14 +36,16 @@ test_expect_success 'setup' '
+ test_expect_success 'merge c2 with a custom message' '
+ 	git reset --hard c1 &&
+ 	git merge -m "$(cat exp.subject)" c2 &&
+-	git cat-file commit HEAD | sed -e "1,/^$/d" >actual &&
++	git cat-file commit HEAD >raw &&
++	sed -e "1,/^$/d" raw >actual &&
+ 	test_cmp exp.subject actual
  '
  
- test_expect_success 'failed cherry-pick describes conflict in work tree' '
- 	pristine_detach initial &&
--	cat <<-EOF > expected &&
-+	cat <<-EOF >expected &&
- 	<<<<<<< HEAD
- 	a
- 	=======
-@@ -201,14 +201,14 @@ test_expect_success 'failed cherry-pick describes conflict in work tree' '
- 
- 	test_must_fail git cherry-pick picked &&
- 
--	sed "s/[a-f0-9]*\.\.\./objid/" foo > actual &&
-+	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
- 	test_cmp expected actual
- '
- 
- test_expect_success 'diff3 -m style' '
- 	pristine_detach initial &&
- 	git config merge.conflictstyle diff3 &&
--	cat <<-EOF > expected &&
-+	cat <<-EOF >expected &&
- 	<<<<<<< HEAD
- 	a
- 	||||||| parent of objid picked
-@@ -220,14 +220,14 @@ test_expect_success 'diff3 -m style' '
- 
- 	test_must_fail git cherry-pick picked &&
- 
--	sed "s/[a-f0-9]*\.\.\./objid/" foo > actual &&
-+	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
- 	test_cmp expected actual
- '
- 
- test_expect_success 'revert also handles conflicts sanely' '
- 	git config --unset merge.conflictstyle &&
- 	pristine_detach initial &&
--	cat <<-EOF > expected &&
-+	cat <<-EOF >expected &&
- 	<<<<<<< HEAD
- 	a
- 	=======
-@@ -241,24 +241,24 @@ test_expect_success 'revert also handles conflicts sanely' '
- 		git ls-files --stage foo &&
- 		git checkout base -- foo &&
- 		git ls-files --stage foo
--	} > stages &&
-+	} >stages &&
- 	sed "
- 		1 s/ 0	/ 1	/
- 		2 s/ 0	/ 2	/
- 		3 s/ 0	/ 3	/
--	" < stages > expected-stages &&
-+	" stages >expected-stages &&
- 	git read-tree -u --reset HEAD &&
- 
- 	head=$(git rev-parse HEAD) &&
- 	test_must_fail git revert picked &&
- 	newhead=$(git rev-parse HEAD) &&
--	git ls-files --stage --unmerged > actual-stages &&
-+	git ls-files --stage --unmerged >actual-stages &&
- 
- 	test "$head" = "$newhead" &&
- 	test_must_fail git update-index --refresh -q &&
- 	test_must_fail git diff-index --exit-code HEAD &&
- 	test_cmp expected-stages actual-stages &&
--	sed "s/[a-f0-9]*\.\.\./objid/" foo > actual &&
-+	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
- 	test_cmp expected actual
- '
- 
-@@ -284,7 +284,7 @@ test_expect_success 'revert --no-commit sets REVERT_HEAD' '
- 
- test_expect_success 'revert w/dirty tree does not set REVERT_HEAD' '
- 	pristine_detach base &&
--	echo foo > foo &&
-+	echo foo >foo &&
- 	test_must_fail git revert base &&
- 	test_must_fail git rev-parse --verify CHERRY_PICK_HEAD &&
- 	test_must_fail git rev-parse --verify REVERT_HEAD
-@@ -319,7 +319,7 @@ test_expect_success 'failed commit does not clear REVERT_HEAD' '
- test_expect_success 'revert conflict, diff3 -m style' '
- 	pristine_detach initial &&
- 	git config merge.conflictstyle diff3 &&
--	cat <<-EOF > expected &&
-+	cat <<-EOF >expected &&
- 	<<<<<<< HEAD
- 	a
- 	||||||| objid picked
-@@ -331,7 +331,7 @@ test_expect_success 'revert conflict, diff3 -m style' '
- 
- 	test_must_fail git revert picked &&
- 
--	sed "s/[a-f0-9]*\.\.\./objid/" foo > actual &&
-+	sed "s/[a-f0-9]*\.\.\./objid/" foo >actual &&
- 	test_cmp expected actual
- '
- 
-@@ -345,7 +345,7 @@ test_expect_success 'commit after failed cherry-pick does not add duplicated -s'
- 	pristine_detach initial &&
- 	test_must_fail git cherry-pick -s picked-signed &&
- 	git commit -a -s &&
--	test $(git show -s |grep -c "Signed-off-by") = 1
-+	test $(git show -s >tmp && grep -c "Signed-off-by" tmp && rm tmp) = 1
- '
- 
- test_expect_success 'commit after failed cherry-pick adds -s at the right place' '
-@@ -359,7 +359,7 @@ test_expect_success 'commit after failed cherry-pick adds -s at the right place'
- 	Signed-off-by: C O Mitter <committer@example.com>
- 	# Conflicts:
- 	EOF
--	grep -e "^# Conflicts:" -e '^Signed-off-by' <.git/COMMIT_EDITMSG >actual &&
-+	grep -e "^# Conflicts:" -e '^Signed-off-by' .git/COMMIT_EDITMSG >actual &&
- 	test_cmp expect actual &&
- 
- 	cat <<-\EOF >expected &&
-@@ -378,7 +378,7 @@ test_expect_success 'commit --amend -s places the sign-off at the right place' '
- 
- 	# emulate old-style conflicts block
- 	mv .git/MERGE_MSG .git/MERGE_MSG+ &&
--	sed -e "/^# Conflicts:/,\$s/^# *//" <.git/MERGE_MSG+ >.git/MERGE_MSG &&
-+	sed -e "/^# Conflicts:/,\$s/^# *//" .git/MERGE_MSG+ >.git/MERGE_MSG &&
- 
- 	git commit -a &&
- 	git commit --amend -s &&
-@@ -388,7 +388,7 @@ test_expect_success 'commit --amend -s places the sign-off at the right place' '
- 	Signed-off-by: C O Mitter <committer@example.com>
- 	Conflicts:
- 	EOF
--	grep -e "^Conflicts:" -e '^Signed-off-by' <.git/COMMIT_EDITMSG >actual &&
-+	grep -e "^Conflicts:" -e '^Signed-off-by' .git/COMMIT_EDITMSG >actual &&
- 	test_cmp expect actual
+ test_expect_success 'merge --log appends to custom message' '
+ 	git reset --hard c1 &&
+ 	git merge --log -m "$(cat exp.subject)" c2 &&
+-	git cat-file commit HEAD | sed -e "1,/^$/d" >actual &&
++	git cat-file commit HEAD >raw &&
++	sed -e "1,/^$/d" raw >actual &&
+ 	test_cmp exp.log actual
  '
  
 -- 
