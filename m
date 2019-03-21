@@ -2,217 +2,236 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77F6120248
-	for <e@80x24.org>; Thu, 21 Mar 2019 21:10:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4204920248
+	for <e@80x24.org>; Thu, 21 Mar 2019 21:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727142AbfCUVJ7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 17:09:59 -0400
-Received: from mail-vk1-f202.google.com ([209.85.221.202]:37853 "EHLO
-        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726093AbfCUVJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 17:09:59 -0400
-Received: by mail-vk1-f202.google.com with SMTP id u9so124153vke.4
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 14:09:58 -0700 (PDT)
+        id S1727047AbfCUVNV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 17:13:21 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42831 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726589AbfCUVNU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 17:13:20 -0400
+Received: by mail-wr1-f67.google.com with SMTP id g3so107158wrx.9
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 14:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
-        bh=M1ioYCGKaNZ2WJdD6vkP694Njemi4tZjghRZmG0/8qA=;
-        b=p/EPktqtEqJ8wAvPlOLiB4iNwyXDQlpm81uwj5b0mARSdmAYPZEpte13X6QBEOoe/c
-         RZq9MKeoeMVlBTgXysgH5Fv/Rfd2+cvyvOMzcoKEv6+zaVeIk60AIdgTYrAnBol8GXLd
-         xDyMGigrVqXNNfnsaNdX6KEzKcxzAsBEtbpQdmNyU1mQ3qHr8mRvC3YnAVG09YsKZtK9
-         f41/8dp+8EeEQa87OEEOulheJWpd/6lIaWwiuXlDvvQEZnV84Yu/0fVuruN+XhfST+MN
-         H/SriReprTjkc1G9xoXmnrxPDK3Hu1HTh8e9/ktfKo/SeFM2mtpoRgpdJg+N3bPA3zMo
-         dFrw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AtfkmRjCqFxAnIff/gA/rWT2HG9QGdeFzx/afS5T5Fw=;
+        b=rH5ZbrlkKAAkeBCvGwj155ODCEmosn2gh+LyL1+y3pB2Q7NRMwXujOa10DC2ZAesYg
+         zAw+lLqm7FMIyD8xynqUk4TP+jDjJD1obaYtwBlKM3fDg+lulOMeFjLTpwX73M72Hdkd
+         TbIDseP2OIymHpsnk8q4X9CkR/sNU6a0Gu7xshBViSl80TJO39Xr/GkzyQ6nu4T+V5Gz
+         m9UaS8dW+t6BBYz4sdZ0WzgV6Frg9Wtacdd7eBJ6IF7ufbueHBnQCRsOAvMfdOni5Rjo
+         l4CXsa+lxFhJJWtxA9E4f/AjAzkV/2yzMj7gMru2DG9duNchweWbmftJmCjE+yo/AlNK
+         ZN1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to;
-        bh=M1ioYCGKaNZ2WJdD6vkP694Njemi4tZjghRZmG0/8qA=;
-        b=dbctI1T54le9BIXtfUTgCMH2Dn/nqUg+PF72AAq7W4078dLBrvv+8OXIsezU0PRvbP
-         PvvOJRH/jPoSI/YOE/4noxAl2dCyv6C4/kHPo4mqkAQ3MTbtIQxfadJYCkiuCdkQ/nei
-         TvvyyGExDpZBCbPVtHIXNAeDh+sAbZPiFYuK9w1hAMEZ2bGKJhv3y0HeY7oia76a1yom
-         SGNvnXyiihxTsxlkncGi3DzDOhMqkpl4sMMyRlvlRnDFQCH0XzAte9Ch4UteBD6mBcBE
-         j+5rIC8LitCydf3lAWtkuTWgbAZstm08bLFxcxTSny2QA1YsVsKMmT1qwcvmXuhl8eRL
-         4Pzw==
-X-Gm-Message-State: APjAAAVwOF2yuLfiOcq84ngMqqJkTAq1/ec0VUGxNAoyufu6WTtIwZV2
-        DfgdIbGqt9i4Pq7Rl8hEkqQLQ4v0O25VtRSgHQNeiEBgPCF8NiwzX0tyQCUo4emKS3KI+AHhYWA
-        SVhar20FIWV40GnV7k+YVRGMCY+xAG0d8lnprXAeApFnL0i3Z6qmKSM3TyvNA/dc=
-X-Google-Smtp-Source: APXvYqwEeoKsi3LMIKi+P1opgvd6sHNryHDPxxYvfrnun3oAEMtVsp6IZMkXsRBeugSPRCRH8y4CzJQx5q4uVA==
-X-Received: by 2002:a67:1646:: with SMTP id 67mr3458486vsw.19.1553202597367;
- Thu, 21 Mar 2019 14:09:57 -0700 (PDT)
-Date:   Thu, 21 Mar 2019 14:09:51 -0700
-In-Reply-To: <cover.1553202340.git.steadmon@google.com>
-Message-Id: <ce5258610ffbc2e498ff33336c5c89b69468d4fd.1553202340.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <cover.1552519463.git.steadmon@google.com> <cover.1553202340.git.steadmon@google.com>
-X-Mailer: git-send-email 2.21.0.225.g810b269d1ac-goog
-Subject: [PATCH v3 1/1] trace2: write to directory targets
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=AtfkmRjCqFxAnIff/gA/rWT2HG9QGdeFzx/afS5T5Fw=;
+        b=jhBmRUEWRH1K4PkvPB3rtSz/PH60sbomAEH37cP2eKm6+RlKZ3ZFycTBoDXwLbcgEd
+         JuLxb0hPw6TMBxjgJ1p3J6i/TgxiRECbzAxsHF0T2opmIf+mxHTAhfJmRBibxsHOgBWI
+         cpvuul9hv7UH9OsbSPLJWqx+9hRAjtsyMYguRG2bpVjnuWiCyR+H5v0ljIWmNPPmgeJP
+         n7mhRBNDUyrtmHOHW/pseQmhdm0cSfPX4sy/kGysZAco8e75LPbMvIoeVGQkVhf5ub2m
+         2oiOeS9+zp/x/kITGdpOiv/PvwMpSR2Daw7b9+STjRoXpVRHnrNduGocgMwfUicGsrOx
+         aIsA==
+X-Gm-Message-State: APjAAAVpiQ8OR+6o5+gmhs/1kkRrDLCu3WDG7X33iTStzrq7V4XOhvcD
+        Yj6iFBAUuqDNDkHheTptimTedCjx
+X-Google-Smtp-Source: APXvYqxhtrBTySBeWzqvNO3Fo8efiQH8C5C2fqTFE8r1oyZrPeSffhAXbKj9eKt0QmyutyXSeuRx2g==
+X-Received: by 2002:adf:ea43:: with SMTP id j3mr3795308wrn.210.1553202798071;
+        Thu, 21 Mar 2019 14:13:18 -0700 (PDT)
+Received: from [192.168.0.104] (atoulouse-658-1-58-102.w92-136.abo.wanadoo.fr. [92.136.153.102])
+        by smtp.gmail.com with ESMTPSA id a9sm7161315wmb.30.2019.03.21.14.13.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Mar 2019 14:13:17 -0700 (PDT)
+Subject: Re: [RFC PATCH 08/11] rebase -i: use struct rebase_options to parse
+ args
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20190319190317.6632-1-phillip.wood123@gmail.com>
+ <20190319190317.6632-9-phillip.wood123@gmail.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <7ba0dc1a-b6dd-4ef6-81ee-495e32fc67cf@gmail.com>
+Date:   Thu, 21 Mar 2019 22:13:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
+MIME-Version: 1.0
+In-Reply-To: <20190319190317.6632-9-phillip.wood123@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the value of a trace2 environment variable is an absolute path
-referring to an existing directory, write output to files (one per
-process) underneath the given directory. Files will be named according
-to the final component of the trace2 SID, followed by a counter to avoid
-potential collisions.
+Hi Phillip,
 
-This makes it more convenient to collect traces for every git invocation
-by unconditionally setting the relevant trace2 envvar to a constant
-directory name.
+It’s nice to see your work on this on the list.
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- Documentation/technical/api-trace2.txt |  5 ++
- t/t0210-trace2-normal.sh               | 15 ++++++
- trace2/tr2_dst.c                       | 63 +++++++++++++++++++++++++-
- 3 files changed, 81 insertions(+), 2 deletions(-)
+Le 19/03/2019 à 20:03, Phillip Wood a écrit :
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> In order to run `rebase -i` without forking `rebase--interactive` it
+> will be convenient to use the same structure when parsing the options in
+> cmd_rebase() and cmd_rebase__interactive().
+> 
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  builtin/rebase.c | 203 ++++++++++++++++++++++++++---------------------
+>  1 file changed, 112 insertions(+), 91 deletions(-)
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index c93f2aa629..33a2495032 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -50,6 +50,73 @@ enum rebase_type {
+>  	REBASE_PRESERVE_MERGES
+>  };
+>  
+> +struct rebase_options {
+> +	enum rebase_type type;
+> +	const char *state_dir;
+> +	struct commit *upstream;
+> +	const char *upstream_name;
+> +	const char *upstream_arg;
+> +	char *head_name;
+> +	struct object_id orig_head;
+> +	struct commit *onto;
+> +	const char *onto_name;
+> +	const char *revisions;
+> +	const char *switch_to;
+> +	int root;
+> +	struct object_id *squash_onto;
+> +	struct commit *restrict_revision;
+> +	int dont_finish_rebase;
+> +	enum {
+> +		REBASE_NO_QUIET = 1<<0,
+> +		REBASE_VERBOSE = 1<<1,
+> +		REBASE_DIFFSTAT = 1<<2,
+> +		REBASE_FORCE = 1<<3,
+> +		REBASE_INTERACTIVE_EXPLICIT = 1<<4,
+> +	} flags;
+> +	struct argv_array git_am_opts;
+> +	const char *action;
+> +	int signoff;
+> +	int allow_rerere_autoupdate;
+> +	int keep_empty;
+> +	int autosquash;
+> +	char *gpg_sign_opt;
+> +	int autostash;
+> +	char *cmd;
+> +	int allow_empty_message;
+> +	int rebase_merges, rebase_cousins;
+> +	char *strategy, *strategy_opts;
+> +	struct strbuf git_format_patch_opt;
+> +	int reschedule_failed_exec;
+> +};
+> +
+> +#define REBASE_OPTIONS_INIT {			  	\
+> +		.type = REBASE_UNSPECIFIED,	  	\
+> +		.flags = REBASE_NO_QUIET, 		\
+> +		.git_am_opts = ARGV_ARRAY_INIT,		\
+> +		.git_format_patch_opt = STRBUF_INIT	\
+> +	}
+> +
+> +static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+> +{
+> +	struct replay_opts replay = REPLAY_OPTS_INIT;
+> +
+> +	sequencer_init_config(&replay);
+> +
+> +	replay.action = REPLAY_INTERACTIVE_REBASE;
+> +	replay.signoff = opts->signoff;
+> +	replay.allow_ff = !(opts->flags & REBASE_FORCE);
+> +	if (opts->allow_rerere_autoupdate)
+> +		replay.allow_rerere_auto = opts->allow_rerere_autoupdate;
+> +	replay.allow_empty = 1;
+> +	replay.allow_empty_message = opts->allow_empty_message;
+> +	replay.verbose = opts->flags & REBASE_VERBOSE;
+> +	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+> +	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+> +	replay.strategy = opts->strategy;
+> +
+> +	return replay;
+> +}
+> +
 
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 2de565fa3d..d0948ba250 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -109,6 +109,11 @@ values are recognized.
- 
- 	Enables the target, opens and writes to the file in append mode.
- 
-+	If the target already exists and is a directory, the traces will be
-+	written to files (one per process) underneath the given directory. They
-+	will be named according to the last component of the SID (optionally
-+	followed by a counter to avoid filename collisions).
-+
- `af_unix:[<socket_type>:]<absolute-pathname>`::
- 
- 	Enables the target, opens and writes to a Unix Domain Socket
-diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-index 03a0aedb1d..819430658b 100755
---- a/t/t0210-trace2-normal.sh
-+++ b/t/t0210-trace2-normal.sh
-@@ -80,6 +80,21 @@ test_expect_success 'normal stream, return code 1' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'automatic filename' '
-+	test_when_finished "rm -r traces actual expect" &&
-+	mkdir traces &&
-+	GIT_TR2="$(pwd)/traces" test-tool trace2 001return 0 &&
-+	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <"$(ls traces/*)" >actual &&
-+	cat >expect <<-EOF &&
-+		version $V
-+		start _EXE_ trace2 001return 0
-+		cmd_name trace2 (trace2)
-+		exit elapsed:_TIME_ code:0
-+		atexit elapsed:_TIME_ code:0
-+	EOF
-+	test_cmp expect actual
-+'
-+
- # Verb 002exit
- #
- # Explicit exit(code) from within cmd_<verb> propagates <code>.
-diff --git a/trace2/tr2_dst.c b/trace2/tr2_dst.c
-index fd490a43ad..c3d82ca6a4 100644
---- a/trace2/tr2_dst.c
-+++ b/trace2/tr2_dst.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "trace2/tr2_dst.h"
-+#include "trace2/tr2_sid.h"
- 
- /*
-  * If a Trace2 target cannot be opened for writing, we should issue a
-@@ -12,6 +13,11 @@
-  */
- #define TR2_ENVVAR_DST_DEBUG "GIT_TR2_DST_DEBUG"
- 
-+/*
-+ * How many attempts we will make at creating an automatically-named trace file.
-+ */
-+#define MAX_AUTO_ATTEMPTS 10
-+
- static int tr2_dst_want_warning(void)
- {
- 	static int tr2env_dst_debug = -1;
-@@ -36,6 +42,55 @@ void tr2_dst_trace_disable(struct tr2_dst *dst)
- 	dst->need_close = 0;
- }
- 
-+static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
-+{
-+	int fd;
-+	const char *last_slash, *sid = tr2_sid_get();
-+	struct strbuf path = STRBUF_INIT;
-+	size_t base_path_len;
-+	unsigned attempt_count;
-+
-+	last_slash = strrchr(sid, '/');
-+	if (last_slash)
-+		sid = last_slash + 1;
-+
-+	strbuf_addstr(&path, tgt_prefix);
-+	if (!is_dir_sep(path.buf[path.len - 1]))
-+		strbuf_addch(&path, '/');
-+	strbuf_addstr(&path, sid);
-+	base_path_len = path.len;
-+
-+	for (attempt_count = 0; attempt_count < MAX_AUTO_ATTEMPTS; attempt_count++) {
-+		if (attempt_count > 0) {
-+			strbuf_setlen(&path, base_path_len);
-+			strbuf_addf(&path, ".%d", attempt_count);
-+		}
-+
-+		fd = open(path.buf, O_WRONLY | O_CREAT | O_EXCL, 0666);
-+		if (fd != -1)
-+			break;
-+	}
-+
-+	if (fd == -1) {
-+		if (tr2_dst_want_warning())
-+			warning("trace2: could not open '%.*s' for '%s' tracing: %s",
-+				(int) base_path_len, path.buf,
-+				dst->env_var_name, strerror(errno));
-+
-+		tr2_dst_trace_disable(dst);
-+		strbuf_release(&path);
-+		return 0;
-+	}
-+
-+	strbuf_release(&path);
-+
-+	dst->fd = fd;
-+	dst->need_close = 1;
-+	dst->initialized = 1;
-+
-+	return dst->fd;
-+}
-+
- static int tr2_dst_try_path(struct tr2_dst *dst, const char *tgt_value)
- {
- 	int fd = open(tgt_value, O_WRONLY | O_APPEND | O_CREAT, 0666);
-@@ -202,8 +257,12 @@ int tr2_dst_get_trace_fd(struct tr2_dst *dst)
- 		return dst->fd;
- 	}
- 
--	if (is_absolute_path(tgt_value))
--		return tr2_dst_try_path(dst, tgt_value);
-+	if (is_absolute_path(tgt_value)) {
-+		if (is_directory(tgt_value))
-+			return tr2_dst_try_auto_path(dst, tgt_value);
-+		else
-+			return tr2_dst_try_path(dst, tgt_value);
-+	}
- 
- #ifndef NO_UNIX_SOCKETS
- 	if (starts_with(tgt_value, PREFIX_AF_UNIX))
--- 
-2.21.0.225.g810b269d1ac-goog
+I wonder if `struct rebase_options` and `struct replay_options` could be
+merged, or at least have `replay_options` used in `rebase_options`,
+instead of converting one to the other.  I think it would make things
+simpler and cleaner, but I don’t know how hard it would be, or if my
+assumption is correct.
+
+Cheers,
+Alban
 
