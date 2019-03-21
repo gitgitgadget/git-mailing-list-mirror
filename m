@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CEE720248
-	for <e@80x24.org>; Thu, 21 Mar 2019 22:32:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D919F20248
+	for <e@80x24.org>; Thu, 21 Mar 2019 22:33:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727166AbfCUWc5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 18:32:57 -0400
-Received: from mail-eopbgr740090.outbound.protection.outlook.com ([40.107.74.90]:6221
-        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
+        id S1727194AbfCUWda (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 18:33:30 -0400
+Received: from mail-eopbgr720118.outbound.protection.outlook.com ([40.107.72.118]:2850
+        "EHLO NAM05-CO1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726681AbfCUWc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 18:32:56 -0400
+        id S1726840AbfCUWda (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 18:33:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zsXKuS0sLoF6vg9kwfz/4lj7MRt+ss9M7eELjPZ5gdM=;
- b=WeB3tEtSE7QTVQcqUUMPgn+yU7/gqeQnCXAU6LKLK3P05HsHsjDBdb5p37rTVyvwevY92sVGQxOLbBFgboGJei/x+pZvVSp3NYXb2xNXG6XwCxdkXObu1k05oCVt/DdeedOaZ+mG0wtYEiTWM2XDGbHAc7QwIIStgwPsRGgK984=
+ bh=fApAHcZQMtYa/QSLAHsE4NtFBjm4hfFqSIphn1aIuO0=;
+ b=mAZQivqGFUFXUtzxT+yMM+L/39Y+jBpcxhPWFE68oHhEqcAluzT8egHimxFD0qoGBj+PBZONAdSPqLOlMhVZa/Er1QpqmJEe54XUHU9sbX5Xih0+G4abKG3k2t0/dPetjQdHW+WeG/37t/g0CSYlUAZvtXrrSWYyOcnWbWp0uk4=
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
- DM6PR08MB4410.namprd08.prod.outlook.com (20.176.82.156) with Microsoft SMTP
+ DM6PR08MB4251.namprd08.prod.outlook.com (20.176.82.12) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1730.16; Thu, 21 Mar 2019 22:32:54 +0000
+ 15.20.1730.15; Thu, 21 Mar 2019 22:32:45 +0000
 Received: from DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::75e5:faf9:290a:a244]) by DM6PR08MB4956.namprd08.prod.outlook.com
  ([fe80::75e5:faf9:290a:a244%3]) with mapi id 15.20.1709.015; Thu, 21 Mar 2019
- 22:32:54 +0000
+ 22:32:45 +0000
 From:   "Mazo, Andrey" <amazo@checkvideo.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
@@ -44,13 +44,13 @@ CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
         "szeder.dev@gmail.com" <szeder.dev@gmail.com>,
         "ahippo@yandex.com" <ahippo@yandex.com>,
         "gitster@pobox.com" <gitster@pobox.com>
-Subject: [PATCH v2 2/7] git-p4: match branches case insensitively if
- configured
-Thread-Topic: [PATCH v2 2/7] git-p4: match branches case insensitively if
- configured
-Thread-Index: AQHU4DYGwpQ0yt3xbE+SDG6OAdz4sg==
-Date:   Thu, 21 Mar 2019 22:32:54 +0000
-Message-ID: <e644a8ab4928349ed83ac9ab6ffdbcafc3a3a7b5.1553207234.git.amazo@checkvideo.com>
+Subject: [PATCH v2 1/7] git-p4: detect/prevent infinite loop in
+ gitCommitByP4Change()
+Thread-Topic: [PATCH v2 1/7] git-p4: detect/prevent infinite loop in
+ gitCommitByP4Change()
+Thread-Index: AQHU4DYBurNperuERU6FwqqqyjyYfA==
+Date:   Thu, 21 Mar 2019 22:32:45 +0000
+Message-ID: <3ac39171d441b84a20d5e918a9995e8d8de627c5.1553207234.git.amazo@checkvideo.com>
 References: <cover.1553207234.git.amazo@checkvideo.com>
 In-Reply-To: <cover.1553207234.git.amazo@checkvideo.com>
 Accept-Language: en-US
@@ -65,73 +65,140 @@ x-ms-exchange-messagesentrepresentingtype: 1
 x-mailer: git-send-email 2.19.2
 x-originating-ip: [70.163.25.109]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: fe3a9977-b3b7-4fec-6c8f-08d6ae4d28df
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600127)(711020)(4605104)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB4410;
-x-ms-traffictypediagnostic: DM6PR08MB4410:
-x-microsoft-antispam-prvs: <DM6PR08MB441048B6BB64034952DDBBC1DA420@DM6PR08MB4410.namprd08.prod.outlook.com>
+x-ms-office365-filtering-correlation-id: c8420298-d124-4a2f-317b-08d6ae4d23a5
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600127)(711020)(4605104)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB4251;
+x-ms-traffictypediagnostic: DM6PR08MB4251:
+x-microsoft-antispam-prvs: <DM6PR08MB425196FC53FA101B480F8E37DA420@DM6PR08MB4251.namprd08.prod.outlook.com>
 x-forefront-prvs: 0983EAD6B2
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(39860400002)(346002)(366004)(136003)(376002)(189003)(199004)(26005)(2906002)(6436002)(68736007)(14444005)(7416002)(36756003)(6486002)(316002)(256004)(106356001)(66066001)(486006)(476003)(97736004)(11346002)(446003)(2501003)(118296001)(2616005)(105586002)(2351001)(54906003)(6506007)(386003)(6916009)(25786009)(8676002)(5660300002)(99286004)(76176011)(478600001)(102836004)(81166006)(81156014)(1730700003)(3846002)(6116002)(305945005)(71190400001)(71200400001)(5640700003)(4326008)(186003)(7736002)(86362001)(8936002)(53936002)(19627235002)(52116002)(50226002)(6512007)(14454004);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4410;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6029001)(396003)(346002)(136003)(39860400002)(376002)(366004)(199004)(189003)(3846002)(6116002)(26005)(7736002)(2616005)(6916009)(71200400001)(7416002)(4326008)(118296001)(6486002)(102836004)(11346002)(71190400001)(2351001)(1730700003)(81166006)(52116002)(5660300002)(105586002)(8936002)(316002)(66066001)(50226002)(81156014)(2906002)(106356001)(99286004)(14454004)(54906003)(36756003)(76176011)(8676002)(6506007)(386003)(446003)(486006)(14444005)(53936002)(6436002)(5640700003)(186003)(478600001)(476003)(86362001)(6512007)(68736007)(2501003)(256004)(25786009)(305945005)(97736004);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4251;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 received-spf: None (protection.outlook.com: checkvideo.com does not designate
  permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: sHzjkL+l39S4RSB3gL3brBMIh68345MGl9QS+PhWdfJnxc6fxD9QCULrtCBMcpip4fJOqsvXwLTBeywgR5WW+BsZgXGznreojWD8ERThuMS+IaALhg35Sk9FclGneTLguVZ0dFoQa1sB7spxHYi54uCIOgX+zqRsUR3XGOkSohMpRbYT+xyrpf7u8qPYCdC94HqEUc9mfiJf8d50WCEydTa3FoyGgpbufDjyNkUid8dP5glC0YESkXws5EOe6yT1eTojBK+fgvpvcqAU7+XQQxV9MJ8YNsRWTpXAQ5T1Lx0WanWiToDaGxPz0hYujY+pdXnJ47FoGIFiyQ0BDlqBDHeCsoPeLJIN6WOoz5KQx+/ryeUfwjZir07XzaIojMTh6vMS5zUidufl0gKcEDnCzag6sgtGdpA+yi3oGtQAzXQ=
+x-microsoft-antispam-message-info: gT9blEmpKTpVNfIw1okIe5Yz8T+X3n2T5i/IuDy5AD5JdZTfZdqlit21REQLo22+ELiK7OmRIMk+pkU5sC0S4xjLcdH/Kg1eart2M3c/q1R9AALsdBUj9jFQ6Ku8RD9ENUb26UOBd00naJYVVn6S0H2PpRjmtjnYNLxnhs3x8uBzblmgMbCE7Q5nKENg4WN9aTkymUak0+KFlxO/J1u2RfozmbEhxZd1Pm1A2S1QuzLOPQItNdtu3il4iUzct0HNmef7+jQmmVMb+pRGgv0Y13ce/uSxnFvnRRRkcFiGoLz04bV/EIKCWwM4oYT4LBemEqtvT3oNL7SXqdTkzyZsSS9o8QJ1IDbcRFzuEYHIIueGSl4YnO6AF3huDn+Qts3yRcTrRKDIgWKc4NidNjlS9/t8SJ1RcwUv426s3KYq7sc=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: checkvideo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fe3a9977-b3b7-4fec-6c8f-08d6ae4d28df
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2019 22:32:54.3201
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8420298-d124-4a2f-317b-08d6ae4d23a5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2019 22:32:45.5939
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB4410
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB4251
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-p4 knows how to handle case insensitivity in file paths
-if core.ignorecase is set.
-However, when determining a branch for a file,
-it still does a case-sensitive prefix match.
-This may result in some file changes to be lost on import.
+Under certain circumstances, gitCommitByP4Change() can enter an infinite
+loop resulting in `git p4 sync` hanging forever.
 
-For example, given the following commits
- 1. add //depot/main/file1
- 2. add //depot/DirA/file2
- 3. add //depot/dira/file3
- 4. add //depot/DirA/file4
-and "branchList =3D main:DirA" branch mapping,
-commit 3 will be lost.
+The problem is that
+`git rev-list --bisect <latest> ^<earliest>` can return `<latest>`,
+which would result in reinspecting <latest> and potentially an infinite loo=
+p.
 
-So, do branch search case insensitively if running with core.ignorecase set=
+This can happen when importing just a subset of P4 repository
+and/or with explicit "--changesfile" option.
+
+A real-life example:
+"""
+    looking in ref refs/remotes/p4/mybranch for change 26894 using bisect..=
 .
-Teach splitFilesIntoBranches() to use the p4PathStartsWith() function
-for path prefix matches instead of always case-sensitive match.
+    Reading pipe: git rev-parse refs/remotes/p4/mybranch
+    trying: earliest  latest 4daff81c520a82678e1ef347f2b5e97258101ae1
+    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
+01ae1
+    Reading pipe: git cat-file commit 147f5d3292af2e1cc4a56a7b96db845144c68=
+486
+    current change 25339
+    trying: earliest ^147f5d3292af2e1cc4a56a7b96db845144c68486 latest 4daff=
+81c520a82678e1ef347f2b5e97258101ae1
+    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
+01ae1 ^147f5d3292af2e1cc4a56a7b96db845144c68486
+    Reading pipe: git cat-file commit 51db83df9d588010d0bd995641c85aa0408a5=
+bb9
+    current change 25420
+    trying: earliest ^51db83df9d588010d0bd995641c85aa0408a5bb9 latest 4daff=
+81c520a82678e1ef347f2b5e97258101ae1
+    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
+01ae1 ^51db83df9d588010d0bd995641c85aa0408a5bb9
+    Reading pipe: git cat-file commit e8f83909ceb570f5a7e48c2853f3c5d8207ce=
+a52
+    current change 25448
+    trying: earliest ^e8f83909ceb570f5a7e48c2853f3c5d8207cea52 latest 4daff=
+81c520a82678e1ef347f2b5e97258101ae1
+    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
+01ae1 ^e8f83909ceb570f5a7e48c2853f3c5d8207cea52
+    Reading pipe: git cat-file commit 09a48eb7acd594dce52e06681be9c366e1844=
+d66
+    current change 25521
+    trying: earliest ^09a48eb7acd594dce52e06681be9c366e1844d66 latest 4daff=
+81c520a82678e1ef347f2b5e97258101ae1
+    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
+01ae1 ^09a48eb7acd594dce52e06681be9c366e1844d66
+    Reading pipe: git cat-file commit 4daff81c520a82678e1ef347f2b5e97258101=
+ae1
+    current change 26907
+    trying: earliest ^09a48eb7acd594dce52e06681be9c366e1844d66 latest 4daff=
+81c520a82678e1ef347f2b5e97258101ae1
+    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
+01ae1 ^09a48eb7acd594dce52e06681be9c366e1844d66
+    Reading pipe: git cat-file commit 4daff81c520a82678e1ef347f2b5e97258101=
+ae1
+    current change 26907
+    trying: earliest ^09a48eb7acd594dce52e06681be9c366e1844d66 latest 4daff=
+81c520a82678e1ef347f2b5e97258101ae1
+    Reading pipe: git rev-list --bisect 4daff81c520a82678e1ef347f2b5e972581=
+01ae1 ^09a48eb7acd594dce52e06681be9c366e1844d66
+    Reading pipe: git cat-file commit 4daff81c520a82678e1ef347f2b5e97258101=
+ae1
+    current change 26907
+    ...
+"""
+
+The fix is two-fold:
+ * detect an infinite loop and die right away
+   instead of looping forever;
+ * make sure, `git rev-list --bisect` can't return "latestCommit" again
+   by excluding it from the rev-list range explicitly.
 
 Signed-off-by: Andrey Mazo <amazo@checkvideo.com>
 ---
- git-p4.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Notes:
+    I don't have a simple test-case for this yet,
+    and I was able to perform a few complex initial `git p4 sync` runs
+    without hitting this problem.
+   =20
+    I suspect, I had somehow messed up with branch definitions
+    and --changesfile option at some point.
+
+ git-p4.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index c0a3068b6f..91c610f960 100755
+index 5b79920f46..c0a3068b6f 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -2721,11 +2721,11 @@ def splitFilesIntoBranches(self, commit):
-                 relPath =3D self.stripRepoPath(path, self.depotPaths)
+@@ -3323,11 +3323,13 @@ def gitCommitByP4Change(self, ref, change):
+                 return next
 =20
-             for branch in self.knownBranches.keys():
-                 # add a trailing slash so that a commit into qt/4.2foo
-                 # doesn't end up in qt/4.2, e.g.
--                if relPath.startswith(branch + "/"):
-+                if p4PathStartsWith(relPath, branch + "/"):
-                     if branch not in branches:
-                         branches[branch] =3D []
-                     branches[branch].append(file)
-                     break
+             if currentChange < change:
+                 earliestCommit =3D "^%s" % next
+             else:
+-                latestCommit =3D "%s" % next
++                if next =3D=3D latestCommit:
++                    die("Infinite loop while looking in ref %s for change =
+%s. Check your branch mappings" % (ref, change))
++                latestCommit =3D "%s^@" % next
 =20
+         return ""
+=20
+     def importNewBranch(self, branch, maxChange):
+         # make fast-import flush all changes to disk and update the refs u=
+sing the checkpoint
 --=20
 2.19.2
 
