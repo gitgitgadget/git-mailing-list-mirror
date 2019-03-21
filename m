@@ -2,118 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0585820248
-	for <e@80x24.org>; Thu, 21 Mar 2019 22:12:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCC8820248
+	for <e@80x24.org>; Thu, 21 Mar 2019 22:32:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726555AbfCUWMD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 18:12:03 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46406 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726374AbfCUWMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 18:12:03 -0400
-Received: by mail-wr1-f68.google.com with SMTP id o1so214821wrs.13
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 15:12:02 -0700 (PDT)
+        id S1726609AbfCUWcr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 18:32:47 -0400
+Received: from mail-eopbgr740094.outbound.protection.outlook.com ([40.107.74.94]:26016
+        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726370AbfCUWcr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 18:32:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=n/pVG8/WblF9KdySkHnET7nKhUD+dLxdaKCSj7IMZLg=;
-        b=IldFZRIsssVJpP7Uk+uhgwYwR9fxYnxpZ/xJXpdbxifJbYb8MMixVa0ErTrvKfcMG8
-         dISg/MTHgk6rbX1w3t5KFaaD/HmssIgtau9XmALkLT56Y92M9TVmxjRatLSIXdnzNO0f
-         vfo/TQkKnvcv3LAJI5SoMNYvasGymw/aPk54lUnQVbENbQ5Hed1bU1S55n81a9B25wKV
-         R+oSDsd9YjXw5Hb2QhoL3WFxy/EetABySnhXgsYmZxWcjFkXyj3S6q2NGyQ41H5sJO8a
-         U/hkbuC4RXk/AumBucRZI+cgNY6b1n80IJ9YQJK06yDtHZLkJqF1zHEEyz97T7bJP++7
-         69lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=n/pVG8/WblF9KdySkHnET7nKhUD+dLxdaKCSj7IMZLg=;
-        b=Iyr5gn0jeSf2OzUKjX2KqOEjStGUEb252+giKCPEqT0DNN1I1NnayBUdxoPd7/ZRec
-         gUz/TqzhOILR7d/WS5i/u3o+QD6cqqalbI8vxAFtUH/Tz4PZ4dgrsonFes9TJGtYDeXY
-         skrysIWSm7DpuQaSIG/tDEEa6iHf5LcHF+iQf4teNkxJ6mZpP93hgnn4b2z+2uR9NkdV
-         MeBcD8WhvpZHqGTE0c224zoVSqmzD3XDG21Kwx+WWpegJtp2On+dh1TRnu13pR11pKct
-         61Pg29rcnt4+TKLK0H3wHoUukQOCQ69WRoa+6/ssv5Dc+GtsoX5t5/e5O+8vUErSjubG
-         4Fag==
-X-Gm-Message-State: APjAAAXAK2poLnO7elgdTq721oI0HANsQ2SRhmaHhGRrwld+bzNh7Elp
-        UNAC66lfiEqoOAJf+6S7eg4=
-X-Google-Smtp-Source: APXvYqxiMF+S1hm2V3gsm8I0fZQn7G6ugLOTIagg84hzQqQ5wzPzxcD7KYTZq0/nd1lPX4ogJDFrbg==
-X-Received: by 2002:adf:9c8e:: with SMTP id d14mr4023751wre.237.1553206321534;
-        Thu, 21 Mar 2019 15:12:01 -0700 (PDT)
-Received: from ?IPv6:2001:a62:1401:b801:e94e:b0ec:3a32:7f61? ([2001:a62:1401:b801:e94e:b0ec:3a32:7f61])
-        by smtp.googlemail.com with ESMTPSA id 7sm16410070wrc.81.2019.03.21.15.11.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Mar 2019 15:12:00 -0700 (PDT)
-Subject: Re: [PATCH 2/4] gc docs: include the "gc.*" section from "config" in
- "gc"
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Matt McCutchen <matt@mattmccutchen.net>
-References: <20190318161502.7979-1-avarab@gmail.com>
- <20190318161502.7979-3-avarab@gmail.com>
- <20190318213139.GF29661@sigill.intra.peff.net>
-From:   Andreas Heiduk <asheiduk@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <4dba2718-9e93-4f07-8f67-f79a8a9fbb0c@gmail.com>
-Date:   Thu, 21 Mar 2019 23:11:59 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
-MIME-Version: 1.0
-In-Reply-To: <20190318213139.GF29661@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+ d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IxTWKLD4AEtPuAsdwKT+mEDtVxihAuvPlelkwDtcOsE=;
+ b=Vu98zR2FRT5AbwUCUznE6lgJH8qUwTN8vuwzxPYvJtfOWsPoOGdZtfL/VJUvgUjsHIjRVYGX0l+i7BRq9kpE3IPKV4KXa2q6OV5vuQc7VSAymm5zSusj+jlvO2/fMXP2akzSkkQR1D8hvIp0CBiL2HE6rpM/0NZ5WHOAyfmgoQk=
+Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
+ DM6PR08MB4410.namprd08.prod.outlook.com (20.176.82.156) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1730.16; Thu, 21 Mar 2019 22:32:36 +0000
+Received: from DM6PR08MB4956.namprd08.prod.outlook.com
+ ([fe80::75e5:faf9:290a:a244]) by DM6PR08MB4956.namprd08.prod.outlook.com
+ ([fe80::75e5:faf9:290a:a244%3]) with mapi id 15.20.1709.015; Thu, 21 Mar 2019
+ 22:32:35 +0000
+From:   "Mazo, Andrey" <amazo@checkvideo.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
+        "luke@diamand.org" <luke@diamand.org>,
+        "sunshine@sunshineco.com" <sunshine@sunshineco.com>,
+        "gvanburgh@bloomberg.net" <gvanburgh@bloomberg.net>,
+        "larsxschneider@gmail.com" <larsxschneider@gmail.com>,
+        "miguel.torroja@gmail.com" <miguel.torroja@gmail.com>,
+        "merlorom@yahoo.fr" <merlorom@yahoo.fr>,
+        "vitor.hda@gmail.com" <vitor.hda@gmail.com>,
+        "aoakley@roku.com" <aoakley@roku.com>,
+        "szeder.dev@gmail.com" <szeder.dev@gmail.com>,
+        "ahippo@yandex.com" <ahippo@yandex.com>,
+        "gitster@pobox.com" <gitster@pobox.com>
+Subject: [PATCH v2 0/7] git-p4: a few assorted fixes for branches, excludes
+Thread-Topic: [PATCH v2 0/7] git-p4: a few assorted fixes for branches,
+ excludes
+Thread-Index: AQHU4DX7aD8586BBEU6JZoh59uSl1Q==
+Date:   Thu, 21 Mar 2019 22:32:35 +0000
+Message-ID: <cover.1553207234.git.amazo@checkvideo.com>
+References: <cover.1551485349.git.amazo@checkvideo.com>
+In-Reply-To: <cover.1551485349.git.amazo@checkvideo.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: BN3PR05CA0023.namprd05.prod.outlook.com (2603:10b6:400::33)
+ To DM6PR08MB4956.namprd08.prod.outlook.com (2603:10b6:5:4b::25)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=amazo@checkvideo.com; 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-mailer: git-send-email 2.19.2
+x-originating-ip: [70.163.25.109]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 08c6144f-2871-4bad-9795-08d6ae4d1dc5
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600127)(711020)(4605104)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB4410;
+x-ms-traffictypediagnostic: DM6PR08MB4410:
+x-ms-exchange-purlcount: 1
+x-microsoft-antispam-prvs: <DM6PR08MB4410057C6E9BCA9277564E66DA420@DM6PR08MB4410.namprd08.prod.outlook.com>
+x-forefront-prvs: 0983EAD6B2
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(39860400002)(346002)(366004)(136003)(376002)(189003)(199004)(26005)(2906002)(6436002)(68736007)(14444005)(7416002)(36756003)(6486002)(316002)(256004)(106356001)(66066001)(486006)(476003)(97736004)(11346002)(446003)(2501003)(2616005)(105586002)(2351001)(54906003)(6506007)(386003)(6916009)(25786009)(8676002)(966005)(5660300002)(99286004)(76176011)(478600001)(102836004)(81166006)(81156014)(1730700003)(3846002)(6116002)(305945005)(71190400001)(71200400001)(5640700003)(6306002)(4326008)(186003)(7736002)(86362001)(8936002)(53936002)(52116002)(50226002)(6512007)(14454004);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB4410;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: checkvideo.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: gfu6SiEPl4lNoTlLgezHvgUSx69YgI8c2sHbTfCnwnSRFiEHYj4u+yurB+otieBP8ovg/7TKUsfBPmi9JWLBAkP0HXHEUA3b2HdA6vz99dj2Mx6J6qCmFRrR57wMotEl2mt1EXFNBeS1yK3RbWOjAc2pbfXCgElj0HMzeq+vSYYXUgZ1i3wo7h4bCQejB0byCazlGwL8QqRVkouO0CgmWaktQj5x08D7bWPjPkN/JSX4/v5r3Xl+LSvCvVRB7IcjD+0Fx8XHd5CZxloZXmj8ZDK3ZfflRCRI/htlQnfGrGM9xRPqTiH8hQ2jCPv6Uo3Mp5kjzzpMGaNeoEQ3gCXLugUDViFY0QRTsv+KjouSBwaKmllmum3j3Jdw5yEbeGmJiQKtWVwfsTEvTbYZb7EgirZFXdy3pjGw66gSKwuZIuU=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: checkvideo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 08c6144f-2871-4bad-9795-08d6ae4d1dc5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2019 22:32:35.8750
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB4410
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18.03.19 at 22:31 Jeff King wrote:
-> On Mon, Mar 18, 2019 at 05:15:00PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
->> Rather than duplicating the documentation for the various "gc" options
->> let's include the "gc" docs from git-config. They were mostly better
->> already, and now we don't have the same docs in two places with subtly
->> different wording.
->>
->> In the cases where the git-gc(1) docs were saying something the "gc"
->> docs in git-config(1) didn't cover move the relevant section over to
->> the git-config(1) docs.
-> 
-> Makes sense.
-> 
-> I think we lose the actual example for gc.*.reflogExpire:
-> 
->> -The above two configuration variables can be given to a pattern.  For
->> -example, this sets non-default expiry values only to remote-tracking
->> -branches:
->> -
->> -------------
->> -[gc "refs/remotes/*"]
->> -	reflogExpire = never
->> -	reflogExpireUnreachable = 3 days
->> -------------
-> 
-> I don't actually think it's that big a loss. If we wanted to retain it,
-> though, it might make sense in the "EXAMPLES" section.
+This series fixes a few cases with branch detection
+and handling of excludes by git-p4.
 
-Coincidentally I stumbled over that example a  month ago and immediately
-put `never` into my configuraton for a certain - often rebased branch
-(something like "pu" here).
+This is the second iteration of the patch series.
+Changes since the v1 [1]:
+ * Added new test case for excluded paths when detecting branches;
+ * Added a new fix for excluded paths when detecting branches.
 
-> 
-> -Peff
-> 
+[1] https://public-inbox.org/git/cover.1551485349.git.amazo@checkvideo.com
+
+Range-diff vs v1:
+1:  3ac39171d4 =3D 1:  3ac39171d4 git-p4: detect/prevent infinite loop in g=
+itCommitByP4Change()
+2:  e644a8ab49 =3D 2:  e644a8ab49 git-p4: match branches case insensitively=
+ if configured
+3:  44fed954dc =3D 3:  44fed954dc git-p4: don't groom exclude path list on =
+every commit
+4:  a0d3fa6add =3D 4:  a0d3fa6add git-p4: add failing test for "don't exclu=
+de other files with same prefix"
+5:  3330f88a0d =3D 5:  3330f88a0d git-p4: don't exclude other files with sa=
+me prefix
+-:  ---------- > 6:  6170d45951 git-p4: add failing test for "git-p4: respe=
+ct excluded paths when detecting branches"
+-:  ---------- > 7:  758d8e8486 git-p4: respect excluded paths when detecti=
+ng branches
+
+Andrey Mazo (7):
+  git-p4: detect/prevent infinite loop in gitCommitByP4Change()
+  git-p4: match branches case insensitively if configured
+  git-p4: don't groom exclude path list on every commit
+  git-p4: add failing test for "don't exclude other files with same prefix"
+  git-p4: don't exclude other files with same prefix
+  git-p4: add failing test for "git-p4: respect excluded paths when detecti=
+ng branches"
+  git-p4: respect excluded paths when detecting branches
+
+ git-p4.py                 | 42 ++++++++++++++++++++------------
+ t/t9801-git-p4-branch.sh  | 40 ++++++++++++++++++++++++++++++
+ t/t9817-git-p4-exclude.sh | 51 +++++++++++++++++++++++++++++++++++----
+ 3 files changed, 112 insertions(+), 21 deletions(-)
+
+
+base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
+--=20
+2.19.2
 
