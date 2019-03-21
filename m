@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EFBC20248
-	for <e@80x24.org>; Thu, 21 Mar 2019 13:19:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8284920248
+	for <e@80x24.org>; Thu, 21 Mar 2019 13:19:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728443AbfCUNS5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 09:18:57 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:42779 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728274AbfCUNS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 09:18:57 -0400
-Received: by mail-pf1-f193.google.com with SMTP id r15so4264470pfn.9
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 06:18:56 -0700 (PDT)
+        id S1728451AbfCUNTE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 09:19:04 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:39518 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728358AbfCUNTD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 09:19:03 -0400
+Received: by mail-pf1-f195.google.com with SMTP id i17so4278424pfo.6
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 06:19:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4ZQQRHn9XK8rrnoxSr4h+Ki5RAY/Pc5VbFRPJCzdYuY=;
-        b=G9mPlMT0I0huu3fQkdx+oMWCVbtg/wl3OcOyOmmP59jU6yIdPV8Zja3+vIGA8UkJaY
-         TzGfIO8oKTPiLgZU6spUHDixA1yH2gNjBBlo8pj1X7VPSwj5iE3bhICcBLcPn9wxcKD7
-         In1BRYTm+elBCly/1NdVw/7X5WSVy5H/Ui8CC4Xy5l31yEMlExePJSZ/I54HRreZirkJ
-         pczJ+mo55KnJKL4LED1dorObE9hNZqm2Kjdl3VdKfkAomMOZxSp4Wob7Ap868KZJqRkR
-         xtXwaurV+1N1mOHJ6ltLbgr7dxMbnAR3Dz8bCIEEmqG9a3DFfhYCMee5ViKsW4nh6k0y
-         ooKQ==
+        bh=MqKYrmfJKIBg7dTlN4kzRtnrpQ1nhlPmIYXENcjD1KM=;
+        b=nToKipi4XkacWm0yjPMeM0nY2CX8cqDXQ1GP5GsDKBMSHjBSK+CMDnEGPFk+8dbHPB
+         6qJkm4nc7NoUpdiigxhq5bn1OX8KwPzwpvVtpNIR4ZytyfaqcIbrxUKSVxTeF1VulKsB
+         88JFoD9CG5FLq26QlPMKF0Q6WIxEPFeo9gZFHWQ7qq/9jOsYlZlf4eaS6+k986wUTdw2
+         GxVyqKIOl6ts8Sy4erZ4U++WqYvWauL72xQ2/F9uTG2aR6CFTI6Hy+xnVes52udDjk1m
+         w227p+IbSHWUYAa5arMAYaH4UXivHMqWGPD3C5xjLeJewTEtnUTzJWbQ1fq7g8q+UPN3
+         73Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4ZQQRHn9XK8rrnoxSr4h+Ki5RAY/Pc5VbFRPJCzdYuY=;
-        b=fkKrF1GuoF9CjYLvCtMHtjCxr6MisyV1nVsBML6CI/iMjbht2jYx2yo9eL85DC8l0V
-         tKTT2CS2qpW7ExFXkfIoq57NCMLTYyuFbJALeHzWr5ZvyA0IIeCjwrr/C63+8J77DzEe
-         UQrCUHwqhnOO6Fmt/bfNMP2AfIjVliFROtPmsqHR4z9vZUhpiWAk9RN6c1VUinW8la7L
-         A4qjXcVT0ETkFsI1iykRC+qLrrWElapuzh1vkR3M3frRpsRYL/CxoUmjK9N9jIegBUbx
-         i3acGkvCs3hc3oft0XWk4KopjlHTuDlvZtL/mxACjmw0/WWsKRHfnVcPnahr32W+26C4
-         wDkw==
-X-Gm-Message-State: APjAAAWbhmvzFi1My7JRtKHjJqYATqh+FFWmk2wvzLWtMkQVRiU6dOqT
-        NViyWcoBmMHU/YGYqw9nkNc=
-X-Google-Smtp-Source: APXvYqx1Axm3Edn0rhQ2v9Pg176nKI1JmKQU3KoMNy8+LF9U+hZ2UtLpTjL5L2ZGPOvtPe819li0pw==
-X-Received: by 2002:a17:902:758f:: with SMTP id j15mr3525447pll.211.1553174336086;
-        Thu, 21 Mar 2019 06:18:56 -0700 (PDT)
+        bh=MqKYrmfJKIBg7dTlN4kzRtnrpQ1nhlPmIYXENcjD1KM=;
+        b=WOxNcLJxT1WGcXFpZoj0/S/kQ+Hvdiri0HyffT5u7k4wNxXppGmH+zlOhJanZ+82dl
+         JjiiJZFwjG3SRT6lavTXGjG5emgP1G09fUVun9M2lQBLRoilqdmOK4EMIk024b5o8zqt
+         p4AGhI4ps91PSjuskXvr5WB5fsOnlcIg3FLWBdV0FTK0vifhuuzNpnqtz591oTqZjZKx
+         5wLXFYcnin3BlAQGpH6UV3K/Wc/UngOj07M3mgQbPYOWIbHJd9983+8rMjX0HLLg8LMk
+         bGni5iN/70/VB4fIzuZ0W3vXzhmFeQ9yk2N6Yo5IkQAC58fNJR9kNZOYI0GogWtz5B40
+         yLXw==
+X-Gm-Message-State: APjAAAWiymSzqF38ptH3d5G8AMsrFINDuQqtBis7MCtlYVmIxHh6rY9h
+        lG5RzphZxdaihpbzey2lXZo=
+X-Google-Smtp-Source: APXvYqzvHyVNkX59EfIuCkH6f5OWcMEbAfkqSa9NxSCoNM70lZL0fUFOHe4yO071zSF1pyvd5OvjaQ==
+X-Received: by 2002:a17:902:694b:: with SMTP id k11mr3592058plt.288.1553174342541;
+        Thu, 21 Mar 2019 06:19:02 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id k3sm14671761pfc.59.2019.03.21.06.18.50
+        by smtp.gmail.com with ESMTPSA id z189sm6941640pfb.146.2019.03.21.06.18.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Mar 2019 06:18:54 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 21 Mar 2019 20:18:48 +0700
+        Thu, 21 Mar 2019 06:19:01 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Thu, 21 Mar 2019 20:18:56 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
@@ -57,9 +57,9 @@ Cc:     eckhard.s.maass@googlemail.com, git@vger.kernel.org,
         gitster@pobox.com, jacob.keller@gmail.com, martin.agren@gmail.com,
         newren@gmail.com, phillip.wood123@gmail.com, rybak.a.v@gmail.com,
         sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: [PATCH v5 15/26] switch: remove -l
-Date:   Thu, 21 Mar 2019 20:16:44 +0700
-Message-Id: <20190321131655.15249-16-pclouds@gmail.com>
+Subject: [PATCH v5 16/26] switch: stop accepting pathspec
+Date:   Thu, 21 Mar 2019 20:16:45 +0700
+Message-Id: <20190321131655.15249-17-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190321131655.15249-1-pclouds@gmail.com>
 References: <20190317124926.17137-1-pclouds@gmail.com>
@@ -71,32 +71,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This option is ancient. Nowadays reflog is enabled by default and
-automatically created for new branches. Keep it in git-checkout only.
+This command is about switching branch (or creating a new one) and
+should not accept pathspec. This helps simplify ambiguation
+handling. The other two ("git checkout" and "git restore") of
+course do accept pathspec as before.
 ---
- builtin/checkout.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/checkout.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index bd94b04303..85fc60f5f2 100644
+index 85fc60f5f2..2c4cab6406 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -1376,7 +1376,6 @@ static struct option *add_common_switch_branch_options(
- 	struct checkout_opts *opts, struct option *prevopts)
- {
- 	struct option options[] = {
--		OPT_BOOL('l', NULL, &opts->new_branch_log, N_("create reflog for new branch")),
- 		OPT_BOOL(0, "detach", &opts->force_detach, N_("detach HEAD at named commit")),
- 		OPT_SET_INT('t', "track",  &opts->track, N_("set upstream info for new branch"),
- 			BRANCH_TRACK_EXPLICIT),
-@@ -1579,6 +1578,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 			   N_("create and checkout a new branch")),
- 		OPT_STRING('B', NULL, &opts.new_branch_force, N_("branch"),
- 			   N_("create/reset and checkout a branch")),
-+		OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create reflog for new branch")),
- 		OPT_END()
- 	};
- 	int ret;
+@@ -54,6 +54,7 @@ struct checkout_opts {
+ 	int overlay_mode;
+ 	int no_dwim_new_local_branch;
+ 	int discard_changes;
++	int accept_pathspec;
+ 
+ 	/*
+ 	 * If new checkout options are added, skip_merge_working_tree
+@@ -1176,10 +1177,16 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	if (!argc)
+ 		return 0;
+ 
++	if (!opts->accept_pathspec) {
++		if (argc > 1)
++			die(_("only one reference expected"));
++		has_dash_dash = 1; /* helps disambiguate */
++	}
++
+ 	arg = argv[0];
+ 	dash_dash_pos = -1;
+ 	for (i = 0; i < argc; i++) {
+-		if (!strcmp(argv[i], "--")) {
++		if (opts->accept_pathspec && !strcmp(argv[i], "--")) {
+ 			dash_dash_pos = i;
+ 			break;
+ 		}
+@@ -1213,11 +1220,12 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 			recover_with_dwim = 0;
+ 
+ 		/*
+-		 * Accept "git checkout foo" and "git checkout foo --"
+-		 * as candidates for dwim.
++		 * Accept "git checkout foo", "git checkout foo --"
++		 * and "git switch foo" as candidates for dwim.
+ 		 */
+ 		if (!(argc == 1 && !has_dash_dash) &&
+-		    !(argc == 2 && has_dash_dash))
++		    !(argc == 2 && has_dash_dash) &&
++		    opts->accept_pathspec)
+ 			recover_with_dwim = 0;
+ 
+ 		if (recover_with_dwim) {
+@@ -1262,7 +1270,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 		 */
+ 		if (argc)
+ 			verify_non_filename(opts->prefix, arg);
+-	} else {
++	} else if (opts->accept_pathspec) {
+ 		argcount++;
+ 		argv++;
+ 		argc--;
+@@ -1585,6 +1593,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.no_dwim_new_local_branch = 0;
++	opts.accept_pathspec = 1;
+ 
+ 	options = parse_options_dup(checkout_options);
+ 	options = add_common_options(&opts, options);
+@@ -1614,6 +1623,7 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
+ 
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.no_dwim_new_local_branch = 0;
++	opts.accept_pathspec = 0;
+ 
+ 	options = parse_options_dup(switch_options);
+ 	options = add_common_options(&opts, options);
 -- 
 2.21.0.548.gd3c7d92dc2
 
