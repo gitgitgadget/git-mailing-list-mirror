@@ -2,86 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30C2A20248
-	for <e@80x24.org>; Thu, 21 Mar 2019 09:44:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74A0820248
+	for <e@80x24.org>; Thu, 21 Mar 2019 09:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728203AbfCUJoQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 05:44:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58794 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727829AbfCUJoQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 05:44:16 -0400
-Received: (qmail 10769 invoked by uid 109); 21 Mar 2019 09:44:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Mar 2019 09:44:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8485 invoked by uid 111); 21 Mar 2019 09:44:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Mar 2019 05:44:38 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Mar 2019 05:44:14 -0400
-Date:   Thu, 21 Mar 2019 05:44:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/13] more unused parameter cleanups
-Message-ID: <20190321094414.GA2894@sigill.intra.peff.net>
-References: <20190320081258.GA5621@sigill.intra.peff.net>
- <87woksd322.fsf@evledraar.gmail.com>
+        id S1728116AbfCUJpf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 05:45:35 -0400
+Received: from mail-it1-f193.google.com ([209.85.166.193]:34124 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727829AbfCUJpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 05:45:35 -0400
+Received: by mail-it1-f193.google.com with SMTP id l4so2040518ite.1
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 02:45:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JOBCjk2cjW+pGj2e8e97qQpFpquASkSywievNSXVYJs=;
+        b=ecDi23rPkwYP/6SHKKvq1rWPseQ2R4Ctfpxk9Lcj9b4GChJRCOcTSlm5XJwcc3j5gC
+         VSOnTY8kY+A58gNOlFvXJ4Q5frg97+G573goN2IEPTvHnOVSuPpb4v3p4eC3yJ9eIO+v
+         1Lj/DOG1zLUasVZUCWCd04Q10Td+W6bGdoRoVu+mgZ1U86RHZD/GiUEKBtBJaqwFUCv0
+         s8JHAVaya8hMOEMhvjqCfcZ1+maPY26H4UCDrLg2X+HPpkS6Ia88kqde09v0pUleU8bq
+         WGjLdmY6t1PwPD3k8W8pnvycmOh7RalMps+oy7LBUNdNvAtYjnq9AYBHbGpRamxVcvKi
+         Jpig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JOBCjk2cjW+pGj2e8e97qQpFpquASkSywievNSXVYJs=;
+        b=eHSiNvZ2bT6DAKh03Mgu5yDYBlbEQatb6CIyWSU+lZZO2AhNh6OaHXt9Lmzel/XmF2
+         U9iPdhJNPhV7xr34fWkTmFbOd0eqe+oTN3iVZlgYUYuq8pIouU6gbZzJg4TdFFpshbua
+         hffzm/llFfIQyue82D4wturWBIbW2eIDqFjeTAbNTD0n2ouFiIIREqPgLOcIMgZBXuJd
+         i/MJbMo0fRU57ry5vlsdfuIU6ruJVBSVO5dj9myXm0Qqns6r6GmuL3gBrPjDzrdZEmFG
+         O0YyaPdB4ogP4arooPS1+5bOhYNnqdme1k54Uv7bpM14VY5KO5Zz1x78RW3IeLGHt5L3
+         WmfA==
+X-Gm-Message-State: APjAAAWf6PjY/w+KKDTPO+RLtcpRdsbVFLOX6bEv+yaEWtNfpta5UBXJ
+        ZNOffHADxvLbr3hLZ0ueq2Hyke2HNnd4a4RDpL8=
+X-Google-Smtp-Source: APXvYqzEJhl8JBeSlv+9q/UoC6tQhC+9DyGq2oG/JBU39QTkoROmE5l8EGZ724dQ1GxWh9C+AR290ZRu/qNCmMLlB0Q=
+X-Received: by 2002:a24:ccc5:: with SMTP id x188mr1947180itf.123.1553161534436;
+ Thu, 21 Mar 2019 02:45:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87woksd322.fsf@evledraar.gmail.com>
+References: <CACsJy8DiQwmAKMruOAO4roPbiRTvt5TESBTd682hTwkZjcoj2Q@mail.gmail.com>
+ <20190320180329.22280-1-tmz@pobox.com>
+In-Reply-To: <20190320180329.22280-1-tmz@pobox.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 21 Mar 2019 16:45:08 +0700
+Message-ID: <CACsJy8BM_3_XYhY9J3bp97N-Ux6AZvuTOzSMTn4fAxizk+2fYA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] completion.commands: fix multiple command removals
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 21, 2019 at 09:50:13AM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Thu, Mar 21, 2019 at 1:03 AM Todd Zullinger <tmz@pobox.com> wrote:
+>
+> Hi,
+>
+> Duy Nguyen wrote:
+> > You probably want to drop the comment block about repository setup
+> > inside list_cmds_by_config() too.
+>
+> You're right, of course.  Thanks Duy. :)
+>
+> That's the only change since v2.
 
-> LGTM from skimming it, FWIW this is now what we need to compile cleanly
-> with -Wextra:
-> 
->     make DEVELOPER=1 DEVOPTS="extra-all" CFLAGS="-Wno-unused-parameter -Wno-missing-field-initializers -Wno-sign-compare -Wno-empty-body" all
-> 
-> For some such as -Wempty-body we'd really need to contort ourselves to
-> get it passing anywhere near cleanly (all of those have existing "/*
-> this is intentional! */" comments).
-
-I think we could probably define a NOOP_BODY macro or function and use
-that instead. But it may not be worth the trouble. I'd have to see how
-painful that would be, and whether it might find any cases that actually
-look like real bugs.
-
-For -Wunused-parameter I am working towards being able to actually
-enable that everywhere. It is not _too_ bad to annotate the instances
-which must be there, and my digging with it has uncovered several real
-bugs. Right now I'm in the "drop useless parameters" phase, which I
-expect will take one or two more rounds.
-
-Then I'll start on the "annotate unused ones we must keep" series, which
-culminates in actually flipping on the switch with DEVELOPER (or rather,
-stopping flipping it off).
-
-You can see my progress on the jk/unused-4-mark branch of
-https://github.com/peff/git (I think the contents are good, but the
-commit messages and organization need some cleanup).
-
-> I wonder if for the rest of these it's worth re-picking up this old
-> suggestions of yours about #pragma:
-> https://public-inbox.org/git/20170126143252.ne533mcv3n2ksbai@sigill.intra.peff.net/
-> 
-> I.e. for us to define our own macro for these cases & use it.
-
-The push/pop ones may be of use (which both clang and gcc seem to
-support), since that would let us localize the effects. I think in many
-cases there's usually a more readable solution, though (e.g., you'd want
-to annotate specific parameters as unused with single word, not a 3-line
-push-diag/declare-param/pop-diag mess).
-
--Peff
+The range-diff looks obviously correct. Thanks!
+-- 
+Duy
