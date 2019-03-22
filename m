@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6330220248
-	for <e@80x24.org>; Fri, 22 Mar 2019 05:23:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB2E920248
+	for <e@80x24.org>; Fri, 22 Mar 2019 05:37:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727837AbfCVFXx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 01:23:53 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34158 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727703AbfCVFXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 01:23:19 -0400
-Received: by mail-wr1-f66.google.com with SMTP id p10so929739wrq.1
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 22:23:18 -0700 (PDT)
+        id S1727752AbfCVFhu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 01:37:50 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35336 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726162AbfCVFhs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 01:37:48 -0400
+Received: by mail-wr1-f67.google.com with SMTP id w1so950606wrp.2
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 22:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=He0cbT5rozKqKLtlm+XdzVRpTpj0aJ/SDqfOQmnkLcw=;
-        b=IHbftnZDLGY86F7aRa/2C6Fteb1gME7SZwjv+PA0/gORjqJLfty79BklEpdQD64DfS
-         mLYZLNrgorANmCeT45xRiWe81QBT9dinc11gE7EipxMStQq5UzGPhkcH3MCqt9idpBi1
-         xvkaw+laHTG2qudxfT1ut1kD2CwSFTF2RAOjZ4Tk+sXJRCka9fx2oTE5WCaJ7iJzOyYG
-         Li372W7wXnyaJBI8xA3+JTkjNRB/sy5ZaD8emWmst22oZ3qbgz1CDo4Iu3m8cONcARQo
-         krzqzFJuJ5O6OlUCqcE203jM39okcIvXifejTyDcfSC7u3AtOjKsd+s0W3pkmoAtGDCy
-         XAiw==
+        bh=vk2FjwdZOQpH2km+/0HsSTTdFctqv6cjh6FuCmIu+W8=;
+        b=lzHwcv3QfiJThh3cTVioVjUjDQHxJYq+ldW9ZW3HXi04WU7xJX3vVUNKRGq/UL0hcM
+         gwk9dJJ/WaGzZP62k8j5X7yWZdwojdgHIli5JvBQCmao0u/BcIEN6XfspvzL1C/oDZv9
+         VnRrSebKL7UEsHOcN9MQZL5Q9+NRSWU2jPiknUXrPYDP/p/wC6tMlwaNnoi15YACQX1m
+         btD4dgqlO8VPVKTGz2Ly7QB9ZDP+bQd/CBScQpJweaWRb/lJHSbR5laI85pQxUvTZZLD
+         VxbBZ+gJCKClu6HUP+IBpk/G4+utU/CkuNNhemJPtHYf1gLPb3wZXdrbdd0XQOhWxpxi
+         pYgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=He0cbT5rozKqKLtlm+XdzVRpTpj0aJ/SDqfOQmnkLcw=;
-        b=rgl3FdWndZPGwxjygpDb0SGBb4wxSLW+yE5yDoW6T69Sbm4ObY3Fom3nqfJBpJ7cdm
-         xg0phMGFFcJf/rlApLrDS7Sswa0niepj4iCqYTcqcd5n5xHsZMdjAhF27I3VYKt3HJq3
-         zmO3HwXqFlZhjYlttln9jE46mEBKMt7T7bDTCXmVvsWrQACJDNg/txsuPOF7Spc4aA0G
-         nzdNoffvCJ6uucJZ05cEXj0z2xhtOKfXPr1BfdMRqW5bZEEctMSRTRisep4FW19qnwvG
-         5GuBDtFZayEIz9EpkzmrsSntzV2OnAN6BlpkfN1NVix7SAUggKSgTcJjWUozSTdYrOGT
-         lcSQ==
-X-Gm-Message-State: APjAAAUXrmwu8ea7KI0GhFKYvzgCDYT6JR08E+UEBF0na2MLWYdl1IOV
-        Egud4zVMe/DMX5lTnTSM4Z8=
-X-Google-Smtp-Source: APXvYqzJT00ZqSF1ylAFv0jdmGFw0rObJ8od+l4NarYEwUrDWvJqr2aDW+d7XeGoLokr0E9yGsmfnQ==
-X-Received: by 2002:adf:f64d:: with SMTP id x13mr5196500wrp.298.1553232197997;
-        Thu, 21 Mar 2019 22:23:17 -0700 (PDT)
+        bh=vk2FjwdZOQpH2km+/0HsSTTdFctqv6cjh6FuCmIu+W8=;
+        b=mr1aUPsPX0PKAHOgRkyqbqABRlfqr/V1XXU0/yeBySlIEBFkxVyB/2hBNEdGvQAdry
+         2USKQauaTDI/f+TnLUFpurYiflJnpbzNZEOIPjJ0Mdw8SUJJ6fYaZB+LzbH5sPASyKcZ
+         jEv/OCutxLqiaAkphdWsn2FlLGTEtcVTyr/LISbmaLzDkonUgC/ahU+XMbycdIW9lxZm
+         N5ORCjHq89yFwGYLsVRSXAtLocgnKSzWoYXTAhgjJUaQsaxs7r17BMHAw7TUrvw/eQFF
+         rJOofUycR1OW9yiVbeoIvgcm6uSogfGFW1XDNKUc1p0/qRHrXy1sKwZn6kRjndOmgAAq
+         neCQ==
+X-Gm-Message-State: APjAAAV03C4yWQOOSHzNDJUIaKCOH4qZvjdhkrzUSkoQHjOXw3zwoPmt
+        bWoYQa/Bsez6vsI+S9CgwK4GToSH3tw=
+X-Google-Smtp-Source: APXvYqylOVSyCLRxXEbJlaK3Hul87PJNavEEZ+NxO3ioP4EPV3heRXzNQZ6YlqR5+bn4k5hviYKrgg==
+X-Received: by 2002:adf:dd8c:: with SMTP id x12mr5197105wrl.262.1553233066066;
+        Thu, 21 Mar 2019 22:37:46 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id 204sm11408772wmc.1.2019.03.21.22.23.17
+        by smtp.gmail.com with ESMTPSA id q16sm7806327wmc.39.2019.03.21.22.37.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Mar 2019 22:23:17 -0700 (PDT)
+        Thu, 21 Mar 2019 22:37:45 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 0/1] Write trace2 output to directories
-References: <cover.1552519463.git.steadmon@google.com>
-        <cover.1553202340.git.steadmon@google.com>
-        <fc057cb5-c1c9-5466-1d45-c7d1e89a9894@jeffhostetler.com>
-Date:   Fri, 22 Mar 2019 14:23:17 +0900
-In-Reply-To: <fc057cb5-c1c9-5466-1d45-c7d1e89a9894@jeffhostetler.com> (Jeff
-        Hostetler's message of "Thu, 21 Mar 2019 17:16:52 -0400")
-Message-ID: <xmqq36nfqy7u.fsf@gitster-ct.c.googlers.com>
+To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com
+Subject: Re: [PATCH v3 0/4] multi-pack-index: fix verify on large repos
+References: <pull.166.v2.git.gitgitgadget@gmail.com>
+        <pull.166.v3.git.gitgitgadget@gmail.com>
+Date:   Fri, 22 Mar 2019 14:37:44 +0900
+In-Reply-To: <pull.166.v3.git.gitgitgadget@gmail.com> (Jeff Hostetler via
+        GitGitGadget's message of "Thu, 21 Mar 2019 12:36:11 -0700 (PDT)")
+Message-ID: <xmqqy357pizb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,16 +67,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 3/21/2019 5:09 PM, Josh Steadmon wrote:
->> Persistently enabling trace2 output is difficult because it requires
->> specifying a full filename. This series teaches tr2_dst_get_trace_fd()
->> to create files underneath a given directory provided as the target of
->> the GIT_TR2_* envvars.
-> ...
-> Looks good.  Thanks.
-> Jeff
+> Teach "multi-pack-index verify" to handle cases where the number of
+> packfiles exceeds the open file handle limit.
+>
+> The first commit fixes a problem that prevented the LRU-style
+> close_one_pack() mechanism from working which caused midx verify to run out
+> of file descriptors.
+>
+> The second commit teaches midx verify to sort the set of objects to verify
+> by packfile rather than verifying them in OID order. This eliminates the
+> need to have more than one packfile/idx open at the same time.
+>
+> With the second commit, runtime on 3600 packfiles went from 12 minutes to 25
+> seconds.
 
-Thanks, both.  Will queue.
+These reference to the first and second commit might have become
+stale across interations, but logically it makes sense---the first
+point is about correctness (i.e. do not die by running out of fds)
+and the second one is about usable-performance.
 
+But in this round (possibly in the previous one, too?) the "group
+objects by packfile" one addresses both points?
