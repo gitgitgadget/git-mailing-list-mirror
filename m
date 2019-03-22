@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0805220248
-	for <e@80x24.org>; Fri, 22 Mar 2019 03:30:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E190520248
+	for <e@80x24.org>; Fri, 22 Mar 2019 03:34:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727846AbfCVDa1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 23:30:27 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35090 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727516AbfCVDa0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 23:30:26 -0400
-Received: by mail-wm1-f68.google.com with SMTP id y197so738127wmd.0
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 20:30:25 -0700 (PDT)
+        id S1727427AbfCVDen (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 23:34:43 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37859 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727566AbfCVDen (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 23:34:43 -0400
+Received: by mail-wr1-f66.google.com with SMTP id w10so766195wrm.4
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 20:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=x9k+ELwMOkJ1kdbOL1I7mbqmTZ478qUP+OBXJOQNwcs=;
-        b=AxK7w5+tQuP9QYAahPkN7JmMxn5GxYuXXjbSjhPjrz+yptbKyw45B9GaDjRZDunWx0
-         Pb5oH/CcYGLXDAraYjtGURwWN/bYHkHeECHF1nhTJR6eu406u5DBWvgMfn3KpgsmNBiq
-         k4F2cYFiokQovpJCloRmgsq6aPvpO0HeBlNqjcl9NnFkODav0s2DCUy9TcFTWv0ecpe9
-         Q0jWyYhlpeOhEwMId7yX527DcbuvzKYkxj96coWlFHKK0pMyWgJMmOG8C8A/xb3ukAEf
-         V6sA0uZqUvZuemoOpuXU6G0mWbGmSPqyy66PXNMk0rYoVJaz0NJp+BK7L4/3FVz+tdbd
-         8fhA==
+        bh=/hVw8/g1nR47okywlIIdmN3ZcdM0yj84qVivCqijtVA=;
+        b=F1v/z+IMgWBt5z5E2We61IDOI5bW5Sd9mORXkLQ7vUKn6IGGhFEDmc+braZvfrU0he
+         6IV4j+oDynDDxpEv9WAOR2rcyeLez63e+W/ASJf6IzD18m0AHltqFW2PLs+JjaspqF4U
+         XD5W6w+k8QYTCKyQYTZgw4Jt+Sc5bVJrpG3MxzPsg5Xg38LCVdldCcFwZ3Wg54RcrXEl
+         zIHtKWjW2b66JGe7doKhgSg6VMJRM7KoJDq6mW4CLxAIexLa+MHsePRl+7+UE3YS7HTU
+         rCpfq9wL5wu/DMka/V4/IV/B4xuJDUjRk1ROualhfjItr+vqOQV3/E2dER/VB7+CMdld
+         9LeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=x9k+ELwMOkJ1kdbOL1I7mbqmTZ478qUP+OBXJOQNwcs=;
-        b=WYcUHpzT84ZWHXPxuAJKeMgKK5YVnrDOfNTx9n8KxfgxeLPypzXZix+y0wfZY4rOtP
-         Lh5S1BkxGd4jOrhPOQw6ro59yZuQKDNKc76tf7h50+G4jTOJHO4pI4g7F28EC0T0wYDi
-         zXqysVlj6ZGtrZofSKGmGUMjCwn/vuJJ+3rdFxihAnhzYaVkjmraZ3JPoavCJLcjLZBV
-         4pgyL6WbcnpQqmXKxFfBCSm8p5W6ihamRKm9rWANqJ3skGr700D+WojWA4KhHtCwo7GJ
-         r4xhyfadUhUz7IxDoP0HqW3VpAJdanmz3vrpkbMHM6qISn2ZF1dYVrsEJnk0z7pYnJz1
-         mtfQ==
-X-Gm-Message-State: APjAAAXDqJeu/BrpiMNt5iRdBv7O6LtzM07nnfaOHhjcW6g7tkhysyPN
-        6upkDkF806nS+lq1kWq3i6RxjOYBtZI=
-X-Google-Smtp-Source: APXvYqwrdxs7AQZ934JhRVJzdS9EiuDfvZ4Wa29qOZ0ednjbdtqYCQweHnjk2ReAcZLALDP13kxFYw==
-X-Received: by 2002:a1c:cc0a:: with SMTP id h10mr1347355wmb.20.1553225424754;
-        Thu, 21 Mar 2019 20:30:24 -0700 (PDT)
+        bh=/hVw8/g1nR47okywlIIdmN3ZcdM0yj84qVivCqijtVA=;
+        b=gAwRJbL+k3RSO2X75CO9rTlmBygkj7vODOnZYMU9bMMyNjR7tk7VyDZriz3Ajs1Cp+
+         35ncDuwLs9eU+fEFbtR7CYP/RJXNLwxQEsGmRXe89SnTGyE+Fc3stBy2osh9yKzGJFoU
+         v5FlY8g3rN0o5wgZcDg48H86UPN5WN/qDvKFuTaj5ArWXJ7KZcD2ZgyAt8a7PlP7s8+g
+         3m2dan3JUyIw4kC2RcY94WoVHnY2bP254aCNhdb8wfdZne+C2PTi107sbySefDBoQxAR
+         m8t3CFcgTUd85gOU7kUjWG0aQNvIQNV+qdgT06G+QB1oMlPAaXSjn8TJmEAkUy+v0gmq
+         GO2A==
+X-Gm-Message-State: APjAAAUZ9l0Xyz7vy6xoJds3SG970ZjFaPCVh5G1rrbLGrXsn3z6ZtUi
+        J2mLzhKz+En8InF06ZIURW4or6rKEzk=
+X-Google-Smtp-Source: APXvYqzJzHcIWAgHV/5RwwTxur3LQb1t9WWLozq8DTAGDIsjlujRwEjHAg1VbXnhSPRnB5P6iJTNjA==
+X-Received: by 2002:adf:de8d:: with SMTP id w13mr4599765wrl.26.1553225681566;
+        Thu, 21 Mar 2019 20:34:41 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id o127sm8504382wmo.20.2019.03.21.20.30.23
+        by smtp.gmail.com with ESMTPSA id o127sm8513581wmo.20.2019.03.21.20.34.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Mar 2019 20:30:23 -0700 (PDT)
+        Thu, 21 Mar 2019 20:34:40 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        avarab@gmail.com, peff@peff.net, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v2 1/1] trace2: write to directory targets
-References: <cover.1552519463.git.steadmon@google.com>
-        <cover.1553126984.git.steadmon@google.com>
-        <59d8c6511bc8c5fd25473c282768b38c97df9e6b.1553126984.git.steadmon@google.com>
-        <xmqqmulpt22e.fsf@gitster-ct.c.googlers.com>
-        <51e88650-8667-df1f-13ef-4537f2e70346@jeffhostetler.com>
-Date:   Fri, 22 Mar 2019 12:30:23 +0900
-In-Reply-To: <51e88650-8667-df1f-13ef-4537f2e70346@jeffhostetler.com> (Jeff
-        Hostetler's message of "Thu, 21 Mar 2019 13:43:07 -0400")
-Message-ID: <xmqqpnqjr3g0.fsf@gitster-ct.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [RFC PATCH 08/11] rebase -i: use struct rebase_options to parse args
+References: <20190319190317.6632-1-phillip.wood123@gmail.com>
+        <20190319190317.6632-9-phillip.wood123@gmail.com>
+        <xmqqwokssvq6.fsf@gitster-ct.c.googlers.com>
+        <94fe6518-ca13-8eb8-d455-e2a6fcaeb1d6@gmail.com>
+Date:   Fri, 22 Mar 2019 12:34:40 +0900
+In-Reply-To: <94fe6518-ca13-8eb8-d455-e2a6fcaeb1d6@gmail.com> (Phillip Wood's
+        message of "Thu, 21 Mar 2019 14:59:49 +0000")
+Message-ID: <xmqqlg17r38v.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,43 +71,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->>> +	for (attempt_count = 0; attempt_count < MAX_RANDOM_ATTEMPTS; attempt_count++) {
->>> +		strbuf_reset(&final_path);
->>> +		strbuf_addbuf(&final_path, &base_path);
->>> +		strbuf_addf(&final_path, ".%d", attempt_count);
+> Hi Junio
 >
-> Since the last component of the SID is already very unique and
-> we're unlikely to have collisions, maybe change the above line to:
+> On 21/03/2019 04:21, Junio C Hamano wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>
+>>> +static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>>> +{
+>>> +	struct replay_opts replay = REPLAY_OPTS_INIT;
+>>> +
+>>> +	sequencer_init_config(&replay);
+>>> +
+>>> +	replay.action = REPLAY_INTERACTIVE_REBASE;
+>>> +	replay.signoff = opts->signoff;
+>>> +	replay.allow_ff = !(opts->flags & REBASE_FORCE);
+>>> +	if (opts->allow_rerere_autoupdate)
+>>> +		replay.allow_rerere_auto = opts->allow_rerere_autoupdate;
+>>> +	replay.allow_empty = 1;
+>>> +	replay.allow_empty_message = opts->allow_empty_message;
+>>> +	replay.verbose = opts->flags & REBASE_VERBOSE;
+>>> +	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+>>> +	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+>>> +	replay.strategy = opts->strategy;
+>>> +
+>>> +	return replay;
+>>> +}
+>>
+>> This calls init_config() and then sets .action; does it revert to
+>> what dl/merge-cleanup-scissors-fix wants to do, which flipped the
+>> order to fix some bug?  It is a bit hard to tell.
 >
-> 		if (attempt_count > 0)
-> 			strbuf_addf(&final_path, ".%d", attempt_count);
+> dl/merge-cleanup-scissors-fix changes sequencer_init_config() to
+> depend on the value of action so action should to be set first. What
+> is in pu at the moment in not quite right (though I'm not sure what
+> the practical implications are as it looks like the rebase tests are
+> passing[1]).
 >
-> and in reality expect to never have files with the suffix.
+> [1] https://travis-ci.org/git/git/jobs/509332448
 
-That's a nice property.
+Yes, it actually is the reason why I left the seemingly-wrong merge
+in 'pu' on purpose to see if we have enough test coverage.
 
-> Unless, that is, they turned on more than one of GIT_TR2,
-> GIT_TR2_PERF, or GIT_TR2_EVENT and pointed them at the same
-> directory, but I'm not sure if I care about that edge case
-> or not.
+> they'd both be in the same file. I think it would only need to share
+> the definitions of struct rebase_options, enum rebase_action and the
+> declaration of run_rebase_interactive(). Would you be happy with the
+> addition of builtin/rebase.h (there don't seem to be another headers
+> in that directory). We could leave rebase--interactive.c around until
+> rebase--preserve-merges.sh is finally removed.
 
-That actually makes me wonder if the auto generated filenames want
-to have a common trait (e.g. suffix) that allows the readers to tell
-from which of these environment variables the names came from.  It
-would not be very useful if two files with the same sid component
-had .1 suffix for GIT_TR2 trace for one session, and the same .1
-suffix is used for GIT_TR2_PERF trace for a pair of files from
-another session.
+I think dl/merge-cleanup-scissors-fix is getting solid enough, so a
+better alternative may be to base this on top of
 
-But let's not worry about it for now.  If people do not want them
-get mixed up and become hard to tell apart, they can always specify
-different directories for different traces.
+	reset e902e9bcae ;# The second batch
+	merge ag/sequencer-reduce-rewriting-todo
+	merge dl/merge-cleanup-scissors-fix
 
->
->>> +		fd = open(final_path.buf, O_WRONLY | O_CREAT | O_EXCL, 0666);
-> [...]
->
-> Nice.  Thanks for looking into this.
-> Jeff
+instead of basing it only on ag/sequencer-reduce-rewriting-todo.
+
+Thanks.
