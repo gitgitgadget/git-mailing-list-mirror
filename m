@@ -2,134 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A62720248
-	for <e@80x24.org>; Fri, 22 Mar 2019 15:22:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4338F20248
+	for <e@80x24.org>; Fri, 22 Mar 2019 15:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726801AbfCVPWN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 11:22:13 -0400
-Received: from mail.javad.com ([54.86.164.124]:43626 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726091AbfCVPWM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 11:22:12 -0400
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 86C273E93B;
-        Fri, 22 Mar 2019 15:22:11 +0000 (UTC)
-Authentication-Results: mail.javad.com;
-        dkim=pass (1024-bit key; unprotected) header.d=javad.com header.i=@javad.com header.b=F8tAb5sD;
-        dkim-atps=neutral
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1553268131;
-        bh=gp8Rnt7FMsa1f1iJMHA0GqX2G3i9WL8B/Pa6YwG24PM=; l=3073;
-        h=Received:From:To:Subject;
-        b=F8tAb5sDJbYoSs7NvYmJwVdJLyZogOgKiNAdB0M+EV337Go2vPnhj3aHgAxLKaAYL
-         LIe/NBm6ZwM+ueaKmF6MRob0Z376wblxVhjTT6NgEsBlcxhn2vC6jgcSYmjO8Fbyiu
-         ZPcagD5v845L53YrpU+eg3XEnEJuWqO/LUqGb4Lo=
-Authentication-Results: ip-172-31-2-110;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1h7Lzm-0006Lx-3E; Fri, 22 Mar 2019 18:22:10 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        "C.J. Jameson" <cjcjameson@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] cherry-pick: set default `--mainline` parent to 1
-References: <CALm+SVJR5BCHi_r7B279gKDukD4mYDQuv=K5guje73YDVmOxug@mail.gmail.com>
-        <xmqq1s32w3vu.fsf@gitster-ct.c.googlers.com>
-        <871s31vjo7.fsf@javad.com>
-        <CABPp-BEe56GFM_2g7EyXmSrULFwRAvSPBomQ66jEQmCs=HhWpg@mail.gmail.com>
-        <xmqqd0mlt1h1.fsf@gitster-ct.c.googlers.com>
-        <xmqq4l7wuddk.fsf@gitster-ct.c.googlers.com>
-        <87pnqklr8a.fsf@javad.com>
-        <xmqqlg18srrp.fsf@gitster-ct.c.googlers.com>
-        <878sx8lpqw.fsf@javad.com>
-        <xmqqbm24sk68.fsf@gitster-ct.c.googlers.com>
-        <87k1gsh1zs.fsf@javad.com>
-        <xmqqy357r6im.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 22 Mar 2019 18:22:10 +0300
-In-Reply-To: <xmqqy357r6im.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 22 Mar 2019 11:24:01 +0900")
-Message-ID: <8736nfc4t9.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1727524AbfCVPtu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 11:49:50 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39715 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725981AbfCVPtt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 11:49:49 -0400
+Received: by mail-wr1-f65.google.com with SMTP id j9so2889199wrn.6
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 08:49:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=7S5OmNjmTwPe9qeQs4fDb98yXIJ32W/gc2cfDl2pwqo=;
+        b=O9zmHystrf1YtqjvN/drMLP7Cy/45MamTiwgy9m7C3d8JzTrtKWDjwwLKgh/lGoDix
+         VRExp8uUuxcm1CoKHenZdkE+mKhyvRCAp9tUkrVteFUcKq/viU8jjhp4D7oElf5pMbt7
+         i/w4unmq0Ka+7SjUDo0IORcvYSaWqYjwd7hZTloMTv4QLnx/KBNqfuvVj2CZyW5HcWDZ
+         +4IPGAP2/nhi9ps5zjnxGxLIC1V0w2foys5HXPpJDEzSP9Bji+pt/BX8egTprPUYE6E/
+         DeM8kbYqzf5o4iOPI/gYO/ztc0C+JHaVvPOAKK0CcDrvX+CcNc/PxAQsxXwARo2gV4g6
+         IQkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=7S5OmNjmTwPe9qeQs4fDb98yXIJ32W/gc2cfDl2pwqo=;
+        b=G4mssxiN9T0MWfmzyS8uey1D8cYw0yuMe0hnc/coxxjW5cnndIEbqHQH2BC6QulNNH
+         J49E73YX2OVfL4z5Foa+wDfpPWKDsS/4HkDazYvNgzgUs+hIbetifPdzCRN4nZYJ45K/
+         Py5u/+wyemqjQMMYu00nBxOZOfyzbSi6OOcq1qFT8uWm2vWCyR7sFzCkVdxQT88+6Qck
+         R/K84Z/VIWEQoppbf06IoOfsR5m7JaSnlW14NnFLSq5ACSTA72xApDFeJ6zo76I6+tNb
+         A+DHfnLiz0RN2uqF/yJXhyaZo3mrEAnoyzhgXHXsXAAOnOHpDlWvn7croVXgbNxvqw9/
+         aIYA==
+X-Gm-Message-State: APjAAAVz0n45YIKhNhmU1Xw5khzGFnQEzPBIn1GZYyswA1QCibu/mW9/
+        2bp/Esdo+V/j7pC9NLVyjL8=
+X-Google-Smtp-Source: APXvYqwlFqPqzH7fv563Ynuvm8VAlEYZdkr+gKVCcL4k6y6lNwcAsfTHAsAzlIKU4kaguyTjvPxCog==
+X-Received: by 2002:adf:f285:: with SMTP id k5mr4191978wro.110.1553269786833;
+        Fri, 22 Mar 2019 08:49:46 -0700 (PDT)
+Received: from szeder.dev (x4db501f9.dyn.telefonica.de. [77.181.1.249])
+        by smtp.gmail.com with ESMTPSA id f15sm145956wru.21.2019.03.22.08.49.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Mar 2019 08:49:46 -0700 (PDT)
+Date:   Fri, 22 Mar 2019 16:49:43 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Subject: Re: [PATCH] commit-graph: don't show progress percentages while
+ expanding reachable commits
+Message-ID: <20190322154943.GF22459@szeder.dev>
+References: <20190119202121.3590-11-avarab@gmail.com>
+ <20190322102817.19708-1-szeder.dev@gmail.com>
+ <87lg17cgf5.fsf@evledraar.gmail.com>
+ <20190322111829.GC22459@szeder.dev>
+ <87k1grc7al.fsf@evledraar.gmail.com>
+ <20190322145550.GE22459@szeder.dev>
+ <87ftrfc5b7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87ftrfc5b7.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Mar 22, 2019 at 04:11:24PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Mar 22 2019, SZEDER Gábor wrote:
+> 
+> > On Fri, Mar 22, 2019 at 03:28:34PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> >>
+> >> On Fri, Mar 22 2019, SZEDER Gábor wrote:
+> >>
+> >> > On Fri, Mar 22, 2019 at 12:11:26PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> >> >>
+> >> >> On Fri, Mar 22 2019, SZEDER Gábor wrote:
+> >> >>
+> >> >> > Commit 49bbc57a57 (commit-graph write: emit a percentage for all
+> >> >> > progress, 2019-01-19) was a bit overeager when it added progress
+> >> >> > percentages to the "Expanding reachable commits in commit graph" phase
+> >> >> > as well, because most of the time the number of commits that phase has
+> >> >> > to iterate over is not known in advance and grows significantly, and,
+> >> >> > consequently, we end up with nonsensical numbers:
+> >> >> >
+> >> >> >   $ git commit-graph write --reachable
+> >> >> >   Expanding reachable commits in commit graph: 138606% (824706/595), done.
+> >> >> >   [...]
+> >> >> >
+> >> >> >   $ git rev-parse v5.0 | git commit-graph write --stdin-commits
+> >> >> >   Expanding reachable commits in commit graph: 81264400% (812644/1), done.
+> >> >> >   [...]
+> >> >> >
+> >> >> > Therefore, don't show progress percentages in the "Expanding reachable
+> >> >> > commits in commit graph" phase.
+> >> >>
+> >> >> There's indeed a bug here as your examples show, but there *are* cases
+> >> >> where it's correct, as the commit message for my patch on "master" shows
+> >> >> there's cases where we correctly.
+> >> >>
+> >> >> So this "fixes" things by always removing the progress, why not instead
+> >> >> pass down the state to close_reachable() about what we're walking over,
+> >> >> so we can always show progress, or at least in some cases?
+> >> >
+> >> > The cases where it does display correct percentages are exceptional,
+> >> > and doesn't worth the effort to try to find out whether ther current
+> >> > operation happens to be such a case.
+> >>
+> >> It's the "write" entry point without arguments that displays the correct
+> >> progress. So not exceptional, but yeah, it's not what we use on "gc".
+> >
+> > Bit it displays the correct number only if all the reachable commits
+> > are in packfiles, which is not necessarily the case (e.g. unpacked
+> > small packs during 'git fetch').
+> 
+> No, argument-less "write" only considers packed commits.
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->>> With it reverted, "[alias] cp = cherry-pick -m1" can be used to train
->>> the user to blindly pick a range that has a merge without thinking,
->>> which is what I meant by "ship has already sailed".
->>
->> Did you mean "With it *not* reverted" here?
->
-> Thanks for a correction.  Yes, if we do not revert it, then that
-> would allow people to follow a bad workflow we do not want to
-> recommend (and I think that is what Elijah does not want to do), and
-> that is why I said the ship has already sailed.
+No, it considers packed commits as starting points, and then expands
+to all reachable commits, that's what that loop in question is about.
 
-I still don't think it makes sense to revert the patch (that fixed a
-real-life issue) on the sole ground that, as a side-effect, it has
-provided an opportunity that could potentially be abused, specifically
-by defining a random alias, and then shooting oneself in the foot with
-it. And even then no irreversible damage actually happens.
+  $ git init
+  Initialized empty Git repository in /tmp/test/.git/
+  $ echo >file
+  $ git add file
+  $ git commit -q -m initial
+  $ echo 1 >file
+  $ git commit -q -m 1 file
+  $ git rev-parse HEAD | git pack-objects
+  .git/objects/pack/pack
+  Enumerating objects: 1, done.
+  Counting objects: 100% (1/1), done.
+  ece3ff72952af2b28e048fa5c58db88c44312876
+  Writing objects: 100% (1/1), done.
+  Total 1 (delta 0), reused 0 (delta 0)
+  $ git commit-graph write
+  Computing commit graph generation numbers: 100% (2/2), done.
 
-Moreover, if somebody actually wants to "follow a bad workflow", he
-still needs to ask for it explicitly, either by providing '-m 1', or by
-defining and using an alias, so let him do it please, maybe he even does
-know what he is doing, after all.
 
->
->> Those who don't like such alias are still free not to define or use it.
->
-> That's not the point.  Those who do want to be careful can learn to
-> use a new option --forbid-stupid-things, but why should they?
-
-Sure thing, who said they should? Fortunately, that's exactly the
-current state, no need to invent and specify any --forbid-stupid-things
-option, and even if we pretend the option is already there and is
-active by default, still no need to revert anything.
-
-> They should be forbidden from doing stupid things by default, which is
-> the point of this exchange.
-
-I already agreed before to assume this, and it seems that we now all
-agree this safety should be preserved, as there are those who actually
-care. However, as merges are already forbidden right now with all the
-current defaults, I fail to see how it could justify reverting of
-already applied patch.
-
-To me, the actual question here is: what's the option that overrides
-that default? The current answer is: "-m 1", that admittedly is not very
-nice, but has not been introduced by any of the recent patches, so is
-not solvable by reverting any of them.
-
-To summarize, as it looks to me, it's mostly the current way of allowing
-merges, that cryptically reads as "-m 1", that makes the OP unhappy.
-This was already the case before the "allow '-m 1' for non-merge
-commits" patch, so reverting it won't solve the problem in any suitable
-way.
-
-Due to all the above, may we please finally let alone the already
-applied patch and focus on finding (or denying) actual solution to the
-original issue of this thread?
-
-If so, I'm still on the ground of providing new, say,
-"--no-forbid-merges" option, if anything. I'm with Duy Nguyen that the
-way suggested by RFC, making value optional for yet another short
-option, is to be avoided at all costs.
-
--- Sergey
+> >> In any case, the problem is that sometimes we've walked the full set of
+> >> commits already, and some other times we haven't.
+> >
+> > ... and that we can't really be sure whether we've walked the full set
+> > of commits until after this loop.
+> 
+> I'm fairly sure we can when we start with a full walk. See my
+> explanation in <87imwbc6x8.fsf@evledraar.gmail.com>, but I may have
+> missed something.
+> 
+> >> So in cases where we have we can show progress, and as a TODO (I think
+> >> this came up in previous discussions), we could do better if we had a
+> >> approximate_commit_count().
+> >>
+> >> In any case, the below fix seems correct to me, but I haven't poked it
+> >> much. It *does* suffer from a theoretical race with the progress bar
+> >> similar to d9b1b309cf ("commit-graph write: show progress for object
+> >> search", 2019-01-19), but I work around it in the same way:
+> >>
+> >> diff --git a/commit-graph.c b/commit-graph.c
+> >> index 47e9be0a3a..0fab3d8b2b 100644
+> >> --- a/commit-graph.c
+> >> +++ b/commit-graph.c
+> >> @@ -693,7 +693,8 @@ static void add_missing_parents(struct packed_oid_list *oids, struct commit *com
+> >>  	}
+> >>  }
+> >>
+> >> -static void close_reachable(struct packed_oid_list *oids, int report_progress)
+> >> +static void close_reachable(struct packed_oid_list *oids, int report_progress,
+> >> +			    uint64_t oids_count_for_progress)
+> >>  {
+> >>  	int i;
+> >>  	struct commit *commit;
+> >> @@ -717,7 +718,8 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
+> >>  	 */
+> >>  	if (report_progress)
+> >>  		progress = start_delayed_progress(
+> >> -			_("Expanding reachable commits in commit graph"), oids->nr);
+> >> +			_("Expanding reachable commits in commit graph"),
+> >> +			oids_count_for_progress);
+> >>  	for (i = 0; i < oids->nr; i++) {
+> >>  		display_progress(progress, i + 1);
+> >>  		commit = lookup_commit(the_repository, &oids->list[i]);
+> >> @@ -725,6 +727,8 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
+> >>  		if (commit && !parse_commit(commit))
+> >>  			add_missing_parents(oids, commit);
+> >>  	}
+> >> +	if (oids->nr < oids_count_for_progress)
+> >> +		display_progress(progress, oids_count_for_progress);
+> >>  	stop_progress(&progress);
+> >>
+> >>  	if (report_progress)
+> >> @@ -829,6 +833,7 @@ void write_commit_graph(const char *obj_dir,
+> >>  	uint64_t progress_cnt = 0;
+> >>  	struct strbuf progress_title = STRBUF_INIT;
+> >>  	unsigned long approx_nr_objects;
+> >> +	uint64_t oids_count_for_progress = 0;
+> >>
+> >>  	if (!commit_graph_compatible(the_repository))
+> >>  		return;
+> >> @@ -934,9 +939,10 @@ void write_commit_graph(const char *obj_dir,
+> >>  		if (oids.progress_done < approx_nr_objects)
+> >>  			display_progress(oids.progress, approx_nr_objects);
+> >>  		stop_progress(&oids.progress);
+> >> +		oids_count_for_progress = oids.nr;
+> >>  	}
+> >>
+> >> -	close_reachable(&oids, report_progress);
+> >> +	close_reachable(&oids, report_progress, oids_count_for_progress);
+> >>
+> >>  	if (report_progress)
+> >>  		progress = start_delayed_progress(
+> >>
