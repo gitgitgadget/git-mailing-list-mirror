@@ -2,53 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CAD220248
-	for <e@80x24.org>; Fri, 22 Mar 2019 17:23:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 715AD20248
+	for <e@80x24.org>; Fri, 22 Mar 2019 17:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728512AbfCVRXB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 13:23:01 -0400
-Received: from che.mayfirst.org ([162.247.75.118]:47945 "EHLO che.mayfirst.org"
+        id S1728532AbfCVRXC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 13:23:02 -0400
+Received: from che.mayfirst.org ([162.247.75.118]:41851 "EHLO che.mayfirst.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728287AbfCVRXB (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728286AbfCVRXB (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 22 Mar 2019 13:23:01 -0400
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple; 
  d=fifthhorseman.net; i=@fifthhorseman.net; q=dns/txt; 
- s=2019; t=1553275379; h=from : to : cc : subject : 
+ s=2019; t=1553275380; h=from : to : cc : subject : 
  in-reply-to : references : date : message-id : 
- mime-version : content-type : content-transfer-encoding : 
- from; bh=F5TqFGOW87TrF2IaammfOuN8PnBbf16q9JMOgkbb2KI=; 
- b=UyD/zhfDfiZxDan8uf4n7wF/Sg0sUT5vTHO1VFmHEIqtrIZJOO3I1QmJ
- +BsSyov2L4FLHdneBNF54N+gXsDaBw==
+ mime-version : content-type : from; 
+ bh=ciVUXCpH61wY0UPdT5VXHkeKXKXP8kXVd3Dn3iebwqI=; 
+ b=WaUw4GypDWrJxJaSfyvR197rbIpZTkW9Wv9pIB7VdwIuXYk1ScptNx8H
+ Drjp6/kS1iO7BLwLISWbXmyBVmTPBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fifthhorseman.net; 
- i=@fifthhorseman.net; q=dns/txt; s=2019rsa; t=1553275379; 
+ i=@fifthhorseman.net; q=dns/txt; s=2019rsa; t=1553275380; 
  h=from : to : cc : subject : in-reply-to : references : 
- date : message-id : mime-version : content-type : 
- content-transfer-encoding : from; 
- bh=F5TqFGOW87TrF2IaammfOuN8PnBbf16q9JMOgkbb2KI=; 
- b=gCJw+qF0TzHat7FTbyN0DshK6CP8WRPiOHxWlH5Av2SNo+h+lbTCXLPM
- FfzXcuKzqY0f/wVFfMyKetF6q3e69qZy2eqNwZEnz5EDyEAUb/BoNBniyx
- erBOq14fpMMhjl7YEI0rpkirGKGChGpUJz/qzDVb6PyjvfVhghCNHXlzAb
- tz0LLHbJdbH4u+upSoYz0DNxfMo1etThrU17aixIOpZidFS7H9HImXlXOS
- mALkgAkOA/gw8KJtfWmjT18xpty80kDdJXyhKdkMSKwckEAKQke3TnhrEs
- Kg3C8wIsAY8DuHxqB22k0t6BPKk2Y13xNygOY28cje4ev9tmDeJHmw==
+ date : message-id : mime-version : content-type : from; 
+ bh=ciVUXCpH61wY0UPdT5VXHkeKXKXP8kXVd3Dn3iebwqI=; 
+ b=P5u6n+sydvzKGsy2HGanIbyR6zKl/n+bTL6xMamMkB+GAm04pIXqlYGA
+ S2pdBC63MM3ZM902L8umKfAozumRdblx5s0DFslKjznKtb6ZdehCgGl7VB
+ VxaC/z7/1E0ll/iurb1Wjdc38SInz+xII+WbiGRzuvxmNgwMdTt7cUFPPM
+ BUdNTQY2mmMOXGwOqgUszEaii/ZqWa2NdXw0nHIwq3rB2GVtj5S0lNWlLJ
+ 4r59ANtbEPNxD+PsytEF42gDtn+GqptAhnvaMLAT0XNcOV8tWoeYE4LddS
+ aiLCqt53QK9Jj/r3a0Mb0FmD/NiIwr5KlT63LUVWJWTORLMlbycRWQ==
 Received: from fifthhorseman.net (ip-78-45-46-183.net.upcbroadband.cz [78.45.46.183])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by che.mayfirst.org (Postfix) with ESMTPSA id 4F564F99D;
-        Fri, 22 Mar 2019 13:22:59 -0400 (EDT)
+        by che.mayfirst.org (Postfix) with ESMTPSA id 3C4FCF9A2;
+        Fri, 22 Mar 2019 13:23:00 -0400 (EDT)
 Received: by fifthhorseman.net (Postfix, from userid 1000)
-        id 90B9820A67; Fri, 22 Mar 2019 01:19:07 -0400 (EDT)
+        id 456F5206B9; Fri, 22 Mar 2019 00:00:38 -0400 (EDT)
 From:   Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Santiago Torres <santiago@nyu.edu>
 Subject: Re: git tag -v should verify that the tag signer intended the same tag name as the user is verifying
-In-Reply-To: <xmqq1s31ui5s.fsf@gitster-ct.c.googlers.com>
-References: <875zsdu41d.fsf@fifthhorseman.net> <xmqq5zsduinf.fsf@gitster-ct.c.googlers.com> <xmqq1s31ui5s.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <8736nhdvi3.fsf@evledraar.gmail.com>
+References: <875zsdu41d.fsf@fifthhorseman.net> <8736nhdvi3.fsf@evledraar.gmail.com>
 Autocrypt: addr=dkg@fifthhorseman.net; prefer-encrypt=mutual; keydata=
  mDMEXEK/AhYJKwYBBAHaRw8BAQdAr/gSROcn+6m8ijTN0DV9AahoHGafy52RRkhCZVwxhEe0K0Rh
  bmllbCBLYWhuIEdpbGxtb3IgPGRrZ0BmaWZ0aGhvcnNlbWFuLm5ldD6ImQQTFggAQQIbAQUJA8Jn
@@ -63,79 +62,101 @@ Autocrypt: addr=dkg@fifthhorseman.net; prefer-encrypt=mutual; keydata=
  BQEBB0BG4iXnHX/fs35NWKMWQTQoRI7oiAUt0wJHFFJbomxXbAMBCAeIfgQYFggAJhYhBMS8Lds4
  zOlkhevpwvIGkReQOOXGBQJcQr+dAhsMBQkB4TOAAAoJEPIGkReQOOXGe/cBAPlek5d9xzcXUn/D
  kY6jKmxe26CTws3ZkbK6Aa5Ey/qKAP0VuPQSCRxA7RKfcB/XrEphfUFkraL06Xn/xGwJ+D0hCw==
-Date:   Fri, 22 Mar 2019 01:19:07 -0400
-Message-ID: <87imwbmqpg.fsf@fifthhorseman.net>
+Date:   Fri, 22 Mar 2019 00:00:37 -0400
+Message-ID: <87lg17muca.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha512; protocol="application/pgp-signature"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the thoughtful feedback, Junio!
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu 2019-03-21 10:31:59 +0900, Junio C Hamano wrote:
-> The other point still stands; there are legitimate reasons people
-> would want to have a tag with v1.0.0 tagname in somewhere that is
-> not refs/tags/v1.0.0 and an extra validation must need to make sure
-> it won't error out, even though warning is probably acceptable.
+On Wed 2019-03-20 23:35:48 +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wr=
+ote:
+> But e.g. if you've signed a v1.00 in foo.git, but also maintain bar.git
+> and have a v2.00 there, I can be fooled in foo.git with your proposed
+> change by having the v2.00 bar.git tag pushed to it (just, with the
+> proposed change, not the other way around).
 
-It would be great if "git tag -v" would present a warning by default in
-case of a tag name mismatch!  I would not want to rule out making it
-possible to return an error though.
+Presumably the tool looking for the "most interesting new tag" already
+has some sort of pattern that it looks for in a tag name (to avoid
+accidentally ingesting some development-specific, non-release tag).
 
-I don't personally have any use case for doing such a tag rename -- you
-mention two:
+So yes, this is true for upstreams which issue signed release tags on
+multiple projects named with the generic form v1.2.3, but it is *not*
+true of projects which name their tags the way that (for example)
+GnuPG's upstream does (e.g. gnupg-2.2.14 and libgpg-error-1.36).
 
- a) wanting to call tag "foo" that you found on remote "origin" by the
-    name of "origin/foo"
+In that case, and the matching pattern itself will exclude tags from
+other repositories.
 
- b) wanting to call "v2.20.0" by the name "g2.20.0"
+> It *does* help with the "pass of an old tag [from the same repository]"
+> problem, which I'd expect would realistically be the only threat model
+> that matters (forcing a downgrade to an old buggy version), whereas some
+> entirely different project is likely going to be next fed to some
+> project-specific build infrastructure and then won't even build.
 
-And Ævar mentions a third:
+I agree that a cross-project tag substitution attack is more exotic than
+an in-project downgrade or freeze attack, but i'm not inclined to wager
+on it never being exploitable.  Why take that gamble?
 
- c) mapping versioned tags (e.g. "v2.20.0") to tags with a date name
-    ("2018-03-22")
+> I wonder if there's a more general fix to be found here that'll have
+> nothing to do with GPG or signed tags per-se. A lot of people have this
+> "given tags in the repo, what's the latest one?" problem. I think
+> they'll mostly use the --sort option now, maybe some variant of that
+> which for each <older>/<newer> tag in the chain also checked:
+>
+>     git merge-base --is-ancestor <older> <newer>
+>
+> That would serve as a check for such rouge tags, even if none of them
+> were signed, and a "they must be signed" option could be added, along
+> with "start walking from here".
 
-I'm not sure how realistic or useful any of these patterns are.  While
-(a) seems the most plausible of the lot to me, none of them are things
-i've ever seen in practice.
+I agree that this is a common tag verification use case, and i've seen
+probably a dozen different attempts to do it which all fail in some
+curious ways if you assume that the repository being pulled from is
+malicious.
 
-So i'd say that anyone in such a scenario is the outlier, and i wouldn't
-want the existence of that edge case to make git less useful in the much
-more common case.
+I like the idea you're describing here, and would be happy to see some
+reasonable, easy-to-use git subcommand that says something like "find
+the most interesting tag that derives from the current HEAD".  for some
+version of "interesting", of course :) It would probably be a good start
+to have "interesting" mean:
 
-Here's a revised proposal:
+ * the tag name matches some particular pattern
+=20
+ * the tag is cryptographically signed by at least one member of a
+   specific curated keyring
+=20=20=20
+ * the tag is the "most recent" or "farthest descendant" (these are
+   subtly different, i'm not sure which one makes more sense)
 
-Consider a config setting named tag.verifyNameMatch, which can be true,
-false, or some sort of sed expression name mangler.
+Anyway, the fact that there isn't an obvious perfect answer for how to
+do this shouldn't stop git from offering a reasonable, well-vetted,
+*good* answer.  Because the current situation just means that every
+project that cares about verifying signed tags makes up their own
+approach, and i would happily bet that most of them get it wrong in some
+corner case.
 
- - If set to true, it would do the thing that naive users probably
-   expect when they do "git tag -v foo" -- show a warning *and* return
-   an error if the tag message itself doesn't have "tag foo" in the
-   "header section" of the signed tag.
+And if there's a tool that does a sensible verification of some workflow
+that we think is reasonable, that tool will also help to encourgae
+projects to adopt that reasonable workflow.  This is a good thing!
 
- - If set to false, it wouldn't error out (though maybe it would still
-   show the warning).
+       --dkg
 
- - If set to a sed expression, it would feed the name being checked
-   through the sed expression and ensure that the resultant value was
-   present in the signed tag's "header section".
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The mangler would work in a pretty straightforward way for (a)
-(e.g. "s_origin/(.*)_\1_") and (b) (e.g. "s_v(.*)_g\1_").
+-----BEGIN PGP SIGNATURE-----
 
-i don't see how it would handle (c), but i think there are probably
-better ways to handle (c) (if i'm understanding Ævar's scenario
-correctly) than just trying to replay the upstream author's tags with
-different names.  For example, the curator of the repository could just
-make their own signed tags, based on whatever policy they wanted.  Or,
-they could just ignore the warnings :P
-
-As you can probably guess, i'd say that such a tag.verifyNameMatch
-should default to true, but i'd also be ok if it started off defaulting
-to false, to gather feedback about its impact, and eventually consider
-transitioning it to true by default.
-
-      --dkg
+iHUEARYKAB0WIQTJDm02IAobkioVCed2GBllKa5f+AUCXJRd5QAKCRB2GBllKa5f
++GbfAP0YiEYt0JQdu6w9YpPIQcqPuYJ1ftlkra3NsdWxbdPSvgD9HmYdEaWUCY1H
+/YTUAC4a624Fm/YlUlsObRj3gDt8LAU=
+=v0/S
+-----END PGP SIGNATURE-----
+--=-=-=--
