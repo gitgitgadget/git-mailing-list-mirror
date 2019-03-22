@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61303202BB
-	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60E2120248
+	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727934AbfCVJdJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 05:33:09 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:36186 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727919AbfCVJdI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 05:33:08 -0400
-Received: by mail-wr1-f47.google.com with SMTP id y13so1554895wrd.3
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:06 -0700 (PDT)
+        id S1727957AbfCVJdR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 05:33:17 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41129 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727948AbfCVJdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 05:33:15 -0400
+Received: by mail-wr1-f68.google.com with SMTP id p1so1524524wrs.8
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=B9QhC8VKdT3oiryVnZe9Q6K88y5w7jnpncMv3vAKIjc=;
-        b=lmROaBW1e2oVKjL6p4ogFyw+ekaZlHasPLAd/eBlGTHDjphM/Ld8Ixr9gRN5wNylBg
-         DJIDRE6LQMHx7MEkAbl3IRTNUY5MJlwSdN1P7IfN48ubOHpLWJII7u4bmaGJC41XqxHb
-         oPL1QE83ioPoExj2xuDI6r9XpKFBoFXQT7FuX8r3KntO3KITmkrO9a2YF+5TYSqCRTkL
-         V4h0XjaHrNmf80kNpED96vmYcRCOsuKKSJ1SmMPQttfOwJ2No0OqIGORLiGsnx9AxkTT
-         ssKefvM6O1wwSXGdDKnBPfq9T9CU0mVhFDPSR0j5dcPF4uW62ZyHAihFNozASJoaopEH
-         rdFQ==
+        bh=hbz+ZQhaxAq9zBs8Z0B/DXRydlbJbw7ibhZnEiAJdjw=;
+        b=MKa+uy+Dq6KWv3LMadx2aZjkzJWbBM2lAXd7Feey1uOvL689lpyrjpAyqnD964EzOx
+         uZ64Ol9VTDhBMGDfUzP+05a0akoBuefgG/nFWjXcPe73M55bqJrESDNINDrwc8kuHOmn
+         BFbTKP+8tJjcw/eURvcrD39Ga4Dt1Cofwu1UgeNkgx4q2IIaqOvM0mmJb9dmQiiIKNky
+         8rdhVCpV7DndUdm+YMpSXfmz0Zo01n2r9Rfom2Ch2w5Wv7geBd8W3/upT1DG2fNdyJUq
+         6+skLJYpcZ/6g2BqN/ag+0lywqXc8j3baoZ0amaYOYx/2cs31xMEFLhzaLzGvQAvFbsx
+         1Eig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=B9QhC8VKdT3oiryVnZe9Q6K88y5w7jnpncMv3vAKIjc=;
-        b=YL0booCg+hHa0oFeCpD41SggzPYHzbMulJS2UI4U/08n5zyBW4optwGA8mp6NXT4WD
-         dZy4+eZ7hLmqoTFr6zqiPvHz/pEj29sdzDhvxzrUNcp7GFORXmierQIX8LGRiPU6luUd
-         ZYpTScoWnTfmz9cVkOYgdqidxFty/amvNB2vJujGAA8fy55yKNvPUR2EpB0R/2/b72bI
-         Vlv20+ltNQdzgRFlL8Vj+gb26QEqWHuifCaHiLYEigSXsfXbwXRXPwUuhSht+pWWlt24
-         ZJ4Qa/nObMLBm7PkNDbASMot0YvKUuYeJnoitUWwBSlb/3lnWlz1CZMbGC2yFeBaZ2Uy
-         NiZQ==
-X-Gm-Message-State: APjAAAVkCVw/xJoM3xOHOSJJuSdotIqh61EtxdRRkpB6VxCG6Bn4ua2O
-        4Pvv7OxzvlFNQGIZHey0Cmtn+bzyy0g=
-X-Google-Smtp-Source: APXvYqy/XqyixAaetFVVmfJJrZCKPvQ6C+4NMCNbbLbYyUtRPxTiggpGBJV0QCHMbvNYQb8xg+NsSg==
-X-Received: by 2002:adf:e449:: with SMTP id t9mr5496650wrm.204.1553247185478;
-        Fri, 22 Mar 2019 02:33:05 -0700 (PDT)
+        bh=hbz+ZQhaxAq9zBs8Z0B/DXRydlbJbw7ibhZnEiAJdjw=;
+        b=ZSvWOgvDZCx9ybOVW/xTKLU0fRs8/J0uGpVW6P1MifMsG3vLdJmtGKm1U37+dbnFAr
+         1g0+a7VCJHVPf2yz+dJBeh55+dX48rD/ScesxazgTbXgT+B7ZFGteJfeiRDNwaVRksdu
+         uJQ6J7doIejsZoYa3oLks8Jn5cwy2dzC+qjAuz4ggvNZOFudXtUOC4yeUY+otGvECs0A
+         ystmI0QdyUiT717FflTS0K2hUTs8wH8kBlz5S2Jbrk73NQHSvM1PawJiN2sJA48V7lll
+         XvjdNiuJzitgl4Z1FK1OKGQd+HrGgj/DhWuzuZ5yH1gZOp0pCFaTqlk58Ueq9uoKf4dv
+         Q2Cg==
+X-Gm-Message-State: APjAAAVlvAbe1LLVLjg+z7VWi53EHVouF+bgPJ65D7+HDu6L8RcetEyv
+        D3pP+AMMcDPSQUJQGvfuG74RNkBk4Cw=
+X-Google-Smtp-Source: APXvYqzNZr/9MT2Jz7BeuZXSX6rEzFp+SFN17/I9yfDXoFqeVZQNWfW8qsaoUO6O2Z2apRvmTAqVgg==
+X-Received: by 2002:a5d:4a8a:: with SMTP id o10mr5678427wrq.189.1553247192596;
+        Fri, 22 Mar 2019 02:33:12 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.33.03
+        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.33.11
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 22 Mar 2019 02:33:04 -0700 (PDT)
+        Fri, 22 Mar 2019 02:33:11 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 04/11] gc docs: include the "gc.*" section from "config" in "gc"
-Date:   Fri, 22 Mar 2019 10:32:35 +0100
-Message-Id: <20190322093242.5508-5-avarab@gmail.com>
+Subject: [PATCH v3 10/11] gc docs: clarify that "gc" doesn't throw away referenced objects
+Date:   Fri, 22 Mar 2019 10:32:41 +0100
+Message-Id: <20190322093242.5508-11-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190321205054.17109-1-avarab@gmail.com>
 References: <20190321205054.17109-1-avarab@gmail.com>
@@ -76,199 +76,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rather than duplicating the documentation for the various "gc" options
-let's include the "gc" docs from git-config. They were mostly better
-already, and now we don't have the same docs in two places with subtly
-different wording.
+Amend the "NOTES" section to fix up wording that's been with us since
+3ffb58be0a ("doc/git-gc: add a note about what is collected",
+2008-04-23).
 
-In the cases where the git-gc(1) docs were saying something the "gc"
-docs in git-config(1) didn't cover move the relevant section over to
-the git-config(1) docs.
+I can't remember when/where anymore (I think Freenode #Git), but at
+some point I was having a conversation with someone who was convinced
+that "gc" would prune things only referenced by e.g. refs/pull/*, and
+pointed to this section as proof.
+
+It turned out that they'd read the "branches and tags" wording here
+and thought just refs/{heads,tags}/* and refs/remotes/* etc. would be
+kept, which is what we enumerate explicitly.
+
+So let's say "other refs", even though just above we say "objects that
+are referenced anywhere in your repository".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/gc.txt | 29 ++++++++++++-
- Documentation/git-gc.txt    | 86 +++----------------------------------
- 2 files changed, 35 insertions(+), 80 deletions(-)
+ Documentation/git-gc.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-index c6fbb8a96f..a255ae67b0 100644
---- a/Documentation/config/gc.txt
-+++ b/Documentation/config/gc.txt
-@@ -2,24 +2,39 @@ gc.aggressiveDepth::
- 	The depth parameter used in the delta compression
- 	algorithm used by 'git gc --aggressive'.  This defaults
- 	to 50.
-++
-+See the documentation for the `--depth` option in
-+linkgit:git-repack[1] for more details.
- 
- gc.aggressiveWindow::
- 	The window size parameter used in the delta compression
- 	algorithm used by 'git gc --aggressive'.  This defaults
- 	to 250.
-++
-+See the documentation for the `--window` option in
-+linkgit:git-repack[1] for more details.
- 
- gc.auto::
- 	When there are approximately more than this many loose
- 	objects in the repository, `git gc --auto` will pack them.
- 	Some Porcelain commands use this command to perform a
- 	light-weight garbage collection from time to time.  The
--	default value is 6700.  Setting this to 0 disables it.
-+	default value is 6700.
-++
-+Setting this to 0 disables not only automatic packing based on the
-+number of loose objects, but any other heuristic `git gc --auto` will
-+otherwise use to determine if there's work to do, such as
-+`gc.autoPackLimit`.
- 
- gc.autoPackLimit::
- 	When there are more than this many packs that are not
- 	marked with `*.keep` file in the repository, `git gc
- 	--auto` consolidates them into one larger pack.  The
- 	default	value is 50.  Setting this to 0 disables it.
-+	Setting `gc.auto` to 0 will also disable this.
-++
-+See the `gc.bigPackThreshold` configuration variable below. When in
-+use, it'll affect how the auto pack limit works.
- 
- gc.autoDetach::
- 	Make `git gc --auto` return immediately and run in background
-@@ -36,6 +51,11 @@ Note that if the number of kept packs is more than gc.autoPackLimit,
- this configuration variable is ignored, all packs except the base pack
- will be repacked. After this the number of packs should go below
- gc.autoPackLimit and gc.bigPackThreshold should be respected again.
-++
-+If the amount of memory estimated for `git repack` to run smoothly is
-+not available and `gc.bigPackThreshold` is not set, the largest
-+pack will also be excluded (this is the equivalent of running `git gc`
-+with `--keep-base-pack`).
- 
- gc.writeCommitGraph::
- 	If true, then gc will rewrite the commit-graph file when
-@@ -94,6 +114,13 @@ gc.<pattern>.reflogExpireUnreachable::
- 	With "<pattern>" (e.g. "refs/stash")
- 	in the middle, the setting applies only to the refs that
- 	match the <pattern>.
-++
-+These types of entries are generally created as
-+a result of using `git commit --amend` or `git rebase` and are the
-+commits prior to the amend or rebase occurring.  Since these changes
-+are not part of the current project most users will want to expire
-+them sooner, which is why the default is more aggressive than
-+`gc.reflogExpire`.
- 
- gc.rerereResolved::
- 	Records of conflicted merge you resolved earlier are
 diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 66386439b7..c037a46b09 100644
+index 165f05e999..49aec5435b 100644
 --- a/Documentation/git-gc.txt
 +++ b/Documentation/git-gc.txt
-@@ -45,28 +45,12 @@ OPTIONS
- --auto::
- 	With this option, 'git gc' checks whether any housekeeping is
- 	required; if not, it exits without performing any work.
--	Some git commands run `git gc --auto` after performing
--	operations that could create many loose objects. Housekeeping
--	is required if there are too many loose objects or too many
--	packs in the repository.
- +
--If the number of loose objects exceeds the value of the `gc.auto`
--configuration variable, then all loose objects are combined into a
--single pack.  Setting the value of `gc.auto`
--to 0 disables automatic packing of loose objects.
-+See the `gc.auto' option in the "CONFIGURATION" section below for how
-+this heuristic works.
- +
--If the number of packs exceeds the value of `gc.autoPackLimit`,
--then existing packs (except those marked with a `.keep` file
--or over `gc.bigPackThreshold` limit)
--are consolidated into a single pack.
--If the amount of memory estimated for `git repack` to run smoothly is
--not available and `gc.bigPackThreshold` is not set, the largest
--pack will also be excluded (this is the equivalent of running `git gc`
--with `--keep-base-pack`).
--Setting `gc.autoPackLimit` to 0 disables automatic consolidation of
--packs.
--+
--If houskeeping is required due to many loose objects or packs, all
-+Once housekeeping is triggered by exceeding the limits of
-+configuration options such as `gc.auto` and `gc.autoPackLimit`, all
- other housekeeping tasks (e.g. rerere, working trees, reflog...) will
- be performed as well.
- 
-@@ -97,66 +81,10 @@ be performed as well.
- CONFIGURATION
- -------------
- 
--The optional configuration variable `gc.reflogExpire` can be
--set to indicate how long historical entries within each branch's
--reflog should remain available in this repository.  The setting is
--expressed as a length of time, for example '90 days' or '3 months'.
--It defaults to '90 days'.
--
--The optional configuration variable `gc.reflogExpireUnreachable`
--can be set to indicate how long historical reflog entries which
--are not part of the current branch should remain available in
--this repository.  These types of entries are generally created as
--a result of using `git commit --amend` or `git rebase` and are the
--commits prior to the amend or rebase occurring.  Since these changes
--are not part of the current project most users will want to expire
--them sooner.  This option defaults to '30 days'.
--
--The above two configuration variables can be given to a pattern.  For
--example, this sets non-default expiry values only to remote-tracking
--branches:
--
--------------
--[gc "refs/remotes/*"]
--	reflogExpire = never
--	reflogExpireUnreachable = 3 days
--------------
--
--The optional configuration variable `gc.rerereResolved` indicates
--how long records of conflicted merge you resolved earlier are
--kept.  This defaults to 60 days.
--
--The optional configuration variable `gc.rerereUnresolved` indicates
--how long records of conflicted merge you have not resolved are
--kept.  This defaults to 15 days.
--
--The optional configuration variable `gc.packRefs` determines if
--'git gc' runs 'git pack-refs'. This can be set to "notbare" to enable
--it within all non-bare repos or it can be set to a boolean value.
--This defaults to true.
--
--The optional configuration variable `gc.writeCommitGraph` determines if
--'git gc' should run 'git commit-graph write'. This can be set to a
--boolean value. This defaults to false.
--
--The optional configuration variable `gc.aggressiveWindow` controls how
--much time is spent optimizing the delta compression of the objects in
--the repository when the --aggressive option is specified.  The larger
--the value, the more time is spent optimizing the delta compression.  See
--the documentation for the --window option in linkgit:git-repack[1] for
--more details.  This defaults to 250.
--
--Similarly, the optional configuration variable `gc.aggressiveDepth`
--controls --depth option in linkgit:git-repack[1]. This defaults to 50.
--
--The optional configuration variable `gc.pruneExpire` controls how old
--the unreferenced loose objects have to be before they are pruned.  The
--default is "2 weeks ago".
--
--Optional configuration variable `gc.worktreePruneExpire` controls how
--old a stale working tree should be before `git worktree prune` deletes
--it. Default is "3 months ago".
-+The below documentation is the same as what's found in
-+linkgit:git-config[1]:
- 
-+include::config/gc.txt[]
- 
- NOTES
- -----
+@@ -119,8 +119,8 @@ anywhere in your repository. In
+ particular, it will keep not only objects referenced by your current set
+ of branches and tags, but also objects referenced by the index,
+ remote-tracking branches, refs saved by 'git filter-branch' in
+-refs/original/, or reflogs (which may reference commits in branches
+-that were later amended or rewound).
++refs/original/, reflogs (which may reference commits in branches
++that were later amended or rewound), and anything else in the refs/* namespace.
+ If you are expecting some objects to be deleted and they aren't, check
+ all of those locations and decide whether it makes sense in your case to
+ remove those references.
 -- 
 2.21.0.360.g471c308f928
 
