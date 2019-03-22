@@ -2,118 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D77E20248
-	for <e@80x24.org>; Fri, 22 Mar 2019 10:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0C5B20248
+	for <e@80x24.org>; Fri, 22 Mar 2019 11:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727915AbfCVK26 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 06:28:58 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33412 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727739AbfCVK25 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 06:28:57 -0400
-Received: by mail-wr1-f68.google.com with SMTP id q1so1762690wrp.0
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 03:28:56 -0700 (PDT)
+        id S1728126AbfCVLE2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 07:04:28 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:54358 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727713AbfCVLE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 07:04:27 -0400
+Received: by mail-wm1-f68.google.com with SMTP id f3so1715354wmj.4
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 04:04:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=E+xe6PNWXnohX3HyYNaG38Njj56vo8zuH+PQfej8GQw=;
-        b=f4hnGhABn2iGYcdu906z/1RCpu6wdOAXXd9j+mGIdESPS7t0yXiSIxItUk9RdyDvEt
-         sjFJ0qyJ1+33VSduIuI3/GqgP+uvDZnCyLE1FBa1SCrbTDq1Xl06I7TqNULoxaatluYV
-         YSjwbK2D/tgFQ+L+fC4l0No3lESbFvBptD+H9VCdfh6P02pn3uuri/JeGSbxQ3JKtT5L
-         rxmlGf45zcBQAzZFm9vFtv0SpqfP0pcIlQkFhgxy9HGpX+yY+wWO2/mZ00zeNaduxwKW
-         t0vuQAaN6XP/+VD2L5lkKU3QqUFVnBh3CfDCPkjtS0LnJ5GtbBvsIGOCbcd5odesfUp8
-         hdIA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=n+EWAEicMX/nEhFWx5zilvgkrtmMrVY6Hx1aQS/ihZ0=;
+        b=Tw6wH/QlPkz3F6w1wvTlzgxIGYlc0nk+RQfKcfCLW3+1DYhX55JM611omis/9ePtA4
+         wjLTChOZZ2VqgzCcMaAwvDzBm+W7hCYXlA9T6vySrUyaQMWJJDWoDws4YmSFz+SB06y9
+         nLxKHEiTydhH0lC1A6VSFjxgjWMdEMs/RzSUSWrx8UWySlpGeaHNq0quR5F0aKTFMx7N
+         EMk0MUq2QbbeVT9s0Wvl0KbmTuaMrE9FYpxPsHT8I72OGODA5+LvjjFMFMymGtMfJJ3r
+         ADgceNtJNznONXMGsANHeLzAN0O3/GJhWoU5paxkml27NaDbxQLktWzakMRdCCrbrzMy
+         vMSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=E+xe6PNWXnohX3HyYNaG38Njj56vo8zuH+PQfej8GQw=;
-        b=jseIGE25sYUoIuaNaUl0TlGE561QggHYHB0sh1DUmQ6i7Md2ruHFUA2CfgZjRBEwbh
-         D4wqqSqtAKG/j7qn4a9nGacfdtXenfQSHkYzWbyw051gEVUXqLlnq5BI4YN2QcxTlSeb
-         xD+j29O1ciuR8fZ7Z32ZM4CygjOAJNmWQWqg9I9e5U7DNOkI237uzs8ZTKuDqQpQ64fn
-         AoNTy7iVuGIgtR3vYuJc6lV8oG+fkO5FF47rK3WsINVq0z+2AMAUV/2/rO3P3/jV5d0i
-         bAX1NaAlrGqu28+H18GmGZCQvfqNwxk5OVgFsABnym8PhyUbj405TsZctjz9/HU3+4Vh
-         XTLA==
-X-Gm-Message-State: APjAAAVe2SQml46/OxHE2avJSCVQxeEnG4pHx0pufirdvMsuKifpsIjL
-        /EfBN2ABAJRySR7xMt+C7Oc=
-X-Google-Smtp-Source: APXvYqyHULB8V4eyEwA6FzgeNObNcPDtKxhJTMM+blMMy1KhGWQ+DA3JJk6qhvprX2JWllkRKFA2gQ==
-X-Received: by 2002:adf:ed86:: with SMTP id c6mr6027837wro.146.1553250536247;
-        Fri, 22 Mar 2019 03:28:56 -0700 (PDT)
-Received: from localhost.localdomain (x4db501f9.dyn.telefonica.de. [77.181.1.249])
-        by smtp.gmail.com with ESMTPSA id 204sm12352591wmc.1.2019.03.22.03.28.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 22 Mar 2019 03:28:55 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] commit-graph: don't show progress percentages while expanding reachable commits
-Date:   Fri, 22 Mar 2019 11:28:17 +0100
-Message-Id: <20190322102817.19708-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.21.0.539.g07239c3a71.dirty
-In-Reply-To: <20190119202121.3590-11-avarab@gmail.com>
-References: <20190119202121.3590-11-avarab@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=n+EWAEicMX/nEhFWx5zilvgkrtmMrVY6Hx1aQS/ihZ0=;
+        b=nHh2kbIObWgPTcmF6FyJ3ADnGW9yVO8AWB6LiI/kifRDw9n8CvIs9456p0gLtbiNjQ
+         pOBFHioxBKXyXE1nd7FBa/2i/2I1Gn3pKHiKvSPOO0+lIkRI2h29txdgNXT6qCwVAHrb
+         r0zCnbHKeRs2w78CkUfoUYPpu6CWWdKxHzA/92aG81M15qwDNw9YpMhvrMWp01emFxLf
+         3JGRrd30Qrgru7d+Zo/SVnYKaKO2rO/ZKS/ygiqf60RYivVvWXfMz5j0H+A7tajNprEC
+         kVIPWOMexieEj66wOE6pTBaNWiV0vwj5LEU9iyCb9YQMQIejCQ2a3YoZkKlhAaWG/S5s
+         vapA==
+X-Gm-Message-State: APjAAAV1B92moHO/Yr52abtjVVckK88+eJnDp2ntP1VO3DocskAy0XTg
+        6AjPGrcHLLHHMIzi6d5B6YA=
+X-Google-Smtp-Source: APXvYqwrYBrkIrdgRkXz1gZjDQW29/yQARwT03ximjt4VfzgolJGhW/iLYEN3YcqKNK4OH7/vtZpjg==
+X-Received: by 2002:a1c:cc0a:: with SMTP id h10mr2482113wmb.20.1553252666077;
+        Fri, 22 Mar 2019 04:04:26 -0700 (PDT)
+Received: from szeder.dev (x4db501f9.dyn.telefonica.de. [77.181.1.249])
+        by smtp.gmail.com with ESMTPSA id a9sm8905515wmb.30.2019.03.22.04.04.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Mar 2019 04:04:25 -0700 (PDT)
+Date:   Fri, 22 Mar 2019 12:04:22 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Ben Peart <benpeart@microsoft.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/2] fsmonitor: force a refresh after the index was
+ discarded
+Message-ID: <20190322110422.GB22459@szeder.dev>
+References: <pull.165.git.gitgitgadget@gmail.com>
+ <pull.165.v2.git.gitgitgadget@gmail.com>
+ <79fdd0d586e9086b68af1b68dc5e194a566d2240.1553176651.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <79fdd0d586e9086b68af1b68dc5e194a566d2240.1553176651.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 49bbc57a57 (commit-graph write: emit a percentage for all
-progress, 2019-01-19) was a bit overeager when it added progress
-percentages to the "Expanding reachable commits in commit graph" phase
-as well, because most of the time the number of commits that phase has
-to iterate over is not known in advance and grows significantly, and,
-consequently, we end up with nonsensical numbers:
+On Thu, Mar 21, 2019 at 06:57:34AM -0700, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> With this change, the `index_state` struct becomes the new home for the
+> flag that says whether the fsmonitor hook has been run, i.e. it is now
+> per-index.
+> 
+> It also gets re-set when the index is discarded, fixing the bug where
+> fsmonitor-enabled Git would miss updates under certain circumstances.
 
-  $ git commit-graph write --reachable
-  Expanding reachable commits in commit graph: 138606% (824706/595), done.
-  [...]
-
-  $ git rev-parse v5.0 | git commit-graph write --stdin-commits
-  Expanding reachable commits in commit graph: 81264400% (812644/1), done.
-  [...]
-
-Therefore, don't show progress percentages in the "Expanding reachable
-commits in commit graph" phase.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- commit-graph.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 017225ccea..60c06ce58f 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -672,13 +672,13 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
- 	 * As this loop runs, oids->nr may grow, but not more
- 	 * than the number of missing commits in the reachable
- 	 * closure.
- 	 */
- 	if (report_progress)
- 		progress = start_delayed_progress(
--			_("Expanding reachable commits in commit graph"), oids->nr);
-+			_("Expanding reachable commits in commit graph"), 0);
- 	for (i = 0; i < oids->nr; i++) {
- 		display_progress(progress, i + 1);
- 		commit = lookup_commit(the_repository, &oids->list[i]);
- 
- 		if (commit && !parse_commit(commit))
- 			add_missing_parents(oids, commit);
--- 
-2.21.0.539.g07239c3a71.dirty
+Under what circumstances would a fsmonitor-enabled Git miss updates?
 
