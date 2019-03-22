@@ -2,119 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66D4B20248
-	for <e@80x24.org>; Fri, 22 Mar 2019 17:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CAD220248
+	for <e@80x24.org>; Fri, 22 Mar 2019 17:23:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728248AbfCVRU2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 13:20:28 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:49410 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728203AbfCVRU2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 13:20:28 -0400
-Received: by mail-qk1-f202.google.com with SMTP id 23so2506827qkl.16
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 10:20:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=cissq3CZd94tb4DevNwBEVgzoEXCCRfFdBXuOtv/h1U=;
-        b=KZoKRFUysF746C9mDOKsiqsYxavc50qGlxZajolo3HSPsIuN8mdlODH5m0aixXwgfF
-         VwkeNzvnn+JUq47HXH35HJxqvGQBj4LAdHg8evynkHYTY1FUHWgQeWlV/2gPwpVeyv5w
-         865ql1fk4sO8HmuqS51jFOb3iBWwd+bRC2NzzGZM5Rbz4zXLb1i3WjzXesM7sR0eDyMQ
-         xjSKMAlVO9WTmqRN+Wt4jxGSvGPcF/vIp449oij700qMBllhk/8vscN0rhUAAL9tzaVs
-         /vPXa9SkzvKCrM74dG5cT0kSvgF/6HhAK36+asrl1toEOyfoFEXMjfCuhjA9xebdIKxs
-         pACQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=cissq3CZd94tb4DevNwBEVgzoEXCCRfFdBXuOtv/h1U=;
-        b=MY6/uzcNN9YnAdVQrMF0TjPiOzBLtch7hzcukZAOLxQrsmC2psYpAc+J+L7qcJlTi0
-         H/PIETRucXr9vYqEK79LYfD0Tdc2cxeWrECqBPPYGnOG2VyYtbikoCqEwbOouApiHT8P
-         A6IvoHzd0p4Npx4dbMJ2Lcpqf9kRbWKneU6wHIefsRrFoPJJ1QjLAPYHOBhs2SKh/4i5
-         x7hQTVCJ4/Rbci4WuMYqB59piiJb6JUUZuaelCVW+X3pXVWEu8VFkW17YVWgpJlIPAC5
-         EwHPks+H0aPLt/yG2SsKWwCQyhtsYxQr8VknA/MOo75AUfBhGAib0+VPbt4+q4gJPSDt
-         S9hQ==
-X-Gm-Message-State: APjAAAXNeKcmymtgktWmCHTf4pT9iRgdvap3JCtZ9jWpBbsORwIqr6Tn
-        AFjjtPuFDu2jI6PaKhNgaIu+hNbFi5IFVBCl2T3C
-X-Google-Smtp-Source: APXvYqzy4++o4FW6j5+GMceMzl9p05omOxgT8lKKHz+jEWyq2yt6ROWXOcwtl1VPv/1EK4RFatZ7jlwVKXPqKlVhAJNX
-X-Received: by 2002:a37:9682:: with SMTP id y124mr7950056qkd.288.1553275227189;
- Fri, 22 Mar 2019 10:20:27 -0700 (PDT)
-Date:   Fri, 22 Mar 2019 10:20:23 -0700
-In-Reply-To: <xmqq36nfsl8t.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20190322172023.238242-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq36nfsl8t.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.21.0.155.ge902e9bcae.dirty
-Subject: Re: [RFC PATCH] t5551: delete auth-for-pack-but-not-refs test
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+        id S1728512AbfCVRXB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 13:23:01 -0400
+Received: from che.mayfirst.org ([162.247.75.118]:47945 "EHLO che.mayfirst.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728287AbfCVRXB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 13:23:01 -0400
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple; 
+ d=fifthhorseman.net; i=@fifthhorseman.net; q=dns/txt; 
+ s=2019; t=1553275379; h=from : to : cc : subject : 
+ in-reply-to : references : date : message-id : 
+ mime-version : content-type : content-transfer-encoding : 
+ from; bh=F5TqFGOW87TrF2IaammfOuN8PnBbf16q9JMOgkbb2KI=; 
+ b=UyD/zhfDfiZxDan8uf4n7wF/Sg0sUT5vTHO1VFmHEIqtrIZJOO3I1QmJ
+ +BsSyov2L4FLHdneBNF54N+gXsDaBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fifthhorseman.net; 
+ i=@fifthhorseman.net; q=dns/txt; s=2019rsa; t=1553275379; 
+ h=from : to : cc : subject : in-reply-to : references : 
+ date : message-id : mime-version : content-type : 
+ content-transfer-encoding : from; 
+ bh=F5TqFGOW87TrF2IaammfOuN8PnBbf16q9JMOgkbb2KI=; 
+ b=gCJw+qF0TzHat7FTbyN0DshK6CP8WRPiOHxWlH5Av2SNo+h+lbTCXLPM
+ FfzXcuKzqY0f/wVFfMyKetF6q3e69qZy2eqNwZEnz5EDyEAUb/BoNBniyx
+ erBOq14fpMMhjl7YEI0rpkirGKGChGpUJz/qzDVb6PyjvfVhghCNHXlzAb
+ tz0LLHbJdbH4u+upSoYz0DNxfMo1etThrU17aixIOpZidFS7H9HImXlXOS
+ mALkgAkOA/gw8KJtfWmjT18xpty80kDdJXyhKdkMSKwckEAKQke3TnhrEs
+ Kg3C8wIsAY8DuHxqB22k0t6BPKk2Y13xNygOY28cje4ev9tmDeJHmw==
+Received: from fifthhorseman.net (ip-78-45-46-183.net.upcbroadband.cz [78.45.46.183])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by che.mayfirst.org (Postfix) with ESMTPSA id 4F564F99D;
+        Fri, 22 Mar 2019 13:22:59 -0400 (EDT)
+Received: by fifthhorseman.net (Postfix, from userid 1000)
+        id 90B9820A67; Fri, 22 Mar 2019 01:19:07 -0400 (EDT)
+From:   Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git tag -v should verify that the tag signer intended the same tag name as the user is verifying
+In-Reply-To: <xmqq1s31ui5s.fsf@gitster-ct.c.googlers.com>
+References: <875zsdu41d.fsf@fifthhorseman.net> <xmqq5zsduinf.fsf@gitster-ct.c.googlers.com> <xmqq1s31ui5s.fsf@gitster-ct.c.googlers.com>
+Autocrypt: addr=dkg@fifthhorseman.net; prefer-encrypt=mutual; keydata=
+ mDMEXEK/AhYJKwYBBAHaRw8BAQdAr/gSROcn+6m8ijTN0DV9AahoHGafy52RRkhCZVwxhEe0K0Rh
+ bmllbCBLYWhuIEdpbGxtb3IgPGRrZ0BmaWZ0aGhvcnNlbWFuLm5ldD6ImQQTFggAQQIbAQUJA8Jn
+ AAULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBMS8Lds4zOlkhevpwvIGkReQOOXGBQJcQsbzAhkB
+ AAoJEPIGkReQOOXG4fkBAO1joRxqAZY57PjdzGieXLpluk9RkWa3ufkt3YUVEpH/AP9c+pgIxtyW
+ +FwMQRjlqljuj8amdN4zuEqaCy4hhz/1DbgzBFxCv4sWCSsGAQQB2kcPAQEHQERSZxSPmgtdw6nN
+ u7uxY7bzb9TnPrGAOp9kClBLRwGfiPUEGBYIACYWIQTEvC3bOMzpZIXr6cLyBpEXkDjlxgUCXEK/
+ iwIbAgUJAeEzgACBCRDyBpEXkDjlxnYgBBkWCAAdFiEEyQ5tNiAKG5IqFQnndhgZZSmuX/gFAlxC
+ v4sACgkQdhgZZSmuX/iVWgD/fCU4ONzgy8w8UCHGmrmIZfDvdhg512NIBfx+Mz9ls5kA/Rq97vz4
+ z48MFuBdCuu0W/fVqVjnY7LN5n+CQJwGC0MIA7QA/RyY7Sz2gFIOcrns0RpoHr+3WI+won3xCD8+
+ sVXSHZvCAP98HCjDnw/b0lGuCR7coTXKLIM44/LFWgXAdZjm1wjODbg4BFxCv50SCisGAQQBl1UB
+ BQEBB0BG4iXnHX/fs35NWKMWQTQoRI7oiAUt0wJHFFJbomxXbAMBCAeIfgQYFggAJhYhBMS8Lds4
+ zOlkhevpwvIGkReQOOXGBQJcQr+dAhsMBQkB4TOAAAoJEPIGkReQOOXGe/cBAPlek5d9xzcXUn/D
+ kY6jKmxe26CTws3ZkbK6Aa5Ey/qKAP0VuPQSCRxA7RKfcB/XrEphfUFkraL06Xn/xGwJ+D0hCw==
+Date:   Fri, 22 Mar 2019 01:19:07 -0400
+Message-ID: <87imwbmqpg.fsf@fifthhorseman.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > Because this configuration is not supported by all protocol versions,
-> > and because this configuration seems to be of limited usefulness (only
-> > useful for people who use manual credential entry and on servers that
-> > are OK with exposing refs but not objects, and even in this case, helps
-> > only in a no-op fetch), delete the test that verifies that this
-> > configuration works.
-> 
-> A possible and different conclusion that naturally follow your first
-> "because" could be "fix protocol versions whose support of this
-> configuration is broken", and your second "because" is with "seems
-> to be", that makes it quite weak.
-> 
-> Quite honestly, I hate to see a proposed log message that downplays
-> its potential negative effects without sufficient justification.
+Thanks for the thoughtful feedback, Junio!
 
-That is true, and that's fair.
+On Thu 2019-03-21 10:31:59 +0900, Junio C Hamano wrote:
+> The other point still stands; there are legitimate reasons people
+> would want to have a tag with v1.0.0 tagname in somewhere that is
+> not refs/tags/v1.0.0 and an extra validation must need to make sure
+> it won't error out, even though warning is probably acceptable.
 
-> Isn't this feature primarily for those who want to poll from an
-> automated job (and naturally you want to assign as little privilege
-> as possible to such an automated job) with ls-remote and only run an
-> authenticated fetch, perhaps manually, with or without cred helper,
-> when the automated polling job finds there is something worthwhile
-> to fetch?  What this test is checking seems to be a quite effective
-> way to achieve that useful workflow, at least to me, and offhand I
-> do not think of other ways to easily achieve the same.
-> 
-> The "ls-remote" communication may not even touch any outside network
-> but may be happening all within a single organization, in which case
-> "are OK with exposing refs" is making a security mountain out of a
-> molehill.  If it were a truly problematic hole that makes it a
-> security issue, wouldn't we deleting this test and at the same time
-> plugging the hole for earlier protocol versions?
+It would be great if "git tag -v" would present a warning by default in
+case of a tag name mismatch!  I would not want to rule out making it
+possible to return an error though.
 
-Thanks - that's a reasonable use case.
+I don't personally have any use case for doing such a tag rename -- you
+mention two:
 
-> Having said all that, I do not care too deeply.  Would a much better
-> longer-term solution for those who want to poll and fetch only when
-> there is something new be to allow clients to subscribe to a feed
-> that hangs while there is nothing new, and lets the upstream side
-> continuously feed incremental updates to the receiving client, as
-> its refs are updated, or something?  As long as such a thing is in
-> our vision (it is OK if nobody is currently working on it) to become
-> replacement, I do not think it is a huge loss to lose the ability for
-> unauthenticated ls-remote with authenticated fetch.
+ a) wanting to call tag "foo" that you found on remote "origin" by the
+    name of "origin/foo"
 
-I just remembered that one way we can support the existing use case is
-to inline the ls-refs call that we make as an Extra Parameter [1]. This
-would restore the ability to obtain refs through only the info/refs
-path.
+ b) wanting to call "v2.20.0" by the name "g2.20.0"
 
-Perhaps this is the component in our vision that we need - I'll write
-another patch that merely forces GIT_TEST_PROTOCOL_VERSION=0 and has a
-NEEDSWORK comment that explains this. 
+And Ævar mentions a third:
 
-[1] https://github.com/git/git/blob/master/Documentation/technical/pack-protocol.txt
+ c) mapping versioned tags (e.g. "v2.20.0") to tags with a date name
+    ("2018-03-22")
+
+I'm not sure how realistic or useful any of these patterns are.  While
+(a) seems the most plausible of the lot to me, none of them are things
+i've ever seen in practice.
+
+So i'd say that anyone in such a scenario is the outlier, and i wouldn't
+want the existence of that edge case to make git less useful in the much
+more common case.
+
+Here's a revised proposal:
+
+Consider a config setting named tag.verifyNameMatch, which can be true,
+false, or some sort of sed expression name mangler.
+
+ - If set to true, it would do the thing that naive users probably
+   expect when they do "git tag -v foo" -- show a warning *and* return
+   an error if the tag message itself doesn't have "tag foo" in the
+   "header section" of the signed tag.
+
+ - If set to false, it wouldn't error out (though maybe it would still
+   show the warning).
+
+ - If set to a sed expression, it would feed the name being checked
+   through the sed expression and ensure that the resultant value was
+   present in the signed tag's "header section".
+
+The mangler would work in a pretty straightforward way for (a)
+(e.g. "s_origin/(.*)_\1_") and (b) (e.g. "s_v(.*)_g\1_").
+
+i don't see how it would handle (c), but i think there are probably
+better ways to handle (c) (if i'm understanding Ævar's scenario
+correctly) than just trying to replay the upstream author's tags with
+different names.  For example, the curator of the repository could just
+make their own signed tags, based on whatever policy they wanted.  Or,
+they could just ignore the warnings :P
+
+As you can probably guess, i'd say that such a tag.verifyNameMatch
+should default to true, but i'd also be ok if it started off defaulting
+to false, to gather feedback about its impact, and eventually consider
+transitioning it to true by default.
+
+      --dkg
