@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0A5F20248
-	for <e@80x24.org>; Fri, 22 Mar 2019 09:32:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D852420248
+	for <e@80x24.org>; Fri, 22 Mar 2019 09:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727910AbfCVJcX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 05:32:23 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:45893 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727713AbfCVJcX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 05:32:23 -0400
-Received: by mail-pg1-f194.google.com with SMTP id y3so1103420pgk.12
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:32:23 -0700 (PDT)
+        id S1727913AbfCVJc3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 05:32:29 -0400
+Received: from mail-pf1-f169.google.com ([209.85.210.169]:36257 "EHLO
+        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727713AbfCVJc3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 05:32:29 -0400
+Received: by mail-pf1-f169.google.com with SMTP id p10so1151867pff.3
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:32:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CW/wzZj4Cv+1o9Ob6MVdLJO3us7qmcKRkvd/yHLh5G8=;
-        b=Tq8eOZg2cNyQv0TqDwPBHvEGk+V7Y/EzQJuUviao/eiIh3F5bahimcNwUxBDQguqHd
-         KW3xixLXFQ5g/uB0liMRg1YlXhuN+v5+uuoTV7O4SiBfHNwYt0WMuwsWEunMiA4oV/p4
-         nRSWU6WyHiV1eaox+Yj1tWQeMmEcwfOeeM8OAD7zG1D74tlCo35C1BlFaNAaU/PZdNWL
-         rvsA9syAZQeI2VsoobTmCoozI50VO+plHIv4O/HXHoUNG/ZZOAcsDtR4IcuNd/kFxRZz
-         0Rid4uvtvE/NLX+DHmDo0t1X+0a2LSv4hy69Ol/BOGL3UdqeI419dhakXqo5uXlI6GvS
-         y/jA==
+        bh=Dp4yRhzscDtaxNgptHVBokbFOxRHcWFndnMRLiOXHHo=;
+        b=enltlpg7TPWpyvOoaGKUKgPQ9Ka3g1cU3jcckbIwiafCiHLYRE34T9mvonvxhQOArh
+         RnkTanhyHkW02GjLqfyLxOpMFv/h9K0yA8tYZL5APZ0eOdMGdTGbv6vq5K1yLgkGkPD+
+         o7VkFmeuO9iNYRcx2QCcaCnPbTzOuP0SH3tP84NEUgo1ly9i7BlQIF2diPraVYIk5fvx
+         ZA+WxEb390pHa2HmBva4hjn0bLB5+AUwvnponA0WUebgFyw685NKKOW68xQQK4ocM1/U
+         KiRq2yehn4vECF/6ZswB08SVnFq+oNP6VQtJKa0qN8kxJcJ66e+bZrvYwv2Ei8KedaUk
+         +y4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CW/wzZj4Cv+1o9Ob6MVdLJO3us7qmcKRkvd/yHLh5G8=;
-        b=hB/ZQZUKQPSKR/hMhU6PNdD+Y9b6YTNQV4tVkK+bovRWK+yK/PfSX6fT1vPAHI22mk
-         JklO3S6a9kFV4RTzS7vfn1XODGaNGOgOcoKVsMjVmI8LY+LbjWPSwi2WDIm9lJnOn5Ox
-         NbTjf1HdtAeYtikXOp1xOVXol4B6RVQIUObprlvFIFoN4LcnflCC1G4nd1ii/BzP5TrM
-         DUa58clff/vAb1po5LeGBD1LylTJdx61V/iGrPjUetjbWHJMc5Rb1LlF+wFn08x2ql5g
-         UFkxPZ56zikQXysmK27AiRmqW8qtl5fsEmDWPfrtqKoH0pbUectJpxXt99y9NXkAMu89
-         dzaQ==
-X-Gm-Message-State: APjAAAWFkz466RRDFmt1+TloSyc7Ky1HmBX1H/iB51H+PmWUyiqdTFTC
-        ztafdP3nI0/PGw4FYODmpn6avYka51c=
-X-Google-Smtp-Source: APXvYqyWsPUXwP6idtnAp613ew+izcyLo47PyDlIdtRaoC/NOEnYlMhTSwVpeIsZavOypLIzhVNghw==
-X-Received: by 2002:aa7:910e:: with SMTP id 14mr8177614pfh.68.1553247142603;
-        Fri, 22 Mar 2019 02:32:22 -0700 (PDT)
+        bh=Dp4yRhzscDtaxNgptHVBokbFOxRHcWFndnMRLiOXHHo=;
+        b=jfhGpL3lDFx8O3DMfXVjpATamqVEqGkI09EINYhURNsoUCgEvtebKZ052eC9x7pmO8
+         sLmJp8TQziUrPvg/MlZBc6Aw9gzIagbsULdzLRCLHi7ikzs9NeDFzJHfROqy5s//MNDV
+         dojX+icGWHPnR3T2JeE7uJ5Hg5DPYpQ6WRQyXm+Vv9L3ARuq7Np5JeSLtdkaFpce3hau
+         JzV9gkh8ZguYa3CqxftUdMkY9ryeylP77VPW7O3zZlFB6K1cgv3tItcP9lehqPAuHgHe
+         F4qTAqIlyZ9whyxhr0bTJOvPuLNqv3EEL6b8p3w4/hqGd4Y+8Mt7PtMovCly95YsTuVc
+         UoNQ==
+X-Gm-Message-State: APjAAAW2eR0UvCyJCQ5+r/aXRMPbLV59cvbEw5lP/Ap/Rfgq3vcRCwGT
+        lFNouhmGXsfO1VmQU8l7xhkPlgblhMo=
+X-Google-Smtp-Source: APXvYqyLtAXWOjT1bl3vppMIX51NjQC0N7CxfmBV8zefsts/ekafzHWISbS0pgJW1yXU/YOy5UzskQ==
+X-Received: by 2002:a63:ca:: with SMTP id 193mr7937769pga.288.1553247148305;
+        Fri, 22 Mar 2019 02:32:28 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id n65sm22444666pfb.160.2019.03.22.02.32.19
+        by smtp.gmail.com with ESMTPSA id o38sm14716488pgm.36.2019.03.22.02.32.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Mar 2019 02:32:22 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Fri, 22 Mar 2019 16:32:16 +0700
+        Fri, 22 Mar 2019 02:32:27 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Fri, 22 Mar 2019 16:32:22 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,10 +58,10 @@ Cc:     Phillip Wood <phillip.wood123@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 3/4] read-tree: add --quiet
-Date:   Fri, 22 Mar 2019 16:31:37 +0700
-Message-Id: <20190322093138.13765-4-pclouds@gmail.com>
+        <pclouds@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 4/4] checkout: prevent losing staged changes with --merge
+Date:   Fri, 22 Mar 2019 16:31:38 +0700
+Message-Id: <20190322093138.13765-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190322093138.13765-1-pclouds@gmail.com>
 References: <20190322093138.13765-1-pclouds@gmail.com>
@@ -73,74 +73,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-read-tree is basically the front end of unpack-trees code and shoud
-expose all of its functionality (unless it's designed for internal
-use). This "opts.quiet" (formerly "opts.gently") was added for
-builtin/checkout.c but there is no reason why other read-tree users
-won't find this useful.
+When --merge is specified, we may need to do a real merge (instead of
+three-way tree unpacking), the steps are best seen in git-checkout.sh
+version before it's removed:
 
-The test that is updated to run 'read-tree --quiet' was added because
-unpack-trees was accidentally not being quiet [1] in 6a143aa2b2
-(checkout -m: attempt merge when deletion of path was staged -
-2014-08-12). Because checkout is the only "opts.quiet" user, there was
-no other way to test quiet behavior. But we can now test it directly.
+    # Match the index to the working tree, and do a three-way.
+    git diff-files --name-only | git update-index --remove --stdin &&
+    work=`git write-tree` &&
+    git read-tree $v --reset -u $new || exit
 
-6a143aa2b2 was manually reverted to verify that read-tree --quiet
-works correctly (i.e. test_must_be_empty fails).
+    git merge-recursive $old -- $new $work
 
-[1] the commit message there say "errors out instead of performing a
-    merge" but I'm pretty sure the "performing a merge" happens anyway
-    even before that commit. That line should say "errors out
-    _in addition to_ performing a merge"
+    # Do not register the cleanly merged paths in the index yet.
+    # this is not a real merge before committing, but just carrying
+    # the working tree changes along.
+    unmerged=`git ls-files -u`
+    git read-tree $v --reset $new
+    case "$unmerged" in
+    '')     ;;
+    *)
+            (
+                    z40=0000000000000000000000000000000000000000
+                    echo "$unmerged" |
+                    sed -e 's/^[0-7]* [0-9a-f]* /'"0 $z40 /"
+                    echo "$unmerged"
+            ) | git update-index --index-info
+            ;;
+    esac
 
+Notice the last 'read-tree --reset' step. We restore worktree back to
+'new' tree after worktree's messed up by merge-recursive. If there are
+staged changes before this whole command sequence is executed, they
+are lost because they are unlikely part of the 'new' tree to be
+restored.
+
+There is no easy way to fix this. Elijah may have something up his
+sleeves [1], but until then, check if there are staged changes and
+refuse to run and lose them. The user would need to do "git reset" to
+continue in this case.
+
+A note about the test update. 'checkout -m' in that test will fail
+because a deletion is staged. This 'checkout -m' was previously needed
+to verify quietness behavior of unpack-trees. But a different check
+has been put in place in the last patch. We can safely drop
+'checkout -m' now.
+
+[1] CABPp-BFoL_U=bzON4SEMaQSKU2TKwnOgNqjt5MUaOejTKGUJxw@mail.gmail.com
+
+Reported-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/git-read-tree.txt | 4 ++++
- builtin/read-tree.c             | 1 +
- t/t7201-co.sh                   | 3 +++
- 3 files changed, 8 insertions(+)
+ builtin/checkout.c | 11 ++++++++++-
+ t/t7201-co.sh      | 10 +---------
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index 5c70bc2878..1e81f9c4e6 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -128,6 +128,10 @@ OPTIONS
- 	Instead of reading tree object(s) into the index, just empty
- 	it.
- 
-+-q::
-+--quiet::
-+	Quiet, suppress feedback messages.
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 22fb6c0cae..7cd01f62be 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -725,7 +725,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			 */
+ 			struct tree *result;
+ 			struct tree *work;
++			struct tree *old_tree;
+ 			struct merge_options o;
++			struct strbuf sb = STRBUF_INIT;
 +
- <tree-ish#>::
- 	The id of the tree object(s) to be read/merged.
+ 			if (!opts->merge)
+ 				return 1;
  
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 9083dcfa28..5c9c082595 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -154,6 +154,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 		{ OPTION_CALLBACK, 0, "recurse-submodules", NULL,
- 			    "checkout", "control recursive updating of submodules",
- 			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater },
-+		OPT__QUIET(&opts.quiet, N_("suppress feedback messages")),
- 		OPT_END()
- 	};
+@@ -735,6 +738,12 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			 */
+ 			if (!old_branch_info->commit)
+ 				return 1;
++			old_tree = get_commit_tree(old_branch_info->commit);
++
++			if (repo_index_has_changes(the_repository, old_tree, &sb))
++				die(_("cannot continue with staged changes in "
++				      "the following files:\n%s"), sb.buf);
++			strbuf_release(&sb);
  
+ 			/* Do more real merge */
+ 
+@@ -772,7 +781,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			ret = merge_trees(&o,
+ 					  get_commit_tree(new_branch_info->commit),
+ 					  work,
+-					  get_commit_tree(old_branch_info->commit),
++					  old_tree,
+ 					  &result);
+ 			if (ret < 0)
+ 				exit(128);
 diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 72b9b375ba..f165582019 100755
+index f165582019..5990299fc9 100755
 --- a/t/t7201-co.sh
 +++ b/t/t7201-co.sh
-@@ -223,6 +223,9 @@ test_expect_success 'switch to another branch while carrying a deletion' '
- 	test_must_fail git checkout simple 2>errs &&
+@@ -224,15 +224,7 @@ test_expect_success 'switch to another branch while carrying a deletion' '
  	test_i18ngrep overwritten errs &&
  
-+	test_must_fail git read-tree --quiet -m -u HEAD simple 2>errs &&
-+	test_must_be_empty errs &&
-+
- 	git checkout --merge simple 2>errs &&
- 	test_i18ngrep ! overwritten errs &&
- 	git ls-files -u &&
+ 	test_must_fail git read-tree --quiet -m -u HEAD simple 2>errs &&
+-	test_must_be_empty errs &&
+-
+-	git checkout --merge simple 2>errs &&
+-	test_i18ngrep ! overwritten errs &&
+-	git ls-files -u &&
+-	test_must_fail git cat-file -t :0:two &&
+-	test "$(git cat-file -t :1:two)" = blob &&
+-	test "$(git cat-file -t :2:two)" = blob &&
+-	test_must_fail git cat-file -t :3:two
++	test_must_be_empty errs
+ '
+ 
+ test_expect_success 'checkout to detach HEAD (with advice declined)' '
 -- 
 2.21.0.548.gd3c7d92dc2
 
