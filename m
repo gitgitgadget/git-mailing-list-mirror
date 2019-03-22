@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CA7420248
-	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2541120248
+	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727963AbfCVJdS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 05:33:18 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42969 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727944AbfCVJdM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 05:33:12 -0400
-Received: by mail-wr1-f67.google.com with SMTP id g3so1523955wrx.9
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:11 -0700 (PDT)
+        id S1727961AbfCVJdR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 05:33:17 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:53385 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727684AbfCVJdQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 05:33:16 -0400
+Received: by mail-wm1-f68.google.com with SMTP id q16so1418593wmj.3
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yTTQxMmGI7f0QN1UVXgcYOBv68WULak0tHw22nssWfU=;
-        b=jwv4w9rw9JfSezgLo9QNgGQgXyv+DK7Twd/yMurOTrUuxJCS7LkrtFgMjS+KBpsWl+
-         zhMvZDnghXRTuv2gkzkX0NO/oN71gpEY5aqHoGUAihz96z417zM4PiozLrZDxYHlDnYz
-         yTr62nFrtXJRX8P7tmms4m4ZKm3IpUHEhoNxLsMGOAGF7vHoZw7BJHfhjMDOUTabRzKg
-         XBXAsf3tTKJ+hDsVbeqCfGtSYGsVuOTB5fNlCAh8Ig4C4bcBoMYcXw1TB44f2DgOaajs
-         pS8vnNHNQlO5leGp2uJBLTXn8hYn5I7s9m3BUE264wyzQUC+eX1tMpQmlRayDvQDnA5W
-         Zicw==
+        bh=8rgI6yxKGMPqEI7PNifLp7tOQA/X7/mI8l/sGLVPHjs=;
+        b=LMbNbRPA9ByQQpmb1EFuQoMNxco2GBDTgovR1SjeUBEXvu9C2Agfy9uwY0oDCD7Fwu
+         Cbdh6zLAwrqM1NlIDJSm35/0yj4xxRtbisFWHL2KOrYZXCG9NVtgYue23cyUs+hU/2Vs
+         LtN1IhczQaoav1l28+J6/YoGYUut7I9Iv3dxdLcAzMEMiaEYOZSgu9TRwGhxQVNutevc
+         laBYO3HpshiS4/9po5gZ25kvDEoSWSwK7j17+0AvUe2ughF5ykmoW/HmMXYa4Dn0IVJd
+         KHwO/W2iRsdutflHXawIaHaIR/gWv1Q6wtlh8OqS9FcZ/BZdY8DzEBhn164Dw/uK4g7E
+         yQvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yTTQxMmGI7f0QN1UVXgcYOBv68WULak0tHw22nssWfU=;
-        b=L6XG8aeCyI7iwj3mDRGvjLndZFMOGjyF3N2Hwk4DNRgB0aabLMavuYjYqMyzyr66Ak
-         nohL9nfLlkxMIvfxIIHv5vlRbup2MV2/9gm/tUsrTFu1pHMItEZnPK1mT/pB+KeHTMfy
-         uiqU4Mla+blhFVxV0ygnkrhp1JcWlXR4y3WL6GI2rmTbXs6H/7rkEWfGKUBglenKT36x
-         MQlXlFPlq3XEHZM1DplP7OneSiVivXu4xZ6iorhsIQuJ1MFz5vFFzitJrwTqnz7Ise7M
-         URqq4EgjpwhgFhej3v9oJeemV97fW5GxnQmwJqcKx59f5tibzNX2F+9JfoG4m7QcfzIX
-         86gg==
-X-Gm-Message-State: APjAAAU0KItQu3wKBGU8WyI0DrgXgf2qq2+dSQmNa6lbTBme24NEDMBS
-        Y+F5eQK21lxMuomRPq32m2mob6G8Njg=
-X-Google-Smtp-Source: APXvYqwChULFCaYOjVCwOLrbzyC0JMrkXr9Pp9+2CBakHFJ4Lmc5a6XmwBUGMNiAitNk0FqQRnXqXg==
-X-Received: by 2002:adf:f4c9:: with SMTP id h9mr2216607wrp.317.1553247190099;
-        Fri, 22 Mar 2019 02:33:10 -0700 (PDT)
+        bh=8rgI6yxKGMPqEI7PNifLp7tOQA/X7/mI8l/sGLVPHjs=;
+        b=rx0TZkL5kzyFSkbsrLTGGizG3G1O7TZRWJwIWfFlVgNLKhVgGsL/zgQEEyZIzd5+R8
+         B0pemTcvMmFQSVzFbLnLogrtufcEhl8Gib8mjXXXYLSf5Hb4oT9adriWTqLrunTHe9Hy
+         nzz1San7SxKePD1yF0D/Agd38KlxSqSwMa7tBZzgDeac9AlnbIcNPvt2bmr8DJJiYXIB
+         KMHhuMKlH5LwaCfJY1buYy0CCfLy7Mwxx5KfnCflV2o5C9KdPQ6XS9PRLxIunIbgPmIJ
+         qmKK6MU6kHyl1DL0qJlbAKz8nFxByKPIqgKzmI279o5FfnRvi8O4B/8W9TBXsFrFuwQX
+         GgIQ==
+X-Gm-Message-State: APjAAAVeY0uTtqqsFwn1uyiawd7k/o6TC6LzXYJPpLLAjfXJGX/SD9e1
+        SSpmU91jkz5tkjdFaNyBJwx/BOMcCKI=
+X-Google-Smtp-Source: APXvYqzmwG6j74yfwCClb4fF4ttykh6MHrqif52M37BO7jEzpWkFC0eV4v+N5Z2/dJgQUaAgiE2WFA==
+X-Received: by 2002:a1c:4105:: with SMTP id o5mr2422279wma.35.1553247193698;
+        Fri, 22 Mar 2019 02:33:13 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.33.09
+        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.33.12
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 22 Mar 2019 02:33:09 -0700 (PDT)
+        Fri, 22 Mar 2019 02:33:12 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 08/11] gc docs: downplay the usefulness of --aggressive
-Date:   Fri, 22 Mar 2019 10:32:39 +0100
-Message-Id: <20190322093242.5508-9-avarab@gmail.com>
+Subject: [PATCH v3 11/11] gc docs: remove incorrect reference to gc.auto=0
+Date:   Fri, 22 Mar 2019 10:32:42 +0100
+Message-Id: <20190322093242.5508-12-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190321205054.17109-1-avarab@gmail.com>
 References: <20190321205054.17109-1-avarab@gmail.com>
@@ -76,71 +76,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The existing "gc --aggressive" docs come just short of recommending to
-users that they run it regularly. I've personally talked to many users
-who've taken these docs as an advice to use this option, and have,
-usually it's (mostly) a waste of time.
+The chance of a repository being corrupted due to a "gc" has nothing
+to do with whether or not that "gc" was invoked via "gc --auto", but
+whether there's other concurrent operations happening.
 
-So let's clarify what it really does, and let the user draw their own
-conclusions.
+This is already noted earlier in the paragraph, so there's no reason
+to suggest this here. The user can infer from the rest of the
+documentation that "gc" will run automatically unless gc.auto=0 is
+set, and we shouldn't confuse the issue by implying that "gc --auto"
+is somehow more prone to produce corruption than a normal "gc".
 
-Let's also clarify the "The effects [...] are persistent" to
-paraphrase a brief version of Jeff King's explanation at [1].
-
-1. https://public-inbox.org/git/20190318235356.GK29661@sigill.intra.peff.net/
+Well, it is in the sense that a blocking "gc" would stop you from
+doing anything else in *that* particular terminal window, but users
+are likely to have another window, or to be worried about how
+concurrent "gc" on a server might cause corruption.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-gc.txt | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ Documentation/git-gc.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index c037a46b09..165f05e999 100644
+index 49aec5435b..2af503bdb1 100644
 --- a/Documentation/git-gc.txt
 +++ b/Documentation/git-gc.txt
-@@ -39,8 +39,7 @@ OPTIONS
- 	space utilization and performance.  This option will cause
- 	'git gc' to more aggressively optimize the repository at the expense
- 	of taking much more time.  The effects of this optimization are
--	persistent, so this option only needs to be used occasionally; every
--	few hundred changesets or so.
-+	mostly persistent. See the "AGGRESSIVE" section below for details.
+@@ -141,8 +141,7 @@ mitigate this problem:
  
- --auto::
- 	With this option, 'git gc' checks whether any housekeeping is
-@@ -78,6 +77,32 @@ be performed as well.
- 	`.keep` files are consolidated into a single pack. When this
- 	option is used, `gc.bigPackThreshold` is ignored.
+ However, these features fall short of a complete solution, so users who
+ run commands concurrently have to live with some risk of corruption (which
+-seems to be low in practice) unless they turn off automatic garbage
+-collection with 'git config gc.auto 0'.
++seems to be low in practice).
  
-+AGGRESSIVE
-+----------
-+
-+When the `--aggressive` option is supplied, linkgit:git-repack[1] will
-+be invoked with the `-f` flag, which in turn will pass
-+`--no-reuse-delta` to linkgit:git-pack-objects[1]. This will throw
-+away any existing deltas and re-compute them, at the expense of
-+spending much more time on the repacking.
-+
-+The effects of this are mostly persistent, e.g. when packs and loose
-+objects are coalesced into one another pack the existing deltas in
-+that pack might get re-used, but there are also various cases where we
-+might pick a sub-optimal delta from a newer pack instead.
-+
-+Furthermore, supplying `--aggressive` will tweak the `--depth` and
-+`--window` options passed to linkgit:git-repack[1]. See the
-+`gc.aggressiveDepth` and `gc.aggressiveWindow` settings below. By
-+using a larger window size we're more likely to find more optimal
-+deltas.
-+
-+It's probably not worth it to use this option on a given repository
-+without running tailored performance benchmarks on it. It takes a lot
-+more time, and the resulting space/delta optimization may or may not
-+be worth it. Not using this at all is the right trade-off for most
-+users and their repositories.
-+
- CONFIGURATION
- -------------
- 
+ HOOKS
+ -----
 -- 
 2.21.0.360.g471c308f928
 
