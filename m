@@ -2,125 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EC8820248
-	for <e@80x24.org>; Fri, 22 Mar 2019 17:18:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66D4B20248
+	for <e@80x24.org>; Fri, 22 Mar 2019 17:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728219AbfCVRSr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 13:18:47 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:36107 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727105AbfCVRSq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 13:18:46 -0400
-Received: from [192.168.1.12] ([2.101.244.128])
-        by smtp.talktalk.net with SMTP
-        id 7NoZhfOcodrax7NoZhNgxT; Fri, 22 Mar 2019 17:18:43 +0000
-X-Originating-IP: [2.101.244.128]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=QfUYQfTv c=1 sm=1 tr=0 a=8nsoD1t2XaTH5iSUU4dp1Q==:117
- a=8nsoD1t2XaTH5iSUU4dp1Q==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=VmrKRvbLY6Vl8-nRlB0A:9 a=QEXdDO2ut3YA:10
-Subject: Re: [PATCH 3/4] read-tree: add --quiet
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <20190322093138.13765-1-pclouds@gmail.com>
- <20190322093138.13765-4-pclouds@gmail.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <04d888be-d66b-110a-b1e4-35ff4897fcab@iee.org>
-Date:   Fri, 22 Mar 2019 17:18:44 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.0
-MIME-Version: 1.0
-In-Reply-To: <20190322093138.13765-4-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfM+m4Bf1GYmRZnCo8SDMWnBIeFtt5oUwnHn+f4AC9tZ3y8EqmnTbwLbKuAdoi7vfidF86RY0u+TdhckF4LmMSj/Ww8yatwL6VpuUrR73oTty7gJKGraz
- zmDu04Wol+0lLC9X0UrLl9l7FR7JhjSRtNKVMDVHteoEVLRR3homg+qPcro+zGnI+k+vawEmWNtk2hlwq5NHMgKFDrCzZrnoiwdYi+d+RwPE5seUA2bXOq42
- ueGzF8ZLwDv+t0K3Gk3o4n24Lwbifn/TyZ1zfNZP4ZHW51FM6XbL9Q5hBREBcYedw6eGNVbQugl8wSnPr9NN2A==
+        id S1728248AbfCVRU2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 13:20:28 -0400
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:49410 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728203AbfCVRU2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 13:20:28 -0400
+Received: by mail-qk1-f202.google.com with SMTP id 23so2506827qkl.16
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 10:20:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=cissq3CZd94tb4DevNwBEVgzoEXCCRfFdBXuOtv/h1U=;
+        b=KZoKRFUysF746C9mDOKsiqsYxavc50qGlxZajolo3HSPsIuN8mdlODH5m0aixXwgfF
+         VwkeNzvnn+JUq47HXH35HJxqvGQBj4LAdHg8evynkHYTY1FUHWgQeWlV/2gPwpVeyv5w
+         865ql1fk4sO8HmuqS51jFOb3iBWwd+bRC2NzzGZM5Rbz4zXLb1i3WjzXesM7sR0eDyMQ
+         xjSKMAlVO9WTmqRN+Wt4jxGSvGPcF/vIp449oij700qMBllhk/8vscN0rhUAAL9tzaVs
+         /vPXa9SkzvKCrM74dG5cT0kSvgF/6HhAK36+asrl1toEOyfoFEXMjfCuhjA9xebdIKxs
+         pACQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=cissq3CZd94tb4DevNwBEVgzoEXCCRfFdBXuOtv/h1U=;
+        b=MY6/uzcNN9YnAdVQrMF0TjPiOzBLtch7hzcukZAOLxQrsmC2psYpAc+J+L7qcJlTi0
+         H/PIETRucXr9vYqEK79LYfD0Tdc2cxeWrECqBPPYGnOG2VyYtbikoCqEwbOouApiHT8P
+         A6IvoHzd0p4Npx4dbMJ2Lcpqf9kRbWKneU6wHIefsRrFoPJJ1QjLAPYHOBhs2SKh/4i5
+         x7hQTVCJ4/Rbci4WuMYqB59piiJb6JUUZuaelCVW+X3pXVWEu8VFkW17YVWgpJlIPAC5
+         EwHPks+H0aPLt/yG2SsKWwCQyhtsYxQr8VknA/MOo75AUfBhGAib0+VPbt4+q4gJPSDt
+         S9hQ==
+X-Gm-Message-State: APjAAAXNeKcmymtgktWmCHTf4pT9iRgdvap3JCtZ9jWpBbsORwIqr6Tn
+        AFjjtPuFDu2jI6PaKhNgaIu+hNbFi5IFVBCl2T3C
+X-Google-Smtp-Source: APXvYqzy4++o4FW6j5+GMceMzl9p05omOxgT8lKKHz+jEWyq2yt6ROWXOcwtl1VPv/1EK4RFatZ7jlwVKXPqKlVhAJNX
+X-Received: by 2002:a37:9682:: with SMTP id y124mr7950056qkd.288.1553275227189;
+ Fri, 22 Mar 2019 10:20:27 -0700 (PDT)
+Date:   Fri, 22 Mar 2019 10:20:23 -0700
+In-Reply-To: <xmqq36nfsl8t.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20190322172023.238242-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqq36nfsl8t.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.21.0.155.ge902e9bcae.dirty
+Subject: Re: [RFC PATCH] t5551: delete auth-for-pack-but-not-refs test
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/03/2019 09:31, Nguyễn Thái Ngọc Duy wrote:
-> read-tree is basically the front end of unpack-trees code and shoud
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> > Because this configuration is not supported by all protocol versions,
+> > and because this configuration seems to be of limited usefulness (only
+> > useful for people who use manual credential entry and on servers that
+> > are OK with exposing refs but not objects, and even in this case, helps
+> > only in a no-op fetch), delete the test that verifies that this
+> > configuration works.
+> 
+> A possible and different conclusion that naturally follow your first
+> "because" could be "fix protocol versions whose support of this
+> configuration is broken", and your second "because" is with "seems
+> to be", that makes it quite weak.
+> 
+> Quite honestly, I hate to see a proposed log message that downplays
+> its potential negative effects without sufficient justification.
 
-s/shoud/should/
+That is true, and that's fair.
 
-Philip
+> Isn't this feature primarily for those who want to poll from an
+> automated job (and naturally you want to assign as little privilege
+> as possible to such an automated job) with ls-remote and only run an
+> authenticated fetch, perhaps manually, with or without cred helper,
+> when the automated polling job finds there is something worthwhile
+> to fetch?  What this test is checking seems to be a quite effective
+> way to achieve that useful workflow, at least to me, and offhand I
+> do not think of other ways to easily achieve the same.
+> 
+> The "ls-remote" communication may not even touch any outside network
+> but may be happening all within a single organization, in which case
+> "are OK with exposing refs" is making a security mountain out of a
+> molehill.  If it were a truly problematic hole that makes it a
+> security issue, wouldn't we deleting this test and at the same time
+> plugging the hole for earlier protocol versions?
 
-> expose all of its functionality (unless it's designed for internal
-> use). This "opts.quiet" (formerly "opts.gently") was added for
-> builtin/checkout.c but there is no reason why other read-tree users
-> won't find this useful.
->
-> The test that is updated to run 'read-tree --quiet' was added because
-> unpack-trees was accidentally not being quiet [1] in 6a143aa2b2
-> (checkout -m: attempt merge when deletion of path was staged -
-> 2014-08-12). Because checkout is the only "opts.quiet" user, there was
-> no other way to test quiet behavior. But we can now test it directly.
->
-> 6a143aa2b2 was manually reverted to verify that read-tree --quiet
-> works correctly (i.e. test_must_be_empty fails).
->
-> [1] the commit message there say "errors out instead of performing a
->      merge" but I'm pretty sure the "performing a merge" happens anyway
->      even before that commit. That line should say "errors out
->      _in addition to_ performing a merge"
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->   Documentation/git-read-tree.txt | 4 ++++
->   builtin/read-tree.c             | 1 +
->   t/t7201-co.sh                   | 3 +++
->   3 files changed, 8 insertions(+)
->
-> diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-> index 5c70bc2878..1e81f9c4e6 100644
-> --- a/Documentation/git-read-tree.txt
-> +++ b/Documentation/git-read-tree.txt
-> @@ -128,6 +128,10 @@ OPTIONS
->   	Instead of reading tree object(s) into the index, just empty
->   	it.
->   
-> +-q::
-> +--quiet::
-> +	Quiet, suppress feedback messages.
-> +
->   <tree-ish#>::
->   	The id of the tree object(s) to be read/merged.
->   
-> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-> index 9083dcfa28..5c9c082595 100644
-> --- a/builtin/read-tree.c
-> +++ b/builtin/read-tree.c
-> @@ -154,6 +154,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
->   		{ OPTION_CALLBACK, 0, "recurse-submodules", NULL,
->   			    "checkout", "control recursive updating of submodules",
->   			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater },
-> +		OPT__QUIET(&opts.quiet, N_("suppress feedback messages")),
->   		OPT_END()
->   	};
->   
-> diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-> index 72b9b375ba..f165582019 100755
-> --- a/t/t7201-co.sh
-> +++ b/t/t7201-co.sh
-> @@ -223,6 +223,9 @@ test_expect_success 'switch to another branch while carrying a deletion' '
->   	test_must_fail git checkout simple 2>errs &&
->   	test_i18ngrep overwritten errs &&
->   
-> +	test_must_fail git read-tree --quiet -m -u HEAD simple 2>errs &&
-> +	test_must_be_empty errs &&
-> +
->   	git checkout --merge simple 2>errs &&
->   	test_i18ngrep ! overwritten errs &&
->   	git ls-files -u &&
+Thanks - that's a reasonable use case.
+
+> Having said all that, I do not care too deeply.  Would a much better
+> longer-term solution for those who want to poll and fetch only when
+> there is something new be to allow clients to subscribe to a feed
+> that hangs while there is nothing new, and lets the upstream side
+> continuously feed incremental updates to the receiving client, as
+> its refs are updated, or something?  As long as such a thing is in
+> our vision (it is OK if nobody is currently working on it) to become
+> replacement, I do not think it is a huge loss to lose the ability for
+> unauthenticated ls-remote with authenticated fetch.
+
+I just remembered that one way we can support the existing use case is
+to inline the ls-refs call that we make as an Extra Parameter [1]. This
+would restore the ability to obtain refs through only the info/refs
+path.
+
+Perhaps this is the component in our vision that we need - I'll write
+another patch that merely forces GIT_TEST_PROTOCOL_VERSION=0 and has a
+NEEDSWORK comment that explains this. 
+
+[1] https://github.com/git/git/blob/master/Documentation/technical/pack-protocol.txt
