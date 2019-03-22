@@ -7,130 +7,134 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20D4720248
-	for <e@80x24.org>; Fri, 22 Mar 2019 19:04:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F336F20248
+	for <e@80x24.org>; Fri, 22 Mar 2019 19:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727364AbfCVTED (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 15:04:03 -0400
-Received: from mail-qk1-f171.google.com ([209.85.222.171]:46755 "EHLO
-        mail-qk1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbfCVTED (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 15:04:03 -0400
-Received: by mail-qk1-f171.google.com with SMTP id s81so1834343qke.13
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 12:04:02 -0700 (PDT)
+        id S1726087AbfCVTyQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 15:54:16 -0400
+Received: from mail-eopbgr680121.outbound.protection.outlook.com ([40.107.68.121]:13926
+        "EHLO NAM04-BN3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725982AbfCVTyQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 15:54:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6Q82n0QZT85OlycjjewKwHtE/j0sEiAzbYMYjrDvNeg=;
-        b=m8+CjIVJY+oUMTubN4uqpnv45eT0GdlHYI0+Uj3kJo4DOhJXo6xY0Et61xmbotvXIn
-         rRi+kDjDymxO/KxHXgb+w7v4y9e4v3qSQk/GxIGiUCpKP0O2FDqdEFknnzDymct8CiyQ
-         Hd9rzTrSM6GYmixrnILjFdinESdBuZOm7ZoH3Kw0ak38H8V2iKNJjnPpjzcidU0MBg+T
-         zp6Y5udzgsk0VK5aIGEHN96P1NyxPtj5rwqju64YmGVWM9AFi9LWnE5tgHKDee2UHJpp
-         /YeP3i9fKLuIIoIPDfDBg7eNDBSjZDmzRcizV86H5Oj7JqR2MVWDfWv29yNKeBrhSuGL
-         4B2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6Q82n0QZT85OlycjjewKwHtE/j0sEiAzbYMYjrDvNeg=;
-        b=g+/a+nfm2R78SoYdIagr4amv4CL6KKGA7ATEfa9ciJz1BlMwBu5q+s5Llx3l5pVdP2
-         UcI6gP9++rCutgZnCmwZISs1q1lFoEPWcHcriEUkE3heGWxJKi7nw9vmbBdeHnlwbAKz
-         YejUT+MfKOAyNiaOss+BYlQB6kYnZqmrbWax7JEyIoNhfCoCCvfyhns1yZPHNIeNe0M2
-         NZ0TLxLC0A0KJXSdpMlzkZhDZpvqmIYvpgRVMu742I2snNagZo/Y0PTjiSbMqhlBtanL
-         2uSV+LfejoTDQkzYG6g6i4u+2RwLit/aBAgOyjzMf3kjyBnz51GZ2h2hsubbTzKXsWaU
-         JeNw==
-X-Gm-Message-State: APjAAAX8bHemrn5uGnc3bC+AT1dR7+UxAa0ES4xTyWIr8fwMDYflAKba
-        aPsz1pAZJaUut0lw5sWVNvC+0g==
-X-Google-Smtp-Source: APXvYqy01UM0chPpDJCZALEeAFtfRAZB5ZRDzk5ZVXtqIUrBkcNZ2J4kE52k0p6UBrMZbZ1RKY/PEA==
-X-Received: by 2002:a05:620a:153b:: with SMTP id n27mr8291386qkk.343.1553281441762;
-        Fri, 22 Mar 2019 12:04:01 -0700 (PDT)
-Received: from localhost ([173.225.52.220])
-        by smtp.gmail.com with ESMTPSA id r15sm4726972qte.65.2019.03.22.12.04.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Mar 2019 12:04:00 -0700 (PDT)
-Date:   Fri, 22 Mar 2019 15:04:00 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jason Karns <jason.karns@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] Suspected with double asterisk in conditional include
- pattern
-Message-ID: <20190322190400.GD12155@Taylors-MacBook-Pro.local>
-References: <CAKNmmv26G05GO7hG9bNvMsjpuUMHZRA+2f94TuG2wDNUwNhHkw@mail.gmail.com>
+ d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mouDDS9k8dBAQPx0w0iEWrBL0vWRUJrLlHDyMiK8dKo=;
+ b=rFcuMfIUVTQGO8WUP50wURHkUh9hAqINjmuXpSgMJmInOsVld7mdeG9kPv8x8Ozm9aBMMDqFKgkI56gVYJD3nTllg546mAq/5f8AI4eCZpMZgiVAHJadIsTSc75dB3RLdkfcE1KIkmTnfMaaOmiFH87D0GoL9R9s26d6i9S1fM0=
+Received: from BN7PR08MB4945.namprd08.prod.outlook.com (20.176.176.19) by
+ BN7PR08MB6004.namprd08.prod.outlook.com (20.176.179.81) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1730.18; Fri, 22 Mar 2019 19:54:12 +0000
+Received: from BN7PR08MB4945.namprd08.prod.outlook.com
+ ([fe80::5c65:6123:80f4:d975]) by BN7PR08MB4945.namprd08.prod.outlook.com
+ ([fe80::5c65:6123:80f4:d975%6]) with mapi id 15.20.1730.017; Fri, 22 Mar 2019
+ 19:54:12 +0000
+From:   "Mazo, Andrey" <amazo@checkvideo.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
+        Luke Diamand <luke@diamand.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        George Vanburgh <gvanburgh@bloomberg.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Miguel Torroja <miguel.torroja@gmail.com>,
+        Romain Merland <merlorom@yahoo.fr>,
+        Vitor Antunes <vitor.hda@gmail.com>,
+        Andrew Oakley <aoakley@roku.com>,
+        =?iso-8859-1?Q?SZEDER_G=E1bor?= <szeder.dev@gmail.com>,
+        Andrey <ahippo@yandex.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [RFC PATCH 0/2] git-p4: "alien" branches and load changelist info
+ from file
+Thread-Topic: [RFC PATCH 0/2] git-p4: "alien" branches and load changelist
+ info from file
+Thread-Index: AQHU4OkFVMhPXBd7e0iGZccol2HZIA==
+Date:   Fri, 22 Mar 2019 19:54:12 +0000
+Message-ID: <cover.1553283214.git.amazo@checkvideo.com>
+References: <cover.1553207234.git.amazo@checkvideo.com>
+In-Reply-To: <cover.1553207234.git.amazo@checkvideo.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: BL0PR02CA0115.namprd02.prod.outlook.com
+ (2603:10b6:208:35::20) To BN7PR08MB4945.namprd08.prod.outlook.com
+ (2603:10b6:408:28::19)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=amazo@checkvideo.com; 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-mailer: git-send-email 2.19.2
+x-originating-ip: [70.163.25.109]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: c8e865a7-8827-4520-c2fd-08d6af002789
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600127)(711020)(4605104)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7153060)(7193020);SRVR:BN7PR08MB6004;
+x-ms-traffictypediagnostic: BN7PR08MB6004:
+x-ms-exchange-purlcount: 1
+x-microsoft-antispam-prvs: <BN7PR08MB60040C41F0B90462363BF8CEDA430@BN7PR08MB6004.namprd08.prod.outlook.com>
+x-forefront-prvs: 09840A4839
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(366004)(39860400002)(136003)(396003)(346002)(189003)(199004)(106356001)(5640700003)(5660300002)(6486002)(71200400001)(66066001)(2501003)(71190400001)(68736007)(6436002)(53936002)(486006)(6116002)(3846002)(446003)(86362001)(11346002)(476003)(7416002)(186003)(2351001)(6506007)(6916009)(97736004)(102836004)(50226002)(6512007)(36756003)(105586002)(966005)(26005)(8936002)(14454004)(99286004)(4326008)(25786009)(81166006)(54906003)(1730700003)(256004)(386003)(81156014)(316002)(52116002)(305945005)(8676002)(2616005)(76176011)(2906002)(478600001)(6306002)(7736002);DIR:OUT;SFP:1102;SCL:1;SRVR:BN7PR08MB6004;H:BN7PR08MB4945.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: checkvideo.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: 4Cz8UGVFJ9cy5NPFvbHhJyeNdzeq0//37teQyr+5jDQ0xQCqZSJyQYzXf5cr05VIHlnO8m/XlLBYjSeUutUAgc/kBNZcqpvtdT5OctTO6qPAziXif344cLJXWUFxOSOGAIBFIL3GP30HHa7RdQBMYkjv8DxpgUxMo3rBy/bXG7ueJU4FDL45rIb5PtHVIZlDto+JrkAVScWNoVRkvTWwdlobYdCSmJ4hcv5pYNSfyAqMzJQX7/NWQ20VB/9BCh/EH3Wdos9gb8BEyNEp91cg9lIavgPWVJXW+CbE1OJ0g6Mby/Cy2aMefiGt60CY5KFv58VOIVwFII4xoVao+1iwrxINxb1bNaV0idbzuAWAGlBe92NakOVbgC5EwDWWIwN8q/kdscicIa4Gh2Cv8Q8MlpUvNbvkK4prfih0bEwWvkc=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKNmmv26G05GO7hG9bNvMsjpuUMHZRA+2f94TuG2wDNUwNhHkw@mail.gmail.com>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+X-OriginatorOrg: checkvideo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8e865a7-8827-4520-c2fd-08d6af002789
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Mar 2019 19:54:12.2908
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR08MB6004
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jason,
 
-On Thu, Mar 14, 2019 at 01:30:43PM -0400, Jason Karns wrote:
-> Hello,
->
-> I believe I've encountered a bug regarding the use of double asterisk
-> ( /**/ ) within includeIf patterns.
->
-> git-config man pages state that
->
->     **/ and /**, that can match multiple path components
->
-> They then refer to the gitignore man pages which further define
-> supported wildcard patterns:
->
->     A slash followed by two consecutive asterisks then a slash matches
-> zero or more directories.
->     For example, "a/**/b" matches "a/b", "a/x/b", "a/x/y/b" and so on.
->
-> My understanding of these docs are that the pattern
-> `/usr/local/**/Homebrew/` ought to match
-> both`/usr/local/cache/Homebrew/foo` and `/usr/local/Homebrew/foo`.
->
-> However, given the following conditional include rule:
->
->     [includeIf "gitdir:/usr/local/**/Homebrew/"]
+This patch series introduces two experimental features to git-p4,
+which unrelated to each other.
+ 1. The first patch adds support for so-called "alien" branches.
+    The feature lets git-p4 create empty commits
+    to make the history or tags more accurate.
+    It is particularly useful when splitting a large Perforce depot
+    into multiple git repositories.
+ 2. The second patch adds support for loading changelist information from a=
+ file.
+    (`p4 -G describe` equivalent)
+    The original use case is to be able to migrate a Perforce depot,
+    which database got a little bit corrupted, into git.
 
-For what it's worth, Git LFS's implementation of the wildmatch
-algorithm [1] exhibits the same behavior (i.e., that it does _not_ match
-those double stars in the middle of the pathspec).
+It would be nice to get some feedback to see
+if these features are usable in general and are worth mainlining at all.
 
-Here are the tests I added to double check:
+The patches don't contain documentation or test changes yet,
+because I wanted to get feedback first
+if there is interest in mainlining these features in the first place.
 
-	{
-		Pattern: `/usr/local/**/Homebrew/`,
-		Subject: `/usr/local/cache/Homebrew/foo`,
-		Match:   false,
-	},
-	{
-		Pattern: `/usr/local/**/Homebrew/`,
-		Subject: `/usr/local/Homebrew/foo`,
-		Match:   false,
-	},
+This patch series should be applied on top of
+"[PATCH v2 0/7] git-p4: a few assorted fixes for branches, excludes" [1]
 
-And they passed, indicating that neither of the above subjects are a
-match for the pattern '/usr/local/**/Homebrew'. I was suspicious that
-changing the pattern to '/usr/local/**/Homebrew/*' might have caused it
-to match, but it did not.
+[1] https://public-inbox.org/git/cover.1551485349.git.amazo@checkvideo.com/=
+t/#m965fb5895d25d6b42638dd8efbb96e9fa9182978
 
-But this isn't really telling us anything that we don't know. What's
-interesting is that '/usr/local/**/Homebrew' _does_ match
-'/usr/local/Homebrew' and '/usr/local/cache/Homebrew'. I think that this
-is consistent with [2]:
+Andrey Mazo (2):
+  git-p4: introduce alien branch mappings
+  git-p4: support loading changelist descriptions from files
 
-  A slash followed by two consecutive asterisks then a slash matches
-  zero or more directories. For example, "a/**/b" matches "a/b",
-  "a/x/b", "a/x/y/b" and so on.
+ git-p4.py | 84 ++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 71 insertions(+), 13 deletions(-)
 
-So I think that there _is_ a bug here, but not the one you suggested.
-Rather, I think that the bug is that with the _trailing_ wildcard, the
-pathspec doesn't accept '/usr/local/cache/Homebrew/a'.
 
-Thanks,
-Taylor
+base-commit: 8104ec994ea3849a968b4667d072fedd1e688642
+prerequisite-patch-id: 23e039fec7a1f5c51c98326a14d788adb1ecb5ba
+prerequisite-patch-id: 030a0acdce715ff99916fd412832e5a9471225c3
+prerequisite-patch-id: 10661f77392f4131d2375976c77a7cd231fdf9ab
+prerequisite-patch-id: a55360c904eba1b9e9c934405d3141eb96c5ad30
+prerequisite-patch-id: 46357586199c02d956d53d782a12f1ee0c991302
+prerequisite-patch-id: c683e7d6017580df9385a1544af409ca615d770c
+prerequisite-patch-id: 411dcb5e95aff036e0cb3e850ea75f2424b260a6
+--=20
+2.19.2
 
-[1]: https://github.com/git-lfs/wildmatch
-[2]: https://git-scm.com/docs/gitignore
