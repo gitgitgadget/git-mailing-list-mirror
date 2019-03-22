@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08D5F20248
-	for <e@80x24.org>; Fri, 22 Mar 2019 09:32:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4486520248
+	for <e@80x24.org>; Fri, 22 Mar 2019 09:32:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727900AbfCVJcL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 05:32:11 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:46178 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727713AbfCVJcL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 05:32:11 -0400
-Received: by mail-pg1-f194.google.com with SMTP id a22so1099810pgg.13
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:32:11 -0700 (PDT)
+        id S1727907AbfCVJcS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 05:32:18 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:40275 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727713AbfCVJcR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 05:32:17 -0400
+Received: by mail-pg1-f195.google.com with SMTP id u9so1119807pgo.7
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:32:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=j5b7Hi0QW5VFWXhXSUf1XmIgv+P5jKo7W6wPVYCQRqw=;
-        b=p66aleF83IBqQQ99/AuQ8YauyjzTQDZLlSKJ5t5JCQLJ1ittTEe9gElrZ2asEJOdIj
-         21jpUIM3Gbu3Rjcz0UEmgr5Mmw8g+CHye5zfTBIxdkv9eEpumzlNFbj0QtwpRunRPUiA
-         vPAOEXJIdx79+/CYs0zBr48NNOa3G8zNRy2dycOVSAlz4wrVRZuL6GNNBpvOq2ODpsGq
-         bjSZRcPuUEP59LJhq53bFlL8vmmAorBakcpsS5yyJX2xLAm92ibU2WXLUNm996auud9B
-         Grerhsg/b8yFzDetENrjCTYS70knZC1pz9wegH5cznzWE9S88KmOwOE8wIS9NASN5lHq
-         FGWw==
+        bh=UUfue73ZCfN3XboApdoqEHg56GFX0kKKikXxjGE2MYQ=;
+        b=cY5x74tituMVl0mnstyxV1xFX6kQ6oxyytu/AUmaXjnWidBH9VLtLXYuym3l7PPuXd
+         0lHeblLgd+ojcWkpPfkCzaSxUOl3+wHO65wBU84o8qhgu2te67aGiDT1nGKpGg1Z/Jzi
+         l852IiwIK1lCfs4ZytDwMYPu49+e3/LKpgbuQcVj7xlVh9PP29AdFtz6Zx640ndXoiiX
+         SzEU34/F0LQElwcKe0yNqywvMz+zuE1lGIBQ3yDQy6aNmNiJd9Hy9bf3hbstKNo/u5me
+         hcpVek2T0VSK/G1bZasCnMkYtGseSHJs14Zte1ZmzMS1wSz4tUYWCAzMOWpigQCw1hq2
+         Z/1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=j5b7Hi0QW5VFWXhXSUf1XmIgv+P5jKo7W6wPVYCQRqw=;
-        b=RCcG8rj+SvTctM+EAqZzj0roGwvLS2pHqKijNw/ZrYhSd389PDooPAvCwZfu4tAWG9
-         OBsLv7bwoAWH867YN1ik8rCzFnLL/Sq7kE/d5juGrR/JBcqKPLaX2+/bo0rqGhhu8DMk
-         0Q3tgAS4X8V7p+T+S1RQSvjFgvExK797m7Rp/0SajIabJxV3p76L+vYHKp62CRq6QZIh
-         IATDY8PZntJGDP/0EdsBajcZOjYvbLHCSpwUGeNjoe10uZTmnHGVgYoZCvYhDpXn7Sho
-         5lUAfS753DNMQ+7DzSpzgf8NlctNAPM5f8fKnr+xOqt2shuhp/f3XCGoqhYQTLY/b77w
-         XRlA==
-X-Gm-Message-State: APjAAAWikmGc+6yDtkdoVSw3GQgye1fLn0PLoOUTfwJpZ0sKhyNdrCRm
-        zrckOelRI2AcX+CCgZQb/5dhRBsUznU=
-X-Google-Smtp-Source: APXvYqwjnQcf1oUVDaaAc6RzKNYArQHNPq0A90ZS3TfeJsfkQcwyC9pRDQ/M9LLcHHaQ2qE6qlON7w==
-X-Received: by 2002:a62:6d81:: with SMTP id i123mr8108817pfc.235.1553247130910;
-        Fri, 22 Mar 2019 02:32:10 -0700 (PDT)
+        bh=UUfue73ZCfN3XboApdoqEHg56GFX0kKKikXxjGE2MYQ=;
+        b=ah2mkVC4+/POS/iEQ30+VqXUOIpDoMEYGrPgpEh3UOIaWvygWNvRqCgKSgNYkBQYc+
+         nkvI/bMI5S1MJdsB8pWc0KRGJ9f0fiDoNWJNGD5YfJZeNMbR0I1q97sgqIiYbAss3fen
+         ZFVxbdmOtsZ1Y7IJYc1qHQfvWgIj8pIIWzcofnX7GejU/LoBtx/ZAIy/gcT5TsRjlycK
+         cBvFOqGTkhyUUMZncewMehi1Ou4jaTl9d/VK+cWtRxI52mjvvS3Wd4cyvXaLJmxj73+A
+         LeQ3qNQm/AN3PP0dKjhid2JS9Ct1bS7UHNY8sDre5yl1pW4G9xnjY60Q0ypPxyviWAV4
+         YyGA==
+X-Gm-Message-State: APjAAAXR1h2g82Bfhpq++bHTE0Yhx3tywaC6TzRFZtw8Sh8bvf7ofiFf
+        6LuvqAcrPvpeXWn9VDhDunwCTpoeDow=
+X-Google-Smtp-Source: APXvYqw7BF8WTdySEvaF+1qFOrSewpdz8+EPWI02SvwtXjbJOY7FeUkfEdFUzRu2eqyiTE0aBy2Udw==
+X-Received: by 2002:a65:624c:: with SMTP id q12mr7711290pgv.75.1553247136403;
+        Fri, 22 Mar 2019 02:32:16 -0700 (PDT)
 Received: from ash ([171.226.148.85])
-        by smtp.gmail.com with ESMTPSA id x13sm8006662pgr.87.2019.03.22.02.32.07
+        by smtp.gmail.com with ESMTPSA id o5sm17221375pgc.16.2019.03.22.02.32.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Mar 2019 02:32:10 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Fri, 22 Mar 2019 16:32:05 +0700
+        Fri, 22 Mar 2019 02:32:15 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Fri, 22 Mar 2019 16:32:11 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Phillip Wood <phillip.wood123@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 1/4] unpack-trees: keep gently check inside add_rejected_path
-Date:   Fri, 22 Mar 2019 16:31:35 +0700
-Message-Id: <20190322093138.13765-2-pclouds@gmail.com>
+Subject: [PATCH 2/4] unpack-trees: rename "gently" flag to "quiet"
+Date:   Fri, 22 Mar 2019 16:31:36 +0700
+Message-Id: <20190322093138.13765-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.21.0.548.gd3c7d92dc2
 In-Reply-To: <20190322093138.13765-1-pclouds@gmail.com>
 References: <20190322093138.13765-1-pclouds@gmail.com>
@@ -73,94 +73,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This basically follows the footsteps of 6a143aa2b2 (checkout -m:
-attempt merge when deletion of path was staged - 2014-08-12) where
-there gently check is moved inside reject_merge() so that callers do
-not accidentally forget it.
-
-add_rejected_path() has the same usage pattern. All call sites check
-gently first, then decide to call add_rejected_path() if needed. Move
-the check inside.
+The gently flag was added in 17e4642667 (Add flag to make unpack_trees()
+not print errors. - 2008-02-07) to suppress error messages. The name
+"gently" does not quite express that. Granted, being quiet is gentle but
+it could mean not performing some other actions. Rename the flag to
+"quiet" to be more on point.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- unpack-trees.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ builtin/checkout.c | 2 +-
+ unpack-trees.c     | 6 +++---
+ unpack-trees.h     | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 0e6037b296..22fb6c0cae 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -700,7 +700,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		topts.initial_checkout = is_cache_unborn();
+ 		topts.update = 1;
+ 		topts.merge = 1;
+-		topts.gently = opts->merge && old_branch_info->commit;
++		topts.quiet = opts->merge && old_branch_info->commit;
+ 		topts.verbose_update = opts->show_progress;
+ 		topts.fn = twoway_merge;
+ 		if (opts->overwrite_ignore) {
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 22c41a3ba8..e6c1cc8302 100644
+index e6c1cc8302..2e5d7b202e 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -219,6 +219,9 @@ static int add_rejected_path(struct unpack_trees_options *o,
+@@ -219,7 +219,7 @@ static int add_rejected_path(struct unpack_trees_options *o,
  			     enum unpack_trees_error_types e,
  			     const char *path)
  {
-+	if (o->gently)
-+		return -1;
-+
+-	if (o->gently)
++	if (o->quiet)
+ 		return -1;
+ 
  	if (!o->show_all_errors)
- 		return error(ERRORMSG(o, e), super_prefixed(path));
- 
-@@ -268,8 +271,7 @@ static int check_submodule_move_head(const struct cache_entry *ce,
- 		flags |= SUBMODULE_MOVE_HEAD_FORCE;
- 
- 	if (submodule_move_head(ce->name, old_id, new_id, flags))
--		return o->gently ? -1 :
--				   add_rejected_path(o, ERROR_WOULD_LOSE_SUBMODULE, ce->name);
-+		return add_rejected_path(o, ERROR_WOULD_LOSE_SUBMODULE, ce->name);
- 	return 0;
- }
- 
-@@ -1645,8 +1647,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- static int reject_merge(const struct cache_entry *ce,
- 			struct unpack_trees_options *o)
+@@ -1042,7 +1042,7 @@ static int unpack_nondirectories(int n, unsigned long mask,
+ static int unpack_failed(struct unpack_trees_options *o, const char *message)
  {
--	return o->gently ? -1 :
--		add_rejected_path(o, ERROR_WOULD_OVERWRITE, ce->name);
-+	return add_rejected_path(o, ERROR_WOULD_OVERWRITE, ce->name);
- }
- 
- static int same(const struct cache_entry *a, const struct cache_entry *b)
-@@ -1693,8 +1694,7 @@ static int verify_uptodate_1(const struct cache_entry *ce,
- 			int r = check_submodule_move_head(ce,
- 				"HEAD", oid_to_hex(&ce->oid), o);
- 			if (r)
--				return o->gently ? -1 :
--					add_rejected_path(o, error_type, ce->name);
-+				return add_rejected_path(o, error_type, ce->name);
- 			return 0;
- 		}
- 
-@@ -1712,8 +1712,7 @@ static int verify_uptodate_1(const struct cache_entry *ce,
- 	}
- 	if (errno == ENOENT)
- 		return 0;
--	return o->gently ? -1 :
--		add_rejected_path(o, error_type, ce->name);
-+	return add_rejected_path(o, error_type, ce->name);
- }
- 
- int verify_uptodate(const struct cache_entry *ce,
-@@ -1835,8 +1834,7 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
- 		d.exclude_per_dir = o->dir->exclude_per_dir;
- 	i = read_directory(&d, o->src_index, pathbuf, namelen+1, NULL);
- 	if (i)
+ 	discard_index(&o->result);
+-	if (!o->gently && !o->exiting_early) {
++	if (!o->quiet && !o->exiting_early) {
+ 		if (message)
+ 			return error("%s", message);
+ 		return -1;
+@@ -2343,7 +2343,7 @@ int bind_merge(const struct cache_entry * const *src,
+ 		return error("Cannot do a bind merge of %d trees",
+ 			     o->merge_size);
+ 	if (a && old)
 -		return o->gently ? -1 :
--			add_rejected_path(o, ERROR_NOT_UPTODATE_DIR, ce->name);
-+		return add_rejected_path(o, ERROR_NOT_UPTODATE_DIR, ce->name);
- 	free(pathbuf);
- 	return cnt;
- }
-@@ -1905,8 +1903,7 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
- 			return 0;
- 	}
- 
--	return o->gently ? -1 :
--		add_rejected_path(o, error_type, name);
-+	return add_rejected_path(o, error_type, name);
- }
- 
- /*
++		return o->quiet ? -1 :
+ 			error(ERRORMSG(o, ERROR_BIND_OVERLAP),
+ 			      super_prefixed(a->name),
+ 			      super_prefixed(old->name));
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 0135080a7b..d344d7d296 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -56,7 +56,7 @@ struct unpack_trees_options {
+ 		     diff_index_cached,
+ 		     debug_unpack,
+ 		     skip_sparse_checkout,
+-		     gently,
++		     quiet,
+ 		     exiting_early,
+ 		     show_all_errors,
+ 		     dry_run;
 -- 
 2.21.0.548.gd3c7d92dc2
 
