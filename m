@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6022720248
-	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 158F120248
+	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727945AbfCVJdL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 05:33:11 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51884 "EHLO
+        id S1727936AbfCVJdJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 05:33:09 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:33068 "EHLO
         mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727930AbfCVJdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 05:33:10 -0400
-Received: by mail-wm1-f65.google.com with SMTP id 4so1426893wmf.1
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:08 -0700 (PDT)
+        with ESMTP id S1727929AbfCVJdI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 05:33:08 -0400
+Received: by mail-wm1-f65.google.com with SMTP id z6so3879686wmi.0
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ymah7V7qjj0iS6332aEkdrxLe9QKJfxCLGBu7hRDLaE=;
-        b=o42Osz5lXdXsmqAz5qFpQbNKmHLN5H1gdyFlkp0+zn8k9JrmFEhNDtt30sK/DIeev3
-         1ZrctD4T4I26Ba4py3soUwVqFlAV7YH4RYCkACW5b/1xDb6jdKSckJx+iVOy28PRpKh1
-         75FKzinIyciJq+TTH6WLxq1dJAD4lp6t5rWfAHUKHW7mnbRQawPJvtru6Znt3ZeKJntF
-         BPKEWM94Lqt0i4NhGhNfYiacK0VdVvEBmGoeDFOC7FlYqVM+C0KpOhMYSm4jI8mI5lvv
-         Ub8hSmohY6ARaPnuzFO4gdHw8BaISxqt7SJHhTV7oFKY9y4Qs4SgujKhEUcP7EcgOmvG
-         8UDA==
+        bh=+qdcbY4knywdY0KgKM7U5q/OHcbFDdWPUwgxeXJGnTw=;
+        b=r3umLyU8h1hqZmNDpofdZiRhPKVb+4/Ezpq9Vvxq19hKaViBvgu+PO9Yo9++MjAgqJ
+         UnqwosGyaBjJnc93UVF6iNrkR28VxJf3op7NCMX2xwBKaJ2cgzjs8Pu8r6UJAQuLO2Qk
+         FGdGcQ1PlLdW8Lf92aoSYDv2ATHNrrduDjT1VVFy3oi1F4E6hwBFsOObmWfLAQN/LngK
+         0x2xt2/rdoo/6hDzXCxUWbllXrYKvFh8Ygz2a3Q3ra2u9jO3g7H30VA+EGF90SIV10rq
+         g92QDOGu0zVp3rUunQ/vROGKRnNAtcglLEX/rMIml9W8LKTrjkgRBBxPMirmR9u34wcG
+         K6ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ymah7V7qjj0iS6332aEkdrxLe9QKJfxCLGBu7hRDLaE=;
-        b=MHB8DATuNlFgp6YkhszOPtLLCPHluDTXY41jiV/Th8NBGfJoNIwcrOjVWBPSmvnkAk
-         XQzY3hFZynKls0EswYumE1v5w4fcIOgoeP+7rfNDV8IJmzrLLL4GGicyp5BpzFiVO7O2
-         8cHre2liMec9GMErr+0wiAIJywYmi+r/MXNC6nZJo2es9GM9TVmIA+0cJNC0TH2KAI5E
-         IddrO1KXcCy2jKTl2lOJVkO99x7VK4YwzvEfn3j2N6Dt16Z7pV8UlquEUVzr8d1Yxscb
-         fKYlEJyezRBRyjXFYQjZW1+5OfANLKfFoLVILWyE8h48hKQWaOg5oz77VJcghCMBxXLJ
-         l5nQ==
-X-Gm-Message-State: APjAAAW1Z5SQ/rklJPV4LrgIoZpaWUq3QUwt3jvRETnx8ZCaFCQf894W
-        onAnWXwZdUv7S/k7d3mbhiWoEYZgUNk=
-X-Google-Smtp-Source: APXvYqwpXlcBQjzgn9Pm1xh9nZy72m4cEr5lKrhkkOfbaKf2XmdB/RBif6fhaqoK+MGTrjtFhh9fkQ==
-X-Received: by 2002:a05:600c:2293:: with SMTP id 19mr2230806wmf.77.1553247187968;
-        Fri, 22 Mar 2019 02:33:07 -0700 (PDT)
+        bh=+qdcbY4knywdY0KgKM7U5q/OHcbFDdWPUwgxeXJGnTw=;
+        b=WEsmTaY8ZnhQ4d6OheIMogu6jCUHCvJZDWCE9wIQNnuQ2Mcpobtx5m6Y/VV3d/mgQ+
+         UX5ztv3CTh4mJs9wX2A72cJCvtholPTB/bYTj5FdBaoMyhmLLtCjdPLWtzSF4AlDV13Y
+         XcLLvf4svbb+d7nXsC/9ukR04tNYoPyOO92ffBDoPVvgLcURfszBOOIcc4jr1jBGWGAs
+         wJt6ZjgidRhhMRVtb6xu79FFvpNCNdYz8JP4DbZdzxiwX5zetuWd9QQO5DTCqp1InvZP
+         sovxNCRZzCcXTnz9tD8BhTNSl4JcLyrwT2wJfsGhnbY6071/5d/0Bl94Dx+5pmcEBTl1
+         QSrQ==
+X-Gm-Message-State: APjAAAV0iZcbCsDC8WJ8F6GhN3kMEIdD3StiiaDfLviuK7ooTzJaZeNZ
+        2QrkslxjiDoyGnqX2k3y+DX4i6d2+7E=
+X-Google-Smtp-Source: APXvYqwU0EbhfWQbkDDSwGVxPk3ALfA8vXDcGAQoiIFvQhwsxLOaiQGVQHXOE9DeNzuWy5IMW5ZefA==
+X-Received: by 2002:a1c:41d6:: with SMTP id o205mr2264929wma.2.1553247186692;
+        Fri, 22 Mar 2019 02:33:06 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.33.06
+        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.33.05
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 22 Mar 2019 02:33:07 -0700 (PDT)
+        Fri, 22 Mar 2019 02:33:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 06/11] gc docs: fix formatting for "gc.writeCommitGraph"
-Date:   Fri, 22 Mar 2019 10:32:37 +0100
-Message-Id: <20190322093242.5508-7-avarab@gmail.com>
+Subject: [PATCH v3 05/11] gc docs: re-flow the "gc.*" section in "config"
+Date:   Fri, 22 Mar 2019 10:32:36 +0100
+Message-Id: <20190322093242.5508-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190321205054.17109-1-avarab@gmail.com>
 References: <20190321205054.17109-1-avarab@gmail.com>
@@ -76,34 +76,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the AsciiDoc formatting so that an example of "gc --auto" isn't
-rendered as "git-gc(1) --auto", but as "git gc --auto". This is
-consistent with the rest of the links and command examples in this
-documentation.
-
-The formatting I'm changing was initially introduced in
-d5d5d7b641 ("gc: automatically write commit-graph files", 2018-06-27).
+Re-flow the "gc.*" section in "config". A previous commit moved this
+over from the "gc" docs, but tried to keep as many of the lines
+identical to benefit from diff's move detection.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/gc.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/config/gc.txt | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-index 3e7fc052d9..56918a5008 100644
+index a255ae67b0..3e7fc052d9 100644
 --- a/Documentation/config/gc.txt
 +++ b/Documentation/config/gc.txt
-@@ -59,8 +59,8 @@ will also be excluded (this is the equivalent of running `git gc` with
+@@ -53,9 +53,9 @@ will be repacked. After this the number of packs should go below
+ gc.autoPackLimit and gc.bigPackThreshold should be respected again.
+ +
+ If the amount of memory estimated for `git repack` to run smoothly is
+-not available and `gc.bigPackThreshold` is not set, the largest
+-pack will also be excluded (this is the equivalent of running `git gc`
+-with `--keep-base-pack`).
++not available and `gc.bigPackThreshold` is not set, the largest pack
++will also be excluded (this is the equivalent of running `git gc` with
++`--keep-base-pack`).
  
  gc.writeCommitGraph::
  	If true, then gc will rewrite the commit-graph file when
--	linkgit:git-gc[1] is run. When using linkgit:git-gc[1]
--	'--auto' the commit-graph will be updated if housekeeping is
-+	linkgit:git-gc[1] is run. When using `git gc --auto`
-+	the commit-graph will be updated if housekeeping is
- 	required. Default is false. See linkgit:git-commit-graph[1]
- 	for details.
+@@ -115,12 +115,11 @@ gc.<pattern>.reflogExpireUnreachable::
+ 	in the middle, the setting applies only to the refs that
+ 	match the <pattern>.
+ +
+-These types of entries are generally created as
+-a result of using `git commit --amend` or `git rebase` and are the
+-commits prior to the amend or rebase occurring.  Since these changes
+-are not part of the current project most users will want to expire
+-them sooner, which is why the default is more aggressive than
+-`gc.reflogExpire`.
++These types of entries are generally created as a result of using `git
++commit --amend` or `git rebase` and are the commits prior to the amend
++or rebase occurring.  Since these changes are not part of the current
++project most users will want to expire them sooner, which is why the
++default is more aggressive than `gc.reflogExpire`.
  
+ gc.rerereResolved::
+ 	Records of conflicted merge you resolved earlier are
 -- 
 2.21.0.360.g471c308f928
 
