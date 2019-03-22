@@ -2,171 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E40420248
-	for <e@80x24.org>; Fri, 22 Mar 2019 16:52:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EC8820248
+	for <e@80x24.org>; Fri, 22 Mar 2019 17:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728247AbfCVQwe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 12:52:34 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35135 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727443AbfCVQwe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 12:52:34 -0400
-Received: by mail-wm1-f65.google.com with SMTP id y197so2867352wmd.0
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 09:52:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ywtvnvp/Ly71xdYpMp2Ed+5JF/s8enzI4D9Mr5D/VpA=;
-        b=AlNkRBMrcDSZL2hjzQkjQwbnDfYLX8zWPPoZtmMLkOHpC1UEDRnfqtAB2qpbsghUsM
-         BtGWc08wRXxx+PgzCCb3YEwetRZGy2j0biZ0yWJvyia5oJxHJRBNb9pyaBjjorqE7MlX
-         er3RXW5REFfVtDoAoVg6d4aD7wFu8YPCecG2E07yYWOnDmB1lzgeRUAxXYyZdm2Bw2Le
-         uyi5mKUD1c96MogQsJEy2Hmg9LcZndBMDpOhvhYqho8ZuZc2gZbo3QOMeeQpd5hWHZDH
-         AN7DKr3bmKXHz16l84QZok6DjeG6nC7jZPmvm75GMgjHDBLT4M0mjWU3FbaoUWwagINQ
-         qBcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ywtvnvp/Ly71xdYpMp2Ed+5JF/s8enzI4D9Mr5D/VpA=;
-        b=il5uMfPZfzDVvg8YYxWDEXB9iqKYPUgNiZxkXMGRlbmQOQaJwHEgsVxaqv7eTg2zyV
-         QCowBU/9xzr8C89XNsfE8gVVpWKfg7gJ8DXEK91AVxRSCnPq/iquVn1kKjp4rTGBmIq3
-         ZH5LMlh8pQg3YJTN3gltDN8GEqSNKbtsNs6gBgQV7ks+raXOMQFf+w0MzCwHcnLf9zOR
-         0O5PH0MreP9JdrzJnfdgo0ipbkXWfUvr/uKWdhb7ez2Q1V6pUY8RxYFlHG7rWwMx1/Gw
-         KGkLtjiMeZBRgAEB9YfvENqdPyw5DTXALz9dMzygrUJdg/10YqYYbHVCcp1y4oo2sy98
-         bcDA==
-X-Gm-Message-State: APjAAAXB+Wvf0s7i3Ma6SwX5lffT46i6k7ClgmNd3hRJl5HiZx44BXLZ
-        g+K2LfsmELTF+V/b2a5259E=
-X-Google-Smtp-Source: APXvYqy4V+WUMmPOZBoa8lw3n3kleA5LimmihbotvWzkZd0zuedFlt6Xsjc3jjVtjmOSUU9MmtScbw==
-X-Received: by 2002:a1c:3845:: with SMTP id f66mr3829820wma.41.1553273552407;
-        Fri, 22 Mar 2019 09:52:32 -0700 (PDT)
-Received: from szeder.dev (x4db501f9.dyn.telefonica.de. [77.181.1.249])
-        by smtp.gmail.com with ESMTPSA id i28sm1984515wrc.32.2019.03.22.09.52.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Mar 2019 09:52:31 -0700 (PDT)
-Date:   Fri, 22 Mar 2019 17:52:28 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Subject: Re: [PATCH] commit-graph: don't show progress percentages while
- expanding reachable commits
-Message-ID: <20190322165228.GG22459@szeder.dev>
-References: <20190119202121.3590-11-avarab@gmail.com>
- <20190322102817.19708-1-szeder.dev@gmail.com>
- <87lg17cgf5.fsf@evledraar.gmail.com>
- <20190322111829.GC22459@szeder.dev>
- <87k1grc7al.fsf@evledraar.gmail.com>
- <20190322145550.GE22459@szeder.dev>
- <87ftrfc5b7.fsf@evledraar.gmail.com>
- <20190322154943.GF22459@szeder.dev>
+        id S1728219AbfCVRSr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 13:18:47 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:36107 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727105AbfCVRSq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 13:18:46 -0400
+Received: from [192.168.1.12] ([2.101.244.128])
+        by smtp.talktalk.net with SMTP
+        id 7NoZhfOcodrax7NoZhNgxT; Fri, 22 Mar 2019 17:18:43 +0000
+X-Originating-IP: [2.101.244.128]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=QfUYQfTv c=1 sm=1 tr=0 a=8nsoD1t2XaTH5iSUU4dp1Q==:117
+ a=8nsoD1t2XaTH5iSUU4dp1Q==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=VmrKRvbLY6Vl8-nRlB0A:9 a=QEXdDO2ut3YA:10
+Subject: Re: [PATCH 3/4] read-tree: add --quiet
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <20190322093138.13765-1-pclouds@gmail.com>
+ <20190322093138.13765-4-pclouds@gmail.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <04d888be-d66b-110a-b1e4-35ff4897fcab@iee.org>
+Date:   Fri, 22 Mar 2019 17:18:44 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <20190322093138.13765-4-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190322154943.GF22459@szeder.dev>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfM+m4Bf1GYmRZnCo8SDMWnBIeFtt5oUwnHn+f4AC9tZ3y8EqmnTbwLbKuAdoi7vfidF86RY0u+TdhckF4LmMSj/Ww8yatwL6VpuUrR73oTty7gJKGraz
+ zmDu04Wol+0lLC9X0UrLl9l7FR7JhjSRtNKVMDVHteoEVLRR3homg+qPcro+zGnI+k+vawEmWNtk2hlwq5NHMgKFDrCzZrnoiwdYi+d+RwPE5seUA2bXOq42
+ ueGzF8ZLwDv+t0K3Gk3o4n24Lwbifn/TyZ1zfNZP4ZHW51FM6XbL9Q5hBREBcYedw6eGNVbQugl8wSnPr9NN2A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 22, 2019 at 04:49:43PM +0100, SZEDER Gábor wrote:
-> On Fri, Mar 22, 2019 at 04:11:24PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > 
-> > On Fri, Mar 22 2019, SZEDER Gábor wrote:
-> > 
-> > > On Fri, Mar 22, 2019 at 03:28:34PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > >>
-> > >> On Fri, Mar 22 2019, SZEDER Gábor wrote:
-> > >>
-> > >> > On Fri, Mar 22, 2019 at 12:11:26PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > >> >>
-> > >> >> On Fri, Mar 22 2019, SZEDER Gábor wrote:
-> > >> >>
-> > >> >> > Commit 49bbc57a57 (commit-graph write: emit a percentage for all
-> > >> >> > progress, 2019-01-19) was a bit overeager when it added progress
-> > >> >> > percentages to the "Expanding reachable commits in commit graph" phase
-> > >> >> > as well, because most of the time the number of commits that phase has
-> > >> >> > to iterate over is not known in advance and grows significantly, and,
-> > >> >> > consequently, we end up with nonsensical numbers:
-> > >> >> >
-> > >> >> >   $ git commit-graph write --reachable
-> > >> >> >   Expanding reachable commits in commit graph: 138606% (824706/595), done.
-> > >> >> >   [...]
-> > >> >> >
-> > >> >> >   $ git rev-parse v5.0 | git commit-graph write --stdin-commits
-> > >> >> >   Expanding reachable commits in commit graph: 81264400% (812644/1), done.
-> > >> >> >   [...]
-> > >> >> >
-> > >> >> > Therefore, don't show progress percentages in the "Expanding reachable
-> > >> >> > commits in commit graph" phase.
-> > >> >>
-> > >> >> There's indeed a bug here as your examples show, but there *are* cases
-> > >> >> where it's correct, as the commit message for my patch on "master" shows
-> > >> >> there's cases where we correctly.
-> > >> >>
-> > >> >> So this "fixes" things by always removing the progress, why not instead
-> > >> >> pass down the state to close_reachable() about what we're walking over,
-> > >> >> so we can always show progress, or at least in some cases?
-> > >> >
-> > >> > The cases where it does display correct percentages are exceptional,
-> > >> > and doesn't worth the effort to try to find out whether ther current
-> > >> > operation happens to be such a case.
-> > >>
-> > >> It's the "write" entry point without arguments that displays the correct
-> > >> progress. So not exceptional, but yeah, it's not what we use on "gc".
-> > >
-> > > Bit it displays the correct number only if all the reachable commits
-> > > are in packfiles, which is not necessarily the case (e.g. unpacked
-> > > small packs during 'git fetch').
-> > 
-> > No, argument-less "write" only considers packed commits.
-> 
-> No, it considers packed commits as starting points, and then expands
-> to all reachable commits, that's what that loop in question is about.
-> 
->   $ git init
->   Initialized empty Git repository in /tmp/test/.git/
->   $ echo >file
->   $ git add file
->   $ git commit -q -m initial
->   $ echo 1 >file
->   $ git commit -q -m 1 file
->   $ git rev-parse HEAD | git pack-objects
->   .git/objects/pack/pack
->   Enumerating objects: 1, done.
->   Counting objects: 100% (1/1), done.
->   ece3ff72952af2b28e048fa5c58db88c44312876
->   Writing objects: 100% (1/1), done.
->   Total 1 (delta 0), reused 0 (delta 0)
->   $ git commit-graph write
->   Computing commit graph generation numbers: 100% (2/2), done.
-> 
-> 
-> > >> In any case, the problem is that sometimes we've walked the full set of
-> > >> commits already, and some other times we haven't.
-> > >
-> > > ... and that we can't really be sure whether we've walked the full set
-> > > of commits until after this loop.
-> > 
-> > I'm fairly sure we can when we start with a full walk. See my
-> > explanation in <87imwbc6x8.fsf@evledraar.gmail.com>, but I may have
-> > missed something.
+On 22/03/2019 09:31, Nguyễn Thái Ngọc Duy wrote:
+> read-tree is basically the front end of unpack-trees code and shoud
 
-BTW, if we know for _sure_ that we started with the full set of
-commits, then we don't have to iterate over all the history in this
-"Expanding reachable commits..." phase in the first place, because
-there is nowhere to expand anyway.  Maybe we wouldn't even have to
-call close_reachable() in that case.
+s/shoud/should/
 
+Philip
+
+> expose all of its functionality (unless it's designed for internal
+> use). This "opts.quiet" (formerly "opts.gently") was added for
+> builtin/checkout.c but there is no reason why other read-tree users
+> won't find this useful.
+>
+> The test that is updated to run 'read-tree --quiet' was added because
+> unpack-trees was accidentally not being quiet [1] in 6a143aa2b2
+> (checkout -m: attempt merge when deletion of path was staged -
+> 2014-08-12). Because checkout is the only "opts.quiet" user, there was
+> no other way to test quiet behavior. But we can now test it directly.
+>
+> 6a143aa2b2 was manually reverted to verify that read-tree --quiet
+> works correctly (i.e. test_must_be_empty fails).
+>
+> [1] the commit message there say "errors out instead of performing a
+>      merge" but I'm pretty sure the "performing a merge" happens anyway
+>      even before that commit. That line should say "errors out
+>      _in addition to_ performing a merge"
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>   Documentation/git-read-tree.txt | 4 ++++
+>   builtin/read-tree.c             | 1 +
+>   t/t7201-co.sh                   | 3 +++
+>   3 files changed, 8 insertions(+)
+>
+> diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+> index 5c70bc2878..1e81f9c4e6 100644
+> --- a/Documentation/git-read-tree.txt
+> +++ b/Documentation/git-read-tree.txt
+> @@ -128,6 +128,10 @@ OPTIONS
+>   	Instead of reading tree object(s) into the index, just empty
+>   	it.
+>   
+> +-q::
+> +--quiet::
+> +	Quiet, suppress feedback messages.
+> +
+>   <tree-ish#>::
+>   	The id of the tree object(s) to be read/merged.
+>   
+> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+> index 9083dcfa28..5c9c082595 100644
+> --- a/builtin/read-tree.c
+> +++ b/builtin/read-tree.c
+> @@ -154,6 +154,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+>   		{ OPTION_CALLBACK, 0, "recurse-submodules", NULL,
+>   			    "checkout", "control recursive updating of submodules",
+>   			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater },
+> +		OPT__QUIET(&opts.quiet, N_("suppress feedback messages")),
+>   		OPT_END()
+>   	};
+>   
+> diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+> index 72b9b375ba..f165582019 100755
+> --- a/t/t7201-co.sh
+> +++ b/t/t7201-co.sh
+> @@ -223,6 +223,9 @@ test_expect_success 'switch to another branch while carrying a deletion' '
+>   	test_must_fail git checkout simple 2>errs &&
+>   	test_i18ngrep overwritten errs &&
+>   
+> +	test_must_fail git read-tree --quiet -m -u HEAD simple 2>errs &&
+> +	test_must_be_empty errs &&
+> +
+>   	git checkout --merge simple 2>errs &&
+>   	test_i18ngrep ! overwritten errs &&
+>   	git ls-files -u &&
