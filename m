@@ -2,86 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEAC020248
-	for <e@80x24.org>; Fri, 22 Mar 2019 14:19:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 747AF20248
+	for <e@80x24.org>; Fri, 22 Mar 2019 14:20:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728045AbfCVOTc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 10:19:32 -0400
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:48108 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727487AbfCVOTc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 10:19:32 -0400
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.92)
-        (envelope-from <mh@glandium.org>)
-        id 1h7L13-0002h2-T6; Fri, 22 Mar 2019 23:19:25 +0900
-Date:   Fri, 22 Mar 2019 23:19:25 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: How to properly find git config in a libgit.a-using executable?
-Message-ID: <20190322141925.olzzfjm5ytp2gwv7@glandium.org>
-References: <20190320101941.2xjsjx3zfnnp33a2@glandium.org>
- <20190322073311.GA839@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1903221436590.41@tvgsbejvaqbjf.bet>
+        id S1728104AbfCVOUF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 10:20:05 -0400
+Received: from siwi.pair.com ([209.68.5.199]:44704 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727964AbfCVOUE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 10:20:04 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id E4C203F400C;
+        Fri, 22 Mar 2019 10:20:03 -0400 (EDT)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 563D63F4092;
+        Fri, 22 Mar 2019 10:20:03 -0400 (EDT)
+Subject: Re: [PATCH v2 1/1] trace2: write to directory targets
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        avarab@gmail.com, peff@peff.net, Johannes.Schindelin@gmx.de
+References: <cover.1552519463.git.steadmon@google.com>
+ <cover.1553126984.git.steadmon@google.com>
+ <59d8c6511bc8c5fd25473c282768b38c97df9e6b.1553126984.git.steadmon@google.com>
+ <xmqqmulpt22e.fsf@gitster-ct.c.googlers.com>
+ <51e88650-8667-df1f-13ef-4537f2e70346@jeffhostetler.com>
+ <xmqqpnqjr3g0.fsf@gitster-ct.c.googlers.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <b0d5949a-1afa-fcce-646c-d33d51686a2f@jeffhostetler.com>
+Date:   Fri, 22 Mar 2019 10:20:02 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:66.0) Gecko/20100101
+ Thunderbird/66.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1903221436590.41@tvgsbejvaqbjf.bet>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20180716
+In-Reply-To: <xmqqpnqjr3g0.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 22, 2019 at 02:39:43PM +0100, Johannes Schindelin wrote:
-> Hi Peff & Mike,
-> 
-> On Fri, 22 Mar 2019, Jeff King wrote:
-> 
-> > On Wed, Mar 20, 2019 at 07:19:41PM +0900, Mike Hommey wrote:
-> >
-> > > I thought of a few options (it's worth noting the helper is invoked in a
-> > > way that makes $GIT_EXEC_PATH set, which can help a little):
-> > > - spawn `$GIT_EXEC_PATH/git-config -l -z`, parse its output, and set the
-> > >   internal config from that. That's the barbarian option.
-> > > - build the helper with RUNTIME_PREFIX, and modify the RUNTIME_PREFIX
-> > >   code to use $GIT_EXEC_PATH if it's set, rather than the path the
-> > >   executable is in. That actually sounds reasonable enough that I'd send
-> > >   a patch for git itself. But that doesn't quite address the nitpick case
-> > >   where ETC_GITCONFIG could be either `/etc/gitconfig` or
-> > >   `etc/gitconfig` depending how git was compiled, and there's no way to
-> > >   know which is the right one.
-> >
-> > I'm not entirely sure I understand the problem, but it sounds like you
-> > want to know the baked-in ETC_GITCONFIG for a built version of git (that
-> > isn't necessarily the one that shares your build of libgit.a).
-> >
-> > There's no direct way to have Git print that out. It would be reasonable
-> > to add one to rev-parse, I think.
-> >
-> > Barring that, here's a hack:
-> >
-> >   git config --system --show-origin --list -z |
-> >   perl -lne '/^file:(.*?)\0/ and print $1 and exit 0'
-> >
-> > If the file is empty, it won't print anything, of course. But then,
-> > you'd know that it also has no config in it. :)
-> 
-> How about
-> 
-> 	GIT_EDITOR=echo git config --system -e 2>/dev/null
-> 
-> It will error out if the directory does not exist, for some reason, e.g.
-> when you installed Git in your home directory via `make install` from a
-> fresh clone. So you'll have to cope with that contingency.
 
-Thank you both, I can probably work with this, although I might have to
-alter the git init sequence. I'm not sure my usecase needs git to cater
-for it more generally, though. Who else uses libgit.a?
 
-Mike
+On 3/21/2019 11:30 PM, Junio C Hamano wrote:
+> Jeff Hostetler <git@jeffhostetler.com> writes:
+> 
+>>>> +	for (attempt_count = 0; attempt_count < MAX_RANDOM_ATTEMPTS; attempt_count++) {
+>>>> +		strbuf_reset(&final_path);
+>>>> +		strbuf_addbuf(&final_path, &base_path);
+>>>> +		strbuf_addf(&final_path, ".%d", attempt_count);
+>>
+>> Since the last component of the SID is already very unique and
+>> we're unlikely to have collisions, maybe change the above line to:
+>>
+>> 		if (attempt_count > 0)
+>> 			strbuf_addf(&final_path, ".%d", attempt_count);
+>>
+>> and in reality expect to never have files with the suffix.
+> 
+> That's a nice property.
+> 
+>> Unless, that is, they turned on more than one of GIT_TR2,
+>> GIT_TR2_PERF, or GIT_TR2_EVENT and pointed them at the same
+>> directory, but I'm not sure if I care about that edge case
+>> or not.
+> 
+> That actually makes me wonder if the auto generated filenames want
+> to have a common trait (e.g. suffix) that allows the readers to tell
+> from which of these environment variables the names came from.  It
+> would not be very useful if two files with the same sid component
+> had .1 suffix for GIT_TR2 trace for one session, and the same .1
+> suffix is used for GIT_TR2_PERF trace for a pair of files from
+> another session.
+
+I thought about suggesting that, but didn't think it worth the bother.
+
+> But let's not worry about it for now.  If people do not want them
+> get mixed up and become hard to tell apart, they can always specify
+> different directories for different traces.
+
+agreed. it should be very rare.  the SID is the built from
+	"<microseconds-since-the-epoch><dash><pid>"
+so something would have to be seriously wrong with their
+system to get collision from 2 different git commands.
+
+and yes, they the advise should be to use different directories
+for the different streams.
+
+> 
+>>
+>>>> +		fd = open(final_path.buf, O_WRONLY | O_CREAT | O_EXCL, 0666);
+>> [...]
+>>
+>> Nice.  Thanks for looking into this.
+>> Jeff
