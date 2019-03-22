@@ -7,57 +7,69 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B24520248
-	for <e@80x24.org>; Fri, 22 Mar 2019 02:20:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 781E620248
+	for <e@80x24.org>; Fri, 22 Mar 2019 02:24:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727283AbfCVCUh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 22:20:37 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:38664 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726695AbfCVCUh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 22:20:37 -0400
-Received: by mail-wm1-f65.google.com with SMTP id a188so639579wmf.3
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 19:20:36 -0700 (PDT)
+        id S1727162AbfCVCYF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 22:24:05 -0400
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33783 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726695AbfCVCYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 22:24:04 -0400
+Received: by mail-wm1-f68.google.com with SMTP id z6so3293861wmi.0
+        for <git@vger.kernel.org>; Thu, 21 Mar 2019 19:24:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=VLyYenL6SUVc/ejmds7TfMcyxQ4hFnsoiMzzSyOjoGc=;
-        b=UvPjP47ZwdC1/FE74quy35Z3X9Dc1CiHjhKOsd85PWVLWy6wOgirp+5sSX69CnL+EO
-         oElGI/1sIAJsnot72FUkmBjQi/cONeZwOCk/T+5v38oBAT7nhbjsDE4uAl3REtWsrtOV
-         szrhNXU8ZkQM46lGLH/B7KwB/zazo5Ueno/0YVpfriF5mvLSAUeaI5H4f8GwYb1K886U
-         Y0ylksk6WL2jHXfbxxQ3/0tqvOfetMstm0Kgj14f8LwVF018CXUZXNw4cfhu2coUV8F4
-         vUdE35LQnBv1FlmT/8M6gsieT/iLY/fV5p3mOlbmVAJjxoGbi09YsXErqiLEnxdJmVcf
-         fpgw==
+        bh=xstVJk23ajKINLV+n3875EzXRO6H5oDJPkRX4Irmzes=;
+        b=WSDAWgWIdDUUCGUOrOrnDjYY4tHPsxk9UT6hKC0nyGtg2rpHSTgbSs5zfKcwx8onGn
+         k4Xzv97toUtFLnioGpPjj9d3u5qMQGxHSgBZEPWWCr4rOJgslv7+RkMrQU5gAX6LVoMI
+         AMTxfjel05kiYiEYGUcPqh2+nropzoKHqoQfuIywIjRmVMJCPY+N7UC6RjL9/gRcdzgF
+         YK9und0ww9+AgD+VCCcDWzUF03Q07Qo2OZX3yuG+GlbUfc4/QevFDHzpSdpr68ypMix4
+         1lCpmJy5fongK+RMb8SqbteXQ0uOgqVIwRyb4jdhSp4AerYNs/iEWOgAyN64xFYh9QOJ
+         PeLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=VLyYenL6SUVc/ejmds7TfMcyxQ4hFnsoiMzzSyOjoGc=;
-        b=sASiqnxDHvaz8X8zAyOR/CF2T/xFoSrb/MExs2TTqlUbLkCovJ9WdA8Yrsw5OyI1RN
-         4bDkmyYpCcKWi176wSFhpHF1HoOmW+e7zdFydTNOG4upD2ku/1epRZAjWgpttRNx+Am9
-         jgI0byu3nR1F17knmfdcd6/zXGCavLagxSGrLcfMJaXBagPozqtFA89lDAUvL1X6p5kl
-         fxaoJraglf32FkCxC4dQEK9IktsgSGf/J7DjfFZX/CjQULxqRUlePaNbCO8nrP3mh6go
-         Cn6Ta/e2b3gvUWjR5Gp6/cEUTEIe/OD/qlTzjJDWT01VlMB/sQrgz7wxQ7ZTH7Jb2+S9
-         Dknw==
-X-Gm-Message-State: APjAAAWU9s0LUWJNiO3wFvs2IPYWDVjuSBlMcE9WGpdXWT1tUqzTTFHQ
-        v4f4xuHVF1GYchvjrorB5kw=
-X-Google-Smtp-Source: APXvYqwrH1IcQZZBN9HdQJ7ho4fxwxRwYIpDxms8vadUfTuH/F8nzrx6vHe3/ZPVYFK+CfgKNYxCSg==
-X-Received: by 2002:a1c:b455:: with SMTP id d82mr1379682wmf.153.1553221235387;
-        Thu, 21 Mar 2019 19:20:35 -0700 (PDT)
+        bh=xstVJk23ajKINLV+n3875EzXRO6H5oDJPkRX4Irmzes=;
+        b=JPNirW9k2MiPK3m4Bx+oZx46Q71YCLinLMgaisdTrqbpxR2InrLvpK4SR41PsgJjjY
+         UkUksnolkHHEyOssx0UJ+K00Wzt9jtXNtXUyRz0YIodkp8H1jTpb7UWupk7JWHybgRcz
+         8n8+P5DruddhztdWuVw5fqjzR72Aj9ZRysG08J666h3RP9V+RfAqie66aZyuAMiHXbTG
+         pT7clj9qTiWkyGEipw8P4bVlMyPRF/vQTWhSLkeoGgQhhcTNWOoWKxGCcfeFt/KUTmDX
+         cqtZ46LtDX9lzGUsbj5qgQbhojVmcl6ZNycm8fp35tqYzQ3/yT0Pv8KsjcrCM6Ti9p5U
+         CK9Q==
+X-Gm-Message-State: APjAAAWP+NP5ByyG4L8I+kg0i6e9kEpNP3rrHGTIKTduJECH/J16zqxP
+        3QWpB5yqLK0BTIxoc5XhCmM=
+X-Google-Smtp-Source: APXvYqyBZ0E8i+h92WEMrgx+B/jVoID1j7t+K/bCUD6FkzRjzLPTL0Fx1BABTalbgC8YYsv69LRgZQ==
+X-Received: by 2002:a1c:c68e:: with SMTP id w136mr1265092wmf.111.1553221442820;
+        Thu, 21 Mar 2019 19:24:02 -0700 (PDT)
 Received: from localhost (141.255.76.34.bc.googleusercontent.com. [34.76.255.141])
-        by smtp.gmail.com with ESMTPSA id 132sm11819338wmd.27.2019.03.21.19.20.34
+        by smtp.gmail.com with ESMTPSA id g3sm6255194wmk.32.2019.03.21.19.24.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Mar 2019 19:20:34 -0700 (PDT)
+        Thu, 21 Mar 2019 19:24:01 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [RFC PATCH] t5551: delete auth-for-pack-but-not-refs test
-References: <20190321174719.151877-1-jonathantanmy@google.com>
-Date:   Fri, 22 Mar 2019 11:20:34 +0900
-In-Reply-To: <20190321174719.151877-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Thu, 21 Mar 2019 10:47:19 -0700")
-Message-ID: <xmqq36nfsl8t.fsf@gitster-ct.c.googlers.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        "C.J. Jameson" <cjcjameson@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] cherry-pick: set default `--mainline` parent to 1
+References: <CALm+SVJR5BCHi_r7B279gKDukD4mYDQuv=K5guje73YDVmOxug@mail.gmail.com>
+        <xmqq1s32w3vu.fsf@gitster-ct.c.googlers.com>
+        <871s31vjo7.fsf@javad.com>
+        <CABPp-BEe56GFM_2g7EyXmSrULFwRAvSPBomQ66jEQmCs=HhWpg@mail.gmail.com>
+        <xmqqd0mlt1h1.fsf@gitster-ct.c.googlers.com>
+        <xmqq4l7wuddk.fsf@gitster-ct.c.googlers.com>
+        <87pnqklr8a.fsf@javad.com>
+        <xmqqlg18srrp.fsf@gitster-ct.c.googlers.com>
+        <878sx8lpqw.fsf@javad.com>
+        <xmqqbm24sk68.fsf@gitster-ct.c.googlers.com>
+        <87k1gsh1zs.fsf@javad.com>
+Date:   Fri, 22 Mar 2019 11:24:01 +0900
+In-Reply-To: <87k1gsh1zs.fsf@javad.com> (Sergey Organov's message of "Thu, 21
+        Mar 2019 14:59:35 +0300")
+Message-ID: <xmqqy357r6im.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,49 +78,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Sergey Organov <sorganov@gmail.com> writes:
 
-> Because this configuration is not supported by all protocol versions,
-> and because this configuration seems to be of limited usefulness (only
-> useful for people who use manual credential entry and on servers that
-> are OK with exposing refs but not objects, and even in this case, helps
-> only in a no-op fetch), delete the test that verifies that this
-> configuration works.
+>> With it reverted, "[alias] cp = cherry-pick -m1" can be used to train
+>> the user to blindly pick a range that has a merge without thinking,
+>> which is what I meant by "ship has already sailed".
+>
+> Did you mean "With it *not* reverted" here?
 
-A possible and different conclusion that naturally follow your first
-"because" could be "fix protocol versions whose support of this
-configuration is broken", and your second "because" is with "seems
-to be", that makes it quite weak.
+Thanks for a correction.  Yes, if we do not revert it, then that
+would allow people to follow a bad workflow we do not want to
+recommend (and I think that is what Elijah does not want to do), and
+that is why I said the ship has already sailed.
 
-Quite honestly, I hate to see a proposed log message that downplays
-its potential negative effects without sufficient justification.
+> Those who don't like such alias are still free not to define or use it.
 
-Isn't this feature primarily for those who want to poll from an
-automated job (and naturally you want to assign as little privilege
-as possible to such an automated job) with ls-remote and only run an
-authenticated fetch, perhaps manually, with or without cred helper,
-when the automated polling job finds there is something worthwhile
-to fetch?  What this test is checking seems to be a quite effective
-way to achieve that useful workflow, at least to me, and offhand I
-do not think of other ways to easily achieve the same.
-
-The "ls-remote" communication may not even touch any outside network
-but may be happening all within a single organization, in which case
-"are OK with exposing refs" is making a security mountain out of a
-molehill.  If it were a truly problematic hole that makes it a
-security issue, wouldn't we deleting this test and at the same time
-plugging the hole for earlier protocol versions?
-
-Having said all that, I do not care too deeply.  Would a much better
-longer-term solution for those who want to poll and fetch only when
-there is something new be to allow clients to subscribe to a feed
-that hangs while there is nothing new, and lets the upstream side
-continuously feed incremental updates to the receiving client, as
-its refs are updated, or something?  As long as such a thing is in
-our vision (it is OK if nobody is currently working on it) to become
-replacement, I do not think it is a huge loss to lose the ability for
-unauthenticated ls-remote with authenticated fetch.
-
-Thanks.
-
-
+That's not the point.  Those who do want to be careful can learn to
+use a new option --forbid-stupid-things, but why should they?  They
+should be forbidden from doing stupid things by default, which is
+the point of this exchange.
