@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60E2120248
-	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CA7420248
+	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727957AbfCVJdR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 05:33:17 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41129 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727948AbfCVJdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 05:33:15 -0400
-Received: by mail-wr1-f68.google.com with SMTP id p1so1524524wrs.8
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:13 -0700 (PDT)
+        id S1727963AbfCVJdS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 05:33:18 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42969 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727944AbfCVJdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 05:33:12 -0400
+Received: by mail-wr1-f67.google.com with SMTP id g3so1523955wrx.9
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hbz+ZQhaxAq9zBs8Z0B/DXRydlbJbw7ibhZnEiAJdjw=;
-        b=MKa+uy+Dq6KWv3LMadx2aZjkzJWbBM2lAXd7Feey1uOvL689lpyrjpAyqnD964EzOx
-         uZ64Ol9VTDhBMGDfUzP+05a0akoBuefgG/nFWjXcPe73M55bqJrESDNINDrwc8kuHOmn
-         BFbTKP+8tJjcw/eURvcrD39Ga4Dt1Cofwu1UgeNkgx4q2IIaqOvM0mmJb9dmQiiIKNky
-         8rdhVCpV7DndUdm+YMpSXfmz0Zo01n2r9Rfom2Ch2w5Wv7geBd8W3/upT1DG2fNdyJUq
-         6+skLJYpcZ/6g2BqN/ag+0lywqXc8j3baoZ0amaYOYx/2cs31xMEFLhzaLzGvQAvFbsx
-         1Eig==
+        bh=yTTQxMmGI7f0QN1UVXgcYOBv68WULak0tHw22nssWfU=;
+        b=jwv4w9rw9JfSezgLo9QNgGQgXyv+DK7Twd/yMurOTrUuxJCS7LkrtFgMjS+KBpsWl+
+         zhMvZDnghXRTuv2gkzkX0NO/oN71gpEY5aqHoGUAihz96z417zM4PiozLrZDxYHlDnYz
+         yTr62nFrtXJRX8P7tmms4m4ZKm3IpUHEhoNxLsMGOAGF7vHoZw7BJHfhjMDOUTabRzKg
+         XBXAsf3tTKJ+hDsVbeqCfGtSYGsVuOTB5fNlCAh8Ig4C4bcBoMYcXw1TB44f2DgOaajs
+         pS8vnNHNQlO5leGp2uJBLTXn8hYn5I7s9m3BUE264wyzQUC+eX1tMpQmlRayDvQDnA5W
+         Zicw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hbz+ZQhaxAq9zBs8Z0B/DXRydlbJbw7ibhZnEiAJdjw=;
-        b=ZSvWOgvDZCx9ybOVW/xTKLU0fRs8/J0uGpVW6P1MifMsG3vLdJmtGKm1U37+dbnFAr
-         1g0+a7VCJHVPf2yz+dJBeh55+dX48rD/ScesxazgTbXgT+B7ZFGteJfeiRDNwaVRksdu
-         uJQ6J7doIejsZoYa3oLks8Jn5cwy2dzC+qjAuz4ggvNZOFudXtUOC4yeUY+otGvECs0A
-         ystmI0QdyUiT717FflTS0K2hUTs8wH8kBlz5S2Jbrk73NQHSvM1PawJiN2sJA48V7lll
-         XvjdNiuJzitgl4Z1FK1OKGQd+HrGgj/DhWuzuZ5yH1gZOp0pCFaTqlk58Ueq9uoKf4dv
-         Q2Cg==
-X-Gm-Message-State: APjAAAVlvAbe1LLVLjg+z7VWi53EHVouF+bgPJ65D7+HDu6L8RcetEyv
-        D3pP+AMMcDPSQUJQGvfuG74RNkBk4Cw=
-X-Google-Smtp-Source: APXvYqzNZr/9MT2Jz7BeuZXSX6rEzFp+SFN17/I9yfDXoFqeVZQNWfW8qsaoUO6O2Z2apRvmTAqVgg==
-X-Received: by 2002:a5d:4a8a:: with SMTP id o10mr5678427wrq.189.1553247192596;
-        Fri, 22 Mar 2019 02:33:12 -0700 (PDT)
+        bh=yTTQxMmGI7f0QN1UVXgcYOBv68WULak0tHw22nssWfU=;
+        b=L6XG8aeCyI7iwj3mDRGvjLndZFMOGjyF3N2Hwk4DNRgB0aabLMavuYjYqMyzyr66Ak
+         nohL9nfLlkxMIvfxIIHv5vlRbup2MV2/9gm/tUsrTFu1pHMItEZnPK1mT/pB+KeHTMfy
+         uiqU4Mla+blhFVxV0ygnkrhp1JcWlXR4y3WL6GI2rmTbXs6H/7rkEWfGKUBglenKT36x
+         MQlXlFPlq3XEHZM1DplP7OneSiVivXu4xZ6iorhsIQuJ1MFz5vFFzitJrwTqnz7Ise7M
+         URqq4EgjpwhgFhej3v9oJeemV97fW5GxnQmwJqcKx59f5tibzNX2F+9JfoG4m7QcfzIX
+         86gg==
+X-Gm-Message-State: APjAAAU0KItQu3wKBGU8WyI0DrgXgf2qq2+dSQmNa6lbTBme24NEDMBS
+        Y+F5eQK21lxMuomRPq32m2mob6G8Njg=
+X-Google-Smtp-Source: APXvYqwChULFCaYOjVCwOLrbzyC0JMrkXr9Pp9+2CBakHFJ4Lmc5a6XmwBUGMNiAitNk0FqQRnXqXg==
+X-Received: by 2002:adf:f4c9:: with SMTP id h9mr2216607wrp.317.1553247190099;
+        Fri, 22 Mar 2019 02:33:10 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.33.11
+        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.33.09
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 22 Mar 2019 02:33:11 -0700 (PDT)
+        Fri, 22 Mar 2019 02:33:09 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 10/11] gc docs: clarify that "gc" doesn't throw away referenced objects
-Date:   Fri, 22 Mar 2019 10:32:41 +0100
-Message-Id: <20190322093242.5508-11-avarab@gmail.com>
+Subject: [PATCH v3 08/11] gc docs: downplay the usefulness of --aggressive
+Date:   Fri, 22 Mar 2019 10:32:39 +0100
+Message-Id: <20190322093242.5508-9-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190321205054.17109-1-avarab@gmail.com>
 References: <20190321205054.17109-1-avarab@gmail.com>
@@ -76,42 +76,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the "NOTES" section to fix up wording that's been with us since
-3ffb58be0a ("doc/git-gc: add a note about what is collected",
-2008-04-23).
+The existing "gc --aggressive" docs come just short of recommending to
+users that they run it regularly. I've personally talked to many users
+who've taken these docs as an advice to use this option, and have,
+usually it's (mostly) a waste of time.
 
-I can't remember when/where anymore (I think Freenode #Git), but at
-some point I was having a conversation with someone who was convinced
-that "gc" would prune things only referenced by e.g. refs/pull/*, and
-pointed to this section as proof.
+So let's clarify what it really does, and let the user draw their own
+conclusions.
 
-It turned out that they'd read the "branches and tags" wording here
-and thought just refs/{heads,tags}/* and refs/remotes/* etc. would be
-kept, which is what we enumerate explicitly.
+Let's also clarify the "The effects [...] are persistent" to
+paraphrase a brief version of Jeff King's explanation at [1].
 
-So let's say "other refs", even though just above we say "objects that
-are referenced anywhere in your repository".
+1. https://public-inbox.org/git/20190318235356.GK29661@sigill.intra.peff.net/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-gc.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-gc.txt | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 165f05e999..49aec5435b 100644
+index c037a46b09..165f05e999 100644
 --- a/Documentation/git-gc.txt
 +++ b/Documentation/git-gc.txt
-@@ -119,8 +119,8 @@ anywhere in your repository. In
- particular, it will keep not only objects referenced by your current set
- of branches and tags, but also objects referenced by the index,
- remote-tracking branches, refs saved by 'git filter-branch' in
--refs/original/, or reflogs (which may reference commits in branches
--that were later amended or rewound).
-+refs/original/, reflogs (which may reference commits in branches
-+that were later amended or rewound), and anything else in the refs/* namespace.
- If you are expecting some objects to be deleted and they aren't, check
- all of those locations and decide whether it makes sense in your case to
- remove those references.
+@@ -39,8 +39,7 @@ OPTIONS
+ 	space utilization and performance.  This option will cause
+ 	'git gc' to more aggressively optimize the repository at the expense
+ 	of taking much more time.  The effects of this optimization are
+-	persistent, so this option only needs to be used occasionally; every
+-	few hundred changesets or so.
++	mostly persistent. See the "AGGRESSIVE" section below for details.
+ 
+ --auto::
+ 	With this option, 'git gc' checks whether any housekeeping is
+@@ -78,6 +77,32 @@ be performed as well.
+ 	`.keep` files are consolidated into a single pack. When this
+ 	option is used, `gc.bigPackThreshold` is ignored.
+ 
++AGGRESSIVE
++----------
++
++When the `--aggressive` option is supplied, linkgit:git-repack[1] will
++be invoked with the `-f` flag, which in turn will pass
++`--no-reuse-delta` to linkgit:git-pack-objects[1]. This will throw
++away any existing deltas and re-compute them, at the expense of
++spending much more time on the repacking.
++
++The effects of this are mostly persistent, e.g. when packs and loose
++objects are coalesced into one another pack the existing deltas in
++that pack might get re-used, but there are also various cases where we
++might pick a sub-optimal delta from a newer pack instead.
++
++Furthermore, supplying `--aggressive` will tweak the `--depth` and
++`--window` options passed to linkgit:git-repack[1]. See the
++`gc.aggressiveDepth` and `gc.aggressiveWindow` settings below. By
++using a larger window size we're more likely to find more optimal
++deltas.
++
++It's probably not worth it to use this option on a given repository
++without running tailored performance benchmarks on it. It takes a lot
++more time, and the resulting space/delta optimization may or may not
++be worth it. Not using this at all is the right trade-off for most
++users and their repositories.
++
+ CONFIGURATION
+ -------------
+ 
 -- 
 2.21.0.360.g471c308f928
 
