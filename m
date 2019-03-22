@@ -2,179 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 261FB20248
-	for <e@80x24.org>; Fri, 22 Mar 2019 14:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C72CF20248
+	for <e@80x24.org>; Fri, 22 Mar 2019 14:55:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729157AbfCVOxR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 10:53:17 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42480 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728827AbfCVOxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 10:53:16 -0400
-Received: by mail-ed1-f68.google.com with SMTP id j89so1899675edb.9
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 07:53:15 -0700 (PDT)
+        id S1729308AbfCVOzz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 10:55:55 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33837 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728465AbfCVOzz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 10:55:55 -0400
+Received: by mail-wr1-f67.google.com with SMTP id p10so2722196wrq.1
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 07:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=/mzCv0tI1Gud98MyQB96uij/l16TH8BlPCg5b8xJ6o4=;
-        b=S+lOUqZiLx9GvPHjhS9DjTX/HG2lmVuAsmkk6sNF+C9AywQWuTlFlLlaO4SSsWs85X
-         ytPVNZaRX7YeFi+wCO+Y0duvS+cvKaLrVLY7Z28YjhtPNAImd6kn8oD4wnzrIU1a3d97
-         gJ16HMTvRK7HODtGMUkukjLwrazhlcef59e+uJh4V7hcjw+l1tmTbVMMTeXT8NRgxAJ+
-         XH5LVRp0FDNmg8Wy4b6agdTH8BYC89dlmHv873plGBXbyFweKdHzEGQ1HEUV3R5m9Ee9
-         d3Qyu9Dl4okmjFYQ1gTYyZOvVnbk35dFakqAIqLqYtzdRd0VXULANLOdUoDn5NnA9WqN
-         uSLg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=hUYWPET+wsd2mXfsIeRavCodPRSw4RGPLT8QF0nDP7w=;
+        b=VMFgL5yn3xOlVjtU/9Z8W3V6zWZm+XbSrXSj1tHNa5Y8LmnUZAGjVzTD6aeayTqzjR
+         0Gnc8KnhGbk9UKk91UC1pUq/K9vvb3uO4LGLCHplteZpyXw4b5tff7MxzLhn9/0teEhB
+         1IqeZA1wEDzlzjBhE7nLdR2or59F2yU1vxsqiWdURDQnZm4q1EhVCPFtV/h6zkrmUnNA
+         XAod1ka7wsJ/ShZMn0mAxZgwwgfsugv3tC/un08Mq6oquHZ5EBhoebDAFwiRbVjIvtdg
+         hUryftbdtdVlRjnA4v/6JR6Ocd20vtAsz5T/sdO5RBPDww+EauDpPHbkie9ocH32Ogt1
+         PxnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=/mzCv0tI1Gud98MyQB96uij/l16TH8BlPCg5b8xJ6o4=;
-        b=FjsWj/abP01+a/vGE+LdIkhBRE++OLQK+9sVPJqTM2/C0uH8w2CyTuvXk/7Vl3ahd6
-         PaH3azHaB3EyccnZj+049olpYgU6N8BUXalo8KsFMf6hYjGdypVwcW3mPx2mhTNBtDId
-         WQvBLhojDpqQPb8DnbchIDa5YsplhBgkLdozZZbYPB29PJNdkNLPCZEcnwb8+aY8Bw9H
-         OJRZ394vHpUlSSR++kMnPlw90jG7PZ+CBt8jVxqynuChk5QBVYVZznLr5/af1PdrNW2/
-         ek+FJlDDF3YODvS0wlNWv+dy85ni5nYFUvchy2nc4+28rjvqRp6xV+iqSKqRs2ZBI4gL
-         bfJg==
-X-Gm-Message-State: APjAAAVjyEZNAPToQVKg+mwvxHvFQUb0yDQIXkP38wWxuKuepzjUGrVo
-        NexLCd1YNwjxu0id5Rs1MY8=
-X-Google-Smtp-Source: APXvYqwghiB+w0mabD+KHiMxE8LflbY1iZmPhkhqaQBMRa3ZYeuzlk/8/rAR6Zya4ONQA8ZGsO4fAQ==
-X-Received: by 2002:a17:906:484:: with SMTP id f4mr5837979eja.49.1553266394506;
-        Fri, 22 Mar 2019 07:53:14 -0700 (PDT)
-Received: from evledraar ([5.57.21.49])
-        by smtp.gmail.com with ESMTPSA id h32sm2487279edc.93.2019.03.22.07.53.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 22 Mar 2019 07:53:13 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jeffhost@microsoft.com,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 00/15] Trace2 tracing facility
-References: <pull.108.v5.git.gitgitgadget@gmail.com> <pull.108.v6.git.gitgitgadget@gmail.com> <87a7iyk0r8.fsf@evledraar.gmail.com> <0aff8302-371e-cb5e-fe5e-f08e45456559@jeffhostetler.com> <87k1gxa8cm.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1903211528090.41@tvgsbejvaqbjf.bet> <87mulocmgz.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1903221416230.41@tvgsbejvaqbjf.bet> <37cffd65-58bd-3fae-a4f1-44038ed52f60@jeffhostetler.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <37cffd65-58bd-3fae-a4f1-44038ed52f60@jeffhostetler.com>
-Date:   Fri, 22 Mar 2019 15:53:12 +0100
-Message-ID: <87h8bvc65j.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=hUYWPET+wsd2mXfsIeRavCodPRSw4RGPLT8QF0nDP7w=;
+        b=GuL+EU9N5Q0+r8nipNUFS8RKNW9CZXs1k8bhxS5P1xPWa8m4XnuvEzAuEm5rnLpg8i
+         6mKBv97V6E+SNLumokHqaBjSGEWKdR8eBorQf0xogFGbV1hZQCB21+2qwpYldfL4+Rws
+         H3RkCEdSZtJq65dE1YEARWdBvTNvx4y7h8q+0vVKCbJ7iJwMmE8/GJXZOImbtOJQUx9X
+         I34xigka5pdtT3OQrnh9FvmA1DlsNUGnvt8fTRCqmF44pBT27WVQx3ODKQysY9HWfPHH
+         q6GZT0JELCZWvpEDe2XhWgFhgb3XA+Yopf05A8ZD5tGCOpttLn8HypxbiMKOKz5diFtM
+         QHhQ==
+X-Gm-Message-State: APjAAAX5TrcWZ23l9dt4JwNy9TtbKuaQCSkjg5QmROlVzzUjlvSYlI+S
+        5WhwRqTCjYc7l9M/sca3f/k=
+X-Google-Smtp-Source: APXvYqxbzx4rp7b0Zd59RuzAK0ON6UbMhBeS9wsy0vPwsMFTDbQyyiVEQgToSCl0s4tC+Ua8L5AQAw==
+X-Received: by 2002:adf:e547:: with SMTP id z7mr6465638wrm.295.1553266553440;
+        Fri, 22 Mar 2019 07:55:53 -0700 (PDT)
+Received: from szeder.dev (x4db501f9.dyn.telefonica.de. [77.181.1.249])
+        by smtp.gmail.com with ESMTPSA id c17sm5723628wrs.17.2019.03.22.07.55.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Mar 2019 07:55:52 -0700 (PDT)
+Date:   Fri, 22 Mar 2019 15:55:50 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Subject: Re: [PATCH] commit-graph: don't show progress percentages while
+ expanding reachable commits
+Message-ID: <20190322145550.GE22459@szeder.dev>
+References: <20190119202121.3590-11-avarab@gmail.com>
+ <20190322102817.19708-1-szeder.dev@gmail.com>
+ <87lg17cgf5.fsf@evledraar.gmail.com>
+ <20190322111829.GC22459@szeder.dev>
+ <87k1grc7al.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87k1grc7al.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Mar 22, 2019 at 03:28:34PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Mar 22 2019, SZEDER Gábor wrote:
+> 
+> > On Fri, Mar 22, 2019 at 12:11:26PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> >>
+> >> On Fri, Mar 22 2019, SZEDER Gábor wrote:
+> >>
+> >> > Commit 49bbc57a57 (commit-graph write: emit a percentage for all
+> >> > progress, 2019-01-19) was a bit overeager when it added progress
+> >> > percentages to the "Expanding reachable commits in commit graph" phase
+> >> > as well, because most of the time the number of commits that phase has
+> >> > to iterate over is not known in advance and grows significantly, and,
+> >> > consequently, we end up with nonsensical numbers:
+> >> >
+> >> >   $ git commit-graph write --reachable
+> >> >   Expanding reachable commits in commit graph: 138606% (824706/595), done.
+> >> >   [...]
+> >> >
+> >> >   $ git rev-parse v5.0 | git commit-graph write --stdin-commits
+> >> >   Expanding reachable commits in commit graph: 81264400% (812644/1), done.
+> >> >   [...]
+> >> >
+> >> > Therefore, don't show progress percentages in the "Expanding reachable
+> >> > commits in commit graph" phase.
+> >>
+> >> There's indeed a bug here as your examples show, but there *are* cases
+> >> where it's correct, as the commit message for my patch on "master" shows
+> >> there's cases where we correctly.
+> >>
+> >> So this "fixes" things by always removing the progress, why not instead
+> >> pass down the state to close_reachable() about what we're walking over,
+> >> so we can always show progress, or at least in some cases?
+> >
+> > The cases where it does display correct percentages are exceptional,
+> > and doesn't worth the effort to try to find out whether ther current
+> > operation happens to be such a case.
+> 
+> It's the "write" entry point without arguments that displays the correct
+> progress. So not exceptional, but yeah, it's not what we use on "gc".
 
-On Fri, Mar 22 2019, Jeff Hostetler wrote:
+Bit it displays the correct number only if all the reachable commits
+are in packfiles, which is not necessarily the case (e.g. unpacked
+small packs during 'git fetch').
 
-> On 3/22/2019 9:17 AM, Johannes Schindelin wrote:
->> Hi =C3=86var,
->>
->> On Thu, 21 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->>> On Thu, Mar 21 2019, Johannes Schindelin wrote:
->>>
->>>> On Sun, 17 Mar 2019, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>>
->>>>>
->>>>> On Fri, Feb 15 2019, Jeff Hostetler wrote:
->>>>>
->>>>>> I could see having a "~/.git_tr2_config" or something similar in
->>>>>> some place like "/etc" that only contained the Trace2 settings. It
->>>>>> would be safe to read very early inside main() and we would not
->>>>>> consider it to be part of the real config.  For example, "git
->>>>>> config" would not know about it.  Then you could enforce a
->>>>>> system-wide setting without any of the env var issues.
->>>>>
->>>>> I haven't written a patch for this, but it seems to me that we could
->>>>> just start reading /etc/gitconfig via some custom config callback
->>>>> code early as e.g. 58b284a2e91 ("worktree: add per-worktree config
->>>>> files", 2018-10-21) does for the worktree config.
->>>>
->>>> Oy. Oy, oy, oy.
->>>>
->>>> Maybe use `read_early_config()` instead? That would be *a lot*
->>>> cleaner. You could maybe use a9bcf6586d1a (alias: use the early config
->>>> machinery to expand aliases, 2017-06-14) as an inspiration.
->>>
->>> Thanks. I was thinking *only* to do /etc/gitconfig and not the whole
->>> .git/config -> ~/.gitconfig etc. sequence just in terms of saving
->>> critical time (this is the performance trace path, after all...).
->>>
->>> But on a second reading I see that read_early_config() can do that if
->>> you set config_source->file, opts->respect_includes etc. I.e. it just
->>> (depending on options) resolves to git_config_from_file() which
->>> 58b284a2e91 used directly.
->>
->> Sure, it can exclude the repo and user config, but would that not be
->> rather confusing?
->
-> This was hidden in my earlier message.
->
-> There's a lot a config machinery here with lots of chicken-n-egg
-> problems.  I want to know at the top of main() as quickly as possible
-> whether trace2 should be enabled.
->
-> I don't want to slow down git by spinning up a bunch of trace2 state
-> and wait until the git-dir is discovered, the "-c" args are processed,
-> and we dispatch into the builtin layer and the config is enumerated
-> to know if it should really be on or not.
->
-> I also didn't want to introduce another full iteration of the full
-> config system for startup performance reasons.
->
-> I played with read_early_config() at one point and it always seemed
-> to introduce side-effects.  Perhaps I was calling it earlier than it
-> was expecting and that triggered some of the git-dir discovery or
-> something. I don't remember all the details, I just remember that it
-> changed some behaviors in subtle ways.
->
-> Perhaps I could call something like git_config_from_file() with the
-> right set of magic bits to get it to parse exactly 1 system config
-> file that would contain my trace2 settings.  Hopefully, this will
-> not have any side-effects.
+> In any case, the problem is that sometimes we've walked the full set of
+> commits already, and some other times we haven't.
 
-Right, it also occurred to me that e.g. /home tends to be on NFS on some
-systems, but very rarely /etc. I'd hate for trace reporting for git to
-stall because NFS slows to a halt, so aside from temporary
-implementation details (e.g. -c on the CLI not working) there's a good
-case to be made for "read this from /etc/gitconfig only".
+... and that we can't really be sure whether we've walked the full set
+of commits until after this loop.
 
-> But if we lump them in with the main /etc/gitconfig settings, we
-> would have to explain that these trace2 config settings are
-> system-only and ARE NOT overridden by "-c", global, local, ...
-> config settings.  This would get confusing if the user tried to
-> set local values and did:
-> 	git config --list --show-origin
-> and it showed system and local values but yet "stubbornly" refused
-> to use the local values over the system values. (I think this was
-> Johannes' point.)
->
-> That's why I was suggesting a system trace2 config file that is a
-> peer of /etc/gitconfig (maybe /etc/gittrace2) that would have these
-> values and not be expected to interact with the main config system.
-> That is, we just use the git_config_ routines to parse the file format,
-> rather than inventing another file format, but not change the
-> expectation of the established config value inheritance system.
->
-> If there's no objections, I'll take a look at doing this.
-
-I'd much rather just drop it in /etc/gitconfig with documented caveats
-than introduce a new and permanent thing like /etc/gittrace2 due to a
-current implementation detail.
-
-Unlike something in core.* or whatever this facility is specialized
-enough that I think it's fine to make it a bit of a special snowflake
-given what it does and the target audience.
-
-But even with those caveats it's still useful to see it in 'git config
--l --show-origin' for inspecting, and e.g. have it just work out of the
-box with say the default puppetry for the likes of GitLab that now knows
-how to set stuff in its /etc/gitconfig, but would need a special case
-just for this.
+> So in cases where we have we can show progress, and as a TODO (I think
+> this came up in previous discussions), we could do better if we had a
+> approximate_commit_count().
+> 
+> In any case, the below fix seems correct to me, but I haven't poked it
+> much. It *does* suffer from a theoretical race with the progress bar
+> similar to d9b1b309cf ("commit-graph write: show progress for object
+> search", 2019-01-19), but I work around it in the same way:
+> 
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 47e9be0a3a..0fab3d8b2b 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -693,7 +693,8 @@ static void add_missing_parents(struct packed_oid_list *oids, struct commit *com
+>  	}
+>  }
+>  
+> -static void close_reachable(struct packed_oid_list *oids, int report_progress)
+> +static void close_reachable(struct packed_oid_list *oids, int report_progress,
+> +			    uint64_t oids_count_for_progress)
+>  {
+>  	int i;
+>  	struct commit *commit;
+> @@ -717,7 +718,8 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
+>  	 */
+>  	if (report_progress)
+>  		progress = start_delayed_progress(
+> -			_("Expanding reachable commits in commit graph"), oids->nr);
+> +			_("Expanding reachable commits in commit graph"),
+> +			oids_count_for_progress);
+>  	for (i = 0; i < oids->nr; i++) {
+>  		display_progress(progress, i + 1);
+>  		commit = lookup_commit(the_repository, &oids->list[i]);
+> @@ -725,6 +727,8 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
+>  		if (commit && !parse_commit(commit))
+>  			add_missing_parents(oids, commit);
+>  	}
+> +	if (oids->nr < oids_count_for_progress)
+> +		display_progress(progress, oids_count_for_progress);
+>  	stop_progress(&progress);
+>  
+>  	if (report_progress)
+> @@ -829,6 +833,7 @@ void write_commit_graph(const char *obj_dir,
+>  	uint64_t progress_cnt = 0;
+>  	struct strbuf progress_title = STRBUF_INIT;
+>  	unsigned long approx_nr_objects;
+> +	uint64_t oids_count_for_progress = 0;
+>  
+>  	if (!commit_graph_compatible(the_repository))
+>  		return;
+> @@ -934,9 +939,10 @@ void write_commit_graph(const char *obj_dir,
+>  		if (oids.progress_done < approx_nr_objects)
+>  			display_progress(oids.progress, approx_nr_objects);
+>  		stop_progress(&oids.progress);
+> +		oids_count_for_progress = oids.nr;
+>  	}
+>  
+> -	close_reachable(&oids, report_progress);
+> +	close_reachable(&oids, report_progress, oids_count_for_progress);
+>  
+>  	if (report_progress)
+>  		progress = start_delayed_progress(
+> 
