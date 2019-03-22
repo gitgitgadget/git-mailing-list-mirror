@@ -2,160 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C02BB20248
-	for <e@80x24.org>; Thu, 21 Mar 2019 22:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5667620248
+	for <e@80x24.org>; Fri, 22 Mar 2019 00:06:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726611AbfCUW67 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Mar 2019 18:58:59 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:63163 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726247AbfCUW67 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Mar 2019 18:58:59 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x2LMwtFk077079
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Thu, 21 Mar 2019 18:58:55 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-Subject: [RFC] git stash --snapshot
-Date:   Thu, 21 Mar 2019 18:58:47 -0400
-Message-ID: <002101d4e039$a7cd8a10$f7689e30$@nexbridge.com>
+        id S1727419AbfCVAGD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Mar 2019 20:06:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60180 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726611AbfCVAGD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Mar 2019 20:06:03 -0400
+Received: (qmail 28767 invoked by uid 109); 22 Mar 2019 00:06:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 22 Mar 2019 00:06:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14876 invoked by uid 111); 22 Mar 2019 00:06:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 21 Mar 2019 20:06:25 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Mar 2019 20:06:01 -0400
+Date:   Thu, 21 Mar 2019 20:06:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 1/2] refs/files-backend: handle packed transaction
+ prepare failure
+Message-ID: <20190322000601.GA32671@sigill.intra.peff.net>
+References: <20190321092829.GA2648@sigill.intra.peff.net>
+ <20190321092844.GA2722@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdTgN9J4WhLeuAq7Rk2YEnzueIN6+A==
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190321092844.GA2722@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-About two weeks ago there was a discussion about building an undo stack. 
-https://public-inbox.org/git/000401d4d6c8$f68bb020$e3a31060$@nexbridge.com/
+On Thu, Mar 21, 2019 at 05:28:44AM -0400, Jeff King wrote:
 
-it had me thinking about whether a stash --snapshot might be useful. Below
-is a conceptual change - by no means even close to complete. This would
-allow scripting to wrap critical commands with a "git stash push --snapshot"
-without changing the working directory. For symmetry, a "git stash pop
---force" is needed if --include-untracked were used to stash everything in
-the first place. It might be more useful also to wait until stash is
-converted to C, I suppose. I'm wondering whether to pursue this or drop it.
-Thoughts? (and I beg forgiveness for what my mailer might do to the wrapping
-of this patch, and I already know the indent is wrong between 329 and 370,
-and that the granularity of the --force option is wrong).
+>   - instead of disconnecting backend_data->packed_transaction on error,
+>     we could wait to install it until we successfully prepare. That
+>     might make the flow a little simpler, but it introduces a hassle.
+>     Earlier parts of files_transaction_prepare() that encounter an error
+>     will jump to the cleanup label, and expect that cleaning up the
+>     outer transaction will clean up the packed transaction, too. We'd
+>     have to adjust those sites to clean up the packed transaction.
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 789ce2f41d..7741192980 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -5,12 +5,13 @@ dashless=$(basename "$0" | sed -e 's/-/ /')
- USAGE="list [<options>]
-    or: $dashless show [<stash>]
-    or: $dashless drop [-q|--quiet] [<stash>]
--   or: $dashless ( pop | apply ) [--index] [-q|--quiet] [<stash>]
-+   or: $dashless ( pop | apply ) [--index] [-q|--quiet] [-f|--force]
-[<stash>]
-    or: $dashless branch <branchname> [<stash>]
-    or: $dashless save [--patch] [-k|--[no-]keep-index] [-q|--quiet]
-                      [-u|--include-untracked] [-a|--all] [<message>]
-    or: $dashless [push [--patch] [-k|--[no-]keep-index] [-q|--quiet]
-                       [-u|--include-untracked] [-a|--all] [-m <message>]
-+                      [--snapshot]
-                       [-- <pathspec>...]]
-    or: $dashless clear"
+This actually isn't too bad. Here's what it would look like as a
+cleanup patch on top. I dunno if it's worth it or not.
 
-@@ -252,6 +253,7 @@ push_stash () {
-        patch_mode=
-        untracked=
-        stash_msg=
-+       snapshot=
-        while test $# != 0
-        do
-                case "$1" in
-@@ -286,6 +288,9 @@ push_stash () {
-                --message=*)
-                        stash_msg=${1#--message=}
-                        ;;
-+               --snapshot)
-+                       snapshot=t
-+                       ;;
-                --help)
-                        show_help
-                        ;;
-@@ -329,6 +334,8 @@ push_stash () {
-        die "$(gettext "Cannot save the current status")"
-        say "$(eval_gettext "Saved working directory and index state
-\$stash_msg")"
+-- >8 --
+Subject: [PATCH] refs/files-backend: delay setting packed_transaction
 
-+       if test -z "$snapshot"
-+       then
-        if test -z "$patch_mode"
-        then
-                test "$untracked" = "all" && CLEAN_X_OPTION=-x ||
-CLEAN_X_OPTION=
-@@ -363,6 +370,7 @@ push_stash () {
-                        git reset -q -- "$@"
-                fi
-        fi
-+       fi
- }
+When preparing a files_transaction, we have two pointers to the
+subordinate packed transaction: a local variable, and one in
+backend_data which will be carried forward if we succeed.
 
- save_stash () {
-@@ -490,6 +498,7 @@ parse_flags_and_rev()
+These always point to the same thing, so one is basically an alias of
+the other. But in some of the trickier cleanup code added by the last
+few commits, we have to set them to NULL if we've already freed the
+struct. We only _need_ to do this for the one in backend_data, but that
+leaves the local variable as a dangling pointer.
 
-        FLAGS=
-        REV=
-+       FORCE_OPTION=
-        for opt
-        do
-                case "$opt" in
-@@ -499,6 +508,9 @@ parse_flags_and_rev()
-                        --index)
-                                INDEX_OPTION=--index
-                        ;;
-+                       -f|--force)
-+                               FORCE_OPTION=--force
-+                       ;;
-                        --help)
-                                show_help
-                        ;;
-@@ -607,7 +619,7 @@ apply_stash () {
-        if test -n "$u_tree"
-        then
-                GIT_INDEX_FILE="$TMPindex" git read-tree "$u_tree" &&
--               GIT_INDEX_FILE="$TMPindex" git checkout-index --all &&
-+               GIT_INDEX_FILE="$TMPindex" git checkout-index --all
-$FORCE_OPTION &&
-                rm -f "$TMPindex" ||
-                die "$(gettext "Could not restore untracked files from stash
-entry")"
-        fi
-@@ -688,7 +700,7 @@ apply_to_branch () {
-        set -- --index "$@"
-        assert_stash_like "$@"
+Instead, let's make the rules more obvious:
 
--       git checkout -b $branch $REV^ &&
-+       git checkout -b $branch $FORCE_OPTION $REV^ &&
-        apply_stash "$@" && {
-                test -z "$IS_STASH_REF" || drop_stash "$@"
-        }
+  - only point backend_data at the packed transaction when we know it is
+    needed and preparation has succeeded. We should never need to roll
+    back backend_data->packed_transaction
 
-Regards,
-Randall
+  - clean up the local packed_transaction variable on failure manually,
+    instead of relying on files_transaction_cleanup() to do it
 
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
+An alternative would be to drop the local variable entirely, and just
+use backend_data->packed_transaction. That works, but the resulting code
+is a bit harder to read because of the length of the name.
 
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ refs/files-backend.c | 41 ++++++++++++++++++++++++-----------------
+ 1 file changed, 24 insertions(+), 17 deletions(-)
 
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 442204af4d..13a53bcb30 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2672,9 +2672,6 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 					ret = TRANSACTION_GENERIC_ERROR;
+ 					goto cleanup;
+ 				}
+-
+-				backend_data->packed_transaction =
+-					packed_transaction;
+ 			}
+ 
+ 			ref_transaction_add_update(
+@@ -2695,15 +2692,23 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 		if (is_packed_transaction_needed(refs->packed_ref_store,
+ 						 packed_transaction)) {
+ 			ret = ref_transaction_prepare(packed_transaction, err);
+-			/*
+-			 * A failure during the prepare step will abort
+-			 * itself, but not free. Do that now, and disconnect
+-			 * from the files_transaction so it does not try to
+-			 * abort us when we hit the cleanup code below.
+-			 */
+-			if (ret) {
++			if (!ret) {
++				/*
++				 * Attach the prepared packed transaction to
++				 * the files transaction so it can be committed
++				 * later.
++				 */
++				backend_data->packed_transaction =
++					packed_transaction;
++			} else {
++				/*
++				 * A failure during the prepare step will abort
++				 * itself, but not free. Do that now, so we
++				 * don't try to double-abort during the cleanup
++				 * below.
++				 */
+ 				ref_transaction_free(packed_transaction);
+-				backend_data->packed_transaction = NULL;
++				packed_transaction = NULL;
+ 			}
+ 		} else {
+ 			/*
+@@ -2712,25 +2717,27 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 			 * that somebody else doesn't pack a reference
+ 			 * that we are trying to delete.
+ 			 *
+-			 * We need to disconnect our transaction from
+-			 * backend_data, since the abort (whether successful or
+-			 * not) will free it.
++			 * We need to NULL our local pointer, since the abort
++			 * (whether successful or not) will free it.
+ 			 */
+-			backend_data->packed_transaction = NULL;
+ 			if (ref_transaction_abort(packed_transaction, err)) {
+ 				ret = TRANSACTION_GENERIC_ERROR;
++				packed_transaction = NULL;
+ 				goto cleanup;
+ 			}
++			packed_transaction = NULL;
+ 		}
+ 	}
+ 
+ cleanup:
+ 	free(head_ref);
+ 	string_list_clear(&affected_refnames, 0);
+ 
+-	if (ret)
++	if (ret) {
+ 		files_transaction_cleanup(refs, transaction);
+-	else
++		if (packed_transaction)
++			ref_transaction_abort(packed_transaction, err);
++	} else
+ 		transaction->state = REF_TRANSACTION_PREPARED;
+ 
+ 	return ret;
+-- 
+2.21.0.705.g64cb90f133
 
