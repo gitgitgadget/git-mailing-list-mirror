@@ -2,161 +2,246 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 715AD20248
-	for <e@80x24.org>; Fri, 22 Mar 2019 17:23:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D14620248
+	for <e@80x24.org>; Fri, 22 Mar 2019 17:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728532AbfCVRXC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 13:23:02 -0400
-Received: from che.mayfirst.org ([162.247.75.118]:41851 "EHLO che.mayfirst.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728286AbfCVRXB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 13:23:01 -0400
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple; 
- d=fifthhorseman.net; i=@fifthhorseman.net; q=dns/txt; 
- s=2019; t=1553275380; h=from : to : cc : subject : 
- in-reply-to : references : date : message-id : 
- mime-version : content-type : from; 
- bh=ciVUXCpH61wY0UPdT5VXHkeKXKXP8kXVd3Dn3iebwqI=; 
- b=WaUw4GypDWrJxJaSfyvR197rbIpZTkW9Wv9pIB7VdwIuXYk1ScptNx8H
- Drjp6/kS1iO7BLwLISWbXmyBVmTPBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fifthhorseman.net; 
- i=@fifthhorseman.net; q=dns/txt; s=2019rsa; t=1553275380; 
- h=from : to : cc : subject : in-reply-to : references : 
- date : message-id : mime-version : content-type : from; 
- bh=ciVUXCpH61wY0UPdT5VXHkeKXKXP8kXVd3Dn3iebwqI=; 
- b=P5u6n+sydvzKGsy2HGanIbyR6zKl/n+bTL6xMamMkB+GAm04pIXqlYGA
- S2pdBC63MM3ZM902L8umKfAozumRdblx5s0DFslKjznKtb6ZdehCgGl7VB
- VxaC/z7/1E0ll/iurb1Wjdc38SInz+xII+WbiGRzuvxmNgwMdTt7cUFPPM
- BUdNTQY2mmMOXGwOqgUszEaii/ZqWa2NdXw0nHIwq3rB2GVtj5S0lNWlLJ
- 4r59ANtbEPNxD+PsytEF42gDtn+GqptAhnvaMLAT0XNcOV8tWoeYE4LddS
- aiLCqt53QK9Jj/r3a0Mb0FmD/NiIwr5KlT63LUVWJWTORLMlbycRWQ==
-Received: from fifthhorseman.net (ip-78-45-46-183.net.upcbroadband.cz [78.45.46.183])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by che.mayfirst.org (Postfix) with ESMTPSA id 3C4FCF9A2;
-        Fri, 22 Mar 2019 13:23:00 -0400 (EDT)
-Received: by fifthhorseman.net (Postfix, from userid 1000)
-        id 456F5206B9; Fri, 22 Mar 2019 00:00:38 -0400 (EDT)
-From:   Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Santiago Torres <santiago@nyu.edu>
-Subject: Re: git tag -v should verify that the tag signer intended the same tag name as the user is verifying
-In-Reply-To: <8736nhdvi3.fsf@evledraar.gmail.com>
-References: <875zsdu41d.fsf@fifthhorseman.net> <8736nhdvi3.fsf@evledraar.gmail.com>
-Autocrypt: addr=dkg@fifthhorseman.net; prefer-encrypt=mutual; keydata=
- mDMEXEK/AhYJKwYBBAHaRw8BAQdAr/gSROcn+6m8ijTN0DV9AahoHGafy52RRkhCZVwxhEe0K0Rh
- bmllbCBLYWhuIEdpbGxtb3IgPGRrZ0BmaWZ0aGhvcnNlbWFuLm5ldD6ImQQTFggAQQIbAQUJA8Jn
- AAULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBMS8Lds4zOlkhevpwvIGkReQOOXGBQJcQsbzAhkB
- AAoJEPIGkReQOOXG4fkBAO1joRxqAZY57PjdzGieXLpluk9RkWa3ufkt3YUVEpH/AP9c+pgIxtyW
- +FwMQRjlqljuj8amdN4zuEqaCy4hhz/1DbgzBFxCv4sWCSsGAQQB2kcPAQEHQERSZxSPmgtdw6nN
- u7uxY7bzb9TnPrGAOp9kClBLRwGfiPUEGBYIACYWIQTEvC3bOMzpZIXr6cLyBpEXkDjlxgUCXEK/
- iwIbAgUJAeEzgACBCRDyBpEXkDjlxnYgBBkWCAAdFiEEyQ5tNiAKG5IqFQnndhgZZSmuX/gFAlxC
- v4sACgkQdhgZZSmuX/iVWgD/fCU4ONzgy8w8UCHGmrmIZfDvdhg512NIBfx+Mz9ls5kA/Rq97vz4
- z48MFuBdCuu0W/fVqVjnY7LN5n+CQJwGC0MIA7QA/RyY7Sz2gFIOcrns0RpoHr+3WI+won3xCD8+
- sVXSHZvCAP98HCjDnw/b0lGuCR7coTXKLIM44/LFWgXAdZjm1wjODbg4BFxCv50SCisGAQQBl1UB
- BQEBB0BG4iXnHX/fs35NWKMWQTQoRI7oiAUt0wJHFFJbomxXbAMBCAeIfgQYFggAJhYhBMS8Lds4
- zOlkhevpwvIGkReQOOXGBQJcQr+dAhsMBQkB4TOAAAoJEPIGkReQOOXGe/cBAPlek5d9xzcXUn/D
- kY6jKmxe26CTws3ZkbK6Aa5Ey/qKAP0VuPQSCRxA7RKfcB/XrEphfUFkraL06Xn/xGwJ+D0hCw==
-Date:   Fri, 22 Mar 2019 00:00:37 -0400
-Message-ID: <87lg17muca.fsf@fifthhorseman.net>
+        id S1728577AbfCVRXJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 13:23:09 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37529 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728286AbfCVRXI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 13:23:08 -0400
+Received: by mail-ed1-f67.google.com with SMTP id v21so2330450edq.4
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 10:23:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=p4SOuaSG00V2DtM+86jpcOnu+dDWuUrVi6PhYhhc/Fg=;
+        b=S3GnKJplowLx2D5gH7hM3tTc/ye4XKllVN4+xZw/NnMWrnJBjj/z6kX6xUD2JS4f74
+         HFm5XxguKraeV88A1PrarUJ1XWDxrjl8xVvNyw7/L08LTu1U8Dkd3J1zMnTh0h5PsJQQ
+         9/yfTUsCplc5mRlRY0eKBNgO3HqoBDhEXnt6ZChdUC4/g1INmZlkAyYAN2VrRFQKSt6x
+         98v0eNRpHOU47iWjfTr94KlAtERXKiF6Recvqu8wnS/2lDBzmWPEo5inpNqtQuCfqe+j
+         rX4jtav2gFgeQT0Gq+PXk4sdIvSTG6SdlByewfvQb8aDTHJsQlMcAhWfjQQYq6FATB+Y
+         Z3ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=p4SOuaSG00V2DtM+86jpcOnu+dDWuUrVi6PhYhhc/Fg=;
+        b=QJ+5z0DqKcOJFstBFh2721f2c34vFj8U/Pwfy9CqiFv0U6sIEPXpkYp8iSLezibhbv
+         yKbqjL3iuWC8h6ngoBPx8U5o+7o+jGFMefhgqICSt60qtZw8xKr6hpdTFZFeUuK0r7oa
+         pkIlOHffyCVd3bqheRMMvqXeb/1+nrJzmIfrB1jAsR/ogOYj8TWPCVezqLlaO7LaZXwz
+         BIofX7AvXBcWXUukH3gk3eFcwEgZRAg1A63/FCz1a5jq9xmXmGUZZzTP2xXcpePn7XTG
+         qvC4I8KjKGmv1XmS/chVhIsxCAzJ/sHN+nDcmXGL7+OZrFIjVwWKePy6tobtP4S10O0s
+         J7wQ==
+X-Gm-Message-State: APjAAAX9KrMmEBEGScVDNigIlt9cVLgrCWHzVNOgCWCaDRVOa/1469SC
+        YZdnteKYVm3w/cQyg6M4rMM=
+X-Google-Smtp-Source: APXvYqz9gZJDv+CWetymK2P/+3tRBmBy2jonBN5Sx8piKep2XLjBefjAh8AWKMqUJ3IonDmCYTfxGg==
+X-Received: by 2002:a17:906:9157:: with SMTP id y23mr6310369ejw.240.1553275385741;
+        Fri, 22 Mar 2019 10:23:05 -0700 (PDT)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id g4sm1773188ejd.74.2019.03.22.10.23.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 22 Mar 2019 10:23:04 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Subject: Re: [PATCH] commit-graph: don't show progress percentages while expanding reachable commits
+References: <20190119202121.3590-11-avarab@gmail.com> <20190322102817.19708-1-szeder.dev@gmail.com> <87lg17cgf5.fsf@evledraar.gmail.com> <20190322111829.GC22459@szeder.dev> <87k1grc7al.fsf@evledraar.gmail.com> <20190322145550.GE22459@szeder.dev> <87ftrfc5b7.fsf@evledraar.gmail.com> <20190322154943.GF22459@szeder.dev>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190322154943.GF22459@szeder.dev>
+Date:   Fri, 22 Mar 2019 18:23:03 +0100
+Message-ID: <87ef6ydds8.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha512; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
 
-On Wed 2019-03-20 23:35:48 +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wr=
-ote:
-> But e.g. if you've signed a v1.00 in foo.git, but also maintain bar.git
-> and have a v2.00 there, I can be fooled in foo.git with your proposed
-> change by having the v2.00 bar.git tag pushed to it (just, with the
-> proposed change, not the other way around).
+On Fri, Mar 22 2019, SZEDER G=C3=A1bor wrote:
 
-Presumably the tool looking for the "most interesting new tag" already
-has some sort of pattern that it looks for in a tag name (to avoid
-accidentally ingesting some development-specific, non-release tag).
-
-So yes, this is true for upstreams which issue signed release tags on
-multiple projects named with the generic form v1.2.3, but it is *not*
-true of projects which name their tags the way that (for example)
-GnuPG's upstream does (e.g. gnupg-2.2.14 and libgpg-error-1.36).
-
-In that case, and the matching pattern itself will exclude tags from
-other repositories.
-
-> It *does* help with the "pass of an old tag [from the same repository]"
-> problem, which I'd expect would realistically be the only threat model
-> that matters (forcing a downgrade to an old buggy version), whereas some
-> entirely different project is likely going to be next fed to some
-> project-specific build infrastructure and then won't even build.
-
-I agree that a cross-project tag substitution attack is more exotic than
-an in-project downgrade or freeze attack, but i'm not inclined to wager
-on it never being exploitable.  Why take that gamble?
-
-> I wonder if there's a more general fix to be found here that'll have
-> nothing to do with GPG or signed tags per-se. A lot of people have this
-> "given tags in the repo, what's the latest one?" problem. I think
-> they'll mostly use the --sort option now, maybe some variant of that
-> which for each <older>/<newer> tag in the chain also checked:
+> On Fri, Mar 22, 2019 at 04:11:24PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>
+>> On Fri, Mar 22 2019, SZEDER G=C3=A1bor wrote:
+>>
+>> > On Fri, Mar 22, 2019 at 03:28:34PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
+>> >>
+>> >> On Fri, Mar 22 2019, SZEDER G=C3=A1bor wrote:
+>> >>
+>> >> > On Fri, Mar 22, 2019 at 12:11:26PM +0100, =C3=86var Arnfj=C3=B6r=C3=
+=B0 Bjarmason wrote:
+>> >> >>
+>> >> >> On Fri, Mar 22 2019, SZEDER G=C3=A1bor wrote:
+>> >> >>
+>> >> >> > Commit 49bbc57a57 (commit-graph write: emit a percentage for all
+>> >> >> > progress, 2019-01-19) was a bit overeager when it added progress
+>> >> >> > percentages to the "Expanding reachable commits in commit graph"=
+ phase
+>> >> >> > as well, because most of the time the number of commits that pha=
+se has
+>> >> >> > to iterate over is not known in advance and grows significantly,=
+ and,
+>> >> >> > consequently, we end up with nonsensical numbers:
+>> >> >> >
+>> >> >> >   $ git commit-graph write --reachable
+>> >> >> >   Expanding reachable commits in commit graph: 138606% (824706/5=
+95), done.
+>> >> >> >   [...]
+>> >> >> >
+>> >> >> >   $ git rev-parse v5.0 | git commit-graph write --stdin-commits
+>> >> >> >   Expanding reachable commits in commit graph: 81264400% (812644=
+/1), done.
+>> >> >> >   [...]
+>> >> >> >
+>> >> >> > Therefore, don't show progress percentages in the "Expanding rea=
+chable
+>> >> >> > commits in commit graph" phase.
+>> >> >>
+>> >> >> There's indeed a bug here as your examples show, but there *are* c=
+ases
+>> >> >> where it's correct, as the commit message for my patch on "master"=
+ shows
+>> >> >> there's cases where we correctly.
+>> >> >>
+>> >> >> So this "fixes" things by always removing the progress, why not in=
+stead
+>> >> >> pass down the state to close_reachable() about what we're walking =
+over,
+>> >> >> so we can always show progress, or at least in some cases?
+>> >> >
+>> >> > The cases where it does display correct percentages are exceptional,
+>> >> > and doesn't worth the effort to try to find out whether ther current
+>> >> > operation happens to be such a case.
+>> >>
+>> >> It's the "write" entry point without arguments that displays the corr=
+ect
+>> >> progress. So not exceptional, but yeah, it's not what we use on "gc".
+>> >
+>> > Bit it displays the correct number only if all the reachable commits
+>> > are in packfiles, which is not necessarily the case (e.g. unpacked
+>> > small packs during 'git fetch').
+>>
+>> No, argument-less "write" only considers packed commits.
 >
->     git merge-base --is-ancestor <older> <newer>
+> No, it considers packed commits as starting points, and then expands
+> to all reachable commits, that's what that loop in question is about.
 >
-> That would serve as a check for such rouge tags, even if none of them
-> were signed, and a "they must be signed" option could be added, along
-> with "start walking from here".
+>   $ git init
+>   Initialized empty Git repository in /tmp/test/.git/
+>   $ echo >file
+>   $ git add file
+>   $ git commit -q -m initial
+>   $ echo 1 >file
+>   $ git commit -q -m 1 file
+>   $ git rev-parse HEAD | git pack-objects
+>   .git/objects/pack/pack
+>   Enumerating objects: 1, done.
+>   Counting objects: 100% (1/1), done.
+>   ece3ff72952af2b28e048fa5c58db88c44312876
+>   Writing objects: 100% (1/1), done.
+>   Total 1 (delta 0), reused 0 (delta 0)
+>   $ git commit-graph write
+>   Computing commit graph generation numbers: 100% (2/2), done.
 
-I agree that this is a common tag verification use case, and i've seen
-probably a dozen different attempts to do it which all fail in some
-curious ways if you assume that the repository being pulled from is
-malicious.
+Ah, indeed. I think in practice it'll be unlikely to happen in practice
+except on servers due to receive.unpackLimit, and then it won't be off
+by much.
 
-I like the idea you're describing here, and would be happy to see some
-reasonable, easy-to-use git subcommand that says something like "find
-the most interesting tag that derives from the current HEAD".  for some
-version of "interesting", of course :) It would probably be a good start
-to have "interesting" mean:
+So I think it's best to do something like my WIP patch upthread + the
+"snap to 100%" at the end behavior. I'll try to clean that up / test it
+/ submit that sometime soon.
 
- * the tag name matches some particular pattern
-=20
- * the tag is cryptographically signed by at least one member of a
-   specific curated keyring
-=20=20=20
- * the tag is the "most recent" or "farthest descendant" (these are
-   subtly different, i'm not sure which one makes more sense)
-
-Anyway, the fact that there isn't an obvious perfect answer for how to
-do this shouldn't stop git from offering a reasonable, well-vetted,
-*good* answer.  Because the current situation just means that every
-project that cares about verifying signed tags makes up their own
-approach, and i would happily bet that most of them get it wrong in some
-corner case.
-
-And if there's a tool that does a sensible verification of some workflow
-that we think is reasonable, that tool will also help to encourgae
-projects to adopt that reasonable workflow.  This is a good thing!
-
-       --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQTJDm02IAobkioVCed2GBllKa5f+AUCXJRd5QAKCRB2GBllKa5f
-+GbfAP0YiEYt0JQdu6w9YpPIQcqPuYJ1ftlkra3NsdWxbdPSvgD9HmYdEaWUCY1H
-/YTUAC4a624Fm/YlUlsObRj3gDt8LAU=
-=v0/S
------END PGP SIGNATURE-----
---=-=-=--
+>> >> In any case, the problem is that sometimes we've walked the full set =
+of
+>> >> commits already, and some other times we haven't.
+>> >
+>> > ... and that we can't really be sure whether we've walked the full set
+>> > of commits until after this loop.
+>>
+>> I'm fairly sure we can when we start with a full walk. See my
+>> explanation in <87imwbc6x8.fsf@evledraar.gmail.com>, but I may have
+>> missed something.
+>>
+>> >> So in cases where we have we can show progress, and as a TODO (I think
+>> >> this came up in previous discussions), we could do better if we had a
+>> >> approximate_commit_count().
+>> >>
+>> >> In any case, the below fix seems correct to me, but I haven't poked it
+>> >> much. It *does* suffer from a theoretical race with the progress bar
+>> >> similar to d9b1b309cf ("commit-graph write: show progress for object
+>> >> search", 2019-01-19), but I work around it in the same way:
+>> >>
+>> >> diff --git a/commit-graph.c b/commit-graph.c
+>> >> index 47e9be0a3a..0fab3d8b2b 100644
+>> >> --- a/commit-graph.c
+>> >> +++ b/commit-graph.c
+>> >> @@ -693,7 +693,8 @@ static void add_missing_parents(struct packed_oid=
+_list *oids, struct commit *com
+>> >>  	}
+>> >>  }
+>> >>
+>> >> -static void close_reachable(struct packed_oid_list *oids, int report=
+_progress)
+>> >> +static void close_reachable(struct packed_oid_list *oids, int report=
+_progress,
+>> >> +			    uint64_t oids_count_for_progress)
+>> >>  {
+>> >>  	int i;
+>> >>  	struct commit *commit;
+>> >> @@ -717,7 +718,8 @@ static void close_reachable(struct packed_oid_lis=
+t *oids, int report_progress)
+>> >>  	 */
+>> >>  	if (report_progress)
+>> >>  		progress =3D start_delayed_progress(
+>> >> -			_("Expanding reachable commits in commit graph"), oids->nr);
+>> >> +			_("Expanding reachable commits in commit graph"),
+>> >> +			oids_count_for_progress);
+>> >>  	for (i =3D 0; i < oids->nr; i++) {
+>> >>  		display_progress(progress, i + 1);
+>> >>  		commit =3D lookup_commit(the_repository, &oids->list[i]);
+>> >> @@ -725,6 +727,8 @@ static void close_reachable(struct packed_oid_lis=
+t *oids, int report_progress)
+>> >>  		if (commit && !parse_commit(commit))
+>> >>  			add_missing_parents(oids, commit);
+>> >>  	}
+>> >> +	if (oids->nr < oids_count_for_progress)
+>> >> +		display_progress(progress, oids_count_for_progress);
+>> >>  	stop_progress(&progress);
+>> >>
+>> >>  	if (report_progress)
+>> >> @@ -829,6 +833,7 @@ void write_commit_graph(const char *obj_dir,
+>> >>  	uint64_t progress_cnt =3D 0;
+>> >>  	struct strbuf progress_title =3D STRBUF_INIT;
+>> >>  	unsigned long approx_nr_objects;
+>> >> +	uint64_t oids_count_for_progress =3D 0;
+>> >>
+>> >>  	if (!commit_graph_compatible(the_repository))
+>> >>  		return;
+>> >> @@ -934,9 +939,10 @@ void write_commit_graph(const char *obj_dir,
+>> >>  		if (oids.progress_done < approx_nr_objects)
+>> >>  			display_progress(oids.progress, approx_nr_objects);
+>> >>  		stop_progress(&oids.progress);
+>> >> +		oids_count_for_progress =3D oids.nr;
+>> >>  	}
+>> >>
+>> >> -	close_reachable(&oids, report_progress);
+>> >> +	close_reachable(&oids, report_progress, oids_count_for_progress);
+>> >>
+>> >>  	if (report_progress)
+>> >>  		progress =3D start_delayed_progress(
+>> >>
