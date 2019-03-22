@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0B9C20248
-	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0299220248
+	for <e@80x24.org>; Fri, 22 Mar 2019 09:33:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727918AbfCVJdB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 05:33:01 -0400
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:38319 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727684AbfCVJdB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 05:33:01 -0400
-Received: by mail-wr1-f51.google.com with SMTP id g12so1537955wrm.5
-        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:00 -0700 (PDT)
+        id S1727922AbfCVJdE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 05:33:04 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:33899 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727684AbfCVJdE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 05:33:04 -0400
+Received: by mail-wm1-f65.google.com with SMTP id o10so3868010wmc.1
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 02:33:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+kJvini9wuBtfe6Jf4KGTt8mOhW8xRN8yY1J4ZMMCHM=;
-        b=WfBd3ljQKmMEYmV6QpnxZo+sTEl2L3qbZawtt8baD1N9S4aRduCgvxJnYkozhauoPn
-         M6T54diy3IybJ/5VpFjO0EwO0cQ7wC+izY1nR9ghzMrE6wIYwb1DQmiiDamlvA72Bw0a
-         9j/zmAxAldrZavuNNhVwUpp7RGhBmBQYRonuC61KUBk79hPrDbArp+SiV8d84OTHojYG
-         oz/rWySUNGnCn8w+1+e+/NWVZ4EL7SQlTQFFeM/g38Vm10XwHwh59PRRmKEI/OUp/022
-         DKFa/4kNx3CgfrmrMPt5vzNAYQN5BoDNumDga9jW+iJgZIMwLpseTpT/mCl9XZws99zy
-         etMw==
+        bh=6Tbe/tae1N/ST1rYfBFw3t4mz1O/zliGul1YTY740Zo=;
+        b=Hj6A3zkNnWh+Qr0vHP88Uqrd9FXRethkWGEjNaqbNvmABwiLFzcwLPril+BE0neo7r
+         1aNoJL2oGNhjEnMJYfVztTON5fhqlGAmlPx+slsLRIjaGjR9lTnTj5u620Er70PwI2WX
+         8AaP/7h/Q7LPyhBVeVYF1AZh1NnMBle/89iDiqW8cnZg6aS6fawnSouTZ7imi76REk8a
+         iCbKA7PEGVGNV5XhaC8eb9Wvs0TJ6Oszl5u8yiDbb8B4Q6tAOuYwVfCkReDcdhT5vwaG
+         INZsaLzDlu4wA3RYadH0nmu1h+oj+j93nfbX5QbFoRphDhguSQs5SM/hANt4e292aBRb
+         mH0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+kJvini9wuBtfe6Jf4KGTt8mOhW8xRN8yY1J4ZMMCHM=;
-        b=UXOQRutcx0JwA4sr2WerMd4f0pPz0N7fOHn50ukkHYqdQsgojEGdvNXtIvJAm9MQ9q
-         +8vzWAhkPZdFS4NqqX0j5n4s8J4eEret6VLHON1aCgfY3Causcc7yLVrm/DJZAWJGR14
-         UPCxHF2SA3qDr1Q2zvxfJBCp/KsVeOiyLK/GaasYHqCSy9j9zgcIcRicUrzHSDStgvp/
-         VSrqY2TS8LSfPLJiwlO34KfTbG+uXexfbaVrPdICs1d5Lh6N5WlRMjHNlrTWvcoC2VAm
-         fN5NH4BX53ZkUb7sjyTeYT0AMmmicTXDlZge8NJrDSD53QkGbDNIkNzs5mnhfWGlTHDH
-         iS+g==
-X-Gm-Message-State: APjAAAXta6T978kizV2dtoFEJ5OVQRIkXs5J69pMlNT1HnAG0mwpYlaX
-        +wThHEfNsaBsJg3VmyX6zbs4tICSlR4=
-X-Google-Smtp-Source: APXvYqzjEpukGKYtiSa2dkpz5xOONgYTbdAMHhbbovChMWe/ThVRtjEbKYs3nJZfuqoUmS1FUuVgkQ==
-X-Received: by 2002:a5d:6b4a:: with SMTP id x10mr5554111wrw.63.1553247179138;
-        Fri, 22 Mar 2019 02:32:59 -0700 (PDT)
+        bh=6Tbe/tae1N/ST1rYfBFw3t4mz1O/zliGul1YTY740Zo=;
+        b=mijicAI5B3nVzFf1GUmx6aP8dAgLbKHIALoZQD3geNLq+ZXvb8ojRlB+iSL05AL9Nx
+         QSJSUCXaruO2VkhnJ44kg6sI778aIl/1KUf8X1FxzDpaKb++jowxsQo4zy5654bcIUxs
+         GoCybpue46b6BrwYXM1Y8x/DQG6kIpNCQ7z3vgl+6DdsGpckHsk4LLnCIXAi3LIYE7WI
+         0Yl50glrCHDQjdOj/zqB25sqv5IKIQtpU1JxOWtbdhfmPUpwAw4qaSM/jQsenmeHZ1Qf
+         fZAE4sAQKQ2MOuLpI0j3FeGY7aaB6Rf7eeHV4hamh8iHOwVP9Fu1/XH6pqQC95vi4f09
+         PGrg==
+X-Gm-Message-State: APjAAAW0FZuggcqNb5z4k5vUyjFZP1mdkIJYT31h6wW5qBLuFymbG/PT
+        AbK7WTisoBkItVnMSgkuzijyoQdQ5Ek=
+X-Google-Smtp-Source: APXvYqz+LRxNzR11vvmDCxXwCD77vg3j2/0ewSeu5oFHyoWrAMY7n86/yMt5OfvyolXdyJ6reKwuFA==
+X-Received: by 2002:a1c:2d4c:: with SMTP id t73mr2316681wmt.142.1553247181364;
+        Fri, 22 Mar 2019 02:33:01 -0700 (PDT)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.32.57
+        by smtp.gmail.com with ESMTPSA id y197sm3521447wmd.34.2019.03.22.02.33.00
         (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
-        Fri, 22 Mar 2019 02:32:58 -0700 (PDT)
+        Fri, 22 Mar 2019 02:33:00 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 00/11] gc docs: modernize the advice for manually running "gc"
-Date:   Fri, 22 Mar 2019 10:32:31 +0100
-Message-Id: <20190322093242.5508-1-avarab@gmail.com>
+Subject: [PATCH v3 01/11] gc docs: modernize the advice for manually running "gc"
+Date:   Fri, 22 Mar 2019 10:32:32 +0100
+Message-Id: <20190322093242.5508-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.21.0.360.g471c308f928
 In-Reply-To: <20190321205054.17109-1-avarab@gmail.com>
 References: <20190321205054.17109-1-avarab@gmail.com>
@@ -76,49 +76,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patch v3 fixes a minor grammar issue noted by Junio in
-<xmqqtvfvphv6.fsf@gitster-ct.c.googlers.com>, and another "while I'm
-at it" formatting error.
+The docs have been recommending that users need to run this manually,
+but that hasn't been needed in practice for a long time except in
+exceptional circumstances.
 
-Ævar Arnfjörð Bjarmason (11):
-  gc docs: modernize the advice for manually running "gc"
-  gc docs: stop noting "repack" flags
-  gc docs: clean grammar for "gc.bigPackThreshold"
-  gc docs: include the "gc.*" section from "config" in "gc"
-  gc docs: re-flow the "gc.*" section in "config"
-  gc docs: fix formatting for "gc.writeCommitGraph"
-  gc docs: note how --aggressive impacts --window & --depth
-  gc docs: downplay the usefulness of --aggressive
-  gc docs: note "gc --aggressive" in "fast-import"
-  gc docs: clarify that "gc" doesn't throw away referenced objects
-  gc docs: remove incorrect reference to gc.auto=0
+Let's instead have this reflect reality and say that most users don't
+need to run this manually at all, while briefly describing the sorts
+sort of cases where "gc" does need to be run manually.
 
- Documentation/config/gc.txt       |  38 ++++++--
- Documentation/git-fast-import.txt |   7 ++
- Documentation/git-gc.txt          | 142 ++++++++++--------------------
- 3 files changed, 86 insertions(+), 101 deletions(-)
+Since we're recommending that users run this most of the and usually
+don't need to tweak it, let's tone down the very prominent example of
+the gc.auto=0 command. It's sufficient to point to the gc.auto
+documentation below.
 
-Range-diff:
- 1:  89719142c7 !  1:  a48ef8d5d8 gc docs: modernize the advice for manually running "gc"
-    @@ -35,7 +35,7 @@
-     -----------------------
-     -$ git config --global gc.auto 0
-     -----------------------
-    -+When common porcelain operations that creates objects are run, they
-    ++When common porcelain operations that create objects are run, they
-     +will check whether the repository has grown substantially since the
-     +last maintenance, and if so run `git gc` automatically. See `gc.auto`
-     +below for how to disable this behavior.
- 2:  d90a5b1b4c =  2:  21e66a7903 gc docs: stop noting "repack" flags
- 3:  fedd9bb886 =  3:  c8a1342e34 gc docs: clean grammar for "gc.bigPackThreshold"
- 4:  6fad05a67c =  4:  9163e2f885 gc docs: include the "gc.*" section from "config" in "gc"
- 5:  994e22a0d6 =  5:  8fa0e26671 gc docs: re-flow the "gc.*" section in "config"
- -:  ---------- >  6:  b70396f029 gc docs: fix formatting for "gc.writeCommitGraph"
- 6:  916433ef73 =  7:  04ee81a3c9 gc docs: note how --aggressive impacts --window & --depth
- 7:  457357b464 =  8:  04af0afbcf gc docs: downplay the usefulness of --aggressive
- 8:  d80a6021f5 =  9:  c35bc94416 gc docs: note "gc --aggressive" in "fast-import"
- 9:  a5d31faf6f = 10:  702f2cd2d9 gc docs: clarify that "gc" doesn't throw away referenced objects
-10:  9fd1203ad5 = 11:  08af3cc3ee gc docs: remove incorrect reference to gc.auto=0
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/git-gc.txt | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index a7c1b0f60e..dd22eecc79 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -20,17 +20,16 @@ created from prior invocations of 'git add', packing refs, pruning
+ reflog, rerere metadata or stale working trees. May also update ancillary
+ indexes such as the commit-graph.
+ 
+-Users are encouraged to run this task on a regular basis within
+-each repository to maintain good disk space utilization and good
+-operating performance.
+-
+-Some git commands may automatically run 'git gc'; see the `--auto` flag
+-below for details. If you know what you're doing and all you want is to
+-disable this behavior permanently without further considerations, just do:
+-
+-----------------------
+-$ git config --global gc.auto 0
+-----------------------
++When common porcelain operations that create objects are run, they
++will check whether the repository has grown substantially since the
++last maintenance, and if so run `git gc` automatically. See `gc.auto`
++below for how to disable this behavior.
++
++Running `git gc` manually should only be needed when adding objects to
++a repository without regularly running such porcelain commands, to do
++a one-off repository optimization, or e.g. to clean up a suboptimal
++mass-import. See the "PACKFILE OPTIMIZATION" section in
++linkgit:git-fast-import[1] for more details on the import case.
+ 
+ OPTIONS
+ -------
 -- 
 2.21.0.360.g471c308f928
 
