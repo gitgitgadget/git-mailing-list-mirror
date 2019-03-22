@@ -2,132 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24F3320248
-	for <e@80x24.org>; Fri, 22 Mar 2019 10:23:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D77E20248
+	for <e@80x24.org>; Fri, 22 Mar 2019 10:28:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727929AbfCVKXp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Mar 2019 06:23:45 -0400
-Received: from mout.gmx.net ([212.227.17.21]:40271 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727906AbfCVKXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Mar 2019 06:23:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1553250219;
-        bh=1GKbokx0KEYBT8GT8E6VA3lQIHR9ogKO5FSyJSbO2nU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TJSCYpTlIu1NgHD9xF7waNUD+QSkEzXSkoHt9YjP7jJBolNkSzPNVPOioqWP2Q0rf
-         nraQWKsdbZ2dg2bgoj55haVbrAYXMu92S2qkyKWzvi42ET5mSvpKGTfhWsjZTDZnhz
-         ULibHxk9Yik+vTSGFq4cWkCNGPhyO1JnxWTXbtKk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.129] ([37.201.192.14]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lh7M3-1gc0aK2hjr-00oYDj; Fri, 22
- Mar 2019 11:23:39 +0100
-Date:   Fri, 22 Mar 2019 11:23:23 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1727915AbfCVK26 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Mar 2019 06:28:58 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33412 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727739AbfCVK25 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Mar 2019 06:28:57 -0400
+Received: by mail-wr1-f68.google.com with SMTP id q1so1762690wrp.0
+        for <git@vger.kernel.org>; Fri, 22 Mar 2019 03:28:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=E+xe6PNWXnohX3HyYNaG38Njj56vo8zuH+PQfej8GQw=;
+        b=f4hnGhABn2iGYcdu906z/1RCpu6wdOAXXd9j+mGIdESPS7t0yXiSIxItUk9RdyDvEt
+         sjFJ0qyJ1+33VSduIuI3/GqgP+uvDZnCyLE1FBa1SCrbTDq1Xl06I7TqNULoxaatluYV
+         YSjwbK2D/tgFQ+L+fC4l0No3lESbFvBptD+H9VCdfh6P02pn3uuri/JeGSbxQ3JKtT5L
+         rxmlGf45zcBQAzZFm9vFtv0SpqfP0pcIlQkFhgxy9HGpX+yY+wWO2/mZ00zeNaduxwKW
+         t0vuQAaN6XP/+VD2L5lkKU3QqUFVnBh3CfDCPkjtS0LnJ5GtbBvsIGOCbcd5odesfUp8
+         hdIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=E+xe6PNWXnohX3HyYNaG38Njj56vo8zuH+PQfej8GQw=;
+        b=jseIGE25sYUoIuaNaUl0TlGE561QggHYHB0sh1DUmQ6i7Md2ruHFUA2CfgZjRBEwbh
+         D4wqqSqtAKG/j7qn4a9nGacfdtXenfQSHkYzWbyw051gEVUXqLlnq5BI4YN2QcxTlSeb
+         xD+j29O1ciuR8fZ7Z32ZM4CygjOAJNmWQWqg9I9e5U7DNOkI237uzs8ZTKuDqQpQ64fn
+         AoNTy7iVuGIgtR3vYuJc6lV8oG+fkO5FF47rK3WsINVq0z+2AMAUV/2/rO3P3/jV5d0i
+         bAX1NaAlrGqu28+H18GmGZCQvfqNwxk5OVgFsABnym8PhyUbj405TsZctjz9/HU3+4Vh
+         XTLA==
+X-Gm-Message-State: APjAAAVe2SQml46/OxHE2avJSCVQxeEnG4pHx0pufirdvMsuKifpsIjL
+        /EfBN2ABAJRySR7xMt+C7Oc=
+X-Google-Smtp-Source: APXvYqyHULB8V4eyEwA6FzgeNObNcPDtKxhJTMM+blMMy1KhGWQ+DA3JJk6qhvprX2JWllkRKFA2gQ==
+X-Received: by 2002:adf:ed86:: with SMTP id c6mr6027837wro.146.1553250536247;
+        Fri, 22 Mar 2019 03:28:56 -0700 (PDT)
+Received: from localhost.localdomain (x4db501f9.dyn.telefonica.de. [77.181.1.249])
+        by smtp.gmail.com with ESMTPSA id 204sm12352591wmc.1.2019.03.22.03.28.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 22 Mar 2019 03:28:55 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Elijah Newren <newren@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        "C.J. Jameson" <cjcjameson@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH] cherry-pick: set default `--mainline` parent to 1
-In-Reply-To: <xmqqd0mlt1h1.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1903221116530.41@tvgsbejvaqbjf.bet>
-References: <CALm+SVJR5BCHi_r7B279gKDukD4mYDQuv=K5guje73YDVmOxug@mail.gmail.com>        <xmqq1s32w3vu.fsf@gitster-ct.c.googlers.com>        <871s31vjo7.fsf@javad.com>        <CABPp-BEe56GFM_2g7EyXmSrULFwRAvSPBomQ66jEQmCs=HhWpg@mail.gmail.com>
- <xmqqd0mlt1h1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] commit-graph: don't show progress percentages while expanding reachable commits
+Date:   Fri, 22 Mar 2019 11:28:17 +0100
+Message-Id: <20190322102817.19708-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.21.0.539.g07239c3a71.dirty
+In-Reply-To: <20190119202121.3590-11-avarab@gmail.com>
+References: <20190119202121.3590-11-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iCa0GqSo1wCIrMRZWbi61TKn28tVouT/5Rfm1Yj1RT7dQMcCbft
- CBJ0UyWN2CgGOkZRtanAsY9jtJMQxHxBFkfizonb4hH4TxXdS9ejspmerZ/atFuiVtoZLln
- ymxtmskenzzQI9pLBUd3NPIiD4gEpuLV57VZ+zlWYaqCJbrZWMhdafCup295Rj9qsYW2H7h
- VQ9EvAAg9YWM2JaQ6gqjg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VX8I0rCaWC8=:757zy6ZR/wl/B2Zt0Ze8bq
- XEPDxUziMT5nGc5AlGr7iyhz9/z4G//VpBk7zMtR+N6iTXsenQh/teJXJQyGFYfdxzzxzpbvy
- DF/BxkmnRCiCc+L+6tLWn4D3vp0VLp93PWr6qMhY8yzmmLj55IKCIzKBFabc5tX0YlyYuRNqG
- ckoV1STqsD8TPc0uaNUOnhbh/cpsnV+PIn6vRXVpxWYVOtDcCYbdyUImFOmP1YXuRVTKR0yOJ
- Cy/b3q9CHccBVDPFE0kU6NtfsjQ41Om5vb+S9A6ONuLTKs3LVf+RfH+vq4ohzIzb+bT1L5kPh
- PgPXp37byaVUavUOPYrpHwShOLyxtIxz1ZcMkKJnu28iPdbL4FlS+xpaWoE1Pf20/dXXDWmEs
- sSUjIbBTMwz7z/CQep7IazeEveD1wGsqGaN6rksGTfHJodhZ5xUSjryO7JN0CiwDBx/NMCj2m
- 8nqKGXL0rc/TmhNEYA/ZuFXIZbHIlkTGJQJl8A/z8IRvbzlCFtSiH6+97ZuJTcvoAEOmusmyu
- TXUPh8tAn+nEpKcqWSl0jpHFYiDY4oZ0qsdZhs7Mym1F60AYqlIxAAgf368fTDAL+EV8y5Fmp
- 36mFev7PUXe60RypoE3nLXE9ow32C+o3J4MK5+gJcQR07+thwUAd7/7aRu0S0Em3zBf7Kvaj1
- 8dVcM/h4HHvjl/tE0Dy4BjkexrWjv1l+NuxBzFE+5EeblW8dIDIe8/YLdFosE28FExjFokFix
- SzzUnAIrlhdIP1y8/IsoOP7ONoMcyNLUQA6mVLNLMn7p8bmRFSUjHlduuHgeMjSZ69D9XMtyR
- 3zzfhper6eRM9T/Z0GGwpDs4PFU03S/6yiKaWKlSPnrSJSxWhlGrd6WhG43xKmAaFpw9JIjfu
- tU4YSkEnwnlgabwtN460sd/xPzRJHGVggjkigBdzJZwQf8d5Qfycn8c3/uGjmVe6P6YKHEk05
- Xd1m8wi8dHQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Commit 49bbc57a57 (commit-graph write: emit a percentage for all
+progress, 2019-01-19) was a bit overeager when it added progress
+percentages to the "Expanding reachable commits in commit graph" phase
+as well, because most of the time the number of commits that phase has
+to iterate over is not known in advance and grows significantly, and,
+consequently, we end up with nonsensical numbers:
 
-On Thu, 21 Mar 2019, Junio C Hamano wrote:
+  $ git commit-graph write --reachable
+  Expanding reachable commits in commit graph: 138606% (824706/595), done.
+  [...]
 
-> Elijah Newren <newren@gmail.com> writes:
->
-> > This worries me that it'll lead to bad surprises.  Perhaps some folks
-> > cherry-pick merges around intentionally, but I would want that to be a
-> > rare occurrence at most.  There are lots of folks at $DAYJOB that
-> > cherry-pick things, not all of them are expert git-users, and I am
-> > certain several have erroneously attempted to cherry-pick merges
-> > before.
->
-> It was a lot simpler back when "git cherry-pick" did not accept
-> ranges.  You are either knowingly cherry-picking a merge, or doing
-> so by mistake, and because the command rejected cherry-picking a
-> merge without being told with "-m $n" which parent the mainline is
-> by default, we are assured that the user knew that s/he was picking
-> a merge commit when we saw "-m $n".
+  $ git rev-parse v5.0 | git commit-graph write --stdin-commits
+  Expanding reachable commits in commit graph: 81264400% (812644/1), done.
+  [...]
 
-Indeed.
+Therefore, don't show progress percentages in the "Expanding reachable
+commits in commit graph" phase.
 
-> It's not so simple in the world after we started allowing picks of a
-> range.  "cherry-pick -m1 A..B" did not work when the range A..B is a
-> mixture of merges and non-merges (which is the case 100% of the
-> time), as the command used to error out when given the -m option for
-> a single-parent commit.  Earlier we said that "as long as the $n
-> does not exceed the number of actual parents, let's allow '-m $n'
-> even for non-merge commits." to fix it.
->
-> We can just reject this RFC patch and we'd be in a slightly safer
-> place.  You still need to tell us with "-m 1" on the command line
-> that you are picking a range with merges in it.  But then I am sure
-> that clueless people blindly would alias "pick =3D cherry-pick -m1" and
-> use "git pick" and blindly pick ranges here and there, so I am not
-> sure such a slightly-more safety buys us very much.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ commit-graph.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-It gets even better.
+diff --git a/commit-graph.c b/commit-graph.c
+index 017225ccea..60c06ce58f 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -672,13 +672,13 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
+ 	 * As this loop runs, oids->nr may grow, but not more
+ 	 * than the number of missing commits in the reachable
+ 	 * closure.
+ 	 */
+ 	if (report_progress)
+ 		progress = start_delayed_progress(
+-			_("Expanding reachable commits in commit graph"), oids->nr);
++			_("Expanding reachable commits in commit graph"), 0);
+ 	for (i = 0; i < oids->nr; i++) {
+ 		display_progress(progress, i + 1);
+ 		commit = lookup_commit(the_repository, &oids->list[i]);
+ 
+ 		if (commit && !parse_commit(commit))
+ 			add_missing_parents(oids, commit);
+-- 
+2.21.0.539.g07239c3a71.dirty
 
-Recently, I found myself wishing for the equivalent of `--rebase-merges`
-in `git cherry-pick`. In other words, I wanted to transplant some commits
-(including merge commits) from a different branch onto the current branch.
-
-Currently, I work around this by this kind of dance:
-
-	$ git checkout B^0
-	$ git rebase -ir --onto HEAD@{1} A
-	$ git checkout @{-1}
-	$ git merge --ff-only HEAD@{1}
-
-which does work, but it changes the worktree quite a bit (often causing
-complete rebuilds due to "changed" header files, when those rebuilds were
-not actually necessary).
-
-It also has the rather real downside of not mixing well with an
-already-running rebase...
-
-And with that use case in mind, I think that making the `-m 1` option the
-default is even less desirable than I thought before.
-
-Ciao,
-Dscho
